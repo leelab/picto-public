@@ -1,0 +1,21 @@
+#include "InteractiveSTDIOHandler.h"
+
+#include <QTextStream>
+#include <QApplication>
+
+InteractiveSTDIOHandler::InteractiveSTDIOHandler()
+{
+}
+
+void InteractiveSTDIOHandler::run()
+{
+	QTextStream stdinStream(stdin, QIODevice::ReadOnly);
+	QString command;
+
+	do
+	{
+		command = stdinStream.readLine();
+	} while(command.toLower() != "quit");
+
+	QApplication::exit(0);
+}

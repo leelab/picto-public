@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=PictoServer
+Type=Application
+Comment=The daemon which coordinates execution and recording of Picto based experiments.
+Exec=/home/user/Desktop/Picto/output/bin/release/PictoServer
+Path=/home/user/Desktop/Picto/output/bin/release
+Icon=/home/user/Desktop/Picto/output/bin/release/icons/PictoServer.ico
+GenericName[en_US]=PictoServer

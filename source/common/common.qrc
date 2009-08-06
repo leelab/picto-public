@@ -1,0 +1,10 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+ <qresource prefix="/common/images">
+  <file alias="scope.png">images/scope.png</file>
+  <file alias="splash.png">images/splash.png</file>
+ </qresource>
+ <qresource prefix="/common/translations">
+  <file alias="common_ko.qm">translations/common_ko.qm</file>
+ </qresource>
+</RCC>

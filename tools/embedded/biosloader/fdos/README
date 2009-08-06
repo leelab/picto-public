@@ -1,0 +1,35 @@
+FREEDOS Ripcord BootDisk
+This is a basic boot disk intended for basic DOS use,
+and not intended for use to install a FreeDOS distribution.
+USE OF THIS DISK IS AT YOUR OWN RISK
+
+This boot disk is auto generated about once a week.
+Some portions (such as the Kernel) are built from latest
+source or latest downloadable binary, whereas other portions
+are manually updated.  An archive with all source (to satisfy
+various license requirements, e.g. GPL) should be available
+with the disk/disk image.  You should obtain it at the
+same time, as only the latest available boot disk and source
+archive are provided.
+
+Goals:
+This disk (image) should be bootable by any computer 
+supported by FreeDOS (8086+ IBM compatible PC), however
+certain additions may require a 80286, 80386 or newer system.
+It is my hope that disk may be useful for BIOS flashing
+(please use default BARE mode), playing 'classic' DOS games,
+system recovery, OEM use (just add your program), etc.
+
+Please use the FreeDOS lists if you need assistance.
+
+See http://www.freedos.org for more information about FreeDOS.
+See http://www.fdos.org for more information about this distribution.
+
+--------------------------------------------------------------------------
+
+  FreeDOS is a trademark of Jim Hall. 
+  It was claimed as a trademark to prevent its possible abuse or misuse.
+  The name FreeDOS may be used by the FreeDOS community to refer to 
+  programs that are part of the FreeDOS operating system, or to associate
+  their programs with FreeDOS.
+
