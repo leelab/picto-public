@@ -56,6 +56,8 @@ DaqBoard::~DaqBoard()
   * 			2					1			17
   * 			3					2			49
   * 			4					3			47
+  *
+  * \note The Crouzet PB-4 Digital I/O board uses active low logic.
   * 
   * \param _numControllers The number of reward controllers to initialize
   * \param _rewardDurations an array containging the durations in ms for each controller. The array must have the same number of elements as the number of controllers being initialized.
@@ -94,6 +96,17 @@ bool DaqBoard::initRewardController(int _numControllers, unsigned int _rewardDur
 
 	SetFilePointer(hDAQ_, REG_DIO_DIRECTION,NULL, FILE_BEGIN);
 	WriteFile(hDAQ_,&data, FOUR_BYTES, &bytesWritten, NULL);
+
+	if(bytesWritten != FOUR_BYTES)
+	{
+		OutputDebugString(L"DaqBoard.initRewardController: Failed writing to DIO_DIRECTION register\n");
+		return false;
+	}
+
+	//set the reward controller values to 1 (off)
+	data = 0x0000000F;
+	SetFilePointer(hDAQ_,REG_STATIC_DIGITAL_OUTPUT,NULL,FILE_BEGIN);
+	WriteFile(hDAQ_,&data,FOUR_BYTES,&bytesWritten,NULL);
 
 	if(bytesWritten != FOUR_BYTES)
 	{
@@ -179,10 +192,10 @@ bool DaqBoard::giveReward(int _controller)
 	}
 
 
-	//Turn on the reward controller
+	//Turn on the reward controller (set the bit to 0)
 	SetFilePointer(hDAQ_,REG_STATIC_DIGITAL_OUTPUT,NULL,FILE_BEGIN);
 	ReadFile(hDAQ_,&buffer,FOUR_BYTES,&bytesRead,NULL);
-	buffer |= rewardBitmasks_[_controller-1];
+	buffer &= ~rewardBitmasks_[_controller-1];
 	SetFilePointer(hDAQ_,REG_STATIC_DIGITAL_OUTPUT,NULL,FILE_BEGIN);
 	WriteFile(hDAQ_,&buffer, FOUR_BYTES,&bytesWritten, NULL);
 
@@ -213,10 +226,10 @@ bool DaqBoard::giveReward(int _controller)
 		}
 	}
 
-	//turn off the reward controller
+	//turn off the reward controller (set the bit to 1)
 	SetFilePointer(hDAQ_,REG_STATIC_DIGITAL_OUTPUT,NULL,FILE_BEGIN);
 	ReadFile(hDAQ_,&buffer,FOUR_BYTES,&bytesRead,NULL);
-	buffer &= ~rewardBitmasks_[_controller-1];
+	buffer |= rewardBitmasks_[_controller-1];
 	SetFilePointer(hDAQ_,REG_STATIC_DIGITAL_OUTPUT,NULL,FILE_BEGIN);
 	WriteFile(hDAQ_,&buffer, FOUR_BYTES,&bytesWritten, NULL);
 
@@ -591,7 +604,6 @@ int DaqBoard::FlushAIData()
 		if(numReads>4096)
 			break;
     }
-
 	return numReads;
 }
 
