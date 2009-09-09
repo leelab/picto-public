@@ -1,5 +1,4 @@
-// DaqBoard.cpp : Defines the entry point for the console application.
-//
+//! A simple test program for the DaqBoard class
 
 #include "stdafx.h"
 #include "DaqBoard.h"
