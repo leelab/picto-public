@@ -1,0 +1,9 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+ <qresource prefix="/translations">
+  <file alias="proxyserver_ko.qm">translations/proxyserver_ko.qm</file>
+ </qresource>
+ <qresource prefix="/mjpeg">
+  <file alias="cambozola.jar">mjpeg/cambozola.jar</file>
+ </qresource>
+</RCC>
