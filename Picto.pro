@@ -4,6 +4,7 @@ SUBDIRS = source/common
 SUBDIRS += source/director
 !wince* {
   SUBDIRS += source/server          source/server/unittests
+  SUBDIRS += source/proxyserver
   SUBDIRS += source/config
   SUBDIRS += source/workstation
   SUBDIRS += source/documentation/developersguide
@@ -148,6 +149,17 @@ TESTS_DEBUG.extra = copy $$(PICTO_TREE)\output\bin\debug\*.dll $$(PICTO_TREE)\ou
 TESTS_DEBUG.files = $$[QT_INSTALL_PREFIX]/lib/QtTestd4.dll
 TESTS_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug
 INSTALLS += TESTS_DEBUG
+
+
+#Files for running the ProxyServer with the various nerual acquisition devices
+NEURALACQ_DLLS.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
+NEURALACQ_DLLS.path = $$(PICTO_TREE)/output/bin/release
+INSTALLS += NEURALACQ_DLLS
+
+NEURALACQ_DLLS_DEBUG.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
+NEURALACQ_DLLS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
+INSTALLS += NEURALACQ_DLLS_DEBUG
+
 }
 
 unix:!macx {
@@ -218,4 +230,6 @@ TESTS_DEBUG.extra  =   cp -dp $$(PICTO_TREE)/output/bin/debug/shared/* $$(PICTO_
 TESTS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtTest.so* $$(PICTO_TREE)/output/tests/bin/debug/shared
 TESTS_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug/shared/
 INSTALLS += TESTS_DEBUG
+
 }
+

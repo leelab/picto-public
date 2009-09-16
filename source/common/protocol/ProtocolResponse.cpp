@@ -45,7 +45,7 @@ QString ProtocolResponse::getHeaders()
 										.arg(protocolResponseCode)
 										.arg(protocolResponseTypeStrings[protocolResponseCode]);
 
-	headers += QString("Server: %1\r\n").arg(Picto::Names->serverAppName);
+	headers += QString("Server: %1\r\n").arg(Picto::Names->proxyServerAppName);
 	if(!contentType.isEmpty())
 	{
 		headers += QString("Content-Type: %1\r\n").arg(contentType);

@@ -87,6 +87,19 @@ int ProtocolCommand::setContent(QByteArray _content)
 	return remainingContentLength();
 }
 
+bool ProtocolCommand::hasField(QString field)
+{
+	std::map<QString,QString>::const_iterator fieldIter = fields_.find(field);
+	if(fieldIter != fields_.end())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 QString ProtocolCommand::getFieldValue(QString field)
 {
 	QString fieldValue;

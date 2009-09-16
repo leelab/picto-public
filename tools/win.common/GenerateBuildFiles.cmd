@@ -17,7 +17,7 @@
 
   @echo Generating Makefiles
   @qmake -recursive
-
+  
   @echo Generating Visual Studio Solution
   @qmake -recursive -tp vc
 

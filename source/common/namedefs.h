@@ -23,6 +23,7 @@ public:
 	TranslatedNames();
 
 	QString serverAppName;
+	QString proxyServerAppName;
 	QString configAppName;
 	QString directorAppName;
 	QString directorHWName;
