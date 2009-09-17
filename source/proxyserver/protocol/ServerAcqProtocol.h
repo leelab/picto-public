@@ -5,10 +5,12 @@
 
 #include "../../common/protocol/Protocol.h"
 
+#include <QObject>
+
 struct ServerAcqProtocol : Picto::Protocol
 {
 public:
-	ServerAcqProtocol();
+	ServerAcqProtocol(QObject *acqPlugin);
 
 private:
 	QString id();

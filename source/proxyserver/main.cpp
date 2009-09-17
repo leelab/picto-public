@@ -10,7 +10,6 @@
 #include <QtGui>
 #include <QLocale>
 #include <QCoreApplication>
-#include <windows.h>
 
 #include "../common/common.h"
 #include "../common/globals.h"
@@ -20,10 +19,8 @@
 #include "protocol/ServerProtocols.h"
 #include "protocol/ServerAcqProtocol.h"
 #include "protocol/ServerHTTPProtocol.h"
-#include "service/systemservice.h"
-#include "dialog.h"
 #include "InteractiveSTDIOHandler.h"
-#include "plexon.h"
+#include "interfaces.h"
 
 #ifdef Q_WS_MAC
 #include <sys/types.h>
@@ -36,15 +33,15 @@
 #include "processinfo/WinGetPID.h"
 #endif
 
-int serviceMain(SystemService *)
+int serviceMain(QObject *acqPlugin)
 {
 	QEventLoop eventLoop;
 
 	QSharedPointer<ServerProtocols> httpProtocols(new ServerProtocols());
 	QSharedPointer<ServerProtocols> acqProtocols(new ServerProtocols());
 
-	QSharedPointer<ServerHTTPProtocol> httpProtocol(new ServerHTTPProtocol());
-	QSharedPointer<ServerAcqProtocol> acqProtocol(new ServerAcqProtocol());
+	QSharedPointer<ServerHTTPProtocol> httpProtocol(new ServerHTTPProtocol(acqPlugin));
+	QSharedPointer<ServerAcqProtocol> acqProtocol(new ServerAcqProtocol(acqPlugin));
 	
 	httpProtocols->addProtocol(httpProtocol);
 	acqProtocols->addProtocol(httpProtocol);
@@ -63,94 +60,9 @@ int serviceMain(SystemService *)
 
 int main(int argc, char *argv[])
 {
-	bool bUseGUI = false;
 
-	//If we have no parameters, and a windowing system is available, we'll put up a GUI
-#ifdef Q_WS_MAC
-	//If we're on Mac OS X 10.2 or later and were launched from the finder, dock, or
-	//terminal via the open command, then we'll have an extra argument containing the
-	//process serial number in the form -psn_#_###.
-	if(argc==2)
-	{
-		QString checkPSN = argv[1];
-
-		if(checkPSN.left(5)=="-psn_")
-		{
-			bUseGUI = true;
-		}
-	}
-#endif
-
-	if(argc==1)
-	{
-#ifdef Q_WS_X11
-		//On Unix OSes using an X11 display manager, we'll simply look for the DISPLAY
-		//environment variable.  If it's there, we'll put up a GUI; otherwise, we'll use
-		//the terminal so as to allow remote usage via SSH.
-		bUseGUI = getenv("DISPLAY") != 0;
-#elif defined Q_WS_MAC
-		//On Mac OS X, if you explicitly invoke the BSD binary from within the app bundle
-		//via a terminal, then we will not use a GUI (allowing for remote usage via SSH).
-		//
-		//We'll check if there is a terminal environment variable present, and if so we
-		//will further check to see if we were invoked by the WindowServer to cover the
-		//case where someone starts the app bundle on a pre-Mac OS X 10.2 machine from
-		//a terminal using the open command
-		bUseGUI = getenv("TERM") == 0;
-		
-		if(!bUseGUI)
-		{
-			pid_t ppid = getppid();
-
-			if(ppid == GetPIDForProcessName("WindowServer"))
-			{
-				bUseGUI = true;
-			}	
-		}
-#elif defined Q_WS_WIN
-		//We'll find our parent process and check if it was a GUI application
-		bUseGUI = winParentProcessIsGUI();
-
-		//On Windows, to have standard output within a terminal, you mark your executable
-		//as a console application.  If you aren't invoked from a terminal, the windowing
-		//system will allocate a console for you.
-		//
-		//The alternative is to mark the executable as a GUI application, and try to
-		//attach to the console of the parent process using AttachConsole((DWORD) -1)
-		//(Note that you would also have to redirect stdout/stderr/stdin using freopen()).
-		//This has the benefit of not initially showing a console window, but it has
-		//two drawbacks: 1) stdout can't be redirected, because you're expressly overriding
-		//any redirection via freopen(); and 2) since the invoking console doesn't know we
-		//are a console application, it will return immediately - this disallows proper
-		//chaining, enables multiple commands to target the console, and invalidates any
-		//logic to format output.
-		//
-		//Since we opt to mark the executable as a console application, if we decided to
-		//instantiate a GUI, we now need to hide our console window.
-		if(bUseGUI)
-		{
-#ifndef WINCE		
-			ShowWindow(GetConsoleWindow(),false);
-#endif
-		}
-#else
-		bUseGUI = true;
-#endif
-	}
 	
-	bool bUsedGUIArgument = false;
-
-	if(argc == 2)
-	{
-		QString guiArgument = argv[1];
-		if(guiArgument == "-gui")
-		{
-			bUseGUI = true;
-			bUsedGUIArgument = true;
-		}
-	}
-	
-	QApplication app(argc,argv,bUseGUI);
+	QApplication app(argc,argv,false);  //console app
 
 	QLocale systemLocale = QLocale();
 	QString localeLanguageCode = systemLocale.name().left(2);
@@ -167,57 +79,28 @@ int main(int argc, char *argv[])
 		app.translate("ProxyServerMain",
 					  "Usage:\n"
 					  "\n"
-					  "%1 [-gui] [-interactive] [-install] [-start] [-remove] [-stop]\n"
+					  "%1 [-listdevices] [-device :deviceName]\n"
 					  "\n"
-					  "  -gui          - Launch a graphical user interface for the\n"
-					  "                  Service/Daemon.  Must be the only argument.\n"
-					  "  -interactive  - Runs in interactive mode (as a regular application)\n"
-					  "                  instead of as a Service/Daemon.\n"
-					  "  -install      - Installs the Service/Daemon so that it will run in\n"
-					  "                  the background at system startup, even if no user\n"
-					  "                  is logged in.\n"
-					  "  -start        - Puts the Service/Daemon into the running state.\n"
-					  "                  This can be placed after -install to install and\n"
-					  "                  start the Service/Daemon immediately.\n"
-					  "  -remove       - Removes the Service/Daemon from the system.\n"
-					  "                  The Service/Daemon can no longer be started and\n"
-					  "                  will not run at system startup.\n"
-					  "  -stop         - Puts the Service/Daemon into the stopped state, but\n"
-					  "                  does not remove it from the system.\n"
-					  "                  The Service/Daemon will still run at system startup.\n").
-						arg(Picto::Names->proxyServerAppName);
+					  "The Proxy Server is used to provide data from a neural data\n"
+					  "collection device (e.g. a Plexon) to the %2.\n\n"
+					  "  -listdevices  - Lists the available plugins for devices that can\n"
+					  "                  provide data with the proxy server\n"
+					  "  -device       - Runs the proxy server using the listed device.\n").
+						arg(Picto::Names->proxyServerAppName).
+						arg(Picto::Names->serverAppName);
 					   
 
-	if(argc==1 && !bUseGUI)
+	if(argc==1)
 	{
 		outputStream << usageDescription;
 		Picto::CloseLib();
 		return(0);
 	}
 
-	const QString serviceDescription =
-		app.translate("ProxyServerMain",
-					  "Enables data collection from %1 hardware and %2 software.  "
-					  "Allows control and observation of experiments from %3 software.  "
-					  "Manage this service using the %4 software.").arg(Picto::Names->directorHWName).
-																    arg(Picto::Names->directorAppName).
-																    arg(Picto::Names->workstationAppName).
-																    arg(Picto::Names->configAppName);
+	bool result = false;
 
-	const QString serviceSwitch = "-service";
 
-	SystemService systemService(Picto::Names->proxyServerAppName,
-								serviceSwitch,
-								Picto::Names->proxyServerAppName,
-								serviceDescription,
-								"",
-								serviceMain,
-								argc,
-								argv);
-
-	bool result=false;
-
-	if(argc > 1 && !bUsedGUIArgument)
+	if(argc > 1)
 	{
 		for(int iArgCounter = 1; iArgCounter < argc; iArgCounter++)
 		{
@@ -227,122 +110,119 @@ int main(int argc, char *argv[])
 			{
 				QString errorDescription;
 
-				if(argument.mid(1)==serviceSwitch.mid(1))
+				if(argument.mid(1)=="device")
 				{
-					result = systemService.runAsService();
-				}
-				else if(argument.mid(1)=="interactive")
-				{
-					outputStream << app.translate("ProxyServerMain",
-												 "Starting %1 in interactive mode.\n").
-													arg(Picto::Names->proxyServerAppName);
-					outputStream << app.translate("ProxyServerMain","Type \"quit\" on a single line to exit\n");
-					outputStream.flush();
+					//get the device name
+					iArgCounter++;
+					QString deviceName = argv[iArgCounter];
 
-					InteractiveSTDIOHandler interactiveSTDIOHandler;
-					interactiveSTDIOHandler.start();
+					QObject *devicePlugin = NULL;
 
-					result = systemService.runInteractive();
+					//find the appropriate plugin
+					foreach (QObject *plugin, QPluginLoader::staticInstances())
+					{
+						NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(plugin);
+						if(iNDAcq->device() == deviceName)
+							devicePlugin = plugin;
+					}
+					
+					QDir pluginsDir = QDir(qApp->applicationDirPath());
 
-					outputStream << "Shutting down...\n";
-				}
-				else if(argument.mid(1)=="install")
-				{
-					result = systemService.install(&errorDescription);
-					if(result)
+	#if defined(Q_OS_WIN)
+					if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
+						pluginsDir.cdUp();
+	#elif defined(Q_OS_MAC)
+					if (pluginsDir.dirName() == "MacOS") {
+						pluginsDir.cdUp();
+						pluginsDir.cdUp();
+						pluginsDir.cdUp();
+					}
+	#endif
+					pluginsDir.cd("plugins");
+
+					foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
+					{
+						QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+						QObject *plugin = loader.instance();
+						if (plugin) 
+						{
+							NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(plugin);
+							if(iNDAcq->device() == deviceName)
+								devicePlugin = plugin;
+						}
+					}
+
+					if(!devicePlugin)
 					{
 						outputStream << app.translate("ProxyServerMain",
-													 "The %1 Service/Daemon has been installed.\n").
-														arg(Picto::Names->proxyServerAppName);
+													"Proxy server unable to find a plugin for device %1\n"
+													"Use -devicelist to see available devices.\n").
+													arg(deviceName);
 					}
 					else
 					{
-						outputStream << app.translate("ProxyServerMain",
-													 "Unable to install the %1 Service/Daemon.\n").
+						outputStream << app.translate("ProxyServerMain","Starting %1.\n").
 														arg(Picto::Names->proxyServerAppName);
-						outputStream << "\n\n";
-						outputStream << errorDescription;
+						outputStream << app.translate("ProxyServerMain","Device: %1\n").
+														arg(deviceName);
+						outputStream << app.translate("ProxyServerMain","Type \"quit\" on a single line to exit\n");
+						outputStream.flush();
+
+						InteractiveSTDIOHandler interactiveSTDIOHandler;
+						interactiveSTDIOHandler.start();
+
+						result = serviceMain(devicePlugin);
+
+						outputStream << app.translate("ProxyServerMain","Shutting down...\n");
 					}
 				}
-				else if(argument.mid(1)=="remove")
+
+				else if(argument.mid(1) == "listdevices")
 				{
-					result = systemService.remove(&errorDescription);
-					if(result)
+					//Run through the plugins printing their names 
+					//(both static and dynamic plugins)
+					outputStream << app.translate("ProxyServerMain", "Available device plugins:\n");
+					foreach (QObject *plugin, QPluginLoader::staticInstances())
 					{
-						outputStream << app.translate("ProxyServerMain",
-													 "The %1 Service/Daemon has been removed.\n").
-														arg(Picto::Names->proxyServerAppName);
+						NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(plugin);
+						outputStream << QString("%1\n").arg(iNDAcq->device());
 					}
-					else
+					
+					QDir pluginsDir = QDir(qApp->applicationDirPath());
+
+	#if defined(Q_OS_WIN)
+					if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
+						pluginsDir.cdUp();
+	#elif defined(Q_OS_MAC)
+					if (pluginsDir.dirName() == "MacOS") {
+						pluginsDir.cdUp();
+						pluginsDir.cdUp();
+						pluginsDir.cdUp();
+					}
+	#endif
+					pluginsDir.cd("plugins");
+
+					foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
 					{
-						outputStream << app.translate("ProxyServerMain",
-													 "Unable to remove the %1 Service/Daemon.\n").
-														arg(Picto::Names->proxyServerAppName);
-						outputStream << "\n\n";
-						outputStream << errorDescription;
+						QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+						QObject *plugin = loader.instance();
+						if (plugin) 
+						{
+							NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(plugin);
+							outputStream << QString("%1\n").arg(iNDAcq->device());
+						}
 					}
-				}
-				else if(argument.mid(1)=="start")
-				{
-					result = systemService.start(&errorDescription);
-					if(result)
-					{
-						outputStream << app.translate("ProxyServerMain",
-													 "The %1 Service/Daemon has been started.\n").
-														arg(Picto::Names->proxyServerAppName);
-					}
-					else
-					{
-						outputStream << app.translate("ProxyServerMain",
-													 "Unable to start the %1 Service/Daemon.\n").
-														arg(Picto::Names->proxyServerAppName);
-						outputStream << "\n\n";
-						outputStream << errorDescription;
-					}
-				}
-				else if(argument.mid(1)=="stop")
-				{
-					result = systemService.stop(&errorDescription);
-					if(result)
-					{
-						outputStream << app.translate("ProxyServerMain",
-													 "The %1 Service/Daemon has been stopped.\n").
-														arg(Picto::Names->proxyServerAppName);
-					}
-					else
-					{
-						outputStream << app.translate("ProxyServerMain",
-													 "Unable to stop the %1 Service/Daemon.\n").
-														arg(Picto::Names->proxyServerAppName);
-						outputStream << "\n\n";
-						outputStream << errorDescription;
-					}
+
+
+
+
 				}
 				else
 				{
 					outputStream << usageDescription;
 				}
 			}
-			else
-			{
-				outputStream << usageDescription;
-			}
 		}
-	}
-	else if(bUseGUI)
-	{
-		QApplication::setDesktopSettingsAware(false);
-
-		QIcon icon;
-
-		icon.addFile(":/common/images/scope.png");
-
-		app.setWindowIcon(icon);
-
-		Dialog dialog(&systemService);
-		dialog.show();
-
-		result = app.exec();
 	}
 
 	Picto::CloseLib();

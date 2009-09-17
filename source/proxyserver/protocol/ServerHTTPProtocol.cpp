@@ -4,9 +4,9 @@
 
 #include "HTTPGetCommandHandler.h"
 
-ServerHTTPProtocol::ServerHTTPProtocol()
+ServerHTTPProtocol::ServerHTTPProtocol(QObject *acqPlugin)
 {
-	QSharedPointer<HTTPGetCommandHandler> getCommandHandler(new HTTPGetCommandHandler());
+	QSharedPointer<HTTPGetCommandHandler> getCommandHandler(new HTTPGetCommandHandler(acqPlugin));
 
 	addCommandHandler(getCommandHandler);
 }

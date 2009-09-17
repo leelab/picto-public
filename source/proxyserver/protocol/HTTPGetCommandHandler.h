@@ -6,6 +6,8 @@
 #ifndef _HTTPGETCOMMANDHANDLER_H_
 #define _HTTPGETCOMMANDHANDLER_H_
 
+#include <QObject>
+
 #include "../../common/common.h"
 
 #include "../../common/protocol/ProtocolCommandHandler.h"
@@ -20,10 +22,12 @@
 struct HTTPGetCommandHandler : Picto::ProtocolCommandHandler
 {
 public:
-	HTTPGetCommandHandler();
+	HTTPGetCommandHandler(QObject *acqPlugin);
 
 	QString method() { return QString("GET"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
+private:
+	QObject *acgPlugin;
 };
 
 /*! @} */

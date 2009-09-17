@@ -1,71 +1,37 @@
-TEMPLATE = app
-TARGET = PictoProxyServer
-QT = core gui xml network sql
+TEMPLATE = lib
+TARGET = ProxyPluginPlexon
+QT = core  xml
 CONFIG += qt warn_on debug_and_release
-# We elect to be a console application on Windows so that we will have our
-# standard output attached to the invoking terminal, if one is present; if
-# none is present, then we can still create a GUI
-win32:CONFIG += console
+CONFIG += plugin
+
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 
 # Input
-macx {
-SOURCES += $$(PICTO_TREE)/source/proxyserver/processinfo/GetPID.c
-HEADERS += $$(PICTO_TREE)/source/proxyserver/processinfo/GetPID.h
-}
-win32 {
-SOURCES += $$(PICTO_TREE)/source/proxyserver/processinfo/WinGetPID.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/processinfo/WinGetPID.h
-}
-HEADERS += $$(PICTO_TREE)/source/proxyserver/interfaces.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/main.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/InteractiveSTDIOHandler.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/InteractiveSTDIOHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/network/server.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/network/server.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/network/serverthread.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/network/serverthread.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/HTTPGetCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/HTTPGetCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ServerAcqProtocol.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ServerAcqProtocol.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ServerHTTPProtocol.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ServerHTTPProtocol.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ServerProtocols.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ServerProtocols.cpp
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/plexonplugin/plexonplugin.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/plexonplugin/plexonplugin.h
+
 
 include($$(PICTO_TREE)/source/common/common.pri)
 
 # Resources
-RESOURCES += $$(PICTO_TREE)/source/proxyserver/proxyserver.qrc
-
-# Translations
-TRANSLATIONS += $$(PICTO_TREE)/source/proxyserver/translations/proxyserver_ko.ts
+RESOURCES += $$(PICTO_TREE)/source/proxyplugins/plexonplugin/plexonplugin.qrc
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/debug
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/proxyserver/debug
+  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/plexonplugins/debug
 }
 build_pass:CONFIG(release, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/release
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/proxyserver/release
+  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/plexonplugins/release
 }
-RCC_DIR = $$(PICTO_TREE)/intermediates/resources/proxyserver
-UI_DIR = $$(PICTO_TREE)/intermediates/ui/proxyserver
-MOC_DIR = $$(PICTO_TREE)/intermediates/moc/proxyserver
+RCC_DIR = $$(PICTO_TREE)/intermediates/resources/plexonplugins
+UI_DIR = $$(PICTO_TREE)/intermediates/ui/plexonplugins
+MOC_DIR = $$(PICTO_TREE)/intermediates/moc/plexonplugins
 
-# Application Icon
-win32 {
-RC_FILE = $$(PICTO_TREE)/source/proxyserver/proxyserver.rc
-}
-macx {
-ICON = $$(PICTO_TREE)/source/proxyserver/images/scope.icns
-}
+
 
 # Libraries
 build_pass:CONFIG(debug, debug|release) {
@@ -86,6 +52,8 @@ macx:LIBPATH += $$(PICTO_TREE)/intermediates/lib/release
 win32:LIBS += libPicto.lib
 unix:LIBS += -lPicto
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/
+win32:LIBPATH += $$(PICTO_TREE)/3rdparty/lib
+win32:LIBS += PlexClient.lib
 }
 
 win32:!wince*:LIBS += advapi32.lib user32.lib psapi.lib

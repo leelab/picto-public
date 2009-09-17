@@ -2,6 +2,7 @@
 #define _SERVERHTTPPROTOCOL_H_
 
 #include <QString>
+#include <QObject>
 
 #include "../../common/common.h"
 
@@ -10,7 +11,7 @@
 struct ServerHTTPProtocol : Picto::Protocol
 {
 public:
-	ServerHTTPProtocol();
+	ServerHTTPProtocol(QObject *acqPlugin);
 
 private:
 	QString id();

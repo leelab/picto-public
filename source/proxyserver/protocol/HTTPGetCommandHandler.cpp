@@ -13,8 +13,9 @@
 
 #define MAX_MAP_EVENTS_PER_READ 5000
 
-HTTPGetCommandHandler::HTTPGetCommandHandler()
+HTTPGetCommandHandler::HTTPGetCommandHandler(QObject *acqPlugin)
 {
+	acgPlugin = acqPlugin;
 }
 
 QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
@@ -57,7 +58,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 	{
 		QSharedPointer<Picto::ProtocolResponse> xmlResponse(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
-		QSharedPointer<ACQGetCommandHandler> ACQGetCommandHandler(new ACQGetCommandHandler());
+		QSharedPointer<ACQGetCommandHandler> ACQGetCommandHandler(new ACQGetCommandHandler(acgPlugin));
 
 		//grab the XML
 		command->setFieldValue("all","1");
@@ -78,7 +79,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 								"<html><head>\r\n"
 								"<title>Picto Proxy Server Status</title>\r\n"
 								"</head><body>\r\n"
-								"<P>This is the result of<BR> \"GET / ACQ/1.0<BR>all:1<BR></P>\r\n"));
+								"<P>This is the result of<BR> \"GET / ACQ/1.0</P>\r\n"));
 		content.append(QString("</body></html>\r\n"));
 		
 		response->setContent(content.toUtf8());

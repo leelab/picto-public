@@ -5,6 +5,7 @@ SUBDIRS += source/director
 !wince* {
   SUBDIRS += source/server          source/server/unittests
   SUBDIRS += source/proxyserver
+  SUBDIRS += source/proxyplugins/plexonplugin              source/proxyplugins/tdtplugin
   SUBDIRS += source/config
   SUBDIRS += source/workstation
   SUBDIRS += source/documentation/developersguide

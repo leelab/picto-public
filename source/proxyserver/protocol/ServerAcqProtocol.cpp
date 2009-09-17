@@ -6,9 +6,9 @@
 #include "../../common/common.h"
 
 
-ServerAcqProtocol::ServerAcqProtocol()
+ServerAcqProtocol::ServerAcqProtocol(QObject *acqPlugin)
 {
-	QSharedPointer<ACQGetCommandHandler> getCommandHandler(new ACQGetCommandHandler());
+	QSharedPointer<ACQGetCommandHandler> getCommandHandler(new ACQGetCommandHandler(acqPlugin));
 
 	addCommandHandler(getCommandHandler);
 }

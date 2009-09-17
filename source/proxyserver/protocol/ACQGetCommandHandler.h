@@ -6,10 +6,14 @@
 #ifndef _ACQGETCOMMANDHANDLER_H_
 #define _ACQGETCOMMANDHANDLER_H_
 
+#include <QObject>
+
 #include "../../common/common.h"
 
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
+
+#include "interfaces.h"
 
 /*! \addtogroup pictoproxyserver_protocol
  * @{
@@ -20,10 +24,12 @@
 struct ACQGetCommandHandler : Picto::ProtocolCommandHandler
 {
 public:
-	ACQGetCommandHandler();
+	ACQGetCommandHandler(QObject *acqPlugin);
 
 	QString method() { return QString("GET"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
+private:
+	NeuralDataAcqInterface *iNDAcq;
 };
 
 /*! @} */
