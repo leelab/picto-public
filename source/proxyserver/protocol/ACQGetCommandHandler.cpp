@@ -40,18 +40,27 @@ QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSh
 	writer.setAutoFormatting(true);
 	writer.writeStartDocument();
 
+
 	//Start writing the XML document
 	writer.writeStartElement("device");
-	writer.writeCharacters(iNDAcq->deviceName());
+	writer.writeCharacters(iNDAcq->device());
 	writer.writeEndElement();
 
-	//check to see if the Plexon connection is up and running.  If it is, great!  
-	//Otherwise set it up, and send a response indicating whether the setup was successful 
-	writer.writeStartElement("DeviceStatus");
-	writer.writeCharacters(iNDAcq->deviceStatus());
-	writer.writeEndElement();
-
-
+	//check to see if our device is running
+	writer.writeStartElement("deviceStatus");
+	if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
+	{
+		writer.writeCharacters("not running");
+		writer.writeEndElement();
+		writer.writeEndDocument();
+		response->setContent(xmlData.toUtf8());
+		return response;
+	}
+	else
+	{
+		writer.writeCharacters("running");
+		writer.writeEndElement();
+	}
 
 	//sampling rate
 	if(command->getFieldValue("rate") == "1" || command->getFieldValue("all") == "1")

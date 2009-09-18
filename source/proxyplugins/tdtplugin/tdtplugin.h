@@ -14,8 +14,9 @@ class TdtPlugin : public QObject, public NeuralDataAcqInterface
 
 public:
     QString device() const;
-	QString deviceName();
-	QString deviceStatus();
+	NeuralDataAcqInterface::deviceStatus startDevice();
+	NeuralDataAcqInterface::deviceStatus stopDevice();
+	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
 	QString dumpData();
 };

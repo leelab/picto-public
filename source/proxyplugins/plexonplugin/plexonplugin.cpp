@@ -10,35 +10,41 @@
 
 QString PlexonPlugin::device() const
 {
-	return "plexon";
-}
-
-QString PlexonPlugin::deviceName()
-{
 	return "Plexon";
 }
-QString PlexonPlugin::deviceStatus()
+NeuralDataAcqInterface::deviceStatus PlexonPlugin::startDevice()
 {
-	QString status;
+	PL_CloseClient();
+	PL_InitClientEx3(0, NULL, NULL);
 
-	if(!PL_IsSortClientRunning())
+	if(PL_IsSortClientRunning())
 	{
-		PL_CloseClient();
-		PL_InitClientEx3(0, NULL, NULL);
-
-		if(!PL_IsSortClientRunning())
-		{
-			status = "Failed to start";
-		}
-		else
-		{
-			status = "Started";
-		}
-
+		return started;
 	}
 	else
 	{
-		status = "Running";
+		return failedToStart;
+	}
+}
+
+NeuralDataAcqInterface::deviceStatus PlexonPlugin::stopDevice()
+{
+	PL_CloseClient();
+
+	return stopped;
+}
+
+NeuralDataAcqInterface::deviceStatus PlexonPlugin::getDeviceStatus()
+{
+	deviceStatus status;
+
+	if(!PL_IsSortClientRunning())
+	{
+		status = stopped;
+	}
+	else
+	{
+		status = running;
 	}
 	return status;
 }

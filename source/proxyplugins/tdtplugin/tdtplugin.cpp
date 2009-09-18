@@ -7,16 +7,22 @@
 
 QString TdtPlugin::device() const
 {
-	return "tdt";
-}
-
-QString TdtPlugin::deviceName()
-{
 	return "TDT";
 }
-QString TdtPlugin::deviceStatus()
+
+NeuralDataAcqInterface::deviceStatus TdtPlugin::startDevice()
 {
-	return "TDT:device status";
+	return NeuralDataAcqInterface::stopped;
+}
+
+NeuralDataAcqInterface::deviceStatus TdtPlugin::stopDevice()
+{
+	return NeuralDataAcqInterface::stopped;
+
+}
+NeuralDataAcqInterface::deviceStatus TdtPlugin::getDeviceStatus()
+{
+	return NeuralDataAcqInterface::stopped;
 }
 
 

@@ -5,7 +5,7 @@ CONFIG += qt warn_on debug_and_release
 # We elect to be a console application on Windows so that we will have our
 # standard output attached to the invoking terminal, if one is present; if
 # none is present, then we can still create a GUI
-win32:CONFIG += console
+#win32:CONFIG += console
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
@@ -21,6 +21,8 @@ HEADERS += $$(PICTO_TREE)/source/proxyserver/processinfo/WinGetPID.h
 }
 HEADERS += $$(PICTO_TREE)/source/proxyserver/interfaces.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/main.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/mainwindow.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/mainwindow.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/InteractiveSTDIOHandler.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/InteractiveSTDIOHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/network/server.h

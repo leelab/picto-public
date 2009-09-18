@@ -11,11 +11,20 @@
 class NeuralDataAcqInterface
 {
 public:
+	enum deviceStatus
+	{
+		stopped,
+		started,
+		running,
+		failedToStart
+	};
+
     virtual ~NeuralDataAcqInterface() {}
 
     virtual QString device() const = 0;
-	virtual QString deviceName() = 0;
-	virtual QString deviceStatus() = 0;
+	virtual deviceStatus startDevice() = 0;
+	virtual deviceStatus stopDevice() = 0;
+	virtual deviceStatus getDeviceStatus() = 0;
 	virtual float samplingRate() = 0;
 	virtual QString dumpData() = 0;
 

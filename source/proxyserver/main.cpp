@@ -20,6 +20,7 @@
 #include "protocol/ServerAcqProtocol.h"
 #include "protocol/ServerHTTPProtocol.h"
 #include "InteractiveSTDIOHandler.h"
+#include "mainwindow.h"
 #include "interfaces.h"
 
 #ifdef Q_WS_MAC
@@ -33,7 +34,7 @@
 #include "processinfo/WinGetPID.h"
 #endif
 
-int serviceMain(QObject *acqPlugin)
+/*int serviceMain(QObject *acqPlugin)
 {
 	QEventLoop eventLoop;
 
@@ -45,24 +46,46 @@ int serviceMain(QObject *acqPlugin)
 	
 	httpProtocols->addProtocol(httpProtocol);
 	acqProtocols->addProtocol(httpProtocol);
-	acqProtocols->addProtocol(acqProtocol);
+	acqProtocols->addProtocol(acqProtocol);*/
 
 
 
 	/*! \todo this should specify the IP address in addition to the port, and both should be read from the
 	 *        configuration database.
 	 */
-	Server httpServer(80, httpProtocols);
+	/*Server httpServer(80, httpProtocols);
 	Server pictoServer(42424, acqProtocols);
 
+
 	return eventLoop.exec();
-}
+}*/
 
 int main(int argc, char *argv[])
 {
+	QApplication app(argc,argv);
+
+	QLocale systemLocale = QLocale();
+	QString localeLanguageCode = systemLocale.name().left(2);
+
+	QTranslator appTranslator;
+	appTranslator.load(":/translations/server_" + localeLanguageCode + ".qm");
+	app.installTranslator(&appTranslator);
+
+	Picto::InitializeLib(&app,localeLanguageCode);
 
 	
-	QApplication app(argc,argv,false);  //console app
+	MainWindow window;
+
+	QIcon icon;
+
+	icon.addFile(":/common/images/scope.png");
+
+	app.setWindowIcon(icon);
+
+	window.show();
+	return app.exec();
+
+	/*QApplication app(argc,argv,false);  //console app
 
 	QLocale systemLocale = QLocale();
 	QString localeLanguageCode = systemLocale.name().left(2);
@@ -223,11 +246,11 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-	}
+	}*/
 
 	Picto::CloseLib();
 
-	return(result);
+	return 0;
 }
 
 /*! \defgroup pictoproxyserver Picto Server
