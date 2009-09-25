@@ -12,6 +12,7 @@ QString PlexonPlugin::device() const
 {
 	return "Plexon";
 }
+
 NeuralDataAcqInterface::deviceStatus PlexonPlugin::startDevice()
 {
 	PL_CloseClient();

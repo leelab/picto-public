@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = ProxyPluginTDT
-QT = core  xml
+QT = core gui xml
 CONFIG += qt warn_on debug_and_release
 CONFIG += plugin
 
@@ -11,6 +11,8 @@ INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 # Input
 SOURCES += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/tdtplugin.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/tdtplugin.h
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/dialog.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/dialog.h
 
 
 include($$(PICTO_TREE)/source/common/common.pri)

@@ -134,12 +134,12 @@ void MainWindow::checkDevStatus()
 	return;
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent *ev)
 {
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);
 	iNDAcq->stopDevice();
-	serverEventLoop->exit();
-	event->accept();
+	//serverEventLoop->exit();
+	ev->accept();
 }
 void MainWindow::createButtons()
 {
