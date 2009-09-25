@@ -13,6 +13,11 @@
 #define _SYSTEMSERVICE_H_
 
 #if defined WIN32 || defined WINCE
+
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT WINVER
+#endif
+
 #include <windows.h>
 #endif
 
