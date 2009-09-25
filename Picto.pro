@@ -107,16 +107,16 @@ INSTALLS += SSLLIBS_DEBUG
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC??.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC??.CRT
     }
     contains(MACHINE_TYPE,X64) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC??.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC??.CRT
     }
 }
 wince* {
-    CRUNTIMEPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr90.dll\" $$(PICTO_TREE)\output\bin\release
+    CRUNTIMEPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??.dll\" $$(PICTO_TREE)\output\bin\release
 }
 CRUNTIMEPRIVATEASSEMBLY.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += CRUNTIMEPRIVATEASSEMBLY
@@ -132,7 +132,7 @@ INSTALLS += TESTS
 
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC90.CRT
+    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC??.CRT
     }
     contains(MACHINE_TYPE,X64) {
     CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC90.CRT
