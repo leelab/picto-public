@@ -7,12 +7,7 @@
 #include <QMap>
 
 #include "../../proxyserver/interfaces.h"
-//#import "C:\\TDT\\OpenEx\\OCX\\TTankX.ocx"
-
-QT_BEGIN_NAMESPACE
-//class QVector;
-//class QMap;
-QT_END_NAMESPACE
+#import "C:\\TDT\\OpenEx\\OCX\\TTankX.ocx"
 
 
 class TdtPlugin : public QObject, public NeuralDataAcqInterface
@@ -29,8 +24,8 @@ public:
 	QString dumpData();
 
 private:
-//	TTANKXLib::_DTTankXPtr tdtTank;
-//	float samplingRate;
+	TTANKXLib::_DTTankXPtr tdtTank;
+	float sampleRate;
 
 	struct SpikeDetails
 	{
@@ -50,8 +45,13 @@ private:
 
 	QVector<EventDetails> eventList;
 	
-	bool spikeTimestampLessThan(const SpikeDetails &sd1, const SpikeDetails &sd2);
-	bool eventTimestampLessThan(const EventDetails &ed1, const EventDetails &ed2);
+	static bool spikeTimestampLessThan(const SpikeDetails &sd1, const SpikeDetails &sd2);
+	static bool eventTimestampLessThan(const EventDetails &ed1, const EventDetails &ed2);
+
+	wchar_t *szServerName;
+	wchar_t *szTankName;
+	wchar_t *szBlockName;
+
 
 
 };

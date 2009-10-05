@@ -7,8 +7,8 @@ Dialog::Dialog(QWidget *parent) :
 {
 	//set up the dialog box
 	serverLine = new QLineEdit(tr("local"));
-	tankLine = new QLineEdit();
-	blockLine = new QLineEdit();
+	tankLine = new QLineEdit("Quincy_OFC");
+	blockLine = new QLineEdit("Block-225");
 
 	okButton = new QPushButton(tr("OK"));
 	okButton->setDefault(true);

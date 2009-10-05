@@ -3,7 +3,6 @@
 
 #include <QDialog>
 
-
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QPushButton;
