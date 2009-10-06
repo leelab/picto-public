@@ -26,6 +26,8 @@ MainWindow::MainWindow()
 
 	QWidget *controlPanel = new QWidget(this);
 	controlPanel->setLayout(layout);
+	
+	setPalette(QPalette(Qt::red));
 
 	setCentralWidget(controlPanel);
 }
@@ -51,7 +53,7 @@ void MainWindow::startStopServer()
 		if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
 		{
 			QMessageBox startErrorBox;
-			QString errorMsg = tr("%1 failed to start server."
+			QString errorMsg = tr("%1 failed to start server.  "
 								  "Device: \"%2\" is not running.  Confirm that "
 								  "all the needed hardware and software is turned "
 								  "on and started up, then try again.").
@@ -82,10 +84,12 @@ void MainWindow::startStopServer()
 
 		pluginCombo->setEnabled(false);
 		startStopServerButton->setText(stopServerMsg);
+		setPalette(QPalette(Qt::green));
 
 
 		serverEventLoop = new QEventLoop();
 		serverEventLoop->exec();
+
 	}
 	else if(startStopServerButton->text() == stopServerMsg)
 	{
@@ -93,6 +97,8 @@ void MainWindow::startStopServer()
 		startStopServerButton->setText(startServerMsg);
 		iNDAcq->stopDevice();
 		pluginCombo->setEnabled(true);
+		setPalette(QPalette(Qt::red));
+
 	}
 	return;
 }
@@ -137,7 +143,8 @@ void MainWindow::checkDevStatus()
 void MainWindow::closeEvent(QCloseEvent *ev)
 {
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);
-	iNDAcq->stopDevice();
+	if(iNDAcq)
+		iNDAcq->stopDevice();
 	//serverEventLoop->exit();
 	ev->accept();
 }
