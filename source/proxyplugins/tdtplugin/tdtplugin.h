@@ -24,8 +24,12 @@ public:
 	QString dumpData();
 
 private:
+	bool startCOM();
+	void stopCOM();
+
 	TTANKXLib::_DTTankXPtr tdtTank;
 	float sampleRate;
+	double lastTimestamp;
 
 	struct SpikeDetails
 	{

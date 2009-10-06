@@ -20,6 +20,57 @@ QString TdtPlugin::device() const
 	return "TDT";
 }
 
+bool TdtPlugin::startCOM()
+{
+	//set up the connection
+	//Initialize ActiveX object
+	HRESULT hr;
+	hr = CoInitialize(NULL);
+	if (FAILED(hr)) {
+		return false;
+	}
+	hr = tdtTank.CreateInstance("TTank.X"); //appId = "{670490CE-57D2-4176-8E74-80C4C6A47D88}"; //"TTankX.ocx"
+
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	try
+	{
+		if(!(tdtTank->ConnectServer(szServerName,"PictoProxyServer")))
+		{
+			return false;
+		}
+	}
+	catch(_com_error e)
+	{
+		return false;
+	}
+
+	if(!(tdtTank->OpenTank(szTankName,"R")))
+	{
+		tdtTank->ReleaseServer();
+		return false;
+	}
+
+	if(!(tdtTank->SelectBlock(szBlockName)))
+	{
+		tdtTank->CloseTank();
+		tdtTank->ReleaseServer();
+		return false;
+	}
+
+	return true;
+}
+
+void TdtPlugin::stopCOM()
+{
+	tdtTank->CloseTank();
+	tdtTank->ReleaseServer();
+	CoUninitialize();
+}
+
+
 NeuralDataAcqInterface::deviceStatus TdtPlugin::startDevice()
 {
 	//get the server/tank/block name
@@ -44,11 +95,10 @@ NeuralDataAcqInterface::deviceStatus TdtPlugin::startDevice()
 	blockName.toWCharArray(szBlockName);
 	szBlockName[blockName.size()] = '\0';
 
-
-	QMessageBox errorMsgBox;
 	
-	//set up the connection
-	//Initialize ActiveX object
+	//Test the tank Interface to make sure that the passed in values are working.
+	QMessageBox errorMsgBox;
+
 	HRESULT hr;
 	hr = CoInitialize(NULL);
 	if (FAILED(hr)) {
@@ -111,41 +161,76 @@ NeuralDataAcqInterface::deviceStatus TdtPlugin::startDevice()
 		tdtTank->ReleaseServer();
 		return NeuralDataAcqInterface::failedToStart;
 	}
+	
 
 	sampleRate=0;
+	lastTimestamp=0;
+
+	//Close everything back up...
+	tdtTank->CloseTank();
+	tdtTank->ReleaseServer();
+	CoUninitialize();
 
 	return NeuralDataAcqInterface::started;
 }
 
 NeuralDataAcqInterface::deviceStatus TdtPlugin::stopDevice()
 {
-	tdtTank->CloseTank();
-	tdtTank->ReleaseServer();
-	CoUninitialize();
-
-
 	return NeuralDataAcqInterface::stopped;
 }
 NeuralDataAcqInterface::deviceStatus TdtPlugin::getDeviceStatus()
 {
-	long tankStatus = tdtTank->CheckTank(szTankName);
-	if(tankStatus == 79 || tankStatus == 82)
-		return NeuralDataAcqInterface::running;
-	return NeuralDataAcqInterface::stopped;
+	if(startCOM())
+	{
+		long tankStatus = tdtTank->CheckTank(szTankName);
+		if(tankStatus == 79 || tankStatus == 82)
+		{
+			stopCOM();
+			return NeuralDataAcqInterface::running;
+		}
+		else
+		{
+			stopCOM();
+			return NeuralDataAcqInterface::stopped;
+		}
+	}
+	else
+	{
+		return NeuralDataAcqInterface::stopped;
+	}
 
 }
 
-
 float TdtPlugin::samplingRate()
 {
-	//This gets thet "data rate"
-	//(number of bytes stored to tank per second)
-	//return samplingRate;
-	return 0;
+	if(!startCOM())
+		return 0;
+	
+	long tankStatus = tdtTank->CheckTank(szTankName);
+	if(tankStatus != 79 && tankStatus != 82)
+	{
+		stopCOM();
+		return 0;
+	}
+
+	int numSpikeSamples;
+
+	//Read spike samples
+	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,lastTimestamp,0.0,"All");
+	
+	_variant_t spikeSampleFrequencyArray;
+
+	spikeSampleFrequencyArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,9);
+	
+	sampleRate = (float)((double *) spikeSampleFrequencyArray.parray->pvData)[0];
+
+
+	return sampleRate;
 }
 
 QString TdtPlugin::dumpData()
 {
+
 	QString xmlData;
 	QXmlStreamWriter writer(&xmlData);
 
@@ -154,13 +239,14 @@ QString TdtPlugin::dumpData()
 	long tankStatus = tdtTank->CheckTank(szTankName);
 	if(tankStatus != 79 && tankStatus != 82)
 	{
+		stopCOM();
 		return QString::null;
 	}
 
 	int numSpikeSamples;
 
 	//Read spike samples
-	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,0.0,0.0,"All");
+	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,lastTimestamp,0.0,"All");
 	
 	_variant_t spikeSampleArray, spikeTimestampArray, spikeChannelArray, spikeUnitArray, spikeSampleFrequencyArray;
 
@@ -220,6 +306,12 @@ QString TdtPlugin::dumpData()
 	qStableSort(spikeList.begin(),spikeList.end(),spikeTimestampLessThan);
 	qStableSort(eventList.begin(),eventList.end(),eventTimestampLessThan);
 
+	//record the last timestamp
+	if(spikeList.end()->timeStamp >= eventList.end()->timeStamp)
+		lastTimestamp = spikeList.end()->timeStamp;
+	else
+		lastTimestamp = eventList.end()->timeStamp;
+
 	//number of events
 	writer.writeStartElement("numEvents");
 	writer.writeCharacters(QString("%1").arg(numSpikeSamples+numEvents));
@@ -228,7 +320,7 @@ QString TdtPlugin::dumpData()
 	while(spikeList.size() != 0 && eventList.size() !=0)
 	{
 		//output a spike waveform
-		if(spikeList.begin()->timeStamp < eventList.begin()->timeStamp)
+		if(spikeList.begin()->timeStamp <= eventList.begin()->timeStamp)
 		{
 			writer.writeStartElement("event");
 
@@ -286,7 +378,7 @@ QString TdtPlugin::dumpData()
 
 		}
 	}
-
+	stopCOM();
 	return xmlData;
 	//return "TDT datadump";
 }
