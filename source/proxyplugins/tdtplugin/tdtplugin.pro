@@ -90,6 +90,12 @@ for(compilerDefine, QMAKE_COMPILER_DEFINES) {
             #Note: This switch has been moved to a custom mkspecs
             #file for win32-msvc2008
             #QMAKE_CXXFLAGS+=/MP
+            		
+            #So, actually, we can't compile this with the /MP switch, since there
+            #is a #import (which apparently doesn't work with /MP).
+            #So we need to undo the work of the mkspecs file
+            QMAKE_CXXFLAGS-=-MP
+
             visualStudioProject = $$find(TEMPLATE, "vc")
             build_pass:CONFIG(release, debug|release):!isEmpty(visualStudioProject) {
                 message(Warnings regarding Compiler option: -MP can safely be ignored)
