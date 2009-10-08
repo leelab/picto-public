@@ -5,13 +5,20 @@ SUBDIRS += source/director
 !wince* {
   SUBDIRS += source/server          source/server/unittests
   SUBDIRS += source/proxyserver
-  SUBDIRS += source/proxyplugins/plexonplugin              source/proxyplugins/tdtplugin
   SUBDIRS += source/config
   SUBDIRS += source/workstation
   SUBDIRS += source/documentation/developersguide
 }
 wince* {
   SUBDIRS += source/embedded
+}
+
+#proxy server plugins
+win32:!wince*:  SUBDIRS += source/proxyplugins/plexonplugin
+exists(C:/TDT){
+
+	SUBDIRS += source/proxyplugins/tdtplugin
+	message("Building TDT proxy server plugin")
 }
 
 # Deployment
