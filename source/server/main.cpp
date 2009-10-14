@@ -24,6 +24,7 @@
 #include "service/systemservice.h"
 #include "dialog.h"
 #include "InteractiveSTDIOHandler.h"
+#include "datacollection/neuraldatacollector.h"
 
 #ifdef Q_WS_MAC
 #include <sys/types.h>
@@ -93,6 +94,9 @@ int serviceMain(SystemService *)
 	 */
 	Server httpServer(80, httpProtocols);
 	Server pictoServer(42424, pictoProtocols);
+
+	//Start neural data collector
+	NeuralDataCollector neuralDataCollector;
 
 	return eventLoop.exec();
 }

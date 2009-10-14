@@ -153,4 +153,36 @@ bool ProtocolCommand::isWellFormed()
 	return true;
 }
 
+int ProtocolCommand::write(QAbstractSocket *socket)
+{
+	QString commandHeader;
+	QByteArray command;
+
+	int bytesWritten;
+
+	if(!isWellFormed())
+		return -1;
+
+
+	commandHeader = method_ + " " + target_ + " " + protocolName_ + "/" + protocolVersion_ + "\r\n";
+	
+	std::map<QString,QString>::const_iterator fieldIter = fields_.begin();
+	while(fieldIter != fields_.end())
+	{
+		commandHeader += fieldIter->first + ":" + fieldIter->second + "\r\n";
+		fieldIter++;
+	}
+
+	commandHeader += "\r\n";
+
+	command = commandHeader.toAscii();
+	command.append(content_);
+
+	bytesWritten =  socket->write(command);
+	QString errStr = socket->errorString();
+	return bytesWritten;
+
+
+}
+
 }; //namespace Picto

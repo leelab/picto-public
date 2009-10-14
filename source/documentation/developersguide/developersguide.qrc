@@ -202,6 +202,10 @@
    <file alias="build_environment_preparation.html">../../../output/documentation/main/html/build_environment_preparation.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler-members.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler-members.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler.html</file>
+   <file alias="class_neural_collector_thread-members.html">../../../output/documentation/main/html/class_neural_collector_thread-members.html</file>
+   <file alias="class_neural_collector_thread.html">../../../output/documentation/main/html/class_neural_collector_thread.html</file>
+   <file alias="class_neural_data_collector-members.html">../../../output/documentation/main/html/class_neural_data_collector-members.html</file>
+   <file alias="class_neural_data_collector.html">../../../output/documentation/main/html/class_neural_data_collector.html</file>
    <file alias="class_picto_1_1_translated_names-members.html">../../../output/documentation/main/html/class_picto_1_1_translated_names-members.html</file>
    <file alias="class_picto_1_1_translated_names.html">../../../output/documentation/main/html/class_picto_1_1_translated_names.html</file>
    <file alias="class_system_service-members.html">../../../output/documentation/main/html/class_system_service-members.html</file>
@@ -245,6 +249,7 @@
    <file alias="dir_f3a3e4a2c7c37a1f567516a9c1af2a08.html">../../../output/documentation/main/html/dir_f3a3e4a2c7c37a1f567516a9c1af2a08.html</file>
    <file alias="dir_f590583401b2dc7988aec0d95c41e496.html">../../../output/documentation/main/html/dir_f590583401b2dc7988aec0d95c41e496.html</file>
    <file alias="dir_f7a7d2bac90fd489f89ac24575dfcb18.html">../../../output/documentation/main/html/dir_f7a7d2bac90fd489f89ac24575dfcb18.html</file>
+   <file alias="dir_fb181e1a79d7191f384666f452e6c2f1.html">../../../output/documentation/main/html/dir_fb181e1a79d7191f384666f452e6c2f1.html</file>
    <file alias="director_2main_8cpp-source.html">../../../output/documentation/main/html/director_2main_8cpp-source.html</file>
    <file alias="dirs.html">../../../output/documentation/main/html/dirs.html</file>
    <file alias="document_8cpp-source.html">../../../output/documentation/main/html/document_8cpp-source.html</file>
@@ -318,6 +323,10 @@
    <file alias="namespacemembers_func.html">../../../output/documentation/main/html/namespacemembers_func.html</file>
    <file alias="namespacemembers_vars.html">../../../output/documentation/main/html/namespacemembers_vars.html</file>
    <file alias="namespaces.html">../../../output/documentation/main/html/namespaces.html</file>
+   <file alias="neuralcollectorthread_8cpp-source.html">../../../output/documentation/main/html/neuralcollectorthread_8cpp-source.html</file>
+   <file alias="neuralcollectorthread_8h-source.html">../../../output/documentation/main/html/neuralcollectorthread_8h-source.html</file>
+   <file alias="neuraldatacollector_8cpp-source.html">../../../output/documentation/main/html/neuraldatacollector_8cpp-source.html</file>
+   <file alias="neuraldatacollector_8h-source.html">../../../output/documentation/main/html/neuraldatacollector_8h-source.html</file>
    <file alias="pages.html">../../../output/documentation/main/html/pages.html</file>
    <file alias="pictodoc.css">../../../output/documentation/main/html/pictodoc.css</file>
    <file alias="server_2main_8cpp-source.html">../../../output/documentation/main/html/server_2main_8cpp-source.html</file>

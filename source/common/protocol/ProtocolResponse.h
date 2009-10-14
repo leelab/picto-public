@@ -5,6 +5,7 @@
 
 #include <QString>
 #include <QByteArray>
+#include <QAbstractSocket>
 
 #include "../common.h"
 
@@ -73,6 +74,8 @@ public:
 	void setShouldStream(bool shouldStream);
 
 	QString getFieldValue(QString field);
+
+	int read(QAbstractSocket *socket);
 
 private:
 	void encodeContent();

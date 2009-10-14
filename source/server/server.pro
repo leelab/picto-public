@@ -37,6 +37,10 @@ HEADERS += $$(PICTO_TREE)/source/server/protocol/ServerHTTPProtocol.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/ServerHTTPProtocol.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/HTTPGetCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/HTTPGetCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
+SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
+HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuralcollectorthread.h
+SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuralcollectorthread.cpp
 
 include($$(PICTO_TREE)/source/common/common.pri)
 

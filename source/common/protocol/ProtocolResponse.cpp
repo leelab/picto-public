@@ -5,6 +5,8 @@
 #include <QDateTime>
 #include <QBuffer>
 #include <QtIOCompressor>
+#include <QRegExp>
+#include <QStringList>
 
 namespace Picto {
 
@@ -226,5 +228,103 @@ QString ProtocolResponse::getFieldValue(QString field)
 
 	return fieldValue;
 }
+
+int ProtocolResponse::read(QAbstractSocket *socket)
+{
+	QString commandHeader;
+	QString currentLine;
+	int contentLength;
+	
+	if(!socket->waitForReadyRead(1000))
+		return -1;
+
+	//initialize everything
+	protocolResponseCode = ProtocolResponseType::UninitializedResponse;
+	protocol = "";
+	version = "0.0";
+	contentEncodingType = ContentEncodingType::raw;
+	contentType = "";
+
+	
+	
+	//read status line (e.g. ACQ/1.0 200 OK)
+	currentLine = socket->readLine();
+	
+	QStringList tokens = currentLine.split(QRegExp("[ ][ ]*"));
+	
+	protocolResponseCode = (ProtocolResponseType::ProtocolResponseType)(tokens[1].toInt());
+
+	int protocolVersionPosition = tokens[0].indexOf('/');
+	if(protocolVersionPosition == -1)
+	{
+		return -2;
+	}
+	else
+	{
+		protocol = tokens[0].left(protocolVersionPosition);
+		version = tokens[0].mid(protocolVersionPosition+1);
+	}
+
+	//read headers
+	QRegExp newLineRegExp("[\r\n]+");
+	currentLine = socket->readLine();
+	while(!newLineRegExp.exactMatch(currentLine))
+	{
+		QString fieldKey,fieldValue;
+
+		int fieldEndPosition = currentLine.indexOf(':');		
+		fieldKey = currentLine.left(fieldEndPosition);
+		fieldValue = currentLine.mid(fieldEndPosition+2);
+
+		if(!QString::compare(fieldKey,"Content-Type",Qt::CaseInsensitive))
+		{
+			setContentType(fieldValue);
+		}
+		if(!QString::compare(fieldKey,"Content-Encoding",Qt::CaseInsensitive))
+		{
+			//this is ugly, but I don't see a better way to get the 
+			//encoding type enum value, since we can't find() on a value...
+			std::map<ContentEncodingType::ContentEncodingType,QString>::const_iterator encodingIter = contentEncodingTypeStrings.begin();
+			while(encodingIter != contentEncodingTypeStrings.end())
+			{
+				if(!QString::compare(encodingIter->second,fieldValue,Qt::CaseInsensitive))
+				{
+					setContentEncoding(encodingIter->first);
+					break;
+				}
+				encodingIter ++;
+			}
+			if(encodingIter == contentEncodingTypeStrings.end())
+			{
+				return -2;
+			}
+		}
+		if(!QString::compare(fieldKey,"Content-Length",Qt::CaseInsensitive))
+		{
+			contentLength = fieldValue.toInt();
+			addField(fieldKey,fieldValue);
+		}
+		else
+		{
+			addField(fieldKey,fieldValue);
+		}
+
+		currentLine = socket->readLine();
+	}
+
+	//read content
+	content = socket->read(contentLength);
+	while(content.size() < contentLength)
+	{
+		if(!socket->waitForReadyRead(1000))
+			break;
+		content.append(socket->read(contentLength));
+	}
+	if(content.size() == contentLength)
+		return content.size();
+	else
+		return 0-content.size();
+}
+
 
 }; //namespace Picto

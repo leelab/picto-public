@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSharedPointer>
+#include <QAbstractSocket>
 
 #include "../common.h"
 
@@ -65,6 +66,8 @@ public:
 	bool isWellFormed();
 
 	void parse(QString commandText);
+
+	int write(QAbstractSocket *socket);
 
 private:
 	QString method_, target_, protocolName_, protocolVersion_;

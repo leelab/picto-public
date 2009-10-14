@@ -75,6 +75,8 @@ QString PlexonPlugin::dumpData()
 
 	//Collect the data from the Plexon Server
 	PL_Wave*     pServerEventBuffer;
+	double timestampSec;
+	double samplePeriodSec = PL_GetTimeStampTick()/1000000.0;  //clock period in seconds
 
 	pServerEventBuffer = (PL_Wave*)malloc(sizeof(PL_Wave)*MAX_MAP_EVENTS_PER_READ);
 
@@ -99,7 +101,8 @@ QString PlexonPlugin::dumpData()
 				writer.writeStartElement("event");
 
 				writer.writeStartElement("timestamp");
-				writer.writeCharacters(QString("%1").arg(pServerEventBuffer[MAPEvent].TimeStamp));
+				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
+				writer.writeCharacters(QString("%1").arg(timestampSec,0,'f',4));
 				writer.writeEndElement();
 
 				writer.writeStartElement("eventType");
@@ -132,7 +135,8 @@ QString PlexonPlugin::dumpData()
 				writer.writeStartElement("event");
 
 				writer.writeStartElement("timestamp");
-				writer.writeCharacters(QString("%1").arg(pServerEventBuffer[MAPEvent].TimeStamp));
+				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
+				writer.writeCharacters(QString("%1").arg(timestampSec,0,'f',4));
 				writer.writeEndElement();
 
 				writer.writeStartElement("eventType");
