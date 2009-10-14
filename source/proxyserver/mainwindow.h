@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QObject>
+#include <QTimer>
 
 
 QT_BEGIN_NAMESPACE
@@ -10,6 +11,8 @@ class QComboBox;
 class QPushButton;
 class QVBoxLayout;
 class QEventLoop;
+class QLineEdit;
+class QLabel;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -23,9 +26,11 @@ private slots:
 	void startStopServer();
 	void checkDevStatus();
 	void closeEvent(QCloseEvent *event);
+	void setProxyServerName(const QString &newName);
 private:
 	void createComboBox();
 	void createButtons();
+	void createLineEdits();
 	void createLayout();
 	void createTimer();
 
@@ -33,6 +38,8 @@ private:
 	QPushButton *startStopServerButton;
 	QPushButton *quitButton;
 	QVBoxLayout *layout;
+	QLabel *lineEditNameLabel;
+	QLineEdit *lineEditName;
 
 	QObject *acqPlugin;
 	QList<QObject*> acqPluginList;
@@ -40,7 +47,7 @@ private:
 	QEventLoop *serverEventLoop;
 
 	QString startServerMsg, stopServerMsg;
-	static int a;
+	QString proxyName;
 
 };
 #endif

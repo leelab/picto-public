@@ -1,4 +1,5 @@
 #include "serverthread.h"
+#include "broadcast.h"
 
 #include <QtNetwork>
 #include <QDateTime>
@@ -216,7 +217,9 @@ void ServerThread::handleDroppedClient()
 
 void ServerThread::handleTimeout()
 {
-	//QSharedPointer<Picto::ProtocolResponse> response = new Picto::ProtocolResponse(protocol->id(),protocol->version(),Picto::ProtocolResponseType::ConnectionTimedOut);
-	//deliverResponse(response);
+	//On a timeout, we should broadcast to the network that we stll exist.  this way, if 
+	//PictoServer has somehow lost track of us, we will remind it that we are an active proxy server
+	//announce("someproxy");
+
 	exit();
 }

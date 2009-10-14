@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QVector>
 #include <QMap>
+#include <QMutex>
 
 #include "../../proxyserver/interfaces.h"
 #import "C:\\TDT\\OpenEx\\OCX\\TTankX.ocx"
@@ -24,13 +25,6 @@ public:
 	QString dumpData();
 
 private:
-	bool startCOM();
-	void stopCOM();
-
-	TTANKXLib::_DTTankXPtr tdtTank;
-	float sampleRate;
-	double lastTimestamp;
-
 	struct SpikeDetails
 	{
 		QVector<double> sampleWaveform;
@@ -38,19 +32,27 @@ private:
 		int unitNum;
 		double timeStamp;
 	};
-
-	QVector<SpikeDetails> spikeList;
-
 	struct EventDetails
 	{
 		int code;
 		double timeStamp;
 	};
 
-	QVector<EventDetails> eventList;
-	
+	bool startCOM();
+	void stopCOM();
 	static bool spikeTimestampLessThan(const SpikeDetails &sd1, const SpikeDetails &sd2);
 	static bool eventTimestampLessThan(const EventDetails &ed1, const EventDetails &ed2);
+
+
+	TTANKXLib::_DTTankXPtr tdtTank;
+	float sampleRate;
+	double lastTimestamp;
+	bool bDeviceRunning;
+
+	QMutex COMMutex;
+
+
+	
 
 	wchar_t *szServerName;
 	wchar_t *szTankName;

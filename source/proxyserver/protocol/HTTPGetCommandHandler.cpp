@@ -54,14 +54,13 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 
 		return response;
 	}
-	else if(command->getTarget() == "/all")
+	else if(command->getTarget() == "/data")
 	{
 		QSharedPointer<Picto::ProtocolResponse> xmlResponse(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
 		QSharedPointer<ACQGetCommandHandler> ACQGetCommandHandler(new ACQGetCommandHandler(acgPlugin));
 
 		//grab the XML
-		command->setFieldValue("all","1");
 		xmlResponse = ACQGetCommandHandler->processCommand(command);
 		QString content = xmlResponse->getContent();
 
@@ -79,7 +78,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 								"<html><head>\r\n"
 								"<title>Picto Proxy Server Status</title>\r\n"
 								"</head><body>\r\n"
-								"<P>This is the result of<BR> \"GET / ACQ/1.0</P>\r\n"));
+								"<P>This is the result of<BR> \"GET /data ACQ/1.0</P>\r\n"));
 		content.append(QString("</body></html>\r\n"));
 		
 		response->setContent(content.toUtf8());

@@ -15,7 +15,7 @@ int _tmain(int argc, TCHAR *argv[], TCHAR *envp[])
 	DaqBoard *myBoard = new DaqBoard;
 
 #ifdef REWARD_TEST
-	unsigned int rewardDurations[4] = {1000,1000,1000,1000};
+	unsigned int rewardDurations[4] = {200,200,200,200};
 	if(!(myBoard->initRewardController(4,rewardDurations)))
 		printf("intiRewardController failed!\n");
 

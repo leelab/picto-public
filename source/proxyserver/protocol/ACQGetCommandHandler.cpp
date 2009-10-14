@@ -40,42 +40,39 @@ QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSh
 	writer.setAutoFormatting(true);
 	writer.writeStartDocument();
 
-
-	//Start writing the XML document
-	writer.writeStartElement("device");
-	writer.writeCharacters(iNDAcq->device());
-	writer.writeEndElement();
-
-	//check to see if our device is running
-	writer.writeStartElement("deviceStatus");
-	if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
+	if(command->getTarget() == "/data")
 	{
-		writer.writeCharacters("not running");
+		//Start writing the XML document
+		writer.writeStartElement("device");
+		writer.writeCharacters(iNDAcq->device());
 		writer.writeEndElement();
-		writer.writeEndDocument();
-		response->setContent(xmlData.toUtf8());
-		return response;
-	}
-	else
-	{
-		writer.writeCharacters("running");
-		writer.writeEndElement();
-	}
 
-	//sampling rate
-	if(command->getFieldValue("rate") == "1" || command->getFieldValue("all") == "1")
-	{
+		//check to see if our device is running
+		writer.writeStartElement("deviceStatus");
+		if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
+		{
+			writer.writeCharacters("not running");
+			writer.writeEndElement();
+			writer.writeEndDocument();
+			response->setContent(xmlData.toUtf8());
+			return response;
+		}
+		else
+		{
+			writer.writeCharacters("running");
+			writer.writeEndElement();
+		}
+
 		writer.writeStartElement("sampleRate");
 		writer.writeCharacters(QString("%1").arg(iNDAcq->samplingRate()));
 		writer.writeEndElement();
-	}
 
 
-	//get the data from the neural acquisition device 
-	//(the plugin should have formatted it as XML already)
-	xmlData.append(iNDAcq->dumpData());
+		//get the data from the neural acquisition device 
+		//(the plugin should have formatted it as XML already)
+		xmlData.append(iNDAcq->dumpData());
 
-	
+	}	
 	writer.writeEndDocument();
 	
 	response->setContent(xmlData.toUtf8());

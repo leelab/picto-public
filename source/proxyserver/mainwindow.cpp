@@ -8,6 +8,7 @@
 #include "mainwindow.h"
 #include "interfaces.h"
 #include "network/server.h"
+#include "network/broadcast.h"
 #include "protocol/ServerProtocols.h"
 #include "protocol/ServerAcqProtocol.h"
 #include "protocol/ServerHTTPProtocol.h"
@@ -21,6 +22,7 @@ MainWindow::MainWindow()
 
 	createComboBox();
 	createButtons();
+	createLineEdits();
 	createLayout();
 	createTimer();
 
@@ -65,6 +67,9 @@ void MainWindow::startStopServer()
 			return;
 		}
 
+		announce(proxyName);
+		
+		//set up the servers (HTTP and ACQ)
 		QSharedPointer<ServerProtocols> httpProtocols(new ServerProtocols());
 		QSharedPointer<ServerProtocols> acqProtocols(new ServerProtocols());
 
@@ -80,9 +85,10 @@ void MainWindow::startStopServer()
 		 *        configuration database.
 		 */
 		Server httpServer(80, httpProtocols);
-		Server acqServer(42424, acqProtocols);
+		Server acqServer(42420, acqProtocols);
 
 		pluginCombo->setEnabled(false);
+		lineEditName->setEnabled(false);
 		startStopServerButton->setText(stopServerMsg);
 		setPalette(QPalette(Qt::green));
 
@@ -97,7 +103,13 @@ void MainWindow::startStopServer()
 		startStopServerButton->setText(startServerMsg);
 		iNDAcq->stopDevice();
 		pluginCombo->setEnabled(true);
+		lineEditName->setEnabled(true);
+
 		setPalette(QPalette(Qt::red));
+
+		//Announce our departure to the world (or at least our network)
+		depart(proxyName);
+
 
 	}
 	return;
@@ -107,7 +119,7 @@ void MainWindow::startStopServer()
 //neural acquisition device hasn't failed out from under us.
 void MainWindow::checkDevStatus()
 {
-	//Is the server running?
+	//Is the server supposed to be running?
 	if(startStopServerButton->text() == startServerMsg)
 		return;
 
@@ -145,35 +157,18 @@ void MainWindow::closeEvent(QCloseEvent *ev)
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);
 	if(iNDAcq)
 		iNDAcq->stopDevice();
-	//serverEventLoop->exit();
+
+	//Announce our departure to the world (or at least our network)
+	depart(proxyName);
+	
+	//accept the close event
 	ev->accept();
 }
-void MainWindow::createButtons()
+void MainWindow::setProxyServerName(const QString &newName)
 {
-	startServerMsg = tr("Start server");
-	stopServerMsg = tr("Stop server");
-	startStopServerButton = new QPushButton(startServerMsg);
-
-	quitButton = new QPushButton(tr("Quit"));
-
-	connect(startStopServerButton,SIGNAL(clicked()),this,SLOT(startStopServer()));
-	connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
+	proxyName = newName;
+	proxyName.remove(' ');
 }
-void MainWindow::createLayout()
-{
-	layout = new QVBoxLayout();
-	layout->addWidget(pluginCombo);
-	layout->addWidget(startStopServerButton);
-	layout->addWidget(quitButton);
-}
-
-void MainWindow::createTimer()
-{
-	QTimer *statusTimer = new QTimer(this);
-	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkDevStatus()));
-	statusTimer->start(5000);
-}
-
 
 
 void MainWindow::createComboBox()
@@ -249,3 +244,49 @@ void MainWindow::createComboBox()
 
 	return;
 }
+
+void MainWindow::createButtons()
+{
+	startServerMsg = tr("Start server");
+	stopServerMsg = tr("Stop server");
+	startStopServerButton = new QPushButton(startServerMsg);
+
+	quitButton = new QPushButton(tr("Quit"));
+
+	connect(startStopServerButton,SIGNAL(clicked()),this,SLOT(startStopServer()));
+	connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
+}
+
+void MainWindow::createLineEdits()
+{
+	lineEditName = new QLineEdit();
+	lineEditName->setText("proxyName");
+	lineEditNameLabel = new QLabel(tr("Proxy Name:"));
+	lineEditNameLabel->setBuddy(lineEditName);
+	connect(lineEditName,SIGNAL(textEdited(const QString&)),this,SLOT(setProxyServerName(const QString&)));
+
+	proxyName = "proxyName";
+}
+
+void MainWindow::createLayout()
+{
+	QHBoxLayout *HLayout = new QHBoxLayout();
+	HLayout->addWidget(lineEditNameLabel);
+	HLayout->addWidget(lineEditName);
+
+	layout = new QVBoxLayout();
+	layout->addLayout(HLayout);
+	layout->addWidget(pluginCombo);
+	layout->addWidget(startStopServerButton);
+	layout->addWidget(quitButton);
+}
+
+void MainWindow::createTimer()
+{
+	QTimer *statusTimer = new QTimer(this);
+	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkDevStatus()));
+	statusTimer->start(5000);
+}
+
+
+

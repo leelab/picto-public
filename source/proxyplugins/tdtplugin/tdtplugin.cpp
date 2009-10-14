@@ -22,6 +22,7 @@ QString TdtPlugin::device() const
 
 bool TdtPlugin::startCOM()
 {
+	COMMutex.lock();
 	//set up the connection
 	//Initialize ActiveX object
 	HRESULT hr;
@@ -31,7 +32,10 @@ bool TdtPlugin::startCOM()
 	}
 	hr = tdtTank.CreateInstance("TTank.X"); //appId = "{670490CE-57D2-4176-8E74-80C4C6A47D88}"; //"TTankX.ocx"
 
-	if (FAILED(hr)) {
+	if (FAILED(hr)) 
+	{
+		bDeviceRunning = false;
+		COMMutex.unlock();
 		return false;
 	}
 
@@ -39,17 +43,23 @@ bool TdtPlugin::startCOM()
 	{
 		if(!(tdtTank->ConnectServer(szServerName,"PictoProxyServer")))
 		{
+			bDeviceRunning = false;
+			COMMutex.unlock();
 			return false;
 		}
 	}
 	catch(_com_error e)
 	{
+		bDeviceRunning = false;
+		COMMutex.unlock();
 		return false;
 	}
 
 	if(!(tdtTank->OpenTank(szTankName,"R")))
 	{
 		tdtTank->ReleaseServer();
+		bDeviceRunning = false;
+		COMMutex.unlock();
 		return false;
 	}
 
@@ -57,6 +67,8 @@ bool TdtPlugin::startCOM()
 	{
 		tdtTank->CloseTank();
 		tdtTank->ReleaseServer();
+		bDeviceRunning = false;
+		COMMutex.unlock();
 		return false;
 	}
 
@@ -68,6 +80,8 @@ void TdtPlugin::stopCOM()
 	tdtTank->CloseTank();
 	tdtTank->ReleaseServer();
 	CoUninitialize();
+
+	COMMutex.unlock();
 }
 
 
@@ -171,38 +185,40 @@ NeuralDataAcqInterface::deviceStatus TdtPlugin::startDevice()
 	tdtTank->ReleaseServer();
 	CoUninitialize();
 
+	bDeviceRunning = true;
+	sampleRate = 0.0f;
+
 	return NeuralDataAcqInterface::started;
 }
 
 NeuralDataAcqInterface::deviceStatus TdtPlugin::stopDevice()
 {
+	bDeviceRunning = false;
+	sampleRate = 0.0f;
+
 	return NeuralDataAcqInterface::stopped;
 }
 NeuralDataAcqInterface::deviceStatus TdtPlugin::getDeviceStatus()
 {
-	if(startCOM())
+	if(	bDeviceRunning )
 	{
-		long tankStatus = tdtTank->CheckTank(szTankName);
-		if(tankStatus == 79 || tankStatus == 82)
-		{
-			stopCOM();
-			return NeuralDataAcqInterface::running;
-		}
-		else
-		{
-			stopCOM();
-			return NeuralDataAcqInterface::stopped;
-		}
+		return NeuralDataAcqInterface::running;
 	}
 	else
 	{
 		return NeuralDataAcqInterface::stopped;
 	}
-
 }
 
 float TdtPlugin::samplingRate()
 {
+	//The sample rate is zeroed any time the device is stopped or started.
+	//The rate is also updated every time dump data is called.
+	//Since the sampling rate shouldn't be changing during a run, then 
+	//if it isn't zero, we can jsut use the value from the last call to dump data.
+	if(sampleRate != 0.0f)
+		return sampleRate;
+
 	if(!startCOM())
 		return 0;
 	
@@ -216,7 +232,7 @@ float TdtPlugin::samplingRate()
 	int numSpikeSamples;
 
 	//Read spike samples
-	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,lastTimestamp,0.0,"All");
+	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,0.0,0.0,"All");
 	
 	_variant_t spikeSampleFrequencyArray;
 
@@ -224,12 +240,16 @@ float TdtPlugin::samplingRate()
 	
 	sampleRate = (float)((double *) spikeSampleFrequencyArray.parray->pvData)[0];
 
-
+	stopCOM();
 	return sampleRate;
 }
 
 QString TdtPlugin::dumpData()
 {
+	if(!startCOM())
+	{
+		return QString::null;
+	}
 
 	QString xmlData;
 	QXmlStreamWriter writer(&xmlData);
@@ -239,36 +259,40 @@ QString TdtPlugin::dumpData()
 	long tankStatus = tdtTank->CheckTank(szTankName);
 	if(tankStatus != 79 && tankStatus != 82)
 	{
+		writer.writeStartElement("Error");
+		writer.writeCharacters("TDT tank not open");
+		writer.writeEndElement();
 		stopCOM();
-		return QString::null;
+		return xmlData;
 	}
 
 	int numSpikeSamples;
+	double lastSpikeTimestamp = 0.0;
+	QVector<SpikeDetails> spikeList;
+	QVector<EventDetails> eventList;
 
 	//Read spike samples
-	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,lastTimestamp,0.0,"All");
-	
-	_variant_t spikeSampleArray, spikeTimestampArray, spikeChannelArray, spikeUnitArray, spikeSampleFrequencyArray;
+	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,lastTimestamp,0.0,"ALL");
+	//numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,0.0,0.0,"All");
 
-	spikeSampleArray = tdtTank->ParseEvV(0,numSpikeSamples);
-	spikeTimestampArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,6);
-	spikeChannelArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,4);
-	spikeUnitArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,5);
-	spikeSampleFrequencyArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,9);
-
-	//Read event codes
-	int numEvents;
-	numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,0.0,0.0,"All");
-
-	_variant_t eventCodeArray, eventTimestampArray;
-
-	eventCodeArray = tdtTank->ParseEvV(0,numEvents);
-	eventTimestampArray = tdtTank->ParseEvInfoV(0,numEvents,6);
-
+	//This is really only used in simulations where we are pulling data from a tank that
+	//is already full.  We do this to avoid taking forever to respond.
+	if(numSpikeSamples >1000)
+		numSpikeSamples = 1000;
 
 	//load spike samples
-	sampleRate = (float)((double *) spikeSampleFrequencyArray.parray->pvData)[0];
+	_variant_t spikeSampleArray, spikeTimestampArray, spikeChannelArray, spikeUnitArray, spikeSampleFrequencyArray;
 
+	if(numSpikeSamples > 0)
+	{
+		spikeSampleArray = tdtTank->ParseEvV(0,numSpikeSamples);
+		spikeTimestampArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,6);
+		spikeChannelArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,4);
+		spikeUnitArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,5);
+		spikeSampleFrequencyArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,9);
+
+		sampleRate = (float)((double *) spikeSampleFrequencyArray.parray->pvData)[0];
+	}
 
 	for(int i=0;i<numSpikeSamples;i++)
 	{
@@ -277,7 +301,7 @@ QString TdtPlugin::dumpData()
 		spikeDetails.chanNum = (int) ((double *) spikeChannelArray.parray->pvData)[i];
 		spikeDetails.unitNum = (int) ((double *) spikeUnitArray.parray->pvData)[i] + 1;
 		
-		spikeDetails.timeStamp = (int) (0.5 + sampleRate * ((double *) spikeTimestampArray.parray->pvData)[i]);
+		spikeDetails.timeStamp = ((double *) spikeTimestampArray.parray->pvData)[i];
 		for(unsigned int j=0;j<spikeSampleArray.parray->rgsabound[1].cElements;j++)
 		{
 			double spikeVoltage = ((float *) spikeSampleArray.parray->pvData)[i*spikeSampleArray.parray->rgsabound[1].cElements+j];
@@ -286,12 +310,33 @@ QString TdtPlugin::dumpData()
 		}
 		spikeList.append(spikeDetails);
 	}
+	if(numSpikeSamples == 1000)
+		lastSpikeTimestamp = spikeList.last().timeStamp;
+	else
+		lastSpikeTimestamp = 0.0;
+
+
+
+	//Read event codes
+	int numEvents;
+	numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,lastTimestamp,lastSpikeTimestamp,"All");
+	//numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,0.0,lastSpikeTimestamp,"All");
+
+	_variant_t eventCodeArray, eventTimestampArray;
+
+	if(numEvents > 0)
+	{
+		eventCodeArray = tdtTank->ParseEvV(0,numEvents);
+		eventTimestampArray = tdtTank->ParseEvInfoV(0,numEvents,6);
+	}
+
+
 
 	//load event codes
 	for(int i=0; i<numEvents; i++)
 	{
 		EventDetails eventDetails;
-		eventDetails.timeStamp = (int) (0.5 + sampleRate * ((double *) spikeTimestampArray.parray->pvData)[i]);
+		eventDetails.timeStamp = ((double *) eventTimestampArray.parray->pvData)[i];
 		eventDetails.code = (int) ((double *) eventCodeArray.parray->pvData)[i];
 
 		eventList.append(eventDetails);
@@ -307,10 +352,17 @@ QString TdtPlugin::dumpData()
 	qStableSort(eventList.begin(),eventList.end(),eventTimestampLessThan);
 
 	//record the last timestamp
-	if(spikeList.end()->timeStamp >= eventList.end()->timeStamp)
-		lastTimestamp = spikeList.end()->timeStamp;
+	//(This is annoying because calling last on an empty QList crashes things)
+	if(eventList.isEmpty() && spikeList.isEmpty())
+		lastTimestamp = lastTimestamp;
+	else if (eventList.isEmpty())
+		lastTimestamp = spikeList.last().timeStamp;
+	else if (spikeList.isEmpty())
+		lastTimestamp = eventList.last().timeStamp;
+	else if(spikeList.last().timeStamp >= eventList.last().timeStamp)
+		lastTimestamp = spikeList.last().timeStamp;
 	else
-		lastTimestamp = eventList.end()->timeStamp;
+		lastTimestamp = eventList.last().timeStamp;
 
 	//number of events
 	writer.writeStartElement("numEvents");
@@ -380,7 +432,6 @@ QString TdtPlugin::dumpData()
 	}
 	stopCOM();
 	return xmlData;
-	//return "TDT datadump";
 }
 
 //comparison functions for easy sorting
