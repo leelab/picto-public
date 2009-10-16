@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QTimer>
+#include "StatusLight.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -27,13 +28,17 @@ private slots:
 	void checkDevStatus();
 	void closeEvent(QCloseEvent *event);
 	void setProxyServerName(const QString &newName);
+	void serverActivity();
 private:
+	void createStatusLights();
 	void createComboBox();
 	void createButtons();
 	void createLineEdits();
 	void createLayout();
 	void createTimer();
 
+	StatusLight *readyStatus,*activityStatus;
+	QLabel *readyStatusLabel, *activityStatusLabel;
 	QComboBox *pluginCombo;
 	QPushButton *startStopServerButton;
 	QPushButton *quitButton;
@@ -41,8 +46,11 @@ private:
 	QLabel *lineEditNameLabel;
 	QLineEdit *lineEditName;
 
+	QTimer *activityTimer;
+
 	QObject *acqPlugin;
 	QList<QObject*> acqPluginList;
+
 
 	QEventLoop *serverEventLoop;
 

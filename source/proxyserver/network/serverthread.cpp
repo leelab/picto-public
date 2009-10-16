@@ -161,6 +161,8 @@ void ServerThread::readClient()
 {
 	timer->stop();
 
+	emit activity();
+
 	while(tcpSocket->canReadLine())
 	{
 		QString currentLine = tcpSocket->readLine();

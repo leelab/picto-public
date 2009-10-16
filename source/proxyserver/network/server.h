@@ -16,7 +16,8 @@ class Server : public QTcpServer
 
 public:
     Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject *parent = 0);
-
+signals:
+	void activity();
 private slots:
     void processPendingDatagrams();
 

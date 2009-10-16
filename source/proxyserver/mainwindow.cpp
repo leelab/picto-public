@@ -20,6 +20,7 @@ MainWindow::MainWindow()
 
     setWindowTitle(tr("%1").arg(Picto::Names->proxyServerAppName));
 
+	createStatusLights();
 	createComboBox();
 	createButtons();
 	createLineEdits();
@@ -29,8 +30,6 @@ MainWindow::MainWindow()
 	QWidget *controlPanel = new QWidget(this);
 	controlPanel->setLayout(layout);
 	
-	setPalette(QPalette(Qt::red));
-
 	setCentralWidget(controlPanel);
 }
 
@@ -80,21 +79,23 @@ void MainWindow::startStopServer()
 		acqProtocols->addProtocol(httpProtocol);
 		acqProtocols->addProtocol(acqProtocol);
 
-
 		/*! \todo this should specify the IP address in addition to the port, and both should be read from the
 		 *        configuration database.
 		 */
-		Server httpServer(80, httpProtocols);
-		Server acqServer(42420, acqProtocols);
+		Server httpServer(80, httpProtocols,this);
+		Server acqServer(42420, acqProtocols,this);
+
+		connect(&httpServer,SIGNAL(activity()),this, SLOT(serverActivity()));
+		connect(&acqServer,SIGNAL(activity()),this, SLOT(serverActivity()));
 
 		pluginCombo->setEnabled(false);
 		lineEditName->setEnabled(false);
 		startStopServerButton->setText(stopServerMsg);
-		setPalette(QPalette(Qt::green));
-
+		readyStatus->turnGreen();
 
 		serverEventLoop = new QEventLoop();
 		serverEventLoop->exec();
+
 
 	}
 	else if(startStopServerButton->text() == stopServerMsg)
@@ -105,10 +106,9 @@ void MainWindow::startStopServer()
 		pluginCombo->setEnabled(true);
 		lineEditName->setEnabled(true);
 
-		setPalette(QPalette(Qt::red));
-
 		//Announce our departure to the world (or at least our network)
 		depart(proxyName);
+		readyStatus->turnRed();
 
 
 	}
@@ -170,6 +170,21 @@ void MainWindow::setProxyServerName(const QString &newName)
 	proxyName.remove(' ');
 }
 
+void MainWindow::serverActivity()
+{
+	activityTimer->start();
+	activityStatus->turnGreen();
+}
+
+void MainWindow::createStatusLights()
+{
+	readyStatus = new StatusLight(this,Qt::red,10);
+	activityStatus = new StatusLight(this,Qt::red,10);
+
+	readyStatusLabel = new QLabel(tr("Ready"));
+	activityStatusLabel = new QLabel(tr("Activity"));
+
+}
 
 void MainWindow::createComboBox()
 {
@@ -272,12 +287,24 @@ void MainWindow::createLineEdits()
 
 void MainWindow::createLayout()
 {
-	QHBoxLayout *HLayout = new QHBoxLayout();
+	QHBoxLayout *HLayout;
+	layout = new QVBoxLayout();
+
+	HLayout = new QHBoxLayout();
 	HLayout->addWidget(lineEditNameLabel);
 	HLayout->addWidget(lineEditName);
-
-	layout = new QVBoxLayout();
 	layout->addLayout(HLayout);
+
+	HLayout = new QHBoxLayout();
+	HLayout->addWidget(readyStatus);
+	HLayout->addWidget(readyStatusLabel);
+	layout->addLayout(HLayout);
+	
+	HLayout = new QHBoxLayout();
+	HLayout->addWidget(activityStatus);
+	HLayout->addWidget(activityStatusLabel);
+	layout->addLayout(HLayout);
+
 	layout->addWidget(pluginCombo);
 	layout->addWidget(startStopServerButton);
 	layout->addWidget(quitButton);
@@ -288,6 +315,12 @@ void MainWindow::createTimer()
 	QTimer *statusTimer = new QTimer(this);
 	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkDevStatus()));
 	statusTimer->start(5000);
+
+	activityTimer = new QTimer();
+	activityTimer->setInterval(2000);
+	activityTimer->setSingleShot(true);
+	connect(activityTimer,SIGNAL(timeout()),activityStatus,SLOT(turnRed()));
+
 }
 
 

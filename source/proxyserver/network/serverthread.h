@@ -24,6 +24,7 @@ public:
 
 signals:
     void error(QTcpSocket::SocketError socketError);
+	void activity();
 
 private:
 	bool receiveContent(QSharedPointer<Picto::ProtocolCommand> command);

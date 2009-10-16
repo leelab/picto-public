@@ -33,6 +33,7 @@ void Server::incomingConnection(int socketDescriptor)
 {
     ServerThread *thread = new ServerThread(socketDescriptor, protocols, this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+	connect(thread, SIGNAL(activity()), parent(), SLOT(serverActivity()));
     thread->start();
 }
 
