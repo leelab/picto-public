@@ -96,7 +96,7 @@ int serviceMain(SystemService *)
 	Server pictoServer(42424, pictoProtocols);
 
 	//Start neural data collector
-	NeuralDataCollector neuralDataCollector;
+	NeuralDataCollector neuralDataCollector(500);
 
 	return eventLoop.exec();
 }

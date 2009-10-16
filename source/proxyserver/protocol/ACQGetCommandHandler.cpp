@@ -40,12 +40,12 @@ QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSh
 	writer.setAutoFormatting(true);
 	writer.writeStartDocument();
 
+	writer.writeStartElement("ResponseACQ1.0");
+
 	if(command->getTarget() == "/data")
 	{
 		//Start writing the XML document
-		writer.writeStartElement("device");
-		writer.writeCharacters(iNDAcq->device());
-		writer.writeEndElement();
+		writer.writeTextElement("device",iNDAcq->device());
 
 		//check to see if our device is running
 		writer.writeStartElement("deviceStatus");
@@ -63,9 +63,7 @@ QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSh
 			writer.writeEndElement();
 		}
 
-		writer.writeStartElement("sampleRate");
-		writer.writeCharacters(QString("%1").arg(iNDAcq->samplingRate()));
-		writer.writeEndElement();
+		writer.writeTextElement("sampleRate",QString("%1").arg(iNDAcq->samplingRate()));
 
 
 		//get the data from the neural acquisition device 
@@ -73,6 +71,8 @@ QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSh
 		xmlData.append(iNDAcq->dumpData());
 
 	}	
+	writer.writeEndElement();  //end "ResponseACQ1.0"
+
 	writer.writeEndDocument();
 	
 	response->setContent(xmlData.toUtf8());

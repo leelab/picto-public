@@ -247,11 +247,13 @@ void MainWindow::createComboBox()
 
 void MainWindow::createButtons()
 {
-	startServerMsg = tr("Start server");
-	stopServerMsg = tr("Stop server");
+	startServerMsg = tr("&Start server");
+	stopServerMsg = tr("&Stop server");
 	startStopServerButton = new QPushButton(startServerMsg);
+	startStopServerButton->setDefault(true);
 
-	quitButton = new QPushButton(tr("Quit"));
+	quitButton = new QPushButton(tr("&Quit"));
+	quitButton->setDefault(false);
 
 	connect(startStopServerButton,SIGNAL(clicked()),this,SLOT(startStopServer()));
 	connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
@@ -261,7 +263,7 @@ void MainWindow::createLineEdits()
 {
 	lineEditName = new QLineEdit();
 	lineEditName->setText("proxyName");
-	lineEditNameLabel = new QLabel(tr("Proxy Name:"));
+	lineEditNameLabel = new QLabel(tr("&Proxy Name:"));
 	lineEditNameLabel->setBuddy(lineEditName);
 	connect(lineEditName,SIGNAL(textEdited(const QString&)),this,SLOT(setProxyServerName(const QString&)));
 

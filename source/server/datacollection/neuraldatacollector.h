@@ -20,8 +20,10 @@ class NeuralDataCollector : QObject
 	Q_OBJECT
 
 public:
-	NeuralDataCollector();
+	NeuralDataCollector(int interval=1000);
 	~NeuralDataCollector();
+	void setCollectionInterval(int interval) { collectionInterval = interval;};
+	int getCollectionInterval() { return collectionInterval; };
 
 private slots:
 	void processPendingDatagrams();
@@ -37,6 +39,8 @@ private:
 	QSharedPointer<QTimer> timer;
 	QList<proxyServerInfo> proxyServerList;
 	QUdpSocket udpSocket_;
+
+	int collectionInterval; //ms
 };
 
 #endif

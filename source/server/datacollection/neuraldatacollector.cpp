@@ -1,7 +1,8 @@
 #include "neuraldatacollector.h"
 #include <QStringList>
 
-NeuralDataCollector::NeuralDataCollector()
+NeuralDataCollector::NeuralDataCollector(int interval):
+	collectionInterval(interval)
 {
 	//Listen for broadcasts of new proxy servers
 	udpSocket_.bind(42420);
@@ -62,9 +63,6 @@ void NeuralDataCollector::processPendingDatagrams()
 			}
 
 		
-			/*! /TODO Figure out how to have proxies fall off the list 
-			 *  As they get old and out of date.
-			 */
 			if(method == "ANNOUNCE" && protocolName == "ACQ")
 			{
 				proxyServerInfo newServer;
@@ -83,7 +81,8 @@ void NeuralDataCollector::processPendingDatagrams()
 						break;
 					}
 				}
-				newServer.collectorThread = new NeuralCollectorThread(newServer.name,newServer.address,this);
+				newServer.collectorThread = new NeuralCollectorThread(newServer.name,newServer.address,this,collectionInterval);
+				connect(newServer.collectorThread, SIGNAL(finished()), newServer.collectorThread, SLOT(deleteLater()));
 				newServer.collectorThread->start();
 				proxyServerList.push_back(newServer);
 			}
@@ -106,3 +105,5 @@ void NeuralDataCollector::processPendingDatagrams()
 	}
 
 }
+
+

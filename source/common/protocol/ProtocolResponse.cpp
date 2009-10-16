@@ -313,17 +313,17 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	}
 
 	//read content
-	content = socket->read(contentLength);
-	while(content.size() < contentLength)
+	encodedContent = socket->read(contentLength);
+	while(encodedContent.size() < contentLength)
 	{
 		if(!socket->waitForReadyRead(1000))
 			break;
-		content.append(socket->read(contentLength));
+		encodedContent.append(socket->read(contentLength));
 	}
-	if(content.size() == contentLength)
-		return content.size();
+	if(encodedContent.size() == contentLength)
+		return encodedContent.size();
 	else
-		return 0-content.size();
+		return 0-encodedContent.size();
 }
 
 

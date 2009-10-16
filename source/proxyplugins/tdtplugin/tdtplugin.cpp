@@ -259,9 +259,7 @@ QString TdtPlugin::dumpData()
 	long tankStatus = tdtTank->CheckTank(szTankName);
 	if(tankStatus != 79 && tankStatus != 82)
 	{
-		writer.writeStartElement("Error");
-		writer.writeCharacters("TDT tank not open");
-		writer.writeEndElement();
+		writer.writeTextElement("Error","TDT tank not open");
 		stopCOM();
 		return xmlData;
 	}
@@ -365,9 +363,7 @@ QString TdtPlugin::dumpData()
 		lastTimestamp = eventList.last().timeStamp;
 
 	//number of events
-	writer.writeStartElement("numEvents");
-	writer.writeCharacters(QString("%1").arg(numSpikeSamples+numEvents));
-	writer.writeEndElement();
+	writer.writeTextElement("numEvents",QString("%1").arg(numSpikeSamples+numEvents));
 
 	while(spikeList.size() != 0 && eventList.size() !=0)
 	{
@@ -375,22 +371,13 @@ QString TdtPlugin::dumpData()
 		if(spikeList.begin()->timeStamp <= eventList.begin()->timeStamp)
 		{
 			writer.writeStartElement("event");
+			writer.writeAttribute("type", "spike");
 
-			writer.writeStartElement("timestamp");
-			writer.writeCharacters(QString("%1").arg(spikeList.begin()->timeStamp));
-			writer.writeEndElement();
+			writer.writeTextElement("timestamp",QString("%1").arg(spikeList.begin()->timeStamp));
 
-			writer.writeStartElement("eventType");
-			writer.writeCharacters("spike");
-			writer.writeEndElement();
+			writer.writeTextElement("channel",QString("%1").arg(spikeList.begin()->chanNum));
 
-			writer.writeStartElement("channel");
-			writer.writeCharacters(QString("%1").arg(spikeList.begin()->chanNum));
-			writer.writeEndElement();
-
-			writer.writeStartElement("unit");
-			writer.writeCharacters(QString("%1").arg(spikeList.begin()->unitNum));
-			writer.writeEndElement();
+			writer.writeTextElement("unit",QString("%1").arg(spikeList.begin()->unitNum));
 
 			//waveform data
 			writer.writeStartElement("wave");
@@ -409,18 +396,11 @@ QString TdtPlugin::dumpData()
 		else if(eventList.begin()->timeStamp < spikeList.begin()->timeStamp)
 		{
 			writer.writeStartElement("event");
+			writer.writeAttribute("type","externalEvent");
 
-			writer.writeStartElement("timestamp");
-			writer.writeCharacters(QString("%1").arg(eventList.begin()->timeStamp));
-			writer.writeEndElement();
+			writer.writeTextElement("timestamp",QString("%1").arg(eventList.begin()->timeStamp));
 
-			writer.writeStartElement("eventType");
-			writer.writeCharacters("external event");
-			writer.writeEndElement();
-
-			writer.writeStartElement("eventCode");
-			writer.writeCharacters(QString("%1").arg(eventList.begin()->code));
-			writer.writeEndElement();
+			writer.writeTextElement("eventCode",QString("%1").arg(eventList.begin()->code));
 
 			writer.writeEndElement(); //event
 

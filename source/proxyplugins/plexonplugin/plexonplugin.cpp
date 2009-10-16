@@ -99,24 +99,15 @@ QString PlexonPlugin::dumpData()
 				pServerEventBuffer[MAPEvent].Unit <= 4)
 			{
 				writer.writeStartElement("event");
+				writer.writeAttribute("type", "spike");
 
-				writer.writeStartElement("timestamp");
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
-				writer.writeCharacters(QString("%1").arg(timestampSec,0,'f',4));
-				writer.writeEndElement();
+				writer.writeTextElement("timestamp",QString("%1").arg(timestampSec,0,'f',4));
 
-				writer.writeStartElement("eventType");
-				writer.writeCharacters("spike");
-				writer.writeEndElement();
+				writer.writeTextElement("channel",QString("%1").arg(pServerEventBuffer[MAPEvent].Channel));
 
-				writer.writeStartElement("channel");
-				writer.writeCharacters(QString("%1").arg(pServerEventBuffer[MAPEvent].Channel));
-				writer.writeEndElement();
-
-				writer.writeStartElement("unit");
 				char chUnit = 'a'+pServerEventBuffer[MAPEvent].Unit-1;
-				writer.writeCharacters(QString("%1").arg(chUnit));
-				writer.writeEndElement();
+				writer.writeTextElement("unit",QString("%1").arg(chUnit));
 
 				//waveform data
 				writer.writeStartElement("wave");
@@ -133,19 +124,12 @@ QString PlexonPlugin::dumpData()
 			if(pServerEventBuffer[MAPEvent].Type == PL_ExtEventType)
 			{
 				writer.writeStartElement("event");
+				writer.writeAttribute("type","externalEvent");
 
-				writer.writeStartElement("timestamp");
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
-				writer.writeCharacters(QString("%1").arg(timestampSec,0,'f',4));
-				writer.writeEndElement();
+				writer.writeTextElement("timestamp",QString("%1").arg(timestampSec,0,'f',4));
 
-				writer.writeStartElement("eventType");
-				writer.writeCharacters("external event");
-				writer.writeEndElement();
-
-				writer.writeStartElement("eventCode");
-				writer.writeCharacters(QString("%1").arg(pServerEventBuffer[MAPEvent].Unit));
-				writer.writeEndElement();
+				writer.writeTextElement("eventCode",QString("%1").arg(pServerEventBuffer[MAPEvent].Unit));
 
 				writer.writeEndElement(); //event
 
