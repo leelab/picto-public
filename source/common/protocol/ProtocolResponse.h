@@ -53,6 +53,7 @@ public:
 	QString getHeaders();
 	QString getMultiPartHeaders();
 	QByteArray getContent();
+	QByteArray getDecodedContent();
 	void setContent(QByteArray _content);
 	void addField(QString field, QString value);
 	void setShouldTerminateConnection(bool terminateConnection);
@@ -79,6 +80,7 @@ public:
 
 private:
 	void encodeContent();
+	void decodeContent();
 
 	ProtocolResponseType::ProtocolResponseType protocolResponseCode;
 

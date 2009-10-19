@@ -18,6 +18,7 @@ NeuralCollectorThread::NeuralCollectorThread(QString name, QHostAddress address,
 
 void NeuralCollectorThread::run()
 {
+	qDebug()<<"Run";
 	//set up the database
 	if(!initDatabase())
 		return;
@@ -75,7 +76,7 @@ void NeuralCollectorThread::timeoutHandler()
 void NeuralCollectorThread::collectData()
 {
 	int bytesRead;
-
+	collectionTimer->stop();
 	
 	/*! /todo Figure out a way to handle failed connections */
 	if(proxySocket->state()<QAbstractSocket::ConnectingState)
@@ -106,6 +107,11 @@ void NeuralCollectorThread::collectData()
 		timeoutTimer->start();
 		qDebug()<<proxyName<<": Read "<<bytesRead<<" bytes";
 	}
+
+	//flush out any remaining data in the conenction
+	proxySocket->readAll();
+
+	collectionTimer->start();
 }
 
 bool NeuralCollectorThread::initDatabase()
@@ -135,7 +141,7 @@ bool NeuralCollectorThread::initDatabase()
 
 void NeuralCollectorThread::parseResponse()
 {
-	QByteArray xmlData = proxyResponse->getContent();
+	QByteArray xmlData = proxyResponse->getDecodedContent();
 
 	QString timestamp,sampleRate;
 	QString channel,unit,waveform,device,deviceStatus;

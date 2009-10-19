@@ -32,6 +32,7 @@ ACQGetCommandHandler::ACQGetCommandHandler(QObject *acqPlugin)
 QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("ACQ","1.0",Picto::ProtocolResponseType::OK));
+	response->setContentType("text/xml; charset=\"utf-8\"");
 	
 	//set up XML writer
 	QString xmlData;
@@ -76,6 +77,7 @@ QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSh
 	writer.writeEndDocument();
 	
 	response->setContent(xmlData.toUtf8());
+	response->setContentEncoding(Picto::ContentEncodingType::gzip);
 
 	return response;
 }

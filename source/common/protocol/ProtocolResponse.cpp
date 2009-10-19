@@ -110,6 +110,11 @@ QByteArray ProtocolResponse::getContent()
 	return encodedContent;
 }
 
+QByteArray ProtocolResponse::getDecodedContent()
+{
+	return content;
+}
+
 void ProtocolResponse::encodeContent()
 {
 	switch(contentEncodingType)
@@ -147,6 +152,42 @@ void ProtocolResponse::encodeContent()
 			break;
 		}
 	}
+}
+
+void ProtocolResponse::decodeContent()
+{
+	switch(contentEncodingType)
+	{
+		case ContentEncodingType::gzip:
+		{
+			QBuffer compressedContent(&encodedContent);
+
+			QtIOCompressor compressor(&compressedContent);
+			compressor.setStreamFormat(QtIOCompressor::GzipFormat);
+			compressor.open(QIODevice::ReadOnly);
+			content = compressor.readAll();
+			compressor.close();
+			break;
+		}
+		case ContentEncodingType::deflate:
+		{
+			QBuffer compressedContent(&encodedContent);
+
+			QtIOCompressor compressor(&compressedContent);
+			compressor.setStreamFormat(QtIOCompressor::ZlibFormat);
+			compressor.open(QIODevice::ReadOnly);
+			content = compressor.readAll();
+			compressor.close();
+			break;
+		}
+		case ContentEncodingType::raw:
+		default:
+		{
+			content = encodedContent;
+			break;
+		}
+	}
+
 }
 
 void ProtocolResponse::setContentType(QString contentTypeString)
@@ -252,11 +293,18 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	
 	QStringList tokens = currentLine.split(QRegExp("[ ][ ]*"));
 	
+	if(tokens.count() < 2)
+	{
+		qDebug()<<"Bad status line";
+		return -2;
+	}
+	
 	protocolResponseCode = (ProtocolResponseType::ProtocolResponseType)(tokens[1].toInt());
 
 	int protocolVersionPosition = tokens[0].indexOf('/');
 	if(protocolVersionPosition == -1)
 	{
+		qDebug()<<"No / in protocol/version";
 		return -2;
 	}
 	else
@@ -270,24 +318,25 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	currentLine = socket->readLine();
 	while(!newLineRegExp.exactMatch(currentLine))
 	{
+		currentLine.remove(QRegExp("[\r\n]"));
 		QString fieldKey,fieldValue;
 
 		int fieldEndPosition = currentLine.indexOf(':');		
 		fieldKey = currentLine.left(fieldEndPosition);
 		fieldValue = currentLine.mid(fieldEndPosition+2);
 
-		if(!QString::compare(fieldKey,"Content-Type",Qt::CaseInsensitive))
+		if(fieldKey.contains("Content-Type",Qt::CaseInsensitive))
 		{
 			setContentType(fieldValue);
 		}
-		if(!QString::compare(fieldKey,"Content-Encoding",Qt::CaseInsensitive))
+		else if(fieldKey.contains("Content-Encoding",Qt::CaseInsensitive))
 		{
 			//this is ugly, but I don't see a better way to get the 
 			//encoding type enum value, since we can't find() on a value...
 			std::map<ContentEncodingType::ContentEncodingType,QString>::const_iterator encodingIter = contentEncodingTypeStrings.begin();
 			while(encodingIter != contentEncodingTypeStrings.end())
 			{
-				if(!QString::compare(encodingIter->second,fieldValue,Qt::CaseInsensitive))
+				if(!QString::compare(fieldValue,encodingIter->second,Qt::CaseInsensitive))
 				{
 					setContentEncoding(encodingIter->first);
 					break;
@@ -296,10 +345,11 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 			}
 			if(encodingIter == contentEncodingTypeStrings.end())
 			{
+				qDebug()<<"Encoding type not found";
 				return -2;
 			}
 		}
-		if(!QString::compare(fieldKey,"Content-Length",Qt::CaseInsensitive))
+		else if(fieldKey.contains("Content-Length",Qt::CaseInsensitive))
 		{
 			contentLength = fieldValue.toInt();
 			addField(fieldKey,fieldValue);
@@ -320,6 +370,11 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 			break;
 		encodedContent.append(socket->read(contentLength));
 	}
+
+	//decode content
+	decodeContent();
+
+	//return length of content read
 	if(encodedContent.size() == contentLength)
 		return encodedContent.size();
 	else

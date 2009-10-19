@@ -26,8 +26,15 @@ void NeuralDataCollector::cleanupThreads()
 	QList<proxyServerInfo>::iterator i = proxyServerList.begin();
 	while(i != proxyServerList.end())
 	{
-		if(i->collectorThread->isFinished())
+		if(!i->collectorThread)
+		{
 			proxyServerList.erase(i);
+		}
+		else if(i->collectorThread->isFinished())
+		{
+			proxyServerList.erase(i);
+			continue;
+		}
 		i++;
 	}
 	
