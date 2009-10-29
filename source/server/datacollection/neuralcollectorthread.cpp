@@ -122,7 +122,7 @@ bool NeuralCollectorThread::initDatabase()
 	currDateTime = QDateTime::currentDateTime();
 	
 	sessionDb = QSqlDatabase::addDatabase("QSQLITE",proxyName + currDateTime.toString("yyyyMMdd_hhmmss"));
-	sessionDb.setDatabaseName(QCoreApplication::applicationDirPath() + "/neuraldata/" + proxyName + "_" + currDateTime.toString("yyyyMMdd_hhmmss"));
+	sessionDb.setDatabaseName(QCoreApplication::applicationDirPath() + "/neuraldata/" + proxyName + "_" + currDateTime.toString("yyyyMMdd_hhmmss.sqlite"));
 	result = sessionDb.open();
 	if(!result)
 	{
@@ -132,9 +132,9 @@ bool NeuralCollectorThread::initDatabase()
 	}
 
 	QSqlQuery query(sessionDb);
-	query.exec("create table events (timestamp REAL, eventcode INTEGER)");
-	query.exec("create table spikes (timestamp REAL, channel TEXT, unit TEXT, waveform TEXT)");
-	query.exec("create table sessionInfo (proxyName TEXT, proxyAddress TEXT, device TEXT, sampleRate REAL, startDate TEXT, startTime TEXT, endDate TEXT, endTime TEXT)");
+	query.exec("create table alignment (id INTEGER PRIMARY KEY, timestamp REAL, aligncode INTEGER)");
+	query.exec("create table spikes (id INTEGER PRIMARY KEY, timestamp REAL, channel TEXT, unit TEXT, waveform TEXT)");
+	query.exec("create table sessionInfo (id INTEGER PRIMARY KEY, proxyName TEXT, proxyAddress TEXT, device TEXT, sampleRate REAL, startDate TEXT, startTime TEXT, endDate TEXT, endTime TEXT)");
 
 	return true;
 }
@@ -251,10 +251,10 @@ void NeuralCollectorThread::parseResponse()
 					}
 					reader.readNext();
 				}
-				query.prepare("INSERT INTO events "
-					"VALUES(:timestamp, :eventcode)");
+				query.prepare("INSERT INTO alignment "
+					"VALUES(:timestamp, :aligncode)");
 				query.bindValue(":timestamp", timestamp);
-				query.bindValue(":eventcode", eventcode);
+				query.bindValue(":aligncode", eventcode);
 				query.exec();
 			}
 		}

@@ -25,6 +25,7 @@
 #include "dialog.h"
 #include "InteractiveSTDIOHandler.h"
 #include "datacollection/neuraldatacollector.h"
+#include "datacollection/alignmenttool.h"
 
 #ifdef Q_WS_MAC
 #include <sys/types.h>
@@ -97,6 +98,19 @@ int serviceMain(SystemService *)
 
 	//Start neural data collector
 	NeuralDataCollector neuralDataCollector(500);
+
+	//Test the alignment tool
+	AlignmentTool align;
+	bool alignmentResult = align.mergeDatabases("C:/Projects/PictoSVN/Picto/trunk/source/dbTest/data/testNeuralDb.sqlite",
+												"C:/Projects/PictoSVN/Picto/trunk/source/dbTest/data/testBehavioralDb.sqlite",
+												"C:/Projects/PictoSVN/Picto/trunk/source/dbTest/data/testMergedDb.sqlite");
+	if(alignmentResult)
+		qDebug()<<"Alignment successful";
+	else
+	{
+		qDebug()<<"Alignment failed";
+		qDebug()<<"Error: "<<align.lastError();
+	}
 
 	return eventLoop.exec();
 }

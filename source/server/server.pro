@@ -41,6 +41,8 @@ HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
 SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
 HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuralcollectorthread.h
 SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuralcollectorthread.cpp
+HEADERS += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.h
+SOURCES += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.cpp
 
 include($$(PICTO_TREE)/source/common/common.pri)
 
