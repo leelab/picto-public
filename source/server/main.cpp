@@ -11,6 +11,7 @@
 #include <QLocale>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QCoreApplication>
 
 #include "../common/common.h"
@@ -76,16 +77,31 @@ int serviceMain(SystemService *)
 	db.setDatabaseName(QCoreApplication::applicationDirPath() + "/PictoServer.config");
     db.open();
 
+	QSqlQuery query(db);
+
 	if(!db.tables().contains("commandchannels"))
 	{
-		QSqlQuery query(db);
-
 		/*! \todo these queries should be broken out as their own files which are loaded out of the Qt
 		 *        resource system.
 		 */
 		query.exec("create table commandchannels (id int primary key, "
 				                                 "address varchar(20), "
 												 "port varchar(20))");
+	}
+	if(!db.tables().contains("proxyservers"))
+	{
+		/*! \todo these queries should be broken out as their own files which are loaded out of the Qt
+		 *        resource system.
+		 */
+		query.exec("create table proxyservers (id int primary key, "
+												 "name varchar(30), "
+				                                 "address varchar(20), "
+												 "port varchar(20))");
+	}
+	else
+	{
+		query.exec("DELETE FROM proxyservers");
+		QString aert = query.lastError().text();
 	}
 
 	db.close();
@@ -96,21 +112,6 @@ int serviceMain(SystemService *)
 	Server httpServer(80, httpProtocols);
 	Server pictoServer(42424, pictoProtocols);
 
-	//Start neural data collector
-	NeuralDataCollector neuralDataCollector(500);
-
-	//Test the alignment tool
-	AlignmentTool align;
-	bool alignmentResult = align.mergeDatabases("C:/Projects/PictoSVN/Picto/trunk/source/dbTest/data/testNeuralDb.sqlite",
-												"C:/Projects/PictoSVN/Picto/trunk/source/dbTest/data/testBehavioralDb.sqlite",
-												"C:/Projects/PictoSVN/Picto/trunk/source/dbTest/data/testMergedDb.sqlite");
-	if(alignmentResult)
-		qDebug()<<"Alignment successful";
-	else
-	{
-		qDebug()<<"Alignment failed";
-		qDebug()<<"Error: "<<align.lastError();
-	}
 
 	return eventLoop.exec();
 }

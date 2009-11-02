@@ -66,7 +66,6 @@ void MainWindow::startStopServer()
 			return;
 		}
 
-		announce(proxyName);
 		
 		//set up the servers (HTTP and ACQ)
 		QSharedPointer<ServerProtocols> httpProtocols(new ServerProtocols());
@@ -82,8 +81,9 @@ void MainWindow::startStopServer()
 		/*! \todo this should specify the IP address in addition to the port, and both should be read from the
 		 *        configuration database.
 		 */
+		port_ = 42420;
 		Server httpServer(80, httpProtocols,this);
-		Server acqServer(42420, acqProtocols,this);
+		Server acqServer(port_, acqProtocols,this);
 
 		connect(&httpServer,SIGNAL(activity()),this, SLOT(serverActivity()));
 		connect(&acqServer,SIGNAL(activity()),this, SLOT(serverActivity()));
@@ -92,6 +92,8 @@ void MainWindow::startStopServer()
 		lineEditName->setEnabled(false);
 		startStopServerButton->setText(stopServerMsg);
 		readyStatus->turnGreen();
+
+		announce(proxyName, port_);
 
 		serverEventLoop = new QEventLoop();
 		serverEventLoop->exec();
@@ -107,7 +109,7 @@ void MainWindow::startStopServer()
 		lineEditName->setEnabled(true);
 
 		//Announce our departure to the world (or at least our network)
-		depart(proxyName);
+		depart(proxyName, port_);
 		readyStatus->turnRed();
 
 
@@ -159,7 +161,7 @@ void MainWindow::closeEvent(QCloseEvent *ev)
 		iNDAcq->stopDevice();
 
 	//Announce our departure to the world (or at least our network)
-	depart(proxyName);
+	depart(proxyName, port_);
 	
 	//accept the close event
 	ev->accept();

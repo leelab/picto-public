@@ -8,6 +8,7 @@
 #include "../../common/protocol/DiscoverCommandHandler.h"
 #include "../../common/protocol/GetCommandHandler.h"
 #include "../../common/protocol/TerminateCommandHandler.h"
+#include "DebugCommandHandler.h"
 
 ServerPictoProtocol::ServerPictoProtocol()
 {
@@ -15,11 +16,14 @@ ServerPictoProtocol::ServerPictoProtocol()
 	QSharedPointer<Picto::DiscoverCommandHandler> discoverCommandHandler(new Picto::DiscoverCommandHandler());
 	QSharedPointer<Picto::GetCommandHandler> getCommandHandler(new Picto::GetCommandHandler());
 	QSharedPointer<Picto::TerminateCommandHandler> terminateCommandHandler(new Picto::TerminateCommandHandler());
+	QSharedPointer<DebugCommandHandler> debugCommandHandler(new DebugCommandHandler());
+
 
 	addCommandHandler(announceCommandHandler);
 	addCommandHandler(discoverCommandHandler);
 	addCommandHandler(getCommandHandler);
 	addCommandHandler(terminateCommandHandler);
+	addCommandHandler(debugCommandHandler);
 }
 
 QString ServerPictoProtocol::id()

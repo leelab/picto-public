@@ -38,8 +38,14 @@ void Server::incomingConnection(int socketDescriptor)
 
 void Server::processPendingDatagrams()
 {
+	QSqlDatabase db = QSqlDatabase::database("PictoServerConfigDatabase");
+	db.open();
+
+	QSqlQuery query(db);
+
     while (udpSocket->hasPendingDatagrams())
 	{
+
         QByteArray datagram;
 		QHostAddress senderAddress;
 		quint16 senderPort;
@@ -77,10 +83,6 @@ void Server::processPendingDatagrams()
 				udpResponseSocket.writeDatagram(datagram.data(), datagram.size(),
 												senderAddress, target.toInt());
 
-				QSqlDatabase db = QSqlDatabase::database("PictoServerConfigDatabase");
-				db.open();
-
-				QSqlQuery query(db);
 				query.exec("select count(*) from commandchannels");
 				query.next();
 				int index = query.value(0).toInt();
@@ -92,9 +94,56 @@ void Server::processPendingDatagrams()
 				query.bindValue(":address", senderAddress.toString());
 				query.bindValue(":port", target);
 				query.exec();
-
-				db.close();
 			}
+
+			//Proxy server announcing its presence..
+			if(method == "ANNOUNCE"  && protocolName == "ACQ")
+			{
+				//ACQ announce uses the format ANNOUNCE proxyname:port ACQ/1.0
+				int portPosition = target.indexOf(':');
+				QString proxyPort, proxyName;
+				if(protocolVersionPosition != -1)
+				{
+					proxyName = target.left(portPosition);
+					proxyPort = target.mid(portPosition+1);
+				}
+
+				query.exec("SELECT COUNT(*) FROM proxyservers");
+				query.next();
+				int index = query.value(0).toInt();
+				query.clear();
+
+				query.prepare("INSERT INTO proxyservers (id,name,address,port) "
+					"VALUES (:id, :name, :address,:port)");
+				query.bindValue(":id",index);
+				query.bindValue(":name", proxyName);
+				query.bindValue(":address", senderAddress.toString());
+				query.bindValue(":port", proxyPort);
+				query.exec();
+			}
+
+			//Proxy server signing off
+			if(method == "DEPART"  && protocolName == "ACQ")
+			{
+				//ACQ depart uses the format DEPART proxyname:port ACQ/1.0
+				int portPosition = target.indexOf(':');
+				QString proxyPort, proxyName;
+				if(protocolVersionPosition != -1)
+				{
+					proxyName = target.left(portPosition);
+					proxyPort = target.mid(portPosition+1);
+				}
+
+				query.prepare("DELETE FROM proxyservers WHERE "
+					"name=:name AND address=:address AND port=:port");
+				query.bindValue(":name", proxyName);
+				query.bindValue(":address", senderAddress.toString());
+				query.bindValue(":port", proxyPort);
+				query.exec();
+			}
+
+
 		}
 	}
+	db.close();
 }

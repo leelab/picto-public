@@ -37,6 +37,7 @@ void Server::incomingConnection(int socketDescriptor)
     thread->start();
 }
 
+/*! /todo: The Proxy server doesn't need to process pending datagrams, since it never receives any...*/
 void Server::processPendingDatagrams()
 {
     while (udpSocket->hasPendingDatagrams())

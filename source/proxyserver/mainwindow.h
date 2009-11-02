@@ -57,5 +57,7 @@ private:
 	QString startServerMsg, stopServerMsg;
 	QString proxyName;
 
+	int port_;
+
 };
 #endif

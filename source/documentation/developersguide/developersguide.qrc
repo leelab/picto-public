@@ -53,6 +53,8 @@
    <file alias="_data_source_equipment_8h-source.html">../../../output/documentation/main/html/_data_source_equipment_8h-source.html</file>
    <file alias="_data_store_8cpp-source.html">../../../output/documentation/main/html/_data_store_8cpp-source.html</file>
    <file alias="_data_store_8h-source.html">../../../output/documentation/main/html/_data_store_8h-source.html</file>
+   <file alias="_debug_command_handler_8cpp-source.html">../../../output/documentation/main/html/_debug_command_handler_8cpp-source.html</file>
+   <file alias="_debug_command_handler_8h-source.html">../../../output/documentation/main/html/_debug_command_handler_8h-source.html</file>
    <file alias="_device_interface_8cpp-source.html">../../../output/documentation/main/html/_device_interface_8cpp-source.html</file>
    <file alias="_device_interface_8h-source.html">../../../output/documentation/main/html/_device_interface_8h-source.html</file>
    <file alias="_discover_command_handler_8cpp-source.html">../../../output/documentation/main/html/_discover_command_handler_8cpp-source.html</file>
@@ -204,8 +206,6 @@
    <file alias="build_environment_preparation.html">../../../output/documentation/main/html/build_environment_preparation.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler-members.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler-members.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler.html</file>
-   <file alias="class_neural_collector_thread-members.html">../../../output/documentation/main/html/class_neural_collector_thread-members.html</file>
-   <file alias="class_neural_collector_thread.html">../../../output/documentation/main/html/class_neural_collector_thread.html</file>
    <file alias="class_neural_data_collector-members.html">../../../output/documentation/main/html/class_neural_data_collector-members.html</file>
    <file alias="class_neural_data_collector.html">../../../output/documentation/main/html/class_neural_data_collector.html</file>
    <file alias="class_picto_1_1_translated_names-members.html">../../../output/documentation/main/html/class_picto_1_1_translated_names-members.html</file>
@@ -325,8 +325,6 @@
    <file alias="namespacemembers_func.html">../../../output/documentation/main/html/namespacemembers_func.html</file>
    <file alias="namespacemembers_vars.html">../../../output/documentation/main/html/namespacemembers_vars.html</file>
    <file alias="namespaces.html">../../../output/documentation/main/html/namespaces.html</file>
-   <file alias="neuralcollectorthread_8cpp-source.html">../../../output/documentation/main/html/neuralcollectorthread_8cpp-source.html</file>
-   <file alias="neuralcollectorthread_8h-source.html">../../../output/documentation/main/html/neuralcollectorthread_8h-source.html</file>
    <file alias="neuraldatacollector_8cpp-source.html">../../../output/documentation/main/html/neuraldatacollector_8cpp-source.html</file>
    <file alias="neuraldatacollector_8h-source.html">../../../output/documentation/main/html/neuraldatacollector_8h-source.html</file>
    <file alias="pages.html">../../../output/documentation/main/html/pages.html</file>

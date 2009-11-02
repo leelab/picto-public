@@ -6,7 +6,7 @@
 
 #include <QString>
 
-void announce(QString proxyName);
-void depart(QString proxyName);
+void announce(QString proxyName, int port);
+void depart(QString proxyName, int port);
 
 #endif
