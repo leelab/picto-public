@@ -2,16 +2,28 @@
   @echo Picto environment hasn't been configured
   @echo Run the appropriate configure script for your platform from the Picto root directory and try again
 ) ELSE (
-@echo Generating Translation Object Files
-pushd %PICTO_TREE%
+  @echo Generating Translation Object Files
+  pushd %PICTO_TREE%
 
-FOR /R source %%T IN (*.ts) DO lrelease %%T
+  FOR /R source %%T IN (*.ts) DO lrelease %%T
 
-@echo Generating Makefiles
-@qmake -recursive
+  @echo Generating Makefiles
+  @qmake -recursive
 
-@echo Generating Visual Studio Solution
-@qmake -recursive -tp vc
+  @echo Generating Visual Studio Solution
+  @qmake -recursive -tp vc
+
+  @echo Organizing Source Code in Visual Studio Solution
+
+  FOR /R source %%T IN (*.vcproj) DO @%PICTO_TREE%\tools\win.common\vcprojFilters\bin\vcprojFilters %%T
+
+  @echo Setting Dependencies in Visual Studio Solution
+    
+  %PICTO_TREE%\tools\win.common\vcSlnDependencies\bin\vcSlnDependencies Picto.sln libPicto
+
+  @echo If using nmake, run 'nmake install' following the build to prepare the application for distribution
+  popd
+
 
 popd
 )
