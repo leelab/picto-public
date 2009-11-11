@@ -22,7 +22,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 	/*! \todo implement handler */
 	if(command->getTarget() == "/")
 	{
-		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
+		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "HTTP","1.1",Picto::ProtocolResponseType::OK));
 
 		response->setContentType("text/html; charset=\"utf-8\"");
 
@@ -55,7 +55,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 	}
 	else if(command->getTarget() == "/cambozola.jar")
 	{
-		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
+		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "HTTP","1.1",Picto::ProtocolResponseType::OK));
 		
 		response->setContentType("application/java-archive");
 		
@@ -68,7 +68,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 	}
 	else if(command->getTarget() == "/testVid")
 	{
-		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
+		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "HTTP","1.1",Picto::ProtocolResponseType::OK));
 
 		response->setContentType("text/html; charset=\"utf-8\"");
 
@@ -105,7 +105,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 	}
 	else if(command->getTarget() == "/testMjpegStream")
 	{
-		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::OK));
+		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "HTTP","1.1",Picto::ProtocolResponseType::OK));
 		
 		response->setContentType("multipart/x-mixed-replace; boundary=--pictoboundary");
 		response->setMultiPartContentType("image/jpeg");
@@ -149,7 +149,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 	}
 	else
 	{
-		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("HTTP","1.1",Picto::ProtocolResponseType::NotFound));
+		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "HTTP","1.1",Picto::ProtocolResponseType::NotFound));
 
 		/*! \todo these should probably be moved to files in the Qt resource system.  This would require having some
 		 *        rudimentary server side scripting support to replace basic dynamic values such as the URL that was

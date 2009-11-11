@@ -46,11 +46,12 @@ struct ProtocolResponse
 {
 public:
 	ProtocolResponse(
+		QString serverType = "PictoServer",
 		QString protocol = "PICTO",
 		QString version = "1.0",
 		ProtocolResponseType::ProtocolResponseType protocolResponseType = ProtocolResponseType::UninitializedResponse);
 
-	QString getHeaders();
+	QString generateHeadersString();
 	QString getMultiPartHeaders();
 	QByteArray getContent();
 	QByteArray getDecodedContent();
@@ -84,6 +85,7 @@ private:
 
 	ProtocolResponseType::ProtocolResponseType protocolResponseCode;
 
+	QString serverType;
 	QString protocol;
 	QString version;
 

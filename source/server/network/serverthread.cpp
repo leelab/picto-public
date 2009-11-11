@@ -1,4 +1,5 @@
 #include "serverthread.h"
+#include "../../common/globals.h"
 
 #include <QtNetwork>
 #include <QDateTime>
@@ -70,7 +71,8 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	if(protocol.isNull())
 	{
 		QSharedPointer<Picto::ProtocolResponse> unknownProtocolResponse(
-			new Picto::ProtocolResponse("PICTO",
+			new Picto::ProtocolResponse(Picto::Names->serverAppName,
+										"PICTO",
 										"1.0",
 										Picto::ProtocolResponseType::BadRequest));
 
@@ -80,7 +82,8 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	if(_command->isPendingContent())
 	{
 		QSharedPointer<Picto::ProtocolResponse> incompleteRequestResponse(
-			new Picto::ProtocolResponse(protocol->id(),
+			new Picto::ProtocolResponse(Picto::Names->serverAppName,
+										protocol->id(),
 										protocol->version(),
 										Picto::ProtocolResponseType::IncompleteRequest));
 
@@ -90,7 +93,8 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	if(!_command->isWellFormed())
 	{
 		QSharedPointer<Picto::ProtocolResponse> malformedRequestResponse(
-			new Picto::ProtocolResponse(protocol->id(),
+			new Picto::ProtocolResponse(Picto::Names->serverAppName,
+										protocol->id(),
 										protocol->version(),
 										Picto::ProtocolResponseType::BadRequest));
 
@@ -101,7 +105,8 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	if(handler.isNull())
 	{
 		QSharedPointer<Picto::ProtocolResponse> notImplementedResponse(
-			new Picto::ProtocolResponse(protocol->id(),
+			new Picto::ProtocolResponse(Picto::Names->serverAppName,
+										protocol->id(),
 										protocol->version(),
 										Picto::ProtocolResponseType::NotImplemented));
 
@@ -118,7 +123,8 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 	if(response.isNull())
 	{
 		response = QSharedPointer<Picto::ProtocolResponse>(
-			new Picto::ProtocolResponse("PICTO",
+			new Picto::ProtocolResponse(Picto::Names->serverAppName,
+										"PICTO",
 										"1.0",
 										Picto::ProtocolResponseType::InternalServerError));
 	}
@@ -127,7 +133,7 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 
 	if(response->getMultiPart() <= Picto::MultiPartResponseType::MultiPartInitial)
 	{
-		QString headers = response->getHeaders();
+		QString headers = response->generateHeadersString();
 		os.writeRawData(headers.toUtf8().data(),headers.toUtf8().length());
 		os.writeRawData("\r\n",2);
 	}

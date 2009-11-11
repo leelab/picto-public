@@ -10,10 +10,12 @@
 
 namespace Picto {
 
-ProtocolResponse::ProtocolResponse(QString _protocol,
+ProtocolResponse::ProtocolResponse(QString _serverType,
+								   QString _protocol,
 								   QString _version,
 								   ProtocolResponseType::ProtocolResponseType protocolResponseType) :
 	protocolResponseCode(protocolResponseType),
+	serverType(_serverType),
 	protocol(_protocol),
 	version(_version),
 	bShouldTerminateConnection(false),
@@ -38,7 +40,7 @@ ProtocolResponse::ProtocolResponse(QString _protocol,
 	contentEncodingTypeStrings[ContentEncodingType::deflate] = "deflate";
 }
 
-QString ProtocolResponse::getHeaders()
+QString ProtocolResponse::generateHeadersString()
 {
 	QString headers;
 
@@ -47,7 +49,7 @@ QString ProtocolResponse::getHeaders()
 										.arg(protocolResponseCode)
 										.arg(protocolResponseTypeStrings[protocolResponseCode]);
 
-	headers += QString("Server: %1\r\n").arg(Picto::Names->proxyServerAppName);
+	headers += QString("Server: %1\r\n").arg(serverType);
 	if(!contentType.isEmpty())
 	{
 		headers += QString("Content-Type: %1\r\n").arg(contentType);
@@ -325,11 +327,11 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 		fieldKey = currentLine.left(fieldEndPosition);
 		fieldValue = currentLine.mid(fieldEndPosition+2);
 
-		if(fieldKey.contains("Content-Type",Qt::CaseInsensitive))
+		if(fieldKey.compare("Content-Type",Qt::CaseInsensitive))
 		{
 			setContentType(fieldValue);
 		}
-		else if(fieldKey.contains("Content-Encoding",Qt::CaseInsensitive))
+		else if(fieldKey.compare("Content-Encoding",Qt::CaseInsensitive))
 		{
 			//this is ugly, but I don't see a better way to get the 
 			//encoding type enum value, since we can't find() on a value...
@@ -349,9 +351,14 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 				return -2;
 			}
 		}
-		else if(fieldKey.contains("Content-Length",Qt::CaseInsensitive))
+		else if(fieldKey.compare("Content-Length",Qt::CaseInsensitive))
 		{
 			contentLength = fieldValue.toInt();
+			addField(fieldKey,fieldValue);
+		}
+		else if(fieldKey.compare("Server",Qt::CaseInsensitive))
+		{
+			serverType = fieldValue;
 			addField(fieldKey,fieldValue);
 		}
 		else

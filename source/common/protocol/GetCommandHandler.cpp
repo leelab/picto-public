@@ -1,4 +1,5 @@
 #include "GetCommandHandler.h"
+#include "../common/globals.h"
 
 namespace Picto {
 
@@ -10,7 +11,7 @@ QSharedPointer<ProtocolResponse> GetCommandHandler::processCommand(QSharedPointe
 {
 	/*! \todo implement handler */
 	//QSharedPointer<ProtocolResponse> response = new ProtocolResponse("PICTO","1.0",ProtocolResponseType::NotImplemented);
-	QSharedPointer<ProtocolResponse> response(new ProtocolResponse("PICTO","1.0",ProtocolResponseType::OK));
+	QSharedPointer<ProtocolResponse> response(new ProtocolResponse(Picto::Names->serverAppName,"PICTO","1.0",ProtocolResponseType::OK));
 
 	int streamState = command->getFieldValue("X-PictoStreamState").toInt();
 

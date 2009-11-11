@@ -31,7 +31,7 @@ ACQGetCommandHandler::ACQGetCommandHandler(QObject *acqPlugin)
 
 QSharedPointer<Picto::ProtocolResponse> ACQGetCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("ACQ","1.0",Picto::ProtocolResponseType::OK));
+	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->proxyServerAppName,"ACQ","1.0",Picto::ProtocolResponseType::OK));
 	response->setContentType("text/xml; charset=\"utf-8\"");
 	
 	//set up XML writer

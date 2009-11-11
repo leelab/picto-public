@@ -25,7 +25,7 @@ DebugCommandHandler::DebugCommandHandler()
 QSharedPointer<Picto::ProtocolResponse> DebugCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	//create an "OK" response
-	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse("PICTO","1.0",Picto::ProtocolResponseType::OK));
+	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName,"PICTO","1.0",Picto::ProtocolResponseType::OK));
 
 	QString target = command->getTarget();
 
