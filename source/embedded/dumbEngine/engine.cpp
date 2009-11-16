@@ -1,6 +1,7 @@
 #include <QTextStream>
 #include <QRegExp>
 
+#include "../../common/globals.h"
 #include "engine.h"
 #include "protocol/FPGETCommandHandler.h"
 #include "protocol/FPPUTCommandHandler.h"
@@ -264,7 +265,8 @@ QSharedPointer<Picto::ProtocolResponse> Engine::processCommand(QSharedPointer<Pi
 	if(protocolName != "PICTO"  && protocolVersion != "1.0")
 	{
 		QSharedPointer<Picto::ProtocolResponse> unknownProtocolResponse(
-			new Picto::ProtocolResponse("PICTO",
+			new Picto::ProtocolResponse(Picto::Names->directorAppName,
+										"PICTO",
 										"1.0",
 										Picto::ProtocolResponseType::BadRequest));
 
@@ -275,8 +277,9 @@ QSharedPointer<Picto::ProtocolResponse> Engine::processCommand(QSharedPointer<Pi
 	else if(command->isPendingContent())
 	{
 		QSharedPointer<Picto::ProtocolResponse> incompleteRequestResponse(
-			new Picto::ProtocolResponse(protocolName,
-										protocolVersion,
+			new Picto::ProtocolResponse(Picto::Names->directorAppName,
+										"PICTO",
+										"1.0",
 										Picto::ProtocolResponseType::IncompleteRequest));
 
 		return incompleteRequestResponse;
@@ -290,7 +293,8 @@ QSharedPointer<Picto::ProtocolResponse> Engine::processCommand(QSharedPointer<Pi
 		if(handler == commandHandlers.end())
 		{
 			QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
-				new Picto::ProtocolResponse("PICTO",
+				new Picto::ProtocolResponse(Picto::Names->directorAppName,
+											"PICTO",
 											"1.0",
 											Picto::ProtocolResponseType::NotFound));
 			return notFoundResponse;
@@ -317,7 +321,7 @@ void Engine::deliverResponse(QSharedPointer<Picto::ProtocolResponse> response)
 		return;
 
 
-	QString headers = response->getHeaders();
+	QString headers = response->generateHeadersString();
 	headers += "\r\n";
 	commSocket->write(headers.toUtf8().data(), headers.toUtf8().size());
 

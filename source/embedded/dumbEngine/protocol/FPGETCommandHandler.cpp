@@ -4,6 +4,7 @@
 #include <QTextStream>
 
 #include "FPGETCommandHandler.h"
+#include "../../common/globals.h"
 
 
 FPGETCommandHandler::FPGETCommandHandler()
@@ -13,11 +14,13 @@ FPGETCommandHandler::FPGETCommandHandler()
 QSharedPointer<Picto::ProtocolResponse> FPGETCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QSharedPointer<Picto::ProtocolResponse> response(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
 

@@ -5,6 +5,7 @@
 #include <QTextStream>
 
 #include "FPPUTCommandHandler.h"
+#include "../../common/globals.h"
 
 
 FPPUTCommandHandler::FPPUTCommandHandler()
@@ -14,17 +15,20 @@ FPPUTCommandHandler::FPPUTCommandHandler()
 QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::OK));
 
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
 
 	QSharedPointer<Picto::ProtocolResponse> badRequestResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::BadRequest));
 	QString commandContent;

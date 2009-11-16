@@ -4,6 +4,7 @@
 #include <QTextStream>
 
 #include "FPREWARDCommandHandler.h"
+#include "../../common/globals.h"
 
 
 FPREWARDCommandHandler::FPREWARDCommandHandler()
@@ -15,11 +16,13 @@ QSharedPointer<Picto::ProtocolResponse> FPREWARDCommandHandler::processCommand(Q
 	QTextStream out(stdout);
 
 	QSharedPointer<Picto::ProtocolResponse> okResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
 

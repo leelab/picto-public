@@ -4,6 +4,7 @@
 #include <QTextStream>
 
 #include "FPSTOPFLUSHCommandHandler.h"
+#include "../../common/globals.h"
 
 
 FPSTOPFLUSHCommandHandler::FPSTOPFLUSHCommandHandler()
@@ -15,11 +16,13 @@ QSharedPointer<Picto::ProtocolResponse> FPSTOPFLUSHCommandHandler::processComman
 	QTextStream out(stdout);
 
 	QSharedPointer<Picto::ProtocolResponse> okResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
-		new Picto::ProtocolResponse("PICTO",
+		new Picto::ProtocolResponse(Picto::Names->directorAppName,
+									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
 
