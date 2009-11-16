@@ -52,7 +52,7 @@ bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command
 
 	while(command->isPendingContent())
 	{
-		if(!tcpSocket->waitForReadyRead(timeoutInterval))
+		if(tcpSocket->bytesAvailable() == 0 && !tcpSocket->waitForReadyRead(timeoutInterval))
 		{
 			return false;
 		}
