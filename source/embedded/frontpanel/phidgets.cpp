@@ -1,98 +1,53 @@
 #include <QNetworkInterface>
+#include <QTextStream>
+
+#include <qDebug>
 
 #include "phidgets.h"
 
-Phidgets::Phidgets() :
+Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	textLCDSerialNumber(0),
-	rotaryTouchSerialNumber(0),
 	encoderSerialNumber(0),
-	interfaceKitSerialNumber(0),
-	rewardDuration(40),
-	trialNumber(0),
-	previousValue(-1),
 	hTextLCD(0),
-	hRotaryTouch(0),
 	hEncoder(0),
-	hManager(0)
+	prevClickState(0),
+	panelInfo(panelInfo)
 {
-	timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(drawLCD()));
-	timer->start(100);
-
-	systemName = "PictoBox 408"; //this would be read from the configuration file
-	rewardDuration = 40;         //this would be read from the configuration file
-
-	systemStatus = SystemStatus::disconnected;
-
-	CPhidgetManager_create(&hManager);
-
-	CPhidgetManager_set_OnAttach_Handler(hManager, ManagerAttachHandler, this);
-	CPhidgetManager_set_OnDetach_Handler(hManager, ManagerDetachHandler, this);
-	CPhidgetManager_set_OnError_Handler(hManager, ManagerErrorHandler, this);
-
-	CPhidgetManager_open(hManager);
-
-	int numDevices;
-	CPhidgetHandle *devices;
-	
-	do
-	{
-		CPhidgetManager_getAttachedDevices(hManager, &devices, &numDevices);
-		CPhidgetManager_freeAttachedDevicesArray(devices);
-	} while (numDevices != 3);
+	QTextStream outstream(stdout);
 
 	int result;
 	const char *err;
 
+	//Text LCD
+	//--------
 	CPhidgetTextLCD_create(&hTextLCD);
 
 	CPhidget_set_OnAttach_Handler((CPhidgetHandle) hTextLCD, TextLCDAttachHandler, this);
 	CPhidget_set_OnDetach_Handler((CPhidgetHandle) hTextLCD, TextLCDDetachHandler, this);
 	CPhidget_set_OnError_Handler((CPhidgetHandle) hTextLCD, TextLCDErrorHandler, this);
 
-	CPhidget_open((CPhidgetHandle) hTextLCD, textLCDSerialNumber);
+	CPhidget_open((CPhidgetHandle) hTextLCD, -1);
 
 	if((result = CPhidget_waitForAttachment((CPhidgetHandle) hTextLCD, 10000)))
 	{
 		CPhidget_getErrorDescription(result, &err);
+		outstream<<"Text LCD never attached.\n Error: "<<err<<"\n";
+		outstream.flush();
 		return;
 	}
 
+	//Custom character creator: http://www.phidgets.com/documentation/customchar.html
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 8, 476859, 461256); //milliseconds character
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 9, 506248, 8590); //arrow character
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 10, 31, 0); //horizontal line across top of matrix (used for underlining)
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 11, 330,558); //frown face
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 12, 330,31); //neutral face
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 13, 557386,14); //smile face
 
-	updateTextLCD();
-	drawLCD();
 	CPhidgetTextLCD_setContrast(hTextLCD, 128);
-/*
-	CPhidgetInterfaceKit_create(&hRotaryTouch);
 
-	CPhidget_set_OnAttach_Handler((CPhidgetHandle)hRotaryTouch, RotaryTouchAttachHandler, this);
-	CPhidget_set_OnDetach_Handler((CPhidgetHandle)hRotaryTouch, RotaryTouchDetachHandler, this);
-	CPhidget_set_OnError_Handler((CPhidgetHandle)hRotaryTouch, RotaryTouchErrorHandler, this);
-
-	CPhidgetInterfaceKit_set_OnInputChange_Handler(hRotaryTouch, RotaryTouchInputChangeHandler, this);
-	CPhidgetInterfaceKit_set_OnSensorChange_Handler(hRotaryTouch, RotaryTouchSensorChangeHandler, this);
-
-	CPhidget_open((CPhidgetHandle) hRotaryTouch, rotaryTouchSerialNumber);
-
-	if((result = CPhidget_waitForAttachment((CPhidgetHandle) hRotaryTouch, 10000)))
-	{
-		CPhidget_getErrorDescription(result, &err);
-		return;
-	}
-
-	int numSensors = 0;
-
-	CPhidgetInterfaceKit_getSensorCount(hRotaryTouch, &numSensors);
-
-	for(int i = 0; i < numSensors; i++)
-	{
-		CPhidgetInterfaceKit_setSensorChangeTrigger(hRotaryTouch, i, 10);
-	}
-
-	CPhidgetInterfaceKit_setRatiometric(hRotaryTouch, PFALSE);
-*/
-
+	//Rotary Encoder
+	//--------------
 	CPhidgetEncoder_create(&hEncoder);
 
 	CPhidget_set_OnAttach_Handler((CPhidgetHandle) hEncoder, EncoderAttachHandler, this);
@@ -103,11 +58,14 @@ Phidgets::Phidgets() :
 
 	CPhidgetEncoder_set_OnPositionChange_Handler(hEncoder, EncoderPositionChangeHandler, this);
 
-	CPhidget_open((CPhidgetHandle) hEncoder, encoderSerialNumber);
+	CPhidget_open((CPhidgetHandle) hEncoder, -1);
 
 	if((result = CPhidget_waitForAttachment((CPhidgetHandle) hEncoder, 10000)))
 	{
 		CPhidget_getErrorDescription(result, &err);
+
+		outstream<<"Rotary encoder never attached.\nError: "<<err<<"\n";
+		outstream.flush();
 		return;
 	}
 }
@@ -117,30 +75,90 @@ Phidgets::~Phidgets()
 	CPhidgetTextLCD_setDisplayString(hTextLCD, 0, "");
 	CPhidgetTextLCD_setDisplayString(hTextLCD, 1, "");
 
-//	CPhidget_close((CPhidgetHandle) hRotaryTouch);
-//	CPhidget_delete((CPhidgetHandle) hRotaryTouch);
 	CPhidget_close((CPhidgetHandle) hEncoder);
 	CPhidget_delete((CPhidgetHandle) hEncoder);
 
 	CPhidget_close((CPhidgetHandle) hTextLCD);
 	CPhidget_delete((CPhidgetHandle) hTextLCD);
 
-	CPhidgetManager_close(hManager);
-	CPhidgetManager_delete(hManager);
+	//CPhidgetManager_close(hManager);
+	//CPhidgetManager_delete(hManager);
 }
 
-int __stdcall TextLCDAttachHandler(CPhidgetHandle hTextLCD, void *)
+
+
+void Phidgets::updateLCD(int line, QString text)
 {
-	int serialNo;
-	const char *name;
+	QTextStream outstream(stdout);
 
-	CPhidget_getDeviceName (hTextLCD, &name);
-	CPhidget_getSerialNumber(hTextLCD, &serialNo);
+	if(!hTextLCD || !textLCDSerialNumber)
+	{
+		outstream<<"Missing handle or serial number";
+		outstream.flush();
+		return;
+	}
 
-	return 0;
+	//make the text 20 characters long...
+	if(text.size() > 20)
+		text.truncate(20);
+	else if(text.size() <20)
+		text += QString(20-text.size(),' ');
+
+	//set the values appropriately
+	if(line == 1)
+	{
+		LCDRow1 = text;
+	}
+	else if(line == 2)
+	{
+		LCDRow2 = text;
+	}
+
+	//update the LCD
+	CPhidgetTextLCD_setDisplayString(hTextLCD, 0, LCDRow1.toLocal8Bit().data());
+	CPhidgetTextLCD_setDisplayString(hTextLCD, 1, LCDRow2.toLocal8Bit().data());
+
+	return;
 }
 
-int __stdcall TextLCDDetachHandler(CPhidgetHandle hTextLCD, void * phidgetsObject)
+void Phidgets::toggleBacklight()
+{
+	int backlightState;
+	
+	CPhidgetTextLCD_getBacklight(hTextLCD,&backlightState);
+	if(backlightState == 0)
+		backlightState = 1;
+	else
+		backlightState = 0;
+	CPhidgetTextLCD_setBacklight(hTextLCD,backlightState);
+
+}
+void Phidgets::turnOnBacklight()
+{
+	CPhidgetTextLCD_setBacklight(hTextLCD,1);
+}
+
+
+void Phidgets::buttonClicked()
+{
+	emit userInputSignal(PanelInfo::buttonPush);
+}
+
+void Phidgets::dialTurnedLeft()
+{
+	emit userInputSignal(PanelInfo::rotateLeft);
+}
+
+void Phidgets::dialTurnedRight()
+{
+	emit userInputSignal(PanelInfo::rotateRight);
+}
+
+//---------------------------------------------------
+//   LCD Text
+//---------------------------------------------------
+
+int __stdcall TextLCDAttachHandler(CPhidgetHandle hTextLCD, void *phidgetsObject)
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
 
@@ -150,7 +168,20 @@ int __stdcall TextLCDDetachHandler(CPhidgetHandle hTextLCD, void * phidgetsObjec
 	CPhidget_getDeviceName (hTextLCD, &name);
 	CPhidget_getSerialNumber(hTextLCD, &serialNo);
 
-	if(phidgets->textLCDSerialNumber == serialNo) phidgets->textLCDSerialNumber = 0;
+	phidgets->textLCDSerialNumber = serialNo;
+
+	CPhidgetTextLCD_setDisplayString((CPhidgetTextLCDHandle)hTextLCD, 0, phidgets->LCDRow1.toLocal8Bit().data());
+	CPhidgetTextLCD_setDisplayString((CPhidgetTextLCDHandle)hTextLCD, 1, phidgets->LCDRow2.toLocal8Bit().data());
+
+
+	return 0;
+}
+
+int __stdcall TextLCDDetachHandler(CPhidgetHandle hTextLCD, void * phidgetsObject)
+{
+	Phidgets * phidgets = (Phidgets *) phidgetsObject;
+
+	phidgets->textLCDSerialNumber = 0;
 
 	return 0;
 }
@@ -160,97 +191,22 @@ int __stdcall TextLCDErrorHandler(CPhidgetHandle, void *, int, const char *)
 	return 0;
 }
 
-int __stdcall RotaryTouchAttachHandler(CPhidgetHandle hRotaryTouch, void *)
-{
-	int serialNo;
-	const char *name;
 
-	CPhidget_getDeviceName(hRotaryTouch, &name);
-	CPhidget_getSerialNumber(hRotaryTouch, &serialNo);
-
-	return 0;
-}
-
-int __stdcall RotaryTouchDetachHandler(CPhidgetHandle hRotaryTouch, void * phidgetsObject)
+//---------------------------------------------------
+// Rotary Encoder
+//---------------------------------------------------
+int __stdcall EncoderAttachHandler(CPhidgetHandle hEncoder, void *phidgetsObject)
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
-	int serialNo;
-	const char *name;
-
-	CPhidget_getDeviceName (hRotaryTouch, &name);
-	CPhidget_getSerialNumber(hRotaryTouch, &serialNo);
-
-	if(phidgets->rotaryTouchSerialNumber == serialNo) phidgets->rotaryTouchSerialNumber = 0;
-
-	return 0;
-}
-
-int __stdcall RotaryTouchErrorHandler(CPhidgetHandle, void *, int, const char *)
-{
-	return 0;
-}
-
-int __stdcall RotaryTouchInputChangeHandler(CPhidgetInterfaceKitHandle, void * phidgetsObject, int index, int state)
-{
-	Phidgets * phidgets = (Phidgets *) phidgetsObject;
-
-	if(index==1) //hover
-	{
-		if(state==1) //hovering
-		{
-			//if(phidgets->hTextLCD && phidgets->textLCDSerialNumber) CPhidgetTextLCD_setBacklight(phidgets->hTextLCD, PTRUE);
-		}
-		else //removed
-		{
-			//if(phidgets->hTextLCD && phidgets->textLCDSerialNumber) CPhidgetTextLCD_setBacklight(phidgets->hTextLCD, PFALSE);
-		}
-	}
-	else //touch
-	{
-		if(state==1) //touching
-		{
-			if(phidgets->hTextLCD && phidgets->textLCDSerialNumber) CPhidgetTextLCD_setBacklight(phidgets->hTextLCD, PTRUE);
-		}
-		else //removed
-		{
-			phidgets->previousValue = -1;
-			if(phidgets->hTextLCD && phidgets->textLCDSerialNumber) CPhidgetTextLCD_setBacklight(phidgets->hTextLCD, PFALSE);
-		}
-	}
-
-	return 0;
-}
-
-int __stdcall RotaryTouchSensorChangeHandler(CPhidgetInterfaceKitHandle, void * phidgetsObject, int, int value)
-{
-	Phidgets * phidgets = (Phidgets *) phidgetsObject;
-
-	double updateRate = 0.1;
-
-	if(phidgets->previousValue != -1 && value != phidgets->previousValue)
-	{
-		if(value - phidgets->previousValue > 500) phidgets->previousValue += 1000;
-		else if(phidgets->previousValue - value > 500)phidgets-> previousValue -= 1000;
-
-		phidgets->rewardDuration += (int) (((double) (value - phidgets->previousValue)) * updateRate);
-		if(phidgets->rewardDuration < 1) phidgets->rewardDuration = 1;
-		else if(phidgets->rewardDuration > 999) phidgets->rewardDuration = 999;
-	}
-
-	phidgets->previousValue = value;
-
-	phidgets->updateTextLCD();
-
-	return 0;
-}
-
-int __stdcall EncoderAttachHandler(CPhidgetHandle hEncoder, void *)
-{
 	int serialNo;
 	const char *name;
 
 	CPhidget_getDeviceName(hEncoder, &name);
 	CPhidget_getSerialNumber(hEncoder, &serialNo);
+
+	phidgets->encoderSerialNumber = serialNo;
+	phidgets->lastRot = 0;
+	phidgets->cumRot = 0;
 
 	return 0;
 }
@@ -258,13 +214,8 @@ int __stdcall EncoderAttachHandler(CPhidgetHandle hEncoder, void *)
 int __stdcall EncoderDetachHandler(CPhidgetHandle hEncoder, void * phidgetsObject)
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
-	int serialNo;
-	const char *name;
-
-	CPhidget_getDeviceName (hEncoder, &name);
-	CPhidget_getSerialNumber(hEncoder, &serialNo);
-
-	if(phidgets->encoderSerialNumber == serialNo) phidgets->encoderSerialNumber = 0;
+	
+	phidgets->encoderSerialNumber = 0;
 
 	return 0;
 }
@@ -274,6 +225,10 @@ int __stdcall EncoderErrorHandler(CPhidgetHandle, void *, int, const char *)
 	return 0;
 }
 
+
+
+//Since these functions can't interact directly with QT signals and slots,
+//We'll insted call a function within the phidgets object to emit a signal
 int __stdcall EncoderInputChangeHandler(CPhidgetEncoderHandle,
                                         void * phidgetsObject,
                                         int, //index
@@ -281,15 +236,13 @@ int __stdcall EncoderInputChangeHandler(CPhidgetEncoderHandle,
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
 
-	if(state==1) //pressed
-	{
-		if(phidgets->hTextLCD && phidgets->textLCDSerialNumber) CPhidgetTextLCD_setBacklight(phidgets->hTextLCD, PFALSE);
-	}
-	else //normal
-	{
-		phidgets->previousValue = -1;
-		if(phidgets->hTextLCD && phidgets->textLCDSerialNumber) CPhidgetTextLCD_setBacklight(phidgets->hTextLCD, PTRUE);
-	}
+	if(state==0 && phidgets->prevClickState==1) //released
+		phidgets->buttonClicked();
+
+	phidgets->prevClickState = state;
+
+	//kill the rotation counter on any button clicking
+	phidgets->cumRot = 0;
 
 	return 0;
 }
@@ -302,18 +255,41 @@ int __stdcall EncoderPositionChangeHandler(CPhidgetEncoderHandle, //hEncoder
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
 
-	double updateRate = -1.0;
+	//keep track of cumulative rotation, resetting in the event
+	//of a direction change
+	if(phidgets->lastRot * relativePosition < 0)
+	{
+		phidgets->cumRot = relativePosition;
+	}
+	else
+	{
+		phidgets->cumRot += relativePosition;
+	}
 
-	phidgets->rewardDuration += (int) (((double) relativePosition) * updateRate);
-	if(phidgets->rewardDuration < 1) phidgets->rewardDuration = 1;
-	else if(phidgets->rewardDuration > 999) phidgets->rewardDuration = 999;
+	//check for a 1/4 turn (20 ticks)
+	if(phidgets->cumRot > 10)
+	{
+		phidgets->cumRot = 0;
+		phidgets->dialTurnedLeft();
+	}
+	if(phidgets->cumRot <-10)
+	{
+		phidgets->cumRot = 0;
+		phidgets->dialTurnedRight();
+	}
 
-	phidgets->updateTextLCD();
+	phidgets->lastRot = relativePosition;
+
 
 	return 0;
 }
-//////////////////////////////////////
-int __stdcall ManagerAttachHandler(CPhidgetHandle phid, void * phidgetsObject)
+
+
+//---------------------------------------------------
+// Phidgets Manager
+//---------------------------------------------------
+
+/*int __stdcall ManagerAttachHandler(CPhidgetHandle phid, void * phidgetsObject)
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
 
@@ -356,54 +332,4 @@ int __stdcall ManagerDetachHandler(CPhidgetHandle phid, void * phidgetsObject)
 int __stdcall ManagerErrorHandler(CPhidgetManagerHandle, void *, int, const char *)
 {
 	return 0;
-}
-
-void Phidgets::drawLCD()
-{
-	CPhidgetTextLCD_setDisplayString(hTextLCD, 0, headerRow.toLocal8Bit().data());
-	CPhidgetTextLCD_setDisplayString(hTextLCD, 1, dataRow.toLocal8Bit().data());
-}
-
-void Phidgets::updateTextLCD()
-{
-	if(!hTextLCD || !textLCDSerialNumber)
-	{
-		return;
-	}
-
-	headerRow = systemName;
-	headerRow += QString(20 - headerRow.length(), ' ');
-	headerRow.replace(15,4,"Rew:");
-
-	switch(systemStatus)
-	{
-		case SystemStatus::connected:
-		{
-			dataRow = "Connected";
-
-			break;
-		}
-		case SystemStatus::running:
-		{
-			dataRow = QString("Trial: %d").arg(trialNumber);
-
-			break;
-		}
-		case SystemStatus::disconnected:
-		default:
-		{
-			QList<QHostAddress> hostAddresses = QNetworkInterface::allAddresses();
-
-			if(!hostAddresses.empty())
-			{
-				dataRow = hostAddresses[0].toString();
-			}
-
-			break;
-		}
-	}
-
-	dataRow += QString(20 - dataRow.length(), ' ');
-	dataRow.replace(16,3,QString("%1").arg(rewardDuration,3));
-	dataRow.replace(19,2,"\x08\0");
-}
+}*/

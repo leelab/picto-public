@@ -76,6 +76,8 @@ public:
 	void setShouldStream(bool shouldStream);
 
 	QString getFieldValue(QString field);
+	int getResponseCode();
+	QString getResponseType();
 
 	int read(QAbstractSocket *socket);
 

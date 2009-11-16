@@ -8,6 +8,7 @@
 #include <QRegExp>
 #include <QStringList>
 
+
 namespace Picto {
 
 ProtocolResponse::ProtocolResponse(QString _serverType,
@@ -68,7 +69,6 @@ QString ProtocolResponse::generateHeadersString()
 	{
 		headers += QString("%1: %2\r\n").arg(fieldsIter->first).arg(fieldsIter->second);
 	}
-
 	return headers;
 }
 
@@ -105,6 +105,15 @@ void ProtocolResponse::setMultiPartBoundary(QString multiPartBoundaryString)
 QString ProtocolResponse::getMultiPartBoundary()
 {
 	return multiPartBoundary;
+}
+int ProtocolResponse::getResponseCode()
+{
+	return protocolResponseCode;
+}
+
+QString ProtocolResponse::getResponseType()
+{
+	return protocolResponseTypeStrings[protocolResponseCode];
 }
 
 QByteArray ProtocolResponse::getContent()
@@ -215,8 +224,8 @@ bool ProtocolResponse::hasContent()
 void ProtocolResponse::setContent(QByteArray _content)
 {
 	content = _content;
-
-	encodeContent();
+	if(!content.isEmpty())
+		encodeContent();
 }
 
 void ProtocolResponse::addField(QString field, QString value)
@@ -279,7 +288,9 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	int contentLength;
 	
 	if(!socket->waitForReadyRead(1000))
+	{
 		return -1;
+	}
 
 	//initialize everything
 	protocolResponseCode = ProtocolResponseType::UninitializedResponse;
@@ -297,7 +308,6 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	
 	if(tokens.count() < 2)
 	{
-		qDebug()<<"Bad status line";
 		return -2;
 	}
 	
@@ -306,7 +316,6 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	int protocolVersionPosition = tokens[0].indexOf('/');
 	if(protocolVersionPosition == -1)
 	{
-		qDebug()<<"No / in protocol/version";
 		return -2;
 	}
 	else
@@ -320,6 +329,7 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	currentLine = socket->readLine();
 	while(!newLineRegExp.exactMatch(currentLine))
 	{
+
 		currentLine.remove(QRegExp("[\r\n]"));
 		QString fieldKey,fieldValue;
 
@@ -347,14 +357,12 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 			}
 			if(encodingIter == contentEncodingTypeStrings.end())
 			{
-				qDebug()<<"Encoding type not found";
 				return -2;
 			}
 		}
 		else if(fieldKey.compare("Content-Length",Qt::CaseInsensitive))
 		{
 			contentLength = fieldValue.toInt();
-			addField(fieldKey,fieldValue);
 		}
 		else if(fieldKey.compare("Server",Qt::CaseInsensitive))
 		{
@@ -371,11 +379,9 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 
 	//read content
 	encodedContent = socket->read(contentLength);
-	while(encodedContent.size() < contentLength)
+	while(encodedContent.size() < contentLength && socket->bytesAvailable() > 0)
 	{
-		if(!socket->waitForReadyRead(1000))
-			break;
-		encodedContent.append(socket->read(contentLength));
+		encodedContent.append(socket->read(contentLength-encodedContent.size()));
 	}
 
 	//decode content

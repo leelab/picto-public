@@ -152,7 +152,11 @@ bool ProtocolCommand::isWellFormed()
 
 	return true;
 }
-
+/*! \todo This is a really rudimentary write command.  The following would be useful additions:
+ *			- Check that the content length matches the content length field
+ *			- Do content encoding (although with commands, there really shouldn't be
+ *			  that much content...)
+ */
 int ProtocolCommand::write(QAbstractSocket *socket)
 {
 	QString commandHeader;
@@ -162,7 +166,6 @@ int ProtocolCommand::write(QAbstractSocket *socket)
 
 	if(!isWellFormed())
 		return -1;
-
 
 	commandHeader = method_ + " " + target_ + " " + protocolName_ + "/" + protocolVersion_ + "\r\n";
 	

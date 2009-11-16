@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = EmbeddedFrontPanel
+TARGET = EmbeddedDumbEngine
 QT = core gui xml network
 CONFIG += qt warn_on debug_and_release
 CONFIG += console
@@ -7,33 +7,32 @@ DEPENDPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include .
 
 # Input
-SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/main.cpp
-HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/engineconnections.h
-SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/engineconnections.cpp
-HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/eventchannelthread.h
-SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/eventchannelthread.cpp
-HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/ENGEVENTCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/ENGEVENTCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/3rdparty/include/phidget21.h
-HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.h
-SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.cpp
-HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.h
-SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.cpp
-HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/menu.h
-SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/menu.cpp
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/main.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/engine.h
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/engine.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPGETCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPGETCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPPUTCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPPUTCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPREWARDCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPREWARDCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTARTFLUSHCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTARTFLUSHCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTOPFLUSHCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTOPFLUSHCommandHandler.cpp
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
   DESTDIR = $$(PICTO_TREE)/output/bin/debug
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/embedded/frontpanel/debug
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/embedded/dumbengine/debug
 }
 build_pass:CONFIG(release, debug|release) {
   DESTDIR = $$(PICTO_TREE)/output/bin/release
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/embedded/frontpanel/release
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/embedded/dumbengine/release
 }
-RCC_DIR = $$(PICTO_TREE)/intermediates/resources/embedded/frontpanel
-UI_DIR = $$(PICTO_TREE)/intermediates/ui/embedded/frontpanel
-MOC_DIR = $$(PICTO_TREE)/intermediates/moc/embedded/frontpanel
+RCC_DIR = $$(PICTO_TREE)/intermediates/resources/embedded/dumbengine
+UI_DIR = $$(PICTO_TREE)/intermediates/ui/embedded/dumbengine
+MOC_DIR = $$(PICTO_TREE)/intermediates/moc/embedded/dumbengine
 
 # Libraries
 win32:LIBPATH += $$(PICTO_TREE)/3rdparty/lib

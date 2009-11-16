@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = blankscreen frontpanel
+SUBDIRS = blankscreen frontpanel dumbengine
