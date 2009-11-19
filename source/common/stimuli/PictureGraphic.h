@@ -1,5 +1,5 @@
-#ifndef _CIRCLEGRAPHIC_H_
-#define _CIRCLEGRAPHIC_H_
+#ifndef _PICTUREGRAPHIC_H_
+#define _PICTUREGRAPHIC_H_
 
 #include "../common.h"
 
@@ -9,20 +9,18 @@
 
 namespace Picto {
 
-class PICTOLIB_CLASS CircleGraphic : public VisualElement
+class PICTOLIB_CLASS PictureGraphic : public VisualElement
 {
 	Q_OBJECT
 
 public:
-	CircleGraphic(QPoint position, int radius, QColor color);
+	PictureGraphic(QPoint position, QString imageFile);
 
 	void draw();
 
 private:
 	ParameterContainer parameterContainer_;
-
-private slots:
-	void slotParameterValueChanged(QString parameterName, QVariant parameterValue);
+	QString imageFile_;
 };
 
 

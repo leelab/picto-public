@@ -1,14 +1,19 @@
 #ifndef _COMPOSITINGSURFACE_H_
 #define _COMPOSITINGSURFACE_H_
 
-#include "common.h"
+#include "../common.h"
+
+#include <QImage>
 
 namespace Picto {
 
-class CompositingSurface
+struct PICTOLIB_CLASS CompositingSurface
 {
 public:
 	CompositingSurface();
+
+	virtual void convertImage(QImage image) = 0;
+	virtual QString getTypeName() = 0;
 };
 
 

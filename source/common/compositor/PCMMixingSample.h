@@ -1,11 +1,13 @@
 #ifndef _PCMMIXINGSAMPLE_H_
 #define _PCMMIXINGSAMPLE_H_
 
-#include "common.h"
+#include "../common.h"
+
+#include "MixingSample.h"
 
 namespace Picto {
 
-class PCMMixingSample
+struct PICTOLIB_CLASS PCMMixingSample : MixingSample
 {
 public:
 	PCMMixingSample();

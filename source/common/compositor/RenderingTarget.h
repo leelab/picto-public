@@ -8,8 +8,12 @@
 
 #include "../common.h"
 
+#include "VisualTarget.h"
+#include "AuralTarget.h"
+
 #include <QWidget>
 #include <QHostAddress>
+#include <QSharedPointer>
 
 namespace Picto {
 
@@ -36,7 +40,10 @@ struct RenderingTarget : QWidget
 	Q_OBJECT
 
 public:
-    RenderingTarget(bool bWindowed = false, QWidget *parent = 0);
+    RenderingTarget(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<AuralTarget> auralTarget, bool bWindowed = false, int width = 800, int height = 600, QWidget *parent = 0);
+
+	QSharedPointer<CompositingSurface> generateCompositingSurface();
+	QSharedPointer<MixingSample> generateMixingSample();
 
 	void updateStatus(QString status);
 	void showSplash(bool visible=true);
@@ -45,6 +52,9 @@ protected:
 	void paintEvent(QPaintEvent *);
 
 private:
+	QSharedPointer<VisualTarget> visualTarget_;
+	QSharedPointer<AuralTarget> auralTarget_;
+
 	bool bWindowed_;
 	bool bShowSplash_;
 	QString status_;

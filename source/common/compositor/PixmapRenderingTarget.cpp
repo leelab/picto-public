@@ -1,9 +1,4 @@
-/*! \file RenderingTarget.cpp
- * \ingroup picto_compositor
- * \brief
- */
-
-#include "RenderingTarget.h"
+#include "PixmapRenderingTarget.h"
 
 #include <QApplication>
 #include <QPainter>
@@ -11,12 +6,12 @@
 
 namespace Picto {
 
-RenderingTarget::RenderingTarget(QSharedPointer<VisualTarget> visualTarget,
-								 QSharedPointer<AuralTarget> auralTarget, 
-								 bool bWindowed, 
-								 int width, 
-								 int height, 
-								 QWidget *parent) :
+PixmapRenderingTarget::PixmapRenderingTarget(QSharedPointer<VisualTarget> visualTarget,
+											 QSharedPointer<AuralTarget> auralTarget, 
+											 bool bWindowed, 
+											 int width, 
+											 int height, 
+											 QWidget *parent) :
 	bWindowed_(bWindowed),
 	bShowSplash_(false),
 	QWidget(parent)
@@ -42,28 +37,28 @@ RenderingTarget::RenderingTarget(QSharedPointer<VisualTarget> visualTarget,
     setPalette(pal);
 }
 
-QSharedPointer<CompositingSurface> RenderingTarget::generateCompositingSurface()
+QSharedPointer<CompositingSurface> PixmapRenderingTarget::generateCompositingSurface()
 {
 	return visualTarget_->generateCompositingSurface();
 }
 
-QSharedPointer<MixingSample> RenderingTarget::generateMixingSample()
+QSharedPointer<MixingSample> PixmapRenderingTarget::generateMixingSample()
 {
 	return auralTarget_->generateMixingSample();
 }
 
-void RenderingTarget::updateStatus(QString status)
+void PixmapRenderingTarget::updateStatus(QString status)
 {
 	status_ = status;
 	update();
 }
 
-void RenderingTarget::showSplash(bool visible)
+void PixmapRenderingTarget::showSplash(bool visible)
 {
 	bShowSplash_ = visible;
 }
 
-void RenderingTarget::paintEvent(QPaintEvent *)
+void PixmapRenderingTarget::paintEvent(QPaintEvent *)
 {
 	QPainter painter(this);
 
@@ -83,12 +78,12 @@ void RenderingTarget::paintEvent(QPaintEvent *)
 	}
 }
 
-void RenderingTarget::foundServer(QHostAddress serverAddress, quint16 serverPort)
+void PixmapRenderingTarget::foundServer(QHostAddress serverAddress, quint16 serverPort)
 {
 	updateStatus(QString("Found server at %1:%2").arg(serverAddress.toString()).arg(serverPort));
 }
 
-void RenderingTarget::discoverServerFailed()
+void PixmapRenderingTarget::discoverServerFailed()
 {
 	updateStatus("Server discover failed");
 }

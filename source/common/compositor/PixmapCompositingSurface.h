@@ -3,12 +3,22 @@
 
 #include "common.h"
 
+#include "CompositingSurface.h"
+
+#include <QPixmap>
+
 namespace Picto {
 
-class PixmapCompositingSurface
+class PixmapCompositingSurface : public CompositingSurface
 {
 public:
 	PixmapCompositingSurface();
+
+	void convertImage(QImage image);
+	QString getTypeName();
+
+private:
+	QPixmap pixmap_;
 };
 
 

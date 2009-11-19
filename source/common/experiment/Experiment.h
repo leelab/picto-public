@@ -3,12 +3,21 @@
 
 #include "common.h"
 
+#include "../task/Task.h"
+
+#include <vector>
+
 namespace Picto {
 
 class Experiment
 {
 public:
 	Experiment();
+
+	void addTask(Picto::Task * task);
+
+private:
+	std::vector<Picto::Task *> tasks_;
 };
 
 

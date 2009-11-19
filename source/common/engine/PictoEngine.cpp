@@ -29,5 +29,18 @@ void PictoEngine::endExclusiveMode()
 	/*! \todo Implement Me */
 }
 
+void PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> //experiment
+								 )
+{
+	/*! \todo Implement Me */
+}
+
+void executeTask(Picto::Task * //task
+				 )
+{
+	/*! \todo Implement Me */
+}
+
+
 	}; //namespace Engine
 }; //namespace Picto

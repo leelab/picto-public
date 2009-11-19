@@ -7,7 +7,11 @@
 #define _PICTOENGINE_H_
 
 #include "common.h"
-#include "compositor/RenderingTarget.h"
+#include "../compositor/RenderingTarget.h"
+#include "../experiment/Experiment.h"
+#include "../task/Task.h"
+#include "../network/CommandChannel.h"
+#include "SignalChannel.h"
 
 #include <QSharedPointer>
 
@@ -69,10 +73,17 @@ public:
 	void beginExclusiveMode();
 	void endExclusiveMode();
 
+	void loadExperiment(QSharedPointer<Picto::Experiment> experiment);
+
+	void executeTask(Picto::Task * task);
+
 private:
 
+	QSharedPointer<Picto::Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
 	std::vector<QSharedPointer<RenderingTarget> > RenderingTargets_;
+	std::vector<QSharedPointer<CommandChannel> > CommandChannels_;
+	std::vector<QSharedPointer<SignalChannel> > SignalChannels_;
 	bool bExclusiveMode_;
 };
 

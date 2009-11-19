@@ -1,11 +1,13 @@
 #ifndef _AUDIOELEMENT_H_
 #define _AUDIOELEMENT_H_
 
-#include "common.h"
+#include "../common.h"
+
+#include "StimulusElement.h"
 
 namespace Picto {
 
-class AudioElement
+struct PICTOLIB_CLASS AudioElement : public StimulusElement
 {
 public:
 	AudioElement();

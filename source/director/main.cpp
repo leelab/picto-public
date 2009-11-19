@@ -3,10 +3,16 @@
 #include <QDesktopWidget>
 #include <QPainter>
 #include <QTranslator>
+#include <QSharedPointer>
 
 #include "../common/globals.h"
 #include "../common/network/ServerDiscoverer.h"
 #include "../common/compositor/RenderingTarget.h"
+#include "../common/compositor/PixmapVisualTarget.h"
+#include "../common/compositor/PCMAuralTarget.h"
+#include "../common/compositor/CompositingSurface.h"
+#include "../common/compositor/MixingSample.h"
+#include "../common/stimuli/CircleGraphic.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,12 +45,28 @@ int main(int argc, char *argv[])
 	 *        until successful.  In the future we'll allow for configuring a direct connection manually.
 	 */
 
-	Picto::RenderingTarget renderingTarget(bWindowed);
+	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget(new Picto::PixmapVisualTarget());
+	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
+
+	Picto::RenderingTarget renderingTarget(pixmapVisualTarget, pcmAuralTarget, bWindowed);
 	renderingTarget.showSplash();
 	renderingTarget.updateStatus(QString("Searching for a %1").arg(Picto::Names->serverAppName));
 	renderingTarget.show();
 
 	/*! \todo PictoEngine pictoEngine; */
+//////////////////////////////
+	QSharedPointer<Picto::CompositingSurface> compositingSurface = 
+		renderingTarget.generateCompositingSurface();
+
+	QSharedPointer<Picto::MixingSample> mixingSample = renderingTarget.generateMixingSample();
+
+	QImage testImage(100,100,QImage::Format_ARGB32);
+	compositingSurface->convertImage(testImage);
+
+	QSharedPointer<Picto::CircleGraphic> circleGraphic(
+											new Picto::CircleGraphic(QPoint(10,10),100,QColor(0,255,0,255)));
+	circleGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+//////////////////////////////
 
 	Picto::ServerDiscoverer serverDiscoverer;
 	QObject::connect(&serverDiscoverer, SIGNAL(foundServer(QHostAddress, quint16)), &renderingTarget, SLOT(foundServer(QHostAddress, quint16)));

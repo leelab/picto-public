@@ -6,4 +6,9 @@ Experiment::Experiment()
 {
 }
 
+void Experiment::addTask(Picto::Task * //task
+						 )
+{
+}
+
 }; //namespace Picto
