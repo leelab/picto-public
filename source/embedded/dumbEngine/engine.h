@@ -10,6 +10,7 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 #include "../../common/protocol/protocolcommandhandler.h"
+#include "daqboard/DaqBoard.h"
 
 
 class Engine : public QObject
@@ -17,7 +18,8 @@ class Engine : public QObject
 	Q_OBJECT
 
 public:
-	Engine(QString boxName, QHostAddress addr, QObject* parent = 0);
+	Engine(QString boxName, QHostAddress addr, QObject* parent = 0);\
+	~Engine();
 
 	void runEngine(int trialsPerBlock, int blocks);
 	void testFunction();
@@ -29,8 +31,8 @@ public:
 	QString getName() { return boxName; };
 	void setName(QString name) { boxName = name; };
 
-	int getRewardDuration(int controller) { if(controller>0 && controller <=4) return rewardDurations[controller-1]; else return 0; };
-	void setRewardDuration(int controller, int duration) { if(controller>=0 && controller <4) rewardDurations[controller-1] = duration; };
+	int getRewardDuration(int controller);
+	void setRewardDuration(int controller, int duration);
 
 	int getFlushDuration(int controller) { if(controller>0 && controller <=4) return flushDurations[controller-1]; else return 0; };
 	void setFlushDuration(int controller, int duration) { if(controller>=0 && controller <4) flushDurations[controller-1] = duration; };
@@ -39,6 +41,8 @@ public:
 
 	void startFlush(int controller);
 	void stopFlush(int controller);
+
+	void giveReward(int controller);
 
 private slots:
 	void startTrial();
@@ -54,6 +58,7 @@ private:
 	void deliverResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
 	void sendEngineEvent(QString xmlFragment);
+
 
 	//Timers
 	QTimer *interTrialTimer;
@@ -73,6 +78,7 @@ private:
 	int flushTimeRemain[4];
 	int currTrial;
 	int currBlock;
+	int eventCodeCounter;
 
 	//experiment information
 	int trialsPerBlock;
@@ -80,6 +86,10 @@ private:
 
 	//protocol stuff
 	QMap<QString, QSharedPointer<Picto::ProtocolCommandHandler>> commandHandlers;
+
+	//DAQ board
+	DaqBoard *daqBoard;
+
 };
 
 #endif

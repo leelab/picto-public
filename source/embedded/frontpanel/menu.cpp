@@ -422,7 +422,7 @@ void Menu::userInputSlot(int type)
 		{
 			flushingTimer->stop();
 
-			//send out a start flushing command
+			//send out a stop flushing command
 			QTcpSocket *commSock = panelInfo->getCommandSocket();
 			int controller = panelInfo->getRewardController();
 			Picto::ProtocolCommand command(QString("FPSTOPFLUSH /reward/%1 PICTO/1.0").arg(controller));
@@ -433,6 +433,7 @@ void Menu::userInputSlot(int type)
 			response.read(commSock);
 
 			panelInfo->setDispMode(PanelInfo::MenuMode);
+			emit turnOnBacklight();
 			drawMenu();
 		}
 			
@@ -527,7 +528,7 @@ void Menu::menuAction()
 		else if(menuItems[currItem].name == "Exit")
 		{
 			currItem = menuItems.indexOf(MenuItem("Reward Controls...",0));
-			cursorPos = 1;
+			cursorPos = 2;
 			drawMenu();
 		}
 
@@ -764,8 +765,8 @@ void Menu::initFlushDuration()
 //This is the code used to draw the controller changing panel
 void Menu::drawFlushDuration()
 {
-	int duration = panelInfo->getRewardController();
-	int controller = panelInfo->getFlushDuration();
+	int controller = panelInfo->getRewardController();
+	int duration = panelInfo->getFlushDuration();
 	
 	QString line1 = QString("Flush %1 Duration:").arg(controller);
 	QString line2 = QString("   %1 secs").arg(duration);
@@ -819,7 +820,7 @@ void Menu::drawFlush()
 	int timeRem = engineResponse.getDecodedContent().toInt(&ok);
 	if(!ok)
 		endFlush = true;
-	if(timeRem == 0)
+	if(timeRem <= 0)
 		endFlush = true;
 
 	QString line1 = "Flushing.";

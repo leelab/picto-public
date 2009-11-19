@@ -27,7 +27,6 @@ QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processComma
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
 
-
 	QStringList targetFields = command->getTarget().split('/',QString::SkipEmptyParts);
 	if(targetFields.size()>1)
 	{
@@ -35,9 +34,6 @@ QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processComma
 		int controller = targetFields[1].toInt(&ok);
 		if(ok)
 		{
-			/*! \todo we should actually give a reward here when this is used with 
-			 *  the real engine...
-			 */
 			out<<"\nStarting Flush on controller: "<<controller<<"\n\n";
 			eng->startFlush(controller);
 			return okResponse;

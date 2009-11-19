@@ -13,6 +13,8 @@ FPGETCommandHandler::FPGETCommandHandler()
 
 QSharedPointer<Picto::ProtocolResponse> FPGETCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
+	QTextStream out(stdout);
+
 	QSharedPointer<Picto::ProtocolResponse> response(
 		new Picto::ProtocolResponse(Picto::Names->directorAppName,
 									"PICTO",
@@ -36,8 +38,6 @@ QSharedPointer<Picto::ProtocolResponse> FPGETCommandHandler::processCommand(QSha
 	}
 	else if(command->getTarget().startsWith("/reward"))
 	{
-		QTextStream out(stdout);
-
 		QStringList targetFields = command->getTarget().split('/',QString::SkipEmptyParts);
 		if(targetFields.size()>2 && targetFields[2] == "duration")
 		{

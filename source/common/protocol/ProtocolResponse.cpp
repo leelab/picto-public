@@ -285,7 +285,7 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 {
 	QString commandHeader;
 	QString currentLine;
-	int contentLength;
+	int contentLength=0;
 	
 	if(!socket->waitForReadyRead(1000))
 	{
@@ -337,11 +337,11 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 		fieldKey = currentLine.left(fieldEndPosition);
 		fieldValue = currentLine.mid(fieldEndPosition+2);
 
-		if(fieldKey.compare("Content-Type",Qt::CaseInsensitive))
+		if(!fieldKey.compare("Content-Type",Qt::CaseInsensitive))
 		{
 			setContentType(fieldValue);
 		}
-		else if(fieldKey.compare("Content-Encoding",Qt::CaseInsensitive))
+		else if(!fieldKey.compare("Content-Encoding",Qt::CaseInsensitive))
 		{
 			//this is ugly, but I don't see a better way to get the 
 			//encoding type enum value, since we can't find() on a value...
@@ -360,11 +360,11 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 				return -2;
 			}
 		}
-		else if(fieldKey.compare("Content-Length",Qt::CaseInsensitive))
+		else if(!fieldKey.compare("Content-Length",Qt::CaseInsensitive))
 		{
 			contentLength = fieldValue.toInt();
 		}
-		else if(fieldKey.compare("Server",Qt::CaseInsensitive))
+		else if(!fieldKey.compare("Server",Qt::CaseInsensitive))
 		{
 			serverType = fieldValue;
 			addField(fieldKey,fieldValue);

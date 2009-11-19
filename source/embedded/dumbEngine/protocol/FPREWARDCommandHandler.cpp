@@ -34,9 +34,7 @@ QSharedPointer<Picto::ProtocolResponse> FPREWARDCommandHandler::processCommand(Q
 		int controller = targetFields[1].toInt(&ok);
 		if(ok)
 		{
-			/*! \todo we should actually give a reward here when this is used with 
-			 *  the real engine...
-			 */
+			eng->giveReward(controller);
 			out<<"\n!Reward! Controller "<<controller<<"\n\n";
 			return okResponse;
 		}

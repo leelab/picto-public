@@ -18,10 +18,10 @@ Engine::Engine(QString boxName, QHostAddress addr, QObject *parent) :
 {
 	QTextStream out(stdout);
 
-	rewardDurations[0] = 10;
-	rewardDurations[1] = 20;
-	rewardDurations[2] = 30;
-	rewardDurations[3] = 40;
+	rewardDurations[0] = 100;
+	rewardDurations[1] = 200;
+	rewardDurations[2] = 300;
+	rewardDurations[3] = 400;
 
 	flushDurations[0] = 10;
 	flushDurations[1] = 15;
@@ -71,6 +71,20 @@ Engine::Engine(QString boxName, QHostAddress addr, QObject *parent) :
 	fpstopflushCommandHandler->setEngine(this);
 	commandHandlers[fpstopflushCommandHandler->method()] = fpstopflushCommandHandler;
 
+	//set up the daqboard
+	daqBoard = new DaqBoard();
+
+	unsigned int rewardDurations[] = {100,100,100,100};
+	if(!daqBoard->initRewardController(4,rewardDurations))
+		out<<"Failed to initialize reward controller";
+	if(!daqBoard->initEventLines())
+		out<<"Failed to initialize event lines";
+
+}
+
+Engine::~Engine()
+{
+	delete daqBoard;
 }
 
 void Engine::runEngine(int trialsPerBlock, int blocks)
@@ -90,17 +104,18 @@ void Engine::runEngine(int trialsPerBlock, int blocks)
 	interTrialTimer = new QTimer(this);
 	interTrialTimer->setInterval(500);
 	connect(interTrialTimer,SIGNAL(timeout()), this, SLOT(startTrial()));
+	interTrialTimer->start();
 	
-
 	frameTimer = new QTimer(this);
 	frameTimer->setInterval(17);
 	connect(frameTimer,SIGNAL(timeout()), this, SLOT(doFrame()));
 
-	interTrialTimer->start();
-
 	flushingTimer = new QTimer(this);
 	flushingTimer->setInterval(1000);
 	connect(flushingTimer, SIGNAL(timeout()), this, SLOT(decrementFlushTime()));
+
+	//reset counter
+	eventCodeCounter = 0;
 
 	//Tell the front panel that we are starting
 	QString eventXml = QString("<event type=\"statuschange\" status=\"running\" />");
@@ -113,6 +128,14 @@ void Engine::runEngine(int trialsPerBlock, int blocks)
 //called at the beginning of a trial
 void Engine::startTrial()
 {
+	//deal with event codes
+	/*! \todo Sending the even needs to occur at EXACTLY the same time
+	          as we mark the trial start/end in the behavioral database. */
+	eventCodeCounter++;
+	if(eventCodeCounter >127)
+		eventCodeCounter = 0;
+	daqBoard->sendEvent(eventCodeCounter);
+
 	interTrialTimer->stop();
 	trialTimer->start();
 	frameTimer->start();
@@ -341,27 +364,33 @@ void Engine::deliverResponse(QSharedPointer<Picto::ProtocolResponse> response)
 
 void Engine::startFlush(int controller)
 {
-	flushTimeRemain[controller-1] = flushDurations[controller-1];
-
-	//In the real engine, we'll need to actually do the flushing...
 	QTextStream out(stdout);
 	out<<"Flushing on controller "<<controller<<"\n";
+	if(daqBoard->flushReward(controller, true))
+	{
+		flushTimeRemain[controller-1] = flushDurations[controller-1];
 
-	//if it's not already running, start the timer
-	if(!flushingTimer->isActive())
-		flushingTimer->start();
+		//if it's not already running, start the timer
+		if(!flushingTimer->isActive())
+			flushingTimer->start();
+	}
 
 }
 
 void Engine::stopFlush(int controller)
 {
+	QTextStream out(stdout);
+	out<<"Stopping flushing on controller "<<controller<<"\n";
+
 	flushTimeRemain[controller-1] = -1;
+
+	daqBoard->flushReward(controller, false);
 
 	//if none of the controllers are currently being flushed, 
 	//stop the clock.
 	bool allInactive = true;
 	for(int i=0; i<4; i++)
-		if(flushTimeRemain[controller-1] > 0)
+		if(flushTimeRemain[i] > 0)
 			allInactive = false;
 
 	if(allInactive)
@@ -372,18 +401,31 @@ void Engine::decrementFlushTime()
 {
 	//decrement the flush time for all of the controllers that are currently
 	//being flushed, and stop any where time has expired.
-	for(int i=0; i<4; i++)
+	for(int i=1; i<=4; i++)
 	{
-		if(flushTimeRemain[i] > 0)
-			flushTimeRemain[i]--;
-		if(flushTimeRemain[i] == 0)
+		if(flushTimeRemain[i-1] > 0)
+			flushTimeRemain[i-1]--;
+		if(flushTimeRemain[i-1] == 0)
 			stopFlush(i);
 	}
 
-	QTextStream out(stdout);
-	out<<"tick\n";
+}
+
+void Engine::giveReward(int controller)
+{
+	daqBoard->giveReward(controller);
+}
+int Engine::getRewardDuration(int controller) 
+{
+	return (unsigned int)daqBoard->getRewardDuration(controller);
 
 }
+
+void Engine::setRewardDuration(int controller, int duration) 
+{
+	daqBoard->setRewardDuration(controller,duration);
+}
+
 
 //This function send an ENGEVENT command through the event channel.
 //The command's content will be the passed in XML fragment
@@ -391,9 +433,6 @@ void Engine::sendEngineEvent(QString xmlFragment)
 {
 	//prepend a start document tag so the xml reader doesn't get annoyed
 	xmlFragment.prepend("<?xml version=\"1.0\"?>\n");
-
-	QTextStream out(stdout);
-	out<<"Engine event: "<<xmlFragment<<"\n";
 
 	//create the command
 	Picto::ProtocolCommand command("ENGEVENT /frontpanel PICTO/1.0");
@@ -405,6 +444,7 @@ void Engine::sendEngineEvent(QString xmlFragment)
 	command.write(eventSocket);
 
 }
+
 
 
 

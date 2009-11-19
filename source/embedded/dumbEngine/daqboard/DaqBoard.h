@@ -51,11 +51,19 @@ public:
 	DaqBoard();
 	~DaqBoard();
 
+	//Digital Ouput Functions
+	//-----------------------
+
 	//Reward Controller 
 	bool initRewardController(int _numControllers, unsigned int _rewardDurations[]);
 	bool setRewardDuration(int _controller, unsigned int _duration);
+	unsigned int getRewardDuration(int _controller);
 	bool giveReward(int _controller);
 	bool flushReward(int _controller, bool _flush);
+
+	//Events
+	bool sendEvent(unsigned char _eventCode);
+	bool initEventLines();
 
 	//Analog Input Functions
 	//----------------------
@@ -92,11 +100,12 @@ private:
 	//-----------------
 	HANDLE hDAQ_;
 
-	//Reward Controller
+	//Digital I/O
 	//-----------------
 	unsigned int rewardDurations_[MAX_NUM_REWARD_CONTROLLERS];
 	ULONG rewardBitmasks_[MAX_NUM_REWARD_CONTROLLERS];
 	bool rewardControllersInitialized_;
+	bool eventLinesInitialized_;
 	int activeRewardControllers_;
 
 	//Analog Input

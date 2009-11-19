@@ -10,6 +10,7 @@ INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include .
 SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/main.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/engine.h
 SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/engine.cpp
+
 HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPGETCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPGETCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPPUTCommandHandler.h
@@ -20,6 +21,13 @@ HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTARTFLUSHComman
 SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTARTFLUSHCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTOPFLUSHCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTOPFLUSHCommandHandler.cpp
+
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DaqBoard.h
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DaqBoard_p.h
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DAQ_Driver.h
+HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/registerMap.h
+SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DaqBoard.cpp
+
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
