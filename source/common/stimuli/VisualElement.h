@@ -6,6 +6,7 @@
 #include "StimulusElement.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
+#include "../parameter/ParameterContainer.h"
 
 #include <QImage>
 #include <QSharedPointer>
@@ -20,10 +21,16 @@ public:
 	VisualElement();
 
 	void addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface);
+	QSharedPointer<CompositingSurface> getCompositingSurface(QString surfaceType);
 
 	virtual void draw() = 0;
 	void setRandomNumberGeneratorState(MTRand::uint32 * rng);
 	MTRand::uint32 * getRandomNumberGeneratorState();
+
+	QPoint getPosition();
+	QRect getBoundingRect();
+
+	void setPosition(QPoint position);
 
 protected:
 	QImage image_;
@@ -33,8 +40,9 @@ protected:
 	void updateCompositingSurfaces();
 
 	MTRand random;
-};
 
+	ParameterContainer parameterContainer_;
+};
 
 }; //namespace Picto
 

@@ -18,9 +18,6 @@ public:
 
 	void draw();
 
-private:
-	ParameterContainer parameterContainer_;
-
 private slots:
 	void slotParameterValueChanged(QString parameterName, QVariant parameterValue);
 };

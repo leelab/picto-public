@@ -11,8 +11,6 @@
 #include "VisualTarget.h"
 #include "AuralTarget.h"
 
-#include <QWidget>
-#include <QHostAddress>
 #include <QSharedPointer>
 
 namespace Picto {
@@ -32,36 +30,20 @@ namespace Picto {
  * factory classes for elements that can then be combined by the renderer to produce the final output.
  */
 #if defined WIN32 || defined WINCE
-struct PICTOLIB_API RenderingTarget : QWidget
+struct PICTOLIB_API RenderingTarget
 #else
-struct RenderingTarget : QWidget
+struct RenderingTarget
 #endif
 {
-	Q_OBJECT
-
 public:
-    RenderingTarget(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<AuralTarget> auralTarget, bool bWindowed = false, int width = 800, int height = 600, QWidget *parent = 0);
+    RenderingTarget(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<AuralTarget> auralTarget);
 
-	QSharedPointer<CompositingSurface> generateCompositingSurface();
-	QSharedPointer<MixingSample> generateMixingSample();
-
-	void updateStatus(QString status);
-	void showSplash(bool visible=true);
-
-protected:
-	void paintEvent(QPaintEvent *);
+	virtual QSharedPointer<CompositingSurface> generateCompositingSurface();
+	virtual QSharedPointer<MixingSample> generateMixingSample();
 
 private:
 	QSharedPointer<VisualTarget> visualTarget_;
 	QSharedPointer<AuralTarget> auralTarget_;
-
-	bool bWindowed_;
-	bool bShowSplash_;
-	QString status_;
-
-private slots:
-	void foundServer(QHostAddress serverAddress, quint16 serverPort);
-	void discoverServerFailed();
 };
 
 /*! @} */

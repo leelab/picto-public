@@ -17,6 +17,8 @@ public:
 	void convertImage(QImage image);
 	QString getTypeName();
 
+	QPixmap getPixmap();
+
 private:
 	QPixmap pixmap_;
 };

@@ -19,17 +19,19 @@ public:
 
 	void addParameter(Parameter _parameter);
 	QVariant getParameterValue(QString _parameterName);
+	void setParameterValue(QString _parameterName, QVariant _value);
+	void setContainerName(QString _containerName);
 
 signals:
 	void signalParameterValueChanged(QString parameterName, QVariant parameterValue);
 
 private:
 	QtVariantPropertyManager variantManager_;
-	QtProperty * containerGroupItem_;
-	QMap<QString, QtProperty *> parameters_;
+	QtVariantProperty * containerGroupItem_;
+	QMap<QString, QtVariantProperty *> parameters_;
 
 private slots:
-	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
+	void slotPropertyManagerValueChanged(QtVariantProperty * property, const QVariant & value);
 };
 
 

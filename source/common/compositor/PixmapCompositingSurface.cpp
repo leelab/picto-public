@@ -16,4 +16,9 @@ QString PixmapCompositingSurface::getTypeName()
 	return QString("Pixmap");
 }
 
+QPixmap PixmapCompositingSurface::getPixmap()
+{
+	return pixmap_;
+}
+
 }; //namespace Picto

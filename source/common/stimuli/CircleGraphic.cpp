@@ -4,9 +4,10 @@
 
 namespace Picto {
 
-CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color) :
-	parameterContainer_(QString("Circle Graphic"))
+CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 {
+	parameterContainer_.setContainerName("Circle Graphic");
+
 	parameterContainer_.addParameter(Parameter(QVariant::Point,"Position",position));
 
 	Parameter radiusParameter(QVariant::Int,"Radius",radius);
@@ -33,11 +34,12 @@ void CircleGraphic::draw()
 	int radius = parameterContainer_.getParameterValue("Radius").toInt();
 	QColor color = parameterContainer_.getParameterValue("Color").value<QColor>();
 
-	QImage image(radius*2+1,radius*2+1,QImage::Format_RGB32);
+	QImage image(radius*2+1,radius*2+1,QImage::Format_ARGB32);
 	image.fill(0);
-	QPainter p;
-	p.begin(&image);
+	QPainter p(&image);
+	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(color);
+	p.setPen(color);
 	p.drawEllipse(image.rect());
 	p.end();
 	image_ = image;
@@ -50,7 +52,7 @@ void CircleGraphic::draw()
 void CircleGraphic::slotParameterValueChanged(QString parameterName,
 											  QVariant) //parameterValue
 {
-	if(parameterName != "Position")
+	if(parameterName != "Position" && parameterName != "Name")
 	{
 		draw();
 	}

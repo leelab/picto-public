@@ -18,9 +18,8 @@ public:
 
 	void draw();
 
-private:
-	ParameterContainer parameterContainer_;
-	QString imageFile_;
+private slots:
+	void slotParameterValueChanged(QString parameterName, QVariant parameterValue);
 };
 
 

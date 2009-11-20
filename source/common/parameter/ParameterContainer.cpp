@@ -1,6 +1,6 @@
 #include "ParameterContainer.h"
 
-#include <QtProperty>
+#include <QtVariantProperty>
 
 namespace Picto {
 
@@ -10,10 +10,15 @@ ParameterContainer::ParameterContainer(QString _containerName)
 													  _containerName);
 
 	connect(&variantManager_,
-		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
+		    SIGNAL(valueChanged(QtVariantProperty *, const QVariant &)),
 		    this,
-			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
+			SLOT(slotPropertyManagerValueChanged(QtVariantProperty *, const QVariant &))
 			);
+}
+
+void ParameterContainer::setContainerName(QString _containerName)
+{
+	containerGroupItem_->setValue(_containerName);
 }
 
 void ParameterContainer::addParameter(Parameter _parameter)
@@ -45,10 +50,22 @@ QVariant ParameterContainer::getParameterValue(QString _parameterName)
 	}
 }
 
-void ParameterContainer::slotPropertyManagerValueChanged(QtProperty * property,
+void ParameterContainer::setParameterValue(QString _parameterName, QVariant _value)
+{
+	if(parameters_.contains(_parameterName))
+	{
+		parameters_[_parameterName]->setValue(_value);
+	}
+	else
+	{
+		addParameter(Parameter(_value.type(), _parameterName, _value));
+	}
+}
+
+void ParameterContainer::slotPropertyManagerValueChanged(QtVariantProperty * property,
 														 const QVariant & value)
 {
-	QMapIterator<QString, QtProperty *> paramIterator(parameters_);
+	QMapIterator<QString, QtVariantProperty *> paramIterator(parameters_);
 	while(paramIterator.hasNext())
 	{
 		paramIterator.next();

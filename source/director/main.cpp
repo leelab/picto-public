@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QTranslator>
 #include <QSharedPointer>
+#include <QTimer>
 
 #include "../common/globals.h"
 #include "../common/network/ServerDiscoverer.h"
@@ -13,6 +14,7 @@
 #include "../common/compositor/CompositingSurface.h"
 #include "../common/compositor/MixingSample.h"
 #include "../common/stimuli/CircleGraphic.h"
+#include "../common/stimuli/PictureGraphic.h"
 
 int main(int argc, char *argv[])
 {
@@ -45,32 +47,64 @@ int main(int argc, char *argv[])
 	 *        until successful.  In the future we'll allow for configuring a direct connection manually.
 	 */
 
-	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget(new Picto::PixmapVisualTarget());
+	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget(new Picto::PixmapVisualTarget(bWindowed));
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
 
-	Picto::RenderingTarget renderingTarget(pixmapVisualTarget, pcmAuralTarget, bWindowed);
-	renderingTarget.showSplash();
-	renderingTarget.updateStatus(QString("Searching for a %1").arg(Picto::Names->serverAppName));
-	renderingTarget.show();
+	Picto::RenderingTarget renderingTarget(pixmapVisualTarget, pcmAuralTarget);
+	//renderingTarget.showSplash();
+	//renderingTarget.updateStatus(QString("Searching for a %1").arg(Picto::Names->serverAppName));
+	//renderingTarget.show();
+	pixmapVisualTarget->show();
 
 	/*! \todo PictoEngine pictoEngine; */
 //////////////////////////////
 	QSharedPointer<Picto::CompositingSurface> compositingSurface = 
 		renderingTarget.generateCompositingSurface();
 
-	QSharedPointer<Picto::MixingSample> mixingSample = renderingTarget.generateMixingSample();
-
-	QImage testImage(100,100,QImage::Format_ARGB32);
-	compositingSurface->convertImage(testImage);
-
 	QSharedPointer<Picto::CircleGraphic> circleGraphic(
-											new Picto::CircleGraphic(QPoint(10,10),100,QColor(0,255,0,255)));
+											new Picto::CircleGraphic(QPoint(10,10),100,QColor(0,255,0,200)));
 	circleGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+
+	compositingSurface = renderingTarget.generateCompositingSurface();
+
+	QSharedPointer<Picto::PictureGraphic> pictureGraphic(
+											new Picto::PictureGraphic(QPoint(0,0),":/common/images/splash.png"));
+	pictureGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+	QRect splashScreenRect = pictureGraphic->getBoundingRect();
+	QRect visualTargetRect = pixmapVisualTarget->getDimensions();
+	pictureGraphic->setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,
+								       (visualTargetRect.height()-splashScreenRect.height())/2));
+
+	pixmapVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Pixmap"));
+	pixmapVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Pixmap"));
+
+	pixmapVisualTarget->drawNonExperimentText(QFont("Arial",18),
+											  QColor(Qt::white),
+											  QRect(0,			  
+												   (visualTargetRect.height()-splashScreenRect.height())/2+splashScreenRect.height()+25,
+												   visualTargetRect.width(),
+												   50),
+											  Qt::AlignCenter,
+											  "Testing");
+
+	pixmapVisualTarget->present();
+
 //////////////////////////////
+/*
+void PixmapRenderingTarget::foundServer(QHostAddress serverAddress, quint16 serverPort)
+{
+	updateStatus(QString("Found server at %1:%2").arg(serverAddress.toString()).arg(serverPort));
+}
+
+void PixmapRenderingTarget::discoverServerFailed()
+{
+	updateStatus("Server discover failed");
+}
+*/
 
 	Picto::ServerDiscoverer serverDiscoverer;
-	QObject::connect(&serverDiscoverer, SIGNAL(foundServer(QHostAddress, quint16)), &renderingTarget, SLOT(foundServer(QHostAddress, quint16)));
-	QObject::connect(&serverDiscoverer, SIGNAL(discoverFailed()), &renderingTarget, SLOT(discoverServerFailed()));
+	//QObject::connect(&serverDiscoverer, SIGNAL(foundServer(QHostAddress, quint16)), &renderingTarget, SLOT(foundServer(QHostAddress, quint16)));
+	//QObject::connect(&serverDiscoverer, SIGNAL(discoverFailed()), &renderingTarget, SLOT(discoverServerFailed()));
 
 	serverDiscoverer.discover();
 
