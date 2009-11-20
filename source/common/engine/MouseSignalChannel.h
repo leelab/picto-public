@@ -3,9 +3,11 @@
 
 #include <QTimer>
 #include <QObject>
+#include <QWidget>
 
 #include "../common.h"
 #include "SignalChannel.h"
+
 
 
 namespace Picto {
@@ -19,7 +21,7 @@ class MouseSignalChannel :  public QObject, SignalChannel
 	Q_OBJECT
 
 public:
-	MouseSignalChannel(int sampsPerSecond);
+	MouseSignalChannel(int sampsPerSecond, QWidget *widget);
 	~MouseSignalChannel() {};
 
 	bool start();
@@ -31,6 +33,7 @@ private slots:
 
 private:
 	QTimer *pollingTimer;
+	QWidget *widget;  //used for coordinate translation
 
 };
 

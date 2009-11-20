@@ -83,6 +83,8 @@
    <file alias="_interactive_s_t_d_i_o_handler_8h.html">../../../output/documentation/main/html/_interactive_s_t_d_i_o_handler_8h.html</file>
    <file alias="_interval_controller_8cpp-source.html">../../../output/documentation/main/html/_interval_controller_8cpp-source.html</file>
    <file alias="_interval_controller_8h-source.html">../../../output/documentation/main/html/_interval_controller_8h-source.html</file>
+   <file alias="_line_graphic_8cpp-source.html">../../../output/documentation/main/html/_line_graphic_8cpp-source.html</file>
+   <file alias="_line_graphic_8h-source.html">../../../output/documentation/main/html/_line_graphic_8h-source.html</file>
    <file alias="_local_field_potential_data_store_8cpp-source.html">../../../output/documentation/main/html/_local_field_potential_data_store_8cpp-source.html</file>
    <file alias="_local_field_potential_data_store_8h-source.html">../../../output/documentation/main/html/_local_field_potential_data_store_8h-source.html</file>
    <file alias="_magnetic_resonance_imaging_data_store_8cpp-source.html">../../../output/documentation/main/html/_magnetic_resonance_imaging_data_store_8cpp-source.html</file>
@@ -122,8 +124,6 @@
    <file alias="_picture_graphic_8h-source.html">../../../output/documentation/main/html/_picture_graphic_8h-source.html</file>
    <file alias="_pixmap_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_pixmap_compositing_surface_8cpp-source.html</file>
    <file alias="_pixmap_compositing_surface_8h-source.html">../../../output/documentation/main/html/_pixmap_compositing_surface_8h-source.html</file>
-   <file alias="_pixmap_rendering_target_8cpp-source.html">../../../output/documentation/main/html/_pixmap_rendering_target_8cpp-source.html</file>
-   <file alias="_pixmap_rendering_target_8h-source.html">../../../output/documentation/main/html/_pixmap_rendering_target_8h-source.html</file>
    <file alias="_pixmap_visual_target_8cpp-source.html">../../../output/documentation/main/html/_pixmap_visual_target_8cpp-source.html</file>
    <file alias="_pixmap_visual_target_8h-source.html">../../../output/documentation/main/html/_pixmap_visual_target_8h-source.html</file>
    <file alias="_plexon_interface_8cpp-source.html">../../../output/documentation/main/html/_plexon_interface_8cpp-source.html</file>
