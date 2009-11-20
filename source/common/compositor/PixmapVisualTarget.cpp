@@ -25,6 +25,9 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 	{
 		resize(width_, height_);
 	}
+	setAttribute(Qt::WA_NativeWindow,true);
+	winId();
+	setAttribute(Qt::WA_PaintOnScreen,true);
 
     QPalette pal = palette();
     pal.setColor(QPalette::Window, Qt::black);
@@ -71,11 +74,11 @@ void PixmapVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface
 void PixmapVisualTarget::present()
 {
 	surfaceActingAsBackBuffer_ = ~surfaceActingAsBackBuffer_ & 1;
-
+/*
 	QPainter painter(this);
 
 	painter.drawPixmap(QPoint(0,0),pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1]);
-
+*/
 	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,0,0,0));
 
 	repaint();

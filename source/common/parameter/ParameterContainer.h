@@ -32,7 +32,7 @@ private:
 	QMap<QString, QtVariantProperty *> parameters_;
 
 private slots:
-	void slotPropertyManagerValueChanged(QtVariantProperty * property, const QVariant & value);
+	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
 };
 
 

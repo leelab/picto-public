@@ -6,8 +6,13 @@
 
 #include <QMetaType>
 #include <QHostAddress>
+#include <QMap>
+#include <QString>
+#include <QVariant>
 
 Q_DECLARE_METATYPE(QHostAddress);
+typedef QMap<QString, QVariant> test;
+Q_DECLARE_METATYPE(test);
 
 namespace Picto {
 
@@ -18,6 +23,7 @@ QTranslator * commonTranslator = NULL;
 void InitializeMetaTypes()
 {
 	qRegisterMetaType<QHostAddress>();
+	qRegisterMetaType<QMap<QString, QVariant> >();
 }
 
 void InitializeLib(QCoreApplication * coreApp, QString localeLanguageCode)

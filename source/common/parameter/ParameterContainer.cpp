@@ -10,9 +10,9 @@ ParameterContainer::ParameterContainer(QString _containerName)
 													  _containerName);
 
 	connect(&variantManager_,
-		    SIGNAL(valueChanged(QtVariantProperty *, const QVariant &)),
+		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
 		    this,
-			SLOT(slotPropertyManagerValueChanged(QtVariantProperty *, const QVariant &))
+			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
 			);
 }
 
@@ -67,7 +67,7 @@ void ParameterContainer::setParameterValue(QString _parameterName, QVariant _val
 	}
 }
 
-void ParameterContainer::slotPropertyManagerValueChanged(QtVariantProperty * property,
+void ParameterContainer::slotPropertyManagerValueChanged(QtProperty * property,
 														 const QVariant & value)
 {
 	QMapIterator<QString, QtVariantProperty *> paramIterator(parameters_);

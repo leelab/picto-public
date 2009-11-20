@@ -6,4 +6,9 @@ StateMachineElement::StateMachineElement()
 {
 }
 
+QPoint StateMachineElement::getDisplayLayoutPosition()
+{
+	return layoutPosition_;
+}
+
 }; //namespace Picto

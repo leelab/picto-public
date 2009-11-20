@@ -4,20 +4,36 @@
 #include "common.h"
 
 #include "../task/Task.h"
+#include "../storage/DataStore.h"
+#include "../parameter/ParameterContainer.h"
+#include "../parameter/Parameter.h"
+#include "SessionData.h"
+#include "MediaItem.h"
+#include "Calibration.h"
 
-#include <vector>
+#include <QList>
+#include <QSharedPointer>
 
 namespace Picto {
 
-class Experiment
+class Experiment : public DataStore
 {
 public:
 	Experiment();
 
 	void addTask(Picto::Task * task);
 
+
 private:
-	std::vector<Picto::Task *> tasks_;
+	QUuid uuid_;
+	QString formatID_;
+	unsigned int revision_;
+	QList<QSharedPointer<Task> > tasks_;
+	QList<QSharedPointer<SessionData> > sessionDataElements_;
+	QList<QSharedPointer<Calibration> > calibrations_;
+	QList<QSharedPointer<MediaItem> > mediaItems_;
+
+	ParameterContainer parameterContainer_;
 };
 
 
