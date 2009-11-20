@@ -22,12 +22,7 @@ SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTARTFLUSHComman
 HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTOPFLUSHCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/protocol/FPSTOPFLUSHCommandHandler.cpp
 
-HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DaqBoard.h
-HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DaqBoard_p.h
-HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DAQ_Driver.h
-HEADERS += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/registerMap.h
-SOURCES += $$(PICTO_TREE)/source/embedded/dumbengine/daqboard/DaqBoard.cpp
-
+include($$(PICTO_TREE)/source/common/common.pri)
 
 # Output
 build_pass:CONFIG(debug, debug|release) {

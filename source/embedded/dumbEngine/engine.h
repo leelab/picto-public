@@ -10,7 +10,7 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 #include "../../common/protocol/protocolcommandhandler.h"
-#include "daqboard/DaqBoard.h"
+#include "../../common/iodevices/PictoBoxDaqBoard.h"
 
 
 class Engine : public QObject
@@ -88,7 +88,7 @@ private:
 	QMap<QString, QSharedPointer<Picto::ProtocolCommandHandler>> commandHandlers;
 
 	//DAQ board
-	DaqBoard *daqBoard;
+	Picto::PictoBoxDaqBoard *daqBoard;
 
 };
 

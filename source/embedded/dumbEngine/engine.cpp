@@ -72,7 +72,7 @@ Engine::Engine(QString boxName, QHostAddress addr, QObject *parent) :
 	commandHandlers[fpstopflushCommandHandler->method()] = fpstopflushCommandHandler;
 
 	//set up the daqboard
-	daqBoard = new DaqBoard();
+	daqBoard = new Picto::PictoBoxDaqBoard();
 
 	unsigned int rewardDurations[] = {100,100,100,100};
 	if(!daqBoard->initRewardController(4,rewardDurations))
