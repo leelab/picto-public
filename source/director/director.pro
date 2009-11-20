@@ -7,6 +7,8 @@ INCLUDEPATH += .
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/director/main.cpp
+SOURCES += $$(PICTO_TREE)/source/director/SignalChannelTest.cpp
+HEADERS += $$(PICTO_TREE)/source/director/SignalChannelTest.h
 
 include($$(PICTO_TREE)/source/common/common.pri)
 

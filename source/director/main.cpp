@@ -18,6 +18,8 @@
 #include "../common/stimuli/LineGraphic.h"
 #include "../common/stimuli/BoxGraphic.h"
 
+#include "SignalChannelTest.h"
+
 int main(int argc, char *argv[])
 {
 	bool bWindowed = false;
@@ -114,6 +116,11 @@ int main(int argc, char *argv[])
 											  "Testing");
 
 	pixmapVisualTarget->present();
+
+	/*************************************************
+	 * Testing the signal channel
+	 *************************************************/
+	SignalChannelTest sigChanTest(pixmapVisualTarget);
 
 //////////////////////////////
 /*

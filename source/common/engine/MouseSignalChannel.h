@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QObject>
 #include <QWidget>
+#include <QSharedPointer>
 
 #include "../common.h"
 #include "SignalChannel.h"
@@ -13,15 +14,15 @@
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API MouseSignalChannel : public QObject, SignalChannel
+class PICTOLIB_API MouseSignalChannel : public QObject, public SignalChannel
 #else
-class MouseSignalChannel :  public QObject, SignalChannel
+class MouseSignalChannel :  public QObject, public SignalChannel
 #endif
 {
 	Q_OBJECT
 
 public:
-	MouseSignalChannel(int sampsPerSecond, QWidget *widget);
+	MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget);
 	~MouseSignalChannel() {};
 
 	bool start();
@@ -33,7 +34,7 @@ private slots:
 
 private:
 	QTimer *pollingTimer;
-	QWidget *widget;  //used for coordinate translation
+	QSharedPointer<QWidget> widget;  //used for coordinate translation
 
 };
 

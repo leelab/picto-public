@@ -30,6 +30,13 @@ void SignalChannel::addSubchannel(QString subchannelName)
 	QList<double> data;
 	if(!rawDataBuffer.contains(subchannelName))
 		rawDataBuffer[subchannelName] = data;
+	
+	if(!scaleFactorsMap.contains(subchannelName))
+	{
+		scaleFactorsMap[subchannelName].scaleB = 1;
+		scaleFactorsMap[subchannelName].scaleA = 0;
+	}
+
 }
 
 
@@ -38,9 +45,9 @@ QMap<QString, QList<double> > SignalChannel::getValues()
 	QMap<QString, QList<double> > dataBuffer = getRawValues();
 
 	//scale the values
-	QMap<QString, QList<double> >::iterator x = rawDataBuffer.begin();
+	QMap<QString, QList<double> >::iterator x = dataBuffer.begin();
 
-	while(x != rawDataBuffer.end())
+	while(x != dataBuffer.end())
 	{
 		for(int y=0; y<x.value().size(); y++)
 		{
@@ -60,7 +67,7 @@ QMap<QString, QList<double> > SignalChannel::getRawValues()
 
 	QMap<QString, QList<double> > dataBuffer = rawDataBuffer;
 	
-	//clear out the data
+	//clear out the raw data
 	QMap<QString, QList<double> >::iterator x = rawDataBuffer.begin();
 
 	while(x != rawDataBuffer.end())

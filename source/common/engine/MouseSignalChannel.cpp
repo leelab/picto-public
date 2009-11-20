@@ -5,18 +5,19 @@
 
 namespace Picto {
 
-MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QWidget *widget)
+MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget)
 	: SignalChannel(sampsPerSecond),
 	  widget(widget)
 {
 	//add our subchannels to the list
-	QList<double> list;
-	rawDataBuffer["xpos"]= list;
-	rawDataBuffer["ypos"]= list;
+	addSubchannel("xpos");
+	addSubchannel("ypos");
+
+	//Since this is coordinate data, there doesn't need to be any calibration
 
 	pollingTimer = new QTimer(this);
 	pollingTimer->setInterval(1000/sampsPerSecond);
-	connect(pollingTimer, SIGNAL(timeout()), this, SIGNAL(pollMouse()));
+	connect(pollingTimer, SIGNAL(timeout()), this, SLOT(pollMouse()));
 }
 
 bool MouseSignalChannel::start()
