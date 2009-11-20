@@ -1,5 +1,5 @@
-#ifndef _BOXGRAPHIC_H_
-#define _BOXGRAPHIC_H_
+#ifndef _LINEGRAPHIC_H_
+#define _LINEGRAPHIC_H_
 
 #include "../common.h"
 
@@ -7,14 +7,17 @@
 #include "../parameter/ParameterContainer.h"
 #include "../parameter/Parameter.h"
 
+#include <QVector>
+#include <QPoint>
+
 namespace Picto {
 
-class PICTOLIB_CLASS BoxGraphic : public VisualElement
+class PICTOLIB_CLASS LineGraphic : public VisualElement
 {
 	Q_OBJECT
 
 public:
-	BoxGraphic(QPoint position, QRect dimensions, QColor color);
+	LineGraphic(QPoint position, QVector<QPoint>, QColor color);
 
 	void draw();
 

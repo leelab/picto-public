@@ -38,6 +38,11 @@ void ParameterContainer::addParameter(Parameter _parameter)
 	parameters_[_parameter.name()] = item;
 }
 
+QList<QString> ParameterContainer::getParameterList()
+{
+	return parameters_.keys();
+}
+
 QVariant ParameterContainer::getParameterValue(QString _parameterName)
 {
 	if(parameters_.contains(_parameterName))

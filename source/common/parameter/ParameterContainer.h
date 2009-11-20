@@ -21,6 +21,7 @@ public:
 	QVariant getParameterValue(QString _parameterName);
 	void setParameterValue(QString _parameterName, QVariant _value);
 	void setContainerName(QString _containerName);
+	QList<QString> getParameterList();
 
 signals:
 	void signalParameterValueChanged(QString parameterName, QVariant parameterValue);

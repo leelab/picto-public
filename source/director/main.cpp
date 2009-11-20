@@ -15,6 +15,8 @@
 #include "../common/compositor/MixingSample.h"
 #include "../common/stimuli/CircleGraphic.h"
 #include "../common/stimuli/PictureGraphic.h"
+#include "../common/stimuli/LineGraphic.h"
+#include "../common/stimuli/BoxGraphic.h"
 
 int main(int argc, char *argv[])
 {
@@ -75,8 +77,32 @@ int main(int argc, char *argv[])
 	pictureGraphic->setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,
 								       (visualTargetRect.height()-splashScreenRect.height())/2));
 
+	compositingSurface = renderingTarget.generateCompositingSurface();
+
+	QVector<QPoint> points;
+	points.push_back(QPoint(10,10));
+	points.push_back(QPoint(790,590));
+	points.push_back(QPoint(10,590));
+	points.push_back(QPoint(790,10));
+	points.push_back(QPoint(10,10));
+	points.push_back(QPoint(10,590));
+	points.push_back(QPoint(790,590));
+	points.push_back(QPoint(790,10));
+	QSharedPointer<Picto::LineGraphic> lineGraphic(
+		new Picto::LineGraphic(QPoint(0,0),points,QColor(255,0,0,255)));
+	lineGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+
+	compositingSurface = renderingTarget.generateCompositingSurface();
+
+	QRect dimensions(0,0,200,150);
+	QSharedPointer<Picto::BoxGraphic> boxGraphic(
+		new Picto::BoxGraphic(QPoint(550,400),dimensions,QColor(0,0,255,255)));
+	boxGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+
 	pixmapVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Pixmap"));
+	pixmapVisualTarget->draw(lineGraphic->getPosition(), lineGraphic->getCompositingSurface("Pixmap"));
+	pixmapVisualTarget->draw(boxGraphic->getPosition(), boxGraphic->getCompositingSurface("Pixmap"));
 
 	pixmapVisualTarget->drawNonExperimentText(QFont("Arial",18),
 											  QColor(Qt::white),
