@@ -18,6 +18,8 @@ SignalChannelTest::SignalChannelTest(QSharedPointer<Picto::PixmapVisualTarget> p
 	frameTimer->setInterval(17);
 	connect(frameTimer, SIGNAL(timeout()), this, SLOT(doFrame()));
 	frameTimer->start();
+
+	elapsedTime.start();
 }
 
 SignalChannelTest::~SignalChannelTest()
@@ -45,11 +47,19 @@ void SignalChannelTest::doFrame()
 
 	QString text = QString("(%1, %2)").arg(xpos).arg(ypos);
 
+
 	pixmapVisualTarget->drawNonExperimentText(QFont("Arial",18),
 											  QColor(Qt::white),
-											  QRect(50,10,200,50),
+											  QRect(frameCounter%1280,10,200,50),
 											  Qt::AlignCenter,
 											  text);
+
 	pixmapVisualTarget->present();
+
+	text = QString("%1 - %2").arg(frameCounter).arg(elapsedTime.elapsed());
+
+	printf(text.toAscii().data());
+	printf("\n");
+	elapsedTime.restart();
 }
 

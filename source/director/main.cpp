@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
 	//renderingTarget.showSplash();
 	//renderingTarget.updateStatus(QString("Searching for a %1").arg(Picto::Names->serverAppName));
 	//renderingTarget.show();
+
 	pixmapVisualTarget->show();
 
 	/*! \todo PictoEngine pictoEngine; */

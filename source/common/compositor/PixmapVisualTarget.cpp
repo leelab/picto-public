@@ -78,7 +78,7 @@ void PixmapVisualTarget::present()
 
 	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,0,0,0));
 
-	update();
+	repaint();
 }
 
 void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)

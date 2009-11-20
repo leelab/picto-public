@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QTime>
 #include <QSharedPointer>
 
 #include "../common/compositor/PixmapVisualTarget.h"
@@ -21,6 +22,7 @@ public slots:
 
 private:
 	QTimer *frameTimer;
+	QTime elapsedTime;
 	
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget;
 
