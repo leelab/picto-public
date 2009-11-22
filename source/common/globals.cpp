@@ -11,8 +11,6 @@
 #include <QVariant>
 
 Q_DECLARE_METATYPE(QHostAddress);
-typedef QMap<QString, QVariant> test;
-Q_DECLARE_METATYPE(test);
 
 namespace Picto {
 

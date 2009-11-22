@@ -6,7 +6,7 @@
 #include "StimulusElement.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
-#include "../parameter/ParameterContainer.h"
+#include "../property/PropertyContainer.h"
 
 #include <QImage>
 #include <QSharedPointer>
@@ -41,7 +41,7 @@ protected:
 
 	MTRand random;
 
-	ParameterContainer parameterContainer_;
+	PropertyContainer propertyContainer_;
 };
 
 }; //namespace Picto

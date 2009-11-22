@@ -3,9 +3,9 @@
 namespace Picto {
 
 Task::Task() :
-	parameterContainer_("Task")
+	propertyContainer_("Task")
 {
-	parameterContainer_.addParameter(Parameter(QVariant::String,"Name","Unnamed Task"));
+	propertyContainer_.addProperty(Property(QVariant::String,"Name","Unnamed Task"));
 }
 
 }; //namespace Picto

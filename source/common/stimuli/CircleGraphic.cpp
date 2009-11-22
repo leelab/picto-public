@@ -6,33 +6,33 @@ namespace Picto {
 
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 {
-	parameterContainer_.setContainerName("Circle Graphic");
+	propertyContainer_.setContainerName("Circle Graphic");
 
-	parameterContainer_.addParameter(Parameter(QVariant::Point,"Position",position));
+	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
-	Parameter radiusParameter(QVariant::Int,"Radius",radius);
-	radiusParameter.addAttribute("minimum", 1);
-	radiusParameter.addAttribute("maximum", 1000);
-	radiusParameter.addAttribute("singleStep", 1);
-	parameterContainer_.addParameter(radiusParameter);
+	Property radiusProperty(QVariant::Int,"Radius",radius);
+	radiusProperty.addAttribute("minimum", 1);
+	radiusProperty.addAttribute("maximum", 1000);
+	radiusProperty.addAttribute("singleStep", 1);
+	propertyContainer_.addProperty(radiusProperty);
 
-	parameterContainer_.addParameter(Parameter(QVariant::Color,"Color",color));
+	propertyContainer_.addProperty(Property(QVariant::Color,"Color",color));
 
-	parameterContainer_.addParameter(Parameter(QVariant::String,"Name",""));
+	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
 
 	draw();
 
-	connect(&parameterContainer_,
-		    SIGNAL(signalParameterValueChanged(QString, QVariant)),
+	connect(&propertyContainer_,
+		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
 		    this,
-			SLOT(slotParameterValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, QVariant))
 			);
 }
 
 void CircleGraphic::draw()
 {
-	int radius = parameterContainer_.getParameterValue("Radius").toInt();
-	QColor color = parameterContainer_.getParameterValue("Color").value<QColor>();
+	int radius = propertyContainer_.getPropertyValue("Radius").toInt();
+	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
 
 	QImage image(radius*2+1,radius*2+1,QImage::Format_ARGB32);
 	image.fill(0);
@@ -49,10 +49,10 @@ void CircleGraphic::draw()
 	shouldRedrawImage_ = false;
 }
 
-void CircleGraphic::slotParameterValueChanged(QString parameterName,
-											  QVariant) //parameterValue
+void CircleGraphic::slotPropertyValueChanged(QString propertyName,
+											  QVariant) //propertyValue
 {
-	if(parameterName != "Position" && parameterName != "Name")
+	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}

@@ -5,8 +5,8 @@
 
 #include "../task/Task.h"
 #include "../storage/DataStore.h"
-#include "../parameter/ParameterContainer.h"
-#include "../parameter/Parameter.h"
+#include "../property/PropertyContainer.h"
+#include "../property/Property.h"
 #include "SessionData.h"
 #include "MediaItem.h"
 #include "Calibration.h"
@@ -33,7 +33,7 @@ private:
 	QList<QSharedPointer<Calibration> > calibrations_;
 	QList<QSharedPointer<MediaItem> > mediaItems_;
 
-	ParameterContainer parameterContainer_;
+	PropertyContainer propertyContainer_;
 };
 
 

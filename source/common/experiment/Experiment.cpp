@@ -4,9 +4,9 @@ namespace Picto {
 
 Experiment::Experiment() :
 	formatID_("1.0.0.0"),
-	parameterContainer_("Experiment")
+	propertyContainer_("Experiment")
 {
-	parameterContainer_.addParameter(Parameter(QVariant::String,"Name","Unnamed Experiment"));
+	propertyContainer_.addProperty(Property(QVariant::String,"Name","Unnamed Experiment"));
 }
 
 void Experiment::addTask(Picto::Task * //task

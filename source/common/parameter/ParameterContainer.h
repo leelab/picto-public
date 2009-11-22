@@ -5,8 +5,7 @@
 
 #include "Parameter.h"
 
-#include <QtVariantPropertyManager>
-#include <QString>
+#include <QObject>
 
 namespace Picto {
 
@@ -15,24 +14,13 @@ class ParameterContainer : public QObject
 	Q_OBJECT
 
 public:
-	ParameterContainer(QString _containerName);
+	ParameterContainer();
 
-	void addParameter(Parameter _parameter);
-	QVariant getParameterValue(QString _parameterName);
-	void setParameterValue(QString _parameterName, QVariant _value);
-	void setContainerName(QString _containerName);
-	QList<QString> getParameterList();
+//signals:
+//	void signalParameterValueChanged(QString parameterName, QVariant parameterValue);
 
-signals:
-	void signalParameterValueChanged(QString parameterName, QVariant parameterValue);
-
-private:
-	QtVariantPropertyManager variantManager_;
-	QtVariantProperty * containerGroupItem_;
-	QMap<QString, QtVariantProperty *> parameters_;
-
-private slots:
-	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
+//private slots:
+//	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
 };
 
 

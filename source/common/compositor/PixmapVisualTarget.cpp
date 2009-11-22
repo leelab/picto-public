@@ -74,11 +74,7 @@ void PixmapVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface
 void PixmapVisualTarget::present()
 {
 	surfaceActingAsBackBuffer_ = ~surfaceActingAsBackBuffer_ & 1;
-/*
-	QPainter painter(this);
 
-	painter.drawPixmap(QPoint(0,0),pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1]);
-*/
 	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,0,0,0));
 
 	repaint();

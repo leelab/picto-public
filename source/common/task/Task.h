@@ -4,6 +4,7 @@
 #include "../common.h"
 #include "../storage/DataStore.h"
 #include "../parameter/ParameterContainer.h"
+#include "../property/PropertyContainer.h"
 
 #include <QUuid>
 
@@ -18,6 +19,7 @@ private:
 	QUuid uuid_;
 	unsigned int revision_;
 
+	PropertyContainer propertyContainer_;
 	ParameterContainer parameterContainer_;
 };
 

@@ -115,6 +115,11 @@ SOURCES += $$(PICTO_TREE)/source/common/parameter/Parameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.cpp
 
+HEADERS += $$(PICTO_TREE)/source/common/property/Property.h
+SOURCES += $$(PICTO_TREE)/source/common/property/Property.cpp
+HEADERS += $$(PICTO_TREE)/source/common/property/PropertyContainer.h
+SOURCES += $$(PICTO_TREE)/source/common/property/PropertyContainer.cpp
+
 HEADERS += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/protocol/DiscoverCommandHandler.h

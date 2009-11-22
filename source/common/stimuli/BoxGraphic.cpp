@@ -6,30 +6,30 @@ namespace Picto {
 
 BoxGraphic::BoxGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	parameterContainer_.setContainerName("Box Graphic");
+	propertyContainer_.setContainerName("Box Graphic");
 
-	parameterContainer_.addParameter(Parameter(QVariant::Point,"Position",position));
+	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
-	Parameter dimensionsParameter(QVariant::Rect,"Dimensions",dimensions);
-	parameterContainer_.addParameter(dimensionsParameter);
+	Property dimensionsProperty(QVariant::Rect,"Dimensions",dimensions);
+	propertyContainer_.addProperty(dimensionsProperty);
 
-	parameterContainer_.addParameter(Parameter(QVariant::Color,"Color",color));
+	propertyContainer_.addProperty(Property(QVariant::Color,"Color",color));
 
-	parameterContainer_.addParameter(Parameter(QVariant::String,"Name",""));
+	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
 
 	draw();
 
-	connect(&parameterContainer_,
-		    SIGNAL(signalParameterValueChanged(QString, QVariant)),
+	connect(&propertyContainer_,
+		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
 		    this,
-			SLOT(slotParameterValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, QVariant))
 			);
 }
 
 void BoxGraphic::draw()
 {
-	QRect dimensions = parameterContainer_.getParameterValue("Dimensions").toRect();
-	QColor color = parameterContainer_.getParameterValue("Color").value<QColor>();
+	QRect dimensions = propertyContainer_.getPropertyValue("Dimensions").toRect();
+	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
 	image.fill(0);
@@ -46,10 +46,10 @@ void BoxGraphic::draw()
 	shouldRedrawImage_ = false;
 }
 
-void BoxGraphic::slotParameterValueChanged(QString parameterName,
-											  QVariant) //parameterValue
+void BoxGraphic::slotPropertyValueChanged(QString propertyName,
+											  QVariant) //propertyValue
 {
-	if(parameterName != "Position" && parameterName != "Name")
+	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}

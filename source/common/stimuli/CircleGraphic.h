@@ -4,8 +4,8 @@
 #include "../common.h"
 
 #include "VisualElement.h"
-#include "../parameter/ParameterContainer.h"
-#include "../parameter/Parameter.h"
+#include "../property/PropertyContainer.h"
+#include "../property/Property.h"
 
 namespace Picto {
 
@@ -19,7 +19,7 @@ public:
 	void draw();
 
 private slots:
-	void slotParameterValueChanged(QString parameterName, QVariant parameterValue);
+	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
 };
 
 

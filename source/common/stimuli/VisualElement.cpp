@@ -4,13 +4,13 @@ namespace Picto {
 
 VisualElement::VisualElement() :
 	shouldRedrawImage_(true),
-	parameterContainer_("Visual Element")
+	propertyContainer_("Visual Element")
 {
 }
 
 QPoint VisualElement::getPosition()
 {
-	QVariant positionVariant = parameterContainer_.getParameterValue("Position");
+	QVariant positionVariant = propertyContainer_.getPropertyValue("Position");
 
 	if(positionVariant == QVariant::Invalid)
 	{
@@ -29,7 +29,7 @@ QRect VisualElement::getBoundingRect()
 
 void VisualElement::setPosition(QPoint position)
 {
-	parameterContainer_.setParameterValue("Position",position);
+	propertyContainer_.setPropertyValue("Position",position);
 }
 
 void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface)

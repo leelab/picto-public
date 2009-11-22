@@ -6,26 +6,26 @@ namespace Picto {
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 {
-	parameterContainer_.setContainerName("Line Graphic");
+	propertyContainer_.setContainerName("Line Graphic");
 
-	parameterContainer_.addParameter(Parameter(QVariant::Point,"Position",position));
+	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
 	for(int i = 0; i < points.count(); i++)
 	{
-		Parameter pointParameter(QVariant::Point,QString("Point %1").arg(i),points[i]);
-		parameterContainer_.addParameter(pointParameter);
+		Property pointProperty(QVariant::Point,QString("Point %1").arg(i),points[i]);
+		propertyContainer_.addProperty(pointProperty);
 	}
 
-	parameterContainer_.addParameter(Parameter(QVariant::Color,"Color",color));
+	propertyContainer_.addProperty(Property(QVariant::Color,"Color",color));
 
-	parameterContainer_.addParameter(Parameter(QVariant::String,"Name",""));
+	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
 
 	draw();
 
-	connect(&parameterContainer_,
-		    SIGNAL(signalParameterValueChanged(QString, QVariant)),
+	connect(&propertyContainer_,
+		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
 		    this,
-			SLOT(slotParameterValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, QVariant))
 			);
 }
 
@@ -34,11 +34,11 @@ void LineGraphic::draw()
 	QVector<QPoint> points;
 	int left = 0, top = 0, right = 0, bottom = 0;
 
-	foreach(QString parameterName, parameterContainer_.getParameterList())
+	foreach(QString propertyName, propertyContainer_.getPropertyList())
 	{
-		if(parameterName.left(5)=="Point")
+		if(propertyName.left(5)=="Point")
 		{
-			QPoint point = parameterContainer_.getParameterValue(parameterName).toPoint();
+			QPoint point = propertyContainer_.getPropertyValue(propertyName).toPoint();
 			points.push_back(point);
 
 			if(point.x() < left) left = point.x();
@@ -48,7 +48,7 @@ void LineGraphic::draw()
 		}
 	}
 
-	QColor color = parameterContainer_.getParameterValue("Color").value<QColor>();
+	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
 
 	QImage image(right-left,bottom-top,QImage::Format_ARGB32);
 	image.fill(0);
@@ -68,10 +68,10 @@ void LineGraphic::draw()
 	shouldRedrawImage_ = false;
 }
 
-void LineGraphic::slotParameterValueChanged(QString parameterName,
-											  QVariant) //parameterValue
+void LineGraphic::slotPropertyValueChanged(QString propertyName,
+											  QVariant) //propertyValue
 {
-	if(parameterName != "Position" && parameterName != "Name")
+	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}

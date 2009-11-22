@@ -4,69 +4,11 @@
 
 namespace Picto {
 
-ParameterContainer::ParameterContainer(QString _containerName)
+ParameterContainer::ParameterContainer()
 {
-    containerGroupItem_ = variantManager_.addProperty(QtVariantPropertyManager::groupTypeId(),
-													  _containerName);
-
-	connect(&variantManager_,
-		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
-		    this,
-			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
-			);
 }
 
-void ParameterContainer::setContainerName(QString _containerName)
-{
-	containerGroupItem_->setValue(_containerName);
-}
-
-void ParameterContainer::addParameter(Parameter _parameter)
-{
-    QtVariantProperty *item = variantManager_.addProperty(_parameter.type(),
-														  _parameter.name());
-
-	item->setValue(_parameter.value());
-
-	QMap<QString, QVariant> attributes = _parameter.getAttributes();
-	foreach(QString attributeName, attributes.keys())
-	{
-		item->setAttribute(attributeName, attributes.value(attributeName));
-	}
-
-	containerGroupItem_->addSubProperty(item);
-	parameters_[_parameter.name()] = item;
-}
-
-QList<QString> ParameterContainer::getParameterList()
-{
-	return parameters_.keys();
-}
-
-QVariant ParameterContainer::getParameterValue(QString _parameterName)
-{
-	if(parameters_.contains(_parameterName))
-	{
-		return variantManager_.value(parameters_[_parameterName]);
-	}
-	else
-	{
-		return QVariant(QVariant::Invalid);
-	}
-}
-
-void ParameterContainer::setParameterValue(QString _parameterName, QVariant _value)
-{
-	if(parameters_.contains(_parameterName))
-	{
-		parameters_[_parameterName]->setValue(_value);
-	}
-	else
-	{
-		addParameter(Parameter(_value.type(), _parameterName, _value));
-	}
-}
-
+/*
 void ParameterContainer::slotPropertyManagerValueChanged(QtProperty * property,
 														 const QVariant & value)
 {
@@ -81,5 +23,6 @@ void ParameterContainer::slotPropertyManagerValueChanged(QtProperty * property,
 		}
 	}
 }
+*/
 
 }; //namespace Picto

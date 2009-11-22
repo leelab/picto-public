@@ -6,26 +6,26 @@ namespace Picto {
 
 PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 {
-	parameterContainer_.setContainerName("Picture Graphic");
+	propertyContainer_.setContainerName("Picture Graphic");
 
-	parameterContainer_.addParameter(Parameter(QVariant::Point,"Position",position));
+	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
-	parameterContainer_.addParameter(Parameter(QVariant::String,"ImageFile",imageFile));
+	propertyContainer_.addProperty(Property(QVariant::String,"ImageFile",imageFile));
 
-	parameterContainer_.addParameter(Parameter(QVariant::String,"Name",""));
+	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
 
 	draw();
 
-	connect(&parameterContainer_,
-		    SIGNAL(signalParameterValueChanged(QString, QVariant)),
+	connect(&propertyContainer_,
+		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
 		    this,
-			SLOT(slotParameterValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, QVariant))
 			);
 }
 
 void PictureGraphic::draw()
 {
-	QString imageFile = parameterContainer_.getParameterValue("ImageFile").toString();
+	QString imageFile = propertyContainer_.getPropertyValue("ImageFile").toString();
 	image_.load(imageFile);
 
 	updateCompositingSurfaces();
@@ -33,10 +33,10 @@ void PictureGraphic::draw()
 	shouldRedrawImage_ = false;
 }
 
-void PictureGraphic::slotParameterValueChanged(QString parameterName,
-											   QVariant) //parameterValue
+void PictureGraphic::slotPropertyValueChanged(QString propertyName,
+											   QVariant) //propertyValue
 {
-	if(parameterName != "Position" && parameterName != "Name")
+	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}
