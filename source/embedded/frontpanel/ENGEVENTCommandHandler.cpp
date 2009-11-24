@@ -66,14 +66,14 @@ QSharedPointer<Picto::ProtocolResponse> ENGEVENTCommandHandler::processCommand(Q
 			{
 				int trial = reader.attributes().value("trial").toString().toInt();
 				panelInfo->setTrial(trial);
+				panelInfo->setLastEvent("Trial start");
 			}
 			else if(eventType=="trialend")
 			{
 				int trial = reader.attributes().value("trial").toString().toInt();
 				panelInfo->setTrial(trial);
 
-				//clear the "last event" at the end of each trial
-				panelInfo->setLastEvent("");
+				panelInfo->setLastEvent("Trial end");
 			}
 			else if(eventType=="statuschange")
 			{

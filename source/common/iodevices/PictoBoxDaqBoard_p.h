@@ -797,7 +797,7 @@ inline void PictoBoxDaqBoard::_getCalibrationValues(scalingCoeff *_pScale)
 	//an array and work with it there (since IOControls are expensive)
 	eepromInfo[0] = 0x400;	//offset
 	eepromInfo[1] = 0x400;	//buffer length
-	//DeviceIoControl(hDAQ_,IOCTRL_READ_EEPROM,eepromInfo,8,eepromData,0x400, &bytesRead, NULL);
+
 	_readEeprom(0x400,		//offset
 			   eepromData,	//buffer
 			   0x400);		//buffer length
@@ -811,6 +811,7 @@ inline void PictoBoxDaqBoard::_getCalibrationValues(scalingCoeff *_pScale)
 	modeOffset = calOffset + 16 + (0*17);
 
 	modeOrder = eepromData[modeOffset++];
+
 	for(int i=0; i<4; i++)
 	{
 		modeC[i] = getFloatFromEeprom (eepromData, modeOffset);
@@ -820,6 +821,7 @@ inline void PictoBoxDaqBoard::_getCalibrationValues(scalingCoeff *_pScale)
 	//u32 intervalOffset = calOffset + kAiIntervalBlockStart + (intervalIdx*kAiIntervalBlockSize);
 	intervalMemOffset = calOffset + 84 + (0*8);
 	intervalGain = getFloatFromEeprom (eepromData, intervalMemOffset);
+
 	intervalMemOffset += 4;
 	intervalOffset = getFloatFromEeprom (eepromData, intervalMemOffset);
 
@@ -833,9 +835,6 @@ inline void PictoBoxDaqBoard::_getCalibrationValues(scalingCoeff *_pScale)
 		if(i==0)
 			_pScale->c[i] += intervalOffset;
 	}
-
-
-
 
 }
 

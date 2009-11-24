@@ -122,6 +122,7 @@ void Menu::userInputSlot(int type)
 	else if(panelInfo->getDispMode() == PanelInfo::ChangeIPMode)
 	{
 		bool exit = false;
+		bool drawLine2 = false;
 		QString addr = panelInfo->getSystemIP().toString();
 		QStringList ipFields = addr.split(".");
 
@@ -129,11 +130,16 @@ void Menu::userInputSlot(int type)
 		{
 		case PanelInfo::rotateLeft:
 			ipFields[currIpField] = QString("%1").arg(ipFields[currIpField].toInt()-1);
+			if(ipFields[currIpField] == "99" || ipFields[currIpField] == "9")
+				drawLine2 = true;
 			break;
 		case PanelInfo::rotateRight:
 			ipFields[currIpField] = QString("%1").arg(ipFields[currIpField].toInt()+1);
+			if(ipFields[currIpField] == "100" || ipFields[currIpField] == "10")
+				drawLine2 = true;
 			break;
 		case PanelInfo::buttonPush:
+			drawLine2 = true;
 			if(currIpField<3)
 				currIpField++;
 			else
@@ -142,6 +148,11 @@ void Menu::userInputSlot(int type)
 		default:
 			break;
 		}
+		if(ipFields[currIpField].toInt() > 255)
+			ipFields[currIpField] = "255";
+		if(ipFields[currIpField].toInt() < 0)
+			ipFields[currIpField] = "0";
+
 
 		if(exit)
 		{
@@ -172,13 +183,14 @@ void Menu::userInputSlot(int type)
 			addr = QString("%1.%2.%3.%4").arg(ipFields[0]).
 				arg(ipFields[1]).arg(ipFields[2]).arg(ipFields[3]);
 			panelInfo->setSystemIP(QHostAddress(addr));
-			drawChangeIP();
+			drawChangeIP(drawLine2);
 		}
 	}
 	//--- Change Name Mode ---
 	else if(panelInfo->getDispMode() == PanelInfo::ChangeNameMode)
 	{
 		bool exit = false;
+		bool drawLine2 = false;
 		QString name = panelInfo->getSystemName();
 
 		switch(type)
@@ -208,6 +220,7 @@ void Menu::userInputSlot(int type)
 				name[currNameChar]=name[currNameChar].toAscii()+1;
 			break;
 		case PanelInfo::buttonPush:
+			drawLine2 = true;
 			if(name[currNameChar] == ' ')
 				exit = true;
 			else if(currNameChar < name.size()-1)
@@ -256,7 +269,7 @@ void Menu::userInputSlot(int type)
 		else
 		{
 			panelInfo->setSystemName(name);
-			drawChangeName();
+			drawChangeName(drawLine2);
 		}
 	}
 	//--- RewardDurMode ---
@@ -281,6 +294,9 @@ void Menu::userInputSlot(int type)
 		default:
 			break;
 		}
+
+		if(rewardDur<10)
+			rewardDur = 10;
 
 		if(exit)
 		{
@@ -308,7 +324,7 @@ void Menu::userInputSlot(int type)
 		else
 		{
 			panelInfo->setRewardDuration(rewardDur);
-			drawRewardDuration();
+			drawRewardDuration(false);
 		}
 
 	}
@@ -373,6 +389,9 @@ void Menu::userInputSlot(int type)
 		default:
 			break;
 		}
+		
+		if(flushDur <10)
+			flushDur = 10;
 
 		if(exit)
 		{
@@ -400,7 +419,7 @@ void Menu::userInputSlot(int type)
 		else
 		{
 			panelInfo->setFlushDuration(flushDur);
-			drawFlushDuration();
+			drawFlushDuration(false);
 		}
 
 	}
@@ -538,7 +557,10 @@ void Menu::menuAction()
 	{
 		if(menuItems[currItem].name == "Start Flush")
 		{
-			initFlush();
+			if(panelInfo->getSystemStatus() == PanelInfo::running)
+				doMessage("Flushing failed.", "Experiment running.");
+			else
+				initFlush();
 		}
 		else if(menuItems[currItem].name == "Set Flush Duration")
 		{
@@ -672,16 +694,18 @@ void Menu::drawStatus()
 }
 
 //Draws the screen for setting the reward duration
-void Menu::drawRewardDuration()
+void Menu::drawRewardDuration(bool firstTime)
 {
 	int controller = panelInfo->getRewardController();
 	int rewardDur = panelInfo->getRewardDuration();
 	
-	QString line1 = QString("Reward %1 Duration:").arg(controller);
 	QString line2 = QString("   %1 \x08").arg(rewardDur);
-
-	emit updateLCD(1,line1);
 	emit updateLCD(2,line2);
+	if(firstTime)
+	{
+		QString line1 = QString("Reward %1 Duration:").arg(controller);
+		emit updateLCD(1,line1);
+	}
 }
 
 //Sets everything up for the reward duration mode
@@ -711,7 +735,7 @@ void Menu::initRewardDuration()
 	panelInfo->setRewardDuration(duration.toInt());
 
 	panelInfo->setDispMode(PanelInfo::RewardDurMode);
-	drawRewardDuration();
+	drawRewardDuration(true);
 
 	return;
 }
@@ -757,21 +781,23 @@ void Menu::initFlushDuration()
 	panelInfo->setFlushDuration(duration.toInt());
 
 	panelInfo->setDispMode(PanelInfo::FlushDurMode);
-	drawFlushDuration();
+	drawFlushDuration(true);
 
 	return;
 }
 
 //This is the code used to draw the controller changing panel
-void Menu::drawFlushDuration()
+void Menu::drawFlushDuration(bool firstTime)
 {
 	int controller = panelInfo->getRewardController();
 	int duration = panelInfo->getFlushDuration();
 	
-	QString line1 = QString("Flush %1 Duration:").arg(controller);
+	if(firstTime)
+	{
+		QString line1 = QString("Flush %1 Duration:").arg(controller);
+		emit updateLCD(1,line1);
+	}
 	QString line2 = QString("   %1 secs").arg(duration);
-
-	emit updateLCD(1,line1);
 	emit updateLCD(2,line2);
 
 }
@@ -788,7 +814,7 @@ void Menu::initFlush()
 	Picto::ProtocolCommand command(QString("FPSTARTFLUSH /reward/%1 PICTO/1.0").arg(controller));
 	command.write(commSock);
 
-	//wait for a response from the engine
+	//get a response from the engine
 	Picto::ProtocolResponse response;
 	response.read(commSock);
 	if(response.getResponseCode() != 200)
@@ -797,14 +823,23 @@ void Menu::initFlush()
 	}	
 
 	panelInfo->setDispMode(PanelInfo::FlushingMode);
-	tenthSecondCounter = 0;
-	drawFlush();
+
+	//drawFlush only draws the second line of the LCD,
+	//so we have to draw the first line here.  (We can't use the "firstTime"
+	//bool like with the other draw methods, since this one is a slot, and it
+	//needs to be connected to a signal with no arguments).
+
+	QString line1 = "Flushing.";
+	emit updateLCD(1,line1);
 }
 
 void Menu::drawFlush()
 {
-	bool endFlush = false;;
+	bool endFlush = false;
+	int timeRem;
 	int controller = panelInfo->getRewardController();
+
+	flushingTimer->stop();
 
 	//get the time remaining in the flush
 	QTcpSocket *commSock = panelInfo->getCommandSocket();
@@ -812,38 +847,28 @@ void Menu::drawFlush()
 	command.write(commSock);
 
 	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock);
-	if(bytesRead<0)
-		endFlush = true;
-	
+	engineResponse.read(commSock);
+
 	bool ok;
-	int timeRem = engineResponse.getDecodedContent().toInt(&ok);
+	timeRem = engineResponse.getDecodedContent().toInt(&ok);
 	if(!ok)
 		endFlush = true;
-	if(timeRem <= 0)
+	else if(timeRem <= 0)
 		endFlush = true;
 
-	QString line1 = "Flushing.";
-	QString line2 = QString("  %1 s").arg(timeRem);
 
-	/*! \todo Figure out the timing on the flashing backlight (after removing all the debugging I/O) */
-	emit toggleBacklight();
-	/*tenthSecondCounter++;
-	if(tenthSecondCounter == 5)
-	{
-		tenthSecondCounter = 0;
-		emit toggleBacklight();
-	}*/
 	if(!endFlush)
 	{
-		emit updateLCD(1,line1);
+		emit toggleBacklight();
+		QString line2 = QString("  %1 s").arg(timeRem);
 		emit updateLCD(2,line2);
+		flushingTimer->start();
 	}
 	else
 	{
+		//printf("endFlush\n");
 		emit turnOnBacklight();
 		panelInfo->setDispMode(PanelInfo::MenuMode);
-		flushingTimer->stop();
 		drawMenu();
 	}
 
@@ -888,36 +913,37 @@ void Menu::initChangeIP()
 	currIpField=0;
 
 	panelInfo->setDispMode(PanelInfo::ChangeIPMode);
-	drawChangeIP();
+	drawChangeIP(true);
 
 	return;
 }
 
-void Menu::drawChangeIP()
+void Menu::drawChangeIP(bool drawLine2)
 {
 	QString addr = panelInfo->getSystemIP().toString();
-
 	QString line1 = QString("IP: %1").arg(addr);
 
-
-	QStringList addrFields = addr.split(".");
-	if(addrFields.size() != 4)
-		doMessage("IP Adress invalid","");
-
-	int numSpaces;
-	numSpaces = 4; //for "IP: "
-	for(int i=0; i<currIpField; i++)
-	{
-		numSpaces++; //for trailing dot
-		numSpaces += addrFields[i].length(); //for digits
-	}
-
-	QString line2 = QString(numSpaces,' ');
-	line2 += QString(addrFields[currIpField].length(), '\xA');
-
-
 	emit updateLCD(1,line1);
-	emit updateLCD(2,line2);
+
+
+	if(drawLine2)
+	{
+		QStringList addrFields = addr.split(".");
+		if(addrFields.size() != 4)
+			doMessage("IP Adress invalid","");
+
+		int numSpaces;
+		numSpaces = 4; //for "IP: "
+		for(int i=0; i<currIpField; i++)
+		{
+			numSpaces++; //for trailing dot
+			numSpaces += addrFields[i].length(); //for digits
+		}
+
+		QString line2 = QString(numSpaces,' ');
+		line2 += QString(addrFields[currIpField].length(), '\xA');
+		emit updateLCD(2,line2);
+	}
 }
 
 void Menu::initChangeName()
@@ -951,27 +977,29 @@ void Menu::initChangeName()
 	currNameChar=0;
 
 	panelInfo->setDispMode(PanelInfo::ChangeNameMode);
-	drawChangeName();
+	drawChangeName(true);
 
 	return;
 }
 
-void Menu::drawChangeName()
+void Menu::drawChangeName(bool drawLine2)
 {
 	QString name = panelInfo->getSystemName();
 
 	QString line1 = QString("Name:%1").arg(name);
-
-	int numSpaces;
-	numSpaces = 5; //for "Name:"
-	numSpaces += currNameChar;
-
-	QString line2 = QString(numSpaces,' ');
-	line2 += QString(1, '\xA');
-
-
 	emit updateLCD(1,line1);
-	emit updateLCD(2,line2);
+
+	if(drawLine2)
+	{
+		int numSpaces;
+		numSpaces = 5; //for "Name:"
+		numSpaces += currNameChar;
+
+		QString line2 = QString(numSpaces,' ');
+		line2 += QString(1, '\xA');
+
+		emit updateLCD(2,line2);
+	}
 
 }
 

@@ -11,9 +11,9 @@
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PictoBoxAnalongInputSignalChannel : SignalChannel
+class PICTOLIB_API PictoBoxAnalongInputSignalChannel : public SignalChannel
 #else
-class PictoBoxAnalongInputSignalChannel : SignalChannel
+class PictoBoxAnalongInputSignalChannel : public SignalChannel
 #endif
 {
 public:
@@ -31,6 +31,7 @@ public:
 private:
 
 	QSharedPointer<PictoBoxDaqBoard> daqBoard;
+
 	//maps channel name to daq board ai channel number
 	QMap<QString, int> aiChannelNums;  
 

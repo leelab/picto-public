@@ -67,20 +67,20 @@ private:
 	void drawStatus();
 
 	void initRewardDuration();
-	void drawRewardDuration();
+	void drawRewardDuration(bool firstTime);
 
 	void drawChangeController();
 
 	void initFlushDuration();
-	void drawFlushDuration();
+	void drawFlushDuration(bool firstTime);
 
 	void initFlush();
 
 	void initChangeIP();
-	void drawChangeIP();
+	void drawChangeIP(bool drawLine2);
 
 	void initChangeName();
-	void drawChangeName();
+	void drawChangeName(bool drawLine2);
 
 	int nextMenuItem();
 	int prevMenuItem();
@@ -98,7 +98,6 @@ private:
 					  //This value is used in text parsing, which is why it's so odd.
 	int currNameChar; //used to keep track of which character in the system name is being changed.
 	
-	int tenthSecondCounter;
 
 };
 

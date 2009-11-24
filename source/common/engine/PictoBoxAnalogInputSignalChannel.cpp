@@ -16,18 +16,21 @@ void PictoBoxAnalongInputSignalChannel::addAiChannel(QString subchannelName, int
 
 bool PictoBoxAnalongInputSignalChannel::start()
 {
-	daqBoard->StopAI();
 	daqBoard->ClearAIChannelList();
 
-	QMap<QString, int>::iterator x = aiChannelNums.begin();
-	while(x != aiChannelNums.end())
+
+	QMap<QString, int>::const_iterator x = aiChannelNums.constBegin();
+	while(x != aiChannelNums.constEnd())
 	{
 		if(!daqBoard->CreateAIChannel(x.value(), daqBoard->kChanTypeRSE))
 			return false;
-		x++;
+		++x;
 	}
+
 	if(!daqBoard->StartAI(sampleRate,true))
+	{
 		return false;
+	}
 	return true;
 }
 

@@ -32,6 +32,83 @@ public:
 	FrontPanelInfo();
 	~FrontPanelInfo() {};
 
+	int getRewardDuration() { return rewardDuration; };
+	void setRewardDuration(int dur) { rewardDuration = dur; };
+
+	int getRewardController() { return rewardController; };
+	void setRewardController(int controller) { rewardController = controller; };
+	
+	int getFlushDuration() { return flushDuration; };
+	void setFlushDuration(int dur) { flushDuration = dur; };
+
+	PanelInfo::DisplayMode getDispMode() { return dispMode; };
+	void setDispMode(PanelInfo::DisplayMode mode) { dispMode = mode; };
+
+	QString getSystemName() { return systemName; }
+	void setSystemName(QString name) { systemName = name; };
+
+	QHostAddress getSystemIP() { return systemIP; }
+	void setSystemIP(QHostAddress ip) { systemIP = ip; };
+
+	PanelInfo::SystemStatus getSystemStatus() { return status; };
+	void setSystemStatus(PanelInfo::SystemStatus stat) { status = stat; };
+
+	QTcpSocket* getCommandSocket() { return commandSocket; }
+	void setCommandSocket(QTcpSocket* socket) { commandSocket = socket; };
+
+	QTcpSocket* getEventSocket() { return eventSocket; }
+	void setEventSocket(QTcpSocket* socket) { eventSocket = socket; };
+
+	int getTrial() { return trial; };
+	void setTrial(int tr) { trial = tr; };
+
+	int getBlock() { return block; };
+	void setBlock(int blk) { block = blk; };
+
+	QString getLastEvent() { return lastEvent; }
+	void setLastEvent(QString lastEvent) { this->lastEvent = lastEvent; };
+
+
+private:
+	//any access to the data members is protected with a single lock.  
+	//This is slightly less efficient than protecting the data members seperately, 
+	//but it makes the code easier to write.
+	QMutex mutex;
+
+	int rewardDuration;		//for current reward controller only
+	int rewardController;
+	int flushDuration;      //for current reward controller only
+
+	PanelInfo::DisplayMode dispMode;
+	QString systemName;
+	QHostAddress systemIP;
+	PanelInfo::SystemStatus status;
+
+	QTcpSocket *commandSocket;
+	QTcpSocket *eventSocket;
+
+	/*! \todo  At the moment, we are only storing the most recent event.  Should
+	 *  we store the last 10 events?  Then the user could scroll forward and backward
+	 */
+	int trial;
+	int block;
+	QString lastEvent;
+
+
+
+
+
+
+};
+
+//OLD VERSION WITH MUTEX...
+
+/*class FrontPanelInfo
+{
+public:
+	FrontPanelInfo();
+	~FrontPanelInfo() {};
+
 	int getRewardDuration() { QMutexLocker locker(&mutex); return rewardDuration; };
 	void setRewardDuration(int dur) { QMutexLocker locker(&mutex); rewardDuration = dur; };
 
@@ -85,12 +162,12 @@ private:
 	PanelInfo::SystemStatus status;
 
 	QTcpSocket *commandSocket;
-	QTcpSocket *eventSocket;
+	QTcpSocket *eventSocket;*/
 
 	/*! \todo  At the moment, we are only storing the most recent event.  Should
 	 *  we store the last 10 events?  Then the user could scroll forward and backward
 	 */
-	int trial;
+	/*int trial;
 	int block;
 	QString lastEvent;
 
@@ -99,6 +176,6 @@ private:
 
 
 
-};
+};*/
 
 #endif

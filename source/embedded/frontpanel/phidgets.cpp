@@ -80,9 +80,6 @@ Phidgets::~Phidgets()
 
 	CPhidget_close((CPhidgetHandle) hTextLCD);
 	CPhidget_delete((CPhidgetHandle) hTextLCD);
-
-	//CPhidgetManager_close(hManager);
-	//CPhidgetManager_delete(hManager);
 }
 
 
@@ -94,7 +91,6 @@ void Phidgets::updateLCD(int line, QString text)
 	if(!hTextLCD || !textLCDSerialNumber)
 	{
 		outstream<<"Missing handle or serial number";
-		outstream.flush();
 		return;
 	}
 
@@ -108,16 +104,13 @@ void Phidgets::updateLCD(int line, QString text)
 	if(line == 1)
 	{
 		LCDRow1 = text;
+		CPhidgetTextLCD_setDisplayString(hTextLCD, 0, LCDRow1.toLocal8Bit().data());
 	}
 	else if(line == 2)
 	{
 		LCDRow2 = text;
+		CPhidgetTextLCD_setDisplayString(hTextLCD, 1, LCDRow2.toLocal8Bit().data());
 	}
-
-	//update the LCD
-	CPhidgetTextLCD_setDisplayString(hTextLCD, 0, LCDRow1.toLocal8Bit().data());
-	CPhidgetTextLCD_setDisplayString(hTextLCD, 1, LCDRow2.toLocal8Bit().data());
-
 	return;
 }
 
@@ -228,7 +221,7 @@ int __stdcall EncoderErrorHandler(CPhidgetHandle, void *, int, const char *)
 
 
 //Since these functions can't interact directly with QT signals and slots,
-//We'll insted call a function within the phidgets object to emit a signal
+//We'll instead call a function within the phidgets object to emit a signal
 int __stdcall EncoderInputChangeHandler(CPhidgetEncoderHandle,
                                         void * phidgetsObject,
                                         int, //index
@@ -266,16 +259,22 @@ int __stdcall EncoderPositionChangeHandler(CPhidgetEncoderHandle, //hEncoder
 		phidgets->cumRot += relativePosition;
 	}
 
-	//check for a 1/4 turn (20 ticks)
+	//check for 10 ticks
 	if(phidgets->cumRot > 10)
 	{
+		//this for loop helps speed things up when the user is spinning
+		//the encoder quickly so that if they turn it 20 ticks, we
+		//generate 2 left turn events.
+		for(int i=0; i<phidgets->cumRot/10; i++)
+			phidgets->dialTurnedLeft();
 		phidgets->cumRot = 0;
-		phidgets->dialTurnedLeft();
 	}
 	if(phidgets->cumRot <-10)
 	{
+		for(int i=0; i<phidgets->cumRot/-10; i++)
+			phidgets->dialTurnedRight();
 		phidgets->cumRot = 0;
-		phidgets->dialTurnedRight();
+		
 	}
 
 	phidgets->lastRot = relativePosition;

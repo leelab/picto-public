@@ -711,11 +711,10 @@ int PictoBoxDaqBoard::CollectAIData(unsigned int _numSamples)
 	ULONG *dataBuffer;
 	dataBuffer = new ULONG[_numSamples*numChannels];
 
-	ULONG fifoBytes;
+	ULONG fifoBytes=0;
 
 	//dump the data fifo
 	DeviceIoControl(hDAQ_,IOCTRL_DATA_FIFO_DUMP,NULL,0, dataBuffer, _numSamples*numChannels*sizeof(ULONG), &fifoBytes, NULL);
-
 	//sort the data fifo into the channels
 
 	//run through each channel
@@ -858,6 +857,7 @@ bool PictoBoxDaqBoard::StopAI()
 	WriteFile(hDAQ_,&data, TWO_BYTES, &bytesWritten,NULL);
 
 	CloseHandle(hDAQ_);
+	hDAQ_ = 0;
 
 	return true;
 }

@@ -3,11 +3,12 @@
 
 #include <QObject>
 #include <QTimer>
-#include <QTime>
 #include <QSharedPointer>
 
 #include "../common/compositor/PixmapVisualTarget.h"
 #include "../common/engine/MouseSignalChannel.h"
+#include "../common/engine/PictoBoxAnalogInputSignalChannel.h"
+#include "../common/stimuli/CircleGraphic.h"
 
 class SignalChannelTest : public QObject
 {
@@ -22,11 +23,12 @@ public slots:
 
 private:
 	QTimer *frameTimer;
-	QTime elapsedTime;
 	
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget;
+	QSharedPointer<Picto::CircleGraphic> circleGraphic;
 
 	Picto::MouseSignalChannel *mouseChannel;
+	Picto::PictoBoxAnalongInputSignalChannel *aiChannel;
 
 	int frameCounter;
 };

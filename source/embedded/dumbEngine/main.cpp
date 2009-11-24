@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
 	outstream<<"Hello world\n";
 	outstream.flush();
 
-	Engine eng("MattBox", QHostAddress("98.76.54.32"));
-	eng.runEngine(3,20);
+	Engine eng("MattBox", QHostAddress("9.250.54.32"));
+	eng.runExperiment(3,200);
 
 	bool result = app.exec();
 

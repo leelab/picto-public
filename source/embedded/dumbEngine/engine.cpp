@@ -50,6 +50,21 @@ Engine::Engine(QString boxName, QHostAddress addr, QObject *parent) :
 	else
 		out<<"Event socket connected\n";
 
+	//Set up the timers
+	/*! \todo In real-life, the engine needs to freqeuntly check for incoming commands
+	 *        This needs to occur whether or not an experiment is running.  If an 
+	 *		  experiment is running, the checking should occur once per frame.  If an
+	 *		  experiment isn't running, the checking should occur with a similar frequency.
+	 */		
+	commandTimer = new QTimer(this);
+	commandTimer->setInterval(17);
+	connect(commandTimer, SIGNAL(timeout()), this, SLOT(doIncomingCommands()));
+	commandTimer->start();
+
+	flushingTimer = new QTimer(this);
+	flushingTimer->setInterval(1000);
+	connect(flushingTimer, SIGNAL(timeout()), this, SLOT(decrementFlushTime()));
+
 	//set up the command handlers
 	QSharedPointer<FPGETCommandHandler> fpgetCommandHandler(new FPGETCommandHandler);
 	fpgetCommandHandler->setEngine(this);
@@ -87,7 +102,7 @@ Engine::~Engine()
 	delete daqBoard;
 }
 
-void Engine::runEngine(int trialsPerBlock, int blocks)
+void Engine::runExperiment(int trialsPerBlock, int blocks)
 {
 	if(!commSocket->isValid())
 		return;
@@ -109,10 +124,11 @@ void Engine::runEngine(int trialsPerBlock, int blocks)
 	frameTimer = new QTimer(this);
 	frameTimer->setInterval(17);
 	connect(frameTimer,SIGNAL(timeout()), this, SLOT(doFrame()));
+	frameTimer->start();
 
-	flushingTimer = new QTimer(this);
-	flushingTimer->setInterval(1000);
-	connect(flushingTimer, SIGNAL(timeout()), this, SLOT(decrementFlushTime()));
+	//turn off the command timer since we'll be checking for incoming commands
+	//manually during each frame (or not if we're short of time...)
+	commandTimer->stop();
 
 	//reset counter
 	eventCodeCounter = 0;
@@ -128,6 +144,9 @@ void Engine::runEngine(int trialsPerBlock, int blocks)
 //called at the beginning of a trial
 void Engine::startTrial()
 {
+	QTextStream out(stdout);
+	out<<"Start trial\n";
+
 	//deal with event codes
 	/*! \todo Sending the even needs to occur at EXACTLY the same time
 	          as we mark the trial start/end in the behavioral database. */
@@ -138,7 +157,6 @@ void Engine::startTrial()
 
 	interTrialTimer->stop();
 	trialTimer->start();
-	frameTimer->start();
 	currTrial++;
 
 	//end the experiment?
@@ -152,11 +170,12 @@ void Engine::startTrial()
 
 		trialTimer->stop();
 		frameTimer->stop();
+		commandTimer->start();
 		return;
 	}
 
 	//change the block?
-	if(currTrial > trialsPerBlock)
+	else if(currTrial > trialsPerBlock)
 	{
 		currTrial = 1;
 		currBlock++;
@@ -167,6 +186,7 @@ void Engine::startTrial()
 		sendEngineEvent(eventXml);
 
 	}
+
 	QString eventXml = QString("<event type=\"trialstart\" trial=\"%1\"/>").arg(currTrial);
 	sendEngineEvent(eventXml);
 }
@@ -178,67 +198,58 @@ void Engine::endTrial()
 	out<<"End trial\n";
 
 	trialTimer->stop();
-	frameTimer->stop();
 	interTrialTimer->start();
 
 	QString eventXml = QString("<event type=\"trialend\" trial=\"%1\"/>").arg(currTrial);
 	sendEngineEvent(eventXml);
+
+	daqBoard->sendEvent(eventCodeCounter);
 }
 
 //called every frame
+
+//NOTE: since doFrame is responsible for checking for incoming commands, the
+//frameTimer must never stop, event if we're not in the middle of a trial
 void Engine::doFrame()
 {
 	QTextStream out(stdout);
 
-	frameTimer->stop();
-
-	//Generate a rnadom event once every so often (once every 4 seconds)
-	if(qrand() % 240 == 0)
+	//Generate a random event once every so often (once every 4 seconds)
+	if(qrand() % 240 == 0 && trialTimer->isActive())
 	{
 		QString eventXml = QString("<event type=\"other\">Random event</event>").arg(currTrial);
 		sendEngineEvent(eventXml);
 	}
 
-	//if there's data, we can safely assume that it's a command, so
-	//we'll try to parse it...
-	//Note this is arranged in a way that limits us to one command per frame.
-	//This was done on purpose so that the engine won't get bogged down
-	//with commands.  The front panel isn't supposed to send more than
-	//one command at a time anyway...
-	if(incomingCommand())
-	{
-		QSharedPointer<Picto::ProtocolCommand> command;
-		command = readCommand();
-
-
-		//Handle command 
-		/*out<<"Incoming Command:\n";
-		QString method = command->getMethod();
-		QString target = command->getTarget();
-		QString protocolName = command->getProtocolName();
-		QString protocolVer = command->getProtocolVersion();
-		out<<" "<<method<<" "<<target<<" "<<protocolName<<"/"<<protocolVer<<"\n";
-
-		QByteArray content = command->getContent();
-		out<<" content:\n "<<content<<"\n";
-		out.flush();*/
-
-		QSharedPointer<Picto::ProtocolResponse> response;
-		response = processCommand(command);
-
-		//send out response
-		deliverResponse(response);
-	}
-	frameTimer->start();
+	doIncomingCommands();
 
 }
 
-bool Engine::incomingCommand()
+void Engine::doIncomingCommands()
 {
-	if(commSocket->canReadLine())
-		return true;
-	else
-		return false;
+	if(!commSocket->canReadLine())
+		return;
+
+	QSharedPointer<Picto::ProtocolCommand> command;
+	command = readCommand();
+
+	//Handle command 
+	/*out<<"Incoming Command:\n";
+	QString method = command->getMethod();
+	QString target = command->getTarget();
+	QString protocolName = command->getProtocolName();
+	QString protocolVer = command->getProtocolVersion();
+	out<<" "<<method<<" "<<target<<" "<<protocolName<<"/"<<protocolVer<<"\n";
+
+	QByteArray content = command->getContent();
+	out<<" content:\n "<<content<<"\n";
+	out.flush();*/
+
+	QSharedPointer<Picto::ProtocolResponse> response;
+	response = processCommand(command);
+
+	//send out response
+	deliverResponse(response);
 }
 
 

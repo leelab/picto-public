@@ -21,7 +21,7 @@ public:
 	Engine(QString boxName, QHostAddress addr, QObject* parent = 0);\
 	~Engine();
 
-	void runEngine(int trialsPerBlock, int blocks);
+	void runExperiment(int trialsPerBlock, int blocks);
 	void testFunction();
 
 	//getters/setters
@@ -48,6 +48,7 @@ private slots:
 	void startTrial();
 	void endTrial();
 	void doFrame();
+	void doIncomingCommands();
 	void decrementFlushTime();
 
 private:
@@ -65,6 +66,7 @@ private:
 	QTimer *trialTimer;
 	QTimer *frameTimer;
 	QTimer *flushingTimer;
+	QTimer *commandTimer;
 
 	//front panel connections
 	QTcpSocket *commSocket;
