@@ -119,9 +119,12 @@ int main(int argc, char *argv[])
 	pixmapVisualTarget->present();
 
 	/*************************************************
-	 * Testing the signal channel
+	 * Testing the signal channel.  
+	 *
+	 * This only works in WinCE, so don't uncomment the line
+	 * unless it's a CE build...
 	 *************************************************/
-	SignalChannelTest sigChanTest(pixmapVisualTarget);
+	//SignalChannelTest sigChanTest(pixmapVisualTarget);
 
 //////////////////////////////
 /*
