@@ -62,15 +62,10 @@ void ProtocolCommand::parse(QString commandText)
 
 int ProtocolCommand::remainingContentLength()
 {
-	std::map<QString,QString>::const_iterator contentLengthIter = fields_.find("Content-Length");
-	if(contentLengthIter == fields_.end())
-	{
-		return std::numeric_limits<int>::min();
-	}
+	if(fields_.contains("Content-Length"))
+		return fields_["Content-Length"].toInt() - content_.size();
 	else
-	{
-		return contentLengthIter->second.toInt() - content_.size();
-	}
+		return std::numeric_limits<int>::min();
 }
 
 int ProtocolCommand::addToContent(QByteArray _content)
@@ -89,29 +84,12 @@ int ProtocolCommand::setContent(QByteArray _content)
 
 bool ProtocolCommand::hasField(QString field)
 {
-	std::map<QString,QString>::const_iterator fieldIter = fields_.find(field);
-	if(fieldIter != fields_.end())
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return(fields_.contains(field));
 }
 
 QString ProtocolCommand::getFieldValue(QString field)
 {
-	QString fieldValue;
-
-	std::map<QString,QString>::const_iterator fieldIter = fields_.find(field);
-
-	if(fieldIter != fields_.end())
-	{
-		fieldValue = fieldIter->second;
-	}
-
-	return fieldValue;
+	return fields_.value(field,"");
 }
 
 void ProtocolCommand::setFieldValue(QString field, QString value)
@@ -121,16 +99,7 @@ void ProtocolCommand::setFieldValue(QString field, QString value)
 
 bool ProtocolCommand::isPendingContent()
 {
-	std::map<QString,QString>::const_iterator contentLengthIter = fields_.find("Content-Length");
-	if(contentLengthIter != fields_.end())
-	{
-		if(content_.size() < contentLengthIter->second.toInt())
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return content_.size() < fields_.value("Content-Length", "0").toInt();
 }
 
 bool ProtocolCommand::isWellFormed()
@@ -152,11 +121,7 @@ bool ProtocolCommand::isWellFormed()
 
 	return true;
 }
-/*! \todo This is a really rudimentary write command.  The following would be useful additions:
- *			- Check that the content length matches the content length field
- *			- Do content encoding (although with commands, there really shouldn't be
- *			  that much content...)
- */
+
 int ProtocolCommand::write(QAbstractSocket *socket)
 {
 	QString commandHeader;
@@ -166,26 +131,100 @@ int ProtocolCommand::write(QAbstractSocket *socket)
 
 	if(!isWellFormed())
 		return -1;
+	if(content_.size() != fields_["Content-Length"].toInt())
+		return -1;
 
 	commandHeader = method_ + " " + target_ + " " + protocolName_ + "/" + protocolVersion_ + "\r\n";
 	
-	std::map<QString,QString>::const_iterator fieldIter = fields_.begin();
+	QMap<QString,QString>::const_iterator fieldIter = fields_.begin();
 	while(fieldIter != fields_.end())
 	{
-		commandHeader += fieldIter->first + ":" + fieldIter->second + "\r\n";
+		commandHeader += fieldIter.key() + ":" + fieldIter.value() + "\r\n";
 		fieldIter++;
 	}
 
 	commandHeader += "\r\n";
 
 	command = commandHeader.toAscii();
-	command.append(content_);
+
+	if(!content_.isEmpty())
+		command.append(content_);
 
 	bytesWritten =  socket->write(command);
-	QString errStr = socket->errorString();
+
 	return bytesWritten;
+}
+
+//! Reads a command from the socket, and returns the bytes of content (frequently 0)
+int ProtocolCommand::read(QAbstractSocket *socket)
+{
+	QString currentLine;
+	QStringList tokens;
+
+	if(socket->bytesAvailable() <= 0 && !socket->waitForReadyRead(1000))
+	{
+		return -1;
+	}
+
+	//read the first line(e.g. "GET /sometarget PICTO/1.0")
+	currentLine = socket->readLine();
+	currentLine.remove("\r\n");
+
+	tokens = currentLine.split(" ", QString::SkipEmptyParts);
+	if(tokens.size() != 3)
+		return -2;
+
+	method_ = tokens[0];
+	target_ = tokens[1];
+
+	tokens = tokens[2].split("/");
+	if(tokens.size() != 2)
+		return -2;
+	protocolName_ = tokens[0];
+	protocolVersion_ = tokens[1];
+
+	//next, clear then populate the fields map
+	fields_.clear();
+	
+	currentLine = socket->readLine();
+	while(currentLine != "\r\n")
+	{
+		currentLine.remove("\r\n");
+		QString fieldKey,fieldValue;
+
+		int keyEndPosition = currentLine.indexOf(':');
+		if(keyEndPosition < 0)
+			return -4;
+
+		fieldKey = currentLine.left(keyEndPosition);
+		fieldValue = currentLine.mid(keyEndPosition+2);
+		fields_[fieldKey] = fieldValue;
+
+		currentLine = socket->readLine();
+	}
+
+	//finally, if there's content, read it
+	int contentLength = fields_.value("Content-Length", "0").toInt();
+	if(contentLength == 0)
+		return 0;
+
+	content_ = socket->read(contentLength);
+	while(content_.size() < contentLength && 
+		(socket->bytesAvailable() > 0 || socket->waitForReadyRead(500)))
+	{
+		content_.append(socket->read(contentLength-content_.size()));
+	}
+
+	//return length of content read
+	if(content_.size() == contentLength)
+		return content_.size();
+	else
+		return 0-content_.size();
+
 
 
 }
 
 }; //namespace Picto
+
+

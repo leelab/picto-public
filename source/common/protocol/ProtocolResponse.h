@@ -6,6 +6,7 @@
 #include <QString>
 #include <QByteArray>
 #include <QAbstractSocket>
+#include <QMap>
 
 #include "../common.h"
 
@@ -54,6 +55,7 @@ public:
 	QString generateHeadersString();
 	QString getMultiPartHeaders();
 	QByteArray getContent();
+	QByteArray getEncodedContent();
 	QByteArray getDecodedContent();
 	void setContent(QByteArray _content);
 	void addField(QString field, QString value);
@@ -80,32 +82,37 @@ public:
 	QString getResponseType();
 
 	int read(QAbstractSocket *socket);
+	int write(QAbstractSocket *socket);
 
 private:
 	void encodeContent();
 	void decodeContent();
 
+	void parseHeaders(QString headers);
+
 	ProtocolResponseType::ProtocolResponseType protocolResponseCode;
 
-	QString serverType;
+	//QString serverType;
 	QString protocol;
 	QString version;
 
-	std::map<QString, QString> fields;
+	QMap<QString, QString> fields;
 
-	QString contentType;
+	//QString contentType;
 	QString multiPartContentType;
 	QString multiPartBoundary;
 	QByteArray content;
 	QByteArray encodedContent;
-	ContentEncodingType::ContentEncodingType contentEncodingType;
+	//ContentEncodingType::ContentEncodingType contentEncodingType;
 
-	std::map<ProtocolResponseType::ProtocolResponseType, QString> protocolResponseTypeStrings;
-	std::map<ContentEncodingType::ContentEncodingType, QString> contentEncodingTypeStrings;
+	QMap<ProtocolResponseType::ProtocolResponseType, QString> protocolResponseTypeStrings;
+	QMap<ContentEncodingType::ContentEncodingType, QString> contentEncodingTypeStrings;
 
 	bool bShouldTerminateConnection;
 	bool bStreamingResponse;
 	MultiPartResponseType::MultiPartResponseType multiPartResponseState;
+
+	int timeout;
 };
 
 }; //namespace Picto

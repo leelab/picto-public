@@ -15,6 +15,7 @@ void TestBasicProtocolCommands::testQueryResponse(QString query, QString respons
 	QTcpSocket tcpSocket;
 
 	tcpSocket.connectToHost(serverAddress_,port_);
+
 	if(!tcpSocket.waitForConnected(10000))
 	{
 		QFAIL("Unable to establish a connection");
@@ -61,7 +62,8 @@ void TestBasicProtocolCommands::httpGet()
 	}
 	else
 	{
-		expected = "HTTP/1.1 400 Bad Request";
+		//expected = "HTTP/1.1 400 Bad Request";
+		expected = "HTTP/1.1 404 Resource Not Found";
 	}
 
 	testQueryResponse(request, expected);
@@ -73,8 +75,8 @@ void TestBasicProtocolCommands::pictoGet_data()
 	QTest::addColumn<QString>("target");
 	QTest::addColumn<QString>("protocol");
 
-	QTest::newRow("/") << "GET" << "/" << "HTTP/1.1";
-	QTest::newRow("/DoesNotExist") << "GET" << "/DoesNotExist" << "HTTP/1.1";
+	QTest::newRow("/") << "GET" << "/" << "PICTO/1.1";
+	QTest::newRow("/DoesNotExist") << "GET" << "/DoesNotExist" << "PICTO/1.1";
 }
 
 void TestBasicProtocolCommands::pictoGet()
@@ -131,7 +133,7 @@ void TestBasicProtocolCommands::unknownRequest()
 	QFETCH(QString, protocol);
 
 	QString request = method + " " + target + " " + protocol + "\r\n\r\n";
-	QString expected = "PICTO/1.0 401 Malformed Request";
+	QString expected = "PICTO/1.0 501 Not Implemented";
 
 	testQueryResponse(request, expected);
 }

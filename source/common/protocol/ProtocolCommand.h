@@ -68,10 +68,11 @@ public:
 	void parse(QString commandText);
 
 	int write(QAbstractSocket *socket);
+	int read(QAbstractSocket *socket);
 
 private:
 	QString method_, target_, protocolName_, protocolVersion_;
-	std::map<QString,QString> fields_;
+	QMap<QString,QString> fields_;
 	QByteArray content_;
 
 	QString parseError, executeError;

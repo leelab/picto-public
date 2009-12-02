@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				serverAddress.setAddress(QHostAddress::LocalHost);
+				serverAddress.setAddress("127.0.0.1");
 			}
 
 			TestBasicProtocolCommands basicProtocolCommandTestObject(serverAddress);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 			//We first need to add the executable image name so that it can properly be added
 			//as the first argument.  Otherwise, our other arguments will be ignored.
 			testOptionList += argv[0];
-			testOptionList += "-xml";
+			//testOptionList += "-xml";
 
 			return QTest::qExec(&basicProtocolCommandTestObject, testOptionList);
 		}
