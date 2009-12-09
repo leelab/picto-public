@@ -45,7 +45,7 @@
 #include <QHostAddress>
 #include <QTcpSocket>
 
-#include "common.h"
+#include "../common.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 
@@ -64,29 +64,29 @@ class CommandChannel : public QObject
 public:
 	CommandChannel(QObject *parent = 0);
 	CommandChannel(QHostAddress serverAddress, quint16 serverPort, QObject *parent = 0);
-	~CommandChannel() {};
+	~CommandChannel();
 
-	//! Returns the number of responses currently queued
 	int incomingResponsesWaiting();
 	int incomingCommandsWaiting();
 
 	QSharedPointer<ProtocolResponse> getResponse();
 	QSharedPointer<ProtocolCommand> getCommand();
 
-	//!Puts the channel in polling mode
 	void pollingMode(bool polling);
 
 	typedef enum
 	{
-		connected, disconnected, uninitialized
+		connected, disconnected
 	} ChannelStatus;
 
 	//!Check channel status
 	ChannelStatus getChannelStatus() { return status; };
 
+	void closeChannel();
+
 signals:
 	//! emitted when a response is received from the server
-	void incomingResponse(QSharedPointer<ProtocolResponse> response);
+	void incomingResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
 	//!emitted when a command is received from the server
 	void incomingCommand(QSharedPointer<ProtocolCommand> command);
@@ -96,14 +96,14 @@ signals:
 
 public slots:
 	void connectToServer(QHostAddress serverAddress, quint16 serverPort);
-	void sendCommand(ProtocolCommand command);
-	void sendResponse(ProtocolResponse response);
+	void sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
+	void sendResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
 private slots:
-	void errorHandler(QAbstractSocket::SocketError err);
-	void disconnectHandler();
 	void readIncomingCommand();
 	void readIncomingResponse();
+	void errorHandler(QAbstractSocket::SocketError err);
+	void disconnectHandler();
 
 private:
 	void initConnection();
@@ -130,10 +130,12 @@ private:
 	// will be filled in the correct order.
 	QTcpSocket *consumerSocket;
 	QTcpSocket *producerSocket;
-	int serverTimeout;
 
 	bool polledMode;
 	ChannelStatus status;
+
+	//should we attempt to reconnect in the event of a disconnect?
+	bool reconnect;
 
 	//incoming queues.  These queues are only used if we are in polled mode
 	//otherwise, the incoming commands and responses are immediately sent out

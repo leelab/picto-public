@@ -131,7 +131,9 @@ int ProtocolCommand::write(QAbstractSocket *socket)
 
 	if(!isWellFormed())
 		return -1;
-	if(content_.size() != fields_["Content-Length"].toInt())
+	if(content_.size() != fields_.value("Content-Length","0").toInt())
+		return -1;
+	if(socket->state() < QAbstractSocket::ConnectedState)
 		return -1;
 
 	commandHeader = method_ + " " + target_ + " " + protocolName_ + "/" + protocolVersion_ + "\r\n";
@@ -152,6 +154,8 @@ int ProtocolCommand::write(QAbstractSocket *socket)
 
 	bytesWritten =  socket->write(command);
 
+	socket->flush();
+
 	return bytesWritten;
 }
 
@@ -161,7 +165,7 @@ int ProtocolCommand::read(QAbstractSocket *socket)
 	QString currentLine;
 	QStringList tokens;
 
-	if(socket->bytesAvailable() <= 0 && !socket->waitForReadyRead(1000))
+	if(socket->bytesAvailable() <= 0 && !socket->waitForReadyRead(0))
 	{
 		return -1;
 	}

@@ -138,6 +138,7 @@ void TestBasicProtocolCommands::unknownRequest()
 	testQueryResponse(request, expected);
 }
 
+
 /*
 void TestBasicProtocolCommands::multipleConnectionBenchmark_data()
 {

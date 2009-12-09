@@ -47,6 +47,8 @@ ProtocolResponse::ProtocolResponse(QString _serverType,
 
 QString ProtocolResponse::generateHeadersString()
 {
+	//NOTE: The approach to generate headers changed sometime around 12/1/09.  If
+	//you're experiencing problems with protocolResponses this might be the cause...
 	QString headers;
 
 	headers = QString("%1/%2 %3 %4\r\n").arg(protocol)
@@ -59,7 +61,7 @@ QString ProtocolResponse::generateHeadersString()
 	{
 		if(fields.contains("Content-Encoding"))
 			headers+= QString("Content-Encoding: %1\r\n").arg(fields.value("Content-Encoding"));
-		headers+= QString("Content-Length: %1\r\n").arg(fields.value("Content-Length",0));
+		headers+= QString("Content-Length: %1\r\n").arg(fields.value("Content-Length","0"));
 	}
 
 	//update (or add) the date field
@@ -79,35 +81,6 @@ QString ProtocolResponse::generateHeadersString()
 		fieldsIter++;
 	}
 	return headers;
-
-	///////////////////////////////////////////////////////////
-	///////////////
-	//OLD VERSION
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-	///////////////
-	/////////////////////////////////////////////////////////////
-
-	//headers += QString("Server: %1\r\n").arg(serverType);
-	/*if(!contentType.isEmpty())
-	{
-		headers += QString("Content-Type: %1\r\n").arg(contentType);
-	}
-	if(contentEncodingType != ContentEncodingType::raw && multiPartResponseState < MultiPartResponseType::MultiPartInitial)
-	{
-		headers += QString("Content-Encoding: %1\r\n").arg(contentEncodingTypeStrings[contentEncodingType]);
-	}
-	if(multiPartResponseState < MultiPartResponseType::MultiPartInitial)
-	{
-		headers += QString("Content-Length: %1\r\n").arg(encodedContent.size());
-	}
-	
-	headers += QString("Date: %1 GMT\r\n").arg(QDateTime::currentDateTime().toUTC().toString("ddd, dd MMM yyyy hh:mm:ss"));
-
-	for(std::map<QString,QString>::const_iterator fieldsIter = fields.begin(); fieldsIter != fields.end(); ++fieldsIter)
-	{
-		headers += QString("%1: %2\r\n").arg(fieldsIter->first).arg(fieldsIter->second);
-	}
-	return headers;*/
 }
 
 //In the case of a multipart response, after the initial headers are sent, 
@@ -265,8 +238,8 @@ bool ProtocolResponse::hasContent()
 void ProtocolResponse::setContent(QByteArray _content)
 {
 	content = _content;
-	if(!content.isEmpty())
-		encodeContent();
+	encodeContent();
+	fields["Content-Length"] = QString("%1").arg(encodedContent.size());
 }
 
 void ProtocolResponse::addField(QString field, QString value)
@@ -348,7 +321,11 @@ int ProtocolResponse::write(QAbstractSocket *socket)
 		response.append(getContent());
 	}
 	
-	return socket->write(response);
+	int bytesWritten = socket->write(response);
+	
+	socket->flush();
+
+	return bytesWritten;
 }
 
 //! Reads an incoming response from a socket and returns the bytes of content read
@@ -367,24 +344,35 @@ int ProtocolResponse::write(QAbstractSocket *socket)
  *	The safest way to use a response that you have just read is to look at the fields 
  *	directly
  *
+ *	It is also importnat to note that calling read() when a there is no data on the
+ *	socket will result in a 1 second dealy.  So, repeated polling of read() is probably
+ *	a bad idea.
  */
 int ProtocolResponse::read(QAbstractSocket *socket)
 {
 	QString currentLine;
 	int contentLength=0;
 	
-	if(socket->bytesAvailable() <= 0 && !socket->waitForReadyRead(1000))
+	if(socket->bytesAvailable() <= 0 && !socket->waitForReadyRead(0))
 	{
 		return -1;
 	}
 
 	//read the first line, it might be a status line (e.g. ACQ/1.0 200 OK)
 	//or it might be a CRLF followed by a multipart boundary string.  This 
-	//tells us what type of response we're dealing iwht
+	//tells us what type of response we're dealing with.  Adittionally, if the
+	//first line is null, there's no data on the socket, so we should give up.
+	
 	currentLine = socket->readLine();
+	
 
+	//there is no response.
+	if(currentLine.isEmpty())
+	{
+		return -1;
+	}
 	//it's a multipart part
-	if(currentLine == "\r\n")
+	else if(currentLine == "\r\n")
 	{
 		multiPartResponseState = MultiPartResponseType::MultiPartPart;
 
