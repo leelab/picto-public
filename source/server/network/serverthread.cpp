@@ -200,8 +200,10 @@ void ServerThread::readClient()
 				{
 					command->setFieldValue("X-PictoStreamState",response->getFieldValue("X-PictoStreamState"));
 				}
+
+				tcpSocket->flush();
 			} while(tcpSocket->state() == QTcpSocket::ConnectedState &&
-				    tcpSocket->waitForBytesWritten() &&
+				    //tcpSocket->waitForBytesWritten() &&
 					response->shouldStream());
 
 			pendingCommand.clear();
