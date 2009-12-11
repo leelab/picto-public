@@ -53,8 +53,6 @@
    <file alias="_data_source_equipment_8h-source.html">../../../output/documentation/main/html/_data_source_equipment_8h-source.html</file>
    <file alias="_data_store_8cpp-source.html">../../../output/documentation/main/html/_data_store_8cpp-source.html</file>
    <file alias="_data_store_8h-source.html">../../../output/documentation/main/html/_data_store_8h-source.html</file>
-   <file alias="_debug_command_handler_8cpp-source.html">../../../output/documentation/main/html/_debug_command_handler_8cpp-source.html</file>
-   <file alias="_debug_command_handler_8h-source.html">../../../output/documentation/main/html/_debug_command_handler_8h-source.html</file>
    <file alias="_device_interface_8cpp-source.html">../../../output/documentation/main/html/_device_interface_8cpp-source.html</file>
    <file alias="_device_interface_8h-source.html">../../../output/documentation/main/html/_device_interface_8h-source.html</file>
    <file alias="_discover_command_handler_8cpp-source.html">../../../output/documentation/main/html/_discover_command_handler_8cpp-source.html</file>
@@ -241,6 +239,8 @@
    <file alias="coding_conventions.html">../../../output/documentation/main/html/coding_conventions.html</file>
    <file alias="commands_8cpp-source.html">../../../output/documentation/main/html/commands_8cpp-source.html</file>
    <file alias="commands_8h-source.html">../../../output/documentation/main/html/commands_8h-source.html</file>
+   <file alias="common_2protocol_2_test_command_handler_8cpp-source.html">../../../output/documentation/main/html/common_2protocol_2_test_command_handler_8cpp-source.html</file>
+   <file alias="common_2protocol_2_test_command_handler_8h-source.html">../../../output/documentation/main/html/common_2protocol_2_test_command_handler_8h-source.html</file>
    <file alias="common_8h-source.html">../../../output/documentation/main/html/common_8h-source.html</file>
    <file alias="common_8h.html">../../../output/documentation/main/html/common_8h.html</file>
    <file alias="config_2main_8cpp-source.html">../../../output/documentation/main/html/config_2main_8cpp-source.html</file>
@@ -360,6 +360,8 @@
    <file alias="pages.html">../../../output/documentation/main/html/pages.html</file>
    <file alias="pictodoc.css">../../../output/documentation/main/html/pictodoc.css</file>
    <file alias="server_2main_8cpp-source.html">../../../output/documentation/main/html/server_2main_8cpp-source.html</file>
+   <file alias="server_2protocol_2_test_command_handler_8cpp-source.html">../../../output/documentation/main/html/server_2protocol_2_test_command_handler_8cpp-source.html</file>
+   <file alias="server_2protocol_2_test_command_handler_8h-source.html">../../../output/documentation/main/html/server_2protocol_2_test_command_handler_8h-source.html</file>
    <file alias="server_8cpp-source.html">../../../output/documentation/main/html/server_8cpp-source.html</file>
    <file alias="server_8h-source.html">../../../output/documentation/main/html/server_8h-source.html</file>
    <file alias="serverthread_8cpp-source.html">../../../output/documentation/main/html/serverthread_8cpp-source.html</file>

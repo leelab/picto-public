@@ -7,13 +7,16 @@
 #include <QStringList>
 #include <QHostAddress>
 
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+
 #include "../../common/globals.h"
 
-#include "DebugCommandHandler.h"
+#include "TestCommandHandler.h"
 #include "../datacollection/neuraldatacollector.h"
 #include "../datacollection/alignmenttool.h"
 
-DebugCommandHandler::DebugCommandHandler()
+TestCommandHandler::TestCommandHandler()
 {
 }
 /*! This is a command handler that I've been using to test and debug the server.
@@ -22,14 +25,27 @@ DebugCommandHandler::DebugCommandHandler()
  *  is sent using telnet, rather than from a real Picto component
  */
 
-QSharedPointer<Picto::ProtocolResponse> DebugCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
+QSharedPointer<Picto::ProtocolResponse> TestCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
+
+	//If it's not a debug mode, ignore all TEST commands
+#ifndef QT_DEBUG
+	//If it's not a debug build, return a Bad Rewuest response
+	QSharedPointer<Picto::ProtocolResponse> unknownProtocolResponse(
+		new Picto::ProtocolResponse(Picto::Names->serverAppName,
+									"PICTO",
+									"1.0",
+									Picto::ProtocolResponseType::BadRequest));
+	return unknownProtocolResponse;
+#endif
+
 	//create an "OK" response
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName,"PICTO","1.0",Picto::ProtocolResponseType::OK));
 
 	QString target = command->getTarget();
 
  
+	//Test the proxy servers
 	if(target == "/proxytest")
 	{
 		qDebug() << "Data Collector Test initiated";
@@ -86,15 +102,20 @@ QSharedPointer<Picto::ProtocolResponse> DebugCommandHandler::processCommand(QSha
 		AlignmentTool align(sessionDb);
 
 		ndc.setAlignmentTool(&align);
-		
-
 		ndc.start();
 		ndc.wait(4000);
 		ndc.stop();
 
-
-
 		qDebug()<<"Data Collector Test Complete";
+
+	}
+	//unknown target
+	else
+	{
+		QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
+			new Picto::ProtocolResponse(Picto::Names->serverAppName, 
+										"HTTP","1.1",Picto::ProtocolResponseType::NotFound));
+		return notFoundResponse;
 
 	}
 

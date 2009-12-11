@@ -54,6 +54,8 @@ void CommandChannel::connectToServer(QHostAddress serverAddress, quint16 serverP
 
 void CommandChannel::initConnection()
 {
+	//set multipart boundary to a null string
+	multipartBoundary = "";
 	//even in polled mode, we're going to make a couple of connections, for events that
 	//are unlikely to occur (and when they do occur, we're probably in trouble anyway,
 	//so grabbing a few extra cycles will be the least of our worries)
@@ -185,17 +187,30 @@ void CommandChannel::readIncomingResponse()
 	while(consumerSocket->bytesAvailable() > 0)
 	{
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse());
+
+		//if we're expecting a multipart part response, we should go ahead and set the
+		//boundary string for the response.
+		if(!multipartBoundary.isEmpty())
+			response->setMultiPartBoundary(multipartBoundary);
+
 		bytesRead = response->read(consumerSocket);
 
 		//if there is an error, bytes read will be negative
 		if(bytesRead >= 0)
 		{
-			QString content = response->getContent();
+			if(response->getMultiPart() == MultiPartResponseType::MultiPartInitial)
+				multipartBoundary = response->getMultiPartBoundary();
+			else if(!multipartBoundary.isEmpty())
+				multipartBoundary="";
 
 			if(polledMode)
 				incomingResponseQueue.push_back(response);
 			else
 				emit incomingResponse(response);
+		}
+		else
+		{
+			Q_ASSERT(false); //This is for debugging purposes only
 		}
 	}
 
@@ -229,7 +244,8 @@ void CommandChannel::readIncomingCommand()
  */
 void CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	command->write(consumerSocket);
+	if(command->write(consumerSocket) < 1)
+		qDebug("CommandChannel::sendCommand failed to send requested command");
 }
 
 /*! \brief Sends a response over the channel
@@ -240,7 +256,9 @@ void CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
  */
 void CommandChannel::sendResponse(QSharedPointer<Picto::ProtocolResponse> response)
 {
-	response->write(producerSocket);
+	if(response->write(producerSocket) < 1)
+		qDebug("CommandChannel::sendResponse failed to send requested response");
+
 }
 
 //! Sends a message to the debug stream in the event of a socekt error

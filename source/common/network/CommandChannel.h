@@ -82,6 +82,12 @@ public:
 	//!Check channel status
 	ChannelStatus getChannelStatus() { return status; };
 
+	QTcpSocket *getConsumerSocket() { return consumerSocket; };
+	QTcpSocket *getProducerSocket() { return producerSocket; };
+
+
+
+
 	void closeChannel();
 
 signals:
@@ -89,7 +95,7 @@ signals:
 	void incomingResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
 	//!emitted when a command is received from the server
-	void incomingCommand(QSharedPointer<ProtocolCommand> command);
+	void incomingCommand(QSharedPointer<Picto::ProtocolCommand> command);
 
 	//!emitted when the channel has lost its connection to the remote server, and is unable to recover.
 	void droppedConnection();
@@ -142,6 +148,8 @@ private:
 	//with their signals
 	QList<QSharedPointer<ProtocolCommand> > incomingCommandQueue;
 	QList<QSharedPointer<ProtocolResponse> > incomingResponseQueue;
+
+	QString multipartBoundary;
 };
 
 

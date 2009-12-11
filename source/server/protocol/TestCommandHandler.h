@@ -1,17 +1,17 @@
-#ifndef _DEBUGCOMMANDHANDLER_H_
-#define _DEBUGCOMMANDHANDLER_H_
+#ifndef _TESTCOMMANDHANDLER_H_
+#define _TESTCOMMANDHANDLER_H_
 
 #include "../../common/common.h"
 
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-struct DebugCommandHandler : Picto::ProtocolCommandHandler
+struct TestCommandHandler : Picto::ProtocolCommandHandler
 {
 public:
-	DebugCommandHandler();
+	TestCommandHandler();
 
-	QString method() { return QString("DEBUG"); }
+	QString method() { return QString("TEST"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 };
 

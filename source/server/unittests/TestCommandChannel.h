@@ -31,6 +31,10 @@ public slots:
 private slots:
 	void initTestCase();
 
+	//NOTE: The test names may be somewhat confusing. If it includes "command"
+	//then the test involves *sending* commands (consumer mode).  If it 
+	//includes "response", then the test involves *sending* responses
+	//(producer mode).
 	void polledSingleCommand();
 	void polledMultipleCommands();
 	void polledServerConnectionDropped();
@@ -38,6 +42,13 @@ private slots:
 	void eventDrivenSingleCommand();
 	void eventDrivenMultipleCommands();
 	void eventDrivenServerConnectionDropped();
+
+	void streamingResponse();
+
+	void polledResponses_data();
+	void polledResponses();
+	void eventDrivenResponses_data();
+	void eventDrivenResponses();
 
 	void cleanupTestCase();
 };

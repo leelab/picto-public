@@ -1,4 +1,5 @@
 #include "TestCommandChannel.h"
+#include "ConsumerServer.h"
 #include "../../common/protocol/ProtocolCommand.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
@@ -7,10 +8,13 @@
 #include <QSignalSpy>
 #include <QList>
 #include <QVariant>
+#include <QXmlStreamReader>
 
 #include <QDebug>
 
-#define QABSTRACTSOCKET_DEBUG
+Q_DECLARE_METATYPE(QSharedPointer<Picto::ProtocolResponse>)
+Q_DECLARE_METATYPE(QSharedPointer<Picto::ProtocolCommand>)
+
 
 TestCommandChannel::TestCommandChannel(QHostAddress _serverAddress) :
 	serverAddress_(_serverAddress),
@@ -65,7 +69,7 @@ void TestCommandChannel::polledSingleCommand()
 //		2. Responses are received in order (as determined by the date field)
 void TestCommandChannel::polledMultipleCommands()
 {
-	int commandsToSend = 5;
+	int commandsToSend = 10;
 
 	//put the channel in polled mode
 	channel_->pollingMode(true);
@@ -140,7 +144,6 @@ void TestCommandChannel::polledServerConnectionDropped()
 //		2. The response is of type 200 (OK)
 //		3. The content of the response contains the following string:
 //			"<title>Picto Server Status</title>"
-Q_DECLARE_METATYPE(QSharedPointer<Picto::ProtocolResponse>)
 
 void TestCommandChannel::eventDrivenSingleCommand()
 {
@@ -185,7 +188,7 @@ void TestCommandChannel::eventDrivenSingleCommand()
 //are checked as above, except for condition 4.
 void TestCommandChannel::eventDrivenMultipleCommands()
 {
-	int commandsToSend = 5;
+	int commandsToSend = 10;
 
 	channel_->pollingMode(false);
 
@@ -198,7 +201,6 @@ void TestCommandChannel::eventDrivenMultipleCommands()
 	//resolution
 	for(int i=0; i<commandsToSend; i++)
 	{
-		qDebug()<<"Command"<<i;
 		channel_->sendCommand(command);
 		QTest::qWait(2000);
 	}
@@ -292,6 +294,253 @@ void TestCommandChannel::eventDrivenServerConnectionDropped()
 	QCOMPARE(droppedConnectionSpy.count(),0);
 
 }
+
+//This tests the command channel when there is a streaming rsponse.
+//This is also an implicit test of protocolResponse::read(), since it 
+//requires the response to handle a multipart response.
+void::TestCommandChannel::streamingResponse()
+{
+	channel_->pollingMode(false);
+
+	qRegisterMetaType< QSharedPointer<Picto::ProtocolResponse> >("QSharedPointer<Picto::ProtocolResponse>");
+	QSignalSpy spy(channel_, SIGNAL(incomingResponse(QSharedPointer<Picto::ProtocolResponse>)));	
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand("GET /testMjpegStream HTTP/1.1"));
+
+	channel_->sendCommand(command);
+
+	//Wait for a bunch of partial responses to arrive
+	QTest::qWait(500);
+
+	qDebug()<<"Responses recieved: "<<spy.count();
+	QVERIFY(spy.count() > 1);
+
+	//grab the first response
+	QList<QVariant> arguments = spy.takeFirst();
+	QSharedPointer<Picto::ProtocolResponse> response = arguments[0].value<QSharedPointer<Picto::ProtocolResponse> >();
+
+	//check the the content-type field is multipart...
+	QCOMPARE(response->getFieldValue("Content-Type"), QString("multipart/x-mixed-replace; boundary=--pictoboundary"));
+	QCOMPARE(response->getMultiPart(), Picto::MultiPartResponseType::MultiPartInitial);
+	QCOMPARE(response->getMultiPartBoundary(), QString("--pictoboundary"));
+
+	//grab all of the remaining responses
+	while(spy.size() > 0)
+	{
+		arguments = spy.takeFirst();
+		response = arguments[0].value<QSharedPointer<Picto::ProtocolResponse> >();
+
+		qDebug()<<"Content-Length:"<<response->getFieldValue("Content-Length");
+		QCOMPARE(response->getFieldValue("Content-Type"), QString("image/jpeg"));
+		QCOMPARE(response->getMultiPart(), Picto::MultiPartResponseType::MultiPartPart);
+
+		//The content size actually varies (since the content is a jpeg), so we
+		//will simply confirm that there is "enough" content.
+		//QVERIFY(response->getFieldValue("Content-Length").toInt()>2000);
+
+	}
+
+}
+
+void TestCommandChannel::polledResponses_data()
+{
+	QTest::addColumn<int>("commandsToSend");
+	QTest::newRow("Single response")<<1;
+	QTest::newRow("Multiple responses")<<10;
+}
+
+
+//	This tests the command channel in producer mode.  The bad news is that there
+//	is no way to get the server to send us commands, so we have to use our own server
+//	for this test.  Because we're using a different server, we will also have to create
+//	a new command channel.  Oh well...
+
+//The test will pass if the following conditions are met:
+//		1. The number of received commands equals the commandsToSend value 
+//		2. Every incoming command has method POST
+//		3. There is a single incoming response to the original TEST command
+//		4. The incoming response is type 200 (OK)
+//		4. The incoming response contains a report showing the following:
+//			a. status="pass"
+//			b. commandsSent=commandsToSend
+//			c. responsesReceived=commandsToSend
+void TestCommandChannel::polledResponses()
+{
+	QFETCH(int, commandsToSend);
+
+	int testPort=24242; //hopefully nothing else is using this...
+
+	ConsumerServer server(testPort);
+
+	Picto::CommandChannel *testChannel;
+	testChannel = new Picto::CommandChannel(QHostAddress::LocalHost,testPort);
+	testChannel->pollingMode(true);
+
+	QSharedPointer<Picto::ProtocolCommand> command(
+		new Picto::ProtocolCommand(QString("TEST /%1 PICTO/1.0").arg(commandsToSend)));
+	testChannel->sendCommand(command);
+
+	//sit in a loop polling for commands and sending responses
+	//The wait is needed even though we're in polled mode, since the 
+	//ConsumerServer uses the event loop
+	int timeCounter=0;
+	int commandCounter = 0;
+	QSharedPointer<Picto::ProtocolCommand> incomingCommand;
+	QSharedPointer<Picto::ProtocolResponse> ackResponse(
+		new Picto::ProtocolResponse("commandchanel","PICTO", "1.0", Picto::ProtocolResponseType::OK));
+
+	while(timeCounter < 1000 + commandsToSend*50) 
+	{
+		QTest::qWait(20);
+		timeCounter += 20;
+		while(testChannel->incomingCommandsWaiting())
+		{
+			incomingCommand = testChannel->getCommand();
+			QString method = incomingCommand->getMethod();
+			QCOMPARE(method, QString("POST"));
+			
+			commandCounter++;
+
+			testChannel->sendResponse(ackResponse);
+		}
+	}
+
+	QCOMPARE(commandCounter, commandsToSend);
+
+	//Read the report sent in response to our initial "TEST" command
+	QCOMPARE(testChannel->incomingResponsesWaiting(), 1);
+	QSharedPointer<Picto::ProtocolResponse> incomingResponse;
+	incomingResponse = testChannel->getResponse();
+	QCOMPARE(incomingResponse->getResponseCode(), 200);	
+	QString report = incomingResponse->getDecodedContent();
+
+	QXmlStreamReader reader;
+	reader.addData(report);
+	QString status, commandsSent, responsesReceived;
+	while(!reader.atEnd())
+	{
+		reader.readNext();
+		if(reader.isStartElement() && reader.name() == "ConsumerServerReport")
+		{
+			status = reader.attributes().value("status").toString();
+			commandsSent = reader.attributes().value("commandsSent").toString();
+			responsesReceived = reader.attributes().value("responsesReceived").toString();
+		}
+	}
+
+	QCOMPARE(commandsSent, QString("%1").arg(commandsToSend));
+	QCOMPARE(responsesReceived, QString("%1").arg(commandsToSend));
+	QCOMPARE(status, QString("pass"));
+
+
+	delete testChannel;
+}
+
+void TestCommandChannel::eventDrivenResponses_data()
+{
+	QTest::addColumn<int>("commandsToSend");
+	QTest::newRow("Single response")<<1;
+	QTest::newRow("Multiple responses")<<10;
+}
+
+//This test is very similar to the polledResponses test, except that it uses the 
+//event driven aspects of the command channel.
+
+//The test will pass if the following conditions are met:
+//		1. The number of received commands equals the commandsToSend value 
+//		2. Every incoming command has method POST
+//		3. There is a single incoming response to the original TEST command
+//		4. The incoming response is type 200 (OK)
+//		4. The incoming response contains a report showing the following:
+//			a. status="pass"
+//			b. commandsSent=commandsToSend
+//			c. responsesReceived=commandsToSend
+
+void TestCommandChannel::eventDrivenResponses()
+{
+	QFETCH(int, commandsToSend);
+
+	int testPort=24242; //hopefully nothing else is using this...
+
+	ConsumerServer server(testPort);
+
+	Picto::CommandChannel *testChannel;
+	testChannel = new Picto::CommandChannel(QHostAddress::LocalHost,testPort);
+	testChannel->pollingMode(false);
+
+	qRegisterMetaType< QSharedPointer<Picto::ProtocolResponse> >("QSharedPointer<Picto::ProtocolResponse>");
+	qRegisterMetaType< QSharedPointer<Picto::ProtocolCommand> >("QSharedPointer<Picto::ProtocolCommand>");
+
+	QSignalSpy incomingResponseSpy(testChannel, SIGNAL(incomingResponse(QSharedPointer<Picto::ProtocolResponse>)));	
+	QSignalSpy incomingCommandSpy(testChannel, SIGNAL(incomingCommand(QSharedPointer<Picto::ProtocolCommand>)));
+
+	QSharedPointer<Picto::ProtocolCommand> command(
+		new Picto::ProtocolCommand(QString("TEST /%1 PICTO/1.0").arg(commandsToSend)));
+	testChannel->sendCommand(command);
+	
+	//sit in a loop polling for commands and sending responses
+	//This is done manually, because connecting the signals and slots within a test is impossible
+	//(any slot I create will be seen as a test case)
+	int timeCounter=0;
+	int commandCounter = 0;
+	QSharedPointer<Picto::ProtocolCommand> incomingCommand;
+	QSharedPointer<Picto::ProtocolResponse> ackResponse(
+		new Picto::ProtocolResponse("commandchanel","PICTO", "1.0", Picto::ProtocolResponseType::OK));
+	QList<QVariant> arguments;
+
+	while(timeCounter < 1000 + commandsToSend*50) 
+	{
+		QTest::qWait(20);
+		timeCounter += 20;
+	
+		while(incomingCommandSpy.size() > 0)
+		{
+			arguments = incomingCommandSpy.takeFirst();
+			incomingCommand = arguments[0].value<QSharedPointer<Picto::ProtocolCommand> >();
+
+			QString method = incomingCommand->getMethod();
+			QCOMPARE(method, QString("POST"));
+			
+			commandCounter++;
+
+			testChannel->sendResponse(ackResponse);
+		}
+	}
+	
+	QCOMPARE(commandCounter, commandsToSend);
+
+	//Read the report sent in response to our initial "TEST" command
+	QCOMPARE(incomingResponseSpy.count(), 1);
+
+	QSharedPointer<Picto::ProtocolResponse> incomingResponse;
+	arguments = incomingResponseSpy.takeFirst();
+	incomingResponse = arguments[0].value<QSharedPointer<Picto::ProtocolResponse> >();
+	QCOMPARE(incomingResponse->getResponseCode(), 200);	
+	QString report = incomingResponse->getDecodedContent();
+
+	QXmlStreamReader reader;
+	reader.addData(report);
+	QString status, commandsSent, responsesReceived;
+	while(!reader.atEnd())
+	{
+		reader.readNext();
+		if(reader.isStartElement() && reader.name() == "ConsumerServerReport")
+		{
+			status = reader.attributes().value("status").toString();
+			commandsSent = reader.attributes().value("commandsSent").toString();
+			responsesReceived = reader.attributes().value("responsesReceived").toString();
+		}
+	}
+
+	QCOMPARE(commandsSent, QString("%1").arg(commandsToSend));
+	QCOMPARE(responsesReceived, QString("%1").arg(commandsToSend));
+	QCOMPARE(status, QString("pass"));
+
+
+	delete testChannel;
+
+}
+
+
 
 //	The cleanup test case basically closes the channel, and
 //	then deletes it.  It's impossible to check that this worked,

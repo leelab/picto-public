@@ -10,6 +10,8 @@ HEADERS += $$(PICTO_TREE)/source/server/unittests/TestBasicProtocolCommands.h
 SOURCES += $$(PICTO_TREE)/source/server/unittests/TestBasicProtocolCommands.cpp
 HEADERS += $$(PICTO_TREE)/source/server/unittests/TestCommandChannel.h
 SOURCES += $$(PICTO_TREE)/source/server/unittests/TestCommandChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/ConsumerServer.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/ConsumerServer.cpp
 SOURCES += $$(PICTO_TREE)/source/server/unittests/main.cpp
 
 include($$(PICTO_TREE)/source/common/common.pri)

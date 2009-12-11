@@ -90,7 +90,7 @@ QString ProtocolResponse::getMultiPartHeaders()
 	QString headers;
 
 	headers = QString("%1\r\n").arg(multiPartBoundary);
-	headers += QString("Content-Length: %1\r\n").arg(fields.value("Content-Length"));
+	headers += QString("Content-Length: %1\r\n").arg(fields.value("Content-Length","0"));
 	headers += QString("Content-Type: %1\r\n").arg(multiPartContentType);
 	if(fields.contains("Content-Encoding"))
 	{
@@ -364,7 +364,6 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	//first line is null, there's no data on the socket, so we should give up.
 	
 	currentLine = socket->readLine();
-	
 
 	//there is no response.
 	if(currentLine.isEmpty())
@@ -372,6 +371,12 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 		return -1;
 	}
 	//it's a multipart part
+	//NOTE: if it's the first multipart part, it will start with the boundary --....
+	//Otherwise, it will start with \r\n bollowed by the boundary
+	//I'm trying to leave the flexibilty for the user to not have to define the
+	//boundary string
+
+	//It's a multi part part, but not the first one
 	else if(currentLine == "\r\n")
 	{
 		multiPartResponseState = MultiPartResponseType::MultiPartPart;
@@ -386,9 +391,16 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 		if(!multiPartBoundary.isEmpty() &&
 			currentLine != multiPartBoundary)
 			return -3;
-
 	}
-	//it's a multipart initial or, a non multipart
+	//Its' the first part of a multipary part (meaning that it starts with the boundary
+	//rather than LFCR)
+	else if	((!multiPartBoundary.isEmpty() && currentLine.remove("\r\n") == multiPartBoundary) ||
+		(multiPartBoundary.isEmpty() && currentLine.startsWith("--")))
+	{
+		multiPartResponseState = MultiPartResponseType::MultiPartPart;
+	}
+	//it's a multipart initial or, a non multipart, or something else entirely 
+	//(in which case we return -2
 	else
 	{
 		//if it turns out to be multiPartInitial, this gets changed when the 
@@ -436,12 +448,15 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 	}
 
 	//Interpret the headers
-	contentLength = fields.value("Content-Length",0).toInt();
+	contentLength = fields.value("Content-Length","0").toInt();
 
 	if(fields.value("Content-Type").contains("multipart", Qt::CaseInsensitive))
+	{
 		multiPartResponseState = MultiPartResponseType::MultiPartInitial;
-
-
+		int boundaryIndex = fields.value("Content-Type").indexOf("boundary=");
+		if(boundaryIndex >= 0)
+			multiPartBoundary = fields.value("Content-Type").mid(boundaryIndex+9);
+	}
 
 	//read content
 	encodedContent = socket->read(contentLength);
@@ -462,141 +477,3 @@ int ProtocolResponse::read(QAbstractSocket *socket)
 }
 
 }; //namespace Picto
-
-
-//Matt's Random Thoughts
-/*********************************************************
-
-The protocolResponse is a real pain to deal with from the recipient's end.
-The protocolCommand is much easier to deal with.  The difference is that
-when you receive a command, all you have to do is add fields and values to 
-a map.  However, the response has a whole bunch of special variables that
-may need to be changed based on the fields in the response header.  Making matters 
-even more complicated, some of these variables don't have setter methods, so creating 
-a new responpse from received data must be done from within the response object.
-Currently the read method deals with this (although it isn't particularly elegant,
-and may well create chaos in the future as new member variables are added).  
-I'm starting to run into issues however, as the original read method was designed 
-for handling responses coming from the proxy servers, and now I'm trying to extend it
-to handle responses that a command channel is reading (the problem here is that the
-command channel will have already read the first line of the response, otherwise
-I could just reuse the existing read method).
-
-REWRITING THE WHOLE THING
-Would it be easier just to use the fields directly?  To do this, we would remove 
-almost all of the member variables (e.g.contentEncodingType), and store everyhting
-about the response in the fields map.  This would ential rewriting all
- of the get/set methods (increasing their complexity slightly), as well as
-rewriting the generate headers function (decreasing it's complexity significantly).
-A new constructor could also be added which would convert the header string into
-a full blown response.  Since the getters and setters would rely on the field
-map, this would actually be a very simple approach.
-
-The advantage of this is that although it will take a while, once it's done, 
-we can easily add new features to the response objects.  Also, instead of using
-the read method as a "black box", we could kill read, and let everyone handle 
-reading on their own.  Or we could leave it in place, since it's a simple
-method, but end users would still have the option of simply passing in the headers
-to the constructor.
-
-If I took this approach, I would want to set up the response object so that it is 
-almost identical to the command object.  (Or at least so that it can be used in 
-exactly the same way).  In the long run, it would be nice if both of these objects 
-were mirrors of each other, but this may not be feasible...
-
-DEALING WITH IT AS IT IS
-We could also leave the response object more or less intact.  The major problem
-is that we need to be able to generate a response object after the first line
-of the response has already been read from a socket. There are a bunch of ways to
-do this:
-	-	Add a statusLine argument to the read method.  The argument would be an empty
-		string by default, in which case the status line would be read from the socket.
-		If the status line is not an empty string, then it's content would be used
-		to set the relevant values.
-	-	Create a new read method that takes a string containing all of the headers
-		We'd have to be careful not to repeat the code from the original read method, 
-		so this approach would require some refactoring (probably a parse headers method)
-	-	Create a new constructor that takes all of the headers.  This has the same issue 
-		as above.
-
-
-***********************************************************/
-
-/**********************************************************
-MORE RANDOM THOUGHTS
-
-Basically, this all comes down to a question of how we want to arrange 
-the command and response objects.  In other words, what are they responsible
-for?  Here are a couple of possibilities:
-
-OBJECT RESPONSIBLE FOR READING/WRITING FROM/TO NETWORK
-
-In this case each object will have read/write functions that are passed
-a socket.  The object will then pull the data from the network, and parse
-it.  If this is the case, we'll need to makes sure that the read/write functions 
-are robust, and that they can handle a variety of scenarios.
-
-The problem with this approach is that there are a variety of different cases 
-in which we need to read a command/response from the network.  Sometimes 
-it will be read in full (for example if we know that we are reading a command).
-Other times, we'll read the first line ourselves (to determine if it's a 
-command or a response), and then want the object to finish reading itself.
-
-This approach also makes creating a command/response from scratch different from 
-reading one off the network.  This isn't neccessarily a problem, but there
-may be cases where we want to read an object from a source other than the
-network (for example out of a file or database).
-
-Advatages:
-- Network reading code only written once
-- Can hide a lot of the guts of each object
-
-Disadvantages
-- Will require adding read function to command, and write function to response
-- How will we handle cases where we don't know if the object is a command
-  or a response?
-
-END USER RESPONSIBLE FOR READING/WRITING FROM/TO THE NETWORK
-
-With this approach, the end user has to read the data from the network, and then 
-build the command/response from the data.  The command object can already do this
-easily (read the headers, and pass them into a command constructor, then read the 
-content and pass that to setContent or addToContent).  The response object however 
-can't do this yet
-
-Advantages
-- End user has nearly full control over the object
-- End user can create an object from any source of data (network, database
-  text file, etc)
-- Object can be created from data read in different locations
-
-Disadvantages
-- End user has nearly full control over the object
-- Network code gets frequently rewritten (although it is simple...)
-
-
-WHAT ABOUT THE FIELDS?
-If every object can have an infinite number of fields, then the 
-access to fields will need to be a public function that directly accesses
-the field map.  Without this, an object with a "new" field would not be
-usuable, since there would be no access to that field.
-
-The other alternative is to limit the fields in any given object to a preset
-list.  If this is the case, then there is no need for a public field access method.  
-However, there then becomes a need for individual getter and setter methods for 
-every field that could possibly exist in a command/response.  This isn't actually 
-that bad, but it will lead to long term maintenance issues, and effectively
-limit what the protocols are capable of doing.
-
-SUMMARY
-
-There's a real asymmetry between the command and response objects.  
-This is almost certainly due to the fact that these objects were developed
-with the server (which parses incoming commands, and generates outgoing responses).
-Naturally as the code has progressed, we've started needing to handle the other situations
-(incomin responses and outgoing commands).  I've just added code as I needed it, but 
-things are starting to get messy, so we need to come up with a more unified approach.
-
-Really, it would be easiest, if both the command and response objects behaved in 
-the same way.
- **********************************************************/

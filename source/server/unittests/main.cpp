@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
 			testOptionList += argv[0];
 			//testOptionList += "-xml";
 
-			int result;
-			result =  QTest::qExec(&basicProtocolCommandTestObject, testOptionList);
+			int result=0;
+			//result +=  QTest::qExec(&basicProtocolCommandTestObject, testOptionList);
 			result += QTest::qExec(&commandChannelTestObject, testOptionList);
 			return result;
 		}
