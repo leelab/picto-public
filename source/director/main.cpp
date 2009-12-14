@@ -17,6 +17,8 @@
 #include "../common/stimuli/PictureGraphic.h"
 #include "../common/stimuli/LineGraphic.h"
 #include "../common/stimuli/BoxGraphic.h"
+#include "../common/stimuli/ArrowGraphic.h"
+#include "../common/stimuli/EllipseGraphic.h"
 
 #include "SignalChannelTest.h"
 
@@ -63,8 +65,9 @@ int main(int argc, char *argv[])
 
 	/*! \todo PictoEngine pictoEngine; */
 //////////////////////////////
-	QSharedPointer<Picto::CompositingSurface> compositingSurface = 
-		renderingTarget.generateCompositingSurface();
+	QSharedPointer<Picto::CompositingSurface> compositingSurface;
+	
+	compositingSurface = renderingTarget.generateCompositingSurface();
 
 	QSharedPointer<Picto::CircleGraphic> circleGraphic(
 											new Picto::CircleGraphic(QPoint(10,10),100,QColor(0,255,0,200)));
@@ -102,10 +105,25 @@ int main(int argc, char *argv[])
 		new Picto::BoxGraphic(QPoint(550,400),dimensions,QColor(0,0,255,255)));
 	boxGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
+
+	compositingSurface = renderingTarget.generateCompositingSurface();
+	QSharedPointer<Picto::ArrowGraphic> arrowGraphic1(
+		new Picto::ArrowGraphic(QPoint(0,0),QPoint(400,400),QPoint(300,500),1,QColor(255,0,0,255)));
+	arrowGraphic1->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+
+
+	compositingSurface = renderingTarget.generateCompositingSurface();
+	dimensions = QRect(0,0,200,50);
+	QSharedPointer<Picto::EllipseGraphic> ellipseGraphic(
+		new Picto::EllipseGraphic(QPoint(10,85),dimensions,QColor(0,0,255,255)));
+	ellipseGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+
 	pixmapVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(lineGraphic->getPosition(), lineGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(boxGraphic->getPosition(), boxGraphic->getCompositingSurface("Pixmap"));
+	pixmapVisualTarget->draw(arrowGraphic1->getPosition(), arrowGraphic1->getCompositingSurface("Pixmap"));
+	pixmapVisualTarget->draw(ellipseGraphic->getPosition(), ellipseGraphic->getCompositingSurface("Pixmap"));
 
 	pixmapVisualTarget->drawNonExperimentText(QFont("Arial",18),
 											  QColor(Qt::white),

@@ -42,7 +42,7 @@ void LineGraphic::draw()
 			points.push_back(point);
 
 			if(point.x() < left) left = point.x();
-			if(point.y() > right) right = point.x();
+			if(point.x() > right) right = point.x();
 			if(point.y() < top) top = point.y();
 			if(point.y() > bottom) bottom = point.y();
 		}
