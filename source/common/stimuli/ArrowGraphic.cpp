@@ -68,7 +68,8 @@ void ArrowGraphic::draw()
 
 	//set up the image/painter
 	QImage image(imgWidth,imgHeight,QImage::Format_ARGB32);
-	image.fill(0);
+	image.fill(0x0);
+
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(color);
@@ -78,11 +79,8 @@ void ArrowGraphic::draw()
 	pen.setJoinStyle(Qt::MiterJoin);
 	p.setPen(pen);
 
-
-
 	//draw the lines
 	p.drawLines(points);
-
 
 	p.end();
 	image_ = image;
@@ -90,29 +88,6 @@ void ArrowGraphic::draw()
 	updateCompositingSurfaces();
 
 	shouldRedrawImage_ = false;
-
-
-	//--------------------------------------
-
-
-
-	/*QRect dimensions(0,0,40,500);
-	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
-
-	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
-	image.fill(0);
-	QPainter p(&image);
-	p.setRenderHint(QPainter::Antialiasing, true);
-	p.setBrush(color);
-	p.setPen(color);
-	p.drawRect(dimensions);
-	p.end();
-	image_ = image;
-
-	updateCompositingSurfaces();
-
-	shouldRedrawImage_ = false;*/
-
 }
 
 void ArrowGraphic::slotPropertyValueChanged(QString propertyName, QVariant propertyValue)
@@ -121,7 +96,6 @@ void ArrowGraphic::slotPropertyValueChanged(QString propertyName, QVariant prope
 	{
 		draw();
 	}
-
 }
 
 }

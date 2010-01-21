@@ -1,6 +1,7 @@
 #ifndef _VISUALTARGET_H_
 #define _VISUALTARGET_H_
 
+#include <QColor>
 #include "../common.h"
 
 #include "CompositingSurface.h"
@@ -14,11 +15,14 @@ class VisualTarget
 public:
 	VisualTarget(bool _bWindowed = false, int _width = 800, int _height = 600);
 
+
 	virtual QSharedPointer<CompositingSurface> generateCompositingSurface() = 0;
 	virtual QString getTypeName() = 0;
 	virtual void draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface) = 0;
 	virtual void present() = 0;
 	virtual QRect getDimensions();
+
+	//! \todo Add a function that returns time to VSynch
 
 protected:
 	bool bWindowed_;

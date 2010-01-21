@@ -10,6 +10,8 @@
 #include "../common/network/ServerDiscoverer.h"
 #include "../common/compositor/RenderingTarget.h"
 #include "../common/compositor/PixmapVisualTarget.h"
+#include "../common/compositor/DDrawVisualTarget.h"
+#include "../common/compositor/D3DMVisualTarget.h"
 #include "../common/compositor/PCMAuralTarget.h"
 #include "../common/compositor/CompositingSurface.h"
 #include "../common/compositor/MixingSample.h"
@@ -24,6 +26,7 @@
 
 int main(int argc, char *argv[])
 {
+
 	bool bWindowed = false;
 
 	if(argc>1)
@@ -46,6 +49,10 @@ int main(int argc, char *argv[])
 
 	Picto::InitializeLib(&app,localeLanguageCode);
 
+	//For debugging we'll quit automatically after a fixed time
+	//QTimer::singleShot(10000,&app,SLOT(quit()));
+
+
 	/*! \todo this should create a target surface (optionally windowed if a -testing argument is present)
 	 *        set it to all black with a logo and status message (the status message should be reflected
 	 *        on the LCD display if present).  The director instance should attempt to discover and
@@ -53,38 +60,48 @@ int main(int argc, char *argv[])
 	 *        until successful.  In the future we'll allow for configuring a direct connection manually.
 	 */
 
-	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget(new Picto::PixmapVisualTarget(bWindowed));
+	//QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget(new Picto::PixmapVisualTarget(bWindowed));
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
+	//QSharedPointer<Picto::DDrawVisualTarget> ddrawVisualTarget(new Picto::DDrawVisualTarget());
+	QSharedPointer<Picto::D3DMVisualTarget> d3dmVisualTarget(new Picto::D3DMVisualTarget());
 
-	Picto::RenderingTarget renderingTarget(pixmapVisualTarget, pcmAuralTarget);
+	//Picto::RenderingTarget renderingTarget(pixmapVisualTarget, pcmAuralTarget);
+	//Picto::RenderingTarget renderingTarget(ddrawVisualTarget, pcmAuralTarget);
+	Picto::RenderingTarget renderingTarget(d3dmVisualTarget, pcmAuralTarget);
 	//renderingTarget.showSplash();
 	//renderingTarget.updateStatus(QString("Searching for a %1").arg(Picto::Names->serverAppName));
 	//renderingTarget.show();
 
-	pixmapVisualTarget->show();
+	//pixmapVisualTarget->show();
+	//ddrawVisualTarget->show();
+	d3dmVisualTarget->show();
 
 	/*! \todo PictoEngine pictoEngine; */
 //////////////////////////////
 	QSharedPointer<Picto::CompositingSurface> compositingSurface;
 	
+	//CIRCLE
+	printf("\nCircle\n");
 	compositingSurface = renderingTarget.generateCompositingSurface();
-
 	QSharedPointer<Picto::CircleGraphic> circleGraphic(
-											new Picto::CircleGraphic(QPoint(10,10),100,QColor(0,255,0,200)));
+											new Picto::CircleGraphic(QPoint(50,50),100,QColor(0,255,0,127)));
 	circleGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
+	//PICTURE
+	printf("\nPicture\n");
 	compositingSurface = renderingTarget.generateCompositingSurface();
-
 	QSharedPointer<Picto::PictureGraphic> pictureGraphic(
-											new Picto::PictureGraphic(QPoint(0,0),":/common/images/splash.png"));
+											new Picto::PictureGraphic(QPoint(0,0),":/common/images/splash2.png"));
 	pictureGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 	QRect splashScreenRect = pictureGraphic->getBoundingRect();
-	QRect visualTargetRect = pixmapVisualTarget->getDimensions();
+	//QRect visualTargetRect = ddrawVisualTarget->getDimensions();
+	QRect visualTargetRect = d3dmVisualTarget->getDimensions();
 	pictureGraphic->setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,
 								       (visualTargetRect.height()-splashScreenRect.height())/2));
 
+	//LINE
+	printf("\nLine\n");
 	compositingSurface = renderingTarget.generateCompositingSurface();
-
 	QVector<QPoint> points;
 	points.push_back(QPoint(10,10));
 	points.push_back(QPoint(790,590));
@@ -95,30 +112,95 @@ int main(int argc, char *argv[])
 	points.push_back(QPoint(790,590));
 	points.push_back(QPoint(790,10));
 	QSharedPointer<Picto::LineGraphic> lineGraphic(
-		new Picto::LineGraphic(QPoint(0,0),points,QColor(255,0,0,255)));
+		new Picto::LineGraphic(QPoint(50,50),points,QColor(255,0,0,127)));
 	lineGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
+	//BOX
+	printf("\nBox\n");
 	compositingSurface = renderingTarget.generateCompositingSurface();
-
-	QRect dimensions(0,0,200,150);
+	QRect dimensions(0,0,100,100);
 	QSharedPointer<Picto::BoxGraphic> boxGraphic(
-		new Picto::BoxGraphic(QPoint(550,400),dimensions,QColor(0,0,255,255)));
+		new Picto::BoxGraphic(QPoint(1,1),dimensions,QColor(255,0,0,255)));
 	boxGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
+	printf("\nBox2\n");
+	compositingSurface = renderingTarget.generateCompositingSurface();
+	QSharedPointer<Picto::BoxGraphic> boxGraphic2(
+		new Picto::BoxGraphic(QPoint(0,0),QRect(0,0,200,200),QColor(255,255,255,255)));
+	boxGraphic2->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
+	//ARROW
+	printf("\nArrow\n");
 	compositingSurface = renderingTarget.generateCompositingSurface();
 	QSharedPointer<Picto::ArrowGraphic> arrowGraphic1(
-		new Picto::ArrowGraphic(QPoint(0,0),QPoint(400,400),QPoint(300,500),1,QColor(255,0,0,255)));
+		new Picto::ArrowGraphic(QPoint(0,0),QPoint(400,400),QPoint(300,500),1,QColor(255,255,0,255)));
 	arrowGraphic1->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
-
+	//ELLIPSE
+	printf("\nEllipse\n");
 	compositingSurface = renderingTarget.generateCompositingSurface();
-	dimensions = QRect(0,0,200,50);
+	dimensions = QRect(0,0,200,75);
 	QSharedPointer<Picto::EllipseGraphic> ellipseGraphic(
 		new Picto::EllipseGraphic(QPoint(10,85),dimensions,QColor(0,0,255,255)));
 	ellipseGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
-	pixmapVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Pixmap"));
+	//My mini event loop to test framerate
+	LARGE_INTEGER ticksPerSec;
+	LARGE_INTEGER tick, tock;
+	double elapsedTime;
+	int frameCounter = 0;
+	QueryPerformanceFrequency(&ticksPerSec);
+
+	while(frameCounter < 600)
+	{
+
+		
+		QueryPerformanceCounter(&tick);
+
+		//test the four corners...
+		//top left
+		d3dmVisualTarget->draw(QPoint(0,0), boxGraphic2->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(QPoint(1,1), boxGraphic->getCompositingSurface("Direct3DMobile"));
+		//top right
+		d3dmVisualTarget->draw(QPoint(1279-200,0), boxGraphic2->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(QPoint(1279-100-1,1), boxGraphic->getCompositingSurface("Direct3DMobile"));
+		//bottom left
+		d3dmVisualTarget->draw(QPoint(0,1023-200), boxGraphic2->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(QPoint(1,1023-100-1), boxGraphic->getCompositingSurface("Direct3DMobile"));
+		//bottom right
+		d3dmVisualTarget->draw(QPoint(1279-200,1023-200), boxGraphic2->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(QPoint(1279-100-1,1023-100-1), boxGraphic->getCompositingSurface("Direct3DMobile"));
+	
+		d3dmVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(lineGraphic->getPosition(), lineGraphic->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(ellipseGraphic->getPosition(), ellipseGraphic->getCompositingSurface("Direct3DMobile"));
+		d3dmVisualTarget->draw(arrowGraphic1->getPosition(), arrowGraphic1->getCompositingSurface("Direct3DMobile"));
+
+
+		/*ddrawVisualTarget->drawNonExperimentText(QFont("Arial",18),
+												  QColor(Qt::white),
+												  QRect(0,			  
+													   (visualTargetRect.height()-splashScreenRect.height())/2+splashScreenRect.height()+25,
+													   visualTargetRect.width(),
+													   50),
+												  Qt::AlignCenter,
+												  "Testing");*/
+		
+		//ddrawVisualTarget->present();
+		d3dmVisualTarget->present();
+
+		QueryPerformanceCounter(&tock);
+		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
+		printf("Elapsed time: %f\n", elapsedTime);
+		
+		//QCoreApplication::processEvents();
+		frameCounter++;
+
+	}
+		printf("Elapsed time of last frame: %f\n", elapsedTime);
+
+	/*pixmapVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(lineGraphic->getPosition(), lineGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(boxGraphic->getPosition(), boxGraphic->getCompositingSurface("Pixmap"));
@@ -134,7 +216,7 @@ int main(int argc, char *argv[])
 											  Qt::AlignCenter,
 											  "Testing");
 
-	pixmapVisualTarget->present();
+	pixmapVisualTarget->present();*/
 
 	/*************************************************
 	 * Testing the signal channel.  
@@ -164,12 +246,14 @@ void PixmapRenderingTarget::discoverServerFailed()
 	serverDiscoverer.discover();
 
 	/*! \todo DirectorCommandChannel directorCommandChannel; */
+
 	
-	int result = app.exec();
+	//int result = app.exec();
 
 	Picto::CloseLib();
 
-	return result;
+	//return result;
+	return 0;
 }
 
 /*! \todo PictoEngine object which loads an experiment object and can execute its contained tasks rendering to one or

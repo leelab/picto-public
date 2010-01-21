@@ -95,6 +95,15 @@ DDrawObject::DDrawObject(QWidget *parent) :
     hRet = DirectDrawCreate(NULL, &pDD, NULL);
     if (hRet != DD_OK)
 	{
+		if(hRet == DDERR_DIRECTDRAWALREADYCREATED)
+			printf("DirectDrawCreate FAILED, DirectDraw already created");
+		if(hRet == DDERR_GENERIC )
+			printf("DirectDrawCreate FAILED, undefined error condition");
+		if(hRet == DDERR_INVALIDPARAMS)
+			printf("DirectDrawCreate FAILED, Invalid parameters");
+		if(hRet == DDERR_OUTOFMEMORY )
+			printf("DirectDrawCreate FAILED, Out of memory");
+
 		delete this;
 		return;
 	}

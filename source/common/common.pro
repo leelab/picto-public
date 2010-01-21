@@ -48,8 +48,6 @@ HEADERS += $$(PICTO_TREE)/source/common/compositor/PixmapCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/PixmapCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.cpp
-HEADERS += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/NullCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/NullCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/MixingSample.h
@@ -232,8 +230,19 @@ HEADERS += $$(PICTO_TREE)/source/common/task/BlockGenerator.h
 SOURCES += $$(PICTO_TREE)/source/common/task/BlockGenerator.cpp
 
 wince* {
-HEADERS += $$(PICTO_TREE)/source/common/time_ce/time_ce.h
-SOURCES += $$(PICTO_TREE)/source/common/time_ce/time_ce.cpp
+HEADERS += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.cpp
+HEADERS += $$(PICTO_TREE)/source/common/compositor/DDrawVisualTarget.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/DDrawVisualTarget.cpp
+LIBS += ddraw.lib
+
+HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DMCompositingSurface.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DMCompositingSurface.cpp
+HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DMVisualTarget.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DMVisualTarget.cpp
+LIBS += d3dm.lib
+LIBS += d3dmx.lib
+
 
 HEADERS += $$(PICTO_TREE)/source/common/engine/PictoBoxAnalogInputSignalChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/PictoBoxAnalogInputSignalChannel.cpp
@@ -242,6 +251,10 @@ HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.h
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard_p.h
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoardRegisterMap.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.cpp
+
+HEADERS += $$(PICTO_TREE)/source/common/time_ce/time_ce.h
+SOURCES += $$(PICTO_TREE)/source/common/time_ce/time_ce.cpp
+
 }
 
 include($$(PICTO_TREE)/source/common/common.pri)
