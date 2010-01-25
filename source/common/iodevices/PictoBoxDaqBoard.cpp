@@ -439,7 +439,7 @@ bool PictoBoxDaqBoard::initEventLines()
 	//clear PFI lines
 	data = 0x0;
 	SetFilePointer(hDAQ_, PFI_DO,NULL, FILE_BEGIN);
-	WriteFile(hDAQ_,&data, TWO_BYTES, NULL, NULL);
+	WriteFile(hDAQ_,&data, TWO_BYTES, &bytesWritten, NULL);
 
 
 	eventLinesInitialized_ = true;
@@ -462,56 +462,48 @@ bool PictoBoxDaqBoard::initEventLines()
 //******************************************************/
 bool PictoBoxDaqBoard::sendEvent(unsigned char _eventCode)
 {
+
 	if(!eventLinesInitialized_)
 		return false;
 
-	DWORD data;
+	SHORT data;
+	DWORD bytesWritten;
 	
 	//set event code on PFI lines
 	data = _eventCode & 0x7F;
 	SetFilePointer(hDAQ_, PFI_DO,NULL, FILE_BEGIN);
-	WriteFile(hDAQ_,&data, TWO_BYTES, NULL, NULL);
+	WriteFile(hDAQ_,&data, TWO_BYTES, &bytesWritten, NULL);
 
 	//set strobe high
 	data = (_eventCode & 0x7F) | 0x80;
 	SetFilePointer(hDAQ_, PFI_DO,NULL, FILE_BEGIN);
-	WriteFile(hDAQ_,&data, TWO_BYTES, NULL, NULL);
+	WriteFile(hDAQ_,&data, TWO_BYTES, &bytesWritten, NULL);
 
 	//wait 250 us
-	//code stolen/modified from MSDN:
-	//http://msdn.microsoft.com/en-us/library/ms836797.aspx
-	LARGE_INTEGER ticksPerUs;
-	LARGE_INTEGER currTicks,endTicks;
-	int delay = 250; //delay in us
-	// Query number of ticks per second
-	if (QueryPerformanceFrequency(&ticksPerUs))
-	{
-		//get ticks per ms
-		ticksPerUs.QuadPart /= 1000000;
+	LARGE_INTEGER ticksPerSec;
+	LARGE_INTEGER tick, tock;
+	double elapsedTime;
+	double delayTime = 0.000250; //250 microseconds
 
-		// Get current ticks
-		if (QueryPerformanceCounter(&currTicks))
-		{
-			// Create timeout value
-			endTicks.QuadPart = currTicks.QuadPart + ticksPerUs.QuadPart*delay;
-			do
-			{
-				// Get current ticks
-				QueryPerformanceCounter(&currTicks);
-				// Delay until timeout
-			} while (currTicks.QuadPart<endTicks.QuadPart);
-		}
+	QueryPerformanceFrequency(&ticksPerSec);
+	QueryPerformanceCounter(&tick);
+	do
+	{
+		QueryPerformanceCounter(&tock);
+		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
 	}
+	while(elapsedTime < delayTime);
 
 	//set strobe low
 	data = _eventCode & 0x7F;
 	SetFilePointer(hDAQ_, PFI_DO,NULL, FILE_BEGIN);
-	WriteFile(hDAQ_,&data, TWO_BYTES, NULL, NULL);
-
+	WriteFile(hDAQ_,(LPCVOID)&data, TWO_BYTES, &bytesWritten, NULL);
+	
 	//clear PFI lines
 	data = 0x0;
 	SetFilePointer(hDAQ_, PFI_DO,NULL, FILE_BEGIN);
-	WriteFile(hDAQ_,&data, TWO_BYTES, NULL, NULL);
+	WriteFile(hDAQ_,&data, TWO_BYTES, &bytesWritten, NULL);
+
 
 	return true;
 }
