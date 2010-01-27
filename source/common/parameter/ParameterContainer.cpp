@@ -1,28 +1,28 @@
 #include "ParameterContainer.h"
 
-#include <QtVariantProperty>
-
 namespace Picto {
 
 ParameterContainer::ParameterContainer()
 {
 }
 
-/*
-void ParameterContainer::slotPropertyManagerValueChanged(QtProperty * property,
-														 const QVariant & value)
+void ParameterContainer::addParameter(QSharedPointer<Parameter> parameter)
 {
-	QMapIterator<QString, QtVariantProperty *> paramIterator(parameters_);
-	while(paramIterator.hasNext())
-	{
-		paramIterator.next();
-		if(paramIterator.value() == property)
-		{
-			emit signalParameterValueChanged(paramIterator.key(), value);
-			break;
-		}
-	}
+	parameters_.append(parameter);
 }
-*/
+
+bool ParameterContainer::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+{
+	//TODO: implement me
+
+	return false;
+}
+
+bool ParameterContainer::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	//TODO: implement me
+
+	return false;
+}
 
 }; //namespace Picto

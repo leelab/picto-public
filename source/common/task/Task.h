@@ -5,8 +5,14 @@
 #include "../storage/DataStore.h"
 #include "../parameter/ParameterContainer.h"
 #include "../property/PropertyContainer.h"
+#include "../statemachine/StageResult.h"
+#include "../experimentalsystem/ExperimentalSystem.h"
+#include "Constraint.h"
+#include "TrialResult.h"
+#include "BlockGenerator.h"
 
 #include <QUuid>
+#include <QList>
 
 namespace Picto {
 
@@ -21,6 +27,11 @@ private:
 
 	PropertyContainer propertyContainer_;
 	ParameterContainer parameterContainer_;
+	QList<StageResult> stageResults_;
+	QList<TrialResult> trialResults_;
+	QList<Constraint> constraints_;
+	ExperimentalSystem experimentalSystemRequirements_;
+	BlockGenerator blockGenerator_;
 };
 
 

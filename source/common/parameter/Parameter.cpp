@@ -2,8 +2,26 @@
 
 namespace Picto {
 
-Parameter::Parameter()
+Parameter::Parameter() :
+	bOperatorUI_(false),
+	name_("unnamed parameter"),
+	type_("null")
 {
+}
+
+QString Parameter::name()
+{
+	return name_;
+}
+
+void Parameter::setName(QString parameterName)
+{
+	name_ = parameterName;
+}
+
+QString Parameter::type()
+{
+	return type_;
 }
 
 }; //namespace Picto

@@ -2,25 +2,26 @@
 #define _PARAMETERCONTAINER_H_
 
 #include "../common.h"
+#include "../storage/DataStore.h"
 
 #include "Parameter.h"
 
-#include <QObject>
+#include <QSharedPointer>
+#include <QList>
 
 namespace Picto {
 
-class ParameterContainer : public QObject
+class ParameterContainer : public DataStore
 {
-	Q_OBJECT
-
 public:
 	ParameterContainer();
 
-//signals:
-//	void signalParameterValueChanged(QString parameterName, QVariant parameterValue);
+	void addParameter(QSharedPointer<Parameter> parameter);
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-//private slots:
-//	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
+private:
+	QList<QSharedPointer<Parameter> > parameters_;
 };
 
 

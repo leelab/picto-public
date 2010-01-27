@@ -108,10 +108,18 @@ SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp
 HEADERS += $$(PICTO_TREE)/source/common/network/CommandChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/network/CommandChannel.cpp
 
-HEADERS += $$(PICTO_TREE)/source/common/parameter/Parameter.h
-SOURCES += $$(PICTO_TREE)/source/common/parameter/Parameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/Parameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/Parameter.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/BooleanParameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/BooleanParameter.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/ChoiceParameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/ChoiceParameter.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/RangeParameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/RangeParameter.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/StringParameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/StringParameter.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/property/Property.h
 SOURCES += $$(PICTO_TREE)/source/common/property/Property.cpp
