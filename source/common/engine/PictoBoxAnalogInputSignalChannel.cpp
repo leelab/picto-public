@@ -2,19 +2,19 @@
 
 namespace Picto {
 
-PictoBoxAnalongInputSignalChannel::PictoBoxAnalongInputSignalChannel(QSharedPointer<PictoBoxDaqBoard> daqBoard, 
+PictoBoxAnalogInputSignalChannel::PictoBoxAnalogInputSignalChannel(QSharedPointer<PictoBoxDaqBoard> daqBoard, 
 																	 int sampsPerSecond)
 	: daqBoard(daqBoard),
 	  SignalChannel(sampsPerSecond)
 {
 }
-void PictoBoxAnalongInputSignalChannel::addAiChannel(QString subchannelName, int aiChannelNum)
+void PictoBoxAnalogInputSignalChannel::addAiChannel(QString subchannelName, int aiChannelNum)
 {
 	addSubchannel(subchannelName);
 	aiChannelNums[subchannelName] = aiChannelNum;
 }
 
-bool PictoBoxAnalongInputSignalChannel::start()
+bool PictoBoxAnalogInputSignalChannel::start()
 {
 	daqBoard->ClearAIChannelList();
 
@@ -34,7 +34,7 @@ bool PictoBoxAnalongInputSignalChannel::start()
 	return true;
 }
 
-bool PictoBoxAnalongInputSignalChannel::stop()
+bool PictoBoxAnalogInputSignalChannel::stop()
 {
 	if(daqBoard->StopAI())
 		return true;
@@ -42,7 +42,7 @@ bool PictoBoxAnalongInputSignalChannel::stop()
 		return false;
 }
 
-void PictoBoxAnalongInputSignalChannel::updateDataBuffer()
+void PictoBoxAnalogInputSignalChannel::updateDataBuffer()
 {
 	int maxSamples = 1000;
 	int samplesCollected = maxSamples;

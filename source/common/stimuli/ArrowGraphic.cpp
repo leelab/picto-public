@@ -87,7 +87,7 @@ void ArrowGraphic::draw()
 
 	updateCompositingSurfaces();
 
-	shouldRedrawImage_ = false;
+	shouldUpdateCompositingSurfaces_ = false;
 }
 
 void ArrowGraphic::slotPropertyValueChanged(QString propertyName, QVariant propertyValue)

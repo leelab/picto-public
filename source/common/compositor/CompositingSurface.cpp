@@ -6,4 +6,8 @@ CompositingSurface::CompositingSurface()
 {
 }
 
+CompositingSurface::~CompositingSurface()
+{
+}
+
 }; //namespace Picto

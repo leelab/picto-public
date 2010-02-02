@@ -30,7 +30,7 @@ void PictureGraphic::draw()
 
 	updateCompositingSurfaces();
 
-	shouldRedrawImage_ = false;
+	shouldUpdateCompositingSurfaces_ = false;
 }
 
 void PictureGraphic::slotPropertyValueChanged(QString propertyName,

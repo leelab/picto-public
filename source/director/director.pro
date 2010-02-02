@@ -14,6 +14,10 @@ HEADERS += $$(PICTO_TREE)/source/director/SignalChannelTest.h
 }
 include($$(PICTO_TREE)/source/common/common.pri)
 
+win32 {
+INCLUDEPATH += "$$(DXSDK_DIR)/include"
+}
+
 # Output
 build_pass:CONFIG(debug, debug|release) {
   DESTDIR = $$(PICTO_TREE)/output/bin/debug

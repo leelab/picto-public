@@ -43,7 +43,7 @@ void EllipseGraphic::draw()
 
 	updateCompositingSurfaces();
 
-	shouldRedrawImage_ = false;
+	shouldUpdateCompositingSurfaces_ = false;
 }
 
 void EllipseGraphic::slotPropertyValueChanged(QString propertyName,

@@ -12,6 +12,7 @@
 #include <QSharedPointer>
 #include <QString>
 #include <QMap>
+#include <QTime>
 
 namespace Picto {
 
@@ -19,11 +20,13 @@ struct PICTOLIB_CLASS VisualElement : public StimulusElement
 {
 public:
 	VisualElement();
+	~VisualElement();
 
 	void addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface);
 	QSharedPointer<CompositingSurface> getCompositingSurface(QString surfaceType);
 
 	virtual void draw() = 0;
+	virtual void updateAnimation(int frame, QTime elapsedTime);
 	void setRandomNumberGeneratorState(MTRand::uint32 * rng);
 	MTRand::uint32 * getRandomNumberGeneratorState();
 
@@ -34,7 +37,7 @@ public:
 
 protected:
 	QImage image_;
-	bool shouldRedrawImage_;
+	bool shouldUpdateCompositingSurfaces_;
 	QMap<QString, QSharedPointer<CompositingSurface> > compositingSurfaces_;
 	
 	void updateCompositingSurfaces();

@@ -68,9 +68,9 @@ public:
 	//-----------------------
 
 	//Reward Controller 
-	bool initRewardController(int _numControllers, unsigned int _rewardDurations[]);
-	bool setRewardDuration(int _controller, unsigned int _duration);
-	unsigned int getRewardDuration(int _controller);
+	bool initRewardController(int _numControllers, unsigned int _rewardDurationsMs[]);
+	bool setRewardDuration(int _controller, unsigned int _durationMs);
+	unsigned int getRewardDurationMs(int _controller);
 	bool giveReward(int _controller);
 	bool flushReward(int _controller, bool _flush);
 

@@ -43,7 +43,7 @@ void BoxGraphic::draw()
 
 	updateCompositingSurfaces();
 
-	shouldRedrawImage_ = false;
+	shouldUpdateCompositingSurfaces_ = false;
 }
 
 void BoxGraphic::slotPropertyValueChanged(QString propertyName,

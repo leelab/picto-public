@@ -428,7 +428,7 @@ void Engine::giveReward(int controller)
 }
 int Engine::getRewardDuration(int controller) 
 {
-	return (unsigned int)daqBoard->getRewardDuration(controller);
+	return (unsigned int)daqBoard->getRewardDurationMs(controller);
 
 }
 

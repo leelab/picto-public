@@ -28,7 +28,7 @@ private:
 	QSharedPointer<Picto::CircleGraphic> circleGraphic;
 
 	Picto::MouseSignalChannel *mouseChannel;
-	Picto::PictoBoxAnalongInputSignalChannel *aiChannel;
+	Picto::PictoBoxAnalogInputSignalChannel *aiChannel;
 
 	int frameCounter;
 };

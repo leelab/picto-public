@@ -11,6 +11,7 @@ struct PICTOLIB_CLASS CompositingSurface
 {
 public:
 	CompositingSurface();
+	virtual ~CompositingSurface();
 
 	virtual void convertImage(QImage image) = 0;
 	virtual QString getTypeName() = 0;

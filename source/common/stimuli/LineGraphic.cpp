@@ -65,7 +65,7 @@ void LineGraphic::draw()
 
 	updateCompositingSurfaces();
 
-	shouldRedrawImage_ = false;
+	shouldUpdateCompositingSurfaces_ = false;
 }
 
 void LineGraphic::slotPropertyValueChanged(QString propertyName,

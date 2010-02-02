@@ -11,14 +11,14 @@
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PictoBoxAnalongInputSignalChannel : public SignalChannel
+class PICTOLIB_API PictoBoxAnalogInputSignalChannel : public SignalChannel
 #else
-class PictoBoxAnalongInputSignalChannel : public SignalChannel
+class PictoBoxAnalogInputSignalChannel : public SignalChannel
 #endif
 {
 public:
-	PictoBoxAnalongInputSignalChannel(QSharedPointer<PictoBoxDaqBoard> daqBoard, int sampsPerSecond);
-	~PictoBoxAnalongInputSignalChannel() {};
+	PictoBoxAnalogInputSignalChannel(QSharedPointer<PictoBoxDaqBoard> daqBoard, int sampsPerSecond);
+	~PictoBoxAnalogInputSignalChannel() {};
 
 	bool start();
 	bool stop();

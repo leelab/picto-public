@@ -3,8 +3,12 @@
 namespace Picto {
 
 VisualElement::VisualElement() :
-	shouldRedrawImage_(true),
+	shouldUpdateCompositingSurfaces_(true),
 	propertyContainer_("Visual Element")
+{
+}
+
+VisualElement::~VisualElement()
 {
 }
 
@@ -56,6 +60,16 @@ void VisualElement::updateCompositingSurfaces()
 	{
 		compositingSurface->convertImage(image_);
 	}
+}
+
+//If updateAnimation isn't implemented in the derived class, we can simply return.
+void VisualElement::updateAnimation(int frame, QTime elapsedTime)
+{
+	if(shouldUpdateCompositingSurfaces_)
+	{
+		updateCompositingSurfaces();
+	}
+	return;
 }
 
 }; //namespace Picto

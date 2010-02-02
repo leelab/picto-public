@@ -1,5 +1,5 @@
-#ifndef MOUSESIGNALCHANNEL_H
-#define MOUSESIGNALCHANNEL_H
+#ifndef _MOUSESIGNALCHANNEL_H
+#define _MOUSESIGNALCHANNEL_H
 
 #include <QTimer>
 #include <QObject>

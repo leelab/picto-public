@@ -25,6 +25,19 @@ void SignalChannel::setCalibrationRange(QString subchannel, double minRawValue, 
 	scaleFactorsMap[subchannel].scaleA = maxScaledValue-scaleFactorsMap[subchannel].scaleB*maxRawValue;
 }
 
+//! Set the scaling coefficients directly (A + Bx)
+
+/*!
+ *	Each value is linearly scaled using the formula A + Bx.  This function
+ *	sets the scaling coefficients directly.
+ */
+void SignalChannel::setCalibrationCoefficients(QString subchannel, double A, double B)
+{
+	scaleFactorsMap[subchannel].scaleA = A;
+	scaleFactorsMap[subchannel].scaleB = B;
+}
+
+
 void SignalChannel::addSubchannel(QString subchannelName)
 {
 	QList<double> data;

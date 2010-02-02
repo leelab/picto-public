@@ -48,6 +48,5 @@ private:
 
 /*! @} */
 
-#endif
-
 }; //namespace Picto
+#endif

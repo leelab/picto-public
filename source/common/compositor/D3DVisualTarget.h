@@ -1,31 +1,31 @@
-/*!	\brief A visual target that uses the Direct3D Mobile interface.  For use on PictoBox.
+/*!	\brief A visual target that uses the Direct3D interface.  For use on any windows system.
  *	
- *	This visual target uses the Direct3D Mobile interface to present visual stimuli.
- *	Direct3D Mobile is only supported by Windows CE, so this code is only included
- *	if the target OS is WinCE.  
  *
  *	The functions drawNonExperimentText and paintEvent are not currently supported
  */
 
-#ifndef _D3DMVISUALTARGET_H_
-#define _D3DMVISUALTARGET_H_
+#ifndef _D3DVISUALTARGET_H_
+#define _D3DVISUALTARGET_H_
 
 #include "../common.h"
 
 #include "VisualTarget.h"
-
-#include <d3dm.h>
-#include <d3dmx.h>
+#include <d3d9.h>
+#include <d3dx9.h>
 #include <QWidget>
 #include <QList>
 
 namespace Picto {
 
-struct PICTOLIB_CLASS D3DMVisualTarget : public VisualTarget, public QWidget
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API D3DVisualTarget : public VisualTarget, public QWidget
+#else
+class D3DVisualTarget : public VisualTarget, public QWidget
+#endif
 {
 public:
-	D3DMVisualTarget();
-	~D3DMVisualTarget();
+	D3DVisualTarget();
+	~D3DVisualTarget();
 
 	QSharedPointer<CompositingSurface> generateCompositingSurface();
 	QString getTypeName();
@@ -40,38 +40,30 @@ protected:
 private:
 	void d3dFail(QString);
 
-	LPDIRECT3DMOBILE        pD3DM_;  // Used to create the D3DMDevice
-	LPDIRECT3DMOBILEDEVICE  pD3dmDevice_;  // Our rendering device
+	IDirect3D9*        pD3D_;  // Used to create the D3DDevice
+	IDirect3DDevice9*  pD3dDevice_;  // Our rendering device
 	HANDLE hCRT;
-
-	//These are used with the CRT "file"
-	enum{
-		IOCTRL_VSYNC,
-		IOCTRL_WAIT_VBLANK_START,
-		IOCTRL_WAIT_VBLANK_END
-	};
 
 
 
 	//Vertex and index buffers and buffer data.  
 	//Note that since we are using textured quads, the buffers contain noting more than 
 	//a 1x1 quad.  This quad is scaled and translated to draw a sprite.
-	LPDIRECT3DMOBILEVERTEXBUFFER pVertexBuffer_; // Buffer to hold vertices
-	LPDIRECT3DMOBILEINDEXBUFFER pIndexBuffer_; // Buffer to hold indices
+	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer_; // Buffer to hold vertices
 
 	struct CUSTOMVERTEX
 	{
 		float x, y, z;
-		D3DMCOLOR color;
+		D3DCOLOR color;
 		float u,v;		//texture coords
 	};
 
 	//texture and position lists
 	//Note that these lists are aligned so that textureList[x]
 	//has position = positionList[x]
-	//Also, the location list uses D3DM coordinates, which means that the origin
+	//Also, the location list uses D3D coordinates, which means that the origin
 	//is in the bottom left corner, and the units are pixels
-	QList<LPDIRECT3DMOBILETEXTURE> textureList_;
+	QList<LPDIRECT3DTEXTURE9> textureList_;
 	QList<QPointF> positionList_;
 
 

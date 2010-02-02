@@ -28,28 +28,7 @@ D3DMCompositingSurface::~D3DMCompositingSurface()
  */
 void D3DMCompositingSurface::convertImage(QImage image)
 {
-	//If we already have a valid texture, we need to clean it up and 
-	//start over.
-	if(texture_)
-	{
-		texture_->Release();
-		texture_ = 0;
-	}
-	
-    // Determine if the device can create textures in video memory
-    // by testing the device caps bits.
-	D3DMCAPS caps;
 	HRESULT hr;
-    hr = pD3dmDevice_->GetDeviceCaps(&caps);
-	if(hr)
-		d3dFail("D3DMCompositingSurface: GetDeviceCaps FAILED");
-
-
-    D3DMPOOL texpool;
-    if (caps.SurfaceCaps & D3DMSURFCAPS_VIDTEXTURE)
-        texpool = D3DMPOOL_VIDEOMEM;
-    else
-        texpool = D3DMPOOL_SYSTEMMEM;
 
 	//Figure out the dimensions of the texture.
 	//NOTE: The following comments apply only to the D3DM drivers supplied by VIA
@@ -65,15 +44,52 @@ void D3DMCompositingSurface::convertImage(QImage image)
 	while(texHeight < image.height())
 		texHeight *= 2;
 
-	//store the image height (since this information will be lost when we
-	//place the image on a texture).  We need this info to accurately determine
-	//the coordinates
-	imageHeight_ = image.height();
+	//If we don't have a valid texture, or is the incorrect size, 
+	//we will need to generate a new texture interface
+	bool generateNewTexture = false;
+	if(!texture_)
+	{
+		generateNewTexture = true;
+	}
+	else
+	{
+		 D3DMSURFACE_DESC texDesc;
+		 texture_->GetLevelDesc(0,&texDesc);
+		 if(texDesc.Height != texHeight)
+			 generateNewTexture = true;
+		 else if(texDesc.Width != texWidth)
+			 generateNewTexture = true;
+	}
 
-	//Create a texture with dimensions large enough for the image
-	hr = pD3dmDevice_->CreateTexture(texWidth,texHeight,1,D3DMUSAGE_LOCKABLE,D3DMFMT_A8R8G8B8,texpool,&texture_);
-	if(hr)
-		d3dFail("D3DMCompositingSurface: CreateTexture FAILED");
+	if(generateNewTexture)
+	{
+		if(texture_)
+			texture_->Release();
+
+		// Determine if the device can create textures in video memory
+		// by testing the device caps bits.
+		D3DMCAPS caps;
+		hr = pD3dmDevice_->GetDeviceCaps(&caps);
+		if(hr)
+			d3dFail("D3DMCompositingSurface: GetDeviceCaps FAILED");
+
+
+		D3DMPOOL texpool;
+		if (caps.SurfaceCaps & D3DMSURFCAPS_VIDTEXTURE)
+			texpool = D3DMPOOL_VIDEOMEM;
+		else
+			texpool = D3DMPOOL_SYSTEMMEM;
+
+		//store the image height (since this information will be lost when we
+		//place the image on a texture).  We need this info to accurately determine
+		//the coordinates
+		imageHeight_ = image.height();
+
+		//Create a texture with dimensions large enough for the image
+		hr = pD3dmDevice_->CreateTexture(texWidth,texHeight,1,D3DMUSAGE_LOCKABLE,D3DMFMT_A8R8G8B8,texpool,&texture_);
+		if(hr)
+			d3dFail("D3DMCompositingSurface: CreateTexture FAILED");
+	}
 
 	//if needed, convert the image format
 	if(image.format() != QImage::Format_ARGB32)
@@ -86,27 +102,35 @@ void D3DMCompositingSurface::convertImage(QImage image)
 	if(hr)
 		d3dFail("D3DMCompositingSurface: texture_->LockRect FAILED");
 
-	int x,y;
 	DWORD *pTexel;
 	pTexel = (DWORD*)lockedRect.pBits;
 
 	//clear the existing texture
-	memset(pTexel,0,sizeof(DWORD)*texHeight*lockedRect.Pitch);
+	//memset(pTexel,0,sizeof(DWORD)*texHeight*lockedRect.Pitch);
 
 	//NOTE: The following code assumes that the pitch is a multiple of 4
 	//so far this has always been true.  If there are rendering problems, 
 	//this may be a cause...
 	Q_ASSERT_X(lockedRect.Pitch%4 == 0, "D3DMCompositingSurface::convertImage", "pitch not a multiple of 4");
 
-	//NOTE: QImage has the origin in the top-right corner, while D3DM has it in the 
-	//bottom left, so coordinate conversion is neccessary.
-	for(y=0;y<image.height(); y++)
+	//be sure to use a const pointer since we won't be modifying the image data and want to avoid an expensive and unnecessary deep copy
+	const uchar * imageData = image.bits();
+	const QRgb * imageDataQRgb = (const QRgb *) imageData;
+	const unsigned int * imageDataUint32 = (const unsigned int *) imageData;
+
+	unsigned int upperBound = (unsigned int) pTexel + image.height() * lockedRect.Pitch;
+	unsigned int incrementAmount = lockedRect.Pitch;
+	unsigned int widthBound = image.width();
+
+	unsigned int rowDataPointer, columnDataOffset;
+	//this will probably draw the texture upside down...
+	for(rowDataPointer=(unsigned int) pTexel;rowDataPointer<upperBound; rowDataPointer+=incrementAmount)
 	{
-		for(x=0; x<image.width(); x++)
+		for(columnDataOffset=0; columnDataOffset < widthBound; columnDataOffset++)
 		{
-			DWORD index = x+y*lockedRect.Pitch/4;
-			*(pTexel+index) = image.pixel(x,image.height()-y-1);
+			*((unsigned int *) (rowDataPointer+columnDataOffset*sizeof(int))) = *imageDataUint32++;
 		}
+
 	}
 
 	texture_->UnlockRect(0);
@@ -122,7 +146,7 @@ LPDIRECT3DMOBILETEXTURE D3DMCompositingSurface::getTexture()
 	return texture_;
 }
 
-//outputs an error message if something goes wrong with Direct3DMobile
+//! outputs an error message if something goes wrong with Direct3DMobile
 void D3DMCompositingSurface::d3dFail(QString errorMsg)
 {
 	QString text = "If you are seeing this message, something has gone ";

@@ -48,6 +48,8 @@ HEADERS += $$(PICTO_TREE)/source/common/compositor/PixmapCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/PixmapCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.cpp
+HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/NullCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/NullCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/MixingSample.h
@@ -83,6 +85,10 @@ HEADERS += $$(PICTO_TREE)/source/common/experiment/Calibration.h
 SOURCES += $$(PICTO_TREE)/source/common/experiment/Calibration.cpp
 HEADERS += $$(PICTO_TREE)/source/common/experiment/MediaItem.h
 SOURCES += $$(PICTO_TREE)/source/common/experiment/MediaItem.cpp
+HEADERS += $$(PICTO_TREE)/source/common/experiment/RewardCalibration.h
+SOURCES += $$(PICTO_TREE)/source/common/experiment/RewardCalibration.cpp
+HEADERS += $$(PICTO_TREE)/source/common/experiment/EyeTrackerCalibration.h
+SOURCES += $$(PICTO_TREE)/source/common/experiment/EyeTrackerCalibration.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/experimentalsystem/ExperimentalSystem.h
 SOURCES += $$(PICTO_TREE)/source/common/experimentalsystem/ExperimentalSystem.cpp
@@ -102,6 +108,9 @@ HEADERS += $$(PICTO_TREE)/source/common/experimentalsystem/SubjectPosition.h
 SOURCES += $$(PICTO_TREE)/source/common/experimentalsystem/SubjectPosition.cpp
 HEADERS += $$(PICTO_TREE)/source/common/experimentalsystem/Environmental.h
 SOURCES += $$(PICTO_TREE)/source/common/experimentalsystem/Environmental.cpp
+
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/RewardController.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/RewardController.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp
@@ -198,6 +207,12 @@ HEADERS += $$(PICTO_TREE)/source/common/stimuli/PictureGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/PictureGraphic.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/WaveSound.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/WaveSound.cpp
+HEADERS += $$(PICTO_TREE)/source/common/stimuli/RandomlyFilledGridGraphic.h
+SOURCES += $$(PICTO_TREE)/source/common/stimuli/RandomlyFilledGridGraphic.cpp
+
+
+
+
 
 HEADERS += $$(PICTO_TREE)/source/common/storage/DataStore.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/DataStore.cpp
@@ -237,6 +252,12 @@ SOURCES += $$(PICTO_TREE)/source/common/task/Constraint.cpp
 HEADERS += $$(PICTO_TREE)/source/common/task/BlockGenerator.h
 SOURCES += $$(PICTO_TREE)/source/common/task/BlockGenerator.cpp
 
+win32 {
+INCLUDEPATH += "$$(DXSDK_DIR)/include"
+LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
+LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
+}
+
 wince* {
 HEADERS += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.cpp
@@ -259,6 +280,8 @@ HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.h
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard_p.h
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoardRegisterMap.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardController.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardController.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/time_ce/time_ce.h
 SOURCES += $$(PICTO_TREE)/source/common/time_ce/time_ce.cpp

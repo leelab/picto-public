@@ -19,7 +19,7 @@ SignalChannelTest::SignalChannelTest(QSharedPointer<Picto::PixmapVisualTarget> p
 
 	//set up ai channels
 	QSharedPointer<Picto::PictoBoxDaqBoard> daqBoard(new Picto::PictoBoxDaqBoard);
-	aiChannel = new Picto::PictoBoxAnalongInputSignalChannel(daqBoard,250);
+	aiChannel = new Picto::PictoBoxAnalogInputSignalChannel(daqBoard,250);
 	aiChannel->addAiChannel("xeye",0);
 	aiChannel->addAiChannel("yeye",1);
 

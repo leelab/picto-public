@@ -46,7 +46,7 @@ void CircleGraphic::draw()
 
 	updateCompositingSurfaces();
 
-	shouldRedrawImage_ = false;
+	shouldUpdateCompositingSurfaces_ = false;
 }
 
 void CircleGraphic::slotPropertyValueChanged(QString propertyName,

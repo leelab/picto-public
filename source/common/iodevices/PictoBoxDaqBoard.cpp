@@ -66,7 +66,7 @@ PictoBoxDaqBoard::~PictoBoxDaqBoard()
   * \param _rewardDurations an array containging the durations in ms for each controller. The array must have the same number of elements as the number of controllers being initialized.
   */ 
 //******************************************************/
-bool PictoBoxDaqBoard::initRewardController(int _numControllers, unsigned int _rewardDurations[])
+bool PictoBoxDaqBoard::initRewardController(int _numControllers, unsigned int _rewardDurationsMs[])
 {
 	if(hDAQ_ == NULL)
 	{
@@ -87,7 +87,7 @@ bool PictoBoxDaqBoard::initRewardController(int _numControllers, unsigned int _r
 	activeRewardControllers_ = _numControllers;
 	for(int i=0; i<activeRewardControllers_; i++)
 	{
-		rewardDurations_[i] = _rewardDurations[i];
+		rewardDurations_[i] = _rewardDurationsMs[i];
 		rewardBitmasks_[i] = 1 << i;
 	}
 
@@ -134,19 +134,19 @@ bool PictoBoxDaqBoard::initRewardController(int _numControllers, unsigned int _r
  * you wanted to change the duration in the middle of a program.
  * 
  * \param _controller Controllers are numbered starting at 1.
- * \param _duration The duration in ms
+ * \param _duration The duration in us
  * 
  * \return true if the action was successful.
  */
 //******************************************************/
-bool PictoBoxDaqBoard::setRewardDuration(int _controller, unsigned int _duration)
+bool PictoBoxDaqBoard::setRewardDuration(int _controller, unsigned int _durationMs)
 {
 	if(_controller > activeRewardControllers_)
 	{
 		OutputDebugString(L"DaqBoard.setRewardDuration: Invalid reward controller number\n");
 		return false;
 	}
-	if(_duration < 0 || _duration > 10000)
+	if(_durationMs < 0 || _durationMs > 10000)
 	{
 		OutputDebugString(L"DaqBoard.setRewardDuration: Invalid rewward duration\n");
 		return false;
@@ -156,7 +156,7 @@ bool PictoBoxDaqBoard::setRewardDuration(int _controller, unsigned int _duration
 		OutputDebugString(L"DaqBoard.setRewardDuration: Reward controllers not initialized\n");
 		return false;
 	}
-	rewardDurations_[_controller-1] = _duration;
+	rewardDurations_[_controller-1] = _durationMs;
 	return true;
 }
 
@@ -174,7 +174,7 @@ bool PictoBoxDaqBoard::setRewardDuration(int _controller, unsigned int _duration
  * \return currently set duration (or -1 for an invaldi controller).
  */
 //******************************************************/
-unsigned int PictoBoxDaqBoard::getRewardDuration(int _controller)
+unsigned int PictoBoxDaqBoard::getRewardDurationMs(int _controller)
 {
 	if(_controller > activeRewardControllers_)
 		return -1;
