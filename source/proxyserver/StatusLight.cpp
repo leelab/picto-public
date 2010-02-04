@@ -23,6 +23,8 @@ QSize StatusLight::sizeHint() const
 }
 void StatusLight::paintEvent(QPaintEvent *event)
 {
+	Q_UNUSED(event);
+
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing,true);
 

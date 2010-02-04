@@ -20,7 +20,7 @@ public:
 	ControlElement();
 
 signals:
-	virtual void controlEvent(bool succeeded, QMap<QString, QVariant> controlParameters);
+	void controlEvent(bool succeeded, QMap<QString, QVariant> controlParameters);
 
 private:
 	QList<QString> conditions_;
