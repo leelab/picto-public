@@ -46,10 +46,6 @@ HEADERS += $$(PICTO_TREE)/source/common/compositor/SoftwareCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/SoftwareCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/PixmapCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/PixmapCompositingSurface.cpp
-HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.cpp
-HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/NullCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/NullCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/MixingSample.h
@@ -111,6 +107,8 @@ SOURCES += $$(PICTO_TREE)/source/common/experimentalsystem/Environmental.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/RewardController.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/RewardController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/EventCodeGenerator.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/EventCodeGenerator.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp
@@ -253,9 +251,24 @@ HEADERS += $$(PICTO_TREE)/source/common/task/BlockGenerator.h
 SOURCES += $$(PICTO_TREE)/source/common/task/BlockGenerator.cpp
 
 win32 {
+HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.cpp
+HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.cpp
 INCLUDEPATH += "$$(DXSDK_DIR)/include"
 LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
 LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
+
+
+HEADERS += $$(PICTO_TREE)/source/common/engine/PictoBoxXPAnalogInputSignalChannel.h
+SOURCES += $$(PICTO_TREE)/source/common/engine/PictoBoxXPAnalogInputSignalChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPEventCodeGenerator.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPEventCodeGenerator.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPRewardController.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPRewardController.cpp
+INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
+LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
+
 }
 
 wince* {
@@ -280,8 +293,8 @@ HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.h
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard_p.h
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoardRegisterMap.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.cpp
-HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardController.h
-SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardControllerCE.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardControllerCE.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/time_ce/time_ce.h
 SOURCES += $$(PICTO_TREE)/source/common/time_ce/time_ce.cpp

@@ -1,0 +1,168 @@
+====================================
+=                                  =
+=    PictoBox BIOS settings        =
+=                                  =
+====================================
+
+In an attempt to save myself from future pain, I am documenting the BIOS 
+settings of PictoBox.  This list is current as of Feb 3, 2010, and the 
+listed settings seemed to work when running Windows XP from an external 
+hard disk.  Obviously, some settings might need to be changed for other setups
+but at least this is one setup that works.
+
+Standard CMOS Features
+	Date: current
+	Time: current
+	IDE Channel 0 Master: [None]
+	IDE Channel 0 Slave: [None]
+	IDE Channel 1 Master: [Emphase CF4000XI2G]
+	IDE Channel 1 Slave: [WDC WD800JB-00CRA1]
+	Video: [EGA/VGA]
+	Halt On: [All, but Keyboard]
+	Base Memory: 640 K
+	Extended Memory: 784384 K
+	Total Memory: 785408 K
+  
+Advanced BIOS Features
+	CPU Feature
+		Delay Prior to Thermal: [16 Min]
+		Thermal Management: [Thermal Montitor 1]
+		Thermal Monitor Bus Ratio: 8X
+		Thermal Monitor BusVID: 0.700V
+	Hard Disk Boot Priority
+		1. Ch1 S. : WDC WD800JB-00CRA1
+		2. Ch1 M. : Emphase CF4000XI2G
+		3. Bootable Add-in Cards
+	Virus Warning: [Disabled]
+	CPU L1 & L2 Cache: [Enabled]
+	CPU L2 Cache Ecc Checking: [Enabled]
+	Quick Power On Self Test: [Enabled]
+	First Boot Device: [USB-FDD]
+	Second Boot Device: [CDROM]
+	Third Boot Device: [Hard Disk]
+	Boot Other Device: [Enabled]
+	Boot Up numLock Status: [On]
+	Typematic Rate Setting: [Disabled]
+	Typematic Rate (Chars/Sec): 6
+	Typematic Delay (msec): 250
+	Security Option: [setup]
+	MPS Version Control For OS: [1.4]
+	OS Select For DRAM > 64MB: [Non-OS2]
+	HDD S.M.A.R.T. Capability: [Disabled]
+	Video BIOS Shadow: [Enabled]
+	Summary SCreen Show: [Enabled]
+	
+Advanced Chipset Features
+	Internal VGA Control
+		VGA Share Memory Size: [256M]
+		Direct Frame Buffer: [Enabled]
+		Select Display Device: [CRT]	*NOTE* Setting this to CRT+DVI will cause tearing in the rendering done by Direct3D
+	CPU & PCI Bus control
+		PCI Master 0 WS Write: [Enabled]
+		PCI Delay Transaction: [Enabled]
+		VIA PWR Management: [Enabled]
+	Memory Hole: [Disabled]
+	System BIOS Cacheable: [Enabled]
+	Video RAM Cacheable: [Disabled]
+	
+Integrated Peripherals
+	VIA OnChip IDE Device
+		DOM/CF Card ATA66: [Disabled]
+		SATA Controller: [Disabled]
+		IDE DMA transfer access: [Enabled]
+		OnChip IDE Channel1: [Enabled]
+		IDE Prefetch ModE: [Enabled]
+		Secondary Master PIO: [Auto]
+		Secondary Slave PIO: [Auto]
+		Secondary Master UDMA: [Auto]
+		Secondary Slare UDMA: [Auto]
+		IDE HDD Block mode: [Enabled]
+	VIA OnChip PCI Device
+		Azalia HDA Controller: [Auto]
+	SuperIO Device
+		Onboard SErial Port 1: [3F8/IRQ4]
+		Onboard Serial Port 2: [Disabled]
+		IR Model Select: Disabled
+		RxD, TxD Active: Hi, Lo
+		IR Transmission Delay: Enabled
+		UR2 Duplex Mode: Half
+		Use IR Pins: IR-Rx2Tx2
+		Watch Dog Timer Seelct: [Disabled]
+	USB Device Setting
+		USB 1.0 Controller: [Enabled]
+		USB 2.0 controller: [Enabled]
+		USB Operation Mode: [High Speed]
+		USB Keyboard Function: [Enabled]
+		USB Mouse Function: [Enabled]
+		USB Storage Function: [Enabled]
+
+Power Management Setup
+	ACPI Suspend Type: [S1&S3]
+	Power Management Option: [User Define]
+	HDD Power Down: [Disable]
+	Suspend Mode: [Disable]
+	Video Off Option: [Suspend -> Off]
+	Video Off Method: [V/H SYNC+Blank]
+	MODEM Use IRQ: [NA]
+	Soft-Off by PWRBTN: [Instant-Off]
+	Run VGABIOS if S3 Resume: [Auto]
+	Ac Loss Auto Restart: [Off]
+	Wakeup Event Detect
+		PS2KB Wakeup Select: [Hot key]
+		PS2KB Wakeup Key Select: [Any Key]
+		PS2MS Wakeup Key Select: [Any Button]
+		PS2 Keyboard Power On: [Disabled]
+		PS2 mouse Powen ON: [Disabled]
+		PowerOn by PCI Card: [By OS]
+		RTC Alarm Resume: [Dissabled]
+		Date (of Month): 0
+		Resume Time (hh:mm:ss): 0 : 0 : 0
+	
+
+Pnp/PCI Configurations
+	Init Display First [Onboard]
+	PNP OS Installed: [No]
+	Reset Configuration Data: [Disabled]
+	Resources Controlled By: [Manual]
+	IRQ Resources  *Note* At least one of these reserved IRQs is essential for WinCE to function.
+		IRQ-3 assigned to: [Reserved]
+		IRQ-4 assigned to: [PCI Device]
+		IRQ-5 assigned to: [PCI Device]
+		IRQ-6 assigned to: [PCI Device]
+		IRQ-7 assigned to: [PCI Device]
+		IRQ-10 assigned to: [Reserved]
+		IRQ-11 assigned to: [PCI Device]
+		IRQ-12 assigned to: [PCI Device]
+		IRQ-14 assigned to: [PCI Device]
+		IRQ-15 assigned to: [PCI Device]
+	PCI/VGA Palette Snoop: [Disabled]
+	Assign IRQ for VGA: [Enabled]
+	Assign IRQ for USB: [Enabled]
+	** PCI Express relative items **
+	Maximum Payload Size: [4096]
+		
+
+PC Health Status
+	SYSTEM Temp.: 119C/246F
+	CPU FAN Speed: 6490 RPM
+	SYSTEM FAN Speed: 0 RPM
+	Vcore: 0.99V
+	3.3 V: 3.26 V
+	+ 5 V: 4.94 V
+	+ 12 V: 12.28 V
+	VBAT(V): 3.15 V
+	5VSB(V): 4.92 V
+
+Frequency/Voltage Control
+	Current FSB Frequency: 100MHz
+	Current DRAM Frequency: 333MHz
+	Dram Frequency: [SPD]
+	DRAM Channel Mode: [Channel A]
+	DDR CAS Latency Control: [SPD]
+	DDR Burst Length: [SPD]
+	DDR 1T command Rate: [Disabled]
+	DRDY table: [Optimize]
+	ODT: [Enabled]
+	Spread Spectrum: [+/- 0.1%]
+
+

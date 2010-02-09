@@ -4,6 +4,7 @@
 #include <QXmlStreamReader>
 #include <QTcpSocket>
 #include <QHostAddress>
+#include <QApplication>
 
 #include "menu.h"
 #include "../../common/protocol/protocolcommand.h"
@@ -170,7 +171,7 @@ void Menu::userInputSlot(int type)
 
 			//wait for a response from the engine
 			Picto::ProtocolResponse response;
-			response.read(commSock);
+			response.read(commSock,300);
 			if(response.getResponseCode() != 200)
 			{
 				doMessage("IP not updated,","try again");
@@ -258,7 +259,7 @@ void Menu::userInputSlot(int type)
 
 			//wait for a response from the engine
 			Picto::ProtocolResponse response;
-			response.read(commSock);
+			response.read(commSock,300);
 			if(response.getResponseCode() != 200)
 			{
 				doMessage("Name not updated,","try again");
@@ -314,7 +315,7 @@ void Menu::userInputSlot(int type)
 
 			//wait for a response from the engine
 			Picto::ProtocolResponse response;
-			response.read(commSock);
+			response.read(commSock,300);
 			if(response.getResponseCode() != 200)
 			{
 				doMessage("Duration not updated,","try again");
@@ -409,7 +410,7 @@ void Menu::userInputSlot(int type)
 
 			//wait for a response from the engine
 			Picto::ProtocolResponse response;
-			response.read(commSock);
+			response.read(commSock,300);
 			if(response.getResponseCode() != 200)
 			{
 				doMessage("Duration not updated,","try again");
@@ -449,7 +450,7 @@ void Menu::userInputSlot(int type)
 
 			//wait for a response from the engine
 			Picto::ProtocolResponse response;
-			response.read(commSock);
+			response.read(commSock,300);
 
 			panelInfo->setDispMode(PanelInfo::MenuMode);
 			emit turnOnBacklight();
@@ -521,9 +522,10 @@ void Menu::menuAction()
 			Picto::ProtocolCommand command(QString("FPREWARD /reward/%1 PICTO/1.0").arg(panelInfo->getRewardController()));
 			command.write(commSock);
 
-			//wait for a response from the engine
+			//wait for a response from the engine 
+			QApplication::processEvents();
 			Picto::ProtocolResponse response;
-			response.read(commSock);
+			response.read(commSock,300);
 			if(response.getResponseCode() != 200)
 			{
 				doMessage("Reward not given,","try again");
@@ -723,7 +725,7 @@ void Menu::initRewardDuration()
 	//got the whole response, but that seems unneccessary given that we're communicating
 	//to localhost...
 	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock);
+	int bytesRead = engineResponse.read(commSock,300);
 	if(bytesRead<0)
 	{
 		doMessage("Duration not recv'd","from engine");
@@ -768,7 +770,7 @@ void Menu::initFlushDuration()
 	//got the whole response, but that seems unneccessary given that we're communicating
 	//to localhost...
 	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock);
+	int bytesRead = engineResponse.read(commSock,300);
 	if(bytesRead<0)
 	{
 		doMessage("Flush dur not recv'd","from engine");
@@ -816,7 +818,7 @@ void Menu::initFlush()
 
 	//get a response from the engine
 	Picto::ProtocolResponse response;
-	response.read(commSock);
+	response.read(commSock,300);
 	if(response.getResponseCode() != 200)
 	{
 		doMessage("Flushing failed,","Try again");
@@ -847,7 +849,7 @@ void Menu::drawFlush()
 	command.write(commSock);
 
 	Picto::ProtocolResponse engineResponse;
-	engineResponse.read(commSock);
+	engineResponse.read(commSock,300);
 
 	bool ok;
 	timeRem = engineResponse.getDecodedContent().toInt(&ok);
@@ -889,7 +891,7 @@ void Menu::initChangeIP()
 	//got the whole response, but that seems unneccessary given that we're communicating
 	//to localhost...
 	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock);
+	int bytesRead = engineResponse.read(commSock,300);
 	if(bytesRead<0)
 	{
 		doMessage("IP not recv'd","from engine");
@@ -959,7 +961,7 @@ void Menu::initChangeName()
 	//got the whole response, but that seems unneccessary given that we're communicating
 	//to localhost...
 	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock);
+	int bytesRead = engineResponse.read(commSock,300);
 	if(bytesRead<0)
 	{
 		doMessage("Name not recv'd","from engine");

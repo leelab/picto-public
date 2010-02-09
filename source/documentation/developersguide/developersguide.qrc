@@ -79,6 +79,8 @@
    <file alias="_ellipse_graphic_8h-source.html">../../../output/documentation/main/html/_ellipse_graphic_8h-source.html</file>
    <file alias="_environmental_8cpp-source.html">../../../output/documentation/main/html/_environmental_8cpp-source.html</file>
    <file alias="_environmental_8h-source.html">../../../output/documentation/main/html/_environmental_8h-source.html</file>
+   <file alias="_event_code_generator_8cpp-source.html">../../../output/documentation/main/html/_event_code_generator_8cpp-source.html</file>
+   <file alias="_event_code_generator_8h-source.html">../../../output/documentation/main/html/_event_code_generator_8h-source.html</file>
    <file alias="_experiment_8cpp-source.html">../../../output/documentation/main/html/_experiment_8cpp-source.html</file>
    <file alias="_experiment_8h-source.html">../../../output/documentation/main/html/_experiment_8h-source.html</file>
    <file alias="_experimental_system_8cpp-source.html">../../../output/documentation/main/html/_experimental_system_8cpp-source.html</file>
@@ -132,8 +134,14 @@
    <file alias="_picto_box_daq_board_8h-source.html">../../../output/documentation/main/html/_picto_box_daq_board_8h-source.html</file>
    <file alias="_picto_box_daq_board__p_8h-source.html">../../../output/documentation/main/html/_picto_box_daq_board__p_8h-source.html</file>
    <file alias="_picto_box_daq_board_register_map_8h-source.html">../../../output/documentation/main/html/_picto_box_daq_board_register_map_8h-source.html</file>
-   <file alias="_picto_box_reward_controller_8cpp-source.html">../../../output/documentation/main/html/_picto_box_reward_controller_8cpp-source.html</file>
-   <file alias="_picto_box_reward_controller_8h-source.html">../../../output/documentation/main/html/_picto_box_reward_controller_8h-source.html</file>
+   <file alias="_picto_box_reward_controller_c_e_8cpp-source.html">../../../output/documentation/main/html/_picto_box_reward_controller_c_e_8cpp-source.html</file>
+   <file alias="_picto_box_reward_controller_c_e_8h-source.html">../../../output/documentation/main/html/_picto_box_reward_controller_c_e_8h-source.html</file>
+   <file alias="_picto_box_x_p_analog_input_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_signal_channel_8cpp-source.html</file>
+   <file alias="_picto_box_x_p_analog_input_signal_channel_8h-source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_signal_channel_8h-source.html</file>
+   <file alias="_picto_box_x_p_event_code_generator_8cpp-source.html">../../../output/documentation/main/html/_picto_box_x_p_event_code_generator_8cpp-source.html</file>
+   <file alias="_picto_box_x_p_event_code_generator_8h-source.html">../../../output/documentation/main/html/_picto_box_x_p_event_code_generator_8h-source.html</file>
+   <file alias="_picto_box_x_p_reward_controller_8cpp-source.html">../../../output/documentation/main/html/_picto_box_x_p_reward_controller_8cpp-source.html</file>
+   <file alias="_picto_box_x_p_reward_controller_8h-source.html">../../../output/documentation/main/html/_picto_box_x_p_reward_controller_8h-source.html</file>
    <file alias="_picto_engine_8cpp-source.html">../../../output/documentation/main/html/_picto_engine_8cpp-source.html</file>
    <file alias="_picto_engine_8cpp.html">../../../output/documentation/main/html/_picto_engine_8cpp.html</file>
    <file alias="_picto_engine_8h-source.html">../../../output/documentation/main/html/_picto_engine_8h-source.html</file>

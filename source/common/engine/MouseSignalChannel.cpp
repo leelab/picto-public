@@ -5,9 +5,9 @@
 
 namespace Picto {
 
-MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget)
+MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget_)
 	: SignalChannel(sampsPerSecond),
-	  widget(widget)
+	  widget_(widget_)
 {
 	//add our subchannels to the list
 	addSubchannel("xpos");
@@ -15,20 +15,20 @@ MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidge
 
 	//Since this is coordinate data, there doesn't need to be any calibration
 
-	pollingTimer = new QTimer(this);
-	pollingTimer->setInterval(1000/sampsPerSecond);
-	connect(pollingTimer, SIGNAL(timeout()), this, SLOT(pollMouse()));
+	pollingTimer_ = new QTimer(this);
+	pollingTimer_->setInterval(1000/sampsPerSecond);
+	connect(pollingTimer_, SIGNAL(timeout()), this, SLOT(pollMouse()));
 }
 
 bool MouseSignalChannel::start()
 {
-	pollingTimer->start();
+	pollingTimer_->start();
 	return true;
 }
 
 bool MouseSignalChannel::stop()
 {
-	pollingTimer->stop();
+	pollingTimer_->stop();
 	return true;
 }
 
@@ -42,9 +42,9 @@ void MouseSignalChannel::updateDataBuffer()
 void MouseSignalChannel::pollMouse()
 {
 	QPoint point = QCursor::pos();
-	point = widget->mapFromGlobal(point);
-	rawDataBuffer["xpos"].append((double)point.x());
-	rawDataBuffer["ypos"].append((double)point.y());
+	point = widget_->mapFromGlobal(point);
+	rawDataBuffer_["xpos"].append((double)point.x());
+	rawDataBuffer_["ypos"].append((double)point.y());
 	
 }
 

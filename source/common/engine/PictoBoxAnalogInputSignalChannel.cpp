@@ -2,32 +2,32 @@
 
 namespace Picto {
 
-PictoBoxAnalogInputSignalChannel::PictoBoxAnalogInputSignalChannel(QSharedPointer<PictoBoxDaqBoard> daqBoard, 
+PictoBoxAnalogInputSignalChannel::PictoBoxAnalogInputSignalChannel(QSharedPointer<PictoBoxdaqBoard_> daqBoard_, 
 																	 int sampsPerSecond)
-	: daqBoard(daqBoard),
+	: daqBoard_(daqBoard_),
 	  SignalChannel(sampsPerSecond)
 {
 }
 void PictoBoxAnalogInputSignalChannel::addAiChannel(QString subchannelName, int aiChannelNum)
 {
 	addSubchannel(subchannelName);
-	aiChannelNums[subchannelName] = aiChannelNum;
+	aiChannelNums_[subchannelName] = aiChannelNum;
 }
 
 bool PictoBoxAnalogInputSignalChannel::start()
 {
-	daqBoard->ClearAIChannelList();
+	daqBoard_->ClearAIChannelList();
 
 
-	QMap<QString, int>::const_iterator x = aiChannelNums.constBegin();
-	while(x != aiChannelNums.constEnd())
+	QMap<QString, int>::const_iterator x = aiChannelNums_.constBegin();
+	while(x != aiChannelNums_.constEnd())
 	{
-		if(!daqBoard->CreateAIChannel(x.value(), daqBoard->kChanTypeRSE))
+		if(!daqBoard_->CreateAIChannel(x.value(), daqBoard_->kChanTypeRSE))
 			return false;
 		++x;
 	}
 
-	if(!daqBoard->StartAI(sampleRate,true))
+	if(!daqBoard_->StartAI(sampleRate_,true))
 	{
 		return false;
 	}
@@ -36,7 +36,7 @@ bool PictoBoxAnalogInputSignalChannel::start()
 
 bool PictoBoxAnalogInputSignalChannel::stop()
 {
-	if(daqBoard->StopAI())
+	if(daqBoard_->StopAI())
 		return true;
 	else
 		return false;
@@ -46,22 +46,22 @@ void PictoBoxAnalogInputSignalChannel::updateDataBuffer()
 {
 	int maxSamples = 1000;
 	int samplesCollected = maxSamples;
-	PictoBoxDaqBoard::AIChannel *aiChan;
+	PictoBoxdaqBoard_::AIChannel *aiChan;
 
 	//collect data until the number of samples collected is less than the buffer size
 	//This gets everything.
 	while(samplesCollected == maxSamples)
 	{
-		samplesCollected = daqBoard->CollectAIData(maxSamples);
+		samplesCollected = daqBoard_->CollectAIData(maxSamples);
 
 		//for every subchannel, dump the data
-		QMap<QString, int>::iterator x = aiChannelNums.begin();
-		while(x != aiChannelNums.end())
+		QMap<QString, int>::iterator x = aiChannelNums_.begin();
+		while(x != aiChannelNums_.end())
 		{
-			aiChan = daqBoard->GetAIChannel(x.value());
+			aiChan = daqBoard_->GetAIChannel(x.value());
 			for(int y=0; y<aiChan->voltages.size(); y++)
 			{
-				rawDataBuffer[x.key()].push_back((double)aiChan->voltages[y]);
+				rawDataBuffer_[x.key()].push_back((double)aiChan->voltages[y]);
 			}
 			x++;
 		}

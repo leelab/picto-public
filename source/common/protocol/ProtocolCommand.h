@@ -68,7 +68,7 @@ public:
 	void parse(QString commandText);
 
 	int write(QAbstractSocket *socket);
-	int read(QAbstractSocket *socket);
+	int read(QAbstractSocket *socket, int timeoutMs=0);
 
 private:
 	QString method_, target_, protocolName_, protocolVersion_;

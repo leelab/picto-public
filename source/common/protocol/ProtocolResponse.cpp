@@ -338,24 +338,26 @@ int ProtocolResponse::write(QAbstractSocket *socket)
  *		1. If you know anything about the incoming response, tell the object (ie
  *		   if it's part of a multi-part response, set the multi-part response type)
  *		2. You can't assume that write will create an exact copy of the response
- *		   that was sent.  For example, theoriginal response may have had the 
+ *		   that was sent.  For example, the original response may have had the 
  *		   shouldTerminateConnection value set, but there is no way for us to tell if
  *		   this was the case on the receiving end.
  *	The safest way to use a response that you have just read is to look at the fields 
  *	directly
  *
- *	It is also importnat to note that calling read() when a there is no data on the
- *	socket will result in a 1 second dealy.  So, repeated polling of read() is probably
- *	a bad idea.
+ *	The timeoutSec parameter is used to determine how long we should wait for incoming data
+ *	on the socket.  The default value is 0.
  */
-int ProtocolResponse::read(QAbstractSocket *socket)
+int ProtocolResponse::read(QAbstractSocket *socket, int timeoutMs)
 {
 	QString currentLine;
 	int contentLength=0;
 	
-	if(socket->bytesAvailable() <= 0 && !socket->waitForReadyRead(0))
+	if(socket->bytesAvailable() <= 0)
 	{
-		return -1;
+		if(!socket->waitForReadyRead(timeoutMs))
+		{
+			return -1;
+		}
 	}
 
 	//read the first line, it might be a status line (e.g. ACQ/1.0 200 OK)

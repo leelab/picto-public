@@ -3,7 +3,7 @@
 namespace Picto
 {
 
-PictoBoxRewardController::PictoBoxRewardController(unsigned int channelCount) 
+PictoBoxRewardControllerCE::PictoBoxRewardControllerCE(unsigned int channelCount) 
 : RewardController(channelCount)
 {
 	unsigned int rewardDurations[MAX_NUM_REWARD_CONTROLLERS];
@@ -12,21 +12,21 @@ PictoBoxRewardController::PictoBoxRewardController(unsigned int channelCount)
 	daqBoard_.initRewardController(channelCount_,rewardDurations);
 }
 
-PictoBoxRewardController::~PictoBoxRewardController()
+PictoBoxRewardControllerCE::~PictoBoxRewardControllerCE()
 {
 }
 
-void PictoBoxRewardController::giveReward(unsigned int channel)
+void PictoBoxRewardControllerCE::giveReward(unsigned int channel)
 {
 	daqBoard_.giveReward(channel);
 }
 
-bool PictoBoxRewardController::setRewardVolume(unsigned int channel, float volume)
+bool PictoBoxRewardControllerCE::setRewardVolume(unsigned int channel, float volume)
 {
 	return false;
 }
 
-bool PictoBoxRewardController::setRewardDuration(unsigned int channel, unsigned int duration)
+bool PictoBoxRewardControllerCE::setRewardDurationMs(unsigned int channel, unsigned int duration)
 {
 	if(!daqBoard_.setRewardDuration(channel,duration))
 		return false;

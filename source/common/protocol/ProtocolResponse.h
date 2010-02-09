@@ -81,7 +81,7 @@ public:
 	int getResponseCode();
 	QString getResponseType();
 
-	int read(QAbstractSocket *socket);
+	int read(QAbstractSocket *socket, int timeoutMs=0);
 	int write(QAbstractSocket *socket);
 
 private:

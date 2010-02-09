@@ -7,12 +7,15 @@
 #include <QTimer>
 
 #include "../common/globals.h"
+
 #include "../common/network/ServerDiscoverer.h"
+
 #include "../common/compositor/RenderingTarget.h"
 #include "../common/compositor/PixmapVisualTarget.h"
 #include "../common/compositor/PCMAuralTarget.h"
 #include "../common/compositor/CompositingSurface.h"
 #include "../common/compositor/MixingSample.h"
+
 #include "../common/stimuli/CircleGraphic.h"
 #include "../common/stimuli/PictureGraphic.h"
 #include "../common/stimuli/LineGraphic.h"
@@ -20,28 +23,32 @@
 #include "../common/stimuli/ArrowGraphic.h"
 #include "../common/stimuli/EllipseGraphic.h"
 #include "../common/stimuli/RandomlyFilledGridGraphic.h"
+
 #include "../common/experiment/RewardCalibration.h"
 #include "../common/experiment/EyeTrackerCalibration.h"
 
 
-#include "SignalChannelTest.h"
 
 void TestPixmapRendering();
 
 #ifdef WINCE
 	#include "../common/compositor/DDrawVisualTarget.h"
 	#include "../common/compositor/D3DMVisualTarget.h"
-	#include "../common/iodevices/PictoBoxRewardController.h"
+	#include "../common/iodevices/PictoBoxRewardControllerCE.h"
 	void TestD3DMRendering();
 	void TestVSync();
-	void TestEventGeneration();
-	void TestRewardCalibration();
 	void TestEyeTrackerCalibration();
 #endif
 
 #ifdef WIN32
 	#include "../common/compositor/D3DVisualTarget.h"
+	#include "../common/iodevices/PictoBoxXPRewardController.h"
+	#include "../common/iodevices/PictoBoxXPEventCodeGenerator.h"
+	#include "SignalChannelTest.h"
+
 	void TestD3DRendering();
+	void TestRewardCalibration();
+	void TestEventGeneration();
 #endif
 
 int main(int argc, char *argv[])
@@ -79,11 +86,11 @@ int main(int argc, char *argv[])
 	//TestPixmapRendering();
 
 #ifdef WINCE
-	TestRendering2();
+	//TestRendering2();
 #endif
 
 #ifdef WIN32
-	TestD3DRendering();
+	//TestD3DRendering();
 #endif
 
 	/*************************************************
@@ -98,7 +105,8 @@ int main(int argc, char *argv[])
 	 * This only works in WinCE, so don't uncomment the line
 	 * unless it's a CE build...
 	 *************************************************/
-	//SignalChannelTest sigChanTest(pixmapVisualTarget);
+	SignalChannelTest sigChanTest;
+	sigChanTest.exec();
 
 	//TestVSync();
 
@@ -127,7 +135,7 @@ void PixmapRenderingTarget::discoverServerFailed()
 	/*! \todo DirectorCommandChannel directorCommandChannel; */
 
 	
-	//int result = app.exec();
+	int result = app.exec();
 
 	Picto::CloseLib();
 
@@ -195,19 +203,13 @@ void TestPixmapRendering()
 	bool bWindowed = true;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget(new Picto::PixmapVisualTarget(bWindowed));
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
-	//QSharedPointer<Picto::DDrawVisualTarget> ddrawVisualTarget(new Picto::DDrawVisualTarget());
-	//QSharedPointer<Picto::D3DMVisualTarget> d3dmVisualTarget(new Picto::D3DMVisualTarget());
 
 	Picto::RenderingTarget renderingTarget(pixmapVisualTarget, pcmAuralTarget);
-	//Picto::RenderingTarget renderingTarget(ddrawVisualTarget, pcmAuralTarget);
-	//Picto::RenderingTarget renderingTarget(d3dmVisualTarget, pcmAuralTarget);
 	//renderingTarget.showSplash();
 	//renderingTarget.updateStatus(QString("Searching for a %1").arg(Picto::Names->serverAppName));
 	//renderingTarget.show();
 
 	pixmapVisualTarget->show();
-	//ddrawVisualTarget->show();
-	//d3dmVisualTarget->show();
 
 	/*! \todo PictoEngine pictoEngine; */
 //////////////////////////////
@@ -228,8 +230,6 @@ void TestPixmapRendering()
 	pictureGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 	QRect splashScreenRect = pictureGraphic->getBoundingRect();
 	QRect visualTargetRect = pixmapVisualTarget->getDimensions();
-	//QRect visualTargetRect = ddrawVisualTarget->getDimensions();
-	//QRect visualTargetRect = d3dmVisualTarget->getDimensions();
 	pictureGraphic->setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,
 								       (visualTargetRect.height()-splashScreenRect.height())/2));
 
@@ -285,69 +285,6 @@ void TestPixmapRendering()
 	ellipseGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
 
-	//My mini event loop to test framerate
-	LARGE_INTEGER ticksPerSec;
-	LARGE_INTEGER tick, tock;
-	double elapsedTime[60];
-	int frameCounter = 0;
-	QueryPerformanceFrequency(&ticksPerSec);
-
-	/*while(frameCounter < 600)
-	{
-
-		QueryPerformanceCounter(&tick);
-		
-
-		//test the four corners...
-		//top left
-		d3dmVisualTarget->draw(QPoint(0,0), boxGraphic2->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(QPoint(1,1), boxGraphic->getCompositingSurface("Direct3DMobile"));
-		//top right
-		d3dmVisualTarget->draw(QPoint(1279-200,0), boxGraphic2->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(QPoint(1279-100-1,1), boxGraphic->getCompositingSurface("Direct3DMobile"));
-		//bottom left
-		d3dmVisualTarget->draw(QPoint(0,1023-200), boxGraphic2->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(QPoint(1,1023-100-1), boxGraphic->getCompositingSurface("Direct3DMobile"));
-		//bottom right
-		d3dmVisualTarget->draw(QPoint(1279-200,1023-200), boxGraphic2->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(QPoint(1279-100-1,1023-100-1), boxGraphic->getCompositingSurface("Direct3DMobile"));
-
-		//draw additional stimuli
-		d3dmVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(lineGraphic->getPosition(), lineGraphic->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(ellipseGraphic->getPosition(), ellipseGraphic->getCompositingSurface("Direct3DMobile"));
-		d3dmVisualTarget->draw(arrowGraphic1->getPosition(), arrowGraphic1->getCompositingSurface("Direct3DMobile"));
-
-		//draw animated box
-		d3dmVisualTarget->draw(QPoint(frameCounter*10,0), boxGraphic3->getCompositingSurface("Direct3DMobile"));
-
-
-		//ddrawVisualTarget->drawNonExperimentText(QFont("Arial",18),
-		//										  QColor(Qt::white),
-		//										  QRect(0,			  
-		//											   (visualTargetRect.height()-splashScreenRect.height())/2+splashScreenRect.height()+25,
-		//											   visualTargetRect.width(),
-		//											   50),
-		//										  Qt::AlignCenter,
-		//										  "Testing");
-		
-
-		//ddrawVisualTarget->present();
-		d3dmVisualTarget->present();
-
-		QueryPerformanceCounter(&tock);
-		if(frameCounter % 10 == 0)
-			elapsedTime[frameCounter/10] = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
-		
-		//QCoreApplication::processEvents();
-		frameCounter++;
-
-	}
-
-	for(int i=0; i<60; i++)
-		printf("Frame %d elapsed time: %f\n", i*10, elapsedTime[i]);
-*/
 	pixmapVisualTarget->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Pixmap"));
 	pixmapVisualTarget->draw(lineGraphic->getPosition(), lineGraphic->getCompositingSurface("Pixmap"));
@@ -369,43 +306,7 @@ void TestPixmapRendering()
 }
 #ifdef WINCE
 
-void TestEventGeneration()
-{
-	printf("\nSTART: event code generation\n\n");
 
-
-	//DAQ board setup
-	Picto::PictoBoxDaqBoard daqBoard;
-	if(!daqBoard.initEventLines())
-		printf("Failed to initialize event lines");
-
-	LARGE_INTEGER ticksPerSec;
-	LARGE_INTEGER tick, tock;
-	double elapsedTime;
-
-	int eventCounter = 0;
-
-	while(1)
-	{
-		daqBoard.sendEvent(eventCounter);
-
-		if(eventCounter >= 127 )
-			eventCounter = 0;
-		else
-			eventCounter++;
-
-		//wait for 250us (the stobe line goes high for 250 us, so this
-		//should give us a nices square wave with period 500 us
-		QueryPerformanceFrequency(&ticksPerSec);
-		QueryPerformanceCounter(&tick);
-		do
-		{
-			QueryPerformanceCounter(&tock);
-			elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
-		}
-		while(elapsedTime < 0.250);
-
-	}
 
 	printf("\nEND: event code generation\n\n");
 }
@@ -618,6 +519,7 @@ void TestD3DMRendering()
 }
 
 #endif
+#ifdef WIN32
 
 
 void TestD3DRendering()
@@ -687,10 +589,16 @@ void TestD3DRendering()
 	int frameCounter = 0;
 	QueryPerformanceFrequency(&ticksPerSec);
 
-	while(frameCounter < 6000)
+	while(frameCounter < 600)
 	{
 
 		QueryPerformanceCounter(&tick);
+		//draw some text
+		d3dVisualTarget->drawNonExperimentText(QFont("Arial",18),
+											  QColor(Qt::white),
+											  QRect(0,0,300,60),
+											  Qt::AlignCenter,
+											  "Testing");
 
 		//draw the circles
 		QSharedPointer<Picto::CircleGraphic> circle;
@@ -718,8 +626,8 @@ void TestD3DRendering()
 		d3dVisualTarget->present();
 
 		QueryPerformanceCounter(&tock);
-		//if(frameCounter % 10 == 0)
-			//elapsedTime[frameCounter/10] = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
+		if(frameCounter % 10 == 0)
+			elapsedTime[frameCounter/10] = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
 		
 		frameCounter++;
 	}
@@ -733,3 +641,47 @@ void TestD3DRendering()
 
 
 }
+
+
+void TestRewardCalibration()
+{
+	MessageBox(NULL, L"Hello",L"Hello World", MB_OK);
+	Picto::PictoBoxXPRewardController rewardController(4);
+	Picto::RewardCalibration rewCal(&rewardController);
+	rewCal.RunCalibration(10,1000);
+}
+
+
+void TestEventGeneration()
+{
+	MessageBox(NULL, L"Hello",L"Hello World", MB_OK);
+	Picto::PictoBoxXPEventCodeGenerator eventGen;
+
+	LARGE_INTEGER ticksPerSec;
+	LARGE_INTEGER tick, tock;
+	double elapsedTime;
+
+	int eventCounter = 0;
+
+	 while(1)
+	{
+		eventGen.sendEvent(eventCounter);
+		if(eventCounter >= 127 )
+			eventCounter = 0;
+		else
+			eventCounter++;
+
+		//wait for 250us (the stobe line goes high for 250 us, so this
+		//should give us a nices square wave with period 500 us
+		QueryPerformanceFrequency(&ticksPerSec);
+		QueryPerformanceCounter(&tick);
+		do
+		{
+			QueryPerformanceCounter(&tock);
+			elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
+		}
+		while(elapsedTime < 0.250);
+
+	}
+}
+#endif

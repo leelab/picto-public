@@ -65,15 +65,7 @@ QSharedPointer<Picto::ProtocolResponse> FPGETCommandHandler::processCommand(QSha
 		}
 		else if(targetFields.size()>2 && targetFields[2] == "flushtimeremain")
 		{
-			bool ok;
-			int controller = targetFields[1].toInt(&ok);
-			if(ok)
-				content = QString("%1").arg(eng->getFlushTimeRemain(controller)).toUtf8();
-			else
-			{
-				out<<"Reward controller not an int\n";
-				return notFoundResponse;
-			}
+			content = QString("%1").arg(eng->getFlushTimeRemain()).toUtf8();
 		}
 		else
 		{

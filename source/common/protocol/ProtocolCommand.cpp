@@ -160,14 +160,17 @@ int ProtocolCommand::write(QAbstractSocket *socket)
 }
 
 //! Reads a command from the socket, and returns the bytes of content (frequently 0)
-int ProtocolCommand::read(QAbstractSocket *socket)
+int ProtocolCommand::read(QAbstractSocket *socket, int timeoutMs)
 {
 	QString currentLine;
 	QStringList tokens;
 
-	if(socket->bytesAvailable() <= 0 && !socket->waitForReadyRead(0))
+	if(socket->bytesAvailable() <= 0)
 	{
-		return -1;
+		if(!socket->waitForReadyRead(timeoutMs))
+		{
+			return -1;
+		}
 	}
 
 	//read the first line(e.g. "GET /sometarget PICTO/1.0")

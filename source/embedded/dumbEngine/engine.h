@@ -10,7 +10,8 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 #include "../../common/protocol/protocolcommandhandler.h"
-#include "../../common/iodevices/PictoBoxDaqBoard.h"
+#include "../../common/iodevices/PictoBoxXPEventCodeGenerator.h"
+#include "../../common/iodevices/PictoBoxXPRewardController.h"
 
 
 class Engine : public QObject
@@ -37,7 +38,7 @@ public:
 	int getFlushDuration(int controller) { if(controller>0 && controller <=4) return flushDurations[controller-1]; else return 0; };
 	void setFlushDuration(int controller, int duration) { if(controller>=0 && controller <4) flushDurations[controller-1] = duration; };
 
-	int getFlushTimeRemain(int controller) { if(controller>0 && controller <=4) return flushTimeRemain[controller-1]; else return 0; };
+	int getFlushTimeRemain() { return flushTimeRemain; };
 
 	void startFlush(int controller);
 	void stopFlush(int controller);
@@ -77,10 +78,11 @@ private:
 	QString boxName;
 	int rewardDurations[4];
 	int flushDurations[4];
-	int flushTimeRemain[4];
+	int flushTimeRemain;
+	int flushingController;
 	int currTrial;
 	int currBlock;
-	int eventCodeCounter;
+	unsigned int eventCodeCounter;
 
 	//experiment information
 	int trialsPerBlock;
@@ -89,8 +91,9 @@ private:
 	//protocol stuff
 	QMap<QString, QSharedPointer<Picto::ProtocolCommandHandler>> commandHandlers;
 
-	//DAQ board
-	Picto::PictoBoxDaqBoard *daqBoard;
+	//IOstuff
+	Picto::PictoBoxXPEventCodeGenerator *eventGen;
+	Picto::PictoBoxXPRewardController *rewardController;
 
 };
 

@@ -28,11 +28,6 @@ Engine::Engine(QString boxName, QHostAddress addr, QObject *parent) :
 	flushDurations[2] = 20;
 	flushDurations[3] = 25;
 
-	flushTimeRemain[0] = -1;
-	flushTimeRemain[1] = -1;
-	flushTimeRemain[2] = -1;
-	flushTimeRemain[3] = -1;
-
 
 	//Set up network connections
 	commSocket = new QTcpSocket();
@@ -86,20 +81,19 @@ Engine::Engine(QString boxName, QHostAddress addr, QObject *parent) :
 	fpstopflushCommandHandler->setEngine(this);
 	commandHandlers[fpstopflushCommandHandler->method()] = fpstopflushCommandHandler;
 
-	//set up the daqboard
-	daqBoard = new Picto::PictoBoxDaqBoard();
+	//set up the rewardController
+	rewardController = new Picto::PictoBoxXPRewardController(4);
+	for(int i=0; i<4; i++)
+		rewardController->setRewardDurationMs(i+1,rewardDurations[i]);
 
-	unsigned int rewardDurations[] = {100,100,100,100};
-	if(!daqBoard->initRewardController(4,rewardDurations))
-		out<<"Failed to initialize reward controller";
-	if(!daqBoard->initEventLines())
-		out<<"Failed to initialize event lines";
-
+	//set up the event code generator
+	eventGen = new Picto::PictoBoxXPEventCodeGenerator();
 }
 
 Engine::~Engine()
 {
-	delete daqBoard;
+	delete eventGen;
+	delete rewardController;
 }
 
 void Engine::runExperiment(int trialsPerBlock, int blocks)
@@ -153,7 +147,7 @@ void Engine::startTrial()
 	eventCodeCounter++;
 	if(eventCodeCounter >127)
 		eventCodeCounter = 0;
-	daqBoard->sendEvent(eventCodeCounter);
+	eventGen->sendEvent(eventCodeCounter);
 
 	interTrialTimer->stop();
 	trialTimer->start();
@@ -203,7 +197,7 @@ void Engine::endTrial()
 	QString eventXml = QString("<event type=\"trialend\" trial=\"%1\"/>").arg(currTrial);
 	sendEngineEvent(eventXml);
 
-	daqBoard->sendEvent(eventCodeCounter);
+	eventGen->sendEvent(eventCodeCounter);
 }
 
 //called every frame
@@ -217,7 +211,7 @@ void Engine::doFrame()
 	//Generate a random event once every so often (once every 4 seconds)
 	if(qrand() % 240 == 0 && trialTimer->isActive())
 	{
-		QString eventXml = QString("<event type=\"other\">Random event</event>").arg(currTrial);
+		QString eventXml = QString("<event type=\"other\">Random event</event>");
 		sendEngineEvent(eventXml);
 	}
 
@@ -376,15 +370,23 @@ void Engine::deliverResponse(QSharedPointer<Picto::ProtocolResponse> response)
 void Engine::startFlush(int controller)
 {
 	QTextStream out(stdout);
-	out<<"Flushing on controller "<<controller<<"\n";
-	if(daqBoard->flushReward(controller, true))
-	{
-		flushTimeRemain[controller-1] = flushDurations[controller-1];
 
-		//if it's not already running, start the timer
-		if(!flushingTimer->isActive())
-			flushingTimer->start();
+	//if the flushing timer is already running, this means another flush is in
+	//process, so we can't do anything
+	if(flushingTimer->isActive())
+	{
+		out<<"Flushing already in progress\n";
+		return;
 	}
+
+	out<<"Flushing on controller "<<controller<<"\n";
+	rewardController->flush(controller, true);
+
+	flushTimeRemain = flushDurations[controller-1];
+	flushingController = controller;
+
+	//start the timer
+	flushingTimer->start();
 
 }
 
@@ -393,48 +395,38 @@ void Engine::stopFlush(int controller)
 	QTextStream out(stdout);
 	out<<"Stopping flushing on controller "<<controller<<"\n";
 
-	flushTimeRemain[controller-1] = -1;
+	flushTimeRemain = -1;
 
-	daqBoard->flushReward(controller, false);
+	rewardController->flush(controller, false);
 
-	//if none of the controllers are currently being flushed, 
 	//stop the clock.
-	bool allInactive = true;
-	for(int i=0; i<4; i++)
-		if(flushTimeRemain[i] > 0)
-			allInactive = false;
-
-	if(allInactive)
-		flushingTimer->stop();
+	flushingTimer->stop();
 }
 
 void Engine::decrementFlushTime()
 {
 	//decrement the flush time for all of the controllers that are currently
 	//being flushed, and stop any where time has expired.
-	for(int i=1; i<=4; i++)
-	{
-		if(flushTimeRemain[i-1] > 0)
-			flushTimeRemain[i-1]--;
-		if(flushTimeRemain[i-1] == 0)
-			stopFlush(i);
-	}
+	flushTimeRemain--;
+	if(flushTimeRemain == 0)
+		stopFlush(flushingController);
 
 }
 
 void Engine::giveReward(int controller)
 {
-	daqBoard->giveReward(controller);
+	rewardController->giveReward(controller);
 }
+
 int Engine::getRewardDuration(int controller) 
 {
-	return (unsigned int)daqBoard->getRewardDurationMs(controller);
+	return (unsigned int)rewardController->getRewardDurationMs(controller);
 
 }
 
 void Engine::setRewardDuration(int controller, int duration) 
 {
-	daqBoard->setRewardDuration(controller,duration);
+	rewardController->setRewardDurationMs(controller,duration);
 }
 
 

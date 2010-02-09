@@ -12,6 +12,8 @@
  *	Reward controllers may also have these features:
  *		- The ability to vary reward duration
  *		- The ability to vary reward volume
+ *
+ * \note reward controllers are numbered from 1 to n
  */
 
 #ifndef _REWARDCONTROLLER_H_
@@ -36,12 +38,14 @@ public:
 	~RewardController();
 
 	virtual bool setRewardVolume(unsigned int channel, float volume)=0;
-	virtual bool setRewardDuration(unsigned int channel, unsigned int duration)=0;
+	virtual bool setRewardDurationMs(unsigned int channel, unsigned int duration)=0;
+	virtual int getRewardDurationMs(unsigned int channel)=0;
 
 	int getChannelCount() { return channelCount_; };
 
 public slots:
 	virtual void giveReward(unsigned int channel) = 0;
+	virtual void flush(unsigned int channel,bool flush) = 0;
 
 protected:
 	int channelCount_;

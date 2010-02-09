@@ -4,7 +4,9 @@
 #include <QDesktopWidget>
 #include <QPalette>
 
+#ifdef WINCE
 #include <winbase.h>
+#endif
 
 class BlankWindow : public QWidget
 {
@@ -41,7 +43,9 @@ int main(int argc, char *argv[])
 
   if(argc>1)
   {
-      SignalStarted(atol(argv[1]));
+#ifdef WINCE
+     SignalStarted(atol(argv[1]));
+#endif
   }
 
 	return a.exec();

@@ -9,7 +9,7 @@ SUBDIRS += source/director
   SUBDIRS += source/workstation
   SUBDIRS += source/documentation/developersguide
 }
-wince* {
+win* {
   SUBDIRS += source/embedded
 }
 

@@ -1,10 +1,11 @@
 #include "D3DVisualTarget.h"
-
 #include "D3DCompositingSurface.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QMessageBox>
+
+#include <tchar.h>
 
 
 namespace Picto {
@@ -147,11 +148,11 @@ D3DVisualTarget::D3DVisualTarget() :
 	//----------------------------------
 	//Since this visual target is only going to be used in Win32, we
 	//can bump the thread priority to the top.  
-	HANDLE hProcess, hThread;
+	/*HANDLE hProcess, hThread;
 	hProcess = GetCurrentProcess();
 	hThread = GetCurrentThread();
 	SetPriorityClass(hProcess, REALTIME_PRIORITY_CLASS);
-	SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);
+	SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);*/
 
 }
 
@@ -217,7 +218,7 @@ void D3DVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> c
 		//of the sprite.
 		QPointF quadPoint;
 		quadPoint.setX((float)location.x());
-		quadPoint.setY((float)(height_-location.y()-imgHeight));
+		quadPoint.setY((float)(height_-location.y()-(int)imgHeight));
 		positionList_.push_back(quadPoint);
 	}
 	else
@@ -235,9 +236,6 @@ void D3DVisualTarget::present()
 	D3DSURFACE_DESC texDesc;
 
 	HRESULT hr;
-	
-	//clear the back buffer
-    pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );
 
 
 	//begin the scene
@@ -283,6 +281,11 @@ void D3DVisualTarget::present()
     hr = pD3dDevice_->Present( NULL, NULL, NULL, NULL );
     if(hr)
 		d3dFail("D3DVisualTarget: Present FAILED");
+
+	
+	//clear the back buffer
+    pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );
+
 }
 
 //!We'll never get any paint events since we run in full screen
@@ -294,12 +297,74 @@ void D3DVisualTarget::paintEvent(QPaintEvent *e)
 
 void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)
 {
-	Q_UNUSED(font);
-	Q_UNUSED(color);
-	Q_UNUSED(rect);
-	Q_UNUSED(alignment);
-	Q_UNUSED(text);
-	//! \todo implement drawNonExperimentText for D3DVisualTarget
+	ID3DXFont *d3dFont;
+	HRESULT hr;
+
+	//Get the FontInfo from the QFont so we can figure out what font
+	//we should use
+	QFontInfo qFontInfo(font);
+
+	//Set up and create teh font
+	D3DXFONT_DESC fontDesc;
+	memset(&fontDesc, 0, sizeof(fontDesc));
+	fontDesc.Height = qFontInfo.pixelSize();
+	fontDesc.Width = 0;
+	if(qFontInfo.bold())
+		fontDesc.Weight = FW_BOLD;
+	else
+		fontDesc.Weight = FW_NORMAL;
+	fontDesc.MipLevels = 0;
+	fontDesc.Italic = qFontInfo.italic();
+	fontDesc.CharSet = DEFAULT_CHARSET;  //This limits our ability to internationalize...
+	fontDesc.OutputPrecision = OUT_DEFAULT_PRECIS;
+	fontDesc.Quality = DEFAULT_QUALITY;
+	fontDesc.PitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+	wchar_t fontName[32];
+	qFontInfo.family().toWCharArray(fontName);
+	wcscpy(fontDesc.FaceName, fontName);
+
+	hr = D3DXCreateFontIndirect(pD3dDevice_, &fontDesc, &d3dFont);
+	if(hr)
+		d3dFail("D3DVisualTarget D3DXCreateFontIndirect FAILED");
+
+	//set up all the stuff we need to draw text
+	wchar_t *textW;
+	textW = new wchar_t[text.length()];
+	text.toWCharArray(textW);
+
+	RECT textRect;
+	textRect.bottom = rect.bottom();
+	textRect.left = rect.left();
+	textRect.right = rect.right();
+
+	DWORD textFormat = 0;
+	if(alignment & Qt::AlignLeft)
+		textFormat |= DT_LEFT;
+	if(alignment & Qt::AlignRight)
+		textFormat |= DT_RIGHT;
+	if(alignment & Qt::AlignHCenter)
+		textFormat |= DT_CENTER;
+	if(alignment & Qt::AlignTop)
+		textFormat |= DT_TOP;
+	if(alignment & Qt::AlignBottom)
+		textFormat |= DT_BOTTOM;
+	if(alignment & Qt::AlignVCenter)
+		textFormat |= DT_VCENTER;
+
+	D3DCOLOR textColor = D3DCOLOR_ARGB(color.alpha(),color.red(), color.green(), color.blue());
+	
+
+	pD3dDevice_->BeginScene();
+
+	textRect.top = rect.top();
+
+	hr = d3dFont->DrawText(NULL,textW,text.length(),&textRect,textFormat,textColor);
+	
+	pD3dDevice_->EndScene();
+
+	d3dFont->Release();
+
+
 }
 
 

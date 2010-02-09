@@ -5,8 +5,8 @@
  *	a special reward controller is required.
  */
 
-#ifndef _PICTOBOXREWARDCONTROLLER_H_
-#define _PICTOBOXREWARDCONTROLLER_H_
+#ifndef _PICTOBOXREWARDCONTROLLERCE_H_
+#define _PICTOBOXREWARDCONTROLLERCE_H_
 
 #include "RewardController.h"
 #include "PictoBoxDaqBoard.h"
@@ -15,18 +15,18 @@ namespace Picto
 {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PictoBoxRewardController : public RewardController
+class PICTOLIB_API PictoBoxRewardControllerCE : public RewardController
 #else
-class PictoBoxRewardController :  public RewardController
+class PictoBoxRewardControllerCE :  public RewardController
 #endif
 {
 public:
-	PictoBoxRewardController(unsigned int channelCount);
-	~PictoBoxRewardController();
+	PictoBoxRewardControllerCE(unsigned int channelCount);
+	~PictoBoxRewardControllerCE();
 
 
 	bool setRewardVolume(unsigned int channel, float volume);
-	bool setRewardDuration(unsigned int channel, unsigned int duration);
+	bool setRewardDurationMs(unsigned int channel, unsigned int duration);
 public slots:
 	void giveReward(unsigned int channel);
 

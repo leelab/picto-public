@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
 
 
 	//For debugging: Since CE doesn't like to force quit stuff, we'll quit after a fixed time
-	QTimer timer;
+	/*QTimer timer;
 	timer.setInterval(30000);
 	QObject::connect(&timer, SIGNAL(timeout()), &app, SLOT(quit()));
-	timer.start();
+	timer.start();*/
 	
 
 	return app.exec();

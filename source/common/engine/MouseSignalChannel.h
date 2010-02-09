@@ -22,7 +22,7 @@ class MouseSignalChannel :  public QObject, public SignalChannel
 	Q_OBJECT
 
 public:
-	MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget);
+	MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget_);
 	~MouseSignalChannel() {};
 
 	bool start();
@@ -33,8 +33,8 @@ private slots:
 	void pollMouse();
 
 private:
-	QTimer *pollingTimer;
-	QSharedPointer<QWidget> widget;  //used for coordinate translation
+	QTimer *pollingTimer_;
+	QSharedPointer<QWidget> widget_;  //used for coordinate translation
 
 };
 

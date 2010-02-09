@@ -46,10 +46,10 @@ public:
 	~SignalChannel() {};
 
 
-	void setSampleRate(int sampsPerSec);
+	void setsampleRate_(int sampsPerSec);
 	void setCalibrationRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue);
 	void setCalibrationCoefficients(QString subchannel, double A, double B);
-	QList<QString> getSubchannels() { return rawDataBuffer.keys(); };
+	QList<QString> getSubchannels() { return rawDataBuffer_.keys(); };
 
 	virtual bool start() = 0;
 	virtual bool stop() = 0;
@@ -62,16 +62,16 @@ public:
 
 protected:
 	//This function places current data (everything that has been generated
-	//since the last call) into rawDataBuffer.  The buffer should not be assumed
+	//since the last call) into rawDataBuffer_.  The buffer should not be assumed
 	//to be empty (nor should it be emptied), since an insertValue call may have 
 	//added data.
 	virtual void updateDataBuffer(){};
 	
 	void addSubchannel(QString subchannelName);
 
-	QMap<QString, QList<double> > rawDataBuffer;
+	QMap<QString, QList<double> > rawDataBuffer_;
 
-	int sampleRate;			//samples per second collected by the channel
+	int sampleRate_;			//samples per second collected by the channel
 
 private:
 	double scaleData(int subchannel, double rawData);
@@ -82,9 +82,7 @@ private:
 		double scaleB;
 	};
 
-	QMap<QString, scaleFactors> scaleFactorsMap;
-	
-	bool calibrationRangeSet;
+	QMap<QString, scaleFactors> scaleFactorsMap_;
 
 };
 

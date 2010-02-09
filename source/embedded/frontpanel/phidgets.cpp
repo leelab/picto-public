@@ -204,7 +204,7 @@ int __stdcall EncoderAttachHandler(CPhidgetHandle hEncoder, void *phidgetsObject
 	return 0;
 }
 
-int __stdcall EncoderDetachHandler(CPhidgetHandle hEncoder, void * phidgetsObject)
+int __stdcall EncoderDetachHandler(CPhidgetHandle, void * phidgetsObject)
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
 	

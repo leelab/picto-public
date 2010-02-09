@@ -5,9 +5,12 @@
 #include <QTimer>
 #include <QSharedPointer>
 
-#include "../common/compositor/PixmapVisualTarget.h"
+#include "../common/compositor/PCMAuralTarget.h"
+#include "../common/compositor/CompositingSurface.h"
+#include "../common/compositor/RenderingTarget.h"
+#include "../common/compositor/D3DVisualTarget.h"
 #include "../common/engine/MouseSignalChannel.h"
-#include "../common/engine/PictoBoxAnalogInputSignalChannel.h"
+#include "../common/engine/PictoBoxXPAnalogInputSignalChannel.h"
 #include "../common/stimuli/CircleGraphic.h"
 
 class SignalChannelTest : public QObject
@@ -15,8 +18,10 @@ class SignalChannelTest : public QObject
 	Q_OBJECT
 
 public:
-	SignalChannelTest(QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget);
+	SignalChannelTest();
 	~SignalChannelTest();
+
+	void exec();
 
 public slots:
 	void doFrame();
@@ -24,11 +29,11 @@ public slots:
 private:
 	QTimer *frameTimer;
 	
-	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget;
+	QSharedPointer<Picto::D3DVisualTarget> d3dVisualTarget;
 	QSharedPointer<Picto::CircleGraphic> circleGraphic;
 
 	Picto::MouseSignalChannel *mouseChannel;
-	Picto::PictoBoxAnalogInputSignalChannel *aiChannel;
+	Picto::PictoBoxXPAnalogInputSignalChannel *aiChannel;
 
 	int frameCounter;
 };

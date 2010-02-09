@@ -2,7 +2,7 @@
 #define PICTOBOXANALOGSIGNALCHANNEL_H
 
 #include "../common.h"
-#include "../iodevices/PictoBoxDaqBoard.h"
+#include "../iodevices/PictoBoxdaqBoard.h"
 #include "SignalChannel.h"
 
 
@@ -17,7 +17,7 @@ class PictoBoxAnalogInputSignalChannel : public SignalChannel
 #endif
 {
 public:
-	PictoBoxAnalogInputSignalChannel(QSharedPointer<PictoBoxDaqBoard> daqBoard, int sampsPerSecond);
+	PictoBoxAnalogInputSignalChannel(QSharedPointer<PictoBoxDaqBoard> daqBoard_, int sampsPerSecond);
 	~PictoBoxAnalogInputSignalChannel() {};
 
 	bool start();
@@ -30,10 +30,10 @@ public:
 
 private:
 
-	QSharedPointer<PictoBoxDaqBoard> daqBoard;
+	QSharedPointer<PictoBoxDaqBoard> daqBoard_;
 
 	//maps channel name to daq board ai channel number
-	QMap<QString, int> aiChannelNums;  
+	QMap<QString, int> aiChannelNums_;  
 
 };
 

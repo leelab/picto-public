@@ -71,10 +71,13 @@ for(compilerDefine, QMAKE_COMPILER_DEFINES) {
         !contains(compilerVersion,1300) {
         !contains(compilerVersion,1310) {
         !contains(compilerVersion,1400) {
-            QMAKE_CXXFLAGS+=/MP
+            DEFINES += _BIND_TO_CURRENT_CRT_VERSION
+            #Note: This switch has been moved to a custom mkspecs
+            #file for win32-msvc2008
+            #QMAKE_CXXFLAGS+=/MP
             visualStudioProject = $$find(TEMPLATE, "vc")
             build_pass:CONFIG(release, debug|release):!isEmpty(visualStudioProject) {
-                message(Warnings regarding Compiler option: /MP can safely be ignored)
+                message(Warnings regarding Compiler option: -MP can safely be ignored)
             }
         }}}}
     }

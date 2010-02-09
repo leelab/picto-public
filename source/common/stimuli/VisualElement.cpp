@@ -65,6 +65,8 @@ void VisualElement::updateCompositingSurfaces()
 //If updateAnimation isn't implemented in the derived class, we can simply return.
 void VisualElement::updateAnimation(int frame, QTime elapsedTime)
 {
+	Q_UNUSED(frame);
+	Q_UNUSED(elapsedTime);
 	if(shouldUpdateCompositingSurfaces_)
 	{
 		updateCompositingSurfaces();

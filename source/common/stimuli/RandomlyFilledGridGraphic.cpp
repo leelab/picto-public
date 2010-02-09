@@ -72,7 +72,7 @@ void RandomlyFilledGridGraphic::draw()
 		foregroundIndex = 0;
 	}
 
-
+	//! \todo use mersenne twister random number generator
 	std::random_shuffle(colorList.begin(), colorList.end());
 
 	QRect dimensions = propertyContainer_.getPropertyValue("Dimensions").toRect();
@@ -114,6 +114,8 @@ void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName,
 
 void RandomlyFilledGridGraphic::updateAnimation(int frame, QTime elapsedTime)
 {
+	Q_UNUSED(elapsedTime);
+
 	bool animated = propertyContainer_.getPropertyValue("Animated").toBool();
 	if(!animated)
 		return;

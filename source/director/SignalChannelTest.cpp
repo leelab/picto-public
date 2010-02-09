@@ -8,28 +8,41 @@
 #include "SignalChannelTest.h"
 
 
-SignalChannelTest::SignalChannelTest(QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget)
-	: pixmapVisualTarget(pixmapVisualTarget)
+SignalChannelTest::SignalChannelTest()
 {
+}
+
+void SignalChannelTest::exec()
+{
+	//stall to allow us to attach debugger remotely
+	//while(1);
+
+	//set up graphics
+	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
+	d3dVisualTarget = QSharedPointer<Picto::D3DVisualTarget>(new Picto::D3DVisualTarget());
+
+	Picto::RenderingTarget renderingTarget(d3dVisualTarget, pcmAuralTarget);
+
+	d3dVisualTarget->show();
+
 	frameCounter = 0;
 
 	//set up mouse channel
-	mouseChannel = new Picto::MouseSignalChannel(120, pixmapVisualTarget);
+	mouseChannel = new Picto::MouseSignalChannel(120, d3dVisualTarget);
 	mouseChannel->start();
 
 	//set up ai channels
-	QSharedPointer<Picto::PictoBoxDaqBoard> daqBoard(new Picto::PictoBoxDaqBoard);
-	aiChannel = new Picto::PictoBoxAnalogInputSignalChannel(daqBoard,250);
-	aiChannel->addAiChannel("xeye",0);
-	aiChannel->addAiChannel("yeye",1);
+	aiChannel = new Picto::PictoBoxXPAnalogInputSignalChannel(250);
+	aiChannel->addAiChannel("xeye",1);
+	aiChannel->addAiChannel("yeye",0);
 
-	QRect visualTargetRect = pixmapVisualTarget->getDimensions();
-	aiChannel->setCalibrationRange("xeye", 0,10,0,visualTargetRect.width());
-	aiChannel->setCalibrationRange("yeye", 0,10,0,visualTargetRect.height());
+	QRect visualTargetRect = d3dVisualTarget->getDimensions();
+	aiChannel->setCalibrationRange("xeye", 0.0,10.0,0.0,(double)visualTargetRect.width());
+	aiChannel->setCalibrationRange("yeye", 0.0,10.0,0.0,(double)visualTargetRect.height());
 	aiChannel->start();
 
 	QSharedPointer<Picto::CompositingSurface> compositingSurface = 
-		pixmapVisualTarget->generateCompositingSurface();
+		renderingTarget.generateCompositingSurface();
 
 	QSharedPointer<Picto::CircleGraphic> circleGraphicTemp(new Picto::CircleGraphic(QPoint(10,10),100,QColor(0,255,0,200)));
 	circleGraphic = circleGraphicTemp;
@@ -68,7 +81,7 @@ void SignalChannelTest::doFrame()
 
 	QString mousePos = QString("(%1, %2)").arg(xpos).arg(ypos);
 
-	pixmapVisualTarget->drawNonExperimentText(QFont("Arial",18),
+	d3dVisualTarget->drawNonExperimentText(QFont("Arial",18),
 											  QColor(Qt::white),
 											  QRect(frameCounter%1280,10,200,50),
 											  Qt::AlignCenter,
@@ -91,21 +104,23 @@ void SignalChannelTest::doFrame()
 	else
 		eyeY = 0.0;
 
-	QString eyePos = QString("(%1, %2)").arg(eyeX).arg(eyeY);
+	QString eyePos = QString("(%1, %2)").arg(eyeX,0,'f',1).arg(eyeY,0,'f',1);
 
 
-	pixmapVisualTarget->drawNonExperimentText(QFont("Arial",18),
+	d3dVisualTarget->drawNonExperimentText(QFont("Arial",18),
 											  QColor(Qt::white),
 											  QRect(50,100,300,50),
 											  Qt::AlignCenter,
 											  eyePos);
 
-	pixmapVisualTarget->draw(QPoint((int) eyeX,(int) eyeY), circleGraphic->getCompositingSurface("Pixmap"));
+	//d3dVisualTarget->draw(QPoint((int) eyeX,(int) eyeY), circleGraphic->getCompositingSurface("Direct3D"));
+	d3dVisualTarget->draw(QPoint((int) xpos,(int) ypos), circleGraphic->getCompositingSurface("Direct3D"));
+	//d3dVisualTarget->draw(QPoint(200,200), circleGraphic->getCompositingSurface("Direct3D"));
 
 	//Present the image
 	//-----------------
 
-	pixmapVisualTarget->present();
+	d3dVisualTarget->present();
 
 }
 

@@ -4,25 +4,25 @@ namespace Picto {
 
 SignalChannel::SignalChannel()
 {
-	sampleRate = 1;
+	sampleRate_ = 1;
 }
 SignalChannel::SignalChannel(int sampsPerSec)
 {
-	sampleRate = sampsPerSec;
+	sampleRate_ = sampsPerSec;
 }
 
 
-void SignalChannel::setSampleRate(int sampsPerSec)
+void SignalChannel::setsampleRate_(int sampsPerSec)
 {
-	sampleRate = sampsPerSec;
+	sampleRate_ = sampsPerSec;
 }
 
 void SignalChannel::setCalibrationRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue)
 {
 	//set the scaling values (we're assuming a linear scaling with 
 	//y = A + Bx
-	scaleFactorsMap[subchannel].scaleB = (maxScaledValue-minScaledValue)/(maxRawValue-minRawValue);
-	scaleFactorsMap[subchannel].scaleA = maxScaledValue-scaleFactorsMap[subchannel].scaleB*maxRawValue;
+	scaleFactorsMap_[subchannel].scaleB = (maxScaledValue-minScaledValue)/(maxRawValue-minRawValue);
+	scaleFactorsMap_[subchannel].scaleA = maxScaledValue-scaleFactorsMap_[subchannel].scaleB*maxRawValue;
 }
 
 //! Set the scaling coefficients directly (A + Bx)
@@ -33,21 +33,21 @@ void SignalChannel::setCalibrationRange(QString subchannel, double minRawValue, 
  */
 void SignalChannel::setCalibrationCoefficients(QString subchannel, double A, double B)
 {
-	scaleFactorsMap[subchannel].scaleA = A;
-	scaleFactorsMap[subchannel].scaleB = B;
+	scaleFactorsMap_[subchannel].scaleA = A;
+	scaleFactorsMap_[subchannel].scaleB = B;
 }
 
 
 void SignalChannel::addSubchannel(QString subchannelName)
 {
 	QList<double> data;
-	if(!rawDataBuffer.contains(subchannelName))
-		rawDataBuffer[subchannelName] = data;
+	if(!rawDataBuffer_.contains(subchannelName))
+		rawDataBuffer_[subchannelName] = data;
 	
-	if(!scaleFactorsMap.contains(subchannelName))
+	if(!scaleFactorsMap_.contains(subchannelName))
 	{
-		scaleFactorsMap[subchannelName].scaleB = 1;
-		scaleFactorsMap[subchannelName].scaleA = 0;
+		scaleFactorsMap_[subchannelName].scaleB = 1;
+		scaleFactorsMap_[subchannelName].scaleA = 0;
 	}
 
 }
@@ -64,8 +64,8 @@ QMap<QString, QList<double> > SignalChannel::getValues()
 	{
 		for(int y=0; y<x.value().size(); y++)
 		{
-			double scaledValue = scaleFactorsMap.value(x.key()).scaleA + 
-				scaleFactorsMap.value(x.key()).scaleB * x.value().at(y);
+			double scaledValue = scaleFactorsMap_.value(x.key()).scaleA + 
+				scaleFactorsMap_.value(x.key()).scaleB * x.value().at(y);
 			x.value().replace(y,scaledValue);
 		}
 		x++;
@@ -78,12 +78,12 @@ QMap<QString, QList<double> > SignalChannel::getRawValues()
 {
 	updateDataBuffer();
 
-	QMap<QString, QList<double> > dataBuffer = rawDataBuffer;
+	QMap<QString, QList<double> > dataBuffer = rawDataBuffer_;
 	
 	//clear out the raw data
-	QMap<QString, QList<double> >::iterator x = rawDataBuffer.begin();
+	QMap<QString, QList<double> >::iterator x = rawDataBuffer_.begin();
 
-	while(x != rawDataBuffer.end())
+	while(x != rawDataBuffer_.end())
 	{
 		x.value().clear();
 		x++;
@@ -95,24 +95,24 @@ QMap<QString, QList<double> > SignalChannel::getRawValues()
 
 
 //When this is called, the passed in value is immediately added to the 
-//rawDataBuffer.  Since real data is only added to the rawDataBuffer
+//rawDataBuffer_.  Since real data is only added to the rawDataBuffer_
 //when updateDataBuffer is called, the inserted data is slightly out of
 //order.  This shouldn't be a big deal, since it is unlikely that we'll be 
 //inserting values at the same time as we're collecting real data.
 //Should this become an issue, we'll want to add timestamps.
 void SignalChannel::insertValue(QString subchannel, double val)
 {
-	if(rawDataBuffer.contains(subchannel))
+	if(rawDataBuffer_.contains(subchannel))
 	{
-		rawDataBuffer[subchannel].append(val);
+		rawDataBuffer_[subchannel].append(val);
 	}
 }
 
 void SignalChannel::insertValues(QString subchannel, QList<double> vals)
 {
-	if(rawDataBuffer.contains(subchannel))
+	if(rawDataBuffer_.contains(subchannel))
 	{
-		rawDataBuffer[subchannel].append(vals);
+		rawDataBuffer_[subchannel].append(vals);
 	}
 }
 

@@ -106,7 +106,6 @@ void D3DCompositingSurface::convertImage(QImage image)
 
 	//be sure to use a const pointer since we won't be modifying the image data and want to avoid an expensive and unnecessary deep copy
 	const uchar * imageData = image.bits();
-	const QRgb * imageDataQRgb = (const QRgb *) imageData;
 	const unsigned int * imageDataUint32 = (const unsigned int *) imageData;
 
 	unsigned int upperBound = (unsigned int) pTexel + image.height() * lockedRect.Pitch;
