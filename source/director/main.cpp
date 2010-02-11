@@ -645,7 +645,6 @@ void TestD3DRendering()
 
 void TestRewardCalibration()
 {
-	MessageBox(NULL, L"Hello",L"Hello World", MB_OK);
 	Picto::PictoBoxXPRewardController rewardController(4);
 	Picto::RewardCalibration rewCal(&rewardController);
 	rewCal.RunCalibration(10,1000);
@@ -654,7 +653,6 @@ void TestRewardCalibration()
 
 void TestEventGeneration()
 {
-	MessageBox(NULL, L"Hello",L"Hello World", MB_OK);
 	Picto::PictoBoxXPEventCodeGenerator eventGen;
 
 	LARGE_INTEGER ticksPerSec;

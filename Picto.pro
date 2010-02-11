@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS = source/common
+SUBDIRS = source/common				source/common/unittests
 SUBDIRS += source/director
 !wince* {
   SUBDIRS += source/server          source/server/unittests

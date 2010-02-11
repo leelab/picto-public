@@ -69,8 +69,17 @@
 #include <time.h>
 #endif
 #include <math.h>
+#include "../common.h"
 
-class MTRand {
+namespace Picto
+{
+
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API MTRand
+#else
+class MTRand
+#endif
+{
 // Data
 public:
 	typedef unsigned long uint32;  // unsigned integer type, at least 32 bits
@@ -437,3 +446,6 @@ inline std::istream& operator>>( std::istream& is, MTRand& mtrand )
 //      - Fixed out-of-range number generation on 64-bit machines
 //      - Improved portability by substituting literal constants for long enum's
 //      - Changed license from GNU LGPL to BSD
+
+
+}  //namespace Picto
