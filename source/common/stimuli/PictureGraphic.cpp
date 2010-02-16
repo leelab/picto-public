@@ -4,9 +4,11 @@
 
 namespace Picto {
 
+const QString PictureGraphic::name = "Picture Graphic";
+
 PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 {
-	propertyContainer_.setContainerName("Picture Graphic");
+	propertyContainer_.setContainerName(name);
 
 	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
@@ -33,6 +35,11 @@ void PictureGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = false;
 }
 
+VisualElement* PictureGraphic::NewVisualElement()
+{
+	return new PictureGraphic;
+}
+
 void PictureGraphic::slotPropertyValueChanged(QString propertyName,
 											   QVariant) //propertyValue
 {
@@ -40,6 +47,12 @@ void PictureGraphic::slotPropertyValueChanged(QString propertyName,
 	{
 		draw();
 	}
+}
+
+
+bool PictureGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
 }
 
 }; //namespace Picto

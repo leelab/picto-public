@@ -9,6 +9,7 @@ PredicateLessThanEq::PredicateLessThanEq()
 : Predicate()
 {
 	predicateString_= "<=";
+	name_ = "Less than or equal to";
 
 	//draw the icon
 	const QPoint pointsLT[] = { QPoint(75,30),

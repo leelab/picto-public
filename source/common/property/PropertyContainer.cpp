@@ -18,13 +18,21 @@ PropertyContainer::PropertyContainer(QString _containerName)
 
 void PropertyContainer::setContainerName(QString _containerName)
 {
-	containerGroupItem_->setValue(_containerName);
+	containerGroupItem_->setPropertyName(_containerName);
+}
+
+QString PropertyContainer::getContainerName()
+{
+	return containerGroupItem_->propertyName();
 }
 
 void PropertyContainer::addProperty(Property _property)
 {
     QtVariantProperty *item = variantManager_.addProperty(_property.type(),
 														  _property.name());
+
+	//This will fail if you use an unsupported type
+	Q_ASSERT(item);
 
 	item->setValue(_property.value());
 

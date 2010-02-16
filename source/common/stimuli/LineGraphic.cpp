@@ -4,12 +4,14 @@
 
 namespace Picto {
 
+const QString LineGraphic::name = "Line Graphic";
+
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 {
-	propertyContainer_.setContainerName("Line Graphic");
+	propertyContainer_.setContainerName(name);
 
 	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
-
+	
 	for(int i = 0; i < points.count(); i++)
 	{
 		Property pointProperty(QVariant::Point,QString("Point %1").arg(i),points[i]);
@@ -68,6 +70,11 @@ void LineGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = false;
 }
 
+VisualElement* LineGraphic::NewVisualElement()
+{
+	return new LineGraphic;
+}
+
 void LineGraphic::slotPropertyValueChanged(QString propertyName,
 											  QVariant) //propertyValue
 {
@@ -75,6 +82,12 @@ void LineGraphic::slotPropertyValueChanged(QString propertyName,
 	{
 		draw();
 	}
+}
+
+
+bool LineGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
 }
 
 }; //namespace Picto

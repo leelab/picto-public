@@ -14,9 +14,15 @@ class PICTOLIB_CLASS BoxGraphic : public VisualElement
 	Q_OBJECT
 
 public:
-	BoxGraphic(QPoint position, QRect dimensions, QColor color);
+	BoxGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
 
 	void draw();
+	static VisualElement* NewVisualElement();
+
+	static const QString name;
+
+private:
+	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);

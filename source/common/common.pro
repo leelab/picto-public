@@ -219,9 +219,8 @@ HEADERS += $$(PICTO_TREE)/source/common/stimuli/WaveSound.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/WaveSound.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/RandomlyFilledGridGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/RandomlyFilledGridGraphic.cpp
-
-
-
+HEADERS += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.h
+SOURCES += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.cpp
 
 
 HEADERS += $$(PICTO_TREE)/source/common/storage/DataStore.h

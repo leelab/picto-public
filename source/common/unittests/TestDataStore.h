@@ -6,34 +6,33 @@
  *	the user is prompted to confirm its correctness.
  */
 
-#ifndef _TEST_PREDICATES_H
-#define _TEST_PREDICATES_H
+#ifndef _TEST_DATA_STORE_H
+#define _TEST_DATA_STORE_H
 
 #include <QtTest/QtTest>
 
-#include "../random/MersenneTwister.h"
 #include "../../common/globals.h"
+#include "../random/MersenneTwister.h"
+#include "../stimuli/VisualElement.h"
+#include "../stimuli/VisualElementFactory.h"
 
-class TestPredicates: public QObject
+
+class TestDataStore: public QObject
 {
     Q_OBJECT
 
 public:
-	TestPredicates();
-
-private:
-	Picto::MTRand randGen;
+	TestDataStore();
 
 private slots:
-	void TestPredicateEvaluation();
-	void TestPredicateOutputs();
+	void TestVisualElementDataStore_data();
+	void TestVisualElementDataStore();
 
-	void TestPredicateExpressionGeneral();
-	void TestPredicateExpressionEvaluation();
-	void TestPredicateExpressionOutputs();
+private:
+	Picto::MTRand randGen_;
+	Picto::VisualElementFactory visualElementFactory_;
 
-	void TestCompoundExpressionEvaluation();
-	void TestCompoundExpressionOutputs();
+	void testSingleVisualElementDataStore(Picto::VisualElement *original);
 };
 
 

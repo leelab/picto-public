@@ -17,9 +17,15 @@ class PICTOLIB_CLASS LineGraphic : public VisualElement
 	Q_OBJECT
 
 public:
-	LineGraphic(QPoint position, QVector<QPoint>, QColor color);
+	LineGraphic(QPoint position=QPoint(), QVector<QPoint> = QVector<QPoint>(2,QPoint()), QColor color=QColor());
 
 	void draw();
+	static VisualElement* NewVisualElement();
+
+	static const QString name;
+
+private:
+	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);

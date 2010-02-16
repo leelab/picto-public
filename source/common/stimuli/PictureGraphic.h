@@ -14,9 +14,15 @@ class PICTOLIB_CLASS PictureGraphic : public VisualElement
 	Q_OBJECT
 
 public:
-	PictureGraphic(QPoint position, QString imageFile);
+	PictureGraphic(QPoint position=QPoint(), QString imageFile="");
 
 	void draw();
+	static VisualElement* NewVisualElement();
+
+	static const QString name;
+
+private:
+	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);

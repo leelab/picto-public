@@ -14,9 +14,15 @@ class PICTOLIB_CLASS EllipseGraphic : public VisualElement
 	Q_OBJECT
 
 public:
-	EllipseGraphic(QPoint position, QRect dimensions, QColor color);
+	EllipseGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
 
 	void draw();
+	static VisualElement* NewVisualElement();
+
+	static const QString name;
+
+private:
+	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);

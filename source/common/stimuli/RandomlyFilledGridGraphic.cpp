@@ -5,12 +5,14 @@
 
 namespace Picto {
 
+const QString RandomlyFilledGridGraphic::name = "Randomly Filled Grid Graphic";
+
 RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dimensions, 
 													 QColor color1, QColor color2, 
 													 int numHorizSquares, int numVertSquares,
 													 int numColor1, bool animated, int updateFrameRate)
 {
-	propertyContainer_.setContainerName("Randomly Filled Grid Graphic");
+	propertyContainer_.setContainerName(name);
 
 	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
@@ -103,6 +105,11 @@ void RandomlyFilledGridGraphic::draw()
 	updateCompositingSurfaces();
 }
 
+VisualElement* RandomlyFilledGridGraphic::NewVisualElement()
+{
+	return new RandomlyFilledGridGraphic;
+}
+
 void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName,
 											  QVariant) //propertyValue
 {
@@ -124,6 +131,12 @@ void RandomlyFilledGridGraphic::updateAnimation(int frame, QTime elapsedTime)
 	if(frame%updateRate == 0)
 		draw();
 	return;
+}
+
+
+bool RandomlyFilledGridGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
 }
 
 }; //namespace Picto

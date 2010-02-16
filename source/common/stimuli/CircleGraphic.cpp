@@ -4,9 +4,11 @@
 
 namespace Picto {
 
+const QString CircleGraphic::name = "Circle Graphic";
+
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 {
-	propertyContainer_.setContainerName("Circle Graphic");
+	propertyContainer_.setContainerName(name);
 
 	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
@@ -49,6 +51,11 @@ void CircleGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = false;
 }
 
+VisualElement* CircleGraphic::NewVisualElement()
+{
+	return new CircleGraphic;
+}
+
 void CircleGraphic::slotPropertyValueChanged(QString propertyName,
 											  QVariant) //propertyValue
 {
@@ -56,6 +63,55 @@ void CircleGraphic::slotPropertyValueChanged(QString propertyName,
 	{
 		draw();
 	}
+}
+
+
+bool CircleGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	bool success = true;
+
+	//Read through the XML grabbing the properties
+	//Note that we fail in the event of unexpected input...
+	xmlStreamReader->readNext();
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "VisualElement"))
+	{
+		if(!xmlStreamReader->isStartElement())
+		{
+			//do nothing unless we're looking at a start element
+		}
+		else if(xmlStreamReader->name() == "Position")
+		{
+			QPoint position = deserializeQPoint(xmlStreamReader);
+			propertyContainer_.setPropertyValue("Position", position);
+		}
+		else if(xmlStreamReader->name() == "Radius")
+		{
+			int radius = xmlStreamReader->readElementText().toInt();
+			propertyContainer_.setPropertyValue("Radius",radius);
+		}
+		else if(xmlStreamReader->name() == "Color")
+		{
+			QColor color = deserializeQColor(xmlStreamReader);
+			propertyContainer_.setPropertyValue("Color",color);
+		}
+		else if(xmlStreamReader->name() == "Name")
+		{
+			QString name = xmlStreamReader->readElementText();
+			propertyContainer_.setPropertyValue("Name",name);
+		}
+		else
+		{
+			success = false;
+		}
+		xmlStreamReader->readNext();
+	}
+
+
+
+
+	draw();
+
+	return success;
 }
 
 }; //namespace Picto

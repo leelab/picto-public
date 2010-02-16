@@ -21,6 +21,7 @@ public:
 	QVariant getPropertyValue(QString _propertyName);
 	void setPropertyValue(QString _propertyName, QVariant _value);
 	void setContainerName(QString _containerName);
+	QString getContainerName();
 	QList<QString> getPropertyList();
 
 signals:

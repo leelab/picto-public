@@ -4,6 +4,7 @@
 #include "../common.h"
 
 #include "StimulusElement.h"
+#include "../storage/DataStore.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
 #include "../property/PropertyContainer.h"
@@ -16,7 +17,7 @@
 
 namespace Picto {
 
-struct PICTOLIB_CLASS VisualElement : public StimulusElement
+struct PICTOLIB_CLASS VisualElement : public StimulusElement, public DataStore
 {
 public:
 	VisualElement();
@@ -35,7 +36,19 @@ public:
 
 	void setPosition(QPoint position);
 
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+
 protected:
+	//This virtual functions handle the deserialization of
+	//each element's properties.  The serialization functios needs to write all 
+	//of .  Likewise, The deserialization function needs to read the content 
+	//between the <VisualElement type="blah"> and </VisualElement>tags and
+	//modify itself to match the content of the XML.  This is done 
+	//at the subclass level to simplify the code.
+	virtual bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)=0;
+
 	QImage image_;
 	bool shouldUpdateCompositingSurfaces_;
 	QMap<QString, QSharedPointer<CompositingSurface> > compositingSurfaces_;

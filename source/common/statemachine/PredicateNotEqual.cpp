@@ -9,6 +9,7 @@ PredicateNotEqual::PredicateNotEqual()
 : Predicate()
 {
 	predicateString_= "!=";
+	name_ = "Not equal";
 
 	//draw the icon
 

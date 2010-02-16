@@ -14,16 +14,22 @@ class PICTOLIB_CLASS RandomlyFilledGridGraphic : public VisualElement
 	Q_OBJECT
 
 public:
-	RandomlyFilledGridGraphic(QPoint position, QRect dimensions, QColor color1, QColor color2, 
-								int numHorizSquares, int numVertSquares,int numColor1, 
-								bool animated, int updateFrameRate);
+	RandomlyFilledGridGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), 
+								QColor color1=QColor(), QColor color2=QColor(), 
+								int numHorizSquares=0, int numVertSquares=0,int numColor1=0, 
+								bool animated=false, int updateFrameRate=0);
 
 	void draw();
 	void updateAnimation(int frame, QTime elapsedTime);
+	static VisualElement* NewVisualElement();
 
-private slots:
+	static const QString name;
+
+	private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
 private:
+	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 	QList<unsigned char> colorList;
 };
 

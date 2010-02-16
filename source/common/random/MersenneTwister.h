@@ -405,6 +405,8 @@ inline std::istream& operator>>( std::istream& is, MTRand& mtrand )
 	return is;
 }
 
+}  //namespace Picto
+
 #endif  // MERSENNETWISTER_H
 
 // Change log:
@@ -448,4 +450,4 @@ inline std::istream& operator>>( std::istream& is, MTRand& mtrand )
 //      - Changed license from GNU LGPL to BSD
 
 
-}  //namespace Picto
+

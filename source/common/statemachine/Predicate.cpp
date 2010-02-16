@@ -10,6 +10,7 @@ Predicate::Predicate()
 	delete temp;
 
 	predicateString_ = "";
+	name_ = "";
 }
 
 Predicate::~Predicate()

@@ -31,6 +31,8 @@ QRect VisualElement::getBoundingRect()
 	return image_.rect();
 }
 
+
+
 void VisualElement::setPosition(QPoint position)
 {
 	propertyContainer_.setPropertyValue("Position",position);
@@ -74,4 +76,162 @@ void VisualElement::updateAnimation(int frame, QTime elapsedTime)
 	return;
 }
 
+
+/*! \brief Turns the VisualElement object into an XML fragment.
+ *
+ *	Since VisualElements are defined soley by their properties, we can handle
+ *	serialization in this base class.  The only issue with this approach is that 
+ *	there are an infinite number of property data types, and we will only
+ *	include code fro turning some of them into XML.  So, if you create a new
+ *	VisualElement that has some sort of non-standard data type (for example, 
+ *	an enum, or special struct), then this code will need to be modified.  To
+ *	prevent accidental bugs, this function will experience an assertion failure
+ *	if it encounters an unknown data type in a the properties.
+ *
+ *	It should also be noted that thefunction (as of its initial development)
+ *	only supports porperties, so if a Visual Element uses Property Attributes
+ *	we will have problems.
+ */
+bool VisualElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+{
+	xmlStreamWriter->writeStartElement("VisualElement");
+
+	//add the visual element's type (BoxGraphic, ARrowgraphic, etc)
+	xmlStreamWriter->writeAttribute("type",propertyContainer_.getContainerName());
+
+	//Get the list of properties
+	QList<QString> propList = propertyContainer_.getPropertyList();
+
+	//loop through the property list
+	QString propName;
+	foreach(propName, propList)
+	{
+		QVariant propVal = propertyContainer_.getPropertyValue(propName);
+
+		//figure out what data type this is, and output it appropriately
+		switch(propVal.type())
+		{
+		case QVariant::Point:
+			serializeQPoint(xmlStreamWriter, propName, propVal.toPoint());
+			break;
+		case QVariant::Rect:
+			serializeQRect(xmlStreamWriter, propName, propVal.toRect());
+			break;
+		case QVariant::Color:
+			serializeQColor(xmlStreamWriter, propName, propVal.value<QColor>());
+			break;
+		case QVariant::String:
+		case QVariant::Int:
+			//xmlStreamWriter->writeTextElement(propName,propVal.toString());
+			xmlStreamWriter->writeStartElement(propVal.typeName());
+			xmlStreamWriter->writeAttribute("name",propName);
+			xmlStreamWriter->writeCharacters(propVal.toString());
+			xmlStreamWriter->writeEndElement();
+			break;
+		default:
+			//If you have reacehd this point, it means that we have encountered
+			//some sort of unexpected data type in one of the VisualElements. 
+			//The developer will need to add support for the new data type.
+			Q_ASSERT(false);
+		}
+	}
+
+	//bool success = serializePropertiesAsXML(xmlStreamWriter);
+
+	xmlStreamWriter->writeEndElement(); //VisualElement
+
+	return true;
+}
+
+
+/*! \brief Converts an XML fragment into a VisualElement
+ *
+ *	This code handles the conversion of XML into real objects. This function
+ *	will be called after the parent deserializer has read a <VisualElement type="blah">
+ *	tag.  The parent deserializer will then instanatiate a VisualElement of the 
+ *	appropriate type and call us.  We will return with the xmlStreamREader's current token
+ *	being the </VisualElement>tag.
+ *
+ *	The function calls deserializePropertiesFromXML in the subclass.  The deserialization
+ *	process is sort of like a "reconstructor".  It basically rebuilds the object from the ground up
+ *	At the end of the call to deserialize, the object should be an exact duplicate
+ *	 of whatever object called serialize to generate the XML.
+ */
+bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	//do some basic error checking to confirm that the caller isn't dumb
+	if(!xmlStreamReader->isStartElement())
+		return false;
+	if(xmlStreamReader->name() != "VisualElement")
+		return false;
+	if(xmlStreamReader->attributes().value("type").toString() != propertyContainer_.getContainerName())
+		return false;
+
+	//deserialize
+	//bool success = deserializePropertiesFromXML(xmlStreamReader);
+	
+	//loop through the XML modifying properties as we go.
+	xmlStreamReader->readNext();
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "VisualElement"))
+	{
+		if(!xmlStreamReader->isStartElement())
+		{
+			//do nothing unless we're looking at a start element
+		}
+		else
+		{
+			QString type = xmlStreamReader->name().toString();
+			QString name = xmlStreamReader->attributes().value("name").toString();
+
+			//define all the variables that are used in our switch statement
+
+			//deserialze the property based on the type of the current property value
+			if(type == "QPoint")
+			{
+				QPoint point;
+				point = deserializeQPoint(xmlStreamReader);
+				propertyContainer_.setPropertyValue(name,point);
+			}
+			else if(type == "QRect")
+			{
+				QRect rect;
+				rect = deserializeQRect(xmlStreamReader);
+				propertyContainer_.setPropertyValue(name,rect);
+			}			
+			else if(type == "QColor")
+			{
+				QColor color;
+				color = deserializeQColor(xmlStreamReader);
+				propertyContainer_.setPropertyValue(name,color);
+			}
+			else if(type == "QString")
+			{
+				QString string;
+				string = xmlStreamReader->readElementText();
+				propertyContainer_.setPropertyValue(name,string);
+			}
+			else if(type == "int")
+			{
+				int intValue;
+				intValue = xmlStreamReader->readElementText().toInt();
+				propertyContainer_.setPropertyValue(name,intValue);
+			}
+			else
+			{
+				//If you have reached this point, it means that we have encountered
+				//some sort of unexpected data type in one of the VisualElements. 
+				//The developer will need to add support for the new data type.
+				Q_ASSERT(false);
+				return false;
+			}
+		}
+		xmlStreamReader->readNext();
+	}
+
+	return true;
+}
+
+
+
 }; //namespace Picto
+

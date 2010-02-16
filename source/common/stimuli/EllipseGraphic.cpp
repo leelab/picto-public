@@ -4,9 +4,11 @@
 
 namespace Picto {
 
+const QString EllipseGraphic::name = "Ellipse Graphic";
+
 EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	propertyContainer_.setContainerName("Box Graphic");
+	propertyContainer_.setContainerName(name);
 
 	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 
@@ -46,6 +48,11 @@ void EllipseGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = false;
 }
 
+VisualElement* EllipseGraphic::NewVisualElement()
+{
+	return new EllipseGraphic;
+}
+
 void EllipseGraphic::slotPropertyValueChanged(QString propertyName,
 											  QVariant) //propertyValue
 {
@@ -53,6 +60,12 @@ void EllipseGraphic::slotPropertyValueChanged(QString propertyName,
 	{
 		draw();
 	}
+}
+
+
+bool EllipseGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
 }
 
 }; //namespace Picto

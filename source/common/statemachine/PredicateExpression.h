@@ -10,15 +10,18 @@
 #ifndef _PREDICATEEXPRESSION_H_
 #define _PREDICATEEXPRESSION_H_
 
+#include <QSharedPointer>
+#include <QXmlStreamWriter>
+
 #include "../common.h"
 #include "Predicate.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PredicateExpression
+class PICTOLIB_API PredicateExpression : public DataStore
 #else
-class PredicateExpression
+class PredicateExpression : public DataStore
 #endif
 {
 public:
@@ -47,6 +50,9 @@ public:
 	double getRHSvalue() { return RHSvalue_; };
 	QString getLHSname() { return LHSname_; }
 	QString getRHSname() { return RHSname_; }
+
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	double LHSvalue_, RHSvalue_;

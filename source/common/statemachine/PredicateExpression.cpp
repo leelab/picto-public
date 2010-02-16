@@ -185,14 +185,31 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 			RHSsrcPixel++;
 		}
 	}
-
-
-
-
 	return expImage;
-
-
-
 }
+
+/*! \breife Converts a predicate expression into XML
+ *
+ *	This takes the current predicate expression and turns it into an
+ *	XML fragment.  Bear in mind that each side of the expression can
+ *	have a name and/or value.
+ *
+ *	SAMPLE (for the expression "trial number < 100")
+ *		<PredicateExpression>
+ *			<LHS name="trial number">12</LHS>
+ *			<Comparison>Greater than</Comparison>
+ *			<RHS name="">100</RHS>
+ *
+ */
+bool PredicateExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+{
+	return false;
+}
+
+bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return false;
+}
+
 
 }; //namespace Picto

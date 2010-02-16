@@ -25,11 +25,12 @@
 #include <QImage>
 
 #include "../common.h"
+#include "../storage/datastore.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Predicate
+	class PICTOLIB_API Predicate
 #else
 class Predicate
 #endif
@@ -44,10 +45,12 @@ public:
 	virtual bool evaluate(double LHS, double RHS) = 0;
 	QImage toQImage() { return icon_; };
 	QString toString() { return predicateString_; };
+	QString name() { return name_; };
 
 protected:
 	QImage icon_;
 	QString predicateString_;
+	QString name_;
 };
 
 

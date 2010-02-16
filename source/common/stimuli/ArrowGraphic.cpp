@@ -4,10 +4,11 @@
 
 namespace Picto {
 
+const QString ArrowGraphic::name = "Arrow Graphic";
 
 ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, QColor color)
 {
-	propertyContainer_.setContainerName("Arrow Graphic");
+	propertyContainer_.setContainerName(name);
 
 	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
 	propertyContainer_.addProperty(Property(QVariant::Point,"Start",start));
@@ -90,12 +91,75 @@ void ArrowGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = false;
 }
 
+VisualElement* ArrowGraphic::NewVisualElement()
+{
+	return new ArrowGraphic;
+}
+
 void ArrowGraphic::slotPropertyValueChanged(QString propertyName, QVariant propertyValue)
 {
 	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}
+}
+
+bool ArrowGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	bool success = true;
+
+	//Read through the XML grabbing the properties
+	//Note that we fail in the event of unexpected input...
+	xmlStreamReader->readNext();
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "VisualElement"))
+	{
+		if(!xmlStreamReader->isStartElement())
+		{
+			//do nothing unless we're looking at a start element
+		}
+		else if(xmlStreamReader->name() == "Position")
+		{
+			QPoint position = deserializeQPoint(xmlStreamReader);
+			propertyContainer_.setPropertyValue("Position", position);
+		}
+		else if(xmlStreamReader->name() == "Start")
+		{
+			QPoint start = deserializeQPoint(xmlStreamReader);
+			propertyContainer_.setPropertyValue("Start", start);
+		}
+		else if(xmlStreamReader->name() == "End")
+		{
+			QPoint end = deserializeQPoint(xmlStreamReader);
+			propertyContainer_.setPropertyValue("End", end);
+		}
+		else if(xmlStreamReader->name() == "Size")
+		{
+			int size = xmlStreamReader->readElementText().toInt();
+			propertyContainer_.setPropertyValue("Size", size);
+		}
+		else if(xmlStreamReader->name() == "Color")
+		{
+			QColor color = deserializeQColor(xmlStreamReader);
+			propertyContainer_.setPropertyValue("Color",color);
+		}
+		else if(xmlStreamReader->name() == "Name")
+		{
+			QString name = xmlStreamReader->readElementText();
+			propertyContainer_.setPropertyValue("Name",name);
+		}
+		else
+		{
+			success = false;
+		}
+		xmlStreamReader->readNext();
+	}
+
+
+
+
+	draw();
+
+	return success;
 }
 
 }

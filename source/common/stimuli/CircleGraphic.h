@@ -14,9 +14,15 @@ class PICTOLIB_CLASS CircleGraphic : public VisualElement
 	Q_OBJECT
 
 public:
-	CircleGraphic(QPoint position, int radius, QColor color);
+	CircleGraphic(QPoint position=QPoint(), int radius=0, QColor color=QColor());
 
 	void draw();
+	static VisualElement* NewVisualElement();
+
+	static const QString name;
+
+private:
+	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);

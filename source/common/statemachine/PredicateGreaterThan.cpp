@@ -9,6 +9,7 @@ PredicateGreaterThan::PredicateGreaterThan()
 : Predicate()
 {
 	predicateString_= ">";
+	name_ = "Greater than";
 
 	//draw the icon
 	const QPoint points[] = { QPoint(25,30),
