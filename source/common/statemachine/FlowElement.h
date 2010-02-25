@@ -31,6 +31,11 @@ public:
 		int order;
 		QString name;
 	} Condition;
+
+	//DataStore functions
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:
 
 	QList<Condition> conditions_;

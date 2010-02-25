@@ -18,9 +18,19 @@ public:
 	State();
 	QString run();
 
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+	void setRevision(int rev) { revision_ = rev; };
+	int getRevision() { return revision_; };
+	void setEngineNeeded(int eng) { engineNeeded_ = eng; };
+	int getEngineNeeded() { return engineNeeded_; };
+
 private:
 	QSharedPointer<Scene> scene_;
-	QList<ControlElement> controlElements_;
+	QList<QSharedPointer<ControlElement> > controlElements_;
+	int revision_;
+	int engineNeeded_;
 };
 
 

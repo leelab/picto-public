@@ -239,7 +239,7 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
  *			<Parameter>Trial Number</Parameter>
  *			<Comparison>Greater than</Comparison>
  *			<Value>100</Value>
- *
+ *		</Expression>
  */
 bool PredicateExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {

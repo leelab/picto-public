@@ -21,6 +21,9 @@ public:
 	QString run();
 	void setResultValue(QString value) { resultValue_ = value; };
 
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:	
 	QString resultValue_;	//e.g. "Success", "Broke Fixation", etc
 };

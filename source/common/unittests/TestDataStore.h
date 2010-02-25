@@ -35,6 +35,7 @@ private slots:
 	void TestPredicateExpression();
 	void TestCompoundExpression();
 	void TestScene();
+	void Test
 private:
 	Picto::MTRand randGen_;
 	Picto::VisualElementFactory visualElementFactory_;

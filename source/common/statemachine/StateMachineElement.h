@@ -55,9 +55,13 @@ public:
 
 
 protected:
+	bool serializeTransitions(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeTransitions(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+
 	QString type_;	//e.g. "FlowElement", "Stage", etc
 	QStringList validConatinedTypes_; //Types of elements that this element can contain
-	QMap<QUuid, QMap<QString, QUuid> > transitions_;	//transition map
+	QMap<QUuid, QMap<QString, QUuid> > transitions_;	//transition map <source, <condition, destination> >
 	QMap<QUuid, QUuid> defaultTransitions_;
 
 	QUuid initialElement_;	//Where do we start?

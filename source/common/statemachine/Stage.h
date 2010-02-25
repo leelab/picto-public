@@ -16,6 +16,10 @@ class Stage : public StateMachineElement
 public:
 	Stage();
 	QString run();
+
+	//DataStore functions
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 
 

@@ -16,6 +16,10 @@ class Trial : public StateMachineElement
 public:
 	Trial();
 	QString run();
+
+	//DataStore functions
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 
 

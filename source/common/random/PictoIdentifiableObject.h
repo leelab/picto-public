@@ -46,7 +46,7 @@ public:
 
 	static QSharedPointer<PictoIdentifiableObject> getObjectByID(QUuid id);
 
-protected:
+private:
 	QUuid id_;
 	bool registered_;
 
