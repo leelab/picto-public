@@ -5,6 +5,7 @@
 
 namespace Picto
 {
+
 PredicateNotEqual::PredicateNotEqual()
 : Predicate()
 {
@@ -12,7 +13,6 @@ PredicateNotEqual::PredicateNotEqual()
 	name_ = "Not equal";
 
 	//draw the icon
-
 	QPainter p(&icon_);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(QColor(0,0,0,255));
@@ -30,9 +30,14 @@ PredicateNotEqual::PredicateNotEqual()
 
 }
 
-bool PredicateNotEqual::evaluate(double LHS, double RHS)
+
+bool PredicateNotEqual::evaluate(Parameter &LHS, Parameter &RHS)
 {
-	return (LHS != RHS);
+	return LHS != RHS;
 }
 
+bool PredicateNotEqual::evaluate(Parameter &LHS, QVariant RHS)
+{
+	return LHS != RHS;
+}
 } //namespacePicto

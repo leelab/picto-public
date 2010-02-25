@@ -13,7 +13,8 @@ void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter
 						QString name, QPoint point)
 {
 	xmlStreamWriter->writeStartElement("QPoint");
-	xmlStreamWriter->writeAttribute("name",name);
+	if(!name.isEmpty())
+		xmlStreamWriter->writeAttribute("name",name);
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(point.x()));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(point.y()));
 	xmlStreamWriter->writeEndElement();
@@ -24,7 +25,8 @@ void DataStore::serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter,
 						QString name, QRect rect)
 {
 	xmlStreamWriter->writeStartElement("QRect");
-	xmlStreamWriter->writeAttribute("name",name);
+	if(!name.isEmpty())
+		xmlStreamWriter->writeAttribute("name",name);
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(rect.x()));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(rect.y()));
 	xmlStreamWriter->writeAttribute("width",QString("%1").arg(rect.width()));
@@ -37,7 +39,8 @@ void DataStore::serializeQColor(QSharedPointer<QXmlStreamWriter> xmlStreamWriter
 					QString name, QColor color)
 {
 	xmlStreamWriter->writeStartElement("QColor");
-	xmlStreamWriter->writeAttribute("name",name);
+	if(!name.isEmpty())
+		xmlStreamWriter->writeAttribute("name",name);
 	xmlStreamWriter->writeAttribute("R",QString("%1").arg(color.red()));
 	xmlStreamWriter->writeAttribute("G",QString("%1").arg(color.green()));
 	xmlStreamWriter->writeAttribute("B",QString("%1").arg(color.blue()));
@@ -74,6 +77,5 @@ QColor DataStore::deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	color.setAlpha(xmlStreamReader->attributes().value("A").toString().toInt());
 	return color;
 }
-
 
 }; //namespace Picto

@@ -5,88 +5,52 @@
 
 namespace Picto {
 
-CompoundExpression::CompoundExpression(PredicateExpression *LHS, PredicateExpression *RHS, 
-			CompoundExpressionOperator::CompoundExpressionOperator op,
-			bool invertLHS, bool invertRHS)
+CompoundExpression::CompoundExpression()
 {
-	LHS_.isPred = true;
-	LHS_.predExp = LHS;
-	RHS_.isPred = true;
-	RHS_.predExp = RHS;
+	LHSisPred_ = true;
+	RHSisPred_ = true;
 
-	operator_ = op;
-	invertLHS_ = invertLHS;
-	invertRHS_ = invertRHS;
+	operator_ = CompoundExpressionOperator::and;
+	invertLHS_ = false;
+	invertRHS_ = false;
+
+	LHSInitialized_ = false;
+	RHSInitialized_ = false;
+	operatorInitialized_ = false;
+
 }
 
-CompoundExpression::CompoundExpression(CompoundExpression *LHS, PredicateExpression *RHS, 
-			CompoundExpressionOperator::CompoundExpressionOperator op,
-			bool invertLHS, bool invertRHS)
+
+void CompoundExpression::setLHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert)
 {
-	LHS_.isPred = false;
-	LHS_.comExp = LHS;
-	RHS_.isPred = true;
-	RHS_.predExp = RHS;
-
-	operator_ = op;
-	invertLHS_ = invertLHS;
-	invertRHS_ = invertRHS;
-}
-
-CompoundExpression::CompoundExpression(PredicateExpression *LHS, CompoundExpression *RHS, 
-			CompoundExpressionOperator::CompoundExpressionOperator op,
-			bool invertLHS, bool invertRHS)
-{
-	LHS_.isPred = true;
-	LHS_.predExp = LHS;
-	RHS_.isPred = false;
-	RHS_.comExp = RHS;
-
-	operator_ = op;
-	invertLHS_ = invertLHS;
-	invertRHS_ = invertRHS;
-}
-
-CompoundExpression::CompoundExpression(CompoundExpression *LHS, CompoundExpression *RHS, 
-			CompoundExpressionOperator::CompoundExpressionOperator op,
-			bool invertLHS, bool invertRHS)
-{
-	LHS_.isPred = false;
-	LHS_.comExp = LHS;
-	RHS_.isPred = false;
-	RHS_.comExp = RHS;
-
-	operator_ = op;
-	invertLHS_ = invertLHS;
-	invertRHS_ = invertRHS;
-}
-
-void CompoundExpression::setLHSCompoundExp(CompoundExpression *exp, bool invert)
-{
-	LHS_.isPred = false;
-	LHS_.comExp = exp;
+	LHSisPred_ = false;
+	LHSComExp_ = exp;
 	invertLHS_ = invert;
+	LHSInitialized_ = true;
 }
 
-void CompoundExpression::setRHSCompoundExp(CompoundExpression *exp, bool invert)
+void CompoundExpression::setRHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert)
 {
-	RHS_.isPred = false;
-	RHS_.comExp = exp;
+	RHSisPred_ = false;
+	RHSComExp_ = exp;
 	invertRHS_ = invert;
+	RHSInitialized_ = true;
 }
 
-void CompoundExpression::setLHSPredicateExp(PredicateExpression *exp, bool invert)
+void CompoundExpression::setLHSPredicateExp(QSharedPointer<PredicateExpression> exp, bool invert)
 {
-	LHS_.isPred = true;
-	LHS_.predExp = exp;
+	LHSisPred_ = true;
+	LHSPredExp_ = exp;
 	invertLHS_ = invert;
+	LHSInitialized_ = true;
 }
 
-void CompoundExpression::setRHSPredicateExp(PredicateExpression *exp, bool invert)
+void CompoundExpression::setRHSPredicateExp(QSharedPointer<PredicateExpression> exp, bool invert)
 {
-	RHS_.isPred = true;
-	RHS_.predExp = exp;
+	RHSisPred_ = true;
+	RHSPredExp_ = exp;
 	invertRHS_ = invert;
+	RHSInitialized_ = true;
 }
 
 bool CompoundExpression::evaluate()
@@ -95,16 +59,16 @@ bool CompoundExpression::evaluate()
 	bool RHSresult;
 
 	//evaluate the left side
-	if(LHS_.isPred)
-		LHSresult = LHS_.predExp->evaluate();
+	if(LHSisPred_)
+		LHSresult = LHSPredExp_->evaluate();
 	else
-		LHSresult = LHS_.comExp->evaluate();
+		LHSresult = LHSComExp_->evaluate();
 
 	//evaluate the right side
-	if(RHS_.isPred)
-		RHSresult = RHS_.predExp->evaluate();
+	if(RHSisPred_)
+		RHSresult = RHSPredExp_->evaluate();
 	else
-		RHSresult = RHS_.comExp->evaluate();
+		RHSresult = RHSComExp_->evaluate();
 
 	//invert the results if necessary
 	if(invertLHS_)
@@ -117,6 +81,8 @@ bool CompoundExpression::evaluate()
 		return LHSresult & RHSresult;
 	else if(operator_ == CompoundExpressionOperator::or)
 		return LHSresult | RHSresult;
+	else
+		return false;
 }
 
 /*!	\brief Converts the compound expression into a string
@@ -137,18 +103,18 @@ QString CompoundExpression::toString(bool useLHSNames, bool useRHSNames)
 	QString leftStr = "";
 	if(invertLHS_)
 		leftStr = "!";
-	if(LHS_.isPred)
-		leftStr += "( " + LHS_.predExp->toString(useLHSNames,useRHSNames) + " )";
+	if(LHSisPred_)
+		leftStr += "( " + LHSPredExp_->toString(useLHSNames,useRHSNames) + " )";
 	else
-		leftStr += "( " + LHS_.comExp->toString(useLHSNames,useRHSNames) + " )";
+		leftStr += "( " + LHSComExp_->toString(useLHSNames,useRHSNames) + " )";
 
 	QString rightStr = "";
 	if(invertRHS_)
 		rightStr = "!";
-	if(RHS_.isPred)
-		rightStr += "( " + RHS_.predExp->toString(useLHSNames,useRHSNames) + " )";
+	if(RHSisPred_)
+		rightStr += "( " + RHSPredExp_->toString(useLHSNames,useRHSNames) + " )";
 	else
-		rightStr += "( " + RHS_.comExp->toString(useLHSNames,useRHSNames) + " )";
+		rightStr += "( " + RHSComExp_->toString(useLHSNames,useRHSNames) + " )";
 	
 	QString operatorStr;
 
@@ -226,15 +192,15 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
 	//generate the LHS and RHS images
 	QImage LHSImg, RHSImg;
 
-	if(LHS_.isPred)
-		LHSImg = LHS_.predExp->toQImage(useLHSNames,useRHSNames);
+	if(LHSisPred_)
+		LHSImg = LHSPredExp_->toQImage(useLHSNames,useRHSNames);
 	else
-		LHSImg = LHS_.comExp->toQImage(useLHSNames,useRHSNames);
+		LHSImg = LHSComExp_->toQImage(useLHSNames,useRHSNames);
 
-	if(RHS_.isPred)
-		RHSImg = RHS_.predExp->toQImage(useLHSNames,useRHSNames);
+	if(RHSisPred_)
+		RHSImg = RHSPredExp_->toQImage(useLHSNames,useRHSNames);
 	else
-		RHSImg = RHS_.comExp->toQImage(useLHSNames,useRHSNames);
+		RHSImg = RHSComExp_->toQImage(useLHSNames,useRHSNames);
 
 	//figure out the width of the final iamge, and generate it
 	//(There are gauranteed to be 4 parenthesis and one operator)
@@ -350,13 +316,173 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
 	}
 
 	return compoundImg;
-
-
-
 }
 
+/*!	\brief	Converts a CompoundExpression into XML
+ *
+ *	The XML output of a compound expression will look like this:
+ *	
+ *	<CompoundExpression boolean="and" invertLeft="true" invertRight = "false>
+ *		<Expression>
+ *			...
+ *		</Expression>
+ *		<CompoundExpression boolean="or" invertLeft="false" invertRight = "false>
+ *			<Expression>
+ *				...
+ *			</Expression>
+ *			<Expression>
+ *				...
+ *			</Expression>
+ *		</CompoundExpression>
+ *	</CompoundExpression>
+ */
+bool CompoundExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+{
+	xmlStreamWriter->writeStartElement("CompoundExpression");
+
+	if(operator_ == CompoundExpressionOperator::and)
+		xmlStreamWriter->writeAttribute("boolean","and");
+	else if(operator_ == CompoundExpressionOperator::or)
+		xmlStreamWriter->writeAttribute("boolean","or");
+
+	if(invertLHS_)
+		xmlStreamWriter->writeAttribute("invertLeft","true");
+	else
+		xmlStreamWriter->writeAttribute("invertLeft","false");
+
+	if(invertRHS_)
+		xmlStreamWriter->writeAttribute("invertRight","true");
+	else
+		xmlStreamWriter->writeAttribute("invertRight","false");
+
+	if(LHSisPred_)
+		LHSPredExp_->serializeAsXml(xmlStreamWriter);
+	else
+		LHSComExp_->serializeAsXml(xmlStreamWriter);
+
+	if(RHSisPred_)
+		RHSPredExp_->serializeAsXml(xmlStreamWriter);
+	else
+		RHSComExp_->serializeAsXml(xmlStreamWriter);
 
 
+	xmlStreamWriter->writeEndElement(); //CompoundExpression
+	return true;
+}
 
+/*!	\brief	Converts an XML fragment into a CompoundExpression
+ *
+ *	The XML fragment of a compound expression will look like this:
+ *	
+ *	<CompoundExpression boolean="and" invertLeft="true" invertRight = "false>
+ *		<Expression>
+ *			...
+ *		</Expression>
+ *		<CompoundExpression boolean="or" invertLeft="false" invertRight = "false>
+ *			<Expression>
+ *				...
+ *			</Expression>
+ *			<Expression>
+ *				...
+ *			</Expression>
+ *		</CompoundExpression>
+ *	</CompoundExpression>
+ */
+bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	//Do some basic error checking
+	if(!xmlStreamReader->isStartElement())
+		return false;
+	if(xmlStreamReader->name() != "CompoundExpression")
+		return false;
+
+	//read in the attributes
+	QString operatorStr = xmlStreamReader->attributes().value("boolean").toString();
+	if(operatorStr == "and")
+		operator_ = CompoundExpressionOperator::and;
+	else if(operatorStr == "or")
+		operator_ = CompoundExpressionOperator::or;
+	else
+		return false;
+
+	QString invertLeftStr = xmlStreamReader->attributes().value("invertLeft").toString();
+	if(invertLeftStr == "true")
+		invertLHS_ = true;
+	else if(invertLeftStr == "false")
+		invertLHS_ = false;
+	else
+		return false;
+
+	QString invertRightStr = xmlStreamReader->attributes().value("invertRight").toString();
+	if(invertRightStr == "true")
+		invertRHS_ = true;
+	else if(invertRightStr == "false")
+		invertRHS_ = false;
+	else
+		return false;
+
+	LHSInitialized_ = false;
+	RHSInitialized_ = false;
+	
+	xmlStreamReader->readNext();
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "CompoundExpression") && !xmlStreamReader->atEnd())
+	{
+		if(!xmlStreamReader->isStartElement())
+		{
+			//do nothing unless we're looking at a start element
+			xmlStreamReader->readNext();
+			continue;
+		}
+
+		//use the name to set up the sides and predicate.
+		//Note that we assume the order is LHS, RHS
+		QString name = xmlStreamReader->name().toString();
+
+		if(name == "Expression")
+		{
+			QSharedPointer<Picto::PredicateExpression> newExpr(new Picto::PredicateExpression);
+			if(!newExpr->deserializeFromXml(xmlStreamReader))
+				return false;
+			if(!LHSInitialized_)
+			{
+				LHSisPred_ = true;
+				LHSPredExp_ = newExpr;
+				LHSInitialized_ = true;
+			}
+			else if(LHSInitialized_ && !RHSInitialized_)
+			{
+				RHSisPred_ = true;
+				RHSPredExp_ = newExpr;
+				RHSInitialized_ = true;
+			}
+			else 
+				return false;
+		}
+		else if(name == "CompoundExpression")
+		{
+			QSharedPointer<Picto::CompoundExpression> newExpr(new Picto::CompoundExpression);
+			if(!newExpr->deserializeFromXml(xmlStreamReader))
+				return false;
+			if(!LHSInitialized_)
+			{
+				LHSisPred_ = false;
+				LHSComExp_ = newExpr;
+				LHSInitialized_ = true;
+			}
+			else if(LHSInitialized_ && !RHSInitialized_)
+			{
+				RHSisPred_ = false;
+				RHSComExp_ = newExpr;
+				RHSInitialized_ = true;
+			}
+			else 
+				return false;
+		}
+		xmlStreamReader->readNext();
+
+	}
+
+	return LHSInitialized_ & RHSInitialized_;
+}
 
 }; //namespace Picto

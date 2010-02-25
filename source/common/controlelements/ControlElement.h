@@ -12,7 +12,11 @@
 
 namespace Picto {
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API ControlElement : public QObject
+#else
 class ControlElement : public QObject
+#endif
 {
 	Q_OBJECT
 

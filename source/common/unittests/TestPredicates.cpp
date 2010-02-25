@@ -10,6 +10,11 @@
 #include "../statemachine/PredicateEqual.h"
 #include "../statemachine/PredicateNotEqual.h"
 
+#include "../parameter/RangeParameter.h"
+#include "../parameter/BooleanParameter.h"
+#include "../parameter/ChoiceParameter.h"
+
+#include "../parameter/ParameterContainer.h"
 
 
 TestPredicates::TestPredicates()
@@ -21,17 +26,30 @@ TestPredicates::TestPredicates()
 /*!	\brief Tests that single predicates are evaluating correctly
  *
  *	This test runs through all of the existing predicates and tests
- *	their "evaluate" function.  Since there are an infinite number of
- *	test cases, we randomly select pairs of values and test them, making
- *	sure to exercise all possible relationships.
+ *	their "evaluate" function.  Since the comparison operators are fully
+ *	tested in "TestParameters", we're going to use only RageParameters
+ *	for this test.  However, we do need to test evaluation of the predicate
+ *	when comparing two parameters, and when comparing a paramter to a constant
  */
 void TestPredicates::TestPredicateEvaluation()
 {
 	Picto::Predicate *pred;
-	double A, B;
-	int numTests = 10;
+	Picto::RangeParameter A,B;
+	QVariant AConst, BConst;
+
+	int numTests = 100;
 	double maxValue = 5000;
 	double minValue = -5000;
+
+	A.setIncrement(1);
+	A.setDefault(0);
+	A.setMin(minValue);
+	A.setMax(maxValue);
+	B.setIncrement(1);
+	B.setDefault(0);
+	B.setMin(minValue);
+	B.setMax(maxValue);
+
 
 	////////////////////////////
 	// PredicateGreaterThan
@@ -41,14 +59,22 @@ void TestPredicates::TestPredicateEvaluation()
 	for(int i=0; i<numTests; i++)
 	{
 		//generate random values
-		A = randGen.randDblExc(maxValue-minValue) + minValue;
-		B = randGen.randDblExc(maxValue-minValue) + minValue;
+		A.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		B.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		AConst = A.getValue().toInt();
+		BConst = B.getValue().toInt();
 
-		//test all four possible combinations
+		//test all four possible combinations using both parameters
 		QCOMPARE(pred->evaluate(A,B), (A>B));
 		QCOMPARE(pred->evaluate(B,A), (B>A));
 		QCOMPARE(pred->evaluate(A,A), (A>A));
 		QCOMPARE(pred->evaluate(B,B), (B>B));
+
+		//test with a parameter and a constant
+		QCOMPARE(pred->evaluate(A,BConst), (A>BConst));
+		QCOMPARE(pred->evaluate(B,AConst), (B>AConst));
+		QCOMPARE(pred->evaluate(A,AConst), (A>AConst));
+		QCOMPARE(pred->evaluate(B,BConst), (B>BConst));
 	}
 
 	delete pred;
@@ -61,14 +87,22 @@ void TestPredicates::TestPredicateEvaluation()
 	for(int i=0; i<numTests; i++)
 	{
 		//generate random values
-		A = randGen.randDblExc(maxValue-minValue) + minValue;
-		B = randGen.randDblExc(maxValue-minValue) + minValue;
+		A.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		B.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		AConst = A.getValue().toInt();
+		BConst = B.getValue().toInt();
 
 		//test all four possible combinations
 		QCOMPARE(pred->evaluate(A,B), (A>=B));
 		QCOMPARE(pred->evaluate(B,A), (B>=A));
 		QCOMPARE(pred->evaluate(A,A), (A>=A));
 		QCOMPARE(pred->evaluate(B,B), (B>=B));
+
+		//test with a parameter and a constant
+		QCOMPARE(pred->evaluate(A,BConst), (A>=BConst));
+		QCOMPARE(pred->evaluate(B,AConst), (B>=AConst));
+		QCOMPARE(pred->evaluate(A,AConst), (A>=AConst));
+		QCOMPARE(pred->evaluate(B,BConst), (B>=BConst));
 	}
 
 	delete pred;
@@ -81,14 +115,22 @@ void TestPredicates::TestPredicateEvaluation()
 	for(int i=0; i<numTests; i++)
 	{
 		//generate random values
-		A = randGen.randDblExc(maxValue-minValue) + minValue;
-		B = randGen.randDblExc(maxValue-minValue) + minValue;
+		A.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		B.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		AConst = A.getValue().toInt();
+		BConst = B.getValue().toInt();
 
 		//test all four possible combinations
 		QCOMPARE(pred->evaluate(A,B), (A<B));
 		QCOMPARE(pred->evaluate(B,A), (B<A));
 		QCOMPARE(pred->evaluate(A,A), (A<A));
 		QCOMPARE(pred->evaluate(B,B), (B<B));
+
+		//test with a parameter and a constant
+		QCOMPARE(pred->evaluate(A,BConst), (A<BConst));
+		QCOMPARE(pred->evaluate(B,AConst), (B<AConst));
+		QCOMPARE(pred->evaluate(A,AConst), (A<AConst));
+		QCOMPARE(pred->evaluate(B,BConst), (B<BConst));
 	}
 
 	delete pred;
@@ -101,14 +143,22 @@ void TestPredicates::TestPredicateEvaluation()
 	for(int i=0; i<numTests; i++)
 	{
 		//generate random values
-		A = randGen.randDblExc(maxValue-minValue) + minValue;
-		B = randGen.randDblExc(maxValue-minValue) + minValue;
+		A.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		B.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		AConst = A.getValue().toInt();
+		BConst = B.getValue().toInt();
 
 		//test all four possible combinations
 		QCOMPARE(pred->evaluate(A,B), (A<=B));
 		QCOMPARE(pred->evaluate(B,A), (B<=A));
 		QCOMPARE(pred->evaluate(A,A), (A<=A));
 		QCOMPARE(pred->evaluate(B,B), (B<=B));
+
+		//test with a parameter and a constant
+		QCOMPARE(pred->evaluate(A,BConst), (A<=BConst));
+		QCOMPARE(pred->evaluate(B,AConst), (B<=AConst));
+		QCOMPARE(pred->evaluate(A,AConst), (A<=AConst));
+		QCOMPARE(pred->evaluate(B,BConst), (B<=BConst));
 	}
 
 	delete pred;
@@ -121,14 +171,22 @@ void TestPredicates::TestPredicateEvaluation()
 	for(int i=0; i<numTests; i++)
 	{
 		//generate random values
-		A = randGen.randDblExc(maxValue-minValue) + minValue;
-		B = randGen.randDblExc(maxValue-minValue) + minValue;
+		A.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		B.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		AConst = A.getValue().toInt();
+		BConst = B.getValue().toInt();
 
 		//test all four possible combinations
 		QCOMPARE(pred->evaluate(A,B), (A==B));
 		QCOMPARE(pred->evaluate(B,A), (B==A));
 		QCOMPARE(pred->evaluate(A,A), (A==A));
 		QCOMPARE(pred->evaluate(B,B), (B==B));
+
+		//test with a parameter and a constant
+		QCOMPARE(pred->evaluate(A,BConst), (A==BConst));
+		QCOMPARE(pred->evaluate(B,AConst), (B==AConst));
+		QCOMPARE(pred->evaluate(A,AConst), (A==AConst));
+		QCOMPARE(pred->evaluate(B,BConst), (B==BConst));
 	}
 
 	delete pred;
@@ -141,14 +199,22 @@ void TestPredicates::TestPredicateEvaluation()
 	for(int i=0; i<numTests; i++)
 	{
 		//generate random values
-		A = randGen.randDblExc(maxValue-minValue) + minValue;
-		B = randGen.randDblExc(maxValue-minValue) + minValue;
+		A.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		B.setValue(randGen.randInt(maxValue-minValue) + minValue);
+		AConst = A.getValue().toInt();
+		BConst = B.getValue().toInt();
 
 		//test all four possible combinations
 		QCOMPARE(pred->evaluate(A,B), (A!=B));
 		QCOMPARE(pred->evaluate(B,A), (B!=A));
 		QCOMPARE(pred->evaluate(A,A), (A!=A));
 		QCOMPARE(pred->evaluate(B,B), (B!=B));
+
+		//test with a parameter and a constant
+		QCOMPARE(pred->evaluate(A,BConst), (A!=BConst));
+		QCOMPARE(pred->evaluate(B,AConst), (B!=AConst));
+		QCOMPARE(pred->evaluate(A,AConst), (A!=AConst));
+		QCOMPARE(pred->evaluate(B,BConst), (B!=BConst));
 	}
 
 	delete pred;
@@ -234,149 +300,138 @@ void TestPredicates::TestPredicateOutputs()
 	QWARN("Don't forget to check the image files to confirm output");
 }
 
-/*!	Tests the constructor, destructor,getters, setters, and isValid of the PredicateExpression Object
- *
- *	This is a general test of the PredicateExpression object.  It tests the following
- *	functionality:
- *	- All three construstors
- *	- All getter and setter functions
- *	- isValid function
- *	The testing is thorough, but by no means comprehensive.
- */
-void TestPredicates::TestPredicateExpressionGeneral()
-{
-	Picto::PredicateExpression *predExp;
-	Picto::Predicate *pred;
-	Picto::Predicate *testPred;
-
-	//Subtest 1:
-	//------------------------------------------
-	//	Construct an empty expression
-	//	Confirm expression is invalid
-	//	Set, then get the predicate
-	//	Confirm expression is still invalid
-	//	Set, then get the LHS (name & value)
-	//	Confirm expression is still invalid
-	//	Set, then get the RHS (name & value)
-	//	Confirm expression is valid
-	predExp = new Picto::PredicateExpression();
-	pred = new Picto::PredicateGreaterThan();
-	
-	QCOMPARE(predExp->isValid(), false);
-
-	predExp->setPredicate(pred);
-	testPred = predExp->getPredicate();
-	QCOMPARE(testPred->toString(),QString(">"));
-
-	QCOMPARE(predExp->isValid(), false);
-
-	predExp->setLHS(31,"left side");
-	QCOMPARE(predExp->getLHSvalue(),31.0);
-	QCOMPARE(predExp->getLHSname(),QString("left side"));
-
-	QCOMPARE(predExp->isValid(), false);
-
-	predExp->setRHS(32,"right side");
-	QCOMPARE(predExp->getRHSvalue(),32.0);
-	QCOMPARE(predExp->getRHSname(),QString("right side"));
-
-	QCOMPARE(predExp->isValid(), true);
-
-
-	delete predExp;
-	delete pred;
-
-
-	//Subtest 2:
-	//------------------------------------------
-	//	Construct an expression with a predicate
-	//	Get the predicate and confirm it is correct
-	//	Confirm expression is invalid
-	//	Set LHS and RHS
-	//	Confirm expression is valid
-	pred = new Picto::PredicateGreaterThan();
-	predExp = new Picto::PredicateExpression(pred);
-
-	testPred = predExp->getPredicate();
-	QCOMPARE(testPred->toString(), QString(">"));
-
-	QCOMPARE(predExp->isValid(),false);
-
-	predExp->setLHS(31,"left side");
-	predExp->setRHS(32,"right side");
-
-	QCOMPARE(predExp->isValid(),true);
-
-	delete pred;
-	delete predExp;
-
-	//Subtest 3:
-	//------------------------------------------
-	//	Construct an expression with a predicate, LHS and RHS (names and values)
-	//	Get the predicate and confirm it is correct
-	//	Get the LHS value and name and confim they are correct
-	//	Get the RHS value and name and confim they are correct
-	//	Confirm expression is valid
-	pred = new Picto::PredicateGreaterThan();
-	predExp = new Picto::PredicateExpression(pred,19,20,"left side", "right side");
-
-	testPred = predExp->getPredicate();
-	QCOMPARE(testPred->toString(), QString(">"));
-
-	QCOMPARE(predExp->getLHSvalue(),19.0);
-	QCOMPARE(predExp->getLHSname(),QString("left side"));
-
-	QCOMPARE(predExp->getRHSvalue(),20.0);
-	QCOMPARE(predExp->getRHSname(),QString("right side"));
-
-	QCOMPARE(predExp->isValid(), true);
-	delete pred;
-	delete predExp;
-}
-
 /*!	\brief Tests the evaluation of predicate expressions 
  *
  *	Throughly testing the evaluation of predicate expressions is actually
  *	really simple.  Since the predicate evaluation is already tested, I 
- *	can just test pick one of the predicates and use it.
+ *	can just test pick one of the predicates and use it.  Just for fun,
+ *	I'm going to test with a BooleanParameter and equals, as well as the more
+ *	thorough test with a RangeParameter
  */
 void TestPredicates::TestPredicateExpressionEvaluation()
 {
 	Picto::PredicateExpression *predExp;
-	Picto::Predicate *pred;
 
-	pred = new Picto::PredicateGreaterThan();
-	predExp = new Picto::PredicateExpression(pred);
+	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
+	Picto::PredicateExpression::setParameterContainer(paramContainer);
 
-	double A, B;
-	int numTests = 10;
+	///////////////////////////////
+	//  Test 1 - RangeParameter
+	//
+	predExp = new Picto::PredicateExpression("Greater than");
+
+	QSharedPointer<Picto::RangeParameter> A(new Picto::RangeParameter);
+	QSharedPointer<Picto::RangeParameter> B(new Picto::RangeParameter);
+	QVariant AConst, BConst;
+
+	int numTests = 100;
 	double maxValue = 5000;
 	double minValue = -5000;
+
+	A->setIncrement(1);
+	A->setDefault(0);
+	A->setMin(minValue);
+	A->setMax(maxValue);
+	A->setName("RangeParameterA");
+	B->setIncrement(1);
+	B->setDefault(0);
+	B->setMin(minValue);
+	B->setMax(maxValue);
+	B->setName("RangeParameterB");
+	paramContainer->addParameter(A);
+	paramContainer->addParameter(B);
 
 	for(int i=0; i<numTests; i++)
 	{
 		//generate random values
-		A = randGen.randDblExc(maxValue-minValue) + minValue;
-		B = randGen.randDblExc(maxValue-minValue) + minValue;
+		int Avalue = randGen.randInt(maxValue-minValue) + minValue;
+		int Bvalue = randGen.randInt(maxValue-minValue) + minValue;
+		A->setValue(Avalue);
+		B->setValue(Bvalue);
+		AConst = A->getValue().toInt();
+		BConst = B->getValue().toInt();
 
-		//test all four combinations (this also tests the set function)
-		predExp->setLHS(A);
-		predExp->setRHS(B);
-		QCOMPARE(predExp->evaluate(),(A>B));
+		//test all four combinations using Parameters on both sides
+		predExp->setLHS("RangeParameterA");
+		predExp->setRHSParam("RangeParameterB");
+		QCOMPARE(predExp->evaluate(),(Avalue>Bvalue));
 
-		predExp->setLHS(B);
-		predExp->setRHS(A);
-		QCOMPARE(predExp->evaluate(),(B>A));
+		predExp->setLHS("RangeParameterB");
+		predExp->setRHSParam("RangeParameterA");
+		QCOMPARE(predExp->evaluate(),(Bvalue>Avalue));
 
-		predExp->setLHS(A);
-		predExp->setRHS(A);
-		QCOMPARE(predExp->evaluate(),(A>A));
+		predExp->setLHS("RangeParameterA");
+		predExp->setRHSParam("RangeParameterA");
+		QCOMPARE(predExp->evaluate(),(Avalue>Avalue));
 
-		predExp->setLHS(B);
-		predExp->setRHS(B);
-		QCOMPARE(predExp->evaluate(),(B>B));
+		predExp->setLHS("RangeParameterB");
+		predExp->setRHSParam("RangeParameterB");
+		QCOMPARE(predExp->evaluate(),(Bvalue>Bvalue));
+
+		//test all four combinations using constants on right sides
+		predExp->setLHS("RangeParameterA");
+		predExp->setRHSValue(BConst);
+		QCOMPARE(predExp->evaluate(),(Avalue>Bvalue));
+
+		predExp->setLHS("RangeParameterB");
+		predExp->setRHSValue(AConst);
+		QCOMPARE(predExp->evaluate(),(Bvalue>Avalue));
+
+		predExp->setLHS("RangeParameterA");
+		predExp->setRHSValue(AConst);
+		QCOMPARE(predExp->evaluate(),(Avalue>Avalue));
+
+		predExp->setLHS("RangeParameterB");
+		predExp->setRHSValue(BConst);
+		QCOMPARE(predExp->evaluate(),(Bvalue>Bvalue));
 	}
 
+	delete predExp;
+
+	///////////////////////////////
+	//  Test 2 - BooleanParameter
+	//
+	predExp = new Picto::PredicateExpression("Equal");
+
+	QSharedPointer<Picto::BooleanParameter> C(new Picto::BooleanParameter);
+	QSharedPointer<Picto::BooleanParameter> D(new Picto::BooleanParameter);
+
+
+	C->setValue(true);
+	D->setValue(false);
+	C->setName("BooleanParameterC");
+	D->setName("BooleanParameterD");
+
+	paramContainer->addParameter(C);
+	paramContainer->addParameter(D);
+
+	//test all the combinations of parameters
+	predExp->setLHS("BooleanParameterC");
+	predExp->setRHSParam("BooleanParameterD");
+	QCOMPARE(predExp->evaluate(), false);
+
+	predExp->setLHS("BooleanParameterD");
+	predExp->setRHSParam("BooleanParameterC");
+	QCOMPARE(predExp->evaluate(), false);
+
+	predExp->setLHS("BooleanParameterC");
+	predExp->setRHSParam("BooleanParameterC");
+	QCOMPARE(predExp->evaluate(), true);
+
+	predExp->setLHS("BooleanParameterD");
+	predExp->setRHSParam("BooleanParameterD");
+	QCOMPARE(predExp->evaluate(), true);
+
+	//test all the combinations with constants
+	predExp->setLHS("BooleanParameterD");
+	predExp->setRHSValue(QVariant(true));
+	QCOMPARE(predExp->evaluate(), false);
+
+	predExp->setLHS("BooleanParameterD");
+	predExp->setRHSValue(QVariant(false));
+	QCOMPARE(predExp->evaluate(), true);
+
+	delete predExp;
 }
 
 /*!	\brief This tests the output functionality (both text based and graphical)
@@ -388,34 +443,55 @@ void TestPredicates::TestPredicateExpressionEvaluation()
  */
 void TestPredicates::TestPredicateExpressionOutputs()
 {
+	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
+	Picto::PredicateExpression::setParameterContainer(paramContainer);
+
 	Picto::PredicateExpression *predExp;
 	Picto::Predicate *pred;
 
+	QSharedPointer<Picto::ChoiceParameter> param1(new Picto::ChoiceParameter);
+	QSharedPointer<Picto::ChoiceParameter> param2(new Picto::ChoiceParameter);
+	param1->setName("Parameter 1");
+	param1->addChoice("One", 1);
+	param1->addChoice("Two", 2);
+	param1->setValue("One");
+	param2->setName("Parameter 2");
+	param2->addChoice("One", 1);
+	param2->addChoice("Two", 2);
+	param2->setValue("Two");
+
+	paramContainer->addParameter(param1);
+	paramContainer->addParameter(param2);
+
+
+
 	////////////////////////////////
-	//Test the text output
+	//Test the text output with parameters on both sides
 	//
+
 	pred = new Picto::PredicateGreaterThan();
-	predExp = new Picto::PredicateExpression(pred,25,-3.1415,"foo", "bar");
+	predExp = new Picto::PredicateExpression("Greater than","Parameter 1","Parameter 2");
 
-	QCOMPARE(predExp->toString(false,false),QString("25 > -3.1415"));
-	QCOMPARE(predExp->toString(true,false),QString("foo > -3.1415"));
-	QCOMPARE(predExp->toString(false,true),QString("25 > bar"));
-	QCOMPARE(predExp->toString(true,true),QString("foo > bar"));
-
-	delete predExp;
-
-	//what happens if there isn't a name for the side?
-	predExp = new Picto::PredicateExpression(pred,25,-3.1415);
-	QCOMPARE(predExp->toString(true,true),QString("25 > -3.1415"));
-
-	delete predExp;
+	QCOMPARE(predExp->toString(false,false),QString("1 > 2"));
+	QCOMPARE(predExp->toString(true,false),QString("Parameter 1 > 2"));
+	QCOMPARE(predExp->toString(false,true),QString("1 > Parameter 2"));
+	QCOMPARE(predExp->toString(true,true),QString("Parameter 1 > Parameter 2"));
+	
+	////////////////////////////////
+	//Test the text output with a constant on one sides
+	//
+	predExp->setRHSValue(3);
+	QCOMPARE(predExp->toString(false,false),QString("1 > 3"));
+	QCOMPARE(predExp->toString(true,false),QString("Parameter 1 > 3"));
+	QCOMPARE(predExp->toString(false,true),QString("1 > 3"));
+	QCOMPARE(predExp->toString(true,true),QString("Parameter 1 > 3"));
 
 
 	////////////////////////////////
 	//Test the image output
 	//
-	predExp = new Picto::PredicateExpression(pred,25,-3.1415,"foo", "bar");
 	QImage testImage;
+	predExp->setRHSParam("Parameter 2");
 
 	testImage = predExp->toQImage(false, false);
 	testImage.save("PredicateExpression1.bmp","BMP");
@@ -429,15 +505,16 @@ void TestPredicates::TestPredicateExpressionOutputs()
 	testImage = predExp->toQImage(true, true);
 	testImage.save("PredicateExpression4.bmp","BMP");
 
-	delete predExp;
-
-	//what happens if there isn't a name for the side?
-	predExp = new Picto::PredicateExpression(pred,25,-3.1415);
+	////////////////////////////////
+	//Test the text output with a constant on one sides
+	//
+	predExp->setRHSValue(3);
 	testImage = predExp->toQImage(true, true);
 	testImage.save("PredicateExpression5.bmp","BMP");
 
 	delete predExp;
-	
+	delete pred;
+
 	QWARN("Don't forget to check the image files to confirm output");
 
 }
@@ -460,14 +537,43 @@ void TestPredicates::TestPredicateExpressionOutputs()
  */
 void TestPredicates::TestCompoundExpressionEvaluation()
 {
-	Picto::CompoundExpression *compoundExpr, *compoundExprA, *compoundExprB;
-	Picto::PredicateExpression *predExprA, *predExprB, *predExprC, *predExprD;
-	Picto::Predicate *pred;
+	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
+	Picto::PredicateExpression::setParameterContainer(paramContainer);
 
-	double A_L, A_R, B_L, B_R, C_L, C_R, D_L, D_R;
+	QSharedPointer<Picto::CompoundExpression> compoundExpr;
+	QSharedPointer<Picto::CompoundExpression> compoundExprA;
+	QSharedPointer<Picto::CompoundExpression> compoundExprB;
+	QSharedPointer<Picto::PredicateExpression> predExprA;
+	QSharedPointer<Picto::PredicateExpression> predExprB;
+	QSharedPointer<Picto::PredicateExpression> predExprC;
+	QSharedPointer<Picto::PredicateExpression> predExprD;
+
 	int numTests = 10;
 	double maxValue = 5000;
 	double minValue = -5000;
+
+	QStringList rangeParameterNames;
+	rangeParameterNames.push_back("Range Parameter A Left");
+	rangeParameterNames.push_back("Range Parameter A Right");
+	rangeParameterNames.push_back("Range Parameter B Left");
+	rangeParameterNames.push_back("Range Parameter B Right");
+	rangeParameterNames.push_back("Range Parameter C Left");
+	rangeParameterNames.push_back("Range Parameter C Right");
+	rangeParameterNames.push_back("Range Parameter D Left");
+	rangeParameterNames.push_back("Range Parameter D Right");
+
+	foreach(QString name, rangeParameterNames)
+	{
+		QSharedPointer<Picto::RangeParameter> range(new Picto::RangeParameter);
+		range->setIncrement(1);
+		range->setDefault(0);
+		range->setMin(minValue);
+		range->setMax(maxValue);
+		range->setName(name);
+
+		paramContainer->addParameter(range);
+	}
+
 
 	/////////////////////
 	//  Case 1        
@@ -477,12 +583,13 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	//	tested (and, or, invert either or both sides of the expression).  Random 
 	//	values are used to really stretch the object.
 
-	pred = new Picto::PredicateGreaterThan();
-	predExprA = new Picto::PredicateExpression(pred,1,1);
-	predExprB = new Picto::PredicateExpression(pred,1,1);
-	compoundExpr = new Picto::CompoundExpression(predExprA, predExprB, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter A Left","Range Parameter A Right"));
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter B Left","Range Parameter B Right"));
+	compoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
+	compoundExpr->setLHSPredicateExp(predExprA, false);
+	compoundExpr->setRHSPredicateExp(predExprB, false);
+	compoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+
 
 
 	//Test list
@@ -527,40 +634,35 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 
 		for(int i=0; i<numTests; i++)
 		{
-			A_L = randGen.randDblExc(maxValue-minValue) + minValue;
-			A_R = randGen.randDblExc(maxValue-minValue) + minValue;
-			B_L = randGen.randDblExc(maxValue-minValue) + minValue;
-			B_R = randGen.randDblExc(maxValue-minValue) + minValue;
-
-			predExprA->setLHS(A_L);
-			predExprA->setRHS(A_R);
-			predExprB->setLHS(B_L);
-			predExprB->setRHS(B_R);
+			//generate random values
+			int ALeftVal = randGen.randInt(maxValue-minValue) + minValue;
+			int ARightVal = randGen.randInt(maxValue-minValue) + minValue;
+			int BLeftVal = randGen.randInt(maxValue-minValue) + minValue;
+			int BRightVal = randGen.randInt(maxValue-minValue) + minValue;
+			paramContainer->getParameter("Range Parameter A Left")->setValue(ALeftVal);
+			paramContainer->getParameter("Range Parameter A Right")->setValue(ARightVal);
+			paramContainer->getParameter("Range Parameter B Left")->setValue(BLeftVal);
+			paramContainer->getParameter("Range Parameter B Right")->setValue(BRightVal);
 
 			if(test==1)
-				QCOMPARE(compoundExpr->evaluate(), (A_L>A_R) && (B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), (ALeftVal>ARightVal) && (BLeftVal > BRightVal));
 			if(test==2)
-				QCOMPARE(compoundExpr->evaluate(), !(A_L>A_R) && (B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), !(ALeftVal>ARightVal) && (BLeftVal > BRightVal));
 			if(test==3)
-				QCOMPARE(compoundExpr->evaluate(), (A_L>A_R) && !(B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), (ALeftVal>ARightVal) && !(BLeftVal > BRightVal));
 			if(test==4)
-				QCOMPARE(compoundExpr->evaluate(), !(A_L>A_R) && !(B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), !(ALeftVal>ARightVal) && !(BLeftVal > BRightVal));
 			if(test==5)
-				QCOMPARE(compoundExpr->evaluate(), (A_L>A_R) || (B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), (ALeftVal>ARightVal) || (BLeftVal > BRightVal));
 			if(test==6)
-				QCOMPARE(compoundExpr->evaluate(), !(A_L>A_R) || (B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), !(ALeftVal>ARightVal) || (BLeftVal > BRightVal));
 			if(test==7)
-				QCOMPARE(compoundExpr->evaluate(), (A_L>A_R) || !(B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), (ALeftVal>ARightVal) || !(BLeftVal > BRightVal));
 			if(test==8)
-				QCOMPARE(compoundExpr->evaluate(), !(A_L>A_R) || !(B_L > B_R));
+				QCOMPARE(compoundExpr->evaluate(), !(ALeftVal>ARightVal) || !(BLeftVal > BRightVal));
 		}
 	}
 
-	//clean up
-	delete pred;
-	delete predExprA;
-	delete predExprB;
-	delete compoundExpr;
 
 	/////////////////////
 	//  Case 2        
@@ -574,43 +676,40 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	//	inversion and combination of the results occur after evaluation, so those
 	//	code paths were already tested
 
-	pred = new Picto::PredicateGreaterThan();
-	predExprA = new Picto::PredicateExpression(pred,1,1);
-	predExprB = new Picto::PredicateExpression(pred,1,1);
-	predExprC = new Picto::PredicateExpression(pred,1,1);
-	compoundExprA = new Picto::CompoundExpression(predExprA, predExprB, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
-	compoundExpr = new Picto::CompoundExpression(compoundExprA, predExprC, 
-							Picto::CompoundExpressionOperator::or,
-							false,false);
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter A Left","Range Parameter A Right"));
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter B Left","Range Parameter B Right"));
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter C Left","Range Parameter C Right"));
+
+	compoundExprA= QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
+	compoundExprA->setLHSPredicateExp(predExprA,false);
+	compoundExprA->setRHSPredicateExp(predExprB,false);
+	compoundExprA->setOperator(Picto::CompoundExpressionOperator::and);
+
+	compoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
+	compoundExpr->setLHSCompoundExp(compoundExprA,false);
+	compoundExpr->setRHSPredicateExp(predExprC,false);
+	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
+
 
 	for(int i=0; i<numTests; i++)
 	{
-		A_L = randGen.randDblExc(maxValue-minValue) + minValue;
-		A_R = randGen.randDblExc(maxValue-minValue) + minValue;
-		B_L = randGen.randDblExc(maxValue-minValue) + minValue;
-		B_R = randGen.randDblExc(maxValue-minValue) + minValue;
-		C_L = randGen.randDblExc(maxValue-minValue) + minValue;
-		C_R = randGen.randDblExc(maxValue-minValue) + minValue;
+		//generate random values
+		int ALeftVal = randGen.randInt(maxValue-minValue) + minValue;
+		int ARightVal = randGen.randInt(maxValue-minValue) + minValue;
+		int BLeftVal = randGen.randInt(maxValue-minValue) + minValue;
+		int BRightVal = randGen.randInt(maxValue-minValue) + minValue;
+		int CLeftVal = randGen.randInt(maxValue-minValue) + minValue;
+		int CRightVal = randGen.randInt(maxValue-minValue) + minValue;
 
-		predExprA->setLHS(A_L);
-		predExprA->setRHS(A_R);
-		predExprB->setLHS(B_L);
-		predExprB->setRHS(B_R);
-		predExprC->setLHS(C_L);
-		predExprC->setRHS(C_R);
+		paramContainer->getParameter("Range Parameter A Left")->setValue(ALeftVal);
+		paramContainer->getParameter("Range Parameter A Right")->setValue(ARightVal);
+		paramContainer->getParameter("Range Parameter B Left")->setValue(BLeftVal);
+		paramContainer->getParameter("Range Parameter B Right")->setValue(BRightVal);
+		paramContainer->getParameter("Range Parameter C Left")->setValue(CLeftVal);
+		paramContainer->getParameter("Range Parameter C Right")->setValue(CRightVal);
 
-		QCOMPARE(compoundExpr->evaluate(), ((A_L > A_R) && (B_L > B_R)) || (C_L > C_R));
+		QCOMPARE(compoundExpr->evaluate(), ((ALeftVal > ARightVal) && (BLeftVal > BRightVal)) || (CLeftVal > CRightVal));
 	}
-
-	//cleanup
-	delete pred;
-	delete predExprA;
-	delete predExprB;
-	delete predExprC;
-	delete compoundExprA;
-	delete compoundExpr;
 
 	/////////////////////
 	//  Case 3        
@@ -620,54 +719,50 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	//	being used is:
 	//		(expA AND expB) OR (expC AND expD)
 
-	pred = new Picto::PredicateGreaterThan();
-	predExprA = new Picto::PredicateExpression(pred,1,1);
-	predExprB = new Picto::PredicateExpression(pred,1,1);
-	predExprC = new Picto::PredicateExpression(pred,1,1);
-	predExprD = new Picto::PredicateExpression(pred,1,1);
-	compoundExprA = new Picto::CompoundExpression(predExprA, predExprB, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
-	compoundExprB = new Picto::CompoundExpression(predExprC, predExprD, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
-	compoundExpr = new Picto::CompoundExpression(compoundExprA, compoundExprB, 
-							Picto::CompoundExpressionOperator::or,
-							false,false);
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter A Left","Range Parameter A Right"));
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","Range Parameter B Left","Range Parameter B Right"));
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than or equal","Range Parameter C Left","Range Parameter C Right"));
+	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than or equal","Range Parameter D Left","Range Parameter D Right"));
+
+	compoundExprA= QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
+	compoundExprA->setLHSPredicateExp(predExprA,false);
+	compoundExprA->setRHSPredicateExp(predExprB,false);
+	compoundExprA->setOperator(Picto::CompoundExpressionOperator::and);
+
+	compoundExprB = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
+	compoundExprB->setLHSPredicateExp(predExprC,false);
+	compoundExprB->setRHSPredicateExp(predExprD,false);
+	compoundExprB->setOperator(Picto::CompoundExpressionOperator::and);
+
+	compoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
+	compoundExpr->setLHSCompoundExp(compoundExprA,false);
+	compoundExpr->setRHSCompoundExp(compoundExprB,false);
+	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
+
 
 	for(int i=0; i<numTests; i++)
 	{
-		A_L = randGen.randDblExc(maxValue-minValue) + minValue;
-		A_R = randGen.randDblExc(maxValue-minValue) + minValue;
-		B_L = randGen.randDblExc(maxValue-minValue) + minValue;
-		B_R = randGen.randDblExc(maxValue-minValue) + minValue;
-		C_L = randGen.randDblExc(maxValue-minValue) + minValue;
-		C_R = randGen.randDblExc(maxValue-minValue) + minValue;
-		D_L = randGen.randDblExc(maxValue-minValue) + minValue;
-		D_R = randGen.randDblExc(maxValue-minValue) + minValue;
+		//generate random values
+		int ALeftVal = randGen.randInt(maxValue-minValue) + minValue;
+		int ARightVal = randGen.randInt(maxValue-minValue) + minValue;
+		int BLeftVal = randGen.randInt(maxValue-minValue) + minValue;
+		int BRightVal = randGen.randInt(maxValue-minValue) + minValue;
+		int CLeftVal = randGen.randInt(maxValue-minValue) + minValue;
+		int CRightVal = randGen.randInt(maxValue-minValue) + minValue;
+		int DLeftVal = randGen.randInt(maxValue-minValue) + minValue;
+		int DRightVal = randGen.randInt(maxValue-minValue) + minValue;
 
-		predExprA->setLHS(A_L);
-		predExprA->setRHS(A_R);
-		predExprB->setLHS(B_L);
-		predExprB->setRHS(B_R);
-		predExprC->setLHS(C_L);
-		predExprC->setRHS(C_R);
-		predExprD->setLHS(D_L);
-		predExprD->setRHS(D_R);
+		paramContainer->getParameter("Range Parameter A Left")->setValue(ALeftVal);
+		paramContainer->getParameter("Range Parameter A Right")->setValue(ARightVal);
+		paramContainer->getParameter("Range Parameter B Left")->setValue(BLeftVal);
+		paramContainer->getParameter("Range Parameter B Right")->setValue(BRightVal);
+		paramContainer->getParameter("Range Parameter C Left")->setValue(CLeftVal);
+		paramContainer->getParameter("Range Parameter C Right")->setValue(CRightVal);
+		paramContainer->getParameter("Range Parameter D Left")->setValue(DLeftVal);
+		paramContainer->getParameter("Range Parameter D Right")->setValue(DRightVal);
 
-		QCOMPARE(compoundExpr->evaluate(), ((A_L > A_R) && (B_L > B_R)) || ((C_L > C_R) && (D_L > D_R)));
+		QCOMPARE(compoundExpr->evaluate(), ((ALeftVal > ARightVal) && (BLeftVal < BRightVal)) || ((CLeftVal >= CRightVal) && (DLeftVal <= DRightVal)));
 	}
-
-	//cleanup
-	delete pred;
-	delete predExprA;
-	delete predExprB;
-	delete predExprC;
-	delete predExprD;
-	delete compoundExprA;
-	delete compoundExprB;
-	delete compoundExpr;
-
 }
 
 
@@ -690,14 +785,48 @@ void TestPredicates::TestCompoundExpressionEvaluation()
  *				This will be tested with only names and only values
  *		4. (expA & expB) | (expC & expD)
  *				This will be tested with only names and only values
+ *
  */
 void TestPredicates::TestCompoundExpressionOutputs()
 {
-	Picto::CompoundExpression *compoundExpr, *compoundExprA, *compoundExprB;
-	Picto::PredicateExpression *predExprA, *predExprB, *predExprC, *predExprD;
-	Picto::Predicate *pred;
+	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
+	Picto::PredicateExpression::setParameterContainer(paramContainer);
+
+	QSharedPointer<Picto::CompoundExpression> compoundExpr(new Picto::CompoundExpression());
+	QSharedPointer<Picto::CompoundExpression> compoundExprA(new Picto::CompoundExpression());
+	QSharedPointer<Picto::CompoundExpression> compoundExprB(new Picto::CompoundExpression());
+	QSharedPointer<Picto::PredicateExpression> predExprA;
+	QSharedPointer<Picto::PredicateExpression> predExprB;
+	QSharedPointer<Picto::PredicateExpression> predExprC;
+	QSharedPointer<Picto::PredicateExpression> predExprD;
 
 	QImage testImage;
+
+	double maxValue = 5000;
+	double minValue = -5000;
+
+	QStringList rangeParameterNames;
+	rangeParameterNames.push_back("A Left");
+	rangeParameterNames.push_back("A Right");
+	rangeParameterNames.push_back("B Left");
+	rangeParameterNames.push_back("B Right");
+	rangeParameterNames.push_back("C Left");
+	rangeParameterNames.push_back("C Right");
+	rangeParameterNames.push_back("D Left");
+	rangeParameterNames.push_back("D Right");
+
+	foreach(QString name, rangeParameterNames)
+	{
+		QSharedPointer<Picto::RangeParameter> range(new Picto::RangeParameter);
+		range->setIncrement(1);
+		range->setDefault(0);
+		range->setMin(minValue);
+		range->setMax(maxValue);
+		range->setName(name);
+		range->setValue(42);
+		paramContainer->addParameter(range);
+	}
+
 
 	/////////////////////
 	//  Case 1        
@@ -705,14 +834,14 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	//	This case tests the oupout functionality of a compound expression made
 	//	up of two predicate expressions.  The full range of possibilities are
 	//	tested (and, or, invert either or both sides of the expression) with the
-	//	expression, but the display options are limited to values only
+	//	expression, but the display options are limited to names on the left and
+	//	values on the right
 
-	pred = new Picto::PredicateGreaterThan();
-	predExprA = new Picto::PredicateExpression(pred,1,2, "ALeft", "ARight");
-	predExprB = new Picto::PredicateExpression(pred,3.14,-2.86, "BLeft", "BRight");
-	compoundExpr = new Picto::CompoundExpression(predExprA, predExprB, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal","A Left", "A Right"));
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","B Left", "B Right"));
+	compoundExpr->setLHSPredicateExp(predExprA);
+	compoundExpr->setRHSPredicateExp(predExprB);
+	compoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
 
 
 	//Test list
@@ -757,26 +886,26 @@ void TestPredicates::TestCompoundExpressionOutputs()
 
 		//check the string outputs
 		if(test == 1)
-			QCOMPARE(compoundExpr->toString(false,false),QString("( 1 > 2 ) & ( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(true,false),QString("( A Left == 42 ) & ( B Left < 42 )"));
 		if(test == 2)
-			QCOMPARE(compoundExpr->toString(false,false),QString("!( 1 > 2 ) & ( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(true,false),QString("!( A Left == 42 ) & ( B Left < 42 )"));
 		if(test == 3)
-			QCOMPARE(compoundExpr->toString(false,false),QString("( 1 > 2 ) & !( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(true,false),QString("( A Left == 42 ) & !( B Left < 42 )"));
 		if(test == 4)
-			QCOMPARE(compoundExpr->toString(false,false),QString("!( 1 > 2 ) & !( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(true,false),QString("!( A Left == 42 ) & !( B Left < 42 )"));
 		if(test == 5)
-			QCOMPARE(compoundExpr->toString(false,false),QString("( 1 > 2 ) | ( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(false,true),QString("( 42 == A Right ) | ( 42 < B Right )"));
 		if(test == 6)
-			QCOMPARE(compoundExpr->toString(false,false),QString("!( 1 > 2 ) | ( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(false,true),QString("!( 42 == A Right ) | ( 42 < B Right )"));
 		if(test == 7)
-			QCOMPARE(compoundExpr->toString(false,false),QString("( 1 > 2 ) | !( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(false,true),QString("( 42 == A Right ) | !( 42 < B Right )"));
 		if(test == 8)
-			QCOMPARE(compoundExpr->toString(false,false),QString("!( 1 > 2 ) | !( 3.14 > -2.86 )"));
+			QCOMPARE(compoundExpr->toString(false,true),QString("!( 42 == A Right ) | !( 42 < B Right )"));
 
 		//output the files...
 		QString filename = QString("CompoundExpressionCase1Test%1.bmp").arg(test);
 
-		testImage = compoundExpr->toQImage(false, false);
+		testImage = compoundExpr->toQImage(true, false);
 		testImage.save(filename,"BMP");
 
 	}
@@ -797,16 +926,16 @@ void TestPredicates::TestCompoundExpressionOutputs()
 
 	//Test the text output
 	//Names only
-	QCOMPARE(compoundExpr->toString(true,true),QString("( ALeft > ARight ) & ( BLeft > BRight )"));
+	QCOMPARE(compoundExpr->toString(true,true),QString("( A Left == A Right ) & ( B Left < B Right )"));
 
 	//Values only
-	QCOMPARE(compoundExpr->toString(false,false),QString("( 1 > 2 ) & ( 3.14 > -2.86 )"));
+	QCOMPARE(compoundExpr->toString(false,false),QString("( 42 == 42 ) & ( 42 < 42 )"));
 
 	//Names on left, values on right
-	QCOMPARE(compoundExpr->toString(true,false),QString("( ALeft > 2 ) & ( BLeft > -2.86 )"));
+	QCOMPARE(compoundExpr->toString(true,false),QString("( A Left == 42 ) & ( B Left < 42 )"));
 
 	//Values on left, names on right
-	QCOMPARE(compoundExpr->toString(false,true),QString("( 1 > ARight ) & ( 3.14 > BRight )"));
+	QCOMPARE(compoundExpr->toString(false,true),QString("( 42 == A Right ) & ( 42 < B Right )"));
 
 
 	//Output the image files
@@ -823,14 +952,6 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	testImage.save("CompoundExpressionCase2Test4.bmp","BMP");
 
 
-	//clean up
-	delete pred;
-	delete predExprA;
-	delete predExprB;
-	delete compoundExpr;
-
-
-
 	/////////////////////
 	//  Case 3        
 	//
@@ -838,23 +959,31 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	//		(expA & expB) | expC
 	//We test the output with only names and only values
 
-	pred = new Picto::PredicateGreaterThan();
-	predExprA = new Picto::PredicateExpression(pred,1,2, "ALeft", "ARight");
-	predExprB = new Picto::PredicateExpression(pred,3,4, "BLeft", "BRight");
-	predExprC = new Picto::PredicateExpression(pred,5,6, "CLeft", "CRight");
-	compoundExprA = new Picto::CompoundExpression(predExprA, predExprB, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
-	compoundExpr = new Picto::CompoundExpression(compoundExprA, predExprC, 
-							Picto::CompoundExpressionOperator::or,
-							false,false);
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","A Left","A Right"));
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","B Left","B Right"));
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal","C Left","C Right"));
+
+	compoundExprA->setLHSPredicateExp(predExprA);
+	compoundExprA->setRHSPredicateExp(predExprB);
+	compoundExprA->setOperator(Picto::CompoundExpressionOperator::and);
+
+	compoundExpr->setLHSCompoundExp(compoundExprA);
+	compoundExpr->setRHSPredicateExp(predExprC);
+	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
+
+	predExprA->toString();
+	predExprB->toString();
+	predExprC->toString();
+	compoundExprA->toString();
+	compoundExpr->toString();
+
 
 	//Test the text output
 	//Names only
-	QCOMPARE(compoundExpr->toString(true,true),QString("( ( ALeft > ARight ) & ( BLeft > BRight ) ) | ( CLeft > CRight )"));
+	QCOMPARE(compoundExpr->toString(true,true),QString("( ( A Left > A Right ) & ( B Left < B Right ) ) | ( C Left == C Right )"));
 
 	//Values only
-	QCOMPARE(compoundExpr->toString(false,false),QString("( ( 1 > 2 ) & ( 3 > 4 ) ) | ( 5 > 6 )"));
+	QCOMPARE(compoundExpr->toString(false,false),QString("( ( 42 > 42 ) & ( 42 < 42 ) ) | ( 42 == 42 )"));
 
 	//Output the image files
 	testImage = compoundExpr->toQImage(true, true);
@@ -864,15 +993,6 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	testImage.save("CompoundExpressionCase3Test2.bmp","BMP");
 
 
-	//clean up
-	delete pred;
-	delete predExprA;
-	delete predExprB;
-	delete predExprC;
-	delete compoundExprA;
-	delete compoundExpr;
-
-
 	/////////////////////
 	//  Case 4        
 	//
@@ -880,28 +1000,29 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	//		(expA & expB) | (expC & expD)
 	//We test the output with only names and only values
 
-	pred = new Picto::PredicateGreaterThan();
-	predExprA = new Picto::PredicateExpression(pred,1,2, "ALeft", "ARight");
-	predExprB = new Picto::PredicateExpression(pred,3,4, "BLeft", "BRight");
-	predExprC = new Picto::PredicateExpression(pred,5,6, "CLeft", "CRight");
-	predExprD = new Picto::PredicateExpression(pred,7,8, "DLeft", "DRight");
-	compoundExprA = new Picto::CompoundExpression(predExprA, predExprB, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
-	compoundExprB = new Picto::CompoundExpression(predExprC, predExprD, 
-							Picto::CompoundExpressionOperator::and,
-							false,false);
-	compoundExpr = new Picto::CompoundExpression(compoundExprA, compoundExprB, 
-							Picto::CompoundExpressionOperator::or,
-							false,false);
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","A Left","A Right"));
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","B Left","B Right"));
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal","C Left","C Right"));
+	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","D Left","D Right"));
 
+	compoundExprA->setLHSPredicateExp(predExprA);
+	compoundExprA->setRHSPredicateExp(predExprB);
+	compoundExprA->setOperator(Picto::CompoundExpressionOperator::and);
+
+	compoundExprB->setLHSPredicateExp(predExprC);
+	compoundExprB->setRHSPredicateExp(predExprD);
+	compoundExprB->setOperator(Picto::CompoundExpressionOperator::and);
+
+	compoundExpr->setLHSCompoundExp(compoundExprA);
+	compoundExpr->setRHSCompoundExp(compoundExprB);
+	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
 
 	//Test the text output
 	//Names only
-	QCOMPARE(compoundExpr->toString(true,true),QString("( ( ALeft > ARight ) & ( BLeft > BRight ) ) | ( ( CLeft > CRight ) & ( DLeft > DRight ) )"));
+	QCOMPARE(compoundExpr->toString(true,true),QString("( ( A Left > A Right ) & ( B Left < B Right ) ) | ( ( C Left == C Right ) & ( D Left > D Right ) )"));
 
 	//Values only
-	QCOMPARE(compoundExpr->toString(false,false),QString("( ( 1 > 2 ) & ( 3 > 4 ) ) | ( ( 5 > 6 ) & ( 7 > 8 ) )"));
+	QCOMPARE(compoundExpr->toString(false,false),QString("( ( 42 > 42 ) & ( 42 < 42 ) ) | ( ( 42 == 42 ) & ( 42 > 42 ) )"));
 
 	//Output image files
 	testImage = compoundExpr->toQImage(true, true);
@@ -910,16 +1031,6 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	testImage = compoundExpr->toQImage(false, false);
 	testImage.save("CompoundExpressionCase4Test2.bmp","BMP");
 
-
-	//clean up
-	delete pred;
-	delete predExprA;
-	delete predExprB;
-	delete predExprC;
-	delete predExprD;
-	delete compoundExprA;
-	delete compoundExprB;
-	delete compoundExpr;
 
 	QWARN("Don't forget to check the image files to confirm output");
 

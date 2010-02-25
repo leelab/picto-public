@@ -14,10 +14,20 @@ struct StringParameterOption
 	MediaItem icon;
 };
 
-class StringParameter : Parameter
+#if defined WIN32 || defined WINCE
+	class PICTOLIB_API StringParameter : public Parameter
+#else
+class StringParameter : public Parameter
+#endif
 {
 public:
 	StringParameter();
+
+	static Parameter* NewParameter();
+
+	//DataStore functions
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void addOption(StringParameterOption option);
 

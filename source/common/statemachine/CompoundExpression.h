@@ -35,41 +35,23 @@ namespace CompoundExpressionOperator
 } //namespace CompoundExpressionOperator
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API CompoundExpression
+class PICTOLIB_API CompoundExpression : public DataStore
 #else
-class CompoundExpression
+class CompoundExpression : public DataStore
 #endif
 {
 public:
-	//CompoundExpression();
-
-	//Yes, it's dumb to create 4 different constructors.  There's got to 
-	//be a better way, but I can't think of one....
-	CompoundExpression(PredicateExpression *LHS, PredicateExpression *RHS, 
-				CompoundExpressionOperator::CompoundExpressionOperator op,
-				bool invertLHS=false, bool invertRHS=false);
-	CompoundExpression(CompoundExpression *LHS, PredicateExpression *RHS, 
-				CompoundExpressionOperator::CompoundExpressionOperator op,
-				bool invertLHS=false, bool invertRHS=false);
-	CompoundExpression(PredicateExpression *LHS, CompoundExpression *RHS, 
-				CompoundExpressionOperator::CompoundExpressionOperator op,
-				bool invertLHS=false, bool invertRHS=false);
-	CompoundExpression(CompoundExpression *LHS, CompoundExpression *RHS, 
-				CompoundExpressionOperator::CompoundExpressionOperator op,
-				bool invertLHS=false, bool invertRHS=false);
+	CompoundExpression();
 
 	~CompoundExpression() {};
 
-	//There are no getter functions.  Since the operands are stored in a private
-	//union, the end user wouldn't be able to interpret the returned operand
-
 	//Setters
-	void setLHSCompoundExp(CompoundExpression *exp, bool invert=false);
-	void setRHSCompoundExp(CompoundExpression *exp, bool invert=false);
-	void setLHSPredicateExp(PredicateExpression *exp, bool invert=false);
-	void setRHSPredicateExp(PredicateExpression *exp, bool invert=false);
+	void setLHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert=false);
+	void setRHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert=false);
+	void setLHSPredicateExp(QSharedPointer<PredicateExpression> exp, bool invert=false);
+	void setRHSPredicateExp(QSharedPointer<PredicateExpression> exp, bool invert=false);
 
-	void setOperator(CompoundExpressionOperator::CompoundExpressionOperator op) { operator_=op; };
+	void setOperator(CompoundExpressionOperator::CompoundExpressionOperator op) { operator_=op; operatorInitialized_ = true;};
 
 	//Evaluate the expression
 	bool evaluate();
@@ -78,20 +60,24 @@ public:
 	QString toString(bool useLHSNames=false, bool useRHSNames=false);
 	QImage toQImage(bool useLHSNames=false, bool useRHSNames=false);
 
+	//DataStore functions
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private:
-	typedef struct
-	{
-		bool isPred;
-		union 
-		{
-			PredicateExpression *predExp;
-			CompoundExpression *comExp;
-		};
-	}Operand;
+	bool LHSisPred_;
+	QSharedPointer<PredicateExpression> LHSPredExp_;
+	QSharedPointer<CompoundExpression> LHSComExp_;
 
-	Operand LHS_;
-	Operand RHS_;
+	bool RHSisPred_;
+	QSharedPointer<PredicateExpression> RHSPredExp_;
+	QSharedPointer<CompoundExpression> RHSComExp_;
+
+	bool LHSInitialized_;
+	bool RHSInitialized_;
+	bool operatorInitialized_;
+	bool isValid() { return LHSInitialized_ & RHSInitialized_ & operatorInitialized_;};
 
 	bool invertLHS_, invertRHS_;
 	CompoundExpressionOperator::CompoundExpressionOperator operator_;

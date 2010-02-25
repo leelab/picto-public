@@ -4,7 +4,8 @@ namespace Picto {
 
 VisualElement::VisualElement() :
 	shouldUpdateCompositingSurfaces_(true),
-	propertyContainer_("Visual Element")
+	propertyContainer_("Visual Element"),
+	order_(0)
 {
 }
 
@@ -132,7 +133,7 @@ bool VisualElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 			//If you have reacehd this point, it means that we have encountered
 			//some sort of unexpected data type in one of the VisualElements. 
 			//The developer will need to add support for the new data type.
-			Q_ASSERT(false);
+			return false;
 		}
 	}
 
@@ -183,8 +184,6 @@ bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 			QString type = xmlStreamReader->name().toString();
 			QString name = xmlStreamReader->attributes().value("name").toString();
 
-			//define all the variables that are used in our switch statement
-
 			//deserialze the property based on the type of the current property value
 			if(type == "QPoint")
 			{
@@ -221,7 +220,6 @@ bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 				//If you have reached this point, it means that we have encountered
 				//some sort of unexpected data type in one of the VisualElements. 
 				//The developer will need to add support for the new data type.
-				Q_ASSERT(false);
 				return false;
 			}
 		}

@@ -14,6 +14,8 @@
 #include <QXmlStreamWriter>
 
 #include "../common.h"
+#include "../parameter/parameter.h"
+#include "../parameter/ParameterContainer.h"
 #include "Predicate.h"
 
 namespace Picto {
@@ -26,10 +28,9 @@ class PredicateExpression : public DataStore
 {
 public:
 	PredicateExpression();
-	PredicateExpression(Predicate *p);
-	PredicateExpression(Predicate *p, double LHSvalue, double RHSvalue, 
-		QString LHSname="", QString RHSname="");
-	~PredicateExpression();
+	PredicateExpression(QString predicateName);
+	PredicateExpression(QString predicateName, QString LHSParamName, QString RHSParamName);
+	~PredicateExpression() {};
 
 	bool isValid();
 	bool evaluate();
@@ -37,28 +38,25 @@ public:
 	QString toString(bool useLHSName=false, bool useRHSName=false);
 	QImage toQImage(bool useLHSName=false, bool useRHSName=false);
 
-	void setPredicate(Predicate *p) { predicate_ = p; };
-	void setLHS(double val, QString name = "") { LHSinitialized_ = true;  
-												 LHSvalue_ = val; 
-												 LHSname_ = name; };
-	void setRHS(double val, QString name = "") { RHSinitialized_ = true; 
-												 RHSvalue_ = val; 
-												 RHSname_ = name;  };
+	void setPredicate(QString predicateName) { predicateName_ = predicateName; };
+	void setLHS(QString parameterName) { LHSParamName_ = parameterName; };
+ 	void setRHSParam(QString parameterName) { RHSParamName_ = parameterName; useRHSVal_=false;};
+	void setRHSValue(QVariant RHS) { RHSval_ = RHS; useRHSVal_=true;};
 
-	Predicate* getPredicate() { return predicate_; };
-	double getLHSvalue() {return LHSvalue_; };
-	double getRHSvalue() { return RHSvalue_; };
-	QString getLHSname() { return LHSname_; }
-	QString getRHSname() { return RHSname_; }
-
+	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+	static void setParameterContainer(QSharedPointer<ParameterContainer> params) { parameters_ = params; };
+
 private:
-	double LHSvalue_, RHSvalue_;
-	QString LHSname_, RHSname_;
-	bool LHSinitialized_, RHSinitialized_;
-	Predicate *predicate_;
+	QString predicateName_;
+	QString LHSParamName_;
+	QString RHSParamName_;
+	QVariant RHSval_;
+	bool useRHSVal_;
+
+	static QSharedPointer<ParameterContainer> parameters_;
 };
 
 

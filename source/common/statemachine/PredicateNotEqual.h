@@ -6,6 +6,7 @@
 
 #include "../common.h"
 #include "Predicate.h"
+#include "../parameter/parameter.h"
 
 namespace Picto {
 
@@ -19,8 +20,8 @@ public:
 	PredicateNotEqual();
 	~PredicateNotEqual() {};
 
-	bool evaluate(double LHS, double RHS);
-
+	bool evaluate(Parameter &LHS, Parameter &RHS);
+	bool evaluate(Parameter &LHS, QVariant RHS);
 private:
 };
 

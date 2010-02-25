@@ -8,10 +8,15 @@
 
 namespace Picto {
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API State : public StateMachineElement
+#else
 class State : public StateMachineElement
+#endif
 {
 public:
 	State();
+	QString run();
 
 private:
 	QSharedPointer<Scene> scene_;

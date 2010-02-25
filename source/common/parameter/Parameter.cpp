@@ -5,7 +5,8 @@ namespace Picto {
 Parameter::Parameter() :
 	bOperatorUI_(false),
 	name_("unnamed parameter"),
-	type_("null")
+	type_("null"),
+	order_(0)
 {
 }
 

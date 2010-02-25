@@ -5,10 +5,12 @@
 
 namespace Picto
 {
+
 PredicateEqual::PredicateEqual()
 : Predicate()
 {
 	predicateString_= "==";
+	name_ = "Equal";
 
 	//draw the icon
 
@@ -30,9 +32,14 @@ PredicateEqual::PredicateEqual()
 
 }
 
-bool PredicateEqual::evaluate(double LHS, double RHS)
+bool PredicateEqual::evaluate(Parameter &LHS, Parameter &RHS)
 {
-	return (LHS == RHS);
+	return LHS == RHS;
+}
+
+bool PredicateEqual::evaluate(Parameter &LHS, QVariant RHS)
+{
+	return LHS == RHS;
 }
 
 } //namespacePicto

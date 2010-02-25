@@ -15,6 +15,8 @@
 #include "../random/MersenneTwister.h"
 #include "../stimuli/VisualElement.h"
 #include "../stimuli/VisualElementFactory.h"
+#include "../parameter/Parameter.h"
+#include "../parameter/ParameterFactory.h"
 
 
 class TestDataStore: public QObject
@@ -25,14 +27,20 @@ public:
 	TestDataStore();
 
 private slots:
-	void TestVisualElementDataStore_data();
-	void TestVisualElementDataStore();
-
+	void TestVisualElement_data();
+	void TestVisualElement();
+	void TestParameter_data();
+	void TestParameter();
+	void TestParameterContainer();
+	void TestPredicateExpression();
+	void TestCompoundExpression();
+	void TestScene();
 private:
 	Picto::MTRand randGen_;
 	Picto::VisualElementFactory visualElementFactory_;
 
-	void testSingleVisualElementDataStore(Picto::VisualElement *original);
+	void TestSimpleDataStore(QSharedPointer<Picto::DataStore> original, QSharedPointer<Picto::DataStore> copy, QString startElementName);
+
 };
 
 

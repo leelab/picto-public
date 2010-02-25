@@ -5,12 +5,12 @@
 
 namespace Picto
 {
+
 PredicateLessThan::PredicateLessThan()
 : Predicate()
 {
 	predicateString_= "<";
 	name_ = "Less than";
-
 	//draw the icon
 	const QPoint points[] = { QPoint(75,30),
 							   QPoint(25,50),
@@ -31,9 +31,13 @@ PredicateLessThan::PredicateLessThan()
 
 }
 
-bool PredicateLessThan::evaluate(double LHS, double RHS)
+bool PredicateLessThan::evaluate(Parameter &LHS, Parameter &RHS)
 {
-	return (LHS < RHS);
+	return LHS < RHS;
 }
 
+bool PredicateLessThan::evaluate(Parameter &LHS, QVariant RHS)
+{
+	return LHS < RHS;
+}
 } //namespacePicto

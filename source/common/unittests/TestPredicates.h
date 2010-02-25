@@ -28,7 +28,6 @@ private slots:
 	void TestPredicateEvaluation();
 	void TestPredicateOutputs();
 
-	void TestPredicateExpressionGeneral();
 	void TestPredicateExpressionEvaluation();
 	void TestPredicateExpressionOutputs();
 

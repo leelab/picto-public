@@ -11,17 +11,23 @@
 
 namespace Picto {
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API ParameterContainer : public DataStore
+#else
 class ParameterContainer : public DataStore
+#endif
 {
 public:
 	ParameterContainer();
+	~ParameterContainer() {};
 
 	void addParameter(QSharedPointer<Parameter> parameter);
+	QSharedPointer<Parameter> getParameter(QString name);
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QList<QSharedPointer<Parameter> > parameters_;
+	QMap<QString, QSharedPointer<Parameter> > parameters_;
 };
 
 

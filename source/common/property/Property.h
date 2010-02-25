@@ -9,7 +9,11 @@
 
 namespace Picto {
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API Property
+#else
 class Property
+#endif
 {
 public:
 	Property(int _type, QString _name, QVariant _value);

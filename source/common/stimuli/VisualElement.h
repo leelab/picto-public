@@ -36,6 +36,9 @@ public:
 
 	void setPosition(QPoint position);
 
+	void setOrder(int order) { order_ = order; };
+	int getOrder() { return order_; }
+
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
@@ -58,6 +61,8 @@ protected:
 	MTRand random;
 
 	PropertyContainer propertyContainer_;
+
+	int order_;		//The order in which this visual element should be drawn within its layer
 };
 
 }; //namespace Picto

@@ -1,83 +1,118 @@
 #include "PredicateExpression.h"
+#include "PredicateFactory.h"
 
 #include <QFont>
 #include <QPainter>
 
 namespace Picto {
 
+QSharedPointer<ParameterContainer> PredicateExpression::parameters_ = QSharedPointer<ParameterContainer>();
+
 PredicateExpression::PredicateExpression()
 {
-	LHSinitialized_ = false;
-	RHSinitialized_ = false;
-	LHSvalue_ = 0;
-	RHSvalue_ = 0;
-	LHSname_ = "";
-	RHSname_ = "";
+	//If you're hitting one of these asserts, it's becuase you forgot to call the 
+	//setParameterContainer function.  This MUST be done at some point before creating
+	//a PredicateExpression
+	Q_ASSERT_X(parameters_,"PredicateExpression", "Parameter container is null.");
+	LHSParamName_ = "";
+	RHSParamName_ = "";
+	useRHSVal_ = false;
 
-	predicate_ = 0;
+	predicateName_ = "";
 }
 
-PredicateExpression::PredicateExpression(Predicate *p)
+PredicateExpression::PredicateExpression(QString predicateName)
 {
-	LHSinitialized_ = false;
-	RHSinitialized_ = false;
-	LHSvalue_ = 0;
-	RHSvalue_ = 0;
-	LHSname_ = "";
-	RHSname_ = "";
+	//Error checking
+	Q_ASSERT_X(parameters_,"PredicateExpression", "Parameter container is null.");
+	PredicateFactory predFact;
+	Q_ASSERT(predFact.createPredicate(predicateName));
 
-	predicate_ = p;
+	LHSParamName_ = "";
+	RHSParamName_ = "";
+	useRHSVal_ = false;
+
+	predicateName_ = predicateName;
 }
 
-PredicateExpression::PredicateExpression(Predicate *p, double LHSvalue, double RHSvalue, 
-	QString LHSname, QString RHSname)
+PredicateExpression::PredicateExpression(QString predicateName, QString LHSParamName, QString RHSParamName)
 {
-	LHSinitialized_ = true;
-	RHSinitialized_ = true;
-	LHSvalue_ = LHSvalue;
-	RHSvalue_ = RHSvalue;
-	LHSname_ = LHSname;
-	RHSname_ = RHSname;
+	Q_ASSERT_X(parameters_,"PredicateExpression", "Parameter container is null.");
+	PredicateFactory predFact;
+	Q_ASSERT(predFact.createPredicate(predicateName));
+	Q_ASSERT(parameters_->getParameter(LHSParamName));
+	Q_ASSERT(parameters_->getParameter(RHSParamName));
 
-	predicate_ = p;
+	LHSParamName_ = LHSParamName;
+	RHSParamName_ = RHSParamName;
+	useRHSVal_ = false;
+
+	predicateName_ = predicateName;
 }
-
-PredicateExpression::~PredicateExpression()
-{
-}
-
 
 bool PredicateExpression::isValid()
 {
-	if(!predicate_)
+	if(predicateName_.isEmpty())
 		return false;
-	return (LHSinitialized_ && RHSinitialized_);
+	if(LHSParamName_.isEmpty())
+		return false;
+	if(RHSParamName_.isEmpty() && !useRHSVal_)
+		return false;
+	return true;
 }
 
 bool PredicateExpression::evaluate()
 {
-	return predicate_->evaluate(LHSvalue_, RHSvalue_);
+	if(!isValid())
+		return false;
+
+	PredicateFactory predFact;
+	QSharedPointer<Predicate> pred = predFact.createPredicate(predicateName_);
+
+	QSharedPointer<Parameter> LHSParam = parameters_->getParameter(LHSParamName_);
+	if(useRHSVal_)
+	{
+		return pred->evaluate(*LHSParam,RHSval_);
+	}
+	else
+	{
+		QSharedPointer<Parameter> RHSParam = parameters_->getParameter(RHSParamName_);
+		return pred->evaluate(*LHSParam, *RHSParam);
+	}
 }
 
 
 
 QString PredicateExpression::toString(bool useLHSName, bool useRHSName)
 {
-	if(!predicate_ || !LHSinitialized_ || ! RHSinitialized_)
+	if(!isValid())
 		return "";
 
-	QString LHSstring, RHSstring;
-	if(useLHSName && !LHSname_.isEmpty())
-		LHSstring = LHSname_;
-	else
-		LHSstring = QString("%1").arg(LHSvalue_);
+	PredicateFactory predFact;
+	QSharedPointer<Predicate> pred = predFact.createPredicate(predicateName_);
 
-	if(useRHSName && !RHSname_.isEmpty())
-		RHSstring = RHSname_;
+	QSharedPointer<Parameter> LHSParam = parameters_->getParameter(LHSParamName_);
+
+	QString LHSstring, RHSstring;
+	if(useLHSName)
+		LHSstring = LHSParam->name();
 	else
-		RHSstring = QString("%1").arg(RHSvalue_);
-	
-	return LHSstring+" "+predicate_->toString()+" "+RHSstring;
+		LHSstring = LHSParam->getValue().toString();
+
+	if(!useRHSVal_)
+	{
+		QSharedPointer<Parameter> RHSParam = parameters_->getParameter(RHSParamName_);
+		if(useRHSName)
+			RHSstring=RHSParam->name();
+		else
+			RHSstring= RHSParam->getValue().toString();
+	}
+	else
+	{
+		RHSstring = RHSval_.toString();
+	}
+
+	return LHSstring+" "+pred->toString()+" "+RHSstring;
 }
 
 QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
@@ -92,16 +127,19 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 	//-----------------------
 	//Get the predicate image
 	//-----------------------
-	QImage predImage = predicate_->toQImage();
+	PredicateFactory predFact;
+	QSharedPointer<Predicate> pred = predFact.createPredicate(predicateName_);
+	QImage predImage = pred->toQImage();
 
 	//----------------------
 	//create left side image
 	//----------------------
 	QString LHSstring;
-	if(useLHSName && !LHSname_.isEmpty())
-		LHSstring = LHSname_;
+	QSharedPointer<Parameter> LHSParam = parameters_->getParameter(LHSParamName_);
+	if(useLHSName)
+		LHSstring = LHSParam->name();
 	else
-		LHSstring = QString("%1").arg(LHSvalue_);
+		LHSstring = LHSParam->getValue().toString();
 
 	QImage LHSimage(80*LHSstring.length(),100,QImage::Format_ARGB32);
 
@@ -125,10 +163,13 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 	//create right side image
 	//-----------------------
 	QString RHSstring;
-	if(useRHSName && !RHSname_.isEmpty())
-		RHSstring = RHSname_;
+	QSharedPointer<Parameter> RHSParam = parameters_->getParameter(RHSParamName_);
+	if(useRHSName & !useRHSVal_)
+		RHSstring = RHSParam->name();
+	else if(useRHSVal_)
+		RHSstring = RHSval_.toString();
 	else
-		RHSstring = QString("%1").arg(RHSvalue_);
+		RHSstring = RHSParam->getValue().toString();
 
 	QImage RHSimage(80*RHSstring.length(),100,QImage::Format_ARGB32);
 
@@ -188,27 +229,134 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 	return expImage;
 }
 
-/*! \breife Converts a predicate expression into XML
+/*! \breif Converts a predicate expression into XML
  *
  *	This takes the current predicate expression and turns it into an
- *	XML fragment.  Bear in mind that each side of the expression can
- *	have a name and/or value.
+ *	XML fragment. 
  *
- *	SAMPLE (for the expression "trial number < 100")
- *		<PredicateExpression>
- *			<LHS name="trial number">12</LHS>
+ *	SAMPLE 
+ *		<Expression>
+ *			<Parameter>Trial Number</Parameter>
  *			<Comparison>Greater than</Comparison>
- *			<RHS name="">100</RHS>
+ *			<Value>100</Value>
  *
  */
 bool PredicateExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	return false;
+	if(!isValid())
+		return false;
+
+	PredicateFactory predFact;
+	QSharedPointer<Predicate> pred = predFact.createPredicate(predicateName_);
+	if(pred.isNull())
+		return false;
+
+
+	xmlStreamWriter->writeStartElement("Expression");
+	xmlStreamWriter->writeTextElement("Parameter",LHSParamName_);
+	xmlStreamWriter->writeTextElement("Comparison",pred->name());
+	if(useRHSVal_)
+	{
+		//Not all constant values can be converted to a string this way.  However,
+		//so far everything, works.  If you hit this assert, you'll need to do a bit
+		//of rewriting...
+		Q_ASSERT(!RHSval_.toString().isEmpty());
+		xmlStreamWriter->writeStartElement("Value");
+		xmlStreamWriter->writeAttribute("type", RHSval_.typeName());
+		xmlStreamWriter->writeCharacters(RHSval_.toString());
+		xmlStreamWriter->writeEndElement();
+	}
+	else
+		xmlStreamWriter->writeTextElement("Parameter",RHSParamName_);
+	xmlStreamWriter->writeEndElement(); //Expression
+	return true;
 }
 
+/*!	\brief Converts XML into a predicate expression
+ *
+ *	This takes a predicate expression in unknown state and modifies it to
+ *	match the XML fragment currently being read.  The function assumes
+ *	that the xml stream reader is pointing to an <Expression> tag upon entry,
+ *	and returns with the reader pointing to an </Expression tag>
+ */
 bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	return false;
+	//Do some basic error checking
+	if(!xmlStreamReader->isStartElement())
+		return false;
+	if(xmlStreamReader->name() != "Expression")
+		return false;
+
+	bool lhsInit = false;
+	bool rhsInit = false;
+	bool predInit = false;
+
+	//loop through the XML modifying properties as we go.
+	xmlStreamReader->readNext();
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Expression") && !xmlStreamReader->atEnd())
+	{
+		if(!xmlStreamReader->isStartElement())
+		{
+			//do nothing unless we're looking at a start element
+			xmlStreamReader->readNext();
+			continue;
+		}
+		//use the name to set up the sides and predicate.
+		//Note that we assume the order is LHS, predicate, RHS
+		QString name = xmlStreamReader->name().toString();
+
+		//LHS parameter
+		if(name == "Parameter")
+		{
+			//LHS parameter
+			if(!lhsInit)
+			{
+				LHSParamName_ = xmlStreamReader->readElementText();
+				lhsInit = true;
+			}
+			//RHS parameter
+			else if(lhsInit && !rhsInit)
+			{
+				RHSParamName_ = xmlStreamReader->readElementText();
+				rhsInit = true;
+				useRHSVal_ = false;
+			}
+		}
+		//predicate
+		else if(name == "Comparison")
+		{
+			predicateName_ = xmlStreamReader->readElementText();
+			predInit = true;
+		}
+		
+		//RHS constant value
+		else if(name == "Value" && lhsInit && !rhsInit)
+		{
+			QString valueTypeStr;
+			valueTypeStr = xmlStreamReader->attributes().value("type").toString();
+
+			QVariant::Type valueType = QVariant::nameToType(valueTypeStr.toAscii());
+
+			//This will probably break at some point...
+			//Since the Value is written out using QVariant::toString, I can simply
+			//read it back in as a string, and then convert it to the correct type.
+			QString valueStr;
+			valueStr = xmlStreamReader->readElementText();
+			RHSval_ = valueStr;
+			RHSval_.convert(valueType);
+
+			rhsInit = true;
+			useRHSVal_ = true;
+		}
+		else
+		{
+			return false;
+		}
+	
+		xmlStreamReader->readNext();
+	}
+	
+	return lhsInit & rhsInit & predInit;
 }
 
 

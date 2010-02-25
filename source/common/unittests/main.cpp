@@ -7,6 +7,7 @@
 #include "../../common/globals.h"
 #include "TestPredicates.h"
 #include "TestDataStore.h"
+#include "TestParameters.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,9 +20,12 @@ int main(int argc, char *argv[])
 	
 	TestPredicates testPredicatesObject;
 	TestDataStore testDataStoreObject;
+	TestParameters testParametersObject;
+
 	int result = 0;
-	result += QTest::qExec((QObject*)&testPredicatesObject);
+	//result += QTest::qExec((QObject*)&testPredicatesObject);
 	result += QTest::qExec((QObject*)&testDataStoreObject);
+	//result += QTest::qExec((QObject*)&testParametersObject);
 	
 	return result;
 }

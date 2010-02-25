@@ -42,7 +42,6 @@ protected:
 	//functions are provided, for serializing and deserializing common data types.
 	//Note that these don't cover all possible data types, so you should expect
 	//to write some of your own code...
-
 	void serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
 					QString name, QPoint point);
 	void serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
@@ -53,6 +52,7 @@ protected:
 	QPoint deserializeQPoint(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QRect deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QColor deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 };
 
 

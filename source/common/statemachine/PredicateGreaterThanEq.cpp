@@ -5,12 +5,13 @@
 
 namespace Picto
 {
+
 PredicateGreaterThanEq::PredicateGreaterThanEq()
 : Predicate()
 {
 	predicateString_= ">=";
-	name_ = "Greater than or equal to";
-
+	name_ = "Greater than or equal";
+	
 	//draw the icon
 	const QPoint pointsGT[] = { QPoint(25,30),
 							   QPoint(75,50),
@@ -34,9 +35,12 @@ PredicateGreaterThanEq::PredicateGreaterThanEq()
 
 }
 
-bool PredicateGreaterThanEq::evaluate(double LHS, double RHS)
+bool PredicateGreaterThanEq::evaluate(Parameter &LHS, Parameter &RHS)
 {
-	return (LHS >= RHS);
+	return LHS >= RHS;
 }
-
+bool PredicateGreaterThanEq::evaluate(Parameter &LHS, QVariant RHS)
+{
+	return LHS >= RHS;
+}
 } //namespacePicto

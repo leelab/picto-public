@@ -5,6 +5,7 @@
 
 namespace Picto
 {
+
 PredicateGreaterThan::PredicateGreaterThan()
 : Predicate()
 {
@@ -31,9 +32,14 @@ PredicateGreaterThan::PredicateGreaterThan()
 
 }
 
-bool PredicateGreaterThan::evaluate(double LHS, double RHS)
+bool PredicateGreaterThan::evaluate(Parameter &LHS, Parameter &RHS)
 {
-	return (LHS > RHS);
+	return LHS > RHS;
+}
+
+bool PredicateGreaterThan::evaluate(Parameter &LHS, QVariant RHS)
+{
+	return LHS > RHS;
 }
 
 } //namespacePicto

@@ -26,6 +26,8 @@
 
 #include "../common.h"
 #include "../storage/datastore.h"
+#include "../parameter/parameter.h"
+
 
 namespace Picto {
 
@@ -37,20 +39,23 @@ class Predicate
 {
 public:
 	//The constructor is responsible for:
-	//	- setting the string value
+	//	- setting the predicateString_ value
+	//	- setting the name_ value
 	//	- creating the icon_ QImage
 	Predicate();
 	~Predicate();
 
-	virtual bool evaluate(double LHS, double RHS) = 0;
+	virtual bool evaluate(Parameter &LHS, Parameter &RHS) = 0;
+	virtual bool evaluate(Parameter &LHS, QVariant RHS) = 0;
 	QImage toQImage() { return icon_; };
 	QString toString() { return predicateString_; };
+
 	QString name() { return name_; };
 
 protected:
+	QString name_;
 	QImage icon_;
 	QString predicateString_;
-	QString name_;
 };
 
 

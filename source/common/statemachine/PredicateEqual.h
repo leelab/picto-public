@@ -19,7 +19,8 @@ public:
 	PredicateEqual();
 	~PredicateEqual() {};
 
-	bool evaluate(double LHS, double RHS);
+	bool evaluate(Parameter &LHS, Parameter &RHS);
+	bool evaluate(Parameter &LHS, QVariant RHS);
 
 private:
 };
