@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is a really simple state machine that uses the testConmtroller -->
+<!-- To flip back and forth between two scenes forever-->
+<StateMachine>
+    <Name>Stage 1</Name>
+    <Level>Stage</Level>
+    <InitialElement>State 1</InitialElement>
+    <StateMachineElements>
+        <StateMachineElement type="State">
+            <Revision>-1</Revision>
+            <EngineNeeded>-1</EngineNeeded>
+            <Name>State 1</Name>
+            <ControlElements>
+                <ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
+                    <Name></Name>
+                    <NumberOfFrames>120</NumberOfFrames>
+                </ControlElement>
+            </ControlElements>
+            <Scene>
+                <Canvas>
+                    <Layers>
+                        <BackgroundLayer color="#000000"/>
+                        <Layer>
+							<Name>Layer1</Name>
+							<Order>1</Order>
+							<VisualElement type="Box Graphic">
+								<QString name="Name">box</QString>
+								<QPoint name="Position" x="30" y="30"/>
+								<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
+								<QColor name="Color" R="255" G="255" B="0" A="255"/>
+							</VisualElement>
+                        </Layer>
+                    </Layers>
+                </Canvas>
+                <AudioElement></AudioElement>
+            </Scene>
+            <Results>
+                <Result>
+                    <Name>Success</Name>
+                </Result>
+            </Results>
+        </StateMachineElement>
+        <StateMachineElement type="State">
+            <Revision>-1</Revision>
+            <EngineNeeded>-1</EngineNeeded>
+            <Name>State 2</Name>
+            <ControlElements>
+                <ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
+                    <Name></Name>
+                    <NumberOfFrames>120</NumberOfFrames>
+                </ControlElement>
+            </ControlElements>
+            <Scene>
+                <Canvas>
+                    <Layers>
+                        <BackgroundLayer color="#000000"/>
+                        <Layer>
+							<Name>Layer1</Name>
+							<Order>1</Order>
+							<VisualElement type="Box Graphic">
+								<QString name="Name">box</QString>
+								<QPoint name="Position" x="100" y="30"/>
+								<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
+								<QColor name="Color" R="255" G="0" B="255" A="255"/>
+							</VisualElement>
+                        </Layer>
+                    </Layers>
+                </Canvas>
+                <AudioElement></AudioElement>
+            </Scene>
+            <Results>
+                <Result>
+                    <Name>Success</Name>
+                </Result>
+            </Results>
+        </StateMachineElement>   </StateMachineElements>
+    <Parameters/>
+    <Transitions>
+        <Transition>
+            <Source>State 1</Source>
+            <SourceResult>Success</SourceResult>
+            <Destination>State 2</Destination>
+        </Transition>
+        <Transition>
+            <Source>State 2</Source>
+            <SourceResult>Success</SourceResult>
+            <Destination>State 1</Destination>
+        </Transition>
+     </Transitions>
+    <Results/>
+</StateMachine>

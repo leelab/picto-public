@@ -25,6 +25,16 @@
 #include "../statemachine/Canvas.h"
 #include "../statemachine/Layer.h"
 
+#include "../statemachine/StateMachine.h"
+#include "../statemachine/StateMachineElement.h"
+#include "../statemachine/FlowElement.h"
+#include "../statemachine/Result.h"
+#include "../statemachine/State.h"
+
+#include "../controlelements/ControlElementFactory.h"
+#include "../controlelements/ControlElement.h"
+#include "../controlelements/TestController.h"
+
 Q_DECLARE_METATYPE(QSharedPointer<Picto::VisualElement>)
 Q_DECLARE_METATYPE(QSharedPointer<Picto::Parameter>)
 
@@ -49,6 +59,10 @@ TestDataStore::TestDataStore()
 	paramFactory.addParameterType("Choice",&Picto::ChoiceParameter::NewParameter);
 	paramFactory.addParameterType("Range",&Picto::RangeParameter::NewParameter);
 	paramFactory.addParameterType("Numeric",&Picto::NumericParameter::NewParameter);
+
+	//Set up the ControlElementFactory
+	Picto::ControlElementFactory controlElementFactory;
+	controlElementFactory.addControlElementType(Picto::TestController::ControllerType(), &Picto::TestController::NewTestController);
 }
 
 
@@ -666,12 +680,162 @@ void TestDataStore::TestScene()
 	TestSimpleDataStore(scene, sceneCopy, "Scene");
 }
 
+//! Tests a StateMachine (as well as all the StateMachineElements)
+void TestDataStore::TestStateMachine()
+{
+	///////////////////////////
+	// Results
+	//
+	QSharedPointer<Picto::Result> passResult(new Picto::Result());
+	QSharedPointer<Picto::Result> passResultCopy(new Picto::Result());
+	passResult->setName("Pass");
+
+	//Test a result
+	TestSimpleDataStore(passResult, passResultCopy, "StateMachineElement");
+
+	//These results will be used later
+	QSharedPointer<Picto::Result> failResult(new Picto::Result());
+	failResult->setName("Fail");
+	QSharedPointer<Picto::Result> fixatedResult(new Picto::Result());
+	fixatedResult->setName("Fixated");
+	QSharedPointer<Picto::Result> brokeFixationResult(new Picto::Result());
+	brokeFixationResult->setName("Broke Fixation");
+	QSharedPointer<Picto::Result> passedEmptyResult(new Picto::Result());
+	passedEmptyResult->setName("Pass Empty");
+
+
+
+	/////////////////////////////
+	// FlowElements
+	//
+	QSharedPointer<Picto::FlowElement> flowElement(new Picto::FlowElement());
+	QSharedPointer<Picto::FlowElement> flowElementCopy(new Picto::FlowElement());
+	flowElement->setName("Trial selection");
+
+	QSharedPointer<Picto::ParameterContainer> parameters(new Picto::ParameterContainer());
+
+	QSharedPointer<Picto::RangeParameter> rangeParam(new Picto::RangeParameter);
+	rangeParam->setName("Trial Number");
+	rangeParam->setOrder(1);
+	rangeParam->setIncrement(1);
+	rangeParam->setMax(500);
+	rangeParam->setMin(100);
+	rangeParam->setDefault(1);
+	rangeParam->setUnits("trial");
+
+	parameters->addParameter(rangeParam);
+
+	QSharedPointer<Picto::PredicateExpression> predExpr(new Picto::PredicateExpression("Less than"));
+	predExpr->setLHS("Trial Number");
+	predExpr->setRHSValue(50);
+
+	flowElement->addCondition(predExpr,1,"Less than 50");
+	
+	predExpr->setPredicate("Greater than");
+	flowElement->addCondition(predExpr,2,"Greater than 50");
+
+	TestSimpleDataStore(flowElement, flowElementCopy, "StateMachineElement");
+
+	////////////////////////////////////////
+	// State
+	//
+	QSharedPointer<Picto::State> state1(new Picto::State);
+	QSharedPointer<Picto::State> state1Copy(new Picto::State);
+	state1->setName("Fixation State");
+
+	state1->addResult(fixatedResult);
+	state1->addResult(brokeFixationResult);
+
+	QSharedPointer<Picto::Scene> scene1(new Picto::Scene());
+	state1->setScene(scene1);
+
+
+	
+
+	//Test the state
+	TestSimpleDataStore(state1, state1Copy, "StateMachineElement");
+
+	//Create a second state for use in our state machine
+	QSharedPointer<Picto::State> state2(new Picto::State);
+	state2->setName("Empty State");
+
+	QSharedPointer<Picto::TestController> controller(new Picto::TestController());
+	state2->addControlElement(controller);
+
+
+	//////////////////////////////////
+	// State Machine
+	//
+	//	This state machine should be really simple.  It starts with a FlowElement
+	//	that checks if the trial number is > or < 50.  Depending on this result, it
+	//  sends us to a Fixation trial or an empty trial.  The state machine has two
+	//	possible results: Pass, Fail.
+	QSharedPointer<Picto::StateMachine> stateMachine(new Picto::StateMachine);
+	QSharedPointer<Picto::StateMachine> stateMachineCopy(new Picto::StateMachine);
+	stateMachine->setLevel("Stage");
+	stateMachine->setName("Stage 1");
+
+	stateMachine->addParameter(rangeParam);
+	stateMachine->addElement(passResult);
+	stateMachine->addElement(flowElement);
+	stateMachine->addElement(state1);
+	stateMachine->addElement(state2);
+
+	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Trial selection","Less than 50","Fixation State")));
+	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Fixated","Pass")));
+	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Empty State","Success","Pass")));
+
+	stateMachine->setInitialElement("Trial selection");
+
+	TestSimpleDataStore(stateMachine, stateMachineCopy, "StateMachine");
+
+	//The reason for this odd arrangement is due to the fact that the TestSimpleDataStore function requires
+	//the two XML fragments to be identical, but since we are using lists and maps, the ordering sometimes gets reversed.
+	//So we don't test a full state machine
+	stateMachine->addElement(failResult);
+	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Trial selection","Greater than 50","Empty State")));
+	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Broke Fixation","Fail")));
+	QCOMPARE(stateMachine->validateTransitions(),true);
+
+	//Testing the ability to add substages
+	//QSharedPointer<Picto::StateMachine> stateMachine2(new Picto::StateMachine);
+	//stateMachine2->setLevel("SubStage");
+	//stateMachine2->setName("SubStage 1");
+	//stateMachine2->addElement(passResult);
+	//stateMachine2->addElement(failResult);
+	//stateMachine2->addElement(state1);
+	//stateMachine2->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Fixated","Pass")));
+	//stateMachine2->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Broke Fixation","Fail")));
+	//stateMachine2->setInitialElement("Fixation State");
+
+	//stateMachine->addElement(stateMachine2);
+
+	//Output the StateMachine to file so that we can reuse it later.
+	QFile file("StateMachineTest1.xml");
+	if(!file.open(QIODevice::WriteOnly))
+		return;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&file));
+
+	xmlWriter->setAutoFormatting(true);
+	xmlWriter->writeStartDocument();
+	stateMachine->serializeAsXml(xmlWriter);
+	xmlWriter->writeEndDocument();
+
+	file.close();
+
+
+
+
+}
+
 
 //! This function tests a simple DataStore object
 void TestDataStore::TestSimpleDataStore(QSharedPointer<Picto::DataStore> original, QSharedPointer<Picto::DataStore> copy, QString startElementName)
 {
-	//Serialize it
 	QByteArray originalByteArr;
+	QByteArray copyByteArr;
+
+	//Serialize it
 	QBuffer originalBuffer(&originalByteArr);
 	originalBuffer.open(QBuffer::WriteOnly);
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&originalBuffer));
@@ -692,15 +856,12 @@ void TestDataStore::TestSimpleDataStore(QSharedPointer<Picto::DataStore> origina
 	}
 	copy->deserializeFromXml(xmlReader);
 
-	QString blah=xmlReader->name().toString();
-
 	QCOMPARE(xmlReader->isEndElement(), true);
 	QCOMPARE(xmlReader->name().toString(), QString(startElementName));
 
 	originalBuffer.close();
 
 	//Reserialize it
-	QByteArray copyByteArr;
 	QBuffer copyBuffer(&copyByteArr);
 	copyBuffer.open(QBuffer::WriteOnly);
 	xmlWriter->setDevice(&copyBuffer);

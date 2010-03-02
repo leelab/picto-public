@@ -1,7 +1,7 @@
 #ifndef _BRANCHFLOWELEMENT_H_
 #define _BRANCHFLOWELEMENT_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

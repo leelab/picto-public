@@ -1,7 +1,7 @@
 #ifndef _SIGNAL_H_
 #define _SIGNAL_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

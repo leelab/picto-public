@@ -1,7 +1,7 @@
 #ifndef _LOCALFIELDPOTENTIALDATASTORE_H_
 #define _LOCALFIELDPOTENTIALDATASTORE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

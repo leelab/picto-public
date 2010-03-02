@@ -1,7 +1,7 @@
 #ifndef _PHYSIOLOGICALDATASTORE_H_
 #define _PHYSIOLOGICALDATASTORE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

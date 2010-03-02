@@ -1,7 +1,7 @@
 #ifndef _BEHAVIORALDATASTORE_H_
 #define _BEHAVIORALDATASTORE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

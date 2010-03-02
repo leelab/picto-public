@@ -321,7 +321,7 @@ void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect
 	fontDesc.PitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
 	wchar_t fontName[32];
 	qFontInfo.family().toWCharArray(fontName);
-	wcscpy(fontDesc.FaceName, fontName);
+	wcscpy_s(fontDesc.FaceName,32, fontName);
 
 	hr = D3DXCreateFontIndirect(pD3dDevice_, &fontDesc, &d3dFont);
 	if(hr)

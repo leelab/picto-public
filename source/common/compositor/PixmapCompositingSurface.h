@@ -1,7 +1,7 @@
 #ifndef _PIXMAPCOMPOSITINGSURFACE_H_
 #define _PIXMAPCOMPOSITINGSURFACE_H_
 
-#include "common.h"
+#include "../common.h"
 
 #include "CompositingSurface.h"
 

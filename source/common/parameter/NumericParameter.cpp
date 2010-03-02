@@ -128,12 +128,16 @@ bool NumericParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStream
 bool NumericParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Parameter")
+	{
+		addError("NumericParameter","Incorrect tag, expected <Parameter>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Parameter")
-		return false;
+	}
 	if(xmlStreamReader->attributes().value("type").toString() != type_)
+	{
+		addError("NumericParameter","Incorrect type of parameter",xmlStreamReader);
 		return false;
+	}
 
 	//grab the operatorUI attribute
 	QString operatorUIStr = xmlStreamReader->attributes().value("operatorUI").toString();
@@ -170,13 +174,17 @@ bool NumericParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 		}
 		else
 		{
+			addError("NumericParameter", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();
 	}
 
-
-
+	if(xmlStreamReader->atEnd())
+	{
+		addError("NumericParameter", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
 	return true;
 }
 

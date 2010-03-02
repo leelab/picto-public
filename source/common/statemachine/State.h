@@ -26,9 +26,14 @@ public:
 	void setEngineNeeded(int eng) { engineNeeded_ = eng; };
 	int getEngineNeeded() { return engineNeeded_; };
 
+	void addControlElement(QSharedPointer<ControlElement> controlElement);
+	void removeControlElement(QString controlElementName);
+
+	void setScene(QSharedPointer<Scene> scene) { scene_ = scene; };
+
 private:
 	QSharedPointer<Scene> scene_;
-	QList<QSharedPointer<ControlElement> > controlElements_;
+	QMap<QString, QSharedPointer<ControlElement> > controlElements_;
 	int revision_;
 	int engineNeeded_;
 };

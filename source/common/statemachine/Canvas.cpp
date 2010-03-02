@@ -1,10 +1,45 @@
 #include "Canvas.h"
+#include "../engine/PictoEngine.h"
+#include "../compositor/RenderingTarget.h"
+#include "../compositor/VisualTarget.h"
 
 namespace Picto {
+
+bool layerLessThan(const QSharedPointer<Layer> &l1, const QSharedPointer<Layer> &l2) 
+{ 
+	return l1->getOrder() < l2->getOrder(); 
+}
 
 Canvas::Canvas()
 : backgroundColor_(QColor(Qt::black))
 {
+}
+
+void Canvas::draw()
+{
+	//Grab the RenderingTargets from the engine
+	QList<QSharedPointer< RenderingTarget> > renderingTargets;
+	renderingTargets = Engine::PictoEngine::getRenderingTargets();
+
+	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+	{
+		QSharedPointer<VisualTarget> visualTarget = renderTarget->getVisualTarget();
+
+		//The Layers are sorted as they get added, so we can simply run through them in order
+		foreach(QSharedPointer<Layer> layer, layers_)
+		{
+			layer->draw(visualTarget);
+		}
+
+		visualTarget->present();
+	}
+}
+
+void Canvas::addLayer(QSharedPointer<Layer> layer)
+{ 
+	layers_.push_back(layer); 
+	qSort(layers_.begin(), layers_.end(), &layerLessThan);
+
 }
 
 /*!	\brief Converts this canvas to an XML fragment
@@ -64,13 +99,14 @@ bool Canvas::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	layers_.clear();
 
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Canvas")
+	{
+		addError("Canvas","Incorrect tag, expected <Canvas>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Canvas")
-		return false;
+	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Canvas") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name() == "Canvas") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -98,11 +134,17 @@ bool Canvas::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 		}
 		else
 		{
+			addError("Canvas", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();
 	}
 
+	if(xmlStreamReader->atEnd())
+	{
+		addError("Canvas", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
 	return true;
 }
 

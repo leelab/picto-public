@@ -8,6 +8,7 @@
 #include "TestPredicates.h"
 #include "TestDataStore.h"
 #include "TestParameters.h"
+#include "TestStateMachine.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,10 +22,11 @@ int main(int argc, char *argv[])
 	TestPredicates testPredicatesObject;
 	TestDataStore testDataStoreObject;
 	TestParameters testParametersObject;
-
+	TestStateMachine testStateMachineObject;
 	int result = 0;
 	//result += QTest::qExec((QObject*)&testPredicatesObject);
-	result += QTest::qExec((QObject*)&testDataStoreObject);
+	//result += QTest::qExec((QObject*)&testDataStoreObject);
+	result += QTest::qExec((QObject*)&testStateMachineObject);
 	//result += QTest::qExec((QObject*)&testParametersObject);
 	
 	return result;

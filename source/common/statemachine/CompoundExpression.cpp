@@ -391,10 +391,11 @@ bool CompoundExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "CompoundExpression")
+	{
+		addError("CompoundExpression","Incorrect tag, expected <CompoundExpression>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "CompoundExpression")
-		return false;
+	}
 
 	//read in the attributes
 	QString operatorStr = xmlStreamReader->attributes().value("boolean").toString();
@@ -403,7 +404,10 @@ bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	else if(operatorStr == "or")
 		operator_ = CompoundExpressionOperator::or;
 	else
+	{
+		addError("CompoundExpression","Unexpected boolean operator.", xmlStreamReader);
 		return false;
+	}
 
 	QString invertLeftStr = xmlStreamReader->attributes().value("invertLeft").toString();
 	if(invertLeftStr == "true")
@@ -411,7 +415,10 @@ bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	else if(invertLeftStr == "false")
 		invertLHS_ = false;
 	else
+	{
+		addError("CompoundExpression","Unexpected or missing value for invertLeft", xmlStreamReader);
 		return false;
+	}
 
 	QString invertRightStr = xmlStreamReader->attributes().value("invertRight").toString();
 	if(invertRightStr == "true")
@@ -419,7 +426,10 @@ bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	else if(invertRightStr == "false")
 		invertRHS_ = false;
 	else
+	{
+		addError("CompoundExpression","Unexpected or missing value for invertRight", xmlStreamReader);
 		return false;
+	}
 
 	LHSInitialized_ = false;
 	RHSInitialized_ = false;
@@ -456,7 +466,10 @@ bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 				RHSInitialized_ = true;
 			}
 			else 
+			{
+				addError("CompoundExpression", "Too many Expressions", xmlStreamReader);
 				return false;
+			}
 		}
 		else if(name == "CompoundExpression")
 		{
@@ -476,13 +489,31 @@ bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 				RHSInitialized_ = true;
 			}
 			else 
+			{
+				addError("CompoundExpression", "Too many CompoundExpressions", xmlStreamReader);
 				return false;
+			}
+		}
+		else
+		{
+			addError("CompoundExpression", "Unexpected tag", xmlStreamReader);
+			return false;
 		}
 		xmlStreamReader->readNext();
 
 	}
 
-	return LHSInitialized_ & RHSInitialized_;
+	if(xmlStreamReader->atEnd())
+	{
+		addError("CompoundExpression", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
+	if(!LHSInitialized_ & RHSInitialized_)
+	{
+		addError("CompoundExpression", "Missing one or both sides of the expression", xmlStreamReader);
+		return false;
+	}
+	return true;
 }
 
 }; //namespace Picto

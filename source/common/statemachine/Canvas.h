@@ -23,7 +23,9 @@ public:
 
 	void setBackgroundColor(QColor color) { backgroundColor_ = color; };
 
-	void addLayer(QSharedPointer<Layer> layer) { layers_.push_back(layer); };
+	void addLayer(QSharedPointer<Layer> layer);
+
+	void draw();
 
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

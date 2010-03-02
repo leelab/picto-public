@@ -26,10 +26,15 @@
 #include <QRect>
 #include <QPoint>
 #include <QColor>
+#include <QString>
 
 namespace Picto {
 
+#if defined WIN32 || defined WINCE
+	class PICTOLIB_API DataStore
+#else
 class DataStore
+#endif
 {
 public:
 	DataStore();
@@ -37,7 +42,11 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
+	static QString getErrors();
+
 protected:
+	void addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 	//To make the serialization and desrialization routines easier, the following mini
 	//functions are provided, for serializing and deserializing common data types.
 	//Note that these don't cover all possible data types, so you should expect
@@ -52,6 +61,9 @@ protected:
 	QPoint deserializeQPoint(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QRect deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QColor deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+private:
+	static QStringList errors_;
 
 };
 

@@ -3,10 +3,12 @@
 #define _LAYER_H_
 
 #include <QSharedPointer>
+#include <QTime>
 
 #include "../common.h"
 #include "../storage/DataStore.h"
 #include "../stimuli/VisualElement.h"
+#include "../compositor/VisualTarget.h"
 
 namespace Picto {
 
@@ -19,9 +21,12 @@ class Layer : public DataStore
 public:
 	Layer();
 
-	void addVisualElement( QSharedPointer<VisualElement> v) { visualElements_.push_back(v); };
+	void addVisualElement( QSharedPointer<VisualElement> v);
 	void setOrder(int order) { order_ = order; };
+	int getOrder() { return order_; };
 	void setName(QString name) { name_ = name; };
+
+	void draw(QSharedPointer<VisualTarget> visualTarget);
 
 
 	//DataStore functions
@@ -31,6 +36,9 @@ private:
 	QList<QSharedPointer <VisualElement> > visualElements_;
 	int order_;
 	QString name_;
+
+	int frame_;
+	QTime elapsedTime_;
 
 };
 

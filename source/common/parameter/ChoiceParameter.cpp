@@ -203,12 +203,16 @@ bool ChoiceParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 bool ChoiceParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Parameter")
+	{
+		addError("ChoiceParameter","Incorrect tag, expected <Parameter>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Parameter")
-		return false;
+	}
 	if(xmlStreamReader->attributes().value("type").toString() != type_)
+	{
+		addError("ChoiceParameter","Incorrect type of parameter",xmlStreamReader);
 		return false;
+	}
 
 	//We should clear out the option list in cse this isn't a 
 	//fresh instance
@@ -224,77 +228,86 @@ bool ChoiceParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 
 	//loop through everything else
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Parameter"))
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Parameter") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
-			//do nothing unless we're looking at a start element
+			//Do nothing unless we're at a start element
+			xmlStreamReader->readNext();
+			continue;
 		}
-		else
+		QString name = xmlStreamReader->name().toString();
+		if(name == "Name")
 		{
-			QString name = xmlStreamReader->name().toString();
-			if(name == "Name")
-			{
-				name_ = xmlStreamReader->readElementText();
-			}
-			else if(name == "Order")
-			{
-				order_ = xmlStreamReader->readElementText().toInt();
-			}
-			else if(name == "Choice")
-			{
-				defaultOption_ = xmlStreamReader->attributes().value("default").toString();
-			}
-			else if(name == "Option")
-			{
-				ChoiceParameterOption newOption;
-				QString newOptionLabel;
+			name_ = xmlStreamReader->readElementText();
+		}
+		else if(name == "Order")
+		{
+			order_ = xmlStreamReader->readElementText().toInt();
+		}
+		else if(name == "Choice")
+		{
+			defaultOption_ = xmlStreamReader->attributes().value("default").toString();
+		}
+		else if(name == "Option")
+		{
+			ChoiceParameterOption newOption;
+			QString newOptionLabel;
 
-				xmlStreamReader->readNext();
-				while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Option"))
+			xmlStreamReader->readNext();
+			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Option"))
+			{
+				if(!xmlStreamReader->isStartElement())
 				{
-					if(!xmlStreamReader->isStartElement())
+					//Do nothing unless we're at a start element
+					xmlStreamReader->readNext();
+					continue;
+				}
+				QString name = xmlStreamReader->name().toString();
+				if(name == "Type")
+				{
+					newOption.type = xmlStreamReader->readElementText();
+				}
+				else if(name == "Label")
+				{
+					newOptionLabel = xmlStreamReader->readElementText();
+				}
+				else if(name == "Data")
+				{
+					QString elementText = xmlStreamReader->readElementText();
+					if(!elementText.isEmpty())
 					{
-						//do nothing unless we're looking at a start element
+						newOption.data = elementText;
+						newOption.data.convert(QVariant::nameToType(newOption.type.toAscii()));
 					}
 					else
 					{
-						QString name = xmlStreamReader->name().toString();
-						if(name == "Type")
-						{
-							newOption.type = xmlStreamReader->readElementText();
-						}
-						else if(name == "Label")
-						{
-							newOptionLabel = xmlStreamReader->readElementText();
-						}
-						else if(name == "Data")
-						{
-							QString elementText = xmlStreamReader->readElementText();
-							if(!elementText.isEmpty())
-							{
-								newOption.data = elementText;
-								newOption.data.convert(QVariant::nameToType(newOption.type.toAscii()));
-							}
-							else
-							{
-								//unsupported data type
-								return false;
-							}
-						}
+						addError("ChoiceParameter", "Unsupported data type in option", xmlStreamReader);
+						return false;
 					}
-					xmlStreamReader->readNext();
 				}
-				options_[newOptionLabel] = newOption;
+				else
+				{
+					addError("ChoiceParameter", "Unexpected tag within <Option>", xmlStreamReader);
+					return false;
+				}
+				xmlStreamReader->readNext();
+			}
+			options_[newOptionLabel] = newOption;
 
-			}
-			else
-			{
-				//unexpected tag
-				return false;
-			}
+		}
+		else
+		{
+			addError("ChoiceParameter", "Unexpected tag", xmlStreamReader);
+			return false;
 		}
 		xmlStreamReader->readNext();
+	}
+
+	if(xmlStreamReader->atEnd())
+	{
+		addError("ChoiceParameter", "Unexpected end of document", xmlStreamReader);
+		return false;
 	}
 	return true;
 }

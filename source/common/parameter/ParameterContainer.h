@@ -19,12 +19,12 @@ class ParameterContainer : public DataStore
 {
 public:
 	ParameterContainer();
-	~ParameterContainer() {};
 
 	void addParameter(QSharedPointer<Parameter> parameter);
 	QSharedPointer<Parameter> getParameter(QString name);
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	QStringList getParameterList();
 
 private:
 	QMap<QString, QSharedPointer<Parameter> > parameters_;

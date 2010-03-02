@@ -4,9 +4,42 @@
 
 namespace Picto {
 
+QStringList DataStore::errors_;
+
 DataStore::DataStore()
 {
 }
+
+/*! \brief Adds an error message to the list of errors
+ *
+ *	We maintain a list of erros so that errors can be tracked through the deserialization
+ *	process.
+ */
+void DataStore::addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	QString newErr = "ERROR\n";
+	newErr += "Object: " + objectType + "\n";
+	newErr += QString("Line: %1\n").arg(xmlStreamReader->lineNumber());
+	newErr += "Element: " + xmlStreamReader->tokenString() + "\n";
+	newErr += "Message: " + errorMsg + "\n";
+
+	errors_.append(newErr);
+}
+
+/*!	\brief Returns a string listing all errors that have occured
+ */
+QString DataStore::getErrors()
+{
+	QString errorString = "DESERIALIZATION ERRORS\n\n";
+
+	for(int i=0; i<errors_.length(); i++)
+	{
+		errorString += errors_[i] + "\n";
+	}
+	return errorString;
+
+}
+
 
 
 void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 

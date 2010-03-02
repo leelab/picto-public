@@ -1,7 +1,7 @@
 #ifndef _PUPILDIAMETERDATASTORE_H_
 #define _PUPILDIAMETERDATASTORE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

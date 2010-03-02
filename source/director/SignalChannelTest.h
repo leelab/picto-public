@@ -13,6 +13,7 @@
 #include "../common/engine/PictoBoxXPAnalogInputSignalChannel.h"
 #include "../common/stimuli/CircleGraphic.h"
 
+
 class SignalChannelTest : public QObject
 {
 	Q_OBJECT

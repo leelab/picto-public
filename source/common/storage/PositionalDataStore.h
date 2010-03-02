@@ -1,7 +1,7 @@
 #ifndef _POSITIONALDATASTORE_H_
 #define _POSITIONALDATASTORE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

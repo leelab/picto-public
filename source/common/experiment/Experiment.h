@@ -1,7 +1,7 @@
 #ifndef _EXPERIMENT_H_
 #define _EXPERIMENT_H_
 
-#include "common.h"
+#include "../common.h"
 
 #include "../task/Task.h"
 #include "../storage/DataStore.h"

@@ -160,70 +160,78 @@ bool VisualElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
  */
 bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	//do some basic error checking to confirm that the caller isn't dumb
-	if(!xmlStreamReader->isStartElement())
+	//Do some basic error checking
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "VisualElement")
+	{
+		addError("VisualElement","Incorrect tag, expected <VisualElement>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "VisualElement")
-		return false;
+	}
 	if(xmlStreamReader->attributes().value("type").toString() != propertyContainer_.getContainerName())
+	{
+		addError("VisualElement","Incorrect type of VisualElement, expected "+propertyContainer_.getContainerName(),xmlStreamReader);
 		return false;
+	}
 
-	//deserialize
-	//bool success = deserializePropertiesFromXML(xmlStreamReader);
-	
-	//loop through the XML modifying properties as we go.
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "VisualElement"))
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "VisualElement") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
 			//do nothing unless we're looking at a start element
+			xmlStreamReader->readNext();
+			continue;
+		}
+
+		QString type = xmlStreamReader->name().toString();
+		QString name = xmlStreamReader->attributes().value("name").toString();
+
+		//deserialze the property based on the type of the current property value
+		if(type == "QPoint")
+		{
+			QPoint point;
+			point = deserializeQPoint(xmlStreamReader);
+			propertyContainer_.setPropertyValue(name,point);
+		}
+		else if(type == "QRect")
+		{
+			QRect rect;
+			rect = deserializeQRect(xmlStreamReader);
+			propertyContainer_.setPropertyValue(name,rect);
+		}			
+		else if(type == "QColor")
+		{
+			QColor color;
+			color = deserializeQColor(xmlStreamReader);
+			propertyContainer_.setPropertyValue(name,color);
+		}
+		else if(type == "QString")
+		{
+			QString string;
+			string = xmlStreamReader->readElementText();
+			propertyContainer_.setPropertyValue(name,string);
+		}
+		else if(type == "int")
+		{
+			int intValue;
+			intValue = xmlStreamReader->readElementText().toInt();
+			propertyContainer_.setPropertyValue(name,intValue);
 		}
 		else
 		{
-			QString type = xmlStreamReader->name().toString();
-			QString name = xmlStreamReader->attributes().value("name").toString();
-
-			//deserialze the property based on the type of the current property value
-			if(type == "QPoint")
-			{
-				QPoint point;
-				point = deserializeQPoint(xmlStreamReader);
-				propertyContainer_.setPropertyValue(name,point);
-			}
-			else if(type == "QRect")
-			{
-				QRect rect;
-				rect = deserializeQRect(xmlStreamReader);
-				propertyContainer_.setPropertyValue(name,rect);
-			}			
-			else if(type == "QColor")
-			{
-				QColor color;
-				color = deserializeQColor(xmlStreamReader);
-				propertyContainer_.setPropertyValue(name,color);
-			}
-			else if(type == "QString")
-			{
-				QString string;
-				string = xmlStreamReader->readElementText();
-				propertyContainer_.setPropertyValue(name,string);
-			}
-			else if(type == "int")
-			{
-				int intValue;
-				intValue = xmlStreamReader->readElementText().toInt();
-				propertyContainer_.setPropertyValue(name,intValue);
-			}
-			else
-			{
-				//If you have reached this point, it means that we have encountered
-				//some sort of unexpected data type in one of the VisualElements. 
-				//The developer will need to add support for the new data type.
-				return false;
-			}
+			//If you have reached this point, it means that we have encountered
+			//some sort of unexpected data type in one of the VisualElements. 
+			//The developer will need to add support for the new data type.
+			addError("VisualElement", "Unexpected tag (likely due to an unsupported data type", xmlStreamReader);
+			return false;
 		}
+
 		xmlStreamReader->readNext();
+	}
+
+	if(xmlStreamReader->atEnd())
+	{
+		addError("VisualElement", "Unexpected end of document", xmlStreamReader);
+		return false;
 	}
 
 	return true;

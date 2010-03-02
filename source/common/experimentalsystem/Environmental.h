@@ -1,7 +1,7 @@
 #ifndef _ENVIRONMENTAL_H_
 #define _ENVIRONMENTAL_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

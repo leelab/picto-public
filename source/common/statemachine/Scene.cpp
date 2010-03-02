@@ -3,7 +3,14 @@
 namespace Picto {
 
 Scene::Scene()
+: canvas_(QSharedPointer<Canvas>(new Canvas))
 {
+}
+
+void Scene::render()
+{
+	//! \TODO "render" the audio stuff
+	canvas_->draw();
 }
 
 /*	\brief Converts this scene into an XML fragment
@@ -45,10 +52,11 @@ bool Scene::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 bool Scene::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Scene")
+	{
+		addError("Scene","Incorrect tag, expected <Scene>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Scene")
-		return false;
+	}
 
 	xmlStreamReader->readNext();
 	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Scene") && !xmlStreamReader->atEnd())
@@ -65,7 +73,10 @@ bool Scene::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		{
 			canvas_ = QSharedPointer<Canvas>(new Canvas);
 			if(!canvas_->deserializeFromXml(xmlStreamReader))
+			{
+				addError("Scene","Failed to deserialize Canvas",xmlStreamReader);
 				return false;
+			}
 		}
 		else if(name == "AudioElement")
 		{
@@ -73,11 +84,23 @@ bool Scene::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		}
 		else
 		{
+			addError("Scene", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();
 	}
 
+	if(xmlStreamReader->atEnd())
+	{
+		addError("Scene", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
+
+	if(xmlStreamReader->atEnd())
+	{
+		addError("Scene", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
 	return true;
 }
 

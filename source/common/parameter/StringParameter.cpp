@@ -25,6 +25,7 @@ bool StringParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 }
 bool StringParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
+	addError("StringParameter", "Deserialization function not yet implemented", xmlStreamReader);
 	return false;
 }
 

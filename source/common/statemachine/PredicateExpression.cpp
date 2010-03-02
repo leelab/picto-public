@@ -282,10 +282,11 @@ bool PredicateExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStr
 bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Expression")
+	{
+		addError("PredicateExpression","Incorrect tag, expected <Expression>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Expression")
-		return false;
+	}
 
 	bool lhsInit = false;
 	bool rhsInit = false;
@@ -301,11 +302,8 @@ bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 			xmlStreamReader->readNext();
 			continue;
 		}
-		//use the name to set up the sides and predicate.
-		//Note that we assume the order is LHS, predicate, RHS
 		QString name = xmlStreamReader->name().toString();
 
-		//LHS parameter
 		if(name == "Parameter")
 		{
 			//LHS parameter
@@ -322,14 +320,11 @@ bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 				useRHSVal_ = false;
 			}
 		}
-		//predicate
 		else if(name == "Comparison")
 		{
 			predicateName_ = xmlStreamReader->readElementText();
 			predInit = true;
 		}
-		
-		//RHS constant value
 		else if(name == "Value" && lhsInit && !rhsInit)
 		{
 			QString valueTypeStr;
@@ -350,13 +345,35 @@ bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 		}
 		else
 		{
+			addError("PredicateExpression", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 	
 		xmlStreamReader->readNext();
 	}
-	
-	return lhsInit & rhsInit & predInit;
+
+	if(xmlStreamReader->atEnd())
+	{
+		addError("PredicateExpression", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
+	if(!lhsInit)
+	{
+		addError("PredicateExpression", "Left hand side of expression not defined", xmlStreamReader);
+		return false;
+	}
+	if(!rhsInit)
+	{
+		addError("PredicateExpression", "Right hand side of expression not defined", xmlStreamReader);
+		return false;
+	}
+	if(!predInit)
+	{
+		addError("PredicateExpression", "Predicate not defined", xmlStreamReader);
+		return false;
+	}
+
+	return true;
 }
 
 

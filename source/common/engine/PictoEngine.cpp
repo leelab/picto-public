@@ -8,6 +8,9 @@
 namespace Picto {
 	namespace Engine {
 
+QList<QSharedPointer<RenderingTarget> > PictoEngine::renderingTargets_;
+
+
 PictoEngine::PictoEngine() :
 	timingType_(PictoEngineTimingType::precise),
 	bExclusiveMode_(false)
@@ -27,6 +30,16 @@ void PictoEngine::beginExclusiveMode()
 void PictoEngine::endExclusiveMode()
 {
 	/*! \todo Implement Me */
+}
+
+QList<QSharedPointer<RenderingTarget> > PictoEngine::getRenderingTargets()
+{
+	return renderingTargets_;
+}
+
+void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
+{	
+	renderingTargets_.append(target);
 }
 
 void PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> //experiment

@@ -2,7 +2,7 @@
 
 #include <QSharedPointer>
 
-#include "common.h"
+#include "../common.h"
 
 #include "AnnounceCommandHandler.h"
 #include "GetCommandHandler.h"

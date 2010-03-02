@@ -27,6 +27,8 @@
 #include "../common/experiment/RewardCalibration.h"
 #include "../common/experiment/EyeTrackerCalibration.h"
 
+#include "EngineTest.h"
+
 
 
 void TestPixmapRendering();
@@ -80,9 +82,11 @@ int main(int argc, char *argv[])
 	srand(QTime::currentTime().msecsTo(QTime(0,0)));
 
 
-	/*************************************************
-	 * Testing rendering  
-	 *************************************************/
+/*************************************************
+ * Testing stuff
+ *************************************************/
+	EngineTest engineTest;
+	engineTest.exec();
 	//TestPixmapRendering();
 
 #ifdef WINCE
@@ -93,54 +97,31 @@ int main(int argc, char *argv[])
 	//TestD3DRendering();
 #endif
 
-	/*************************************************
-	 * Testing event code generation
-	 *************************************************/
 	//TestEventGeneration();
 
-
-	/*************************************************
-	 * Testing the signal channel.  
-	 *
-	 * This only works in WinCE, so don't uncomment the line
-	 * unless it's a CE build...
-	 *************************************************/
-	SignalChannelTest sigChanTest;
-	sigChanTest.exec();
+	//SignalChannelTest sigChanTest;
+	//sigChanTest.exec();
 
 	//TestVSync();
 
 	//TestRewardCalibration();
 	//TestEyeTrackerCalibration();
 
-//////////////////////////////
-/*
-void PixmapRenderingTarget::foundServer(QHostAddress serverAddress, quint16 serverPort)
-{
-	updateStatus(QString("Found server at %1:%2").arg(serverAddress.toString()).arg(serverPort));
-}
-
-void PixmapRenderingTarget::discoverServerFailed()
-{
-	updateStatus("Server discover failed");
-}
-*/
-
-	Picto::ServerDiscoverer serverDiscoverer;
+	//Picto::ServerDiscoverer serverDiscoverer;
 	//QObject::connect(&serverDiscoverer, SIGNAL(foundServer(QHostAddress, quint16)), &renderingTarget, SLOT(foundServer(QHostAddress, quint16)));
 	//QObject::connect(&serverDiscoverer, SIGNAL(discoverFailed()), &renderingTarget, SLOT(discoverServerFailed()));
 
-	serverDiscoverer.discover();
+	//serverDiscoverer.discover();
 
 	/*! \todo DirectorCommandChannel directorCommandChannel; */
 
 	
-	int result = app.exec();
+	//int result = app.exec();
 
 	Picto::CloseLib();
 
 	//return result;
-	return 0;
+	//return 0;
 }
 
 /*! \todo PictoEngine object which loads an experiment object and can execute its contained tasks rendering to one or

@@ -18,11 +18,17 @@ class FlowElement : public StateMachineElement
 {
 public:
 	FlowElement();
+	FlowElement(QSharedPointer<ParameterContainer> parameters);
 	
 	QString run();
 
 	bool addCondition(QSharedPointer<PredicateExpression> predExpr, int order, QString name);
 	bool addCondition(QSharedPointer<CompoundExpression> compExpr, int order, QString name);
+
+	//DataStore functions
+	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 	typedef struct
 	{
 		bool isCompound;
@@ -32,12 +38,7 @@ public:
 		QString name;
 	} Condition;
 
-	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private:
-
 	QList<Condition> conditions_;
 
 

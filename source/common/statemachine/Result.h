@@ -1,4 +1,10 @@
 /*!	\brief A Result is a state machine element that determines what is returned
+ *	
+ *	Results are used in two disparate manners.  If a result is added to a StateMachine
+ *	it acts as a StateMachineElement; you can transition to it, and call run on it.
+ *	However, results are also used within StateMachineElements.  When addResult is
+ *	called, on a StateMachineElement, the "name" of the result is added to the 
+ *	element's result list.
  */
 
 #ifndef _RESULT_H_
@@ -19,13 +25,9 @@ public:
 	Result();
 
 	QString run();
-	void setResultValue(QString value) { resultValue_ = value; };
 
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:	
-	QString resultValue_;	//e.g. "Success", "Broke Fixation", etc
 };
 
 

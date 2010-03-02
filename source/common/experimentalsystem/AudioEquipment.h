@@ -1,7 +1,7 @@
 #ifndef _AUDIOEQUIPMENT_H_
 #define _AUDIOEQUIPMENT_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

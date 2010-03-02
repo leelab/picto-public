@@ -41,6 +41,9 @@ public:
 	virtual QSharedPointer<CompositingSurface> generateCompositingSurface();
 	virtual QSharedPointer<MixingSample> generateMixingSample();
 
+	QSharedPointer<VisualTarget> getVisualTarget() { return visualTarget_; };
+	QSharedPointer<AuralTarget> getAuralTarget() { return auralTarget_; };
+
 private:
 	QSharedPointer<VisualTarget> visualTarget_;
 	QSharedPointer<AuralTarget> auralTarget_;

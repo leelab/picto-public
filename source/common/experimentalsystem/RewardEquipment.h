@@ -1,7 +1,7 @@
 #ifndef _REWARDEQUIPMENT_H_
 #define _REWARDEQUIPMENT_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

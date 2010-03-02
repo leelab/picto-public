@@ -5,12 +5,12 @@ namespace Picto
 
 Result::Result()
 {
-	type_ = "Result";
+	propertyContainer_.setPropertyValue("Type","Result");
 }
 
 QString Result::run()
 {
-	return resultValue_;
+	return propertyContainer_.getPropertyValue("Name").toString();
 }
 
 
@@ -18,19 +18,18 @@ QString Result::run()
  *
  *	The XML fragment for a result will look like this:
  * 
- *	<Result>
- *		<ID>{d2c2b990-2227-11df-8a39-0800200c9a66}</ID>
+ *	<StateMachineElement type="Result">
  *		<Name>BrokeFixation</Name>
- *	</Result>
+ *	</StateMachineElement>
  */
 bool Result::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("Result");
+	xmlStreamWriter->writeStartElement("StateMachineElement");
+	xmlStreamWriter->writeAttribute("type","Result");
 	
-	xmlStreamWriter->writeTextElement("ID",getId().toString());
-	xmlStreamWriter->writeTextElement("Name",name_);
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
 
-	xmlStreamWriter->writeEndElement(); //Result
+	xmlStreamWriter->writeEndElement(); //StateMachineElement
 	return true;
 }
 
@@ -38,13 +37,19 @@ bool Result::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
+	{
+		addError("Result","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Result")
+	}
+	if(xmlStreamReader->attributes().value("type").toString() != type())
+	{
+		addError("Result","Incorrect type of StateMachineElement, expected Result",xmlStreamReader);
 		return false;
+	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Result") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -54,15 +59,10 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "ID")
+		if(name == "Name")
 		{
-			QString idStr = xmlStreamReader->readElementText();
-			setId(QUuid(idStr));
-			registerObject();
-		}
-		else if(name == "Name")
-		{
-			name_ = xmlStreamReader->readElementText();
+			addError("Result", "Unexpected tag", xmlStreamReader);
+			propertyContainer_.setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
 		}
 		else
 		{
@@ -72,7 +72,10 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	}
 	
 	if(xmlStreamReader->atEnd())
+	{
+		addError("Result", "Unexpected end of document", xmlStreamReader);
 		return false;
+	}
 
 	return true;
 }

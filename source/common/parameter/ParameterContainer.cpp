@@ -7,9 +7,6 @@ ParameterContainer::ParameterContainer()
 {
 }
 
-
-
-
 void ParameterContainer::addParameter(QSharedPointer<Parameter> parameter)
 {
 	Q_ASSERT(!parameters_.contains(parameter->name()));
@@ -21,6 +18,19 @@ QSharedPointer<Parameter> ParameterContainer::getParameter(QString name)
 	return parameters_.value(name,QSharedPointer<Parameter>());
 }
 
+//! \brief Returns a list of all contained parameters
+QStringList ParameterContainer::getParameterList()
+{
+	QStringList parameterList;
+
+	QMap<QString, QSharedPointer<Parameter>>::const_iterator param = parameters_.begin();
+	while (param != parameters_.end()) 
+	{
+		parameterList.append(param.key());
+		++param;
+	}
+	return parameterList;
+}
 
 bool ParameterContainer::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -41,10 +51,11 @@ bool ParameterContainer::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 bool ParameterContainer::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Parameters")
+	{
+		addError("ParameterContainer","Incorrect tag, expected <Parameters>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Parameters")
-		return false;
+	}
 
 	ParameterFactory paramFactory;
 
@@ -74,14 +85,20 @@ bool ParameterContainer::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 		}
 		else
 		{
-			//unexpected tag
+			addError("ParameterContainer", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 
 
 
 	}
-	return false;
+
+	if(xmlStreamReader->atEnd())
+	{
+		addError("ParameterContainer", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
+	return true;
 }
 
 }; //namespace Picto

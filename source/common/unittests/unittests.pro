@@ -14,6 +14,8 @@ SOURCES += $$(PICTO_TREE)/source/common/unittests/TestDataStore.cpp
 HEADERS += $$(PICTO_TREE)/source/common/unittests/TestDataStore.h
 SOURCES += $$(PICTO_TREE)/source/common/unittests/TestParameters.cpp
 HEADERS += $$(PICTO_TREE)/source/common/unittests/TestParameters.h
+SOURCES += $$(PICTO_TREE)/source/common/unittests/TestStateMachine.cpp
+HEADERS += $$(PICTO_TREE)/source/common/unittests/TestStateMachine.h
 
 
 include($$(PICTO_TREE)/source/common/common.pri)

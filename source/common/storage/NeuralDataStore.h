@@ -1,7 +1,7 @@
 #ifndef _NEURALDATASTORE_H_
 #define _NEURALDATASTORE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

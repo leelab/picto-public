@@ -1,14 +1,55 @@
 #include "Layer.h"
 
 #include "../stimuli/VisualElementFactory.h"
+#include "../compositor/RenderingTarget.h"
+#include "../compositor/VisualTarget.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
 Layer::Layer()
-	: order_(0)
+	: order_(0),
+	 frame_(0)
 {
 	name_ = "";
+	elapsedTime_.start();
 }
+
+void Layer::addVisualElement(QSharedPointer<VisualElement> v)
+{
+	//add the appropriate compositing surfaces to the element
+	QSharedPointer<Picto::CompositingSurface> compositingSurface;
+
+	QList<QSharedPointer<RenderingTarget> > renderingTargets;
+	renderingTargets = Engine::PictoEngine::getRenderingTargets();
+
+	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+	{
+		compositingSurface = renderTarget->generateCompositingSurface();
+		v->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+	}
+
+	visualElements_.push_back(v);
+}
+
+/*! \brief This is where the actual rendering occurs
+ *
+ *	This gets called by the Canvas for every rendering taget 
+ *  currently being used by the engine.
+ */
+void Layer::draw(QSharedPointer<VisualTarget> visualTarget)
+{
+	//run through all our visualElements updating the animation and drawing
+	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
+	{
+		visualElement->updateAnimation(frame_,elapsedTime_);
+		visualTarget->draw(visualElement->getPosition(),visualElement->getCompositingSurface(visualTarget->getTypeName()));
+	}
+
+	frame_++;
+	elapsedTime_.restart();
+}
+
 
 /*!	\brief Converts this canvas to an XML fragment
  *
@@ -59,10 +100,11 @@ bool Layer::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	visualElements_.clear();
 
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Layer")
+	{
+		addError("Layer","Incorrect tag, expected <Layer>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Layer")
-		return false;
+	}
 
 	//We'll need a visual element factory
 	VisualElementFactory visualElementFactory;
@@ -91,14 +133,24 @@ bool Layer::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 			QString visualElementType = xmlStreamReader->attributes().value("type").toString();
 			QSharedPointer<VisualElement> newVisualElement = visualElementFactory.generateVisualElement(visualElementType);
 			if(!newVisualElement->deserializeFromXml(xmlStreamReader))
+			{
+				addError("Layer", "Failed to deserialize a VisualElement", xmlStreamReader);
 				return false;
-			visualElements_.push_back(newVisualElement);
+			}
+			addVisualElement(newVisualElement);
 		}
 		else
 		{
+			addError("Layer", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();
+	}
+
+	if(xmlStreamReader->atEnd())
+	{
+		addError("Layer", "Unexpected end of document", xmlStreamReader);
+		return false;
 	}
 
 	return true;

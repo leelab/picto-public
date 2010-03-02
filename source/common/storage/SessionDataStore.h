@@ -1,7 +1,7 @@
 #ifndef _SESSIONDATASTORE_H_
 #define _SESSIONDATASTORE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

@@ -1,7 +1,7 @@
 #ifndef _BLOCKGENERATOR_H_
 #define _BLOCKGENERATOR_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

@@ -1,7 +1,7 @@
 #ifndef _SUBJECTPOSITION_H_
 #define _SUBJECTPOSITION_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

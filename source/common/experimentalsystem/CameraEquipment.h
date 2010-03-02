@@ -1,7 +1,7 @@
 #ifndef _CAMERAEQUIPMENT_H_
 #define _CAMERAEQUIPMENT_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

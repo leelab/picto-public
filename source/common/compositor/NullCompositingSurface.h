@@ -1,7 +1,7 @@
 #ifndef _NULLCOMPOSITINGSURFACE_H_
 #define _NULLCOMPOSITINGSURFACE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

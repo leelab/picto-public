@@ -80,12 +80,16 @@ bool BooleanParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStream
 bool BooleanParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Parameter")
+	{
+		addError("BooleanParameter","Incorrect tag, expected <Parameter>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "Parameter")
-		return false;
+	}
 	if(xmlStreamReader->attributes().value("type").toString() != type_)
+	{
+		addError("BooleanParameter","Incorrect type of parameter",xmlStreamReader);
 		return false;
+	}
 
 	//grab the operatorUI attribute
 	QString operatorUIStr = xmlStreamReader->attributes().value("operatorUI").toString();
@@ -101,53 +105,62 @@ bool BooleanParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
-			//do nothing unless we're looking at a start element
+			//Do nothing unless we're at a start element
+			xmlStreamReader->readNext();
+			continue;
+		}
+
+		QString name = xmlStreamReader->name().toString();
+
+		//LHS parameter
+		if(name == "Name")
+		{
+			name_ = xmlStreamReader->readElementText();
+		}
+		else if(name == "Order")
+		{
+			order_ = xmlStreamReader->readElementText().toInt();
+		}
+		else if(name == "Boolean")
+		{
+			QString defaultStr = xmlStreamReader->attributes().value("default").toString();
+			if(defaultStr == "true")
+				defaultValue_ = true;
+			else if(defaultStr == "false")
+				defaultValue_ = false;
+			else 
+			{
+				addError("BooleanParameter", "Incorrect default value in <Boolean>", xmlStreamReader);
+				return false;
+			}
+		}
+		else if(name == "Label")
+		{
+			QString stateStr = xmlStreamReader->attributes().value("state").toString();
+			if(stateStr == "true")
+				trueLabel_ = xmlStreamReader->readElementText();
+			else if(stateStr == "false")
+				falseLabel_ = xmlStreamReader->readElementText();
+			else
+			{
+				addError("BooleanParameter", "Incorrect state value in <Label>", xmlStreamReader);
+				return false;
+			}
 		}
 		else
 		{
-			QString name = xmlStreamReader->name().toString();
-
-			//LHS parameter
-			if(name == "Name")
-			{
-				name_ = xmlStreamReader->readElementText();
-			}
-			else if(name == "Order")
-			{
-				order_ = xmlStreamReader->readElementText().toInt();
-			}
-			else if(name == "Boolean")
-			{
-				QString defaultStr = xmlStreamReader->attributes().value("default").toString();
-				if(defaultStr == "true")
-					defaultValue_ = true;
-				else if(defaultStr == "false")
-					defaultValue_ = false;
-				else 
-					return false;
-			}
-			else if(name == "Label")
-			{
-				QString stateStr = xmlStreamReader->attributes().value("state").toString();
-				if(stateStr == "true")
-					trueLabel_ = xmlStreamReader->readElementText();
-				else if(stateStr == "false")
-					falseLabel_ = xmlStreamReader->readElementText();
-				else
-					return false;
-			}
-			else
-			{
-				//unexpected tag
-				return false;
-			}
-
-
+			addError("BooleanParameter", "Unexpected tag", xmlStreamReader);
+			return false;
 		}
+	
 		xmlStreamReader->readNext();
 	}
 
-
+	if(xmlStreamReader->atEnd())
+	{
+		addError("BooleanParameter", "Unexpected end of document", xmlStreamReader);
+		return false;
+	}
 	return true;
 }
 

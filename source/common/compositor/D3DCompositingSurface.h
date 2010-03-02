@@ -4,7 +4,7 @@
 #include <d3d9.h>
 #include <QImage>
 
-#include "common.h"
+#include "../common.h"
 #include "CompositingSurface.h"
 
 namespace Picto {

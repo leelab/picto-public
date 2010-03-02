@@ -1,7 +1,7 @@
 #ifndef _ANALYSISMODULE_H_
 #define _ANALYSISMODULE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

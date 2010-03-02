@@ -1,7 +1,7 @@
 #ifndef _TDTINTERFACE_H_
 #define _TDTINTERFACE_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

@@ -1,8 +1,17 @@
 /*!	\brief A StateMachineElement is a piece that can be used in a state machine
  *	
- *	StateMachineElements would include FlowElements, States, Trials, 
- *	Stages, and States.  Not all StateMachineElements need all of
- *	the functionality provided.
+ *	StateMachineElements include FlowElements, Results, States, and StateMchines
+ *	themselves. Not all StateMachineElements need all of the functionality provided.
+ *
+ *	Calling run() on a state machine element returns a result.
+ *
+ *	StateMchineElements are connected by transitions objects.  A transition
+ *	connects a specific result from a specific StateMachineElement to antother
+ *	specific StateMachineElement.
+ *
+ *	Parameters are local+global in scope, so a StateMachineElement has access to 
+ *	its own parameters as well as the parameters from above it in the hierarchy.
+ *	
  */
 
 #ifndef _STATEMACHINEELEMENT_H_
@@ -16,32 +25,41 @@
 #include <QSharedPointer>
 #include <QStringList>
 
-#include "../random/PictoIdentifiableObject.h"
+#include "../parameter/ParameterContainer.h"
+#include "../parameter/Parameter.h"
+#include "../property/PropertyContainer.h"
 #include "../storage/DataStore.h"
 
 namespace Picto {
 
+class Result;
+
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API StateMachineElement : public QObject, public PictoIdentifiableObject, public DataStore
+class PICTOLIB_API StateMachineElement : public QObject, public DataStore
 #else
-class StateMachineElement : public QObject, public PictoIdentifiableObject
+class StateMachineElement : public QObject, public DataStore
 #endif
 {
 	Q_OBJECT
 
 public:
 	StateMachineElement();
+	StateMachineElement(QSharedPointer<ParameterContainer> parameters);
 
 	//All StateMachineElements must implement a run function that returns a string
+	//The returned string should correspond to a result contained by the element
 	virtual QString run() = 0;
 	
-	QString type() { return type_; }
-	bool addTransition(QUuid source, QString condition, QUuid destination);
-	bool setDefaultTransition(QUuid source, QUuid destination);
-	bool setInitialElement(QUuid id);
 
-	void setName(QString name) { name_ = name; };
-	QString getName() { return name_; }
+	bool addResult(QSharedPointer<Result> result);
+	QStringList getResultList();
+	void addParameters(QSharedPointer<ParameterContainer> parameters);
+	void addParameters(ParameterContainer &parameters);
+
+
+	void setName(QString name);
+	QString getName();
+	QString type();
 
 	virtual QPoint getDisplayLayoutPosition();
 
@@ -53,26 +71,19 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
+	bool serializeResults(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	bool deserializeResults(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 protected:
-	bool serializeTransitions(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeTransitions(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-
-	QString type_;	//e.g. "FlowElement", "Stage", etc
-	QStringList validConatinedTypes_; //Types of elements that this element can contain
-	QMap<QUuid, QMap<QString, QUuid> > transitions_;	//transition map <source, <condition, destination> >
-	QMap<QUuid, QUuid> defaultTransitions_;
-
-	QUuid initialElement_;	//Where do we start?
-
-	QString name_;
+	ParameterContainer parameterContainer_;
+	QStringList results_;
+	QString defaultResult_;
 
 	QPoint layoutPosition_;
 
-
-	
-
+	PropertyContainer propertyContainer_;	//This should be used for any properties that can be 
+											//changed by Javascript, or edited/displayed in the GUI
 };
 
 

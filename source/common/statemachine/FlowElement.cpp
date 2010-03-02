@@ -1,4 +1,5 @@
 #include "FlowElement.h"
+#include "Result.h"
 
 namespace Picto {
 
@@ -9,11 +10,25 @@ bool conditionLessThan(const FlowElement::Condition &c1, const FlowElement::Cond
 
 FlowElement::FlowElement()
 {
-	type_ = "FlowElement";
+	propertyContainer_.setPropertyValue("Type","FlowElement");
+	
+	//At some point, we may want to make the default result name user modifiable...
+	defaultResult_ = "default";
+}
+FlowElement::FlowElement(QSharedPointer<ParameterContainer> parameters)
+: StateMachineElement(parameters)
+{
+	propertyContainer_.setPropertyValue("Type","FlowElement");
+	
+	//At some point, we may want to make the default result name user modifiable...
+	defaultResult_ = "default";
 }
 
 QString FlowElement::run()
 {
+	//before using predicates, we have to set the parameter container
+	PredicateExpression::setParameterContainer(QSharedPointer<ParameterContainer>(&parameterContainer_));
+
 	//The Condition list is sorted by the order values, so all we have to do is run 
 	//through it evaluating conditions.
 	foreach(Condition c, conditions_)
@@ -34,8 +49,8 @@ QString FlowElement::run()
 		}
 	}
 
-	//if we made it this far, nothing evaluated true, so return an empty string
-	return "";
+	//if we made it this far, nothing evaluated true, so return the default result
+	return defaultResult_;
 
 }
 
@@ -62,6 +77,12 @@ bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr, int
 	//will all occur at the beginning, and there aren't likely to be more than a few
 	//Conditions.  Also, it's better to sort here, than when the FlowElement is run
 	qSort(conditions_.begin(), conditions_.end(), &conditionLessThan);
+
+	//add the condition name to our list of results (even though we aren't
+	//really using the result list in this case...)
+	QSharedPointer<Result> r(new Result());
+	r->setName(name);
+	addResult(r);
 
 	return true;
 }
@@ -90,6 +111,12 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr, int 
 	//Conditions.  Also, it's better to sort here, than when the FlowElement is run
 	qSort(conditions_.begin(), conditions_.end(), &conditionLessThan);
 
+	//add the condition name to our list of results (even though we aren't
+	//really using the result list in this case...)
+	QSharedPointer<Result> r;
+	r->setName(name);
+	addResult(r);
+
 	return true;
 }
 
@@ -97,8 +124,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr, int 
 /*	\brief Converts this FlowElement into an XML fragment
  *
  *	The FlowElement will look something like this when converted to XML:
- *		<FlowElement>
- *			<ID>{07B5A6FE-EE99-4f26-8F65-9537E5A5E2E3}</ID>
+ *		<StateMachineElement type = "FlowElement">
  *			<Name>Trial Type Branch</Name>
  *			<Conditions>
  *				<Condition>
@@ -111,19 +137,27 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr, int 
  *				<Condition>
  *					<Name>Condition 2</Name>
  *					<Order>2</Order>
- *					<PredicateExpression>
+ *					<Expression>
  *						...
- *					</PredicateExpression>
+ *					</Expression>
  *				</Condition>
  *			</Conditions>
- *		</FlowElement>
+ *			<Results>
+ *				<Result>
+ *					<Name>Condition 1</Name>
+ *				</Result>
+ *				<Result>
+ *					<Name>Condition 2</Name>
+ *				</Result>
+ *			<Results>
+ *		</StateMachineElement>
  */
 bool FlowElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("FlowElement");
+	xmlStreamWriter->writeStartElement("StateMachineElement");
+	xmlStreamWriter->writeAttribute("type","FlowElement");
 
-	xmlStreamWriter->writeTextElement("ID",getId().toString());
-	xmlStreamWriter->writeTextElement("Name",name_);
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
 
 	xmlStreamWriter->writeStartElement("Conditions");
 
@@ -139,45 +173,33 @@ bool FlowElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWrite
 		xmlStreamWriter->writeEndElement(); //Condition
 	}
 	xmlStreamWriter->writeEndElement(); //Conditions
-	xmlStreamWriter->writeEndElement(); //FlowElement
+	serializeResults(xmlStreamWriter);
+	xmlStreamWriter->writeEndElement(); //StateMachineElement
 	
 	return true;
 }
 
-/*	\brief Converts an XML fragment into a FlowElement
- *
- *	The FlowElement will look something like this when converted to XML:
- *		<FlowElement>
- *			<ID>{07B5A6FE-EE99-4f26-8F65-9537E5A5E2E3}</ID>
- *			<Name>Trial Type Branch</Name>
- *			<Conditions>
- *				<Condition>
- *					<Name>Condition 1</Name>
- *					<Order>1</Order>
- *					<CompoundExpression>
- *						...
- *					<CompoundExpression>
- *				</Condition>
- *				<Condition>
- *					<Name>Condition 2</Name>
- *					<Order>2</Order>
- *					<PredicateExpression>
- *						...
- *					</PredicateExpression>
- *				</Condition>
- *			</Conditions>
- *		</FlowElement>
- */
+/*	\brief Converts an XML fragment into a FlowElement */
 bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
+	{
+		addError("FlowElement","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
 		return false;
-	if(xmlStreamReader->name() != "FlowElement")
+	}
+	if(xmlStreamReader->attributes().value("type").toString() != type())
+	{
+		addError("FlowElement","Incorrect type of StateMachineElement, expected FlowElement",xmlStreamReader);
 		return false;
+	}
+
+	//clear out the existing results and conditions
+	conditions_.clear();
+	results_.clear();
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "FlowElement") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -187,19 +209,21 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "ID")
+		if(name == "Name")
 		{
-			QString idStr = xmlStreamReader->readElementText();
-			setId(QUuid(idStr));
-			registerObject();
-		}
-		else if(name == "Name")
-		{
-			name_ = xmlStreamReader->readElementText();
+			propertyContainer_.setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
 		}
 		else if(name == "Conditions")
 		{
 			//do nothing
+		}
+		else if(name == "Results")
+		{
+			if(!deserializeResults(xmlStreamReader))
+			{
+				addError("FlowElement", "Failed to deserialize <Results>", xmlStreamReader);
+				return false;
+			}
 		}
 		else if(name == "Condition")
 		{
@@ -213,6 +237,7 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 			bool initCompExpr = false;
 			bool initPredExpr = false;
 
+			xmlStreamReader->readNext();
 			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Condition") && !xmlStreamReader->atEnd())
 			{
 				if(!xmlStreamReader->isStartElement())
@@ -236,28 +261,53 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 				else if(name == "CompoundExpression")
 				{
 					compExpr = QSharedPointer<CompoundExpression>(new CompoundExpression);
-					compExpr->deserializeFromXml(xmlStreamReader);
+					if(!compExpr->deserializeFromXml(xmlStreamReader))
+					{
+						addError("FlowElement", "Failed to deserialize <CompoundExpression>", xmlStreamReader);
+						return false;
+					}
 					initCompExpr = true;
 				}
-				else if(name == "PredicateExpression")
+				else if(name == "Expression")
 				{
 					predExpr = QSharedPointer<PredicateExpression>(new PredicateExpression);
-					predExpr->deserializeFromXml(xmlStreamReader);
+					if(!predExpr->deserializeFromXml(xmlStreamReader))
+					{
+						addError("FlowElement", "Failed to deserialize <Expression>", xmlStreamReader);
+						return false;
+					}
 					initPredExpr = true;
 				}
 				else
 				{
-					return false;
+					addError("FlowElement", "Unexpected tag within <Condition>",xmlStreamReader);
 				}
+				xmlStreamReader->readNext();
 			}
 
 			//if we're at the end, return false
 			if(xmlStreamReader->atEnd())
+			{
+				addError("FlowElement", "Unexpected end of document encountered while reading <Condition>", xmlStreamReader);
 				return false;
+			}
 
 			//if stuff didn't get initialized, return false
-			if(!(initName && initOrder && (initCompExpr ^ initPredExpr)))
+			if(!initName)
+			{
+				addError("FlowElement", "Did not find <Name> within <Condition>", xmlStreamReader);
 				return false;
+			}
+			if(!initOrder)
+			{
+				addError("FlowElement", "Did not find <Order> within <Condition>", xmlStreamReader);
+				return false;
+			}
+			if(!(initCompExpr ^ initPredExpr))
+			{
+				addError("FlowElement", "Did not find an expression within <Condition>", xmlStreamReader);
+				return false;
+			}
 
 			Condition cond;
 			cond.isCompound = initCompExpr;
@@ -269,19 +319,27 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 				cond.predExpr = predExpr;
 
 			conditions_.push_back(cond);
+			results_.push_back(nameStr);
 		}
 		else
 		{
+			addError("FlowElement", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();
 	}
 	
 	if(xmlStreamReader->atEnd())
+	{
+		addError("FlowElement", "Unexpected end of document", xmlStreamReader);
 		return false;
+	}
 
 	//sort the condition list
 	qSort(conditions_.begin(), conditions_.end(), &conditionLessThan);
+
+	//Our results list should contain one more result, than there are conditions.
+	//this extra result is the default.  We need to find it and deal with it
 
 	return true;
 }

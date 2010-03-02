@@ -1,7 +1,7 @@
 #ifndef _EXPERIMENTALSYSTEM_H_
 #define _EXPERIMENTALSYSTEM_H_
 
-#include "common.h"
+#include "../common.h"
 
 namespace Picto {
 

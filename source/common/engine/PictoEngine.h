@@ -6,7 +6,7 @@
 #ifndef _PICTOENGINE_H_
 #define _PICTOENGINE_H_
 
-#include "common.h"
+#include "../common.h"
 #include "../compositor/RenderingTarget.h"
 #include "../experiment/Experiment.h"
 #include "../task/Task.h"
@@ -48,9 +48,9 @@ namespace PictoEngineTimingType
 	} PictoEngineTimingType;
 }
 
-/*! \brief Executes tasks contained in Experiment objects
+/*! \brief Executes state machines contained in Experiment objects
  *
- * The PictoEngine object takes an Experiment object and executes its contained tasks by rendering to one or
+ * The PictoEngine object takes an Experiment object and executes its contained state machines by rendering to one or
  * more RenderingTarget derived objects.  The PictoEngine can be set to have precise timing control, or to ignore
  * frame intervals (to catch up a playback, allow for fast forward and rewind behaviors, enable generation of movie
  * files, allow analysis of replayed data, etcetera).  The storage for behavioral data accomodates out of order
@@ -77,13 +77,16 @@ public:
 
 	void executeTask(Picto::Task * task);
 
+	static QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
+	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
+
 private:
 
 	QSharedPointer<Picto::Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
-	std::vector<QSharedPointer<RenderingTarget> > RenderingTargets_;
-	std::vector<QSharedPointer<CommandChannel> > CommandChannels_;
-	std::vector<QSharedPointer<SignalChannel> > SignalChannels_;
+	static QList<QSharedPointer<RenderingTarget> > renderingTargets_;
+	QList<QSharedPointer<CommandChannel> > commandChannels_;
+	QList<QSharedPointer<SignalChannel> > signalChannels_;
 	bool bExclusiveMode_;
 };
 
