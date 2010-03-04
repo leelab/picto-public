@@ -58,6 +58,9 @@ protected:
 
 	bool operatorVisible_;
 	bool subjectVisible_;
+
+	bool isDone_;
+
 };
 
 

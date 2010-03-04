@@ -1,91 +1,277 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This is a really simple state machine that uses the testConmtroller -->
-<!-- To flip back and forth between two scenes forever-->
+
+<!-- This is a really simple Trial with two stages -->
 <StateMachine>
-    <Name>Stage 1</Name>
-    <Level>Stage</Level>
-    <InitialElement>State 1</InitialElement>
-    <StateMachineElements>
-        <StateMachineElement type="State">
-            <Revision>-1</Revision>
-            <EngineNeeded>-1</EngineNeeded>
-            <Name>State 1</Name>
-            <ControlElements>
-                <ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
-                    <Name></Name>
-                    <NumberOfFrames>120</NumberOfFrames>
-                </ControlElement>
-            </ControlElements>
-            <Scene>
-                <Canvas>
-                    <Layers>
-                        <BackgroundLayer color="#000000"/>
-                        <Layer>
-							<Name>Layer1</Name>
-							<Order>1</Order>
-							<VisualElement type="Box Graphic">
-								<QString name="Name">box</QString>
-								<QPoint name="Position" x="30" y="30"/>
-								<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
-								<QColor name="Color" R="255" G="255" B="0" A="255"/>
-							</VisualElement>
-                        </Layer>
-                    </Layers>
-                </Canvas>
-                <AudioElement></AudioElement>
-            </Scene>
-            <Results>
-                <Result>
-                    <Name>Success</Name>
-                </Result>
-            </Results>
-        </StateMachineElement>
-        <StateMachineElement type="State">
-            <Revision>-1</Revision>
-            <EngineNeeded>-1</EngineNeeded>
-            <Name>State 2</Name>
-            <ControlElements>
-                <ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
-                    <Name></Name>
-                    <NumberOfFrames>120</NumberOfFrames>
-                </ControlElement>
-            </ControlElements>
-            <Scene>
-                <Canvas>
-                    <Layers>
-                        <BackgroundLayer color="#000000"/>
-                        <Layer>
-							<Name>Layer1</Name>
-							<Order>1</Order>
-							<VisualElement type="Box Graphic">
-								<QString name="Name">box</QString>
-								<QPoint name="Position" x="100" y="30"/>
-								<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
-								<QColor name="Color" R="255" G="0" B="255" A="255"/>
-							</VisualElement>
-                        </Layer>
-                    </Layers>
-                </Canvas>
-                <AudioElement></AudioElement>
-            </Scene>
-            <Results>
-                <Result>
-                    <Name>Success</Name>
-                </Result>
-            </Results>
-        </StateMachineElement>   </StateMachineElements>
-    <Parameters/>
-    <Transitions>
-        <Transition>
-            <Source>State 1</Source>
-            <SourceResult>Success</SourceResult>
-            <Destination>State 2</Destination>
-        </Transition>
-        <Transition>
-            <Source>State 2</Source>
-            <SourceResult>Success</SourceResult>
-            <Destination>State 1</Destination>
-        </Transition>
-     </Transitions>
-    <Results/>
+	<Name>Dumb Trial</Name>
+	<Level>Trial</Level>
+	<InitialElement>Stage 1</InitialElement>
+	<StateMachineElements>
+	
+		<!-- This stage is a test of the TargetController controlElement 		-->
+		<!-- The input device must fixate on the displayed target.  If 			-->
+		<!-- successful, then another target is displayed.  If unsuccessful,	-->
+		<!-- then we move on to Stage 2.  This stage can last indefinitely 		-->
+		<StateMachine>
+			<Name>Stage 1</Name>
+			<Level>Stage</Level>
+			<InitialElement>State 1</InitialElement>
+			<StateMachineElements>
+				<StateMachineElement type="State">
+					<Revision>-1</Revision>
+					<EngineNeeded>-1</EngineNeeded>
+					<Name>State 1</Name>
+					<ControlElements>
+						<ControlElement type="Target Controller" operatorVisible="false" subjectVisible="false">
+							<Name></Name>
+							<SignalChannel>PositionChannel</SignalChannel>
+							<Shape>Rectangle</Shape>
+							<Target x="400" y="400" width="100" height="100"/>
+							<TotalTime units="Ms">10000</TotalTime>
+							<FixationTime units="Ms">1000</FixationTime>
+							<MinInitialAcquisitionTime units="Ms">0</MinInitialAcquisitionTime>
+							<MaxInitialAcquisitionTime units="Ms">4000</MaxInitialAcquisitionTime>
+							<MaxReacquisitionTime units="Ms">1000</MaxReacquisitionTime>
+							<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
+						</ControlElement>
+					</ControlElements>
+					<Scene>
+						<Canvas>
+							<Layers>
+								<BackgroundLayer color="#000000"/>
+								<Layer>
+									<Name>Layer1</Name>
+									<Order>1</Order>
+									<VisualElement type="Box Graphic">
+										<QString name="Name">box</QString>
+										<QPoint name="Position" x="400" y="400"/>
+										<QRect name="Dimensions" x="0" y="0" width="100" height="100"/>
+										<QColor name="Color" R="255" G="0" B="0" A="255"/>
+									</VisualElement>
+								</Layer>
+							</Layers>
+						</Canvas>
+						<AudioElement></AudioElement>
+					</Scene>
+					<Results>
+						<Result><Name>Success</Name></Result>
+						<Result><Name>Broke Fixation</Name></Result>
+						<Result><Name>Total Time Excceeded</Name></Result>
+						<Result><Name>Initial Aquistion Time Exceeded</Name></Result>
+						<Result><Name>Reaquistion Time Exceeded</Name></Result>
+					</Results>
+				</StateMachineElement>
+				<StateMachineElement type="State">
+					<Revision>-1</Revision>
+					<EngineNeeded>-1</EngineNeeded>
+					<Name>State 2</Name>
+					<ControlElements>
+						<ControlElement type="Target Controller" operatorVisible="false" subjectVisible="false">
+							<Name></Name>
+							<SignalChannel>PositionChannel</SignalChannel>
+							<Shape>Rectangle</Shape>
+							<Target x="600" y="400" width="100" height="100"/>
+							<TotalTime units="Ms">10000</TotalTime>
+							<FixationTime units="Ms">1000</FixationTime>
+							<MinInitialAcquisitionTime units="Ms">0</MinInitialAcquisitionTime>
+							<MaxInitialAcquisitionTime units="Ms">4000</MaxInitialAcquisitionTime>
+							<MaxReacquisitionTime units="Ms">1000</MaxReacquisitionTime>
+							<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
+						</ControlElement>
+					</ControlElements>
+					<Scene>
+						<Canvas>
+							<Layers>
+								<BackgroundLayer color="#000000"/>
+								<Layer>
+									<Name>Layer1</Name>
+									<Order>1</Order>
+									<VisualElement type="Box Graphic">
+										<QString name="Name">box</QString>
+										<QPoint name="Position" x="600" y="400"/>
+										<QRect name="Dimensions" x="0" y="0" width="100" height="100"/>
+										<QColor name="Color" R="0" G="255" B="0" A="255"/>
+									</VisualElement>
+								</Layer>
+							</Layers>
+						</Canvas>
+						<AudioElement></AudioElement>
+					</Scene>
+					<Results>
+						<Result><Name>Success</Name></Result>
+						<Result><Name>Broke Fixation</Name></Result>
+						<Result><Name>Total Time Excceeded</Name></Result>
+						<Result><Name>Initial Aquistion Time Exceeded</Name></Result>
+						<Result><Name>Reaquistion Time Exceeded</Name></Result>
+					</Results>
+				</StateMachineElement>
+				<StateMachineElement type="Result">
+					<Name>Failed</Name>
+				</StateMachineElement>
+			</StateMachineElements>
+			<Parameters/>
+			<Transitions>
+				<Transition>
+					<Source>State 1</Source>
+					<SourceResult>Success</SourceResult>
+					<Destination>State 2</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 1</Source>
+					<SourceResult>Broke Fixation</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 1</Source>
+					<SourceResult>Total Time Excceeded</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 1</Source>
+					<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 1</Source>
+					<SourceResult>Reaquistion Time Exceeded</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 2</Source>
+					<SourceResult>Success</SourceResult>
+					<Destination>State 1</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 2</Source>
+					<SourceResult>Broke Fixation</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 2</Source>
+					<SourceResult>Total Time Excceeded</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 2</Source>
+					<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 2</Source>
+					<SourceResult>Reaquistion Time Exceeded</SourceResult>
+					<Destination>Failed</Destination>
+				</Transition>
+			 </Transitions>
+			<Results>
+				<Result>
+					<Name>Failed</Name>
+				</Result>
+			</Results>
+		</StateMachine>
+
+
+
+
+		<!-- This is a really simple stage that uses the testConmtroller -->
+		<!-- and StopwatchController to flip back and forth between two scenes forever-->
+		<StateMachine>
+			<Name>Stage 2</Name>
+			<Level>Stage</Level>
+			<InitialElement>State 1</InitialElement>
+			<StateMachineElements>
+				<StateMachineElement type="State">
+					<Revision>-1</Revision>
+					<EngineNeeded>-1</EngineNeeded>
+					<Name>State 1</Name>
+					<ControlElements>
+						<ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
+							<Name></Name>
+							<NumberOfFrames>120</NumberOfFrames>
+						</ControlElement>
+					</ControlElements>
+					<Scene>
+						<Canvas>
+							<Layers>
+								<BackgroundLayer color="#000000"/>
+								<Layer>
+									<Name>Layer1</Name>
+									<Order>1</Order>
+									<VisualElement type="Box Graphic">
+										<QString name="Name">box</QString>
+										<QPoint name="Position" x="30" y="30"/>
+										<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
+										<QColor name="Color" R="255" G="255" B="0" A="255"/>
+									</VisualElement>
+								</Layer>
+							</Layers>
+						</Canvas>
+						<AudioElement></AudioElement>
+					</Scene>
+					<Results>
+						<Result>
+							<Name>Success</Name>
+						</Result>
+					</Results>
+				</StateMachineElement>
+				<StateMachineElement type="State">
+					<Revision>-1</Revision>
+					<EngineNeeded>-1</EngineNeeded>
+					<Name>State 2</Name>
+					<ControlElements>
+						<ControlElement type="Stopwatch Controller" operatorVisible="true" subjectVisible="true">
+							<Name></Name>
+							<Time units="Ms">500</Time>
+						</ControlElement>
+					</ControlElements>
+					<Scene>
+						<Canvas>
+							<Layers>
+								<BackgroundLayer color="#000000"/>
+								<Layer>
+									<Name>Layer1</Name>
+									<Order>1</Order>
+									<VisualElement type="Box Graphic">
+										<QString name="Name">box</QString>
+										<QPoint name="Position" x="100" y="30"/>
+										<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
+										<QColor name="Color" R="255" G="0" B="255" A="255"/>
+									</VisualElement>
+								</Layer>
+							</Layers>
+						</Canvas>
+						<AudioElement></AudioElement>
+					</Scene>
+					<Results>
+						<Result>
+							<Name>Success</Name>
+						</Result>
+					</Results>
+				</StateMachineElement>   
+			</StateMachineElements>
+			<Parameters/>
+			<Transitions>
+				<Transition>
+					<Source>State 1</Source>
+					<SourceResult>Success</SourceResult>
+					<Destination>State 2</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 2</Source>
+					<SourceResult>Success</SourceResult>
+					<Destination>State 1</Destination>
+				</Transition>
+			 </Transitions>
+			<Results/>
+		</StateMachine>
+		
+		
+	</StateMachineElements>
+	<Parameters/>
+	<Transitions>
+		<Transition>
+			<Source>Stage 1</Source>
+			<SourceResult>Failed</SourceResult>
+			<Destination>Stage 2</Destination>
+		</Transition>
+	</Transitions>
+	<Results/>
 </StateMachine>

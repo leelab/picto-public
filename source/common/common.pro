@@ -55,10 +55,14 @@ SOURCES += $$(PICTO_TREE)/source/common/compositor/PCMMixingSample.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/TestController.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/TestController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/controlelements/StopwatchController.h
+SOURCES += $$(PICTO_TREE)/source/common/controlelements/StopwatchController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/controlelements/Timer.h
+SOURCES += $$(PICTO_TREE)/source/common/controlelements/Timer.cpp
 # HEADERS += $$(PICTO_TREE)/source/common/controlelements/IntervalController.h
 # SOURCES += $$(PICTO_TREE)/source/common/controlelements/IntervalController.cpp
-# HEADERS += $$(PICTO_TREE)/source/common/controlelements/TargetController.h
-# SOURCES += $$(PICTO_TREE)/source/common/controlelements/TargetController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/controlelements/TargetController.h
+SOURCES += $$(PICTO_TREE)/source/common/controlelements/TargetController.cpp
 # HEADERS += $$(PICTO_TREE)/source/common/controlelements/ChoiceController.h
 # SOURCES += $$(PICTO_TREE)/source/common/controlelements/ChoiceController.cpp
 # HEADERS += $$(PICTO_TREE)/source/common/controlelements/DynamicController.h

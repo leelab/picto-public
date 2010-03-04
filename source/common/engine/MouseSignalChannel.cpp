@@ -5,9 +5,9 @@
 
 namespace Picto {
 
-MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget_)
+MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget)
 	: SignalChannel(sampsPerSecond),
-	  widget_(widget_)
+	  widget_(widget)
 {
 	//add our subchannels to the list
 	addSubchannel("xpos");
@@ -15,28 +15,29 @@ MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidge
 
 	//Since this is coordinate data, there doesn't need to be any calibration
 
-	pollingTimer_ = new QTimer(this);
-	pollingTimer_->setInterval(1000/sampsPerSecond);
-	connect(pollingTimer_, SIGNAL(timeout()), this, SLOT(pollMouse()));
+	pollingTimer_.setInterval(1000/sampsPerSecond);
+	connect(&pollingTimer_, SIGNAL(timeout()), this, SLOT(pollMouse()));
 }
 
 bool MouseSignalChannel::start()
 {
-	pollingTimer_->start();
+	pollingTimer_.start();
 	return true;
 }
 
 bool MouseSignalChannel::stop()
 {
-	pollingTimer_->stop();
+	pollingTimer_.stop();
 	return true;
 }
 
 //In this case, we are constantly polling the mouse position and 
 //updating the data buffer, so update data buffer doesn't need to
-//do anything.
+//do anything.  However, if the timers aren't working (for example if
+//we're running without an event loop), we'll call pollMouse anyway).
 void MouseSignalChannel::updateDataBuffer()
 {
+	pollMouse();
 }
 
 void MouseSignalChannel::pollMouse()

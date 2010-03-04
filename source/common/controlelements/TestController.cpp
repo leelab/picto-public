@@ -33,20 +33,29 @@ bool TestController::isDone()
 	qDebug()<<"Checking isDone for frame: "<<timesCalled_;
 
 	if(timesCalled_ < numberOfFrames)
+	{
 		return false;
+	}
 	else
+	{
+		isDone_ = true;
 		return true;
+	}
 }
 
 QString TestController::getResult()
 {
-	return "Success";
+	if(isDone_)
+		return "Success";
+	else
+		return "";
 }
 
 void TestController::start()
 {
 	qDebug()<<"Starting Test Controller";
 	timesCalled_ = 0;
+	isDone_ = false;
 }
 
 

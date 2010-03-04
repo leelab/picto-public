@@ -61,11 +61,11 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 		QString name = xmlStreamReader->name().toString();
 		if(name == "Name")
 		{
-			addError("Result", "Unexpected tag", xmlStreamReader);
 			propertyContainer_.setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
 		}
 		else
 		{
+			addError("Result", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();

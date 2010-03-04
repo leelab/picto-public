@@ -34,6 +34,8 @@
 #include "../controlelements/ControlElementFactory.h"
 #include "../controlelements/ControlElement.h"
 #include "../controlelements/TestController.h"
+#include "../controlelements/StopwatchController.h"
+#include "../controlelements/TargetController.h"
 
 Q_DECLARE_METATYPE(QSharedPointer<Picto::VisualElement>)
 Q_DECLARE_METATYPE(QSharedPointer<Picto::Parameter>)
@@ -63,6 +65,8 @@ TestDataStore::TestDataStore()
 	//Set up the ControlElementFactory
 	Picto::ControlElementFactory controlElementFactory;
 	controlElementFactory.addControlElementType(Picto::TestController::ControllerType(), &Picto::TestController::NewTestController);
+	controlElementFactory.addControlElementType(Picto::StopwatchController::ControllerType(), &Picto::StopwatchController::NewStopwatchController);
+	controlElementFactory.addControlElementType(Picto::TargetController::ControllerType(), &Picto::TargetController::NewTargetController);
 }
 
 
@@ -822,9 +826,6 @@ void TestDataStore::TestStateMachine()
 	xmlWriter->writeEndDocument();
 
 	file.close();
-
-
-
 
 }
 

@@ -22,6 +22,9 @@
  *	(for example, eyeTracker data needs to be converted from voltages to screen 
  *	coordinates).  As such, all SignalChannels have calibration constants that 
  *	can be set.
+ *
+ *	NOTE: If a SignalChannel is going to be used for x/y data, it must contain
+ *	xpos and ypos subchannels.
  */
 
 #ifndef _SIGNALCHANNEL_H_
@@ -43,7 +46,8 @@ class SignalChannel
 public:
 	SignalChannel();
 	SignalChannel(int sampsPerSec);
-	~SignalChannel() {};
+
+	virtual ~SignalChannel() {};
 
 
 	void setsampleRate_(int sampsPerSec);
@@ -56,6 +60,7 @@ public:
 
 	QMap<QString, QList<double>> getValues();
 	QMap<QString, QList<double>> getRawValues();
+	double peekValue(QString subchannel);
 
 	void insertValue(QString subchannel, double val);
 	void insertValues(QString subchannel, QList<double> vals);
@@ -65,7 +70,7 @@ protected:
 	//since the last call) into rawDataBuffer_.  The buffer should not be assumed
 	//to be empty (nor should it be emptied), since an insertValue call may have 
 	//added data.
-	virtual void updateDataBuffer(){};
+	virtual void updateDataBuffer()=0;
 	
 	void addSubchannel(QString subchannelName);
 

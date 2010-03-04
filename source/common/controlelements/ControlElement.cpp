@@ -11,6 +11,4 @@ ControlElement::ControlElement()
 }
 
 
-
-
 }; //namespace Picto

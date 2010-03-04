@@ -52,6 +52,16 @@ void SignalChannel::addSubchannel(QString subchannelName)
 
 }
 
+//! Grabs the most recent value from the subchannel, scales it, and returns it
+double SignalChannel::peekValue(QString subchannel)
+{
+	updateDataBuffer();
+	double rawValue = rawDataBuffer_.value(subchannel).last();
+	double scaledValue = scaleFactorsMap_.value(subchannel).scaleA + 
+				scaleFactorsMap_.value(subchannel).scaleB * rawValue;
+	return scaledValue;
+}
+
 
 QMap<QString, QList<double> > SignalChannel::getValues()
 {

@@ -17,6 +17,8 @@ Canvas::Canvas()
 
 void Canvas::draw()
 {
+	//! \todo deal with the background layer color
+
 	//Grab the RenderingTargets from the engine
 	QList<QSharedPointer< RenderingTarget> > renderingTargets;
 	renderingTargets = Engine::PictoEngine::getRenderingTargets();

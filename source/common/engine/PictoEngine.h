@@ -80,13 +80,16 @@ public:
 	static QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
 
+	static QSharedPointer<SignalChannel> getSignalChannel(QString name);
+	void addSignalChannel(QString name, QSharedPointer<SignalChannel> channel);
+
 private:
 
 	QSharedPointer<Picto::Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
 	static QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	QList<QSharedPointer<CommandChannel> > commandChannels_;
-	QList<QSharedPointer<SignalChannel> > signalChannels_;
+	static QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
 	bool bExclusiveMode_;
 };
 

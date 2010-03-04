@@ -21,7 +21,7 @@ void StateMachine::setLevel(QString level)
 
 QString StateMachine::getLevel()
 {
-	QString level = propertyContainer_.getPropertyValue("LEvel").toString();
+	QString level = propertyContainer_.getPropertyValue("Level").toString();
 	return level;
 }
 
@@ -115,10 +115,20 @@ bool StateMachine::validateTransitions()
 		}			
 	}
 
-	//Finally confirm that the initial element is a real element
+	//Confirm that the initial element is a real element
 	QString initialElement = propertyContainer_.getPropertyValue("Initial Element").toString();
 	if(!elements_.contains(initialElement))
 		return false;
+
+	//Do the same for all state machines contained within this state machine
+	foreach(QSharedPointer<StateMachineElement> element, elements_)
+	{
+		if(element->type() == "StateMachine")
+		{
+			if(!element.staticCast<StateMachine>()->validateTransitions())
+				return false;
+		}
+	}
 
 	//If we made it this far, all the transitions are "legal"
 	return true;
@@ -316,6 +326,8 @@ bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 						addError("StateMachine", "Failed to deserialize <StateMachine> within <StateMachineElements>", xmlStreamReader);
 						return false;
 					}
+					newMachine->addParameters(parameterContainer_);
+					addElement(newMachine);
 				}
 				else
 				{

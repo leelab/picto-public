@@ -14,13 +14,18 @@
 #include "../common/statemachine/State.h"
 #include "../common/statemachine/StateMachine.h"
 
-#include "../common/controlelements/TestController.h"
 #include "../common/controlelements/ControlElementFactory.h"
+#include "../common/controlelements/TestController.h"
+#include "../common/controlelements/StopwatchController.h"
+#include "../common/controlelements/TargetController.h"
 
 #include "../common/stimuli/VisualElementFactory.h"
 #include "../common/stimuli/BoxGraphic.h"
 
 #include "../common/storage/DataStore.h"
+
+#include "../common/engine/MouseSignalChannel.h"
+#include "../common/engine/PictoBoxXPAnalogInputSignalChannel.h"
 
 EngineTest::EngineTest()
 {
@@ -37,6 +42,10 @@ EngineTest::EngineTest()
 	//add the rendering target to the engine
 	engine_.addRenderingTarget(renderingTarget);
 
+	//Create a mouse signal channel
+	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,d3dVisualTarget));
+	engine_.addSignalChannel("PositionChannel",mouseChannel);
+
 	//Set up all of the factories
 	//Set up the VisualElementFactory
 	Picto::VisualElementFactory visualElementFactory;
@@ -46,6 +55,8 @@ EngineTest::EngineTest()
 	//Set up the ControlElementFactory
 	Picto::ControlElementFactory controlElementFactory;
 	controlElementFactory.addControlElementType(Picto::TestController::ControllerType(), &Picto::TestController::NewTestController);
+	controlElementFactory.addControlElementType(Picto::StopwatchController::ControllerType(), &Picto::StopwatchController::NewStopwatchController);
+	controlElementFactory.addControlElementType(Picto::TargetController::ControllerType(), &Picto::TargetController::NewTargetController);
 
 
 }
@@ -101,9 +112,11 @@ void EngineTest::TestStateMachine()
 	if(!stateMachine.deserializeFromXml(xmlStreamReader))
 	{
 		QMessageBox error;
-		error.setText("Error reading StateMachine XML");
+		//The extra spaces are to resize the MessageBox
+		error.setText("Error reading StateMachine XML                            ");
 		error.setIcon(QMessageBox::Critical);
 		error.setDetailedText(Picto::DataStore::getErrors());
+		error.resize(400,100);
 		error.exec();
 		QApplication::exit();
 		return;

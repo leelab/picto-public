@@ -9,6 +9,7 @@ namespace Picto {
 	namespace Engine {
 
 QList<QSharedPointer<RenderingTarget> > PictoEngine::renderingTargets_;
+QMap<QString, QSharedPointer<SignalChannel> > PictoEngine::signalChannels_;
 
 
 PictoEngine::PictoEngine() :
@@ -40,6 +41,16 @@ QList<QSharedPointer<RenderingTarget> > PictoEngine::getRenderingTargets()
 void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
 {	
 	renderingTargets_.append(target);
+}
+
+QSharedPointer<SignalChannel> PictoEngine::getSignalChannel(QString name)
+{
+	return signalChannels_.value(name, QSharedPointer<SignalChannel>());
+}
+
+void PictoEngine::addSignalChannel(QString name, QSharedPointer<SignalChannel> channel)
+{
+	signalChannels_.insert(name, channel);
 }
 
 void PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> //experiment

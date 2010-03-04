@@ -177,6 +177,11 @@ bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 			ControlElementFactory factory;
 			QString controllerType = xmlStreamReader->attributes().value("type").toString();
 			QSharedPointer<ControlElement> newController = factory.generateControlElement(controllerType);
+			if(!newController)
+			{
+				addError("State", "Failed to create a new Controller of type "+controllerType,xmlStreamReader);
+				return false;
+			}
 			if(!newController->deserializeFromXml(xmlStreamReader))
 			{
 				addError("State", "Failed to deserialize <ControlElement>", xmlStreamReader);
