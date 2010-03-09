@@ -14,8 +14,23 @@
 		<StateMachine>
 			<Name>Stage 1</Name>
 			<Level>Stage</Level>
-			<InitialElement>State 1</InitialElement>
+			<InitialElement>Initialize Values</InitialElement>
+			<Parameters>
+				<Parameter operatorUi="false" type="Numeric">
+					<Name>SuccessfulAttempts</Name>
+					<Order>1</Order>
+				</Parameter>
+			</Parameters>
 			<StateMachineElements>
+				<StateMachineElement type = "ScriptElement">
+					<Name>Initialize Values</Name>
+					<Script>SuccessfulAttempts.setValue(0)</Script>
+				</StateMachineElement>
+				<StateMachineElement type = "ScriptElement">
+					<Name>Increment successful attempts</Name>
+					<Script>SuccessfulAttempts.setValue(SuccessfulAttempts.getValue()+1)</Script>
+				</StateMachineElement>
+
 				<StateMachineElement type="State">
 					<Revision>-1</Revision>
 					<EngineNeeded>-1</EngineNeeded>
@@ -42,7 +57,7 @@
 									<Name>Layer1</Name>
 									<Order>1</Order>
 									<VisualElement type="Box Graphic">
-										<QString name="Name">box</QString>
+										<QString name="Name">LeftBox</QString>
 										<QPoint name="Position" x="400" y="400"/>
 										<QRect name="Dimensions" x="0" y="0" width="100" height="100"/>
 										<QColor name="Color" R="255" G="0" B="0" A="255"/>
@@ -52,6 +67,24 @@
 						</Canvas>
 						<AudioElement></AudioElement>
 					</Scene>
+					<Scripts>
+						<!-- Upon entry we set the box's color to red, yellow, or green -->
+						<!-- depending on the number of successful attempts -->
+						<Script type="entry">
+							if(SuccessfulAttempts.getValue() == 0)
+							{
+								LeftBox.setColor(255,0,0,255);
+							}
+							else if(SuccessfulAttempts.getValue() == 1)
+							{
+								LeftBox.setColor(255,255,0);	//testing the use of a default variable
+							}
+							else if(SuccessfulAttempts.getValue() == 2)
+							{
+								LeftBox.setColor(0,255,0,255);
+							}
+						</Script>
+					</Scripts>
 					<Results>
 						<Result><Name>Success</Name></Result>
 						<Result><Name>Broke Fixation</Name></Result>
@@ -60,6 +93,7 @@
 						<Result><Name>Reaquistion Time Exceeded</Name></Result>
 					</Results>
 				</StateMachineElement>
+				
 				<StateMachineElement type="State">
 					<Revision>-1</Revision>
 					<EngineNeeded>-1</EngineNeeded>
@@ -86,16 +120,32 @@
 									<Name>Layer1</Name>
 									<Order>1</Order>
 									<VisualElement type="Box Graphic">
-										<QString name="Name">box</QString>
+										<QString name="Name">RightBox</QString>
 										<QPoint name="Position" x="600" y="400"/>
 										<QRect name="Dimensions" x="0" y="0" width="100" height="100"/>
-										<QColor name="Color" R="0" G="255" B="0" A="255"/>
+										<QColor name="Color" R="255" G="0" B="0" A="255"/>
 									</VisualElement>
 								</Layer>
 							</Layers>
 						</Canvas>
 						<AudioElement></AudioElement>
 					</Scene>
+					<Scripts>
+						<!-- Upon exit we set the box's color to red, yellow, or green -->
+						<!-- depending on the number of successful attempts. -->
+						<!-- Remember that the number of successful attempts hasn't yet -->
+						<!-- been updated upon exit from the state -->
+						<Script type="exit">
+							if(SuccessfulAttempts.getValue() == 0)
+							{
+								RightBox.setColor(255,255,0,255);
+							}
+							else if(SuccessfulAttempts.getValue() == 1)
+							{
+								RightBox.setColor(0,255,0);	//testing the use of a default variable
+							}
+						</Script>
+					</Scripts>
 					<Results>
 						<Result><Name>Success</Name></Result>
 						<Result><Name>Broke Fixation</Name></Result>
@@ -104,12 +154,47 @@
 						<Result><Name>Reaquistion Time Exceeded</Name></Result>
 					</Results>
 				</StateMachineElement>
+				
+				<StateMachineElement type="FlowElement">
+					<Name>Finish Stage</Name>
+					<Conditions>
+						<Condition>
+							<Name>Finished</Name>
+							<Order>1</Order>
+							<Expression>
+								<Parameter>SuccessfulAttempts</Parameter>
+								<Comparison>Greater than</Comparison>
+								<Value type="int">2</Value>
+							</Expression>
+						</Condition>
+						<Condition>
+							<Name>NotFinished</Name>
+							<Order>2</Order>
+							<Expression>
+								<Parameter>SuccessfulAttempts</Parameter>
+								<Comparison>Less than or equal</Comparison>
+								<Value type="int">2</Value>
+							</Expression>
+						</Condition>
+					</Conditions>
+					<Results>
+						<Result><Name>Finished</Name></Result>
+						<Result><Name>NotFinished</Name></Result>
+					</Results>
+				</StateMachineElement>
+				
 				<StateMachineElement type="Result">
-					<Name>Failed</Name>
+					<Name>Success</Name>
+					<Reward quantity="5" channel="1"/>
 				</StateMachineElement>
 			</StateMachineElements>
-			<Parameters/>
+			
 			<Transitions>
+				<Transition>
+					<Source>Initialize Values</Source>
+					<SourceResult>done</SourceResult>
+					<Destination>State 1</Destination>
+				</Transition>
 				<Transition>
 					<Source>State 1</Source>
 					<SourceResult>Success</SourceResult>
@@ -118,52 +203,67 @@
 				<Transition>
 					<Source>State 1</Source>
 					<SourceResult>Broke Fixation</SourceResult>
-					<Destination>Failed</Destination>
+					<Destination>State 1</Destination>
 				</Transition>
 				<Transition>
 					<Source>State 1</Source>
 					<SourceResult>Total Time Excceeded</SourceResult>
-					<Destination>Failed</Destination>
+					<Destination>State 1</Destination>
 				</Transition>
 				<Transition>
 					<Source>State 1</Source>
 					<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
-					<Destination>Failed</Destination>
+					<Destination>State 1</Destination>
 				</Transition>
 				<Transition>
 					<Source>State 1</Source>
 					<SourceResult>Reaquistion Time Exceeded</SourceResult>
-					<Destination>Failed</Destination>
-				</Transition>
-				<Transition>
-					<Source>State 2</Source>
-					<SourceResult>Success</SourceResult>
 					<Destination>State 1</Destination>
 				</Transition>
 				<Transition>
 					<Source>State 2</Source>
+					<SourceResult>Success</SourceResult>
+					<Destination>Increment successful attempts</Destination>
+				</Transition>
+				<Transition>
+					<Source>State 2</Source>
 					<SourceResult>Broke Fixation</SourceResult>
-					<Destination>Failed</Destination>
+					<Destination>State 1</Destination>
 				</Transition>
 				<Transition>
 					<Source>State 2</Source>
 					<SourceResult>Total Time Excceeded</SourceResult>
-					<Destination>Failed</Destination>
+					<Destination>State 1</Destination>
 				</Transition>
 				<Transition>
 					<Source>State 2</Source>
 					<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
-					<Destination>Failed</Destination>
+					<Destination>State 1</Destination>
 				</Transition>
 				<Transition>
 					<Source>State 2</Source>
 					<SourceResult>Reaquistion Time Exceeded</SourceResult>
-					<Destination>Failed</Destination>
+					<Destination>State 1</Destination>
+				</Transition>
+				<Transition>
+					<Source>Increment successful attempts</Source>
+					<SourceResult>done</SourceResult>
+					<Destination>Finish Stage</Destination>
+				</Transition>
+				<Transition>
+					<Source>Finish Stage</Source>
+					<SourceResult>Finished</SourceResult>
+					<Destination>Success</Destination>
+				</Transition>
+				<Transition>
+					<Source>Finish Stage</Source>
+					<SourceResult>NotFinished</SourceResult>
+					<Destination>State 1</Destination>
 				</Transition>
 			 </Transitions>
 			<Results>
 				<Result>
-					<Name>Failed</Name>
+				<Name>Success</Name>
 				</Result>
 			</Results>
 		</StateMachine>
@@ -172,7 +272,7 @@
 
 
 		<!-- This is a really simple stage that uses the testConmtroller -->
-		<!-- and StopwatchController to flip back and forth between two scenes forever-->
+		<!-- and StopwatchController to flip back and forth between two scenes -->
 		<StateMachine>
 			<Name>Stage 2</Name>
 			<Level>Stage</Level>
@@ -219,7 +319,7 @@
 					<ControlElements>
 						<ControlElement type="Stopwatch Controller" operatorVisible="true" subjectVisible="true">
 							<Name></Name>
-							<Time units="Ms">500</Time>
+							<Time units="Ms">5000</Time>
 						</ControlElement>
 					</ControlElements>
 					<Scene>
@@ -240,12 +340,23 @@
 						</Canvas>
 						<AudioElement></AudioElement>
 					</Scene>
+					<Scripts>
+						<Script type="frame">
+							x = box.getX();
+							y = box.getY()+10;
+							box.setPosition(x,y);
+						</Script>
+					</Scripts>
 					<Results>
 						<Result>
 							<Name>Success</Name>
 						</Result>
 					</Results>
-				</StateMachineElement>   
+				</StateMachineElement>  
+				<StateMachineElement type="Result">
+					<Name>Done</Name>
+				</StateMachineElement>
+ 
 			</StateMachineElements>
 			<Parameters/>
 			<Transitions>
@@ -257,21 +368,30 @@
 				<Transition>
 					<Source>State 2</Source>
 					<SourceResult>Success</SourceResult>
-					<Destination>State 1</Destination>
+					<Destination>Done</Destination>
 				</Transition>
 			 </Transitions>
 			<Results/>
 		</StateMachine>
 		
 		
+		<StateMachineElement type="Result">
+			<Name>Done</Name>
+		</StateMachineElement>
+		
 	</StateMachineElements>
 	<Parameters/>
 	<Transitions>
 		<Transition>
 			<Source>Stage 1</Source>
-			<SourceResult>Failed</SourceResult>
+			<SourceResult>Success</SourceResult>
 			<Destination>Stage 2</Destination>
 		</Transition>
-	</Transitions>
+		<Transition>
+			<Source>Stage 2</Source>
+			<SourceResult>Done</SourceResult>
+			<Destination>Done</Destination>
+		</Transition>
+  </Transitions>
 	<Results/>
 </StateMachine>

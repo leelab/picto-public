@@ -4,20 +4,18 @@
 
 namespace Picto {
 
-const QString EllipseGraphic::name = "Ellipse Graphic";
+const QString EllipseGraphic::type = "Ellipse Graphic";
 
 EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	propertyContainer_.setContainerName(name);
+	propertyContainer_.setContainerName(type);
 
-	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
+	propertyContainer_.setPropertyValue("Position",position);
 
 	Property dimensionsProperty(QVariant::Rect,"Dimensions",dimensions);
 	propertyContainer_.addProperty(dimensionsProperty);
 
-	propertyContainer_.addProperty(Property(QVariant::Color,"Color",color));
-
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
+	propertyContainer_.setPropertyValue("Color",color);
 
 	draw();
 

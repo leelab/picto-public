@@ -27,6 +27,11 @@
 #include "../common/engine/MouseSignalChannel.h"
 #include "../common/engine/PictoBoxXPAnalogInputSignalChannel.h"
 
+#include "../common/iodevices/PictoBoxXPRewardController.h"
+
+#include "../common/parameter/ParameterFactory.h"
+#include "../common/parameter/NumericParameter.h"
+
 EngineTest::EngineTest()
 {
 	randGen_.seed();
@@ -46,10 +51,15 @@ EngineTest::EngineTest()
 	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,d3dVisualTarget));
 	engine_.addSignalChannel("PositionChannel",mouseChannel);
 
+	//Create a rewardController
+	//QSharedPointer<Picto::PictoBoxXPRewardController> rewardController(new Picto::PictoBoxXPRewardController(1));
+	//rewardController->setRewardResetTimeMs(1,500);
+	//engine_.setRewardController(rewardController);
+
 	//Set up all of the factories
 	//Set up the VisualElementFactory
 	Picto::VisualElementFactory visualElementFactory;
-	visualElementFactory.addVisualElementType(Picto::BoxGraphic::name, &Picto::BoxGraphic::NewVisualElement);
+	visualElementFactory.addVisualElementType(Picto::BoxGraphic::type, &Picto::BoxGraphic::NewVisualElement);
 
 
 	//Set up the ControlElementFactory
@@ -57,6 +67,9 @@ EngineTest::EngineTest()
 	controlElementFactory.addControlElementType(Picto::TestController::ControllerType(), &Picto::TestController::NewTestController);
 	controlElementFactory.addControlElementType(Picto::StopwatchController::ControllerType(), &Picto::StopwatchController::NewStopwatchController);
 	controlElementFactory.addControlElementType(Picto::TargetController::ControllerType(), &Picto::TargetController::NewTargetController);
+
+	Picto::ParameterFactory parameterFactory;
+	parameterFactory.addParameterType("Numeric",&Picto::NumericParameter::NewParameter);
 
 
 }
@@ -102,7 +115,8 @@ void EngineTest::TestLayerRendering()
 void EngineTest::TestStateMachine()
 {
 	//Read in a state machine from file
-	QFile stateMachineXML("C:\\Projects\\PictoSVN\\Picto\\trunk\\source\\director\\StateMachineTest1.xml");
+	//QFile stateMachineXML("C:\\Projects\\PictoSVN\\Picto\\trunk\\source\\director\\StateMachineTest1.xml");
+	QFile stateMachineXML("StateMachineTest1.xml");
 	Q_ASSERT(stateMachineXML.open(QIODevice::ReadOnly));
 	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader(&stateMachineXML));
 
@@ -113,7 +127,7 @@ void EngineTest::TestStateMachine()
 	{
 		QMessageBox error;
 		//The extra spaces are to resize the MessageBox
-		error.setText("Error reading StateMachine XML                            ");
+		error.setText("Error reading StateMachine XML                                                         ");
 		error.setIcon(QMessageBox::Critical);
 		error.setDetailedText(Picto::DataStore::getErrors());
 		error.resize(400,100);

@@ -21,6 +21,8 @@ class Layer : public DataStore
 public:
 	Layer();
 
+	void bindVisualElementsToScript(QScriptEngine &qsEngine);
+
 	void addVisualElement( QSharedPointer<VisualElement> v);
 	void setOrder(int order) { order_ = order; };
 	int getOrder() { return order_; };

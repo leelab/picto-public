@@ -41,6 +41,7 @@ public:
 	bool setRewardVolume(unsigned int channel, float volume);
 	bool setRewardDurationMs(unsigned int channel, unsigned int duration);
 	int getRewardDurationMs(unsigned int channel);
+	bool setRewardResetTimeMs(unsigned int channel, unsigned int time);
 
 public slots:
 	void giveReward(unsigned int channel);
@@ -48,7 +49,6 @@ public slots:
 
 private:
 	unsigned long  daqTaskHandle_;
-	int rewardDurationMs_[4];
 	int rewardLines_[4];
 
 };

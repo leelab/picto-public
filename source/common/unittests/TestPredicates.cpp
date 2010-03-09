@@ -312,8 +312,7 @@ void TestPredicates::TestPredicateExpressionEvaluation()
 {
 	Picto::PredicateExpression *predExp;
 
-	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
-	Picto::PredicateExpression::setParameterContainer(paramContainer);
+	Picto::ParameterContainer paramContainer;
 
 	///////////////////////////////
 	//  Test 1 - RangeParameter
@@ -338,8 +337,9 @@ void TestPredicates::TestPredicateExpressionEvaluation()
 	B->setMin(minValue);
 	B->setMax(maxValue);
 	B->setName("RangeParameterB");
-	paramContainer->addParameter(A);
-	paramContainer->addParameter(B);
+	paramContainer.addParameter(A);
+	paramContainer.addParameter(B);
+	predExp->setParameterContainer(&paramContainer);
 
 	for(int i=0; i<numTests; i++)
 	{
@@ -402,8 +402,10 @@ void TestPredicates::TestPredicateExpressionEvaluation()
 	C->setName("BooleanParameterC");
 	D->setName("BooleanParameterD");
 
-	paramContainer->addParameter(C);
-	paramContainer->addParameter(D);
+	paramContainer.addParameter(C);
+	paramContainer.addParameter(D);
+
+	predExp->setParameterContainer(&paramContainer);
 
 	//test all the combinations of parameters
 	predExp->setLHS("BooleanParameterC");
@@ -443,8 +445,7 @@ void TestPredicates::TestPredicateExpressionEvaluation()
  */
 void TestPredicates::TestPredicateExpressionOutputs()
 {
-	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
-	Picto::PredicateExpression::setParameterContainer(paramContainer);
+	Picto::ParameterContainer paramContainer;
 
 	Picto::PredicateExpression *predExp;
 	Picto::Predicate *pred;
@@ -460,17 +461,18 @@ void TestPredicates::TestPredicateExpressionOutputs()
 	param2->addChoice("Two", 2);
 	param2->setValue("Two");
 
-	paramContainer->addParameter(param1);
-	paramContainer->addParameter(param2);
-
-
+	paramContainer.addParameter(param1);
+	paramContainer.addParameter(param2);
 
 	////////////////////////////////
 	//Test the text output with parameters on both sides
 	//
 
 	pred = new Picto::PredicateGreaterThan();
-	predExp = new Picto::PredicateExpression("Greater than","Parameter 1","Parameter 2");
+	predExp = new Picto::PredicateExpression("Greater than");
+	predExp->setLHS("Parameter 1");
+	predExp->setRHSParam("Parameter 2");
+	predExp->setParameterContainer(&paramContainer);
 
 	QCOMPARE(predExp->toString(false,false),QString("1 > 2"));
 	QCOMPARE(predExp->toString(true,false),QString("Parameter 1 > 2"));
@@ -537,8 +539,7 @@ void TestPredicates::TestPredicateExpressionOutputs()
  */
 void TestPredicates::TestCompoundExpressionEvaluation()
 {
-	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
-	Picto::PredicateExpression::setParameterContainer(paramContainer);
+	Picto::ParameterContainer paramContainer;
 
 	QSharedPointer<Picto::CompoundExpression> compoundExpr;
 	QSharedPointer<Picto::CompoundExpression> compoundExprA;
@@ -571,7 +572,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 		range->setMax(maxValue);
 		range->setName(name);
 
-		paramContainer->addParameter(range);
+		paramContainer.addParameter(range);
 	}
 
 
@@ -583,12 +584,17 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	//	tested (and, or, invert either or both sides of the expression).  Random 
 	//	values are used to really stretch the object.
 
-	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter A Left","Range Parameter A Right"));
-	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter B Left","Range Parameter B Right"));
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprA->setLHS("Range Parameter A Left");
+	predExprA->setRHSParam("Range Parameter A Right");
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprB->setLHS("Range Parameter B Left");
+	predExprB->setRHSParam("Range Parameter B Right");
 	compoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
 	compoundExpr->setLHSPredicateExp(predExprA, false);
 	compoundExpr->setRHSPredicateExp(predExprB, false);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+	compoundExpr->setParameterContainer(&paramContainer);
 
 
 
@@ -639,10 +645,10 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 			int ARightVal = randGen.randInt(maxValue-minValue) + minValue;
 			int BLeftVal = randGen.randInt(maxValue-minValue) + minValue;
 			int BRightVal = randGen.randInt(maxValue-minValue) + minValue;
-			paramContainer->getParameter("Range Parameter A Left")->setValue(ALeftVal);
-			paramContainer->getParameter("Range Parameter A Right")->setValue(ARightVal);
-			paramContainer->getParameter("Range Parameter B Left")->setValue(BLeftVal);
-			paramContainer->getParameter("Range Parameter B Right")->setValue(BRightVal);
+			paramContainer.getParameter("Range Parameter A Left")->setValue(ALeftVal);
+			paramContainer.getParameter("Range Parameter A Right")->setValue(ARightVal);
+			paramContainer.getParameter("Range Parameter B Left")->setValue(BLeftVal);
+			paramContainer.getParameter("Range Parameter B Right")->setValue(BRightVal);
 
 			if(test==1)
 				QCOMPARE(compoundExpr->evaluate(), (ALeftVal>ARightVal) && (BLeftVal > BRightVal));
@@ -676,9 +682,15 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	//	inversion and combination of the results occur after evaluation, so those
 	//	code paths were already tested
 
-	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter A Left","Range Parameter A Right"));
-	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter B Left","Range Parameter B Right"));
-	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter C Left","Range Parameter C Right"));
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprA->setLHS("Range Parameter A Left");
+	predExprA->setRHSParam("Range Parameter A Right");
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprB->setLHS("Range Parameter B Left");
+	predExprB->setRHSParam("Range Parameter B Right");
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprC->setLHS("Range Parameter C Left");
+	predExprC->setRHSParam("Range Parameter C Right");
 
 	compoundExprA= QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
 	compoundExprA->setLHSPredicateExp(predExprA,false);
@@ -689,6 +701,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	compoundExpr->setLHSCompoundExp(compoundExprA,false);
 	compoundExpr->setRHSPredicateExp(predExprC,false);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
+	compoundExpr->setParameterContainer(&paramContainer);
 
 
 	for(int i=0; i<numTests; i++)
@@ -701,12 +714,12 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 		int CLeftVal = randGen.randInt(maxValue-minValue) + minValue;
 		int CRightVal = randGen.randInt(maxValue-minValue) + minValue;
 
-		paramContainer->getParameter("Range Parameter A Left")->setValue(ALeftVal);
-		paramContainer->getParameter("Range Parameter A Right")->setValue(ARightVal);
-		paramContainer->getParameter("Range Parameter B Left")->setValue(BLeftVal);
-		paramContainer->getParameter("Range Parameter B Right")->setValue(BRightVal);
-		paramContainer->getParameter("Range Parameter C Left")->setValue(CLeftVal);
-		paramContainer->getParameter("Range Parameter C Right")->setValue(CRightVal);
+		paramContainer.getParameter("Range Parameter A Left")->setValue(ALeftVal);
+		paramContainer.getParameter("Range Parameter A Right")->setValue(ARightVal);
+		paramContainer.getParameter("Range Parameter B Left")->setValue(BLeftVal);
+		paramContainer.getParameter("Range Parameter B Right")->setValue(BRightVal);
+		paramContainer.getParameter("Range Parameter C Left")->setValue(CLeftVal);
+		paramContainer.getParameter("Range Parameter C Right")->setValue(CRightVal);
 
 		QCOMPARE(compoundExpr->evaluate(), ((ALeftVal > ARightVal) && (BLeftVal > BRightVal)) || (CLeftVal > CRightVal));
 	}
@@ -719,10 +732,18 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	//	being used is:
 	//		(expA AND expB) OR (expC AND expD)
 
-	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","Range Parameter A Left","Range Parameter A Right"));
-	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","Range Parameter B Left","Range Parameter B Right"));
-	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than or equal","Range Parameter C Left","Range Parameter C Right"));
-	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than or equal","Range Parameter D Left","Range Parameter D Right"));
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprA->setLHS("Range Parameter A Left");
+	predExprA->setRHSParam("Range Parameter A Right");
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
+	predExprB->setLHS("Range Parameter B Left");
+	predExprB->setRHSParam("Range Parameter B Right");
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than or equal"));
+	predExprC->setLHS("Range Parameter C Left");
+	predExprC->setRHSParam("Range Parameter C Right");
+	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than or equal"));
+	predExprD->setLHS("Range Parameter D Left");
+	predExprD->setRHSParam("Range Parameter D Right");
 
 	compoundExprA= QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression());
 	compoundExprA->setLHSPredicateExp(predExprA,false);
@@ -738,6 +759,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	compoundExpr->setLHSCompoundExp(compoundExprA,false);
 	compoundExpr->setRHSCompoundExp(compoundExprB,false);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
+	compoundExpr->setParameterContainer(&paramContainer);
 
 
 	for(int i=0; i<numTests; i++)
@@ -752,14 +774,14 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 		int DLeftVal = randGen.randInt(maxValue-minValue) + minValue;
 		int DRightVal = randGen.randInt(maxValue-minValue) + minValue;
 
-		paramContainer->getParameter("Range Parameter A Left")->setValue(ALeftVal);
-		paramContainer->getParameter("Range Parameter A Right")->setValue(ARightVal);
-		paramContainer->getParameter("Range Parameter B Left")->setValue(BLeftVal);
-		paramContainer->getParameter("Range Parameter B Right")->setValue(BRightVal);
-		paramContainer->getParameter("Range Parameter C Left")->setValue(CLeftVal);
-		paramContainer->getParameter("Range Parameter C Right")->setValue(CRightVal);
-		paramContainer->getParameter("Range Parameter D Left")->setValue(DLeftVal);
-		paramContainer->getParameter("Range Parameter D Right")->setValue(DRightVal);
+		paramContainer.getParameter("Range Parameter A Left")->setValue(ALeftVal);
+		paramContainer.getParameter("Range Parameter A Right")->setValue(ARightVal);
+		paramContainer.getParameter("Range Parameter B Left")->setValue(BLeftVal);
+		paramContainer.getParameter("Range Parameter B Right")->setValue(BRightVal);
+		paramContainer.getParameter("Range Parameter C Left")->setValue(CLeftVal);
+		paramContainer.getParameter("Range Parameter C Right")->setValue(CRightVal);
+		paramContainer.getParameter("Range Parameter D Left")->setValue(DLeftVal);
+		paramContainer.getParameter("Range Parameter D Right")->setValue(DRightVal);
 
 		QCOMPARE(compoundExpr->evaluate(), ((ALeftVal > ARightVal) && (BLeftVal < BRightVal)) || ((CLeftVal >= CRightVal) && (DLeftVal <= DRightVal)));
 	}
@@ -789,8 +811,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
  */
 void TestPredicates::TestCompoundExpressionOutputs()
 {
-	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
-	Picto::PredicateExpression::setParameterContainer(paramContainer);
+	Picto::ParameterContainer paramContainer;
 
 	QSharedPointer<Picto::CompoundExpression> compoundExpr(new Picto::CompoundExpression());
 	QSharedPointer<Picto::CompoundExpression> compoundExprA(new Picto::CompoundExpression());
@@ -824,7 +845,7 @@ void TestPredicates::TestCompoundExpressionOutputs()
 		range->setMax(maxValue);
 		range->setName(name);
 		range->setValue(42);
-		paramContainer->addParameter(range);
+		paramContainer.addParameter(range);
 	}
 
 
@@ -837,11 +858,17 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	//	expression, but the display options are limited to names on the left and
 	//	values on the right
 
-	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal","A Left", "A Right"));
-	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","B Left", "B Right"));
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
+	predExprA->setLHS("A Left");
+	predExprA->setRHSParam("A Right");
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
+	predExprB->setLHS("B Left");
+	predExprB->setRHSParam("B Right");
+
 	compoundExpr->setLHSPredicateExp(predExprA);
 	compoundExpr->setRHSPredicateExp(predExprB);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+	compoundExpr->setParameterContainer(&paramContainer);
 
 
 	//Test list
@@ -959,9 +986,15 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	//		(expA & expB) | expC
 	//We test the output with only names and only values
 
-	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","A Left","A Right"));
-	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","B Left","B Right"));
-	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal","C Left","C Right"));
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprA->setLHS("A Left");
+	predExprA->setRHSParam("A Right");
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
+	predExprB->setLHS("B Left");
+	predExprB->setRHSParam("B Right");
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
+	predExprC->setLHS("C Left");
+	predExprC->setRHSParam("C Right");
 
 	compoundExprA->setLHSPredicateExp(predExprA);
 	compoundExprA->setRHSPredicateExp(predExprB);
@@ -971,12 +1004,7 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	compoundExpr->setRHSPredicateExp(predExprC);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
 
-	predExprA->toString();
-	predExprB->toString();
-	predExprC->toString();
-	compoundExprA->toString();
-	compoundExpr->toString();
-
+	compoundExpr->setParameterContainer(&paramContainer);
 
 	//Test the text output
 	//Names only
@@ -1000,10 +1028,18 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	//		(expA & expB) | (expC & expD)
 	//We test the output with only names and only values
 
-	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","A Left","A Right"));
-	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than","B Left","B Right"));
-	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal","C Left","C Right"));
-	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than","D Left","D Right"));
+	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprA->setLHS("A Left");
+	predExprA->setRHSParam("A Right");
+	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
+	predExprB->setLHS("B Left");
+	predExprB->setRHSParam("B Right");
+	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
+	predExprC->setLHS("C Left");
+	predExprC->setRHSParam("C Right");
+	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+	predExprD->setLHS("D Left");
+	predExprD->setRHSParam("D Right");
 
 	compoundExprA->setLHSPredicateExp(predExprA);
 	compoundExprA->setRHSPredicateExp(predExprB);
@@ -1016,6 +1052,8 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	compoundExpr->setLHSCompoundExp(compoundExprA);
 	compoundExpr->setRHSCompoundExp(compoundExprB);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
+
+	compoundExpr->setParameterContainer(&paramContainer);
 
 	//Test the text output
 	//Names only

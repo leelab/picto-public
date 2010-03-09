@@ -6,11 +6,12 @@
 #include <QVariant>
 #include <QString>
 #include <QMap>
+#include <QScriptEngine>
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Property
+	class PICTOLIB_API Property
 #else
 class Property
 #endif
@@ -20,10 +21,10 @@ public:
 
 	int type();
 	QString name();
-	QVariant value();
-	void setValue(QVariant _value);
 	QMap<QString, QVariant> getAttributes();
 	void addAttribute(QString _attributeName, QVariant _attributeValue);
+	QVariant value();
+	void setValue(QVariant _value);
 
 private:
 	int type_;

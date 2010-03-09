@@ -2,7 +2,8 @@
 #define _SCENE_H_
 
 #include <QXmlStreamWriter>
-#include <QXmlStreamREader>
+#include <QXmlStreamReader>
+#include <QScriptEngine>
 
 #include "../common.h"
 #include "../storage/DataStore.h"
@@ -25,6 +26,8 @@ public:
 	//void setAudioElement(....)
 
 	void render();
+
+	void bindVisualElementsToScript(QScriptEngine &qsEngine);
 
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

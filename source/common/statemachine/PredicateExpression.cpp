@@ -6,14 +6,9 @@
 
 namespace Picto {
 
-QSharedPointer<ParameterContainer> PredicateExpression::parameters_ = QSharedPointer<ParameterContainer>();
 
 PredicateExpression::PredicateExpression()
 {
-	//If you're hitting one of these asserts, it's becuase you forgot to call the 
-	//setParameterContainer function.  This MUST be done at some point before creating
-	//a PredicateExpression
-	Q_ASSERT_X(parameters_,"PredicateExpression", "Parameter container is null.");
 	LHSParamName_ = "";
 	RHSParamName_ = "";
 	useRHSVal_ = false;
@@ -23,28 +18,11 @@ PredicateExpression::PredicateExpression()
 
 PredicateExpression::PredicateExpression(QString predicateName)
 {
-	//Error checking
-	Q_ASSERT_X(parameters_,"PredicateExpression", "Parameter container is null.");
 	PredicateFactory predFact;
 	Q_ASSERT(predFact.createPredicate(predicateName));
 
 	LHSParamName_ = "";
 	RHSParamName_ = "";
-	useRHSVal_ = false;
-
-	predicateName_ = predicateName;
-}
-
-PredicateExpression::PredicateExpression(QString predicateName, QString LHSParamName, QString RHSParamName)
-{
-	Q_ASSERT_X(parameters_,"PredicateExpression", "Parameter container is null.");
-	PredicateFactory predFact;
-	Q_ASSERT(predFact.createPredicate(predicateName));
-	Q_ASSERT(parameters_->getParameter(LHSParamName));
-	Q_ASSERT(parameters_->getParameter(RHSParamName));
-
-	LHSParamName_ = LHSParamName;
-	RHSParamName_ = RHSParamName;
 	useRHSVal_ = false;
 
 	predicateName_ = predicateName;
@@ -70,6 +48,8 @@ bool PredicateExpression::evaluate()
 	QSharedPointer<Predicate> pred = predFact.createPredicate(predicateName_);
 
 	QSharedPointer<Parameter> LHSParam = parameters_->getParameter(LHSParamName_);
+	if(LHSParam.isNull())
+		return false;
 	if(useRHSVal_)
 	{
 		return pred->evaluate(*LHSParam,RHSval_);
@@ -330,7 +310,12 @@ bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 			QString valueTypeStr;
 			valueTypeStr = xmlStreamReader->attributes().value("type").toString();
 
-			QVariant::Type valueType = QVariant::nameToType(valueTypeStr.toAscii());
+			QVariant::Type valueType = QVariant::nameToType(valueTypeStr.toLatin1());
+			if(valueType == QVariant::Invalid)
+			{
+				addError("PredicateExpression","Invalid or unrecognized type for value", xmlStreamReader);
+				return false;
+			}
 
 			//This will probably break at some point...
 			//Since the Value is written out using QVariant::toString, I can simply

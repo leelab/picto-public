@@ -1,5 +1,7 @@
 #include "VisualElement.h"
 
+#include <QScriptValue>
+
 namespace Picto {
 
 VisualElement::VisualElement() :
@@ -7,11 +9,25 @@ VisualElement::VisualElement() :
 	propertyContainer_("Visual Element"),
 	order_(0)
 {
+	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
+	propertyContainer_.addProperty(Property(QVariant::Point,"Position",QPoint(0,0)));
+	propertyContainer_.addProperty(Property(QVariant::Color,"Color",QColor()));
 }
 
 VisualElement::~VisualElement()
 {
 }
+
+void VisualElement::addAsScriptProperty(QScriptEngine &engine)
+{
+	QScriptValue qsValue = engine.newQObject(this);
+	engine.globalObject().setProperty(propertyContainer_.getPropertyValue("Name").toString(),qsValue);
+
+
+	//allow the derived class to add more properties
+	addAdditionalPropertiesAsScriptProperty(engine);
+}
+
 
 QPoint VisualElement::getPosition()
 {
@@ -38,6 +54,18 @@ void VisualElement::setPosition(QPoint position)
 {
 	propertyContainer_.setPropertyValue("Position",position);
 }
+
+QColor VisualElement::getColor()
+{
+	return propertyContainer_.getPropertyValue("Color").value<QColor>();
+}
+
+void VisualElement::setColor(QColor color)
+{
+	propertyContainer_.setPropertyValue("Color",color);
+	draw();
+}
+
 
 void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface)
 {

@@ -1,12 +1,17 @@
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
 
+#include <QDebug>
+
 namespace Picto {
 
 State::State()
 : scene_(QSharedPointer<Scene>(new Scene))
 {
 	propertyContainer_.setPropertyValue("Type","State");
+	propertyContainer_.addProperty(Property(QVariant::String,"EntryScript",""));
+	propertyContainer_.addProperty(Property(QVariant::String,"FrameScript",""));
+	propertyContainer_.addProperty(Property(QVariant::String,"ExitScript",""));
 
 	//at some point, these should actually do something, but for the moment
 	//we'll leave them as -1 to show that they aren't being used
@@ -17,13 +22,42 @@ State::State()
 
 QString State::run()
 {
+	//Figure out which scripts we will be running
+	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
+	bool runFrameScript = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
+	bool runExitScript = !propertyContainer_.getPropertyValue("ExitScript").toString().isEmpty();
+
+	//if we're running any scripts at all, bind to the contained 
+	//visual elements and parameters
+	if(runEntryScript || runFrameScript || runExitScript)
+	{
+		scene_->bindVisualElementsToScript(qsEngine_);
+		parameterContainer_.addAsScriptProperties(qsEngine_);
+	}
+
+	//run the entry script
+	if(runEntryScript)
+	{
+		qsEngine_.evaluate(propertyContainer_.getPropertyValue("EntryScript").toString());
+		if(qsEngine_.hasUncaughtException())
+		{
+			QString errorMsg = "Uncaught exception in State" + getName() +" entry script.\n";
+			errorMsg += QString("Line %1: %2\n").arg(qsEngine_.uncaughtExceptionLineNumber())
+											  .arg(qsEngine_.uncaughtException().toString());
+			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_.uncaughtExceptionBacktrace().join(", "));
+			qDebug()<<errorMsg;
+		}
+	}
+
 	//Start up all of the control elements
 	foreach(QSharedPointer<ControlElement> control, controlElements_)
 	{
 		control->start();
 	}
 
-	while(true)
+	QString result = "";
+	bool isDone = false;
+	while(!isDone)
 	{
 		//Draw the scene
 		scene_->render();
@@ -32,13 +66,46 @@ QString State::run()
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
 		{
 			if(control->isDone())
-				return control->getResult();
+			{
+				result = control->getResult();
+				isDone = true;
+			}
+		}
+		//run the frame script
+		if(runFrameScript && !isDone)
+		{
+			qsEngine_.evaluate(propertyContainer_.getPropertyValue("FrameScript").toString());
+			if(qsEngine_.hasUncaughtException())
+			{
+				QString errorMsg = "Uncaught exception in State" + getName() +" frame script.\n";
+				errorMsg += QString("Line %1: %2\n").arg(qsEngine_.uncaughtExceptionLineNumber())
+												  .arg(qsEngine_.uncaughtException().toString());
+				errorMsg += QString("Backtrace: %1\n").arg(qsEngine_.uncaughtExceptionBacktrace().join(", "));
+				qDebug()<<errorMsg;
+			}
 		}
 
 		//If there are no control elements, then we just return with an empty string
 		if(controlElements_.isEmpty())
-			return "";
+			isDone = true;
 	}
+
+	//run the exit script
+	if(runExitScript)
+	{
+		qsEngine_.evaluate(propertyContainer_.getPropertyValue("ExitScript").toString());
+		if(qsEngine_.hasUncaughtException())
+		{
+			QString errorMsg = "Uncaught exception in State" + getName() +" exit script.\n";
+			errorMsg += QString("Line %1: %2\n").arg(qsEngine_.uncaughtExceptionLineNumber())
+											  .arg(qsEngine_.uncaughtException().toString());
+			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_.uncaughtExceptionBacktrace().join(", "));
+			qDebug()<<errorMsg;
+		}
+	}
+
+
+	return result;
 }
 
 void State::addControlElement(QSharedPointer<ControlElement> controlElement)
@@ -86,6 +153,12 @@ void State::removeControlElement(QString controlElementName)
  *		<Scene>
  *			...
  *		</Scene>
+ *		<Scripts>
+ *			<Script type="entry"> ... </Script>
+ *			<Script type="frame "> ... </Script>
+ *			<Script type="exit"> ... </Script>
+ *		</Scripts>
+
  *		<Results>
  *			<!-- We'll list all possible results from the ControlElements here -->
  *			<Result>
@@ -198,6 +271,33 @@ bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				return false;
 			}
 			scene_ = newScene;
+		}
+		else if(name == "Scripts")
+		{
+			//do nothing
+		}
+		else if(name == "Script")
+		{
+			QString type = xmlStreamReader->attributes().value("type").toString();
+			QString script = xmlStreamReader->readElementText();
+
+			if(type == "entry")
+			{
+				propertyContainer_.setPropertyValue("EntryScript",script);
+			}
+			else if(type == "frame")
+			{
+				propertyContainer_.setPropertyValue("FrameScript",script);
+			}
+			else if(type == "exit")
+			{
+				propertyContainer_.setPropertyValue("ExitScript",script);
+			}
+			else
+			{
+				addError("State", "Unrecognized script type.  Expecting \"entry\", \"frame\", or \"exit\"", xmlStreamReader);
+				return false;
+			}
 		}
 		else if(name == "Results")
 		{

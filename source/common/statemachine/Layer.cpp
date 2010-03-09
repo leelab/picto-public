@@ -15,6 +15,15 @@ Layer::Layer()
 	elapsedTime_.start();
 }
 
+void Layer::bindVisualElementsToScript(QScriptEngine &qsEngine)
+{
+	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
+	{
+		visualElement->addAsScriptProperty(qsEngine);
+	}
+
+}
+
 void Layer::addVisualElement(QSharedPointer<VisualElement> v)
 {
 	//add the appropriate compositing surfaces to the element

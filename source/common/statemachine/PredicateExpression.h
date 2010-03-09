@@ -29,7 +29,6 @@ class PredicateExpression : public DataStore
 public:
 	PredicateExpression();
 	PredicateExpression(QString predicateName);
-	PredicateExpression(QString predicateName, QString LHSParamName, QString RHSParamName);
 	~PredicateExpression() {};
 
 	bool isValid();
@@ -47,7 +46,7 @@ public:
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	static void setParameterContainer(QSharedPointer<ParameterContainer> params) { parameters_ = params; };
+	void setParameterContainer(ParameterContainer *params) { parameters_ = params; };
 
 private:
 	QString predicateName_;
@@ -56,7 +55,7 @@ private:
 	QVariant RHSval_;
 	bool useRHSVal_;
 
-	static QSharedPointer<ParameterContainer> parameters_;
+	ParameterContainer *parameters_;
 };
 
 

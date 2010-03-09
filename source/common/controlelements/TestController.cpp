@@ -30,7 +30,7 @@ bool TestController::isDone()
 
 	timesCalled_++;
 
-	qDebug()<<"Checking isDone for frame: "<<timesCalled_;
+	//qDebug()<<"Checking isDone for frame: "<<timesCalled_;
 
 	if(timesCalled_ < numberOfFrames)
 	{

@@ -120,9 +120,7 @@ bool ChoiceParameter::equalTo(QVariant& RHS)
  *			<Option>
  *				<Type>QColor</Type>
  *				<Label>Green</Label>
- *				<Data>
- *					<QColor R="255" G="0" B="0" A="0"/>
- *				</Data>
+ *				<Data>#00FF00</Data>
  *			</Option>
  *		</Choice>
  *	</Parameter>

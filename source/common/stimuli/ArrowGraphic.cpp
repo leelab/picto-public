@@ -4,18 +4,17 @@
 
 namespace Picto {
 
-const QString ArrowGraphic::name = "Arrow Graphic";
+const QString ArrowGraphic::type = "Arrow Graphic";
 
 ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, QColor color)
 {
-	propertyContainer_.setContainerName(name);
+	propertyContainer_.setContainerName(type);
 
-	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
+	propertyContainer_.setPropertyValue("Position",position);
 	propertyContainer_.addProperty(Property(QVariant::Point,"Start",start));
 	propertyContainer_.addProperty(Property(QVariant::Point,"End",end));
 	propertyContainer_.addProperty(Property(QVariant::Int,"Size", size));
-	propertyContainer_.addProperty(Property(QVariant::Color,"Color",color));
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
+	propertyContainer_.setPropertyValue("Color",color);
 
 	draw();
 

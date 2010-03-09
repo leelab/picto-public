@@ -5,21 +5,21 @@
 
 namespace Picto {
 
-const QString RandomlyFilledGridGraphic::name = "Randomly Filled Grid Graphic";
+const QString RandomlyFilledGridGraphic::type = "Randomly Filled Grid Graphic";
 
 RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dimensions, 
 													 QColor color1, QColor color2, 
 													 int numHorizSquares, int numVertSquares,
 													 int numColor1, bool animated, int updateFrameRate)
 {
-	propertyContainer_.setContainerName(name);
+	propertyContainer_.setContainerName(type);
 
-	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
+	propertyContainer_.setPropertyValue("Position",position);
 
 	Property dimensionsProperty(QVariant::Rect,"Dimensions",dimensions);
 	propertyContainer_.addProperty(dimensionsProperty);
 
-	propertyContainer_.addProperty(Property(QVariant::Color,"Color1",color1));
+	propertyContainer_.setPropertyValue("Color",color1);
 	propertyContainer_.addProperty(Property(QVariant::Color,"Color2",color2));
 
 	//NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
@@ -31,8 +31,6 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 
 	propertyContainer_.addProperty(Property(QVariant::Bool,"Animated",animated));
 	propertyContainer_.addProperty(Property(QVariant::Int,"Update frame rate",updateFrameRate));
-
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
 
 	colorList.clear();
 	for(int i=0; i<numColor1; i++)

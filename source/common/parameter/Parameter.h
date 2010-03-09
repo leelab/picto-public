@@ -2,6 +2,8 @@
 #define _PARAMETER_H_
 
 #include <QVariant>
+#include <QScriptEngine>
+#include <QScriptValue>
 
 #include "../common.h"
 #include "../storage/DataStore.h"
@@ -9,12 +11,15 @@
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API Parameter : public DataStore
+	class PICTOLIB_API Parameter : public QObject, public DataStore
 #else
-	class Parameter : public DataStore
+	class Parameter : public QObject, public DataStore
 #endif
 {
+	Q_OBJECT
+
 public:
+
 	Parameter();
 
 	//DataStore functions
@@ -23,12 +28,10 @@ public:
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
+	void addAsScriptProperty(QScriptEngine &engine);
+
 	QString name();
 	void setName(QString parameterName);
-
-	//setters and getters
-	virtual void setValue(QVariant value) = 0;
-	virtual QVariant getValue() = 0;
 
 	void setOrder(int i) { order_ = i; };
 	int getOrder() { return order_; };
@@ -75,6 +78,12 @@ public:
 
 
 	QString type();
+
+public slots:
+	//setters and getters are slots so we can bind them to scripts
+	virtual void setValue(QVariant value) = 0;
+	virtual QVariant getValue() = 0;
+
 
 protected:
 	QString type_;

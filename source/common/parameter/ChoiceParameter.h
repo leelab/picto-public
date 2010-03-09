@@ -19,6 +19,11 @@ struct ChoiceParameterOption
 class ChoiceParameter : public Parameter
 #endif
 {
+	Q_OBJECT
+public slots:
+	void setValue(QVariant value);
+	QVariant getValue();
+
 public:
 	ChoiceParameter();
 
@@ -31,9 +36,6 @@ public:
 	bool addChoice(QString label, QVariant data);
 	bool removeChoice(QString label);
 	void setDefaultOption(QString label);
-
-	virtual void setValue(QVariant value);
-	virtual QVariant getValue();
 
 	virtual bool equalTo(Parameter& RHS);
 	virtual bool equalTo(QVariant& RHS);

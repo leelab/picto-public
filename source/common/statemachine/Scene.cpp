@@ -13,6 +13,11 @@ void Scene::render()
 	canvas_->draw();
 }
 
+void Scene::bindVisualElementsToScript(QScriptEngine &qsEngine)
+{
+	canvas_->bindVisualElementsToScript(qsEngine);
+}
+
 /*	\brief Converts this scene into an XML fragment
  *
  *	The Scene will look something like this when converted to XML:

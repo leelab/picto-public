@@ -8,6 +8,7 @@
 
 #include <QSharedPointer>
 #include <QList>
+#include <QScriptEngine>
 
 namespace Picto {
 
@@ -25,6 +26,9 @@ public:
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QStringList getParameterList();
+
+	void addAsScriptProperties(QScriptEngine &engine);
+
 
 private:
 	QMap<QString, QSharedPointer<Parameter> > parameters_;

@@ -6,6 +6,8 @@
 #include "../controlelements/ControlElement.h"
 #include "scene.h"
 
+#include <QScriptEngine>
+
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
@@ -36,6 +38,8 @@ private:
 	QMap<QString, QSharedPointer<ControlElement> > controlElements_;
 	int revision_;
 	int engineNeeded_;
+
+	QScriptEngine qsEngine_;
 };
 
 

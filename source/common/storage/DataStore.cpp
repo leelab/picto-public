@@ -20,6 +20,7 @@ void DataStore::addError(QString objectType, QString errorMsg, QSharedPointer<QX
 	QString newErr = "ERROR\n";
 	newErr += "Object: " + objectType + "\n";
 	newErr += QString("Line: %1\n").arg(xmlStreamReader->lineNumber());
+	newErr += "Name: " + xmlStreamReader->name().toString() + "\n";
 	newErr += "Element: " + xmlStreamReader->tokenString() + "\n";
 	newErr += "Message: " + errorMsg + "\n";
 

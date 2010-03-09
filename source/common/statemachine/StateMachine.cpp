@@ -3,6 +3,7 @@
 #include "State.h"
 #include "Result.h"
 #include "FlowElement.h"
+#include "ScriptElement.h"
 
 namespace Picto {
 
@@ -111,7 +112,11 @@ bool StateMachine::validateTransitions()
 				}
 			}
 			if(!found)
+			{
+				QString elementName = element->getName();
+				QString unconnectedResult = result;
 				return false;
+			}
 		}			
 	}
 
@@ -296,6 +301,10 @@ bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 					{
 						newElement = QSharedPointer<StateMachineElement>(new FlowElement());
 					}
+					else if(elementType == "ScriptElement")
+					{
+						newElement = QSharedPointer<StateMachineElement>(new ScriptElement());
+					}
 					else if(elementType == "Result")
 					{
 						newElement = QSharedPointer<StateMachineElement>(new Result());
@@ -315,7 +324,6 @@ bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 						addError("StateMachine", "Failed to deserialize <StateMachineElement>", xmlStreamReader);
 						return false;
 					}
-					newElement->addParameters(parameterContainer_);
 					addElement(newElement);
 				}
 				else if(name == "StateMachine")

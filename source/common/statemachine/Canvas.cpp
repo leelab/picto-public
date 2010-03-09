@@ -15,6 +15,15 @@ Canvas::Canvas()
 {
 }
 
+void Canvas::bindVisualElementsToScript(QScriptEngine &qsEngine)
+{
+	foreach(QSharedPointer<Layer> layer, layers_)
+	{
+		layer->bindVisualElementsToScript(qsEngine);
+	}
+
+}
+
 void Canvas::draw()
 {
 	//! \todo deal with the background layer color

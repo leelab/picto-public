@@ -53,6 +53,19 @@ void CompoundExpression::setRHSPredicateExp(QSharedPointer<PredicateExpression> 
 	RHSInitialized_ = true;
 }
 
+void CompoundExpression::setParameterContainer(ParameterContainer *params)
+{
+	if(LHSisPred_)
+		LHSPredExp_->setParameterContainer(params);
+	else
+		LHSComExp_->setParameterContainer(params);
+
+	if(RHSisPred_)
+		RHSPredExp_->setParameterContainer(params);
+	else
+		RHSComExp_->setParameterContainer(params);
+}
+
 bool CompoundExpression::evaluate()
 {
 	bool LHSresult;

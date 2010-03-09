@@ -20,6 +20,11 @@ struct StringParameterOption
 class StringParameter : public Parameter
 #endif
 {
+	Q_OBJECT
+public slots:
+	void setValue(QVariant value);
+	QVariant getValue();
+
 public:
 	StringParameter();
 

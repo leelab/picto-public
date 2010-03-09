@@ -45,13 +45,13 @@ TestDataStore::TestDataStore()
 	randGen_.seed();
 
 	//Set up the VisualElementFactory
-	visualElementFactory_.addVisualElementType(Picto::ArrowGraphic::name, &Picto::ArrowGraphic::NewVisualElement);
-	visualElementFactory_.addVisualElementType(Picto::BoxGraphic::name, &Picto::BoxGraphic::NewVisualElement);
-	visualElementFactory_.addVisualElementType(Picto::CircleGraphic::name, &Picto::CircleGraphic::NewVisualElement);
-	visualElementFactory_.addVisualElementType(Picto::EllipseGraphic::name, &Picto::EllipseGraphic::NewVisualElement);
-	visualElementFactory_.addVisualElementType(Picto::LineGraphic::name, &Picto::LineGraphic::NewVisualElement);
-	visualElementFactory_.addVisualElementType(Picto::PictureGraphic::name, &Picto::PictureGraphic::NewVisualElement);
-	visualElementFactory_.addVisualElementType(Picto::RandomlyFilledGridGraphic::name, &Picto::RandomlyFilledGridGraphic::NewVisualElement);
+	visualElementFactory_.addVisualElementType(Picto::ArrowGraphic::type, &Picto::ArrowGraphic::NewVisualElement);
+	visualElementFactory_.addVisualElementType(Picto::BoxGraphic::type, &Picto::BoxGraphic::NewVisualElement);
+	visualElementFactory_.addVisualElementType(Picto::CircleGraphic::type, &Picto::CircleGraphic::NewVisualElement);
+	visualElementFactory_.addVisualElementType(Picto::EllipseGraphic::type, &Picto::EllipseGraphic::NewVisualElement);
+	visualElementFactory_.addVisualElementType(Picto::LineGraphic::type, &Picto::LineGraphic::NewVisualElement);
+	visualElementFactory_.addVisualElementType(Picto::PictureGraphic::type, &Picto::PictureGraphic::NewVisualElement);
+	visualElementFactory_.addVisualElementType(Picto::RandomlyFilledGridGraphic::type, &Picto::RandomlyFilledGridGraphic::NewVisualElement);
 
 	//Set up the ParameterFactory
 	//Since the factories map is static, we should be able to set it up once and
@@ -433,8 +433,7 @@ void TestDataStore::TestPredicateExpression()
 	QSharedPointer<Picto::PredicateExpression> origPredExp;
 	QSharedPointer<Picto::PredicateExpression> copyPredExp;
 
-	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
-	Picto::PredicateExpression::setParameterContainer(paramContainer);
+	Picto::ParameterContainer paramContainer;
 
 	//Set up a range parameters and a boolean parameter
 	QSharedPointer<Picto::RangeParameter> A(new Picto::RangeParameter);
@@ -446,38 +445,41 @@ void TestDataStore::TestPredicateExpression()
 	A->setMin(5000);
 	A->setMax(-5000);
 	A->setName("Range parameter A");
-	paramContainer->addParameter(A);
+	paramContainer.addParameter(A);
 
 	B->setIncrement(1);
 	B->setDefault(0);
 	B->setMin(5000);
 	B->setMax(-5000);
 	B->setName("Range parameter B");
-	paramContainer->addParameter(B);
+	paramContainer.addParameter(B);
 
 	C->setName("Boolean parameter");
 	C->setDefaultValue(true);
 	C->setTrueLabel("OK");
 	C->setFalseLabel("Fail");
-	paramContainer->addParameter(C);
+	paramContainer.addParameter(C);
 
 	//Test RangeParameter > 500
 	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
 	copyPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression);
 	origPredExp->setLHS("Range Parameter A");
 	origPredExp->setRHSValue(500);
+	origPredExp->setParameterContainer(&paramContainer);
 	TestSimpleDataStore(origPredExp, copyPredExp,"Expression");
 
 	//Test Boolean Parameter == true
 	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
 	origPredExp->setLHS("Boolean Parameter");
 	origPredExp->setRHSValue(true);
+	origPredExp->setParameterContainer(&paramContainer);
 	TestSimpleDataStore(origPredExp, copyPredExp,"Expression");
 
 	//Test RangeParameter > 500
 	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
 	origPredExp->setLHS("Range Parameter A");
 	origPredExp->setRHSParam("Range Parameter B");
+	origPredExp->setParameterContainer(&paramContainer);
 	TestSimpleDataStore(origPredExp,copyPredExp,"Expression");
 }
 
@@ -505,8 +507,7 @@ void TestDataStore::TestCompoundExpression()
 	QSharedPointer<Picto::CompoundExpression> origCompoundExpr;
 	QSharedPointer<Picto::CompoundExpression> copyCompoundExpr;
 
-	QSharedPointer<Picto::ParameterContainer> paramContainer(new Picto::ParameterContainer);
-	Picto::PredicateExpression::setParameterContainer(paramContainer);
+	Picto::ParameterContainer paramContainer;
 
 	//Set up a range parameter
 	QSharedPointer<Picto::RangeParameter> rangeParam(new Picto::RangeParameter);
@@ -515,14 +516,14 @@ void TestDataStore::TestCompoundExpression()
 	rangeParam->setMin(5000);
 	rangeParam->setMax(-5000);
 	rangeParam->setName("Trial");
-	paramContainer->addParameter(rangeParam);
+	paramContainer.addParameter(rangeParam);
 
 	QSharedPointer<Picto::BooleanParameter> boolParam(new Picto::BooleanParameter);
 	boolParam->setName("RepeatTrial");
 	boolParam->setDefaultValue(true);
 	boolParam->setTrueLabel("Repeat");
 	boolParam->setFalseLabel("Don't repeat");
-	paramContainer->addParameter(boolParam);
+	paramContainer.addParameter(boolParam);
 
 
 	////////////////////////////
@@ -567,7 +568,7 @@ void TestDataStore::TestCompoundExpression()
 			origCompoundExpr->setRHSPredicateExp(predExprB,true);
 			break;
 		}
-
+		origCompoundExpr->setParameterContainer(&paramContainer);
 		copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
 
 		TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
@@ -595,6 +596,7 @@ void TestDataStore::TestCompoundExpression()
 	origCompoundExpr->setLHSCompoundExp(compExprA);
 	origCompoundExpr->setRHSPredicateExp(predExprC);
 	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+	origCompoundExpr->setParameterContainer(&paramContainer);
 
 	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
 	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
@@ -604,6 +606,7 @@ void TestDataStore::TestCompoundExpression()
 	origCompoundExpr->setLHSPredicateExp(predExprC);
 	origCompoundExpr->setRHSCompoundExp(compExprA);
 	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+	origCompoundExpr->setParameterContainer(&paramContainer);
 
 	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
 	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
@@ -618,6 +621,7 @@ void TestDataStore::TestCompoundExpression()
 
 	origCompoundExpr->setLHSCompoundExp(compExprB);
 	origCompoundExpr->setRHSCompoundExp(compExprA);
+	origCompoundExpr->setParameterContainer(&paramContainer);
 	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
 
 	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);

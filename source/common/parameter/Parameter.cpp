@@ -25,4 +25,12 @@ QString Parameter::type()
 	return type_;
 }
 
+void Parameter::addAsScriptProperty(QScriptEngine &engine)
+{
+	QScriptValue qsValue = engine.newQObject(this);
+	engine.globalObject().setProperty(name(),qsValue);
+
+}
+
+
 }; //namespace Picto

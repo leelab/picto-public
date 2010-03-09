@@ -4,13 +4,13 @@
 
 namespace Picto {
 
-const QString CircleGraphic::name = "Circle Graphic";
+const QString CircleGraphic::type = "Circle Graphic";
 
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 {
-	propertyContainer_.setContainerName(name);
+	propertyContainer_.setContainerName(type);
 
-	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
+	propertyContainer_.setPropertyValue("Position",position);
 
 	Property radiusProperty(QVariant::Int,"Radius",radius);
 	radiusProperty.addAttribute("minimum", 1);
@@ -18,9 +18,7 @@ CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 	radiusProperty.addAttribute("singleStep", 1);
 	propertyContainer_.addProperty(radiusProperty);
 
-	propertyContainer_.addProperty(Property(QVariant::Color,"Color",color));
-
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
+	propertyContainer_.setPropertyValue("Color",color);
 
 	draw();
 

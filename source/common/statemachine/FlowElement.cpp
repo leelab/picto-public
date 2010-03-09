@@ -15,20 +15,21 @@ FlowElement::FlowElement()
 	//At some point, we may want to make the default result name user modifiable...
 	defaultResult_ = "default";
 }
-FlowElement::FlowElement(QSharedPointer<ParameterContainer> parameters)
+/*FlowElement::FlowElement(QSharedPointer<ParameterContainer> parameters)
 : StateMachineElement(parameters)
 {
 	propertyContainer_.setPropertyValue("Type","FlowElement");
 	
 	//At some point, we may want to make the default result name user modifiable...
 	defaultResult_ = "default";
-}
+	QSharedPointer<Result> r(new Result());
+	r->setName(defaultResult_);
+	addResult(r);
+
+}*/
 
 QString FlowElement::run()
 {
-	//before using predicates, we have to set the parameter container
-	PredicateExpression::setParameterContainer(QSharedPointer<ParameterContainer>(&parameterContainer_));
-
 	//The Condition list is sorted by the order values, so all we have to do is run 
 	//through it evaluating conditions.
 	foreach(Condition c, conditions_)
@@ -70,6 +71,7 @@ bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr, int
 		if(c.order == newCond.order)
 			return false;
 	}
+	newCond.predExpr->setParameterContainer(&parameterContainer_);
 
 	conditions_.push_back(newCond);
 
@@ -103,6 +105,8 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr, int 
 		if(c.order == newCond.order)
 			return false;
 	}
+	
+	newCond.compExpr->setParameterContainer(&parameterContainer_);
 
 	conditions_.push_back(newCond);
 
@@ -266,6 +270,7 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 						addError("FlowElement", "Failed to deserialize <CompoundExpression>", xmlStreamReader);
 						return false;
 					}
+					compExpr->setParameterContainer(&parameterContainer_);
 					initCompExpr = true;
 				}
 				else if(name == "Expression")
@@ -276,6 +281,7 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 						addError("FlowElement", "Failed to deserialize <Expression>", xmlStreamReader);
 						return false;
 					}
+					predExpr->setParameterContainer(&parameterContainer_);
 					initPredExpr = true;
 				}
 				else
@@ -308,18 +314,10 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 				addError("FlowElement", "Did not find an expression within <Condition>", xmlStreamReader);
 				return false;
 			}
-
-			Condition cond;
-			cond.isCompound = initCompExpr;
-			cond.name = nameStr;
-			cond.order = order;
 			if(initCompExpr)
-				cond.compExpr = compExpr;
+				addCondition(compExpr,order,nameStr);
 			else
-				cond.predExpr = predExpr;
-
-			conditions_.push_back(cond);
-			results_.push_back(nameStr);
+				addCondition(predExpr,order,nameStr);
 		}
 		else
 		{
@@ -337,9 +335,6 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 
 	//sort the condition list
 	qSort(conditions_.begin(), conditions_.end(), &conditionLessThan);
-
-	//Our results list should contain one more result, than there are conditions.
-	//this extra result is the default.  We need to find it and deal with it
 
 	return true;
 }

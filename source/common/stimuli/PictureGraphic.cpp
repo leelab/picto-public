@@ -4,17 +4,15 @@
 
 namespace Picto {
 
-const QString PictureGraphic::name = "Picture Graphic";
+const QString PictureGraphic::type = "Picture Graphic";
 
 PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 {
-	propertyContainer_.setContainerName(name);
+	propertyContainer_.setContainerName(type);
 
-	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
+	propertyContainer_.setPropertyValue("Position",position);
 
 	propertyContainer_.addProperty(Property(QVariant::String,"ImageFile",imageFile));
-
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
 
 	draw();
 

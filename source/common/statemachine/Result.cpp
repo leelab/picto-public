@@ -1,15 +1,29 @@
 #include "Result.h"
-
+#include "../engine/PictoEngine.h"
+#include <QtDebug>
 namespace Picto
 {
 
 Result::Result()
 {
 	propertyContainer_.setPropertyValue("Type","Result");
+	propertyContainer_.addProperty(Property(QVariant::Bool,"GiveReward",false));
+	propertyContainer_.addProperty(Property(QVariant::Int,"RewardQty",0));
+	propertyContainer_.addProperty(Property(QVariant::Int,"RewardChan",1));
 }
 
 QString Result::run()
 {
+	if(propertyContainer_.getPropertyValue("GiveReward").toBool())
+	{
+		int numRewards = propertyContainer_.getPropertyValue("RewardQty").toInt();
+		int rewardChan = propertyContainer_.getPropertyValue("RewardChan").toInt();
+		for(int i=0; i<numRewards; i++)
+		{
+			qDebug()<<"Reward";
+			Engine::PictoEngine::giveReward(rewardChan);
+		}
+	}
 	return propertyContainer_.getPropertyValue("Name").toString();
 }
 
@@ -20,6 +34,7 @@ QString Result::run()
  * 
  *	<StateMachineElement type="Result">
  *		<Name>BrokeFixation</Name>
+ *		<Reward quantity="3" channel="1"/>
  *	</StateMachineElement>
  */
 bool Result::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
@@ -28,6 +43,14 @@ bool Result::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeAttribute("type","Result");
 	
 	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
+
+	if(propertyContainer_.getPropertyValue("GiveReward").toBool())
+	{
+		xmlStreamWriter->writeStartElement("Reward");
+		xmlStreamWriter->writeAttribute("quantity", propertyContainer_.getPropertyValue("RewardQty").toString());
+		xmlStreamWriter->writeAttribute("channel", propertyContainer_.getPropertyValue("RewardChan").toString());
+		xmlStreamWriter->writeEndElement();
+	}
 
 	xmlStreamWriter->writeEndElement(); //StateMachineElement
 	return true;
@@ -62,6 +85,26 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 		if(name == "Name")
 		{
 			propertyContainer_.setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
+		}
+		else if(name == "Reward")
+		{
+			propertyContainer_.setPropertyValue("GiveReward",QVariant(true));
+			bool ok;
+			int rewardQuantity = xmlStreamReader->attributes().value("quantity").toString().toInt(&ok);
+			if(!ok)
+			{
+				addError("Result","Reward quantity attribute not an integer",xmlStreamReader);
+				return false;
+			}
+			propertyContainer_.setPropertyValue("RewardQty",QVariant(rewardQuantity));
+
+			int rewardChan = xmlStreamReader->attributes().value("channel").toString().toInt(&ok);
+			if(!ok)
+			{
+				addError("Result","Reward channel attribute not an integer",xmlStreamReader);
+				return false;
+			}
+			propertyContainer_.setPropertyValue("RewardChan",QVariant(rewardChan));
 		}
 		else
 		{

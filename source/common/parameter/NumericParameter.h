@@ -21,6 +21,11 @@ namespace Picto {
 class NumericParameter : public Parameter
 #endif
 {
+	Q_OBJECT
+public slots:
+	void setValue(QVariant value);
+	QVariant getValue() { return QVariant(value_); };
+
 public:
 	NumericParameter();
 
@@ -29,9 +34,6 @@ public:
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-	void setValue(QVariant value);
-	QVariant getValue() { return QVariant(value_); };
 
 	void setUnits(QString units) { units_ = units; };
 

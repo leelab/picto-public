@@ -23,7 +23,7 @@ public:
 	void updateAnimation(int frame, QTime elapsedTime);
 	static VisualElement* NewVisualElement();
 
-	static const QString name;
+	static const QString type;
 
 	private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);

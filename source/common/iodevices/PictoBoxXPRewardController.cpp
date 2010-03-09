@@ -25,7 +25,11 @@ PictoBoxXPRewardController::PictoBoxXPRewardController(unsigned int channelCount
 
 	//initialize the rewrad durations to 250 ms (this is arbitrary
 	for(int i=0; i<4; i++)
-		rewardDurationMs_[i] = 250;
+		rewardDurations_.append(250);
+	//initialize the reset time to  0 ms
+	for(int i=0; i<4; i++)
+		rewardResetTimes_.append(250);
+
 	DAQmxErrChk(DAQmxCreateTask("RewardTask",&daqTaskHandle_));
 	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_REWARD_CHANNELS,"",DAQmx_Val_ChanForAllLines));
 	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
@@ -54,7 +58,7 @@ bool PictoBoxXPRewardController::setRewardDurationMs(unsigned int channel, unsig
 {
 	if(channel > 4 || channel < 1)
 		return false;
-	rewardDurationMs_[channel-1] = duration;
+	rewardDurations_[channel-1] = duration;
 	return true;
 }
 
@@ -63,8 +67,16 @@ int PictoBoxXPRewardController::getRewardDurationMs(unsigned int channel)
 	if(channel > 4 || channel < 1)
 		return -1;
 	else
-		return rewardDurationMs_[channel-1];
+		return rewardDurations_[channel-1];
 
+}
+
+bool PictoBoxXPRewardController::setRewardResetTimeMs(unsigned int channel, unsigned int time)
+{
+	if(channel > 4 || channel < 1)
+		return false;
+	rewardResetTimes_[channel-1] = time;
+	return true;
 }
 
 
@@ -92,11 +104,24 @@ void PictoBoxXPRewardController::giveReward(unsigned int channel)
 		QueryPerformanceCounter(&tock);
 		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
 	}
-	while(elapsedTime * 1000.0 < rewardDurationMs_[channel-1]);
+	while(elapsedTime * 1000.0 < rewardDurations_[channel-1]);
 
 	data[channel-1] = 1;
 	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-	
+
+	//wait for the reset time
+	if(rewardResetTimes_[channel-1] <= 0)
+		return;
+
+	QueryPerformanceCounter(&tick);
+	do
+	{
+		QueryPerformanceCounter(&tock);
+		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
+	}
+	while(elapsedTime * 1000.0 < rewardResetTimes_[channel-1]);
+
+
 
 }
 

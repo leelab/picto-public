@@ -37,9 +37,10 @@ public:
 	RewardController(unsigned int channelCount);
 	~RewardController();
 
-	virtual bool setRewardVolume(unsigned int channel, float volume)=0;
-	virtual bool setRewardDurationMs(unsigned int channel, unsigned int duration)=0;
-	virtual int getRewardDurationMs(unsigned int channel)=0;
+	virtual bool setRewardVolume(unsigned int channel, float volume) =0 ;
+	virtual bool setRewardDurationMs(unsigned int channel, unsigned int duration) = 0;
+	virtual int getRewardDurationMs(unsigned int channel) = 0;
+	virtual bool setRewardResetTimeMs(unsigned int channel, unsigned int time) = 0;
 
 	int getChannelCount() { return channelCount_; };
 
@@ -51,6 +52,7 @@ protected:
 	int channelCount_;
 	QList<float> rewardVolumes_;
 	QList<int> rewardDurations_;
+	QList<int> rewardResetTimes_;
 };
 
 } //namespace Picto

@@ -10,6 +10,7 @@ namespace Picto {
 
 QList<QSharedPointer<RenderingTarget> > PictoEngine::renderingTargets_;
 QMap<QString, QSharedPointer<SignalChannel> > PictoEngine::signalChannels_;
+QSharedPointer<RewardController> PictoEngine::rewardController_;
 
 
 PictoEngine::PictoEngine() :
@@ -52,6 +53,13 @@ void PictoEngine::addSignalChannel(QString name, QSharedPointer<SignalChannel> c
 {
 	signalChannels_.insert(name, channel);
 }
+
+void PictoEngine::giveReward(int channel)
+{
+	if(!rewardController_.isNull())
+		rewardController_->giveReward(channel);
+}
+
 
 void PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> //experiment
 								 )

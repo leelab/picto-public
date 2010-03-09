@@ -21,6 +21,8 @@ class Canvas : public DataStore
 public:
 	Canvas();
 
+	void bindVisualElementsToScript(QScriptEngine &qsEngine);
+
 	void setBackgroundColor(QColor color) { backgroundColor_ = color; };
 
 	void addLayer(QSharedPointer<Layer> layer);

@@ -22,7 +22,7 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 
-	static const QString name;
+	static const QString type;
 
 private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);

@@ -27,6 +27,11 @@ namespace Picto {
 class RangeParameter : public Parameter
 #endif
 {
+	Q_OBJECT
+public slots:
+	void setValue(QVariant value);
+	QVariant getValue() { return QVariant(currentValue_); };
+
 public:
 	RangeParameter();
 
@@ -41,9 +46,6 @@ public:
 	void setDefault(int defualtValue);
 	void setIncrement(int increment) {increment_ = increment; }
 	void setUnits(QString units) { units_ = units; };
-
-	void setValue(QVariant value);
-	QVariant getValue() { return QVariant(currentValue_); };
 
 	void increment() { currentValue_ += increment_; };
 	void decrement() { currentValue_ -= increment_; };

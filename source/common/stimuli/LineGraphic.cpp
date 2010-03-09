@@ -4,13 +4,13 @@
 
 namespace Picto {
 
-const QString LineGraphic::name = "Line Graphic";
+const QString LineGraphic::type = "Line Graphic";
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 {
-	propertyContainer_.setContainerName(name);
+	propertyContainer_.setContainerName(type);
 
-	propertyContainer_.addProperty(Property(QVariant::Point,"Position",position));
+	propertyContainer_.setPropertyValue("Position",position);
 	
 	for(int i = 0; i < points.count(); i++)
 	{
@@ -18,9 +18,7 @@ LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 		propertyContainer_.addProperty(pointProperty);
 	}
 
-	propertyContainer_.addProperty(Property(QVariant::Color,"Color",color));
-
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
+	propertyContainer_.setPropertyValue("Color",color);
 
 	draw();
 

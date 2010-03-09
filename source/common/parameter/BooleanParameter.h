@@ -13,6 +13,11 @@ namespace Picto {
 class BooleanParameter : public Parameter
 #endif
 {
+	Q_OBJECT
+public slots:
+	void setValue(QVariant value) { value_ = value.toBool(); };
+	QVariant getValue() { return QVariant(value_); };
+
 public:
 	BooleanParameter();
 
@@ -21,9 +26,6 @@ public:
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-	void setValue(QVariant value) { value_ = value.toBool(); };
-	QVariant getValue() { return QVariant(value_); };
 
 	void setDefaultValue(bool defaultValue) { defaultValue_ = defaultValue; };
 	void setTrueLabel(QString label) { trueLabel_ = label; };

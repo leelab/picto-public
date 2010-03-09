@@ -12,6 +12,8 @@
 #include "../task/Task.h"
 #include "../network/CommandChannel.h"
 #include "SignalChannel.h"
+#include "../iodevices/RewardController.h"
+#include "../iodevices/EventCodeGenerator.h"
 
 #include <QSharedPointer>
 
@@ -83,6 +85,11 @@ public:
 	static QSharedPointer<SignalChannel> getSignalChannel(QString name);
 	void addSignalChannel(QString name, QSharedPointer<SignalChannel> channel);
 
+	void setEventCodeGenerator(QSharedPointer<EventCodeGenerator> eventCodeGenerator) { eventCodeGenerator_ = eventCodeGenerator; };
+
+	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
+	static void giveReward(int channel);
+
 private:
 
 	QSharedPointer<Picto::Experiment> experiment_;
@@ -91,6 +98,8 @@ private:
 	QList<QSharedPointer<CommandChannel> > commandChannels_;
 	static QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
 	bool bExclusiveMode_;
+	QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
+	static QSharedPointer<RewardController> rewardController_;
 };
 
 /*! @} */

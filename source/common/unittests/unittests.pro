@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = PictoLibraryUnitTests
-QT = core gui network testlib
+QT = core gui network testlib script
 CONFIG += qt warn_on debug_and_release
 DEPENDPATH += .
 INCLUDEPATH += .
@@ -16,6 +16,8 @@ SOURCES += $$(PICTO_TREE)/source/common/unittests/TestParameters.cpp
 HEADERS += $$(PICTO_TREE)/source/common/unittests/TestParameters.h
 SOURCES += $$(PICTO_TREE)/source/common/unittests/TestStateMachine.cpp
 HEADERS += $$(PICTO_TREE)/source/common/unittests/TestStateMachine.h
+SOURCES += $$(PICTO_TREE)/source/common/unittests/TestScripts.cpp
+HEADERS += $$(PICTO_TREE)/source/common/unittests/TestScripts.h
 
 
 include($$(PICTO_TREE)/source/common/common.pri)

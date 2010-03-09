@@ -1,3 +1,5 @@
+#include <QScriptValue>
+
 #include "Property.h"
 
 namespace Picto {
@@ -38,5 +40,6 @@ void Property::addAttribute(QString _attributeName, QVariant _attributeValue)
 {
 	attributes_[_attributeName] = _attributeValue;
 }
+
 
 }; //namespace Picto

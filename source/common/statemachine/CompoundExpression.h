@@ -53,6 +53,8 @@ public:
 
 	void setOperator(CompoundExpressionOperator::CompoundExpressionOperator op) { operator_=op; operatorInitialized_ = true;};
 
+	void setParameterContainer(ParameterContainer *params);
+
 	//Evaluate the expression
 	bool evaluate();
 

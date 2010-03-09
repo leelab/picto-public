@@ -32,6 +32,15 @@ QStringList ParameterContainer::getParameterList()
 	return parameterList;
 }
 
+void ParameterContainer::addAsScriptProperties(QScriptEngine &engine)
+{
+	foreach(QSharedPointer<Parameter> param, parameters_)
+	{
+		param->addAsScriptProperty(engine);
+	}
+}
+
+
 bool ParameterContainer::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("Parameters");
@@ -78,8 +87,16 @@ bool ParameterContainer::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			//figure out the parameter type, and create a new instance of one
 			QString paramType = xmlStreamReader->attributes().value("type").toString();
 			QSharedPointer<Parameter> newParam = paramFactory.generateParameter(paramType);
-			if(!newParam->deserializeFromXml(xmlStreamReader))
+			if(newParam.isNull())
+			{
+				addError("ParameterContainer","Unrecognized parameter type",xmlStreamReader);			
 				return false;
+			}
+			if(!newParam->deserializeFromXml(xmlStreamReader))
+			{
+				addError("ParameterContainer","Failed to deserialize parameter",xmlStreamReader);			
+				return false;
+			}
 			parameters_.insert(newParam->name(),newParam);
 
 		}
