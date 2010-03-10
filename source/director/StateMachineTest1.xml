@@ -24,11 +24,15 @@
 			<StateMachineElements>
 				<StateMachineElement type = "ScriptElement">
 					<Name>Initialize Values</Name>
-					<Script>SuccessfulAttempts.setValue(0)</Script>
+					<Script>
+						SuccessfulAttempts.setValue(0);
+					</Script>
 				</StateMachineElement>
 				<StateMachineElement type = "ScriptElement">
 					<Name>Increment successful attempts</Name>
-					<Script>SuccessfulAttempts.setValue(SuccessfulAttempts.getValue()+1)</Script>
+					<Script>
+						SuccessfulAttempts.setValue(SuccessfulAttempts.getValue()+1);
+					</Script>
 				</StateMachineElement>
 
 				<StateMachineElement type="State">

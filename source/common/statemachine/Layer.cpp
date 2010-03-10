@@ -15,11 +15,11 @@ Layer::Layer()
 	elapsedTime_.start();
 }
 
-void Layer::bindVisualElementsToScript(QScriptEngine &qsEngine)
+void Layer::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 {
 	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 	{
-		visualElement->addAsScriptProperty(qsEngine);
+		visualElement->bindToScriptEngine(qsEngine);
 	}
 
 }

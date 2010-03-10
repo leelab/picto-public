@@ -22,19 +22,56 @@ void ScriptElement::setScript(QString script)
 	propertyContainer_.setPropertyValue("Script",script);
 }
 
+/*! \brief Sets up the ScriptElement so it is ready to run scripts
+ *	
+ *	Setting up the element involves two steps:
+ *		1. Adding our script as a function to the passed in engine
+ *		2. Storing a pointer to the passed in engine
+ */
+bool ScriptElement::initScripting(QScriptEngine &qsEngine)
+{
+	//We allow ScriptElement names to have whitespace, so we need 
+	//to get rid of it for a script function name
+	QString functionName = getName().simplified().remove(' ');
+
+	//confirm that this function doesn't already exist in the engine
+	//If you hit this assert, it means that there are two ScriptElements
+	//with the asme name.  The GUI shouldn't allow this...
+	if(qsEngine.globalObject().property(functionName).isValid())
+	{
+		return false;
+	}
+
+	QString script = propertyContainer_.getPropertyValue("Script").toString();
+	QString function = "function " + functionName + "() { " + script + "}";
+
+	//add the function to the engine by calling evaluate on it
+	qsEngine.evaluate(function);
+	if(qsEngine.hasUncaughtException())
+	{
+		QString errorMsg = "Uncaught exception in Script Element " + getName() +"\n";
+		errorMsg += QString("Line %1: %2\n").arg(qsEngine.uncaughtExceptionLineNumber())
+										  .arg(qsEngine.uncaughtException().toString());
+		errorMsg += QString("Backtrace: %1\n").arg(qsEngine.uncaughtExceptionBacktrace().join(", "));
+		qDebug()<<errorMsg;
+	}
+
+	//Store a pointer to the engine
+	qsEngine_ = &qsEngine;
+}
 
 QString ScriptElement::run()
 {
-	parameterContainer_.addAsScriptProperties(qsEngine_);
-	QString script = propertyContainer_.getPropertyValue("Script").toString();
-	qsEngine_.evaluate(script);
+	QString functionName = getName().simplified().remove(' ');
 	
-	if(qsEngine_.hasUncaughtException())
+	qsEngine_->globalObject().property(functionName).call();
+	
+	if(qsEngine_->hasUncaughtException())
 	{
-		QString errorMsg = "Uncaught exception in Script Element" + getName() +"\n";
-		errorMsg += QString("Line %1: %2\n").arg(qsEngine_.uncaughtExceptionLineNumber())
-										  .arg(qsEngine_.uncaughtException().toString());
-		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_.uncaughtExceptionBacktrace().join(", "));
+		QString errorMsg = "Uncaught exception in Script Element " + getName() +"\n";
+		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+										  .arg(qsEngine_->uncaughtException().toString());
+		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
 		qDebug()<<errorMsg;
 	}
 

@@ -11,6 +11,8 @@
 #include "StateMachineElement.h"
 #include "Transition.h"
 
+#include <QScriptEngine>
+
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
@@ -33,6 +35,7 @@ public:
 	bool validateTransitions();
 
 	QString run();
+	bool initScripting(QScriptEngine &qsEngine);
 
 	//DataStore functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -45,6 +48,10 @@ protected:
 	//This is used to keep track of the local parameters, so that I don't
 	//serialize all the parameters every time.
 	ParameterContainer localParameterContainer_;
+
+	QScriptEngine qsEngine_;
+	bool scriptingInit_;
+
 };
 
 

@@ -19,7 +19,16 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 
+	QRect getDimensions(){ return propertyContainer_.getPropertyValue("Dimensions").toRect(); };
+	void setDimensions(QRect dimensions){ propertyContainer_.setPropertyValue("Dimensions",dimensions); };
+
 	static const QString type;
+
+public slots:
+	int getWidth() { return getDimensions().width(); };
+	void setWidth(int width);
+	int getHeight() { return getDimensions().height(); };
+	void setHeight(int height);
 
 private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);

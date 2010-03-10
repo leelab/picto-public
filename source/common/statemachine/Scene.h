@@ -27,7 +27,7 @@ public:
 
 	void render();
 
-	void bindVisualElementsToScript(QScriptEngine &qsEngine);
+	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

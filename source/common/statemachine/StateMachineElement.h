@@ -63,6 +63,8 @@ public:
 
 	virtual QPoint getDisplayLayoutPosition();
 
+	virtual bool initScripting(QScriptEngine &qsEngine) { Q_UNUSED(qsEngine); return true; }
+
 	//These will need to be implemented in all subclasses for the GUI
 	/*virtual QRect getDisplayBoundingRect() = 0;
 	virtual void draw() = 0;*/

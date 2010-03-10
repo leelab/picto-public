@@ -27,24 +27,20 @@ QString State::run()
 	bool runFrameScript = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
 	bool runExitScript = !propertyContainer_.getPropertyValue("ExitScript").toString().isEmpty();
 
-	//if we're running any scripts at all, bind to the contained 
-	//visual elements and parameters
-	if(runEntryScript || runFrameScript || runExitScript)
-	{
-		scene_->bindVisualElementsToScript(qsEngine_);
-		parameterContainer_.addAsScriptProperties(qsEngine_);
-	}
+	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
+	QString frameScriptName = getName().simplified().remove(' ')+"Frame";
+	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
 
 	//run the entry script
 	if(runEntryScript)
 	{
-		qsEngine_.evaluate(propertyContainer_.getPropertyValue("EntryScript").toString());
-		if(qsEngine_.hasUncaughtException())
+		qsEngine_->globalObject().property(entryScriptName).call();
+		if(qsEngine_->hasUncaughtException())
 		{
 			QString errorMsg = "Uncaught exception in State" + getName() +" entry script.\n";
-			errorMsg += QString("Line %1: %2\n").arg(qsEngine_.uncaughtExceptionLineNumber())
-											  .arg(qsEngine_.uncaughtException().toString());
-			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_.uncaughtExceptionBacktrace().join(", "));
+			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+											  .arg(qsEngine_->uncaughtException().toString());
+			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
 			qDebug()<<errorMsg;
 		}
 	}
@@ -74,13 +70,13 @@ QString State::run()
 		//run the frame script
 		if(runFrameScript && !isDone)
 		{
-			qsEngine_.evaluate(propertyContainer_.getPropertyValue("FrameScript").toString());
-			if(qsEngine_.hasUncaughtException())
+			qsEngine_->globalObject().property(frameScriptName).call();
+			if(qsEngine_->hasUncaughtException())
 			{
 				QString errorMsg = "Uncaught exception in State" + getName() +" frame script.\n";
-				errorMsg += QString("Line %1: %2\n").arg(qsEngine_.uncaughtExceptionLineNumber())
-												  .arg(qsEngine_.uncaughtException().toString());
-				errorMsg += QString("Backtrace: %1\n").arg(qsEngine_.uncaughtExceptionBacktrace().join(", "));
+				errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+												  .arg(qsEngine_->uncaughtException().toString());
+				errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
 				qDebug()<<errorMsg;
 			}
 		}
@@ -93,19 +89,105 @@ QString State::run()
 	//run the exit script
 	if(runExitScript)
 	{
-		qsEngine_.evaluate(propertyContainer_.getPropertyValue("ExitScript").toString());
-		if(qsEngine_.hasUncaughtException())
+		qsEngine_->globalObject().property(exitScriptName).call();
+		if(qsEngine_->hasUncaughtException())
 		{
 			QString errorMsg = "Uncaught exception in State" + getName() +" exit script.\n";
-			errorMsg += QString("Line %1: %2\n").arg(qsEngine_.uncaughtExceptionLineNumber())
-											  .arg(qsEngine_.uncaughtException().toString());
-			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_.uncaughtExceptionBacktrace().join(", "));
+			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+											  .arg(qsEngine_->uncaughtException().toString());
+			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
 			qDebug()<<errorMsg;
 		}
 	}
 
-
 	return result;
+}
+
+/* \Brief Sets up the state for scripting
+ *
+ *	This gets called before we actually start running a state machine.
+ *	Because of scoping issues, each State gets its own scriptengine
+ *	To initialize a state, we need to do the following:
+ *		1. Bind the parameters to the engine
+ *		2. Bind the contained visual elements to the engine
+ *		3. Create functions in the engine for the 3 (potential) scripts.
+ *	To minimize wasted resources, the state doesn't use a concrete QScriptEngine
+ *	but insteads instantiates one if the state needs to run scripts.  The
+ *	assumption is that many states (at least 50%) won't need the scripting
+ *	functionality.
+ */
+bool State::initScripting(QScriptEngine &qsEngine)
+{
+	//Since we have our own engine, we aren't using the passed in one
+	Q_UNUSED(qsEngine);
+
+	QStringList scriptTypes;
+	scriptTypes<<"Entry"<<"Frame"<<"Exit";
+
+	//Figure out which scripts we will be running
+	//(The odd array structure is useful later...)
+	bool scriptsToRun[3];
+	scriptsToRun[0] = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
+	scriptsToRun[1] = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
+	scriptsToRun[2] = !propertyContainer_.getPropertyValue("ExitScript").toString().isEmpty();
+
+	//If we aren't running any scripts, we're done
+	bool noScripts = true;
+	for(int i=0; i<sizeof(scriptsToRun); i++)
+	{
+		if(scriptsToRun[i])
+		{
+			noScripts = false;
+			break;
+		}
+	}
+	if(noScripts)
+		return true;
+
+
+	//create the engine
+	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
+
+	//Bind our parameters
+	parameterContainer_.bindToScriptEngine(*qsEngine_);
+
+	//Bind the visualElements
+	scene_->bindToScriptEngine(qsEngine_);
+
+	//create functions for our scripts
+	for(int i=0; i<3; i++)
+	{
+		if(!scriptsToRun[i])
+			continue;
+
+		//We allow ScriptElement names to have whitespace, so we need 
+		//to get rid of it for a script function name
+		QString functionName = getName().simplified().remove(' ')+scriptTypes[i];
+
+		//confirm that this function doesn't already exist in the engine
+		//If you hit this assert, it means that there are two ScriptElements
+		//with the asme name.  The GUI shouldn't allow this...
+		if(qsEngine_->globalObject().property(functionName).isValid())
+		{
+			return false;
+		}
+
+		QString script = propertyContainer_.getPropertyValue(scriptTypes[i]+"Script").toString();
+		QString function = "function " + functionName + "() { " + script + "}";
+
+		//add the function to the engine by calling evaluate on it
+		qsEngine_->evaluate(function);
+		if(qsEngine_->hasUncaughtException())
+		{
+			QString errorMsg = "Uncaught exception in State" + getName() + scriptTypes[i] + " script.\n";
+			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+											  .arg(qsEngine_->uncaughtException().toString());
+			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+			qDebug()<<errorMsg;
+		}
+	}
+
+	return true;
 }
 
 void State::addControlElement(QSharedPointer<ControlElement> controlElement)

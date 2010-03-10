@@ -27,7 +27,7 @@ public:
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QStringList getParameterList();
 
-	void addAsScriptProperties(QScriptEngine &engine);
+	void bindToScriptEngine(QScriptEngine &engine);
 
 
 private:

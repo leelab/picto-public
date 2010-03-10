@@ -16,6 +16,7 @@
 #include "../../common/globals.h"
 #include "../random/MersenneTwister.h"
 #include "../parameter/Parameter.h"
+#include "../stimuli/VisualElement.h"
 
 
 class TestScripts: public QObject
@@ -28,7 +29,15 @@ public:
 
 private slots:
 	void TestParameterBinding();
+	void TestArrowGraphicBinding();
+	void TestBoxGraphicBinding();
+	void TestCircleGraphicBinding();
+	void TestEllipseGraphicBinding();
+	void TestLineGraphicBinding();
+	void TestPictureGraphicBinding();
 private:
+	void TestVisualElementBinding(QSharedPointer<Picto::VisualElement> v);
+
 	Picto::MTRand randGen_;
 	QScriptEngine qsEngine_;
 

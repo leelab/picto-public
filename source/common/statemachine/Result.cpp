@@ -20,7 +20,6 @@ QString Result::run()
 		int rewardChan = propertyContainer_.getPropertyValue("RewardChan").toInt();
 		for(int i=0; i<numRewards; i++)
 		{
-			qDebug()<<"Reward";
 			Engine::PictoEngine::giveReward(rewardChan);
 		}
 	}

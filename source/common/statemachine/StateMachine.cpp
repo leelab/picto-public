@@ -8,6 +8,7 @@
 namespace Picto {
 
 StateMachine::StateMachine()
+: scriptingInit_(false)
 {
 	propertyContainer_.setPropertyValue("Type", "StateMachine");
 	propertyContainer_.addProperty(Property(QVariant::String,"Level",""));
@@ -141,8 +142,14 @@ bool StateMachine::validateTransitions()
 
 QString StateMachine::run()
 {
-	//! \TODO If we didn't mind slowing down, we could call ValidateTransitions here
-	//Maybe we should have a flag that requires us to validate the first time we run?
+	if(!scriptingInit_)
+	{
+		if(!initScripting(qsEngine_))
+		{
+			//! \TODO Make some sort of intelligent error reporting...
+			return "scriptingError";
+		}
+	}
 
 	QString currElementName;
 	QString nextElementName;
@@ -176,6 +183,38 @@ QString StateMachine::run()
 			return currElement->run();
 	}
 
+}
+
+
+/*!	\brief Sets up the script engines for this state machine
+ *
+ *	To make script execution more efficient, we attempt to preload everything
+ *	Each state machine maintains its own script engine, which is used by all of
+ *	the contained ScriptElements.  The initialization process consists of the 
+ *	following:
+ *		1. Bind all of the parameters to the scripting engine
+ *		2. Call initScripting on all contained elements.  This has the following effects:
+ *			a. Creates functions in our local engine for all ScriptElements
+ *			b. Sets up a local engine within all States
+ *			c. Calls this function on all contained StateMachines
+ */
+bool StateMachine::initScripting(QScriptEngine &qsEngine)
+{
+	//Since the StateMachine maintains its own engine, we can ignore the passed in engine
+	Q_UNUSED(qsEngine);
+
+	//bind the Parameters
+	parameterContainer_.bindToScriptEngine(qsEngine_);
+
+	//initialize scripting on all of the contained elements
+	foreach(QSharedPointer<StateMachineElement> element, elements_)
+	{
+		if(!element->initScripting(qsEngine_))
+			return false;
+	}
+
+	scriptingInit_ = true;
+	return true;
 }
 
 /*!	\brief Turns a StateMachine into an XML fragment

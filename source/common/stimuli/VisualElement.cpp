@@ -18,14 +18,10 @@ VisualElement::~VisualElement()
 {
 }
 
-void VisualElement::addAsScriptProperty(QScriptEngine &engine)
+void VisualElement::bindToScriptEngine(QSharedPointer<QScriptEngine> engine)
 {
-	QScriptValue qsValue = engine.newQObject(this);
-	engine.globalObject().setProperty(propertyContainer_.getPropertyValue("Name").toString(),qsValue);
-
-
-	//allow the derived class to add more properties
-	addAdditionalPropertiesAsScriptProperty(engine);
+	QScriptValue qsValue = engine->newQObject(this);
+	engine->globalObject().setProperty(propertyContainer_.getPropertyValue("Name").toString(),qsValue);
 }
 
 
@@ -64,6 +60,16 @@ void VisualElement::setColor(QColor color)
 {
 	propertyContainer_.setPropertyValue("Color",color);
 	draw();
+}
+
+QString VisualElement::getName()
+{
+	return propertyContainer_.getPropertyValue("Name").toString();
+}
+
+void VisualElement::setName(QString name)
+{
+	propertyContainer_.setPropertyValue("Name",name);
 }
 
 

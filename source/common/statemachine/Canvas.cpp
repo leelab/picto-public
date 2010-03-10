@@ -15,11 +15,11 @@ Canvas::Canvas()
 {
 }
 
-void Canvas::bindVisualElementsToScript(QScriptEngine &qsEngine)
+void Canvas::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 {
 	foreach(QSharedPointer<Layer> layer, layers_)
 	{
-		layer->bindVisualElementsToScript(qsEngine);
+		layer->bindToScriptEngine(qsEngine);
 	}
 
 }

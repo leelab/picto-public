@@ -21,6 +21,11 @@ public:
 
 	static const QString type;
 
+public slots:
+	int getRadius() { return propertyContainer_.getPropertyValue("Radius").toInt(); };
+	void setRadius(int radius) { propertyContainer_.setPropertyValue("Radius",radius); };
+
+
 private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

@@ -27,10 +27,15 @@
 #include "../common/engine/MouseSignalChannel.h"
 #include "../common/engine/PictoBoxXPAnalogInputSignalChannel.h"
 
+#include "../common/iodevices/RewardController.h"
 #include "../common/iodevices/PictoBoxXPRewardController.h"
+#include "../common/iodevices/NullRewardController.h"
 
 #include "../common/parameter/ParameterFactory.h"
 #include "../common/parameter/NumericParameter.h"
+
+//Define this if we're actually running on PictoBox
+//#define DIRECTOR_PICTOBOX
 
 EngineTest::EngineTest()
 {
@@ -52,9 +57,14 @@ EngineTest::EngineTest()
 	engine_.addSignalChannel("PositionChannel",mouseChannel);
 
 	//Create a rewardController
-	//QSharedPointer<Picto::PictoBoxXPRewardController> rewardController(new Picto::PictoBoxXPRewardController(1));
-	//rewardController->setRewardResetTimeMs(1,500);
-	//engine_.setRewardController(rewardController);
+#ifdef DIRECTOR_PICTOBOX
+	QSharedPointer<Picto::RewardController> rewardController(new Picto::PictoBoxXPRewardController(1));
+#else
+	QSharedPointer<Picto::RewardController> rewardController(new Picto::NullRewardController());
+
+#endif
+	rewardController->setRewardResetTimeMs(1,500);
+	engine_.setRewardController(rewardController);
 
 	//Set up all of the factories
 	//Set up the VisualElementFactory

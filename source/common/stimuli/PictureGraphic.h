@@ -21,6 +21,10 @@ public:
 
 	static const QString type;
 
+public slots:
+	QString getImageFile() { return propertyContainer_.getPropertyValue("ImageFile").toString(); };
+	void setImageFile(QString filename) { propertyContainer_.setPropertyValue("ImageFile",filename); };
+
 private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

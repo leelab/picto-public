@@ -34,12 +34,14 @@ public:
 
 	void setScript(QString script);
 
+	bool initScripting(QScriptEngine &qsEngine);
+
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QScriptEngine qsEngine_;
+	QScriptEngine *qsEngine_;
 
 };
 

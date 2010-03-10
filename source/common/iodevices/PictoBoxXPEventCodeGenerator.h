@@ -24,17 +24,15 @@
 #ifndef _PICTOBOXXPEVENTCODEGENERATOR_H_
 #define _PICTOBOXXPEVENTCODEGENERATOR_H_
 
-#include <QObject>
-
 #include "../common.h"
 #include "EventCodeGenerator.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API PictoBoxXPEventCodeGenerator : public QObject
+	class PICTOLIB_API PictoBoxXPEventCodeGenerator : public EventCodeGenerator
 #else
-class PictoBoxXPEventCodeGenerator : public QObject
+class PictoBoxXPEventCodeGenerator : public EventCodeGenerator
 #endif
 {
 	Q_OBJECT

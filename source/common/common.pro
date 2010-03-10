@@ -117,6 +117,10 @@ HEADERS += $$(PICTO_TREE)/source/common/iodevices/RewardController.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/RewardController.cpp
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/EventCodeGenerator.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/EventCodeGenerator.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/NullRewardController.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/NullRewardController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/NullEventCodeGenerator.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/NullEventCodeGenerator.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp

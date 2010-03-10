@@ -33,7 +33,7 @@ public:
 	void setRandomNumberGeneratorState(MTRand::uint32 * rng);
 	MTRand::uint32 * getRandomNumberGeneratorState();
 
-	void addAsScriptProperty(QScriptEngine &engine);
+	void bindToScriptEngine(QSharedPointer<QScriptEngine> engine);
 
 	QPoint getPosition();
 	QRect getBoundingRect();
@@ -41,6 +41,9 @@ public:
 
 	QColor getColor();
 	void setColor(QColor color);
+
+	QString getName();
+	void setName(QString name);
 
 	void setOrder(int order) { order_ = order; };
 	int getOrder() { return order_; }
@@ -68,11 +71,6 @@ protected:
 	//modify itself to match the content of the XML.  This is done 
 	//at the subclass level to simplify the code.
 	virtual bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)=0;
-
-	//If a VisualElement would like to bind to more than just the color and position properties
-	//that binding should be implemented in this function.
-	virtual void addAdditionalPropertiesAsScriptProperty(QScriptEngine &engine) { Q_UNUSED(engine); };
-
 
 	QImage image_;
 	bool shouldUpdateCompositingSurfaces_;

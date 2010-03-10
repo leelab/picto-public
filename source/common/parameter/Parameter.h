@@ -28,7 +28,7 @@ public:
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
-	void addAsScriptProperty(QScriptEngine &engine);
+	void bindToScriptEngine(QScriptEngine &engine);
 
 	QString name();
 	void setName(QString parameterName);

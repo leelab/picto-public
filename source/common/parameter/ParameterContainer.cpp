@@ -32,11 +32,11 @@ QStringList ParameterContainer::getParameterList()
 	return parameterList;
 }
 
-void ParameterContainer::addAsScriptProperties(QScriptEngine &engine)
+void ParameterContainer::bindToScriptEngine(QScriptEngine &engine)
 {
 	foreach(QSharedPointer<Parameter> param, parameters_)
 	{
-		param->addAsScriptProperty(engine);
+		param->bindToScriptEngine(engine);
 	}
 }
 

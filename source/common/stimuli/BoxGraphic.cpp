@@ -25,6 +25,29 @@ BoxGraphic::BoxGraphic(QPoint position, QRect dimensions, QColor color)
 			SLOT(slotPropertyValueChanged(QString, QVariant))
 			);
 }
+QRect BoxGraphic::getDimensions()
+{
+	return propertyContainer_.getPropertyValue("Dimensions").toRect();
+}
+
+void BoxGraphic::setDimensions(QRect dimensions)
+{
+	propertyContainer_.setPropertyValue("Dimensions",dimensions);
+}
+
+void BoxGraphic::setHeight(int height)
+{
+	QRect origDims = getDimensions();
+	origDims.setHeight(height);
+	setDimensions(origDims);
+}
+
+void BoxGraphic::setWidth(int width)
+{
+	QRect origDims = getDimensions();
+	origDims.setWidth(width);
+	setDimensions(origDims);
+}
 
 void BoxGraphic::draw()
 {

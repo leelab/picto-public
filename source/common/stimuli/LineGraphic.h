@@ -24,6 +24,8 @@ public:
 
 	static const QString type;
 
+	//! \TODO At some point, we might want to expose some getter and setter slots for script binding
+
 private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

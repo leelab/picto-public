@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
 
 	int result = 0;
 	//result += QTest::qExec((QObject*)&testPredicatesObject);
-	result += QTest::qExec((QObject*)&testDataStoreObject);
+	//result += QTest::qExec((QObject*)&testDataStoreObject);
 	//result += QTest::qExec((QObject*)&testStateMachineObject);
 	//result += QTest::qExec((QObject*)&testParametersObject);
-	//result += QTest::qExec((QObject*)&testScriptsObject);
+	result += QTest::qExec((QObject*)&testScriptsObject);
 	
 	return result;
 }

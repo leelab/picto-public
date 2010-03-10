@@ -33,13 +33,16 @@ public:
 
 	void setScene(QSharedPointer<Scene> scene) { scene_ = scene; };
 
+	bool initScripting(QScriptEngine &qsEngine);
+
+
 private:
 	QSharedPointer<Scene> scene_;
 	QMap<QString, QSharedPointer<ControlElement> > controlElements_;
 	int revision_;
 	int engineNeeded_;
 
-	QScriptEngine qsEngine_;
+	QSharedPointer<QScriptEngine> qsEngine_;
 };
 
 

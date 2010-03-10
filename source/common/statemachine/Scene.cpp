@@ -13,9 +13,9 @@ void Scene::render()
 	canvas_->draw();
 }
 
-void Scene::bindVisualElementsToScript(QScriptEngine &qsEngine)
+void Scene::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 {
-	canvas_->bindVisualElementsToScript(qsEngine);
+	canvas_->bindToScriptEngine(qsEngine);
 }
 
 /*	\brief Converts this scene into an XML fragment
