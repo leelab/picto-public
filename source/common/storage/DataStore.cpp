@@ -46,9 +46,9 @@ QString DataStore::getErrors()
 void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
 						QString name, QPoint point)
 {
-	xmlStreamWriter->writeStartElement("QPoint");
-	if(!name.isEmpty())
-		xmlStreamWriter->writeAttribute("name",name);
+	Q_ASSERT(!name.isEmpty());
+	xmlStreamWriter->writeStartElement(name);
+	xmlStreamWriter->writeAttribute("datatype", "QPoint");
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(point.x()));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(point.y()));
 	xmlStreamWriter->writeEndElement();
@@ -58,9 +58,9 @@ void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter
 void DataStore::serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
 						QString name, QRect rect)
 {
-	xmlStreamWriter->writeStartElement("QRect");
-	if(!name.isEmpty())
-		xmlStreamWriter->writeAttribute("name",name);
+	Q_ASSERT(!name.isEmpty());
+	xmlStreamWriter->writeStartElement(name);
+	xmlStreamWriter->writeAttribute("datatype", "QRect");
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(rect.x()));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(rect.y()));
 	xmlStreamWriter->writeAttribute("width",QString("%1").arg(rect.width()));
@@ -72,9 +72,9 @@ void DataStore::serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter,
 void DataStore::serializeQColor(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
 					QString name, QColor color)
 {
-	xmlStreamWriter->writeStartElement("QColor");
-	if(!name.isEmpty())
-		xmlStreamWriter->writeAttribute("name",name);
+	Q_ASSERT(!name.isEmpty());
+	xmlStreamWriter->writeStartElement(name);
+	xmlStreamWriter->writeAttribute("datatype", "QColor");
 	xmlStreamWriter->writeAttribute("R",QString("%1").arg(color.red()));
 	xmlStreamWriter->writeAttribute("G",QString("%1").arg(color.green()));
 	xmlStreamWriter->writeAttribute("B",QString("%1").arg(color.blue()));

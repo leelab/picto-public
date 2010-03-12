@@ -46,7 +46,7 @@ void PropertyContainer::addProperty(Property _property)
 	properties_[_property.name()] = item;
 }
 
-QList<QString> PropertyContainer::getPropertyList()
+QStringList PropertyContainer::getPropertyList()
 {
 	return properties_.keys();
 }

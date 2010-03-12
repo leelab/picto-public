@@ -58,6 +58,8 @@ bool ScriptElement::initScripting(QScriptEngine &qsEngine)
 
 	//Store a pointer to the engine
 	qsEngine_ = &qsEngine;
+
+	return true;
 }
 
 QString ScriptElement::run()

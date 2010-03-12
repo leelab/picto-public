@@ -21,7 +21,7 @@ namespace Picto
 
 PictoBoxXPEventCodeGenerator::PictoBoxXPEventCodeGenerator()
 {
-	DAQmxErrChk(DAQmxCreateTask("EventTask",&daqTaskHandle_));
+	DAQmxErrChk(DAQmxCreateTask("EventTask",(TaskHandle*)&daqTaskHandle_));
 	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS,"",DAQmx_Val_ChanForAllLines));
 	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
 

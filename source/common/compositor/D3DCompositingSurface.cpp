@@ -29,10 +29,7 @@ void D3DCompositingSurface::convertImage(QImage image)
 	HRESULT hr;
 
 	//Figure out the dimensions of the texture.
-	//NOTE: This assumes (possibly falsely) that the textures are 2^n x 2^m
-	//We could check the device caps for this, but since the VIA drivers 
-	//frequently lie about their capabilities, there is no point
-	//! \todo check to see if arbitrary dimensions work
+	//NOTE: This assumes that the textures must be 2^n x 2^m
 	int texWidth = 1;
 	int texHeight = 1;
 
@@ -70,17 +67,16 @@ void D3DCompositingSurface::convertImage(QImage image)
 		if(hr)
 			d3dFail("D3DCompositingSurface: GetDeviceCaps FAILED");
 
-
-		//store the image height (since this information will be lost when we
-		//place the image on a texture).  We need this info to accurately determine
-		//the coordinates
-		imageHeight_ = image.height();
-
 		//Create a texture with dimensions large enough for the image
 		hr = pD3dDevice_->CreateTexture(texWidth,texHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&texture_, NULL);
 		if(hr)
 			d3dFail("D3DCompositingSurface: CreateTexture FAILED");
 	}
+
+	//store the image height (since this information will be lost when we
+	//place the image on a texture).  We need this info to accurately determine
+	//the coordinates
+	imageHeight_ = image.height();
 
 	//if needed, convert the image format
 	if(image.format() != QImage::Format_ARGB32)
@@ -97,7 +93,8 @@ void D3DCompositingSurface::convertImage(QImage image)
 	pTexel = (DWORD*)lockedRect.pBits;
 
 	//clear the existing texture
-	//memset(pTexel,0,sizeof(DWORD)*texHeight*lockedRect.Pitch);
+	memset(pTexel,0,texHeight*lockedRect.Pitch);
+
 
 	//NOTE: The following code assumes that the pitch is a multiple of 4
 	//so far this has always been true.  If there are rendering problems, 
@@ -113,7 +110,7 @@ void D3DCompositingSurface::convertImage(QImage image)
 	unsigned int widthBound = image.width();
 
 	unsigned int rowDataPointer, columnDataOffset;
-	//this will probably draw the texture upside down...
+	
 	for(rowDataPointer=(unsigned int) pTexel;rowDataPointer<upperBound; rowDataPointer+=incrementAmount)
 	{
 		for(columnDataOffset=0; columnDataOffset < widthBound; columnDataOffset++)
@@ -122,7 +119,6 @@ void D3DCompositingSurface::convertImage(QImage image)
 		}
 
 	}
-
 	texture_->UnlockRect(0);
 
 }

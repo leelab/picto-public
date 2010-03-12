@@ -6,7 +6,7 @@
  *
  *	TargetControllers have the following properties:
  *	 SignalChannel: The name of the signal channel to use
- *	 Shape: The shape of the target area (oval or rectangle)
+ *	 Shape: The shape of the target area (Ellipse or Rectangle)
  *	 Target: The target area (as a rectangle)
  *	 TimeUnits: Units in which times are stored
  *	 TotalTime: The maximum time before a failure is returned

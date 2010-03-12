@@ -4,7 +4,7 @@
 <StateMachine>
 	<Name>Dumb Trial</Name>
 	<Level>Trial</Level>
-	<InitialElement>Stage 1</InitialElement>
+	<InitialElement>Stage 2</InitialElement>
 	<StateMachineElements>
 	
 		<!-- This stage is a test of the TargetController controlElement 		-->
@@ -61,10 +61,10 @@
 									<Name>Layer1</Name>
 									<Order>1</Order>
 									<VisualElement type="Box Graphic">
-										<QString name="Name">LeftBox</QString>
-										<QPoint name="Position" x="400" y="400"/>
-										<QRect name="Dimensions" x="0" y="0" width="100" height="100"/>
-										<QColor name="Color" R="255" G="0" B="0" A="255"/>
+                    <Name datatype="QString">LeftBox</Name>
+										<Position datatype="QPoint" x="400" y="400"/>
+										<Dimensions datatype="QRect" x="0" y="0" width="100" height="100"/>
+                    <Color datatype="QColor" R="255" G="0" B="0" A="255"/>
 									</VisualElement>
 								</Layer>
 							</Layers>
@@ -123,12 +123,12 @@
 								<Layer>
 									<Name>Layer1</Name>
 									<Order>1</Order>
-									<VisualElement type="Box Graphic">
-										<QString name="Name">RightBox</QString>
-										<QPoint name="Position" x="600" y="400"/>
-										<QRect name="Dimensions" x="0" y="0" width="100" height="100"/>
-										<QColor name="Color" R="255" G="0" B="0" A="255"/>
-									</VisualElement>
+                  <VisualElement type="Box Graphic">
+                    <Name datatype="QString">RightBox</Name>
+                    <Position datatype="QPoint" x="600" y="400"/>
+                    <Dimensions datatype="QRect" x="0" y="0" width="100" height="100"/>
+                    <Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+                  </VisualElement>
 								</Layer>
 							</Layers>
 						</Canvas>
@@ -272,13 +272,118 @@
 			</Results>
 		</StateMachine>
 
+    <!-- This stage is used to test the ChoiceController.  It consists of -->
+    <!-- a single state with a top and bottom target.  Selecting the top -->
+    <!-- target leads to result of "KeepGoing" (with 1 reward), which connects -->
+    <!-- to Stage 3.  Selecting the bottom leads to a result of "Stop" -->
+    <!-- Which leads to the trial's "Done" result.-->
+    <StateMachine>
+      <Name>Stage 2</Name>
+      <Level>Stage</Level>
+      <InitialElement>State 1</InitialElement>
+      <StateMachineElements>
+        <StateMachineElement type="State">
+          <Revision>-1</Revision>
+          <EngineNeeded>-1</EngineNeeded>
+          <Name>State 1</Name>
+          <ControlElements>
+            <ControlElement type="Choice Controller" operatorVisible="true" subjectVisible="false">
+              <Name>MyChoiceController</Name>
+              <SignalChannel>PositionChannel</SignalChannel>
+              <Shape>Ellipse</Shape>
+              <TotalTime units="Ms">10000</TotalTime>
+              <FixationTime units="Ms">1000</FixationTime>
+              <AllowReentries>Yes</AllowReentries>
+              <Target1 name="TopTarget" x="400" y="300" width="150" height="150"/>
+              <Target2 name="BottomTarget" x="400" y="500" width="150" height="150"/>
+            </ControlElement>
+          </ControlElements>
+          <Scene>
+            <Canvas>
+              <Layers>
+                <BackgroundLayer color="#000000"/>
+                <Layer>
+                  <Name>Layer1</Name>
+                  <Order>1</Order>
+                  <VisualElement type="Circle Graphic">
+                    <Name datatype="QString">TopCircle</Name>
+                    <Position datatype="QPoint" x="400" y="300"/>
+                    <Radius datatype="int">75</Radius>
+                    <Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+                  </VisualElement>
+                  <VisualElement type="Circle Graphic">
+                    <Name datatype="QString">BottomCircle</Name>
+                    <Position datatype="QPoint" x="400" y="500"/>
+                    <Radius datatype="int">75</Radius>
+                    <Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+                    </VisualElement>
+                </Layer>
+              </Layers>
+            </Canvas>
+            <AudioElement></AudioElement>
+          </Scene>
+          <Results>
+            <Result><Name>Success</Name></Result>
+            <Result><Name>TopTarget</Name></Result>
+            <Result><Name>BottomTarget</Name></Result>
+            <Result><Name>Broke Fixation</Name></Result>
+            <Result><Name>Total Time Excceeded</Name></Result>
+            
+          </Results>
+        </StateMachineElement>
+        <StateMachineElement type="Result">
+          <Name>KeepGoing</Name>
+          <Reward quantity="1" channel="1"/>
+        </StateMachineElement>
+        <StateMachineElement type="Result">
+          <Name>Stop</Name>
+        </StateMachineElement>
+
+      </StateMachineElements>
+      <Parameters/>
+      <Transitions>
+        <Transition>
+          <Source>State 1</Source>
+          <SourceResult>Success</SourceResult>
+          <Destination>KeepGoing</Destination>
+        </Transition>
+        <Transition>
+          <Source>State 1</Source>
+          <SourceResult>TopTarget</SourceResult>
+          <Destination>KeepGoing</Destination>
+        </Transition>
+        <Transition>
+          <Source>State 1</Source>
+          <SourceResult>BottomTarget</SourceResult>
+          <Destination>Stop</Destination>
+        </Transition>
+        <Transition>
+          <Source>State 1</Source>
+          <SourceResult>Broke Fixation</SourceResult>
+          <Destination>Stop</Destination>
+        </Transition>
+        <Transition>
+          <Source>State 1</Source>
+          <SourceResult>Total Time Excceeded</SourceResult>
+          <Destination>Stop</Destination>
+        </Transition>
+      </Transitions>
+      <Results>
+        <Result>
+          <Name>KeepGoing</Name>
+        </Result>
+        <Result>
+          <Name>Stop</Name>
+        </Result>
+      </Results>
+    </StateMachine>
 
 
 
-		<!-- This is a really simple stage that uses the testConmtroller -->
+    <!-- This is a really simple stage that uses the testConmtroller -->
 		<!-- and StopwatchController to flip back and forth between two scenes -->
 		<StateMachine>
-			<Name>Stage 2</Name>
+			<Name>Stage 3</Name>
 			<Level>Stage</Level>
 			<InitialElement>State 1</InitialElement>
 			<StateMachineElements>
@@ -299,12 +404,12 @@
 								<Layer>
 									<Name>Layer1</Name>
 									<Order>1</Order>
-									<VisualElement type="Box Graphic">
-										<QString name="Name">box</QString>
-										<QPoint name="Position" x="30" y="30"/>
-										<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
-										<QColor name="Color" R="255" G="255" B="0" A="255"/>
-									</VisualElement>
+                  <VisualElement type="Box Graphic">
+                    <Name datatype="QString">box</Name>
+                    <Position datatype="QPoint" x="30" y="30"/>
+                    <Dimensions datatype="QRect" x="0" y="0" width="50" height="100"/>
+                    <Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+                  </VisualElement>
 								</Layer>
 							</Layers>
 						</Canvas>
@@ -334,10 +439,10 @@
 									<Name>Layer1</Name>
 									<Order>1</Order>
 									<VisualElement type="Box Graphic">
-										<QString name="Name">box</QString>
-										<QPoint name="Position" x="100" y="30"/>
-										<QRect name="Dimensions" x="0" y="0" width="50" height="100"/>
-										<QColor name="Color" R="255" G="0" B="255" A="255"/>
+                    <Name datatype="QString">box</Name>
+                    <Position datatype="QPoint" x="100" y="30"/>
+                    <Dimensions datatype="QRect" x="0" y="0" width="50" height="100"/>
+                    <Color datatype="QColor" R="255" G="0" B="255" A="255"/>
 									</VisualElement>
 								</Layer>
 							</Layers>
@@ -391,11 +496,21 @@
 			<SourceResult>Success</SourceResult>
 			<Destination>Stage 2</Destination>
 		</Transition>
-		<Transition>
-			<Source>Stage 2</Source>
-			<SourceResult>Done</SourceResult>
-			<Destination>Done</Destination>
-		</Transition>
+    <Transition>
+      <Source>Stage 2</Source>
+      <SourceResult>KeepGoing</SourceResult>
+      <Destination>Stage 3</Destination>
+    </Transition>
+    <Transition>
+      <Source>Stage 2</Source>
+      <SourceResult>Stop</SourceResult>
+      <Destination>Done</Destination>
+    </Transition>
+    <Transition>
+      <Source>Stage 3</Source>
+      <SourceResult>Done</SourceResult>
+      <Destination>Done</Destination>
+    </Transition>
   </Transitions>
 	<Results/>
 </StateMachine>

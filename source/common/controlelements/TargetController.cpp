@@ -91,9 +91,10 @@ bool TargetController::isDone()
 		return true;
 	}
 
+	bool isInsideTarget = insideTarget();
 
 	//just entered target
-	if(!targetAcquired_ && insideTarget())
+	if(!targetAcquired_ && isInsideTarget)
 	{
 		//if we're past the Min Initial Acquisition Time mark the target as acquired
 		//and start running the timer
@@ -109,12 +110,12 @@ bool TargetController::isDone()
 
 	}
 	//just left target
-	else if(targetAcquired_ && !insideTarget())
+	else if(targetAcquired_ && !isInsideTarget)
 	{
 		targetAcquired_ = false;
 
 		//If reacquisition isn't allowed, then we're done with a failure value.
-		if("No" == reacquisitionAllowedList_.value(propertyContainer_.getPropertyValue("ReacquisitionAllowed").toInt(),""))
+		if("No" == reacquisitionAllowedList_.value(propertyContainer_.getPropertyValue("ReacquisitionAllowed").toInt(),"No"))
 		{
 			isDone_ = true;
 			result_ = "Broke Fixation";
@@ -127,7 +128,7 @@ bool TargetController::isDone()
 		}
 	}
 	//staying inside target
-	else if(targetAcquired_ && insideTarget())
+	else if(targetAcquired_ && isInsideTarget)
 	{
 		//check to see if we've met or exceeded the fixation time
 		int fixTime = propertyContainer_.getPropertyValue("FixationTime").toInt();
@@ -141,7 +142,7 @@ bool TargetController::isDone()
 
 	}
 	//staying outside target
-	else if(!targetAcquired_ && !insideTarget())
+	else if(!targetAcquired_ && !isInsideTarget)
 	{
 		//check to see if we've met or exceeded the total time
 		int maxAcqTime = propertyContainer_.getPropertyValue("MaxInitialAcquisitionTime").toInt();
@@ -209,7 +210,7 @@ bool TargetController::insideTarget()
 		else
 			return false;
 	}
-	else if("Oval" == shapeList_.value(propertyContainer_.getPropertyValue("Shape").toInt()))
+	else if("Ellipse" == shapeList_.value(propertyContainer_.getPropertyValue("Shape").toInt()))
 	{
 		/*We're going to test this equation:
 			(x-x0)^2     (y-0)^2
@@ -279,9 +280,8 @@ bool TargetController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStream
 	xmlStreamWriter->writeAttribute("height",QString("%1").arg(target.height()));
 	xmlStreamWriter->writeEndElement();
 
-	QString timeUnitsStr = unitList_.value(propertyContainer_.getPropertyValue("TimeUnits").toInt(), "");
-	
 	xmlStreamWriter->writeStartElement("TotalTime");
+	QString timeUnitsStr = unitList_.value(propertyContainer_.getPropertyValue("TimeUnits").toInt(), "");
 	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
 	xmlStreamWriter->writeCharacters(propertyContainer_.getPropertyValue("TotalTime").toString());
 	xmlStreamWriter->writeEndElement();

@@ -59,7 +59,6 @@ QColor VisualElement::getColor()
 void VisualElement::setColor(QColor color)
 {
 	propertyContainer_.setPropertyValue("Color",color);
-	draw();
 }
 
 QString VisualElement::getName()
@@ -117,15 +116,24 @@ void VisualElement::updateAnimation(int frame, QTime elapsedTime)
  *	Since VisualElements are defined soley by their properties, we can handle
  *	serialization in this base class.  The only issue with this approach is that 
  *	there are an infinite number of property data types, and we will only
- *	include code fro turning some of them into XML.  So, if you create a new
+ *	include code for turning some of them into XML.  So, if you create a new
  *	VisualElement that has some sort of non-standard data type (for example, 
  *	an enum, or special struct), then this code will need to be modified.  To
  *	prevent accidental bugs, this function will experience an assertion failure
  *	if it encounters an unknown data type in a the properties.
  *
- *	It should also be noted that thefunction (as of its initial development)
+ *	It should also be noted that the function (as of its initial development)
  *	only supports porperties, so if a Visual Element uses Property Attributes
  *	we will have problems.
+ *
+ *	The generated XML for a Visual element will Look like this
+ *	<VisualElement type="Box Graphic">
+ *		<Name datatype="QString">LeftBox</Name>
+ *		<Position datatype="QPoint" x="400" y="400">
+ *		<Dimensions datatype="QRect" x="0" y="0" width="100" height="100"/>
+ *		<Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+ *	</VisualElement>
+
  */
 bool VisualElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -216,8 +224,8 @@ bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 			continue;
 		}
 
-		QString type = xmlStreamReader->name().toString();
-		QString name = xmlStreamReader->attributes().value("name").toString();
+		QString name = xmlStreamReader->name().toString();
+		QString type = xmlStreamReader->attributes().value("datatype").toString();
 
 		//deserialze the property based on the type of the current property value
 		if(type == "QPoint")

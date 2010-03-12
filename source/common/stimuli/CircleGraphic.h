@@ -23,7 +23,7 @@ public:
 
 public slots:
 	int getRadius() { return propertyContainer_.getPropertyValue("Radius").toInt(); };
-	void setRadius(int radius) { propertyContainer_.setPropertyValue("Radius",radius); };
+	void setRadius(int radius) { propertyContainer_.setPropertyValue("Radius",radius);};
 
 
 private:

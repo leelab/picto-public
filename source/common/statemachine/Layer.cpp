@@ -141,6 +141,11 @@ bool Layer::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		{
 			QString visualElementType = xmlStreamReader->attributes().value("type").toString();
 			QSharedPointer<VisualElement> newVisualElement = visualElementFactory.generateVisualElement(visualElementType);
+			if(newVisualElement.isNull())
+			{
+				addError("Layer", "Unrecognized visual element type: "+visualElementType,xmlStreamReader);
+				return false;
+			}
 			if(!newVisualElement->deserializeFromXml(xmlStreamReader))
 			{
 				addError("Layer", "Failed to deserialize a VisualElement", xmlStreamReader);

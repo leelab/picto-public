@@ -2,7 +2,6 @@
 #include <windows.h>
 #include <NIDAQmx.h>
 
-
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
 							DAQmxClearTask(daqTaskHandle_); \
@@ -30,7 +29,7 @@ PictoBoxXPRewardController::PictoBoxXPRewardController(unsigned int channelCount
 	for(int i=0; i<4; i++)
 		rewardResetTimes_.append(250);
 
-	DAQmxErrChk(DAQmxCreateTask("RewardTask",&daqTaskHandle_));
+	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
 	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_REWARD_CHANNELS,"",DAQmx_Val_ChanForAllLines));
 	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
 

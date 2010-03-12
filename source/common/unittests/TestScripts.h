@@ -35,6 +35,7 @@ private slots:
 	void TestEllipseGraphicBinding();
 	void TestLineGraphicBinding();
 	void TestPictureGraphicBinding();
+	void TestRandomlyFilledGridGraphicBinding();
 private:
 	void TestVisualElementBinding(QSharedPointer<Picto::VisualElement> v);
 

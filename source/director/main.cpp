@@ -545,10 +545,19 @@ void TestD3DRendering()
 		boxList.push_back(boxGraphic);
 	}
 
+	//animated box
 	compositingSurface = renderingTarget.generateCompositingSurface();
 	QSharedPointer<Picto::BoxGraphic> animatedBoxGraphic(
 											new Picto::BoxGraphic(QPoint(0,0),QRect(0,0,20,1000),QColor(0,0,255,255)));
 	animatedBoxGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+
+	//Animated ellipse
+	compositingSurface = renderingTarget.generateCompositingSurface();
+	QSharedPointer<Picto::EllipseGraphic> animatedEllipseGraphic(
+											new Picto::EllipseGraphic(QPoint(50,600),QRect(0,0,500,50),QColor(0,0,255,255)));
+	animatedEllipseGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+	int ellipseWidth = 500;
+	bool ellipseShrinking = true;
 
 
 	//generate a randomly filled grid
@@ -561,12 +570,17 @@ void TestD3DRendering()
 		new Picto::RandomlyFilledGridGraphic(randomGridLocation,QRect(0,0,side,side),QColor(255,0,0),QColor(0,0,255),10,10,50,true,1));
 	randomGridGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
+	//PictureGraphic
+	compositingSurface = renderingTarget.generateCompositingSurface();
+	QSharedPointer<Picto::PictureGraphic> pictureGraphic(
+											new Picto::PictureGraphic(QPoint(0,500),":/common/images/splash.png"));
+	pictureGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 
 
 	//My mini event loop to test framerate
 	LARGE_INTEGER ticksPerSec;
 	LARGE_INTEGER tick, tock;
-	double elapsedTime[60];
+	QList<double> elapsedTimes;
 	int frameCounter = 0;
 	QueryPerformanceFrequency(&ticksPerSec);
 
@@ -575,11 +589,12 @@ void TestD3DRendering()
 
 		QueryPerformanceCounter(&tick);
 		//draw some text
-		d3dVisualTarget->drawNonExperimentText(QFont("Arial",18),
+		//WARNING: Drawing text results in dropped frames!
+		/*d3dVisualTarget->drawNonExperimentText(QFont("Arial",18),
 											  QColor(Qt::white),
 											  QRect(0,0,300,60),
 											  Qt::AlignCenter,
-											  "Testing");
+											  "Testing");*/
 
 		//draw the circles
 		QSharedPointer<Picto::CircleGraphic> circle;
@@ -600,23 +615,44 @@ void TestD3DRendering()
 		randomGridGraphic->updateAnimation(frameCounter,QTime());
 		d3dVisualTarget->draw(randomGridGraphic->getPosition(), randomGridGraphic->getCompositingSurface("Direct3D"));
 
+		//This gives us a bar moving across the screen
 		animatedBoxGraphic->updateAnimation(frameCounter,QTime());
 		d3dVisualTarget->draw(QPoint((frameCounter%120)*10,0), animatedBoxGraphic->getCompositingSurface("Direct3D"));
+
+		//This gives us an animated Ellipse
+		if(ellipseShrinking)
+		{
+			ellipseWidth -= 1;
+			if(ellipseWidth <260)
+				ellipseShrinking = false;
+		}
+		else
+		{
+			ellipseWidth += 1;
+			if(ellipseWidth > 500)
+				ellipseShrinking = true;
+		}
+		animatedEllipseGraphic->setWidth(ellipseWidth);
 		
+		animatedEllipseGraphic->updateAnimation(frameCounter,QTime());
+		d3dVisualTarget->draw(animatedEllipseGraphic->getPosition(), animatedEllipseGraphic->getCompositingSurface("Direct3D"));
+
+		//pictureGraphic->updateAnimation(frameCounter,QTime());
+		//d3dVisualTarget->draw(pictureGraphic->getPosition(),pictureGraphic->getCompositingSurface("Direct3D"));
 
 		d3dVisualTarget->present();
 
 		QueryPerformanceCounter(&tock);
-		if(frameCounter % 10 == 0)
-			elapsedTime[frameCounter/10] = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
+		elapsedTimes.append((double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart));
 		
 		frameCounter++;
 	}
 
 	FILE* outFile;
 	outFile = fopen("output.txt", "w");
-	for(int i=0; i<60; i++)
-		fprintf(outFile,"Frame %d elapsed time: %f\n", i*10, elapsedTime[i]);
+	Q_ASSERT(outFile);
+	for(int i=0; i<elapsedTimes.length(); i++)
+		fprintf(outFile,"Frame %d elapsed time: %f\n", i, elapsedTimes[i]*1000);
 	fclose(outFile);
 
 

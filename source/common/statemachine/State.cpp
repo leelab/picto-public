@@ -1,7 +1,15 @@
+//This can only be defined if we are running on a windows box.
+#define CHECK_TIMING
+
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
 
 #include <QDebug>
+
+#ifdef CHECK_TIMING
+#include <QFile>
+#include "Windows.h"
+#endif
 
 namespace Picto {
 
@@ -50,11 +58,26 @@ QString State::run()
 	{
 		control->start();
 	}
+#ifdef CHECK_TIMING
+	LARGE_INTEGER ticksPerSec;
+	LARGE_INTEGER tick, tock;
+	QList<double> elapsedTimes;
+	QueryPerformanceFrequency(&ticksPerSec);
+#endif
+
 
 	QString result = "";
 	bool isDone = false;
 	while(!isDone)
 	{
+#ifdef CHECK_TIMING
+		QueryPerformanceCounter(&tock);
+		elapsedTimes.append((double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart));
+#endif
+
+#ifdef CHECK_TIMING
+		QueryPerformanceCounter(&tick);
+#endif
 		//Draw the scene
 		scene_->render();
 
@@ -99,6 +122,19 @@ QString State::run()
 			qDebug()<<errorMsg;
 		}
 	}
+
+#ifdef CHECK_TIMING
+	QFile outFile("renderingTimes.txt");
+	Q_ASSERT(outFile.open(QIODevice::WriteOnly));
+
+	for(int i=0; i<elapsedTimes.length(); i++)
+	{
+		QString line = QString("Frame %1: %2 ms\n").arg(i).arg(elapsedTimes[i]*1000);
+		outFile.write(line.toAscii());
+	}
+
+	outFile.close();
+#endif
 
 	return result;
 }
@@ -184,6 +220,7 @@ bool State::initScripting(QScriptEngine &qsEngine)
 											  .arg(qsEngine_->uncaughtException().toString());
 			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
 			qDebug()<<errorMsg;
+			return false;
 		}
 	}
 

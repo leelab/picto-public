@@ -48,7 +48,7 @@ public slots:
 	void flush(unsigned int channel,bool flush);
 
 private:
-	unsigned long  daqTaskHandle_;
+	quint32 daqTaskHandle_;
 	int rewardLines_[4];
 
 };

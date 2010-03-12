@@ -11,6 +11,7 @@
 #include "../stimuli/EllipseGraphic.h"
 #include "../stimuli/LineGraphic.h"
 #include "../stimuli/PictureGraphic.h"
+#include "../stimuli/RandomlyFilledGridGraphic.h"
 
 
 TestScripts::TestScripts()
@@ -281,6 +282,98 @@ void TestScripts::TestPictureGraphicBinding()
 	qsEngine->evaluate("TestPicture.setImageFile(\"SomeOtherFile.bmp\")");
 	QCOMPARE(qsEngine->hasUncaughtException(),false);
 	QCOMPARE(picture->getImageFile(),QString("SomeOtherFile.bmp"));
+}
+
+/*!	\Brief Tests binding to the RandomlyFilledGridGraphic properties
+ *
+ *	The PictureGraphic has the following bound functions that need to be tested
+ *		getRed2()
+ *		getBlue2()
+ *		getGreen2()
+ *		getAlpha2()
+ *		setColor2(r,g,b,a)
+ *		getNumHorizSquares()
+ *		setNumHorizSquares(squares)
+ *		getNumVertSquares()
+ *		setNumVertSquares(squares)
+ *		getNumColor1Squares()
+ *		setNumColor1Squares(squares)
+ *		setUpdateRate(rate)
+ *		getUpdateRate()
+ *		setAnimated(animated)
+ *		isAnimated()
+ *		getWidth()
+ *		setWidth(w)
+ *		getHeight()
+ *		setHeight(h)
+ */
+void TestScripts::TestRandomlyFilledGridGraphicBinding()
+{
+	QSharedPointer<QScriptEngine> qsEngine(new QScriptEngine);
+	QSharedPointer<Picto::RandomlyFilledGridGraphic> grid(new Picto::RandomlyFilledGridGraphic());
+
+	TestVisualElementBinding(grid);
+
+	int initialA2 = randGen_.randInt(200);
+	int initialR2 = randGen_.randInt(200);
+	int initialG2 = randGen_.randInt(200);
+	int initialB2 = randGen_.randInt(200);
+	int initialWidth = randGen_.randInt(300);
+	int initialHeight = randGen_.randInt(300);
+	int initialHorizSqs = randGen_.randInt(200);
+	int initialVertSqs = randGen_.randInt(200);
+	int initialColor1Sqs = randGen_.randInt(initialHorizSqs*initialVertSqs-1);
+	int initialUpdateRate = randGen_.randInt(50);
+
+	grid->setName("TestGrid");
+	grid->setColor2(QColor(initialR2,initialG2,initialB2,initialA2));
+	grid->setDimensions(QRect(0,0,initialWidth,initialHeight));
+	grid->setNumHorizSquares(initialHorizSqs);
+	grid->setNumVertSquares(initialVertSqs);
+	grid->setNumColor1Squares(initialColor1Sqs);
+	grid->setUpdateRate(initialUpdateRate);
+	grid->setAnimated(false);
+	grid->bindToScriptEngine(qsEngine);
+
+	qsEngine->evaluate("TestGrid.setColor2(TestGrid.getRed2()+5, "
+											"TestGrid.getGreen2()+5, "
+											"TestGrid.getBlue2()+5, "
+											"TestGrid.getAlpha2()+5)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->getColor2().alpha(),initialA2+5);
+	QCOMPARE(grid->getColor2().red(),initialR2+5);
+	QCOMPARE(grid->getColor2().green(),initialG2+5);
+	QCOMPARE(grid->getColor2().blue(),initialB2+5);
+
+	qsEngine->evaluate("TestGrid.setWidth(TestGrid.getWidth()+5)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->getDimensions().width(),initialWidth+5);
+
+	qsEngine->evaluate("TestGrid.setHeight(TestGrid.getHeight()+5)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->getDimensions().height(),initialHeight+5);
+
+	qsEngine->evaluate("TestGrid.setNumHorizSquares(TestGrid.getNumHorizSquares()+5)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->getNumHorizSquares(),initialHorizSqs+5);
+
+	qsEngine->evaluate("TestGrid.setNumVertSquares(TestGrid.getNumVertSquares()+5)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->getNumVertSquares(),initialVertSqs+5);
+
+	qsEngine->evaluate("TestGrid.setNumColor1Squares(TestGrid.getNumColor1Squares()-5)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->getNumColor1Squares(),initialColor1Sqs-5);
+
+	qsEngine->evaluate("TestGrid.setUpdateRate(TestGrid.getUpdateRate()+5)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->getUpdateRate(),initialUpdateRate+5);
+
+	QCOMPARE(grid->isAnimated(),false);
+	qsEngine->evaluate("TestGrid.setAnimated(true)");
+	QCOMPARE(qsEngine->hasUncaughtException(),false);
+	QCOMPARE(grid->isAnimated(),true);
+
 }
 
 /*	\brief tests the base class binding

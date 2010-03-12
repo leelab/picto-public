@@ -32,12 +32,7 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 	propertyContainer_.addProperty(Property(QVariant::Bool,"Animated",animated));
 	propertyContainer_.addProperty(Property(QVariant::Int,"Update frame rate",updateFrameRate));
 
-	colorList.clear();
-	for(int i=0; i<numColor1; i++)
-		colorList.push_back(0);
-
-	for(int i=0; i<numHorizSquares*numVertSquares-numColor1; i++)
-		colorList.push_back(1);
+	buildColorList();
 
 	draw();
 
@@ -46,6 +41,26 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 		    this,
 			SLOT(slotPropertyValueChanged(QString, QVariant))
 			);
+}
+
+VisualElement* RandomlyFilledGridGraphic::NewVisualElement()
+{
+	return new RandomlyFilledGridGraphic;
+}
+
+
+void RandomlyFilledGridGraphic::buildColorList()
+{
+	int numColor1 = propertyContainer_.getPropertyValue("Number of squares with color1").toInt();
+	int numHorizSquares = propertyContainer_.getPropertyValue("Number of horizontal squares").toInt();
+	int numVertSquares = propertyContainer_.getPropertyValue("Number of vertical squares").toInt();
+
+	colorList_.clear();
+	for(int i=0; i<numColor1; i++)
+		colorList_.push_back(0);
+
+	for(int i=0; i<numHorizSquares*numVertSquares-numColor1; i++)
+		colorList_.push_back(1);
 }
 
 void RandomlyFilledGridGraphic::draw()
@@ -73,7 +88,7 @@ void RandomlyFilledGridGraphic::draw()
 	}
 
 	//! \todo use mersenne twister random number generator
-	std::random_shuffle(colorList.begin(), colorList.end());
+	std::random_shuffle(colorList_.begin(), colorList_.end());
 
 	QRect dimensions = propertyContainer_.getPropertyValue("Dimensions").toRect();
 
@@ -92,7 +107,7 @@ void RandomlyFilledGridGraphic::draw()
 	{
 		for(int y=0; y<numVertSquares; y++)
 		{
-			if(colorList[y*numHorizSquares + x] != foregroundIndex)
+			if(colorList_[y*numHorizSquares + x] != foregroundIndex)
 				continue;
 			p.drawRect(x*gridWidth,y*gridHeight,gridWidth,gridHeight);
 		}
@@ -103,15 +118,31 @@ void RandomlyFilledGridGraphic::draw()
 	updateCompositingSurfaces();
 }
 
-VisualElement* RandomlyFilledGridGraphic::NewVisualElement()
+void RandomlyFilledGridGraphic::setHeight(int height)
 {
-	return new RandomlyFilledGridGraphic;
+	QRect origDims = getDimensions();
+	origDims.setHeight(height);
+	setDimensions(origDims);
+}
+
+void RandomlyFilledGridGraphic::setWidth(int width)
+{
+	QRect origDims = getDimensions();
+	origDims.setWidth(width);
+	setDimensions(origDims);
 }
 
 void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName,
 											  QVariant) //propertyValue
 {
-	if(propertyName != "Position" && propertyName != "Name")
+	if(propertyName == "Number of horizontal squares" ||
+		propertyName == "Number of vertical squares" ||
+		propertyName == "Number of squares with color1")
+	{
+		buildColorList();
+	}
+	if(propertyName != "Position" && propertyName != "Name" 
+		&& propertyName != "Update frame rate" && propertyName != "Animated")
 	{
 		draw();
 	}

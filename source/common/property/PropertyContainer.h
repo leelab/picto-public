@@ -22,7 +22,7 @@ public:
 	void setPropertyValue(QString _propertyName, QVariant _value);
 	void setContainerName(QString _containerName);
 	QString getContainerName();
-	QList<QString> getPropertyList();
+	QStringList getPropertyList();
 
 signals:
 	void signalPropertyValueChanged(QString propertyName, QVariant propertyValue);

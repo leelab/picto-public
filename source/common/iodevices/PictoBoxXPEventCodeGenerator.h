@@ -46,7 +46,7 @@ public slots:
 	void sendEvent(unsigned int eventCode);
 
 private:
-	unsigned long  daqTaskHandle_;
+	quint32  daqTaskHandle_;
 
 };
 

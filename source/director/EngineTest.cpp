@@ -18,9 +18,12 @@
 #include "../common/controlelements/TestController.h"
 #include "../common/controlelements/StopwatchController.h"
 #include "../common/controlelements/TargetController.h"
+#include "../common/controlelements/ChoiceController.h"
 
 #include "../common/stimuli/VisualElementFactory.h"
 #include "../common/stimuli/BoxGraphic.h"
+#include "../common/stimuli/EllipseGraphic.h"
+#include "../common/stimuli/CircleGraphic.h"
 
 #include "../common/storage/DataStore.h"
 
@@ -33,6 +36,7 @@
 
 #include "../common/parameter/ParameterFactory.h"
 #include "../common/parameter/NumericParameter.h"
+#include "../common/parameter/BooleanParameter.h"
 
 //Define this if we're actually running on PictoBox
 //#define DIRECTOR_PICTOBOX
@@ -70,6 +74,8 @@ EngineTest::EngineTest()
 	//Set up the VisualElementFactory
 	Picto::VisualElementFactory visualElementFactory;
 	visualElementFactory.addVisualElementType(Picto::BoxGraphic::type, &Picto::BoxGraphic::NewVisualElement);
+	visualElementFactory.addVisualElementType(Picto::EllipseGraphic::type, &Picto::EllipseGraphic::NewVisualElement);
+	visualElementFactory.addVisualElementType(Picto::CircleGraphic::type, &Picto::CircleGraphic::NewVisualElement);
 
 
 	//Set up the ControlElementFactory
@@ -77,9 +83,11 @@ EngineTest::EngineTest()
 	controlElementFactory.addControlElementType(Picto::TestController::ControllerType(), &Picto::TestController::NewTestController);
 	controlElementFactory.addControlElementType(Picto::StopwatchController::ControllerType(), &Picto::StopwatchController::NewStopwatchController);
 	controlElementFactory.addControlElementType(Picto::TargetController::ControllerType(), &Picto::TargetController::NewTargetController);
+	controlElementFactory.addControlElementType(Picto::ChoiceController::ControllerType(), &Picto::ChoiceController::NewChoiceController);
 
 	Picto::ParameterFactory parameterFactory;
 	parameterFactory.addParameterType("Numeric",&Picto::NumericParameter::NewParameter);
+	parameterFactory.addParameterType("Boolean",&Picto::BooleanParameter::NewParameter);
 
 
 }
@@ -125,8 +133,10 @@ void EngineTest::TestLayerRendering()
 void EngineTest::TestStateMachine()
 {
 	//Read in a state machine from file
+	QFile stateMachineXML("C:\\Projects\\PictoSVN\\Picto\\trunk\\source\\director\\StateMachineForFrameRateTesting.xml");
+	//QFile stateMachineXML("StateMachineForFrameRateTesting.xml");
 	//QFile stateMachineXML("C:\\Projects\\PictoSVN\\Picto\\trunk\\source\\director\\StateMachineTest1.xml");
-	QFile stateMachineXML("StateMachineTest1.xml");
+	//QFile stateMachineXML("StateMachineTest1.xml");
 	Q_ASSERT(stateMachineXML.open(QIODevice::ReadOnly));
 	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader(&stateMachineXML));
 

@@ -91,14 +91,16 @@ D3DVisualTarget::D3DVisualTarget() :
 	//----------------------------------
 	//Set up the Vertex Stream
 	//----------------------------------
+	//Note that the texture y-coordinates are flipped.  This is because Picto coordinates
+	//start in the top right corner, while D3D coordinates start in the bottom left.
 	CUSTOMVERTEX quadVertexData[] =
 	{
-	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 0.0f },
-	  { 0.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
-	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 1.0f },
-	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 0.0f },
-	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 1.0f },
-	  { 1.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
+	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
+	  { 0.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 0.0f },
+	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
+	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
+	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
+	  { 1.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 1.0f },
 	};
 
     // Create the vertex buffer.
@@ -208,8 +210,6 @@ void D3DVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> c
 		D3DSURFACE_DESC texDesc;
 		tex->GetLevelDesc(0, &texDesc);
 
-		unsigned int imgHeight = compositingSurface.staticCast<D3DCompositingSurface>()->getImageHeight();
-
 		//figure out the position for the sprite, and add it to the list
 		//NOTE: Picto uses the standard screen coodinates with (0,0) in the top left
 		//corner.  However, the D3D setup we are using has (0,0) in the bottom left corner, so
@@ -218,7 +218,7 @@ void D3DVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> c
 		//of the sprite.
 		QPointF quadPoint;
 		quadPoint.setX((float)location.x());
-		quadPoint.setY((float)(height_-location.y()-(int)imgHeight));
+		quadPoint.setY((float)(height_-location.y()-texDesc.Height));
 		positionList_.push_back(quadPoint);
 	}
 	else
@@ -260,10 +260,7 @@ void D3DVisualTarget::present()
 		pD3dDevice_->DrawPrimitive(D3DPT_TRIANGLELIST,
 											0,		//Start Vertex
 											2);		//Primitive Count
-
-
 	}
-
 
 	//end the scene
 	hr = pD3dDevice_->EndScene();
@@ -282,7 +279,6 @@ void D3DVisualTarget::present()
     if(hr)
 		d3dFail("D3DVisualTarget: Present FAILED");
 
-	
 	//clear the back buffer
     pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );
 
@@ -294,7 +290,10 @@ void D3DVisualTarget::paintEvent(QPaintEvent *e)
 	Q_UNUSED(e);
 }
 
-
+/*!	\Brief Draws text on the screen
+ *
+ *	WARNING: This function is slow, and will likely result in dropped frames.
+ */
 void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)
 {
 	ID3DXFont *d3dFont;
