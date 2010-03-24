@@ -17,9 +17,12 @@ public:
 	void exec();
 	void TestLayerRendering();
 	void TestStateMachine();
+
 private:
 	Picto::Engine::PictoEngine engine_;
 	Picto::MTRand randGen_;
+
+
 
 
 };

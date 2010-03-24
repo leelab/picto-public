@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- This is a really simple Trial with two stages -->
+<!-- This is a really simple Trial with three stages -->
 <StateMachine>
 	<Name>Dumb Trial</Name>
 	<Level>Trial</Level>
-	<InitialElement>Stage 2</InitialElement>
+	<InitialElement>Stage 1</InitialElement>
 	<StateMachineElements>
 	
 		<!-- This stage is a test of the TargetController controlElement 		-->

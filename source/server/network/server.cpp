@@ -16,9 +16,17 @@ Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject
 	QTcpServer(parent)
 {
 	QList<QHostAddress> hostAddresses = QNetworkInterface::allAddresses();
-	if(!hostAddresses.empty())
+
+	//Use the first IPv4 address that isn't localhost
+	//This will probably be a valid ip address, but there could still be issues...
+	foreach(QHostAddress addr, hostAddresses)
 	{
-		serverAddress.setAddress(hostAddresses[0].toIPv4Address());
+		QString blah = addr.toString();
+		if(addr.protocol() == QAbstractSocket::IPv4Protocol && addr != QHostAddress::LocalHost)
+		{
+			serverAddress.setAddress(addr.toIPv4Address());
+			break;
+		}
 	}
 
 	listen(serverAddress, port);

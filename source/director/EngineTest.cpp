@@ -33,13 +33,18 @@
 #include "../common/iodevices/RewardController.h"
 #include "../common/iodevices/PictoBoxXPRewardController.h"
 #include "../common/iodevices/NullRewardController.h"
+#include "../common/iodevices/EventCodeGenerator.h"
+#include "../common/iodevices/PictoBoxXPEventCodeGenerator.h"
+#include "../common/iodevices/NullEventCodeGenerator.h"
 
 #include "../common/parameter/ParameterFactory.h"
 #include "../common/parameter/NumericParameter.h"
 #include "../common/parameter/BooleanParameter.h"
 
+#include "../common/network/ServerDiscoverer.h"
+
 //Define this if we're actually running on PictoBox
-//#define DIRECTOR_PICTOBOX
+//#define USING_PICTOBOX
 
 EngineTest::EngineTest()
 {
@@ -61,14 +66,17 @@ EngineTest::EngineTest()
 	engine_.addSignalChannel("PositionChannel",mouseChannel);
 
 	//Create a rewardController
-#ifdef DIRECTOR_PICTOBOX
+#ifdef USING_PICTOBOX
 	QSharedPointer<Picto::RewardController> rewardController(new Picto::PictoBoxXPRewardController(1));
+	QSharedPointer<Picto::EventCodeGenerator> eventGenerator(new Picto::PictoBoxXPEventCodeGenerator());
 #else
 	QSharedPointer<Picto::RewardController> rewardController(new Picto::NullRewardController());
-
+	QSharedPointer<Picto::EventCodeGenerator> eventGenerator(new Picto::NullEventCodeGenerator());
 #endif
 	rewardController->setRewardResetTimeMs(1,500);
 	engine_.setRewardController(rewardController);
+
+	engine_.setEventCodeGenerator(eventGenerator);
 
 	//Set up all of the factories
 	//Set up the VisualElementFactory
@@ -92,8 +100,40 @@ EngineTest::EngineTest()
 
 }
 
+
 void EngineTest::exec()
 {
+	Picto::ServerDiscoverer serverDiscoverer;
+	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel);
+	serverChannel->pollingMode(true);
+
+	//connect(&serverDiscoverer,SIGNAL(foundServer(QHostAddress, quint16)),
+		//serverChannel.data(), SLOT(connectToServer(QHostAddress, quint16)));
+
+	serverDiscoverer.discover();
+
+	//Note that waitForDiscovered runs an event loop for us, so the signals & slots will work temporarily
+	if(!serverDiscoverer.waitForDiscovered())
+	{
+		QMessageBox notFound;
+		notFound.setText("No PictoServer found on the network.  PictoDirector will terminate.");
+		notFound.setIcon(QMessageBox::Critical);
+		notFound.exec();
+
+		return;
+	}
+	QHostAddress serverAddr = serverDiscoverer.getAddress();
+	quint16 port = serverDiscoverer.getPort();
+
+	serverChannel->connectToServer(serverAddr, port);
+
+	Q_ASSERT(serverChannel->getChannelStatus() == Picto::CommandChannel::connected);
+
+	engine_.setCommandChannel(serverChannel);
+
+
+
+
 	//TestLayerRendering();
 	TestStateMachine();
 }
@@ -133,10 +173,10 @@ void EngineTest::TestLayerRendering()
 void EngineTest::TestStateMachine()
 {
 	//Read in a state machine from file
-	QFile stateMachineXML("C:\\Projects\\PictoSVN\\Picto\\trunk\\source\\director\\StateMachineForFrameRateTesting.xml");
+	//QFile stateMachineXML("C:\\Projects\\PictoSVN\\Picto\\trunk\\source\\director\\StateMachineForFrameRateTesting.xml");
 	//QFile stateMachineXML("StateMachineForFrameRateTesting.xml");
 	//QFile stateMachineXML("C:\\Projects\\PictoSVN\\Picto\\trunk\\source\\director\\StateMachineTest1.xml");
-	//QFile stateMachineXML("StateMachineTest1.xml");
+	QFile stateMachineXML("StateMachineTest1.xml");
 	Q_ASSERT(stateMachineXML.open(QIODevice::ReadOnly));
 	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader(&stateMachineXML));
 
@@ -152,16 +192,14 @@ void EngineTest::TestStateMachine()
 		error.setDetailedText(Picto::DataStore::getErrors());
 		error.resize(400,100);
 		error.exec();
-		QApplication::exit();
 		return;
 	}
-	if(!stateMachine.validateTransitions())
+	if(!stateMachine.validateStateMachine())
 	{
 		QMessageBox error;
 		error.setText("StateMachine XML describes an invalid StateMachine");
 		error.setIcon(QMessageBox::Critical);
 		error.exec();
-		QApplication::exit();
 		return;
 	}
 

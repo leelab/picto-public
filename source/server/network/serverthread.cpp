@@ -122,6 +122,7 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 {
 	if(response.isNull())
 	{
+
 		response = QSharedPointer<Picto::ProtocolResponse>(
 			new Picto::ProtocolResponse(Picto::Names->serverAppName,
 										"PICTO",

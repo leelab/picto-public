@@ -1,5 +1,5 @@
 //This can only be defined if we are running on a windows box.
-#define CHECK_TIMING
+//#define CHECK_TIMING
 
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
@@ -73,9 +73,6 @@ QString State::run()
 #ifdef CHECK_TIMING
 		QueryPerformanceCounter(&tock);
 		elapsedTimes.append((double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart));
-#endif
-
-#ifdef CHECK_TIMING
 		QueryPerformanceCounter(&tick);
 #endif
 		//Draw the scene

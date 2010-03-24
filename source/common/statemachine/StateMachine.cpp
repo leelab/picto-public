@@ -5,26 +5,40 @@
 #include "FlowElement.h"
 #include "ScriptElement.h"
 
+#include "../engine/PictoEngine.h"
+#include "../timing/Timestamper.h"
+#include "../protocol/ProtocolCommand.h"
+#include "../protocol/ProtocolResponse.h"
+
 namespace Picto {
+
+int StateMachine::trialEventCode_;
+int StateMachine::trialNum_;
 
 StateMachine::StateMachine()
 : scriptingInit_(false)
 {
 	propertyContainer_.setPropertyValue("Type", "StateMachine");
-	propertyContainer_.addProperty(Property(QVariant::String,"Level",""));
 	propertyContainer_.addProperty(Property(QVariant::String,"Initial Element",""));
 
+	Property levelsEnumProp(QtVariantPropertyManager::enumTypeId(), "Level",0);
+	//Note that this is the same order as the enum to allow the enum to be
+	//used as an index
+	levelEnumStrs_<<"Stage"<<"Trial"<<"Task"<<"Experiment"; 
+	levelsEnumProp.addAttribute("enumNames",levelEnumStrs_);
+	propertyContainer_.addProperty(levelsEnumProp);
+
+	trialEventCode_ = 0;
 }
 
-void StateMachine::setLevel(QString level)
+void StateMachine::setLevel(StateMachineLevel::StateMachineLevel level)
 {
 	propertyContainer_.setPropertyValue("Level", QVariant(level));
 }
 
-QString StateMachine::getLevel()
+StateMachineLevel::StateMachineLevel StateMachine::getLevel()
 {
-	QString level = propertyContainer_.getPropertyValue("Level").toString();
-	return level;
+	return (StateMachineLevel::StateMachineLevel) propertyContainer_.getPropertyValue("Level").toInt();
 }
 
 //! \brief Adds a transition to this state machine
@@ -67,18 +81,50 @@ bool StateMachine::setInitialElement(QString elementName)
 		return false;
 	}
 }
-/*! \brief Confirms that the transitions are legal
+/*! \brief Confirms that the state machine is legal
  *
  *	This function will mostly be used in the deserialization function to
  *	confirm that the passed in XML is legal.  However it is possible that
  *	it could be used elsewhere...
  *
- *	The validation process consists of checking each transition to confirm
- *	that the source, sourceResult, and destination all exist.
+ *	The validation process consists of:
+ *		- check that the contained state machines are of a legal level
+ *		- check each transition to confirm that the source, 
+ *		  sourceResult, and destination all exist.
+ *		- check that every element has all its results connected to
+ *		  a transition
+ *		- check that the initial element is a real element
+ *		- validate all contained state machines
+ *		
  */
 
-bool StateMachine::validateTransitions()
+bool StateMachine::validateStateMachine()
 {
+	//Confirm that any contained StateMachines are of the correct level
+	foreach(QSharedPointer<StateMachineElement> element, elements_)
+	{
+		if(element->type() == "StateMachine")
+		{
+			StateMachineLevel::StateMachineLevel containedLevel;
+			containedLevel = element.staticCast<StateMachine>()->getLevel();
+
+			StateMachineLevel::StateMachineLevel thisLevel;
+			thisLevel = getLevel();
+
+			if(thisLevel == StateMachineLevel::Stage)
+			{
+				if(containedLevel > thisLevel)
+					return false;
+			}
+			else
+			{
+				if(containedLevel >= thisLevel)
+					return false;
+			}
+		}
+		
+	}
+
 	//Confirm that all transitions are legal
 	foreach(QSharedPointer<Transition> tran, transitions_)
 	{
@@ -131,7 +177,7 @@ bool StateMachine::validateTransitions()
 	{
 		if(element->type() == "StateMachine")
 		{
-			if(!element.staticCast<StateMachine>()->validateTransitions())
+			if(!element.staticCast<StateMachine>()->validateStateMachine())
 				return false;
 		}
 	}
@@ -150,6 +196,26 @@ QString StateMachine::run()
 			return "scriptingError";
 		}
 	}
+
+	//Generate the start trial event
+	if(getLevel() == StateMachineLevel::Trial)
+	{
+		//The Picto event is generated first in an attempt to closely align the
+		//times.  Generating a Picto event takes almost no time, while generating
+		//an event code, takes 250 us.  I am assuming that the event gets recorded as soon
+		//as the Plexon/TDT notices that the event strobe line has gone high, so generating
+		//the Picto event first will place the events in closer proximity.
+		trialEventCode_++;
+		trialNum_++;
+		sendStartTrialToServer();
+		Engine::PictoEngine::generateEvent(trialEventCode_);
+	}
+	//Reset trialNum_ if we just entered a new Task
+	if(getLevel() == StateMachineLevel::Task)
+	{
+		trialNum_ = 0;
+	}
+
 
 	QString currElementName;
 	QString nextElementName;
@@ -180,7 +246,12 @@ QString StateMachine::run()
 		currElementName = nextElementName;
 
 		if(currElement->type() == "Result")
+		{
+			if(getLevel() == StateMachineLevel::Trial)
+				sendEndTrialToServer();
+			Engine::PictoEngine::generateEvent(trialEventCode_);
 			return currElement->run();
+		}
 	}
 
 }
@@ -215,6 +286,105 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
 
 	scriptingInit_ = true;
 	return true;
+}
+
+
+/*!	\brief Sends a StartTrial event to PictoServer
+ *
+ *	At the begining of a Trial, we send a timestamped StartTrial event to PictoServer.
+ *	This is done nearly simultaneously to sending a StartTrial event code to the
+ *	neural recording device.  
+ *
+ *	The command used to do this is (the units of time are seconds)
+ *		TRIAL /start PICTO/1.0
+ *		Content-Length:???
+ *		
+ *		<Trial>
+ *			<Time>8684354986.358943</Time>
+ *			<EventCode>56</EventCode>
+ *			<TrialNum>412</TrialNum> 	
+ *		</Trial>
+ */
+void StateMachine::sendStartTrialToServer()
+{
+	//Create a TRIAL command
+	QSharedPointer<ProtocolCommand> command(new ProtocolCommand("TRIAL /start PICTO/1.0"));
+
+	//Create the content of the TRIAL command
+	QString content;
+	QXmlStreamWriter xmlWriter(&content);
+
+	xmlWriter.writeStartElement("Trial");
+
+	xmlWriter.writeStartElement("Time");
+	Timestamper timestamper;
+	xmlWriter.writeCharacters(QString("%1").arg(timestamper.stampSec(),0,'f',4));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeTextElement("EventCode",QString("%1").arg(trialEventCode_));
+	xmlWriter.writeTextElement("TrialNum",QString("%1").arg(trialNum_));
+
+	xmlWriter.writeEndElement(); //Trial
+
+	//Add the content to the command
+	QByteArray contentArr = content.toUtf8();
+	command->setFieldValue("Content-Length",QString("%1").arg(contentArr.length()));
+	//Check that the Content-Length field matches the actual content
+	Q_ASSERT(0 == command->setContent(contentArr));
+
+	//Send out the command
+	QSharedPointer<ProtocolResponse> response;
+	Q_ASSERT(Engine::PictoEngine::sendCommand(command, response));
+	Q_ASSERT(response->getResponseType() == "OK");
+}
+
+/*!	\brief Sends a EndTrial event to PictoServer
+ *
+ *	At the end of a Trial, we send a timestamped EndTrial event to PictoServer.
+ *	This is done nearly simultaneously to sending a EndTrial event code to the
+ *	neural recording device.  
+ *
+ *	The command used to do this is (the units of time are seconds)
+ *		TRIAL /end PICTO/1.0
+ *		Content-Length:???
+ *		
+ *		<Trial>
+ *			<Time>8684354986.358943</Time>
+ *			<EventCode>56</EventCode>
+ *			<TrialNum>412</TrialNum> 	
+ *		</Trial>
+ */
+void StateMachine::sendEndTrialToServer()
+{
+	//Create a TRIAL command
+	QSharedPointer<ProtocolCommand> command(new ProtocolCommand("TRIAL /end PICTO/1.0"));
+
+	//Create the content of the TRIAL command
+	QString content;
+	QXmlStreamWriter xmlWriter(&content);
+
+	xmlWriter.writeStartElement("Trial");
+
+	xmlWriter.writeStartElement("Time");
+	Timestamper timestamper;
+	xmlWriter.writeCharacters(QString("%1").arg(timestamper.stampSec(),0,'f',4));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeTextElement("EventCode",QString("%1").arg(trialEventCode_));
+	xmlWriter.writeTextElement("TrialNum",QString("%1").arg(trialNum_));
+
+	xmlWriter.writeEndElement(); //Trial
+
+	//Add the content to the command
+	QByteArray contentArr = content.toUtf8();
+	command->setFieldValue("Content-Length",QString("%1").arg(contentArr.length()));
+	//Check that the Content-Length field matches the actual content
+	Q_ASSERT(0 == command->setContent(contentArr));
+
+	//Send out the command
+	QSharedPointer<ProtocolResponse> response;
+	Q_ASSERT(Engine::PictoEngine::sendCommand(command, response));
+	Q_ASSERT(response->getResponseType() == "OK");
 }
 
 /*!	\brief Turns a StateMachine into an XML fragment
@@ -315,7 +485,15 @@ bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 		}
 		else if(name == "Level")
 		{
-			propertyContainer_.setPropertyValue("Level",xmlStreamReader->readElementText());
+			int levelIndex = levelEnumStrs_.indexOf(xmlStreamReader->readElementText());
+
+			if(levelIndex <0)
+			{
+				addError("StateMachine", "Unrecognized value inside Level tag", xmlStreamReader);
+				return false;
+			}
+
+			propertyContainer_.setPropertyValue("Level",levelIndex);
 		}
 		else if(name == "StateMachineElements")
 		{

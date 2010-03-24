@@ -1,5 +1,7 @@
 #include <QStringList>
 #include <qDebug>
+
+
 #include "CommandChannel.h"
 
 namespace Picto {
@@ -73,12 +75,15 @@ void CommandChannel::initConnection()
 	producerSocket->connectToHost(serverAddr, serverPort, QIODevice::ReadWrite);
 	consumerSocket->connectToHost(serverAddr, serverPort, QIODevice::ReadWrite);
 
-	if(producerSocket->waitForConnected(5000) && consumerSocket->waitForConnected(5000))
+
+
+	if(consumerSocket->waitForConnected(5000) && producerSocket->waitForConnected(5000))
+	{
 		status = connected;
+	}
 	else
 	{
 		status = disconnected;
-		return;
 	}
 }
 

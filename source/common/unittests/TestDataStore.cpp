@@ -780,7 +780,7 @@ void TestDataStore::TestStateMachine()
 	//	possible results: Pass, Fail.
 	QSharedPointer<Picto::StateMachine> stateMachine(new Picto::StateMachine);
 	QSharedPointer<Picto::StateMachine> stateMachineCopy(new Picto::StateMachine);
-	stateMachine->setLevel("Stage");
+	stateMachine->setLevel(Picto::StateMachineLevel::Stage);
 	stateMachine->setName("Stage 1");
 
 	stateMachine->addParameter(rangeParam);
@@ -803,7 +803,7 @@ void TestDataStore::TestStateMachine()
 	stateMachine->addElement(failResult);
 	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Trial selection","Greater than 50","Empty State")));
 	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Broke Fixation","Fail")));
-	QCOMPARE(stateMachine->validateTransitions(),true);
+	QCOMPARE(stateMachine->validateStateMachine(),true);
 
 	//Testing the ability to add substages
 	//QSharedPointer<Picto::StateMachine> stateMachine2(new Picto::StateMachine);

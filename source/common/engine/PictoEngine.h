@@ -11,6 +11,7 @@
 #include "../experiment/Experiment.h"
 #include "../task/Task.h"
 #include "../network/CommandChannel.h"
+#include "../protocol/ProtocolCommand.h"
 #include "SignalChannel.h"
 #include "../iodevices/RewardController.h"
 #include "../iodevices/EventCodeGenerator.h"
@@ -86,20 +87,24 @@ public:
 	void addSignalChannel(QString name, QSharedPointer<SignalChannel> channel);
 
 	void setEventCodeGenerator(QSharedPointer<EventCodeGenerator> eventCodeGenerator) { eventCodeGenerator_ = eventCodeGenerator; };
+	static void generateEvent(unsigned int eventCode);
 
 	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
 	static void giveReward(int channel);
 
-private:
+	bool setCommandChannel(QSharedPointer<CommandChannel> commandChannel);
+	static bool sendCommand(QSharedPointer<ProtocolCommand> command, QSharedPointer<ProtocolResponse> response, int timeout=100);
 
+private:
 	QSharedPointer<Picto::Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
-	static QList<QSharedPointer<RenderingTarget> > renderingTargets_;
-	QList<QSharedPointer<CommandChannel> > commandChannels_;
-	static QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
 	bool bExclusiveMode_;
-	QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
+	
+	static QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
+	static QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
+	static QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	static QSharedPointer<RewardController> rewardController_;
+	static QSharedPointer<CommandChannel> commandChannel_;
 };
 
 /*! @} */

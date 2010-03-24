@@ -149,6 +149,8 @@ SOURCES += $$(PICTO_TREE)/source/common/property/Property.cpp
 HEADERS += $$(PICTO_TREE)/source/common/property/PropertyContainer.h
 SOURCES += $$(PICTO_TREE)/source/common/property/PropertyContainer.cpp
 
+HEADERS += $$(PICTO_TREE)/source/common/protocol/TrialCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/common/protocol/TrialCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/protocol/DiscoverCommandHandler.h
@@ -278,6 +280,9 @@ HEADERS += $$(PICTO_TREE)/source/common/task/Constraint.h
 SOURCES += $$(PICTO_TREE)/source/common/task/Constraint.cpp
 HEADERS += $$(PICTO_TREE)/source/common/task/BlockGenerator.h
 SOURCES += $$(PICTO_TREE)/source/common/task/BlockGenerator.cpp
+
+HEADERS += $$(PICTO_TREE)/source/common/timing/Timestamper.h
+SOURCES += $$(PICTO_TREE)/source/common/timing/Timestamper.cpp
 
 win32 {
 HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.h

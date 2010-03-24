@@ -130,6 +130,8 @@
    <file alias="_p_c_m_aural_target_8h-source.html">../../../output/documentation/main/html/_p_c_m_aural_target_8h-source.html</file>
    <file alias="_p_c_m_mixing_sample_8cpp-source.html">../../../output/documentation/main/html/_p_c_m_mixing_sample_8cpp-source.html</file>
    <file alias="_p_c_m_mixing_sample_8h-source.html">../../../output/documentation/main/html/_p_c_m_mixing_sample_8h-source.html</file>
+   <file alias="_p_i_c_t_o_trial_command_handler_8cpp-source.html">../../../output/documentation/main/html/_p_i_c_t_o_trial_command_handler_8cpp-source.html</file>
+   <file alias="_p_i_c_t_o_trial_command_handler_8h-source.html">../../../output/documentation/main/html/_p_i_c_t_o_trial_command_handler_8h-source.html</file>
    <file alias="_parameter_8cpp-source.html">../../../output/documentation/main/html/_parameter_8cpp-source.html</file>
    <file alias="_parameter_8h-source.html">../../../output/documentation/main/html/_parameter_8h-source.html</file>
    <file alias="_parameter_container_8cpp-source.html">../../../output/documentation/main/html/_parameter_container_8cpp-source.html</file>
@@ -268,6 +270,10 @@
    <file alias="_test_controller_8h-source.html">../../../output/documentation/main/html/_test_controller_8h-source.html</file>
    <file alias="_test_label_8cpp-source.html">../../../output/documentation/main/html/_test_label_8cpp-source.html</file>
    <file alias="_test_label_8h-source.html">../../../output/documentation/main/html/_test_label_8h-source.html</file>
+   <file alias="_timestamper_8cpp-source.html">../../../output/documentation/main/html/_timestamper_8cpp-source.html</file>
+   <file alias="_timestamper_8h-source.html">../../../output/documentation/main/html/_timestamper_8h-source.html</file>
+   <file alias="_trial_command_handler_8cpp-source.html">../../../output/documentation/main/html/_trial_command_handler_8cpp-source.html</file>
+   <file alias="_trial_command_handler_8h-source.html">../../../output/documentation/main/html/_trial_command_handler_8h-source.html</file>
    <file alias="_trial_data_8cpp-source.html">../../../output/documentation/main/html/_trial_data_8cpp-source.html</file>
    <file alias="_trial_data_8h-source.html">../../../output/documentation/main/html/_trial_data_8h-source.html</file>
    <file alias="_trial_result_8cpp-source.html">../../../output/documentation/main/html/_trial_result_8cpp-source.html</file>
@@ -315,6 +321,7 @@
    <file alias="crypt_8h-source.html">../../../output/documentation/main/html/crypt_8h-source.html</file>
    <file alias="dialog_8cpp-source.html">../../../output/documentation/main/html/dialog_8cpp-source.html</file>
    <file alias="dialog_8h-source.html">../../../output/documentation/main/html/dialog_8h-source.html</file>
+   <file alias="dir_000177b0e36692cc05a91689fb686d41.html">../../../output/documentation/main/html/dir_000177b0e36692cc05a91689fb686d41.html</file>
    <file alias="dir_019343320eb26a8799e1aa642d524b79.html">../../../output/documentation/main/html/dir_019343320eb26a8799e1aa642d524b79.html</file>
    <file alias="dir_1e5dd99d77de68af782c1b60d48b6406.html">../../../output/documentation/main/html/dir_1e5dd99d77de68af782c1b60d48b6406.html</file>
    <file alias="dir_1eee61ee1c11aa24bce57267e309e21b.html">../../../output/documentation/main/html/dir_1eee61ee1c11aa24bce57267e309e21b.html</file>
