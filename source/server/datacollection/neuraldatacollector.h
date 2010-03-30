@@ -20,14 +20,14 @@ class NeuralDataCollector : public QThread
 	Q_OBJECT
 
 public:
-	NeuralDataCollector(QHostAddress proxyAddress, int proxyPort, QSqlDatabase &sessionDb, QObject *parent, int interval=1000);
+	NeuralDataCollector(QSqlDatabase &sessionDb, int interval=1000, QObject *parent=0);
 	~NeuralDataCollector();
 
-	void setCollectionInterval(int interval) { collectionInterval = interval;};
-	int getCollectionInterval() { return collectionInterval; };
+	void setCollectionInterval(int interval) { collectionInterval_ = interval;};
+	int getCollectionInterval() { return collectionInterval_; };
 
-	void setAlignmentTool(AlignmentTool *a) { align = a; };
-	AlignmentTool* getAlignmentTool() { return align; };
+	//void setAlignmentTool(AlignmentTool *a) { align = a; };
+	//AlignmentTool* getAlignmentTool() { return align; };
 
 	void run();
 	void stop();
@@ -37,16 +37,16 @@ private slots:
 private:
 	void parseResponse(Picto::ProtocolResponse *proxyResponse);
 
-	AlignmentTool *align;
+	//AlignmentTool *align;
 
-	int collectionInterval;
-	QTimer *pollingTimer;
+	int collectionInterval_;
+	QTimer *pollingTimer_;
 
-	QHostAddress proxyAddress;
-	int proxyPort;
-	QTcpSocket *proxySocket;
+	QHostAddress proxyAddress_;
+	int proxyPort_;
+	QTcpSocket *proxySocket_;
 
-	QSqlDatabase db;
+	QSqlDatabase db_;
 };
 
 

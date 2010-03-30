@@ -8,10 +8,10 @@
 #include "../common/compositor/PCMAuralTarget.h"
 #include "../common/compositor/CompositingSurface.h"
 #include "../common/compositor/RenderingTarget.h"
-#include "../common/compositor/D3DVisualTarget.h"
 #include "../common/engine/MouseSignalChannel.h"
-#include "../common/engine/PictoBoxXPAnalogInputSignalChannel.h"
 #include "../common/stimuli/CircleGraphic.h"
+#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
+#include "compositor/D3DVisualTarget.h"
 
 
 class SignalChannelTest : public QObject

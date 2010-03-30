@@ -247,6 +247,11 @@ void ProtocolResponse::addField(QString field, QString value)
 	fields[field] = value;
 }
 
+void ProtocolResponse::setFieldValue(QString field, QString value)
+{
+	fields[field] = value;
+}
+
 void ProtocolResponse::setShouldTerminateConnection(bool terminateConnection)
 {
 	bShouldTerminateConnection = terminateConnection;

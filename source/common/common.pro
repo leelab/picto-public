@@ -149,8 +149,6 @@ SOURCES += $$(PICTO_TREE)/source/common/property/Property.cpp
 HEADERS += $$(PICTO_TREE)/source/common/property/PropertyContainer.h
 SOURCES += $$(PICTO_TREE)/source/common/property/PropertyContainer.cpp
 
-HEADERS += $$(PICTO_TREE)/source/common/protocol/TrialCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/common/protocol/TrialCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/protocol/DiscoverCommandHandler.h
@@ -285,50 +283,10 @@ HEADERS += $$(PICTO_TREE)/source/common/timing/Timestamper.h
 SOURCES += $$(PICTO_TREE)/source/common/timing/Timestamper.cpp
 
 win32 {
-HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DCompositingSurface.cpp
-HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DVisualTarget.cpp
-INCLUDEPATH += "$$(DXSDK_DIR)/include"
-LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
-LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
-
-
-HEADERS += $$(PICTO_TREE)/source/common/engine/PictoBoxXPAnalogInputSignalChannel.h
-SOURCES += $$(PICTO_TREE)/source/common/engine/PictoBoxXPAnalogInputSignalChannel.cpp
-HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPEventCodeGenerator.h
-SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPEventCodeGenerator.cpp
-HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPRewardController.h
-SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxXPRewardController.cpp
-INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
-LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
 
 }
 
 wince* {
-HEADERS += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/DDrawCompositingSurface.cpp
-HEADERS += $$(PICTO_TREE)/source/common/compositor/DDrawVisualTarget.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/DDrawVisualTarget.cpp
-LIBS += ddraw.lib
-
-HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DMCompositingSurface.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DMCompositingSurface.cpp
-HEADERS += $$(PICTO_TREE)/source/common/compositor/D3DMVisualTarget.h
-SOURCES += $$(PICTO_TREE)/source/common/compositor/D3DMVisualTarget.cpp
-LIBS += d3dm.lib
-LIBS += d3dmx.lib
-
-
-HEADERS += $$(PICTO_TREE)/source/common/engine/PictoBoxAnalogInputSignalChannel.h
-SOURCES += $$(PICTO_TREE)/source/common/engine/PictoBoxAnalogInputSignalChannel.cpp
-
-HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.h
-HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard_p.h
-HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoardRegisterMap.h
-SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxDaqBoard.cpp
-HEADERS += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardControllerCE.h
-SOURCES += $$(PICTO_TREE)/source/common/iodevices/PictoBoxRewardControllerCE.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/time_ce/time_ce.h
 SOURCES += $$(PICTO_TREE)/source/common/time_ce/time_ce.cpp

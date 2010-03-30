@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = PictoLab
+TARGET = PictoWorkstation
 QT = core gui xml network script scripttools
 CONFIG += qt warn_on debug_and_release
 DEPENDPATH += .
@@ -13,6 +13,8 @@ HEADERS += $$(PICTO_TREE)/source/workstation/document.h
 SOURCES += $$(PICTO_TREE)/source/workstation/document.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/mainwindow.h
 SOURCES += $$(PICTO_TREE)/source/workstation/mainwindow.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/LoadExperimentDialog.h
+SOURCES += $$(PICTO_TREE)/source/workstation/LoadExperimentDialog.cpp
 
 RESOURCES += $$(PICTO_TREE)/source/workstation/workstation.qrc
 

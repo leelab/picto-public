@@ -5,7 +5,7 @@
 
 #include "EngineTest.h"
 #include "../common/compositor/RenderingTarget.h"
-#include "../common/compositor/D3DVisualTarget.h"
+#include "compositor/D3DVisualTarget.h"
 #include "../common/compositor/PCMAuralTarget.h"
 
 #include "../common/statemachine/Layer.h"
@@ -28,13 +28,13 @@
 #include "../common/storage/DataStore.h"
 
 #include "../common/engine/MouseSignalChannel.h"
-#include "../common/engine/PictoBoxXPAnalogInputSignalChannel.h"
+#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
 
 #include "../common/iodevices/RewardController.h"
-#include "../common/iodevices/PictoBoxXPRewardController.h"
+#include "iodevices/PictoBoxXPRewardController.h"
 #include "../common/iodevices/NullRewardController.h"
 #include "../common/iodevices/EventCodeGenerator.h"
-#include "../common/iodevices/PictoBoxXPEventCodeGenerator.h"
+#include "iodevices/PictoBoxXPEventCodeGenerator.h"
 #include "../common/iodevices/NullEventCodeGenerator.h"
 
 #include "../common/parameter/ParameterFactory.h"

@@ -23,12 +23,19 @@ HEADERS += $$(PICTO_TREE)/source/server/dialog.h
 SOURCES += $$(PICTO_TREE)/source/server/dialog.cpp
 HEADERS += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/server/service/systemservice.h
-SOURCES += $$(PICTO_TREE)/source/server/service/systemservice.cpp
+
+HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
+SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
+HEADERS += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.h
+SOURCES += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.cpp
+
 HEADERS += $$(PICTO_TREE)/source/server/network/server.h
 SOURCES += $$(PICTO_TREE)/source/server/network/server.cpp
 HEADERS += $$(PICTO_TREE)/source/server/network/serverthread.h
 SOURCES += $$(PICTO_TREE)/source/server/network/serverthread.cpp
+HEADERS += $$(PICTO_TREE)/source/server/network/DirectorList.h
+SOURCES += $$(PICTO_TREE)/source/server/network/DirectorList.cpp
+
 HEADERS += $$(PICTO_TREE)/source/server/protocol/ServerProtocols.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/ServerProtocols.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/ServerPictoProtocol.h
@@ -39,10 +46,21 @@ HEADERS += $$(PICTO_TREE)/source/server/protocol/HTTPGetCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/HTTPGetCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/TestCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/TestCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
-SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
-HEADERS += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.h
-SOURCES += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.cpp
+HEADERS += $$(PICTO_TREE)/source/server/protocol/DirectorUpdateCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/server/protocol/DirectorUpdateCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.cpp
+
+HEADERS += $$(PICTO_TREE)/source/server/service/systemservice.h
+SOURCES += $$(PICTO_TREE)/source/server/service/systemservice.cpp
+
+HEADERS += $$(PICTO_TREE)/source/server/session/SessionInfo.h
+SOURCES += $$(PICTO_TREE)/source/server/session/SessionInfo.cpp
+HEADERS += $$(PICTO_TREE)/source/server/session/SessionManager.h
+SOURCES += $$(PICTO_TREE)/source/server/session/SessionManager.cpp
+
 
 include($$(PICTO_TREE)/source/common/common.pri)
 

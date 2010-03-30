@@ -79,15 +79,6 @@ int serviceMain(SystemService *)
 
 	QSqlQuery query(db);
 
-	if(!db.tables().contains("commandchannels"))
-	{
-		/*! \todo these queries should be broken out as their own files which are loaded out of the Qt
-		 *        resource system.
-		 */
-		query.exec("create table commandchannels (id int primary key, "
-				                                 "address varchar(20), "
-												 "port varchar(20))");
-	}
 	if(!db.tables().contains("proxyservers"))
 	{
 		/*! \todo these queries should be broken out as their own files which are loaded out of the Qt

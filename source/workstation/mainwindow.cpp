@@ -11,6 +11,7 @@
 #include "document.h"
 #include "mainwindow.h"
 #include "commands.h"
+#include "LoadExperimentDialog.h"
 
 #include "qtpropertymanager.h"
 #include "qtvariantproperty.h"
@@ -42,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionToggleClipping, SIGNAL(triggered()), this, SLOT(toggleClipping()));
     connect(actionDebug, SIGNAL(triggered()), this, SLOT(beginDebug()));
     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+	connect(actionLoad_Experiment, SIGNAL(triggered()), this, SLOT(loadExperiment()));
 
     connect(documentTabs, SIGNAL(currentChanged(int)), this, SLOT(updateActions()));
 
@@ -581,6 +583,20 @@ void MainWindow::beginDebug()
 					 "foo()\n"
 					 "i=5\n"
 					 "i--;", "Script");
+}
+
+void MainWindow::loadExperiment()
+{
+	LoadExperimentDialog *dialog = new LoadExperimentDialog;
+
+	int result = dialog->exec();
+
+	if(result != QDialog::Accepted)
+	{
+		return;
+	}
+
+	QString filename = dialog->getExperimentFile();
 }
 
 void MainWindow::about()

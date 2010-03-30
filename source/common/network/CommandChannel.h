@@ -72,6 +72,8 @@ public:
 	QSharedPointer<ProtocolResponse> getResponse();
 	QSharedPointer<ProtocolCommand> getCommand();
 
+	bool waitForResponse(int timeout=0);
+
 	void pollingMode(bool polling);
 
 	typedef enum

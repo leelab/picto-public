@@ -3,8 +3,6 @@
 #include <QList>
 #include <QString>
 
-#include "../common/iodevices/PictoBoxDaqBoard.h"
-
 #include "SignalChannelTest.h"
 
 

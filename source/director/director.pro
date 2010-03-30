@@ -7,18 +7,65 @@ INCLUDEPATH += .
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/director/main.cpp
+SOURCES += $$(PICTO_TREE)/source/director/HardwareSetup.cpp
+HEADERS += $$(PICTO_TREE)/source/director/HardwareSetup.h
 SOURCES += $$(PICTO_TREE)/source/director/EngineTest.cpp
 HEADERS += $$(PICTO_TREE)/source/director/EngineTest.h
+
 
 win32 {
 SOURCES += $$(PICTO_TREE)/source/director/SignalChannelTest.cpp
 HEADERS += $$(PICTO_TREE)/source/director/SignalChannelTest.h
+HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DCompositingSurface.h
+SOURCES += $$(PICTO_TREE)/source/director/compositor/D3DCompositingSurface.cpp
+HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DVisualTarget.h
+SOURCES += $$(PICTO_TREE)/source/director/compositor/D3DVisualTarget.cpp
+INCLUDEPATH += "$$(DXSDK_DIR)/include"
+
+LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
+LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
+
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.cpp
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.cpp
+INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
+LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
+
+HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.h
+SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.cpp
+
 }
+
+
+wince* {
+HEADERS += $$(PICTO_TREE)/source/director/compositor/DDrawCompositingSurface.h
+SOURCES += $$(PICTO_TREE)/source/director/compositor/DDrawCompositingSurface.cpp
+HEADERS += $$(PICTO_TREE)/source/director/compositor/DDrawVisualTarget.h
+SOURCES += $$(PICTO_TREE)/source/director/compositor/DDrawVisualTarget.cpp
+LIBS += ddraw.lib
+
+HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DMCompositingSurface.h
+SOURCES += $$(PICTO_TREE)/source/director/compositor/D3DMCompositingSurface.cpp
+HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DMVisualTarget.h
+SOURCES += $$(PICTO_TREE)/source/director/compositor/D3DMVisualTarget.cpp
+LIBS += d3dm.lib
+LIBS += d3dmx.lib
+
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxDaqBoard.h
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxDaqBoard_p.h
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxDaqBoardRegisterMap.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxDaqBoard.cpp
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxRewardControllerCE.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxRewardControllerCE.cpp
+
+HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxAnalogInputSignalChannel.h
+SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxAnalogInputSignalChannel.cpp
+}
+
 include($$(PICTO_TREE)/source/common/common.pri)
 
-win32 {
-INCLUDEPATH += "$$(DXSDK_DIR)/include"
-}
+
 
 # Output
 build_pass:CONFIG(debug, debug|release) {

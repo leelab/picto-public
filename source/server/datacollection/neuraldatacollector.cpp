@@ -7,14 +7,19 @@
 #include "neuraldatacollector.h"
 
 
-NeuralDataCollector::NeuralDataCollector(QHostAddress proxyAddress, int proxyPort, 
-							QSqlDatabase &sessionDb, QObject *parent, int interval):
+NeuralDataCollector::NeuralDataCollector(QSqlDatabase &sessionDb, int interval, QObject *parent):
 		QThread(parent),
-		proxyAddress(proxyAddress),
-		proxyPort(proxyPort),
-		collectionInterval(interval),
-		db(sessionDb)
+		collectionInterval_(interval),
+		db_(sessionDb)
 {
+	//grab the proxy server port and and adression from the sessoin db_
+	QSqlQuery query(sessionDb);
+	query.exec("SELECT value FROM sessioninfo WHERE key='Proxy Adress'");
+	Q_ASSERT(query.next());
+	proxyAddress_ = QHostAddress(query.value(0).toString());
+	query.exec("SELECT value FROM sessioninfo WHERE key='Proxy Port'");
+	Q_ASSERT(query.next());
+	proxyPort_ = query.value(0).toInt();
 }
 
 NeuralDataCollector::~NeuralDataCollector()
@@ -26,14 +31,14 @@ NeuralDataCollector::~NeuralDataCollector()
 void NeuralDataCollector::run()
 {
 	//set up a timer to grab proxy data
-	pollingTimer = new QTimer();
-	pollingTimer->setInterval(collectionInterval);
-	connect(pollingTimer, SIGNAL(timeout()), this, SLOT(collectData()),Qt::DirectConnection);
-	pollingTimer->start();
+	pollingTimer_ = new QTimer();
+	pollingTimer_->setInterval(collectionInterval_);
+	connect(pollingTimer_, SIGNAL(timeout()), this, SLOT(collectData()),Qt::DirectConnection);
+	pollingTimer_->start();
 
 	//set up the network connection
-	proxySocket = new QTcpSocket;;
-	proxySocket->connectToHost(proxyAddress,proxyPort,QIODevice::ReadWrite);
+	proxySocket_ = new QTcpSocket;;
+	proxySocket_->connectToHost(proxyAddress_,proxyPort_,QIODevice::ReadWrite);
 
 	QThread::exec();
 
@@ -47,40 +52,40 @@ void NeuralDataCollector::stop()
 
 void NeuralDataCollector::collectData()
 {
-	pollingTimer->stop();
+	pollingTimer_->stop();
 
 	//check for failed connections
-	if(proxySocket->state()<QAbstractSocket::ConnectingState)
-		proxySocket->connectToHost(proxyAddress,proxyPort,QIODevice::ReadWrite);
-	if(!proxySocket->waitForConnected(2000))
+	if(proxySocket_->state()<QAbstractSocket::ConnectingState)
+		proxySocket_->connectToHost(proxyAddress_,proxyPort_,QIODevice::ReadWrite);
+	if(!proxySocket_->waitForConnected(2000))
 		return;
 
 	Picto::ProtocolCommand *getCommand;
 	getCommand = new Picto::ProtocolCommand("GET /data ACQ/1.0");
-	getCommand->write(proxySocket);
+	getCommand->write(proxySocket_);
 
 	Picto::ProtocolResponse *proxyResponse = new Picto::ProtocolResponse();
-	int bytesRead = proxyResponse->read(proxySocket);
+	int bytesRead = proxyResponse->read(proxySocket_);
 
 	if(bytesRead == -1)
-		qDebug()<<proxyAddress.toString()<<": No data returned from proxy";
+		qDebug()<<proxyAddress_.toString()<<": No data returned from proxy";
 	else if(bytesRead == -2)
-		qDebug()<<proxyAddress.toString()<<": Poorly formed headers";
+		qDebug()<<proxyAddress_.toString()<<": Poorly formed headers";
 	else if(bytesRead<0)
 	{
 		/*! \todo I need to make sure that in this case, the data received is still recorded */
-		qDebug()<<proxyAddress.toString()<<": Unable to read entire content block";
+		qDebug()<<proxyAddress_.toString()<<": Unable to read entire content block";
 	}
 	else
 	{
 		parseResponse(proxyResponse);
-		qDebug()<<proxyAddress.toString()<<": Read "<<bytesRead<<" bytes";
+		qDebug()<<proxyAddress_.toString()<<": Read "<<bytesRead<<" bytes";
 	}
 
 	//flush out any remaining data in the conenction
-	proxySocket->readAll();
+	proxySocket_->readAll();
 
-	pollingTimer->start();
+	pollingTimer_->start();
 
 
 }
@@ -93,12 +98,14 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 {
 	QByteArray xmlData = response->getDecodedContent();
 
-	QString timestamp,prealigntime;
+	double timestamp;
+	double fittedTime;
+	double correlation;
 	QString channel,unit,waveform,device,deviceStatus;
 	int eventcode;
 
-	QSqlQuery query(db);
-	db.transaction();
+	QSqlQuery query(db_);
+	db_.transaction();
 
 	QXmlStreamReader reader(xmlData);
 
@@ -119,7 +126,7 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 				{
 					if(reader.isStartElement() && reader.name() == "timestamp")
 					{
-						prealigntime = reader.readElementText();
+						timestamp = reader.readElementText().toDouble();
 					}
 					else if(reader.isStartElement() && reader.name() == "channel")
 					{
@@ -139,13 +146,17 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 					reader.readNext();
 				}
 
-				//use the alignment tool to 
-				timestamp = prealigntime;
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				//! \todo use the alignment tool to fit the time
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				fittedTime = timestamp;
+				correlation = 0.0;
 
-				query.prepare("INSERT INTO spikes (timestamp, prealigntime, channel, unit, waveform)"
-					"VALUES(:timestamp, :prealigntime, :channel, :unit, :waveform)");
+				query.prepare("INSERT INTO spikes (timestamp, fittedtime, correlation, channel, unit, waveform)"
+					"VALUES(:timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
 				query.bindValue(":timestamp", timestamp);
-				query.bindValue(":prealigntime", prealigntime);
+				query.bindValue(":fittedtime", fittedTime);
+				query.bindValue(":correlation", correlation);
 				query.bindValue(":channel", channel);
 				query.bindValue(":unit", unit);
 				query.bindValue(":waveform", waveform);
@@ -157,7 +168,7 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 				{
 					if(reader.isStartElement() && reader.name() == "timestamp")
 					{
-						timestamp = reader.readElementText();
+						timestamp = reader.readElementText().toDouble();
 					}
 					else if(reader.isStartElement() && reader.name() == "eventCode")
 					{
@@ -169,8 +180,18 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 					reader.readNext();
 				}
 
-				//Use the event codes to update the alignment tool
-				align->addEvent(eventcode,timestamp.toDouble(), Align::neural); 
+				//Add the event code to the neuraltrials table
+				query.prepare("INSERT INTO neuraltrials (timestamp, aligncode, matched)"
+					"VALUES(:timestamp, :aligncode, 0)");
+				query.bindValue(":timestamp", timestamp);
+				query.bindValue(":aligncode", eventcode);
+				query.exec();
+
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				//!  \todo Rerun the alignment tool with our new data
+				//
+				//   Actually, wait until after we've commited to the db...
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			}
 		}
 		else
@@ -184,7 +205,7 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 
 	}
 
-	db.commit();
+	db_.commit();
 
 
 }

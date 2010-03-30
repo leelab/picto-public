@@ -78,6 +78,8 @@ public:
 	void setShouldStream(bool shouldStream);
 
 	QString getFieldValue(QString field);
+	void setFieldValue(QString field, QString value);
+
 	int getResponseCode();
 	QString getResponseType();
 

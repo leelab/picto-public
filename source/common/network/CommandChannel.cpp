@@ -1,6 +1,7 @@
 #include <QStringList>
 #include <qDebug>
-
+#include <QTime>
+#include <QCoreApplication>
 
 #include "CommandChannel.h"
 
@@ -182,6 +183,53 @@ QSharedPointer<ProtocolCommand> CommandChannel::getCommand()
 		return QSharedPointer<ProtocolCommand>();
 	else
 		return incomingCommandQueue.takeFirst();
+}
+
+/*! \brief Waits for a response to arrive
+ *
+ *	Since the networking code works best with some sort of event loop, this
+ *	function creates one for us.  Note that if the timeout timer is 0, we still
+ *	call process events.
+ *
+ *	The function returns true if there is a waiting response.
+ *
+ *	This function is designed to work if the channel is in polling mode. If
+ *	the channel isn't in polling mode, the function immediately returns false.
+ */
+bool CommandChannel::waitForResponse(int timeout)
+{
+	if(!polledMode)
+		return false;
+
+	if(timeout == 0)
+	{
+		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		if(incomingResponsesWaiting() > 0)
+			return true;
+		else
+			return false;
+	}
+	else
+	{
+		QTime timeoutTimer;
+		timeoutTimer.start();
+
+		while(true)
+		{
+			QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
+			if(incomingResponsesWaiting()>0)
+			{
+				return true;
+			}
+
+			if(timeoutTimer.elapsed() > timeout)
+			{
+				return false;
+			}
+		}
+	}
+
 }
 
 

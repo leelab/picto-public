@@ -334,7 +334,8 @@ void StateMachine::sendStartTrialToServer()
 
 	//Send out the command
 	QSharedPointer<ProtocolResponse> response;
-	Q_ASSERT(Engine::PictoEngine::sendCommand(command, response));
+	response = Engine::PictoEngine::sendCommand(command, 1);
+	Q_ASSERT(!response.isNull());
 	Q_ASSERT(response->getResponseType() == "OK");
 }
 
@@ -383,7 +384,8 @@ void StateMachine::sendEndTrialToServer()
 
 	//Send out the command
 	QSharedPointer<ProtocolResponse> response;
-	Q_ASSERT(Engine::PictoEngine::sendCommand(command, response));
+	response = Engine::PictoEngine::sendCommand(command, 1);
+	Q_ASSERT(!response.isNull());
 	Q_ASSERT(response->getResponseType() == "OK");
 }
 

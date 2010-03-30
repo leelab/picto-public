@@ -23,16 +23,16 @@
 #ifndef _PICTOBOXXPREWARDCONTROLLER_H_
 #define _PICTOBOXXPREWARDCONTROLLER_H_
 
-#include "RewardController.h"
+#include "../../common/iodevices/RewardController.h"
 
 
 namespace Picto
 {
-#if defined WIN32 || defined WINCE
-class PICTOLIB_API PictoBoxXPRewardController : public RewardController
-#else
+//#if defined WIN32 || defined WINCE
+//class PICTOLIB_API PictoBoxXPRewardController : public RewardController
+//#else
 class PictoBoxXPRewardController :  public RewardController
-#endif
+//#endif
 {
 public:
 	PictoBoxXPRewardController(unsigned int channelCount);

@@ -6,11 +6,14 @@
 #include "VisualTarget.h"
 
 #include <QPixmap>
-#include <QWidget>
 
 namespace Picto {
 
-struct PICTOLIB_CLASS PixmapVisualTarget : public VisualTarget, public QWidget
+#if defined WIN32 || defined WINCE
+struct PICTOLIB_API PixmapVisualTarget : public VisualTarget
+#else
+struct PixmapVisualTarget : public VisualTarget
+#endif
 {
 public:
 	PixmapVisualTarget(bool _bWindowed = false, int _width = 800, int _height = 600);

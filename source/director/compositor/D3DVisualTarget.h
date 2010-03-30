@@ -7,22 +7,21 @@
 #ifndef _D3DVISUALTARGET_H_
 #define _D3DVISUALTARGET_H_
 
-#include "../common.h"
+//#include "../common.h"
 
-#include "VisualTarget.h"
+#include "../../common/compositor/VisualTarget.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <D3dx9core.h>
-#include <QWidget>
 #include <QList>
 
 namespace Picto {
 
-#if defined WIN32 || defined WINCE
-class PICTOLIB_API D3DVisualTarget : public VisualTarget, public QWidget
-#else
-class D3DVisualTarget : public VisualTarget, public QWidget
-#endif
+//#if defined WIN32 || defined WINCE
+//class PICTOLIB_API D3DVisualTarget : public VisualTarget
+//#else
+class D3DVisualTarget : public VisualTarget
+//#endif
 {
 public:
 	D3DVisualTarget();

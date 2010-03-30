@@ -7,10 +7,15 @@
 #include "CompositingSurface.h"
 
 #include <QSharedPointer>
+#include <QWidget>
 
 namespace Picto {
 
-class VisualTarget
+#if defined WIN32 || defined WINCE
+	class PICTOLIB_API VisualTarget :  public QWidget
+#else
+class VisualTarget : public QWidget
+#endif
 {
 public:
 	VisualTarget(bool _bWindowed = false, int _width = 800, int _height = 600);

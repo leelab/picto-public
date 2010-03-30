@@ -6,6 +6,7 @@
 #include <QString>
 #include <QTimer>
 #include <QSharedPointer>
+#include <QUuid>
 
 #include "../common/common.h"
 #include "../common/protocol/ProtocolCommand.h"
@@ -38,6 +39,8 @@ private:
 	static const int timeoutInterval = 10000;
 
 	QTimer * timer;
+
+	QUuid sessionId_;
 
 private slots:
 	void readClient();

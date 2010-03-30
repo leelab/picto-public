@@ -91,59 +91,47 @@ bool PictoEngine::setCommandChannel(QSharedPointer<CommandChannel> commandChanne
  *	commands are expected to generate responsese) is stored in response.  If no respose is
  *	recieved within the timeout period, or if there is some other problem, false is returned.
  */
-bool PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command, QSharedPointer<ProtocolResponse> response, int timeout)
+QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command, int timeout)
 {
-
+	QSharedPointer<ProtocolResponse> nullResponse;
 	if(commandChannel_.isNull())
 	{
-		return false;
+		return nullResponse;
 	}
 	if(commandChannel_->getChannelStatus() == CommandChannel::disconnected)
 	{
-		return false;
+		return nullResponse;
 	}
 	if(commandChannel_->incomingResponsesWaiting() >0)
 	{
 		Q_ASSERT(false);
-		return false;
+		return nullResponse;
 	}
 	commandChannel_->sendCommand(command);
 
-	QTime timeoutTimer;
-	timeoutTimer.start();
-
-	while(true)
+	if(commandChannel_->waitForResponse(timeout))
 	{
-		//QApplication::processEvents(QEventLoop::ExcludeUserInputEvent);
-
-		if(timeoutTimer.elapsed() >timeout)
-		{
-			return false;
-		}
-
-		if(commandChannel_->incomingResponsesWaiting()>0)
-		{
-			response = commandChannel_->getResponse();
-			break;
-		}
+		return commandChannel_->getResponse();
+	}
+	else
+	{
+		return nullResponse;
 	}
 
-	return true;
 }
 
 
-void PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> //experiment
-								 )
+void PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> experiment)
 {
-	/*! \todo Implement Me */
+	experiment_ = experiment;
 }
 
-void executeTask(Picto::Task * //task
-				 )
+//! Runs the task with the passed in name
+bool PictoEngine::runTask(QString taskName)
 {
-	/*! \todo Implement Me */
+	return experiment_->runTask(taskName);
 }
 
 
-	}; //namespace Engine
+}; //namespace Engine
 }; //namespace Picto

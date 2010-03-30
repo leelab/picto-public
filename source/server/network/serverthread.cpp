@@ -1,6 +1,8 @@
 #include "serverthread.h"
 #include "../../common/globals.h"
 
+#include "DirectorList.h"
+
 #include <QtNetwork>
 #include <QDateTime>
 
@@ -112,6 +114,16 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 
 		return notImplementedResponse;
 	}
+
+	//If this is thread is attached to a session, and the command doesn't have a session ID,
+	//we should add one.
+	if(!sessionId_.isNull() && !_command->hasField("Session-ID"))
+	{
+		_command->setFieldValue("Session-ID",sessionId_.toString());
+	}
+
+	//Add the source ip to the command
+	_command->setFieldValue("Source-Address", tcpSocket->peerAddress().toString());
 	
 	QSharedPointer<Picto::ProtocolResponse> response = handler->processCommand(_command);
 
@@ -220,6 +232,11 @@ void ServerThread::readClient()
 
 void ServerThread::handleDroppedClient()
 {
+	//Remove this connection from the directorList (if the connection
+	//wasn't from a director instance, this will have no effect)
+	DirectorList directorList;
+	directorList.removeDirector(tcpSocket->peerAddress());
+
 	exit();
 }
 

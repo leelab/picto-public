@@ -66,6 +66,8 @@ bool ChoiceController::addTarget(QString targetName, QRect target)
 	propertyContainer_.addProperty(Property(QVariant::Rect,targetPropertyStr, target));
 
 	results_.append(targetName);
+
+	return true;
 }
 
 
@@ -298,7 +300,7 @@ bool ChoiceController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStream
 
 bool ChoiceController::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-		//Do some basic error checking
+	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "ControlElement")
 	{
 		addError("ChoiceController","Incorrect tag, expected <ControlElement>",xmlStreamReader);
@@ -414,8 +416,6 @@ bool ChoiceController::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 	}
 
 	return true;
-
-	return false;
 }
 
 }; //namespace Picto

@@ -90,18 +90,6 @@ void Server::processPendingDatagrams()
 
 				udpResponseSocket.writeDatagram(datagram.data(), datagram.size(),
 												senderAddress, target.toInt());
-
-				query.exec("select count(*) from commandchannels");
-				query.next();
-				int index = query.value(0).toInt();
-				query.clear();
-
-				query.prepare("INSERT INTO commandchannels "
-							  "VALUES(:id, :address, :port)");
-				query.bindValue(":id", index);
-				query.bindValue(":address", senderAddress.toString());
-				query.bindValue(":port", target);
-				query.exec();
 			}
 
 			//Proxy server announcing its presence..

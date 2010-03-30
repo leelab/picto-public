@@ -37,6 +37,8 @@ public slots:
     void toggleClipping();
 	void beginDebug();
 
+	void loadExperiment();
+
     void about();
 
 private slots:

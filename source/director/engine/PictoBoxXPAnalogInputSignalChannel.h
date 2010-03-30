@@ -2,8 +2,8 @@
 #define PICTOBOXXPANALOGSIGNALCHANNEL_H
 
 
-#include "../common.h"
-#include "SignalChannel.h"
+//#include "../common.h"
+#include "../../common/engine/SignalChannel.h"
 
 /*! \brief A SignalChannel object for collecting analog input data.  Only runs on PictoBoxXP
  *	
@@ -19,11 +19,11 @@
 
 namespace Picto {
 
-#if defined WIN32 || defined WINCE
-class PICTOLIB_API PictoBoxXPAnalogInputSignalChannel : public SignalChannel
-#else
+//#if defined WIN32 || defined WINCE
+//class PICTOLIB_API PictoBoxXPAnalogInputSignalChannel : public SignalChannel
+//#else
 class PictoBoxXPAnalogInputSignalChannel : public SignalChannel
-#endif
+//#endif
 {
 public:
 	PictoBoxXPAnalogInputSignalChannel(int sampsPerSecond);

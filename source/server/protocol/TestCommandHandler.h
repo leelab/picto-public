@@ -13,6 +13,8 @@ public:
 
 	QString method() { return QString("TEST"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
+private:
+	void doAlignTest();
 };
 
 #endif

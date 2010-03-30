@@ -5,24 +5,23 @@
 
 #include "alignmenttool.h"
 
-AlignmentTool::AlignmentTool(QSqlDatabase& sessionDb)
-	:sessionDb(sessionDb)
+AlignmentTool::AlignmentTool(QSqlDatabase sessionDb)
+	: sessionDb_(sessionDb)
 {
 	//set up the sums
-	sumXX = 0.0;
-	sumYY = 0.0;
-	sumXY = 0.0;
-	sumX = 0.0;
-	sumY = 0.0;
-	n = 0;
+	sumXX_ = 0.0;
+	sumYY_ = 0.0;
+	sumXY_ = 0.0;
+	sumX_ = 0.0;
+	sumY_ = 0.0;
+	n_ = 0;
 
 	//set up an initial fit of y=x with no correlation
-	coeff.A = 0.0;
-	coeff.B = 1.0;  
-	coeff.corr = 0.0;
+	coeff_.A = 0.0;
+	coeff_.B = 1.0;  
+	coeff_.corr = 0.0;
 
-	trials = 0; 
-	orphanedCodes = 0;
+	trials_ = 0; 
 
 	qDebug()<<"!!!!!!!!!!!WARNING!!!!!!!!!!!!!!!!!";
 	qDebug()<<"The alignment tool has not been tested (due to the difficulty of creating a test program)";
@@ -33,211 +32,306 @@ AlignmentTool::~AlignmentTool()
 {
 }
 
-Align::coefficients AlignmentTool::getCoefficients()
+//!	\brief converts the passed in time from neural to behavioral time using the current best fit
+double AlignmentTool::convertToBehavioralTimebase(double neuralTime)
 {
-	return coeff;
+	return coeff_.A + coeff_.B*neuralTime;
 }
 
-void AlignmentTool::addEvent(int alignCode, double timestamp, Align::EventType eventType)
+//!	\brief converts the passed in time from behavioral to neural time using the current best fit
+double AlignmentTool::convertToNeuralTimebase(double behavioralTime)
 {
-	alignmentEvent newEvent;
-	newEvent.timestamp = timestamp;
-	newEvent.alignCode = alignCode;
-	newEvent.age = 0;
+	return (behavioralTime - coeff_.A)/coeff_.B;
+}
 
-	//add the event to the appropriate list
-	if(eventType == Align::behavioral)
+/*! \brief Does a complete alignment on the session database
+ *
+ *	A complete alignment involves running through all of the trial start/stop events
+ *	and calculating the coefficients.  This is time consuming, and probably shouldn't 
+ *	be done while an experiment is running.  Note also that this resets the matched
+ *	column in the trial tables.
+ */
+void AlignmentTool::doFullAlignment()
+{
+	QSqlQuery query(sessionDb_);
+
+	//Clear out the trials table
+	query.exec("DELETE FROM trials");
+
+	//Reset the matched values to 0 (since we're going to rematch all of the events)
+	query.exec("UPDATE neuraltrials SET matched = 0");
+	query.exec("UPDATE behavioraltrials SET matched = 0");
+
+	//Now that everything is unmatched, we can simply call the incremental
+	//alignment function
+	doIncrementalAlignment();
+
+	QSqlQuery trialsQuery(sessionDb_);
+
+
+	//since we have done a complete fit, we'll need to recalculate the
+	//jitter value for each row in the trials table.
+	trialsQuery.exec("SELECT id,neuralstart,neuralend,behavioralstart,behavioralend "
+					 "FROM trials");
+
+	while(trialsQuery.next())
 	{
-		behavioralEvents.push_back(newEvent);
-	}
-	else if(eventType == Align::neural)
-	{
-		neuralEvents.push_back(newEvent);
-	}
-	else
-	{
-		qDebug()<<"aligntool: Invalid eventType";
+		QSqlQuery trialsInsertQuery(sessionDb_);
+
+		double nStart, nEnd, bStart, bEnd;
+		double startjitter,endjitter;
+		int id;
+
+		id=trialsQuery.value(0).toInt();	
+		nStart = trialsQuery.value(1).toDouble();
+		nEnd = trialsQuery.value(2).toDouble();
+		bStart = trialsQuery.value(3).toDouble();
+		bEnd = trialsQuery.value(4).toDouble();
+	
+
+		startjitter = bStart - (coeff_.A + coeff_.B*nStart);
+		endjitter = bEnd - (coeff_.A + coeff_.B*nEnd);
+
+		trialsInsertQuery.prepare("UPDATE trials"
+			"SET startjitter=:startjitter endjitter=:endjitter "
+			"WHERE id=:id");
+		trialsInsertQuery.bindValue(":startjitter",startjitter);
+		trialsInsertQuery.bindValue(":endjitter",endjitter);
+		trialsInsertQuery.bindValue(":id",id);
+
 	}
 
-	int bStartIdx, bEndIdx, nStartIdx, nEndIdx;
-	if(completedTrial(bStartIdx, bEndIdx, nStartIdx, nEndIdx))
+	//set the correlation for each row as well (we can do this with a signle query
+	trialsQuery.prepare("UPDATE trials SET correlation=:corr");
+	trialsQuery.bindValue(":corr",coeff_.corr);
+	trialsQuery.exec();
+}
+
+/*!	\Brief Updates alignemnt with any new (unmatched) trials.
+ *
+ *	This runs through the unmatched trials in the trial tables, and tries
+ *	to find new matches.  If a match is found, then the alignemnt is updated.
+ *	This is a quick function, and should be called whenever a new trial is
+ *	added to either the behavioral or neural trial tables.
+ *
+ *	There are a number of assumptions made in the alignment that we need to be aware of:
+ *		1. Every trial should generate a start/stop pair in both the neural and behavioral
+ *		   tables
+ *		2. Trials are added more or less in order (we use the id to determine the order
+ *		   they were added).
+ *		3. Trial marking started at more or less the same time for the neural and behavioral
+ *		   trials (e.g. we didn't mark 200 neural trials, and then suddenly start marking 
+ *		   behavioral trials).  The system can handle some variation here, but not too much
+ *
+ *	I'm using a different scheme for marking matched trials internally:
+ *		0  - unmatched and unchecked
+ *		1  - matched
+ *		-1 - unmatched, but checked
+ *	Upon returning from the function, all tables are remarked with matched(1) and
+ *	unmatched(0).
+ */
+void AlignmentTool::doIncrementalAlignment()
+{
+	QSqlQuery neuralQuery(sessionDb_);
+	QSqlQuery behavioralQuery(sessionDb_);
+	QSqlQuery trialsQuery(sessionDb_);
+
+	while(true)
 	{
-		updateCoefficients(bStartIdx, bEndIdx, nStartIdx, nEndIdx);
-		writeToDb(bStartIdx, bEndIdx, nStartIdx, nEndIdx);
+		neuralQuery.exec("SELECT id,timestamp,aligncode FROM neuraltrials WHERE matched = 0");
 
-		//finally, we'll remove the alignment codes from our list
-		neuralEvents.removeAt(nStartIdx);
-		neuralEvents.removeAt(nEndIdx);
-		behavioralEvents.removeAt(bStartIdx);
-		behavioralEvents.removeAt(bEndIdx);
+		//stop the loop when we're out of trials that haven't been checked.
+		if(!neuralQuery.next())
+			break;
 
-		//check for excessive orphaned codes
-		Q_ASSERT(trials<10 || (double)orphanedCodes/(trials*4.0) < 0.02);
+		AlignmentEvent neuralStartEvent;
+		neuralStartEvent.alignCode = neuralQuery.value(2).toInt();
+		neuralStartEvent.timestamp = neuralQuery.value(1).toDouble();
+		neuralStartEvent.id = neuralQuery.value(0).toInt();
+
+		//This could be a start or end, so find it's matching pair within +/- 10 trials
+		neuralQuery.prepare("SELECT id,timestamp,aligncode "
+			"FROM neuraltrials "
+			"WHERE id>:minID AND id<:maxId AND aligncode = :aligncode AND matched=0");
+		neuralQuery.bindValue(":minID",neuralStartEvent.id-10);
+		neuralQuery.bindValue(":maxID",neuralStartEvent.id+10);
+		neuralQuery.bindValue(":aligncode",neuralStartEvent.alignCode);
+		neuralQuery.exec();
+
+		//if we don't find a match, mark the first event as unmatched(-1)
+		//and go back to the beginning
+		if(!neuralQuery.next())
+		{
+			neuralQuery.prepare("UPDATE neuraltrials SET matched=-1 WHERE id=:id");
+			neuralQuery.bindValue(":id", neuralStartEvent.id);
+			neuralQuery.exec();
+			continue;
+		}
+
+		AlignmentEvent neuralEndEvent;
+		neuralEndEvent.alignCode = neuralQuery.value(2).toInt();
+		neuralEndEvent.timestamp = neuralQuery.value(1).toDouble();
+		neuralEndEvent.id = neuralQuery.value(0).toInt();
+
+		//We may need to flip the start/end values
+		if(neuralStartEvent.timestamp > neuralEndEvent.timestamp)
+		{
+			AlignmentEvent temp;
+			temp = neuralStartEvent;
+			neuralStartEvent = neuralEndEvent;
+			neuralEndEvent = temp;
+		}
+
+		//Find a start/stop pair in the behavioral trials table with ids within +/- 50
+		//events of the neural start event.
+		//If more than 2 matching events are found, we continue to narrow the search
+		//range until only two events are found.
+		int idRange = 50;
+		do
+		{
+			behavioralQuery.prepare("SELECT id,timestamp,aligncode,trialnumber "
+									"FROM behavioraltrials "
+									"WHERE id>:MINid AND id< :MAXid AND aligncode=:aligncode AND matched = 0");
+			behavioralQuery.bindValue(":MINid",neuralStartEvent.id-idRange);
+			behavioralQuery.bindValue(":MAXid",neuralStartEvent.id+idRange);
+			behavioralQuery.bindValue(":aligncode", neuralStartEvent.alignCode);
+			behavioralQuery.exec();
+
+			idRange--;
+		}
+		while(behavioralQuery.size()>2);
+
+		//If we didn't find exactly two matching events
+		//mark the neural events as unmatched(-1)
+		if(behavioralQuery.size() != 2)
+		{
+			neuralQuery.prepare("UPDATE neuraltrials SET matched=-1 WHERE id=:id");
+			neuralQuery.bindValue(":id", neuralStartEvent.id);
+			neuralQuery.exec();
+			neuralQuery.prepare("UPDATE neuraltrials SET matched=-1 WHERE id=:id");
+			neuralQuery.bindValue(":id", neuralEndEvent.id);
+			neuralQuery.exec();
+			continue;
+
+		}
+
+		behavioralQuery.next();
+		AlignmentEvent behavioralStartEvent;
+		behavioralStartEvent.id = behavioralQuery.value(0).toInt();
+		behavioralStartEvent.alignCode = behavioralQuery.value(1).toInt();
+		behavioralStartEvent.timestamp = behavioralQuery.value(2).toDouble();
+		behavioralStartEvent.trialNum = behavioralQuery.value(3).toInt();
+		
+		behavioralQuery.next();
+		AlignmentEvent behavioralEndEvent;
+		behavioralEndEvent.id = behavioralQuery.value(0).toInt();
+		behavioralEndEvent.alignCode = behavioralQuery.value(1).toInt();
+		behavioralEndEvent.timestamp = behavioralQuery.value(2).toDouble();
+		behavioralEndEvent.trialNum = behavioralQuery.value(3).toInt();
+
+		//if the trial numbers don't match, mark everything as unmatched(-1)
+		if(behavioralStartEvent.trialNum != behavioralEndEvent.trialNum)
+		{
+			neuralQuery.prepare("UPDATE neuraltrials SET matched=-1 WHERE id=:id");
+			neuralQuery.bindValue(":id", neuralStartEvent.id);
+			neuralQuery.exec();
+			neuralQuery.prepare("UPDATE neuraltrials SET matched=-1 WHERE id=:id");
+			neuralQuery.bindValue(":id", neuralEndEvent.id);
+			neuralQuery.exec();
+			behavioralQuery.prepare("UPDATE behavioraltrials SET matched=-1 WHERE id=:id");
+			behavioralQuery.bindValue(":id", behavioralStartEvent.id);
+			behavioralQuery.exec();
+			behavioralQuery.prepare("UPDATE behavioraltrials SET matched=-1 WHERE id=:id");
+			behavioralQuery.bindValue(":id", behavioralEndEvent.id);
+			behavioralQuery.exec();
+			continue;
+		}
+
+
+		//We may need to flip the start/end values
+		if(behavioralStartEvent.timestamp > behavioralEndEvent.timestamp)
+		{
+			AlignmentEvent temp;
+			temp = behavioralStartEvent;
+			behavioralStartEvent = behavioralEndEvent;
+			behavioralEndEvent = temp;
+		}
+
+		//Mark all four events as matched
+		neuralQuery.prepare("UPDATE neuraltrials SET matched=1 WHERE id=:id");
+		neuralQuery.bindValue(":id", neuralStartEvent.id);
+		neuralQuery.exec();
+		neuralQuery.prepare("UPDATE neuraltrials SET matched=1 WHERE id=:id");
+		neuralQuery.bindValue(":id", neuralEndEvent.id);
+		neuralQuery.exec();
+		behavioralQuery.prepare("UPDATE behavioraltrials SET matched=1 WHERE id=:id");
+		behavioralQuery.bindValue(":id", behavioralStartEvent.id);
+		behavioralQuery.exec();
+		behavioralQuery.prepare("UPDATE behavioraltrials SET matched=1 WHERE id=:id");
+		behavioralQuery.bindValue(":id", behavioralEndEvent.id);
+		behavioralQuery.exec();
+
+		//update the coefficients
+		updateCoefficients(behavioralStartEvent,behavioralEndEvent,neuralStartEvent,neuralEndEvent);
+
+		//calculate jitter
+		double startjitter,endjitter;
+
+		startjitter = behavioralStartEvent.timestamp - (coeff_.A + coeff_.B*neuralStartEvent.timestamp);
+		endjitter = behavioralEndEvent.timestamp - (coeff_.A + coeff_.B*neuralEndEvent.timestamp);
+
+		//insert everything into the trials table
+		trialsQuery.prepare("INSERT INTO trials(trialnumber,aligncode,neuralstart, "
+							"neuralend,behavioralstart,behavioralend,"
+							"startjitter,endjitter,correlation) "
+							"VALUES :trialnumber,:aligncode,:neuralstart, "
+							":neuralend,:behavioralstart,:behavioralend,"
+							":startjitter,:endjitter,:corr");
+		trialsQuery.bindValue(":trialnumber",behavioralStartEvent.trialNum);
+		trialsQuery.bindValue(":aligncode",behavioralStartEvent.alignCode);
+		trialsQuery.bindValue(":neuralstart",neuralStartEvent.timestamp);
+		trialsQuery.bindValue(":neuralend",neuralEndEvent.timestamp);
+		trialsQuery.bindValue(":behavioralstart",behavioralStartEvent.timestamp);
+		trialsQuery.bindValue(":behavioralend",behavioralEndEvent.timestamp);
+		trialsQuery.bindValue(":startjitter",startjitter);
+		trialsQuery.bindValue(":endjitter",endjitter);
+		trialsQuery.bindValue(":corr",coeff_.corr);
+		trialsQuery.exec();
+
 	}
-	ageTrialLists();
+
+	//return all of the matched=-1 values back to matched=0
+	neuralQuery.exec("UPDATE neuraltrials SET matched=0 WHERE matched=-1");
 }
 
 
-//completedTrial looks through the list of active events and tries 
-//to match them up.  If a complete trial is found (a pair of alignment
-//codes from both the neural data and the behavioral data), the function
-//returns true, and places the indices in the passed in values.  Otherwise, 
-//the function returns false, and the indices are unchanged.
+/*!	\brief Updates the coefficients when a new complete trial is found.
+ *
+ *	The function updates the running sums, and then uses those to 
+ *	calculate the newest coefficients.
+ *
+ *	The math is based on:
+ *	  http://mathworld.wolfram.com/LeastSquaresFitting.html
+ *	
+ *	Note that the neural timebase is the x-axis, while the behavioral
+ *	timebase is the y-axis
+ */
+void AlignmentTool::updateCoefficients(AlignmentEvent bStartEvent,
+									   AlignmentEvent bEndEvent,
+									   AlignmentEvent nStartEvent,
+									   AlignmentEvent nEndEvent)
 
-//This function is called everytime an event is added.
-bool AlignmentTool::completedTrial(int& bStartIdx, int& bEndIdx, 
-								   int& nStartIdx, int& nEndIdx)
-{
-	//loop through all the neural events
-	for(int n = 0; n < neuralEvents.size(); n++)
-	{
-		if(neuralEvents.count(neuralEvents[n]) == 2 &&
-			behavioralEvents.count(neuralEvents[n]) == 2)
-		{
-			nStartIdx = n;
-			nEndIdx = neuralEvents.indexOf(neuralEvents[nStartIdx],nStartIdx+1);
-			bStartIdx = behavioralEvents.indexOf(neuralEvents[nStartIdx],0);
-			bEndIdx = behavioralEvents.indexOf(neuralEvents[nStartIdx],bStartIdx + 1);
-
-			//check that everything is in order
-			if(neuralEvents[nStartIdx].timestamp > neuralEvents[nEndIdx].timestamp)
-			{
-				int tempIdx;
-				tempIdx = nStartIdx;
-				nStartIdx = nEndIdx;
-				nEndIdx = tempIdx;
-			}
-			if(behavioralEvents[bStartIdx].timestamp > behavioralEvents[bEndIdx].timestamp)
-			{
-				int tempIdx;
-				tempIdx = bStartIdx;
-				bStartIdx = bEndIdx;
-				bEndIdx = tempIdx;
-			}
-
-			trials += 4;
-
-			return true;
-		}
-		else if(neuralEvents.count(neuralEvents[n]) > 2)
-		{
-			QSqlQuery query(sessionDb);
-			//If there are more than 2 identical codes in the list, we'll 
-			//simply dump all of the codes into the orphan table, and remove them from our list
-			int deleteIdx = neuralEvents.indexOf(neuralEvents[n]);
-			while (deleteIdx != -1)
-			{
-				query.prepare("INSERT INTO orphantrials (aligncode,timestamp,source) "
-					"VALUES (:aligncode, :timestamp, 'neural')");
-				query.bindValue(":aligncode",neuralEvents[deleteIdx].alignCode);
-				query.bindValue(":timestamp",neuralEvents[deleteIdx].timestamp);
-				Q_ASSERT(query.exec());
-				
-				neuralEvents.removeAt(deleteIdx);
-				orphanedCodes ++;
-
-				deleteIdx = neuralEvents.indexOf(neuralEvents[n]);
-			}
-
-			qDebug()<<"Too many neural events with the same aligncodes!";
-		}
-		else if(behavioralEvents.count(behavioralEvents[n]) > 2)
-		{
-			QSqlQuery query(sessionDb);
-			//If there are more than 2 identical codes in the list, we'll 
-			//simply dump all of the codes into the orphan table, and remove them from our list
-			int deleteIdx = behavioralEvents.indexOf(behavioralEvents[n]);
-			while (deleteIdx != -1)
-			{
-				query.prepare("INSERT INTO orphantrials (aligncode,timestamp,source) "
-					"VALUES (:aligncode, :timestamp, 'behavioral')");
-				query.bindValue(":aligncode",behavioralEvents[deleteIdx].alignCode);
-				query.bindValue(":timestamp",behavioralEvents[deleteIdx].timestamp);
-				Q_ASSERT(query.exec());
-				
-				behavioralEvents.removeAt(deleteIdx);
-				orphanedCodes ++;
-
-				deleteIdx = behavioralEvents.indexOf(neuralEvents[n]);
-			}
-
-			qDebug()<<"Too many neural events with the same aligncodes!";
-		}
-	}
-	return false;
-
-
-}
-
-//The events should be coming in at approximately the 
-//same times (give or take a bit), so alignment should be easy.  However, 
-//there remains a possibility of codes failing to align (for example, if
-//behavioral codes start coming in before neural codes, or visa versa).  
-//If this occurs, it could result in an overflow of the lists.  To prevent this,
-//all events are stamped with an age that increases every time a new event is
-//added.  Since 4 events are added for each trial, we will then delete any events
-// that are older than 16 (4 trials worth of events).
-
-//Additionally, the old events are sent to the orphantrials table so they can be 
-//sorted out later..
-void AlignmentTool::ageTrialLists()
-{
-	QSqlQuery query(sessionDb);
-	for(int i=0; i<behavioralEvents.size(); i++)
-	{
-		if(behavioralEvents[i].age>16)
-		{
-			query.prepare("INSERT INTO orphantrials (aligncode,timestamp,source) "
-				"VALUES (:aligncode, :timestamp, 'behavioral')");
-			query.bindValue(":aligncode",behavioralEvents[i].alignCode);
-			query.bindValue(":timestamp",behavioralEvents[i].timestamp);
-			Q_ASSERT(query.exec());
-
-			orphanedCodes++;
-			behavioralEvents.removeAt(i);
-		}
-		behavioralEvents[i].age++;
-	}
-	for(int i=0; i<neuralEvents.size(); i++)
-	{
-		if(neuralEvents[i].age>16)
-		{
-			query.prepare("INSERT INTO orphantrials (aligncode,timestamp,source) "
-				"VALUES (:aligncode, :timestamp, 'neural')");
-			query.bindValue(":aligncode",neuralEvents[i].alignCode);
-			query.bindValue(":timestamp",neuralEvents[i].timestamp);
-			Q_ASSERT(query.exec());
-			
-			orphanedCodes++;
-			neuralEvents.removeAt(i);
-		}
-		neuralEvents[i].age++;
-	}
-
-	return;
-}
-
-
-
-//updateCoefficients is called whenever a complete trial is found.
-//The function updates the running sums, and then uses those to 
-//calculate the newest coefficients.
-
-////The math is based on:
-		//  http://mathworld.wolfram.com/LeastSquaresFitting.html
-void AlignmentTool::updateCoefficients(int bStartIdx, int bEndIdx, 
-								   int nStartIdx, int nEndIdx)
 {
 	//update the sums
-	n += 2;
-	sumXX += neuralEvents[nStartIdx].timestamp*neuralEvents[nStartIdx].timestamp;
-	sumXX += neuralEvents[nEndIdx].timestamp*neuralEvents[nEndIdx].timestamp;
-	sumYY += behavioralEvents[bStartIdx].timestamp*behavioralEvents[bStartIdx].timestamp;
-	sumYY += behavioralEvents[bEndIdx].timestamp*behavioralEvents[bEndIdx].timestamp;
-	sumXY += neuralEvents[nStartIdx].timestamp*behavioralEvents[bStartIdx].timestamp;
-	sumXY += neuralEvents[nEndIdx].timestamp*behavioralEvents[bEndIdx].timestamp;
-	sumX += neuralEvents[nStartIdx].timestamp + neuralEvents[nEndIdx].timestamp;
-	sumY += neuralEvents[nStartIdx].timestamp + neuralEvents[nEndIdx].timestamp;
+	n_ += 2;
+	sumXX_ += nStartEvent.timestamp*nStartEvent.timestamp;
+	sumXX_ += nEndEvent.timestamp*nEndEvent.timestamp;
+	sumYY_ += bStartEvent.timestamp*bStartEvent.timestamp;
+	sumYY_ += bEndEvent.timestamp*bEndEvent.timestamp;
+	sumXY_ += nStartEvent.timestamp*bStartEvent.timestamp;
+	sumXY_ += nEndEvent.timestamp*bEndEvent.timestamp;
+	sumX_ += nStartEvent.timestamp + nEndEvent.timestamp;
+	sumY_ += bStartEvent.timestamp + bEndEvent.timestamp;
 
 	//calulate the new coefficients
 		//SSxx = sum(x[i]^2) - n*mean(x)^2
@@ -248,90 +342,15 @@ void AlignmentTool::updateCoefficients(int bStartIdx, int bEndIdx,
 		//A = mean(y) - B*mean(x)
 		//corr = r^2 = SSxy^2/(SSxx*SSyy)
 
-	double meanX = sumX/n;
-	double meanY = sumY/n;
+	double meanX = sumX_/n_;
+	double meanY = sumY_/n_;
 
-	double SSxx = sumXX - n*meanX*meanX;
-	double SSyy = sumYY - n*meanY*meanY;
-	double SSxy = sumXY - n*meanX*meanY;
+	double SSxx = sumXX_ - n_*meanX*meanX;
+	double SSyy = sumYY_ - n_*meanY*meanY;
+	double SSxy = sumXY_ - n_*meanX*meanY;
 
-	coeff.B = SSxy/SSxx;
-	coeff.A = meanY - coeff.B*meanX;
-	coeff.corr = (SSxy*SSxy)/(SSxx*SSyy);
+	coeff_.B = SSxy/SSxx;
+	coeff_.A = meanY - coeff_.B*meanX;
+	coeff_.corr = (SSxy*SSxy)/(SSxx*SSyy);
 
 }
-
-//writeToDb outputs the information about a completed trial to the session database
-//most of the fields are obvious, however, the jitter fields deserve some
-//discussion.  Since we can't possibly know the true relationship between the
-//two timebases, to calculate jitter, we compare the fit values to the best fit
-//line. Additionally, we output the current value of the correlation coefficient.
-void AlignmentTool::writeToDb(int bStartIdx, int bEndIdx, int nStartIdx, int nEndIdx)
-{
-		/*sessionQ.exec("CREATE TABLE trials (trialnumber INTEGER PRIMARY KEY, "
-			"aligncode INTEGER, neuralstart REAL, neuralend REAL, "
-			"behavioralstart REAL, behavioralend REAL, startjitter REAL, "
-			"endjitter REAL, correlation REAL)");*/
-
-	int trialnumber;
-
-	if(!sessionDb.tables().contains("trials"))
-		return;
-
-	QSqlQuery query(sessionDb);
-
-	//figure out our trial number (this should be trivial, but there is a chance that
-	//we are working out of order)
-	query.exec("SELECT trialnumber aligncode FROM trials ORDER BY aligncode DESC");
-
-	//first trial case
-	if(query.size() == 0)
-	{
-		trialnumber = 1;
-	}
-	//not first trial
-	else 
-	{
-		//grab the most recent trial, and use it to figure out what our trial number is
-		//The math should work regardless of skipped trials)
-		query.next();
-		trialnumber = query.value(0).toInt() + 
-			(neuralEvents[nStartIdx].alignCode - query.value(1).toInt());
-	}
-
-	//just to be safe, confirm that the alignment code/trial number pair
-	//doesn't already exist in the database.
-	query.prepare("SELECT FROM trials WHERE aligncode = :aligncode OR trialnumber = :trialnumber");
-	query.bindValue(":aligncode", neuralEvents[nStartIdx].alignCode);
-	query.bindValue(":trialnumber",trialnumber);
-	query.exec();
-
-	if(query.next())
-	{
-		qDebug()<<"Two trials with the same trial number or alignment code!";
-	}
-
-	//find the jitter values
-	double startjitter = neuralEvents[nStartIdx].timestamp - 
-		(coeff.A + coeff.B*behavioralEvents[bStartIdx].timestamp);
-	double endjitter = neuralEvents[nStartIdx].timestamp - 
-		(coeff.A + coeff.B*behavioralEvents[bStartIdx].timestamp);
-
-	//insert data into the trials table
-	query.prepare("INSERT INTO trials(trialnumber,aligncode,neuralstart, "
-		"neuralend,behavioralstart,behavioralend,startjitter,endjitter,correlation) "
-		"VALUES :trialnumber,:aligncode,:neuralstart, "
-		":neuralend,:behavioralstart,:behavioralend,:startjitter,:endjitter,:correlation");
-	query.bindValue(":trialnumber",trialnumber);
-	query.bindValue(":aligncode",neuralEvents[nStartIdx].alignCode);
-	query.bindValue(":neuralstart",neuralEvents[nStartIdx].timestamp);
-	query.bindValue(":neuralend",neuralEvents[nEndIdx].timestamp);
-	query.bindValue(":behavioralstart",behavioralEvents[bStartIdx].timestamp);
-	query.bindValue(":behavioralend",behavioralEvents[bEndIdx].timestamp);
-	query.bindValue(":startjitter",startjitter);
-	query.bindValue(":endjitter",endjitter);
-	query.bindValue(":correlation",coeff.corr);
-	Q_ASSERT(query.exec());
-}
-
-

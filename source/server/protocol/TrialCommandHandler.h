@@ -8,17 +8,12 @@
 #ifndef _TRIAL_COMMAND_HANDLER_H_
 #define _TRIAL_COMMAND_HANDLER_H_
 
-#include "../common.h"
+#include "../../common/common.h"
 
-#include "ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
 
-namespace Picto {
-
-#if defined WIN32 || defined WINCE
-struct PICTOLIB_API TrialCommandHandler : ProtocolCommandHandler
-#else
-struct TrialCommandHandler : ProtocolCommandHandler
-#endif
+struct TrialCommandHandler : Picto::ProtocolCommandHandler
 {
 public:
 	TrialCommandHandler();
@@ -27,6 +22,5 @@ public:
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 };
 
-} //namespace Picto
 
 #endif

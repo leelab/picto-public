@@ -78,7 +78,7 @@ public:
 
 	void loadExperiment(QSharedPointer<Picto::Experiment> experiment);
 
-	void executeTask(Picto::Task * task);
+	bool runTask(QString taskName);
 
 	static QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
@@ -93,7 +93,7 @@ public:
 	static void giveReward(int channel);
 
 	bool setCommandChannel(QSharedPointer<CommandChannel> commandChannel);
-	static bool sendCommand(QSharedPointer<ProtocolCommand> command, QSharedPointer<ProtocolResponse> response, int timeout=100);
+	static QSharedPointer<ProtocolResponse> sendCommand(QSharedPointer<ProtocolCommand> command, int timeout=100);
 
 private:
 	QSharedPointer<Picto::Experiment> experiment_;
