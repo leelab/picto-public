@@ -7,8 +7,6 @@
 #ifndef _D3DVISUALTARGET_H_
 #define _D3DVISUALTARGET_H_
 
-//#include "../common.h"
-
 #include "../../common/compositor/VisualTarget.h"
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -17,11 +15,7 @@
 
 namespace Picto {
 
-//#if defined WIN32 || defined WINCE
-//class PICTOLIB_API D3DVisualTarget : public VisualTarget
-//#else
 class D3DVisualTarget : public VisualTarget
-//#endif
 {
 public:
 	D3DVisualTarget();
@@ -36,6 +30,7 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent *);
+	void closeEvent(QCloseEvent *event);
 
 private:
 	void d3dFail(QString);

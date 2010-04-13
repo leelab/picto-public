@@ -1,6 +1,6 @@
 #include "TrialCommandHandler.h"
-#include "../session/SessionInfo.h"
-#include "../session/SessionManager.h"
+#include "../connections/SessionInfo.h"
+#include "../connections/ConnectionManager.h"
 
 #include "../../common/globals.h"
 
@@ -22,6 +22,7 @@ TrialCommandHandler::TrialCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
+	printf("TRIAL command handler\n");
 	//If there's an unrecognized target, then something has gone horribly wrong
 	if(command->getTarget() != "/start" && command->getTarget() != "/end")
 	{
@@ -80,9 +81,8 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	QUuid sessionID = QUuid(command->getFieldValue("Session-ID"));
 
 	//Get the current session info from a session manager
-	SessionManager sessionMgr;
 	QSharedPointer<SessionInfo> sessionInfo;
-	sessionInfo = sessionMgr.getSessionInfo(sessionID);
+	sessionInfo = ConnectionManager::Instance()->getSessionInfo(sessionID);
 
 	if(sessionInfo.isNull())
 	{
@@ -100,11 +100,6 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	query.bindValue(":aligncode", eventCode);
 	query.bindValue(":trialnumber", trialNum);
 	query.exec();
-
-
-
-
-
 
 
 	//! \todo Actually implement this stuff...

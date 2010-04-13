@@ -13,8 +13,10 @@ HEADERS += $$(PICTO_TREE)/source/workstation/document.h
 SOURCES += $$(PICTO_TREE)/source/workstation/document.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/mainwindow.h
 SOURCES += $$(PICTO_TREE)/source/workstation/mainwindow.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/LoadExperimentDialog.h
-SOURCES += $$(PICTO_TREE)/source/workstation/LoadExperimentDialog.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/StartSessionDialog.h
+SOURCES += $$(PICTO_TREE)/source/workstation/StartSessionDialog.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/RunTaskDialog.h
+SOURCES += $$(PICTO_TREE)/source/workstation/RunTaskDialog.cpp
 
 RESOURCES += $$(PICTO_TREE)/source/workstation/workstation.qrc
 

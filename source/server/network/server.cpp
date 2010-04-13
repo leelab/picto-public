@@ -1,5 +1,7 @@
 #include "server.h"
 
+#include "../connections/ConnectionManager.h"
+
 #include <QNetworkInterface>
 #include <QStringList>
 #include <QSqlDatabase>
@@ -7,8 +9,6 @@
 #include <QCoreApplication>
 #include <QSqlRecord>
 #include <QVariant>
-
-#include "serverthread.h"
 
 Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject *parent) :
 	protocols(_protocols),
@@ -35,12 +35,18 @@ Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject
     udpSocket->bind(port);
 
     connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
+
+	//I want to make sure that the ConnectionManager singleton is initially created in 
+	//the server's main thread, so I create an instance here.
+	ConnectionManager::Instance();
 }
 
 void Server::incomingConnection(int socketDescriptor)
 {
     ServerThread *thread = new ServerThread(socketDescriptor, protocols, this);
-    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    connect(thread, SIGNAL(finished()), this, SLOT(endThread()));
+
+	//ConnectionManager::Instance()->addServerThread(thread);
     thread->start();
 }
 
@@ -143,3 +149,16 @@ void Server::processPendingDatagrams()
 	}
 	db.close();
 }
+
+//! Called when a server thread ends
+void Server::endThread()
+{
+	ServerThread *thread = (ServerThread*)QObject::sender();
+
+	//remove the thread from our list
+	//ConnectionManager::Instance()->removeServerThread(thread);
+
+	//call delete later
+	thread->deleteLater();
+}
+

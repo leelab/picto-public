@@ -74,9 +74,4 @@ void EllipseGraphic::slotPropertyValueChanged(QString propertyName,
 }
 
 
-bool EllipseGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 }; //namespace Picto

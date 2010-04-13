@@ -12,6 +12,7 @@
 #include "AuralTarget.h"
 
 #include <QSharedPointer>
+#include <QString>
 
 namespace Picto {
 
@@ -44,9 +45,13 @@ public:
 	QSharedPointer<VisualTarget> getVisualTarget() { return visualTarget_; };
 	QSharedPointer<AuralTarget> getAuralTarget() { return auralTarget_; };
 
+	void showSplash();
+	void updateStatus(QString status) { status_ = status; };
+
 private:
 	QSharedPointer<VisualTarget> visualTarget_;
 	QSharedPointer<AuralTarget> auralTarget_;
+	QString status_;
 };
 
 /*! @} */

@@ -19,11 +19,7 @@
 
 namespace Picto {
 
-//#if defined WIN32 || defined WINCE
-//class PICTOLIB_API PictoBoxXPAnalogInputSignalChannel : public SignalChannel
-//#else
 class PictoBoxXPAnalogInputSignalChannel : public SignalChannel
-//#endif
 {
 public:
 	PictoBoxXPAnalogInputSignalChannel(int sampsPerSecond);

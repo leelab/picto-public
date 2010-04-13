@@ -86,10 +86,10 @@
    </widget>
    <widget class="QMenu" name="menuRun">
     <property name="title">
-     <string>Run</string>
+     <string>Session</string>
     </property>
-    <addaction name="actionLoad_Experiment"/>
-    <addaction name="actionRun_Task"/>
+    <addaction name="actionStartSession"/>
+    <addaction name="actionRunTask"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuShape"/>
@@ -242,12 +242,12 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionLoad_Experiment">
+  <action name="actionStartSession">
    <property name="text">
-    <string>Load Experiment</string>
+    <string>Start Session</string>
    </property>
   </action>
-  <action name="actionRun_Task">
+  <action name="actionRunTask">
    <property name="text">
     <string>Run Task</string>
    </property>

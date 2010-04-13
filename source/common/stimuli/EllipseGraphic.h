@@ -31,9 +31,6 @@ public slots:
 	void setHeight(int height);
 	void setDimensions(int width,int height) { setDimensions(QRect(0,0,width,height)); };
 
-private:
-	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
 };

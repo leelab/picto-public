@@ -47,10 +47,4 @@ void PictureGraphic::slotPropertyValueChanged(QString propertyName,
 	}
 }
 
-
-bool PictureGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 }; //namespace Picto

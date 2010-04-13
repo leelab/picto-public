@@ -200,15 +200,13 @@ QString StateMachine::run()
 	//Generate the start trial event
 	if(getLevel() == StateMachineLevel::Trial)
 	{
-		//The Picto event is generated first in an attempt to closely align the
-		//times.  Generating a Picto event takes almost no time, while generating
-		//an event code, takes 250 us.  I am assuming that the event gets recorded as soon
-		//as the Plexon/TDT notices that the event strobe line has gone high, so generating
-		//the Picto event first will place the events in closer proximity.
+		//Generating an event on the neural recorder takes ~250 us, while generating a 
+		//Picto event requires sending a command to the server and waiting for a response.
+		//Because of this, we generate the nerual recorder event first.
 		trialEventCode_++;
 		trialNum_++;
-		sendStartTrialToServer();
 		Engine::PictoEngine::generateEvent(trialEventCode_);
+		sendStartTrialToServer();
 	}
 	//Reset trialNum_ if we just entered a new Task
 	if(getLevel() == StateMachineLevel::Task)
@@ -248,8 +246,10 @@ QString StateMachine::run()
 		if(currElement->type() == "Result")
 		{
 			if(getLevel() == StateMachineLevel::Trial)
+			{
 				sendEndTrialToServer();
-			Engine::PictoEngine::generateEvent(trialEventCode_);
+				Engine::PictoEngine::generateEvent(trialEventCode_);
+			}
 			return currElement->run();
 		}
 	}
@@ -334,8 +334,10 @@ void StateMachine::sendStartTrialToServer()
 
 	//Send out the command
 	QSharedPointer<ProtocolResponse> response;
-	response = Engine::PictoEngine::sendCommand(command, 1);
+
+	response = Engine::PictoEngine::sendCommand(command, 10);
 	Q_ASSERT(!response.isNull());
+	QString respType = response->getResponseType();
 	Q_ASSERT(response->getResponseType() == "OK");
 }
 
@@ -384,7 +386,7 @@ void StateMachine::sendEndTrialToServer()
 
 	//Send out the command
 	QSharedPointer<ProtocolResponse> response;
-	response = Engine::PictoEngine::sendCommand(command, 1);
+	response = Engine::PictoEngine::sendCommand(command, 10);
 	Q_ASSERT(!response.isNull());
 	Q_ASSERT(response->getResponseType() == "OK");
 }

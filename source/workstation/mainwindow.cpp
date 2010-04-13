@@ -7,15 +7,21 @@
 #include <QDate>
 #include <QScriptEngineDebugger>
 #include <QScriptEngine>
+#include <QXmlStreamReader>
 
 #include "document.h"
 #include "mainwindow.h"
 #include "commands.h"
-#include "LoadExperimentDialog.h"
+#include "StartSessionDialog.h"
+#include "RunTaskDialog.h"
 
 #include "qtpropertymanager.h"
 #include "qtvariantproperty.h"
 #include "qttreepropertybrowser.h"
+
+#include "../common/protocol/ProtocolCommand.h"
+#include "../common/protocol/ProtocolResponse.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -43,7 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionToggleClipping, SIGNAL(triggered()), this, SLOT(toggleClipping()));
     connect(actionDebug, SIGNAL(triggered()), this, SLOT(beginDebug()));
     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
-	connect(actionLoad_Experiment, SIGNAL(triggered()), this, SLOT(loadExperiment()));
+	connect(actionStartSession, SIGNAL(triggered()), this, SLOT(startSession()));
+	connect(actionRunTask, SIGNAL(triggered()), this, SLOT(runTask()));
 
     connect(documentTabs, SIGNAL(currentChanged(int)), this, SLOT(updateActions()));
 
@@ -56,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent)
     actionAddCircle->setShortcut(QString("Alt+R"));
     actionAddRectangle->setShortcut(QString("Alt+L"));
     actionAddTriangle->setShortcut(QString("Alt+T"));
+
+	actionRunTask->setEnabled(false);
 
     m_undoGroup = new QUndoGroup(this);
     undoView->setGroup(m_undoGroup);
@@ -119,6 +128,17 @@ MainWindow::MainWindow(QWidget *parent)
 	addToolBar(toolBar);
 
     documentTabs->addTab(codeWindow, "Script");
+
+	serverChannel_ = QSharedPointer<Picto::CommandChannel>(new Picto::CommandChannel);
+	serverChannel_->pollingMode(true);
+	serverDiscoverer_ = new Picto::ServerDiscoverer;
+
+	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), serverChannel_.data(), SLOT(connectToServer(QHostAddress, quint16)));
+	connect(serverDiscoverer_, SIGNAL(discoverFailed()), this, SLOT(connectToServer()));
+	connect(serverChannel_.data(), SIGNAL(droppedConnection()), this, SLOT(connectToServer()));
+
+	connectToServer();
+
 }
 
 MainWindow::~MainWindow()
@@ -128,6 +148,8 @@ MainWindow::~MainWindow()
     if(variantEditor) delete variantEditor;
 	if(engine) delete engine;
 	if(debugger) delete debugger;
+
+	if(serverDiscoverer_) delete serverDiscoverer_;
 }
 
 void MainWindow::setupPropertyView()
@@ -585,9 +607,19 @@ void MainWindow::beginDebug()
 					 "i--;", "Script");
 }
 
-void MainWindow::loadExperiment()
+
+/*!	\brief Starts a session
+ *
+ *	This is called when the user selects Run/Start Session.  The user selects
+ *	an XML experiment file, and a Director instance, and then a session is started
+ *	
+ *	We will probably want to change this in the future, since the expeiment to be 
+ *	loaded will probably be the one that the user is currently editing, but since the
+ *	editor isn't built yet, this approach will be great for testing.
+ */
+void MainWindow::startSession()
 {
-	LoadExperimentDialog *dialog = new LoadExperimentDialog;
+	StartSessionDialog *dialog = new StartSessionDialog(serverChannel_);
 
 	int result = dialog->exec();
 
@@ -596,10 +628,44 @@ void MainWindow::loadExperiment()
 		return;
 	}
 
-	QString filename = dialog->getExperimentFile();
+	experiment_= dialog->getExperiment();
+	sessionId_ = dialog->getSessionId();
+	actionRunTask->setEnabled(true);
+	actionStartSession->setEnabled(false);
+}
+
+/*! \brief runs a task.
+ *	
+ *	This action should only be enabled if a session has been started.  A quick dialog
+ *	box is popped up allowing the user to select the task to start.
+ *	
+ *	At some point in the near future, we'll actually need to do more after starting
+ *	a task, but at the moment, we simply start it remotely.  (Eventually, we'll need
+ *	to display the behavioral input and state machine stuff on the user screen).
+ */
+void MainWindow::runTask()
+{
+	RunTaskDialog *dialog = new RunTaskDialog(serverChannel_, experiment_, sessionId_);
+
+	int result = dialog->exec();
+
+	if(result != QDialog::Accepted)
+	{
+		return;
+	}
 }
 
 void MainWindow::about()
 {
     QMessageBox::about(this, tr("About Picto"), tr("Picto Workstation"));
+}
+
+void MainWindow::connectToServer()
+{
+	//We're using a long timeout here, so that if there isn't a 
+	//server on the network, we aren't spinning our wheels constantly
+	//checking for one.
+	serverDiscoverer_->discover(30000);
+
+	//! \todo this function should set some sort of indicator for us...
 }

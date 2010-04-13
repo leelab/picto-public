@@ -41,6 +41,8 @@ public:
 	QString name();
 	void setName(QString name);
 
+	QStringList getTaskNames();
+
 	//DataStore Functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

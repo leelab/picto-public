@@ -3,6 +3,9 @@
 
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
+#include "../protocol/ProtocolCommand.h"
+#include "../protocol/ProtocolResponse.h"
+#include "../engine/PictoEngine.h"
 
 #include <QDebug>
 
@@ -65,6 +68,10 @@ QString State::run()
 	QueryPerformanceFrequency(&ticksPerSec);
 #endif
 
+	//The UPDATEDIRECTOR command (we'll need to modify this...
+	QSharedPointer<Picto::ProtocolResponse> updateResponse;
+	QString updateCommandStr = "DIRECTORUPDATE "+Engine::PictoEngine::getName()+":running PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 
 	QString result = "";
 	bool isDone = false;
@@ -75,6 +82,12 @@ QString State::run()
 		elapsedTimes.append((double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart));
 		QueryPerformanceCounter(&tick);
 #endif
+		//send an UPDATEDIRECTOR command to the server
+		//This is somewhat temporary, and should be replaced by a command that sends all of the
+		//relevant behavioral data.
+		updateResponse = Engine::PictoEngine::sendCommand(updateCommand,5000);
+
+
 		//Draw the scene
 		scene_->render();
 

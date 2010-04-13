@@ -30,8 +30,6 @@ public slots:
 	int getHeight() { return getDimensions().height(); };
 	void setHeight(int height);
 
-private:
-	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);

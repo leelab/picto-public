@@ -19,7 +19,7 @@ class VisualTarget : public QWidget
 {
 public:
 	VisualTarget(bool _bWindowed = false, int _width = 800, int _height = 600);
-
+	virtual ~VisualTarget(){};
 
 	virtual QSharedPointer<CompositingSurface> generateCompositingSurface() = 0;
 	virtual QString getTypeName() = 0;

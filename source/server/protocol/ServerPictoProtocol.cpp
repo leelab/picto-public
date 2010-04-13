@@ -8,10 +8,13 @@
 #include "../../common/protocol/DiscoverCommandHandler.h"
 #include "../../common/protocol/GetCommandHandler.h"
 #include "../../common/protocol/TerminateCommandHandler.h"
-#include "TrialCommandHandler.h"
-#include "DirectorUpdateCommandHandler.h"
+
 #include "DirectorListCommandHandler.h"
+#include "DirectorUpdateCommandHandler.h"
+#include "StartsessionCommandHandler.h"
+#include "StarttaskCommandHandler.h"
 #include "TestCommandHandler.h"
+#include "TrialCommandHandler.h"
 
 ServerPictoProtocol::ServerPictoProtocol()
 {
@@ -19,9 +22,12 @@ ServerPictoProtocol::ServerPictoProtocol()
 	QSharedPointer<Picto::DiscoverCommandHandler> discoverCommandHandler(new Picto::DiscoverCommandHandler());
 	QSharedPointer<Picto::GetCommandHandler> getCommandHandler(new Picto::GetCommandHandler());
 	QSharedPointer<Picto::TerminateCommandHandler> terminateCommandHandler(new Picto::TerminateCommandHandler());
-	QSharedPointer<TestCommandHandler> testCommandHandler(new TestCommandHandler());
-	QSharedPointer<DirectorUpdateCommandHandler> directorUpdateCommandHandler(new DirectorUpdateCommandHandler());
+
 	QSharedPointer<DirectorListCommandHandler> directorListCommandHandler(new DirectorListCommandHandler());
+	QSharedPointer<DirectorUpdateCommandHandler> directorUpdateCommandHandler(new DirectorUpdateCommandHandler());
+	QSharedPointer<StartsessionCommandHandler> startsessionCommandHandler(new StartsessionCommandHandler());
+	QSharedPointer<StarttaskCommandHandler> starttaskCommandHandler(new StarttaskCommandHandler());
+	QSharedPointer<TestCommandHandler> testCommandHandler(new TestCommandHandler());
 	QSharedPointer<TrialCommandHandler> trialCommandHandler(new TrialCommandHandler());
 
 
@@ -29,9 +35,12 @@ ServerPictoProtocol::ServerPictoProtocol()
 	addCommandHandler(discoverCommandHandler);
 	addCommandHandler(getCommandHandler);
 	addCommandHandler(terminateCommandHandler);
-	addCommandHandler(testCommandHandler);
-	addCommandHandler(directorUpdateCommandHandler);
+
 	addCommandHandler(directorListCommandHandler);
+	addCommandHandler(directorUpdateCommandHandler);
+	addCommandHandler(startsessionCommandHandler);
+	addCommandHandler(starttaskCommandHandler);
+	addCommandHandler(testCommandHandler);
 	addCommandHandler(trialCommandHandler);
 }
 

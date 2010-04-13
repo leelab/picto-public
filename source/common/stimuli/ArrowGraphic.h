@@ -38,9 +38,6 @@ public slots:
 	int getSize() {return propertyContainer_.getPropertyValue("Size").toInt(); };
 	void setSize(int size) { propertyContainer_.setPropertyValue("Size", size);};
 
-private:
-	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private slots:
 	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
 };

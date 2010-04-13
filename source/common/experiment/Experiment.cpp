@@ -26,9 +26,34 @@ void Experiment::addTask(QSharedPointer<Task> task)
 	tasks_.append(task);
 }
 
+QStringList Experiment::getTaskNames()
+{
+	QStringList taskList;
+	foreach(QSharedPointer<Task> task, tasks_)
+	{
+		taskList.append(task->name());
+	}
+	return taskList;
+}
+
+
 bool Experiment::runTask(QString taskName)
 {
-	//Implement this (search through tasks_ for a matching task and run it!)
+	//search through tasks_ for a matching task and run it!
+	//note that the taskname here may have had all of it's whitespace 
+	//removed, so we need to check that possibility
+	foreach(QSharedPointer<Task> task, tasks_)
+	{
+		if(task->name() == taskName)
+		{
+			return task->run();
+		}
+
+		if(task->name().simplified().remove(' ') == taskName)
+		{
+			return task->run();
+		}
+	}
 	return false;
 }
 

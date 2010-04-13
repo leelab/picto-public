@@ -82,10 +82,4 @@ void LineGraphic::slotPropertyValueChanged(QString propertyName,
 	}
 }
 
-
-bool LineGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 }; //namespace Picto

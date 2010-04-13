@@ -36,7 +36,7 @@ private:
 	QTcpSocket * tcpSocket;
 	QSharedPointer<ServerProtocols> protocols;
 
-	static const int timeoutInterval = 10000;
+	static const int timeoutInterval = 2000;
 
 	QTimer * timer;
 

@@ -17,6 +17,7 @@
 #include "../iodevices/EventCodeGenerator.h"
 
 #include <QSharedPointer>
+#include <QUuid>
 
 namespace Picto {
 	namespace Engine {
@@ -76,7 +77,7 @@ public:
 	void beginExclusiveMode();
 	void endExclusiveMode();
 
-	void loadExperiment(QSharedPointer<Picto::Experiment> experiment);
+	bool loadExperiment(QSharedPointer<Picto::Experiment> experiment);
 
 	bool runTask(QString taskName);
 
@@ -95,6 +96,12 @@ public:
 	bool setCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	static QSharedPointer<ProtocolResponse> sendCommand(QSharedPointer<ProtocolCommand> command, int timeout=100);
 
+	void setSessionId(QUuid sessionId) { sessionId_ = sessionId; };
+	QUuid getSessionId() { return sessionId_; };
+
+	void setName(QString name) { name_ = name; };
+	static QString getName() { return name_; };
+
 private:
 	QSharedPointer<Picto::Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -105,6 +112,9 @@ private:
 	static QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	static QSharedPointer<RewardController> rewardController_;
 	static QSharedPointer<CommandChannel> commandChannel_;
+
+	static QUuid sessionId_;
+	static QString name_;
 };
 
 /*! @} */

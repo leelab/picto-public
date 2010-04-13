@@ -84,7 +84,7 @@ int serviceMain(SystemService *)
 		/*! \todo these queries should be broken out as their own files which are loaded out of the Qt
 		 *        resource system.
 		 */
-		query.exec("create table proxyservers (id int primary key, "
+		query.exec("CREATE TABLE proxyservers (id int primary key, "
 												 "name varchar(30), "
 				                                 "address varchar(20), "
 												 "port varchar(20))");
@@ -92,7 +92,6 @@ int serviceMain(SystemService *)
 	else
 	{
 		query.exec("DELETE FROM proxyservers");
-		QString aert = query.lastError().text();
 	}
 
 	db.close();

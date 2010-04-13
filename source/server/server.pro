@@ -24,6 +24,13 @@ SOURCES += $$(PICTO_TREE)/source/server/dialog.cpp
 HEADERS += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.cpp
 
+HEADERS += $$(PICTO_TREE)/source/server/connections/ConnectionManager.h
+SOURCES += $$(PICTO_TREE)/source/server/connections/ConnectionManager.cpp
+HEADERS += $$(PICTO_TREE)/source/server/connections/SessionInfo.h
+SOURCES += $$(PICTO_TREE)/source/server/connections/SessionInfo.cpp
+HEADERS += $$(PICTO_TREE)/source/server/connections/DirectorInfo.h
+SOURCES += $$(PICTO_TREE)/source/server/connections/DirectorInfo.cpp
+
 HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
 SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
 HEADERS += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.h
@@ -33,8 +40,6 @@ HEADERS += $$(PICTO_TREE)/source/server/network/server.h
 SOURCES += $$(PICTO_TREE)/source/server/network/server.cpp
 HEADERS += $$(PICTO_TREE)/source/server/network/serverthread.h
 SOURCES += $$(PICTO_TREE)/source/server/network/serverthread.cpp
-HEADERS += $$(PICTO_TREE)/source/server/network/DirectorList.h
-SOURCES += $$(PICTO_TREE)/source/server/network/DirectorList.cpp
 
 HEADERS += $$(PICTO_TREE)/source/server/protocol/ServerProtocols.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/ServerProtocols.cpp
@@ -52,14 +57,13 @@ HEADERS += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/server/protocol/StartsessionCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/server/protocol/StartsessionCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/server/protocol/StarttaskCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/server/protocol/StarttaskCommandHandler.cpp
 
 HEADERS += $$(PICTO_TREE)/source/server/service/systemservice.h
 SOURCES += $$(PICTO_TREE)/source/server/service/systemservice.cpp
-
-HEADERS += $$(PICTO_TREE)/source/server/session/SessionInfo.h
-SOURCES += $$(PICTO_TREE)/source/server/session/SessionInfo.cpp
-HEADERS += $$(PICTO_TREE)/source/server/session/SessionManager.h
-SOURCES += $$(PICTO_TREE)/source/server/session/SessionManager.cpp
 
 
 include($$(PICTO_TREE)/source/common/common.pri)

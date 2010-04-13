@@ -15,6 +15,11 @@ namespace Picto {
 D3DVisualTarget::D3DVisualTarget() :
 	VisualTarget(false, 640,480)
 {
+	//zero all of the pointers
+	pD3D_ = 0;  
+	pD3dDevice_ = 0;
+	pVertexBuffer_ = 0;
+
 	HWND hWnd;
 
 	QRect screenRect = QApplication::desktop()->screenGeometry(-1);
@@ -150,25 +155,24 @@ D3DVisualTarget::D3DVisualTarget() :
 	//----------------------------------
 	//Since this visual target is only going to be used in Win32, we
 	//can bump the thread priority to the top.  
-	/*HANDLE hProcess, hThread;
+	HANDLE hProcess, hThread;
 	hProcess = GetCurrentProcess();
 	hThread = GetCurrentThread();
 	SetPriorityClass(hProcess, REALTIME_PRIORITY_CLASS);
-	SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);*/
+	SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);
 
 }
-
-D3DVisualTarget::~D3DVisualTarget()
-{	if(pVertexBuffer_)
-	{
-        pVertexBuffer_->Release();
-	}
-
-    if(pD3dDevice_) 
+void D3DVisualTarget::closeEvent(QCloseEvent *event)
+ {
+	if(pD3dDevice_) 
 	{
 		pD3dDevice_->Release();
 	}
 
+	if(pVertexBuffer_)
+	{
+        pVertexBuffer_->Release();
+	}
     if(pD3D_)
 	{
         pD3D_->Release();
@@ -180,8 +184,9 @@ D3DVisualTarget::~D3DVisualTarget()
 	hThread = GetCurrentThread();
 	SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
 	SetThreadPriority(hThread, THREAD_PRIORITY_NORMAL);
-
-
+ }
+D3DVisualTarget::~D3DVisualTarget()
+{	
 }
 
 //! Return a D3D Compositing surface
@@ -217,8 +222,8 @@ void D3DVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> c
 		//The value stored in the positionList_ is the bottom left corner (inclusive)
 		//of the sprite.
 		QPointF quadPoint;
-		quadPoint.setX((float)location.x());
-		quadPoint.setY((float)(height_-location.y()-texDesc.Height));
+		quadPoint.setX(location.x());
+		quadPoint.setY((height_-location.y()-(int)texDesc.Height));
 		positionList_.push_back(quadPoint);
 	}
 	else

@@ -23,34 +23,30 @@
 #include "../datacollection/neuraldatacollector.h"
 #include "../network/serverthread.h"
 
-#include <QObject>
 #include <QSharedPointer>
 #include <QSqlDatabase>
 #include <QUuid>
-#include <QTimer>
+#include <QStringList>
 
-class SessionInfo : public QObject
+class SessionInfo
 {
-	Q_OBJECT
-
 public:
 	SessionInfo();
 
 	QSqlDatabase sessionDb() { return sessionDb_; };
-	QUuid uuid() { return uuid_; };
+	QUuid sessionId() { return uuid_; };
 	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
 	QSharedPointer<NeuralDataCollector> neuralDataCollector() { return ndc_; };
+	QString directorAddr() { return directorAddr_; };
 
 	QString pendingDirective();
-	void setPendingDirective(QString directive) { pendingDirective_ = directive; };
+	void addPendingDirective(QString directive) { pendingDirectives_.append(directive); };
 
-	void setTimeoutInterval(int timoutMs);
-	void resetTimeout();
+	//! clears the state of activity and returns it.
+	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
+	void setActivity() { activity_ = true; };
 
-	friend class SessionManager;
-
-signals:
-	void timeout();
+	friend class ConnectionManager;
 
 private:
 	QUuid uuid_;
@@ -58,7 +54,9 @@ private:
 	QSharedPointer<AlignmentTool> alignmentTool_;
 	QSharedPointer<NeuralDataCollector> ndc_;
 	QTimer timeoutTimer_;
-	QString pendingDirective_;
+	QStringList pendingDirectives_;
+	QString directorAddr_;
+	bool activity_;
 };
 
 #endif

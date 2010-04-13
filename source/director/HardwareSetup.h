@@ -39,7 +39,6 @@ public:
 		PictoBoxXpGen, NullGen
 	} EventCodeGeneratorType;
 
-	bool setupFactories();
 	bool setupRenderingTargets(VisualTargetType visualTargetType);
 	bool setupSignalChannel(SignalChannelType channelType);
 	bool setupRewardController(RewardControllerType controllerType);
@@ -50,7 +49,6 @@ public:
 private:
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 
-	bool factoriesSetup_;
 	bool renderingTargetsSetup_;
 	bool signalChannelSetup_;
 	bool rewardControllerSetup_;

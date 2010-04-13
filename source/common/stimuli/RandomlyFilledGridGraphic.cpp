@@ -162,10 +162,4 @@ void RandomlyFilledGridGraphic::updateAnimation(int frame, QTime elapsedTime)
 	return;
 }
 
-
-bool RandomlyFilledGridGraphic::deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 }; //namespace Picto

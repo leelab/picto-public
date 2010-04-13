@@ -9,6 +9,7 @@
 #include "../common/stimuli/LineGraphic.h"
 #include "../common/stimuli/PictureGraphic.h"
 #include "../common/stimuli/RandomlyFilledGridGraphic.h"
+#include "../common/stimuli/TextGraphic.h"
 
 #include "../common/controlelements/ControlElementFactory.h"
 #include "../common/controlelements/TestController.h"
@@ -32,7 +33,7 @@
 
 #include "../common/engine/MouseSignalChannel.h"
 #ifdef WIN32
-#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
+//#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
 #endif
 
 #include "../common/iodevices/RewardController.h"
@@ -40,8 +41,8 @@
 #include "../common/iodevices/NullRewardController.h"
 #include "../common/iodevices/NullEventCodeGenerator.h"
 #ifdef WIN32
-#include "iodevices/PictoBoxXPRewardController.h"
-#include "iodevices/PictoBoxXPEventCodeGenerator.h"
+//#include "iodevices/PictoBoxXPRewardController.h"
+//#include "iodevices/PictoBoxXPEventCodeGenerator.h"
 #endif
 
 
@@ -49,7 +50,6 @@ HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 {
 	engine_ = engine;
 
-	factoriesSetup_ = false;
 	renderingTargetsSetup_ = false;
 	signalChannelSetup_ = false;
 	rewardControllerSetup_ = false;
@@ -59,48 +59,11 @@ HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 //! Returns true if everything has been setup
 bool HardwareSetup::isSetup()
 {
-	return factoriesSetup_ & renderingTargetsSetup_ & 
+	return renderingTargetsSetup_ & 
 		signalChannelSetup_ & rewardControllerSetup_ &
 		eventCodeGenSetup_;
 }
 
-/*! \brief Sets up all of the factories used by the Director
- *
- *	There are a number of factories used by Director that need to be set up prior
- *	to usage.  This functions sets all of them up.  If there are changes in the
- *	factories, or if new elements are added (e.g. additional VisualStimuli objects)
- *	this function will need to be modified).
- */
-bool HardwareSetup::setupFactories()
-{
-	//Set up the VisualElementFactory
-	Picto::VisualElementFactory visualElementFactory;
-	visualElementFactory.addVisualElementType(Picto::ArrowGraphic::type, &Picto::ArrowGraphic::NewVisualElement);
-	visualElementFactory.addVisualElementType(Picto::BoxGraphic::type, &Picto::BoxGraphic::NewVisualElement);
-	visualElementFactory.addVisualElementType(Picto::CircleGraphic::type, &Picto::CircleGraphic::NewVisualElement);
-	visualElementFactory.addVisualElementType(Picto::EllipseGraphic::type, &Picto::EllipseGraphic::NewVisualElement);
-	visualElementFactory.addVisualElementType(Picto::LineGraphic::type, &Picto::LineGraphic::NewVisualElement);
-	visualElementFactory.addVisualElementType(Picto::PictureGraphic::type, &Picto::PictureGraphic::NewVisualElement);
-	visualElementFactory.addVisualElementType(Picto::RandomlyFilledGridGraphic::type, &Picto::RandomlyFilledGridGraphic::NewVisualElement);
-
-
-	//Set up the ControlElementFactory
-	Picto::ControlElementFactory controlElementFactory;
-	controlElementFactory.addControlElementType(Picto::TestController::ControllerType(), &Picto::TestController::NewTestController);
-	controlElementFactory.addControlElementType(Picto::StopwatchController::ControllerType(), &Picto::StopwatchController::NewStopwatchController);
-	controlElementFactory.addControlElementType(Picto::TargetController::ControllerType(), &Picto::TargetController::NewTargetController);
-	controlElementFactory.addControlElementType(Picto::ChoiceController::ControllerType(), &Picto::ChoiceController::NewChoiceController);
-
-	Picto::ParameterFactory parameterFactory;
-	parameterFactory.addParameterType("Boolean",&Picto::BooleanParameter::NewParameter);
-	parameterFactory.addParameterType("Choice",&Picto::ChoiceParameter::NewParameter);
-	parameterFactory.addParameterType("Numeric",&Picto::NumericParameter::NewParameter);
-	parameterFactory.addParameterType("Range",&Picto::RangeParameter::NewParameter);
-
-	factoriesSetup_ = true;
-
-	return true;
-}
 
 /*!	\brief	Sets up the rendering targest used in the experiment
  *
@@ -168,10 +131,10 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 #ifndef WIN32
 		return false;
 #else
-		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
-		aiChannel->addAiChannel("xpos",1);
-		aiChannel->addAiChannel("ypos",0);
-		engine_->addSignalChannel("PositionChannel",aiChannel);
+		//QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
+		//aiChannel->addAiChannel("xpos",1);
+		//aiChannel->addAiChannel("ypos",0);
+		//engine_->addSignalChannel("PositionChannel",aiChannel);
 #endif
 	}
 
@@ -194,8 +157,8 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 #ifndef WIN32
 		return false;
 #else
-		rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController(1));
-		rewardController->setRewardResetTimeMs(1,500);
+		//rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController(1));
+		//rewardController->setRewardResetTimeMs(1,500);
 #endif
 	}
 	else if(controllerType == NullReward)
@@ -224,7 +187,7 @@ bool HardwareSetup::setupEventCodeGenerator(HardwareSetup::EventCodeGeneratorTyp
 #ifndef WIN32
 		return false;
 #else
-		generator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::PictoBoxXPEventCodeGenerator());
+		//generator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::PictoBoxXPEventCodeGenerator());
 #endif
 	}
 	else if(generatorType == NullGen)

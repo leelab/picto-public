@@ -5,7 +5,7 @@
  *	directives from Server to Director.
  *
  *	FORMAT
- *		DIRECTORUPDATE idle/running PICTO.1/0
+ *		DIRECTORUPDATE name:idle/running PICTO.1/0
  *	RESPONSES
  *		The response is always of type 200 OK.  The first line of content 
  *		contains the directive, and the remaining lines may contain XML

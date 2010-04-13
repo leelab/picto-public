@@ -1,7 +1,7 @@
 #include "serverthread.h"
 #include "../../common/globals.h"
 
-#include "DirectorList.h"
+#include "../connections/ConnectionManager.h"
 
 #include <QtNetwork>
 #include <QDateTime>
@@ -16,6 +16,7 @@ ServerThread::ServerThread(int socketDescriptor, QSharedPointer<ServerProtocols>
 
 void ServerThread::run()
 {
+	//printf("New server thread: %d\n\n", QThread::currentThreadId());
 	QTcpSocket socket;
 
 	tcpSocket = &socket;
@@ -26,13 +27,14 @@ void ServerThread::run()
         return;
     }
 
+	peerAddress_ = socket.peerAddress().toString();
+
 	connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readClient()), Qt::DirectConnection);
 	connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(handleDroppedClient()), Qt::DirectConnection);
 
 	//We establish the timer here so that we can start and stop it from this thread
 	//if it was created/deleted in the constructor/destructor it wouldn't be directly accessible
 	timer = new QTimer();
-	timer->setSingleShot(true);
 	timer->setInterval(timeoutInterval);
 	connect(timer, SIGNAL(timeout()), this, SLOT(handleTimeout()), Qt::DirectConnection);
 	timer->start();
@@ -117,10 +119,10 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 
 	//If this is thread is attached to a session, and the command doesn't have a session ID,
 	//we should add one.
-	if(!sessionId_.isNull() && !_command->hasField("Session-ID"))
-	{
-		_command->setFieldValue("Session-ID",sessionId_.toString());
-	}
+	//if(!sessionId_.isNull() && !_command->hasField("Session-ID"))
+	//{
+		//_command->setFieldValue("Session-ID",sessionId_.toString());
+	//}
 
 	//Add the source ip to the command
 	_command->setFieldValue("Source-Address", tcpSocket->peerAddress().toString());
@@ -232,11 +234,6 @@ void ServerThread::readClient()
 
 void ServerThread::handleDroppedClient()
 {
-	//Remove this connection from the directorList (if the connection
-	//wasn't from a director instance, this will have no effect)
-	DirectorList directorList;
-	directorList.removeDirector(tcpSocket->peerAddress());
-
 	exit();
 }
 

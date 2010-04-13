@@ -195,10 +195,6 @@ bool VisualElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
  *	appropriate type and call us.  We will return with the xmlStreamREader's current token
  *	being the </VisualElement>tag.
  *
- *	The function calls deserializePropertiesFromXML in the subclass.  The deserialization
- *	process is sort of like a "reconstructor".  It basically rebuilds the object from the ground up
- *	At the end of the call to deserialize, the object should be an exact duplicate
- *	 of whatever object called serialize to generate the XML.
  */
 bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {

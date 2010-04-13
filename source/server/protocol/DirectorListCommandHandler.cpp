@@ -1,13 +1,8 @@
 #include "DirectorListCommandHandler.h"
 
 #include "../../common/globals.h"
-#include "../session/SessionManager.h"
-#include "../session/SessionInfo.h"
-#include "../network/DirectorList.h"
-
-
-#include <QXmlStreamReader>
-#include <QFile>
+#include "../connections/SessionInfo.h"
+#include "../connections/ConnectionManager.h"
 
 DirectorListCommandHandler::DirectorListCommandHandler()
 {
@@ -24,11 +19,8 @@ QSharedPointer<Picto::ProtocolResponse> DirectorListCommandHandler::processComma
 	if(command->getTarget() != "/")
 		return notFoundResponse;
 
-	DirectorList directorList;
-	QString directorsXML = directorList.getList();
-
-	//Get the session ID from the command
-	QUuid sessionID = QUuid(command->getFieldValue("Session-ID"));
+	ConnectionManager *conMgr = ConnectionManager::Instance();
+	QString directorsXML = conMgr->getDirectorList();
 
 	response->setContent(directorsXML.toUtf8());
 	return response;

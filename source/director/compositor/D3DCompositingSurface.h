@@ -4,16 +4,11 @@
 #include <d3d9.h>
 #include <QImage>
 
-//#include "../common.h"
 #include "../../common/compositor/CompositingSurface.h"
 
 namespace Picto {
 
-//#if defined WIN32 || defined WINCE
-//class PICTOLIB_API D3DCompositingSurface : public CompositingSurface
-//#else
 class D3DCompositingSurface : public CompositingSurface
-//#endif
 {
 public:
 	D3DCompositingSurface(IDirect3DDevice9 *_pD3dDevice);

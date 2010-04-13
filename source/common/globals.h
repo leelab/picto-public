@@ -18,6 +18,9 @@ namespace Picto {
 /*! \brief Registers types needed for signals and slots */
 inline void InitializeMetaTypes();
 
+/*! \brief Sets up the factories */
+inline void initializeFactories();
+
 /*! \brief Initializes the %Picto library
  *
  * InitializeLib must be called by code using the %Picto library prior to usage.  This

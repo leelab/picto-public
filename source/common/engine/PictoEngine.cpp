@@ -16,6 +16,8 @@ QMap<QString, QSharedPointer<SignalChannel> > PictoEngine::signalChannels_;
 QSharedPointer<RewardController> PictoEngine::rewardController_;
 QSharedPointer<EventCodeGenerator> PictoEngine::eventCodeGenerator_;
 QSharedPointer<CommandChannel> PictoEngine::commandChannel_;
+QUuid PictoEngine::sessionId_;
+QString PictoEngine::name_;
 
 
 PictoEngine::PictoEngine() :
@@ -89,7 +91,8 @@ bool PictoEngine::setCommandChannel(QSharedPointer<CommandChannel> commandChanne
  *
  *	The passed in command is sent out over the command channel and the response (since all
  *	commands are expected to generate responsese) is stored in response.  If no respose is
- *	recieved within the timeout period, or if there is some other problem, false is returned.
+ *	recieved within the timeout period, or if there is some other problem, a null response
+ *	is returned.
  */
 QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command, int timeout)
 {
@@ -102,11 +105,22 @@ QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<Protoco
 	{
 		return nullResponse;
 	}
-	if(commandChannel_->incomingResponsesWaiting() >0)
+	/*if(commandChannel_->incomingResponsesWaiting() >0)
 	{
-		Q_ASSERT(false);
+		//Q_ASSERT(false);
 		return nullResponse;
+	}*/
+	while(commandChannel_->incomingResponsesWaiting() > 0)
+	{
+		commandChannel_->getResponse();
 	}
+
+	//If we have a sessionID append it to the command
+	if(!sessionId_.isNull())
+	{
+		command->setFieldValue("Session-ID",sessionId_.toString());
+	}
+
 	commandChannel_->sendCommand(command);
 
 	if(commandChannel_->waitForResponse(timeout))
@@ -121,9 +135,11 @@ QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<Protoco
 }
 
 
-void PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> experiment)
+bool PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> experiment)
 {
 	experiment_ = experiment;
+
+	return true;
 }
 
 //! Runs the task with the passed in name

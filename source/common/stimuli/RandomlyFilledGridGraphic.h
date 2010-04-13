@@ -65,7 +65,6 @@ private slots:
 
 
 private:
-	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	void buildColorList();
 
 	QList<unsigned char> colorList_;

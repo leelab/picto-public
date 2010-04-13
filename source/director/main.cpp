@@ -7,6 +7,10 @@
 #include <QTime>
 #include <QMessageBox>
 #include <QNetworkInterface>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QUuid>
 
 #include "../common/globals.h"
 
@@ -22,17 +26,6 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////
 	// Setup app
 	///////////////////////////////////////
-	bool bWindowed = false;
-
-	if(argc>1)
-	{
-		QString arg = argv[1];
-		if(arg.toLower() == "-testing")
-		{
-			bWindowed = true;
-		}
-	}
-
 	QApplication app(argc, argv);
 
 	QLocale systemLocale = QLocale();
@@ -47,14 +40,50 @@ int main(int argc, char *argv[])
 	QSharedPointer<Picto::Engine::PictoEngine> engine(new Picto::Engine::PictoEngine());
 
 	//! \TODO Set up random number generator?
+
+	///////////////////////////////////////
+	// Open Configuration database, and configure as needed
+	///////////////////////////////////////
+    QSqlDatabase configDb = QSqlDatabase::addDatabase("QSQLITE","PictoDirectorConfigDatabase");
+	configDb.setDatabaseName(QCoreApplication::applicationDirPath() + "/PictoDirector.config");
+    configDb.open();
+
+	QSqlQuery query(configDb);
+
+	if(!configDb.tables().contains("directorinfo"))
+	{
+		query.exec("CREATE TABLE directorinfo "
+						"(id int, "
+						"key TEXT, "
+						"value TEXT)");
+		query.exec("INSERT INTO directorinfo (key,value) VALUES ('Name','unnamed')");
+		QString test = query.lastError().text();
+	}
+
+	//possibly reset our name...
+	QStringList args = app.arguments();
+	int nameArgIdx = args.indexOf("-name");
+	if(nameArgIdx > 0)
+	{
+		QString newName = args[nameArgIdx+1];
+
+		query.prepare("UPDATE directorinfo SET value=:value WHERE key='Name'");
+		query.bindValue(":value",newName);
+		query.exec();
+	}
+
+	//figure out our name
+	query.exec("SELECT value FROM directorinfo WHERE key='Name'");
+	Q_ASSERT(query.next());
+	QString name = query.value(0).toString();
+	engine->setName(name);
 	
 	///////////////////////////////////////
 	// Setup hardware
 	///////////////////////////////////////
 	HardwareSetup hwSetup(engine);
 	
-	hwSetup.setupFactories();
-	if(!hwSetup.setupRenderingTargets(HardwareSetup::D3D)) 
+	if(!hwSetup.setupRenderingTargets(HardwareSetup::Pixmap)) 
 		return -1;
 	if(!hwSetup.setupSignalChannel(HardwareSetup::Mouse)) 
 		return -1;
@@ -79,9 +108,14 @@ int main(int argc, char *argv[])
 	while(!serverDiscoverer.waitForDiscovered(10000))
 	{
 		QMessageBox notFound;
-		notFound.setText("No PictoServer found on the network.  PictoDirector will try again.");
+		notFound.setText("No PictoServer found on the network.  Try again.?");
 		notFound.setIcon(QMessageBox::Critical);
-		notFound.exec();
+		notFound.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		int ret = notFound.exec();
+		if(ret == QMessageBox::Cancel)
+			return 0;
+		else
+			serverDiscoverer.discover();
 	}
 
 	QHostAddress serverAddr = serverDiscoverer.getAddress();
@@ -93,78 +127,159 @@ int main(int argc, char *argv[])
 
 	engine->setCommandChannel(serverChannel);
 
-
-	//Figure out our own address
-	QList<QHostAddress> hostAddresses = QNetworkInterface::allAddresses();
-	QHostAddress directorAddress;
-
-	//Use the first IPv4 address that isn't localhost
-	//This will probably be a valid ip address, but there could still be issues...
-	foreach(QHostAddress addr, hostAddresses)
-	{
-		QString blah = addr.toString();
-		if(addr.protocol() == QAbstractSocket::IPv4Protocol && addr != QHostAddress::LocalHost)
-		{
-			directorAddress.setAddress(addr.toIPv4Address());
-			break;
-		}
-	}
-
 	///////////////////////////////////////
 	// Run event loop
 	///////////////////////////////////////
 
+	//Put up our splash screen
+	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine->getRenderingTargets();
+	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+	{
+		target->updateStatus("PictoDirector started");
+		target->showSplash();
+	}
+
 	//Once we have the command channel set up, we'll sit in a tight loop sending
-	//STATUS commands at 1Hz and processing the responses forever.
-	QString statusCommandStr = "DIRECTORUPDATE idle PICTO/1.0";
-	QSharedPointer<Picto::ProtocolCommand> statusCommand(new Picto::ProtocolCommand(statusCommandStr));
-	QSharedPointer<Picto::ProtocolResponse> statusResponse;
+	//DIRECTORUPDATE commands at 1Hz and processing the responses forever.
+	QSharedPointer<Picto::ProtocolResponse> updateResponse;
+	QString updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":idle PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 	forever
 	{
-		statusResponse = engine->sendCommand(statusCommand,100);
+		updateResponse = engine->sendCommand(updateCommand,5000);
 
-		if(statusResponse.isNull() || statusResponse->getResponseType() != "OK")
+		if(updateResponse.isNull() || updateResponse->getResponseType() != "OK")
 		{
-			continue;
+			/*QMessageBox netError;
+			netError.setText("Network error.  PictoDirector will exit.");
+			netError.setIcon(QMessageBox::Critical);
+			netError.exec();*/
+			break;
 		}
 
-		QString statusDirective = statusResponse->getDecodedContent();
+		QString statusDirective = updateResponse->getDecodedContent();
 
 		if(statusDirective.startsWith("OK"))
 		{
 			//We don't need to do anything if the status is "OK"
 		}
+		else if(statusDirective.startsWith("NEWSESSION"))
+		{
+			QString sessionIdStr = statusDirective.mid(statusDirective.indexOf(' ')+1);
+			engine->setSessionId(QUuid(sessionIdStr));
+		}
 		else if(statusDirective.startsWith("LOADEXP"))
 		{
 			//Extract the XML from the response
 			int xmlIdx = statusDirective.indexOf('\n');
-			statusDirective.remove(0,xmlIdx);
+			statusDirective.remove(0,xmlIdx+1);
 
 			//Load the experiment
-			QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader(statusDirective));
-			
-			QSharedPointer<Picto::Experiment> experiment;
-			experiment->deserializeFromXml(xmlStreamReader);
+			QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(statusDirective.toUtf8()));
+			QSharedPointer<Picto::Experiment> experiment(new Picto::Experiment);
 
-			engine->loadExperiment(experiment);
+			xmlReader->readNext();
+			while(!xmlReader->atEnd() && xmlReader->name().toString() != "Experiment")
+			{
+				QString test = xmlReader->name().toString();
+				xmlReader->readNext();
+			}
+
+			if(!experiment->deserializeFromXml(xmlReader) || !engine->loadExperiment(experiment))
+			{
+				foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+				{
+					target->updateStatus(QString("Error loading experiment: %1").arg(experiment->getErrors()));
+					target->showSplash();
+				}
+			}
+			else
+			{
+				foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+				{
+					target->updateStatus("Loaded experiment, Session ID: " + engine->getSessionId().toString());
+					target->showSplash();
+				}
+
+			}
+
 
 		}
 		else if(statusDirective.startsWith("START"))
 		{
 			//Start running a task
+			QString taskName = statusDirective.mid(statusDirective.indexOf(' ')+1);
+			
+			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+			{
+				target->updateStatus("Starting task: " + taskName);
+				target->showSplash();
+			}
+
+			//Before we actually start running the task, we need to send a DIRECTORUPDATE
+			//command to let the server know that we have changed status to running
+			//This also lets Workstation know that we received the command that they
+			//initiated.  Note that if there is a directive in the response, it will be
+			//ignored.  I don't think this is a problem, since there would be no reason
+			//to send a second directive immediately after the first.
+			QString runningUpdateCommandStr = "DIRECTORUPDATE "+name+":running PICTO/1.0";
+			QSharedPointer<Picto::ProtocolCommand> runningUpdateCommand(new Picto::ProtocolCommand(runningUpdateCommandStr));
+			QSharedPointer<Picto::ProtocolResponse> runningUpdateResponse;
+			runningUpdateResponse = engine->sendCommand(runningUpdateCommand,5000);
+
+			//start running our task
+			engine->runTask(taskName);
+
+			//upon completion return to splash screen
+			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+			{
+				target->updateStatus("Completed Task: " + taskName);
+				target->showSplash();
+			}
 		}
 		else
 		{
+			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+			{
+				target->updateStatus("Unrecognized directive: " + statusDirective);;
+				target->showSplash();
+			}
 			Q_ASSERT(false);
 		}
 
 		//Pause for 1 second
-		QTime pauseTimer;
+		QEventLoop pauseLoop;
+		QTimer pauseTimer;
+		pauseTimer.setSingleShot(true);
+		pauseTimer.setInterval(1000);
+		QObject::connect(&pauseTimer, SIGNAL(timeout()), &pauseLoop, SLOT(quit()));
+		//! \todo figure out how to handle quitting...
 		pauseTimer.start();
-		while(pauseTimer.elapsed() < 1000);
+		pauseLoop.exec();
+
+		//if all of the visual targets are closed, it's time for us to exit
+		bool exit = true;
+		foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+		{
+			if(/*!target->getVisualTarget().isNull() &&*/
+				target->getVisualTarget()->isVisible())
+				exit = false;
+		}
+		if(exit)
+			break;
 	}
 
+	///////////////////////////////////////
+	// Clean up
+	///////////////////////////////////////
+	//Close all of our visual targets (which are actually QWidgets)
+	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+	{
+		if(target->getVisualTarget()->isVisible())
+			target->getVisualTarget()->close();
+	}
 
+	configDb.close();
 
 }
 

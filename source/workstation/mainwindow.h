@@ -4,12 +4,18 @@
 #include <QMainWindow>
 #include <QScriptEngine>
 #include <QScriptEngineDebugger>
+#include <QUuid>
 
 #include "ui_mainwindow.h"
 
 #include "qtpropertymanager.h"
 #include "qtvariantproperty.h"
 #include "qttreepropertybrowser.h"
+
+#include "../common/network/CommandChannel.h"
+#include "../common/network/ServerDiscoverer.h"
+
+#include "../common/experiment/experiment.h"
 
 class Document;
 
@@ -37,7 +43,8 @@ public slots:
     void toggleClipping();
 	void beginDebug();
 
-	void loadExperiment();
+	void startSession();
+	void runTask();
 
     void about();
 
@@ -45,6 +52,8 @@ private slots:
     void updateActions();
 
 	void valueChanged(QtProperty *changedProperty, const QVariant &value);
+
+	void connectToServer();
 
 private:
     QUndoGroup *m_undoGroup;
@@ -57,8 +66,14 @@ private:
 	QtVariantEditorFactory *variantFactory;
 	QtTreePropertyBrowser *variantEditor;
 
-    QScriptEngine * engine;
-    QScriptEngineDebugger * debugger;
+    QScriptEngine *engine;
+    QScriptEngineDebugger *debugger;
+
+	QSharedPointer<Picto::CommandChannel> serverChannel_;
+	Picto::ServerDiscoverer *serverDiscoverer_;
+
+	QSharedPointer<Picto::Experiment> experiment_;
+	QUuid sessionId_;
 };
 
 #endif // MAINWINDOW_H

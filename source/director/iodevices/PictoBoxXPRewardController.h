@@ -28,11 +28,7 @@
 
 namespace Picto
 {
-//#if defined WIN32 || defined WINCE
-//class PICTOLIB_API PictoBoxXPRewardController : public RewardController
-//#else
 class PictoBoxXPRewardController :  public RewardController
-//#endif
 {
 public:
 	PictoBoxXPRewardController(unsigned int channelCount);

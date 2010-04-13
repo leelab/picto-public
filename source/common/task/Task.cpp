@@ -20,6 +20,19 @@ void Task::setName(QString name)
 	propertyContainer_.setPropertyValue("Name",name);
 }
 
+bool Task::run()
+{
+	if(stateMachine_.isNull())
+	{
+		return false;
+	}
+	else
+	{
+		stateMachine_->run();
+		return true;
+	}
+}
+
 /*! \brief Turns this task into an XML fragment
  *
  *	The XML for a task looks like this:
