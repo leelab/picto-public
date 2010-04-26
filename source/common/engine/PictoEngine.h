@@ -86,6 +86,8 @@ public:
 
 	static QSharedPointer<SignalChannel> getSignalChannel(QString name);
 	void addSignalChannel(QString name, QSharedPointer<SignalChannel> channel);
+	void startAllSignalChannels();
+	void stopAllSignalChannels();
 
 	void setEventCodeGenerator(QSharedPointer<EventCodeGenerator> eventCodeGenerator) { eventCodeGenerator_ = eventCodeGenerator; };
 	static void generateEvent(unsigned int eventCode);
@@ -94,7 +96,9 @@ public:
 	static void giveReward(int channel);
 
 	bool setCommandChannel(QSharedPointer<CommandChannel> commandChannel);
-	static QSharedPointer<ProtocolResponse> sendCommand(QSharedPointer<ProtocolCommand> command, int timeout=100);
+	static QSharedPointer<ProtocolResponse> sendCommand(QSharedPointer<ProtocolCommand> command, int timeout);
+	static bool sendCommand(QSharedPointer<ProtocolCommand> command);
+	static QSharedPointer<ProtocolResponse> getResponse(int timeout=0);
 
 	void setSessionId(QUuid sessionId) { sessionId_ = sessionId; };
 	QUuid getSessionId() { return sessionId_; };

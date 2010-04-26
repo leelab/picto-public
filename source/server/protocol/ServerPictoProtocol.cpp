@@ -9,6 +9,7 @@
 #include "../../common/protocol/GetCommandHandler.h"
 #include "../../common/protocol/TerminateCommandHandler.h"
 
+#include "DirectorDataCommandHandler.h"
 #include "DirectorListCommandHandler.h"
 #include "DirectorUpdateCommandHandler.h"
 #include "StartsessionCommandHandler.h"
@@ -23,6 +24,7 @@ ServerPictoProtocol::ServerPictoProtocol()
 	QSharedPointer<Picto::GetCommandHandler> getCommandHandler(new Picto::GetCommandHandler());
 	QSharedPointer<Picto::TerminateCommandHandler> terminateCommandHandler(new Picto::TerminateCommandHandler());
 
+	QSharedPointer<DirectorDataCommandHandler> directorDataCommandHandler(new DirectorDataCommandHandler());
 	QSharedPointer<DirectorListCommandHandler> directorListCommandHandler(new DirectorListCommandHandler());
 	QSharedPointer<DirectorUpdateCommandHandler> directorUpdateCommandHandler(new DirectorUpdateCommandHandler());
 	QSharedPointer<StartsessionCommandHandler> startsessionCommandHandler(new StartsessionCommandHandler());
@@ -36,6 +38,7 @@ ServerPictoProtocol::ServerPictoProtocol()
 	addCommandHandler(getCommandHandler);
 	addCommandHandler(terminateCommandHandler);
 
+	addCommandHandler(directorDataCommandHandler);
 	addCommandHandler(directorListCommandHandler);
 	addCommandHandler(directorUpdateCommandHandler);
 	addCommandHandler(startsessionCommandHandler);

@@ -61,6 +61,24 @@ void PictoEngine::addSignalChannel(QString name, QSharedPointer<SignalChannel> c
 	signalChannels_.insert(name, channel);
 }
 
+//! \brief Starts every signal channel in the engine
+void PictoEngine::startAllSignalChannels()
+{
+	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
+	{
+		channel->start();
+	}
+}
+
+//! \brief Stops every signal channel in the engine
+void PictoEngine::stopAllSignalChannels()
+{
+	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
+	{
+		channel->stop();
+	}
+}
+
 void PictoEngine::generateEvent(unsigned int eventCode)
 {
 	if(!eventCodeGenerator_.isNull())
@@ -92,27 +110,50 @@ bool PictoEngine::setCommandChannel(QSharedPointer<CommandChannel> commandChanne
  *	The passed in command is sent out over the command channel and the response (since all
  *	commands are expected to generate responsese) is stored in response.  If no respose is
  *	recieved within the timeout period, or if there is some other problem, a null response
- *	is returned.
+ *	is returned.  
+ *
+ *	Note that this version of sendCommand clears out any existing responses in the
+ *	command channel, so it shouldn't be called if we think there might be important
+ *	responses from somewhere else.
  */
 QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command, int timeout)
 {
 	QSharedPointer<ProtocolResponse> nullResponse;
-	if(commandChannel_.isNull())
-	{
-		return nullResponse;
-	}
-	if(commandChannel_->getChannelStatus() == CommandChannel::disconnected)
-	{
-		return nullResponse;
-	}
-	/*if(commandChannel_->incomingResponsesWaiting() >0)
-	{
-		//Q_ASSERT(false);
-		return nullResponse;
-	}*/
+
 	while(commandChannel_->incomingResponsesWaiting() > 0)
 	{
 		commandChannel_->getResponse();
+	}
+
+	if(!sendCommand(command))
+		return nullResponse;
+
+	if(commandChannel_->waitForResponse(timeout))
+	{
+		return commandChannel_->getResponse();
+	}
+	else
+	{
+		return nullResponse;
+	}
+
+}
+
+/*	\brief Simply sends a command (with no waiting for a response).
+ *
+ *  Unlike the version of send command with a timeout value and a return of a
+ *	response, this version simply sends out a command and immediately returns.
+ *	To find the response, you'll need to call getResponse.
+ */
+bool PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command)
+{
+	if(commandChannel_.isNull())
+	{
+		return false;
+	}
+	if(commandChannel_->getChannelStatus() == CommandChannel::disconnected)
+	{
+		return false;
 	}
 
 	//If we have a sessionID append it to the command
@@ -121,7 +162,13 @@ QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<Protoco
 		command->setFieldValue("Session-ID",sessionId_.toString());
 	}
 
-	commandChannel_->sendCommand(command);
+	return commandChannel_->sendCommand(command);
+}
+
+//! \brief Returns the first response waiting in the command channel, or a null response
+QSharedPointer<ProtocolResponse> PictoEngine::getResponse(int timeout)
+{
+	QSharedPointer<ProtocolResponse> nullResponse;
 
 	if(commandChannel_->waitForResponse(timeout))
 	{
@@ -145,7 +192,11 @@ bool PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> experiment)
 //! Runs the task with the passed in name
 bool PictoEngine::runTask(QString taskName)
 {
-	return experiment_->runTask(taskName);
+	bool success;
+	startAllSignalChannels();
+	success = experiment_->runTask(taskName);
+	stopAllSignalChannels();
+	return success;
 }
 
 

@@ -14,8 +14,8 @@ HEADERS += $$(PICTO_TREE)/source/director/EngineTest.h
 
 
 win32 {
-#SOURCES += $$(PICTO_TREE)/source/director/SignalChannelTest.cpp
-#HEADERS += $$(PICTO_TREE)/source/director/SignalChannelTest.h
+SOURCES += $$(PICTO_TREE)/source/director/SignalChannelTest.cpp
+HEADERS += $$(PICTO_TREE)/source/director/SignalChannelTest.h
 HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/director/compositor/D3DCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DVisualTarget.h
@@ -25,15 +25,15 @@ INCLUDEPATH += "$$(DXSDK_DIR)/include"
 LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
 LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
 
-#HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.h
-#SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.cpp
-#HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.h
-#SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.cpp
-#INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
-#LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.cpp
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.cpp
+INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
+LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
 
-#HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.h
-#SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.h
+SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.cpp
 
 }
 

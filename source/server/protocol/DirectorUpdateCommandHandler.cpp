@@ -4,8 +4,6 @@
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
 
-
-#include <QXmlStreamReader>
 #include <QFile>
 
 DirectorUpdateCommandHandler::DirectorUpdateCommandHandler()

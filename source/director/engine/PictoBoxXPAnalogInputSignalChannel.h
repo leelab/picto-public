@@ -40,6 +40,9 @@ private:
 	//maps channel name to daq board ai channel number
 	QMap<QString, int> aiChannelNums_;  
 
+	double startTime_;
+	int sampsCollected_;
+
 };
 
 };

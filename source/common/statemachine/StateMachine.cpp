@@ -335,7 +335,7 @@ void StateMachine::sendStartTrialToServer()
 	//Send out the command
 	QSharedPointer<ProtocolResponse> response;
 
-	response = Engine::PictoEngine::sendCommand(command, 10);
+	response = Engine::PictoEngine::sendCommand(command, 1000);
 	Q_ASSERT(!response.isNull());
 	QString respType = response->getResponseType();
 	Q_ASSERT(response->getResponseType() == "OK");

@@ -1,7 +1,10 @@
 #include <QPoint>
 #include <QCursor>
 
+#include <QDebug>
+
 #include "MouseSignalChannel.h"
+#include "../timing/Timestamper.h"
 
 namespace Picto {
 
@@ -12,22 +15,21 @@ MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidge
 	//add our subchannels to the list
 	addSubchannel("xpos");
 	addSubchannel("ypos");
+	addSubchannel("time");
 
-	//Since this is coordinate data, there doesn't need to be any calibration
-
-	pollingTimer_.setInterval(1000/sampsPerSecond);
-	connect(&pollingTimer_, SIGNAL(timeout()), this, SLOT(pollMouse()));
+	//pollingTimer_.setInterval(1000/sampsPerSecond);
+	//connect(&pollingTimer_, SIGNAL(timeout()), this, SLOT(pollMouse()));
 }
 
 bool MouseSignalChannel::start()
 {
-	pollingTimer_.start();
+	//pollingTimer_.start();
 	return true;
 }
 
 bool MouseSignalChannel::stop()
 {
-	pollingTimer_.stop();
+	//pollingTimer_.stop();
 	return true;
 }
 
@@ -39,14 +41,15 @@ void MouseSignalChannel::updateDataBuffer()
 {
 	pollMouse();
 }
-
 void MouseSignalChannel::pollMouse()
 {
+	Timestamper stamper;
 	QPoint point = QCursor::pos();
 	point = widget_->mapFromGlobal(point);
+
 	rawDataBuffer_["xpos"].append((double)point.x());
 	rawDataBuffer_["ypos"].append((double)point.y());
-	
+	rawDataBuffer_["time"].append(stamper.stampSec());
 }
 
 };

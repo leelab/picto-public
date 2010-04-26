@@ -63,16 +63,18 @@
    <file alias="_d_draw_compositing_surface_8h-source.html">../../../output/documentation/main/html/_d_draw_compositing_surface_8h-source.html</file>
    <file alias="_d_draw_visual_target_8cpp-source.html">../../../output/documentation/main/html/_d_draw_visual_target_8cpp-source.html</file>
    <file alias="_d_draw_visual_target_8h-source.html">../../../output/documentation/main/html/_d_draw_visual_target_8h-source.html</file>
+   <file alias="_d_x_mouse_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_d_x_mouse_signal_channel_8cpp-source.html</file>
+   <file alias="_d_x_mouse_signal_channel_8h-source.html">../../../output/documentation/main/html/_d_x_mouse_signal_channel_8h-source.html</file>
    <file alias="_data_source_equipment_8cpp-source.html">../../../output/documentation/main/html/_data_source_equipment_8cpp-source.html</file>
    <file alias="_data_source_equipment_8h-source.html">../../../output/documentation/main/html/_data_source_equipment_8h-source.html</file>
    <file alias="_data_store_8cpp-source.html">../../../output/documentation/main/html/_data_store_8cpp-source.html</file>
    <file alias="_data_store_8h-source.html">../../../output/documentation/main/html/_data_store_8h-source.html</file>
    <file alias="_device_interface_8cpp-source.html">../../../output/documentation/main/html/_device_interface_8cpp-source.html</file>
    <file alias="_device_interface_8h-source.html">../../../output/documentation/main/html/_device_interface_8h-source.html</file>
+   <file alias="_director_data_command_handler_8cpp-source.html">../../../output/documentation/main/html/_director_data_command_handler_8cpp-source.html</file>
+   <file alias="_director_data_command_handler_8h-source.html">../../../output/documentation/main/html/_director_data_command_handler_8h-source.html</file>
    <file alias="_director_info_8cpp-source.html">../../../output/documentation/main/html/_director_info_8cpp-source.html</file>
    <file alias="_director_info_8h-source.html">../../../output/documentation/main/html/_director_info_8h-source.html</file>
-   <file alias="_director_list_8cpp-source.html">../../../output/documentation/main/html/_director_list_8cpp-source.html</file>
-   <file alias="_director_list_8h-source.html">../../../output/documentation/main/html/_director_list_8h-source.html</file>
    <file alias="_director_list_command_handler_8cpp-source.html">../../../output/documentation/main/html/_director_list_command_handler_8cpp-source.html</file>
    <file alias="_director_list_command_handler_8h-source.html">../../../output/documentation/main/html/_director_list_command_handler_8h-source.html</file>
    <file alias="_director_update_command_handler_8cpp-source.html">../../../output/documentation/main/html/_director_update_command_handler_8cpp-source.html</file>
@@ -117,10 +119,6 @@
    <file alias="_layer_8h-source.html">../../../output/documentation/main/html/_layer_8h-source.html</file>
    <file alias="_line_graphic_8cpp-source.html">../../../output/documentation/main/html/_line_graphic_8cpp-source.html</file>
    <file alias="_line_graphic_8h-source.html">../../../output/documentation/main/html/_line_graphic_8h-source.html</file>
-   <file alias="_load_experiment_dialog_8cpp-source.html">../../../output/documentation/main/html/_load_experiment_dialog_8cpp-source.html</file>
-   <file alias="_load_experiment_dialog_8h-source.html">../../../output/documentation/main/html/_load_experiment_dialog_8h-source.html</file>
-   <file alias="_loadexp_command_handler_8cpp-source.html">../../../output/documentation/main/html/_loadexp_command_handler_8cpp-source.html</file>
-   <file alias="_loadexp_command_handler_8h-source.html">../../../output/documentation/main/html/_loadexp_command_handler_8h-source.html</file>
    <file alias="_local_field_potential_data_store_8cpp-source.html">../../../output/documentation/main/html/_local_field_potential_data_store_8cpp-source.html</file>
    <file alias="_local_field_potential_data_store_8h-source.html">../../../output/documentation/main/html/_local_field_potential_data_store_8h-source.html</file>
    <file alias="_magnetic_resonance_imaging_data_store_8cpp-source.html">../../../output/documentation/main/html/_magnetic_resonance_imaging_data_store_8cpp-source.html</file>
@@ -252,8 +250,6 @@
    <file alias="_session_data_store_8h-source.html">../../../output/documentation/main/html/_session_data_store_8h-source.html</file>
    <file alias="_session_info_8cpp-source.html">../../../output/documentation/main/html/_session_info_8cpp-source.html</file>
    <file alias="_session_info_8h-source.html">../../../output/documentation/main/html/_session_info_8h-source.html</file>
-   <file alias="_session_manager_8cpp-source.html">../../../output/documentation/main/html/_session_manager_8cpp-source.html</file>
-   <file alias="_session_manager_8h-source.html">../../../output/documentation/main/html/_session_manager_8h-source.html</file>
    <file alias="_signal_8cpp-source.html">../../../output/documentation/main/html/_signal_8cpp-source.html</file>
    <file alias="_signal_8h-source.html">../../../output/documentation/main/html/_signal_8h-source.html</file>
    <file alias="_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_signal_channel_8cpp-source.html</file>
@@ -322,8 +318,6 @@
    <file alias="bug.html">../../../output/documentation/main/html/bug.html</file>
    <file alias="build__environment__preparation_8h-source.html">../../../output/documentation/main/html/build__environment__preparation_8h-source.html</file>
    <file alias="build_environment_preparation.html">../../../output/documentation/main/html/build_environment_preparation.html</file>
-   <file alias="class_director_list-members.html">../../../output/documentation/main/html/class_director_list-members.html</file>
-   <file alias="class_director_list.html">../../../output/documentation/main/html/class_director_list.html</file>
    <file alias="class_hardware_setup-members.html">../../../output/documentation/main/html/class_hardware_setup-members.html</file>
    <file alias="class_hardware_setup.html">../../../output/documentation/main/html/class_hardware_setup.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler-members.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler-members.html</file>
@@ -373,7 +367,6 @@
    <file alias="dir_81b59a9481bea75e0a9fa1bbd1a37f9c.html">../../../output/documentation/main/html/dir_81b59a9481bea75e0a9fa1bbd1a37f9c.html</file>
    <file alias="dir_892338cf588fdc472662f81c604bd67f.html">../../../output/documentation/main/html/dir_892338cf588fdc472662f81c604bd67f.html</file>
    <file alias="dir_8ce368a8f84f64978acfa0b01bf083fa.html">../../../output/documentation/main/html/dir_8ce368a8f84f64978acfa0b01bf083fa.html</file>
-   <file alias="dir_90f79f912de1aa4619df2be8efdb4518.html">../../../output/documentation/main/html/dir_90f79f912de1aa4619df2be8efdb4518.html</file>
    <file alias="dir_9185c7e72acb51348ef49d39f3118557.html">../../../output/documentation/main/html/dir_9185c7e72acb51348ef49d39f3118557.html</file>
    <file alias="dir_93844aef55a9862431f80d36a148f72f.html">../../../output/documentation/main/html/dir_93844aef55a9862431f80d36a148f72f.html</file>
    <file alias="dir_a543fb9e67733b8e9f03aca2d2194628.html">../../../output/documentation/main/html/dir_a543fb9e67733b8e9f03aca2d2194628.html</file>
@@ -490,9 +483,6 @@
    <file alias="struct_h_t_t_p_get_command_handler-members.html">../../../output/documentation/main/html/struct_h_t_t_p_get_command_handler-members.html</file>
    <file alias="struct_h_t_t_p_get_command_handler.html">../../../output/documentation/main/html/struct_h_t_t_p_get_command_handler.html</file>
    <file alias="struct_h_t_t_p_get_command_handler.png">../../../output/documentation/main/html/struct_h_t_t_p_get_command_handler.png</file>
-   <file alias="struct_loadexp_command_handler-members.html">../../../output/documentation/main/html/struct_loadexp_command_handler-members.html</file>
-   <file alias="struct_loadexp_command_handler.html">../../../output/documentation/main/html/struct_loadexp_command_handler.html</file>
-   <file alias="struct_loadexp_command_handler.png">../../../output/documentation/main/html/struct_loadexp_command_handler.png</file>
    <file alias="struct_picto_1_1_engine_1_1_picto_engine-members.html">../../../output/documentation/main/html/struct_picto_1_1_engine_1_1_picto_engine-members.html</file>
    <file alias="struct_picto_1_1_engine_1_1_picto_engine.html">../../../output/documentation/main/html/struct_picto_1_1_engine_1_1_picto_engine.html</file>
    <file alias="struct_picto_1_1_picto_box_daq_board_1_1ai_channel__st-members.html">../../../output/documentation/main/html/struct_picto_1_1_picto_box_daq_board_1_1ai_channel__st-members.html</file>

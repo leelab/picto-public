@@ -83,13 +83,13 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////
 	HardwareSetup hwSetup(engine);
 	
-	if(!hwSetup.setupRenderingTargets(HardwareSetup::Pixmap)) 
+	if(!hwSetup.setupRenderingTargets(HardwareSetup::D3D)) 
 		return -1;
-	if(!hwSetup.setupSignalChannel(HardwareSetup::Mouse)) 
+	if(!hwSetup.setupSignalChannel(HardwareSetup::EyetrackerXp)) 
 		return -1;
-	if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
+	if(!hwSetup.setupRewardController(HardwareSetup::PictoBoxXpReward)) 
 		return -1;
-	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen)) 
+	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::PictoBoxXpGen)) 
 		return -1;
 
 	if(!hwSetup.isSetup())
@@ -181,7 +181,6 @@ int main(int argc, char *argv[])
 			xmlReader->readNext();
 			while(!xmlReader->atEnd() && xmlReader->name().toString() != "Experiment")
 			{
-				QString test = xmlReader->name().toString();
 				xmlReader->readNext();
 			}
 
@@ -234,6 +233,14 @@ int main(int argc, char *argv[])
 			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
 			{
 				target->updateStatus("Completed Task: " + taskName);
+				target->showSplash();
+			}
+		}
+		else if(statusDirective.startsWith("ERROR"))
+		{
+			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+			{
+				target->updateStatus("ERROR");
 				target->showSplash();
 			}
 		}

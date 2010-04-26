@@ -171,7 +171,6 @@ QString ChoiceController::insideTarget()
 		//confirm that the signal channel contains "xpos" and "ypos" subchannels
 		Q_ASSERT(signal_->getSubchannels().contains("xpos"));
 		Q_ASSERT(signal_->getSubchannels().contains("ypos"));
-		signal_->start();
 	}
 
 	//Run through the targets checking them

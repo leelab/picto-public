@@ -154,12 +154,20 @@ D3DVisualTarget::D3DVisualTarget() :
 	//Increase thread priority
 	//----------------------------------
 	//Since this visual target is only going to be used in Win32, we
-	//can bump the thread priority to the top.  
+	//can bump the thread priority to the top.  Not
 	HANDLE hProcess, hThread;
 	hProcess = GetCurrentProcess();
 	hThread = GetCurrentThread();
-	SetPriorityClass(hProcess, REALTIME_PRIORITY_CLASS);
-	SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);
+	//SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS);
+	SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
+
+	//Doing the following makes the mouse non-responsive.
+	//This is fine when using an eye-tracker input, but unacceptable
+	//when testing
+	//SetPriorityClass(hProcess, REALTIME_PRIORITY_CLASS);
+
+	//SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);
+	SetThreadPriority(hThread, THREAD_PRIORITY_NORMAL);
 
 }
 void D3DVisualTarget::closeEvent(QCloseEvent *event)

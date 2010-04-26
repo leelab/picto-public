@@ -295,10 +295,13 @@ void CommandChannel::readIncomingCommand()
  *	be used a a stand-alone function that gets called on-demand, or as a slot
  *	that gets connected to a signal for  automatic command sending.
  */
-void CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
+bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	if(command->write(consumerSocket) < 1)
+	{
 		qDebug("CommandChannel::sendCommand failed to send requested command");
+		return false;
+	}
 }
 
 /*! \brief Sends a response over the channel

@@ -2,6 +2,7 @@
 
 #include "PictoBoxXPAnalogInputSignalChannel.h"
 
+#include "../../common/timing/Timestamper.h"
 
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
@@ -17,6 +18,11 @@ PictoBoxXPAnalogInputSignalChannel::PictoBoxXPAnalogInputSignalChannel(int samps
 	//all of the initialization takes place in start, while all of the
 	//cleanup takes place in stop
 	daqTaskHandle_ = 0;
+
+	//If the analog input represents behavioral data, it will be expected to have
+	//a timestamp subchannel
+	addSubchannel("time");
+
 }
 void PictoBoxXPAnalogInputSignalChannel::addAiChannel(QString subchannelName, int aiChannelNum)
 {
@@ -24,8 +30,16 @@ void PictoBoxXPAnalogInputSignalChannel::addAiChannel(QString subchannelName, in
 	aiChannelNums_[subchannelName] = aiChannelNum;
 }
 
+/*!	\brief Starts the DAQ collecting data.
+ *
+ *	This should be called as close to the point at which the data will actually
+ *	be collected as possible.  Otherwise, data will pile up in the buffer.
+ *	Also note that calling this clears out any existing data in the channel.
+ */
 bool PictoBoxXPAnalogInputSignalChannel::start()
 {
+	Timestamper stamper;
+
 	//Clear the existing task
 	if(daqTaskHandle_)
 		DAQmxErrChk (DAQmxClearTask(daqTaskHandle_));
@@ -41,7 +55,16 @@ bool PictoBoxXPAnalogInputSignalChannel::start()
 	int bufferSize = 5000;
 	DAQmxErrChk (DAQmxCfgSampClkTiming(daqTaskHandle_,"",sampleRate_,DAQmx_Val_Rising,DAQmx_Val_ContSamps,bufferSize));
 	DAQmxErrChk (DAQmxStartTask(daqTaskHandle_));
+	
+	//Mark the start time
+	startTime_ = stamper.stampSec();
+	sampsCollected_=0;
 
+	//Clear out the subchannels
+	foreach(QList<double> subchannel, rawDataBuffer_)
+	{
+		subchannel.clear();
+	}
 
 	return true;
 
@@ -51,6 +74,8 @@ bool PictoBoxXPAnalogInputSignalChannel::stop()
 {
 	if(daqTaskHandle_)
 		DAQmxErrChk (DAQmxStopTask(daqTaskHandle_));
+
+
 
 	return true;
 }
@@ -82,6 +107,21 @@ void PictoBoxXPAnalogInputSignalChannel::updateDataBuffer()
 			bufferOffset += sampsPerChanRead;
 			chan++;
 		}
+
+		//Add the timestamps
+		//double baseTime = startTime_ + sampsCollected_/(double)sampleRate_;
+
+		//for(int x=0; x<sampsPerChanRead; x++)
+			//rawDataBuffer_["time"].push_back(baseTime + x/(double)sampleRate_);
+
+		for(int x=0; x<sampsPerChanRead; x++)
+		{
+			rawDataBuffer_["time"].push_back(startTime_ + sampsCollected_/(double)sampleRate_);
+			sampsCollected_++;
+		}
+
+		//sampsCollected_ += sampsPerChanRead;
+
 	}while(sampsPerChanRead == bufferSizePerChan);
 
 }

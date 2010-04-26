@@ -1,13 +1,17 @@
 //This can only be defined if we are running on a windows box.
-//#define CHECK_TIMING
+#define CHECK_TIMING
 
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../engine/PictoEngine.h"
+#include "../storage/BehavioralDataStore.h"
+#include "../engine/SignalChannel.h"
 
 #include <QDebug>
+
+#include <QUuid>
 
 #ifdef CHECK_TIMING
 #include <QFile>
@@ -33,6 +37,12 @@ State::State()
 
 QString State::run()
 {
+	BehavioralDataStore behavData;
+
+	QSharedPointer<SignalChannel> sigChannel;
+
+	sigChannel = Engine::PictoEngine::getSignalChannel("PositionChannel");
+
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
 	bool runFrameScript = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
@@ -61,6 +71,7 @@ QString State::run()
 	{
 		control->start();
 	}
+
 #ifdef CHECK_TIMING
 	LARGE_INTEGER ticksPerSec;
 	LARGE_INTEGER tick, tock;
@@ -68,13 +79,12 @@ QString State::run()
 	QueryPerformanceFrequency(&ticksPerSec);
 #endif
 
-	//The UPDATEDIRECTOR command (we'll need to modify this...
-	QSharedPointer<Picto::ProtocolResponse> updateResponse;
-	QString updateCommandStr = "DIRECTORUPDATE "+Engine::PictoEngine::getName()+":running PICTO/1.0";
-	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
-
 	QString result = "";
 	bool isDone = false;
+
+	QMap<QUuid, QSharedPointer<Picto::ProtocolCommand> > sentCommands;
+
+	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
 #ifdef CHECK_TIMING
@@ -82,14 +92,49 @@ QString State::run()
 		elapsedTimes.append((double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart));
 		QueryPerformanceCounter(&tick);
 #endif
-		//send an UPDATEDIRECTOR command to the server
-		//This is somewhat temporary, and should be replaced by a command that sends all of the
-		//relevant behavioral data.
-		updateResponse = Engine::PictoEngine::sendCommand(updateCommand,5000);
 
-
-		//Draw the scene
+		//----------  Draw the scene --------------
 		scene_->render();
+		//-----------------------------------------
+
+
+		//Update the BehavioralDataStore
+		//Note that the call to getValues clears out any existing values,
+		//so it should only be made once per frame.
+		behavData.emptyData();
+		behavData.addData(sigChannel->getValues());
+
+		//send a DIRECTORDATA command to the server with the most recent behavioral data
+		QSharedPointer<Picto::ProtocolResponse> dataResponse;
+		QString dataCommandStr = "DIRECTORDATA "+Engine::PictoEngine::getName()+" PICTO/1.0";
+		QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+		QByteArray behaveDataXml;
+		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&behaveDataXml));
+		behavData.serializeAsXml(xmlWriter);
+
+		dataCommand->setContent(behaveDataXml);
+		dataCommand->setFieldValue("Content-Length",QString::number(behaveDataXml.length()));
+		QUuid commandUuid = QUuid::createUuid();
+		dataCommand->setFieldValue("Command-ID",commandUuid.toString());
+
+		sentCommands[commandUuid] = dataCommand;
+
+		Q_ASSERT(Engine::PictoEngine::sendCommand(dataCommand));
+
+		//check for and process responses
+		dataResponse = Engine::PictoEngine::getResponse(0);
+		while(!dataResponse.isNull())
+		{
+			//! \todo break out of this loop if we have timing issues
+			commandUuid = QUuid(dataResponse->getFieldValue("Command-ID"));
+			Q_ASSERT_X(sentCommands.contains(commandUuid), "State::Run()", "Unrecognized command ID");
+			sentCommands.remove(commandUuid);
+
+			dataResponse = Engine::PictoEngine::getResponse(0);
+		}
+
+		Q_ASSERT_X(sentCommands.size()<30,"State::Run()","Too many commands sent to server without responses received.");
 
 		//check all of the control elements
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
@@ -100,6 +145,7 @@ QString State::run()
 				isDone = true;
 			}
 		}
+
 		//run the frame script
 		if(runFrameScript && !isDone)
 		{
@@ -133,9 +179,36 @@ QString State::run()
 		}
 	}
 
+	//Deal with sent commands that have never received responses.
+	//Depending on the speed of the server/director there are two possible reasons
+	//for missing responses:
+	//	1. The server is too slow, so we just aren't getting the responses
+	//  2. Something went wrong with the connection, so we should resend the data
+	//We'll assume that it's the former and sit in a tight loop until all of the 
+	//network data is cleared out, or 100 ms has passed.  If we hit the time limit, 
+	//we will send the commands missing responses again, and if we fail to get a response
+	//we stop execution.
+	int elapsedTime=0;
+	while(sentCommands.size() > 0 && elapsedTime < 100)
+	{
+		elapsedTime++;
+
+		QSharedPointer<Picto::ProtocolResponse> dataResponse;
+		dataResponse = Engine::PictoEngine::getResponse(1);
+		if(!dataResponse.isNull())
+		{
+			QUuid commandUuid = QUuid(dataResponse->getFieldValue("Command-ID"));
+			Q_ASSERT_X(sentCommands.contains(commandUuid), "State::Run()", "Unrecognized command ID");
+			sentCommands.remove(commandUuid);
+		}
+	}
+
+
 #ifdef CHECK_TIMING
 	QFile outFile("renderingTimes.txt");
-	Q_ASSERT(outFile.open(QIODevice::WriteOnly));
+	Q_ASSERT(outFile.open(QIODevice::Append));
+
+	outFile.write("\n------ STATE ------\n");
 
 	for(int i=0; i<elapsedTimes.length(); i++)
 	{

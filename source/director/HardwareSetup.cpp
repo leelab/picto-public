@@ -33,7 +33,7 @@
 
 #include "../common/engine/MouseSignalChannel.h"
 #ifdef WIN32
-//#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
+#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
 #endif
 
 #include "../common/iodevices/RewardController.h"
@@ -41,8 +41,8 @@
 #include "../common/iodevices/NullRewardController.h"
 #include "../common/iodevices/NullEventCodeGenerator.h"
 #ifdef WIN32
-//#include "iodevices/PictoBoxXPRewardController.h"
-//#include "iodevices/PictoBoxXPEventCodeGenerator.h"
+#include "iodevices/PictoBoxXPRewardController.h"
+#include "iodevices/PictoBoxXPEventCodeGenerator.h"
 #endif
 
 
@@ -131,10 +131,10 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 #ifndef WIN32
 		return false;
 #else
-		//QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
-		//aiChannel->addAiChannel("xpos",1);
-		//aiChannel->addAiChannel("ypos",0);
-		//engine_->addSignalChannel("PositionChannel",aiChannel);
+		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
+		aiChannel->addAiChannel("xpos",0);
+		aiChannel->addAiChannel("ypos",1);
+		engine_->addSignalChannel("PositionChannel",aiChannel);
 #endif
 	}
 
@@ -157,8 +157,8 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 #ifndef WIN32
 		return false;
 #else
-		//rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController(1));
-		//rewardController->setRewardResetTimeMs(1,500);
+		rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController(1));
+		rewardController->setRewardResetTimeMs(1,500);
 #endif
 	}
 	else if(controllerType == NullReward)
@@ -187,7 +187,7 @@ bool HardwareSetup::setupEventCodeGenerator(HardwareSetup::EventCodeGeneratorTyp
 #ifndef WIN32
 		return false;
 #else
-		//generator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::PictoBoxXPEventCodeGenerator());
+		generator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::PictoBoxXPEventCodeGenerator());
 #endif
 	}
 	else if(generatorType == NullGen)

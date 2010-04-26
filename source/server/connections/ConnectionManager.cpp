@@ -287,6 +287,9 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAdd
 		"behavioralstart REAL, behavioralend REAL, startjitter REAL, "
 		"endjitter REAL, correlation REAL)");
 
+	sessionQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
+		"ypos REAL, time REAL)");
+
 	openSessions_[uuid] = sessInfo;
 
 	return sessInfo;

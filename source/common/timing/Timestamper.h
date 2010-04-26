@@ -5,9 +5,8 @@
  *	timing is not provided by Qt, the code in this object is grossly platform
  *	dependent.
  *
- *	To reduce the number of significant figures in each timestamp, the first time 
- *	a timestamp object is created, we measure the elapsed time since the first time
- *	a Timestamper object is created.
+ *	To reduce the number of significant figures in each timestamp, we measure the 
+ *	elapsed time since the first time a Timestamper object is created.
  */
 
 #ifndef _TIMESTAMPER_H_

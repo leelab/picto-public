@@ -84,11 +84,8 @@ public:
 	//!Check channel status
 	ChannelStatus getChannelStatus() { return status; };
 
-	QTcpSocket *getConsumerSocket() { return consumerSocket; };
-	QTcpSocket *getProducerSocket() { return producerSocket; };
-
-
-
+	//QTcpSocket *getConsumerSocket() { return consumerSocket; };
+	//QTcpSocket *getProducerSocket() { return producerSocket; };
 
 	void closeChannel();
 
@@ -104,7 +101,7 @@ signals:
 
 public slots:
 	void connectToServer(QHostAddress serverAddress, quint16 serverPort);
-	void sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
+	bool sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	void sendResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
 private slots:
