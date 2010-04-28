@@ -40,8 +40,9 @@ QString State::run()
 	BehavioralDataStore behavData;
 
 	QSharedPointer<SignalChannel> sigChannel;
-
 	sigChannel = Engine::PictoEngine::getSignalChannel("PositionChannel");
+
+	QSharedPointer<CommandChannel> serverChannel = Engine::PictoEngine::getCommandChannel();
 
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
@@ -75,14 +76,13 @@ QString State::run()
 #ifdef CHECK_TIMING
 	LARGE_INTEGER ticksPerSec;
 	LARGE_INTEGER tick, tock;
+	QueryPerformanceCounter(&tick); //Initialize...
 	QList<double> elapsedTimes;
 	QueryPerformanceFrequency(&ticksPerSec);
 #endif
 
 	QString result = "";
 	bool isDone = false;
-
-	QMap<QUuid, QSharedPointer<Picto::ProtocolCommand> > sentCommands;
 
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
@@ -118,23 +118,18 @@ QString State::run()
 		QUuid commandUuid = QUuid::createUuid();
 		dataCommand->setFieldValue("Command-ID",commandUuid.toString());
 
-		sentCommands[commandUuid] = dataCommand;
-
-		Q_ASSERT(Engine::PictoEngine::sendCommand(dataCommand));
+		serverChannel->sendRegisteredCommand(dataCommand);
 
 		//check for and process responses
-		dataResponse = Engine::PictoEngine::getResponse(0);
-		while(!dataResponse.isNull())
+		while(serverChannel->waitForResponse(0))
 		{
-			//! \todo break out of this loop if we have timing issues
-			commandUuid = QUuid(dataResponse->getFieldValue("Command-ID"));
-			Q_ASSERT_X(sentCommands.contains(commandUuid), "State::Run()", "Unrecognized command ID");
-			sentCommands.remove(commandUuid);
-
-			dataResponse = Engine::PictoEngine::getResponse(0);
+			dataResponse = serverChannel->getResponse();
+			Q_ASSERT(!dataResponse.isNull());
+			Q_ASSERT(dataResponse->getResponseType() == "OK");
 		}
 
-		Q_ASSERT_X(sentCommands.size()<30,"State::Run()","Too many commands sent to server without responses received.");
+
+		Q_ASSERT_X(serverChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
 
 		//check all of the control elements
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
@@ -179,29 +174,6 @@ QString State::run()
 		}
 	}
 
-	//Deal with sent commands that have never received responses.
-	//Depending on the speed of the server/director there are two possible reasons
-	//for missing responses:
-	//	1. The server is too slow, so we just aren't getting the responses
-	//  2. Something went wrong with the connection, so we should resend the data
-	//We'll assume that it's the former and sit in a tight loop until all of the 
-	//network data is cleared out, or 100 ms has passed.  If we hit the time limit, 
-	//we will send the commands missing responses again, and if we fail to get a response
-	//we stop execution.
-	int elapsedTime=0;
-	while(sentCommands.size() > 0 && elapsedTime < 100)
-	{
-		elapsedTime++;
-
-		QSharedPointer<Picto::ProtocolResponse> dataResponse;
-		dataResponse = Engine::PictoEngine::getResponse(1);
-		if(!dataResponse.isNull())
-		{
-			QUuid commandUuid = QUuid(dataResponse->getFieldValue("Command-ID"));
-			Q_ASSERT_X(sentCommands.contains(commandUuid), "State::Run()", "Unrecognized command ID");
-			sentCommands.remove(commandUuid);
-		}
-	}
 
 
 #ifdef CHECK_TIMING

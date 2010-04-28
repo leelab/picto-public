@@ -28,12 +28,6 @@ QSharedPointer<Picto::ProtocolResponse> DirectorDataCommandHandler::processComma
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
-	QUuid commandUuid(command->getFieldValue("Command-ID"));
-	Q_ASSERT(!commandUuid.isNull());
-
-	response->setFieldValue("Command-ID",commandUuid.toString());
-	notFoundResponse->setFieldValue("Command-ID",commandUuid.toString());
-
 	//Start reading the content
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(command->getContent()));
 	while(!xmlReader->atEnd() && !xmlReader->isStartElement())

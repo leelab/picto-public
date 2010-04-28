@@ -62,7 +62,11 @@ namespace PictoEngineTimingType
  * PictoServer instance.
  * 
  */
-struct PICTOLIB_CLASS PictoEngine
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API PictoEngine
+#else
+class PictoEngine
+#endif
 {
 public:
 	PictoEngine();
@@ -96,11 +100,12 @@ public:
 	static void giveReward(int channel);
 
 	bool setCommandChannel(QSharedPointer<CommandChannel> commandChannel);
-	static QSharedPointer<ProtocolResponse> sendCommand(QSharedPointer<ProtocolCommand> command, int timeout);
-	static bool sendCommand(QSharedPointer<ProtocolCommand> command);
-	static QSharedPointer<ProtocolResponse> getResponse(int timeout=0);
+	static QSharedPointer<CommandChannel> getCommandChannel();
+	//static QSharedPointer<ProtocolResponse> sendCommand(QSharedPointer<ProtocolCommand> command, int timeout);
+	//static bool sendCommand(QSharedPointer<ProtocolCommand> command);
+	//static QSharedPointer<ProtocolResponse> getResponse(int timeout=0);
 
-	void setSessionId(QUuid sessionId) { sessionId_ = sessionId; };
+	void setSessionId(QUuid sessionId);
 	QUuid getSessionId() { return sessionId_; };
 
 	void setName(QString name) { name_ = name; };

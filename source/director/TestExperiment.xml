@@ -13,7 +13,7 @@
 			<!-- to output frame rates.												-->
 			<StateMachine>
 				<Name>FrameRateTest</Name>
-				<Level>Stage</Level>
+				<Level>Trial</Level>
 				<InitialElement>TestState</InitialElement>
 				<Parameters>
 					<Parameter type="Boolean" operatorUI="false">

@@ -79,8 +79,9 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	void sendStartTrialToServer();
-	void sendEndTrialToServer();
+	void sendTrialEventToServer();
+
+	bool cleanupRegisteredCommands();
 
 	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
 	QMap<QString, QSharedPointer<StateMachineElement> > elements_;

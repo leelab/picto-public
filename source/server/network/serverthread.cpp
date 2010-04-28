@@ -117,17 +117,15 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 		return notImplementedResponse;
 	}
 
-	//If this is thread is attached to a session, and the command doesn't have a session ID,
-	//we should add one.
-	//if(!sessionId_.isNull() && !_command->hasField("Session-ID"))
-	//{
-		//_command->setFieldValue("Session-ID",sessionId_.toString());
-	//}
-
 	//Add the source ip to the command
 	_command->setFieldValue("Source-Address", tcpSocket->peerAddress().toString());
 	
 	QSharedPointer<Picto::ProtocolResponse> response = handler->processCommand(_command);
+
+	//If this command has a Command-ID field, we need to include the same field in the
+	//response (this allows the client to match up commands and responses).
+	if(_command->hasField("Command-ID"))
+		response->setFieldValue("Command-ID",_command->getFieldValue("Command-ID"));
 
 	return response;
 }

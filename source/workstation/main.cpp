@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
 	Picto::InitializeLib(&app,localeLanguageCode);
 
-	Picto::testMTRand();
+	Q_ASSERT_X(Picto::testMTRand(),"Director::main()","Random number generator failed test");
 
 	MainWindow mainWin;
 

@@ -34,6 +34,9 @@
  *
  *	Incoming commands are handled similarly to incoming responses, and outgoing responses
  *  are handled similarly to outgoing commands
+ *
+ *	The registered functions are a special subset of the send/receive functions. These are used
+ *	if you need to keep track of which commands have received responses.
  */
 
 #ifndef _COMMANDCHANNEL_H_
@@ -44,6 +47,7 @@
 #include <QSharedPointer>
 #include <QHostAddress>
 #include <QTcpSocket>
+#include <QUuid>
 
 #include "../common.h"
 #include "../protocol/ProtocolCommand.h"
@@ -74,6 +78,12 @@ public:
 
 	bool waitForResponse(int timeout=0);
 
+	int pendingResponses() { return pendingCommands_.size(); };  //! Returns the number of responses we are waiting for
+	void resendPendingCommands();
+
+	void setSessionId(QUuid sessionId) { sessionId_ = sessionId; };
+	void clearSessionId() { sessionId_ = QUuid(); };
+
 	void pollingMode(bool polling);
 
 	typedef enum
@@ -102,6 +112,7 @@ signals:
 public slots:
 	void connectToServer(QHostAddress serverAddress, quint16 serverPort);
 	bool sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
+	bool sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	void sendResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
 private slots:
@@ -149,6 +160,9 @@ private:
 	QList<QSharedPointer<ProtocolResponse> > incomingResponseQueue;
 
 	QString multipartBoundary;
+
+	QMap<QUuid,QSharedPointer<ProtocolCommand> > pendingCommands_;
+	QUuid sessionId_;
 };
 
 

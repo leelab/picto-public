@@ -105,6 +105,18 @@ bool PictoEngine::setCommandChannel(QSharedPointer<CommandChannel> commandChanne
 	}
 }
 
+QSharedPointer<CommandChannel> PictoEngine::getCommandChannel()
+{
+	return commandChannel_;
+}
+
+void PictoEngine::setSessionId(QUuid sessionId)
+{
+	sessionId_ = sessionId;
+	if(!commandChannel_.isNull())
+		commandChannel_->setSessionId(sessionId_);
+}
+
 /*! \brief Sends the passed in command over the command channel.  
  *
  *	The passed in command is sent out over the command channel and the response (since all
@@ -116,7 +128,7 @@ bool PictoEngine::setCommandChannel(QSharedPointer<CommandChannel> commandChanne
  *	command channel, so it shouldn't be called if we think there might be important
  *	responses from somewhere else.
  */
-QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command, int timeout)
+/*QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command, int timeout)
 {
 	QSharedPointer<ProtocolResponse> nullResponse;
 
@@ -137,7 +149,7 @@ QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<Protoco
 		return nullResponse;
 	}
 
-}
+}*/
 
 /*	\brief Simply sends a command (with no waiting for a response).
  *
@@ -145,7 +157,7 @@ QSharedPointer<ProtocolResponse> PictoEngine::sendCommand(QSharedPointer<Protoco
  *	response, this version simply sends out a command and immediately returns.
  *	To find the response, you'll need to call getResponse.
  */
-bool PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command)
+/*bool PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command)
 {
 	if(commandChannel_.isNull())
 	{
@@ -163,10 +175,10 @@ bool PictoEngine::sendCommand(QSharedPointer<ProtocolCommand> command)
 	}
 
 	return commandChannel_->sendCommand(command);
-}
+}*/
 
 //! \brief Returns the first response waiting in the command channel, or a null response
-QSharedPointer<ProtocolResponse> PictoEngine::getResponse(int timeout)
+/*QSharedPointer<ProtocolResponse> PictoEngine::getResponse(int timeout)
 {
 	QSharedPointer<ProtocolResponse> nullResponse;
 
@@ -179,7 +191,7 @@ QSharedPointer<ProtocolResponse> PictoEngine::getResponse(int timeout)
 		return nullResponse;
 	}
 
-}
+}*/
 
 
 bool PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> experiment)

@@ -1,5 +1,4 @@
 #include <QStringList>
-#include <qDebug>
 #include <QTime>
 #include <QCoreApplication>
 
@@ -256,6 +255,11 @@ void CommandChannel::readIncomingResponse()
 			else if(!multipartBoundary.isEmpty())
 				multipartBoundary="";
 
+			//Check to see if this is a registered response
+			QString commandId = response->getFieldValue("Command-ID");
+			if(!commandId.isNull())
+				pendingCommands_.remove(QUuid(commandId));
+
 			if(polledMode)
 				incomingResponseQueue.push_back(response);
 			else
@@ -297,11 +301,33 @@ void CommandChannel::readIncomingCommand()
  */
 bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
+	//If the command channel is part of a session, add a Session-ID field
+	if(!sessionId_.isNull())
+		command->setFieldValue("Session-ID",sessionId_.toString());
+
 	if(command->write(consumerSocket) < 1)
 	{
 		qDebug("CommandChannel::sendCommand failed to send requested command");
 		return false;
 	}
+	return true;
+}
+
+/*	\brief Sends a command and then registers it so we can watch for the matching response
+ *
+ *	This function is used when you want to be able to check at a later time to determine
+ *	if a response has been issued for your command.  A command sent this way 
+ *	has a "Command-ID" field appended.  The command is also added to the pending
+ *	commands map (using the Command-ID UUID as a key).  Sending a command
+ *	"registered" allows us to see if a response was received for that command
+ *	and to resend any commands which didn't receive responses.
+ */
+bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command)
+{
+	QUuid commandId = QUuid::createUuid();
+	command->setFieldValue("Command-ID",commandId);
+	pendingCommands_[commandId] = command;
+	return sendCommand(command);
 }
 
 /*! \brief Sends a response over the channel
@@ -365,6 +391,28 @@ void CommandChannel::disconnectHandler()
 
 }
 
+/*!	\brief Resends all registered commands for which responses have not been received
+ *
+ *	Every time a registered command is sent, it is added to the list of pending
+ *	commands.  When a registered response is received, the corresponding command is 
+ *	removed from that list.  This function clears out the pending commands list,
+ *	and resends all of the registered commands that have not yet received.
+ */
+void CommandChannel::resendPendingCommands()
+{
+	QList<QSharedPointer<ProtocolCommand> > commandsToResend;
+	foreach(QSharedPointer<ProtocolCommand> command, pendingCommands_)
+	{
+		commandsToResend.append(command);
+	}
+
+	pendingCommands_.clear();
+
+	foreach(QSharedPointer<ProtocolCommand> command, commandsToResend)
+	{
+		sendRegisteredCommand(command);
+	}
+}
 
 }; //namespace Picto
 

@@ -85,11 +85,11 @@ int main(int argc, char *argv[])
 	
 	if(!hwSetup.setupRenderingTargets(HardwareSetup::D3D)) 
 		return -1;
-	if(!hwSetup.setupSignalChannel(HardwareSetup::EyetrackerXp)) 
+	if(!hwSetup.setupSignalChannel(HardwareSetup::Mouse)) 
 		return -1;
-	if(!hwSetup.setupRewardController(HardwareSetup::PictoBoxXpReward)) 
+	if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
 		return -1;
-	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::PictoBoxXpGen)) 
+	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen)) 
 		return -1;
 
 	if(!hwSetup.isSetup())
@@ -146,7 +146,15 @@ int main(int argc, char *argv[])
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 	forever
 	{
-		updateResponse = engine->sendCommand(updateCommand,5000);
+		serverChannel->sendCommand(updateCommand);
+
+		//! \todo figure out something better to do here...
+		//If we don't get a response, die
+		if(!serverChannel->waitForResponse(5000))
+			break;
+
+
+		updateResponse = serverChannel->getResponse();
 
 		if(updateResponse.isNull() || updateResponse->getResponseType() != "OK")
 		{
@@ -224,7 +232,15 @@ int main(int argc, char *argv[])
 			QString runningUpdateCommandStr = "DIRECTORUPDATE "+name+":running PICTO/1.0";
 			QSharedPointer<Picto::ProtocolCommand> runningUpdateCommand(new Picto::ProtocolCommand(runningUpdateCommandStr));
 			QSharedPointer<Picto::ProtocolResponse> runningUpdateResponse;
-			runningUpdateResponse = engine->sendCommand(runningUpdateCommand,5000);
+
+			serverChannel->sendCommand(runningUpdateCommand);
+
+			//! \todo handle this more gracefully
+			if(!serverChannel->waitForResponse(5000))
+				break;
+			runningUpdateResponse = serverChannel->getResponse();
+			if(runningUpdateResponse.isNull() || runningUpdateResponse->getResponseType() != "OK")
+				break;
 
 			//start running our task
 			engine->runTask(taskName);
@@ -251,7 +267,7 @@ int main(int argc, char *argv[])
 				target->updateStatus("Unrecognized directive: " + statusDirective);;
 				target->showSplash();
 			}
-			Q_ASSERT(false);
+			Q_ASSERT_X(false, "PictoDirector main","Unrecognized directive received: " + statusDirective.toAscii());
 		}
 
 		//Pause for 1 second
@@ -274,6 +290,7 @@ int main(int argc, char *argv[])
 		}
 		if(exit)
 			break;
+
 	}
 
 	///////////////////////////////////////

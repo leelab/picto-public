@@ -9,6 +9,7 @@
 #include "../timing/Timestamper.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
+#include "../network/CommandChannel.h"
 
 namespace Picto {
 
@@ -205,8 +206,8 @@ QString StateMachine::run()
 		//Because of this, we generate the nerual recorder event first.
 		trialEventCode_++;
 		trialNum_++;
+		sendTrialEventToServer();
 		Engine::PictoEngine::generateEvent(trialEventCode_);
-		sendStartTrialToServer();
 	}
 	//Reset trialNum_ if we just entered a new Task
 	if(getLevel() == StateMachineLevel::Task)
@@ -221,7 +222,7 @@ QString StateMachine::run()
 
 	currElementName = propertyContainer_.getPropertyValue("Initial Element").toString();
 	currElement = elements_.value(currElementName);
-	
+
 	while(true)
 	{
 		QString result = currElement->run();
@@ -247,8 +248,12 @@ QString StateMachine::run()
 		{
 			if(getLevel() == StateMachineLevel::Trial)
 			{
-				sendEndTrialToServer();
+				//At the end of a trial, we need to deal with all of the left-over commands
+				Q_ASSERT(cleanupRegisteredCommands());
+
 				Engine::PictoEngine::generateEvent(trialEventCode_);
+				sendTrialEventToServer();
+
 			}
 			return currElement->run();
 		}
@@ -289,11 +294,11 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
 }
 
 
-/*!	\brief Sends a StartTrial event to PictoServer
+/*!	\brief Sends a Trial event to PictoServer
  *
- *	At the begining of a Trial, we send a timestamped StartTrial event to PictoServer.
- *	This is done nearly simultaneously to sending a StartTrial event code to the
- *	neural recording device.  
+ *	At the begining and end of a Trial, we send a timestamped StartTrial event to 
+ *	PictoServer. This is done nearly simultaneously to sending a StartTrial event 
+ *	code to the neural recording device.  
  *
  *	The command used to do this is (the units of time are seconds)
  *		TRIAL /start PICTO/1.0
@@ -305,7 +310,7 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
  *			<TrialNum>412</TrialNum> 	
  *		</Trial>
  */
-void StateMachine::sendStartTrialToServer()
+void StateMachine::sendTrialEventToServer()
 {
 	//Create a TRIAL command
 	QSharedPointer<ProtocolCommand> command(new ProtocolCommand("TRIAL /start PICTO/1.0"));
@@ -321,8 +326,8 @@ void StateMachine::sendStartTrialToServer()
 	xmlWriter.writeCharacters(QString("%1").arg(timestamper.stampSec(),0,'f',4));
 	xmlWriter.writeEndElement();
 
-	xmlWriter.writeTextElement("EventCode",QString("%1").arg(trialEventCode_));
-	xmlWriter.writeTextElement("TrialNum",QString("%1").arg(trialNum_));
+	xmlWriter.writeTextElement("EventCode",QString::number(trialEventCode_));
+	xmlWriter.writeTextElement("TrialNum",QString::number(trialNum_));
 
 	xmlWriter.writeEndElement(); //Trial
 
@@ -335,60 +340,72 @@ void StateMachine::sendStartTrialToServer()
 	//Send out the command
 	QSharedPointer<ProtocolResponse> response;
 
-	response = Engine::PictoEngine::sendCommand(command, 1000);
+	QSharedPointer<CommandChannel> serverChannel = Engine::PictoEngine::getCommandChannel();
+
+	serverChannel->sendCommand(command);
+	serverChannel->waitForResponse(1000);
+	response = serverChannel->getResponse();
+
 	Q_ASSERT(!response.isNull());
-	QString respType = response->getResponseType();
 	Q_ASSERT(response->getResponseType() == "OK");
 }
 
-/*!	\brief Sends a EndTrial event to PictoServer
- *
- *	At the end of a Trial, we send a timestamped EndTrial event to PictoServer.
- *	This is done nearly simultaneously to sending a EndTrial event code to the
- *	neural recording device.  
- *
- *	The command used to do this is (the units of time are seconds)
- *		TRIAL /end PICTO/1.0
- *		Content-Length:???
- *		
- *		<Trial>
- *			<Time>8684354986.358943</Time>
- *			<EventCode>56</EventCode>
- *			<TrialNum>412</TrialNum> 	
- *		</Trial>
+/*! \brief cleans up all of the sent commands.
+ *	
+ *	When registered commands are sent, we don't wait around for a response.  Therefore,
+ *	at some point we need to make sure that all of the responses have arrived.  This 
+ *	point is at the end of a trial (since that's the only time we have to spare).
+ *	The function does the following:
+ *		1. Waits for 2 seconds checking to see if all the responses are in.
+ *		2. Resends any commands that never saw responses
+ *		3. Waits for 2 seconds picking up all responses
+ *		4. Returns true if all commands received responses (eventually) or
+ *		   false if responses were dropped
  */
-void StateMachine::sendEndTrialToServer()
+bool StateMachine::cleanupRegisteredCommands()
 {
-	//Create a TRIAL command
-	QSharedPointer<ProtocolCommand> command(new ProtocolCommand("TRIAL /end PICTO/1.0"));
+	QSharedPointer<CommandChannel> serverChan = Engine::PictoEngine::getCommandChannel();
 
-	//Create the content of the TRIAL command
-	QString content;
-	QXmlStreamWriter xmlWriter(&content);
+	int elapsedTimeMs = 0;
+	QSharedPointer<ProtocolResponse> resp;
 
-	xmlWriter.writeStartElement("Trial");
+	//wait to see if the missing responses arrive (2 seconds total)
+	while(elapsedTimeMs < 2000)
+	{
+		if(serverChan->pendingResponses() == 0)
+		{
+			return true;
+		}
+		if(serverChan->waitForResponse(10))
+		{
+			resp = serverChan->getResponse();
+			Q_ASSERT(!resp.isNull());
+			Q_ASSERT(resp->getResponseType() == "OK");
+		}
 
-	xmlWriter.writeStartElement("Time");
-	Timestamper timestamper;
-	xmlWriter.writeCharacters(QString("%1").arg(timestamper.stampSec(),0,'f',4));
-	xmlWriter.writeEndElement();
+		elapsedTimeMs += 10;
+	}
 
-	xmlWriter.writeTextElement("EventCode",QString("%1").arg(trialEventCode_));
-	xmlWriter.writeTextElement("TrialNum",QString("%1").arg(trialNum_));
+	//resend all of the pending responses
+	serverChan->resendPendingCommands();
 
-	xmlWriter.writeEndElement(); //Trial
+	//wait to see if the missing responses arrive (2 seconds total)
+	while(elapsedTimeMs < 2000)
+	{
+		if(serverChan->pendingResponses() == 0)
+			return true;
+		if(serverChan->waitForResponse(10))
+		{
+			resp = serverChan->getResponse();
+			Q_ASSERT(!resp.isNull());
+			Q_ASSERT(resp->getResponseType() == "OK");
+		}
+		elapsedTimeMs += 10;
+	}
 
-	//Add the content to the command
-	QByteArray contentArr = content.toUtf8();
-	command->setFieldValue("Content-Length",QString("%1").arg(contentArr.length()));
-	//Check that the Content-Length field matches the actual content
-	Q_ASSERT(0 == command->setContent(contentArr));
+	//If we've made it this far, then we failed at cleaning up.
+	return false;
 
-	//Send out the command
-	QSharedPointer<ProtocolResponse> response;
-	response = Engine::PictoEngine::sendCommand(command, 10);
-	Q_ASSERT(!response.isNull());
-	Q_ASSERT(response->getResponseType() == "OK");
 }
 
 /*!	\brief Turns a StateMachine into an XML fragment
