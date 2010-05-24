@@ -87,7 +87,11 @@ bool Task::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		else if(name == "StateMachine")
 		{
 			stateMachine_ = QSharedPointer<StateMachine>(new StateMachine);
-			stateMachine_->deserializeFromXml(xmlStreamReader);
+			if(!stateMachine_->deserializeFromXml(xmlStreamReader))
+			{
+				addError("Task","State Machine failed to deserialize", xmlStreamReader);
+				return false;
+			}
 		}
 		else
 		{

@@ -3,6 +3,10 @@
         <file>icons/background.png</file>
         <file>icons/blue.png</file>
         <file>icons/circle.png</file>
+		<file>icons/check.png</file>
+        <file>icons/checksyntax.png</file>
+        <file>icons/copy.png</file>
+        <file>icons/cut.png</file>
         <file>icons/exit.png</file>
         <file>icons/fileclose.png</file>
         <file>icons/filenew.png</file>
@@ -10,11 +14,20 @@
         <file>icons/filesave.png</file>
         <file>icons/green.png</file>
         <file>icons/ok.png</file>
+        <file>icons/pause.png</file>
+        <file>icons/play.png</file>
+        <file>icons/paste.png</file>
         <file>icons/rectangle.png</file>
         <file>icons/red.png</file>
         <file>icons/redo.png</file>
         <file>icons/remove.png</file>
+        <file>icons/stop.png</file>
         <file>icons/triangle.png</file>
         <file>icons/undo.png</file>
+        <file>icons/texteditmode.png</file>
+        <file>icons/statemachineeditmode.png</file>
+        <file>icons/runmode.png</file>
+        <file>icons/testmode.png</file>
+		<file>icons/x.png</file>
     </qresource>
 </RCC>

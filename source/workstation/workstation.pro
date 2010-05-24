@@ -7,20 +7,32 @@ INCLUDEPATH += .
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/workstation/main.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
-SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/document.h
-SOURCES += $$(PICTO_TREE)/source/workstation/document.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/mainwindow.h
 SOURCES += $$(PICTO_TREE)/source/workstation/mainwindow.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/StartSessionDialog.h
 SOURCES += $$(PICTO_TREE)/source/workstation/StartSessionDialog.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/RunTaskDialog.h
 SOURCES += $$(PICTO_TREE)/source/workstation/RunTaskDialog.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/ErrorList.h
+SOURCES += $$(PICTO_TREE)/source/workstation/ErrorList.cpp
+
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/viewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/viewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/textviewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/xmleditor.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/xmleditor.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/textviewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/testviewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/testviewer.cpp
+
+#HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
+#SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp
+#HEADERS += $$(PICTO_TREE)/source/workstation/document.h
+#SOURCES += $$(PICTO_TREE)/source/workstation/document.cpp
 
 RESOURCES += $$(PICTO_TREE)/source/workstation/workstation.qrc
 
-FORMS += $$(PICTO_TREE)/source/workstation/mainwindow.ui
+#FORMS += $$(PICTO_TREE)/source/workstation/mainwindow.ui
 
 include($$(PICTO_TREE)/source/common/common.pri)
 

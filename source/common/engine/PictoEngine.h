@@ -78,12 +78,19 @@ public:
 	 */
 	void setTimingControl(PictoEngineTimingType::PictoEngineTimingType _timingType);
 
-	void beginExclusiveMode();
-	void endExclusiveMode();
+	void setExclusiveMode(bool mode) { bExclusiveMode_ = mode; };
+	static bool getExclusiveMode() { return bExclusiveMode_; };
 
 	bool loadExperiment(QSharedPointer<Picto::Experiment> experiment);
 
 	bool runTask(QString taskName);
+
+	//The engine commands are only used when the engine is being run locally
+	enum {NoCommand, ResumeEngine, StopEngine, PauseEngine};
+	void resume() { engineCommand_ = ResumeEngine; };
+	void pause() { engineCommand_ = PauseEngine; };
+	void stop() { engineCommand_ = StopEngine; };
+	static int getEngineCommand();
 
 	static QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
@@ -101,9 +108,6 @@ public:
 
 	bool setCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	static QSharedPointer<CommandChannel> getCommandChannel();
-	//static QSharedPointer<ProtocolResponse> sendCommand(QSharedPointer<ProtocolCommand> command, int timeout);
-	//static bool sendCommand(QSharedPointer<ProtocolCommand> command);
-	//static QSharedPointer<ProtocolResponse> getResponse(int timeout=0);
 
 	void setSessionId(QUuid sessionId);
 	QUuid getSessionId() { return sessionId_; };
@@ -114,7 +118,7 @@ public:
 private:
 	QSharedPointer<Picto::Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
-	bool bExclusiveMode_;
+	static bool bExclusiveMode_;
 	
 	static QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
 	static QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
@@ -124,6 +128,8 @@ private:
 
 	static QUuid sessionId_;
 	static QString name_;
+
+	static int engineCommand_;
 };
 
 /*! @} */

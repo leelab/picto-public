@@ -9,7 +9,7 @@ TranslatedNames::TranslatedNames()
 	configAppName = tr("PictoConfig");
 	directorAppName = tr("PictoController");
 	directorHWName = tr("PictoBox");
-	workstationAppName = tr("PictoLab");
+	workstationAppName = tr("PictoWorkstation");
 }
 
 }; //namespace Picto

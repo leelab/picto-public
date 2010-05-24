@@ -168,6 +168,12 @@ bool StateMachineElement::deserializeResults(QSharedPointer<QXmlStreamReader> xm
 		else if(name == "Name")
 		{
 			QString resultName = xmlStreamReader->readElementText();
+			if(resultName == "EngineAbort")
+			{
+				addError("StateMachineElement", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
+				return false;
+			}
+
 			if(isDefault)
 			{
 				defaultResult_ = resultName;

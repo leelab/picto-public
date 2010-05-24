@@ -172,6 +172,7 @@ D3DVisualTarget::D3DVisualTarget() :
 }
 void D3DVisualTarget::closeEvent(QCloseEvent *event)
  {
+	 Q_UNUSED(event);
 	if(pD3dDevice_) 
 	{
 		pD3dDevice_->Release();
@@ -192,7 +193,8 @@ void D3DVisualTarget::closeEvent(QCloseEvent *event)
 	hThread = GetCurrentThread();
 	SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
 	SetThreadPriority(hThread, THREAD_PRIORITY_NORMAL);
- }
+}
+
 D3DVisualTarget::~D3DVisualTarget()
 {	
 }
@@ -295,12 +297,14 @@ void D3DVisualTarget::present()
 	//clear the back buffer
     pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );
 
+	emit presented();
+
 }
 
 //!We'll never get any paint events since we run in full screen
-void D3DVisualTarget::paintEvent(QPaintEvent *e)
+void D3DVisualTarget::paint(QPaintDevice *widget)
 {
-	Q_UNUSED(e);
+	Q_UNUSED(widget);
 }
 
 /*!	\Brief Draws text on the screen
@@ -316,7 +320,7 @@ void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect
 	//we should use
 	QFontInfo qFontInfo(font);
 
-	//Set up and create teh font
+	//Set up and create the font
 	D3DXFONT_DESC fontDesc;
 	memset(&fontDesc, 0, sizeof(fontDesc));
 	fontDesc.Height = qFontInfo.pixelSize();
@@ -393,6 +397,14 @@ void D3DVisualTarget::d3dFail(QString errorMsg)
 	errorMsgBox.exec();
 
 	QCoreApplication::exit(1);
+}
+
+void D3DVisualTarget::clear()
+{
+	//Since the back buffer was cleared the last time we presented, 
+	//I can simply flip it to the front, and we will be done
+    pD3dDevice_->Present( NULL, NULL, NULL, NULL );
+
 }
 
 

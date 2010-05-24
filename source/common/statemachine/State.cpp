@@ -9,8 +9,7 @@
 #include "../storage/BehavioralDataStore.h"
 #include "../engine/SignalChannel.h"
 
-#include <QDebug>
-
+#include <QCoreApplication>
 #include <QUuid>
 
 #ifdef CHECK_TIMING
@@ -97,39 +96,73 @@ QString State::run()
 		scene_->render();
 		//-----------------------------------------
 
-
-		//Update the BehavioralDataStore
-		//Note that the call to getValues clears out any existing values,
-		//so it should only be made once per frame.
-		behavData.emptyData();
-		behavData.addData(sigChannel->getValues());
-
-		//send a DIRECTORDATA command to the server with the most recent behavioral data
-		QSharedPointer<Picto::ProtocolResponse> dataResponse;
-		QString dataCommandStr = "DIRECTORDATA "+Engine::PictoEngine::getName()+" PICTO/1.0";
-		QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
-
-		QByteArray behaveDataXml;
-		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&behaveDataXml));
-		behavData.serializeAsXml(xmlWriter);
-
-		dataCommand->setContent(behaveDataXml);
-		dataCommand->setFieldValue("Content-Length",QString::number(behaveDataXml.length()));
-		QUuid commandUuid = QUuid::createUuid();
-		dataCommand->setFieldValue("Command-ID",commandUuid.toString());
-
-		serverChannel->sendRegisteredCommand(dataCommand);
-
-		//check for and process responses
-		while(serverChannel->waitForResponse(0))
+		//------------- Send Behavioral data to server --------------
+		if(serverChannel)
 		{
-			dataResponse = serverChannel->getResponse();
-			Q_ASSERT(!dataResponse.isNull());
-			Q_ASSERT(dataResponse->getResponseType() == "OK");
+			//Update the BehavioralDataStore
+			//Note that the call to getValues clears out any existing values,
+			//so it should only be made once per frame.
+			behavData.emptyData();
+			behavData.addData(sigChannel->getValues());
+
+			//send a DIRECTORDATA command to the server with the most recent behavioral data
+			QSharedPointer<Picto::ProtocolResponse> dataResponse;
+			QString dataCommandStr = "DIRECTORDATA "+Engine::PictoEngine::getName()+" PICTO/1.0";
+			QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+			QByteArray behaveDataXml;
+			QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&behaveDataXml));
+			behavData.serializeAsXml(xmlWriter);
+
+			dataCommand->setContent(behaveDataXml);
+			dataCommand->setFieldValue("Content-Length",QString::number(behaveDataXml.length()));
+			QUuid commandUuid = QUuid::createUuid();
+			dataCommand->setFieldValue("Command-ID",commandUuid.toString());
+
+			serverChannel->sendRegisteredCommand(dataCommand);
+
+			//check for and process responses
+			while(serverChannel->waitForResponse(0))
+			{
+				dataResponse = serverChannel->getResponse();
+				Q_ASSERT(!dataResponse.isNull());
+				Q_ASSERT(dataResponse->getResponseType() == "OK");
+			}
+
+
+			Q_ASSERT_X(serverChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
 		}
+		//If we don't have a command channel, we must be running locally
+		else
+		{
+			//The commands are a bit funny, but they work.  When Engine::stop() is called,
+			//the engine command gets set to StopEngine (and never gets reset).  This results
+			//in all of our states returning.  When pause is called, we simply sit and spin
+			//until a new command is issued (play or stop). 
+			int command = Engine::PictoEngine::getEngineCommand();
 
+			//To stop, we set isDone to true which breaks out of our loop.
+			//Then we generate an arbitrary result.  Regardless of where this result sends us
+			if(command == Engine::PictoEngine::StopEngine)
+			{
+				isDone = true;
+				result = "EngineAbort";
+			}
+			else if(command == Engine::PictoEngine::PauseEngine)
+			{
+				while(command == Engine::PictoEngine::PauseEngine)
+				{
+					command = Engine::PictoEngine::getEngineCommand();
+					QCoreApplication::processEvents();
+				}
+				if(command == Engine::PictoEngine::StopEngine)
+				{
+					isDone = true;
+					result = "EngineAbort";
+				}
+			}
 
-		Q_ASSERT_X(serverChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
+		}
 
 		//check all of the control elements
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
@@ -158,6 +191,14 @@ QString State::run()
 		//If there are no control elements, then we just return with an empty string
 		if(controlElements_.isEmpty())
 			isDone = true;
+
+		//If we're not in exclusive mode, we should allocate time to process events
+		//This would occur if we were running a state machine somewhere other than
+		//Director (e.g. debugging it in Workstation)
+		if(!Engine::PictoEngine::getExclusiveMode())
+		{
+			QCoreApplication::processEvents();
+		}
 	}
 
 	//run the exit script

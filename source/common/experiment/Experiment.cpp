@@ -57,6 +57,13 @@ bool Experiment::runTask(QString taskName)
 	return false;
 }
 
+//! Clears the experiment
+void Experiment::clear()
+{
+	tasks_.clear();
+	propertyContainer_.setPropertyValue("Name","Unnamed Experiment");
+}
+
 /*! \brief Turns this experiment into an XML fragment
  *
  *	The XML for an experiment looks like this:
@@ -99,6 +106,10 @@ bool Experiment::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRe
 		return false;
 	}
 	
+	//clear out the existing experiment
+	tasks_.clear();
+	
+
 	xmlStreamReader->readNext();
 	
 	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Experiment") && !xmlStreamReader->atEnd())
@@ -122,7 +133,11 @@ bool Experiment::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRe
 		else if(name == "Task")
 		{
 			QSharedPointer<Task> newTask(new Task);
-			newTask->deserializeFromXml(xmlStreamReader);
+			if(!newTask->deserializeFromXml(xmlStreamReader))
+			{
+				addError("Experiment", "Task failed to deserialize correctly", xmlStreamReader);
+				return false;
+			}
 			addTask(newTask);
 		}
 		else

@@ -9,6 +9,11 @@ VisualTarget::VisualTarget(bool _bWindowed, int _width, int _height) :
 {
 }
 
+VisualTarget::~VisualTarget()
+{
+	printf("Visual target destructor");
+}
+
 QRect VisualTarget::getDimensions()
 {
 	return(QRect(0,0,width_,height_));

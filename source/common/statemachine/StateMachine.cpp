@@ -227,6 +227,9 @@ QString StateMachine::run()
 	{
 		QString result = currElement->run();
 
+		if(result == "EngineAbort")
+			return result;
+
 		//Find the transition from our current source with a SourceResult string that matches the result
 		//Yeah, this is kind of ugly...
 		nextElementName = "";
@@ -293,7 +296,6 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
 	return true;
 }
 
-
 /*!	\brief Sends a Trial event to PictoServer
  *
  *	At the begining and end of a Trial, we send a timestamped StartTrial event to 
@@ -312,6 +314,10 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
  */
 void StateMachine::sendTrialEventToServer()
 {
+	QSharedPointer<CommandChannel> serverChannel = Engine::PictoEngine::getCommandChannel();
+	if(serverChannel.isNull())
+		return;
+
 	//Create a TRIAL command
 	QSharedPointer<ProtocolCommand> command(new ProtocolCommand("TRIAL /start PICTO/1.0"));
 
@@ -340,7 +346,6 @@ void StateMachine::sendTrialEventToServer()
 	//Send out the command
 	QSharedPointer<ProtocolResponse> response;
 
-	QSharedPointer<CommandChannel> serverChannel = Engine::PictoEngine::getCommandChannel();
 
 	serverChannel->sendCommand(command);
 	serverChannel->waitForResponse(1000);
@@ -365,6 +370,9 @@ void StateMachine::sendTrialEventToServer()
 bool StateMachine::cleanupRegisteredCommands()
 {
 	QSharedPointer<CommandChannel> serverChan = Engine::PictoEngine::getCommandChannel();
+	
+	if(!serverChan)
+		return true;
 
 	int elapsedTimeMs = 0;
 	QSharedPointer<ProtocolResponse> resp;

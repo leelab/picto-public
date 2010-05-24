@@ -23,15 +23,18 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 	}
 	else
 	{
-		resize(width_, height_);
+		//setMaximumSize(width_,height_);
+		setFixedSize(width_,height_);
+		resize(width_, height_);  //This might be redundant...
 	}
 	setAttribute(Qt::WA_NativeWindow,true);
-	winId();
 	setAttribute(Qt::WA_PaintOnScreen,true);
 
     QPalette pal = palette();
     pal.setColor(QPalette::Window, Qt::black);
     setPalette(pal);
+
+	setAutoFillBackground(true);
 
 	pixmapCompositingSurfaces_.push_back(QPixmap(width(),height()));
 	pixmapCompositingSurfaces_.push_back(QPixmap(width(),height()));
@@ -42,9 +45,15 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 	surfaceActingAsBackBuffer_=1;
 }
 
-void PixmapVisualTarget::paintEvent(QPaintEvent *)
+PixmapVisualTarget::~PixmapVisualTarget()
 {
-	QPainter painter(this);
+	printf("PixmapVisualTarget detructor called!\n");
+}
+
+void PixmapVisualTarget::paint(QPaintDevice *widget)
+{
+	//Note that we aren't assuming that we're drawing on ourselves.
+	QPainter painter(widget);
 
 	painter.drawPixmap(QPoint(0,0),pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1]);
 }
@@ -75,9 +84,13 @@ void PixmapVisualTarget::present()
 {
 	surfaceActingAsBackBuffer_ = ~surfaceActingAsBackBuffer_ & 1;
 
-	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,0,0,0));
+	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,127,0,0));
 
 	repaint();
+
+	//This signal is here so that if this VisualTarget belongs to a 
+	//VisualTargetHost, we will know that a repaint occured.
+	emit presented();
 }
 
 void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)
@@ -87,6 +100,17 @@ void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect r
 	painter.setPen(color);
 	painter.setFont(font);
 	painter.drawText(rect, alignment, text);
+}
+
+void PixmapVisualTarget::clear()
+{
+	pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1].fill(QColor(0,0,0,0));
+
+	repaint();
+
+	//This signal is here so that if this VisualTarget belongs to a 
+	//VisualTargetHost, we will know that a repaint occured.
+	emit presented();
 }
 
 }; //namespace Picto

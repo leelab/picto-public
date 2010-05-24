@@ -83,7 +83,13 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 		QString name = xmlStreamReader->name().toString();
 		if(name == "Name")
 		{
-			propertyContainer_.setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
+			QString elementText = xmlStreamReader->readElementText();
+			if(elementText == "EngineAbort")
+			{
+				addError("Result", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
+				return false;
+			}
+			propertyContainer_.setPropertyValue("Name",QVariant(elementText));
 		}
 		else if(name == "Reward")
 		{

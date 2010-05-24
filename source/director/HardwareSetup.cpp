@@ -1,7 +1,6 @@
 #include "HardwareSetup.h"
 
-
-#include "../common/stimuli/VisualElementFactory.h"
+/*#include "../common/stimuli/VisualElementFactory.h"
 #include "../common/stimuli/ArrowGraphic.h"
 #include "../common/stimuli/BoxGraphic.h"
 #include "../common/stimuli/CircleGraphic.h"
@@ -9,7 +8,7 @@
 #include "../common/stimuli/LineGraphic.h"
 #include "../common/stimuli/PictureGraphic.h"
 #include "../common/stimuli/RandomlyFilledGridGraphic.h"
-#include "../common/stimuli/TextGraphic.h"
+#include "../common/stimuli/TextGraphic.h"*/
 
 #include "../common/controlelements/ControlElementFactory.h"
 #include "../common/controlelements/TestController.h"
@@ -123,7 +122,7 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 			return false;
 
 		QSharedPointer<Picto::VisualTarget> visualTarget = engine_->getRenderingTargets().first()->getVisualTarget();
-		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,visualTarget));
+		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,visualTarget.data()));
 		engine_->addSignalChannel("PositionChannel",mouseChannel);
 	}
 	else if(channelType == EyetrackerXp)

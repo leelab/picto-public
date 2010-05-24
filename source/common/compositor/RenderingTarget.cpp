@@ -16,6 +16,11 @@ RenderingTarget::RenderingTarget(QSharedPointer<VisualTarget> visualTarget,
 	auralTarget_ = auralTarget;
 }
 
+RenderingTarget::~RenderingTarget()
+{
+	printf("RenderTarget destructor");
+}
+
 QSharedPointer<CompositingSurface> RenderingTarget::generateCompositingSurface()
 {
 	return visualTarget_->generateCompositingSurface();

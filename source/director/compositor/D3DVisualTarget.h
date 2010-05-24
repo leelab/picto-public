@@ -25,11 +25,12 @@ public:
 	QString getTypeName();
 	void draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface);
 	void present();
+	void clear();
 
 	void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text);
 
 protected:
-	void paintEvent(QPaintEvent *);
+	void paint(QPaintDevice *widget);
 	void closeEvent(QCloseEvent *event);
 
 private:

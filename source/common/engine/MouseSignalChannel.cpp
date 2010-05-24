@@ -8,7 +8,7 @@
 
 namespace Picto {
 
-MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QSharedPointer<QWidget> widget)
+MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QWidget *widget)
 	: SignalChannel(sampsPerSecond),
 	  widget_(widget)
 {

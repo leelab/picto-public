@@ -38,6 +38,7 @@ struct RenderingTarget
 {
 public:
     RenderingTarget(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<AuralTarget> auralTarget);
+	~RenderingTarget();
 
 	virtual QSharedPointer<CompositingSurface> generateCompositingSurface();
 	virtual QSharedPointer<MixingSample> generateMixingSample();

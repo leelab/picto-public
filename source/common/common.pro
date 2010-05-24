@@ -34,6 +34,8 @@ HEADERS += $$(PICTO_TREE)/source/common/compositor/RenderingTarget.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/RenderingTarget.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/VisualTarget.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/VisualTarget.cpp
+HEADERS += $$(PICTO_TREE)/source/common/compositor/VisualTargetHost.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/VisualTargetHost.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/AuralTarget.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/AuralTarget.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/PixmapVisualTarget.h
@@ -121,6 +123,8 @@ HEADERS += $$(PICTO_TREE)/source/common/iodevices/NullRewardController.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/NullRewardController.cpp
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/NullEventCodeGenerator.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/NullEventCodeGenerator.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/AudioRewardController.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/AudioRewardController.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp
