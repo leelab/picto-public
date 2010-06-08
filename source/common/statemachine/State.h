@@ -10,6 +10,10 @@
 
 namespace Picto {
 
+class BehavioralDataStore;
+class CommandChannel;
+class SignalChannel;
+
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API State : public StateMachineElement
 #else
@@ -37,10 +41,17 @@ public:
 
 
 private:
+	void sendBehavioralData();
+	void runScript(QString scriptName);
+	bool checkForEngineStop();
+	void updateServer();
+
 	QSharedPointer<Scene> scene_;
 	QMap<QString, QSharedPointer<ControlElement> > controlElements_;
 	int revision_;
 	int engineNeeded_;
+
+	QSharedPointer<SignalChannel> sigChannel_;
 
 	QSharedPointer<QScriptEngine> qsEngine_;
 };

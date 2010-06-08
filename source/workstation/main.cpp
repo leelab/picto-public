@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
 	MainWindow mainWin;
 
-	mainWin.resize(1450,1024);
+	//mainWin.resize(1450,1024);
 	mainWin.show();
 
 	int result = app.exec();

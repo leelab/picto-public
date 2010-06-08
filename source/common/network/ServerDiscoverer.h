@@ -20,10 +20,12 @@ struct ServerDiscoverer : QObject
 
 public:
 	ServerDiscoverer(QObject *parent = 0);
-	void discover(int timeout = 1000);
 	bool waitForDiscovered(int timeout = 30000);
 	QHostAddress getAddress();
 	quint16 getPort();
+
+public slots:
+	void discover(int timeout = 1000);
 
 signals:
 	void foundServer(QHostAddress pictoServerAddress, quint16 pictoServerPort);

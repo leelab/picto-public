@@ -12,6 +12,7 @@ NeuralDataCollector::NeuralDataCollector(QSqlDatabase &sessionDb, int interval, 
 		collectionInterval_(interval),
 		db_(sessionDb)
 {
+	Q_ASSERT(false);  //We need to move all db access out of here and the alignment tool...
 	//grab the proxy server port and and adression from the sessoin db_
 	QSqlQuery query(sessionDb);
 	query.exec("SELECT value FROM sessioninfo WHERE key='Proxy Adress'");

@@ -7,7 +7,7 @@ TranslatedNames::TranslatedNames()
 	serverAppName = tr("PictoServer");
 	proxyServerAppName = tr("PictoProxyServer");
 	configAppName = tr("PictoConfig");
-	directorAppName = tr("PictoController");
+	directorAppName = tr("PictoDirector");
 	directorHWName = tr("PictoBox");
 	workstationAppName = tr("PictoWorkstation");
 }

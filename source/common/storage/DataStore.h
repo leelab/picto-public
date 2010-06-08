@@ -43,9 +43,11 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 	static QString getErrors();
+	void clearErrors() { errors_.clear(); };
 
 protected:
 	void addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	void addError(QString objectType, QString errorMsg);
 
 	//To make the serialization and desrialization routines easier, the following mini
 	//functions are provided, for serializing and deserializing common data types.

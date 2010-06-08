@@ -36,12 +36,7 @@ State::State()
 
 QString State::run()
 {
-	BehavioralDataStore behavData;
-
-	QSharedPointer<SignalChannel> sigChannel;
-	sigChannel = Engine::PictoEngine::getSignalChannel("PositionChannel");
-
-	QSharedPointer<CommandChannel> serverChannel = Engine::PictoEngine::getCommandChannel();
+	sigChannel_ = Engine::PictoEngine::getSignalChannel("PositionChannel");
 
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
@@ -54,17 +49,7 @@ QString State::run()
 
 	//run the entry script
 	if(runEntryScript)
-	{
-		qsEngine_->globalObject().property(entryScriptName).call();
-		if(qsEngine_->hasUncaughtException())
-		{
-			QString errorMsg = "Uncaught exception in State" + getName() +" entry script.\n";
-			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-											  .arg(qsEngine_->uncaughtException().toString());
-			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-			qDebug()<<errorMsg;
-		}
-	}
+		runScript(entryScriptName);
 
 	//Start up all of the control elements
 	foreach(QSharedPointer<ControlElement> control, controlElements_)
@@ -94,77 +79,14 @@ QString State::run()
 
 		//----------  Draw the scene --------------
 		scene_->render();
-		//-----------------------------------------
 
 		//------------- Send Behavioral data to server --------------
-		if(serverChannel)
-		{
-			//Update the BehavioralDataStore
-			//Note that the call to getValues clears out any existing values,
-			//so it should only be made once per frame.
-			behavData.emptyData();
-			behavData.addData(sigChannel->getValues());
+		sendBehavioralData();
 
-			//send a DIRECTORDATA command to the server with the most recent behavioral data
-			QSharedPointer<Picto::ProtocolResponse> dataResponse;
-			QString dataCommandStr = "DIRECTORDATA "+Engine::PictoEngine::getName()+" PICTO/1.0";
-			QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+		//---------- Check for directives from the server -----------
+		updateServer();
 
-			QByteArray behaveDataXml;
-			QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&behaveDataXml));
-			behavData.serializeAsXml(xmlWriter);
-
-			dataCommand->setContent(behaveDataXml);
-			dataCommand->setFieldValue("Content-Length",QString::number(behaveDataXml.length()));
-			QUuid commandUuid = QUuid::createUuid();
-			dataCommand->setFieldValue("Command-ID",commandUuid.toString());
-
-			serverChannel->sendRegisteredCommand(dataCommand);
-
-			//check for and process responses
-			while(serverChannel->waitForResponse(0))
-			{
-				dataResponse = serverChannel->getResponse();
-				Q_ASSERT(!dataResponse.isNull());
-				Q_ASSERT(dataResponse->getResponseType() == "OK");
-			}
-
-
-			Q_ASSERT_X(serverChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
-		}
-		//If we don't have a command channel, we must be running locally
-		else
-		{
-			//The commands are a bit funny, but they work.  When Engine::stop() is called,
-			//the engine command gets set to StopEngine (and never gets reset).  This results
-			//in all of our states returning.  When pause is called, we simply sit and spin
-			//until a new command is issued (play or stop). 
-			int command = Engine::PictoEngine::getEngineCommand();
-
-			//To stop, we set isDone to true which breaks out of our loop.
-			//Then we generate an arbitrary result.  Regardless of where this result sends us
-			if(command == Engine::PictoEngine::StopEngine)
-			{
-				isDone = true;
-				result = "EngineAbort";
-			}
-			else if(command == Engine::PictoEngine::PauseEngine)
-			{
-				while(command == Engine::PictoEngine::PauseEngine)
-				{
-					command = Engine::PictoEngine::getEngineCommand();
-					QCoreApplication::processEvents();
-				}
-				if(command == Engine::PictoEngine::StopEngine)
-				{
-					isDone = true;
-					result = "EngineAbort";
-				}
-			}
-
-		}
-
-		//check all of the control elements
+		//--------- Check control elements------------
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
 		{
 			if(control->isDone())
@@ -173,24 +95,19 @@ QString State::run()
 				isDone = true;
 			}
 		}
-
-		//run the frame script
-		if(runFrameScript && !isDone)
-		{
-			qsEngine_->globalObject().property(frameScriptName).call();
-			if(qsEngine_->hasUncaughtException())
-			{
-				QString errorMsg = "Uncaught exception in State" + getName() +" frame script.\n";
-				errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-												  .arg(qsEngine_->uncaughtException().toString());
-				errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-				qDebug()<<errorMsg;
-			}
-		}
-
-		//If there are no control elements, then we just return with an empty string
 		if(controlElements_.isEmpty())
 			isDone = true;
+
+		//-------------- Run the frame script ----------------
+		if(runFrameScript && !isDone)
+			runScript(frameScriptName);
+
+		//------ Check for engine stop commands ---------------
+		if(checkForEngineStop())
+		{
+			isDone = true;
+			result = "EngineAbort";
+		}
 
 		//If we're not in exclusive mode, we should allocate time to process events
 		//This would occur if we were running a state machine somewhere other than
@@ -203,17 +120,7 @@ QString State::run()
 
 	//run the exit script
 	if(runExitScript)
-	{
-		qsEngine_->globalObject().property(exitScriptName).call();
-		if(qsEngine_->hasUncaughtException())
-		{
-			QString errorMsg = "Uncaught exception in State" + getName() +" exit script.\n";
-			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-											  .arg(qsEngine_->uncaughtException().toString());
-			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-			qDebug()<<errorMsg;
-		}
-	}
+		runScript(exitScriptName);
 
 
 
@@ -234,6 +141,170 @@ QString State::run()
 
 	return result;
 }
+
+//! Sends the current behavioral data to the server
+void State::sendBehavioralData()
+{
+	BehavioralDataStore behavData;
+
+	QSharedPointer<CommandChannel> dataChannel = Engine::PictoEngine::getDataCommandChannel();
+
+	if(dataChannel.isNull())
+		return;
+	
+	//Update the BehavioralDataStore
+	//Note that the call to getValues clears out any existing values,
+	//so it should only be made once per frame.
+	behavData.emptyData();
+	behavData.addData(sigChannel_->getValues());
+
+	//send a PUTDATA command to the server with the most recent behavioral data
+	QSharedPointer<Picto::ProtocolResponse> dataResponse;
+	QString dataCommandStr = "PUTDATA "+Engine::PictoEngine::getName()+" PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+	QByteArray behaveDataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&behaveDataXml));
+	behavData.serializeAsXml(xmlWriter);
+
+	dataCommand->setContent(behaveDataXml);
+	dataCommand->setFieldValue("Content-Length",QString::number(behaveDataXml.length()));
+	QUuid commandUuid = QUuid::createUuid();
+	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
+
+	dataChannel->sendRegisteredCommand(dataCommand);
+
+	//check for and process responses
+	while(dataChannel->waitForResponse(0))
+	{
+		dataResponse = dataChannel->getResponse();
+		Q_ASSERT(!dataResponse.isNull());
+		Q_ASSERT(dataResponse->getResponseType() == "OK");
+	}
+
+
+	Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
+
+}
+
+//! Runs a script
+void State::runScript(QString scriptName)
+{
+	//entry script
+	qsEngine_->globalObject().property(scriptName).call();
+	if(qsEngine_->hasUncaughtException())
+	{
+		QString errorMsg = "Uncaught exception in State" + getName() +", script "+scriptName+"\n";
+		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+										  .arg(qsEngine_->uncaughtException().toString());
+		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+		qDebug()<<errorMsg;
+	}
+}
+
+/*! \brief Checks for engine commands and returns true if we need to stop
+ *
+ *	The commands are a bit funny, but they work.  When Engine::stop() is called,
+ *	the engine command gets set to StopEngine (and never gets reset).  This results
+ *	in all of our states returning.  When pause is called, we simply sit and spin
+ *	until a new command is issued (play or stop). 
+ */
+bool State::checkForEngineStop()
+{
+	int command = Engine::PictoEngine::getEngineCommand();
+
+	//To stop, we set isDone to true which breaks out of our loop.
+	//Then we generate an arbitrary result.  Regardless of where this result sends us
+	if(command == Engine::PictoEngine::StopEngine)
+	{
+		return true;
+	}
+	else if(command == Engine::PictoEngine::PauseEngine)
+	{
+		while(command == Engine::PictoEngine::PauseEngine)
+		{
+			updateServer();
+			sendBehavioralData();
+			command = Engine::PictoEngine::getEngineCommand();
+			QCoreApplication::processEvents();
+
+			//kill 20 ms
+			QTime timer;
+			timer.start();
+			while(timer.elapsed()<20);
+
+		}
+		if(command == Engine::PictoEngine::StopEngine)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+/*	\brief Sends an UPDATEDIRECTOR command and deals with any directives included in the response
+ *
+ *	Once per frame, we need to check in with the server.  The response from the server
+ *  may contain a "directive", which we will handle here as well (e.g. stop, pause, etc).
+ */
+void State::updateServer()
+{
+	QSharedPointer<Picto::CommandChannel>updateChan = Engine::PictoEngine::getUpdateCommandChannel();
+	
+	if(updateChan.isNull())
+		return;
+
+	while(updateChan->incomingResponsesWaiting())
+	{
+		updateChan->getResponse();
+		Q_ASSERT(false);	//This will break things in debug, but ignore issues in release
+	}
+
+
+	QSharedPointer<Picto::ProtocolResponse> updateResponse;
+
+	QString updateCommandStr = "DIRECTORUPDATE "+Picto::Engine::PictoEngine::getName()+":running PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
+
+	updateChan->sendCommand(updateCommand);
+
+	if(!updateChan->waitForResponse(100))
+	{
+		Q_ASSERT(false);
+		return;
+	}
+
+	updateResponse = updateChan->getResponse();
+	Q_ASSERT(updateResponse);
+	Q_ASSERT(updateResponse->getResponseType() == "OK");
+
+	QString statusDirective = updateResponse->getDecodedContent().toUpper();
+
+	if(statusDirective.startsWith("OK"))
+	{
+		//do nothing
+	}
+	else if(statusDirective.startsWith("STOP"))
+	{
+		Picto::Engine::PictoEngine::stop();
+	}
+	else if(statusDirective.startsWith("PAUSE"))
+	{
+		Picto::Engine::PictoEngine::pause();
+	}
+	else if(statusDirective.startsWith("RESUME"))
+	{
+		Picto::Engine::PictoEngine::resume();
+	}
+	else
+	{
+		Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
+	}
+
+}
+
 
 /* \Brief Sets up the state for scripting
  *

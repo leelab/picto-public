@@ -60,7 +60,8 @@ void RunTaskDialog::runTask()
 
 	QSharedPointer<Picto::ProtocolCommand> startTaskCmd(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> startTaskResponse;
-	startTaskCmd->setFieldValue("Session-ID",sessionId_.toString());
+
+	commandChannel_->setSessionId(sessionId_);
 
 	if(commandChannel_->getChannelStatus() != Picto::CommandChannel::connected)
 	{

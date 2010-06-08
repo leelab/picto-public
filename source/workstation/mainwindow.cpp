@@ -7,6 +7,7 @@
 #include "viewer/viewer.h"
 #include "viewer/textviewer.h"
 #include "viewer/testviewer.h"
+#include "viewer/remoteviewer.h"
 
 MainWindow::MainWindow()
 {	
@@ -24,7 +25,8 @@ MainWindow::MainWindow()
 
 
 	isModified_ = false;
-	newExperiment();
+	//newExperiment();
+	recentExperimentsActions_[0]->trigger();
 }
 
 
@@ -211,6 +213,17 @@ void MainWindow::createViewers()
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 
+	//remote viewer
+	viewer = new RemoteViewer(this);
+	viewerNames_.append(viewer->type());
+	viewerStack_->addWidget(viewer);
+	viewerAction = new QAction(tr("&Run remote experiment"),this);
+	viewerAction->setShortcut(tr("Ctrl+4"));
+	viewerAction->setIcon(QIcon(":/icons/remote.png"));
+	viewerAction->setData(3);
+	viewerToolbar_->addAction(viewerAction);
+	modeMenu_->addAction(viewerAction);
+	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 
 	/*modeMenu_->addAction(stateMachineEditModeAction_);
 	modeMenu_->addAction(runModeAction_);
@@ -245,8 +258,10 @@ void MainWindow::createViewers()
 	viewerNames_.append(testViewer->type());
 	viewerStack_->addWidget(testViewer);*/
 
-	currViewer_ = qobject_cast<Viewer*>(viewerStack_->widget(0));
+	currViewer_ = qobject_cast<Viewer*>(viewerStack_->widget(3));
 	viewerStack_->setCurrentWidget(currViewer_);
+	currViewer_->init();
+	currViewer_->setVisible(true);
 }
 
 /*****************************************************
@@ -512,6 +527,9 @@ bool MainWindow::convertTextToExperiment()
 		return false;
 	}
 
+	experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
+	//experiment_->clearErrors();
+	//experiment_->clear();
 	bool result = experiment_->deserializeFromXml(xmlReader);
 
 	if(!result)

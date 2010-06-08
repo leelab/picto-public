@@ -20,6 +20,9 @@
 
 #include "../common/engine/PictoEngine.h"
 
+QSharedPointer<Picto::CommandChannel> connectToServer();
+
+
 int main(int argc, char *argv[])
 {
 
@@ -98,34 +101,10 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////
 	// Setup networking
 	///////////////////////////////////////
-	//Find a server and open a command channel to it
-	Picto::ServerDiscoverer serverDiscoverer;
-	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel);
-	serverChannel->pollingMode(true);
+	engine->setDataCommandChannel(connectToServer());
 
-	serverDiscoverer.discover();
-
-	while(!serverDiscoverer.waitForDiscovered(10000))
-	{
-		QMessageBox notFound;
-		notFound.setText("No PictoServer found on the network.  Try again.?");
-		notFound.setIcon(QMessageBox::Critical);
-		notFound.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-		int ret = notFound.exec();
-		if(ret == QMessageBox::Cancel)
-			return 0;
-		else
-			serverDiscoverer.discover();
-	}
-
-	QHostAddress serverAddr = serverDiscoverer.getAddress();
-	quint16 port = serverDiscoverer.getPort();
-
-	serverChannel->connectToServer(serverAddr, port);
-
-	Q_ASSERT(serverChannel->getChannelStatus() == Picto::CommandChannel::connected);
-
-	engine->setCommandChannel(serverChannel);
+	QSharedPointer<Picto::CommandChannel> serverUpdateChannel = connectToServer();
+	engine->setUpdateCommandChannel(serverUpdateChannel);
 
 	///////////////////////////////////////
 	// Run event loop
@@ -146,22 +125,33 @@ int main(int argc, char *argv[])
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 	forever
 	{
-		serverChannel->sendCommand(updateCommand);
+		if(serverUpdateChannel->incomingResponsesWaiting())
+		{
+			int pendingResponses = serverUpdateChannel->pendingResponses();
+			
+			updateResponse = serverUpdateChannel->getResponse();
+			QString debugMsg = "Unexpected response: ";
+			debugMsg += updateResponse->generateHeadersString();
+			debugMsg += updateResponse->getContent();
+			Q_ASSERT_X(false, "Director loop", QString::number(pendingResponses).toAscii());
+			Q_ASSERT_X(false, "Director loop", debugMsg.toAscii());
+		}
+		serverUpdateChannel->sendCommand(updateCommand);
 
 		//! \todo figure out something better to do here...
 		//If we don't get a response, die
-		if(!serverChannel->waitForResponse(5000))
+		if(!serverUpdateChannel->waitForResponse(5000))
 			break;
 
 
-		updateResponse = serverChannel->getResponse();
+		updateResponse = serverUpdateChannel->getResponse();
 
 		if(updateResponse.isNull() || updateResponse->getResponseType() != "OK")
 		{
-			/*QMessageBox netError;
+			QMessageBox netError;
 			netError.setText("Network error.  PictoDirector will exit.");
 			netError.setIcon(QMessageBox::Critical);
-			netError.exec();*/
+			netError.exec();
 			break;
 		}
 
@@ -233,12 +223,12 @@ int main(int argc, char *argv[])
 			QSharedPointer<Picto::ProtocolCommand> runningUpdateCommand(new Picto::ProtocolCommand(runningUpdateCommandStr));
 			QSharedPointer<Picto::ProtocolResponse> runningUpdateResponse;
 
-			serverChannel->sendCommand(runningUpdateCommand);
+			serverUpdateChannel->sendCommand(runningUpdateCommand);
 
 			//! \todo handle this more gracefully
-			if(!serverChannel->waitForResponse(5000))
+			if(!serverUpdateChannel->waitForResponse(5000))
 				break;
-			runningUpdateResponse = serverChannel->getResponse();
+			runningUpdateResponse = serverUpdateChannel->getResponse();
 			if(runningUpdateResponse.isNull() || runningUpdateResponse->getResponseType() != "OK")
 				break;
 
@@ -249,6 +239,16 @@ int main(int argc, char *argv[])
 			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
 			{
 				target->updateStatus("Completed Task: " + taskName);
+				target->showSplash();
+			}
+		}
+		else if(statusDirective.startsWith("ENDSESSION"))
+		{
+			engine->setSessionId(QUuid());
+			engine->clearExperiment();
+			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+			{
+				target->updateStatus("Session ended");
 				target->showSplash();
 			}
 		}
@@ -353,3 +353,37 @@ int main(int argc, char *argv[])
  *        
  *        When a PictoEngine is not executing, it will render a splash screen to the RenderingTarget.
  */
+
+
+//! Returns a command channel connected to the server (or null if the something goes wrong).
+QSharedPointer<Picto::CommandChannel> connectToServer()
+{
+	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel);
+	QSharedPointer<Picto::CommandChannel> nullChannel;
+
+	//Find a server and open a command channel to it
+	Picto::ServerDiscoverer serverDiscoverer;
+	serverChannel->pollingMode(true);
+
+	serverDiscoverer.discover();
+
+	while(!serverDiscoverer.waitForDiscovered(10000))
+	{
+		QMessageBox notFound;
+		notFound.setText("No PictoServer found on the network.  Try again.?");
+		notFound.setIcon(QMessageBox::Critical);
+		notFound.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		int ret = notFound.exec();
+		if(ret == QMessageBox::Cancel)
+			return nullChannel;
+		else
+			serverDiscoverer.discover();
+	}
+
+	serverChannel->connectToServer(serverDiscoverer.getAddress(), 
+								 serverDiscoverer.getPort());
+
+	Q_ASSERT(serverChannel->getChannelStatus() == Picto::CommandChannel::connected);
+
+	return serverChannel;
+}

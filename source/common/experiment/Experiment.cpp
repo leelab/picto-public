@@ -39,11 +39,19 @@ QStringList Experiment::getTaskNames()
 
 bool Experiment::runTask(QString taskName)
 {
+	if(tasks_.isEmpty())
+		return false;
+
 	//search through tasks_ for a matching task and run it!
 	//note that the taskname here may have had all of it's whitespace 
 	//removed, so we need to check that possibility
 	foreach(QSharedPointer<Task> task, tasks_)
 	{
+		///////////////////////
+		QString debugginStr = task->name();
+		///////////////////////
+
+
 		if(task->name() == taskName)
 		{
 			return task->run();
@@ -60,7 +68,7 @@ bool Experiment::runTask(QString taskName)
 //! Clears the experiment
 void Experiment::clear()
 {
-	tasks_.clear();
+	tasks_.clear();	
 	propertyContainer_.setPropertyValue("Name","Unnamed Experiment");
 }
 

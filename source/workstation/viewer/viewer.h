@@ -9,6 +9,10 @@
  *	since the viewers are all so different, this will be a pretty simple class
  *	and most of the work withh be in the derived classes.
  *
+ *	Each viewer is allocated a single menu that it is given full control over.  The setupMenu
+ *	function is called by the mainwindow along with a menu which is being allocated to that 
+ *	viewer.
+ *
  *	The relationship between experiment_ and experimentText_ needs to be explained.  Since
  *	it is likely that uring the early stages of developing an experiment, the XML for the
  *	experiment will be incomplete, we need to be able to store the actual text.  If the
@@ -34,6 +38,8 @@
 #include <QSharedPointer>
 #include <QTextDocument>
 
+class QMenu;
+
 class Viewer : public QWidget
 {
 	Q_OBJECT
@@ -42,6 +48,7 @@ public:
 
 	void setExperiment(QSharedPointer<Picto::Experiment> experiment) { experiment_ = experiment; }
 	void setExperimentText(QTextDocument *experimentText) {experimentText_ = experimentText; }
+
 	//Returns the type of viewer (e.g "Text")
 	virtual QString type() = 0;
 

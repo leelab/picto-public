@@ -39,12 +39,12 @@ public:
 
 	void emptyData() { data_.clear(); };
 
+	int length() { return data_.length(); }
+	BehavioralDataPoint takeFirstDataPoint() { return data_.takeFirst(); };
+
 	//Data store functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-	int length() { return data_.length(); }
-	BehavioralDataPoint takeFirstDataPoint() { return data_.takeFirst(); };
 private:
 
 	QList<BehavioralDataPoint> data_;

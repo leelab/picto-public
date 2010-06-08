@@ -12,7 +12,7 @@ DataStore::DataStore()
 
 /*! \brief Adds an error message to the list of errors
  *
- *	We maintain a list of erros so that errors can be tracked through the deserialization
+ *	We maintain a list of errors so that errors can be tracked through the deserialization
  *	process.
  */
 void DataStore::addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -26,6 +26,16 @@ void DataStore::addError(QString objectType, QString errorMsg, QSharedPointer<QX
 
 	errors_.append(newErr);
 }
+
+void DataStore::addError(QString objectType, QString errorMsg)
+{
+	QString newErr = "ERROR\n";
+	newErr += "Object: " + objectType + "\n";
+	newErr += "Message: " + errorMsg + "\n";
+
+	errors_.append(newErr);
+}
+
 
 /*!	\brief Returns a string listing all errors that have occured
  */

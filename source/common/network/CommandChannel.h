@@ -94,6 +94,8 @@ public:
 	//!Check channel status
 	ChannelStatus getChannelStatus() { return status; };
 
+	bool isConnected() { return status == connected; };
+
 	//QTcpSocket *getConsumerSocket() { return consumerSocket; };
 	//QTcpSocket *getProducerSocket() { return producerSocket; };
 

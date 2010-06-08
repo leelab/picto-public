@@ -15,7 +15,8 @@ QList<QSharedPointer<RenderingTarget> > PictoEngine::renderingTargets_;
 QMap<QString, QSharedPointer<SignalChannel> > PictoEngine::signalChannels_;
 QSharedPointer<RewardController> PictoEngine::rewardController_;
 QSharedPointer<EventCodeGenerator> PictoEngine::eventCodeGenerator_;
-QSharedPointer<CommandChannel> PictoEngine::commandChannel_;
+QSharedPointer<CommandChannel> PictoEngine::dataCommandChannel_;
+QSharedPointer<CommandChannel> PictoEngine::updateCommandChannel_;
 QUuid PictoEngine::sessionId_;
 QString PictoEngine::name_;
 bool PictoEngine::bExclusiveMode_;
@@ -25,6 +26,7 @@ PictoEngine::PictoEngine() :
 	timingType_(PictoEngineTimingType::precise)
 {
 	bExclusiveMode_ = true;
+	setSessionId(QUuid());
 }
 
 void PictoEngine::setTimingControl(PictoEngineTimingType::PictoEngineTimingType _timingType)
@@ -82,30 +84,43 @@ void PictoEngine::giveReward(int channel)
 		rewardController_->giveReward(channel);
 }
 
-//! Sets the CommandChannel.  Returns true if the channel's status is connected
-bool PictoEngine::setCommandChannel(QSharedPointer<CommandChannel> commandChannel)
+//! Sets the CommandChannel used for data.  Returns true if the channel's status is connected
+bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel)
 {
+	dataCommandChannel_ = commandChannel;
 	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
-	{
 		return false;
-	}
 	else
-	{
-		commandChannel_ = commandChannel;
 		return true;
-	}
 }
 
-QSharedPointer<CommandChannel> PictoEngine::getCommandChannel()
+QSharedPointer<CommandChannel> PictoEngine::getDataCommandChannel()
 {
-	return commandChannel_;
+	return dataCommandChannel_;
+}
+
+//! Sets the CommandChannel used for updates.  Returns true if the channel's status is connected
+bool PictoEngine::setUpdateCommandChannel(QSharedPointer<CommandChannel> commandChannel)
+{
+	updateCommandChannel_ = commandChannel;
+	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
+		return false;
+	else
+		return true;
+}
+
+QSharedPointer<CommandChannel> PictoEngine::getUpdateCommandChannel()
+{
+	return updateCommandChannel_;
 }
 
 void PictoEngine::setSessionId(QUuid sessionId)
 {
 	sessionId_ = sessionId;
-	if(!commandChannel_.isNull())
-		commandChannel_->setSessionId(sessionId_);
+	if(!dataCommandChannel_.isNull())
+		dataCommandChannel_->setSessionId(sessionId_);
+	if(!updateCommandChannel_.isNull())
+		updateCommandChannel_->setSessionId(sessionId_);
 }
 
 
@@ -114,6 +129,12 @@ bool PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> experiment)
 	experiment_ = experiment;
 
 	return true;
+}
+
+//Sets the experiment pointer to null
+void PictoEngine::clearExperiment()
+{
+	experiment_ = QSharedPointer<Picto::Experiment>();  
 }
 
 //! Runs the task with the passed in name
@@ -130,6 +151,12 @@ bool PictoEngine::runTask(QString taskName)
 int PictoEngine::getEngineCommand()
 {
 	return engineCommand_;
+}
+ 
+void PictoEngine::stop()
+{ 
+	engineCommand_ = StopEngine; 
+	stopAllSignalChannels();
 }
 
 

@@ -19,11 +19,13 @@ SOURCES += $$(PICTO_TREE)/source/workstation/ErrorList.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/viewer/viewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/viewer/viewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/viewer/textviewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/textviewer.cpp
 SOURCES += $$(PICTO_TREE)/source/workstation/viewer/xmleditor.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/viewer/xmleditor.h
-SOURCES += $$(PICTO_TREE)/source/workstation/viewer/textviewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/viewer/testviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/viewer/testviewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/remoteviewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/remoteviewer.cpp
 
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp

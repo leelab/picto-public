@@ -107,8 +107,15 @@ bool Task::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		addError("Task", "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
-
-	return true;
+	if(stateMachine_->validateStateMachine())
+	{
+		return true;
+	}
+	else
+	{
+		addError("StateMachine","StateMachine failed validation",xmlStreamReader);
+		return false;
+	}
 }
 
 }; //namespace Picto

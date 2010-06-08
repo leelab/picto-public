@@ -8,6 +8,7 @@
 AlignmentTool::AlignmentTool(QSqlDatabase sessionDb)
 	: sessionDb_(sessionDb)
 {
+	Q_ASSERT(false);  //We need to relocate all of the database accesses to SessionInfo
 	//set up the sums
 	sumXX_ = 0.0;
 	sumYY_ = 0.0;

@@ -137,6 +137,11 @@ TESTS.files = $$[QT_INSTALL_PREFIX]/lib/QtTest4.dll
 TESTS.path = $$(PICTO_TREE)/output/tests/bin/release
 INSTALLS += TESTS
 
+PICTOLIB_DEBUG.files += $$(PICTO_TREE)/intermediates/lib/debug/libPicto_debug.ilk
+PICTOLIB_DEBUG.files += $$(PICTO_TREE)/intermediates/lib/debug/libPicto_debug.pdb
+PICTOLIB_DEBUG.path += $$(PICTO_TREE)/output/bin/debug
+INSTALLS += PICTOLIB_DEBUG
+
 !wince* {
     contains(MACHINE_TYPE,X86) {
     CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC??.CRT

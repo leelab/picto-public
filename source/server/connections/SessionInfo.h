@@ -22,6 +22,7 @@
 #include "../datacollection/alignmenttool.h"
 #include "../datacollection/neuraldatacollector.h"
 #include "../network/serverthread.h"
+#include "../../common/storage/BehavioralDataStore.h"
 
 #include <QSharedPointer>
 #include <QSqlDatabase>
@@ -31,9 +32,18 @@
 class SessionInfo
 {
 public:
-	SessionInfo();
+	SessionInfo(QString directorAddr);
+	~SessionInfo();
 
-	QSqlDatabase sessionDb() { return sessionDb_; };
+	void endSession();
+
+	void flushCache();
+	void insertTrialEvent(double time, int eventCode, int trialNum);
+	void insertBehavioralData(Picto::BehavioralDataStore data);
+
+	//getters/setters
+	//QSqlDatabase sessionDb() { return sessionDb_; };
+	//QSqlDatabase cacheDb() { return cacheDb_; };
 	QUuid sessionId() { return uuid_; };
 	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
 	QSharedPointer<NeuralDataCollector> neuralDataCollector() { return ndc_; };
@@ -51,6 +61,7 @@ public:
 private:
 	QUuid uuid_;
 	QSqlDatabase sessionDb_;
+	QSqlDatabase cacheDb_;
 	QSharedPointer<AlignmentTool> alignmentTool_;
 	QSharedPointer<NeuralDataCollector> ndc_;
 	QTimer timeoutTimer_;

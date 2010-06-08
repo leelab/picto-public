@@ -8,6 +8,7 @@
  *		  regexes for XML)
  *		- Outlining (like in VS) this may be tough.
  *		- Go to matching tag command that can be run without the mouse.
+ *		- Find/Replace: ESSENTIAL!!!! MUST ADD!!!!!
  */
 #ifndef _TEXT_VIEWER_H_
 #define _TEXT_VIEWER_H_

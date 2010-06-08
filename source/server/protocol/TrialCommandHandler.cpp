@@ -9,6 +9,7 @@
 #include <QUuid>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QVariant>
 
 TrialCommandHandler::TrialCommandHandler()
@@ -78,7 +79,7 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	}
 
 	//Get the session ID from the command
-	QUuid sessionID = QUuid(command->getFieldValue("Session-ID"));
+	QUuid sessionID(command->getFieldValue("Session-ID"));
 
 	//Get the current session info from a session manager
 	QSharedPointer<SessionInfo> sessionInfo;
@@ -92,35 +93,10 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	}
 
 	//Now that we've got the sessionInfo, we need to add the trial to the database
-	QSqlQuery query(sessionInfo->sessionDb());
+	sessionInfo->insertTrialEvent(time, eventCode, trialNum);
 
-	query.prepare("INSERT INTO behavioraltrials (timestamp,aligncode,trialnumber,matched)"
-		"VALUES(:timestamp, :aligncode, :trialnumber, 0)");
-	query.bindValue(":timestamp", time);
-	query.bindValue(":aligncode", eventCode);
-	query.bindValue(":trialnumber", trialNum);
-	query.exec();
-
-
-	//! \todo Actually implement this stuff...
-	//For the moment we are simply going to print out the start trial info...
-	/*QFile outFile("TRIALevents.txt");
-	outFile.open(QIODevice::Append);
-
-	if(command->getTarget() == "/start")
-	{
-		outFile.write("Trial Start\n");
-	}
-	else if(command->getTarget() == "/end")
-	{
-		outFile.write("Trial End\n");
-	}
-
-	outFile.write(QString(" Time: %1\n").arg(time).toAscii());
-	outFile.write(QString(" Trial number: %1\n").arg(trialNum).toAscii());
-	outFile.write(QString(" Event code: %1\n\n").arg(eventCode).toAscii());
-
-	outFile.close();*/
+	//Flush the database cache
+	sessionInfo->flushCache();
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 

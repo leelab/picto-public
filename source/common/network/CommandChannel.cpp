@@ -298,12 +298,13 @@ void CommandChannel::readIncomingCommand()
  *	sendCommand sends the passed in command over the commandChannel.  This can 
  *	be used a a stand-alone function that gets called on-demand, or as a slot
  *	that gets connected to a signal for  automatic command sending.
+ *
+ *	WARNING: This command permanently adds a Session
  */
 bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	//If the command channel is part of a session, add a Session-ID field
-	if(!sessionId_.isNull())
-		command->setFieldValue("Session-ID",sessionId_.toString());
+	//We always add a session-ID field, even if it's a null value
+	command->setFieldValue("Session-ID",sessionId_.toString());
 
 	if(command->write(consumerSocket) < 1)
 	{
@@ -400,6 +401,30 @@ void CommandChannel::disconnectHandler()
  */
 void CommandChannel::resendPendingCommands()
 {
+	/////////TESTING
+	/*FILE* outFile;
+	outFile = fopen("pendingCommands.txt","w");
+	fprintf(outFile, "Resending pending commands...\n");
+	fprintf(outFile, "  %i commands to send\n\n",pendingCommands_.size());
+
+	QMap<QUuid,QSharedPointer<ProtocolCommand> >::const_iterator i = pendingCommands_.begin();
+
+	while(i != pendingCommands_.end())
+	{
+		QString method = i.value()->getMethod();
+		QString target = i.value()->getTarget();
+		QString content = i.value()->getContent();
+
+		QString cmd = QString("  %1 %2\n%3\n\n").arg(method).arg(target).arg(content);
+		fprintf(outFile, cmd.toAscii());
+		i++;
+	}*/
+	//QString debug = QString("Pending command count: %1").arg(pendingCommands_.size());
+	//Q_ASSERT_X(false,"",debug.toAscii());
+
+	//////////////////////////////////////////////
+
+
 	QList<QSharedPointer<ProtocolCommand> > commandsToResend;
 	foreach(QSharedPointer<ProtocolCommand> command, pendingCommands_)
 	{

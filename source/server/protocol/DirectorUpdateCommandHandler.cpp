@@ -15,8 +15,6 @@ DirectorUpdateCommandHandler::DirectorUpdateCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	printf("\nDIRECTORUPDATE  handler: %d\n", QThread::currentThreadId());
-
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
@@ -32,11 +30,11 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 	targetStr = command->getTarget();
 	name = targetStr.left(targetStr.indexOf(':'));
 	statusStr = targetStr.right(targetStr.length() - targetStr.indexOf(':') - 1);
-	if(statusStr == "idle")
+	if(statusStr.toUpper() == "IDLE")
 	{
 		status = DirectorStatus::idle;
 	}
-	else if(statusStr == "running")
+	else if(statusStr.toUpper() == "RUNNING")
 	{
 		status = DirectorStatus::running;
 	}
@@ -48,15 +46,18 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 	conMgr->updateDirector(sourceAddr, name, status);
 
 	//If we're in a session, check for pending directives
-	if(command->hasField("Session-ID"))
+	QUuid sessionId(command->getFieldValue("Session-ID"));
+	if(!sessionId.isNull())
 	{
-		QUuid sessionId = QUuid(command->getFieldValue("Session-ID"));
+		printf("DIRECTORUPDATE with session\n");
 		QSharedPointer<SessionInfo> sessionInfo;
 		sessionInfo = ConnectionManager::Instance()->getSessionInfo(sessionId);
 
 		if(sessionInfo.isNull())
 		{
-			response->setContent("ERROR");
+			response->setContent("ERROR: SessionInfo not found.");
+			QString errorMsg = QString("Couldn't find session: %1\n").arg(sessionId);
+			printf(errorMsg.toAscii());
 		}
 		else
 		{
@@ -85,6 +86,7 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 		else
 		{
 			response->setContent("NEWSESSION "+sessionId.toString().toUtf8());
+			printf("NEWSESSION\n");
 		}
 	}
 

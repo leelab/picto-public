@@ -23,6 +23,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QXmlStreamReader>
+#include <QMenu>
 
 
 TestViewer::TestViewer(QWidget *parent) :
@@ -56,7 +57,6 @@ void TestViewer::init()
 void TestViewer::deinit()
 {
 	//stop the engine running
-
 }
 
 //! Initializes the engine with all of the appropriate pieces for testing
@@ -97,16 +97,16 @@ void TestViewer::setupEngine()
 void TestViewer::setupUi()
 {
 	///play/pause/stop actions and toolbar
-	playAction_ = new QAction(tr("P&lay"),this);
+	playAction_ = new QAction(tr("&Start task"),this);
 	playAction_->setIcon(QIcon(":/icons/play.png"));
 	connect(playAction_,SIGNAL(triggered()),this, SLOT(play()));
 
-	pauseAction_ = new QAction(tr("&Pause"),this);
+	pauseAction_ = new QAction(tr("&Pause task"),this);
 	pauseAction_->setIcon(QIcon(":/icons/pause.png"));
 	connect(pauseAction_,SIGNAL(triggered()),this, SLOT(pause()));
 	pauseAction_->setEnabled(false);
 
-	stopAction_ = new QAction(tr("&Stop"),this);
+	stopAction_ = new QAction(tr("S&top task"),this);
 	stopAction_->setIcon(QIcon(":/icons/stop.png"));
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 	stopAction_->setEnabled(false);
@@ -154,6 +154,7 @@ void TestViewer::play()
 	}
 	else if(status_ == Paused)
 	{
+		status_ = Running;
 		engine_->resume();
 	}
 }
@@ -192,9 +193,7 @@ void TestViewer::generateComboBox()
 	if(!experiment_)
 		return;
 
-	QStringList test = experiment_->getTaskNames();
-	taskListBox_->addItems(test);
-	//taskListBox_->addItems(experiment_->getTaskNames());
+	taskListBox_->addItems(experiment_->getTaskNames());
 }
 
 /*! \brief Resets the current experiment
