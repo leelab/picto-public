@@ -1,14 +1,16 @@
-/*! \brief Handles the DIRECTORDATA commands, which are sent by Director
+/*! \brief Handles the PUTDATA commands, which are sent by Director
  *
  *	PictoDirector sends these commands to the server when it has data it would
- *	like to be recorded.  Initiall, these commands will contain behavioral data,
+ *	like to be recorded.  Initially, these commands will contain behavioral data,
  *	but it's likely that there will be additional data being transmitted in the 
  *	future.
  *
- *	The id included in the response is to allow the matching of commands and responses.
+ *	The id included in the response is a consequence of the fact that these
+ *	commands are usually sent as "registered" commands, but it is not an 
+ *	essential field for the command
  *
  *	FORMAT
- *		DIRECTORDATA directorname PICTO.1/0
+ *		PUTDATA directorname PICTO.1/0
  *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
  *
  *		<!--- This could be a different data element --->
@@ -21,27 +23,23 @@
  *	RESPONSES
  *		The response is of type 200 OK if the data was processed and stored
  *		correctly.  If the session ID isn't recognized, the response is
- *		404:NotFound.  In both cases, the content of the response includes an
- *		XML fragment that looks like this:
- *			<DirectorData id=132/>
- *		This is so that responses can be matched with commands, and missed data
- *		can be resent.
+ *		404:NotFound.  
  */
 
-#ifndef _DIRECTORDATA_COMMAND_HANDLER_H_
-#define _DIRECTORUPDATE__DIRECTORDATA_COMMAND_HANDLER_H_COMMAND_HANDLER_H_
+#ifndef _PUTDATA_COMMAND_HANDLER_H_
+#define _PUTDATA_COMMAND_HANDLER_H_
 
 #include "../../common/common.h"
 
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-struct DirectorDataCommandHandler : Picto::ProtocolCommandHandler
+struct PutDataCommandHandler : Picto::ProtocolCommandHandler
 {
 public:
-	DirectorDataCommandHandler();
+	PutDataCommandHandler();
 
-	QString method() { return QString("DIRECTORDATA"); }
+	QString method() { return QString("PUTDATA"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 };
 

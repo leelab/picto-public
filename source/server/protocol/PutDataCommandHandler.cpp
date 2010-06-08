@@ -1,4 +1,4 @@
-#include "DirectorDataCommandHandler.h"
+#include "PutDataCommandHandler.h"
 
 #include "../../common/globals.h"
 #include "../../common/storage/BehavioralDataStore.h"
@@ -12,18 +12,19 @@
 #include <QVariant>
 #include <QUuid>
 
-DirectorDataCommandHandler::DirectorDataCommandHandler()
+PutDataCommandHandler::PutDataCommandHandler()
 {
 }
 
-/*! \brief handles a DIRECTORDATA command
+/*! \brief handles a PUTDATA command
  *
  *	The data is stored in a database table appropraite to the type of data,
  *	and a response is returned indicating that the data was received.
  */
-QSharedPointer<Picto::ProtocolResponse> DirectorDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
+QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	//printf("\nDIRECTORDATA  handler: %d\n", QThread::currentThreadId());
+	//the random value makes it easy to observe scrolling on a full command prompt.
+	printf("PUTDATA  handler: %d %d\n", QThread::currentThreadId(), rand()%10);  //the random value makes it easy to bserve scrolling on 
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
@@ -39,9 +40,6 @@ QSharedPointer<Picto::ProtocolResponse> DirectorDataCommandHandler::processComma
 	}
 	
 	QString dataType = xmlReader->name().toString();
-
-	if(!command->hasField("Session-ID"))
-		return notFoundResponse;
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
 	conMgr->updateDirector(QHostAddress(command->getFieldValue("Source-Address")), command->getTarget(), DirectorStatus::running);
@@ -60,32 +58,13 @@ QSharedPointer<Picto::ProtocolResponse> DirectorDataCommandHandler::processComma
 		Picto::BehavioralDataStore behaveData;
 		behaveData.deserializeFromXml(xmlReader);
 
-		//Open up the database and start writing out data
-		QSqlDatabase sessionDb = sessionInfo->sessionDb();
-		QSqlQuery sessionQ(sessionDb);
-
-		sessionDb.transaction();
-		
-		Picto::BehavioralDataStore::BehavioralDataPoint dataPoint;
-		while(behaveData.length() > 0)
-		{
-			dataPoint = behaveData.takeFirstDataPoint();
-			sessionQ.prepare("INSERT INTO behavioraldata (xpos, ypos, time)"
-				"VALUES(:xpos, :ypos, :time)");
-			sessionQ.bindValue(":xpos",dataPoint.x);
-			sessionQ.bindValue(":ypos",dataPoint.y);
-			sessionQ.bindValue(":time",dataPoint.t);
-			sessionQ.exec();
-		}
-
-		sessionDb.commit();
+		sessionInfo->insertBehavioralData(behaveData);
 	}
 	else
 	{
 		return notFoundResponse;
 	}
 
-	//printf("Returning good response: "+response->getDecodedContent() + "\n");
 	return response;
 
 }
