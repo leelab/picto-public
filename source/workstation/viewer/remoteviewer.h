@@ -95,6 +95,7 @@ private:
 	bool startedSession_;
 
 	QUuid sessionId_;
+
 };
 
 #endif

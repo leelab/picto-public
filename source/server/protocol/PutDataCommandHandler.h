@@ -5,7 +5,7 @@
  *	but it's likely that there will be additional data being transmitted in the 
  *	future.
  *
- *	The id included in the response is a consequence of the fact that these
+ *	The id included in the command is a consequence of the fact that these
  *	commands are usually sent as "registered" commands, but it is not an 
  *	essential field for the command
  *

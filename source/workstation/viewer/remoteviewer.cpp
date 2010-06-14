@@ -5,8 +5,10 @@
 #include "../../common/compositor/PCMAuralTarget.h"
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
+#include "../../common/engine/NetworkSignalChannel.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
+#include "../../common/storage/behavioraldatastore.h"
 
 
 
@@ -52,18 +54,18 @@ void RemoteViewer::init()
 					   tr("Check your network connection, and ensure that ") + Picto::Names->serverAppName + tr(" is running."));
 		msg.exec();
 	}
-	////If we're stopped, load the current experiment.  If we are paused,
-	////then we shouldn't load the experiment.
-	//if(status_ == Stopped)
-	//{
-	//	if(!experiment_ || !engine_->loadExperiment(experiment_))
-	//	{
-	//		QMessageBox msg;
-	//		msg.setText("Failed to load current experiment.");
-	//		msg.exec();
+	//If we're stopped, load the current experiment.  If we are paused,
+	//then we shouldn't load the experiment.
+	if(status_ == Stopped)
+	{
+		if(!experiment_ || !engine_->loadExperiment(experiment_))
+		{
+			QMessageBox msg;
+			msg.setText("Failed to load current experiment.");
+			msg.exec();
 
-	//	}
-	//}
+		}
+	}
 
 	generateTaskList();
 	
@@ -89,7 +91,7 @@ void RemoteViewer::setupEngine()
 	engine_->setExclusiveMode(false);
 
 	//Set up the rendering target
-	/*QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
+	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
 	pixmapVisualTarget_ = QSharedPointer<Picto::PixmapVisualTarget>(new Picto::PixmapVisualTarget(true,800,600));
 	renderingTarget_ = QSharedPointer<Picto::RenderingTarget>(new Picto::RenderingTarget(pixmapVisualTarget_, pcmAuralTarget));
 	engine_->addRenderingTarget(renderingTarget_);
@@ -102,6 +104,8 @@ void RemoteViewer::setupEngine()
 
 	//set up signal channel
 	//We'll need to set up a network signal channel here...
+	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::NetworkSignalChannel(serverChannel_));
+	engine_->addSignalChannel("PositionChannel",signalChannel);
 
 	//Set up event code generator
 	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
@@ -111,7 +115,7 @@ void RemoteViewer::setupEngine()
 	//set up reward controller
 	QSharedPointer<Picto::RewardController> rewardController;
 	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
-	engine_->setRewardController(rewardController);*/
+	engine_->setRewardController(rewardController);
 }
 
 //! Sets up the user interface portions of the GUI
@@ -172,7 +176,7 @@ void RemoteViewer::setupUi()
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
-	//mainLayout->addWidget(visualTargetHost_);
+	mainLayout->addWidget(visualTargetHost_);
 	mainLayout->addStretch(1);
 	mainLayout->addWidget(statusBar_);
 	setLayout(mainLayout);
@@ -184,7 +188,6 @@ void RemoteViewer::setupUi()
 void RemoteViewer::setupServerChannel()
 {
 	serverChannel_ = new Picto::CommandChannel(this);
-	serverChannel_->pollingMode(true);
 	serverDiscoverer_ = new Picto::ServerDiscoverer(this);
 
 	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), serverChannel_, SLOT(connectToServer(QHostAddress, quint16)));
@@ -205,12 +208,18 @@ void RemoteViewer::play()
 		modifiedTaskName = modifiedTaskName.simplified().remove(' ');
 
 		if(sendTaskCommand("start:"+modifiedTaskName))
+		{
 			status_ = Running;
+			engine_->runTask(modifiedTaskName);
+		}
 	}
 	else if(status_ == Paused)
 	{
 		if(sendTaskCommand("resume"))
+		{
+			engine_->resume();
 			status_ = Running;
+		}
 	}
 	updateActions();
 }
@@ -220,6 +229,7 @@ void RemoteViewer::pause()
 	if(sendTaskCommand("pause"))
 	{
 		status_ = Paused;
+		engine_->pause();
 	}
 	updateActions();
 }
@@ -229,6 +239,7 @@ void RemoteViewer::stop()
 	if(sendTaskCommand("stop"))
 	{
 		status_ = Stopped;
+		engine_->stop();
 	}
 	updateActions();
 }
@@ -393,7 +404,8 @@ void RemoteViewer::updateActions()
 
 }
 
-/*! \updates the combo box containing Director instances
+
+/*! \brief updates the combo box containing Director instances
  *
  *	The list of director instances gets updated periodically (by a running timer).
  *	This function asks the server for a current list of Director instances, and 

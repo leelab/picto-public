@@ -3,9 +3,6 @@
  *	The behavioral data store is designed to work with signal channels
  *	to store behavioral data.  The store is used to convert data into
  *  XML fragments for movement across the network.
- *
- *	The id is used so that we can keep track of different pieces of 
- *	behavioral data (e.g. matching up commands with responses)
  */
 
 #ifndef _BEHAVIORALDATASTORE_H_

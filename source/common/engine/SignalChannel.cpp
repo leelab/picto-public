@@ -56,6 +56,12 @@ void SignalChannel::addSubchannel(QString subchannelName)
 double SignalChannel::peekValue(QString subchannel)
 {
 	updateDataBuffer();
+
+	if(rawDataBuffer_.isEmpty())
+		return 0.0;
+	if(rawDataBuffer_.value(subchannel).isEmpty())
+		return 0.0;
+
 	double rawValue = rawDataBuffer_.value(subchannel).last();
 	double scaledValue = scaleFactorsMap_.value(subchannel).scaleA + 
 				scaleFactorsMap_.value(subchannel).scaleB * rawValue;

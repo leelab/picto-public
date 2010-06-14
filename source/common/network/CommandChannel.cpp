@@ -8,7 +8,6 @@ namespace Picto {
 
 CommandChannel::CommandChannel(QObject *parent)
 	:QObject(parent),
-	polledMode(false),
 	status(disconnected),
 	reconnect(true)
 {
@@ -21,7 +20,6 @@ CommandChannel::CommandChannel(QHostAddress serverAddress, quint16 serverPort, Q
 	:QObject(parent),
 	serverAddr(serverAddress),
 	serverPort(serverPort),
-	polledMode(false),
 	status(disconnected),
 	reconnect(true)
 {
@@ -64,18 +62,9 @@ void CommandChannel::initConnection()
 	connect(consumerSocket, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 	connect(producerSocket, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 
-	//if we're not in polled mode, listen on the sockets for incoming data
-	if(!polledMode)
-	{
-		connect(producerSocket, SIGNAL(readyRead()), this, SLOT(readIncomingCommand()));
-		connect(consumerSocket, SIGNAL(readyRead()), this, SLOT(readIncomingResponse()));
-	}
-
 	//connect to the server
 	producerSocket->connectToHost(serverAddr, serverPort, QIODevice::ReadWrite);
 	consumerSocket->connectToHost(serverAddr, serverPort, QIODevice::ReadWrite);
-
-
 
 	if(consumerSocket->waitForConnected(5000) && producerSocket->waitForConnected(5000))
 	{
@@ -87,45 +76,6 @@ void CommandChannel::initConnection()
 	}
 }
 
-/*	\brief places the channel into polled or automatic mode depending on the passed in value.
- *
- *	This is used to control the way the channel handels traffic.
- *
- *	In POLLED mode, the program waits for the user to call incomingCommandsWaiting
- *	or incomingResponsesWaiting, and then checks the network socket, and enqueues
- *	all of the commands and responses that have arrived since the previous calls
- *	to the functions.  This mode is good if the end user requires more complete
- *	control over the event loop.  (i.e. If you don't want your code to be randomly
- *	interrupted, use this mode.
- *
- *	In AUTOMATIC mode, the user connects the incomingCommand and incomingResponse
- *	signals emitted by the CommandChannel to a slot somewhere else.  Then when 
- *	commands and responses arrive on the channel, they are automatically handled
- *	This is easier and more efficient than polling, but will result in random i
- *	interruptions of the executing code. 
- */
-void CommandChannel::pollingMode(bool polling)
-{
-	if(polledMode == polling)
-		return;
-
-	polledMode = polling;
-	if(polledMode)
-	{
-		//Disconnect the signals (this may fail since it's possible that nothing 
-		//has been connected yet...)
-		disconnect(producerSocket, SIGNAL(readyRead()), 0, 0);
-		disconnect(consumerSocket, SIGNAL(readyRead()), 0, 0);
-	}
-	else
-	{
-		//This connection may fail if it already exists, or if the socket objects 
-		//haven't been created yet
-		connect(producerSocket, SIGNAL(readyRead()), this, SLOT(readIncomingCommand()));
-		connect(consumerSocket, SIGNAL(readyRead()), this, SLOT(readIncomingResponse()));
-	}
-
-}
 
 /*!	\brief Closes the channel (also called from the destructor)
  *
@@ -142,9 +92,6 @@ void CommandChannel::closeChannel()
 //! the number of responses in the queue.  Used when the channel is in polled mode
 int CommandChannel::incomingResponsesWaiting()
 {
-	if(!polledMode)
-		return 0;
-
 	//before looking for incoming responses, we need to give the
 	//socket a chance to update its buffers, waitForReadyRead
 	//accomplishes this.
@@ -157,9 +104,6 @@ int CommandChannel::incomingResponsesWaiting()
 //! the number of responses in the queue. Used when the channel is in polled mode
 int CommandChannel::incomingCommandsWaiting()
 {
-	if(!polledMode)
-		return 0;
-
 	readIncomingCommand();
 	return incomingCommandQueue.size();
 }
@@ -168,7 +112,7 @@ int CommandChannel::incomingCommandsWaiting()
 //! responses in the queue (this will always happen if you aren't in polled mode)
 QSharedPointer<ProtocolResponse> CommandChannel::getResponse()
 {
-	if(!polledMode || incomingResponseQueue.empty())
+	if(incomingResponseQueue.empty())
 		return QSharedPointer<ProtocolResponse>();
 	else
 		return incomingResponseQueue.takeFirst();
@@ -178,7 +122,7 @@ QSharedPointer<ProtocolResponse> CommandChannel::getResponse()
 //! commands in the queue (this will always happen if you aren't in polled mode)
 QSharedPointer<ProtocolCommand> CommandChannel::getCommand()
 {
-	if(!polledMode || incomingCommandQueue.empty())
+	if(incomingCommandQueue.empty())
 		return QSharedPointer<ProtocolCommand>();
 	else
 		return incomingCommandQueue.takeFirst();
@@ -197,9 +141,6 @@ QSharedPointer<ProtocolCommand> CommandChannel::getCommand()
  */
 bool CommandChannel::waitForResponse(int timeout)
 {
-	if(!polledMode)
-		return false;
-
 	if(timeout == 0)
 	{
 		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -260,10 +201,7 @@ void CommandChannel::readIncomingResponse()
 			if(!commandId.isNull())
 				pendingCommands_.remove(QUuid(commandId));
 
-			if(polledMode)
-				incomingResponseQueue.push_back(response);
-			else
-				emit incomingResponse(response);
+			incomingResponseQueue.push_back(response);
 		}
 		else
 		{
@@ -285,10 +223,7 @@ void CommandChannel::readIncomingCommand()
 		//if there is an error, bytes read will be negative
 		if(bytesRead >= 0)
 		{
-			if(polledMode)
-				incomingCommandQueue.push_back(command);
-			else
-				emit incomingCommand(command);
+			incomingCommandQueue.push_back(command);
 		}
 	}
 }
@@ -344,20 +279,6 @@ void CommandChannel::sendResponse(QSharedPointer<Picto::ProtocolResponse> respon
 
 }
 
-//! Sends a message to the debug stream in the event of a socekt error
-void CommandChannel::errorHandler(QAbstractSocket::SocketError err)
-{
-	if(QObject::sender() == consumerSocket)
-		qDebug()<<"CommandChannel::errorHandler - Consumer socket error:"<<err;
-	else
-		qDebug()<<"CommandChannel::errorHandler - Poducer socket error:"<<err;
-
-	/*! \todo Maybe we should do some actual error handling here?  This is a pretty
-	 *  simplistic implementation.  On the other hand, the connection to the server
-	 *  should be pretty robust...
-	 */
-}
-
 /*! \Called when a socket emits a disconnect signal
  *
  *	There are two scenarios in which this handler gets called:
@@ -387,7 +308,6 @@ void CommandChannel::disconnectHandler()
 	else
 	{
 		status = disconnected;
-		emit droppedConnection();
 	}
 
 }

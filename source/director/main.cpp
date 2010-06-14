@@ -363,7 +363,6 @@ QSharedPointer<Picto::CommandChannel> connectToServer()
 
 	//Find a server and open a command channel to it
 	Picto::ServerDiscoverer serverDiscoverer;
-	serverChannel->pollingMode(true);
 
 	serverDiscoverer.discover();
 

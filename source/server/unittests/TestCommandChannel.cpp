@@ -22,7 +22,7 @@ TestCommandChannel::TestCommandChannel(QHostAddress _serverAddress) :
 {
 }
 
-void TestCommandChannel::initTestCase()
+/*void TestCommandChannel::initTestCase()
 {
 	channel_ = new Picto::CommandChannel(serverAddress_, port_, this);
 	if(channel_->getChannelStatus() != Picto::CommandChannel::connected)
@@ -552,3 +552,4 @@ void TestCommandChannel::cleanupTestCase()
 	delete channel_;
 }
 
+*/

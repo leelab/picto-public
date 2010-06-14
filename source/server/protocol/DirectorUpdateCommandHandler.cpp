@@ -49,7 +49,6 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 	QUuid sessionId(command->getFieldValue("Session-ID"));
 	if(!sessionId.isNull())
 	{
-		printf("DIRECTORUPDATE with session\n");
 		QSharedPointer<SessionInfo> sessionInfo;
 		sessionInfo = ConnectionManager::Instance()->getSessionInfo(sessionId);
 

@@ -40,6 +40,7 @@ public:
 	void flushCache();
 	void insertTrialEvent(double time, int eventCode, int trialNum);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
+	Picto::BehavioralDataStore selectBehavioralData(double timestamp);
 
 	//getters/setters
 	//QSqlDatabase sessionDb() { return sessionDb_; };

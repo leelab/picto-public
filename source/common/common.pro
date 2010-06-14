@@ -80,6 +80,8 @@ HEADERS += $$(PICTO_TREE)/source/common/engine/SignalChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/SignalChannel.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/MouseSignalChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/MouseSignalChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/common/engine/NetworkSignalChannel.h
+SOURCES += $$(PICTO_TREE)/source/common/engine/NetworkSignalChannel.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/PictoEngine.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/PictoEngine.cpp
 

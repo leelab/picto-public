@@ -235,3 +235,59 @@ void SessionInfo::insertBehavioralData(Picto::BehavioralDataStore data)
 		Q_ASSERT(cacheQ.exec());
 	}
 }
+
+/*! \brief Returns a behavioral datastore with all of the data collected after the timestamp
+ *
+ *	This functions creates a new BehavioralDataStore object, and fills it with
+ *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
+ *	then all data is returned.  This is actually a bit tricky, since the data could be
+ *	either the session database or the cache database.
+ */
+Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
+{
+	Picto::BehavioralDataStore dataStore;
+	Picto::BehavioralDataStore::BehavioralDataPoint dataPoint;
+
+	//First, we attempt to pull data from the session database.  This will 
+	//likely return an empty query.
+	QSqlQuery sessionQuery(sessionDb_);
+	sessionQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
+		"WHERE time > :time ORDER BY time ASC");
+	if(timestamp == 0)
+		sessionQuery.bindValue(":time",-1);
+	else
+		sessionQuery.bindValue(":time", timestamp);
+	if(!sessionQuery.exec())
+	{
+		QString err = sessionQuery.lastError().text();
+		Q_ASSERT_X(false, "SessionInfo::selectBehavioralData", err.toAscii());
+	}
+
+	while(sessionQuery.next())
+	{
+		dataStore.addData(sessionQuery.value(0).toDouble(),
+						  sessionQuery.value(1).toDouble(),
+						  sessionQuery.value(2).toDouble());
+	}
+
+
+	QSqlQuery cacheQuery(cacheDb_);
+
+	cacheQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
+		"WHERE time > :time ORDER BY time ASC");
+	if(timestamp == 0)
+		cacheQuery.bindValue(":time",-1);
+	else
+		cacheQuery.bindValue(":time", timestamp);
+	Q_ASSERT(cacheQuery.exec());
+
+	while(cacheQuery.next())
+	{
+		dataStore.addData(cacheQuery.value(0).toDouble(),
+						  cacheQuery.value(1).toDouble(),
+						  cacheQuery.value(2).toDouble());
+	}
+
+	return dataStore;
+
+}
