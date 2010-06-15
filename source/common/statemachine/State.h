@@ -5,6 +5,7 @@
 #include "../statemachine/StateMachineElement.h"
 #include "../controlelements/ControlElement.h"
 #include "scene.h"
+#include "../engine/PictoEngine.h"
 
 #include <QScriptEngine>
 
@@ -22,7 +23,7 @@ class State : public StateMachineElement
 {
 public:
 	State();
-	QString run();
+	QString run(QSharedPointer<Engine::PictoEngine> engine);
 
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -41,10 +42,10 @@ public:
 
 
 private:
-	void sendBehavioralData();
+	void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);
 	void runScript(QString scriptName);
-	bool checkForEngineStop();
-	void updateServer();
+	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);
+	void updateServer(QSharedPointer<Engine::PictoEngine> engine);
 
 	QSharedPointer<Scene> scene_;
 	QMap<QString, QSharedPointer<ControlElement> > controlElements_;

@@ -7,10 +7,10 @@ Scene::Scene()
 {
 }
 
-void Scene::render()
+void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//! \TODO "render" the audio stuff
-	canvas_->draw();
+	canvas_->draw(engine);
 
 	//NOTE TO SELF:
 

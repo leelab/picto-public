@@ -17,6 +17,7 @@
 
 #include "../property/PropertyContainer.h"
 #include "../storage/DataStore.h"
+#include "../engine/PictoEngine.h"
 
 #include <QObject>
 
@@ -34,14 +35,14 @@ public:
 	ControlElement();
 
 	//isDone will return true if the ControlElement has completed.
-	virtual bool isDone() {return true;};
+	virtual bool isDone(QSharedPointer<Engine::PictoEngine> engine) {return true;};
 
 	//getResult returns the result from a completed ControlElement
 	//if the ControlElement hasn't completed, this returns an empty string
 	virtual QString getResult() {return "";};
 
 	//called to start the controller running
-	virtual void start(){};
+	virtual void start(QSharedPointer<Engine::PictoEngine> engine){};
 
 	void setName(QString name) { propertyContainer_.setPropertyValue("Name", name); };
 	QString getName() { return propertyContainer_.getPropertyValue("Name").toString(); };

@@ -11,6 +11,8 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QUuid>
+#include <QVariant>
+#include <QXmlStreamReader>
 
 #include "../common/globals.h"
 
@@ -19,6 +21,7 @@
 
 
 #include "../common/engine/PictoEngine.h"
+#include "../common/experiment/experiment.h"
 
 QSharedPointer<Picto::CommandChannel> connectToServer();
 
@@ -118,6 +121,8 @@ int main(int argc, char *argv[])
 		target->showSplash();
 	}
 
+	QSharedPointer<Picto::Experiment> experiment;
+
 	//Once we have the command channel set up, we'll sit in a tight loop sending
 	//DIRECTORUPDATE commands at 1Hz and processing the responses forever.
 	QSharedPointer<Picto::ProtocolResponse> updateResponse;
@@ -174,7 +179,7 @@ int main(int argc, char *argv[])
 
 			//Load the experiment
 			QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(statusDirective.toUtf8()));
-			QSharedPointer<Picto::Experiment> experiment(new Picto::Experiment);
+			experiment = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
 
 			xmlReader->readNext();
 			while(!xmlReader->atEnd() && xmlReader->name().toString() != "Experiment")
@@ -182,7 +187,7 @@ int main(int argc, char *argv[])
 				xmlReader->readNext();
 			}
 
-			if(!experiment->deserializeFromXml(xmlReader) || !engine->loadExperiment(experiment))
+			if(!experiment->deserializeFromXml(xmlReader))
 			{
 				foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
 				{
@@ -233,7 +238,8 @@ int main(int argc, char *argv[])
 				break;
 
 			//start running our task
-			engine->runTask(taskName);
+			if(experiment)
+				experiment->runTask(taskName, engine);
 
 			//upon completion return to splash screen
 			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
@@ -245,7 +251,7 @@ int main(int argc, char *argv[])
 		else if(statusDirective.startsWith("ENDSESSION"))
 		{
 			engine->setSessionId(QUuid());
-			engine->clearExperiment();
+			experiment = QSharedPointer<Picto::Experiment>();
 			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
 			{
 				target->updateStatus("Session ended");

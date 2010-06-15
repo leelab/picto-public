@@ -23,6 +23,7 @@
 //#include "Constraint.h"
 //#include "TrialResult.h"
 //#include "BlockGenerator.h"
+#include "../engine/PictoEngine.h"
 
 //#include <QUuid>
 #include <QList>
@@ -41,7 +42,7 @@ public:
 	QString name();
 	void setName(QString name);
 
-	bool run();
+	bool run(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore Functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

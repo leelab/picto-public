@@ -36,6 +36,7 @@
 #include "../common.h"
 #include "StateMachineElement.h"
 #include "Transition.h"
+#include "../engine/PictoEngine.h"
 
 #include <QScriptEngine>
 
@@ -71,7 +72,7 @@ public:
 
 	bool validateStateMachine();
 
-	QString run();
+	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	bool initScripting(QScriptEngine &qsEngine);
 
 	//DataStore functions
@@ -79,9 +80,9 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	void sendTrialEventToServer();
+	void sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine);
 
-	bool cleanupRegisteredCommands();
+	bool cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine);
 
 	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
 	QMap<QString, QSharedPointer<StateMachineElement> > elements_;

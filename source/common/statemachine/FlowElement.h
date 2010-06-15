@@ -17,6 +17,7 @@
 #include "StateMachineElement.h"
 #include "PredicateExpression.h"
 #include "CompoundExpression.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
@@ -30,7 +31,7 @@ public:
 	FlowElement();
 	//FlowElement(QSharedPointer<ParameterContainer> parameters);
 	
-	QString run();
+	QString run(QSharedPointer<Engine::PictoEngine> engine);
 
 	bool addCondition(QSharedPointer<PredicateExpression> predExpr, int order, QString name);
 	bool addCondition(QSharedPointer<CompoundExpression> compExpr, int order, QString name);

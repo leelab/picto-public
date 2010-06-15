@@ -24,8 +24,10 @@ QString TestController::ControllerType()
 	return "Test Controller";
 }
 
-bool TestController::isDone()
+bool TestController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 {
+	Q_UNUSED(engine);
+
 	int numberOfFrames = propertyContainer_.getPropertyValue("NumberOfFrames").toInt();
 
 	timesCalled_++;
@@ -51,8 +53,9 @@ QString TestController::getResult()
 		return "";
 }
 
-void TestController::start()
+void TestController::start(QSharedPointer<Engine::PictoEngine> engine)
 {
+	Q_UNUSED(engine);
 	qDebug()<<"Starting Test Controller";
 	timesCalled_ = 0;
 	isDone_ = false;

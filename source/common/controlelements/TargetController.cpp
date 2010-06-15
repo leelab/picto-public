@@ -55,7 +55,7 @@ QString TargetController::ControllerType()
 }
 
 
-void TargetController::start()
+void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 {
 	cumulativeTimer_.start();
 	isDone_ = false;
@@ -65,10 +65,10 @@ void TargetController::start()
 	initialAcquisitionOccurred_ = false;
 
 	//We call isDone to initialize everything
-	isDone();
+	isDone(engine);
 }
 
-bool TargetController::isDone()
+bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 {
 	Controller::TimerUnits::TimerUnits timeUnits;
 	if(unitList_.value(propertyContainer_.getPropertyValue("TimeUnits").toInt(),"") == "Sec")
@@ -91,7 +91,7 @@ bool TargetController::isDone()
 		return true;
 	}
 
-	bool isInsideTarget = insideTarget();
+	bool isInsideTarget = insideTarget(engine);
 
 	//just entered target
 	if(!targetAcquired_ && isInsideTarget)
@@ -184,12 +184,14 @@ QString TargetController::getResult()
 
 /*!	\brief Returns true if the signalChannel coordinates are within the target area
  */
-bool TargetController::insideTarget()
+bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 {
+	if(engine.isNull())
+		return false;
 	if(signal_.isNull())
 	{
 		//grab the signal channel
-		signal_ = Engine::PictoEngine::getSignalChannel(propertyContainer_.getPropertyValue("SignalChannel").toString());
+		signal_ = engine->getSignalChannel(propertyContainer_.getPropertyValue("SignalChannel").toString());
 		if(signal_.isNull())
 			return false;
 

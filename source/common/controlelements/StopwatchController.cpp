@@ -47,14 +47,18 @@ void StopwatchController::setTime(int time, Controller::TimerUnits::TimerUnits u
 }
 
 
-void StopwatchController::start()
+void StopwatchController::start(QSharedPointer<Engine::PictoEngine> engine)
 {
+	Q_UNUSED(engine);
+
 	isDone_ = false;
 	timer_.start();
 }
 
-bool StopwatchController::isDone()
+bool StopwatchController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 {
+	Q_UNUSED(engine);
+
 	Controller::TimerUnits::TimerUnits units;
 	if(unitList_.value(propertyContainer_.getPropertyValue("Units").toInt(),"") == "Sec")
 		units = Controller::TimerUnits::sec;

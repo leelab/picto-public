@@ -1,5 +1,7 @@
 #include "Experiment.h"
 
+#include "../engine/PictoEngine.h"
+
 namespace Picto {
 
 Experiment::Experiment() :
@@ -37,7 +39,7 @@ QStringList Experiment::getTaskNames()
 }
 
 
-bool Experiment::runTask(QString taskName)
+bool Experiment::runTask(QString taskName, QSharedPointer<Engine::PictoEngine> engine)
 {
 	if(tasks_.isEmpty())
 		return false;
@@ -52,14 +54,15 @@ bool Experiment::runTask(QString taskName)
 		///////////////////////
 
 
-		if(task->name() == taskName)
-		{
-			return task->run();
-		}
+		if(task->name() == taskName ||
+		   task->name().simplified().remove(' ') == taskName)
+		{	
+			engine->clearEngineCommand();
+			engine->startAllSignalChannels();
+			bool success = task->run(engine);
+			engine->stopAllSignalChannels();
 
-		if(task->name().simplified().remove(' ') == taskName)
-		{
-			return task->run();
+			return success;
 		}
 	}
 	return false;

@@ -8,8 +8,8 @@
 
 #include "../common.h"
 #include "../compositor/RenderingTarget.h"
-#include "../experiment/Experiment.h"
-#include "../task/Task.h"
+//#include "../task/Task.h"
+//#include "../experiment/Experiment.h"
 #include "../network/CommandChannel.h"
 #include "../protocol/ProtocolCommand.h"
 #include "SignalChannel.h"
@@ -52,6 +52,7 @@ namespace PictoEngineTimingType
 	} PictoEngineTimingType;
 }
 
+
 /*! \brief Executes state machines contained in Experiment objects
  *
  * The PictoEngine object takes an Experiment object and executes its contained state machines by rendering to one or
@@ -60,7 +61,6 @@ namespace PictoEngineTimingType
  * files, allow analysis of replayed data, etcetera).  The storage for behavioral data accomodates out of order
  * receipt.  Additionally a PictoEngine can be assigned a CommandChannel with which to communicate with a
  * PictoServer instance.
- * 
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PictoEngine
@@ -79,63 +79,63 @@ public:
 	void setTimingControl(PictoEngineTimingType::PictoEngineTimingType _timingType);
 
 	void setExclusiveMode(bool mode) { bExclusiveMode_ = mode; };
-	static bool getExclusiveMode() { return bExclusiveMode_; };
+	bool getExclusiveMode() { return bExclusiveMode_; };
 
-	bool loadExperiment(QSharedPointer<Picto::Experiment> experiment);
-	void clearExperiment();
+	//bool loadExperiment(QSharedPointer<Experiment> experiment);
+	//void clearExperiment();
 
-	bool runTask(QString taskName);
+	//bool runTask(QString taskName);
 
 	//The engine commands are only used when the engine is being run locally
 	enum {NoCommand, ResumeEngine, StopEngine, PauseEngine};
-	static void resume() { engineCommand_ = ResumeEngine; };
-	static void pause() { engineCommand_ = PauseEngine; };
-	static void stop();
-	static int getEngineCommand();
+	void resume() { engineCommand_ = ResumeEngine; };
+	void pause() { engineCommand_ = PauseEngine; };
+	void stop();
+	void clearEngineCommand() {engineCommand_ = NoCommand; };
+	int getEngineCommand();
 
-	static QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
+	QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
 
-	static QSharedPointer<SignalChannel> getSignalChannel(QString name);
+	QSharedPointer<SignalChannel> getSignalChannel(QString name);
 	void addSignalChannel(QString name, QSharedPointer<SignalChannel> channel);
+	void startAllSignalChannels();
+	void stopAllSignalChannels();
 
 	void setEventCodeGenerator(QSharedPointer<EventCodeGenerator> eventCodeGenerator) { eventCodeGenerator_ = eventCodeGenerator; };
-	static void generateEvent(unsigned int eventCode);
+	void generateEvent(unsigned int eventCode);
 
 	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
-	static void giveReward(int channel);
+	void giveReward(int channel);
 
 	bool setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel);
-	static QSharedPointer<CommandChannel> getDataCommandChannel();
+	QSharedPointer<CommandChannel> getDataCommandChannel();
 
 	bool setUpdateCommandChannel(QSharedPointer<CommandChannel> commandChannel);
-	static QSharedPointer<CommandChannel> getUpdateCommandChannel();
+	QSharedPointer<CommandChannel> getUpdateCommandChannel();
 
 	void setSessionId(QUuid sessionId);
 	QUuid getSessionId() { return sessionId_; };
 
 	void setName(QString name) { name_ = name; };
-	static QString getName() { return name_; };
+	QString getName() { return name_; };
 
 private:
-	void startAllSignalChannels();
-	static void stopAllSignalChannels();
-
-	QSharedPointer<Picto::Experiment> experiment_;
+	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
-	static bool bExclusiveMode_;
+	bool bExclusiveMode_;
 	
-	static QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
-	static QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
-	static QList<QSharedPointer<RenderingTarget> > renderingTargets_;
-	static QSharedPointer<RewardController> rewardController_;
-	static QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server
-	static QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
+	QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
+	QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
+	QList<QSharedPointer<RenderingTarget> > renderingTargets_;
+	QSharedPointer<RewardController> rewardController_;
+	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server
+	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
 
-	static QUuid sessionId_;
-	static QString name_;
+	QUuid sessionId_;
+	QString name_;
 
-	static int engineCommand_;
+	int engineCommand_;
 };
 
 /*! @} */

@@ -12,7 +12,7 @@ Result::Result()
 	propertyContainer_.addProperty(Property(QVariant::Int,"RewardChan",1));
 }
 
-QString Result::run()
+QString Result::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	if(propertyContainer_.getPropertyValue("GiveReward").toBool())
 	{
@@ -20,7 +20,7 @@ QString Result::run()
 		int rewardChan = propertyContainer_.getPropertyValue("RewardChan").toInt();
 		for(int i=0; i<numRewards; i++)
 		{
-			Engine::PictoEngine::giveReward(rewardChan);
+			engine->giveReward(rewardChan);
 		}
 	}
 	return propertyContainer_.getPropertyValue("Name").toString();

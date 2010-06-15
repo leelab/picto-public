@@ -58,7 +58,7 @@ void RemoteViewer::init()
 	//then we shouldn't load the experiment.
 	if(status_ == Stopped)
 	{
-		if(!experiment_ || !engine_->loadExperiment(experiment_))
+		if(!experiment_)
 		{
 			QMessageBox msg;
 			msg.setText("Failed to load current experiment.");
@@ -210,7 +210,8 @@ void RemoteViewer::play()
 		if(sendTaskCommand("start:"+modifiedTaskName))
 		{
 			status_ = Running;
-			engine_->runTask(modifiedTaskName);
+			if(experiment_)
+				experiment_->runTask(modifiedTaskName, engine_);
 		}
 	}
 	else if(status_ == Paused)

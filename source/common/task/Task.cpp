@@ -20,7 +20,7 @@ void Task::setName(QString name)
 	propertyContainer_.setPropertyValue("Name",name);
 }
 
-bool Task::run()
+bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	if(stateMachine_.isNull())
 	{
@@ -28,7 +28,7 @@ bool Task::run()
 	}
 	else
 	{
-		stateMachine_->run();
+		stateMachine_->run(engine);
 		return true;
 	}
 }

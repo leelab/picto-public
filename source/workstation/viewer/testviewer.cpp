@@ -42,7 +42,7 @@ void TestViewer::init()
 	//then we shouldn't load the experiment.
 	if(status_ == Stopped)
 	{
-		if(!experiment_ || !engine_->loadExperiment(experiment_))
+		if(!experiment_)
 		{
 			QMessageBox msg;
 			msg.setText("Failed to load current experiment.");
@@ -149,7 +149,8 @@ void TestViewer::play()
 	if(status_ == Stopped)
 	{
 		status_ = Running;
-		engine_->runTask(taskListBox_->currentText());
+		if(experiment_)
+			experiment_->runTask(taskListBox_->currentText(),engine_);
 		stop();
 	}
 	else if(status_ == Paused)

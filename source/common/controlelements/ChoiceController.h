@@ -39,16 +39,16 @@ public:
 
 	bool addTarget(QString targetName, QRect target);
 
-	bool isDone();
+	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
 	QString getResult();
-	void start();
+	void start(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore Functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QString insideTarget();
+	QString insideTarget(QSharedPointer<Engine::PictoEngine> engine);
 	bool checkSingleTarget(QRect targetRect);
 
 	Controller::Timer cumulativeTimer_;

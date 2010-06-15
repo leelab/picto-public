@@ -71,7 +71,7 @@ bool ChoiceController::addTarget(QString targetName, QRect target)
 }
 
 
-void ChoiceController::start()
+void ChoiceController::start(QSharedPointer<Engine::PictoEngine> engine)
 {
 	cumulativeTimer_.start();
 	isDone_ = false;
@@ -79,11 +79,11 @@ void ChoiceController::start()
 	targetAcquired_ = false;
 
 	//We call isDone to initialize everything
-	isDone();
+	isDone(engine);
 
 }
 
-bool ChoiceController::isDone()
+bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 {
 	Controller::TimerUnits::TimerUnits timeUnits;
 	if(unitList_.value(propertyContainer_.getPropertyValue("TimeUnits").toInt(),"") == "Sec")
@@ -106,7 +106,7 @@ bool ChoiceController::isDone()
 		return true;
 	}
 
-	QString currTarget = insideTarget();
+	QString currTarget = insideTarget(engine);
 
 	//just left a target
 	if(currTarget != lastTarget_ && targetAcquired_)
@@ -159,12 +159,14 @@ bool ChoiceController::isDone()
  *
  *	If we aren't inside a target, this returns NotATarget(which is a reserved name).
  */
-QString ChoiceController::insideTarget()
+QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 {
+	if(engine.isNull())
+		return false;
 	if(signal_.isNull())
 	{
 		//grab the signal channel
-		signal_ = Engine::PictoEngine::getSignalChannel(propertyContainer_.getPropertyValue("SignalChannel").toString());
+		signal_ = engine->getSignalChannel(propertyContainer_.getPropertyValue("SignalChannel").toString());
 		if(signal_.isNull())
 			return false;
 

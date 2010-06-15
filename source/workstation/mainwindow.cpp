@@ -258,7 +258,7 @@ void MainWindow::createViewers()
 	viewerNames_.append(testViewer->type());
 	viewerStack_->addWidget(testViewer);*/
 
-	currViewer_ = qobject_cast<Viewer*>(viewerStack_->widget(3));
+	currViewer_ = qobject_cast<Viewer*>(viewerStack_->widget(0));
 	viewerStack_->setCurrentWidget(currViewer_);
 	currViewer_->init();
 	currViewer_->setVisible(true);

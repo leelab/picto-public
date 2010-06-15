@@ -18,6 +18,7 @@
 
 #include "../common.h"
 #include "StateMachineElement.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
@@ -30,7 +31,7 @@ class ScriptElement : public StateMachineElement
 public:
 	ScriptElement();
 	
-	QString run();
+	QString run(QSharedPointer<Engine::PictoEngine> engine);
 
 	void setScript(QString script);
 

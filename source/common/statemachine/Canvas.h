@@ -9,6 +9,7 @@
 #include "../common.h"
 #include "../storage/DataStore.h"
 #include "Layer.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
@@ -27,7 +28,7 @@ public:
 
 	void addLayer(QSharedPointer<Layer> layer);
 
-	void draw();
+	void draw(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

@@ -24,13 +24,13 @@ void Canvas::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 
 }
 
-void Canvas::draw()
+void Canvas::draw(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//! \todo deal with the background layer color
 
 	//Grab the RenderingTargets from the engine
 	QList<QSharedPointer< RenderingTarget> > renderingTargets;
-	renderingTargets = Engine::PictoEngine::getRenderingTargets();
+	renderingTargets = engine->getRenderingTargets();
 
 	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
 	{
@@ -39,7 +39,7 @@ void Canvas::draw()
 		//The Layers are sorted as they get added, so we can simply run through them in order
 		foreach(QSharedPointer<Layer> layer, layers_)
 		{
-			layer->draw(visualTarget);
+			layer->draw(visualTarget, engine);
 		}
 
 		visualTarget->present();

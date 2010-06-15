@@ -28,9 +28,9 @@ public:
 	static ControlElement* NewTestController();
 	static QString ControllerType();
 
-	bool isDone();
+	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
 	QString getResult();
-	void start();
+	void start(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore Functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

@@ -29,10 +29,12 @@
 #include "../parameter/Parameter.h"
 #include "../property/PropertyContainer.h"
 #include "../storage/DataStore.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
 class Result;
+//class Engine::PictoEngine;
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API StateMachineElement : public QObject, public DataStore
@@ -48,7 +50,7 @@ public:
 
 	//All StateMachineElements must implement a run function that returns a string
 	//The returned string should correspond to a result contained by the element
-	virtual QString run() = 0;
+	virtual QString run(QSharedPointer<Engine::PictoEngine> engine) = 0;
 	
 
 	bool addResult(QSharedPointer<Result> result);

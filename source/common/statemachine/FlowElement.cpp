@@ -28,7 +28,7 @@ FlowElement::FlowElement()
 
 }*/
 
-QString FlowElement::run()
+QString FlowElement::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//The Condition list is sorted by the order values, so all we have to do is run 
 	//through it evaluating conditions.

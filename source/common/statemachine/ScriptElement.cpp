@@ -62,7 +62,7 @@ bool ScriptElement::initScripting(QScriptEngine &qsEngine)
 	return true;
 }
 
-QString ScriptElement::run()
+QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	QString functionName = getName().simplified().remove(' ');
 	

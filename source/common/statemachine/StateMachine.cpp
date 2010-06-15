@@ -222,7 +222,7 @@ bool StateMachine::validateStateMachine()
 	return true;
 }
 
-QString StateMachine::run()
+QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	if(!scriptingInit_)
 	{
@@ -241,8 +241,8 @@ QString StateMachine::run()
 		//Because of this, we generate the nerual recorder event first.
 		trialEventCode_++;
 		trialNum_++;
-		sendTrialEventToServer();
-		Engine::PictoEngine::generateEvent(trialEventCode_);
+		sendTrialEventToServer(engine);
+		engine->generateEvent(trialEventCode_);
 	}
 	//Reset trialNum_ if we just entered a new Task
 	if(getLevel() == StateMachineLevel::Task)
@@ -260,7 +260,7 @@ QString StateMachine::run()
 
 	while(true)
 	{
-		QString result = currElement->run();
+		QString result = currElement->run(engine);
 
 		if(result == "EngineAbort")
 			return result;
@@ -287,15 +287,15 @@ QString StateMachine::run()
 		{
 			if(getLevel() == StateMachineLevel::Trial)
 			{
-				Engine::PictoEngine::generateEvent(trialEventCode_);
-				sendTrialEventToServer();
+				engine->generateEvent(trialEventCode_);
+				sendTrialEventToServer(engine);
 
 				//Deal with all of the left-over commands
-				Q_ASSERT_X(cleanupRegisteredCommands(),"",QString("Failed to cleanup registered commands.  "
+				Q_ASSERT_X(cleanupRegisteredCommands(engine),"",QString("Failed to cleanup registered commands.  "
 					"Leftover commands: " + 
-					QString::number(Engine::PictoEngine::getDataCommandChannel()->pendingResponses())).toAscii());
+					QString::number(engine->getDataCommandChannel()->pendingResponses())).toAscii());
 			}
-			return currElement->run();
+			return currElement->run(engine);
 		}
 	}
 
@@ -349,9 +349,9 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
  *			<TrialNum>412</TrialNum> 	
  *		</Trial>
  */
-void StateMachine::sendTrialEventToServer()
+void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine)
 {
-	QSharedPointer<CommandChannel> serverChannel = Engine::PictoEngine::getUpdateCommandChannel();
+	QSharedPointer<CommandChannel> serverChannel = engine->getUpdateCommandChannel();
 	if(serverChannel.isNull())
 		return;
 
@@ -410,11 +410,11 @@ void StateMachine::sendTrialEventToServer()
  *	this clean-up function becomes essential.  Obviously the database issues
  *	will eventually get fixed.
  */
-bool StateMachine::cleanupRegisteredCommands()
+bool StateMachine::cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//! \TODO Clean this up onec we get the database up to speed
 
-	QSharedPointer<CommandChannel> serverChan = Engine::PictoEngine::getDataCommandChannel();
+	QSharedPointer<CommandChannel> serverChan = engine->getDataCommandChannel();
 
 	if(!serverChan)
 		return true;

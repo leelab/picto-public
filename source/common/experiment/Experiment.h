@@ -20,9 +20,12 @@
 //#include "SessionData.h"
 //#include "MediaItem.h"
 //#include "Calibration.h"
+#include "../engine/PictoEngine.h"
+
 
 #include <QList>
 #include <QSharedPointer>
+
 
 namespace Picto {
 
@@ -36,7 +39,7 @@ public:
 	Experiment();
 
 	void addTask(QSharedPointer<Task> task);
-	bool runTask(QString taskName);
+	bool runTask(QString taskName, QSharedPointer<Engine::PictoEngine> engine);
 
 	QString name();
 	void setName(QString name);

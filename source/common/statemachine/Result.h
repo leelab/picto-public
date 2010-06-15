@@ -12,6 +12,7 @@
 
 #include "../common.h"
 #include "StateMachineElement.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
@@ -24,7 +25,7 @@ class Result : public StateMachineElement
 public:
 	Result();
 
-	QString run();
+	QString run(QSharedPointer<Engine::PictoEngine> engine);
 
 	//! \TODO Add rewarding options here...
 

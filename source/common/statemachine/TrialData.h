@@ -3,6 +3,7 @@
 
 #include "../common.h"
 
+
 namespace Picto {
 
 class TrialData

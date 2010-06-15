@@ -34,9 +34,9 @@ State::State()
 
 }
 
-QString State::run()
+QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
-	sigChannel_ = Engine::PictoEngine::getSignalChannel("PositionChannel");
+	sigChannel_ = engine->getSignalChannel("PositionChannel");
 
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
@@ -54,7 +54,7 @@ QString State::run()
 	//Start up all of the control elements
 	foreach(QSharedPointer<ControlElement> control, controlElements_)
 	{
-		control->start();
+		control->start(engine);
 	}
 
 #ifdef CHECK_TIMING
@@ -78,18 +78,18 @@ QString State::run()
 #endif
 
 		//----------  Draw the scene --------------
-		scene_->render();
+		scene_->render(engine);
 
 		//------------- Send Behavioral data to server --------------
-		sendBehavioralData();
+		sendBehavioralData(engine);
 
 		//---------- Check for directives from the server -----------
-		updateServer();
+		updateServer(engine);
 
 		//--------- Check control elements------------
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
 		{
-			if(control->isDone())
+			if(control->isDone(engine))
 			{
 				result = control->getResult();
 				isDone = true;
@@ -103,7 +103,7 @@ QString State::run()
 			runScript(frameScriptName);
 
 		//------ Check for engine stop commands ---------------
-		if(checkForEngineStop())
+		if(checkForEngineStop(engine))
 		{
 			isDone = true;
 			result = "EngineAbort";
@@ -112,7 +112,7 @@ QString State::run()
 		//If we're not in exclusive mode, we should allocate time to process events
 		//This would occur if we were running a state machine somewhere other than
 		//Director (e.g. debugging it in Workstation)
-		if(!Engine::PictoEngine::getExclusiveMode())
+		if(!engine->getExclusiveMode())
 		{
 			QCoreApplication::processEvents();
 		}
@@ -143,11 +143,11 @@ QString State::run()
 }
 
 //! Sends the current behavioral data to the server
-void State::sendBehavioralData()
+void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 {
 	BehavioralDataStore behavData;
 
-	QSharedPointer<CommandChannel> dataChannel = Engine::PictoEngine::getDataCommandChannel();
+	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 
 	if(dataChannel.isNull())
 		return;
@@ -160,7 +160,7 @@ void State::sendBehavioralData()
 
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
-	QString dataCommandStr = "PUTDATA "+Engine::PictoEngine::getName()+" PICTO/1.0";
+	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
 	QByteArray behaveDataXml;
@@ -209,9 +209,9 @@ void State::runScript(QString scriptName)
  *	in all of our states returning.  When pause is called, we simply sit and spin
  *	until a new command is issued (play or stop). 
  */
-bool State::checkForEngineStop()
+bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 {
-	int command = Engine::PictoEngine::getEngineCommand();
+	int command = engine->getEngineCommand();
 
 	//To stop, we set isDone to true which breaks out of our loop.
 	//Then we generate an arbitrary result.  Regardless of where this result sends us
@@ -223,9 +223,9 @@ bool State::checkForEngineStop()
 	{
 		while(command == Engine::PictoEngine::PauseEngine)
 		{
-			updateServer();
-			sendBehavioralData();
-			command = Engine::PictoEngine::getEngineCommand();
+			updateServer(engine);
+			sendBehavioralData(engine);
+			command = engine->getEngineCommand();
 			QCoreApplication::processEvents();
 
 			//kill 20 ms
@@ -249,9 +249,9 @@ bool State::checkForEngineStop()
  *	Once per frame, we need to check in with the server.  The response from the server
  *  may contain a "directive", which we will handle here as well (e.g. stop, pause, etc).
  */
-void State::updateServer()
+void State::updateServer(QSharedPointer<Engine::PictoEngine> engine)
 {
-	QSharedPointer<Picto::CommandChannel>updateChan = Engine::PictoEngine::getUpdateCommandChannel();
+	QSharedPointer<Picto::CommandChannel>updateChan = engine->getUpdateCommandChannel();
 	
 	if(updateChan.isNull())
 		return;
@@ -265,7 +265,7 @@ void State::updateServer()
 
 	QSharedPointer<Picto::ProtocolResponse> updateResponse;
 
-	QString updateCommandStr = "DIRECTORUPDATE "+Picto::Engine::PictoEngine::getName()+":running PICTO/1.0";
+	QString updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":running PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 
 	updateChan->sendCommand(updateCommand);
@@ -288,15 +288,15 @@ void State::updateServer()
 	}
 	else if(statusDirective.startsWith("STOP"))
 	{
-		Picto::Engine::PictoEngine::stop();
+		engine->stop();
 	}
 	else if(statusDirective.startsWith("PAUSE"))
 	{
-		Picto::Engine::PictoEngine::pause();
+		engine->pause();
 	}
 	else if(statusDirective.startsWith("RESUME"))
 	{
-		Picto::Engine::PictoEngine::resume();
+		engine->resume();
 	}
 	else
 	{

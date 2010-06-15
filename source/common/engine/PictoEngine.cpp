@@ -11,16 +11,6 @@
 namespace Picto {
 	namespace Engine {
 
-QList<QSharedPointer<RenderingTarget> > PictoEngine::renderingTargets_;
-QMap<QString, QSharedPointer<SignalChannel> > PictoEngine::signalChannels_;
-QSharedPointer<RewardController> PictoEngine::rewardController_;
-QSharedPointer<EventCodeGenerator> PictoEngine::eventCodeGenerator_;
-QSharedPointer<CommandChannel> PictoEngine::dataCommandChannel_;
-QSharedPointer<CommandChannel> PictoEngine::updateCommandChannel_;
-QUuid PictoEngine::sessionId_;
-QString PictoEngine::name_;
-bool PictoEngine::bExclusiveMode_;
-int PictoEngine::engineCommand_;
 
 PictoEngine::PictoEngine() :
 	timingType_(PictoEngineTimingType::precise)
@@ -124,21 +114,21 @@ void PictoEngine::setSessionId(QUuid sessionId)
 }
 
 
-bool PictoEngine::loadExperiment(QSharedPointer<Picto::Experiment> experiment)
+/*bool PictoEngine::loadExperiment(QSharedPointer<Experiment> experiment)
 {
 	experiment_ = experiment;
 
 	return true;
-}
+}*/
 
 //Sets the experiment pointer to null
-void PictoEngine::clearExperiment()
+/*void PictoEngine::clearExperiment()
 {
-	experiment_ = QSharedPointer<Picto::Experiment>();  
-}
+	experiment_ = QSharedPointer<Experiment>();  
+}*/
 
 //! Runs the task with the passed in name
-bool PictoEngine::runTask(QString taskName)
+/*bool PictoEngine::runTask(QString taskName)
 {
 	bool success;
 	engineCommand_ = NoCommand;
@@ -146,7 +136,7 @@ bool PictoEngine::runTask(QString taskName)
 	success = experiment_->runTask(taskName);
 	stopAllSignalChannels();
 	return success;
-}
+}*/
 
 int PictoEngine::getEngineCommand()
 {

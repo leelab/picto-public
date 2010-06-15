@@ -9,6 +9,7 @@
 #include "../storage/DataStore.h"
 #include "../stimuli/VisualElement.h"
 #include "../compositor/VisualTarget.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
@@ -23,12 +24,12 @@ public:
 
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
-	void addVisualElement( QSharedPointer<VisualElement> v);
+	void addVisualElement(QSharedPointer<VisualElement> v);
 	void setOrder(int order) { order_ = order; };
 	int getOrder() { return order_; };
 	void setName(QString name) { name_ = name; };
 
-	void draw(QSharedPointer<VisualTarget> visualTarget);
+	void draw(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<Engine::PictoEngine> engine);
 
 
 	//DataStore functions
@@ -36,6 +37,7 @@ public:
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QList<QSharedPointer <VisualElement> > visualElements_;
+	QList<QSharedPointer <VisualElement> > unaddedVisualElements_;
 	int order_;
 	QString name_;
 

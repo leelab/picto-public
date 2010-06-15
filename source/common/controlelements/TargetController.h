@@ -40,16 +40,16 @@ public:
 	static ControlElement* NewTargetController();
 	static QString ControllerType();
 
-	bool isDone();
+	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
 	QString getResult();
-	void start();
+	void start(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore Functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	bool insideTarget();
+	bool insideTarget(QSharedPointer<Engine::PictoEngine> engine);
 
 	bool targetAcquired_;
 	bool initialAcquisitionOccurred_;

@@ -22,23 +22,16 @@ void Layer::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 		visualElement->bindToScriptEngine(qsEngine);
 	}
 
+	foreach(QSharedPointer<VisualElement> visualElement, unaddedVisualElements_)
+	{
+		visualElement->bindToScriptEngine(qsEngine);
+	}
+
 }
 
 void Layer::addVisualElement(QSharedPointer<VisualElement> v)
 {
-	//add the appropriate compositing surfaces to the element
-	QSharedPointer<Picto::CompositingSurface> compositingSurface;
-
-	QList<QSharedPointer<RenderingTarget> > renderingTargets;
-	renderingTargets = Engine::PictoEngine::getRenderingTargets();
-
-	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
-	{
-		compositingSurface = renderTarget->generateCompositingSurface();
-		v->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
-	}
-
-	visualElements_.push_back(v);
+	unaddedVisualElements_.push_back(v);
 }
 
 /*! \brief This is where the actual rendering occurs
@@ -46,8 +39,29 @@ void Layer::addVisualElement(QSharedPointer<VisualElement> v)
  *	This gets called by the Canvas for every rendering taget 
  *  currently being used by the engine.
  */
-void Layer::draw(QSharedPointer<VisualTarget> visualTarget)
+void Layer::draw(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<Engine::PictoEngine> engine)
 {
+	//See if we need to change the rendering targets
+	if(!unaddedVisualElements_.isEmpty())
+	{
+		QList<QSharedPointer<RenderingTarget> > renderingTargets;
+		renderingTargets = engine->getRenderingTargets();
+		QSharedPointer<Picto::CompositingSurface> compositingSurface;
+
+		//add the appropriate compositing surfaces to the element
+		//foreach(QSharedPointer<VisualElement> element, unaddedVisualElements_)
+		for(int i=0; i<unaddedVisualElements_.length(); i++)
+		{
+			foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+			{
+				compositingSurface = renderTarget->generateCompositingSurface();
+				unaddedVisualElements_[i]->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+			}
+			visualElements_.append(unaddedVisualElements_[i]);
+		}
+
+		unaddedVisualElements_.clear();
+	}
 	//run through all our visualElements updating the animation and drawing
 	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 	{

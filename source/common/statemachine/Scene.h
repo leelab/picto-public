@@ -10,6 +10,7 @@
 #include "Canvas.h"
 #include "../controlelements/ControlElement.h"
 #include "../compositor/RenderingTarget.h"
+#include "../engine/PictoEngine.h"
 
 namespace Picto {
 
@@ -25,7 +26,7 @@ public:
 	void setCanvas(QSharedPointer<Canvas> canvas) { canvas_ = canvas; }
 	//void setAudioElement(....)
 
-	void render();
+	void render(QSharedPointer<Engine::PictoEngine> engine);
 
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
