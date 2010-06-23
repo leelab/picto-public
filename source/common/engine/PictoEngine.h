@@ -52,7 +52,6 @@ namespace PictoEngineTimingType
 	} PictoEngineTimingType;
 }
 
-
 /*! \brief Executes state machines contained in Experiment objects
  *
  * The PictoEngine object takes an Experiment object and executes its contained state machines by rendering to one or
@@ -120,6 +119,10 @@ public:
 	void setName(QString name) { name_ = name; };
 	QString getName() { return name_; };
 
+	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
+	bool slaveMode() { return slave_; }
+	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
+
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -131,11 +134,14 @@ private:
 	QSharedPointer<RewardController> rewardController_;
 	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server
 	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
+	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode
 
 	QUuid sessionId_;
 	QString name_;
 
 	int engineCommand_;
+
+	bool slave_;
 };
 
 /*! @} */

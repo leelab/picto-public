@@ -1,6 +1,6 @@
 #include "Result.h"
 #include "../engine/PictoEngine.h"
-#include <QtDebug>
+#include <QCoreApplication>
 namespace Picto
 {
 
@@ -26,6 +26,22 @@ QString Result::run(QSharedPointer<Engine::PictoEngine> engine)
 	return propertyContainer_.getPropertyValue("Name").toString();
 }
 
+QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+{
+	//This will issue the rewards
+	//Also, since results don't really have transitions out (they are implicit transitions to the
+	//next layer up), we don't wait for a transition here.
+	return run(engine);
+
+	/*QString result;
+	while(result.isEmpty())
+	{
+		result = getMasterStateResult(engine);
+		QCoreApplication::processEvents();
+	}
+
+	return result; */
+}
 
 /*!	\Brief Turns a result object into an XML framgent.
  *

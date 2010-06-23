@@ -1,37 +1,22 @@
 #include "NullRewardController.h"
 
 #include <QtDebug>
+#include <QCoreApplication>
+#include <QTime>
 
 namespace Picto
 {
 
-bool NullRewardController::setRewardVolume(unsigned int channel, float volume)
-{
-	qDebug()<<"Reward volume on channel "<<channel<<" set to "<<volume;
-	return true;
-}
-
-bool NullRewardController::setRewardDurationMs(unsigned int channel, unsigned int duration)
-{
-	qDebug()<<"Reward duration on channel "<<channel<<" set to "<<duration<<" ms.";
-	return true;
-}
-
-int NullRewardController::getRewardDurationMs(unsigned int channel)
-{
-	Q_UNUSED(channel);
-	return 0;
-}
-
-bool NullRewardController::setRewardResetTimeMs(unsigned int channel, unsigned int time)
-{
-	qDebug()<<"Reward reset time on channel "<<channel<<" set to "<<time<<" ms.";
-	return true;
-}
 
 void NullRewardController::giveReward(unsigned int channel)
 {
 	qDebug()<<"Reward given on channel "<<channel;
+	QTime timer;
+	timer.start();
+	while(timer.elapsed() < rewardResetTimes_[channel-1] + rewardDurations_[channel-1])
+		QCoreApplication::processEvents();
+	Q_ASSERT(false);
+
 }
 
 void NullRewardController::flush(unsigned int channel,bool flush)

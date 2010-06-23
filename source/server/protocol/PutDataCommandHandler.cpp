@@ -2,6 +2,7 @@
 
 #include "../../common/globals.h"
 #include "../../common/storage/BehavioralDataStore.h"
+#include "../../common/storage/StateDataStore.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
 
@@ -53,12 +54,21 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	//We do different things depending on the type of data being sent
 	if(dataType == "BehavioralDataStore")
 	{
-
 		//Extract the behavioralDataStore
 		Picto::BehavioralDataStore behaveData;
 		behaveData.deserializeFromXml(xmlReader);
 
 		sessionInfo->insertBehavioralData(behaveData);
+	}
+	else if(dataType == "StateDataStore")
+	{
+		//deserialize the data store
+		Picto::StateDataStore stateData;
+		stateData.deserializeFromXml(xmlReader);
+
+		printf("State data, state machine name: %s\n", stateData.getMachineName().toAscii());
+
+		sessionInfo->insertStateData(stateData);
 	}
 	else
 	{

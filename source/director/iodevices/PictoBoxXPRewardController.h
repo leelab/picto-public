@@ -34,11 +34,6 @@ public:
 	PictoBoxXPRewardController(unsigned int channelCount);
 	~PictoBoxXPRewardController();
 
-	bool setRewardVolume(unsigned int channel, float volume);
-	bool setRewardDurationMs(unsigned int channel, unsigned int duration);
-	int getRewardDurationMs(unsigned int channel);
-	bool setRewardResetTimeMs(unsigned int channel, unsigned int time);
-
 public slots:
 	void giveReward(unsigned int channel);
 	void flush(unsigned int channel,bool flush);

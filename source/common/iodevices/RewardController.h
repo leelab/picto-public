@@ -37,10 +37,10 @@ public:
 	RewardController(unsigned int channelCount);
 	~RewardController();
 
-	virtual bool setRewardVolume(unsigned int channel, float volume) =0 ;
-	virtual bool setRewardDurationMs(unsigned int channel, unsigned int duration) = 0;
-	virtual int getRewardDurationMs(unsigned int channel) = 0;
-	virtual bool setRewardResetTimeMs(unsigned int channel, unsigned int time) = 0;
+	bool setRewardVolume(unsigned int channel, float volume);
+	bool setRewardDurationMs(unsigned int channel, unsigned int duration);
+	int getRewardDurationMs(unsigned int channel);
+	bool setRewardResetTimeMs(unsigned int channel, unsigned int time);
 
 	int getChannelCount() { return channelCount_; };
 

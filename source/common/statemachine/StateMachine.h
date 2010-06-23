@@ -73,6 +73,8 @@ public:
 	bool validateStateMachine();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
+	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
+
 	bool initScripting(QScriptEngine &qsEngine);
 
 	//DataStore functions
@@ -80,7 +82,10 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
+	QString runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave);
 	void sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine);
+	void sendStateDataToServer(QSharedPointer<Transition> transition, QSharedPointer<Engine::PictoEngine> engine);
+
 
 	bool cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine);
 

@@ -1,5 +1,5 @@
 //This can only be defined if we are running on a windows box.
-#define CHECK_TIMING
+//#define CHECK_TIMING
 
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
@@ -138,6 +138,69 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 
 	outFile.close();
 #endif
+
+	return result;
+}
+
+/*! \brief Runs a state in slave mode
+ *
+ *	Running in slave mode results in two major differences:
+ *		1. The controllers are completely ignored, and we return the result 
+ *		   pulled from the master engine over the network.
+ *		2. Frames are rendered as behavioral data comes in.  For every piece of
+ *		   behavioral data received, we advance one frame.  This keeps us from 
+ *		   getting ahead of the master engine.
+ */
+QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+{
+	sigChannel_ = engine->getSignalChannel("PositionChannel");
+
+	//Figure out which scripts we will be running
+	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
+	bool runFrameScript = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
+	bool runExitScript = !propertyContainer_.getPropertyValue("ExitScript").toString().isEmpty();
+
+	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
+	QString frameScriptName = getName().simplified().remove(' ')+"Frame";
+	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
+
+	//run the entry script
+	if(runEntryScript)
+		runScript(entryScriptName);
+
+	QString result = "";
+	bool isDone = false;
+
+	//This is the "rendering loop"  It gets run for every frame
+	while(!isDone)
+	{
+		//----------  Draw the scene --------------
+		scene_->render(engine);
+
+		//--------- Check for master state change ------------
+		result = getMasterStateResult(engine);
+		if(!result.isEmpty())
+			isDone = true;
+		
+
+		//-------------- Run the frame script ----------------
+		if(runFrameScript && !isDone)
+			runScript(frameScriptName);
+
+		//------ Check for engine stop commands ---------------
+		if(checkForEngineStop(engine))
+		{
+			isDone = true;
+			result = "EngineAbort";
+		}
+
+		//In slave mode, we always process events
+		QCoreApplication::processEvents();
+	}
+
+	//run the exit script
+	if(runExitScript)
+		runScript(exitScriptName);
 
 	return result;
 }

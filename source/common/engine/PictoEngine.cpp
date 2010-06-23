@@ -13,7 +13,8 @@ namespace Picto {
 
 
 PictoEngine::PictoEngine() :
-	timingType_(PictoEngineTimingType::precise)
+	timingType_(PictoEngineTimingType::precise),
+	slave_(false)
 {
 	bExclusiveMode_ = true;
 	setSessionId(QUuid());

@@ -22,12 +22,6 @@ PictoBoxXPRewardController::PictoBoxXPRewardController(unsigned int channelCount
 {
 	Q_ASSERT(channelCount <= 4);	//PictoBox only has 4 reward channels...
 
-	//initialize the rewrad durations to 250 ms (this is arbitrary
-	for(int i=0; i<4; i++)
-		rewardDurations_.append(250);
-	//initialize the reset time to  0 ms
-	for(int i=0; i<4; i++)
-		rewardResetTimes_.append(250);
 
 	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
 	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_REWARD_CHANNELS,"",DAQmx_Val_ChanForAllLines));
@@ -45,38 +39,7 @@ PictoBoxXPRewardController::~PictoBoxXPRewardController()
 }
 
 
-//! With PictoBox, we can't easily control reward volume, so this function fails
-bool PictoBoxXPRewardController::setRewardVolume(unsigned int channel, float volume)
-{
-	Q_UNUSED(channel);
-	Q_UNUSED(volume);
-	return false;
-}
 
-bool PictoBoxXPRewardController::setRewardDurationMs(unsigned int channel, unsigned int duration)
-{
-	if(channel > 4 || channel < 1)
-		return false;
-	rewardDurations_[channel-1] = duration;
-	return true;
-}
-
-int PictoBoxXPRewardController::getRewardDurationMs(unsigned int channel)
-{
-	if(channel > 4 || channel < 1)
-		return -1;
-	else
-		return rewardDurations_[channel-1];
-
-}
-
-bool PictoBoxXPRewardController::setRewardResetTimeMs(unsigned int channel, unsigned int time)
-{
-	if(channel > 4 || channel < 1)
-		return false;
-	rewardResetTimes_[channel-1] = time;
-	return true;
-}
 
 
 void PictoBoxXPRewardController::giveReward(unsigned int channel)

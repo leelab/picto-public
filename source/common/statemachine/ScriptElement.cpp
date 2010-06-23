@@ -80,6 +80,21 @@ QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 	return "done";
 }
 
+QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+{
+	//This will execute the script
+	run(engine);
+
+	QString result;
+	while(result.isEmpty())
+	{
+		result = getMasterStateResult(engine);
+		QCoreApplication::processEvents();
+	}
+
+	return result; 
+}
+
 /*!	\brief Converts the ScriptElement to an XML fragment
  *
  *	The XML fragment will look something like this:

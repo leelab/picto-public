@@ -1,9 +1,14 @@
 #include "StateMachineElement.h"
 
 #include "../property/Property.h"
+#include "../protocol/ProtocolCommand.h"
+#include "../protocol/ProtocolResponse.h"
+#include "../storage/StateDataStore.h"
 #include "Result.h"
 
 namespace Picto {
+
+	double StateMachineElement::lastTransitionTime_;
 
 StateMachineElement::StateMachineElement()
 :propertyContainer_("StateMachineElement")
@@ -100,6 +105,74 @@ QString StateMachineElement::type()
 {
 	QString typeStr = propertyContainer_.getPropertyValue("Type").toString();
 	return typeStr;
+}
+
+/*! Checks the server for a result from the master engine/state machine
+ *
+ *	If we're running in slave mode, we'll be making calls to the server to figure
+ *	out what is going on in the master state machine.  This function will be used
+ *	by all of the derived classes to make those calls.
+ *
+ *	If the master has already left this state, then the result string is returned.
+ *	otherwise, an empty string is returned.
+ */
+QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine)
+{
+
+	//Collect the data from the server
+	QString commandStr = QString("GETDATA StateDataStore:%1 PICTO/1.0").arg(lastTransitionTime_);
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolResponse> response;
+
+	CommandChannel* slaveToServerChan = engine->getSlaveCommandChannel();
+
+	slaveToServerChan->sendCommand(command);
+	//No response
+	if(!slaveToServerChan->waitForResponse(1000))
+		return "";
+
+	response = slaveToServerChan->getResponse();
+
+	//Response not 200:OK
+	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
+		return "";
+	
+	QByteArray xmlFragment = response->getContent();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
+
+	while(xmlReader->readNext() && xmlReader->name() != "Data");
+
+	Q_ASSERT(!xmlReader->atEnd());
+
+
+	xmlReader->readNext();
+	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
+	{
+		if(xmlReader->name() == "StateDataStore")
+		{
+
+			StateDataStore data;
+			data.deserializeFromXml(xmlReader);
+			
+			//Even if multiple transitions have stacked up, we are expecting that data to be
+			//in temporal order, so we can simply return the first response.  However, we are
+			//going to confirm that the source name matches as well
+			QString msg = QString("Transition source: %1 doesn't match current state: %2 at time: %3")
+				.arg(data.getSource()).arg(getName()).arg(data.getTime());
+			Q_ASSERT_X(data.getSource() == getName(),"StateMachineElement::getMasterStateResult", 
+				msg.toAscii());
+			lastTransitionTime_ = data.getTime();
+
+			return data.getSourceResult();
+		}
+		else
+		{
+			Q_ASSERT(false);
+		}
+	}
+
+	return "";
+
 }
 
 /*!	\brief A simple function to turn the result list into XML

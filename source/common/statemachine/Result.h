@@ -26,7 +26,7 @@ public:
 	Result();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
-
+	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 	//! \TODO Add rewarding options here...
 
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

@@ -15,6 +15,7 @@
 
 #include <QSharedPointer>
 #include <QScriptEngine>
+#include <QCoreApplication>
 
 #include "../common.h"
 #include "StateMachineElement.h"
@@ -32,6 +33,7 @@ public:
 	ScriptElement();
 	
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
+	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
 	void setScript(QString script);
 

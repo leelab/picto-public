@@ -6,34 +6,6 @@
 namespace Picto
 {
 
-bool AudioRewardController::setRewardVolume(unsigned int channel, float volume)
-{
-	Q_UNUSED(channel);
-	Q_UNUSED(volume);
-	return true;
-}
-
-bool AudioRewardController::setRewardDurationMs(unsigned int channel, unsigned int duration)
-{
-	Q_UNUSED(channel);
-	Q_UNUSED(duration);
-
-	return true;
-}
-
-int AudioRewardController::getRewardDurationMs(unsigned int channel)
-{
-	Q_UNUSED(channel);
-	return 0;
-}
-
-bool AudioRewardController::setRewardResetTimeMs(unsigned int channel, unsigned int time)
-{
-	Q_UNUSED(channel);
-	Q_UNUSED(time);
-	return true;
-}
-
 void AudioRewardController::giveReward(unsigned int channel)
 {
 	if(channel == 1)
@@ -44,7 +16,8 @@ void AudioRewardController::giveReward(unsigned int channel)
 		//so we have to pause after each call
 		QTime timer;
 		timer.start();
-		while(timer.elapsed()<300);
+		while(timer.elapsed() < rewardResetTimes_[channel-1] + rewardDurations_[channel-1])
+			QCoreApplication::processEvents();
 	}
 
 }

@@ -53,7 +53,7 @@ void BehavioralDataStore::addData(QMap<QString, QList<double>> signalChannelData
 /*! \brief Turns the BehavioralDataStore into an XML fragment
  *
  *	The XML will look like this:
- *	<BehavioralDataStore id=143>
+ *	<BehavioralDataStore>
  *		<Data timestamp=123.4324 x=450 y=394/>
  *		<Data timestamp=123.4334 x=457 y=386/>
  *		...
@@ -141,12 +141,6 @@ bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 			return false;
 		}
 		xmlStreamReader->readNext();
-	}
-
-	if(xmlStreamReader->atEnd())
-	{
-		addError("BehavioralDataStore", "Unexpected end of document", xmlStreamReader);
-		return false;
 	}
 
 	if(xmlStreamReader->atEnd())

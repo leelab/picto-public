@@ -32,6 +32,7 @@ public:
 	//FlowElement(QSharedPointer<ParameterContainer> parameters);
 	
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
+	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
 	bool addCondition(QSharedPointer<PredicateExpression> predExpr, int order, QString name);
 	bool addCondition(QSharedPointer<CompoundExpression> compExpr, int order, QString name);

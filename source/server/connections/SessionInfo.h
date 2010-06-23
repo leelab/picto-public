@@ -23,6 +23,7 @@
 #include "../datacollection/neuraldatacollector.h"
 #include "../network/serverthread.h"
 #include "../../common/storage/BehavioralDataStore.h"
+#include "../../common/storage/StateDataStore.h"
 
 #include <QSharedPointer>
 #include <QSqlDatabase>
@@ -41,6 +42,8 @@ public:
 	void insertTrialEvent(double time, int eventCode, int trialNum);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
 	Picto::BehavioralDataStore selectBehavioralData(double timestamp);
+	void insertStateData(Picto::StateDataStore data);
+	QList<Picto::StateDataStore> selectStateData(double timestamp);
 
 	//getters/setters
 	//QSqlDatabase sessionDb() { return sessionDb_; };

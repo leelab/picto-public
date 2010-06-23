@@ -93,7 +93,8 @@ int main(int argc, char *argv[])
 		return -1;
 	if(!hwSetup.setupSignalChannel(HardwareSetup::Mouse)) 
 		return -1;
-	if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
+	//if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
+	if(!hwSetup.setupRewardController(HardwareSetup::PictoBoxXpReward)) 
 		return -1;
 	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen)) 
 		return -1;

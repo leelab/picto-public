@@ -6,7 +6,7 @@
  *  return all data that was collected after 10.324 seconds).
  *
  *	FORMAT
- *		GETDATA time(e.g. 3.245) PICTO.1/0
+ *		GETDATA datastoretype:time(e.g. BehavioralDataStore:3.245) PICTO.1/0
  *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
  *
  *	RESPONSES
@@ -22,8 +22,15 @@
  *	    <Data timestamp=123.4334 x=457 y=386/>
  *	    ...
  *	  </BehavioralDataStore>
+ *	</Data>
+ *
+ *			OR
+ *	<Data>
  *	  <StateChangeDataStore>
- *	    <!--- This hasn't yet been coded, so the format may change --->
+ *	    ...
+ *	  </StateChangeDataStore>
+*	  <StateChangeDataStore>
+ *	    ...
  *	  </StateChangeDataStore>
  *	</Data>
  */

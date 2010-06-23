@@ -24,6 +24,7 @@ class State : public StateMachineElement
 public:
 	State();
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
+	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

@@ -1,6 +1,8 @@
 #include "FlowElement.h"
 #include "Result.h"
 
+#include <QCoreApplication>
+
 namespace Picto {
 
 bool conditionLessThan(const FlowElement::Condition &c1, const FlowElement::Condition &c2) 
@@ -15,18 +17,6 @@ FlowElement::FlowElement()
 	//At some point, we may want to make the default result name user modifiable...
 	defaultResult_ = "default";
 }
-/*FlowElement::FlowElement(QSharedPointer<ParameterContainer> parameters)
-: StateMachineElement(parameters)
-{
-	propertyContainer_.setPropertyValue("Type","FlowElement");
-	
-	//At some point, we may want to make the default result name user modifiable...
-	defaultResult_ = "default";
-	QSharedPointer<Result> r(new Result());
-	r->setName(defaultResult_);
-	addResult(r);
-
-}*/
 
 QString FlowElement::run(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -53,6 +43,18 @@ QString FlowElement::run(QSharedPointer<Engine::PictoEngine> engine)
 	//if we made it this far, nothing evaluated true, so return the default result
 	return defaultResult_;
 
+}
+
+QString FlowElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+{
+	QString result;
+	while(result.isEmpty())
+	{
+		result = getMasterStateResult(engine);
+		QCoreApplication::processEvents();
+	}
+
+	return result; 
 }
 
 bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr, int order, QString name)

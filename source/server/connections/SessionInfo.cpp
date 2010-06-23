@@ -63,6 +63,9 @@ SessionInfo::SessionInfo(QString directorAddr):
 	sessionQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
 		"ypos REAL, time REAL)");
 
+	sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, machinename TEXT, "
+		"source TEXT, sourceresult TEXT, destination TEXT, time REAL)");
+
 	//Add the current time
 	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session start\", :time)");
 	sessionQ.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
@@ -236,6 +239,23 @@ void SessionInfo::insertBehavioralData(Picto::BehavioralDataStore data)
 	}
 }
 
+//! \brief inserts a state change record in the session database
+void SessionInfo::insertStateData(Picto::StateDataStore data)
+{
+	QSqlQuery query(sessionDb_);
+	query.prepare("INSERT INTO statetransitions "
+		"(machinename, source, sourceresult, destination, time) "
+		"VALUES(:machinename, :source, :sourceresult, :destination, :time) ");
+	query.bindValue(":machinename", data.getMachineName());
+	QString machineName = data.getMachineName();
+	query.bindValue(":source", data.getSource()); 
+	query.bindValue(":sourceresult",data.getSourceResult());
+	query.bindValue(":destination",data.getDestination());
+	query.bindValue(":time",data.getTime());
+	Q_ASSERT(query.exec());
+}
+
+
 /*! \brief Returns a behavioral datastore with all of the data collected after the timestamp
  *
  *	This functions creates a new BehavioralDataStore object, and fills it with
@@ -246,7 +266,6 @@ void SessionInfo::insertBehavioralData(Picto::BehavioralDataStore data)
 Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 {
 	Picto::BehavioralDataStore dataStore;
-	Picto::BehavioralDataStore::BehavioralDataPoint dataPoint;
 
 	//First, we attempt to pull data from the session database.  This will 
 	//likely return an empty query.
@@ -289,5 +308,42 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 	}
 
 	return dataStore;
+
+}
+
+/*! \brief Returns a list of state datastores with all of the data collected after the timestamp
+ *
+ *	This functions creates a list of state data stores and returns it.  If the timestamp is 0, 
+ *	then all data is returned.
+ */
+QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
+{
+	QList<Picto::StateDataStore> stateDataList;
+
+	QSqlQuery sessionQuery(sessionDb_);
+	sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinename FROM statetransitions  "
+		"WHERE time > :time ORDER BY time ASC");
+	if(timestamp == 0)
+		sessionQuery.bindValue(":time",-1);
+	else
+		sessionQuery.bindValue(":time", timestamp);
+	if(!sessionQuery.exec())
+	{
+		QString err = sessionQuery.lastError().text();
+		Q_ASSERT_X(false, "SessionInfo::selectBehavioralData", err.toAscii());
+	}
+
+	while(sessionQuery.next())
+	{
+		Picto::StateDataStore data;
+		data.setTransition(sessionQuery.value(0).toString(),
+						   sessionQuery.value(1).toString(),
+						   sessionQuery.value(2).toString(),
+						   sessionQuery.value(3).toDouble(),
+						   sessionQuery.value(4).toString());
+		stateDataList.append(data);
+	}
+
+	return stateDataList;
 
 }

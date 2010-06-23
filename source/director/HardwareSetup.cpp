@@ -157,7 +157,6 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 		return false;
 #else
 		rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController(1));
-		rewardController->setRewardResetTimeMs(1,500);
 #endif
 	}
 	else if(controllerType == NullReward)

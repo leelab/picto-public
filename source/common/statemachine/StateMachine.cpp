@@ -10,6 +10,8 @@
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../network/CommandChannel.h"
+#include "../timing/Timestamper.h"
+#include "../storage/StateDataStore.h"
 
 namespace Picto {
 
@@ -222,7 +224,7 @@ bool StateMachine::validateStateMachine()
 	return true;
 }
 
-QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
+QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave)
 {
 	if(!scriptingInit_)
 	{
@@ -234,7 +236,7 @@ QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 
 	//Generate the start trial event
-	if(getLevel() == StateMachineLevel::Trial)
+	if(getLevel() == StateMachineLevel::Trial && !slave)
 	{
 		//Generating an event on the neural recorder takes ~250 us, while generating a 
 		//Picto event requires sending a command to the server and waiting for a response.
@@ -260,7 +262,11 @@ QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 
 	while(true)
 	{
-		QString result = currElement->run(engine);
+		QString result;
+		if(slave)
+			result = currElement->runAsSlave(engine);
+		else
+			result = currElement->run(engine);
 
 		if(result == "EngineAbort")
 			return result;
@@ -273,6 +279,7 @@ QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 			if(tran->getSourceResult() == result)
 			{
 				nextElementName = tran->getDestination();
+				sendStateDataToServer(tran, engine);
 				break;
 			}
 		}
@@ -290,17 +297,41 @@ QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 				engine->generateEvent(trialEventCode_);
 				sendTrialEventToServer(engine);
 
+
 				//Deal with all of the left-over commands
 				Q_ASSERT_X(cleanupRegisteredCommands(engine),"",QString("Failed to cleanup registered commands.  "
 					"Leftover commands: " + 
 					QString::number(engine->getDataCommandChannel()->pendingResponses())).toAscii());
 			}
-			return currElement->run(engine);
+			if(slave)
+			{
+				//Since the result state takes a long time to run (due to issuing of rewards)
+				//were going to assume that we are in synch, and run it first.  Then well check
+				//to make sure that the master engine is done (and that we didn't screw up)
+				QString masterResult;
+				QString slaveResult;
+				slaveResult = currElement->runAsSlave(engine);
+
+				while(masterResult.isEmpty())
+					masterResult = getMasterStateResult(engine);
+				Q_ASSERT(masterResult == slaveResult);
+				return masterResult;
+			}
+			else
+				return currElement->run(engine);
 		}
 	}
 
 }
+QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
+{
+	return runPrivate(engine, false);
+}
 
+QString StateMachine::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+{
+	return runPrivate(engine, true);
+}
 
 /*!	\brief Sets up the script engines for this state machine
  *
@@ -391,6 +422,55 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	Q_ASSERT(!response.isNull());
 	Q_ASSERT(response->getResponseType() == "OK");
 }
+
+/*!	\brief Sends a StateDataStore to the server to let it know that we are transitioning
+ *
+ *	To keep master and slave engines in synch, we send StateDataStores to the server
+ *	everytime there is a change in state.
+ *
+ *	This command is sent as a registered command, which means that we don't need to 
+ *	worry about checking for a response, as that will be taken care of in either the
+ *	State rendering loop, or the cleanup at the end of a trial.
+ */
+void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, QSharedPointer<Engine::PictoEngine> engine)
+{
+	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+
+	if(dataChannel.isNull())
+		return;
+	
+
+	//send a PUTDATA command to the server with the state transition data
+	QSharedPointer<Picto::ProtocolResponse> dataResponse;
+	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+	QByteArray stateDataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&stateDataXml));
+
+	Timestamper stamper;
+	double timestamp = stamper.stampSec();
+	QString name = propertyContainer_.getPropertyValue("Name").toString();
+
+	/*xmlWriter->writeStartElement("StateDataStore");
+	xmlWriter->writeAttribute("timestamp",QString::number(timestamp));
+	xmlWriter->writeAttribute("statemachine",propertyContainer_.getPropertyValue("Name").toString() );
+	
+	transition->serializeAsXml(xmlWriter);
+	xmlWriter->writeEndElement();*/
+
+	StateDataStore stateData;
+	stateData.setTransition(transition,timestamp,name);
+	stateData.serializeAsXml(xmlWriter);
+
+	dataCommand->setContent(stateDataXml);
+	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
+	QUuid commandUuid = QUuid::createUuid();
+	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
+
+	dataChannel->sendRegisteredCommand(dataCommand);
+}
+
 
 /*! \brief cleans up all of the sent commands.
  *	

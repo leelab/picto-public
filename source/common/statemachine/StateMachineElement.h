@@ -30,6 +30,7 @@
 #include "../property/PropertyContainer.h"
 #include "../storage/DataStore.h"
 #include "../engine/PictoEngine.h"
+#include "../network/CommandChannel.h"
 
 namespace Picto {
 
@@ -51,6 +52,8 @@ public:
 	//All StateMachineElements must implement a run function that returns a string
 	//The returned string should correspond to a result contained by the element
 	virtual QString run(QSharedPointer<Engine::PictoEngine> engine) = 0;
+	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine) = 0;
+	static void resetSlaveElements() { lastTransitionTime_ = 0; };
 	
 
 	bool addResult(QSharedPointer<Result> result);
@@ -80,6 +83,9 @@ public:
 
 
 protected:
+	QString getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine);
+
+
 	ParameterContainer parameterContainer_;
 	QStringList results_;
 	QString defaultResult_;
@@ -88,6 +94,8 @@ protected:
 
 	PropertyContainer propertyContainer_;	//This should be used for any properties that can be 
 											//changed by Javascript, or edited/displayed in the GUI
+private:
+	static double lastTransitionTime_;
 };
 
 

@@ -35,7 +35,7 @@ bool NetworkSignalChannel::stop()
 void NetworkSignalChannel::updateDataBuffer()
 {
 	//Collect the data from the server
-	QString commandStr = QString("GETDATA %1 PICTO/1.0").arg(lastTimeDataCollected_);
+	QString commandStr = QString("GETDATA BehavioralDataStore:%1 PICTO/1.0").arg(lastTimeDataCollected_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 

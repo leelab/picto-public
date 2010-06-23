@@ -2,6 +2,7 @@
 
 #include "../../common/globals.h"
 #include "../../common/storage/BehavioralDataStore.h"
+#include "../../common/storage/StateDataStore.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
 
@@ -23,7 +24,7 @@ GetDataCommandHandler::GetDataCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	printf("GETDATA  handler: %d %d\n", QThread::currentThreadId());
+	//printf("GETDATA  handler: %d %d\n", QThread::currentThreadId());
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
@@ -34,16 +35,34 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	if(sessionInfo.isNull())
 		return notFoundResponse;
 
-	//NOTE: If the target isn't a double, we'll get 0.0 here, which is fine
-	double timestamp = command->getTarget().toDouble();
+	double timestamp = command->getTarget().split(':').value(1).toDouble();
+	QString dataType = command->getTarget().split(':').value(0,"");
 
 	QByteArray xmlContent;
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&xmlContent));
 	xmlWriter->writeStartElement("Data");
 
-	Picto::BehavioralDataStore dataStore;
-	dataStore = sessionInfo->selectBehavioralData(timestamp);
-	dataStore.serializeAsXml(xmlWriter);
+	if(dataType.compare("BehavioralDataStore",Qt::CaseInsensitive) == 0)
+	{
+		Picto::BehavioralDataStore dataStore;
+		dataStore = sessionInfo->selectBehavioralData(timestamp);
+		dataStore.serializeAsXml(xmlWriter);
+	}
+	else if(dataType.compare("StateDataStore",Qt::CaseInsensitive) == 0)
+	{
+		QList<Picto::StateDataStore> dataStores;
+		dataStores = sessionInfo->selectStateData(timestamp);
+		foreach(Picto::StateDataStore data, dataStores)
+		{
+			data.serializeAsXml(xmlWriter);
+		}
+	}
+	else
+	{
+		QString msg = "Unrecognized data type" + dataType;
+		Q_ASSERT_X(false, "GetDataCommandHandler", msg.toAscii());
+	}
+
 
 	//! \TODO add state transistions here...
 

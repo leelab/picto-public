@@ -28,7 +28,13 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 	else
 	{
-		stateMachine_->run(engine);
+		if(engine->slaveMode())
+		{
+			StateMachine::resetSlaveElements();
+			stateMachine_->runAsSlave(engine);
+		}
+		else
+			stateMachine_->run(engine);
 		return true;
 	}
 }
