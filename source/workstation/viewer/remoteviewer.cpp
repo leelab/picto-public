@@ -9,6 +9,7 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 #include "../../common/storage/behavioraldatastore.h"
+#include "../../common/statemachine/statemachine.h"
 
 
 
@@ -173,7 +174,8 @@ void RemoteViewer::setupUi()
 	toolbarLayout->addWidget(toolBar_);
 	toolbarLayout->addStretch();
 
-	statusBar_ = new QLabel("Testing");
+	statusBar_ = new QLabel();
+	updateStatus();
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
@@ -212,7 +214,10 @@ void RemoteViewer::play()
 		{
 			status_ = Running;
 			if(experiment_)
+			{
 				experiment_->runTask(modifiedTaskName, engine_);
+				status_ = Stopped;
+			}
 		}
 	}
 	else if(status_ == Paused)
@@ -583,6 +588,11 @@ bool RemoteViewer::startSession()
 			sessionId_ = QUuid(xmlReader.readElementText());
 			serverChannel_->setSessionId(sessionId_);
 			setStatus(tr("Experiment loaded on remote Director instance. Session ID: ")+ sessionId_.toString());
+			
+			//This resets the timing on all of our slave elements.  Note that this will eventually
+			//need to be rebuilt, because in the current arrangement, we can only have one running 
+			//slave state machine
+			Picto::StateMachine::resetSlaveElements();
 			return true;
 		}
 		else

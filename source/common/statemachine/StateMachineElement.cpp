@@ -140,9 +140,10 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 	QByteArray xmlFragment = response->getContent();
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
 
-	while(xmlReader->readNext() && xmlReader->name() != "Data");
+	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
 
-	Q_ASSERT(!xmlReader->atEnd());
+	if(xmlReader->atEnd())
+		return "";
 
 
 	xmlReader->readNext();
@@ -167,7 +168,7 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 		}
 		else
 		{
-			Q_ASSERT(false);
+			return "";
 		}
 	}
 

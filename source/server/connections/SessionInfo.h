@@ -24,6 +24,7 @@
 #include "../network/serverthread.h"
 #include "../../common/storage/BehavioralDataStore.h"
 #include "../../common/storage/StateDataStore.h"
+#include "../../common/storage/FrameDataStore.h"
 
 #include <QSharedPointer>
 #include <QSqlDatabase>
@@ -41,9 +42,12 @@ public:
 	void flushCache();
 	void insertTrialEvent(double time, int eventCode, int trialNum);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
+	void insertFrameData(Picto::FrameDataStore data);
+
 	Picto::BehavioralDataStore selectBehavioralData(double timestamp);
 	void insertStateData(Picto::StateDataStore data);
 	QList<Picto::StateDataStore> selectStateData(double timestamp);
+	Picto::FrameDataStore selectFrameData(double timestamp);
 
 	//getters/setters
 	//QSqlDatabase sessionDb() { return sessionDb_; };

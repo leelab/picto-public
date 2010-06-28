@@ -41,9 +41,7 @@ void EllipseGraphic::draw()
 	p.end();
 	image_ = image;
 
-	updateCompositingSurfaces();
-
-	shouldUpdateCompositingSurfaces_ = false;
+	shouldUpdateCompositingSurfaces_ = true;
 }
 
 VisualElement* EllipseGraphic::NewVisualElement()

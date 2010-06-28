@@ -85,9 +85,9 @@ void ArrowGraphic::draw()
 	p.end();
 	image_ = image;
 
-	updateCompositingSurfaces();
+	//updateCompositingSurfaces();
 
-	shouldUpdateCompositingSurfaces_ = false;
+	shouldUpdateCompositingSurfaces_ = true;
 }
 
 VisualElement* ArrowGraphic::NewVisualElement()

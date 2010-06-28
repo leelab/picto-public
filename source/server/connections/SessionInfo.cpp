@@ -66,6 +66,8 @@ SessionInfo::SessionInfo(QString directorAddr):
 	sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, machinename TEXT, "
 		"source TEXT, sourceresult TEXT, destination TEXT, time REAL)");
 
+	sessionQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
+
 	//Add the current time
 	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session start\", :time)");
 	sessionQ.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
@@ -81,6 +83,7 @@ SessionInfo::SessionInfo(QString directorAddr):
 	QSqlQuery cacheQ(cacheDb_);
 	cacheQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
 		"ypos REAL, time REAL)");
+	cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
 }
 
 SessionInfo::~SessionInfo()
@@ -180,6 +183,8 @@ void SessionInfo::flushCache()
 	}
 
 	flushQ.exec("DELETE FROM behavioraldata");*/
+
+
 	Q_ASSERT(sessionDb_.transaction());
 
 	//The queries are in a seperate namespace so that they get
@@ -189,6 +194,8 @@ void SessionInfo::flushCache()
 		QSqlQuery cacheQuery(cacheDb_);
 		QSqlQuery cacheCleanup(cacheDb_);
 
+		//Flush the behavioraldata table
+		//------------------------------
 		cacheQuery.exec("SELECT id,xpos,ypos,time FROM behavioraldata");
 
 		while(cacheQuery.next())
@@ -204,6 +211,25 @@ void SessionInfo::flushCache()
 			cacheCleanup.bindValue(":id", cacheQuery.value(0));
 			cacheCleanup.exec();
 		}
+
+		//Flush the framedata table
+		//------------------------------
+		Q_ASSERT(cacheQuery.exec("SELECT id,frame,time,state FROM framedata"));
+
+		while(cacheQuery.next())
+		{
+			diskQuery.prepare("INSERT INTO framedata(frame,time,state) "
+				"VALUES(:frame,:time,:state)");
+			diskQuery.bindValue(":frame",cacheQuery.value(1));
+			diskQuery.bindValue(":time",cacheQuery.value(2));
+			diskQuery.bindValue(":state",cacheQuery.value(3));
+			diskQuery.exec();
+
+			cacheCleanup.prepare("DELETE FROM framedata WHERE id=:id");
+			cacheCleanup.bindValue(":id", cacheQuery.value(0));
+			cacheCleanup.exec();
+		}
+
 	}
 	Q_ASSERT(sessionDb_.commit());
 }
@@ -255,6 +281,24 @@ void SessionInfo::insertStateData(Picto::StateDataStore data)
 	Q_ASSERT(query.exec());
 }
 
+//! \brief Inserts the passed in frame data into the cache database
+void SessionInfo::insertFrameData(Picto::FrameDataStore data)
+{
+	Picto::FrameDataStore::FrameData framedata;
+	while(data.length() > 0)
+	{
+		QSqlQuery cacheQ(cacheDb_);
+
+		framedata = data.takeFirstDataPoint();
+		cacheQ.prepare("INSERT INTO framedata (frame, time, state)"
+			"VALUES(:frame, :time, :state)");
+		cacheQ.bindValue(":frame",framedata.frameNumber);
+		cacheQ.bindValue(":time",framedata.time);
+		cacheQ.bindValue(":state",framedata.stateName);
+		cacheQ.exec();
+	}
+}
+
 
 /*! \brief Returns a behavioral datastore with all of the data collected after the timestamp
  *
@@ -276,11 +320,7 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 		sessionQuery.bindValue(":time",-1);
 	else
 		sessionQuery.bindValue(":time", timestamp);
-	if(!sessionQuery.exec())
-	{
-		QString err = sessionQuery.lastError().text();
-		Q_ASSERT_X(false, "SessionInfo::selectBehavioralData", err.toAscii());
-	}
+	Q_ASSERT(sessionQuery.exec());
 
 	while(sessionQuery.next())
 	{
@@ -310,6 +350,58 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 	return dataStore;
 
 }
+
+
+/*! \brief Returns a frame datastore with all of the data collected after the timestamp
+ *
+ *	This functions creates a new FrameDataStore object, and fills it with
+ *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
+ *	then all data is returned.  This is actually a bit tricky, since the data could be
+ *	either the session database or the cache database.
+ */
+Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
+{
+	Picto::FrameDataStore dataStore;
+
+	//First, we attempt to pull data from the session database.  This will 
+	//likely return an empty query.
+	QSqlQuery sessionQuery(sessionDb_);
+	sessionQuery.prepare("SELECT frame,time,state FROM framedata "
+		"WHERE time > :time ORDER BY time ASC");
+	if(timestamp == 0)
+		sessionQuery.bindValue(":time",-1);
+	else
+		sessionQuery.bindValue(":time", timestamp);
+	Q_ASSERT(sessionQuery.exec());
+
+	while(sessionQuery.next())
+	{
+		dataStore.addFrame(sessionQuery.value(1).toInt(),
+						   sessionQuery.value(2).toDouble(),
+						   sessionQuery.value(3).toString());
+	}
+
+
+	QSqlQuery cacheQuery(cacheDb_);
+	cacheQuery.prepare("SELECT frame,time,state FROM framedata "
+		"WHERE time > :time ORDER BY time ASC");
+	if(timestamp == 0)
+		cacheQuery.bindValue(":time",-1);
+	else
+		cacheQuery.bindValue(":time", timestamp);
+	Q_ASSERT(cacheQuery.exec());
+
+	while(cacheQuery.next())
+	{
+		dataStore.addFrame(cacheQuery.value(0).toInt(),
+						  cacheQuery.value(1).toDouble(),
+						  cacheQuery.value(2).toString());
+	}
+
+	return dataStore;
+
+}
+
 
 /*! \brief Returns a list of state datastores with all of the data collected after the timestamp
  *

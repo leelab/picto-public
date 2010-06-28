@@ -7,7 +7,10 @@
 #include "../protocol/ProtocolResponse.h"
 #include "../engine/PictoEngine.h"
 #include "../storage/BehavioralDataStore.h"
+#include "../storage/FrameDataStore.h"
 #include "../engine/SignalChannel.h"
+#include "../timing/Timestamper.h"
+#include "../stimuli/CursorGraphic.h"
 
 #include <QCoreApplication>
 #include <QUuid>
@@ -36,6 +39,8 @@ State::State()
 
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
+	frameCounter_ = -1; //We're zero-indexed
+
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 
 	//Figure out which scripts we will be running
@@ -79,6 +84,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 
 		//----------  Draw the scene --------------
 		scene_->render(engine);
+		frameCounter_ ++;
 
 		//------------- Send Behavioral data to server --------------
 		sendBehavioralData(engine);
@@ -154,6 +160,11 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
+	lastFrameCheckTime_ = lastTransitionTime_;
+
+	//Add a cursor for the user input
+	addCursor();
+	
 
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
@@ -170,32 +181,57 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 	QString result = "";
 	bool isDone = false;
+	frameCounter_ = -1;
 
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
-		//----------  Draw the scene --------------
-		scene_->render(engine);
+		//------ !!!! WARNING !!!! ------
+		//The ordering in this rendering loop is really, really sensitive.
+		//Think long and hard before rearranging code.  If you do rearrange, 
+		//you'll need to test pretty thoroughly0.
 
 		//--------- Check for master state change ------------
 		result = getMasterStateResult(engine);
 		if(!result.isEmpty())
 			isDone = true;
-		
-
-		//-------------- Run the frame script ----------------
-		if(runFrameScript && !isDone)
-			runScript(frameScriptName);
 
 		//------ Check for engine stop commands ---------------
+		//This has to be done first, otherwise if we are caught up with the master, 
+		//we'll never check for a stop
 		if(checkForEngineStop(engine))
 		{
 			isDone = true;
 			result = "EngineAbort";
 		}
 
+		//--------- Check for master frame ------------
+		//Since this "continues" the loop, it has to occur after checking
+		//for a state change
+		int masterFrame = getMasterFramenumber(engine);
+
+		if(masterFrame <= frameCounter_)
+		{
+			continue;
+		}
+
+		//Run the frame scripts enough to catch up
+		if(!isDone && runFrameScript)
+		{
+			for(int i=0; i<masterFrame - frameCounter_; i++)
+			{
+				runScript(frameScriptName);
+			}
+		}
+
+		//----------  Draw the scene --------------
+		scene_->render(engine);
+		
+
 		//In slave mode, we always process events
 		QCoreApplication::processEvents();
+
+		frameCounter_ = masterFrame;
 	}
 
 	//run the exit script
@@ -208,30 +244,41 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 //! Sends the current behavioral data to the server
 void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 {
+	//Create a new frame data store
+	FrameDataStore frameData;
+	Timestamper stamper;
+
+	frameData.addFrame(frameCounter_,stamper.stampSec(),getName());
+
+	//Update the BehavioralDataStore
 	BehavioralDataStore behavData;
 
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 
-	if(dataChannel.isNull())
-		return;
-	
-	//Update the BehavioralDataStore
-	//Note that the call to getValues clears out any existing values,
-	//so it should only be made once per frame.
-	behavData.emptyData();
-	behavData.addData(sigChannel_->getValues());
+	if(!dataChannel.isNull())
+	{
+		//Note that the call to getValues clears out any existing values,
+		//so it should only be made once per frame.
+		behavData.emptyData();
+		behavData.addData(sigChannel_->getValues());
+	}
 
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
 	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
-	QByteArray behaveDataXml;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&behaveDataXml));
-	behavData.serializeAsXml(xmlWriter);
+	QByteArray dataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
-	dataCommand->setContent(behaveDataXml);
-	dataCommand->setFieldValue("Content-Length",QString::number(behaveDataXml.length()));
+	xmlWriter->writeStartElement("Data");
+	frameData.serializeAsXml(xmlWriter);
+	if(behavData.length())
+		behavData.serializeAsXml(xmlWriter);
+	xmlWriter->writeEndElement();
+
+	dataCommand->setContent(dataXml);
+	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
 	QUuid commandUuid = QUuid::createUuid();
 	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
 
@@ -248,6 +295,64 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 
 	Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
 
+}
+
+/*! \brief returns the frame of the master state machine
+ *
+ *	When running in slave mode, we need to figure out what the current frame number 
+ *	of the master engine is.  This function returns that value.  To figure out the 
+ *	frame number we use GETDATA FrameDataStore.  If something goes wrong, this functio
+ *	returns a negative value.
+ */
+int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
+{
+	QString commandStr = QString("GETDATA FrameDataStore:%1 PICTO/1.0").arg(lastFrameCheckTime_);
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolResponse> response;
+
+	CommandChannel* slaveToServerChan = engine->getSlaveCommandChannel();
+	slaveToServerChan->sendCommand(command);
+
+	if(!slaveToServerChan->waitForResponse(1000))
+		return -1;
+
+	response = slaveToServerChan->getResponse();
+
+	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
+		return -2;
+	
+	QByteArray xmlFragment = response->getContent();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
+
+	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
+
+	if(xmlReader->atEnd())
+		return -3;
+
+	xmlReader->readNext();
+	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
+	{
+		if(xmlReader->name() == "FrameDataStore")
+		{
+			FrameDataStore dataStore;
+			dataStore.deserializeFromXml(xmlReader);
+
+			if(dataStore.length() <1)
+				return -1;
+			
+			//Since the frames are returned in order, we can simply pull off the 
+			//last frame, and know that it is the most recently reported frame
+			FrameDataStore::FrameData data;
+			data = dataStore.takeLastDataPoint();
+
+			return data.frameNumber;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	return -1;
 }
 
 //! Runs a script
@@ -366,6 +471,19 @@ void State::updateServer(QSharedPointer<Engine::PictoEngine> engine)
 		Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
 	}
 
+}
+
+void State::addCursor()
+{
+	QSharedPointer<CursorGraphic> cursor(new CursorGraphic(sigChannel_, QColor(255,0,0,255)));
+
+	//Create a new layer
+	QSharedPointer<Layer> cursorLayer(new Layer());
+	cursorLayer->setOrder(100);  //This puts it on top
+	cursorLayer->addVisualElement(cursor);
+	
+	//add the layer to our state/scene/canvas
+	scene_->getCanvas()->addLayer(cursorLayer);
 }
 
 

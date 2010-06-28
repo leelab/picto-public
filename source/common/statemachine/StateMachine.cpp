@@ -306,7 +306,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 			if(slave)
 			{
 				//Since the result state takes a long time to run (due to issuing of rewards)
-				//were going to assume that we are in synch, and run it first.  Then well check
+				//we're going to assume that we are in synch, and run it first.  Then well check
 				//to make sure that the master engine is done (and that we didn't screw up)
 				QString masterResult;
 				QString slaveResult;
@@ -452,16 +452,13 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 	double timestamp = stamper.stampSec();
 	QString name = propertyContainer_.getPropertyValue("Name").toString();
 
-	/*xmlWriter->writeStartElement("StateDataStore");
-	xmlWriter->writeAttribute("timestamp",QString::number(timestamp));
-	xmlWriter->writeAttribute("statemachine",propertyContainer_.getPropertyValue("Name").toString() );
-	
-	transition->serializeAsXml(xmlWriter);
-	xmlWriter->writeEndElement();*/
-
 	StateDataStore stateData;
 	stateData.setTransition(transition,timestamp,name);
+
+	xmlWriter->writeStartElement("Data");
 	stateData.serializeAsXml(xmlWriter);
+	xmlWriter->writeEndElement();
+
 
 	dataCommand->setContent(stateDataXml);
 	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));

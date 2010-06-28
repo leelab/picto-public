@@ -51,6 +51,8 @@
    <file alias="_constraint_8h-source.html">../../../output/documentation/main/html/_constraint_8h-source.html</file>
    <file alias="_control_element_8cpp-source.html">../../../output/documentation/main/html/_control_element_8cpp-source.html</file>
    <file alias="_control_element_8h-source.html">../../../output/documentation/main/html/_control_element_8h-source.html</file>
+   <file alias="_cursor_graphic_8cpp-source.html">../../../output/documentation/main/html/_cursor_graphic_8cpp-source.html</file>
+   <file alias="_cursor_graphic_8h-source.html">../../../output/documentation/main/html/_cursor_graphic_8h-source.html</file>
    <file alias="_custom_controller_8cpp-source.html">../../../output/documentation/main/html/_custom_controller_8cpp-source.html</file>
    <file alias="_custom_controller_8h-source.html">../../../output/documentation/main/html/_custom_controller_8h-source.html</file>
    <file alias="_d3_d_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_d3_d_compositing_surface_8cpp-source.html</file>
@@ -103,6 +105,8 @@
    <file alias="_eye_tracker_calibration_8h-source.html">../../../output/documentation/main/html/_eye_tracker_calibration_8h-source.html</file>
    <file alias="_flow_element_8cpp-source.html">../../../output/documentation/main/html/_flow_element_8cpp-source.html</file>
    <file alias="_flow_element_8h-source.html">../../../output/documentation/main/html/_flow_element_8h-source.html</file>
+   <file alias="_frame_data_store_8cpp-source.html">../../../output/documentation/main/html/_frame_data_store_8cpp-source.html</file>
+   <file alias="_frame_data_store_8h-source.html">../../../output/documentation/main/html/_frame_data_store_8h-source.html</file>
    <file alias="_get_command_handler_8cpp-source.html">../../../output/documentation/main/html/_get_command_handler_8cpp-source.html</file>
    <file alias="_get_command_handler_8h-source.html">../../../output/documentation/main/html/_get_command_handler_8h-source.html</file>
    <file alias="_get_data_command_handler_8cpp-source.html">../../../output/documentation/main/html/_get_data_command_handler_8cpp-source.html</file>
@@ -268,8 +272,6 @@
    <file alias="_signal_channel_test_8h-source.html">../../../output/documentation/main/html/_signal_channel_test_8h-source.html</file>
    <file alias="_single_unit_data_store_8cpp-source.html">../../../output/documentation/main/html/_single_unit_data_store_8cpp-source.html</file>
    <file alias="_single_unit_data_store_8h-source.html">../../../output/documentation/main/html/_single_unit_data_store_8h-source.html</file>
-   <file alias="_slave_controller_8cpp-source.html">../../../output/documentation/main/html/_slave_controller_8cpp-source.html</file>
-   <file alias="_slave_controller_8h-source.html">../../../output/documentation/main/html/_slave_controller_8h-source.html</file>
    <file alias="_software_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_software_compositing_surface_8cpp-source.html</file>
    <file alias="_software_compositing_surface_8h-source.html">../../../output/documentation/main/html/_software_compositing_surface_8h-source.html</file>
    <file alias="_start_session_dialog_8cpp-source.html">../../../output/documentation/main/html/_start_session_dialog_8cpp-source.html</file>
@@ -282,8 +284,6 @@
    <file alias="_state_data_store_8h-source.html">../../../output/documentation/main/html/_state_data_store_8h-source.html</file>
    <file alias="_state_machine_8cpp-source.html">../../../output/documentation/main/html/_state_machine_8cpp-source.html</file>
    <file alias="_state_machine_8h-source.html">../../../output/documentation/main/html/_state_machine_8h-source.html</file>
-   <file alias="_state_machine_data_store_8cpp-source.html">../../../output/documentation/main/html/_state_machine_data_store_8cpp-source.html</file>
-   <file alias="_state_machine_data_store_8h-source.html">../../../output/documentation/main/html/_state_machine_data_store_8h-source.html</file>
    <file alias="_state_machine_element_8cpp-source.html">../../../output/documentation/main/html/_state_machine_element_8cpp-source.html</file>
    <file alias="_state_machine_element_8h-source.html">../../../output/documentation/main/html/_state_machine_element_8h-source.html</file>
    <file alias="_stimulus_element_8cpp-source.html">../../../output/documentation/main/html/_stimulus_element_8cpp-source.html</file>

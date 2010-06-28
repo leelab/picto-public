@@ -94,7 +94,6 @@ protected:
 
 	PropertyContainer propertyContainer_;	//This should be used for any properties that can be 
 											//changed by Javascript, or edited/displayed in the GUI
-private:
 	static double lastTransitionTime_;
 };
 

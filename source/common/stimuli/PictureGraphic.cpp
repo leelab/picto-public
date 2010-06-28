@@ -28,9 +28,9 @@ void PictureGraphic::draw()
 	QString imageFile = propertyContainer_.getPropertyValue("ImageFile").toString();
 	image_.load(imageFile);
 
-	updateCompositingSurfaces();
+	//updateCompositingSurfaces();
 
-	shouldUpdateCompositingSurfaces_ = false;
+	shouldUpdateCompositingSurfaces_ = true;
 }
 
 VisualElement* PictureGraphic::NewVisualElement()

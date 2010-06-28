@@ -2,10 +2,14 @@
 #define _STATE_H_
 
 #include "../common.h"
-#include "../statemachine/StateMachineElement.h"
+#include "StateMachineElement.h"
+#include "Canvas.h"
+#include "Layer.h"
 #include "../controlelements/ControlElement.h"
 #include "scene.h"
 #include "../engine/PictoEngine.h"
+
+
 
 #include <QScriptEngine>
 
@@ -47,11 +51,16 @@ private:
 	void runScript(QString scriptName);
 	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);
 	void updateServer(QSharedPointer<Engine::PictoEngine> engine);
+	int getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine);
+	void addCursor();
 
 	QSharedPointer<Scene> scene_;
 	QMap<QString, QSharedPointer<ControlElement> > controlElements_;
 	int revision_;
 	int engineNeeded_;
+
+	int frameCounter_;
+	double lastFrameCheckTime_;
 
 	QSharedPointer<SignalChannel> sigChannel_;
 

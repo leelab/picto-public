@@ -24,6 +24,7 @@ public:
 	Scene();
 
 	void setCanvas(QSharedPointer<Canvas> canvas) { canvas_ = canvas; }
+	QSharedPointer<Canvas> getCanvas() { return canvas_; };
 	//void setAudioElement(....)
 
 	void render(QSharedPointer<Engine::PictoEngine> engine);

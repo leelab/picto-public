@@ -30,49 +30,61 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
+	ConnectionManager *conMgr = ConnectionManager::Instance();
+	conMgr->updateDirector(QHostAddress(command->getFieldValue("Source-Address")), command->getTarget(), DirectorStatus::running);
+
+	QSharedPointer<SessionInfo> sessionInfo;
+	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));
+
+	if(sessionInfo.isNull())
+		return notFoundResponse;
+	
 	//Start reading the content
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(command->getContent()));
-	while(!xmlReader->atEnd() && !xmlReader->isStartElement())
+	while(!xmlReader->atEnd() && !xmlReader->isStartElement() && xmlReader->text() != "Data")
 		xmlReader->readNext();
 
 	if(xmlReader->atEnd())
 	{
 		return notFoundResponse;
 	}
-	
-	QString dataType = xmlReader->name().toString();
 
-	ConnectionManager *conMgr = ConnectionManager::Instance();
-	conMgr->updateDirector(QHostAddress(command->getFieldValue("Source-Address")), command->getTarget(), DirectorStatus::running);
-
-	QSharedPointer<SessionInfo> sessionInfo;
-	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));
-	
-	if(sessionInfo.isNull())
-		return notFoundResponse;
-
-	//We do different things depending on the type of data being sent
-	if(dataType == "BehavioralDataStore")
+	xmlReader->readNext();
+	while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "Data") && !xmlReader->atEnd())
 	{
-		//Extract the behavioralDataStore
-		Picto::BehavioralDataStore behaveData;
-		behaveData.deserializeFromXml(xmlReader);
+		
+		QString dataType = xmlReader->name().toString();
 
-		sessionInfo->insertBehavioralData(behaveData);
-	}
-	else if(dataType == "StateDataStore")
-	{
-		//deserialize the data store
-		Picto::StateDataStore stateData;
-		stateData.deserializeFromXml(xmlReader);
+		//We do different things depending on the type of data being sent
+		if(dataType == "BehavioralDataStore")
+		{
+			//Extract the behavioralDataStore
+			Picto::BehavioralDataStore behaveData;
+			behaveData.deserializeFromXml(xmlReader);
 
-		printf("State data, state machine name: %s\n", stateData.getMachineName().toAscii());
+			sessionInfo->insertBehavioralData(behaveData);
+		}
+		else if(dataType == "StateDataStore")
+		{
+			//deserialize the data store
+			Picto::StateDataStore stateData;
+			stateData.deserializeFromXml(xmlReader);
 
-		sessionInfo->insertStateData(stateData);
-	}
-	else
-	{
-		return notFoundResponse;
+			sessionInfo->insertStateData(stateData);
+		}
+		else if(dataType == "FrameDataStore")
+		{
+			Picto::FrameDataStore frameData;
+			frameData.deserializeFromXml(xmlReader);
+
+			sessionInfo->insertFrameData(frameData);
+		}
+		else
+		{
+			return notFoundResponse;
+		}
+
+		xmlReader->readNext();
 	}
 
 	return response;

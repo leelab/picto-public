@@ -57,9 +57,15 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 			data.serializeAsXml(xmlWriter);
 		}
 	}
+	else if(dataType.compare("FrameDataStore",Qt::CaseInsensitive) == 0)
+	{
+		Picto::FrameDataStore dataStore;
+		dataStore = sessionInfo->selectFrameData(timestamp);
+		dataStore.serializeAsXml(xmlWriter);
+	}
 	else
 	{
-		QString msg = "Unrecognized data type" + dataType;
+		QString msg = "Unrecognized data type: " + dataType;
 		Q_ASSERT_X(false, "GetDataCommandHandler", msg.toAscii());
 	}
 

@@ -15,8 +15,6 @@ void NullRewardController::giveReward(unsigned int channel)
 	timer.start();
 	while(timer.elapsed() < rewardResetTimes_[channel-1] + rewardDurations_[channel-1])
 		QCoreApplication::processEvents();
-	Q_ASSERT(false);
-
 }
 
 void NullRewardController::flush(unsigned int channel,bool flush)
