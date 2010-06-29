@@ -95,6 +95,12 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		xmlReader->readNext();
 	}
 
+	QString directive = sessionInfo->pendingDirective();
+	if(directive.isEmpty())
+		response->setContent("OK");
+	else
+		response->setContent(directive.toUtf8());
+	
 	return response;
 }
 

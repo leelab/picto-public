@@ -90,7 +90,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		sendBehavioralData(engine);
 
 		//---------- Check for directives from the server -----------
-		updateServer(engine);
+		//updateServer(engine);
 
 		//--------- Check control elements------------
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
@@ -241,7 +241,15 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-//! Sends the current behavioral data to the server
+/*! \brief Sends the current behavioral data to the server
+ *
+ *	We update the server with all of the usefule behavioral data.  This includes 
+ *	the time at which the most recent frame was drawn, as well as all the input
+ *	coordinates from the subject.  Since we're in a hurry, we use the "registered"
+ *	command functions in the command channel to send commands without having to 
+ *	wait for reponses.  The responses we get will all contain directives, so we 
+ *	have to handle those here as well.
+ */
 void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//Create a new frame data store
@@ -290,6 +298,36 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 		dataResponse = dataChannel->getResponse();
 		Q_ASSERT(!dataResponse.isNull());
 		Q_ASSERT(dataResponse->getResponseType() == "OK");
+
+		QString statusDirective = dataResponse->getDecodedContent().toUpper();
+
+		//We may want to break this out in a seperate function at some point...
+		if(statusDirective.startsWith("OK"))
+		{
+			//do nothing
+		}
+		else if(statusDirective.startsWith("STOP"))
+		{
+			engine->stop();
+		}
+		else if(statusDirective.startsWith("PAUSE"))
+		{
+			engine->pause();
+		}
+		else if(statusDirective.startsWith("RESUME"))
+		{
+			engine->resume();
+		}
+		else if(statusDirective.startsWith("REWARD"))
+		{
+			int channel = statusDirective.split(" ").value(1).toInt();
+			engine->giveReward(channel);	
+		}
+		else
+		{
+			Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
+		}
+
 	}
 
 
