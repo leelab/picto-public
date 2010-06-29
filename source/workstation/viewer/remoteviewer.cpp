@@ -136,6 +136,11 @@ void RemoteViewer::setupUi()
 	stopAction_->setIcon(QIcon(":/icons/stop.png"));
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 
+	rewardAction_ = new QAction(tr("&Reward"), this);
+	rewardAction_->setIcon(QIcon(":/icons/reward.png"));
+	connect(rewardAction_, SIGNAL(triggered()),this, SLOT(reward()));
+	rewardChannel_ = 1;
+
 	//TaskList combo box
 	taskListBox_ = new QComboBox;
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -147,6 +152,7 @@ void RemoteViewer::setupUi()
 	toolBar_->addAction(playAction_);
 	toolBar_->addAction(pauseAction_);
 	toolBar_->addAction(stopAction_);
+	toolBar_->addAction(rewardAction_);
 	toolBar_->addSeparator();
 	toolBar_->addWidget(new QLabel("Task: ", this));
 	toolBar_->addWidget(taskListBox_);
@@ -213,10 +219,13 @@ void RemoteViewer::play()
 		if(sendTaskCommand("start:"+modifiedTaskName))
 		{
 			status_ = Running;
+			updateActions();
 			if(experiment_)
 			{
 				experiment_->runTask(modifiedTaskName, engine_);
 				status_ = Stopped;
+				updateActions();
+
 			}
 		}
 	}
@@ -226,6 +235,7 @@ void RemoteViewer::play()
 		{
 			engine_->resume();
 			status_ = Running;
+			updateActions();
 		}
 	}
 	updateActions();
@@ -236,6 +246,7 @@ void RemoteViewer::pause()
 	if(sendTaskCommand("pause"))
 	{
 		status_ = Paused;
+		updateActions();
 		engine_->pause();
 	}
 	updateActions();
@@ -246,9 +257,18 @@ void RemoteViewer::stop()
 	if(sendTaskCommand("stop"))
 	{
 		status_ = Stopped;
+		updateActions();
 		engine_->stop();
 	}
 	updateActions();
+}
+
+void RemoteViewer::reward()
+{
+	if(sendTaskCommand(QString("reward:%1").arg(rewardChannel_)))
+	{
+		engine_->giveReward(rewardChannel_);
+	}
 }
 
 //! \brief Called whenever the connected button changes state
@@ -388,6 +408,16 @@ void RemoteViewer::updateActions()
 		pauseAction_->setEnabled(false);
 	else
 		pauseAction_->setEnabled(true);
+
+	//Reward action
+	//------------------------------------------
+	bool disableReward = false;
+	disableReward |= !connectAction_->isChecked();
+
+	if(disableReward)
+		rewardAction_->setEnabled(false);
+	else
+		rewardAction_->setEnabled(true);
 
 	//Director Combo Box
 	//------------------------------------------

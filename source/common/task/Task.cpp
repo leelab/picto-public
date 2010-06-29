@@ -1,4 +1,6 @@
 #include "Task.h"
+#include "../storage/StateDataStore.h"
+#include "../timing/Timestamper.h"
 
 namespace Picto {
 
@@ -29,12 +31,62 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 	else
 	{
 		if(engine->slaveMode())
+		{
 			stateMachine_->runAsSlave(engine);
+		}
 		else
-			stateMachine_->run(engine);
+		{
+			QString result;
+			result = stateMachine_->run(engine);
+
+			//After the task has finished running, we need to report the final result.
+			//This can't be done within the state machine, because the state machine
+			//has no idea if it's the top level.
+			if(result != "EngineAbort")
+				sendFinalStateDataToServer(result, engine);
+		}
 
 		return true;
 	}
+}
+
+void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine)
+{
+	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+
+	if(dataChannel.isNull())
+		return;
+	
+	//send a PUTDATA command to the server with the state transition data
+	QSharedPointer<Picto::ProtocolResponse> dataResponse;
+	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+	QByteArray stateDataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&stateDataXml));
+
+	Timestamper stamper;
+	double timestamp = stamper.stampSec();
+	QString name = stateMachine_->getName();
+
+	StateDataStore stateData;
+	stateData.setTransition(name,result,"NULL",timestamp,name);
+
+	xmlWriter->writeStartElement("Data");
+	stateData.serializeAsXml(xmlWriter);
+	xmlWriter->writeEndElement();
+
+
+	dataCommand->setContent(stateDataXml);
+	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
+	QUuid commandUuid = QUuid::createUuid();
+	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
+
+	dataChannel->sendCommand(dataCommand);
+
+	Q_ASSERT_X(dataChannel->waitForResponse(1000), "Task::sendFinalStateDataToServer", "No response from server");
+	dataResponse = dataChannel->getResponse();
+
 }
 
 /*! \brief Turns this task into an XML fragment

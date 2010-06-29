@@ -79,8 +79,16 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertFrameData(frameData);
 		}
+		else if(dataType == "RewardDataStore")
+		{
+			Picto::RewardDataStore rewardData;
+			rewardData.deserializeFromXml(xmlReader);
+
+			sessionInfo->insertRewardData(rewardData);
+		}
 		else
 		{
+			Q_ASSERT_X(false,"a",QString("DataType: "+dataType+" not found").toAscii());
 			return notFoundResponse;
 		}
 
@@ -88,6 +96,5 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	}
 
 	return response;
-
 }
 

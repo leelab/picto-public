@@ -68,6 +68,8 @@ SessionInfo::SessionInfo(QString directorAddr):
 
 	sessionQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
 
+	sessionQ.exec("CREATE TABLE rewards (id INTEGER PRIMARY KEY, duration INTEGER, channel INTEGER, time REAL)");
+
 	//Add the current time
 	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session start\", :time)");
 	sessionQ.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
@@ -297,6 +299,17 @@ void SessionInfo::insertFrameData(Picto::FrameDataStore data)
 		cacheQ.bindValue(":state",framedata.stateName);
 		cacheQ.exec();
 	}
+}
+
+void SessionInfo::insertRewardData(Picto::RewardDataStore data)
+{
+	QSqlQuery sessionQ(sessionDb_);
+	sessionQ.prepare("INSERT INTO rewards (duration, channel, time) "
+		"VALUES (:duration, :channel, :time)");
+	sessionQ.bindValue(":duration",data.getDuration());
+	sessionQ.bindValue(":channel", data.getChannel());
+	sessionQ.bindValue(":time",data.getTime());
+	Q_ASSERT(sessionQ.exec());
 }
 
 

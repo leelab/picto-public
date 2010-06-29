@@ -25,6 +25,7 @@
 #include "../../common/storage/BehavioralDataStore.h"
 #include "../../common/storage/StateDataStore.h"
 #include "../../common/storage/FrameDataStore.h"
+#include "../../common/storage/RewardDataStore.h"
 
 #include <QSharedPointer>
 #include <QSqlDatabase>
@@ -43,6 +44,7 @@ public:
 	void insertTrialEvent(double time, int eventCode, int trialNum);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
 	void insertFrameData(Picto::FrameDataStore data);
+	void insertRewardData(Picto::RewardDataStore data);
 
 	Picto::BehavioralDataStore selectBehavioralData(double timestamp);
 	void insertStateData(Picto::StateDataStore data);

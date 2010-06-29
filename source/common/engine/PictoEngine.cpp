@@ -5,6 +5,9 @@
 
 #include "PictoEngine.h"
 
+#include "../timing/Timestamper.h"
+#include "../storage/RewardDataStore.h"
+
 #include <QApplication>
 #include <QTime>
 
@@ -69,10 +72,49 @@ void PictoEngine::generateEvent(unsigned int eventCode)
 		eventCodeGenerator_->sendEvent(eventCode);
 }
 
+
+//! \brief Issues a reward and sends notfication to the server
 void PictoEngine::giveReward(int channel)
 {
-	if(!rewardController_.isNull())
-		rewardController_->giveReward(channel);
+	if(rewardController_.isNull())
+		return;
+
+	Timestamper stamper;
+	double timestamp = stamper.stampSec();
+
+	rewardController_->giveReward(channel);
+
+	if(dataCommandChannel_.isNull())
+		return;
+
+	if(slave_)
+		return;
+
+	int duration = rewardController_->getRewardDurationMs(channel);
+	RewardDataStore rewardData(duration,channel,timestamp);
+
+
+	QString dataCommandStr = "PUTDATA "+getName()+" PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+	QByteArray dataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+
+	xmlWriter->writeStartElement("Data");
+
+	rewardData.serializeAsXml(xmlWriter);
+
+	xmlWriter->writeEndElement();  //End Data
+
+	dataCommand->setContent(dataXml);
+	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+	QUuid commandUuid = QUuid::createUuid();
+	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
+
+	//Send the command in registered mode (so we don't have to wait for a response)
+	dataCommandChannel_->sendRegisteredCommand(dataCommand);
+
+
 }
 
 //! Sets the CommandChannel used for data.  Returns true if the channel's status is connected
@@ -113,31 +155,6 @@ void PictoEngine::setSessionId(QUuid sessionId)
 	if(!updateCommandChannel_.isNull())
 		updateCommandChannel_->setSessionId(sessionId_);
 }
-
-
-/*bool PictoEngine::loadExperiment(QSharedPointer<Experiment> experiment)
-{
-	experiment_ = experiment;
-
-	return true;
-}*/
-
-//Sets the experiment pointer to null
-/*void PictoEngine::clearExperiment()
-{
-	experiment_ = QSharedPointer<Experiment>();  
-}*/
-
-//! Runs the task with the passed in name
-/*bool PictoEngine::runTask(QString taskName)
-{
-	bool success;
-	engineCommand_ = NoCommand;
-	startAllSignalChannels();
-	success = experiment_->runTask(taskName);
-	stopAllSignalChannels();
-	return success;
-}*/
 
 int PictoEngine::getEngineCommand()
 {

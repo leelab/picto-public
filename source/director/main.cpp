@@ -259,6 +259,11 @@ int main(int argc, char *argv[])
 				target->showSplash();
 			}
 		}
+		else if(statusDirective.startsWith("REWARD"))
+		{
+			int channel = statusDirective.split(" ").value(1).toInt();
+			engine->giveReward(channel);
+		}
 		else if(statusDirective.startsWith("ERROR"))
 		{
 			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
@@ -277,13 +282,12 @@ int main(int argc, char *argv[])
 			Q_ASSERT_X(false, "PictoDirector main","Unrecognized directive received: " + statusDirective.toAscii());
 		}
 
-		//Pause for 1 second
+		//Pause for 20 ms 
 		QEventLoop pauseLoop;
 		QTimer pauseTimer;
 		pauseTimer.setSingleShot(true);
-		pauseTimer.setInterval(1000);
+		pauseTimer.setInterval(20);
 		QObject::connect(&pauseTimer, SIGNAL(timeout()), &pauseLoop, SLOT(quit()));
-		//! \todo figure out how to handle quitting...
 		pauseTimer.start();
 		pauseLoop.exec();
 

@@ -4,10 +4,10 @@
  *	instance to change the current state of a task (start, stop, pause)
  *
  *	FORMAT
- *		STARTTASK command[:taskname] PICTO/1.0
+ *		STARTTASK command[:argument] PICTO/1.0
  *		Session-ID: 582f4440-43f7-11df-9879-0800200c9a66
  *		
- *		Valid commands: start, stop, pause (case insenseitive)
+ *		Valid commands: start, stop, pause, resume, reward (case insenseitive)
  *
  *	RESPONSES
  *		There are 3 possible responses:
@@ -42,6 +42,7 @@ private:
 	QSharedPointer<Picto::ProtocolResponse> stop();
 	QSharedPointer<Picto::ProtocolResponse> pause();
 	QSharedPointer<Picto::ProtocolResponse> resume();
+	QSharedPointer<Picto::ProtocolResponse> reward(int channel);
 
 	QUuid sessionId_;
 	ConnectionManager *conMgr_;

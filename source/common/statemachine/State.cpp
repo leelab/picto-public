@@ -210,7 +210,7 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		//for a state change
 		int masterFrame = getMasterFramenumber(engine);
 
-		if(masterFrame <= frameCounter_)
+		if(!isDone && masterFrame <= frameCounter_)
 		{
 			continue;
 		}
@@ -255,13 +255,13 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 
-	if(!dataChannel.isNull())
-	{
-		//Note that the call to getValues clears out any existing values,
-		//so it should only be made once per frame.
-		behavData.emptyData();
-		behavData.addData(sigChannel_->getValues());
-	}
+	if(dataChannel.isNull())
+		return;
+
+	//Note that the call to getValues clears out any existing values,
+	//so it should only be made once per frame.
+	behavData.emptyData();
+	behavData.addData(sigChannel_->getValues());
 
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
@@ -465,6 +465,11 @@ void State::updateServer(QSharedPointer<Engine::PictoEngine> engine)
 	else if(statusDirective.startsWith("RESUME"))
 	{
 		engine->resume();
+	}
+	else if(statusDirective.startsWith("REWARD"))
+	{
+		int channel = statusDirective.split(" ").value(1).toInt();
+		engine->giveReward(channel);	
 	}
 	else
 	{

@@ -59,6 +59,17 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 	{
 		return resume();
 	}
+	else if(target.startsWith("reward", Qt::CaseInsensitive))
+	{
+		int channel;
+		int colonIndex = target.indexOf(":");
+		bool ok;
+		channel = target.mid(colonIndex+1).toInt(&ok);
+		if(!ok)
+			return notFoundResponse;
+		else
+			return reward(channel);
+	}
 	else
 	{
 		return notFoundResponse;
@@ -163,4 +174,21 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 
 
 	return okResponse;
+}
+
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
+{
+	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
+
+	if(channel <1 || channel >4)
+	{
+		badReqResponse->setContent("Non-existant reward channel");
+		return badReqResponse;
+	}
+
+	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel));
+
+	return okResponse;
+
 }

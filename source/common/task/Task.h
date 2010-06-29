@@ -49,6 +49,8 @@ public:
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
+	void sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine);
+
 	//QUuid uuid_;
 	//unsigned int revision_;
 

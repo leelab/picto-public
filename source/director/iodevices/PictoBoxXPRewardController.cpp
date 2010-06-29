@@ -5,7 +5,11 @@
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
 							DAQmxClearTask(daqTaskHandle_); \
-							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", "DAQ function failure");\
+							char error[512]; \
+							DAQmxGetErrorString(rc, error,512); \
+							QString msg = "DAQ function error:"; \
+							msg.append(error); \
+							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", msg.toAscii());\
 						 } }
 
 // NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 

@@ -306,7 +306,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 			if(slave)
 			{
 				//Since the result state takes a long time to run (due to issuing of rewards)
-				//we're going to assume that we are in synch, and run it first.  Then well check
+				//we're going to assume that we are in synch, and run it first.  Then we'll check
 				//to make sure that the master engine is done (and that we didn't screw up)
 				QString masterResult;
 				QString slaveResult;
@@ -416,7 +416,7 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 
 
 	serverChannel->sendCommand(command);
-	serverChannel->waitForResponse(1000);
+	serverChannel->waitForResponse(10000);
 	response = serverChannel->getResponse();
 
 	Q_ASSERT(!response.isNull());
@@ -441,7 +441,6 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 	
 
 	//send a PUTDATA command to the server with the state transition data
-	QSharedPointer<Picto::ProtocolResponse> dataResponse;
 	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 

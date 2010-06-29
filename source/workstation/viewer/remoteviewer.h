@@ -38,6 +38,7 @@ private slots:
 	void play();
 	void pause();
 	void stop();
+	void reward();
 
 	void changeConnectionState();
 	
@@ -77,8 +78,8 @@ private:
 	QAction *playAction_;
 	QAction *pauseAction_;
 	QAction *stopAction_;
+	QAction *rewardAction_;
 	QAction *connectAction_;
-	//QAction *disconnectAction_;
 
 	QToolBar *toolBar_;
 	QComboBox *taskListBox_;
@@ -95,6 +96,8 @@ private:
 	bool startedSession_;
 
 	QUuid sessionId_;
+
+	int rewardChannel_;  //Channel used for issuing manual rewards
 
 };
 

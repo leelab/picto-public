@@ -45,7 +45,7 @@ public:
 	int getChannelCount() { return channelCount_; };
 
 public slots:
-	virtual void giveReward(unsigned int channel) = 0;
+	virtual void giveReward(unsigned int channel) = 0;  //must return duration of reward
 	virtual void flush(unsigned int channel,bool flush) = 0;
 
 protected:
