@@ -43,6 +43,7 @@ public:
 	VisualTargetHost();
 
 	void setVisualTarget(QSharedPointer<VisualTarget> target);
+	QSharedPointer<VisualTarget> getVisualTarget() { return target_; };
 	 
 protected:
 	void paintEvent(QPaintEvent *);

@@ -33,6 +33,23 @@
  *
  *	The registered functions are a special subset of the send/receive functions. These are used
  *	if you need to keep track of which commands have received responses.
+ *
+ *	!!!!!!   WARNING    !!!!!!
+ *	The command channel has a weird "feature" (err bug).  Since we call proccess events in the
+ *	waitForResponse function, it is entirely possible to get responses out of order.  Here's an
+ *	example:
+ *		1. The following code is executed:
+ *				sendCommand(commandA)
+ *				waitForResponse(1000)
+ *		2. While waiting, some event occurs that results in this code being executed:
+ *				sendCommand(commandB)
+ *				waitForResponse(1000)
+ *		3. Response A then arrives and gets processed by the function that sent command B
+ *		4. Program crashes.
+ *	To fix this, I'm going to stop making calls to QCoreApplication::processEvents().  However,
+ *	this is DANGEROUS.  I seem to recall that these calls were essential for working with sockets
+ *	if there isn't a real event loop, but everything seems to be working now, so who knows...
+ *	(I did rerun the unit tests, and everything passed.)
  */
 
 #ifndef _COMMANDCHANNEL_H_

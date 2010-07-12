@@ -14,6 +14,7 @@
 
 #include "../protocol/ServerProtocols.h"
 #include "../protocol/ServerProtocols.h"
+#include "../connections/ServerConfig.h"
 
 class Server : public QTcpServer
 {
@@ -36,6 +37,8 @@ private:
 	QSharedPointer<ServerProtocols> protocols;
 
 	const static int maxConnections = 500;
+
+	ServerConfig config_;
 };
 
 #endif

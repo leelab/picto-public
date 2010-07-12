@@ -22,7 +22,7 @@ TestCommandChannel::TestCommandChannel(QHostAddress _serverAddress) :
 {
 }
 
-/*void TestCommandChannel::initTestCase()
+void TestCommandChannel::initTestCase()
 {
 	channel_ = new Picto::CommandChannel(serverAddress_, port_, this);
 	if(channel_->getChannelStatus() != Picto::CommandChannel::connected)
@@ -42,8 +42,6 @@ TestCommandChannel::TestCommandChannel(QHostAddress _serverAddress) :
 //conditions.
 void TestCommandChannel::polledSingleCommand()
 {
-	channel_->pollingMode(true);
-	
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand("GET / HTTP/1.1"));
 	channel_->sendCommand(command);
 
@@ -70,9 +68,6 @@ void TestCommandChannel::polledSingleCommand()
 void TestCommandChannel::polledMultipleCommands()
 {
 	int commandsToSend = 10;
-
-	//put the channel in polled mode
-	channel_->pollingMode(true);
 	
 	//send a command every 2 seconds (this is way slower than normal, but the date
 	//field in the response only has a resolution of seconds).
@@ -112,10 +107,9 @@ void TestCommandChannel::polledMultipleCommands()
 //	The test will be passed if the following conditions are met:
 //		1. Both commands result in responses sitting in the queue
 //		2. The channel does not emit a droppedConnection signal
-void TestCommandChannel::polledServerConnectionDropped()
+/*void TestCommandChannel::polledServerConnectionDropped()
 {
 	int serverTimeout = 10000;
-	channel_->pollingMode(true);
 	
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand("GET / HTTP/1.1"));
 
@@ -133,7 +127,7 @@ void TestCommandChannel::polledServerConnectionDropped()
 	QCOMPARE(channel_->incomingResponsesWaiting(),1);
 
 	QCOMPARE(spy.count(),0);
-}
+}*/
 
 		
 // This test places the command channel in the event driven mode (polled = false)
@@ -145,7 +139,7 @@ void TestCommandChannel::polledServerConnectionDropped()
 //		3. The content of the response contains the following string:
 //			"<title>Picto Server Status</title>"
 
-void TestCommandChannel::eventDrivenSingleCommand()
+/*void TestCommandChannel::eventDrivenSingleCommand()
 {
 	channel_->pollingMode(false);
 
@@ -170,7 +164,7 @@ void TestCommandChannel::eventDrivenSingleCommand()
 	//make sure that the response is as expected
 	QVERIFY(content.contains("<title>Picto Server Status</title>"));
 
-}
+}*/
 
 // This test places the command channel in the event driven mode (polled = false)
 // and then sends multiple commands to the server.  The test uses QSignalSpy
@@ -186,7 +180,7 @@ void TestCommandChannel::eventDrivenSingleCommand()
 //Since the first test requires the commands to be seperated by >1 sec, the test
 //is run a second time with commands issued at 5 ms intervals.  The same conditions
 //are checked as above, except for condition 4.
-void TestCommandChannel::eventDrivenMultipleCommands()
+/*void TestCommandChannel::eventDrivenMultipleCommands()
 {
 	int commandsToSend = 10;
 
@@ -256,7 +250,7 @@ void TestCommandChannel::eventDrivenMultipleCommands()
 		//make sure that the response is as expected
 		QVERIFY(content.contains("<title>Picto Server Status</title>"));
 	}
-}
+}*/
 
 // This test confirms that the command channel can reconnect when the server 
 // times out.  The test consists of sending a command in eventd driven mode, sleeping
@@ -265,7 +259,7 @@ void TestCommandChannel::eventDrivenMultipleCommands()
 //	The test will be passed if the following conditions are met:
 //		1. Both commands result in incomingResoponse being emitted
 //		2. The channel does not emit a droppedConnection signal
-void TestCommandChannel::eventDrivenServerConnectionDropped()
+/*void TestCommandChannel::eventDrivenServerConnectionDropped()
 {
 	int serverTimeout = 10000;
 	channel_->pollingMode(false);
@@ -293,12 +287,12 @@ void TestCommandChannel::eventDrivenServerConnectionDropped()
 
 	QCOMPARE(droppedConnectionSpy.count(),0);
 
-}
+}*/
 
 //This tests the command channel when there is a streaming rsponse.
 //This is also an implicit test of protocolResponse::read(), since it 
 //requires the response to handle a multipart response.
-void::TestCommandChannel::streamingResponse()
+/*void::TestCommandChannel::streamingResponse()
 {
 	channel_->pollingMode(false);
 
@@ -339,7 +333,7 @@ void::TestCommandChannel::streamingResponse()
 
 	}
 
-}
+}*/
 
 void TestCommandChannel::polledResponses_data()
 {
@@ -373,7 +367,7 @@ void TestCommandChannel::polledResponses()
 
 	Picto::CommandChannel *testChannel;
 	testChannel = new Picto::CommandChannel(QHostAddress::LocalHost,testPort);
-	testChannel->pollingMode(true);
+	//testChannel->pollingMode(true);
 
 	QSharedPointer<Picto::ProtocolCommand> command(
 		new Picto::ProtocolCommand(QString("TEST /%1 PICTO/1.0").arg(commandsToSend)));
@@ -435,12 +429,12 @@ void TestCommandChannel::polledResponses()
 	delete testChannel;
 }
 
-void TestCommandChannel::eventDrivenResponses_data()
+/*void TestCommandChannel::eventDrivenResponses_data()
 {
 	QTest::addColumn<int>("commandsToSend");
 	QTest::newRow("Single response")<<1;
 	QTest::newRow("Multiple responses")<<10;
-}
+}*/
 
 //This test is very similar to the polledResponses test, except that it uses the 
 //event driven aspects of the command channel.
@@ -455,7 +449,7 @@ void TestCommandChannel::eventDrivenResponses_data()
 //			b. commandsSent=commandsToSend
 //			c. responsesReceived=commandsToSend
 
-void TestCommandChannel::eventDrivenResponses()
+/*void TestCommandChannel::eventDrivenResponses()
 {
 	QFETCH(int, commandsToSend);
 
@@ -538,7 +532,7 @@ void TestCommandChannel::eventDrivenResponses()
 
 	delete testChannel;
 
-}
+}*/
 
 
 
@@ -552,4 +546,3 @@ void TestCommandChannel::cleanupTestCase()
 	delete channel_;
 }
 
-*/

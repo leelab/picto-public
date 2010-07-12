@@ -13,6 +13,7 @@
 
 #include "../common/protocol/ProtocolCommand.h"
 #include "../common/protocol/ProtocolResponse.h"
+#include "../common/network/CommandChannel.h"
 #include "alignmenttool.h"
 
 class NeuralDataCollector : public QThread
@@ -20,8 +21,8 @@ class NeuralDataCollector : public QThread
 	Q_OBJECT
 
 public:
-	NeuralDataCollector(QSqlDatabase &sessionDb, int interval=1000, QObject *parent=0);
-	~NeuralDataCollector();
+	NeuralDataCollector(int proxyId, QString sessionDbName, int interval=1000, QObject *parent=0);
+	~NeuralDataCollector() { printf("~NeuralDataCollector\n"); };
 
 	void setCollectionInterval(int interval) { collectionInterval_ = interval;};
 	int getCollectionInterval() { return collectionInterval_; };
@@ -35,17 +36,19 @@ public:
 private slots:
 	void collectData();
 private:
-	void parseResponse(Picto::ProtocolResponse *proxyResponse);
+	void parseResponse(QSharedPointer<Picto::ProtocolResponse> proxyResponse);
 
 	//AlignmentTool *align;
 
 	int collectionInterval_;
 	QTimer *pollingTimer_;
 
+	Picto::CommandChannel *cmdChannel_;
 	QHostAddress proxyAddress_;
 	int proxyPort_;
-	QTcpSocket *proxySocket_;
+	//QTcpSocket *proxySocket_;
 
+	QString sessionDbName_;
 	QSqlDatabase db_;
 };
 

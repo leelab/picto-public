@@ -43,6 +43,7 @@ public:
 
 	//Director related functions
 	void updateDirector(QHostAddress addr, QString name, DirectorStatus::DirectorStatus status);
+	void updateDirector(QHostAddress addr, QString name);
 	//void removeDirector(QHostAddress addr);
 
 	DirectorStatus::DirectorStatus getDirectorStatus(QHostAddress addr);
@@ -51,15 +52,16 @@ public:
 
 	QString getDirectorList();
 
+	QString getProxyList();
+
 	//ServerThread related functions
 	//void addServerThread(ServerThread* thread);
 	//bool removeServerThread(ServerThread* thread);
 
 	//Session related functions
-	QSharedPointer<SessionInfo> createSession(QString directorAddr);
-
+	QSharedPointer<SessionInfo> createSession(QString directorAddr, int proxyId);
 	QSharedPointer<SessionInfo> getSessionInfo(QUuid uuid);
-
+	void endSession(QUuid sessionId);
 	QUuid pendingSession(QHostAddress directorAddr);
 
 private slots:

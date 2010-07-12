@@ -135,19 +135,20 @@ QSharedPointer<ProtocolCommand> CommandChannel::getCommand()
  *	call process events.
  *
  *	The function returns true if there is a waiting response.
- *
- *	This function is designed to work if the channel is in polling mode. If
- *	the channel isn't in polling mode, the function immediately returns false.
  */
 bool CommandChannel::waitForResponse(int timeout)
 {
 	if(timeout == 0)
 	{
-		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		//QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 		if(incomingResponsesWaiting() > 0)
+		{
 			return true;
+		}
 		else
+		{
 			return false;
+		}
 	}
 	else
 	{
@@ -156,9 +157,9 @@ bool CommandChannel::waitForResponse(int timeout)
 
 		while(true)
 		{
-			QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+			//QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
-			if(incomingResponsesWaiting()>0)
+			if(incomingResponsesWaiting() > 0)
 			{
 				return true;
 			}
@@ -276,7 +277,6 @@ void CommandChannel::sendResponse(QSharedPointer<Picto::ProtocolResponse> respon
 {
 	if(response->write(producerSocket) < 1)
 		qDebug("CommandChannel::sendResponse failed to send requested response");
-
 }
 
 /*! \Called when a socket emits a disconnect signal

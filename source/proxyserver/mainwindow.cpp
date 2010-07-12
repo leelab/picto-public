@@ -16,7 +16,7 @@
 
 MainWindow::MainWindow()
 {
-	acqPlugin = NULL;
+	acqPlugin_ = NULL;
 
     setWindowTitle(tr("%1").arg(Picto::Names->proxyServerAppName));
 
@@ -27,8 +27,10 @@ MainWindow::MainWindow()
 	createLayout();
 	createTimer();
 
+	readSettings();
+
 	QWidget *controlPanel = new QWidget(this);
-	controlPanel->setLayout(layout);
+	controlPanel->setLayout(layout_);
 	
 	setCentralWidget(controlPanel);
 }
@@ -36,8 +38,8 @@ MainWindow::MainWindow()
 void MainWindow::setNeuralDataAcquisitionDevice(int index)
 {
 	//QAction *action = qobject_cast<QAction *>(sender());
-	//acqPlugin = action->parent();
-	acqPlugin = acqPluginList[index];
+	//acqPlugin_ = action->parent();
+	acqPlugin_ = acqPluginList_[index];
 	return;
 }
 
@@ -45,9 +47,9 @@ void MainWindow::setNeuralDataAcquisitionDevice(int index)
 
 void MainWindow::startStopServer()
 {
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 
-	if(startStopServerButton->text() == startServerMsg)
+	if(startStopServerButton_->text() == startServerMsg)
 	{
 		//start the Neural Data Acquisition Device
 		iNDAcq->startDevice();
@@ -71,8 +73,8 @@ void MainWindow::startStopServer()
 		QSharedPointer<ServerProtocols> httpProtocols(new ServerProtocols());
 		QSharedPointer<ServerProtocols> acqProtocols(new ServerProtocols());
 
-		QSharedPointer<ServerHTTPProtocol> httpProtocol(new ServerHTTPProtocol(acqPlugin));
-		QSharedPointer<ServerAcqProtocol> acqProtocol(new ServerAcqProtocol(acqPlugin));
+		QSharedPointer<ServerHTTPProtocol> httpProtocol(new ServerHTTPProtocol(acqPlugin_));
+		QSharedPointer<ServerAcqProtocol> acqProtocol(new ServerAcqProtocol(acqPlugin_));
 		
 		httpProtocols->addProtocol(httpProtocol);
 		acqProtocols->addProtocol(httpProtocol);
@@ -88,29 +90,29 @@ void MainWindow::startStopServer()
 		connect(&httpServer,SIGNAL(activity()),this, SLOT(serverActivity()));
 		connect(&acqServer,SIGNAL(activity()),this, SLOT(serverActivity()));
 
-		pluginCombo->setEnabled(false);
-		lineEditName->setEnabled(false);
-		startStopServerButton->setText(stopServerMsg);
-		readyStatus->turnGreen();
+		pluginCombo_->setEnabled(false);
+		lineEditName_->setEnabled(false);
+		startStopServerButton_->setText(stopServerMsg_);
+		readyStatus_->turnGreen();
 
-		announce(proxyName, port_);
+		announce(lineEditName_->text().remove(' '), port_);
 
-		serverEventLoop = new QEventLoop();
-		serverEventLoop->exec();
+		serverEventLoop_ = new QEventLoop();
+		serverEventLoop_->exec();
 
 
 	}
-	else if(startStopServerButton->text() == stopServerMsg)
+	else if(startStopServerButton_->text() == stopServerMsg_)
 	{
-		serverEventLoop->exit();
-		startStopServerButton->setText(startServerMsg);
+		serverEventLoop_->exit();
+		startStopServerButton_->setText(startServerMsg);
 		iNDAcq->stopDevice();
-		pluginCombo->setEnabled(true);
-		lineEditName->setEnabled(true);
+		pluginCombo_->setEnabled(true);
+		lineEditName_->setEnabled(true);
 
 		//Announce our departure to the world (or at least our network)
-		depart(proxyName, port_);
-		readyStatus->turnRed();
+		depart(lineEditName_->text().remove(' '), port_);
+		readyStatus_->turnRed();
 
 
 	}
@@ -122,11 +124,11 @@ void MainWindow::startStopServer()
 void MainWindow::checkDevStatus()
 {
 	//Is the server supposed to be running?
-	if(startStopServerButton->text() == startServerMsg)
+	if(startStopServerButton_->text() == startServerMsg)
 		return;
 
 	//Is the device running?
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 	if(iNDAcq->getDeviceStatus() == NeuralDataAcqInterface::running)
 		return;
 	
@@ -156,42 +158,39 @@ void MainWindow::checkDevStatus()
 
 void MainWindow::closeEvent(QCloseEvent *ev)
 {
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 	if(iNDAcq)
 		iNDAcq->stopDevice();
 
 	//Announce our departure to the world (or at least our network)
-	depart(proxyName, port_);
+	depart(lineEditName_->text().remove(' '), port_);
+
+	writeSettings();
 	
 	//accept the close event
 	ev->accept();
 }
-void MainWindow::setProxyServerName(const QString &newName)
-{
-	proxyName = newName;
-	proxyName.remove(' ');
-}
 
 void MainWindow::serverActivity()
 {
-	activityTimer->start();
-	activityStatus->turnGreen();
+	activityTimer_->start();
+	activityStatus_->turnGreen();
 }
 
 void MainWindow::createStatusLights()
 {
-	readyStatus = new StatusLight(this,Qt::red,10);
-	activityStatus = new StatusLight(this,Qt::red,10);
+	readyStatus_ = new StatusLight(this,Qt::red,10);
+	activityStatus_ = new StatusLight(this,Qt::red,10);
 
-	readyStatusLabel = new QLabel(tr("Ready"));
-	activityStatusLabel = new QLabel(tr("Activity"));
+	readyStatusLabel_ = new QLabel(tr("Ready"));
+	activityStatusLabel_ = new QLabel(tr("Activity"));
 
 }
 
 void MainWindow::createComboBox()
 {
-	pluginCombo = new QComboBox();
-	pluginCombo->setEditable(false);
+	pluginCombo_ = new QComboBox();
+	pluginCombo_->setEditable(false);
 
 	//Run through the plugins adding them to the combo box as we go 
 	//(both static and dynamic plugins)
@@ -202,8 +201,8 @@ void MainWindow::createComboBox()
 		{
 			//QAction *action = new QAction(iNDAcq->device(), plugin);
 			//connect(action, SIGNAL(triggered()),this, SLOT(setNeuralDataAcquisitionDevice()));
-			//pluginCombo->addAction(action);
-			pluginCombo->addItem(iNDAcq->device());
+			//pluginCombo_->addAction(action);
+			pluginCombo_->addItem(iNDAcq->device());
 		}
 	}
 	
@@ -223,25 +222,22 @@ void MainWindow::createComboBox()
 
 	foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
 	{
-
 		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
 		QObject *plugin = loader.instance();
-		QString error = loader.errorString();
+		//QString error = loader.errorString();
 		if (plugin) 
 		{
 			NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(plugin);
 			if(iNDAcq)
 			{
-				//QAction *action = new QAction(iNDAcq->device(), plugin);
-				//connect(action, SIGNAL(triggered()),this, SLOT(setNeuralDataAcquisitionDevice()));
-				//pluginCombo->addAction(action);
-				pluginCombo->addItem(iNDAcq->device());
-				acqPluginList<<plugin;
+				pluginCombo_->addItem(iNDAcq->device());
+				acqPluginList_<<plugin;
 			}
 		}
+
 	}
 
-	if(acqPluginList.length() == 0)
+	if(acqPluginList_.length() == 0)
 	{
 		QMessageBox noPluginMsgBox;
 		noPluginMsgBox.setText(tr("Plugins not found"));
@@ -257,7 +253,7 @@ void MainWindow::createComboBox()
 	}
 
 	setNeuralDataAcquisitionDevice(0);
-	connect(pluginCombo,SIGNAL(currentIndexChanged(int)),this,SLOT(setNeuralDataAcquisitionDevice(int)));
+	connect(pluginCombo_,SIGNAL(currentIndexChanged(int)),this,SLOT(setNeuralDataAcquisitionDevice(int)));
 
 	return;
 }
@@ -265,51 +261,48 @@ void MainWindow::createComboBox()
 void MainWindow::createButtons()
 {
 	startServerMsg = tr("&Start server");
-	stopServerMsg = tr("&Stop server");
-	startStopServerButton = new QPushButton(startServerMsg);
-	startStopServerButton->setDefault(true);
+	stopServerMsg_ = tr("&Stop server");
+	startStopServerButton_ = new QPushButton(startServerMsg);
+	startStopServerButton_->setDefault(true);
 
-	quitButton = new QPushButton(tr("&Quit"));
-	quitButton->setDefault(false);
+	quitButton_ = new QPushButton(tr("&Quit"));
+	quitButton_->setDefault(false);
 
-	connect(startStopServerButton,SIGNAL(clicked()),this,SLOT(startStopServer()));
-	connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
+	connect(startStopServerButton_,SIGNAL(clicked()),this,SLOT(startStopServer()));
+	connect(quitButton_,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 void MainWindow::createLineEdits()
 {
-	lineEditName = new QLineEdit();
-	lineEditName->setText("proxyName");
-	lineEditNameLabel = new QLabel(tr("&Proxy Name:"));
-	lineEditNameLabel->setBuddy(lineEditName);
-	connect(lineEditName,SIGNAL(textEdited(const QString&)),this,SLOT(setProxyServerName(const QString&)));
-
-	proxyName = "proxyName";
+	lineEditName_ = new QLineEdit();
+	lineEditName_->setText("proxyName");
+	lineEditNameLabel_ = new QLabel(tr("&Proxy Name:"));
+	lineEditNameLabel_->setBuddy(lineEditName_);
 }
 
 void MainWindow::createLayout()
 {
 	QHBoxLayout *HLayout;
-	layout = new QVBoxLayout();
+	layout_ = new QVBoxLayout();
 
 	HLayout = new QHBoxLayout();
-	HLayout->addWidget(lineEditNameLabel);
-	HLayout->addWidget(lineEditName);
-	layout->addLayout(HLayout);
+	HLayout->addWidget(lineEditNameLabel_);
+	HLayout->addWidget(lineEditName_);
+	layout_->addLayout(HLayout);
 
 	HLayout = new QHBoxLayout();
-	HLayout->addWidget(readyStatus);
-	HLayout->addWidget(readyStatusLabel);
-	layout->addLayout(HLayout);
+	HLayout->addWidget(readyStatus_);
+	HLayout->addWidget(readyStatusLabel_);
+	layout_->addLayout(HLayout);
 	
 	HLayout = new QHBoxLayout();
-	HLayout->addWidget(activityStatus);
-	HLayout->addWidget(activityStatusLabel);
-	layout->addLayout(HLayout);
+	HLayout->addWidget(activityStatus_);
+	HLayout->addWidget(activityStatusLabel_);
+	layout_->addLayout(HLayout);
 
-	layout->addWidget(pluginCombo);
-	layout->addWidget(startStopServerButton);
-	layout->addWidget(quitButton);
+	layout_->addWidget(pluginCombo_);
+	layout_->addWidget(startStopServerButton_);
+	layout_->addWidget(quitButton_);
 }
 
 void MainWindow::createTimer()
@@ -318,12 +311,40 @@ void MainWindow::createTimer()
 	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkDevStatus()));
 	statusTimer->start(5000);
 
-	activityTimer = new QTimer();
-	activityTimer->setInterval(2000);
-	activityTimer->setSingleShot(true);
-	connect(activityTimer,SIGNAL(timeout()),activityStatus,SLOT(turnRed()));
+	activityTimer_ = new QTimer();
+	activityTimer_->setInterval(2000);
+	activityTimer_->setSingleShot(true);
+	connect(activityTimer_,SIGNAL(timeout()),activityStatus_,SLOT(turnRed()));
 
 }
 
 
+/*****************************************************
+ *
+ *			PERSISTANT SETTINGS
+ *
+ *****************************************************/
+/*! \Brief stores settings
+ *
+ *	Settings for the workstation app are stored between sessions.
+ *	The QSettings object does this for us in a platform independent
+ *	manner.  This uses the registry in Windows, XML preference files
+ *	in OSX, and ini files in Unix.
+ */
+void MainWindow::writeSettings()
+{
+	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
 
+	settings.setValue("proxyName",lineEditName_->text());
+
+}
+
+void MainWindow::readSettings()
+{
+	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
+
+	QString proxyName = settings.value("proxyName").toString();
+
+	if(!proxyName.isNull())
+		lineEditName_->setText(proxyName);
+}

@@ -1,5 +1,5 @@
 //This can only be defined if we are running on a windows box.
-//#define CHECK_TIMING
+#define CHECK_TIMING
 
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
@@ -90,7 +90,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		sendBehavioralData(engine);
 
 		//---------- Check for directives from the server -----------
-		//updateServer(engine);
+		updateServer(engine);
 
 		//--------- Check control elements------------
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
@@ -420,7 +420,6 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	int command = engine->getEngineCommand();
 
 	//To stop, we set isDone to true which breaks out of our loop.
-	//Then we generate an arbitrary result.  Regardless of where this result sends us
 	if(command == Engine::PictoEngine::StopEngine)
 	{
 		return true;
@@ -429,12 +428,12 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		while(command == Engine::PictoEngine::PauseEngine)
 		{
-			updateServer(engine);
+			updateServer(engine, true);
 			sendBehavioralData(engine);
 			command = engine->getEngineCommand();
 			QCoreApplication::processEvents();
 
-			//kill 20 ms
+			//waste 20 ms
 			QTime timer;
 			timer.start();
 			while(timer.elapsed()<20);
@@ -455,7 +454,7 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
  *	Once per frame, we need to check in with the server.  The response from the server
  *  may contain a "directive", which we will handle here as well (e.g. stop, pause, etc).
  */
-void State::updateServer(QSharedPointer<Engine::PictoEngine> engine)
+void State::updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused)
 {
 	QSharedPointer<Picto::CommandChannel>updateChan = engine->getUpdateCommandChannel();
 	
@@ -471,14 +470,20 @@ void State::updateServer(QSharedPointer<Engine::PictoEngine> engine)
 
 	QSharedPointer<Picto::ProtocolResponse> updateResponse;
 
-	QString updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":running PICTO/1.0";
+	QString updateCommandStr;
+
+	if(paused)
+		updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":paused PICTO/1.0";
+	else
+		updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":running PICTO/1.0";
+
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 
 	updateChan->sendCommand(updateCommand);
 
 	if(!updateChan->waitForResponse(100))
 	{
-		Q_ASSERT(false);
+		Q_ASSERT_X(false,"State::updateServer", "Server failed to reply to DIRECTORUPDATE command within 100 ms");
 		return;
 	}
 

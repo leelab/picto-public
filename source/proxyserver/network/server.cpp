@@ -68,36 +68,6 @@ void Server::processPendingDatagrams()
 				protocolVersion = tokens[2].mid(protocolVersionPosition+1);
 			}
 
-			if(method == "DISCOVER" && target.toInt() && protocolName == "PICTO")
-			{
-				//! \todo:This shouldn't happen in the Proxy Server
-				/*datagram.clear();
-
-				datagram = QString("ANNOUNCE %1:%2 PICTO/1.0").arg(serverAddress.toString())
-															  .arg(serverPort)
-															  .toAscii();
-
-				udpResponseSocket.writeDatagram(datagram.data(), datagram.size(),
-												senderAddress, target.toInt());
-
-				QSqlDatabase db = QSqlDatabase::database("PictoServerConfigDatabase");
-				db.open();
-
-				QSqlQuery query(db);
-				query.exec("select count(*) from commandchannels");
-				query.next();
-				int index = query.value(0).toInt();
-				query.clear();
-
-				query.prepare("INSERT INTO commandchannels "
-							  "VALUES(:id, :address, :port)");
-				query.bindValue(":id", index);
-				query.bindValue(":address", senderAddress.toString());
-				query.bindValue(":port", target);
-				query.exec();
-
-				db.close();*/
-			}
 		}
 	}
 }

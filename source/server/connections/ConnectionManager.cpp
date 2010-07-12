@@ -1,5 +1,7 @@
 #include "ConnectionManager.h"
 
+#include "ServerConfig.h"
+
 #include <QXmlStreamWriter>
 #include <QMutexLocker>
 #include <QDateTime>
@@ -77,7 +79,7 @@ void ConnectionManager::checkForTimeouts()
  *	Everytime the DIRECTORUPDATE command is received by the server, this 
  *	function gets called.  The function checks to see if the director instance referenced
  *	in our list, and if not adds it.  If the instance already exists, the function makes
- *	any needed changes.  Note that the IP address is being used as a "primary key" here.
+ *	any needed changes.  Note that the IP address is being used as a primary key here.
  */
 void ConnectionManager::updateDirector(QHostAddress addr, QString name, DirectorStatus::DirectorStatus status)
 {
@@ -102,6 +104,32 @@ void ConnectionManager::updateDirector(QHostAddress addr, QString name, Director
 	}
 }
 
+/*!	\brief Updates the list of directors with this director (overloaded)
+ *
+ *	This version of updateDirector doesn't update the status.  This is important, because 
+ *	sometimes (for example during a PUTDATA command) the status isn't available.
+ */
+void ConnectionManager::updateDirector(QHostAddress addr, QString name)
+{
+	QMutexLocker locker(mutex_);
+
+	if(directors_.contains(addr.toString()))
+	{
+		QSharedPointer<DirectorInfo> info = directors_[addr.toString()];
+		info->name_ = name;	
+		info->setActivity();
+	}
+	else
+	{
+		QSharedPointer<DirectorInfo> info(new DirectorInfo);
+
+		info->addressStr_ = addr.toString();
+		info->name_ = name;
+
+		directors_[addr.toString()] = info;
+	}
+}
+
 //! Removes a director instance from the list
 /*void ConnectionManager::removeDirector(QHostAddress addr)
 {
@@ -109,6 +137,24 @@ void ConnectionManager::updateDirector(QHostAddress addr, QString name, Director
 	QMutexLocker locker(&directorListMutex_);
 	directors_.remove(addr.toString());
 }*/
+
+/*! Returns an XML list of active proxy servers
+ *
+ *	NOTE: It would be reasonable to question the logic of storing the proxy servers
+ *	in the configuration database while the Director instances are being stored in memory.
+ *	There is in fact no explanation for this, other than the fact that the two components
+ *	were developed at compoletely different times, and hence chose different data storage
+ *	approaches.  Feel free to modify things...
+ *
+ *	In an attempt to hide this difference, the getProxyList function has been created here
+ *	even though there's no reason not to simply create a ServerConfig object and call it 
+ *	directly.
+ */
+QString ConnectionManager::getProxyList()
+{
+	ServerConfig config;
+	return config.listProxyServers();
+}
 
 /*!	\brief Returns a list of director instances as an xml fragment.
  *
@@ -141,6 +187,10 @@ QString ConnectionManager::getDirectorList()
 		xmlWriter.writeTextElement("Name", director->name_);
 		if(director->status_ == DirectorStatus::idle)
 			xmlWriter.writeTextElement("Status","Idle");
+		else if(director->status_ == DirectorStatus::stopped)
+			xmlWriter.writeTextElement("Status","Stopped");
+		else if(director->status_ == DirectorStatus::paused)
+			xmlWriter.writeTextElement("Status","Paused");
 		else if(director->status_ == DirectorStatus::running)
 			xmlWriter.writeTextElement("Status","Running");
 		xmlWriter.writeEndElement(); //Director
@@ -231,14 +281,21 @@ QUuid ConnectionManager::pendingSession(QHostAddress directorAddr)
 }
 
 //! Creates a new session and returns a pointer to the SessinoInfo object
-QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAddr)
+QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAddr, int proxyId)
 {
 	QMutexLocker locker(mutex_);
 	
-	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorAddr));
+	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorAddr, proxyId));
 
 	pendingSessions_[directorAddr] = sessInfo->uuid_;
 	openSessions_[sessInfo->uuid_] = sessInfo;
 
 	return sessInfo;
+}
+
+//!Ends a currently running session
+void ConnectionManager::endSession(QUuid sessionId)
+{
+	openSessions_[sessionId]->endSession();
+	openSessions_.remove(sessionId);
 }

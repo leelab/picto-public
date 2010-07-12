@@ -75,7 +75,7 @@ QSharedPointer<Picto::ProtocolResponse> TestCommandHandler::processCommand(QShar
  */
 void TestCommandHandler::doAlignTest()
 {
-		qDebug() << "Alignment Test initiated";
+		/*qDebug() << "Alignment Test initiated";
 
 		//set up a fake session database
 		QSqlDatabase sessionDb = QSqlDatabase::addDatabase("QSQLITE","AlignmentTestSession");
@@ -154,7 +154,7 @@ void TestCommandHandler::doAlignTest()
 
 		//creating a parentless thread seems like it might be a bad idea...
 		//This is only test code, but we may need to fix this later...
-		NeuralDataCollector ndc(sessionDb,1000,0);
+		NeuralDataCollector ndc(sessionDb,1000,0);*/
 
 
 }

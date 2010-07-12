@@ -224,6 +224,8 @@
    <file alias="_protocol_command_handler_8h-source.html">../../../output/documentation/main/html/_protocol_command_handler_8h-source.html</file>
    <file alias="_protocol_response_8cpp-source.html">../../../output/documentation/main/html/_protocol_response_8cpp-source.html</file>
    <file alias="_protocol_response_8h-source.html">../../../output/documentation/main/html/_protocol_response_8h-source.html</file>
+   <file alias="_proxy_list_command_handler_8cpp-source.html">../../../output/documentation/main/html/_proxy_list_command_handler_8cpp-source.html</file>
+   <file alias="_proxy_list_command_handler_8h-source.html">../../../output/documentation/main/html/_proxy_list_command_handler_8h-source.html</file>
    <file alias="_pupil_diameter_data_store_8cpp-source.html">../../../output/documentation/main/html/_pupil_diameter_data_store_8cpp-source.html</file>
    <file alias="_pupil_diameter_data_store_8h-source.html">../../../output/documentation/main/html/_pupil_diameter_data_store_8h-source.html</file>
    <file alias="_put_data_command_handler_8cpp-source.html">../../../output/documentation/main/html/_put_data_command_handler_8cpp-source.html</file>
@@ -252,6 +254,8 @@
    <file alias="_scene_8h-source.html">../../../output/documentation/main/html/_scene_8h-source.html</file>
    <file alias="_script_element_8cpp-source.html">../../../output/documentation/main/html/_script_element_8cpp-source.html</file>
    <file alias="_script_element_8h-source.html">../../../output/documentation/main/html/_script_element_8h-source.html</file>
+   <file alias="_server_config_8cpp-source.html">../../../output/documentation/main/html/_server_config_8cpp-source.html</file>
+   <file alias="_server_config_8h-source.html">../../../output/documentation/main/html/_server_config_8h-source.html</file>
    <file alias="_server_discoverer_8cpp-source.html">../../../output/documentation/main/html/_server_discoverer_8cpp-source.html</file>
    <file alias="_server_discoverer_8h-source.html">../../../output/documentation/main/html/_server_discoverer_8h-source.html</file>
    <file alias="_server_h_t_t_p_protocol_8cpp-source.html">../../../output/documentation/main/html/_server_h_t_t_p_protocol_8cpp-source.html</file>
@@ -525,6 +529,9 @@
    <file alias="struct_picto_1_1_protocol_command.html">../../../output/documentation/main/html/struct_picto_1_1_protocol_command.html</file>
    <file alias="struct_picto_1_1_rendering_target-members.html">../../../output/documentation/main/html/struct_picto_1_1_rendering_target-members.html</file>
    <file alias="struct_picto_1_1_rendering_target.html">../../../output/documentation/main/html/struct_picto_1_1_rendering_target.html</file>
+   <file alias="struct_proxy_list_command_handler-members.html">../../../output/documentation/main/html/struct_proxy_list_command_handler-members.html</file>
+   <file alias="struct_proxy_list_command_handler.html">../../../output/documentation/main/html/struct_proxy_list_command_handler.html</file>
+   <file alias="struct_proxy_list_command_handler.png">../../../output/documentation/main/html/struct_proxy_list_command_handler.png</file>
    <file alias="struct_put_data_command_handler-members.html">../../../output/documentation/main/html/struct_put_data_command_handler-members.html</file>
    <file alias="struct_put_data_command_handler.html">../../../output/documentation/main/html/struct_put_data_command_handler.html</file>
    <file alias="struct_put_data_command_handler.png">../../../output/documentation/main/html/struct_put_data_command_handler.png</file>

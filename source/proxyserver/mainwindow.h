@@ -27,7 +27,6 @@ private slots:
 	void startStopServer();
 	void checkDevStatus();
 	void closeEvent(QCloseEvent *event);
-	void setProxyServerName(const QString &newName);
 	void serverActivity();
 private:
 	void createStatusLights();
@@ -37,25 +36,28 @@ private:
 	void createLayout();
 	void createTimer();
 
-	StatusLight *readyStatus,*activityStatus;
-	QLabel *readyStatusLabel, *activityStatusLabel;
-	QComboBox *pluginCombo;
-	QPushButton *startStopServerButton;
-	QPushButton *quitButton;
-	QVBoxLayout *layout;
-	QLabel *lineEditNameLabel;
-	QLineEdit *lineEditName;
+	void readSettings();
+	void writeSettings();
 
-	QTimer *activityTimer;
+	StatusLight *readyStatus_,*activityStatus_;
+	QLabel *readyStatusLabel_, *activityStatusLabel_;
+	QComboBox *pluginCombo_;
+	QPushButton *startStopServerButton_;
+	QPushButton *quitButton_;
+	QVBoxLayout *layout_;
+	QLabel *lineEditNameLabel_;
+	QLineEdit *lineEditName_;
 
-	QObject *acqPlugin;
-	QList<QObject*> acqPluginList;
+	QTimer *activityTimer_;
+
+	QObject *acqPlugin_;
+	QList<QObject*> acqPluginList_;
 
 
-	QEventLoop *serverEventLoop;
+	QEventLoop *serverEventLoop_;
 
-	QString startServerMsg, stopServerMsg;
-	QString proxyName;
+	QString startServerMsg, stopServerMsg_;
+	//QString proxyName_;
 
 	int port_;
 

@@ -2,52 +2,54 @@
 #include <QByteArray>
 #include <QXmlStreamReader>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QVariant>
 
 #include "neuraldatacollector.h"
+#include "../connections/ServerConfig.h"
 
-
-NeuralDataCollector::NeuralDataCollector(QSqlDatabase &sessionDb, int interval, QObject *parent):
+NeuralDataCollector::NeuralDataCollector(int proxyId, QString sessionDbName, int interval, QObject *parent):
 		QThread(parent),
 		collectionInterval_(interval),
-		db_(sessionDb)
+		sessionDbName_(sessionDbName)
 {
-	Q_ASSERT(false);  //We need to move all db access out of here and the alignment tool...
-	//grab the proxy server port and and adression from the sessoin db_
-	QSqlQuery query(sessionDb);
-	query.exec("SELECT value FROM sessioninfo WHERE key='Proxy Adress'");
-	Q_ASSERT(query.next());
-	proxyAddress_ = QHostAddress(query.value(0).toString());
-	query.exec("SELECT value FROM sessioninfo WHERE key='Proxy Port'");
-	Q_ASSERT(query.next());
-	proxyPort_ = query.value(0).toInt();
+	ServerConfig config;
+	proxyAddress_ = config.proxyServerAddress(proxyId);
+	proxyPort_ = config.proxyServerPort(proxyId);
 }
 
-NeuralDataCollector::~NeuralDataCollector()
-{
-	exit();
-	return;
-}
 
 void NeuralDataCollector::run()
 {
+	//cmdChannel_ = QSharedPointer<Picto::CommandChannel>(new Picto::CommandChannel(proxyAddress_,proxyPort_));
+	cmdChannel_ = new Picto::CommandChannel(proxyAddress_,proxyPort_);
+
 	//set up a timer to grab proxy data
 	pollingTimer_ = new QTimer();
 	pollingTimer_->setInterval(collectionInterval_);
 	connect(pollingTimer_, SIGNAL(timeout()), this, SLOT(collectData()),Qt::DirectConnection);
 	pollingTimer_->start();
 
-	//set up the network connection
-	proxySocket_ = new QTcpSocket;;
-	proxySocket_->connectToHost(proxyAddress_,proxyPort_,QIODevice::ReadWrite);
+	if(!cmdChannel_->isConnected())
+		cmdChannel_->connectToServer(proxyAddress_,proxyPort_);
+
+	//Open the database connection
+	//This must be done here, since database connections aren't happy across threads	
+	db_ = QSqlDatabase::addDatabase("QSQLITE",QString("SessionDb%1").arg((int)currentThreadId()));
+	db_.setDatabaseName(sessionDbName_);
+	Q_ASSERT(db_.open());
 
 	QThread::exec();
+
+	delete pollingTimer_;
+	delete cmdChannel_;
 
 }
 
 void NeuralDataCollector::stop()
 {
-	exit();
+	if(isRunning())
+		exit();
 	return;
 }
 
@@ -56,35 +58,22 @@ void NeuralDataCollector::collectData()
 	pollingTimer_->stop();
 
 	//check for failed connections
-	if(proxySocket_->state()<QAbstractSocket::ConnectingState)
-		proxySocket_->connectToHost(proxyAddress_,proxyPort_,QIODevice::ReadWrite);
-	if(!proxySocket_->waitForConnected(2000))
-		return;
+	if(!cmdChannel_->isConnected())
+		cmdChannel_->connectToServer(proxyAddress_,proxyPort_);
 
-	Picto::ProtocolCommand *getCommand;
-	getCommand = new Picto::ProtocolCommand("GET /data ACQ/1.0");
-	getCommand->write(proxySocket_);
+	QSharedPointer<Picto::ProtocolCommand> getCommand = QSharedPointer<Picto::ProtocolCommand>(new Picto::ProtocolCommand("GET /data ACQ/1.0"));
+	cmdChannel_->sendCommand(getCommand);
 
-	Picto::ProtocolResponse *proxyResponse = new Picto::ProtocolResponse();
-	int bytesRead = proxyResponse->read(proxySocket_);
-
-	if(bytesRead == -1)
+	QSharedPointer<Picto::ProtocolResponse> proxyResponse;
+	if(!cmdChannel_->waitForResponse(1000))
 		qDebug()<<proxyAddress_.toString()<<": No data returned from proxy";
-	else if(bytesRead == -2)
-		qDebug()<<proxyAddress_.toString()<<": Poorly formed headers";
-	else if(bytesRead<0)
-	{
-		/*! \todo I need to make sure that in this case, the data received is still recorded */
-		qDebug()<<proxyAddress_.toString()<<": Unable to read entire content block";
-	}
-	else
-	{
-		parseResponse(proxyResponse);
-		qDebug()<<proxyAddress_.toString()<<": Read "<<bytesRead<<" bytes";
-	}
+	
+	proxyResponse = cmdChannel_->getResponse();
 
-	//flush out any remaining data in the conenction
-	proxySocket_->readAll();
+	//! \TODO Figure out how to handle missed responses from the proxy server.  We should probably \
+	//!		  come up with a way to notify the workstation...
+	if(proxyResponse)
+		parseResponse(proxyResponse);
 
 	pollingTimer_->start();
 
@@ -95,7 +84,7 @@ void NeuralDataCollector::collectData()
 // 1. Spike information is stored in the spikes table in the session databasae
 // 2. "External events" (which are just alignment codes) are sent to the alignment tool
 
-void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
+void NeuralDataCollector::parseResponse(QSharedPointer<Picto::ProtocolResponse> response)
 {
 	QByteArray xmlData = response->getDecodedContent();
 
@@ -153,7 +142,8 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 				fittedTime = timestamp;
 				correlation = 0.0;
 
-				query.prepare("INSERT INTO spikes (timestamp, fittedtime, correlation, channel, unit, waveform)"
+				//! \TODO move this code to sessioninfo
+				query.prepare("INSERT INTO spikes (timestamp, fittedtime, correlation, channel, unit, waveform) "
 					"VALUES(:timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
 				query.bindValue(":timestamp", timestamp);
 				query.bindValue(":fittedtime", fittedTime);
@@ -161,7 +151,7 @@ void NeuralDataCollector::parseResponse(Picto::ProtocolResponse *response)
 				query.bindValue(":channel", channel);
 				query.bindValue(":unit", unit);
 				query.bindValue(":waveform", waveform);
-				query.exec();
+				Q_ASSERT_X(query.exec(),"",query.lastError().text().toAscii());
 			}
 			else if(reader.attributes().value("type").toString() == "externalEvent")
 			{

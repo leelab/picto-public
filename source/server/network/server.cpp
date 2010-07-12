@@ -52,10 +52,6 @@ void Server::incomingConnection(int socketDescriptor)
 
 void Server::processPendingDatagrams()
 {
-	QSqlDatabase db = QSqlDatabase::database("PictoServerConfigDatabase");
-	db.open();
-
-	QSqlQuery query(db);
 
     while (udpSocket->hasPendingDatagrams())
 	{
@@ -103,25 +99,20 @@ void Server::processPendingDatagrams()
 			{
 				//ACQ announce uses the format ANNOUNCE proxyname:port ACQ/1.0
 				int portPosition = target.indexOf(':');
-				QString proxyPort, proxyName;
+				
+				QString proxyName;
+				int proxyPort = -1;
+				bool portOk;
+
 				if(protocolVersionPosition != -1)
 				{
 					proxyName = target.left(portPosition);
-					proxyPort = target.mid(portPosition+1);
+					proxyPort = target.mid(portPosition+1).toInt(&portOk);
 				}
+				
+				if(portOk && !proxyName.isEmpty())
+					config_.insertProxyServer(proxyName,proxyPort,senderAddress);
 
-				query.exec("SELECT COUNT(*) FROM proxyservers");
-				query.next();
-				int index = query.value(0).toInt();
-				query.clear();
-
-				query.prepare("INSERT INTO proxyservers (id,name,address,port) "
-					"VALUES (:id, :name, :address,:port)");
-				query.bindValue(":id",index);
-				query.bindValue(":name", proxyName);
-				query.bindValue(":address", senderAddress.toString());
-				query.bindValue(":port", proxyPort);
-				query.exec();
 			}
 
 			//Proxy server signing off
@@ -129,25 +120,22 @@ void Server::processPendingDatagrams()
 			{
 				//ACQ depart uses the format DEPART proxyname:port ACQ/1.0
 				int portPosition = target.indexOf(':');
-				QString proxyPort, proxyName;
+				
+				QString proxyName;
+				int proxyPort = -1;
+				bool portOk;
+
 				if(protocolVersionPosition != -1)
 				{
 					proxyName = target.left(portPosition);
-					proxyPort = target.mid(portPosition+1);
+					proxyPort = target.mid(portPosition+1).toInt(&portOk);
 				}
-
-				query.prepare("DELETE FROM proxyservers WHERE "
-					"name=:name AND address=:address AND port=:port");
-				query.bindValue(":name", proxyName);
-				query.bindValue(":address", senderAddress.toString());
-				query.bindValue(":port", proxyPort);
-				query.exec();
+				
+				if(portOk && !proxyName.isEmpty())
+					config_.removeProxyServer(proxyName,proxyPort,senderAddress);
 			}
-
-
 		}
 	}
-	db.close();
 }
 
 //! Called when a server thread ends

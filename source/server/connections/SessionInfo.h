@@ -35,7 +35,7 @@
 class SessionInfo
 {
 public:
-	SessionInfo(QString directorAddr);
+	SessionInfo(QString directorAddr, int proxyId);
 	~SessionInfo();
 
 	void endSession();
@@ -56,7 +56,6 @@ public:
 	//QSqlDatabase cacheDb() { return cacheDb_; };
 	QUuid sessionId() { return uuid_; };
 	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
-	QSharedPointer<NeuralDataCollector> neuralDataCollector() { return ndc_; };
 	QString directorAddr() { return directorAddr_; };
 
 	QString pendingDirective();
@@ -70,10 +69,14 @@ public:
 
 private:
 	QUuid uuid_;
+	QString databaseName_;
 	QSqlDatabase sessionDb_;
 	QSqlDatabase cacheDb_;
 	QSharedPointer<AlignmentTool> alignmentTool_;
-	QSharedPointer<NeuralDataCollector> ndc_;
+	//QSharedPointer<NeuralDataCollector> ndc_;
+
+	int proxyId_;
+	NeuralDataCollector *ndc_;
 	QTimer timeoutTimer_;
 	QStringList pendingDirectives_;
 	QString directorAddr_;

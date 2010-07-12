@@ -9,11 +9,12 @@
 #include "../../common/protocol/GetCommandHandler.h"
 #include "../../common/protocol/TerminateCommandHandler.h"
 
-#include "PutDataCommandHandler.h"
 #include "DirectorListCommandHandler.h"
 #include "DirectorUpdateCommandHandler.h"
 #include "EndsessionCommandHandler.h"
 #include "GetDataCommandHandler.h"
+#include "ProxyListCommandHandler.h"
+#include "PutDataCommandHandler.h"
 #include "StartsessionCommandHandler.h"
 #include "TaskCommandHandler.h"
 #include "TestCommandHandler.h"
@@ -30,6 +31,7 @@ ServerPictoProtocol::ServerPictoProtocol()
 	QSharedPointer<DirectorUpdateCommandHandler> directorUpdateCommandHandler(new DirectorUpdateCommandHandler());
 	QSharedPointer<EndsessionCommandHandler> endsessionCommandHandler(new EndsessionCommandHandler());
 	QSharedPointer<GetDataCommandHandler> getDataCommandHandler(new GetDataCommandHandler());
+	QSharedPointer<ProxyListCommandHandler> proxyListCommandHandler(new ProxyListCommandHandler());
 	QSharedPointer<PutDataCommandHandler> putDataCommandHandler(new PutDataCommandHandler());
 	QSharedPointer<StartsessionCommandHandler> startsessionCommandHandler(new StartsessionCommandHandler());
 	QSharedPointer<TaskCommandHandler> taskCommandHandler(new TaskCommandHandler());
@@ -46,6 +48,7 @@ ServerPictoProtocol::ServerPictoProtocol()
 	addCommandHandler(directorUpdateCommandHandler);
 	addCommandHandler(endsessionCommandHandler);
 	addCommandHandler(getDataCommandHandler);
+	addCommandHandler(proxyListCommandHandler);
 	addCommandHandler(putDataCommandHandler);
 	addCommandHandler(startsessionCommandHandler);
 	addCommandHandler(taskCommandHandler);

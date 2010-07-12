@@ -8,16 +8,14 @@
 #include <QSqlError>
 #include <QVariant>
 
-SessionInfo::SessionInfo(QString directorAddr):
-	activity_(true)
+SessionInfo::SessionInfo(QString directorAddr, int proxyId):
+	activity_(true),
+	proxyId_(proxyId)
 {
 	//CreateUUID
 	QUuid uuid = QUuid::createUuid();
 	uuid_ = uuid;
 
-	//create alignment tool and neuraldatacollector
-	//sessInfo->alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool(sessInfo->sessionDb_));
-	//sessInfo->ndc_ = QSharedPointer<NeuralDataCollector>(new NeuralDataCollector(sessInfo->sessionDb_,50));
  
 	//Set the director address
 	directorAddr_ = directorAddr;
@@ -25,17 +23,17 @@ SessionInfo::SessionInfo(QString directorAddr):
 
 	//Create a new Session Database
 	QDateTime dateTime = QDateTime::currentDateTime();
-	QString databaseName="Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");
+	databaseName_="Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");
 	
 	//! \todo come up with a better place to store session data...
 	QDir dir(QCoreApplication::applicationDirPath());
-	while(dir.entryList().contains(databaseName))
+	while(dir.entryList().contains(databaseName_))
 	{
-		databaseName.append("_x");
+		databaseName_.append("_x");
 	}
 
-	sessionDb_ = QSqlDatabase::addDatabase("QSQLITE",databaseName);
-	sessionDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + databaseName + ".sqlite");
+	sessionDb_ = QSqlDatabase::addDatabase("QSQLITE",databaseName_);
+	sessionDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + databaseName_ + ".sqlite");
 	Q_ASSERT(sessionDb_.open());
 
 	QSqlQuery sessionQ(sessionDb_);
@@ -76,20 +74,33 @@ SessionInfo::SessionInfo(QString directorAddr):
 	sessionQ.exec();
 
 	//Create the cacheDB
-	QString cacheDatabaseName = databaseName+"_cache";
-	cacheDb_ = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
+	QString cachedatabaseName_ = databaseName_+"_cache";
+	cacheDb_ = QSqlDatabase::addDatabase("QSQLITE",cachedatabaseName_);
 	cacheDb_.setDatabaseName(":memory:");
-	//cacheDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + cacheDatabaseName + ".sqlite");
+	//cacheDb_.setdatabaseName_(QCoreApplication::applicationDirPath() + "/" + cachedatabaseName_ + ".sqlite");
 	Q_ASSERT(cacheDb_.open());
 
 	QSqlQuery cacheQ(cacheDb_);
 	cacheQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
 		"ypos REAL, time REAL)");
 	cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
-}
+
+	//create alignment tool and neuraldatacollector
+	//sessInfo->alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool(sessInfo->sessionDb_));
+	if(proxyId_ == -1)
+		ndc_ = 0;
+	else
+	{
+		ndc_ = new NeuralDataCollector(proxyId_, QCoreApplication::applicationDirPath() + "/" + databaseName_ + ".sqlite",50);
+		QObject::connect(ndc_, SIGNAL(finished()), ndc_, SLOT(deleteLater()));
+		ndc_->start();
+	}}
 
 SessionInfo::~SessionInfo()
 {
+	if(ndc_ && ndc_->isRunning())
+		ndc_->stop();
+		
 	cacheDb_.close();
 	sessionDb_.close();
 }
@@ -121,21 +132,27 @@ void SessionInfo::endSession()
 	query.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session end\", :time)");
 	query.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
 	query.exec();
-
+	
 	//Let the Director know that we are planning to stop
 	addPendingDirective("ENDSESSION");
 
 	//Sit around waiting for the director's state to change
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	while(conMgr->getDirectorStatus(uuid_) == DirectorStatus::running)
+	Q_ASSERT(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle);
+	while(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle)
 	{
 		QThread::yieldCurrentThread();
 		QCoreApplication::processEvents();
 	}
 
+	if(ndc_ && ndc_->isRunning())
+	{
+		ndc_->exit();
+		ndc_ = 0;
+	}
+
 	//Flush the database cache
 	flushCache();
-
 }
 
 /*! \brief Dumps the cache database into the session database
@@ -233,7 +250,8 @@ void SessionInfo::flushCache()
 		}
 
 	}
-	Q_ASSERT(sessionDb_.commit());
+	Q_ASSERT_X(sessionDb_.commit(),"SessionInfo::flushCache","Unable to commit to session DB: "+sessionDb_.lastError().text().toAscii());
+
 }
 
 //! \brief Inserts a trial event into the session database
@@ -452,3 +470,4 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 	return stateDataList;
 
 }
+

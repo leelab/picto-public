@@ -1,5 +1,7 @@
 #include "HardwareSetup.h"
 
+#define NI_STUFF
+
 /*#include "../common/stimuli/VisualElementFactory.h"
 #include "../common/stimuli/ArrowGraphic.h"
 #include "../common/stimuli/BoxGraphic.h"
@@ -31,7 +33,7 @@
 
 
 #include "../common/engine/MouseSignalChannel.h"
-#ifdef WIN32
+#if defined WIN32 && defined NI_STUFF
 #include "engine/PictoBoxXPAnalogInputSignalChannel.h"
 #endif
 
@@ -39,7 +41,7 @@
 #include "../common/iodevices/EventCodeGenerator.h"
 #include "../common/iodevices/NullRewardController.h"
 #include "../common/iodevices/NullEventCodeGenerator.h"
-#ifdef WIN32
+#if defined WIN32 && defined NI_STUFF
 #include "iodevices/PictoBoxXPRewardController.h"
 #include "iodevices/PictoBoxXPEventCodeGenerator.h"
 #endif
@@ -64,7 +66,7 @@ bool HardwareSetup::isSetup()
 }
 
 
-/*!	\brief	Sets up the rendering targest used in the experiment
+/*!	\brief	Sets up the rendering target used in the experiment
  *
  *	As this is an early release, we don't set up the audio target.
  *
@@ -127,13 +129,13 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 	}
 	else if(channelType == EyetrackerXp)
 	{
-#ifndef WIN32
-		return false;
-#else
+#if defined WIN32 && defined NI_STUFF
 		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
 		aiChannel->addAiChannel("xpos",0);
 		aiChannel->addAiChannel("ypos",1);
 		engine_->addSignalChannel("PositionChannel",aiChannel);
+#else
+		return false;
 #endif
 	}
 
@@ -153,10 +155,10 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 
 	if(controllerType == PictoBoxXpReward)
 	{
-#ifndef WIN32
-		return false;
-#else
+#if defined WIN32 && defined NI_STUFF
 		rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController(1));
+#else
+		return false;
 #endif
 	}
 	else if(controllerType == NullReward)
@@ -182,10 +184,10 @@ bool HardwareSetup::setupEventCodeGenerator(HardwareSetup::EventCodeGeneratorTyp
 
 	if(generatorType == PictoBoxXpGen)
 	{
-#ifndef WIN32
-		return false;
-#else
+#if defined WIN32 && defined NI_STUFF
 		generator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::PictoBoxXPEventCodeGenerator());
+#else
+		return false;
 #endif
 	}
 	else if(generatorType == NullGen)

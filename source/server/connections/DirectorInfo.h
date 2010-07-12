@@ -19,7 +19,7 @@ namespace DirectorStatus
 {
 	enum DirectorStatus
 	{
-		idle, running, notFound
+		notFound, idle, stopped, paused, running
 	};
 }
 

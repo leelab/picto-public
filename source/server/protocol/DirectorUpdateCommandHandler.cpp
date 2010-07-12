@@ -15,6 +15,8 @@ DirectorUpdateCommandHandler::DirectorUpdateCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
+	//printf("DIRECTORUPDATE handler: %d\n", QThread::currentThreadId());
+
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
@@ -34,12 +36,18 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 	{
 		status = DirectorStatus::idle;
 	}
+	else if(statusStr.toUpper() == "STOPPED")
+	{
+		status = DirectorStatus::stopped;
+	}
+	else if(statusStr.toUpper() == "PAUSED")
+	{
+		status = DirectorStatus::paused;
+	}
 	else if(statusStr.toUpper() == "RUNNING")
 	{
 		status = DirectorStatus::running;
 	}
-	else
-		return notFoundResponse;
 
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
@@ -47,6 +55,7 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 
 	//If we're in a session, check for pending directives
 	QUuid sessionId(command->getFieldValue("Session-ID"));
+	QString test = sessionId.toString();
 	if(!sessionId.isNull())
 	{
 		QSharedPointer<SessionInfo> sessionInfo;
@@ -85,7 +94,6 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 		else
 		{
 			response->setContent("NEWSESSION "+sessionId.toString().toUtf8());
-			printf("NEWSESSION\n");
 		}
 	}
 

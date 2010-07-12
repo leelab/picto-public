@@ -50,7 +50,7 @@ private:
 	void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);
 	void runScript(QString scriptName);
 	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);
-	void updateServer(QSharedPointer<Engine::PictoEngine> engine);
+	void updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused=false);
 	int getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine);
 	void addCursor();
 

@@ -91,6 +91,9 @@ void TestViewer::setupEngine()
 	QSharedPointer<Picto::RewardController> rewardController;
 	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
 	engine_->setRewardController(rewardController);
+
+	//display the splash screen
+	renderingTarget_->showSplash();
 }
 
 //! Sets up the user interface portions of the GUI
@@ -184,6 +187,9 @@ void TestViewer::stop()
 	playAction_->setEnabled(true);
 
 	pixmapVisualTarget_->clear();
+
+	//display the splash screen
+	renderingTarget_->showSplash();
 }
 
 void TestViewer::generateComboBox()

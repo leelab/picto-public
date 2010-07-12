@@ -98,7 +98,93 @@
 			</StateMachine>
 
 		</Task>
-		<Task>
+    <Task>
+      <Name>Frame Rate Testing</Name>
+      <!-- This is a simple state machine designed to test the frame rate 	-->
+      <!-- at which we are rendering.  In order to truly "max out" the 		-->
+      <!-- rendering engine, we are going to draw an ellipse and use 			-->
+      <!-- scripts on entry, exit, and every frame.  To run this as an 		-->
+      <!-- actual frame rate test, we'll need to modify the rendering loop 	-->
+      <!-- to output frame rates.												-->
+      <StateMachine>
+        <Name>FrameRateTest2</Name>
+        <Level>Trial</Level>
+        <InitialElement>TestState</InitialElement>
+        <Parameters>
+          <Parameter type="Boolean" operatorUI="false">
+            <Name>MovingUp</Name>
+          </Parameter>
+        </Parameters>
+        <StateMachineElements>
+
+          <StateMachineElement type="State">
+            <Revision>-1</Revision>
+            <EngineNeeded>-1</EngineNeeded>
+            <Name>TestState</Name>
+            <ControlElements>
+              <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
+                <Name></Name>
+                <Time units="Ms">20000</Time>
+              </ControlElement>
+            </ControlElements>
+            <Scene>
+              <Canvas>
+                <Layers>
+                  <BackgroundLayer color="#000000"/>
+                  <Layer>
+                    <Name>Layer1</Name>
+                    <Order>1</Order>
+                    <VisualElement type="Ellipse Graphic">
+                      <Name datatype="QString">Ellipse</Name>
+                      <Position datatype="QPoint" x="400" y="400"/>
+                      <Dimensions datatype="QRect" x="0" y="0" width="300" height="300"/>
+                      <Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+                    </VisualElement>
+                  </Layer>
+                </Layers>
+              </Canvas>
+              <AudioElement></AudioElement>
+            </Scene>
+            <Scripts>
+              <Script type="frame">
+                //Every frame, we move the ellipse
+                x = Ellipse.getX();
+                y = Ellipse.getY();
+                
+
+                if(y &gt;= 600)
+                  MovingUp.setValue(true);
+                if(y &lt;= )
+                MovingUp.setValue(false);
+
+                if(MovingUp.getValue() == true)
+                  Ellipse.setPosition(x,y+10);
+                else
+                  Ellipse.setPosition(x,y-10);
+              </Script>
+            </Scripts>
+            <Results>
+              <Result>
+                <Name>Success</Name>
+              </Result>
+            </Results>
+          </StateMachineElement>
+          <StateMachineElement type="Result">
+            <Name>Done</Name>
+          </StateMachineElement>
+        </StateMachineElements>
+        <Transitions>
+          <Transition>
+            <Source>TestState</Source>
+            <SourceResult>Success</SourceResult>
+            <Destination>Done</Destination>
+          </Transition>
+        </Transitions>
+        <Results/>
+      </StateMachine>
+
+    </Task>
+    <Task>
 			<Name>Simple Test</Name>
 			<StateMachine>
 				<Name>Dumb Trial</Name>

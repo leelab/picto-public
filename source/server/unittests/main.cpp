@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 				serverAddress.setAddress("127.0.0.1");
 			}
 
-			TestBasicProtocolCommands basicProtocolCommandTestObject(serverAddress);
+			//TestBasicProtocolCommands basicProtocolCommandTestObject(serverAddress);
 			TestCommandChannel commandChannelTestObject(serverAddress);
 
 			QStringList testOptionList;

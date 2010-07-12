@@ -27,6 +27,7 @@
 #include "InteractiveSTDIOHandler.h"
 #include "datacollection/neuraldatacollector.h"
 #include "datacollection/alignmenttool.h"
+#include "connections/ServerConfig.h"
 
 #ifdef Q_WS_MAC
 #include <sys/types.h>
@@ -72,29 +73,9 @@ int serviceMain(SystemService *)
 	 *        database).
 	 *        This should also all be abstracted into a seperate object layer.
 	 */
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","PictoServerConfigDatabase");
-	db.setDatabaseName(QCoreApplication::applicationDirPath() + "/PictoServer.config");
-    db.open();
-
-	QSqlQuery query(db);
-
-	if(!db.tables().contains("proxyservers"))
-	{
-		/*! \todo these queries should be broken out as their own files which are loaded out of the Qt
-		 *        resource system.
-		 */
-		query.exec("CREATE TABLE proxyservers (id int primary key, "
-												 "name varchar(30), "
-				                                 "address varchar(20), "
-												 "port varchar(20))");
-	}
-	else
-	{
-		query.exec("DELETE FROM proxyservers");
-	}
-
-	db.close();
+	ServerConfig config;
+	config.clearProxyServers();
+	
 
 	/*! \todo this should specify the IP address in addition to the port, and both should be read from the
 	 *        configuration database.

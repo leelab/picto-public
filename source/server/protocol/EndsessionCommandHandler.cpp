@@ -20,12 +20,15 @@ QSharedPointer<Picto::ProtocolResponse> EndsessionCommandHandler::processCommand
 	
 	QString targetSession = command->getTarget();
 
-	QSharedPointer<SessionInfo> session = ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession));
-	if(session.isNull())
+	QSharedPointer<SessionInfo> sessionInfo = ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession));
+	if(sessionInfo.isNull())
+	{
 		return notFoundResponse;
-
-	session->endSession();
-
-	return okResponse;
+	}
+	else
+	{
+		ConnectionManager::Instance()->endSession(QUuid(targetSession));
+		return okResponse;
+	}
 
 }

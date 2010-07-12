@@ -40,12 +40,13 @@ private slots:
 	void stop();
 	void reward();
 
-	void changeConnectionState();
+	void changeConnectionState(bool checked);
 	
 	void updateStatus();
-	void updateDirectorList();
+	void updateLists();
 	void updateActions();
 
+	void checkForTimeouts();
 private:
 	typedef struct
 	{
@@ -53,6 +54,12 @@ private:
 		QString status;
 		QString address;
 	}DirectorInstance;
+
+	struct ProxyServerInfo
+	{
+		QString name;
+		int id;
+	};
 
 
 
@@ -69,6 +76,8 @@ private:
 	bool directorIsRunning(QString addr);
 	QList<DirectorInstance> getDirectorList();
 
+	QList<ProxyServerInfo> getProxyList();
+
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
@@ -84,11 +93,15 @@ private:
 	QToolBar *toolBar_;
 	QComboBox *taskListBox_;
 	QComboBox *directorListBox_;
+	QComboBox *proxyListBox_;
 	QLabel *statusBar_;
 
 	QTimer *updateTimer_;
+	QTimer *timeoutTimer_;
 
 	Picto::CommandChannel *serverChannel_;
+	Picto::CommandChannel *engineSlaveChannel_;
+	Picto::CommandChannel *behavioralDataChannel_;
 	Picto::ServerDiscoverer *serverDiscoverer_;
 
 	enum Status {Stopped, Running, Paused};

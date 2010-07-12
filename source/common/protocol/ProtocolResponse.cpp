@@ -227,6 +227,7 @@ void ProtocolResponse::setContentEncoding(ContentEncodingType::ContentEncodingTy
 	if(!content.isEmpty())
 	{
 		encodeContent();
+		fields["Content-Length"] = QString("%1").arg(encodedContent.size());
 	}
 }
 

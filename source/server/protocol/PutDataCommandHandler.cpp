@@ -31,7 +31,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	conMgr->updateDirector(QHostAddress(command->getFieldValue("Source-Address")), command->getTarget(), DirectorStatus::running);
+	conMgr->updateDirector(QHostAddress(command->getFieldValue("Source-Address")), command->getTarget());
 
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));

@@ -30,7 +30,8 @@
 RemoteViewer::RemoteViewer(QWidget *parent) :
 	Viewer(parent),
 	status_(Stopped),
-	serverChannel_(0)
+	serverChannel_(0),
+	timeoutTimer_(0)
 {
 	setupServerChannel();
 	setupEngine();
@@ -39,7 +40,7 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	updateTimer_ = new QTimer(this);
 	updateTimer_->setInterval(5000);
 	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateStatus()));
-	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateDirectorList()));
+	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateLists()));
 	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateActions()));
 }
 
@@ -71,7 +72,7 @@ void RemoteViewer::init()
 	generateTaskList();
 	
 	updateActions();
-	updateDirectorList();
+	updateLists();
 	updateTimer_->start();
 }
 
@@ -90,7 +91,7 @@ void RemoteViewer::setupEngine()
 	//set up the engine
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
-	engine_->setSlaveMode(true,serverChannel_);
+	engine_->setSlaveMode(true,engineSlaveChannel_);
 
 	//Set up the rendering target
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
@@ -105,8 +106,7 @@ void RemoteViewer::setupEngine()
 	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
 
 	//set up signal channel
-	//We'll need to set up a network signal channel here...
-	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::NetworkSignalChannel(serverChannel_));
+	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::NetworkSignalChannel(behavioralDataChannel_));
 	engine_->addSignalChannel("PositionChannel",signalChannel);
 
 	//Set up event code generator
@@ -118,6 +118,8 @@ void RemoteViewer::setupEngine()
 	QSharedPointer<Picto::RewardController> rewardController;
 	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
 	engine_->setRewardController(rewardController);
+
+	renderingTarget_->showSplash();
 }
 
 //! Sets up the user interface portions of the GUI
@@ -162,18 +164,22 @@ void RemoteViewer::setupUi()
 	connectAction_ = new QAction(tr("&Connect"), this);
 	connectAction_->setCheckable(true);
 	connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
-	connect(connectAction_, SIGNAL(triggered(bool)), this, SLOT(changeConnectionState()));
+	connect(connectAction_, SIGNAL(toggled(bool)), this, SLOT(changeConnectionState(bool)));
 
 
 	directorListBox_ = new QComboBox;
 	directorListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	updateDirectorList();
 
+	proxyListBox_ = new QComboBox;
+	proxyListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	proxyListBox_->addItem("No Proxy",-1);
+	updateLists();
 
 	toolBar_->addAction(connectAction_);
-	//toolBar_->addAction(disconnectAction_);
 	toolBar_->addWidget(new QLabel(Picto::Names->directorAppName + ": ", this));
 	toolBar_->addWidget(directorListBox_);
+	toolBar_->addWidget(new QLabel(Picto::Names->proxyServerAppName + ": ", this));
+	toolBar_->addWidget(proxyListBox_);
 	
 	//------ Main layout -----------
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
@@ -197,11 +203,16 @@ void RemoteViewer::setupUi()
 void RemoteViewer::setupServerChannel()
 {
 	serverChannel_ = new Picto::CommandChannel(this);
+	engineSlaveChannel_ = new Picto::CommandChannel(this);
+	behavioralDataChannel_ = new Picto::CommandChannel(this);
+
 	serverDiscoverer_ = new Picto::ServerDiscoverer(this);
 
 	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), serverChannel_, SLOT(connectToServer(QHostAddress, quint16)));
+	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), engineSlaveChannel_, SLOT(connectToServer(QHostAddress, quint16)));
+	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), behavioralDataChannel_, SLOT(connectToServer(QHostAddress, quint16)));
+
 	connect(serverDiscoverer_, SIGNAL(discoverFailed()), serverDiscoverer_, SLOT(discover()));
-	connect(serverChannel_, SIGNAL(droppedConnection()), serverDiscoverer_, SLOT(discover()));
 
 	serverDiscoverer_->discover(30000);
 }
@@ -225,7 +236,7 @@ void RemoteViewer::play()
 				experiment_->runTask(modifiedTaskName, engine_);
 				status_ = Stopped;
 				updateActions();
-
+				renderingTarget_->showSplash();
 			}
 		}
 	}
@@ -254,13 +265,10 @@ void RemoteViewer::pause()
 
 void RemoteViewer::stop()
 {
-	if(sendTaskCommand("stop"))
-	{
-		status_ = Stopped;
-		updateActions();
-		engine_->stop();
-	}
+	Q_ASSERT(sendTaskCommand("stop"));
+	status_ = Stopped;
 	updateActions();
+	engine_->stop();
 }
 
 void RemoteViewer::reward()
@@ -272,9 +280,9 @@ void RemoteViewer::reward()
 }
 
 //! \brief Called whenever the connected button changes state
-void RemoteViewer::changeConnectionState()
+void RemoteViewer::changeConnectionState(bool checked)
 {
-	if(connectAction_->isChecked())
+	if(checked)
 	{
 	
 		QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
@@ -326,6 +334,8 @@ void RemoteViewer::updateStatus()
 	QString statusLine;
 
 	//Check server connection
+	//I'm going to assume that if one of our signal channels is connected that they
+	//all are.  this may prove to be a faulty assumption, but I doubt it...
 	if(serverChannel_->isConnected())
 		statusLine += tr("Server: connected");
 	else
@@ -372,7 +382,6 @@ void RemoteViewer::generateTaskList()
 void RemoteViewer::updateActions()
 {
 	//Play action
-	//------------------------------------------
 	bool disablePlay = false;
 	disablePlay |= !serverChannel_->isConnected();
 	disablePlay |= !connectAction_->isChecked();
@@ -387,7 +396,6 @@ void RemoteViewer::updateActions()
 		playAction_->setEnabled(true);
 
 	//Stop action
-	//------------------------------------------
 	bool disableStop = false;
 	disableStop |= !(status_ == Running || status_ == Paused);
 	disableStop |= !connectAction_->isChecked();
@@ -399,7 +407,6 @@ void RemoteViewer::updateActions()
 
 
 	//Pause action
-	//------------------------------------------
 	bool disablePause = false;
 	disablePause |= (status_ != Running);
 	disablePause |= !connectAction_->isChecked();
@@ -410,7 +417,6 @@ void RemoteViewer::updateActions()
 		pauseAction_->setEnabled(true);
 
 	//Reward action
-	//------------------------------------------
 	bool disableReward = false;
 	disableReward |= !connectAction_->isChecked();
 
@@ -419,53 +425,106 @@ void RemoteViewer::updateActions()
 	else
 		rewardAction_->setEnabled(true);
 
-	//Director Combo Box
-	//------------------------------------------
-	bool disableDirectorList = false;
-	disableDirectorList |= connectAction_->isChecked();
-
-	if(disableDirectorList)
-		directorListBox_->setEnabled(false);
-	else
-		directorListBox_->setEnabled(true);
-
 	//Connect Action
-	//------------------------------------------
 	bool disableConnect = false;
 	disableConnect |= (directorListBox_->count() == 0);
+	disableConnect |= (proxyListBox_->count() == 0);
 
 	if(disableConnect)
 		connectAction_->setEnabled(false);
 	else
 		connectAction_->setEnabled(true);
 
+	//Director and Proxy combo boxes
+	bool disableDirectorAndProxyLists = false;
+	disableDirectorAndProxyLists |= (connectAction_->isChecked());
+
+	if(disableDirectorAndProxyLists)
+	{
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+	}
+	else
+	{
+		directorListBox_->setEnabled(true);
+		proxyListBox_->setEnabled(true);
+	}
+
+
+
 }
 
 
-/*! \brief updates the combo box containing Director instances
+/*! \brief updates the combo boxes containing Director instances and proxy servers
  *
- *	The list of director instances gets updated periodically (by a running timer).
  *	This function asks the server for a current list of Director instances, and 
- *	then adds new ones to the combo box and removes old ones, as needed
+ *	then adds new ones to the combo box and removes old ones, as needed.  The same
+ *	is done for the proxy servers
  */
-void RemoteViewer::updateDirectorList()
+void RemoteViewer::updateLists()
 {
-	if(status_ != Stopped)
+	if(connectAction_->isChecked())
+	{
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
 		return;
-
+	}
+ 
+	//Update the director combo box
 	QList<DirectorInstance> directors;
 	directors = getDirectorList();
-	
-	//Clear out the combo box, then add all directors that are available
-	directorListBox_->clear();
 
+	//Add new directors
 	for(int i=0; i<directors.length(); i++)
 	{
 		DirectorInstance d = directors[i];
-		directorListBox_->addItem(d.name, d.address);
+		if(directorListBox_->findData(d.address) == -1)
+			directorListBox_->addItem(d.name, d.address);
 	}
 
-	directorListBox_->setEnabled(directorListBox_->count() > 0);
+	//Remove old directors
+	for(int i=0; i<directorListBox_->count(); i++)
+	{
+		bool remove = true;
+		for(int j=0; j<directors.length(); j++)
+		{
+			if(directors[j].address ==directorListBox_->itemData(i))
+			{
+				remove = false;
+				break;
+			}
+		}
+		if(remove)
+			directorListBox_->removeItem(i);
+	}
+
+	//Update the proxy combo box
+	QList<ProxyServerInfo> proxies = getProxyList();
+
+	//Add new proxies
+	for(int i=0; i<proxies.length(); i++)
+	{
+		ProxyServerInfo proxy = proxies[i];
+		if(proxyListBox_->findData(proxy.id) == -1)
+			proxyListBox_->addItem(proxy.name, proxy.id);
+	}
+
+	//Remove old proxies
+	//(We're skipping the first entry, since that's "No Proxy")
+	for(int i=1; i<proxyListBox_->count(); i++)
+	{
+		bool remove = true;
+		for(int j=0; j<proxies.length(); j++)
+		{
+			if(proxies[j].id ==proxyListBox_->itemData(i))
+			{
+				remove = false;
+				break;
+			}
+		}
+		if(remove)
+			proxyListBox_->removeItem(i);
+	}
 
 	updateActions();
 }
@@ -503,6 +562,7 @@ bool RemoteViewer::directorIsRunning(QString addr)
  */  
 QList<RemoteViewer::DirectorInstance> RemoteViewer::getDirectorList()
 {
+	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
 	QList<DirectorInstance> directors;
 
 	if(!serverChannel_->isConnected())
@@ -556,8 +616,134 @@ QList<RemoteViewer::DirectorInstance> RemoteViewer::getDirectorList()
 			}
 		}
 	}
-
+	Q_ASSERT(!directors.isEmpty());
 	return directors;
+}
+
+/*! \brief Returns a list of proxy servers and their address
+ *
+ *	This sends out a PROXYLIST command, and then parses the response into a 
+ *	QList of ProxyServerInfos (really just a struct with the name and ID number
+ *	for each proxy).
+ *	
+ */  
+QList<RemoteViewer::ProxyServerInfo> RemoteViewer::getProxyList()
+{
+	QList<ProxyServerInfo> proxies;
+
+	if(!serverChannel_->isConnected())
+	{
+		return proxies;
+	}
+
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand("PROXYLIST / PICTO/1.0"));
+	QSharedPointer<Picto::ProtocolResponse> response;
+
+	serverChannel_->sendCommand(command);
+	if(!serverChannel_->waitForResponse(1000))
+	{
+		setStatus(tr("Server did not respond to PROXYLIST command"));
+		return proxies;
+	}
+	response = serverChannel_->getResponse();
+	
+	QByteArray xmlFragment = response->getContent();
+	QXmlStreamReader xmlReader(xmlFragment);
+
+	while(!xmlReader.atEnd())
+	{
+		xmlReader.readNext();
+
+		if(xmlReader.isStartElement() && xmlReader.name() == "Proxy")
+		{
+			ProxyServerInfo proxy;
+
+			while(!xmlReader.atEnd())
+			{
+				xmlReader.readNext();
+
+				if(xmlReader.name() == "Name" && xmlReader.isStartElement())
+				{
+					proxy.name = xmlReader.readElementText();
+				}
+				else if(xmlReader.name() == "Id" && xmlReader.isStartElement())
+				{
+					proxy.id = xmlReader.readElementText().toInt();
+				}
+				else if(xmlReader.name() == "Proxy" && xmlReader.isEndElement())
+				{
+					proxies.append(proxy);
+					break;
+				}
+				else
+				{
+					//There shouldn't be anything else in here...
+					Q_ASSERT(false);
+				}
+			}
+		}
+	}
+
+	return proxies;
+}
+
+/*! \brief checks to see if the current proxy or director has timed out
+ *
+ *	When we are in a session, this slot is called periodically, to confirm that the
+ *	proxy and director being used haven't disapearred from the network.
+ */
+void RemoteViewer::checkForTimeouts()
+{
+	//Check the director
+	QList<DirectorInstance> directors =  getDirectorList();
+
+	bool foundDirector = false;
+	foreach(DirectorInstance director, directors)
+	{
+		QString testName = directorListBox_->currentText();
+		QString testAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+		if(director.name == directorListBox_->currentText() &&
+			director.address == directorListBox_->itemData(directorListBox_->currentIndex()).toString())
+		{
+			foundDirector = true;
+			break;
+		}
+	}
+
+	if(!foundDirector)
+	{
+		//connectAction_->setChecked(false);
+		//changeConnectionState(false);
+		connectAction_->setChecked(false);
+		QMessageBox::critical(0,tr("Director Lost"),
+			tr("The director instance being used is no longer on the network." 
+			"The session has been ended."));
+		return;
+	}
+
+	//Check the proxy
+	if(proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt() == -1)
+		return;
+	QList<ProxyServerInfo> proxies = getProxyList();
+	
+	bool foundProxy = false;
+	foreach(ProxyServerInfo proxy, proxies)
+	{
+		if(proxy.name == proxyListBox_->currentText() &&
+			proxy.id == proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt())
+		{
+			foundProxy = true;
+			break;
+		}
+	}
+	if(!foundProxy)
+	{
+		connectAction_->setChecked(false);
+		QMessageBox::critical(0,tr("Proxy Lost"),
+			tr("The proxy server being used is no longer on the network." 
+			"The session has been ended."));
+		return;
+	}
 
 }
 
@@ -570,7 +756,8 @@ bool RemoteViewer::startSession()
 
 	QString commandStr;
 	QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
-	commandStr = "STARTSESSION "+directorAddr+" PICTO/1.0";
+	int proxyId = proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt();
+	commandStr = "STARTSESSION "+directorAddr+"/"+QString::number(proxyId)+" PICTO/1.0";
 
 	QSharedPointer<Picto::ProtocolCommand> loadExpCommand(new Picto::ProtocolCommand(commandStr));
 
@@ -596,7 +783,6 @@ bool RemoteViewer::startSession()
 	else if(loadExpResponse->getResponseCode() == Picto::ProtocolResponseType::NotFound)
 	{
 		setStatus(tr("Director instance not found at:") + directorAddr +tr(".  Experiment not loaded."));
-		qDebug()<<(tr("Director instance not found at:") + directorAddr +tr(".  Experiment not loaded."));
 		return false;
 	}
 	else if(loadExpResponse->getResponseCode() == Picto::ProtocolResponseType::Unauthorized)
@@ -617,12 +803,24 @@ bool RemoteViewer::startSession()
 		{
 			sessionId_ = QUuid(xmlReader.readElementText());
 			serverChannel_->setSessionId(sessionId_);
+			engineSlaveChannel_->setSessionId(sessionId_);
+			behavioralDataChannel_->setSessionId(sessionId_);
 			setStatus(tr("Experiment loaded on remote Director instance. Session ID: ")+ sessionId_.toString());
 			
 			//This resets the timing on all of our slave elements.  Note that this will eventually
 			//need to be rebuilt, because in the current arrangement, we can only have one running 
 			//slave state machine
 			Picto::StateMachine::resetSlaveElements();
+
+			//Start the timeout timer
+			if(!timeoutTimer_)
+			{
+				timeoutTimer_ = new QTimer(this);
+				timeoutTimer_->setInterval(50);
+				connect(timeoutTimer_, SIGNAL(timeout()), this, SLOT(checkForTimeouts()));
+			}
+			timeoutTimer_->start();
+
 			return true;
 		}
 		else
@@ -636,6 +834,7 @@ bool RemoteViewer::startSession()
 		setStatus(tr("Unexpected response from server.\nExperiment not loaded."));
 		return false;
 	}
+
 }
 
 //! Ends a currently running session
@@ -643,11 +842,19 @@ bool RemoteViewer::endSession()
 {
 	//Check for a currently running session
 	if(sessionId_.isNull())
-		return false;
+	{
+		setStatus(tr("Not currently in a session"));
+	}
 
 	//If we're running, we should stop first
 	if(status_ == Running || status_ == Paused)
+	{
 		stop();
+
+		//wait for the remote engine to stop
+		QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+		while(directorIsRunning(directorAddr));
+	}
 
 	QSharedPointer<Picto::ProtocolCommand> endSessCommand(
 		new Picto::ProtocolCommand("ENDSESSION "+sessionId_+" PICTO/1.0"));
@@ -658,33 +865,32 @@ bool RemoteViewer::endSession()
 	{
 		setStatus(tr("Server did not respond to ENDSESSION command"));
 		qDebug()<<(tr("Server did not respond to ENDSESSION command"));
-		return false;
 	}
 
 	endSessResponse = serverChannel_->getResponse();
 	if(endSessResponse.isNull())
 	{
 		setStatus(tr("No response received from server.\nExperiment not loaded."));
-		return false;
 	}
 	else if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::NotFound)
 	{
 		setStatus(tr("Session ID not found, session not ended"));
-		return false;
 	}
 	else if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::OK)
 	{
 		setStatus(tr("Session ended"));
-		status_ = Stopped;
-		serverChannel_->setSessionId(QUuid());
-		sessionId_ = QUuid();
-		return true;
 	}
 	else
 	{
 		setStatus(tr("Unexpected response to ENDSESSION command"));
-		return false;
 	}
+	status_ = Stopped;
+	serverChannel_->setSessionId(QUuid());
+	engineSlaveChannel_->setSessionId(QUuid());
+	behavioralDataChannel_->setSessionId(QUuid());
+	sessionId_ = QUuid();
+	timeoutTimer_->stop();
+	return true;
 
 }
 

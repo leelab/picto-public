@@ -34,7 +34,7 @@ private slots:
 	// I rebuilt the command channel so that it only used the polling mode.  As a result
 	// many of these tests will no longer work.
 	/////////////////////////////
-	/*void initTestCase();
+	void initTestCase();
 
 	//NOTE: The test names may be somewhat confusing. If it includes "command"
 	//then the test involves *sending* commands (consumer mode).  If it 
@@ -42,18 +42,18 @@ private slots:
 	//(producer mode).
 	void polledSingleCommand();
 	void polledMultipleCommands();
-	void polledServerConnectionDropped();
+	//void polledServerConnectionDropped();
 
-	void eventDrivenSingleCommand();
-	void eventDrivenMultipleCommands();
-	void eventDrivenServerConnectionDropped();
+	//void eventDrivenSingleCommand();
+	//void eventDrivenMultipleCommands();
+	//void eventDrivenServerConnectionDropped();
 
-	void streamingResponse();
+	//void streamingResponse();
 
 	void polledResponses_data();
 	void polledResponses();
-	void eventDrivenResponses_data();
-	void eventDrivenResponses();
+	//void eventDrivenResponses_data();
+	//void eventDrivenResponses();
 
-	void cleanupTestCase();*/
+	void cleanupTestCase();
 };

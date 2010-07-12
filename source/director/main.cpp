@@ -24,6 +24,7 @@
 #include "../common/experiment/experiment.h"
 
 QSharedPointer<Picto::CommandChannel> connectToServer();
+void updateSplashStatus(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status);
 
 
 int main(int argc, char *argv[])
@@ -89,12 +90,22 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////
 	HardwareSetup hwSetup(engine);
 	
-	if(!hwSetup.setupRenderingTargets(HardwareSetup::D3D)) 
-		return -1;
+	//If there is a command argument of "-pixmap", we should use a pixmpa rendering
+	//otherwise use d3d.
+	if(app.arguments().contains("-pixmap"))
+	{
+		if(!hwSetup.setupRenderingTargets(HardwareSetup::Pixmap)) 
+			return -1;
+	}
+	else
+	{
+		if(!hwSetup.setupRenderingTargets(HardwareSetup::D3D)) 
+			return -1;
+	}
 	if(!hwSetup.setupSignalChannel(HardwareSetup::Mouse)) 
 		return -1;
-	//if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
-	if(!hwSetup.setupRewardController(HardwareSetup::PictoBoxXpReward)) 
+	if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
+	//if(!hwSetup.setupRewardController(HardwareSetup::PictoBoxXpReward)) 
 		return -1;
 	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen)) 
 		return -1;
@@ -105,10 +116,11 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////
 	// Setup networking
 	///////////////////////////////////////
-	engine->setDataCommandChannel(connectToServer());
+	QSharedPointer<Picto::CommandChannel> serverUpdateChannel;
+	//engine->setDataCommandChannel(connectToServer());
 
-	QSharedPointer<Picto::CommandChannel> serverUpdateChannel = connectToServer();
-	engine->setUpdateCommandChannel(serverUpdateChannel);
+	//QSharedPointer<Picto::CommandChannel> serverUpdateChannel = connectToServer();
+	//engine->setUpdateCommandChannel(serverUpdateChannel);
 
 	///////////////////////////////////////
 	// Run event loop
@@ -116,11 +128,7 @@ int main(int argc, char *argv[])
 
 	//Put up our splash screen
 	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine->getRenderingTargets();
-	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-	{
-		target->updateStatus("PictoDirector started");
-		target->showSplash();
-	}
+	updateSplashStatus(engine, "PictoDirector started");
 
 	QSharedPointer<Picto::Experiment> experiment;
 
@@ -131,6 +139,36 @@ int main(int argc, char *argv[])
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 	forever
 	{
+		//if all of the visual targets are closed, it's time for us to exit
+		bool exit = true;
+		foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+		{
+			if(/*!target->getVisualTarget().isNull() &&*/
+				target->getVisualTarget()->isVisible())
+				exit = false;
+		}
+		if(exit)
+			break;
+
+		//Check on network connection
+		if(engine->getDataCommandChannel().isNull())
+		{
+			updateSplashStatus(engine,"Not connected to server");
+			engine->setDataCommandChannel(connectToServer());
+			if(!engine->getDataCommandChannel().isNull())
+				updateSplashStatus(engine, "Connected to server");
+			continue;
+		}
+		if(serverUpdateChannel.isNull())
+		{
+			updateSplashStatus(engine,"Not connected to server");
+			serverUpdateChannel = connectToServer();
+			engine->setUpdateCommandChannel(serverUpdateChannel);
+			if(!serverUpdateChannel.isNull())
+				updateSplashStatus(engine, "Connected to server");
+			continue;
+		}
+
 		if(serverUpdateChannel->incomingResponsesWaiting())
 		{
 			int pendingResponses = serverUpdateChannel->pendingResponses();
@@ -171,6 +209,8 @@ int main(int argc, char *argv[])
 		{
 			QString sessionIdStr = statusDirective.mid(statusDirective.indexOf(' ')+1);
 			engine->setSessionId(QUuid(sessionIdStr));
+			updateCommand->setTarget(engine->getName()+":stopped");;
+
 		}
 		else if(statusDirective.startsWith("LOADEXP"))
 		{
@@ -190,20 +230,11 @@ int main(int argc, char *argv[])
 
 			if(!experiment->deserializeFromXml(xmlReader))
 			{
-				foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-				{
-					target->updateStatus(QString("Error loading experiment: %1").arg(experiment->getErrors()));
-					target->showSplash();
-				}
+				updateSplashStatus(engine, QString("Error loading experiment: %1").arg(experiment->getErrors()));
 			}
 			else
 			{
-				foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-				{
-					target->updateStatus("Loaded experiment, Session ID: " + engine->getSessionId().toString());
-					target->showSplash();
-				}
-
+				updateSplashStatus(engine, "Loaded experiment, Session ID: " + engine->getSessionId().toString());
 			}
 
 
@@ -213,11 +244,7 @@ int main(int argc, char *argv[])
 			//Start running a task
 			QString taskName = statusDirective.mid(statusDirective.indexOf(' ')+1);
 			
-			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-			{
-				target->updateStatus("Starting task: " + taskName);
-				target->showSplash();
-			}
+			updateSplashStatus(engine, "Starting task: " + taskName);
 
 			//Before we actually start running the task, we need to send a DIRECTORUPDATE
 			//command to let the server know that we have changed status to running
@@ -243,21 +270,14 @@ int main(int argc, char *argv[])
 				experiment->runTask(taskName, engine);
 
 			//upon completion return to splash screen
-			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-			{
-				target->updateStatus("Completed Task: " + taskName);
-				target->showSplash();
-			}
+			updateSplashStatus(engine,"Completed Task: " + taskName);
 		}
 		else if(statusDirective.startsWith("ENDSESSION"))
 		{
 			engine->setSessionId(QUuid());
 			experiment = QSharedPointer<Picto::Experiment>();
-			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-			{
-				target->updateStatus("Session ended");
-				target->showSplash();
-			}
+			updateSplashStatus(engine,"Session ended");
+			updateCommand->setTarget(engine->getName()+":idle");;
 		}
 		else if(statusDirective.startsWith("REWARD"))
 		{
@@ -266,20 +286,11 @@ int main(int argc, char *argv[])
 		}
 		else if(statusDirective.startsWith("ERROR"))
 		{
-			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-			{
-				target->updateStatus("ERROR");
-				target->showSplash();
-			}
+			updateSplashStatus(engine,"ERROR");
 		}
 		else
 		{
-			foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-			{
-				target->updateStatus("Unrecognized directive: " + statusDirective);;
-				target->showSplash();
-			}
-			Q_ASSERT_X(false, "PictoDirector main","Unrecognized directive received: " + statusDirective.toAscii());
+			updateSplashStatus(engine,"Unrecognized directive: " + statusDirective);
 		}
 
 		//Pause for 20 ms 
@@ -291,16 +302,6 @@ int main(int argc, char *argv[])
 		pauseTimer.start();
 		pauseLoop.exec();
 
-		//if all of the visual targets are closed, it's time for us to exit
-		bool exit = true;
-		foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-		{
-			if(/*!target->getVisualTarget().isNull() &&*/
-				target->getVisualTarget()->isVisible())
-				exit = false;
-		}
-		if(exit)
-			break;
 
 	}
 
@@ -315,6 +316,7 @@ int main(int argc, char *argv[])
 	}
 
 	configDb.close();
+	return 0;
 
 }
 
@@ -377,7 +379,7 @@ QSharedPointer<Picto::CommandChannel> connectToServer()
 
 	serverDiscoverer.discover();
 
-	while(!serverDiscoverer.waitForDiscovered(10000))
+	/*while(!serverDiscoverer.waitForDiscovered(10000))
 	{
 		QMessageBox notFound;
 		notFound.setText("No PictoServer found on the network.  Try again.?");
@@ -388,7 +390,9 @@ QSharedPointer<Picto::CommandChannel> connectToServer()
 			return nullChannel;
 		else
 			serverDiscoverer.discover();
-	}
+	}*/
+	if(!serverDiscoverer.waitForDiscovered(10000))
+		return nullChannel;
 
 	serverChannel->connectToServer(serverDiscoverer.getAddress(), 
 								 serverDiscoverer.getPort());
@@ -396,4 +400,14 @@ QSharedPointer<Picto::CommandChannel> connectToServer()
 	Q_ASSERT(serverChannel->getChannelStatus() == Picto::CommandChannel::connected);
 
 	return serverChannel;
+}
+
+void updateSplashStatus(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status)
+{
+	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine->getRenderingTargets();
+	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
+	{
+		target->updateStatus(status);
+		target->showSplash();
+	}
 }

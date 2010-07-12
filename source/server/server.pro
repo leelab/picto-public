@@ -30,6 +30,8 @@ HEADERS += $$(PICTO_TREE)/source/server/connections/SessionInfo.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/SessionInfo.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/DirectorInfo.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/DirectorInfo.cpp
+HEADERS += $$(PICTO_TREE)/source/server/connections/ServerConfig.h
+SOURCES += $$(PICTO_TREE)/source/server/connections/ServerConfig.cpp
 
 HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
 SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
@@ -59,6 +61,8 @@ HEADERS += $$(PICTO_TREE)/source/server/protocol/GetDataCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/GetDataCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/server/protocol/ProxyListCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/server/protocol/ProxyListCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/StartsessionCommandHandler.h

@@ -120,6 +120,9 @@ void PictoEngine::giveReward(int channel)
 //! Sets the CommandChannel used for data.  Returns true if the channel's status is connected
 bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel)
 {
+	if(commandChannel.isNull())
+		return false;
+
 	dataCommandChannel_ = commandChannel;
 	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
 		return false;
@@ -135,6 +138,9 @@ QSharedPointer<CommandChannel> PictoEngine::getDataCommandChannel()
 //! Sets the CommandChannel used for updates.  Returns true if the channel's status is connected
 bool PictoEngine::setUpdateCommandChannel(QSharedPointer<CommandChannel> commandChannel)
 {
+	if(commandChannel.isNull())
+		return false;
+
 	updateCommandChannel_ = commandChannel;
 	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
 		return false;

@@ -6,17 +6,17 @@
  *	command.
  *
  *	FORMAT
- *		STARTSESSION 192.168.3.45/192.168.3.124 PICTO/1.0
+ *		STARTSESSION 192.168.3.45/5 PICTO/1.0
  *		Content-Length:???
  *
  *		<Experiment> ... </Experiment>
- *	The first IP address is the Director instance, and the second is the proxy server
+ *	The IP address is the Director instance, and the number is the proxy server id
  *
  *	RESPONSES
  *		There are 3 possible responses:
  *		200:OK - sent if the command is proccessed sucessfully
  *		401:Unauthorized - sent if the director instance is already running
- *		404:NotFound - sent if the director instance isn't found
+ *		404:NotFound - sent if the director instance or proxy server isn't found
  *
  *		If the response is 200:OK, then an XML fragment is included in the content
  *		declaring the session ID.
