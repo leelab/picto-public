@@ -34,15 +34,15 @@ private:
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand> _command);
 	void deliverResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
-	int socketDescriptor;
-	QString pendingCommand;
-	QTcpSocket * tcpSocket;
-	QSharedPointer<ServerProtocols> protocols;
+	int socketDescriptor_;
+	QString pendingCommand_;
+	QTcpSocket * tcpSocket_;
+	QSharedPointer<ServerProtocols> protocols_;
 	QString peerAddress_;
 
-	static const int timeoutInterval = 10000;
+	static const int timeoutInterval_ = 10000;
 
-	QTimer * timer;
+	QTimer * timer_;
 
 	//QUuid sessionId_;
 

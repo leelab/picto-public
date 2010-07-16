@@ -616,7 +616,6 @@ QList<RemoteViewer::DirectorInstance> RemoteViewer::getDirectorList()
 			}
 		}
 	}
-	Q_ASSERT(!directors.isEmpty());
 	return directors;
 }
 
@@ -816,7 +815,7 @@ bool RemoteViewer::startSession()
 			if(!timeoutTimer_)
 			{
 				timeoutTimer_ = new QTimer(this);
-				timeoutTimer_->setInterval(50);
+				timeoutTimer_->setInterval(500);
 				connect(timeoutTimer_, SIGNAL(timeout()), this, SLOT(checkForTimeouts()));
 			}
 			timeoutTimer_->start();

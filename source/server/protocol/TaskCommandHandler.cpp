@@ -137,6 +137,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 
 	sessInfo_->addPendingDirective("STOP");
 	sessInfo_->flushCache();
+	conMgr_->setDirectorStatus(sessionId_,DirectorStatus::stopped);
 
 
 	return okResponse;
@@ -156,6 +157,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
 	}
 
 	sessInfo_->addPendingDirective("PAUSE");
+	conMgr_->setDirectorStatus(sessionId_,DirectorStatus::paused);
 
 
 	return okResponse;
@@ -168,7 +170,6 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	DirectorStatus::DirectorStatus status = conMgr_->getDirectorStatus(sessionId_);
 	if(conMgr_->getDirectorStatus(sessionId_) != DirectorStatus::paused)
 	{
 		badReqResponse->setContent("Director not currently puased");
@@ -176,8 +177,8 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 	}
 
 	sessInfo_->addPendingDirective("RESUME");
-
-
+	conMgr_->setDirectorStatus(sessionId_,DirectorStatus::running);
+	
 	return okResponse;
 }
 

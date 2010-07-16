@@ -240,6 +240,21 @@ DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatus(QUuid sessio
 
 }
 
+//! Sets the director status for the session id
+void ConnectionManager::setDirectorStatus(QUuid sessionId, DirectorStatus::DirectorStatus status)
+{
+	QMutexLocker locker(mutex_);
+	if(openSessions_.contains(sessionId))
+	{
+		QSharedPointer<SessionInfo> sessInfo = openSessions_.value(sessionId);
+		QString directorAddr = sessInfo->directorAddr_;
+
+		directors_[directorAddr]->setActivity();
+		directors_[directorAddr]->status_ = status;
+	}
+
+}
+
 
 //! Returns the session info for the passed in session id
 QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QUuid uuid)

@@ -56,6 +56,7 @@ void CommandChannel::initConnection()
 {
 	//set multipart boundary to a null string
 	multipartBoundary = "";
+
 	//even in polled mode, we're going to make a couple of connections, for events that
 	//are unlikely to occur (and when they do occur, we're probably in trouble anyway,
 	//so grabbing a few extra cycles will be the least of our worries)
@@ -174,7 +175,7 @@ bool CommandChannel::waitForResponse(int timeout)
 }
 
 
-//! Reads an incoming response and either emits the incomingCommand signal or adds it to the queue
+//! Reads an incoming response and adds it to the queue
 void CommandChannel::readIncomingResponse()
 {
 	int bytesRead;
@@ -239,6 +240,19 @@ void CommandChannel::readIncomingCommand()
  */
 bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
+	//This is an incredibly dumb call.
+	//
+	//If the CommandChannel is being used in a situation with no event loop, the
+	//sockets behave oddly.  When the socket loses its connection, it doesn't realize it.
+	//This means that we can't reliably check for the connection by calling socket::state().
+	//A call to socket->flush also fails to work.
+	//Instead, I call waitForReadyRead, which has the side effect of realizing that the connection
+	//is dead, emmitting the disconnected signal, and then calling the reconnect slot.
+	//
+	//Surely there is a better way to do this, but I can't find one and I've already spent
+	//way too long dealing with this issue.
+	consumerSocket->waitForReadyRead(0);
+
 	//We always add a session-ID field, even if it's a null value
 	command->setFieldValue("Session-ID",sessionId_.toString());
 
@@ -247,6 +261,7 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 		qDebug("CommandChannel::sendCommand failed to send requested command");
 		return false;
 	}
+
 	return true;
 }
 
@@ -275,6 +290,9 @@ bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand
  */
 void CommandChannel::sendResponse(QSharedPointer<Picto::ProtocolResponse> response)
 {
+	//See sendCommand for an explanation of this crazy call.
+	consumerSocket->waitForReadyRead(0);
+
 	if(response->write(producerSocket) < 1)
 		qDebug("CommandChannel::sendResponse failed to send requested response");
 }
@@ -321,30 +339,6 @@ void CommandChannel::disconnectHandler()
  */
 void CommandChannel::resendPendingCommands()
 {
-	/////////TESTING
-	/*FILE* outFile;
-	outFile = fopen("pendingCommands.txt","w");
-	fprintf(outFile, "Resending pending commands...\n");
-	fprintf(outFile, "  %i commands to send\n\n",pendingCommands_.size());
-
-	QMap<QUuid,QSharedPointer<ProtocolCommand> >::const_iterator i = pendingCommands_.begin();
-
-	while(i != pendingCommands_.end())
-	{
-		QString method = i.value()->getMethod();
-		QString target = i.value()->getTarget();
-		QString content = i.value()->getContent();
-
-		QString cmd = QString("  %1 %2\n%3\n\n").arg(method).arg(target).arg(content);
-		fprintf(outFile, cmd.toAscii());
-		i++;
-	}*/
-	//QString debug = QString("Pending command count: %1").arg(pendingCommands_.size());
-	//Q_ASSERT_X(false,"",debug.toAscii());
-
-	//////////////////////////////////////////////
-
-
 	QList<QSharedPointer<ProtocolCommand> > commandsToResend;
 	foreach(QSharedPointer<ProtocolCommand> command, pendingCommands_)
 	{

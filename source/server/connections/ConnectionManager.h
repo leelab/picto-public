@@ -49,6 +49,7 @@ public:
 	DirectorStatus::DirectorStatus getDirectorStatus(QHostAddress addr);
 	DirectorStatus::DirectorStatus getDirectorStatus(QString addr);
 	DirectorStatus::DirectorStatus getDirectorStatus(QUuid sessionId);
+	void setDirectorStatus(QUuid sessionId, DirectorStatus::DirectorStatus status);
 
 	QString getDirectorList();
 

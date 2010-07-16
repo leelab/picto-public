@@ -6,11 +6,11 @@
 #include <QtNetwork>
 #include <QDateTime>
 
-ServerThread::ServerThread(int socketDescriptor, QSharedPointer<ServerProtocols> _protocols, QObject *parent)
+ServerThread::ServerThread(int socketDescriptor_, QSharedPointer<ServerProtocols> protocols, QObject *parent)
     : QThread(parent),
-      socketDescriptor(socketDescriptor),
-	  pendingCommand(""),
-	  protocols(_protocols)
+      socketDescriptor_(socketDescriptor_),
+	  pendingCommand_(""),
+	  protocols_(protocols)
 {
 }
 
@@ -19,29 +19,40 @@ void ServerThread::run()
 	//printf("New server thread: %d\n\n", QThread::currentThreadId());
 	QTcpSocket socket;
 
-	tcpSocket = &socket;
+	tcpSocket_ = &socket;
 
-    if (!socket.setSocketDescriptor(socketDescriptor))
+	if (!socket.setSocketDescriptor(socketDescriptor_))
     {
         emit error(socket.error());
         return;
     }
 
+	////TESTING
+	if(tcpSocket_->peerAddress().toString() == "192.168.3.178")
+	{
+		printf("New Director Thread: %d\n",(int)QThread::currentThreadId());
+		if(tcpSocket_->bytesAvailable())
+			printf("Bytes waiting to be read\n\n");
+	}
+
 	peerAddress_ = socket.peerAddress().toString();
 
-	connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readClient()), Qt::DirectConnection);
-	connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(handleDroppedClient()), Qt::DirectConnection);
+	connect(tcpSocket_, SIGNAL(readyRead()), this, SLOT(readClient()), Qt::DirectConnection);
+	connect(tcpSocket_, SIGNAL(disconnected()), this, SLOT(handleDroppedClient()), Qt::DirectConnection);
 
-	//We establish the timer here so that we can start and stop it from this thread
+	//We establish the timer_ here so that we can start and stop it from this thread
 	//if it was created/deleted in the constructor/destructor it wouldn't be directly accessible
-	timer = new QTimer();
-	timer->setInterval(timeoutInterval);
-	connect(timer, SIGNAL(timeout()), this, SLOT(handleTimeout()), Qt::DirectConnection);
-	timer->start();
+	timer_ = new QTimer();
+	timer_->setInterval(timeoutInterval_);
+	connect(timer_, SIGNAL(timeout()), this, SLOT(handleTimeout()), Qt::DirectConnection);
+	timer_->start();
+
+	//check for data as soon as the thread starts
+	connect(this, SIGNAL(started()), this, SLOT(readClient()));
 
 	QThread::exec();
 
-	delete timer;
+	delete timer_;
 
 	socket.disconnectFromHost();
 	if(socket.state() != QTcpSocket::UnconnectedState)
@@ -56,13 +67,13 @@ bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command
 
 	while(command->isPendingContent())
 	{
-		if(tcpSocket->bytesAvailable() == 0 && !tcpSocket->waitForReadyRead(timeoutInterval))
+		if(tcpSocket_->bytesAvailable() == 0 && !tcpSocket_->waitForReadyRead(timeoutInterval_))
 		{
 			return false;
 		}
 		else
 		{
-			remainingContentLength = command->addToContent(tcpSocket->read(remainingContentLength));
+			remainingContentLength = command->addToContent(tcpSocket_->read(remainingContentLength));
 		}
 	}
 
@@ -71,7 +82,7 @@ bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command
 
 QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPointer<Picto::ProtocolCommand> _command)
 {
-	QSharedPointer<Picto::Protocol> protocol = protocols->getProtocol(_command->getProtocolName());
+	QSharedPointer<Picto::Protocol> protocol = protocols_->getProtocol(_command->getProtocolName());
 	if(protocol.isNull())
 	{
 		QSharedPointer<Picto::ProtocolResponse> unknownProtocolResponse(
@@ -118,7 +129,7 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	}
 
 	//Add the source ip to the command
-	_command->setFieldValue("Source-Address", tcpSocket->peerAddress().toString());
+	_command->setFieldValue("Source-Address", tcpSocket_->peerAddress().toString());
 	
 	QSharedPointer<Picto::ProtocolResponse> response = handler->processCommand(_command);
 
@@ -142,7 +153,7 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 										Picto::ProtocolResponseType::InternalServerError));
 	}
 
-	QDataStream os(tcpSocket);
+	QDataStream os(tcpSocket_);
 
 	if(response->getMultiPart() <= Picto::MultiPartResponseType::MultiPartInitial)
 	{
@@ -177,16 +188,17 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 
 void ServerThread::readClient()
 {
-	timer->stop();
+	timer_->stop();
 
-	while(tcpSocket->canReadLine())
+	while(tcpSocket_->canReadLine())
 	{
-		QString currentLine = tcpSocket->readLine();
+		QString currentLine = tcpSocket_->readLine();
+
 		QRegExp newLineRegExp("[\r\n]+");
 
 		if(newLineRegExp.exactMatch(currentLine))
 		{
-			QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(pendingCommand));
+			QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(pendingCommand_));
 			if(command->isPendingContent())
 			{
 				receiveContent(command);
@@ -214,20 +226,20 @@ void ServerThread::readClient()
 					command->setFieldValue("X-PictoStreamState",response->getFieldValue("X-PictoStreamState"));
 				}
 
-				tcpSocket->flush();
-			} while(tcpSocket->state() == QTcpSocket::ConnectedState &&
-				    //tcpSocket->waitForBytesWritten() &&
+				tcpSocket_->flush();
+			} while(tcpSocket_->state() == QTcpSocket::ConnectedState &&
+				    //tcpSocket_->waitForBytesWritten() &&
 					response->shouldStream());
 
-			pendingCommand.clear();
+			pendingCommand_.clear();
 		}
 		else
 		{
-			pendingCommand += currentLine;
+			pendingCommand_ += currentLine;
 		}
 	}
 
-	timer->start();
+	timer_->start();
 }
 
 void ServerThread::handleDroppedClient()
@@ -239,5 +251,10 @@ void ServerThread::handleTimeout()
 {
 	//QSharedPointer<Picto::ProtocolResponse> response = new Picto::ProtocolResponse(protocol->id(),protocol->version(),Picto::ProtocolResponseType::ConnectionTimedOut);
 	//deliverResponse(response);
+
+	////////// TESTING
+	if(tcpSocket_->peerAddress().toString() == "192.168.3.178")
+		printf("Director Thread timeout: %d\n",(int)QThread::currentThreadId());
+
 	exit();
 }

@@ -88,6 +88,8 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////
 	// Setup hardware
 	///////////////////////////////////////
+	engine->setExclusiveMode(true);
+
 	HardwareSetup hwSetup(engine);
 	
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering

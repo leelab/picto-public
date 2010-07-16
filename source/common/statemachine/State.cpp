@@ -90,7 +90,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		sendBehavioralData(engine);
 
 		//---------- Check for directives from the server -----------
-		updateServer(engine);
+		//updateServer(engine);
 
 		//--------- Check control elements------------
 		foreach(QSharedPointer<ControlElement> control, controlElements_)
@@ -428,7 +428,7 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		while(command == Engine::PictoEngine::PauseEngine)
 		{
-			updateServer(engine, true);
+			//updateServer(engine, true);
 			sendBehavioralData(engine);
 			command = engine->getEngineCommand();
 			QCoreApplication::processEvents();
@@ -454,7 +454,7 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
  *	Once per frame, we need to check in with the server.  The response from the server
  *  may contain a "directive", which we will handle here as well (e.g. stop, pause, etc).
  */
-void State::updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused)
+/*void State::updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused)
 {
 	QSharedPointer<Picto::CommandChannel>updateChan = engine->getUpdateCommandChannel();
 	
@@ -519,7 +519,7 @@ void State::updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused
 		Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
 	}
 
-}
+}*/
 
 void State::addCursor()
 {
