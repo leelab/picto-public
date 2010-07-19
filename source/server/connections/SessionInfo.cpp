@@ -20,23 +20,9 @@ SessionInfo::SessionInfo(QString directorAddr, int proxyId):
 	//Set the director address
 	directorAddr_ = directorAddr;
 
+	QSqlDatabase sessionDb = getSessionDb();
 
-	//Create a new Session Database
-	QDateTime dateTime = QDateTime::currentDateTime();
-	databaseName_="Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");
-	
-	//! \todo come up with a better place to store session data...
-	QDir dir(QCoreApplication::applicationDirPath());
-	while(dir.entryList().contains(databaseName_))
-	{
-		databaseName_.append("_x");
-	}
-
-	sessionDb_ = QSqlDatabase::addDatabase("QSQLITE",databaseName_);
-	sessionDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + databaseName_ + ".sqlite");
-	Q_ASSERT(sessionDb_.open());
-
-	QSqlQuery sessionQ(sessionDb_);
+	QSqlQuery sessionQ(sessionDb);
 
 	sessionQ.exec("CREATE TABLE sessioninfo(id INTEGER PRIMARY KEY,"
 		"key TEXT, value TEXT)");
@@ -86,7 +72,7 @@ SessionInfo::SessionInfo(QString directorAddr, int proxyId):
 	cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
 
 	//create alignment tool and neuraldatacollector
-	//sessInfo->alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool(sessInfo->sessionDb_));
+	//sessInfo->alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool(sessInfo->sessionDb));
 	if(proxyId_ == -1)
 		ndc_ = 0;
 	else
@@ -102,7 +88,9 @@ SessionInfo::~SessionInfo()
 		ndc_->stop();
 		
 	cacheDb_.close();
-	sessionDb_.close();
+
+	QSqlDatabase sessionDb = getSessionDb();
+	sessionDb.close();
 }
 
 //! Returns the next pending directive
@@ -127,8 +115,10 @@ QString SessionInfo::pendingDirective()
  */
 void SessionInfo::endSession()
 {
+	QSqlDatabase sessionDb = getSessionDb();
+
 	//Add the end time to the session db
-	QSqlQuery query(sessionDb_);
+	QSqlQuery query(sessionDb);
 	query.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session end\", :time)");
 	query.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
 	query.exec();
@@ -190,7 +180,7 @@ void SessionInfo::flushCache()
 	QString queryStr = QString("INSERT INTO \"%1\".behavioraldata(xpos,ypos,time) "
 							   "SELECT xpos, ypos, time "
 							   "FROM behavioraldata")
-							   .arg(sessionDb_.connectionName());
+							   .arg(sessionDb.connectionName());
 	if(!flushQ.exec(queryStr))
 	{
 		QString err = flushQ.lastError().text();
@@ -203,13 +193,14 @@ void SessionInfo::flushCache()
 
 	flushQ.exec("DELETE FROM behavioraldata");*/
 
+	QSqlDatabase sessionDb = getSessionDb();
 
-	Q_ASSERT(sessionDb_.transaction());
+	Q_ASSERT(sessionDb.transaction());
 
 	//The queries are in a seperate namespace so that they get
 	//deleted before we try to commit.
 	{
-		QSqlQuery diskQuery(sessionDb_);
+		QSqlQuery diskQuery(sessionDb);
 		QSqlQuery cacheQuery(cacheDb_);
 		QSqlQuery cacheCleanup(cacheDb_);
 
@@ -250,14 +241,15 @@ void SessionInfo::flushCache()
 		}
 
 	}
-	Q_ASSERT_X(sessionDb_.commit(),"SessionInfo::flushCache","Unable to commit to session DB: "+sessionDb_.lastError().text().toAscii());
+	Q_ASSERT_X(sessionDb.commit(),"SessionInfo::flushCache","Unable to commit to session DB: "+sessionDb.lastError().text().toAscii());
 
 }
 
 //! \brief Inserts a trial event into the session database
 void SessionInfo::insertTrialEvent(double time, int eventCode, int trialNum)
 {
-	QSqlQuery query(sessionDb_);
+	QSqlDatabase sessionDb = getSessionDb();
+	QSqlQuery query(sessionDb);
 
 	query.prepare("INSERT INTO behavioraltrials (timestamp,aligncode,trialnumber,matched)"
 		"VALUES(:timestamp, :aligncode, :trialnumber, 0)");
@@ -288,7 +280,8 @@ void SessionInfo::insertBehavioralData(Picto::BehavioralDataStore data)
 //! \brief inserts a state change record in the session database
 void SessionInfo::insertStateData(Picto::StateDataStore data)
 {
-	QSqlQuery query(sessionDb_);
+	QSqlDatabase sessionDb = getSessionDb();
+	QSqlQuery query(sessionDb);
 	query.prepare("INSERT INTO statetransitions "
 		"(machinename, source, sourceresult, destination, time) "
 		"VALUES(:machinename, :source, :sourceresult, :destination, :time) ");
@@ -321,7 +314,8 @@ void SessionInfo::insertFrameData(Picto::FrameDataStore data)
 
 void SessionInfo::insertRewardData(Picto::RewardDataStore data)
 {
-	QSqlQuery sessionQ(sessionDb_);
+	QSqlDatabase sessionDb = getSessionDb();
+	QSqlQuery sessionQ(sessionDb);
 	sessionQ.prepare("INSERT INTO rewards (duration, channel, time) "
 		"VALUES (:duration, :channel, :time)");
 	sessionQ.bindValue(":duration",data.getDuration());
@@ -340,11 +334,12 @@ void SessionInfo::insertRewardData(Picto::RewardDataStore data)
  */
 Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 {
+	QSqlDatabase sessionDb = getSessionDb();
 	Picto::BehavioralDataStore dataStore;
 
 	//First, we attempt to pull data from the session database.  This will 
 	//likely return an empty query.
-	QSqlQuery sessionQuery(sessionDb_);
+	QSqlQuery sessionQuery(sessionDb);
 	sessionQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
 		"WHERE time > :time ORDER BY time ASC");
 	if(timestamp == 0)
@@ -392,11 +387,12 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
  */
 Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 {
+	QSqlDatabase sessionDb = getSessionDb();
 	Picto::FrameDataStore dataStore;
 
 	//First, we attempt to pull data from the session database.  This will 
 	//likely return an empty query.
-	QSqlQuery sessionQuery(sessionDb_);
+	QSqlQuery sessionQuery(sessionDb);
 	sessionQuery.prepare("SELECT frame,time,state FROM framedata "
 		"WHERE time > :time ORDER BY time ASC");
 	if(timestamp == 0)
@@ -441,9 +437,10 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
  */
 QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 {
+	QSqlDatabase sessionDb = getSessionDb();
 	QList<Picto::StateDataStore> stateDataList;
 
-	QSqlQuery sessionQuery(sessionDb_);
+	QSqlQuery sessionQuery(sessionDb);
 	sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinename FROM statetransitions  "
 		"WHERE time > :time ORDER BY time ASC");
 	if(timestamp == 0)
@@ -471,3 +468,50 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 
 }
 
+/*! This is a temporary function to test the database connection issues.
+ *	It is supposed to prove that the commit failures we are experiencing
+ *	are due to the fact that we are writing to the database from different 
+ *	threads.
+ *
+ *	If this function is still in use in August 2010, something needs to be
+ *	done (ideally, we will create a single thread that handles the database
+ *	writes for us).
+ */
+
+QSqlDatabase SessionInfo::getSessionDb()
+{
+	QSqlDatabase sessionDb;
+	QString connectionName = QString("SessionDatabase%1").arg((int)QThread::currentThreadId());
+
+	
+	//If we already have a connection open in this thread, use it, 
+	//otherwise, create a new connection
+	if(QSqlDatabase::contains(connectionName))
+	{
+		sessionDb = QSqlDatabase::database(connectionName);
+	}
+	else
+	{
+		//If we haven't named the db yet (the filename), do so here.
+		if(databaseName_.isNull())
+		{
+			QDateTime dateTime = QDateTime::currentDateTime();
+			databaseName_="Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");
+			
+			QDir dir(QCoreApplication::applicationDirPath());
+			while(dir.entryList().contains(databaseName_))
+			{
+				databaseName_.append("_x");
+			}
+		}
+
+		sessionDb = QSqlDatabase::addDatabase("QSQLITE",connectionName);
+		sessionDb.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + databaseName_ + ".sqlite");
+		sessionDb.open();
+	}
+
+	Q_ASSERT(sessionDb.isOpen());
+
+	return sessionDb;
+
+}

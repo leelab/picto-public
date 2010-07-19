@@ -10,7 +10,6 @@
 ServerConfig::ServerConfig()
 {
 	//Create a unique connection name
-	QStringList connections = QSqlDatabase::connectionNames();
 	connectionName_ = QString("PictoServerConfigDatabase%1").arg((int)QThread::currentThreadId());
 
 	//If we already have a connection open in this thread, use it, 

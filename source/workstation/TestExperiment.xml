@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Experiment>
+	<Name>Test Experiment</Name>
+	<Tasks>
+		<Task>
+			<Name>Frame Rate Testing</Name>
+			<!-- This is a simple state machine designed to test the frame rate 	-->
+			<!-- at which we are rendering.  In order to truly "max out" the 		-->
+			<!-- rendering engine, we are going to draw an ellipse and use 			-->
+			<!-- scripts on entry, exit, and every frame.  To run this as an 		-->
+			<!-- actual frame rate test, we'll need to modify the rendering loop 	-->
+			<!-- to output frame rates.												-->
+			<StateMachine>
+				<Name>FrameRateTest</Name>
+				<Level>Trial</Level>
+				<InitialElement>TestState</InitialElement>
+				<Parameters>
+					<Parameter type="Boolean" operatorUI="false">
+						<Name>Increasing</Name>
+					</Parameter>
+				</Parameters>
+				<StateMachineElements>
+				
+					<StateMachineElement type="State">
+						<Revision>-1</Revision>
+						<EngineNeeded>-1</EngineNeeded>
+						<Name>TestState</Name>
+						<ControlElements>
+							<ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
+								<Name></Name>
+								<Time units="Ms">5000</Time>				
+							</ControlElement>
+						</ControlElements>
+						<Scene>
+							<Canvas>
+								<Layers>
+									<BackgroundLayer color="#000000"/>
+									<Layer>
+										<Name>Layer1</Name>
+										<Order>1</Order>
+										<VisualElement type="Ellipse Graphic">
+											<Name datatype="QString">Ellipse</Name>
+											<Position datatype="QPoint" x="400" y="400"/>
+											<Dimensions datatype="QRect" x="0" y="0" width="300" height="300"/>
+											<Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+										</VisualElement>
+									</Layer>
+								</Layers>
+							</Canvas>
+							<AudioElement></AudioElement>
+						</Scene>
+						<Scripts>
+							<Script type="entry">
+									//Upon entry we set the ellipse's color
+									Ellipse.setColor(0,255,127,255);
+							</Script>
+							<Script type="frame">
+								//Every frame, we change the Ellipse's size
+								width = Ellipse.getWidth();
+								height = Ellipse.getHeight();
+								
+								if(width &lt;= 270)
+									Increasing.setValue(true);
+								if(width &gt;= 480)
+									Increasing.setValue(false);
+								
+								if(Increasing.getValue() == true)
+								{
+									Ellipse.setDimensions(width+10,height+10);
+								}
+								else
+								{
+									Ellipse.setDimensions(width-10,height-10);
+								}
+							</Script>
+							<Script type="exit">
+								//Upon exit we set the ellipse's color
+								Ellipse.setColor(255,0,0,255);
+							</Script>
+						</Scripts>
+						<Results>
+							<Result><Name>Success</Name></Result>
+						</Results>
+					</StateMachineElement>
+					<StateMachineElement type="Result">
+						<Name>Done</Name>
+					</StateMachineElement>
+				</StateMachineElements>
+				<Transitions>
+					<Transition>
+						<Source>TestState</Source>
+						<SourceResult>Success</SourceResult>
+						<Destination>Done</Destination>
+					</Transition>
+				</Transitions>
+				<Results/>
+			</StateMachine>
+
+		</Task>
+    <Task>
+      <Name>Frame Rate Testing 2</Name>
+      <!-- This is a simple state machine designed to test the frame rate 	-->
+      <!-- at which we are rendering.  The task repeats the trial infinitely -->
+      <!-- The trial consists of an ellipse which is moved (but not resized) -->
+      <!-- every frame.  -->
+      <StateMachine>
+        <Name>Frame Rate Testing Experiment</Name>
+        <Level>Task</Level>
+        <InitialElement>FrameRateTrial</InitialElement>
+        <StateMachineElements>
+        
+          <StateMachine>
+            <Name>FrameRateTrial</Name>
+            <Level>Trial</Level>
+            <InitialElement>TestState</InitialElement>
+            <Parameters>
+              <Parameter type="Boolean" operatorUI="false">
+                <Name>MovingUp</Name>
+              </Parameter>
+            </Parameters>
+            <StateMachineElements>
+
+              <StateMachineElement type="State">
+                <Revision>-1</Revision>
+                <EngineNeeded>-1</EngineNeeded>
+                <Name>TestState</Name>
+                <ControlElements>
+                  <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
+                    <Name></Name>
+                    <Time units="Ms">20000</Time>
+                  </ControlElement>
+                </ControlElements>
+                <Scene>
+                  <Canvas>
+                    <Layers>
+                      <BackgroundLayer color="#000000"/>
+                      <Layer>
+                        <Name>Layer1</Name>
+                        <Order>1</Order>
+                        <VisualElement type="Ellipse Graphic">
+                          <Name datatype="QString">Ellipse</Name>
+                          <Position datatype="QPoint" x="400" y="400"/>
+                          <Dimensions datatype="QRect" x="0" y="0" width="300" height="300"/>
+                          <Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+                        </VisualElement>
+                      </Layer>
+                    </Layers>
+                  </Canvas>
+                  <AudioElement></AudioElement>
+                </Scene>
+                <Scripts>
+                  <Script type="frame">
+                    //Every frame, we move the ellipse
+                    x = Ellipse.getX();
+                    y = Ellipse.getY();
+                    
+
+                    if(y &gt;= 600)
+                      MovingUp.setValue(true);
+                    if(y &lt;= 200)
+                    MovingUp.setValue(false);
+
+                    if(MovingUp.getValue() == true)
+                      Ellipse.setPosition(x,y-10);
+                    else
+                      Ellipse.setPosition(x,y+10);
+                  </Script>
+                </Scripts>
+                <Results>
+                  <Result>
+                    <Name>Success</Name>
+                  </Result>
+                </Results>
+              </StateMachineElement>
+              <StateMachineElement type="Result">
+                <Name>Done</Name>
+              </StateMachineElement>
+            </StateMachineElements>
+            <Transitions>
+              <Transition>
+                <Source>TestState</Source>
+                <SourceResult>Success</SourceResult>
+                <Destination>Done</Destination>
+              </Transition>
+            </Transitions>
+            <Results/>
+          </StateMachine>
+
+          <StateMachineElement type="State">
+            <Revision>-1</Revision>
+            <EngineNeeded>-1</EngineNeeded>
+            <Name>InterTrialInterval</Name>
+            <ControlElements>
+              <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
+                <Name></Name>
+                <Time units="Ms">2000</Time>
+              </ControlElement>
+            </ControlElements>
+            <Scene>
+              <Canvas>
+                <Layers>
+                  <BackgroundLayer color="#000000"/>
+                  <Layer>
+                    <Name>Layer1</Name>
+                    <Order>1</Order>
+                  </Layer>
+                </Layers>
+              </Canvas>
+              <AudioElement></AudioElement>
+            </Scene>
+            <Scripts></Scripts>
+           </StateMachineElement>
+
+        </StateMachineElements>
+
+        <Transitions>
+          <Transition>
+            <Source>FrameRateTrial</Source>
+            <SourceResult>Done</SourceResult>
+            <Destination>InterTrialInterval</Destination>
+          </Transition>
+          <Transition>
+            <Source>InterTrialInterval</Source>
+            <SourceResult>Success</SourceResult>
+            <Destination>FrameRateTrial</Destination>
+          </Transition>
+        </Transitions>
+        
+     </StateMachine>
+    </Task>
+ 
+    <Task>
+			<Name>Simple Test</Name>
+			<StateMachine>
+				<Name>Dumb Trial</Name>
+				<Level>Trial</Level>
+				<InitialElement>Stage 1</InitialElement>
+				<StateMachineElements>
+				
+					<!-- This stage is a test of the TargetController controlElement 		-->
+					<!-- The input device must fixate on the displayed target.  If 			-->
+					<!-- successful, then another target is displayed.  If unsuccessful,	-->
+					<!-- then we move on to Stage 2.  This stage can last indefinitely 		-->
+					<StateMachine>
+						<Name>Stage 1</Name>
+						<Level>Stage</Level>
+						<InitialElement>Initialize Values</InitialElement>
+						<Parameters>
+							<Parameter operatorUi="false" type="Numeric">
+								<Name>SuccessfulAttempts</Name>
+								<Order>1</Order>
+							</Parameter>
+						</Parameters>
+						<StateMachineElements>
+							<StateMachineElement type = "ScriptElement">
+								<Name>Initialize Values</Name>
+								<Script>
+									SuccessfulAttempts.setValue(0);
+								</Script>
+							</StateMachineElement>
+							<StateMachineElement type = "ScriptElement">
+								<Name>Increment successful attempts</Name>
+								<Script>
+									SuccessfulAttempts.setValue(SuccessfulAttempts.getValue()+1);
+								</Script>
+							</StateMachineElement>
+
+							<StateMachineElement type="State">
+								<Revision>-1</Revision>
+								<EngineNeeded>-1</EngineNeeded>
+								<Name>State 1</Name>
+								<ControlElements>
+									<ControlElement type="Target Controller" operatorVisible="false" subjectVisible="false">
+										<Name></Name>
+										<SignalChannel>PositionChannel</SignalChannel>
+										<Shape>Rectangle</Shape>
+										<Target x="400" y="400" width="100" height="100"/>
+										<TotalTime units="Ms">10000</TotalTime>
+										<FixationTime units="Ms">1000</FixationTime>
+										<MinInitialAcquisitionTime units="Ms">0</MinInitialAcquisitionTime>
+										<MaxInitialAcquisitionTime units="Ms">4000</MaxInitialAcquisitionTime>
+										<MaxReacquisitionTime units="Ms">1000</MaxReacquisitionTime>
+										<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
+									</ControlElement>
+								</ControlElements>
+								<Scene>
+									<Canvas>
+										<Layers>
+											<BackgroundLayer color="#000000"/>
+											<Layer>
+												<Name>Layer1</Name>
+												<Order>1</Order>
+												<VisualElement type="Box Graphic">
+								<Name datatype="QString">LeftBox</Name>
+													<Position datatype="QPoint" x="400" y="400"/>
+													<Dimensions datatype="QRect" x="0" y="0" width="100" height="100"/>
+								<Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+												</VisualElement>
+											</Layer>
+										</Layers>
+									</Canvas>
+									<AudioElement></AudioElement>
+								</Scene>
+								<Scripts>
+									<!-- Upon entry we set the box's color to red, yellow, or green -->
+									<!-- depending on the number of successful attempts -->
+									<Script type="entry">
+										if(SuccessfulAttempts.getValue() == 0)
+										{
+											LeftBox.setColor(255,0,0,255);
+										}
+										else if(SuccessfulAttempts.getValue() == 1)
+										{
+											LeftBox.setColor(255,255,0);	//testing the use of a default variable
+										}
+										else if(SuccessfulAttempts.getValue() == 2)
+										{
+											LeftBox.setColor(0,255,0,255);
+										}
+									</Script>
+								</Scripts>
+								<Results>
+									<Result><Name>Success</Name></Result>
+									<Result><Name>Broke Fixation</Name></Result>
+									<Result><Name>Total Time Excceeded</Name></Result>
+									<Result><Name>Initial Aquistion Time Exceeded</Name></Result>
+									<Result><Name>Reaquistion Time Exceeded</Name></Result>
+								</Results>
+							</StateMachineElement>
+							
+							<StateMachineElement type="State">
+								<Revision>-1</Revision>
+								<EngineNeeded>-1</EngineNeeded>
+								<Name>State 2</Name>
+								<ControlElements>
+									<ControlElement type="Target Controller" operatorVisible="false" subjectVisible="false">
+										<Name></Name>
+										<SignalChannel>PositionChannel</SignalChannel>
+										<Shape>Rectangle</Shape>
+										<Target x="600" y="400" width="100" height="100"/>
+										<TotalTime units="Ms">10000</TotalTime>
+										<FixationTime units="Ms">1000</FixationTime>
+										<MinInitialAcquisitionTime units="Ms">0</MinInitialAcquisitionTime>
+										<MaxInitialAcquisitionTime units="Ms">4000</MaxInitialAcquisitionTime>
+										<MaxReacquisitionTime units="Ms">1000</MaxReacquisitionTime>
+										<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
+									</ControlElement>
+								</ControlElements>
+								<Scene>
+									<Canvas>
+										<Layers>
+											<BackgroundLayer color="#000000"/>
+											<Layer>
+												<Name>Layer1</Name>
+												<Order>1</Order>
+							  <VisualElement type="Box Graphic">
+								<Name datatype="QString">RightBox</Name>
+								<Position datatype="QPoint" x="600" y="400"/>
+								<Dimensions datatype="QRect" x="0" y="0" width="100" height="100"/>
+								<Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+							  </VisualElement>
+											</Layer>
+										</Layers>
+									</Canvas>
+									<AudioElement></AudioElement>
+								</Scene>
+								<Scripts>
+									<!-- Upon exit we set the box's color to red, yellow, or green -->
+									<!-- depending on the number of successful attempts. -->
+									<!-- Remember that the number of successful attempts hasn't yet -->
+									<!-- been updated upon exit from the state -->
+									<Script type="exit">
+										if(SuccessfulAttempts.getValue() == 0)
+										{
+											RightBox.setColor(255,255,0,255);
+										}
+										else if(SuccessfulAttempts.getValue() == 1)
+										{
+											RightBox.setColor(0,255,0);	//testing the use of a default variable
+										}
+									</Script>
+								</Scripts>
+								<Results>
+									<Result><Name>Success</Name></Result>
+									<Result><Name>Broke Fixation</Name></Result>
+									<Result><Name>Total Time Excceeded</Name></Result>
+									<Result><Name>Initial Aquistion Time Exceeded</Name></Result>
+									<Result><Name>Reaquistion Time Exceeded</Name></Result>
+								</Results>
+							</StateMachineElement>
+							
+							<StateMachineElement type="FlowElement">
+								<Name>Finish Stage</Name>
+								<Conditions>
+									<Condition>
+										<Name>Finished</Name>
+										<Order>1</Order>
+										<Expression>
+											<Parameter>SuccessfulAttempts</Parameter>
+											<Comparison>Greater than</Comparison>
+											<Value type="int">2</Value>
+										</Expression>
+									</Condition>
+									<Condition>
+										<Name>NotFinished</Name>
+										<Order>2</Order>
+										<Expression>
+											<Parameter>SuccessfulAttempts</Parameter>
+											<Comparison>Less than or equal</Comparison>
+											<Value type="int">2</Value>
+										</Expression>
+									</Condition>
+								</Conditions>
+								<Results>
+									<Result><Name>Finished</Name></Result>
+									<Result><Name>NotFinished</Name></Result>
+								</Results>
+							</StateMachineElement>
+							
+							<StateMachineElement type="Result">
+								<Name>Success</Name>
+								<Reward quantity="5" channel="1"/>
+							</StateMachineElement>
+						</StateMachineElements>
+						
+						<Transitions>
+							<Transition>
+								<Source>Initialize Values</Source>
+								<SourceResult>done</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 1</Source>
+								<SourceResult>Success</SourceResult>
+								<Destination>State 2</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 1</Source>
+								<SourceResult>Broke Fixation</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 1</Source>
+								<SourceResult>Total Time Excceeded</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 1</Source>
+								<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 1</Source>
+								<SourceResult>Reaquistion Time Exceeded</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 2</Source>
+								<SourceResult>Success</SourceResult>
+								<Destination>Increment successful attempts</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 2</Source>
+								<SourceResult>Broke Fixation</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 2</Source>
+								<SourceResult>Total Time Excceeded</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 2</Source>
+								<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 2</Source>
+								<SourceResult>Reaquistion Time Exceeded</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>Increment successful attempts</Source>
+								<SourceResult>done</SourceResult>
+								<Destination>Finish Stage</Destination>
+							</Transition>
+							<Transition>
+								<Source>Finish Stage</Source>
+								<SourceResult>Finished</SourceResult>
+								<Destination>Success</Destination>
+							</Transition>
+							<Transition>
+								<Source>Finish Stage</Source>
+								<SourceResult>NotFinished</SourceResult>
+								<Destination>State 1</Destination>
+							</Transition>
+						 </Transitions>
+						<Results>
+							<Result>
+							<Name>Success</Name>
+							</Result>
+						</Results>
+					</StateMachine>
+
+				<!-- This stage is used to test the ChoiceController.  It consists of -->
+				<!-- a single state with a top and bottom target.  Selecting the top -->
+				<!-- target leads to result of "KeepGoing" (with 1 reward), which connects -->
+				<!-- to Stage 3.  Selecting the bottom leads to a result of "Stop" -->
+				<!-- Which leads to the trial's "Done" result.-->
+				<StateMachine>
+				  <Name>Stage 2</Name>
+				  <Level>Stage</Level>
+				  <InitialElement>State 1</InitialElement>
+				  <StateMachineElements>
+					<StateMachineElement type="State">
+					  <Revision>-1</Revision>
+					  <EngineNeeded>-1</EngineNeeded>
+					  <Name>State 1</Name>
+					  <ControlElements>
+						<ControlElement type="Choice Controller" operatorVisible="true" subjectVisible="false">
+						  <Name>MyChoiceController</Name>
+						  <SignalChannel>PositionChannel</SignalChannel>
+						  <Shape>Ellipse</Shape>
+						  <TotalTime units="Ms">10000</TotalTime>
+						  <FixationTime units="Ms">1000</FixationTime>
+						  <AllowReentries>Yes</AllowReentries>
+						  <Target1 name="TopTarget" x="400" y="300" width="150" height="150"/>
+						  <Target2 name="BottomTarget" x="400" y="500" width="150" height="150"/>
+						</ControlElement>
+					  </ControlElements>
+					  <Scene>
+						<Canvas>
+						  <Layers>
+							<BackgroundLayer color="#000000"/>
+							<Layer>
+							  <Name>Layer1</Name>
+							  <Order>1</Order>
+							  <VisualElement type="Circle Graphic">
+								<Name datatype="QString">TopCircle</Name>
+								<Position datatype="QPoint" x="400" y="300"/>
+								<Radius datatype="int">75</Radius>
+								<Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+							  </VisualElement>
+							  <VisualElement type="Circle Graphic">
+								<Name datatype="QString">BottomCircle</Name>
+								<Position datatype="QPoint" x="400" y="500"/>
+								<Radius datatype="int">75</Radius>
+								<Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+								</VisualElement>
+							</Layer>
+						  </Layers>
+						</Canvas>
+						<AudioElement></AudioElement>
+					  </Scene>
+					  <Results>
+						<Result><Name>Success</Name></Result>
+						<Result><Name>TopTarget</Name></Result>
+						<Result><Name>BottomTarget</Name></Result>
+						<Result><Name>Broke Fixation</Name></Result>
+						<Result><Name>Total Time Excceeded</Name></Result>
+						
+					  </Results>
+					</StateMachineElement>
+					<StateMachineElement type="Result">
+					  <Name>KeepGoing</Name>
+					  <Reward quantity="1" channel="1"/>
+					</StateMachineElement>
+					<StateMachineElement type="Result">
+					  <Name>Stop</Name>
+					</StateMachineElement>
+
+				  </StateMachineElements>
+				  <Parameters/>
+				  <Transitions>
+					<Transition>
+					  <Source>State 1</Source>
+					  <SourceResult>Success</SourceResult>
+					  <Destination>KeepGoing</Destination>
+					</Transition>
+					<Transition>
+					  <Source>State 1</Source>
+					  <SourceResult>TopTarget</SourceResult>
+					  <Destination>KeepGoing</Destination>
+					</Transition>
+					<Transition>
+					  <Source>State 1</Source>
+					  <SourceResult>BottomTarget</SourceResult>
+					  <Destination>Stop</Destination>
+					</Transition>
+					<Transition>
+					  <Source>State 1</Source>
+					  <SourceResult>Broke Fixation</SourceResult>
+					  <Destination>Stop</Destination>
+					</Transition>
+					<Transition>
+					  <Source>State 1</Source>
+					  <SourceResult>Total Time Excceeded</SourceResult>
+					  <Destination>Stop</Destination>
+					</Transition>
+				  </Transitions>
+				  <Results>
+					<Result>
+					  <Name>KeepGoing</Name>
+					</Result>
+					<Result>
+					  <Name>Stop</Name>
+					</Result>
+				  </Results>
+				</StateMachine>
+
+
+
+				<!-- This is a really simple stage that uses the testConmtroller -->
+					<!-- and StopwatchController to flip back and forth between two scenes -->
+					<StateMachine>
+						<Name>Stage 3</Name>
+						<Level>Stage</Level>
+						<InitialElement>State 1</InitialElement>
+						<StateMachineElements>
+							<StateMachineElement type="State">
+								<Revision>-1</Revision>
+								<EngineNeeded>-1</EngineNeeded>
+								<Name>State 1</Name>
+								<ControlElements>
+									<ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
+										<Name></Name>
+										<NumberOfFrames>120</NumberOfFrames>
+									</ControlElement>
+								</ControlElements>
+								<Scene>
+									<Canvas>
+										<Layers>
+											<BackgroundLayer color="#000000"/>
+											<Layer>
+												<Name>Layer1</Name>
+												<Order>1</Order>
+							  <VisualElement type="Box Graphic">
+								<Name datatype="QString">box</Name>
+								<Position datatype="QPoint" x="30" y="30"/>
+								<Dimensions datatype="QRect" x="0" y="0" width="50" height="100"/>
+								<Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+							  </VisualElement>
+											</Layer>
+										</Layers>
+									</Canvas>
+									<AudioElement></AudioElement>
+								</Scene>
+								<Results>
+									<Result>
+										<Name>Success</Name>
+									</Result>
+								</Results>
+							</StateMachineElement>
+							<StateMachineElement type="State">
+								<Revision>-1</Revision>
+								<EngineNeeded>-1</EngineNeeded>
+								<Name>State 2</Name>
+								<ControlElements>
+									<ControlElement type="Stopwatch Controller" operatorVisible="true" subjectVisible="true">
+										<Name></Name>
+										<Time units="Ms">5000</Time>
+									</ControlElement>
+								</ControlElements>
+								<Scene>
+									<Canvas>
+										<Layers>
+											<BackgroundLayer color="#000000"/>
+											<Layer>
+												<Name>Layer1</Name>
+												<Order>1</Order>
+												<VisualElement type="Box Graphic">
+								<Name datatype="QString">box</Name>
+								<Position datatype="QPoint" x="100" y="30"/>
+								<Dimensions datatype="QRect" x="0" y="0" width="50" height="100"/>
+								<Color datatype="QColor" R="255" G="0" B="255" A="255"/>
+												</VisualElement>
+											</Layer>
+										</Layers>
+									</Canvas>
+									<AudioElement></AudioElement>
+								</Scene>
+								<Scripts>
+									<Script type="frame">
+										x = box.getX();
+										y = box.getY()+10;
+										box.setPosition(x,y);
+									</Script>
+								</Scripts>
+								<Results>
+									<Result>
+										<Name>Success</Name>
+									</Result>
+								</Results>
+							</StateMachineElement>  
+							<StateMachineElement type="Result">
+								<Name>Done</Name>
+							</StateMachineElement>
+			 
+						</StateMachineElements>
+						<Parameters/>
+						<Transitions>
+							<Transition>
+								<Source>State 1</Source>
+								<SourceResult>Success</SourceResult>
+								<Destination>State 2</Destination>
+							</Transition>
+							<Transition>
+								<Source>State 2</Source>
+								<SourceResult>Success</SourceResult>
+								<Destination>Done</Destination>
+							</Transition>
+						 </Transitions>
+						<Results/>
+					</StateMachine>
+					
+					
+					<StateMachineElement type="Result">
+						<Name>Done</Name>
+					</StateMachineElement>
+					
+				</StateMachineElements>
+				<Parameters/>
+				<Transitions>
+					<Transition>
+						<Source>Stage 1</Source>
+						<SourceResult>Success</SourceResult>
+						<Destination>Stage 2</Destination>
+					</Transition>
+				<Transition>
+				  <Source>Stage 2</Source>
+				  <SourceResult>KeepGoing</SourceResult>
+				  <Destination>Stage 3</Destination>
+				</Transition>
+				<Transition>
+				  <Source>Stage 2</Source>
+				  <SourceResult>Stop</SourceResult>
+				  <Destination>Done</Destination>
+				</Transition>
+				<Transition>
+				  <Source>Stage 3</Source>
+				  <SourceResult>Done</SourceResult>
+				  <Destination>Done</Destination>
+				</Transition>
+			  </Transitions>
+				<Results/>
+			</StateMachine>
+		</Task>
+	</Tasks>
+</Experiment>

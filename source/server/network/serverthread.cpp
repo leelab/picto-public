@@ -27,14 +27,6 @@ void ServerThread::run()
         return;
     }
 
-	////TESTING
-	if(tcpSocket_->peerAddress().toString() == "192.168.3.178")
-	{
-		printf("New Director Thread: %d\n",(int)QThread::currentThreadId());
-		if(tcpSocket_->bytesAvailable())
-			printf("Bytes waiting to be read\n\n");
-	}
-
 	peerAddress_ = socket.peerAddress().toString();
 
 	connect(tcpSocket_, SIGNAL(readyRead()), this, SLOT(readClient()), Qt::DirectConnection);
@@ -251,10 +243,5 @@ void ServerThread::handleTimeout()
 {
 	//QSharedPointer<Picto::ProtocolResponse> response = new Picto::ProtocolResponse(protocol->id(),protocol->version(),Picto::ProtocolResponseType::ConnectionTimedOut);
 	//deliverResponse(response);
-
-	////////// TESTING
-	if(tcpSocket_->peerAddress().toString() == "192.168.3.178")
-		printf("Director Thread timeout: %d\n",(int)QThread::currentThreadId());
-
 	exit();
 }

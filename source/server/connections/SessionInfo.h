@@ -68,9 +68,11 @@ public:
 	friend class ConnectionManager;
 
 private:
+	QSqlDatabase getSessionDb();
+
 	QUuid uuid_;
 	QString databaseName_;
-	QSqlDatabase sessionDb_;
+	//QSqlDatabase sessionDb_;
 	QSqlDatabase cacheDb_;
 	QSharedPointer<AlignmentTool> alignmentTool_;
 	//QSharedPointer<NeuralDataCollector> ndc_;

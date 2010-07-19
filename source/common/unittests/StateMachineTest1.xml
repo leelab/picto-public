@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StateMachine>
+    <Name>Stage 1</Name>
+    <Level>Stage</Level>
+    <InitialElement>Trial selection</InitialElement>
+    <StateMachineElements>
+        <StateMachineElement type="State">
+            <Revision>-1</Revision>
+            <EngineNeeded>-1</EngineNeeded>
+            <Name>Empty State</Name>
+            <ControlElements>
+                <ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
+                    <Name></Name>
+                    <NumberOfFrames>120</NumberOfFrames>
+                </ControlElement>
+            </ControlElements>
+            <Scene>
+                <Canvas>
+                    <Layers>
+                        <BackgroundLayer color="#000000"/>
+                    </Layers>
+                </Canvas>
+                <AudioElement></AudioElement>
+            </Scene>
+            <Results>
+                <Result>
+                    <Name>Success</Name>
+                </Result>
+            </Results>
+        </StateMachineElement>
+        <StateMachineElement type="Result">
+            <Name>Fail</Name>
+        </StateMachineElement>
+        <StateMachineElement type="State">
+            <Revision>-1</Revision>
+            <EngineNeeded>-1</EngineNeeded>
+            <Name>Fixation State</Name>
+            <ControlElements/>
+            <Scene>
+                <Canvas>
+                    <Layers>
+                        <BackgroundLayer color="#000000"/>
+                    </Layers>
+                </Canvas>
+                <AudioElement></AudioElement>
+            </Scene>
+            <Results>
+                <Result>
+                    <Name>Fixated</Name>
+                </Result>
+                <Result>
+                    <Name>Broke Fixation</Name>
+                </Result>
+            </Results>
+        </StateMachineElement>
+        <StateMachineElement type="Result">
+            <Name>Pass</Name>
+        </StateMachineElement>
+        <StateMachineElement type="FlowElement">
+            <Name>Trial selection</Name>
+            <Conditions>
+                <Condition>
+                    <Name>Less than 50</Name>
+                    <Order>1</Order>
+                    <Expression>
+                        <Parameter>Trial Number</Parameter>
+                        <Comparison>Greater than</Comparison>
+                        <Value type="int">50</Value>
+                    </Expression>
+                </Condition>
+                <Condition>
+                    <Name>Greater than 50</Name>
+                    <Order>2</Order>
+                    <Expression>
+                        <Parameter>Trial Number</Parameter>
+                        <Comparison>Greater than</Comparison>
+                        <Value type="int">50</Value>
+                    </Expression>
+                </Condition>
+            </Conditions>
+            <Results>
+                <Result>
+                    <Name>Less than 50</Name>
+                </Result>
+                <Result>
+                    <Name>Greater than 50</Name>
+                </Result>
+                <Result type="default">
+                    <Name>default</Name>
+                </Result>
+            </Results>
+        </StateMachineElement>
+    </StateMachineElements>
+    <Parameters>
+        <Parameter operatorUI="false" type="Range">
+            <Name>Trial Number</Name>
+            <Order>1</Order>
+            <Range default="-842150451">
+                <Min>100</Min>
+                <Max>500</Max>
+                <Increment>1</Increment>
+                <Units>trial</Units>
+            </Range>
+        </Parameter>
+    </Parameters>
+    <Transitions>
+        <Transition>
+            <Source>Empty State</Source>
+            <SourceResult>Success</SourceResult>
+            <Destination>Pass</Destination>
+        </Transition>
+        <Transition>
+            <Source>Fixation State</Source>
+            <SourceResult>Broke Fixation</SourceResult>
+            <Destination>Fail</Destination>
+        </Transition>
+        <Transition>
+            <Source>Fixation State</Source>
+            <SourceResult>Fixated</SourceResult>
+            <Destination>Pass</Destination>
+        </Transition>
+        <Transition>
+            <Source>Trial selection</Source>
+            <SourceResult>Greater than 50</SourceResult>
+            <Destination>Empty State</Destination>
+        </Transition>
+        <Transition>
+            <Source>Trial selection</Source>
+            <SourceResult>Less than 50</SourceResult>
+            <Destination>Fixation State</Destination>
+        </Transition>
+    </Transitions>
+    <Results>
+        <Result>
+            <Name>Pass</Name>
+        </Result>
+        <Result>
+            <Name>Fail</Name>
+        </Result>
+    </Results>
+</StateMachine>
