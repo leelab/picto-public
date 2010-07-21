@@ -3,6 +3,7 @@
 #include "../compositor/RenderingTarget.h"
 #include "../compositor/VisualTarget.h"
 
+
 namespace Picto {
 
 bool layerLessThan(const QSharedPointer<Layer> &l1, const QSharedPointer<Layer> &l2) 
@@ -10,8 +11,8 @@ bool layerLessThan(const QSharedPointer<Layer> &l1, const QSharedPointer<Layer> 
 	return l1->getOrder() < l2->getOrder(); 
 }
 
-Canvas::Canvas()
-: backgroundColor_(QColor(Qt::black))
+Canvas::Canvas()  :
+	backgroundColor_(QColor(Qt::black))
 {
 }
 

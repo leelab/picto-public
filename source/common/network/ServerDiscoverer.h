@@ -25,7 +25,7 @@ public:
 	quint16 getPort();
 
 public slots:
-	void discover(int timeout = 1000);
+	void discover(int timeout = 5000);
 
 signals:
 	void foundServer(QHostAddress pictoServerAddress, quint16 pictoServerPort);

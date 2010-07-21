@@ -10,10 +10,21 @@
  *	later date.
  *
  *	Since we don't want random objects changing the values of the contained variables
- *	I am not providing setter functions.  Instead, this is a fried of the 
- *	SessionManager class, so it will be the only object able to set these
+ *	I am not providing setter functions.  Instead, this is a friend of the 
+ *	ConnectionManager class, so it will be the only object able to set these
  *	values.  As a result, it is perfectly safe to pass these objects around
  *	(ideally we should pass around pointers to them).
+ *
+ *	The SessionInfo object handles all access to the Session databases (both the one
+ *	on disk, and the in-memory cache database.  Database connections can't be used from 
+ *	different threads, so we create a unique connection for each thread.  This is somewhat
+ *	wasteful, but it's easy and gauranteed to work.  An alternative approach would be to
+ *	create a special thread that handles db access through some sort of queued interface.
+ *	The cache database is limited to a single connection (since it's a :memory database),
+ *	so we're not controlling access to it.  This may be risky.
+ *
+ *	Since database access here is generally messed up, I have placed Q_ASSERTs on all
+ *	calls to QSqlQuery::exec().  This will let us know as soon as there is a problem.
  */
 
 #ifndef _SESSION_INFO_H_
@@ -52,10 +63,8 @@ public:
 	Picto::FrameDataStore selectFrameData(double timestamp);
 
 	//getters/setters
-	//QSqlDatabase sessionDb() { return sessionDb_; };
-	//QSqlDatabase cacheDb() { return cacheDb_; };
 	QUuid sessionId() { return uuid_; };
-	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
+	//QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
 	QString directorAddr() { return directorAddr_; };
 
 	QString pendingDirective();
@@ -71,11 +80,8 @@ private:
 	QSqlDatabase getSessionDb();
 
 	QUuid uuid_;
-	QString databaseName_;
-	//QSqlDatabase sessionDb_;
+	QSqlDatabase baseSessionDbConnection_;
 	QSqlDatabase cacheDb_;
-	QSharedPointer<AlignmentTool> alignmentTool_;
-	//QSharedPointer<NeuralDataCollector> ndc_;
 
 	int proxyId_;
 	NeuralDataCollector *ndc_;

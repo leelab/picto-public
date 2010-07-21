@@ -61,6 +61,7 @@ private:
 
 	int frameCounter_;
 	double lastFrameCheckTime_;
+	bool hasCursor_;
 
 	QSharedPointer<SignalChannel> sigChannel_;
 

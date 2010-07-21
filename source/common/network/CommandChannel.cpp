@@ -8,46 +8,47 @@ namespace Picto {
 
 CommandChannel::CommandChannel(QObject *parent)
 	:QObject(parent),
-	status(disconnected),
-	reconnect(true)
+	status_(disconnected),
+	reconnect_(true)
 {
-	//set up the sockets
-	producerSocket = new QTcpSocket(this);
-	consumerSocket = new QTcpSocket(this);
+	//set up the socket
+	consumerSocket_ = new QTcpSocket(this);
+
+	connect(consumerSocket_, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 }
 
-CommandChannel::CommandChannel(QHostAddress serverAddress, quint16 serverPort, QObject *parent)
+CommandChannel::CommandChannel(QHostAddress serverAddress, quint16 serverPort_, QObject *parent)
 	:QObject(parent),
-	serverAddr(serverAddress),
-	serverPort(serverPort),
-	status(disconnected),
-	reconnect(true)
+	serverAddr_(serverAddress),
+	serverPort_(serverPort_),
+	status_(disconnected),
+	reconnect_(true)
 {
-	//set up the sockets
-	producerSocket = new QTcpSocket(this);
-	consumerSocket = new QTcpSocket(this);
+	//set up the socket
+	consumerSocket_ = new QTcpSocket(this);
+
+	connect(consumerSocket_, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 
 	initConnection();
 }
 
 CommandChannel::~CommandChannel()
 {
-	if(status == connected)
+	if(status_ == connected)
 		closeChannel();
 
-	delete producerSocket;
-	delete consumerSocket;
+	delete consumerSocket_;
 }
 
-void CommandChannel::connectToServer(QHostAddress serverAddress, quint16 serverPort)
+void CommandChannel::connectToServer(QHostAddress serverAddress, quint16 serverPort_)
 {
-	if(status != disconnected)
+	if(status_ != disconnected)
 		return;
 
-	this->serverAddr = serverAddress;
-	this->serverPort = serverPort;
+	this->serverAddr_ = serverAddress;
+	this->serverPort_ = serverPort_;
 
-	status = disconnected;
+	status_ = disconnected;
 
 	initConnection();
 }
@@ -55,25 +56,19 @@ void CommandChannel::connectToServer(QHostAddress serverAddress, quint16 serverP
 void CommandChannel::initConnection()
 {
 	//set multipart boundary to a null string
-	multipartBoundary = "";
-
-	//even in polled mode, we're going to make a couple of connections, for events that
-	//are unlikely to occur (and when they do occur, we're probably in trouble anyway,
-	//so grabbing a few extra cycles will be the least of our worries)
-	connect(consumerSocket, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
-	connect(producerSocket, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
+	multipartBoundary_ = "";
 
 	//connect to the server
-	producerSocket->connectToHost(serverAddr, serverPort, QIODevice::ReadWrite);
-	consumerSocket->connectToHost(serverAddr, serverPort, QIODevice::ReadWrite);
+	consumerSocket_->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
 
-	if(consumerSocket->waitForConnected(5000) && producerSocket->waitForConnected(5000))
+	if(consumerSocket_->waitForConnected(5000))
 	{
-		status = connected;
+		status_ = connected;
+		emit channelConnected();
 	}
 	else
 	{
-		status = disconnected;
+		status_ = disconnected;
 	}
 }
 
@@ -83,9 +78,8 @@ void CommandChannel::initConnection()
  */
 void CommandChannel::closeChannel()
 {
-	reconnect = false;
-	producerSocket->close();
-	consumerSocket->close();
+	reconnect_ = false;
+	consumerSocket_->close();
 }
 
 
@@ -96,38 +90,22 @@ int CommandChannel::incomingResponsesWaiting()
 	//before looking for incoming responses, we need to give the
 	//socket a chance to update its buffers, waitForReadyRead
 	//accomplishes this.
-	consumerSocket->waitForReadyRead(0);
+	consumerSocket_->waitForReadyRead(0);
 	readIncomingResponse();
-	return incomingResponseQueue.size();
-}
-
-//! Checks the network for any new incoming commands, adds them to the queue, and returns
-//! the number of responses in the queue. Used when the channel is in polled mode
-int CommandChannel::incomingCommandsWaiting()
-{
-	readIncomingCommand();
-	return incomingCommandQueue.size();
+	return incomingResponseQueue_.size();
 }
 
 //! Returns the top response in the queue, or a null pointer if there are no
 //! responses in the queue (this will always happen if you aren't in polled mode)
 QSharedPointer<ProtocolResponse> CommandChannel::getResponse()
 {
-	if(incomingResponseQueue.empty())
+	if(incomingResponseQueue_.empty())
 		return QSharedPointer<ProtocolResponse>();
 	else
-		return incomingResponseQueue.takeFirst();
+		return incomingResponseQueue_.takeFirst();
 }
 
-//! Returns the top command in the queue, or a null pointer if there are no
-//! commands in the queue (this will always happen if you aren't in polled mode)
-QSharedPointer<ProtocolCommand> CommandChannel::getCommand()
-{
-	if(incomingCommandQueue.empty())
-		return QSharedPointer<ProtocolCommand>();
-	else
-		return incomingCommandQueue.takeFirst();
-}
+
 
 /*! \brief Waits for a response to arrive
  *
@@ -179,31 +157,31 @@ bool CommandChannel::waitForResponse(int timeout)
 void CommandChannel::readIncomingResponse()
 {
 	int bytesRead;
-	while(consumerSocket->bytesAvailable() > 0)
+	while(consumerSocket_->bytesAvailable() > 0)
 	{
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse());
 
 		//if we're expecting a multipart part response, we should go ahead and set the
 		//boundary string for the response.
-		if(!multipartBoundary.isEmpty())
-			response->setMultiPartBoundary(multipartBoundary);
+		if(!multipartBoundary_.isEmpty())
+			response->setMultiPartBoundary(multipartBoundary_);
 
-		bytesRead = response->read(consumerSocket);
+		bytesRead = response->read(consumerSocket_);
 
 		//if there is an error, bytes read will be negative
 		if(bytesRead >= 0)
 		{
 			if(response->getMultiPart() == MultiPartResponseType::MultiPartInitial)
-				multipartBoundary = response->getMultiPartBoundary();
-			else if(!multipartBoundary.isEmpty())
-				multipartBoundary="";
+				multipartBoundary_ = response->getMultiPartBoundary();
+			else if(!multipartBoundary_.isEmpty())
+				multipartBoundary_="";
 
 			//Check to see if this is a registered response
 			QString commandId = response->getFieldValue("Command-ID");
 			if(!commandId.isNull())
 				pendingCommands_.remove(QUuid(commandId));
 
-			incomingResponseQueue.push_back(response);
+			incomingResponseQueue_.push_back(response);
 		}
 		else
 		{
@@ -211,23 +189,6 @@ void CommandChannel::readIncomingResponse()
 		}
 	}
 
-}
-
-//! Reads an incoming command and either emits the incomingCommand signal or adds it to the queue
-void CommandChannel::readIncomingCommand()
-{
-	int bytesRead;
-	while(producerSocket->bytesAvailable() > 0)
-	{
-		QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand());
-		bytesRead = command->read(producerSocket);
-
-		//if there is an error, bytes read will be negative
-		if(bytesRead >= 0)
-		{
-			incomingCommandQueue.push_back(command);
-		}
-	}
 }
 
 /*! \brief Sends a command over the channel
@@ -247,16 +208,16 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 	//This means that we can't reliably check for the connection by calling socket::state().
 	//A call to socket->flush also fails to work.
 	//Instead, I call waitForReadyRead, which has the side effect of realizing that the connection
-	//is dead, emmitting the disconnected signal, and then calling the reconnect slot.
+	//is dead, emmitting the disconnected signal, and then calling the reconnect_ slot.
 	//
 	//Surely there is a better way to do this, but I can't find one and I've already spent
 	//way too long dealing with this issue.
-	consumerSocket->waitForReadyRead(0);
+	consumerSocket_->waitForReadyRead(0);
 
 	//We always add a session-ID field, even if it's a null value
 	command->setFieldValue("Session-ID",sessionId_.toString());
 
-	if(command->write(consumerSocket) < 1)
+	if(command->write(consumerSocket_) < 1)
 	{
 		qDebug("CommandChannel::sendCommand failed to send requested command");
 		return false;
@@ -282,50 +243,40 @@ bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand
 	return sendCommand(command);
 }
 
-/*! \brief Sends a response over the channel
- *
- *	sendResponse sends the response in command over the commandChannel.  This can 
- *	be used a a stand-alone function that gets called on-demand, or as a slot
- *	that gets connected to a signal for  automatic response sending.
- */
-void CommandChannel::sendResponse(QSharedPointer<Picto::ProtocolResponse> response)
-{
-	//See sendCommand for an explanation of this crazy call.
-	consumerSocket->waitForReadyRead(0);
-
-	if(response->write(producerSocket) < 1)
-		qDebug("CommandChannel::sendResponse failed to send requested response");
-}
-
 /*! \Called when a socket emits a disconnect signal
  *
  *	There are two scenarios in which this handler gets called:
  *		1. We are closing the channel
  *		2. There was some sort of error
  *	In the first case, we should let the disconnect happen, but in the second
- *	case we need to reconnect immediately.  The reconnect variable is
+ *	case we need to reconnect_ immediately.  The reconnect_ variable is
  *	used to differentiate between the situations.
  */
 void CommandChannel::disconnectHandler()
 {
-	status = disconnected;
+	qDebug()<<"disconnectHandler\n";
+	status_ = disconnected;
 
-	if(!reconnect)
+	if(!reconnect_)
+	{
+		emit channelDisconnected();
 		return;
+	}
 
 	//We could get this signal from either socket...
 	QTcpSocket *socket = (QTcpSocket*)QObject::sender();
-
-	//assume the disconnect is due to error and attermpt to reconnect
-	socket->connectToHost(serverAddr, serverPort, QIODevice::ReadWrite);
+	
+	//assume the disconnect is due to error and attermpt to reconnect_
+	socket->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
 
 	if(socket->waitForConnected(1000))
 	{
-		status = connected;
+		status_ = connected;
 	}
 	else
 	{
-		status = disconnected;
+		emit channelDisconnected();
+		status_ = disconnected;
 	}
 
 }

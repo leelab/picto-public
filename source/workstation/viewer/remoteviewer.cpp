@@ -212,6 +212,10 @@ void RemoteViewer::setupServerChannel()
 	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), engineSlaveChannel_, SLOT(connectToServer(QHostAddress, quint16)));
 	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), behavioralDataChannel_, SLOT(connectToServer(QHostAddress, quint16)));
 
+	connect(serverChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
+	connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
+	connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
+
 	connect(serverDiscoverer_, SIGNAL(discoverFailed()), serverDiscoverer_, SLOT(discover()));
 
 	serverDiscoverer_->discover(30000);
@@ -265,7 +269,7 @@ void RemoteViewer::pause()
 
 void RemoteViewer::stop()
 {
-	Q_ASSERT(sendTaskCommand("stop"));
+	sendTaskCommand("stop");
 	status_ = Stopped;
 	updateActions();
 	engine_->stop();
@@ -450,6 +454,15 @@ void RemoteViewer::updateActions()
 		proxyListBox_->setEnabled(true);
 	}
 
+	//Task list combo box
+	bool disableTaskList = false;
+	disableTaskList |= (status_ == Running);
+	disableTaskList |= (status_ == Paused);
+
+	if(disableTaskList)
+		taskListBox_->setEnabled(false);
+	else
+		taskListBox_->setEnabled(true);
 
 
 }
@@ -549,7 +562,7 @@ bool RemoteViewer::directorIsRunning(QString addr)
 		}
 	}
 	//If we made it this far, something is wrong...
-	Q_ASSERT_X(false, "RemoteViewer::directorIsRunning", "Passed in address not an active director instance");
+	//Q_ASSERT_X(false, "RemoteViewer::directorIsRunning", "Passed in address not an active director instance");
 	return false;
 }
 
@@ -686,13 +699,29 @@ QList<RemoteViewer::ProxyServerInfo> RemoteViewer::getProxyList()
 	return proxies;
 }
 
-/*! \brief checks to see if the current proxy or director has timed out
+/*! \brief checks to see if the current proxy or director has timed out, or if we have lost contact with the server
  *
  *	When we are in a session, this slot is called periodically, to confirm that the
  *	proxy and director being used haven't disapearred from the network.
  */
 void RemoteViewer::checkForTimeouts()
 {
+	//check that the command channels are still connected
+	//serverChannel_ = new Picto::CommandChannel(this);
+	//engineSlaveChannel_ = new Picto::CommandChannel(this);
+	//behavioralDataChannel_ = new Picto::CommandChannel(this);
+	if(serverChannel_->getChannelStatus() == Picto::CommandChannel::disconnected ||
+	   engineSlaveChannel_->getChannelStatus() == Picto::CommandChannel::disconnected ||
+	   behavioralDataChannel_->getChannelStatus() == Picto::CommandChannel::disconnected)
+	{
+		connectAction_->setChecked(false);
+		QMessageBox::critical(0,tr("Server Connection Lost"),
+			tr("Workstation is no longer able to connect to the server.  " 
+			"The session has been ended."));
+		return;
+	}
+
+
 	//Check the director
 	QList<DirectorInstance> directors =  getDirectorList();
 
@@ -711,8 +740,6 @@ void RemoteViewer::checkForTimeouts()
 
 	if(!foundDirector)
 	{
-		//connectAction_->setChecked(false);
-		//changeConnectionState(false);
 		connectAction_->setChecked(false);
 		QMessageBox::critical(0,tr("Director Lost"),
 			tr("The director instance being used is no longer on the network." 
@@ -746,7 +773,7 @@ void RemoteViewer::checkForTimeouts()
 
 }
 
-//Starts a new session
+//! Starts a new session
 bool RemoteViewer::startSession()
 {
 	//Check for a currently running session

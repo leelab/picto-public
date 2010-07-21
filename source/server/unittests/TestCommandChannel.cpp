@@ -357,7 +357,7 @@ void TestCommandChannel::polledResponses_data()
 //			a. status="pass"
 //			b. commandsSent=commandsToSend
 //			c. responsesReceived=commandsToSend
-void TestCommandChannel::polledResponses()
+/*void TestCommandChannel::polledResponses()
 {
 	QFETCH(int, commandsToSend);
 
@@ -427,7 +427,7 @@ void TestCommandChannel::polledResponses()
 
 
 	delete testChannel;
-}
+}*/
 
 /*void TestCommandChannel::eventDrivenResponses_data()
 {

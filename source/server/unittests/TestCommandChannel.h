@@ -51,7 +51,7 @@ private slots:
 	//void streamingResponse();
 
 	void polledResponses_data();
-	void polledResponses();
+	//void polledResponses();
 	//void eventDrivenResponses_data();
 	//void eventDrivenResponses();
 

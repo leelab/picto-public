@@ -7,12 +7,6 @@
 #include "../../common/engine/MouseSignalChannel.h"
 
 
-///////////TESTING
-#include "../common/compositor/compositingsurface.h"
-#include "../common/stimuli/circlegraphic.h"
-
-#include <QPushButton>
-/////////////////////////////////
 
 #include <QToolBar>
 #include <QAction>

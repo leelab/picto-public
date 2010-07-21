@@ -7,8 +7,8 @@
  *  PictoDirector would use a CommandChannel to send commands to PictoServer.
  *
  *	The channel is bidirectional, but is intended to be used by the client in 
- *	a client/server pair.  The channel can send or receive protocolCommands
- *	and ProtocolResponses
+ *	a client/server pair.  The channel can send protocolCommands and receive
+ *	ProtocolResponses.
  *
  *	The CommandChannel can be connected to a server in multiple ways:
  *		1. The CommandChannel can be passed a host address and port in the constructor
@@ -22,17 +22,17 @@
  *
  *  To use the object, the owner calls the incomingResponsesWaiting function.  This 
  *  checks the command socket for any incoming data, and then reports back the
- *	number of responses queed up for processing.  Then the readCommand or readResponse 
+ *	number of responses queed up for processing.  Then the readResponse 
  *	function can be called for each item in the queue. The advantage of this approach is
  *	that the calling object maintains nearly full control of the CPU.  The disadvantage
  *	is that it will burn cycles if there aren't any incoming responses, and it requires
  *	extra coding.  For outgoing commands, the sendCommandfunction is called directly.
  *
- *	Incoming commands are handled similarly to incoming responses, and outgoing responses
- *  are handled similarly to outgoing commands
- *
  *	The registered functions are a special subset of the send/receive functions. These are used
  *	if you need to keep track of which commands have received responses.
+ *
+ *	NOTE: An earlier version of this object allowed true bidirection communication (you could receive
+ *	commands and send responses.  If this functionality is desired, it can be dug out of the SVN archives.
  *
  *	!!!!!!   WARNING    !!!!!!
  *	The command channel has a weird "feature" (err bug).  Since we call proccess events in the
@@ -80,17 +80,14 @@ class CommandChannel : public QObject
 
 public:
 	CommandChannel(QObject *parent = 0);
-	CommandChannel(QHostAddress serverAddress, quint16 serverPort, QObject *parent = 0);
+	CommandChannel(QHostAddress serverAddress, quint16 serverPort_, QObject *parent = 0);
 	~CommandChannel();
 
 	int incomingResponsesWaiting();
-	int incomingCommandsWaiting();
 
 	bool sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	bool sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	QSharedPointer<ProtocolResponse> getResponse();
-	QSharedPointer<ProtocolCommand> getCommand();
-	void sendResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
 	bool waitForResponse(int timeout=0);
 
@@ -105,14 +102,18 @@ public:
 		connected, disconnected
 	} ChannelStatus;
 
-	//!Check channel status
-	ChannelStatus getChannelStatus() { return status; };
+	//!Check channel status_
+	ChannelStatus getChannelStatus() { return status_; };
 
-	bool isConnected() { return status == connected; };
+	bool isConnected() { return status_ == connected; };
 
 	void closeChannel();
 public slots:
-	void connectToServer(QHostAddress serverAddress, quint16 serverPort);
+	void connectToServer(QHostAddress serverAddress, quint16 serverPort_);
+
+signals:
+	void channelDisconnected();
+	void channelConnected();
 
 private slots:
 	void disconnectHandler();
@@ -123,40 +124,19 @@ private:
 	void readIncomingResponse();
 
 
-	QHostAddress serverAddr;
-	quint16 serverPort;
+	QHostAddress serverAddr_;
+	quint16 serverPort_;
 
-	//We use two ports here because there are two types of communictions that
-	//a CommandChannel might use.
-	//	consumer: the consumer socket is used the situations in which the
-	//		channel is sending commands and receiving responses
-	//	producer: the consumer socket is used the situations in which the
-	//		channel is receiving commands and sending responses
-	//The two sockets are completely transparent to the end euser and can be used
-	//more or less simultaneously.  With this approach, the command channel is
-	//pretty much stateless.  For example, the following sequence of events can 
-	//occur:
-	//	- channel sends command A
-	//	- channel receives command B
-	//	- channel sends response B
-	//	- channel receives response A
-	// Despite the interleaved ordering, the incoming command and response queues
-	// will be filled in the correct order.
-	QTcpSocket *consumerSocket;
-	QTcpSocket *producerSocket;
+	QTcpSocket *consumerSocket_;
 
-	ChannelStatus status;
+	ChannelStatus status_;
 
-	//should we attempt to reconnect in the event of a disconnect?
-	bool reconnect;
+	//should we attempt to reconnect_ in the event of a disconnect?
+	bool reconnect_;
 
-	//incoming queues.  These queues are only used if we are in polled mode
-	//otherwise, the incoming commands and responses are immediately sent out
-	//with their signals
-	QList<QSharedPointer<ProtocolCommand> > incomingCommandQueue;
-	QList<QSharedPointer<ProtocolResponse> > incomingResponseQueue;
+	QList<QSharedPointer<ProtocolResponse> > incomingResponseQueue_;
 
-	QString multipartBoundary;
+	QString multipartBoundary_;
 
 	QMap<QUuid,QSharedPointer<ProtocolCommand> > pendingCommands_;
 	QUuid sessionId_;

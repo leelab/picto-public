@@ -5,9 +5,6 @@
 #include <QContextMenuEvent>
 #include <QCursor>
 
-/////////TESTING
-#include <QDebug>
-//////////////////
 
 XmlEditor::XmlEditor(QWidget *parent) :
 	QTextEdit(parent)

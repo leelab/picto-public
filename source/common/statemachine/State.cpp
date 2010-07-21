@@ -1,5 +1,3 @@
-//This can only be defined if we are running on a windows box.
-#define CHECK_TIMING
 
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
@@ -15,15 +13,11 @@
 #include <QCoreApplication>
 #include <QUuid>
 
-#ifdef CHECK_TIMING
-#include <QFile>
-#include "Windows.h"
-#endif
-
 namespace Picto {
 
-State::State()
-: scene_(QSharedPointer<Scene>(new Scene))
+State::State() :
+	scene_(QSharedPointer<Scene>(new Scene)),
+	hasCursor_(false)
 {
 	propertyContainer_.setPropertyValue("Type","State");
 	propertyContainer_.addProperty(Property(QVariant::String,"EntryScript",""));
@@ -62,25 +56,12 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		control->start(engine);
 	}
 
-#ifdef CHECK_TIMING
-	LARGE_INTEGER ticksPerSec;
-	LARGE_INTEGER tick, tock;
-	QueryPerformanceCounter(&tick); //Initialize...
-	QList<double> elapsedTimes;
-	QueryPerformanceFrequency(&ticksPerSec);
-#endif
-
 	QString result = "";
 	bool isDone = false;
 
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
-#ifdef CHECK_TIMING
-		QueryPerformanceCounter(&tock);
-		elapsedTimes.append((double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart));
-		QueryPerformanceCounter(&tick);
-#endif
 
 		//----------  Draw the scene --------------
 		scene_->render(engine);
@@ -128,23 +109,6 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	if(runExitScript)
 		runScript(exitScriptName);
 
-
-
-#ifdef CHECK_TIMING
-	QFile outFile("renderingTimes.txt");
-	Q_ASSERT(outFile.open(QIODevice::Append));
-
-	outFile.write("\n------ STATE ------\n");
-
-	for(int i=0; i<elapsedTimes.length(); i++)
-	{
-		QString line = QString("Frame %1: %2 ms\n").arg(i).arg(elapsedTimes[i]*1000);
-		outFile.write(line.toAscii());
-	}
-
-	outFile.close();
-#endif
-
 	return result;
 }
 
@@ -165,7 +129,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	//Add a cursor for the user input
 	addCursor();
 	
-
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
 	bool runFrameScript = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
@@ -189,8 +152,11 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		//------ !!!! WARNING !!!! ------
 		//The ordering in this rendering loop is really, really sensitive.
 		//Think long and hard before rearranging code.  If you do rearrange, 
-		//you'll need to test pretty thoroughly0.
+		//you'll need to test pretty thoroughly.
 
+		//In slave mode, we always process events
+		QCoreApplication::processEvents();
+		
 		//--------- Check for master state change ------------
 		result = getMasterStateResult(engine);
 		if(!result.isEmpty())
@@ -208,6 +174,7 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		//--------- Check for master frame ------------
 		//Since this "continues" the loop, it has to occur after checking
 		//for a state change
+		
 		int masterFrame = getMasterFramenumber(engine);
 
 		if(!isDone && masterFrame <= frameCounter_)
@@ -215,9 +182,11 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 			continue;
 		}
 
+
 		//Run the frame scripts enough to catch up
 		if(!isDone && runFrameScript)
 		{
+			
 			for(int i=0; i<masterFrame - frameCounter_; i++)
 			{
 				runScript(frameScriptName);
@@ -226,10 +195,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 		//----------  Draw the scene --------------
 		scene_->render(engine);
-		
-
-		//In slave mode, we always process events
-		QCoreApplication::processEvents();
 
 		frameCounter_ = masterFrame;
 	}
@@ -358,7 +323,7 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 
 	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
 		return -2;
-	
+
 	QByteArray xmlFragment = response->getContent();
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
 
@@ -383,6 +348,7 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 			FrameDataStore::FrameData data;
 			data = dataStore.takeLastDataPoint();
 
+			lastFrameCheckTime_ = data.time;
 			return data.frameNumber;
 		}
 		else
@@ -523,6 +489,10 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 
 void State::addCursor()
 {
+	//We should only add the cursor the first time we run as a slave.
+	if(hasCursor_)
+		return;
+
 	QSharedPointer<CursorGraphic> cursor(new CursorGraphic(sigChannel_, QColor(255,0,0,255)));
 
 	//Create a new layer
@@ -532,6 +502,8 @@ void State::addCursor()
 	
 	//add the layer to our state/scene/canvas
 	scene_->getCanvas()->addLayer(cursorLayer);
+
+	hasCursor_ = true;
 }
 
 
