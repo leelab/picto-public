@@ -16,7 +16,6 @@ ServerThread::ServerThread(int socketDescriptor_, QSharedPointer<ServerProtocols
 
 void ServerThread::run()
 {
-	printf("New server thread: %d\n\n", QThread::currentThreadId());
 	QTcpSocket socket;
 
 	tcpSocket_ = &socket;
@@ -236,7 +235,6 @@ void ServerThread::readClient()
 
 void ServerThread::handleDroppedClient()
 {
-	printf("Dropped client\n");
 	exit();
 }
 
@@ -244,6 +242,5 @@ void ServerThread::handleTimeout()
 {
 	//QSharedPointer<Picto::ProtocolResponse> response = new Picto::ProtocolResponse(protocol->id(),protocol->version(),Picto::ProtocolResponseType::ConnectionTimedOut);
 	//deliverResponse(response);
-	printf("timeout\n");
 	exit();
 }

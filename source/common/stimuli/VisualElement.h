@@ -33,6 +33,8 @@ public:
 	void setRandomNumberGeneratorState(MTRand::uint32 * rng);
 	MTRand::uint32 * getRandomNumberGeneratorState();
 
+	void reset();
+
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> engine);
 
 	QPoint getPosition();
@@ -64,6 +66,9 @@ public slots:
 	void setColor(int r, int g, int b, int a=255) { setColor(QColor(r,g,b,a)); };
 
 protected:
+	void backupProperties();
+	void restoreProperties();
+
 	QImage image_;
 	bool shouldUpdateCompositingSurfaces_;
 	QMap<QString, QSharedPointer<CompositingSurface> > compositingSurfaces_;
@@ -73,6 +78,7 @@ protected:
 	MTRand random;
 
 	PropertyContainer propertyContainer_;
+	QMap<QString, QVariant> initialProperties_;
 
 	int order_;		//The order in which this visual element should be drawn within its layer
 };

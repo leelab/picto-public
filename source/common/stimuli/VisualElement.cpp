@@ -24,7 +24,6 @@ void VisualElement::bindToScriptEngine(QSharedPointer<QScriptEngine> engine)
 	engine->globalObject().setProperty(propertyContainer_.getPropertyValue("Name").toString(),qsValue);
 }
 
-
 QPoint VisualElement::getPosition()
 {
 	QVariant positionVariant = propertyContainer_.getPropertyValue("Position");
@@ -110,6 +109,56 @@ void VisualElement::updateAnimation(int frame, QTime elapsedTime)
 	return;
 }
 
+/*!	\brief Resets the VisualElement
+ *
+ *	Since VisualElements can be modified by scripts, resetting them returns them
+ *	to their initial state.  This basically just reloads the PropertyContainer
+ *	with the initial properties
+ */
+void VisualElement::reset()
+{
+	restoreProperties();
+}
+
+/*	\brief Stores the elements properties in a map.
+ *
+ *	Since everything important about a VisualElement is stored in its porperties,
+ *	we can "back up" the element by recording those properties.  Since a property 
+ *	can be set with nothing more than a name and value, we store all of that info 
+ *	in a QMap<QString, QVariant>.
+ */
+void VisualElement::backupProperties()
+{
+	initialProperties_.clear();
+
+	//iterate through the properties storing their values by name
+	QStringList properties = propertyContainer_.getPropertyList();
+
+	foreach(QString name, properties)
+	{
+		initialProperties_[name] = propertyContainer_.getPropertyValue(name);
+	}
+}
+
+/* \brief Relads the property container with the values backed up in backupProperties()
+ *
+ *	This basically iterates through the backed up properties and resets the values
+ *	in the property container.
+ */
+void VisualElement::restoreProperties()
+{
+	QStringList properties = propertyContainer_.getPropertyList();
+
+	QMap<QString, QVariant>::iterator propItr = initialProperties_.begin();
+	while(propItr != initialProperties_.end())
+	{
+		//There should never be a property in initialProperties_ that doesn't
+		//exist in the property container
+		Q_ASSERT(properties.contains(propItr.key()));
+		propertyContainer_.setPropertyValue(propItr.key(),propItr.value());
+		propItr++;
+	}
+}
 
 /*! \brief Turns the VisualElement object into an XML fragment.
  *
@@ -271,6 +320,8 @@ bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		addError("VisualElement", "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
+
+	backupProperties();
 
 	return true;
 }

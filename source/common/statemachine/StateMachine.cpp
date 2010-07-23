@@ -299,9 +299,8 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 
 				//Deal with all of the left-over commands
-				Q_ASSERT_X(cleanupRegisteredCommands(engine),"",QString("Failed to cleanup registered commands.  "
-					"Leftover commands: " + 
-					QString::number(engine->getDataCommandChannel()->pendingResponses())).toAscii());
+				if(!cleanupRegisteredCommands(engine))
+					handleLostServer(engine);
 			}
 			if(slave)
 			{
@@ -416,11 +415,17 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 
 
 	serverChannel->sendCommand(command);
-	serverChannel->waitForResponse(10000);
-	response = serverChannel->getResponse();
+	if(!serverChannel->waitForResponse(10000))
+	{
+		handleLostServer(engine);
+	}
+	else
+	{
+		response = serverChannel->getResponse();
 
-	Q_ASSERT(!response.isNull());
-	Q_ASSERT(response->getResponseType() == "OK");
+		Q_ASSERT(!response.isNull());
+		Q_ASSERT(response->getResponseType() == "OK");
+	}
 }
 
 /*!	\brief Sends a StateDataStore to the server to let it know that we are transitioning
@@ -467,6 +472,22 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 	dataChannel->sendRegisteredCommand(dataCommand);
 }
 
+/*	\brief Called when we seem to have lost contact with the server
+ *
+ *	In the event that the server connection goes down, the commandChannels will
+ *	automatically attempt to reconnect.  By the time we've gotten here, we can
+ *	assume that the connection is completely lost (either the server died, or
+ *	there's a network interruption.
+ *
+ *	We "handle" this by sending a stop command to the engine.
+ *
+ *	At some point, we may decide to use a more elegant error handling mechanism...
+ */
+void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
+{
+	engine->stop();
+}
+
 
 /*! \brief cleans up all of the sent commands.
  *	
@@ -488,67 +509,57 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
  */
 bool StateMachine::cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine)
 {
-	//! \TODO Clean this up onec we get the database up to speed
-
 	QSharedPointer<CommandChannel> serverChan = engine->getDataCommandChannel();
 
 	if(!serverChan)
+		return true;
+
+	if(serverChan->pendingResponses() == 0)
 		return true;
 
 	//int elapsedTimeMs = 0;
 	QSharedPointer<ProtocolResponse> resp;
 
 	//See if the missing responses are just slow getting to us...
-	int pendingResponseCount = serverChan->pendingResponses();
-	for(int i=0; i<=pendingResponseCount; i++)
+	//This loop will keep reading responses as long as they are arriving at a 
+	//rate of greater than 0.5Hz
+	while(serverChan->waitForResponse(2000))
 	{
+		resp = serverChan->getResponse();
+		Q_ASSERT(!resp.isNull());
+		Q_ASSERT(resp->getResponseType() == "OK");
+
+		processStatusDirective(engine, resp);
+
 		if(serverChan->pendingResponses() == 0 && 
 			serverChan->incomingResponsesWaiting() == 0)
 		{
 			return true;
 		}
-		if(serverChan->waitForResponse(2000))
+	}
+
+
+	//resend all of the pending responses
+	serverChan->resendPendingCommands();
+
+	//Wait to see if the missing responses arrive
+	//This loop will keep reading responses as long as they are arriving at a 
+	//rate of greater than 0.5Hz
+	while(serverChan->waitForResponse(2000))
+	{
+		resp = serverChan->getResponse();
+		Q_ASSERT(!resp.isNull());
+		Q_ASSERT(resp->getResponseType() == "OK");
+
+		processStatusDirective(engine, resp);
+
+		if(serverChan->pendingResponses() == 0 && 
+			serverChan->incomingResponsesWaiting() == 0)
 		{
-			resp = serverChan->getResponse();
-			Q_ASSERT(!resp.isNull());
-			Q_ASSERT(resp->getResponseType() == "OK");
+			return true;
 		}
 	}
 
-	//wait to see if the missing responses arrive (100 ms/per missing response + 1 second)
-	//Note that this timing isn't exactly accurate, since waitForResponse will return immediately
-	/*while(elapsedTimeMs < 1000 + 100*serverChan->pendingResponses())
-	{
-		if(serverChan->pendingResponses() == 0)
-		{
-			return true;
-		}
-		if(serverChan->waitForResponse(100))
-		{
-			resp = serverChan->getResponse();
-			Q_ASSERT(!resp.isNull());
-			Q_ASSERT(resp->getResponseType() == "OK");
-		}
-
-		elapsedTimeMs += 100;
-	}*/
-
-	//resend all of the pending responses
-	/*serverChan->resendPendingCommands();
-
-	//wait to see if the missing responses arrive (100 ms/per missing response + 1 second)
-	while(elapsedTimeMs < 1000 + 100*serverChan->pendingResponses())
-	{
-		if(serverChan->pendingResponses() == 0)
-			return true;
-		if(serverChan->waitForResponse(10))
-		{
-			resp = serverChan->getResponse();
-			Q_ASSERT(!resp.isNull());
-			Q_ASSERT(resp->getResponseType() == "OK");
-		}
-		elapsedTimeMs += 10;
-	}*/
 
 	//If we've made it this far, then we failed at cleaning up.
 	return false;

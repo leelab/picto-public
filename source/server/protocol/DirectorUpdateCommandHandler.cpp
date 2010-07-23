@@ -32,6 +32,7 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 	targetStr = command->getTarget();
 	name = targetStr.left(targetStr.indexOf(':'));
 	statusStr = targetStr.right(targetStr.length() - targetStr.indexOf(':') - 1);
+
 	if(statusStr.toUpper() == "IDLE")
 	{
 		status = DirectorStatus::idle;

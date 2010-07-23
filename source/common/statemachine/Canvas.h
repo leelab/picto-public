@@ -30,6 +30,8 @@ public:
 
 	void draw(QSharedPointer<Engine::PictoEngine> engine);
 
+	void reset();
+
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

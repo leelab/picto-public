@@ -153,16 +153,20 @@ int main(int argc, char *argv[])
 			break;
 
 		//Check on network connection
-		if(engine->getDataCommandChannel().isNull())
+		if(engine->getDataCommandChannel().isNull() || !engine->getDataCommandChannel()->isConnected())
 		{
+			updateCommand->setTarget(engine->getName()+":idle");
+
 			updateSplashStatus(engine,"Not connected to server");
 			engine->setDataCommandChannel(connectToServer());
 			if(!engine->getDataCommandChannel().isNull())
 				updateSplashStatus(engine, "Connected to server");
 			continue;
 		}
-		if(serverUpdateChannel.isNull())
+		if(serverUpdateChannel.isNull() || !serverUpdateChannel->isConnected())
 		{
+			updateCommand->setTarget(engine->getName()+":idle");
+
 			updateSplashStatus(engine,"Not connected to server");
 			serverUpdateChannel = connectToServer();
 			engine->setUpdateCommandChannel(serverUpdateChannel);
@@ -182,23 +186,20 @@ int main(int argc, char *argv[])
 			Q_ASSERT_X(false, "Director loop", QString::number(pendingResponses).toAscii());
 			Q_ASSERT_X(false, "Director loop", debugMsg.toAscii());
 		}
+
 		serverUpdateChannel->sendCommand(updateCommand);
 
-		//! \todo figure out something better to do here...
-		//If we don't get a response, die
+		//If we don't get a response, it probably means that we lost our
+		//network connection, so start over
 		if(!serverUpdateChannel->waitForResponse(5000))
-			break;
+			continue;
 
 
 		updateResponse = serverUpdateChannel->getResponse();
 
 		if(updateResponse.isNull() || updateResponse->getResponseType() != "OK")
 		{
-			QMessageBox netError;
-			netError.setText("Network error.  PictoDirector will exit.");
-			netError.setIcon(QMessageBox::Critical);
-			netError.exec();
-			break;
+			continue;
 		}
 
 		QString statusDirective = updateResponse->getDecodedContent();
@@ -260,12 +261,11 @@ int main(int argc, char *argv[])
 
 			serverUpdateChannel->sendCommand(runningUpdateCommand);
 
-			//! \todo handle this more gracefully
 			if(!serverUpdateChannel->waitForResponse(5000))
-				break;
+				continue;
 			runningUpdateResponse = serverUpdateChannel->getResponse();
 			if(runningUpdateResponse.isNull() || runningUpdateResponse->getResponseType() != "OK")
-				break;
+				continue;
 
 			//start running our task
 			if(experiment)
@@ -381,18 +381,6 @@ QSharedPointer<Picto::CommandChannel> connectToServer()
 
 	serverDiscoverer.discover();
 
-	/*while(!serverDiscoverer.waitForDiscovered(10000))
-	{
-		QMessageBox notFound;
-		notFound.setText("No PictoServer found on the network.  Try again.?");
-		notFound.setIcon(QMessageBox::Critical);
-		notFound.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-		int ret = notFound.exec();
-		if(ret == QMessageBox::Cancel)
-			return nullChannel;
-		else
-			serverDiscoverer.discover();
-	}*/
 	if(!serverDiscoverer.waitForDiscovered(10000))
 		return nullChannel;
 

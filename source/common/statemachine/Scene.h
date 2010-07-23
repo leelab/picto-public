@@ -31,6 +31,8 @@ public:
 
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
+	void reset();
+
 	//DataStore functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

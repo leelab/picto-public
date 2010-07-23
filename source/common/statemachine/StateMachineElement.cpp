@@ -176,6 +176,39 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 
 }
 
+void StateMachineElement::processStatusDirective(QSharedPointer<Engine::PictoEngine> engine, QSharedPointer<ProtocolResponse> dataResponse)
+{
+
+		QString statusDirective = dataResponse->getDecodedContent().toUpper();
+
+		//We may want to break this out in a seperate function at some point...
+		if(statusDirective.startsWith("OK"))
+		{
+			//do nothing
+		}
+		else if(statusDirective.startsWith("STOP"))
+		{
+			engine->stop();
+		}
+		else if(statusDirective.startsWith("PAUSE"))
+		{
+			engine->pause();
+		}
+		else if(statusDirective.startsWith("RESUME"))
+		{
+			engine->resume();
+		}
+		else if(statusDirective.startsWith("REWARD"))
+		{
+			int channel = statusDirective.split(" ").value(1).toInt();
+			engine->giveReward(channel);	
+		}
+		else
+		{
+			Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
+		}
+}
+
 /*!	\brief A simple function to turn the result list into XML
  *
  *	When serializing a StateMachineElement, we sometimes need to list all possible

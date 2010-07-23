@@ -75,6 +75,8 @@ public:
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
+	void reset();
+
 	bool initScripting(QScriptEngine &qsEngine);
 
 	//DataStore functions
@@ -86,8 +88,9 @@ private:
 	void sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine);
 	void sendStateDataToServer(QSharedPointer<Transition> transition, QSharedPointer<Engine::PictoEngine> engine);
 
-
 	bool cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine);
+
+	void handleLostServer(QSharedPointer<Engine::PictoEngine> engine);
 
 	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
 	QMap<QString, QSharedPointer<StateMachineElement> > elements_;

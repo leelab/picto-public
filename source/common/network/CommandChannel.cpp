@@ -178,10 +178,18 @@ void CommandChannel::readIncomingResponse()
 
 			//Check to see if this is a registered response
 			QString commandId = response->getFieldValue("Command-ID");
-			if(!commandId.isNull())
-				pendingCommands_.remove(QUuid(commandId));
-
-			incomingResponseQueue_.push_back(response);
+			if(!commandId.isEmpty())
+			{
+				if(pendingCommands_.contains(QUuid(commandId)))
+				{
+					pendingCommands_.remove(QUuid(commandId));
+					incomingResponseQueue_.push_back(response);
+				}
+			}
+			else
+			{
+				incomingResponseQueue_.push_back(response);
+			}
 		}
 		else
 		{

@@ -130,6 +130,9 @@ QString SessionInfo::pendingDirective()
  */
 void SessionInfo::endSession()
 {
+	ConnectionManager *conMgr = ConnectionManager::Instance();
+	Q_ASSERT(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle);
+
 	QSqlDatabase sessionDb = getSessionDb();
 
 	//Add the end time to the session db
@@ -142,8 +145,6 @@ void SessionInfo::endSession()
 	addPendingDirective("ENDSESSION");
 
 	//Sit around waiting for the director's state to change
-	ConnectionManager *conMgr = ConnectionManager::Instance();
-	Q_ASSERT(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle);
 	while(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle)
 	{
 		QThread::yieldCurrentThread();

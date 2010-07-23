@@ -128,7 +128,7 @@
                 <ControlElements>
                   <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
                     <Name></Name>
-                    <Time units="Ms">20000</Time>
+                    <Time units="Ms">4600</Time>
                   </ControlElement>
                 </ControlElements>
                 <Scene>
@@ -140,7 +140,7 @@
                         <Order>1</Order>
                         <VisualElement type="Ellipse Graphic">
                           <Name datatype="QString">Ellipse</Name>
-                          <Position datatype="QPoint" x="400" y="400"/>
+                          <Position datatype="QPoint" x="400" y="199"/>
                           <Dimensions datatype="QRect" x="0" y="0" width="300" height="300"/>
                           <Color datatype="QColor" R="255" G="0" B="0" A="255"/>
                         </VisualElement>

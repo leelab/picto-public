@@ -33,6 +33,7 @@ State::State() :
 
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
+	reset();
 	frameCounter_ = -1; //We're zero-indexed
 
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
@@ -123,6 +124,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
  */
 QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
+	reset();
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 	lastFrameCheckTime_ = lastTransitionTime_;
 
@@ -206,6 +208,15 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
+//!  Resets all of the contained visual stimuli back to their original state (in case they were modified by a script)
+void State::reset()
+{
+	scene_->reset();
+
+	//We may want to consider resetting the scripting environment as well.  At the moment, variables stored
+	//in script will maintain their state from run to run.  This could be good or bad...
+}
+
 /*! \brief Sends the current behavioral data to the server
  *
  *	We update the server with all of the usefule behavioral data.  This includes 
@@ -263,41 +274,68 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 		dataResponse = dataChannel->getResponse();
 		Q_ASSERT(!dataResponse.isNull());
 		Q_ASSERT(dataResponse->getResponseType() == "OK");
-
-		QString statusDirective = dataResponse->getDecodedContent().toUpper();
-
-		//We may want to break this out in a seperate function at some point...
-		if(statusDirective.startsWith("OK"))
-		{
-			//do nothing
-		}
-		else if(statusDirective.startsWith("STOP"))
-		{
-			engine->stop();
-		}
-		else if(statusDirective.startsWith("PAUSE"))
-		{
-			engine->pause();
-		}
-		else if(statusDirective.startsWith("RESUME"))
-		{
-			engine->resume();
-		}
-		else if(statusDirective.startsWith("REWARD"))
-		{
-			int channel = statusDirective.split(" ").value(1).toInt();
-			engine->giveReward(channel);	
-		}
-		else
-		{
-			Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
-		}
+		processStatusDirective(engine,dataResponse);
 
 	}
 
+	//This is useful for debugging, but we should let the state machine handle server drop-outs
+	//Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
 
-	Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
+}
 
+
+//! Runs a script
+void State::runScript(QString scriptName)
+{
+	qsEngine_->globalObject().property(scriptName).call();
+	if(qsEngine_->hasUncaughtException())
+	{
+		QString errorMsg = "Uncaught exception in State" + getName() +", script "+scriptName+"\n";
+		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+										  .arg(qsEngine_->uncaughtException().toString());
+		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+		qDebug()<<errorMsg;
+	}
+}
+
+/*! \brief Checks for engine commands and returns true if we need to stop
+ *
+ *	The commands are a bit funny, but they work.  When Engine::stop() is called,
+ *	the engine command gets set to StopEngine (and never gets reset).  This results
+ *	in all of our states returning.  When pause is called, we simply sit and spin
+ *	until a new command is issued (play or stop). 
+ */
+bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
+{
+	int command = engine->getEngineCommand();
+
+	//To stop, we set isDone to true which breaks out of our loop.
+	if(command == Engine::PictoEngine::StopEngine)
+	{
+		return true;
+	}
+	else if(command == Engine::PictoEngine::PauseEngine)
+	{
+		while(command == Engine::PictoEngine::PauseEngine)
+		{
+			//updateServer(engine, true);
+			sendBehavioralData(engine);
+			command = engine->getEngineCommand();
+			QCoreApplication::processEvents();
+
+			//waste 20 ms
+			QTime timer;
+			timer.start();
+			while(timer.elapsed()<20);
+
+		}
+		if(command == Engine::PictoEngine::StopEngine)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /*! \brief returns the frame of the master state machine
@@ -358,62 +396,6 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 	}
 	return -1;
 }
-
-//! Runs a script
-void State::runScript(QString scriptName)
-{
-	//entry script
-	qsEngine_->globalObject().property(scriptName).call();
-	if(qsEngine_->hasUncaughtException())
-	{
-		QString errorMsg = "Uncaught exception in State" + getName() +", script "+scriptName+"\n";
-		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-										  .arg(qsEngine_->uncaughtException().toString());
-		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-		qDebug()<<errorMsg;
-	}
-}
-
-/*! \brief Checks for engine commands and returns true if we need to stop
- *
- *	The commands are a bit funny, but they work.  When Engine::stop() is called,
- *	the engine command gets set to StopEngine (and never gets reset).  This results
- *	in all of our states returning.  When pause is called, we simply sit and spin
- *	until a new command is issued (play or stop). 
- */
-bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
-{
-	int command = engine->getEngineCommand();
-
-	//To stop, we set isDone to true which breaks out of our loop.
-	if(command == Engine::PictoEngine::StopEngine)
-	{
-		return true;
-	}
-	else if(command == Engine::PictoEngine::PauseEngine)
-	{
-		while(command == Engine::PictoEngine::PauseEngine)
-		{
-			//updateServer(engine, true);
-			sendBehavioralData(engine);
-			command = engine->getEngineCommand();
-			QCoreApplication::processEvents();
-
-			//waste 20 ms
-			QTime timer;
-			timer.start();
-			while(timer.elapsed()<20);
-
-		}
-		if(command == Engine::PictoEngine::StopEngine)
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
 
 /*	\brief Sends an UPDATEDIRECTOR command and deals with any directives included in the response
  *

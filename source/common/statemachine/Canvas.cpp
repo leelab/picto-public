@@ -25,6 +25,15 @@ void Canvas::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 
 }
 
+//Resets the canvas
+void Canvas::reset()
+{
+	foreach(QSharedPointer<Layer> layer, layers_)
+	{
+		layer->reset();
+	}
+}
+
 void Canvas::draw(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//! \todo deal with the background layer color

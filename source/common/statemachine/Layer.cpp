@@ -29,6 +29,20 @@ void Layer::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 
 }
 
+//!  Resets the layer
+void Layer::reset()
+{
+	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
+	{
+		visualElement->reset();
+	}
+
+	foreach(QSharedPointer<VisualElement> visualElement, unaddedVisualElements_)
+	{
+		visualElement->reset();
+	}
+}
+
 void Layer::addVisualElement(QSharedPointer<VisualElement> v)
 {
 	unaddedVisualElements_.push_back(v);

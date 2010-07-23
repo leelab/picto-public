@@ -31,6 +31,7 @@
 #include "../storage/DataStore.h"
 #include "../engine/PictoEngine.h"
 #include "../network/CommandChannel.h"
+#include "../protocol/ProtocolResponse.h"
 
 namespace Picto {
 
@@ -84,7 +85,7 @@ public:
 
 protected:
 	QString getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine);
-
+	void processStatusDirective(QSharedPointer<Engine::PictoEngine> engine, QSharedPointer<ProtocolResponse> dataResponse);
 
 	ParameterContainer parameterContainer_;
 	QStringList results_;

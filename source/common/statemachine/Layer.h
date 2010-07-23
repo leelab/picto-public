@@ -24,6 +24,8 @@ public:
 
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
+	void reset();
+
 	void addVisualElement(QSharedPointer<VisualElement> v);
 	void setOrder(int order) { order_ = order; };
 	int getOrder() { return order_; };

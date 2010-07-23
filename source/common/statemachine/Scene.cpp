@@ -26,6 +26,12 @@ void Scene::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 	canvas_->bindToScriptEngine(qsEngine);
 }
 
+//! Resets the scene
+void Scene::reset()
+{
+	canvas_->reset();
+}
+
 /*	\brief Converts this scene into an XML fragment
  *
  *	The Scene will look something like this when converted to XML:
