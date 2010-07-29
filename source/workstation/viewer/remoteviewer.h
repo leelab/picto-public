@@ -72,11 +72,17 @@ private:
 	bool sendTaskCommand(QString target);
 	bool startSession();
 	bool endSession();
+	bool joinSession();
+	bool disjoinSession();
 
 	bool directorIsRunning(QString addr);
 	QList<DirectorInstance> getDirectorList();
 
 	QList<ProxyServerInfo> getProxyList();
+
+	//Since we don't want the experiemnt to be changed while it is being run
+	//we keep a local copy here.
+	Picto::Experiment activeExperiment_;
 
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
@@ -107,6 +113,7 @@ private:
 	enum Status {Stopped, Running, Paused};
 	Status status_;
 	bool startedSession_;
+	bool observerHasControl_;
 
 	QUuid sessionId_;
 

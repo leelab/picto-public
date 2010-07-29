@@ -123,6 +123,8 @@
    <file alias="_interactive_s_t_d_i_o_handler_8h.html">../../../output/documentation/main/html/_interactive_s_t_d_i_o_handler_8h.html</file>
    <file alias="_interval_controller_8cpp-source.html">../../../output/documentation/main/html/_interval_controller_8cpp-source.html</file>
    <file alias="_interval_controller_8h-source.html">../../../output/documentation/main/html/_interval_controller_8h-source.html</file>
+   <file alias="_joinsession_command_handler_8cpp-source.html">../../../output/documentation/main/html/_joinsession_command_handler_8cpp-source.html</file>
+   <file alias="_joinsession_command_handler_8h-source.html">../../../output/documentation/main/html/_joinsession_command_handler_8h-source.html</file>
    <file alias="_layer_8cpp-source.html">../../../output/documentation/main/html/_layer_8cpp-source.html</file>
    <file alias="_layer_8h-source.html">../../../output/documentation/main/html/_layer_8h-source.html</file>
    <file alias="_line_graphic_8cpp-source.html">../../../output/documentation/main/html/_line_graphic_8cpp-source.html</file>
@@ -525,6 +527,9 @@
    <file alias="struct_h_t_t_p_get_command_handler-members.html">../../../output/documentation/main/html/struct_h_t_t_p_get_command_handler-members.html</file>
    <file alias="struct_h_t_t_p_get_command_handler.html">../../../output/documentation/main/html/struct_h_t_t_p_get_command_handler.html</file>
    <file alias="struct_h_t_t_p_get_command_handler.png">../../../output/documentation/main/html/struct_h_t_t_p_get_command_handler.png</file>
+   <file alias="struct_joinsession_command_handler-members.html">../../../output/documentation/main/html/struct_joinsession_command_handler-members.html</file>
+   <file alias="struct_joinsession_command_handler.html">../../../output/documentation/main/html/struct_joinsession_command_handler.html</file>
+   <file alias="struct_joinsession_command_handler.png">../../../output/documentation/main/html/struct_joinsession_command_handler.png</file>
    <file alias="struct_picto_1_1_picto_box_daq_board_1_1ai_channel__st-members.html">../../../output/documentation/main/html/struct_picto_1_1_picto_box_daq_board_1_1ai_channel__st-members.html</file>
    <file alias="struct_picto_1_1_picto_box_daq_board_1_1ai_channel__st.html">../../../output/documentation/main/html/struct_picto_1_1_picto_box_daq_board_1_1ai_channel__st.html</file>
    <file alias="struct_picto_1_1_protocol_command-members.html">../../../output/documentation/main/html/struct_picto_1_1_protocol_command-members.html</file>

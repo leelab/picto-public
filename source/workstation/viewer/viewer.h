@@ -21,7 +21,7 @@
  *
  *	When we change from one viewer to another, the process is:
  *		1. Call deinit on the old viewer
- *		2. Attempt to convert experiment test to an experiment object
+ *		2. Attempt to convert experiment text to an experiment object
  *		3. Call init on the new viewer
  *	This process makes keeping the engine and engineText in sync easy.  For example
  *	if the state machine editor viewer is operating on the experiment object

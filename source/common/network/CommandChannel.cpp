@@ -262,7 +262,6 @@ bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand
  */
 void CommandChannel::disconnectHandler()
 {
-	qDebug()<<"disconnectHandler\n";
 	status_ = disconnected;
 
 	if(!reconnect_)

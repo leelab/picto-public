@@ -9,17 +9,15 @@
 #include <QVariant>
 #include <QMutexLocker>
 
-SessionInfo::SessionInfo(QString directorAddr, int proxyId):
+SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml):
 	activity_(true),
-	proxyId_(proxyId)
+	directorAddr_(directorAddr),
+	proxyId_(proxyId),
+	experimentXml_(experimentXml)
 {
 	//CreateUUID
 	QUuid uuid = QUuid::createUuid();
 	uuid_ = uuid;
-
- 
-	//Set the director address
-	directorAddr_ = directorAddr;
 
 	//Create the base session DB
 	QString databaseName;
@@ -354,45 +352,79 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 {
 	QSqlDatabase sessionDb = getSessionDb();
 	Picto::BehavioralDataStore dataStore;
-
-	//First, we attempt to pull data from the session database.  This will 
-	//likely return an empty query.
-	QSqlQuery sessionQuery(sessionDb);
-	sessionQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
-		"WHERE time > :time ORDER BY time ASC");
-	if(timestamp == 0)
-		sessionQuery.bindValue(":time",-1);
-	else
-		sessionQuery.bindValue(":time", timestamp);
-	Q_ASSERT(sessionQuery.exec());
-
-	while(sessionQuery.next())
+	
+	//If the timestamp is -1, we only need to return the most recent behavioral data
+	if(timestamp < 0)
 	{
-		dataStore.addData(sessionQuery.value(0).toDouble(),
-						  sessionQuery.value(1).toDouble(),
-						  sessionQuery.value(2).toDouble());
+		//check the cache database first
+		QSqlQuery cacheQuery(cacheDb_);
+
+		cacheQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
+			"ORDER BY time DESC");
+		Q_ASSERT(cacheQuery.exec());
+
+		if(cacheQuery.next())
+		{
+			dataStore.addData(cacheQuery.value(0).toDouble(),
+							  cacheQuery.value(1).toDouble(),
+							  cacheQuery.value(2).toDouble());
+		}
+		else
+		{
+			//If there wasn't anything in the cache db, pull from the session db
+			QSqlQuery sessionQuery;
+			sessionQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
+				"ORDER BY time DESC");
+			Q_ASSERT(sessionQuery.exec());
+
+			if(sessionQuery.next())
+			{
+				dataStore.addData(cacheQuery.value(0).toDouble(),
+								  cacheQuery.value(1).toDouble(),
+								  cacheQuery.value(2).toDouble());
+			}
+		}
 	}
-
-
-	QSqlQuery cacheQuery(cacheDb_);
-
-	cacheQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
-		"WHERE time > :time ORDER BY time ASC");
-	if(timestamp == 0)
-		cacheQuery.bindValue(":time",-1);
 	else
-		cacheQuery.bindValue(":time", timestamp);
-	Q_ASSERT(cacheQuery.exec());
-
-	while(cacheQuery.next())
 	{
-		dataStore.addData(cacheQuery.value(0).toDouble(),
-						  cacheQuery.value(1).toDouble(),
-						  cacheQuery.value(2).toDouble());
+		//First, we attempt to pull data from the session database.  This will 
+		//likely return an empty query.
+		QSqlQuery sessionQuery(sessionDb);
+		sessionQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
+			"WHERE time > :time ORDER BY time ASC");
+		if(timestamp == 0)
+			sessionQuery.bindValue(":time",-1);
+		else
+			sessionQuery.bindValue(":time", timestamp);
+		Q_ASSERT(sessionQuery.exec());
+
+		while(sessionQuery.next())
+		{
+			dataStore.addData(sessionQuery.value(0).toDouble(),
+							  sessionQuery.value(1).toDouble(),
+							  sessionQuery.value(2).toDouble());
+		}
+
+
+		QSqlQuery cacheQuery(cacheDb_);
+
+		cacheQuery.prepare("SELECT xpos, ypos, time FROM behavioraldata "
+			"WHERE time > :time ORDER BY time ASC");
+		if(timestamp == 0)
+			cacheQuery.bindValue(":time",-1);
+		else
+			cacheQuery.bindValue(":time", timestamp);
+		Q_ASSERT(cacheQuery.exec());
+
+		while(cacheQuery.next())
+		{
+			dataStore.addData(cacheQuery.value(0).toDouble(),
+							  cacheQuery.value(1).toDouble(),
+							  cacheQuery.value(2).toDouble());
+		}
 	}
 
 	return dataStore;
-
 }
 
 
@@ -408,41 +440,74 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 	QSqlDatabase sessionDb = getSessionDb();
 	Picto::FrameDataStore dataStore;
 
-	//First, we attempt to pull data from the session database.  This will 
-	//likely return an empty query.
-	QSqlQuery sessionQuery(sessionDb);
-	sessionQuery.prepare("SELECT frame,time,state FROM framedata "
-		"WHERE time > :time ORDER BY time ASC");
-	if(timestamp == 0)
-		sessionQuery.bindValue(":time",-1);
-	else
-		sessionQuery.bindValue(":time", timestamp);
-	Q_ASSERT(sessionQuery.exec());
-
-	while(sessionQuery.next())
+	if(timestamp < 0)
 	{
-		dataStore.addFrame(sessionQuery.value(1).toInt(),
-						   sessionQuery.value(2).toDouble(),
-						   sessionQuery.value(3).toString());
+		//check the cache db first
+		QSqlQuery cacheQuery(cacheDb_);
+		cacheQuery.prepare("SELECT frame,time,state FROM framedata "
+			"ORDER BY time DESC");
+		Q_ASSERT_X(cacheQuery.exec(),"SessionInfo::insertBehavioralData","Error: "+cacheQuery.lastError().text().toAscii());
+
+		if(cacheQuery.next())
+		{
+			dataStore.addFrame(cacheQuery.value(0).toInt(),
+							  cacheQuery.value(1).toDouble(),
+							  cacheQuery.value(2).toString());
+		}
+		else
+		{
+			//There was nothing in the cache db, so we need to pull from the session db
+			QSqlQuery sessionQuery(sessionDb);	
+			sessionQuery.prepare("SELECT frame,time,state FROM framedata "
+				"ORDER BY time DESC");
+			Q_ASSERT_X(sessionQuery.exec(),"SessionInfo::insertBehavioralData","Error: "+cacheQuery.lastError().text().toAscii());
+
+			if(sessionQuery.next())
+			{
+				dataStore.addFrame(cacheQuery.value(0).toInt(),
+								  cacheQuery.value(1).toDouble(),
+								  cacheQuery.value(2).toString());
+			}
+		}
+
 	}
-
-
-	QSqlQuery cacheQuery(cacheDb_);
-	cacheQuery.prepare("SELECT frame,time,state FROM framedata "
-		"WHERE time > :time ORDER BY time ASC");
-	if(timestamp == 0)
-		cacheQuery.bindValue(":time",-1);
 	else
-		cacheQuery.bindValue(":time", timestamp);
-	Q_ASSERT_X(cacheQuery.exec(),"SessionInfo::insertBehavioralData","Error: "+cacheQuery.lastError().text().toAscii());
-
-	while(cacheQuery.next())
 	{
-		dataStore.addFrame(cacheQuery.value(0).toInt(),
-						  cacheQuery.value(1).toDouble(),
-						  cacheQuery.value(2).toString());
-	}
+		//First, we attempt to pull data from the session database.  This will 
+		//likely return an empty query.
+		QSqlQuery sessionQuery(sessionDb);
+		sessionQuery.prepare("SELECT frame,time,state FROM framedata "
+			"WHERE time > :time ORDER BY time ASC");
+		if(timestamp == 0)
+			sessionQuery.bindValue(":time",-1);
+		else
+			sessionQuery.bindValue(":time", timestamp);
+		Q_ASSERT(sessionQuery.exec());
 
+		while(sessionQuery.next())
+		{
+			dataStore.addFrame(sessionQuery.value(1).toInt(),
+							   sessionQuery.value(2).toDouble(),
+							   sessionQuery.value(3).toString());
+		}
+
+
+		QSqlQuery cacheQuery(cacheDb_);
+		cacheQuery.prepare("SELECT frame,time,state FROM framedata "
+			"WHERE time > :time ORDER BY time ASC");
+		if(timestamp == 0)
+			cacheQuery.bindValue(":time",-1);
+		else
+			cacheQuery.bindValue(":time", timestamp);
+		Q_ASSERT_X(cacheQuery.exec(),"SessionInfo::insertBehavioralData","Error: "+cacheQuery.lastError().text().toAscii());
+
+		while(cacheQuery.next())
+		{
+			dataStore.addFrame(cacheQuery.value(0).toInt(),
+							  cacheQuery.value(1).toDouble(),
+							  cacheQuery.value(2).toString());
+		}
+	}
 	return dataStore;
 
 }
@@ -458,24 +523,51 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 	QSqlDatabase sessionDb = getSessionDb();
 	QList<Picto::StateDataStore> stateDataList;
 
-	QSqlQuery sessionQuery(sessionDb);
-	sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinename FROM statetransitions  "
-		"WHERE time > :time ORDER BY time ASC");
-	if(timestamp == 0)
-		sessionQuery.bindValue(":time",-1);
-	else
-		sessionQuery.bindValue(":time", timestamp);
-	Q_ASSERT_X(sessionQuery.exec(), "SessionInfo::selectBehavioralData", sessionQuery.lastError().text().toAscii());
-
-	while(sessionQuery.next())
+	if(timestamp < 0)
 	{
-		Picto::StateDataStore data;
-		data.setTransition(sessionQuery.value(0).toString(),
-						   sessionQuery.value(1).toString(),
-						   sessionQuery.value(2).toString(),
-						   sessionQuery.value(3).toDouble(),
-						   sessionQuery.value(4).toString());
-		stateDataList.append(data);
+		QSqlQuery sessionQuery(sessionDb);
+		sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinename FROM statetransitions  "
+			"ORDER BY time DESC");
+		Q_ASSERT_X(sessionQuery.exec(), "SessionInfo::selectBehavioralData", sessionQuery.lastError().text().toAscii());
+
+		if(sessionQuery.next())
+		{
+			Picto::StateDataStore data;
+			data.setTransition(sessionQuery.value(0).toString(),
+							   sessionQuery.value(1).toString(),
+							   sessionQuery.value(2).toString(),
+							   sessionQuery.value(3).toDouble(),
+							   sessionQuery.value(4).toString());
+			stateDataList.append(data);
+		}
+		else
+		{
+			//If you hit this, something has gone wrong, and we should fix it.
+			//////////TESTING
+			Q_ASSERT_X(false,"SessionInfo::selectStateData", "SELECT state data query failed to return data");
+		}
+	}
+	else
+	{
+		QSqlQuery sessionQuery(sessionDb);
+		sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinename FROM statetransitions  "
+			"WHERE time > :time ORDER BY time ASC");
+		if(timestamp == 0)
+			sessionQuery.bindValue(":time",-1);
+		else
+			sessionQuery.bindValue(":time", timestamp);
+		Q_ASSERT_X(sessionQuery.exec(), "SessionInfo::selectBehavioralData", sessionQuery.lastError().text().toAscii());
+
+		while(sessionQuery.next())
+		{
+			Picto::StateDataStore data;
+			data.setTransition(sessionQuery.value(0).toString(),
+							   sessionQuery.value(1).toString(),
+							   sessionQuery.value(2).toString(),
+							   sessionQuery.value(3).toDouble(),
+							   sessionQuery.value(4).toString());
+			stateDataList.append(data);
+		}
 	}
 
 	return stateDataList;

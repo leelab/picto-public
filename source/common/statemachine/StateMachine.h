@@ -79,6 +79,10 @@ public:
 
 	bool initScripting(QScriptEngine &qsEngine);
 
+	void setPath(QStringList path) { path_ = path; };
+
+	bool jumpToState(QStringList path, QString state);
+
 	//DataStore functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -106,6 +110,10 @@ private:
 
 	static int trialEventCode_;
 	static int trialNum_;
+
+	QSharedPointer<StateMachineElement> currElement_;
+	bool ignoreInitialElement_;
+	QStringList path_;
 
 
 };

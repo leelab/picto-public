@@ -255,6 +255,23 @@ void ConnectionManager::setDirectorStatus(QUuid sessionId, DirectorStatus::Direc
 
 }
 
+//! Returns the session info for the session attached to the director with the given address
+QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QString directorAddr)
+{
+	QMutexLocker locker(mutex_);
+
+	//Iterate through the open sessions looking for the session info with the 
+	//matching address
+	foreach(QSharedPointer<SessionInfo> session, openSessions_)
+	{
+		if(session->directorAddr_ == directorAddr)
+			return getSessionInfo(session->uuid_);
+	}
+
+	//If we made it this far, there is no session with the specified director,
+	//so return a null object
+	return QSharedPointer<SessionInfo>();
+}
 
 //! Returns the session info for the passed in session id
 QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QUuid uuid)
@@ -296,11 +313,11 @@ QUuid ConnectionManager::pendingSession(QHostAddress directorAddr)
 }
 
 //! Creates a new session and returns a pointer to the SessinoInfo object
-QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAddr, int proxyId)
+QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAddr, int proxyId, QByteArray experimentXml)
 {
 	QMutexLocker locker(mutex_);
 	
-	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorAddr, proxyId));
+	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorAddr, proxyId, experimentXml));
 
 	pendingSessions_[directorAddr] = sessInfo->uuid_;
 	openSessions_[sessInfo->uuid_] = sessInfo;

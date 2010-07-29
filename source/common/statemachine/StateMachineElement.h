@@ -54,7 +54,7 @@ public:
 	//The returned string should correspond to a result contained by the element
 	virtual QString run(QSharedPointer<Engine::PictoEngine> engine) = 0;
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine) = 0;
-	static void resetSlaveElements() { lastTransitionTime_ = 0; };
+	static void resetSlaveElements(double time = 0.0) { lastTransitionTime_ = time; };
 	
 
 	bool addResult(QSharedPointer<Result> result);

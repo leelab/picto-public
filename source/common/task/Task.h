@@ -43,6 +43,7 @@ public:
 	void setName(QString name);
 
 	bool run(QSharedPointer<Engine::PictoEngine> engine);
+	bool jumpToState(QStringList path, QString state);
 
 	//DataStore Functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

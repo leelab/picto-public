@@ -18,8 +18,10 @@ namespace Picto {
 int StateMachine::trialEventCode_;
 int StateMachine::trialNum_;
 
-StateMachine::StateMachine()
-: scriptingInit_(false)
+StateMachine::StateMachine() : 
+	scriptingInit_(false),
+	ignoreInitialElement_(false)
+
 {
 	propertyContainer_.setPropertyValue("Type", "StateMachine");
 	propertyContainer_.addProperty(Property(QVariant::String,"Initial Element",""));
@@ -84,6 +86,41 @@ bool StateMachine::setInitialElement(QString elementName)
 		return false;
 	}
 }
+
+/*!	\brief Sets the machine in a specific state
+ *	
+ *	Calling this function will place the state machine into the passed in state.
+ *	Then, when run() or runAsSlave() is called, the machine will start in that
+ *	state, rather than in the initial state.  This is used when we are joining 
+ *  state machines that are already running.
+ */
+bool StateMachine::jumpToState(QStringList path, QString state)
+{
+	if(!path.isEmpty())
+	{
+		QString nextMachine = path.takeFirst();
+		if(elements_.contains(nextMachine))
+		{
+			currElement_ = elements_[nextMachine];
+			if(!currElement_.dynamicCast<StateMachine>()->jumpToState(path,state))
+				return false;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if(elements_.contains(state))
+			currElement_ = elements_[state];
+		else
+			return false;
+	}
+	ignoreInitialElement_ = true;
+	return true;
+}
+
 /*! \brief Confirms that the state machine is legal
  *
  *	This function will mostly be used in the deserialization function to
@@ -100,7 +137,6 @@ bool StateMachine::setInitialElement(QString elementName)
  *		- validate all contained state machines
  *		
  */
-
 bool StateMachine::validateStateMachine()
 {
 	QString name = propertyContainer_.getPropertyValue("Name").toString();
@@ -224,8 +260,16 @@ bool StateMachine::validateStateMachine()
 	return true;
 }
 
+
+/*	\brief The "run" function
+ *
+ *	Since runAsSlave(), and run() are so similar, they both just call into this private
+ *	run function.  This saves us some serious code repetition.
+ */
 QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave)
 {
+	path_.append(getName());
+
 	if(!scriptingInit_)
 	{
 		if(!initScripting(qsEngine_))
@@ -255,42 +299,29 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 	QString currElementName;
 	QString nextElementName;
-	QSharedPointer<StateMachineElement> currElement;
 
-	currElementName = propertyContainer_.getPropertyValue("Initial Element").toString();
-	currElement = elements_.value(currElementName);
+	if(!ignoreInitialElement_)
+	{
+		currElementName = propertyContainer_.getPropertyValue("Initial Element").toString();
+		currElement_ = elements_.value(currElementName);
+	}
+	else
+	{
+		currElementName = currElement_->getName();
+		ignoreInitialElement_ = false;
+	}
 
 	while(true)
 	{
 		QString result;
-		if(slave)
-			result = currElement->runAsSlave(engine);
-		else
-			result = currElement->run(engine);
-
-		if(result == "EngineAbort")
-			return result;
-
-		//Find the transition from our current source with a SourceResult string that matches the result
-		//Yeah, this is kind of ugly...
-		nextElementName = "";
-		foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
+		
+		//If we're about to dive into another state machine we need to set it's path
+		if(currElement_->type() == "StateMachine")
 		{
-			if(tran->getSourceResult() == result)
-			{
-				nextElementName = tran->getDestination();
-				sendStateDataToServer(tran, engine);
-				break;
-			}
+			currElement_.dynamicCast<StateMachine>()->setPath(path_);
 		}
-		//! \TODO come up with a more elegant error handling scheme...
-		//QString errorMsg = "Unable to find element with name: "+nextElementName
-		Q_ASSERT_X(elements_.contains(nextElementName), "StateMachine::Run",QString("Unable to find element with name: %1").arg(nextElementName).toAscii());
 
-		currElement = elements_[nextElementName];
-		currElementName = nextElementName;
-
-		if(currElement->type() == "Result")
+		if(currElement_->type() == "Result")
 		{
 			if(getLevel() == StateMachineLevel::Trial)
 			{
@@ -309,7 +340,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 				//to make sure that the master engine is done (and that we didn't screw up)
 				QString masterResult;
 				QString slaveResult;
-				slaveResult = currElement->runAsSlave(engine);
+				slaveResult = currElement_->runAsSlave(engine);
 
 				while(masterResult.isEmpty())
 					masterResult = getMasterStateResult(engine);
@@ -317,8 +348,38 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 				return masterResult;
 			}
 			else
-				return currElement->run(engine);
+				return currElement_->run(engine);
 		}
+		else
+		{
+			if(slave)
+				result = currElement_->runAsSlave(engine);
+			else
+				result = currElement_->run(engine);
+
+			if(result == "EngineAbort")
+				return result;
+		}
+
+		//Find the transition from our current source with a SourceResult string that matches the result
+		//Yeah, this is kind of ugly...
+		nextElementName = "";
+		foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
+		{
+			if(tran->getSourceResult() == result)
+			{
+				nextElementName = tran->getDestination();
+				sendStateDataToServer(tran, engine);
+				break;
+			}
+		}
+		//! \TODO come up with a more elegant error handling scheme...
+		//QString errorMsg = "Unable to find element with name: "+nextElementName
+		Q_ASSERT_X(elements_.contains(nextElementName), "StateMachine::Run",QString("Unable to find element with name: %1").arg(nextElementName).toAscii());
+
+		currElement_ = elements_[nextElementName];
+		currElementName = nextElementName;
+
 	}
 
 }
@@ -454,10 +515,10 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 
 	Timestamper stamper;
 	double timestamp = stamper.stampSec();
-	QString name = propertyContainer_.getPropertyValue("Name").toString();
+	QString qualifiedName = path_.join("::");
 
 	StateDataStore stateData;
-	stateData.setTransition(transition,timestamp,name);
+	stateData.setTransition(transition,timestamp,qualifiedName);
 
 	xmlWriter->writeStartElement("Data");
 	stateData.serializeAsXml(xmlWriter);

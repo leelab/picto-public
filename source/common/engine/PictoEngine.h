@@ -122,7 +122,6 @@ public:
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
 	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
-
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;

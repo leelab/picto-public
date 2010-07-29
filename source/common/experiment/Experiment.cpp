@@ -49,11 +49,6 @@ bool Experiment::runTask(QString taskName, QSharedPointer<Engine::PictoEngine> e
 	//removed, so we need to check that possibility
 	foreach(QSharedPointer<Task> task, tasks_)
 	{
-		///////////////////////
-		QString debugginStr = task->name();
-		///////////////////////
-
-
 		if(task->name() == taskName ||
 		   task->name().simplified().remove(' ') == taskName)
 		{	
@@ -63,6 +58,22 @@ bool Experiment::runTask(QString taskName, QSharedPointer<Engine::PictoEngine> e
 			engine->stopAllSignalChannels();
 
 			return success;
+		}
+	}
+	return false;
+}
+
+
+//! Jumps to the specified task and state
+bool Experiment::jumpToState(QString taskName, QStringList path, QString state)
+{
+	foreach(QSharedPointer<Task> task, tasks_)
+	{
+		if(task->name() == taskName ||
+		   task->name().simplified().remove(' ') == taskName)
+		{	
+			task->jumpToState(path,state);
+			return true;
 		}
 	}
 	return false;

@@ -46,7 +46,7 @@
 class SessionInfo
 {
 public:
-	SessionInfo(QString directorAddr, int proxyId);
+	SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml);
 	~SessionInfo();
 
 	void endSession();
@@ -66,6 +66,7 @@ public:
 	QUuid sessionId() { return uuid_; };
 	//QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
 	QString directorAddr() { return directorAddr_; };
+	QByteArray experimentXml() { return experimentXml_; };
 
 	QString pendingDirective();
 	void addPendingDirective(QString directive) { pendingDirectives_.append(directive); };
@@ -89,6 +90,7 @@ private:
 	QStringList pendingDirectives_;
 	QString directorAddr_;
 	bool activity_;
+	QByteArray experimentXml_;
 };
 
 #endif

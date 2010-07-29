@@ -50,6 +50,16 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 }
 
+//!	Jumps to the specified state in the task's main state machine
+bool Task::jumpToState(QStringList path, QString state)
+{
+	//The fist name in the path should be the name of our state machine
+	if(path.takeFirst() != stateMachine_->getName())
+		return false;
+
+	return stateMachine_->jumpToState(path,state);
+}
+
 void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine)
 {
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
@@ -79,8 +89,6 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 
 	dataCommand->setContent(stateDataXml);
 	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
-	QUuid commandUuid = QUuid::createUuid();
-	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
 
 	dataChannel->sendCommand(dataCommand);
 

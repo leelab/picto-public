@@ -9,6 +9,7 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 #include "../../common/storage/behavioraldatastore.h"
+#include "../../common/storage/statedatastore.h"
 #include "../../common/statemachine/statemachine.h"
 
 
@@ -58,7 +59,7 @@ void RemoteViewer::init()
 	}
 	//If we're stopped, load the current experiment.  If we are paused,
 	//then we shouldn't load the experiment.
-	if(status_ == Stopped)
+	/*if(status_ == Stopped)
 	{
 		if(!experiment_)
 		{
@@ -67,7 +68,7 @@ void RemoteViewer::init()
 			msg.exec();
 
 		}
-	}
+	}*/
 
 	generateTaskList();
 	
@@ -226,6 +227,7 @@ void RemoteViewer::play()
 {
 	qDebug()<<"Play slot";
 
+	timeoutTimer_->stop();
 	if(status_ == Stopped)
 	{
 		QString modifiedTaskName = taskListBox_->currentText();
@@ -235,13 +237,14 @@ void RemoteViewer::play()
 		{
 			status_ = Running;
 			updateActions();
-			if(experiment_)
-			{
-				experiment_->runTask(modifiedTaskName, engine_);
-				status_ = Stopped;
-				updateActions();
-				renderingTarget_->showSplash();
-			}
+			timeoutTimer_->start();
+
+			//We don't return from this until the task completes
+			activeExperiment_.runTask(modifiedTaskName, engine_);
+
+			status_ = Stopped;
+			updateActions();
+			renderingTarget_->showSplash();
 		}
 	}
 	else if(status_ == Paused)
@@ -254,25 +257,30 @@ void RemoteViewer::play()
 		}
 	}
 	updateActions();
+	timeoutTimer_->start();
 }
 
 void RemoteViewer::pause()
 {
+	timeoutTimer_->stop();
+
 	if(sendTaskCommand("pause"))
 	{
 		status_ = Paused;
-		updateActions();
 		engine_->pause();
 	}
 	updateActions();
+	timeoutTimer_->start();
 }
 
 void RemoteViewer::stop()
 {
+	timeoutTimer_->stop();
 	sendTaskCommand("stop");
 	status_ = Stopped;
-	updateActions();
 	engine_->stop();
+	updateActions();
+	timeoutTimer_->start();
 }
 
 void RemoteViewer::reward()
@@ -292,11 +300,21 @@ void RemoteViewer::changeConnectionState(bool checked)
 		QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 		if(directorIsRunning(directorAddr))
 		{
-			//! \TODO Handle joining a running session...
-			Q_ASSERT(false);
+			//joinSession doesn't return until the session ends (this could be fixed
+			//by using a signal to run the task, but  tasks were designed to be run in 
+			//an environment without event loops).  This means that we need to handle
+			//everything before calling it.
+			startedSession_ = false;
+			connectAction_->setIcon(QIcon(":/icons/connected.png"));
+			if(!joinSession())
+			{
+				connectAction_->setChecked(false);
+				connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+			}
 		}
 		else
 		{
+			startedSession_ = true;
 			if(startSession())
 			{
 				connectAction_->setIcon(QIcon(":/icons/connected.png"));
@@ -315,15 +333,16 @@ void RemoteViewer::changeConnectionState(bool checked)
 		{
 			//We started the session, so disconnecting from it will kill it.
 			if(endSession())
-			{
 				connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
-			}
 			else
 				connectAction_->setChecked(true);
 		}
 		else
 		{
-			//If we joined an already active sesssion, we aren't allowed to kill it
+			if(disjoinSession())
+				connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+			else
+				connectAction_->setChecked(true);
 		}
 
 
@@ -476,6 +495,8 @@ void RemoteViewer::updateActions()
  */
 void RemoteViewer::updateLists()
 {
+	QIcon runningIcon(QIcon(":/icons/runningWorkstation.png"));
+
 	if(connectAction_->isChecked())
 	{
 		directorListBox_->setEnabled(false);
@@ -492,7 +513,14 @@ void RemoteViewer::updateLists()
 	{
 		DirectorInstance d = directors[i];
 		if(directorListBox_->findData(d.address) == -1)
-			directorListBox_->addItem(d.name, d.address);
+		{
+			if(d.status.toUpper() == "IDLE")
+				directorListBox_->addItem(d.name, d.address);
+			else
+				directorListBox_->addItem(runningIcon, d.name, d.address);
+		}
+
+
 	}
 
 	//Remove old directors
@@ -503,6 +531,11 @@ void RemoteViewer::updateLists()
 		{
 			if(directors[j].address ==directorListBox_->itemData(i))
 			{
+				if(directors[j].status.toUpper() == "IDLE")
+					directorListBox_->setItemIcon(i,QIcon());
+				else
+					directorListBox_->setItemIcon(i,runningIcon);
+
 				remove = false;
 				break;
 			}
@@ -702,14 +735,14 @@ QList<RemoteViewer::ProxyServerInfo> RemoteViewer::getProxyList()
 /*! \brief checks to see if the current proxy or director has timed out, or if we have lost contact with the server
  *
  *	When we are in a session, this slot is called periodically, to confirm that the
- *	proxy and director being used haven't disapearred from the network.
+ *	proxy and director being used haven't disapearred from the network.  Since this
+ *	gives us access to the director status, it makes sense to use this time to see
+ *	if the director sttae has been modified by someone else (for example, if the 
+ *	director has been paused by another Workstation, we should change our state to paused)
  */
 void RemoteViewer::checkForTimeouts()
 {
 	//check that the command channels are still connected
-	//serverChannel_ = new Picto::CommandChannel(this);
-	//engineSlaveChannel_ = new Picto::CommandChannel(this);
-	//behavioralDataChannel_ = new Picto::CommandChannel(this);
 	if(serverChannel_->getChannelStatus() == Picto::CommandChannel::disconnected ||
 	   engineSlaveChannel_->getChannelStatus() == Picto::CommandChannel::disconnected ||
 	   behavioralDataChannel_->getChannelStatus() == Picto::CommandChannel::disconnected)
@@ -733,6 +766,48 @@ void RemoteViewer::checkForTimeouts()
 		if(director.name == directorListBox_->currentText() &&
 			director.address == directorListBox_->itemData(directorListBox_->currentIndex()).toString())
 		{
+
+			//These commands are weird.  Basically, if someone else has screwed with the state of
+			//our director, we need to make the same change in our local engine.
+			if(director.status.toUpper() == "IDLE" && !startedSession_)
+			{
+				//This means that the session has ended, so we must disjoin
+				Q_ASSERT(disjoinSession());
+			}
+			else if(director.status.toUpper() == "STOPPED")
+			{
+				if(status_ != Stopped)
+				{
+					engine_->stop();
+					status_ = Stopped;
+				}
+			}
+			else if(director.status.toUpper() == "PAUSED")
+			{
+				if(status_ != Paused)
+				{
+					engine_->pause();
+					status_ = Paused;
+				}
+			}
+			else if(director.status.toUpper() == "RUNNING")
+			{
+				if(status_ == Paused)
+				{
+					status_ = Running;
+					engine_->resume();
+				}
+				else if(status_ == Stopped)
+				{
+					//If director went from stopped to running, then
+					//a new task was started.  The easiest way for us to handle
+					//this will be to disjoin and then rejoin the session,
+					//but that only works if we were the observers
+					disjoinSession();
+					joinSession();
+				}
+			}
+
 			foundDirector = true;
 			break;
 		}
@@ -779,6 +854,20 @@ bool RemoteViewer::startSession()
 	//Check for a currently running session
 	if(!sessionId_.isNull())
 		return true;
+
+	//Make a copy of the experiment
+	//It would be 100 times easier to copy the experiment obect directly, but it contains a
+	//parameter container, which is a QObject, and can't be copied.  So instead, we generate
+	//a new copy instead
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
+	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
+		xmlReader->readNext();
+
+	if(xmlReader->atEnd())
+		return false;
+	if(!activeExperiment_.deserializeFromXml(xmlReader))
+		return false;
+
 
 	QString commandStr;
 	QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
@@ -918,6 +1007,187 @@ bool RemoteViewer::endSession()
 	timeoutTimer_->stop();
 	return true;
 
+}
+
+//! Joins a currently running session as an "observer" of the session
+bool RemoteViewer::joinSession()
+{
+	//Check for a currently running session
+	if(!sessionId_.isNull())
+		return true;
+
+	//Send a JOINSESSION command
+	QString commandStr;
+	QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+	commandStr = "JOINSESSION "+directorAddr+" PICTO/1.0";
+
+	QSharedPointer<Picto::ProtocolCommand> joinSessCommand(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolResponse> joinSessResponse;
+
+	serverChannel_->sendCommand(joinSessCommand);
+	if(!serverChannel_->waitForResponse(5000))
+	{
+		setStatus(tr("Server did not respond to JOISESSION command"));
+		return false;
+	}
+
+	joinSessResponse = serverChannel_->getResponse();
+	if(joinSessResponse.isNull() || joinSessResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
+	{
+		setStatus(tr("Unexpected response to JOINSESSION. Unable to join session."));
+		return false;
+	}
+
+	
+	
+	QByteArray content = joinSessResponse->getDecodedContent();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(content));
+
+	//Extract the sessionID
+	while(!xmlReader->atEnd() && !(xmlReader->isStartElement() && xmlReader->name() == "SessionID"))
+		xmlReader->readNext();
+
+	if(!xmlReader->atEnd())
+	{
+		sessionId_ = QUuid(xmlReader->readElementText());
+		serverChannel_->setSessionId(sessionId_);
+		engineSlaveChannel_->setSessionId(sessionId_);
+		behavioralDataChannel_->setSessionId(sessionId_);
+		setStatus(tr("Existing session joined. Session ID: ")+ sessionId_.toString());
+	}
+	else
+	{
+		setStatus(tr("SessionID not found in response from server."));
+		return false;
+	}
+
+	//Extract the experiment xml
+	while(!xmlReader->atEnd() && !(xmlReader->isStartElement() && xmlReader->name() == "Experiment"))
+		xmlReader->readNext();
+
+	if(!xmlReader->atEnd())
+	{
+		if(!activeExperiment_.deserializeFromXml(xmlReader))
+		{
+			setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"));
+			return false;
+		}
+	}
+	else
+	{
+		setStatus(tr("No Experiment returned by JOINSESSION"));
+		return false;
+	}
+
+	//Figure out where we are in the state machine, and what the current time is
+	commandStr = "GETDATA StateDataStore:-1.0 PICTO/1.0";
+
+	QSharedPointer<Picto::ProtocolCommand> getDataCommand(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolResponse> getDataResponse;
+
+	serverChannel_->sendCommand(getDataCommand);
+	if(!serverChannel_->waitForResponse(5000))
+	{
+		setStatus(tr("Server did not respond to GETDATA command"));
+		return false;
+	}
+
+	getDataResponse = serverChannel_->getResponse();
+
+	if(getDataResponse.isNull() || getDataResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
+	{
+		setStatus("Unexpected response to GETDATA command");
+		return false;
+	}
+
+	content = getDataResponse->getDecodedContent();
+	xmlReader = QSharedPointer<QXmlStreamReader>(new QXmlStreamReader(content));
+	
+	//Grab the data
+	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
+
+	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataStore");
+
+
+	if(!xmlReader->atEnd())
+	{
+		Picto::StateDataStore data;
+		data.deserializeFromXml(xmlReader);
+		double lastTransitionTime = data.getTime();
+
+		//This resets the timing on all of our slave elements.  Note that this will eventually
+		//need to be rebuilt, because in the current arrangement, we can only have one running 
+		//slave state machine
+		Picto::StateMachine::resetSlaveElements(lastTransitionTime);
+
+		QStringList currentStateMachinePath = data.getMachineName().split("::");
+		QString currentState = data.getDestination();
+
+		///////TESTING
+		//We'll need to actually determine the task name directly....
+		QString modifiedTaskName = taskListBox_->currentText();
+		modifiedTaskName = modifiedTaskName.simplified().remove(' ');
+
+		if(!activeExperiment_.jumpToState(modifiedTaskName,currentStateMachinePath, currentState))
+		{
+			setStatus("Failed to jump into the state machine correctly");
+			return false;
+		}
+
+		status_ = Running;
+		updateActions();
+
+		//Start the timeout timer
+		if(!timeoutTimer_)
+		{
+			timeoutTimer_ = new QTimer(this);
+			timeoutTimer_->setInterval(500);
+			connect(timeoutTimer_, SIGNAL(timeout()), this, SLOT(checkForTimeouts()));
+		}
+		timeoutTimer_->start();
+
+		//WARNING:  Nothing after this line will be processed until the task is finished running
+		activeExperiment_.runTask(modifiedTaskName, engine_);
+		status_ = Stopped;
+		updateActions();
+		renderingTarget_->showSplash();
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+
+//! Disjoins a currently running session for which we are an observer only
+bool RemoteViewer::disjoinSession()
+{
+	Q_ASSERT_X(!startedSession_, "RemoteViewer::disjoinSession","Attempted to disjoin a session that we started.");
+
+	//Check for a currently running session
+	if(sessionId_.isNull())
+	{
+		setStatus(tr("Not currently in a session"));
+		return false;
+	}
+
+	//If we're running, we should stop the local engine
+	if(status_ == Running || status_ == Paused)
+		engine_->stop();
+
+	status_ = Stopped;
+	serverChannel_->setSessionId(QUuid());
+	engineSlaveChannel_->setSessionId(QUuid());
+	behavioralDataChannel_->setSessionId(QUuid());
+	sessionId_ = QUuid();
+	timeoutTimer_->stop();
+
+	setStatus("Disjoined session");
+
+	return true;
 }
 
 //! Sends a task command with the given target.  Returns true if execution was successful

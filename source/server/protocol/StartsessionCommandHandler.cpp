@@ -27,9 +27,11 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	QString target = command->getTarget();
 	QString directorAddr;
 	int proxyId;
+	QByteArray experimentXml;
 
 	directorAddr = target.left(target.indexOf('/'));
 	proxyId = target.mid(target.indexOf('/')+1).toInt();
+	experimentXml = command->getContent();
 
 	//Check that the Director is ready to go
 	if(conMgr->getDirectorStatus(directorAddr) == DirectorStatus::notFound)
@@ -52,7 +54,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 
 	//create the session
 	QSharedPointer<SessionInfo> sessionInfo;
-	sessionInfo = ConnectionManager::Instance()->createSession(directorAddr, proxyId);
+	sessionInfo = ConnectionManager::Instance()->createSession(directorAddr, proxyId, experimentXml);
 	
 	if(sessionInfo.isNull())
 	{
@@ -60,7 +62,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 		return notFoundResponse;
 	}
 
-	QString pendingDirective = "LOADEXP\n" + command->getContent();
+	QString pendingDirective = "LOADEXP\n" + experimentXml;
 	sessionInfo->addPendingDirective(pendingDirective);
 
 	QByteArray sessionIDXml;

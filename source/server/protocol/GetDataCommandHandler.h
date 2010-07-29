@@ -3,7 +3,9 @@
  *	PictoWorkstation sends these commands to the server to request that 
  *  behavioral data be sent.  The target of the command is the timestamp
  *	from which data should be returned (e.g. a target of 10.324 will 
- *  return all data that was collected after 10.324 seconds).
+ *  return all data that was collected after 10.324 seconds).  If the timestamp
+ *	is 0, we return all data, and if it is -1, we return only the most recent 
+ *  piece of data
  *
  *	FORMAT
  *		GETDATA datastoretype:time(e.g. BehavioralDataStore:3.245) PICTO.1/0
