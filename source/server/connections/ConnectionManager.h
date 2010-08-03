@@ -60,7 +60,7 @@ public:
 	//bool removeServerThread(ServerThread* thread);
 
 	//Session related functions
-	QSharedPointer<SessionInfo> createSession(QString directorAddr, int proxyId, QByteArray experimentXml);
+	QSharedPointer<SessionInfo> createSession(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
 	QSharedPointer<SessionInfo> getSessionInfo(QString directorAddr);
 	QSharedPointer<SessionInfo> getSessionInfo(QUuid uuid);
 	void endSession(QUuid sessionId);

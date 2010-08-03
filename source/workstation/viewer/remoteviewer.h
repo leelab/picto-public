@@ -116,9 +116,10 @@ private:
 	DirectorStatus localStatus_;
 	
 	bool startedSession_;
-	bool observerHasControl_;
+	bool enableTaskCommands_;
 
 	QUuid sessionId_;
+	QUuid observerId_;
 
 	int rewardChannel_;  //Channel used for issuing manual rewards
 

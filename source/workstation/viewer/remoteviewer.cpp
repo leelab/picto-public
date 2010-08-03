@@ -47,6 +47,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateStatus()));
 	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateLists()));
 	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateActions()));
+
+	observerId_ = QUuid::createUuid();
 }
 
 //! Called just before displaying the viewer
@@ -460,8 +462,12 @@ void RemoteViewer::generateTaskList()
  */
 void RemoteViewer::updateActions()
 {
+	if(startedSession_)
+		enableTaskCommands_ = true;
+
 	//Play action
 	bool disablePlay = false;
+	disablePlay |= !enableTaskCommands_;
 	disablePlay |= !serverChannel_->isConnected();
 	disablePlay |= !connectAction_->isChecked();
 	disablePlay |= (taskListBox_->count() == 0);
@@ -476,6 +482,7 @@ void RemoteViewer::updateActions()
 
 	//Stop action
 	bool disableStop = false;
+	disableStop |= !enableTaskCommands_;
 	disableStop |= !(localStatus_ == Running || localStatus_ == Paused);
 	disableStop |= !connectAction_->isChecked();
 
@@ -487,6 +494,7 @@ void RemoteViewer::updateActions()
 
 	//Pause action
 	bool disablePause = false;
+	disablePause |= !enableTaskCommands_;
 	disablePause |= (localStatus_ != Running);
 	disablePause |= !connectAction_->isChecked();
 
@@ -497,6 +505,7 @@ void RemoteViewer::updateActions()
 
 	//Reward action
 	bool disableReward = false;
+	disableReward |= !enableTaskCommands_;
 	disableReward |= !connectAction_->isChecked();
 
 	if(disableReward)
@@ -530,6 +539,7 @@ void RemoteViewer::updateActions()
 
 	//Task list combo box
 	bool disableTaskList = false;
+	disableTaskList |= !enableTaskCommands_;
 	disableTaskList |= (localStatus_ == Running);
 	disableTaskList |= (localStatus_ == Paused);
 
@@ -942,15 +952,16 @@ bool RemoteViewer::startSession()
 	int proxyId = proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt();
 	commandStr = "STARTSESSION "+directorAddr+"/"+QString::number(proxyId)+" PICTO/1.0";
 
-	QSharedPointer<Picto::ProtocolCommand> loadExpCommand(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolCommand> startSessCommand(new Picto::ProtocolCommand(commandStr));
 
 	QByteArray experimentXml = experimentText_->toPlainText().toUtf8();
-	loadExpCommand->setContent(experimentXml);
-	loadExpCommand->setFieldValue("Content-Length",QString("%1").arg(experimentXml.length()));
+	startSessCommand->setContent(experimentXml);
+	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(experimentXml.length()));
+	startSessCommand->setFieldValue("Observer-ID",observerId_.toString());
 
 	QSharedPointer<Picto::ProtocolResponse> loadExpResponse;
 
-	serverChannel_->sendCommand(loadExpCommand);
+	serverChannel_->sendCommand(startSessCommand);
 	if(!serverChannel_->waitForResponse(5000))
 	{
 		setStatus(tr("Server did not respond to STARTSESSION command"));
@@ -1017,8 +1028,9 @@ bool RemoteViewer::endSession()
 	}
 
 
-	QSharedPointer<Picto::ProtocolCommand> endSessCommand(
-		new Picto::ProtocolCommand("ENDSESSION "+sessionId_+" PICTO/1.0"));
+	QSharedPointer<Picto::ProtocolCommand> endSessCommand(new Picto::ProtocolCommand("ENDSESSION "+sessionId_+" PICTO/1.0"));
+	endSessCommand->setFieldValue("Observer-ID",observerId_.toString());
+
 	QSharedPointer<Picto::ProtocolResponse> endSessResponse;
 
 	serverChannel_->sendCommand(endSessCommand);
@@ -1037,6 +1049,10 @@ bool RemoteViewer::endSession()
 	else if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::OK)
 	{
 		setStatus(tr("Session ended"));
+	}
+	else if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::Unauthorized)
+	{
+		setStatus(tr("Workstation instance not authorized to end session"));
 	}
 	else
 	{
@@ -1075,7 +1091,6 @@ bool RemoteViewer::joinSession()
 	{
 
 		//Send a JOINSESSION command
-		
 		commandStr = "JOINSESSION "+directorAddr+" PICTO/1.0";
 
 		QSharedPointer<Picto::ProtocolCommand> joinSessCommand(new Picto::ProtocolCommand(commandStr));
@@ -1229,9 +1244,17 @@ bool RemoteViewer::joinSession()
 
 	setStatus(tr("Existing session joined. Session ID: ")+ sessionId_.toString());
 
+	//Send an isauthorized TASK command to figure out if we're authorized to send commands
+	//on this session.
+	if(sendTaskCommand("isauthorized"))
+		enableTaskCommands_ = true;
+	else
+		enableTaskCommands_ = false;
+
+
+
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.
-
 	DirectorStatus remoteStatus = directorStatus(directorAddr);
 	if(remoteStatus == Idle || remoteStatus == Error)
 	{
@@ -1325,6 +1348,7 @@ bool RemoteViewer::disjoinSession()
 bool RemoteViewer::sendTaskCommand(QString target)
 {
 	QSharedPointer<Picto::ProtocolCommand> cmd(new Picto::ProtocolCommand("TASK "+target+" PICTO/1.0"));
+	cmd->setFieldValue("Observer-ID",observerId_.toString());
 	
 	QSharedPointer<Picto::ProtocolResponse> cmdResponse;
 
@@ -1350,6 +1374,11 @@ bool RemoteViewer::sendTaskCommand(QString target)
 	else if(cmdResponse->getResponseCode() == 404)
 	{
 		setStatus("TASK "+target+tr(" command failed: Session ID not recognized"));
+		return false;
+	}
+	else if(cmdResponse->getResponseCode() == Picto::ProtocolResponseType::Unauthorized)
+	{
+		setStatus("TASK "+target+tr(" command failed: Workstation instance not authorized"));
 		return false;
 	}
 	else

@@ -46,7 +46,7 @@
 class SessionInfo
 {
 public:
-	SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml);
+	SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
 	~SessionInfo();
 
 	void endSession();
@@ -75,6 +75,8 @@ public:
 	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
 	void setActivity() { activity_ = true; };
 
+	bool isAuthorizedObserver(QUuid observerId);
+
 	friend class ConnectionManager;
 
 private:
@@ -91,6 +93,8 @@ private:
 	QString directorAddr_;
 	bool activity_;
 	QByteArray experimentXml_;
+
+	QList<QUuid> authorizedObservers_;
 };
 
 #endif

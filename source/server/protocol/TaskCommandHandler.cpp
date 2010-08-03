@@ -45,6 +45,11 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 		return badReqResponse;
 	}
 
+	//Figure out if the observer sending the command is an authorized user
+	QUuid observerId = QUuid(command->getFieldValue("Observer-ID"));
+	if(!sessInfo_->isAuthorizedObserver(observerId))
+		return unauthResponse;
+
 	//Parse the command
 	QString target = command->getTarget();
 
@@ -77,6 +82,13 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 			return notFoundResponse;
 		else
 			return reward(channel);
+	}
+	else if(target.startsWith("isauthorized", Qt::CaseInsensitive))
+	{
+		//This is a weird little command.  It's basically a check so that a workstation can determine
+		//if it is authorized to send task commands.  If the workstation isn't authorized, the command
+		//will return 401:Unauthorized, otherwise, we do nothing, and return 200:OK
+		return okResponse;
 	}
 	else
 	{

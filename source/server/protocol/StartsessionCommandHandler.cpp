@@ -6,6 +6,7 @@
 #include "../connections/ServerConfig.h"
 
 #include <QXmlStreamWriter>
+#include <QUuid>
 
 StartsessionCommandHandler::StartsessionCommandHandler()
 {
@@ -28,10 +29,16 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	QString directorAddr;
 	int proxyId;
 	QByteArray experimentXml;
+	QUuid observerId;
 
 	directorAddr = target.left(target.indexOf('/'));
 	proxyId = target.mid(target.indexOf('/')+1).toInt();
 	experimentXml = command->getContent();
+	observerId = QUuid(command->getFieldValue("Observer-ID"));
+	
+	if(observerId.isNull())
+		return notFoundResponse;
+
 
 	//Check that the Director is ready to go
 	if(conMgr->getDirectorStatus(directorAddr) == DirectorStatus::notFound)
@@ -54,7 +61,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 
 	//create the session
 	QSharedPointer<SessionInfo> sessionInfo;
-	sessionInfo = ConnectionManager::Instance()->createSession(directorAddr, proxyId, experimentXml);
+	sessionInfo = ConnectionManager::Instance()->createSession(directorAddr, proxyId, experimentXml, observerId);
 	
 	if(sessionInfo.isNull())
 	{

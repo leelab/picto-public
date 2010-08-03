@@ -9,7 +9,10 @@
 #include <QVariant>
 #include <QMutexLocker>
 
-SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml):
+//This turns on and off the authorized user permission setup on SessionInfo
+//#define NO_AUTH_REQUIRED
+
+SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId):
 	activity_(true),
 	directorAddr_(directorAddr),
 	proxyId_(proxyId),
@@ -18,6 +21,15 @@ SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimen
 	//CreateUUID
 	QUuid uuid = QUuid::createUuid();
 	uuid_ = uuid;
+
+	//Add the initial observer (the session creator) to our list of authorized observers
+	//This means that he can issue ENDSESSION and TASK commands.
+	authorizedObservers_.append(initialObserverId);
+
+#ifdef NO_AUTH_REQUIRED
+	//Add a null QUuid so that everyone is considered an authorized user
+	authorizedObservers_.append(QUuid());
+#endif
 
 	//Create the base session DB
 	QString databaseName;
@@ -166,6 +178,33 @@ void SessionInfo::endSession()
 
 	//Flush the database cache
 	flushCache();
+}
+
+
+/*!	\brief Determines if the observer with the passed in ID is authorized to issue commands
+ *
+ *	This is a really simple means of setting permissions on the session.  Effectively there
+ *	are two levels of user: authorized, and unauthorized.  This allows us to limit who is 
+ *	allowed to do things like issuing TASK and ENDSESSION commands.
+ *
+ *	The authorized observers list contains all observers who are authorized at the higher 
+ *	permission level.  However, there is a special case.  If the list contains a null Uuid,
+ *	then all observers (including those using null IDs) are considered to be at the authorized
+ *	level.
+ *
+ *	!!!!  WARNING  !!!!
+ *	This is by no means a secure method of assigning permissions.  Since all network communication
+ *	is unencrypted, it would be trivial to intercept a valid observer ID, and then append it to
+ *	spoofed commands.  If you want high security, you'll need to rewrite this from the ground up.
+ */
+bool SessionInfo::isAuthorizedObserver(QUuid observerId)
+{
+	if(authorizedObservers_.contains(QUuid()))
+		return true;
+	else if(authorizedObservers_.contains(observerId))
+		return true;
+	else
+		return false;
 }
 
 /*! \brief Dumps the cache database into the session database

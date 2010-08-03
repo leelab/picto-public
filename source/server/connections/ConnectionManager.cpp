@@ -313,11 +313,11 @@ QUuid ConnectionManager::pendingSession(QHostAddress directorAddr)
 }
 
 //! Creates a new session and returns a pointer to the SessinoInfo object
-QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAddr, int proxyId, QByteArray experimentXml)
+QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId)
 {
 	QMutexLocker locker(mutex_);
 	
-	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorAddr, proxyId, experimentXml));
+	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorAddr, proxyId, experimentXml,initialObserverId));
 
 	pendingSessions_[directorAddr] = sessInfo->uuid_;
 	openSessions_[sessInfo->uuid_] = sessInfo;
