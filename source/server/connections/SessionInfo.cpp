@@ -62,7 +62,7 @@ SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimen
 	sessionQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
 		"ypos REAL, time REAL)");
 
-	sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, machinename TEXT, "
+	sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, machinepath TEXT, "
 		"source TEXT, sourceresult TEXT, destination TEXT, time REAL)");
 
 	sessionQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
@@ -307,10 +307,10 @@ void SessionInfo::insertStateData(Picto::StateDataStore data)
 	QSqlQuery query(sessionDb);
 	
 	query.prepare("INSERT INTO statetransitions "
-		"(machinename, source, sourceresult, destination, time) "
-		"VALUES(:machinename, :source, :sourceresult, :destination, :time) ");
-	query.bindValue(":machinename", data.getMachineName());
-	QString machineName = data.getMachineName();
+		"(machinepath, source, sourceresult, destination, time) "
+		"VALUES(:machinepath, :source, :sourceresult, :destination, :time) ");
+	query.bindValue(":machinepath", data.getMachinePath());
+	QString machineName = data.getMachinePath();
 	query.bindValue(":source", data.getSource()); 
 	query.bindValue(":sourceresult",data.getSourceResult());
 	query.bindValue(":destination",data.getDestination());
@@ -535,7 +535,7 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 	if(timestamp < 0)
 	{
 		QSqlQuery sessionQuery(sessionDb);
-		sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinename FROM statetransitions  "
+		sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinepath FROM statetransitions  "
 			"ORDER BY time DESC");
 		Q_ASSERT_X(sessionQuery.exec(), "SessionInfo::selectBehavioralData", sessionQuery.lastError().text().toAscii());
 
@@ -554,7 +554,7 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 	else
 	{
 		QSqlQuery sessionQuery(sessionDb);
-		sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinename FROM statetransitions  "
+		sessionQuery.prepare("SELECT source, sourceresult, destination, time, machinepath FROM statetransitions  "
 			"WHERE time > :time ORDER BY time ASC");
 		if(timestamp == 0)
 			sessionQuery.bindValue(":time",-1);

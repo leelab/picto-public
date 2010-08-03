@@ -13,6 +13,7 @@
  *		There are 3 possible responses:
  *		200:OK - sent if the command is proccessed sucessfully
  *		400:BadRequest - sent if the command doesn't make sense (e.g. calling stop on a task that isn't currently running)
+ *		401:Unauthorized - sent if the originator of the command isn't authorized to send task commands.
  *		404:NotFound - sent if the session ID, taskname, or command isn't recognized
  */
 

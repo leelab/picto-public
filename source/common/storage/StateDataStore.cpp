@@ -6,23 +6,23 @@ StateDataStore::StateDataStore()
 {
 }
 
-void StateDataStore::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachineName)
+void StateDataStore::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
 {
 	transition_ = transition; 
 	timestamp_ = timestamp;
-	machineName_ = stateMachineName;
+	machinePath_ = stateMachinePath;
 }
-void StateDataStore::setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachineName)
+void StateDataStore::setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath)
 {
 	transition_ = QSharedPointer<Transition>(new Transition(source, sourceResult, destination));
 	timestamp_ = timestamp;
-	machineName_ = stateMachineName;
+	machinePath_ = stateMachinePath;
 }
 
 /*! \brief Turns the StateDataStore into an XML fragment
  *
  *	The XML will look like this:
- *	<StateDataStore timestamp = 123.456 statemachine="state machine name">
+ *	<StateDataStore timestamp = 123.456 statemachinepath="state machine name">
  *		<Transition>
  *			<Source>TestState</Source>
  *			<SourceResult>Success</SourceResult>
@@ -34,7 +34,7 @@ bool StateDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 {
 	xmlStreamWriter->writeStartElement("StateDataStore");
 	xmlStreamWriter->writeAttribute("timestamp",QString::number(timestamp_));
-	xmlStreamWriter->writeAttribute("statemachine",machineName_);
+	xmlStreamWriter->writeAttribute("statemachinepath",machinePath_);
 
 	if(transition_)
 		transition_->serializeAsXml(xmlStreamWriter);
@@ -54,7 +54,7 @@ bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	}
 
 	timestamp_ = xmlStreamReader->attributes().value("timestamp").toString().toDouble();
-	machineName_ = xmlStreamReader->attributes().value("statemachine").toString();
+	machinePath_ = xmlStreamReader->attributes().value("statemachinepath").toString();
 	transition_ = QSharedPointer<Transition>(new Transition());
 
 	xmlStreamReader->readNext();

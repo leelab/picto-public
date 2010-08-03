@@ -65,8 +65,9 @@ bool Experiment::runTask(QString taskName, QSharedPointer<Engine::PictoEngine> e
 
 
 //! Jumps to the specified task and state
-bool Experiment::jumpToState(QString taskName, QStringList path, QString state)
+bool Experiment::jumpToState(QStringList path, QString state)
 {
+	QString taskName = path.takeFirst();
 	foreach(QSharedPointer<Task> task, tasks_)
 	{
 		if(task->name() == taskName ||

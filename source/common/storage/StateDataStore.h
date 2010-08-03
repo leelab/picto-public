@@ -5,7 +5,7 @@
  *	state machine.
  *
  *	The XML format is:
- *	<StateDataStore timestamp = 123.456 statemachine="state machine name">
+ *	<StateDataStore timestamp = 123.456 statemachinepath="state machine name">
  *		<Transition>
  *			<Source>TestState</Source>
  *			<SourceResult>Success</SourceResult>
@@ -34,11 +34,11 @@ class StateDataStore : public DataStore
 public:
 	StateDataStore();
 
-	void setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachineName);
-	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachineName);
+	void setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath);
+	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath);
 	void clearTransition() { transition_ = QSharedPointer<Transition>(); };
 
-	QString getMachineName() { return machineName_; };
+	QString getMachinePath() { return machinePath_; };
 	double getTime() { return timestamp_; };
 	QString getSource() { return transition_->getSource(); };
 	QString getSourceResult() { return transition_->getSourceResult(); };
@@ -50,7 +50,7 @@ public:
 private:
 	QSharedPointer<Transition> transition_;
 	double timestamp_;
-	QString machineName_;
+	QString machinePath_;
 };
 
 

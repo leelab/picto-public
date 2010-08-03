@@ -32,6 +32,9 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 	else
 	{
+		//Before running the statemachine, we need to append the task name to its path
+		stateMachine_->setPath(QStringList()<<name());
+
 		if(engine->slaveMode())
 		{
 			stateMachine_->runAsSlave(engine);
@@ -46,10 +49,7 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 			//After the task has finished running, we need to report the final result.
 			//This can't be done within the state machine, because the state machine
 			//has no idea if it's the top level.
-			//if(result != "EngineAbort")
-				sendFinalStateDataToServer(result, engine);
-			//else
-				//sendFinalStateDataToServer("Engine
+			sendFinalStateDataToServer(result, engine);
 		}
 
 		return true;
@@ -59,7 +59,12 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 //!	Jumps to the specified state in the task's main state machine
 bool Task::jumpToState(QStringList path, QString state)
 {
-	//The fist name in the path should be the name of our state machine
+	//If there's nothing left in the path, it means that we haven't started 
+	//running the task yet, so we don't need to do any jumping
+	if(path.isEmpty())
+		return true;
+
+	//The first name in the path should be the name of our state machine
 	if(path.takeFirst() != stateMachine_->getName())
 		return false;
 
@@ -121,7 +126,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 	double timestamp = stamper.stampSec();
 
 	StateDataStore stateData;
-	stateData.setTransition(source,sourceResult,destination,timestamp,"Task");
+	stateData.setTransition(source,sourceResult,destination,timestamp,name());
 
 	xmlWriter->writeStartElement("Data");
 	stateData.serializeAsXml(xmlWriter);

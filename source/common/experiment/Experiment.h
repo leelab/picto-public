@@ -40,7 +40,7 @@ public:
 
 	void addTask(QSharedPointer<Task> task);
 	bool runTask(QString taskName, QSharedPointer<Engine::PictoEngine> engine);
-	bool jumpToState(QString taskName, QStringList path, QString state);
+	bool jumpToState(QStringList path, QString state);
 
 	QString name();
 	void setName(QString name);

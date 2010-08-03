@@ -35,7 +35,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	localStatus_(Stopped),
 	serverChannel_(0),
 	timeoutTimer_(0),
-	startedSession_(false)
+	startedSession_(false),
+	activeExperiment_(0)
 {
 	setupServerChannel();
 	setupEngine();
@@ -111,7 +112,7 @@ bool RemoteViewer::aboutToQuit()
 		changeConnectionState(false);
 		return true;
 	}
-	else if(r == QMessageBox::No)
+	else
 		return false;	
 }
 
@@ -435,10 +436,12 @@ void RemoteViewer::generateTaskList()
 	Q_ASSERT(taskListBox_);
 	taskListBox_->clear();
 
-	if(!experiment_)
+	if(activeExperiment_)
+		taskListBox_->addItems(activeExperiment_->getTaskNames());
+	else if(experiment_)
+		taskListBox_->addItems(experiment_->getTaskNames());
+	else
 		return;
-
-	taskListBox_->addItems(experiment_->getTaskNames());
 	
 	taskListBox_->setEnabled(taskListBox_->count() > 0);
 
@@ -919,14 +922,19 @@ bool RemoteViewer::startSession()
 	//It would be 100 times easier to copy the experiment object directly, but it contains a
 	//parameter container, which is a QObject, and can't be copied.  So instead, we generate
 	//a new copy instead
+	activeExperiment_ = new Picto::Experiment;
+
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
 	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
 		xmlReader->readNext();
 
 	if(xmlReader->atEnd())
 		return false;
-	if(!activeExperiment_.deserializeFromXml(xmlReader))
+	if(!activeExperiment_->deserializeFromXml(xmlReader))
+	{
+		delete activeExperiment_;
 		return false;
+	}
 
 
 	QString commandStr;
@@ -1036,6 +1044,8 @@ bool RemoteViewer::endSession()
 	}
 	sessionId_ = QUuid();
 	serverChannel_->setSessionId(QUuid());
+	if(activeExperiment_)
+		delete activeExperiment_;
 	startedSession_ = false;
 	return true;
 
@@ -1103,16 +1113,18 @@ bool RemoteViewer::joinSession()
 		}
 
 		//Extract the experiment xml
+		activeExperiment_ = new Picto::Experiment;
 		while(!xmlReader->atEnd() && !(xmlReader->isStartElement() && xmlReader->name() == "Experiment"))
 			xmlReader->readNext();
 
 		if(!xmlReader->atEnd())
 		{
-			if(!activeExperiment_.deserializeFromXml(xmlReader))
+			if(!activeExperiment_->deserializeFromXml(xmlReader))
 			{
 				setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"));
 				return false;
 			}
+			generateTaskList();
 		}
 		else
 		{
@@ -1163,7 +1175,7 @@ bool RemoteViewer::joinSession()
 	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataStore");
 
 	double lastTransitionTime;
-	QString modifiedTaskName;
+	QString taskName;
 	QStringList currentStateMachinePath;
 	QString currentState;
 
@@ -1175,8 +1187,14 @@ bool RemoteViewer::joinSession()
 		data.deserializeFromXml(xmlReader);
 
 		lastTransitionTime = data.getTime();
-		currentStateMachinePath = data.getMachineName().split("::");
+		currentStateMachinePath = data.getMachinePath().split("::");
 		currentState = data.getDestination();
+		taskName = currentStateMachinePath.first();
+
+		//Update the task list box
+		int taskIdx = taskListBox_->findText(taskName);
+		Q_ASSERT_X(taskIdx >= 0,"RemoteViewer::joinSession", "Task name not found in out list of experiments.");
+		taskListBox_->setCurrentIndex(taskIdx);
 	}
 	else
 	{
@@ -1186,12 +1204,13 @@ bool RemoteViewer::joinSession()
 		lastTransitionTime = 0.0;
 		currentStateMachinePath = QStringList();
 		currentState = "";
+		taskName="";
 	}
 
 	///////TESTING
 	//We'll need to actually determine the task name directly....
-	modifiedTaskName = taskListBox_->currentText();
-	modifiedTaskName = modifiedTaskName.simplified().remove(' ');
+	//modifiedTaskName = taskListBox_->currentText();
+	//modifiedTaskName = modifiedTaskName.simplified().remove(' ');
 	
 	//Set ouselves up so we are synched with the remote director
 	Picto::StateMachine::resetSlaveElements(lastTransitionTime);
@@ -1228,9 +1247,9 @@ bool RemoteViewer::joinSession()
 	else if(remoteStatus == Running || remoteStatus == Paused)
 	{
 		////////////TESTING
-		qDebug()<<"JumpToState "<<modifiedTaskName<<currentStateMachinePath<<currentState;
+		qDebug()<<"JumpToState "<<currentStateMachinePath<<currentState;
 
-		if(!activeExperiment_.jumpToState(modifiedTaskName,currentStateMachinePath, currentState))
+		if(!activeExperiment_->jumpToState(currentStateMachinePath, currentState))
 		{
 			////////TESTING
 			Q_ASSERT(false);
@@ -1252,7 +1271,7 @@ bool RemoteViewer::joinSession()
 		updateActions();
 
 		//WARNING:  Nothing after this line will be processed until the task is finished running
-		activeExperiment_.runTask(modifiedTaskName, engine_);
+		activeExperiment_->runTask(taskName.simplified().remove(' '), engine_);
 		localStatus_ = Stopped;
 		updateActions();
 		renderingTarget_->showSplash();
@@ -1292,7 +1311,10 @@ bool RemoteViewer::disjoinSession()
 	//If we started the session, there's no reason to throw away the session ID
 	//until we end it.
 	if(!startedSession_)
+	{
 		sessionId_ = QUuid();
+		delete activeExperiment_;
+	}
 
 	setStatus("Disjoined session");
 

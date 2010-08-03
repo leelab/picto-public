@@ -17,13 +17,21 @@ TaskCommandHandler::TaskCommandHandler()
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 
-	//! \TODO Record the time that each command is received
+	/*! \TODO Record the time that each command is received.  This way less trivial 
+	 *	than it appears.  We want the time to be recorded in the session's timebase,
+	 *	but the server doesn't hold a timer in that timebase, so at best, we could
+	 *	estimate the time using the frame table.  We could also try inserting the 
+	 *	command in the state transition table.
+	 */
+
+
 
 	printf("TASK handler: %d\n", QThread::currentThreadId());
 
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
+	QSharedPointer<Picto::ProtocolResponse> unauthResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::Unauthorized));
 
 
 	//grab the session info and connection manager

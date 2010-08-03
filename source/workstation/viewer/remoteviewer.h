@@ -28,6 +28,7 @@ class RemoteViewer : public Viewer
 	Q_OBJECT
 public:
 	RemoteViewer(QWidget *parent=0);
+
 	QString type() { return "Remote"; };
 	bool aboutToQuit();
 
@@ -84,7 +85,7 @@ private:
 
 	//Since we don't want the experiemnt to be changed while it is being run
 	//we keep a local copy here.
-	Picto::Experiment activeExperiment_;
+	Picto::Experiment *activeExperiment_;
 
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
