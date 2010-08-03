@@ -34,6 +34,8 @@ public:
 	bool stop();
 	void updateDataBuffer();
 
+	void setLastTimeDataCollected(double time) { lastTimeDataCollected_ = time; };
+
 private:
 	CommandChannel *serverChannel_;
 	double lastTimeDataCollected_;

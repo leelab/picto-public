@@ -272,6 +272,21 @@ void MainWindow::createViewers()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+	//We're going to call the aboutToQuit slot on all of the viewer widgets
+	//WARNING: Iterating through the stack like this only works if widgets are
+	//inserted without leaving gaps in the indices.  This would seem to be a
+	//weakness in Qt.
+	for(int i=0; i<viewerStack_->count(); i++)
+	{
+		Viewer* v = qobject_cast<Viewer*>(viewerStack_->widget(i));
+		if(v)
+			if(!v->aboutToQuit())
+			{
+				event->ignore();
+				return;
+			}
+	}
+
 	if(okToContinue())
 	{
 		writeSettings();

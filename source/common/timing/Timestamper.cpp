@@ -71,4 +71,16 @@ double Timestamper::stampUs()
 #endif
 }
 
+
+//! Resets the timestamper to 0
+void Timestamper::reset()
+{
+#if defined WIN32 || defined WINCE
+	startTicks_.LowPart = 0;
+	startTicks_.HighPart = 0;
+#else
+	startTime_ = QTime();
+#endif
+}
+
 }//namespace Picto

@@ -11,18 +11,17 @@ namespace Picto {
 
 NetworkSignalChannel::NetworkSignalChannel(CommandChannel *serverChannel)
 	: SignalChannel(0),
-	  serverChannel_(serverChannel)
+	  serverChannel_(serverChannel),
+	  lastTimeDataCollected_(0)
 {
 	//add our subchannels to the list
 	addSubchannel("xpos");
 	addSubchannel("ypos");
 	addSubchannel("time");
-
 }
 
 bool NetworkSignalChannel::start()
 {
-	lastTimeDataCollected_ = 0.0;
 	return serverChannel_->isConnected();
 }
 

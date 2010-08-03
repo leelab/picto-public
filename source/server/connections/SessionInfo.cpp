@@ -74,6 +74,11 @@ SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimen
 	sessionQ.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
 	sessionQ.exec();
 
+	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session ID\", :id)");
+	sessionQ.bindValue(":id", uuid_.toString());
+	sessionQ.exec();
+
+
 
 
 
@@ -98,7 +103,8 @@ SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimen
 		ndc_ = new NeuralDataCollector(proxyId_, QCoreApplication::applicationDirPath() + "/" + databaseName + ".sqlite",50);
 		QObject::connect(ndc_, SIGNAL(finished()), ndc_, SLOT(deleteLater()));
 		ndc_->start();
-	}}
+	}
+}
 
 SessionInfo::~SessionInfo()
 {
@@ -142,12 +148,15 @@ void SessionInfo::endSession()
 	//Let the Director know that we are planning to stop
 	addPendingDirective("ENDSESSION");
 
-	//Sit around waiting for the director's state to change
-	while(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle)
+	//Sit around waiting for the director's state to change (but no longer than 2 seconds)
+	QTime timer;
+	timer.start();
+	while(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle && timer.elapsed() < 2000)
 	{
 		QThread::yieldCurrentThread();
 		QCoreApplication::processEvents();
 	}
+	Q_ASSERT_X(timer.elapsed()<2000, "SessionInfo::endSession","The director failed to stop within 2 seconds");
 
 	if(ndc_ && ndc_->isRunning())
 	{
@@ -540,12 +549,7 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 							   sessionQuery.value(4).toString());
 			stateDataList.append(data);
 		}
-		else
-		{
-			//If you hit this, something has gone wrong, and we should fix it.
-			//////////TESTING
-			Q_ASSERT_X(false,"SessionInfo::selectStateData", "SELECT state data query failed to return data");
-		}
+		//If there is no data, that's OK  (This happens when we join a session that hasn't started running yet)
 	}
 	else
 	{
@@ -589,7 +593,9 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 QSqlDatabase SessionInfo::getSessionDb()
 {
 	QSqlDatabase sessionDb;
-	QString connectionName = QString("SessionDatabase%1").arg((int)QThread::currentThreadId());
+	QString connectionName = QString("SessionDatabase_%1_%2")
+					.arg(sessionId())
+					.arg((int)QThread::currentThreadId());
 
 	
 	//If we already have a connection open in this thread, use it, 

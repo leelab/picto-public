@@ -29,7 +29,7 @@
 						<ControlElements>
 							<ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
 								<Name></Name>
-								<Time units="Ms">2000</Time>				
+								<Time units="Ms">4000</Time>				
 							</ControlElement>
 						</ControlElements>
 						<Scene>
@@ -128,7 +128,7 @@
                 <ControlElements>
                   <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
                     <Name></Name>
-                    <Time units="Ms">400</Time>
+                    <Time units="Ms">500</Time>
                   </ControlElement>
                 </ControlElements>
                 <Scene>

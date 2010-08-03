@@ -35,6 +35,8 @@ public:
 	double stampMs();
 	double stampUs();
 
+	void reset();
+
 private:
 #if defined WIN32 || defined WINCE
 	LARGE_INTEGER ticksPerSec_;

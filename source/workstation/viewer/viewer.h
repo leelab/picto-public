@@ -51,6 +51,7 @@ public:
 
 	//Returns the type of viewer (e.g "Text")
 	virtual QString type() = 0;
+	virtual bool aboutToQuit() { return true; };  //called just before quitting
 
 public slots:
 	virtual void init() = 0;  //Called just before displaying the viewer

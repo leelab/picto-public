@@ -65,6 +65,13 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	QString pendingDirective = "LOADEXP\n" + experimentXml;
 	sessionInfo->addPendingDirective(pendingDirective);
 
+	//wait for the director to change to stopped status
+	while(conMgr->getDirectorStatus(directorAddr) == DirectorStatus::idle)
+	{
+		QThread::yieldCurrentThread();
+		QCoreApplication::processEvents();
+	}
+
 	QByteArray sessionIDXml;
 	QXmlStreamWriter xmlWriter(&sessionIDXml);
 	xmlWriter.writeStartElement("SessionID");

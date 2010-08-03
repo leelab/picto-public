@@ -264,7 +264,6 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	dataCommand->setContent(dataXml);
 	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
 	QUuid commandUuid = QUuid::createUuid();
-	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
 
 	dataChannel->sendRegisteredCommand(dataCommand);
 

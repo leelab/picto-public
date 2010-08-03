@@ -29,6 +29,7 @@ class RemoteViewer : public Viewer
 public:
 	RemoteViewer(QWidget *parent=0);
 	QString type() { return "Remote"; };
+	bool aboutToQuit();
 
 public slots:
 	void init();  //Called just before displaying the viewer
@@ -47,6 +48,7 @@ private slots:
 	void updateActions();
 
 	void checkForTimeouts();
+
 private:
 	typedef struct
 	{
@@ -61,7 +63,7 @@ private:
 		int id;
 	};
 
-
+	enum DirectorStatus {Error, Idle, Stopped, Paused, Running};
 
 	void setupEngine();
 	void setupServerChannel();
@@ -75,7 +77,7 @@ private:
 	bool joinSession();
 	bool disjoinSession();
 
-	bool directorIsRunning(QString addr);
+	DirectorStatus directorStatus(QString addr);
 	QList<DirectorInstance> getDirectorList();
 
 	QList<ProxyServerInfo> getProxyList();
@@ -110,8 +112,8 @@ private:
 	Picto::CommandChannel *behavioralDataChannel_;
 	Picto::ServerDiscoverer *serverDiscoverer_;
 
-	enum Status {Stopped, Running, Paused};
-	Status status_;
+	DirectorStatus localStatus_;
+	
 	bool startedSession_;
 	bool observerHasControl_;
 

@@ -1,6 +1,8 @@
 #include "Task.h"
 #include "../storage/StateDataStore.h"
 #include "../timing/Timestamper.h"
+#include "../protocol/ProtocolCommand.h"
+#include "../protocol/ProtocolResponse.h"
 
 namespace Picto {
 
@@ -36,14 +38,18 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 		}
 		else
 		{
+			sendInitialStateDataToServer(engine);
+
 			QString result;
 			result = stateMachine_->run(engine);
 
 			//After the task has finished running, we need to report the final result.
 			//This can't be done within the state machine, because the state machine
 			//has no idea if it's the top level.
-			if(result != "EngineAbort")
+			//if(result != "EngineAbort")
 				sendFinalStateDataToServer(result, engine);
+			//else
+				//sendFinalStateDataToServer("Engine
 		}
 
 		return true;
@@ -60,16 +66,52 @@ bool Task::jumpToState(QStringList path, QString state)
 	return stateMachine_->jumpToState(path,state);
 }
 
+/*! \brief Sends the initial state transition to the server
+ *
+ *	If a task is stopped, and then restarted, the transitions recordered by the server
+ *	will be this:
+ *		1. Final transition before stop command recieved
+ *		2. First transition within state machine after start
+ *	This is a problem for a remotely viewed session, since if it tries to join just after
+ *	the task is restarted, it will put itself into the destination state from 1, which 
+ *	probably won't be the source state for 2.
+ *
+ *	To fix this issue, we'll generate a starting the task transition with the following
+ *	values:
+ *		source: NULL
+ *		sourceResult: NULL
+ *		destination: the task's statemachine
+ */
+void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engine)
+{
+	Q_ASSERT(sendStateData("NULL","NULL",stateMachine_->getName(),engine));
+}
+
+
+/*! \brief Sends the final state transition to the server
+ *
+ *	When a task completes, the final state transition never gets sent to the server.
+ *	by the state machine, so we send it here.
+ */
 void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine)
 {
-	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+	if(result == "EngineAbort")
+		Q_ASSERT(sendStateData("NULL",result,"NULL",engine));
+	else
+		Q_ASSERT(sendStateData(stateMachine_->getName(),result,"NULL",engine));
 
+}
+
+//! \brief Sends state data to the server
+bool Task::sendStateData(QString source, QString sourceResult, QString destination, QSharedPointer<Engine::PictoEngine> engine)
+{
+	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 	if(dataChannel.isNull())
-		return;
+		return false;
 	
-	//send a PUTDATA command to the server with the state transition data
-	QSharedPointer<Picto::ProtocolResponse> dataResponse;
 	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
+
+	QSharedPointer<Picto::ProtocolResponse> dataResponse;
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
 	QByteArray stateDataXml;
@@ -77,25 +119,28 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 
 	Timestamper stamper;
 	double timestamp = stamper.stampSec();
-	QString name = stateMachine_->getName();
 
 	StateDataStore stateData;
-	stateData.setTransition(name,result,"NULL",timestamp,name);
+	stateData.setTransition(source,sourceResult,destination,timestamp,"Task");
 
 	xmlWriter->writeStartElement("Data");
 	stateData.serializeAsXml(xmlWriter);
 	xmlWriter->writeEndElement();
-
 
 	dataCommand->setContent(stateDataXml);
 	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
 
 	dataChannel->sendCommand(dataCommand);
 
-	Q_ASSERT_X(dataChannel->waitForResponse(1000), "Task::sendFinalStateDataToServer", "No response from server");
+	if(!dataChannel->waitForResponse(1000))
+		return false;
 	dataResponse = dataChannel->getResponse();
+	if(dataResponse->getResponseCode() != ProtocolResponseType::OK)
+		return false;
 
+	return true;
 }
+
 
 /*! \brief Turns this task into an XML fragment
  *

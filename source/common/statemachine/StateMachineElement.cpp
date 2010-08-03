@@ -160,11 +160,17 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 			//going to confirm that the source name matches as well
 			QString msg = QString("Transition source: %1 doesn't match current state: %2 at time: %3")
 				.arg(data.getSource()).arg(getName()).arg(data.getTime());
-			Q_ASSERT_X(data.getSource() == getName(),"StateMachineElement::getMasterStateResult", 
+			Q_ASSERT_X(data.getSource() == getName() || data.getSource().toUpper() == "NULL","StateMachineElement::getMasterStateResult", 
 				msg.toAscii());
 			lastTransitionTime_ = data.getTime();
 
-			return data.getSourceResult();
+			QString result = data.getSourceResult();
+			
+			//The result will be "NULL" if this was the starting "transition"
+			if(result.toUpper() == "NULL")
+				return "";
+			else
+				return result;
 		}
 		else
 		{
@@ -205,7 +211,7 @@ void StateMachineElement::processStatusDirective(QSharedPointer<Engine::PictoEng
 		}
 		else
 		{
-			Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
+			Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server: "+statusDirective.toAscii());
 		}
 }
 

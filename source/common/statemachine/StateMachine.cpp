@@ -311,9 +311,10 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		ignoreInitialElement_ = false;
 	}
 
+	QString result;
 	while(true)
 	{
-		QString result;
+		
 		
 		//If we're about to dive into another state machine we need to set it's path
 		if(currElement_->type() == "StateMachine")
@@ -345,10 +346,15 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 				while(masterResult.isEmpty())
 					masterResult = getMasterStateResult(engine);
 				Q_ASSERT(masterResult == slaveResult);
-				return masterResult;
+				
+				result = masterResult;
+				break;
 			}
 			else
-				return currElement_->run(engine);
+			{
+				result = currElement_->run(engine);
+				break;
+			}
 		}
 		else
 		{
@@ -358,7 +364,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 				result = currElement_->run(engine);
 
 			if(result == "EngineAbort")
-				return result;
+				break;
 		}
 
 		//Find the transition from our current source with a SourceResult string that matches the result
@@ -381,7 +387,9 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		currElementName = nextElementName;
 
 	}
-
+	//Since we're backing out of this state machine we need to remove it from the path
+	path_.takeLast();
+	return result;
 }
 QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 {

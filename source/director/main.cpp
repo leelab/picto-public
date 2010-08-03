@@ -22,6 +22,7 @@
 
 #include "../common/engine/PictoEngine.h"
 #include "../common/experiment/experiment.h"
+#include "../common/timing/timestamper.h"
 
 QSharedPointer<Picto::CommandChannel> connectToServer();
 void updateSplashStatus(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status);
@@ -211,9 +212,13 @@ int main(int argc, char *argv[])
 		else if(statusDirective.startsWith("NEWSESSION"))
 		{
 			QString sessionIdStr = statusDirective.mid(statusDirective.indexOf(' ')+1);
-			engine->setSessionId(QUuid(sessionIdStr));
-			updateCommand->setTarget(engine->getName()+":stopped");;
 
+			engine->setSessionId(QUuid(sessionIdStr));
+			updateCommand->setTarget(engine->getName()+":stopped");
+
+			//We should 
+			Picto::Timestamper stamper;
+			stamper.reset();
 		}
 		else if(statusDirective.startsWith("LOADEXP"))
 		{
