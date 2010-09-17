@@ -1,13 +1,3 @@
-/*!	\brief A state machine element for branching based on Parameter values
- *
- *	Flow Elements are used for branching in a state machine.  Each flow element
- *	contains multiple "conditions"  Each condition contains a predicate based 
- *	expression (either a simple PredicateExpression, or a mor complex CompoundExpression)
- *	When the run is called on a flow element, it works throw the conditions (in a user
- *	defined order) until one of them evaluates true.  The element then returns the
- *	name of the condition that evaluated true as its result.  If none of the conditions
- *	evaluate true, then a defulat value is returned.
- */
 #ifndef _FLOWELEMENT_H_
 #define _FLOWELEMENT_H_
 
@@ -20,6 +10,16 @@
 #include "../engine/PictoEngine.h"
 
 namespace Picto {
+/*!	\brief A state machine element for branching based on Parameter values
+ *
+ *	Flow Elements are used for branching in a state machine.  Each flow element
+ *	contains multiple "conditions"  Each condition contains a predicate based 
+ *	expression (either a simple PredicateExpression, or a mor complex CompoundExpression)
+ *	When the run is called on a flow element, it works throw the conditions (in a user
+ *	defined order) until one of them evaluates true.  The element then returns the
+ *	name of the condition that evaluated true as its result.  If none of the conditions
+ *	evaluate true, then a defulat value is returned.
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API FlowElement : public StateMachineElement

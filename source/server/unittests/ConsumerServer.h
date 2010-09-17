@@ -1,3 +1,12 @@
+#ifndef _CONSUMERSERVER_H_
+#define _CONSUMERSERVER_H_
+
+#include <QTcpServer>
+#include <QTcpSocket>
+#include <QTimer>
+
+#include "../../common/common.h"
+
 /*! \brief A simple server specifically for testing the CommandChannel
  *
  *	To test the command channel in "producer" mode, we need a source of commands.
@@ -21,15 +30,6 @@
  *
  */
 
-
-#ifndef _CONSUMERSERVER_H_
-#define _CONSUMERSERVER_H_
-
-#include <QTcpServer>
-#include <QTcpSocket>
-#include <QTimer>
-
-#include "../../common/common.h"
 
 class ConsumerServer : public QTcpServer
 {

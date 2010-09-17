@@ -9,7 +9,12 @@ class QPainter;
 class QSize;
 QT_END_NAMESPACE
 
-
+/*! \brief A status light GUI element
+ *
+ *	The status light is used in the proxy server's GUI.  It is basically a circle
+ *	that changes colors (red, yellow, green) to indicate status.  This was one of
+ *	my first attempts at writing a Qt GUI, so it's a bit crude.
+ */
 class StatusLight : public QWidget
 {
 	Q_OBJECT

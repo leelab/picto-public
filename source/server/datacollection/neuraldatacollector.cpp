@@ -59,7 +59,10 @@ void NeuralDataCollector::collectData()
 
 	//check for failed connections
 	if(!cmdChannel_->isConnected())
+	{
+		qDebug()<<"Command channel not connected.  Attempting to reconnect";
 		cmdChannel_->connectToServer(proxyAddress_,proxyPort_);
+	}
 
 	QSharedPointer<Picto::ProtocolCommand> getCommand = QSharedPointer<Picto::ProtocolCommand>(new Picto::ProtocolCommand("GET /data ACQ/1.0"));
 	cmdChannel_->sendCommand(getCommand);

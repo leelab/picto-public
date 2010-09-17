@@ -7,6 +7,7 @@
 
 namespace Picto {
 
+//! A pulse code modulation(PCM) mixing sample.  Not implemented yet.
 struct PICTOLIB_CLASS PCMMixingSample : MixingSample
 {
 public:

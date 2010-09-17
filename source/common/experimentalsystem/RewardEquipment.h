@@ -5,6 +5,8 @@
 
 namespace Picto {
 
+//! \brief Unimplemented. Stores information about the rewarder setup being used.
+
 class RewardEquipment
 {
 public:

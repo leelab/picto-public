@@ -8,11 +8,11 @@
 
 #include "FrontPanelInfo.h"
 
-/*! \addtogroup pictoserver_protocol
- * @{
- */
-
-/*! \brief Handles GET commands received specifying use of the HTTP protocol
+/*! \brief Handles ENGEVENT commands received.
+ *
+ *	ENGEVENT commands are sent from the PictoEngine to the front panel application 
+ *	and generally result in some sort of text being desplayed on the front panel
+ *	(e.g. "Trial start")
  */
 struct ENGEVENTCommandHandler : Picto::ProtocolCommandHandler
 {

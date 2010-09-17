@@ -12,6 +12,14 @@
 
 namespace Picto {
 
+/*! \brief A container for storing parameters
+ *
+ *	The parameter container is basically a list of parameters.  This makes it easy to 
+ *	give parameters scope (if the parameter is in the container, it is in scope).  Note
+ *	that the container actually stores QSharedPointers to the parameters which means 
+ *	that we don't need to worry about deleting them, and can have multiple copies of a 
+ *	parameter pointer.
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ParameterContainer : public DataStore
 #else

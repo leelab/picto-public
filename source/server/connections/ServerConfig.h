@@ -1,3 +1,9 @@
+#ifndef _SERVER_CONGIF_H_
+#define _SERVER_CONGIF_H_
+
+#include <QSqlDatabase>
+#include <QHostAddress>
+#include <QString>
 
 /*! \brief ServerConfig handles the configuration of a PictoServer
  *
@@ -13,13 +19,6 @@
  *	database connection if there is still a database that used that connection.  This is true, 
  *	even if you call close on the database object.  Because I wanted to 
  */
-
-#ifndef _SERVER_CONGIF_H_
-#define _SERVER_CONGIF_H_
-
-#include <QSqlDatabase>
-#include <QHostAddress>
-#include <QString>
 
 class ServerConfig
 {

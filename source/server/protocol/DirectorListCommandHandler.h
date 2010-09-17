@@ -1,3 +1,11 @@
+#ifndef _DIRECTORLIST_COMMAND_HANDLER_H_
+#define _DIRECTORLIST_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the DIRECTORLIST commands
  *
  *	PictoWorkstation sends these commands in order to get a list of all the
@@ -23,14 +31,6 @@
  *		</DirectorInstances>
  *		
  */
-
-#ifndef _DIRECTORLIST_COMMAND_HANDLER_H_
-#define _DIRECTORLIST_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct DirectorListCommandHandler : Picto::ProtocolCommandHandler
 {

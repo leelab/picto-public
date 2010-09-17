@@ -1,15 +1,3 @@
-/*!	\brief	This views the experiment as a simple XML text file.
- *
- *	The viewer includes a simple text editor (which may be expanded as a true XML
- *	editor at some point, but currently is just a dumb editor).
- *
- *	Potential future features:
- *		- Syntax highlighting (easy, but I'd have to figure out
- *		  regexes for XML)
- *		- Outlining (like in VS) this may be tough.
- *		- Go to matching tag command that can be run without the mouse.
- *		- Find/Replace: ESSENTIAL!!!! MUST ADD!!!!!
- */
 #ifndef _TEXT_VIEWER_H_
 #define _TEXT_VIEWER_H_
 
@@ -22,6 +10,18 @@ class QToolBar;
 class QComboBox;
 class QLabel; 
 
+/*!	\brief	This views the experiment as a simple XML text file.
+ *
+ *	The viewer includes a simple text editor (which may be expanded as a true XML
+ *	editor at some point, but currently is just a dumb editor).
+ *
+ *	Potential future features:
+ *		- Syntax highlighting (easy, but I'd have to figure out
+ *		  regexes for XML)
+ *		- Outlining (like in VS) this may be tough.
+ *		- Go to matching tag command that can be run without the mouse.
+ *		- Find/Replace: ESSENTIAL!!!! MUST ADD!!!!!
+ */
 class TextViewer : public Viewer
 {
 	Q_OBJECT

@@ -18,6 +18,14 @@
 
 namespace Picto {
 
+/*!	\brief A Base class for all Visual Elements
+ *
+ *	This base class handles all of the StimulusElements that are visual in 
+ *	nature.  In particular, it provides the XML serialization code.  Since all
+ *	visual elements use properties to describe themselves, we can serialize
+ *	them by generating a list of their properties.  This class also handles
+ *	the compositing surfaces.
+ */
 struct PICTOLIB_CLASS VisualElement : public StimulusElement, public DataStore
 {
 	Q_OBJECT

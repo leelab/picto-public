@@ -1,7 +1,3 @@
-/*! \file AnnounceCommandHandler.h
- * \ingroup picto_protocol
- * \brief
- */
 
 #ifndef _ANNOUNCECOMMANDHANDLER_H_
 #define _ANNOUNCECOMMANDHANDLER_H_
@@ -12,10 +8,15 @@
 
 namespace Picto {
 
-/*! \addtogroup picto_engine
- * @{
+/*!	\brief Handles ANNOUNCE commands. Kinda, sorta not implemented
+ *
+ *	Although this command handler isn't implemented, there is an ANNOUNCE command that
+ *	does get passed around the network.  If you dig into the PictoServer code (in particular
+ *	/server/network/server.cpp), you'll see that if a UDP ANNOUNCE command is received, we
+ *	assume that it is coming from a proxy server, and add that server to our list.
+ *
+ *	It may be wise to get rid of this command handler...
  */
-
 struct PICTOLIB_CLASS AnnounceCommandHandler : ProtocolCommandHandler
 {
 public:

@@ -1,3 +1,11 @@
+#ifndef _PUTDATA_COMMAND_HANDLER_H_
+#define _PUTDATA_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the PUTDATA commands, which are sent by Director
  *
  *	PictoDirector sends these commands to the server when it has data it would
@@ -34,14 +42,6 @@
  *		correctly.  If the session ID isn't recognized, the response is
  *		404:NotFound.  
  */
-
-#ifndef _PUTDATA_COMMAND_HANDLER_H_
-#define _PUTDATA_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct PutDataCommandHandler : Picto::ProtocolCommandHandler
 {

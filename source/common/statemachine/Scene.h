@@ -14,6 +14,16 @@
 
 namespace Picto {
 
+/*!	\brief A scene consists of the graphical stimuli
+ *
+ *	A scene is the thing that actually puts images on the screen.  Scenes 
+ *	are closesly tied to the state machine element "State".  Each state must
+ *	contain a single Scene.  The scenes also have include the control elements
+ *	since those need to get passed down to the rendering loop.
+ *
+ *	NOTE: At some point we will need to add support for audio elements.  This
+ *	will probably require adding them to the scene.
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Scene : public DataStore
 #else

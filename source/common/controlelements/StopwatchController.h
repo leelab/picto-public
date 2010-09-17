@@ -1,10 +1,3 @@
-/*! \brief A time based controller
- *
- *	This controller ignores any and all inputs, and simply returns "Success"
- *	when a fixed amount of time has expired.  Since the time values are properties
- *	it is possible to change them at runtime through Javascript.
- */
-
 #ifndef _STOPWATCH_CONTROLLER_H_
 #define _STOPWATCH_CONTROLLER_H_
 
@@ -14,6 +7,13 @@
 #include "ControlElement.h"
 
 namespace Picto {
+
+/*! \brief A time based controller
+ *
+ *	This controller ignores any and all inputs, and simply returns "Success"
+ *	when a fixed amount of time has expired.  Since the time values are properties
+ *	it is possible to change them at runtime through Javascript.
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API StopwatchController : public ControlElement

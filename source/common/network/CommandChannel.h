@@ -1,7 +1,21 @@
+#ifndef _COMMANDCHANNEL_H_
+#define _COMMANDCHANNEL_H_
 
-//! A channel for sending/receiving commands/responses over the network
+#include <QObject>
+#include <QList>
+#include <QSharedPointer>
+#include <QHostAddress>
+#include <QTcpSocket>
+#include <QUuid>
 
-/*!
+#include "../common.h"
+#include "../protocol/ProtocolCommand.h"
+#include "../protocol/ProtocolResponse.h"
+
+namespace Picto {
+
+
+/*!	\brief A channel for sending/receiving commands/responses over the network
  *	The CommandChannel object abstracts the communication between any 
  *  two devices which communicate via network protocols.  For example,
  *  PictoDirector would use a CommandChannel to send commands to PictoServer.
@@ -51,23 +65,6 @@
  *	if there isn't a real event loop, but everything seems to be working now, so who knows...
  *	(I did rerun the unit tests, and everything passed.)
  */
-
-#ifndef _COMMANDCHANNEL_H_
-#define _COMMANDCHANNEL_H_
-
-#include <QObject>
-#include <QList>
-#include <QSharedPointer>
-#include <QHostAddress>
-#include <QTcpSocket>
-#include <QUuid>
-
-#include "../common.h"
-#include "../protocol/ProtocolCommand.h"
-#include "../protocol/ProtocolResponse.h"
-
-namespace Picto {
-
 
 
 #if defined WIN32 || defined WINCE

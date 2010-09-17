@@ -5,6 +5,7 @@
 
 namespace Picto {
 
+/*!	\brief Unimplemented.  I have no idea what this is for. */
 class TrialResult
 {
 public:

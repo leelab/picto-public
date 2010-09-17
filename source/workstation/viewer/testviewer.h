@@ -1,3 +1,15 @@
+#ifndef _TEST_VIEWER_H_
+#define _TEST_VIEWER_H_
+
+#include "viewer.h"
+#include "../../common/engine/pictoengine.h"
+#include "../../common/compositor/PixmapVisualTarget.h"
+#include "../../common/compositor/VisualTargetHost.h"
+
+class QAction;
+class QToolBar;
+class QComboBox;
+
 /*!	\brief	This views the experiment as a running test
  *
  *	Designers will want to test the experiments they have written.  This
@@ -14,18 +26,6 @@
  *		- Pause should stop any timed controllers
  *		- Add a step function for advancing frame by frame
  */
-#ifndef _TEST_VIEWER_H_
-#define _TEST_VIEWER_H_
-
-#include "viewer.h"
-#include "../../common/engine/pictoengine.h"
-#include "../../common/compositor/PixmapVisualTarget.h"
-#include "../../common/compositor/VisualTargetHost.h"
-
-class QAction;
-class QToolBar;
-class QComboBox;
-
 class TestViewer : public Viewer
 {
 	Q_OBJECT

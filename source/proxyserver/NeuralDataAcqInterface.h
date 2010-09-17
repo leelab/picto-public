@@ -1,13 +1,13 @@
-/*! \file interfaces.h
- * \ingroup pictoproxyserver
- * \brief Interface used for all proxy server plugins
- */
-
 #ifndef INTERFACES_H
 #define INTERFACES_H
 
 #include <QtPlugin>
 
+/*! \brief Interface used for all proxy server plugins
+ *
+ *	This defines the interface used by proxy server plugins.  If you want to build a new
+ *	plugin (for a different device), you'll need to make sure that it has these functions.
+ */
 class NeuralDataAcqInterface
 {
 public:

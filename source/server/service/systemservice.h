@@ -20,6 +20,11 @@
 #include <QtCore/QString>
 #include <QtCore/QThread>
 
+/*!	\brief Lets us run the server as a System service.
+ *
+ *	This class lets us run the server as a system service, as opposed to as a
+ *	user application.  We should replace this with the QtService class.
+ */
 class SystemService
 {
 public:

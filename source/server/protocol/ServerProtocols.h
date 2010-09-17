@@ -9,6 +9,7 @@
 #include "../../common/common.h"
 #include "../../common/protocol/Protocol.h"
 
+/*!	\brief Stores the protocols used by the server. */
 struct ServerProtocols
 {
 public:

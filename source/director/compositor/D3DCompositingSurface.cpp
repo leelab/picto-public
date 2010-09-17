@@ -24,6 +24,13 @@ D3DCompositingSurface::~D3DCompositingSurface()
 	//Visual Target), so it is not our responsibility to release it.
 }
 
+/*!	\brief Converts a QImage to a D3D Texture.
+ *
+ *	We use DIRECT3DTEXTURE9 objects to store the image data.  What convertImage
+ *	is called, the passed in QImage gets written to a texture of the
+ *	appropriate size.  This texture is then eventually returned to the 
+ *	D3DVisualTarget which draws it on a quad.
+ */
 void D3DCompositingSurface::convertImage(QImage image)
 {	
 	HRESULT hr;

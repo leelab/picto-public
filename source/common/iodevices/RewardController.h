@@ -1,3 +1,13 @@
+#ifndef _REWARDCONTROLLER_H_
+#define _REWARDCONTROLLER_H_
+
+#include <QList>
+#include <QObject>
+
+#include "../common.h"
+
+namespace Picto {
+
 /*! \brief This is the base class for the reward controller
  *
  *	Since there are multiple different types reward controllers, this
@@ -13,18 +23,12 @@
  *		- The ability to vary reward duration
  *		- The ability to vary reward volume
  *
+ *	It should be noted that hardware specific reward controllers won't be located
+ *	in the common/iodevices folder, but will rather be in the folders of the source
+ *	that actually uses them (e.g. Director).
+ *
  * \note reward controllers are numbered from 1 to n
  */
-
-#ifndef _REWARDCONTROLLER_H_
-#define _REWARDCONTROLLER_H_
-
-#include <QList>
-#include <QObject>
-
-#include "../common.h"
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardController : public QObject

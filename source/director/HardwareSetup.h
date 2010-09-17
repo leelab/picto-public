@@ -1,3 +1,10 @@
+#ifndef _HARDWARE_SETUP_H_
+#define _HARDWARE_SETUP_H_
+
+#include <QSharedPointer>
+
+#include "../common/engine/PictoEngine.h"
+
 /*!	\brief Sets up the hardware for PictoDirector
  *
  *	pictoDirector could be running on any of a number of hardware platforms.
@@ -6,13 +13,6 @@
  *	object.  If we start supporting more than 1 or 2 platforms, it may be worth 
  *	breaking out each configuration seperately
  */
-
-#ifndef _HARDWARE_SETUP_H_
-#define _HARDWARE_SETUP_H_
-
-#include <QSharedPointer>
-
-#include "../common/engine/PictoEngine.h"
 
 class HardwareSetup
 {

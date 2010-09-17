@@ -1,11 +1,3 @@
-/*! \brief Contains unit tests for Predicate objects
- *
- * 	This tests the objects: Predicate, PredicateExpression, and CompoundExpression.
- *	Although most of the tests are automated, the graphics tests can't be automated.
- *	Instead, to test the toQImage() functionality, a jpg image is generated, and
- *	the user is prompted to confirm its correctness.
- */
-
 #ifndef _TEST_PARAMETERS_H
 #define _TEST_PARAMETERS_H
 
@@ -14,6 +6,12 @@
 #include "../../common/globals.h"
 #include "../random/MersenneTwister.h"
 
+
+/*! \brief Contains unit tests for Parameter objects
+ *
+ * 	This tests the boolean, range, choice, and numeric parameters.  The
+ *	tests are pretty much self-explanatory.
+ */
 
 class TestParameters: public QObject
 {

@@ -11,14 +11,6 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//! \TODO "render" the audio stuff
 	canvas_->draw(engine);
-
-	//NOTE TO SELF:
-
-	/*	When we start sending out behavioral data, we'll need to keep track of the
-	 *	responses, but we don't want to waste time waiting for the server to reply
-	 *	Instead, we should simply keep a running sum of missed responses, and "catch
-	 *	up" at the end of a trial
-	 */
 }
 
 void Scene::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)

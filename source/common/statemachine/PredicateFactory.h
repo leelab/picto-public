@@ -1,12 +1,3 @@
-/* \brief A factory for predicate objects
- *
- *	This is a really simple factory for predicate objects.  Rather than 
- *	Having the factory register predicates, the factory is assumed to
- *	"know" about all the different types of predicates.  This is done to
- *	simplify usage of the factory, and can be justified based on the fact 
- *	that there are a limited number of predicates.
- */
-
 #ifndef _PREDICATE_FACTORY_H_
 #define _PREDICATE_FACTORY_H_
 
@@ -15,6 +6,15 @@
 
 
 namespace Picto {
+
+/*! \brief A factory for predicate objects
+ *
+ *	This is a really simple factory for predicate objects.  Rather than 
+ *	Having the factory register predicates, the factory is assumed to
+ *	"know" about all the different types of predicates.  This is done to
+ *	simplify usage of the factory, and can be justified based on the fact 
+ *	that there are a limited number of predicates.
+ */
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API PredicateFactory

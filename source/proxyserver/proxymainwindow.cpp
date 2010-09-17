@@ -1,29 +1,22 @@
-/*! \file mainwindow.cpp
- * \ingroup pictoproxyserver
- * \brief A GUI window for controlling the proxy server
- */
-
 #include <QtGui>
 
-#include "mainwindow.h"
-#include "interfaces.h"
-#include "network/server.h"
-#include "network/broadcast.h"
-#include "protocol/ServerProtocols.h"
-#include "protocol/ServerAcqProtocol.h"
-#include "protocol/ServerHTTPProtocol.h"
+#include "proxymainwindow.h"
+#include "NeuralDataAcqInterface.h"
+#include "network/proxyserver.h"
+#include "protocol/ProxyServerProtocols.h"
+#include "protocol/ProxyServerAcqProtocol.h"
 #include "../common/globals.h"
 
-MainWindow::MainWindow()
+ProxyMainWindow::ProxyMainWindow()
 {
 	acqPlugin_ = NULL;
 
     setWindowTitle(tr("%1").arg(Picto::Names->proxyServerAppName));
 
 	createStatusLights();
-	createComboBox();
 	createButtons();
 	createLineEdits();
+	createComboBox();
 	createLayout();
 	createTimer();
 
@@ -35,7 +28,7 @@ MainWindow::MainWindow()
 	setCentralWidget(controlPanel);
 }
 
-void MainWindow::setNeuralDataAcquisitionDevice(int index)
+void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 {
 	//QAction *action = qobject_cast<QAction *>(sender());
 	//acqPlugin_ = action->parent();
@@ -45,7 +38,7 @@ void MainWindow::setNeuralDataAcquisitionDevice(int index)
 
 
 
-void MainWindow::startStopServer()
+void ProxyMainWindow::startStopServer()
 {
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 
@@ -70,24 +63,18 @@ void MainWindow::startStopServer()
 
 		
 		//set up the servers (HTTP and ACQ)
-		QSharedPointer<ServerProtocols> httpProtocols(new ServerProtocols());
-		QSharedPointer<ServerProtocols> acqProtocols(new ServerProtocols());
+		QSharedPointer<ProxyServerProtocols> acqProtocols(new ProxyServerProtocols());
 
-		QSharedPointer<ServerHTTPProtocol> httpProtocol(new ServerHTTPProtocol(acqPlugin_));
-		QSharedPointer<ServerAcqProtocol> acqProtocol(new ServerAcqProtocol(acqPlugin_));
+		QSharedPointer<ProxyServerAcqProtocol> acqProtocol(new ProxyServerAcqProtocol(acqPlugin_));
 		
-		httpProtocols->addProtocol(httpProtocol);
-		acqProtocols->addProtocol(httpProtocol);
 		acqProtocols->addProtocol(acqProtocol);
 
 		/*! \todo this should specify the IP address in addition to the port, and both should be read from the
 		 *        configuration database.
 		 */
 		port_ = 42420;
-		Server httpServer(80, httpProtocols,this);
-		Server acqServer(port_, acqProtocols,this);
+		ProxyServer acqServer(port_, acqProtocols,this);
 
-		connect(&httpServer,SIGNAL(activity()),this, SLOT(serverActivity()));
 		connect(&acqServer,SIGNAL(activity()),this, SLOT(serverActivity()));
 
 		pluginCombo_->setEnabled(false);
@@ -95,7 +82,7 @@ void MainWindow::startStopServer()
 		startStopServerButton_->setText(stopServerMsg_);
 		readyStatus_->turnGreen();
 
-		announce(lineEditName_->text().remove(' '), port_);
+		announce();
 
 		serverEventLoop_ = new QEventLoop();
 		serverEventLoop_->exec();
@@ -111,7 +98,7 @@ void MainWindow::startStopServer()
 		lineEditName_->setEnabled(true);
 
 		//Announce our departure to the world (or at least our network)
-		depart(lineEditName_->text().remove(' '), port_);
+		depart();
 		readyStatus_->turnRed();
 
 
@@ -121,7 +108,7 @@ void MainWindow::startStopServer()
 
 //This is called every 5 seconds just to confirm that the
 //neural acquisition device hasn't failed out from under us.
-void MainWindow::checkDevStatus()
+void ProxyMainWindow::checkDevStatus()
 {
 	//Is the server supposed to be running?
 	if(startStopServerButton_->text() == startServerMsg)
@@ -156,14 +143,14 @@ void MainWindow::checkDevStatus()
 	return;
 }
 
-void MainWindow::closeEvent(QCloseEvent *ev)
+void ProxyMainWindow::closeEvent(QCloseEvent *ev)
 {
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 	if(iNDAcq)
 		iNDAcq->stopDevice();
 
 	//Announce our departure to the world (or at least our network)
-	depart(lineEditName_->text().remove(' '), port_);
+	depart();
 
 	writeSettings();
 	
@@ -171,13 +158,13 @@ void MainWindow::closeEvent(QCloseEvent *ev)
 	ev->accept();
 }
 
-void MainWindow::serverActivity()
+void ProxyMainWindow::serverActivity()
 {
 	activityTimer_->start();
 	activityStatus_->turnGreen();
 }
 
-void MainWindow::createStatusLights()
+void ProxyMainWindow::createStatusLights()
 {
 	readyStatus_ = new StatusLight(this,Qt::red,10);
 	activityStatus_ = new StatusLight(this,Qt::red,10);
@@ -187,7 +174,7 @@ void MainWindow::createStatusLights()
 
 }
 
-void MainWindow::createComboBox()
+void ProxyMainWindow::createComboBox()
 {
 	pluginCombo_ = new QComboBox();
 	pluginCombo_->setEditable(false);
@@ -249,6 +236,8 @@ void MainWindow::createComboBox()
 		noPluginMsgBox.setInformativeText(errorMsg);
 		noPluginMsgBox.exec();
 
+		startStopServerButton_->setEnabled(false);
+
 		return;
 	}
 
@@ -258,7 +247,7 @@ void MainWindow::createComboBox()
 	return;
 }
 
-void MainWindow::createButtons()
+void ProxyMainWindow::createButtons()
 {
 	startServerMsg = tr("&Start server");
 	stopServerMsg_ = tr("&Stop server");
@@ -272,7 +261,7 @@ void MainWindow::createButtons()
 	connect(quitButton_,SIGNAL(clicked()),this,SLOT(close()));
 }
 
-void MainWindow::createLineEdits()
+void ProxyMainWindow::createLineEdits()
 {
 	lineEditName_ = new QLineEdit();
 	lineEditName_->setText("proxyName");
@@ -280,7 +269,7 @@ void MainWindow::createLineEdits()
 	lineEditNameLabel_->setBuddy(lineEditName_);
 }
 
-void MainWindow::createLayout()
+void ProxyMainWindow::createLayout()
 {
 	QHBoxLayout *HLayout;
 	layout_ = new QVBoxLayout();
@@ -305,7 +294,7 @@ void MainWindow::createLayout()
 	layout_->addWidget(quitButton_);
 }
 
-void MainWindow::createTimer()
+void ProxyMainWindow::createTimer()
 {
 	QTimer *statusTimer = new QTimer(this);
 	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkDevStatus()));
@@ -331,7 +320,7 @@ void MainWindow::createTimer()
  *	manner.  This uses the registry in Windows, XML preference files
  *	in OSX, and ini files in Unix.
  */
-void MainWindow::writeSettings()
+void ProxyMainWindow::writeSettings()
 {
 	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
 
@@ -339,7 +328,7 @@ void MainWindow::writeSettings()
 
 }
 
-void MainWindow::readSettings()
+void ProxyMainWindow::readSettings()
 {
 	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
 
@@ -347,4 +336,32 @@ void MainWindow::readSettings()
 
 	if(!proxyName.isNull())
 		lineEditName_->setText(proxyName);
+}
+
+void ProxyMainWindow::announce()
+{
+	//Announce our prescence to the world (or at least our network)
+	QUdpSocket udpSendSocket;
+
+	QString proxyName = lineEditName_->text().remove(' ');
+
+	QByteArray datagram = QString("ANNOUNCE %1:%2 ACQ/1.0").arg(proxyName).arg(port_).toAscii();
+
+	udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
+								QHostAddress::Broadcast, 42424);
+
+}
+
+void ProxyMainWindow::depart()
+{
+	//Announce our departure to the world (or at least our network)
+	QUdpSocket udpSendSocket;
+
+	QString proxyName = lineEditName_->text().remove(' ');
+
+	QByteArray datagram = QString("DEPART %1:%2 ACQ/1.0").arg(proxyName).arg(port_).toAscii();
+
+	udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
+								QHostAddress::Broadcast, 42424);
+
 }

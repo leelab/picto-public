@@ -15,6 +15,10 @@ win* {
 
 #proxy server plugins
 win32:!wince*:  SUBDIRS += source/proxyplugins/plexonplugin
+
+#We can't build the TDT plugin unless we have the TDT SDK installed.
+#The TDT software has a hard time running under 64-bit Vista, so I always
+#used a 32-bit XP virtual machine to build this.
 exists(C:/TDT){
 
 	SUBDIRS += source/proxyplugins/tdtplugin
@@ -60,7 +64,7 @@ wince*:QTSOLUTIONS_PROPERTYBROWSER.files += $$QTPROPERTYBROWSER_LIBDIR/../releas
 QTSOLUTIONS_PROPERTYBROWSER.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += QTSOLUTIONS_PROPERTYBROWSER
 
-!wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$QTPROPERTYBROWSER_LIBDIR/../debug/PropertyBrowser-2.5d.dll
+!wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$QTPROPERTYBROWSER_LIBDIR/../debug/QtSolutions_PropertyBrowser-2.5d.dll
 wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$QTPROPERTYBROWSER_LIBDIR/../debug/PropertyBrowser-2.5d.dll
 QTSOLUTIONS_PROPERTYBROWSER_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += QTSOLUTIONS_PROPERTYBROWSER_DEBUG
@@ -114,12 +118,12 @@ INSTALLS += SSLLIBS_DEBUG
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC??.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC??.CRT
+    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" "$$(PICTO_TREE)\output\bin\release\Microsoft.VC90.CRT"
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC90.CRT
     }
     contains(MACHINE_TYPE,X64) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC??.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC??.CRT
+    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC90.CRT
     }
 }
 wince* {
@@ -130,7 +134,43 @@ INSTALLS += CRUNTIMEPRIVATEASSEMBLY
 CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.path = $$(PICTO_TREE)/output/bin/release/imageformats
 INSTALLS += CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS
 
-#The C runtime files for debug are not licensed for redistribution, and are thus not copied here
+
+
+
+#The C runtime files for debug are not licensed for redistribution, We need to make sure that 
+#we don't accidentally release them.  However, that seems like a low risk, given that we won't be 
+#releasing a debug build of Picto.  The benefit of copying them here is that the output folder can
+#be copied directly to other machines.
+
+#Also, OpenSSL requires the non-debug c runtime, so we copy that here as well
+
+!wince* {
+    contains(MACHINE_TYPE,X86) {
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.DebugCRT
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\imageformats\Microsoft.VC90.DebugCRT
+    }
+    contains(MACHINE_TYPE,X64) {
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\amd64\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.DebugCRT
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\amd64\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\imageformats\Microsoft.VC90.DebugCRT
+    }
+}
+wince* {
+	# !!! WARNING !!!
+	# I set this up without looking at an actual CE dev environment.  This path may be incorrect.
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??d.dll\" $$(PICTO_TREE)\output\bin\release
+}
+CRUNTIMEPRIVATEASSEMBLY_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
+INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG
+CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/imageformats
+INSTALLS += CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG
+CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.path = $$(PICTO_TREE)/output/bin/debug
+INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT
+
+
+
+
 
 TESTS.extra = copy $$(PICTO_TREE)\output\bin\release\*.dll $$(PICTO_TREE)\output\tests\bin\release
 TESTS.files = $$[QT_INSTALL_PREFIX]/lib/QtTest4.dll
@@ -144,19 +184,35 @@ INSTALLS += PICTOLIB_DEBUG
 
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC??.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC??.CRT
+    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC90.CRT
     }
     contains(MACHINE_TYPE,X64) {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC90.CRT
+    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC90.CRT
     }
 }
 wince* {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr90.dll\" $$(PICTO_TREE)\output\bin\release
+    CRUNTIMETESTSPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??.dll\" $$(PICTO_TREE)\output\bin\release
 }
 CRUNTIMETESTSPRIVATEASSEMBLY.path = $$(PICTO_TREE)/output/tests/bin/release
 INSTALLS += CRUNTIMETESTSPRIVATEASSEMBLY
 
-#The C runtime files for debug are not licensed for redistribution, and are thus not copied here
+# As noted above, we are copying C runtime assemblies that aren't licensed for redistribution.  
+# Don't redistribute the debug builds.
+!wince* {
+    contains(MACHINE_TYPE,X86) {
+    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.DebugCRT
+    CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.CRT
+    }
+    contains(MACHINE_TYPE,X64) {
+    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\amd64\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.DebugCRT
+     CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.CRT
+   }
+}
+wince* {
+    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??d.dll\" $$(PICTO_TREE)\output\bin\debug
+}
+CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug\
+INSTALLS += CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG
 
 TESTS_DEBUG.extra = copy $$(PICTO_TREE)\output\bin\debug\*.dll $$(PICTO_TREE)\output\tests\bin\debug
 TESTS_DEBUG.files = $$[QT_INSTALL_PREFIX]/lib/QtTestd4.dll

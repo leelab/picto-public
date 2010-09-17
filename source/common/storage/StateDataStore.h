@@ -1,4 +1,15 @@
-/*!	\brief Stores behavioral data as x,y,t triplets
+#ifndef _STATEDATASTORE_H_
+#define _STATEDATASTORE_H_
+
+#include "../common.h"
+#include "DataStore.h"
+#include "../statemachine/transition.h"
+
+#include <QString>
+
+namespace Picto {
+
+/*!	\brief Stores state transitions.
  *
  *	The state data store is used for storing the current state of the engine's 
  *	state machine.  These are generated when there is some sort of change in the
@@ -13,17 +24,6 @@
  *		</Transition>
  *	</StateDataStore>
  */
-
-#ifndef _STATEDATASTORE_H_
-#define _STATEDATASTORE_H_
-
-#include "../common.h"
-#include "DataStore.h"
-#include "../statemachine/transition.h"
-
-#include <QString>
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API StateDataStore : public DataStore

@@ -1,8 +1,3 @@
-/*! \file plexonplugin.cpp
- * \ingroup proxypluginplexon
- * \brief A plugin allowing the proxy server to interface with a Plexon MAP
- */
-
 #include <QXmlStreamWriter>
 #include <windows.h>
 #include "plexon.h"

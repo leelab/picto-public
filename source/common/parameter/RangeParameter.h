@@ -1,4 +1,13 @@
-/*!	\brief A Parmeter that holds integer values within a limited range
+#ifndef _RANGEPARAMETER_H_
+#define _RANGEPARAMETER_H_
+
+#include "../common.h"
+
+#include "parameter.h"
+
+namespace Picto {
+
+/*!	\brief A Parameter that holds integer values within a limited range
  *
  *	The increment value is used throughtout the range parameter, and will
  *	result in strange behavior, if you aren't thinking about it.  The increment
@@ -10,16 +19,10 @@
  *	worked in the Orion system, so it seems likely to work here.  If it
  *	starts to cause problems, we can either subclass RangeParameter 
  *	(e.g. FloatRangeParameter), or we can use QVariants.
+ *
+ *	This is a somewhat redundant parameter type (since you could just use the 
+ *	NumericParameter), but it seems like something that users will appreciate.
  */
-
-#ifndef _RANGEPARAMETER_H_
-#define _RANGEPARAMETER_H_
-
-#include "../common.h"
-
-#include "parameter.h"
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RangeParameter : public Parameter

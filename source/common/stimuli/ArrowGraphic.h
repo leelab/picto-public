@@ -9,6 +9,15 @@
 
 namespace Picto {
 
+/*!	\brief An arrow graphic.
+ *
+ *	An ArrowGraphic has the following properties:
+ *	- Position: the position of the top-left corner of the box containing the arrow (in screen coordinates)
+ *	- Start: The start position of the arrow (in local coordinates)
+ *	- End: The end position of the arrow (in local coordinates)
+ *	- Size: The size of the arrowhead
+ *	- Color: The color
+ */
 class PICTOLIB_CLASS ArrowGraphic : public VisualElement
 {
 	Q_OBJECT

@@ -1,3 +1,13 @@
+
+#ifndef _AUDIO_REWARD_CONTROLLER_H_
+#define _AUDIO_REWARD_CONTROLLER_H_
+
+#include "RewardController.h"
+
+
+namespace Picto
+{
+
 /*! \brief An audio rewarder
  *
  *	During testing, it is likely that we won't have a real rewarder 
@@ -9,14 +19,6 @@
  *	types of noises.  (Phonon is probably the best approach for this...)
  */
 
-#ifndef _AUDIO_REWARD_CONTROLLER_H_
-#define _AUDIO_REWARD_CONTROLLER_H_
-
-#include "RewardController.h"
-
-
-namespace Picto
-{
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AudioRewardController : public RewardController
 #else

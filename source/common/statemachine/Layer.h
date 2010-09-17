@@ -1,4 +1,3 @@
-/*! \brief A Layer contains a set of VisualElements. */
 #ifndef _LAYER_H_
 #define _LAYER_H_
 
@@ -13,6 +12,11 @@
 
 namespace Picto {
 
+/*! \brief A Layer contains a set of VisualElements. 
+ *
+ *	Layers are rendered in order from smallest to largest.  Each Layer contains multiple
+ *	VisualElements which make up the layer.
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Layer : public DataStore
 #else

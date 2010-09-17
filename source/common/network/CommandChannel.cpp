@@ -227,7 +227,7 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 
 	if(command->write(consumerSocket_) < 1)
 	{
-		qDebug("CommandChannel::sendCommand failed to send requested command");
+		qDebug("CommandChannel::sendCommand failed to send requested command ");
 		return false;
 	}
 

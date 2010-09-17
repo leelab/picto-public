@@ -11,6 +11,12 @@ class QComboBox;
 class QLabel;
 class QDialogButtonBox;
 
+/*!	\brief Deprecated. A dialog for running a task.
+ *
+ *	This was originally used as a dialog to start up a new task.  We no longer use 
+ *	this dialog, and hence the code is no longer needed.  However, I have left it in place
+ *	as it shows exactly how to run a task.
+ */
 class RunTaskDialog : public QDialog
 {
 	Q_OBJECT

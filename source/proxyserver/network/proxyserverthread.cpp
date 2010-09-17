@@ -1,11 +1,10 @@
-#include "serverthread.h"
-#include "broadcast.h"
+#include "proxyserverthread.h"
 #include "../../common/globals.h"
 
 #include <QtNetwork>
 #include <QDateTime>
 
-ServerThread::ServerThread(int socketDescriptor, QSharedPointer<ServerProtocols> _protocols, QObject *parent)
+ProxyServerThread::ProxyServerThread(int socketDescriptor, QSharedPointer<ProxyServerProtocols> _protocols, QObject *parent)
     : QThread(parent),
       socketDescriptor(socketDescriptor),
 	  pendingCommand(""),
@@ -13,7 +12,7 @@ ServerThread::ServerThread(int socketDescriptor, QSharedPointer<ServerProtocols>
 {
 }
 
-void ServerThread::run()
+void ProxyServerThread::run()
 {
 	QTcpSocket socket;
 
@@ -47,7 +46,7 @@ void ServerThread::run()
 	}
 }
 
-bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command)
+bool ProxyServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	int remainingContentLength = command->getFieldValue("Content-Length").toInt();
 
@@ -66,7 +65,7 @@ bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command
 	return true;
 }
 
-QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPointer<Picto::ProtocolCommand> _command)
+QSharedPointer<Picto::ProtocolResponse> ProxyServerThread::processCommand(QSharedPointer<Picto::ProtocolCommand> _command)
 {
 	QSharedPointer<Picto::Protocol> protocol = protocols->getProtocol(_command->getProtocolName());
 	if(protocol.isNull())
@@ -119,7 +118,7 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	return response;
 }
 
-void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> response)
+void ProxyServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> response)
 {
 	if(response.isNull())
 	{
@@ -163,7 +162,7 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 	}
 }
 
-void ServerThread::readClient()
+void ProxyServerThread::readClient()
 {
 	timer->stop();
 
@@ -218,12 +217,12 @@ void ServerThread::readClient()
 	timer->start();
 }
 
-void ServerThread::handleDroppedClient()
+void ProxyServerThread::handleDroppedClient()
 {
 	exit();
 }
 
-void ServerThread::handleTimeout()
+void ProxyServerThread::handleTimeout()
 {
 	//On a timeout, we should broadcast to the network that we stll exist.  this way, if 
 	//PictoServer has somehow lost track of us, we will remind it that we are an active proxy server

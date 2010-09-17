@@ -1,3 +1,11 @@
+#ifndef _STARTSESSION_COMMAND_HANDLER_H_
+#define _STARTSESSION_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the STARTSESSION commands
  *
  *	PictoWorkstation sends these commands when it wants a remote Director
@@ -22,14 +30,6 @@
  *		declaring the session ID.
  *		
  */
-
-#ifndef _STARTSESSION_COMMAND_HANDLER_H_
-#define _STARTSESSION_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct StartsessionCommandHandler : Picto::ProtocolCommandHandler
 {

@@ -128,7 +128,7 @@
                 <ControlElements>
                   <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
                     <Name></Name>
-                    <Time units="Ms">500</Time>
+                    <Time units="Ms">5000</Time>
                   </ControlElement>
                 </ControlElements>
                 <Scene>

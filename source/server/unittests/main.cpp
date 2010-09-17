@@ -1,3 +1,8 @@
+/*!	\file server/unittests/main.cpp
+ *
+ *	This is the main unit test program for PictoServer.
+ */
+
 #include <QLocale>
 #include <QApplication>
 #include <QCoreApplication>

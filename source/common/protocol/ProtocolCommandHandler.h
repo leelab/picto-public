@@ -11,6 +11,13 @@
 
 namespace Picto {
 
+/*! \brief A base class from which all command handlers are derived
+ *
+ *	A command handler needs to implement two functions.  The method function is 
+ *	simply the name of the commang (e.g. GET).  The processCommand function is where
+ *	all of the logic is.  The processCommand function should return a response, and
+ *	cause any necessary internal state changes.  
+ */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolCommandHandler
 #else

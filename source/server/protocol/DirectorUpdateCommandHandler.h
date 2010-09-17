@@ -1,3 +1,11 @@
+#ifndef _DIRECTORUPDATE_COMMAND_HANDLER_H_
+#define _DIRECTORUPDATE_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the DIRECTORUPDATE commands, which are sent by Director
  *
  *	PictoDirector sends these commands to the Server at a fixed interval.
@@ -14,14 +22,6 @@
  *			OK, LOADEXP, START, STOP, PAUSE, RESTART
  *		
  */
-
-#ifndef _DIRECTORUPDATE_COMMAND_HANDLER_H_
-#define _DIRECTORUPDATE_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct DirectorUpdateCommandHandler : Picto::ProtocolCommandHandler
 {

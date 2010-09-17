@@ -1,6 +1,3 @@
-/*! \brief The greater than predicate
- */
-
 #ifndef _PREDICATE_NOT_EQUAL_H_
 #define _PREDICATE_NOT_EQUAL_H_
 
@@ -9,6 +6,9 @@
 #include "../parameter/parameter.h"
 
 namespace Picto {
+
+/*! \brief The not equal (!=) predicate
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PredicateNotEqual : public Predicate

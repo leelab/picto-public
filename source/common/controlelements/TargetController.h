@@ -1,3 +1,13 @@
+#ifndef _TARGETCONTROLLER_H_
+#define _TARGETCONTROLLER_H_
+
+#include "../common.h"
+#include "Timer.h"
+#include "ControlElement.h"
+#include "../engine/SignalChannel.h"
+
+namespace Picto {
+
 /*! \brief This controller watches for fixation on a single target
  *
  *	A TargetController watches a single target and returns true if the subject
@@ -17,16 +27,6 @@
  *	 Reacquisiton Allowed: Can the subject leave and re-enter the target?
  *
  */
-
-#ifndef _TARGETCONTROLLER_H_
-#define _TARGETCONTROLLER_H_
-
-#include "../common.h"
-#include "Timer.h"
-#include "ControlElement.h"
-#include "../engine/SignalChannel.h"
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API TargetController : public ControlElement

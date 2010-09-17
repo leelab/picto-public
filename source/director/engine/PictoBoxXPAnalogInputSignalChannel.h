@@ -5,6 +5,8 @@
 //#include "../common.h"
 #include "../../common/engine/SignalChannel.h"
 
+namespace Picto {
+
 /*! \brief A SignalChannel object for collecting analog input data.  Only runs on PictoBoxXP
  *	
  *	This SignalChannel is designed to collect analog data from the inputs to the 
@@ -16,8 +18,6 @@
  *	- The DAQ card is "Dev1"
  *	- The development box has the NIDAQmx libraries and headers installed
  */
-
-namespace Picto {
 
 class PictoBoxXPAnalogInputSignalChannel : public SignalChannel
 {

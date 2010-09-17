@@ -1,10 +1,3 @@
-/*!	\brief Stores behavioral data as x,y,t triplets
- *
- *	The behavioral data store is designed to work with signal channels
- *	to store behavioral data.  The store is used to convert data into
- *  XML fragments for movement across the network.
- */
-
 #ifndef _BEHAVIORALDATASTORE_H_
 #define _BEHAVIORALDATASTORE_H_
 
@@ -15,6 +8,13 @@
 #include <QMap>
 
 namespace Picto {
+
+/*!	\brief Stores behavioral data as x,y,t triplets
+ *
+ *	The behavioral data store is designed to work with signal channels
+ *	to store behavioral data.  The store is used to convert data into
+ *  XML fragments for movement across the network.
+ */
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API BehavioralDataStore : public DataStore

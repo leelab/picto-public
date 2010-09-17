@@ -12,6 +12,18 @@
 
 namespace Picto {
 
+/*!	\brief A line segment graphic.
+ *
+ *	A line graphic is basically a set of points (in the graphic's internal coordinates) that draw a 
+ *	series of line segments.  This one is a bit weird, since the number of properties is indeterminate
+ *	(it depends on the number of segments).
+ *
+ *	A LineGraphic has the following properties:
+ *	- Position: The position of the top-left corner of the box containing the line (in screen coordinates)
+ *	- Point 1 - N: The points (in order) that will be conencted to form the line graphic.
+ *	- Color: The color of the lines
+ */
+
 class PICTOLIB_CLASS LineGraphic : public VisualElement
 {
 	Q_OBJECT

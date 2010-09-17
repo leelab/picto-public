@@ -14,6 +14,16 @@
 
 #include "../protocol/ServerProtocols.h"
 
+/*!	\brief A thread used to handle TCP connections.
+ *
+ *	When a TCp connection is created by the server, a new serverthread is spun
+ *	up to handle the incoming data.  The thread reads the incoming data as if it is
+ *	following HTTP protocol.  It then finds the appropriate command handler (using the 
+ *	protocol and command name) and calls that command handler for a response, which 
+ *	is then returned to the sender.  The server is treated as a true server, so it
+ *	is only equipped to handle ProtocolCommands.  Should a ProtocolResponse arrive,
+ *	it will be treated as an error.
+ */
 class ServerThread : public QThread
 {
     Q_OBJECT

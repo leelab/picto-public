@@ -1,9 +1,3 @@
-/*! \brief A signal channel that pulls input data off the network
- *
- *	If we're remotely viewing an experiment, we will need to get the positional
- *	data from the network using GETDATA commands.  This signal channel does that.
- */
-
 #ifndef _NETWORK_SIGNAL_CHANNEL_H
 #define _NETWORK_SIGNAL_CHANNEL_H
 
@@ -17,6 +11,12 @@
 
 
 namespace Picto {
+
+/*! \brief A signal channel that pulls input data off the network
+ *
+ *	If we're remotely viewing an experiment, we will need to get the positional
+ *	data from the network using GETDATA commands.  This signal channel does that.
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API NetworkSignalChannel : public QObject, public SignalChannel

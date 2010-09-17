@@ -1,3 +1,20 @@
+#ifndef _COMPOUNTEXPRESSION_H_
+#define _COMPOUNTEXPRESSION_H_
+
+#include "../common.h"
+#include "PredicateExpression.h"
+
+namespace Picto {
+
+namespace CompoundExpressionOperator
+{
+	typedef enum
+	{
+		and,
+		or
+	}CompoundExpressionOperator;
+} //namespace CompoundExpressionOperator
+
 /*!	\brief A compundExpression is made up of multiple PredicateExpressions combined with AND, OR, and NOT
  *
  *	The compoundExpression object is used to combine multiple predicate expressions
@@ -16,23 +33,6 @@
  *	neccessary, since they can be created from AND, OR, and NOT).
  *
  */
-
-#ifndef _COMPOUNTEXPRESSION_H_
-#define _COMPOUNTEXPRESSION_H_
-
-#include "../common.h"
-#include "PredicateExpression.h"
-
-namespace Picto {
-
-namespace CompoundExpressionOperator
-{
-	typedef enum
-	{
-		and,
-		or
-	}CompoundExpressionOperator;
-} //namespace CompoundExpressionOperator
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API CompoundExpression : public DataStore

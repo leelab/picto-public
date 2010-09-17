@@ -1,11 +1,3 @@
-/*!	\brief	This views and controls a remotely running experiment
- *
- *	This is the viewer that will be used while an experiment is running.  It has the
- *	following features:
- *		Allows starting, stopping, and pausing of remotely running experiments
- *		Displays behavioral input (eye tracker) as a moving cursor
- *		Displays current state of remote experiment
- */
 #ifndef _REMOTE_VIEWER_H_
 #define _REMOTE_VIEWER_H_
 
@@ -23,6 +15,14 @@ class QToolBar;
 class QComboBox;
 class QLabel;
 
+/*!	\brief	This views and controls a remotely running experiment
+ *
+ *	This is the viewer that will be used while an experiment is running.  It has the
+ *	following features:
+ *		Allows starting, stopping, and pausing of remotely running experiments
+ *		Displays behavioral input (eye tracker) as a moving cursor
+ *		Displays current state of remote experiment
+ */
 class RemoteViewer : public Viewer
 {
 	Q_OBJECT

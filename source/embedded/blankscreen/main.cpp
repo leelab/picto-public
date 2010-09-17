@@ -1,3 +1,12 @@
+/*! \file blankscreen/main.cpp
+ *
+ *	\brief A really simple embedded apllication that displays a blank screen
+ *
+ *	This is a simple test application designed to be run on PictoBox.  It was originally
+ *	designed so that we could test the Windows CE Platform that we had built, but it is
+ *	generally usable as a way to confirm that any device is capable of running Qt.
+ */
+
 #include <QApplication>
 #include <QObject>
 #include <QWidget>

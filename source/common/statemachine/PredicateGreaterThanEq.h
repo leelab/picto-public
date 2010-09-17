@@ -1,6 +1,3 @@
-/*! \brief The greater than predicate
- */
-
 #ifndef _PREDICATE_GREATER_THAN_EQ_H_
 #define _PREDICATE_GREATER_THAN_EQ_H_
 
@@ -9,6 +6,9 @@
 #include "../parameter/parameter.h"
 
 namespace Picto {
+
+/*! \brief The greater than or equal to (>=) predicate
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PredicateGreaterThanEq : public Predicate

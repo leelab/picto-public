@@ -5,6 +5,12 @@
 
 namespace Picto {
 
+/*!	\brief Unimplemented.
+ *
+ *	I'm not sure how this was going to be implemented.  However, I suspect that it
+ *	was going to be used to store the MRI data of a subject.
+ */
+
 class MagneticResonanceImagingDataStore
 {
 public:

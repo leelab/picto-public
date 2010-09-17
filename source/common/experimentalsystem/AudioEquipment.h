@@ -5,6 +5,7 @@
 
 namespace Picto {
 
+//! \brief Unimplemented. Stores information about the audio setup being used.
 class AudioEquipment
 {
 public:

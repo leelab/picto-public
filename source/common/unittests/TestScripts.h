@@ -1,11 +1,3 @@
-/*! \brief Contains unit tests for scripting
- *
- * 	Since I've never dealt with scripting in a Qt environment before, these 
- *	tests serve two purposes:
- *		1. As a testbed to see if I can get scripting working
- *		2. To test that the scripting is working correctly
- */
-
 #ifndef _TEST_SCRIPTS_H
 #define _TEST_SCRIPTS_H
 
@@ -18,6 +10,14 @@
 #include "../parameter/Parameter.h"
 #include "../stimuli/VisualElement.h"
 
+
+/*! \brief Contains unit tests for scripting
+ *
+ * 	Since I've never dealt with scripting in a Qt environment before, these 
+ *	tests serve two purposes:
+ *		1. As a testbed to see if I can get scripting working
+ *		2. To test that the scripting is working correctly
+ */
 
 class TestScripts: public QObject
 {

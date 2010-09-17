@@ -1,8 +1,3 @@
-/*! \file ACQGetCommandHandler.h
- * \ingroup pictoproxyserver_protocol
- * \brief
- */
-
 #ifndef _ACQGETCOMMANDHANDLER_H_
 #define _ACQGETCOMMANDHANDLER_H_
 
@@ -13,13 +8,12 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-#include "interfaces.h"
-
-/*! \addtogroup pictoproxyserver_protocol
- * @{
- */
+#include "NeuralDataAcqInterface.h"
 
 /*! \brief Handles GET commands received specifying use of the ACQ protocol
+ *	
+ *	A GET command is asking for a piece of neural data from the proxy server.  The data is
+ *	returned as an XML fragment.  The fragment is documented in the TRAC wiki.
  */
 struct ACQGetCommandHandler : Picto::ProtocolCommandHandler
 {

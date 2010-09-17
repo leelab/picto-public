@@ -12,6 +12,11 @@ class QLabel;
 class QPushButton;
 QT_END_NAMESPACE
 
+/*!	\brief A diaolog box explaining the server.
+ *
+ *	If the server is run in a GUI environment, this dialog box pops up.  It gives the user the
+ *	option to start and stop the server service.
+ */
 class Dialog : public QDialog
 {
     Q_OBJECT

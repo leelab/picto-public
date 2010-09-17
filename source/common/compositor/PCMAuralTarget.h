@@ -11,6 +11,11 @@
 
 namespace Picto {
 
+/*! \brief A pulse code modulation (PCM) aural target
+ *
+ *	This hasn't been implemented yet, and I'm not sure how it was going
+ *	to be implemented...  - Matt Gay 8/31/2010
+ */
 struct PICTOLIB_CLASS PCMAuralTarget : public AuralTarget
 {
 public:

@@ -1,3 +1,11 @@
+#ifndef _GETDATA_COMMAND_HANDLER_H_
+#define _GETDATA_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the GETDATA commands, which are sent by Director
  *
  *	PictoWorkstation sends these commands to the server to request that 
@@ -36,14 +44,6 @@
  *	  </StateChangeDataStore>
  *	</Data>
  */
-
-#ifndef _GETDATA_COMMAND_HANDLER_H_
-#define _GETDATA_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct GetDataCommandHandler : Picto::ProtocolCommandHandler
 {

@@ -1,5 +1,11 @@
-/*!
- *	\brief EventCodeGenerator specific to PictoBox when it is running WindowsXP
+#ifndef _PICTOBOXXPEVENTCODEGENERATOR_H_
+#define _PICTOBOXXPEVENTCODEGENERATOR_H_
+
+#include "../../common/iodevices/EventCodeGenerator.h"
+
+namespace Picto {
+
+/*!	\brief EventCodeGenerator specific to PictoBox when it is running WindowsXP
  *
  *	The EventCodeGenerator for PictoBox running Windows XP makes the following
  *	assumptions about the hardware:
@@ -20,13 +26,6 @@
  *			eventCode[6]		P1.6			5
  *			event stobe			P1.7			38
  */
-
-#ifndef _PICTOBOXXPEVENTCODEGENERATOR_H_
-#define _PICTOBOXXPEVENTCODEGENERATOR_H_
-
-#include "../../common/iodevices/EventCodeGenerator.h"
-
-namespace Picto {
 
 class PictoBoxXPEventCodeGenerator : public EventCodeGenerator
 {

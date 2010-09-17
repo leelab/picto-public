@@ -9,6 +9,13 @@ class QPushButton;
 class QLineEdit;
 QT_END_NAMESPACE
 
+
+/*!\brief A Dialog used by the TDTProxyPlugin
+ *
+ *	To interface with a TDT system, you need to know the server, tank,
+ *	and block names.  This dialog gets those from the user.  In the future
+ *	it might be cool to pull them from the TDT..
+ */
 class Dialog : public QDialog
 {
     Q_OBJECT

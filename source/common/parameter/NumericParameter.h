@@ -1,11 +1,3 @@
-/*	\brief A parameter for containing numeric values.
- *
- *	Given our experience with Picto, it seems reasonable to limit these
- *	parameters to integer values.  If a user requires a non-integer
- *	value (e.g. 0.135 seconds), they can usually get away with changing
- *	the units (e.g. 135 milliseconds).
- */
-
 #ifndef _NUMERIC_PARAMETER_H_
 #define _NUMERIC_PARAMETER_H_
 
@@ -14,6 +6,14 @@
 #include "parameter.h"
 
 namespace Picto {
+
+/*!	\brief A parameter for containing numeric values.
+ *
+ *	Given our experience with Picto, it seems reasonable to limit these
+ *	parameters to integer values.  If a user requires a non-integer
+ *	value (e.g. 0.135 seconds), they can usually get away with changing
+ *	the units (e.g. 135 milliseconds).
+ */
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API NumericParameter : public Parameter

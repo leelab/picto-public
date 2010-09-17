@@ -10,6 +10,14 @@
 
 namespace Picto {
 
+/*!	\brief A base class for storing values that can be used in a state machine
+ *
+ *	Since Picto requires users to build state machines to define their experiments, we need
+ *	some sort of "variable" (actually we don't, but variables make the state machines a lot
+ *	simpler).  The Parameter object is that variable.  The base class includes functions
+ *	for converting parameters to XML, as well as the comparison operators as virtual 
+ *	functions.
+ */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Parameter : public QObject, public DataStore
 #else

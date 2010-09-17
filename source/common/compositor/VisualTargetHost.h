@@ -1,3 +1,14 @@
+
+#ifndef _VISUAL_TARGET_HOST_H_
+#define _VISUAL_TARGET_HOST_H_
+
+#include "VisualTarget.h"
+
+#include <QSharedPointer>
+#include <QWidget>
+
+namespace Picto {
+
 /*! \brief A Widget that contains a Visual Target
  *
  *	This object needs some explanation.  If we want to run an engine and place a
@@ -21,16 +32,6 @@
  *	QSharedPointers have lots of automatic calls to delete that occur behind the 
  *	scenes.
  */
-
-#ifndef _VISUAL_TARGET_HOST_H_
-#define _VISUAL_TARGET_HOST_H_
-
-#include "VisualTarget.h"
-
-#include <QSharedPointer>
-#include <QWidget>
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API VisualTargetHost :  public QWidget

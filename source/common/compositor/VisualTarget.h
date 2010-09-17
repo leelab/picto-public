@@ -11,6 +11,28 @@
 
 namespace Picto {
 
+/*!	\brief Handles the visual rendering
+ *
+ *	This is a base class for the visual rendering targets.  The best way to explain
+ *	these is to show an example of one:
+ *
+ *		QSharedPointer<Picto::D3DMVisualTarget> d3dmVisualTarget(new Picto::D3DMVisualTarget());
+ *		d3dmVisualTarget->show();
+ *
+ *		QSharedPointer<Picto::CompositingSurface> compositingSurface;
+ * 		compositingSurface = renderingTarget.generateCompositingSurface();
+ *
+ *		QSharedPointer<Picto::CircleGraphic> circleGraphic(new Picto::CircleGraphic(QPoint(50,50),100,QColor(0,255,0,127)));
+ *		circleGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);\
+ *
+ *		// This is the actual rendering loop
+ *		while(true)
+ *		{
+ *			d3dmVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface("Direct3DMobile"));
+ *			d3dmVisualTarget->present();
+ *		}
+ */
+
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API VisualTarget :  public QWidget
 #else

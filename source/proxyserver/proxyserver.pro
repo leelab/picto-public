@@ -11,38 +11,22 @@ INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 
 # Input
-macx {
-SOURCES += $$(PICTO_TREE)/source/proxyserver/processinfo/GetPID.c
-HEADERS += $$(PICTO_TREE)/source/proxyserver/processinfo/GetPID.h
-}
-win32 {
-SOURCES += $$(PICTO_TREE)/source/proxyserver/processinfo/WinGetPID.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/processinfo/WinGetPID.h
-}
-HEADERS += $$(PICTO_TREE)/source/proxyserver/interfaces.h
+HEADERS += $$(PICTO_TREE)/source/proxyserver/NeuralDataAcqInterface.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/main.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/mainwindow.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/mainwindow.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/proxymainwindow.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/proxymainwindow.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/StatusLight.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/StatusLight.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/InteractiveSTDIOHandler.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/InteractiveSTDIOHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/network/server.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/network/server.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/network/serverthread.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/network/serverthread.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/network/broadcast.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/network/broadcast.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxyserver.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxyserver.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxyserverthread.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxyserverthread.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/HTTPGetCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/HTTPGetCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ServerAcqProtocol.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ServerAcqProtocol.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ServerHTTPProtocol.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ServerHTTPProtocol.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ServerProtocols.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ServerProtocols.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerAcqProtocol.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerAcqProtocol.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerProtocols.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerProtocols.cpp
 
 include($$(PICTO_TREE)/source/common/common.pri)
 

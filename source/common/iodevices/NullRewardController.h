@@ -1,11 +1,3 @@
-/*!	\brief An empty reward controller
- *
- *	We don't always have reward hardware connected to the machine
- *	that is running a state machine.  This RewardController simply
- *	outputs a message to the debug console when a reward is issued.
-
- */
-
 #ifndef _NULLREWARDCONTROLLER_H_
 #define _NULLREWARDCONTROLLER_H_
 
@@ -14,6 +6,14 @@
 
 namespace Picto
 {
+
+/*!	\brief An empty reward controller
+ *
+ *	We don't always have reward hardware connected to the machine
+ *	that is running a state machine.  This RewardController simply
+ *	outputs a message to the debug console when a reward is issued.
+ */
+
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API NullRewardController : public RewardController
 #else

@@ -1,3 +1,11 @@
+#ifndef _PICTOBOXXPREWARDCONTROLLER_H_
+#define _PICTOBOXXPREWARDCONTROLLER_H_
+
+#include "../../common/iodevices/RewardController.h"
+
+
+namespace Picto
+{
 /*!	\brief A reward controller for the PictoBox used when running Windows XP
  *
  *	PictoBox uses a National Instruments PCI-6221 data acquisition board
@@ -17,17 +25,8 @@
  * 			4					P0.3			47
  *
  * \note The Crouzet PB-4 Digital I/O board uses active low logic.
-
  */
 
-#ifndef _PICTOBOXXPREWARDCONTROLLER_H_
-#define _PICTOBOXXPREWARDCONTROLLER_H_
-
-#include "../../common/iodevices/RewardController.h"
-
-
-namespace Picto
-{
 class PictoBoxXPRewardController :  public RewardController
 {
 public:

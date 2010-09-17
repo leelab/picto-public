@@ -1,3 +1,11 @@
+#ifndef _PROXYLIST_COMMAND_HANDLER_H_
+#define _PROXYLIST_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the PROXYLIST commands
  *
  *	PictoWorkstation sends these commands in order to get a list of all the
@@ -20,14 +28,6 @@
  *		</Proxy>
  *	</Proxies> 
  */
-
-#ifndef _PROXYLIST_COMMAND_HANDLER_H_
-#define _PROXYLIST_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct ProxyListCommandHandler : Picto::ProtocolCommandHandler
 {

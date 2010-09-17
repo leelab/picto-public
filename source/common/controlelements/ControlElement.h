@@ -1,15 +1,3 @@
-/*! \brief Controls the exit from a scene
- *
- *	All Picto scenes must include a Control Element of some sort.  The control
- *	element determines when the scene ends.  During the scene's rendering loop,
- *	the isDone() function is called every frame (until it returns true).  Then the
- *	getResult() function is called to determine the result of the ControlElements
- *	execution(e.g. "Broke fixation", "Selected traget 3", etc)
- *
- *	To keep things simple, the behavior of a Target Controller is defined through a 
- *	set of properties stored in a property container.
- */
-
 #ifndef _CONTROLELEMENT_H_
 #define _CONTROLELEMENT_H_
 
@@ -22,6 +10,18 @@
 #include <QObject>
 
 namespace Picto {
+
+/*! \brief Controls the exit from a scene
+ *
+ *	All Picto scenes must include a Control Element of some sort.  The control
+ *	element determines when the scene ends.  During the scene's rendering loop,
+ *	the isDone() function is called every frame (until it returns true).  Then the
+ *	getResult() function is called to determine the result of the ControlElements
+ *	execution(e.g. "Broke fixation", "Selected traget 3", etc)
+ *
+ *	To keep things simple, the behavior of a Target Controller is defined through a 
+ *	set of properties stored in a property container.
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ControlElement : public QObject, public DataStore

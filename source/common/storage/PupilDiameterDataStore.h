@@ -5,6 +5,11 @@
 
 namespace Picto {
 
+/*!	\brief Unimplemented. Stores pupil data
+ *
+ *	This was clearly intended to store information about the pupil diameter.
+ */
+
 class PupilDiameterDataStore
 {
 public:

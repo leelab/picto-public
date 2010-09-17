@@ -1,19 +1,3 @@
-/*!	\brief A StateMachineElement is a piece that can be used in a state machine
- *	
- *	StateMachineElements include FlowElements, Results, States, and StateMchines
- *	themselves. Not all StateMachineElements need all of the functionality provided.
- *
- *	Calling run() on a state machine element returns a result.
- *
- *	StateMchineElements are connected by transitions objects.  A transition
- *	connects a specific result from a specific StateMachineElement to antother
- *	specific StateMachineElement.
- *
- *	Parameters are local+global in scope, so a StateMachineElement has access to 
- *	its own parameters as well as the parameters from above it in the hierarchy.
- *	
- */
-
 #ifndef _STATEMACHINEELEMENT_H_
 #define _STATEMACHINEELEMENT_H_
 
@@ -37,6 +21,22 @@ namespace Picto {
 
 class Result;
 //class Engine::PictoEngine;
+
+/*!	\brief A StateMachineElement is a piece that can be used in a state machine
+ *	
+ *	StateMachineElements include FlowElements, Results, States, and StateMchines
+ *	themselves. Not all StateMachineElements need all of the functionality provided.
+ *
+ *	Calling run() on a state machine element returns a result.
+ *
+ *	StateMchineElements are connected by transitions objects.  A transition
+ *	connects a specific result from a specific StateMachineElement to antother
+ *	specific StateMachineElement.
+ *
+ *	Parameters are local+global in scope, so a StateMachineElement has access to 
+ *	its own parameters as well as the parameters from above it in the hierarchy.
+ *	
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API StateMachineElement : public QObject, public DataStore

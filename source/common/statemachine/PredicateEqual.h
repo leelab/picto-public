@@ -1,5 +1,3 @@
-/*! \brief The greater than predicate
- */
 
 #ifndef _PREDICATE_EQUAL_H_
 #define _PREDICATE_EQUAL_H_
@@ -8,6 +6,9 @@
 #include "Predicate.h"
 
 namespace Picto {
+
+/*! \brief The equal(==) predicate
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PredicateEqual : public Predicate

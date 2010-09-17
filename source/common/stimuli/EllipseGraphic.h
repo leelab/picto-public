@@ -9,6 +9,14 @@
 
 namespace Picto {
 
+/*!	\brief An ellipse graphic.
+ *
+ *	An EllipseGraphic has the following properties:
+ *	- Position: The position of the top-left corner of the box containing the ellipse (in screen coordinates)
+ *	- Dimensions: The width and height of the ellipse
+ *	- Color: The color
+ */
+
 class PICTOLIB_CLASS EllipseGraphic : public VisualElement
 {
 	Q_OBJECT

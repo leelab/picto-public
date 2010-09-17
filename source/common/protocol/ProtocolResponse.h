@@ -39,6 +39,14 @@ namespace MultiPartResponseType
 	} MultiPartResponseType;
 }
 
+/*!	\brief A response, issued as the result of a command
+ *
+ *	Protocol responses are the obvious object that gets returned after a command 
+ *	is received.  The response can simply be an empty 200:OK, in response to a 
+ *	simple command, or they can be much more complex.  Although there is functionality
+ *	in place for streaming responses, I never used it.  (However, it might be wise
+ *	to stream some of the responses for the repetitve commands.)
+ */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolResponse
 #else

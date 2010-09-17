@@ -9,6 +9,14 @@
 
 namespace Picto {
 
+/*!	\brief A picture graphic.
+ *
+ *	A PictureGraphic has the following properties:
+ *	- Position: The position of the top-left corner of the box containing the picture (in screen coordinates)
+ *	- ImageFile: The name of the file to display
+ */
+
+
 class PICTOLIB_CLASS PictureGraphic : public VisualElement
 {
 	Q_OBJECT

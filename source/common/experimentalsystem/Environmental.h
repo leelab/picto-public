@@ -5,6 +5,7 @@
 
 namespace Picto {
 
+//! \brief Unimplemented. Stores information about the environment.
 class Environmental
 {
 public:

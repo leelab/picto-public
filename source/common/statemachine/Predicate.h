@@ -1,3 +1,17 @@
+
+#ifndef _PREDICATE_H_
+#define _PREDICATE_H_
+
+#include <QString>
+#include <QImage>
+
+#include "../common.h"
+#include "../storage/datastore.h"
+#include "../parameter/parameter.h"
+
+
+namespace Picto {
+
 /*!	\brief The base class for all logic predicates (examples: ==, <. >, etc)
  *
  *	In a state machine, we are constantly evaluating logical expressions.  For
@@ -16,20 +30,9 @@
  *		==
  *		!=
  *		javascript
+ *
+ *	NOTE: This was an early class, and is probably over-engineered.  Feel free to refactor.
  */
-
-#ifndef _PREDICATE_H_
-#define _PREDICATE_H_
-
-#include <QString>
-#include <QImage>
-
-#include "../common.h"
-#include "../storage/datastore.h"
-#include "../parameter/parameter.h"
-
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Predicate

@@ -7,6 +7,10 @@
 
 namespace Picto {
 
+/*!	\brief Unimplemented. An audio stimuli
+ *
+ *	This is an unimplemented class that will eventually contain an audio element.
+ */
 struct PICTOLIB_CLASS AudioElement : public StimulusElement
 {
 public:

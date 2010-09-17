@@ -1,3 +1,19 @@
+#ifndef _SESSION_INFO_H_
+#define _SESSION_INFO_H_
+
+#include "../datacollection/alignmenttool.h"
+#include "../datacollection/neuraldatacollector.h"
+#include "../network/serverthread.h"
+#include "../../common/storage/BehavioralDataStore.h"
+#include "../../common/storage/StateDataStore.h"
+#include "../../common/storage/FrameDataStore.h"
+#include "../../common/storage/RewardDataStore.h"
+
+#include <QSharedPointer>
+#include <QSqlDatabase>
+#include <QUuid>
+#include <QStringList>
+
 /*!	\brief Contains info about a single session
  *
  *	The Server will likely be handling multiple concurrent sessions,
@@ -26,22 +42,6 @@
  *	Since database access here is generally messed up, I have placed Q_ASSERTs on all
  *	calls to QSqlQuery::exec().  This will let us know as soon as there is a problem.
  */
-
-#ifndef _SESSION_INFO_H_
-#define _SESSION_INFO_H_
-
-#include "../datacollection/alignmenttool.h"
-#include "../datacollection/neuraldatacollector.h"
-#include "../network/serverthread.h"
-#include "../../common/storage/BehavioralDataStore.h"
-#include "../../common/storage/StateDataStore.h"
-#include "../../common/storage/FrameDataStore.h"
-#include "../../common/storage/RewardDataStore.h"
-
-#include <QSharedPointer>
-#include <QSqlDatabase>
-#include <QUuid>
-#include <QStringList>
 
 class SessionInfo
 {

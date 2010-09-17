@@ -10,6 +10,12 @@
 
 namespace Picto {
 
+/*!	\brief Describes the property of an object
+ *
+ *	Many objects in Picto have properties (e.g. a circle has properties of color 
+ *	radius, and location).  The Property object allows us to assign properties to 
+ *	objects.
+ */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Property
 #else

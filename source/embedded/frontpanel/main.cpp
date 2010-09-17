@@ -1,3 +1,17 @@
+/*! \file frontpanel/main.cpp
+ *	\brief This application controls the front panle on PictoBox
+ *
+ *	The front panel on PictoBox consists of a 2 line LCD and a rotary encoder
+ *	plus button input device (a PhidgetEncoder, part number 1052).  The application
+ *	handles user input and communicates with the Picto engine via a simple TCP/IP
+ *	connection.  
+ *	
+ *	It should be noted that as of August 31, 2010, the current incarnation of
+ *	PictoDirector does not interact with the FrontPanel at all.  If you want to
+ *	see how this functionality should eventually be implemented, check out 
+ *	embedded/dumbEngine.
+ */
+
 #include <QApplication>
 #include <QTimer>
 #include <QTcpServer>

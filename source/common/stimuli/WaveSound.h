@@ -5,6 +5,8 @@
 
 namespace Picto {
 
+/*!	\brief Unimplemented. A Wave Sound class.
+ */
 class WaveSound
 {
 public:

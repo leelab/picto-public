@@ -1,15 +1,15 @@
-#include "ServerProtocols.h"
+#include "ProxyServerProtocols.h"
 
-ServerProtocols::ServerProtocols()
+ProxyServerProtocols::ProxyServerProtocols()
 {
 }
 
-void ServerProtocols::addProtocol(QSharedPointer<Picto::Protocol> protocol)
+void ProxyServerProtocols::addProtocol(QSharedPointer<Picto::Protocol> protocol)
 {
 	protocols[protocol->id()] = protocol;
 }
 
-QSharedPointer<Picto::Protocol> ServerProtocols::getProtocol(QString protocolName)
+QSharedPointer<Picto::Protocol> ProxyServerProtocols::getProtocol(QString protocolName)
 {
 	QSharedPointer<Picto::Protocol> protocol;
 

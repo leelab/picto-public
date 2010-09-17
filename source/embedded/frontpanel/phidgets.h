@@ -19,6 +19,13 @@ int __stdcall EncoderPositionChangeHandler(CPhidgetEncoderHandle hEncoder, void 
 //int __stdcall ManagerDetachHandler(CPhidgetHandle phid, void * phidgetsObj);
 //int __stdcall ManagerErrorHandler(CPhidgetManagerHandle hManager, void * phidgetsObj, int Code, const char * Description);
 
+/*! \brief Interface to the Phidgets devices
+ *
+ *	The front panel deals with two different Phidgets devices: a 2-line LCD (1203)
+ *	and a rotary encoder with push button (1052).  This object/collection of functions
+ *	handles all of the I/O for these devices.
+ */
+
 class Phidgets : public QObject
 {
 	Q_OBJECT

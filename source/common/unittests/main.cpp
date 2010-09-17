@@ -1,3 +1,14 @@
+/*!	\file common/unittests/main.cpp
+ *	\brief These unit tests are used for testing libPicto.
+ *
+ *	Ummmmm, yeah, unit testing....
+ *
+ *	So, some of these unit tests worked at one time.  However, I wasn't
+ *	religious about testing, and it's possible that code that previously
+ *	passed will now fail.  I also made some changes that were dramatic enough
+ *	to prevent the tests from compiling.  Those tests got commented out.
+ */
+
 #include <QLocale>
 #include <QApplication>
 #include <QCoreApplication>

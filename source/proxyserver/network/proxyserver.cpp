@@ -1,4 +1,4 @@
-#include "server.h"
+#include "proxyserver.h"
 
 #include <QNetworkInterface>
 #include <QStringList>
@@ -8,9 +8,9 @@
 #include <QSqlRecord>
 #include <QVariant>
 
-#include "serverthread.h"
+#include "proxyserverthread.h"
 
-Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject *parent) :
+ProxyServer::ProxyServer(quint16 port, QSharedPointer<ProxyServerProtocols> _protocols, QObject *parent) :
 	protocols(_protocols),
 	serverPort(port),
 	QTcpServer(parent)
@@ -29,16 +29,16 @@ Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject
     connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 }
 
-void Server::incomingConnection(int socketDescriptor)
+void ProxyServer::incomingConnection(int socketDescriptor)
 {
-    ServerThread *thread = new ServerThread(socketDescriptor, protocols, this);
+    ProxyServerThread *thread = new ProxyServerThread(socketDescriptor, protocols, this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 	connect(thread, SIGNAL(activity()), parent(), SLOT(serverActivity()));
     thread->start();
 }
 
 /*! /todo: The Proxy server doesn't need to process pending datagrams, since it never receives any...*/
-void Server::processPendingDatagrams()
+void ProxyServer::processPendingDatagrams()
 {
     while (udpSocket->hasPendingDatagrams())
 	{

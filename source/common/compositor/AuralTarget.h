@@ -9,6 +9,10 @@
 
 namespace Picto {
 
+/*!	\brief A target for audio.  
+ *
+ *	None of these have been implemented yet.
+ */
 class AuralTarget
 {
 public:

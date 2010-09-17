@@ -1,3 +1,17 @@
+/*!	\file workstation/main.cpp
+ *	\brief The Workstation application
+ *
+ *	Picto workstation is the user's interface to the Picto System.  It will need to handle everything
+ *	that the user could possibly want to do.  It's features will includes:
+ *	- Experiment design
+ *	- Experiment testing
+ *	- Experiment control/observation
+ *	- Data analysis (online and offline)
+ *	- Access to archive data stored on the server
+ */
+
+
+
 #include <QApplication>
 #include <QLabel>
 #include <QFont>

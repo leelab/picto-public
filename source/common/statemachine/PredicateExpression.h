@@ -1,12 +1,3 @@
-/*! \brief A predicate expression involves a predicate and 2 values
- *
- *	A PredicateExpression gets evaluated to a boolean value.  It should be
- *	noted that the predicates and predicate expressions default to false.
- *	For example, if you tried to evaluate a predicate expression without
- *	having first set the left hand side value, it will automatically
- *	return false (as opposed to returning an error flag)
- */
-
 #ifndef _PREDICATEEXPRESSION_H_
 #define _PREDICATEEXPRESSION_H_
 
@@ -19,6 +10,15 @@
 #include "Predicate.h"
 
 namespace Picto {
+
+/*! \brief A predicate expression involves a predicate and 2 values
+ *
+ *	A PredicateExpression gets evaluated to a boolean value.  It should be
+ *	noted that the predicates and predicate expressions default to false.
+ *	For example, if you tried to evaluate a predicate expression without
+ *	having first set the left hand side value, it will automatically
+ *	return false (as opposed to returning an error flag)
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PredicateExpression : public DataStore

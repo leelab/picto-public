@@ -5,6 +5,8 @@
 
 namespace Picto {
 
+//! \brief Unimplemented. Stores information about the camera setup being used.
+
 class CameraEquipment
 {
 public:

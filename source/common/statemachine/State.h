@@ -19,6 +19,12 @@ class BehavioralDataStore;
 class CommandChannel;
 class SignalChannel;
 
+/*!	\brief The stat machine element that handles stimulus rendering
+ *
+ *	A state contatins a single scene and multiple control elements.  This is where
+ *	the rendering loop lives.
+ */
+
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API State : public StateMachineElement
 #else

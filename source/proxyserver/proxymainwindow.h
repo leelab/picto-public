@@ -16,11 +16,16 @@ class QLineEdit;
 class QLabel;
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+/*!	\brief The main window of the proxy server
+ *
+ *	The MainWindow object is the GUI for the proxy server.  It also handles a little
+ *	bit of the networking (it sends out ANNOUNCE and DEPART broadcasts), and the plugins.
+ */
+class ProxyMainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow();
+	ProxyMainWindow();
 
 private slots:
 	void setNeuralDataAcquisitionDevice(int index);
@@ -38,6 +43,9 @@ private:
 
 	void readSettings();
 	void writeSettings();
+
+	void announce();
+	void depart();
 
 	StatusLight *readyStatus_,*activityStatus_;
 	QLabel *readyStatusLabel_, *activityStatusLabel_;

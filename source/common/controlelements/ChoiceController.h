@@ -1,3 +1,13 @@
+#ifndef _CHOICECONTROLLER_H_
+#define _CHOICECONTROLLER_H_
+
+#include "../common.h"
+#include "Timer.h"
+#include "ControlElement.h"
+#include "../engine/SignalChannel.h"
+
+namespace Picto {
+
 /*!	\Brief Returns a result based on the region selected by the subject
  *
  *	A choice controller allows the experimenter to define multiple regions
@@ -14,16 +24,6 @@
  *		FixationTime: The required fixation time for success to be returned
  *		AllowReentries: Is the subject allowed to leave a target without failing?
  */
-
-#ifndef _CHOICECONTROLLER_H_
-#define _CHOICECONTROLLER_H_
-
-#include "../common.h"
-#include "Timer.h"
-#include "ControlElement.h"
-#include "../engine/SignalChannel.h"
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ChoiceController : public ControlElement

@@ -1,7 +1,3 @@
-/*! This handles collecting data from a nerual data source.
- *  Each neural data source will be running a proxy server, that
- *  we can connect to for the data.
- */
 #ifndef NEURALDATACOLLECTOR_H
 #define NEURALDATACOLLECTOR_H
 
@@ -16,6 +12,15 @@
 #include "../common/network/CommandChannel.h"
 #include "alignmenttool.h"
 
+/*!	\brief Collects data from a running neural data source.
+ *
+ *	This object uses a timer to peridocially poll a proxy server for neural data
+ *	upon receiving the data, it parses the XML fragment and adds the data to the 
+ *	session database.
+ *
+ *	If you were in the mood to refactor, it would make sense to create a NeuralDataStore object
+ *	and then move the SQL stuff to the SessionInfo object.
+ */
 class NeuralDataCollector : public QThread
 {
 	Q_OBJECT

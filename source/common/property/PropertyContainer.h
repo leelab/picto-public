@@ -10,6 +10,13 @@
 
 namespace Picto {
 
+/*!	\brief A container for groups of properties.
+ *
+ *	Since most objects have more than one property, it makes sense to provide a 
+ *	container object for grouping the properties of a single object.  This uses the
+ *	Qt PropertyBrowser framework to keep track of the properties.  (This will come in
+ *	handy when we start building the state machine design GUI.)
+ */
 class PropertyContainer : public QObject
 {
 	Q_OBJECT

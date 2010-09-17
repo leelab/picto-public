@@ -34,6 +34,10 @@ struct MenuItem
 	int menu;
 };
 
+/*!	\brief The front panel's menu interface
+ *
+ *	The front panel's menu interface is defined here.
+ */
 class Menu : public QObject
 {
 	Q_OBJECT

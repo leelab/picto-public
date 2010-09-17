@@ -9,6 +9,14 @@
 
 namespace Picto {
 
+/*!	\brief A circle graphic.
+ *
+ *	A CircleGraphic has the following properties:
+ *	- Position: The position of the top-left corner of the box containing the circle (in screen coordinates)
+ *	- Radius: Duh.
+ *	- Color: The color of the circle
+ */
+
 class PICTOLIB_CLASS CircleGraphic : public VisualElement
 {
 	Q_OBJECT

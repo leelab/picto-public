@@ -13,7 +13,13 @@
 #include "engine/PictoBoxXPAnalogInputSignalChannel.h"
 #include "compositor/D3DVisualTarget.h"
 
-
+/*!	\brief A test class for playing with signal channels
+ *	
+ *	This was a test class that was written to test out a signal channel.  It draws a 
+ *	circle on the screen, and moves it around according to the inputs from the signal 
+ *	channel.  This is actually a really good place to start reading if you're trying 
+ *	to understand either signal channels, or the compositing system.
+ */
 class SignalChannelTest : public QObject
 {
 	Q_OBJECT

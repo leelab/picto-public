@@ -14,6 +14,12 @@ struct StringParameterOption
 	MediaItem icon;
 };
 
+/*!	\brief A parameter for storing strings
+ *
+ *	This parameter was never implemented.  It may turn out to be unnecessary.
+ *	The parameter was intended to hold arbitrary strings, but this seems
+ *	like something that would be of limited use within a state machine.
+ */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API StringParameter : public Parameter
 #else

@@ -9,6 +9,25 @@
 
 namespace Picto {
 
+/*!	\brief A randomly filled grid graphic.
+ *
+ *	Randomly filled grids are used in many neuro physiology experiments.  These are rectangular grids
+ *	in which each space in the grid is filled with one of two colors, at random, according to a given 
+ *	distribution.
+ *	
+ *	A RandomlyFilledGridGraphic has the following properties:
+ *	- Position: The position of the top-left corner of the box containing the grid (in screen coordinates)
+ *	- Dimensions: The width and height of the grid
+ *	- Color: The first color
+ *	- Color2: The second color
+ *	- Number of horizontal squares: As advertised
+ *	- Number of vertical squares: As advertised
+ *	- Number of squares with color1: This lets you set the ratio of colored grid spaces
+ *	- Animated: Does the grid arrangement change?  Or is it static? (boolean)
+ *	- Update frame rate: If the grid is animated, this is the frequency at which it updates.  Otherwise meaningless.
+ */
+
+
 class PICTOLIB_CLASS RandomlyFilledGridGraphic : public VisualElement
 {
 	Q_OBJECT

@@ -1,3 +1,12 @@
+#ifndef _XML_EDITOR_H_
+#define _XML_EDITOR_H_
+
+#include <QTextEdit>
+#include <QList>
+#include <QTextCursor>
+
+class QAction; 
+
 /*! \brief A text editor for editing experiment xml
  *
  *	This is a variant on the standard QText Edit.  The following features should
@@ -7,15 +16,6 @@
  *		3. Syntax highlighting?
  *		4. Outlining?
  */
-
-#ifndef _XML_EDITOR_H_
-#define _XML_EDITOR_H_
-
-#include <QTextEdit>
-#include <QList>
-#include <QTextCursor>
-
-class QAction; 
 
 class XmlEditor : public QTextEdit
 {

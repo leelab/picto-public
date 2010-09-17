@@ -1,9 +1,3 @@
-/*!	\brief Stores frame data 
- *
- *	The behavioral data store is designed to information about the times 
- *	at which frames are rendered
- */
-
 #ifndef _FRAME_DATA_STORE_H_
 #define _FRAME_DATA_STORE_H_
 
@@ -13,6 +7,12 @@
 #include <QString>
 
 namespace Picto {
+
+/*!	\brief Stores frame data 
+ *
+ *	The behavioral data store is designed to information about the times 
+ *	at which frames are rendered
+ */
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API FrameDataStore : public DataStore

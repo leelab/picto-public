@@ -1,4 +1,4 @@
-#include "ServerAcqProtocol.h"
+#include "ProxyServerAcqProtocol.h"
 #include "ACQGetCommandHandler.h"
 
 #include <QSharedPointer>
@@ -6,19 +6,19 @@
 #include "../../common/common.h"
 
 
-ServerAcqProtocol::ServerAcqProtocol(QObject *acqPlugin)
+ProxyServerAcqProtocol::ProxyServerAcqProtocol(QObject *acqPlugin)
 {
 	QSharedPointer<ACQGetCommandHandler> getCommandHandler(new ACQGetCommandHandler(acqPlugin));
 
 	addCommandHandler(getCommandHandler);
 }
 
-QString ServerAcqProtocol::id()
+QString ProxyServerAcqProtocol::id()
 {
 	return QString("ACQ");
 }
 
-QString ServerAcqProtocol::version()
+QString ProxyServerAcqProtocol::version()
 {
 	return QString("1.0");
 }

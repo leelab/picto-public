@@ -5,6 +5,7 @@
 
 namespace Picto {
 
+//! \brief Unimplemented. Stores information about the behavioral input setup being used (eye tracker, joystick, etc).
 class BehavioralInputEquipment
 {
 public:

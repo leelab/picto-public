@@ -11,14 +11,20 @@
 #include "../common/protocol/ProtocolCommand.h"
 #include "../common/protocol/ProtocolResponse.h"
 
-#include "../protocol/ServerProtocols.h"
+#include "../protocol/ProxyServerProtocols.h"
 
-class ServerThread : public QThread
+/*!	\brief The thread spun up by the server to handle each connection
+ *
+ *	Much like the server itself, this thread was stolen from the PictoServer
+ *	code.  And we are now stuck maintinaing two nearly identical pieces of code...
+ *	And again, sorry.
+ */
+class ProxyServerThread : public QThread
 {
     Q_OBJECT
 
 public:
-	ServerThread(int socketDescriptor, QSharedPointer<ServerProtocols> _protocol, QObject *parent);
+	ProxyServerThread(int socketDescriptor, QSharedPointer<ProxyServerProtocols> _protocol, QObject *parent);
 
     void run();
 
@@ -34,7 +40,7 @@ private:
 	int socketDescriptor;
 	QString pendingCommand;
 	QTcpSocket * tcpSocket;
-	QSharedPointer<ServerProtocols> protocols;
+	QSharedPointer<ProxyServerProtocols> protocols;
 
 	static const int timeoutInterval = 2000;
 

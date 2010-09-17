@@ -1,15 +1,3 @@
-/*!	\brief Contains info about a director connected to the server
- *
- *	The Server will likely have multiple Director instances connected
- *	at any given time.  This object holds info about the directors, 
- *	and provides a mechanism for catching timeouts.
- *
- *	This is more of a data structure than a true object, but I had
- *	to make it an actual object to deal with the timeouts.  Note that 
- *	it is a friend of the Connection Manager, so we don't have any 
- *	setter/getter functions.
- */
-
 #ifndef _DIRECTOR_INFO_H_
 #define _DIRECTOR_INFO_H_
 
@@ -23,6 +11,18 @@ namespace DirectorStatus
 	};
 }
 
+
+/*!	\brief Contains info about a director connected to the server
+ *
+ *	The Server will likely have multiple Director instances connected
+ *	at any given time.  This object holds info about the directors, 
+ *	and provides a mechanism for catching timeouts.
+ *
+ *	This is more of a data structure than a true object, but I had
+ *	to make it an actual object to deal with the timeouts.  Note that 
+ *	it is a friend of the Connection Manager, so we don't have any 
+ *	setter/getter functions.
+ */
 
 class DirectorInfo 
 {

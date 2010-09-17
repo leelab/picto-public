@@ -1,10 +1,3 @@
-/*! \brief A simple controller for test purposes
- *
- *	This controller can be modified to do anything for test purposes
- *	Initially, it will simply output to the debuggin console, and return true
- *	the 120th time it is called (2 seconds if we're running at 60Hz).
- */
-
 #ifndef _TEST_CONTROLLER_H_
 #define _TEST_CONTROLLER_H_
 
@@ -13,6 +6,13 @@
 #include "ControlElement.h"
 
 namespace Picto {
+
+/*! \brief A simple controller for test purposes
+ *
+ *	This controller can be modified to do anything for test purposes
+ *	Initially, it will simply output to the debuggin console, and return true
+ *	the 120th time it is called (2 seconds if we're running at 60Hz).
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API TestController : public ControlElement

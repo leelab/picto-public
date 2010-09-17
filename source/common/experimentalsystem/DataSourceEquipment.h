@@ -5,6 +5,7 @@
 
 namespace Picto {
 
+//! \brief Unimplemented. Stores information about the data source being used. (I'm not sure what is meant by this...)
 class DataSourceEquipment
 {
 public:

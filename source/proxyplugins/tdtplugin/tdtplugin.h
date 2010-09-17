@@ -10,6 +10,11 @@
 #include "../../proxyserver/interfaces.h"
 #import "C:\\TDT\\OpenEx\\OCX\\TTankX.ocx"
 
+/*! \brief A plugin allowing the proxy server to interface with a TDT system
+ *
+ *	This uses the Microsoft COM interface to talk to the TDT system.  This interface is
+ *	well-documented by TDT.
+ */
 
 class TdtPlugin : public QObject, public NeuralDataAcqInterface
 {

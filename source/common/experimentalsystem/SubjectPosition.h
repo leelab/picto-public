@@ -5,6 +5,8 @@
 
 namespace Picto {
 
+//! \brief Unimplemented. Stores information about the subject's position.
+
 class SubjectPosition
 {
 public:

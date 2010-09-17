@@ -9,6 +9,14 @@
 
 namespace Picto {
 
+	/*!	\brief A box graphic (a rectangle).
+ *
+ *	A BoxGraphic has the following properties:
+ *	- Position: the position of the top-left corner of the box (in screen coordinates)
+ *	- Dimensions: the size of the rectangle
+ *	- Color: The color of the rectangle
+ */
+
 class PICTOLIB_CLASS BoxGraphic : public VisualElement
 {
 	Q_OBJECT

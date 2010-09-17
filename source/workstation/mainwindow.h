@@ -1,3 +1,14 @@
+#include <QMainWindow>
+#include <QTextDocument>
+
+#include "../common/experiment/experiment.h"
+
+class QAction;
+class Viewer;
+class QTextDocument;
+class ErrorList;
+class QStackedWidget;
+
 /*! \brief The main window for the Workstation tool
  *
  *	This window works similarly to the the Qt Creator tool.  There are multiple
@@ -16,17 +27,6 @@
  *	distinction is important, since it's possible to have experimentText_ that can't
  *	be deserialized.  In this case, experiment_ will be null.
  */
-#include <QMainWindow>
-#include <QTextDocument>
-
-#include "../common/experiment/experiment.h"
-
-class QAction;
-class Viewer;
-class QTextDocument;
-class ErrorList;
-class QStackedWidget;
-
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT

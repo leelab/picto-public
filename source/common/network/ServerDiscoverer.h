@@ -10,6 +10,19 @@
 
 namespace Picto {
 
+/*!	\brief An object to find the Picto server instance on the local network.
+ *
+ *	All Picto apps (except for Server) communicate with the server.  For this to
+ *	occur, they need to know the address of the server.  This is something that we 
+ *	could require the user to enter, but it is much more user-friendly to automate 
+ *	the process.  The server discoverer object sends out a UDP broadcast, and then
+ *	waits for a response from a server on the network.
+ *
+ *	This object was not designed for use on a network with multiple servers, so its
+ *	behavior in such a scenario is undefined. (I believe it will find *a* server, 
+ *	but it is undefined as to which server it will find.)
+ */
+
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ServerDiscoverer : QObject
 #else

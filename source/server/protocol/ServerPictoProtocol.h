@@ -5,6 +5,10 @@
 
 #include "../../common/protocol/Protocol.h"
 
+/*!	\brief The PICTO protocol.
+ *
+ *	The PICTO protocol contains all of the commands that are used by the Picto system.
+ */
 struct ServerPictoProtocol : Picto::Protocol
 {
 public:

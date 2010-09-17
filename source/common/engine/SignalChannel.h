@@ -1,4 +1,14 @@
-/* SignalChannel
+#ifndef _SIGNALCHANNEL_H_
+#define _SIGNALCHANNEL_H_
+
+#include "../common.h"
+#include <QMap>
+#include <QString>
+#include <QList>
+
+namespace Picto {
+
+/*! SignalChannel
  *
  *	SignalChannel is a base class for signalChannel objects
  *	These objects will be used for collecting signals from any
@@ -26,16 +36,6 @@
  *	NOTE: If a SignalChannel is going to be used for x/y data, it must contain
  *	xpos and ypos subchannels.
  */
-
-#ifndef _SIGNALCHANNEL_H_
-#define _SIGNALCHANNEL_H_
-
-#include "../common.h"
-#include <QMap>
-#include <QString>
-#include <QList>
-
-namespace Picto {
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SignalChannel

@@ -16,6 +16,16 @@
 #include "../protocol/ServerProtocols.h"
 #include "../connections/ServerConfig.h"
 
+/*!	\brief The server for PictoServer
+ *
+ *	The server handles incoming and outgoing network connections.  Luckily for us, QT
+ *	already has a server class, so we just extended it.  It should be noted that there
+ *	are two types of connections that are being dealt with here.  When a UDP broadcast 
+ *	is observed, the server object handles it directly.  When a TCP connection arrives, 
+ *	a new thread is spun up to handle incoming commands.
+ *
+ *	The server makes extensive use of the ProtocolCommand and ProtocolResponse objects.
+ */
 class Server : public QTcpServer
 {
     Q_OBJECT

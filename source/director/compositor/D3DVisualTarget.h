@@ -1,9 +1,3 @@
-/*!	\brief A visual target that uses the Direct3D interface.  For use on any windows system.
- *	
- *
- *	The functions drawNonExperimentText and paintEvent are not currently supported
- */
-
 #ifndef _D3DVISUALTARGET_H_
 #define _D3DVISUALTARGET_H_
 
@@ -14,6 +8,16 @@
 #include <QList>
 
 namespace Picto {
+
+/*!	\brief A visual target that uses the Direct3D interface.  For use on any windows system.
+ *	
+ *
+ *	This visual target is clearly limited to Windows platforms.  Additionally, the
+ *	platform must support DirectX9.  We are using Direct3D for a number of reasons:
+ *	- It gives us full control over the frame rate
+ *	- DirectDraw isn't really supported (outside of WinCE and Win7)
+ *	- Video card drivers always support Direct3D
+ */
 
 class D3DVisualTarget : public VisualTarget
 {

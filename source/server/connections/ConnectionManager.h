@@ -1,4 +1,19 @@
-/*!	\brief	keeps track of all server connections
+#ifndef _CONNECTION_MANAGER_H_
+#define _CONNECTION_MANAGER_H_
+
+#include <QObject>
+#include <QString>
+#include <QHostAddress>
+#include <QUuid>
+#include <QMutex>
+
+#include "SessionInfo.h"
+#include "DirectorInfo.h"
+
+class ServerThread;
+class QTimer;
+
+/*! \brief	Keeps track of all server connections
  *
  *	There are 3 different components that the server talks to:
  *		PictoDirector (client)
@@ -18,21 +33,6 @@
  *	- We'll use signals to start QTimers
  *	- We'll protect a lot of the data with Mutexes.
  */
-
-#ifndef _CONNECTION_MANAGER_H_
-#define _CONNECTION_MANAGER_H_
-
-#include <QObject>
-#include <QString>
-#include <QHostAddress>
-#include <QUuid>
-#include <QMutex>
-
-#include "SessionInfo.h"
-#include "DirectorInfo.h"
-
-class ServerThread;
-class QTimer;
 
 class ConnectionManager : public QObject
 {

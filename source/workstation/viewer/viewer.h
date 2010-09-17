@@ -1,3 +1,12 @@
+#ifndef _VIEWER_H_
+#define _VIEWER_H_
+
+#include "../common/experiment/experiment.h"
+
+#include <QWidget>
+#include <QSharedPointer>
+#include <QTextDocument>
+
 /*!	\brief A Viewer is a main panel used to view an experiment.  This is a base class
  *
  *	Within PictoWorkstation, you change modes by selecting different viewers.  For
@@ -28,17 +37,6 @@
  *	directly, it only needs convert it to XML in the deinit() function.
  *
  */
-
-#ifndef _VIEWER_H_
-#define _VIEWER_H_
-
-#include "../common/experiment/experiment.h"
-
-#include <QWidget>
-#include <QSharedPointer>
-#include <QTextDocument>
-
-class QMenu;
 
 class Viewer : public QWidget
 {

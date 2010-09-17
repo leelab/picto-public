@@ -1,6 +1,14 @@
-/*! \file main.cpp
- * \ingroup pictoserver
- * \brief
+/*! \file server/main.cpp
+ * \brief The PictoSErver application.
+ *
+ *	PictoServer is the central server that ties all of the distributed pieces of Picto
+ *	together.  Like any good server, it recieves commands, parses and replies to them.
+ *
+ *	The server can be run in two modes.  The first mode is as a service.  This lets us 
+ *	install it on a machine and completely ignore it (assuming that it doesn't crash).  The
+ *	second mode is "interactive".  This gets run from a command line and provides feedback
+ *	as the server is running.  While developing Picto, you will want to use interactive 
+ *	mode exclusively, since it gives you some clue as to what is going on with the server.
  */
 
 #include <QApplication>
@@ -25,8 +33,6 @@
 #include "service/systemservice.h"
 #include "dialog.h"
 #include "InteractiveSTDIOHandler.h"
-#include "datacollection/neuraldatacollector.h"
-#include "datacollection/alignmenttool.h"
 #include "connections/ServerConfig.h"
 
 #ifdef Q_WS_MAC

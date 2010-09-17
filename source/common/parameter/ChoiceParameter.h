@@ -13,6 +13,15 @@ struct ChoiceParameterOption
 	QVariant data;
 };
 
+/*!	\brief A parameter for choosing between multiple options (e.g. "fast", "medium" "slow")
+ *
+ *	This parameter allows you to create a list of values and select between them.  Each value
+ *	contains a string for naming the value and a Variant for the value itself.  You could, for
+ *	example, have a "red" value which would be a QColor returning 0xFF0000.  The equality operators
+ *	are clearly defined, but since there isn't an obvious way to implement them, the cmoparison
+ *	operators (> and <) are undefined and will always return false.
+ */
+
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API ChoiceParameter : public Parameter
 #else

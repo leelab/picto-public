@@ -1,8 +1,3 @@
-/*!	\brief A Canvas contains the layers of a scene
- *
- *	The layers are stored in a list, with the exception of the
- *	background layer, which is defined as a single opaque color
- */
 #ifndef _CANVAS_H_
 #define _CANVAS_H_
 
@@ -12,6 +7,12 @@
 #include "../engine/PictoEngine.h"
 
 namespace Picto {
+
+/*!	\brief A Canvas contains the layers of a scene
+ *
+ *	The layers are stored in a list, with the exception of the
+ *	background layer, which is defined as a single opaque color
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Canvas : public DataStore

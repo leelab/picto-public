@@ -1,9 +1,3 @@
-/*!	\brief Stores reward data 
- *
- *	The reward data store is designed to store information about rewards being given
- *	Each one stores information about a single reward.
- */
-
 #ifndef _REWARD_DATA_STORE_H_
 #define _REWARD_DATA_STORE_H_
 
@@ -11,6 +5,12 @@
 #include "DataStore.h"
 
 namespace Picto {
+
+/*!	\brief Stores reward data 
+ *
+ *	The reward data store is designed to store information about rewards being given
+ *	Each one stores information about a single reward.
+ */
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardDataStore : public DataStore

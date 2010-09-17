@@ -1,3 +1,11 @@
+#ifndef _JOINSESSION_COMMAND_HANDLER_H_
+#define _JOINSESSION_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the JoinSESSION commands
  *
  *	The JOINSESSION command is sent from PictoWorkstation to the server to join 
@@ -26,14 +34,6 @@
  *		     </Experiment>
  *		</JoinSession> 
  */
-
-#ifndef _JOINSESSION_COMMAND_HANDLER_H_
-#define _JOINSESSION_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct JoinsessionCommandHandler : Picto::ProtocolCommandHandler
 {

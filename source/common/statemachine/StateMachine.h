@@ -1,4 +1,27 @@
-/*!	\Brief A container for StateMachineElements that acts as a statemachine
+#ifndef _STATEMACHINE_H_
+#define _STATEMACHINE_H_
+
+#include "../common.h"
+#include "StateMachineElement.h"
+#include "Transition.h"
+#include "../engine/PictoEngine.h"
+
+#include <QScriptEngine>
+
+namespace Picto {
+
+namespace StateMachineLevel
+{
+	typedef enum
+	{
+		Stage,
+		Trial,
+		Task,
+		Experiment
+	} StateMachineLevel;
+}
+
+/*!	\brief A container for StateMachineElements that acts as a statemachine
  *
  *	A StateMachine contains multiple StateMachineElements and the
  *	transitions between them.  Additionally, a StateMachine is a 
@@ -30,28 +53,6 @@
  *	each level is only allowed to contain the level below it, with the exception of stages,  
  *	which would be allowed to contain an infinite number of substages.
  */
-#ifndef _STATEMACHINE_H_
-#define _STATEMACHINE_H_
-
-#include "../common.h"
-#include "StateMachineElement.h"
-#include "Transition.h"
-#include "../engine/PictoEngine.h"
-
-#include <QScriptEngine>
-
-namespace Picto {
-
-namespace StateMachineLevel
-{
-	typedef enum
-	{
-		Stage,
-		Trial,
-		Task,
-		Experiment
-	} StateMachineLevel;
-}
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API StateMachine : public StateMachineElement

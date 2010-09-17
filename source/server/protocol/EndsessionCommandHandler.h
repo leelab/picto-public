@@ -1,3 +1,11 @@
+#ifndef _ENDSESSION_COMMAND_HANDLER_H_
+#define _ENDSESSION_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+
 /*! \brief Handles the ENDSESSION commands
  *
  *	PictoWorkstation sends these commands when it wants to terminate a session.
@@ -14,14 +22,6 @@
  *		200:OK - sent if the command is proccessed sucessfully
  *		404:NotFound - sent if the session ID isn't recognized
  */
-
-#ifndef _ENDSESSION_COMMAND_HANDLER_H_
-#define _ENDSESSION_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
 
 struct EndsessionCommandHandler : Picto::ProtocolCommandHandler
 {

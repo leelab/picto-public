@@ -1,3 +1,16 @@
+#ifndef _TASK_COMMAND_HANDLER_H_
+#define _TASK_COMMAND_HANDLER_H_
+
+#include "../../common/common.h"
+
+#include "../../common/protocol/ProtocolCommandHandler.h"
+#include "../../common/protocol/ProtocolResponse.h"
+#include "../connections/SessionInfo.h"
+
+#include <QUuid>
+
+class ConnectionManager;
+
 /*! \brief Handles the TASK commands
  *
  *	PictoWorkstation sends these commands when it wants a remote Director
@@ -16,19 +29,6 @@
  *		401:Unauthorized - sent if the originator of the command isn't authorized to send task commands.
  *		404:NotFound - sent if the session ID, taskname, or command isn't recognized
  */
-
-#ifndef _TASK_COMMAND_HANDLER_H_
-#define _TASK_COMMAND_HANDLER_H_
-
-#include "../../common/common.h"
-
-#include "../../common/protocol/ProtocolCommandHandler.h"
-#include "../../common/protocol/ProtocolResponse.h"
-#include "../connections/SessionInfo.h"
-
-#include <QUuid>
-
-class ConnectionManager;
 
 struct TaskCommandHandler : Picto::ProtocolCommandHandler
 {

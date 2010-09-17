@@ -12,6 +12,13 @@
 
 namespace Picto {
 
+/*!	\brief Defines a protocol (which is really nothing more than a set of command handlers)
+ *
+ *	A protocol is really just a collection of commands that are "legal".  This
+ *	object is a base class that makes it easy to define a custom protocol.  Each
+ *	derived protocol needs to have a name and version, as well as a list of command
+ *	handlers that get added to the protocol.
+ */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API Protocol
 #else

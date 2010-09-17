@@ -1,10 +1,3 @@
-/*! \brief Calibration tool for the reward controller
- *
- *	The RewardCalibration object provides the framework for calibrating
- *	the reward controller.  The object allows for a fixed number of rewards
- *	to be given, so that the controller can be calibrated.  Additional functions
- *	are included to make applying the results of the calibration easy.
- */
 
 #ifndef _REWARDCALIBRATION_H
 #define _REWARDCALIBRATION_H
@@ -16,6 +9,18 @@
 
 namespace Picto
 {
+
+/*! \brief Calibration tool for the reward controller
+ *
+ *	The RewardCalibration object provides the framework for calibrating
+ *	the reward controller.  The object allows for a fixed number of rewards
+ *	to be given, so that the controller can be calibrated.  Additional functions
+ *	are included to make applying the results of the calibration easy.
+ *
+ *	NOTE: We need to use the calibration base class, and this hasn't really been
+ *	tested, so I have no idea if it actually works or not.
+ *		--Matt Gay Sept 1, 2010
+ */
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardCalibration

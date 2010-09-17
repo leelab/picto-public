@@ -1,8 +1,3 @@
-/*! \file plexonplugin.cpp
- * \ingroup proxypluginplexon
- * \brief A plugin allowing the proxy server to interface with a Plexon MAP
- */
-
 #include <windows.h>
 #include <tchar.h>
 

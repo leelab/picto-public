@@ -9,11 +9,9 @@
 
 #include <windows.h>
 #include "plexon.h"
-#include "interfaces.h"
+#include "NeuralDataAcqInterface.h"
 
 #define MAX_MAP_EVENTS_PER_READ 5000
-
-//! Command handler for the ACQ protocol's GET command
 
 /*!
  *  See the Trac wiki for a better description of this protocol. 

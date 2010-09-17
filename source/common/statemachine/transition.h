@@ -1,8 +1,3 @@
-/*!	\Brief A transition between two StateMachineElements
- *
- *	A transition links a specific Result value from a specific StateMachineElement
- *	to another StateMachineElement.  Everything is referenced by by name.
- */
 #ifndef _TRANSITION_H_
 #define _TRANSITION_H_
 
@@ -12,6 +7,12 @@
 #include "../storage/DataStore.h"
 
 namespace Picto {
+
+/*!	\Brief A transition between two StateMachineElements
+ *
+ *	A transition links a specific Result value from a specific StateMachineElement
+ *	to another StateMachineElement.  Everything is referenced by by name.
+ */
 
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Transition : public QObject, public DataStore

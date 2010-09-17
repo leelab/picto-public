@@ -1,14 +1,3 @@
-/*! \brief An object that returns the current time
- *
- *	Throughout Picto there is a need to know the current time in precise units
- *	This Timestamper object is a way to get the exact current time.  Since precise
- *	timing is not provided by Qt, the code in this object is grossly platform
- *	dependent.
- *
- *	To reduce the number of significant figures in each timestamp, we measure the 
- *	elapsed time since the first time a Timestamper object is created.
- */
-
 #ifndef _TIMESTAMPER_H_
 #define _TIMESTAMPER_H_
 
@@ -20,6 +9,17 @@
 #include "Windows.h"
 #endif
 namespace Picto {
+
+/*! \brief An object that returns the current time
+ *
+ *	Throughout Picto there is a need to know the current time in precise units
+ *	This Timestamper object is a way to get the exact current time.  Since precise
+ *	timing is not provided by Qt, the code in this object is grossly platform
+ *	dependent.
+ *
+ *	To reduce the number of significant figures in each timestamp, we measure the 
+ *	elapsed time since the first time a Timestamper object is created.
+ */
 
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Timestamper
