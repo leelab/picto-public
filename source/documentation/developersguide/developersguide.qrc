@@ -726,6 +726,8 @@
    <file alias="class_start_session_dialog.html">../../../output/documentation/main/html/class_start_session_dialog.html</file>
    <file alias="class_status_light-members.html">../../../output/documentation/main/html/class_status_light-members.html</file>
    <file alias="class_status_light.html">../../../output/documentation/main/html/class_status_light.html</file>
+   <file alias="class_syntax_highlighter-members.html">../../../output/documentation/main/html/class_syntax_highlighter-members.html</file>
+   <file alias="class_syntax_highlighter.html">../../../output/documentation/main/html/class_syntax_highlighter.html</file>
    <file alias="class_system_service-members.html">../../../output/documentation/main/html/class_system_service-members.html</file>
    <file alias="class_system_service.html">../../../output/documentation/main/html/class_system_service.html</file>
    <file alias="class_tdt_plugin-members.html">../../../output/documentation/main/html/class_tdt_plugin-members.html</file>
@@ -1095,6 +1097,8 @@
    <file alias="struct_trial_command_handler-members.html">../../../output/documentation/main/html/struct_trial_command_handler-members.html</file>
    <file alias="struct_trial_command_handler.html">../../../output/documentation/main/html/struct_trial_command_handler.html</file>
    <file alias="struct_trial_command_handler.png">../../../output/documentation/main/html/struct_trial_command_handler.png</file>
+   <file alias="syntax_highlighter_8cpp-source.html">../../../output/documentation/main/html/syntax_highlighter_8cpp-source.html</file>
+   <file alias="syntax_highlighter_8h-source.html">../../../output/documentation/main/html/syntax_highlighter_8h-source.html</file>
    <file alias="tab_b.gif">../../../output/documentation/main/html/tab_b.gif</file>
    <file alias="tab_l.gif">../../../output/documentation/main/html/tab_l.gif</file>
    <file alias="tab_r.gif">../../../output/documentation/main/html/tab_r.gif</file>

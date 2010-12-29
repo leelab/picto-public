@@ -14,6 +14,7 @@ TextViewer::TextViewer(QAction* checkSyntaxAction, QWidget *parent)
 : Viewer(parent)
 {
 	xmlEdit_ = new XmlEditor();
+	syntaxHighlight_ = new SyntaxHighlighter(xmlEdit_);
 	connect(xmlEdit_, SIGNAL(cursorPositionChanged()), this, SLOT(updateStatus()));
 
 	taskComboBox_ = new QComboBox(this);
@@ -45,9 +46,10 @@ void TextViewer::init()
 	if(experimentText_)
 	{
 		xmlEdit_->setDocument(experimentText_);
+		syntaxHighlight_->setDocument(experimentText_);
 
 		//set tabs equal to four spaces
-		QFont font("Courier",12);
+		QFont font("Courier",10);
 		QFontMetrics metrics(font);
 		xmlEdit_->setTabStopWidth(metrics.width("    "));
 

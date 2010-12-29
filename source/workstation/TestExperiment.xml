@@ -21,7 +21,6 @@
 					</Parameter>
 				</Parameters>
 				<StateMachineElements>
-				
 					<StateMachineElement type="State">
 						<Revision>-1</Revision>
 						<EngineNeeded>-1</EngineNeeded>

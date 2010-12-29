@@ -3,6 +3,7 @@
 
 #include "viewer.h"
 #include "xmleditor.h"
+#include "syntaxhighlighter.h"
 
 class QTextEdit;
 class QVBoxLayout;
@@ -42,6 +43,7 @@ private:
 
 	QVBoxLayout *mainLayout_;
 	XmlEditor *xmlEdit_;
+	SyntaxHighlighter *syntaxHighlight_;
 	
 	QComboBox *taskComboBox_;
 	QToolBar *editToolBar_;
