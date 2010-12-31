@@ -107,12 +107,13 @@ SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimen
 	Q_ASSERT(cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)"));
 
 	//create alignment tool and neuraldatacollector
-	//sessInfo->alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool(sessInfo->sessionDb));
+	alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool());
 	if(proxyId_ == -1)
 		ndc_ = 0;
 	else
 	{
 		ndc_ = new NeuralDataCollector(proxyId_, QCoreApplication::applicationDirPath() + "/" + databaseName + ".sqlite",50);
+		ndc_->setAlignmentTool(alignmentTool_);
 		QObject::connect(ndc_, SIGNAL(finished()), ndc_, SLOT(deleteLater()));
 		ndc_->start();
 	}

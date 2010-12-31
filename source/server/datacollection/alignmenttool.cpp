@@ -2,13 +2,12 @@
 #include <QStringList>
 #include <QSqlQuery>
 #include <QVariant>
-
+#include <QSqlError>
 #include "alignmenttool.h"
 
-AlignmentTool::AlignmentTool(QSqlDatabase sessionDb)
-	: sessionDb_(sessionDb)
-{
-	Q_ASSERT(false);  //We need to relocate all of the database accesses to SessionInfo
+//We should relocate all of the database accesses to SessionInfo
+AlignmentTool::AlignmentTool()
+{ 
 	//set up the sums
 	sumXX_ = 0.0;
 	sumYY_ = 0.0;
@@ -17,17 +16,12 @@ AlignmentTool::AlignmentTool(QSqlDatabase sessionDb)
 	sumY_ = 0.0;
 	n_ = 0;
 
-	//set up an initial fit of y=x with no correlation
-	coeff_.A = 0.0;
-	coeff_.B = 1.0;  
+	//Before initial alignment, all neural timestamps will be converted to -1 in behavioral timebase.
+	coeff_.A = -1.0;
+	coeff_.B = 0.0;  
 	coeff_.corr = 0.0;
 
 	trials_ = 0; 
-
-	qDebug()<<"!!!!!!!!!!!WARNING!!!!!!!!!!!!!!!!!";
-	qDebug()<<"The alignment tool has not been tested (due to the difficulty of creating a test program)";
-	qDebug()<<"Do not use this code until it has been tested";
-
 }
 AlignmentTool::~AlignmentTool()
 {
@@ -42,7 +36,13 @@ double AlignmentTool::convertToBehavioralTimebase(double neuralTime)
 //!	\brief converts the passed in time from behavioral to neural time using the current best fit
 double AlignmentTool::convertToNeuralTimebase(double behavioralTime)
 {
-	return (behavioralTime - coeff_.A)/coeff_.B;
+	return (coeff_.B)?(behavioralTime - coeff_.A)/coeff_.B:-1;
+}
+
+//! \brief returns the correlation coefficient based as of the last call to one of the alignment functions.
+double AlignmentTool::getCorrelationCoefficient()
+{
+	return coeff_.corr;
 }
 
 /*! \brief Does a complete alignment on the session database
@@ -51,10 +51,12 @@ double AlignmentTool::convertToNeuralTimebase(double behavioralTime)
  *	and calculating the coefficients.  This is time consuming, and probably shouldn't 
  *	be done while an experiment is running.  Note also that this resets the matched
  *	column in the trial tables.
+ *
+ *  THIS FUNCTION HAS NOT YET BEEN TESTED
  */
-void AlignmentTool::doFullAlignment()
+void AlignmentTool::doFullAlignment(QSqlDatabase& sessionDb)
 {
-	QSqlQuery query(sessionDb_);
+	QSqlQuery query(sessionDb);
 
 	//Clear out the trials table
 	query.exec("DELETE FROM trials");
@@ -65,9 +67,9 @@ void AlignmentTool::doFullAlignment()
 
 	//Now that everything is unmatched, we can simply call the incremental
 	//alignment function
-	doIncrementalAlignment();
+	doIncrementalAlignment(sessionDb);
 
-	QSqlQuery trialsQuery(sessionDb_);
+	QSqlQuery trialsQuery(sessionDb);
 
 
 	//since we have done a complete fit, we'll need to recalculate the
@@ -77,7 +79,7 @@ void AlignmentTool::doFullAlignment()
 
 	while(trialsQuery.next())
 	{
-		QSqlQuery trialsInsertQuery(sessionDb_);
+		QSqlQuery trialsInsertQuery(sessionDb);
 
 		double nStart, nEnd, bStart, bEnd;
 		double startjitter,endjitter;
@@ -131,15 +133,16 @@ void AlignmentTool::doFullAlignment()
  *	Upon returning from the function, all tables are remarked with matched(1) and
  *	unmatched(0).
  */
-void AlignmentTool::doIncrementalAlignment()
+void AlignmentTool::doIncrementalAlignment(QSqlDatabase& sessionDb)
 {
-	QSqlQuery neuralQuery(sessionDb_);
-	QSqlQuery behavioralQuery(sessionDb_);
-	QSqlQuery trialsQuery(sessionDb_);
+	QSqlQuery neuralQuery(sessionDb);
+	QSqlQuery behavioralQuery(sessionDb);
+	QSqlQuery trialsQuery(sessionDb);
 
 	while(true)
 	{
-		neuralQuery.exec("SELECT id,timestamp,aligncode FROM neuraltrials WHERE matched = 0");
+		if(!neuralQuery.exec("SELECT id,timestamp,aligncode FROM neuraltrials WHERE matched=0"))
+			break;
 
 		//stop the loop when we're out of trials that haven't been checked.
 		if(!neuralQuery.next())
@@ -153,10 +156,11 @@ void AlignmentTool::doIncrementalAlignment()
 		//This could be a start or end, so find it's matching pair within +/- 10 trials
 		neuralQuery.prepare("SELECT id,timestamp,aligncode "
 			"FROM neuraltrials "
-			"WHERE id>:minID AND id<:maxId AND aligncode = :aligncode AND matched=0");
+			"WHERE id>:minID AND id<:maxId AND aligncode = :aligncode AND matched=0 AND id<>:id");
 		neuralQuery.bindValue(":minID",neuralStartEvent.id-10);
 		neuralQuery.bindValue(":maxID",neuralStartEvent.id+10);
 		neuralQuery.bindValue(":aligncode",neuralStartEvent.alignCode);
+		neuralQuery.bindValue(":id",neuralStartEvent.id);
 		neuralQuery.exec();
 
 		//if we don't find a match, mark the first event as unmatched(-1)
@@ -200,11 +204,12 @@ void AlignmentTool::doIncrementalAlignment()
 
 			idRange--;
 		}
-		while(behavioralQuery.size()>2);
+		//while(behavioralQuery.size()>2); //Joey - size() isn't supported by sqlite :(.  Try iterating 3 times instead.
+		while(behavioralQuery.next() && behavioralQuery.next() && behavioralQuery.next());
 
 		//If we didn't find exactly two matching events
 		//mark the neural events as unmatched(-1)
-		if(behavioralQuery.size() != 2)
+		if(!behavioralQuery.first() || !behavioralQuery.next() || behavioralQuery.next())
 		{
 			neuralQuery.prepare("UPDATE neuraltrials SET matched=-1 WHERE id=:id");
 			neuralQuery.bindValue(":id", neuralStartEvent.id);
@@ -216,18 +221,18 @@ void AlignmentTool::doIncrementalAlignment()
 
 		}
 
-		behavioralQuery.next();
+		behavioralQuery.first();
 		AlignmentEvent behavioralStartEvent;
 		behavioralStartEvent.id = behavioralQuery.value(0).toInt();
-		behavioralStartEvent.alignCode = behavioralQuery.value(1).toInt();
-		behavioralStartEvent.timestamp = behavioralQuery.value(2).toDouble();
+		behavioralStartEvent.alignCode = behavioralQuery.value(2).toInt();
+		behavioralStartEvent.timestamp = behavioralQuery.value(1).toDouble();
 		behavioralStartEvent.trialNum = behavioralQuery.value(3).toInt();
 		
 		behavioralQuery.next();
 		AlignmentEvent behavioralEndEvent;
 		behavioralEndEvent.id = behavioralQuery.value(0).toInt();
-		behavioralEndEvent.alignCode = behavioralQuery.value(1).toInt();
-		behavioralEndEvent.timestamp = behavioralQuery.value(2).toDouble();
+		behavioralEndEvent.alignCode = behavioralQuery.value(2).toInt();
+		behavioralEndEvent.timestamp = behavioralQuery.value(1).toDouble();
 		behavioralEndEvent.trialNum = behavioralQuery.value(3).toInt();
 
 		//if the trial numbers don't match, mark everything as unmatched(-1)
@@ -285,9 +290,9 @@ void AlignmentTool::doIncrementalAlignment()
 		trialsQuery.prepare("INSERT INTO trials(trialnumber,aligncode,neuralstart, "
 							"neuralend,behavioralstart,behavioralend,"
 							"startjitter,endjitter,correlation) "
-							"VALUES :trialnumber,:aligncode,:neuralstart, "
+							"VALUES(:trialnumber,:aligncode,:neuralstart, "
 							":neuralend,:behavioralstart,:behavioralend,"
-							":startjitter,:endjitter,:corr");
+							":startjitter,:endjitter,:corr)");
 		trialsQuery.bindValue(":trialnumber",behavioralStartEvent.trialNum);
 		trialsQuery.bindValue(":aligncode",behavioralStartEvent.alignCode);
 		trialsQuery.bindValue(":neuralstart",neuralStartEvent.timestamp);

@@ -24,19 +24,26 @@
  *
  *	WARNING: As of Sept 2010, this tool is mostly untested.  I have no idea if
  *	it actually works.  (Hint: It probably has at least 1 bug)
+ * 
+ *  WARNING: Currently, the session database is being passed into the alignment
+ *  calls.  This is a BAD way to do things because there should only ever be one
+ *  one database associated with each alignmentTool object anyway.  Also, all 
+ *  database access needs to be moved into the sessionInfo object anyway, so
+ *  do that.
  */
 
 class AlignmentTool
 {
 public:
-	AlignmentTool(QSqlDatabase sessionDb);
+	AlignmentTool();
 	~AlignmentTool();
 
 	double convertToBehavioralTimebase(double neuralTime);
 	double convertToNeuralTimebase(double behavioralTime);
+	double getCorrelationCoefficient();
 
-	void doFullAlignment();
-	void doIncrementalAlignment();
+	void doFullAlignment(QSqlDatabase& sessionDb);
+	void doIncrementalAlignment(QSqlDatabase& sessionDb);
 
 private:
 	struct AlignmentEvent
@@ -62,8 +69,6 @@ private:
 							AlignmentEvent bEndEvent,
 							AlignmentEvent nStartEvent,
 							AlignmentEvent nEndEvent);
-
-	QSqlDatabase sessionDb_;
 
 	coefficients coeff_;
 

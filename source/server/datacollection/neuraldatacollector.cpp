@@ -16,6 +16,7 @@ NeuralDataCollector::NeuralDataCollector(int proxyId, QString sessionDbName, int
 	ServerConfig config;
 	proxyAddress_ = config.proxyServerAddress(proxyId);
 	proxyPort_ = config.proxyServerPort(proxyId);
+	timestampsAligned_ = false;
 }
 
 
@@ -95,7 +96,7 @@ void NeuralDataCollector::parseResponse(QSharedPointer<Picto::ProtocolResponse> 
 	double fittedTime;
 	double correlation;
 	QString channel,unit,waveform,device,deviceStatus;
-	int eventcode;
+	int eventcode = -1;
 
 	QSqlQuery query(db_);
 	db_.transaction();
@@ -111,7 +112,7 @@ void NeuralDataCollector::parseResponse(QSharedPointer<Picto::ProtocolResponse> 
 			channel.clear();
 			unit.clear();
 			waveform.clear();
-			eventcode = 0;
+			eventcode = -1;
 
 			if(reader.attributes().value("type").toString() == "spike")
 			{
@@ -139,11 +140,9 @@ void NeuralDataCollector::parseResponse(QSharedPointer<Picto::ProtocolResponse> 
 					reader.readNext();
 				}
 
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				//! \todo use the alignment tool to fit the time
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				fittedTime = timestamp;
-				correlation = 0.0;
+				//! Use the alignment tool to fit the time
+				fittedTime = align->convertToBehavioralTimebase(timestamp);
+				correlation = align->getCorrelationCoefficient();
 
 				//! \TODO move this code to sessioninfo
 				query.prepare("INSERT INTO spikes (timestamp, fittedtime, correlation, channel, unit, waveform) "
@@ -180,12 +179,6 @@ void NeuralDataCollector::parseResponse(QSharedPointer<Picto::ProtocolResponse> 
 				query.bindValue(":timestamp", timestamp);
 				query.bindValue(":aligncode", eventcode);
 				query.exec();
-
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				//!  \todo Rerun the alignment tool with our new data
-				//
-				//   Actually, wait until after we've commited to the db...
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			}
 		}
 		else
@@ -200,6 +193,27 @@ void NeuralDataCollector::parseResponse(QSharedPointer<Picto::ProtocolResponse> 
 	}
 
 	db_.commit();
+	if(eventcode >= 0)
+	{
+		align->doIncrementalAlignment(db_);
+		
+		// alignment isn't calculated until the end of the first trial, meaning that all spikes in the first trial are unaligned.
+		// once the first alignment values are calculated, go back and update the fittedtimes of neural trials that weren't yet aligned.
+		if(!timestampsAligned_ && (align->getCorrelationCoefficient() != 0) )
+		{	
+			timestampsAligned_ = true;
+			QSqlQuery unalignedSpikes(query);
+			timestampsAligned_ &= unalignedSpikes.exec("SELECT id, timestamp FROM spikes WHERE fittedtime<0");
+			while(unalignedSpikes.next())
+			{
+				query.prepare("UPDATE spikes SET fittedtime=:fittedtime, correlation=:correlation WHERE id=:id");
+				query.bindValue(":id",unalignedSpikes.value(0).toInt());
+				query.bindValue(":fittedtime",align->convertToBehavioralTimebase(unalignedSpikes.value(1).toDouble()));
+				query.bindValue(":correlation",align->getCorrelationCoefficient() );
+				timestampsAligned_ &= query.exec();
+			}
+		}
+	}
 
 
 }

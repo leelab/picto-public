@@ -109,7 +109,7 @@ private:
 
 	QStringList levelEnumStrs_;
 
-	static int trialEventCode_;
+	static short trialEventCode_;
 	static int trialNum_;
 
 	QSharedPointer<StateMachineElement> currElement_;

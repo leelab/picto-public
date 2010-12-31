@@ -15,7 +15,7 @@
 
 namespace Picto {
 
-int StateMachine::trialEventCode_;
+short StateMachine::trialEventCode_;
 int StateMachine::trialNum_;
 
 StateMachine::StateMachine() : 
@@ -285,10 +285,10 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		//Generating an event on the neural recorder takes ~250 us, while generating a 
 		//Picto event requires sending a command to the server and waiting for a response.
 		//Because of this, we generate the nerual recorder event first.
-		trialEventCode_++;
+		(trialEventCode_ == 0x7F)? trialEventCode_ = 0 : trialEventCode_++;
 		trialNum_++;
-		sendTrialEventToServer(engine);
 		engine->generateEvent(trialEventCode_);
+		sendTrialEventToServer(engine);
 	}
 	//Reset trialNum_ if we just entered a new Task
 	if(getLevel() == StateMachineLevel::Task)

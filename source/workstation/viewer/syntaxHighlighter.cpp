@@ -89,6 +89,7 @@ SyntaxHighlighter::SyntaxHighlighter(QObject *parent)
 		constructs_[eTAGNAME].subConstructs_.push_back(eTAGPROPERTY);
 		constructs_[eTAGNAME].subConstructs_.push_back(eSELFENDSLASH);
 		constructs_[eTAGPROPERTY].subConstructs_.push_back(eSTRING);
+		constructs_[eTAGPROPERTY].subConstructs_.push_back(eSELFENDSLASH);
 		constructs_[eSELFENDSLASH].subConstructs_.push_back(eSTRING);
 		constructs_[eCOMMENT].subConstructs_.push_back(eCOMMENTTEXT);
 		constructs_[eBASE].subConstructs_.push_back(eENTITY);

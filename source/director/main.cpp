@@ -139,7 +139,8 @@ int main(int argc, char *argv[])
 	if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
 	//if(!hwSetup.setupRewardController(HardwareSetup::PictoBoxXpReward)) 
 		return -1;
-	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen)) 
+	//if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen)) // Joey - Changed this to test event code generation, etc
+	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::PictoBoxXpGen)) 
 		return -1;
 
 	if(!hwSetup.isSetup())

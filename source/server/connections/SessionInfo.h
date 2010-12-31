@@ -64,7 +64,7 @@ public:
 
 	//getters/setters
 	QUuid sessionId() { return uuid_; };
-	//QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
+	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
 	QString directorAddr() { return directorAddr_; };
 	QByteArray experimentXml() { return experimentXml_; };
 
@@ -88,6 +88,7 @@ private:
 
 	int proxyId_;
 	NeuralDataCollector *ndc_;
+	QSharedPointer<AlignmentTool> alignmentTool_;
 	QTimer timeoutTimer_;
 	QStringList pendingDirectives_;
 	QString directorAddr_;

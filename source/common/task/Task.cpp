@@ -89,6 +89,11 @@ bool Task::jumpToState(QStringList path, QString state)
  */
 void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engine)
 {
+	// JOEY 12/24/10 If there's no data channel, we're running in test mode.
+	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+	if(dataChannel.isNull())
+		return;
+
 	Q_ASSERT(sendStateData("NULL","NULL",stateMachine_->getName(),engine));
 }
 
@@ -100,6 +105,11 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
  */
 void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine)
 {
+	// JOEY 12/24/10 If there's no data channel, we're running in test mode.
+	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+	if(dataChannel.isNull())
+		return;
+
 	if(result == "EngineAbort")
 		Q_ASSERT(sendStateData("NULL",result,"NULL",engine));
 	else

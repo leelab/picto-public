@@ -32,8 +32,8 @@ public:
 	void setCollectionInterval(int interval) { collectionInterval_ = interval;};
 	int getCollectionInterval() { return collectionInterval_; };
 
-	//void setAlignmentTool(AlignmentTool *a) { align = a; };
-	//AlignmentTool* getAlignmentTool() { return align; };
+	void setAlignmentTool(QSharedPointer<AlignmentTool> a) { align = a; };
+	QSharedPointer<AlignmentTool> getAlignmentTool() { return align; };
 
 	void run();
 	void stop();
@@ -43,7 +43,7 @@ private slots:
 private:
 	void parseResponse(QSharedPointer<Picto::ProtocolResponse> proxyResponse);
 
-	//AlignmentTool *align;
+	QSharedPointer<AlignmentTool> align;
 
 	int collectionInterval_;
 	QTimer *pollingTimer_;
@@ -55,6 +55,8 @@ private:
 
 	QString sessionDbName_;
 	QSqlDatabase db_;
+
+	bool timestampsAligned_;
 };
 
 
