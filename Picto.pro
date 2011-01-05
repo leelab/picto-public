@@ -15,6 +15,7 @@ win* {
 
 #proxy server plugins
 win32:!wince*:  SUBDIRS += source/proxyplugins/plexonplugin
+win32:!wince*:  SUBDIRS += source/proxyplugins/virtualdeviceplugin
 
 #We can't build the TDT plugin unless we have the TDT SDK installed.
 #The TDT software has a hard time running under 64-bit Vista, so I always

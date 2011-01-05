@@ -1,0 +1,9 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+ <qresource prefix="/translations">
+  <file alias="virtualdeviceplugin_ko.qm">translations/virtualdeviceplugin_ko.qm</file>
+ </qresource>
+ <qresource prefix="/mjpeg">
+  <file alias="cambozola.jar">mjpeg/cambozola.jar</file>
+ </qresource>
+</RCC>
