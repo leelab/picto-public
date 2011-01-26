@@ -391,3 +391,12 @@ win32:QMAKE_LFLAGS += /MACHINE:$$(PICTO_MACHINE_TYPE)
 build_pass:CONFIG(debug, debug|release) {
   TARGET 		= $$member(TARGET, 0)_debug
 }
+
+# Copy Output dll to Test Directories for Testing
+build_pass:CONFIG(debug, debug|release) {
+  QMAKE_POST_LINK = copy "$(TargetPath)"  $$(PICTO_TREE)\output\tests\bin\debug
+}
+
+build_pass:CONFIG(release, debug|release) {
+  QMAKE_POST_LINK = copy "$(TargetPath)" $$(PICTO_TREE)\output\tests\bin\debug
+}

@@ -12,6 +12,25 @@ HEADERS += $$(PICTO_TREE)/source/server/unittests/TestCommandChannel.h
 SOURCES += $$(PICTO_TREE)/source/server/unittests/TestCommandChannel.cpp
 HEADERS += $$(PICTO_TREE)/source/server/unittests/ConsumerServer.h
 SOURCES += $$(PICTO_TREE)/source/server/unittests/ConsumerServer.cpp
+
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoDeviceSimulator.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoDeviceSimulator.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoDeviceSimulatorTypes.h
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoDirectorSimulator.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoDirectorSimulator.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoProxyServerSimulator.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoProxyServerSimulator.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoServerSimulator.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoServerSimulator.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoServerTest.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoServerTest.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoTestBench.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoTestBench.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoWorkstationSimulator.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoWorkstationSimulator.cpp
+HEADERS += $$(PICTO_TREE)/source/server/unittests/PictoSystemState.h
+SOURCES += $$(PICTO_TREE)/source/server/unittests/PictoSystemState.cpp
+
 SOURCES += $$(PICTO_TREE)/source/server/unittests/main.cpp
 
 include($$(PICTO_TREE)/source/common/common.pri)

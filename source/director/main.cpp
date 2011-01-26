@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		if(!hwSetup.setupRenderingTargets(HardwareSetup::D3D)) 
+		if(!hwSetup.setupRenderingTargets(HardwareSetup::Pixmap)) // Joey - Changed from D3D for easier debugging.  Change back!!! 
 			return -1;
 	}
 	if(!hwSetup.setupSignalChannel(HardwareSetup::Mouse)) 

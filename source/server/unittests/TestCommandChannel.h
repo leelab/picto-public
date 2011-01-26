@@ -16,7 +16,7 @@ class TestCommandChannel: public QObject
 
 
 public:
-	TestCommandChannel(QHostAddress _serverAddress);
+	TestCommandChannel(QHostAddress _serverAddress,quint16 _port);
 
 private:
 

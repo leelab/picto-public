@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <StateMachine>
     <Name>Stage 1</Name>
-    <Level>Stage</Level>
+    <Level>0</Level>
     <InitialElement>Trial selection</InitialElement>
     <StateMachineElements>
         <StateMachineElement type="State">

@@ -16,9 +16,9 @@ Q_DECLARE_METATYPE(QSharedPointer<Picto::ProtocolResponse>)
 Q_DECLARE_METATYPE(QSharedPointer<Picto::ProtocolCommand>)
 
 
-TestCommandChannel::TestCommandChannel(QHostAddress _serverAddress) :
+TestCommandChannel::TestCommandChannel(QHostAddress _serverAddress,quint16 _port) :
 	serverAddress_(_serverAddress),
-	port_(42424)
+	port_(_port)
 {
 }
 

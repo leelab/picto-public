@@ -4,9 +4,9 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 
-TestBasicProtocolCommands::TestBasicProtocolCommands(QHostAddress _serverAddress) :
+TestBasicProtocolCommands::TestBasicProtocolCommands(QHostAddress _serverAddress,quint16 _port) :
 	serverAddress_(_serverAddress),
-	port_(42424)
+	port_(_port)
 {
 }
 

@@ -15,7 +15,7 @@ class TestBasicProtocolCommands: public QObject
     Q_OBJECT
 
 public:
-	TestBasicProtocolCommands(QHostAddress _serverAddress);
+	TestBasicProtocolCommands(QHostAddress _serverAddress,quint16 _port);
 
 private:
 
