@@ -1,7 +1,7 @@
 #include "PictoServerSimulator.h"
 using namespace PictoSim;
 using namespace Server;
-
+//Not Yet Implemented
 PictoServerSimulator::PictoServerSimulator(PictoSystemState* systemState, QString deviceName) : PictoDeviceSimulator(systemState, deviceName)
 {}
 QString PictoServerSimulator::GetDeviceTypeName()

@@ -4,7 +4,8 @@
 #include "PictoDeviceSimulator.h"
 namespace PictoSim{
 
-/*! \brief 
+/*! \brief Simulates a Picto Server's network interface and checks for errors.
+ *	Not Yet Implemented
  */
 class PictoServerSimulator : public PictoDeviceSimulator
 {

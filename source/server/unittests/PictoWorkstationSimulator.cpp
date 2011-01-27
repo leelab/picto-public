@@ -18,6 +18,7 @@ QString PictoWorkstationSimulator::GetDeviceTypeName()
 
 void PictoWorkstationSimulator::Init()
 {
+	// Tcp Socket must be created in the thread where it will be used
 	tcpSocket_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
 	observerID_ = QUuid::createUuid().toString();
 	iAmAuthorized_ = false;
@@ -25,6 +26,7 @@ void PictoWorkstationSimulator::Init()
 
 void PictoWorkstationSimulator::Deinit()
 {
+	// tcp socket must be deleted in the thread where it was created.
 	tcpSocket_ = QSharedPointer<QTcpSocket>();
 }
 
@@ -34,6 +36,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 	switch(actionDesc->type_)
 	{
 	case DISCOVERSERVER:
+		// Get the server's IP Address and port, then connect my TcpSocket to it.
 		systemState_->AssureDeviceExistance(systemState_->GetServerName(),SERVER);
 		if(systemState_->GetDevice(systemState_->GetServerName())->isBeingTested)
 		{
@@ -48,17 +51,22 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 		}
 		break;
 	case DIRECTORLIST:
+		// Get a list of directors from the Server.  Check response for errors while building an internal list of directors.
 		SendMessage("DIRECTORLIST / PICTO/1.0\r\n\r\n", tcpSocket_);
 		ReadIncomingMessage("PICTO/1.0 200 OK",message,tcpSocket_,10000);
 		BuildIPMap(message);
 		break;
 	case PROXYLIST:
+		// Get a list of proxy servers from the Server.  Check response for errors while building an internal list of proxy servers.
 		SendMessage("PROXYLIST / PICTO/1.0\r\n\r\n", tcpSocket_);
 		ReadIncomingMessage("PICTO/1.0 200 OK",message,tcpSocket_,10000);
 		BuildProxyMap(message);
 		break;
 	case STARTSESSION:
 		{
+			// Build a STARTSESSION message with the desired directory and proxy server by looking them up in the tables that
+			// we built in the DIRECTORLIST and PROXYLIST actions.  This action must occur after those actions and the 
+			// test will fail if it isn't.
 			QSharedPointer<StartSessionDesc> desc = actionDesc.staticCast<StartSessionDesc>();
 			QString directorName = desc->directorName_;
 			QString proxyName = desc->proxyName_;
@@ -84,6 +92,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			SendMessage(QString("STARTSESSION %1/%2 PICTO/1.0\r\nContent-Length:63\r\nObserver-ID:%3\r\nSession-ID:{00000000-0000-0000-0000-000000000000}\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><Experiment></Experiment>").arg(directorIP).arg(proxyIndex).arg(observerID_), tcpSocket_);
 			ReadIncomingMessage("PICTO/1.0 200 OK",message,tcpSocket_,10000);
 			iAmAuthorized_ = true;
+			// Get the sessionID for this session from the reply message.
 			QStringList bufferList = message.split("<SessionID>");
 			if(bufferList.size() > 1)
 			{
@@ -93,6 +102,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 		break;
 	case TASK:
 		{
+			// Check what type of task action is desired and send a corresponding message.
 			QSharedPointer<TaskDesc> desc = actionDesc.staticCast<TaskDesc>();
 			QString target;
 			switch(desc->taskAction_)
@@ -110,10 +120,11 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				target = "stop";
 				break;
 			case TaskDesc::REWARD:
-				target = "reward:1";
+				target = "reward:1";	// For now, always reward only once.
 				break;
 			}
 			SendMessage(QString("TASK %1 PICTO/1.0\r\nObserver-ID:%2\r\nSession-ID:%3\r\n\r\n").arg(target).arg(observerID_).arg(session_), tcpSocket_);
+			// Check response.
 			if(iAmAuthorized_)
 				ReadIncomingMessage("PICTO/1.0 200 OK",message,tcpSocket_,10000);
 			else
@@ -121,6 +132,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 		}
 		break;
 	case ENDSESSION:
+		// End the current session and check response.
 		SendMessage(QString("ENDSESSION %1 PICTO/1.0\r\nObserver-ID:%2\r\n\r\n").arg(session_).arg(observerID_), tcpSocket_);
 		if(iAmAuthorized_)
 			ReadIncomingMessage("PICTO/1.0 200 OK",message,tcpSocket_,10000);
@@ -129,6 +141,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 		break;
 	case JOINSESSION:
 		{
+			// Join the session with the input directorName.  Get its ipaddress from the list I created during the DIRECTORLIST action.
 			QSharedPointer<JoinSessionDesc> desc = actionDesc.staticCast<JoinSessionDesc>();
 			QString directorName = desc->directorName_;
 			QString directorIP;
@@ -141,6 +154,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 							   "was called before using STARTSESSION." ).arg(directorName).toAscii());
 			QString proxy = "-1";
 			SendMessage(QString("JOINSESSION %1/%2 PICTO/1.0\r\nContent-Length:0\r\nObserver-ID:%3\r\nSession-ID:{00000000-0000-0000-0000-000000000000}\r\n\r\n").arg(directorIP).arg(proxy).arg(observerID_), tcpSocket_);
+			// Check reply and get my new session ID
 			ReadIncomingMessage("PICTO/1.0 200 OK",message,tcpSocket_,10000);
 			iAmAuthorized_ = false;
 			QStringList bufferList = message.split("<SessionID>");
@@ -151,10 +165,12 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 		}
 		break;
 	case GETDATA:
+		// Not Yet Implemented
 		break;
 	}
 }
-
+/*! \brief Goes throught the DirectorList reply message and builds up a map of DirectorNames to IPAddress while checking for errors.
+ */
 void PictoWorkstationSimulator::BuildIPMap(QString message)
 {
 	ipMap_.clear();
@@ -189,6 +205,7 @@ void PictoWorkstationSimulator::BuildIPMap(QString message)
 				}
 				else if(xmlReader.name() == "Director" && xmlReader.isEndElement())
 				{
+					// This is the last element name, if we got here we can insert the name, ip mapping.
 					ipMap_.insert(name,QHostAddress(address));
 					break;
 				}
@@ -196,6 +213,9 @@ void PictoWorkstationSimulator::BuildIPMap(QString message)
 		}
 	}
 }
+
+/*! \brief Goes throught the ProxyList reply message and builds up a map of Proxy names to Proxy IDs while checking for errors.
+ */
 void PictoWorkstationSimulator::BuildProxyMap(QString message)
 {
 	proxyMap_.clear();
@@ -226,6 +246,8 @@ void PictoWorkstationSimulator::BuildProxyMap(QString message)
 				}
 				else if(xmlReader.name() == "Proxy" && xmlReader.isEndElement())
 				{
+					// This is the last element name, if we got here we can insert the name, id mapping.
+					// First lets make sure there only one of each proxy.
 					if(proxyMap_.contains(name))
 						QFAIL( QString("ProxyMap received at %1 from server contains multiple ids for the same proxy name").arg(GetDeviceName()).toAscii() );
 					proxyMap_.insert(name,id);
