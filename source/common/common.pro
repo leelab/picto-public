@@ -398,5 +398,5 @@ build_pass:CONFIG(debug, debug|release) {
 }
 
 build_pass:CONFIG(release, debug|release) {
-  QMAKE_POST_LINK = copy "$(TargetPath)" $$(PICTO_TREE)\output\tests\bin\debug
+  QMAKE_POST_LINK = copy "$(TargetPath)" $$(PICTO_TREE)\output\tests\bin\release
 }

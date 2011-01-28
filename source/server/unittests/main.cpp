@@ -36,21 +36,21 @@ int main(int argc, char *argv[])
 	testOptionList += argv[0];
 	//testOptionList += "-xml";
 
-	// RUN OLD TESTS---------------------------------------------------------------------------------------------------
-	//Find a server and open a command channel to it
-	Picto::ServerDiscoverer serverDiscoverer;
-	serverDiscoverer.discover();
-	if(!serverDiscoverer.waitForDiscovered(10000))
-	{
-		qFatal("Server Discoverer failed to discover server.");
-		return 1;
-	}	
-	// Create unit test objects
-	TestBasicProtocolCommands basicProtocolCommandTestObject(serverDiscoverer.getAddress(),serverDiscoverer.getPort());
-	TestCommandChannel commandChannelTestObject(serverDiscoverer.getAddress(),serverDiscoverer.getPort());
-	// Run unit tests
-	result +=  QTest::qExec(&basicProtocolCommandTestObject, testOptionList);
-	result += QTest::qExec(&commandChannelTestObject, testOptionList);
+	//// RUN OLD TESTS---------------------------------------------------------------------------------------------------
+	////Find a server and open a command channel to it
+	//Picto::ServerDiscoverer serverDiscoverer;
+	//serverDiscoverer.discover();
+	//if(!serverDiscoverer.waitForDiscovered(10000))
+	//{
+	//	qFatal("Server Discoverer failed to discover server.");
+	//	return 1;
+	//}	
+	//// Create unit test objects
+	//TestBasicProtocolCommands basicProtocolCommandTestObject(serverDiscoverer.getAddress(),serverDiscoverer.getPort());
+	//TestCommandChannel commandChannelTestObject(serverDiscoverer.getAddress(),serverDiscoverer.getPort());
+	//// Run unit tests
+	//result +=  QTest::qExec(&basicProtocolCommandTestObject, testOptionList);
+	//result += QTest::qExec(&commandChannelTestObject, testOptionList);
 
 	// RUN NEW TESTS that use PictoTestBench -------------------------------------------------------------------------
 	// Create unit test object

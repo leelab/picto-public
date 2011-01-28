@@ -22,9 +22,9 @@ void PictoProxyServerSimulator::Init()
 
 void PictoProxyServerSimulator::Deinit()
 {
-	// tcp server must be deleted in the thread where it was created.
-	tcpSocket_ = QSharedPointer<QTcpSocket>();
 	// tcp socket must be deleted in the thread where it was created.
+	tcpSocket_ = QSharedPointer<QTcpSocket>();
+	// tcp server must be deleted in the thread where it was created.
 	tcpServer_ = QSharedPointer<QTcpServer>();
 }
 
@@ -61,7 +61,7 @@ void PictoProxyServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			// Listen on my ip address (which we just found) on port 42420 (which is the ProxyServer's port)
 			tcpServer_->listen(serverAddress,42420);
 
-			// I send out an ANNOUNCE message to the broadcast address so that anyone who cares knows that I exit
+			// I send out an ANNOUNCE message to the broadcast address so that anyone who cares knows that I started
 			// In practice, only the PictoServer is listening
 			QUdpSocket udpSendSocket;
 			QByteArray datagram = QString("ANNOUNCE %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42420).toAscii();

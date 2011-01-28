@@ -34,9 +34,8 @@ void PictoDirectorSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 	switch(actionDesc->type_)
 	{
 	case DISCOVERSERVER:
-		systemState_->AssureDeviceExistance(systemState_->GetServerName(),SERVER);
-		if(systemState_->GetDevice(systemState_->GetServerName())->isBeingTested)
 		{
+			systemState_->AssureDeviceExistance(systemState_->GetServerName(),SERVER);
 			Picto::ServerDiscoverer serverDiscoverer;
 			serverDiscoverer.discover();
 			if(!serverDiscoverer.waitForDiscovered(10000))

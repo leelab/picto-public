@@ -1,7 +1,7 @@
 #include <QtTest/QtTest>
 #include "PictoTestBench.h"
 
-/*! \brief 
+/*! \brief Runs various tests on the server's network interface using the PictoTestBench
  *
  */
 class PictoServerTest : public QObject
@@ -14,7 +14,13 @@ public:
 private:
 
 	PictoSim::PictoTestBench testBench_;
+	void runExperiment();
 private slots:
+
+	
+	void directorTest_data();
+	void directorTest();
+
 	void standardExperiments_data();
 	void standardExperiments();
 };
