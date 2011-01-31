@@ -18,6 +18,7 @@
 #include "TestBasicProtocolCommands.h"
 #include "TestCommandChannel.h"
 #include "PictoServerTest.h"
+#include "PictoDirectorTest.h"
 
 int main(int argc, char *argv[])
 {
@@ -53,10 +54,12 @@ int main(int argc, char *argv[])
 	//result += QTest::qExec(&commandChannelTestObject, testOptionList);
 
 	// RUN NEW TESTS that use PictoTestBench -------------------------------------------------------------------------
-	// Create unit test object
+	// Create unit test objects
 	PictoServerTest serverTest;
+	PictoDirectorTest directorTest;
 	// Run unit test
-	result += QTest::qExec(&serverTest, testOptionList);
+	//result += QTest::qExec(&serverTest, testOptionList);
+	result += QTest::qExec(&directorTest, testOptionList);
 
 	return result;
 }

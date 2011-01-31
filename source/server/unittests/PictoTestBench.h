@@ -1,3 +1,5 @@
+#ifndef _PICTOTESTBENCH_H_
+#define _PICTOTESTBENCH_H_
 #include <QVector>
 #include <QSharedPointer>
 #include "PictoWorkstationSimulator.h"
@@ -35,7 +37,8 @@ enum DescTypes{
 	ADDDEVICEUNDERTEST,
 	WAITFORDEVICE,
 	SLEEP,
-	CLOSEDEVICES
+	CLOSEDEVICES,
+	CLOSEDEVICE
 };
 
 /*! \brief Informs the PictoTestBench that a particular device is under test and is not to be simulated.
@@ -76,6 +79,17 @@ struct CloseDevicesDesc: public SimActionDesc
 		SimActionDesc(testStep, CLOSEDEVICES){};
 };
 
+/*! \brief Tells the PictoTestBench to close a particular simulated devices in the PictoSystem.
+ *	When this descriptor is used, the action blocks until the device is closed.
+ */
+struct CloseDeviceDesc: public SimActionDesc
+{
+	CloseDeviceDesc(QString testStep, QString deviceName): 
+		SimActionDesc(testStep, CLOSEDEVICE){deviceName_ = deviceName;};
+		QString deviceName_;
+};
+
 }; // TestBench namespace
 }; // PictoSim namespace
 
+#endif

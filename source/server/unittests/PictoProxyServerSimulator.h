@@ -1,3 +1,5 @@
+#ifndef _PICTOPROXYSERVERSIMULATOR_H_
+#define _PICTOPROXYSERVERSIMULATOR_H_
 #include <QObject>
 #include <QTcpServer>
 #include <QSharedPointer>
@@ -70,3 +72,4 @@ struct DepartDesc: public SimActionDesc
 }; // ProxyServer namespace
 
 }; // PictoSim namespace
+#endif

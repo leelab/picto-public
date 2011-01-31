@@ -13,6 +13,13 @@ actualVal_(actualVal),
 expectedVal_(expectedVal)
 {}
 
+/*! \brief Constructs a new system state.
+ */
+PictoSystemState::PictoSystemState()
+{
+	timer_.start();
+}
+
 /*! \brief Assures that a device of the input name and type exists, and if it doesn't, creates it.
  *	Note that the PictoTestBench at this time doesn't allow for two devices of the same name even
  *	if they are of different type.
@@ -72,6 +79,13 @@ QSharedPointer<PictoDeviceSimulator> PictoSystemState::GetDevice(QString name)
 QMap<QString, QSharedPointer<PictoDeviceSimulator>>& PictoSystemState::GetDeviceMap()
 {
 	return devices_;
+}
+/*! \brief Returns a debug object for streaming debug info to output.
+ *	A timestamp is appended to every message.
+ */
+QDebug PictoSystemState::Debug()
+{
+	return qDebug() << timer_.elapsed() << ":";
 }
 
 /*! \brief Adds an activity report to the system state.

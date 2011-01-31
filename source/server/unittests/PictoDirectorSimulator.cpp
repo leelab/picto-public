@@ -63,6 +63,8 @@ void PictoDirectorSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				ReadIncomingMessage("PICTO/1.0 200",message,tcpSocket_,10000);
 				sleepTime = 1000;	// 1 second between messages when there's nothing new to report
 				QString directive = message.split("\r\n\r\n")[1];
+				if(directive != "OK")
+					Debug() << directive << "received";
 				if(directive.startsWith("NEWSESSION"))
 				{
 					// If server said NEWSESSION, store the session and reply that we're stopped.
@@ -179,6 +181,7 @@ QString PictoDirectorSimulator::SimulateNextMsg(QSharedPointer<SimActionDesc> ac
 			QString eventCode = QString::number(msg.staticCast<DirectorUpdateDesc::TrialMsgDesc>()->eventID_);
 			QString trialNum = QString::number(msg.staticCast<DirectorUpdateDesc::TrialMsgDesc>()->trialID_);
 			result = trialTemplate.arg(session_).arg(72+timestampStr.length()+eventCode.length()+trialNum.length()).arg(timestampStr).arg(eventCode).arg(trialNum);	
+			Debug() << "Sending TRIAL Message";
 		}
 		break;
 	case DirectorUpdateDesc::DATA:
@@ -187,6 +190,7 @@ QString PictoDirectorSimulator::SimulateNextMsg(QSharedPointer<SimActionDesc> ac
 			QString x = QString::number(msg.staticCast<DirectorUpdateDesc::DataMsgDesc>()->x_);
 			QString y = QString::number(msg.staticCast<DirectorUpdateDesc::DataMsgDesc>()->y_);
 			result = putDataTemplate.arg(session_).arg(81+timestampStr.length()+x.length()+y.length()).arg(timestampStr).arg(x).arg(y);	
+			Debug() << "Sending DATA Message";
 		}
 		break;
 	}

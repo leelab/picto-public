@@ -1,3 +1,5 @@
+#ifndef _PICTOSERVERSIMULATOR_H_
+#define _PICTOSERVERSIMULATOR_H_
 #include <QVector>
 #include <QHostAddress>
 #include <QSharedPointer>
@@ -30,21 +32,33 @@ protected:
 	virtual void Deinit();
 	virtual void Act(QSharedPointer<SimActionDesc> actionDesc);
 private:
+	void CreateConnection(int timeout);
 	void SendLatestMessages(QSharedPointer<SimActionDesc> actionDesc);
 	QTime timer_;
+	bool receivedMessage_;
 	QSharedPointer<QTcpServer> tcpServer_;
 	QSharedPointer<QTcpSocket> tcpSocket_;
 	QSharedPointer<QUdpSocket> udpSocket_;
+	QSharedPointer<QEventLoop> waitLoop_;
 };
 
 namespace Server{
 	enum DescTypes{
+		GETDISCOVERED,
 		INTERFACEPROXY,
 		INTERFACEDIRECTOR,
 		INTERFACEWORKSTATION
 	};
 
-	/*! \brief Defines the act of interfacing the PictoProxyServer.
+/*! \brief Defines the act of waiting to get discovered with a DISCOVER message.
+ */
+struct GetDiscoveredDesc: public SimActionDesc
+{
+	GetDiscoveredDesc(QString testStep, int timeoutMs): SimActionDesc(testStep, GETDISCOVERED){timeoutMs_ = timeoutMs;};
+	int timeoutMs_;
+};
+	
+/*! \brief Defines the act of interfacing the PictoProxyServer.
  */
 struct InterfaceProxyDesc: public SimActionDesc
 {
@@ -61,7 +75,7 @@ struct InterfaceDirectorDesc: public SimActionDesc
 	enum MsgType{NEWSESSION,ENDSESSION,LOADEXP,START,STOP,PAUSE};
 	/*!	\brief Defines a NewSession message.
 	 */
-	struct NewSessionMsgDesc:public SimMsgDesc{NewSessionMsgDesc():SimMsgDesc(0,NEWSESSION){};int channel_;};
+	struct NewSessionMsgDesc:public SimMsgDesc{NewSessionMsgDesc():SimMsgDesc(0,NEWSESSION){};};
 	/*!	\brief Defines an EndSession message
 	 */
 	struct EndSessionMsgDesc:public SimMsgDesc{EndSessionMsgDesc():SimMsgDesc(0,ENDSESSION){};};
@@ -77,16 +91,17 @@ struct InterfaceDirectorDesc: public SimActionDesc
 	/*!	\brief Defines an Pause message to be sent a particular interval(ms) after the last message
 	 */
 	struct PauseMsgDesc:public SimMsgDesc{PauseMsgDesc(float interval):SimMsgDesc(interval,PAUSE){};};
-	InterfaceDirectorDesc(QString testStep): SimActionDesc(testStep, INTERFACEDIRECTOR, true){};
+	InterfaceDirectorDesc(QString testStep): SimActionDesc(testStep, INTERFACEDIRECTOR){};
 };
 
 /*! \brief Defines the act of interfacing the PictoWorkstation.
  */
 struct InterfaceWorkstationDesc: public SimActionDesc
 {
-	InterfaceWorkstationDesc(QString testStep): SimActionDesc(testStep, INTERFACEWORKSTATION, true){};
+	InterfaceWorkstationDesc(QString testStep): SimActionDesc(testStep, INTERFACEWORKSTATION){};
 };
 
 };// Server namespace
 
 }; // PictoSim namespace
+#endif

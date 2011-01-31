@@ -139,7 +139,8 @@ void PictoDeviceSimulator::ReadIncomingMessage(QString expected, QString& messag
 	if(!tcpSocket->waitForConnected(0))
 	{
 		tcpSocket->close();
-		QFAIL((GetDeviceTypeName() +" Can't read incoming messages.  Tcp socket is not connected").toAscii());
+		if(requireMessage)
+			QFAIL((GetDeviceTypeName() +" Can't read incoming messages.  Tcp socket is not connected").toAscii());
 	}
 
 	if(tcpSocket->waitForReadyRead(timeout))
@@ -157,4 +158,12 @@ void PictoDeviceSimulator::ReadIncomingMessage(QString expected, QString& messag
 		QVERIFY2(message == expected, (GetDeviceTypeName() +" received an unexpected or badly formed message.\nActual: " 
 			+ message + "\nExpected: " + expected).toAscii());
 	}
+}
+
+/*! \brief Returns an object for printing out debug data.
+ *	Object is prepopulated with timestamp and device name.
+ */
+QDebug PictoDeviceSimulator::Debug()
+{
+	return systemState_->Debug() << GetDeviceName() << ":";
 }

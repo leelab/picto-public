@@ -58,6 +58,17 @@ void PictoTestBench::DoAction(QSharedPointer<SimActorDesc> actorDesc, QSharedPoi
 			}
 			systemState_ = QSharedPointer<PictoSystemState>(new PictoSystemState());
 			break;
+		case CLOSEDEVICE:
+			{
+				//Close a particular devices.
+				QSharedPointer<CloseDeviceDesc> desc = actionDesc.staticCast<CloseDeviceDesc>();
+				QSharedPointer<PictoDeviceSimulator> device = systemState_->GetDevice(desc->deviceName_);
+					if(!device.isNull())
+					{
+						device->Close();
+					}
+			}
+			break;
 		}
 		return;
 	}

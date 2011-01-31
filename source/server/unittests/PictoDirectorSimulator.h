@@ -1,3 +1,5 @@
+#ifndef _PICTODIRECTORSIMULATOR_H_
+#define _PICTODIRECTORSIMULATOR_H_
 #include <QObject>
 #include <QSharedPointer>
 #include <QHostAddress>
@@ -76,3 +78,4 @@ struct TrialDesc: public SimActionDesc
 };//	Director namespace
 
 }; // PictoSim namespace
+#endif

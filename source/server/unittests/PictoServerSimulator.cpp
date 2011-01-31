@@ -1,5 +1,6 @@
 #include "PictoServerSimulator.h"
 #include <QNetworkInterface>
+#include <QEventLoop>
 using namespace PictoSim;
 using namespace Server;
 //Not Yet Implemented
@@ -23,52 +24,35 @@ void PictoServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 	QString message;
 	switch(actionDesc->type_)
 	{
+	case GETDISCOVERED:
+		{
+			QSharedPointer<GetDiscoveredDesc> desc = actionDesc.staticCast<GetDiscoveredDesc>();
+			CreateConnection(desc->timeoutMs_);
+		}
+		break;
 	case INTERFACEDIRECTOR:
 		{
-			//Get Discovered
-			udpSocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
-			udpSocket_->bind(42424);
-			while(!udpSocket_->hasPendingDatagrams() && InterruptableSleep(200));
-			QHostAddress hostAddr;
-			QByteArray incoming;
-			quint16 port = 0;
-			incoming.resize(udpSocket_->pendingDatagramSize());
-			udpSocket_->readDatagram(incoming.data(),incoming.size(),&hostAddr,&port);
-			QByteArray datagram = QString("ANNOUNCE %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42424).toAscii();
-			udpSocket_->writeDatagram(datagram.data(), datagram.size(),
-			hostAddr, port);
-
-			// Get my ip address
-			QHostAddress serverAddress;
-			QList<QHostAddress> hostAddresses = QNetworkInterface::allAddresses();
-			if(!hostAddresses.empty())
-			{
-				serverAddress.setAddress(hostAddresses[0].toIPv4Address());
-			}
-			// Listen on my ip address (which we just found) on port 42424 (which is the server's port)
-			tcpServer_->listen(serverAddress,42424);
-
-			// Wait for the PictoDirector to connect to me.  Make sure to call InterruptableSleep() every so often
-			// so that the testbench can break me out of this action if necessary.
-			while( tcpSocket_.isNull() && !tcpServer_->waitForNewConnection(500) && !InterruptableSleep(0) );
-			// Someone connected to me.  I assume that we're only running me and the director, so I only care about the first one and 
-			// I get a pointer to the socket and stop listening for more connections.
-			tcpSocket_ = QSharedPointer<QTcpSocket>(tcpServer_->nextPendingConnection());
+			if(tcpSocket_.isNull())
+				QFAIL("Test Definition Error: GETDISCOVERED action must be run in server before it interfaces another device"); 
 			
-			while(!InterruptableSleep(500))
+			while(!InterruptableSleep(0))
 			{	//Wait for a DIRECTORUPDATE message from the PictoDirector.  When it arrives, check it and send back data, then wait again.
-				ReadIncomingMessage("",message,tcpSocket_,100,false);
+				ReadIncomingMessage("",message,tcpSocket_,500,false);
 				if(message == "")
 					continue;
 
-				QString expected = "UPDATEDIRECTOR";
-				if(!message.startsWith(expected))
+				QString expected = "DIRECTORUPDATE";
+				if(!message.startsWith("DIRECTORUPDATE") && !message.startsWith("TRIAL") && !message.startsWith("PUTDATA"))
 				{
 					QVERIFY2(message == expected, (GetDeviceTypeName() +" received an unexpected or badly formed message.\nActual: " 
-					+ message + "\nExpected: " + expected).toAscii());
+					+ message + "\nExpected: " + "DIRECTORUPDATE, TRIAL OR PUTDATA").toAscii());
 				}
 				else
 				{
+					if(message.startsWith("TRIAL"))
+						Debug() << "TRIAL message received";
+					if(message.startsWith("PUTDATA"))
+						Debug() << "PUTDATA message received";
 					SendLatestMessages(actionDesc);
 				}
 			}
@@ -87,20 +71,87 @@ void PictoServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 
 void PictoServerSimulator::Deinit()
 {
-	// Tcp server must be deleted in the thread where it will be created
-	tcpServer_ = QSharedPointer<QTcpServer>();
 	// tcp socket must be deleted in the thread where it was created.
 	tcpSocket_ = QSharedPointer<QTcpSocket>();
 	udpSocket_ = QSharedPointer<QUdpSocket>();
+	// Tcp server must be deleted in the thread where it will be created
+	tcpServer_ = QSharedPointer<QTcpServer>();
 
+}
+
+void PictoServerSimulator::CreateConnection(int timeout)
+{
+	QTime timer;
+	timer.start();
+	// Start TCP server
+	// Get my ip address
+	QHostAddress serverAddress;
+	QList<QHostAddress> hostAddresses = QNetworkInterface::allAddresses();
+	foreach(QHostAddress addr,hostAddresses)
+	{
+		if(addr.toString().startsWith("192."))
+			serverAddress.setAddress(addr.toIPv4Address());
+	}
+	// Listen on my ip address (which we just found) on port 42424 (which is the server's port)
+	tcpServer_->listen(serverAddress,42424);
+
+	//Start UDP Port listening on 42424
+	udpSocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
+	udpSocket_->bind(42424);
+	
+	//Wait for a UDP message
+	QHostAddress hostAddr;
+	quint16 port = 0;
+	bool gotDiscovered = false;
+	while(!gotDiscovered && !InterruptableSleep(0))
+	{
+		if(!udpSocket_->waitForReadyRead(200))
+		{
+			if(timer.elapsed() > timeout)
+				break;
+			continue;
+		}
+		hostAddr = QHostAddress();
+		port = 0;
+		QByteArray incoming;
+		incoming.resize(udpSocket_->pendingDatagramSize());
+		udpSocket_->readDatagram(incoming.data(),incoming.size(),&hostAddr,&port);
+		// Make sure its a DISCOVER message
+		QStringList tokens = QString(incoming.data()).split(QRegExp("[ ][ ]*"));
+		if((tokens.count() == 3) && tokens[0] == "DISCOVER")
+		{
+			port = tokens[1].toInt();
+			gotDiscovered = true;
+		}
+	}
+	if(!gotDiscovered)
+		QFAIL((QString() + "Server failed to get discovered within " + QString::number(timeout) + "ms").toAscii());
+	// Respond with an ANNOUNCE message
+	QByteArray datagram = QString("ANNOUNCE %1:%2 PICTO/1.0").arg(serverAddress.toString())
+														  .arg(42424)
+														  .toAscii();
+	udpSocket_->writeDatagram(datagram.data(), datagram.size(),
+									hostAddr, port);
+
+
+	// Wait for the a TCP connection.  Make sure to call InterruptableSleep() every so often
+	// so that the testbench can break me out of this action if necessary.
+	while( tcpSocket_.isNull() && !tcpServer_->waitForNewConnection(500) && !InterruptableSleep(0) );
+	// Someone connected to me.  I assume that we're only running me and the device that I'm testing, so I only care about the first one and 
+	// I get a pointer to the socket and stop listening for more connections.
+	tcpSocket_ = QSharedPointer<QTcpSocket>(tcpServer_->nextPendingConnection());
 }
 
 void PictoServerSimulator::SendLatestMessages(QSharedPointer<SimActionDesc> actionDesc)
 {
-	if(actionDesc->msgs_.size() == 0)
-		return;
-	QString msgTemplate = "PICTO/1.0 200 %1";
+	QString msgTemplate = "PICTO/1.0 200 OK\r\n\r\n%1";
 	QString msgStr;
+	if(actionDesc->msgs_.size() == 0)
+	{
+		msgStr = msgTemplate.arg("OK");
+		SendMessage(msgStr,tcpSocket_);
+		return;
+	}
 	QSharedPointer<SimMsgDesc> msg = actionDesc->msgs_.front();
 	switch(msg->type_)
 	{
@@ -123,10 +174,13 @@ void PictoServerSimulator::SendLatestMessages(QSharedPointer<SimActionDesc> acti
 		msgStr = msgTemplate.arg("PAUSE");
 		break;
 	}
-	msgStr += "\r\n\r\n";
-	if(timer_.elapsed() < msg->timestamp_)
-		return;
-	actionDesc->msgs_.pop_front();
+	if(timer_.elapsed() >= msg->timestamp_)
+	{
+		actionDesc->msgs_.pop_front();
+		timer_.start();
+	}
+	else
+		msgStr = msgTemplate.arg("OK");
 	SendMessage(msgStr,tcpSocket_);
-	timer_.start();
+
 }

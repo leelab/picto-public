@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QMap>
 #include <QString>
+#include <QTime>
 #include "PictoDeviceSimulatorTypes.h"
 namespace PictoSim{
 
@@ -30,16 +31,19 @@ class PictoDeviceSimulator;
 class PictoSystemState
 {
 public:
+	PictoSystemState();
 	void AssureDeviceExistance(QString name, SimActorType devType);
 	void RemoveDevice(QString name);
 	QSharedPointer<PictoDeviceSimulator> GetDevice(QString name);
 	unsigned int NumDevices();
 	QMap<QString, QSharedPointer<PictoDeviceSimulator>>& GetDeviceMap();
 	QString GetServerName(){return serverName_;};
+	QDebug Debug();
 
 	void PushActivityReport(PictoSystemActivityReport& activityReport);
 	bool PopActivityReport(PictoSystemActivityReport& activityReport);
 private:
+	QTime timer_;
 	QMap<QString, QSharedPointer<PictoDeviceSimulator>> devices_;	// The map of PictoDeviceSimulators indexed by their name.
 	QVector<PictoSystemActivityReport> activityReports_;			// A list of pending activity reports.
 	QString serverName_;

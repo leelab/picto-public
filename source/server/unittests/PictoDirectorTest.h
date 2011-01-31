@@ -4,12 +4,12 @@
 /*! \brief Runs various tests on the server's network interface using the PictoTestBench
  *
  */
-class PictoServerTest : public QObject
+class PictoDirectorTest : public QObject
 {
 	    Q_OBJECT
 
 public:
-	PictoServerTest();
+	PictoDirectorTest();
 
 private:
 
@@ -17,6 +17,6 @@ private:
 	void runExperiment();
 private slots:
 
-	void standardExperiments_data();
-	void standardExperiments();
+	void directorTest_data();
+	void directorTest();
 };

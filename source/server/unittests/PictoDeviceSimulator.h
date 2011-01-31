@@ -26,7 +26,6 @@ namespace PictoSim{
  */
 class PictoDeviceSimulator : public QThread
 {
-	
 public:
 	PictoDeviceSimulator(PictoSystemState* systemState, QString deviceName);
 	~PictoDeviceSimulator();
@@ -62,6 +61,7 @@ protected:
 	void ConnectToHost(QSharedPointer<QTcpSocket> tcpSocket, QHostAddress hostAddr,quint16 hostPort);
 	void SendMessage(QString message, QSharedPointer<QTcpSocket> tcpSocket);
 	void ReadIncomingMessage(QString expected, QString& message, QSharedPointer<QTcpSocket> tcpSocket, int timeout = 10000, bool requireMessage = true);
+	QDebug Debug();
 	/*! \brief A pointer to the PictoSystemState of the Picto System with which this device is associated.
 	 *	This object can be used for error checking (ie. For checking the state of other objects to determine 
 	 *	expected responses.
