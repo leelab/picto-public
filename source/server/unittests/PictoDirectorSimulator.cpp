@@ -63,7 +63,7 @@ void PictoDirectorSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				ReadIncomingMessage("PICTO/1.0 200",message,tcpSocket_,10000);
 				sleepTime = 1000;	// 1 second between messages when there's nothing new to report
 				QString directive = message.split("\r\n\r\n")[1];
-				if(directive != "OK")
+				if((directive != "OK") && (directive != ""))
 					Debug() << directive << "received";
 				if(directive.startsWith("NEWSESSION"))
 				{
