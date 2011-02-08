@@ -13,7 +13,7 @@
  *	to a DIRECTORUPDATE command.
  *
  *	FORMAT
- *		STARTSESSION 489360f0-6e88-11df-be2b-0800200c9a66 PICTO/1.0
+ *		ENDSESSION 489360f0-6e88-11df-be2b-0800200c9a66 PICTO/1.0
 
  *	The target is the session ID to kill
  *

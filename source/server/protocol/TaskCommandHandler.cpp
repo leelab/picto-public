@@ -105,7 +105,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
 	//Check that we have a Director and that it is idle
-	DirectorStatus::DirectorStatus dirStatus = conMgr_->getDirectorStatus(sessionId_);
+	DirectorStatus::DirectorStatus dirStatus = conMgr_->getDirectorStatusBySession(sessionId_);
 
 	if(dirStatus == DirectorStatus::running)
 	{
@@ -129,7 +129,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 	{
 		QThread::yieldCurrentThread();
 		QCoreApplication::processEvents();
-	}while(timer.elapsed() < 10000 && conMgr_->getDirectorStatus(sessionId_) < DirectorStatus::stopped);
+	}while(timer.elapsed() < 10000 && conMgr_->getDirectorStatusBySession(sessionId_) < DirectorStatus::stopped);
 
 	if(timer.elapsed() <10000)
 	{
@@ -149,7 +149,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	if(conMgr_->getDirectorStatus(sessionId_) < DirectorStatus::paused)
+	if(conMgr_->getDirectorStatusBySession(sessionId_) < DirectorStatus::paused)
 	{
 		badReqResponse->setContent("Director not currently running");
 		return badReqResponse;
@@ -170,7 +170,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	if(conMgr_->getDirectorStatus(sessionId_) != DirectorStatus::running)
+	if(conMgr_->getDirectorStatusBySession(sessionId_) != DirectorStatus::running)
 	{
 		badReqResponse->setContent("Director not currently running");
 		return badReqResponse;
@@ -190,7 +190,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	if(conMgr_->getDirectorStatus(sessionId_) != DirectorStatus::paused)
+	if(conMgr_->getDirectorStatusBySession(sessionId_) != DirectorStatus::paused)
 	{
 		badReqResponse->setContent("Director not currently puased");
 		return badReqResponse;

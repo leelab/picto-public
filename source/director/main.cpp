@@ -4,7 +4,7 @@
  *	Picto Director is one of the major components of the Picto system.  This software
  *	is responsible for presenting the stimuli, collecting the behavioral data, and 
  *	controlling the flow of the experiment by running the state machines.  Director
- *	is also responsible for all communcations with PictoServer.
+ *	is also responsible for all communications with PictoServer.
  *	
  *	Despite the long list of responsibilities, PictoDirector is actually a really
  *	simple program.  Upon booting it first sets up hardware to match the system on 
@@ -23,7 +23,7 @@
  *	Command line arguments:
  *	- -name: Set the name of this Director instance to the string argument immediately following "-name"
  *	- -pixmap: Run Director using Pixmap rendering.  This is really slow, but it lets you run
- *	Director in places where DirectX is available (e.g. when running Director on a machine that
+ *	Director in places where DirectX is not available (e.g. when running Director on a machine that
  *	is accessed by remote desktop).
  */
 
@@ -53,7 +53,7 @@
 #include "../common/experiment/experiment.h"
 #include "../common/timing/timestamper.h"
 
-QSharedPointer<Picto::CommandChannel> connectToServer();
+QSharedPointer<Picto::CommandChannel> connectToServer(QUuid directorID);
 void updateSplashStatus(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status);
 
 
@@ -114,6 +114,9 @@ int main(int argc, char *argv[])
 	Q_ASSERT(query.next());
 	QString name = query.value(0).toString();
 	engine->setName(name);
+
+	//Generate a DirectorID
+	QUuid directorID = QUuid::createUuid();
 	
 	///////////////////////////////////////
 	// Setup hardware
@@ -139,8 +142,8 @@ int main(int argc, char *argv[])
 	if(!hwSetup.setupRewardController(HardwareSetup::NullReward)) 
 	//if(!hwSetup.setupRewardController(HardwareSetup::PictoBoxXpReward)) 
 		return -1;
-	//if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen)) // Joey - Changed this to test event code generation, etc
-	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::PictoBoxXpGen)) 
+	if(!hwSetup.setupEventCodeGenerator(HardwareSetup::NullGen))		// Joey - Change this to test event code generation, etc
+	//if(!hwSetup.setupEventCodeGenerator(HardwareSetup::PictoBoxXpGen))	//
 		return -1;
 
 	if(!hwSetup.isSetup())
@@ -150,9 +153,9 @@ int main(int argc, char *argv[])
 	// Setup networking
 	///////////////////////////////////////
 	QSharedPointer<Picto::CommandChannel> serverUpdateChannel;
-	//engine->setDataCommandChannel(connectToServer());
+	//engine->setDataCommandChannel(connectToServer(directorID));
 
-	//QSharedPointer<Picto::CommandChannel> serverUpdateChannel = connectToServer();
+	//QSharedPointer<Picto::CommandChannel> serverUpdateChannel = connectToServer(directorID);
 	//engine->setUpdateCommandChannel(serverUpdateChannel);
 
 	///////////////////////////////////////
@@ -189,7 +192,7 @@ int main(int argc, char *argv[])
 			updateCommand->setTarget(engine->getName()+":idle");
 
 			updateSplashStatus(engine,"Not connected to server");
-			engine->setDataCommandChannel(connectToServer());
+			engine->setDataCommandChannel(connectToServer(directorID));
 			if(!engine->getDataCommandChannel().isNull())
 				updateSplashStatus(engine, "Connected to server");
 			continue;
@@ -199,7 +202,7 @@ int main(int argc, char *argv[])
 			updateCommand->setTarget(engine->getName()+":idle");
 
 			updateSplashStatus(engine,"Not connected to server");
-			serverUpdateChannel = connectToServer();
+			serverUpdateChannel = connectToServer(directorID);
 			engine->setUpdateCommandChannel(serverUpdateChannel);
 			if(!serverUpdateChannel.isNull())
 				updateSplashStatus(engine, "Connected to server");
@@ -406,9 +409,9 @@ int main(int argc, char *argv[])
 
 
 //! Returns a command channel connected to the server (or null if the something goes wrong).
-QSharedPointer<Picto::CommandChannel> connectToServer()
+QSharedPointer<Picto::CommandChannel> connectToServer(QUuid directorID)
 {
-	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel);
+	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel(directorID));
 	QSharedPointer<Picto::CommandChannel> nullChannel;
 
 	//Find a server and open a command channel to it

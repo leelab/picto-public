@@ -42,13 +42,13 @@ public:
 	static ConnectionManager* Instance();
 
 	//Director related functions
-	void updateDirector(QHostAddress addr, QString name, DirectorStatus::DirectorStatus status);
-	void updateDirector(QHostAddress addr, QString name);
-	//void removeDirector(QHostAddress addr);
+	void updateDirector(QUuid uuid, QHostAddress addr, QString name, DirectorStatus::DirectorStatus status);
+	void updateDirector(QUuid uuid, QHostAddress addr, QString name);
+	//void removeDirector(QUuid uuid);
 
-	DirectorStatus::DirectorStatus getDirectorStatus(QHostAddress addr);
-	DirectorStatus::DirectorStatus getDirectorStatus(QString addr);
-	DirectorStatus::DirectorStatus getDirectorStatus(QUuid sessionId);
+	DirectorStatus::DirectorStatus getDirectorStatus(QUuid uuid);
+	DirectorStatus::DirectorStatus getDirectorStatus(QString uuidStr);
+	DirectorStatus::DirectorStatus getDirectorStatusBySession(QUuid sessionId);
 	void setDirectorStatus(QUuid sessionId, DirectorStatus::DirectorStatus status);
 
 	QString getDirectorList();
@@ -60,11 +60,12 @@ public:
 	//bool removeServerThread(ServerThread* thread);
 
 	//Session related functions
-	QSharedPointer<SessionInfo> createSession(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
-	QSharedPointer<SessionInfo> getSessionInfo(QString directorAddr);
+	QSharedPointer<SessionInfo> createSession(QUuid directorID, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
+	QSharedPointer<SessionInfo> getSessionInfoByDirector(QString directorID);
+	QSharedPointer<SessionInfo> getSessionInfoByDirector(QUuid directorID);
 	QSharedPointer<SessionInfo> getSessionInfo(QUuid uuid);
 	void endSession(QUuid sessionId);
-	QUuid pendingSession(QHostAddress directorAddr);
+	QUuid pendingSession(QUuid directorID);
 
 private slots:
 	void checkForTimeouts();
@@ -87,11 +88,11 @@ private:
 	QMutex *mutex_;
 
 	//Map of Directors
-	QMap<QString,QSharedPointer<DirectorInfo> > directors_;  //QString = director address as string
+	QMap<QUuid,QSharedPointer<DirectorInfo> > directors_;  //QUuid = director's unique user Id delivered in its messages
 
 	//List of Sessions
 	QMap<QUuid, QSharedPointer<SessionInfo> > openSessions_;
-	QMap<QString, QUuid> pendingSessions_;
+	QMap<QUuid, QUuid> pendingSessions_; //First QUuid is the directors ID, second is the Session ID
 
 	QTimer *timeoutTimer_;
 

@@ -12,8 +12,9 @@
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 
-SessionInfo::SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId):
+SessionInfo::SessionInfo(QUuid directorID, QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId):
 	activity_(true),
+	directorUuid_(directorID),
 	directorAddr_(directorAddr),
 	proxyId_(proxyId),
 	experimentXml_(experimentXml)
@@ -148,7 +149,7 @@ QString SessionInfo::pendingDirective()
 void SessionInfo::endSession()
 {
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	Q_ASSERT(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle);
+	Q_ASSERT(conMgr->getDirectorStatusBySession(uuid_) > DirectorStatus::idle);
 
 	QSqlDatabase sessionDb = getSessionDb();
 
@@ -164,7 +165,7 @@ void SessionInfo::endSession()
 	//Sit around waiting for the director's state to change (but no longer than 2 seconds)
 	QTime timer;
 	timer.start();
-	while(conMgr->getDirectorStatus(uuid_) > DirectorStatus::idle && timer.elapsed() < 2000)
+	while(conMgr->getDirectorStatusBySession(uuid_) > DirectorStatus::idle && timer.elapsed() < 2000)
 	{
 		QThread::yieldCurrentThread();
 		QCoreApplication::processEvents();

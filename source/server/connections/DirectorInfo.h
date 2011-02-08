@@ -2,6 +2,7 @@
 #define _DIRECTOR_INFO_H_
 
 #include <QString>
+#include <QUuid>
 
 namespace DirectorStatus
 {
@@ -38,6 +39,7 @@ public:
 private:
 	QString addressStr_;
 	QString name_;
+	QUuid	uuid_;
 	DirectorStatus::DirectorStatus status_;
 
 	bool activity_;

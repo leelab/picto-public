@@ -15,9 +15,9 @@
  *	However, we may wish to limit the Workstation access at some point in the future.
  *
  *	FORMAT
- *		JOINSESSION 192.168.3.45 PICTO/1.0
+ *		JOINSESSION 582f4440-43f7-11df-9879-0800200c9a66 PICTO/1.0
  *
- *	The IP address is the Director instance, and the number is the proxy server id
+ *	The Uuid is the Director ID
  *
  *	RESPONSES
  *		There are 3 possible responses:

@@ -46,7 +46,7 @@
 class SessionInfo
 {
 public:
-	SessionInfo(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
+	SessionInfo(QUuid directorID, QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
 	~SessionInfo();
 
 	void endSession();
@@ -92,6 +92,7 @@ private:
 	QTimer timeoutTimer_;
 	QStringList pendingDirectives_;
 	QString directorAddr_;
+	QUuid directorUuid_;
 	bool activity_;
 	QByteArray experimentXml_;
 

@@ -26,28 +26,28 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 	ConnectionManager *conMgr = ConnectionManager::Instance();
 	
 	QString target = command->getTarget();
-	QString directorAddr;
+	QString directorID;
 
-	directorAddr = target.left(target.indexOf('/'));
+	directorID = target.left(target.indexOf('/'));
 
 	//Check that the Director is ready to go
-	if(conMgr->getDirectorStatus(directorAddr) == DirectorStatus::notFound)
+	if(conMgr->getDirectorStatus(directorID) == DirectorStatus::notFound)
 	{
-		notFoundResponse->setContent("Director address not found");
+		notFoundResponse->setContent("Director ID not found");
 		return notFoundResponse;
 	}
-	else if(conMgr->getDirectorStatus(directorAddr) <= DirectorStatus::idle)
+	else if(conMgr->getDirectorStatus(directorID) <= DirectorStatus::idle)
 	{
 		return unauthorizedResponse;
 	}
 
 	//Find the session ID
 	QUuid sessionId;
-	sessionId = ConnectionManager::Instance()->getSessionInfo(directorAddr)->sessionId();
+	sessionId = ConnectionManager::Instance()->getSessionInfoByDirector(directorID)->sessionId();
 
 	//Find the experiment's XML
 	QByteArray experimentXml;
-	experimentXml = ConnectionManager::Instance()->getSessionInfo(directorAddr)->experimentXml();
+	experimentXml = ConnectionManager::Instance()->getSessionInfoByDirector(directorID)->experimentXml();
 
 	//Write out the content
 	//The XMLStreamWriter doesn't handle copying text well, so we'll use it first, and then

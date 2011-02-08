@@ -107,13 +107,17 @@ QComboBox* StartSessionDialog::createDirectorList()
 					{
 						director.name = xmlReader.readElementText();
 					}
-					else if(xmlReader.name() == "Address" && xmlReader.isStartElement())
-					{
-						director.address = xmlReader.readElementText();
-					}
 					else if(xmlReader.name() == "Status" && xmlReader.isStartElement())
 					{
 						director.status = xmlReader.readElementText();
+					}
+					else if(xmlReader.name() == "Address" && xmlReader.isStartElement())
+					{
+						director.addr = xmlReader.readElementText();
+					}
+					else if(xmlReader.name() == "Id" && xmlReader.isStartElement())
+					{
+						director.id = xmlReader.readElementText();
 					}
 					else if(xmlReader.name() == "Director" && xmlReader.isEndElement())
 					{
@@ -151,23 +155,21 @@ void StartSessionDialog::selectExperimentFile()
 	fileEdit_->setText(filename_);
 }
 
-/*! \brief Returns the selected director address as a string
+/*! \brief Returns the selected director's unique ID as a string.
  *
- *	If the selected director is "localDirector", this returns the localhost
- *	address (127.0.0.0).  The value is returned as a string (rather than a 
- *	QHostAddress), because Workstation never directly contacts director, and
- *	hence never uses the address as anything other than an argument in a command
- *	sent to the server.
+ *	The value is returned as a string (rather than a QUuid), because Workstation 
+ *	never uses the ID as anything other than as an argument in a command
+ *	sent to the server.  If no director is selected, an empty string is returned.
  */
-QString StartSessionDialog::getDirectorAddress()
+QString StartSessionDialog::getDirectorID()
 {
 	if(directorComboBox_->currentIndex() == 0)
 	{
-		return "127.0.0.0";
+		return QString();
 	}
 	else
 	{
-		return directors_[directorComboBox_->currentIndex()-1].address;
+		return directors_[directorComboBox_->currentIndex()-1].id;
 	}
 }
 
@@ -192,8 +194,9 @@ void StartSessionDialog::loadExperiment()
 		QByteArray xmlByteArr = xmlFile.readAll();
 
 		QString commandStr;
-		QString directorAddr = directors_[directorComboBox_->currentIndex()-1].address;
-		commandStr = "STARTSESSION "+directorAddr+" PICTO/1.0";
+		QString directorId = directors_[directorComboBox_->currentIndex()-1].id;
+		QString directorAddr = directors_[directorComboBox_->currentIndex()-1].addr;
+		commandStr = "STARTSESSION "+directorId+" PICTO/1.0";
 
 		QSharedPointer<Picto::ProtocolCommand> loadExpCommand(new Picto::ProtocolCommand(commandStr));
 		loadExpCommand->setContent(xmlByteArr);
@@ -250,7 +253,7 @@ void StartSessionDialog::loadExperiment()
 		}
 		else if(loadExpResponse->getResponseCode() == 404)
 		{
-			msgBox.setText(tr("Director instance not found at:") + directorAddr +tr("\nExperiment not loaded."));
+			msgBox.setText(tr("Director instance not found with id:") + directorId +tr(" and IP address:") + directorAddr + tr("\nExperiment not loaded."));
 			msgBox.setIcon(QMessageBox::Critical);
 		}
 		else if(loadExpResponse->getResponseCode() == 401)

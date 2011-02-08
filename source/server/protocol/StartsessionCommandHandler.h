@@ -14,11 +14,11 @@
  *	command.
  *
  *	FORMAT
- *		STARTSESSION 192.168.3.45/5 PICTO/1.0
+ *		STARTSESSION 582f4440-43f7-11df-9879-0800200c9a66/5 PICTO/1.0
  *		Content-Length:???
  *
  *		<Experiment> ... </Experiment>
- *	The IP address is the Director instance, and the number is the proxy server id
+ *	The Uuid is the Director id, and the number is the proxy server id
  *
  *	RESPONSES
  *		There are 3 possible responses:

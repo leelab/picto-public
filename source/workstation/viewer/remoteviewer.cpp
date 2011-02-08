@@ -235,9 +235,9 @@ void RemoteViewer::setupUi()
 
 void RemoteViewer::setupServerChannel()
 {
-	serverChannel_ = new Picto::CommandChannel(this);
-	engineSlaveChannel_ = new Picto::CommandChannel(this);
-	behavioralDataChannel_ = new Picto::CommandChannel(this);
+	serverChannel_ = new Picto::CommandChannel(observerId_,this);
+	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,this);
+	behavioralDataChannel_ = new Picto::CommandChannel(observerId_,this);
 
 	serverDiscoverer_ = new Picto::ServerDiscoverer(this);
 
@@ -322,9 +322,9 @@ void RemoteViewer::changeConnectionState(bool checked)
 {
 	if(checked)
 	{
-		QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+		QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 		//We need to possibbly start a session, and always join a session
-		DirectorStatus remoteStatus = directorStatus(directorAddr);
+		DirectorStatus remoteStatus = directorStatus(directorID);
 		if(remoteStatus == Error)
 		{
 			connectAction_->setChecked(false);
@@ -369,10 +369,10 @@ void RemoteViewer::changeConnectionState(bool checked)
 				stop();
 
 				//wait for the remote engine to stop
-				QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+				QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 				QTime timer;
 				timer.start();
-				while(directorStatus(directorAddr) != Stopped && timer.elapsed() < 2000);
+				while(directorStatus(directorID) != Stopped && timer.elapsed() < 2000);
 
 				Q_ASSERT_X(timer.elapsed()<2000, "RemoteViewer::changeConnectionState", "Remote director never stopped");
 			}
@@ -577,12 +577,12 @@ void RemoteViewer::updateLists()
 	for(int i=0; i<directors.length(); i++)
 	{
 		DirectorInstance d = directors[i];
-		if(directorListBox_->findData(d.address) == -1)
+		if(directorListBox_->findData(d.id) == -1)
 		{
 			if(d.status.toUpper() == "IDLE")
-				directorListBox_->addItem(d.name, d.address);
+				directorListBox_->addItem(d.name, d.id);
 			else
-				directorListBox_->addItem(runningIcon, d.name, d.address);
+				directorListBox_->addItem(runningIcon, d.name, d.id);
 		}
 
 
@@ -594,7 +594,7 @@ void RemoteViewer::updateLists()
 		bool remove = true;
 		for(int j=0; j<directors.length(); j++)
 		{
-			if(directors[j].address ==directorListBox_->itemData(i))
+			if(directors[j].id ==directorListBox_->itemData(i))
 			{
 				if(directors[j].status.toUpper() == "IDLE")
 					directorListBox_->setItemIcon(i,QIcon());
@@ -642,13 +642,13 @@ void RemoteViewer::updateLists()
 
 /*! \brief returns the current status of a remote director
  */
-RemoteViewer::DirectorStatus RemoteViewer::directorStatus(QString addr)
+RemoteViewer::DirectorStatus RemoteViewer::directorStatus(QString id)
 {
 	QList<DirectorInstance> directors = getDirectorList();
 
 	foreach(DirectorInstance director, directors)
 	{
-		if(director.address == addr)
+		if(director.id == id)
 		{
 			if(director.status.toUpper() == "IDLE")
 				return Idle;
@@ -716,6 +716,10 @@ QList<RemoteViewer::DirectorInstance> RemoteViewer::getDirectorList()
 				else if(xmlReader.name() == "Address" && xmlReader.isStartElement())
 				{
 					director.address = xmlReader.readElementText();
+				}
+				else if(xmlReader.name() == "Id" && xmlReader.isStartElement())
+				{
+					director.id = xmlReader.readElementText();
 				}
 				else if(xmlReader.name() == "Status" && xmlReader.isStartElement())
 				{
@@ -948,9 +952,9 @@ bool RemoteViewer::startSession()
 
 
 	QString commandStr;
-	QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 	int proxyId = proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt();
-	commandStr = "STARTSESSION "+directorAddr+"/"+QString::number(proxyId)+" PICTO/1.0";
+	commandStr = "STARTSESSION "+directorID+"/"+QString::number(proxyId)+" PICTO/1.0";
 
 	QSharedPointer<Picto::ProtocolCommand> startSessCommand(new Picto::ProtocolCommand(commandStr));
 
@@ -976,7 +980,7 @@ bool RemoteViewer::startSession()
 	}
 	else if(loadExpResponse->getResponseCode() == Picto::ProtocolResponseType::NotFound)
 	{
-		setStatus(tr("Director instance not found at:") + directorAddr +tr(".  Experiment not loaded."));
+		setStatus(tr("Director instance not found with ID:") + directorID + tr(".  Experiment not loaded."));
 		return false;
 	}
 	else if(loadExpResponse->getResponseCode() == Picto::ProtocolResponseType::Unauthorized)
@@ -1079,7 +1083,7 @@ bool RemoteViewer::endSession()
  */	
 bool RemoteViewer::joinSession()
 {
-	QString directorAddr = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 
 	QByteArray content;
 	QSharedPointer<QXmlStreamReader> xmlReader;
@@ -1091,7 +1095,7 @@ bool RemoteViewer::joinSession()
 	{
 
 		//Send a JOINSESSION command
-		commandStr = "JOINSESSION "+directorAddr+" PICTO/1.0";
+		commandStr = "JOINSESSION "+directorID+" PICTO/1.0";
 
 		QSharedPointer<Picto::ProtocolCommand> joinSessCommand(new Picto::ProtocolCommand(commandStr));
 		QSharedPointer<Picto::ProtocolResponse> joinSessResponse;
@@ -1255,7 +1259,7 @@ bool RemoteViewer::joinSession()
 
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.
-	DirectorStatus remoteStatus = directorStatus(directorAddr);
+	DirectorStatus remoteStatus = directorStatus(directorID);
 	if(remoteStatus == Idle || remoteStatus == Error)
 	{
 		setStatus("Attempted to joins a session with a director that isn't in a session");

@@ -5,6 +5,7 @@
 #include "../connections/ConnectionManager.h"
 
 #include <QFile>
+#include <QUuid>
 
 DirectorUpdateCommandHandler::DirectorUpdateCommandHandler()
 {
@@ -22,6 +23,7 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 
 	//Update the DirectorList
 	QHostAddress sourceAddr(command->getFieldValue("Source-Address"));
+	QUuid sourceID(command->getFieldValue("Source-ID"));
 	
 	DirectorStatus::DirectorStatus status;
 
@@ -52,7 +54,7 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	conMgr->updateDirector(sourceAddr, name, status);
+	conMgr->updateDirector(sourceID, sourceAddr, name, status);
 
 	//If we're in a session, check for pending directives
 	QUuid sessionId(command->getFieldValue("Session-ID"));
@@ -86,7 +88,7 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 	}
 	else
 	{
-		QUuid sessionId = ConnectionManager::Instance()->pendingSession(sourceAddr);
+		QUuid sessionId = ConnectionManager::Instance()->pendingSession(sourceID);
 
 		if(sessionId.isNull())
 		{

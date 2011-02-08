@@ -56,7 +56,7 @@ void ConnectionManager::checkForTimeouts()
 	{
 		if(!directorInfo->clearActivity())
 		{
-			directors_.remove(directorInfo->addressStr_);
+			directors_.remove(directorInfo->uuid_);
 			printf("Director timed out!!!!!!!\n");
 		}
 	}
@@ -79,15 +79,15 @@ void ConnectionManager::checkForTimeouts()
  *	Everytime the DIRECTORUPDATE command is received by the server, this 
  *	function gets called.  The function checks to see if the director instance referenced
  *	in our list, and if not adds it.  If the instance already exists, the function makes
- *	any needed changes.  Note that the IP address is being used as a primary key here.
+ *	any needed changes.  Note that the Uuid is being used as a primary key here.
  */
-void ConnectionManager::updateDirector(QHostAddress addr, QString name, DirectorStatus::DirectorStatus status)
+void ConnectionManager::updateDirector(QUuid uuid, QHostAddress addr, QString name, DirectorStatus::DirectorStatus status)
 {
 	QMutexLocker locker(mutex_);
 
-	if(directors_.contains(addr.toString()))
+	if(directors_.contains(uuid))
 	{
-		QSharedPointer<DirectorInfo> info = directors_[addr.toString()];
+		QSharedPointer<DirectorInfo> info = directors_[uuid];
 		info->name_ = name;	
 		info->status_ = status;
 		info->setActivity();
@@ -96,11 +96,12 @@ void ConnectionManager::updateDirector(QHostAddress addr, QString name, Director
 	{
 		QSharedPointer<DirectorInfo> info(new DirectorInfo);
 
+		info->uuid_ = uuid;
 		info->addressStr_ = addr.toString();
 		info->name_ = name;
 		info->status_ = status;
 
-		directors_[addr.toString()] = info;
+		directors_[uuid] = info;
 	}
 }
 
@@ -109,13 +110,13 @@ void ConnectionManager::updateDirector(QHostAddress addr, QString name, Director
  *	This version of updateDirector doesn't update the status.  This is important, because 
  *	sometimes (for example during a PUTDATA command) the status isn't available.
  */
-void ConnectionManager::updateDirector(QHostAddress addr, QString name)
+void ConnectionManager::updateDirector(QUuid uuid, QHostAddress addr, QString name)
 {
 	QMutexLocker locker(mutex_);
 
-	if(directors_.contains(addr.toString()))
+	if(directors_.contains(uuid))
 	{
-		QSharedPointer<DirectorInfo> info = directors_[addr.toString()];
+		QSharedPointer<DirectorInfo> info = directors_[uuid];
 		info->name_ = name;	
 		info->setActivity();
 	}
@@ -123,19 +124,20 @@ void ConnectionManager::updateDirector(QHostAddress addr, QString name)
 	{
 		QSharedPointer<DirectorInfo> info(new DirectorInfo);
 
+		info->uuid_ = uuid;
 		info->addressStr_ = addr.toString();
 		info->name_ = name;
 
-		directors_[addr.toString()] = info;
+		directors_[uuid] = info;
 	}
 }
 
 //! Removes a director instance from the list
-/*void ConnectionManager::removeDirector(QHostAddress addr)
+/*void ConnectionManager::removeDirector(QUuid uuid)
 {
 
 	QMutexLocker locker(&directorListMutex_);
-	directors_.remove(addr.toString());
+	directors_.remove(uuid);
 }*/
 
 /*! Returns an XML list of active proxy servers
@@ -184,6 +186,7 @@ QString ConnectionManager::getDirectorList()
 	{
 		xmlWriter.writeStartElement("Director");
 		xmlWriter.writeTextElement("Address",director->addressStr_);
+		xmlWriter.writeTextElement("Id",director->uuid_.toString());
 		xmlWriter.writeTextElement("Name", director->name_);
 		if(director->status_ == DirectorStatus::idle)
 			xmlWriter.writeTextElement("Status","Idle");
@@ -201,22 +204,15 @@ QString ConnectionManager::getDirectorList()
 }
 
 
-//! Returns the status of the Director instance with the passed in address
-DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatus(QHostAddress addr)
-{
-	QString addrStr = addr.toString();
-	return getDirectorStatus(addrStr);
-}
-
-//! Returns the status of the Director instance with the passed in address
-DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatus(QString addr)
+//! Returns the status of the Director instance with the passed in Unique User ID
+DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatus(QUuid uuid)
 {
 	QMutexLocker locker(mutex_);
-	if(directors_.contains(addr))
+	if(directors_.contains(uuid))
 	{
 		//checking the status is a form of activity
-		directors_[addr]->setActivity();
-		return directors_[addr]->status_;
+		directors_[uuid]->setActivity();
+		return directors_[uuid]->status_;
 	}
 	else
 	{
@@ -224,14 +220,21 @@ DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatus(QString addr
 	}
 }
 
-DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatus(QUuid sessionId)
+//! Returns the status of the Director instance with the passed in Unique User ID
+DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatus(QString uuidStr)
+{
+	QUuid uuid(uuidStr);
+	return getDirectorStatus(uuid);
+}
+
+DirectorStatus::DirectorStatus ConnectionManager::getDirectorStatusBySession(QUuid sessionId)
 {
 	QMutexLocker locker(mutex_);
 	if(openSessions_.contains(sessionId))
 	{
 		QSharedPointer<SessionInfo> sessInfo = openSessions_.value(sessionId);
-		QString directorAddr = sessInfo->directorAddr_;
-		return getDirectorStatus(directorAddr);
+		QUuid directorID = sessInfo->directorUuid_;
+		return getDirectorStatus(directorID);
 	}
 	else
 	{
@@ -247,30 +250,37 @@ void ConnectionManager::setDirectorStatus(QUuid sessionId, DirectorStatus::Direc
 	if(openSessions_.contains(sessionId))
 	{
 		QSharedPointer<SessionInfo> sessInfo = openSessions_.value(sessionId);
-		QString directorAddr = sessInfo->directorAddr_;
+		QString directorUuid = sessInfo->directorUuid_;
 
-		directors_[directorAddr]->setActivity();
-		directors_[directorAddr]->status_ = status;
+		directors_[directorUuid]->setActivity();
+		directors_[directorUuid]->status_ = status;
 	}
 
 }
 
-//! Returns the session info for the session attached to the director with the given address
-QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QString directorAddr)
+//! Returns the session info for the session attached to the director with the given ID
+QSharedPointer<SessionInfo> ConnectionManager::getSessionInfoByDirector(QUuid directorID)
 {
 	QMutexLocker locker(mutex_);
 
 	//Iterate through the open sessions looking for the session info with the 
-	//matching address
+	//matching director ID
 	foreach(QSharedPointer<SessionInfo> session, openSessions_)
 	{
-		if(session->directorAddr_ == directorAddr)
+		if(session->directorUuid_ == directorID)
 			return getSessionInfo(session->uuid_);
 	}
 
 	//If we made it this far, there is no session with the specified director,
 	//so return a null object
 	return QSharedPointer<SessionInfo>();
+}
+
+//! Returns the session info for the session attached to the director with the given ID
+QSharedPointer<SessionInfo> ConnectionManager::getSessionInfoByDirector(QString directorID)
+{
+	QUuid uuid(directorID);
+	return getSessionInfoByDirector(uuid);
 }
 
 //! Returns the session info for the passed in session id
@@ -290,7 +300,7 @@ QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QUuid uuid)
 		return QSharedPointer<SessionInfo>();
 	}
 }
-/*! /Brief returns the UUID if the director needs to start a new session
+/*! /Brief returns the session UUID if the director needs to start a new session
  *
  *	Since all communication with Director instances is indirect (we have to
  *	wait for an incoming DIRECTOUPDATE command), there is a delay between starting
@@ -298,12 +308,12 @@ QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QUuid uuid)
  *	is used by the DIRECTORUPDATE command handler to figure out if the director
  *	instance needs to start a new session.
  */
-QUuid ConnectionManager::pendingSession(QHostAddress directorAddr)
+QUuid ConnectionManager::pendingSession(QUuid directorID)
 {
-	if(pendingSessions_.contains(directorAddr.toString()))
+	if(pendingSessions_.contains(directorID))
 	{
-		QUuid sessionId = pendingSessions_[directorAddr.toString()];
-		pendingSessions_.remove(directorAddr.toString());
+		QUuid sessionId = pendingSessions_[directorID];
+		pendingSessions_.remove(directorID);
 		return sessionId;
 	}
 	else
@@ -313,13 +323,18 @@ QUuid ConnectionManager::pendingSession(QHostAddress directorAddr)
 }
 
 //! Creates a new session and returns a pointer to the SessinoInfo object
-QSharedPointer<SessionInfo> ConnectionManager::createSession(QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId)
+QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, int proxyId, QByteArray experimentXml, QUuid initialObserverId)
 {
 	QMutexLocker locker(mutex_);
-	
-	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorAddr, proxyId, experimentXml,initialObserverId));
+	QString directorAddr;
+	if(directors_.contains(directorID))
+		directorAddr = directors_[directorID]->addressStr_;
+	else
+		return QSharedPointer<SessionInfo>();
 
-	pendingSessions_[directorAddr] = sessInfo->uuid_;
+	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(directorID, directorAddr, proxyId, experimentXml,initialObserverId));
+
+	pendingSessions_[directorID] = sessInfo->uuid_;
 	openSessions_[sessInfo->uuid_] = sessInfo;
 
 	return sessInfo;

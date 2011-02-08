@@ -108,7 +108,7 @@ EngineTest::EngineTest()
 void EngineTest::exec()
 {
 	Picto::ServerDiscoverer serverDiscoverer;
-	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel);
+	QSharedPointer<Picto::CommandChannel> serverChannel(createUuid(),new Picto::CommandChannel);
 	serverChannel->pollingMode(true);
 
 	//connect(&serverDiscoverer,SIGNAL(foundServer(QHostAddress, quint16)),

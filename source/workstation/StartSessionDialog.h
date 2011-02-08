@@ -28,7 +28,7 @@ public:
 	StartSessionDialog(QSharedPointer<Picto::CommandChannel> commandChannel);
 
 	QString getExperimentFile() { return currentDir_.absoluteFilePath(filename_); };
-	QString getDirectorAddress();
+	QString getDirectorID();
 	QSharedPointer<Picto::Experiment> getExperiment() { return experiment_; }
 	QUuid getSessionId() { return sessionId_; };
 
@@ -41,7 +41,8 @@ private:
 	{
 		QString name;
 		QString status;
-		QString address;
+		QString addr;
+		QString id;
 	}DirectorInstance;
 
 

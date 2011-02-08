@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
 	PictoServerTest serverTest;
 	PictoDirectorTest directorTest;
 	// Run unit test
-	//result += QTest::qExec(&serverTest, testOptionList);
-	result += QTest::qExec(&directorTest, testOptionList);
+	result += QTest::qExec(&serverTest, testOptionList);
+	//result += QTest::qExec(&directorTest, testOptionList);
 
 	return result;
 }

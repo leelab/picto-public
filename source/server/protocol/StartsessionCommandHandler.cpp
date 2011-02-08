@@ -26,12 +26,12 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	ConnectionManager *conMgr = ConnectionManager::Instance();
 	
 	QString target = command->getTarget();
-	QString directorAddr;
+	QString directorID;
 	int proxyId;
 	QByteArray experimentXml;
 	QUuid observerId;
 
-	directorAddr = target.left(target.indexOf('/'));
+	directorID = target.left(target.indexOf('/'));
 	proxyId = target.mid(target.indexOf('/')+1).toInt();
 	experimentXml = command->getContent();
 	observerId = QUuid(command->getFieldValue("Observer-ID"));
@@ -41,12 +41,12 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 
 
 	//Check that the Director is ready to go
-	if(conMgr->getDirectorStatus(directorAddr) == DirectorStatus::notFound)
+	if(conMgr->getDirectorStatus(directorID) == DirectorStatus::notFound)
 	{
-		notFoundResponse->setContent("Director address not found");
+		notFoundResponse->setContent("Director ID not found");
 		return notFoundResponse;
 	}
-	else if(conMgr->getDirectorStatus(directorAddr) > DirectorStatus::idle)
+	else if(conMgr->getDirectorStatus(directorID) > DirectorStatus::idle)
 	{
 		return unauthorizedResponse;
 	}
@@ -61,7 +61,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 
 	//create the session
 	QSharedPointer<SessionInfo> sessionInfo;
-	sessionInfo = ConnectionManager::Instance()->createSession(directorAddr, proxyId, experimentXml, observerId);
+	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), proxyId, experimentXml, observerId);
 	
 	if(sessionInfo.isNull())
 	{
@@ -73,7 +73,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	sessionInfo->addPendingDirective(pendingDirective);
 
 	//wait for the director to change to stopped status
-	while(conMgr->getDirectorStatus(directorAddr) == DirectorStatus::idle)
+	while(conMgr->getDirectorStatus(directorID) == DirectorStatus::idle)
 	{
 		QThread::yieldCurrentThread();
 		QCoreApplication::processEvents();

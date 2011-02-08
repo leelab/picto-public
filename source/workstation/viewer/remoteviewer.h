@@ -56,6 +56,7 @@ private:
 		QString name;
 		QString status;
 		QString address;
+		QString id;
 	}DirectorInstance;
 
 	struct ProxyServerInfo
@@ -78,7 +79,7 @@ private:
 	bool joinSession();
 	bool disjoinSession();
 
-	DirectorStatus directorStatus(QString addr);
+	DirectorStatus directorStatus(QString id);
 	QList<DirectorInstance> getDirectorList();
 
 	QList<ProxyServerInfo> getProxyList();
