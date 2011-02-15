@@ -33,7 +33,7 @@ namespace Director{
 	 */
 enum DescTypes{
 	DISCOVERSERVER,
-	DIRECTORUPDATE,
+	COMPONENTUPDATE,
 	PUTDATA,
 	TRIAL
 };
@@ -57,7 +57,7 @@ struct DirectorUpdateDesc: public SimActionDesc
 	enum MsgType{TRIAL, DATA};
 	struct TrialMsgDesc:public SimMsgDesc{TrialMsgDesc(float timestamp, int eventID, int trialID):SimMsgDesc(timestamp,TRIAL),eventID_(eventID),trialID_(trialID){};int eventID_; int trialID_;};
 	struct DataMsgDesc:public SimMsgDesc{DataMsgDesc(float timestamp, int x, int y):SimMsgDesc(timestamp,DATA),x_(x),y_(y){};int x_; int y_;};
-	DirectorUpdateDesc(QString testStep): SimActionDesc(testStep, DIRECTORUPDATE){};
+	DirectorUpdateDesc(QString testStep): SimActionDesc(testStep, COMPONENTUPDATE){};
 };
 
 /*! \brief Not Currently used.

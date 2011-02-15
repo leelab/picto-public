@@ -14,7 +14,7 @@
 
 #include "../protocol/ServerProtocols.h"
 #include "../protocol/ServerProtocols.h"
-#include "../connections/ServerConfig.h"
+//#include "../connections/ServerConfig.h"
 
 /*!	\brief The server for PictoServer
  *
@@ -48,7 +48,7 @@ private:
 
 	const static int maxConnections = 500;
 
-	ServerConfig config_;
+	//ServerConfig config_;
 };
 
 #endif

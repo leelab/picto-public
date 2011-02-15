@@ -10,7 +10,7 @@
  *
  *	PictoWorkstation sends these commands when it wants to terminate a session.
  *	The command results in an ENDSESSION directive being included in the next reply 
- *	to a DIRECTORUPDATE command.
+ *	to a COMPONENTUPDATE command.
  *
  *	FORMAT
  *		ENDSESSION 489360f0-6e88-11df-be2b-0800200c9a66 PICTO/1.0

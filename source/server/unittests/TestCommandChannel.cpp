@@ -25,7 +25,7 @@ TestCommandChannel::TestCommandChannel(QHostAddress _serverAddress,quint16 _port
 
 void TestCommandChannel::initTestCase()
 {
-	channel_ = new Picto::CommandChannel(QUuid::createUuid(),serverAddress_, port_, this);
+	channel_ = new Picto::CommandChannel(QUuid::createUuid(),"TESTCOMPONENT",serverAddress_, port_, this);
 	if(channel_->getChannelStatus() != Picto::CommandChannel::connected)
 		QFAIL("Command channel failed to connect");
 }
@@ -367,7 +367,7 @@ void TestCommandChannel::polledResponses_data()
 	ConsumerServer server(testPort);
 
 	Picto::CommandChannel *testChannel;
-	testChannel = new Picto::CommandChannel(createUuid(),QHostAddress::LocalHost,testPort);
+	testChannel = new Picto::CommandChannel(createUuid(),"TESTCOMPONENT",QHostAddress::LocalHost,testPort);
 	//testChannel->pollingMode(true);
 
 	QSharedPointer<Picto::ProtocolCommand> command(
@@ -459,7 +459,7 @@ void TestCommandChannel::polledResponses_data()
 	ConsumerServer server(testPort);
 
 	Picto::CommandChannel *testChannel;
-	testChannel = new Picto::CommandChannel(createUuid(),QHostAddress::LocalHost,testPort);
+	testChannel = new Picto::CommandChannel(createUuid()"TESTCOMPONENT",QHostAddress::LocalHost,testPort);
 	testChannel->pollingMode(false);
 
 	qRegisterMetaType< QSharedPointer<Picto::ProtocolResponse> >("QSharedPointer<Picto::ProtocolResponse>");

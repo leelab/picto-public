@@ -24,7 +24,7 @@ NeuralDataCollector::NeuralDataCollector(int proxyId, QString sessionDbName, int
 void NeuralDataCollector::run()
 {
 	//cmdChannel_ = QSharedPointer<Picto::CommandChannel>(new Picto::CommandChannel(proxyAddress_,proxyPort_));//!!HERE!!
-	cmdChannel_ = new Picto::CommandChannel(QUuid(),proxyAddress_,proxyPort_);//Since we will be changing the proxy server to a client, we just put in an empty Uuid for now
+	cmdChannel_ = new Picto::CommandChannel(QUuid(),"SERVER",proxyAddress_,proxyPort_);//Since we will be changing the proxy server to a client, we just put in an empty Uuid for now
 
 	//set up a timer to grab proxy data
 	pollingTimer_ = new QTimer();

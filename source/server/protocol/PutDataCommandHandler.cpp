@@ -31,7 +31,9 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	conMgr->updateDirector(QUuid(command->getFieldValue("Source-ID")),QHostAddress(command->getFieldValue("Source-Address")), command->getTarget());
+	QUuid sourceID(command->getFieldValue("Source-ID"));
+	QString sourceType(command->getFieldValue("Source-Type"));
+	conMgr->updateComponent(sourceID,QHostAddress(command->getFieldValue("Source-Address")), command->getTarget(),sourceType);
 
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));
@@ -52,7 +54,12 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	xmlReader->readNext();
 	while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "Data") && !xmlReader->atEnd())
 	{
-		
+		if(!xmlReader->isStartElement())
+		{
+			xmlReader->readNext();
+			continue;
+		}
+
 		QString dataType = xmlReader->name().toString();
 
 		//We do different things depending on the type of data being sent
@@ -86,6 +93,60 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertRewardData(rewardData);
 		}
+		else if(dataType == "event")
+		{
+			if(xmlReader->attributes().value("type").toString() == "spike")
+			{
+				Picto::NeuralDataStore neuralData;
+				neuralData.deserializeFromXml(xmlReader);
+
+				sessionInfo->insertNeuralData(neuralData);
+			}
+			else if(xmlReader->attributes().value("type").toString() == "externalEvent")
+			{
+				double time = 0.0;
+				int eventCode = -1;
+				int trialNum = -1;
+				while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "event") && !xmlReader->atEnd())
+				{
+					if(!xmlReader->isStartElement())
+					{
+						xmlReader->readNext();
+						continue;
+					}
+					if(xmlReader->name() == "timestamp")
+					{
+						time = xmlReader->readElementText().toDouble();
+					}
+					else if(xmlReader->name() == "eventCode")
+					{
+						eventCode = xmlReader->readElementText().toInt();
+					}
+					xmlReader->readNext();
+				}
+				sessionInfo->insertTrialEvent(time,eventCode,trialNum,sourceType);
+			}
+		}
+		else if((dataType == "device"))
+		{	//Ignore these until they are handled correctly in NeuralDataStore
+			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "device") && !xmlReader->atEnd())
+			{xmlReader->readNext();}
+		}
+		else if((dataType == "deviceStatus"))
+		{	//Ignore these until they are handled correctly in NeuralDataStore
+			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "deviceStatus") && !xmlReader->atEnd())
+			{xmlReader->readNext();}
+		}
+		else if((dataType == "sampleRate"))
+		{	//Ignore these until they are handled correctly in NeuralDataStore
+			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "sampleRate") && !xmlReader->atEnd())
+			{xmlReader->readNext();}
+		}
+		else if((dataType == "numEvents"))
+		{	//Ignore these until they are handled correctly in NeuralDataStore
+			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "numEvents") && !xmlReader->atEnd())
+			{xmlReader->readNext();}
+		}
 		else
 		{
 			Q_ASSERT_X(false,"a",QString("DataType: "+dataType+" not found").toAscii());
@@ -95,7 +156,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		xmlReader->readNext();
 	}
 
-	QString directive = sessionInfo->pendingDirective();
+	QString directive = sessionInfo->pendingDirective(sourceID);
 	if(directive.isEmpty())
 		response->setContent("OK");
 	else

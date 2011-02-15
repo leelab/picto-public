@@ -105,21 +105,21 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
 	//Check that we have a Director and that it is idle
-	DirectorStatus::DirectorStatus dirStatus = conMgr_->getDirectorStatusBySession(sessionId_);
+	ComponentStatus::ComponentStatus dirStatus = conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR");
 
-	if(dirStatus == DirectorStatus::running)
+	if(dirStatus == ComponentStatus::running)
 	{
 		badReqResponse->setContent("Director is already running a task.");
 		return badReqResponse;
 	}
-	else if(dirStatus == DirectorStatus::notFound)
+	else if(dirStatus == ComponentStatus::notFound)
 	{
 		badReqResponse->setContent("Director not found");
 		return badReqResponse;
 	}
 
 	//Add a START directive to the session info
-	sessInfo_->addPendingDirective("START "+taskname);
+	sessInfo_->addPendingDirective("START "+taskname,"DIRECTOR");
 
 	//Wait around until the Director's status changes to "running"
 	QTime timer;
@@ -129,7 +129,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 	{
 		QThread::yieldCurrentThread();
 		QCoreApplication::processEvents();
-	}while(timer.elapsed() < 10000 && conMgr_->getDirectorStatusBySession(sessionId_) < DirectorStatus::stopped);
+	}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") < ComponentStatus::stopped);
 
 	if(timer.elapsed() <10000)
 	{
@@ -149,15 +149,15 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	if(conMgr_->getDirectorStatusBySession(sessionId_) < DirectorStatus::paused)
+	if(conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") < ComponentStatus::paused)
 	{
 		badReqResponse->setContent("Director not currently running");
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective("STOP");
+	sessInfo_->addPendingDirective("STOP","DIRECTOR");
 	sessInfo_->flushCache();
-	//conMgr_->setDirectorStatus(sessionId_,DirectorStatus::stopped);
+	//conMgr_->setComponentStatus(sessionId_,"DIRECTOR"ComponentStatus::stopped);
 
 
 	return okResponse;
@@ -170,14 +170,14 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	if(conMgr_->getDirectorStatusBySession(sessionId_) != DirectorStatus::running)
+	if(conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") != ComponentStatus::running)
 	{
 		badReqResponse->setContent("Director not currently running");
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective("PAUSE");
-	conMgr_->setDirectorStatus(sessionId_,DirectorStatus::paused);
+	sessInfo_->addPendingDirective("PAUSE","DIRECTOR");
+	conMgr_->setComponentStatus(sessionId_,"DIRECTOR",ComponentStatus::paused);
 
 
 	return okResponse;
@@ -190,14 +190,14 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	if(conMgr_->getDirectorStatusBySession(sessionId_) != DirectorStatus::paused)
+	if(conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") != ComponentStatus::paused)
 	{
 		badReqResponse->setContent("Director not currently puased");
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective("RESUME");
-	conMgr_->setDirectorStatus(sessionId_,DirectorStatus::running);
+	sessInfo_->addPendingDirective("RESUME","DIRECTOR");
+	conMgr_->setComponentStatus(sessionId_,"DIRECTOR",ComponentStatus::running);
 	
 	return okResponse;
 }
@@ -214,7 +214,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel));
+	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel),"DIRECTOR");
 
 	return okResponse;
 

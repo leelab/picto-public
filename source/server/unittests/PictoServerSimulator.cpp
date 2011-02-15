@@ -36,16 +36,16 @@ void PictoServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				QFAIL("Test Definition Error: GETDISCOVERED action must be run in server before it interfaces another device"); 
 			
 			while(!InterruptableSleep(0))
-			{	//Wait for a DIRECTORUPDATE message from the PictoDirector.  When it arrives, check it and send back data, then wait again.
+			{	//Wait for a COMPONENTUPDATE message from the PictoDirector.  When it arrives, check it and send back data, then wait again.
 				ReadIncomingMessage("",message,tcpSocket_,500,false);
 				if(message == "")
 					continue;
 
-				QString expected = "DIRECTORUPDATE";
-				if(!message.startsWith("DIRECTORUPDATE") && !message.startsWith("TRIAL") && !message.startsWith("PUTDATA"))
+				QString expected = "COMPONENTUPDATE";
+				if(!message.startsWith("COMPONENTUPDATE") && !message.startsWith("TRIAL") && !message.startsWith("PUTDATA"))
 				{
 					QVERIFY2(message == expected, (GetDeviceTypeName() +" received an unexpected or badly formed message.\nActual: " 
-					+ message + "\nExpected: " + "DIRECTORUPDATE, TRIAL OR PUTDATA").toAscii());
+					+ message + "\nExpected: " + "COMPONENTUPDATE, TRIAL OR PUTDATA").toAscii());
 				}
 				else
 				{

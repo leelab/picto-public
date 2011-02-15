@@ -93,47 +93,6 @@ void Server::processPendingDatagrams()
 				udpResponseSocket.writeDatagram(datagram.data(), datagram.size(),
 												senderAddress, target.toInt());
 			}
-
-			//Proxy server announcing its presence..
-			if(method == "ANNOUNCE"  && protocolName == "ACQ")
-			{
-				//ACQ announce uses the format ANNOUNCE proxyname:port ACQ/1.0
-				int portPosition = target.indexOf(':');
-				
-				QString proxyName;
-				int proxyPort = -1;
-				bool portOk;
-
-				if(protocolVersionPosition != -1)
-				{
-					proxyName = target.left(portPosition);
-					proxyPort = target.mid(portPosition+1).toInt(&portOk);
-				}
-				
-				if(portOk && !proxyName.isEmpty())
-					config_.insertProxyServer(proxyName,proxyPort,senderAddress);
-
-			}
-
-			//Proxy server signing off
-			if(method == "DEPART"  && protocolName == "ACQ")
-			{
-				//ACQ depart uses the format DEPART proxyname:port ACQ/1.0
-				int portPosition = target.indexOf(':');
-				
-				QString proxyName;
-				int proxyPort = -1;
-				bool portOk;
-
-				if(protocolVersionPosition != -1)
-				{
-					proxyName = target.left(portPosition);
-					proxyPort = target.mid(portPosition+1).toInt(&portOk);
-				}
-				
-				if(portOk && !proxyName.isEmpty())
-					config_.removeProxyServer(proxyName,proxyPort,senderAddress);
-			}
 		}
 	}
 }

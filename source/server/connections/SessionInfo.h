@@ -2,17 +2,19 @@
 #define _SESSION_INFO_H_
 
 #include "../datacollection/alignmenttool.h"
-#include "../datacollection/neuraldatacollector.h"
 #include "../network/serverthread.h"
+#include "../../common/storage/NeuralDataStore.h"
 #include "../../common/storage/BehavioralDataStore.h"
 #include "../../common/storage/StateDataStore.h"
 #include "../../common/storage/FrameDataStore.h"
 #include "../../common/storage/RewardDataStore.h"
+#include "ComponentInfo.h"
 
 #include <QSharedPointer>
 #include <QSqlDatabase>
 #include <QUuid>
 #include <QStringList>
+#include <QMutex>
 
 /*!	\brief Contains info about a single session
  *
@@ -46,13 +48,18 @@
 class SessionInfo
 {
 public:
-	SessionInfo(QUuid directorID, QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
+	SessionInfo(QByteArray experimentXml, QUuid initialObserverId);
 	~SessionInfo();
 
+	void AddComponent(QSharedPointer<ComponentInfo> component);
+	QSharedPointer<ComponentInfo> getComponentByType(QString type);
+	bool hasComponent(QUuid componentID);
+	void alignTimestampsTo(QString componentType);
 	void endSession();
 
 	void flushCache();
-	void insertTrialEvent(double time, int eventCode, int trialNum);
+	void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType);
+	void insertNeuralData(Picto::NeuralDataStore data);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
 	void insertFrameData(Picto::FrameDataStore data);
 	void insertRewardData(Picto::RewardDataStore data);
@@ -65,11 +72,10 @@ public:
 	//getters/setters
 	QUuid sessionId() { return uuid_; };
 	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
-	QString directorAddr() { return directorAddr_; };
 	QByteArray experimentXml() { return experimentXml_; };
 
-	QString pendingDirective();
-	void addPendingDirective(QString directive) { pendingDirectives_.append(directive); };
+	QString pendingDirective(QUuid componentID);
+	void addPendingDirective(QString directive, QString componentType);
 
 	//! clears the state of activity and returns it.
 	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
@@ -86,13 +92,13 @@ private:
 	QSqlDatabase baseSessionDbConnection_;
 	QSqlDatabase cacheDb_;
 
-	int proxyId_;
-	NeuralDataCollector *ndc_;
 	QSharedPointer<AlignmentTool> alignmentTool_;
+	bool timestampsAligned_;	//Indicates whether initial timestamp alignment has occured
+	QMutex alignmentMutex_;
 	QTimer timeoutTimer_;
-	QStringList pendingDirectives_;
-	QString directorAddr_;
-	QUuid directorUuid_;
+	QMap<QUuid,QStringList> pendingDirectives_; //Uuid is the Uuid of the component who's pending directives are stored in the QStringList
+	QMap<QString,QSharedPointer<ComponentInfo>> components_;	//QString is the type of the component (only one of each component type can be attached).
+	QString alignToType_;	//The component type who's timeframe should be used as a baseline in timing alignment.
 	bool activity_;
 	QByteArray experimentXml_;
 

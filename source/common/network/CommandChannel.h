@@ -76,8 +76,8 @@ class CommandChannel : public QObject
 	Q_OBJECT
 
 public:
-	CommandChannel(QUuid sourceId, QObject *parent = 0);
-	CommandChannel(QUuid sourceId, QHostAddress serverAddress, quint16 serverPort_, QObject *parent = 0);
+	CommandChannel(QUuid sourceId, QString sourceType, QObject *parent = 0);
+	CommandChannel(QUuid sourceId, QString sourceType, QHostAddress serverAddress, quint16 serverPort_, QObject *parent = 0);
 	~CommandChannel();
 
 	int incomingResponsesWaiting();
@@ -138,6 +138,7 @@ private:
 	QMap<QUuid,QSharedPointer<ProtocolCommand> > pendingCommands_;
 	QUuid sessionId_;
 	QUuid sourceId_;
+	QString sourceType_;
 };
 
 

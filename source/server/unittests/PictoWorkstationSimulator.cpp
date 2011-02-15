@@ -77,7 +77,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				directorIP = ipMap_[directorName].toString();
 			else
 				QFAIL( QString("TEST DEFINITION ERROR: Workstation simulator %1 could not find the IP address for %2. \n"\
-							   "Make sure that all Directors have sent DIRECTORUPDATE messages and that DIRECTORLIST "\
+							   "Make sure that all Directors have sent COMPONENTUPDATE messages and that DIRECTORLIST "\
 							   "was called before using STARTSESSION." ).arg(GetDeviceName()).arg(directorName).toAscii());
 			if((proxyName != "") && !proxyMap_.contains(proxyName))
 			{
@@ -150,7 +150,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				directorIP = ipMap_[directorName].toString();
 			else
 				QFAIL( QString("TEST DEFINITION ERROR: Workstation simulator could not find the IP address for %1. \n"\
-							   "Make sure that all Directors have sent DIRECTORUPDATE messages and that DIRECTORLIST "\
+							   "Make sure that all Directors have sent COMPONENTUPDATE messages and that DIRECTORLIST "\
 							   "was called before using STARTSESSION." ).arg(directorName).toAscii());
 			QString proxy = "-1";
 			SendMessage(QString("JOINSESSION %1/%2 PICTO/1.0\r\nContent-Length:0\r\nObserver-ID:%3\r\nSession-ID:{00000000-0000-0000-0000-000000000000}\r\n\r\n").arg(directorIP).arg(proxy).arg(observerID_), tcpSocket_);
@@ -177,7 +177,7 @@ void PictoWorkstationSimulator::BuildIPMap(QString message)
 
 	QStringList splitMessage = message.split("DirectorInstances");
 	if(splitMessage.size() < 2)
-		QFAIL("Message returned from server after DIRECTORUPDATE call was badly formed");
+		QFAIL("Message returned from server after COMPONENTUPDATE call was badly formed");
 	QXmlStreamReader xmlReader(QString("<DirectorInstances") + splitMessage[1]);
 	QString name, address;
 	while(!xmlReader.atEnd())
@@ -222,7 +222,7 @@ void PictoWorkstationSimulator::BuildProxyMap(QString message)
 
 	QStringList splitMessage = message.split("Proxies");
 	if(splitMessage.size() < 2)
-		QFAIL("Message returned from server after DIRECTORUPDATE call was badly formed");
+		QFAIL("Message returned from server after COMPONENTUPDATE call was badly formed");
 	QXmlStreamReader xmlReader(QString("<Proxies") + splitMessage[1]);
 	QString name, id;
 	while(!xmlReader.atEnd())

@@ -7,16 +7,16 @@
 #include <QFile>
 #include <QUuid>
 
-DirectorUpdateCommandHandler::DirectorUpdateCommandHandler()
+ComponentUpdateCommandHandler::ComponentUpdateCommandHandler()
 {
 }
 
-/*! \brief handles a DIRECTORUPDATE command
+/*! \brief handles a COMPONENTUPDATE command
  *
  */
-QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
+QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	//printf("DIRECTORUPDATE handler: %d\n", QThread::currentThreadId());
+	//printf("COMPONENTUPDATE handler: %d\n", QThread::currentThreadId());
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
@@ -24,8 +24,9 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 	//Update the DirectorList
 	QHostAddress sourceAddr(command->getFieldValue("Source-Address"));
 	QUuid sourceID(command->getFieldValue("Source-ID"));
+	QString sourceType(command->getFieldValue("Source-Type"));
 	
-	DirectorStatus::DirectorStatus status;
+	ComponentStatus::ComponentStatus status;
 
 	QString statusStr;
 	QString name;
@@ -37,24 +38,24 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 
 	if(statusStr.toUpper() == "IDLE")
 	{
-		status = DirectorStatus::idle;
+		status = ComponentStatus::idle;
 	}
 	else if(statusStr.toUpper() == "STOPPED")
 	{
-		status = DirectorStatus::stopped;
+		status = ComponentStatus::stopped;
 	}
 	else if(statusStr.toUpper() == "PAUSED")
 	{
-		status = DirectorStatus::paused;
+		status = ComponentStatus::paused;
 	}
 	else if(statusStr.toUpper() == "RUNNING")
 	{
-		status = DirectorStatus::running;
+		status = ComponentStatus::running;
 	}
 
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	conMgr->updateDirector(sourceID, sourceAddr, name, status);
+	conMgr->updateComponent(sourceID, sourceAddr, name, sourceType, status);
 
 	//If we're in a session, check for pending directives
 	QUuid sessionId(command->getFieldValue("Session-ID"));
@@ -75,7 +76,7 @@ QSharedPointer<Picto::ProtocolResponse> DirectorUpdateCommandHandler::processCom
 			//Indicate that there was activity on this session.
 			sessionInfo->setActivity();
 
-			QString directive = sessionInfo->pendingDirective();
+			QString directive = sessionInfo->pendingDirective(sourceID);
 			if(directive.isEmpty())
 			{
 				response->setContent("OK");

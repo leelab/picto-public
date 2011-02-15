@@ -10,7 +10,7 @@
  *	simple program.  Upon booting it first sets up hardware to match the system on 
  *	which it is running (actually, at the moment it sets up the hardware for PictoBoxXp).
  *	Then, it attempts to connect to a PictoServer instance. Once connected, it sits in a 
- *	loop waiting sending DIRECTORUPDATE commands.  The responses to these commands may 
+ *	loop waiting sending COMPONENTUPDATE commands.  The responses to these commands may 
  *	include "directives" which tell Director to do something (start an experiment, deliver
  *	a reward, etc).
  *
@@ -169,9 +169,9 @@ int main(int argc, char *argv[])
 	QSharedPointer<Picto::Experiment> experiment;
 
 	//Once we have the command channel set up, we'll sit in a tight loop sending
-	//DIRECTORUPDATE commands at 1Hz and processing the responses forever.
+	//COMPONENTUPDATE commands at 1Hz and processing the responses forever.
 	QSharedPointer<Picto::ProtocolResponse> updateResponse;
-	QString updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":idle PICTO/1.0";
+	QString updateCommandStr = "COMPONENTUPDATE "+engine->getName()+":idle PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 	forever
 	{
@@ -287,13 +287,13 @@ int main(int argc, char *argv[])
 			
 			updateSplashStatus(engine, "Starting task: " + taskName);
 
-			//Before we actually start running the task, we need to send a DIRECTORUPDATE
+			//Before we actually start running the task, we need to send a COMPONENTUPDATE
 			//command to let the server know that we have changed status to running
 			//This also lets Workstation know that we received the command that they
 			//initiated.  Note that if there is a directive in the response, it will be
 			//ignored.  I don't think this is a problem, since there would be no reason
 			//to send a second directive immediately after the first.
-			QString runningUpdateCommandStr = "DIRECTORUPDATE "+name+":running PICTO/1.0";
+			QString runningUpdateCommandStr = "COMPONENTUPDATE "+name+":running PICTO/1.0";
 			QSharedPointer<Picto::ProtocolCommand> runningUpdateCommand(new Picto::ProtocolCommand(runningUpdateCommandStr));
 			QSharedPointer<Picto::ProtocolResponse> runningUpdateResponse;
 
@@ -411,7 +411,7 @@ int main(int argc, char *argv[])
 //! Returns a command channel connected to the server (or null if the something goes wrong).
 QSharedPointer<Picto::CommandChannel> connectToServer(QUuid directorID)
 {
-	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel(directorID));
+	QSharedPointer<Picto::CommandChannel> serverChannel(new Picto::CommandChannel(directorID,"DIRECTOR"));
 	QSharedPointer<Picto::CommandChannel> nullChannel;
 
 	//Find a server and open a command channel to it

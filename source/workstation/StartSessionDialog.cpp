@@ -97,7 +97,7 @@ QComboBox* StartSessionDialog::createDirectorList()
 
 			if(xmlReader.isStartElement() && xmlReader.name() == "Director")
 			{
-				DirectorInstance director;
+				ComponentInstance director;
 
 				while(!xmlReader.atEnd())
 				{

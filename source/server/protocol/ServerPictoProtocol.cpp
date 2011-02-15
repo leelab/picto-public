@@ -29,7 +29,7 @@ ServerPictoProtocol::ServerPictoProtocol()
 	QSharedPointer<Picto::TerminateCommandHandler> terminateCommandHandler(new Picto::TerminateCommandHandler());
 
 	QSharedPointer<DirectorListCommandHandler> directorListCommandHandler(new DirectorListCommandHandler());
-	QSharedPointer<DirectorUpdateCommandHandler> directorUpdateCommandHandler(new DirectorUpdateCommandHandler());
+	QSharedPointer<ComponentUpdateCommandHandler> directorUpdateCommandHandler(new ComponentUpdateCommandHandler());
 	QSharedPointer<EndsessionCommandHandler> endsessionCommandHandler(new EndsessionCommandHandler());
 	QSharedPointer<GetDataCommandHandler> getDataCommandHandler(new GetDataCommandHandler());
 	QSharedPointer<JoinsessionCommandHandler> joinsessionCommandHandler(new JoinsessionCommandHandler());

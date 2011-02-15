@@ -81,6 +81,9 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	//Get the session ID from the command
 	QUuid sessionID(command->getFieldValue("Session-ID"));
 
+	//Get the source ID
+	QString sourceType(command->getFieldValue("Source-Type"));
+
 	//Get the current session info from a session manager
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = ConnectionManager::Instance()->getSessionInfo(sessionID);
@@ -93,7 +96,7 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	}
 
 	//Now that we've got the sessionInfo, we need to add the trial to the database
-	sessionInfo->insertTrialEvent(time, eventCode, trialNum);
+	sessionInfo->insertTrialEvent(time, eventCode, trialNum, sourceType);
 
 	//Flush the database cache
 	sessionInfo->flushCache();

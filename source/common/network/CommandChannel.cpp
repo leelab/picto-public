@@ -6,11 +6,12 @@
 
 namespace Picto {
 
-CommandChannel::CommandChannel(QUuid sourceId, QObject *parent)
+CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QObject *parent)
 	:QObject(parent),
 	status_(disconnected),
 	reconnect_(true),
-	sourceId_(sourceId)
+	sourceId_(sourceId),
+	sourceType_(sourceType)
 {
 	//set up the socket
 	consumerSocket_ = new QTcpSocket(this);
@@ -18,13 +19,14 @@ CommandChannel::CommandChannel(QUuid sourceId, QObject *parent)
 	connect(consumerSocket_, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 }
 
-CommandChannel::CommandChannel(QUuid sourceId, QHostAddress serverAddress, quint16 serverPort_, QObject *parent)
+CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress serverAddress, quint16 serverPort_, QObject *parent)
 	:QObject(parent),
 	serverAddr_(serverAddress),
 	serverPort_(serverPort_),
 	status_(disconnected),
 	reconnect_(true),
-	sourceId_(sourceId)
+	sourceId_(sourceId),
+	sourceType_(sourceType)
 {
 	//set up the socket
 	consumerSocket_ = new QTcpSocket(this);
@@ -229,6 +231,9 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 
 	//We also always add a source-ID field so that we can be uniquely identified by the recipient.
 	command->setFieldValue("Source-ID",sourceId_.toString());
+
+	//We also always add a source-Type field so that we our component type can be identified by the recipient
+	command->setFieldValue("Source-Type",sourceType_);
 
 	if(command->write(consumerSocket_) < 1)
 	{

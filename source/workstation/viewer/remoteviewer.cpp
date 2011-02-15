@@ -235,9 +235,9 @@ void RemoteViewer::setupUi()
 
 void RemoteViewer::setupServerChannel()
 {
-	serverChannel_ = new Picto::CommandChannel(observerId_,this);
-	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,this);
-	behavioralDataChannel_ = new Picto::CommandChannel(observerId_,this);
+	serverChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
+	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
+	behavioralDataChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 
 	serverDiscoverer_ = new Picto::ServerDiscoverer(this);
 
@@ -324,7 +324,7 @@ void RemoteViewer::changeConnectionState(bool checked)
 	{
 		QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 		//We need to possibbly start a session, and always join a session
-		DirectorStatus remoteStatus = directorStatus(directorID);
+		ComponentStatus remoteStatus = directorStatus(directorID);
 		if(remoteStatus == Error)
 		{
 			connectAction_->setChecked(false);
@@ -570,13 +570,13 @@ void RemoteViewer::updateLists()
 	}
  
 	//Update the director combo box
-	QList<DirectorInstance> directors;
+	QList<ComponentInstance> directors;
 	directors = getDirectorList();
 
 	//Add new directors
 	for(int i=0; i<directors.length(); i++)
 	{
-		DirectorInstance d = directors[i];
+		ComponentInstance d = directors[i];
 		if(directorListBox_->findData(d.id) == -1)
 		{
 			if(d.status.toUpper() == "IDLE")
@@ -584,8 +584,6 @@ void RemoteViewer::updateLists()
 			else
 				directorListBox_->addItem(runningIcon, d.name, d.id);
 		}
-
-
 	}
 
 	//Remove old directors
@@ -610,18 +608,24 @@ void RemoteViewer::updateLists()
 	}
 
 	//Update the proxy combo box
-	QList<ProxyServerInfo> proxies = getProxyList();
+	QList<ComponentInstance> proxies;
+	proxies = getProxyList();
 
 	//Add new proxies
 	for(int i=0; i<proxies.length(); i++)
 	{
-		ProxyServerInfo proxy = proxies[i];
-		if(proxyListBox_->findData(proxy.id) == -1)
-			proxyListBox_->addItem(proxy.name, proxy.id);
+		ComponentInstance p = proxies[i];
+		if(proxyListBox_->findData(p.id) == -1)
+		{
+			if(p.status.toUpper() == "IDLE")
+				proxyListBox_->addItem(p.name, p.id);
+			else
+				proxyListBox_->addItem(runningIcon, p.name, p.id);
+		}
 	}
 
 	//Remove old proxies
-	//(We're skipping the first entry, since that's "No Proxy")
+	// Skip first entry because that's the "No Proxy" option.
 	for(int i=1; i<proxyListBox_->count(); i++)
 	{
 		bool remove = true;
@@ -629,6 +633,11 @@ void RemoteViewer::updateLists()
 		{
 			if(proxies[j].id ==proxyListBox_->itemData(i))
 			{
+				if(directors[j].status.toUpper() == "IDLE")
+					proxyListBox_->setItemIcon(i,QIcon());
+				else
+					proxyListBox_->setItemIcon(i,runningIcon);
+
 				remove = false;
 				break;
 			}
@@ -642,11 +651,11 @@ void RemoteViewer::updateLists()
 
 /*! \brief returns the current status of a remote director
  */
-RemoteViewer::DirectorStatus RemoteViewer::directorStatus(QString id)
+RemoteViewer::ComponentStatus RemoteViewer::directorStatus(QString id)
 {
-	QList<DirectorInstance> directors = getDirectorList();
+	QList<ComponentInstance> directors = getDirectorList();
 
-	foreach(DirectorInstance director, directors)
+	foreach(ComponentInstance director, directors)
 	{
 		if(director.id == id)
 		{
@@ -666,17 +675,43 @@ RemoteViewer::DirectorStatus RemoteViewer::directorStatus(QString id)
 	return Error;
 }
 
+/*! \brief returns the current status of a remote proxy
+ */
+RemoteViewer::ComponentStatus RemoteViewer::proxyStatus(QString id)
+{
+	QList<ComponentInstance> proxies = getProxyList();
+
+	foreach(ComponentInstance proxy, proxies)
+	{
+		if(proxy.id == id)
+		{
+			if(proxy.status.toUpper() == "IDLE")
+				return Idle;
+			else if(proxy.status.toUpper() == "STOPPED")
+				return Stopped;
+			else if(proxy.status.toUpper() == "RUNNING")
+				return Running;
+			else if(proxy.status.toUpper() == "PAUSED")
+				return Paused;
+			else
+				return Error;
+		}
+	}
+	//If we made it this far, something is wrong...
+	return Error;
+}
+
 /*! \brief Returns a list of directors and their properties
  *
  *	This sends out a DIRECTORLIST command, and then parses the response into a 
- *	QList of DirectorInstances (really just a struct with a couple of strings).
- *	If something does wrong, or no director instances are found, an empy
+ *	QList of ComponentInstances (really just a struct with a couple of strings).
+ *	If something goes wrong, or no director instances are found, an empty
  *	list is returned.
  */  
-QList<RemoteViewer::DirectorInstance> RemoteViewer::getDirectorList()
+QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 {
 	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
-	QList<DirectorInstance> directors;
+	QList<ComponentInstance> directors;
 
 	if(!serverChannel_->isConnected())
 	{
@@ -703,7 +738,7 @@ QList<RemoteViewer::DirectorInstance> RemoteViewer::getDirectorList()
 
 		if(xmlReader.isStartElement() && xmlReader.name() == "Director")
 		{
-			DirectorInstance director;
+			ComponentInstance director;
 
 			while(!xmlReader.atEnd())
 			{
@@ -739,13 +774,14 @@ QList<RemoteViewer::DirectorInstance> RemoteViewer::getDirectorList()
 /*! \brief Returns a list of proxy servers and their address
  *
  *	This sends out a PROXYLIST command, and then parses the response into a 
- *	QList of ProxyServerInfos (really just a struct with the name and ID number
- *	for each proxy).
- *	
+ *	QList of ComponentInstances (really just a struct with a few strings).
+ *	If something goes wrong, or no proxy instances are found, an empty
+ *	list is returned.
  */  
-QList<RemoteViewer::ProxyServerInfo> RemoteViewer::getProxyList()
+QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 {
-	QList<ProxyServerInfo> proxies;
+	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
+	QList<ComponentInstance> proxies;
 
 	if(!serverChannel_->isConnected())
 	{
@@ -772,7 +808,7 @@ QList<RemoteViewer::ProxyServerInfo> RemoteViewer::getProxyList()
 
 		if(xmlReader.isStartElement() && xmlReader.name() == "Proxy")
 		{
-			ProxyServerInfo proxy;
+			ComponentInstance proxy;
 
 			while(!xmlReader.atEnd())
 			{
@@ -782,24 +818,26 @@ QList<RemoteViewer::ProxyServerInfo> RemoteViewer::getProxyList()
 				{
 					proxy.name = xmlReader.readElementText();
 				}
+				else if(xmlReader.name() == "Address" && xmlReader.isStartElement())
+				{
+					proxy.address = xmlReader.readElementText();
+				}
 				else if(xmlReader.name() == "Id" && xmlReader.isStartElement())
 				{
-					proxy.id = xmlReader.readElementText().toInt();
+					proxy.id = xmlReader.readElementText();
+				}
+				else if(xmlReader.name() == "Status" && xmlReader.isStartElement())
+				{
+					proxy.status = xmlReader.readElementText();
 				}
 				else if(xmlReader.name() == "Proxy" && xmlReader.isEndElement())
 				{
 					proxies.append(proxy);
 					break;
 				}
-				else
-				{
-					//There shouldn't be anything else in here...
-					Q_ASSERT(false);
-				}
 			}
 		}
 	}
-
 	return proxies;
 }
 
@@ -828,7 +866,7 @@ void RemoteViewer::checkForTimeouts()
 
 	//Check that the director is still alive and possibly modify our state to match it's state
 	//(In case another workstation changed its state.
-	DirectorStatus remoteStatus = directorStatus(directorListBox_->itemData(directorListBox_->currentIndex()).toString());
+	ComponentStatus remoteStatus = directorStatus(directorListBox_->itemData(directorListBox_->currentIndex()).toString());
 
 	if(remoteStatus == Idle && localStatus_ != Idle)
 	{
@@ -863,39 +901,28 @@ void RemoteViewer::checkForTimeouts()
 			joinSession();
 		}
 	}
-	else if(remoteStatus = Error)
+	else if(remoteStatus == Error)
 	{
 		connectAction_->setChecked(false);
 		connectAction_->trigger();
 		QMessageBox::critical(0,tr("Director Lost"),
-			tr("The director instance being used is no longer on the network." 
+			tr("The Director instance being used is no longer on the network." 
 			"The session has been ended."));
 		return;
 	}
 
-
-
 	//Check the proxy
-	if(proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt() == -1)
+	//If there's no Proxy in this experiment, don't worry about it.
+	if(proxyListBox_->currentIndex() == -1)
 		return;
-	QList<ProxyServerInfo> proxies = getProxyList();
-	
-	bool foundProxy = false;
-	foreach(ProxyServerInfo proxy, proxies)
-	{
-		if(proxy.name == proxyListBox_->currentText() &&
-			proxy.id == proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt())
-		{
-			foundProxy = true;
-			break;
-		}
-	}
-	if(!foundProxy)
+	//Check that the proxy is still alive.
+	remoteStatus = proxyStatus(proxyListBox_->itemData(proxyListBox_->currentIndex()).toString());
+	if(remoteStatus == Error)
 	{
 		connectAction_->setChecked(false);
 		connectAction_->trigger();
 		QMessageBox::critical(0,tr("Proxy Lost"),
-			tr("The proxy server being used is no longer on the network." 
+			tr("The Proxy instance being used is no longer on the network." 
 			"The session has been ended."));
 		return;
 	}
@@ -906,7 +933,7 @@ void RemoteViewer::checkForTimeouts()
 /*! \brief Starts a new session
  *
  *	This starts a new session on the server.  The act of starting a session basically 
- *	ties together the various components involved (Director, and proxy server) and 
+ *	ties together the various components involved (Director, and proxy) and 
  *	starts a new session database.  Note that the Workstation instance isn't really 
  *	tied to the session.  This is intentional, and makes it easy to remotely view and
  *	control running sessions.
@@ -953,8 +980,8 @@ bool RemoteViewer::startSession()
 
 	QString commandStr;
 	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
-	int proxyId = proxyListBox_->itemData(proxyListBox_->currentIndex()).toInt();
-	commandStr = "STARTSESSION "+directorID+"/"+QString::number(proxyId)+" PICTO/1.0";
+	QString proxyID = proxyListBox_->itemData(proxyListBox_->currentIndex()).toString();
+	commandStr = "STARTSESSION "+directorID+"/"+proxyID+" PICTO/1.0";
 
 	QSharedPointer<Picto::ProtocolCommand> startSessCommand(new Picto::ProtocolCommand(commandStr));
 
@@ -1259,7 +1286,7 @@ bool RemoteViewer::joinSession()
 
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.
-	DirectorStatus remoteStatus = directorStatus(directorID);
+	ComponentStatus remoteStatus = directorStatus(directorID);
 	if(remoteStatus == Idle || remoteStatus == Error)
 	{
 		setStatus("Attempted to joins a session with a director that isn't in a session");

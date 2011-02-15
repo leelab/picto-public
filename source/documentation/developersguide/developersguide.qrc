@@ -42,6 +42,10 @@
    <file alias="_circle_graphic_8h-source.html">../../../output/documentation/main/html/_circle_graphic_8h-source.html</file>
    <file alias="_command_channel_8cpp-source.html">../../../output/documentation/main/html/_command_channel_8cpp-source.html</file>
    <file alias="_command_channel_8h-source.html">../../../output/documentation/main/html/_command_channel_8h-source.html</file>
+   <file alias="_component_info_8cpp-source.html">../../../output/documentation/main/html/_component_info_8cpp-source.html</file>
+   <file alias="_component_info_8h-source.html">../../../output/documentation/main/html/_component_info_8h-source.html</file>
+   <file alias="_component_interface_8cpp-source.html">../../../output/documentation/main/html/_component_interface_8cpp-source.html</file>
+   <file alias="_component_interface_8h-source.html">../../../output/documentation/main/html/_component_interface_8h-source.html</file>
    <file alias="_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_compositing_surface_8cpp-source.html</file>
    <file alias="_compositing_surface_8h-source.html">../../../output/documentation/main/html/_compositing_surface_8h-source.html</file>
    <file alias="_compound_expression_8cpp-source.html">../../../output/documentation/main/html/_compound_expression_8cpp-source.html</file>
@@ -377,6 +381,8 @@
    <file alias="build_environment_preparation.html">../../../output/documentation/main/html/build_environment_preparation.html</file>
    <file alias="class_alignment_tool-members.html">../../../output/documentation/main/html/class_alignment_tool-members.html</file>
    <file alias="class_alignment_tool.html">../../../output/documentation/main/html/class_alignment_tool.html</file>
+   <file alias="class_component_info-members.html">../../../output/documentation/main/html/class_component_info-members.html</file>
+   <file alias="class_component_info.html">../../../output/documentation/main/html/class_component_info.html</file>
    <file alias="class_connection_manager-members.html">../../../output/documentation/main/html/class_connection_manager-members.html</file>
    <file alias="class_connection_manager.html">../../../output/documentation/main/html/class_connection_manager.html</file>
    <file alias="class_daq_board-members.html">../../../output/documentation/main/html/class_daq_board-members.html</file>
@@ -527,6 +533,7 @@
    <file alias="class_picto_1_1_network_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_network_signal_channel.png</file>
    <file alias="class_picto_1_1_neural_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_neural_data_store-members.html</file>
    <file alias="class_picto_1_1_neural_data_store.html">../../../output/documentation/main/html/class_picto_1_1_neural_data_store.html</file>
+   <file alias="class_picto_1_1_neural_data_store.png">../../../output/documentation/main/html/class_picto_1_1_neural_data_store.png</file>
    <file alias="class_picto_1_1_null_compositing_surface-members.html">../../../output/documentation/main/html/class_picto_1_1_null_compositing_surface-members.html</file>
    <file alias="class_picto_1_1_null_compositing_surface.html">../../../output/documentation/main/html/class_picto_1_1_null_compositing_surface.html</file>
    <file alias="class_picto_1_1_null_event_code_generator-members.html">../../../output/documentation/main/html/class_picto_1_1_null_event_code_generator-members.html</file>
@@ -703,6 +710,7 @@
    <file alias="class_plexon_plugin.png">../../../output/documentation/main/html/class_plexon_plugin.png</file>
    <file alias="class_proxy_main_window-members.html">../../../output/documentation/main/html/class_proxy_main_window-members.html</file>
    <file alias="class_proxy_main_window.html">../../../output/documentation/main/html/class_proxy_main_window.html</file>
+   <file alias="class_proxy_main_window.png">../../../output/documentation/main/html/class_proxy_main_window.png</file>
    <file alias="class_proxy_server-members.html">../../../output/documentation/main/html/class_proxy_server-members.html</file>
    <file alias="class_proxy_server.html">../../../output/documentation/main/html/class_proxy_server.html</file>
    <file alias="class_proxy_server_thread-members.html">../../../output/documentation/main/html/class_proxy_server_thread-members.html</file>
@@ -860,6 +868,7 @@
    <file alias="functions_0x65.html">../../../output/documentation/main/html/functions_0x65.html</file>
    <file alias="functions_0x66.html">../../../output/documentation/main/html/functions_0x66.html</file>
    <file alias="functions_0x67.html">../../../output/documentation/main/html/functions_0x67.html</file>
+   <file alias="functions_0x68.html">../../../output/documentation/main/html/functions_0x68.html</file>
    <file alias="functions_0x69.html">../../../output/documentation/main/html/functions_0x69.html</file>
    <file alias="functions_0x6a.html">../../../output/documentation/main/html/functions_0x6a.html</file>
    <file alias="functions_0x6b.html">../../../output/documentation/main/html/functions_0x6b.html</file>
@@ -881,6 +890,7 @@
    <file alias="functions_func_0x65.html">../../../output/documentation/main/html/functions_func_0x65.html</file>
    <file alias="functions_func_0x66.html">../../../output/documentation/main/html/functions_func_0x66.html</file>
    <file alias="functions_func_0x67.html">../../../output/documentation/main/html/functions_func_0x67.html</file>
+   <file alias="functions_func_0x68.html">../../../output/documentation/main/html/functions_func_0x68.html</file>
    <file alias="functions_func_0x69.html">../../../output/documentation/main/html/functions_func_0x69.html</file>
    <file alias="functions_func_0x6a.html">../../../output/documentation/main/html/functions_func_0x6a.html</file>
    <file alias="functions_func_0x6c.html">../../../output/documentation/main/html/functions_func_0x6c.html</file>
@@ -1001,6 +1011,9 @@
    <file alias="struct_a_c_q_get_command_handler-members.html">../../../output/documentation/main/html/struct_a_c_q_get_command_handler-members.html</file>
    <file alias="struct_a_c_q_get_command_handler.html">../../../output/documentation/main/html/struct_a_c_q_get_command_handler.html</file>
    <file alias="struct_a_c_q_get_command_handler.png">../../../output/documentation/main/html/struct_a_c_q_get_command_handler.png</file>
+   <file alias="struct_component_update_command_handler-members.html">../../../output/documentation/main/html/struct_component_update_command_handler-members.html</file>
+   <file alias="struct_component_update_command_handler.html">../../../output/documentation/main/html/struct_component_update_command_handler.html</file>
+   <file alias="struct_component_update_command_handler.png">../../../output/documentation/main/html/struct_component_update_command_handler.png</file>
    <file alias="struct_daq_board_1_1ai_channel__st-members.html">../../../output/documentation/main/html/struct_daq_board_1_1ai_channel__st-members.html</file>
    <file alias="struct_daq_board_1_1ai_channel__st.html">../../../output/documentation/main/html/struct_daq_board_1_1ai_channel__st.html</file>
    <file alias="struct_director_list_command_handler-members.html">../../../output/documentation/main/html/struct_director_list_command_handler-members.html</file>

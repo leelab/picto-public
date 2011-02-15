@@ -12,11 +12,9 @@
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 
-SessionInfo::SessionInfo(QUuid directorID, QString directorAddr, int proxyId, QByteArray experimentXml, QUuid initialObserverId):
+SessionInfo::SessionInfo(QByteArray experimentXml, QUuid initialObserverId):
 	activity_(true),
-	directorUuid_(directorID),
-	directorAddr_(directorAddr),
-	proxyId_(proxyId),
+	timestampsAligned_(false),
 	experimentXml_(experimentXml)
 {
 	//CreateUUID
@@ -107,49 +105,83 @@ SessionInfo::SessionInfo(QUuid directorID, QString directorAddr, int proxyId, QB
 		"ypos REAL, time REAL)"));
 	Q_ASSERT(cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)"));
 
-	//create alignment tool and neuraldatacollector
+	//create alignment tool
 	alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool());
-	if(proxyId_ == -1)
-		ndc_ = 0;
-	else
-	{
-		ndc_ = new NeuralDataCollector(proxyId_, QCoreApplication::applicationDirPath() + "/" + databaseName + ".sqlite",50);
-		ndc_->setAlignmentTool(alignmentTool_);
-		QObject::connect(ndc_, SIGNAL(finished()), ndc_, SLOT(deleteLater()));
-		ndc_->start();
-	}
 }
 
 SessionInfo::~SessionInfo()
 {
-	if(ndc_ && ndc_->isRunning())
-		ndc_->stop();
 }
 
-//! Returns the next pending directive
-QString SessionInfo::pendingDirective()
+//! \brief Adds a component to this session (ie. Director or proxy)
+void SessionInfo::AddComponent(QSharedPointer<ComponentInfo> component)
 {
-	if(pendingDirectives_.isEmpty())
+	components_[component->getType()] = component;
+}
+
+//! \brief Gets a component from this session by Type
+QSharedPointer<ComponentInfo> SessionInfo::getComponentByType(QString type)
+{
+	if(components_.contains(type))
+		return components_[type];
+	return QSharedPointer<ComponentInfo>();
+}
+
+//! \brief Returns true if this Session is attached to the component with input componentID
+bool SessionInfo::hasComponent(QUuid componentID)
+{
+	foreach(QSharedPointer<ComponentInfo> component,components_)
+	{
+		if(component->getUuid() == componentID)
+			return true;
+	}
+	return false;
+}
+
+/*! \brief Sets the type of component to which other component types' timestamps should be aligned.
+ *	If this is not called, component timestamps will not be aligned.
+ */
+void SessionInfo::alignTimestampsTo(QString componentType)
+{
+	Q_ASSERT(!getComponentByType(componentType).isNull());
+	alignToType_ = componentType;
+}
+
+
+//! Returns the next pending directive
+QString SessionInfo::pendingDirective(QUuid componentID)
+{
+	if(!pendingDirectives_.contains(componentID) || pendingDirectives_[componentID].isEmpty())
 		return QString();
 	else
-		return pendingDirectives_.takeFirst();
+		return pendingDirectives_[componentID].takeFirst();
 }
+
+/*!	\brief Adds the input directive to the pendingDirectives list for the component with the input type
+ */
+void SessionInfo::addPendingDirective(QString directive, QString componentType)
+{
+	QSharedPointer<ComponentInfo> component = getComponentByType(componentType);
+	if(component.isNull())
+		return;
+	pendingDirectives_[component->getUuid()].append(directive); 
+};
 
 
 /*! \brief Ends the session
  *
  *	Ending a session requires the following actions to be taken
  *	 -	Add an end time in the sessioninfo
- *   -  Send ENDSESSION directive to the Director instance
+ *   -  Send ENDSESSION directive to the Director and Proxy instances
  *	 -	Flush the databse cache after we're sure that the Director instance is done.
  *
- *	When the Director stops sending DIREECTORUPDATE commands, the session will 
+ *	When the Director and Proxy stop sending COMPONENTUPDATE commands, the session will 
  *	naturally time out on its own, so we don't need to do that explicitly.
  */
 void SessionInfo::endSession()
 {
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	Q_ASSERT(conMgr->getDirectorStatusBySession(uuid_) > DirectorStatus::idle);
+	Q_ASSERT(conMgr->getComponentStatusBySession(uuid_,"DIRECTOR") > ComponentStatus::idle);
 
 	QSqlDatabase sessionDb = getSessionDb();
 
@@ -159,23 +191,21 @@ void SessionInfo::endSession()
 	query.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
 	Q_ASSERT(query.exec());
 	
-	//Let the Director know that we are planning to stop
-	addPendingDirective("ENDSESSION");
+	//Let the Director and Proxy know that we are planning to stop
+	addPendingDirective("ENDSESSION","DIRECTOR");
+	addPendingDirective("ENDSESSION","PROXY");
 
-	//Sit around waiting for the director's state to change (but no longer than 2 seconds)
+	//Sit around waiting for the components' states to change (but no longer than 2 seconds)
 	QTime timer;
 	timer.start();
-	while(conMgr->getDirectorStatusBySession(uuid_) > DirectorStatus::idle && timer.elapsed() < 2000)
+	foreach(QSharedPointer<ComponentInfo> component,components_)
 	{
-		QThread::yieldCurrentThread();
-		QCoreApplication::processEvents();
-	}
-	Q_ASSERT_X(timer.elapsed()<2000, "SessionInfo::endSession","The director failed to stop within 2 seconds");
-
-	if(ndc_ && ndc_->isRunning())
-	{
-		ndc_->exit();
-		ndc_ = 0;
+		while(component->getStatus() > ComponentStatus::idle && timer.elapsed() < 2000)
+		{
+			QThread::yieldCurrentThread();
+			QCoreApplication::processEvents();
+		}
+		Q_ASSERT_X(timer.elapsed()<2000, "SessionInfo::endSession",QString("%1 failed to stop within 2 seconds").arg(component->getName()).toAscii());
 	}
 
 	//Flush the database cache
@@ -309,18 +339,85 @@ void SessionInfo::flushCache()
 
 }
 
-//! \brief Inserts a trial event into the session database
-void SessionInfo::insertTrialEvent(double time, int eventCode, int trialNum)
+/*! \brief Inserts a trial event into the session database after aligning timestamps with the alignToComponent.
+ *	If sourceType is not the alignToType, timebase alignment will occur before adding trial to the database.
+ *	If no alignToType has been set, no timestamps will be aligned.
+ *	Currently, if no alignToType is set, all trials will go into the NeuralTrials database.  We should generalize
+ *	this at some point.
+ */
+void SessionInfo::insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType)
 {
 	QSqlDatabase sessionDb = getSessionDb();
 	QSqlQuery query(sessionDb);
-
-	query.prepare("INSERT INTO behavioraltrials (timestamp,aligncode,trialnumber,matched)"
-		"VALUES(:timestamp, :aligncode, :trialnumber, 0)");
+	
+	Q_ASSERT(getComponentByType(sourceType));
+	// If the trial event comes from the component providing the time baseline, put it in behaviortrials an
+	// don't align its timestamps.
+	if(sourceType == alignToType_)
+	{
+		query.prepare("INSERT INTO behavioraltrials (timestamp,aligncode,trialnumber,matched)"
+			"VALUES(:timestamp, :aligncode, :trialnumber, 0)");
+		query.bindValue(":timestamp", time);
+		query.bindValue(":aligncode", eventCode);
+		query.bindValue(":trialnumber", trialNum);
+		Q_ASSERT(query.exec());
+		return;
+	}
+	// If we got here, its Neural Data
+	//Add the event code to the neuraltrials table
+	query.prepare("INSERT INTO neuraltrials (timestamp, aligncode, matched)"
+		"VALUES(:timestamp, :aligncode, 0)");
 	query.bindValue(":timestamp", time);
 	query.bindValue(":aligncode", eventCode);
-	query.bindValue(":trialnumber", trialNum);
-	Q_ASSERT(query.exec());
+	query.exec();
+
+	// Check if this session requires alignment.  If so, do it.
+	if(alignToType_ != "")
+	{
+		QMutexLocker locker(&alignmentMutex_);
+		alignmentTool_->doIncrementalAlignment(sessionDb);
+		
+		// alignment isn't calculated until the end of the first trial, meaning that all spikes in the first trial are unaligned.
+		// once the first alignment values are calculated, go back and update the fittedtimes of neural trials that weren't yet aligned.
+		if(!timestampsAligned_ && (alignmentTool_->getCorrelationCoefficient() != 0) )
+		{	
+			timestampsAligned_ = true;
+			QSqlQuery unalignedSpikes(query);
+			timestampsAligned_ &= unalignedSpikes.exec("SELECT id, timestamp FROM spikes WHERE fittedtime<0");
+			while(unalignedSpikes.next())
+			{
+				query.prepare("UPDATE spikes SET fittedtime=:fittedtime, correlation=:correlation WHERE id=:id");
+				query.bindValue(":id",unalignedSpikes.value(0).toInt());
+				query.bindValue(":fittedtime",alignmentTool_->convertToBehavioralTimebase(unalignedSpikes.value(1).toDouble()));
+				query.bindValue(":correlation",alignmentTool_->getCorrelationCoefficient() );
+				timestampsAligned_ &= query.exec();
+			}
+		}
+	}
+}
+
+/*! \brief inserts a neural record in the session database
+ */
+void SessionInfo::insertNeuralData(Picto::NeuralDataStore data)
+{
+	QMutexLocker locker(&alignmentMutex_);
+	//! Use the alignment tool to fit the time
+	data.setFittedtime(alignmentTool_->convertToBehavioralTimebase(data.getTimestamp()));
+	data.setCorrelation(alignmentTool_->getCorrelationCoefficient());
+	locker.unlock();
+
+	QSqlDatabase sessionDb = getSessionDb();
+	QSqlQuery query(sessionDb);
+	
+	query.prepare("INSERT INTO spikes (timestamp, fittedtime, correlation, channel, unit, waveform) "
+					"VALUES(:timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
+	query.bindValue(":timestamp", data.getTimestamp());
+	query.bindValue(":fittedtime", data.getFittedtime());
+	query.bindValue(":correlation", data.getCorrelation());
+	query.bindValue(":channel", data.getChannel());
+	query.bindValue(":unit", data.getUnit());
+	query.bindValue(":waveform", data.getWaveform());
+	Q_ASSERT_X(query.exec(),"",query.lastError().text().toAscii());
 }
 
 //! \brief inserts a behavioral data point in the cache database
@@ -565,7 +662,7 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 
 /*! \brief Returns a list of state datastores with all of the data collected after the timestamp
  *
- *	This functions creates a list of state data stores and returns it.  If the timestamp is 0, 
+ *	This function creates a list of state data stores and returns it.  If the timestamp is 0, 
  *	then all data is returned.
  */
 QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)

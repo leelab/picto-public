@@ -43,7 +43,7 @@ private:
 		QString status;
 		QString addr;
 		QString id;
-	}DirectorInstance;
+	}ComponentInstance;
 
 
 	void createDialog();
@@ -61,7 +61,7 @@ private:
 	static QString filename_;
 	static QDir currentDir_;
 
-	QList<DirectorInstance> directors_;
+	QList<ComponentInstance> directors_;
 	QSharedPointer<Picto::Experiment> experiment_;
 
 	QUuid sessionId_;

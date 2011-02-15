@@ -3,7 +3,6 @@
 #include "../../common/globals.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
-#include "../connections/ServerConfig.h"
 
 #include <QXmlStreamWriter>
 #include <QUuid>
@@ -27,12 +26,12 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	
 	QString target = command->getTarget();
 	QString directorID;
-	int proxyId;
+	QString proxyID;
 	QByteArray experimentXml;
 	QUuid observerId;
 
 	directorID = target.left(target.indexOf('/'));
-	proxyId = target.mid(target.indexOf('/')+1).toInt();
+	proxyID = target.right(target.indexOf('/'));
 	experimentXml = command->getContent();
 	observerId = QUuid(command->getFieldValue("Observer-ID"));
 	
@@ -41,27 +40,34 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 
 
 	//Check that the Director is ready to go
-	if(conMgr->getDirectorStatus(directorID) == DirectorStatus::notFound)
+	if(conMgr->getComponentStatus(directorID) == ComponentStatus::notFound)
 	{
 		notFoundResponse->setContent("Director ID not found");
 		return notFoundResponse;
 	}
-	else if(conMgr->getDirectorStatus(directorID) > DirectorStatus::idle)
+	else if(conMgr->getComponentStatus(directorID) > ComponentStatus::idle)
 	{
 		return unauthorizedResponse;
 	}
 
-	//Check that the proxy server id is valid
-	ServerConfig config;
-	if(!config.proxyIdIsValid(proxyId))
+	//Check that the Proxy is ready to go
+	if(proxyID == QUuid().toString())
 	{
-		notFoundResponse->setContent("Proxy ID not recognized");
+		//No Proxy in this experiment
+	}
+	else if(conMgr->getComponentStatus(proxyID) == ComponentStatus::notFound)
+	{
+		notFoundResponse->setContent("proxy ID not found");
 		return notFoundResponse;
+	}
+	else if(conMgr->getComponentStatus(proxyID) > ComponentStatus::idle)
+	{
+		return unauthorizedResponse;
 	}
 
 	//create the session
 	QSharedPointer<SessionInfo> sessionInfo;
-	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), proxyId, experimentXml, observerId);
+	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentXml, observerId);
 	
 	if(sessionInfo.isNull())
 	{
@@ -70,13 +76,22 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	}
 
 	QString pendingDirective = "LOADEXP\n" + experimentXml;
-	sessionInfo->addPendingDirective(pendingDirective);
+	sessionInfo->addPendingDirective(pendingDirective,"DIRECTOR");
 
 	//wait for the director to change to stopped status
-	while(conMgr->getDirectorStatus(directorID) == DirectorStatus::idle)
+	while(conMgr->getComponentStatus(directorID) == ComponentStatus::idle)
 	{
 		QThread::yieldCurrentThread();
 		QCoreApplication::processEvents();
+	}
+	//wait for the proxy to change to stopped status if we're using a proxy.
+	if(proxyID != QUuid().toString())
+	{
+		while(conMgr->getComponentStatus(directorID) == ComponentStatus::idle)
+		{
+			QThread::yieldCurrentThread();
+			QCoreApplication::processEvents();
+		}
 	}
 
 	QByteArray sessionIDXml;

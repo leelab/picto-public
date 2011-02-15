@@ -132,6 +132,8 @@ HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp
 HEADERS += $$(PICTO_TREE)/source/common/network/CommandChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/network/CommandChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/common/network/ComponentInterface.h
+SOURCES += $$(PICTO_TREE)/source/common/network/ComponentInterface.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.cpp

@@ -10,15 +10,15 @@
  *
  *	PictoWorkstation sends these commands when it wants a remote Director
  *	instance to load an experiment.  The command causes a STARTSESSION directive 
- *	to be included the next time that Director instance sends a DIRECTORUPDATE
- *	command.
+ *	to be included the next time that Director and Proxy instances send COMPONENTUPDATE
+ *	commands.
  *
  *	FORMAT
- *		STARTSESSION 582f4440-43f7-11df-9879-0800200c9a66/5 PICTO/1.0
+ *		STARTSESSION 582f4440-43f7-11df-9879-0800200c9a66/682f4440-43f7-11df-9879-0800200c9a66 PICTO/1.0
  *		Content-Length:???
  *
  *		<Experiment> ... </Experiment>
- *	The Uuid is the Director id, and the number is the proxy server id
+ *	The first Uuid is the Director id, and the second  is the proxy server id
  *
  *	RESPONSES
  *		There are 3 possible responses:

@@ -396,7 +396,7 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 	return -1;
 }
 
-/*	\brief Sends an UPDATEDIRECTOR command and deals with any directives included in the response
+/*	\brief Sends an UPDATECOMPONENT command and deals with any directives included in the response
  *
  *	Once per frame, we need to check in with the server.  The response from the server
  *  may contain a "directive", which we will handle here as well (e.g. stop, pause, etc).
@@ -420,9 +420,9 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 	QString updateCommandStr;
 
 	if(paused)
-		updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":paused PICTO/1.0";
+		updateCommandStr = "COMPONENTUPDATE "+engine->getName()+":paused PICTO/1.0";
 	else
-		updateCommandStr = "DIRECTORUPDATE "+engine->getName()+":running PICTO/1.0";
+		updateCommandStr = "COMPONENTUPDATE "+engine->getName()+":running PICTO/1.0";
 
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
 
@@ -430,7 +430,7 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 
 	if(!updateChan->waitForResponse(100))
 	{
-		Q_ASSERT_X(false,"State::updateServer", "Server failed to reply to DIRECTORUPDATE command within 100 ms");
+		Q_ASSERT_X(false,"State::updateServer", "Server failed to reply to COMPONENTUPDATE command within 100 ms");
 		return;
 	}
 

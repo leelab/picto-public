@@ -46,9 +46,9 @@ void PictoDirectorSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			ConnectToHost(tcpSocket_,serverDiscoverer.getAddress(),serverDiscoverer.getPort());
 		}
 		break;
-	case DIRECTORUPDATE:	// This runs until a task is started
+	case COMPONENTUPDATE:	// This runs until a task is started
 		{
-			QString updateTemplate = "DIRECTORUPDATE " + GetDeviceName() + ":%1 PICTO/1.0\r\nSession-ID:%2\r\n\r\n";
+			QString updateTemplate = "COMPONENTUPDATE " + GetDeviceName() + ":%1 PICTO/1.0\r\nSession-ID:%2\r\n\r\n";
 			QString runningStatus = "running";
 			QString pausedStatus = "paused";
 			QString stoppedStatus = "stopped";

@@ -6,14 +6,14 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \brief Handles the DIRECTORUPDATE commands, which are sent by Director
+/*! \brief Handles the COMPONENTUPDATE commands, which are sent by Director
  *
- *	PictoDirector sends these commands to the Server at a fixed interval.
- *	These keep the network connection from timing out and are used to send
- *	directives from Server to Director.
+ *	Passive Picto Components (ie. Director, Proxy... not Workstation) send these 
+ *	commands to the Server at a fixed interval.  These keep the network connection 
+ *	from timing out and are used to send directives from Server to the Component.
  *
  *	FORMAT
- *		DIRECTORUPDATE name:idle/running PICTO.1/0
+ *		COMPONENTUPDATE name:idle/running PICTO.1/0
  *	RESPONSES
  *		The response is always of type 200 OK.  The first line of content 
  *		contains the directive, and the remaining lines may contain XML
@@ -23,12 +23,12 @@
  *		
  */
 
-struct DirectorUpdateCommandHandler : Picto::ProtocolCommandHandler
+struct ComponentUpdateCommandHandler : Picto::ProtocolCommandHandler
 {
 public:
-	DirectorUpdateCommandHandler();
+	ComponentUpdateCommandHandler();
 
-	QString method() { return QString("DIRECTORUPDATE"); }
+	QString method() { return QString("COMPONENTUPDATE"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 };
 

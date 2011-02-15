@@ -8,7 +8,7 @@
 #include <QMutex>
 
 #include "SessionInfo.h"
-#include "DirectorInfo.h"
+#include "ComponentInfo.h"
 
 class ServerThread;
 class QTimer;
@@ -42,14 +42,14 @@ public:
 	static ConnectionManager* Instance();
 
 	//Director related functions
-	void updateDirector(QUuid uuid, QHostAddress addr, QString name, DirectorStatus::DirectorStatus status);
-	void updateDirector(QUuid uuid, QHostAddress addr, QString name);
+	void updateComponent(QUuid uuid, QHostAddress addr, QString name, QString type, ComponentStatus::ComponentStatus status);
+	void updateComponent(QUuid uuid, QHostAddress addr, QString name, QString type);
 	//void removeDirector(QUuid uuid);
 
-	DirectorStatus::DirectorStatus getDirectorStatus(QUuid uuid);
-	DirectorStatus::DirectorStatus getDirectorStatus(QString uuidStr);
-	DirectorStatus::DirectorStatus getDirectorStatusBySession(QUuid sessionId);
-	void setDirectorStatus(QUuid sessionId, DirectorStatus::DirectorStatus status);
+	ComponentStatus::ComponentStatus getComponentStatus(QUuid uuid);
+	ComponentStatus::ComponentStatus getComponentStatus(QString uuidStr);
+	ComponentStatus::ComponentStatus getComponentStatusBySession(QUuid sessionId, QString componentType);
+	void setComponentStatus(QUuid sessionId, QString componentType, ComponentStatus::ComponentStatus status);
 
 	QString getDirectorList();
 
@@ -60,12 +60,12 @@ public:
 	//bool removeServerThread(ServerThread* thread);
 
 	//Session related functions
-	QSharedPointer<SessionInfo> createSession(QUuid directorID, int proxyId, QByteArray experimentXml, QUuid initialObserverId);
-	QSharedPointer<SessionInfo> getSessionInfoByDirector(QString directorID);
-	QSharedPointer<SessionInfo> getSessionInfoByDirector(QUuid directorID);
+	QSharedPointer<SessionInfo> createSession(QUuid directorID, QUuid proxyID, QByteArray experimentXml, QUuid initialObserverId);
+	QSharedPointer<SessionInfo> getSessionInfoByComponent(QString componentID);
+	QSharedPointer<SessionInfo> getSessionInfoByComponent(QUuid componentID);
 	QSharedPointer<SessionInfo> getSessionInfo(QUuid uuid);
 	void endSession(QUuid sessionId);
-	QUuid pendingSession(QUuid directorID);
+	QUuid pendingSession(QUuid componentID);
 
 private slots:
 	void checkForTimeouts();
@@ -87,8 +87,8 @@ private:
 	//efficient, it's a lot safer.)
 	QMutex *mutex_;
 
-	//Map of Directors
-	QMap<QUuid,QSharedPointer<DirectorInfo> > directors_;  //QUuid = director's unique user Id delivered in its messages
+	//Map of passive components (ie. Directors and Proxies)
+	QMap<QUuid,QSharedPointer<ComponentInfo> > components_;  //QUuid = component's unique user Id delivered in its messages
 
 	//List of Sessions
 	QMap<QUuid, QSharedPointer<SessionInfo> > openSessions_;

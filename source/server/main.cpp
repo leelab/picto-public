@@ -33,7 +33,7 @@
 #include "service/systemservice.h"
 #include "dialog.h"
 #include "InteractiveSTDIOHandler.h"
-#include "connections/ServerConfig.h"
+//#include "connections/ServerConfig.h"
 
 #ifdef Q_WS_MAC
 #include <sys/types.h>
@@ -79,8 +79,7 @@ int serviceMain(SystemService *)
 	 *        database).
 	 *        This should also all be abstracted into a seperate object layer.
 	 */
-	ServerConfig config;
-	config.clearProxyServers();
+	//ServerConfig config;
 	
 
 	/*! \todo this should specify the IP address in addition to the port, and both should be read from the

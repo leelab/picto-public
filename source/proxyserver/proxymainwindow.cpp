@@ -6,6 +6,8 @@
 #include "protocol/ProxyServerProtocols.h"
 #include "protocol/ProxyServerAcqProtocol.h"
 #include "../common/globals.h"
+#include "../common/network/CommandChannel.h"
+#include "../common/timing/timestamper.h"
 
 ProxyMainWindow::ProxyMainWindow()
 {
@@ -38,72 +40,27 @@ void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void ProxyMainWindow::startStopServer()
 {
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
-
 	if(startStopServerButton_->text() == startServerMsg)
-	{
-		//start the Neural Data Acquisition Device
-		iNDAcq->startDevice();
-		if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
-		{
-			QMessageBox startErrorBox;
-			QString errorMsg = tr("%1 failed to start server.  "
-								  "Device: \"%2\" is not running.  Confirm that "
-								  "all the needed hardware and software is turned "
-								  "on and started up, then try again.").
-								  arg(Picto::Names->proxyServerAppName).
-								  arg(iNDAcq->device());
-			startErrorBox.setText(tr("Server failed to start"));
-			startErrorBox.setInformativeText(errorMsg);
-			startErrorBox.exec();
-			return;
-		}
-
-		
-		//set up the servers (HTTP and ACQ)
-		QSharedPointer<ProxyServerProtocols> acqProtocols(new ProxyServerProtocols());
-
-		QSharedPointer<ProxyServerAcqProtocol> acqProtocol(new ProxyServerAcqProtocol(acqPlugin_));
-		
-		acqProtocols->addProtocol(acqProtocol);
-
-		/*! \todo this should specify the IP address in addition to the port, and both should be read from the
-		 *        configuration database.
-		 */
-		port_ = 42420;
-		ProxyServer acqServer(port_, acqProtocols,this);
-
-		connect(&acqServer,SIGNAL(activity()),this, SLOT(serverActivity()));
-
-		pluginCombo_->setEnabled(false);
-		lineEditName_->setEnabled(false);
-		startStopServerButton_->setText(stopServerMsg_);
-		readyStatus_->turnGreen();
-
-		announce();
-
-		serverEventLoop_ = new QEventLoop();
-		serverEventLoop_->exec();
-
-
-	}
-	else if(startStopServerButton_->text() == stopServerMsg_)
-	{
-		serverEventLoop_->exit();
-		startStopServerButton_->setText(startServerMsg);
-		iNDAcq->stopDevice();
-		pluginCombo_->setEnabled(true);
-		lineEditName_->setEnabled(true);
-
-		//Announce our departure to the world (or at least our network)
-		depart();
-		readyStatus_->turnRed();
-
-
-	}
-	return;
+		activate();
+	else
+		deActivate();
 }
 
 //This is called every 5 seconds just to confirm that the
@@ -145,15 +102,9 @@ void ProxyMainWindow::checkDevStatus()
 
 void ProxyMainWindow::closeEvent(QCloseEvent *ev)
 {
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
-	if(iNDAcq)
-		iNDAcq->stopDevice();
-
-	//Announce our departure to the world (or at least our network)
-	depart();
+	deActivate();
 
 	writeSettings();
-	
 	//accept the close event
 	ev->accept();
 }
@@ -170,7 +121,7 @@ void ProxyMainWindow::createStatusLights()
 	activityStatus_ = new StatusLight(this,Qt::red,10);
 
 	readyStatusLabel_ = new QLabel(tr("Ready"));
-	activityStatusLabel_ = new QLabel(tr("Activity"));
+	activityStatusLabel_ = new QLabel(tr("Connected"));
 
 }
 
@@ -249,8 +200,8 @@ void ProxyMainWindow::createComboBox()
 
 void ProxyMainWindow::createButtons()
 {
-	startServerMsg = tr("&Start server");
-	stopServerMsg_ = tr("&Stop server");
+	startServerMsg = tr("&Start");
+	stopServerMsg_ = tr("&Stop");
 	startStopServerButton_ = new QPushButton(startServerMsg);
 	startStopServerButton_->setDefault(true);
 
@@ -338,30 +289,173 @@ void ProxyMainWindow::readSettings()
 		lineEditName_->setText(proxyName);
 }
 
-void ProxyMainWindow::announce()
+
+QString ProxyMainWindow::componentType()
 {
-	//Announce our prescence to the world (or at least our network)
-	QUdpSocket udpSendSocket;
-
-	QString proxyName = lineEditName_->text().remove(' ');
-
-	QByteArray datagram = QString("ANNOUNCE %1:%2 ACQ/1.0").arg(proxyName).arg(port_).toAscii();
-
-	udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
-								QHostAddress::Broadcast, 42424);
-
+	return "PROXY";
 }
-
-void ProxyMainWindow::depart()
+QString ProxyMainWindow::name()
 {
-	//Announce our departure to the world (or at least our network)
-	QUdpSocket udpSendSocket;
+	return lineEditName_->text().remove(' ');
+}
+int ProxyMainWindow::openDevice()
+{
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	//start the Neural Data Acquisition Device
+	iNDAcq->startDevice();
+	if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
+	{
+		QMessageBox startErrorBox;
+		QString errorMsg = tr("%1 failed to start server.  "
+							  "Device: \"%2\" is not running.  Confirm that "
+							  "all the needed hardware and software is turned "
+							  "on and started up, then try again.").
+							  arg(Picto::Names->proxyServerAppName).
+							  arg(iNDAcq->device());
+		startErrorBox.setText(tr("Server failed to start"));
+		startErrorBox.setInformativeText(errorMsg);
+		startErrorBox.exec();
+		return 1;
+	}
+	pluginCombo_->setEnabled(false);
+	lineEditName_->setEnabled(false);
+	startStopServerButton_->setText(stopServerMsg_);
+	readyStatus_->turnGreen();
+	return 0;
+}
+int ProxyMainWindow::closeDevice()
+{
+	startStopServerButton_->setText(startServerMsg);
 
-	QString proxyName = lineEditName_->text().remove(' ');
+	pluginCombo_->setEnabled(true);
+	lineEditName_->setEnabled(true);
+	readyStatus_->turnRed();
+	return 0;
+}
+int ProxyMainWindow::startSession(QUuid sessionID)
+{
+	sessionEnded_ = false;
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	forever
+	{
+		//send a PUTDATA command to the server with the most recent behavioral data
+		QSharedPointer<Picto::ProtocolResponse> dataResponse;
+		QString dataCommandStr = "PUTDATA "+name()+" PICTO/1.0";
+		QSharedPointer<Picto::ProtocolCommand> response(new Picto::ProtocolCommand(dataCommandStr));
 
-	QByteArray datagram = QString("DEPART %1:%2 ACQ/1.0").arg(proxyName).arg(port_).toAscii();
+		//set up XML writer
+		QString xmlData;
+		QXmlStreamWriter writer(&xmlData);
+		writer.setAutoFormatting(true);
+		writer.writeStartDocument();
+		writer.writeStartElement("Data");
 
-	udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
-								QHostAddress::Broadcast, 42424);
+		//Start writing the XML document
+		writer.writeTextElement("device",iNDAcq->device());
 
+		//check to see if our device is running
+		writer.writeStartElement("deviceStatus");
+		writer.writeCharacters("running");
+		writer.writeEndElement();
+		writer.writeTextElement("sampleRate",QString("%1").arg(iNDAcq->samplingRate()));
+
+
+		//get the data from the neural acquisition device 
+		//(the plugin should have formatted it as XML already)
+		xmlData.append(iNDAcq->dumpData());
+		writer.writeEndElement();  //end "ResponseACQ1.0"
+		writer.writeEndDocument();
+		
+		response->setContent(xmlData.toUtf8());
+		//response->setContentEncoding(Picto::ContentEncodingType::gzip); //ADD ENCODING!!!!!!!!!!!!!!!!
+		response->setFieldValue("Content-Length",QString::number(xmlData.length()));
+
+		dataCommandChannel_->sendRegisteredCommand(response);
+
+		//check for and process responses
+		while(dataCommandChannel_->waitForResponse(0))
+		{
+			serverActivity();
+			dataResponse = dataCommandChannel_->getResponse();
+			Q_ASSERT(!dataResponse.isNull());
+			Q_ASSERT(dataResponse->getResponseType() == "OK");
+
+			QString statusDirective = dataResponse->getDecodedContent().toUpper();
+
+			//We may want to break this out in a seperate function at some point...
+			if(statusDirective.startsWith("OK"))
+			{
+				//do nothing
+			}
+			else if(statusDirective.startsWith("STOP"))
+			{
+				//engine->stop();
+			}
+			else if(statusDirective.startsWith("PAUSE"))
+			{
+				//engine->pause();
+			}
+			else if(statusDirective.startsWith("RESUME"))
+			{
+				//engine->resume();
+			}
+			else if(statusDirective.startsWith("REWARD"))
+			{
+				//int channel = statusDirective.split(" ").value(1).toInt();
+				//engine->giveReward(channel);	
+			}
+			else if(statusDirective.startsWith("ENDSESSION"))
+			{
+				serverUpdateChannel_->setSessionId(QUuid());
+				sessionEnded_ = true;
+				break;	
+			}
+			else
+			{
+				Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server: "+statusDirective.toAscii());
+			}
+		}
+		if(sessionEnded_)
+			break;
+		//Pause for 20 ms 
+		QEventLoop pauseLoop;
+		QTimer pauseTimer;
+		pauseTimer.setSingleShot(true);
+		pauseTimer.setInterval(50);
+		QObject::connect(&pauseTimer, SIGNAL(timeout()), &pauseLoop, SLOT(quit()));
+		pauseTimer.start();
+		pauseLoop.exec();
+	}
+	return 0;
+}
+int ProxyMainWindow::loadExp()
+{
+	return 0;
+}
+int ProxyMainWindow::startExp(QString expName)
+{
+	return 0;
+}
+int ProxyMainWindow::stopExp()
+{
+	return 0;
+}
+int ProxyMainWindow::reward(int channel)
+{
+	return 0;
+}
+int ProxyMainWindow::reportError()
+{
+	return 0;
+}
+int ProxyMainWindow::reportUnsupported()
+{
+	return 0;
+}
+int ProxyMainWindow::endSession()
+{
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	sessionEnded_ = true;
+	iNDAcq->stopDevice();
+	return 0;
 }

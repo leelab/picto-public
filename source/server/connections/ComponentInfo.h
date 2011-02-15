@@ -1,12 +1,13 @@
-#ifndef _DIRECTOR_INFO_H_
-#define _DIRECTOR_INFO_H_
+#ifndef _COMPONENT_INFO_H_
+#define _COMPONENT_INFO_H_
 
 #include <QString>
 #include <QUuid>
+#include <QMutex>
 
-namespace DirectorStatus
+namespace ComponentStatus
 {
-	enum DirectorStatus
+	enum ComponentStatus
 	{
 		notFound, idle, stopped, paused, running
 	};
@@ -25,22 +26,32 @@ namespace DirectorStatus
  *	setter/getter functions.
  */
 
-class DirectorInfo 
+class ComponentInfo 
 {
 public:
-	DirectorInfo();
+	ComponentInfo();
 
-	//! clears the state of activity and returns it.
-	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
-	void setActivity() { activity_ = true; };
+	void setAddress(QString addressStr);
+	void setName(QString name);
+	void setType(QString type);
+	void setUuid(QUuid uuid);
+	void setStatus(ComponentStatus::ComponentStatus status);
+	void setActivity();
 
-	friend class ConnectionManager;
+	QString getAddress();
+	QString getName();
+	QString getType();
+	QUuid getUuid();
+	ComponentStatus::ComponentStatus getStatus();
+	bool clearActivity();
 
 private:
+	QMutex mutex_;
 	QString addressStr_;
 	QString name_;
+	QString type_;
 	QUuid	uuid_;
-	DirectorStatus::DirectorStatus status_;
+	ComponentStatus::ComponentStatus status_;
 
 	bool activity_;
 };

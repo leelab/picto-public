@@ -57,15 +57,9 @@ private:
 		QString status;
 		QString address;
 		QString id;
-	}DirectorInstance;
+	}ComponentInstance;
 
-	struct ProxyServerInfo
-	{
-		QString name;
-		int id;
-	};
-
-	enum DirectorStatus {Error, Idle, Stopped, Paused, Running};
+	enum ComponentStatus {Error, Idle, Stopped, Paused, Running};
 
 	void setupEngine();
 	void setupServerChannel();
@@ -79,10 +73,11 @@ private:
 	bool joinSession();
 	bool disjoinSession();
 
-	DirectorStatus directorStatus(QString id);
-	QList<DirectorInstance> getDirectorList();
+	ComponentStatus directorStatus(QString id);
+	ComponentStatus proxyStatus(QString id);
 
-	QList<ProxyServerInfo> getProxyList();
+	QList<ComponentInstance> getDirectorList();
+	QList<ComponentInstance> getProxyList();
 
 	//Since we don't want the experiemnt to be changed while it is being run
 	//we keep a local copy here.
@@ -114,7 +109,7 @@ private:
 	Picto::CommandChannel *behavioralDataChannel_;
 	Picto::ServerDiscoverer *serverDiscoverer_;
 
-	DirectorStatus localStatus_;
+	ComponentStatus localStatus_;
 	
 	bool startedSession_;
 	bool enableTaskCommands_;

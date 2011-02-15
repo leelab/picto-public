@@ -28,8 +28,8 @@ HEADERS += $$(PICTO_TREE)/source/server/connections/ConnectionManager.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/ConnectionManager.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/SessionInfo.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/SessionInfo.cpp
-HEADERS += $$(PICTO_TREE)/source/server/connections/DirectorInfo.h
-SOURCES += $$(PICTO_TREE)/source/server/connections/DirectorInfo.cpp
+HEADERS += $$(PICTO_TREE)/source/server/connections/ComponentInfo.h
+SOURCES += $$(PICTO_TREE)/source/server/connections/ComponentInfo.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/ServerConfig.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/ServerConfig.cpp
 
