@@ -7,6 +7,8 @@ INCLUDEPATH += .
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/director/main.cpp
+HEADERS += $$(PICTO_TREE)/source/director/Director.h
+SOURCES += $$(PICTO_TREE)/source/director/Director.cpp
 SOURCES += $$(PICTO_TREE)/source/director/HardwareSetup.cpp
 HEADERS += $$(PICTO_TREE)/source/director/HardwareSetup.h
 SOURCES += $$(PICTO_TREE)/source/director/EngineTest.cpp

@@ -42,8 +42,7 @@ public:
 	static ConnectionManager* Instance();
 
 	//Director related functions
-	void updateComponent(QUuid uuid, QHostAddress addr, QString name, QString type, ComponentStatus::ComponentStatus status);
-	void updateComponent(QUuid uuid, QHostAddress addr, QString name, QString type);
+	void updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status);
 	//void removeDirector(QUuid uuid);
 
 	ComponentStatus::ComponentStatus getComponentStatus(QUuid uuid);
@@ -61,9 +60,11 @@ public:
 
 	//Session related functions
 	QSharedPointer<SessionInfo> createSession(QUuid directorID, QUuid proxyID, QByteArray experimentXml, QUuid initialObserverId);
+	QSharedPointer<SessionInfo> loadSession(QString filePath);
 	QSharedPointer<SessionInfo> getSessionInfoByComponent(QString componentID);
 	QSharedPointer<SessionInfo> getSessionInfoByComponent(QUuid componentID);
 	QSharedPointer<SessionInfo> getSessionInfo(QUuid uuid);
+	bool sessionIsValid(QString sessionId);
 	void endSession(QUuid sessionId);
 	QUuid pendingSession(QUuid componentID);
 
@@ -74,6 +75,7 @@ private:
 	ConnectionManager();
 	ConnectionManager(ConnectionManager const&){};	//empty private copy constructor
 	ConnectionManager& operator=(ConnectionManager const&){} //empty private assignment operator
+	void checkForDroppedSessionTimeouts();
 
 	//The single allowed instance
 	static ConnectionManager* conMan_;

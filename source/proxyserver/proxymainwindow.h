@@ -18,24 +18,6 @@ class QLineEdit;
 class QLabel;
 QT_END_NAMESPACE
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*!	\brief The main window of the proxy server
  *
  *	The MainWindow object is the GUI for the proxy server.  It also handles a little
@@ -49,7 +31,7 @@ public:
 
 private slots:
 	void setNeuralDataAcquisitionDevice(int index);
-	void startStopServer();
+	void startStopClient();
 	void checkDevStatus();
 	void closeEvent(QCloseEvent *event);
 	void serverActivity();
@@ -64,33 +46,18 @@ private:
 	void readSettings();
 	void writeSettings();
 
-	void announce();
-	void depart();
-
-
-
-
+	//Inherited functions from ComponentInterface
 	virtual QString componentType();
 	virtual QString name();
 	virtual int openDevice();
 	virtual int closeDevice();	//Should make any of the calls below that are running end
 	virtual int startSession(QUuid sessionID);
-	virtual int loadExp();
-	virtual int startExp(QString expName);
-	virtual int stopExp();
-	virtual int reward(int channel);
-	virtual int reportError();
-	virtual int reportUnsupported();
 	virtual int endSession();
-
-
-
-
 
 	StatusLight *readyStatus_,*activityStatus_;
 	QLabel *readyStatusLabel_, *activityStatusLabel_;
 	QComboBox *pluginCombo_;
-	QPushButton *startStopServerButton_;
+	QPushButton *startStopClientButton_;
 	QPushButton *quitButton_;
 	QVBoxLayout *layout_;
 	QLabel *lineEditNameLabel_;

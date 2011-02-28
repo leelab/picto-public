@@ -49,6 +49,7 @@ class SessionInfo
 {
 public:
 	SessionInfo(QByteArray experimentXml, QUuid initialObserverId);
+	SessionInfo(QString databaseFilePath);
 	~SessionInfo();
 
 	void AddComponent(QSharedPointer<ComponentInfo> component);
@@ -71,6 +72,8 @@ public:
 
 	//getters/setters
 	QUuid sessionId() { return uuid_; };
+	QString dataBaseFilePath() { return baseSessionDbFilepath_; };
+	QString timeCreated() { return timeCreated_; };
 	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
 	QByteArray experimentXml() { return experimentXml_; };
 
@@ -86,6 +89,10 @@ public:
 	friend class ConnectionManager;
 
 private:
+	void InitializeVariables();
+	void LoadBaseSessionDatabase(QString databaseName);
+	void SetupBaseSessionDatabase();
+	void CreateCacheDatabase(QString databaseName);
 	QSqlDatabase getSessionDb();
 
 	QUuid uuid_;
@@ -101,6 +108,8 @@ private:
 	QString alignToType_;	//The component type who's timeframe should be used as a baseline in timing alignment.
 	bool activity_;
 	QByteArray experimentXml_;
+	QString baseSessionDbFilepath_;
+	QString timeCreated_;
 
 	QList<QUuid> authorizedObservers_;
 };

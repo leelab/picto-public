@@ -95,6 +95,7 @@ public:
 
 	QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
+	bool hasVisibleRenderingTargets();
 
 	QSharedPointer<SignalChannel> getSignalChannel(QString name);
 	void addSignalChannel(QString name, QSharedPointer<SignalChannel> channel);

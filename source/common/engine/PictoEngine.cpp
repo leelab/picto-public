@@ -38,6 +38,16 @@ void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
 	renderingTargets_.append(target);
 }
 
+bool PictoEngine::hasVisibleRenderingTargets()
+{
+	foreach(QSharedPointer<RenderingTarget> target, renderingTargets_)
+	{
+		if(target->getVisualTarget()->isVisible())
+			return true;
+	}
+	return false;
+}
+
 QSharedPointer<SignalChannel> PictoEngine::getSignalChannel(QString name)
 {
 	return signalChannels_.value(name, QSharedPointer<SignalChannel>());

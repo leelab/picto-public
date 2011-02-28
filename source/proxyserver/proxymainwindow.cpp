@@ -30,45 +30,27 @@ ProxyMainWindow::ProxyMainWindow()
 	setCentralWidget(controlPanel);
 }
 
+//! \brief Sets the plugin to the value in the plugin list
 void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 {
-	//QAction *action = qobject_cast<QAction *>(sender());
-	//acqPlugin_ = action->parent();
 	acqPlugin_ = acqPluginList_[index];
 	return;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void ProxyMainWindow::startStopServer()
+//! \brief Called by the button signal, this starts or stops ProxyClient activity.
+void ProxyMainWindow::startStopClient()
 {
-	if(startStopServerButton_->text() == startServerMsg)
+	if(startStopClientButton_->text() == startServerMsg)
 		activate();
 	else
 		deActivate();
 }
 
-//This is called every 5 seconds just to confirm that the
-//neural acquisition device hasn't failed out from under us.
+//! \brief This is called every 5 seconds just to confirm that the neural acquisition device hasn't failed out from under us.
 void ProxyMainWindow::checkDevStatus()
 {
 	//Is the server supposed to be running?
-	if(startStopServerButton_->text() == startServerMsg)
+	if(startStopClientButton_->text() == startServerMsg)
 		return;
 
 	//Is the device running?
@@ -86,7 +68,7 @@ void ProxyMainWindow::checkDevStatus()
 
 	//stop device and server
 	iNDAcq->stopDevice();
-	startStopServer();
+	startStopClient();
 
 	//put up a message box
 	QMessageBox deviceErrorBox;
@@ -100,6 +82,7 @@ void ProxyMainWindow::checkDevStatus()
 	return;
 }
 
+//! \brief Called when the window is closed, this ends all activity and saves settings
 void ProxyMainWindow::closeEvent(QCloseEvent *ev)
 {
 	deActivate();
@@ -109,6 +92,7 @@ void ProxyMainWindow::closeEvent(QCloseEvent *ev)
 	ev->accept();
 }
 
+//! \brief This signals to the UI that activity is detected from the server.
 void ProxyMainWindow::serverActivity()
 {
 	activityTimer_->start();
@@ -187,7 +171,7 @@ void ProxyMainWindow::createComboBox()
 		noPluginMsgBox.setInformativeText(errorMsg);
 		noPluginMsgBox.exec();
 
-		startStopServerButton_->setEnabled(false);
+		startStopClientButton_->setEnabled(false);
 
 		return;
 	}
@@ -202,13 +186,13 @@ void ProxyMainWindow::createButtons()
 {
 	startServerMsg = tr("&Start");
 	stopServerMsg_ = tr("&Stop");
-	startStopServerButton_ = new QPushButton(startServerMsg);
-	startStopServerButton_->setDefault(true);
+	startStopClientButton_ = new QPushButton(startServerMsg);
+	startStopClientButton_->setDefault(true);
 
 	quitButton_ = new QPushButton(tr("&Quit"));
 	quitButton_->setDefault(false);
 
-	connect(startStopServerButton_,SIGNAL(clicked()),this,SLOT(startStopServer()));
+	connect(startStopClientButton_,SIGNAL(clicked()),this,SLOT(startStopClient()));
 	connect(quitButton_,SIGNAL(clicked()),this,SLOT(close()));
 }
 
@@ -241,7 +225,7 @@ void ProxyMainWindow::createLayout()
 	layout_->addLayout(HLayout);
 
 	layout_->addWidget(pluginCombo_);
-	layout_->addWidget(startStopServerButton_);
+	layout_->addWidget(startStopClientButton_);
 	layout_->addWidget(quitButton_);
 }
 
@@ -257,7 +241,6 @@ void ProxyMainWindow::createTimer()
 	connect(activityTimer_,SIGNAL(timeout()),activityStatus_,SLOT(turnRed()));
 
 }
-
 
 /*****************************************************
  *
@@ -319,19 +302,23 @@ int ProxyMainWindow::openDevice()
 	}
 	pluginCombo_->setEnabled(false);
 	lineEditName_->setEnabled(false);
-	startStopServerButton_->setText(stopServerMsg_);
+	startStopClientButton_->setText(stopServerMsg_);
 	readyStatus_->turnGreen();
 	return 0;
 }
 int ProxyMainWindow::closeDevice()
 {
-	startStopServerButton_->setText(startServerMsg);
+	startStopClientButton_->setText(startServerMsg);
 
 	pluginCombo_->setEnabled(true);
 	lineEditName_->setEnabled(true);
 	readyStatus_->turnRed();
 	return 0;
 }
+
+/*! \brief When a NEWSESSION is started, proxy starts sending data to the server.
+ *	This runs until endSession is called or the Session ends.
+ */
 int ProxyMainWindow::startSession(QUuid sessionID)
 {
 	sessionEnded_ = false;
@@ -340,7 +327,7 @@ int ProxyMainWindow::startSession(QUuid sessionID)
 	{
 		//send a PUTDATA command to the server with the most recent behavioral data
 		QSharedPointer<Picto::ProtocolResponse> dataResponse;
-		QString dataCommandStr = "PUTDATA "+name()+" PICTO/1.0";
+		QString dataCommandStr = "PUTDATA "+name()+":running PICTO/1.0";
 		QSharedPointer<Picto::ProtocolCommand> response(new Picto::ProtocolCommand(dataCommandStr));
 
 		//set up XML writer
@@ -406,7 +393,6 @@ int ProxyMainWindow::startSession(QUuid sessionID)
 			}
 			else if(statusDirective.startsWith("ENDSESSION"))
 			{
-				serverUpdateChannel_->setSessionId(QUuid());
 				sessionEnded_ = true;
 				break;	
 			}
@@ -426,30 +412,7 @@ int ProxyMainWindow::startSession(QUuid sessionID)
 		pauseTimer.start();
 		pauseLoop.exec();
 	}
-	return 0;
-}
-int ProxyMainWindow::loadExp()
-{
-	return 0;
-}
-int ProxyMainWindow::startExp(QString expName)
-{
-	return 0;
-}
-int ProxyMainWindow::stopExp()
-{
-	return 0;
-}
-int ProxyMainWindow::reward(int channel)
-{
-	return 0;
-}
-int ProxyMainWindow::reportError()
-{
-	return 0;
-}
-int ProxyMainWindow::reportUnsupported()
-{
+	setStatus(idle);
 	return 0;
 }
 int ProxyMainWindow::endSession()

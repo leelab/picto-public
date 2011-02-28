@@ -31,9 +31,37 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
+	QHostAddress sourceAddr(command->getFieldValue("Source-Address"));
 	QUuid sourceID(command->getFieldValue("Source-ID"));
 	QString sourceType(command->getFieldValue("Source-Type"));
-	conMgr->updateComponent(sourceID,QHostAddress(command->getFieldValue("Source-Address")), command->getTarget(),sourceType);
+	QUuid sessionId(command->getFieldValue("Session-ID"));
+	ComponentStatus::ComponentStatus status;
+
+	QString statusStr;
+	QString name;
+	QString targetStr;
+
+	targetStr = command->getTarget();
+	name = targetStr.left(targetStr.indexOf(':'));
+	statusStr = targetStr.right(targetStr.length() - targetStr.indexOf(':') - 1);
+
+	if(statusStr.toUpper() == "IDLE")
+	{
+		status = ComponentStatus::idle;
+	}
+	else if(statusStr.toUpper() == "STOPPED")
+	{
+		status = ComponentStatus::stopped;
+	}
+	else if(statusStr.toUpper() == "PAUSED")
+	{
+		status = ComponentStatus::paused;
+	}
+	else if(statusStr.toUpper() == "RUNNING")
+	{
+		status = ComponentStatus::running;
+	}
+	conMgr->updateComponent(sourceID,sourceAddr,sessionId, command->getTarget(),sourceType,status);
 
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));

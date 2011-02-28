@@ -46,6 +46,8 @@
    <file alias="_component_info_8h-source.html">../../../output/documentation/main/html/_component_info_8h-source.html</file>
    <file alias="_component_interface_8cpp-source.html">../../../output/documentation/main/html/_component_interface_8cpp-source.html</file>
    <file alias="_component_interface_8h-source.html">../../../output/documentation/main/html/_component_interface_8h-source.html</file>
+   <file alias="_component_update_command_handler_8cpp-source.html">../../../output/documentation/main/html/_component_update_command_handler_8cpp-source.html</file>
+   <file alias="_component_update_command_handler_8h-source.html">../../../output/documentation/main/html/_component_update_command_handler_8h-source.html</file>
    <file alias="_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_compositing_surface_8cpp-source.html</file>
    <file alias="_compositing_surface_8h-source.html">../../../output/documentation/main/html/_compositing_surface_8h-source.html</file>
    <file alias="_compound_expression_8cpp-source.html">../../../output/documentation/main/html/_compound_expression_8cpp-source.html</file>
@@ -86,6 +88,8 @@
    <file alias="_data_store_8h-source.html">../../../output/documentation/main/html/_data_store_8h-source.html</file>
    <file alias="_device_interface_8cpp-source.html">../../../output/documentation/main/html/_device_interface_8cpp-source.html</file>
    <file alias="_device_interface_8h-source.html">../../../output/documentation/main/html/_device_interface_8h-source.html</file>
+   <file alias="_director_8cpp-source.html">../../../output/documentation/main/html/_director_8cpp-source.html</file>
+   <file alias="_director_8h-source.html">../../../output/documentation/main/html/_director_8h-source.html</file>
    <file alias="_director_info_8cpp-source.html">../../../output/documentation/main/html/_director_info_8cpp-source.html</file>
    <file alias="_director_info_8h-source.html">../../../output/documentation/main/html/_director_info_8h-source.html</file>
    <file alias="_director_list_command_handler_8cpp-source.html">../../../output/documentation/main/html/_director_list_command_handler_8cpp-source.html</file>

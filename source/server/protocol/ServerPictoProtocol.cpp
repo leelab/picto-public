@@ -10,7 +10,7 @@
 #include "../../common/protocol/TerminateCommandHandler.h"
 
 #include "DirectorListCommandHandler.h"
-#include "DirectorUpdateCommandHandler.h"
+#include "ComponentUpdateCommandHandler.h"
 #include "EndsessionCommandHandler.h"
 #include "GetDataCommandHandler.h"
 #include "JoinsessionCommandHandler.h"

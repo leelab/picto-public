@@ -59,7 +59,7 @@ private:
 		QString id;
 	}ComponentInstance;
 
-	enum ComponentStatus {Error, Idle, Stopped, Paused, Running};
+	enum ComponentStatus {NotFound, Idle, Stopped, Paused, Running};
 
 	void setupEngine();
 	void setupServerChannel();

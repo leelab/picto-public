@@ -4,7 +4,6 @@
 #include <QStringList>
 #include <QSqlQuery>
 #include <QVariant>
-#include <QXmlStreamWriter>
 #include <QThread>
 
 ServerConfig::ServerConfig()
@@ -24,13 +23,15 @@ ServerConfig::ServerConfig()
 		configDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/PictoServer.config");
 		configDb_.open();
 		//Possibly create a new proxy table
-		if(!configDb_.tables().contains("proxyservers"))
+		if(!configDb_.tables().contains("opensessions"))
 		{
 			QSqlQuery query(configDb_);
-			query.exec("CREATE TABLE proxyservers (id INTEGER PRIMARY KEY, "
-													 "name VARCHAR(30), "
-													 "address VARCHAR(20), "
-													 "port INT)");
+			query.exec("CREATE TABLE opensessions (sessionID VARCHAR(38), "
+													 "filepath VARCHAR(100), "
+													 "lastactivity VARCHAR(20), "
+													 "running INTEGER, "
+													 "directorID VARCHAR(38), "
+													 "proxyID VARCHAR(38))");
 		}
 	}
 
@@ -40,136 +41,131 @@ ServerConfig::ServerConfig()
 ServerConfig::~ServerConfig()
 {
 	//configDb_.close();
-	int x=5;
-	x++;
 }
 
-//! \brief Inserts a single proxy server into the configuration database
-void ServerConfig::insertProxyServer(QString name, int port, QHostAddress address)
+//! \brief Inserts a session into the open sessions list
+void ServerConfig::addSession(QString sessionID, QString filepath, QString directorID, QString proxyID)
 {
 	Q_ASSERT(configDb_.isOpen());
 	QSqlQuery query(configDb_);
 
-	query.prepare("INSERT INTO proxyservers (name,address,port) "
-		"VALUES (:name, :address,:port)");
-	query.bindValue(":name", name);
-	query.bindValue(":address", address.toString());
-	query.bindValue(":port", port);
+	query.prepare("INSERT INTO opensessions (sessionID,filepath,directorID,proxyID) "
+		"VALUES (:sessionID,:filepath,:directorID,:proxyID)");
+	query.bindValue(":sessionID", sessionID);
+	query.bindValue(":filepath", filepath);
+	query.bindValue(":directorID", directorID);
+	query.bindValue(":proxyID", proxyID);
+	query.exec();
+
+	setActivity(sessionID,true);
+}
+
+//! \brief Removes a the session with the input ID from the database
+void ServerConfig::removeSession(QString sessionID)
+{
+	Q_ASSERT(configDb_.isOpen());
+	QSqlQuery query(configDb_);
+
+	query.prepare("DELETE FROM opensessions WHERE "
+		"sessionID=:sessionID");
+	query.bindValue(":sessionID", sessionID);
 	query.exec();
 }
 
-//! \brief Removes a single prixy server fromt the configuration database
-void ServerConfig::removeProxyServer(QString name, int port, QHostAddress address)
+//! \brief Returns the filepath of the database for the session with input ID
+QString ServerConfig::getSessionPathByID(QString sessionID)
 {
 	Q_ASSERT(configDb_.isOpen());
 	QSqlQuery query(configDb_);
-
-	query.prepare("DELETE FROM proxyservers WHERE "
-		"name=:name AND address=:address AND port=:port");
-	query.bindValue(":name", name);
-	query.bindValue(":address", address.toString());
-	query.bindValue(":port", port);
+	query.prepare("SELECT filepath FROM opensessions WHERE sessionID=:sessionID");
+	query.bindValue(":sessionID", sessionID);
 	query.exec();
-}
 
-//! \brief Clears out the proxy server list.  This is used when the server starts up.
-void ServerConfig::clearProxyServers()
-{
-	Q_ASSERT(configDb_.isOpen());
-	QSqlQuery query(configDb_);
-	query.exec("DELETE FROM proxyservers");
-}
-
-/*!	\brief Returns a list of director instances as an xml fragment.
- *
- *	The XML fragment will look like this:
- *	<Proxies>
- *		<Proxy>
- *			<Id>5</Id>
- *			<Name>Room 408 Proxy Server</Name>
- *		</Proxy>
- *		<Proxy>
- *			<Id>8</Id>
- *			<Name>Room 406 Proxy Server</Name>
- *		</Proxy>
- *	</Proxies> 
- */
-QString ServerConfig::listProxyServers()
-{
-	Q_ASSERT(configDb_.isOpen());
-	QString xmlFragment;
-	QXmlStreamWriter xmlWriter(&xmlFragment);
-
-	xmlWriter.writeStartElement("Proxies");
-
-	QSqlQuery query(configDb_);
-	Q_ASSERT(query.exec("SELECT id, name FROM proxyservers"));
-
-	while(query.next())
+	QString path = "";
+	if(query.next())
 	{
-		xmlWriter.writeStartElement("Proxy");
-		xmlWriter.writeTextElement("Id",QString::number(query.value(0).toInt()));
-		xmlWriter.writeTextElement("Name",query.value(1).toString());
-		xmlWriter.writeEndElement(); //Proxy
+		path = QString(query.value(0).toString());
 	}
-	xmlWriter.writeEndElement();	//Proxies
-
-	return xmlFragment;
+	return path;
 }
 
-//! Returns true if the passed in ID refers to a running proxy server
-bool ServerConfig::proxyIdIsValid(int id)
+//! \brief Returns the filepath of the database for the session associated with the input component
+QString ServerConfig::getSessionPathByComponent(QString componentID)
 {
-	//-1 indicates that we aren't going to be recording neural data
-	if(id == -1)
-		return true;
-
 	Q_ASSERT(configDb_.isOpen());
 	QSqlQuery query(configDb_);
-	query.prepare("SELECT id FROM proxyservers WHERE id = :id");
-	query.bindValue(":id", id);
+	query.prepare("SELECT filepath FROM opensessions WHERE ( directorID=:directorID ) OR ( proxyID=:proxyID )");
+	query.bindValue(":directorID", componentID);
+	query.bindValue(":proxyID", componentID);
 	query.exec();
-
+	QString path = "";
 	if(query.next())
-		return true;
-	else
-		return false;
+	{
+		path = query.value(0).toString();
+	}
+	return path;
 }
 
-//! Return the address of a proxy server given its id
-QHostAddress ServerConfig::proxyServerAddress(int id)
+//! \brief Returns the sessionID of the session associated with the input component
+QString ServerConfig::getSessionIDByComponent(QString componentID)
 {
 	Q_ASSERT(configDb_.isOpen());
-	QHostAddress addr;
-	if(!proxyIdIsValid(id))
-		return addr;
-
 	QSqlQuery query(configDb_);
-	query.prepare("SELECT address FROM proxyservers WHERE id = :id");
-	query.bindValue(":id", id);
+	query.prepare("SELECT sessionID FROM opensessions WHERE ( directorID=:directorID ) OR ( proxyID=:proxyID )");
+	query.bindValue(":directorID", componentID);
+	query.bindValue(":proxyID", componentID);
 	query.exec();
-
+	QString sessionID = "";
 	if(query.next())
-		addr = QHostAddress(query.value(0).toString());
-
-	return addr;
+	{
+		sessionID = query.value(0).toString();
+	}
+	return sessionID;
 }
 
-//! Return the port of a proxy server given its id
-int ServerConfig::proxyServerPort(int id)
+//! \brief Sets the lastactivity field for the input session to the current time and changes the running field to the input value
+void ServerConfig::setActivity(QString sessionID, bool running)
+{
+	if(sessionID == "")
+		return;
+	Q_ASSERT(configDb_.isOpen());
+	QSqlQuery query(configDb_);
+
+	QDateTime lastactivity = QDateTime::currentDateTime();
+	query.prepare("UPDATE opensessions SET lastactivity=:lastactivity,running=:running WHERE sessionID=:sessionID");
+	query.bindValue(":sessionID", sessionID);
+	query.bindValue(":lastactivity", lastactivity.toString());
+	query.bindValue(":running", int(running));
+	query.exec();
+}
+
+//! \brief Returns a list of all sessions with "running" field of true
+QStringList ServerConfig::getRunningSessions()
 {
 	Q_ASSERT(configDb_.isOpen());
-	int port = -1;
-	if(!proxyIdIsValid(id))
-		return port;
-
 	QSqlQuery query(configDb_);
-	query.prepare("SELECT port FROM proxyservers WHERE id = :id");
-	query.bindValue(":id", id);
-	query.exec();
-
+	query.exec("SELECT sessionID FROM opensessions WHERE (running=1)");
+	QStringList result;
 	if(query.next())
-		port = query.value(0).toInt();
+	{
+		result.append(query.value(0).toString());
+	}
+	return result;
+}
 
-	return port;
+//! \brief Returns a list of all sessions with "running" field of false and lastactivity time after input time
+QStringList ServerConfig::getSessionsIdledBefore(QDateTime time)
+{
+	Q_ASSERT(configDb_.isOpen());
+	QSqlQuery query(configDb_);
+	query.exec("SELECT lastactivity,sessionID FROM opensessions WHERE (running=0)");
+	QStringList result;
+	QDateTime lastActive;
+	if(query.next())
+	{
+		lastActive.fromString(query.value(0).toString());
+		if(lastActive < time)
+			result.append(query.value(1).toString());
+	}
+	return result;
 }

@@ -2,8 +2,8 @@
 #define _SERVER_CONGIF_H_
 
 #include <QSqlDatabase>
-#include <QHostAddress>
 #include <QString>
+#include <QDateTime>
 
 /*! \brief ServerConfig handles the configuration of a PictoServer
  *
@@ -26,13 +26,14 @@ public:
 	ServerConfig();
 	~ServerConfig();
 
-	void insertProxyServer(QString name, int port, QHostAddress address);
-	void removeProxyServer(QString name, int port, QHostAddress address);
-	void clearProxyServers();
-	QString listProxyServers();
-	bool proxyIdIsValid(int id);
-	QHostAddress proxyServerAddress(int id);
-	int proxyServerPort(int id);
+	void addSession(QString sessionID, QString filepath, QString directorID, QString proxyID);
+	void removeSession(QString sessionID);
+	QString getSessionPathByID(QString sessionID);
+	QString getSessionPathByComponent(QString componentID);
+	QString getSessionIDByComponent(QString componentID);
+	void setActivity(QString sessionID, bool running);
+	QStringList getRunningSessions();
+	QStringList getSessionsIdledBefore(QDateTime time);
 
 private:
 	QSqlDatabase configDb_;

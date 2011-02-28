@@ -8,105 +8,91 @@
 #include <QSqlError>
 #include <QVariant>
 #include <QMutexLocker>
+#include <QStringList>
 
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 
 SessionInfo::SessionInfo(QByteArray experimentXml, QUuid initialObserverId):
-	activity_(true),
-	timestampsAligned_(false),
 	experimentXml_(experimentXml)
 {
-	//CreateUUID
-	QUuid uuid = QUuid::createUuid();
-	uuid_ = uuid;
+	InitializeVariables();
 
 	//Add the initial observer (the session creator) to our list of authorized observers
 	//This means that he can issue ENDSESSION and TASK commands.
 	authorizedObservers_.append(initialObserverId);
 
-#ifdef NO_AUTH_REQUIRED
-	//Add a null QUuid so that everyone is considered an authorized user
-	authorizedObservers_.append(QUuid());
-#endif
-
-	//Create the base session DB
-	QString databaseName;
-
+	//Generate the base session DB name
 	QDateTime dateTime = QDateTime::currentDateTime();
-	databaseName = "Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");
-	
+	QString databaseName = "Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");	
 	//If there's already a file with this name, append _x until we have a unique name
 	QDir dir(QCoreApplication::applicationDirPath());
 	while(dir.entryList().contains(databaseName))
 	{
 		databaseName.append("_x");
 	}
+	databaseName.append(".sqlite");
 
-	baseSessionDbConnection_ = QSqlDatabase::addDatabase("QSQLITE",databaseName);
-	baseSessionDbConnection_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + databaseName + ".sqlite");
-	baseSessionDbConnection_.open();
+	//Setup databases
+	LoadBaseSessionDatabase(databaseName);
+	SetupBaseSessionDatabase();
+	CreateCacheDatabase(databaseName);
+}
 
+SessionInfo::SessionInfo(QString databaseFilePath):
+	activity_(true),
+	timestampsAligned_(false)
+{
+	InitializeVariables();
+
+	//Setup databases
+	QStringList strList = databaseFilePath.split("/");
+	QString databaseName = strList[strList.size()-1];
+	LoadBaseSessionDatabase(databaseName);
+	Q_ASSERT(baseSessionDbConnection_.tables().contains("sessioninfo"));
+
+	SetupBaseSessionDatabase();
+	CreateCacheDatabase(databaseName);
 
 	QSqlQuery sessionQ(baseSessionDbConnection_);
+	// Load SessionID
+	sessionQ.exec("SELECT value FROM sessioninfo WHERE key=\"SessionID\"");
+	if(sessionQ.next())
+		uuid_ = QUuid(sessionQ.value(0).toString());
+	
+	// Load ExperimentXML
+	sessionQ.exec("SELECT value FROM sessioninfo WHERE key=\"ExperimentXML\"");
+	if(sessionQ.next())
+		experimentXml_ = sessionQ.value(0).toByteArray();
 
-	sessionQ.exec("CREATE TABLE sessioninfo(id INTEGER PRIMARY KEY,"
-		"key TEXT, value TEXT)");
+	// Load TimeCreated
+	sessionQ.exec("SELECT value FROM sessioninfo WHERE key=\"sessionstart\"");
+	if(sessionQ.next())
+		timeCreated_ = sessionQ.value(0).toString();
+	
+	// Load Authorized Observers
+	sessionQ.exec("SELECT value FROM sessioninfo WHERE key=\"AuthObserverID\"");
+	while(sessionQ.next())
+		authorizedObservers_.append(QUuid(sessionQ.value(0).toString()));
 
-	sessionQ.exec("CREATE TABLE spikes "
-		"(id INTEGER PRIMARY KEY, timestamp REAL, fittedtime REAL,"
-		"correlation REAL, channel TEXT, unit TEXT, waveform TEXT)");
+	// Load Components
+	QSharedPointer<ComponentInfo> component;
+	sessionQ.exec("SELECT id,address, name, type FROM componentinfo");
+	while(sessionQ.next())
+	{
+		component = QSharedPointer<ComponentInfo>(new ComponentInfo());
+		component->setUuid(QUuid(sessionQ.value(0).toString()));
+		component->setAddress(sessionQ.value(1).toString());
+		component->setName(sessionQ.value(2).toString());
+		component->setType(sessionQ.value(3).toString());
+		component->setStatus(ComponentStatus::notFound);
+		components_[component->getType()] = component;
+	}
 
-	sessionQ.exec("CREATE TABLE neuraltrials "
-		"(id INTEGER PRIMARY KEY, timestamp REAL, aligncode INTEGER,"
-		"matched INTEGER)");
-
-	sessionQ.exec("CREATE TABLE behavioraltrials "
-		"(id INTEGER PRIMARY KEY, timestamp REAL, aligncode INTEGER, "
-		"trialnumber INTEGER, matched INTEGER)");
-
-	sessionQ.exec("CREATE TABLE trials (id INTEGER PRIMARY KEY,trialnumber INTEGER,"
-		"aligncode INTEGER, neuralstart REAL, neuralend REAL, "
-		"behavioralstart REAL, behavioralend REAL, startjitter REAL, "
-		"endjitter REAL, correlation REAL)");
-
-	sessionQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
-		"ypos REAL, time REAL)");
-
-	sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, machinepath TEXT, "
-		"source TEXT, sourceresult TEXT, destination TEXT, time REAL)");
-
-	sessionQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
-
-	sessionQ.exec("CREATE TABLE rewards (id INTEGER PRIMARY KEY, duration INTEGER, channel INTEGER, time REAL)");
-
-	//Add the current time
-	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session start\", :time)");
-	sessionQ.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
-	sessionQ.exec();
-
-	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session ID\", :id)");
-	sessionQ.bindValue(":id", uuid_.toString());
-	sessionQ.exec();
-
-
-
-
-
-	//Create the cacheDB
-	QString cacheDatabaseName = databaseName+"_cache";
-	cacheDb_ = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
-	cacheDb_.setDatabaseName(":memory:");
-	//baseCacheDbConnection_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + cacheDatabaseName + ".sqlite");
-	Q_ASSERT(cacheDb_.open());
-
-	QSqlQuery cacheQ(cacheDb_);
-	Q_ASSERT(cacheQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
-		"ypos REAL, time REAL)"));
-	Q_ASSERT(cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)"));
-
-	//create alignment tool
-	alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool());
+	// Load AlignToType
+	sessionQ.exec("SELECT value FROM sessioninfo WHERE key=\"AlignToComponent\"");
+	if(sessionQ.next())
+		alignToType_ = sessionQ.value(0).toString();
 }
 
 SessionInfo::~SessionInfo()
@@ -116,6 +102,16 @@ SessionInfo::~SessionInfo()
 //! \brief Adds a component to this session (ie. Director or proxy)
 void SessionInfo::AddComponent(QSharedPointer<ComponentInfo> component)
 {
+	QSqlDatabase sessionDb = getSessionDb();
+	//Add the component to the session db
+	QSqlQuery query(sessionDb);
+	query.prepare("INSERT INTO componentinfo(id,address, name, type)"
+		" VALUES (:id,:address,:name,:type)");
+	query.bindValue(":id", component->getUuid().toString());
+	query.bindValue(":address", component->getAddress());
+	query.bindValue(":name", component->getName());
+	query.bindValue(":type", component->getType());
+	Q_ASSERT(query.exec());
 	components_[component->getType()] = component;
 }
 
@@ -144,6 +140,14 @@ bool SessionInfo::hasComponent(QUuid componentID)
 void SessionInfo::alignTimestampsTo(QString componentType)
 {
 	Q_ASSERT(!getComponentByType(componentType).isNull());
+	
+	QSqlDatabase sessionDb = getSessionDb();
+	//Add the align to type to the session db
+	QSqlQuery query(sessionDb);
+	query.prepare("INSERT INTO sessioninfo(key,value)"
+		" VALUES (\"AlignToComponent\",:type)");
+	query.bindValue(":type", componentType);
+	Q_ASSERT(query.exec());
 	alignToType_ = componentType;
 }
 
@@ -175,19 +179,17 @@ void SessionInfo::addPendingDirective(QString directive, QString componentType)
  *   -  Send ENDSESSION directive to the Director and Proxy instances
  *	 -	Flush the databse cache after we're sure that the Director instance is done.
  *
- *	When the Director and Proxy stop sending COMPONENTUPDATE commands, the session will 
- *	naturally time out on its own, so we don't need to do that explicitly.
  */
 void SessionInfo::endSession()
 {
-	ConnectionManager *conMgr = ConnectionManager::Instance();
-	Q_ASSERT(conMgr->getComponentStatusBySession(uuid_,"DIRECTOR") > ComponentStatus::idle);
+	//ConnectionManager *conMgr = ConnectionManager::Instance();
+	//Q_ASSERT(conMgr->getComponentStatusBySession(uuid_,"DIRECTOR") > ComponentStatus::idle);
 
 	QSqlDatabase sessionDb = getSessionDb();
 
 	//Add the end time to the session db
 	QSqlQuery query(sessionDb);
-	query.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Session end\", :time)");
+	query.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"sessionend\", :time)");
 	query.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
 	Q_ASSERT(query.exec());
 	
@@ -714,6 +716,114 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 
 	return stateDataList;
 
+}
+
+void SessionInfo::InitializeVariables()
+{
+	activity_ = true;
+	timestampsAligned_ = (false);
+	//CreateUUID
+	QUuid uuid = QUuid::createUuid();
+	uuid_ = uuid;
+
+#ifdef NO_AUTH_REQUIRED
+	//Add a null QUuid so that everyone is considered an authorized user
+	authorizedObservers_.append(QUuid());
+#endif
+	//create alignment tool
+	alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool());
+}
+void SessionInfo::LoadBaseSessionDatabase(QString databaseName)
+{
+	baseSessionDbConnection_ = QSqlDatabase::addDatabase("QSQLITE",databaseName);
+	baseSessionDbFilepath_ = QCoreApplication::applicationDirPath() + "/" + databaseName;
+	baseSessionDbConnection_.setDatabaseName(baseSessionDbFilepath_);
+	baseSessionDbConnection_.open();
+}
+void SessionInfo::SetupBaseSessionDatabase()
+{
+	Q_ASSERT(baseSessionDbConnection_.isOpen());
+	QSqlQuery sessionQ(baseSessionDbConnection_);
+
+	if(!baseSessionDbConnection_.tables().contains("sessioninfo"))
+	{
+		sessionQ.exec("CREATE TABLE sessioninfo(id INTEGER PRIMARY KEY,"
+			"key TEXT, value TEXT)");
+		//Add the current time
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"sessionstart\", :time)");
+		timeCreated_ = QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm");
+		sessionQ.bindValue(":time", timeCreated_);
+		sessionQ.exec();
+		//Add the session ID
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"SessionID\", :id)");
+		sessionQ.bindValue(":id", uuid_.toString());
+		sessionQ.exec();
+		//Add authorized observers
+		foreach(QUuid observer, authorizedObservers_)
+		{
+			sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"AuthObserverID\", :id)");
+			sessionQ.bindValue(":id", observer.toString());
+			sessionQ.exec();
+		}
+		//Add the experimentXML
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"ExperimentXML\", :xml)");
+		sessionQ.bindValue(":xml", QString(experimentXml_));
+		sessionQ.exec();
+	}
+
+	if(!baseSessionDbConnection_.tables().contains("componentinfo"))
+		sessionQ.exec("CREATE TABLE componentinfo(id,"
+			"address TEXT, name TEXT, type TEXT)");
+	
+
+	if(!baseSessionDbConnection_.tables().contains("spikes"))
+		sessionQ.exec("CREATE TABLE spikes "
+			"(id INTEGER PRIMARY KEY, timestamp REAL, fittedtime REAL,"
+			"correlation REAL, channel TEXT, unit TEXT, waveform TEXT)");
+
+	if(!baseSessionDbConnection_.tables().contains("neuraltrials"))
+		sessionQ.exec("CREATE TABLE neuraltrials "
+			"(id INTEGER PRIMARY KEY, timestamp REAL, aligncode INTEGER,"
+			"matched INTEGER)");
+
+	if(!baseSessionDbConnection_.tables().contains("behavioraltrials"))
+		sessionQ.exec("CREATE TABLE behavioraltrials "
+			"(id INTEGER PRIMARY KEY, timestamp REAL, aligncode INTEGER, "
+			"trialnumber INTEGER, matched INTEGER)");
+
+	if(!baseSessionDbConnection_.tables().contains("trials"))
+		sessionQ.exec("CREATE TABLE trials (id INTEGER PRIMARY KEY,trialnumber INTEGER,"
+			"aligncode INTEGER, neuralstart REAL, neuralend REAL, "
+			"behavioralstart REAL, behavioralend REAL, startjitter REAL, "
+			"endjitter REAL, correlation REAL)");
+
+	if(!baseSessionDbConnection_.tables().contains("behavioraldata"))
+		sessionQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
+			"ypos REAL, time REAL)");
+
+	if(!baseSessionDbConnection_.tables().contains("statetransitions"))
+		sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, machinepath TEXT, "
+			"source TEXT, sourceresult TEXT, destination TEXT, time REAL)");
+
+	if(!baseSessionDbConnection_.tables().contains("framedata"))
+		sessionQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
+
+	if(!baseSessionDbConnection_.tables().contains("rewards"))
+		sessionQ.exec("CREATE TABLE rewards (id INTEGER PRIMARY KEY, duration INTEGER, channel INTEGER, time REAL)");
+}
+void SessionInfo::CreateCacheDatabase(QString databaseName)
+{
+	//Create the cacheDB
+	QString cacheDatabaseName = databaseName+"_cache";
+	cacheDb_ = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
+	cacheDb_.setDatabaseName(":memory:");
+	//baseCacheDbConnection_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + cacheDatabaseName + ".sqlite");
+	Q_ASSERT(cacheDb_.open());
+
+	QSqlQuery cacheQ(cacheDb_);
+	Q_ASSERT(cacheQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
+		"ypos REAL, time REAL)"));
+	Q_ASSERT(cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)"));
 }
 
 /*! /brief Generates a thread-specific connection to the Session database

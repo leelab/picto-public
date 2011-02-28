@@ -1,7 +1,7 @@
 TEMPLATE = lib
 unix:TARGET = Picto
 win32:TARGET = libPicto
-QT = core gui xml network script scripttools
+QT = core gui xml network script scripttools sql
 CONFIG += qt warn_on debug_and_release
 DEPENDPATH += .
 INCLUDEPATH += .

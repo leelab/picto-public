@@ -1,4 +1,4 @@
-#include "DirectorUpdateCommandHandler.h"
+#include "ComponentUpdateCommandHandler.h"
 
 #include "../../common/globals.h"
 #include "../connections/SessionInfo.h"
@@ -25,6 +25,7 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 	QHostAddress sourceAddr(command->getFieldValue("Source-Address"));
 	QUuid sourceID(command->getFieldValue("Source-ID"));
 	QString sourceType(command->getFieldValue("Source-Type"));
+	QUuid sessionId(command->getFieldValue("Session-ID"));
 	
 	ComponentStatus::ComponentStatus status;
 
@@ -55,10 +56,9 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	conMgr->updateComponent(sourceID, sourceAddr, name, sourceType, status);
+	conMgr->updateComponent(sourceID, sourceAddr, sessionId, name, sourceType, status);
 
 	//If we're in a session, check for pending directives
-	QUuid sessionId(command->getFieldValue("Session-ID"));
 	QString test = sessionId.toString();
 	if(!sessionId.isNull())
 	{

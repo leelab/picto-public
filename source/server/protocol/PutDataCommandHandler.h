@@ -18,7 +18,7 @@
  *	essential field for the command
  *
  *	FORMAT
- *		PUTDATA directorname PICTO.1/0
+ *		PUTDATA directorname:running/paused PICTO.1/0
  *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
  *
  *	 <Data>

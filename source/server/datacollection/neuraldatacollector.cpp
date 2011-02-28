@@ -7,16 +7,16 @@
 #include <QUuid>
 
 #include "neuraldatacollector.h"
-#include "../connections/ServerConfig.h"
+//#include "../connections/ServerConfig.h"
 
 NeuralDataCollector::NeuralDataCollector(int proxyId, QString sessionDbName, int interval, QObject *parent):
 		QThread(parent),
 		collectionInterval_(interval),
 		sessionDbName_(sessionDbName)
 {
-	ServerConfig config;
-	proxyAddress_ = config.proxyServerAddress(proxyId);
-	proxyPort_ = config.proxyServerPort(proxyId);
+	//ServerConfig config;
+	//proxyAddress_ = config.proxyServerAddress(proxyId);
+	//proxyPort_ = config.proxyServerPort(proxyId);
 	timestampsAligned_ = false;
 }
 

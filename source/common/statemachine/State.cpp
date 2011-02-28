@@ -249,7 +249,21 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
-	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
+	QString status = "running";
+	int engCmd = engine->getEngineCommand();
+	switch(engCmd)
+	{
+	case Engine::PictoEngine::ResumeEngine:
+		status = "running";
+		break;
+	case Engine::PictoEngine::PauseEngine:
+		status = "paused";
+		break;
+	case Engine::PictoEngine::StopEngine:
+		status = "stopped";
+		break;
+	}
+	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
 	QByteArray dataXml;

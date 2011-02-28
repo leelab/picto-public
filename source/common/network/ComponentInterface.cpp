@@ -1,19 +1,42 @@
+#include <QApplication>
 #include "ComponentInterface.h"
 #include "../common/network/ServerDiscoverer.h"
 #include <QStringList>
+#include <QSqlQuery>
+#include <QVariant>
 ComponentInterface::ComponentInterface()
 {
 	deviceOpened_ = false;
 	sessionStarted_ = false;
 	expStarted_ = false;
+	serverWasConnected_ = false;
+	setStatus(idle);
 }
 int ComponentInterface::activate()
 {
 	active_ = true;
 	deviceOpened_ = true;
+	QString dbName = "Picto" + componentType() + "Interface";
+	dbName = dbName.toLower();
+	configDb_ = QSqlDatabase::addDatabase("QSQLITE",dbName);
+	configDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + dbName + ".config");
+	configDb_.open();
+
+	QUuid componentID;
+	QSqlQuery query(configDb_);
+	if(!configDb_.tables().contains("componentinfo"))
+	{
+		query.exec("CREATE TABLE componentinfo (key TEXT, value TEXT)");
+		componentID = QUuid::createUuid();
+		query.prepare("INSERT INTO componentinfo (key,value) VALUES ('id',:id)");
+		query.bindValue(":id",QString(componentID));
+		query.exec();
+	}
+	query.exec("SELECT value FROM componentinfo WHERE key='id'");
+	Q_ASSERT(query.next());
+	componentID = QUuid(query.value(0).toString());
+
 	openDevice();
-	//Generate a Component ID
-	QUuid componentID = QUuid::createUuid();
 
 	// Setup networking channel pointers
 
@@ -26,12 +49,13 @@ int ComponentInterface::activate()
 	QSharedPointer<Picto::ProtocolResponse> updateResponse;
 	QString updateCommandStr = "COMPONENTUPDATE "+name()+":idle PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
-	while(active_)
+	while(active_ && continueRunning())
 	{
 		//Check on network connection
 		if(serverUpdateChannel_.isNull() || !serverUpdateChannel_->isConnected())
 		{
-			updateCommand->setTarget(name()+":idle");
+			ServerConnectivityUpdate(false);
+			setStatus(idle);
 			serverUpdateChannel_ = connectToServer(componentID, componentType());
 			continue;
 		}
@@ -39,10 +63,12 @@ int ComponentInterface::activate()
 		//Check on network connection
 		if(dataCommandChannel_.isNull() || !dataCommandChannel_->isConnected())
 		{
-			updateCommand->setTarget(name()+":idle");
+			ServerConnectivityUpdate(false);
+			setStatus(idle);
 			dataCommandChannel_ = connectToServer(componentID, componentType());
 			continue;
 		}
+		ServerConnectivityUpdate(true);
 
 		if(serverUpdateChannel_->incomingResponsesWaiting())
 		{
@@ -55,7 +81,14 @@ int ComponentInterface::activate()
 			Q_ASSERT_X(false, "Component loop", QString::number(pendingResponses).toAscii());
 			Q_ASSERT_X(false, "Component loop", debugMsg.toAscii());
 		}
+		//If I'm idle, then I have no sessionID
+		if(getStatusString() == "idle")
+		{
+			serverUpdateChannel_->setSessionId(QUuid());
+			dataCommandChannel_->setSessionId(QUuid());
+		}
 
+		updateCommand->setTarget(name()+":"+getStatusString());
 		serverUpdateChannel_->sendCommand(updateCommand);
 
 		//If we don't get a response, it probably means that we lost our
@@ -80,17 +113,20 @@ int ComponentInterface::activate()
 			QUuid sessionID = QUuid(statusDirective.mid(statusDirective.indexOf(' ')+1));
 			serverUpdateChannel_->setSessionId(sessionID);
 			dataCommandChannel_->setSessionId(sessionID);
-			updateCommand->setTarget(name()+":stopped");
+			setStatus(stopped);
 			sessionStarted_ = true;
 			startSession(sessionID);
 		}
 		else if(statusDirective.startsWith("LOADEXP"))
 		{
-			loadExp();
+			//Extract the XML from the response
+			int xmlIdx = statusDirective.indexOf('\n');
+			statusDirective.remove(0,xmlIdx+1);
+			loadExp(statusDirective);
 		}
 		else if(statusDirective.startsWith("START"))
 		{
-			QString expName = statusDirective.mid(statusDirective.indexOf(' ')+1);
+			QString taskName = statusDirective.mid(statusDirective.indexOf(' ')+1);
 			//Before we actually start running the task, we need to send a COMPONENTUPDATE
 			//command to let the server know that we have changed status to running
 			//This also lets Workstation know that we received the command that they
@@ -110,7 +146,7 @@ int ComponentInterface::activate()
 				continue;
 
 			expStarted_ = true;
-			startExp(expName);
+			startExp(taskName);
 			expStarted_ = false;
 		}
 		else if(statusDirective.startsWith("ENDSESSION"))
@@ -119,7 +155,7 @@ int ComponentInterface::activate()
 			sessionStarted_ = false;
 			serverUpdateChannel_->setSessionId(QUuid());
 			dataCommandChannel_->setSessionId(QUuid());
-			updateCommand->setTarget(name()+":idle");
+			setStatus(idle);
 		}
 		else if(statusDirective.startsWith("REWARD"))
 		{
@@ -128,11 +164,11 @@ int ComponentInterface::activate()
 		}
 		else if(statusDirective.startsWith("ERROR"))
 		{
-			reportError();
+			reportErrorDirective();
 		}
 		else
 		{
-			reportUnsupported();
+			reportUnsupportedDirective(statusDirective);
 		}
 	
 		//Pause for 20 ms 
@@ -144,6 +180,7 @@ int ComponentInterface::activate()
 		pauseTimer.start();
 		pauseLoop.exec();
 	}
+	ServerConnectivityUpdate(false);
 	return 0;
 }
 
@@ -167,7 +204,21 @@ QSharedPointer<Picto::CommandChannel> ComponentInterface::connectToServer(QUuid 
 
 	return serverChannel;
 }
-
+QString ComponentInterface::getStatusString()
+{
+	switch(status_)
+	{
+	case idle:
+		return "idle";
+	case stopped:
+		return "stopped";
+	case paused:
+		return "paused";
+	case running:
+		return "running";
+	}
+	return "";
+}
 int ComponentInterface::deActivate()
 {
 	active_ = false;
@@ -181,4 +232,11 @@ int ComponentInterface::deActivate()
 		closeDevice();
 	deviceOpened_ = false;
 	return 0;
+}
+
+void ComponentInterface::ServerConnectivityUpdate(bool connected)
+{
+	if(serverWasConnected_ != connected)
+		reportServerConnectivity(connected);
+	serverWasConnected_ = connected;
 }

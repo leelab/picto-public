@@ -205,7 +205,7 @@ void RemoteViewer::setupUi()
 
 	proxyListBox_ = new QComboBox;
 	proxyListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	proxyListBox_->addItem("No Proxy",-1);
+	proxyListBox_->addItem("No Proxy",QUuid().toString());
 	updateLists();
 
 	toolBar_->addAction(connectAction_);
@@ -325,7 +325,7 @@ void RemoteViewer::changeConnectionState(bool checked)
 		QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 		//We need to possibbly start a session, and always join a session
 		ComponentStatus remoteStatus = directorStatus(directorID);
-		if(remoteStatus == Error)
+		if(remoteStatus == NotFound)
 		{
 			connectAction_->setChecked(false);
 			return;
@@ -633,7 +633,7 @@ void RemoteViewer::updateLists()
 		{
 			if(proxies[j].id ==proxyListBox_->itemData(i))
 			{
-				if(directors[j].status.toUpper() == "IDLE")
+				if(proxies[j].status.toUpper() == "IDLE")
 					proxyListBox_->setItemIcon(i,QIcon());
 				else
 					proxyListBox_->setItemIcon(i,runningIcon);
@@ -668,11 +668,11 @@ RemoteViewer::ComponentStatus RemoteViewer::directorStatus(QString id)
 			else if(director.status.toUpper() == "PAUSED")
 				return Paused;
 			else
-				return Error;
+				return NotFound;
 		}
 	}
 	//If we made it this far, something is wrong...
-	return Error;
+	return NotFound;
 }
 
 /*! \brief returns the current status of a remote proxy
@@ -694,11 +694,11 @@ RemoteViewer::ComponentStatus RemoteViewer::proxyStatus(QString id)
 			else if(proxy.status.toUpper() == "PAUSED")
 				return Paused;
 			else
-				return Error;
+				return NotFound;
 		}
 	}
 	//If we made it this far, something is wrong...
-	return Error;
+	return NotFound;
 }
 
 /*! \brief Returns a list of directors and their properties
@@ -856,7 +856,7 @@ void RemoteViewer::checkForTimeouts()
 	   engineSlaveChannel_->getChannelStatus() == Picto::CommandChannel::disconnected ||
 	   behavioralDataChannel_->getChannelStatus() == Picto::CommandChannel::disconnected)
 	{
-		connectAction_->setChecked(false);
+		//connectAction_->setChecked(false);//For a checkable action, the checked property is toggled during the trigger call.
 		connectAction_->trigger();
 		QMessageBox::critical(0,tr("Server Connection Lost"),
 			tr("Workstation is no longer able to connect to the server.  " 
@@ -901,29 +901,27 @@ void RemoteViewer::checkForTimeouts()
 			joinSession();
 		}
 	}
-	else if(remoteStatus == Error)
+	else if(remoteStatus == NotFound)
 	{
-		connectAction_->setChecked(false);
+		//connectAction_->setChecked(false); //For a checkable action, the checked property is toggled during the trigger call.
 		connectAction_->trigger();
 		QMessageBox::critical(0,tr("Director Lost"),
-			tr("The Director instance being used is no longer on the network." 
-			"The session has been ended."));
+			tr("The Director instance being used is no longer on the network."));
 		return;
 	}
 
 	//Check the proxy
 	//If there's no Proxy in this experiment, don't worry about it.
-	if(proxyListBox_->currentIndex() == -1)
+	if(proxyListBox_->currentIndex() == 0)
 		return;
 	//Check that the proxy is still alive.
 	remoteStatus = proxyStatus(proxyListBox_->itemData(proxyListBox_->currentIndex()).toString());
-	if(remoteStatus == Error)
+	if(remoteStatus == NotFound)
 	{
-		connectAction_->setChecked(false);
+		//connectAction_->setChecked(false);//For a checkable action, the checked property is toggled during the trigger call.
 		connectAction_->trigger();
 		QMessageBox::critical(0,tr("Proxy Lost"),
-			tr("The Proxy instance being used is no longer on the network." 
-			"The session has been ended."));
+			tr("The Proxy instance being used is no longer on the network."));
 		return;
 	}
 
@@ -1287,7 +1285,7 @@ bool RemoteViewer::joinSession()
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.
 	ComponentStatus remoteStatus = directorStatus(directorID);
-	if(remoteStatus == Idle || remoteStatus == Error)
+	if(remoteStatus == Idle || remoteStatus == NotFound)
 	{
 		setStatus("Attempted to joins a session with a director that isn't in a session");
 		return false;

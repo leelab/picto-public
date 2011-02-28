@@ -450,8 +450,8 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
  */
 void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine)
 {
-	QSharedPointer<CommandChannel> serverChannel = engine->getUpdateCommandChannel();
-	if(serverChannel.isNull())
+	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+	if(dataChannel.isNull())
 		return;
 
 	//Create a TRIAL command
@@ -483,17 +483,18 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	QSharedPointer<ProtocolResponse> response;
 
 
-	serverChannel->sendCommand(command);
-	if(!serverChannel->waitForResponse(10000))
+	dataChannel->sendCommand(command);
+	if(!dataChannel->waitForResponse(10000))
 	{
 		handleLostServer(engine);
 	}
 	else
 	{
-		response = serverChannel->getResponse();
 
+		response = dataChannel->getResponse();
 		Q_ASSERT(!response.isNull());
 		Q_ASSERT(response->getResponseType() == "OK");
+		processStatusDirective(engine,response);
 	}
 }
 
@@ -515,7 +516,21 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 	
 
 	//send a PUTDATA command to the server with the state transition data
-	QString dataCommandStr = "PUTDATA "+engine->getName()+" PICTO/1.0";
+	QString status = "running";
+	int engCmd = engine->getEngineCommand();
+	switch(engCmd)
+	{
+	case Engine::PictoEngine::ResumeEngine:
+		status = "running";
+		break;
+	case Engine::PictoEngine::PauseEngine:
+		status = "paused";
+		break;
+	case Engine::PictoEngine::StopEngine:
+		status = "stopped";
+		break;
+	}
+	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
 	QByteArray stateDataXml;

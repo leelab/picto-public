@@ -34,6 +34,10 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	//Extract the content
 	QByteArray content = command->getContent();
 	QXmlStreamReader xmlReader(content);
+	QHostAddress sourceAddr(command->getFieldValue("Source-Address"));
+	QUuid sourceID(command->getFieldValue("Source-ID"));
+	QString sourceType(command->getFieldValue("Source-Type"));
+	QUuid sessionID(command->getFieldValue("Session-ID"));
 
 	double time = -1.0;
 	int eventCode = -1;
@@ -78,12 +82,6 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 		return response;
 	}
 
-	//Get the session ID from the command
-	QUuid sessionID(command->getFieldValue("Session-ID"));
-
-	//Get the source ID
-	QString sourceType(command->getFieldValue("Source-Type"));
-
 	//Get the current session info from a session manager
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = ConnectionManager::Instance()->getSessionInfo(sessionID);
@@ -94,6 +92,9 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 		response->setContent("SessionID not recognized");
 		return response;
 	}
+	
+	//Update the component
+	ConnectionManager::Instance()->updateComponent(sourceID,sourceAddr,sessionID, sessionInfo->getComponentByType(sourceType)->getName(),sourceType,ComponentStatus::running);
 
 	//Now that we've got the sessionInfo, we need to add the trial to the database
 	sessionInfo->insertTrialEvent(time, eventCode, trialNum, sourceType);
@@ -102,6 +103,11 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	sessionInfo->flushCache();
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	QString directive = sessionInfo->pendingDirective(sourceID);
+	if(directive.isEmpty())
+		response->setContent("OK");
+	else
+		response->setContent(directive.toUtf8());
 
 	return response;
 }
