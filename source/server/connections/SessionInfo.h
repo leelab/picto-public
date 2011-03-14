@@ -8,6 +8,7 @@
 #include "../../common/storage/StateDataStore.h"
 #include "../../common/storage/FrameDataStore.h"
 #include "../../common/storage/RewardDataStore.h"
+#include "../../common/storage/AlignmentDataStore.h"
 #include "ComponentInfo.h"
 
 #include <QSharedPointer>
@@ -59,9 +60,10 @@ public:
 	void endSession();
 
 	void flushCache();
-	void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType);
+	void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID );
 	void insertNeuralData(Picto::NeuralDataStore data);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
+	void insertAlignmentData(Picto::AlignmentDataStore data);
 	void insertFrameData(Picto::FrameDataStore data);
 	void insertRewardData(Picto::RewardDataStore data);
 
@@ -93,6 +95,7 @@ private:
 	void LoadBaseSessionDatabase(QString databaseName);
 	void SetupBaseSessionDatabase();
 	void CreateCacheDatabase(QString databaseName);
+	double LoadMaxDataID(QString tableName);
 	QSqlDatabase getSessionDb();
 
 	QUuid uuid_;
@@ -110,6 +113,8 @@ private:
 	QByteArray experimentXml_;
 	QString baseSessionDbFilepath_;
 	QString timeCreated_;
+
+	qulonglong maxReceivedDataID_;
 
 	QList<QUuid> authorizedObservers_;
 };

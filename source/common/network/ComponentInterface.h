@@ -21,7 +21,7 @@ public:
 	virtual int activate();
 	virtual int deActivate();
 protected:
-	static QSharedPointer<Picto::CommandChannel> connectToServer(QUuid componentID, QString componentType);
+	static bool connectToServer(QSharedPointer<Picto::CommandChannel>& channel, QUuid componentID, QString componentType);
 	void setStatus(ComponentStatus status){status_ = status;}
 	ComponentStatus getStatus(){return status_;};
 	QString getStatusString();
@@ -53,7 +53,6 @@ protected:
 	virtual int reportUnsupportedDirective(QString directive){directive = "";return 0;}
 	//! \brief Overload this to perform any actions necessary to end a running session.
 	virtual int endSession(){return 0;}
-	QSharedPointer<Picto::CommandChannel> serverUpdateChannel_;	// This is the command channel used to update the server as to the component status.
 	QSharedPointer<Picto::CommandChannel> dataCommandChannel_;	// This is the command channel used to send data to the server.
 private:
 	void ServerConnectivityUpdate(bool connected);

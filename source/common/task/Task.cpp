@@ -115,6 +115,28 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	else
 		Q_ASSERT(sendStateData(stateMachine_->getName(),result,"NULL",engine));
 
+	//while(dataChannel->pendingResponses())
+	//{
+	//	// AssureConnection gets up to 2 seconds to make a connection.  If not, we
+	//	// can't send anything, so we try again;
+	//	if(!dataChannel->assureConnection(2000))
+	//		continue;
+
+	//	QSharedPointer<ProtocolResponse> resp;
+
+	//	//reading responses
+	//	while(dataChannel->waitForResponse(0))
+	//	{
+	//		resp = dataChannel->getResponse();
+	//		Q_ASSERT(!resp.isNull());
+	//		Q_ASSERT(resp->getResponseType() == "OK");
+	//	}
+
+	//	//resend all of the pending responses
+	//	dataChannel->resendPendingCommands(10);
+	//}
+
+
 }
 
 //! \brief Sends state data to the server
@@ -161,11 +183,11 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 
 	dataChannel->sendRegisteredCommand(dataCommand);
 
-	if(!dataChannel->waitForResponse(1000))
-		return false;
-	dataResponse = dataChannel->getResponse();
-	if(dataResponse->getResponseCode() != ProtocolResponseType::OK)
-		return false;
+	//if(!dataChannel->waitForResponse(1000))
+	//	return false;
+	//dataResponse = dataChannel->getResponse();
+	//if(dataResponse->getResponseCode() != ProtocolResponseType::OK)
+	//	return false;
 
 	return true;
 }

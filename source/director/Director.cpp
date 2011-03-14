@@ -110,8 +110,6 @@ int Director::reportServerConnectivity(bool connected)
 	{
 		if(engine_->getDataCommandChannel().isNull())
 			engine_->setDataCommandChannel(dataCommandChannel_);
-		if(engine_->getUpdateCommandChannel().isNull())
-			engine_->setUpdateCommandChannel(serverUpdateChannel_);
 	}
 	return 0;
 }

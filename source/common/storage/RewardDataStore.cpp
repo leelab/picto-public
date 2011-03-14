@@ -34,6 +34,7 @@ bool RewardDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 
 	xmlStreamWriter->writeTextElement("Channel",QString::number(channel_));
 	xmlStreamWriter->writeTextElement("Duration",QString::number(durationMs_));
+	DataStore::serializeAsXml(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //RewardDataStore
 
@@ -95,8 +96,7 @@ bool RewardDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 		}
 		else
 		{
-			addError("RewardDataStore", "Unexpected tag", xmlStreamReader);
-			return false;
+			DataStore::deserializeFromXml(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}

@@ -9,7 +9,7 @@ BehavioralDataStore::BehavioralDataStore()
 //! Adds a simple (x,y,t) data point
 void BehavioralDataStore::addData(double x, double y, double t)
 {
-	BehavioralDataPoint newPoint = {x,y,t};
+	BehavioralUnitDataStore newPoint(x,y,t);
 	data_.append(newPoint);
 }
 
@@ -40,7 +40,7 @@ void BehavioralDataStore::addData(QMap<QString, QList<double>> signalChannelData
 		  ypos != signalChannelData.value("ypos").end() &&
 		  time != signalChannelData.value("time").end())
 	{
-		BehavioralDataPoint newPoint = {*xpos,*ypos,*time};
+		BehavioralUnitDataStore newPoint(*xpos,*ypos,*time);
 		data_.append(newPoint);
 
 		xpos++;
@@ -54,8 +54,8 @@ void BehavioralDataStore::addData(QMap<QString, QList<double>> signalChannelData
  *
  *	The XML will look like this:
  *	<BehavioralDataStore>
- *		<Data timestamp=123.4324 x=450 y=394/>
- *		<Data timestamp=123.4334 x=457 y=386/>
+ *		<BehavioralUnitDataStore time=123.4324 x=450 y=394/>
+ *		<BehavioralUnitDataStore time=123.4334 x=457 y=386/>
  *		...
  *	</BehavioralDataStore>
  */
@@ -63,13 +63,9 @@ bool BehavioralDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStr
 {
 	xmlStreamWriter->writeStartElement("BehavioralDataStore");
 
-	foreach(BehavioralDataPoint dataPoint, data_)
+	foreach(BehavioralUnitDataStore dataPoint, data_)
 	{
-		xmlStreamWriter->writeStartElement("Data");
-		xmlStreamWriter->writeAttribute("time",QString("%1").arg(dataPoint.t));
-		xmlStreamWriter->writeAttribute("x",QString("%1").arg(dataPoint.x));
-		xmlStreamWriter->writeAttribute("y",QString("%1").arg(dataPoint.y));
-		xmlStreamWriter->writeEndElement();
+		dataPoint.serializeAsXml(xmlStreamWriter);
 	}
 
 	xmlStreamWriter->writeEndElement(); //BehavioralDataStore
@@ -99,41 +95,11 @@ bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "Data")
+		if(name == "BehavioralUnitDataStore")
 		{
-			double x,y,t;
-
-			if(xmlStreamReader->attributes().hasAttribute("x"))
-			{
-				x = xmlStreamReader->attributes().value("x").toString().toDouble();
-			}
-			else
-			{
-				addError("BehavioralDataStore","Data missing x attribute",xmlStreamReader);
-				return false;
-			}
-
-			if(xmlStreamReader->attributes().hasAttribute("y"))
-			{
-				y = xmlStreamReader->attributes().value("y").toString().toDouble();
-			}
-			else
-			{
-				addError("BehavioralDataStore","Data missing y attribute",xmlStreamReader);
-				return false;
-			}
-
-			if(xmlStreamReader->attributes().hasAttribute("time"))
-			{
-				t = xmlStreamReader->attributes().value("time").toString().toDouble();
-			}
-			else
-			{
-				addError("BehavioralDataStore","Data missing time attribute",xmlStreamReader);
-				return false;
-			}
-
-			addData(x,y,t);
+			BehavioralUnitDataStore newPoint;
+			newPoint.deserializeFromXml(xmlStreamReader);
+			data_.append(newPoint);
 		}
 		else
 		{

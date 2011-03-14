@@ -12,6 +12,7 @@
 #include "../network/CommandChannel.h"
 #include "../timing/Timestamper.h"
 #include "../storage/StateDataStore.h"
+#include "../storage/AlignmentDataStore.h"
 
 namespace Picto {
 
@@ -439,63 +440,83 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
  *	code to the neural recording device.  
  *
  *	The command used to do this is (the units of time are seconds)
- *		TRIAL /start PICTO/1.0
+ *		PUTDATA engineName:running PICTO/1.0
  *		Content-Length:???
  *		
- *		<Trial>
- *			<Time>8684354986.358943</Time>
- *			<EventCode>56</EventCode>
- *			<TrialNum>412</TrialNum> 	
- *		</Trial>
+ *		<Data>
+ *			<AlignmentDataStore>
+ *				<Time>8684354986.358943</Time>
+ *				<EventCode>56</EventCode>
+ *				<TrialNum>412</TrialNum> 	
+ *			</AlignmentDataStore>
+ *		</Data>
  */
 void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine)
 {
+	Timestamper timestamper;
+	double timestamp = timestamper.stampSec();
+
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 	if(dataChannel.isNull())
 		return;
 
-	//Create a TRIAL command
-	QSharedPointer<ProtocolCommand> command(new ProtocolCommand("TRIAL /start PICTO/1.0"));
+	//Create an alignment command
+	QString dataCommandStr = "PUTDATA " + engine->getName() + ":running PICTO/1.0";
+	QSharedPointer<ProtocolCommand> command(new ProtocolCommand(dataCommandStr));
 
-	//Create the content of the TRIAL command
-	QString content;
-	QXmlStreamWriter xmlWriter(&content);
+	//Create the content of the alignment command
+	QByteArray alignDataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&alignDataXml));
+	
+	Picto::AlignmentDataStore alignData;
+	alignData.setAlignCode(trialEventCode_);
+	alignData.setAlignNumber(trialNum_);
+	alignData.setTimestamp(timestamp);
 
-	xmlWriter.writeStartElement("Trial");
-
-	xmlWriter.writeStartElement("Time");
-	Timestamper timestamper;
-	xmlWriter.writeCharacters(QString("%1").arg(timestamper.stampSec(),0,'f',4));
-	xmlWriter.writeEndElement();
-
-	xmlWriter.writeTextElement("EventCode",QString::number(trialEventCode_));
-	xmlWriter.writeTextElement("TrialNum",QString::number(trialNum_));
-
-	xmlWriter.writeEndElement(); //Trial
-
-	//Add the content to the command
-	QByteArray contentArr = content.toUtf8();
-	command->setFieldValue("Content-Length",QString("%1").arg(contentArr.length()));
-	//Check that the Content-Length field matches the actual content
-	Q_ASSERT(0 == command->setContent(contentArr));
-
-	//Send out the command
-	QSharedPointer<ProtocolResponse> response;
+	xmlWriter->writeStartElement("Data");
+	alignData.serializeAsXml(xmlWriter);
+	xmlWriter->writeEndElement();
 
 
-	dataChannel->sendCommand(command);
-	if(!dataChannel->waitForResponse(10000))
-	{
-		handleLostServer(engine);
-	}
-	else
-	{
+	command->setContent(alignDataXml);
+	command->setFieldValue("Content-Length",QString::number(alignDataXml.length()));
 
-		response = dataChannel->getResponse();
-		Q_ASSERT(!response.isNull());
-		Q_ASSERT(response->getResponseType() == "OK");
-		processStatusDirective(engine,response);
-	}
+
+	//xmlWriter.writeStartElement("Trial");
+
+	//xmlWriter.writeStartElement("Time");
+	//Timestamper timestamper;
+	//xmlWriter.writeCharacters(QString("%1").arg(timestamper.stampSec(),0,'f',4));
+	//xmlWriter.writeEndElement();
+
+	//xmlWriter.writeTextElement("EventCode",QString::number(trialEventCode_));
+	//xmlWriter.writeTextElement("TrialNum",QString::number(trialNum_));
+
+	//xmlWriter.writeEndElement(); //Trial
+
+	////Add the content to the command
+	//QByteArray contentArr = content.toUtf8();
+	//command->setFieldValue("Content-Length",QString("%1").arg(contentArr.length()));
+	////Check that the Content-Length field matches the actual content
+	//Q_ASSERT(0 == command->setContent(contentArr));
+
+	////Send out the command
+	//QSharedPointer<ProtocolResponse> response;
+
+
+	dataChannel->sendRegisteredCommand(command);
+	//if(!dataChannel->waitForResponse(10000))
+	//{
+	//	handleLostServer(engine);
+	//}
+	//else
+	//{
+
+	//	response = dataChannel->getResponse();
+	//	Q_ASSERT(!response.isNull());
+	//	Q_ASSERT(response->getResponseType() == "OK");
+	//	processStatusDirective(engine,response);
+	//}
 }
 
 /*!	\brief Sends a StateDataStore to the server to let it know that we are transitioning
@@ -550,8 +571,6 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 
 	dataCommand->setContent(stateDataXml);
 	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
-	QUuid commandUuid = QUuid::createUuid();
-	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
 
 	dataChannel->sendRegisteredCommand(dataCommand);
 }
@@ -598,55 +617,50 @@ bool StateMachine::cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine>
 	if(!serverChan)
 		return true;
 
-	if(serverChan->pendingResponses() == 0)
+	// AssureConnection gets up to 2 seconds to make a connection.  If not, we
+	// can't send anything, so we return;
+	if(!serverChan->assureConnection(2000))
 		return true;
 
 	//int elapsedTimeMs = 0;
 	QSharedPointer<ProtocolResponse> resp;
 
-	//See if the missing responses are just slow getting to us...
-	//This loop will keep reading responses as long as they are arriving at a 
-	//rate of greater than 0.5Hz
-	while(serverChan->waitForResponse(2000))
+	//read responses
+	while(serverChan->waitForResponse(0) && serverChan->incomingResponsesWaiting())
 	{
 		resp = serverChan->getResponse();
 		Q_ASSERT(!resp.isNull());
 		Q_ASSERT(resp->getResponseType() == "OK");
 
 		processStatusDirective(engine, resp);
-
-		if(serverChan->pendingResponses() == 0 && 
-			serverChan->incomingResponsesWaiting() == 0)
-		{
-			return true;
-		}
 	}
 
 
 	//resend all of the pending responses
-	serverChan->resendPendingCommands();
+	serverChan->resendPendingCommands(10);
+	return true;
 
-	//Wait to see if the missing responses arrive
-	//This loop will keep reading responses as long as they are arriving at a 
-	//rate of greater than 0.5Hz
-	while(serverChan->waitForResponse(2000))
-	{
-		resp = serverChan->getResponse();
-		Q_ASSERT(!resp.isNull());
-		Q_ASSERT(resp->getResponseType() == "OK");
+	////Wait to see if the missing responses arrive
+	////This loop will keep reading responses as long as they are arriving at a 
+	////rate of greater than 0.5Hz
+	//while(serverChan->waitForResponse(2000))
+	//{
+	//	resp = serverChan->getResponse();
+	//	Q_ASSERT(!resp.isNull());
+	//	Q_ASSERT(resp->getResponseType() == "OK");
 
-		processStatusDirective(engine, resp);
+	//	processStatusDirective(engine, resp);
 
-		if(serverChan->pendingResponses() == 0 && 
-			serverChan->incomingResponsesWaiting() == 0)
-		{
-			return true;
-		}
-	}
+	//	if(serverChan->pendingResponses() == 0 && 
+	//		serverChan->incomingResponsesWaiting() == 0)
+	//	{
+	//		return true;
+	//	}
+	//}
 
 
-	//If we've made it this far, then we failed at cleaning up.
-	return false;
+	////If we've made it this far, then we failed at cleaning up.
+	//return false;
 
 }
 

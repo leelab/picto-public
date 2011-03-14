@@ -396,7 +396,7 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 			
 			//Since the frames are returned in order, we can simply pull off the 
 			//last frame, and know that it is the most recently reported frame
-			FrameDataStore::FrameData data;
+			FrameUnitDataStore data;
 			data = dataStore.takeLastDataPoint();
 
 			lastFrameCheckTime_ = data.time;

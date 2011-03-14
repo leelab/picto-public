@@ -44,8 +44,10 @@ class DataStore
 public:
 	DataStore();
 
-	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+	qulonglong getDataID();
 
 	static QString getErrors();
 	void clearErrors() { errors_.clear(); };
@@ -70,7 +72,11 @@ protected:
 	QColor deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
+	static qulonglong generateDataID();
 	static QStringList errors_;
+	static qulonglong lastDataID_;
+	qulonglong dataID_;
+
 
 };
 

@@ -39,6 +39,14 @@ namespace MultiPartResponseType
 	} MultiPartResponseType;
 }
 
+namespace RegisteredResponseType
+{
+	typedef enum
+	{
+		NotRegistered,Delayed,Immediate
+	} RegisteredResponseType;
+}
+
 /*!	\brief A response, issued as the result of a command
  *
  *	Protocol responses are the obvious object that gets returned after a command 
@@ -83,6 +91,9 @@ public:
 	void setMultiPart(MultiPartResponseType::MultiPartResponseType multiPartState);
 	MultiPartResponseType::MultiPartResponseType getMultiPart();
 
+	void setRegisteredType(RegisteredResponseType::RegisteredResponseType type);
+	RegisteredResponseType::RegisteredResponseType getRegisteredType();
+
 	void setShouldStream(bool shouldStream);
 
 	QString getFieldValue(QString field);
@@ -120,6 +131,7 @@ private:
 
 	bool bShouldTerminateConnection;
 	bool bStreamingResponse;
+	RegisteredResponseType::RegisteredResponseType registeredType_;
 	MultiPartResponseType::MultiPartResponseType multiPartResponseState;
 
 	int timeout;

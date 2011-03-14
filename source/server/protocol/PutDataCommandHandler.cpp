@@ -24,8 +24,7 @@ PutDataCommandHandler::PutDataCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	//the random value makes it easy to observe scrolling on a full command prompt.
-	//printf("PUTDATA  handler: %d %d\n", QThread::currentThreadId(), rand()%10);  //the random value makes it easy to bserve scrolling on 
+	qDebug((QString("PUTDATA  handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
@@ -61,7 +60,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	{
 		status = ComponentStatus::running;
 	}
-	conMgr->updateComponent(sourceID,sourceAddr,sessionId, command->getTarget(),sourceType,status);
+	conMgr->updateComponent(sourceID,sourceAddr,sessionId, name,sourceType,status);
 
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));
@@ -121,59 +120,19 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertRewardData(rewardData);
 		}
-		else if(dataType == "event")
+		else if(dataType == "NeuralDataStore")
 		{
-			if(xmlReader->attributes().value("type").toString() == "spike")
-			{
-				Picto::NeuralDataStore neuralData;
-				neuralData.deserializeFromXml(xmlReader);
+			Picto::NeuralDataStore neuralData;
+			neuralData.deserializeFromXml(xmlReader);
 
-				sessionInfo->insertNeuralData(neuralData);
-			}
-			else if(xmlReader->attributes().value("type").toString() == "externalEvent")
-			{
-				double time = 0.0;
-				int eventCode = -1;
-				int trialNum = -1;
-				while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "event") && !xmlReader->atEnd())
-				{
-					if(!xmlReader->isStartElement())
-					{
-						xmlReader->readNext();
-						continue;
-					}
-					if(xmlReader->name() == "timestamp")
-					{
-						time = xmlReader->readElementText().toDouble();
-					}
-					else if(xmlReader->name() == "eventCode")
-					{
-						eventCode = xmlReader->readElementText().toInt();
-					}
-					xmlReader->readNext();
-				}
-				sessionInfo->insertTrialEvent(time,eventCode,trialNum,sourceType);
-			}
+			sessionInfo->insertNeuralData(neuralData);
 		}
-		else if((dataType == "device"))
-		{	//Ignore these until they are handled correctly in NeuralDataStore
-			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "device") && !xmlReader->atEnd())
-			{xmlReader->readNext();}
-		}
-		else if((dataType == "deviceStatus"))
-		{	//Ignore these until they are handled correctly in NeuralDataStore
-			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "deviceStatus") && !xmlReader->atEnd())
-			{xmlReader->readNext();}
-		}
-		else if((dataType == "sampleRate"))
-		{	//Ignore these until they are handled correctly in NeuralDataStore
-			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "sampleRate") && !xmlReader->atEnd())
-			{xmlReader->readNext();}
-		}
-		else if((dataType == "numEvents"))
-		{	//Ignore these until they are handled correctly in NeuralDataStore
-			while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "numEvents") && !xmlReader->atEnd())
-			{xmlReader->readNext();}
+		else if(dataType == "AlignmentDataStore")
+		{
+			Picto::AlignmentDataStore alignmentData;
+			alignmentData.deserializeFromXml(xmlReader);
+
+			sessionInfo->insertAlignmentData(alignmentData);
 		}
 		else
 		{
@@ -188,8 +147,12 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	if(directive.isEmpty())
 		response->setContent("OK");
 	else
+	{
+						qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
 		response->setContent(directive.toUtf8());
-	
+		sessionInfo->flushCache();
+		response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+	}
 	return response;
 }
 

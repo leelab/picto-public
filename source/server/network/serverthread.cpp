@@ -30,6 +30,7 @@ void ServerThread::run()
 
 	connect(tcpSocket_, SIGNAL(readyRead()), this, SLOT(readClient()), Qt::DirectConnection);
 	connect(tcpSocket_, SIGNAL(disconnected()), this, SLOT(handleDroppedClient()), Qt::DirectConnection);
+	connect(tcpSocket_, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(handleError(QAbstractSocket::SocketError)), Qt::DirectConnection);
 
 	//We establish the timer_ here so that we can start and stop it from this thread
 	//if it was created/deleted in the constructor/destructor it wouldn't be directly accessible
@@ -127,7 +128,11 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	//If this command has a Command-ID field, we need to include the same field in the
 	//response (this allows the client to match up commands and responses).
 	if(_command->hasField("Command-ID"))
+	{
 		response->setFieldValue("Command-ID",_command->getFieldValue("Command-ID"));
+		if(response->getRegisteredType() == Picto::RegisteredResponseType::NotRegistered)
+			response->setRegisteredType(Picto::RegisteredResponseType::Delayed);
+	}
 
 	return response;
 }
@@ -211,13 +216,28 @@ void ServerThread::readClient()
 						response->setContentEncoding(Picto::ContentEncodingType::deflate);
 					}
 				}
-				deliverResponse(response);
-				if(response->shouldStream())
+				switch(response->getRegisteredType())
 				{
-					command->setFieldValue("X-PictoStreamState",response->getFieldValue("X-PictoStreamState"));
+				case Picto::RegisteredResponseType::Delayed:
+					delayedResponses_.push_back(response);
+					continue;
+				case Picto::RegisteredResponseType::Immediate:
+					Q_ASSERT_X(!response->shouldStream(),"ServerThread::readClient()","Streaming for registered messages is not currently supported.");
+					foreach(QSharedPointer<Picto::ProtocolResponse> msg,delayedResponses_)
+					{
+						//For now, registered responses can't stream
+						deliverResponse(msg);
+						tcpSocket_->flush();
+					}
+					delayedResponses_.clear();
+				case Picto::RegisteredResponseType::NotRegistered:
+					deliverResponse(response);
+					if(response->shouldStream())
+					{
+						command->setFieldValue("X-PictoStreamState",response->getFieldValue("X-PictoStreamState"));
+					}
+					tcpSocket_->flush();
 				}
-
-				tcpSocket_->flush();
 			} while(tcpSocket_->state() == QTcpSocket::ConnectedState &&
 				    //tcpSocket_->waitForBytesWritten() &&
 					response->shouldStream());
@@ -243,4 +263,10 @@ void ServerThread::handleTimeout()
 	//QSharedPointer<Picto::ProtocolResponse> response = new Picto::ProtocolResponse(protocol->id(),protocol->version(),Picto::ProtocolResponseType::ConnectionTimedOut);
 	//deliverResponse(response);
 	exit();
+}
+
+void ServerThread::handleError(QAbstractSocket::SocketError socketError)
+{
+	int i = socketError;
+	i = i;
 }

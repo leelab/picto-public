@@ -1,21 +1,20 @@
 #include <QStringList>
-#include <QTime>
 #include <QCoreApplication>
 
 #include "CommandChannel.h"
 
 namespace Picto {
-
+#define RECONNECT_POLL_INTERVAL_MS 100 
 CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QObject *parent)
 	:QObject(parent),
 	status_(disconnected),
 	reconnect_(true),
 	sourceId_(sourceId),
-	sourceType_(sourceType)
+	sourceType_(sourceType),
+	currRegCmdID_(Q_UINT64_C(1))
 {
 	//set up the socket
 	consumerSocket_ = new QTcpSocket(this);
-
 	connect(consumerSocket_, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 }
 
@@ -26,14 +25,15 @@ CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress 
 	status_(disconnected),
 	reconnect_(true),
 	sourceId_(sourceId),
-	sourceType_(sourceType)
+	sourceType_(sourceType),
+	currRegCmdID_(Q_UINT64_C(1))
 {
 	//set up the socket
 	consumerSocket_ = new QTcpSocket(this);
-
 	connect(consumerSocket_, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
-
-	initConnection();
+	
+	//set multipart boundary to a null string
+	connectToServer(serverAddr_,serverPort_);
 }
 
 CommandChannel::~CommandChannel()
@@ -44,6 +44,7 @@ CommandChannel::~CommandChannel()
 	delete consumerSocket_;
 }
 
+//! \brief Don't call from time sensitive zone
 void CommandChannel::connectToServer(QHostAddress serverAddress, quint16 serverPort_)
 {
 	if(status_ != disconnected)
@@ -53,27 +54,14 @@ void CommandChannel::connectToServer(QHostAddress serverAddress, quint16 serverP
 	this->serverPort_ = serverPort_;
 
 	status_ = disconnected;
-
-	initConnection();
-}
-
-void CommandChannel::initConnection()
-{
+	consumerSocket_->disconnectFromHost();
 	//set multipart boundary to a null string
 	multipartBoundary_ = "";
 
-	//connect to the server
-	consumerSocket_->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
-
-	if(consumerSocket_->waitForConnected(5000))
-	{
-		status_ = connected;
-		emit channelConnected();
-	}
-	else
-	{
-		status_ = disconnected;
-	}
+	QTime timer;
+	timer.restart();
+	if(!assureConnection(5000))
+		emit connectAttemptFailed();
 }
 
 
@@ -184,9 +172,9 @@ void CommandChannel::readIncomingResponse()
 			QString commandId = response->getFieldValue("Command-ID");
 			if(!commandId.isEmpty())
 			{
-				if(pendingCommands_.contains(QUuid(commandId)))
+				if(pendingCommands_.contains(commandId.toULongLong()))
 				{
-					pendingCommands_.remove(QUuid(commandId));
+					pendingCommands_.remove(commandId.toULongLong());
 					incomingResponseQueue_.push_back(response);
 				}
 			}
@@ -203,6 +191,53 @@ void CommandChannel::readIncomingResponse()
 
 }
 
+/*! \brief Assures that the channel is connected, and if not starts the reconnection process.
+ *	This call is non-blocking.  It checks for a connection every time the function is called
+ *	and if there is no connection, it attempts to reconnect whenever it hasn't tried within reconnectIntervalMs_.  
+ *	If connection is successful, it returns true and status is set accordingly.
+ */
+bool CommandChannel::assureConnection(int acceptableTimeoutMs)
+{	
+	if(consumerSocket_->state() == QAbstractSocket::ConnectedState)
+	{
+		//This is an incredibly dumb call.
+		//
+		//If the CommandChannel is being used in a situation with no event loop, the
+		//sockets behave oddly.  When the socket loses its connection, it doesn't realize it.
+		//This means that we can't reliably check for the connection by calling socket::state().
+		//A call to socket->flush also fails to work.
+		//Instead, I call waitForReadyRead, which has the side effect of realizing that the connection
+		//is dead, emmitting the disconnected signal, and then calling the disconnectHandler slot.
+		//
+		//Surely there is a better way to do this, but I can't find one and I've already spent
+		//way too long dealing with this issue.
+		consumerSocket_->waitForReadyRead(0);
+	}
+	//Now we can really check if we're connected and if not, 
+	//then if there is an acceptable timeout lets try reconnecting.
+	// 
+	if(consumerSocket_->state() != QAbstractSocket::ConnectedState)
+	{
+		status_ = disconnected;
+		if(acceptableTimeoutMs > 0)
+		{
+			QTime timer;
+			timer.start();
+			consumerSocket_->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
+			int connectDelay = timer.elapsed();
+			if(connectDelay >= acceptableTimeoutMs)
+				return false;
+			consumerSocket_->waitForConnected(acceptableTimeoutMs - connectDelay);
+		}
+	}
+	if(consumerSocket_->state() == QAbstractSocket::ConnectedState)
+	{
+		status_ = connected;
+		return true;
+	}
+	return false;
+}
+
 /*! \brief Sends a command over the channel
  *
  *	sendCommand sends the passed in command over the commandChannel.  This can 
@@ -213,18 +248,10 @@ void CommandChannel::readIncomingResponse()
  */
 bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	//This is an incredibly dumb call.
-	//
-	//If the CommandChannel is being used in a situation with no event loop, the
-	//sockets behave oddly.  When the socket loses its connection, it doesn't realize it.
-	//This means that we can't reliably check for the connection by calling socket::state().
-	//A call to socket->flush also fails to work.
-	//Instead, I call waitForReadyRead, which has the side effect of realizing that the connection
-	//is dead, emmitting the disconnected signal, and then calling the reconnect_ slot.
-	//
-	//Surely there is a better way to do this, but I can't find one and I've already spent
-	//way too long dealing with this issue.
-	consumerSocket_->waitForReadyRead(0);
+	// We need to call assureConnection every time we send a command.  It fails if there is no
+	// connection and starts the process of reconnecting without blocking.
+	if(!assureConnection())
+		return false;
 
 	//We always add a session-ID field, even if it's a null value
 	command->setFieldValue("Session-ID",sessionId_.toString());
@@ -255,9 +282,10 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
  */
 bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	QUuid commandId = QUuid::createUuid();
-	command->setFieldValue("Command-ID",commandId);
-	pendingCommands_[commandId] = command;
+	Q_ASSERT_X(sessionId_ != QUuid(),"CommandChannel::sendRegisteredCommand","Registered commands may only be sent on command channels with session IDs!");
+	command->setFieldValue("Command-ID",QString::number(currRegCmdID_));
+	command->setFieldValue("Time-Sent",QDateTime::currentDateTime().toString());
+	pendingCommands_[currRegCmdID_++] = command;
 	return sendCommand(command);
 }
 
@@ -272,29 +300,33 @@ bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand
  */
 void CommandChannel::disconnectHandler()
 {
-	status_ = disconnected;
-
-	if(!reconnect_)
+	if(reconnect_)
 	{
-		emit channelDisconnected();
+		// If reconnect timer isn't null, we've already started trying to reconnect,
+		// and we may have been called by the assureConnection() function.
+		if(status_ == connected)
+			assureConnection();
 		return;
 	}
+	status_ = disconnected;
+	emit channelDisconnected();
 
-	//We could get this signal from either socket...
-	QTcpSocket *socket = (QTcpSocket*)QObject::sender();
-	
-	//assume the disconnect is due to error and attermpt to reconnect_
-	socket->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
 
-	if(socket->waitForConnected(1000))
-	{
-		status_ = connected;
-	}
-	else
-	{
-		emit channelDisconnected();
-		status_ = disconnected;
-	}
+	////We could get this signal from either socket...
+	//QTcpSocket *socket = (QTcpSocket*)QObject::sender();
+	//
+	////assume the disconnect is due to error and attermpt to reconnect_
+	//socket->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
+
+	//if(socket->waitForConnected(1000))
+	//{
+	//	status_ = connected;
+	//}
+	//else
+	//{
+	//	emit channelDisconnected();
+	//	status_ = disconnected;
+	//}
 
 }
 
@@ -302,24 +334,45 @@ void CommandChannel::disconnectHandler()
  *
  *	Every time a registered command is sent, it is added to the list of pending
  *	commands.  When a registered response is received, the corresponding command is 
- *	removed from that list.  This function clears out the pending commands list,
- *	and resends all of the registered commands that have not yet received.
+ *	removed from that list.  This function resends all of the registered commands that 
+ *	were sent over "timeoutS" seconds ago and have not yet had responses received.
  */
-void CommandChannel::resendPendingCommands()
+void CommandChannel::resendPendingCommands(int timeoutS)
 {
+	Q_ASSERT(timeoutS >=0);
 	QList<QSharedPointer<ProtocolCommand> > commandsToResend;
+	QDateTime timeSent;
+	QDateTime currTime = QDateTime::currentDateTime();
 	foreach(QSharedPointer<ProtocolCommand> command, pendingCommands_)
 	{
-		commandsToResend.append(command);
+		// If the command was sent more than 10 secs ago, send it again.
+		timeSent = QDateTime::fromString(command->getFieldValue("Time-Sent"));
+		if(timeSent.secsTo(currTime) > timeoutS)
+		{
+			commandsToResend.push_back(command);
+		}
 	}
-
-	pendingCommands_.clear();
 
 	foreach(QSharedPointer<ProtocolCommand> command, commandsToResend)
 	{
-		sendRegisteredCommand(command);
+		command->setFieldValue("Time-Sent",QDateTime::currentDateTime().toString());
+		sendCommand(command);
 	}
 }
+
+void CommandChannel::setSessionId(QUuid sessionId) 
+{ 
+	if(sessionId_ == sessionId)
+		return;
+	currRegCmdID_ = Q_UINT64_C(1);
+	sessionId_ = sessionId; 
+};
+
+void CommandChannel::clearSessionId() 
+{ 
+	setSessionId(QUuid()); 
+};
+
 
 }; //namespace Picto
 

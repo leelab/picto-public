@@ -6,12 +6,10 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*!	\brief A command handler used for internal testing.
+/*!	\brief A command handler used when a component just wants to check on the server.
  *
- *	I created this command handler when I was first playing with the server.  It was 
- *	an experiment to see if I could create my own command handler.  It has since been 
- *	used as a testbed to see how different commands might work.  Feel free to play with
- *	it or throw it away.
+ *	Components can send simple messages to the server using TEST anything PICTO/1.0.
+ *	The server will always respond with an OK message.
  */
 struct TestCommandHandler : Picto::ProtocolCommandHandler
 {
@@ -20,8 +18,6 @@ public:
 
 	QString method() { return QString("TEST"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
-private:
-	void doAlignTest();
 };
 
 #endif

@@ -66,65 +66,6 @@ float VirtualDevicePlugin::samplingRate()
 		return markSource_->samplingRate();
 }
 
-/*!	\brief	Calls getNextEvent() over and over, adding new events to the xml until it gets null back.
- */
-QString VirtualDevicePlugin::dumpData()
-{
-	QString xmlData;
-	QXmlStreamWriter writer(&xmlData);
-	writer.setAutoFormatting(true);
-	double currTime = timeStamper_->stampSec();
-
-	unsigned int numEvents = 0;
-
-	QSharedPointer<VirtualEvent> currEvent = getNextEvent(currTime);
-	while(!currEvent.isNull())
-	{
-		numEvents++;
-		if(currEvent->type_ == VirtualEvent::eSPIKE)
-		{
-			//spike events
-			writer.writeStartElement("event");
-			writer.writeAttribute("type", "spike");
-
-			writer.writeTextElement("timestamp",QString("%1").arg(currEvent->timeStamp_,0,'f',4));
-
-			writer.writeTextElement("channel",QString("%1").arg(currEvent->channel_));
-
-			char chUnit = 'a'+currEvent->unit_-1;
-			writer.writeTextElement("unit",QString("%1").arg(chUnit));
-
-			//waveform data
-			writer.writeStartElement("wave");
-			for(int i=0; i<currEvent->waveform_.size(); i++)
-			{
-				writer.writeCharacters(QString("%1 ").arg(currEvent->waveform_[i]));
-			}
-			writer.writeEndElement();			
-
-			writer.writeEndElement(); //end event
-		}
-		else if(currEvent->type_ == VirtualEvent::eMARK)
-		{
-			// eventcodes
-			writer.writeStartElement("event");
-			writer.writeAttribute("type","externalEvent");
-
-			writer.writeTextElement("timestamp",QString("%1").arg(currEvent->timeStamp_,0,'f',4));
-
-			writer.writeTextElement("eventCode",QString("%1").arg(currEvent->eventCode_));
-
-			writer.writeEndElement(); //event
-		}
-		currEvent = getNextEvent(currTime);
-	}
-	//number of events
-	writer.writeStartElement("numEvents");
-	writer.writeCharacters(QString("%1").arg(numEvents));
-	writer.writeEndElement();
-	return xmlData;
-}
-
 /*!	\brief	Gets new events from spikeSource and markSource until they return NULL and returns them.
  *
  *	This function also sorts the spikes and mark events into increasing timestamp order.
@@ -158,6 +99,51 @@ QSharedPointer<VirtualEvent> VirtualDevicePlugin::getNextEvent(double currTime)
 	else if(lastMark_->timeStamp_ < lastSpike_->timeStamp_) lastEvent_ = lastMark_;
 	else lastEvent_ = lastSpike_;
 	return lastEvent_;
+}
+
+QList<QSharedPointer<Picto::DataStore>> VirtualDevicePlugin::dumpData()
+{
+	dataList_.clear();
+	updateData();
+	return dataList_;
+}
+
+/*!	\brief	Calls getNextEvent() over and over, adding new events to the dataStores until it gets null back.
+ */
+void VirtualDevicePlugin::updateData()
+{
+	double currTime = timeStamper_->stampSec();
+	QSharedPointer<VirtualEvent> currEvent = getNextEvent(currTime);
+	while(!currEvent.isNull())
+	{
+		if(currEvent->type_ == VirtualEvent::eSPIKE)
+		{
+			QSharedPointer<Picto::NeuralDataStore> data(new Picto::NeuralDataStore);
+
+			//spike events
+			data->setTimestamp(currEvent->timeStamp_);
+			data->setChannel(currEvent->channel_);
+			data->setUnit('a'+currEvent->unit_-1);
+			QSharedPointer<QList<int>> waveform(new QList<int>);
+			//waveform data
+			for(int i=0; i<currEvent->waveform_.size(); i++)
+			{
+				waveform->push_back(currEvent->waveform_[i]);
+			}
+			data->setWaveform(waveform);
+			dataList_.push_back(data);
+		}
+		else if(currEvent->type_ == VirtualEvent::eMARK)
+		{
+			QSharedPointer<Picto::AlignmentDataStore> data(new Picto::AlignmentDataStore);
+
+			// eventcodes
+			data->setTimestamp(currEvent->timeStamp_);
+			data->setAlignCode(currEvent->eventCode_);
+			dataList_.push_back(data);
+		}
+		currEvent = getNextEvent(currTime);
+	}
 }
 
 Q_EXPORT_PLUGIN2(ProxyPluginVirtualDevice, VirtualDevicePlugin)

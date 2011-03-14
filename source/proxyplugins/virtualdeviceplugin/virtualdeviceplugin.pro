@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = ProxyPluginVirtualDevice
-QT = core  xml
+QT = core gui xml
 CONFIG += qt warn_on debug_and_release
 CONFIG += plugin
 

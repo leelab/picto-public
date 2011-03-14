@@ -29,6 +29,7 @@ public:
 
 	virtual QString method() = 0;
 	virtual QSharedPointer<ProtocolResponse> processCommand(QSharedPointer<ProtocolCommand>) = 0;
+
 };
 
 }; //namespace Picto

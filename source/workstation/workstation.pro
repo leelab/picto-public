@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = PictoWorkstation
-QT = core gui xml network script scripttools
+QT = core gui xml network script scripttools sql
 CONFIG += qt warn_on debug_and_release
 DEPENDPATH += .
 INCLUDEPATH += .

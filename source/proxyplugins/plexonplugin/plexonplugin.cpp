@@ -56,16 +56,15 @@ float PlexonPlugin::samplingRate()
 	return 1/(tick*1E-6);
 }
 
-QString PlexonPlugin::dumpData()
+QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 {
-	QString xmlData;
-	QXmlStreamWriter writer(&xmlData);
-
-	writer.setAutoFormatting(true);
+	QList<QSharedPointer<Picto::DataStore>> returnList;
+	QSharedPointer<Picto::NeuralDataStore> neuralData;
+	QSharedPointer<Picto::AlignmentDataStore> alignData;
 
 	if(!PL_IsSortClientRunning())
 	{
-		return QString::null;
+		return returnList;
 	}
 
 	//Collect the data from the Plexon Server
@@ -80,63 +79,43 @@ QString PlexonPlugin::dumpData()
 	    int NumMAPEvents = MAX_MAP_EVENTS_PER_READ;
 		PL_GetWaveFormStructures(&NumMAPEvents, pServerEventBuffer);
 
-		//number of events
-		writer.writeStartElement("numEvents");
-		writer.writeCharacters(QString("%1").arg(NumMAPEvents));
-		writer.writeEndElement();
-
 		for(int MAPEvent=0; MAPEvent<NumMAPEvents; MAPEvent++)
 		{
-
 			//spike events
 			if(	pServerEventBuffer[MAPEvent].Type == PL_SingleWFType && 
 				pServerEventBuffer[MAPEvent].Unit >= 1 && 
 				pServerEventBuffer[MAPEvent].Unit <= 4)
 			{
-				writer.writeStartElement("event");
-				writer.writeAttribute("type", "spike");
-
+				neuralData = QSharedPointer<Picto::NeuralDataStore>(new Picto::NeuralDataStore());
+				
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
-				writer.writeTextElement("timestamp",QString("%1").arg(timestampSec,0,'f',4));
-
-				writer.writeTextElement("channel",QString("%1").arg(pServerEventBuffer[MAPEvent].Channel));
-
+				neuralData->setTimestamp(timestampSec);
+				neuralData->setChannel(pServerEventBuffer[MAPEvent].Channel);
 				char chUnit = 'a'+pServerEventBuffer[MAPEvent].Unit-1;
-				writer.writeTextElement("unit",QString("%1").arg(chUnit));
+				neuralData->setUnit(chUnit);
 
+				QSharedPointer<QList<int>> waveform(new QList<int>);
 				//waveform data
-				writer.writeStartElement("wave");
 				for(int i=0; i<pServerEventBuffer[MAPEvent].NumberOfDataWords; i++)
 				{
-					writer.writeCharacters(QString("%1 ").arg(pServerEventBuffer[MAPEvent].WaveForm[i]));
+					waveform->push_back(pServerEventBuffer[MAPEvent].WaveForm[i]);
 				}
-				writer.writeEndElement();
-				
-
-				writer.writeEndElement(); //end event
+				neuralData->setWaveform(waveform);
+				returnList.push_back(neuralData);
 			}
 			// eventcodes
 			if(pServerEventBuffer[MAPEvent].Type == PL_ExtEventType)
 			{
-				writer.writeStartElement("event");
-				writer.writeAttribute("type","externalEvent");
-
+				alignData = QSharedPointer<Picto::AlignmentDataStore>(new Picto::AlignmentDataStore());
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
-				writer.writeTextElement("timestamp",QString("%1").arg(timestampSec,0,'f',4));
-
-				writer.writeTextElement("eventCode",QString("%1").arg(pServerEventBuffer[MAPEvent].Unit));
-
-				writer.writeEndElement(); //event
-
-
+				alignData->setTimestamp(timestampSec);
+				alignData->setAlignCode(pServerEventBuffer[MAPEvent].Unit);
+				returnList.push_back(alignData);
 			}
 		}
 	}
-
 	free(pServerEventBuffer);
-
-
-	return xmlData;
+	return returnList;
 }
 
 Q_EXPORT_PLUGIN2(ProxyPluginPlexon, PlexonPlugin)

@@ -10,6 +10,7 @@
 
 #include <QApplication>
 #include <QTime>
+#include <QtConcurrentRun>
 
 namespace Picto {
 	namespace Engine {
@@ -91,9 +92,40 @@ void PictoEngine::giveReward(int channel)
 
 	Timestamper stamper;
 	double timestamp = stamper.stampSec();
+	double lastMsgTime = 0;
 
-	rewardController_->giveReward(channel);
-
+	//Since we don't want the server to timeout the director, we make sure that we
+	//update the server at least once per second by running th giveReward function
+	//in as separate thread.
+	QFuture<void> future = QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel);
+	while(!future.isFinished())
+	{
+		QCoreApplication::processEvents();
+		if(stamper.stampSec() > (lastMsgTime+1))
+		{
+			if((!dataCommandChannel_.isNull()) && (!slave_))
+			{
+				QString status = "running";
+				int engCmd = getEngineCommand();
+				switch(engCmd)
+				{
+				case Engine::PictoEngine::ResumeEngine:
+					status = "running";
+					break;
+				case Engine::PictoEngine::PauseEngine:
+					status = "paused";
+					break;
+				case Engine::PictoEngine::StopEngine:
+					status = "stopped";
+					break;
+				}
+				QString updateCommandStr = "COMPONENTUPDATE "+getName()+":"+status+" PICTO/1.0";
+				QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
+				dataCommandChannel_->sendCommand(updateCommand);
+			}
+			lastMsgTime = stamper.stampSec();
+		}
+	}
 	if(dataCommandChannel_.isNull())
 		return;
 
@@ -102,7 +134,6 @@ void PictoEngine::giveReward(int channel)
 
 	int duration = rewardController_->getRewardDurationMs(channel);
 	RewardDataStore rewardData(duration,channel,timestamp);
-
 
 	QString dataCommandStr = "PUTDATA "+getName()+" PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
@@ -118,8 +149,6 @@ void PictoEngine::giveReward(int channel)
 
 	dataCommand->setContent(dataXml);
 	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
-	QUuid commandUuid = QUuid::createUuid();
-	dataCommand->setFieldValue("Command-ID",commandUuid.toString());
 
 	//Send the command in registered mode (so we don't have to wait for a response)
 	dataCommandChannel_->sendRegisteredCommand(dataCommand);

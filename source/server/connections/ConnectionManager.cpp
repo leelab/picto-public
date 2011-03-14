@@ -20,7 +20,7 @@ ConnectionManager::ConnectionManager()
 	ServerConfig serverConfig;
 
 	timeoutTimer_ = new QTimer;
-	timeoutTimer_->setInterval(3000);
+	timeoutTimer_->setInterval(5000);
 	connect(timeoutTimer_, SIGNAL(timeout()), this, SLOT(checkForTimeouts()));
 	timeoutTimer_->start();
 
@@ -50,22 +50,14 @@ ConnectionManager* ConnectionManager::Instance()
  */
 void ConnectionManager::checkForTimeouts()
 {
-	//First check for component timeouts.  This is done by calling the
+	//First check for session timeouts.  This is done by calling the 
 	//clearActivity function which clears the activity bool and returns
-	//its value.  If there has been no activity since the last time we 
-	//checked, the component instance should be removed from our list.
-	QMutexLocker locker(mutex_);
-	foreach(QSharedPointer<ComponentInfo> componentInfo, components_)
-	{
-		if(!componentInfo->clearActivity())
-		{
-			componentInfo->setStatus(ComponentStatus::notFound);
-			components_.remove(componentInfo->getUuid());
-			printf("Director timed out!!!!!!!\n");
-		}
-	}
-
-	//Next check for session timeouts.
+	//its value.  If there has been no activity since the last time we
+	//checked, the session instance should be removed from our list.
+	//If there has been activity, we should set activity for all of
+	//that sessions components, since we don't want any of them timing
+	//out if any of them haven't timed out. We also send each one a directive
+	//which has the affect of forcing their cached data to be flushed.
 	QMutexLocker locker2(mutex_);
 	foreach(QSharedPointer<SessionInfo> sessionInfo, openSessions_)
 	{
@@ -77,6 +69,33 @@ void ConnectionManager::checkForTimeouts()
 			openSessions_.remove(sessionInfo->uuid_);
 			printf("Session timed out!!!!!\n");
 		}
+		else
+		{
+			QSharedPointer<ComponentInfo> component = sessionInfo->getComponentByType("DIRECTOR");
+			if(!component.isNull())
+			{
+				component->setActivity();
+				sessionInfo->addPendingDirective("OK","DIRECTOR");
+			}
+			component = sessionInfo->getComponentByType("PROXY");
+			if(!component.isNull())
+			{
+				component->setActivity();
+				sessionInfo->addPendingDirective("OK","PROXY");
+			}
+		}
+	}
+
+	//Now check for component timeouts.
+	QMutexLocker locker(mutex_);
+	foreach(QSharedPointer<ComponentInfo> componentInfo, components_)
+	{
+		if(!componentInfo->clearActivity())
+		{
+			componentInfo->setStatus(ComponentStatus::notFound);
+			components_.remove(componentInfo->getUuid());
+			printf("Director timed out!!!!!!!\n");
+		}
 	}
 }
 
@@ -84,7 +103,7 @@ void ConnectionManager::checkForTimeouts()
  *
  *	Everytime the COMPONENTUPDATE command is received by the server, this 
  *	function gets called.  The function checks to see if the component instance referenced
- *	isn in our list, and if not adds it.  If the instance already exists, the function makes
+ *	is in our list, and if not adds it.  If the instance already exists, the function makes
  *	any needed changes.  Note that the Uuid is being used as a primary key here.
  */
 void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status)
@@ -431,6 +450,7 @@ void ConnectionManager::endSession(QUuid sessionId)
 	if(sessionIsValid(sessionId))
 	{
 		openSessions_[sessionId]->endSession();
+		QMutexLocker locker(mutex_);
 		openSessions_.remove(sessionId);
 		ServerConfig serverConfig;
 		serverConfig.removeSession(sessionId);

@@ -327,79 +327,105 @@ int ProxyMainWindow::startSession(QUuid sessionID)
 	{
 		//send a PUTDATA command to the server with the most recent behavioral data
 		QSharedPointer<Picto::ProtocolResponse> dataResponse;
-		QString dataCommandStr = "PUTDATA "+name()+":running PICTO/1.0";
+		QString dataCommandStr = "PUTDATA "+name()+":"+ getStatusString() + " PICTO/1.0";
 		QSharedPointer<Picto::ProtocolCommand> response(new Picto::ProtocolCommand(dataCommandStr));
 
 		//set up XML writer
 		QString xmlData;
-		QXmlStreamWriter writer(&xmlData);
-		writer.setAutoFormatting(true);
-		writer.writeStartDocument();
-		writer.writeStartElement("Data");
+		QSharedPointer<QXmlStreamWriter> writer(new QXmlStreamWriter(&xmlData));
+		writer->setAutoFormatting(true);
+		writer->writeStartDocument();
+		writer->writeStartElement("Data");
 
 		//Start writing the XML document
-		writer.writeTextElement("device",iNDAcq->device());
+		//WE ARE NOT CURRENTLY USING THE DATA BELOW, SO ITS DISABLED, BUT WE WILL
+		//NEED TO.  WHEN THIS HAPPENS, PUT IT IN A DATASTORE OF ITS OWN AND HANDLE
+		//IT IN PUTDATA HANDLER ON SERVER.
+		//writer->writeTextElement("device",iNDAcq->device());
 
-		//check to see if our device is running
-		writer.writeStartElement("deviceStatus");
-		writer.writeCharacters("running");
-		writer.writeEndElement();
-		writer.writeTextElement("sampleRate",QString("%1").arg(iNDAcq->samplingRate()));
+		////check to see if our device is running
+		//writer->writeStartElement("deviceStatus");
+		//writer->writeCharacters("running");
+		//writer->writeEndElement();
+		//writer->writeTextElement("sampleRate",QString("%1").arg(iNDAcq->samplingRate()));
 
 
 		//get the data from the neural acquisition device 
 		//(the plugin should have formatted it as XML already)
-		xmlData.append(iNDAcq->dumpData());
-		writer.writeEndElement();  //end "ResponseACQ1.0"
-		writer.writeEndDocument();
+		QList<QSharedPointer<Picto::DataStore>> dataList = iNDAcq->dumpData();
+		foreach(QSharedPointer<Picto::DataStore> data, dataList)
+		{
+			data->serializeAsXml(writer);
+		}
+		//xmlData.append(iNDAcq->dumpData());
+		writer->writeEndElement();  //end "ResponseACQ1.0"
+		writer->writeEndDocument();
 		
 		response->setContent(xmlData.toUtf8());
 		//response->setContentEncoding(Picto::ContentEncodingType::gzip); //ADD ENCODING!!!!!!!!!!!!!!!!
 		response->setFieldValue("Content-Length",QString::number(xmlData.length()));
-
-		dataCommandChannel_->sendRegisteredCommand(response);
+		
+		if(dataList.size())
+		{
+			qDebug("sent message");
+			dataCommandChannel_->sendRegisteredCommand(response);
+		}
 
 		//check for and process responses
-		while(dataCommandChannel_->waitForResponse(0))
+		if(dataCommandChannel_->assureConnection(2000))
 		{
 			serverActivity();
-			dataResponse = dataCommandChannel_->getResponse();
-			Q_ASSERT(!dataResponse.isNull());
-			Q_ASSERT(dataResponse->getResponseType() == "OK");
+			while(dataCommandChannel_->waitForResponse(0))
+			{
+qDebug("responses waiting");
+				dataResponse = dataCommandChannel_->getResponse();
+				Q_ASSERT(!dataResponse.isNull());
+				Q_ASSERT(dataResponse->getResponseType() == "OK");
 
-			QString statusDirective = dataResponse->getDecodedContent().toUpper();
+				QString statusDirective = dataResponse->getDecodedContent().toUpper();
+qDebug("got message");
+				//We may want to break this out in a seperate function at some point...
+				if(statusDirective.startsWith("OK"))
+				{
+					qDebug("Message:OK");
+					//do nothing
+				}
+				else if(statusDirective.startsWith("STOP"))
+				{
+					qDebug("Message:STOP");
+					//engine->stop();
+				}
+				else if(statusDirective.startsWith("PAUSE"))
+				{
+					qDebug("Message:PAUSE");
+					//engine->pause();
+				}
+				else if(statusDirective.startsWith("RESUME"))
+				{
+					qDebug("Message:RESUME");
+					//engine->resume();
+				}
+				else if(statusDirective.startsWith("REWARD"))
+				{
+					qDebug("Message:REWARD");
+					//int channel = statusDirective.split(" ").value(1).toInt();
+					//engine->giveReward(channel);	
+				}
+				else if(statusDirective.startsWith("ENDSESSION"))
+				{
+					qDebug("Message:ENDSESSION");
+					sessionEnded_ = true;
+					break;	
+				}
+				else
+				{
+					qDebug("Message:UNKNOWN DIRECTIVE");
+					Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server: "+statusDirective.toAscii());
+				}
+			}
 
-			//We may want to break this out in a seperate function at some point...
-			if(statusDirective.startsWith("OK"))
-			{
-				//do nothing
-			}
-			else if(statusDirective.startsWith("STOP"))
-			{
-				//engine->stop();
-			}
-			else if(statusDirective.startsWith("PAUSE"))
-			{
-				//engine->pause();
-			}
-			else if(statusDirective.startsWith("RESUME"))
-			{
-				//engine->resume();
-			}
-			else if(statusDirective.startsWith("REWARD"))
-			{
-				//int channel = statusDirective.split(" ").value(1).toInt();
-				//engine->giveReward(channel);	
-			}
-			else if(statusDirective.startsWith("ENDSESSION"))
-			{
-				sessionEnded_ = true;
-				break;	
-			}
-			else
-			{
-				Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server: "+statusDirective.toAscii());
-			}
+			//resend all of the pending responses
+			dataCommandChannel_->resendPendingCommands(10);
 		}
 		if(sessionEnded_)
 			break;

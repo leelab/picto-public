@@ -239,24 +239,22 @@ float TdtPlugin::samplingRate()
 	return sampleRate;
 }
 
-QString TdtPlugin::dumpData()
+QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 {
+	QList<QSharedPointer<Picto::DataStore>> returnList;
+	QSharedPointer<Picto::NeuralDataStore> neuralData;
+	QSharedPointer<Picto::AlignmentDataStore> alignData;
 	if(!startCOM())
 	{
-		return QString::null;
+		return returnList;
 	}
-
-	QString xmlData;
-	QXmlStreamWriter writer(&xmlData);
-
-	writer.setAutoFormatting(true);
 
 	long tankStatus = tdtTank->CheckTank(szTankName);
 	if(tankStatus != 79 && tankStatus != 82)
 	{
-		writer.writeTextElement("Error","TDT tank not open");
+		//TDT Tank not open
 		stopCOM();
-		return xmlData;
+		return returnList;
 	}
 
 	int numSpikeSamples;
@@ -357,32 +355,24 @@ QString TdtPlugin::dumpData()
 	else
 		lastTimestamp = eventList.last().timeStamp;
 
-	//number of events
-	writer.writeTextElement("numEvents",QString("%1").arg(numSpikeSamples+numEvents));
-
 	while(spikeList.size() != 0 && eventList.size() !=0)
 	{
 		//output a spike waveform
 		if(spikeList.begin()->timeStamp <= eventList.begin()->timeStamp)
 		{
-			writer.writeStartElement("event");
-			writer.writeAttribute("type", "spike");
-
-			writer.writeTextElement("timestamp",QString("%1").arg(spikeList.begin()->timeStamp));
-
-			writer.writeTextElement("channel",QString("%1").arg(spikeList.begin()->chanNum));
-
-			writer.writeTextElement("unit",QString("%1").arg(spikeList.begin()->unitNum));
+			neuralData = QSharedPointer<Picto::NeuralDataStore>(new Picto::NeuralDataStore());
+			neuralData->setTimestamp(spikeList.begin()->timeStamp);
+			neuralData->setChannel(spikeList.begin()->chanNum);
+			neuralData->setUnit(spikeList.begin()->unitNum);
 
 			//waveform data
-			writer.writeStartElement("wave");
+			QSharedPointer<QList<int>> waveform(new QList<int>);
 			for(int i=0; i<spikeList.begin()->sampleWaveform.size(); i++)
 			{
-				writer.writeCharacters(QString("%1 ").arg(spikeList.begin()->sampleWaveform[i]));
+				waveform->push_back(spikeList.begin()->sampleWaveform[i]);
 			}
-			writer.writeEndElement();
-			
-			writer.writeEndElement(); //end event
+			neuralData->setWaveform(waveform);
+			returnList.push_back(neuralData);
 
 			//remove the just processed spike
 			spikeList.erase(spikeList.begin());
@@ -390,23 +380,17 @@ QString TdtPlugin::dumpData()
 		//output an eventcode
 		else if(eventList.begin()->timeStamp < spikeList.begin()->timeStamp)
 		{
-			writer.writeStartElement("event");
-			writer.writeAttribute("type","externalEvent");
+			alignData = QSharedPointer<Picto::AlignmentDataStore>(new Picto::AlignmentDataStore());
+			alignData->setTimestamp(eventList.begin()->timeStamp);
+			alignData->setAlignCode(eventList.begin()->code);
 
-			writer.writeTextElement("timestamp",QString("%1").arg(eventList.begin()->timeStamp));
-
-			writer.writeTextElement("eventCode",QString("%1").arg(eventList.begin()->code));
-
-			writer.writeEndElement(); //event
-
+			returnList.push_back(alignData);
 			//remove the just processed event
 			eventList.erase(eventList.begin());
-
-
 		}
 	}
 	stopCOM();
-	return xmlData;
+	return returnList;
 }
 
 //comparison functions for easy sorting

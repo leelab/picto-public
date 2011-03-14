@@ -5,9 +5,43 @@
 namespace Picto {
 
 QStringList DataStore::errors_;
+qulonglong DataStore::lastDataID_ = 0;
 
-DataStore::DataStore()
+DataStore::DataStore():
+dataID_(0)
 {
+}
+
+
+/*! \brief Used to serialize a unique Data ID into this DataStore's XML record
+ *	This may or may not be called by the child classes serializeAsXml function
+ *	depending whether a unique dataID is desired for this DataStore
+ */
+bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+{
+	if(dataID_ == 0)
+		dataID_ = generateDataID();
+	xmlStreamWriter->writeTextElement("dataid",QString::number(dataID_));
+	return true;
+} 
+
+/*! \brief Deserializes the unique data ID from a DataStore's XML record if it exists.
+ */
+bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "dataid")
+	{
+		addError("DataStore", "Unexpected tag", xmlStreamReader);
+		return false;
+	}
+	dataID_ = xmlStreamReader->readElementText().toLongLong();
+	return true;
+}
+
+//! \brief Returns this datastore's dataID
+qulonglong DataStore::getDataID()
+{
+	return dataID_;
 }
 
 /*! \brief Adds an error message to the list of errors
@@ -51,7 +85,10 @@ QString DataStore::getErrors()
 
 }
 
-
+qulonglong DataStore::generateDataID()
+{
+	return ++lastDataID_;
+}
 
 void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
 						QString name, QPoint point)

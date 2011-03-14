@@ -3,6 +3,7 @@
 
 #include "../common.h"
 #include "DataStore.h"
+#include "FrameUnitDataStore.h"
 
 #include <QString>
 
@@ -21,26 +22,21 @@ class FrameDataStore : public DataStore
 #endif
 {
 public:
-	struct FrameData{
-		int frameNumber; 
-		double time;
-		QString stateName;
-	};
 
 	FrameDataStore();
 
 	void addFrame(int frameNumber, double time, QString stateName);
 	void clearFrames() { data_.clear(); };
 	int length() { return data_.length(); }
-	FrameData takeFirstDataPoint() { return data_.takeFirst(); };
-	FrameData takeLastDataPoint() { return data_.takeLast(); };
+	FrameUnitDataStore takeFirstDataPoint() { return data_.takeFirst(); };
+	FrameUnitDataStore takeLastDataPoint() { return data_.takeLast(); };
 
 	//Data store functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 
-	QList<FrameData> data_;
+	QList<FrameUnitDataStore> data_;
 };
 
 

@@ -28,6 +28,8 @@
 #include <QSharedPointer>
 #include <QMenu>
 #include <QCloseEvent>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 
 RemoteViewer::RemoteViewer(QWidget *parent) :
@@ -48,7 +50,31 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateLists()));
 	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateActions()));
 
-	observerId_ = QUuid::createUuid();
+
+
+
+
+
+
+
+	QString dbName = "PictoWorkstation";
+	dbName = dbName.toLower();
+	QSqlDatabase configDb = QSqlDatabase::addDatabase("QSQLITE",dbName);
+	configDb.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + dbName + ".config");
+	configDb.open();
+
+	QSqlQuery query(configDb);
+	if(!configDb.tables().contains("workstationinfo"))
+	{
+		query.exec("CREATE TABLE workstationinfo (key TEXT, value TEXT)");
+		observerId_ = QUuid::createUuid();
+		query.prepare("INSERT INTO workstationinfo (key,value) VALUES ('id',:id)");
+		query.bindValue(":id",QString(observerId_));
+		query.exec();
+	}
+	query.exec("SELECT value FROM workstationinfo WHERE key='id'");
+	Q_ASSERT(query.next());
+	observerId_ = QUuid(query.value(0).toString());
 }
 
 //! Called just before displaying the viewer
@@ -99,23 +125,26 @@ bool RemoteViewer::aboutToQuit()
 	if(!connectAction_->isChecked())
 		return true;
 
-	if(!startedSession_)
-	{
-		disjoinSession();
-		return true;
-	}
+	//if(!startedSession_)
+	//{
+	//	disjoinSession();
+	//	return true;
+	//}
+	
+	changeConnectionState(false);
+	return true;
 
-	int r = QMessageBox::warning(this,Picto::Names->workstationAppName,
-				tr("There is an active session.\nQuitting will end the session\n"
-				"Do you still want to quit?"),
-				   QMessageBox::Yes|QMessageBox::No);
-	if(r == QMessageBox::Yes)
-	{
-		changeConnectionState(false);
-		return true;
-	}
-	else
-		return false;	
+	//int r = QMessageBox::warning(this,Picto::Names->workstationAppName,
+	//			tr("There is an active session.\nQuitting will end the session\n"
+	//			"Do you still want to quit?"),
+	//			   QMessageBox::Yes|QMessageBox::No);
+	//if(r == QMessageBox::Yes)
+	//{
+	//	changeConnectionState(false);
+	//	return true;
+	//}
+	//else
+	//	return false;	
 }
 
 //! Initializes the engine with all of the appropriate pieces for testing
@@ -245,6 +274,10 @@ void RemoteViewer::setupServerChannel()
 	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), engineSlaveChannel_, SLOT(connectToServer(QHostAddress, quint16)));
 	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), behavioralDataChannel_, SLOT(connectToServer(QHostAddress, quint16)));
 
+	connect(serverChannel_, SIGNAL(connectAttemptFailed()), serverDiscoverer_, SLOT(discover()));
+	connect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), serverDiscoverer_, SLOT(discover()));
+	connect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), serverDiscoverer_, SLOT(discover()));
+
 	connect(serverChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
 	connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
 	connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
@@ -360,30 +393,36 @@ void RemoteViewer::changeConnectionState(bool checked)
 		}
 	}
 	else
-	{
-		//If we're running, we should stop first
-		if(localStatus_ == Running || localStatus_ == Paused)
+	{ 
+		int r = QMessageBox::No;
+		if(((localStatus_ == Stopped) || (localStatus_ == Idle)) && (startedSession_))
 		{
-			if(startedSession_)
-			{
-				stop();
-
-				//wait for the remote engine to stop
-				QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
-				QTime timer;
-				timer.start();
-				while(directorStatus(directorID) != Stopped && timer.elapsed() < 2000);
-
-				Q_ASSERT_X(timer.elapsed()<2000, "RemoteViewer::changeConnectionState", "Remote director never stopped");
-			}
-			else
-			{
-				engine_->stop();
-				localStatus_= Stopped;
-				updateActions();
-			}
-
+			r = QMessageBox::warning(this,Picto::Names->workstationAppName,
+				tr("You are disconnecting from a session that is not currently running an experiment.\n"
+				"Would you like to end the session as well?"),
+				   QMessageBox::Yes|QMessageBox::No);
 		}
+
+		//If we're running, we should stop first
+		if(r == QMessageBox::Yes)
+		{
+			stop();
+
+			//wait for the remote engine to stop
+			QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+			QTime timer;
+			timer.start();
+			while(directorStatus(directorID) != Stopped && timer.elapsed() < 2000);
+
+			Q_ASSERT_X(timer.elapsed()<2000, "RemoteViewer::changeConnectionState", "Remote director never stopped");
+		}
+		else
+		{
+			engine_->stop();
+			localStatus_= Stopped;
+			updateActions();
+		}
+		
 
 		//We should disjoin the session first (this will alwys occur
 		if(disjoinSession())
@@ -392,16 +431,14 @@ void RemoteViewer::changeConnectionState(bool checked)
 			connectAction_->setChecked(true);
 
 		//If we started the session, we should end it too
-		if(startedSession_)
+		if(r == QMessageBox::Yes)
 		{
 			if(!endSession())
 			{
-				connectAction_->setIcon(QIcon(":/icons/connected.png"));
-				connectAction_->setChecked(true);
+				QMessageBox::critical(0,tr("Failed to End Session"),
+				tr("Failed to end the session.  Please reconnect to the session and try again."));
 			}
 		}
-
-
 	}
 	updateActions();
 }
@@ -415,7 +452,9 @@ void RemoteViewer::updateStatus()
 	//Check server connection
 	//I'm going to assume that if one of our signal channels is connected that they
 	//all are.  this may prove to be a faulty assumption, but I doubt it...
-	if(serverChannel_->isConnected())
+	if(serverChannel_->assureConnection(1000) &&
+	   engineSlaveChannel_->assureConnection(1000) &&
+	   behavioralDataChannel_->assureConnection(1000))
 		statusLine += tr("Server: connected");
 	else
 		statusLine += tr("Server: disconnected");
@@ -713,7 +752,7 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
 	QList<ComponentInstance> directors;
 
-	if(!serverChannel_->isConnected())
+	if(!serverChannel_->assureConnection())
 	{
 		return directors;
 	}
@@ -783,7 +822,7 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
 	QList<ComponentInstance> proxies;
 
-	if(!serverChannel_->isConnected())
+	if(!serverChannel_->assureConnection())
 	{
 		return proxies;
 	}
@@ -852,9 +891,9 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 void RemoteViewer::checkForTimeouts()
 {
 	//check that the command channels are still connected
-	if(serverChannel_->getChannelStatus() == Picto::CommandChannel::disconnected ||
-	   engineSlaveChannel_->getChannelStatus() == Picto::CommandChannel::disconnected ||
-	   behavioralDataChannel_->getChannelStatus() == Picto::CommandChannel::disconnected)
+	if(!serverChannel_->assureConnection(1000) ||
+	   !engineSlaveChannel_->assureConnection(1000) ||
+	   !behavioralDataChannel_->assureConnection(1000))
 	{
 		//connectAction_->setChecked(false);//For a checkable action, the checked property is toggled during the trigger call.
 		connectAction_->trigger();
@@ -1182,74 +1221,86 @@ bool RemoteViewer::joinSession()
 	engineSlaveChannel_->setSessionId(sessionId_);
 	behavioralDataChannel_->setSessionId(sessionId_);
 
-	//Figure out where we are in the state machine, and what the current time is
-	commandStr = "GETDATA StateDataStore:-1.0 PICTO/1.0";
-
-	QSharedPointer<Picto::ProtocolCommand> getDataCommand(new Picto::ProtocolCommand(commandStr));
-	QSharedPointer<Picto::ProtocolResponse> getDataResponse;
-
-	serverChannel_->sendCommand(getDataCommand);
-	if(!serverChannel_->waitForResponse(5000))
-	{
-		setStatus(tr("Server did not respond to GETDATA command"));
-		return false;
-	}
-
-	getDataResponse = serverChannel_->getResponse();
-
-	if(getDataResponse.isNull() || getDataResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
-	{
-		setStatus("Unexpected response to GETDATA command");
-		return false;
-	}
-
-	content = getDataResponse->getDecodedContent();
-	xmlReader = QSharedPointer<QXmlStreamReader>(new QXmlStreamReader(content));
-	
-	//Grab the data
-	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
-
-	//This means that the response didn't contain a <DATA> tag
-	if(xmlReader->atEnd())
-	{
-		setStatus("GETDATA response didn't contain <Data> tag");
-		return false;
-	}
-
-	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataStore");
-
+	bool tryAgain;
 	double lastTransitionTime;
 	QString taskName;
 	QStringList currentStateMachinePath;
 	QString currentState;
-
-	if(!xmlReader->atEnd())
+	do
 	{
-		//If we're here, there is state data to read, meaning that an experiment is in progress
+		tryAgain = false;
+		//Figure out where we are in the state machine, and what the current time is
+		commandStr = "GETDATA StateDataStore:-1.0 PICTO/1.0";
 
-		Picto::StateDataStore data;
-		data.deserializeFromXml(xmlReader);
+		QSharedPointer<Picto::ProtocolCommand> getDataCommand(new Picto::ProtocolCommand(commandStr));
+		QSharedPointer<Picto::ProtocolResponse> getDataResponse;
 
-		lastTransitionTime = data.getTime();
-		currentStateMachinePath = data.getMachinePath().split("::");
-		currentState = data.getDestination();
-		taskName = currentStateMachinePath.first();
+		serverChannel_->sendCommand(getDataCommand);
+		if(!serverChannel_->waitForResponse(5000))
+		{
+			setStatus(tr("Server did not respond to GETDATA command"));
+			return false;
+		}
 
-		//Update the task list box
-		int taskIdx = taskListBox_->findText(taskName);
-		Q_ASSERT_X(taskIdx >= 0,"RemoteViewer::joinSession", "Task name not found in out list of experiments.");
-		taskListBox_->setCurrentIndex(taskIdx);
-	}
-	else
-	{
-		//If we're here, then there is no state data, which means that a session was just 
-		//started.
+		getDataResponse = serverChannel_->getResponse();
+
+		if(getDataResponse.isNull() || getDataResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
+		{
+			setStatus("Unexpected response to GETDATA command");
+			return false;
+		}
+
+		content = getDataResponse->getDecodedContent();
+		xmlReader = QSharedPointer<QXmlStreamReader>(new QXmlStreamReader(content));
 		
-		lastTransitionTime = 0.0;
-		currentStateMachinePath = QStringList();
-		currentState = "";
-		taskName="";
-	}
+		//Grab the data
+		while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
+
+		//This means that the response didn't contain a <DATA> tag
+		if(xmlReader->atEnd())
+		{
+			setStatus("GETDATA response didn't contain <Data> tag");
+			return false;
+		}
+
+		while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataStore");
+
+		if(!xmlReader->atEnd())
+		{
+			//If we're here, there is state data to read, meaning that an experiment is in progress
+
+			Picto::StateDataStore data;
+			data.deserializeFromXml(xmlReader);
+
+			lastTransitionTime = data.getTime();
+			currentStateMachinePath = data.getMachinePath().split("::");
+			currentState = data.getDestination();
+			taskName = currentStateMachinePath.first();
+
+			//Update the task list box
+			int taskIdx = taskListBox_->findText(taskName);
+			Q_ASSERT_X(taskIdx >= 0,"RemoteViewer::joinSession", "Task name not found in out list of experiments.");
+			taskListBox_->setCurrentIndex(taskIdx);
+		}
+		else
+		{
+			//If we're here, then there is no state data, which means that a session was just 
+			//started.
+			
+			lastTransitionTime = 0.0;
+			currentStateMachinePath = QStringList();
+			currentState = "";
+			taskName="";
+			ComponentStatus remoteStatus = directorStatus(directorID);
+			// In some cases we happen to request data exactly when the director
+			// has started running but hasn't yet reported its state, or has stopped
+			// and has no currentState but hasn't yet informed us of the stop.  
+			// This should catch these cases.
+			if((remoteStatus == Running) || (remoteStatus == Paused))
+				tryAgain = true;
+		}
+		
+	} while(tryAgain);
 
 	///////TESTING
 	//We'll need to actually determine the task name directly....
@@ -1276,7 +1327,10 @@ bool RemoteViewer::joinSession()
 	//Send an isauthorized TASK command to figure out if we're authorized to send commands
 	//on this session.
 	if(sendTaskCommand("isauthorized"))
+	{
 		enableTaskCommands_ = true;
+		startedSession_ = true;
+	}
 	else
 		enableTaskCommands_ = false;
 

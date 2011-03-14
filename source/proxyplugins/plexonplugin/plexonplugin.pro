@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = ProxyPluginPlexon
-QT = core  xml
+QT = core gui xml
 CONFIG += qt warn_on debug_and_release
 CONFIG += plugin
 

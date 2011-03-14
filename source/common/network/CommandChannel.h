@@ -7,10 +7,12 @@
 #include <QHostAddress>
 #include <QTcpSocket>
 #include <QUuid>
+#include <QDateTime>
 
 #include "../common.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
+#include "../controlelements/timer.h"
 
 namespace Picto {
 
@@ -85,14 +87,16 @@ public:
 	bool sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	bool sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	QSharedPointer<ProtocolResponse> getResponse();
+	int numIncomingResponses(){return incomingResponseQueue_.size();};
 
 	bool waitForResponse(int timeout=0);
 
 	int pendingResponses() { return pendingCommands_.size(); };  //! Returns the number of responses we are waiting for
-	void resendPendingCommands();
+	void resendPendingCommands(int timeoutS = 10);
 
-	void setSessionId(QUuid sessionId) { sessionId_ = sessionId; };
-	void clearSessionId() { sessionId_ = QUuid(); };
+	void setSessionId(QUuid sessionId);
+	QUuid getSessionId(){return sessionId_;};
+	void clearSessionId();
 
 	typedef enum
 	{
@@ -103,12 +107,14 @@ public:
 	ChannelStatus getChannelStatus() { return status_; };
 
 	bool isConnected() { return status_ == connected; };
+	bool assureConnection(int acceptableTimeoutMs = 0);
 
 	void closeChannel();
 public slots:
 	void connectToServer(QHostAddress serverAddress, quint16 serverPort_);
 
 signals:
+	void connectAttemptFailed();
 	void channelDisconnected();
 	void channelConnected();
 
@@ -116,7 +122,6 @@ private slots:
 	void disconnectHandler();
 
 private:
-	void initConnection();
 	void readIncomingCommand();
 	void readIncomingResponse();
 
@@ -131,11 +136,12 @@ private:
 	//should we attempt to reconnect_ in the event of a disconnect?
 	bool reconnect_;
 
+	qulonglong currRegCmdID_;
 	QList<QSharedPointer<ProtocolResponse> > incomingResponseQueue_;
 
 	QString multipartBoundary_;
 
-	QMap<QUuid,QSharedPointer<ProtocolCommand> > pendingCommands_;
+	QMap<qulonglong,QSharedPointer<ProtocolCommand> > pendingCommands_;
 	QUuid sessionId_;
 	QUuid sourceId_;
 	QString sourceType_;

@@ -156,7 +156,6 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 	}
 
 	sessInfo_->addPendingDirective("STOP","DIRECTOR");
-	sessInfo_->flushCache();
 	//conMgr_->setComponentStatus(sessionId_,"DIRECTOR"ComponentStatus::stopped);
 
 

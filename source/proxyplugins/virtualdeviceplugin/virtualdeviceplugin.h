@@ -36,11 +36,13 @@ public:
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
-	QString dumpData();
+	QList<QSharedPointer<Picto::DataStore>> dumpData();
 private:
+	void updateData();
 	deviceStatus status_;
 	QSharedPointer<VirtualEvent> getNextEvent(double currTime);
 	QSharedPointer<VirtualEvent> lastEvent_, lastSpike_, lastMark_;
+	QList<QSharedPointer<Picto::DataStore>> dataList_;
 	static QSharedPointer<Picto::Timestamper> timeStamper_;
 	static QSharedPointer<VirtualEventSource> spikeSource_;
 	static QSharedPointer<VirtualEventSource> markSource_;

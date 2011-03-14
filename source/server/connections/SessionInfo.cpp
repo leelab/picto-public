@@ -17,7 +17,7 @@ SessionInfo::SessionInfo(QByteArray experimentXml, QUuid initialObserverId):
 	experimentXml_(experimentXml)
 {
 	InitializeVariables();
-
+	
 	//Add the initial observer (the session creator) to our list of authorized observers
 	//This means that he can issue ENDSESSION and TASK commands.
 	authorizedObservers_.append(initialObserverId);
@@ -39,9 +39,7 @@ SessionInfo::SessionInfo(QByteArray experimentXml, QUuid initialObserverId):
 	CreateCacheDatabase(databaseName);
 }
 
-SessionInfo::SessionInfo(QString databaseFilePath):
-	activity_(true),
-	timestampsAligned_(false)
+SessionInfo::SessionInfo(QString databaseFilePath)
 {
 	InitializeVariables();
 
@@ -93,6 +91,24 @@ SessionInfo::SessionInfo(QString databaseFilePath):
 	sessionQ.exec("SELECT value FROM sessioninfo WHERE key=\"AlignToComponent\"");
 	if(sessionQ.next())
 		alignToType_ = sessionQ.value(0).toString();
+
+	//Load latestTimeValues
+
+	qulonglong maxID = 0;
+	maxID = LoadMaxDataID("behavioraltrials");
+	if(maxID > maxReceivedDataID_) maxReceivedDataID_ = maxID;
+	maxID = LoadMaxDataID("neuraltrials");
+	if(maxID > maxReceivedDataID_) maxReceivedDataID_ = maxID;
+	maxID = LoadMaxDataID("spikes");
+	if(maxID > maxReceivedDataID_) maxReceivedDataID_ = maxID;
+	maxID = LoadMaxDataID("behavioraldata");
+	if(maxID > maxReceivedDataID_) maxReceivedDataID_ = maxID;
+	maxID = LoadMaxDataID("statetransitions");
+	if(maxID > maxReceivedDataID_) maxReceivedDataID_ = maxID;
+	maxID = LoadMaxDataID("framedata");
+	if(maxID > maxReceivedDataID_) maxReceivedDataID_ = maxID;
+	maxID = LoadMaxDataID("rewards");
+	if(maxID > maxReceivedDataID_) maxReceivedDataID_ = maxID;
 }
 
 SessionInfo::~SessionInfo()
@@ -168,7 +184,9 @@ void SessionInfo::addPendingDirective(QString directive, QString componentType)
 	QSharedPointer<ComponentInfo> component = getComponentByType(componentType);
 	if(component.isNull())
 		return;
-	pendingDirectives_[component->getUuid()].append(directive); 
+	QStringList* directives = &pendingDirectives_[component->getUuid()];
+	if(!directives->size() || (directives->first() != directive))
+		directives->append(directive); 
 };
 
 
@@ -185,6 +203,27 @@ void SessionInfo::endSession()
 	//ConnectionManager *conMgr = ConnectionManager::Instance();
 	//Q_ASSERT(conMgr->getComponentStatusBySession(uuid_,"DIRECTOR") > ComponentStatus::idle);
 
+	
+	//Let the Director and Proxy know that we are planning to stop
+	addPendingDirective("ENDSESSION","DIRECTOR");
+	addPendingDirective("ENDSESSION","PROXY");
+
+	//Sit around waiting for the components' states to change
+	QTime timer;
+	timer.start();
+	foreach(QSharedPointer<ComponentInfo> component,components_)
+	{
+		//Keep waiting until either both components are idle, or the session hasn't had activity on it for 10 seconds.
+		while(component->getStatus() > ComponentStatus::idle && timer.elapsed() < 10000)
+		{
+			QThread::yieldCurrentThread();
+			QCoreApplication::processEvents();
+			if(activity_)
+				timer.start();
+		}
+		Q_ASSERT_X(timer.elapsed()<10000, "SessionInfo::endSession",QString("%1 failed to stop within 10 seconds").arg(component->getName()).toAscii());
+	}
+
 	QSqlDatabase sessionDb = getSessionDb();
 
 	//Add the end time to the session db
@@ -193,22 +232,7 @@ void SessionInfo::endSession()
 	query.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
 	Q_ASSERT(query.exec());
 	
-	//Let the Director and Proxy know that we are planning to stop
-	addPendingDirective("ENDSESSION","DIRECTOR");
-	addPendingDirective("ENDSESSION","PROXY");
-
-	//Sit around waiting for the components' states to change (but no longer than 2 seconds)
-	QTime timer;
-	timer.start();
-	foreach(QSharedPointer<ComponentInfo> component,components_)
-	{
-		while(component->getStatus() > ComponentStatus::idle && timer.elapsed() < 2000)
-		{
-			QThread::yieldCurrentThread();
-			QCoreApplication::processEvents();
-		}
-		Q_ASSERT_X(timer.elapsed()<2000, "SessionInfo::endSession",QString("%1 failed to stop within 2 seconds").arg(component->getName()).toAscii());
-	}
+	
 
 	//Flush the database cache
 	flushCache();
@@ -287,7 +311,9 @@ void SessionInfo::flushCache()
 		int adf = err.length();
 	}
 
-	flushQ.exec("DELETE FROM behavioraldata");*/
+	flushQ.exec("DELETE FROM behavioraldata");
+	//Then verify no replicated data...
+	*/
 
 	QSqlDatabase sessionDb = getSessionDb();
 
@@ -302,15 +328,16 @@ void SessionInfo::flushCache()
 
 		//Flush the behavioraldata table
 		//------------------------------
-		Q_ASSERT(cacheQuery.exec("SELECT id,xpos,ypos,time FROM behavioraldata"));
+		Q_ASSERT(cacheQuery.exec("SELECT id,dataid,xpos,ypos,time FROM behavioraldata"));
 
 		while(cacheQuery.next())
 		{
-			diskQuery.prepare("INSERT INTO behavioraldata(xpos,ypos,time) "
-				"VALUES(:xpos,:ypos,:time)");
-			diskQuery.bindValue(":xpos",cacheQuery.value(1));
-			diskQuery.bindValue(":ypos",cacheQuery.value(2));
-			diskQuery.bindValue(":time",cacheQuery.value(3));
+			diskQuery.prepare("INSERT INTO behavioraldata(dataid, xpos,ypos,time) "
+				"VALUES(:dataid, :xpos,:ypos,:time)");
+			diskQuery.bindValue(":dataid",cacheQuery.value(1));
+			diskQuery.bindValue(":xpos",cacheQuery.value(2));
+			diskQuery.bindValue(":ypos",cacheQuery.value(3));
+			diskQuery.bindValue(":time",cacheQuery.value(4));
 			Q_ASSERT(diskQuery.exec());
 
 			cacheCleanup.prepare("DELETE FROM behavioraldata WHERE id=:id");
@@ -320,15 +347,16 @@ void SessionInfo::flushCache()
 
 		//Flush the framedata table
 		//------------------------------
-		Q_ASSERT(cacheQuery.exec("SELECT id,frame,time,state FROM framedata"));
+		Q_ASSERT(cacheQuery.exec("SELECT id,dataid,frame,time,state FROM framedata"));
 
 		while(cacheQuery.next())
 		{
-			diskQuery.prepare("INSERT INTO framedata(frame,time,state) "
-				"VALUES(:frame,:time,:state)");
-			diskQuery.bindValue(":frame",cacheQuery.value(1));
-			diskQuery.bindValue(":time",cacheQuery.value(2));
-			diskQuery.bindValue(":state",cacheQuery.value(3));
+			diskQuery.prepare("INSERT INTO framedata(dataid,frame,time,state) "
+				"VALUES(:dataid,:frame,:time,:state)");
+			diskQuery.bindValue(":dataid",cacheQuery.value(1));
+			diskQuery.bindValue(":frame",cacheQuery.value(2));
+			diskQuery.bindValue(":time",cacheQuery.value(3));
+			diskQuery.bindValue(":state",cacheQuery.value(4));
 			Q_ASSERT(diskQuery.exec());
 
 			cacheCleanup.prepare("DELETE FROM framedata WHERE id=:id");
@@ -347,28 +375,29 @@ void SessionInfo::flushCache()
  *	Currently, if no alignToType is set, all trials will go into the NeuralTrials database.  We should generalize
  *	this at some point.
  */
-void SessionInfo::insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType)
+void SessionInfo::insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID)
 {
 	QSqlDatabase sessionDb = getSessionDb();
 	QSqlQuery query(sessionDb);
-	
 	Q_ASSERT(getComponentByType(sourceType));
 	// If the trial event comes from the component providing the time baseline, put it in behaviortrials an
 	// don't align its timestamps.
 	if(sourceType == alignToType_)
 	{
-		query.prepare("INSERT INTO behavioraltrials (timestamp,aligncode,trialnumber,matched)"
-			"VALUES(:timestamp, :aligncode, :trialnumber, 0)");
+		query.prepare("INSERT INTO behavioraltrials (dataid,timestamp,aligncode,trialnumber,matched)"
+			"VALUES(:dataid, :timestamp, :aligncode, :trialnumber, 0)");
+		query.bindValue(":dataid", dataID);
 		query.bindValue(":timestamp", time);
 		query.bindValue(":aligncode", eventCode);
 		query.bindValue(":trialnumber", trialNum);
-		Q_ASSERT(query.exec());
+		Q_ASSERT_X(query.exec(),"SessionInfo::insertTrialEvent","Error: "+query.lastError().text().toAscii());	
 		return;
 	}
 	// If we got here, its Neural Data
 	//Add the event code to the neuraltrials table
-	query.prepare("INSERT INTO neuraltrials (timestamp, aligncode, matched)"
-		"VALUES(:timestamp, :aligncode, 0)");
+	query.prepare("INSERT INTO neuraltrials (dataid, timestamp, aligncode, matched)"
+		"VALUES(:dataid, :timestamp, :aligncode, 0)");
+	query.bindValue(":dataid", dataID);
 	query.bindValue(":timestamp", time);
 	query.bindValue(":aligncode", eventCode);
 	query.exec();
@@ -402,23 +431,24 @@ void SessionInfo::insertTrialEvent(double time, int eventCode, int trialNum, QSt
  */
 void SessionInfo::insertNeuralData(Picto::NeuralDataStore data)
 {
+	QSqlDatabase sessionDb = getSessionDb();
+	QSqlQuery query(sessionDb);
+
 	QMutexLocker locker(&alignmentMutex_);
 	//! Use the alignment tool to fit the time
 	data.setFittedtime(alignmentTool_->convertToBehavioralTimebase(data.getTimestamp()));
 	data.setCorrelation(alignmentTool_->getCorrelationCoefficient());
 	locker.unlock();
-
-	QSqlDatabase sessionDb = getSessionDb();
-	QSqlQuery query(sessionDb);
 	
-	query.prepare("INSERT INTO spikes (timestamp, fittedtime, correlation, channel, unit, waveform) "
-					"VALUES(:timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
+	query.prepare("INSERT INTO spikes (dataid, timestamp, fittedtime, correlation, channel, unit, waveform) "
+		"VALUES(:dataid, :timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
+	query.bindValue(":dataid", data.getDataID());
 	query.bindValue(":timestamp", data.getTimestamp());
 	query.bindValue(":fittedtime", data.getFittedtime());
 	query.bindValue(":correlation", data.getCorrelation());
 	query.bindValue(":channel", data.getChannel());
 	query.bindValue(":unit", data.getUnit());
-	query.bindValue(":waveform", data.getWaveform());
+	query.bindValue(":waveform", data.getWaveformAsString());
 	Q_ASSERT_X(query.exec(),"",query.lastError().text().toAscii());
 }
 
@@ -427,16 +457,69 @@ void SessionInfo::insertBehavioralData(Picto::BehavioralDataStore data)
 {
 	QSqlQuery cacheQ(cacheDb_);
 
-	Picto::BehavioralDataStore::BehavioralDataPoint dataPoint;
+	Picto::BehavioralUnitDataStore dataPoint;
 	while(data.length() > 0)
 	{
 		dataPoint = data.takeFirstDataPoint();
-		cacheQ.prepare("INSERT INTO behavioraldata (xpos, ypos, time)"
-			"VALUES(:xpos, :ypos, :time)");
+		cacheQ.prepare("INSERT INTO behavioraldata (dataid, xpos, ypos, time)"
+			"VALUES(:dataid, :xpos, :ypos, :time)");
+		cacheQ.bindValue(":dataid", dataPoint.getDataID());
 		cacheQ.bindValue(":xpos",dataPoint.x);
 		cacheQ.bindValue(":ypos",dataPoint.y);
 		cacheQ.bindValue(":time",dataPoint.t);
 		Q_ASSERT_X(cacheQ.exec(),"SessionInfo::insertBehavioralData","Error: "+cacheQ.lastError().text().toAscii());
+	}
+}
+
+//! \brief inserts an alignment data point in the database and attempts latest alignment
+void SessionInfo::insertAlignmentData(Picto::AlignmentDataStore data)
+{
+	QSqlDatabase sessionDb = getSessionDb();
+	QSqlQuery query(sessionDb);
+	// If the trial event comes with an alignNumber, it must be from the component providing the time baseline, 
+	// put it in behaviortrials and don't align its timestamps.
+	if(data.hasAlignNumber())
+	{
+		query.prepare("INSERT INTO behavioraltrials (dataid,timestamp,aligncode,trialnumber,matched)"
+			"VALUES(:dataid, :timestamp, :aligncode, :trialnumber, 0)");
+		query.bindValue(":dataid", data.getDataID());
+		query.bindValue(":timestamp", data.getTimestamp());
+		query.bindValue(":aligncode", data.getAlignCode());
+		query.bindValue(":trialnumber", data.getAlignNumber());
+		Q_ASSERT_X(query.exec(),"SessionInfo::insertTrialEvent","Error: "+query.lastError().text().toAscii());	
+		return;
+	}
+	//If we got here, its not coming from the component providing the time baseline.
+	//Add the event code to the neuraltrials table
+	query.prepare("INSERT INTO neuraltrials (dataid, timestamp, aligncode, matched)"
+		"VALUES(:dataid, :timestamp, :aligncode, 0)");
+	query.bindValue(":dataid", data.getDataID());
+	query.bindValue(":timestamp", data.getTimestamp());
+	query.bindValue(":aligncode", data.getAlignCode());
+	query.exec();
+
+	// Check if this session requires alignment.  If so, do it.
+	if(alignToType_ != "")
+	{
+		QMutexLocker locker(&alignmentMutex_);
+		alignmentTool_->doIncrementalAlignment(sessionDb);
+		
+		// alignment isn't calculated until the end of the first trial, meaning that all spikes in the first trial are unaligned.
+		// once the first alignment values are calculated, go back and update the fittedtimes of neural trials that weren't yet aligned.
+		if(!timestampsAligned_ && (alignmentTool_->getCorrelationCoefficient() != 0) )
+		{	
+			timestampsAligned_ = true;
+			QSqlQuery unalignedSpikes(query);
+			timestampsAligned_ &= unalignedSpikes.exec("SELECT id, timestamp FROM spikes WHERE fittedtime<0");
+			while(unalignedSpikes.next())
+			{
+				query.prepare("UPDATE spikes SET fittedtime=:fittedtime, correlation=:correlation WHERE id=:id");
+				query.bindValue(":id",unalignedSpikes.value(0).toInt());
+				query.bindValue(":fittedtime",alignmentTool_->convertToBehavioralTimebase(unalignedSpikes.value(1).toDouble()));
+				query.bindValue(":correlation",alignmentTool_->getCorrelationCoefficient() );
+				timestampsAligned_ &= query.exec();
+			}
+		}
 	}
 }
 
@@ -445,12 +528,12 @@ void SessionInfo::insertStateData(Picto::StateDataStore data)
 {
 	QSqlDatabase sessionDb = getSessionDb();
 	QSqlQuery query(sessionDb);
-	
+
 	query.prepare("INSERT INTO statetransitions "
-		"(machinepath, source, sourceresult, destination, time) "
-		"VALUES(:machinepath, :source, :sourceresult, :destination, :time) ");
+		"(dataid, machinepath, source, sourceresult, destination, time) "
+		"VALUES(:dataid, :machinepath, :source, :sourceresult, :destination, :time) ");
+	query.bindValue(":dataid", data.getDataID());
 	query.bindValue(":machinepath", data.getMachinePath());
-	QString machineName = data.getMachinePath();
 	query.bindValue(":source", data.getSource()); 
 	query.bindValue(":sourceresult",data.getSourceResult());
 	query.bindValue(":destination",data.getDestination());
@@ -463,12 +546,13 @@ void SessionInfo::insertFrameData(Picto::FrameDataStore data)
 {
 	QSqlQuery cacheQ(cacheDb_);
 
-	Picto::FrameDataStore::FrameData framedata;
+	Picto::FrameUnitDataStore framedata;
 	while(data.length() > 0)
 	{
 		framedata = data.takeFirstDataPoint();
-		cacheQ.prepare("INSERT INTO framedata (frame, time, state)"
-			"VALUES(:frame, :time, :state)");
+		cacheQ.prepare("INSERT INTO framedata (dataid, frame, time, state)"
+			"VALUES(:dataid, :frame, :time, :state)");
+		cacheQ.bindValue(":dataid", framedata.getDataID());
 		cacheQ.bindValue(":frame",framedata.frameNumber);
 		cacheQ.bindValue(":time",framedata.time);
 		cacheQ.bindValue(":state",framedata.stateName);
@@ -479,14 +563,15 @@ void SessionInfo::insertFrameData(Picto::FrameDataStore data)
 void SessionInfo::insertRewardData(Picto::RewardDataStore data)
 {
 	QSqlDatabase sessionDb = getSessionDb();
-	QSqlQuery sessionQ(sessionDb);
-	
-	sessionQ.prepare("INSERT INTO rewards (duration, channel, time) "
-		"VALUES (:duration, :channel, :time)");
-	sessionQ.bindValue(":duration",data.getDuration());
-	sessionQ.bindValue(":channel", data.getChannel());
-	sessionQ.bindValue(":time",data.getTime());
-	Q_ASSERT(sessionQ.exec());
+	QSqlQuery query(sessionDb);
+
+	query.prepare("INSERT INTO rewards (dataid, duration, channel, time) "
+		"VALUES (:dataid, :duration, :channel, :time)");
+	query.bindValue(":dataid", data.getDataID());
+	query.bindValue(":duration",data.getDuration());
+	query.bindValue(":channel", data.getChannel());
+	query.bindValue(":time",data.getTime());
+	Q_ASSERT(query.exec());
 }
 
 
@@ -723,8 +808,11 @@ void SessionInfo::InitializeVariables()
 	activity_ = true;
 	timestampsAligned_ = (false);
 	//CreateUUID
-	QUuid uuid = QUuid::createUuid();
-	uuid_ = uuid;
+	if(uuid_ == QUuid())
+	{
+		uuid_ = QUuid::createUuid();
+	}
+	maxReceivedDataID_ = 0;
 
 #ifdef NO_AUTH_REQUIRED
 	//Add a null QUuid so that everyone is considered an authorized user
@@ -778,17 +866,17 @@ void SessionInfo::SetupBaseSessionDatabase()
 
 	if(!baseSessionDbConnection_.tables().contains("spikes"))
 		sessionQ.exec("CREATE TABLE spikes "
-			"(id INTEGER PRIMARY KEY, timestamp REAL, fittedtime REAL,"
+			"(id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, timestamp REAL, fittedtime REAL,"
 			"correlation REAL, channel TEXT, unit TEXT, waveform TEXT)");
 
 	if(!baseSessionDbConnection_.tables().contains("neuraltrials"))
 		sessionQ.exec("CREATE TABLE neuraltrials "
-			"(id INTEGER PRIMARY KEY, timestamp REAL, aligncode INTEGER,"
+			"(id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, timestamp REAL, aligncode INTEGER,"
 			"matched INTEGER)");
 
 	if(!baseSessionDbConnection_.tables().contains("behavioraltrials"))
 		sessionQ.exec("CREATE TABLE behavioraltrials "
-			"(id INTEGER PRIMARY KEY, timestamp REAL, aligncode INTEGER, "
+			"(id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE UNIQUE ON CONFLICT IGNORE, timestamp REAL, aligncode INTEGER, "
 			"trialnumber INTEGER, matched INTEGER)");
 
 	if(!baseSessionDbConnection_.tables().contains("trials"))
@@ -798,18 +886,18 @@ void SessionInfo::SetupBaseSessionDatabase()
 			"endjitter REAL, correlation REAL)");
 
 	if(!baseSessionDbConnection_.tables().contains("behavioraldata"))
-		sessionQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
+		sessionQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, xpos REAL, "
 			"ypos REAL, time REAL)");
 
 	if(!baseSessionDbConnection_.tables().contains("statetransitions"))
-		sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, machinepath TEXT, "
+		sessionQ.exec("CREATE TABLE statetransitions (id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, machinepath TEXT, "
 			"source TEXT, sourceresult TEXT, destination TEXT, time REAL)");
 
 	if(!baseSessionDbConnection_.tables().contains("framedata"))
-		sessionQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)");
+		sessionQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, frame INTEGER, time REAL, state TEXT)");
 
 	if(!baseSessionDbConnection_.tables().contains("rewards"))
-		sessionQ.exec("CREATE TABLE rewards (id INTEGER PRIMARY KEY, duration INTEGER, channel INTEGER, time REAL)");
+		sessionQ.exec("CREATE TABLE rewards (id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, duration INTEGER, channel INTEGER, time REAL)");
 }
 void SessionInfo::CreateCacheDatabase(QString databaseName)
 {
@@ -821,12 +909,25 @@ void SessionInfo::CreateCacheDatabase(QString databaseName)
 	Q_ASSERT(cacheDb_.open());
 
 	QSqlQuery cacheQ(cacheDb_);
-	Q_ASSERT(cacheQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, xpos REAL, "
+	Q_ASSERT(cacheQ.exec("CREATE TABLE behavioraldata (id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, xpos REAL, "
 		"ypos REAL, time REAL)"));
-	Q_ASSERT(cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, frame INTEGER, time REAL, state TEXT)"));
+	Q_ASSERT(cacheQ.exec("CREATE TABLE framedata(id INTEGER PRIMARY KEY, dataid INTEGER UNIQUE ON CONFLICT IGNORE, frame INTEGER, time REAL, state TEXT)"));
 }
 
-/*! /brief Generates a thread-specific connection to the Session database
+//! \brief returns the maximum dataID from tableName.
+double SessionInfo::LoadMaxDataID(QString tableName)
+{
+	QSqlDatabase sessionDb = getSessionDb();
+
+	QSqlQuery sessionQuery(sessionDb);
+	sessionQuery.prepare("SELECT MAX(dataid) FROM :tablename");
+	sessionQuery.bindValue(":tablename", tableName);
+	if(!sessionQuery.exec() && sessionQuery.next())
+		return sessionQuery.value(0).toULongLong();
+	return 0;
+}
+
+/*! \brief Generates a thread-specific connection to the Session database
  *
  *	The session database has threading issues because of the following:
  *		1. The session database may be accessed from different threads 

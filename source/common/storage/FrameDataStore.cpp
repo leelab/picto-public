@@ -8,7 +8,7 @@ FrameDataStore::FrameDataStore()
 
 void FrameDataStore::addFrame(int frameNumber, double time, QString stateName)
 {
-	FrameData data = {frameNumber, time, stateName};
+	FrameUnitDataStore data(frameNumber, time, stateName);
 	data_.append(data);
 }
 
@@ -28,13 +28,9 @@ bool FrameDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 {
 	xmlStreamWriter->writeStartElement("FrameDataStore");
 
-	foreach(FrameData data, data_)
+	foreach(FrameUnitDataStore data, data_)
 	{
-		xmlStreamWriter->writeStartElement("Frame");
-		xmlStreamWriter->writeAttribute("time",QString("%1").arg(data.time));
-		xmlStreamWriter->writeAttribute("state",QString("%1").arg(data.stateName));
-		xmlStreamWriter->writeCharacters(QString::number(data.frameNumber));
-		xmlStreamWriter->writeEndElement();
+		data.serializeAsXml(xmlStreamWriter);
 	}
 
 	xmlStreamWriter->writeEndElement(); //BehavioralDataStore
@@ -64,41 +60,11 @@ bool FrameDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "Frame")
+		if(name == "FrameUnitDataStore")
 		{
-			double time;
-			int frameNumber;
-			QString state;
-
-			if(xmlStreamReader->attributes().hasAttribute("time"))
-			{
-				time = xmlStreamReader->attributes().value("time").toString().toDouble();
-			}
-			else
-			{
-				addError("FrameDataStore","Frame missing time attribute",xmlStreamReader);
-				return false;
-			}
-
-			if(xmlStreamReader->attributes().hasAttribute("state"))
-			{
-				state = xmlStreamReader->attributes().value("state").toString();
-			}
-			else
-			{
-				addError("FrameDataStore","Frame missing state attribute",xmlStreamReader);
-				return false;
-			}
-
-			bool ok;
-			frameNumber = xmlStreamReader->readElementText().toInt(&ok);
-			if(!ok)
-			{
-				addError("FrameDataStore","Frame number not an integer",xmlStreamReader);
-				return false;
-			}
-
-			addFrame(frameNumber, time, state);
+			FrameUnitDataStore data;
+			data.deserializeFromXml(xmlStreamReader);
+			data_.append(data);
 		}
 		else
 		{

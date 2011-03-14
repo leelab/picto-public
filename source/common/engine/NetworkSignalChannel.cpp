@@ -74,7 +74,7 @@ void NetworkSignalChannel::updateDataBuffer()
 	while(behavioralData.length() > 0)
 	{
 		// Push the data into our signal channel
-		Picto::BehavioralDataStore::BehavioralDataPoint dataPoint;
+		Picto::BehavioralUnitDataStore dataPoint;
 		dataPoint = behavioralData.takeFirstDataPoint();
 		
 		rawDataBuffer_["xpos"].append(dataPoint.x);

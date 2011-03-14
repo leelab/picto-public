@@ -3,6 +3,7 @@
 
 #include "../common.h"
 #include "DataStore.h"
+#include "BehavioralUnitDataStore.h"
 
 #include <QList>
 #include <QMap>
@@ -23,12 +24,6 @@ class BehavioralDataStore : public DataStore
 #endif
 {
 public:
-	typedef struct BehavioralDataPoint_st
-	{
-		double x;
-		double y;
-		double t;
-	} BehavioralDataPoint;
 
 	BehavioralDataStore();
 	void addData(double x, double y, double t);
@@ -37,14 +32,14 @@ public:
 	void emptyData() { data_.clear(); };
 
 	int length() { return data_.length(); }
-	BehavioralDataPoint takeFirstDataPoint() { return data_.takeFirst(); };
+	BehavioralUnitDataStore takeFirstDataPoint() { return data_.takeFirst(); };
 
 	//Data store functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 
-	QList<BehavioralDataPoint> data_;
+	QList<BehavioralUnitDataStore> data_;
 };
 
 

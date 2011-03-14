@@ -49,6 +49,7 @@ private:
 	QTcpSocket * tcpSocket_;
 	QSharedPointer<ServerProtocols> protocols_;
 	QString peerAddress_;
+	QList<QSharedPointer<Picto::ProtocolResponse> > delayedResponses_;
 
 	static const int timeoutInterval_ = 10000;
 
@@ -60,6 +61,7 @@ private slots:
 	void readClient();
 	void handleDroppedClient();
 	void handleTimeout();
+	void handleError(QAbstractSocket::SocketError socketError);
 };
 
 #endif

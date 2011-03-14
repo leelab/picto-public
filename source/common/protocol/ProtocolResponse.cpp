@@ -21,6 +21,7 @@ ProtocolResponse::ProtocolResponse(QString _serverType,
 	version(_version),
 	bShouldTerminateConnection(false),
 	bStreamingResponse(false),
+	registeredType_(Picto::RegisteredResponseType::NotRegistered),
 	multiPartResponseState(MultiPartResponseType::NotMultiPart),
 	multiPartBoundary(""),
 	timeout(1000)
@@ -280,6 +281,18 @@ bool ProtocolResponse::shouldStream()
 void ProtocolResponse::setMultiPart(MultiPartResponseType::MultiPartResponseType multiPartState)
 {
 	multiPartResponseState = multiPartState;
+}
+
+//! \brief Sets whether this response shouldn't be sent until the next non-delay response is ready.
+void ProtocolResponse::setRegisteredType(RegisteredResponseType::RegisteredResponseType type)
+{
+	registeredType_ = type;
+}
+
+//! \brief Indicates whether this response shouldn't be sent until the next non-delay response is ready.
+RegisteredResponseType::RegisteredResponseType ProtocolResponse::getRegisteredType()
+{
+	return registeredType_;
 }
 
 MultiPartResponseType::MultiPartResponseType ProtocolResponse::getMultiPart()

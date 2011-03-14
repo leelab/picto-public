@@ -2,6 +2,9 @@
 #define INTERFACES_H
 
 #include <QtPlugin>
+#include <QSharedPointer>
+#include "../common/storage/NeuralDataStore.h"
+#include "../common/storage/AlignmentDataStore.h"
 
 /*! \brief Interface used for all proxy server plugins
  *
@@ -26,10 +29,7 @@ public:
 	virtual deviceStatus stopDevice() = 0;
 	virtual deviceStatus getDeviceStatus() = 0;
 	virtual float samplingRate() = 0;
-	virtual QString dumpData() = 0;
-
-
-	
+	virtual QList<QSharedPointer<Picto::DataStore>> dumpData() = 0;
 };
 
 QT_BEGIN_NAMESPACE

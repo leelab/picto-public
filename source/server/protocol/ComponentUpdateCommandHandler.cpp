@@ -16,7 +16,7 @@ ComponentUpdateCommandHandler::ComponentUpdateCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	//printf("COMPONENTUPDATE handler: %d\n", QThread::currentThreadId());
+	qDebug((QString("COMPONENTUPDATE handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
@@ -83,7 +83,10 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 			}
 			else
 			{
+				qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
 				response->setContent(directive.toUtf8());
+				sessionInfo->flushCache();
+				response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 			}
 		}
 	}

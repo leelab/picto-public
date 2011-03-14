@@ -38,6 +38,7 @@ bool StateDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 
 	if(transition_)
 		transition_->serializeAsXml(xmlStreamWriter);
+	DataStore::serializeAsXml(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //StateDataStore
 
@@ -78,8 +79,7 @@ bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		}
 		else
 		{
-			addError("StateDataStore", "Unexpected tag", xmlStreamReader);
-			return false;
+			DataStore::deserializeFromXml(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}
