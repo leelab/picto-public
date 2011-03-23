@@ -35,18 +35,36 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 		notFoundResponse->setContent("Director ID not found");
 		return notFoundResponse;
 	}
-	else if(conMgr->getComponentStatus(directorID) <= ComponentStatus::idle)
+	else if(conMgr->getComponentStatus(directorID) < ComponentStatus::stopped)
 	{
+		unauthorizedResponse->setContent("Director is currently ending the session");
 		return unauthorizedResponse;
 	}
 
 	//Find the session ID
-	QUuid sessionId;
-	sessionId = ConnectionManager::Instance()->getSessionInfoByComponent(directorID)->sessionId();
+	QSharedPointer<SessionInfo> sessInfo = ConnectionManager::Instance()->getSessionInfoByComponent(directorID);
+	if(sessInfo.isNull())
+		return notFoundResponse;
+	QSharedPointer<ComponentInfo> proxy = sessInfo->getComponentByType("PROXY");
+	if(!proxy.isNull())
+	{
+		QUuid proxyID = proxy->getUuid();
+		if(conMgr->getComponentStatus(proxyID) == ComponentStatus::notFound)
+		{
+			notFoundResponse->setContent("Proxy for this sessionID not found");
+			return notFoundResponse;
+		}
+		else if(conMgr->getComponentStatus(proxyID) < ComponentStatus::stopped)
+		{
+			unauthorizedResponse->setContent("Proxy is currently ending the session");
+			return unauthorizedResponse;
+		}
+	}
+	QUuid sessionId = sessInfo->sessionId();
 
 	//Find the experiment's XML
 	QByteArray experimentXml;
-	experimentXml = ConnectionManager::Instance()->getSessionInfoByComponent(directorID)->experimentXml();
+	experimentXml = sessInfo->experimentXml();
 
 	//Write out the content
 	//The XMLStreamWriter doesn't handle copying text well, so we'll use it first, and then

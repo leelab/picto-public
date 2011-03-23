@@ -8,6 +8,9 @@
 #include "../common/globals.h"
 #include "../common/network/CommandChannel.h"
 #include "../common/timing/timestamper.h"
+#include "protocol/ProxyStartResponseHandler.h"
+#include "network/ProxyStatusManager.h"
+#include "../common/protocol/ProtocolResponseHandler.h"
 
 ProxyMainWindow::ProxyMainWindow()
 {
@@ -81,6 +84,52 @@ void ProxyMainWindow::checkDevStatus()
 	deviceErrorBox.exec();
 	return;
 }
+//! \brief This is called every 5 seconds just to confirm that the server connection is still active.
+void ProxyMainWindow::checkConnectionStatus()
+{
+	//Is the server supposed to be running?
+	if(startStopClientButton_->text() == startServerMsg)
+		return;
+
+	if(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection())
+	{
+		connectionStatus_->turnRed();
+		return;
+	}
+	connectionStatus_->turnGreen();
+	
+}
+
+//! \brief This is called every 5 seconds just to confirm that the proxy is in a session.
+void ProxyMainWindow::checkSessionStatus()
+{
+	//Is the server supposed to be running?
+	if(startStopClientButton_->text() == startServerMsg)
+		return;
+
+	if(statusManager_.isNull() || (statusManager_->getStatus() < stopped))
+	{
+		sessionStatus_->turnRed();
+		return;
+	}
+	sessionStatus_->turnGreen();
+}
+
+//! \brief This is called every 5 seconds just to confirm that the proxy is running.
+void ProxyMainWindow::checkRunStatus()
+{
+	//Is the server supposed to be running?
+	if(startStopClientButton_->text() == startServerMsg)
+		return;
+
+	if(statusManager_.isNull() || (statusManager_->getStatus() <= stopped))
+	{
+		runStatus_->turnRed();
+		return;
+	}
+	runStatus_->turnGreen();
+	
+}
 
 //! \brief Called when the window is closed, this ends all activity and saves settings
 void ProxyMainWindow::closeEvent(QCloseEvent *ev)
@@ -96,16 +145,20 @@ void ProxyMainWindow::closeEvent(QCloseEvent *ev)
 void ProxyMainWindow::serverActivity()
 {
 	activityTimer_->start();
-	activityStatus_->turnGreen();
+	connectionStatus_->turnGreen();
 }
 
 void ProxyMainWindow::createStatusLights()
 {
 	readyStatus_ = new StatusLight(this,Qt::red,10);
-	activityStatus_ = new StatusLight(this,Qt::red,10);
+	connectionStatus_ = new StatusLight(this,Qt::red,10);
+	sessionStatus_ = new StatusLight(this,Qt::red,10);
+	runStatus_ = new StatusLight(this,Qt::red,10);
 
 	readyStatusLabel_ = new QLabel(tr("Ready"));
-	activityStatusLabel_ = new QLabel(tr("Connected"));
+	connectionStatusLabel_ = new QLabel(tr("Connected"));
+	sessionStatusLabel_ = new QLabel(tr("In Session"));
+	runStatusLabel_ = new QLabel(tr("Running"));
 
 }
 
@@ -220,8 +273,18 @@ void ProxyMainWindow::createLayout()
 	layout_->addLayout(HLayout);
 	
 	HLayout = new QHBoxLayout();
-	HLayout->addWidget(activityStatus_);
-	HLayout->addWidget(activityStatusLabel_);
+	HLayout->addWidget(connectionStatus_);
+	HLayout->addWidget(connectionStatusLabel_);
+	layout_->addLayout(HLayout);
+
+	HLayout = new QHBoxLayout();
+	HLayout->addWidget(sessionStatus_);
+	HLayout->addWidget(sessionStatusLabel_);
+	layout_->addLayout(HLayout);
+
+	HLayout = new QHBoxLayout();
+	HLayout->addWidget(runStatus_);
+	HLayout->addWidget(runStatusLabel_);
 	layout_->addLayout(HLayout);
 
 	layout_->addWidget(pluginCombo_);
@@ -233,12 +296,15 @@ void ProxyMainWindow::createTimer()
 {
 	QTimer *statusTimer = new QTimer(this);
 	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkDevStatus()));
+	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkConnectionStatus()));
+	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkSessionStatus()));
+	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkRunStatus()));
 	statusTimer->start(5000);
 
 	activityTimer_ = new QTimer();
 	activityTimer_->setInterval(2000);
 	activityTimer_->setSingleShot(true);
-	connect(activityTimer_,SIGNAL(timeout()),activityStatus_,SLOT(turnRed()));
+	connect(activityTimer_,SIGNAL(timeout()),connectionStatus_,SLOT(turnRed()));
 
 }
 
@@ -304,6 +370,8 @@ int ProxyMainWindow::openDevice()
 	lineEditName_->setEnabled(false);
 	startStopClientButton_->setText(stopServerMsg_);
 	readyStatus_->turnGreen();
+	statusManager_ = QSharedPointer<ComponentStatusManager>(new ProxyStatusManager(dataCommandChannel_));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<Picto::ProtocolResponseHandler>(new ProxyStartResponseHandler(statusManager_,dataCommandChannel_,acqPlugin_)));
 	return 0;
 }
 int ProxyMainWindow::closeDevice()
@@ -313,138 +381,5 @@ int ProxyMainWindow::closeDevice()
 	pluginCombo_->setEnabled(true);
 	lineEditName_->setEnabled(true);
 	readyStatus_->turnRed();
-	return 0;
-}
-
-/*! \brief When a NEWSESSION is started, proxy starts sending data to the server.
- *	This runs until endSession is called or the Session ends.
- */
-int ProxyMainWindow::startSession(QUuid sessionID)
-{
-	sessionEnded_ = false;
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
-	forever
-	{
-		//send a PUTDATA command to the server with the most recent behavioral data
-		QSharedPointer<Picto::ProtocolResponse> dataResponse;
-		QString dataCommandStr = "PUTDATA "+name()+":"+ getStatusString() + " PICTO/1.0";
-		QSharedPointer<Picto::ProtocolCommand> response(new Picto::ProtocolCommand(dataCommandStr));
-
-		//set up XML writer
-		QString xmlData;
-		QSharedPointer<QXmlStreamWriter> writer(new QXmlStreamWriter(&xmlData));
-		writer->setAutoFormatting(true);
-		writer->writeStartDocument();
-		writer->writeStartElement("Data");
-
-		//Start writing the XML document
-		//WE ARE NOT CURRENTLY USING THE DATA BELOW, SO ITS DISABLED, BUT WE WILL
-		//NEED TO.  WHEN THIS HAPPENS, PUT IT IN A DATASTORE OF ITS OWN AND HANDLE
-		//IT IN PUTDATA HANDLER ON SERVER.
-		//writer->writeTextElement("device",iNDAcq->device());
-
-		////check to see if our device is running
-		//writer->writeStartElement("deviceStatus");
-		//writer->writeCharacters("running");
-		//writer->writeEndElement();
-		//writer->writeTextElement("sampleRate",QString("%1").arg(iNDAcq->samplingRate()));
-
-
-		//get the data from the neural acquisition device 
-		//(the plugin should have formatted it as XML already)
-		QList<QSharedPointer<Picto::DataStore>> dataList = iNDAcq->dumpData();
-		foreach(QSharedPointer<Picto::DataStore> data, dataList)
-		{
-			data->serializeAsXml(writer);
-		}
-		//xmlData.append(iNDAcq->dumpData());
-		writer->writeEndElement();  //end "ResponseACQ1.0"
-		writer->writeEndDocument();
-		
-		response->setContent(xmlData.toUtf8());
-		//response->setContentEncoding(Picto::ContentEncodingType::gzip); //ADD ENCODING!!!!!!!!!!!!!!!!
-		response->setFieldValue("Content-Length",QString::number(xmlData.length()));
-		
-		if(dataList.size())
-		{
-			qDebug("sent message");
-			dataCommandChannel_->sendRegisteredCommand(response);
-		}
-
-		//check for and process responses
-		if(dataCommandChannel_->assureConnection(2000))
-		{
-			serverActivity();
-			while(dataCommandChannel_->waitForResponse(0))
-			{
-qDebug("responses waiting");
-				dataResponse = dataCommandChannel_->getResponse();
-				Q_ASSERT(!dataResponse.isNull());
-				Q_ASSERT(dataResponse->getResponseType() == "OK");
-
-				QString statusDirective = dataResponse->getDecodedContent().toUpper();
-qDebug("got message");
-				//We may want to break this out in a seperate function at some point...
-				if(statusDirective.startsWith("OK"))
-				{
-					qDebug("Message:OK");
-					//do nothing
-				}
-				else if(statusDirective.startsWith("STOP"))
-				{
-					qDebug("Message:STOP");
-					//engine->stop();
-				}
-				else if(statusDirective.startsWith("PAUSE"))
-				{
-					qDebug("Message:PAUSE");
-					//engine->pause();
-				}
-				else if(statusDirective.startsWith("RESUME"))
-				{
-					qDebug("Message:RESUME");
-					//engine->resume();
-				}
-				else if(statusDirective.startsWith("REWARD"))
-				{
-					qDebug("Message:REWARD");
-					//int channel = statusDirective.split(" ").value(1).toInt();
-					//engine->giveReward(channel);	
-				}
-				else if(statusDirective.startsWith("ENDSESSION"))
-				{
-					qDebug("Message:ENDSESSION");
-					sessionEnded_ = true;
-					break;	
-				}
-				else
-				{
-					qDebug("Message:UNKNOWN DIRECTIVE");
-					Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server: "+statusDirective.toAscii());
-				}
-			}
-
-			//resend all of the pending responses
-			dataCommandChannel_->resendPendingCommands(10);
-		}
-		if(sessionEnded_)
-			break;
-		//Pause for 20 ms 
-		QEventLoop pauseLoop;
-		QTimer pauseTimer;
-		pauseTimer.setSingleShot(true);
-		pauseTimer.setInterval(50);
-		QObject::connect(&pauseTimer, SIGNAL(timeout()), &pauseLoop, SLOT(quit()));
-		pauseTimer.start();
-		pauseLoop.exec();
-	}
-	setStatus(idle);
-	return 0;
-}
-int ProxyMainWindow::endSession()
-{
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
-	sessionEnded_ = true;
-	iNDAcq->stopDevice();
 	return 0;
 }

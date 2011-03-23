@@ -49,6 +49,17 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	{
 		return unauthorizedResponse;
 	}
+	
+	// Check to see that this component isnt associated with a session that's still open
+	QSharedPointer<SessionInfo> sessionInfo;
+	sessionInfo = conMgr->getSessionInfoByComponent(directorID);
+	if(!sessionInfo.isNull())
+	{	// If we got here, the old session is in the process of closing.  Don't start a new session until
+		// its done.
+		unauthorizedResponse->setContent("A session that this director was associated with is still in the process of closing.");
+		return unauthorizedResponse;
+		
+	}
 
 	//Check that the Proxy is ready to go
 	if(proxyID == QUuid().toString())
@@ -66,7 +77,6 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	}
 
 	//create the session
-	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentXml, observerId);
 	
 	if(sessionInfo.isNull())

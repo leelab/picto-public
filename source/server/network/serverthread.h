@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QSharedPointer>
 #include <QUuid>
+#include <QTime>
 
 #include "../common/common.h"
 #include "../common/protocol/ProtocolCommand.h"

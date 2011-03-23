@@ -65,7 +65,7 @@ public:
 	QSharedPointer<SessionInfo> getSessionInfoByComponent(QUuid componentID);
 	QSharedPointer<SessionInfo> getSessionInfo(QUuid uuid);
 	bool sessionIsValid(QString sessionId);
-	void endSession(QUuid sessionId);
+	bool endSession(QUuid sessionId);
 	QUuid pendingSession(QUuid componentID);
 
 private slots:

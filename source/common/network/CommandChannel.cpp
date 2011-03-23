@@ -11,11 +11,16 @@ CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QObject *pare
 	reconnect_(true),
 	sourceId_(sourceId),
 	sourceType_(sourceType),
-	currRegCmdID_(Q_UINT64_C(1))
+	currRegCmdID_(Q_UINT64_C(1)),
+	discoverMsgSentTime_(QDateTime::currentDateTime()),
+	earliestPendingCommand_(QDateTime::currentDateTime()),
+	resendEnabled_(true),
+	resendPendingInterval_(10),
+	lastReconnectTime_(QDateTime::currentDateTime())
 {
 	//set up the socket
-	consumerSocket_ = new QTcpSocket(this);
-	connect(consumerSocket_, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
+	consumerSocket_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
+	connect(consumerSocket_.data(), SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 }
 
 CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress serverAddress, quint16 serverPort_, QObject *parent)
@@ -26,11 +31,16 @@ CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress 
 	reconnect_(true),
 	sourceId_(sourceId),
 	sourceType_(sourceType),
-	currRegCmdID_(Q_UINT64_C(1))
+	currRegCmdID_(Q_UINT64_C(1)),
+	discoverMsgSentTime_(QDateTime::currentDateTime()),
+	earliestPendingCommand_(QDateTime::currentDateTime()),
+	resendEnabled_(true),
+	resendPendingInterval_(10),
+	lastReconnectTime_(QDateTime::currentDateTime())
 {
 	//set up the socket
-	consumerSocket_ = new QTcpSocket(this);
-	connect(consumerSocket_, SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
+	consumerSocket_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
+	connect(consumerSocket_.data(), SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 	
 	//set multipart boundary to a null string
 	connectToServer(serverAddr_,serverPort_);
@@ -41,7 +51,7 @@ CommandChannel::~CommandChannel()
 	if(status_ == connected)
 		closeChannel();
 
-	delete consumerSocket_;
+	//delete consumerSocket_;
 }
 
 //! \brief Don't call from time sensitive zone
@@ -97,6 +107,76 @@ QSharedPointer<ProtocolResponse> CommandChannel::getResponse()
 		return incomingResponseQueue_.takeFirst();
 }
 
+void CommandChannel::setStatusManager(QSharedPointer<ComponentStatusManager> statusManager)
+{
+	statusManager_ = statusManager;
+}
+void CommandChannel::addResponseHandler(QSharedPointer<ProtocolResponseHandler> responseHandler, bool replaceExisting)
+{
+	QString directive = "";
+	if(!responseHandler.isNull())
+		directive = responseHandler->method();
+	if(directive != "" && (!responseHandlerMap_.contains(directive) || replaceExisting))
+		responseHandlerMap_[directive] = responseHandler;
+}
+
+// returns true if it finished processing all pending commands
+bool CommandChannel::processResponses(int timeoutMs)
+{
+		QTime timeoutTimer;
+		bool loopForever = (timeoutMs < 0);
+		timeoutTimer.start();
+		QSharedPointer<Picto::ProtocolResponse> response;
+		QSharedPointer<ProtocolResponseHandler> responseHandler;
+		QDateTime nextPendingMessageTime = QDateTime::currentDateTime();
+		bool keepLooping = true;
+		do
+		{
+			do
+			{
+				if(!waitForResponse(0))
+					break;
+				response = getResponse();
+				if(!response.isNull())
+				{
+					QString directive = response->getDecodedContent();
+					int directiveEnd = directive.indexOf(' ');
+					int altDirectiveEnd = directive.indexOf('\n');
+					if((altDirectiveEnd > 0) && (altDirectiveEnd < directiveEnd))directiveEnd = altDirectiveEnd;
+					QString statusDirective = directive.left(directiveEnd);
+					//qDebug("Directive Received: " + statusDirective.toAscii());
+					responseHandler = responseHandlerMap_.value(statusDirective,QSharedPointer<ProtocolResponseHandler>());
+					if(!responseHandler.isNull())
+					{
+						responseHandler->acceptResponse(response);
+					}
+					else
+					{
+						Q_ASSERT(!responseHandler.isNull());
+					}
+				}
+			}while(numIncomingResponses() > 0);
+
+			int remainingMs = timeoutMs - timeoutTimer.elapsed();
+			if(assureConnection((timeoutMs == 0)?0:(loopForever)?10000:(remainingMs<0)?0:remainingMs))	// This will verify connection and attempt to reconnect if there's time left
+				if(timeoutTimer.elapsed() > timeoutMs)
+					nextPendingMessageTime = resendPendingCommands().addSecs(resendPendingInterval_);
+
+			// Update Status Manager
+			if(!statusManager_.isNull())
+			{
+				remainingMs = timeoutMs - timeoutTimer.elapsed();
+				statusManager_->update((timeoutMs<=0)?timeoutMs:(remainingMs<0)?0:remainingMs);
+			}
+			remainingMs = timeoutMs - timeoutTimer.elapsed();
+			if(!loopForever && QDateTime::currentDateTime().addMSecs(remainingMs) < nextPendingMessageTime)
+				keepLooping = false;
+		}while(loopForever || ((pendingResponses() > 0) && (timeoutTimer.elapsed() < timeoutMs) && keepLooping));
+		if(pendingResponses() == 0)
+			return true;
+		return false;
+}
+
 
 
 /*! \brief Waits for a response to arrive
@@ -149,6 +229,9 @@ bool CommandChannel::waitForResponse(int timeout)
 void CommandChannel::readIncomingResponse()
 {
 	int bytesRead;
+	QSharedPointer<ProtocolCommand> pendingCommand;
+	QDateTime currCreatedTime;
+	int currResponseDelay;
 	while(consumerSocket_->bytesAvailable() > 0)
 	{
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse());
@@ -158,7 +241,7 @@ void CommandChannel::readIncomingResponse()
 		if(!multipartBoundary_.isEmpty())
 			response->setMultiPartBoundary(multipartBoundary_);
 
-		bytesRead = response->read(consumerSocket_);
+		bytesRead = response->read(consumerSocket_.data());
 
 		//if there is an error, bytes read will be negative
 		if(bytesRead >= 0)
@@ -174,8 +257,19 @@ void CommandChannel::readIncomingResponse()
 			{
 				if(pendingCommands_.contains(commandId.toULongLong()))
 				{
-					pendingCommands_.remove(commandId.toULongLong());
+					pendingCommand = pendingCommands_.take(commandId.toULongLong());
 					incomingResponseQueue_.push_back(response);
+					QString serverBytesStr = response->getFieldValue("Server-Bytes");
+					if(serverBytesStr != "")
+					{
+						int serverBytes = serverBytesStr.toInt();
+						if(serverBytes == 0)
+							resendEnabled_ = true;
+						else
+							resendEnabled_ = false;
+						qDebug("serverBytesStr: " + serverBytesStr.toAscii());
+					}
+					
 				}
 			}
 			else
@@ -185,7 +279,7 @@ void CommandChannel::readIncomingResponse()
 		}
 		else
 		{
-			Q_ASSERT(false); //This is for debugging purposes only
+			qDebug("Error reading data into ProtocolResponse. ERROR ID:" + QString::number(bytesRead).toAscii());//Q_ASSERT(false); //This is for debugging purposes only
 		}
 	}
 
@@ -223,6 +317,10 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 		{
 			QTime timer;
 			timer.start();
+			if(!discoverServer(acceptableTimeoutMs))
+				return false;
+			if(timer.elapsed() >= acceptableTimeoutMs)
+				return false;
 			consumerSocket_->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
 			int connectDelay = timer.elapsed();
 			if(connectDelay >= acceptableTimeoutMs)
@@ -232,11 +330,99 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 	}
 	if(consumerSocket_->state() == QAbstractSocket::ConnectedState)
 	{
+		if(status_ != connected)
+			lastReconnectTime_ = QDateTime::currentDateTime();
 		status_ = connected;
 		return true;
 	}
 	return false;
 }
+
+/*!	\brief Attempts to discover server's address and port for the TCPSocket connection.
+ *	The function sends a UDP discover message to the server.  The function checks for 
+ *	a response for up to 10 seconds or until the timeout.  If no response is received
+ *	by the timeout, then the function will check once more for a response the next time
+ *	it is called.  If it still has no response, the function will be set to send another
+ *	request the next time its called.
+ *	If this function is called with a timeout less than or equal to zero it will do nothing
+ *	and return false.
+ */
+bool CommandChannel::discoverServer(int timeoutMs)
+{
+	if(timeoutMs == 0)
+		return false;
+	if(timeoutMs < 0)
+		timeoutMs = 10000;
+	QTime timer;
+	timer.start();
+	if(discoverySocket_.isNull())
+	{
+		discoverySocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
+		QHostAddress serverAddress(QHostAddress::Any);	
+		quint16 port = 42425;
+		while(!discoverySocket_->bind(serverAddress, port) && port < 42500)
+		{
+			if(timer.elapsed() >= timeoutMs)
+			{
+				discoverySocket_ = QSharedPointer<QUdpSocket>();
+				return false;
+			}
+			port++;
+		}
+		QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(port).toAscii();
+		discoverySocket_->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, 42424);
+		discoverMsgSentTime_ = QDateTime::currentDateTime();
+	}
+	int remainingMs = timeoutMs - timer.elapsed();
+	if(remainingMs <= 0)
+		return false;
+	do
+	{
+		discoverySocket_->waitForReadyRead(remainingMs);
+		while (discoverySocket_->hasPendingDatagrams())
+		{
+			QByteArray datagram;
+			datagram.resize(discoverySocket_->pendingDatagramSize());
+			discoverySocket_->readDatagram(datagram.data(), datagram.size());
+			QString request = datagram.data();
+			QString method, targetAddress, targetPort, protocolName, protocolVersion;
+			QStringList tokens = request.split(QRegExp("[ ][ ]*"));
+			if(tokens.count() == 3)
+			{
+				method = tokens[0];
+
+				int targetPortPosition = tokens[1].indexOf(':');
+				if(targetPortPosition != -1)
+				{
+					targetAddress = tokens[1].left(targetPortPosition);
+					serverAddr_.setAddress(targetAddress);
+					targetPort = tokens[1].mid(targetPortPosition+1);
+					serverPort_ = targetPort.toInt();
+				}
+
+				int protocolVersionPosition = tokens[2].indexOf('/');
+				if(protocolVersionPosition != -1)
+				{
+					protocolName = tokens[2].left(protocolVersionPosition);
+					protocolVersion = tokens[2].mid(protocolVersionPosition+1);
+				}
+
+				if(method == "ANNOUNCE" &&
+				   !serverAddr_.isNull() &&
+				   serverPort_ &&
+				   protocolName == "PICTO")
+				{
+					discoverySocket_ = QSharedPointer<QUdpSocket>();
+					return true;
+				}
+			}
+		}
+	}while((timer.elapsed() < timeoutMs) && (discoverMsgSentTime_.secsTo(QDateTime::currentDateTime()) < 10));
+	if(discoverMsgSentTime_.secsTo(QDateTime::currentDateTime()) >= 10)
+		discoverySocket_ = QSharedPointer<QUdpSocket>();
+	return false;
+}
+
 
 /*! \brief Sends a command over the channel
  *
@@ -253,16 +439,24 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 	if(!assureConnection())
 		return false;
 
-	//We always add a session-ID field, even if it's a null value
-	command->setFieldValue("Session-ID",sessionId_.toString());
-
 	//We also always add a source-ID field so that we can be uniquely identified by the recipient.
 	command->setFieldValue("Source-ID",sourceId_.toString());
 
 	//We also always add a source-Type field so that we our component type can be identified by the recipient
 	command->setFieldValue("Source-Type",sourceType_);
 
-	if(command->write(consumerSocket_) < 1)
+	//For messages that have a status element, update it to the latest status.
+	if(!statusManager_.isNull() && ((command->getMethod() == "PUTDATA") || (command->getMethod() == "COMPONENTUPDATE")))
+	{
+		command->setTarget(statusManager_->getName()+":"+statusManager_->getStatusAsString());
+		command->setFieldValue("Session-ID",statusManager_->getSessionID().toString());
+	}
+	else
+	{
+		command->setFieldValue("Session-ID",sessionId_.toString());
+	}
+
+	if(command->write(consumerSocket_.data()) < 1)
 	{
 		qDebug("CommandChannel::sendCommand failed to send requested command ");
 		return false;
@@ -284,6 +478,7 @@ bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand
 {
 	Q_ASSERT_X(sessionId_ != QUuid(),"CommandChannel::sendRegisteredCommand","Registered commands may only be sent on command channels with session IDs!");
 	command->setFieldValue("Command-ID",QString::number(currRegCmdID_));
+	command->setFieldValue("Time-Created",QDateTime::currentDateTime().toString());
 	command->setFieldValue("Time-Sent",QDateTime::currentDateTime().toString());
 	pendingCommands_[currRegCmdID_++] = command;
 	return sendCommand(command);
@@ -336,20 +531,32 @@ void CommandChannel::disconnectHandler()
  *	commands.  When a registered response is received, the corresponding command is 
  *	removed from that list.  This function resends all of the registered commands that 
  *	were sent over "timeoutS" seconds ago and have not yet had responses received.
+ *	It returns a QDateTime that indicates when the next pending command to be sent was
+ *	sent originally.
  */
-void CommandChannel::resendPendingCommands(int timeoutS)
+QDateTime CommandChannel::resendPendingCommands()
 {
-	Q_ASSERT(timeoutS >=0);
+	QDateTime currTime = QDateTime::currentDateTime();
+	if(!resendEnabled_)
+		return earliestPendingCommand_;
+	if(!assureConnection(0))
+		return earliestPendingCommand_;
+	if(earliestPendingCommand_.secsTo(currTime) < resendPendingInterval_)
+		return earliestPendingCommand_;
 	QList<QSharedPointer<ProtocolCommand> > commandsToResend;
 	QDateTime timeSent;
-	QDateTime currTime = QDateTime::currentDateTime();
+	QDateTime nextEarliestCommand = QDateTime::currentDateTime();
 	foreach(QSharedPointer<ProtocolCommand> command, pendingCommands_)
 	{
-		// If the command was sent more than 10 secs ago, send it again.
+		// If the command was sent more than resendInterval secs ago, send it again.
 		timeSent = QDateTime::fromString(command->getFieldValue("Time-Sent"));
-		if(timeSent.secsTo(currTime) > timeoutS)
+		if(timeSent.secsTo(currTime) > resendPendingInterval_)
 		{
 			commandsToResend.push_back(command);
+		}
+		else if(timeSent < nextEarliestCommand)
+		{
+			nextEarliestCommand = timeSent;
 		}
 	}
 
@@ -357,13 +564,18 @@ void CommandChannel::resendPendingCommands(int timeoutS)
 	{
 		command->setFieldValue("Time-Sent",QDateTime::currentDateTime().toString());
 		sendCommand(command);
+		//qDebug((QString("Sent message with ID: ") + command->getFieldValue("Command-ID")).toAscii());
 	}
+	earliestPendingCommand_ = nextEarliestCommand;
+	return earliestPendingCommand_;
 }
 
 void CommandChannel::setSessionId(QUuid sessionId) 
 { 
 	if(sessionId_ == sessionId)
 		return;
+	if(!statusManager_.isNull())
+		statusManager_->setSessionID(sessionId);
 	currRegCmdID_ = Q_UINT64_C(1);
 	sessionId_ = sessionId; 
 };

@@ -93,7 +93,7 @@ private:
 	void sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine);
 	void sendStateDataToServer(QSharedPointer<Transition> transition, QSharedPointer<Engine::PictoEngine> engine);
 
-	bool cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine);
+	//bool cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine);
 
 	void handleLostServer(QSharedPointer<Engine::PictoEngine> engine);
 

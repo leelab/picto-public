@@ -6,6 +6,7 @@
 #include <QSharedPointer>
 #include <QHostAddress>
 #include <QTcpSocket>
+#include <QUdpSocket>
 #include <QUuid>
 #include <QDateTime>
 
@@ -13,6 +14,8 @@
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../controlelements/timer.h"
+#include "../protocol/ProtocolResponseHandler.h"
+#include "ComponentStatusManager.h"
 
 namespace Picto {
 
@@ -87,12 +90,18 @@ public:
 	bool sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	bool sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	QSharedPointer<ProtocolResponse> getResponse();
+
+	void setStatusManager(QSharedPointer<ComponentStatusManager> statusManager);
+	void addResponseHandler(QSharedPointer<ProtocolResponseHandler> responseHandler, bool replaceExisting = true);
+	bool processResponses(int timeoutMs);
+	
+	
 	int numIncomingResponses(){return incomingResponseQueue_.size();};
 
 	bool waitForResponse(int timeout=0);
 
 	int pendingResponses() { return pendingCommands_.size(); };  //! Returns the number of responses we are waiting for
-	void resendPendingCommands(int timeoutS = 10);
+	QDateTime resendPendingCommands();
 
 	void setSessionId(QUuid sessionId);
 	QUuid getSessionId(){return sessionId_;};
@@ -124,12 +133,14 @@ private slots:
 private:
 	void readIncomingCommand();
 	void readIncomingResponse();
+	bool discoverServer(int timeoutMs);
 
 
 	QHostAddress serverAddr_;
 	quint16 serverPort_;
 
-	QTcpSocket *consumerSocket_;
+	QSharedPointer<QTcpSocket> consumerSocket_;
+	QSharedPointer<QUdpSocket> discoverySocket_;
 
 	ChannelStatus status_;
 
@@ -145,6 +156,14 @@ private:
 	QUuid sessionId_;
 	QUuid sourceId_;
 	QString sourceType_;
+
+	QSharedPointer<ComponentStatusManager> statusManager_;
+	QMap<QString,QSharedPointer<ProtocolResponseHandler>> responseHandlerMap_;
+	QDateTime discoverMsgSentTime_;
+	QDateTime earliestPendingCommand_;
+	QDateTime lastReconnectTime_;
+	int resendPendingInterval_;
+	bool resendEnabled_;
 };
 
 

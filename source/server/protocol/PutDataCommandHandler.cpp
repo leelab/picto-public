@@ -12,6 +12,7 @@
 #include <QSqlQuery>
 #include <QVariant>
 #include <QUuid>
+#include <QTime>
 
 PutDataCommandHandler::PutDataCommandHandler()
 {
@@ -24,8 +25,9 @@ PutDataCommandHandler::PutDataCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	qDebug((QString("PUTDATA  handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
-
+	int messageIndex=0;
+	//qDebug((QString("PUTDATA  handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
+	QTime commandProcessingTimer;
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
@@ -47,6 +49,12 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	if(statusStr.toUpper() == "IDLE")
 	{
 		status = ComponentStatus::idle;
+		notFoundResponse->setContent("PUTDATA commands originating from an idle component are ignored.");
+		return notFoundResponse;
+	}
+	else if(statusStr.toUpper() == "ENDING")
+	{
+		status = ComponentStatus::ending;
 	}
 	else if(statusStr.toUpper() == "STOPPED")
 	{
@@ -77,7 +85,6 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	{
 		return notFoundResponse;
 	}
-
 	xmlReader->readNext();
 	while(!(xmlReader->isEndElement() && xmlReader->name().toString() == "Data") && !xmlReader->atEnd())
 	{
@@ -122,17 +129,22 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		}
 		else if(dataType == "NeuralDataStore")
 		{
+			commandProcessingTimer.start();
 			Picto::NeuralDataStore neuralData;
 			neuralData.deserializeFromXml(xmlReader);
-
+			//qDebug((QString("Time to deserialize neural data: ")+QString::number(timer.elapsed())).toAscii()); 
 			sessionInfo->insertNeuralData(neuralData);
+			qDebug("NEURAL " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 		}
 		else if(dataType == "AlignmentDataStore")
 		{
+			commandProcessingTimer.start();
 			Picto::AlignmentDataStore alignmentData;
 			alignmentData.deserializeFromXml(xmlReader);
 
 			sessionInfo->insertAlignmentData(alignmentData);
+			if(sourceType == "PROXY")
+				qDebug("ALIGN  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 		}
 		else
 		{
@@ -142,7 +154,6 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 		xmlReader->readNext();
 	}
-
 	QString directive = sessionInfo->pendingDirective(sourceID);
 	if(directive.isEmpty())
 		response->setContent("OK");
@@ -150,7 +161,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	{
 						qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
 		response->setContent(directive.toUtf8());
-		sessionInfo->flushCache();
+		sessionInfo->flushCache(sourceType);
 		response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	}
 	return response;

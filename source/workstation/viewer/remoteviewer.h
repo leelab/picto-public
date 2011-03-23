@@ -57,9 +57,10 @@ private:
 		QString status;
 		QString address;
 		QString id;
+		QString sessionID;
 	}ComponentInstance;
 
-	enum ComponentStatus {NotFound, Idle, Stopped, Paused, Running};
+	enum ComponentStatus {NotFound, Idle, Ending, Stopped, Paused, Running};
 
 	void setupEngine();
 	void setupServerChannel();
@@ -81,7 +82,7 @@ private:
 
 	//Since we don't want the experiemnt to be changed while it is being run
 	//we keep a local copy here.
-	Picto::Experiment *activeExperiment_;
+	QSharedPointer<Picto::Experiment> activeExperiment_;
 
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;

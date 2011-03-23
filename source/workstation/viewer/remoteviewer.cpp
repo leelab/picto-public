@@ -394,8 +394,10 @@ void RemoteViewer::changeConnectionState(bool checked)
 	}
 	else
 	{ 
+		QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+		ComponentStatus remoteStatus = directorStatus(directorID);
 		int r = QMessageBox::No;
-		if(((localStatus_ == Stopped) || (localStatus_ == Idle)) && (startedSession_))
+		if((remoteStatus >= Stopped) && (startedSession_))
 		{
 			r = QMessageBox::warning(this,Picto::Names->workstationAppName,
 				tr("You are disconnecting from a session that is not currently running an experiment.\n"
@@ -412,7 +414,7 @@ void RemoteViewer::changeConnectionState(bool checked)
 			QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 			QTime timer;
 			timer.start();
-			while(directorStatus(directorID) != Stopped && timer.elapsed() < 2000);
+			while(directorStatus(directorID) > Stopped && timer.elapsed() < 2000);
 
 			Q_ASSERT_X(timer.elapsed()<2000, "RemoteViewer::changeConnectionState", "Remote director never stopped");
 		}
@@ -423,13 +425,6 @@ void RemoteViewer::changeConnectionState(bool checked)
 			updateActions();
 		}
 		
-
-		//We should disjoin the session first (this will alwys occur
-		if(disjoinSession())
-			connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
-		else
-			connectAction_->setChecked(true);
-
 		//If we started the session, we should end it too
 		if(r == QMessageBox::Yes)
 		{
@@ -439,6 +434,13 @@ void RemoteViewer::changeConnectionState(bool checked)
 				tr("Failed to end the session.  Please reconnect to the session and try again."));
 			}
 		}
+
+		//We should disjoin the session first (this will alwys occur
+		if(disjoinSession())
+			connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+		else
+			connectAction_->setChecked(true);
+
 	}
 	updateActions();
 }
@@ -700,6 +702,8 @@ RemoteViewer::ComponentStatus RemoteViewer::directorStatus(QString id)
 		{
 			if(director.status.toUpper() == "IDLE")
 				return Idle;
+			if(director.status.toUpper() == "ENDING")
+				return Ending;
 			else if(director.status.toUpper() == "STOPPED")
 				return Stopped;
 			else if(director.status.toUpper() == "RUNNING")
@@ -726,6 +730,8 @@ RemoteViewer::ComponentStatus RemoteViewer::proxyStatus(QString id)
 		{
 			if(proxy.status.toUpper() == "IDLE")
 				return Idle;
+			if(proxy.status.toUpper() == "ENDING")
+				return Ending;
 			else if(proxy.status.toUpper() == "STOPPED")
 				return Stopped;
 			else if(proxy.status.toUpper() == "RUNNING")
@@ -798,6 +804,10 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 				else if(xmlReader.name() == "Status" && xmlReader.isStartElement())
 				{
 					director.status = xmlReader.readElementText();
+				}
+				else if(xmlReader.name() == "Session-ID" && xmlReader.isStartElement())
+				{
+					director.sessionID = xmlReader.readElementText();
 				}
 				else if(xmlReader.name() == "Director" && xmlReader.isEndElement())
 				{
@@ -896,10 +906,13 @@ void RemoteViewer::checkForTimeouts()
 	   !behavioralDataChannel_->assureConnection(1000))
 	{
 		//connectAction_->setChecked(false);//For a checkable action, the checked property is toggled during the trigger call.
-		connectAction_->trigger();
-		QMessageBox::critical(0,tr("Server Connection Lost"),
-			tr("Workstation is no longer able to connect to the server.  " 
-			"The session has been ended."));
+		if(connectAction_->isChecked())
+		{
+			connectAction_->trigger();
+			QMessageBox::critical(0,tr("Server Connection Lost"),
+				tr("Workstation is no longer able to connect to the server.  " 
+				"The session has been ended."));
+		}
 		return;
 	}
 
@@ -907,7 +920,7 @@ void RemoteViewer::checkForTimeouts()
 	//(In case another workstation changed its state.
 	ComponentStatus remoteStatus = directorStatus(directorListBox_->itemData(directorListBox_->currentIndex()).toString());
 
-	if(remoteStatus == Idle && localStatus_ != Idle)
+	if((remoteStatus < Stopped) && (localStatus_ != Idle))
 	{
 		//This means that the session has ended, so we must  disconnect
 		connectAction_->setChecked(false);
@@ -1000,7 +1013,7 @@ bool RemoteViewer::startSession()
 	//It would be 100 times easier to copy the experiment object directly, but it contains a
 	//parameter container, which is a QObject, and can't be copied.  So instead, we generate
 	//a new copy instead
-	activeExperiment_ = new Picto::Experiment;
+	activeExperiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
 
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
 	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
@@ -1010,7 +1023,7 @@ bool RemoteViewer::startSession()
 		return false;
 	if(!activeExperiment_->deserializeFromXml(xmlReader))
 	{
-		delete activeExperiment_;
+		//delete activeExperiment_;
 		return false;
 	}
 
@@ -1128,8 +1141,8 @@ bool RemoteViewer::endSession()
 	}
 	sessionId_ = QUuid();
 	serverChannel_->setSessionId(QUuid());
-	if(activeExperiment_)
-		delete activeExperiment_;
+	//if(activeExperiment_)
+		//delete activeExperiment_;
 	startedSession_ = false;
 	return true;
 
@@ -1196,7 +1209,7 @@ bool RemoteViewer::joinSession()
 		}
 
 		//Extract the experiment xml
-		activeExperiment_ = new Picto::Experiment;
+		activeExperiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
 		while(!xmlReader->atEnd() && !(xmlReader->isStartElement() && xmlReader->name() == "Experiment"))
 			xmlReader->readNext();
 
@@ -1339,9 +1352,9 @@ bool RemoteViewer::joinSession()
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.
 	ComponentStatus remoteStatus = directorStatus(directorID);
-	if(remoteStatus == Idle || remoteStatus == NotFound)
+	if(remoteStatus < Stopped)
 	{
-		setStatus("Attempted to joins a session with a director that isn't in a session");
+		setStatus("Attempted to join a session with a director that isn't in an active session");
 		return false;
 	}
 	else if(remoteStatus == Stopped)
@@ -1398,29 +1411,29 @@ bool RemoteViewer::joinSession()
 bool RemoteViewer::disjoinSession()
 {
 	//Check for a currently running session
-	if(sessionId_.isNull())
-	{
-		setStatus(tr("Not currently in a session"));
-		return false;
-	}
+	//if(sessionId_.isNull())
+	//{
+	//	setStatus(tr("Not currently in a session"));
+	//	return false;
+	//}
 
 	timeoutTimer_->stop();
 
 	//If we're running, we should stop the local engine
-	if(localStatus_ == Running || localStatus_ == Paused)
+	if(localStatus_ > Stopped)
 		engine_->stop();
 
 	localStatus_ = Stopped;
 	engineSlaveChannel_->setSessionId(QUuid());
 	behavioralDataChannel_->setSessionId(QUuid());
 
-	//If we started the session, there's no reason to throw away the session ID
-	//until we end it.
-	if(!startedSession_)
-	{
+	////If we started the session, there's no reason to throw away the session ID
+	////until we end it.
+	//if(!startedSession_)
+	//{
 		sessionId_ = QUuid();
-		delete activeExperiment_;
-	}
+		//delete activeExperiment_;
+	//}
 
 	setStatus("Disjoined session");
 

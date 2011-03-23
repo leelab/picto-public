@@ -3,8 +3,8 @@
 
 #include <QList>
 #include <QSqlDatabase>
-
-
+#include <QSharedPointer>
+#include <QMutex>
 
 /*!	\brief Aids in the alignment of the neural and behavioral timebases
  *
@@ -38,12 +38,20 @@ public:
 	AlignmentTool();
 	~AlignmentTool();
 
+	void resetValues();
 	double convertToBehavioralTimebase(double neuralTime);
 	double convertToNeuralTimebase(double behavioralTime);
+	double getJitter(double bAlignTimestamp, double nAlignTimestamp);
 	double getCorrelationCoefficient();
+	void updateCoefficients(double bAlignTimestamp, double nAlignTimestamp);
+	QString getSQLTimeConverstionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn);
+	QString getSQLJitterEquation(	QString jitterColumn, 
+									QString neuralTimebaseColumn, 
+									QString behavioralTimebaseColumn,
+									QString correlationColumn);
 
-	void doFullAlignment(QSqlDatabase& sessionDb);
-	void doIncrementalAlignment(QSqlDatabase& sessionDb);
+	//void doFullAlignment(QSqlDatabase& sessionDb);
+	//void doIncrementalAlignment(QSqlDatabase& sessionDb);
 
 private:
 	struct AlignmentEvent
@@ -65,10 +73,8 @@ private:
 		double corr;
 	} coefficients;
 
-	void updateCoefficients(AlignmentEvent bStartEvent,
-							AlignmentEvent bEndEvent,
-							AlignmentEvent nStartEvent,
-							AlignmentEvent nEndEvent);
+	//bool executeWriteQuery(QSqlQuery* query, QString optionalString = "");
+	//bool executeReadQuery(QSqlQuery* query, QString optionalString = "");
 
 	coefficients coeff_;
 
@@ -85,6 +91,8 @@ private:
 
 	//statistics
 	int trials_;
+	//QMutex* databaseWriteMutex_;
+	QSharedPointer<QMutex> alignmentMutex_;
 };
 
 

@@ -125,7 +125,10 @@ void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid ses
 			//If there's any session that thinks this component is attached to it, it's not anymore.  Close that session.
 			sessInfo = getSessionInfoByComponent(uuid);
 			if(!sessInfo.isNull())
-				endSession(sessInfo->sessionId());
+			{
+				bool sessionEnded = endSession(sessInfo->sessionId());
+				Q_ASSERT(sessionEnded);
+			}
 			//Create a new component.
 			info = QSharedPointer<ComponentInfo>(new ComponentInfo);
 		}
@@ -174,6 +177,8 @@ QString ConnectionManager::getProxyList()
 		xmlWriter.writeTextElement("Name", component->getName());
 		if(component->getStatus() == ComponentStatus::idle)
 			xmlWriter.writeTextElement("Status","Idle");
+		else if(component->getStatus() == ComponentStatus::ending)
+			xmlWriter.writeTextElement("Status","Ending");
 		else if(component->getStatus() == ComponentStatus::stopped)
 			xmlWriter.writeTextElement("Status","Stopped");
 		else if(component->getStatus() == ComponentStatus::paused)
@@ -223,6 +228,8 @@ QString ConnectionManager::getDirectorList()
 		xmlWriter.writeTextElement("Name", component->getName());
 		if(component->getStatus() == ComponentStatus::idle)
 			xmlWriter.writeTextElement("Status","Idle");
+		else if(component->getStatus() == ComponentStatus::ending)
+			xmlWriter.writeTextElement("Status","Ending");
 		else if(component->getStatus() == ComponentStatus::stopped)
 			xmlWriter.writeTextElement("Status","Stopped");
 		else if(component->getStatus() == ComponentStatus::paused)
@@ -231,6 +238,9 @@ QString ConnectionManager::getDirectorList()
 			xmlWriter.writeTextElement("Status","Running");
 		else
 			xmlWriter.writeTextElement("Status","NotFound");
+		QSharedPointer<SessionInfo> sessInfo = getSessionInfoByComponent(component->getUuid());
+
+		xmlWriter.writeTextElement("Session-ID",(sessInfo.isNull())?QUuid():sessInfo->sessionId().toString());
 		xmlWriter.writeEndElement(); //Director
 	}
 	xmlWriter.writeEndElement();	//DirectorInstances
@@ -374,8 +384,10 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(experimentXml,initialObserverId));
 	sessInfo->AddComponent(components_[directorID]);
 	if(proxyID != QUuid())
+	{
 		sessInfo->AddComponent(components_[proxyID]);
-	sessInfo->alignTimestampsTo(components_[directorID]->getType());
+		sessInfo->alignTimestampsTo(components_[directorID]->getType());
+	}
 
 	pendingSessions_[directorID] = sessInfo->uuid_;
 	if(proxyID != QUuid())
@@ -421,13 +433,18 @@ void ConnectionManager::checkForDroppedSessionTimeouts()
 	foreach(QString session, timedOut)
 	{
 		if(sessionIsValid(session)) //This will load the session for us.
-			endSession(QUuid(session)); //This will end the session correctly.
+		{
+			bool sessionEnded = endSession(QUuid(session)); //This will end the session correctly.
+			Q_ASSERT(sessionEnded);
+		}
 	}
 }
 
 //! \brief Indicates whether a session is being controlled by this server.
 bool ConnectionManager::sessionIsValid(QString sessionId)
 {
+	if((sessionId == "") || (QUuid(sessionId) == QUuid()))
+		return false;
 	QMutexLocker locker(mutex_);
 	if(openSessions_.contains(sessionId))
 		return true;
@@ -445,14 +462,15 @@ bool ConnectionManager::sessionIsValid(QString sessionId)
 }
 
 //!Ends a currently running session
-void ConnectionManager::endSession(QUuid sessionId)
+bool ConnectionManager::endSession(QUuid sessionId)
 {
-	if(sessionIsValid(sessionId))
+	if(sessionIsValid(sessionId) && openSessions_[sessionId]->endSession())
 	{
-		openSessions_[sessionId]->endSession();
 		QMutexLocker locker(mutex_);
 		openSessions_.remove(sessionId);
 		ServerConfig serverConfig;
 		serverConfig.removeSession(sessionId);
+		return true;
 	}
+	return false;
 }

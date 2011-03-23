@@ -5,6 +5,7 @@
 
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
+#include <QTime>
 
 /*! \brief Handles the PUTDATA commands, which are sent by Director
  *

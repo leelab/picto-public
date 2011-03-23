@@ -142,7 +142,7 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 	//sessionInfo->insertTrialEvent(time, eventCode, trialNum, sourceType, createDataID(command));
 
 	//Flush the database cache
-	sessionInfo->flushCache();
+	sessionInfo->flushCache(sourceType);
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QString directive = sessionInfo->pendingDirective(sourceID);

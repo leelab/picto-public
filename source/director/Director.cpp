@@ -1,5 +1,17 @@
 #include <QApplication>
 #include "Director.h"
+#include "network/DirectorStatusManager.h"
+#include "protocol/DirectorNewSessionResponseHandler.h"
+#include "protocol/DirectorEndSessionResponseHandler.h"
+#include "protocol/DirectorErrorResponseHandler.h"
+#include "protocol/DirectorLoadExpResponseHandler.h"
+#include "protocol/DirectorPauseResponseHandler.h"
+#include "protocol/DirectorResumeResponseHandler.h"
+#include "protocol/DirectorRewardResponseHandler.h"
+#include "protocol/DirectorStartResponseHandler.h"
+#include "protocol/DirectorStopResponseHandler.h"
+using namespace Picto;
+
 Director::Director(QString name,
 		HardwareSetup::SignalChannelType sigChannel,
 		HardwareSetup::VisualTargetType visualTarget,
@@ -82,8 +94,26 @@ int Director::openDevice()
 	if(!hwSetup.isSetup())
 		return 1;
 
+	statusManager_ = QSharedPointer<ComponentStatusManager>(new DirectorStatusManager());
+	statusManager_.staticCast<DirectorStatusManager>()->setEngine(engine_);
+	statusManager_->setName(name());
+
+	dataCommandChannel_->setStatusManager(statusManager_);
+	engine_->setDataCommandChannel(dataCommandChannel_);
+
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorNewSessionResponseHandler(statusManager_.staticCast<DirectorStatusManager>(),dataCommandChannel_)));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorEndSessionResponseHandler(statusManager_.staticCast<DirectorStatusManager>(),dataCommandChannel_)));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorErrorResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorLoadExpResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorPauseResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorResumeResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorRewardResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorStartResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorStopResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+
+
 	//Put up our splash screen
-	updateSplashStatus("PictoDirector started");
+	statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus("PictoDirector started");
 	return 0;
 }
 
@@ -96,95 +126,6 @@ int Director::closeDevice()
 			target->getVisualTarget()->close();
 	}
 	return 0;
-}
-
-bool Director::continueRunning()
-{
-	return engine_->hasVisibleRenderingTargets();
-}
-
-int Director::reportServerConnectivity(bool connected)
-{
-	updateSplashStatus((connected)?"Connected to server":"Not connected to server");
-	if(connected)
-	{
-		if(engine_->getDataCommandChannel().isNull())
-			engine_->setDataCommandChannel(dataCommandChannel_);
-	}
-	return 0;
-}
-int Director::startSession(QUuid sessionID)
-{
-	engine_->setSessionId(sessionID);
-	return 0;
-}
-int Director::loadExp(QString expXML)
-{
-	//Load the experiment
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(expXML.toUtf8()));
-	experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
-
-	xmlReader->readNext();
-	while(!xmlReader->atEnd() && xmlReader->name().toString() != "Experiment")
-	{
-		xmlReader->readNext();
-	}
-
-	if(!experiment_->deserializeFromXml(xmlReader))
-	{
-		updateSplashStatus(QString("Error loading experiment: %1").arg(experiment_->getErrors()));
-	}
-	else
-	{
-		updateSplashStatus("Loaded experiment, Session ID: " + engine_->getSessionId().toString());
-	}
-	return 0;
-}
-int Director::startExp(QString taskName)
-{
-	updateSplashStatus("Starting task: " + taskName);
-	//start running our task
-	if(experiment_)
-		experiment_->runTask(taskName, engine_);
-	//upon completion return to splash screen
-	updateSplashStatus("Completed Task: " + taskName);
-	setStatus(stopped);	// If we're here then our status is stopped
-	return 0;
-}
-int Director::endSession()
-{
-	engine_->setSessionId(QUuid());
-	experiment_ = QSharedPointer<Picto::Experiment>();
-	updateSplashStatus("Session ended");
-	return 0;
-}
-
-int Director::reward(int channel)
-{
-	engine_->giveReward(channel);
-	return 0;
-}
-
-int Director::reportErrorDirective()
-{
-	updateSplashStatus("ERROR");
-	return 0;
-}
-
-int Director::reportUnsupportedDirective(QString directive)
-{
-	updateSplashStatus("Unrecognized directive: " + directive);
-	return 0;
-}
-
-void Director::updateSplashStatus(QString status)
-{
-	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine_->getRenderingTargets();
-	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
-	{
-		target->updateStatus(status);
-		target->showSplash();
-	}
 }
 
 

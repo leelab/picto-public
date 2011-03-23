@@ -104,7 +104,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 
-	//Check that we have a Director and that it is idle
+	//Check that we have a Director and that it is stopped
 	ComponentStatus::ComponentStatus dirStatus = conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR");
 
 	if(dirStatus == ComponentStatus::running)
@@ -116,15 +116,60 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 	{
 		badReqResponse->setContent("Director not found");
 		return badReqResponse;
+	}else if(dirStatus == ComponentStatus::ending)
+	{
+		badReqResponse->setContent("Director is in the process of ending its session");
+		return badReqResponse;
+	}else if(dirStatus == ComponentStatus::idle)
+	{
+		badReqResponse->setContent("Director is not currently in a session");
+		return badReqResponse;
 	}
 
-	//Add a START directive to the session info
+	QTime timer;
+	if(!sessInfo_->getComponentByType("PROXY").isNull())
+	{
+		//Check that we have a Proxy and that it is stopped
+		ComponentStatus::ComponentStatus proxyStatus = conMgr_->getComponentStatusBySession(sessionId_,"PROXY");
+
+		if(proxyStatus == ComponentStatus::running)
+		{
+			badReqResponse->setContent("Proxy is already running a task.");
+			return badReqResponse;
+		}
+		else if(proxyStatus == ComponentStatus::notFound)
+		{
+			badReqResponse->setContent("Proxy not found");
+			return badReqResponse;
+		}else if(proxyStatus == ComponentStatus::ending)
+		{
+			badReqResponse->setContent("Proxy is in the process of ending its session");
+			return badReqResponse;
+		}else if(proxyStatus == ComponentStatus::idle)
+		{
+			badReqResponse->setContent("Proxy is not currently in a session");
+			return badReqResponse;
+		}
+
+		//Add a START directive to the session info
+		timer.start();
+		sessInfo_->addPendingDirective("START "+taskname,"PROXY");
+		do
+		{
+			QThread::yieldCurrentThread();
+			QCoreApplication::processEvents();
+		}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"PROXY") < ComponentStatus::stopped);
+		if(timer.elapsed() >=10000)
+		{
+			badReqResponse->setContent("Proxy failed to start");
+			return badReqResponse;
+		}
+	}
+
 	sessInfo_->addPendingDirective("START "+taskname,"DIRECTOR");
 
 	//Wait around until the Director's status changes to "running"
-	QTime timer;
 	timer.start();
-
 	do
 	{
 		QThread::yieldCurrentThread();
@@ -154,8 +199,36 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 		badReqResponse->setContent("Director not currently running");
 		return badReqResponse;
 	}
-
+	
 	sessInfo_->addPendingDirective("STOP","DIRECTOR");
+	QTime timer;
+	timer.start();
+	do
+	{
+		QThread::yieldCurrentThread();
+		QCoreApplication::processEvents();
+	}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
+	if(timer.elapsed() >=10000)
+	{
+		badReqResponse->setContent("Director failed to stop");
+		return badReqResponse;
+	}
+	if(!sessInfo_->getComponentByType("PROXY").isNull())
+	{
+		sessInfo_->addPendingDirective("STOP","PROXY");
+		timer.start();
+		do
+		{
+			QThread::yieldCurrentThread();
+			QCoreApplication::processEvents();
+		}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
+		if(timer.elapsed() >=10000)
+		{
+			badReqResponse->setContent("Proxy failed to stop");
+			return badReqResponse;
+		}
+	}
+
 	//conMgr_->setComponentStatus(sessionId_,"DIRECTOR"ComponentStatus::stopped);
 
 

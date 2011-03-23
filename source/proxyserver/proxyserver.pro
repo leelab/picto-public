@@ -21,12 +21,26 @@ HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxyserver.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxyserver.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxyserverthread.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxyserverthread.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxystatusmanager.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxystatusmanager.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerAcqProtocol.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerAcqProtocol.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerProtocols.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerProtocols.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyLoadExpResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyLoadExpResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyStartResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyStartResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyStopResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyStopResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyPauseResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyPauseResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyResumeResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyResumeResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyErrorResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyErrorResponseHandler.cpp
 
 include($$(PICTO_TREE)/source/common/common.pri)
 

@@ -9,7 +9,7 @@ namespace ComponentStatus
 {
 	enum ComponentStatus
 	{
-		notFound, idle, stopped, paused, running
+		notFound, idle, ending, stopped, paused, running
 	};
 }
 

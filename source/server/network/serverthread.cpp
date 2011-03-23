@@ -68,7 +68,6 @@ bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command
 			remainingContentLength = command->addToContent(tcpSocket_->read(remainingContentLength));
 		}
 	}
-
 	return true;
 }
 
@@ -149,6 +148,8 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 										Picto::ProtocolResponseType::InternalServerError));
 	}
 
+	response->setFieldValue("Server-Bytes",QString::number(tcpSocket_->bytesAvailable()));
+	//qDebug("Server-Bytes: " + response->getFieldValue("Server-Bytes").toAscii());
 	QDataStream os(tcpSocket_);
 
 	if(response->getMultiPart() <= Picto::MultiPartResponseType::MultiPartInitial)
@@ -241,7 +242,6 @@ void ServerThread::readClient()
 			} while(tcpSocket_->state() == QTcpSocket::ConnectedState &&
 				    //tcpSocket_->waitForBytesWritten() &&
 					response->shouldStream());
-
 			pendingCommand_.clear();
 		}
 		else

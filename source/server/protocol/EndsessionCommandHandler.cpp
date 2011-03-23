@@ -18,6 +18,7 @@ QSharedPointer<Picto::ProtocolResponse> EndsessionCommandHandler::processCommand
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 	QSharedPointer<Picto::ProtocolResponse> unauthResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::Unauthorized));
+	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
 	
 	QString targetSession = command->getTarget();
 
@@ -29,8 +30,13 @@ QSharedPointer<Picto::ProtocolResponse> EndsessionCommandHandler::processCommand
 
 	if(sessionInfo->isAuthorizedObserver(observerId))
 	{
-		ConnectionManager::Instance()->endSession(QUuid(targetSession));
-		return okResponse;
+		if(ConnectionManager::Instance()->endSession(QUuid(targetSession)))
+			return okResponse;
+		else
+		{
+			badReqResponse->setContent("Could not End Session.  Components may still be sending data.");
+			return badReqResponse;
+		}
 	}
 	else
 		return unauthResponse;

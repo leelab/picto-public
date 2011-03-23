@@ -57,10 +57,10 @@ public:
 	QSharedPointer<ComponentInfo> getComponentByType(QString type);
 	bool hasComponent(QUuid componentID);
 	void alignTimestampsTo(QString componentType);
-	void endSession();
+	bool endSession();
 
-	void flushCache();
-	void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID );
+	void flushCache(QString sourceType = "");
+	//void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID );
 	void insertNeuralData(Picto::NeuralDataStore data);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
 	void insertAlignmentData(Picto::AlignmentDataStore data);
@@ -96,7 +96,12 @@ private:
 	void SetupBaseSessionDatabase();
 	void CreateCacheDatabase(QString databaseName);
 	double LoadMaxDataID(QString tableName);
+	bool executeReadQuery(QSqlQuery* query, QString optionalString = "",bool debug = false);
+	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool debug = true);
+	void alignTimeBases(bool realignAll = false);
+	void recalculateFittedTimes();
 	QSqlDatabase getSessionDb();
+	QSqlDatabase getCacheDb();
 
 	QUuid uuid_;
 	QSqlDatabase baseSessionDbConnection_;
@@ -105,6 +110,7 @@ private:
 	QSharedPointer<AlignmentTool> alignmentTool_;
 	bool timestampsAligned_;	//Indicates whether initial timestamp alignment has occured
 	QMutex alignmentMutex_;
+	QSharedPointer<QMutex> databaseWriteMutex_;
 	QTimer timeoutTimer_;
 	QMap<QUuid,QStringList> pendingDirectives_; //Uuid is the Uuid of the component who's pending directives are stored in the QStringList
 	QMap<QString,QSharedPointer<ComponentInfo>> components_;	//QString is the type of the component (only one of each component type can be attached).
@@ -113,6 +119,9 @@ private:
 	QByteArray experimentXml_;
 	QString baseSessionDbFilepath_;
 	QString timeCreated_;
+	double latestNeuralTimestamp_;
+	double latestBehavioralTimestamp_;
+	QString databaseVersion_;
 
 	qulonglong maxReceivedDataID_;
 

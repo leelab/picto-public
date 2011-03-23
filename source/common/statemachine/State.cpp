@@ -281,15 +281,16 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 
 	dataChannel->sendRegisteredCommand(dataCommand);
 
-	//check for and process responses
-	while(dataChannel->waitForResponse(0))
-	{
-		dataResponse = dataChannel->getResponse();
-		Q_ASSERT(!dataResponse.isNull());
-		Q_ASSERT(dataResponse->getResponseType() == "OK");
-		processStatusDirective(engine,dataResponse);
+	dataChannel->processResponses(0);
+	////check for and process responses
+	//while(dataChannel->waitForResponse(0))
+	//{
+	//	dataResponse = dataChannel->getResponse();
+	//	Q_ASSERT(!dataResponse.isNull());
+	//	Q_ASSERT(dataResponse->getResponseType() == "OK");
+	//	processStatusDirective(engine,dataResponse);
 
-	}
+	//}
 
 	//This is useful for debugging, but we should let the state machine handle server drop-outs
 	//Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
@@ -329,17 +330,18 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	}
 	else if(command == Engine::PictoEngine::PauseEngine)
 	{
+		QSharedPointer<Picto::CommandChannel> dataChannel = engine->getDataCommandChannel();
 		while(command == Engine::PictoEngine::PauseEngine)
 		{
-			//updateServer(engine, true);
-			sendBehavioralData(engine);
-			command = engine->getEngineCommand();
-			QCoreApplication::processEvents();
-
-			//waste 20 ms
+			//waste 30 ms
 			QTime timer;
 			timer.start();
-			while(timer.elapsed()<20);
+			//updateServer(engine, true);
+			sendBehavioralData(engine);
+			if(dataChannel.isNull())
+				QCoreApplication::processEvents();
+			command = engine->getEngineCommand();
+			while(timer.elapsed()<30);
 
 		}
 		if(command == Engine::PictoEngine::StopEngine)

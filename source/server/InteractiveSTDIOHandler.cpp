@@ -11,11 +11,11 @@ void InteractiveSTDIOHandler::run()
 {
 	QTextStream stdinStream(stdin, QIODevice::ReadOnly);
 	QString command;
-
-	do
-	{
-		command = stdinStream.readLine();
-	} while(command.toLower() != "quit");
+	forever{sleep(10);}
+	//do
+	//{
+	//	command = stdinStream.readLine();
+	//} while(command.toLower() != "quit");
 
 	QApplication::exit(0);
 }

@@ -24,6 +24,7 @@ bool BehavioralUnitDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xm
 	xmlStreamWriter->writeAttribute("time",QString("%1").arg(t));
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(x));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(y));
+	DataStore::serializeAsXml(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
 }

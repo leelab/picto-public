@@ -15,7 +15,6 @@ public:
 	SimpleMarkSource(double secPerMark, double secPerSample);
 	virtual QSharedPointer<VirtualEvent> buildEvent(double time);
 private:
-	bool lastWasTrialEnd;
 	short currEventCode;
 };
 

@@ -33,6 +33,9 @@ private slots:
 	void setNeuralDataAcquisitionDevice(int index);
 	void startStopClient();
 	void checkDevStatus();
+	void checkConnectionStatus();
+	void checkSessionStatus();
+	void checkRunStatus();
 	void closeEvent(QCloseEvent *event);
 	void serverActivity();
 private:
@@ -51,11 +54,9 @@ private:
 	virtual QString name();
 	virtual int openDevice();
 	virtual int closeDevice();	//Should make any of the calls below that are running end
-	virtual int startSession(QUuid sessionID);
-	virtual int endSession();
 
-	StatusLight *readyStatus_,*activityStatus_;
-	QLabel *readyStatusLabel_, *activityStatusLabel_;
+	StatusLight *readyStatus_,*connectionStatus_,*sessionStatus_,*runStatus_;
+	QLabel *readyStatusLabel_, *connectionStatusLabel_, *sessionStatusLabel_, *runStatusLabel_;
 	QComboBox *pluginCombo_;
 	QPushButton *startStopClientButton_;
 	QPushButton *quitButton_;
@@ -68,12 +69,7 @@ private:
 	QObject *acqPlugin_;
 	QList<QObject*> acqPluginList_;
 
-
-	QEventLoop *serverEventLoop_;
-
 	QString startServerMsg, stopServerMsg_;
-	bool sessionEnded_;
-	//QString proxyName_;
 
 	int port_;
 };

@@ -14,6 +14,28 @@ HEADERS += $$(PICTO_TREE)/source/director/HardwareSetup.h
 SOURCES += $$(PICTO_TREE)/source/director/EngineTest.cpp
 HEADERS += $$(PICTO_TREE)/source/director/EngineTest.h
 
+HEADERS += $$(PICTO_TREE)/source/director/network/DirectorStatusManager.h
+SOURCES += $$(PICTO_TREE)/source/director/network/DirectorStatusManager.cpp
+
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorEndSessionResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorEndSessionResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorLoadExpResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorLoadExpResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorNewSessionResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorNewSessionResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorStartResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorStartResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorStopResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorStopResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorPauseResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorPauseResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorResumeResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorResumeResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorRewardResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorRewardResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorErrorResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorErrorResponseHandler.cpp
+
 
 win32 {
 SOURCES += $$(PICTO_TREE)/source/director/SignalChannelTest.cpp

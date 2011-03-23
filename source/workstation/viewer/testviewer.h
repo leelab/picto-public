@@ -62,7 +62,7 @@ private:
 
 	QComboBox *taskListBox_;
 
-	enum Status {Stopped, Running, Paused};
+	enum Status {Ending, Stopped, Running, Paused};
 	Status status_;
 };
 

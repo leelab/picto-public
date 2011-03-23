@@ -281,16 +281,16 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	}
 
 	//Generate the start trial event
-	if(getLevel() == StateMachineLevel::Trial && !slave)
-	{
-		//Generating an event on the neural recorder takes ~250 us, while generating a 
-		//Picto event requires sending a command to the server and waiting for a response.
-		//Because of this, we generate the nerual recorder event first.
-		(trialEventCode_ == 0x7F)? trialEventCode_ = 0 : trialEventCode_++;
-		trialNum_++;
-		engine->generateEvent(trialEventCode_);
-		sendTrialEventToServer(engine);
-	}
+	//if(getLevel() == StateMachineLevel::Trial && !slave)
+	//{
+	//	//Generating an event on the neural recorder takes ~250 us, while generating a 
+	//	//Picto event requires sending a command to the server and waiting for a response.
+	//	//Because of this, we generate the nerual recorder event first.
+	//	(trialEventCode_ == 0x7F)? trialEventCode_ = 0 : trialEventCode_++;
+	//	trialNum_++;
+	//	engine->generateEvent(trialEventCode_);
+	//	sendTrialEventToServer(engine);
+	//}
 	//Reset trialNum_ if we just entered a new Task
 	if(getLevel() == StateMachineLevel::Task)
 	{
@@ -325,15 +325,16 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 		if(currElement_->type() == "Result")
 		{
-			if(getLevel() == StateMachineLevel::Trial)
+			if((getLevel() == StateMachineLevel::Trial) && !slave)
 			{
-				engine->generateEvent(trialEventCode_);
-				sendTrialEventToServer(engine);
+				engine->getDataCommandChannel()->processResponses(2000);
+				//engine->generateEvent(trialEventCode_);
+				//sendTrialEventToServer(engine);
 
 
-				//Deal with all of the left-over commands
-				if(!cleanupRegisteredCommands(engine))
-					handleLostServer(engine);
+				////Deal with all of the left-over commands
+				//if(!cleanupRegisteredCommands(engine))
+				//	handleLostServer(engine);
 			}
 			if(slave)
 			{
@@ -573,6 +574,7 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
 
 	dataChannel->sendRegisteredCommand(dataCommand);
+	dataChannel->processResponses(0);
 }
 
 /*	\brief Called when we seem to have lost contact with the server
@@ -610,59 +612,32 @@ void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
  *	this clean-up function becomes essential.  Obviously the database issues
  *	will eventually get fixed.
  */
-bool StateMachine::cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine)
-{
-	QSharedPointer<CommandChannel> serverChan = engine->getDataCommandChannel();
+//bool StateMachine::cleanupRegisteredCommands(QSharedPointer<Engine::PictoEngine> engine)
+//{
+	//QSharedPointer<CommandChannel> serverChan = engine->getDataCommandChannel();
 
-	if(!serverChan)
-		return true;
+	//if(!serverChan)
+	//	return true;
 
-	// AssureConnection gets up to 2 seconds to make a connection.  If not, we
-	// can't send anything, so we return;
-	if(!serverChan->assureConnection(2000))
-		return true;
+	//// AssureConnection gets up to 2 seconds to make a connection.  If not, we
+	//// can't send anything, so we return;
+	//if(!serverChan->assureConnection(2000))
+	//	return true;
 
-	//int elapsedTimeMs = 0;
-	QSharedPointer<ProtocolResponse> resp;
+	////int elapsedTimeMs = 0;
+	//QSharedPointer<ProtocolResponse> resp;
 
-	//read responses
-	while(serverChan->waitForResponse(0) && serverChan->incomingResponsesWaiting())
-	{
-		resp = serverChan->getResponse();
-		Q_ASSERT(!resp.isNull());
-		Q_ASSERT(resp->getResponseType() == "OK");
-
-		processStatusDirective(engine, resp);
-	}
-
-
-	//resend all of the pending responses
-	serverChan->resendPendingCommands(10);
-	return true;
-
-	////Wait to see if the missing responses arrive
-	////This loop will keep reading responses as long as they are arriving at a 
-	////rate of greater than 0.5Hz
-	//while(serverChan->waitForResponse(2000))
+	////read responses
+	//while(serverChan->waitForResponse(0) && serverChan->incomingResponsesWaiting())
 	//{
 	//	resp = serverChan->getResponse();
 	//	Q_ASSERT(!resp.isNull());
 	//	Q_ASSERT(resp->getResponseType() == "OK");
 
 	//	processStatusDirective(engine, resp);
-
-	//	if(serverChan->pendingResponses() == 0 && 
-	//		serverChan->incomingResponsesWaiting() == 0)
-	//	{
-	//		return true;
-	//	}
 	//}
 
-
-	////If we've made it this far, then we failed at cleaning up.
-	//return false;
-
-}
+//}
 
 /*!	\brief Turns a StateMachine into an XML fragment
  *

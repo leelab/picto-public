@@ -16,7 +16,7 @@ ComponentUpdateCommandHandler::ComponentUpdateCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	qDebug((QString("COMPONENTUPDATE handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
+	//qDebug((QString("COMPONENTUPDATE handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
@@ -40,6 +40,10 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 	if(statusStr.toUpper() == "IDLE")
 	{
 		status = ComponentStatus::idle;
+	}
+	else if(statusStr.toUpper() == "ENDING")
+	{
+		status = ComponentStatus::ending;
 	}
 	else if(statusStr.toUpper() == "STOPPED")
 	{
@@ -67,7 +71,7 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 
 		if(sessionInfo.isNull())
 		{
-			response->setContent("ERROR: SessionInfo not found.");
+			response->setContent("ERROR\nSessionInfo not found.");
 			QString errorMsg = QString("Couldn't find session: %1\n").arg(sessionId);
 			printf(errorMsg.toAscii());
 		}
@@ -85,7 +89,7 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 			{
 				qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
 				response->setContent(directive.toUtf8());
-				sessionInfo->flushCache();
+				sessionInfo->flushCache(sourceType);
 				response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 			}
 		}

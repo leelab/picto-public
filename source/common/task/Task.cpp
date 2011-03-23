@@ -182,6 +182,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
 
 	dataChannel->sendRegisteredCommand(dataCommand);
+	dataChannel->processResponses(0);
 
 	//if(!dataChannel->waitForResponse(1000))
 	//	return false;

@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "../common/engine/PictoEngine.h"
+#include "../../common/engine/PictoEngine.h"
 #include "../common/random/MersenneTwister.h"
 
 class EngineTest : public QObject
