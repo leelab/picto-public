@@ -3,10 +3,9 @@
 #include "virtualdeviceplugin.h"
 #include "simplespikesource.h"
 #include "simplemarksource.h"
+#include "simplelfpsource.h"
 
 QSharedPointer<Picto::Timestamper> VirtualDevicePlugin::timeStamper_ = QSharedPointer<Picto::Timestamper>(new Picto::Timestamper());
-QSharedPointer<VirtualEventSource> VirtualDevicePlugin::spikeSource_ = QSharedPointer<VirtualEventSource>();
-QSharedPointer<VirtualEventSource> VirtualDevicePlugin::markSource_ = QSharedPointer<VirtualEventSource>();
 
 /*!	\brief	Used to define the VirtualEventSources to which this VirtualDevicePlugin is attached.
  *
@@ -16,10 +15,9 @@ QSharedPointer<VirtualEventSource> VirtualDevicePlugin::markSource_ = QSharedPoi
  */
 void VirtualDevicePlugin::CreateEventSources()
 {
-	if(spikeSource_.isNull())
-		spikeSource_ = QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(1.0, 1.0));
-	if(markSource_.isNull())
-		markSource_ = QSharedPointer<VirtualEventSource>(new SimpleMarkSource(1.0, 1.0));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(5.0, 0.001)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleMarkSource(5.0, 0.001)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(5.0, 0.001)));
 }
 
 QString VirtualDevicePlugin::device() const
@@ -32,14 +30,26 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 	double currTime = timeStamper_->stampSec();
 	lastEvent_ = QSharedPointer<VirtualEvent>();
 	CreateEventSources();
-	if(spikeSource_->start(currTime) && markSource_->start(currTime))
+	latestEvents_.clear();
+	bool started = true;
+	foreach(QSharedPointer<VirtualEventSource> source,sources_)
+	{
+		if(!source->start(currTime))
+		{
+			started = false;
+			break;
+		}
+	}
+	if(started)
 	{
 		status_ = running;
 	}
 	else
 	{
-		spikeSource_->stop();
-		markSource_->stop();
+		foreach(QSharedPointer<VirtualEventSource> source,sources_)
+		{
+			source->stop();
+		}
 		status_ = failedToStart;
 	}
 	return status_;
@@ -47,8 +57,10 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 
 NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::stopDevice()
 {
-	spikeSource_->stop();
-	markSource_->stop();
+	foreach(QSharedPointer<VirtualEventSource> source,sources_)
+	{
+		source->stop();
+	}
 	return stopped;
 }
 
@@ -60,45 +72,36 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::getDeviceStatus()
 
 float VirtualDevicePlugin::samplingRate()
 {
-	if(spikeSource_->samplingRate() <= markSource_->samplingRate())
-		return spikeSource_->samplingRate();
-	else 
-		return markSource_->samplingRate();
+	float rate = -1;
+	foreach(QSharedPointer<VirtualEventSource> source,sources_)
+	{
+		if((source->samplingRate() < rate) || (rate == -1))
+			rate = source->samplingRate();
+	}
+	return rate;
 }
 
 /*!	\brief	Gets new events from spikeSource and markSource until they return NULL and returns them.
- *
- *	This function also sorts the spikes and mark events into increasing timestamp order.
  */
-QSharedPointer<VirtualEvent> VirtualDevicePlugin::getNextEvent(double currTime)
+QSharedPointer<Picto::DataStore> VirtualDevicePlugin::getNextEvent(double currTime)
 {
-	if(!lastEvent_.isNull())
-	{	
-		// This is not the first of the calls for this timeframe
-		switch(lastEvent_->type_)
-		{
-		case VirtualEvent::eSPIKE: // Last event was a spike.  Get a new one.
-				lastSpike_ = spikeSource_->getNextEvent(currTime);
-			break;
-		case VirtualEvent::eMARK: // Last event was a mark.  Get a new one.
-				lastMark_ = markSource_->getNextEvent(currTime);
-			break;
-		}
-	}
-	else
+	if(latestEvents_.size())
 	{
-		// This is the first of the calls for this timeframe
-		lastSpike_ = spikeSource_->getNextEvent(currTime);
-		lastMark_ = markSource_->getNextEvent(currTime);
+		return latestEvents_.takeFirst();
 	}
-
-	// If either event is null, return the other.  Otherwise, choose the event that
-	// happened first.  If all events are null, lastEvent_ will be null.
-	if(lastMark_.isNull()) lastEvent_ = lastSpike_;
-	else if(lastSpike_.isNull()) lastEvent_ = lastMark_;
-	else if(lastMark_->timeStamp_ < lastSpike_->timeStamp_) lastEvent_ = lastMark_;
-	else lastEvent_ = lastSpike_;
-	return lastEvent_;
+	QSharedPointer<Picto::DataStore> latestEvent;
+	foreach(QSharedPointer<VirtualEventSource> source,sources_)
+	{
+		latestEvent = source->getNextEvent(currTime);
+		if(latestEvent.isNull())
+			continue;
+		latestEvents_.push_back(latestEvent);
+	}
+	if(latestEvents_.size())
+	{
+		return latestEvents_.takeFirst();
+	}
+	return QSharedPointer<Picto::DataStore>();
 }
 
 QList<QSharedPointer<Picto::DataStore>> VirtualDevicePlugin::dumpData()
@@ -113,35 +116,10 @@ QList<QSharedPointer<Picto::DataStore>> VirtualDevicePlugin::dumpData()
 void VirtualDevicePlugin::updateData()
 {
 	double currTime = timeStamper_->stampSec();
-	QSharedPointer<VirtualEvent> currEvent = getNextEvent(currTime);
+	QSharedPointer<Picto::DataStore> currEvent = getNextEvent(currTime);
 	while(!currEvent.isNull())
 	{
-		if(currEvent->type_ == VirtualEvent::eSPIKE)
-		{
-			QSharedPointer<Picto::NeuralDataStore> data(new Picto::NeuralDataStore);
-
-			//spike events
-			data->setTimestamp(currEvent->timeStamp_);
-			data->setChannel(currEvent->channel_);
-			data->setUnit('a'+currEvent->unit_-1);
-			QSharedPointer<QList<int>> waveform(new QList<int>);
-			//waveform data
-			for(int i=0; i<currEvent->waveform_.size(); i++)
-			{
-				waveform->push_back(currEvent->waveform_[i]);
-			}
-			data->setWaveform(waveform);
-			dataList_.push_back(data);
-		}
-		else if(currEvent->type_ == VirtualEvent::eMARK)
-		{
-			QSharedPointer<Picto::AlignmentDataStore> data(new Picto::AlignmentDataStore);
-
-			// eventcodes
-			data->setTimestamp(currEvent->timeStamp_);
-			data->setAlignCode(currEvent->eventCode_);
-			dataList_.push_back(data);
-		}
+		dataList_.push_back(currEvent);
 		currEvent = getNextEvent(currTime);
 	}
 }

@@ -13,6 +13,7 @@
 #include "../common/protocol/ProtocolResponseHandler.h"
 
 ProxyMainWindow::ProxyMainWindow()
+:ComponentInterface("PROXY")
 {
 	acqPlugin_ = NULL;
 
@@ -339,13 +340,12 @@ void ProxyMainWindow::readSettings()
 }
 
 
-QString ProxyMainWindow::componentType()
-{
-	return "PROXY";
-}
 QString ProxyMainWindow::name()
 {
-	return lineEditName_->text().remove(' ');
+	QString name = lineEditName_->text().remove(' ');
+	if(name == QString("proxyName"))
+		name = QString("Proxy").append(componentId_.toString());
+	return name;
 }
 int ProxyMainWindow::openDevice()
 {

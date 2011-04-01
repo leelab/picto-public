@@ -244,6 +244,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 	QList<QSharedPointer<Picto::DataStore>> returnList;
 	QSharedPointer<Picto::NeuralDataStore> neuralData;
 	QSharedPointer<Picto::AlignmentDataStore> alignData;
+	QSharedPointer<Picto::LFPDataStore> lfpData;
 	if(!startCOM())
 	{
 		return returnList;
@@ -258,7 +259,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 	}
 
 	int numSpikeSamples;
-	double lastSpikeTimestamp = 0.0;
+	double readUntilTime = 0.0;
 	QVector<SpikeDetails> spikeList;
 	QVector<EventDetails> eventList;
 
@@ -302,15 +303,15 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 		spikeList.append(spikeDetails);
 	}
 	if(numSpikeSamples == 1000)
-		lastSpikeTimestamp = spikeList.last().timeStamp;
+		readUntilTime = spikeList.last().timeStamp;
 	else
-		lastSpikeTimestamp = 0.0;
+		readUntilTime = 0.0;
 
 
 
 	//Read event codes
 	int numEvents;
-	numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,lastTimestamp,lastSpikeTimestamp,"All");
+	numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,lastTimestamp,readUntilTime,"All");
 	//numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,0.0,lastSpikeTimestamp,"All");
 
 	_variant_t eventCodeArray, eventTimestampArray;
@@ -334,6 +335,116 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 	}
 
 
+
+
+
+
+
+
+
+	//Read lfp codes
+	int numLFP;
+	numLFP = tdtTank->ReadEventsV(1000000,"LDec",0,0,lastTimestamp,readUntilTime,"All");
+	//numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,0.0,lastSpikeTimestamp,"All");
+
+	_variant_t lfpSampleArray, lfpChannelArray, lfpTimestampArray, lfpFreqArray;
+	double lastLFPTimestamp = lastTimestamp;
+	if(numLFP > 0)
+	{
+		lfpSampleArray = tdtTank->ParseEvV(0,numLFP);
+		lfpChannelArray = tdtTank->ParseEvInfoV(0,numLFP,4);
+		lfpTimestampArray = tdtTank->ParseEvInfoV(0,numLFP,6);
+		lfpFreqArray = tdtTank->ParseEvInfoV(0,numLFP,9);
+
+
+
+		//load lfp codes
+		//They are returned in lfpSampleArray as an 2D array, where each column
+		//corresponds to a timestamp/channel in the timestamp/channel arrays, and
+		//each row corresponds to a new time = columntimestamp + 1/freqArray value.
+
+		double sampPerSec(((double *) lfpFreqArray.parray->pvData)[0]);
+		double secPerSamp(1.0/sampPerSec);
+		int numChans;
+		int maxChan;
+		int* potentials;
+		int* chans;
+		double currTime;
+		lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+
+		for(int i=0; i<numLFP; i=i+numChans)
+		{
+			//The minimum num of channels with the same timestamp is one.
+			numChans = 1;
+			maxChan = 0;
+			
+			//Get the next timestamp, "samples per second" and "seconds per sample"
+			currTime = ((double *) lfpTimestampArray.parray->pvData)[i];
+			sampPerSec = ((double *) lfpFreqArray.parray->pvData)[i];
+			secPerSamp = 1.0/sampPerSec;
+			
+			//Find how many channels start with this time and which is greatest
+			while(currTime==((double *) lfpTimestampArray.parray->pvData)[i+numChans])
+				numChans++;
+
+			//Create index to potentials array map
+			chans = new int[numChans];
+			// fill the index to potentials array map
+			for(int arrayInd = 0;arrayInd<numChans;arrayInd++)
+			{
+				chans[arrayInd] = (int) ((double *) lfpChannelArray.parray->pvData)[i+arrayInd];
+				if(chans[arrayInd]>maxChan)
+					maxChan = chans[arrayInd];
+			}
+			//Create potentials array.  Use maxChan+1 so that each channel number can be placed in its index.  ie. If maxchan is 6 it needs to go 
+			//into index 6 which is the 7th index.
+			potentials = new int[maxChan+1];
+			
+			//Loop through the list of "sec per sample" separated enties for all channels that start with the same timestamp.
+			//We assume here that all entries have the same "sec per sample" value, which is currently a valid assumption for the
+			//tdt system.
+			for(unsigned int j=0;j<lfpSampleArray.parray->rgsabound[1].cElements;j++)
+			{
+				for(int arrayInd = 0;arrayInd<numChans;arrayInd++)
+				{
+					//Initialize potentials array to have zero values
+					for(int n=0;n<maxChan;n++)
+					{
+						potentials[n] = 0;
+					}
+					//If the lfpDataStore object is getting too big, add it to the list and make a new one.
+					if(lfpData->numSamples() >= 10000)
+					{
+						returnList.push_back(lfpData);
+						lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+					}
+					potentials[chans[arrayInd]] = ((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j];
+					lfpData->addData(currTime,potentials,numChans);
+				}
+				currTime += secPerSamp;
+			}
+			//Get rid of the dynamically constructed arrays
+			delete potentials;
+			delete chans;
+			if(currTime > lastLFPTimestamp)
+				lastLFPTimestamp = currTime;
+		}
+		//Add the last LFPDataStore to the return list
+		if(lfpData->numSamples() > 0)
+			returnList.push_back(lfpData);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	//if we don't care about order, we could have output everyhting as we went.  
 	//However, everthing will have to get sorted sooner or later.  We'll do a stable
 	//sort on the event list and spike list, then we'll interleave the whole mess
@@ -344,16 +455,14 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 
 	//record the last timestamp
 	//(This is annoying because calling last on an empty QList crashes things)
-	if(eventList.isEmpty() && spikeList.isEmpty())
-		lastTimestamp = lastTimestamp;
-	else if (eventList.isEmpty())
-		lastTimestamp = spikeList.last().timeStamp;
-	else if (spikeList.isEmpty())
-		lastTimestamp = eventList.last().timeStamp;
-	else if(spikeList.last().timeStamp >= eventList.last().timeStamp)
-		lastTimestamp = spikeList.last().timeStamp;
-	else
-		lastTimestamp = eventList.last().timeStamp;
+	double lastEventTimestamp = eventList.isEmpty()?lastTimestamp: eventList.last().timeStamp;
+	double lastSpikeTimestamp = spikeList.isEmpty()?lastTimestamp: spikeList.last().timeStamp;
+	if(lastEventTimestamp > lastTimestamp)
+		lastTimestamp = lastEventTimestamp;
+	if(lastSpikeTimestamp > lastTimestamp)
+		lastTimestamp = lastSpikeTimestamp;
+	if(lastLFPTimestamp > lastTimestamp)
+		lastTimestamp = lastLFPTimestamp;
 
 	while(spikeList.size() != 0 && eventList.size() !=0)
 	{

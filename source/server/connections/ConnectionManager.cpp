@@ -10,6 +10,7 @@
 #include <QSqlQuery>
 #include <QApplication>
 #include <QTimer>
+#include <QtConcurrentRun>
 #include "ServerConfig.h"
 
 ConnectionManager* ConnectionManager::conMan_ = 0;
@@ -53,8 +54,12 @@ void ConnectionManager::checkForTimeouts()
 	//First check for session timeouts.  This is done by calling the 
 	//clearActivity function which clears the activity bool and returns
 	//its value.  If there has been no activity since the last time we
-	//checked, the session instance should be removed from our list.
-	//If there has been activity, we should set activity for all of
+	//checked, check if any components are still active in this session
+	//(ie. Still providing data).  If they are, the session instance should 
+	//be removed from our list and kept in the opensessions list in case we 
+	//just lost a connection for a while and components are going to try to reconnect.
+	//If all components are no longer active, we should end the session.
+	//If there has been activity on the session, we should set activity for all of
 	//that sessions components, since we don't want any of them timing
 	//out if any of them haven't timed out. We also send each one a directive
 	//which has the affect of forcing their cached data to be flushed.
@@ -63,11 +68,21 @@ void ConnectionManager::checkForTimeouts()
 	{
 		if(!sessionInfo->clearActivity())
 		{
-			sessionInfo->flushCache();
-			ServerConfig serverConfig;
-			serverConfig.setActivity(sessionInfo->uuid_.toString(),false);
-			openSessions_.remove(sessionInfo->uuid_);
-			printf("Session timed out!!!!!\n");
+			// Check if anything is still active in this session.
+			sessionInfo->UpdateComponentActivity();
+			if(sessionInfo->hasActiveComponents())
+			{
+				//Some components may still be running this session.  Time it out, but keep it available.
+				sessionInfo->flushCache();
+				ServerConfig serverConfig;
+				serverConfig.setActivity(sessionInfo->uuid_.toString(),false);
+				openSessions_.remove(sessionInfo->uuid_);
+				printf("Session timed out!!!!!\n");
+			}
+			else
+			{
+				endSession(sessionInfo->sessionId());
+			}
 		}
 		else
 		{
@@ -94,7 +109,7 @@ void ConnectionManager::checkForTimeouts()
 		{
 			componentInfo->setStatus(ComponentStatus::notFound);
 			components_.remove(componentInfo->getUuid());
-			printf("Director timed out!!!!!!!\n");
+			printf(componentInfo->getType().append("timed out!!!!!!!\n").toAscii());
 		}
 	}
 }
@@ -119,18 +134,25 @@ void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid ses
 		// Maybe its running from a session that was dropped.  The call below will check and add that session back to the ilst if necessary.
 		QSharedPointer<SessionInfo> sessInfo = getSessionInfo(sessionId);	
 		if(!sessInfo.isNull())
+		{
 			info = sessInfo->getComponentByType(type);
+		}
 		else
 		{
-			//If there's any session that thinks this component is attached to it, it's not anymore.  Close that session.
+			//If there's any session that thinks this component is attached to it, it's not anymore.
+			//Load that session and associate this component with it, so that it can see that this
+			//component has moved on.  That way, when it times out, if its other components have also
+			//moved on, it will know that it has to end.
 			sessInfo = getSessionInfoByComponent(uuid);
 			if(!sessInfo.isNull())
 			{
-				bool sessionEnded = endSession(sessInfo->sessionId());
-				Q_ASSERT(sessionEnded);
+				info = sessInfo->getComponentByType(type);
 			}
-			//Create a new component.
-			info = QSharedPointer<ComponentInfo>(new ComponentInfo);
+			else
+			{
+				//Create a new component.
+				info = QSharedPointer<ComponentInfo>(new ComponentInfo);
+			}
 		}
 
 		info->setUuid(uuid);
@@ -140,7 +162,11 @@ void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid ses
 	info->setName(name);	
 	info->setStatus(status);
 	info->setType(type);
+	info->setSessionID(sessionId);
 	info->setActivity();
+	QSharedPointer<SessionInfo> sessInfo = getSessionInfo(sessionId);	
+	if(!sessInfo.isNull())
+		sessInfo->setActivity();
 }
 
 /*!	\brief Returns a list of proxy instances as an xml fragment.
@@ -238,9 +264,8 @@ QString ConnectionManager::getDirectorList()
 			xmlWriter.writeTextElement("Status","Running");
 		else
 			xmlWriter.writeTextElement("Status","NotFound");
-		QSharedPointer<SessionInfo> sessInfo = getSessionInfoByComponent(component->getUuid());
 
-		xmlWriter.writeTextElement("Session-ID",(sessInfo.isNull())?QUuid():sessInfo->sessionId().toString());
+		xmlWriter.writeTextElement("Session-ID",component->getSessionID().toString());
 		xmlWriter.writeEndElement(); //Director
 	}
 	xmlWriter.writeEndElement();	//DirectorInstances
@@ -338,9 +363,6 @@ QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QUuid uuid)
 
 	if(sessionIsValid(uuid.toString()))
 	{
-		//anytime we're asking for info about a session, this would
-		//indicate activity on the session
-		openSessions_[uuid]->setActivity();
 		return openSessions_[uuid];
 	}
 	else
@@ -381,7 +403,7 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 	if((proxyID != QUuid()) && !components_.contains(proxyID))
 		return QSharedPointer<SessionInfo>();
 
-	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(experimentXml,initialObserverId));
+	QSharedPointer<SessionInfo> sessInfo(SessionInfo::CreateSession(experimentXml,initialObserverId));
 	sessInfo->AddComponent(components_[directorID]);
 	if(proxyID != QUuid())
 	{
@@ -400,17 +422,19 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 		directorID.toString(),proxyID.toString());
 
 	//Whenever we create a new session, we check for timeouts of previously dropped sessions
-	checkForDroppedSessionTimeouts();
+	//Do it in a separate thread though so that we don't have to wait for this to finish up.
+
+	QtConcurrent::run(this,&ConnectionManager::checkForDroppedSessionTimeouts);
 
 	return sessInfo;
 }
 
 //! \brief Load's a session from the serverConfig database
-QSharedPointer<SessionInfo> ConnectionManager::loadSession(QString filePath)
+QSharedPointer<SessionInfo> ConnectionManager::loadSession(QString sessionId, QString filePath)
 {
 	QMutexLocker locker(mutex_);
 
-	QSharedPointer<SessionInfo> sessInfo(new SessionInfo(filePath));
+	QSharedPointer<SessionInfo> sessInfo(SessionInfo::LoadSession(sessionId,filePath));
 	openSessions_[sessInfo->uuid_] = sessInfo;
 	return sessInfo;
 }
@@ -454,7 +478,7 @@ bool ConnectionManager::sessionIsValid(QString sessionId)
 	QString sessionPath = serverConfig.getSessionPathByID(sessionId);
 	if(sessionPath != "")
 	{
-		QSharedPointer<SessionInfo> sessInfo = loadSession(sessionPath);		
+		QSharedPointer<SessionInfo> sessInfo = loadSession(sessionId,sessionPath);		
 		if(!sessInfo.isNull())
 			return true;
 	}

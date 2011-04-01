@@ -14,11 +14,11 @@ class ComponentInterface
 #endif
 {
 public:
-	ComponentInterface();
+	ComponentInterface(QString type);
+	QString componentType();
 	virtual int activate();
 	virtual int deActivate();
 protected:
-	virtual QString componentType() = 0;
 	virtual QString name() = 0;
 
 	//! \brief Overload this to initialize any devices and objects used by the component
@@ -27,6 +27,8 @@ protected:
 	virtual int closeDevice(){return 0;}
 	QSharedPointer<Picto::CommandChannel> dataCommandChannel_;	// This is the command channel used to send data to the server.
 	QSharedPointer<ComponentStatusManager> statusManager_;
+	QUuid componentId_;
+	QString componentType_;
 private:
 	ComponentStatus status_;
 	QSqlDatabase configDb_;

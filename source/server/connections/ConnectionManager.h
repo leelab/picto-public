@@ -60,7 +60,7 @@ public:
 
 	//Session related functions
 	QSharedPointer<SessionInfo> createSession(QUuid directorID, QUuid proxyID, QByteArray experimentXml, QUuid initialObserverId);
-	QSharedPointer<SessionInfo> loadSession(QString filePath);
+	QSharedPointer<SessionInfo> loadSession(QString sessionId, QString filePath);
 	QSharedPointer<SessionInfo> getSessionInfoByComponent(QString componentID);
 	QSharedPointer<SessionInfo> getSessionInfoByComponent(QUuid componentID);
 	QSharedPointer<SessionInfo> getSessionInfo(QUuid uuid);

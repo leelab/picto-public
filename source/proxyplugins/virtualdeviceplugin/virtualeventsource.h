@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QVector>
 #include <QSharedPointer>
+#include "..\..\common\storage\DataStore.h"
 
 /*! \brief A struct for holding virtual event data.
  */
@@ -17,10 +18,11 @@ struct VirtualEvent
 	int channel_;
 	int unit_;
 	QVector<short> waveform_;
+	static bool LessThan(const QSharedPointer<VirtualEvent> e1, const QSharedPointer<VirtualEvent> e2){return (e1->timeStamp_ < e2->timeStamp_)?true:false;};
 };
 
-/*! \brief An interface for a Virtual Event Source (ie. A spike or marking event source).
- *  The key function here is getNextEvent(time) which returns events, one by one, in time
+/*! \brief An interface for a Virtual Event Source.
+ *  The key function here is getNextEvent(time) which returns event DataStores, one by one, in time
  *  order until the input time arrives, at which point it should return a null pointer.
  */
 class VirtualEventSource
@@ -29,7 +31,7 @@ public:
 	virtual bool start(double time);
 	virtual bool stop();
 	virtual float samplingRate() = 0;
-	virtual QSharedPointer<VirtualEvent> getNextEvent(double time) = 0;
+	virtual QSharedPointer<Picto::DataStore> getNextEvent(double time) = 0;
 protected:
 	double startTime_;
 };

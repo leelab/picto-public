@@ -5,18 +5,18 @@ SimpleEventSource::SimpleEventSource(double secPerEvent, double secPerSample)
 	secPerEvent_ = secPerEvent;
 	secPerSample_ = secPerSample;
 }
-QSharedPointer<VirtualEvent> SimpleEventSource::getNextEvent(double time)
+QSharedPointer<Picto::DataStore> SimpleEventSource::getNextEvent(double time)
 {
 	if((secPerEvent_ <= 0) || (secPerSample_ <= 0))
 	{
-		return QSharedPointer<VirtualEvent>();
+		return QSharedPointer<Picto::DataStore>();
 	}
 	if((startTime_ + secPerEvent_) < time)
 	{
 		startTime_ += secPerEvent_;
 		return buildEvent(startTime_);
 	}
-	return QSharedPointer<VirtualEvent>();
+	return QSharedPointer<Picto::DataStore>();
 }
 float SimpleEventSource::samplingRate()
 {

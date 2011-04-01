@@ -40,13 +40,13 @@ public:
 private:
 	void updateData();
 	deviceStatus status_;
-	QSharedPointer<VirtualEvent> getNextEvent(double currTime);
+	QSharedPointer<Picto::DataStore> getNextEvent(double currTime);
 	QSharedPointer<VirtualEvent> lastEvent_, lastSpike_, lastMark_;
 	QList<QSharedPointer<Picto::DataStore>> dataList_;
+	QList<QSharedPointer<VirtualEventSource>> sources_;
+	QList<QSharedPointer<Picto::DataStore>> latestEvents_;
 	static QSharedPointer<Picto::Timestamper> timeStamper_;
-	static QSharedPointer<VirtualEventSource> spikeSource_;
-	static QSharedPointer<VirtualEventSource> markSource_;
-	static void CreateEventSources();
+	void CreateEventSources();
 };
 
 #endif

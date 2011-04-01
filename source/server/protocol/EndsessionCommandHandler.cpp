@@ -24,21 +24,58 @@ QSharedPointer<Picto::ProtocolResponse> EndsessionCommandHandler::processCommand
 
 	QUuid observerId = QUuid(command->getFieldValue("Observer-ID"));
 
-	QSharedPointer<SessionInfo> sessionInfo = ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession));
-	if(sessionInfo.isNull())
+	//We don't keep any pointers to session info around because this keeps it from destructing when it times out.
+	if(ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession)).isNull())
 		return notFoundResponse;
 
-	if(sessionInfo->isAuthorizedObserver(observerId))
+	if(!ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession))->isAuthorizedObserver(observerId))
 	{
-		if(ConnectionManager::Instance()->endSession(QUuid(targetSession)))
-			return okResponse;
-		else
+		return unauthResponse;
+	}
+
+	QTime timer;
+	timer.start();
+	while(ConnectionManager::Instance()->sessionIsValid(QUuid(targetSession)))
+	{
+		QSharedPointer<SessionInfo> sessionInfo = ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession));
+		if(!sessionInfo.isNull())
+		{	
+			QSharedPointer<ComponentInfo> component = sessionInfo->getComponentByType("DIRECTOR");
+			if(!component.isNull() 
+				&& (component->getSessionID() == QUuid(targetSession))
+				&& (component->getStatus() > ComponentStatus::ending)) 
+			{
+				//First send the director ENDSESSION and stop when it starts ending
+				sessionInfo->addPendingDirective("ENDSESSION","DIRECTOR");
+			}
+			else
+			{
+				component = sessionInfo->getComponentByType("PROXY");
+				if(!component.isNull() 
+				&& (component->getSessionID() == QUuid(targetSession))
+				&& (component->getStatus() > ComponentStatus::ending)) 
+				{
+					//Next send the proxy ENDSESSION until it starts ending
+					sessionInfo->addPendingDirective("ENDSESSION","PROXY");
+				}
+				else
+				{
+					// Both components are ending.  Consider the command successful
+					break;
+				}
+			}
+			timer.start();
+		}
+		//Keep waiting until either both components start the ending process
+		while(timer.elapsed() < 5000)
 		{
-			badReqResponse->setContent("Could not End Session.  Components may still be sending data.");
-			return badReqResponse;
+			//Wait for it.
+			QThread::yieldCurrentThread();
+			QCoreApplication::processEvents();
 		}
 	}
-	else
-		return unauthResponse;
+
+	
+	return okResponse;
 
 }

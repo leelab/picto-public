@@ -50,7 +50,6 @@ private:
 	void writeSettings();
 
 	//Inherited functions from ComponentInterface
-	virtual QString componentType();
 	virtual QString name();
 	virtual int openDevice();
 	virtual int closeDevice();	//Should make any of the calls below that are running end

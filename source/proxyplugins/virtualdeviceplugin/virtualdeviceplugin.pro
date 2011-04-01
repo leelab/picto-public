@@ -17,6 +17,8 @@ SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simpleeventsou
 HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simpleeventsource.h
 SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplespikesource.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplespikesource.h
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplelfpsource.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplelfpsource.h
 SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplemarksource.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplemarksource.h
 

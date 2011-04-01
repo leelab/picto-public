@@ -17,6 +17,7 @@ Director::Director(QString name,
 		HardwareSetup::VisualTargetType visualTarget,
 		HardwareSetup::RewardControllerType rewardController,
 		HardwareSetup::EventCodeGeneratorType eventCodeGenerator):
+	ComponentInterface("DIRECTOR"),
 	sigChannel_(sigChannel),
 	visualTarget_(visualTarget),
 	rewardController_(rewardController),
@@ -39,7 +40,7 @@ Director::Director(QString name,
 						"(id int, "
 						"key TEXT, "
 						"value TEXT)");
-		query.exec("INSERT INTO directorinfo (key,value) VALUES ('Name','unnamed')");
+		query.exec(QString("INSERT INTO directorinfo (key,value) VALUES ('Name','Director%1')").arg(componentId_.toString()).toAscii());
 		QString test = query.lastError().text();
 	}
 
@@ -59,11 +60,6 @@ Director::Director(QString name,
 Director::~Director()
 {
 	configDb_.close();
-}
-
-QString Director::componentType()
-{
-	return "DIRECTOR";
 }
 
 QString Director::name()

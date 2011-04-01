@@ -388,10 +388,15 @@ void AlignmentTool::updateCoefficients(double bAlignTimestamp,
 	QMutexLocker locker(alignmentMutex_.data());
 	coeff_.B = SSxy/SSxx;
 	coeff_.A = meanY - coeff_.B*meanX;
-	coeff_.corr = (SSxy*SSxy)/(SSxx*SSyy);
+	// Only update correlation coefficient once n_ >= 2.  This is because n==1 doesn't provide any slope information for our linear fit, only constant offset info
+	// we want that fact reflected in the output.
+	if(n_ < 2)
+		coeff_.corr = 0;
+	else
+		coeff_.corr = (SSxy*SSxy)/(SSxx*SSyy);
 }
 
-QString AlignmentTool::getSQLTimeConverstionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn)
+QString AlignmentTool::getSQLTimeConversionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn)
 {
 	QMutexLocker locker(alignmentMutex_.data());
 	return fittedTimeColumn + "=" + QString::number(coeff_.A) + "+(" + QString::number(coeff_.B)+"*"+neuralTimebaseColumn+")"+

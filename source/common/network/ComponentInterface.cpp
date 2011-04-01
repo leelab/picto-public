@@ -16,39 +16,44 @@
 #include "../common/protocol/StartResponseHandler.h"
 #include "../common/protocol/StopResponseHandler.h"
 using namespace Picto;
-ComponentInterface::ComponentInterface()
+ComponentInterface::ComponentInterface(QString type)
+:componentType_(type)
 {
 	deviceOpened_ = false;
-}
-int ComponentInterface::activate()
-{
-	QString dbName = "Picto" + componentType() + "Interface";
+	QString dbName = "Picto" + type + "Interface";
 	dbName = dbName.toLower();
 	configDb_ = QSqlDatabase::addDatabase("QSQLITE",dbName);
 	configDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + dbName + ".config");
 	configDb_.open();
 
-	QUuid componentID;
 	QSqlQuery query(configDb_);
 	if(!configDb_.tables().contains("componentinfo"))
 	{
 		query.exec("CREATE TABLE componentinfo (key TEXT, value TEXT)");
-		componentID = QUuid::createUuid();
+		componentId_ = QUuid::createUuid();
 		query.prepare("INSERT INTO componentinfo (key,value) VALUES ('id',:id)");
-		query.bindValue(":id",QString(componentID));
+		query.bindValue(":id",QString(componentId_));
 		query.exec();
 	}
 	query.exec("SELECT value FROM componentinfo WHERE key='id'");
 	Q_ASSERT(query.next());
-	componentID = QUuid(query.value(0).toString());
+	componentId_ = QUuid(query.value(0).toString());
+}
 
+QString ComponentInterface::componentType()
+{
+	return componentType_;
+}
+int ComponentInterface::activate()
+{
 	//while(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection() )
 	//	connectToServer(dataCommandChannel_,componentID, componentType());
 	if(dataCommandChannel_.isNull())
-		dataCommandChannel_ = QSharedPointer<Picto::CommandChannel>(new Picto::CommandChannel(componentID,componentType()));
+		dataCommandChannel_ = QSharedPointer<Picto::CommandChannel>(new Picto::CommandChannel(componentId_,componentType()));
 	openDevice();
 	deviceOpened_ = true;
 	Q_ASSERT(!statusManager_.isNull());
+	statusManager_->setName(name());
 	dataCommandChannel_->setStatusManager(statusManager_);
 	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new NewSessionResponseHandler(statusManager_,dataCommandChannel_)),false);
 	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new EndSessionResponseHandler(statusManager_,dataCommandChannel_)),false);

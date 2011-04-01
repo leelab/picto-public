@@ -9,9 +9,11 @@
 #include "../../common/storage/FrameDataStore.h"
 #include "../../common/storage/RewardDataStore.h"
 #include "../../common/storage/AlignmentDataStore.h"
+#include "../../common/storage/LFPDataStore.h"
 #include "ComponentInfo.h"
 
 #include <QSharedPointer>
+#include <QWeakPointer>
 #include <QSqlDatabase>
 #include <QUuid>
 #include <QStringList>
@@ -49,11 +51,14 @@
 class SessionInfo
 {
 public:
-	SessionInfo(QByteArray experimentXml, QUuid initialObserverId);
-	SessionInfo(QString databaseFilePath);
+	static QSharedPointer<SessionInfo> CreateSession(QByteArray experimentXml, QUuid initialObserverId);
+	static QSharedPointer<SessionInfo> LoadSession(QString sessionID, QString databaseFilePath);
+	static void deleteSession(SessionInfo* session);
 	~SessionInfo();
 
 	void AddComponent(QSharedPointer<ComponentInfo> component);
+	void UpdateComponentActivity();
+	bool hasActiveComponents();
 	QSharedPointer<ComponentInfo> getComponentByType(QString type);
 	bool hasComponent(QUuid componentID);
 	void alignTimestampsTo(QString componentType);
@@ -64,6 +69,7 @@ public:
 	void insertNeuralData(Picto::NeuralDataStore data);
 	void insertBehavioralData(Picto::BehavioralDataStore data);
 	void insertAlignmentData(Picto::AlignmentDataStore data);
+	void insertLFPData(Picto::LFPDataStore data);
 	void insertFrameData(Picto::FrameDataStore data);
 	void insertRewardData(Picto::RewardDataStore data);
 
@@ -91,10 +97,13 @@ public:
 	friend class ConnectionManager;
 
 private:
+	SessionInfo(QByteArray experimentXml, QUuid initialObserverId);
+	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
 	void LoadBaseSessionDatabase(QString databaseName);
 	void SetupBaseSessionDatabase();
 	void CreateCacheDatabase(QString databaseName);
+	void AddTablesToDatabase(QSqlQuery* query);
 	double LoadMaxDataID(QString tableName);
 	bool executeReadQuery(QSqlQuery* query, QString optionalString = "",bool debug = false);
 	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool debug = true);
@@ -103,6 +112,7 @@ private:
 	QSqlDatabase getSessionDb();
 	QSqlDatabase getCacheDb();
 
+	static QMap<QUuid,QWeakPointer<SessionInfo>> loadedSessions_;
 	QUuid uuid_;
 	QSqlDatabase baseSessionDbConnection_;
 	QSqlDatabase cacheDb_;
@@ -114,6 +124,7 @@ private:
 	QTimer timeoutTimer_;
 	QMap<QUuid,QStringList> pendingDirectives_; //Uuid is the Uuid of the component who's pending directives are stored in the QStringList
 	QMap<QString,QSharedPointer<ComponentInfo>> components_;	//QString is the type of the component (only one of each component type can be attached).
+	QMap<QUuid,bool> componentActivity_;
 	QString alignToType_;	//The component type who's timeframe should be used as a baseline in timing alignment.
 	bool activity_;
 	QByteArray experimentXml_;
@@ -122,6 +133,11 @@ private:
 	double latestNeuralTimestamp_;
 	double latestBehavioralTimestamp_;
 	QString databaseVersion_;
+	QList<QString> tables_;
+	QMap<QString,QString> tableColumns_;
+	QMap<QString,QString> tableColumnTypes_;
+	QMap<QString,QString> tableColumnConstraints_;
+	QMap<QString,QString> tableDataProviders_;
 
 	qulonglong maxReceivedDataID_;
 

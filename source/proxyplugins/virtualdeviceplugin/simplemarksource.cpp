@@ -1,18 +1,18 @@
 #include "simplemarksource.h"
+#include "..\..\common\storage\AlignmentDataStore.h"
 
 SimpleMarkSource::SimpleMarkSource(double secPerEvent, double secPerSample)
 :SimpleEventSource(secPerEvent,secPerSample)
 {
 	currEventCode = 0;
 }
-QSharedPointer<VirtualEvent> SimpleMarkSource::buildEvent(double time)
+QSharedPointer<Picto::DataStore> SimpleMarkSource::buildEvent(double time)
 {
-	QSharedPointer<VirtualEvent> newEvent = QSharedPointer<VirtualEvent>(new VirtualEvent());
+	QSharedPointer<Picto::AlignmentDataStore> newEvent(new Picto::AlignmentDataStore());
 	currEventCode++;
 	if(currEventCode == 128)
 		currEventCode = 1;
-	newEvent->eventCode_ = currEventCode;
-	newEvent->timeStamp_ = time;
-	newEvent->type_ = VirtualEvent::eMARK;
+	newEvent->setAlignCode(currEventCode);
+	newEvent->setTimestamp(time);
 	return newEvent;
 }

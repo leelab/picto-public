@@ -20,6 +20,9 @@ void ComponentInfo::setType(QString type)
 //! \brief sets the uuid of the component to the input value
 void ComponentInfo::setUuid(QUuid uuid)
 {QMutexLocker locker(&mutex_);uuid_ = uuid;}
+//! \brief sets the sessionID with which this component is associated
+void ComponentInfo::setSessionID(QUuid sessionID)
+{QMutexLocker locker(&mutex_);sessionID_ = sessionID;}
 //! \brief sets the status of the component to the input value
 void ComponentInfo::setStatus(ComponentStatus::ComponentStatus status)
 {QMutexLocker locker(&mutex_);status_ = status;}
@@ -44,6 +47,9 @@ QString ComponentInfo::getType()
 //! \brief returns the Uuid of the component
 QUuid ComponentInfo::getUuid()
 {QMutexLocker locker(&mutex_);return uuid_;}
+//! \brief returns the sessionID with which the component is associated
+QUuid ComponentInfo::getSessionID()
+{QMutexLocker locker(&mutex_);return sessionID_;}
 //! \brief returns the status of the component
 ComponentStatus::ComponentStatus ComponentInfo::getStatus()
 {QMutexLocker locker(&mutex_);return status_;}

@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include "../common/storage/NeuralDataStore.h"
 #include "../common/storage/AlignmentDataStore.h"
+#include "../common/storage/LFPDataStore.h"
 
 /*! \brief Interface used for all proxy server plugins
  *

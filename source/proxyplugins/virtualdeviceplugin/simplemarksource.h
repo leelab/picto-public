@@ -13,7 +13,7 @@ class SimpleMarkSource : public SimpleEventSource
 {
 public:
 	SimpleMarkSource(double secPerMark, double secPerSample);
-	virtual QSharedPointer<VirtualEvent> buildEvent(double time);
+	virtual QSharedPointer<Picto::DataStore> buildEvent(double time);
 private:
 	short currEventCode;
 };

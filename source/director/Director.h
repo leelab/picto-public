@@ -19,7 +19,6 @@ public:
 		HardwareSetup::EventCodeGeneratorType eventCodeGenerator = HardwareSetup::NullGen);
 	~Director();
 protected:
-	virtual QString componentType();
 	virtual QString name();
 	virtual int openDevice();
 	virtual int closeDevice();

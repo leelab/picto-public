@@ -44,7 +44,7 @@ public:
 	double getJitter(double bAlignTimestamp, double nAlignTimestamp);
 	double getCorrelationCoefficient();
 	void updateCoefficients(double bAlignTimestamp, double nAlignTimestamp);
-	QString getSQLTimeConverstionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn);
+	QString getSQLTimeConversionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn);
 	QString getSQLJitterEquation(	QString jitterColumn, 
 									QString neuralTimebaseColumn, 
 									QString behavioralTimebaseColumn,
