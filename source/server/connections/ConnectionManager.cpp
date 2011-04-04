@@ -13,6 +13,7 @@
 #include <QtConcurrentRun>
 #include "ServerConfig.h"
 
+#define DROPPED_SESSION_TIMEOUT_DAYS 1
 ConnectionManager* ConnectionManager::conMan_ = 0;
 
 //! Private constructor
@@ -63,7 +64,7 @@ void ConnectionManager::checkForTimeouts()
 	//that sessions components, since we don't want any of them timing
 	//out if any of them haven't timed out. We also send each one a directive
 	//which has the affect of forcing their cached data to be flushed.
-	QMutexLocker locker2(mutex_);
+	QMutexLocker locker(mutex_);
 	foreach(QSharedPointer<SessionInfo> sessionInfo, openSessions_)
 	{
 		if(!sessionInfo->clearActivity())
@@ -81,7 +82,9 @@ void ConnectionManager::checkForTimeouts()
 			}
 			else
 			{
+				locker.unlock();
 				endSession(sessionInfo->sessionId());
+				locker.relock();
 			}
 		}
 		else
@@ -102,7 +105,6 @@ void ConnectionManager::checkForTimeouts()
 	}
 
 	//Now check for component timeouts.
-	QMutexLocker locker(mutex_);
 	foreach(QSharedPointer<ComponentInfo> componentInfo, components_)
 	{
 		if(!componentInfo->clearActivity())
@@ -421,10 +423,8 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 	serverConfig.addSession(sessInfo->sessionId().toString(),sessInfo->dataBaseFilePath(),
 		directorID.toString(),proxyID.toString());
 
-	//Whenever we create a new session, we check for timeouts of previously dropped sessions
-	//Do it in a separate thread though so that we don't have to wait for this to finish up.
-
-	QtConcurrent::run(this,&ConnectionManager::checkForDroppedSessionTimeouts);
+	//Whenever we create a new session, we check for timeouts of previously dropped sessions.
+	checkForDroppedSessionTimeouts();
 
 	return sessInfo;
 }
@@ -432,9 +432,8 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 //! \brief Load's a session from the serverConfig database
 QSharedPointer<SessionInfo> ConnectionManager::loadSession(QString sessionId, QString filePath)
 {
-	QMutexLocker locker(mutex_);
-
 	QSharedPointer<SessionInfo> sessInfo(SessionInfo::LoadSession(sessionId,filePath));
+	QMutexLocker locker(mutex_);
 	openSessions_[sessInfo->uuid_] = sessInfo;
 	return sessInfo;
 }
@@ -452,14 +451,15 @@ void ConnectionManager::checkForDroppedSessionTimeouts()
 			config.setActivity(session,false);
 		}
 	}
-	QDateTime timoutTime = QDateTime::currentDateTime().addDays(1);
-	QStringList timedOut = config.getSessionsIdledBefore(timoutTime);
+	QDateTime timeoutTime = QDateTime::currentDateTime().addDays(-DROPPED_SESSION_TIMEOUT_DAYS);
+	QStringList timedOut = config.getSessionsIdledBefore(timeoutTime);
 	foreach(QString session, timedOut)
 	{
 		if(sessionIsValid(session)) //This will load the session for us.
 		{
-			bool sessionEnded = endSession(QUuid(session)); //This will end the session correctly.
-			Q_ASSERT(sessionEnded);
+			//This tells the session to report that its components are no longer active.
+			//That means that it will be ended as soon as it times out.
+			getSessionInfo(QUuid(session))->ignoreComponents();
 		}
 	}
 }
@@ -478,6 +478,7 @@ bool ConnectionManager::sessionIsValid(QString sessionId)
 	QString sessionPath = serverConfig.getSessionPathByID(sessionId);
 	if(sessionPath != "")
 	{
+		locker.unlock();
 		QSharedPointer<SessionInfo> sessInfo = loadSession(sessionId,sessionPath);		
 		if(!sessInfo.isNull())
 			return true;

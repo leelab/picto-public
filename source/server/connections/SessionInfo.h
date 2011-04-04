@@ -59,6 +59,8 @@ public:
 	void AddComponent(QSharedPointer<ComponentInfo> component);
 	void UpdateComponentActivity();
 	bool hasActiveComponents();
+	//! After this function is called, hasActiveComponents will return false
+	void ignoreComponents(){ignoreComponents_ = true;}
 	QSharedPointer<ComponentInfo> getComponentByType(QString type);
 	bool hasComponent(QUuid componentID);
 	void alignTimestampsTo(QString componentType);
@@ -127,6 +129,7 @@ private:
 	QMap<QUuid,bool> componentActivity_;
 	QString alignToType_;	//The component type who's timeframe should be used as a baseline in timing alignment.
 	bool activity_;
+	bool ignoreComponents_;
 	QByteArray experimentXml_;
 	QString baseSessionDbFilepath_;
 	QString timeCreated_;

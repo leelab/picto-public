@@ -150,9 +150,12 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	sessionQ.finish();
 	locker.unlock();
 
-	//Redoalignment and flush
-	alignTimeBases(true);
-	flushCache();
+	////Redoalignment and flush
+	////I removed this because it isn't strictly necessary (since we realign when we end the session)
+	////and it adds a lot of time to session loading, which is something that can occur frequently in
+	////certain situations
+	//alignTimeBases(true);
+	//flushCache();
 }
 
 SessionInfo::~SessionInfo()
@@ -184,6 +187,7 @@ void SessionInfo::UpdateComponentActivity()
 	QSqlQuery query(sessionDb);
 	foreach(QSharedPointer<ComponentInfo> component,components_)
 	{
+		//If the component isn't found, it may be temporarily disconnected but still running, so don't change anything.
 		if(component->getStatus() != ComponentStatus::notFound)
 		{
 			bool active = component->getSessionID() == sessionId();
@@ -198,6 +202,8 @@ void SessionInfo::UpdateComponentActivity()
 
 bool SessionInfo::hasActiveComponents()
 {
+	if(ignoreComponents_)
+		return false;
 	for(QMap<QUuid,bool>::iterator iter = componentActivity_.begin();iter != componentActivity_.end();iter++)
 	{
 		if(iter.value())
@@ -912,6 +918,7 @@ void SessionInfo::InitializeVariables()
 
 	databaseWriteMutex_ = QSharedPointer<QMutex>(new QMutex(QMutex::Recursive));
 	activity_ = true;
+	ignoreComponents_ = false;
 	timestampsAligned_ = (false);
 	//CreateUUID
 	if(uuid_ == QUuid())
