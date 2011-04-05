@@ -106,9 +106,8 @@ private:
 	void SetupBaseSessionDatabase();
 	void CreateCacheDatabase(QString databaseName);
 	void AddTablesToDatabase(QSqlQuery* query);
-	double LoadMaxDataID(QString tableName);
 	bool executeReadQuery(QSqlQuery* query, QString optionalString = "",bool debug = false);
-	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool debug = true);
+	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
 	void recalculateFittedTimes();
 	QSqlDatabase getSessionDb();

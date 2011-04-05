@@ -191,11 +191,14 @@ void SessionInfo::UpdateComponentActivity()
 		if(component->getStatus() != ComponentStatus::notFound)
 		{
 			bool active = component->getSessionID() == sessionId();
-			query.prepare("UPDATE componentinfo SET active=:active WHERE componentid=:componentid");
-			query.bindValue(":active",active);
-			query.bindValue(":componentid",component->getUuid().toString());
-			executeWriteQuery(&query);
-			componentActivity_[component->getUuid()] = active;
+			if(componentActivity_[component->getUuid()] != active)
+			{
+				query.prepare("UPDATE componentinfo SET active=:active WHERE componentid=:componentid");
+				query.bindValue(":active",active);
+				query.bindValue(":componentid",component->getUuid().toString());
+				executeWriteQuery(&query);
+				componentActivity_[component->getUuid()] = active;
+			}
 		}
 	}
 }
@@ -389,6 +392,8 @@ void SessionInfo::flushCache(QString sourceType)
 
 	//Since we are encapsulating all of these operations in a single transaction, we put the whole thing in a mutex.
 	QMutexLocker locker(databaseWriteMutex_.data());
+	QTime timer;
+	timer.start();
 
 	bool success;
 	int attempt = 0;
@@ -423,6 +428,7 @@ void SessionInfo::flushCache(QString sourceType)
 	}while(!success);
 
 	locker.unlock();	// The transaction is over so we can release this mutex
+	qDebug("Time to flush cache: " + QString::number(timer.elapsed()).toAscii() + "ms");
 	return;
 }
 
@@ -448,7 +454,7 @@ void SessionInfo::insertNeuralData(Picto::NeuralDataStore data)
 	query.bindValue(":channel", data.getChannel());
 	query.bindValue(":unit", data.getUnit());
 	query.bindValue(":waveform", data.getWaveformAsString());
-	executeWriteQuery(&query);	
+	executeWriteQuery(&query,"",false);	
 }
 
 //! \brief inserts a behavioral data point in the cache database
@@ -467,7 +473,7 @@ void SessionInfo::insertBehavioralData(Picto::BehavioralDataStore data)
 		cacheQ.bindValue(":xpos",dataPoint.x);
 		cacheQ.bindValue(":ypos",dataPoint.y);
 		cacheQ.bindValue(":time",dataPoint.t);
-		executeWriteQuery(&cacheQ);	
+		executeWriteQuery(&cacheQ,"",false);	
 	}
 }
 
@@ -486,7 +492,7 @@ void SessionInfo::insertAlignmentData(Picto::AlignmentDataStore data)
 		query.bindValue(":timestamp", data.getTimestamp());
 		query.bindValue(":aligncode", data.getAlignCode());
 		query.bindValue(":aligneventnumber", data.getAlignNumber());
-		executeWriteQuery(&query);
+		executeWriteQuery(&query,"",false);
 		return;
 	}
 	//If we got here, its not coming from the component providing the time baseline.
@@ -496,7 +502,7 @@ void SessionInfo::insertAlignmentData(Picto::AlignmentDataStore data)
 	query.bindValue(":dataid", data.getDataID());
 	query.bindValue(":timestamp", data.getTimestamp());
 	query.bindValue(":aligncode", data.getAlignCode());
-	executeWriteQuery(&query);	
+	executeWriteQuery(&query,"",false);	
 
 	// Check if this session requires alignment.  If so, do it.
 	if(alignToType_ != "")
@@ -591,9 +597,7 @@ void SessionInfo::insertAlignmentData(Picto::AlignmentDataStore data)
 void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 {
 	bool addedColumns;
-	QSqlDatabase sessionDb = getSessionDb();
 	QSqlDatabase cacheDb = getCacheDb();
-	QSqlQuery query(cacheDb);
 	//Get Fitted Times
 	QStringList timestamps = data.getTimes().split(" ",QString::SkipEmptyParts);
 	QVector<QString> potentialsVec = data.getPotentials();
@@ -660,14 +664,17 @@ void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 	}
 
 	//Now that the tables are ready.  Do the insertion.
+	//Start a transaction
+	cacheDb.transaction();
+	QSqlQuery query(cacheDb);
 	QString queryString = QString("INSERT INTO lfp "
 		"(dataid,correlation,timestamp,fittedtime%1) VALUES (?,?,?,?%2)").arg(channels).arg(chanVals);
 
 	int rows = timestampList.size();
-	QMutexLocker locker(databaseWriteMutex_.data());
+	//QMutexLocker locker(databaseWriteMutex_.data());
 	QTime timer;
 	timer.start();
-	executeWriteQuery(&query,"BEGIN TRANSACTION");
+	//executeWriteQuery(&query,"BEGIN TRANSACTION",);
 	query.prepare(queryString.toAscii());
 	query.addBindValue(dataIDList);
 	query.addBindValue(correlationList);
@@ -682,9 +689,10 @@ void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 	//SEE HOW LONG IT DOES TAKE
 	bool success = query.execBatch();
 	query.finish();
+	cacheDb.commit();
 	Q_ASSERT_X(success,"SessionInfo::insertLFPData","Error: "+query.lastError().text().toAscii()+"\nPrepared query was: "+queryString.toAscii());
-	executeWriteQuery(&query,"END TRANSACTION");
-	locker.unlock();
+	//executeWriteQuery(&query,"END TRANSACTION");
+	//locker.unlock();
 	if(rows > 0)
 		qDebug("Time per insert: " + QString::number(double(timer.elapsed())/(double(rows)*1000.0)).toAscii() + " seconds");
 }
@@ -692,8 +700,8 @@ void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 //! \brief inserts a state change record in the session database
 void SessionInfo::insertStateData(Picto::StateDataStore data)
 {
-	QSqlDatabase sessionDb = getSessionDb();
-	QSqlQuery query(sessionDb);
+	QSqlDatabase cacheDb = getCacheDb();
+	QSqlQuery query(cacheDb);
 
 	query.prepare("INSERT INTO statetransitions "
 		"(dataid, machinepath, source, sourceresult, destination, time) "
@@ -704,7 +712,7 @@ void SessionInfo::insertStateData(Picto::StateDataStore data)
 	query.bindValue(":sourceresult",data.getSourceResult());
 	query.bindValue(":destination",data.getDestination());
 	query.bindValue(":time",data.getTime());
-	executeWriteQuery(&query);	
+	executeWriteQuery(&query,"",false);	
 }
 
 //! \brief Inserts the passed in frame data into the cache database
@@ -723,14 +731,14 @@ void SessionInfo::insertFrameData(Picto::FrameDataStore data)
 		cacheQ.bindValue(":frame",framedata.frameNumber);
 		cacheQ.bindValue(":time",framedata.time);
 		cacheQ.bindValue(":state",framedata.stateName);
-		executeWriteQuery(&cacheQ);	
+		executeWriteQuery(&cacheQ,"",false);	
 	}
 }
 
 void SessionInfo::insertRewardData(Picto::RewardDataStore data)
 {
-	QSqlDatabase sessionDb = getSessionDb();
-	QSqlQuery query(sessionDb);
+	QSqlDatabase cacheDb = getCacheDb();
+	QSqlQuery query(cacheDb);
 
 	query.prepare("INSERT INTO rewards (dataid, duration, channel, time) "
 		"VALUES (:dataid, :duration, :channel, :time)");
@@ -738,7 +746,7 @@ void SessionInfo::insertRewardData(Picto::RewardDataStore data)
 	query.bindValue(":duration",data.getDuration());
 	query.bindValue(":channel", data.getChannel());
 	query.bindValue(":time",data.getTime());
-	executeWriteQuery(&query);	
+	executeWriteQuery(&query,"",false);	
 }
 
 
@@ -773,7 +781,7 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 	
 	query.bindValue(":time1",timestamp);
 	query.bindValue(":time2",timestamp);
-	QMutexLocker locker(databaseWriteMutex_.data());
+	//QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
@@ -792,7 +800,6 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 		}
 		query.finish();
 	}
-	locker.unlock();
 	return dataStore;
 }
 
@@ -827,7 +834,7 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 	
 	query.bindValue(":time1",timestamp);
 	query.bindValue(":time2",timestamp);
-	QMutexLocker locker(databaseWriteMutex_.data());
+	//QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
@@ -846,7 +853,6 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 		}
 		query.finish();
 	}
-	locker.unlock();
 	return dataStore;
 }
 
@@ -882,7 +888,7 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 	
 	query.bindValue(":time1",timestamp);
 	query.bindValue(":time2",timestamp);
-	QMutexLocker locker(databaseWriteMutex_.data());
+	//QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
@@ -909,7 +915,6 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 		}
 		query.finish();
 	}
-	locker.unlock();
 	return dataStoreList;
 }
 
@@ -1082,25 +1087,6 @@ void SessionInfo::AddTablesToDatabase(QSqlQuery* query)
 	}
 }
 
-//! \brief returns the maximum dataID from tableName.
-double SessionInfo::LoadMaxDataID(QString tableName)
-{
-	QSqlDatabase sessionDb = getSessionDb();
-
-	QSqlQuery sessionQuery(sessionDb);
-	sessionQuery.prepare("SELECT MAX(dataid) FROM :tablename");
-	sessionQuery.bindValue(":tablename", tableName);
-	QMutexLocker locker(databaseWriteMutex_.data());
-	if(!executeReadQuery(&sessionQuery) && sessionQuery.next())
-	{
-		sessionQuery.finish();
-		return sessionQuery.value(0).toULongLong();
-	}
-	sessionQuery.finish();
-	locker.unlock();
-	return 0;
-}
-
 /*! \brief Adds optional debuggion to read query executions.  
  *	The caller should lock the databaseWriteMutex before calling this function, then finish() the query and unlock
  *	the mutex when done so as to avoid causing problems with commit() calls.  
@@ -1118,16 +1104,18 @@ bool SessionInfo::executeReadQuery(QSqlQuery* query, QString optionalString, boo
 }
 
 //! \brief Executes a Sql write query, making it threadsafe by locking a mutex during query use and including debug assertion
-bool SessionInfo::executeWriteQuery(QSqlQuery* query, QString optionalString,bool debug)
+bool SessionInfo::executeWriteQuery(QSqlQuery* query, QString optionalString,bool lock,bool debug)
 {
-	QMutexLocker locker(databaseWriteMutex_.data());
+	if(lock)
+		databaseWriteMutex_->lock();
 	bool success;
 	if(optionalString != "")
 		success = query->exec(optionalString);
 	else
 		success = query->exec();
 	query->finish();
-	locker.unlock();
+	if(lock)
+		databaseWriteMutex_->unlock();
 	if(debug && !success)
 	{
 		int debugInt = 0;
@@ -1174,7 +1162,7 @@ void SessionInfo::alignTimeBases(bool realignAll)
 	executeReadQuery(&query,"SELECT behavioralalignevents.timestamp, neuralalignevents.timestamp, behavioralalignevents.id, neuralalignevents.id, behavioralalignevents.aligncode, behavioralalignevents.aligneventnumber "
 							"FROM behavioralalignevents JOIN neuralalignevents ON behavioralalignevents.aligncode=neuralalignevents.aligncode WHERE behavioralalignevents.matched=0 AND neuralalignevents.matched=0 "
 							"ORDER BY behavioralalignevents.timestamp,neuralalignevents.timestamp ASC",true);
-	// Go through the list.  Use the first alignable value for each aligncode, throwout any subsequent values for the same aligncode.
+	// Go through the list.  Use the first alignable value for each aligncode, throw out any subsequent values for the same aligncode.
 	double behavTime = latestBehavioralTimestamp_;
 	double neuralTime = latestNeuralTimestamp_;
 	updateNeuralQuery.prepare("UPDATE neuralalignevents SET matched=1 WHERE id=:id");

@@ -82,9 +82,12 @@ void ConnectionManager::checkForTimeouts()
 			}
 			else
 			{
+				//Since endSession may take a long time and we don't want to create thread safety issues.  Whenever we end
+				//a session, we just unlock the mutex first and leave the function when we're done.  The other sessions will
+				//miss one round of timeout checking.  But that doesn't make any significant difference.
 				locker.unlock();
 				endSession(sessionInfo->sessionId());
-				locker.relock();
+				return;
 			}
 		}
 		else

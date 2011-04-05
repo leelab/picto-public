@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QString>
 #include <QDateTime>
+#include <QMutex>
 
 /*! \brief ServerConfig handles the configuration of a PictoServer
  *
@@ -38,6 +39,7 @@ public:
 private:
 	QSqlDatabase configDb_;
 	QString connectionName_;
+	static QMutex fileAccessMutex_;
 };
 
 #endif

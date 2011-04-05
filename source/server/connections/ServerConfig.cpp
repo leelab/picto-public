@@ -5,6 +5,9 @@
 #include <QSqlQuery>
 #include <QVariant>
 #include <QThread>
+#include <QMutexLocker>
+
+QMutex ServerConfig::fileAccessMutex_;
 
 ServerConfig::ServerConfig()
 {
@@ -25,6 +28,7 @@ ServerConfig::ServerConfig()
 		//Possibly create a new proxy table
 		if(!configDb_.tables().contains("opensessions"))
 		{
+			QMutexLocker locker(&fileAccessMutex_);
 			QSqlQuery query(configDb_);
 			query.exec("CREATE TABLE opensessions (sessionID VARCHAR(38), "
 													 "filepath VARCHAR(100), "
@@ -55,7 +59,9 @@ void ServerConfig::addSession(QString sessionID, QString filepath, QString direc
 	query.bindValue(":filepath", filepath);
 	query.bindValue(":directorID", directorID);
 	query.bindValue(":proxyID", proxyID);
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec();
+	locker.unlock();
 
 	setActivity(sessionID,true);
 }
@@ -69,6 +75,7 @@ void ServerConfig::removeSession(QString sessionID)
 	query.prepare("DELETE FROM opensessions WHERE "
 		"sessionID=:sessionID");
 	query.bindValue(":sessionID", sessionID);
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec();
 }
 
@@ -79,6 +86,7 @@ QString ServerConfig::getSessionPathByID(QString sessionID)
 	QSqlQuery query(configDb_);
 	query.prepare("SELECT filepath FROM opensessions WHERE sessionID=:sessionID");
 	query.bindValue(":sessionID", sessionID);
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec();
 
 	QString path = "";
@@ -97,6 +105,7 @@ QString ServerConfig::getSessionPathByComponent(QString componentID)
 	query.prepare("SELECT filepath FROM opensessions WHERE ( directorID=:directorID ) OR ( proxyID=:proxyID )");
 	query.bindValue(":directorID", componentID);
 	query.bindValue(":proxyID", componentID);
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec();
 	QString path = "";
 	if(query.next())
@@ -114,6 +123,7 @@ QString ServerConfig::getSessionIDByComponent(QString componentID)
 	query.prepare("SELECT sessionID FROM opensessions WHERE ( directorID=:directorID ) OR ( proxyID=:proxyID )");
 	query.bindValue(":directorID", componentID);
 	query.bindValue(":proxyID", componentID);
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec();
 	QString sessionID = "";
 	if(query.next())
@@ -136,6 +146,7 @@ void ServerConfig::setActivity(QString sessionID, bool running)
 	query.bindValue(":sessionID", sessionID);
 	query.bindValue(":lastactivity", lastactivity.toString());
 	query.bindValue(":running", int(running));
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec();
 }
 
@@ -144,6 +155,7 @@ QStringList ServerConfig::getRunningSessions()
 {
 	Q_ASSERT(configDb_.isOpen());
 	QSqlQuery query(configDb_);
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec("SELECT sessionID FROM opensessions WHERE (running=1)");
 	QStringList result;
 	if(query.next())
@@ -158,6 +170,7 @@ QStringList ServerConfig::getSessionsIdledBefore(QDateTime time)
 {
 	Q_ASSERT(configDb_.isOpen());
 	QSqlQuery query(configDb_);
+	QMutexLocker locker(&fileAccessMutex_);
 	query.exec("SELECT lastactivity,sessionID FROM opensessions WHERE (running=0)");
 	QStringList result;
 	QDateTime lastActive;
