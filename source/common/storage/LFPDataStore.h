@@ -6,9 +6,18 @@
 #include <QString>
 #include <QVector>
 #include <QList>
+#include <QMap>
 
 
 namespace Picto {
+
+struct lfpDataBlock
+{
+	lfpDataBlock(double timestamp,double timePerSample){timestamp_=timestamp;timePerSample_=timePerSample;};
+	QMap<int,QList<double>> data;
+	double timestamp_;
+	double timePerSample_;
+};
 
 /*!	\brief Stores local field data
  *
@@ -45,8 +54,9 @@ public:
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void setCorrelation(double correlation){correlation_ = correlation;}
-	void addData(double timestamp, int* potentials, int numVals);
-	void addData(double timestamp, int* potentials, int numVals, double fittedtime);
+	void addData(double timestamp, double* potentials, int numVals);
+	void addData(double timestamp, double* potentials, int numVals, double fittedtime);
+	void addDataByBlock(lfpDataBlock* block);
 	int numSamples(){return numSamples_;};
 
 	double getCorrelation(){return correlation_;}

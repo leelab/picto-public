@@ -367,7 +367,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 		double secPerSamp(1.0/sampPerSec);
 		int numChans;
 		int maxChan;
-		int* potentials;
+		double* potentials;
 		int* chans;
 		double currTime;
 		lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
@@ -398,7 +398,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 			}
 			//Create potentials array.  Use maxChan+1 so that each channel number can be placed in its index.  ie. If maxchan is 6 it needs to go 
 			//into index 6 which is the 7th index.
-			potentials = new int[maxChan+1];
+			potentials = new double[maxChan+1];
 			
 			//Loop through the list of "sec per sample" separated enties for all channels that start with the same timestamp.
 			//We assume here that all entries have the same "sec per sample" value, which is currently a valid assumption for the

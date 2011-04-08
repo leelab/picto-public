@@ -208,7 +208,7 @@ bool CommandChannel::waitForResponse(int timeout)
 
 		while(true)
 		{
-			//QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+			QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
 			if(incomingResponsesWaiting() > 0)
 			{
@@ -322,10 +322,10 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 			if(timer.elapsed() >= acceptableTimeoutMs)
 				return false;
 			consumerSocket_->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
-			int connectDelay = timer.elapsed();
-			if(connectDelay >= acceptableTimeoutMs)
+			int remainingTime = acceptableTimeoutMs = timer.elapsed();
+			if(remainingTime <= 0.0)
 				return false;
-			consumerSocket_->waitForConnected(acceptableTimeoutMs - connectDelay);
+			consumerSocket_->waitForConnected(remainingTime);
 		}
 	}
 	if(consumerSocket_->state() == QAbstractSocket::ConnectedState)
@@ -495,6 +495,7 @@ bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand
  */
 void CommandChannel::disconnectHandler()
 {
+	emit channelDisconnected();
 	if(reconnect_)
 	{
 		// If reconnect timer isn't null, we've already started trying to reconnect,
@@ -504,7 +505,6 @@ void CommandChannel::disconnectHandler()
 		return;
 	}
 	status_ = disconnected;
-	emit channelDisconnected();
 
 
 	////We could get this signal from either socket...

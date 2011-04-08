@@ -33,49 +33,32 @@ QSharedPointer<Picto::ProtocolResponse> EndsessionCommandHandler::processCommand
 		return unauthResponse;
 	}
 
-	QTime timer;
-	timer.start();
-	while(ConnectionManager::Instance()->sessionIsValid(QUuid(targetSession)))
+	//Add pending EndSession directives to each of the components.  The sessions will end when they timeout.
+	QSharedPointer<SessionInfo> sessionInfo = ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession));
+	if(!sessionInfo.isNull())
 	{
-		QSharedPointer<SessionInfo> sessionInfo = ConnectionManager::Instance()->getSessionInfo(QUuid(targetSession));
-		if(!sessionInfo.isNull())
-		{	
-			QSharedPointer<ComponentInfo> component = sessionInfo->getComponentByType("DIRECTOR");
-			if(!component.isNull() 
-				&& (component->getSessionID() == QUuid(targetSession))
-				&& (component->getStatus() > ComponentStatus::ending)) 
-			{
-				//First send the director ENDSESSION and stop when it starts ending
-				sessionInfo->addPendingDirective("ENDSESSION","DIRECTOR");
-			}
-			else
-			{
-				component = sessionInfo->getComponentByType("PROXY");
-				if(!component.isNull() 
-				&& (component->getSessionID() == QUuid(targetSession))
-				&& (component->getStatus() > ComponentStatus::ending)) 
-				{
-					//Next send the proxy ENDSESSION until it starts ending
-					sessionInfo->addPendingDirective("ENDSESSION","PROXY");
-				}
-				else
-				{
-					// Both components are ending.  Consider the command successful
-					break;
-				}
-			}
-			timer.start();
-		}
-		//Keep waiting until either both components start the ending process
-		while(timer.elapsed() < 5000)
+		QSharedPointer<ComponentInfo> component = sessionInfo->getComponentByType("DIRECTOR");
+		if(!component.isNull() 
+			&& (component->getSessionID() == QUuid(targetSession))
+			&& (component->getStatus() > ComponentStatus::ending)) 
 		{
-			//Wait for it.
-			QThread::yieldCurrentThread();
-			QCoreApplication::processEvents();
+			//First send the director ENDSESSION and stop when it starts ending
+			sessionInfo->addPendingDirective("ENDSESSION","DIRECTOR");
+		}
+
+		component = sessionInfo->getComponentByType("PROXY");
+		if(!component.isNull() 
+		&& (component->getSessionID() == QUuid(targetSession))
+		&& (component->getStatus() > ComponentStatus::ending)) 
+		{
+			//Next send the proxy ENDSESSION until it starts ending
+			sessionInfo->addPendingDirective("ENDSESSION","PROXY");
 		}
 	}
-
-	
+	else
+	{
+		notFoundResponse->setContent("Requested Session is not active.");
+		return notFoundResponse;
+	}
 	return okResponse;
-
 }

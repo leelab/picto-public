@@ -397,7 +397,7 @@ void RemoteViewer::changeConnectionState(bool checked)
 		QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 		ComponentStatus remoteStatus = directorStatus(directorID);
 		int r = QMessageBox::No;
-		if((remoteStatus >= Stopped) && (startedSession_))
+		if((remoteStatus == Stopped) && (startedSession_))
 		{
 			r = QMessageBox::warning(this,Picto::Names->workstationAppName,
 				tr("You are disconnecting from a session that is not currently running an experiment.\n"
@@ -454,9 +454,9 @@ void RemoteViewer::updateStatus()
 	//Check server connection
 	//I'm going to assume that if one of our signal channels is connected that they
 	//all are.  this may prove to be a faulty assumption, but I doubt it...
-	if(serverChannel_->assureConnection(1000) &&
-	   engineSlaveChannel_->assureConnection(1000) &&
-	   behavioralDataChannel_->assureConnection(1000))
+	if(serverChannel_->isConnected() &&
+	   engineSlaveChannel_->isConnected() &&
+	   behavioralDataChannel_->isConnected())
 		statusLine += tr("Server: connected");
 	else
 		statusLine += tr("Server: disconnected");
@@ -601,7 +601,6 @@ void RemoteViewer::updateActions()
  */
 void RemoteViewer::updateLists()
 {
-	QIcon runningIcon(QIcon(":/icons/runningWorkstation.png"));
 
 	if(connectAction_->isChecked())
 	{
@@ -609,7 +608,10 @@ void RemoteViewer::updateLists()
 		proxyListBox_->setEnabled(false);
 		return;
 	}
- 
+
+	QIcon runningIcon(QIcon(":/icons/runningWorkstation.png"));
+	QIcon endingSession(QIcon(":/icons/endingSession.png"));
+
 	//Update the director combo box
 	QList<ComponentInstance> directors;
 	directors = getDirectorList();
@@ -622,6 +624,8 @@ void RemoteViewer::updateLists()
 		{
 			if(d.status.toUpper() == "IDLE")
 				directorListBox_->addItem(d.name, d.id);
+			else if(d.status.toUpper() == "ENDING")
+				directorListBox_->addItem(endingSession, d.name, d.id);
 			else
 				directorListBox_->addItem(runningIcon, d.name, d.id);
 		}
@@ -637,6 +641,8 @@ void RemoteViewer::updateLists()
 			{
 				if(directors[j].status.toUpper() == "IDLE")
 					directorListBox_->setItemIcon(i,QIcon());
+				else if(directors[j].status.toUpper() == "ENDING")
+					directorListBox_->setItemIcon(i,endingSession);
 				else
 					directorListBox_->setItemIcon(i,runningIcon);
 
@@ -660,6 +666,8 @@ void RemoteViewer::updateLists()
 		{
 			if(p.status.toUpper() == "IDLE")
 				proxyListBox_->addItem(p.name, p.id);
+			else if(p.status.toUpper() == "ENDING")
+				proxyListBox_->addItem(endingSession, p.name, p.id);
 			else
 				proxyListBox_->addItem(runningIcon, p.name, p.id);
 		}
@@ -676,6 +684,8 @@ void RemoteViewer::updateLists()
 			{
 				if(proxies[j].status.toUpper() == "IDLE")
 					proxyListBox_->setItemIcon(i,QIcon());
+				else if(proxies[j].status.toUpper() == "ENDING")
+					proxyListBox_->setItemIcon(i,endingSession);
 				else
 					proxyListBox_->setItemIcon(i,runningIcon);
 
@@ -901,9 +911,9 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 void RemoteViewer::checkForTimeouts()
 {
 	//check that the command channels are still connected
-	if(!serverChannel_->assureConnection(1000) ||
-	   !engineSlaveChannel_->assureConnection(1000) ||
-	   !behavioralDataChannel_->assureConnection(1000))
+	if(!serverChannel_->assureConnection() ||
+	   !engineSlaveChannel_->assureConnection() ||
+	   !behavioralDataChannel_->assureConnection())
 	{
 		//connectAction_->setChecked(false);//For a checkable action, the checked property is toggled during the trigger call.
 		if(connectAction_->isChecked())
@@ -1180,7 +1190,7 @@ bool RemoteViewer::joinSession()
 		serverChannel_->sendCommand(joinSessCommand);
 		if(!serverChannel_->waitForResponse(5000))
 		{
-			setStatus(tr("Server did not respond to JOISESSION command"));
+			setStatus(tr("Server did not respond to JOINSESSION command"));
 			return false;
 		}
 

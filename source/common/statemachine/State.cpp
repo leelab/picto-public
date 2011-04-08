@@ -681,12 +681,12 @@ bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
 	{
-		addError("FlowElement","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
+		addError("State","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
 		return false;
 	}
 	if(xmlStreamReader->attributes().value("type").toString() != type())
 	{
-		addError("FlowElement","Incorrect type of StateMachineElement, expected State",xmlStreamReader);
+		addError("State","Incorrect type of StateMachineElement, expected State",xmlStreamReader);
 		return false;
 	}
 

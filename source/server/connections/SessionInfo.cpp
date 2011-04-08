@@ -402,7 +402,10 @@ void SessionInfo::flushCache(QString sourceType)
 		//Start transaction
 		success = cacheDb.transaction();
 		if(!success)
+		{
+			qDebug("Failed to initiate transaction when flushing cache. Error was: " + cacheDb.lastError().text().toAscii() + "...Reattempting.");
 			continue;
+		}
 
 		// Loop through all tables.  If this sourceType is responsible for that table, flush its contents to the diskdb and erase cache.
 		// In the case of the neural/behavioralalignevents, don't erase unvisited, unmatched alignevents
@@ -664,8 +667,6 @@ void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 	}
 
 	//Now that the tables are ready.  Do the insertion.
-	//Start a transaction
-	cacheDb.transaction();
 	QSqlQuery query(cacheDb);
 	QString queryString = QString("INSERT INTO lfp "
 		"(dataid,correlation,timestamp,fittedtime%1) VALUES (?,?,?,?%2)").arg(channels).arg(chanVals);
@@ -689,7 +690,6 @@ void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 	//SEE HOW LONG IT DOES TAKE
 	bool success = query.execBatch();
 	query.finish();
-	cacheDb.commit();
 	Q_ASSERT_X(success,"SessionInfo::insertLFPData","Error: "+query.lastError().text().toAscii()+"\nPrepared query was: "+queryString.toAscii());
 	//executeWriteQuery(&query,"END TRANSACTION");
 	//locker.unlock();
@@ -781,7 +781,7 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 	
 	query.bindValue(":time1",timestamp);
 	query.bindValue(":time2",timestamp);
-	//QMutexLocker locker(databaseWriteMutex_.data());
+	QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
@@ -834,7 +834,7 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 	
 	query.bindValue(":time1",timestamp);
 	query.bindValue(":time2",timestamp);
-	//QMutexLocker locker(databaseWriteMutex_.data());
+	QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
@@ -888,7 +888,7 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 	
 	query.bindValue(":time1",timestamp);
 	query.bindValue(":time2",timestamp);
-	//QMutexLocker locker(databaseWriteMutex_.data());
+	QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{

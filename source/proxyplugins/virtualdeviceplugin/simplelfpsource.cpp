@@ -8,7 +8,7 @@ SimpleLFPSource::SimpleLFPSource(double secPerEvent, double secPerSample)
 QSharedPointer<Picto::DataStore> SimpleLFPSource::buildEvent(double time)
 {
 	QSharedPointer<Picto::LFPDataStore> newEvent = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
-	int potentials[6];
+	double potentials[6];
 		
 	double sampTime = latestTime_;
 	for(sampTime += secPerSample_;sampTime<time;sampTime+=secPerSample_)

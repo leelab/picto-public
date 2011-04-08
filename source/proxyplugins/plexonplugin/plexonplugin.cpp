@@ -61,6 +61,7 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 	QList<QSharedPointer<Picto::DataStore>> returnList;
 	QSharedPointer<Picto::NeuralDataStore> neuralData;
 	QSharedPointer<Picto::AlignmentDataStore> alignData;
+	QSharedPointer<Picto::LFPDataStore> lfpData;
 
 	if(!PL_IsSortClientRunning())
 	{
@@ -71,13 +72,19 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 	PL_Wave*     pServerEventBuffer;
 	double timestampSec;
 	double samplePeriodSec = PL_GetTimeStampTick()/1000000.0;  //clock period in seconds
+	int freq, dummy[16];
+	PL_GetSlowInfo(&freq, dummy, dummy); //** last two params are unused here
+	double lfpPeriodSec = 1.0/freq;
 
 	pServerEventBuffer = (PL_Wave*)malloc(sizeof(PL_Wave)*MAX_MAP_EVENTS_PER_READ);
 
 	if (pServerEventBuffer != NULL)
 	{
 	    int NumMAPEvents = MAX_MAP_EVENTS_PER_READ;
+		double lastLFPTimestamp = -1;
 		PL_GetWaveFormStructures(&NumMAPEvents, pServerEventBuffer);
+		QSharedPointer<Picto::lfpDataBlock> dataBlock;
+		lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
 
 		for(int MAPEvent=0; MAPEvent<NumMAPEvents; MAPEvent++)
 		{
@@ -112,7 +119,51 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 				alignData->setAlignCode(pServerEventBuffer[MAPEvent].Unit);
 				returnList.push_back(alignData);
 			}
+			// lfp UNTESTED!!!!!!!!!! I HAVE NO IDEA IF THIS IS READING THE CORRECT DATA
+			if(pServerEventBuffer[MAPEvent].Type == PL_ADDataType)
+			{
+				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
+				if(timestampSec != lastLFPTimestamp)
+				{
+					if(!dataBlock.isNull())
+					{
+						if(lfpData->numSamples()>=5000)
+						{
+							returnList.push_back(lfpData);
+							lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+						}
+						lfpData->addDataByBlock(dataBlock.data());
+					}
+					dataBlock = QSharedPointer<Picto::lfpDataBlock>(new Picto::lfpDataBlock(timestampSec,lfpPeriodSec));
+					lastLFPTimestamp = timestampSec;
+				}
+				for(int i=0; i<pServerEventBuffer[MAPEvent].NumberOfDataWords; i++)
+				{
+					//Below, we use the values returned from Plexon as follows:
+					//1. +or- 5000000 is the operating range of the A/D converter in uV.  
+					//2. + or - 2048 is the A/D resolution.  
+					//3. There is a preamp gain of 1000x that seems to be stored in the plexon file and was possibly entered manually by us at some point.
+					//		This may be due to a thomas recording preamp gain of 20X and the "blue box" preamp which seems to at least in some cases
+					//		by 50X.  In any case, assuming that this value is accurate, it brings the 5000000 down to 5000.
+					//4. The value entered should be the voltage in uV assuming that there are no other gains in the system that we didn't include here.
+					//The results of all this were compared to results in neuroexplorer and to values returned from Orion for a single file and things matched up.  
+					//It does seem like older versions of plexon may have had different A/D operating ranges and/or preamp gains.
+					//We really need to just run a test to figure out what the precise values are here...
+					dataBlock->data[pServerEventBuffer[MAPEvent].Channel].push_back(5000.0*double(pServerEventBuffer[MAPEvent].WaveForm[i])/2048.0); 
+				}
+			}
 		}
+		if(!dataBlock.isNull())
+		{
+			if(lfpData->numSamples()>=5000)
+			{
+				returnList.push_back(lfpData);
+				lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+			}
+			lfpData->addDataByBlock(dataBlock.data());
+		}
+		if(lfpData->numSamples())
+			returnList.push_back(lfpData);
 	}
 	free(pServerEventBuffer);
 	return returnList;

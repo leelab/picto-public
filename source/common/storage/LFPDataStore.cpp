@@ -97,7 +97,7 @@ bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 	return true;
 }
 
-void LFPDataStore::addData(double timestamp, int* potentials, int numVals)
+void LFPDataStore::addData(double timestamp, double* potentials, int numVals)
 {
 	while(potentials_.size() < numVals)
 	{
@@ -115,11 +115,47 @@ void LFPDataStore::addData(double timestamp, int* potentials, int numVals)
 	Q_ASSERT_X(numSamples_ <= 10000,"LFPDataStore::addData","No more than 10000 lfp samples should be stored in a lfpdatastore");
 
 }
-void LFPDataStore::addData(double timestamp, int* potentials, int numVals, double fittedtime)
+void LFPDataStore::addData(double timestamp, double* potentials, int numVals, double fittedtime)
 {
 	fittedTimes_.push_back(QString::number(fittedtime));
 	addData(timestamp,potentials,numVals);
 }
 
+void LFPDataStore::addDataByBlock(lfpDataBlock* block)
+{
+	if(!block->data.size())
+		return;
+	QMap<int,QList<double>::Iterator> iters;
+	int maxChan = -1;
+	for(QMap<int,QList<double>>::iterator iter = block->data.begin();iter!=block->data.end();iter++)
+	{
+		iters[iter.key()] = iter.value().begin();
+		if(iter.key() > maxChan)
+			maxChan = iter.key();
+	}
+	double *data = new double[maxChan+1];
+	bool done = false;
+	double timestamp = block->timestamp_;
+	while(!done)
+	{
+		for(int i=0;i<maxChan+1;i++)
+		{
+			if(iters.contains(i))
+			{
+				data[i] = (*(iters[i]));
+				iters[i]++;
+				if(iters[i] == block->data[i].end())
+					done = true;
+			}
+			else
+				data[i] = 0;
+		}
+		addData(timestamp,data,maxChan+1);
+		timestamp += block->timePerSample_;
+	}
+	delete data;
+	
+
+}
 
 
