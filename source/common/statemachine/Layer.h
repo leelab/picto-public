@@ -23,6 +23,7 @@ class PICTOLIB_API Layer : public DataStore
 class Layer : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	Layer();
 

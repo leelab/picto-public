@@ -27,8 +27,8 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 
-	QRect getDimensions(){ return propertyContainer_.getPropertyValue("Dimensions").toRect(); };
-	void setDimensions(QRect dimensions){ propertyContainer_.setPropertyValue("Dimensions",dimensions);};
+	QRect getDimensions(){ return propertyContainer_->getPropertyValue("Dimensions").toRect(); };
+	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Dimensions",dimensions);};
 
 	static const QString type;
 
@@ -40,7 +40,7 @@ public slots:
 	void setDimensions(int width,int height) { setDimensions(QRect(0,0,width,height)); };
 
 private slots:
-	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
+	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

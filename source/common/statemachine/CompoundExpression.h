@@ -40,6 +40,7 @@ class PICTOLIB_API CompoundExpression : public DataStore
 class CompoundExpression : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	CompoundExpression();
 

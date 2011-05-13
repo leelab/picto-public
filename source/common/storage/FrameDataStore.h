@@ -21,6 +21,7 @@ namespace Picto {
 class FrameDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 
 	FrameDataStore();
@@ -28,15 +29,15 @@ public:
 	void addFrame(int frameNumber, double time, QString stateName);
 	void clearFrames() { data_.clear(); };
 	int length() { return data_.length(); }
-	FrameUnitDataStore takeFirstDataPoint() { return data_.takeFirst(); };
-	FrameUnitDataStore takeLastDataPoint() { return data_.takeLast(); };
+	QSharedPointer<FrameUnitDataStore> takeFirstDataPoint() { return data_.takeFirst(); };
+	QSharedPointer<FrameUnitDataStore> takeLastDataPoint() { return data_.takeLast(); };
 
 	//Data store functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 
-	QList<FrameUnitDataStore> data_;
+	QList<QSharedPointer<FrameUnitDataStore>> data_;
 };
 
 

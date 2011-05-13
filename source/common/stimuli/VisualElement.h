@@ -26,7 +26,7 @@ namespace Picto {
  *	them by generating a list of their properties.  This class also handles
  *	the compositing surfaces.
  */
-struct PICTOLIB_CLASS VisualElement : public StimulusElement, public DataStore
+struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public DataStore
 {
 	Q_OBJECT
 public:
@@ -85,7 +85,7 @@ protected:
 
 	MTRand random;
 
-	PropertyContainer propertyContainer_;
+	QSharedPointer<PropertyContainer> propertyContainer_;
 	QMap<QString, QVariant> initialProperties_;
 
 	int order_;		//The order in which this visual element should be drawn within its layer

@@ -6,8 +6,8 @@ namespace Picto
 {
 TestController::TestController()
 {
-	propertyContainer_.setPropertyValue("Type",ControllerType());
-	propertyContainer_.addProperty(Property(QVariant::Int,"NumberOfFrames",QVariant(120)));
+	propertyContainer_->setPropertyValue("Type",ControllerType());
+	propertyContainer_->addProperty(QVariant::Int,"NumberOfFrames",QVariant(120));
 
 	//Make sure to update the list of results...
 	results_.append("Success");
@@ -28,7 +28,7 @@ bool TestController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 {
 	Q_UNUSED(engine);
 
-	int numberOfFrames = propertyContainer_.getPropertyValue("NumberOfFrames").toInt();
+	int numberOfFrames = propertyContainer_->getPropertyValue("NumberOfFrames").toInt();
 
 	timesCalled_++;
 
@@ -74,7 +74,7 @@ void TestController::start(QSharedPointer<Engine::PictoEngine> engine)
 bool TestController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("ControlElement");
-	xmlStreamWriter->writeAttribute("type",propertyContainer_.getPropertyValue("Type").toString());
+	xmlStreamWriter->writeAttribute("type",propertyContainer_->getPropertyValue("Type").toString());
 	if(operatorVisible_)
 		xmlStreamWriter->writeAttribute("operatorVisible","true");
 	else
@@ -84,8 +84,8 @@ bool TestController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 	else
 		xmlStreamWriter->writeAttribute("subjectVisible","false");
 
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
-	xmlStreamWriter->writeTextElement("NumberOfFrames",propertyContainer_.getPropertyValue("NumberOfFrames").toString());
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("NumberOfFrames",propertyContainer_->getPropertyValue("NumberOfFrames").toString());
 
 	xmlStreamWriter->writeEndElement(); //ControlElement
 
@@ -133,7 +133,7 @@ bool TestController::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		}
 		else if(name == "NumberOfFrames")
 		{
-			propertyContainer_.setPropertyValue("NumberOfFrames",xmlStreamReader->readElementText().toInt());
+			propertyContainer_->setPropertyValue("NumberOfFrames",xmlStreamReader->readElementText().toInt());
 		}
 		else
 		{

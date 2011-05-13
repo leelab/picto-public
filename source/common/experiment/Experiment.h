@@ -41,6 +41,7 @@ class PICTOLIB_API Experiment : public DataStore
 class Experiment : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	Experiment();
 
@@ -68,7 +69,7 @@ private:
 	//QList<QSharedPointer<Calibration> > calibrations_;
 	//QList<QSharedPointer<MediaItem> > mediaItems_;
 
-	PropertyContainer propertyContainer_;
+	QSharedPointer<PropertyContainer> propertyContainer_;
 };
 
 

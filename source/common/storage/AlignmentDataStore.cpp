@@ -20,7 +20,7 @@ bool AlignmentDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 	xmlStreamWriter->writeTextElement("Time",QString("%1").arg(getTimestamp(),0,'f',4));
 	xmlStreamWriter->writeTextElement("EventCode",QString("%1").arg(getAlignCode()));
 	xmlStreamWriter->writeTextElement("TrialNum",QString("%1").arg(getAlignNumber()));
-	DataStore::serializeAsXml(xmlStreamWriter);
+	DataStore::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
@@ -53,7 +53,7 @@ bool AlignmentDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 		}
 		else if(xmlStreamReader->isStartElement())
 		{
-			DataStore::deserializeFromXml(xmlStreamReader);
+			DataStore::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	

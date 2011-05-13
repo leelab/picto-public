@@ -41,8 +41,8 @@ public:
 	bool initScripting(QScriptEngine &qsEngine);
 
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+//	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+//	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QScriptEngine *qsEngine_;

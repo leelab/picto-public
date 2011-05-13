@@ -24,7 +24,7 @@ bool BehavioralUnitDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xm
 	xmlStreamWriter->writeAttribute("time",QString("%1").arg(t));
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(x));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(y));
-	DataStore::serializeAsXml(xmlStreamWriter);
+	DataStore::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
@@ -82,7 +82,7 @@ bool BehavioralUnitDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader
 		}
 		else
 		{
-			DataStore::deserializeFromXml(xmlStreamReader);
+			DataStore::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}

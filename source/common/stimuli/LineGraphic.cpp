@@ -8,24 +8,23 @@ const QString LineGraphic::type = "Line Graphic";
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 {
-	propertyContainer_.setContainerName(type);
+	propertyContainer_->setContainerName(type);
 
-	propertyContainer_.setPropertyValue("Position",position);
+	propertyContainer_->setPropertyValue("Position",position);
 	
 	for(int i = 0; i < points.count(); i++)
 	{
-		Property pointProperty(QVariant::Point,QString("Point %1").arg(i),points[i]);
-		propertyContainer_.addProperty(pointProperty);
+		propertyContainer_->addProperty(QVariant::Point,QString("Point %1").arg(i),points[i]);
 	}
 
-	propertyContainer_.setPropertyValue("Color",color);
+	propertyContainer_->setPropertyValue("Color",color);
 
 	draw();
 
-	connect(&propertyContainer_,
-		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
+	connect(propertyContainer_.data(),
+		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
 		    this,
-			SLOT(slotPropertyValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, int, QVariant))
 			);
 }
 
@@ -34,11 +33,11 @@ void LineGraphic::draw()
 	QVector<QPoint> points;
 	int left = 0, top = 0, right = 0, bottom = 0;
 
-	foreach(QString propertyName, propertyContainer_.getPropertyList())
+	foreach(QString propertyName, propertyContainer_->getPropertyList())
 	{
 		if(propertyName.left(5)=="Point")
 		{
-			QPoint point = propertyContainer_.getPropertyValue(propertyName).toPoint();
+			QPoint point = propertyContainer_->getPropertyValue(propertyName).toPoint();
 			points.push_back(point);
 
 			if(point.x() < left) left = point.x();
@@ -48,7 +47,7 @@ void LineGraphic::draw()
 		}
 	}
 
-	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
+	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(right-left,bottom-top,QImage::Format_ARGB32);
 	image.fill(0);
@@ -73,7 +72,7 @@ VisualElement* LineGraphic::NewVisualElement()
 	return new LineGraphic;
 }
 
-void LineGraphic::slotPropertyValueChanged(QString propertyName,
+void LineGraphic::slotPropertyValueChanged(QString propertyName, int index,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")

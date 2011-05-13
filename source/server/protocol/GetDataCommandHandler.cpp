@@ -44,24 +44,24 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 
 	if(dataType.compare("BehavioralDataStore",Qt::CaseInsensitive) == 0)
 	{
-		Picto::BehavioralDataStore dataStore;
+		QSharedPointer<Picto::BehavioralDataStore> dataStore;
 		dataStore = sessionInfo->selectBehavioralData(timestamp);
-		dataStore.serializeAsXml(xmlWriter);
+		dataStore->serializeAsXml(xmlWriter);
 	}
 	else if(dataType.compare("StateDataStore",Qt::CaseInsensitive) == 0)
 	{
-		QList<Picto::StateDataStore> dataStores;
+		QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> dataStores;
 		dataStores = sessionInfo->selectStateData(timestamp);
-		foreach(Picto::StateDataStore data, dataStores)
+		foreach(QSharedPointer<Picto::StateDataStore> data, *dataStores)
 		{
-			data.serializeAsXml(xmlWriter);
+			data->serializeAsXml(xmlWriter);
 		}
 	}
 	else if(dataType.compare("FrameDataStore",Qt::CaseInsensitive) == 0)
 	{
-		Picto::FrameDataStore dataStore;
+		QSharedPointer<Picto::FrameDataStore> dataStore;
 		dataStore = sessionInfo->selectFrameData(timestamp);
-		dataStore.serializeAsXml(xmlWriter);
+		dataStore->serializeAsXml(xmlWriter);
 	}
 	else
 	{

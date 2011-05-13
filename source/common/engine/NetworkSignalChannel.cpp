@@ -74,14 +74,14 @@ void NetworkSignalChannel::updateDataBuffer()
 	while(behavioralData.length() > 0)
 	{
 		// Push the data into our signal channel
-		Picto::BehavioralUnitDataStore dataPoint;
+		QSharedPointer<Picto::BehavioralUnitDataStore> dataPoint;
 		dataPoint = behavioralData.takeFirstDataPoint();
 		
-		rawDataBuffer_["xpos"].append(dataPoint.x);
-		rawDataBuffer_["ypos"].append(dataPoint.y);
-		rawDataBuffer_["time"].append(dataPoint.t);
+		rawDataBuffer_["xpos"].append(dataPoint->x);
+		rawDataBuffer_["ypos"].append(dataPoint->y);
+		rawDataBuffer_["time"].append(dataPoint->t);
 
-		lastTimeDataCollected_ = dataPoint.t;
+		lastTimeDataCollected_ = dataPoint->t;
 	}
 
 }

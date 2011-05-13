@@ -35,6 +35,7 @@ class PICTOLIB_API Task : public DataStore
 class Task : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	Task();
 
@@ -56,7 +57,7 @@ private:
 	//QUuid uuid_;
 	//unsigned int revision_;
 
-	PropertyContainer propertyContainer_;
+	QSharedPointer<PropertyContainer> propertyContainer_;
 	ParameterContainer parameterContainer_;
 	QSharedPointer<StateMachine> stateMachine_;
 	//QList<StageResult> stageResults_;

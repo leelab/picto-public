@@ -9,7 +9,7 @@ BehavioralDataStore::BehavioralDataStore()
 //! Adds a simple (x,y,t) data point
 void BehavioralDataStore::addData(double x, double y, double t)
 {
-	BehavioralUnitDataStore newPoint(x,y,t);
+	QSharedPointer<BehavioralUnitDataStore> newPoint(new BehavioralUnitDataStore(x,y,t));
 	data_.append(newPoint);
 }
 
@@ -40,7 +40,7 @@ void BehavioralDataStore::addData(QMap<QString, QList<double>> signalChannelData
 		  ypos != signalChannelData.value("ypos").end() &&
 		  time != signalChannelData.value("time").end())
 	{
-		BehavioralUnitDataStore newPoint(*xpos,*ypos,*time);
+		QSharedPointer<BehavioralUnitDataStore> newPoint(new BehavioralUnitDataStore(*xpos,*ypos,*time));
 		data_.append(newPoint);
 
 		xpos++;
@@ -63,9 +63,9 @@ bool BehavioralDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStr
 {
 	xmlStreamWriter->writeStartElement("BehavioralDataStore");
 
-	foreach(BehavioralUnitDataStore dataPoint, data_)
+	foreach(QSharedPointer<BehavioralUnitDataStore> dataPoint, data_)
 	{
-		dataPoint.serializeAsXml(xmlStreamWriter);
+		dataPoint->serializeAsXml(xmlStreamWriter);
 	}
 
 	xmlStreamWriter->writeEndElement(); //BehavioralDataStore
@@ -97,8 +97,8 @@ bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 		QString name = xmlStreamReader->name().toString();
 		if(name == "BehavioralUnitDataStore")
 		{
-			BehavioralUnitDataStore newPoint;
-			newPoint.deserializeFromXml(xmlStreamReader);
+			QSharedPointer<BehavioralUnitDataStore> newPoint(new BehavioralUnitDataStore());
+			newPoint->deserializeFromXml(xmlStreamReader);
 			data_.append(newPoint);
 		}
 		else

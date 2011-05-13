@@ -26,6 +26,7 @@ class PICTOLIB_API PredicateExpression : public DataStore
 class PredicateExpression : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	PredicateExpression();
 	PredicateExpression(QString predicateName);

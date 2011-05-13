@@ -20,6 +20,7 @@ namespace Picto {
 class BehavioralUnitDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	BehavioralUnitDataStore();
 	BehavioralUnitDataStore(double X, double Y, double T);

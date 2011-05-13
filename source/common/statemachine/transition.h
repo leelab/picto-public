@@ -15,13 +15,12 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API Transition : public QObject, public DataStore
+	class PICTOLIB_API Transition : public DataStore
 #else
-class Transition  : public QObject, public DataStore
+class Transition  : public DataStore
 #endif
 {
 	Q_OBJECT
-
 public:
 	Transition();
 	Transition(QString source, QString sourceResult, QString destination);

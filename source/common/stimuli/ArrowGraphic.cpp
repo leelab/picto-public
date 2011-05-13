@@ -8,30 +8,30 @@ const QString ArrowGraphic::type = "Arrow Graphic";
 
 ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, QColor color)
 {
-	propertyContainer_.setContainerName(type);
+	propertyContainer_->setContainerName(type);
 
-	propertyContainer_.setPropertyValue("Position",position);
-	propertyContainer_.addProperty(Property(QVariant::Point,"Start",start));
-	propertyContainer_.addProperty(Property(QVariant::Point,"End",end));
-	propertyContainer_.addProperty(Property(QVariant::Int,"Size", size));
-	propertyContainer_.setPropertyValue("Color",color);
+	propertyContainer_->setPropertyValue("Position",position);
+	propertyContainer_->addProperty(QVariant::Point,"Start",start);
+	propertyContainer_->addProperty(QVariant::Point,"End",end);
+	propertyContainer_->addProperty(QVariant::Int,"Size", size);
+	propertyContainer_->setPropertyValue("Color",color);
 
 	draw();
 
-	connect(&propertyContainer_,
-		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
+	connect(propertyContainer_.data(),
+		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
 		    this,
-			SLOT(slotPropertyValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, int, QVariant))
 			);
 
 }
 
 void ArrowGraphic::draw()
 {
-	QPoint start = propertyContainer_.getPropertyValue("Start").toPoint();
-	QPoint end = propertyContainer_.getPropertyValue("End").toPoint();
-	int size = propertyContainer_.getPropertyValue("Size").toInt();
-	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
+	QPoint start = propertyContainer_->getPropertyValue("Start").toPoint();
+	QPoint end = propertyContainer_->getPropertyValue("End").toPoint();
+	int size = propertyContainer_->getPropertyValue("Size").toInt();
+	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	//generate the point pairs that will draw the line and arrow
 	double lineAngle = atan((double)(end.y()-start.y())/(double)(end.x()-start.x()));
@@ -95,7 +95,7 @@ VisualElement* ArrowGraphic::NewVisualElement()
 	return new ArrowGraphic;
 }
 
-void ArrowGraphic::slotPropertyValueChanged(QString propertyName, QVariant propertyValue)
+void ArrowGraphic::slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue)
 {
 	if(propertyName != "Position" && propertyName != "Name")
 	{

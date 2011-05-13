@@ -8,6 +8,7 @@
 #include "viewer/textviewer.h"
 #include "viewer/testviewer.h"
 #include "viewer/remoteviewer.h"
+#include "viewer/stateeditviewer.h"
 
 MainWindow::MainWindow()
 {	
@@ -188,7 +189,7 @@ void MainWindow::createViewers()
 	//StateEditViewer
 	//NOTE: This hasn't yet been created, so we're using a test viewer
 	//as a placeholder
-	viewer = new TextViewer(checkSyntaxAction_,this);
+	viewer = new StateEditViewer(this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&State Machine Editor"),this);
@@ -198,8 +199,6 @@ void MainWindow::createViewers()
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
-	viewerAction->setEnabled(false);
-
 
 	//Test Viewer
 	viewer = new TestViewer(this);
@@ -546,6 +545,13 @@ bool MainWindow::convertTextToExperiment()
 	//experiment_->clearErrors();
 	//experiment_->clear();
 	bool result = experiment_->deserializeFromXml(xmlReader);
+
+	//////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
+	//QString serialTestString;
+	//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&serialTestString));
+	//experiment_->serializeAsXml(xmlWriter);
+	//Q_ASSERT(serialTestString == experimentText_.toPlainText());
+	////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	if(!result)
 	{

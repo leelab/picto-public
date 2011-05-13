@@ -23,6 +23,7 @@ namespace Picto {
 class BehavioralDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 
 	BehavioralDataStore();
@@ -32,14 +33,14 @@ public:
 	void emptyData() { data_.clear(); };
 
 	int length() { return data_.length(); }
-	BehavioralUnitDataStore takeFirstDataPoint() { return data_.takeFirst(); };
+	QSharedPointer<BehavioralUnitDataStore> takeFirstDataPoint() { return data_.takeFirst(); };
 
 	//Data store functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 
-	QList<BehavioralUnitDataStore> data_;
+	QList<QSharedPointer<BehavioralUnitDataStore>> data_;
 };
 
 

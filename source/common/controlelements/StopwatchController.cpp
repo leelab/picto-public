@@ -4,14 +4,13 @@ namespace Picto
 {
 StopwatchController::StopwatchController()
 {
-	propertyContainer_.setPropertyValue("Type",ControllerType());
+	propertyContainer_->setPropertyValue("Type",ControllerType());
 
-	Property unitsEnumProperty(QtVariantPropertyManager::enumTypeId(),"Units",0);
+	QSharedPointer<Property> unitsEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"Units",0);
     unitList_ << "Sec" << "Ms" << "Us";
-	unitsEnumProperty.addAttribute("enumNames", unitList_);
-	propertyContainer_.addProperty(unitsEnumProperty);
+	unitsEnumProperty->addAttribute("enumNames", unitList_);
 
-	propertyContainer_.addProperty(Property(QVariant::Int,"Time",0));
+	propertyContainer_->addProperty(QVariant::Int,"Time",0);
 
 	//Make sure to update the list of results...
 	results_.append("Success");
@@ -41,8 +40,8 @@ void StopwatchController::setTime(int time, Controller::TimerUnits::TimerUnits u
 	else 
 		return;
 
-	propertyContainer_.setPropertyValue("Units",newUnit);
-	propertyContainer_.setPropertyValue("Time",time);
+	propertyContainer_->setPropertyValue("Units",newUnit);
+	propertyContainer_->setPropertyValue("Time",time);
 
 }
 
@@ -60,16 +59,16 @@ bool StopwatchController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	Q_UNUSED(engine);
 
 	Controller::TimerUnits::TimerUnits units;
-	if(unitList_.value(propertyContainer_.getPropertyValue("Units").toInt(),"") == "Sec")
+	if(unitList_.value(propertyContainer_->getPropertyValue("Units").toInt(),"") == "Sec")
 		units = Controller::TimerUnits::sec;
-	else if(unitList_.value(propertyContainer_.getPropertyValue("Units").toInt(),"") == "Ms")
+	else if(unitList_.value(propertyContainer_->getPropertyValue("Units").toInt(),"") == "Ms")
 		units = Controller::TimerUnits::ms;
-	else if(unitList_.value(propertyContainer_.getPropertyValue("Units").toInt(),"") == "Us")
+	else if(unitList_.value(propertyContainer_->getPropertyValue("Units").toInt(),"") == "Us")
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
 
-	if(timer_.elapsedTime(units) > propertyContainer_.getPropertyValue("Time").toInt())
+	if(timer_.elapsedTime(units) > propertyContainer_->getPropertyValue("Time").toInt())
 	{
 		isDone_ = true;
 		return true;
@@ -102,7 +101,7 @@ QString StopwatchController::getResult()
 bool StopwatchController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("ControlElement");
-	xmlStreamWriter->writeAttribute("type",propertyContainer_.getPropertyValue("Type").toString());
+	xmlStreamWriter->writeAttribute("type",propertyContainer_->getPropertyValue("Type").toString());
 	if(operatorVisible_)
 		xmlStreamWriter->writeAttribute("operatorVisible","true");
 	else
@@ -112,12 +111,12 @@ bool StopwatchController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStr
 	else
 		xmlStreamWriter->writeAttribute("subjectVisible","false");
 
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
 
 	xmlStreamWriter->writeStartElement("Time");
-	QString unitsStr = unitList_.value(propertyContainer_.getPropertyValue("Units").toInt(),"unknown");
+	QString unitsStr = unitList_.value(propertyContainer_->getPropertyValue("Units").toInt(),"unknown");
 	xmlStreamWriter->writeAttribute("units",unitsStr);
-	xmlStreamWriter->writeCharacters(QString("%1").arg(propertyContainer_.getPropertyValue("Time").toInt()));
+	xmlStreamWriter->writeCharacters(QString("%1").arg(propertyContainer_->getPropertyValue("Time").toInt()));
 	xmlStreamWriter->writeEndElement(); //Time
 
 	xmlStreamWriter->writeEndElement(); //ControlElement
@@ -174,8 +173,8 @@ bool StopwatchController::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 				addError("StopwatchController","Time contained unrecognized units",xmlStreamReader);
 				return false;
 			}
-			propertyContainer_.setPropertyValue("Units",unitIndex);
-			propertyContainer_.setPropertyValue("Time",xmlStreamReader->readElementText().toInt());
+			propertyContainer_->setPropertyValue("Units",unitIndex);
+			propertyContainer_->setPropertyValue("Time",xmlStreamReader->readElementText().toInt());
 		}
 		else
 		{

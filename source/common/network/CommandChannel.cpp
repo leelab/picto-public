@@ -231,7 +231,6 @@ void CommandChannel::readIncomingResponse()
 	int bytesRead;
 	QSharedPointer<ProtocolCommand> pendingCommand;
 	QDateTime currCreatedTime;
-	int currResponseDelay;
 	while(consumerSocket_->bytesAvailable() > 0)
 	{
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse());

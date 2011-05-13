@@ -1,49 +1,89 @@
 #include "PropertyContainer.h"
-
 #include <QtVariantProperty>
+#include "EnumProperty.h"
+#include "ColorProperty.h"
+#include "PointProperty.h"
+#include "RectProperty.h"
 
 namespace Picto {
 
 PropertyContainer::PropertyContainer(QString _containerName)
 {
-    containerGroupItem_ = variantManager_.addProperty(QtVariantPropertyManager::groupTypeId(),
-													  _containerName);
+	propManager_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
+														  _containerName);
+	Q_ASSERT(item);
+	containerGroupItem_ = QSharedPointer<Property>( new Property(QSharedPointer<QtVariantProperty>(item),propManager_) );
 
-	connect(&variantManager_,
+	connect(propManager_.data(),
 		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
 		    this,
 			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
 			);
 }
 
+//We need to do some pointer gymnastics to get around the fact that
+//the QtAbstractProperyManager deletes all of its properties when it
+//is deleted but we would like to have shared pointers for the
+//properties such that they aren't deleted until we're totally done 
+//with them.  To do this, we only allow the PropertyContainer (inherits
+//the QtPropertyManager) to be created with a shared pointer.  Whenever
+//a property is added to it, this shared pointer is added to the property.
+//This means that the ProperyContainer will never be deleted until all of
+//its properties have already been deleted.  Whenever the properties are 
+//deleted, they remove themselves from their parent PropertyManager's list.  
+//This way, when the PropertyManager is deleted, all of its children will 
+//have already been removed from its list and there will be no problem.
+//Tada!
+QSharedPointer<PropertyContainer> PropertyContainer::create(QString _containerName)
+{
+	QSharedPointer<PropertyContainer> returnVal(new PropertyContainer(_containerName));
+	return returnVal;
+}
+
 void PropertyContainer::setContainerName(QString _containerName)
 {
-	containerGroupItem_->setPropertyName(_containerName);
+	containerGroupItem_->setName(_containerName);
 }
 
 QString PropertyContainer::getContainerName()
 {
-	return containerGroupItem_->propertyName();
+	return containerGroupItem_->name();
 }
 
-void PropertyContainer::addProperty(Property _property)
+QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value)
 {
-    QtVariantProperty *item = variantManager_.addProperty(_property.type(),
-														  _property.name());
-
+	QtVariantProperty *item = propManager_->addProperty(_type,
+														  _identifier);
 	//This will fail if you use an unsupported type
 	Q_ASSERT(item);
 
-	item->setValue(_property.value());
+	item->setValue(_value);
 
-	QMap<QString, QVariant> attributes = _property.getAttributes();
-	foreach(QString attributeName, attributes.keys())
+	QSharedPointer<Property> newProperty;
+	if(_type == QtVariantPropertyManager::enumTypeId())
+		newProperty = QSharedPointer<Property>( new EnumProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+	else
 	{
-		item->setAttribute(attributeName, attributes.value(attributeName));
+		switch(_type)
+		{
+		case QVariant::Rect:
+			newProperty = QSharedPointer<Property>( new RectProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			break;
+		case QVariant::Point:
+			newProperty = QSharedPointer<Property>( new PointProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			break;
+		case QVariant::Color:
+			newProperty = QSharedPointer<Property>( new ColorProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			break;
+		default:
+			newProperty = QSharedPointer<Property>( new Property(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			break;
+		}
 	}
-
-	containerGroupItem_->addSubProperty(item);
-	properties_[_property.name()] = item;
+	containerGroupItem_->addSubProperty(newProperty);
+	properties_[_identifier].push_back(newProperty);
+	return newProperty;
 }
 
 QStringList PropertyContainer::getPropertyList()
@@ -51,11 +91,11 @@ QStringList PropertyContainer::getPropertyList()
 	return properties_.keys();
 }
 
-QVariant PropertyContainer::getPropertyValue(QString _propertyName)
+QVariant PropertyContainer::getPropertyValue(QString _identifier, int index)
 {
-	if(properties_.contains(_propertyName))
+	if(properties_.contains(_identifier) && (properties_[_identifier].size() > index))
 	{
-		return variantManager_.value(properties_[_propertyName]);
+		return properties_.value(_identifier)[index]->value();
 	}
 	else
 	{
@@ -63,29 +103,48 @@ QVariant PropertyContainer::getPropertyValue(QString _propertyName)
 	}
 }
 
-void PropertyContainer::setPropertyValue(QString _propertyName, QVariant _value)
+QString PropertyContainer::getPropertyName(QString _identifier, int index)
 {
-	if(properties_.contains(_propertyName))
+	if(properties_.contains(_identifier) && (properties_[_identifier].size() > index))
 	{
-		properties_[_propertyName]->setValue(_value);
+		return properties_.value(_identifier)[index]->name();
 	}
 	else
 	{
-		addProperty(Property(_value.type(), _propertyName, _value));
+		return QString("");
 	}
+}
+
+QSharedPointer<Property> PropertyContainer::setPropertyValue(QString _propertyName, QVariant _value, int index)
+{
+	if(properties_.contains(_propertyName) && (properties_[_propertyName].size() > index))
+	{
+		properties_[_propertyName][index]->setValue(_value);
+	}
+	else
+	{
+		addProperty(_value.type(), _propertyName, _value);
+		index = properties_[_propertyName].size()-1;
+	}
+	return properties_[_propertyName][index];
 }
 
 void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
 														 const QVariant & value)
 {
-	QMapIterator<QString, QtVariantProperty *> paramIterator(properties_);
+	QMapIterator<QString, QVector<QSharedPointer<Property>>> paramIterator(properties_);
 	while(paramIterator.hasNext())
 	{
 		paramIterator.next();
-		if(paramIterator.value() == property)
+		int index = 0;
+		foreach(QSharedPointer<Property> prop,paramIterator.value())
 		{
-			emit signalPropertyValueChanged(paramIterator.key(), value);
-			break;
+			if(prop->variantProp_.data() == property)
+			{
+				emit signalPropertyValueChanged(paramIterator.key(), index, value);
+				break;
+			}
+			index++;
 		}
 	}
 }

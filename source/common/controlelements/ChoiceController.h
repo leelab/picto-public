@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "ControlElement.h"
 #include "../engine/SignalChannel.h"
+#include <QList>
 
 namespace Picto {
 
@@ -44,9 +45,10 @@ public:
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore Functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QString insideTarget(QSharedPointer<Engine::PictoEngine> engine);
 	bool checkSingleTarget(QRect targetRect);
@@ -62,10 +64,14 @@ private:
 	bool isDone_;
 	bool targetAcquired_;
 	QString result_;
+	int shapeIndex_;
+	int timeUnits_;
+	int reentriesAllowedListIndex_;
 
 	QString lastTarget_;
 
 	QSharedPointer<SignalChannel> signal_;
+	QList<QSharedPointer<Property>> targets_;
 
 };
 

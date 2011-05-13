@@ -20,6 +20,7 @@ class PICTOLIB_API Canvas : public DataStore
 class Canvas : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	Canvas();
 

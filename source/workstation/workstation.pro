@@ -29,6 +29,19 @@ SOURCES += $$(PICTO_TREE)/source/workstation/viewer/testviewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/viewer/remoteviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/viewer/remoteviewer.cpp
 
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/arrow.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/arrow.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/diagramitem.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/diagramitem.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/diagramscene.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/diagramscene.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/diagramsceneitem.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/diagramsceneitem.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/diagramtextitem.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/diagramtextitem.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/viewer/stateeditviewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/viewer/stateeditviewer.cpp
+
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp
 #HEADERS += $$(PICTO_TREE)/source/workstation/document.h

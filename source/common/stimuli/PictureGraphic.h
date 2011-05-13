@@ -30,11 +30,11 @@ public:
 	static const QString type;
 
 public slots:
-	QString getImageFile() { return propertyContainer_.getPropertyValue("ImageFile").toString(); };
-	void setImageFile(QString filename) { propertyContainer_.setPropertyValue("ImageFile",filename);};
+	QString getImageFile() { return propertyContainer_->getPropertyValue("ImageFile").toString(); };
+	void setImageFile(QString filename) { propertyContainer_->setPropertyValue("ImageFile",filename);};
 
 private slots:
-	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
+	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

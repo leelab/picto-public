@@ -24,9 +24,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ControlElement : public QObject, public DataStore
+class PICTOLIB_API ControlElement : public DataStore
 #else
-class ControlElement : public QObject, public DataStore
+class ControlElement : public DataStore
 #endif
 {
 	Q_OBJECT
@@ -44,17 +44,17 @@ public:
 	//called to start the controller running
 	virtual void start(QSharedPointer<Engine::PictoEngine> engine){};
 
-	void setName(QString name) { propertyContainer_.setPropertyValue("Name", name); };
-	QString getName() { return propertyContainer_.getPropertyValue("Name").toString(); };
+	void setName(QString name) { propertyContainer_->setPropertyValue("Name", name); };
+	QString getName() { return propertyContainer_->getPropertyValue("Name").toString(); };
 
 	QStringList getResultList() { return results_; };
 
 	//DataStore Functions
-	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
+	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
+	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 protected:
-	PropertyContainer propertyContainer_;
+	QSharedPointer<PropertyContainer> propertyContainer_;
 	QStringList results_;
 
 	bool operatorVisible_;

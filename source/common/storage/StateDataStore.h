@@ -31,6 +31,7 @@ namespace Picto {
 class StateDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	StateDataStore();
 

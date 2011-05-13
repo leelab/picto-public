@@ -3,10 +3,10 @@
 namespace Picto {
 
 ControlElement::ControlElement()
-:propertyContainer_("ControlElement")
 {
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
-	propertyContainer_.addProperty(Property(QVariant::String,"Type",""));
+	propertyContainer_ = PropertyContainer::create("ControlElement");
+	propertyContainer_->addProperty(QVariant::String,"Name","");
+	propertyContainer_->addProperty(QVariant::String,"Type","");
 
 }
 

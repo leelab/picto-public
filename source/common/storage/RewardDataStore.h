@@ -18,6 +18,7 @@ namespace Picto {
 class RewardDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 
 	RewardDataStore();

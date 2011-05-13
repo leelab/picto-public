@@ -21,6 +21,7 @@ namespace Picto {
 class AlignmentDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	AlignmentDataStore();
 	//Data store functions

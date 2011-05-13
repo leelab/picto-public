@@ -30,11 +30,11 @@ public:
 	static const QString type;
 
 public slots:
-	int getRadius() { return propertyContainer_.getPropertyValue("Radius").toInt(); };
-	void setRadius(int radius) { propertyContainer_.setPropertyValue("Radius",radius);};
+	int getRadius() { return propertyContainer_->getPropertyValue("Radius").toInt(); };
+	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius",radius);};
 
 private slots:
-	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
+	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

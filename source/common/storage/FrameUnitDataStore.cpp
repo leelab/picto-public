@@ -25,7 +25,7 @@ bool FrameUnitDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 	xmlStreamWriter->writeAttribute("time",QString("%1").arg(time));
 	xmlStreamWriter->writeAttribute("state",QString("%1").arg(stateName));
 	xmlStreamWriter->writeTextElement("framenumber",QString::number(frameNumber));
-	DataStore::serializeAsXml(xmlStreamWriter);
+	DataStore::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
@@ -83,7 +83,7 @@ bool FrameUnitDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 		}
 		else
 		{
-			DataStore::deserializeFromXml(xmlStreamReader);
+			DataStore::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}

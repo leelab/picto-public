@@ -8,31 +8,30 @@ const QString CircleGraphic::type = "Circle Graphic";
 
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 {
-	propertyContainer_.setContainerName(type);
+	propertyContainer_->setContainerName(type);
 
-	propertyContainer_.setPropertyValue("Position",position);
+	propertyContainer_->setPropertyValue("Position",position);
 
-	Property radiusProperty(QVariant::Int,"Radius",radius);
-	radiusProperty.addAttribute("minimum", 1);
-	radiusProperty.addAttribute("maximum", 1000);
-	radiusProperty.addAttribute("singleStep", 1);
-	propertyContainer_.addProperty(radiusProperty);
+	QSharedPointer<Property> radiusProperty = propertyContainer_->addProperty(QVariant::Int,"Radius",radius);
+	radiusProperty->addAttribute("minimum", 1);
+	radiusProperty->addAttribute("maximum", 1000);
+	radiusProperty->addAttribute("singleStep", 1);
 
-	propertyContainer_.setPropertyValue("Color",color);
+	propertyContainer_->setPropertyValue("Color",color);
 
 	draw();
 
-	connect(&propertyContainer_,
-		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
+	connect(propertyContainer_.data(),
+		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
 		    this,
-			SLOT(slotPropertyValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, int, QVariant))
 			);
 }
 
 void CircleGraphic::draw()
 {
-	int radius = propertyContainer_.getPropertyValue("Radius").toInt();
-	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
+	int radius = propertyContainer_->getPropertyValue("Radius").toInt();
+	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(radius*2+1,radius*2+1,QImage::Format_ARGB32);
 	image.fill(0);
@@ -54,7 +53,7 @@ VisualElement* CircleGraphic::NewVisualElement()
 	return new CircleGraphic;
 }
 
-void CircleGraphic::slotPropertyValueChanged(QString propertyName,
+void CircleGraphic::slotPropertyValueChanged(QString propertyName, int index,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")

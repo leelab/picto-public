@@ -437,64 +437,64 @@ void SessionInfo::flushCache(QString sourceType)
 
 /*! \brief inserts a neural record in the session database
  */
-void SessionInfo::insertNeuralData(Picto::NeuralDataStore data)
+void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataStore> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 
 	//QMutexLocker locker(&alignmentMutex_);
 	//! Use the alignment tool to fit the time
-	data.setFittedtime(alignmentTool_->convertToBehavioralTimebase(data.getTimestamp()));
-	data.setCorrelation(alignmentTool_->getCorrelationCoefficient());
+	data->setFittedtime(alignmentTool_->convertToBehavioralTimebase(data->getTimestamp()));
+	data->setCorrelation(alignmentTool_->getCorrelationCoefficient());
 	//locker.unlock();
 	
 	query.prepare("INSERT INTO spikes (dataid, timestamp, fittedtime, correlation, channel, unit, waveform) "
 		"VALUES(:dataid, :timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
-	query.bindValue(":dataid", data.getDataID());
-	query.bindValue(":timestamp", data.getTimestamp());
-	query.bindValue(":fittedtime", data.getFittedtime());
-	query.bindValue(":correlation", data.getCorrelation());
-	query.bindValue(":channel", data.getChannel());
-	query.bindValue(":unit", data.getUnit());
-	query.bindValue(":waveform", data.getWaveformAsString());
+	query.bindValue(":dataid", data->getDataID());
+	query.bindValue(":timestamp", data->getTimestamp());
+	query.bindValue(":fittedtime", data->getFittedtime());
+	query.bindValue(":correlation", data->getCorrelation());
+	query.bindValue(":channel", data->getChannel());
+	query.bindValue(":unit", data->getUnit());
+	query.bindValue(":waveform", data->getWaveformAsString());
 	executeWriteQuery(&query,"",false);	
 }
 
 //! \brief inserts a behavioral data point in the cache database
-void SessionInfo::insertBehavioralData(Picto::BehavioralDataStore data)
+void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataStore> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQ(cacheDb);
 
-	Picto::BehavioralUnitDataStore dataPoint;
-	while(data.length() > 0)
+	QSharedPointer<Picto::BehavioralUnitDataStore> dataPoint;
+	while(data->length() > 0)
 	{
-		dataPoint = data.takeFirstDataPoint();
+		dataPoint = data->takeFirstDataPoint();
 		cacheQ.prepare("INSERT INTO behavioraldata (dataid, xpos, ypos, time)"
 			"VALUES(:dataid, :xpos, :ypos, :time)");
-		cacheQ.bindValue(":dataid", dataPoint.getDataID());
-		cacheQ.bindValue(":xpos",dataPoint.x);
-		cacheQ.bindValue(":ypos",dataPoint.y);
-		cacheQ.bindValue(":time",dataPoint.t);
+		cacheQ.bindValue(":dataid", dataPoint->getDataID());
+		cacheQ.bindValue(":xpos",dataPoint->x);
+		cacheQ.bindValue(":ypos",dataPoint->y);
+		cacheQ.bindValue(":time",dataPoint->t);
 		executeWriteQuery(&cacheQ,"",false);	
 	}
 }
 
 //! \brief inserts an alignment data point in the database and attempts latest alignment
-void SessionInfo::insertAlignmentData(Picto::AlignmentDataStore data)
+void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataStore> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 	// If the alignevent comes with an alignNumber, it must be from the component providing the time baseline, 
 	// put it in behavioralignevents and don't align its timestamps.
-	if(data.hasAlignNumber())
+	if(data->hasAlignNumber())
 	{
 		query.prepare("INSERT INTO behavioralalignevents (dataid,timestamp,aligncode,aligneventnumber,matched)"
 			"VALUES(:dataid, :timestamp, :aligncode, :aligneventnumber, 0)");
-		query.bindValue(":dataid", data.getDataID());
-		query.bindValue(":timestamp", data.getTimestamp());
-		query.bindValue(":aligncode", data.getAlignCode());
-		query.bindValue(":aligneventnumber", data.getAlignNumber());
+		query.bindValue(":dataid", data->getDataID());
+		query.bindValue(":timestamp", data->getTimestamp());
+		query.bindValue(":aligncode", data->getAlignCode());
+		query.bindValue(":aligneventnumber", data->getAlignNumber());
 		executeWriteQuery(&query,"",false);
 		return;
 	}
@@ -502,9 +502,9 @@ void SessionInfo::insertAlignmentData(Picto::AlignmentDataStore data)
 	//Add the event code to the neuralalignevents table
 	query.prepare("INSERT OR IGNORE INTO neuralalignevents (dataid, timestamp, aligncode, matched)"
 		"VALUES(:dataid, :timestamp, :aligncode, 0)");
-	query.bindValue(":dataid", data.getDataID());
-	query.bindValue(":timestamp", data.getTimestamp());
-	query.bindValue(":aligncode", data.getAlignCode());
+	query.bindValue(":dataid", data->getDataID());
+	query.bindValue(":timestamp", data->getTimestamp());
+	query.bindValue(":aligncode", data->getAlignCode());
 	executeWriteQuery(&query,"",false);	
 
 	// Check if this session requires alignment.  If so, do it.
@@ -597,13 +597,13 @@ void SessionInfo::insertAlignmentData(Picto::AlignmentDataStore data)
 //}
 
 //! \brief inserts an LFP data point in the cache database
-void SessionInfo::insertLFPData(Picto::LFPDataStore data)
+void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataStore> data)
 {
 	bool addedColumns;
 	QSqlDatabase cacheDb = getCacheDb();
 	//Get Fitted Times
-	QStringList timestamps = data.getTimes().split(" ",QString::SkipEmptyParts);
-	QVector<QString> potentialsVec = data.getPotentials();
+	QStringList timestamps = data->getTimes().split(" ",QString::SkipEmptyParts);
+	QVector<QString> potentialsVec = data->getPotentials();
 	QVector<QStringList> potentials;
 	for(int i=0;i<potentialsVec.size();i++)
 		potentials.push_back(potentialsVec[i].split(" ",QString::SkipEmptyParts));
@@ -613,7 +613,7 @@ void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 	QVariantList correlationList;
 	QVector<QVariantList> potentialLists;
 	double correlation = alignmentTool_->getCorrelationCoefficient();
-	qulonglong dataID = data.getDataID();
+	qulonglong dataID = data->getDataID();
 	foreach(QString time,timestamps)
 	{
 		timestampList << time;
@@ -698,7 +698,7 @@ void SessionInfo::insertLFPData(Picto::LFPDataStore data)
 }
 
 //! \brief inserts a state change record in the session database
-void SessionInfo::insertStateData(Picto::StateDataStore data)
+void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataStore> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
@@ -706,46 +706,46 @@ void SessionInfo::insertStateData(Picto::StateDataStore data)
 	query.prepare("INSERT INTO statetransitions "
 		"(dataid, machinepath, source, sourceresult, destination, time) "
 		"VALUES(:dataid, :machinepath, :source, :sourceresult, :destination, :time) ");
-	query.bindValue(":dataid", data.getDataID());
-	query.bindValue(":machinepath", data.getMachinePath());
-	query.bindValue(":source", data.getSource()); 
-	query.bindValue(":sourceresult",data.getSourceResult());
-	query.bindValue(":destination",data.getDestination());
-	query.bindValue(":time",data.getTime());
+	query.bindValue(":dataid", data->getDataID());
+	query.bindValue(":machinepath", data->getMachinePath());
+	query.bindValue(":source", data->getSource()); 
+	query.bindValue(":sourceresult",data->getSourceResult());
+	query.bindValue(":destination",data->getDestination());
+	query.bindValue(":time",data->getTime());
 	executeWriteQuery(&query,"",false);	
 }
 
 //! \brief Inserts the passed in frame data into the cache database
-void SessionInfo::insertFrameData(Picto::FrameDataStore data)
+void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataStore> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQ(cacheDb);
 
-	Picto::FrameUnitDataStore framedata;
-	while(data.length() > 0)
+	QSharedPointer<Picto::FrameUnitDataStore> framedata;
+	while(data->length() > 0)
 	{
-		framedata = data.takeFirstDataPoint();
+		framedata = data->takeFirstDataPoint();
 		cacheQ.prepare("INSERT INTO framedata (dataid, frame, time, state)"
 			"VALUES(:dataid, :frame, :time, :state)");
-		cacheQ.bindValue(":dataid", framedata.getDataID());
-		cacheQ.bindValue(":frame",framedata.frameNumber);
-		cacheQ.bindValue(":time",framedata.time);
-		cacheQ.bindValue(":state",framedata.stateName);
+		cacheQ.bindValue(":dataid", framedata->getDataID());
+		cacheQ.bindValue(":frame",framedata->frameNumber);
+		cacheQ.bindValue(":time",framedata->time);
+		cacheQ.bindValue(":state",framedata->stateName);
 		executeWriteQuery(&cacheQ,"",false);	
 	}
 }
 
-void SessionInfo::insertRewardData(Picto::RewardDataStore data)
+void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataStore> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 
 	query.prepare("INSERT INTO rewards (dataid, duration, channel, time) "
 		"VALUES (:dataid, :duration, :channel, :time)");
-	query.bindValue(":dataid", data.getDataID());
-	query.bindValue(":duration",data.getDuration());
-	query.bindValue(":channel", data.getChannel());
-	query.bindValue(":time",data.getTime());
+	query.bindValue(":dataid", data->getDataID());
+	query.bindValue(":duration",data->getDuration());
+	query.bindValue(":channel", data->getChannel());
+	query.bindValue(":time",data->getTime());
 	executeWriteQuery(&query,"",false);	
 }
 
@@ -757,10 +757,10 @@ void SessionInfo::insertRewardData(Picto::RewardDataStore data)
  *	then all data is returned.  This is actually a bit tricky, since the data could be
  *	either the session database or the cache database.
  */
-Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
+QSharedPointer<Picto::BehavioralDataStore> SessionInfo::selectBehavioralData(double timestamp)
 {
 	QSqlDatabase cacheDb = getCacheDb();
-	Picto::BehavioralDataStore dataStore;
+	QSharedPointer<Picto::BehavioralDataStore> dataStore(new Picto::BehavioralDataStore());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
 	if(timestamp < 0)
@@ -785,7 +785,7 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
-		dataStore.addData(query.value(0).toDouble(),
+		dataStore->addData(query.value(0).toDouble(),
 						  query.value(1).toDouble(),
 						  query.value(2).toDouble());
 		query.finish();
@@ -794,7 +794,7 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
 	{
 		while(query.next())
 		{
-			dataStore.addData(query.value(0).toDouble(),
+			dataStore->addData(query.value(0).toDouble(),
 							  query.value(1).toDouble(),
 							  query.value(2).toDouble());
 		}
@@ -811,10 +811,10 @@ Picto::BehavioralDataStore SessionInfo::selectBehavioralData(double timestamp)
  *	then all data is returned.  This is actually a bit tricky, since the data could be
  *	either the session database or the cache database.
  */
-Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
+QSharedPointer<Picto::FrameDataStore> SessionInfo::selectFrameData(double timestamp)
 {
 	QSqlDatabase cacheDb = getCacheDb();
-	Picto::FrameDataStore dataStore;
+	QSharedPointer<Picto::FrameDataStore> dataStore(new Picto::FrameDataStore());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
 	if(timestamp < 0)
@@ -838,7 +838,7 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
-		dataStore.addFrame(query.value(0).toInt(),
+		dataStore->addFrame(query.value(0).toInt(),
 						  query.value(1).toDouble(),
 						  query.value(2).toString());
 		query.finish();
@@ -847,7 +847,7 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
 	{
 		while(query.next())
 		{
-			dataStore.addFrame(query.value(0).toInt(),
+			dataStore->addFrame(query.value(0).toInt(),
 							   query.value(1).toDouble(),
 							   query.value(2).toString());
 		}
@@ -862,11 +862,11 @@ Picto::FrameDataStore SessionInfo::selectFrameData(double timestamp)
  *	This function creates a list of state data stores and returns it.  If the timestamp is 0, 
  *	then all data is returned.
  */
-QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
+QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> SessionInfo::selectStateData(double timestamp)
 {
 
 	QSqlDatabase cacheDb = getCacheDb();
-	QList<Picto::StateDataStore> dataStoreList;
+	QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> dataStoreList(new QList<QSharedPointer<Picto::StateDataStore>>());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
 	if(timestamp < 0)
@@ -892,26 +892,26 @@ QList<Picto::StateDataStore> SessionInfo::selectStateData(double timestamp)
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
-		Picto::StateDataStore data;
-		data.setTransition(query.value(0).toString(),
+		QSharedPointer<Picto::StateDataStore> data(new Picto::StateDataStore());
+		data->setTransition(query.value(0).toString(),
 						   query.value(1).toString(),
 						   query.value(2).toString(),
 						   query.value(3).toDouble(),
 						   query.value(4).toString());
-		dataStoreList.append(data);
+		dataStoreList->append(data);
 		query.finish();
 	}
 	else
 	{
 		while(query.next())
 		{
-			Picto::StateDataStore data;
-			data.setTransition(query.value(0).toString(),
+			QSharedPointer<Picto::StateDataStore> data(new Picto::StateDataStore());
+			data->setTransition(query.value(0).toString(),
 							   query.value(1).toString(),
 							   query.value(2).toString(),
 							   query.value(3).toDouble(),
 							   query.value(4).toString());
-			dataStoreList.append(data);
+			dataStoreList->append(data);
 		}
 		query.finish();
 	}

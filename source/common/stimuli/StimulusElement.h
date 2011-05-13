@@ -14,7 +14,7 @@ namespace Picto {
  *	inheritance to here...
  */
 
-class StimulusElement : public QObject
+class StimulusElement
 {
 public:
 	StimulusElement();

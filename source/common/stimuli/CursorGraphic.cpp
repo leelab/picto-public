@@ -15,22 +15,22 @@ CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color
 		Q_ASSERT(positionChannel_->getSubchannels().contains("ypos"));
 	}
 
-	propertyContainer_.setContainerName(type);
-	propertyContainer_.setPropertyValue("Position",QPoint(0,0));
-	propertyContainer_.setPropertyValue("Color",color);
+	propertyContainer_->setContainerName(type);
+	propertyContainer_->setPropertyValue("Position",QPoint(0,0));
+	propertyContainer_->setPropertyValue("Color",color);
 
 	draw();
 
-	connect(&propertyContainer_,
-		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
+	connect(propertyContainer_.data(),
+		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
 		    this,
-			SLOT(slotPropertyValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, int, QVariant))
 			);
 }
 
 void CursorGraphic::draw()
 {
-	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
+	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(9,9,QImage::Format_ARGB32);
 	image.fill(0);
@@ -79,7 +79,7 @@ VisualElement* CursorGraphic::NewVisualElement()
 	return new CursorGraphic(QSharedPointer<SignalChannel>());
 }
 
-void CursorGraphic::slotPropertyValueChanged(QString propertyName,
+void CursorGraphic::slotPropertyValueChanged(QString propertyName, int index,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")

@@ -6,12 +6,12 @@ namespace Picto {
 
 VisualElement::VisualElement() :
 	shouldUpdateCompositingSurfaces_(true),
-	propertyContainer_("Visual Element"),
 	order_(0)
 {
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
-	propertyContainer_.addProperty(Property(QVariant::Point,"Position",QPoint(0,0)));
-	propertyContainer_.addProperty(Property(QVariant::Color,"Color",QColor()));
+	propertyContainer_ = PropertyContainer::create("Visual Element");
+	propertyContainer_->addProperty(QVariant::String,"Name","");
+	propertyContainer_->addProperty(QVariant::Point,"Position",QPoint(0,0));
+	propertyContainer_->addProperty(QVariant::Color,"Color",QColor());
 }
 
 VisualElement::~VisualElement()
@@ -21,12 +21,12 @@ VisualElement::~VisualElement()
 void VisualElement::bindToScriptEngine(QSharedPointer<QScriptEngine> engine)
 {
 	QScriptValue qsValue = engine->newQObject(this);
-	engine->globalObject().setProperty(propertyContainer_.getPropertyValue("Name").toString(),qsValue);
+	engine->globalObject().setProperty(propertyContainer_->getPropertyValue("Name").toString(),qsValue);
 }
 
 QPoint VisualElement::getPosition()
 {
-	QVariant positionVariant = propertyContainer_.getPropertyValue("Position");
+	QVariant positionVariant = propertyContainer_->getPropertyValue("Position");
 
 	if(positionVariant == QVariant::Invalid)
 	{
@@ -47,27 +47,27 @@ QRect VisualElement::getBoundingRect()
 
 void VisualElement::setPosition(QPoint position)
 {
-	propertyContainer_.setPropertyValue("Position",position);
+	propertyContainer_->setPropertyValue("Position",position);
 }
 
 QColor VisualElement::getColor()
 {
-	return propertyContainer_.getPropertyValue("Color").value<QColor>();
+	return propertyContainer_->getPropertyValue("Color").value<QColor>();
 }
 
 void VisualElement::setColor(QColor color)
 {
-	propertyContainer_.setPropertyValue("Color",color);
+	propertyContainer_->setPropertyValue("Color",color);
 }
 
 QString VisualElement::getName()
 {
-	return propertyContainer_.getPropertyValue("Name").toString();
+	return propertyContainer_->getPropertyValue("Name").toString();
 }
 
 void VisualElement::setName(QString name)
 {
-	propertyContainer_.setPropertyValue("Name",name);
+	propertyContainer_->setPropertyValue("Name",name);
 }
 
 
@@ -132,11 +132,11 @@ void VisualElement::backupProperties()
 	initialProperties_.clear();
 
 	//iterate through the properties storing their values by name
-	QStringList properties = propertyContainer_.getPropertyList();
+	QStringList properties = propertyContainer_->getPropertyList();
 
 	foreach(QString name, properties)
 	{
-		initialProperties_[name] = propertyContainer_.getPropertyValue(name);
+		initialProperties_[name] = propertyContainer_->getPropertyValue(name);
 	}
 }
 
@@ -147,7 +147,7 @@ void VisualElement::backupProperties()
  */
 void VisualElement::restoreProperties()
 {
-	QStringList properties = propertyContainer_.getPropertyList();
+	QStringList properties = propertyContainer_->getPropertyList();
 
 	QMap<QString, QVariant>::iterator propItr = initialProperties_.begin();
 	while(propItr != initialProperties_.end())
@@ -155,7 +155,7 @@ void VisualElement::restoreProperties()
 		//There should never be a property in initialProperties_ that doesn't
 		//exist in the property container
 		Q_ASSERT(properties.contains(propItr.key()));
-		propertyContainer_.setPropertyValue(propItr.key(),propItr.value());
+		propertyContainer_->setPropertyValue(propItr.key(),propItr.value());
 		propItr++;
 	}
 }
@@ -189,16 +189,16 @@ bool VisualElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 	xmlStreamWriter->writeStartElement("VisualElement");
 
 	//add the visual element's type (BoxGraphic, ARrowgraphic, etc)
-	xmlStreamWriter->writeAttribute("type",propertyContainer_.getContainerName());
+	xmlStreamWriter->writeAttribute("type",propertyContainer_->getContainerName());
 
 	//Get the list of properties
-	QList<QString> propList = propertyContainer_.getPropertyList();
+	QList<QString> propList = propertyContainer_->getPropertyList();
 
 	//loop through the property list
 	QString propName;
 	foreach(propName, propList)
 	{
-		QVariant propVal = propertyContainer_.getPropertyValue(propName);
+		QVariant propVal = propertyContainer_->getPropertyValue(propName);
 
 		//figure out what data type this is, and output it appropriately
 		switch(propVal.type())
@@ -253,9 +253,9 @@ bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		addError("VisualElement","Incorrect tag, expected <VisualElement>",xmlStreamReader);
 		return false;
 	}
-	if(xmlStreamReader->attributes().value("type").toString() != propertyContainer_.getContainerName())
+	if(xmlStreamReader->attributes().value("type").toString() != propertyContainer_->getContainerName())
 	{
-		addError("VisualElement","Incorrect type of VisualElement, expected "+propertyContainer_.getContainerName(),xmlStreamReader);
+		addError("VisualElement","Incorrect type of VisualElement, expected "+propertyContainer_->getContainerName(),xmlStreamReader);
 		return false;
 	}
 
@@ -277,31 +277,31 @@ bool VisualElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		{
 			QPoint point;
 			point = deserializeQPoint(xmlStreamReader);
-			propertyContainer_.setPropertyValue(name,point);
+			propertyContainer_->setPropertyValue(name,point);
 		}
 		else if(type == "QRect")
 		{
 			QRect rect;
 			rect = deserializeQRect(xmlStreamReader);
-			propertyContainer_.setPropertyValue(name,rect);
+			propertyContainer_->setPropertyValue(name,rect);
 		}			
 		else if(type == "QColor")
 		{
 			QColor color;
 			color = deserializeQColor(xmlStreamReader);
-			propertyContainer_.setPropertyValue(name,color);
+			propertyContainer_->setPropertyValue(name,color);
 		}
 		else if(type == "QString")
 		{
 			QString string;
 			string = xmlStreamReader->readElementText();
-			propertyContainer_.setPropertyValue(name,string);
+			propertyContainer_->setPropertyValue(name,string);
 		}
 		else if(type == "int")
 		{
 			int intValue;
 			intValue = xmlStreamReader->readElementText().toInt();
-			propertyContainer_.setPropertyValue(name,intValue);
+			propertyContainer_->setPropertyValue(name,intValue);
 		}
 		else
 		{

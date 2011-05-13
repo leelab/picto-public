@@ -24,27 +24,26 @@ StateMachine::StateMachine() :
 	ignoreInitialElement_(false)
 
 {
-	propertyContainer_.setPropertyValue("Type", "StateMachine");
-	propertyContainer_.addProperty(Property(QVariant::String,"Initial Element",""));
+	propertyContainer_->setPropertyValue("Type", "StateMachine");
+	propertyContainer_->addProperty(QVariant::String,"Initial Element","");
 
-	Property levelsEnumProp(QtVariantPropertyManager::enumTypeId(), "Level",0);
+	QSharedPointer<Property> levelsEnumProp = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(), "Level",0);
 	//Note that this is the same order as the enum to allow the enum to be
 	//used as an index
 	levelEnumStrs_<<"Stage"<<"Trial"<<"Task"<<"Experiment"; 
-	levelsEnumProp.addAttribute("enumNames",levelEnumStrs_);
-	propertyContainer_.addProperty(levelsEnumProp);
+	levelsEnumProp->addAttribute("enumNames",levelEnumStrs_);
 
 	trialEventCode_ = 0;
 }
 
 void StateMachine::setLevel(StateMachineLevel::StateMachineLevel level)
 {
-	propertyContainer_.setPropertyValue("Level", QVariant(level));
+	propertyContainer_->setPropertyValue("Level", QVariant(level));
 }
 
 StateMachineLevel::StateMachineLevel StateMachine::getLevel()
 {
-	return (StateMachineLevel::StateMachineLevel) propertyContainer_.getPropertyValue("Level").toInt();
+	return (StateMachineLevel::StateMachineLevel) propertyContainer_->getPropertyValue("Level").toInt();
 }
 
 //! \brief Adds a transition to this state machine
@@ -79,7 +78,7 @@ bool StateMachine::setInitialElement(QString elementName)
 {
 	if(elements_.contains(elementName))
 	{
-		propertyContainer_.setPropertyValue("Initial Element", elementName);
+		propertyContainer_->setPropertyValue("Initial Element", elementName);
 		return true;
 	}
 	else
@@ -140,7 +139,7 @@ bool StateMachine::jumpToState(QStringList path, QString state)
  */
 bool StateMachine::validateStateMachine()
 {
-	QString name = propertyContainer_.getPropertyValue("Name").toString();
+	QString name = propertyContainer_->getPropertyValue("Name").toString();
 
 	//Confirm that any contained StateMachines are of the correct level
 	foreach(QSharedPointer<StateMachineElement> element, elements_)
@@ -238,7 +237,7 @@ bool StateMachine::validateStateMachine()
 	}
 
 	//Confirm that the initial element is a real element
-	QString initialElement = propertyContainer_.getPropertyValue("Initial Element").toString();
+	QString initialElement = propertyContainer_->getPropertyValue("Initial Element").toString();
 	if(!elements_.contains(initialElement))
 	{
 		QString errMsg = QString("InitialElement: %1 is not an element of state achine: %2")
@@ -303,7 +302,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 	if(!ignoreInitialElement_)
 	{
-		currElementName = propertyContainer_.getPropertyValue("Initial Element").toString();
+		currElementName = propertyContainer_->getPropertyValue("Initial Element").toString();
 		currElement_ = elements_.value(currElementName);
 	}
 	else
@@ -327,7 +326,9 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		{
 			if((getLevel() == StateMachineLevel::Trial) && !slave)
 			{
-				engine->getDataCommandChannel()->processResponses(2000);
+				QSharedPointer<CommandChannel> dataChan = engine->getDataCommandChannel();
+				if(!dataChan.isNull())
+					dataChan->processResponses(2000);
 				//engine->generateEvent(trialEventCode_);
 				//sendTrialEventToServer(engine);
 
@@ -672,9 +673,9 @@ void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
 bool StateMachine::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("StateMachine");
-	xmlStreamWriter->writeTextElement("Name",propertyContainer_.getPropertyValue("Name").toString());
-	xmlStreamWriter->writeTextElement("Level",propertyContainer_.getPropertyValue("Level").toString());
-	xmlStreamWriter->writeTextElement("InitialElement",propertyContainer_.getPropertyValue("Initial Element").toString());
+	xmlStreamWriter->writeTextElement("Name",propertyContainer_->getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("Level",propertyContainer_->getPropertyValue("Level").toString());
+	xmlStreamWriter->writeTextElement("InitialElement",propertyContainer_->getPropertyValue("Initial Element").toString());
 
 	//StateMachineElements
 	xmlStreamWriter->writeStartElement("StateMachineElements");
@@ -729,11 +730,11 @@ bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 		QString name = xmlStreamReader->name().toString();
 		if(name == "Name")
 		{
-			propertyContainer_.setPropertyValue("Name",xmlStreamReader->readElementText());
+			propertyContainer_->setPropertyValue("Name",xmlStreamReader->readElementText());
 		}
 		else if(name == "InitialElement")
 		{
-			propertyContainer_.setPropertyValue("Initial Element",xmlStreamReader->readElementText());
+			propertyContainer_->setPropertyValue("Initial Element",xmlStreamReader->readElementText());
 		}
 		else if(name == "Level")
 		{
@@ -745,7 +746,7 @@ bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 				return false;
 			}
 
-			propertyContainer_.setPropertyValue("Level",levelIndex);
+			propertyContainer_->setPropertyValue("Level",levelIndex);
 		}
 		else if(name == "StateMachineElements")
 		{

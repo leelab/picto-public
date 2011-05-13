@@ -18,6 +18,7 @@ namespace Picto {
 class FrameUnitDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	FrameUnitDataStore();
 	FrameUnitDataStore(int frameNum, double timestamp, QString statename);

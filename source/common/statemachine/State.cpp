@@ -19,10 +19,10 @@ State::State() :
 	scene_(QSharedPointer<Scene>(new Scene)),
 	hasCursor_(false)
 {
-	propertyContainer_.setPropertyValue("Type","State");
-	propertyContainer_.addProperty(Property(QVariant::String,"EntryScript",""));
-	propertyContainer_.addProperty(Property(QVariant::String,"FrameScript",""));
-	propertyContainer_.addProperty(Property(QVariant::String,"ExitScript",""));
+	propertyContainer_->setPropertyValue("Type","State");
+	propertyContainer_->addProperty(QVariant::String,"EntryScript","");
+	propertyContainer_->addProperty(QVariant::String,"FrameScript","");
+	propertyContainer_->addProperty(QVariant::String,"ExitScript","");
 
 	//at some point, these should actually do something, but for the moment
 	//we'll leave them as -1 to show that they aren't being used
@@ -39,9 +39,9 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 
 	//Figure out which scripts we will be running
-	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
-	bool runFrameScript = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
-	bool runExitScript = !propertyContainer_.getPropertyValue("ExitScript").toString().isEmpty();
+	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+	bool runFrameScript = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
+	bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
 
 	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
 	QString frameScriptName = getName().simplified().remove(' ')+"Frame";
@@ -132,9 +132,9 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	addCursor();
 	
 	//Figure out which scripts we will be running
-	bool runEntryScript = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
-	bool runFrameScript = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
-	bool runExitScript = !propertyContainer_.getPropertyValue("ExitScript").toString().isEmpty();
+	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+	bool runFrameScript = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
+	bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
 
 	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
 	QString frameScriptName = getName().simplified().remove(' ')+"Frame";
@@ -398,11 +398,11 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 			
 			//Since the frames are returned in order, we can simply pull off the 
 			//last frame, and know that it is the most recently reported frame
-			FrameUnitDataStore data;
+			QSharedPointer<FrameUnitDataStore> data;
 			data = dataStore.takeLastDataPoint();
 
-			lastFrameCheckTime_ = data.time;
-			return data.frameNumber;
+			lastFrameCheckTime_ = data->time;
+			return data->frameNumber;
 		}
 		else
 		{
@@ -528,9 +528,9 @@ bool State::initScripting(QScriptEngine &qsEngine)
 	//Figure out which scripts we will be running
 	//(The odd array structure is useful later...)
 	bool scriptsToRun[3];
-	scriptsToRun[0] = !propertyContainer_.getPropertyValue("EntryScript").toString().isEmpty();
-	scriptsToRun[1] = !propertyContainer_.getPropertyValue("FrameScript").toString().isEmpty();
-	scriptsToRun[2] = !propertyContainer_.getPropertyValue("ExitScript").toString().isEmpty();
+	scriptsToRun[0] = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+	scriptsToRun[1] = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
+	scriptsToRun[2] = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
 
 	//If we aren't running any scripts, we're done
 	bool noScripts = true;
@@ -573,7 +573,7 @@ bool State::initScripting(QScriptEngine &qsEngine)
 			return false;
 		}
 
-		QString script = propertyContainer_.getPropertyValue(scriptTypes[i]+"Script").toString();
+		QString script = propertyContainer_->getPropertyValue(scriptTypes[i]+"Script").toString();
 		QString function = "function " + functionName + "() { " + script + "}";
 
 		//add the function to the engine by calling evaluate on it
@@ -658,7 +658,7 @@ bool State::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	
 	xmlStreamWriter->writeTextElement("Revision",QString("%1").arg(revision_));
 	xmlStreamWriter->writeTextElement("EngineNeeded",QString("%1").arg(engineNeeded_));
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
 
 	xmlStreamWriter->writeStartElement("ControlElements");
 	foreach(QSharedPointer<ControlElement> c, controlElements_)
@@ -723,7 +723,7 @@ bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		}
 		else if(name == "Name")
 		{
-			propertyContainer_.setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
+			propertyContainer_->setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
 		}
 		else if(name == "ControlElements")
 		{
@@ -767,15 +767,15 @@ bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 
 			if(type == "entry")
 			{
-				propertyContainer_.setPropertyValue("EntryScript",script);
+				propertyContainer_->setPropertyValue("EntryScript",script);
 			}
 			else if(type == "frame")
 			{
-				propertyContainer_.setPropertyValue("FrameScript",script);
+				propertyContainer_->setPropertyValue("FrameScript",script);
 			}
 			else if(type == "exit")
 			{
-				propertyContainer_.setPropertyValue("ExitScript",script);
+				propertyContainer_->setPropertyValue("ExitScript",script);
 			}
 			else
 			{

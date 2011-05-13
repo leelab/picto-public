@@ -8,31 +8,30 @@ const QString BoxGraphic::type = "Box Graphic";
 
 BoxGraphic::BoxGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	propertyContainer_.setContainerName(type);
+	propertyContainer_->setContainerName(type);
 
-	propertyContainer_.setPropertyValue("Position",position);
+	propertyContainer_->setPropertyValue("Position",position);
 
-	Property dimensionsProperty(QVariant::Rect,"Dimensions",dimensions);
-	propertyContainer_.addProperty(dimensionsProperty);
+	propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
 
-	propertyContainer_.setPropertyValue("Color",color);
+	propertyContainer_->setPropertyValue("Color",color);
 
 	draw();
 
-	connect(&propertyContainer_,
-		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
+	connect(propertyContainer_.data(),
+		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
 		    this,
-			SLOT(slotPropertyValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, int, QVariant))
 			);
 }
 QRect BoxGraphic::getDimensions()
 {
-	return propertyContainer_.getPropertyValue("Dimensions").toRect();
+	return propertyContainer_->getPropertyValue("Dimensions").toRect();
 }
 
 void BoxGraphic::setDimensions(QRect dimensions)
 {
-	propertyContainer_.setPropertyValue("Dimensions",dimensions);
+	propertyContainer_->setPropertyValue("Dimensions",dimensions);
 }
 
 void BoxGraphic::setHeight(int height)
@@ -51,8 +50,8 @@ void BoxGraphic::setWidth(int width)
 
 void BoxGraphic::draw()
 {
-	QRect dimensions = propertyContainer_.getPropertyValue("Dimensions").toRect();
-	QColor color = propertyContainer_.getPropertyValue("Color").value<QColor>();
+	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
 	image.fill(0);
@@ -74,7 +73,7 @@ VisualElement* BoxGraphic::NewVisualElement()
 	return new BoxGraphic;
 }
 
-void BoxGraphic::slotPropertyValueChanged(QString propertyName,
+void BoxGraphic::slotPropertyValueChanged(QString propertyName, int index,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")

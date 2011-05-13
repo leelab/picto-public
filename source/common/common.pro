@@ -158,6 +158,14 @@ HEADERS += $$(PICTO_TREE)/source/common/property/Property.h
 SOURCES += $$(PICTO_TREE)/source/common/property/Property.cpp
 HEADERS += $$(PICTO_TREE)/source/common/property/PropertyContainer.h
 SOURCES += $$(PICTO_TREE)/source/common/property/PropertyContainer.cpp
+HEADERS += $$(PICTO_TREE)/source/common/property/ColorProperty.h
+SOURCES += $$(PICTO_TREE)/source/common/property/ColorProperty.cpp
+HEADERS += $$(PICTO_TREE)/source/common/property/PointProperty.h
+SOURCES += $$(PICTO_TREE)/source/common/property/PointProperty.cpp
+HEADERS += $$(PICTO_TREE)/source/common/property/RectProperty.h
+SOURCES += $$(PICTO_TREE)/source/common/property/RectProperty.cpp
+HEADERS += $$(PICTO_TREE)/source/common/property/EnumProperty.h
+SOURCES += $$(PICTO_TREE)/source/common/property/EnumProperty.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/protocol/AnnounceCommandHandler.cpp
@@ -279,6 +287,10 @@ SOURCES += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/storage/DataStore.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/DataStore.cpp
+HEADERS += $$(PICTO_TREE)/source/common/storage/DataStoreFactory.h
+SOURCES += $$(PICTO_TREE)/source/common/storage/DataStoreFactory.cpp
+HEADERS += $$(PICTO_TREE)/source/common/storage/PropertyFactory.h
+SOURCES += $$(PICTO_TREE)/source/common/storage/PropertyFactory.cpp
 HEADERS += $$(PICTO_TREE)/source/common/storage/SessionDataStore.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/SessionDataStore.cpp
 HEADERS += $$(PICTO_TREE)/source/common/storage/BehavioralDataStore.h

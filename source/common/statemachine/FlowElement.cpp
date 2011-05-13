@@ -12,7 +12,7 @@ bool conditionLessThan(const FlowElement::Condition &c1, const FlowElement::Cond
 
 FlowElement::FlowElement()
 {
-	propertyContainer_.setPropertyValue("Type","FlowElement");
+	propertyContainer_->setPropertyValue("Type","FlowElement");
 	
 	//At some point, we may want to make the default result name user modifiable...
 	defaultResult_ = "default";
@@ -163,7 +163,7 @@ bool FlowElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWrite
 	xmlStreamWriter->writeStartElement("StateMachineElement");
 	xmlStreamWriter->writeAttribute("type","FlowElement");
 
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
 
 	xmlStreamWriter->writeStartElement("Conditions");
 
@@ -217,7 +217,7 @@ bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamR
 		QString name = xmlStreamReader->name().toString();
 		if(name == "Name")
 		{
-			propertyContainer_.setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
+			propertyContainer_->setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
 		}
 		else if(name == "Conditions")
 		{

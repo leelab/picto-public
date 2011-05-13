@@ -38,7 +38,7 @@ bool StateDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 
 	if(transition_)
 		transition_->serializeAsXml(xmlStreamWriter);
-	DataStore::serializeAsXml(xmlStreamWriter);
+	DataStore::serializeDataID(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //StateDataStore
 
@@ -79,7 +79,7 @@ bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		}
 		else
 		{
-			DataStore::deserializeFromXml(xmlStreamReader);
+			DataStore::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}

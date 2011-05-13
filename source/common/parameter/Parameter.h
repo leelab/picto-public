@@ -19,9 +19,9 @@ namespace Picto {
  *	functions.
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API Parameter : public QObject, public DataStore
+	class PICTOLIB_API Parameter : public DataStore
 #else
-	class Parameter : public QObject, public DataStore
+	class Parameter : public DataStore
 #endif
 {
 	Q_OBJECT

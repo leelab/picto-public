@@ -21,6 +21,7 @@ namespace Picto {
 class NeuralDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	NeuralDataStore();
 	//Data store functions

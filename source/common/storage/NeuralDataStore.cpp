@@ -18,7 +18,7 @@ bool NeuralDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 	xmlStreamWriter->setAutoFormatting(true);
 
 	xmlStreamWriter->writeStartElement("NeuralDataStore");
-	DataStore::serializeAsXml(xmlStreamWriter);
+	DataStore::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeTextElement("timestamp",QString("%1").arg(getTimestamp(),0,'f',4));
 	xmlStreamWriter->writeTextElement("channel",QString("%1").arg(getChannel()));
 	xmlStreamWriter->writeTextElement("unit",QString("%1").arg(getUnit()));
@@ -59,7 +59,7 @@ bool NeuralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 		}
 		else if(xmlStreamReader->isStartElement())
 		{
-			DataStore::deserializeFromXml(xmlStreamReader);
+			DataStore::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	

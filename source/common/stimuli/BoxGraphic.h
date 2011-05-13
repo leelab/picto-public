@@ -40,7 +40,7 @@ public slots:
 
 
 private slots:
-	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
+	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

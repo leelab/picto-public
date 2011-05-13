@@ -6,20 +6,20 @@ namespace Picto
 
 Result::Result()
 {
-	propertyContainer_.setPropertyValue("Type","Result");
-	propertyContainer_.addProperty(Property(QVariant::Bool,"GiveReward",false));
-	propertyContainer_.addProperty(Property(QVariant::Int,"RewardQty",0));
-	propertyContainer_.addProperty(Property(QVariant::Int,"RewardChan",1));
+	propertyContainer_->setPropertyValue("Type","Result");
+	propertyContainer_->addProperty(QVariant::Bool,"GiveReward",false);
+	propertyContainer_->addProperty(QVariant::Int,"RewardQty",0);
+	propertyContainer_->addProperty(QVariant::Int,"RewardChan",1);
 }
 
 QString Result::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 
-	int numRewards = propertyContainer_.getPropertyValue("RewardQty").toInt();
-	int rewardChan = propertyContainer_.getPropertyValue("RewardChan").toInt();
+	int numRewards = propertyContainer_->getPropertyValue("RewardQty").toInt();
+	int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
 
 	//Give the rewards
-	if(propertyContainer_.getPropertyValue("GiveReward").toBool())
+	if(propertyContainer_->getPropertyValue("GiveReward").toBool())
 	{
 		for(int i=0; i<numRewards; i++)
 		{
@@ -27,7 +27,7 @@ QString Result::run(QSharedPointer<Engine::PictoEngine> engine)
 		}
 	}
 
-	return propertyContainer_.getPropertyValue("Name").toString();
+	return propertyContainer_->getPropertyValue("Name").toString();
 }
 
 QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
@@ -49,13 +49,13 @@ bool Result::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeStartElement("StateMachineElement");
 	xmlStreamWriter->writeAttribute("type","Result");
 	
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
 
-	if(propertyContainer_.getPropertyValue("GiveReward").toBool())
+	if(propertyContainer_->getPropertyValue("GiveReward").toBool())
 	{
 		xmlStreamWriter->writeStartElement("Reward");
-		xmlStreamWriter->writeAttribute("quantity", propertyContainer_.getPropertyValue("RewardQty").toString());
-		xmlStreamWriter->writeAttribute("channel", propertyContainer_.getPropertyValue("RewardChan").toString());
+		xmlStreamWriter->writeAttribute("quantity", propertyContainer_->getPropertyValue("RewardQty").toString());
+		xmlStreamWriter->writeAttribute("channel", propertyContainer_->getPropertyValue("RewardChan").toString());
 		xmlStreamWriter->writeEndElement();
 	}
 
@@ -97,11 +97,11 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 				addError("Result", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
 				return false;
 			}
-			propertyContainer_.setPropertyValue("Name",QVariant(elementText));
+			propertyContainer_->setPropertyValue("Name",QVariant(elementText));
 		}
 		else if(name == "Reward")
 		{
-			propertyContainer_.setPropertyValue("GiveReward",QVariant(true));
+			propertyContainer_->setPropertyValue("GiveReward",QVariant(true));
 			bool ok;
 			int rewardQuantity = xmlStreamReader->attributes().value("quantity").toString().toInt(&ok);
 			if(!ok)
@@ -109,7 +109,7 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 				addError("Result","Reward quantity attribute not an integer",xmlStreamReader);
 				return false;
 			}
-			propertyContainer_.setPropertyValue("RewardQty",QVariant(rewardQuantity));
+			propertyContainer_->setPropertyValue("RewardQty",QVariant(rewardQuantity));
 
 			int rewardChan = xmlStreamReader->attributes().value("channel").toString().toInt(&ok);
 			if(!ok)
@@ -117,7 +117,7 @@ bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader
 				addError("Result","Reward channel attribute not an integer",xmlStreamReader);
 				return false;
 			}
-			propertyContainer_.setPropertyValue("RewardChan",QVariant(rewardChan));
+			propertyContainer_->setPropertyValue("RewardChan",QVariant(rewardChan));
 		}
 		else
 		{

@@ -8,24 +8,24 @@ const QString PictureGraphic::type = "Picture Graphic";
 
 PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 {
-	propertyContainer_.setContainerName(type);
+	propertyContainer_->setContainerName(type);
 
-	propertyContainer_.setPropertyValue("Position",position);
+	propertyContainer_->setPropertyValue("Position",position);
 
-	propertyContainer_.addProperty(Property(QVariant::String,"ImageFile",imageFile));
+	propertyContainer_->addProperty(QVariant::String,"ImageFile",imageFile);
 
 	draw();
 
-	connect(&propertyContainer_,
-		    SIGNAL(signalPropertyValueChanged(QString, QVariant)),
+	connect(propertyContainer_.data(),
+		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
 		    this,
-			SLOT(slotPropertyValueChanged(QString, QVariant))
+			SLOT(slotPropertyValueChanged(QString, int, QVariant))
 			);
 }
 
 void PictureGraphic::draw()
 {
-	QString imageFile = propertyContainer_.getPropertyValue("ImageFile").toString();
+	QString imageFile = propertyContainer_->getPropertyValue("ImageFile").toString();
 	image_.load(imageFile);
 
 	//updateCompositingSurfaces();
@@ -38,7 +38,7 @@ VisualElement* PictureGraphic::NewVisualElement()
 	return new PictureGraphic;
 }
 
-void PictureGraphic::slotPropertyValueChanged(QString propertyName,
+void PictureGraphic::slotPropertyValueChanged(QString propertyName, int index,
 											   QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")

@@ -26,6 +26,7 @@ class PICTOLIB_API ParameterContainer : public DataStore
 class ParameterContainer : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	ParameterContainer();
 

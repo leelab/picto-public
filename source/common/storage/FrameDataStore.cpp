@@ -8,7 +8,7 @@ FrameDataStore::FrameDataStore()
 
 void FrameDataStore::addFrame(int frameNumber, double time, QString stateName)
 {
-	FrameUnitDataStore data(frameNumber, time, stateName);
+	QSharedPointer<FrameUnitDataStore> data(new FrameUnitDataStore(frameNumber, time, stateName));
 	data_.append(data);
 }
 
@@ -28,9 +28,9 @@ bool FrameDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 {
 	xmlStreamWriter->writeStartElement("FrameDataStore");
 
-	foreach(FrameUnitDataStore data, data_)
+	foreach(QSharedPointer<FrameUnitDataStore> data, data_)
 	{
-		data.serializeAsXml(xmlStreamWriter);
+		data->serializeAsXml(xmlStreamWriter);
 	}
 
 	xmlStreamWriter->writeEndElement(); //BehavioralDataStore
@@ -62,8 +62,8 @@ bool FrameDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		QString name = xmlStreamReader->name().toString();
 		if(name == "FrameUnitDataStore")
 		{
-			FrameUnitDataStore data;
-			data.deserializeFromXml(xmlStreamReader);
+			QSharedPointer<FrameUnitDataStore> data(new FrameUnitDataStore());
+			data->deserializeFromXml(xmlStreamReader);
 			data_.append(data);
 		}
 		else

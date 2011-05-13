@@ -28,7 +28,7 @@ bool LFPDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWrit
 	{
 		xmlStreamWriter->writeTextElement("ch"+QString::number(i).toAscii(),potentials_[i]);
 	}
-	DataStore::serializeAsXml(xmlStreamWriter);
+	DataStore::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
@@ -90,7 +90,7 @@ bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 		}
 		else
 		{
-			DataStore::deserializeFromXml(xmlStreamReader);
+			DataStore::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}

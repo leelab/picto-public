@@ -29,11 +29,11 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 
-	QPoint getStartPoint() { return propertyContainer_.getPropertyValue("Start").toPoint(); };
-	QPoint getEndPoint() { return propertyContainer_.getPropertyValue("End").toPoint(); };
+	QPoint getStartPoint() { return propertyContainer_->getPropertyValue("Start").toPoint(); };
+	QPoint getEndPoint() { return propertyContainer_->getPropertyValue("End").toPoint(); };
 
-	void setStartPoint(QPoint point) { propertyContainer_.setPropertyValue("Start", point);};
-	void setEndPoint(QPoint point) { propertyContainer_.setPropertyValue("End", point);};
+	void setStartPoint(QPoint point) { propertyContainer_->setPropertyValue("Start", point);};
+	void setEndPoint(QPoint point) { propertyContainer_->setPropertyValue("End", point);};
 
 	static const QString type;
 
@@ -44,11 +44,11 @@ public slots:
 	int getEndPointX() { return getEndPoint().x(); };
 	int getEndPointY() { return getEndPoint().y(); };
 	void setEndPoint(int x, int y) { setEndPoint(QPoint(x,y)); };
-	int getSize() {return propertyContainer_.getPropertyValue("Size").toInt(); };
-	void setSize(int size) { propertyContainer_.setPropertyValue("Size", size);};
+	int getSize() {return propertyContainer_->getPropertyValue("Size").toInt(); };
+	void setSize(int size) { propertyContainer_->setPropertyValue("Size", size);};
 
 private slots:
-	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
+	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

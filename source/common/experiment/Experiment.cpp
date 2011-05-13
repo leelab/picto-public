@@ -4,23 +4,23 @@
 
 namespace Picto {
 
-Experiment::Experiment() :
-	//formatID_("1.0.0.0"),
-	propertyContainer_("Experiment")
+Experiment::Experiment()
+	//:formatID_("1.0.0.0"),
 {
-	propertyContainer_.addProperty(Property(QVariant::String,"Name","Unnamed Experiment"));
+	propertyContainer_ = PropertyContainer::create("Experiment");
+	propertyContainer_->addProperty(QVariant::String,"Name","Unnamed Experiment");
 }
 
 //! returns the name of this experiment
 QString Experiment::name()
 {
-	return propertyContainer_.getPropertyValue("Name").toString();
+	return propertyContainer_->getPropertyValue("Name").toString();
 }
 
 //! Sets the name of this experiment
 void Experiment::setName(QString name)
 {
-	propertyContainer_.setPropertyValue("Name",name);
+	propertyContainer_->setPropertyValue("Name",name);
 }
 
 void Experiment::addTask(QSharedPointer<Task> task)
@@ -84,7 +84,7 @@ bool Experiment::jumpToState(QStringList path, QString state)
 void Experiment::clear()
 {
 	tasks_.clear();	
-	propertyContainer_.setPropertyValue("Name","Unnamed Experiment");
+	propertyContainer_->setPropertyValue("Name","Unnamed Experiment");
 }
 
 /*! \brief Turns this experiment into an XML fragment
@@ -104,7 +104,7 @@ void Experiment::clear()
 bool Experiment::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("Experiment");
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
 
 	xmlStreamWriter->writeStartElement("Tasks");
 	foreach(QSharedPointer<Task> task, tasks_)

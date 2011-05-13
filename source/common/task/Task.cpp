@@ -6,22 +6,22 @@
 
 namespace Picto {
 
-Task::Task() :
-	propertyContainer_("Task")
+Task::Task() 
 {
-	propertyContainer_.addProperty(Property(QVariant::String,"Name","Unnamed Task"));
+	propertyContainer_ = PropertyContainer::create("Task");
+	propertyContainer_->addProperty(QVariant::String,"Name","Unnamed Task");
 }
 
 //! returns the name of this task
 QString Task::name()
 {
-	return propertyContainer_.getPropertyValue("Name").toString();
+	return propertyContainer_->getPropertyValue("Name").toString();
 }
 
 //! Sets the name of this task
 void Task::setName(QString name)
 {
-	propertyContainer_.setPropertyValue("Name",name);
+	propertyContainer_->setPropertyValue("Name",name);
 }
 
 bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -208,7 +208,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 bool Task::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("Task");
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_.getPropertyValue("Name").toString());
+	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
 
 	xmlStreamWriter->writeStartElement("StateMachine");
 	stateMachine_->serializeAsXml(xmlStreamWriter);

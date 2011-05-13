@@ -39,7 +39,7 @@ public:
 	//! \TODO At some point, we might want to expose some getter and setter slots for script binding
 
 private slots:
-	void slotPropertyValueChanged(QString propertyName, QVariant propertyValue);
+	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

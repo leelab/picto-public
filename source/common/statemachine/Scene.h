@@ -30,6 +30,7 @@ class PICTOLIB_API Scene : public DataStore
 class Scene : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	Scene();
 

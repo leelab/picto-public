@@ -47,6 +47,7 @@ struct lfpDataBlock
 class LFPDataStore : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	LFPDataStore();
 	//Data store functions

@@ -39,9 +39,9 @@ class Result;
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API StateMachineElement : public QObject, public DataStore
+class PICTOLIB_API StateMachineElement : public DataStore
 #else
-class StateMachineElement : public QObject, public DataStore
+class StateMachineElement : public DataStore
 #endif
 {
 	Q_OBJECT
@@ -76,8 +76,8 @@ public:
 	virtual void draw() = 0;*/
 
 	//DataStore functions
-	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
+	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
+	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 	bool serializeResults(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeResults(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -93,7 +93,7 @@ protected:
 
 	QPoint layoutPosition_;
 
-	PropertyContainer propertyContainer_;	//This should be used for any properties that can be 
+	QSharedPointer<PropertyContainer> propertyContainer_;	//This should be used for any properties that can be 
 											//changed by Javascript, or edited/displayed in the GUI
 	static double lastTransitionTime_;
 };

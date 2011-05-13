@@ -34,7 +34,7 @@ bool RewardDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 
 	xmlStreamWriter->writeTextElement("Channel",QString::number(channel_));
 	xmlStreamWriter->writeTextElement("Duration",QString::number(durationMs_));
-	DataStore::serializeAsXml(xmlStreamWriter);
+	DataStore::serializeDataID(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //RewardDataStore
 
@@ -96,7 +96,7 @@ bool RewardDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 		}
 		else
 		{
-			DataStore::deserializeFromXml(xmlStreamReader);
+			DataStore::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}

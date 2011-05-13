@@ -2,6 +2,8 @@
 #define _DATASTORE_H_
 
 #include "../common.h"
+#include "DataStoreFactory.h"
+//#include "../property/PropertyContainer.h"
 
 #include <QSharedPointer>
 #include <QXmlStreamWriter>
@@ -10,9 +12,12 @@
 #include <QPoint>
 #include <QColor>
 #include <QString>
+#include <QMap>
+#include <QList>
 
 namespace Picto {
-
+class DataStoreFactory;
+//class PropertyContainer;
 /*! \brief a base class for anything that needs to write itself out as XML
  *
  *	Since most stuff is stored as XML, this class is incredibly useful (and yet really 
@@ -34,23 +39,43 @@ namespace Picto {
  *	command/response.  It may be worth going back and refactoring some of that code. -MattG Sept 2010
  *	
  */
-
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API DataStore
+class PICTOLIB_API DataStore : public QObject
 #else
-class DataStore
+class DataStore : public  QObject
 #endif
 {
+	Q_OBJECT
 public:
 	DataStore();
 
-	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+	virtual bool serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 	qulonglong getDataID();
 
 	static QString getErrors();
 	void clearErrors() { errors_.clear(); };
+
+
+	//AutoSerialization Stuff---------------------------------
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	void setDeleted();
+	bool wasEdited(){return edited_;};
+	bool isNew(){return isNew_;};
+	bool isDeleted(){return deleted_;};
+
+public slots:
+	void childEdited();
+
+signals:
+	void edited();
+	//--------------------------------------------------------
 
 protected:
 	void addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -71,15 +96,39 @@ protected:
 	QRect deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QColor deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+
+
+	//AutoSerialization Stuff---------------------------------
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader){return true;};
+	void AddDataStoreFactory(QString name,QSharedPointer<DataStoreFactory> factory);
+	void AddProperty(QSharedPointer<DataStore> prop);
+	QList<QSharedPointer<DataStore>> getGeneratedDataStores(QString factoryName); 
+	//QSharedPointer<PropertyContainer> propertyContainer_;
+	//--------------------------------------------------------
+
+
+
 private:
+	
+	//AutoSerialization Stuff---------------------------------
+	void AddError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader, QSharedPointer<QStringList> errors);
+	QMap<QString,QList<QSharedPointer<DataStore>>> children_;
+	QMap<QString,QSharedPointer<DataStoreFactory>> factories_;
+	QString tagText_;
+	bool edited_;
+	bool isNew_;
+	bool deleted_;
+	//--------------------------------------------------------
+
+
+
 	static qulonglong generateDataID();
 	static QStringList errors_;
 	static qulonglong lastDataID_;
 	qulonglong dataID_;
-
+	QString myTagName_;
 
 };
-
 
 }; //namespace Picto
 

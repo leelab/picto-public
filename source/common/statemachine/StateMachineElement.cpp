@@ -11,18 +11,18 @@ namespace Picto {
 	double StateMachineElement::lastTransitionTime_;
 
 StateMachineElement::StateMachineElement()
-:propertyContainer_("StateMachineElement")
 {
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
-	propertyContainer_.addProperty(Property(QVariant::String,"Type",""));
+	propertyContainer_ = PropertyContainer::create("StateMachineElement");
+	propertyContainer_->addProperty(QVariant::String,"Name","");
+	propertyContainer_->addProperty(QVariant::String,"Type","");
 	defaultResult_ = "";
 }
 
 StateMachineElement::StateMachineElement(QSharedPointer<ParameterContainer> parameters)
-:propertyContainer_("StateMachineElement")
 {
-	propertyContainer_.addProperty(Property(QVariant::String,"Name",""));
-	propertyContainer_.addProperty(Property(QVariant::String,"Type",""));
+	propertyContainer_ = PropertyContainer::create("StateMachineElement");
+	propertyContainer_->addProperty(QVariant::String,"Name","");
+	propertyContainer_->addProperty(QVariant::String,"Type","");
 	defaultResult_ = "";
 
 	addParameters(parameters);
@@ -92,18 +92,18 @@ void StateMachineElement::addParameters(ParameterContainer &parameters)
  */
 void StateMachineElement::setName(QString name)
 {
-	propertyContainer_.setPropertyValue("Name", QVariant(name));
+	propertyContainer_->setPropertyValue("Name", QVariant(name));
 }
 
 QString StateMachineElement::getName()
 {
-	QString name = propertyContainer_.getPropertyValue("Name").toString();
+	QString name = propertyContainer_->getPropertyValue("Name").toString();
 	return name;
 }
 
 QString StateMachineElement::type()
 {
-	QString typeStr = propertyContainer_.getPropertyValue("Type").toString();
+	QString typeStr = propertyContainer_->getPropertyValue("Type").toString();
 	return typeStr;
 }
 
