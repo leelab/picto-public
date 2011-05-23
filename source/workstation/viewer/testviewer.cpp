@@ -220,7 +220,7 @@ void TestViewer::resetExperiment()
 
 	experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
 
-	if(!experiment_->deserializeFromXml(xmlReader))
+	if(!experiment_->fromXml(xmlReader))
 	{
 		experiment_ = QSharedPointer<Picto::Experiment>();
 	}

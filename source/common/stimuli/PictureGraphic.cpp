@@ -8,13 +8,18 @@ const QString PictureGraphic::type = "Picture Graphic";
 
 PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 {
-	propertyContainer_->setContainerName(type);
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",QColor());
+	AddDefinableProperty("ImageFile",imageFile);
 
-	propertyContainer_->setPropertyValue("Position",position);
+	//propertyContainer_->setContainerName(type);
 
-	propertyContainer_->addProperty(QVariant::String,"ImageFile",imageFile);
+	//propertyContainer_->setPropertyValue("Position",position);
 
-	draw();
+	//propertyContainer_->addProperty(QVariant::String,"ImageFile",imageFile);
+
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -38,13 +43,21 @@ VisualElement* PictureGraphic::NewVisualElement()
 	return new PictureGraphic;
 }
 
-void PictureGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void PictureGraphic::slotPropertyValueChanged(QString propertyName, int,
 											   QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}
+}
+
+bool PictureGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
 }
 
 }; //namespace Picto

@@ -357,6 +357,10 @@
    <file alias="_scene_8h-source.html">../../../output/documentation/main/html/_scene_8h-source.html</file>
    <file alias="_script_element_8cpp-source.html">../../../output/documentation/main/html/_script_element_8cpp-source.html</file>
    <file alias="_script_element_8h-source.html">../../../output/documentation/main/html/_script_element_8h-source.html</file>
+   <file alias="_serializable_8cpp-source.html">../../../output/documentation/main/html/_serializable_8cpp-source.html</file>
+   <file alias="_serializable_8h-source.html">../../../output/documentation/main/html/_serializable_8h-source.html</file>
+   <file alias="_serializable_factory_8cpp-source.html">../../../output/documentation/main/html/_serializable_factory_8cpp-source.html</file>
+   <file alias="_serializable_factory_8h-source.html">../../../output/documentation/main/html/_serializable_factory_8h-source.html</file>
    <file alias="_server_config_8cpp-source.html">../../../output/documentation/main/html/_server_config_8cpp-source.html</file>
    <file alias="_server_config_8h-source.html">../../../output/documentation/main/html/_server_config_8h-source.html</file>
    <file alias="_server_discoverer_8cpp-source.html">../../../output/documentation/main/html/_server_discoverer_8cpp-source.html</file>
@@ -750,6 +754,8 @@
    <file alias="class_picto_1_1_script_element-members.html">../../../output/documentation/main/html/class_picto_1_1_script_element-members.html</file>
    <file alias="class_picto_1_1_script_element.html">../../../output/documentation/main/html/class_picto_1_1_script_element.html</file>
    <file alias="class_picto_1_1_script_element.png">../../../output/documentation/main/html/class_picto_1_1_script_element.png</file>
+   <file alias="class_picto_1_1_serializable-members.html">../../../output/documentation/main/html/class_picto_1_1_serializable-members.html</file>
+   <file alias="class_picto_1_1_serializable.html">../../../output/documentation/main/html/class_picto_1_1_serializable.html</file>
    <file alias="class_picto_1_1_session_data-members.html">../../../output/documentation/main/html/class_picto_1_1_session_data-members.html</file>
    <file alias="class_picto_1_1_session_data.html">../../../output/documentation/main/html/class_picto_1_1_session_data.html</file>
    <file alias="class_picto_1_1_session_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_session_data_store-members.html</file>

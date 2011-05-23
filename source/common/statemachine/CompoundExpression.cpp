@@ -7,6 +7,19 @@ namespace Picto {
 
 CompoundExpression::CompoundExpression()
 {
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Int,"Order",0);
+	QStringList operators;
+	operators << "and" << "or";
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Boolean",0,"enumNames",operators);
+
+	AddDefinableProperty(QVariant::Bool,"InvertLeft",false);
+	AddDefinableProperty(QVariant::Bool,"InvertRight",false);
+	AddDefinableProperty("LeftName","");
+
+	AddDefinableObjectFactory("Expression",QSharedPointer<SerializableFactory>(new SerializableFactory(0,2,SerializableFactory::NewSerializableFnPtr(PredicateExpression::Create))) );
+	AddDefinableObjectFactory("CompoundExpression",QSharedPointer<SerializableFactory>(new SerializableFactory(0,2,SerializableFactory::NewSerializableFnPtr(CompoundExpression::Create))) );
+	
 	LHSisPred_ = true;
 	RHSisPred_ = true;
 
@@ -96,6 +109,24 @@ bool CompoundExpression::evaluate()
 		return LHSresult | RHSresult;
 	else
 		return false;
+}
+
+QString CompoundExpression::name()
+{
+	return propertyContainer_->getPropertyValue("Name").toString();
+}
+
+void CompoundExpression::setName(QString name)
+{
+	propertyContainer_->setPropertyValue("Name",name);
+}
+void CompoundExpression::setOrder(int order)
+{
+	propertyContainer_->setPropertyValue("Order",order);
+}
+int CompoundExpression::order()
+{
+	return propertyContainer_->getPropertyValue("Order").toInt();
 }
 
 /*!	\brief Converts the compound expression into a string
@@ -349,181 +380,264 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
  *		</CompoundExpression>
  *	</CompoundExpression>
  */
-bool CompoundExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool CompoundExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("CompoundExpression");
+//
+//	if(operator_ == CompoundExpressionOperator::and)
+//		xmlStreamWriter->writeAttribute("boolean","and");
+//	else if(operator_ == CompoundExpressionOperator::or)
+//		xmlStreamWriter->writeAttribute("boolean","or");
+//
+//	if(invertLHS_)
+//		xmlStreamWriter->writeAttribute("invertLeft","true");
+//	else
+//		xmlStreamWriter->writeAttribute("invertLeft","false");
+//
+//	if(invertRHS_)
+//		xmlStreamWriter->writeAttribute("invertRight","true");
+//	else
+//		xmlStreamWriter->writeAttribute("invertRight","false");
+//
+//	if(LHSisPred_)
+//		LHSPredExp_->toXml(xmlStreamWriter);
+//	else
+//		LHSComExp_->toXml(xmlStreamWriter);
+//
+//	if(RHSisPred_)
+//		RHSPredExp_->toXml(xmlStreamWriter);
+//	else
+//		RHSComExp_->toXml(xmlStreamWriter);
+//
+//
+//	xmlStreamWriter->writeEndElement(); //CompoundExpression
+//	return true;
+//}
+//
+///*!	\brief	Converts an XML fragment into a CompoundExpression
+// *
+// *	The XML fragment of a compound expression will look like this:
+// *	
+// *	<CompoundExpression boolean="and" invertLeft="true" invertRight = "false>
+// *		<Expression>
+// *			...
+// *		</Expression>
+// *		<CompoundExpression boolean="or" invertLeft="false" invertRight = "false>
+// *			<Expression>
+// *				...
+// *			</Expression>
+// *			<Expression>
+// *				...
+// *			</Expression>
+// *		</CompoundExpression>
+// *	</CompoundExpression>
+// */
+//bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "CompoundExpression")
+//	{
+//		addError("CompoundExpression","Incorrect tag, expected <CompoundExpression>",xmlStreamReader);
+//		return false;
+//	}
+//
+//	//read in the attributes
+//	QString operatorStr = xmlStreamReader->attributes().value("boolean").toString();
+//	if(operatorStr == "and")
+//		operator_ = CompoundExpressionOperator::and;
+//	else if(operatorStr == "or")
+//		operator_ = CompoundExpressionOperator::or;
+//	else
+//	{
+//		addError("CompoundExpression","Unexpected boolean operator.", xmlStreamReader);
+//		return false;
+//	}
+//
+//	QString invertLeftStr = xmlStreamReader->attributes().value("invertLeft").toString();
+//	if(invertLeftStr == "true")
+//		invertLHS_ = true;
+//	else if(invertLeftStr == "false")
+//		invertLHS_ = false;
+//	else
+//	{
+//		addError("CompoundExpression","Unexpected or missing value for invertLeft", xmlStreamReader);
+//		return false;
+//	}
+//
+//	QString invertRightStr = xmlStreamReader->attributes().value("invertRight").toString();
+//	if(invertRightStr == "true")
+//		invertRHS_ = true;
+//	else if(invertRightStr == "false")
+//		invertRHS_ = false;
+//	else
+//	{
+//		addError("CompoundExpression","Unexpected or missing value for invertRight", xmlStreamReader);
+//		return false;
+//	}
+//
+//	LHSInitialized_ = false;
+//	RHSInitialized_ = false;
+//	
+//	xmlStreamReader->readNext();
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "CompoundExpression") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//do nothing unless we're looking at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//
+//		//use the name to set up the sides and predicate.
+//		//Note that we assume the order is LHS, RHS
+//		QString name = xmlStreamReader->name().toString();
+//
+//		if(name == "Expression")
+//		{
+//			QSharedPointer<Picto::PredicateExpression> newExpr(new Picto::PredicateExpression);
+//			if(!newExpr->fromXml(xmlStreamReader))
+//				return false;
+//			if(!LHSInitialized_)
+//			{
+//				LHSisPred_ = true;
+//				LHSPredExp_ = newExpr;
+//				LHSInitialized_ = true;
+//			}
+//			else if(LHSInitialized_ && !RHSInitialized_)
+//			{
+//				RHSisPred_ = true;
+//				RHSPredExp_ = newExpr;
+//				RHSInitialized_ = true;
+//			}
+//			else 
+//			{
+//				addError("CompoundExpression", "Too many Expressions", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else if(name == "CompoundExpression")
+//		{
+//			QSharedPointer<Picto::CompoundExpression> newExpr(new Picto::CompoundExpression);
+//			if(!newExpr->fromXml(xmlStreamReader))
+//				return false;
+//			if(!LHSInitialized_)
+//			{
+//				LHSisPred_ = false;
+//				LHSComExp_ = newExpr;
+//				LHSInitialized_ = true;
+//			}
+//			else if(LHSInitialized_ && !RHSInitialized_)
+//			{
+//				RHSisPred_ = false;
+//				RHSComExp_ = newExpr;
+//				RHSInitialized_ = true;
+//			}
+//			else 
+//			{
+//				addError("CompoundExpression", "Too many CompoundExpressions", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else
+//		{
+//			addError("CompoundExpression", "Unexpected tag", xmlStreamReader);
+//			return false;
+//		}
+//		xmlStreamReader->readNext();
+//
+//	}
+//
+//	if(xmlStreamReader->atEnd())
+//	{
+//		addError("CompoundExpression", "Unexpected end of document", xmlStreamReader);
+//		return false;
+//	}
+//	if(!LHSInitialized_ & RHSInitialized_)
+//	{
+//		addError("CompoundExpression", "Missing one or both sides of the expression", xmlStreamReader);
+//		return false;
+//	}
+//	return true;
+//}
+
+bool CompoundExpression::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("CompoundExpression");
+	operator_ = CompoundExpressionOperator::CompoundExpressionOperator(propertyContainer_->getPropertyValue("Boolean").toInt());
+	invertLHS_ = propertyContainer_->getPropertyValue("InvertLeft").toBool();
+	invertRHS_ = propertyContainer_->getPropertyValue("InvertRight").toBool();
 
-	if(operator_ == CompoundExpressionOperator::and)
-		xmlStreamWriter->writeAttribute("boolean","and");
-	else if(operator_ == CompoundExpressionOperator::or)
-		xmlStreamWriter->writeAttribute("boolean","or");
-
-	if(invertLHS_)
-		xmlStreamWriter->writeAttribute("invertLeft","true");
-	else
-		xmlStreamWriter->writeAttribute("invertLeft","false");
-
-	if(invertRHS_)
-		xmlStreamWriter->writeAttribute("invertRight","true");
-	else
-		xmlStreamWriter->writeAttribute("invertRight","false");
-
-	if(LHSisPred_)
-		LHSPredExp_->serializeAsXml(xmlStreamWriter);
-	else
-		LHSComExp_->serializeAsXml(xmlStreamWriter);
-
-	if(RHSisPred_)
-		RHSPredExp_->serializeAsXml(xmlStreamWriter);
-	else
-		RHSComExp_->serializeAsXml(xmlStreamWriter);
-
-
-	xmlStreamWriter->writeEndElement(); //CompoundExpression
-	return true;
-}
-
-/*!	\brief	Converts an XML fragment into a CompoundExpression
- *
- *	The XML fragment of a compound expression will look like this:
- *	
- *	<CompoundExpression boolean="and" invertLeft="true" invertRight = "false>
- *		<Expression>
- *			...
- *		</Expression>
- *		<CompoundExpression boolean="or" invertLeft="false" invertRight = "false>
- *			<Expression>
- *				...
- *			</Expression>
- *			<Expression>
- *				...
- *			</Expression>
- *		</CompoundExpression>
- *	</CompoundExpression>
- */
-bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "CompoundExpression")
+	QString leftName = propertyContainer_->getPropertyValue("LeftName").toString();
+	QList<QSharedPointer<Serializable>> newExprs = getGeneratedChildren("Expression");
+	foreach(QSharedPointer<Serializable> newExpr,newExprs)
 	{
-		addError("CompoundExpression","Incorrect tag, expected <CompoundExpression>",xmlStreamReader);
-		return false;
-	}
-
-	//read in the attributes
-	QString operatorStr = xmlStreamReader->attributes().value("boolean").toString();
-	if(operatorStr == "and")
-		operator_ = CompoundExpressionOperator::and;
-	else if(operatorStr == "or")
-		operator_ = CompoundExpressionOperator::or;
-	else
-	{
-		addError("CompoundExpression","Unexpected boolean operator.", xmlStreamReader);
-		return false;
-	}
-
-	QString invertLeftStr = xmlStreamReader->attributes().value("invertLeft").toString();
-	if(invertLeftStr == "true")
-		invertLHS_ = true;
-	else if(invertLeftStr == "false")
-		invertLHS_ = false;
-	else
-	{
-		addError("CompoundExpression","Unexpected or missing value for invertLeft", xmlStreamReader);
-		return false;
-	}
-
-	QString invertRightStr = xmlStreamReader->attributes().value("invertRight").toString();
-	if(invertRightStr == "true")
-		invertRHS_ = true;
-	else if(invertRightStr == "false")
-		invertRHS_ = false;
-	else
-	{
-		addError("CompoundExpression","Unexpected or missing value for invertRight", xmlStreamReader);
-		return false;
-	}
-
-	LHSInitialized_ = false;
-	RHSInitialized_ = false;
-	
-	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "CompoundExpression") && !xmlStreamReader->atEnd())
-	{
-		if(!xmlStreamReader->isStartElement())
+		if(newExpr.staticCast<PredicateExpression>()->name() == leftName)
 		{
-			//do nothing unless we're looking at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		//use the name to set up the sides and predicate.
-		//Note that we assume the order is LHS, RHS
-		QString name = xmlStreamReader->name().toString();
-
-		if(name == "Expression")
-		{
-			QSharedPointer<Picto::PredicateExpression> newExpr(new Picto::PredicateExpression);
-			if(!newExpr->deserializeFromXml(xmlStreamReader))
-				return false;
-			if(!LHSInitialized_)
+			if(LHSInitialized_)
 			{
 				LHSisPred_ = true;
-				LHSPredExp_ = newExpr;
+				LHSPredExp_ = newExpr.staticCast<PredicateExpression>();
 				LHSInitialized_ = true;
 			}
-			else if(LHSInitialized_ && !RHSInitialized_)
+			else
 			{
-				RHSisPred_ = true;
-				RHSPredExp_ = newExpr;
-				RHSInitialized_ = true;
-			}
-			else 
-			{
-				addError("CompoundExpression", "Too many Expressions", xmlStreamReader);
+				addError("CompoundExpression", "Expressions used in a CompoundExpression cannot have the same name.", xmlStreamReader);
 				return false;
 			}
 		}
-		else if(name == "CompoundExpression")
+		else if(!RHSInitialized_)
 		{
-			QSharedPointer<Picto::CompoundExpression> newExpr(new Picto::CompoundExpression);
-			if(!newExpr->deserializeFromXml(xmlStreamReader))
-				return false;
-			if(!LHSInitialized_)
-			{
-				LHSisPred_ = false;
-				LHSComExp_ = newExpr;
-				LHSInitialized_ = true;
-			}
-			else if(LHSInitialized_ && !RHSInitialized_)
-			{
-				RHSisPred_ = false;
-				RHSComExp_ = newExpr;
-				RHSInitialized_ = true;
-			}
-			else 
-			{
-				addError("CompoundExpression", "Too many CompoundExpressions", xmlStreamReader);
-				return false;
-			}
+			RHSisPred_ = true;
+			RHSPredExp_ = newExpr.staticCast<PredicateExpression>();
+			RHSInitialized_ = true;
 		}
 		else
 		{
-			addError("CompoundExpression", "Unexpected tag", xmlStreamReader);
+			addError("CompoundExpression", "Too many Expressions", xmlStreamReader);
 			return false;
-		}
-		xmlStreamReader->readNext();
 
+		}
 	}
 
-	if(xmlStreamReader->atEnd())
+	QList<QSharedPointer<Serializable>> newCompExprs = getGeneratedChildren("CompoundExpression");
+	foreach(QSharedPointer<Serializable> newCompExpr,newCompExprs)
 	{
-		addError("CompoundExpression", "Unexpected end of document", xmlStreamReader);
+		if(newCompExpr.staticCast<CompoundExpression>()->name() == leftName)
+		{
+			if(LHSInitialized_)
+			{
+				LHSisPred_ = false;
+				LHSComExp_ = newCompExpr.staticCast<CompoundExpression>();
+				LHSInitialized_ = true;
+			}
+			else
+			{
+				addError("CompoundExpression", "Expressions used in a CompoundExpression cannot have the same name.", xmlStreamReader);
+				return false;
+			}
+		}
+		else if(!RHSInitialized_)
+		{
+			RHSisPred_ = false;
+			RHSComExp_ = newCompExpr.staticCast<CompoundExpression>();
+			RHSInitialized_ = true;
+		}
+		else
+		{
+			addError("CompoundExpression", "Too many Expressions", xmlStreamReader);
+			return false;
+
+		}
+	}
+
+	if(!LHSInitialized_)
+	{
+		addError("CompoundExpression", "Missing left hand side of the expression", xmlStreamReader);
 		return false;
 	}
-	if(!LHSInitialized_ & RHSInitialized_)
+
+	if(!RHSInitialized_)
 	{
-		addError("CompoundExpression", "Missing one or both sides of the expression", xmlStreamReader);
+		addError("CompoundExpression", "Missing right hand side of the expression", xmlStreamReader);
 		return false;
 	}
 	return true;

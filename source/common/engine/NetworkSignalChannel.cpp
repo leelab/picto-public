@@ -63,7 +63,7 @@ void NetworkSignalChannel::updateDataBuffer()
 	{
 		if(xmlReader->name() == "BehavioralDataStore")
 		{
-			behavioralData.deserializeFromXml(xmlReader);
+			behavioralData.fromXml(xmlReader);
 		}
 		else
 		{

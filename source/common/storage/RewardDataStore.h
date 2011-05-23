@@ -36,6 +36,9 @@ public:
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:
 	int durationMs_;
 	int channel_;

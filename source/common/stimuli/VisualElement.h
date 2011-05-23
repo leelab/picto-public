@@ -58,8 +58,8 @@ public:
 	void setOrder(int order) { order_ = order; };
 	int getOrder() { return order_; }
 
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 //These public slots exist for binding visual element properties to scripts
 public slots:
@@ -77,6 +77,8 @@ protected:
 	void backupProperties();
 	void restoreProperties();
 
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 	QImage image_;
 	bool shouldUpdateCompositingSurfaces_;
 	QMap<QString, QSharedPointer<CompositingSurface> > compositingSurfaces_;
@@ -85,7 +87,6 @@ protected:
 
 	MTRand random;
 
-	QSharedPointer<PropertyContainer> propertyContainer_;
 	QMap<QString, QVariant> initialProperties_;
 
 	int order_;		//The order in which this visual element should be drawn within its layer

@@ -97,6 +97,11 @@ bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 	return true;
 }
 
+bool LFPDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
+}
+
 void LFPDataStore::addData(double timestamp, double* potentials, int numVals)
 {
 	while(potentials_.size() < numVals)

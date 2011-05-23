@@ -2,8 +2,9 @@
 #define _DATASTORE_H_
 
 #include "../common.h"
-#include "DataStoreFactory.h"
-//#include "../property/PropertyContainer.h"
+#include "Serializable.h"
+#include "SerializableFactory.h"
+#include "../property/PropertyContainer.h"
 
 #include <QSharedPointer>
 #include <QXmlStreamWriter>
@@ -16,7 +17,7 @@
 #include <QList>
 
 namespace Picto {
-class DataStoreFactory;
+class SerializableFactory;
 //class PropertyContainer;
 /*! \brief a base class for anything that needs to write itself out as XML
  *
@@ -40,7 +41,7 @@ class DataStoreFactory;
  *	
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API DataStore : public QObject
+class PICTOLIB_API DataStore : public Serializable
 #else
 class DataStore : public  QObject
 #endif
@@ -49,61 +50,78 @@ class DataStore : public  QObject
 public:
 	DataStore();
 
-	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 	virtual bool serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-
 	qulonglong getDataID();
-
-	static QString getErrors();
-	void clearErrors() { errors_.clear(); };
-
 
 	//AutoSerialization Stuff---------------------------------
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	void setDeleted();
-	bool wasEdited(){return edited_;};
-	bool isNew(){return isNew_;};
-	bool isDeleted(){return deleted_;};
+	virtual void setDeleted();
 
 public slots:
 	void childEdited();
 
-signals:
-	void edited();
-	//--------------------------------------------------------
-
 protected:
-	void addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	void addError(QString objectType, QString errorMsg);
 
-	//To make the serialization and desrialization routines easier, the following mini
-	//functions are provided, for serializing and deserializing common data types.
-	//Note that these don't cover all possible data types, so you should expect
-	//to write some of your own code...
-	void serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-					QString name, QPoint point);
-	void serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-					QString name, QRect rect);
-	void serializeQColor(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-					QString name, QColor color);
+	////To make the serialization and desrialization routines easier, the following mini
+	////functions are provided, for serializing and deserializing common data types.
+	////Note that these don't cover all possible data types, so you should expect
+	////to write some of your own code...
+	//void serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
+	//				QString name, QPoint point);
+	//void serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
+	//				QString name, QRect rect);
+	//void serializeQColor(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
+	//				QString name, QColor color);
 
-	QPoint deserializeQPoint(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	QRect deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	QColor deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//QPoint deserializeQPoint(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//QRect deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//QColor deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 
 
 	//AutoSerialization Stuff---------------------------------
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader){return true;};
-	void AddDataStoreFactory(QString name,QSharedPointer<DataStoreFactory> factory);
-	void AddProperty(QSharedPointer<DataStore> prop);
-	QList<QSharedPointer<DataStore>> getGeneratedDataStores(QString factoryName); 
-	//QSharedPointer<PropertyContainer> propertyContainer_;
+	void AddDefinableProperty(
+		QString tagName, 
+		QVariant defaultValue, 
+		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>(),
+		int minNumOfThisType = 1, 
+		int maxNumOfThisType = 1
+		);
+	void AddDefinableProperty(
+		int type,
+		QString tagName, 
+		QVariant defaultValue, 
+		QString singleAttributeName,
+		QVariant singleAttributeValue,
+		int minNumOfThisType = 1, 
+		int maxNumOfThisType = 1
+		);
+	void AddDefinableProperty(
+		int type,
+		QString tagName, 
+		QVariant defaultValue,
+		int minNumOfThisType, 
+		int maxNumOfThisType
+		);
+	void AddDefinableProperty(
+		int type,
+		QString tagName, 
+		QVariant defaultValue, 
+		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>(),
+		int minNumOfThisType = 1, 
+		int maxNumOfThisType = 1
+		);
+	void AddDefinableObject(QString tagName, QSharedPointer<Serializable> object);
+	void AddDefinableObjectFactory(QString tagName, QSharedPointer<SerializableFactory> factory);
+	void DefinePlaceholderTag(QString tagName);
+
+	QList<QSharedPointer<Serializable>> getGeneratedChildren(QString tagName); 
+	bool hasChildrenOfType(QString tagName);
+	QSharedPointer<PropertyContainer> propertyContainer_;
 	//--------------------------------------------------------
 
 
@@ -111,19 +129,12 @@ protected:
 private:
 	
 	//AutoSerialization Stuff---------------------------------
-	void AddError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader, QSharedPointer<QStringList> errors);
-	QMap<QString,QList<QSharedPointer<DataStore>>> children_;
-	QMap<QString,QSharedPointer<DataStoreFactory>> factories_;
+	QMap<QString,QList<QSharedPointer<Serializable>>> children_;
+	QMap<QString,QSharedPointer<SerializableFactory>> factories_;
 	QString tagText_;
-	bool edited_;
-	bool isNew_;
-	bool deleted_;
 	//--------------------------------------------------------
 
-
-
 	static qulonglong generateDataID();
-	static QStringList errors_;
 	static qulonglong lastDataID_;
 	qulonglong dataID_;
 	QString myTagName_;

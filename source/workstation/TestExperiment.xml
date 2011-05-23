@@ -16,8 +16,9 @@
 				<Level>Trial</Level>
 				<InitialElement>TestState</InitialElement>
 				<Parameters>
-					<Parameter type="Boolean" operatorUI="false">
+					<Parameter type="Boolean">
 						<Name>Increasing</Name>
+						<OperatorUI>False</OperatorUI>
 					</Parameter>
 				</Parameters>
 				<StateMachineElements>
@@ -26,23 +27,26 @@
 						<EngineNeeded>-1</EngineNeeded>
 						<Name>TestState</Name>
 						<ControlElements>
-							<ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
+							<ControlElement type="Stopwatch Controller">
+								<OperatorVisible>false</OperatorVisible>
+								<SubjectVisible>false</SubjectVisible>
 								<Name></Name>
-								<Time units="Ms">4000</Time>				
+								<TimeUnits>Ms</TimeUnits>
+								<Time>4000</Time>				
 							</ControlElement>
 						</ControlElements>
 						<Scene>
 							<Canvas>
 								<Layers>
-									<BackgroundLayer color="#000000"/>
+									<BackgroundColor>#000000</BackgroundColor>
 									<Layer>
 										<Name>Layer1</Name>
 										<Order>1</Order>
 										<VisualElement type="Ellipse Graphic">
-											<Name datatype="QString">Ellipse</Name>
-											<Position datatype="QPoint" x="400" y="400"/>
-											<Dimensions datatype="QRect" x="0" y="0" width="300" height="300"/>
-											<Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+											<Name>Ellipse</Name>
+											<Position x="400" y="400"/>
+											<Dimensions x="0" y="0" width="300" height="300"/>
+											<Color R="255" G="0" B="0" A="255"/>
 										</VisualElement>
 									</Layer>
 								</Layers>
@@ -50,11 +54,11 @@
 							<AudioElement></AudioElement>
 						</Scene>
 						<Scripts>
-							<Script type="entry">
+							<EntryScript>
 									//Upon entry we set the ellipse's color
 									Ellipse.setColor(0,255,127,255);
-							</Script>
-							<Script type="frame">
+							</EntryScript>
+							<FrameScript>
 								//Every frame, we change the Ellipse's size
 								width = Ellipse.getWidth();
 								height = Ellipse.getHeight();
@@ -72,14 +76,14 @@
 								{
 									Ellipse.setDimensions(width-10,height-10);
 								}
-							</Script>
-							<Script type="exit">
+							</FrameScript>
+							<ExitScript>
 								//Upon exit we set the ellipse's color
 								Ellipse.setColor(255,0,0,255);
-							</Script>
+							</ExitScript>
 						</Scripts>
 						<Results>
-							<Result><Name>Success</Name></Result>
+							<Result>Success</Result>
 						</Results>
 					</StateMachineElement>
 					<StateMachineElement type="Result">
@@ -93,7 +97,6 @@
 						<Destination>Done</Destination>
 					</Transition>
 				</Transitions>
-				<Results/>
 			</StateMachine>
 
 		</Task>
@@ -114,8 +117,9 @@
             <Level>Trial</Level>
             <InitialElement>TestState</InitialElement>
             <Parameters>
-              <Parameter type="Boolean" operatorUI="false">
+              <Parameter type="Boolean">
                 <Name>MovingUp</Name>
+				<OperatorUI>False</OperatorUI>
               </Parameter>
             </Parameters>
             <StateMachineElements>
@@ -125,23 +129,26 @@
                 <EngineNeeded>-1</EngineNeeded>
                 <Name>TestState</Name>
                 <ControlElements>
-                  <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
+                  <ControlElement type="Stopwatch Controller">
                     <Name></Name>
-                    <Time units="Ms">5000</Time>
+					<OperatorVisible>false</OperatorVisible>
+					<SubjectVisible>false</SubjectVisible>
+					<TimeUnits>Ms</TimeUnits>
+                    <Time>5000</Time>
                   </ControlElement>
                 </ControlElements>
                 <Scene>
                   <Canvas>
                     <Layers>
-                      <BackgroundLayer color="#000000"/>
+                      <BackgroundColor>#000000</BackgroundColor>
                       <Layer>
                         <Name>Layer1</Name>
                         <Order>1</Order>
                         <VisualElement type="Ellipse Graphic">
-                          <Name datatype="QString">Ellipse</Name>
-                          <Position datatype="QPoint" x="400" y="199"/>
-                          <Dimensions datatype="QRect" x="0" y="0" width="300" height="300"/>
-                          <Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+                          <Name>Ellipse</Name>
+                          <Position x="400" y="199"/>
+                          <Dimensions x="0" y="0" width="300" height="300"/>
+                          <Color R="255" G="0" B="0" A="255"/>
                         </VisualElement>
                       </Layer>
                     </Layers>
@@ -149,7 +156,7 @@
                   <AudioElement></AudioElement>
                 </Scene>
                 <Scripts>
-                  <Script type="frame">
+                  <FrameScript>
                     //Every frame, we move the ellipse
                     x = Ellipse.getX();
                     y = Ellipse.getY();
@@ -164,12 +171,10 @@
                       Ellipse.setPosition(x,y-10);
                     else
                       Ellipse.setPosition(x,y+10);
-                  </Script>
+                  </FrameScript>
                 </Scripts>
                 <Results>
-                  <Result>
-                    <Name>Success</Name>
-                  </Result>
+                  <Result>Success</Result>
                 </Results>
               </StateMachineElement>
               <StateMachineElement type="Result">
@@ -183,7 +188,6 @@
                 <Destination>Done</Destination>
               </Transition>
             </Transitions>
-            <Results/>
           </StateMachine>
 
           <StateMachineElement type="State">
@@ -191,15 +195,18 @@
             <EngineNeeded>-1</EngineNeeded>
             <Name>InterTrialInterval</Name>
             <ControlElements>
-              <ControlElement type="Stopwatch Controller" operatorVisible="false" subjectVisible="false">
+              <ControlElement type="Stopwatch Controller">
+				<OperatorVisible>false</OperatorVisible>
+				<SubjectVisible>false</SubjectVisible>
                 <Name></Name>
-                <Time units="Ms">2000</Time>
+				<TimeUnits>Ms</TimeUnits>
+                <Time>2000</Time>
               </ControlElement>
             </ControlElements>
             <Scene>
               <Canvas>
                 <Layers>
-                  <BackgroundLayer color="#000000"/>
+                  <BackgroundColor>#000000</BackgroundColor>
                   <Layer>
                     <Name>Layer1</Name>
                     <Order>1</Order>
@@ -246,8 +253,9 @@
 						<Level>Stage</Level>
 						<InitialElement>Initialize Values</InitialElement>
 						<Parameters>
-							<Parameter operatorUi="false" type="Numeric">
+							<Parameter type="Numeric">
 								<Name>SuccessfulAttempts</Name>
+								<OperatorUI>False</OperatorUI>
 								<Order>1</Order>
 							</Parameter>
 						</Parameters>
@@ -274,31 +282,34 @@
 								<EngineNeeded>-1</EngineNeeded>
 								<Name>State 1</Name>
 								<ControlElements>
-									<ControlElement type="Target Controller" operatorVisible="false" subjectVisible="false">
+									<ControlElement type="Target Controller">
 										<Name></Name>
+										<OperatorVisible>false</OperatorVisible>
+										<SubjectVisible>false</SubjectVisible>
 										<SignalChannel>PositionChannel</SignalChannel>
 										<Shape>Rectangle</Shape>
 										<Target x="400" y="400" width="100" height="100"/>
-										<TotalTime units="Ms">10000</TotalTime>
-										<FixationTime units="Ms">1000</FixationTime>
-										<MinInitialAcquisitionTime units="Ms">0</MinInitialAcquisitionTime>
-										<MaxInitialAcquisitionTime units="Ms">4000</MaxInitialAcquisitionTime>
-										<MaxReacquisitionTime units="Ms">1000</MaxReacquisitionTime>
+										<TimeUnits>Ms</TimeUnits>
+										<TotalTime>10000</TotalTime>
+										<FixationTime>1000</FixationTime>
+										<MinInitialAcquisitionTime>0</MinInitialAcquisitionTime>
+										<MaxInitialAcquisitionTime>4000</MaxInitialAcquisitionTime>
+										<MaxReacquisitionTime>1000</MaxReacquisitionTime>
 										<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
 									</ControlElement>
 								</ControlElements>
 								<Scene>
 									<Canvas>
 										<Layers>
-											<BackgroundLayer color="#000000"/>
+											<BackgroundColor>#000000</BackgroundColor>
 											<Layer>
 												<Name>Layer1</Name>
 												<Order>1</Order>
 												<VisualElement type="Box Graphic">
-								<Name datatype="QString">LeftBox</Name>
-													<Position datatype="QPoint" x="400" y="400"/>
-													<Dimensions datatype="QRect" x="0" y="0" width="100" height="100"/>
-								<Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+													<Name>LeftBox</Name>
+													<Position x="400" y="400"/>
+													<Dimensions x="0" y="0" width="100" height="100"/>
+													<Color R="255" G="0" B="0" A="255"/>
 												</VisualElement>
 											</Layer>
 										</Layers>
@@ -308,7 +319,7 @@
 								<Scripts>
 									<!-- Upon entry we set the box's color to red, yellow, or green -->
 									<!-- depending on the number of successful attempts -->
-									<Script type="entry">
+									<EntryScript>
 										if(SuccessfulAttempts.getValue() == 0)
 										{
 											LeftBox.setColor(255,0,0,255);
@@ -321,14 +332,14 @@
 										{
 											LeftBox.setColor(0,255,0,255);
 										}
-									</Script>
+									</EntryScript>
 								</Scripts>
 								<Results>
-									<Result><Name>Success</Name></Result>
-									<Result><Name>Broke Fixation</Name></Result>
-									<Result><Name>Total Time Excceeded</Name></Result>
-									<Result><Name>Initial Aquistion Time Exceeded</Name></Result>
-									<Result><Name>Reaquistion Time Exceeded</Name></Result>
+									<Result>Success</Result>
+									<Result>Broke Fixation</Result>
+									<Result>Total Time Excceeded</Result>
+									<Result>Initial Aquistion Time Exceeded</Result>
+									<Result>Reaquistion Time Exceeded</Result>
 								</Results>
 							</StateMachineElement>
 							
@@ -337,31 +348,34 @@
 								<EngineNeeded>-1</EngineNeeded>
 								<Name>State 2</Name>
 								<ControlElements>
-									<ControlElement type="Target Controller" operatorVisible="false" subjectVisible="false">
+									<ControlElement type="Target Controller">
 										<Name></Name>
+										<OperatorVisible>false</OperatorVisible>
+										<SubjectVisible>false</SubjectVisible>
 										<SignalChannel>PositionChannel</SignalChannel>
 										<Shape>Rectangle</Shape>
+										<TimeUnits>Ms</TimeUnits>
 										<Target x="600" y="400" width="100" height="100"/>
-										<TotalTime units="Ms">10000</TotalTime>
-										<FixationTime units="Ms">1000</FixationTime>
-										<MinInitialAcquisitionTime units="Ms">0</MinInitialAcquisitionTime>
-										<MaxInitialAcquisitionTime units="Ms">4000</MaxInitialAcquisitionTime>
-										<MaxReacquisitionTime units="Ms">1000</MaxReacquisitionTime>
+										<TotalTime>10000</TotalTime>
+										<FixationTime>1000</FixationTime>
+										<MinInitialAcquisitionTime>0</MinInitialAcquisitionTime>
+										<MaxInitialAcquisitionTime>4000</MaxInitialAcquisitionTime>
+										<MaxReacquisitionTime>1000</MaxReacquisitionTime>
 										<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
 									</ControlElement>
 								</ControlElements>
 								<Scene>
 									<Canvas>
 										<Layers>
-											<BackgroundLayer color="#000000"/>
+											<BackgroundColor>#000000</BackgroundColor>
 											<Layer>
 												<Name>Layer1</Name>
 												<Order>1</Order>
 							  <VisualElement type="Box Graphic">
-								<Name datatype="QString">RightBox</Name>
-								<Position datatype="QPoint" x="600" y="400"/>
-								<Dimensions datatype="QRect" x="0" y="0" width="100" height="100"/>
-								<Color datatype="QColor" R="255" G="0" B="0" A="255"/>
+								<Name>RightBox</Name>
+								<Position x="600" y="400"/>
+								<Dimensions x="0" y="0" width="100" height="100"/>
+								<Color R="255" G="0" B="0" A="255"/>
 							  </VisualElement>
 											</Layer>
 										</Layers>
@@ -373,7 +387,7 @@
 									<!-- depending on the number of successful attempts. -->
 									<!-- Remember that the number of successful attempts hasn't yet -->
 									<!-- been updated upon exit from the state -->
-									<Script type="exit">
+									<ExitScript>
 										if(SuccessfulAttempts.getValue() == 0)
 										{
 											RightBox.setColor(255,255,0,255);
@@ -382,14 +396,14 @@
 										{
 											RightBox.setColor(0,255,0);	//testing the use of a default variable
 										}
-									</Script>
+									</ExitScript>
 								</Scripts>
 								<Results>
-									<Result><Name>Success</Name></Result>
-									<Result><Name>Broke Fixation</Name></Result>
-									<Result><Name>Total Time Excceeded</Name></Result>
-									<Result><Name>Initial Aquistion Time Exceeded</Name></Result>
-									<Result><Name>Reaquistion Time Exceeded</Name></Result>
+									<Result>Success</Result>
+									<Result>Broke Fixation</Result>
+									<Result>Total Time Excceeded</Result>
+									<Result>Initial Aquistion Time Exceeded</Result>
+									<Result>Reaquistion Time Exceeded</Result>
 								</Results>
 							</StateMachineElement>
 							
@@ -399,31 +413,28 @@
 									<Condition>
 										<Name>Finished</Name>
 										<Order>1</Order>
-										<Expression>
-											<Parameter>SuccessfulAttempts</Parameter>
-											<Comparison>Greater than</Comparison>
-											<Value type="int">2</Value>
-										</Expression>
+										<LeftParameter>SuccessfulAttempts</LeftParameter>
+										<Comparison>Greater than</Comparison>
+										<Value>2</Value>
 									</Condition>
 									<Condition>
 										<Name>NotFinished</Name>
 										<Order>2</Order>
-										<Expression>
-											<Parameter>SuccessfulAttempts</Parameter>
-											<Comparison>Less than or equal</Comparison>
-											<Value type="int">2</Value>
-										</Expression>
+										<LeftParameter>SuccessfulAttempts</LeftParameter>
+										<Comparison>Less than or equal</Comparison>
+										<Value>2</Value>
 									</Condition>
 								</Conditions>
 								<Results>
-									<Result><Name>Finished</Name></Result>
-									<Result><Name>NotFinished</Name></Result>
+									<Result>Finished</Result>
+									<Result>NotFinished</Result>
 								</Results>
 							</StateMachineElement>
 							
 							<StateMachineElement type="Result">
 								<Name>Success</Name>
-								<Reward quantity="5" channel="1"/>
+								<RewardQty>5</RewardQty>
+								<RewardChan>1</RewardChan>
 							</StateMachineElement>
 						</StateMachineElements>
 						
@@ -499,11 +510,11 @@
 								<Destination>State 1</Destination>
 							</Transition>
 						 </Transitions>
-						<Results>
+						<!--<Results>
 							<Result>
 							<Name>Success</Name>
 							</Result>
-						</Results>
+						</Results>-->
 					</StateMachine>
 
 				<!-- This stage is used to test the ChoiceController.  It consists of -->
@@ -538,21 +549,21 @@
 					  <Scene>
 						<Canvas>
 						  <Layers>
-							<BackgroundLayer color="#000000"/>
+							<BackgroundColor>#000000</BackgroundColor>
 							<Layer>
 							  <Name>Layer1</Name>
 							  <Order>1</Order>
 							  <VisualElement type="Circle Graphic">
-								<Name datatype="QString">TopCircle</Name>
-								<Position datatype="QPoint" x="400" y="300"/>
-								<Radius datatype="int">75</Radius>
-								<Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+								<Name>TopCircle</Name>
+								<Position x="400" y="300"/>
+								<Radius>75</Radius>
+								<Color R="255" G="255" B="0" A="255"/>
 							  </VisualElement>
 							  <VisualElement type="Circle Graphic">
-								<Name datatype="QString">BottomCircle</Name>
-								<Position datatype="QPoint" x="400" y="500"/>
-								<Radius datatype="int">75</Radius>
-								<Color datatype="QColor" R="255" G="255" B="0" A="255"/>
+								<Name>BottomCircle</Name>
+								<Position x="400" y="500"/>
+								<Radius>75</Radius>
+								<Color R="255" G="255" B="0" A="255"/>
 								</VisualElement>
 							</Layer>
 						  </Layers>
@@ -560,17 +571,18 @@
 						<AudioElement></AudioElement>
 					  </Scene>
 					  <Results>
-						<Result><Name>Success</Name></Result>
-						<Result><Name>TopTarget</Name></Result>
-						<Result><Name>BottomTarget</Name></Result>
-						<Result><Name>Broke Fixation</Name></Result>
-						<Result><Name>Total Time Excceeded</Name></Result>
+						<Result>Success</Result>
+						<Result>TopTarget</Result>
+						<Result>BottomTarget</Result>
+						<Result>Broke Fixation</Result>
+						<Result>Total Time Excceeded</Result>
 						
 					  </Results>
 					</StateMachineElement>
 					<StateMachineElement type="Result">
 					  <Name>KeepGoing</Name>
-					  <Reward quantity="1" channel="1"/>
+					  <RewardQty>1</RewardQty>
+					  <RewardChan>1</RewardChan>
 					</StateMachineElement>
 					<StateMachineElement type="Result">
 					  <Name>Stop</Name>
@@ -605,14 +617,14 @@
 					  <Destination>Stop</Destination>
 					</Transition>
 				  </Transitions>
-				  <Results>
+				  <!--<Results>
 					<Result>
 					  <Name>KeepGoing</Name>
 					</Result>
 					<Result>
 					  <Name>Stop</Name>
 					</Result>
-				  </Results>
+				  </Results>-->
 				</StateMachine>
 
 
@@ -629,33 +641,33 @@
 								<EngineNeeded>-1</EngineNeeded>
 								<Name>State 1</Name>
 								<ControlElements>
-									<ControlElement type="Test Controller" operatorVisible="true" subjectVisible="true">
+									<ControlElement type="Test Controller">
 										<Name></Name>
+						 		 		<OperatorVisible>true</OperatorVisible>
+						  				<SubjectVisible>true</SubjectVisible>
 										<NumberOfFrames>120</NumberOfFrames>
 									</ControlElement>
 								</ControlElements>
 								<Scene>
 									<Canvas>
 										<Layers>
-											<BackgroundLayer color="#000000"/>
+											<BackgroundColor>#000000</BackgroundColor>
 											<Layer>
 												<Name>Layer1</Name>
 												<Order>1</Order>
-							  <VisualElement type="Box Graphic">
-								<Name datatype="QString">box</Name>
-								<Position datatype="QPoint" x="30" y="30"/>
-								<Dimensions datatype="QRect" x="0" y="0" width="50" height="100"/>
-								<Color datatype="QColor" R="255" G="255" B="0" A="255"/>
-							  </VisualElement>
+							  						<VisualElement type="Box Graphic">
+														<Name>box</Name>
+														<Position x="30" y="30"/>
+														<Dimensions x="0" y="0" width="50" height="100"/>
+														<Color R="255" G="255" B="0" A="255"/>
+							 						</VisualElement>
 											</Layer>
 										</Layers>
 									</Canvas>
 									<AudioElement></AudioElement>
 								</Scene>
 								<Results>
-									<Result>
-										<Name>Success</Name>
-									</Result>
+									<Result>Success</Result>
 								</Results>
 							</StateMachineElement>
 							<StateMachineElement type="State">
@@ -663,23 +675,26 @@
 								<EngineNeeded>-1</EngineNeeded>
 								<Name>State 2</Name>
 								<ControlElements>
-									<ControlElement type="Stopwatch Controller" operatorVisible="true" subjectVisible="true">
+									<ControlElement type="Stopwatch Controller">
+										<OperatorVisible>true</OperatorVisible>
+										<SubjectVisible>true</SubjectVisible>
 										<Name></Name>
-										<Time units="Ms">5000</Time>
+										<TimeUnits>Ms</TimeUnits>
+										<Time>5000</Time>
 									</ControlElement>
 								</ControlElements>
 								<Scene>
 									<Canvas>
 										<Layers>
-											<BackgroundLayer color="#000000"/>
+											<BackgroundColor>#000000</BackgroundColor>
 											<Layer>
 												<Name>Layer1</Name>
 												<Order>1</Order>
 												<VisualElement type="Box Graphic">
-								<Name datatype="QString">box</Name>
-								<Position datatype="QPoint" x="100" y="30"/>
-								<Dimensions datatype="QRect" x="0" y="0" width="50" height="100"/>
-								<Color datatype="QColor" R="255" G="0" B="255" A="255"/>
+													<Name>box</Name>
+													<Position x="100" y="30"/>
+													<Dimensions x="0" y="0" width="50" height="100"/>
+													<Color R="255" G="0" B="255" A="255"/>
 												</VisualElement>
 											</Layer>
 										</Layers>
@@ -687,16 +702,14 @@
 									<AudioElement></AudioElement>
 								</Scene>
 								<Scripts>
-									<Script type="frame">
+									<FrameScript>
 										x = box.getX();
 										y = box.getY()+10;
 										box.setPosition(x,y);
-									</Script>
+									</FrameScript>
 								</Scripts>
 								<Results>
-									<Result>
-										<Name>Success</Name>
-									</Result>
+									<Result>Success</Result>
 								</Results>
 							</StateMachineElement>  
 							<StateMachineElement type="Result">
@@ -717,7 +730,6 @@
 								<Destination>Done</Destination>
 							</Transition>
 						 </Transitions>
-						<Results/>
 					</StateMachine>
 					
 					
@@ -749,7 +761,6 @@
 				  <Destination>Done</Destination>
 				</Transition>
 			  </Transitions>
-				<Results/>
 			</StateMachine>
 		</Task>
 	</Tasks>

@@ -45,7 +45,7 @@ bool ProxyStartResponseHandler::processResponse(QString directive)
 			//Limit each message length to 100000 characters + up to one datastore length
 			while(dataList.size() && (xmlData.length() < 100000))
 			{
-				dataList.takeFirst()->serializeAsXml(writer);
+				dataList.takeFirst()->toXml(writer);
 			}
 			writer->writeEndElement(); // Data
 			writer->writeEndDocument();

@@ -33,6 +33,7 @@ class Scene : public DataStore
 	Q_OBJECT
 public:
 	Scene();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new Scene());};
 
 	void setCanvas(QSharedPointer<Canvas> canvas) { canvas_ = canvas; }
 	QSharedPointer<Canvas> getCanvas() { return canvas_; };
@@ -45,8 +46,11 @@ public:
 	void reset();
 
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private:
 	QSharedPointer<Canvas> canvas_;

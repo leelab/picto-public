@@ -38,15 +38,18 @@ public:
 	TargetController();
 
 	static ControlElement* NewTargetController();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new TargetController());};
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
 	QString getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 
-	//DataStore Functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	////DataStore Functions
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	bool insideTarget(QSharedPointer<Engine::PictoEngine> engine);

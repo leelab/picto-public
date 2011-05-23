@@ -7,8 +7,9 @@ namespace Picto {
 Experiment::Experiment()
 	//:formatID_("1.0.0.0"),
 {
-	propertyContainer_ = PropertyContainer::create("Experiment");
-	propertyContainer_->addProperty(QVariant::String,"Name","Unnamed Experiment");
+	AddDefinableProperty("Name","Unnamed Experiment");
+	DefinePlaceholderTag("Tasks");
+	AddDefinableObjectFactory("Task",QSharedPointer<SerializableFactory>(new SerializableFactory(1,-1,SerializableFactory::NewSerializableFnPtr(Picto::Task::Create))));
 }
 
 //! returns the name of this experiment
@@ -101,82 +102,93 @@ void Experiment::clear()
  *	</Experiment>
  */
 
-bool Experiment::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool Experiment::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("Experiment");
+//	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
+//
+//	xmlStreamWriter->writeStartElement("Tasks");
+//	foreach(QSharedPointer<Task> task, tasks_)
+//	{
+//		task->toXml(xmlStreamWriter);
+//	}
+//	xmlStreamWriter->writeEndElement(); //Tasks
+//
+//	xmlStreamWriter->writeEndElement(); //Experiment
+//	
+//	
+//	return true;
+//}
+//
+////! Turns an XML fragment into an Experiment
+//bool Experiment::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Experiment")
+//	{
+//		addError("Experiment","Incorrect tag, expected <Experiment>",xmlStreamReader);
+//		return false;
+//	}
+//	
+//	//clear out the existing experiment
+//	tasks_.clear();
+//	
+//
+//	xmlStreamReader->readNext();
+//	
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Experiment") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//Do nothing unless we're at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//
+//		QString name = xmlStreamReader->name().toString();
+//		if(name == "Name")
+//		{
+//			setName(xmlStreamReader->readElementText());
+//		}
+//		else if(name == "Tasks")
+//		{
+//			//do nothing
+//		}
+//		else if(name == "Task")
+//		{
+//			QSharedPointer<Task> newTask(new Task);
+//			if(!newTask->fromXml(xmlStreamReader))
+//			{
+//				addError("Experiment", "Task failed to deserialize correctly", xmlStreamReader);
+//				return false;
+//			}
+//			addTask(newTask);
+//		}
+//		else
+//		{
+//			addError("Experiment", "Unexpected tag", xmlStreamReader);
+//			return false;
+//		}		
+//
+//		xmlStreamReader->readNext();
+//	}
+//
+//	//Normally we return an error if we're "atEnd", but since Experiment is a top-level
+//	//XML fragment, we probably are at the end.
+//
+//	return true;
+//}
+
+bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("Experiment");
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
-
-	xmlStreamWriter->writeStartElement("Tasks");
-	foreach(QSharedPointer<Task> task, tasks_)
-	{
-		task->serializeAsXml(xmlStreamWriter);
-	}
-	xmlStreamWriter->writeEndElement(); //Tasks
-
-	xmlStreamWriter->writeEndElement(); //Experiment
-	
-	
-	return true;
-}
-
-//! Turns an XML fragment into an Experiment
-bool Experiment::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Experiment")
-	{
-		addError("Experiment","Incorrect tag, expected <Experiment>",xmlStreamReader);
-		return false;
-	}
-	
 	//clear out the existing experiment
 	tasks_.clear();
-	
-
-	xmlStreamReader->readNext();
-	
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Experiment") && !xmlStreamReader->atEnd())
+	QList<QSharedPointer<Serializable>> newTasks = getGeneratedChildren("Task");
+	foreach(QSharedPointer<Serializable> newTask,newTasks)
 	{
-		if(!xmlStreamReader->isStartElement())
-		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Name")
-		{
-			setName(xmlStreamReader->readElementText());
-		}
-		else if(name == "Tasks")
-		{
-			//do nothing
-		}
-		else if(name == "Task")
-		{
-			QSharedPointer<Task> newTask(new Task);
-			if(!newTask->deserializeFromXml(xmlStreamReader))
-			{
-				addError("Experiment", "Task failed to deserialize correctly", xmlStreamReader);
-				return false;
-			}
-			addTask(newTask);
-		}
-		else
-		{
-			addError("Experiment", "Unexpected tag", xmlStreamReader);
-			return false;
-		}		
-
-		xmlStreamReader->readNext();
+		addTask(newTask.staticCast<Task>());
 	}
-
-	//Normally we return an error if we're "atEnd", but since Experiment is a top-level
-	//XML fragment, we probably are at the end.
-
 	return true;
 }
-
 
 }; //namespace Picto

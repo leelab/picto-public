@@ -8,13 +8,16 @@ const QString CursorGraphic::type = "Cursor Graphic";
 
 CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color)
 {
+	// This is never serialized, so I didn't update it to use the new serialization routine.
+	// It does bring to light the fact that most of our serializable objects must be deserialized
+	// to have valid contents, which might be something worth fixing.
 	positionChannel_ = channel;
 	if(positionChannel_)
 	{
 		Q_ASSERT(positionChannel_->getSubchannels().contains("xpos"));
 		Q_ASSERT(positionChannel_->getSubchannels().contains("ypos"));
 	}
-
+	propertyContainer_->addProperty(QVariant::String,"Name","");
 	propertyContainer_->setContainerName(type);
 	propertyContainer_->setPropertyValue("Position",QPoint(0,0));
 	propertyContainer_->setPropertyValue("Color",color);
@@ -79,7 +82,7 @@ VisualElement* CursorGraphic::NewVisualElement()
 	return new CursorGraphic(QSharedPointer<SignalChannel>());
 }
 
-void CursorGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void CursorGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")
@@ -88,5 +91,12 @@ void CursorGraphic::slotPropertyValueChanged(QString propertyName, int index,
 	}
 }
 
+bool CursorGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
+}
 
 }; //namespace Picto

@@ -26,12 +26,15 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new CircleGraphic());};
 	static const QString type;
 
 public slots:
 	int getRadius() { return propertyContainer_->getPropertyValue("Radius").toInt(); };
 	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius",radius);};
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

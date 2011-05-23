@@ -14,6 +14,10 @@ bool layerLessThan(const QSharedPointer<Layer> &l1, const QSharedPointer<Layer> 
 Canvas::Canvas()  :
 	backgroundColor_(QColor(Qt::black))
 {
+	DefinePlaceholderTag("Layers");
+	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
+	AddDefinableObjectFactory( "Layer",QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Layer::Create))) );
+
 }
 
 void Canvas::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
@@ -78,94 +82,107 @@ void Canvas::addLayer(QSharedPointer<Layer> layer)
  *		</Layers>
  *	</Canvas>
  */
-bool Canvas::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool Canvas::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("Canvas");
+//
+//	xmlStreamWriter->writeStartElement("Layers");
+//
+//	xmlStreamWriter->writeStartElement("BackgroundLayer");
+//	xmlStreamWriter->writeAttribute("color",backgroundColor_.name());
+//	xmlStreamWriter->writeEndElement();
+//
+//	foreach(QSharedPointer<Layer> layer, layers_)
+//		layer->toXml(xmlStreamWriter);
+//
+//	xmlStreamWriter->writeEndElement(); //Layers
+//	xmlStreamWriter->writeEndElement(); //Canvas
+//	
+//	return true;
+//
+//	return false;
+//}
+//
+///*!	\brief Creates a Canvas from an XML fragment
+// *
+// *	The XML fragment for a canvas will look something like this:
+// *	<Canvas>
+// *		<Layers>
+// *			<BackgroundLayer color="#FF00FF"/>
+// *			<Layer>
+// *				...
+// *			</Layer>
+// *			<Layer>
+// *				...
+// *			</Layer>
+// *		</Layers>
+// *	</Canvas>
+// */
+//bool Canvas::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//start off by clearing out all existing layers
+//	layers_.clear();
+//
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Canvas")
+//	{
+//		addError("Canvas","Incorrect tag, expected <Canvas>",xmlStreamReader);
+//		return false;
+//	}
+//
+//	xmlStreamReader->readNext();
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name() == "Canvas") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//Do nothing unless we're at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//
+//		QString name = xmlStreamReader->name().toString();
+//		if(name == "Layers")
+//		{
+//			//we don't need to do anything here
+//		}
+//		else if(name == "BackgroundLayer")
+//		{
+//			QString colorName = xmlStreamReader->attributes().value("color").toString();
+//			backgroundColor_.setNamedColor(colorName);
+//		}
+//		else if(name == "Layer")
+//		{
+//			QSharedPointer<Layer> newLayer(new Layer);
+//			if(!newLayer->fromXml(xmlStreamReader))
+//				return false;
+//			layers_.push_back(newLayer);
+//		}
+//		else
+//		{
+//			addError("Canvas", "Unexpected tag", xmlStreamReader);
+//			return false;
+//		}
+//		xmlStreamReader->readNext();
+//	}
+//
+//	if(xmlStreamReader->atEnd())
+//	{
+//		addError("Canvas", "Unexpected end of document", xmlStreamReader);
+//		return false;
+//	}
+//	return true;
+//}
+
+bool Canvas::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("Canvas");
-
-	xmlStreamWriter->writeStartElement("Layers");
-
-	xmlStreamWriter->writeStartElement("BackgroundLayer");
-	xmlStreamWriter->writeAttribute("color",backgroundColor_.name());
-	xmlStreamWriter->writeEndElement();
-
-	foreach(QSharedPointer<Layer> layer, layers_)
-		layer->serializeAsXml(xmlStreamWriter);
-
-	xmlStreamWriter->writeEndElement(); //Layers
-	xmlStreamWriter->writeEndElement(); //Canvas
+	backgroundColor_.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
 	
-	return true;
-
-	return false;
-}
-
-/*!	\brief Creates a Canvas from an XML fragment
- *
- *	The XML fragment for a canvas will look something like this:
- *	<Canvas>
- *		<Layers>
- *			<BackgroundLayer color="#FF00FF"/>
- *			<Layer>
- *				...
- *			</Layer>
- *			<Layer>
- *				...
- *			</Layer>
- *		</Layers>
- *	</Canvas>
- */
-bool Canvas::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//start off by clearing out all existing layers
-	layers_.clear();
-
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Canvas")
+	QList<QSharedPointer<Serializable>> newLayers = getGeneratedChildren("Layer");
+	foreach(QSharedPointer<Serializable> newLayer,newLayers)
 	{
-		addError("Canvas","Incorrect tag, expected <Canvas>",xmlStreamReader);
-		return false;
+		layers_.push_back(newLayer.staticCast<Layer>());
 	}
-
-	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name() == "Canvas") && !xmlStreamReader->atEnd())
-	{
-		if(!xmlStreamReader->isStartElement())
-		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Layers")
-		{
-			//we don't need to do anything here
-		}
-		else if(name == "BackgroundLayer")
-		{
-			QString colorName = xmlStreamReader->attributes().value("color").toString();
-			backgroundColor_.setNamedColor(colorName);
-		}
-		else if(name == "Layer")
-		{
-			QSharedPointer<Layer> newLayer(new Layer);
-			if(!newLayer->deserializeFromXml(xmlStreamReader))
-				return false;
-			layers_.push_back(newLayer);
-		}
-		else
-		{
-			addError("Canvas", "Unexpected tag", xmlStreamReader);
-			return false;
-		}
-		xmlStreamReader->readNext();
-	}
-
-	if(xmlStreamReader->atEnd())
-	{
-		addError("Canvas", "Unexpected end of document", xmlStreamReader);
-		return false;
-	}
+	
 	return true;
 }
 

@@ -35,12 +35,15 @@ public:
 	StringParameter();
 
 	static Parameter* NewParameter();
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new StringParameter());};
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void addOption(StringParameterOption option);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QList<StringParameterOption> options_;

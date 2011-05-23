@@ -8,15 +8,22 @@ const QString BoxGraphic::type = "Box Graphic";
 
 BoxGraphic::BoxGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	propertyContainer_->setContainerName(type);
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color);
+	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
 
-	propertyContainer_->setPropertyValue("Position",position);
 
-	propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
 
-	propertyContainer_->setPropertyValue("Color",color);
+	//propertyContainer_->setContainerName(type);
 
-	draw();
+	//propertyContainer_->setPropertyValue("Position",position);
+
+	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
+
+	//propertyContainer_->setPropertyValue("Color",color);
+
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -73,7 +80,7 @@ VisualElement* BoxGraphic::NewVisualElement()
 	return new BoxGraphic;
 }
 
-void BoxGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void BoxGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")
@@ -82,6 +89,12 @@ void BoxGraphic::slotPropertyValueChanged(QString propertyName, int index,
 	}
 }
 
-
+bool BoxGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
+}
 
 }; //namespace Picto

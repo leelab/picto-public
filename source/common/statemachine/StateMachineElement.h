@@ -86,6 +86,7 @@ public:
 protected:
 	QString getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine);
 	void processStatusDirective(QSharedPointer<Engine::PictoEngine> engine, QSharedPointer<ProtocolResponse> dataResponse);
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	ParameterContainer parameterContainer_;
 	QStringList results_;
@@ -93,8 +94,6 @@ protected:
 
 	QPoint layoutPosition_;
 
-	QSharedPointer<PropertyContainer> propertyContainer_;	//This should be used for any properties that can be 
-											//changed by Javascript, or edited/displayed in the GUI
 	static double lastTransitionTime_;
 };
 

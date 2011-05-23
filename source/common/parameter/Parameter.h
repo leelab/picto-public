@@ -31,10 +31,10 @@ public:
 	Parameter();
 
 	//DataStore functions
-	//Since the Parameter subclasses are all really different, we'll make
-	//these pure virtual
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
+	////Since the Parameter subclasses are all really different, we'll make
+	////these pure virtual
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 	void bindToScriptEngine(QScriptEngine &engine);
 

@@ -33,10 +33,14 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new LineGraphic());};
 	static const QString type;
 
 	//! \TODO At some point, we might want to expose some getter and setter slots for script binding
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

@@ -314,7 +314,7 @@ void MainWindow::newExperiment()
 		xmlWriter->setAutoFormattingIndent(-1);   //use 1 tab to indent
 		xmlWriter->writeStartDocument();
 
-		experiment_->serializeAsXml(xmlWriter);
+		experiment_->toXml(xmlWriter);
 		experimentText_.setPlainText(experimentXml);
 		experimentText_.setModified(false);
 
@@ -544,12 +544,13 @@ bool MainWindow::convertTextToExperiment()
 	experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
 	//experiment_->clearErrors();
 	//experiment_->clear();
-	bool result = experiment_->deserializeFromXml(xmlReader);
+	Picto::Serializable::clearErrors();
+	bool result = experiment_->fromXml(xmlReader);
 
 	//////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
 	//QString serialTestString;
 	//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&serialTestString));
-	//experiment_->serializeAsXml(xmlWriter);
+	//experiment_->toXml(xmlWriter);
 	//Q_ASSERT(serialTestString == experimentText_.toPlainText());
 	////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

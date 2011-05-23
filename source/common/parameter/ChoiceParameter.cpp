@@ -1,9 +1,28 @@
 #include "ChoiceParameter.h"
+#include "../Storage/PropertyFactory.h"
 
 namespace Picto {
 
 ChoiceParameter::ChoiceParameter()
 {
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Bool,"OperatorUI",false);
+	AddDefinableProperty(QVariant::Int,"Order",0);
+	AddDefinableProperty("Choice","");
+
+	QSharedPointer<SerializableFactory> factory(new SerializableFactory());
+	factory->addSerializableType("Bool",QSharedPointer<SerializableFactory>
+		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Bool,"Bool")));
+	factory->addSerializableType("Int",QSharedPointer<SerializableFactory>
+		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Int,"Int")));
+	factory->addSerializableType("Double",QSharedPointer<SerializableFactory>
+		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Double,"Double")));
+	factory->addSerializableType("String",QSharedPointer<SerializableFactory>
+		(new PropertyFactory(0,-1,propertyContainer_,QVariant::String,"String")));
+	factory->addSerializableType("Color",QSharedPointer<SerializableFactory>
+		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Color,"Color")));
+	AddDefinableObjectFactory("Option",factory);
+
 	type_ = "Choice";
 	currentOption_ = "";
 	defaultOption_ = "";
@@ -125,188 +144,211 @@ bool ChoiceParameter::equalTo(QVariant& RHS)
  *		</Choice>
  *	</Parameter>
  */
-bool ChoiceParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool ChoiceParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("Parameter");
+//	if(bOperatorUI_)
+//		xmlStreamWriter->writeAttribute("operatorUI","true");
+//	else
+//		xmlStreamWriter->writeAttribute("operatorUI","false");
+//	xmlStreamWriter->writeAttribute("type", type_);
+//
+//	xmlStreamWriter->writeTextElement("Name", name());
+//	xmlStreamWriter->writeTextElement("Order", QString("%1").arg(order_));
+//
+//	xmlStreamWriter->writeStartElement("Choice");
+//	xmlStreamWriter->writeAttribute("default",defaultOption_);
+//
+//	//print out the options
+//	QMap<QString, ChoiceParameterOption>::const_iterator option = options_.constBegin();
+//	while(option!= options_.end())
+//	{
+//		xmlStreamWriter->writeStartElement("Option");
+//		xmlStreamWriter->writeTextElement("Type",option.value().type);
+//		xmlStreamWriter->writeTextElement("Label",option.key());
+//
+//		//if we're lucky, we can output the data as a string
+//		//this covers all numbers, dates, times, and strings
+//		xmlStreamWriter->writeStartElement("Data");
+//		if(!option.value().data.toString().isEmpty())
+//		{
+//			xmlStreamWriter->writeCharacters(option.value().data.toString());
+//		}
+//		else
+//		{
+//			//we're dealing with an unrecognized data type...
+//			return false;
+//		}
+//		xmlStreamWriter->writeEndElement(); //Data
+//
+//		xmlStreamWriter->writeEndElement(); //Option
+//
+//		option++;
+//	}
+//
+//	xmlStreamWriter->writeEndElement(); //Choice
+//	xmlStreamWriter->writeEndElement(); //Parameter
+//
+//	return true;
+//}
+//
+///*! \brief Modifies this ChoiceParameter to match XML
+// *
+// *	The XML syntax is this:
+// *
+// *	<Parameter operatorUI="true" type="Choice">
+// *		<Name>Target Color</Name>
+// *		<Order>2</Order>
+// *		<Choice default="Red">
+// *			<Option>
+// *				<Type>QColor</Type>
+// *				<Label>Red</Label>
+// *				<Data>
+// *					<QColor R="255" G="0" B="0" A="0"/>
+// *				</Data>
+// *			</Option>
+// *			<Option>
+// *				<Type>QColor</Type>
+// *				<Label>Green</Label>
+// *				<Data>
+// *					<QColor R="255" G="0" B="0" A="0"/>
+// *				</Data>
+// *			</Option>
+// *		</Choice>
+// *	</Parameter>
+// */
+//bool ChoiceParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Parameter")
+//	{
+//		addError("ChoiceParameter","Incorrect tag, expected <Parameter>",xmlStreamReader);
+//		return false;
+//	}
+//	if(xmlStreamReader->attributes().value("type").toString() != type_)
+//	{
+//		addError("ChoiceParameter","Incorrect type of parameter",xmlStreamReader);
+//		return false;
+//	}
+//
+//	//We should clear out the option list in cse this isn't a 
+//	//fresh instance
+//	options_.clear();
+//
+//	//grab the operatorUI attribute
+//	QString operatorUIStr = xmlStreamReader->attributes().value("operatorUI").toString();
+//
+//	if(operatorUIStr == "true")
+//		bOperatorUI_ = true;
+//	else
+//		bOperatorUI_ = false;
+//
+//	//loop through everything else
+//	xmlStreamReader->readNext();
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Parameter") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//Do nothing unless we're at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//		QString name = xmlStreamReader->name().toString();
+//		if(name == "Name")
+//		{
+//			name_ = xmlStreamReader->readElementText();
+//		}
+//		else if(name == "Order")
+//		{
+//			order_ = xmlStreamReader->readElementText().toInt();
+//		}
+//		else if(name == "Choice")
+//		{
+//			defaultOption_ = xmlStreamReader->attributes().value("default").toString();
+//		}
+//		else if(name == "Option")
+//		{
+//			ChoiceParameterOption newOption;
+//			QString newOptionLabel;
+//
+//			xmlStreamReader->readNext();
+//			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Option"))
+//			{
+//				if(!xmlStreamReader->isStartElement())
+//				{
+//					//Do nothing unless we're at a start element
+//					xmlStreamReader->readNext();
+//					continue;
+//				}
+//				QString name = xmlStreamReader->name().toString();
+//				if(name == "Type")
+//				{
+//					newOption.type = xmlStreamReader->readElementText();
+//				}
+//				else if(name == "Label")
+//				{
+//					newOptionLabel = xmlStreamReader->readElementText();
+//				}
+//				else if(name == "Data")
+//				{
+//					QString elementText = xmlStreamReader->readElementText();
+//					if(!elementText.isEmpty())
+//					{
+//						newOption.data = elementText;
+//						newOption.data.convert(QVariant::nameToType(newOption.type.toAscii()));
+//					}
+//					else
+//					{
+//						addError("ChoiceParameter", "Unsupported data type in option", xmlStreamReader);
+//						return false;
+//					}
+//				}
+//				else
+//				{
+//					addError("ChoiceParameter", "Unexpected tag within <Option>", xmlStreamReader);
+//					return false;
+//				}
+//				xmlStreamReader->readNext();
+//			}
+//			options_[newOptionLabel] = newOption;
+//
+//		}
+//		else
+//		{
+//			addError("ChoiceParameter", "Unexpected tag", xmlStreamReader);
+//			return false;
+//		}
+//		xmlStreamReader->readNext();
+//	}
+//
+//	if(xmlStreamReader->atEnd())
+//	{
+//		addError("ChoiceParameter", "Unexpected end of document", xmlStreamReader);
+//		return false;
+//	}
+//	return true;
+//}
+
+bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("Parameter");
-	if(bOperatorUI_)
-		xmlStreamWriter->writeAttribute("operatorUI","true");
-	else
-		xmlStreamWriter->writeAttribute("operatorUI","false");
-	xmlStreamWriter->writeAttribute("type", type_);
-
-	xmlStreamWriter->writeTextElement("Name", name());
-	xmlStreamWriter->writeTextElement("Order", QString("%1").arg(order_));
-
-	xmlStreamWriter->writeStartElement("Choice");
-	xmlStreamWriter->writeAttribute("default",defaultOption_);
-
-	//print out the options
-	QMap<QString, ChoiceParameterOption>::const_iterator option = options_.constBegin();
-	while(option!= options_.end())
-	{
-		xmlStreamWriter->writeStartElement("Option");
-		xmlStreamWriter->writeTextElement("Type",option.value().type);
-		xmlStreamWriter->writeTextElement("Label",option.key());
-
-		//if we're lucky, we can output the data as a string
-		//this covers all numbers, dates, times, and strings
-		xmlStreamWriter->writeStartElement("Data");
-		if(!option.value().data.toString().isEmpty())
-		{
-			xmlStreamWriter->writeCharacters(option.value().data.toString());
-		}
-		else
-		{
-			//we're dealing with an unrecognized data type...
-			return false;
-		}
-		xmlStreamWriter->writeEndElement(); //Data
-
-		xmlStreamWriter->writeEndElement(); //Option
-
-		option++;
-	}
-
-	xmlStreamWriter->writeEndElement(); //Choice
-	xmlStreamWriter->writeEndElement(); //Parameter
-
-	return true;
-}
-
-/*! \brief Modifies this ChoiceParameter to match XML
- *
- *	The XML syntax is this:
- *
- *	<Parameter operatorUI="true" type="Choice">
- *		<Name>Target Color</Name>
- *		<Order>2</Order>
- *		<Choice default="Red">
- *			<Option>
- *				<Type>QColor</Type>
- *				<Label>Red</Label>
- *				<Data>
- *					<QColor R="255" G="0" B="0" A="0"/>
- *				</Data>
- *			</Option>
- *			<Option>
- *				<Type>QColor</Type>
- *				<Label>Green</Label>
- *				<Data>
- *					<QColor R="255" G="0" B="0" A="0"/>
- *				</Data>
- *			</Option>
- *		</Choice>
- *	</Parameter>
- */
-bool ChoiceParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Parameter")
-	{
-		addError("ChoiceParameter","Incorrect tag, expected <Parameter>",xmlStreamReader);
-		return false;
-	}
-	if(xmlStreamReader->attributes().value("type").toString() != type_)
-	{
-		addError("ChoiceParameter","Incorrect type of parameter",xmlStreamReader);
-		return false;
-	}
-
 	//We should clear out the option list in cse this isn't a 
 	//fresh instance
 	options_.clear();
 
-	//grab the operatorUI attribute
-	QString operatorUIStr = xmlStreamReader->attributes().value("operatorUI").toString();
+	bOperatorUI_ = propertyContainer_->getPropertyValue("OperatorUI").toBool();
+	name_ = propertyContainer_->getPropertyValue("Name").toString();
+	order_ = propertyContainer_->getPropertyValue("Order").toInt();
+	defaultOption_ = propertyContainer_->getPropertyValue("Default").toBool();
 
-	if(operatorUIStr == "true")
-		bOperatorUI_ = true;
-	else
-		bOperatorUI_ = false;
-
-	//loop through everything else
-	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Parameter") && !xmlStreamReader->atEnd())
+	ChoiceParameterOption newOption;
+	QList<QSharedPointer<Serializable>> options = getGeneratedChildren("Option");
+	foreach(QSharedPointer<Serializable> option,options)
 	{
-		if(!xmlStreamReader->isStartElement())
-		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Name")
-		{
-			name_ = xmlStreamReader->readElementText();
-		}
-		else if(name == "Order")
-		{
-			order_ = xmlStreamReader->readElementText().toInt();
-		}
-		else if(name == "Choice")
-		{
-			defaultOption_ = xmlStreamReader->attributes().value("default").toString();
-		}
-		else if(name == "Option")
-		{
-			ChoiceParameterOption newOption;
-			QString newOptionLabel;
-
-			xmlStreamReader->readNext();
-			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Option"))
-			{
-				if(!xmlStreamReader->isStartElement())
-				{
-					//Do nothing unless we're at a start element
-					xmlStreamReader->readNext();
-					continue;
-				}
-				QString name = xmlStreamReader->name().toString();
-				if(name == "Type")
-				{
-					newOption.type = xmlStreamReader->readElementText();
-				}
-				else if(name == "Label")
-				{
-					newOptionLabel = xmlStreamReader->readElementText();
-				}
-				else if(name == "Data")
-				{
-					QString elementText = xmlStreamReader->readElementText();
-					if(!elementText.isEmpty())
-					{
-						newOption.data = elementText;
-						newOption.data.convert(QVariant::nameToType(newOption.type.toAscii()));
-					}
-					else
-					{
-						addError("ChoiceParameter", "Unsupported data type in option", xmlStreamReader);
-						return false;
-					}
-				}
-				else
-				{
-					addError("ChoiceParameter", "Unexpected tag within <Option>", xmlStreamReader);
-					return false;
-				}
-				xmlStreamReader->readNext();
-			}
-			options_[newOptionLabel] = newOption;
-
-		}
-		else
-		{
-			addError("ChoiceParameter", "Unexpected tag", xmlStreamReader);
-			return false;
-		}
-		xmlStreamReader->readNext();
+		newOption.data = option.staticCast<Property>()->value();
+		newOption.type = newOption.data.type();
+		options_[option.staticCast<Property>()->name()] = newOption;
 	}
 
-	if(xmlStreamReader->atEnd())
-	{
-		addError("ChoiceParameter", "Unexpected end of document", xmlStreamReader);
-		return false;
-	}
 	return true;
 }
 

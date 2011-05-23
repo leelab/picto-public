@@ -30,10 +30,11 @@ public:
 	NumericParameter();
 
 	static Parameter* NewParameter();
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new NumericParameter());};
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 	void setUnits(QString units) { units_ = units; };
 
@@ -48,6 +49,9 @@ public:
 	bool greaterThan(QVariant& RHS);
 	bool equalTo(QVariant& RHS);
 	bool lessThan(QVariant& RHS);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	int value_;

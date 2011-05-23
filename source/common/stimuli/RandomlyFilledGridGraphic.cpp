@@ -12,28 +12,47 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 													 int numHorizSquares, int numVertSquares,
 													 int numColor1, bool animated, int updateFrameRate)
 {
-	propertyContainer_->setContainerName(type);
-
-	propertyContainer_->setPropertyValue("Position",position);
-
-	propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
-
-	propertyContainer_->setPropertyValue("Color",color1);
-	propertyContainer_->addProperty(QVariant::Color,"Color2",color2);
-
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color1);
+	AddDefinableProperty(QVariant::Color,"Color2",color2);
+	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
 	//NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
-	//will not render properly.  It's the responsibility of the user to ensure this doesn't happen
-	propertyContainer_->addProperty(QVariant::Int,"Number of horizontal squares",numHorizSquares);
-	propertyContainer_->addProperty(QVariant::Int,"Number of vertical squares",numVertSquares);
+	//will not render properly.  It's the responsibility of the user to ensure this doesn't happen.
+	//This should be easlly fixed by putting a check into validateObject()
+	AddDefinableProperty(QVariant::Int,"Number of horizontal squares",numHorizSquares);
+	AddDefinableProperty(QVariant::Int,"Number of vertical squares",numVertSquares);
 
-	propertyContainer_->addProperty(QVariant::Int,"Number of squares with color1",numColor1);
+	AddDefinableProperty(QVariant::Int,"Number of squares with color1",numColor1);
 
-	propertyContainer_->addProperty(QVariant::Bool,"Animated",animated);
-	propertyContainer_->addProperty(QVariant::Int,"Update frame rate",updateFrameRate);
+	AddDefinableProperty(QVariant::Bool,"Animated",animated);
+	AddDefinableProperty(QVariant::Int,"Update frame rate",updateFrameRate);
 
-	buildColorList();
+	
 
-	draw();
+
+	//propertyContainer_->setContainerName(type);
+
+	//propertyContainer_->setPropertyValue("Position",position);
+
+	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
+
+	//propertyContainer_->setPropertyValue("Color",color1);
+	//propertyContainer_->addProperty(QVariant::Color,"Color2",color2);
+
+	////NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
+	////will not render properly.  It's the responsibility of the user to ensure this doesn't happen
+	//propertyContainer_->addProperty(QVariant::Int,"Number of horizontal squares",numHorizSquares);
+	//propertyContainer_->addProperty(QVariant::Int,"Number of vertical squares",numVertSquares);
+
+	//propertyContainer_->addProperty(QVariant::Int,"Number of squares with color1",numColor1);
+
+	//propertyContainer_->addProperty(QVariant::Bool,"Animated",animated);
+	//propertyContainer_->addProperty(QVariant::Int,"Update frame rate",updateFrameRate);
+
+	//buildColorList();
+
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -131,7 +150,7 @@ void RandomlyFilledGridGraphic::setWidth(int width)
 	setDimensions(origDims);
 }
 
-void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
 	if(propertyName == "Number of horizontal squares" ||
@@ -159,6 +178,15 @@ void RandomlyFilledGridGraphic::updateAnimation(int frame, QTime elapsedTime)
 	if(frame%updateRate == 0)
 		draw();
 	return;
+}
+
+bool RandomlyFilledGridGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	buildColorList();
+	draw();
+	return true;
 }
 
 }; //namespace Picto

@@ -24,14 +24,39 @@ StateMachine::StateMachine() :
 	ignoreInitialElement_(false)
 
 {
-	propertyContainer_->setPropertyValue("Type", "StateMachine");
-	propertyContainer_->addProperty(QVariant::String,"Initial Element","");
+	AddDefinableProperty("Name","");
+	AddDefinableProperty("Type","StateMachine");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 
-	QSharedPointer<Property> levelsEnumProp = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(), "Level",0);
+	AddDefinableProperty("InitialElement","");
+	
 	//Note that this is the same order as the enum to allow the enum to be
 	//used as an index
-	levelEnumStrs_<<"Stage"<<"Trial"<<"Task"<<"Experiment"; 
-	levelsEnumProp->addAttribute("enumNames",levelEnumStrs_);
+	levelEnumStrs_<<"Stage"<<"Trial"<<"Task"<<"Experiment";
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Level",0,"enumNames",levelEnumStrs_);
+
+	DefinePlaceholderTag("StateMachineElements");
+
+	QSharedPointer<SerializableFactory> factory(new SerializableFactory());
+	factory->addSerializableType("FlowElement",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(FlowElement::Create))));
+	factory->addSerializableType("ScriptElement",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ScriptElement::Create))));
+	factory->addSerializableType("Result",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Result::Create))));
+	factory->addSerializableType("State",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(State::Create))));
+	AddDefinableObjectFactory("StateMachineElement",factory);
+
+	AddDefinableObjectFactory("StateMachine",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(StateMachine::Create))));
+
+	AddDefinableObjectFactory("Parameters",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ParameterContainer::Create))));
+
+	DefinePlaceholderTag("Transitions");
+
+	AddDefinableObjectFactory("Transition",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Transition::Create))));
 
 	trialEventCode_ = 0;
 }
@@ -70,7 +95,7 @@ void StateMachine::addElement(QSharedPointer<StateMachineElement> element)
 void StateMachine::addParameter(QSharedPointer<Parameter> parameter)
 {
 	parameterContainer_.addParameter(parameter);
-	localParameterContainer_.addParameter(parameter);
+	localParameterContainer_->addParameter(parameter);
 }
 
 
@@ -78,7 +103,7 @@ bool StateMachine::setInitialElement(QString elementName)
 {
 	if(elements_.contains(elementName))
 	{
-		propertyContainer_->setPropertyValue("Initial Element", elementName);
+		propertyContainer_->setPropertyValue("InitialElement", elementName);
 		return true;
 	}
 	else
@@ -237,7 +262,7 @@ bool StateMachine::validateStateMachine()
 	}
 
 	//Confirm that the initial element is a real element
-	QString initialElement = propertyContainer_->getPropertyValue("Initial Element").toString();
+	QString initialElement = propertyContainer_->getPropertyValue("InitialElement").toString();
 	if(!elements_.contains(initialElement))
 	{
 		QString errMsg = QString("InitialElement: %1 is not an element of state achine: %2")
@@ -302,7 +327,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 	if(!ignoreInitialElement_)
 	{
-		currElementName = propertyContainer_->getPropertyValue("Initial Element").toString();
+		currElementName = propertyContainer_->getPropertyValue("InitialElement").toString();
 		currElement_ = elements_.value(currElementName);
 	}
 	else
@@ -427,6 +452,7 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
 	//initialize scripting on all of the contained elements
 	foreach(QSharedPointer<StateMachineElement> element, elements_)
 	{
+		qDebug(element->getName().toAscii());
 		if(!element->initScripting(qsEngine_))
 			return false;
 	}
@@ -476,7 +502,7 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	alignData.setTimestamp(timestamp);
 
 	xmlWriter->writeStartElement("Data");
-	alignData.serializeAsXml(xmlWriter);
+	alignData.toXml(xmlWriter);
 	xmlWriter->writeEndElement();
 
 
@@ -567,7 +593,7 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 	stateData.setTransition(transition,timestamp,qualifiedName);
 
 	xmlWriter->writeStartElement("Data");
-	stateData.serializeAsXml(xmlWriter);
+	stateData.toXml(xmlWriter);
 	xmlWriter->writeEndElement();
 
 
@@ -670,234 +696,268 @@ void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
  *		</Results>
  *	</StateMachine>
  */
-bool StateMachine::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool StateMachine::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("StateMachine");
+//	xmlStreamWriter->writeTextElement("Name",propertyContainer_->getPropertyValue("Name").toString());
+//	xmlStreamWriter->writeTextElement("Level",propertyContainer_->getPropertyValue("Level").toString());
+//	xmlStreamWriter->writeTextElement("InitialElement",propertyContainer_->getPropertyValue("InitialElement").toString());
+//
+//	//StateMachineElements
+//	xmlStreamWriter->writeStartElement("StateMachineElements");
+//	foreach(QSharedPointer<StateMachineElement> element, elements_)
+//	{
+//		element->toXml(xmlStreamWriter);
+//	}
+//	xmlStreamWriter->writeEndElement(); //StateMachineElements
+//
+//	//Parameters
+//	//We only need to output the local parameters (otherwise we'd end up with
+//	//a really long and confusing list)
+//	localParameterContainer_->toXml(xmlStreamWriter);
+//
+//	//Transitions
+//	xmlStreamWriter->writeStartElement("Transitions");
+//	foreach(QSharedPointer<Transition> transition, transitions_)
+//	{
+//		transition->toXml(xmlStreamWriter);
+//	}
+//	xmlStreamWriter->writeEndElement(); //Transitions
+//
+//	//Results
+//	//Technically this is redundant, since the results are all listed in the
+//	//STateMachineElements section, but these are included for readability
+//	serializeResults(xmlStreamWriter);
+//
+//	xmlStreamWriter->writeEndElement(); //StateMachine
+//
+//	return true;
+//}
+//
+//bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachine")
+//	{
+//		addError("StateMachine","Incorrect tag, expected <StateMachine>",xmlStreamReader);
+//		return false;
+//	}
+//
+//	xmlStreamReader->readNext();
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachine") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//Do nothing unless we're at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//
+//		QString name = xmlStreamReader->name().toString();
+//		if(name == "Name")
+//		{
+//			propertyContainer_->setPropertyValue("Name",xmlStreamReader->readElementText());
+//		}
+//		else if(name == "InitialElement")
+//		{
+//			propertyContainer_->setPropertyValue("InitialElement",xmlStreamReader->readElementText());
+//		}
+//		else if(name == "Level")
+//		{
+//			int levelIndex = levelEnumStrs_.indexOf(xmlStreamReader->readElementText());
+//
+//			if(levelIndex <0)
+//			{
+//				addError("StateMachine", "Unrecognized value inside Level tag", xmlStreamReader);
+//				return false;
+//			}
+//
+//			propertyContainer_->setPropertyValue("Level",levelIndex);
+//		}
+//		else if(name == "StateMachineElements")
+//		{
+//			xmlStreamReader->readNext();
+//			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElements") && !xmlStreamReader->atEnd())
+//			{
+//				if(!xmlStreamReader->isStartElement())
+//				{
+//					//Do nothing unless we're at a start element
+//					xmlStreamReader->readNext();
+//					continue;
+//				}
+//
+//				name = xmlStreamReader->name().toString();
+//				if(name == "StateMachineElement")
+//				{
+//					//I could use a StateMachineElementFactory here, but that seems like overkill, since there
+//					//aren't that many StateMachineElement types
+//					QString elementType = xmlStreamReader->attributes().value("type").toString();
+//					QSharedPointer<StateMachineElement> newElement;
+//					if(elementType == "FlowElement")
+//					{
+//						newElement = QSharedPointer<StateMachineElement>(new FlowElement());
+//					}
+//					else if(elementType == "ScriptElement")
+//					{
+//						newElement = QSharedPointer<StateMachineElement>(new ScriptElement());
+//					}
+//					else if(elementType == "Result")
+//					{
+//						newElement = QSharedPointer<StateMachineElement>(new Result());
+//					}
+//					else if(elementType == "State")
+//					{
+//						newElement = QSharedPointer<StateMachineElement>(new State());
+//					}
+//					else
+//					{
+//						addError("StateMachine", "Unexpected type of StateMachineElement", xmlStreamReader);
+//						return false;
+//					}
+//
+//					if(!newElement->fromXml(xmlStreamReader))
+//					{
+//						addError("StateMachine", "Failed to deserialize <StateMachineElement>", xmlStreamReader);
+//						return false;
+//					}
+//					addElement(newElement);
+//				}
+//				else if(name == "StateMachine")
+//				{
+//					QSharedPointer<StateMachine> newMachine(new StateMachine);
+//					if(!newMachine->fromXml(xmlStreamReader))
+//					{
+//						addError("StateMachine", "Failed to deserialize <StateMachine> within <StateMachineElements>", xmlStreamReader);
+//						return false;
+//					}
+//					newMachine->addParameters(parameterContainer_);
+//					addElement(newMachine);
+//				}
+//				else
+//				{
+//					addError("StateMachine", "Unexpected tag encountered within <StateMachineElements>", xmlStreamReader);
+//					return false;
+//				}
+//				xmlStreamReader->readNext();
+//			}
+//			if(xmlStreamReader->atEnd())
+//			{
+//				addError("StateMachine", "Unexpected end of document encountered within <StateMachineElements>", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else if(name == "Parameters")
+//		{
+//			if(!localParameterContainer_->fromXml(xmlStreamReader))
+//			{
+//				addError("StateMachine","Failed to deserialize <Parameters>",xmlStreamReader);
+//				return false;
+//			}
+//			
+//			//Now our local parameter container is filled up, so we want
+//			//to copy all of these values to the global container (which may already
+//			//contain parameters)
+//			addParameters(localParameterContainer_);
+//		}
+//		else if(name == "Transitions")
+//		{
+//			xmlStreamReader->readNext();
+//			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Transitions") && !xmlStreamReader->atEnd())
+//			{
+//				if(!xmlStreamReader->isStartElement())
+//				{
+//					//Do nothing unless we're at a start element
+//					xmlStreamReader->readNext();
+//					continue;
+//				}
+//
+//				name = xmlStreamReader->name().toString();
+//				if(name == "Transition")
+//				{
+//					QSharedPointer<Transition> newTrans(new Transition());
+//					if(!newTrans->fromXml(xmlStreamReader))
+//					{
+//						addError("StateMachine", "Failed to deserialize <Transition>", xmlStreamReader);
+//						return false;
+//					}
+//					addTransition(newTrans);
+//				}
+//				else
+//				{
+//					addError("StateMachine", "unexpected tag within <Transitions>", xmlStreamReader);
+//					return false;
+//				}
+//				xmlStreamReader->readNext();
+//
+//			}
+//			if(xmlStreamReader->atEnd())
+//			{
+//				addError("StateMachine", "Unexpected end of document encountered within <Transitions>", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else if(name == "Results")
+//		{
+//			//The results were already generated when they were encountered in the 
+//			//StateMachineElement section (they're just included in the XML for readability)
+//			//So, we'll skip reading this section.
+//			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Results") && !xmlStreamReader->atEnd())
+//			{
+//				xmlStreamReader->readNext();
+//			}
+//			if(xmlStreamReader->atEnd())
+//			{
+//				addError("StateMachine", "Unexpected end of document encountered within <Results>", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else
+//		{
+//			addError("StateMachine", "Unexpected tag", xmlStreamReader);
+//			return false;
+//		}
+//		xmlStreamReader->readNext();
+//	}
+//
+//	if(xmlStreamReader->atEnd())
+//	{
+//		addError("StateMachine", "Unexpected end of document", xmlStreamReader);
+//		return false;
+//	}
+//	return true;
+//}
+
+bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("StateMachine");
-	xmlStreamWriter->writeTextElement("Name",propertyContainer_->getPropertyValue("Name").toString());
-	xmlStreamWriter->writeTextElement("Level",propertyContainer_->getPropertyValue("Level").toString());
-	xmlStreamWriter->writeTextElement("InitialElement",propertyContainer_->getPropertyValue("Initial Element").toString());
-
-	//StateMachineElements
-	xmlStreamWriter->writeStartElement("StateMachineElements");
-	foreach(QSharedPointer<StateMachineElement> element, elements_)
+	//We load this StateMachine's Local Parameters before adding any children so that the parameters 
+	//are available to add to the children in addElement().
+	QList<QSharedPointer<Serializable>> localParamContainers = getGeneratedChildren("Parameters");
+	if(!localParamContainers.isEmpty())
 	{
-		element->serializeAsXml(xmlStreamWriter);
+		localParameterContainer_ = localParamContainers.first().staticCast<ParameterContainer>();
+		addParameters(localParameterContainer_);
 	}
-	xmlStreamWriter->writeEndElement(); //StateMachineElements
 
-	//Parameters
-	//We only need to output the local parameters (otherwise we'd end up with
-	//a really long and confusing list)
-	localParameterContainer_.serializeAsXml(xmlStreamWriter);
-
-	//Transitions
-	xmlStreamWriter->writeStartElement("Transitions");
-	foreach(QSharedPointer<Transition> transition, transitions_)
+	QList<QSharedPointer<Serializable>> newStateMachElems = getGeneratedChildren("StateMachineElement");
+	foreach(QSharedPointer<Serializable> newStateMachElem,newStateMachElems)
 	{
-		transition->serializeAsXml(xmlStreamWriter);
+		addElement(newStateMachElem.staticCast<StateMachineElement>());
 	}
-	xmlStreamWriter->writeEndElement(); //Transitions
 
-	//Results
-	//Technically this is redundant, since the results are all listed in the
-	//STateMachineElements section, but these are included for readability
-	serializeResults(xmlStreamWriter);
+	//This must happen after adding this StateMachine's Local Parameters (see comment above)
+	QList<QSharedPointer<Serializable>> newStateMachs = getGeneratedChildren("StateMachine");
+	foreach(QSharedPointer<Serializable> newStateMach,newStateMachs)
+	{
+		addElement(newStateMach.staticCast<StateMachine>());
+	}
 
-	xmlStreamWriter->writeEndElement(); //StateMachine
+	QList<QSharedPointer<Serializable>> newTransitions = getGeneratedChildren("Transition");
+	foreach(QSharedPointer<Serializable> newTransition,newTransitions)
+	{
+		addTransition(newTransition.staticCast<Transition>());
+	}
 
 	return true;
 }
 
-bool StateMachine::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachine")
-	{
-		addError("StateMachine","Incorrect tag, expected <StateMachine>",xmlStreamReader);
-		return false;
-	}
-
-	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachine") && !xmlStreamReader->atEnd())
-	{
-		if(!xmlStreamReader->isStartElement())
-		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Name")
-		{
-			propertyContainer_->setPropertyValue("Name",xmlStreamReader->readElementText());
-		}
-		else if(name == "InitialElement")
-		{
-			propertyContainer_->setPropertyValue("Initial Element",xmlStreamReader->readElementText());
-		}
-		else if(name == "Level")
-		{
-			int levelIndex = levelEnumStrs_.indexOf(xmlStreamReader->readElementText());
-
-			if(levelIndex <0)
-			{
-				addError("StateMachine", "Unrecognized value inside Level tag", xmlStreamReader);
-				return false;
-			}
-
-			propertyContainer_->setPropertyValue("Level",levelIndex);
-		}
-		else if(name == "StateMachineElements")
-		{
-			xmlStreamReader->readNext();
-			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElements") && !xmlStreamReader->atEnd())
-			{
-				if(!xmlStreamReader->isStartElement())
-				{
-					//Do nothing unless we're at a start element
-					xmlStreamReader->readNext();
-					continue;
-				}
-
-				name = xmlStreamReader->name().toString();
-				if(name == "StateMachineElement")
-				{
-					//I could use a StateMachineElementFactory here, but that seems like overkill, since there
-					//aren't that many StateMachineElement types
-					QString elementType = xmlStreamReader->attributes().value("type").toString();
-					QSharedPointer<StateMachineElement> newElement;
-					if(elementType == "FlowElement")
-					{
-						newElement = QSharedPointer<StateMachineElement>(new FlowElement());
-					}
-					else if(elementType == "ScriptElement")
-					{
-						newElement = QSharedPointer<StateMachineElement>(new ScriptElement());
-					}
-					else if(elementType == "Result")
-					{
-						newElement = QSharedPointer<StateMachineElement>(new Result());
-					}
-					else if(elementType == "State")
-					{
-						newElement = QSharedPointer<StateMachineElement>(new State());
-					}
-					else
-					{
-						addError("StateMachine", "Unexpected type of StateMachineElement", xmlStreamReader);
-						return false;
-					}
-
-					if(!newElement->deserializeFromXml(xmlStreamReader))
-					{
-						addError("StateMachine", "Failed to deserialize <StateMachineElement>", xmlStreamReader);
-						return false;
-					}
-					addElement(newElement);
-				}
-				else if(name == "StateMachine")
-				{
-					QSharedPointer<StateMachine> newMachine(new StateMachine);
-					if(!newMachine->deserializeFromXml(xmlStreamReader))
-					{
-						addError("StateMachine", "Failed to deserialize <StateMachine> within <StateMachineElements>", xmlStreamReader);
-						return false;
-					}
-					newMachine->addParameters(parameterContainer_);
-					addElement(newMachine);
-				}
-				else
-				{
-					addError("StateMachine", "Unexpected tag encountered within <StateMachineElements>", xmlStreamReader);
-					return false;
-				}
-				xmlStreamReader->readNext();
-			}
-			if(xmlStreamReader->atEnd())
-			{
-				addError("StateMachine", "Unexpected end of document encountered within <StateMachineElements>", xmlStreamReader);
-				return false;
-			}
-		}
-		else if(name == "Parameters")
-		{
-			if(!localParameterContainer_.deserializeFromXml(xmlStreamReader))
-			{
-				addError("StateMachine","Failed to deserialize <Parameters>",xmlStreamReader);
-				return false;
-			}
-			
-			//Now our local parameter container is filled up, so we want
-			//to copy all of these values to the global container (which may already
-			//contain parameters)
-			addParameters(localParameterContainer_);
-		}
-		else if(name == "Transitions")
-		{
-			xmlStreamReader->readNext();
-			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Transitions") && !xmlStreamReader->atEnd())
-			{
-				if(!xmlStreamReader->isStartElement())
-				{
-					//Do nothing unless we're at a start element
-					xmlStreamReader->readNext();
-					continue;
-				}
-
-				name = xmlStreamReader->name().toString();
-				if(name == "Transition")
-				{
-					QSharedPointer<Transition> newTrans(new Transition());
-					if(!newTrans->deserializeFromXml(xmlStreamReader))
-					{
-						addError("StateMachine", "Failed to deserialize <Transition>", xmlStreamReader);
-						return false;
-					}
-					addTransition(newTrans);
-				}
-				else
-				{
-					addError("StateMachine", "unexpected tag within <Transitions>", xmlStreamReader);
-					return false;
-				}
-				xmlStreamReader->readNext();
-
-			}
-			if(xmlStreamReader->atEnd())
-			{
-				addError("StateMachine", "Unexpected end of document encountered within <Transitions>", xmlStreamReader);
-				return false;
-			}
-		}
-		else if(name == "Results")
-		{
-			//The results were already generated when they were encountered in the 
-			//StateMachineElement section (they're just included in the XML for readability)
-			//So, we'll skip reading this section.
-			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Results") && !xmlStreamReader->atEnd())
-			{
-				xmlStreamReader->readNext();
-			}
-			if(xmlStreamReader->atEnd())
-			{
-				addError("StateMachine", "Unexpected end of document encountered within <Results>", xmlStreamReader);
-				return false;
-			}
-		}
-		else
-		{
-			addError("StateMachine", "Unexpected tag", xmlStreamReader);
-			return false;
-		}
-		xmlStreamReader->readNext();
-	}
-
-	if(xmlStreamReader->atEnd())
-	{
-		addError("StateMachine", "Unexpected end of document", xmlStreamReader);
-		return false;
-	}
-	return true;
-}
 }; //namespace Picto

@@ -35,6 +35,10 @@ public:
 	//Data store functions
 	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:
 
 	QList<QSharedPointer<FrameUnitDataStore>> data_;

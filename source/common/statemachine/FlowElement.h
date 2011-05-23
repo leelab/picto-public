@@ -18,7 +18,7 @@ namespace Picto {
  *	When the run is called on a flow element, it works throw the conditions (in a user
  *	defined order) until one of them evaluates true.  The element then returns the
  *	name of the condition that evaluated true as its result.  If none of the conditions
- *	evaluate true, then a defulat value is returned.
+ *	evaluate true, then a default value is returned.
  */
 
 #if defined WIN32 || defined WINCE
@@ -30,16 +30,18 @@ class FlowElement : public StateMachineElement
 public:
 	FlowElement();
 	//FlowElement(QSharedPointer<ParameterContainer> parameters);
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new FlowElement());};
 	
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
-	bool addCondition(QSharedPointer<PredicateExpression> predExpr, int order, QString name);
-	bool addCondition(QSharedPointer<CompoundExpression> compExpr, int order, QString name);
+	bool addCondition(QSharedPointer<PredicateExpression> predExpr);
+	bool addCondition(QSharedPointer<CompoundExpression> compExpr);
 
-	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	////DataStore functions
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 	typedef struct
 	{
@@ -49,6 +51,9 @@ public:
 		int order;
 		QString name;
 	} Condition;
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QList<Condition> conditions_;

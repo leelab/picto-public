@@ -70,7 +70,7 @@ void DirectorStatusManager::doServerUpdate()
 		alignData.setTimestamp(timestamp);
 
 		xmlWriter->writeStartElement("Data");
-		alignData.serializeAsXml(xmlWriter);
+		alignData.toXml(xmlWriter);
 		xmlWriter->writeEndElement();
 
 		command->setContent(alignDataXml);

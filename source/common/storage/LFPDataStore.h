@@ -64,6 +64,10 @@ public:
 	QString getTimes(){return times_;};
 	QString getFittedTimes(){return fittedTimes_;};
 	QVector<QString> getPotentials(){return potentials_;};
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:
 	int channel_;
 	double correlation_;

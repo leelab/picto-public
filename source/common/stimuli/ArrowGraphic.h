@@ -28,6 +28,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ArrowGraphic());};
 
 	QPoint getStartPoint() { return propertyContainer_->getPropertyValue("Start").toPoint(); };
 	QPoint getEndPoint() { return propertyContainer_->getPropertyValue("End").toPoint(); };
@@ -46,6 +47,9 @@ public slots:
 	void setEndPoint(int x, int y) { setEndPoint(QPoint(x,y)); };
 	int getSize() {return propertyContainer_->getPropertyValue("Size").toInt(); };
 	void setSize(int size) { propertyContainer_->setPropertyValue("Size", size);};
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

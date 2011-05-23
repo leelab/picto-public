@@ -71,6 +71,12 @@ bool NeuralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 	}
 	return true;
 }
+
+bool NeuralDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
+}
+
 //! \brief Waveform should be formatted as "X X X X " where each X is an int
 void NeuralDataStore::setWaveformFromString(QString waveform)
 {

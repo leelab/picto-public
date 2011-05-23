@@ -1,7 +1,7 @@
-#ifndef _PropertyFactory_H_
-#define _PropertyFactory_H_
+#ifndef _PROPERTYFACTORY_H_
+#define _PROPERTYFACTORY_H_
 
-#include "DataStoreFactory.h"
+#include "SerializableFactory.h"
 #include "../Property/PropertyContainer.h"
 
 #include <QSharedPointer>
@@ -11,30 +11,32 @@
 
 namespace Picto {
 
-class DataStore;
-
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PropertyFactory : public DataStoreFactory
+class PICTOLIB_API PropertyFactory : public SerializableFactory
 #else
-class PropertyFactory : public DataStoreFactory
+class PropertyFactory : public SerializableFactory
 #endif
 {
 public:
 	PropertyFactory(
-		int minDataStores,
-		int maxDataStores,
+		int minSerializables,
+		int maxSerializables,
 		QSharedPointer<PropertyContainer> propContainer,
 		int propertyType, 
-		QString propIdentifier, 
-		QVector<QSharedPointer<DataStore>> defaultDataStores = QVector<QSharedPointer<DataStore>>()
+		QString propIdentifier,
+		QVariant defaultValue = QVariant(),
+		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>(),
+		QVector<QSharedPointer<Serializable>> defaultSerializables = QVector<QSharedPointer<Serializable>>()
 		);
 	
 protected:
-	virtual QSharedPointer<DataStore> generateNewDataStore();
+	virtual QSharedPointer<Serializable> generateNewSerializable();
 private:
 	QSharedPointer<PropertyContainer> propContainer_;
 	int propertyType_;
 	QString propIdentifier_;
+	QMap<QString,QVariant> attributeMap_;
+	QVariant defaultValue_;
 };
 
 }; //namespace Picto

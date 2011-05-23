@@ -29,15 +29,19 @@ class ParameterContainer : public DataStore
 	Q_OBJECT
 public:
 	ParameterContainer();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ParameterContainer());};
 
 	void addParameter(QSharedPointer<Parameter> parameter);
 	QSharedPointer<Parameter> getParameter(QString name);
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 	QStringList getParameterList();
 
 	void bindToScriptEngine(QScriptEngine &engine);
 
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QMap<QString, QSharedPointer<Parameter> > parameters_;

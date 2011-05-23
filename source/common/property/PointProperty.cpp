@@ -17,12 +17,13 @@ void PointProperty::UpdateSerializationAttributesFromValue()
 	SetSerializationAttributeValue("x",point.x());
 	SetSerializationAttributeValue("y",point.y());
 }
-void PointProperty::SetValueFromDeserializedData(QVariant _value)
+bool PointProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	QPoint point;
 	point.setX(GetSerializationAttributeValue("x").toInt());
 	point.setY(GetSerializationAttributeValue("y").toInt());\
 	setValue(point);
+	return true;
 }
 
 }; //namespace Picto

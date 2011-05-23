@@ -65,7 +65,7 @@ bool BehavioralDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStr
 
 	foreach(QSharedPointer<BehavioralUnitDataStore> dataPoint, data_)
 	{
-		dataPoint->serializeAsXml(xmlStreamWriter);
+		dataPoint->toXml(xmlStreamWriter);
 	}
 
 	xmlStreamWriter->writeEndElement(); //BehavioralDataStore
@@ -98,7 +98,7 @@ bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 		if(name == "BehavioralUnitDataStore")
 		{
 			QSharedPointer<BehavioralUnitDataStore> newPoint(new BehavioralUnitDataStore());
-			newPoint->deserializeFromXml(xmlStreamReader);
+			newPoint->fromXml(xmlStreamReader);
 			data_.append(newPoint);
 		}
 		else
@@ -114,6 +114,11 @@ bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 		addError("BehavioralDataStore", "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
+	return true;
+}
+
+bool BehavioralDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
 	return true;
 }
 

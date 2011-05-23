@@ -44,6 +44,9 @@ public:
 	QSharedPointer<QList<int>> getWaveform(){return waveform_;}
 	QString getWaveformAsString();
 
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:
 double timestamp_;
 double fittedtime_;

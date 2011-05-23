@@ -321,7 +321,7 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 			if(timer.elapsed() >= acceptableTimeoutMs)
 				return false;
 			consumerSocket_->connectToHost(serverAddr_, serverPort_, QIODevice::ReadWrite);
-			int remainingTime = acceptableTimeoutMs = timer.elapsed();
+			int remainingTime = acceptableTimeoutMs - timer.elapsed();
 			if(remainingTime <= 0.0)
 				return false;
 			consumerSocket_->waitForConnected(remainingTime);

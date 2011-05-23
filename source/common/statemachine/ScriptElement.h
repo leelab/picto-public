@@ -32,7 +32,8 @@ class ScriptElement : public StateMachineElement
 {
 public:
 	ScriptElement();
-	
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ScriptElement());};
+
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
@@ -43,6 +44,9 @@ public:
 	//DataStore functions
 //	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 //	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private:
 	QScriptEngine *qsEngine_;

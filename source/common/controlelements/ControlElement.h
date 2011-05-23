@@ -54,7 +54,6 @@ public:
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 protected:
-	QSharedPointer<PropertyContainer> propertyContainer_;
 	QStringList results_;
 
 	bool operatorVisible_;

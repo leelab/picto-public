@@ -102,7 +102,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		{
 			//Extract the behavioralDataStore
 			QSharedPointer<Picto::BehavioralDataStore> behaveData(new Picto::BehavioralDataStore());
-			behaveData->deserializeFromXml(xmlReader);
+			behaveData->fromXml(xmlReader);
 
 			sessionInfo->insertBehavioralData(behaveData);
 		}
@@ -110,21 +110,21 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		{
 			//deserialize the data store
 			QSharedPointer<Picto::StateDataStore> stateData(new Picto::StateDataStore());
-			stateData->deserializeFromXml(xmlReader);
+			stateData->fromXml(xmlReader);
 
 			sessionInfo->insertStateData(stateData);
 		}
 		else if(dataType == "FrameDataStore")
 		{
 			QSharedPointer<Picto::FrameDataStore> frameData(new Picto::FrameDataStore());
-			frameData->deserializeFromXml(xmlReader);
+			frameData->fromXml(xmlReader);
 
 			sessionInfo->insertFrameData(frameData);
 		}
 		else if(dataType == "RewardDataStore")
 		{
 			QSharedPointer<Picto::RewardDataStore> rewardData(new Picto::RewardDataStore());
-			rewardData->deserializeFromXml(xmlReader);
+			rewardData->fromXml(xmlReader);
 
 			sessionInfo->insertRewardData(rewardData);
 		}
@@ -132,7 +132,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		{
 			/*commandProcessingTimer.start();*/
 			QSharedPointer<Picto::NeuralDataStore> neuralData(new Picto::NeuralDataStore());
-			neuralData->deserializeFromXml(xmlReader);
+			neuralData->fromXml(xmlReader);
 			//qDebug((QString("Time to deserialize neural data: ")+QString::number(timer.elapsed())).toAscii()); 
 			sessionInfo->insertNeuralData(neuralData);
 			//qDebug("NEURAL " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
@@ -141,7 +141,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		{
 			/*commandProcessingTimer.start();*/
 			QSharedPointer<Picto::AlignmentDataStore> alignmentData(new Picto::AlignmentDataStore());
-			alignmentData->deserializeFromXml(xmlReader);
+			alignmentData->fromXml(xmlReader);
 
 			sessionInfo->insertAlignmentData(alignmentData);
 			//if(sourceType == "PROXY")
@@ -151,7 +151,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		{
 			/*commandProcessingTimer.start();*/
 			QSharedPointer<Picto::LFPDataStore> lfpData(new Picto::LFPDataStore());
-			lfpData->deserializeFromXml(xmlReader);
+			lfpData->fromXml(xmlReader);
 			//qDebug("LFPDeserialize  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 
 			sessionInfo->insertLFPData(lfpData);

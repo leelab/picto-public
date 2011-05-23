@@ -1031,7 +1031,7 @@ bool RemoteViewer::startSession()
 
 	if(xmlReader->atEnd())
 		return false;
-	if(!activeExperiment_->deserializeFromXml(xmlReader))
+	if(!activeExperiment_->fromXml(xmlReader))
 	{
 		//delete activeExperiment_;
 		return false;
@@ -1225,7 +1225,7 @@ bool RemoteViewer::joinSession()
 
 		if(!xmlReader->atEnd())
 		{
-			if(!activeExperiment_->deserializeFromXml(xmlReader))
+			if(!activeExperiment_->fromXml(xmlReader))
 			{
 				setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"));
 				return false;
@@ -1293,7 +1293,7 @@ bool RemoteViewer::joinSession()
 			//If we're here, there is state data to read, meaning that an experiment is in progress
 
 			Picto::StateDataStore data;
-			data.deserializeFromXml(xmlReader);
+			data.fromXml(xmlReader);
 
 			lastTransitionTime = data.getTime();
 			currentStateMachinePath = data.getMachinePath().split("::");

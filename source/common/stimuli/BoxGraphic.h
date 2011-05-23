@@ -26,6 +26,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new BoxGraphic());};
 
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);
@@ -38,6 +39,8 @@ public slots:
 	int getHeight() { return getDimensions().height(); };
 	void setHeight(int height);
 
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

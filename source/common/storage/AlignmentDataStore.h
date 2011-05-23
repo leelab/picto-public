@@ -37,6 +37,9 @@ public:
 	int hasAlignNumber(){return (alignNumber_ != -1);};
 	int getAlignNumber(){return alignNumber_;}
 
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:
 double timestamp_;
 int alignCode_;

@@ -30,7 +30,7 @@ bool FrameDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 
 	foreach(QSharedPointer<FrameUnitDataStore> data, data_)
 	{
-		data->serializeAsXml(xmlStreamWriter);
+		data->toXml(xmlStreamWriter);
 	}
 
 	xmlStreamWriter->writeEndElement(); //BehavioralDataStore
@@ -63,7 +63,7 @@ bool FrameDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		if(name == "FrameUnitDataStore")
 		{
 			QSharedPointer<FrameUnitDataStore> data(new FrameUnitDataStore());
-			data->deserializeFromXml(xmlStreamReader);
+			data->fromXml(xmlStreamReader);
 			data_.append(data);
 		}
 		else
@@ -79,6 +79,11 @@ bool FrameDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		addError("FrameDataStore", "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
+	return true;
+}
+
+bool FrameDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
 	return true;
 }
 

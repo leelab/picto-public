@@ -33,6 +33,9 @@ public:
 	double y;
 	double t;
 
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 };
 
 

@@ -129,5 +129,10 @@ bool RewardDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 	return true;
 }
 
+bool RewardDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
+}
+
 
 }; //namespace Picto

@@ -15,19 +15,28 @@ Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject
 	serverPort(port),
 	QTcpServer(parent)
 {
-	QList<QHostAddress> hostAddresses = QNetworkInterface::allAddresses();
-
-	//Use the first IPv4 address that isn't localhost
+	//Use the first IPv4 address that isn't localhost and is on an interface that is up and running
 	//This will probably be a valid ip address, but there could still be issues...
-	foreach(QHostAddress addr, hostAddresses)
+	QList<QNetworkInterface> networkInterfaces = QNetworkInterface::allInterfaces();
+	foreach(QNetworkInterface inter, networkInterfaces)
 	{
-		QString blah = addr.toString();
-		if(addr.protocol() == QAbstractSocket::IPv4Protocol && addr != QHostAddress::LocalHost)
+		QList<QNetworkAddressEntry> hostAddresses = inter.addressEntries();
+		if( !(inter.flags() & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning)) )
+			continue;
+		foreach(QNetworkAddressEntry addrEntry, hostAddresses)
 		{
-			serverAddress.setAddress(addr.toIPv4Address());
-			break;
+			QHostAddress addr = addrEntry.ip();
+			if(addr.protocol() == QAbstractSocket::IPv4Protocol 
+				&& addr != QHostAddress::LocalHost)
+			{
+				serverAddress.setAddress(addr.toIPv4Address());
+				break;
+			}
 		}
+		if(!serverAddress.isNull())
+			break;
 	}
+	Q_ASSERT_X(!serverAddress.isNull(),"Server::Server","Server does not appear to have a working network connection.");
 
 	listen(serverAddress, port);
 

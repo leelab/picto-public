@@ -8,15 +8,19 @@ const QString EllipseGraphic::type = "Ellipse Graphic";
 
 EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	propertyContainer_->setContainerName(type);
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color);
+	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	//propertyContainer_->setContainerName(type);
 
-	propertyContainer_->setPropertyValue("Position",position);
+	//propertyContainer_->setPropertyValue("Position",position);
 
-	propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
+	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
 
-	propertyContainer_->setPropertyValue("Color",color);
+	//propertyContainer_->setPropertyValue("Color",color);
 
-	draw();
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -61,7 +65,7 @@ void EllipseGraphic::setWidth(int width)
 	origDims.setWidth(width);
 	setDimensions(origDims);
 }
-void EllipseGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void EllipseGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")
@@ -70,5 +74,12 @@ void EllipseGraphic::slotPropertyValueChanged(QString propertyName, int index,
 	}
 }
 
+bool EllipseGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
+}
 
 }; //namespace Picto

@@ -29,10 +29,11 @@ public:
 	BooleanParameter();
 
 	static Parameter* NewParameter();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new BooleanParameter());};
 
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void setDefaultValue(bool defaultValue) { defaultValue_ = defaultValue; };
 	void setTrueLabel(QString label) { trueLabel_ = label; };
@@ -42,6 +43,9 @@ public:
 	//so they will always return false
 	bool equalTo(Parameter& RHS) { return RHS.getValue().toBool() == value_ && RHS.type() == "Boolean"; };
 	bool equalTo(QVariant& RHS) { return (RHS.type() == QVariant::Bool) && (RHS.toBool() == value_); };
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	bool value_;

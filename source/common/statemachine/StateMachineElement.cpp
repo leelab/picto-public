@@ -12,17 +12,16 @@ namespace Picto {
 
 StateMachineElement::StateMachineElement()
 {
-	propertyContainer_ = PropertyContainer::create("StateMachineElement");
-	propertyContainer_->addProperty(QVariant::String,"Name","");
-	propertyContainer_->addProperty(QVariant::String,"Type","");
+	DefinePlaceholderTag("Results");
+	AddDefinableProperty(QVariant::String,"DefaultResult","",0,1);
+	AddDefinableProperty(QVariant::String,"Result","",0,-1);
 	defaultResult_ = "";
 }
 
 StateMachineElement::StateMachineElement(QSharedPointer<ParameterContainer> parameters)
 {
-	propertyContainer_ = PropertyContainer::create("StateMachineElement");
-	propertyContainer_->addProperty(QVariant::String,"Name","");
-	propertyContainer_->addProperty(QVariant::String,"Type","");
+	//propertyContainer_->addProperty(QVariant::String,"Name","");
+	//propertyContainer_->addProperty(QVariant::String,"Type","");
 	defaultResult_ = "";
 
 	addParameters(parameters);
@@ -153,7 +152,7 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 		{
 
 			StateDataStore data;
-			data.deserializeFromXml(xmlReader);
+			data.fromXml(xmlReader);
 			
 			//Even if multiple transitions have stacked up, we are expecting that data to be
 			//in temporal order, so we can simply return the first response.  However, we are
@@ -223,93 +222,121 @@ void StateMachineElement::processStatusDirective(QSharedPointer<Engine::PictoEng
  *	a state machine, this function probably shouldn't be used, since 
  *	you can call serialize on the result objects directly.
  */
-bool StateMachineElement::serializeResults(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool StateMachineElement::serializeResults(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("Results");
+//
+//	foreach(QString result, results_)
+//	{
+//		xmlStreamWriter->writeStartElement("Result");
+//		xmlStreamWriter->writeTextElement("Name",result);
+//		xmlStreamWriter->writeEndElement(); //Result
+//	}
+//
+//	if(!defaultResult_.isEmpty())
+//	{
+//		xmlStreamWriter->writeStartElement("Result");
+//		xmlStreamWriter->writeAttribute("type","default");
+//		xmlStreamWriter->writeTextElement("Name",defaultResult_);
+//		xmlStreamWriter->writeEndElement(); //Result
+//	}
+//
+//
+//	xmlStreamWriter->writeEndElement(); //Results
+//	return true;
+//}
+//
+///*!	\Brief A simple function to generate the result list from XML
+// *
+// *	This function may not be needed in all StateMachineElements (for example, the
+// *	FlowElement generates the result list from the passed in conditions, and
+// *	ignores this section of the XML)
+// */
+//bool StateMachineElement::deserializeResults(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement())
+//		return false;
+//	if(xmlStreamReader->name() != "Results")
+//		return false;
+//
+//	xmlStreamReader->readNext();
+//	bool isDefault = false;
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Results") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//Do nothing unless we're at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//
+//		QString name = xmlStreamReader->name().toString();
+//		if(name == "Result")
+//		{
+//			if(xmlStreamReader->attributes().value("type").toString() == "default")
+//				isDefault = true;
+//		}
+//		else if(name == "Name")
+//		{
+//			QString resultName = xmlStreamReader->readElementText();
+//			if(resultName == "EngineAbort")
+//			{
+//				addError("StateMachineElement", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
+//				return false;
+//			}
+//
+//			if(isDefault)
+//			{
+//				defaultResult_ = resultName;
+//				isDefault = false;
+//			}
+//			else
+//			{
+//				//add the result name to our list, but only if it isn't already there...
+//				if(!results_.contains(resultName))
+//					results_.append(resultName);
+//			}
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//		xmlStreamReader->readNext();
+//	}
+//	if(xmlStreamReader->atEnd())
+//		return false;
+//	return true;
+//}
+
+bool StateMachineElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("Results");
-
-	foreach(QString result, results_)
+	QString resultName;
+	QList<QSharedPointer<Serializable>> results = getGeneratedChildren("Result");
+	foreach(QSharedPointer<Serializable> result,results)
 	{
-		xmlStreamWriter->writeStartElement("Result");
-		xmlStreamWriter->writeTextElement("Name",result);
-		xmlStreamWriter->writeEndElement(); //Result
-	}
-
-	if(!defaultResult_.isEmpty())
-	{
-		xmlStreamWriter->writeStartElement("Result");
-		xmlStreamWriter->writeAttribute("type","default");
-		xmlStreamWriter->writeTextElement("Name",defaultResult_);
-		xmlStreamWriter->writeEndElement(); //Result
-	}
-
-
-	xmlStreamWriter->writeEndElement(); //Results
-	return true;
-}
-
-/*!	\Brief A simple function to generate the result list from XML
- *
- *	This function may not be needed in all StateMachineElements (for example, the
- *	FlowElement generates the result list from the passed in conditions, and
- *	ignores this section of the XML)
- */
-bool StateMachineElement::deserializeResults(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement())
-		return false;
-	if(xmlStreamReader->name() != "Results")
-		return false;
-
-	xmlStreamReader->readNext();
-	bool isDefault = false;
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Results") && !xmlStreamReader->atEnd())
-	{
-		if(!xmlStreamReader->isStartElement())
+		resultName = result.staticCast<Property>()->value().toString();
+		if(resultName == "EngineAbort")
 		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Result")
-		{
-			if(xmlStreamReader->attributes().value("type").toString() == "default")
-				isDefault = true;
-		}
-		else if(name == "Name")
-		{
-			QString resultName = xmlStreamReader->readElementText();
-			if(resultName == "EngineAbort")
-			{
-				addError("StateMachineElement", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
-				return false;
-			}
-
-			if(isDefault)
-			{
-				defaultResult_ = resultName;
-				isDefault = false;
-			}
-			else
-			{
-				//add the result name to our list, but only if it isn't already there...
-				if(!results_.contains(resultName))
-					results_.append(resultName);
-			}
-		}
-		else
-		{
+			addError("StateMachineElement", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
 			return false;
 		}
-		xmlStreamReader->readNext();
+		//add the result name to our list, but only if it isn't already there...
+		if(!results_.contains(resultName))
+			results_.append(resultName);
 	}
-	if(xmlStreamReader->atEnd())
-		return false;
+
+	if(getGeneratedChildren("DefaultResult").size())
+	{
+		defaultResult_ = propertyContainer_->getPropertyValue("DefaultResult").toString();
+		if(defaultResult_ == "EngineAbort")
+		{
+			addError("StateMachineElement", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
+			return false;
+		}
+	}
+
 	return true;
 }
-
-
 
 }; //namespace Picto

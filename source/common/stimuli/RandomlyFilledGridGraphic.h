@@ -41,7 +41,7 @@ public:
 	void draw();
 	void updateAnimation(int frame, QTime elapsedTime);
 	static VisualElement* NewVisualElement();
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new RandomlyFilledGridGraphic());};
 	static const QString type;
 
 	void setColor2(QColor color) { propertyContainer_->setPropertyValue("Color2",color); draw(); };
@@ -78,6 +78,10 @@ public slots:
 	void setAnimated(bool animated) { propertyContainer_->setPropertyValue("Animated",animated);};
 	bool isAnimated() { return propertyContainer_->getPropertyValue("Animated").toBool(); };
 	
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

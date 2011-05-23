@@ -45,7 +45,7 @@ public:
 	CompoundExpression();
 
 	~CompoundExpression() {};
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new CompoundExpression());};
 	//Setters
 	void setLHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert=false);
 	void setRHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert=false);
@@ -56,6 +56,12 @@ public:
 
 	void setParameterContainer(ParameterContainer *params);
 
+	//Name
+	void setName(QString name);
+	QString name();
+	void setOrder(int order);
+	int order();
+
 	//Evaluate the expression
 	bool evaluate();
 
@@ -64,8 +70,11 @@ public:
 	QImage toQImage(bool useLHSNames=false, bool useRHSNames=false);
 
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 
 private:

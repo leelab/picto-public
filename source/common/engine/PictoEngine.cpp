@@ -143,7 +143,7 @@ void PictoEngine::giveReward(int channel)
 
 	xmlWriter->writeStartElement("Data");
 
-	rewardData.serializeAsXml(xmlWriter);
+	rewardData.toXml(xmlWriter);
 
 	xmlWriter->writeEndElement();  //End Data
 

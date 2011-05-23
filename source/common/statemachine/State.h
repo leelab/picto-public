@@ -33,11 +33,14 @@ class State : public StateMachineElement
 {
 public:
 	State();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new State());};
+
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 	void setRevision(int rev) { revision_ = rev; };
 	int getRevision() { return revision_; };
@@ -51,6 +54,8 @@ public:
 
 	bool initScripting(QScriptEngine &qsEngine);
 
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);

@@ -8,18 +8,22 @@ const QString LineGraphic::type = "Line Graphic";
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 {
-	propertyContainer_->setContainerName(type);
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color);
+	AddDefinableProperty(QVariant::Point,"Point",QPoint(),2,-1);
+	//propertyContainer_->setContainerName(type);
 
-	propertyContainer_->setPropertyValue("Position",position);
-	
-	for(int i = 0; i < points.count(); i++)
-	{
-		propertyContainer_->addProperty(QVariant::Point,QString("Point %1").arg(i),points[i]);
-	}
+	//propertyContainer_->setPropertyValue("Position",position);
+	//
+	//for(int i = 0; i < points.count(); i++)
+	//{
+	//	propertyContainer_->addProperty(QVariant::Point,QString("Point %1").arg(i),points[i]);
+	//}
 
-	propertyContainer_->setPropertyValue("Color",color);
+	//propertyContainer_->setPropertyValue("Color",color);
 
-	draw();
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -35,7 +39,8 @@ void LineGraphic::draw()
 
 	foreach(QString propertyName, propertyContainer_->getPropertyList())
 	{
-		if(propertyName.left(5)=="Point")
+		//if(propertyName.left(5)=="Point")
+		if(propertyName=="Point")
 		{
 			QPoint point = propertyContainer_->getPropertyValue(propertyName).toPoint();
 			points.push_back(point);
@@ -72,13 +77,21 @@ VisualElement* LineGraphic::NewVisualElement()
 	return new LineGraphic;
 }
 
-void LineGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void LineGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}
+}
+
+bool LineGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
 }
 
 }; //namespace Picto

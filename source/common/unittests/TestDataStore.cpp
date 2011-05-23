@@ -184,7 +184,7 @@ void TestDataStore::TestVisualElement()
 
 	xmlWriter->setAutoFormatting(true);
 	xmlWriter->writeStartDocument();
-	original->serializeAsXml(xmlWriter);
+	original->toXml(xmlWriter);
 	xmlWriter->writeEndDocument();
 
 	originalBuffer.close();
@@ -198,7 +198,7 @@ void TestDataStore::TestVisualElement()
 	}
 	QString type = xmlReader->attributes().value("type").toString();
 	QSharedPointer<Picto::VisualElement> copy = visualElementFactory_.generateVisualElement(type);
-	copy->deserializeFromXml(xmlReader);
+	copy->fromXml(xmlReader);
 
 	//confirm that the xml reader is in the </VisualElement> tag
 	QCOMPARE(xmlReader->isEndElement(), true);
@@ -213,7 +213,7 @@ void TestDataStore::TestVisualElement()
 	xmlWriter->setDevice(&copyBuffer);
 
 	xmlWriter->writeStartDocument();
-	copy->serializeAsXml(xmlWriter);
+	copy->toXml(xmlWriter);
 	xmlWriter->writeEndDocument();
 
 	QCOMPARE(originalByteArr, copyByteArr);
@@ -330,7 +330,7 @@ void TestDataStore::TestParameter()
 	xmlWriter->setAutoFormatting(true);
 	xmlWriter->writeStartDocument();
 	parameter->setName("Test");
-	parameter->serializeAsXml(xmlWriter);
+	parameter->toXml(xmlWriter);
 	xmlWriter->writeEndDocument();
 
 	originalBuffer.close();
@@ -344,7 +344,7 @@ void TestDataStore::TestParameter()
 	}
 	QString type = xmlReader->attributes().value("type").toString();
 	QSharedPointer<Picto::Parameter> copy = paramFact.generateParameter(type);
-	copy->deserializeFromXml(xmlReader);
+	copy->fromXml(xmlReader);
 
 	//confirm that the xml reader is in the </Parameter> tag
 	QCOMPARE(xmlReader->isEndElement(), true);
@@ -359,7 +359,7 @@ void TestDataStore::TestParameter()
 	xmlWriter->setDevice(&copyBuffer);
 
 	xmlWriter->writeStartDocument();
-	copy->serializeAsXml(xmlWriter);
+	copy->toXml(xmlWriter);
 	xmlWriter->writeEndDocument();
 
 	QCOMPARE(originalByteArr, copyByteArr);
@@ -736,11 +736,14 @@ void TestDataStore::TestStateMachine()
 	QSharedPointer<Picto::PredicateExpression> predExpr(new Picto::PredicateExpression("Less than"));
 	predExpr->setLHS("Trial Number");
 	predExpr->setRHSValue(50);
-
-	flowElement->addCondition(predExpr,1,"Less than 50");
+	predExpr->setName("Less than 50");
+	predExpr->setOrder(1);
+	flowElement->addCondition(predExpr);
 	
 	predExpr->setPredicate("Greater than");
-	flowElement->addCondition(predExpr,2,"Greater than 50");
+	predExpr->setName("Greater than 50");
+	predExpr->setOrder(2);
+	flowElement->addCondition(predExpr);
 
 	TestSimpleDataStore(flowElement, flowElementCopy, "StateMachineElement");
 
@@ -826,7 +829,7 @@ void TestDataStore::TestStateMachine()
 
 	xmlWriter->setAutoFormatting(true);
 	xmlWriter->writeStartDocument();
-	stateMachine->serializeAsXml(xmlWriter);
+	stateMachine->toXml(xmlWriter);
 	xmlWriter->writeEndDocument();
 
 	file.close();
@@ -847,7 +850,7 @@ void TestDataStore::TestSimpleDataStore(QSharedPointer<Picto::DataStore> origina
 
 	xmlWriter->setAutoFormatting(true);
 	xmlWriter->writeStartDocument();
-	original->serializeAsXml(xmlWriter);
+	original->toXml(xmlWriter);
 	xmlWriter->writeEndDocument();
 
 	originalBuffer.close();
@@ -859,7 +862,7 @@ void TestDataStore::TestSimpleDataStore(QSharedPointer<Picto::DataStore> origina
 	{
 		xmlReader->readNext();
 	}
-	copy->deserializeFromXml(xmlReader);
+	copy->fromXml(xmlReader);
 
 	QCOMPARE(xmlReader->isEndElement(), true);
 	QCOMPARE(xmlReader->name().toString(), QString(startElementName));
@@ -872,7 +875,7 @@ void TestDataStore::TestSimpleDataStore(QSharedPointer<Picto::DataStore> origina
 	xmlWriter->setDevice(&copyBuffer);
 
 	xmlWriter->writeStartDocument();
-	copy->serializeAsXml(xmlWriter);
+	copy->toXml(xmlWriter);
 	xmlWriter->writeEndDocument();
 
 	//Compare results

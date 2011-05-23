@@ -2,18 +2,16 @@
 
 #include "result.h"
 #include "ScriptElement.h"
-#include "../storage/DataStoreFactory.h"
+#include "../storage/SerializableFactory.h"
 
 namespace Picto
 {
 
 ScriptElement::ScriptElement()
 {
-	AddProperty(propertyContainer_->setPropertyValue("Name",""));
-	AddProperty(propertyContainer_->setPropertyValue("Type","ScriptElement"));
-	AddProperty(propertyContainer_->addProperty(QVariant::String,"Script",""));
-
-	//QSharedPointer<DataStoreFactory> factory(new DataStoreFactory(propertyContainer_->getPropertyValue
+	AddDefinableProperty("Name","");
+	AddDefinableProperty("Type","ScriptElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	AddDefinableProperty(QVariant::String,"Script","");
 	
 	//At some point, we may want to make the default result name user modifiable...
 	QSharedPointer<Result> r(new Result());
@@ -99,6 +97,11 @@ QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	return result; 
 }
 
+bool ScriptElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	return true;
+}
+
 /*!	\brief Converts the ScriptElement to an XML fragment
  *
  *	The XML fragment will look something like this:
@@ -107,68 +110,7 @@ QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
  *			<Script>Trial.setValue(Trial.getValue() + 1);</Script>
  *		</StateMachineElement>
  */
-//bool ScriptElement::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
-//{
-//	xmlStreamWriter->writeStartElement("StateMachineElement");
-//	xmlStreamWriter->writeAttribute("type","ScriptElement");
-//
-//	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
-//
-//	QString script = propertyContainer_->getPropertyValue("Script").toString();
-//	xmlStreamWriter->writeTextElement("Script",script);
-//	return true;
-//}
-
-//bool ScriptElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
-//	{
-//		addError("ScriptElement","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
-//		return false;
-//	}
-//	if(xmlStreamReader->attributes().value("type").toString() != type())
-//	{
-//		addError("ScriptElement","Incorrect type of StateMachineElement, expected ScriptElement",xmlStreamReader);
-//		return false;
-//	}
-//
-//	xmlStreamReader->readNext();
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
-//	{
-//		if(!xmlStreamReader->isStartElement())
-//		{
-//			//Do nothing unless we're at a start element
-//			xmlStreamReader->readNext();
-//			continue;
-//		}
-//
-//		QString name = xmlStreamReader->name().toString();
-//		if(name == "Name")
-//		{
-//			propertyContainer_->setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
-//		}
-//		else if(name == "Script")
-//		{
-//			QString script = xmlStreamReader->readElementText();
-//			propertyContainer_->setPropertyValue("Script",script);
-//		}
-//		else
-//		{
-//			addError("ScriptElement", "Unexpected tag", xmlStreamReader);
-//			return false;
-//		}
-//		xmlStreamReader->readNext();
-//	}
-//	
-//	if(xmlStreamReader->atEnd())
-//	{
-//		addError("ScriptElement", "Unexpected end of document", xmlStreamReader);
-//		return false;
-//	}
-//
-//	return true;
-//}
+////
 
 
 } //namespace Picto

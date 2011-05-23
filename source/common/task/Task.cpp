@@ -8,8 +8,10 @@ namespace Picto {
 
 Task::Task() 
 {
-	propertyContainer_ = PropertyContainer::create("Task");
-	propertyContainer_->addProperty(QVariant::String,"Name","Unnamed Task");
+		AddDefinableProperty("Name","Unnamed Task");
+		AddDefinableObjectFactory("StateMachine",
+		QSharedPointer<SerializableFactory>(new SerializableFactory(1,1,SerializableFactory::NewSerializableFnPtr(StateMachine::Create))));
+
 }
 
 //! returns the name of this task
@@ -175,7 +177,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 	stateData.setTransition(source,sourceResult,destination,timestamp,name());
 
 	xmlWriter->writeStartElement("Data");
-	stateData.serializeAsXml(xmlWriter);
+	stateData.toXml(xmlWriter);
 	xmlWriter->writeEndElement();
 
 	dataCommand->setContent(stateDataXml);
@@ -205,78 +207,93 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
  *		</StateMachine>
  *	</Task>
  */
-bool Task::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool Task::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("Task");
+//	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
+//
+//	xmlStreamWriter->writeStartElement("StateMachine");
+//	stateMachine_->toXml(xmlStreamWriter);
+//	xmlStreamWriter->writeEndElement(); //StateMachine
+//
+//	xmlStreamWriter->writeEndElement(); //Task
+//	
+//	return true;
+//}
+//
+////! Turns XML into a Task
+//bool Task::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Task")
+//	{
+//		addError("Task","Incorrect tag, expected <Task>",xmlStreamReader);
+//		return false;
+//	}
+//	
+//	xmlStreamReader->readNext();
+//	
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Task") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//Do nothing unless we're at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//
+//		QString name = xmlStreamReader->name().toString();
+//		if(name == "Name")
+//		{
+//			setName(xmlStreamReader->readElementText());
+//		}
+//		else if(name == "StateMachine")
+//		{
+//			stateMachine_ = QSharedPointer<StateMachine>(new StateMachine);
+//			if(!stateMachine_->fromXml(xmlStreamReader))
+//			{
+//				addError("Task","State Machine failed to deserialize", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else
+//		{
+//			addError("Task", "Unexpected tag", xmlStreamReader);
+//			return false;
+//		}		
+//
+//		xmlStreamReader->readNext();
+//	}
+//
+//	if(xmlStreamReader->atEnd())
+//	{
+//		addError("Task", "Unexpected end of document", xmlStreamReader);
+//		return false;
+//	}
+//	if(stateMachine_->validateStateMachine())
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		addError("StateMachine","StateMachine failed validation",xmlStreamReader);
+//		return false;
+//	}
+//}
+
+bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("Task");
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
-
-	xmlStreamWriter->writeStartElement("StateMachine");
-	stateMachine_->serializeAsXml(xmlStreamWriter);
-	xmlStreamWriter->writeEndElement(); //StateMachine
-
-	xmlStreamWriter->writeEndElement(); //Task
-	
-	return true;
-}
-
-//! Turns XML into a Task
-bool Task::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Task")
+	QList<QSharedPointer<Serializable>> stateMachines = getGeneratedChildren("StateMachine");
+	if(!stateMachines.isEmpty())
 	{
-		addError("Task","Incorrect tag, expected <Task>",xmlStreamReader);
-		return false;
-	}
-	
-	xmlStreamReader->readNext();
-	
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Task") && !xmlStreamReader->atEnd())
-	{
-		if(!xmlStreamReader->isStartElement())
+		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
+		if(!stateMachine_->validateStateMachine())
 		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Name")
-		{
-			setName(xmlStreamReader->readElementText());
-		}
-		else if(name == "StateMachine")
-		{
-			stateMachine_ = QSharedPointer<StateMachine>(new StateMachine);
-			if(!stateMachine_->deserializeFromXml(xmlStreamReader))
-			{
-				addError("Task","State Machine failed to deserialize", xmlStreamReader);
-				return false;
-			}
-		}
-		else
-		{
-			addError("Task", "Unexpected tag", xmlStreamReader);
+			addError("StateMachine","StateMachine failed validation",xmlStreamReader);
 			return false;
-		}		
-
-		xmlStreamReader->readNext();
+		}
 	}
-
-	if(xmlStreamReader->atEnd())
-	{
-		addError("Task", "Unexpected end of document", xmlStreamReader);
-		return false;
-	}
-	if(stateMachine_->validateStateMachine())
-	{
-		return true;
-	}
-	else
-	{
-		addError("StateMachine","StateMachine failed validation",xmlStreamReader);
-		return false;
-	}
+	return true;
 }
 
 }; //namespace Picto

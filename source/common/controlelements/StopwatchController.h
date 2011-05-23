@@ -27,6 +27,7 @@ public:
 	StopwatchController();
 
 	static ControlElement* NewStopwatchController();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new StopwatchController());};
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
@@ -35,9 +36,11 @@ public:
 
 	void setTime(int time, Controller::TimerUnits::TimerUnits units);
 
-	//DataStore Functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	////DataStore Functions
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QStringList unitList_;

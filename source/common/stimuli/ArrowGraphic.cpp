@@ -8,15 +8,25 @@ const QString ArrowGraphic::type = "Arrow Graphic";
 
 ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, QColor color)
 {
-	propertyContainer_->setContainerName(type);
+	
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color);
+	AddDefinableProperty(QVariant::Point,"Start",start);
+	AddDefinableProperty(QVariant::Point,"End",end);
+	AddDefinableProperty(QVariant::Int,"Size", size);
 
-	propertyContainer_->setPropertyValue("Position",position);
-	propertyContainer_->addProperty(QVariant::Point,"Start",start);
-	propertyContainer_->addProperty(QVariant::Point,"End",end);
-	propertyContainer_->addProperty(QVariant::Int,"Size", size);
-	propertyContainer_->setPropertyValue("Color",color);
 
-	draw();
+
+	//propertyContainer_->setContainerName(type);
+
+	//propertyContainer_->setPropertyValue("Position",position);
+	//propertyContainer_->addProperty(QVariant::Point,"Start",start);
+	//propertyContainer_->addProperty(QVariant::Point,"End",end);
+	//propertyContainer_->addProperty(QVariant::Int,"Size", size);
+	//propertyContainer_->setPropertyValue("Color",color);
+
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -95,12 +105,20 @@ VisualElement* ArrowGraphic::NewVisualElement()
 	return new ArrowGraphic;
 }
 
-void ArrowGraphic::slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue)
+void ArrowGraphic::slotPropertyValueChanged(QString propertyName, int, QVariant propertyValue)
 {
 	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}
+}
+
+bool ArrowGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
 }
 
 }

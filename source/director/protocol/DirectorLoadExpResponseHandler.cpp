@@ -20,7 +20,7 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.staticCast<DirectorStatusManager>()->getEngine();
 	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine->getRenderingTargets();
-	if(!experiment->deserializeFromXml(xmlReader))
+	if(!experiment->fromXml(xmlReader))
 	{
 		statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus(QString("Error loading experiment: %1").arg(experiment->getErrors()));
 		return false;

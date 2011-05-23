@@ -5,33 +5,23 @@ namespace Picto
 {
 TargetController::TargetController()
 {
-	//Properties
-	propertyContainer_->setPropertyValue("Type",ControllerType());
-
-	propertyContainer_->addProperty(QVariant::String,"SignalChannel","");
-
-	QSharedPointer<Property> shapesEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0);
+	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
+	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
+	AddDefinableProperty("SignalChannel","");
 	shapeList_ << "Rectangle" << "Oval";
-	shapesEnumProperty->addAttribute("enumNames",shapeList_);
-	
-
-	propertyContainer_->addProperty(QVariant::Rect, "Target",QRect(0,0,100,100));
-
-	QSharedPointer<Property> unitsEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0);
-    unitList_ << "Sec" << "Ms" << "Us";
-	unitsEnumProperty->addAttribute("enumNames", unitList_);
-
-
-	propertyContainer_->addProperty(QVariant::Int,"FixationTime",1);
-	propertyContainer_->addProperty(QVariant::Int,"TotalTime",5);
-	propertyContainer_->addProperty(QVariant::Int,"MinInitia AcquisitionTime",0);
-	propertyContainer_->addProperty(QVariant::Int,"MaxInitialAcquisitionTime",1);
-	propertyContainer_->addProperty(QVariant::Int,"MaxReacquisitionTime",0);
-
-	QSharedPointer<Property> reaqcAllowedEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"ReacquisitionAllowed",0);
-    reacquisitionAllowedList_ << "No" << "Yes";
-	reaqcAllowedEnumProperty->addAttribute("enumNames", reacquisitionAllowedList_);
-
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
+	AddDefinableProperty(QVariant::Rect,"Target",QRect());
+	unitList_ << "Sec" << "Ms" << "Us";
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
+	AddDefinableProperty(QVariant::Int,"FixationTime",1);
+	AddDefinableProperty(QVariant::Int,"TotalTime",5);
+	AddDefinableProperty(QVariant::Int,"MinInitialAcquisitionTime",0);
+	AddDefinableProperty(QVariant::Int,"MaxInitialAcquisitionTime",1);
+	AddDefinableProperty(QVariant::Int,"MaxReacquisitionTime",0);
+	reacquisitionAllowedList_ << "No" << "Yes";
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"ReacquisitionAllowed",0,"enumNames",reacquisitionAllowedList_);
 
 	//Make sure to update the list of results...
 	results_.append("Success");
@@ -237,7 +227,7 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 
 /*! \brief Turns the ControlElement into an XML fragment
  *
- * A serialized StopwatchController will look something like this:
+ * A serialized TargetController will look something like this:
  *	<ControlElement type="TargetController" operatorVisible="true subjectVisible="false">
  *		<Name>MyControlElement</Name>
  *		<SignalChannel>ChannelName</SignalChannel>
@@ -251,188 +241,15 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
  *		<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
  *	</ControlElement>
  */
-//
-bool TargetController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+////
+
+
+bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("ControlElement");
-	xmlStreamWriter->writeAttribute("type",propertyContainer_->getPropertyValue("Type").toString());
-	if(operatorVisible_)
-		xmlStreamWriter->writeAttribute("operatorVisible","true");
-	else
-		xmlStreamWriter->writeAttribute("operatorVisible","false");
-	if(subjectVisible_)
-		xmlStreamWriter->writeAttribute("subjectVisible","true");
-	else
-		xmlStreamWriter->writeAttribute("subjectVisible","false");
-
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
-	xmlStreamWriter->writeTextElement("SignalChannel", propertyContainer_->getPropertyValue("SignalChannel").toString());
-
-	QString shapeStr = unitList_.value(propertyContainer_->getPropertyValue("Shape").toInt(),"unknown");
-	xmlStreamWriter->writeTextElement("Shape", shapeStr);
-
-	xmlStreamWriter->writeStartElement("Target");
-	QRect target = propertyContainer_->getPropertyValue("Target").toRect();
-	xmlStreamWriter->writeAttribute("x",QString("%1").arg(target.x()));
-	xmlStreamWriter->writeAttribute("y",QString("%1").arg(target.y()));
-	xmlStreamWriter->writeAttribute("width",QString("%1").arg(target.width()));
-	xmlStreamWriter->writeAttribute("height",QString("%1").arg(target.height()));
-	xmlStreamWriter->writeEndElement();
-
-	xmlStreamWriter->writeStartElement("TotalTime");
-	QString timeUnitsStr = unitList_.value(propertyContainer_->getPropertyValue("TimeUnits").toInt(), "");
-	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
-	xmlStreamWriter->writeCharacters(propertyContainer_->getPropertyValue("TotalTime").toString());
-	xmlStreamWriter->writeEndElement();
-	
-	xmlStreamWriter->writeStartElement("FixationTime");
-	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
-	xmlStreamWriter->writeCharacters(propertyContainer_->getPropertyValue("FixationTime").toString());
-	xmlStreamWriter->writeEndElement();
-	
-	xmlStreamWriter->writeStartElement("MinInitialAcquisitionTime");
-	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
-	xmlStreamWriter->writeCharacters(propertyContainer_->getPropertyValue("MinInitialAcquisitionTime").toString());
-	xmlStreamWriter->writeEndElement();
-	
-	xmlStreamWriter->writeStartElement("MaxInitialAcquisitionTime");
-	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
-	xmlStreamWriter->writeCharacters(propertyContainer_->getPropertyValue("MaxInitialAcquisitionTime").toString());
-	xmlStreamWriter->writeEndElement();
-	
-	xmlStreamWriter->writeStartElement("MaxReacquisitionTime");
-	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
-	xmlStreamWriter->writeCharacters(propertyContainer_->getPropertyValue("MaxReacquisitionTime").toString());
-	xmlStreamWriter->writeEndElement();
-
-	QString reacqAllowedStr = unitList_.value(propertyContainer_->getPropertyValue("ReacquisitonAllowed").toInt(),"unknown");
-	xmlStreamWriter->writeTextElement("ReacquisitionAllowed", shapeStr);
-
-	xmlStreamWriter->writeEndElement(); //ControlElement
+	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
+	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
 
 	return true;
-}
-
-//! Turns an XML fragment into a StopwatchController
-bool TargetController::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "ControlElement")
-	{
-		addError("TargetController","Incorrect tag, expected <ControlElement>",xmlStreamReader);
-		return false;
-	}
-	if(xmlStreamReader->attributes().value("type").toString() != ControllerType())
-	{
-		addError("TargetController","Incorrect type of controller",xmlStreamReader);
-		return false;
-	}
-
-	if(xmlStreamReader->attributes().value("operatorVisible").toString() == "true")
-		operatorVisible_ = true;
-	else
-		operatorVisible_ = false;
-
-	if(xmlStreamReader->attributes().value("subjectVisible").toString() == "true")
-		subjectVisible_ = true;
-	else
-		subjectVisible_ = false;
-
-	QString units = "";
-
-	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "ControlElement") && !xmlStreamReader->atEnd())
-	{
-		if(!xmlStreamReader->isStartElement())
-		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Name")
-		{
-			setName(xmlStreamReader->readElementText());
-		}
-		else if(name == "SignalChannel")
-		{
-			propertyContainer_->setPropertyValue("SignalChannel",xmlStreamReader->readElementText());
-		}
-		else if(name == "Shape")
-		{
-			int shapeIndex= shapeList_.indexOf(xmlStreamReader->readElementText());
-			if(shapeIndex <0)
-			{
-				addError("TargetController","Unrecognized shape",xmlStreamReader);
-				return false;
-			}
-			propertyContainer_->setPropertyValue("Shape",shapeIndex);
-		}
-		else if(name == "Target")
-		{
-			QRect target;
-			target.setX(xmlStreamReader->attributes().value("x").toString().toInt());
-			target.setY(xmlStreamReader->attributes().value("y").toString().toInt());
-			target.setWidth(xmlStreamReader->attributes().value("width").toString().toInt());
-			target.setHeight(xmlStreamReader->attributes().value("height").toString().toInt());
-			propertyContainer_->setPropertyValue("Target",target);
-		}
-		else if(name == "TotalTime" ||
-				name == "FixationTime" ||
-				name == "MinInitialAcquisitionTime" ||
-				name == "MaxInitialAcquisitionTime" ||
-				name == "MaxReacquisitionTime")
-		{
-			QString unitsStr = xmlStreamReader->attributes().value("units").toString();
-			int unitsIndex = unitList_.indexOf(unitsStr);
-
-			if(unitsIndex<0)
-			{
-				addError("TargetController", "Unrecognized units for " + name,xmlStreamReader);
-				return false;
-			}
-
-			if(units == "")
-			{
-				units = unitList_.value(unitsIndex);
-				propertyContainer_->setPropertyValue("TimeUnits",unitsIndex);
-			}
-			else if(units != unitList_.value(unitsIndex))
-			{
-				addError("TargetController", "Units for " + name + " are different from ealier units",xmlStreamReader);
-				return false;
-			}
-
-			propertyContainer_->setPropertyValue(name,xmlStreamReader->readElementText().toInt());
-		}
-		else if(name == "ReacquisitionAllowed")
-		{
-			int reacquisitionAllowedIndex = reacquisitionAllowedList_.indexOf(xmlStreamReader->readElementText());
-			if(reacquisitionAllowedIndex <0)
-			{
-				addError("TargetController","Unrecognized value in RecquisitionAllowed",xmlStreamReader);
-				return false;
-			}
-			propertyContainer_->setPropertyValue("ReacquisitionAllowed",reacquisitionAllowedIndex);
-
-		}
-		else
-		{
-			addError("TargetController", "Unexpected tag", xmlStreamReader);
-			return false;
-		}
-		xmlStreamReader->readNext();
-	}
-
-	if(xmlStreamReader->atEnd())
-	{
-		addError("TargetController", "Unexpected end of document", xmlStreamReader);
-		return false;
-	}
-
-	return true;
-
 }
 
 } //namespace Picto

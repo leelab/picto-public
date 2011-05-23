@@ -33,14 +33,20 @@ void StringParameter::addOption(StringParameterOption option)
 	options_.append(option);
 }
 
-bool StringParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool StringParameter::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	return false;
+//}
+//bool StringParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	addError("StringParameter", "Deserialization function not yet implemented", xmlStreamReader);
+//	return false;
+//}
+
+bool StringParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	return false;
-}
-bool StringParameter::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	addError("StringParameter", "Deserialization function not yet implemented", xmlStreamReader);
-	return false;
+	addError("StringParameter", "StringParameter is not yet implemented", xmlStreamReader);
+	return true;
 }
 
 }; //namespace Picto

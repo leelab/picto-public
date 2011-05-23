@@ -8,18 +8,28 @@ const QString CircleGraphic::type = "Circle Graphic";
 
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 {
-	propertyContainer_->setContainerName(type);
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color);
 
-	propertyContainer_->setPropertyValue("Position",position);
+	QMap<QString,QVariant> attributeMap;
+	attributeMap["minimum"] = 1;
+	attributeMap["maximum"] = 1000;
+	attributeMap["singleStep"] = 1;
+	AddDefinableProperty(QVariant::Int,"Radius",radius,attributeMap);
 
-	QSharedPointer<Property> radiusProperty = propertyContainer_->addProperty(QVariant::Int,"Radius",radius);
-	radiusProperty->addAttribute("minimum", 1);
-	radiusProperty->addAttribute("maximum", 1000);
-	radiusProperty->addAttribute("singleStep", 1);
+	//propertyContainer_->setContainerName(type);
 
-	propertyContainer_->setPropertyValue("Color",color);
+	//propertyContainer_->setPropertyValue("Position",position);
 
-	draw();
+	//QSharedPointer<Property> radiusProperty = propertyContainer_->addProperty(QVariant::Int,"Radius",radius);
+	//radiusProperty->addAttribute("minimum", 1);
+	//radiusProperty->addAttribute("maximum", 1000);
+	//radiusProperty->addAttribute("singleStep", 1);
+
+	//propertyContainer_->setPropertyValue("Color",color);
+
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -53,7 +63,7 @@ VisualElement* CircleGraphic::NewVisualElement()
 	return new CircleGraphic;
 }
 
-void CircleGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void CircleGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")
@@ -62,5 +72,12 @@ void CircleGraphic::slotPropertyValueChanged(QString propertyName, int index,
 	}
 }
 
+bool CircleGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
+}
 
 }; //namespace Picto

@@ -9,6 +9,10 @@
 #include "../engine/SignalChannel.h"
 #include "../timing/Timestamper.h"
 #include "../stimuli/CursorGraphic.h"
+#include "../controlelements/TestController.h"
+#include "../controlelements/StopwatchController.h"
+#include "../controlelements/TargetController.h"
+#include "../controlelements/ChoiceController.h"
 
 #include <QCoreApplication>
 #include <QUuid>
@@ -19,10 +23,28 @@ State::State() :
 	scene_(QSharedPointer<Scene>(new Scene)),
 	hasCursor_(false)
 {
-	propertyContainer_->setPropertyValue("Type","State");
-	propertyContainer_->addProperty(QVariant::String,"EntryScript","");
-	propertyContainer_->addProperty(QVariant::String,"FrameScript","");
-	propertyContainer_->addProperty(QVariant::String,"ExitScript","");
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Int,"Revision",-1);
+	AddDefinableProperty(QVariant::Int,"EngineNeeded",-1);
+	
+	DefinePlaceholderTag("ControlElements");
+	QSharedPointer<SerializableFactory> ctrlElemFactory(new SerializableFactory());
+	ctrlElemFactory->addSerializableType(TestController::ControllerType(),
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(TestController::Create))));
+	ctrlElemFactory->addSerializableType(StopwatchController::ControllerType(),
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(StopwatchController::Create))));
+	ctrlElemFactory->addSerializableType(TargetController::ControllerType(),
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(TargetController::Create))));
+	ctrlElemFactory->addSerializableType(ChoiceController::ControllerType(),
+		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ChoiceController::Create))));
+	AddDefinableObjectFactory("ControlElement",ctrlElemFactory);
+
+	AddDefinableObjectFactory("Scene",QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Scene::Create))) );
+	
+	DefinePlaceholderTag("Scripts");
+	AddDefinableProperty("EntryScript","");
+	AddDefinableProperty("FrameScript","");
+	AddDefinableProperty("ExitScript","");
 
 	//at some point, these should actually do something, but for the moment
 	//we'll leave them as -1 to show that they aren't being used
@@ -270,9 +292,9 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
 	xmlWriter->writeStartElement("Data");
-	frameData.serializeAsXml(xmlWriter);
+	frameData.toXml(xmlWriter);
 	if(behavData.length())
-		behavData.serializeAsXml(xmlWriter);
+		behavData.toXml(xmlWriter);
 	xmlWriter->writeEndElement();
 
 	dataCommand->setContent(dataXml);
@@ -391,7 +413,7 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 		if(xmlReader->name() == "FrameDataStore")
 		{
 			FrameDataStore dataStore;
-			dataStore.deserializeFromXml(xmlReader);
+			dataStore.fromXml(xmlReader);
 
 			if(dataStore.length() <1)
 				return -1;
@@ -584,7 +606,7 @@ bool State::initScripting(QScriptEngine &qsEngine)
 			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
 											  .arg(qsEngine_->uncaughtException().toString());
 			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-			qDebug()<<errorMsg;
+			qDebug(errorMsg.toAscii());
 			return false;
 		}
 	}
@@ -651,163 +673,184 @@ void State::removeControlElement(QString controlElementName)
  *		</Results>
  *	</StateMachineElement>
  */
-bool State::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool State::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	xmlStreamWriter->writeStartElement("StateMachineElement");
+//	xmlStreamWriter->writeAttribute("type","State");
+//	
+//	xmlStreamWriter->writeTextElement("Revision",QString("%1").arg(revision_));
+//	xmlStreamWriter->writeTextElement("EngineNeeded",QString("%1").arg(engineNeeded_));
+//	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
+//
+//	xmlStreamWriter->writeStartElement("ControlElements");
+//	foreach(QSharedPointer<ControlElement> c, controlElements_)
+//	{
+//		c->toXml(xmlStreamWriter);
+//	}
+//	xmlStreamWriter->writeEndElement();
+//
+//	scene_->toXml(xmlStreamWriter);
+//
+//	serializeResults(xmlStreamWriter);
+//
+//	xmlStreamWriter->writeEndElement(); //State
+//	return true;
+//}
+//
+///*!	\Brief Turns a an XML fragment into a State object */
+//bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	//Do some basic error checking
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
+//	{
+//		addError("State","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
+//		return false;
+//	}
+//	if(xmlStreamReader->attributes().value("type").toString() != type())
+//	{
+//		addError("State","Incorrect type of StateMachineElement, expected State",xmlStreamReader);
+//		return false;
+//	}
+//
+//	xmlStreamReader->readNext();
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
+//	{
+//		if(!xmlStreamReader->isStartElement())
+//		{
+//			//Do nothing unless we're at a start element
+//			xmlStreamReader->readNext();
+//			continue;
+//		}
+//
+//		QString name = xmlStreamReader->name().toString();
+//		if(name == "Revision")
+//		{
+//			bool ok;
+//			revision_= xmlStreamReader->readElementText().toInt(&ok);
+//			if(!ok)
+//			{
+//				addError("State","Revision value not an integer", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else if(name == "EngineNeeded")
+//		{
+//			bool ok;
+//			engineNeeded_= xmlStreamReader->readElementText().toInt(&ok);
+//			if(!ok)
+//			{
+//				addError("State","EngineNeeded value not an integer", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else if(name == "Name")
+//		{
+//			propertyContainer_->setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
+//		}
+//		else if(name == "ControlElements")
+//		{
+//			//do nothing
+//		}
+//		else if(name == "ControlElement")
+//		{
+//			ControlElementFactory factory;
+//			QString controllerType = xmlStreamReader->attributes().value("type").toString();
+//			QSharedPointer<ControlElement> newController = factory.generateControlElement(controllerType);
+//			if(!newController)
+//			{
+//				addError("State", "Failed to create a new Controller of type "+controllerType,xmlStreamReader);
+//				return false;
+//			}
+//			if(!newController->fromXml(xmlStreamReader))
+//			{
+//				addError("State", "Failed to deserialize <ControlElement>", xmlStreamReader);
+//				return false;
+//			}
+//			addControlElement(newController);
+//		}
+//		else if(name == "Scene")
+//		{
+//			QSharedPointer<Scene> newScene(new Scene);
+//			if(!newScene->fromXml(xmlStreamReader))
+//			{
+//				addError("State", "Failed to deserialize <Scene>", xmlStreamReader);
+//				return false;
+//			}
+//			scene_ = newScene;
+//		}
+//		else if(name == "Scripts")
+//		{
+//			//do nothing
+//		}
+//		else if(name == "Script")
+//		{
+//			QString type = xmlStreamReader->attributes().value("type").toString();
+//			QString script = xmlStreamReader->readElementText();
+//
+//			if(type == "entry")
+//			{
+//				propertyContainer_->setPropertyValue("EntryScript",script);
+//			}
+//			else if(type == "frame")
+//			{
+//				propertyContainer_->setPropertyValue("FrameScript",script);
+//			}
+//			else if(type == "exit")
+//			{
+//				propertyContainer_->setPropertyValue("ExitScript",script);
+//			}
+//			else
+//			{
+//				addError("State", "Unrecognized script type.  Expecting \"entry\", \"frame\", or \"exit\"", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//		else if(name == "Results")
+//		{
+//			if(!deserializeResults(xmlStreamReader))
+//			{
+//				addError("State", "Failed to deserialize <Results>", xmlStreamReader);
+//				return false;
+//			}
+//		}
+//
+//		else
+//		{
+//			addError("State", "Unexpected tag", xmlStreamReader);
+//			return false;
+//		}
+//		xmlStreamReader->readNext();
+//	}
+//
+//	if(xmlStreamReader->atEnd())
+//	{
+//		addError("State", "Unexpected end of document", xmlStreamReader);
+//		return false;
+//	}
+//
+//	return true;
+//}
+
+bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	xmlStreamWriter->writeStartElement("StateMachineElement");
-	xmlStreamWriter->writeAttribute("type","State");
-	
-	xmlStreamWriter->writeTextElement("Revision",QString("%1").arg(revision_));
-	xmlStreamWriter->writeTextElement("EngineNeeded",QString("%1").arg(engineNeeded_));
-	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
+	revision_= propertyContainer_->getPropertyValue("Revision").toInt();
+	engineNeeded_= propertyContainer_->getPropertyValue("EngineNeeded").toInt();
 
-	xmlStreamWriter->writeStartElement("ControlElements");
-	foreach(QSharedPointer<ControlElement> c, controlElements_)
+	QList<QSharedPointer<Serializable>> newCtrlElems = getGeneratedChildren("ControlElement");
+	foreach(QSharedPointer<Serializable> newCtrlElem,newCtrlElems)
 	{
-		c->serializeAsXml(xmlStreamWriter);
+		addControlElement(newCtrlElem.staticCast<ControlElement>());
 	}
-	xmlStreamWriter->writeEndElement();
 
-	scene_->serializeAsXml(xmlStreamWriter);
+	scene_ = getGeneratedChildren("Scene").front().staticCast<Scene>();
 
-	serializeResults(xmlStreamWriter);
+	//! \todo Validate Scripts
 
-	xmlStreamWriter->writeEndElement(); //State
+	////Validate Results
+	if(!StateMachineElement::validateObject(xmlStreamReader))
+		return false;
+
 	return true;
 }
-
-/*!	\Brief Turns a an XML fragment into a State object */
-bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
-	{
-		addError("State","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
-		return false;
-	}
-	if(xmlStreamReader->attributes().value("type").toString() != type())
-	{
-		addError("State","Incorrect type of StateMachineElement, expected State",xmlStreamReader);
-		return false;
-	}
-
-	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
-	{
-		if(!xmlStreamReader->isStartElement())
-		{
-			//Do nothing unless we're at a start element
-			xmlStreamReader->readNext();
-			continue;
-		}
-
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Revision")
-		{
-			bool ok;
-			revision_= xmlStreamReader->readElementText().toInt(&ok);
-			if(!ok)
-			{
-				addError("State","Revision value not an integer", xmlStreamReader);
-				return false;
-			}
-		}
-		else if(name == "EngineNeeded")
-		{
-			bool ok;
-			engineNeeded_= xmlStreamReader->readElementText().toInt(&ok);
-			if(!ok)
-			{
-				addError("State","EngineNeeded value not an integer", xmlStreamReader);
-				return false;
-			}
-		}
-		else if(name == "Name")
-		{
-			propertyContainer_->setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
-		}
-		else if(name == "ControlElements")
-		{
-			//do nothing
-		}
-		else if(name == "ControlElement")
-		{
-			ControlElementFactory factory;
-			QString controllerType = xmlStreamReader->attributes().value("type").toString();
-			QSharedPointer<ControlElement> newController = factory.generateControlElement(controllerType);
-			if(!newController)
-			{
-				addError("State", "Failed to create a new Controller of type "+controllerType,xmlStreamReader);
-				return false;
-			}
-			if(!newController->deserializeFromXml(xmlStreamReader))
-			{
-				addError("State", "Failed to deserialize <ControlElement>", xmlStreamReader);
-				return false;
-			}
-			addControlElement(newController);
-		}
-		else if(name == "Scene")
-		{
-			QSharedPointer<Scene> newScene(new Scene);
-			if(!newScene->deserializeFromXml(xmlStreamReader))
-			{
-				addError("State", "Failed to deserialize <Scene>", xmlStreamReader);
-				return false;
-			}
-			scene_ = newScene;
-		}
-		else if(name == "Scripts")
-		{
-			//do nothing
-		}
-		else if(name == "Script")
-		{
-			QString type = xmlStreamReader->attributes().value("type").toString();
-			QString script = xmlStreamReader->readElementText();
-
-			if(type == "entry")
-			{
-				propertyContainer_->setPropertyValue("EntryScript",script);
-			}
-			else if(type == "frame")
-			{
-				propertyContainer_->setPropertyValue("FrameScript",script);
-			}
-			else if(type == "exit")
-			{
-				propertyContainer_->setPropertyValue("ExitScript",script);
-			}
-			else
-			{
-				addError("State", "Unrecognized script type.  Expecting \"entry\", \"frame\", or \"exit\"", xmlStreamReader);
-				return false;
-			}
-		}
-		else if(name == "Results")
-		{
-			if(!deserializeResults(xmlStreamReader))
-			{
-				addError("State", "Failed to deserialize <Results>", xmlStreamReader);
-				return false;
-			}
-		}
-
-		else
-		{
-			addError("State", "Unexpected tag", xmlStreamReader);
-			return false;
-		}
-		xmlStreamReader->readNext();
-	}
-
-	if(xmlStreamReader->atEnd())
-	{
-		addError("State", "Unexpected end of document", xmlStreamReader);
-		return false;
-	}
-
-	return true;
-}
-
 
 }; //namespace Picto

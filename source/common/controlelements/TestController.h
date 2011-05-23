@@ -26,6 +26,8 @@ public:
 	TestController();
 
 	static ControlElement* NewTestController();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new TestController());};
+
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
@@ -33,8 +35,10 @@ public:
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore Functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	int timesCalled_;

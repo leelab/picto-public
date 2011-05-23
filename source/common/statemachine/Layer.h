@@ -27,6 +27,7 @@ class Layer : public DataStore
 public:
 	Layer();
 
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new Layer());};
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
 	void reset();
@@ -40,8 +41,12 @@ public:
 
 
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 private:
 	QList<QSharedPointer <VisualElement> > visualElements_;
 	QList<QSharedPointer <VisualElement> > unaddedVisualElements_;

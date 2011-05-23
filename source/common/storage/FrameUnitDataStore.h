@@ -30,6 +30,9 @@ public:
 	int frameNumber; 
 	double time;
 	QString stateName;
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 
 

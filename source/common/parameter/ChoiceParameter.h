@@ -37,10 +37,10 @@ public:
 	ChoiceParameter();
 
 	static Parameter* NewParameter();
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ChoiceParameter());};
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	bool addChoice(QString label, QVariant data);
 	bool removeChoice(QString label);
@@ -48,6 +48,9 @@ public:
 
 	virtual bool equalTo(Parameter& RHS);
 	virtual bool equalTo(QVariant& RHS);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QMap<QString,ChoiceParameterOption> options_;

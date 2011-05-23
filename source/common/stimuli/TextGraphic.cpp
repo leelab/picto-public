@@ -8,17 +8,23 @@ const QString TextGraphic::type = "Text Graphic";
 
 TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QString text)
 {
-	propertyContainer_->setContainerName(type);
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color);
+	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	AddDefinableProperty(QVariant::String,"Text",text);
 
-	propertyContainer_->setPropertyValue("Position",position);
+	//propertyContainer_->setContainerName(type);
 
-	propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
+	//propertyContainer_->setPropertyValue("Position",position);
 
-	propertyContainer_->setPropertyValue("Color",color);
+	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
 
-	propertyContainer_->addProperty(QVariant::String,"Text",text);
+	//propertyContainer_->setPropertyValue("Color",color);
 
-	draw();
+	//propertyContainer_->addProperty(QVariant::String,"Text",text);
+
+	//draw();
 
 	connect(propertyContainer_.data(),
 		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
@@ -87,13 +93,21 @@ VisualElement* TextGraphic::NewVisualElement()
 	return new TextGraphic;
 }
 
-void TextGraphic::slotPropertyValueChanged(QString propertyName, int index,
+void TextGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
 	if(propertyName != "Position" && propertyName != "Name")
 	{
 		draw();
 	}
+}
+
+bool TextGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!VisualElement::validateObject(xmlStreamReader))
+		return false;
+	draw();
+	return true;
 }
 
 }; //namespace Picto

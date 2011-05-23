@@ -8,36 +8,27 @@ ChoiceController::ChoiceController()
 {
 	//Properties
 	//propertyContainer_->setPropertyValue("Type",ControllerType());
-	AddProperty(propertyContainer_->setPropertyValue("Name",""));
-	AddProperty(propertyContainer_->addProperty(QVariant::String,"SignalChannel",""));
-	AddProperty(propertyContainer_->addProperty(QVariant::String,"Shape",""));
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::String,"SignalChannel","");
+	AddDefinableProperty(QVariant::String,"Shape","");
 
-	QSharedPointer<Property> shapesEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0);
 	shapeList_ << "Rectangle" << "Ellipse";
-	shapesEnumProperty->addAttribute("enumNames",shapeList_);
-	AddProperty(shapesEnumProperty);
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 
-	QSharedPointer<Property> unitsEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0);
-    unitList_ << "Sec" << "Ms" << "Us";
-	unitsEnumProperty->addAttribute("enumNames", unitList_);
-	AddProperty(unitsEnumProperty);
+	unitList_ << "Sec" << "Ms" << "Us";
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 
-
-	AddProperty(propertyContainer_->addProperty(QVariant::Int,"FixationTime",1));
-	AddProperty(propertyContainer_->setPropertyValue("TimeUnits",""));
+	AddDefinableProperty(QVariant::Int,"FixationTime",1);
 	timeUnits_ = 0;
 
-	AddProperty(propertyContainer_->addProperty(QVariant::Int,"TotalTime",5));
+	AddDefinableProperty(QVariant::Int,"TotalTime",5);
 
-	QSharedPointer<Property> reentriesAllowedEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"AllowReentries",0);
-    reentriesAllowedList_ << "No" << "Yes";
-	reentriesAllowedEnumProperty->addAttribute("enumNames", reentriesAllowedList_);
-	AddProperty(reentriesAllowedEnumProperty);
+	reentriesAllowedList_ << "No" << "Yes";
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"AllowReentries",0,"enumNames",reentriesAllowedList_);
 
-	AddProperty(propertyContainer_->addProperty(QVariant::Bool,"OperatorVisible",false));
-	AddProperty(propertyContainer_->addProperty(QVariant::Bool,"SubjectVisible",false));
-	QSharedPointer<DataStoreFactory> factory(new PropertyFactory(0,-1,propertyContainer_,QVariant::Rect,"Target"));
-	AddDataStoreFactory("Target", factory);
+	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
+	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
+	AddDefinableProperty(QVariant::Rect,"Target",QRect(),0,-1);
 
 	//Make sure to update the list of results...
 	results_.append("Broke Fixation");
@@ -58,7 +49,7 @@ QString ChoiceController::ControllerType()
 bool ChoiceController::addTarget(QString targetName, QRect target)
 {
 	//Figure out what target number we're on...
-	int targetNum = propertyContainer_->getPropertyList().filter("TargetName").length();
+	int targetNum = propertyContainer_->getPropertyList().filter("Target").length();
 	targetNum++;
 
 	//confirm that the new target name doesn't conflict
@@ -266,180 +257,6 @@ QString ChoiceController::getResult()
 // *	</ControlElement>
 //
 // */
-//bool ChoiceController::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
-//{
-//	xmlStreamWriter->writeStartElement("ControlElement");
-//	xmlStreamWriter->writeAttribute("type",propertyContainer_->getPropertyValue("Type").toString());
-//	xmlStreamWriter->writeAttribute("OperatorVisible",propertyContainer_->getPropertyValue("OperatorVisible").toString());
-//	//if(operatorVisible_)
-//	//	xmlStreamWriter->writeAttribute("OperatorVisible","true");
-//	//else
-//	//	xmlStreamWriter->writeAttribute("OperatorVisible","false");
-//	xmlStreamWriter->writeAttribute("SubjectVisible",propertyContainer_->getPropertyValue("SubjectVisible").toString());
-//	//if(subjectVisible_)
-//	//	xmlStreamWriter->writeAttribute("SubjectVisible","true");
-//	//else
-//	//	xmlStreamWriter->writeAttribute("SubjectVisible","false");
-//
-//	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
-//	xmlStreamWriter->writeTextElement("SignalChannel", propertyContainer_->getPropertyValue("SignalChannel").toString());
-//
-//	QString shapeStr = unitList_.value(propertyContainer_->getPropertyValue("Shape").toInt(),"unknown");
-//	xmlStreamWriter->writeTextElement("Shape", shapeStr);
-//
-//	xmlStreamWriter->writeStartElement("TotalTime");
-//	QString timeUnitsStr = unitList_.value(propertyContainer_->getPropertyValue("TimeUnits").toInt(), "");
-//	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
-//	xmlStreamWriter->writeCharacters(propertyContainer_->getPropertyValue("TotalTime").toString());
-//	xmlStreamWriter->writeEndElement();
-//	
-//	xmlStreamWriter->writeStartElement("FixationTime");
-//	xmlStreamWriter->writeAttribute("units",timeUnitsStr);
-//	xmlStreamWriter->writeCharacters(propertyContainer_->getPropertyValue("FixationTime").toString());
-//	xmlStreamWriter->writeEndElement();
-//
-//	QString reacqAllowedStr = unitList_.value(propertyContainer_->getPropertyValue("AllowReentries").toInt(),"unknown");
-//	xmlStreamWriter->writeTextElement("AllowReentries", shapeStr);
-//
-//	int numTargets = propertyContainer_->getPropertyList().filter("TargetName").length();
-//	for(int target=1; target <= numTargets; target++)
-//	{
-//		QRect targetRect = propertyContainer_->getPropertyValue(QString("Target%1").arg(target)).toRect();
-//		QString targetName = propertyContainer_->getPropertyValue(QString("TargetName%1").arg(target)).toString();
-//
-//		xmlStreamWriter->writeStartElement("Target");
-//		xmlStreamWriter->writeAttribute("name", targetName);
-//		xmlStreamWriter->writeAttribute("x",QString("%1").arg(targetRect.x()));
-//		xmlStreamWriter->writeAttribute("y",QString("%1").arg(targetRect.y()));
-//		xmlStreamWriter->writeAttribute("width",QString("%1").arg(targetRect.width()));
-//		xmlStreamWriter->writeAttribute("height",QString("%1").arg(targetRect.height()));
-//		xmlStreamWriter->writeEndElement();
-//	}
-//	
-//	return true;
-//}
-//
-//bool ChoiceController::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "ControlElement")
-//	{
-//		addError("ChoiceController","Incorrect tag, expected <ControlElement>",xmlStreamReader);
-//		return false;
-//	}
-//	if(xmlStreamReader->attributes().value("type").toString() != ControllerType())
-//	{
-//		addError("ChoiceController","Incorrect type of controller",xmlStreamReader);
-//		return false;
-//	}
-//
-//	propertyContainer_->setPropertyValue("OperatorVisible",xmlStreamReader->attributes().value("OperatorVisible").toString());
-//	//if(xmlStreamReader->attributes().value("OperatorVisible").toString() == "true")
-//	//	operatorVisible_ = true;
-//	//else
-//	//	operatorVisible_ = false;
-//
-//	propertyContainer_->setPropertyValue("SubjectVisible",xmlStreamReader->attributes().value("SubjectVisible").toString());
-//	//if(xmlStreamReader->attributes().value("SubjectVisible").toString() == "true")
-//	//	subjectVisible_ = true;
-//	//else
-//	//	subjectVisible_ = false;
-//
-//	QString units = "";
-//
-//	xmlStreamReader->readNext();
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "ControlElement") && !xmlStreamReader->atEnd())
-//	{
-//		if(!xmlStreamReader->isStartElement())
-//		{
-//			//Do nothing unless we're at a start element
-//			xmlStreamReader->readNext();
-//			continue;
-//		}
-//
-//		QString name = xmlStreamReader->name().toString();
-//		if(name == "Name")
-//		{
-//			setName(xmlStreamReader->readElementText());
-//		}
-//		else if(name == "SignalChannel")
-//		{
-//			propertyContainer_->setPropertyValue("SignalChannel",xmlStreamReader->readElementText());
-//		}
-//		else if(name == "Shape")
-//		{
-//			int shapeIndex= shapeList_.indexOf(xmlStreamReader->readElementText());
-//			if(shapeIndex <0)
-//			{
-//				addError("ChoiceController","Unrecognized shape",xmlStreamReader);
-//				return false;
-//			}
-//			propertyContainer_->setPropertyValue("Shape",shapeIndex);
-//		}
-//		else if(name == "TotalTime" ||
-//				name == "FixationTime")
-//		{
-//			QString unitsStr = xmlStreamReader->attributes().value("units").toString();
-//			int unitsIndex = unitList_.indexOf(unitsStr);
-//
-//			if(unitsIndex<0)
-//			{
-//				addError("ChoiceController", "Unrecognized units for " + name,xmlStreamReader);
-//				return false;
-//			}
-//
-//			if(units == "")
-//			{
-//				units = unitList_.value(unitsIndex);
-//				propertyContainer_->setPropertyValue("TimeUnits",unitsIndex);
-//			}
-//			else if(units != unitList_.value(unitsIndex))
-//			{
-//				addError("ChoiceController", "Only one unit of time is allowed per controller",xmlStreamReader);
-//				return false;
-//			}
-//
-//			propertyContainer_->setPropertyValue(name,xmlStreamReader->readElementText().toInt());
-//		}
-//		else if(name == "AllowReentries")
-//		{
-//			int reentriesAllowedListIndex = reentriesAllowedList_.indexOf(xmlStreamReader->readElementText());
-//			if(reentriesAllowedListIndex <0)
-//			{
-//				addError("ChoiceController","Unrecognized value in AllowReentries",xmlStreamReader);
-//				return false;
-//			}
-//			propertyContainer_->setPropertyValue("AllowReentries",reentriesAllowedListIndex);
-//		}
-//		else if(name.startsWith("Target"))
-//		{
-//			QString targetName = xmlStreamReader->attributes().value("name").toString();
-//
-//			QRect target;
-//			target.setX(xmlStreamReader->attributes().value("x").toString().toInt());
-//			target.setY(xmlStreamReader->attributes().value("y").toString().toInt());
-//			target.setWidth(xmlStreamReader->attributes().value("width").toString().toInt());
-//			target.setHeight(xmlStreamReader->attributes().value("height").toString().toInt());
-//
-//			addTarget(targetName,target);
-//		}
-//		else
-//		{
-//			addError("ChoiceController", "Unexpected tag", xmlStreamReader);
-//			return false;
-//		}
-//		xmlStreamReader->readNext();
-//
-//	}
-//
-//	if(xmlStreamReader->atEnd())
-//	{
-//		addError("ChoiceController", "Unexpected end of document", xmlStreamReader);
-//		return false;
-//	}
-//
-//	return true;
-//}
 
 bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
@@ -460,8 +277,8 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	}
 
 	QString targetName;
-	QList<QSharedPointer<DataStore>> targetChildren = getGeneratedDataStores("Target");
-	foreach(QSharedPointer<DataStore> target, targetChildren)
+	QList<QSharedPointer<Serializable>> targetChildren = getGeneratedChildren("Target");
+	foreach(QSharedPointer<Serializable> target, targetChildren)
 	{
 		targetName = target.staticCast<Property>()->name();
 		if(targetName == "NotATarget")

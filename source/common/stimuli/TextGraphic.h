@@ -35,7 +35,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new TextGraphic());};
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);
 
@@ -48,6 +48,10 @@ public slots:
 	void setHeight(int height);
 	QString getText();
 	void setText(QString text);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);

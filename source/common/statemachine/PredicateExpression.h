@@ -32,9 +32,17 @@ public:
 	PredicateExpression(QString predicateName);
 	~PredicateExpression() {};
 
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new PredicateExpression());};
+
 	bool isValid();
 	bool evaluate();
-
+	
+	//Name
+	void setName(QString name);
+	QString name();
+	void setOrder(int order);
+	int order();
+	
 	QString toString(bool useLHSName=false, bool useRHSName=false);
 	QImage toQImage(bool useLHSName=false, bool useRHSName=false);
 
@@ -44,10 +52,13 @@ public:
 	void setRHSValue(QVariant RHS) { RHSval_ = RHS; useRHSVal_=true;};
 
 	//DataStore functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void setParameterContainer(ParameterContainer *params) { parameters_ = params; };
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QString predicateName_;

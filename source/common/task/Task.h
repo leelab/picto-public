@@ -38,7 +38,7 @@ class Task : public DataStore
 	Q_OBJECT
 public:
 	Task();
-
+	static QSharedPointer<Task> Create(){return QSharedPointer<Task>(new Task());};
 	QString name();
 	void setName(QString name);
 
@@ -46,8 +46,11 @@ public:
 	bool jumpToState(QStringList path, QString state);
 
 	//DataStore Functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	void sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engine);
@@ -57,7 +60,6 @@ private:
 	//QUuid uuid_;
 	//unsigned int revision_;
 
-	QSharedPointer<PropertyContainer> propertyContainer_;
 	ParameterContainer parameterContainer_;
 	QSharedPointer<StateMachine> stateMachine_;
 	//QList<StageResult> stageResults_;

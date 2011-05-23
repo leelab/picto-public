@@ -57,8 +57,11 @@ public:
 	void clear();
 
 	//DataStore Functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private:
 	//QUuid uuid_;
@@ -68,8 +71,6 @@ private:
 	//QList<QSharedPointer<SessionData> > sessionDataElements_;
 	//QList<QSharedPointer<Calibration> > calibrations_;
 	//QList<QSharedPointer<MediaItem> > mediaItems_;
-
-	QSharedPointer<PropertyContainer> propertyContainer_;
 };
 
 

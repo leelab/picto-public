@@ -51,8 +51,12 @@ QString PropertyContainer::getContainerName()
 	return containerGroupItem_->name();
 }
 
-QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value)
+QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple)
 {
+	Q_ASSERT_X(allowMultiple || !properties_.contains(_identifier),
+		"PropertyContainer::addProperty",
+		QString("Attempted to add multiple properties to a tag (%1) for which this operation is forbidden").arg(_identifier).toAscii());
+
 	QtVariantProperty *item = propManager_->addProperty(_type,
 														  _identifier);
 	//This will fail if you use an unsupported type
@@ -88,7 +92,16 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 
 QStringList PropertyContainer::getPropertyList()
 {
-	return properties_.keys();
+	QStringList list;
+
+	QMapIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+	while(propIterator.hasNext())
+	{
+		propIterator.next();
+		for(int i=0;i<propIterator.value().size();i++)
+			list.push_back(propIterator.key());
+	}
+	return list;
 }
 
 QVariant PropertyContainer::getPropertyValue(QString _identifier, int index)
@@ -132,16 +145,16 @@ QSharedPointer<Property> PropertyContainer::setPropertyValue(QString _propertyNa
 void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
 														 const QVariant & value)
 {
-	QMapIterator<QString, QVector<QSharedPointer<Property>>> paramIterator(properties_);
-	while(paramIterator.hasNext())
+	QMapIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+	while(propIterator.hasNext())
 	{
-		paramIterator.next();
+		propIterator.next();
 		int index = 0;
-		foreach(QSharedPointer<Property> prop,paramIterator.value())
+		foreach(QSharedPointer<Property> prop,propIterator.value())
 		{
 			if(prop->variantProp_.data() == property)
 			{
-				emit signalPropertyValueChanged(paramIterator.key(), index, value);
+				emit signalPropertyValueChanged(propIterator.key(), index, value);
 				break;
 			}
 			index++;

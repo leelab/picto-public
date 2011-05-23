@@ -17,7 +17,7 @@ class ColorProperty : public Property
 protected:
 	ColorProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
 	virtual void UpdateSerializationAttributesFromValue();
-	virtual void SetValueFromDeserializedData(QVariant _value);
+	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	friend class PropertyContainer;
 };

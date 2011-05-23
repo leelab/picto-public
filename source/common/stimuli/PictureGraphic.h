@@ -23,7 +23,7 @@ class PICTOLIB_CLASS PictureGraphic : public VisualElement
 
 public:
 	PictureGraphic(QPoint position=QPoint(), QString imageFile="");
-
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new PictureGraphic());};
 	void draw();
 	static VisualElement* NewVisualElement();
 
@@ -32,6 +32,10 @@ public:
 public slots:
 	QString getImageFile() { return propertyContainer_->getPropertyValue("ImageFile").toString(); };
 	void setImageFile(QString filename) { propertyContainer_->setPropertyValue("ImageFile",filename);};
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

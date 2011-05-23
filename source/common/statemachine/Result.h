@@ -24,13 +24,17 @@ class Result : public StateMachineElement
 {
 public:
 	Result();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new Result());};
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 	//! \TODO Add rewarding options here...
 
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 
 

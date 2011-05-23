@@ -21,7 +21,7 @@ void ColorProperty::UpdateSerializationAttributesFromValue()
 	SetSerializationAttributeValue("B",color.blue());
 	SetSerializationAttributeValue("A",color.alpha());
 }
-void ColorProperty::SetValueFromDeserializedData(QVariant _value)
+bool ColorProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	QColor color;
 	color.setRed(GetSerializationAttributeValue("R").toInt());
@@ -29,6 +29,7 @@ void ColorProperty::SetValueFromDeserializedData(QVariant _value)
 	color.setBlue(GetSerializationAttributeValue("B").toInt());
 	color.setAlpha(GetSerializationAttributeValue("A").toInt());
 	setValue(color);
+	return true;
 }
 
 }; //namespace Picto

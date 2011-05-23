@@ -62,6 +62,7 @@ class StateMachine : public StateMachineElement
 {
 public:
 	StateMachine();
+	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new StateMachine());};
 
 	void addTransition(QSharedPointer<Transition> transition);
 	void addParameter(QSharedPointer<Parameter> parameter);
@@ -85,8 +86,11 @@ public:
 	bool jumpToState(QStringList path, QString state);
 
 	//DataStore functions
-	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+protected:
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QString runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave);
@@ -102,7 +106,7 @@ private:
 
 	//This is used to keep track of the local parameters, so that I don't
 	//serialize all the parameters every time.
-	ParameterContainer localParameterContainer_;
+	QSharedPointer<ParameterContainer> localParameterContainer_;
 
 	QScriptEngine qsEngine_;
 	bool scriptingInit_;

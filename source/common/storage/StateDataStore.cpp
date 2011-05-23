@@ -37,7 +37,7 @@ bool StateDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 	xmlStreamWriter->writeAttribute("statemachinepath",machinePath_);
 
 	if(transition_)
-		transition_->serializeAsXml(xmlStreamWriter);
+		transition_->toXml(xmlStreamWriter);
 	DataStore::serializeDataID(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //StateDataStore
@@ -71,7 +71,7 @@ bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		QString name = xmlStreamReader->name().toString();
 		if(name == "Transition")
 		{
-			if(!transition_->deserializeFromXml(xmlStreamReader))
+			if(!transition_->fromXml(xmlStreamReader))
 			{
 				addError("StateDataStore", "Failed to deserialize Transition element", xmlStreamReader);
 				return false;
@@ -89,6 +89,11 @@ bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		addError("StateDataStore", "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
+	return true;
+}
+
+bool StateDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
 	return true;
 }
 

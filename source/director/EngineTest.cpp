@@ -187,7 +187,7 @@ void EngineTest::TestStateMachine()
 	while(xmlStreamReader->name() != "StateMachine")
 		xmlStreamReader->readNext();
 	Picto::StateMachine stateMachine;
-	if(!stateMachine.deserializeFromXml(xmlStreamReader))
+	if(!stateMachine.fromXml(xmlStreamReader))
 	{
 		QMessageBox error;
 		//The extra spaces are to resize the MessageBox

@@ -21,7 +21,7 @@ void RectProperty::UpdateSerializationAttributesFromValue()
 	SetSerializationAttributeValue("width",rect.width());
 	SetSerializationAttributeValue("height",rect.height());
 }
-void RectProperty::SetValueFromDeserializedData(QVariant _value)
+bool RectProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	QRect rect;
 	rect.setX(GetSerializationAttributeValue("x").toInt());
@@ -29,6 +29,7 @@ void RectProperty::SetValueFromDeserializedData(QVariant _value)
 	rect.setWidth(GetSerializationAttributeValue("width").toInt());
 	rect.setHeight(GetSerializationAttributeValue("height").toInt());
 	setValue(rect);
+	return true;
 }
 
 }; //namespace Picto

@@ -78,7 +78,7 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 		{
 			//Extract the alignDataStore
 			QSharedPointer<Picto::AlignmentDataStore> alignData(new Picto::AlignmentDataStore());
-			alignData->deserializeFromXml(xmlReader);
+			alignData->fromXml(xmlReader);
 
 			sessionInfo->insertAlignmentData(alignData);
 		}

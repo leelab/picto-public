@@ -8,10 +8,11 @@ namespace Picto {
 Property::Property(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager) :
 variantProp_(variantProp),
 manager_(manager),
-tagName_("")
+tagName_(""),
+typeVal_("")
 {
-	connect(manager_.data(),SIGNAL(valueChanged()),this,SLOT(valueChanged()));
-	connect(manager_.data(),SIGNAL(attributeChanged()),this,SLOT(attributeChanged()));
+	connect(manager_.data(),SIGNAL(valueChanged(QtProperty *, const QVariant &)),this,SLOT(valueChanged(QtProperty *, const QVariant &)));
+	connect(manager_.data(),SIGNAL(attributeChanged(QtProperty*,const QString&, const QVariant&)),this,SLOT(attributeChanged(QtProperty*,const QString&, const QVariant&)));
 }
 
 Property::~Property()
@@ -77,6 +78,9 @@ bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeStartElement(tagName_);
 	if(name() != tagName_)
 		xmlStreamWriter->writeAttribute("name",name());
+	// In cases where a Serializable Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	if(typeVal_ != "")
+		xmlStreamWriter->writeAttribute("type",typeVal_);
 	UpdateSerializationAttributesFromValue();
 	for(QMap<QString,QVariant>::iterator iter = serializationAttributes_.begin();iter != serializationAttributes_.end();iter++)
 	{
@@ -92,17 +96,61 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 {
 	//Get Start tag name (depending on who the parent is, they may have given us different names.
 	tagName_ = xmlStreamReader->name().toString();
+	bool emptyTag = true;
+	bool hadName = false;
 	if(xmlStreamReader->attributes().hasAttribute("name"))
+	{
 		setName(xmlStreamReader->attributes().value("name").toString());
+		hadName = true;
+	}
 	else
 		setName(tagName_);
-	for(QMap<QString,QVariant>::iterator iter = serializationAttributes_.begin();iter != serializationAttributes_.end();iter++)
+
+	// In cases where a Serializable Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	if(xmlStreamReader->attributes().hasAttribute("type"))
 	{
-		if(xmlStreamReader->attributes().hasAttribute(iter.key()))
-			iter.value() = xmlStreamReader->attributes().value(iter.key()).toString();
+		typeVal_ = xmlStreamReader->attributes().value("type").toString();
 	}
+	else
+		typeVal_ = "";
+
+	QXmlStreamAttributes attributeList = xmlStreamReader->attributes();
+	foreach(QXmlStreamAttribute attribute,attributeList)
+	{
+		if(serializationAttributes_.contains(attribute.name().toString()))
+		{
+			serializationAttributes_[attribute.name().toString()] = attribute.value().toString();
+			emptyTag = false;
+		}
+		else if((attribute.name() != "name") && (attribute.name() != "type") )
+		{
+			QString allowedAttributes = "name\ntype";
+			foreach(QString attrName,serializationAttributes_.keys())
+			{
+				allowedAttributes.append("\n").append(attrName);
+			}
+			addError(name().toAscii(), QString("Invalid attribute: \n%1\nThe following attributes are defined for this property:\n%2\n-----").arg(attribute.name().toString()).arg(allowedAttributes).toAscii(), xmlStreamReader);
+			return false;
+		}
+	}
+	//for(QMap<QString,QVariant>::iterator iter = serializationAttributes_.begin();iter != serializationAttributes_.end();iter++)
+	//{
+	//	if(xmlStreamReader->attributes().hasAttribute(iter.key()))
+	//	{
+	//		iter.value() = xmlStreamReader->attributes().value(iter.key()).toString();
+	//		emptyTag = false;
+	//	}
+	//}
 	QString value = xmlStreamReader->readElementText();
-	SetValueFromDeserializedData(value);
+	if(value != "")
+		emptyTag = false;
+	
+	// If its an empty tag, we should just go with the default value.
+	if(!emptyTag)
+	{
+		if(!SetValueFromString(value,xmlStreamReader))
+			return false;
+	}
 
 	//Loop until we're done with the tag or we reach the end of the XMLStream
 	while(!(xmlStreamReader->isEndElement() && (xmlStreamReader->name().toString() == tagName_)) && !xmlStreamReader->atEnd())
@@ -110,7 +158,7 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	//Make sure we didn't finish the document.
 	if(xmlStreamReader->atEnd())
 	{
-		addError(tagName_.toAscii(), "Unexpected end of document", xmlStreamReader);
+		addError(name().toAscii(), "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
 	return true;
@@ -137,18 +185,19 @@ void Property::UpdateSerializationAttributesFromValue()
 {
 }
 
-void Property::SetValueFromDeserializedData(QVariant _value)
+bool Property::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	setValue(_value);
+	return true;
 }
 
-void Property::valueChanged(QtProperty *property, const QVariant &val)
+void Property::valueChanged(QtProperty *property, const QVariant &)
 {
 	if(property == variantProp_.data())
 		emit edited();
 }
 void Property::attributeChanged(QtProperty *property,
-            const QString &attribute, const QVariant &val)
+            const QString &, const QVariant &)
 {
 	if(property == variantProp_.data())
 		emit edited();

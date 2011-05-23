@@ -2,23 +2,18 @@
 
 #include "DataStore.h"
 #include "../property/Property.h"
+#include "PropertyFactory.h"
 
 namespace Picto {
 
-QStringList DataStore::errors_;
 qulonglong DataStore::lastDataID_ = 0;
 
 DataStore::DataStore():
-QObject(NULL),
-dataID_(0),
-isNew_(false),	//!!!!!!!!THIS NEEDS TO BE INITIALIZED TO TRUE.  I JUST CHANGED IT FOR DEBUGGING PURPOSES!!!!!!!!!!!!!
-edited_(false),
-deleted_(false)
+Serializable(),
+dataID_(0)
 {
+	propertyContainer_ = PropertyContainer::create("DataStore");
 }
-
-
-
 
 //Autoserialization Stuff-------------------------------------------------------------
 
@@ -48,14 +43,14 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	bool returnVal = true;	
 	//Make a list of iterators to use for iterating through the children_ data.
 	//Make an "end iterator" list as well to find out when you're done.
-	QMap<QString,QList<QSharedPointer<DataStore>>::iterator> readIterators;
-	QMap<QString,QList<QSharedPointer<DataStore>>::iterator> readEndIterators;
-	for(QMap<QString,QList<QSharedPointer<DataStore>>>::iterator iter=children_.begin();iter!=children_.end();iter++)
+	QMap<QString,QList<QSharedPointer<Serializable>>::iterator> readIterators;
+	QMap<QString,QList<QSharedPointer<Serializable>>::iterator> readEndIterators;
+	for(QMap<QString,QList<QSharedPointer<Serializable>>>::iterator iter=children_.begin();iter!=children_.end();iter++)
 	{
 		readIterators[iter.key()] = (*iter).begin();
 		readEndIterators[iter.key()] = (*iter).end();
 	}
-	QMap<QString,QList<QSharedPointer<DataStore>>::iterator>::iterator dataIter, endIter;
+	QMap<QString,QList<QSharedPointer<Serializable>>::iterator>::iterator dataIter, endIter;
 
 	//DO ALL THE FANCY READING AND WRITING OF XML TO KEEP ORDERING INTACT HERE
 	while(xmlReader->readNext() && !(xmlReader->isEndElement() && (xmlReader->name().toString() == myTagName_)) && !xmlReader->atEnd())
@@ -76,45 +71,43 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 			xmlStreamWriter->writeCurrentToken(*xmlReader);
 			continue;
 		}
-		//Get the DataStore for the tag 
-		Q_ASSERT_X(readIterators[name] != readEndIterators[name],"DataStore::serializeAsXml","The DataStore list ran out of entries while a deserialized DataStore of its type was not yet read from the original deserialized string.");
-		QSharedPointer<DataStore> dataStore = *(readIterators[name]++);
-		Q_ASSERT_X(!dataStore.isNull(),"DataStore::serializeAsXml","A DataStore pointer in this DataStore's list is null.");
-		//Deserialize all new datastores until you get to one that isn't new
-		while(dataStore->isNew())
+		//Get the Serializable for the tag 
+		Q_ASSERT_X(readIterators[name] != readEndIterators[name],"DataStore::serializeAsXml","The original deserialized xml string contains a tag for which there are no remaining children to deserialize.");
+		QSharedPointer<Serializable> child = *(readIterators[name]++);
+		Q_ASSERT_X(!child.isNull(),"DataStore::serializeAsXml","A Serializable child pointer in this DataStore's list is null.");
+		//Deserialize all new children until you get to one that isn't new
+		while(child->isNew())
 		{
-			dataStore->serializeAsXml(xmlStreamWriter);
-			Q_ASSERT_X(readIterators[name] != readEndIterators[name],"DataStore::serializeAsXml","The DataStore list ran out of entries while a deserialized DataStore of its type was not yet read from the original deserialized string.");
-			dataStore = *(readIterators[name]++);		
+			child->toXml(xmlStreamWriter);
+			Q_ASSERT_X(readIterators[name] != readEndIterators[name],"DataStore::serializeAsXml","The original deserialized xml string contains a tag for which there are no remaining children to deserialize.");
+			child = *(readIterators[name]++);		
 		}
-		//This is the datastore represented by this tag.  Deserialize it.
-		dataStore->serializeAsXml(xmlStreamWriter);
+		//This is the child represented by this tag.  Deserialize it.
+		child->toXml(xmlStreamWriter);
 		//Move read pointer forward.  The next thing in it should be an end tag, and we don't want
-		//to write that out because the child datastore already wrote out its end tag.
+		//to write that out because the child Serializable already wrote out its end tag.
 		xmlReader->readNext();
 	}
 
 	//Write out everything that wasn't yet written that needs to be
 	dataIter = readIterators.begin();
 	endIter = readEndIterators.begin();
-	QSharedPointer<DataStore> childDataStore;
+	QSharedPointer<Serializable> childSerializable;
 	while(dataIter!=readIterators.end())
 	{
 		while((*dataIter) != (*endIter))
 		{
-			childDataStore = (*(*dataIter));
+			childSerializable = (*(*dataIter));
 			//If anything was deleted, it must have been in the original XML,
 			//otherwise the system would have removed it from our list.
-			Q_ASSERT(!childDataStore->isDeleted());
-			//If the childDataStore wasEdited and it wasn't deserialized
+			Q_ASSERT(!childSerializable->isDeleted());
+			//If the childSerializable wasEdited and it wasn't deserialized
 			//in from the XML, it must have been a default value that was
 			//altered by the user.  It must now be serialized out.  If
-			//the dataStore isNew() it must have been added by the user since
+			//the childSerializable isNew() it must have been added by the user since
 			//we serialized in and must also be serialized out.
-			//!!!!!!!!!!!!FOR TESTING NOW THIS IS JUST 1, FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			if(childDataStore->wasEdited() || childDataStore->isNew())
-				childDataStore->serializeAsXml(xmlStreamWriter);
+			if(childSerializable->wasEdited() || childSerializable->isNew())
+				childSerializable->toXml(xmlStreamWriter);
 			(*dataIter)++;
 		}
 		dataIter++;
@@ -134,7 +127,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	//Initilialize this DataStore's deserialization
 	bool returnVal = true;
 	children_.clear();
-	foreach(QSharedPointer<DataStoreFactory> factory,factories_)
+	foreach(QSharedPointer<SerializableFactory> factory,factories_)
 	{
 		if(factory.isNull())
 			continue;	//It is a placeholder tag
@@ -150,18 +143,34 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		returnVal = false;
 		return returnVal;
 	}
-	//Loop until we're done with the tag or we reach the end of the XMLStream
-	while(!(xmlStreamReader->isEndElement() && (xmlStreamReader->name().toString() == myTagName_)) && !xmlStreamReader->atEnd())
+
+	//Make sure that there are no attributes besides "type"
+	int numAttributes = xmlStreamReader->attributes().size();
+	if((numAttributes > 1) || ((numAttributes == 1) && !xmlStreamReader->attributes().hasAttribute("type")))
 	{
+		addError(myTagName_.toAscii(),QString("Incorrect attribute(s), only \"type\" attributes are allowed"),xmlStreamReader);
+		returnVal = false;
+		return returnVal;
+	}
+
+	//Loop until we're done with the tag or we reach the end of the XMLStream
+	bool childWithSameTag = false;	//If this is true, we just deserialized a child with the same tag, so we should ignore its end tag.
+	while(!(xmlStreamReader->isEndElement() && (xmlStreamReader->name().toString() == myTagName_) && !childWithSameTag) && !xmlStreamReader->atEnd())
+	{
+		childWithSameTag = false;
 		//Move forward in XMLStream
-		xmlStreamReader->readNext();
+		if(xmlStreamReader->readNext() == QXmlStreamReader::Invalid)
+		{
+			addError(myTagName_.toAscii(),QString("XML syntax has been violated.").toAscii(),xmlStreamReader);
+			return false;
+		}
 		xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets add the current tag to our tagText.
 		//Continue loop if we're not at a start element
 		if(!xmlStreamReader->isStartElement())
 			continue;
 		//Get Tag name
 		QString name = xmlStreamReader->name().toString();
-		//See if there's a datastore factory for this tag.
+		//See if there's a Serializable factory for this tag.
 		if(!factories_.contains(name))
 		{
 			//There's no entry in our factory list for this tag.  Syntax Error.
@@ -175,20 +184,25 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets add the closing tag from the child to our tagText.
 			continue;
 		}
+		//Check if its a child with the same tag as us.  If so, we'll need to ignore the end tag when we read it on the next loop.
+		if(name == myTagName_)
+			childWithSameTag = true;
+		
 		//Get the factory for the tag 
-		QSharedPointer<DataStoreFactory> factory = factories_.value(name);
+		QSharedPointer<SerializableFactory> factory = factories_.value(name);
 		if(factory.isNull())
 		{
-			//If factory is null, this is a place holder tag to be ignored
+			//If factory is null, this is a place holder tag to be ignored.  
+			Q_ASSERT_X(!childWithSameTag,"DataStore::deserializeFromXml",QString("The tag: <%1> has the same name as its parent and cannot be used as a placeholder").arg(name).toAscii());
 			continue;
 		}
-		//Get the new DataStore
+		//Get the new Serializable
 		//
 		//The command below will put an empty string into type if the "type" attribute
 		//isn't found.  This should map to the default value in the factory.
 		QString type = xmlStreamReader->attributes().value("type").toString();
 		QString error = "";
-		QSharedPointer<DataStore> newChild = factory->getDataStore(error,type);
+		QSharedPointer<Serializable> newChild = factory->getSerializable(error,type);
 		//If the new child is Null then that factory must not support the input type.
 		//Report an error and attempt to continue deserialization to catch any other errors.
 		if(newChild.isNull())
@@ -204,26 +218,34 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			continue;
 		}
 		//We created the new child.  Lets deserialize it.
-		returnVal &= newChild->deserializeFromXml(xmlStreamReader);
+		if(!newChild->fromXml(xmlStreamReader))
+		{
+			//Child deserialization failed.  For now, just exit.
+			//We may want to attempt to continue deserialization in the futures in order
+			//to present other errors.
+			returnVal = false;
+			return false;
+		}
 		xmlWriter->writeCurrentToken(*xmlStreamReader);	// Lets add the closing tag from the child to our tagText.
-		//Add the new child datastore to the children map, and continue 
+		//Add the new child Serializable to the children map, and continue 
 		//the loop
 		children_[name].push_back(newChild);
+		connect(newChild.data(),SIGNAL(edited()),this,SLOT(childEdited()));
 	}
-	//Make sure we got to the end tag
+	//Make sure we didn't finish document
 	if(xmlStreamReader->atEnd())
 	{
 		returnVal = false;
 		addError(myTagName_.toAscii(), "Unexpected end of document", xmlStreamReader);
 	}
-	//Generate any default datastores that were not in the XML
-	for(QMap<QString,QSharedPointer<DataStoreFactory>>::iterator iter = factories_.begin();iter!=factories_.end();iter++)
+	//Generate any default Serializables that were not in the XML
+	for(QMap<QString,QSharedPointer<SerializableFactory>>::iterator iter = factories_.begin();iter!=factories_.end();iter++)
 	{
 		if(iter.value().isNull())
 			continue;	//Its a placeholder tag
-		QSharedPointer<DataStore> newChild;
+		QSharedPointer<Serializable> newChild;
 		forever{
-			newChild = iter.value()->getRequiredDataStore();
+			newChild = iter.value()->getRequiredSerializable();
 			if(newChild.isNull())
 				break;
 			//Generate new XMLStreamReader that is an empty tag to deserialize the child into a default state.
@@ -232,7 +254,10 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			// Move read pointer to tag.
 			while(!emptyTagXML->isStartElement()) 
 				emptyTagXML->readNext();
-			newChild->deserializeFromXml(emptyTagXML);
+			newChild->fromXml(emptyTagXML);
+			//Add the new child Serializable to the children map, and continue 
+			//the loop
+			children_[iter.key()].push_back(newChild);
 		}
 	}
 
@@ -245,63 +270,113 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			addError(myTagName_.toAscii(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(myTagName_).toAscii(),xmlStreamReader);
 	}
 	xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets write the end tag to our tagText.
-	edited_ = false;
-	isNew_ = false;
-	deleted_ = false;
 	return returnVal;
 }
 
 void DataStore::setDeleted()
 {
-	deleted_ = true;
-	foreach(QList<QSharedPointer<DataStore>> dataStoreList,children_)
+	emit deleted();
+	foreach(QList<QSharedPointer<Serializable>> serializableList,children_)
 	{
-		foreach(QSharedPointer<DataStore> dataStore,dataStoreList)
+		foreach(QSharedPointer<Serializable> child,serializableList)
 		{
-			dataStore->setDeleted();
+			child->setDeleted();
 		}
 	}
 }
 
-void DataStore::AddDataStoreFactory(QString name,QSharedPointer<DataStoreFactory> factory)
+void DataStore::AddDefinableProperty(
+		QString tagName, 
+		QVariant defaultValue, 
+		QMap<QString,QVariant> attributeMap,
+		int minNumOfThisType, 
+		int maxNumOfThisType
+		)
 {
-	factories_[name]=factory;
+	AddDefinableProperty(defaultValue.type(),tagName,defaultValue,attributeMap,minNumOfThisType,maxNumOfThisType);
 }
 
-void DataStore::AddProperty(QSharedPointer<DataStore> prop)
+void DataStore::AddDefinableProperty(
+		int type,
+		QString tagName, 
+		QVariant defaultValue, 
+		QString singleAttributeName,
+		QVariant singleAttributeValue,
+		int minNumOfThisType, 
+		int maxNumOfThisType
+		)
 {
-	AddDataStoreFactory(prop.staticCast<Property>()->name(),QSharedPointer<DataStoreFactory>(new DataStoreFactory(prop)));
+	QMap<QString,QVariant> attributeMap;
+	attributeMap[singleAttributeName] = singleAttributeValue;
+	AddDefinableProperty(type,tagName,defaultValue,attributeMap,minNumOfThisType,maxNumOfThisType);
 }
 
-QList<QSharedPointer<DataStore>> DataStore::getGeneratedDataStores(QString factoryName)
+void DataStore::AddDefinableProperty(
+		int type,
+		QString tagName, 
+		QVariant defaultValue,
+		int minNumOfThisType, 
+		int maxNumOfThisType
+		)
 {
-	if(!children_.contains(factoryName))
-		return QList<QSharedPointer<DataStore>>();
-	return children_[factoryName];
+	AddDefinableProperty(type,tagName,defaultValue,QMap<QString,QVariant>(),minNumOfThisType,maxNumOfThisType);
 }
 
-void DataStore::AddError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader, QSharedPointer<QStringList> errors)
+void DataStore::AddDefinableProperty(
+		int type,
+		QString tagName, 
+		QVariant defaultValue, 
+		QMap<QString,QVariant> attributeMap,
+		int minNumOfThisType, 
+		int maxNumOfThisType
+		)
 {
-	QString newErr = "ERROR\n";
-	newErr += "Object: " + objectType + "\n";
-	newErr += QString("Line: %1\n").arg(xmlStreamReader->lineNumber());
-	newErr += "Name: " + xmlStreamReader->name().toString() + "\n";
-	newErr += "Element: " + xmlStreamReader->tokenString() + "\n";
-	newErr += "Message: " + errorMsg + "\n";
-	errors->push_back(newErr);
+	QSharedPointer<SerializableFactory> propFactory(new PropertyFactory(
+														minNumOfThisType,
+														maxNumOfThisType,
+														propertyContainer_,
+														type,
+														tagName,
+														defaultValue,
+														attributeMap)
+													);
+
+	AddDefinableObjectFactory(tagName,propFactory);
+}
+
+void DataStore::AddDefinableObject(QString tagName, QSharedPointer<Serializable> object)
+{
+	QSharedPointer<SerializableFactory> factory(new SerializableFactory(object));
+	AddDefinableObjectFactory(tagName,factory);
+}
+
+void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<SerializableFactory> factory)
+{
+	factories_[tagName]=factory;
+}
+
+void DataStore::DefinePlaceholderTag(QString tagName)
+{
+	factories_[tagName] = QSharedPointer<SerializableFactory>();
+}
+
+QList<QSharedPointer<Serializable>> DataStore::getGeneratedChildren(QString tagName)
+{
+	if(!children_.contains(tagName))
+		return QList<QSharedPointer<Serializable>>();
+	return children_[tagName];
+}
+
+bool DataStore::hasChildrenOfType(QString tagName)
+{
+	return children_.contains(tagName);
 }
 
 void DataStore::childEdited()
 {
-	edited_ = true;
 	emit edited();
 }
 //------------------------------------------------------------------------------------
-
-
-
-
-
 
 
 /*! \brief Used to serialize a unique Data ID into this DataStore's XML record
@@ -335,119 +410,79 @@ qulonglong DataStore::getDataID()
 	return dataID_;
 }
 
-/*! \brief Adds an error message to the list of errors
- *
- *	We maintain a list of errors so that errors can be tracked through the deserialization
- *	process.
- */
-void DataStore::addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	QString newErr = "ERROR\n";
-	newErr += "Object: " + objectType + "\n";
-	newErr += QString("Line: %1\n").arg(xmlStreamReader->lineNumber());
-	newErr += "Name: " + xmlStreamReader->name().toString() + "\n";
-	newErr += "Element: " + xmlStreamReader->tokenString() + "\n";
-	newErr += "Message: " + errorMsg + "\n";
-
-	errors_.append(newErr);
-}
-
-void DataStore::addError(QString objectType, QString errorMsg)
-{
-	QString newErr = "ERROR\n";
-	newErr += "Object: " + objectType + "\n";
-	newErr += "Message: " + errorMsg + "\n";
-
-	errors_.append(newErr);
-}
-
-
-/*!	\brief Returns a string listing all errors that have occured
- */
-QString DataStore::getErrors()
-{
-	QString errorString = "DESERIALIZATION ERRORS\n\n";
-
-	for(int i=0; i<errors_.length(); i++)
-	{
-		errorString += errors_[i] + "\n";
-	}
-	return errorString;
-
-}
 
 qulonglong DataStore::generateDataID()
 {
 	return ++lastDataID_;
 }
 
-void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-						QString name, QPoint point)
-{
-	Q_ASSERT(!name.isEmpty());
-	xmlStreamWriter->writeStartElement(name);
-	xmlStreamWriter->writeAttribute("datatype", "QPoint");
-	xmlStreamWriter->writeAttribute("x",QString("%1").arg(point.x()));
-	xmlStreamWriter->writeAttribute("y",QString("%1").arg(point.y()));
-	xmlStreamWriter->writeEndElement();
-
-}
-
-void DataStore::serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-						QString name, QRect rect)
-{
-	Q_ASSERT(!name.isEmpty());
-	xmlStreamWriter->writeStartElement(name);
-	xmlStreamWriter->writeAttribute("datatype", "QRect");
-	xmlStreamWriter->writeAttribute("x",QString("%1").arg(rect.x()));
-	xmlStreamWriter->writeAttribute("y",QString("%1").arg(rect.y()));
-	xmlStreamWriter->writeAttribute("width",QString("%1").arg(rect.width()));
-	xmlStreamWriter->writeAttribute("height",QString("%1").arg(rect.height()));
-	xmlStreamWriter->writeEndElement();
-
-}
-
-void DataStore::serializeQColor(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-					QString name, QColor color)
-{
-	Q_ASSERT(!name.isEmpty());
-	xmlStreamWriter->writeStartElement(name);
-	xmlStreamWriter->writeAttribute("datatype", "QColor");
-	xmlStreamWriter->writeAttribute("R",QString("%1").arg(color.red()));
-	xmlStreamWriter->writeAttribute("G",QString("%1").arg(color.green()));
-	xmlStreamWriter->writeAttribute("B",QString("%1").arg(color.blue()));
-	xmlStreamWriter->writeAttribute("A",QString("%1").arg(color.alpha()));
-	xmlStreamWriter->writeEndElement();
-
-}
-
-
-QPoint DataStore::deserializeQPoint(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	QPoint point;
-	point.setX(xmlStreamReader->attributes().value("x").toString().toInt());
-	point.setY(xmlStreamReader->attributes().value("y").toString().toInt());
-	return point;
-}
-
-QRect DataStore::deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	QRect rect;
-	rect.setX(xmlStreamReader->attributes().value("x").toString().toInt());
-	rect.setY(xmlStreamReader->attributes().value("y").toString().toInt());
-	rect.setWidth(xmlStreamReader->attributes().value("width").toString().toInt());
-	rect.setHeight(xmlStreamReader->attributes().value("height").toString().toInt());
-	return rect;
-}
-
-QColor DataStore::deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	QColor color;
-	color.setRed(xmlStreamReader->attributes().value("R").toString().toInt());
-	color.setGreen(xmlStreamReader->attributes().value("G").toString().toInt());
-	color.setBlue(xmlStreamReader->attributes().value("B").toString().toInt());
-	color.setAlpha(xmlStreamReader->attributes().value("A").toString().toInt());
-	return color;
-}
+//void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
+//						QString name, QPoint point)
+//{
+//	Q_ASSERT(!name.isEmpty());
+//	xmlStreamWriter->writeStartElement(name);
+//	xmlStreamWriter->writeAttribute("datatype", "QPoint");
+//	xmlStreamWriter->writeAttribute("x",QString("%1").arg(point.x()));
+//	xmlStreamWriter->writeAttribute("y",QString("%1").arg(point.y()));
+//	xmlStreamWriter->writeEndElement();
+//
+//}
+//
+//void DataStore::serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
+//						QString name, QRect rect)
+//{
+//	Q_ASSERT(!name.isEmpty());
+//	xmlStreamWriter->writeStartElement(name);
+//	xmlStreamWriter->writeAttribute("datatype", "QRect");
+//	xmlStreamWriter->writeAttribute("x",QString("%1").arg(rect.x()));
+//	xmlStreamWriter->writeAttribute("y",QString("%1").arg(rect.y()));
+//	xmlStreamWriter->writeAttribute("width",QString("%1").arg(rect.width()));
+//	xmlStreamWriter->writeAttribute("height",QString("%1").arg(rect.height()));
+//	xmlStreamWriter->writeEndElement();
+//
+//}
+//
+//void DataStore::serializeQColor(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
+//					QString name, QColor color)
+//{
+//	Q_ASSERT(!name.isEmpty());
+//	xmlStreamWriter->writeStartElement(name);
+//	xmlStreamWriter->writeAttribute("datatype", "QColor");
+//	xmlStreamWriter->writeAttribute("R",QString("%1").arg(color.red()));
+//	xmlStreamWriter->writeAttribute("G",QString("%1").arg(color.green()));
+//	xmlStreamWriter->writeAttribute("B",QString("%1").arg(color.blue()));
+//	xmlStreamWriter->writeAttribute("A",QString("%1").arg(color.alpha()));
+//	xmlStreamWriter->writeEndElement();
+//
+//}
+//
+//
+//QPoint DataStore::deserializeQPoint(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	QPoint point;
+//	point.setX(xmlStreamReader->attributes().value("x").toString().toInt());
+//	point.setY(xmlStreamReader->attributes().value("y").toString().toInt());
+//	return point;
+//}
+//
+//QRect DataStore::deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	QRect rect;
+//	rect.setX(xmlStreamReader->attributes().value("x").toString().toInt());
+//	rect.setY(xmlStreamReader->attributes().value("y").toString().toInt());
+//	rect.setWidth(xmlStreamReader->attributes().value("width").toString().toInt());
+//	rect.setHeight(xmlStreamReader->attributes().value("height").toString().toInt());
+//	return rect;
+//}
+//
+//QColor DataStore::deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	QColor color;
+//	color.setRed(xmlStreamReader->attributes().value("R").toString().toInt());
+//	color.setGreen(xmlStreamReader->attributes().value("G").toString().toInt());
+//	color.setBlue(xmlStreamReader->attributes().value("B").toString().toInt());
+//	color.setAlpha(xmlStreamReader->attributes().value("A").toString().toInt());
+//	return color;
+//}
 
 }; //namespace Picto

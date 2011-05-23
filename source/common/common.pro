@@ -287,8 +287,10 @@ SOURCES += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/storage/DataStore.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/DataStore.cpp
-HEADERS += $$(PICTO_TREE)/source/common/storage/DataStoreFactory.h
-SOURCES += $$(PICTO_TREE)/source/common/storage/DataStoreFactory.cpp
+HEADERS += $$(PICTO_TREE)/source/common/storage/Serializable.h
+SOURCES += $$(PICTO_TREE)/source/common/storage/Serializable.cpp
+HEADERS += $$(PICTO_TREE)/source/common/storage/SerializableFactory.h
+SOURCES += $$(PICTO_TREE)/source/common/storage/SerializableFactory.cpp
 HEADERS += $$(PICTO_TREE)/source/common/storage/PropertyFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/PropertyFactory.cpp
 HEADERS += $$(PICTO_TREE)/source/common/storage/SessionDataStore.h

@@ -25,7 +25,7 @@ class PropertyContainer : public QObject
 
 public:
 	static QSharedPointer<PropertyContainer> create(QString _containerName);
-	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value);
+	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple = false);
 	QVariant getPropertyValue(QString _identifier, int index=0);
 	QString getPropertyName(QString _identifier, int index=0);
 	QSharedPointer<Property> setPropertyValue(QString _identifier, QVariant _value, int index=0);
