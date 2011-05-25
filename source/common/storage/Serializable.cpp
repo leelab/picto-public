@@ -4,44 +4,44 @@ using namespace Picto;
 
 QStringList Serializable::errors_;
 
-Serializable::Serializable():
-QObject(NULL),
-isNew_(false),	//!!!!!!!!THIS NEEDS TO BE INITIALIZED TO TRUE.  I JUST CHANGED IT FOR DEBUGGING PURPOSES!!!!!!!!!!!!!
-edited_(false),
-deleted_(false)
+Serializable::Serializable()
+//: QObject(NULL),
+//isNew_(false),	//!!!!!!!!THIS NEEDS TO BE INITIALIZED TO TRUE.  I JUST CHANGED IT FOR DEBUGGING PURPOSES!!!!!!!!!!!!!
+//edited_(false),
+//deleted_(false)
 {
-	connect(this, SIGNAL(edited()), this, SLOT(receivedEditedSignal()));
-	connect(this, SIGNAL(deleted()), this, SLOT(receivedDeletedSignal()));
+//	//connect(this, SIGNAL(edited()), this, SLOT(receivedEditedSignal()));
+//	//connect(this, SIGNAL(deleted()), this, SLOT(receivedDeletedSignal()));
 }
 
-bool Serializable::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
-{
-	if(isDeleted())
-		return true;
-	return serializeAsXml(xmlStreamWriter);
-}
-bool Serializable::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	bool returnVal = deserializeFromXml(xmlStreamReader);
-	edited_ = false;
-	isNew_ = false;
-	deleted_ = false;
-	return returnVal;
-}
+//bool Serializable::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//{
+//	if(isDeleted())
+//		return true;
+//	return serializeAsXml(xmlStreamWriter);
+//}
+//bool Serializable::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//{
+//	bool returnVal = deserializeFromXml(xmlStreamReader);
+//	edited_ = false;
+//	isNew_ = false;
+//	deleted_ = false;
+//	return returnVal;
+//}
 
-void Serializable::setDeleted()
-{
-	emit deleted();
-}
-
-void Serializable::receivedEditedSignal()
-{
-	edited_ = true;
-}
-void Serializable::receivedDeletedSignal()
-{
-	deleted_ = true;
-}
+//void Serializable::setDeleted()
+//{
+//	emit deleted();
+//}
+//
+//void Serializable::receivedEditedSignal()
+//{
+//	edited_ = true;
+//}
+//void Serializable::receivedDeletedSignal()
+//{
+//	deleted_ = true;
+//}
 
 void Serializable::AddError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader, QSharedPointer<QStringList> errors)
 {

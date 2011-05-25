@@ -1,8 +1,8 @@
-#ifndef _FRAME_UNIT_DATA_STORE_H_
-#define _FRAME_UNIT_DATA_STORE_H_
+#ifndef _FRAMEDATAUNIT_H_
+#define _FRAMEDATAUNIT_H_
 
 #include "../common.h"
-#include "DataStore.h"
+#include "DataUnit.h"
 
 #include <QString>
 
@@ -13,19 +13,18 @@ namespace Picto {
  *	Stores information about the times at which a frame was rendered
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API FrameUnitDataStore : public DataStore
+	class PICTOLIB_API FrameDataUnit : public DataUnit
 #else
-class FrameUnitDataStore : public DataStore
+class FrameDataUnit : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
-	FrameUnitDataStore();
-	FrameUnitDataStore(int frameNum, double timestamp, QString statename);
+	FrameDataUnit();
+	FrameDataUnit(int frameNum, double timestamp, QString statename);
 
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	int frameNumber; 
 	double time;

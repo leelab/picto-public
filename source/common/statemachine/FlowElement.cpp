@@ -15,8 +15,8 @@ FlowElement::FlowElement()
 	AddDefinableProperty("Name","");
 	AddDefinableProperty("Type","FlowElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	DefinePlaceholderTag("Conditions");
-	AddDefinableObjectFactory("Condition",QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(PredicateExpression::Create))) );
-	AddDefinableObjectFactory("CompoundCondition",QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(CompoundExpression::Create))) );
+	AddDefinableObjectFactory("Condition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PredicateExpression::Create))) );
+	AddDefinableObjectFactory("CompoundCondition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
 	
 	//At some point, we may want to make the default result name user modifiable...
 	defaultResult_ = "default";
@@ -352,14 +352,14 @@ bool FlowElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReade
 	results_.clear();
 
 
-	QList<QSharedPointer<Serializable>> newExprs = getGeneratedChildren("Condition");
-	foreach(QSharedPointer<Serializable> newExpr,newExprs)
+	QList<QSharedPointer<Asset>> newExprs = getGeneratedChildren("Condition");
+	foreach(QSharedPointer<Asset> newExpr,newExprs)
 	{
 		newExpr.staticCast<PredicateExpression>()->setParameterContainer(&parameterContainer_);
 		addCondition(newExpr.staticCast<PredicateExpression>());
 	}
-	QList<QSharedPointer<Serializable>> newCompExprs = getGeneratedChildren("CompoundCondition");
-	foreach(QSharedPointer<Serializable> newCompExpr,newCompExprs)
+	QList<QSharedPointer<Asset>> newCompExprs = getGeneratedChildren("CompoundCondition");
+	foreach(QSharedPointer<Asset> newCompExpr,newCompExprs)
 	{
 		newCompExpr.staticCast<CompoundExpression>()->setParameterContainer(&parameterContainer_);
 		addCondition(newCompExpr.staticCast<PredicateExpression>());

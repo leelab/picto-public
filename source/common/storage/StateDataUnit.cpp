@@ -1,56 +1,56 @@
-#include "StateDataStore.h"
+#include "StateDataUnit.h"
 
 namespace Picto {
 
-StateDataStore::StateDataStore()
+StateDataUnit::StateDataUnit()
 {
 }
 
-void StateDataStore::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
+void StateDataUnit::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
 {
 	transition_ = transition; 
 	timestamp_ = timestamp;
 	machinePath_ = stateMachinePath;
 }
-void StateDataStore::setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath)
+void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath)
 {
 	transition_ = QSharedPointer<Transition>(new Transition(source, sourceResult, destination));
 	timestamp_ = timestamp;
 	machinePath_ = stateMachinePath;
 }
 
-/*! \brief Turns the StateDataStore into an XML fragment
+/*! \brief Turns the StateDataUnit into an XML fragment
  *
  *	The XML will look like this:
- *	<StateDataStore timestamp = 123.456 statemachinepath="state machine name">
+ *	<StateDataUnit timestamp = 123.456 statemachinepath="state machine name">
  *		<Transition>
  *			<Source>TestState</Source>
  *			<SourceResult>Success</SourceResult>
  *			<Destination>Done</Destination>
  *		</Transition>
- *	</StateDataStore>
+ *	</StateDataUnit>
  */
-bool StateDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("StateDataStore");
+	xmlStreamWriter->writeStartElement("StateDataUnit");
 	xmlStreamWriter->writeAttribute("timestamp",QString::number(timestamp_));
 	xmlStreamWriter->writeAttribute("statemachinepath",machinePath_);
 
 	if(transition_)
 		transition_->toXml(xmlStreamWriter);
-	DataStore::serializeDataID(xmlStreamWriter);
+	DataUnit::serializeDataID(xmlStreamWriter);
 
-	xmlStreamWriter->writeEndElement(); //StateDataStore
+	xmlStreamWriter->writeEndElement(); //StateDataUnit
 
 	return true;
 }
-//! Converts XML into a StateDataStore object.  Note that this deletes any existing data.
-bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//! Converts XML into a StateDataUnit object.  Note that this deletes any existing data.
+bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
- 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateDataStore")
+ 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateDataUnit")
 	{
-		addError("StateDataStore","Incorrect tag, expected <StateDataStore>",xmlStreamReader);
+		addError("StateDataUnit","Incorrect tag, expected <StateDataUnit>",xmlStreamReader);
 		return false;
 	}
 
@@ -59,7 +59,7 @@ bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	transition_ = QSharedPointer<Transition>(new Transition());
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateDataStore") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateDataUnit") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -73,26 +73,26 @@ bool StateDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		{
 			if(!transition_->fromXml(xmlStreamReader))
 			{
-				addError("StateDataStore", "Failed to deserialize Transition element", xmlStreamReader);
+				addError("StateDataUnit", "Failed to deserialize Transition element", xmlStreamReader);
 				return false;
 			}
 		}
 		else
 		{
-			DataStore::deserializeDataID(xmlStreamReader);
+			DataUnit::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("StateDataStore", "Unexpected end of document", xmlStreamReader);
+		addError("StateDataUnit", "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
 	return true;
 }
 
-bool StateDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool StateDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;
 }

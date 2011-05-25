@@ -3,17 +3,17 @@
 using namespace Picto;
 
 PropertyFactory::PropertyFactory	(	
-		int minSerializables,
-		int maxSerializables,
+		int minAssets,
+		int maxAssets,
 		QSharedPointer<PropertyContainer> propContainer,
 		int propertyType, 
 		QString propIdentifier,
 		QVariant defaultValue,
 		QMap<QString,QVariant> attributeMap,
-		QVector<QSharedPointer<Serializable>> defaultSerializables
+		QVector<QSharedPointer<Asset>> defaultAssets
 
 									) :
-SerializableFactory(minSerializables,maxSerializables,NULL,defaultSerializables),
+AssetFactory(minAssets,maxAssets,NULL,defaultAssets),
 propContainer_(propContainer),
 propertyType_(propertyType),
 propIdentifier_(propIdentifier),
@@ -22,9 +22,9 @@ attributeMap_(attributeMap)
 {
 }
 
-QSharedPointer<Serializable> PropertyFactory::generateNewSerializable()
+QSharedPointer<Asset> PropertyFactory::generateNewAsset()
 {
-	QSharedPointer<Property> prop = propContainer_->addProperty(propertyType_,propIdentifier_,defaultValue_,((getMaxSerializables()==-1) || (getMaxSerializables()>1)) );
+	QSharedPointer<Property> prop = propContainer_->addProperty(propertyType_,propIdentifier_,defaultValue_,((getMaxAssets()==-1) || (getMaxAssets()>1)) );
 	if(!prop.isNull())
 	{
 		for(QMap<QString,QVariant>::iterator iter = attributeMap_.begin();iter != attributeMap_.end(); iter++)

@@ -6,7 +6,7 @@ Scene::Scene()
 : canvas_(QSharedPointer<Canvas>(new Canvas))
 {
 	DefinePlaceholderTag("AudioElement");	//! \todo deal with audio elements
-	AddDefinableObjectFactory("Canvas",QSharedPointer<SerializableFactory>(new SerializableFactory(1,1,SerializableFactory::NewSerializableFnPtr(Canvas::Create))) );
+	AddDefinableObjectFactory("Canvas",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(Canvas::Create))) );
 }
 
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine)

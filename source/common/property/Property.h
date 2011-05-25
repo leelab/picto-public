@@ -2,7 +2,7 @@
 #define _PROPERTY_H_
 
 #include "../common.h"
-#include "../storage/Serializable.h"
+#include "../storage/Asset.h"
 
 #include <QtVariantPropertyManager>
 #include <QVariant>
@@ -20,9 +20,9 @@ class PropertyContainer;
  *	objects.
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API Property : public Serializable
+	class PICTOLIB_API Property : public Asset
 #else
-class Property : public Serializable
+class Property : public Asset
 #endif
 {
 	Q_OBJECT
@@ -55,7 +55,7 @@ private:
 	void addSubProperty(QSharedPointer<Property> prop);
 	void setName(QString name);
 	QString tagName_;
-	QString typeVal_; // In cases where a Serializable Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	QString typeVal_; // In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
 	QSharedPointer<QtVariantPropertyManager> manager_;
 
 private slots:

@@ -8,8 +8,8 @@
 #include "../../common/engine/NetworkSignalChannel.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
-#include "../../common/storage/behavioraldatastore.h"
-#include "../../common/storage/statedatastore.h"
+#include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/StateDataUnit.h"
 #include "../../common/statemachine/statemachine.h"
 
 
@@ -1253,7 +1253,7 @@ bool RemoteViewer::joinSession()
 	{
 		tryAgain = false;
 		//Figure out where we are in the state machine, and what the current time is
-		commandStr = "GETDATA StateDataStore:-1.0 PICTO/1.0";
+		commandStr = "GETDATA StateDataUnit:-1.0 PICTO/1.0";
 
 		QSharedPointer<Picto::ProtocolCommand> getDataCommand(new Picto::ProtocolCommand(commandStr));
 		QSharedPointer<Picto::ProtocolResponse> getDataResponse;
@@ -1286,13 +1286,13 @@ bool RemoteViewer::joinSession()
 			return false;
 		}
 
-		while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataStore");
+		while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataUnit");
 
 		if(!xmlReader->atEnd())
 		{
 			//If we're here, there is state data to read, meaning that an experiment is in progress
 
-			Picto::StateDataStore data;
+			Picto::StateDataUnit data;
 			data.fromXml(xmlReader);
 
 			lastTransitionTime = data.getTime();

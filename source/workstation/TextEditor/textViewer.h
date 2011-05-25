@@ -1,7 +1,7 @@
 #ifndef _TEXT_VIEWER_H_
 #define _TEXT_VIEWER_H_
 
-#include "viewer.h"
+#include "../viewer.h"
 #include "xmleditor.h"
 #include "syntaxhighlighter.h"
 

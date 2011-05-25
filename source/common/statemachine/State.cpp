@@ -4,8 +4,8 @@
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../engine/PictoEngine.h"
-#include "../storage/BehavioralDataStore.h"
-#include "../storage/FrameDataStore.h"
+#include "../storage/BehavioralDataUnitPackage.h"
+#include "../storage/FrameDataUnitPackage.h"
 #include "../engine/SignalChannel.h"
 #include "../timing/Timestamper.h"
 #include "../stimuli/CursorGraphic.h"
@@ -28,18 +28,18 @@ State::State() :
 	AddDefinableProperty(QVariant::Int,"EngineNeeded",-1);
 	
 	DefinePlaceholderTag("ControlElements");
-	QSharedPointer<SerializableFactory> ctrlElemFactory(new SerializableFactory());
-	ctrlElemFactory->addSerializableType(TestController::ControllerType(),
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(TestController::Create))));
-	ctrlElemFactory->addSerializableType(StopwatchController::ControllerType(),
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(StopwatchController::Create))));
-	ctrlElemFactory->addSerializableType(TargetController::ControllerType(),
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(TargetController::Create))));
-	ctrlElemFactory->addSerializableType(ChoiceController::ControllerType(),
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ChoiceController::Create))));
+	QSharedPointer<AssetFactory> ctrlElemFactory(new AssetFactory());
+	ctrlElemFactory->addAssetType(TestController::ControllerType(),
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TestController::Create))));
+	ctrlElemFactory->addAssetType(StopwatchController::ControllerType(),
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(StopwatchController::Create))));
+	ctrlElemFactory->addAssetType(TargetController::ControllerType(),
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
+	ctrlElemFactory->addAssetType(ChoiceController::ControllerType(),
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
 	AddDefinableObjectFactory("ControlElement",ctrlElemFactory);
 
-	AddDefinableObjectFactory("Scene",QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Scene::Create))) );
+	AddDefinableObjectFactory("Scene",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Scene::Create))) );
 	
 	DefinePlaceholderTag("Scripts");
 	AddDefinableProperty("EntryScript","");
@@ -182,6 +182,7 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		QCoreApplication::processEvents();
 		
 		//--------- Check for master state change ------------
+
 		result = getMasterStateResult(engine);
 		if(!result.isEmpty())
 			isDone = true;
@@ -198,9 +199,8 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		//--------- Check for master frame ------------
 		//Since this "continues" the loop, it has to occur after checking
 		//for a state change
-		
-		int masterFrame = getMasterFramenumber(engine);
 
+		int masterFrame = getMasterFramenumber(engine);
 		if(!isDone && masterFrame <= frameCounter_)
 		{
 			continue;
@@ -210,7 +210,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		//Run the frame scripts enough to catch up
 		if(!isDone && runFrameScript)
 		{
-			
 			for(int i=0; i<masterFrame - frameCounter_; i++)
 			{
 				runScript(frameScriptName);
@@ -251,13 +250,13 @@ void State::reset()
 void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//Create a new frame data store
-	FrameDataStore frameData;
+	FrameDataUnitPackage frameData;
 	Timestamper stamper;
 
 	frameData.addFrame(frameCounter_,stamper.stampSec(),getName());
 
-	//Update the BehavioralDataStore
-	BehavioralDataStore behavData;
+	//Update the BehavioralDataUnitPackage
+	BehavioralDataUnitPackage behavData;
 
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 
@@ -379,12 +378,12 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
  *
  *	When running in slave mode, we need to figure out what the current frame number 
  *	of the master engine is.  This function returns that value.  To figure out the 
- *	frame number we use GETDATA FrameDataStore.  If something goes wrong, this functio
+ *	frame number we use GETDATA FrameDataUnitPackage.  If something goes wrong, this functio
  *	returns a negative value.
  */
 int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 {
-	QString commandStr = QString("GETDATA FrameDataStore:%1 PICTO/1.0").arg(lastFrameCheckTime_);
+	QString commandStr = QString("GETDATA FrameDataUnitPackage:%1 PICTO/1.0").arg(lastFrameCheckTime_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
@@ -410,17 +409,16 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 	xmlReader->readNext();
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
-		if(xmlReader->name() == "FrameDataStore")
+		if(xmlReader->name() == "FrameDataUnitPackage")
 		{
-			FrameDataStore dataStore;
+			FrameDataUnitPackage dataStore;
 			dataStore.fromXml(xmlReader);
-
 			if(dataStore.length() <1)
 				return -1;
 			
 			//Since the frames are returned in order, we can simply pull off the 
 			//last frame, and know that it is the most recently reported frame
-			QSharedPointer<FrameUnitDataStore> data;
+			QSharedPointer<FrameDataUnit> data;
 			data = dataStore.takeLastDataPoint();
 
 			lastFrameCheckTime_ = data->time;
@@ -836,8 +834,8 @@ bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	revision_= propertyContainer_->getPropertyValue("Revision").toInt();
 	engineNeeded_= propertyContainer_->getPropertyValue("EngineNeeded").toInt();
 
-	QList<QSharedPointer<Serializable>> newCtrlElems = getGeneratedChildren("ControlElement");
-	foreach(QSharedPointer<Serializable> newCtrlElem,newCtrlElems)
+	QList<QSharedPointer<Asset>> newCtrlElems = getGeneratedChildren("ControlElement");
+	foreach(QSharedPointer<Asset> newCtrlElem,newCtrlElems)
 	{
 		addControlElement(newCtrlElem.staticCast<ControlElement>());
 	}

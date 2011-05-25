@@ -5,7 +5,7 @@
 #include <QDebug>
 
 #include "NetworkSignalChannel.h"
-#include "../storage/BehavioralDataStore.h"
+#include "../storage/BehavioralDataUnitPackage.h"
 
 namespace Picto {
 
@@ -34,7 +34,7 @@ bool NetworkSignalChannel::stop()
 void NetworkSignalChannel::updateDataBuffer()
 {
 	//Collect the data from the server
-	QString commandStr = QString("GETDATA BehavioralDataStore:%1 PICTO/1.0").arg(lastTimeDataCollected_);
+	QString commandStr = QString("GETDATA BehavioralDataUnitPackage:%1 PICTO/1.0").arg(lastTimeDataCollected_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
@@ -56,12 +56,12 @@ void NetworkSignalChannel::updateDataBuffer()
 
 	Q_ASSERT(!xmlReader->atEnd());
 
-	BehavioralDataStore behavioralData;
+	BehavioralDataUnitPackage behavioralData;
 
 	xmlReader->readNext();
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
-		if(xmlReader->name() == "BehavioralDataStore")
+		if(xmlReader->name() == "BehavioralDataUnitPackage")
 		{
 			behavioralData.fromXml(xmlReader);
 		}
@@ -74,7 +74,7 @@ void NetworkSignalChannel::updateDataBuffer()
 	while(behavioralData.length() > 0)
 	{
 		// Push the data into our signal channel
-		QSharedPointer<Picto::BehavioralUnitDataStore> dataPoint;
+		QSharedPointer<Picto::BehavioralDataUnit> dataPoint;
 		dataPoint = behavioralData.takeFirstDataPoint();
 		
 		rawDataBuffer_["xpos"].append(dataPoint->x);

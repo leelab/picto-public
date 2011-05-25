@@ -27,7 +27,7 @@ public:
 	StopwatchController();
 
 	static ControlElement* NewStopwatchController();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new StopwatchController());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StopwatchController());};
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);

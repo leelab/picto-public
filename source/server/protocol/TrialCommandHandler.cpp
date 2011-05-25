@@ -1,7 +1,7 @@
 #include "TrialCommandHandler.h"
 
 #include "../../common/globals.h"
-#include "../../common/storage/AlignmentDataStore.h"
+#include "../../common/storage/AlignmentDataUnit.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
 
@@ -74,10 +74,10 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 		QString dataType = xmlReader->name().toString();
 
 		//We do different things depending on the type of data being sent
-		if(dataType == "AlignmentDataStore")
+		if(dataType == "AlignmentDataUnit")
 		{
 			//Extract the alignDataStore
-			QSharedPointer<Picto::AlignmentDataStore> alignData(new Picto::AlignmentDataStore());
+			QSharedPointer<Picto::AlignmentDataUnit> alignData(new Picto::AlignmentDataUnit());
 			alignData->fromXml(xmlReader);
 
 			sessionInfo->insertAlignmentData(alignData);

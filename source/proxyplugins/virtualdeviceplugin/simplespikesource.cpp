@@ -1,12 +1,12 @@
 #include "simplespikesource.h"
-#include "..\..\common\storage\NeuralDataStore.h"
+#include "..\..\common\storage\NeuralDataUnit.h"
 
 SimpleSpikeSource::SimpleSpikeSource(double secPerEvent, double secPerSample)
 :SimpleEventSource(secPerEvent,secPerSample)
 {}
-QSharedPointer<Picto::DataStore> SimpleSpikeSource::buildEvent(double time)
+QSharedPointer<Picto::DataUnit> SimpleSpikeSource::buildEvent(double time)
 {
-	QSharedPointer<Picto::NeuralDataStore> newEvent = QSharedPointer<Picto::NeuralDataStore>(new Picto::NeuralDataStore());
+	QSharedPointer<Picto::NeuralDataUnit> newEvent = QSharedPointer<Picto::NeuralDataUnit>(new Picto::NeuralDataUnit());
 	newEvent->setChannel(0);
 	newEvent->setTimestamp(time);
 	newEvent->setUnit(0);

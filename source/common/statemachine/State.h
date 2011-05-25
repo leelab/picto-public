@@ -15,7 +15,7 @@
 
 namespace Picto {
 
-class BehavioralDataStore;
+class BehavioralDataUnitPackage;
 class CommandChannel;
 class SignalChannel;
 
@@ -33,7 +33,7 @@ class State : public StateMachineElement
 {
 public:
 	State();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new State());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new State());};
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

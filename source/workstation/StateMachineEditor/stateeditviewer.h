@@ -45,7 +45,7 @@
 #include <QMainWindow>
 
 #include "diagramitem.h"
-#include "viewer.h"
+#include "../viewer.h"
 
 class DiagramScene;
 

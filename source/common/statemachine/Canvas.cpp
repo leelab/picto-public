@@ -16,7 +16,7 @@ Canvas::Canvas()  :
 {
 	DefinePlaceholderTag("Layers");
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
-	AddDefinableObjectFactory( "Layer",QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Layer::Create))) );
+	AddDefinableObjectFactory( "Layer",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Layer::Create))) );
 
 }
 
@@ -177,8 +177,8 @@ bool Canvas::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	backgroundColor_.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
 	
-	QList<QSharedPointer<Serializable>> newLayers = getGeneratedChildren("Layer");
-	foreach(QSharedPointer<Serializable> newLayer,newLayers)
+	QList<QSharedPointer<Asset>> newLayers = getGeneratedChildren("Layer");
+	foreach(QSharedPointer<Asset> newLayer,newLayers)
 	{
 		layers_.push_back(newLayer.staticCast<Layer>());
 	}

@@ -24,7 +24,7 @@ class Transition  : public DataStore
 public:
 	Transition();
 	Transition(QString source, QString sourceResult, QString destination);
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new Transition());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Transition());};
 
 	void setSource(QString source) { source_ = source; };
 	void setSourceResult(QString sourceResult) { sourceResult_ = sourceResult; };
@@ -39,6 +39,7 @@ public:
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
+	virtual QString defaultTagName(){return "Transition";};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

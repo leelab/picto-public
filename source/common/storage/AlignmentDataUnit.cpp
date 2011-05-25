@@ -1,8 +1,8 @@
-#include "AlignmentDataStore.h"
+#include "AlignmentDataUnit.h"
 
 namespace Picto {
 
-AlignmentDataStore::AlignmentDataStore()
+AlignmentDataUnit::AlignmentDataUnit()
 {
 	setTimestamp(0.0);
 	setAlignCode(0);
@@ -12,32 +12,32 @@ AlignmentDataStore::AlignmentDataStore()
 /*! \brief Serializes out alignment event data.
  *	Returns true if successful.
  */
-bool AlignmentDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+bool AlignmentDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->setAutoFormatting(true);
 
-	xmlStreamWriter->writeStartElement("AlignmentDataStore");
+	xmlStreamWriter->writeStartElement("AlignmentDataUnit");
 	xmlStreamWriter->writeTextElement("Time",QString("%1").arg(getTimestamp(),0,'f',4));
 	xmlStreamWriter->writeTextElement("EventCode",QString("%1").arg(getAlignCode()));
 	xmlStreamWriter->writeTextElement("TrialNum",QString("%1").arg(getAlignNumber()));
-	DataStore::serializeDataID(xmlStreamWriter);
+	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
 /*!	\brief Deserializes alignment event data from XML into this object.
  *	Returns true if successful.
  */
-bool AlignmentDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool AlignmentDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
- 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "AlignmentDataStore")
+ 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "AlignmentDataUnit")
 	{
-		addError("AlignmentDataStore","Incorrect tag, expected <AlignmentDataStore>",xmlStreamReader);
+		addError("AlignmentDataUnit","Incorrect tag, expected <AlignmentDataUnit>",xmlStreamReader);
 		return false;
 	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "AlignmentDataStore") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "AlignmentDataUnit") && !xmlStreamReader->atEnd())
 	{	
 		if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "Time")
 		{
@@ -53,20 +53,20 @@ bool AlignmentDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 		}
 		else if(xmlStreamReader->isStartElement())
 		{
-			DataStore::deserializeDataID(xmlStreamReader);
+			DataUnit::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	
 		if(xmlStreamReader->hasError())
 		{
-			addError("AlignmentDataStore", "xmlStreamReader.errorString()", xmlStreamReader);
+			addError("AlignmentDataUnit", "xmlStreamReader.errorString()", xmlStreamReader);
 			return false;
 		}
 	}
 	return true;
 }
 
-bool AlignmentDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool AlignmentDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;
 }

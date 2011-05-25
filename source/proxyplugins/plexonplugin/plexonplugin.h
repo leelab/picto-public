@@ -28,7 +28,7 @@ public:
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
-	QList<QSharedPointer<Picto::DataStore>> dumpData();
+	QList<QSharedPointer<Picto::DataUnit>> dumpData();
 };
 
 

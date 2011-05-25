@@ -3,7 +3,7 @@
 #include "../property/Property.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
-#include "../storage/StateDataStore.h"
+#include "../storage/StateDataUnit.h"
 #include "Result.h"
 
 namespace Picto {
@@ -20,9 +20,11 @@ StateMachineElement::StateMachineElement()
 
 StateMachineElement::StateMachineElement(QSharedPointer<ParameterContainer> parameters)
 {
-	//propertyContainer_->addProperty(QVariant::String,"Name","");
-	//propertyContainer_->addProperty(QVariant::String,"Type","");
+	DefinePlaceholderTag("Results");
+	AddDefinableProperty(QVariant::String,"DefaultResult","",0,1);
+	AddDefinableProperty(QVariant::String,"Result","",0,-1);
 	defaultResult_ = "";
+	initializePropertiesToDefaults();
 
 	addParameters(parameters);
 }
@@ -117,9 +119,8 @@ QString StateMachineElement::type()
  */
 QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine)
 {
-
 	//Collect the data from the server
-	QString commandStr = QString("GETDATA StateDataStore:%1 PICTO/1.0").arg(lastTransitionTime_);
+	QString commandStr = QString("GETDATA StateDataUnit:%1 PICTO/1.0").arg(lastTransitionTime_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
@@ -131,7 +132,6 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 		return "";
 
 	response = slaveToServerChan->getResponse();
-
 	//Response not 200:OK
 	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
 		return "";
@@ -148,10 +148,10 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 	xmlReader->readNext();
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
-		if(xmlReader->name() == "StateDataStore")
+		if(xmlReader->name() == "StateDataUnit")
 		{
 
-			StateDataStore data;
+			StateDataUnit data;
 			data.fromXml(xmlReader);
 			
 			//Even if multiple transitions have stacked up, we are expecting that data to be
@@ -161,15 +161,18 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 				.arg(data.getSource()).arg(getName()).arg(data.getTime());
 			Q_ASSERT_X(data.getSource() == getName() || data.getSource().toUpper() == "NULL","StateMachineElement::getMasterStateResult", 
 				msg.toAscii());
-			lastTransitionTime_ = data.getTime();
+			//lastTransitionTime_ = data.getTime();
 
 			QString result = data.getSourceResult();
-			
+
 			//The result will be "NULL" if this was the starting "transition"
 			if(result.toUpper() == "NULL")
 				return "";
 			else
+			{
+				lastTransitionTime_ = data.getTime();
 				return result;
+			}
 		}
 		else
 		{
@@ -312,8 +315,8 @@ void StateMachineElement::processStatusDirective(QSharedPointer<Engine::PictoEng
 bool StateMachineElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	QString resultName;
-	QList<QSharedPointer<Serializable>> results = getGeneratedChildren("Result");
-	foreach(QSharedPointer<Serializable> result,results)
+	QList<QSharedPointer<Asset>> results = getGeneratedChildren("Result");
+	foreach(QSharedPointer<Asset> result,results)
 	{
 		resultName = result.staticCast<Property>()->value().toString();
 		if(resultName == "EngineAbort")

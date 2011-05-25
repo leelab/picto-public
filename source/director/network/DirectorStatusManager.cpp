@@ -2,7 +2,7 @@
 #include "../../common/protocol/ProtocolCommand.h"
 #include "../../common/network/CommandChannel.h"
 #include "../../common/timing/timestamper.h"
-#include "../../common/storage/alignmentdatastore.h"
+#include "../../common/storage/AlignmentDataUnit.h"
 using namespace Picto;
 
 void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine)
@@ -64,7 +64,7 @@ void DirectorStatusManager::doServerUpdate()
 		QByteArray alignDataXml;
 		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&alignDataXml));
 		
-		AlignmentDataStore alignData;
+		AlignmentDataUnit alignData;
 		alignData.setAlignCode(alignmentCode_);
 		alignData.setAlignNumber(alignmentID_);
 		alignData.setTimestamp(timestamp);

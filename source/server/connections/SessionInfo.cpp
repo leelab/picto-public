@@ -437,7 +437,7 @@ void SessionInfo::flushCache(QString sourceType)
 
 /*! \brief inserts a neural record in the session database
  */
-void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataStore> data)
+void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
@@ -461,12 +461,12 @@ void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataStore> data)
 }
 
 //! \brief inserts a behavioral data point in the cache database
-void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataStore> data)
+void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitPackage> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQ(cacheDb);
 
-	QSharedPointer<Picto::BehavioralUnitDataStore> dataPoint;
+	QSharedPointer<Picto::BehavioralDataUnit> dataPoint;
 	while(data->length() > 0)
 	{
 		dataPoint = data->takeFirstDataPoint();
@@ -481,7 +481,7 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataStore
 }
 
 //! \brief inserts an alignment data point in the database and attempts latest alignment
-void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataStore> data)
+void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
@@ -513,7 +513,7 @@ void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataStore> 
 }
 
 ////! \brief inserts an LFP data point in the cache database
-//void SessionInfo::insertLFPData(Picto::LFPDataStore data)
+//void SessionInfo::insertLFPData(Picto::LFPDataUnitPackage data)
 //{
 //	QSqlDatabase cacheDb = getCacheDb();
 //	QSqlQuery cacheQ(cacheDb);
@@ -597,7 +597,7 @@ void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataStore> 
 //}
 
 //! \brief inserts an LFP data point in the cache database
-void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataStore> data)
+void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 {
 	bool addedColumns;
 	QSqlDatabase cacheDb = getCacheDb();
@@ -698,7 +698,7 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataStore> data)
 }
 
 //! \brief inserts a state change record in the session database
-void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataStore> data)
+void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnit> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
@@ -716,12 +716,12 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataStore> data)
 }
 
 //! \brief Inserts the passed in frame data into the cache database
-void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataStore> data)
+void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQ(cacheDb);
 
-	QSharedPointer<Picto::FrameUnitDataStore> framedata;
+	QSharedPointer<Picto::FrameDataUnit> framedata;
 	while(data->length() > 0)
 	{
 		framedata = data->takeFirstDataPoint();
@@ -735,7 +735,7 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataStore> data)
 	}
 }
 
-void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataStore> data)
+void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
@@ -752,15 +752,15 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataStore> data)
 
 /*! \brief Returns a behavioral datastore with all of the data collected after the timestamp
  *
- *	This functions creates a new BehavioralDataStore object, and fills it with
+ *	This functions creates a new BehavioralDataUnitPackage object, and fills it with
  *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
  *	then all data is returned.  This is actually a bit tricky, since the data could be
  *	either the session database or the cache database.
  */
-QSharedPointer<Picto::BehavioralDataStore> SessionInfo::selectBehavioralData(double timestamp)
+QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralData(double timestamp)
 {
 	QSqlDatabase cacheDb = getCacheDb();
-	QSharedPointer<Picto::BehavioralDataStore> dataStore(new Picto::BehavioralDataStore());
+	QSharedPointer<Picto::BehavioralDataUnitPackage> dataStore(new Picto::BehavioralDataUnitPackage());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
 	if(timestamp < 0)
@@ -806,15 +806,15 @@ QSharedPointer<Picto::BehavioralDataStore> SessionInfo::selectBehavioralData(dou
 
 /*! \brief Returns a frame datastore with all of the data collected after the timestamp
  *
- *	This functions creates a new FrameDataStore object, and fills it with
+ *	This functions creates a new FrameDataUnitPackage object, and fills it with
  *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
  *	then all data is returned.  This is actually a bit tricky, since the data could be
  *	either the session database or the cache database.
  */
-QSharedPointer<Picto::FrameDataStore> SessionInfo::selectFrameData(double timestamp)
+QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(double timestamp)
 {
 	QSqlDatabase cacheDb = getCacheDb();
-	QSharedPointer<Picto::FrameDataStore> dataStore(new Picto::FrameDataStore());
+	QSharedPointer<Picto::FrameDataUnitPackage> dataStore(new Picto::FrameDataUnitPackage());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
 	if(timestamp < 0)
@@ -862,11 +862,11 @@ QSharedPointer<Picto::FrameDataStore> SessionInfo::selectFrameData(double timest
  *	This function creates a list of state data stores and returns it.  If the timestamp is 0, 
  *	then all data is returned.
  */
-QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> SessionInfo::selectStateData(double timestamp)
+QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectStateData(double timestamp)
 {
 
 	QSqlDatabase cacheDb = getCacheDb();
-	QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> dataStoreList(new QList<QSharedPointer<Picto::StateDataStore>>());
+	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStoreList(new QList<QSharedPointer<Picto::StateDataUnit>>());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
 	if(timestamp < 0)
@@ -892,7 +892,7 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> SessionInfo::select
 	executeReadQuery(&query,"",true);
 	if(justFirst && query.next())
 	{
-		QSharedPointer<Picto::StateDataStore> data(new Picto::StateDataStore());
+		QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
 		data->setTransition(query.value(0).toString(),
 						   query.value(1).toString(),
 						   query.value(2).toString(),
@@ -905,7 +905,7 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> SessionInfo::select
 	{
 		while(query.next())
 		{
-			QSharedPointer<Picto::StateDataStore> data(new Picto::StateDataStore());
+			QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
 			data->setTransition(query.value(0).toString(),
 							   query.value(1).toString(),
 							   query.value(2).toString(),

@@ -2,7 +2,7 @@
 
 #include "result.h"
 #include "ScriptElement.h"
-#include "../storage/SerializableFactory.h"
+#include "../storage/AssetFactory.h"
 
 namespace Picto
 {

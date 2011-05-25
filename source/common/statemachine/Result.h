@@ -24,7 +24,7 @@ class Result : public StateMachineElement
 {
 public:
 	Result();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new Result());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Result());};
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

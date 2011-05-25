@@ -83,13 +83,13 @@ float VirtualDevicePlugin::samplingRate()
 
 /*!	\brief	Gets new events from spikeSource and markSource until they return NULL and returns them.
  */
-QSharedPointer<Picto::DataStore> VirtualDevicePlugin::getNextEvent(double currTime)
+QSharedPointer<Picto::DataUnit> VirtualDevicePlugin::getNextEvent(double currTime)
 {
 	if(latestEvents_.size())
 	{
 		return latestEvents_.takeFirst();
 	}
-	QSharedPointer<Picto::DataStore> latestEvent;
+	QSharedPointer<Picto::DataUnit> latestEvent;
 	foreach(QSharedPointer<VirtualEventSource> source,sources_)
 	{
 		latestEvent = source->getNextEvent(currTime);
@@ -101,22 +101,22 @@ QSharedPointer<Picto::DataStore> VirtualDevicePlugin::getNextEvent(double currTi
 	{
 		return latestEvents_.takeFirst();
 	}
-	return QSharedPointer<Picto::DataStore>();
+	return QSharedPointer<Picto::DataUnit>();
 }
 
-QList<QSharedPointer<Picto::DataStore>> VirtualDevicePlugin::dumpData()
+QList<QSharedPointer<Picto::DataUnit>> VirtualDevicePlugin::dumpData()
 {
 	dataList_.clear();
 	updateData();
 	return dataList_;
 }
 
-/*!	\brief	Calls getNextEvent() over and over, adding new events to the dataStores until it gets null back.
+/*!	\brief	Calls getNextEvent() over and over, adding new events to the DataUnits until it gets null back.
  */
 void VirtualDevicePlugin::updateData()
 {
 	double currTime = timeStamper_->stampSec();
-	QSharedPointer<Picto::DataStore> currEvent = getNextEvent(currTime);
+	QSharedPointer<Picto::DataUnit> currEvent = getNextEvent(currTime);
 	while(!currEvent.isNull())
 	{
 		dataList_.push_back(currEvent);

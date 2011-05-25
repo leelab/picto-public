@@ -10,16 +10,16 @@ ChoiceParameter::ChoiceParameter()
 	AddDefinableProperty(QVariant::Int,"Order",0);
 	AddDefinableProperty("Choice","");
 
-	QSharedPointer<SerializableFactory> factory(new SerializableFactory());
-	factory->addSerializableType("Bool",QSharedPointer<SerializableFactory>
+	QSharedPointer<AssetFactory> factory(new AssetFactory());
+	factory->addAssetType("Bool",QSharedPointer<AssetFactory>
 		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Bool,"Bool")));
-	factory->addSerializableType("Int",QSharedPointer<SerializableFactory>
+	factory->addAssetType("Int",QSharedPointer<AssetFactory>
 		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Int,"Int")));
-	factory->addSerializableType("Double",QSharedPointer<SerializableFactory>
+	factory->addAssetType("Double",QSharedPointer<AssetFactory>
 		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Double,"Double")));
-	factory->addSerializableType("String",QSharedPointer<SerializableFactory>
+	factory->addAssetType("String",QSharedPointer<AssetFactory>
 		(new PropertyFactory(0,-1,propertyContainer_,QVariant::String,"String")));
-	factory->addSerializableType("Color",QSharedPointer<SerializableFactory>
+	factory->addAssetType("Color",QSharedPointer<AssetFactory>
 		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Color,"Color")));
 	AddDefinableObjectFactory("Option",factory);
 
@@ -341,8 +341,8 @@ bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	defaultOption_ = propertyContainer_->getPropertyValue("Default").toBool();
 
 	ChoiceParameterOption newOption;
-	QList<QSharedPointer<Serializable>> options = getGeneratedChildren("Option");
-	foreach(QSharedPointer<Serializable> option,options)
+	QList<QSharedPointer<Asset>> options = getGeneratedChildren("Option");
+	foreach(QSharedPointer<Asset> option,options)
 	{
 		newOption.data = option.staticCast<Property>()->value();
 		newOption.type = newOption.data.type();

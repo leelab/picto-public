@@ -1,8 +1,8 @@
-#ifndef _REWARD_DATA_STORE_H_
-#define _REWARD_DATA_STORE_H_
+#ifndef _REWARDDATAUNIT_H_
+#define _REWARDDATAUNIT_H_
 
 #include "../common.h"
-#include "DataStore.h"
+#include "DataUnit.h"
 
 namespace Picto {
 
@@ -13,16 +13,15 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API RewardDataStore : public DataStore
+	class PICTOLIB_API RewardDataUnit : public DataUnit
 #else
-class RewardDataStore : public DataStore
+class RewardDataUnit : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
 
-	RewardDataStore();
-	RewardDataStore(int durationMs, int channel, double time);
+	RewardDataUnit();
+	RewardDataUnit(int durationMs, int channel, double time);
 
 	void setDuration(int durationMs) { durationMs_ = durationMs; };
 	void setChannel(int channel) {channel_ = channel; };
@@ -33,8 +32,8 @@ public:
 	double getTime() { return time_; };
 
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

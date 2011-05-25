@@ -17,8 +17,8 @@ CompoundExpression::CompoundExpression()
 	AddDefinableProperty(QVariant::Bool,"InvertRight",false);
 	AddDefinableProperty("LeftName","");
 
-	AddDefinableObjectFactory("Expression",QSharedPointer<SerializableFactory>(new SerializableFactory(0,2,SerializableFactory::NewSerializableFnPtr(PredicateExpression::Create))) );
-	AddDefinableObjectFactory("CompoundExpression",QSharedPointer<SerializableFactory>(new SerializableFactory(0,2,SerializableFactory::NewSerializableFnPtr(CompoundExpression::Create))) );
+	AddDefinableObjectFactory("Expression",QSharedPointer<AssetFactory>(new AssetFactory(0,2,AssetFactory::NewAssetFnPtr(PredicateExpression::Create))) );
+	AddDefinableObjectFactory("CompoundExpression",QSharedPointer<AssetFactory>(new AssetFactory(0,2,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
 	
 	LHSisPred_ = true;
 	RHSisPred_ = true;
@@ -567,8 +567,8 @@ bool CompoundExpression::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	invertRHS_ = propertyContainer_->getPropertyValue("InvertRight").toBool();
 
 	QString leftName = propertyContainer_->getPropertyValue("LeftName").toString();
-	QList<QSharedPointer<Serializable>> newExprs = getGeneratedChildren("Expression");
-	foreach(QSharedPointer<Serializable> newExpr,newExprs)
+	QList<QSharedPointer<Asset>> newExprs = getGeneratedChildren("Expression");
+	foreach(QSharedPointer<Asset> newExpr,newExprs)
 	{
 		if(newExpr.staticCast<PredicateExpression>()->name() == leftName)
 		{
@@ -598,8 +598,8 @@ bool CompoundExpression::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 		}
 	}
 
-	QList<QSharedPointer<Serializable>> newCompExprs = getGeneratedChildren("CompoundExpression");
-	foreach(QSharedPointer<Serializable> newCompExpr,newCompExprs)
+	QList<QSharedPointer<Asset>> newCompExprs = getGeneratedChildren("CompoundExpression");
+	foreach(QSharedPointer<Asset> newCompExpr,newCompExprs)
 	{
 		if(newCompExpr.staticCast<CompoundExpression>()->name() == leftName)
 		{

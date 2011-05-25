@@ -50,6 +50,7 @@ public:
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
+	virtual QString defaultTagName(){return "Task";};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

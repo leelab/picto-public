@@ -78,7 +78,7 @@ bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeStartElement(tagName_);
 	if(name() != tagName_)
 		xmlStreamWriter->writeAttribute("name",name());
-	// In cases where a Serializable Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	// In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
 	if(typeVal_ != "")
 		xmlStreamWriter->writeAttribute("type",typeVal_);
 	UpdateSerializationAttributesFromValue();
@@ -106,7 +106,7 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	else
 		setName(tagName_);
 
-	// In cases where a Serializable Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	// In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
 	if(xmlStreamReader->attributes().hasAttribute("type"))
 	{
 		typeVal_ = xmlStreamReader->attributes().value("type").toString();

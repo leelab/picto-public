@@ -25,8 +25,14 @@ PredicateExpression::PredicateExpression()
 
 PredicateExpression::PredicateExpression(QString predicateName)
 {
-	PredicateFactory predFact;
-	Q_ASSERT(predFact.createPredicate(predicateName));
+	AddDefinableProperty("Name","");
+	AddDefinableProperty(QVariant::Int,"Order",0);
+	AddDefinableProperty(QVariant::String,"LeftParameter","",0,1);
+	AddDefinableProperty(QVariant::String,"RightParameter","",0,1);
+	AddDefinableProperty(QVariant::String,"Comparison","",0,1);
+	AddDefinableProperty(QVariant::String,"Value","",0,1);
+	initializePropertiesToDefaults();
+	propertyContainer_->setPropertyValue("Name",predicateName);
 
 	LHSParamName_ = "";
 	RHSParamName_ = "";

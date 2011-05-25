@@ -45,7 +45,7 @@ public:
 	CompoundExpression();
 
 	~CompoundExpression() {};
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new CompoundExpression());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new CompoundExpression());};
 	//Setters
 	void setLHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert=false);
 	void setRHSCompoundExp(QSharedPointer<CompoundExpression> exp, bool invert=false);
@@ -73,6 +73,7 @@ public:
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
+	virtual QString defaultTagName(){return "CompoundExpression";};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 

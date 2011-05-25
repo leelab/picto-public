@@ -1,7 +1,7 @@
-#include "LFPDataStore.h"
+#include "LFPDataUnitPackage.h"
 
 using namespace Picto;
-LFPDataStore::LFPDataStore()
+LFPDataUnitPackage::LFPDataUnitPackage()
 {
 	channel_ = -1;
 	correlation_ = 0;
@@ -11,15 +11,15 @@ LFPDataStore::LFPDataStore()
 	numSamples_ = 0;
 }
 
-/*! \brief Turns the FrameDataStore into an XML fragment
+/*! \brief Turns the FrameDataUnitPackage into an XML fragment
  *
  *	The XML will look like this:
- *	<FrameUnitDataStore time=1.234 state=somestate>1</FrameUnitDataStore>
+ *	<FrameDataUnit time=1.234 state=somestate>1</FrameDataUnit>
  *	
  */
-bool LFPDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+bool LFPDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("LFPDataStore");
+	xmlStreamWriter->writeStartElement("LFPDataUnitPackage");
 	xmlStreamWriter->writeAttribute("correlation",QString("%1").arg(correlation_));
 	xmlStreamWriter->writeAttribute("numsamples",QString("%1").arg(numSamples_));
 	xmlStreamWriter->writeTextElement("times",times_);
@@ -28,21 +28,21 @@ bool LFPDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWrit
 	{
 		xmlStreamWriter->writeTextElement("ch"+QString::number(i).toAscii(),potentials_[i]);
 	}
-	DataStore::serializeDataID(xmlStreamWriter);
+	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-//! Converts XML into a FrameDataStore object.  Note that this deletes any existing data.
-bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//! Converts XML into a FrameDataUnitPackage object.  Note that this deletes any existing data.
+bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "LFPDataStore")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "LFPDataUnitPackage")
 	{
-		addError("LFPDataStore","Incorrect tag, expected <LFPDataStore>",xmlStreamReader);
+		addError("LFPDataUnitPackage","Incorrect tag, expected <LFPDataUnitPackage>",xmlStreamReader);
 		return false;
 	}
 
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "LFPDataStore") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "LFPDataUnitPackage") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -52,7 +52,7 @@ bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "LFPDataStore")
+		if(name == "LFPDataUnitPackage")
 		{
 			if(xmlStreamReader->attributes().hasAttribute("correlation"))
 			{
@@ -60,7 +60,7 @@ bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 			}
 			else
 			{
-				addError("LFPDataStore","LFPDataStore missing correlation attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage","LFPDataUnitPackage missing correlation attribute",xmlStreamReader);
 				return false;
 			}
 			if(xmlStreamReader->attributes().hasAttribute("numsamples"))
@@ -69,7 +69,7 @@ bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 			}
 			else
 			{
-				addError("LFPDataStore","LFPDataStore missing numsamples attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage","LFPDataUnitPackage missing numsamples attribute",xmlStreamReader);
 				return false;
 			}
 		}
@@ -90,19 +90,19 @@ bool LFPDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 		}
 		else
 		{
-			DataStore::deserializeDataID(xmlStreamReader);
+			DataUnit::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	}
 	return true;
 }
 
-bool LFPDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool LFPDataUnitPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;
 }
 
-void LFPDataStore::addData(double timestamp, double* potentials, int numVals)
+void LFPDataUnitPackage::addData(double timestamp, double* potentials, int numVals)
 {
 	while(potentials_.size() < numVals)
 	{
@@ -117,16 +117,16 @@ void LFPDataStore::addData(double timestamp, double* potentials, int numVals)
 		potentials_[i].append(" ").append(QString::number(potentials[i]));
 	}
 	numSamples_++;
-	Q_ASSERT_X(numSamples_ <= 10000,"LFPDataStore::addData","No more than 10000 lfp samples should be stored in a lfpdatastore");
+	Q_ASSERT_X(numSamples_ <= 10000,"LFPDataUnitPackage::addData","No more than 10000 lfp samples should be stored in a lfpdatastore");
 
 }
-void LFPDataStore::addData(double timestamp, double* potentials, int numVals, double fittedtime)
+void LFPDataUnitPackage::addData(double timestamp, double* potentials, int numVals, double fittedtime)
 {
 	fittedTimes_.push_back(QString::number(fittedtime));
 	addData(timestamp,potentials,numVals);
 }
 
-void LFPDataStore::addDataByBlock(lfpDataBlock* block)
+void LFPDataUnitPackage::addDataByBlock(lfpDataBlock* block)
 {
 	if(!block->data.size())
 		return;

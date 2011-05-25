@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QVector>
 #include <QSharedPointer>
-#include "..\..\common\storage\DataStore.h"
+#include "..\..\common\storage\DataUnit.h"
 
 /*! \brief A struct for holding virtual event data.
  */
@@ -31,7 +31,7 @@ public:
 	virtual bool start(double time);
 	virtual bool stop();
 	virtual float samplingRate() = 0;
-	virtual QSharedPointer<Picto::DataStore> getNextEvent(double time) = 0;
+	virtual QSharedPointer<Picto::DataUnit> getNextEvent(double time) = 0;
 protected:
 	double startTime_;
 };

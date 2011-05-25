@@ -54,6 +54,8 @@ public:
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 protected:
+	virtual QString defaultTagName(){return "ControlElement";};
+
 	QStringList results_;
 
 	bool operatorVisible_;

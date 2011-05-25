@@ -1,8 +1,8 @@
 #include "GetDataCommandHandler.h"
 
 #include "../../common/globals.h"
-#include "../../common/storage/BehavioralDataStore.h"
-#include "../../common/storage/StateDataStore.h"
+#include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/StateDataUnit.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
 
@@ -42,24 +42,24 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&xmlContent));
 	xmlWriter->writeStartElement("Data");
 
-	if(dataType.compare("BehavioralDataStore",Qt::CaseInsensitive) == 0)
+	if(dataType.compare("BehavioralDataUnitPackage",Qt::CaseInsensitive) == 0)
 	{
-		QSharedPointer<Picto::BehavioralDataStore> dataStore;
+		QSharedPointer<Picto::BehavioralDataUnitPackage> dataStore;
 		dataStore = sessionInfo->selectBehavioralData(timestamp);
 		dataStore->toXml(xmlWriter);
 	}
-	else if(dataType.compare("StateDataStore",Qt::CaseInsensitive) == 0)
+	else if(dataType.compare("StateDataUnit",Qt::CaseInsensitive) == 0)
 	{
-		QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> dataStores;
+		QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStores;
 		dataStores = sessionInfo->selectStateData(timestamp);
-		foreach(QSharedPointer<Picto::StateDataStore> data, *dataStores)
+		foreach(QSharedPointer<Picto::StateDataUnit> data, *dataStores)
 		{
 			data->toXml(xmlWriter);
 		}
 	}
-	else if(dataType.compare("FrameDataStore",Qt::CaseInsensitive) == 0)
+	else if(dataType.compare("FrameDataUnitPackage",Qt::CaseInsensitive) == 0)
 	{
-		QSharedPointer<Picto::FrameDataStore> dataStore;
+		QSharedPointer<Picto::FrameDataUnitPackage> dataStore;
 		dataStore = sessionInfo->selectFrameData(timestamp);
 		dataStore->toXml(xmlWriter);
 	}

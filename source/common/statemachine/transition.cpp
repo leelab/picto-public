@@ -18,9 +18,10 @@ Transition::Transition(QString source, QString sourceResult, QString destination
 	AddDefinableProperty("Source","");
 	AddDefinableProperty("SourceResult","");
 	AddDefinableProperty("Destination","");
-	source_ = source;
-	sourceResult_ = sourceResult;
-	destination_ = destination;
+	initializePropertiesToDefaults();
+	propertyContainer_->setPropertyValue("Source",source);
+	propertyContainer_->setPropertyValue("SourceResult",sourceResult);
+	propertyContainer_->setPropertyValue("Destination",destination);
 }
 
 /*!	\brief Turns a transition into XML

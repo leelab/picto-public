@@ -139,7 +139,7 @@ void PictoDirectorSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 		}
 		break;
 	case PUTDATA:
-		SendMessage((QString("PUTDATA ") + GetDeviceName() + " PICTO/1.0\r\nSession-ID:%1\r\nContent-Length:69\r\n\r\n<BehavioralDataStore><Data time=2.4 x=50 y=30/></BehavioralDataStore>"), tcpSocket_);
+		SendMessage((QString("PUTDATA ") + GetDeviceName() + " PICTO/1.0\r\nSession-ID:%1\r\nContent-Length:69\r\n\r\n<BehavioralDataUnitPackage><Data time=2.4 x=50 y=30/></BehavioralDataUnitPackage>"), tcpSocket_);
 		ReadIncomingMessage("PICTO/1.0 200 OK",message,tcpSocket_,10000);
 		break;
 	case TRIAL:
@@ -172,7 +172,7 @@ QString PictoDirectorSimulator::SimulateNextMsg(QSharedPointer<SimActionDesc> ac
 	if(InterruptableSleep(sleepTime))
 		return result;
 	QString trialTemplate = "TRIAL /start PICTO/1.0\r\nSession-ID:%1\r\nContent-Length:%2\r\n\r\n<Trial><Time>%3</Time><EventCode>%4</EventCode><TrialNum>%5</TrialNum></Trial>";
-	QString putDataTemplate = "PUTDATA " + GetDeviceName() + " PICTO/1.0\r\nSession-ID:%1\r\nContent-Length:%2\r\n\r\n<Data><BehavioralDataStore><Data time=\"%3\" x=\"%4\" y=\"%5\"/></BehavioralDataStore></Data>";
+	QString putDataTemplate = "PUTDATA " + GetDeviceName() + " PICTO/1.0\r\nSession-ID:%1\r\nContent-Length:%2\r\n\r\n<Data><BehavioralDataUnitPackage><Data time=\"%3\" x=\"%4\" y=\"%5\"/></BehavioralDataUnitPackage></Data>";
 	switch(msg->type_)
 	{
 	case DirectorUpdateDesc::TRIAL:

@@ -16,7 +16,7 @@
  *  piece of data
  *
  *	FORMAT
- *		GETDATA datastoretype:time(e.g. BehavioralDataStore:3.245) PICTO.1/0
+ *		GETDATA datastoretype:time(e.g. BehavioralDataUnitPackage:3.245) PICTO.1/0
  *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
  *
  *	RESPONSES
@@ -27,11 +27,11 @@
  *	data types.
  *
  *	<Data>
- *	  <BehavioralDataStore id=143>
+ *	  <BehavioralDataUnitPackage id=143>
  *	    <Data timestamp=123.4324 x=450 y=394/>
  *	    <Data timestamp=123.4334 x=457 y=386/>
  *	    ...
- *	  </BehavioralDataStore>
+ *	  </BehavioralDataUnitPackage>
  *	</Data>
  *
  *			OR

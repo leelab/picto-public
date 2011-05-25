@@ -9,38 +9,24 @@
 
 namespace Picto {
 //class Serialiable;
-/*! \brief An interface for all things serializable.
+/*! \brief An interface for all things Serializable.
  *
  *	
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Serializable: public QObject
+class PICTOLIB_API Serializable
 #else
-class Serializable: public  QObject
+class Serializable
 #endif
 {
-	Q_OBJECT
 public:
 	Serializable();
 
 	static QString getErrors();
 	static void clearErrors() { errors_.clear(); };
 
-	bool toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-	//AutoSerialization Stuff---------------------------------
-	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
-	virtual void setDeleted();
-	bool wasEdited(){return edited_;};
-	bool isNew(){return isNew_;};
-	bool isDeleted(){return deleted_;};
-
-signals:
-	void edited();
-	void deleted();
-	//--------------------------------------------------------
+	virtual bool toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
+	virtual bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 protected:
 	void addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -48,18 +34,9 @@ protected:
 
 private:
 	
-	//AutoSerialization Stuff---------------------------------
 	void AddError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader, QSharedPointer<QStringList> errors);
-	bool edited_;
-	bool isNew_;
-	bool deleted_;
-	//--------------------------------------------------------
-
 	static QStringList errors_;
 
-private slots:
-	void receivedEditedSignal();
-	void receivedDeletedSignal();
 };
 
 }; //namespace Picto

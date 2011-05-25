@@ -1,8 +1,8 @@
-#include "NeuralDataStore.h"
+#include "NeuralDataUnit.h"
 
 namespace Picto {
 
-NeuralDataStore::NeuralDataStore()
+NeuralDataUnit::NeuralDataUnit()
 {
 	setTimestamp(0.0);
 	setChannel(0);
@@ -13,12 +13,12 @@ NeuralDataStore::NeuralDataStore()
 /*! \brief Will serialize out spike data. Not Yet Implemented.
  *	Returns true if successful.
  */
-bool NeuralDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->setAutoFormatting(true);
 
-	xmlStreamWriter->writeStartElement("NeuralDataStore");
-	DataStore::serializeDataID(xmlStreamWriter);
+	xmlStreamWriter->writeStartElement("NeuralDataUnit");
+	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeTextElement("timestamp",QString("%1").arg(getTimestamp(),0,'f',4));
 	xmlStreamWriter->writeTextElement("channel",QString("%1").arg(getChannel()));
 	xmlStreamWriter->writeTextElement("unit",QString("%1").arg(getUnit()));
@@ -29,17 +29,17 @@ bool NeuralDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 /*!	\brief Deserializes Neural data from XML into this object.
  *	Returns true if successful.
  */
-bool NeuralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
- 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "NeuralDataStore")
+ 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "NeuralDataUnit")
 	{
-		addError("NeuralDataStore","Incorrect tag, expected <NeuralDataStore>",xmlStreamReader);
+		addError("NeuralDataUnit","Incorrect tag, expected <NeuralDataUnit>",xmlStreamReader);
 		return false;
 	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "NeuralDataStore") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "NeuralDataUnit") && !xmlStreamReader->atEnd())
 	{	
 		if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "timestamp")
 		{
@@ -59,26 +59,26 @@ bool NeuralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 		}
 		else if(xmlStreamReader->isStartElement())
 		{
-			DataStore::deserializeDataID(xmlStreamReader);
+			DataUnit::deserializeDataID(xmlStreamReader);
 		}
 		xmlStreamReader->readNext();
 	
 		if(xmlStreamReader->hasError())
 		{
-			addError("NeuralDataStore", "xmlStreamReader.errorString()", xmlStreamReader);
+			addError("NeuralDataUnit", "xmlStreamReader.errorString()", xmlStreamReader);
 			return false;
 		}
 	}
 	return true;
 }
 
-bool NeuralDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool NeuralDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;
 }
 
 //! \brief Waveform should be formatted as "X X X X " where each X is an int
-void NeuralDataStore::setWaveformFromString(QString waveform)
+void NeuralDataUnit::setWaveformFromString(QString waveform)
 {
 	waveform_ = QSharedPointer<QList<int>>(new QList<int>);
 	QStringList vals = waveform.split(" ",QString::SkipEmptyParts);
@@ -88,7 +88,7 @@ void NeuralDataStore::setWaveformFromString(QString waveform)
 	}
 }
 
-QString NeuralDataStore::getWaveformAsString()
+QString NeuralDataUnit::getWaveformAsString()
 {
 	QString returnVal;
 	QList<int>::Iterator it;

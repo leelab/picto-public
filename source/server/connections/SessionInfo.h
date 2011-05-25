@@ -3,13 +3,13 @@
 
 #include "../datacollection/alignmenttool.h"
 #include "../network/serverthread.h"
-#include "../../common/storage/NeuralDataStore.h"
-#include "../../common/storage/BehavioralDataStore.h"
-#include "../../common/storage/StateDataStore.h"
-#include "../../common/storage/FrameDataStore.h"
-#include "../../common/storage/RewardDataStore.h"
-#include "../../common/storage/AlignmentDataStore.h"
-#include "../../common/storage/LFPDataStore.h"
+#include "../../common/storage/NeuralDataUnit.h"
+#include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/StateDataUnit.h"
+#include "../../common/storage/FrameDataUnitPackage.h"
+#include "../../common/storage/RewardDataUnit.h"
+#include "../../common/storage/AlignmentDataUnit.h"
+#include "../../common/storage/LFPDataUnitPackage.h"
 #include "ComponentInfo.h"
 
 #include <QSharedPointer>
@@ -68,17 +68,17 @@ public:
 
 	void flushCache(QString sourceType = "");
 	//void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID );
-	void insertNeuralData(QSharedPointer<Picto::NeuralDataStore> data);
-	void insertBehavioralData(QSharedPointer<Picto::BehavioralDataStore> data);
-	void insertAlignmentData(QSharedPointer<Picto::AlignmentDataStore> data);
-	void insertLFPData(QSharedPointer<Picto::LFPDataStore> data);
-	void insertFrameData(QSharedPointer<Picto::FrameDataStore> data);
-	void insertRewardData(QSharedPointer<Picto::RewardDataStore> data);
+	void insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data);
+	void insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitPackage> data);
+	void insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> data);
+	void insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data);
+	void insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data);
+	void insertRewardData(QSharedPointer<Picto::RewardDataUnit> data);
 
-	QSharedPointer<Picto::BehavioralDataStore> selectBehavioralData(double timestamp);
-	void insertStateData(QSharedPointer<Picto::StateDataStore> data);
-	QSharedPointer<QList<QSharedPointer<Picto::StateDataStore>>> selectStateData(double timestamp);
-	QSharedPointer<Picto::FrameDataStore> selectFrameData(double timestamp);
+	QSharedPointer<Picto::BehavioralDataUnitPackage> selectBehavioralData(double timestamp);
+	void insertStateData(QSharedPointer<Picto::StateDataUnit> data);
+	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> selectStateData(double timestamp);
+	QSharedPointer<Picto::FrameDataUnitPackage> selectFrameData(double timestamp);
 
 	//getters/setters
 	QUuid sessionId() { return uuid_; };

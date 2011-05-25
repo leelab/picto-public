@@ -1,7 +1,7 @@
 #ifndef _PROPERTYFACTORY_H_
 #define _PROPERTYFACTORY_H_
 
-#include "SerializableFactory.h"
+#include "AssetFactory.h"
 #include "../Property/PropertyContainer.h"
 
 #include <QSharedPointer>
@@ -12,25 +12,25 @@
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PropertyFactory : public SerializableFactory
+class PICTOLIB_API PropertyFactory : public AssetFactory
 #else
-class PropertyFactory : public SerializableFactory
+class PropertyFactory : public AssetFactory
 #endif
 {
 public:
 	PropertyFactory(
-		int minSerializables,
-		int maxSerializables,
+		int minAssets,
+		int maxAssets,
 		QSharedPointer<PropertyContainer> propContainer,
 		int propertyType, 
 		QString propIdentifier,
 		QVariant defaultValue = QVariant(),
 		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>(),
-		QVector<QSharedPointer<Serializable>> defaultSerializables = QVector<QSharedPointer<Serializable>>()
+		QVector<QSharedPointer<Asset>> defaultAssets = QVector<QSharedPointer<Asset>>()
 		);
 	
 protected:
-	virtual QSharedPointer<Serializable> generateNewSerializable();
+	virtual QSharedPointer<Asset> generateNewAsset();
 private:
 	QSharedPointer<PropertyContainer> propContainer_;
 	int propertyType_;

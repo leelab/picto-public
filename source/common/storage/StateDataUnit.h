@@ -1,8 +1,8 @@
-#ifndef _STATEDATASTORE_H_
-#define _STATEDATASTORE_H_
+#ifndef _STATEDATAUNIT_H_
+#define _STATEDATAUNIT_H_
 
 #include "../common.h"
-#include "DataStore.h"
+#include "DataUnit.h"
 #include "../statemachine/transition.h"
 
 #include <QString>
@@ -16,24 +16,23 @@ namespace Picto {
  *	state machine.
  *
  *	The XML format is:
- *	<StateDataStore timestamp = 123.456 statemachinepath="state machine name">
+ *	<StateDataUnit timestamp = 123.456 statemachinepath="state machine name">
  *		<Transition>
  *			<Source>TestState</Source>
  *			<SourceResult>Success</SourceResult>
  *			<Destination>Done</Destination>
  *		</Transition>
- *	</StateDataStore>
+ *	</StateDataUnit>
  */
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API StateDataStore : public DataStore
+	class PICTOLIB_API StateDataUnit : public DataUnit
 #else
-class StateDataStore : public DataStore
+class StateDataUnit : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
-	StateDataStore();
+	StateDataUnit();
 
 	void setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath);
 	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath);
@@ -46,8 +45,8 @@ public:
 	QString getDestination() { return transition_->getDestination(); };
 
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

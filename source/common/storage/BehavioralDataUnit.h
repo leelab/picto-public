@@ -1,8 +1,8 @@
-#ifndef _BEHAVIORALUNITDATASTORE_H_
-#define _BEHAVIORALUNITDATASTORE_H_
+#ifndef _BEHAVIORALDATAUNIT_H_
+#define _BEHAVIORALDATAUNIT_H_
 
 #include "../common.h"
-#include "DataStore.h"
+#include "DataUnit.h"
 
 #include <QList>
 #include <QMap>
@@ -15,19 +15,18 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API BehavioralUnitDataStore : public DataStore
+	class PICTOLIB_API BehavioralDataUnit : public DataUnit
 #else
-class BehavioralUnitDataStore : public DataStore
+class BehavioralDataUnit : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
-	BehavioralUnitDataStore();
-	BehavioralUnitDataStore(double X, double Y, double T);
+	BehavioralDataUnit();
+	BehavioralDataUnit(double X, double Y, double T);
 	
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 		
 	double x;
 	double y;

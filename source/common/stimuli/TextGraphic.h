@@ -35,7 +35,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new TextGraphic());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TextGraphic());};
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);
 

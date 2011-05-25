@@ -1,9 +1,9 @@
-#ifndef _BEHAVIORALDATASTORE_H_
-#define _BEHAVIORALDATASTORE_H_
+#ifndef _BEHAVIORALDATAUNITPACKAGE_H_
+#define _BEHAVIORALDATAUNITPACKAGE_H_
 
 #include "../common.h"
-#include "DataStore.h"
-#include "BehavioralUnitDataStore.h"
+#include "DataUnit.h"
+#include "BehavioralDataUnit.h"
 
 #include <QList>
 #include <QMap>
@@ -18,33 +18,32 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API BehavioralDataStore : public DataStore
+	class PICTOLIB_API BehavioralDataUnitPackage : public DataUnit
 #else
-class BehavioralDataStore : public DataStore
+class BehavioralDataUnitPackage : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
 
-	BehavioralDataStore();
+	BehavioralDataUnitPackage();
 	void addData(double x, double y, double t);
 	void addData(QMap<QString, QList<double>> signalChannelData);
 
 	void emptyData() { data_.clear(); };
 
 	int length() { return data_.length(); }
-	QSharedPointer<BehavioralUnitDataStore> takeFirstDataPoint() { return data_.takeFirst(); };
+	QSharedPointer<BehavioralDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };
 
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 
-	QList<QSharedPointer<BehavioralUnitDataStore>> data_;
+	QList<QSharedPointer<BehavioralDataUnit>> data_;
 };
 
 

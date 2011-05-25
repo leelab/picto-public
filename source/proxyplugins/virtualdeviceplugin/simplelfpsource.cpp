@@ -1,13 +1,13 @@
 #include "simplelfpsource.h"
-#include "..\..\common\storage\LFPDataStore.h"
+#include "..\..\common\storage\LFPDataUnitPackage.h"
 SimpleLFPSource::SimpleLFPSource(double secPerEvent, double secPerSample)
 :SimpleEventSource(secPerEvent,secPerSample)
 {
 	latestTime_ = 0;
 }
-QSharedPointer<Picto::DataStore> SimpleLFPSource::buildEvent(double time)
+QSharedPointer<Picto::DataUnit> SimpleLFPSource::buildEvent(double time)
 {
-	QSharedPointer<Picto::LFPDataStore> newEvent = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+	QSharedPointer<Picto::LFPDataUnitPackage> newEvent = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 	double potentials[6];
 		
 	double sampTime = latestTime_;

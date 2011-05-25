@@ -18,7 +18,7 @@
 // *	upon receiving the data, it parses the XML fragment and adds the data to the 
 // *	session database.
 // *
-// *	If you were in the mood to refactor, it would make sense to create a NeuralDataStore object
+// *	If you were in the mood to refactor, it would make sense to create a NeuralDataUnit object
 // *	and then move the SQL stuff to the SessionInfo object.
 // */
 //class NeuralDataCollector : public QThread

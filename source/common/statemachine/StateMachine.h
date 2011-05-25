@@ -62,7 +62,7 @@ class StateMachine : public StateMachineElement
 {
 public:
 	StateMachine();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new StateMachine());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StateMachine());};
 
 	void addTransition(QSharedPointer<Transition> transition);
 	void addParameter(QSharedPointer<Parameter> parameter);

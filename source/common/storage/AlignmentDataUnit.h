@@ -1,8 +1,8 @@
-#ifndef _ALIGNMENTDATASTORE_H_
-#define _ALIGNMENTDATASTORE_H_
+#ifndef _ALIGNMENTDATAUNIT_H_
+#define _ALIGNMENTDATAUNIT_H_
 
 #include "../common.h"
-#include "DataStore.h"
+#include "DataUnit.h"
 #include <QString>
 #include <QList>
 
@@ -16,17 +16,16 @@ namespace Picto {
  *	the definition here, but I didn't have time to do so...
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AlignmentDataStore : public DataStore
+	class PICTOLIB_API AlignmentDataUnit : public DataUnit
 #else
-class AlignmentDataStore : public DataStore
+class AlignmentDataUnit : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
-	AlignmentDataStore();
+	AlignmentDataUnit();
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void setTimestamp(double timestamp){timestamp_ = timestamp;}
 	void setAlignCode(int alignCode){alignCode_ = alignCode;}

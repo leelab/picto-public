@@ -29,7 +29,7 @@ class ParameterContainer : public DataStore
 	Q_OBJECT
 public:
 	ParameterContainer();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ParameterContainer());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ParameterContainer());};
 
 	void addParameter(QSharedPointer<Parameter> parameter);
 	QSharedPointer<Parameter> getParameter(QString name);
@@ -41,6 +41,7 @@ public:
 	void bindToScriptEngine(QScriptEngine &engine);
 
 protected:
+	virtual QString defaultTagName(){return "Parameters";};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

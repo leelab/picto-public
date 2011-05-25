@@ -1,15 +1,15 @@
-#include "BehavioralDataStore.h"
+#include "BehavioralDataUnitPackage.h"
 
 namespace Picto {
 
-BehavioralDataStore::BehavioralDataStore()
+BehavioralDataUnitPackage::BehavioralDataUnitPackage()
 {
 }
 
 //! Adds a simple (x,y,t) data point
-void BehavioralDataStore::addData(double x, double y, double t)
+void BehavioralDataUnitPackage::addData(double x, double y, double t)
 {
-	QSharedPointer<BehavioralUnitDataStore> newPoint(new BehavioralUnitDataStore(x,y,t));
+	QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit(x,y,t));
 	data_.append(newPoint);
 }
 
@@ -19,7 +19,7 @@ void BehavioralDataStore::addData(double x, double y, double t)
  *	exactly the same Map used by SignalChannel::getValues, allowing
  *	us to add the data directly to our data store.
  */
-void BehavioralDataStore::addData(QMap<QString, QList<double>> signalChannelData)
+void BehavioralDataUnitPackage::addData(QMap<QString, QList<double>> signalChannelData)
 {
 	//First, check that the signal channel data has the expected subchannels
 	Q_ASSERT(signalChannelData.contains("xpos"));
@@ -40,7 +40,7 @@ void BehavioralDataStore::addData(QMap<QString, QList<double>> signalChannelData
 		  ypos != signalChannelData.value("ypos").end() &&
 		  time != signalChannelData.value("time").end())
 	{
-		QSharedPointer<BehavioralUnitDataStore> newPoint(new BehavioralUnitDataStore(*xpos,*ypos,*time));
+		QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit(*xpos,*ypos,*time));
 		data_.append(newPoint);
 
 		xpos++;
@@ -50,42 +50,42 @@ void BehavioralDataStore::addData(QMap<QString, QList<double>> signalChannelData
 }
 
 
-/*! \brief Turns the BehavioralDataStore into an XML fragment
+/*! \brief Turns the BehavioralDataUnitPackage into an XML fragment
  *
  *	The XML will look like this:
- *	<BehavioralDataStore>
- *		<BehavioralUnitDataStore time=123.4324 x=450 y=394/>
- *		<BehavioralUnitDataStore time=123.4334 x=457 y=386/>
+ *	<BehavioralDataUnitPackage>
+ *		<BehavioralDataUnit time=123.4324 x=450 y=394/>
+ *		<BehavioralDataUnit time=123.4334 x=457 y=386/>
  *		...
- *	</BehavioralDataStore>
+ *	</BehavioralDataUnitPackage>
  */
-bool BehavioralDataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+bool BehavioralDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("BehavioralDataStore");
+	xmlStreamWriter->writeStartElement("BehavioralDataUnitPackage");
 
-	foreach(QSharedPointer<BehavioralUnitDataStore> dataPoint, data_)
+	foreach(QSharedPointer<BehavioralDataUnit> dataPoint, data_)
 	{
 		dataPoint->toXml(xmlStreamWriter);
 	}
 
-	xmlStreamWriter->writeEndElement(); //BehavioralDataStore
+	xmlStreamWriter->writeEndElement(); //BehavioralDataUnitPackage
 
 	return true;
 }
-//! Converts XML into a BehavioralDataStore object.  Note that this deletes any existing data.
-bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//! Converts XML into a BehavioralDataUnitPackage object.  Note that this deletes any existing data.
+bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	emptyData();
 
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BehavioralDataStore")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BehavioralDataUnitPackage")
 	{
-		addError("BehavioralDataStore","Incorrect tag, expected <BehavioralDataStore>",xmlStreamReader);
+		addError("BehavioralDataUnitPackage","Incorrect tag, expected <BehavioralDataUnitPackage>",xmlStreamReader);
 		return false;
 	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "BehavioralDataStore") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "BehavioralDataUnitPackage") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -95,15 +95,15 @@ bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "BehavioralUnitDataStore")
+		if(name == "BehavioralDataUnit")
 		{
-			QSharedPointer<BehavioralUnitDataStore> newPoint(new BehavioralUnitDataStore());
+			QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit());
 			newPoint->fromXml(xmlStreamReader);
 			data_.append(newPoint);
 		}
 		else
 		{
-			addError("BehavioralDataStore", "Unexpected tag", xmlStreamReader);
+			addError("BehavioralDataUnitPackage", "Unexpected tag", xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();
@@ -111,13 +111,13 @@ bool BehavioralDataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xm
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("BehavioralDataStore", "Unexpected end of document", xmlStreamReader);
+		addError("BehavioralDataUnitPackage", "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
 	return true;
 }
 
-bool BehavioralDataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool BehavioralDataUnitPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;
 }

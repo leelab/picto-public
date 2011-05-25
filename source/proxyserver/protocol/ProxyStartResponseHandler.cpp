@@ -16,7 +16,7 @@ bool ProxyStartResponseHandler::processResponse(QString directive)
 	forever
 	{
 		//get the data from the neural acquisition device 
-		QList<QSharedPointer<Picto::DataStore>> dataList = iNDAcq->dumpData();
+		QList<QSharedPointer<Picto::DataUnit>> dataList = iNDAcq->dumpData();
 		while(dataList.size())
 		{
 			//Generate PUTDATA commands with limited length until we're out of data

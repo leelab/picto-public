@@ -56,12 +56,12 @@ float PlexonPlugin::samplingRate()
 	return 1/(tick*1E-6);
 }
 
-QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
+QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 {
-	QList<QSharedPointer<Picto::DataStore>> returnList;
-	QSharedPointer<Picto::NeuralDataStore> neuralData;
-	QSharedPointer<Picto::AlignmentDataStore> alignData;
-	QSharedPointer<Picto::LFPDataStore> lfpData;
+	QList<QSharedPointer<Picto::DataUnit>> returnList;
+	QSharedPointer<Picto::NeuralDataUnit> neuralData;
+	QSharedPointer<Picto::AlignmentDataUnit> alignData;
+	QSharedPointer<Picto::LFPDataUnitPackage> lfpData;
 
 	if(!PL_IsSortClientRunning())
 	{
@@ -84,7 +84,7 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 		double lastLFPTimestamp = -1;
 		PL_GetWaveFormStructures(&NumMAPEvents, pServerEventBuffer);
 		QSharedPointer<Picto::lfpDataBlock> dataBlock;
-		lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+		lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 
 		for(int MAPEvent=0; MAPEvent<NumMAPEvents; MAPEvent++)
 		{
@@ -93,7 +93,7 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 				pServerEventBuffer[MAPEvent].Unit >= 1 && 
 				pServerEventBuffer[MAPEvent].Unit <= 4)
 			{
-				neuralData = QSharedPointer<Picto::NeuralDataStore>(new Picto::NeuralDataStore());
+				neuralData = QSharedPointer<Picto::NeuralDataUnit>(new Picto::NeuralDataUnit());
 				
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
 				neuralData->setTimestamp(timestampSec);
@@ -113,7 +113,7 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 			// eventcodes
 			if(pServerEventBuffer[MAPEvent].Type == PL_ExtEventType)
 			{
-				alignData = QSharedPointer<Picto::AlignmentDataStore>(new Picto::AlignmentDataStore());
+				alignData = QSharedPointer<Picto::AlignmentDataUnit>(new Picto::AlignmentDataUnit());
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
 				alignData->setTimestamp(timestampSec);
 				alignData->setAlignCode(pServerEventBuffer[MAPEvent].Unit);
@@ -130,7 +130,7 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 						if(lfpData->numSamples()>=5000)
 						{
 							returnList.push_back(lfpData);
-							lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+							lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 						}
 						lfpData->addDataByBlock(dataBlock.data());
 					}
@@ -158,7 +158,7 @@ QList<QSharedPointer<Picto::DataStore>> PlexonPlugin::dumpData()
 			if(lfpData->numSamples()>=5000)
 			{
 				returnList.push_back(lfpData);
-				lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+				lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 			}
 			lfpData->addDataByBlock(dataBlock.data());
 		}

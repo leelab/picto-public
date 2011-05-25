@@ -9,7 +9,7 @@ Experiment::Experiment()
 {
 	AddDefinableProperty("Name","Unnamed Experiment");
 	DefinePlaceholderTag("Tasks");
-	AddDefinableObjectFactory("Task",QSharedPointer<SerializableFactory>(new SerializableFactory(1,-1,SerializableFactory::NewSerializableFnPtr(Picto::Task::Create))));
+	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
 }
 
 //! returns the name of this experiment
@@ -183,8 +183,8 @@ bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 {
 	//clear out the existing experiment
 	tasks_.clear();
-	QList<QSharedPointer<Serializable>> newTasks = getGeneratedChildren("Task");
-	foreach(QSharedPointer<Serializable> newTask,newTasks)
+	QList<QSharedPointer<Asset>> newTasks = getGeneratedChildren("Task");
+	foreach(QSharedPointer<Asset> newTask,newTasks)
 	{
 		addTask(newTask.staticCast<Task>());
 	}

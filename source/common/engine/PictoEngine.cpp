@@ -6,7 +6,7 @@
 #include "PictoEngine.h"
 
 #include "../timing/Timestamper.h"
-#include "../storage/RewardDataStore.h"
+#include "../storage/RewardDataUnit.h"
 
 #include <QApplication>
 #include <QTime>
@@ -133,7 +133,7 @@ void PictoEngine::giveReward(int channel)
 		return;
 
 	int duration = rewardController_->getRewardDurationMs(channel);
-	RewardDataStore rewardData(duration,channel,timestamp);
+	RewardDataUnit rewardData(duration,channel,timestamp);
 
 	QString dataCommandStr = "PUTDATA "+getName()+" PICTO/1.0";
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));

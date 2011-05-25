@@ -30,7 +30,7 @@ public:
 	NumericParameter();
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new NumericParameter());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new NumericParameter());};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

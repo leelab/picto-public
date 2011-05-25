@@ -17,9 +17,9 @@ class SimpleEventSource : public VirtualEventSource
 {
 public:
 	SimpleEventSource(double secPerEvent, double secPerSample);
-	virtual QSharedPointer<Picto::DataStore> getNextEvent(double time);
+	virtual QSharedPointer<Picto::DataUnit> getNextEvent(double time);
 	virtual float samplingRate();
-	virtual QSharedPointer<Picto::DataStore> buildEvent(double time) = 0;
+	virtual QSharedPointer<Picto::DataUnit> buildEvent(double time) = 0;
 protected:
 	double secPerEvent_;
 	double secPerSample_;

@@ -1,8 +1,8 @@
 #include "PutDataCommandHandler.h"
 
 #include "../../common/globals.h"
-#include "../../common/storage/BehavioralDataStore.h"
-#include "../../common/storage/StateDataStore.h"
+#include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/StateDataUnit.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
 
@@ -98,59 +98,59 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		QString dataType = xmlReader->name().toString();
 
 		//We do different things depending on the type of data being sent
-		if(dataType == "BehavioralDataStore")
+		if(dataType == "BehavioralDataUnitPackage")
 		{
-			//Extract the behavioralDataStore
-			QSharedPointer<Picto::BehavioralDataStore> behaveData(new Picto::BehavioralDataStore());
+			//Extract the BehavioralDataUnitPackage
+			QSharedPointer<Picto::BehavioralDataUnitPackage> behaveData(new Picto::BehavioralDataUnitPackage());
 			behaveData->fromXml(xmlReader);
 
 			sessionInfo->insertBehavioralData(behaveData);
 		}
-		else if(dataType == "StateDataStore")
+		else if(dataType == "StateDataUnit")
 		{
 			//deserialize the data store
-			QSharedPointer<Picto::StateDataStore> stateData(new Picto::StateDataStore());
+			QSharedPointer<Picto::StateDataUnit> stateData(new Picto::StateDataUnit());
 			stateData->fromXml(xmlReader);
 
 			sessionInfo->insertStateData(stateData);
 		}
-		else if(dataType == "FrameDataStore")
+		else if(dataType == "FrameDataUnitPackage")
 		{
-			QSharedPointer<Picto::FrameDataStore> frameData(new Picto::FrameDataStore());
+			QSharedPointer<Picto::FrameDataUnitPackage> frameData(new Picto::FrameDataUnitPackage());
 			frameData->fromXml(xmlReader);
 
 			sessionInfo->insertFrameData(frameData);
 		}
-		else if(dataType == "RewardDataStore")
+		else if(dataType == "RewardDataUnit")
 		{
-			QSharedPointer<Picto::RewardDataStore> rewardData(new Picto::RewardDataStore());
+			QSharedPointer<Picto::RewardDataUnit> rewardData(new Picto::RewardDataUnit());
 			rewardData->fromXml(xmlReader);
 
 			sessionInfo->insertRewardData(rewardData);
 		}
-		else if(dataType == "NeuralDataStore")
+		else if(dataType == "NeuralDataUnit")
 		{
 			/*commandProcessingTimer.start();*/
-			QSharedPointer<Picto::NeuralDataStore> neuralData(new Picto::NeuralDataStore());
+			QSharedPointer<Picto::NeuralDataUnit> neuralData(new Picto::NeuralDataUnit());
 			neuralData->fromXml(xmlReader);
 			//qDebug((QString("Time to deserialize neural data: ")+QString::number(timer.elapsed())).toAscii()); 
 			sessionInfo->insertNeuralData(neuralData);
 			//qDebug("NEURAL " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 		}
-		else if(dataType == "AlignmentDataStore")
+		else if(dataType == "AlignmentDataUnit")
 		{
 			/*commandProcessingTimer.start();*/
-			QSharedPointer<Picto::AlignmentDataStore> alignmentData(new Picto::AlignmentDataStore());
+			QSharedPointer<Picto::AlignmentDataUnit> alignmentData(new Picto::AlignmentDataUnit());
 			alignmentData->fromXml(xmlReader);
 
 			sessionInfo->insertAlignmentData(alignmentData);
 			//if(sourceType == "PROXY")
 			//	qDebug("ALIGN  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 		}
-		else if(dataType == "LFPDataStore")
+		else if(dataType == "LFPDataUnitPackage")
 		{
 			/*commandProcessingTimer.start();*/
-			QSharedPointer<Picto::LFPDataStore> lfpData(new Picto::LFPDataStore());
+			QSharedPointer<Picto::LFPDataUnitPackage> lfpData(new Picto::LFPDataUnitPackage());
 			lfpData->fromXml(xmlReader);
 			//qDebug("LFPDeserialize  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 

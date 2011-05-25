@@ -26,7 +26,7 @@ public:
 	TestController();
 
 	static ControlElement* NewTestController();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new TestController());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TestController());};
 
 	static QString ControllerType();
 

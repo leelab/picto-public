@@ -32,7 +32,7 @@ public:
 	PredicateExpression(QString predicateName);
 	~PredicateExpression() {};
 
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new PredicateExpression());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new PredicateExpression());};
 
 	bool isValid();
 	bool evaluate();
@@ -58,6 +58,7 @@ public:
 	void setParameterContainer(ParameterContainer *params) { parameters_ = params; };
 
 protected:
+	virtual QString defaultTagName(){return "Expression";};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

@@ -22,23 +22,23 @@ Layer::Layer()
 	AddDefinableProperty("Name","");
 	AddDefinableProperty(QVariant::Int,"Order",0);
 
-	QSharedPointer<SerializableFactory> factory(new SerializableFactory());
-	factory->addSerializableType(ArrowGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ArrowGraphic::Create))));
-	factory->addSerializableType(BoxGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(BoxGraphic::Create))));
-	factory->addSerializableType(CircleGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(CircleGraphic::Create))));
-	factory->addSerializableType(EllipseGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(EllipseGraphic::Create))));
-	factory->addSerializableType(LineGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(LineGraphic::Create))));
-	factory->addSerializableType(PictureGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(PictureGraphic::Create))));
-	factory->addSerializableType(RandomlyFilledGridGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(RandomlyFilledGridGraphic::Create))));
-	factory->addSerializableType(TextGraphic::type,
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(TextGraphic::Create))));
+	QSharedPointer<AssetFactory> factory(new AssetFactory());
+	factory->addAssetType(ArrowGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
+	factory->addAssetType(BoxGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
+	factory->addAssetType(CircleGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
+	factory->addAssetType(EllipseGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	factory->addAssetType(LineGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	factory->addAssetType(PictureGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
+	factory->addAssetType(RandomlyFilledGridGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
+	factory->addAssetType(TextGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
 	AddDefinableObjectFactory("VisualElement",factory);
 
 
@@ -237,8 +237,8 @@ bool Layer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	name_ = propertyContainer_->getPropertyValue("Name").toString();
 	order_ = propertyContainer_->getPropertyValue("Order").toInt();
 
-	QList<QSharedPointer<Serializable>> newVisElems = getGeneratedChildren("VisualElement");
-	foreach(QSharedPointer<Serializable> newVisElem,newVisElems)
+	QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
+	foreach(QSharedPointer<Asset> newVisElem,newVisElems)
 	{
 		addVisualElement(newVisElem.staticCast<VisualElement>());
 	}

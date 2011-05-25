@@ -4,11 +4,11 @@
 #include <QtGui>
 
 #include "errorlist.h"
-#include "viewer/viewer.h"
-#include "viewer/textviewer.h"
-#include "viewer/testviewer.h"
-#include "viewer/remoteviewer.h"
-#include "viewer/stateeditviewer.h"
+#include "viewer.h"
+#include "texteditor/textviewer.h"
+#include "testviewer/testviewer.h"
+#include "remoteviewer/remoteviewer.h"
+#include "statemachineeditor/stateeditviewer.h"
 
 MainWindow::MainWindow()
 {	
@@ -544,7 +544,7 @@ bool MainWindow::convertTextToExperiment()
 	experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
 	//experiment_->clearErrors();
 	//experiment_->clear();
-	Picto::Serializable::clearErrors();
+	Picto::Asset::clearErrors();
 	bool result = experiment_->fromXml(xmlReader);
 
 	//////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!

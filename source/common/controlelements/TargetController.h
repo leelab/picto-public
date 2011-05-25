@@ -38,7 +38,7 @@ public:
 	TargetController();
 
 	static ControlElement* NewTargetController();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new TargetController());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TargetController());};
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);

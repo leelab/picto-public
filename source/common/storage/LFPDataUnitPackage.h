@@ -1,8 +1,8 @@
-#ifndef _LFPDATASTORE_H_
-#define _LFPDATASTORE_H_
+#ifndef _LFPDATAUNITPACKAGE_H_
+#define _LFPDATAUNITPACKAGE_H_
 
 #include "../common.h"
-#include "DataStore.h"
+#include "DataUnit.h"
 #include <QString>
 #include <QVector>
 #include <QList>
@@ -42,17 +42,16 @@ struct lfpDataBlock
  *	point to move the values into separate rows by timestamp.
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API LFPDataStore : public DataStore
+	class PICTOLIB_API LFPDataUnitPackage : public DataUnit
 #else
-class LFPDataStore : public DataStore
+class LFPDataUnitPackage : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
-	LFPDataStore();
+	LFPDataUnitPackage();
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void setCorrelation(double correlation){correlation_ = correlation;}
 	void addData(double timestamp, double* potentials, int numVals);

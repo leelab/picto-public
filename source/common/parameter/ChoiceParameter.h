@@ -37,7 +37,7 @@ public:
 	ChoiceParameter();
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ChoiceParameter());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ChoiceParameter());};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

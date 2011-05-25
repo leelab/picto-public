@@ -9,15 +9,15 @@ namespace Picto {
 
 ParameterContainer::ParameterContainer()
 {
-	QSharedPointer<SerializableFactory> paramFactory(new SerializableFactory());
-	paramFactory->addSerializableType("Boolean",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(BooleanParameter::Create))));
-	paramFactory->addSerializableType("Choice",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ChoiceParameter::Create))));
-	paramFactory->addSerializableType("Numeric",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(NumericParameter::Create))));
-	paramFactory->addSerializableType("Range",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(RangeParameter::Create))));
+	QSharedPointer<AssetFactory> paramFactory(new AssetFactory());
+	paramFactory->addAssetType("Boolean",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
+	paramFactory->addAssetType("Choice",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
+	paramFactory->addAssetType("Numeric",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
+	paramFactory->addAssetType("Range",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RangeParameter::Create))));
 	AddDefinableObjectFactory("Parameter",paramFactory);
 
 }
@@ -134,8 +134,8 @@ void ParameterContainer::bindToScriptEngine(QScriptEngine &engine)
 
 bool ParameterContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	QList<QSharedPointer<Serializable>> newParams = getGeneratedChildren("Parameter");
-	foreach(QSharedPointer<Serializable> newParam,newParams)
+	QList<QSharedPointer<Asset>> newParams = getGeneratedChildren("Parameter");
+	foreach(QSharedPointer<Asset> newParam,newParams)
 	{
 		parameters_.insert(newParam.staticCast<Parameter>()->name(),newParam.staticCast<Parameter>());
 	}

@@ -239,12 +239,12 @@ float TdtPlugin::samplingRate()
 	return sampleRate;
 }
 
-QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
+QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 {
-	QList<QSharedPointer<Picto::DataStore>> returnList;
-	QSharedPointer<Picto::NeuralDataStore> neuralData;
-	QSharedPointer<Picto::AlignmentDataStore> alignData;
-	QSharedPointer<Picto::LFPDataStore> lfpData;
+	QList<QSharedPointer<Picto::DataUnit>> returnList;
+	QSharedPointer<Picto::NeuralDataUnit> neuralData;
+	QSharedPointer<Picto::AlignmentDataUnit> alignData;
+	QSharedPointer<Picto::LFPDataUnitPackage> lfpData;
 	if(!startCOM())
 	{
 		return returnList;
@@ -370,7 +370,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 		double* potentials;
 		int* chans;
 		double currTime;
-		lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+		lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 
 		for(int i=0; i<numLFP; i=i+numChans)
 		{
@@ -416,7 +416,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 					if(lfpData->numSamples() >= 10000)
 					{
 						returnList.push_back(lfpData);
-						lfpData = QSharedPointer<Picto::LFPDataStore>(new Picto::LFPDataStore());
+						lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 					}
 					potentials[chans[arrayInd]] = ((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j];
 					lfpData->addData(currTime,potentials,numChans);
@@ -429,7 +429,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 			if(currTime > lastLFPTimestamp)
 				lastLFPTimestamp = currTime;
 		}
-		//Add the last LFPDataStore to the return list
+		//Add the last LFPDataUnitPackage to the return list
 		if(lfpData->numSamples() > 0)
 			returnList.push_back(lfpData);
 	}
@@ -469,7 +469,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 		//output a spike waveform
 		if(spikeList.begin()->timeStamp <= eventList.begin()->timeStamp)
 		{
-			neuralData = QSharedPointer<Picto::NeuralDataStore>(new Picto::NeuralDataStore());
+			neuralData = QSharedPointer<Picto::NeuralDataUnit>(new Picto::NeuralDataUnit());
 			neuralData->setTimestamp(spikeList.begin()->timeStamp);
 			neuralData->setChannel(spikeList.begin()->chanNum);
 			neuralData->setUnit(spikeList.begin()->unitNum);
@@ -489,7 +489,7 @@ QList<QSharedPointer<Picto::DataStore>> TdtPlugin::dumpData()
 		//output an eventcode
 		else if(eventList.begin()->timeStamp < spikeList.begin()->timeStamp)
 		{
-			alignData = QSharedPointer<Picto::AlignmentDataStore>(new Picto::AlignmentDataStore());
+			alignData = QSharedPointer<Picto::AlignmentDataUnit>(new Picto::AlignmentDataUnit());
 			alignData->setTimestamp(eventList.begin()->timeStamp);
 			alignData->setAlignCode(eventList.begin()->code);
 

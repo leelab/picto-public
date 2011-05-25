@@ -15,6 +15,6 @@ class SimpleSpikeSource : public SimpleEventSource
 {
 public:
 	SimpleSpikeSource(double secPerEvent, double secPerSample);
-	virtual QSharedPointer<Picto::DataStore> buildEvent(double time);
+	virtual QSharedPointer<Picto::DataUnit> buildEvent(double time);
 };
 #endif

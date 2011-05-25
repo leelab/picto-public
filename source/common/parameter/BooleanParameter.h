@@ -29,7 +29,7 @@ public:
 	BooleanParameter();
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new BooleanParameter());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new BooleanParameter());};
 
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

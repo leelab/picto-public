@@ -94,6 +94,7 @@ public slots:
 
 
 protected:
+	virtual QString defaultTagName(){return "Parameter";};
 	QString type_;
 	QString name_;
 	bool bOperatorUI_;

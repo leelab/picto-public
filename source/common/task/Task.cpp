@@ -1,5 +1,5 @@
 #include "Task.h"
-#include "../storage/StateDataStore.h"
+#include "../storage/StateDataUnit.h"
 #include "../timing/Timestamper.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
@@ -10,7 +10,7 @@ Task::Task()
 {
 		AddDefinableProperty("Name","Unnamed Task");
 		AddDefinableObjectFactory("StateMachine",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(1,1,SerializableFactory::NewSerializableFnPtr(StateMachine::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 
 }
 
@@ -173,7 +173,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 	Timestamper stamper;
 	double timestamp = stamper.stampSec();
 
-	StateDataStore stateData;
+	StateDataUnit stateData;
 	stateData.setTransition(source,sourceResult,destination,timestamp,name());
 
 	xmlWriter->writeStartElement("Data");
@@ -283,7 +283,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 
 bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	QList<QSharedPointer<Serializable>> stateMachines = getGeneratedChildren("StateMachine");
+	QList<QSharedPointer<Asset>> stateMachines = getGeneratedChildren("StateMachine");
 	if(!stateMachines.isEmpty())
 	{
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();

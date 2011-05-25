@@ -23,7 +23,7 @@ class Canvas : public DataStore
 	Q_OBJECT
 public:
 	Canvas();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new Canvas());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Canvas());};
 
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
@@ -39,6 +39,7 @@ public:
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
+	virtual QString defaultTagName(){return "Canvas";};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

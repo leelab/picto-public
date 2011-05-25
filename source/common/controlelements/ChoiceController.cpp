@@ -277,8 +277,8 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	}
 
 	QString targetName;
-	QList<QSharedPointer<Serializable>> targetChildren = getGeneratedChildren("Target");
-	foreach(QSharedPointer<Serializable> target, targetChildren)
+	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Target");
+	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
 		targetName = target.staticCast<Property>()->name();
 		if(targetName == "NotATarget")

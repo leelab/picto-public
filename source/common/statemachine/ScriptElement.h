@@ -32,7 +32,7 @@ class ScriptElement : public StateMachineElement
 {
 public:
 	ScriptElement();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ScriptElement());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ScriptElement());};
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

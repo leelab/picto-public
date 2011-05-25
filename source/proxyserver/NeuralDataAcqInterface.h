@@ -3,9 +3,9 @@
 
 #include <QtPlugin>
 #include <QSharedPointer>
-#include "../common/storage/NeuralDataStore.h"
-#include "../common/storage/AlignmentDataStore.h"
-#include "../common/storage/LFPDataStore.h"
+#include "../common/storage/NeuralDataUnit.h"
+#include "../common/storage/AlignmentDataUnit.h"
+#include "../common/storage/LFPDataUnitPackage.h"
 
 /*! \brief Interface used for all proxy server plugins
  *
@@ -30,7 +30,7 @@ public:
 	virtual deviceStatus stopDevice() = 0;
 	virtual deviceStatus getDeviceStatus() = 0;
 	virtual float samplingRate() = 0;
-	virtual QList<QSharedPointer<Picto::DataStore>> dumpData() = 0;
+	virtual QList<QSharedPointer<Picto::DataUnit>> dumpData() = 0;
 };
 
 QT_BEGIN_NAMESPACE

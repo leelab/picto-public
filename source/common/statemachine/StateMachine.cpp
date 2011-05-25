@@ -11,8 +11,8 @@
 #include "../protocol/ProtocolResponse.h"
 #include "../network/CommandChannel.h"
 #include "../timing/Timestamper.h"
-#include "../storage/StateDataStore.h"
-#include "../storage/AlignmentDataStore.h"
+#include "../storage/StateDataUnit.h"
+#include "../storage/AlignmentDataUnit.h"
 
 namespace Picto {
 
@@ -36,27 +36,27 @@ StateMachine::StateMachine() :
 
 	DefinePlaceholderTag("StateMachineElements");
 
-	QSharedPointer<SerializableFactory> factory(new SerializableFactory());
-	factory->addSerializableType("FlowElement",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(FlowElement::Create))));
-	factory->addSerializableType("ScriptElement",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ScriptElement::Create))));
-	factory->addSerializableType("Result",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Result::Create))));
-	factory->addSerializableType("State",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(State::Create))));
+	QSharedPointer<AssetFactory> factory(new AssetFactory());
+	factory->addAssetType("FlowElement",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FlowElement::Create))));
+	factory->addAssetType("ScriptElement",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptElement::Create))));
+	factory->addAssetType("Result",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Result::Create))));
+	factory->addAssetType("State",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(State::Create))));
 	AddDefinableObjectFactory("StateMachineElement",factory);
 
 	AddDefinableObjectFactory("StateMachine",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(StateMachine::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 
 	AddDefinableObjectFactory("Parameters",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(ParameterContainer::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ParameterContainer::Create))));
 
 	DefinePlaceholderTag("Transitions");
 
 	AddDefinableObjectFactory("Transition",
-		QSharedPointer<SerializableFactory>(new SerializableFactory(0,-1,SerializableFactory::NewSerializableFnPtr(Transition::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Transition::Create))));
 
 	trialEventCode_ = 0;
 }
@@ -294,7 +294,6 @@ bool StateMachine::validateStateMachine()
 QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave)
 {
 	path_.append(getName());
-
 	if(!scriptingInit_)
 	{
 		if(!initScripting(qsEngine_))
@@ -452,7 +451,7 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
 	//initialize scripting on all of the contained elements
 	foreach(QSharedPointer<StateMachineElement> element, elements_)
 	{
-		qDebug(element->getName().toAscii());
+		qDebug("Scripting Intialized for: " + element->getName().toAscii());
 		if(!element->initScripting(qsEngine_))
 			return false;
 	}
@@ -472,11 +471,11 @@ bool StateMachine::initScripting(QScriptEngine &qsEngine)
  *		Content-Length:???
  *		
  *		<Data>
- *			<AlignmentDataStore>
+ *			<AlignmentDataUnit>
  *				<Time>8684354986.358943</Time>
  *				<EventCode>56</EventCode>
  *				<TrialNum>412</TrialNum> 	
- *			</AlignmentDataStore>
+ *			</AlignmentDataUnit>
  *		</Data>
  */
 void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine)
@@ -496,7 +495,7 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	QByteArray alignDataXml;
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&alignDataXml));
 	
-	Picto::AlignmentDataStore alignData;
+	Picto::AlignmentDataUnit alignData;
 	alignData.setAlignCode(trialEventCode_);
 	alignData.setAlignNumber(trialNum_);
 	alignData.setTimestamp(timestamp);
@@ -547,9 +546,9 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	//}
 }
 
-/*!	\brief Sends a StateDataStore to the server to let it know that we are transitioning
+/*!	\brief Sends a StateDataUnit to the server to let it know that we are transitioning
  *
- *	To keep master and slave engines in synch, we send StateDataStores to the server
+ *	To keep master and slave engines in synch, we send StateDataUnits to the server
  *	everytime there is a change in state.
  *
  *	This command is sent as a registered command, which means that we don't need to 
@@ -589,7 +588,7 @@ void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, 
 	double timestamp = stamper.stampSec();
 	QString qualifiedName = path_.join("::");
 
-	StateDataStore stateData;
+	StateDataUnit stateData;
 	stateData.setTransition(transition,timestamp,qualifiedName);
 
 	xmlWriter->writeStartElement("Data");
@@ -931,28 +930,28 @@ bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRead
 {
 	//We load this StateMachine's Local Parameters before adding any children so that the parameters 
 	//are available to add to the children in addElement().
-	QList<QSharedPointer<Serializable>> localParamContainers = getGeneratedChildren("Parameters");
+	QList<QSharedPointer<Asset>> localParamContainers = getGeneratedChildren("Parameters");
 	if(!localParamContainers.isEmpty())
 	{
 		localParameterContainer_ = localParamContainers.first().staticCast<ParameterContainer>();
 		addParameters(localParameterContainer_);
 	}
 
-	QList<QSharedPointer<Serializable>> newStateMachElems = getGeneratedChildren("StateMachineElement");
-	foreach(QSharedPointer<Serializable> newStateMachElem,newStateMachElems)
+	QList<QSharedPointer<Asset>> newStateMachElems = getGeneratedChildren("StateMachineElement");
+	foreach(QSharedPointer<Asset> newStateMachElem,newStateMachElems)
 	{
 		addElement(newStateMachElem.staticCast<StateMachineElement>());
 	}
 
 	//This must happen after adding this StateMachine's Local Parameters (see comment above)
-	QList<QSharedPointer<Serializable>> newStateMachs = getGeneratedChildren("StateMachine");
-	foreach(QSharedPointer<Serializable> newStateMach,newStateMachs)
+	QList<QSharedPointer<Asset>> newStateMachs = getGeneratedChildren("StateMachine");
+	foreach(QSharedPointer<Asset> newStateMach,newStateMachs)
 	{
 		addElement(newStateMach.staticCast<StateMachine>());
 	}
 
-	QList<QSharedPointer<Serializable>> newTransitions = getGeneratedChildren("Transition");
-	foreach(QSharedPointer<Serializable> newTransition,newTransitions)
+	QList<QSharedPointer<Asset>> newTransitions = getGeneratedChildren("Transition");
+	foreach(QSharedPointer<Asset> newTransition,newTransitions)
 	{
 		addTransition(newTransition.staticCast<Transition>());
 	}

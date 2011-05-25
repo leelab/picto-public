@@ -1,8 +1,8 @@
-#ifndef _NEURALDATASTORE_H_
-#define _NEURALDATASTORE_H_
+#ifndef _NEURALDATAUNIT_H_
+#define _NEURALDATAUNIT_H_
 
 #include "../common.h"
-#include "DataStore.h"
+#include "DataUnit.h"
 #include <QString>
 #include <QList>
 
@@ -16,17 +16,16 @@ namespace Picto {
  *	the definition here, but I didn't have time to do so...
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API NeuralDataStore : public DataStore
+	class PICTOLIB_API NeuralDataUnit : public DataUnit
 #else
-class NeuralDataStore : public DataStore
+class NeuralDataUnit : public DataUnit
 #endif
 {
-	Q_OBJECT
 public:
-	NeuralDataStore();
+	NeuralDataUnit();
 	//Data store functions
-	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void setTimestamp(double timestamp){timestamp_ = timestamp;}
 	void setFittedtime(double fittedtime){fittedtime_ = fittedtime;}

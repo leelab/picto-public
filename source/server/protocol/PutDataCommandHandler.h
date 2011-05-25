@@ -24,18 +24,18 @@
  *
  *	 <Data>
  *	   <!--- This could be any type of data --->
- *	   <BehavioralDataStore>
+ *	   <BehavioralDataUnitPackage>
  *	      <Data timestamp=3.5186 x=52 y=476/>
  *	      <Data timestamp=3.5188 x=55 y=471/>
  *	      <Data timestamp=3.5190 x=67 y=463/>
  *	      <Data timestamp=3.5192 x=64 y=457/>
  *	      ...
  *	      ...
- *	   </BehavioralDataStore>
- *	   <FrameDataStore>
+ *	   </BehavioralDataUnitPackage>
+ *	   <FrameDataUnitPackage>
  *	      <Frame time = 3.125 state="somestatename">1</Frame>
  *	      <Frame time = 3.250 state="somestatename">2</Frame>
- *	   </FrameDataStore>
+ *	   </FrameDataUnitPackage>
  *	</Data>
  *
  *	RESPONSES

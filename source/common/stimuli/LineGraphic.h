@@ -33,7 +33,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new LineGraphic());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new LineGraphic());};
 	static const QString type;
 
 	//! \TODO At some point, we might want to expose some getter and setter slots for script binding

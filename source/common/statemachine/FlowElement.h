@@ -30,7 +30,7 @@ class FlowElement : public StateMachineElement
 public:
 	FlowElement();
 	//FlowElement(QSharedPointer<ParameterContainer> parameters);
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new FlowElement());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new FlowElement());};
 	
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

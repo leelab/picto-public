@@ -1,7 +1,6 @@
 #ifndef SIMPLELFPSOURCE_H
 #define SIMPLELFPSOURCE_H
 
-
 #include <QObject>
 #include <QSharedPointer>
 
@@ -15,7 +14,7 @@ class SimpleLFPSource : public SimpleEventSource
 {
 public:
 	SimpleLFPSource(double secPerEvent, double secPerSample);
-	virtual QSharedPointer<Picto::DataStore> buildEvent(double time);
+	virtual QSharedPointer<Picto::DataUnit> buildEvent(double time);
 private:
 	double latestTime_;
 };

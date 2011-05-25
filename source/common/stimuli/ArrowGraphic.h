@@ -28,7 +28,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ArrowGraphic());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ArrowGraphic());};
 
 	QPoint getStartPoint() { return propertyContainer_->getPropertyValue("Start").toPoint(); };
 	QPoint getEndPoint() { return propertyContainer_->getPropertyValue("End").toPoint(); };

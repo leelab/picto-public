@@ -36,7 +36,7 @@ public:
 	ChoiceController();
 
 	static ControlElement* NewChoiceController();
-	static QSharedPointer<Serializable> Create(){return QSharedPointer<Serializable>(new ChoiceController());};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ChoiceController());};
 	static QString ControllerType();
 
 	bool addTarget(QString targetName, QRect target);

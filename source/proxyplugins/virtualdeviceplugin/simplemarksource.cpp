@@ -1,14 +1,14 @@
 #include "simplemarksource.h"
-#include "..\..\common\storage\AlignmentDataStore.h"
+#include "..\..\common\storage\AlignmentDataUnit.h"
 
 SimpleMarkSource::SimpleMarkSource(double secPerEvent, double secPerSample)
 :SimpleEventSource(secPerEvent,secPerSample)
 {
 	currEventCode = 0;
 }
-QSharedPointer<Picto::DataStore> SimpleMarkSource::buildEvent(double time)
+QSharedPointer<Picto::DataUnit> SimpleMarkSource::buildEvent(double time)
 {
-	QSharedPointer<Picto::AlignmentDataStore> newEvent(new Picto::AlignmentDataStore());
+	QSharedPointer<Picto::AlignmentDataUnit> newEvent(new Picto::AlignmentDataUnit());
 	currEventCode++;
 	if(currEventCode == 128)
 		currEventCode = 1;

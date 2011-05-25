@@ -2,8 +2,8 @@
 #define _DATASTORE_H_
 
 #include "../common.h"
-#include "Serializable.h"
-#include "SerializableFactory.h"
+#include "Asset.h"
+#include "AssetFactory.h"
 #include "../property/PropertyContainer.h"
 
 #include <QSharedPointer>
@@ -17,7 +17,7 @@
 #include <QList>
 
 namespace Picto {
-class SerializableFactory;
+class AssetFactory;
 //class PropertyContainer;
 /*! \brief a base class for anything that needs to write itself out as XML
  *
@@ -41,19 +41,14 @@ class SerializableFactory;
  *	
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API DataStore : public Serializable
+class PICTOLIB_API DataStore : public Asset
 #else
-class DataStore : public  QObject
+class DataStore : public  Asset
 #endif
 {
 	Q_OBJECT
 public:
 	DataStore();
-
-	virtual bool serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-	qulonglong getDataID();
 
 	//AutoSerialization Stuff---------------------------------
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -83,7 +78,9 @@ protected:
 
 
 	//AutoSerialization Stuff---------------------------------
+	virtual QString defaultTagName(){return "Default";};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader){return true;};
+	void initializePropertiesToDefaults();
 	void AddDefinableProperty(
 		QString tagName, 
 		QVariant defaultValue, 
@@ -115,11 +112,11 @@ protected:
 		int minNumOfThisType = 1, 
 		int maxNumOfThisType = 1
 		);
-	void AddDefinableObject(QString tagName, QSharedPointer<Serializable> object);
-	void AddDefinableObjectFactory(QString tagName, QSharedPointer<SerializableFactory> factory);
+	void AddDefinableObject(QString tagName, QSharedPointer<Asset> object);
+	void AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory);
 	void DefinePlaceholderTag(QString tagName);
 
-	QList<QSharedPointer<Serializable>> getGeneratedChildren(QString tagName); 
+	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
 	bool hasChildrenOfType(QString tagName);
 	QSharedPointer<PropertyContainer> propertyContainer_;
 	//--------------------------------------------------------
@@ -129,14 +126,11 @@ protected:
 private:
 	
 	//AutoSerialization Stuff---------------------------------
-	QMap<QString,QList<QSharedPointer<Serializable>>> children_;
-	QMap<QString,QSharedPointer<SerializableFactory>> factories_;
+	QMap<QString,QList<QSharedPointer<Asset>>> children_;
+	QMap<QString,QSharedPointer<AssetFactory>> factories_;
 	QString tagText_;
 	//--------------------------------------------------------
 
-	static qulonglong generateDataID();
-	static qulonglong lastDataID_;
-	qulonglong dataID_;
 	QString myTagName_;
 
 };

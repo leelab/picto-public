@@ -36,15 +36,15 @@ public:
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
-	QList<QSharedPointer<Picto::DataStore>> dumpData();
+	QList<QSharedPointer<Picto::DataUnit>> dumpData();
 private:
 	void updateData();
 	deviceStatus status_;
-	QSharedPointer<Picto::DataStore> getNextEvent(double currTime);
+	QSharedPointer<Picto::DataUnit> getNextEvent(double currTime);
 	QSharedPointer<VirtualEvent> lastEvent_, lastSpike_, lastMark_;
-	QList<QSharedPointer<Picto::DataStore>> dataList_;
+	QList<QSharedPointer<Picto::DataUnit>> dataList_;
 	QList<QSharedPointer<VirtualEventSource>> sources_;
-	QList<QSharedPointer<Picto::DataStore>> latestEvents_;
+	QList<QSharedPointer<Picto::DataUnit>> latestEvents_;
 	static QSharedPointer<Picto::Timestamper> timeStamper_;
 	void CreateEventSources();
 };

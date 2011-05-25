@@ -9,7 +9,7 @@ const QString CursorGraphic::type = "Cursor Graphic";
 CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color)
 {
 	// This is never serialized, so I didn't update it to use the new serialization routine.
-	// It does bring to light the fact that most of our serializable objects must be deserialized
+	// It does bring to light the fact that most of our Asset objects must be deserialized
 	// to have valid contents, which might be something worth fixing.
 	positionChannel_ = channel;
 	if(positionChannel_)
