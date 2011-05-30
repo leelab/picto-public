@@ -218,7 +218,7 @@ void TestViewer::resetExperiment()
 	if(xmlReader->atEnd())
 		return;
 
-	experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
+	experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
 
 	if(!experiment_->fromXml(xmlReader))
 	{

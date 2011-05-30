@@ -45,6 +45,10 @@
 #include <QGraphicsScene>
 #include "diagramitem.h"
 #include "diagramtextitem.h"
+#include "../../common/storage/asset.h"
+#include <QSharedPointer>
+#include <QPointer>
+using namespace Picto;
 
 QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
@@ -64,7 +68,7 @@ class DiagramScene : public QGraphicsScene
 public:
     enum Mode { InsertItem, InsertLine, InsertText, MoveItem };
 
-    DiagramScene(QMenu *itemMenu, QObject *parent = 0);
+    DiagramScene(QMenu *itemMenu, QObject *parent = 0, QSharedPointer<Asset> sceneAsset = QSharedPointer<Asset>());
     QFont font() const
         { return myFont; }
     QColor textColor() const
@@ -77,29 +81,38 @@ public:
     void setTextColor(const QColor &color);
     void setItemColor(const QColor &color);
     void setFont(const QFont &font);
+	QGraphicsLineItem* insertTransition(DiagramItem* source, DiagramItem* dest);
+	DiagramItem* insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos);
+	void setSceneAsset(QSharedPointer<Asset> sceneAsset){sceneAsset_ = sceneAsset;};
 
 public slots:
     void setMode(Mode mode);
     void setItemType(DiagramItem::DiagramType type);
     void editorLostFocus(DiagramTextItem *item);
-	void debug(DiagramScene* scene);
 
 signals:
     void itemInserted(DiagramItem *item);
     void textInserted(QGraphicsTextItem *item);
     void itemSelected(QGraphicsItem *item);
-	void itemOpened(DiagramScene* scene);
+	void assetSelected(QSharedPointer<Asset> asset);
+	void itemOpened(QSharedPointer<Asset> asset);
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+protected slots:
+	void setSelectedItem(QGraphicsItem *item);
 
 private:
     bool isItemChange(int type);
 
     DiagramItem::DiagramType myItemType;
     QMenu *myItemMenu;
+	QSharedPointer<Asset> selectedAsset_;
+	QSharedPointer<Asset> sceneAsset_;
     Mode myMode;
     bool leftButtonDown;
     QPointF startPoint;

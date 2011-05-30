@@ -62,25 +62,39 @@ QT_END_NAMESPACE
 class Arrow;
 
 //! [0]
-class DiagramItem : public QGraphicsPolygonItem
+class DiagramItem : public QObject, public QGraphicsPolygonItem
 {
+	Q_OBJECT
 public:
     enum { Type = UserType + 15 };
-    enum DiagramType { Step, Conditional, StartEnd, Io };
+    enum DiagramType { Step, Conditional, StartEnd, Io, ArrowSource, ArrowDestination};
 
-    DiagramItem(DiagramType diagramType, QMenu *contextMenu,
+    DiagramItem(DiagramType diagramType, QMenu *contextMenu, QString name = "",
         QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
+	void setName(QString name);
+	void setType(QString type);
+	QString getName();
+	QString getType();
+	void updateLabel();
     void removeArrow(Arrow *arrow);
     void removeArrows();
     DiagramType diagramType() const
         { return myDiagramType; }
     QPolygonF polygon() const
         { return myPolygon; }
+	void setPolygonFromRect(QRectF rect);
     void addArrow(Arrow *arrow);
+	void addArrowSource(QString name);
+	void enableArrowDest();
+	QList<DiagramItem*> getArrowSources();
+	DiagramItem* getArrowDest();
     QPixmap image() const;
     int type() const
         { return Type;}
+
+signals:
+	void selectedChange(QGraphicsItem *item);
 
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
@@ -89,8 +103,14 @@ protected:
 private:
     DiagramType myDiagramType;
     QPolygonF myPolygon;
+	QString name_;
+	QString type_;
+	QGraphicsTextItem* nameText_;
     QMenu *myContextMenu;
     QList<Arrow *> arrows;
+	QList<DiagramItem*> arrowSources_;
+	DiagramItem* arrowDest_;
+	int lastSourcePos_;
 };
 //! [0]
 

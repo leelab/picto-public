@@ -10,7 +10,7 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 {
 	//Load the experiment
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(directive.toUtf8()));
-	QSharedPointer<Picto::Experiment> experiment(new Picto::Experiment);
+	QSharedPointer<Picto::Experiment> experiment(Picto::Experiment::Create());
 
 	xmlReader->readNext();
 	while(!xmlReader->atEnd() && xmlReader->name().toString() != "Experiment")

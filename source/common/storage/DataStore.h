@@ -47,6 +47,7 @@ class DataStore : public  Asset
 #endif
 {
 	Q_OBJECT
+
 public:
 	DataStore();
 
@@ -54,6 +55,12 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual void setDeleted();
+	QStringList getDefinedChildTags(){return factories_.keys();};
+	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
+	virtual QString name(){return propertyContainer_->getPropertyValue("Name").toString();};
+	virtual QString identifier(){return myTagName_;};
+	virtual QString assetType(){return "DataStore";};
+	QSharedPointer<PropertyContainer> getPropertyContainer(){return propertyContainer_;};
 
 public slots:
 	void childEdited();
@@ -116,7 +123,6 @@ protected:
 	void AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory);
 	void DefinePlaceholderTag(QString tagName);
 
-	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
 	bool hasChildrenOfType(QString tagName);
 	QSharedPointer<PropertyContainer> propertyContainer_;
 	//--------------------------------------------------------

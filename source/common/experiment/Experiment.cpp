@@ -12,6 +12,13 @@ Experiment::Experiment()
 	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
 }
 
+QSharedPointer<Experiment> Experiment::Create()
+{
+	QSharedPointer<Experiment> newExperiment(new Experiment());
+	newExperiment->setSelfPtr(newExperiment);
+	return newExperiment;
+};
+
 //! returns the name of this experiment
 QString Experiment::name()
 {

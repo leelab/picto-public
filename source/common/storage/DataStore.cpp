@@ -214,7 +214,11 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets add the closing tag from the child to our tagText.
 			continue;
 		}
-		//We created the new child.  Lets deserialize it.
+		//We created the new child.  
+		//Lets set its pointers
+		newChild->setSelfPtr(newChild);
+		newChild->setParentAsset(selfPtr());
+		//Lets deserialize it.
 		if(!newChild->fromXml(xmlStreamReader))
 		{
 			//Child deserialization failed.  For now, just exit.
@@ -245,6 +249,10 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			newChild = iter.value()->getRequiredAsset();
 			if(newChild.isNull())
 				break;
+			//We created the new child.  
+			//Lets set its pointers
+			newChild->setSelfPtr(newChild);
+			newChild->setParentAsset(selfPtr());
 			//Generate new XMLStreamReader that is an empty tag to deserialize the child into a default state.
 			QString childTag = QString("<%1/>").arg(iter.key());
 			QSharedPointer<QXmlStreamReader> emptyTagXML(new QXmlStreamReader(childTag));
@@ -252,7 +260,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			while(!emptyTagXML->isStartElement()) 
 				emptyTagXML->readNext();
 			newChild->fromXml(emptyTagXML);
-			//Add the new child Asset to the children map, and continue 
+			//Add the new child Asset to the children map and continue 
 			//the loop
 			children_[iter.key()].push_back(newChild);
 		}

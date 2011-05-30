@@ -47,6 +47,8 @@
 #include "diagramitem.h"
 #include "diagramscene.h"
 #include "diagramtextitem.h"
+#include "assetdiagramitem.h"
+#include "../common/statemachine/transition.h"
 
 const int InsertTextButton = 10;
 
@@ -62,13 +64,7 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 	view = NULL;
     topmostScene = new DiagramScene(itemMenu);
 	loadScene(topmostScene);
-    //scene->setSceneRect(QRectF(0, 0, 5000, 5000));
-    //connect(scene, SIGNAL(itemInserted(DiagramItem *)),
-    //        this, SLOT(itemInserted(DiagramItem *)));
-    //connect(scene, SIGNAL(textInserted(QGraphicsTextItem *)),
-    //    this, SLOT(textInserted(QGraphicsTextItem *)));
-    //connect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
-    //    this, SLOT(itemSelected(QGraphicsItem *)));
+
     createToolbars();
 	
 	QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -81,11 +77,17 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(toolBox);
-    
     layout->addWidget(view);
+
+variantFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory());
+variantEditor_ = new QtGroupBoxPropertyBrowser();
+layout->addWidget(variantEditor_);
+layout->setStretch(1,10);
+
 
 	mainLayout->addLayout(toolbarLayout);
 	mainLayout->addLayout(layout);
+
 
 	setLayout(mainLayout);
     //QWidget *widget = new QWidget;
@@ -95,7 +97,16 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
     //setWindowTitle(tr("Diagramscene"));
 }
 //! [0]
-
+void StateEditViewer::init()
+{
+	if(!experiment_)
+	{
+		QMessageBox msg;
+		msg.setText("Failed to load current experiment.");
+		msg.exec();
+	}
+	loadItem(experiment_.staticCast<Asset>());
+}
 //! [1]
 void StateEditViewer::backgroundButtonGroupClicked(QAbstractButton *button)
 {
@@ -301,6 +312,12 @@ void StateEditViewer::handleFontChange()
     scene->setFont(font);
 }
 //! [18]
+void StateEditViewer::assetSelected(QSharedPointer<Asset> asset)
+{
+
+	loadAssetProperties(asset);
+
+}
 
 //! [19]
 void StateEditViewer::itemSelected(QGraphicsItem *item)
@@ -308,13 +325,22 @@ void StateEditViewer::itemSelected(QGraphicsItem *item)
     DiagramTextItem *textItem =
     qgraphicsitem_cast<DiagramTextItem *>(item);
 
-    QFont font = textItem->font();
-    QColor color = textItem->defaultTextColor();
-    fontCombo->setCurrentFont(font);
-    fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
-    boldAction->setChecked(font.weight() == QFont::Bold);
-    italicAction->setChecked(font.italic());
-    underlineAction->setChecked(font.underline());
+	if(textItem)
+	{
+		QFont font = textItem->font();
+		QColor color = textItem->defaultTextColor();
+		fontCombo->setCurrentFont(font);
+		fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
+		boldAction->setChecked(font.weight() == QFont::Bold);
+		italicAction->setChecked(font.italic());
+		underlineAction->setChecked(font.underline());
+		return;
+	}
+	AssetDiagramItem *assetItem = qgraphicsitem_cast<AssetDiagramItem *>(item);
+	if(assetItem)
+	{
+		loadAssetProperties(assetItem->getAsset());
+	}
 }
 //! [19]
 
@@ -349,24 +375,117 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
 	scene = newScene;
 
 	//Load new Scene
+	newScene->setSceneRect(QRectF(0, 0, 4000, 4000));
+	if(view == NULL)
+		view = new QGraphicsView(newScene);
+	view->setScene(newScene);
 	//In this version of Qt it looks like connecting signals to slots more than
 	//once does not have the effect of multiplying the number of times that the
 	//slots are called.  In future versions this may occur though because future 
 	//versions support a Qt::UniqueConnection parameter.  We would just disconnect
 	//old connections before connecting the new ones but this isn't working for 
 	//some reason.
-	newScene->setSceneRect(QRectF(0, 0, 5000, 5000));
 	connect(newScene, SIGNAL(itemInserted(DiagramItem *)),
             this, SLOT(itemInserted(DiagramItem *)));
     connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),
         this, SLOT(textInserted(QGraphicsTextItem *)));
     connect(newScene, SIGNAL(itemSelected(QGraphicsItem *)),
         this, SLOT(itemSelected(QGraphicsItem *)));
-	connect(newScene, SIGNAL(itemOpened(DiagramScene *)),
-		this, SLOT(loadScene(DiagramScene *)));
-	if(view == NULL)
-		view = new QGraphicsView(newScene);
-	view->setScene(newScene);
+	connect(newScene, SIGNAL(assetSelected(QSharedPointer<Asset>)),
+        this, SLOT(assetSelected(QSharedPointer<Asset>)));
+	connect(newScene, SIGNAL(itemOpened(QSharedPointer<Asset>)),
+		this, SLOT(loadItem(QSharedPointer<Asset>)));
+}
+
+void StateEditViewer::loadItem(QSharedPointer<Asset> asset)
+{
+	if(asset.isNull())
+		return;
+					
+	QSharedPointer<DataStore> dataStore(asset.dynamicCast<DataStore>());
+	if(dataStore.isNull())
+		return;
+	scene->setSceneAsset(asset);
+	scene->clear();
+	QStringList childTypes = dataStore->getDefinedChildTags();
+	QPointF childAssetLoc(100,100);
+	QList<QSharedPointer<Transition>> transitions;
+	QList<DiagramItem*> diagItems;
+	foreach(QString childType, childTypes)
+	{
+		QList<QSharedPointer<Asset>> assets = dataStore->getGeneratedChildren(childType);
+		foreach(QSharedPointer<Asset> childAsset,assets)
+		{
+			if(childAsset->assetType() == "DataStore")
+			{
+				DiagramItem* diagItem = scene->insertDiagramItem(childAsset,childAssetLoc);
+				diagItems.push_back(diagItem);
+				childAssetLoc = childAssetLoc+QPointF(1.5*diagItem->boundingRect().width(),0);
+			}
+			else if(childAsset->assetType() == "Transition")
+			{
+				transitions.push_back(childAsset.staticCast<Transition>());
+			}
+		}
+	}
+	foreach(QSharedPointer<Transition> transition,transitions)
+	{
+		DiagramItem* start = NULL;
+		DiagramItem* end = NULL;
+		QString source = transition->getSource();
+		QString sourceResult = transition->getSourceResult();
+		QString dest = transition->getDestination();
+		foreach(DiagramItem* diagItem,diagItems)
+		{
+			if(!start && (source == diagItem->getName()))
+			{
+				QList<DiagramItem*> results = diagItem->getArrowSources();
+				foreach(DiagramItem* result,results)
+				{
+					if(result->getName() == sourceResult)
+					{
+						start = result;
+						break;
+					}
+				}
+			}
+			if(!end && (dest == diagItem->getName()))
+			{
+				end = diagItem->getArrowDest();
+			}
+			if(start && end)
+			{
+				break;
+			}
+		}
+		if(start && end)
+		{
+			scene->insertTransition(start,end);
+		}
+	}
+	loadAssetProperties(asset);
+}
+
+void StateEditViewer::loadAssetProperties(QSharedPointer<Asset> asset)
+{
+	variantEditor_->clear();
+	if(asset.isNull())
+		return;
+					
+	QSharedPointer<DataStore> dataStore(asset.dynamicCast<DataStore>());
+	if(dataStore.isNull())
+		return;
+
+	variantEditor_->setFactoryForManager(dataStore->getPropertyContainer()->getPropertyManager().data(), variantFactory_.data());
+	QMap<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
+	for(QMap<QString, QVector<QSharedPointer<Property>>>::iterator typeIter = properties.begin();typeIter !=properties.end();typeIter ++)
+	{
+		for(QVector<QSharedPointer<Property>>::iterator propIter = typeIter.value().begin(); propIter != typeIter.value().end(); propIter++)
+		{
+			variantEditor_->addProperty((*propIter)->getVariantProperty().data());
+		}
+	}
+	variantEditor_->setMinimumWidth(variantEditor_->childrenRect().width());
 }
 
 //! [21]
@@ -376,33 +495,8 @@ void StateEditViewer::createToolBox()
     buttonGroup->setExclusive(false);
     connect(buttonGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(buttonGroupClicked(int)));
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(createCellWidget(tr("Conditional"),
-                               DiagramItem::Conditional), 0, 0);
-    layout->addWidget(createCellWidget(tr("Process"),
-                      DiagramItem::Step),0, 1);
-    layout->addWidget(createCellWidget(tr("Input/Output"),
-                      DiagramItem::Io), 1, 0);
-//! [21]
-
-    QToolButton *textButton = new QToolButton;
-    textButton->setCheckable(true);
-    buttonGroup->addButton(textButton, InsertTextButton);
-    textButton->setIcon(QIcon(QPixmap(":/icons/textpointer.png")
-                        .scaled(30, 30)));
-    textButton->setIconSize(QSize(50, 50));
-    QGridLayout *textLayout = new QGridLayout;
-    textLayout->addWidget(textButton, 0, 0, Qt::AlignHCenter);
-    textLayout->addWidget(new QLabel(tr("Text")), 1, 0, Qt::AlignCenter);
-    QWidget *textWidget = new QWidget;
-    textWidget->setLayout(textLayout);
-    layout->addWidget(textWidget, 1, 1);
-
-    layout->setRowStretch(3, 10);
-    layout->setColumnStretch(2, 10);
-
+   
     QWidget *itemWidget = new QWidget;
-    itemWidget->setLayout(layout);
 
     backgroundButtonGroup = new QButtonGroup;
     connect(backgroundButtonGroup, SIGNAL(buttonClicked(QAbstractButton *)),
@@ -430,10 +524,41 @@ void StateEditViewer::createToolBox()
     toolBox->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored));
     toolBox->setMinimumWidth(itemWidget->sizeHint().width());
     toolBox->addItem(itemWidget, tr("Basic Flowchart Shapes"));
-    toolBox->addItem(backgroundWidget, tr("Backgrounds"));
+    toolBox->addItem(backgroundWidget, tr("Backgrounds"));\
+	updateToolBox();
 }
 //! [22]
+void StateEditViewer::updateToolBox()
+{
+	QGridLayout *layout = new QGridLayout;
+    layout->addWidget(createCellWidget(tr("Conditional"),
+                               DiagramItem::Conditional), 0, 0);
+    layout->addWidget(createCellWidget(tr("Process"),
+                      DiagramItem::Step),0, 1);
+    layout->addWidget(createCellWidget(tr("Input/Output"),
+                      DiagramItem::Io), 1, 0);
+//! [21]
 
+    QToolButton *textButton = new QToolButton;
+    textButton->setCheckable(true);
+    buttonGroup->addButton(textButton, InsertTextButton);
+    textButton->setIcon(QIcon(QPixmap(":/icons/textpointer.png")
+                        .scaled(30, 30)));
+    textButton->setIconSize(QSize(50, 50));
+    QGridLayout *textLayout = new QGridLayout;
+    textLayout->addWidget(textButton, 0, 0, Qt::AlignHCenter);
+    textLayout->addWidget(new QLabel(tr("Text")), 1, 0, Qt::AlignCenter);
+    QWidget *textWidget = new QWidget;
+    textWidget->setLayout(textLayout);
+    layout->addWidget(textWidget, 1, 1);
+
+    layout->setRowStretch(3, 10);
+    layout->setColumnStretch(2, 10);
+	QWidget* itemWidget = toolBox->widget(0);
+	itemWidget->setLayout(layout);
+	toolBox->setMinimumWidth(itemWidget->sizeHint().width());
+
+}
 //! [23]
 void StateEditViewer::createActions()
 {

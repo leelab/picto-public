@@ -32,6 +32,8 @@ public:
 	void setContainerName(QString _containerName);
 	QString getContainerName();
 	QStringList getPropertyList();
+	QSharedPointer<QtVariantPropertyManager> getPropertyManager(){return propManager_;};
+	QMap<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
 
 signals:
 	void signalPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

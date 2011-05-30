@@ -34,9 +34,13 @@ public:
 	QString name();
 	virtual void setValue(QVariant _value);
 	void addAttribute(QString _attributeName, QVariant _attributeValue);
+	QSharedPointer<QtVariantProperty> getVariantProperty(){return variantProp_;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+	virtual QString identifier(){return tagName_;};
+	virtual QString assetType(){return "Property";};
 
 protected:
 	Property(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);

@@ -301,7 +301,7 @@ void MainWindow::newExperiment()
 {
 	if(!experiment_)
 	{
-		experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
+		experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
 	}
 	if(okToContinue())
 	{
@@ -541,7 +541,7 @@ bool MainWindow::convertTextToExperiment()
 		return false;
 	}
 
-	experiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
+	experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
 	//experiment_->clearErrors();
 	//experiment_->clear();
 	Picto::Asset::clearErrors();

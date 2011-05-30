@@ -1023,7 +1023,7 @@ bool RemoteViewer::startSession()
 	//It would be 100 times easier to copy the experiment object directly, but it contains a
 	//parameter container, which is a QObject, and can't be copied.  So instead, we generate
 	//a new copy instead
-	activeExperiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
+	activeExperiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
 
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
 	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
@@ -1219,7 +1219,7 @@ bool RemoteViewer::joinSession()
 		}
 
 		//Extract the experiment xml
-		activeExperiment_ = QSharedPointer<Picto::Experiment>(new Picto::Experiment);
+		activeExperiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
 		while(!xmlReader->atEnd() && !(xmlReader->isStartElement() && xmlReader->name() == "Experiment"))
 			xmlReader->readNext();
 

@@ -42,11 +42,11 @@
 #include <QtGui>
 
 #include "diagramscene.h"
-#include "diagramsceneitem.h"
+#include "AssetDiagramItem.h"
 #include "arrow.h"
 
 //! [0]
-DiagramScene::DiagramScene(QMenu *itemMenu, QObject *parent)
+DiagramScene::DiagramScene(QMenu *itemMenu, QObject *parent, QSharedPointer<Asset> sceneAsset)
     : QGraphicsScene(parent)
 {
     myItemMenu = itemMenu;
@@ -54,6 +54,7 @@ DiagramScene::DiagramScene(QMenu *itemMenu, QObject *parent)
     myItemType = DiagramItem::Step;
     line = 0;
     textItem = 0;
+	sceneAsset_ = sceneAsset;
     myItemColor = Qt::white;
     myTextColor = Qt::black;
     myLineColor = Qt::black;
@@ -110,7 +111,32 @@ void DiagramScene::setFont(const QFont &font)
             item->setFont(myFont);
     }
 }
+
+QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramItem* dest)
+{
+    Arrow *arrow = new Arrow(source, dest);
+    arrow->setColor(myLineColor);
+    source->addArrow(arrow);
+    dest->addArrow(arrow);
+	int maxZVal = (source->zValue()>dest->zValue())?source->zValue():dest->zValue();
+	arrow->setZValue(maxZVal+1);
+    addItem(arrow);
+    arrow->updatePosition();
+	return arrow;
+}
 //! [4]
+DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos)
+{
+	DiagramItem *item = new AssetDiagramItem(myItemMenu,myItemType,asset);
+	item->setBrush(myItemColor);
+	connect(item, SIGNAL(selectedChange(QGraphicsItem *)),
+			this, SLOT(setSelectedItem(QGraphicsItem *)));
+	item->setPos(pos);
+	addItem(item);
+
+	emit itemInserted(static_cast<DiagramItem*>(item));
+	return item;
+}
 
 void DiagramScene::setMode(Mode mode)
 {
@@ -120,6 +146,25 @@ void DiagramScene::setMode(Mode mode)
 void DiagramScene::setItemType(DiagramItem::DiagramType type)
 {
     myItemType = type;
+}
+void DiagramScene::setSelectedItem(QGraphicsItem *item)
+{
+	AssetDiagramItem* assetItem = dynamic_cast<AssetDiagramItem*>(item);
+	if(!assetItem)
+		return;
+	QSharedPointer<Asset> asset = assetItem->getAsset();
+	if(asset.isNull())
+		return;
+	if(item->isSelected() && (selectedAsset_ != asset))
+	{
+		selectedAsset_ = asset;
+		emit assetSelected(selectedAsset_);
+	}
+	else if(!item->isSelected() && (selectedAsset_ == asset))
+	{
+		selectedAsset_ = sceneAsset_;
+		emit assetSelected(selectedAsset_);
+	}
 }
 
 //! [5]
@@ -142,16 +187,17 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if (mouseEvent->button() != Qt::LeftButton)
         return;
 
-    DiagramSceneItem *item;
+    //DiagramItem *item;
     switch (myMode) {
         case InsertItem:
-            item = new DiagramSceneItem(myItemMenu,myItemType,this);
-            item->setBrush(myItemColor);
-            addItem(item);
-            item->setPos(mouseEvent->scenePos());
-			connect(item,SIGNAL(opened(DiagramScene*)),this,SLOT(debug(DiagramScene *)));
-			connect(item,SIGNAL(opened(DiagramScene*)),this,SIGNAL(itemOpened(DiagramScene *)));
-            emit itemInserted(static_cast<DiagramItem*>(item));
+			insertDiagramItem(QSharedPointer<Asset>(),mouseEvent->scenePos());
+   //         item = new AssetDiagramItem(myItemMenu,myItemType,QSharedPointer<Asset>());
+   //         item->setBrush(myItemColor);
+			//connect(item, SIGNAL(selectedChange(QGraphicsItem *)),
+   //                 this, SLOT(setSelectedItem(QGraphicsItem *)));
+   //         addItem(item);
+   //         item->setPos(mouseEvent->scenePos());
+   //         emit itemInserted(static_cast<DiagramItem*>(item));
             break;
 //! [6] //! [7]
         case InsertLine:
@@ -181,11 +227,19 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 //! [9]
-
-void DiagramScene::debug(DiagramScene* scene)
+void DiagramScene::mouseDoubleClickEvent( QGraphicsSceneMouseEvent *mouseEvent )
 {
-	int i=0;
-	i++;
+	if(mouseEvent->button() == Qt::LeftButton)
+	{
+		if(selectedAsset_)
+			emit itemOpened(selectedAsset_);
+	}
+	else if(mouseEvent->button() == Qt::RightButton)
+	{
+		if(sceneAsset_ && sceneAsset_->getParentAsset())
+			emit itemOpened(sceneAsset_->getParentAsset());
+	}
+	QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
 }
 
 //! [10]
@@ -215,6 +269,16 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         delete line;
 //! [11] //! [12]
 
+		//Ignore text graphics.
+		while(startItems.count() && (startItems.first()->type() == QGraphicsTextItem::Type))
+		{
+			startItems.removeFirst();
+		}
+		while(endItems.count() && (endItems.first()->type() == QGraphicsTextItem::Type))
+		{
+			endItems.removeFirst();
+		}
+
         if (startItems.count() > 0 && endItems.count() > 0 &&
             startItems.first()->type() == DiagramItem::Type &&
             endItems.first()->type() == DiagramItem::Type &&
@@ -223,13 +287,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 qgraphicsitem_cast<DiagramItem *>(startItems.first());
             DiagramItem *endItem =
                 qgraphicsitem_cast<DiagramItem *>(endItems.first());
-            Arrow *arrow = new Arrow(startItem, endItem);
-            arrow->setColor(myLineColor);
-            startItem->addArrow(arrow);
-            endItem->addArrow(arrow);
-            arrow->setZValue(-1000.0);
-            addItem(arrow);
-            arrow->updatePosition();
+			insertTransition(startItem,endItem);
         }
     }
 //! [12] //! [13]

@@ -27,17 +27,25 @@ public:
 	bool wasEdited(){return edited_;};
 	bool isNew(){return isNew_;};
 	bool isDeleted(){return deleted_;};
-
+	void setParentAsset(QSharedPointer<Asset> parent){parent_ = parent;};
+	virtual QString name(){return "";};
+	virtual QString identifier(){return "";};
+	virtual QString assetType(){return "";};
+	QSharedPointer<Asset> getParentAsset(){return QSharedPointer<Asset>(parent_);};
+	void setSelfPtr(QSharedPointer<Asset> selfPtr){self_ = selfPtr;};
 signals:
 	void edited();
 	void deleted();
 
-
+protected:
+	QSharedPointer<Asset> selfPtr(){return QSharedPointer<Asset>(self_);};	
 private:
-	
+
 	bool edited_;
 	bool isNew_;
 	bool deleted_;
+	QWeakPointer<Asset> parent_;
+	QWeakPointer<Asset> self_;
 
 private slots:
 	void receivedEditedSignal();

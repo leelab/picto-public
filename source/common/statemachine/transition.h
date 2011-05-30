@@ -37,6 +37,7 @@ public:
 	//DataStore functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual QString assetType(){return "Transition";};
 
 protected:
 	virtual QString defaultTagName(){return "Transition";};

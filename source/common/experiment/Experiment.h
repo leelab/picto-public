@@ -43,8 +43,7 @@ class Experiment : public DataStore
 {
 	Q_OBJECT
 public:
-	Experiment();
-
+	static QSharedPointer<Experiment> Create();
 	void addTask(QSharedPointer<Task> task);
 	bool runTask(QString taskName, QSharedPointer<Engine::PictoEngine> engine);
 	bool jumpToState(QStringList path, QString state);
@@ -66,6 +65,7 @@ protected:
 
 
 private:
+	Experiment();
 	//QUuid uuid_;
 	//QString formatID_;
 	//unsigned int revision_;

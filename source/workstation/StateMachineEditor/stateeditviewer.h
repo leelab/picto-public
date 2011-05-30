@@ -43,9 +43,25 @@
 #define STATEEDITVIEWER_H
 
 #include <QMainWindow>
+#include <QPointer>
+
+
+
+#include "qtpropertymanager.h"
+#include "qtvariantproperty.h"
+#include "qteditorfactory.h"
+#include "qttreepropertybrowser.h"
+#include "qtbuttonpropertybrowser.h"
+#include "qtgroupboxpropertybrowser.h"
+
+
+
+#include "../common/storage/asset.h"
+using namespace Picto;
 
 #include "diagramitem.h"
 #include "../viewer.h"
+
 
 class DiagramScene;
 
@@ -76,7 +92,7 @@ public:
 
    virtual QString type(){return "State Edit Viewer";};
 public slots:
-	virtual void init(){};  //Called just before displaying the viewer
+	virtual void init();  //Called just before displaying the viewer
 	virtual void deinit(){};	//Called just after the user switches out of the viewer
 
 
@@ -99,15 +115,20 @@ private slots:
     void fillButtonTriggered();
     void lineButtonTriggered();
     void handleFontChange();
+	void assetSelected(QSharedPointer<Asset> asset);
     void itemSelected(QGraphicsItem *item);
     void about();
 	void loadScene(DiagramScene* newScene);
+	void loadItem(QSharedPointer<Asset> asset);
+	void loadAssetProperties(QSharedPointer<Asset> asset);
 
 private:
     void createToolBox();
     void createActions();
     void createMenus();
     void createToolbars();
+
+	void updateToolBox();
     QWidget *createBackgroundCellWidget(const QString &text,
                                         const QString &image);
     QWidget *createCellWidget(const QString &text,
@@ -156,6 +177,9 @@ private:
     QAction *textAction;
     QAction *fillAction;
     QAction *lineAction;
+
+	QSharedPointer<QtVariantEditorFactory> variantFactory_;
+	QtGroupBoxPropertyBrowser *variantEditor_;
 };
 //! [0]
 
