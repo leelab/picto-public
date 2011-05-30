@@ -99,6 +99,8 @@ QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 bool ScriptElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
+	if(!StateMachineElement::validateObject(xmlStreamReader))
+		return false;
 	return true;
 }
 

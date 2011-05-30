@@ -17,9 +17,11 @@ FlowElement::FlowElement()
 	DefinePlaceholderTag("Conditions");
 	AddDefinableObjectFactory("Condition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PredicateExpression::Create))) );
 	AddDefinableObjectFactory("CompoundCondition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
-	
-	//At some point, we may want to make the default result name user modifiable...
-	defaultResult_ = "default";
+	//really using the result list in this case...)
+	//Add the default result
+	QSharedPointer<Result> r(new Result());
+	r->setName("default");
+	addResult(r);
 }
 
 QString FlowElement::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -45,7 +47,7 @@ QString FlowElement::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 
 	//if we made it this far, nothing evaluated true, so return the default result
-	return defaultResult_;
+	return "default";
 
 }
 

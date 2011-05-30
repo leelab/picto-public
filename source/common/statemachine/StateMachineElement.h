@@ -91,7 +91,6 @@ protected:
 
 	ParameterContainer parameterContainer_;
 	QStringList results_;
-	QString defaultResult_;
 
 	QPoint layoutPosition_;
 

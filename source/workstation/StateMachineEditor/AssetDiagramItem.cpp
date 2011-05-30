@@ -1,5 +1,6 @@
 #include "AssetDiagramItem.h"
 #include "../../common/storage/datastore.h"
+#include "../../common/statemachine/statemachineelement.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
@@ -18,15 +19,13 @@ asset_(asset)
 	if(type == "")
 		type = "UNDEFINED TYPE";
 	setType(type);
-	QSharedPointer<DataStore> dataStore = asset.staticCast<DataStore>();
-	if(!dataStore.isNull())
+	QSharedPointer<StateMachineElement> stateMachElem = asset.dynamicCast<StateMachineElement>();
+	if(!stateMachElem.isNull())
 	{
-		QList<QSharedPointer<Asset>> results = dataStore->getGeneratedChildren("Result");
-		foreach(QSharedPointer<Asset> result,results)
+		QStringList results = stateMachElem->getResultList();
+		foreach(QString result,results)
 		{
-			QSharedPointer<Property> resultProp = result.staticCast<Property>();
-			if(!resultProp.isNull())
-				addArrowSource(resultProp->value().toString());
+			addArrowSource(result);
 		}
 		enableArrowDest();
 	}

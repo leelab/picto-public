@@ -15,7 +15,6 @@ StateMachineElement::StateMachineElement()
 	DefinePlaceholderTag("Results");
 	AddDefinableProperty(QVariant::String,"DefaultResult","",0,1);
 	AddDefinableProperty(QVariant::String,"Result","",0,-1);
-	defaultResult_ = "";
 }
 
 StateMachineElement::StateMachineElement(QSharedPointer<ParameterContainer> parameters)
@@ -23,7 +22,6 @@ StateMachineElement::StateMachineElement(QSharedPointer<ParameterContainer> para
 	DefinePlaceholderTag("Results");
 	AddDefinableProperty(QVariant::String,"DefaultResult","",0,1);
 	AddDefinableProperty(QVariant::String,"Result","",0,-1);
-	defaultResult_ = "";
 	initializePropertiesToDefaults();
 
 	addParameters(parameters);
@@ -327,16 +325,6 @@ bool StateMachineElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 		//add the result name to our list, but only if it isn't already there...
 		if(!results_.contains(resultName))
 			results_.append(resultName);
-	}
-
-	if(getGeneratedChildren("DefaultResult").size())
-	{
-		defaultResult_ = propertyContainer_->getPropertyValue("DefaultResult").toString();
-		if(defaultResult_ == "EngineAbort")
-		{
-			addError("StateMachineElement", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
-			return false;
-		}
 	}
 
 	return true;
