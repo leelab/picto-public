@@ -9,5 +9,16 @@ ControlElement::ControlElement()
 
 }
 
+bool ControlElement::addResult(QString resultName)
+{
+	if(results_.contains(resultName))
+		return false;
+	else
+	{
+		results_.push_back(resultName);
+		return true;
+	}
+}
+
 
 }; //namespace Picto

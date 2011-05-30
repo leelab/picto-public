@@ -1,12 +1,14 @@
 #include "AssetDiagramItem.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/statemachine/statemachineelement.h"
+#include "../../common/controlelements/controlelement.h"
+#include "../../common/property/property.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
 AssetDiagramItem::AssetDiagramItem(QMenu *itemMenu, DiagramType diagramType, QSharedPointer<Asset> asset) :
 DiagramItem(
-			(asset && (asset->assetType() == "DataStore"))?Step:Conditional,
+			Step,
 			itemMenu
 			),
 asset_(asset)
@@ -28,5 +30,27 @@ asset_(asset)
 			addArrowSource(result);
 		}
 		enableArrowDest();
+	}
+	else
+	{
+		QSharedPointer<ControlElement> ctrlElem = asset.dynamicCast<ControlElement>();
+		if(!ctrlElem.isNull())
+		{
+			QStringList results = ctrlElem->getResultList();
+			foreach(QString result,results)
+			{
+				addArrowSource(result);
+			}
+			enableArrowDest();
+		}
+		else
+		{
+			QSharedPointer<Property> prop = asset.dynamicCast<Property>();
+			if(!prop.isNull())
+			{
+				setName(prop->value().toString());
+				enableArrowDest();
+			}
+		}
 	}
 }

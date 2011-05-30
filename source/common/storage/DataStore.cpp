@@ -100,10 +100,11 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 			Q_ASSERT(!childAsset->isDeleted());
 			//If the childAsset wasEdited and it wasn't deserialized
 			//in from the XML, it must have been a default value that was
-			//altered by the user.  It must now be serialized out.  If
-			//the childAsset isNew() it must have been added by the user since
-			//we serialized in and must also be serialized out.
-			if(childAsset->wasEdited() || childAsset->isNew())
+			// altered by the user or a new user addition. It must now be 
+			// serialized out.  If the childAsset isNew() but was not edited
+			// it must have been an unedited default value that should not be 
+			// serialized out.
+			if(childAsset->wasEdited())
 				childAsset->toXml(xmlStreamWriter);
 			(*dataIter)++;
 		}
@@ -215,9 +216,8 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			continue;
 		}
 		//We created the new child.  
-		//Lets set its pointers
-		newChild->setSelfPtr(newChild);
-		newChild->setParentAsset(selfPtr());
+		//Lets add it to our list of children
+		AddChild(name,newChild);
 		//Lets deserialize it.
 		if(!newChild->fromXml(xmlStreamReader))
 		{
@@ -228,10 +228,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			return false;
 		}
 		xmlWriter->writeCurrentToken(*xmlStreamReader);	// Lets add the closing tag from the child to our tagText.
-		//Add the new child Asset to the children map, and continue 
-		//the loop
-		children_[name].push_back(newChild);
-		connect(newChild.data(),SIGNAL(edited()),this,SLOT(childEdited()));
+		//continue the loop
 	}
 	//Make sure we didn't finish document
 	if(xmlStreamReader->atEnd())
@@ -250,9 +247,8 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			if(newChild.isNull())
 				break;
 			//We created the new child.  
-			//Lets set its pointers
-			newChild->setSelfPtr(newChild);
-			newChild->setParentAsset(selfPtr());
+			//Lets add it to our list of children
+			AddChild(iter.key(),newChild);
 			//Generate new XMLStreamReader that is an empty tag to deserialize the child into a default state.
 			QString childTag = QString("<%1/>").arg(iter.key());
 			QSharedPointer<QXmlStreamReader> emptyTagXML(new QXmlStreamReader(childTag));
@@ -260,9 +256,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			while(!emptyTagXML->isStartElement()) 
 				emptyTagXML->readNext();
 			newChild->fromXml(emptyTagXML);
-			//Add the new child Asset to the children map and continue 
-			//the loop
-			children_[iter.key()].push_back(newChild);
+			//continue the loop
 		}
 	}
 
@@ -375,6 +369,14 @@ void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetF
 void DataStore::DefinePlaceholderTag(QString tagName)
 {
 	factories_[tagName] = QSharedPointer<AssetFactory>();
+}
+
+void DataStore::AddChild(QString tagName, QSharedPointer<Asset> child)
+{
+	child->setSelfPtr(child);
+	child->setParentAsset(selfPtr());
+	children_[tagName].push_back(child);
+	connect(child.data(),SIGNAL(edited()),this,SLOT(childEdited()));
 }
 
 QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)

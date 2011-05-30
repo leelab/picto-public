@@ -73,6 +73,8 @@ SOURCES += $$(PICTO_TREE)/source/common/controlelements/ChoiceController.cpp
 # SOURCES += $$(PICTO_TREE)/source/common/controlelements/CustomController.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlElement.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlElement.cpp
+HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlLink.h
+SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlLink.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlElementFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlElementFactory.cpp
 

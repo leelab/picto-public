@@ -24,11 +24,11 @@ TargetController::TargetController()
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"ReacquisitionAllowed",0,"enumNames",reacquisitionAllowedList_);
 
 	//Make sure to update the list of results...
-	results_.append("Success");
-	results_.append("Broke Fixation");
-	results_.append("Total Time Excceeded");
-	results_.append("Initial Aquistion Time Exceeded");
-	results_.append("Reaquistion Time Exceeded");
+	addResult("Success");
+	addResult("Broke Fixation");
+	addResult("Total Time Excceeded");
+	addResult("Initial Aquistion Time Exceeded");
+	addResult("Reaquistion Time Exceeded");
 }
 
 

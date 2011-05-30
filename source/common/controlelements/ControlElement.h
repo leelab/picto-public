@@ -55,7 +55,7 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "ControlElement";};
-
+	bool addResult(QString resultName);
 	QStringList results_;
 
 	bool operatorVisible_;

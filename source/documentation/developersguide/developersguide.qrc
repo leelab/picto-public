@@ -72,6 +72,8 @@
    <file alias="_constraint_8h-source.html">../../../output/documentation/main/html/_constraint_8h-source.html</file>
    <file alias="_control_element_8cpp-source.html">../../../output/documentation/main/html/_control_element_8cpp-source.html</file>
    <file alias="_control_element_8h-source.html">../../../output/documentation/main/html/_control_element_8h-source.html</file>
+   <file alias="_control_link_8cpp-source.html">../../../output/documentation/main/html/_control_link_8cpp-source.html</file>
+   <file alias="_control_link_8h-source.html">../../../output/documentation/main/html/_control_link_8h-source.html</file>
    <file alias="_cursor_graphic_8cpp-source.html">../../../output/documentation/main/html/_cursor_graphic_8cpp-source.html</file>
    <file alias="_cursor_graphic_8h-source.html">../../../output/documentation/main/html/_cursor_graphic_8h-source.html</file>
    <file alias="_custom_controller_8cpp-source.html">../../../output/documentation/main/html/_custom_controller_8cpp-source.html</file>
@@ -575,6 +577,9 @@
    <file alias="class_picto_1_1_control_element.png">../../../output/documentation/main/html/class_picto_1_1_control_element.png</file>
    <file alias="class_picto_1_1_control_element_factory-members.html">../../../output/documentation/main/html/class_picto_1_1_control_element_factory-members.html</file>
    <file alias="class_picto_1_1_control_element_factory.html">../../../output/documentation/main/html/class_picto_1_1_control_element_factory.html</file>
+   <file alias="class_picto_1_1_control_link-members.html">../../../output/documentation/main/html/class_picto_1_1_control_link-members.html</file>
+   <file alias="class_picto_1_1_control_link.html">../../../output/documentation/main/html/class_picto_1_1_control_link.html</file>
+   <file alias="class_picto_1_1_control_link.png">../../../output/documentation/main/html/class_picto_1_1_control_link.png</file>
    <file alias="class_picto_1_1_controller_1_1_timer-members.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_timer-members.html</file>
    <file alias="class_picto_1_1_controller_1_1_timer.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_timer.html</file>
    <file alias="class_picto_1_1_cursor_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_cursor_graphic-members.html</file>

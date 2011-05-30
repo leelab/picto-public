@@ -58,6 +58,7 @@ public:
 	
 
 	bool addResult(QSharedPointer<Result> result);
+	bool addResult(QString resultName);
 	QStringList getResultList();
 	void addParameters(QSharedPointer<ParameterContainer> parameters);
 	void addParameters(ParameterContainer &parameters);

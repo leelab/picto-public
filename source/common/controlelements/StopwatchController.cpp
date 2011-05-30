@@ -21,7 +21,7 @@ StopwatchController::StopwatchController()
 	//propertyContainer_->addProperty(QVariant::Int,"Time",0);
 
 	//Make sure to update the list of results...
-	results_.append("Success");
+	addResult("Success");
 }
 
 

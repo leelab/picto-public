@@ -405,6 +405,7 @@ void StateEditViewer::loadItem(QSharedPointer<Asset> asset)
 	QSharedPointer<DataStore> dataStore(asset.dynamicCast<DataStore>());
 	if(dataStore.isNull())
 		return;
+
 	scene->setSceneAsset(asset);
 	scene->clear();
 	QStringList childTypes = dataStore->getDefinedChildTags();
@@ -422,9 +423,15 @@ void StateEditViewer::loadItem(QSharedPointer<Asset> asset)
 				diagItems.push_back(diagItem);
 				childAssetLoc = childAssetLoc+QPointF(1.5*diagItem->boundingRect().width(),0);
 			}
-			else if(childAsset->assetType() == "Transition")
+			else if( (childAsset->assetType() == "Transition") || (childAsset->assetType() == "ControlLink") )
 			{
 				transitions.push_back(childAsset.staticCast<Transition>());
+			}
+			else if(childAsset->identifier() == "Result")
+			{
+				DiagramItem* diagItem = scene->insertDiagramItem(childAsset,childAssetLoc);
+				diagItems.push_back(diagItem);
+				childAssetLoc = childAssetLoc+QPointF(1.5*diagItem->boundingRect().width(),0);
 			}
 		}
 	}

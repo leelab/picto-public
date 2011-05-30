@@ -6,6 +6,7 @@
 #include "Canvas.h"
 #include "Layer.h"
 #include "../controlelements/ControlElement.h"
+#include "../controlelements/ControlLink.h"
 #include "scene.h"
 #include "../engine/PictoEngine.h"
 
@@ -47,6 +48,7 @@ public:
 	void setEngineNeeded(int eng) { engineNeeded_ = eng; };
 	int getEngineNeeded() { return engineNeeded_; };
 
+	void addControlLink(QSharedPointer<ControlLink> link);
 	void addControlElement(QSharedPointer<ControlElement> controlElement);
 	void removeControlElement(QString controlElementName);
 
@@ -78,6 +80,7 @@ private:
 	QSharedPointer<SignalChannel> sigChannel_;
 
 	QSharedPointer<QScriptEngine> qsEngine_;
+	QMultiMap<QString, QSharedPointer<ControlLink> > links_; //<source, link>
 };
 
 

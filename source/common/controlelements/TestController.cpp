@@ -13,7 +13,7 @@ TestController::TestController()
 	AddDefinableProperty(QVariant::Int,"NumberOfFrames",120);
 
 	//Make sure to update the list of results...
-	results_.append("Success");
+	addResult("Success");
 }
 
 

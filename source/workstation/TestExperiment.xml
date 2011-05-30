@@ -30,7 +30,7 @@
 							<ControlElement type="Stopwatch Controller">
 								<OperatorVisible>false</OperatorVisible>
 								<SubjectVisible>false</SubjectVisible>
-								<Name></Name>
+								<Name>Stopwatch</Name>
 								<TimeUnits>Ms</TimeUnits>
 								<Time>4000</Time>				
 							</ControlElement>
@@ -85,6 +85,11 @@
 						<Results>
 							<Result>Success</Result>
 						</Results>
+						<Link>
+							<Source>Stopwatch</Source>
+							<SourceResult>Success</SourceResult>
+							<Destination>Success</Destination>
+						</Link>
 					</StateMachineElement>
 					<StateMachineElement type="Result">
 						<Name>Done</Name>
@@ -130,7 +135,7 @@
                 <Name>TestState</Name>
                 <ControlElements>
                   <ControlElement type="Stopwatch Controller">
-                    <Name></Name>
+                    <Name>Stopwatch</Name>
 					<OperatorVisible>false</OperatorVisible>
 					<SubjectVisible>false</SubjectVisible>
 					<TimeUnits>Ms</TimeUnits>
@@ -176,6 +181,11 @@
                 <Results>
                   <Result>Success</Result>
                 </Results>
+				<Link>
+					<Source>Stopwatch</Source>
+					<SourceResult>Success</SourceResult>
+					<Destination>Success</Destination>
+				</Link>
               </StateMachineElement>
               <StateMachineElement type="Result">
                 <Name>Done</Name>
@@ -198,7 +208,7 @@
               <ControlElement type="Stopwatch Controller">
 				<OperatorVisible>false</OperatorVisible>
 				<SubjectVisible>false</SubjectVisible>
-                <Name></Name>
+                <Name>Stopwatch</Name>
 				<TimeUnits>Ms</TimeUnits>
                 <Time>2000</Time>
               </ControlElement>
@@ -216,6 +226,14 @@
               <AudioElement></AudioElement>
             </Scene>
             <Scripts></Scripts>
+            <Results>
+            	<Result>Success</Result>
+            </Results>
+			<Link>
+				<Source>Stopwatch</Source>
+				<SourceResult>Success</SourceResult>
+				<Destination>Success</Destination>
+			</Link>
            </StateMachineElement>
 
         </StateMachineElements>
@@ -283,7 +301,7 @@
 								<Name>State 1</Name>
 								<ControlElements>
 									<ControlElement type="Target Controller">
-										<Name></Name>
+										<Name>TargetCont</Name>
 										<OperatorVisible>false</OperatorVisible>
 										<SubjectVisible>false</SubjectVisible>
 										<SignalChannel>PositionChannel</SignalChannel>
@@ -341,6 +359,31 @@
 									<Result>Initial Aquistion Time Exceeded</Result>
 									<Result>Reaquistion Time Exceeded</Result>
 								</Results>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Success</SourceResult>
+									<Destination>Success</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Broke Fixation</SourceResult>
+									<Destination>Broke Fixation</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Total Time Excceeded</SourceResult>
+									<Destination>Total Time Excceeded</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
+									<Destination>Initial Aquistion Time Exceeded</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Reaquistion Time Exceeded</SourceResult>
+									<Destination>Reaquistion Time Exceeded</Destination>
+								</Link>
 							</StateMachineElement>
 							
 							<StateMachineElement type="State">
@@ -349,7 +392,7 @@
 								<Name>State 2</Name>
 								<ControlElements>
 									<ControlElement type="Target Controller">
-										<Name></Name>
+										<Name>TargetCont</Name>
 										<OperatorVisible>false</OperatorVisible>
 										<SubjectVisible>false</SubjectVisible>
 										<SignalChannel>PositionChannel</SignalChannel>
@@ -405,6 +448,31 @@
 									<Result>Initial Aquistion Time Exceeded</Result>
 									<Result>Reaquistion Time Exceeded</Result>
 								</Results>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Success</SourceResult>
+									<Destination>Success</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Broke Fixation</SourceResult>
+									<Destination>Broke Fixation</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Total Time Excceeded</SourceResult>
+									<Destination>Total Time Excceeded</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Initial Aquistion Time Exceeded</SourceResult>
+									<Destination>Initial Aquistion Time Exceeded</Destination>
+								</Link>
+								<Link>
+									<Source>TargetCont</Source>
+									<SourceResult>Reaquistion Time Exceeded</SourceResult>
+									<Destination>Reaquistion Time Exceeded</Destination>
+								</Link>
 							</StateMachineElement>
 							
 							<StateMachineElement type="FlowElement">
@@ -568,7 +636,8 @@
 							</Layer>
 						  </Layers>
 						</Canvas>
-						<AudioElement></AudioElement>
+						<AudioElement>
+						</AudioElement>
 					  </Scene>
 					  <Results>
 						<Result>Success</Result>
@@ -576,8 +645,27 @@
 						<Result>BottomTarget</Result>
 						<Result>Broke Fixation</Result>
 						<Result>Total Time Excceeded</Result>
-						
 					  </Results>
+					  <Link>
+						<Source>MyChoiceController</Source>
+						<SourceResult>Broke Fixation</SourceResult>
+						<Destination>Broke Fixation</Destination>
+					  </Link>
+					  <Link>
+						<Source>MyChoiceController</Source>
+						<SourceResult>Total Time Excceeded</SourceResult>
+						<Destination>Total Time Excceeded</Destination>
+					  </Link>
+					  <Link>
+						<Source>MyChoiceController</Source>
+						<SourceResult>BottomTarget</SourceResult>
+						<Destination>BottomTarget</Destination>
+					  </Link>
+					  <Link>
+						<Source>MyChoiceController</Source>
+						<SourceResult>TopTarget</SourceResult>
+						<Destination>TopTarget</Destination>
+					  </Link>
 					</StateMachineElement>
 					<StateMachineElement type="Result">
 					  <Name>KeepGoing</Name>
@@ -642,7 +730,7 @@
 								<Name>State 1</Name>
 								<ControlElements>
 									<ControlElement type="Test Controller">
-										<Name></Name>
+										<Name>TestCont</Name>
 						 		 		<OperatorVisible>true</OperatorVisible>
 						  				<SubjectVisible>true</SubjectVisible>
 										<NumberOfFrames>120</NumberOfFrames>
@@ -669,6 +757,11 @@
 								<Results>
 									<Result>Success</Result>
 								</Results>
+					  			<Link>
+									<Source>TestCont</Source>
+									<SourceResult>Success</SourceResult>
+									<Destination>Success</Destination>
+					  			</Link>
 							</StateMachineElement>
 							<StateMachineElement type="State">
 								<Revision>-1</Revision>
@@ -678,7 +771,7 @@
 									<ControlElement type="Stopwatch Controller">
 										<OperatorVisible>true</OperatorVisible>
 										<SubjectVisible>true</SubjectVisible>
-										<Name></Name>
+										<Name>Stopwatch</Name>
 										<TimeUnits>Ms</TimeUnits>
 										<Time>5000</Time>
 									</ControlElement>
@@ -711,6 +804,11 @@
 								<Results>
 									<Result>Success</Result>
 								</Results>
+					  			<Link>
+									<Source>Stopwatch</Source>
+									<SourceResult>Success</SourceResult>
+									<Destination>Success</Destination>
+					  			</Link>
 							</StateMachineElement>  
 							<StateMachineElement type="Result">
 								<Name>Done</Name>

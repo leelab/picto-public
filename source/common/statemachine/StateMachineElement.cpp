@@ -42,11 +42,28 @@ QPoint StateMachineElement::getDisplayLayoutPosition()
  */
 bool StateMachineElement::addResult(QSharedPointer<Result> result)
 {
-	if(results_.contains(result->getName()))
+	return addResult(result->getName());
+}
+
+bool StateMachineElement::addResult(QString resultName)
+{
+	if(results_.contains(resultName))
 		return false;
 	else
 	{
-		results_.push_back(result->getName());
+		results_.push_back(resultName);
+		QList<QSharedPointer<Asset>> resultChildren = getGeneratedChildren("Result");
+		bool found = false;
+		foreach(QSharedPointer<Asset> result,resultChildren)
+		{
+			if(result.staticCast<Property>()->value().toString() == resultName)
+			{
+				found = true;
+				break;
+			}
+		}
+		if(!found)
+			AddChild("Result",propertyContainer_->addProperty(QVariant::String,"Result",resultName,true));
 		return true;
 	}
 }
@@ -296,7 +313,7 @@ void StateMachineElement::processStatusDirective(QSharedPointer<Engine::PictoEng
 //			{
 //				//add the result name to our list, but only if it isn't already there...
 //				if(!results_.contains(resultName))
-//					results_.append(resultName);
+//					addResult(resultName);
 //			}
 //		}
 //		else
@@ -324,7 +341,7 @@ bool StateMachineElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 		}
 		//add the result name to our list, but only if it isn't already there...
 		if(!results_.contains(resultName))
-			results_.append(resultName);
+			addResult(resultName);
 	}
 
 	return true;

@@ -122,6 +122,7 @@ protected:
 	void AddDefinableObject(QString tagName, QSharedPointer<Asset> object);
 	void AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory);
 	void DefinePlaceholderTag(QString tagName);
+	void AddChild(QString tagName, QSharedPointer<Asset> child);
 
 	bool hasChildrenOfType(QString tagName);
 	QSharedPointer<PropertyContainer> propertyContainer_;

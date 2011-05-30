@@ -31,8 +31,8 @@ ChoiceController::ChoiceController()
 	AddDefinableProperty(QVariant::Rect,"Target",QRect(),0,-1);
 
 	//Make sure to update the list of results...
-	results_.append("Broke Fixation");
-	results_.append("Total Time Excceeded");
+	addResult("Broke Fixation");
+	addResult("Total Time Excceeded");
 }
 
 
@@ -65,7 +65,7 @@ bool ChoiceController::addTarget(QString targetName, QRect target)
 	propertyContainer_->addProperty(QVariant::String,namePropertyStr, targetName);
 	propertyContainer_->addProperty(QVariant::Rect,targetPropertyStr, target);
 
-	results_.append(targetName);
+	addResult(targetName);
 
 	return true;
 }
@@ -292,7 +292,7 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 			addError("ChoiceController", "No two Targets can have the same name.", xmlStreamReader);
 			return false;
 		}
-		results_.append(targetName);
+		addResult(targetName);
 		targets_.push_back(target.staticCast<Property>());
 	}
 
