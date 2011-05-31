@@ -12,6 +12,8 @@ PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",QColor());
 	AddDefinableProperty("ImageFile",imageFile);
+	if(imageFile != "" || (position != QPoint()))
+		initializePropertiesToDefaults();
 
 	//propertyContainer_->setContainerName(type);
 

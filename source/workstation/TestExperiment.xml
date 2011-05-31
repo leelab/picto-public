@@ -91,10 +91,10 @@
 							<Destination>Success</Destination>
 						</Link>
 					</StateMachineElement>
-					<StateMachineElement type="Result">
-						<Name>Done</Name>
-					</StateMachineElement>
 				</StateMachineElements>
+				<Results>
+					<Result>Done</Result>
+				</Results>
 				<Transitions>
 					<Transition>
 						<Source>TestState</Source>
@@ -187,10 +187,10 @@
 					<Destination>Success</Destination>
 				</Link>
               </StateMachineElement>
-              <StateMachineElement type="Result">
-                <Name>Done</Name>
-              </StateMachineElement>
             </StateMachineElements>
+			<Results>
+				<Result>Done</Result>
+			</Results>
             <Transitions>
               <Transition>
                 <Source>TestState</Source>
@@ -237,7 +237,6 @@
            </StateMachineElement>
 
         </StateMachineElements>
-
         <Transitions>
           <Transition>
             <Source>FrameRateTrial</Source>
@@ -499,13 +498,15 @@
 								</Results>
 							</StateMachineElement>
 							
-							<StateMachineElement type="Result">
-								<Name>Success</Name>
+							<StateMachineElement type="Reward">
+								<Name>GiveReward</Name>
 								<RewardQty>5</RewardQty>
 								<RewardChan>1</RewardChan>
 							</StateMachineElement>
 						</StateMachineElements>
-						
+						<Results>
+							<Result>Success</Result>
+						</Results>
 						<Transitions>
 							<Transition>
 								<Source>Initialize Values</Source>
@@ -570,12 +571,17 @@
 							<Transition>
 								<Source>Finish Stage</Source>
 								<SourceResult>Finished</SourceResult>
-								<Destination>Success</Destination>
+								<Destination>GiveReward</Destination>
 							</Transition>
 							<Transition>
 								<Source>Finish Stage</Source>
 								<SourceResult>NotFinished</SourceResult>
 								<Destination>State 1</Destination>
+							</Transition>
+							<Transition>
+								<Source>GiveReward</Source>
+								<SourceResult>done</SourceResult>
+								<Destination>Success</Destination>
 							</Transition>
 						 </Transitions>
 						<!--<Results>
@@ -667,43 +673,58 @@
 						<Destination>TopTarget</Destination>
 					  </Link>
 					</StateMachineElement>
-					<StateMachineElement type="Result">
-					  <Name>KeepGoing</Name>
+					<StateMachineElement type="Reward">
+					  <Name>KeepGoingReward</Name>
 					  <RewardQty>1</RewardQty>
 					  <RewardChan>1</RewardChan>
 					</StateMachineElement>
-					<StateMachineElement type="Result">
-					  <Name>Stop</Name>
+					<StateMachineElement type="Reward">
+					  <Name>StopReward</Name>
 					</StateMachineElement>
 
 				  </StateMachineElements>
+				  <Results>
+					<Result>KeepGoing</Result>
+					<Result>Stop</Result>
+				  </Results>
 				  <Parameters/>
 				  <Transitions>
 					<Transition>
 					  <Source>State 1</Source>
 					  <SourceResult>Success</SourceResult>
-					  <Destination>KeepGoing</Destination>
+					  <Destination>KeepGoingReward</Destination>
 					</Transition>
 					<Transition>
 					  <Source>State 1</Source>
 					  <SourceResult>TopTarget</SourceResult>
-					  <Destination>KeepGoing</Destination>
+					  <Destination>KeepGoingReward</Destination>
 					</Transition>
 					<Transition>
 					  <Source>State 1</Source>
 					  <SourceResult>BottomTarget</SourceResult>
-					  <Destination>Stop</Destination>
+					  <Destination>StopReward</Destination>
 					</Transition>
 					<Transition>
 					  <Source>State 1</Source>
 					  <SourceResult>Broke Fixation</SourceResult>
-					  <Destination>Stop</Destination>
+					  <Destination>StopReward</Destination>
 					</Transition>
 					<Transition>
 					  <Source>State 1</Source>
 					  <SourceResult>Total Time Excceeded</SourceResult>
+					  <Destination>StopReward</Destination>
+					</Transition>
+					<Transition>
+					  <Source>KeepGoingReward</Source>
+					  <SourceResult>done</SourceResult>
+					  <Destination>KeepGoing</Destination>
+					</Transition>
+					<Transition>
+					  <Source>StopReward</Source>
+					  <SourceResult>done</SourceResult>
 					  <Destination>Stop</Destination>
 					</Transition>
+
 				  </Transitions>
 				  <!--<Results>
 					<Result>
@@ -810,11 +831,10 @@
 									<Destination>Success</Destination>
 					  			</Link>
 							</StateMachineElement>  
-							<StateMachineElement type="Result">
-								<Name>Done</Name>
-							</StateMachineElement>
-			 
 						</StateMachineElements>
+						<Results>
+							<Result>Done</Result>
+						</Results>
 						<Parameters/>
 						<Transitions>
 							<Transition>
@@ -828,15 +848,12 @@
 								<Destination>Done</Destination>
 							</Transition>
 						 </Transitions>
-					</StateMachine>
-					
-					
-					<StateMachineElement type="Result">
-						<Name>Done</Name>
-					</StateMachineElement>
-					
+					</StateMachine>	
 				</StateMachineElements>
 				<Parameters/>
+				<Results>
+					<Result>Done</Result>
+				</Results>
 				<Transitions>
 					<Transition>
 						<Source>Stage 1</Source>

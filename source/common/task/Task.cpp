@@ -287,11 +287,6 @@ bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	if(!stateMachines.isEmpty())
 	{
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
-		if(!stateMachine_->validateStateMachine())
-		{
-			addError("StateMachine","StateMachine failed validation",xmlStreamReader);
-			return false;
-		}
 	}
 	return true;
 }

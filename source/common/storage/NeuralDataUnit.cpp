@@ -19,7 +19,7 @@ bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 
 	xmlStreamWriter->writeStartElement("NeuralDataUnit");
 	DataUnit::serializeDataID(xmlStreamWriter);
-	xmlStreamWriter->writeTextElement("timestamp",QString("%1").arg(getTimestamp(),0,'f',4));
+	xmlStreamWriter->writeTextElement("timestamp",QString("%1").arg(getTimestamp(),0,'f',6));
 	xmlStreamWriter->writeTextElement("channel",QString("%1").arg(getChannel()));
 	xmlStreamWriter->writeTextElement("unit",QString("%1").arg(getUnit()));
 	xmlStreamWriter->writeTextElement("wave",getWaveformAsString());		

@@ -72,7 +72,7 @@ public:
 	void setLevel(StateMachineLevel::StateMachineLevel level);
 	StateMachineLevel::StateMachineLevel getLevel();
 
-	bool validateStateMachine();
+	//bool validateStateMachine();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

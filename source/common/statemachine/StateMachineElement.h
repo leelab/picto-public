@@ -56,8 +56,6 @@ public:
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine) = 0;
 	static void resetSlaveElements(double time = 0.0) { lastTransitionTime_ = time; };
 	
-
-	bool addResult(QSharedPointer<Result> result);
 	bool addResult(QString resultName);
 	QStringList getResultList();
 	void addParameters(QSharedPointer<ParameterContainer> parameters);

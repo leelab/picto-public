@@ -111,7 +111,7 @@ void LFPDataUnitPackage::addData(double timestamp, double* potentials, int numVa
 			newChan.append(" 0");
 		potentials_.push_back(newChan);
 	}
-	times_.append(" ").append(QString::number(timestamp));
+	times_.append(" ").append(QString::number(timestamp,'e',6));
 	for(int i=0;i<numVals;i++)
 	{		
 		potentials_[i].append(" ").append(QString::number(potentials[i]));
@@ -122,7 +122,7 @@ void LFPDataUnitPackage::addData(double timestamp, double* potentials, int numVa
 }
 void LFPDataUnitPackage::addData(double timestamp, double* potentials, int numVals, double fittedtime)
 {
-	fittedTimes_.push_back(QString::number(fittedtime));
+	fittedTimes_.push_back(QString::number(fittedtime,'e',6));
 	addData(timestamp,potentials,numVals);
 }
 

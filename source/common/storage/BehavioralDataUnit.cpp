@@ -21,7 +21,7 @@ BehavioralDataUnit::BehavioralDataUnit(double X, double Y, double T)
 bool BehavioralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("BehavioralDataUnit");
-	xmlStreamWriter->writeAttribute("time",QString("%1").arg(t));
+	xmlStreamWriter->writeAttribute("time",QString("%1").arg(t,0,'e',6));
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(x));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(y));
 	DataUnit::serializeDataID(xmlStreamWriter);

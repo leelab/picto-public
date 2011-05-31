@@ -4,7 +4,6 @@
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../storage/StateDataUnit.h"
-#include "Result.h"
 
 namespace Picto {
 
@@ -40,11 +39,6 @@ QPoint StateMachineElement::getDisplayLayoutPosition()
  *  run time (for elements with results that may be edited by the user, like
  *	a FlowElement).
  */
-bool StateMachineElement::addResult(QSharedPointer<Result> result)
-{
-	return addResult(result->getName());
-}
-
 bool StateMachineElement::addResult(QString resultName)
 {
 	if(results_.contains(resultName))
@@ -135,7 +129,11 @@ QString StateMachineElement::type()
 QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//Collect the data from the server
-	QString commandStr = QString("GETDATA StateDataUnit:%1 PICTO/1.0").arg(lastTransitionTime_);
+	//Note that below we use 6 places after the time decimal point.  We do this because we get
+	//6 places after the decimal point and we need to make sure that new data will be after old data.
+	//The reason we need this level of precision is that we found that some transitions were occuring at
+	//the same millisecond, and we need these to be differentiated.
+	QString commandStr = QString("GETDATA StateDataUnit:%1 PICTO/1.0").arg(lastTransitionTime_,0,'e',6);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
@@ -176,7 +174,7 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 				.arg(data.getSource()).arg(getName()).arg(data.getTime());
 			Q_ASSERT_X(data.getSource() == getName() || data.getSource().toUpper() == "NULL","StateMachineElement::getMasterStateResult", 
 				msg.toAscii());
-			//lastTransitionTime_ = data.getTime();
+			lastTransitionTime_ = data.getTime();
 
 			QString result = data.getSourceResult();
 
@@ -185,7 +183,7 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 				return "";
 			else
 			{
-				lastTransitionTime_ = data.getTime();
+				qDebug(QString("Path: %1, Source: %2, SourceResult: %3, Destination: %4").arg(data.getMachinePath()).arg(data.getSource()).arg(data.getSourceResult()).arg(data.getDestination()).toAscii());
 				return result;
 			}
 		}

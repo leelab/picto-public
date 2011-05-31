@@ -393,7 +393,7 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
  */
 int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 {
-	QString commandStr = QString("GETDATA FrameDataUnitPackage:%1 PICTO/1.0").arg(lastFrameCheckTime_);
+	QString commandStr = QString("GETDATA FrameDataUnitPackage:%1 PICTO/1.0").arg(lastFrameCheckTime_,0,'e',6);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
@@ -644,10 +644,10 @@ void State::removeControlElement(QString controlElementName)
 		return;
 
 	//remove the results affiliated with this control element
-	foreach(QString result, controlElements_[controlElementName]->getResultList())
-	{
-		results_.removeOne(result);
-	}
+	//foreach(QString result, controlElements_[controlElementName]->getResultList())
+	//{
+	//	results_.removeOne(result);
+	//}
 
 	//remove the element
 	controlElements_.remove(controlElementName);

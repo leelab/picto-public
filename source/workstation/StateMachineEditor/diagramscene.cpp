@@ -42,7 +42,7 @@
 #include <QtGui>
 
 #include "diagramscene.h"
-#include "AssetDiagramItem.h"
+#include "StateMachineElementItem.h"
 #include "arrow.h"
 
 //! [0]
@@ -127,7 +127,7 @@ QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramIt
 //! [4]
 DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos)
 {
-	DiagramItem *item = new AssetDiagramItem(myItemMenu,myItemType,asset);
+	DiagramItem *item = new StateMachineElementItem(myItemMenu,myItemType,asset);
 	item->setBrush(myItemColor);
 	connect(item, SIGNAL(selectedChange(QGraphicsItem *)),
 			this, SLOT(setSelectedItem(QGraphicsItem *)));
@@ -149,7 +149,7 @@ void DiagramScene::setItemType(DiagramItem::DiagramType type)
 }
 void DiagramScene::setSelectedItem(QGraphicsItem *item)
 {
-	AssetDiagramItem* assetItem = dynamic_cast<AssetDiagramItem*>(item);
+	StateMachineElementItem* assetItem = dynamic_cast<StateMachineElementItem*>(item);
 	if(!assetItem)
 		return;
 	QSharedPointer<Asset> asset = assetItem->getAsset();
@@ -191,7 +191,7 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     switch (myMode) {
         case InsertItem:
 			insertDiagramItem(QSharedPointer<Asset>(),mouseEvent->scenePos());
-   //         item = new AssetDiagramItem(myItemMenu,myItemType,QSharedPointer<Asset>());
+   //         item = new StateMachineElementItem(myItemMenu,myItemType,QSharedPointer<Asset>());
    //         item->setBrush(myItemColor);
 			//connect(item, SIGNAL(selectedChange(QGraphicsItem *)),
    //                 this, SLOT(setSelectedItem(QGraphicsItem *)));

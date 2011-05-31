@@ -33,7 +33,7 @@ void StateDataUnit::setTransition(QString source, QString sourceResult, QString 
 bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("StateDataUnit");
-	xmlStreamWriter->writeAttribute("timestamp",QString::number(timestamp_));
+	xmlStreamWriter->writeAttribute("timestamp",QString::number(timestamp_,'e',6));
 	xmlStreamWriter->writeAttribute("statemachinepath",machinePath_);
 
 	if(transition_)

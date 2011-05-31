@@ -1,5 +1,4 @@
 #include "FlowElement.h"
-#include "Result.h"
 
 #include <QCoreApplication>
 
@@ -19,9 +18,7 @@ FlowElement::FlowElement()
 	AddDefinableObjectFactory("CompoundCondition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
 	//really using the result list in this case...)
 	//Add the default result
-	QSharedPointer<Result> r(new Result());
-	r->setName("default");
-	addResult(r);
+	addResult("default");
 }
 
 QString FlowElement::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -60,7 +57,7 @@ QString FlowElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		QCoreApplication::processEvents();
 	}
 
-	return result; 
+	return result;
 }
 
 bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr)
@@ -90,9 +87,7 @@ bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr)
 
 	//add the condition name to our list of results (even though we aren't
 	//really using the result list in this case...)
-	QSharedPointer<Result> r(new Result());
-	r->setName(newCond.name);
-	addResult(r);
+	addResult(newCond.name);
 
 	return true;
 }
@@ -125,9 +120,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 
 	//add the condition name to our list of results (even though we aren't
 	//really using the result list in this case...)
-	QSharedPointer<Result> r;
-	r->setName(newCond.name);
-	addResult(r);
+	addResult(newCond.name);
 
 	return true;
 }

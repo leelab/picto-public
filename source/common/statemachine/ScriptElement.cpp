@@ -1,6 +1,5 @@
 #include <QDebug>
 
-#include "result.h"
 #include "ScriptElement.h"
 #include "../storage/AssetFactory.h"
 
@@ -14,9 +13,7 @@ ScriptElement::ScriptElement()
 	AddDefinableProperty(QVariant::String,"Script","");
 	
 	//At some point, we may want to make the default result name user modifiable...
-	QSharedPointer<Result> r(new Result());
-	r->setName("done");
-	addResult(r);
+	addResult("done");
 }
 
 void ScriptElement::setScript(QString script)

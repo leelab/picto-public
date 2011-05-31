@@ -22,7 +22,7 @@ FrameDataUnit::FrameDataUnit(int frameNum, double timestamp, QString statename)
 bool FrameDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("FrameDataUnit");
-	xmlStreamWriter->writeAttribute("time",QString("%1").arg(time));
+	xmlStreamWriter->writeAttribute("time",QString("%1").arg(time,0,'e',6));
 	xmlStreamWriter->writeAttribute("state",QString("%1").arg(stateName));
 	xmlStreamWriter->writeTextElement("framenumber",QString::number(frameNumber));
 	DataUnit::serializeDataID(xmlStreamWriter);

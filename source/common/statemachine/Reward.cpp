@@ -1,18 +1,19 @@
-#include "Result.h"
+#include "Reward.h"
 #include "../engine/PictoEngine.h"
 #include <QCoreApplication>
 namespace Picto
 {
 
-Result::Result()
+Reward::Reward()
 {
 	AddDefinableProperty("Name","");
-	AddDefinableProperty("Type","Result");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	AddDefinableProperty("Type","Reward");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Int,"RewardQty",0);
 	AddDefinableProperty(QVariant::Int,"RewardChan",0);
+	addResult("done");
 }
 
-QString Result::run(QSharedPointer<Engine::PictoEngine> engine)
+QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 
 	int numRewards = propertyContainer_->getPropertyValue("RewardQty").toInt();
@@ -27,27 +28,36 @@ QString Result::run(QSharedPointer<Engine::PictoEngine> engine)
 		}
 	}
 
-	return propertyContainer_->getPropertyValue("Name").toString();
+	return "done";
 }
 
-QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+QString Reward::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
-	return run(engine);
+	QString result;// = run(engine);
+	QString masterResult;
+	while(masterResult.isEmpty())
+	{
+		masterResult = getMasterStateResult(engine);
+		QCoreApplication::processEvents();
+	}
+	//Q_ASSERT_X(masterResult == result,"Reward::runAsSlave","Reward result was not equal to master's reward result.");
+	result = masterResult;
+	return result; 
 }
 
-/*!	\Brief Turns a result object into an XML framgent.
+/*!	\Brief Turns a reward object into an XML framgent.
  *
- *	The XML fragment for a result will look like this:
+ *	The XML fragment for a reward will look like this:
  * 
- *	<StateMachineElement type="Result">
+ *	<StateMachineElement type="Reward">
  *		<Name>BrokeFixation</Name>
  *		<Reward quantity="3" channel="1"/>
  *	</StateMachineElement>
  */
-//bool Result::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+//bool Reward::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 //{
 //	xmlStreamWriter->writeStartElement("StateMachineElement");
-//	xmlStreamWriter->writeAttribute("type","Result");
+//	xmlStreamWriter->writeAttribute("type","Reward");
 //	
 //	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
 //	xmlStreamWriter->writeTextElement("RewardQty", propertyContainer_->getPropertyValue("RewardQty").toString());
@@ -58,17 +68,17 @@ QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 //}
 //
 //
-//bool Result::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+//bool Reward::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{
 //	//Do some basic error checking
 //	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
 //	{
-//		addError("Result","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
+//		addError("Reward","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
 //		return false;
 //	}
 //	if(xmlStreamReader->attributes().value("type").toString() != type())
 //	{
-//		addError("Result","Incorrect type of StateMachineElement, expected Result",xmlStreamReader);
+//		addError("Reward","Incorrect type of StateMachineElement, expected Reward",xmlStreamReader);
 //		return false;
 //	}
 //
@@ -88,7 +98,7 @@ QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 //			QString elementText = xmlStreamReader->readElementText();
 //			if(elementText == "EngineAbort")
 //			{
-//				addError("Result", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
+//				addError("Reward", "EngineAbort is a resticted keyword, and may not be used as the name of a reward", xmlStreamReader);
 //				return false;
 //			}
 //			propertyContainer_->setPropertyValue("Name",QVariant(elementText));
@@ -100,7 +110,7 @@ QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 //			int rewardQuantity = elementText.toInt(&ok);
 //			if(!ok)
 //			{
-//				addError("Result","Reward quantity not an integer",xmlStreamReader);
+//				addError("Reward","Reward quantity not an integer",xmlStreamReader);
 //				return false;
 //			}
 //			propertyContainer_->setPropertyValue("RewardQty",QVariant(rewardQuantity));
@@ -112,14 +122,14 @@ QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 //			int rewardQuantity = elementText.toInt(&ok);
 //			if(!ok)
 //			{
-//				addError("Result","Reward channel not an integer",xmlStreamReader);
+//				addError("Reward","Reward channel not an integer",xmlStreamReader);
 //				return false;
 //			}
 //			propertyContainer_->setPropertyValue("RewardChan",QVariant(rewardQuantity));
 //		}
 //		else
 //		{
-//			addError("Result", "Unexpected tag", xmlStreamReader);
+//			addError("Reward", "Unexpected tag", xmlStreamReader);
 //			return false;
 //		}
 //		xmlStreamReader->readNext();
@@ -127,30 +137,30 @@ QString Result::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 //	
 //	if(xmlStreamReader->atEnd())
 //	{
-//		addError("Result", "Unexpected end of document", xmlStreamReader);
+//		addError("Reward", "Unexpected end of document", xmlStreamReader);
 //		return false;
 //	}
 //
 //	return true;
 //}
 
-bool Result::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool Reward::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(propertyContainer_->getPropertyValue("Name").toString() == "EngineAbort")
 	{
-		addError("Result", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
+		addError("Reward", "EngineAbort is a resticted keyword, and may not be used as the name of a reward", xmlStreamReader);
 		return false;
 	}
 
 	if(propertyContainer_->getPropertyValue("RewardQty").toInt() < 0)
 	{
-		addError("Result", "RewardQty must have a value greater than or equal to zero", xmlStreamReader);
+		addError("Reward", "RewardQty must have a value greater than or equal to zero", xmlStreamReader);
 		return false;
 	}
 
 	if(propertyContainer_->getPropertyValue("RewardChan").toInt() < 0)
 	{
-		addError("Result", "RewardChan must have a value greater than or equal to zero", xmlStreamReader);
+		addError("Reward", "RewardChan must have a value greater than or equal to zero", xmlStreamReader);
 		return false;
 	}
 	return true;

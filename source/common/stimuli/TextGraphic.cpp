@@ -13,6 +13,8 @@ TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QStrin
 	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
 	AddDefinableProperty(QVariant::String,"Text",text);
+	if((position != QPoint()) || (dimensions != QRect()) || (color != QColor()) || (text != QString()))
+		initializePropertiesToDefaults();
 
 	//propertyContainer_->setContainerName(type);
 

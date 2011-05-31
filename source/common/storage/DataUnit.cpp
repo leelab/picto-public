@@ -47,6 +47,11 @@ bool DataUnit::deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReade
 	return true;
 }
 
+void DataUnit::setDataID(qulonglong dataID)
+{
+	dataID_ = dataID;
+}
+
 //! \brief Returns this DataUnit's dataID
 qulonglong DataUnit::getDataID()
 {
