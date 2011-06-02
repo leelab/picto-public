@@ -40,6 +40,7 @@ public:
 	void setScript(QString script);
 
 	bool initScripting(QScriptEngine &qsEngine);
+	virtual QString assetType(){return "ScriptElement";};
 
 	//DataStore functions
 //	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

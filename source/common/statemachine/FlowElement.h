@@ -37,6 +37,7 @@ public:
 
 	bool addCondition(QSharedPointer<PredicateExpression> predExpr);
 	bool addCondition(QSharedPointer<CompoundExpression> compExpr);
+	virtual QString assetType(){return "FlowElement";};
 
 	////DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

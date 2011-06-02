@@ -64,6 +64,7 @@ using namespace Picto;
 
 
 class DiagramScene;
+class Toolbox;
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -97,12 +98,7 @@ public slots:
 
 
 private slots:
-    void backgroundButtonGroupClicked(QAbstractButton *button);
-    void buttonGroupClicked(int id);
-    void deleteItem();
     void pointerGroupClicked(int id);
-    void bringToFront();
-    void sendToBack();
     void itemInserted(DiagramItem *item);
     void textInserted(QGraphicsTextItem *item);
     void currentFontChanged(const QFont &font);
@@ -119,16 +115,15 @@ private slots:
     void itemSelected(QGraphicsItem *item);
     void about();
 	void loadScene(DiagramScene* newScene);
-	void loadItem(QSharedPointer<Asset> asset);
+	void loadAsset(QSharedPointer<Asset> asset);
 	void loadAssetProperties(QSharedPointer<Asset> asset);
 
 private:
-    void createToolBox();
     void createActions();
+	void connectActions();
     void createMenus();
     void createToolbars();
 
-	void updateToolBox();
     QWidget *createBackgroundCellWidget(const QString &text,
                                         const QString &image);
     QWidget *createCellWidget(const QString &text,
@@ -139,6 +134,7 @@ private:
 
     DiagramScene *scene;
 	DiagramScene *topmostScene;
+	Toolbox *toolbox_;
     QGraphicsView *view;
 
     QAction *exitAction;
@@ -164,7 +160,6 @@ private:
     QComboBox *fontSizeCombo;
     QFontComboBox *fontCombo;
 
-    QToolBox *toolBox;
     QButtonGroup *buttonGroup;
     QButtonGroup *pointerTypeGroup;
     QButtonGroup *backgroundButtonGroup;

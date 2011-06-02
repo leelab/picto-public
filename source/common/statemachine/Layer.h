@@ -38,6 +38,7 @@ public:
 	void setName(QString name) { name_ = name; };
 
 	void draw(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<Engine::PictoEngine> engine);
+	virtual QString assetType(){return "Layer";};
 
 
 	//DataStore functions

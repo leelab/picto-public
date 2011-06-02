@@ -929,6 +929,26 @@ bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		}			
 	}
 
+	//Confirm that all of this state's results are linked to something
+	foreach(QString result, results_)
+	{
+		bool found = false;
+		foreach(QSharedPointer<ControlLink> link, links_)
+		{
+			if(link->getDestination() == result)
+			{
+				found = true;
+				continue;
+			}
+		}
+		if(!found)
+		{
+			QString errMsg = QString("State: %1 has an unconnected result of %2").arg(getName()).arg(result);
+			addError("State", errMsg, xmlStreamReader);
+			return false;
+		}
+	}	
+
 	//! \todo Validate Scripts
 
 	return true;

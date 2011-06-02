@@ -84,6 +84,7 @@ public:
 	void setPath(QStringList path) { path_ = path; };
 
 	bool jumpToState(QStringList path, QString state);
+	virtual QString assetType(){return "StateMachine";};
 
 	//DataStore functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

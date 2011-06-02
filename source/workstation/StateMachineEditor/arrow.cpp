@@ -43,6 +43,8 @@
 
 #include "arrow.h"
 #include <math.h>
+#include "ArrowSourceItem.h"
+#include "ArrowDestinationItem.h"
 
 const qreal Pi = 3.14;
 
@@ -51,11 +53,22 @@ Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem,
          QGraphicsItem *parent, QGraphicsScene *scene)
     : QGraphicsLineItem(parent, scene)
 {
-    myStartItem = startItem;
-    myEndItem = endItem;
+    myStartItem = static_cast<ArrowPortItem*>(startItem);
+    myEndItem = static_cast<ArrowPortItem*>(endItem);
+	myStartItem->addArrow(this);
+	myEndItem->addArrow(this);
+	int maxZVal = (startItem->zValue()>endItem->zValue())?startItem->zValue():endItem->zValue();
+	setZValue(maxZVal);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     myColor = Qt::black;
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+}
+
+Arrow* Arrow::Create(DiagramItem *startItem, DiagramItem *endItem,QGraphicsItem *parent, QGraphicsScene *scene)
+{
+	if(!dynamic_cast<ArrowSourceItem*>(startItem) || !dynamic_cast<ArrowDestinationItem*>(endItem))
+		return NULL;
+	return new Arrow(startItem,endItem,parent,scene);
 }
 //! [0]
 

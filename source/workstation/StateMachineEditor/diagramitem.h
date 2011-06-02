@@ -69,29 +69,19 @@ public:
     enum { Type = UserType + 15 };
     enum DiagramType { Step, Conditional, StartEnd, Io, ArrowSource, ArrowDestination};
 
-    DiagramItem(DiagramType diagramType, QMenu *contextMenu, QString name = "",
+    DiagramItem(QMenu *contextMenu, QString name = "",
         QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
-	void setName(QString name);
+	void setName(QString name,QPointF pos = QPointF());
 	void setType(QString type);
 	QString getName();
 	QString getType();
 	void updateLabel();
-    void removeArrow(Arrow *arrow);
-    void removeArrows();
-    DiagramType diagramType() const
-        { return myDiagramType; }
-    QPolygonF polygon() const
-        { return myPolygon; }
 	void setPolygonFromRect(QRectF rect);
-    void addArrow(Arrow *arrow);
-	void addArrowSource(QString name);
-	void enableArrowDest();
-	QList<DiagramItem*> getArrowSources();
-	DiagramItem* getArrowDest();
     QPixmap image() const;
     int type() const
         { return Type;}
+	virtual void removeDependantGraphics(){};
 
 signals:
 	void selectedChange(QGraphicsItem *item);
@@ -99,18 +89,13 @@ signals:
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	virtual void updateDependantGraphics(){};
+	QMenu *myContextMenu;
 
 private:
-    DiagramType myDiagramType;
-    QPolygonF myPolygon;
 	QString name_;
 	QString type_;
 	QGraphicsTextItem* nameText_;
-    QMenu *myContextMenu;
-    QList<Arrow *> arrows;
-	QList<DiagramItem*> arrowSources_;
-	DiagramItem* arrowDest_;
-	int lastSourcePos_;
 };
 //! [0]
 

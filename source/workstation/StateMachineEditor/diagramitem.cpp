@@ -45,55 +45,21 @@
 #include "arrow.h"
 
 //! [0]
-DiagramItem::DiagramItem(DiagramType diagramType, QMenu *contextMenu, QString name,
+DiagramItem::DiagramItem(QMenu *contextMenu, QString name,
              QGraphicsItem *parent, QGraphicsScene *scene)
     : QGraphicsPolygonItem(parent, scene)
 {
-	arrowDest_ = NULL;
-	lastSourcePos_ = 0;
-    myDiagramType = diagramType;
     myContextMenu = contextMenu;
-	nameText_ = new QGraphicsTextItem(this);
-	nameText_->setZValue(1000.0);
-    QPainterPath path;
-    switch (myDiagramType) {
-        case StartEnd:
-            path.moveTo(200, 50);
-            path.arcTo(150, 0, 50, 50, 0, 90);
-            path.arcTo(50, 0, 50, 50, 90, 90);
-            path.arcTo(50, 50, 50, 50, 180, 90);
-            path.arcTo(150, 50, 50, 50, 270, 90);
-            path.lineTo(200, 25);
-            myPolygon = path.toFillPolygon();
-			nameText_->setPos(-100,-100);
-			setPolygon(myPolygon);
-            break;
-        case Conditional:
-            myPolygon << QPointF(-100, 0) << QPointF(0, 100)
-                      << QPointF(100, 0) << QPointF(0, -100)
-                      << QPointF(-100, 0);
-			nameText_->setPos(0,0);
-			setPolygon(myPolygon);
-            break;
-        case Step:
-            myPolygon << QPointF(-100, -100) << QPointF(100, -100)
-                      << QPointF(100, 100) << QPointF(-100, 100)
-                      << QPointF(-100, -100);
-			nameText_->setPos(-100,-100);
-			setFlag(QGraphicsItem::ItemIsMovable, true);
-			setFlag(QGraphicsItem::ItemIsSelectable, true);
-			setPolygon(myPolygon);
-            break;
-        default:
-            break;
-    }
+	nameText_ = NULL;
 	setName(name);
 }
 
-void DiagramItem::setName(QString name)
+void DiagramItem::setName(QString name,QPointF pos)
 {
 	name_ = name;
 	updateLabel();
+	if(pos != QPointF())
+		nameText_->setPos(pos);
 }
 void DiagramItem::setType(QString type)
 {
@@ -110,6 +76,11 @@ QString DiagramItem::getType()
 }
 void DiagramItem::updateLabel()
 {
+	if(!nameText_)
+	{
+		nameText_ = new QGraphicsTextItem(this);
+		nameText_->setZValue(1000.0);
+	}
 	QString text = getName();
 	if((text != "") && (getType() != ""))
 	{
@@ -142,29 +113,11 @@ void DiagramItem::updateLabel()
 //! [0]
 
 //! [1]
-void DiagramItem::removeArrow(Arrow *arrow)
-{
-    int index = arrows.indexOf(arrow);
 
-    if (index != -1)
-        arrows.removeAt(index);
-}
-//! [1]
-
-//! [2]
-void DiagramItem::removeArrows()
-{
-    foreach (Arrow *arrow, arrows) {
-        arrow->startItem()->removeArrow(arrow);
-        arrow->endItem()->removeArrow(arrow);
-        scene()->removeItem(arrow);
-        delete arrow;
-    }
-}
 //! [2]
 void DiagramItem::setPolygonFromRect(QRectF rect)
 {
-	myPolygon.clear();
+	QPolygonF myPolygon;
 	myPolygon	<< QPointF(-rect.width(),-rect.height()) 
 				<< QPointF(0,-rect.height()) 
 				<< QPointF(0,0)
@@ -173,38 +126,8 @@ void DiagramItem::setPolygonFromRect(QRectF rect)
 	setPolygon(myPolygon);
 }
 //! [3]
-void DiagramItem::addArrow(Arrow *arrow)
-{
-    arrows.append(arrow);
-}
-void DiagramItem::addArrowSource(QString name)
-{
-	DiagramItem* newArrowSource = new DiagramItem(ArrowSource,myContextMenu,name,this,scene());
-	newArrowSource->setPos(QPointF(boundingRect().width()/2.0,lastSourcePos_));
-	lastSourcePos_ += newArrowSource->boundingRect().height();
-	newArrowSource->setZValue(zValue()+1);
-	arrowSources_.push_back(newArrowSource);
-}
 
-void DiagramItem::enableArrowDest()
-{
-	if(arrowDest_)
-		return;
-	
-	arrowDest_ = new DiagramItem(ArrowDestination,myContextMenu,"",this,scene());
-	arrowDest_->setPos(QPointF(-boundingRect().width()/2.0+arrowDest_->boundingRect().width(),boundingRect().height()/2.0));
-	arrowDest_->setZValue(zValue()+1);	
-}
 
-QList<DiagramItem*> DiagramItem::getArrowSources()
-{
-	return arrowSources_;
-}
-
-DiagramItem* DiagramItem::getArrowDest()
-{
-	return arrowDest_;
-}
 //! [3]
 
 //! [4]
@@ -215,7 +138,7 @@ QPixmap DiagramItem::image() const
     QPainter painter(&pixmap);
     painter.setPen(QPen(Qt::black, 8));
     painter.translate(125, 125);
-    painter.drawPolyline(myPolygon);
+    painter.drawPolyline(polygon());
 
     return pixmap;
 }
@@ -235,9 +158,7 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
                      const QVariant &value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
-        foreach (Arrow *arrow, arrows) {
-            arrow->updatePosition();
-        }
+		updateDependantGraphics();
     }
 	if (change == QGraphicsItem::ItemSelectedHasChanged)
 		emit selectedChange(this);

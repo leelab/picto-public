@@ -45,6 +45,7 @@
 #include <QGraphicsScene>
 #include "diagramitem.h"
 #include "diagramtextitem.h"
+#include "DiagramItemFactory.h"
 #include "../../common/storage/asset.h"
 #include <QSharedPointer>
 #include <QPointer>
@@ -66,7 +67,7 @@ class DiagramScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    enum Mode { InsertItem, InsertLine, InsertText, MoveItem };
+    enum Mode { Select, InsertLine};
 
     DiagramScene(QMenu *itemMenu, QObject *parent = 0, QSharedPointer<Asset> sceneAsset = QSharedPointer<Asset>());
     QFont font() const
@@ -83,19 +84,23 @@ public:
     void setFont(const QFont &font);
 	QGraphicsLineItem* insertTransition(DiagramItem* source, DiagramItem* dest);
 	DiagramItem* insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos);
-	void setSceneAsset(QSharedPointer<Asset> sceneAsset){sceneAsset_ = sceneAsset;};
+	void setSceneAsset(QSharedPointer<Asset> asset);
 
 public slots:
     void setMode(Mode mode);
+	void setInsertionItem(QString itemName);
     void setItemType(DiagramItem::DiagramType type);
     void editorLostFocus(DiagramTextItem *item);
+	void deleteSelectedItems();
+	void bringToFront();
+	void sendToBack();
 
 signals:
     void itemInserted(DiagramItem *item);
     void textInserted(QGraphicsTextItem *item);
     void itemSelected(QGraphicsItem *item);
 	void assetSelected(QSharedPointer<Asset> asset);
-	void itemOpened(QSharedPointer<Asset> asset);
+	void sceneAssetChanged(QSharedPointer<Asset> asset);
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -109,7 +114,9 @@ protected slots:
 private:
     bool isItemChange(int type);
 
+	QSharedPointer<DiagramItemFactory> diagItemFactory_;
     DiagramItem::DiagramType myItemType;
+	QString insertionItem_;
     QMenu *myItemMenu;
 	QSharedPointer<Asset> selectedAsset_;
 	QSharedPointer<Asset> sceneAsset_;

@@ -55,6 +55,7 @@ public:
 	void setScene(QSharedPointer<Scene> scene) { scene_ = scene; };
 
 	bool initScripting(QScriptEngine &qsEngine);
+	virtual QString assetType(){return "State";};
 
 protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

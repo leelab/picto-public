@@ -68,6 +68,7 @@ public:
 	//Output functions
 	QString toString(bool useLHSNames=false, bool useRHSNames=false);
 	QImage toQImage(bool useLHSNames=false, bool useRHSNames=false);
+	virtual QString assetType(){return "CompoundExpression";};
 
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

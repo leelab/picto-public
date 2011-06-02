@@ -646,7 +646,6 @@
 						</AudioElement>
 					  </Scene>
 					  <Results>
-						<Result>Success</Result>
 						<Result>TopTarget</Result>
 						<Result>BottomTarget</Result>
 						<Result>Broke Fixation</Result>
@@ -689,11 +688,6 @@
 				  </Results>
 				  <Parameters/>
 				  <Transitions>
-					<Transition>
-					  <Source>State 1</Source>
-					  <SourceResult>Success</SourceResult>
-					  <Destination>KeepGoingReward</Destination>
-					</Transition>
 					<Transition>
 					  <Source>State 1</Source>
 					  <SourceResult>TopTarget</SourceResult>

@@ -65,6 +65,7 @@ public:
 	void setName(QString name);
 	QString getName();
 	QString type();
+	virtual QString assetType(){return "StateMachineElement";};
 
 	virtual QPoint getDisplayLayoutPosition();
 

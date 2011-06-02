@@ -386,6 +386,11 @@ QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 	return children_[tagName];
 }
 
+QStringList DataStore::getValidChildTags()
+{
+	return factories_.keys();
+}
+
 bool DataStore::hasChildrenOfType(QString tagName)
 {
 	return children_.contains(tagName);

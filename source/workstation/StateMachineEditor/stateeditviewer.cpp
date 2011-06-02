@@ -43,12 +43,12 @@
 #include <QLabel>
 #include <QMenuBar>
 
+#include "toolbox.h"
 #include "stateeditviewer.h"
 #include "diagramitem.h"
 #include "diagramscene.h"
 #include "diagramtextitem.h"
-#include "assetdiagramitem.h"
-#include "../common/statemachine/transition.h"
+#include "AssetItem.h"
 
 const int InsertTextButton = 10;
 
@@ -56,16 +56,14 @@ const int InsertTextButton = 10;
 StateEditViewer::StateEditViewer(QWidget *parent) :
 	Viewer(parent)
 {
-    createActions();
-    createToolBox();
-    createMenus();
-
 	scene = NULL;
 	view = NULL;
-    topmostScene = new DiagramScene(itemMenu);
-	loadScene(topmostScene);
-
+	createActions();
+	createMenus();
     createToolbars();
+	topmostScene = new DiagramScene(itemMenu);
+	loadScene(topmostScene);
+	connectActions();
 	
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 
@@ -76,14 +74,16 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
     toolbarLayout->addWidget(pointerToolbar);
 
     QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(toolBox);
+
+	toolbox_ = new Toolbox;
+	connect(toolbox_, SIGNAL(insertionItemSelected(QString)),scene, SLOT(setInsertionItem(QString)));
+	layout->addWidget(toolbox_);
     layout->addWidget(view);
 
-variantFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory());
-variantEditor_ = new QtGroupBoxPropertyBrowser();
-layout->addWidget(variantEditor_);
-layout->setStretch(1,10);
-
+	variantFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory());
+	variantEditor_ = new QtGroupBoxPropertyBrowser();
+	layout->addWidget(variantEditor_);
+	layout->setStretch(1,10);
 
 	mainLayout->addLayout(toolbarLayout);
 	mainLayout->addLayout(layout);
@@ -105,111 +105,44 @@ void StateEditViewer::init()
 		msg.setText("Failed to load current experiment.");
 		msg.exec();
 	}
-	loadItem(experiment_.staticCast<Asset>());
+	topmostScene->setSceneAsset(experiment_.staticCast<Asset>());
 }
 //! [1]
-void StateEditViewer::backgroundButtonGroupClicked(QAbstractButton *button)
-{
-    QList<QAbstractButton *> buttons = backgroundButtonGroup->buttons();
-    foreach (QAbstractButton *myButton, buttons) {
-    if (myButton != button)
-        button->setChecked(false);
-    }
-    QString text = button->text();
-    if (text == tr("Blue Grid"))
-        scene->setBackgroundBrush(QPixmap(":/icons/background1.png"));
-    else if (text == tr("White Grid"))
-        scene->setBackgroundBrush(QPixmap(":/icons/background2.png"));
-    else if (text == tr("Gray Grid"))
-        scene->setBackgroundBrush(QPixmap(":/icons/background3.png"));
-    else
-        scene->setBackgroundBrush(QPixmap(":/icons/background4.png"));
-
-    scene->update();
-    view->update();
-}
-//! [1]
-
-//! [2]
-void StateEditViewer::buttonGroupClicked(int id)
-{
-    QList<QAbstractButton *> buttons = buttonGroup->buttons();
-    foreach (QAbstractButton *button, buttons) {
-    if (buttonGroup->button(id) != button)
-        button->setChecked(false);
-    }
-    if (id == InsertTextButton) {
-        scene->setMode(DiagramScene::InsertText);
-    } else {
-        scene->setItemType(DiagramItem::DiagramType(id));
-        scene->setMode(DiagramScene::InsertItem);
-    }
-}
-//! [2]
-
-//! [3]
-void StateEditViewer::deleteItem()
-{
-    foreach (QGraphicsItem *item, scene->selectedItems()) {
-        if (item->type() == DiagramItem::Type) {
-            qgraphicsitem_cast<DiagramItem *>(item)->removeArrows();
-        }
-        scene->removeItem(item);
-    }
-}
-//! [3]
+//void StateEditViewer::backgroundButtonGroupClicked(QAbstractButton *button)
+//{
+//    QList<QAbstractButton *> buttons = backgroundButtonGroup->buttons();
+//    foreach (QAbstractButton *myButton, buttons) {
+//    if (myButton != button)
+//        button->setChecked(false);
+//    }
+//    QString text = button->text();
+//    if (text == tr("Blue Grid"))
+//        scene->setBackgroundBrush(QPixmap(":/icons/background1.png"));
+//    else if (text == tr("White Grid"))
+//        scene->setBackgroundBrush(QPixmap(":/icons/background2.png"));
+//    else if (text == tr("Gray Grid"))
+//        scene->setBackgroundBrush(QPixmap(":/icons/background3.png"));
+//    else
+//        scene->setBackgroundBrush(QPixmap(":/icons/background4.png"));
+//
+//    scene->update();
+//    view->update();
+//}
 
 //! [4]
 void StateEditViewer::pointerGroupClicked(int)
 {
     scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
 }
-//! [4]
 
-//! [5]
-void StateEditViewer::bringToFront()
-{
-    if (scene->selectedItems().isEmpty())
-        return;
-
-    QGraphicsItem *selectedItem = scene->selectedItems().first();
-    QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
-
-    qreal zValue = 0;
-    foreach (QGraphicsItem *item, overlapItems) {
-        if (item->zValue() >= zValue &&
-            item->type() == DiagramItem::Type)
-            zValue = item->zValue() + 0.1;
-    }
-    selectedItem->setZValue(zValue);
-}
-//! [5]
-
-//! [6]
-void StateEditViewer::sendToBack()
-{
-    if (scene->selectedItems().isEmpty())
-        return;
-
-    QGraphicsItem *selectedItem = scene->selectedItems().first();
-    QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
-
-    qreal zValue = 0;
-    foreach (QGraphicsItem *item, overlapItems) {
-        if (item->zValue() <= zValue &&
-            item->type() == DiagramItem::Type)
-            zValue = item->zValue() - 0.1;
-    }
-    selectedItem->setZValue(zValue);
-}
 //! [6]
 
 //! [7]
-void StateEditViewer::itemInserted(DiagramItem *item)
+void StateEditViewer::itemInserted(DiagramItem *)
 {
-    pointerTypeGroup->button(int(DiagramScene::MoveItem))->setChecked(true);
+    pointerTypeGroup->button(int(DiagramScene::Select))->setChecked(true);
     scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
-    buttonGroup->button(int(item->diagramType()))->setChecked(false);
+    
 }
 //! [7]
 
@@ -314,9 +247,7 @@ void StateEditViewer::handleFontChange()
 //! [18]
 void StateEditViewer::assetSelected(QSharedPointer<Asset> asset)
 {
-
 	loadAssetProperties(asset);
-
 }
 
 //! [19]
@@ -336,7 +267,7 @@ void StateEditViewer::itemSelected(QGraphicsItem *item)
 		underlineAction->setChecked(font.underline());
 		return;
 	}
-	AssetDiagramItem *assetItem = qgraphicsitem_cast<AssetDiagramItem *>(item);
+	AssetItem *assetItem = qgraphicsitem_cast<AssetItem *>(item);
 	if(assetItem)
 	{
 		loadAssetProperties(assetItem->getAsset());
@@ -347,9 +278,9 @@ void StateEditViewer::itemSelected(QGraphicsItem *item)
 //! [20]
 void StateEditViewer::about()
 {
-    QMessageBox::about(this, tr("About Diagram Scene"),
-                       tr("The <b>Diagram Scene</b> example shows "
-                          "use of the graphics framework."));
+    QMessageBox::about(this, tr("About State Machine Editor"),
+                       tr("The <b>State Machine Editor</b> is used"
+                          "to design Picto experiments."));
 }
 //! [20]
 
@@ -367,7 +298,7 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
 	//		this, SLOT(textInserted(QGraphicsTextItem *)));
 	//	disconnect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
 	//		this, SLOT(itemSelected(QGraphicsItem *)));
-	//	disconnect(scene, SIGNAL(itemOpened(DiagramScene *)),
+	//	disconnect(scene, SIGNAL(sceneAssetChanged(DiagramScene *)),
 	//		this, SLOT(loadScene(DiagramScene *)));
 	//}
 
@@ -393,83 +324,13 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
         this, SLOT(itemSelected(QGraphicsItem *)));
 	connect(newScene, SIGNAL(assetSelected(QSharedPointer<Asset>)),
         this, SLOT(assetSelected(QSharedPointer<Asset>)));
-	connect(newScene, SIGNAL(itemOpened(QSharedPointer<Asset>)),
-		this, SLOT(loadItem(QSharedPointer<Asset>)));
+	connect(newScene, SIGNAL(sceneAssetChanged(QSharedPointer<Asset>)),
+		this, SLOT(loadAsset(QSharedPointer<Asset>)));
 }
 
-void StateEditViewer::loadItem(QSharedPointer<Asset> asset)
+void StateEditViewer::loadAsset(QSharedPointer<Asset> asset)
 {
-	if(asset.isNull())
-		return;
-					
-	QSharedPointer<DataStore> dataStore(asset.dynamicCast<DataStore>());
-	if(dataStore.isNull())
-		return;
-
-	scene->setSceneAsset(asset);
-	scene->clear();
-	QStringList childTypes = dataStore->getDefinedChildTags();
-	QPointF childAssetLoc(100,100);
-	QList<QSharedPointer<Transition>> transitions;
-	QList<DiagramItem*> diagItems;
-	foreach(QString childType, childTypes)
-	{
-		QList<QSharedPointer<Asset>> assets = dataStore->getGeneratedChildren(childType);
-		foreach(QSharedPointer<Asset> childAsset,assets)
-		{
-			if(childAsset->assetType() == "DataStore")
-			{
-				DiagramItem* diagItem = scene->insertDiagramItem(childAsset,childAssetLoc);
-				diagItems.push_back(diagItem);
-				childAssetLoc = childAssetLoc+QPointF(1.5*diagItem->boundingRect().width(),0);
-			}
-			else if( (childAsset->assetType() == "Transition") || (childAsset->assetType() == "ControlLink") )
-			{
-				transitions.push_back(childAsset.staticCast<Transition>());
-			}
-			else if(childAsset->identifier() == "Result")
-			{
-				DiagramItem* diagItem = scene->insertDiagramItem(childAsset,childAssetLoc);
-				diagItems.push_back(diagItem);
-				childAssetLoc = childAssetLoc+QPointF(1.5*diagItem->boundingRect().width(),0);
-			}
-		}
-	}
-	foreach(QSharedPointer<Transition> transition,transitions)
-	{
-		DiagramItem* start = NULL;
-		DiagramItem* end = NULL;
-		QString source = transition->getSource();
-		QString sourceResult = transition->getSourceResult();
-		QString dest = transition->getDestination();
-		foreach(DiagramItem* diagItem,diagItems)
-		{
-			if(!start && (source == diagItem->getName()))
-			{
-				QList<DiagramItem*> results = diagItem->getArrowSources();
-				foreach(DiagramItem* result,results)
-				{
-					if(result->getName() == sourceResult)
-					{
-						start = result;
-						break;
-					}
-				}
-			}
-			if(!end && (dest == diagItem->getName()))
-			{
-				end = diagItem->getArrowDest();
-			}
-			if(start && end)
-			{
-				break;
-			}
-		}
-		if(start && end)
-		{
-			scene->insertTransition(start,end);
-		}
-	}
+	toolbox_->setAsset(asset);
 	loadAssetProperties(asset);
 }
 
@@ -495,77 +356,6 @@ void StateEditViewer::loadAssetProperties(QSharedPointer<Asset> asset)
 	variantEditor_->setMinimumWidth(variantEditor_->childrenRect().width());
 }
 
-//! [21]
-void StateEditViewer::createToolBox()
-{
-    buttonGroup = new QButtonGroup;
-    buttonGroup->setExclusive(false);
-    connect(buttonGroup, SIGNAL(buttonClicked(int)),
-            this, SLOT(buttonGroupClicked(int)));
-   
-    QWidget *itemWidget = new QWidget;
-
-    backgroundButtonGroup = new QButtonGroup;
-    connect(backgroundButtonGroup, SIGNAL(buttonClicked(QAbstractButton *)),
-            this, SLOT(backgroundButtonGroupClicked(QAbstractButton *)));
-
-    QGridLayout *backgroundLayout = new QGridLayout;
-    backgroundLayout->addWidget(createBackgroundCellWidget(tr("Blue Grid"),
-                ":/icons/background1.png"), 0, 0);
-    backgroundLayout->addWidget(createBackgroundCellWidget(tr("White Grid"),
-                ":/icons/background2.png"), 0, 1);
-    backgroundLayout->addWidget(createBackgroundCellWidget(tr("Gray Grid"),
-                    ":/icons/background3.png"), 1, 0);
-    backgroundLayout->addWidget(createBackgroundCellWidget(tr("No Grid"),
-                ":/icons/background4.png"), 1, 1);
-
-    backgroundLayout->setRowStretch(2, 10);
-    backgroundLayout->setColumnStretch(2, 10);
-
-    QWidget *backgroundWidget = new QWidget;
-    backgroundWidget->setLayout(backgroundLayout);
-
-
-//! [22]
-    toolBox = new QToolBox;
-    toolBox->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored));
-    toolBox->setMinimumWidth(itemWidget->sizeHint().width());
-    toolBox->addItem(itemWidget, tr("Basic Flowchart Shapes"));
-    toolBox->addItem(backgroundWidget, tr("Backgrounds"));\
-	updateToolBox();
-}
-//! [22]
-void StateEditViewer::updateToolBox()
-{
-	QGridLayout *layout = new QGridLayout;
-    layout->addWidget(createCellWidget(tr("Conditional"),
-                               DiagramItem::Conditional), 0, 0);
-    layout->addWidget(createCellWidget(tr("Process"),
-                      DiagramItem::Step),0, 1);
-    layout->addWidget(createCellWidget(tr("Input/Output"),
-                      DiagramItem::Io), 1, 0);
-//! [21]
-
-    QToolButton *textButton = new QToolButton;
-    textButton->setCheckable(true);
-    buttonGroup->addButton(textButton, InsertTextButton);
-    textButton->setIcon(QIcon(QPixmap(":/icons/textpointer.png")
-                        .scaled(30, 30)));
-    textButton->setIconSize(QSize(50, 50));
-    QGridLayout *textLayout = new QGridLayout;
-    textLayout->addWidget(textButton, 0, 0, Qt::AlignHCenter);
-    textLayout->addWidget(new QLabel(tr("Text")), 1, 0, Qt::AlignCenter);
-    QWidget *textWidget = new QWidget;
-    textWidget->setLayout(textLayout);
-    layout->addWidget(textWidget, 1, 1);
-
-    layout->setRowStretch(3, 10);
-    layout->setColumnStretch(2, 10);
-	QWidget* itemWidget = toolBox->widget(0);
-	itemWidget->setLayout(layout);
-	toolBox->setMinimumWidth(itemWidget->sizeHint().width());
-
-}
 //! [23]
 void StateEditViewer::createActions()
 {
@@ -573,55 +363,51 @@ void StateEditViewer::createActions()
                                 tr("Bring to &Front"), this);
     toFrontAction->setShortcut(tr("Ctrl+F"));
     toFrontAction->setStatusTip(tr("Bring item to front"));
-    connect(toFrontAction, SIGNAL(triggered()),
-            this, SLOT(bringToFront()));
-//! [23]
 
     sendBackAction = new QAction(QIcon(":/icons/sendtoback.png"),
                                  tr("Send to &Back"), this);
     sendBackAction->setShortcut(tr("Ctrl+B"));
     sendBackAction->setStatusTip(tr("Send item to back"));
-    connect(sendBackAction, SIGNAL(triggered()),
-        this, SLOT(sendToBack()));
 
     deleteAction = new QAction(QIcon(":/icons/delete.png"),
                                tr("&Delete"), this);
     deleteAction->setShortcut(tr("Delete"));
     deleteAction->setStatusTip(tr("Delete item from diagram"));
-    connect(deleteAction, SIGNAL(triggered()),
-        this, SLOT(deleteItem()));
 
     exitAction = new QAction(tr("E&xit"), this);
     exitAction->setShortcut(tr("Ctrl+X"));
     exitAction->setStatusTip(tr("Quit Scenediagram example"));
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
     boldAction = new QAction(tr("Bold"), this);
     boldAction->setCheckable(true);
     QPixmap pixmap(":/icons/bold.png");
     boldAction->setIcon(QIcon(pixmap));
     boldAction->setShortcut(tr("Ctrl+B"));
-    connect(boldAction, SIGNAL(triggered()),
-            this, SLOT(handleFontChange()));
 
     italicAction = new QAction(QIcon(":/icons/italic.png"),
                                tr("Italic"), this);
     italicAction->setCheckable(true);
     italicAction->setShortcut(tr("Ctrl+I"));
-    connect(italicAction, SIGNAL(triggered()),
-            this, SLOT(handleFontChange()));
 
     underlineAction = new QAction(QIcon(":/icons/underline.png"),
                                   tr("Underline"), this);
     underlineAction->setCheckable(true);
     underlineAction->setShortcut(tr("Ctrl+U"));
-    connect(underlineAction, SIGNAL(triggered()),
-            this, SLOT(handleFontChange()));
 
     aboutAction = new QAction(tr("A&bout"), this);
     aboutAction->setShortcut(tr("Ctrl+B"));
-    connect(aboutAction, SIGNAL(triggered()),
-            this, SLOT(about()));
+}
+
+void StateEditViewer::connectActions()
+{
+	connect(toFrontAction, SIGNAL(triggered()),scene, SLOT(bringToFront()));
+    connect(sendBackAction, SIGNAL(triggered()),scene, SLOT(sendToBack()));
+    connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(boldAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
+    connect(italicAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
+    connect(underlineAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
+    connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
 }
 
 //! [24]
@@ -719,7 +505,7 @@ void StateEditViewer::createToolbars()
     linePointerButton->setIcon(QIcon(":/icons/linepointer.png"));
 
     pointerTypeGroup = new QButtonGroup;
-    pointerTypeGroup->addButton(pointerButton, int(DiagramScene::MoveItem));
+    pointerTypeGroup->addButton(pointerButton, int(DiagramScene::Select));
     pointerTypeGroup->addButton(linePointerButton,
                                 int(DiagramScene::InsertLine));
     connect(pointerTypeGroup, SIGNAL(buttonClicked(int)),
@@ -767,8 +553,8 @@ QWidget *StateEditViewer::createBackgroundCellWidget(const QString &text,
 QWidget *StateEditViewer::createCellWidget(const QString &text,
                       DiagramItem::DiagramType type)
 {
-
-    DiagramItem item(type, itemMenu);
+	// JOEY TOOK THE TYPE OUT BELOW... We will use the factory to replace this functionality
+    DiagramItem item(/*type, */itemMenu);
     QIcon icon(item.image());
 
     QToolButton *button = new QToolButton;

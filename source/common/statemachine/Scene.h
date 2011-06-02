@@ -44,6 +44,7 @@ public:
 	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
 	void reset();
+	virtual QString assetType(){return "Scene";};
 
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

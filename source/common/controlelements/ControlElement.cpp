@@ -16,6 +16,18 @@ bool ControlElement::addResult(QString resultName)
 	else
 	{
 		results_.push_back(resultName);
+		QList<QSharedPointer<Asset>> resultChildren = getGeneratedChildren("Result");
+		bool found = false;
+		foreach(QSharedPointer<Asset> result,resultChildren)
+		{
+			if(result.staticCast<Property>()->value().toString() == resultName)
+			{
+				found = true;
+				break;
+			}
+		}
+		if(!found)
+			AddChild("Result",propertyContainer_->addProperty(QVariant::String,"Result",resultName,true));
 		return true;
 	}
 }

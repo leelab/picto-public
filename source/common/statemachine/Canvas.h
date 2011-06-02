@@ -34,6 +34,7 @@ public:
 	void draw(QSharedPointer<Engine::PictoEngine> engine);
 
 	void reset();
+	virtual QString assetType(){return "Canvas";};
 
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

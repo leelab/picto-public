@@ -44,7 +44,7 @@
 
 #include <QGraphicsLineItem>
 
-#include "diagramitem.h"
+#include "ArrowPortItem.h"
 
 QT_BEGIN_NAMESPACE
 class QGraphicsPolygonItem;
@@ -60,10 +60,8 @@ class Arrow : public QGraphicsLineItem
 {
 public:
     enum { Type = UserType + 4 };
-
-    Arrow(DiagramItem *startItem, DiagramItem *endItem,
+	static Arrow* Create(DiagramItem *startItem, DiagramItem *endItem,
       QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-
     int type() const
         { return Type; }
     QRectF boundingRect() const;
@@ -84,8 +82,10 @@ protected:
                QWidget *widget = 0);
 
 private:
-    DiagramItem *myStartItem;
-    DiagramItem *myEndItem;
+	Arrow(DiagramItem *startItem, DiagramItem *endItem,
+      QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+    ArrowPortItem *myStartItem;
+    ArrowPortItem *myEndItem;
     QColor myColor;
     QPolygonF arrowHead;
 };

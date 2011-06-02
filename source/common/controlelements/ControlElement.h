@@ -48,6 +48,7 @@ public:
 	QString getName() { return propertyContainer_->getPropertyValue("Name").toString(); };
 
 	QStringList getResultList() { return results_; };
+	virtual QString assetType(){return "ControlElement";};
 
 	//DataStore Functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
