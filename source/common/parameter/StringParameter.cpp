@@ -43,8 +43,15 @@ void StringParameter::addOption(StringParameterOption option)
 //	return false;
 //}
 
+void StringParameter::postSerialize()
+{
+	Parameter::postSerialize();
+}
+
 bool StringParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
+	if(!Parameter::validateObject(xmlStreamReader))
+		return false;
 	addError("StringParameter", "StringParameter is not yet implemented", xmlStreamReader);
 	return true;
 }

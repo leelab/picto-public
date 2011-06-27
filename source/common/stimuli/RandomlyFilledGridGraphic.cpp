@@ -12,7 +12,7 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 													 int numHorizSquares, int numVertSquares,
 													 int numColor1, bool animated, int updateFrameRate)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color1);
 	AddDefinableProperty(QVariant::Color,"Color2",color2);
@@ -20,13 +20,13 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 	//NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
 	//will not render properly.  It's the responsibility of the user to ensure this doesn't happen.
 	//This should be easlly fixed by putting a check into validateObject()
-	AddDefinableProperty(QVariant::Int,"Number of horizontal squares",numHorizSquares);
-	AddDefinableProperty(QVariant::Int,"Number of vertical squares",numVertSquares);
+	AddDefinableProperty(QVariant::Int,"HorizontalSquares",numHorizSquares);
+	AddDefinableProperty(QVariant::Int,"VerticalSquares",numVertSquares);
 
-	AddDefinableProperty(QVariant::Int,"Number of squares with color1",numColor1);
+	AddDefinableProperty(QVariant::Int,"Color1Squares",numColor1);
 
 	AddDefinableProperty(QVariant::Bool,"Animated",animated);
-	AddDefinableProperty(QVariant::Int,"Update frame rate",updateFrameRate);
+	AddDefinableProperty(QVariant::Int,"FramesPerUpdate",updateFrameRate);
 
 	
 
@@ -42,13 +42,13 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 
 	////NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
 	////will not render properly.  It's the responsibility of the user to ensure this doesn't happen
-	//propertyContainer_->addProperty(QVariant::Int,"Number of horizontal squares",numHorizSquares);
-	//propertyContainer_->addProperty(QVariant::Int,"Number of vertical squares",numVertSquares);
+	//propertyContainer_->addProperty(QVariant::Int,"HorizontalSquares",numHorizSquares);
+	//propertyContainer_->addProperty(QVariant::Int,"VerticalSquares",numVertSquares);
 
-	//propertyContainer_->addProperty(QVariant::Int,"Number of squares with color1",numColor1);
+	//propertyContainer_->addProperty(QVariant::Int,"Color1Squares",numColor1);
 
 	//propertyContainer_->addProperty(QVariant::Bool,"Animated",animated);
-	//propertyContainer_->addProperty(QVariant::Int,"Update frame rate",updateFrameRate);
+	//propertyContainer_->addProperty(QVariant::Int,"FramesPerUpdate",updateFrameRate);
 
 	//buildColorList();
 
@@ -69,9 +69,9 @@ VisualElement* RandomlyFilledGridGraphic::NewVisualElement()
 
 void RandomlyFilledGridGraphic::buildColorList()
 {
-	int numColor1 = propertyContainer_->getPropertyValue("Number of squares with color1").toInt();
-	int numHorizSquares = propertyContainer_->getPropertyValue("Number of horizontal squares").toInt();
-	int numVertSquares = propertyContainer_->getPropertyValue("Number of vertical squares").toInt();
+	int numColor1 = propertyContainer_->getPropertyValue("Color1Squares").toInt();
+	int numHorizSquares = propertyContainer_->getPropertyValue("HorizontalSquares").toInt();
+	int numVertSquares = propertyContainer_->getPropertyValue("VerticalSquares").toInt();
 
 	colorList_.clear();
 	for(int i=0; i<numColor1; i++)
@@ -87,9 +87,9 @@ void RandomlyFilledGridGraphic::draw()
 	QColor foregroundColor;
 	int foregroundIndex;
 
-	int numColor1 = propertyContainer_->getPropertyValue("Number of squares with color1").toInt();
-	int numHorizSquares = propertyContainer_->getPropertyValue("Number of horizontal squares").toInt();
-	int numVertSquares = propertyContainer_->getPropertyValue("Number of vertical squares").toInt();
+	int numColor1 = propertyContainer_->getPropertyValue("Color1Squares").toInt();
+	int numHorizSquares = propertyContainer_->getPropertyValue("HorizontalSquares").toInt();
+	int numVertSquares = propertyContainer_->getPropertyValue("VerticalSquares").toInt();
 
 
 	if(numColor1 > numHorizSquares*numVertSquares/2)
@@ -117,8 +117,13 @@ void RandomlyFilledGridGraphic::draw()
 	p.setBrush(foregroundColor);
 	p.setPen(foregroundColor);
 
-	int gridWidth = image.width()/numHorizSquares;
-	int gridHeight = image.height()/numVertSquares;
+	int gridWidth = 0;
+	int gridHeight = 0;
+	if(numHorizSquares && numVertSquares)
+	{
+		gridWidth = image.width()/numHorizSquares;
+		gridHeight = image.height()/numVertSquares;
+	}
 
 
 	for(int x=0; x<numHorizSquares; x++)
@@ -153,14 +158,14 @@ void RandomlyFilledGridGraphic::setWidth(int width)
 void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {
-	if(propertyName == "Number of horizontal squares" ||
-		propertyName == "Number of vertical squares" ||
-		propertyName == "Number of squares with color1")
+	if(propertyName == "HorizontalSquares" ||
+		propertyName == "VerticalSquares" ||
+		propertyName == "Color1Squares")
 	{
 		buildColorList();
 	}
 	if(propertyName != "Position" && propertyName != "Name" 
-		&& propertyName != "Update frame rate" && propertyName != "Animated")
+		&& propertyName != "FramesPerUpdate" && propertyName != "Animated")
 	{
 		draw();
 	}
@@ -174,18 +179,23 @@ void RandomlyFilledGridGraphic::updateAnimation(int frame, QTime elapsedTime)
 	if(!animated)
 		return;
 
-	int updateRate = propertyContainer_->getPropertyValue("Update frame rate").toInt();
-	if(frame%updateRate == 0)
+	int updateRate = propertyContainer_->getPropertyValue("FramesPerUpdate").toInt();
+	if(updateRate && frame%updateRate == 0)
 		draw();
 	return;
+}
+
+void RandomlyFilledGridGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	buildColorList();
+	draw();
 }
 
 bool RandomlyFilledGridGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	buildColorList();
-	draw();
 	return true;
 }
 

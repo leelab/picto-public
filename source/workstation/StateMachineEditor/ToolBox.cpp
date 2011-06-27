@@ -1,40 +1,38 @@
 #include <QtGui>
 #include "Toolbox.h"
 #include "AssetToolGroup.h"
+#include "PropertyToolGroup.h"
 #include "BackgroundToolGroup.h"
 
 //! [0]
-Toolbox::Toolbox(QWidget *parent) :
+Toolbox::Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent) :
+	editorState_(editorState),
 	QToolBox(parent)
 {
-	setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored));
-	assetTools_ = new AssetToolGroup();
-	backgroundTools_ = new BackgroundToolGroup();
-	addItem(assetTools_,tr("Assets"));
-    addItem(backgroundTools_, tr("Backgrounds"));
-	connect(assetTools_, SIGNAL(insertionItemSelected(QString)),this, SIGNAL(insertionItemSelected(QString)));
-	connect(backgroundTools_, SIGNAL(insertionItemSelected(QString)),this, SIGNAL(insertionItemSelected(QString)));
-	resize();
+	setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored));
+	toolGroups_.push_back(new AssetToolGroup(editorState_));
+	addItem(toolGroups_.last(),tr("Assets"));
+	toolGroups_.push_back(new PropertyToolGroup(editorState_));
+	addItem(toolGroups_.last(),tr("Properties"));
+	toolGroups_.push_back(new BackgroundToolGroup(editorState_));
+	addItem(toolGroups_.last(),tr("Backgrounds"));
+	connect(editorState_.data(), SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),
+		this, SLOT(setAsset(QSharedPointer<Asset>)));
 }
 
 void Toolbox::setAsset(QSharedPointer<Asset> asset)
 {
-	static_cast<AssetToolGroup*>(assetTools_)->setAsset(asset);
-	resize();
-}
-void Toolbox::resize()
-{
-	int assetWidth = assetTools_->sizeHint().width();
-	int backgroundWidth = backgroundTools_->sizeHint().width();
-	int minWidth = (assetWidth>backgroundWidth)?assetWidth:backgroundWidth;
-    setMinimumWidth(minWidth);
-}
-
-QString Toolbox::getSelectedButton()
-{
-	QString resultVal = assetTools_->getSelectedButton();
-	if(resultVal != "")
-		return resultVal;
-	resultVal = backgroundTools_->getSelectedButton();
-	return resultVal;
+	//For some reason, simply changing the items in the AssetToolGroup messed up QT's
+	//Auto Sizing system.  For this reason, we simply create a new AssetToolGroup each
+	//time this function is called and replace the old one.
+	int currIndex = currentIndex();
+	removeItem(0);
+	delete toolGroups_.takeFirst();
+	removeItem(0);
+	delete toolGroups_.takeFirst();
+	toolGroups_.push_front(new PropertyToolGroup(editorState_,asset));
+	insertItem(0,toolGroups_.front(),tr("Properties"));
+	toolGroups_.push_front(new AssetToolGroup(editorState_,asset));
+	insertItem(0,toolGroups_.front(),tr("Assets"));
+	setCurrentIndex(currIndex);
 }

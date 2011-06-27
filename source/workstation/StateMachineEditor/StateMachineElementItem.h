@@ -11,10 +11,7 @@ class StateMachineElementItem : public WireableItem
 {
 	Q_OBJECT
 public:
-	 StateMachineElementItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
-	 QSharedPointer<Asset> getAsset(){return asset_;};
-private:
-	QSharedPointer<Asset> asset_;
+	 StateMachineElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 
 };
 //! [0]

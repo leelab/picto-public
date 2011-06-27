@@ -1,10 +1,10 @@
 #include "ResultItem.h"
-#include "../../common/property/Property.h"
-ResultItem::ResultItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-WireableItem(itemMenu,asset)
+#include "../../common/statemachine/Result.h"
+ResultItem::ResultItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+WireableItem(editorState,contextMenu,asset)
 {
-	QSharedPointer<Property> prop = asset.dynamicCast<Property>();
-	Q_ASSERT(!prop.isNull());
-	setName(prop->value().toString());
+	QSharedPointer<Result> result = asset.dynamicCast<Result>();
+	Q_ASSERT(!result.isNull());
+	setName(result->getName());
 	enableArrowDest();
 }

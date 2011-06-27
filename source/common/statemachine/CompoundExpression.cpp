@@ -1,4 +1,6 @@
 #include "CompoundExpression.h"
+#include "CompareToParamExpression.h"
+#include "CompareToValExpression.h"
 
 #include <QPainter>
 #include <QImage>
@@ -7,7 +9,6 @@ namespace Picto {
 
 CompoundExpression::CompoundExpression()
 {
-	AddDefinableProperty("Name","");
 	AddDefinableProperty(QVariant::Int,"Order",0);
 	QStringList operators;
 	operators << "and" << "or";
@@ -17,8 +18,14 @@ CompoundExpression::CompoundExpression()
 	AddDefinableProperty(QVariant::Bool,"InvertRight",false);
 	AddDefinableProperty("LeftName","");
 
-	AddDefinableObjectFactory("Expression",QSharedPointer<AssetFactory>(new AssetFactory(0,2,AssetFactory::NewAssetFnPtr(PredicateExpression::Create))) );
-	AddDefinableObjectFactory("CompoundExpression",QSharedPointer<AssetFactory>(new AssetFactory(0,2,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
+	QSharedPointer<AssetFactory> factory(new AssetFactory(0,2));
+	factory->addAssetType("CompareToParam",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,2,AssetFactory::NewAssetFnPtr(CompareToParamExpression::Create))));
+	factory->addAssetType("CompareToVal",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,2,AssetFactory::NewAssetFnPtr(CompareToValExpression::Create))));
+	factory->addAssetType("CompoundExpression",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,2,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
+	AddDefinableObjectFactory("Expression",factory);
 	
 	LHSisPred_ = true;
 	RHSisPred_ = true;
@@ -65,19 +72,19 @@ void CompoundExpression::setRHSPredicateExp(QSharedPointer<PredicateExpression> 
 	invertRHS_ = invert;
 	RHSInitialized_ = true;
 }
-
-void CompoundExpression::setParameterContainer(ParameterContainer *params)
-{
-	if(LHSisPred_)
-		LHSPredExp_->setParameterContainer(params);
-	else
-		LHSComExp_->setParameterContainer(params);
-
-	if(RHSisPred_)
-		RHSPredExp_->setParameterContainer(params);
-	else
-		RHSComExp_->setParameterContainer(params);
-}
+//
+//void CompoundExpression::setParameterContainer(ParameterContainer *params)
+//{
+//	if(LHSisPred_)
+//		LHSPredExp_->setParameterContainer(params);
+//	else
+//		LHSComExp_->setParameterContainer(params);
+//
+//	if(RHSisPred_)
+//		RHSPredExp_->setParameterContainer(params);
+//	else
+//		RHSComExp_->setParameterContainer(params);
+//}
 
 bool CompoundExpression::evaluate()
 {
@@ -111,15 +118,6 @@ bool CompoundExpression::evaluate()
 		return false;
 }
 
-QString CompoundExpression::name()
-{
-	return propertyContainer_->getPropertyValue("Name").toString();
-}
-
-void CompoundExpression::setName(QString name)
-{
-	propertyContainer_->setPropertyValue("Name",name);
-}
 void CompoundExpression::setOrder(int order)
 {
 	propertyContainer_->setPropertyValue("Order",order);
@@ -435,7 +433,7 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
 //bool CompoundExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{
 //	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "CompoundExpression")
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->getName() != "CompoundExpression")
 //	{
 //		addError("CompoundExpression","Incorrect tag, expected <CompoundExpression>",xmlStreamReader);
 //		return false;
@@ -479,7 +477,7 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
 //	RHSInitialized_ = false;
 //	
 //	xmlStreamReader->readNext();
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "CompoundExpression") && !xmlStreamReader->atEnd())
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->getName().toString() == "CompoundExpression") && !xmlStreamReader->atEnd())
 //	{
 //		if(!xmlStreamReader->isStartElement())
 //		{
@@ -490,7 +488,7 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
 //
 //		//use the name to set up the sides and predicate.
 //		//Note that we assume the order is LHS, RHS
-//		QString name = xmlStreamReader->name().toString();
+//		QString name = xmlStreamReader->getName().toString();
 //
 //		if(name == "Expression")
 //		{
@@ -560,8 +558,9 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
 //	return true;
 //}
 
-bool CompoundExpression::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void CompoundExpression::postSerialize()
 {
+	Result::postSerialize();
 	operator_ = CompoundExpressionOperator::CompoundExpressionOperator(propertyContainer_->getPropertyValue("Boolean").toInt());
 	invertLHS_ = propertyContainer_->getPropertyValue("InvertLeft").toBool();
 	invertRHS_ = propertyContainer_->getPropertyValue("InvertRight").toBool();
@@ -570,62 +569,66 @@ bool CompoundExpression::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	QList<QSharedPointer<Asset>> newExprs = getGeneratedChildren("Expression");
 	foreach(QSharedPointer<Asset> newExpr,newExprs)
 	{
-		if(newExpr.staticCast<PredicateExpression>()->name() == leftName)
+		if(newExpr->getName() == leftName)
 		{
 			if(LHSInitialized_)
 			{
-				LHSisPred_ = true;
-				LHSPredExp_ = newExpr.staticCast<PredicateExpression>();
+				if(newExpr.dynamicCast<CompoundExpression>().isNull())
+				{
+					LHSisPred_ = true; 
+					LHSPredExp_ = newExpr.staticCast<PredicateExpression>();
+					addChildScriptableContainer(LHSPredExp_);
+				}
+				else
+				{
+					LHSisPred_ = false;
+					LHSComExp_ = newExpr.staticCast<CompoundExpression>();
+					addChildScriptableContainer(LHSComExp_);
+				}
 				LHSInitialized_ = true;
-			}
-			else
-			{
-				addError("CompoundExpression", "Expressions used in a CompoundExpression cannot have the same name.", xmlStreamReader);
-				return false;
 			}
 		}
 		else if(!RHSInitialized_)
 		{
-			RHSisPred_ = true;
-			RHSPredExp_ = newExpr.staticCast<PredicateExpression>();
+			if(newExpr.dynamicCast<CompoundExpression>().isNull())
+			{
+				RHSisPred_ = true;
+				RHSPredExp_ = newExpr.staticCast<PredicateExpression>();
+				addChildScriptableContainer(RHSPredExp_);
+			}
+			else
+			{
+				RHSisPred_ = false;
+				RHSComExp_ = newExpr.staticCast<CompoundExpression>();
+				addChildScriptableContainer(RHSComExp_);
+			}
 			RHSInitialized_ = true;
-		}
-		else
-		{
-			addError("CompoundExpression", "Too many Expressions", xmlStreamReader);
-			return false;
-
 		}
 	}
+}
 
-	QList<QSharedPointer<Asset>> newCompExprs = getGeneratedChildren("CompoundExpression");
-	foreach(QSharedPointer<Asset> newCompExpr,newCompExprs)
+bool CompoundExpression::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!Result::validateObject(xmlStreamReader))
+		return false;
+	QString leftName = propertyContainer_->getPropertyValue("LeftName").toString();
+	QList<QSharedPointer<Asset>> newExprs = getGeneratedChildren("Expression");
+	QMap<QString,bool> nameMap;
+	int i=0;
+	foreach(QSharedPointer<Asset> newExpr,newExprs)
 	{
-		if(newCompExpr.staticCast<CompoundExpression>()->name() == leftName)
+		if(nameMap.contains(newExpr->getName()))
 		{
-			if(LHSInitialized_)
-			{
-				LHSisPred_ = false;
-				LHSComExp_ = newCompExpr.staticCast<CompoundExpression>();
-				LHSInitialized_ = true;
-			}
-			else
-			{
-				addError("CompoundExpression", "Expressions used in a CompoundExpression cannot have the same name.", xmlStreamReader);
-				return false;
-			}
-		}
-		else if(!RHSInitialized_)
-		{
-			RHSisPred_ = false;
-			RHSComExp_ = newCompExpr.staticCast<CompoundExpression>();
-			RHSInitialized_ = true;
+			addError("CompoundExpression", "Expressions used in a CompoundExpression cannot have the same name.", xmlStreamReader);
+			return false;
 		}
 		else
+			nameMap[newExpr->getName()] = true;
+		i++;
+		if(i>2)
 		{
 			addError("CompoundExpression", "Too many Expressions", xmlStreamReader);
 			return false;
-
 		}
 	}
 

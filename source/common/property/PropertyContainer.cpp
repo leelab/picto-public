@@ -1,25 +1,18 @@
 #include "PropertyContainer.h"
 #include <QtVariantProperty>
+#include <QtProperty>
 #include "EnumProperty.h"
 #include "ColorProperty.h"
 #include "PointProperty.h"
 #include "RectProperty.h"
 
-namespace Picto {
+using namespace Picto;
 
 PropertyContainer::PropertyContainer(QString _containerName)
+:
+containerName_(_containerName)
 {
-	propManager_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
-	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
-														  _containerName);
-	Q_ASSERT(item);
-	containerGroupItem_ = QSharedPointer<Property>( new Property(QSharedPointer<QtVariantProperty>(item),propManager_) );
-
-	connect(propManager_.data(),
-		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
-		    this,
-			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
-			);
+	clear();
 }
 
 //We need to do some pointer gymnastics to get around the fact that
@@ -48,7 +41,7 @@ void PropertyContainer::setContainerName(QString _containerName)
 
 QString PropertyContainer::getContainerName()
 {
-	return containerGroupItem_->name();
+	return containerGroupItem_->getName();
 }
 
 QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple)
@@ -104,6 +97,37 @@ QStringList PropertyContainer::getPropertyList()
 	return list;
 }
 
+QSharedPointer<Property> PropertyContainer::getProperty(QString _identifier,int index)
+{
+	if(!properties_.contains(_identifier))
+		return QSharedPointer<Property>();
+	if(properties_[_identifier].size() <= index)
+		return QSharedPointer<Property>();
+	return properties_[_identifier][index];
+}
+
+void PropertyContainer::clear()
+{
+
+	properties_.clear();
+	containerGroupItem_.clear();
+	//We can't just clear the propManager_ because we need its properties to clear themselves out of it
+	//before its deleted (see comment in Property destructor).  Instead, we just replace the propManager_
+	//with a new one, and let the old one get deleted when its pointers go out of scope.
+	propManager_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
+														  containerName_);
+	Q_ASSERT(item);
+	containerGroupItem_ = QSharedPointer<Property>( new Property(QSharedPointer<QtVariantProperty>(item),propManager_) );
+
+	connect(propManager_.data(),
+		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
+		    this,
+			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
+			);
+
+}
+
 QVariant PropertyContainer::getPropertyValue(QString _identifier, int index)
 {
 	if(properties_.contains(_identifier) && (properties_[_identifier].size() > index))
@@ -120,7 +144,7 @@ QString PropertyContainer::getPropertyName(QString _identifier, int index)
 {
 	if(properties_.contains(_identifier) && (properties_[_identifier].size() > index))
 	{
-		return properties_.value(_identifier)[index]->name();
+		return properties_.value(_identifier)[index]->getName();
 	}
 	else
 	{
@@ -140,6 +164,25 @@ QSharedPointer<Property> PropertyContainer::setPropertyValue(QString _propertyNa
 		index = properties_[_propertyName].size()-1;
 	}
 	return properties_[_propertyName][index];
+}
+
+QSharedPointer<Property> PropertyContainer::getPropertyFromQtProperty(QtProperty *property)
+{
+	QMapIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+	while(propIterator.hasNext())
+	{
+		propIterator.next();
+		int index = 0;
+		foreach(QSharedPointer<Property> prop,propIterator.value())
+		{
+			if(prop->variantProp_.staticCast<QtProperty>().data() == property)
+			{
+				return prop;
+			}
+			index++;
+		}
+	}
+	return QSharedPointer<Property>();
 }
 
 void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
@@ -162,4 +205,3 @@ void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
 	}
 }
 
-}; //namespace Picto

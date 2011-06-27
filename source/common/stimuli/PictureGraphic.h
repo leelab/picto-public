@@ -34,6 +34,8 @@ public slots:
 	void setImageFile(QString filename) { propertyContainer_->setPropertyValue("ImageFile",filename);};
 
 protected:
+	virtual QString defaultTagName(){return "Picture";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 

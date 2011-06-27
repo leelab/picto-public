@@ -28,7 +28,7 @@ public:
 
 
 private slots:
-	void TestParameterBinding();
+	//void TestParameterBinding();
 	void TestArrowGraphicBinding();
 	void TestBoxGraphicBinding();
 	void TestCircleGraphicBinding();

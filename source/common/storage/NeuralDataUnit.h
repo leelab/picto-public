@@ -44,6 +44,7 @@ public:
 	QString getWaveformAsString();
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

@@ -63,23 +63,24 @@ public slots:
 	int getHeight() { return getDimensions().height(); };
 	void setHeight(int height);
 
-	int getNumHorizSquares() { return propertyContainer_->getPropertyValue("Number of horizontal squares").toInt(); };
-	void setNumHorizSquares(int squares) { propertyContainer_->setPropertyValue("Number of horizontal squares",squares); buildColorList(); draw();};
+	int getNumHorizSquares() { return propertyContainer_->getPropertyValue("HorizontalSquares").toInt(); };
+	void setNumHorizSquares(int squares) { propertyContainer_->setPropertyValue("HorizontalSquares",squares); buildColorList(); draw();};
 
-	int getNumVertSquares() { return propertyContainer_->getPropertyValue("Number of vertical squares").toInt(); };
-	void setNumVertSquares(int squares) { propertyContainer_->setPropertyValue("Number of vertical squares",squares); buildColorList(); draw();};
+	int getNumVertSquares() { return propertyContainer_->getPropertyValue("VerticalSquares").toInt(); };
+	void setNumVertSquares(int squares) { propertyContainer_->setPropertyValue("VerticalSquares",squares); buildColorList(); draw();};
 
-	int getNumColor1Squares() { return propertyContainer_->getPropertyValue("Number of squares with color1").toInt(); };
-	void setNumColor1Squares(int squares) { propertyContainer_->setPropertyValue("Number of squares with color1",squares); buildColorList(); draw();};
+	int getNumColor1Squares() { return propertyContainer_->getPropertyValue("Color1Squares").toInt(); };
+	void setNumColor1Squares(int squares) { propertyContainer_->setPropertyValue("Color1Squares",squares); buildColorList(); draw();};
 
-	int getUpdateRate() { return propertyContainer_->getPropertyValue("Update frame rate").toInt(); };
-	void setUpdateRate(int rate) { propertyContainer_->setPropertyValue("Update frame rate",rate);};
+	int getUpdateRate() { return propertyContainer_->getPropertyValue("UpdateFrameRate").toInt(); };
+	void setUpdateRate(int rate) { propertyContainer_->setPropertyValue("UpdateFrameRate",rate);};
 
 	void setAnimated(bool animated) { propertyContainer_->setPropertyValue("Animated",animated);};
 	bool isAnimated() { return propertyContainer_->getPropertyValue("Animated").toBool(); };
 	
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 

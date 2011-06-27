@@ -49,10 +49,6 @@
 
 #include "qtpropertymanager.h"
 #include "qtvariantproperty.h"
-#include "qteditorfactory.h"
-#include "qttreepropertybrowser.h"
-#include "qtbuttonpropertybrowser.h"
-#include "qtgroupboxpropertybrowser.h"
 
 
 
@@ -61,6 +57,7 @@ using namespace Picto;
 
 #include "diagramitem.h"
 #include "../viewer.h"
+#include "EditorState.h"
 
 
 class DiagramScene;
@@ -94,7 +91,8 @@ public:
    virtual QString type(){return "State Edit Viewer";};
 public slots:
 	virtual void init();  //Called just before displaying the viewer
-	virtual void deinit(){};	//Called just after the user switches out of the viewer
+	virtual void deinit();	//Called just after the user switches out of the viewer
+	virtual void aboutToSave();  //Called just before the experimentText_ is saved to file.
 
 
 private slots:
@@ -111,19 +109,25 @@ private slots:
     void fillButtonTriggered();
     void lineButtonTriggered();
     void handleFontChange();
-	void assetSelected(QSharedPointer<Asset> asset);
+	//void assetSelected(QSharedPointer<Asset> asset);
     void itemSelected(QGraphicsItem *item);
     void about();
 	void loadScene(DiagramScene* newScene);
-	void loadAsset(QSharedPointer<Asset> asset);
-	void loadAssetProperties(QSharedPointer<Asset> asset);
+	void resetExperiment();
+	void insertEditBlock();
+	void performUndoAction();
+	void performRedoAction();
+	//void loadAsset(QSharedPointer<Asset> asset);
+	//void loadAssetProperties(QSharedPointer<Asset> asset);
 
 private:
     void createActions();
 	void connectActions();
     void createMenus();
     void createToolbars();
+	void reloadExperimentFromDoc();
 
+	QSharedPointer<EditorState> editorState_;
     QWidget *createBackgroundCellWidget(const QString &text,
                                         const QString &image);
     QWidget *createCellWidget(const QString &text,
@@ -144,6 +148,9 @@ private:
     QAction *toFrontAction;
     QAction *sendBackAction;
     QAction *aboutAction;
+
+	QAction *undoAction;
+	QAction *redoAction;
 
     QMenu *fileMenu;
     QMenu *itemMenu;
@@ -173,8 +180,8 @@ private:
     QAction *fillAction;
     QAction *lineAction;
 
-	QSharedPointer<QtVariantEditorFactory> variantFactory_;
-	QtGroupBoxPropertyBrowser *variantEditor_;
+	QWidget *propertyEditor_;
+	QWidget *assetInfoBox_;
 };
 //! [0]
 

@@ -2,11 +2,9 @@
 #define _STATEMACHINE_H_
 
 #include "../common.h"
-#include "StateMachineElement.h"
+#include "MachineContainer.h"
 #include "Transition.h"
 #include "../engine/PictoEngine.h"
-
-#include <QScriptEngine>
 
 namespace Picto {
 
@@ -55,18 +53,18 @@ namespace StateMachineLevel
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API StateMachine : public StateMachineElement
+class PICTOLIB_API StateMachine : public MachineContainer
 #else
-class StateMachine : public StateMachineElement
+class StateMachine : public MachineContainer
 #endif
 {
 public:
 	StateMachine();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StateMachine());};
 
-	void addTransition(QSharedPointer<Transition> transition);
-	void addParameter(QSharedPointer<Parameter> parameter);
-	void addElement(QSharedPointer<StateMachineElement> element);
+	//void addTransition(QSharedPointer<Transition> transition);
+	//void addScriptable(QSharedPointer<Parameter> parameter);
+	//void addElement(QSharedPointer<StateMachineElement> element);
 	bool setInitialElement(QString elementName);
 
 	void setLevel(StateMachineLevel::StateMachineLevel level);
@@ -79,7 +77,7 @@ public:
 
 	void reset();
 
-	bool initScripting(QScriptEngine &qsEngine);
+	//bool initScripting(QScriptEngine &qsEngine);
 
 	void setPath(QStringList path) { path_ = path; };
 
@@ -91,7 +89,14 @@ public:
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
+	//virtual void elementAdded(QSharedPointer<ResultContainer> element);
+	virtual QString defaultTagName(){return "StateMachine";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool hasScripts();
+	//This returns a map of QMap<script name,script code>
+	virtual QMap<QString,QString> getScripts();
+
 
 private:
 	QString runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave);
@@ -102,15 +107,15 @@ private:
 
 	void handleLostServer(QSharedPointer<Engine::PictoEngine> engine);
 
-	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
-	QMap<QString, QSharedPointer<StateMachineElement> > elements_;
+	//QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
+	//QMap<QString, QSharedPointer<StateMachineElement> > elements_;
 
 	//This is used to keep track of the local parameters, so that I don't
 	//serialize all the parameters every time.
-	QSharedPointer<ParameterContainer> localParameterContainer_;
+	//QSharedPointer<ParameterContainer> localParameterContainer_;
 
-	QScriptEngine qsEngine_;
-	bool scriptingInit_;
+	//QScriptEngine qsEngine_;
+	//bool scriptingInit_;
 
 	QStringList levelEnumStrs_;
 

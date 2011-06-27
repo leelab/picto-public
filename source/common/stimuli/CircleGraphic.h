@@ -34,6 +34,7 @@ public slots:
 	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius",radius);};
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:

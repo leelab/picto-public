@@ -25,8 +25,8 @@ public:
 		int propertyType, 
 		QString propIdentifier,
 		QVariant defaultValue = QVariant(),
-		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>(),
-		QVector<QSharedPointer<Asset>> defaultAssets = QVector<QSharedPointer<Asset>>()
+		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>()/*,
+		QVector<QSharedPointer<Asset>> defaultAssets = QVector<QSharedPointer<Asset>>()*/
 		);
 	
 protected:

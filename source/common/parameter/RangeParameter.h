@@ -79,6 +79,7 @@ public:
 	};
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

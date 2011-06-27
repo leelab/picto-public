@@ -3,14 +3,13 @@
 
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
-#include <QScriptEngine>
 
 #include "../common.h"
-#include "../storage/DataStore.h"
-#include "Canvas.h"
+#include "../stimuli/AudioElement.h"
 #include "../controlelements/ControlElement.h"
 #include "../compositor/RenderingTarget.h"
 #include "../engine/PictoEngine.h"
+#include "../stimuli/visualelement.h"
 
 namespace Picto {
 
@@ -25,38 +24,44 @@ namespace Picto {
  *	will probably require adding them to the scene.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Scene : public DataStore
+class PICTOLIB_API Scene 
 #else
-class Scene : public DataStore
+class Scene
 #endif
 {
-	Q_OBJECT
 public:
 	Scene();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Scene());};
-
-	void setCanvas(QSharedPointer<Canvas> canvas) { canvas_ = canvas; }
-	QSharedPointer<Canvas> getCanvas() { return canvas_; };
-	//void setAudioElement(....)
 
 	void render(QSharedPointer<Engine::PictoEngine> engine);
 
-	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
-
 	void reset();
-	virtual QString assetType(){return "Scene";};
+	void setBackgroundColor(QColor color);
+	void addVisualElement(QSharedPointer<VisualElement> element);
+	void addAudioElement(QSharedPointer<AudioElement> element);
+	//virtual QString assetType(){return "Scene";};
 
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-protected:
-	virtual QString defaultTagName(){return "Scene";};
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+//protected:
+//	virtual QString defaultTagName(){return "Scene";};
+//	virtual void postSerialize();
+//	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 
 private:
-	QSharedPointer<Canvas> canvas_;
-	QMap<QString, QSharedPointer<ControlElement> > controlElements_;
+	QColor backgroundColor_;
+	QList<QSharedPointer <VisualElement> > visualElements_;
+	QList<QSharedPointer <VisualElement> > unaddedVisualElements_;
+
+	QList<QSharedPointer <AudioElement> > audioElements_;
+	QList<QSharedPointer <AudioElement> > unaddedAudioElements_;
+	
+	int frame_;
+	QTime elapsedTime_;
+
+	//QSharedPointer<Canvas> canvas_;
+	//QMap<QString, QSharedPointer<ControlElement> > controlElements_;
 };
 
 

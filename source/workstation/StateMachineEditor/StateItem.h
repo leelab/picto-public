@@ -11,10 +11,7 @@ class StateItem : public StateMachineElementItem
 {
 	Q_OBJECT
 public:
-	 StateItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
-	 QSharedPointer<Asset> getAsset(){return asset_;};
-private:
-	QSharedPointer<Asset> asset_;
+	 StateItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 
 };
 //! [0]

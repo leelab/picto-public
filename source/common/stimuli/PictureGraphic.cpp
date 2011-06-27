@@ -8,12 +8,17 @@ const QString PictureGraphic::type = "Picture Graphic";
 
 PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",QColor());
 	AddDefinableProperty("ImageFile",imageFile);
 	if(imageFile != "" || (position != QPoint()))
+	{
 		initializePropertiesToDefaults();
+		//We set the properties as edited because we want this to serialize out and not be mistaken for a default value.
+		propertyContainer_->getProperty("Position")->setEdited();
+		propertyContainer_->getProperty("ImageFile")->setEdited();
+	}
 
 	//propertyContainer_->setContainerName(type);
 
@@ -54,11 +59,16 @@ void PictureGraphic::slotPropertyValueChanged(QString propertyName, int,
 	}
 }
 
+void PictureGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	draw();
+}
+
 bool PictureGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
 	return true;
 }
 

@@ -72,6 +72,11 @@ bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
+void NeuralDataUnit::postSerialize()
+{
+
+}
+
 bool NeuralDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;

@@ -8,8 +8,6 @@ INCLUDEPATH += .
 # Input
 
 SOURCES += $$(PICTO_TREE)/source/common/unittests/main.cpp
-SOURCES += $$(PICTO_TREE)/source/common/unittests/TestPredicates.cpp
-HEADERS += $$(PICTO_TREE)/source/common/unittests/TestPredicates.h
 SOURCES += $$(PICTO_TREE)/source/common/unittests/TestDataStore.cpp
 HEADERS += $$(PICTO_TREE)/source/common/unittests/TestDataStore.h
 SOURCES += $$(PICTO_TREE)/source/common/unittests/TestParameters.cpp

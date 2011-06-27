@@ -6,6 +6,7 @@
 #include "Property.h"
 
 #include <QtVariantPropertyManager>
+#include <QtProperty>
 #include <QString>
 #include <QSharedPointer>
 
@@ -19,7 +20,11 @@ class Property;
  *	Qt PropertyBrowser framework to keep track of the properties.  (This will come in
  *	handy when we start building the state machine design GUI.)
  */
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API PropertyContainer : public QObject
+#else
 class PropertyContainer : public QObject
+#endif
 {
 	Q_OBJECT
 
@@ -29,12 +34,14 @@ public:
 	QVariant getPropertyValue(QString _identifier, int index=0);
 	QString getPropertyName(QString _identifier, int index=0);
 	QSharedPointer<Property> setPropertyValue(QString _identifier, QVariant _value, int index=0);
+	QSharedPointer<Property> getPropertyFromQtProperty(QtProperty *property);
 	void setContainerName(QString _containerName);
 	QString getContainerName();
 	QStringList getPropertyList();
 	QSharedPointer<QtVariantPropertyManager> getPropertyManager(){return propManager_;};
 	QMap<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
-
+	QSharedPointer<Property> getProperty(QString _identifier,int index=0);
+	void clear();
 signals:
 	void signalPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 
@@ -43,6 +50,7 @@ private:
 	PropertyContainer(QString _containerName);
 	QSharedPointer<Property> containerGroupItem_;
 	QMap<QString, QVector<QSharedPointer<Property>>> properties_;
+	QString containerName_;
 
 private slots:
 	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);

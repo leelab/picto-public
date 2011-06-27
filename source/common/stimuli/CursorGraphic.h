@@ -46,6 +46,7 @@ public:
 public slots:
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 

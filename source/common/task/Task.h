@@ -2,7 +2,7 @@
 #define _TASK_H_
 
 #include "../common.h"
-#include "../storage/DataStore.h"
+#include "../statemachine/UIEnabled.h"
 #include "../parameter/ParameterContainer.h"
 #include "../property/PropertyContainer.h"
 #include "../statemachine/StateMachine.h"
@@ -30,20 +30,20 @@ namespace Picto {
 */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Task : public DataStore
+class PICTOLIB_API Task : public UIEnabled
 #else
-class Task : public DataStore
+class Task : public UIEnabled
 #endif
 {
 	Q_OBJECT
 public:
 	Task();
+
 	static QSharedPointer<Task> Create(){return QSharedPointer<Task>(new Task());};
-	QString name();
-	void setName(QString name);
 
 	bool run(QSharedPointer<Engine::PictoEngine> engine);
 	bool jumpToState(QStringList path, QString state);
+	virtual QString assetType(){return "Task";};
 
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -51,6 +51,7 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "Task";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
@@ -61,7 +62,7 @@ private:
 	//QUuid uuid_;
 	//unsigned int revision_;
 
-	ParameterContainer parameterContainer_;
+	//ParameterContainer parameterContainer_;
 	QSharedPointer<StateMachine> stateMachine_;
 	//QList<StageResult> stageResults_;
 	//QList<TrialResult> trialResults_;

@@ -18,17 +18,16 @@
 #include "../parameter/NumericParameter.h"
 #include "../parameter/ParameterContainer.h"
 
-#include "../statemachine/PredicateExpression.h"
-#include "../statemachine/CompoundExpression.h"
+//#include "../statemachine/PredicateExpression.h"
+//#include "../statemachine/CompoundExpression.h"
 
 #include "../statemachine/Scene.h"
-#include "../statemachine/Canvas.h"
-#include "../statemachine/Layer.h"
 
 #include "../statemachine/StateMachine.h"
 #include "../statemachine/StateMachineElement.h"
 #include "../statemachine/FlowElement.h"
 #include "../statemachine/Reward.h"
+#include "../statemachine/Result.h"
 #include "../statemachine/State.h"
 
 #include "../controlelements/ControlElementFactory.h"
@@ -378,7 +377,7 @@ void TestDataStore::TestParameterContainer()
 	boolParam->setDefaultValue(true);
 	boolParam->setTrueLabel("I'm true!");
 	boolParam->setFalseLabel("I'm false.");
-	originalParameterContainer->addParameter(boolParam);
+	originalParameterContainer->addScriptable(boolParam);
 
 	QSharedPointer<Picto::ChoiceParameter> choiceParamStrings (new Picto::ChoiceParameter);
 	choiceParamStrings->setName("Choice parameter (strings)");
@@ -387,7 +386,7 @@ void TestDataStore::TestParameterContainer()
 	choiceParamStrings->addChoice("B",QString("Choice B"));
 	choiceParamStrings->addChoice("C",QString("Choice C"));
 	choiceParamStrings->setDefaultOption("B");
-	originalParameterContainer->addParameter(choiceParamStrings);
+	originalParameterContainer->addScriptable(choiceParamStrings);
 
 	QSharedPointer<Picto::ChoiceParameter> choiceParamInts (new Picto::ChoiceParameter);
 	choiceParamInts->setName("Choice parameter (integers)");
@@ -396,7 +395,7 @@ void TestDataStore::TestParameterContainer()
 	choiceParamInts->addChoice("Two",2);
 	choiceParamInts->addChoice("Five",5);
 	choiceParamInts->setDefaultOption("B");
-	originalParameterContainer->addParameter(choiceParamInts);
+	originalParameterContainer->addScriptable(choiceParamInts);
 
 	QSharedPointer<Picto::ChoiceParameter> choiceParamColors (new Picto::ChoiceParameter);
 	choiceParamColors->setName("Choice parameter (colors)");
@@ -405,7 +404,7 @@ void TestDataStore::TestParameterContainer()
 	choiceParamColors->addChoice("Green",QColor(0,255,0));
 	choiceParamColors->addChoice("Blue",QColor(0,0,255));
 	choiceParamColors->setDefaultOption("Blue");
-	originalParameterContainer->addParameter(choiceParamColors);
+	originalParameterContainer->addScriptable(choiceParamColors);
 
 	QSharedPointer<Picto::RangeParameter> rangeParam (new Picto::RangeParameter);
 	rangeParam->setName("Range Parameter");
@@ -415,234 +414,228 @@ void TestDataStore::TestParameterContainer()
 	rangeParam->setMin(-50);
 	rangeParam->setDefault(45);
 	rangeParam->setUnits("light years");
-	originalParameterContainer->addParameter(rangeParam);
+	originalParameterContainer->addScriptable(rangeParam);
 
 	TestSimpleDataStore(originalParameterContainer,copyParameterContainer,"Parameters");
 }
 
 
-/*!	\brief tests the serialization/deserialization of a PredicateExpression
- *
- *	The following expressions will be tested by serialization/deserialization:
- *		1. Range Parameter > 500
- *		2. Boolean parameter == true
- *		3. RangeParameter < RangeParameter
- */
-void TestDataStore::TestPredicateExpression()
-{
-	QSharedPointer<Picto::PredicateExpression> origPredExp;
-	QSharedPointer<Picto::PredicateExpression> copyPredExp;
-
-	Picto::ParameterContainer paramContainer;
-
-	//Set up a range parameters and a boolean parameter
-	QSharedPointer<Picto::RangeParameter> A(new Picto::RangeParameter);
-	QSharedPointer<Picto::RangeParameter> B(new Picto::RangeParameter);
-	QSharedPointer<Picto::BooleanParameter> C(new Picto::BooleanParameter);
-
-	A->setIncrement(1);
-	A->setDefault(0);
-	A->setMin(5000);
-	A->setMax(-5000);
-	A->setName("Range parameter A");
-	paramContainer.addParameter(A);
-
-	B->setIncrement(1);
-	B->setDefault(0);
-	B->setMin(5000);
-	B->setMax(-5000);
-	B->setName("Range parameter B");
-	paramContainer.addParameter(B);
-
-	C->setName("Boolean parameter");
-	C->setDefaultValue(true);
-	C->setTrueLabel("OK");
-	C->setFalseLabel("Fail");
-	paramContainer.addParameter(C);
-
-	//Test RangeParameter > 500
-	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
-	copyPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression);
-	origPredExp->setLHS("Range Parameter A");
-	origPredExp->setRHSValue(500);
-	origPredExp->setParameterContainer(&paramContainer);
-	TestSimpleDataStore(origPredExp, copyPredExp,"Expression");
-
-	//Test Boolean Parameter == true
-	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
-	origPredExp->setLHS("Boolean Parameter");
-	origPredExp->setRHSValue(true);
-	origPredExp->setParameterContainer(&paramContainer);
-	TestSimpleDataStore(origPredExp, copyPredExp,"Expression");
-
-	//Test RangeParameter > 500
-	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
-	origPredExp->setLHS("Range Parameter A");
-	origPredExp->setRHSParam("Range Parameter B");
-	origPredExp->setParameterContainer(&paramContainer);
-	TestSimpleDataStore(origPredExp,copyPredExp,"Expression");
-}
-
-/*!	\brief tests the serialization/deserialization of a CompoundExpression
- *
- *	To fully test the CompoundExpression object, we need to test all of the 
- *	following pieces:
- *		1. Invert left/right
- *		2. Boolean and/or
- *		4. predicateExpression & compoundExpression
- *		5. compoundExpression & predicateExpression
- *		6. compoundExpression & compoundExpression
- *	To keep things simple, we'll use a range parameter and a constant 
- *	for all our expressions
- */
-void TestDataStore::TestCompoundExpression()
-{
-	QSharedPointer<Picto::PredicateExpression> predExprA;
-	QSharedPointer<Picto::PredicateExpression> predExprB;
-	QSharedPointer<Picto::PredicateExpression> predExprC;
-	QSharedPointer<Picto::PredicateExpression> predExprD;
-
-	QSharedPointer<Picto::CompoundExpression> compExprA;
-	QSharedPointer<Picto::CompoundExpression> compExprB;
-	QSharedPointer<Picto::CompoundExpression> origCompoundExpr;
-	QSharedPointer<Picto::CompoundExpression> copyCompoundExpr;
-
-	Picto::ParameterContainer paramContainer;
-
-	//Set up a range parameter
-	QSharedPointer<Picto::RangeParameter> rangeParam(new Picto::RangeParameter);
-	rangeParam->setIncrement(1);
-	rangeParam->setDefault(0);
-	rangeParam->setMin(5000);
-	rangeParam->setMax(-5000);
-	rangeParam->setName("Trial");
-	paramContainer.addParameter(rangeParam);
-
-	QSharedPointer<Picto::BooleanParameter> boolParam(new Picto::BooleanParameter);
-	boolParam->setName("RepeatTrial");
-	boolParam->setDefaultValue(true);
-	boolParam->setTrueLabel("Repeat");
-	boolParam->setFalseLabel("Don't repeat");
-	paramContainer.addParameter(boolParam);
-
-
-	////////////////////////////
-	// Test all combination of inversions and boolean operators
-	//
-
-	//set up a pair of simple compound expressions
-	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
-	predExprA->setLHS("Trial");
-	predExprA->setRHSValue(QVariant(50));
-	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
-	predExprB->setLHS("Trial");
-	predExprB->setRHSValue(QVariant(75));
-
-	//set up our compound expression
-	origCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
-
-	//test the compound expression with all possible combinations of inversions, and AND/OR
-	for(int i=0; i<8; i++)
-	{
-		if(i/4<1)
-			origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
-		else
-			origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
-
-		switch(i)
-		{
-		case(0):
-			origCompoundExpr->setLHSPredicateExp(predExprA,false);
-			origCompoundExpr->setRHSPredicateExp(predExprB,false);
-			break;
-		case(1):
-			origCompoundExpr->setLHSPredicateExp(predExprA,true);
-			origCompoundExpr->setRHSPredicateExp(predExprB,false);
-			break;
-		case(2):
-			origCompoundExpr->setLHSPredicateExp(predExprA,false);
-			origCompoundExpr->setRHSPredicateExp(predExprB,true);
-			break;
-		case(3):
-			origCompoundExpr->setLHSPredicateExp(predExprA,true);
-			origCompoundExpr->setRHSPredicateExp(predExprB,true);
-			break;
-		}
-		origCompoundExpr->setParameterContainer(&paramContainer);
-		copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
-
-		TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
-	}
-
-	////////////////////////////
-	// Test more complex expressions
-	//
-
-	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
-	predExprC->setLHS("RepeatTrial");
-	predExprC->setRHSValue(QVariant(false));
-
-	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
-	predExprD->setLHS("Trial");
-	predExprD->setRHSValue(QVariant(1));
-
-	// Test ((Trial > 50) & (Trial <75)) & (RepeatTrial == true)
-	//----------------------------------------------------------
-	compExprA = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
-	compExprA->setLHSPredicateExp(predExprA);
-	compExprA->setRHSPredicateExp(predExprB);
-	compExprA->setOperator(Picto::CompoundExpressionOperator::and);
-
-	origCompoundExpr->setLHSCompoundExp(compExprA);
-	origCompoundExpr->setRHSPredicateExp(predExprC);
-	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
-	origCompoundExpr->setParameterContainer(&paramContainer);
-
-	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
-	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
-
-	// Test (RepeatTrial == true) & ((Trial > 50) & (Trial <75))
-	//----------------------------------------------------------
-	origCompoundExpr->setLHSPredicateExp(predExprC);
-	origCompoundExpr->setRHSCompoundExp(compExprA);
-	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
-	origCompoundExpr->setParameterContainer(&paramContainer);
-
-	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
-	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
-
-	// Test ((RepeatTrial == true) | (Trial == 1)) & ((Trial > 50) & (Trial <75))
-	//----------------------------------------------------------
-	compExprB = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
-	compExprB->setLHSPredicateExp(predExprC);
-	compExprB->setRHSPredicateExp(predExprD);
-	compExprB->setOperator(Picto::CompoundExpressionOperator::or);
-
-
-	origCompoundExpr->setLHSCompoundExp(compExprB);
-	origCompoundExpr->setRHSCompoundExp(compExprA);
-	origCompoundExpr->setParameterContainer(&paramContainer);
-	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
-
-	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
- 	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
-
-
-}
+///*!	\brief tests the serialization/deserialization of a PredicateExpression
+// *
+// *	The following expressions will be tested by serialization/deserialization:
+// *		1. Range Parameter > 500
+// *		2. Boolean parameter == true
+// *		3. RangeParameter < RangeParameter
+// */
+//void TestDataStore::TestPredicateExpression()
+//{
+//	QSharedPointer<Picto::PredicateExpression> origPredExp;
+//	QSharedPointer<Picto::PredicateExpression> copyPredExp;
+//
+//	Picto::ParameterContainer paramContainer;
+//
+//	//Set up a range parameters and a boolean parameter
+//	QSharedPointer<Picto::RangeParameter> A(new Picto::RangeParameter);
+//	QSharedPointer<Picto::RangeParameter> B(new Picto::RangeParameter);
+//	QSharedPointer<Picto::BooleanParameter> C(new Picto::BooleanParameter);
+//
+//	A->setIncrement(1);
+//	A->setDefault(0);
+//	A->setMin(5000);
+//	A->setMax(-5000);
+//	A->setName("Range parameter A");
+//	paramContainer.addScriptable(A);
+//
+//	B->setIncrement(1);
+//	B->setDefault(0);
+//	B->setMin(5000);
+//	B->setMax(-5000);
+//	B->setName("Range parameter B");
+//	paramContainer.addScriptable(B);
+//
+//	C->setName("Boolean parameter");
+//	C->setDefaultValue(true);
+//	C->setTrueLabel("OK");
+//	C->setFalseLabel("Fail");
+//	paramContainer.addScriptable(C);
+//
+//	//Test RangeParameter > 500
+//	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+//	copyPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression);
+//	origPredExp->setLHS("Range Parameter A");
+//	origPredExp->setRHSValue(500);
+//	origPredExp->addScriptables(&paramContainer);
+//	TestSimpleDataStore(origPredExp, copyPredExp,"Expression");
+//
+//	//Test Boolean Parameter == true
+//	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
+//	origPredExp->setLHS("Boolean Parameter");
+//	origPredExp->setRHSValue(true);
+//	origPredExp->addScriptables(&paramContainer);
+//	TestSimpleDataStore(origPredExp, copyPredExp,"Expression");
+//
+//	//Test RangeParameter > 500
+//	origPredExp = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
+//	origPredExp->setLHS("Range Parameter A");
+//	origPredExp->setRHSParam("Range Parameter B");
+//	origPredExp->addScriptables(&paramContainer);
+//	TestSimpleDataStore(origPredExp,copyPredExp,"Expression");
+//}
+//
+///*!	\brief tests the serialization/deserialization of a CompoundExpression
+// *
+// *	To fully test the CompoundExpression object, we need to test all of the 
+// *	following pieces:
+// *		1. Invert left/right
+// *		2. Boolean and/or
+// *		4. predicateExpression & compoundExpression
+// *		5. compoundExpression & predicateExpression
+// *		6. compoundExpression & compoundExpression
+// *	To keep things simple, we'll use a range parameter and a constant 
+// *	for all our expressions
+// */
+//void TestDataStore::TestCompoundExpression()
+//{
+//	QSharedPointer<Picto::PredicateExpression> predExprA;
+//	QSharedPointer<Picto::PredicateExpression> predExprB;
+//	QSharedPointer<Picto::PredicateExpression> predExprC;
+//	QSharedPointer<Picto::PredicateExpression> predExprD;
+//
+//	QSharedPointer<Picto::CompoundExpression> compExprA;
+//	QSharedPointer<Picto::CompoundExpression> compExprB;
+//	QSharedPointer<Picto::CompoundExpression> origCompoundExpr;
+//	QSharedPointer<Picto::CompoundExpression> copyCompoundExpr;
+//
+//	Picto::ParameterContainer paramContainer;
+//
+//	//Set up a range parameter
+//	QSharedPointer<Picto::RangeParameter> rangeParam(new Picto::RangeParameter);
+//	rangeParam->setIncrement(1);
+//	rangeParam->setDefault(0);
+//	rangeParam->setMin(5000);
+//	rangeParam->setMax(-5000);
+//	rangeParam->setName("Trial");
+//	paramContainer.addScriptable(rangeParam);
+//
+//	QSharedPointer<Picto::BooleanParameter> boolParam(new Picto::BooleanParameter);
+//	boolParam->setName("RepeatTrial");
+//	boolParam->setDefaultValue(true);
+//	boolParam->setTrueLabel("Repeat");
+//	boolParam->setFalseLabel("Don't repeat");
+//	paramContainer.addScriptable(boolParam);
+//
+//
+//	////////////////////////////
+//	// Test all combination of inversions and boolean operators
+//	//
+//
+//	//set up a pair of simple compound expressions
+//	predExprA = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Greater than"));
+//	predExprA->setLHS("Trial");
+//	predExprA->setRHSValue(QVariant(50));
+//	predExprB = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Less than"));
+//	predExprB->setLHS("Trial");
+//	predExprB->setRHSValue(QVariant(75));
+//
+//	//set up our compound expression
+//	origCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
+//
+//	//test the compound expression with all possible combinations of inversions, and AND/OR
+//	for(int i=0; i<8; i++)
+//	{
+//		if(i/4<1)
+//			origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+//		else
+//			origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
+//
+//		switch(i)
+//		{
+//		case(0):
+//			origCompoundExpr->setLHSPredicateExp(predExprA,false);
+//			origCompoundExpr->setRHSPredicateExp(predExprB,false);
+//			break;
+//		case(1):
+//			origCompoundExpr->setLHSPredicateExp(predExprA,true);
+//			origCompoundExpr->setRHSPredicateExp(predExprB,false);
+//			break;
+//		case(2):
+//			origCompoundExpr->setLHSPredicateExp(predExprA,false);
+//			origCompoundExpr->setRHSPredicateExp(predExprB,true);
+//			break;
+//		case(3):
+//			origCompoundExpr->setLHSPredicateExp(predExprA,true);
+//			origCompoundExpr->setRHSPredicateExp(predExprB,true);
+//			break;
+//		}
+//		origCompoundExpr->addScriptables(&paramContainer);
+//		copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
+//
+//		TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
+//	}
+//
+//	////////////////////////////
+//	// Test more complex expressions
+//	//
+//
+//	predExprC = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
+//	predExprC->setLHS("RepeatTrial");
+//	predExprC->setRHSValue(QVariant(false));
+//
+//	predExprD = QSharedPointer<Picto::PredicateExpression>(new Picto::PredicateExpression("Equal"));
+//	predExprD->setLHS("Trial");
+//	predExprD->setRHSValue(QVariant(1));
+//
+//	// Test ((Trial > 50) & (Trial <75)) & (RepeatTrial == true)
+//	//----------------------------------------------------------
+//	compExprA = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
+//	compExprA->setLHSPredicateExp(predExprA);
+//	compExprA->setRHSPredicateExp(predExprB);
+//	compExprA->setOperator(Picto::CompoundExpressionOperator::and);
+//
+//	origCompoundExpr->setLHSCompoundExp(compExprA);
+//	origCompoundExpr->setRHSPredicateExp(predExprC);
+//	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+//	origCompoundExpr->addScriptables(&paramContainer);
+//
+//	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
+//	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
+//
+//	// Test (RepeatTrial == true) & ((Trial > 50) & (Trial <75))
+//	//----------------------------------------------------------
+//	origCompoundExpr->setLHSPredicateExp(predExprC);
+//	origCompoundExpr->setRHSCompoundExp(compExprA);
+//	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+//	origCompoundExpr->addScriptables(&paramContainer);
+//
+//	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
+//	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
+//
+//	// Test ((RepeatTrial == true) | (Trial == 1)) & ((Trial > 50) & (Trial <75))
+//	//----------------------------------------------------------
+//	compExprB = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
+//	compExprB->setLHSPredicateExp(predExprC);
+//	compExprB->setRHSPredicateExp(predExprD);
+//	compExprB->setOperator(Picto::CompoundExpressionOperator::or);
+//
+//
+//	origCompoundExpr->setLHSCompoundExp(compExprB);
+//	origCompoundExpr->setRHSCompoundExp(compExprA);
+//	origCompoundExpr->addScriptables(&paramContainer);
+//	origCompoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
+//
+//	copyCompoundExpr = QSharedPointer<Picto::CompoundExpression>(new Picto::CompoundExpression);
+// 	TestSimpleDataStore(origCompoundExpr, copyCompoundExpr, "CompoundExpression");
+//
+//
+//}
 
 /*!	\brief Tests the serialization/deserialization of a Scene
  *
- *	Scene objects contain a canvas and potentially multiple layers,
- *	so this test will test the canvas and layer objects as well.
  */
 void TestDataStore::TestScene()
 {
 	QSharedPointer<Picto::Scene> scene(new Picto::Scene());
 	QSharedPointer<Picto::Scene> sceneCopy(new Picto::Scene());
-	QSharedPointer<Picto::Canvas> canvas(new Picto::Canvas);
-	QSharedPointer<Picto::Layer> layer1(new Picto::Layer);
-	QSharedPointer<Picto::Layer> layer2(new Picto::Layer);
-	QSharedPointer<Picto::Layer> layer3(new Picto::Layer);
 
 	//Arrow graphic
 	QPoint position(randGen_.randInt()%400, randGen_.randInt()%400);
@@ -665,172 +658,164 @@ void TestDataStore::TestScene()
 	QSharedPointer<Picto::VisualElement> box(new Picto::BoxGraphic(position,dimensions,color));
 
 	//layer 1: arrow and circle
-	layer1->addVisualElement(arrow);
-	layer1->addVisualElement(circle);
-	layer1->setOrder(1);
+	arrow->setOrder(1);
+	circle->setOrder(1);
 
 	//layer 2: box
-	layer2->addVisualElement(box);
-	layer2->setOrder(2);
+	box->setOrder(2);
 
-	//layer 3: arrow, box, and circle
-	layer3->addVisualElement(arrow);
-	layer3->addVisualElement(circle);
-	layer3->addVisualElement(box);
-	layer3->setOrder(3);
+	scene->addVisualElement(arrow);
+	scene->addVisualElement(circle);
+	scene->addVisualElement(box);
 
-	canvas->addLayer(layer1);
-	canvas->addLayer(layer2);
-	canvas->addLayer(layer3);
-
-	scene->setCanvas(canvas);
-
-	TestSimpleDataStore(scene, sceneCopy, "Scene");
+	//A scene is no longer a datastore, so we got rid of this
+	//TestSimpleDataStore(scene, sceneCopy, "Scene");
 }
 
 //! Tests a StateMachine (as well as all the StateMachineElements)
-void TestDataStore::TestStateMachine()
-{
-	///////////////////////////
-	// Results
-	//
-	QSharedPointer<Picto::Reward> passResult(new Picto::Reward());
-	QSharedPointer<Picto::Reward> passResultCopy(new Picto::Reward());
-	passResult->setName("Pass");
-
-	//Test a result
-	TestSimpleDataStore(passResult, passResultCopy, "StateMachineElement");
-
-	//These results will be used later
-	QSharedPointer<Picto::Reward> failResult(new Picto::Reward());
-	failResult->setName("Fail");
-	QSharedPointer<Picto::Reward> passedEmptyResult(new Picto::Reward());
-	passedEmptyResult->setName("Pass Empty");
-
-
-
-	/////////////////////////////
-	// FlowElements
-	//
-	QSharedPointer<Picto::FlowElement> flowElement(new Picto::FlowElement());
-	QSharedPointer<Picto::FlowElement> flowElementCopy(new Picto::FlowElement());
-	flowElement->setName("Trial selection");
-
-	QSharedPointer<Picto::ParameterContainer> parameters(new Picto::ParameterContainer());
-
-	QSharedPointer<Picto::RangeParameter> rangeParam(new Picto::RangeParameter);
-	rangeParam->setName("Trial Number");
-	rangeParam->setOrder(1);
-	rangeParam->setIncrement(1);
-	rangeParam->setMax(500);
-	rangeParam->setMin(100);
-	rangeParam->setDefault(1);
-	rangeParam->setUnits("trial");
-
-	parameters->addParameter(rangeParam);
-
-	QSharedPointer<Picto::PredicateExpression> predExpr(new Picto::PredicateExpression("Less than"));
-	predExpr->setLHS("Trial Number");
-	predExpr->setRHSValue(50);
-	predExpr->setName("Less than 50");
-	predExpr->setOrder(1);
-	flowElement->addCondition(predExpr);
-	
-	predExpr->setPredicate("Greater than");
-	predExpr->setName("Greater than 50");
-	predExpr->setOrder(2);
-	flowElement->addCondition(predExpr);
-
-	TestSimpleDataStore(flowElement, flowElementCopy, "StateMachineElement");
-
-	////////////////////////////////////////
-	// State
-	//
-	QSharedPointer<Picto::State> state1(new Picto::State);
-	QSharedPointer<Picto::State> state1Copy(new Picto::State);
-	state1->setName("Fixation State");
-
-	state1->addResult("Fixated");
-	state1->addResult("Broke Fixation");
-
-	QSharedPointer<Picto::Scene> scene1(new Picto::Scene());
-	state1->setScene(scene1);
-
-
-	
-
-	//Test the state
-	TestSimpleDataStore(state1, state1Copy, "StateMachineElement");
-
-	//Create a second state for use in our state machine
-	QSharedPointer<Picto::State> state2(new Picto::State);
-	state2->setName("Empty State");
-
-	QSharedPointer<Picto::TestController> controller(new Picto::TestController());
-	state2->addControlElement(controller);
-
-
-	//////////////////////////////////
-	// State Machine
-	//
-	//	This state machine should be really simple.  It starts with a FlowElement
-	//	that checks if the trial number is > or < 50.  Depending on this result, it
-	//  sends us to a Fixation trial or an empty trial.  The state machine has two
-	//	possible results: Pass, Fail.
-	QSharedPointer<Picto::StateMachine> stateMachine(new Picto::StateMachine);
-	QSharedPointer<Picto::StateMachine> stateMachineCopy(new Picto::StateMachine);
-	stateMachine->setLevel(Picto::StateMachineLevel::Stage);
-	stateMachine->setName("Stage 1");
-
-	stateMachine->addParameter(rangeParam);
-	stateMachine->addElement(passResult);
-	stateMachine->addElement(flowElement);
-	stateMachine->addElement(state1);
-	stateMachine->addElement(state2);
-
-	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Trial selection","Less than 50","Fixation State")));
-	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Fixated","Pass")));
-	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Empty State","Success","Pass")));
-
-	stateMachine->setInitialElement("Trial selection");
-
-	TestSimpleDataStore(stateMachine, stateMachineCopy, "StateMachine");
-
-	//The reason for this odd arrangement is due to the fact that the TestSimpleDataStore function requires
-	//the two XML fragments to be identical, but since we are using lists and maps, the ordering sometimes gets reversed.
-	//So we don't test a full state machine
-	stateMachine->addElement(failResult);
-	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Trial selection","Greater than 50","Empty State")));
-	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Broke Fixation","Fail")));
-	//QCOMPARE(stateMachine->validateStateMachine(),true);//THIS WAS REMOVED BECAUSE VALIDATION IS IN VALIDATE OBJECT NOW, BUT THIS MAKES THE TEST INOPERATIVE
-
-	//Testing the ability to add substages
-	//QSharedPointer<Picto::StateMachine> stateMachine2(new Picto::StateMachine);
-	//stateMachine2->setLevel("SubStage");
-	//stateMachine2->setName("SubStage 1");
-	//stateMachine2->addElement(passResult);
-	//stateMachine2->addElement(failResult);
-	//stateMachine2->addElement(state1);
-	//stateMachine2->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Fixated","Pass")));
-	//stateMachine2->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Broke Fixation","Fail")));
-	//stateMachine2->setInitialElement("Fixation State");
-
-	//stateMachine->addElement(stateMachine2);
-
-	//Output the StateMachine to file so that we can reuse it later.
-	QFile file("StateMachineTest1.xml");
-	if(!file.open(QIODevice::WriteOnly))
-		return;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&file));
-
-	xmlWriter->setAutoFormatting(true);
-	xmlWriter->writeStartDocument();
-	stateMachine->toXml(xmlWriter);
-	xmlWriter->writeEndDocument();
-
-	file.close();
-
-}
+//void TestDataStore::TestStateMachine()
+//{
+//	///////////////////////////
+//	// Results
+//	//
+//	QSharedPointer<Picto::Reward> passResult(new Picto::Reward());
+//	QSharedPointer<Picto::Reward> passResultCopy(new Picto::Reward());
+//	passResult->setName("Pass");
+//
+//	//Test a result
+//	TestSimpleDataStore(passResult, passResultCopy, "StateMachineElement");
+//
+//	//These results will be used later
+//	QSharedPointer<Picto::Reward> failResult(new Picto::Reward());
+//	failResult->setName("Fail");
+//	QSharedPointer<Picto::Reward> passedEmptyResult(new Picto::Reward());
+//	passedEmptyResult->setName("Pass Empty");
+//
+//
+//
+//	/////////////////////////////
+//	// FlowElements
+//	//
+//	QSharedPointer<Picto::FlowElement> flowElement(new Picto::FlowElement());
+//	QSharedPointer<Picto::FlowElement> flowElementCopy(new Picto::FlowElement());
+//	flowElement->setName("Trial selection");
+//
+//	QSharedPointer<Picto::ParameterContainer> parameters(new Picto::ParameterContainer());
+//
+//	QSharedPointer<Picto::RangeParameter> rangeParam(new Picto::RangeParameter);
+//	rangeParam->setName("Trial Number");
+//	rangeParam->setOrder(1);
+//	rangeParam->setIncrement(1);
+//	rangeParam->setMax(500);
+//	rangeParam->setMin(100);
+//	rangeParam->setDefault(1);
+//	rangeParam->setUnits("trial");
+//
+//	parameters->addScriptable(rangeParam);
+//
+//	QSharedPointer<Picto::PredicateExpression> predExpr(new Picto::PredicateExpression("Less than"));
+//	predExpr->setLHS("Trial Number");
+//	predExpr->setRHSValue(50);
+//	predExpr->setName("Less than 50");
+//	predExpr->setOrder(1);
+//	flowElement->addCondition(predExpr);
+//	
+//	predExpr->setPredicate("Greater than");
+//	predExpr->setName("Greater than 50");
+//	predExpr->setOrder(2);
+//	flowElement->addCondition(predExpr);
+//
+//	TestSimpleDataStore(flowElement, flowElementCopy, "StateMachineElement");
+//
+//	////////////////////////////////////////
+//	// State
+//	//
+//	QSharedPointer<Picto::State> state1(new Picto::State);
+//	QSharedPointer<Picto::State> state1Copy(new Picto::State);
+//	state1->setName("Fixation State");
+//
+//	//These were removed when this function was removed
+//	//state1->addResult(QSharedPointer<Picto::Result>(new Picto::Result("Fixated")));
+//	//state1->addResult(QSharedPointer<Picto::Result>(new Picto::Result("Broke Fixation")));
+//
+//	QSharedPointer<Picto::Scene> scene1(new Picto::Scene());
+//	state1->setScene(scene1);
+//
+//
+//	
+//
+//	//Test the state
+//	TestSimpleDataStore(state1, state1Copy, "StateMachineElement");
+//
+//	//Create a second state for use in our state machine
+//	QSharedPointer<Picto::State> state2(new Picto::State);
+//	state2->setName("Empty State");
+//
+//	QSharedPointer<Picto::TestController> controller(new Picto::TestController());
+//	state2->addElement(controller);
+//
+//
+//	//////////////////////////////////
+//	// State Machine
+//	//
+//	//	This state machine should be really simple.  It starts with a FlowElement
+//	//	that checks if the trial number is > or < 50.  Depending on this result, it
+//	//  sends us to a Fixation trial or an empty trial.  The state machine has two
+//	//	possible results: Pass, Fail.
+//	QSharedPointer<Picto::StateMachine> stateMachine(new Picto::StateMachine);
+//	QSharedPointer<Picto::StateMachine> stateMachineCopy(new Picto::StateMachine);
+//	stateMachine->setLevel(Picto::StateMachineLevel::Stage);
+//	stateMachine->setName("Stage 1");
+//
+//	stateMachine->addScriptable(rangeParam);
+//	stateMachine->addElement(passResult);
+//	stateMachine->addElement(flowElement);
+//	stateMachine->addElement(state1);
+//	stateMachine->addElement(state2);
+//
+//	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Trial selection","Less than 50","Fixation State")));
+//	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Fixated","Pass")));
+//	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Empty State","Success","Pass")));
+//
+//	stateMachine->setInitialElement("Trial selection");
+//
+//	TestSimpleDataStore(stateMachine, stateMachineCopy, "StateMachine");
+//
+//	//The reason for this odd arrangement is due to the fact that the TestSimpleDataStore function requires
+//	//the two XML fragments to be identical, but since we are using lists and maps, the ordering sometimes gets reversed.
+//	//So we don't test a full state machine
+//	stateMachine->addElement(failResult);
+//	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Trial selection","Greater than 50","Empty State")));
+//	stateMachine->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Broke Fixation","Fail")));
+//	//QCOMPARE(stateMachine->validateStateMachine(),true);//THIS WAS REMOVED BECAUSE VALIDATION IS IN VALIDATE OBJECT NOW, BUT THIS MAKES THE TEST INOPERATIVE
+//
+//	//Testing the ability to add substages
+//	//QSharedPointer<Picto::StateMachine> stateMachine2(new Picto::StateMachine);
+//	//stateMachine2->setLevel("SubStage");
+//	//stateMachine2->setName("SubStage 1");
+//	//stateMachine2->addElement(passResult);
+//	//stateMachine2->addElement(failResult);
+//	//stateMachine2->addElement(state1);
+//	//stateMachine2->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Fixated","Pass")));
+//	//stateMachine2->addTransition(QSharedPointer<Picto::Transition>(new Picto::Transition("Fixation State","Broke Fixation","Fail")));
+//	//stateMachine2->setInitialElement("Fixation State");
+//
+//	//stateMachine->addElement(stateMachine2);
+//
+//	//Output the StateMachine to file so that we can reuse it later.
+//	QFile file("StateMachineTest1.xml");
+//	if(!file.open(QIODevice::WriteOnly))
+//		return;
+//	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&file));
+//
+//	xmlWriter->setAutoFormatting(true);
+//	xmlWriter->writeStartDocument();
+//	stateMachine->toXml(xmlWriter);
+//	xmlWriter->writeEndDocument();
+//
+//	file.close();
+//
+//}
 
 
 //! This function tests a simple DataStore object

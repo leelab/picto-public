@@ -16,6 +16,8 @@
 #include "../engine/PictoEngine.h"
 #include "../network/CommandChannel.h"
 #include "../protocol/ProtocolResponse.h"
+#include "../statemachine/result.h"
+#include "../parameter/ParameterContainer.h"
 
 namespace Picto {
 
@@ -39,16 +41,15 @@ class Result;
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API StateMachineElement : public DataStore
+class PICTOLIB_API StateMachineElement : public ParameterContainer
 #else
-class StateMachineElement : public DataStore
+class StateMachineElement : public ResultContainer
 #endif
 {
 	Q_OBJECT
 
 public:
 	StateMachineElement();
-	StateMachineElement(QSharedPointer<ParameterContainer> parameters);
 
 	//All StateMachineElements must implement a run function that returns a string
 	//The returned string should correspond to a result contained by the element
@@ -56,20 +57,18 @@ public:
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine) = 0;
 	static void resetSlaveElements(double time = 0.0) { lastTransitionTime_ = time; };
 	
-	bool addResult(QString resultName);
-	QStringList getResultList();
-	void addParameters(QSharedPointer<ParameterContainer> parameters);
-	void addParameters(ParameterContainer &parameters);
+	//bool addResult(QSharedPointer<Result> result);
+	//QStringList getResultList();
+	////QSharedPointer<Result> getResult(QString name);
+	//void addParameters(QSharedPointer<ParameterContainer> parameters);
+	//void addParameters(ParameterContainer &parameters);
 
-
-	void setName(QString name);
-	QString getName();
 	QString type();
 	virtual QString assetType(){return "StateMachineElement";};
 
 	virtual QPoint getDisplayLayoutPosition();
 
-	virtual bool initScripting(QScriptEngine &qsEngine) { Q_UNUSED(qsEngine); return true; }
+	//virtual bool initScripting(QScriptEngine &qsEngine) { Q_UNUSED(qsEngine); return true; }
 
 	//These will need to be implemented in all subclasses for the GUI
 	/*virtual QRect getDisplayBoundingRect() = 0;
@@ -79,18 +78,19 @@ public:
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
-	bool serializeResults(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool deserializeResults(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	//bool serializeResults(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeResults(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 
 protected:
 	virtual QString defaultTagName(){return "StateMachineElement";};
 	QString getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine);
 	void processStatusDirective(QSharedPointer<Engine::PictoEngine> engine, QSharedPointer<ProtocolResponse> dataResponse);
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	ParameterContainer parameterContainer_;
-	QStringList results_;
+	//ParameterContainer parameterContainer_;
+	//QMap<QString,QSharedPointer<Result>> results_;
 
 	QPoint layoutPosition_;
 

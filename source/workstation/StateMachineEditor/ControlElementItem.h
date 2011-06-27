@@ -10,10 +10,8 @@ class ControlElementItem : public WireableItem
 {
 	Q_OBJECT
 public:
-	 ControlElementItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
-	 QSharedPointer<Asset> getAsset(){return asset_;};
+	 ControlElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 private:
-	QSharedPointer<Asset> asset_;
 
 };
 //! [0]

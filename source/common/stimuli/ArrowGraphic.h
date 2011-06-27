@@ -49,6 +49,7 @@ public slots:
 	void setSize(int size) { propertyContainer_->setPropertyValue("Size", size);};
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:

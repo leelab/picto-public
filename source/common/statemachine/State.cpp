@@ -13,6 +13,14 @@
 #include "../controlelements/StopwatchController.h"
 #include "../controlelements/TargetController.h"
 #include "../controlelements/ChoiceController.h"
+#include "../stimuli/ArrowGraphic.h"
+#include "../stimuli/BoxGraphic.h"
+#include "../stimuli/CircleGraphic.h"
+#include "../stimuli/EllipseGraphic.h"
+#include "../stimuli/LineGraphic.h"
+#include "../stimuli/PictureGraphic.h"
+#include "../stimuli/RandomlyFilledGridGraphic.h"
+#include "../stimuli/TextGraphic.h"
 
 #include <QCoreApplication>
 #include <QUuid>
@@ -20,32 +28,60 @@
 namespace Picto {
 
 State::State() :
+	MachineContainer("Transition","ControlElement"),
 	scene_(QSharedPointer<Scene>(new Scene)),
 	hasCursor_(false)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Int,"Revision",-1);
 	AddDefinableProperty(QVariant::Int,"EngineNeeded",-1);
 	
-	DefinePlaceholderTag("ControlElements");
-	QSharedPointer<AssetFactory> ctrlElemFactory(new AssetFactory());
-	ctrlElemFactory->addAssetType(TestController::ControllerType(),
+	//Define generatable control elements.
+	elementFactory_->addAssetType(TestController::ControllerType(),
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TestController::Create))));
-	ctrlElemFactory->addAssetType(StopwatchController::ControllerType(),
+	elementFactory_->addAssetType(StopwatchController::ControllerType(),
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(StopwatchController::Create))));
-	ctrlElemFactory->addAssetType(TargetController::ControllerType(),
+	elementFactory_->addAssetType(TargetController::ControllerType(),
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
-	ctrlElemFactory->addAssetType(ChoiceController::ControllerType(),
+	elementFactory_->addAssetType(ChoiceController::ControllerType(),
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
-	AddDefinableObjectFactory("ControlElement",ctrlElemFactory);
 
-	AddDefinableObjectFactory("Scene",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Scene::Create))) );
-	AddDefinableObjectFactory("Link",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlLink::Create))) );
+	//AddDefinableObjectFactory("Scene",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Scene::Create))) );
+	//AddDefinableObjectFactory("Link",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlLink::Create))) );
 	
-	DefinePlaceholderTag("Scripts");
+	//Define script properties
 	AddDefinableProperty("EntryScript","");
 	AddDefinableProperty("FrameScript","");
 	AddDefinableProperty("ExitScript","");
+
+
+	//Add UI Elements
+	//Add Audio Elements
+	AddDefinableObjectFactory("AudioElement",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))) );
+	//Add Visual Elements
+	QSharedPointer<AssetFactory> factory(new AssetFactory());
+	factory->addAssetType(ArrowGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
+	factory->addAssetType(BoxGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
+	factory->addAssetType(CircleGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
+	factory->addAssetType(EllipseGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	factory->addAssetType(LineGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	factory->addAssetType(PictureGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
+	factory->addAssetType(RandomlyFilledGridGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
+	factory->addAssetType(TextGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
+	AddDefinableObjectFactory("VisualElement",factory);
+	//Add background color property
+	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
+
+
+
 
 	//at some point, these should actually do something, but for the moment
 	//we'll leave them as -1 to show that they aren't being used
@@ -75,9 +111,9 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		runScript(entryScriptName);
 
 	//Start up all of the control elements
-	foreach(QSharedPointer<ControlElement> control, controlElements_)
+	foreach(QSharedPointer<ResultContainer> control, elements_)
 	{
-		control->start(engine);
+		control.staticCast<ControlElement>()->start(engine);
 	}
 
 	QString result = "";
@@ -98,13 +134,13 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		//updateServer(engine);
 
 		//--------- Check control elements------------
-		foreach(QSharedPointer<ControlElement> control, controlElements_)
+		foreach(QSharedPointer<ResultContainer> control, elements_)
 		{
-			if(control->isDone(engine))
+			if(control.staticCast<ControlElement>()->isDone(engine))
 			{
-				result = control->getResult();
-				QList<QSharedPointer<ControlLink>> elemLinks = links_.values(control->getName());
-				foreach(QSharedPointer<ControlLink> link,elemLinks)
+				result = control.staticCast<ControlElement>()->getResult();
+				QList<QSharedPointer<Transition>> elemLinks = transitions_.values(control->getName());
+				foreach(QSharedPointer<Transition> link,elemLinks)
 				{
 					if(link->getSourceResult() == result)
 					{
@@ -115,7 +151,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 				isDone = true;
 			}
 		}
-		if(controlElements_.isEmpty())
+		if(elements_.isEmpty())
 			isDone = true;
 
 		//-------------- Run the frame script ----------------
@@ -330,18 +366,18 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 
 
 //! Runs a script
-void State::runScript(QString scriptName)
-{
-	qsEngine_->globalObject().property(scriptName).call();
-	if(qsEngine_->hasUncaughtException())
-	{
-		QString errorMsg = "Uncaught exception in State" + getName() +", script "+scriptName+"\n";
-		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-										  .arg(qsEngine_->uncaughtException().toString());
-		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-		qDebug()<<errorMsg;
-	}
-}
+//void State::runScript(QString scriptName)
+//{
+//	qsEngine_->globalObject().property(scriptName).call();
+//	if(qsEngine_->hasUncaughtException())
+//	{
+//		QString errorMsg = "Uncaught exception in State" + getName() +", script "+scriptName+"\n";
+//		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+//										  .arg(qsEngine_->uncaughtException().toString());
+//		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+//		qDebug()<<errorMsg;
+//	}
+//}
 
 /*! \brief Checks for engine commands and returns true if we need to stop
  *
@@ -521,71 +557,191 @@ void State::addCursor()
 		return;
 
 	QSharedPointer<CursorGraphic> cursor(new CursorGraphic(sigChannel_, QColor(255,0,0,255)));
+	cursor->setOrder(100000);
 
-	//Create a new layer
-	QSharedPointer<Layer> cursorLayer(new Layer());
-	cursorLayer->setOrder(100);  //This puts it on top
-	cursorLayer->addVisualElement(cursor);
-	
-	//add the layer to our state/scene/canvas
-	scene_->getCanvas()->addLayer(cursorLayer);
+	scene_->addVisualElement(cursor);
 
 	hasCursor_ = true;
 }
 
 
-/* \Brief Sets up the state for scripting
- *
- *	This gets called before we actually start running a state machine.
- *	Because of scoping issues, each State gets its own scriptengine
- *	To initialize a state, we need to do the following:
- *		1. Bind the parameters to the engine
- *		2. Bind the contained visual elements to the engine
- *		3. Create functions in the engine for the 3 (potential) scripts.
- *	To minimize wasted resources, the state doesn't use a concrete QScriptEngine
- *	but insteads instantiates one if the state needs to run scripts.  The
- *	assumption is that many states (at least 50%) won't need the scripting
- *	functionality.
- */
-bool State::initScripting(QScriptEngine &qsEngine)
+///* \Brief Sets up the state for scripting
+// *
+// *	This gets called before we actually start running a state machine.
+// *	Because of scoping issues, each State gets its own scriptengine
+// *	To initialize a state, we need to do the following:
+// *		1. Bind the parameters to the engine
+// *		2. Bind the contained visual elements to the engine
+// *		3. Create functions in the engine for the 3 (potential) scripts.
+// *	To minimize wasted resources, the state doesn't use a concrete QScriptEngine
+// *	but insteads instantiates one if the state needs to run scripts.  The
+// *	assumption is that many states (at least 50%) won't need the scripting
+// *	functionality.
+// */
+//bool State::initScripting(QScriptEngine &qsEngine)
+//{
+//	//Since we have our own engine, we aren't using the passed in one
+//	Q_UNUSED(qsEngine);
+//
+//	return initScriptEngine(false);
+//}
+
+//bool State::initScriptEngine(bool forScriptDefinitions)
+//{
+//	QStringList scriptTypes;
+//	scriptTypes<<"Entry"<<"Frame"<<"Exit";
+//
+//	//Figure out which scripts we will be running
+//	//(The odd array structure is useful later...)
+//	bool scriptsToRun[3];
+//	scriptsToRun[0] = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+//	scriptsToRun[1] = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
+//	scriptsToRun[2] = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
+//
+//	//If we aren't running any scripts, and we're not looking for script definitions, we're done
+//	if(!forScriptDefinitions)
+//	{
+//		bool noScripts = true;
+//		for(int i=0; i<sizeof(scriptsToRun); i++)
+//		{
+//			if(scriptsToRun[i])
+//			{
+//				noScripts = false;
+//				break;
+//			}
+//		}
+//		if(noScripts)
+//			return true;
+//	}
+//
+//	//create the engine
+//	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
+//
+//	//Bind our parameters and visual elements
+//	bindToScriptEngine(*qsEngine_);
+//
+//	//Bind the visualElements
+//	//scene_->bindToScriptEngine(*qsEngine_);
+//
+//	//create functions for our scripts
+//	for(int i=0; i<3; i++)
+//	{
+//		if(!scriptsToRun[i])
+//			continue;
+//
+//		//We allow ScriptElement names to have whitespace, so we need 
+//		//to get rid of it for a script function name
+//		QString functionName = getName().simplified().remove(' ')+scriptTypes[i];
+//
+//		//confirm that this function doesn't already exist in the engine
+//		//If you hit this assert, it means that there are two ScriptElements
+//		//with the asme name.  The GUI shouldn't allow this...
+//		if(qsEngine_->globalObject().property(functionName).isValid())
+//		{
+//			return false;
+//		}
+//
+//		QString script = propertyContainer_->getPropertyValue(scriptTypes[i]+"Script").toString();
+//		QString function = "function " + functionName + "() { " + script + "}";
+//
+//		//add the function to the engine by calling evaluate on it
+//		qsEngine_->evaluate(function);
+//		if(qsEngine_->hasUncaughtException())
+//		{
+//			QString errorMsg = "Uncaught exception in State" + getName() + scriptTypes[i] + " script.\n";
+//			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+//											  .arg(qsEngine_->uncaughtException().toString());
+//			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+//			qDebug(errorMsg.toAscii());
+//			return false;
+//		}
+//	}
+//
+//	return true;
+//}
+
+//QString State::getInfo()
+//{
+//	initScripting(true);
+//	if(!qsEngine_)
+//		return "No Parameters Available";
+//	QString returnVal;
+//	QScriptValueIterator it(qsEngine_->globalObject());
+//	while (it.hasNext())
+//	{
+//		it.next();
+//		if(!(it.flags() & (QScriptValue::SkipInEnumeration | QScriptValue::Undeletable)))
+//		{
+//			returnVal.append(QString("Name:%1\n").arg(it.getName()));
+//			QScriptValueIterator it1(it.value());
+//			while(it1.hasNext())
+//			{
+//				it1.next();
+//				if(!(it1.flags() & (QScriptValue::SkipInEnumeration | QScriptValue::Undeletable)))
+//				{
+//					returnVal.append(QString("\tName:%1\n").arg(it1.getName()));
+//				}
+//			}
+//		}
+//	}
+//	if(returnVal.length())
+//		returnVal.prepend("Available Parameters:\n");
+//	return returnVal;
+//}
+
+void State::postSerialize()
 {
-	//Since we have our own engine, we aren't using the passed in one
-	Q_UNUSED(qsEngine);
+	revision_= propertyContainer_->getPropertyValue("Revision").toInt();
+	engineNeeded_= propertyContainer_->getPropertyValue("EngineNeeded").toInt();
+
+	scene_->reset();
+	QColor backgroundColor;
+	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
+	scene_->setBackgroundColor(backgroundColor);
+	QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
+	foreach(QSharedPointer<Asset> newVisElem,newVisElems)
+	{
+		scene_->addVisualElement(newVisElem.staticCast<VisualElement>());
+		addScriptable(newVisElem.staticCast<Scriptable>());
+	}
+
+	MachineContainer::postSerialize();
+}
+
+bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	////Validate Results (so they're ready for link checking)
+	if(!MachineContainer::validateObject(xmlStreamReader))
+		return false;
+
+	//! \todo Validate Scripts
+
+	return true;
+}
+
+bool State::hasScripts()
+{
+	return (!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty()
+		|| !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty()
+		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
+}
+
+QMap<QString,QString> State::getScripts()
+{
+	QMap<QString,QString> scripts;
+	if(!hasScripts())
+		return scripts;
 
 	QStringList scriptTypes;
 	scriptTypes<<"Entry"<<"Frame"<<"Exit";
 
 	//Figure out which scripts we will be running
-	//(The odd array structure is useful later...)
 	bool scriptsToRun[3];
 	scriptsToRun[0] = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
 	scriptsToRun[1] = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
 	scriptsToRun[2] = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
 
-	//If we aren't running any scripts, we're done
-	bool noScripts = true;
-	for(int i=0; i<sizeof(scriptsToRun); i++)
-	{
-		if(scriptsToRun[i])
-		{
-			noScripts = false;
-			break;
-		}
-	}
-	if(noScripts)
-		return true;
-
-
-	//create the engine
-	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
-
-	//Bind our parameters
-	parameterContainer_.bindToScriptEngine(*qsEngine_);
-
-	//Bind the visualElements
-	scene_->bindToScriptEngine(qsEngine_);
-
-	//create functions for our scripts
+	//create the scripts map
 	for(int i=0; i<3; i++)
 	{
 		if(!scriptsToRun[i])
@@ -593,365 +749,9 @@ bool State::initScripting(QScriptEngine &qsEngine)
 
 		//We allow ScriptElement names to have whitespace, so we need 
 		//to get rid of it for a script function name
-		QString functionName = getName().simplified().remove(' ')+scriptTypes[i];
-
-		//confirm that this function doesn't already exist in the engine
-		//If you hit this assert, it means that there are two ScriptElements
-		//with the asme name.  The GUI shouldn't allow this...
-		if(qsEngine_->globalObject().property(functionName).isValid())
-		{
-			return false;
-		}
-
-		QString script = propertyContainer_->getPropertyValue(scriptTypes[i]+"Script").toString();
-		QString function = "function " + functionName + "() { " + script + "}";
-
-		//add the function to the engine by calling evaluate on it
-		qsEngine_->evaluate(function);
-		if(qsEngine_->hasUncaughtException())
-		{
-			QString errorMsg = "Uncaught exception in State" + getName() + scriptTypes[i] + " script.\n";
-			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-											  .arg(qsEngine_->uncaughtException().toString());
-			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-			qDebug(errorMsg.toAscii());
-			return false;
-		}
+		QString scriptName = getName().simplified().remove(' ')+scriptTypes[i];
+		scripts[scriptName] = propertyContainer_->getPropertyValue(scriptTypes[i]+"Script").toString();
 	}
-
-	return true;
+	return scripts;
 }
-
-//! \brief Adds a control link to this state
-void State::addControlLink(QSharedPointer<ControlLink> link)
-{
-	links_.insert(link->getSource(),link);
-}
-
-void State::addControlElement(QSharedPointer<ControlElement> controlElement)
-{
-	//Add the control element to our map
-	controlElements_.insert(controlElement->getName(),controlElement);
-
-	//Add the controlElement's results to our list of possible results
-	//QStringList controlElementResults = controlElement->getResultList();
-	//results_ = results_ +controlElementResults;
-}
-
-void State::removeControlElement(QString controlElementName)
-{
-	if(!controlElements_.contains(controlElementName))
-		return;
-
-	//remove the results affiliated with this control element
-	//foreach(QString result, controlElements_[controlElementName]->getResultList())
-	//{
-	//	results_.removeOne(result);
-	//}
-
-	//remove the element
-	controlElements_.remove(controlElementName);
-
-
-}
-
-
-
-/*!	\Brief Turns a state object into an XML framgent.
- *
- *	The XML fragment for a state will look like this:
- * 
- *	<StateMachineElement type="State">
- *		<Revision>1</Revision>
- *		<EngineNeeded>1</EngineNeeded>
- *		<Name>Fixation</Name>
- *		<ControlElements>
- *			<ControlElement type="TargetController">
- *				...
- *			</ControlElement>
- *		</ControlElements>
- *		<Scene>
- *			...
- *		</Scene>
- *		<Scripts>
- *			<Script type="entry"> ... </Script>
- *			<Script type="frame "> ... </Script>
- *			<Script type="exit"> ... </Script>
- *		</Scripts>
-
- *		<Results>
- *			<!-- We'll list all possible results from the ControlElements here -->
- *			<Result>
- *				<Name>..</Name>
- *			</Result>
- *		</Results>
- *	</StateMachineElement>
- */
-//bool State::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
-//{
-//	xmlStreamWriter->writeStartElement("StateMachineElement");
-//	xmlStreamWriter->writeAttribute("type","State");
-//	
-//	xmlStreamWriter->writeTextElement("Revision",QString("%1").arg(revision_));
-//	xmlStreamWriter->writeTextElement("EngineNeeded",QString("%1").arg(engineNeeded_));
-//	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
-//
-//	xmlStreamWriter->writeStartElement("ControlElements");
-//	foreach(QSharedPointer<ControlElement> c, controlElements_)
-//	{
-//		c->toXml(xmlStreamWriter);
-//	}
-//	xmlStreamWriter->writeEndElement();
-//
-//	scene_->toXml(xmlStreamWriter);
-//
-//	serializeResults(xmlStreamWriter);
-//
-//	xmlStreamWriter->writeEndElement(); //State
-//	return true;
-//}
-//
-///*!	\Brief Turns a an XML fragment into a State object */
-//bool State::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
-//	{
-//		addError("State","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
-//		return false;
-//	}
-//	if(xmlStreamReader->attributes().value("type").toString() != type())
-//	{
-//		addError("State","Incorrect type of StateMachineElement, expected State",xmlStreamReader);
-//		return false;
-//	}
-//
-//	xmlStreamReader->readNext();
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
-//	{
-//		if(!xmlStreamReader->isStartElement())
-//		{
-//			//Do nothing unless we're at a start element
-//			xmlStreamReader->readNext();
-//			continue;
-//		}
-//
-//		QString name = xmlStreamReader->name().toString();
-//		if(name == "Revision")
-//		{
-//			bool ok;
-//			revision_= xmlStreamReader->readElementText().toInt(&ok);
-//			if(!ok)
-//			{
-//				addError("State","Revision value not an integer", xmlStreamReader);
-//				return false;
-//			}
-//		}
-//		else if(name == "EngineNeeded")
-//		{
-//			bool ok;
-//			engineNeeded_= xmlStreamReader->readElementText().toInt(&ok);
-//			if(!ok)
-//			{
-//				addError("State","EngineNeeded value not an integer", xmlStreamReader);
-//				return false;
-//			}
-//		}
-//		else if(name == "Name")
-//		{
-//			propertyContainer_->setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
-//		}
-//		else if(name == "ControlElements")
-//		{
-//			//do nothing
-//		}
-//		else if(name == "ControlElement")
-//		{
-//			ControlElementFactory factory;
-//			QString controllerType = xmlStreamReader->attributes().value("type").toString();
-//			QSharedPointer<ControlElement> newController = factory.generateControlElement(controllerType);
-//			if(!newController)
-//			{
-//				addError("State", "Failed to create a new Controller of type "+controllerType,xmlStreamReader);
-//				return false;
-//			}
-//			if(!newController->fromXml(xmlStreamReader))
-//			{
-//				addError("State", "Failed to deserialize <ControlElement>", xmlStreamReader);
-//				return false;
-//			}
-//			addControlElement(newController);
-//		}
-//		else if(name == "Scene")
-//		{
-//			QSharedPointer<Scene> newScene(new Scene);
-//			if(!newScene->fromXml(xmlStreamReader))
-//			{
-//				addError("State", "Failed to deserialize <Scene>", xmlStreamReader);
-//				return false;
-//			}
-//			scene_ = newScene;
-//		}
-//		else if(name == "Scripts")
-//		{
-//			//do nothing
-//		}
-//		else if(name == "Script")
-//		{
-//			QString type = xmlStreamReader->attributes().value("type").toString();
-//			QString script = xmlStreamReader->readElementText();
-//
-//			if(type == "entry")
-//			{
-//				propertyContainer_->setPropertyValue("EntryScript",script);
-//			}
-//			else if(type == "frame")
-//			{
-//				propertyContainer_->setPropertyValue("FrameScript",script);
-//			}
-//			else if(type == "exit")
-//			{
-//				propertyContainer_->setPropertyValue("ExitScript",script);
-//			}
-//			else
-//			{
-//				addError("State", "Unrecognized script type.  Expecting \"entry\", \"frame\", or \"exit\"", xmlStreamReader);
-//				return false;
-//			}
-//		}
-//		else if(name == "Results")
-//		{
-//			if(!deserializeResults(xmlStreamReader))
-//			{
-//				addError("State", "Failed to deserialize <Results>", xmlStreamReader);
-//				return false;
-//			}
-//		}
-//
-//		else
-//		{
-//			addError("State", "Unexpected tag", xmlStreamReader);
-//			return false;
-//		}
-//		xmlStreamReader->readNext();
-//	}
-//
-//	if(xmlStreamReader->atEnd())
-//	{
-//		addError("State", "Unexpected end of document", xmlStreamReader);
-//		return false;
-//	}
-//
-//	return true;
-//}
-
-bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	revision_= propertyContainer_->getPropertyValue("Revision").toInt();
-	engineNeeded_= propertyContainer_->getPropertyValue("EngineNeeded").toInt();
-
-	QList<QSharedPointer<Asset>> newCtrlElems = getGeneratedChildren("ControlElement");
-	foreach(QSharedPointer<Asset> newCtrlElem,newCtrlElems)
-	{
-		addControlElement(newCtrlElem.staticCast<ControlElement>());
-	}
-
-	scene_ = getGeneratedChildren("Scene").front().staticCast<Scene>();
-
-
-	////Validate Results (so they're ready for link checking)
-	if(!StateMachineElement::validateObject(xmlStreamReader))
-		return false;
-
-	//Add Control Links
-	QList<QSharedPointer<Asset>> newLinks = getGeneratedChildren("Link");
-	foreach(QSharedPointer<Asset> newLink,newLinks)
-	{
-		addControlLink(newLink.staticCast<ControlLink>());
-	}
-	//Confirm that all Control Links are legal
-	foreach(QSharedPointer<ControlLink> link, links_)
-	{
-		QString source = link->getSource();
-		if(!controlElements_.contains(source))
-		{
-			QString errMsg = QString("State: %1 has an illegal link.  "
-				"Source: %2 is not a element.").arg(getName()).arg(source);
-			addError("State", errMsg, xmlStreamReader);
-			return false;
-		}
-		
-		QString dest = link->getDestination();
-		if(!getResultList().contains(dest))
-		{
-			QString errMsg = QString("State: %1 has an illegal link.  "
-				"Destination: %2 is not a element.").arg(getName()).arg(dest);
-			addError("State", errMsg, xmlStreamReader);
-			return false;
-		}
-
-		QString sourceResult = link->getSourceResult();
-		QSharedPointer<ControlElement> sourceElement;
-		sourceElement = controlElements_.value(source);
-		if(!sourceElement->getResultList().contains(sourceResult))
-		{
-			QString errMsg = QString("State: %1 has an illegal link.  "
-				"Result: %2 is not a result generated by source %3.").arg(getName()).arg(sourceResult).arg(source);
-			addError("State", errMsg, xmlStreamReader);
-			return false;
-		}
-	}
-
-	//Confirm that every ControlElement has all of its results connected
-	foreach(QSharedPointer<ControlElement> element, controlElements_)
-	{
-		QStringList results = element->getResultList();
-		foreach(QString result, results)
-		{
-			bool found = false;
-			foreach(QSharedPointer<ControlLink> link, links_.values(element->getName()))
-			{
-				if(link->getSourceResult() == result)
-				{
-					found = true;
-					continue;
-				}
-			}
-			if(!found)
-			{
-				QString elementName = element->getName();
-				QString unconnectedResult = result;
-				QString errMsg = QString("State: %1 Element: %2 has an "
-					"unconnected result of %3").arg(getName()).arg(elementName).arg(unconnectedResult);
-				addError("State", errMsg, xmlStreamReader);
-				return false;
-			}
-		}			
-	}
-
-	//Confirm that all of this state's results are linked to something
-	foreach(QString result, results_)
-	{
-		bool found = false;
-		foreach(QSharedPointer<ControlLink> link, links_)
-		{
-			if(link->getDestination() == result)
-			{
-				found = true;
-				continue;
-			}
-		}
-		if(!found)
-		{
-			QString errMsg = QString("State: %1 has an unconnected result of %2").arg(getName()).arg(result);
-			addError("State", errMsg, xmlStreamReader);
-			return false;
-		}
-	}	
-
-	//! \todo Validate Scripts
-
-	return true;
-}
-
 }; //namespace Picto

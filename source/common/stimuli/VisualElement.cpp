@@ -5,19 +5,13 @@
 namespace Picto {
 
 VisualElement::VisualElement() :
-	shouldUpdateCompositingSurfaces_(true),
-	order_(0)
+	shouldUpdateCompositingSurfaces_(true)
 {
+	AddDefinableProperty(QVariant::Int,"Order",0);
 }
 
 VisualElement::~VisualElement()
 {
-}
-
-void VisualElement::bindToScriptEngine(QSharedPointer<QScriptEngine> engine)
-{
-	QScriptValue qsValue = engine->newQObject(this);
-	engine->globalObject().setProperty(propertyContainer_->getPropertyValue("Name").toString(),qsValue);
 }
 
 QPoint VisualElement::getPosition()
@@ -55,17 +49,6 @@ void VisualElement::setColor(QColor color)
 {
 	propertyContainer_->setPropertyValue("Color",color);
 }
-
-QString VisualElement::getName()
-{
-	return propertyContainer_->getPropertyValue("Name").toString();
-}
-
-void VisualElement::setName(QString name)
-{
-	propertyContainer_->setPropertyValue("Name",name);
-}
-
 
 void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface)
 {
@@ -322,9 +305,16 @@ void VisualElement::restoreProperties()
 //	return true;
 //}
 
+void VisualElement::postSerialize()
+{
+	Scriptable::postSerialize();
+	backupProperties();
+}
+
 bool VisualElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	backupProperties();
+	if(!Scriptable::validateObject(xmlStreamReader))
+		return false;
 	return true;
 }
 

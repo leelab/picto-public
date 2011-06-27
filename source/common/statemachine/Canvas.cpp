@@ -14,13 +14,13 @@ bool layerLessThan(const QSharedPointer<Layer> &l1, const QSharedPointer<Layer> 
 Canvas::Canvas()  :
 	backgroundColor_(QColor(Qt::black))
 {
-	DefinePlaceholderTag("Layers");
+	//DefinePlaceholderTag("Layers");
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
 	AddDefinableObjectFactory( "Layer",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Layer::Create))) );
 
 }
 
-void Canvas::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
+void Canvas::bindToScriptEngine(QScriptEngine& qsEngine)
 {
 	foreach(QSharedPointer<Layer> layer, layers_)
 	{
@@ -173,7 +173,7 @@ void Canvas::addLayer(QSharedPointer<Layer> layer)
 //	return true;
 //}
 
-bool Canvas::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void Canvas::postSerialize()
 {
 	backgroundColor_.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
 	
@@ -182,7 +182,10 @@ bool Canvas::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	{
 		layers_.push_back(newLayer.staticCast<Layer>());
 	}
-	
+}
+
+bool Canvas::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{	
 	return true;
 }
 

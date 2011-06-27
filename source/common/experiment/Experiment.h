@@ -5,7 +5,7 @@
 #include "../common.h"
 
 #include "../task/Task.h"
-#include "../storage/DataStore.h"
+#include "../statemachine/UIEnabled.h"
 #include "../property/PropertyContainer.h"
 
 //#include "SessionData.h"
@@ -36,9 +36,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Experiment : public DataStore
+class PICTOLIB_API Experiment : public UIEnabled
 #else
-class Experiment : public DataStore
+class Experiment : public UIEnabled
 #endif
 {
 	Q_OBJECT
@@ -48,12 +48,7 @@ public:
 	bool runTask(QString taskName, QSharedPointer<Engine::PictoEngine> engine);
 	bool jumpToState(QStringList path, QString state);
 
-	QString name();
-	void setName(QString name);
-
 	QStringList getTaskNames();
-
-	void clear();
 
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -61,6 +56,7 @@ public:
 protected:
 	virtual QString defaultTagName(){return "Experiment";};
 
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 
@@ -70,6 +66,7 @@ private:
 	//QString formatID_;
 	//unsigned int revision_;
 	QList<QSharedPointer<Task> > tasks_;
+	const QString latestSyntaxVersion_;
 	//QList<QSharedPointer<SessionData> > sessionDataElements_;
 	//QList<QSharedPointer<Calibration> > calibrations_;
 	//QList<QSharedPointer<MediaItem> > mediaItems_;

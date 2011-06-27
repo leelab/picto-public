@@ -8,7 +8,7 @@ const QString BoxGraphic::type = "Box Graphic";
 
 BoxGraphic::BoxGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
@@ -89,11 +89,16 @@ void BoxGraphic::slotPropertyValueChanged(QString propertyName, int,
 	}
 }
 
+void BoxGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	draw();
+}
+
 bool BoxGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
 	return true;
 }
 

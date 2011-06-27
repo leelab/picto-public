@@ -24,6 +24,8 @@ public:
 
 	static QString getErrors();
 	static void clearErrors() { errors_.clear(); };
+	QString toXml();
+	bool fromXml(QString xmlText);
 
 	virtual bool toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	virtual bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;

@@ -1,5 +1,5 @@
 #include "TaskItem.h"
-TaskItem::TaskItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-AssetItem(itemMenu,asset)
+TaskItem::TaskItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+AssetItem(editorState,contextMenu,asset)
 {
 }

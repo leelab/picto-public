@@ -8,7 +8,7 @@ const QString EllipseGraphic::type = "Ellipse Graphic";
 
 EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
@@ -74,11 +74,16 @@ void EllipseGraphic::slotPropertyValueChanged(QString propertyName, int,
 	}
 }
 
+void EllipseGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	draw();
+}
+
 bool EllipseGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
 	return true;
 }
 

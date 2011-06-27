@@ -5,7 +5,7 @@
 #include <QTime>
 
 #include "../common.h"
-#include "../storage/DataStore.h"
+#include "../statemachine/UIEnabled.h"
 #include "../stimuli/VisualElement.h"
 #include "../compositor/VisualTarget.h"
 #include "../engine/PictoEngine.h"
@@ -18,9 +18,9 @@ namespace Picto {
  *	VisualElements which make up the layer.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Layer : public DataStore
+class PICTOLIB_API Layer : public UIEnabled
 #else
-class Layer : public DataStore
+class Layer : public UIEnabled
 #endif
 {
 	Q_OBJECT
@@ -28,7 +28,7 @@ public:
 	Layer();
 
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Layer());};
-	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
+	void bindToScriptEngine(QScriptEngine& qsEngine);
 
 	void reset();
 
@@ -47,6 +47,7 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "Layer";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

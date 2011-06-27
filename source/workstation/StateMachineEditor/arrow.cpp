@@ -45,16 +45,21 @@
 #include <math.h>
 #include "ArrowSourceItem.h"
 #include "ArrowDestinationItem.h"
+#include "../../common/storage/datastore.h"
+#include "../../common/statemachine/MachineContainer.h"
+#include "AssetItem.h"
 
 const qreal Pi = 3.14;
 
 //! [0]
-Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem,
+Arrow::Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
          QGraphicsItem *parent, QGraphicsScene *scene)
     : QGraphicsLineItem(parent, scene)
 {
+	transition_ = transition;
     myStartItem = static_cast<ArrowPortItem*>(startItem);
     myEndItem = static_cast<ArrowPortItem*>(endItem);
+	myContextMenu = contextMenu;
 	myStartItem->addArrow(this);
 	myEndItem->addArrow(this);
 	int maxZVal = (startItem->zValue()>endItem->zValue())?startItem->zValue():endItem->zValue();
@@ -64,11 +69,41 @@ Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem,
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 }
 
-Arrow* Arrow::Create(DiagramItem *startItem, DiagramItem *endItem,QGraphicsItem *parent, QGraphicsScene *scene)
+Arrow::~Arrow()
+{
+	QGraphicsScene* scenePtr = scene();
+	if(scenePtr)
+		scenePtr->removeItem(this);
+}
+
+Arrow* Arrow::Create(QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
+		QMenu *contextMenu, QGraphicsItem *parent, QGraphicsScene *scene)
 {
 	if(!dynamic_cast<ArrowSourceItem*>(startItem) || !dynamic_cast<ArrowDestinationItem*>(endItem))
 		return NULL;
-	return new Arrow(startItem,endItem,parent,scene);
+	if(transition.isNull())
+		return NULL;
+	return new Arrow(transition,startItem,endItem,contextMenu,parent,scene);
+}
+
+Arrow* Arrow::Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
+		QMenu *contextMenu, QGraphicsItem *parent, QGraphicsScene *scene)
+{
+	if(!dynamic_cast<ArrowSourceItem*>(startItem) || !dynamic_cast<ArrowDestinationItem*>(endItem))
+		return NULL;
+	if(windowAsset.isNull() || windowAsset.dynamicCast<MachineContainer>().isNull())
+		return NULL;
+
+	//Find Asset Item ancestors
+	QSharedPointer<Asset> source = getAssetAncestor(startItem);
+	QSharedPointer<Asset> dest = getAssetAncestor(endItem);
+	if(source.isNull() || dest.isNull())
+		return NULL;
+	QString result = static_cast<ArrowSourceItem*>(startItem)->getName();
+	QSharedPointer<Transition> newTrans(new Transition(source->getName(),result,dest->getName()));
+	if(!windowAsset.staticCast<MachineContainer>()->addTransition(newTrans))
+		return NULL;
+	return new Arrow(newTrans,startItem,endItem,contextMenu,parent,scene);
 }
 //! [0]
 
@@ -169,4 +204,21 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
         painter->drawLine(myLine);
     }
 }
+
+void Arrow::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    scene()->clearSelection();
+    setSelected(true);
+    myContextMenu->exec(event->screenPos());
+}
 //! [7]
+
+QSharedPointer<Asset> Arrow::getAssetAncestor(DiagramItem* item)
+{
+	QGraphicsItem* parent = item;
+	while(parent && !dynamic_cast<AssetItem *>(parent))
+		parent = parent->parentItem();
+	if(!parent)
+		return QSharedPointer<Asset>();
+	return dynamic_cast<AssetItem *>(parent)->getAsset();
+}

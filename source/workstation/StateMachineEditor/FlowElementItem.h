@@ -11,10 +11,8 @@ class FlowElementItem : public StateMachineElementItem
 {
 	Q_OBJECT
 public:
-	FlowElementItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
-	QSharedPointer<Asset> getAsset(){return asset_;};
+	FlowElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 private:
-	QSharedPointer<Asset> asset_;
 
 };
 //! [0]

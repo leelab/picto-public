@@ -2,6 +2,7 @@
 #define _COMPOUNTEXPRESSION_H_
 
 #include "../common.h"
+#include "../statemachine/Result.h"
 #include "PredicateExpression.h"
 
 namespace Picto {
@@ -35,9 +36,9 @@ namespace CompoundExpressionOperator
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API CompoundExpression : public DataStore
+class PICTOLIB_API CompoundExpression : public Result
 #else
-class CompoundExpression : public DataStore
+class CompoundExpression : public UIEnabled
 #endif
 {
 	Q_OBJECT
@@ -54,11 +55,9 @@ public:
 
 	void setOperator(CompoundExpressionOperator::CompoundExpressionOperator op) { operator_=op; operatorInitialized_ = true;};
 
-	void setParameterContainer(ParameterContainer *params);
+	//void setParameterContainer(ParameterContainer *params);
 
 	//Name
-	void setName(QString name);
-	QString name();
 	void setOrder(int order);
 	int order();
 
@@ -75,6 +74,7 @@ public:
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
 	virtual QString defaultTagName(){return "CompoundExpression";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 

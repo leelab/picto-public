@@ -8,11 +8,11 @@ class ArrowPortItem : public DiagramItem
 {
 	Q_OBJECT
 public:
-	ArrowPortItem(QString name,QGraphicsItem *parent, QGraphicsScene *scene);
+	ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene);
+	virtual ~ArrowPortItem();
  	void addArrow(Arrow *arrow);
 	void removeArrow(Arrow *arrow);
     void removeArrows();
-	virtual void removeDependantGraphics();
 protected:
 	virtual void updateDependantGraphics();
 private:

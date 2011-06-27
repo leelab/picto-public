@@ -92,6 +92,11 @@ bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	return true;
 }
 
+void StateDataUnit::postSerialize()
+{
+
+}
+
 bool StateDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;

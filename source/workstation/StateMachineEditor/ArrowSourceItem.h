@@ -8,7 +8,7 @@ class ArrowSourceItem : public ArrowPortItem
 {
 	Q_OBJECT
 public:
-	ArrowSourceItem(QString name,QGraphicsItem *parent, QGraphicsScene *scene);
+	ArrowSourceItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene);
 };
 //! [0]
 

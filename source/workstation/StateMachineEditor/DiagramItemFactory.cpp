@@ -9,40 +9,78 @@
 #include "TaskItem.h"
 #include "WireableItem.h"
 #include "../../common/property/property.h"
+#include "../../common/statemachine/uienabled.h"
+#include "../../common/statemachine/uiinfo.h"
 #include <string>
 using namespace std;
 
-DiagramItemFactory::DiagramItemFactory(QMenu *contextMenu, QGraphicsScene *scene)
+DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QGraphicsScene *scene)
 {
+	editorState_ = editorState;
 	contextMenu_ = contextMenu;
 	scene_ = scene;
 }
 
 DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 {
+	DiagramItem* returnVal = NULL;
 	if(asset.isNull())
-		return NULL;
+		returnVal =  NULL;
 	QString type = asset->assetType();
-	if(type == "Property")
-	{
-		if(asset.staticCast<Property>()->name() == "Result")
-			return new ResultItem(contextMenu_,asset);
-	}
+	if(type == "UIInfo")
+		returnVal =  NULL;
+	else if(type == "UIEnabled")
+		returnVal = new WireableItem(editorState_, contextMenu_,asset);
+	else if(type == "Property")
+		returnVal =  NULL;
+	else if(type == "Transition")
+		returnVal =  NULL;
+	else if(type == "ControlLink")
+		returnVal =  NULL;
+	else if(type == "Result")
+		returnVal =  new ResultItem(editorState_, contextMenu_,asset);
 	else if(type == "DataStore")
-		return new WireableItem(contextMenu_,asset);
+		returnVal =  new WireableItem(editorState_, contextMenu_,asset);
 	else if(type == "StateMachineElement")
-		return new StateMachineElementItem(contextMenu_,asset);
+		returnVal =  new StateMachineElementItem(editorState_, contextMenu_,asset);
 	else if(type == "State")
-		return new StateItem(contextMenu_,asset);
+		returnVal =  new StateItem(editorState_, contextMenu_,asset);
 	else if(type == "StateMachine")
-		return new StateMachineItem(contextMenu_,asset);
+		returnVal =  new StateMachineItem(editorState_, contextMenu_,asset);
 	else if(type == "ControlElement")
-		return new ControlElementItem(contextMenu_,asset);
+		returnVal =  new ControlElementItem(editorState_, contextMenu_,asset);
 	else if(type == "Reward")
-		return new RewardItem(contextMenu_,asset);
+		returnVal =  new RewardItem(editorState_, contextMenu_,asset);
 	else if(type == "ScriptElement")
-		return new ScriptElementItem(contextMenu_,asset);
+		returnVal =  new ScriptElementItem(editorState_, contextMenu_,asset);
 	else if(type == "Task")
-		return new TaskItem(contextMenu_,asset);
-	return NULL;
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else if(type == "ParameterContainer")
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else if(type == "Scene")
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else if(type == "VisualElement")
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else if(type == "Parameter")
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else if(type == "AudioElement")
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else if(type == "PredicateExpression")
+		returnVal =  new ResultItem(editorState_, contextMenu_,asset);
+	else if(type == "FlowElement")
+		returnVal =  new StateMachineItem(editorState_, contextMenu_,asset);
+	else if(type == "CompoundExpression")
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else if(type == "ControlTarget")
+		returnVal =  new TaskItem(editorState_, contextMenu_,asset);
+	else
+		Q_ASSERT_X(false,"DiagramItemFactory::create","Unknown Item Type: " + type.toAscii());
+	QSharedPointer<UIEnabled> uiEnabled = asset.dynamicCast<UIEnabled>();
+	if(returnVal && !uiEnabled.isNull())
+	{
+		QSharedPointer<Asset> uiInfo = uiEnabled->getGeneratedChildren("UIInfo").first();
+		if(!uiInfo.isNull())
+			returnVal->setPos(uiInfo.staticCast<UIInfo>()->getPos());
+	}
+	return returnVal;
 }

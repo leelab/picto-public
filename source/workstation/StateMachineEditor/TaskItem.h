@@ -11,10 +11,7 @@ class TaskItem : public AssetItem
 {
 	Q_OBJECT
 public:
-	 TaskItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
-	 QSharedPointer<Asset> getAsset(){return asset_;};
-private:
-	QSharedPointer<Asset> asset_;
+	 TaskItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 
 };
 //! [0]

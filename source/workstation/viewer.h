@@ -54,6 +54,7 @@ public:
 public slots:
 	virtual void init() = 0;  //Called just before displaying the viewer
 	virtual void deinit() = 0;	//Called just after the user switches out of the viewer
+	virtual void aboutToSave() {};  //Called just before the experimentText_ is saved to file.
 
 signals:
 	void enableCutAction(bool enable);

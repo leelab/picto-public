@@ -2,12 +2,12 @@
 #include "ArrowDestinationItem.h"
 #include "Arrow.h"
 #include <QGraphicsScene>
-ArrowPortItem::ArrowPortItem(QString name,QGraphicsItem *parent, QGraphicsScene *scene) :
-DiagramItem(NULL,name,parent,scene)
+ArrowPortItem::ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene) :
+DiagramItem(editorState,NULL,name,parent,scene)
 {
 }
 
-void ArrowPortItem::removeDependantGraphics()
+ArrowPortItem::~ArrowPortItem()
 {
 	removeArrows();
 }
@@ -30,7 +30,6 @@ void ArrowPortItem::removeArrows()
     foreach (Arrow *arrow, arrows) {
         static_cast<ArrowPortItem*>(arrow->startItem())->removeArrow(arrow);
         static_cast<ArrowDestinationItem*>(arrow->endItem())->removeArrow(arrow);
-        scene()->removeItem(arrow);
         delete arrow;
     }
 }

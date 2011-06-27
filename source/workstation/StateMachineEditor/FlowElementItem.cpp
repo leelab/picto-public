@@ -1,5 +1,5 @@
 #include "FlowElementItem.h"
-FlowElementItem::FlowElementItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-StateMachineElementItem(itemMenu,asset)
+FlowElementItem::FlowElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+StateMachineElementItem(editorState,contextMenu,asset)
 {
 }

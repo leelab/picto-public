@@ -8,22 +8,10 @@ namespace Picto {
 
 Task::Task() 
 {
-		AddDefinableProperty("Name","Unnamed Task");
+		
 		AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 
-}
-
-//! returns the name of this task
-QString Task::name()
-{
-	return propertyContainer_->getPropertyValue("Name").toString();
-}
-
-//! Sets the name of this task
-void Task::setName(QString name)
-{
-	propertyContainer_->setPropertyValue("Name",name);
 }
 
 bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -35,7 +23,7 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 	else
 	{
 		//Before running the statemachine, we need to append the task name to its path
-		stateMachine_->setPath(QStringList()<<name());
+		stateMachine_->setPath(QStringList()<<getName());
 
 		if(engine->slaveMode())
 		{
@@ -174,7 +162,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 	double timestamp = stamper.stampSec();
 
 	StateDataUnit stateData;
-	stateData.setTransition(source,sourceResult,destination,timestamp,name());
+	stateData.setTransition(source,sourceResult,destination,timestamp,getName());
 
 	xmlWriter->writeStartElement("Data");
 	stateData.toXml(xmlWriter);
@@ -225,7 +213,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 //bool Task::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{
 //	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Task")
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->getName() != "Task")
 //	{
 //		addError("Task","Incorrect tag, expected <Task>",xmlStreamReader);
 //		return false;
@@ -233,7 +221,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 //	
 //	xmlStreamReader->readNext();
 //	
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Task") && !xmlStreamReader->atEnd())
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->getName().toString() == "Task") && !xmlStreamReader->atEnd())
 //	{
 //		if(!xmlStreamReader->isStartElement())
 //		{
@@ -242,7 +230,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 //			continue;
 //		}
 //
-//		QString name = xmlStreamReader->name().toString();
+//		QString name = xmlStreamReader->getName().toString();
 //		if(name == "Name")
 //		{
 //			setName(xmlStreamReader->readElementText());
@@ -281,13 +269,20 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 //	}
 //}
 
-bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void Task::postSerialize()
 {
+	UIEnabled::postSerialize();
 	QList<QSharedPointer<Asset>> stateMachines = getGeneratedChildren("StateMachine");
 	if(!stateMachines.isEmpty())
 	{
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
 	}
+}
+
+bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!UIEnabled::validateObject(xmlStreamReader))
+		return false;
 	return true;
 }
 

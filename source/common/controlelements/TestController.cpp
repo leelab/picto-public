@@ -6,14 +6,14 @@ namespace Picto
 {
 TestController::TestController()
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty("Type",ControllerType());	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
 	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
 	AddDefinableProperty(QVariant::Int,"NumberOfFrames",120);
 
 	//Make sure to update the list of results...
-	addResult("Success");
+	addRequiredResult("Success");
 }
 
 
@@ -156,10 +156,17 @@ void TestController::start(QSharedPointer<Engine::PictoEngine> engine)
 //
 //}
 
-bool TestController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void TestController::postSerialize()
 {
+	ControlElement::postSerialize();
 	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
 	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
+}
+
+bool TestController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!ControlElement::validateObject(xmlStreamReader))
+		return false;
 	return true;
 }
 

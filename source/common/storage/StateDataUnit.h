@@ -49,6 +49,7 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

@@ -53,15 +53,18 @@ public:
 
 	//AutoSerialization Stuff---------------------------------
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
+	virtual bool validateTree();
 	virtual void setDeleted();
 	QStringList getDefinedChildTags(){return factories_.keys();};
 	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
-	virtual QString name(){return propertyContainer_->getPropertyValue("Name").toString();};
-	virtual QString identifier(){return myTagName_;};
+	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
 	virtual QString assetType(){return "DataStore";};
 	QSharedPointer<PropertyContainer> getPropertyContainer(){return propertyContainer_;};
 	QStringList getValidChildTags();
+	QSharedPointer<AssetFactory> getAssetFactory(QString tagName);
+	QSharedPointer<Asset> createChildAsset(QString tagName,QString type,QString& error);
+	void clear();
 
 public slots:
 	void childEdited();
@@ -69,31 +72,25 @@ public slots:
 protected:
 	//AutoSerialization Stuff---------------------------------
 	virtual QString defaultTagName(){return "Default";};
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader){return true;};
 	void initializePropertiesToDefaults();
 	void AddDefinableProperty(
 		QString tagName, 
-		QVariant defaultValue, 
-		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>(),
-		int minNumOfThisType = 1, 
-		int maxNumOfThisType = 1
+		QVariant defaultValue
 		);
 	void AddDefinableProperty(
 		int type,
 		QString tagName, 
 		QVariant defaultValue, 
 		QString singleAttributeName,
-		QVariant singleAttributeValue,
-		int minNumOfThisType = 1, 
-		int maxNumOfThisType = 1
+		QVariant singleAttributeValue
 		);
-	void AddDefinableProperty(
-		int type,
-		QString tagName, 
-		QVariant defaultValue,
-		int minNumOfThisType, 
-		int maxNumOfThisType
-		);
+	//void AddDefinableProperty(
+	//	int type,
+	//	QString tagName, 
+	//	QVariant defaultValue,
+	//	int minNumOfThisType, 
+	//	int maxNumOfThisType
+	//	);
 	void AddDefinableProperty(
 		int type,
 		QString tagName, 
@@ -102,9 +99,8 @@ protected:
 		int minNumOfThisType = 1, 
 		int maxNumOfThisType = 1
 		);
-	void AddDefinableObject(QString tagName, QSharedPointer<Asset> object);
+	//void AddDefinableObject(QString tagName, QSharedPointer<Asset> object);
 	void AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory);
-	void DefinePlaceholderTag(QString tagName);
 	void AddChild(QString tagName, QSharedPointer<Asset> child);
 
 	bool hasChildrenOfType(QString tagName);

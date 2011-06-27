@@ -45,6 +45,7 @@ public:
 	bool equalTo(QVariant& RHS) { return (RHS.type() == QVariant::Bool) && (RHS.toBool() == value_); };
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

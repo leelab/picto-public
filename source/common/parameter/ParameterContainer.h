@@ -2,13 +2,12 @@
 #define _PARAMETERCONTAINER_H_
 
 #include "../common.h"
-#include "../storage/DataStore.h"
+#include "../statemachine/ResultContainer.h"
 
 #include "Parameter.h"
 
 #include <QSharedPointer>
 #include <QList>
-#include <QScriptEngine>
 
 namespace Picto {
 
@@ -21,9 +20,9 @@ namespace Picto {
  *	parameter pointer.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ParameterContainer : public DataStore
+class PICTOLIB_API ParameterContainer : public ResultContainer
 #else
-class ParameterContainer : public DataStore
+class ParameterContainer : public ResultContainer
 #endif
 {
 	Q_OBJECT
@@ -31,21 +30,13 @@ public:
 	ParameterContainer();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ParameterContainer());};
 
-	void addParameter(QSharedPointer<Parameter> parameter);
-	QSharedPointer<Parameter> getParameter(QString name);
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-	QStringList getParameterList();
-
-	void bindToScriptEngine(QScriptEngine &engine);
+	//QSharedPointer<Parameter> getParameter(QString name);
+	virtual QString assetType(){return "ParameterContainer";};
 
 protected:
 	virtual QString defaultTagName(){return "Parameters";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:
-	QMap<QString, QSharedPointer<Parameter> > parameters_;
 };
 
 

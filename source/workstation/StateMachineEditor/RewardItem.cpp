@@ -1,5 +1,5 @@
 #include "RewardItem.h"
-RewardItem::RewardItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-StateMachineElementItem(itemMenu,asset)
+RewardItem::RewardItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+StateMachineElementItem(editorState,contextMenu,asset)
 {
 }

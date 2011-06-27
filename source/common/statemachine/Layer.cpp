@@ -46,7 +46,7 @@ Layer::Layer()
 	elapsedTime_.start();
 }
 
-void Layer::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
+void Layer::bindToScriptEngine(QScriptEngine& qsEngine)
 {
 	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 	{
@@ -229,7 +229,7 @@ void Layer::draw(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<Engin
 //	return true;
 //}
 
-bool Layer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void Layer::postSerialize()
 {
 	//start off by clearing out all existing layers
 	visualElements_.clear();
@@ -242,6 +242,10 @@ bool Layer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	{
 		addVisualElement(newVisElem.staticCast<VisualElement>());
 	}
+}
+
+bool Layer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
 	return true;
 }
 

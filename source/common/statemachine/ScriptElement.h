@@ -2,7 +2,6 @@
 #define _SCRIPT_ELEMENT_H_
 
 #include <QSharedPointer>
-#include <QScriptEngine>
 #include <QCoreApplication>
 
 #include "../common.h"
@@ -39,18 +38,18 @@ public:
 
 	void setScript(QString script);
 
-	bool initScripting(QScriptEngine &qsEngine);
+	//bool initScripting(QScriptEngine &qsEngine);
 	virtual QString assetType(){return "ScriptElement";};
 
 	//DataStore functions
 //	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 //	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-
-private:
-	QScriptEngine *qsEngine_;
+	virtual bool hasScripts();
+	//This returns a map of QMap<script name,script code>
+	virtual QMap<QString,QString> getScripts();
 
 };
 

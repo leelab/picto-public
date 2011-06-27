@@ -65,6 +65,7 @@ public:
 	QVector<QString> getPotentials(){return potentials_;};
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

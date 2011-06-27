@@ -3,31 +3,35 @@
 #include "ToolGroup.h"
 
 
-ToolGroup::ToolGroup(QWidget *parent) :
+ToolGroup::ToolGroup(QSharedPointer<EditorState> editorState, QWidget *parent) :
+	editorState_(editorState),
 	QWidget(parent)
 {
 	buttonGroup_ = new QButtonGroup;
 	buttonGroup_->setExclusive(false);
 	connect(buttonGroup_, SIGNAL(buttonClicked(int)),this, SLOT(buttonGroupClicked(int)));
-	connect(buttonGroup_, SIGNAL(buttonReleased(int)),this, SLOT(buttonGroupReleased(int)));
+	connect(editorState.data(), SIGNAL(itemInserted()),this, SLOT(disableAllButtons()));
 	layout_ = new QGridLayout;
 	setLayout(layout_);
 	clearButtons();
 }
 
-void ToolGroup::AddButton(const QString &label, QIcon icon)
+void ToolGroup::AddButton(const QString &label, QIcon icon, bool enabled)
 {
     QToolButton *button = new QToolButton;
     button->setIcon(icon);
     button->setIconSize(QSize(50, 50));
     button->setCheckable(true);
+	button->setEnabled(enabled);
 	int id=(2*row_)+col_;
     buttonGroup_->addButton(button,id);
 	QGridLayout *layout = new QGridLayout;
     layout->addWidget(button, 0, 0, Qt::AlignHCenter);
-    layout->addWidget(new QLabel(label), 1, 0, Qt::AlignCenter);
+	QLabel* widgLabel = new QLabel(label);
+	widgLabel->setAlignment(Qt::AlignCenter);
+    layout->addWidget(widgLabel, 1, 0, Qt::AlignCenter);
 
-    QWidget *widget = new QWidget;
+    QWidget *widget = new QWidget(this);
     widget->setLayout(layout);
 	layout_->addWidget(widget,row_,col_);
 	widgets_.push_back(widget);
@@ -43,7 +47,6 @@ void ToolGroup::AddButton(const QString &label, QIcon icon)
 	for(int i=0;i<=maxCol;i++)
 		layout_->setColumnStretch(i,0);
 	layout_->setColumnStretch(maxRow+1,10);
-
 }
 
 void ToolGroup::clearButtons()
@@ -68,15 +71,18 @@ void ToolGroup::buttonGroupClicked(int)
 		if (buttonGroup_->button(id) != button)
 			button->setChecked(false);
     }
-	if(nameMap_.contains(id))
-		selectedButton_ = nameMap_[id];
+	if(id >= 0)
+		doButtonAction(id);
 	else
-		selectedButton_ = "";
-	emit insertionItemSelected(selectedButton_);
+		disableButtonActions();
 }
 
-void ToolGroup::buttonGroupReleased(int)
+void ToolGroup::disableAllButtons()
 {
-	selectedButton_ = "";
-	emit insertionItemSelected(selectedButton_);
+	QList<QAbstractButton *> buttons = buttonGroup_->buttons();
+	foreach (QAbstractButton *button, buttons) 
+	{
+		button->setChecked(false);
+    }
+	disableButtonActions();
 }

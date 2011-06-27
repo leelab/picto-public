@@ -11,10 +11,7 @@ class ResultItem : public WireableItem
 {
 	Q_OBJECT
 public:
-	 ResultItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
-	 QSharedPointer<Asset> getAsset(){return asset_;};
-private:
-	QSharedPointer<Asset> asset_;
+	 ResultItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 
 };
 //! [0]

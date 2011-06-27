@@ -51,6 +51,7 @@ public:
 	bool lessThan(QVariant& RHS);
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

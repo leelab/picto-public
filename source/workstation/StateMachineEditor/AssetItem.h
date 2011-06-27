@@ -3,7 +3,8 @@
 
 #include "DiagramItem.h"
 #include "../../common/storage/asset.h"
-#include <QSharedPointer>
+
+#include "EditorState.h"
 using namespace Picto;
 
 //! [0]
@@ -11,13 +12,18 @@ class AssetItem : public DiagramItem
 {
 	Q_OBJECT
 public:
-	 AssetItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
+	 AssetItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
+	 virtual ~AssetItem();
 	 QSharedPointer<Asset> getAsset(){return asset_;};
-	 virtual void removeDependantGraphics(){};
+public slots:
+	void assetEdited();
 protected:
 	virtual void updateDependantGraphics(){};
+	virtual void positionChanged(QPoint pos);
+	virtual void mouseReleaseEvent (QGraphicsSceneMouseEvent *event);
 private:
 	QSharedPointer<Asset> asset_;
+	bool posChanged_;
 
 };
 //! [0]

@@ -89,6 +89,11 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	return true;
 }
 
+void BehavioralDataUnit::postSerialize()
+{
+
+}
+
 bool BehavioralDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;

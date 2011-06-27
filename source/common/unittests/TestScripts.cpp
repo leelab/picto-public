@@ -21,91 +21,91 @@ TestScripts::TestScripts()
 
 
 
-void TestScripts::TestParameterBinding()
-{
-	//Setup
-	//-----
-	QString script;
-	Picto::ParameterContainer parameters;
-
-	//Load up the parameter container
-	QSharedPointer<Picto::NumericParameter> param1(new Picto::NumericParameter);
-	param1->setName("TrialNumber");
-	param1->setValue(1);
-	parameters.addParameter(param1);
-
-	QSharedPointer<Picto::BooleanParameter> param2(new Picto::BooleanParameter);
-	param2->setName("passed");
-	param2->setValue(false);
-	parameters.addParameter(param2);
-
-
-	QSharedPointer<Picto::ChoiceParameter> param3(new Picto::ChoiceParameter);
-	param3->setName("color");
-
-	param3->addChoice("Red",QColor(255,0,0));
-	param3->addChoice("Green",QColor(0,255,0));
-	param3->addChoice("Blue",QColor(255,0,0));
-	param3->setValue("Green");
-	parameters.addParameter(param3);
-
-	QSharedPointer<Picto::RangeParameter> param4(new Picto::RangeParameter);
-	param4->setName("NumberOfTargets");
-	param4->setMin(2);
-	param4->setMax(10);
-	param4->setIncrement(2);
-	param4->setValue(4);
-	parameters.addParameter(param4);
-
-	//Bind everything
-	parameters.bindToScriptEngine(qsEngine_);
-
-	//Test the numeric parameter
-	//--------------------------
-	QSharedPointer<Picto::Parameter> testParam;
-	testParam = parameters.getParameter("TrialNumber");
-	QCOMPARE(testParam->getValue().toInt(),1);
-
-	script = "TrialNumber.setValue(TrialNumber.getValue() + 5);\n";
-	qsEngine_.evaluate(script);
-				
-	QCOMPARE(qsEngine_.hasUncaughtException(), false);
-	QCOMPARE(testParam->getValue().toInt(),6);
-
-	//Test the boolean parameter
-	//--------------------------
-	testParam = parameters.getParameter("passed");
-	QCOMPARE(testParam->getValue().toBool(),false);
-
-	script = "passed.setValue(true);\n";
-	qsEngine_.evaluate(script);
-
-	QCOMPARE(qsEngine_.hasUncaughtException(), false);
-	QCOMPARE(testParam->getValue().toBool(),true);
-
-	//Test the choice parameter
-	//-------------------------
-	testParam = parameters.getParameter("color");
-	QCOMPARE(testParam->getValue().toString(),QString("#00ff00"));
-
-	script = "color.setValue(\"Red\");\n";
-	qsEngine_.evaluate(script);
-
-	QCOMPARE(qsEngine_.hasUncaughtException(), false);
-	QCOMPARE(testParam->getValue().value<QColor>(),QColor(255,0,0));
-
-	//Test the range parameter
-	//------------------------
-	testParam = parameters.getParameter("NumberOfTargets");
-	QCOMPARE(testParam->getValue().toInt(),4);
-
-	script = "NumberOfTargets.setValue(8);\n";
-	qsEngine_.evaluate(script);
-				
-	QCOMPARE(qsEngine_.hasUncaughtException(), false);
-	QCOMPARE(testParam->getValue().toInt(),8);
-
-}
+//void TestScripts::TestParameterBinding()
+//{
+//	//Setup
+//	//-----
+//	QString script;
+//	Picto::ParameterContainer parameters;
+//
+//	//Load up the parameter container
+//	QSharedPointer<Picto::NumericParameter> param1(new Picto::NumericParameter);
+//	param1->setName("TrialNumber");
+//	param1->setValue(1);
+//	parameters.addScriptable(param1);
+//
+//	QSharedPointer<Picto::BooleanParameter> param2(new Picto::BooleanParameter);
+//	param2->setName("passed");
+//	param2->setValue(false);
+//	parameters.addScriptable(param2);
+//
+//
+//	QSharedPointer<Picto::ChoiceParameter> param3(new Picto::ChoiceParameter);
+//	param3->setName("color");
+//
+//	param3->addChoice("Red",QColor(255,0,0));
+//	param3->addChoice("Green",QColor(0,255,0));
+//	param3->addChoice("Blue",QColor(255,0,0));
+//	param3->setValue("Green");
+//	parameters.addScriptable(param3);
+//
+//	QSharedPointer<Picto::RangeParameter> param4(new Picto::RangeParameter);
+//	param4->setName("NumberOfTargets");
+//	param4->setMin(2);
+//	param4->setMax(10);
+//	param4->setIncrement(2);
+//	param4->setValue(4);
+//	parameters.addScriptable(param4);
+//
+//	//Bind everything
+//	parameters.bindToScriptEngine(qsEngine_);
+//
+//	//Test the numeric parameter
+//	//--------------------------
+//	QSharedPointer<Picto::Parameter> testParam;
+//	testParam = parameters.getParameter("TrialNumber");
+//	QCOMPARE(testParam->getValue().toInt(),1);
+//
+//	script = "TrialNumber.setValue(TrialNumber.getValue() + 5);\n";
+//	qsEngine_.evaluate(script);
+//				
+//	QCOMPARE(qsEngine_.hasUncaughtException(), false);
+//	QCOMPARE(testParam->getValue().toInt(),6);
+//
+//	//Test the boolean parameter
+//	//--------------------------
+//	testParam = parameters.getParameter("passed");
+//	QCOMPARE(testParam->getValue().toBool(),false);
+//
+//	script = "passed.setValue(true);\n";
+//	qsEngine_.evaluate(script);
+//
+//	QCOMPARE(qsEngine_.hasUncaughtException(), false);
+//	QCOMPARE(testParam->getValue().toBool(),true);
+//
+//	//Test the choice parameter
+//	//-------------------------
+//	testParam = parameters.getParameter("color");
+//	QCOMPARE(testParam->getValue().toString(),QString("#00ff00"));
+//
+//	script = "color.setValue(\"Red\");\n";
+//	qsEngine_.evaluate(script);
+//
+//	QCOMPARE(qsEngine_.hasUncaughtException(), false);
+//	QCOMPARE(testParam->getValue().value<QColor>(),QColor(255,0,0));
+//
+//	//Test the range parameter
+//	//------------------------
+//	testParam = parameters.getParameter("NumberOfTargets");
+//	QCOMPARE(testParam->getValue().toInt(),4);
+//
+//	script = "NumberOfTargets.setValue(8);\n";
+//	qsEngine_.evaluate(script);
+//				
+//	QCOMPARE(qsEngine_.hasUncaughtException(), false);
+//	QCOMPARE(testParam->getValue().toInt(),8);
+//
+//}
 
 /*!	\Brief Tests binding to the ArrowGraphic properties
  *
@@ -127,7 +127,7 @@ void TestScripts::TestArrowGraphicBinding()
 	TestVisualElementBinding(arrow);
 
 	arrow->setName("TestArrow");
-	arrow->bindToScriptEngine(qsEngine);
+	arrow->bindToScriptEngine(*qsEngine);
 
 	int initialStartX = randGen_.randInt(300);
 	int initialStartY = randGen_.randInt(300);
@@ -177,7 +177,7 @@ void TestScripts::TestBoxGraphicBinding()
 	TestVisualElementBinding(box);
 
 	box->setName("TestBox");
-	box->bindToScriptEngine(qsEngine);
+	box->bindToScriptEngine(*qsEngine);
 
 	int initialWidth = randGen_.randInt(300);
 	int initialHeight = randGen_.randInt(300);
@@ -209,7 +209,7 @@ void TestScripts::TestCircleGraphicBinding()
 	int initialRadius = randGen_.randInt(300);
 	circle->setRadius(initialRadius);
 	circle->setName("TestCircle");
-	circle->bindToScriptEngine(qsEngine);
+	circle->bindToScriptEngine(*qsEngine);
 
 	qsEngine->evaluate("TestCircle.setRadius(TestCircle.getRadius()+5)");
 	QCOMPARE(qsEngine->hasUncaughtException(),false);
@@ -232,7 +232,7 @@ void TestScripts::TestEllipseGraphicBinding()
 	TestVisualElementBinding(ellipse);
 
 	ellipse->setName("TestEllipse");
-	ellipse->bindToScriptEngine(qsEngine);
+	ellipse->bindToScriptEngine(*qsEngine);
 
 	int initialWidth = randGen_.randInt(300);
 	int initialHeight = randGen_.randInt(300);
@@ -277,7 +277,7 @@ void TestScripts::TestPictureGraphicBinding()
 
 	picture->setName("TestPicture");
 	picture->setImageFile("Test1.jpg");
-	picture->bindToScriptEngine(qsEngine);
+	picture->bindToScriptEngine(*qsEngine);
 
 	qsEngine->evaluate("TestPicture.setImageFile(\"SomeOtherFile.bmp\")");
 	QCOMPARE(qsEngine->hasUncaughtException(),false);
@@ -333,7 +333,7 @@ void TestScripts::TestRandomlyFilledGridGraphicBinding()
 	grid->setNumColor1Squares(initialColor1Sqs);
 	grid->setUpdateRate(initialUpdateRate);
 	grid->setAnimated(false);
-	grid->bindToScriptEngine(qsEngine);
+	grid->bindToScriptEngine(*qsEngine);
 
 	qsEngine->evaluate("TestGrid.setColor2(TestGrid.getRed2()+5, "
 											"TestGrid.getGreen2()+5, "
@@ -407,7 +407,7 @@ void TestScripts::TestVisualElementBinding(QSharedPointer<Picto::VisualElement> 
 	v->setPosition(QPoint(initialX,initialY));
 	v->setName("TestElement");
 
-	v->bindToScriptEngine(qsEngine);
+	v->bindToScriptEngine(*qsEngine);
 
 	qsEngine->evaluate("TestElement.setPosition(TestElement.getX()+5,TestElement.getY()+5)");
 	QCOMPARE(qsEngine->hasUncaughtException(),false);

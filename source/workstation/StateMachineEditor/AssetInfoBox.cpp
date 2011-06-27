@@ -1,0 +1,23 @@
+#include <QtGui>
+#include "AssetInfoBox.h"
+#include "../../common/storage/datastore.h"
+using namespace Picto;
+
+//! [0]
+AssetInfoBox::AssetInfoBox(QSharedPointer<EditorState> editorState,QWidget *parent) :
+	QTextEdit(parent),
+	editorState_(editorState)
+{
+	setReadOnly(true);
+	connect(editorState_.data(), SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),
+        this, SLOT(assetSelected(QSharedPointer<Asset>)));
+}
+
+void AssetInfoBox::assetSelected(QSharedPointer<Asset> asset)
+{
+	if(asset.isNull())
+		return;
+					
+	setText(asset->getInfo());
+	setMinimumWidth(childrenRect().width());
+}

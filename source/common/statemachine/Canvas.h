@@ -2,7 +2,7 @@
 #define _CANVAS_H_
 
 #include "../common.h"
-#include "../storage/DataStore.h"
+#include "../statemachine/UIEnabled.h"
 #include "Layer.h"
 #include "../engine/PictoEngine.h"
 
@@ -15,9 +15,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Canvas : public DataStore
+class PICTOLIB_API Canvas : public UIEnabled
 #else
-class Canvas : public DataStore
+class Canvas : public UIEnabled
 #endif
 {
 	Q_OBJECT
@@ -25,7 +25,7 @@ public:
 	Canvas();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Canvas());};
 
-	void bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
+	void bindToScriptEngine(QScriptEngine& qsEngine);
 
 	void setBackgroundColor(QColor color) { backgroundColor_ = color; };
 
@@ -41,6 +41,7 @@ public:
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
 	virtual QString defaultTagName(){return "Canvas";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

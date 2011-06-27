@@ -40,6 +40,7 @@ public slots:
 	void setDimensions(int width,int height) { setDimensions(QRect(0,0,width,height)); };
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 

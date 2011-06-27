@@ -6,7 +6,7 @@ namespace Picto
 TargetController::TargetController()
 {
 	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
 	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
 	AddDefinableProperty("SignalChannel","");
@@ -24,11 +24,11 @@ TargetController::TargetController()
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"ReacquisitionAllowed",0,"enumNames",reacquisitionAllowedList_);
 
 	//Make sure to update the list of results...
-	addResult("Success");
-	addResult("Broke Fixation");
-	addResult("Total Time Excceeded");
-	addResult("Initial Aquistion Time Exceeded");
-	addResult("Reaquistion Time Exceeded");
+	addRequiredResult("Success");
+	addRequiredResult("Broke Fixation");
+	addRequiredResult("Total Time Excceeded");
+	addRequiredResult("Initial Aquistion Time Exceeded");
+	addRequiredResult("Reaquistion Time Exceeded");
 }
 
 
@@ -224,6 +224,13 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 	}
 }
 
+void TargetController::postSerialize()
+{
+	ControlElement::postSerialize();
+	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
+	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
+}
+
 
 /*! \brief Turns the ControlElement into an XML fragment
  *
@@ -246,9 +253,8 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 
 bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
-	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
-
+	if(!ControlElement::validateObject(xmlStreamReader))
+		return false;
 	return true;
 }
 

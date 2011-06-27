@@ -31,13 +31,13 @@ public:
 	int type();
 	QVariant value();
 	virtual QString valueString();
-	QString name();
+	QString getName();
 	virtual void setValue(QVariant _value);
 	void addAttribute(QString _attributeName, QVariant _attributeValue);
 	QSharedPointer<QtVariantProperty> getVariantProperty(){return variantProp_;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
 
 	virtual QString identifier(){return tagName_;};
 	virtual QString assetType(){return "Property";};
@@ -59,6 +59,7 @@ private:
 	void addSubProperty(QSharedPointer<Property> prop);
 	void setName(QString name);
 	QString tagName_;
+	QString tagText_;
 	QString typeVal_; // In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
 	QSharedPointer<QtVariantPropertyManager> manager_;
 

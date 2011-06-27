@@ -5,16 +5,20 @@
 #include "ArrowDestinationItem.h"
 #include "arrow.h"
 #include <QGraphicsScene>
-WireableItem::WireableItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-AssetItem(itemMenu,asset)
+WireableItem::WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+AssetItem(editorState,contextMenu,asset)
 {
 	arrowDest_ = NULL;
 	lastSourcePos_ = 0;
 }
 
+WireableItem::~WireableItem()
+{
+}
+
 void WireableItem::addArrowSource(QString name)
 {
-	DiagramItem* newArrowSource = new ArrowSourceItem(name,this,scene());
+	DiagramItem* newArrowSource = new ArrowSourceItem(name,getEditorState(),this,scene());
 	newArrowSource->setPos(QPointF(boundingRect().width()/2.0,lastSourcePos_));
 	lastSourcePos_ += newArrowSource->boundingRect().height();
 	newArrowSource->setZValue(zValue()+1);
@@ -25,7 +29,7 @@ void WireableItem::enableArrowDest()
 {
 	if(arrowDest_)
 		return;
-	arrowDest_ = new ArrowDestinationItem("",this,scene());
+	arrowDest_ = new ArrowDestinationItem("",getEditorState(),this,scene());
 	arrowDest_->setPos(QPointF(-boundingRect().width()/2.0+arrowDest_->boundingRect().width(),boundingRect().height()/2.0));
 	arrowDest_->setZValue(zValue()+1);	
 }
@@ -38,14 +42,4 @@ QList<DiagramItem*> WireableItem::getArrowSources()
 DiagramItem* WireableItem::getArrowDest()
 {
 	return arrowDest_;
-}
-
-void WireableItem::removeDependantGraphics()
-{
-	foreach(DiagramItem* arrowSource,arrowSources_)
-	{
-		arrowSource->removeDependantGraphics();
-	}
-	if(arrowDest_)
-		arrowDest_->removeDependantGraphics();
 }

@@ -37,6 +37,7 @@ public:
 	int getAlignNumber(){return alignNumber_;}
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

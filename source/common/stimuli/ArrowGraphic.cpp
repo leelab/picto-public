@@ -9,7 +9,7 @@ const QString ArrowGraphic::type = "Arrow Graphic";
 ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, QColor color)
 {
 	
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Point,"Start",start);
@@ -113,11 +113,16 @@ void ArrowGraphic::slotPropertyValueChanged(QString propertyName, int, QVariant 
 	}
 }
 
+void ArrowGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	draw();
+}
+
 bool ArrowGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
 	return true;
 }
 

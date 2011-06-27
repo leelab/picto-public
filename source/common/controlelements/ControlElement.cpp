@@ -4,33 +4,49 @@ namespace Picto {
 
 ControlElement::ControlElement()
 {
-	//propertyContainer_->addProperty(QVariant::String,"Name","");
-	//propertyContainer_->addProperty(QVariant::String,"Type","");
-
 }
 
-bool ControlElement::addResult(QString resultName)
+//bool ControlElement::addResult(QSharedPointer<Result> result)
+//{
+//	results_[result->name()] = result;
+//	QList<QSharedPointer<Asset>> resultChildren = getGeneratedChildren("Result");
+//	bool found = false;
+//	foreach(QSharedPointer<Asset> resultChild,resultChildren)
+//	{
+//		if(resultChild->name() == result->name())
+//		{
+//			found = true;
+//			break;
+//		}
+//	}
+//	if(!found)
+//		AddChild("Result",result);
+//	return true;
+//}
+//
+//QSharedPointer<Result> ControlElement::getResult(QString name)
+//{
+//	if(results_.contains(name))
+//		return results_[name];
+//	return QSharedPointer<Result>();
+//}
+
+void ControlElement::postSerialize()
 {
-	if(results_.contains(resultName))
-		return false;
-	else
-	{
-		results_.push_back(resultName);
-		QList<QSharedPointer<Asset>> resultChildren = getGeneratedChildren("Result");
-		bool found = false;
-		foreach(QSharedPointer<Asset> result,resultChildren)
-		{
-			if(result.staticCast<Property>()->value().toString() == resultName)
-			{
-				found = true;
-				break;
-			}
-		}
-		if(!found)
-			AddChild("Result",propertyContainer_->addProperty(QVariant::String,"Result",resultName,true));
-		return true;
-	}
+	ResultContainer::postSerialize();
+	////Re-Add all default results as children since serialization clears the child list.
+	//QStringList resultKeys = results_.keys();
+	//foreach(QString resultKey,resultKeys)
+	//{
+	//	AddChild("Result",results_[resultKey]);
+	//}
 }
 
+bool ControlElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!ResultContainer::validateObject(xmlStreamReader))
+		return false;
+	return true;
+}
 
 }; //namespace Picto

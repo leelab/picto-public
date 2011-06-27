@@ -4,7 +4,7 @@ namespace Picto
 {
 StopwatchController::StopwatchController()
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Bool,"OperatorVisible","false");
 	AddDefinableProperty(QVariant::Bool,"SubjectVisible","false");
@@ -21,7 +21,7 @@ StopwatchController::StopwatchController()
 	//propertyContainer_->addProperty(QVariant::Int,"Time",0);
 
 	//Make sure to update the list of results...
-	addResult("Success");
+	addRequiredResult("Success");
 }
 
 
@@ -95,6 +95,13 @@ QString StopwatchController::getResult()
 		return "";
 }
 
+void StopwatchController::postSerialize()
+{
+	ControlElement::postSerialize();
+	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
+	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
+}
+
 
 
 ///*! \brief Turns the ControlElement into an XML fragment
@@ -109,9 +116,8 @@ QString StopwatchController::getResult()
 
 bool StopwatchController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
-	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
-
+	if(!ControlElement::validateObject(xmlStreamReader))
+		return false;
 	return true;
 }
 

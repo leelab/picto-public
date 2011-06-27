@@ -46,6 +46,7 @@
 #include "diagramitem.h"
 #include "diagramtextitem.h"
 #include "DiagramItemFactory.h"
+#include "EditorState.h"
 #include "../../common/storage/asset.h"
 #include <QSharedPointer>
 #include <QPointer>
@@ -69,27 +70,19 @@ class DiagramScene : public QGraphicsScene
 public:
     enum Mode { Select, InsertLine};
 
-    DiagramScene(QMenu *itemMenu, QObject *parent = 0, QSharedPointer<Asset> sceneAsset = QSharedPointer<Asset>());
-    QFont font() const
-        { return myFont; }
-    QColor textColor() const
-        { return myTextColor; }
-    QColor itemColor() const
-        { return myItemColor; }
-    QColor lineColor() const
-        { return myLineColor; }
-    void setLineColor(const QColor &color);
+    DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent = 0);
+
+	QGraphicsLineItem* insertTransition(DiagramItem* source, DiagramItem* dest, QSharedPointer<Asset> transition = QSharedPointer<Asset>());
+	DiagramItem* insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos);
+
+public slots:
+	void setSceneAsset(QSharedPointer<Asset> asset);
+	void setLineColor(const QColor &color);
     void setTextColor(const QColor &color);
     void setItemColor(const QColor &color);
     void setFont(const QFont &font);
-	QGraphicsLineItem* insertTransition(DiagramItem* source, DiagramItem* dest);
-	DiagramItem* insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos);
-	void setSceneAsset(QSharedPointer<Asset> asset);
-
-public slots:
-    void setMode(Mode mode);
+	void setBackgroundPattern(QPixmap pattern);
 	void setInsertionItem(QString itemName);
-    void setItemType(DiagramItem::DiagramType type);
     void editorLostFocus(DiagramTextItem *item);
 	void deleteSelectedItems();
 	void bringToFront();
@@ -108,27 +101,21 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
-protected slots:
-	void setSelectedItem(QGraphicsItem *item);
-
 private:
+	QSharedPointer<Asset> createNewAsset();
+	void insertTextItem(QString text,QPointF pos);
     bool isItemChange(int type);
 
+	QSharedPointer<EditorState> editorState_;
 	QSharedPointer<DiagramItemFactory> diagItemFactory_;
     DiagramItem::DiagramType myItemType;
 	QString insertionItem_;
+	int newItemIndex_;
     QMenu *myItemMenu;
-	QSharedPointer<Asset> selectedAsset_;
-	QSharedPointer<Asset> sceneAsset_;
-    Mode myMode;
     bool leftButtonDown;
     QPointF startPoint;
     QGraphicsLineItem *line;
-    QFont myFont;
     DiagramTextItem *textItem;
-    QColor myTextColor;
-    QColor myItemColor;
-    QColor myLineColor;
 };
 //! [0]
 

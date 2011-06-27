@@ -337,9 +337,9 @@ void TestPredicates::TestPredicateExpressionEvaluation()
 	B->setMin(minValue);
 	B->setMax(maxValue);
 	B->setName("RangeParameterB");
-	paramContainer.addParameter(A);
-	paramContainer.addParameter(B);
-	predExp->setParameterContainer(&paramContainer);
+	paramContainer.addScriptable(A);
+	paramContainer.addScriptable(B);
+	predExp->addScriptables(&paramContainer);
 
 	for(int i=0; i<numTests; i++)
 	{
@@ -402,10 +402,10 @@ void TestPredicates::TestPredicateExpressionEvaluation()
 	C->setName("BooleanParameterC");
 	D->setName("BooleanParameterD");
 
-	paramContainer.addParameter(C);
-	paramContainer.addParameter(D);
+	paramContainer.addScriptable(C);
+	paramContainer.addScriptable(D);
 
-	predExp->setParameterContainer(&paramContainer);
+	predExp->addScriptables(&paramContainer);
 
 	//test all the combinations of parameters
 	predExp->setLHS("BooleanParameterC");
@@ -461,8 +461,8 @@ void TestPredicates::TestPredicateExpressionOutputs()
 	param2->addChoice("Two", 2);
 	param2->setValue("Two");
 
-	paramContainer.addParameter(param1);
-	paramContainer.addParameter(param2);
+	paramContainer.addScriptable(param1);
+	paramContainer.addScriptable(param2);
 
 	////////////////////////////////
 	//Test the text output with parameters on both sides
@@ -472,7 +472,7 @@ void TestPredicates::TestPredicateExpressionOutputs()
 	predExp = new Picto::PredicateExpression("Greater than");
 	predExp->setLHS("Parameter 1");
 	predExp->setRHSParam("Parameter 2");
-	predExp->setParameterContainer(&paramContainer);
+	predExp->addScriptables(&paramContainer);
 
 	QCOMPARE(predExp->toString(false,false),QString("1 > 2"));
 	QCOMPARE(predExp->toString(true,false),QString("Parameter 1 > 2"));
@@ -572,7 +572,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 		range->setMax(maxValue);
 		range->setName(name);
 
-		paramContainer.addParameter(range);
+		paramContainer.addScriptable(range);
 	}
 
 
@@ -594,7 +594,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	compoundExpr->setLHSPredicateExp(predExprA, false);
 	compoundExpr->setRHSPredicateExp(predExprB, false);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
-	compoundExpr->setParameterContainer(&paramContainer);
+	compoundExpr->addScriptables(&paramContainer);
 
 
 
@@ -701,7 +701,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	compoundExpr->setLHSCompoundExp(compoundExprA,false);
 	compoundExpr->setRHSPredicateExp(predExprC,false);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
-	compoundExpr->setParameterContainer(&paramContainer);
+	compoundExpr->addScriptables(&paramContainer);
 
 
 	for(int i=0; i<numTests; i++)
@@ -759,7 +759,7 @@ void TestPredicates::TestCompoundExpressionEvaluation()
 	compoundExpr->setLHSCompoundExp(compoundExprA,false);
 	compoundExpr->setRHSCompoundExp(compoundExprB,false);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
-	compoundExpr->setParameterContainer(&paramContainer);
+	compoundExpr->addScriptables(&paramContainer);
 
 
 	for(int i=0; i<numTests; i++)
@@ -845,7 +845,7 @@ void TestPredicates::TestCompoundExpressionOutputs()
 		range->setMax(maxValue);
 		range->setName(name);
 		range->setValue(42);
-		paramContainer.addParameter(range);
+		paramContainer.addScriptable(range);
 	}
 
 
@@ -868,7 +868,7 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	compoundExpr->setLHSPredicateExp(predExprA);
 	compoundExpr->setRHSPredicateExp(predExprB);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::and);
-	compoundExpr->setParameterContainer(&paramContainer);
+	compoundExpr->addScriptables(&paramContainer);
 
 
 	//Test list
@@ -1004,7 +1004,7 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	compoundExpr->setRHSPredicateExp(predExprC);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
 
-	compoundExpr->setParameterContainer(&paramContainer);
+	compoundExpr->addScriptables(&paramContainer);
 
 	//Test the text output
 	//Names only
@@ -1053,7 +1053,7 @@ void TestPredicates::TestCompoundExpressionOutputs()
 	compoundExpr->setRHSCompoundExp(compoundExprB);
 	compoundExpr->setOperator(Picto::CompoundExpressionOperator::or);
 
-	compoundExpr->setParameterContainer(&paramContainer);
+	compoundExpr->addScriptables(&paramContainer);
 
 	//Test the text output
 	//Names only

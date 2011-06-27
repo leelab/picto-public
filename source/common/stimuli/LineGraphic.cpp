@@ -8,10 +8,10 @@ const QString LineGraphic::type = "Line Graphic";
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
-	AddDefinableProperty(QVariant::Point,"Point",QPoint(),2,-1);
+	AddDefinableProperty("Points","(1,1)(2,2)...(n,n)");
 	//propertyContainer_->setContainerName(type);
 
 	//propertyContainer_->setPropertyValue("Position",position);
@@ -34,22 +34,14 @@ LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 
 void LineGraphic::draw()
 {
-	QVector<QPoint> points;
 	int left = 0, top = 0, right = 0, bottom = 0;
 
-	foreach(QString propertyName, propertyContainer_->getPropertyList())
+	foreach(QPoint point, points_)
 	{
-		//if(propertyName.left(5)=="Point")
-		if(propertyName=="Point")
-		{
-			QPoint point = propertyContainer_->getPropertyValue(propertyName).toPoint();
-			points.push_back(point);
-
-			if(point.x() < left) left = point.x();
-			if(point.x() > right) right = point.x();
-			if(point.y() < top) top = point.y();
-			if(point.y() > bottom) bottom = point.y();
-		}
+		if(point.x() < left) left = point.x();
+		if(point.x() > right) right = point.x();
+		if(point.y() < top) top = point.y();
+		if(point.y() > bottom) bottom = point.y();
 	}
 
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
@@ -60,9 +52,9 @@ void LineGraphic::draw()
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(color);
 	p.setPen(color);
-	for(int i = 1; i < points.count(); i++)
+	for(int i = 1; i < points_.count(); i++)
 	{
-		p.drawLine(points[i-1],points[i]);
+		p.drawLine(points_[i-1],points_[i]);
 	}
 	p.end();
 	image_ = image;
@@ -86,11 +78,53 @@ void LineGraphic::slotPropertyValueChanged(QString propertyName, int,
 	}
 }
 
+void LineGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+
+	QString pointsStr = propertyContainer_->getPropertyValue("Points").toString();
+	QStringList pointsSep = pointsStr.split(")",QString::SkipEmptyParts);
+	bool xOk = true, yOk = true;
+	foreach(QString pointStr,pointsSep)
+	{
+		pointStr.replace(" ","");
+		pointStr.replace("(","");
+		QStringList xAndY = pointStr.split(",");
+		if(xAndY.size() != 2)
+			return;
+		points_.push_back(QPoint(xAndY.first().toInt(&xOk),xAndY.last().toInt(&yOk)));
+		if(!(xOk && yOk))
+			return;
+	}
+	draw();
+}
+
 bool LineGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
+
+	QString pointsStr = propertyContainer_->getPropertyValue("Points").toString();
+	QStringList pointsSep = pointsStr.split(")",QString::SkipEmptyParts);
+	bool xOk = true, yOk = true;
+	foreach(QString pointStr,pointsSep)
+	{
+		pointStr.replace(" ","");
+		pointStr.replace("(","");
+		QStringList xAndY = pointStr.split(",");
+		if(xAndY.size() != 2)
+		{
+			addError("LineGraphic","Points string is incorrectly formed:\n" + pointsStr.toAscii(),xmlStreamReader);
+			return false;
+		}
+		xAndY.first().toInt(&xOk);
+		xAndY.last().toInt(&yOk);
+		if(!(xOk && yOk))
+		{
+			addError("LineGraphic","Points string is incorrectly formed:\n" + pointsStr.toAscii(),xmlStreamReader);
+			return false;
+		}
+	}
 	return true;
 }
 

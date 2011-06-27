@@ -8,7 +8,7 @@ ChoiceController::ChoiceController()
 {
 	//Properties
 	//propertyContainer_->setPropertyValue("Type",ControllerType());
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::String,"SignalChannel","");
 	AddDefinableProperty(QVariant::String,"Shape","");
 
@@ -28,11 +28,15 @@ ChoiceController::ChoiceController()
 
 	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
 	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
-	AddDefinableProperty(QVariant::Rect,"Target",QRect(),0,-1);
+	addResultFactoryType("Target",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlTarget::Create))));
 
+	//resultFactory_->addAssetType("Target",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlTarget::Create))));
+	//setMaxUntypedResults(2);
 	//Make sure to update the list of results...
-	addResult("Broke Fixation");
-	addResult("Total Time Excceeded");
+	addRequiredResult("Broke Fixation");
+	addRequiredResult("Total Time Exceeded");
+	setMaxOptionalResults(0,"");
 }
 
 
@@ -44,30 +48,6 @@ ControlElement* ChoiceController::NewChoiceController()
 QString ChoiceController::ControllerType()
 {
 	return "Choice Controller";
-}
-
-bool ChoiceController::addTarget(QString targetName, QRect target)
-{
-	//Figure out what target number we're on...
-	int targetNum = propertyContainer_->getPropertyList().filter("Target").length();
-	targetNum++;
-
-	//confirm that the new target name doesn't conflict
-	if(results_.contains(targetName))
-		return false;
-	if(targetName == "NotATarget")
-		return false;
-
-	//Add the new properties
-	QString namePropertyStr = QString("TargetName%1").arg(targetNum);
-	QString targetPropertyStr = QString("Target%1").arg(targetNum);
-
-	propertyContainer_->addProperty(QVariant::String,namePropertyStr, targetName);
-	propertyContainer_->addProperty(QVariant::Rect,targetPropertyStr, target);
-
-	addResult(targetName);
-
-	return true;
 }
 
 void ChoiceController::start(QSharedPointer<Engine::PictoEngine> engine)
@@ -101,7 +81,7 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	if(currTotalTime >= totalTime)
 	{
 		isDone_ = true;
-		result_ = "Total Time Excceeded";
+		result_ = "Total Time Exceeded";
 		return true;
 	}
 
@@ -175,12 +155,12 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 	}
 
 	//Run through the targets checking them
-	foreach(QSharedPointer<Property> target, targets_)
+	foreach(QSharedPointer<ControlTarget> target, targets_)
 	{
-		QRect targetRect = target->value().toRect();
+		QRect targetRect = target->getBounds();
 		if(checkSingleTarget(targetRect))
 		{
-			QString targetName = target->name();
+			QString targetName = target->getName();
 			return targetName;
 		}
 	}
@@ -242,6 +222,21 @@ QString ChoiceController::getResult()
 	return result_;
 }
 
+void ChoiceController::postSerialize()
+{
+	ControlElement::postSerialize();
+	shapeIndex_ = propertyContainer_->getPropertyValue("Shape").toInt();
+	timeUnits_ = propertyContainer_->getPropertyValue("TimeUnits").toInt();
+
+	QString targetName;
+	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Result");
+	foreach(QSharedPointer<Asset> target, targetChildren)
+	{
+		if(target->assetType() == "ControlTarget")
+			targets_.push_back(target.staticCast<ControlTarget>());
+	}
+}
+
 ///*! \Brief turns a choice controller into XML
 // *
 // *	The XML for a choice controller will look like this:
@@ -260,41 +255,46 @@ QString ChoiceController::getResult()
 
 bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	QString name = propertyContainer_->getPropertyValue("Name").toString();
-	setName(name);
-	shapeIndex_ = propertyContainer_->getPropertyValue("Shape").toInt();
+	if(!ControlElement::validateObject(xmlStreamReader))
+		return false;
 	if(shapeIndex_ <0)
 	{
 		addError("ChoiceController","Unrecognized shape",xmlStreamReader);
 		return false;
 	}
-
-	timeUnits_ = propertyContainer_->getPropertyValue("TimeUnits").toInt();
 	if(timeUnits_<0)
 	{
-		addError("ChoiceController", "Unrecognized units for " + name.toAscii(),xmlStreamReader);
+		addError("ChoiceController", "Unrecognized units for " + getName().toAscii(),xmlStreamReader);
 		return false;
 	}
 
 	QString targetName;
-	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Target");
+	QMap<QString,bool> targetNameMap;
+	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
-		targetName = target.staticCast<Property>()->name();
+		if(target->assetType() != "ControlTarget")
+		{
+			if((target->getName() != "Broke Fixation")
+				&& (target->getName() != "Total Time Exceeded"))
+			{
+				addError("ChoiceController", "Only Target Results can be used in a ChoiceController.", xmlStreamReader);
+				return false;
+			}
+		}
+		targetName = target->getName();
 		if(targetName == "NotATarget")
 		{
 			addError("ChoiceController", "Target name cannot be 'NotATarget'", xmlStreamReader);
 			return false;
 		}
 		//confirm that the new target name doesn't conflict
-		if(results_.contains(targetName))
+		if(targetNameMap.contains(targetName))
 		{
 			addError("ChoiceController", "No two Targets can have the same name.", xmlStreamReader);
 			return false;
 		}
-		addResult(targetName);
-		targets_.push_back(target.staticCast<Property>());
+		targetNameMap[targetName] = true;
 	}
-
 	return true;
 }

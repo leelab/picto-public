@@ -5,6 +5,8 @@
 #include "../../common/storage/asset.h"
 #include <QSharedPointer>
 #include <QString>
+#include <QList>
+#include "EditorState.h"
 using namespace Picto;
 
 QT_BEGIN_NAMESPACE
@@ -21,15 +23,14 @@ class Toolbox : public QToolBox
     Q_OBJECT
 
 public:
-   Toolbox(QWidget *parent=0);
+   Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent=0);
+
+public slots:
    void setAsset(QSharedPointer<Asset> asset);
-   void resize();
-   QString getSelectedButton();
-signals:
-   void insertionItemSelected(QString itemName);
+
 private:
-	ToolGroup* assetTools_;
-	ToolGroup* backgroundTools_;
+	QList<ToolGroup*> toolGroups_;
+	QSharedPointer<EditorState> editorState_;
 };
 //! [0]
 

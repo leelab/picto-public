@@ -17,6 +17,8 @@ class DataUnit : public  Serializable
 public:
 	DataUnit();
 
+	using Serializable::toXml;
+	using Serializable::fromXml;
 	bool toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

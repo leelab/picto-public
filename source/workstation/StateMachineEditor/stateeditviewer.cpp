@@ -49,19 +49,22 @@
 #include "diagramscene.h"
 #include "diagramtextitem.h"
 #include "AssetItem.h"
+#include "PropertyBrowser.h"
+#include "AssetInfoBox.h"
 
 const int InsertTextButton = 10;
 
 //! [0]
 StateEditViewer::StateEditViewer(QWidget *parent) :
-	Viewer(parent)
+	Viewer(parent),
+	editorState_(new EditorState())
 {
 	scene = NULL;
 	view = NULL;
 	createActions();
 	createMenus();
     createToolbars();
-	topmostScene = new DiagramScene(itemMenu);
+	topmostScene = new DiagramScene(editorState_,itemMenu);
 	loadScene(topmostScene);
 	connectActions();
 	
@@ -75,14 +78,18 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 
     QHBoxLayout *layout = new QHBoxLayout;
 
-	toolbox_ = new Toolbox;
-	connect(toolbox_, SIGNAL(insertionItemSelected(QString)),scene, SLOT(setInsertionItem(QString)));
+	toolbox_ = new Toolbox(editorState_);
 	layout->addWidget(toolbox_);
     layout->addWidget(view);
 
-	variantFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory());
-	variantEditor_ = new QtGroupBoxPropertyBrowser();
-	layout->addWidget(variantEditor_);
+	QVBoxLayout * rLayout = new QVBoxLayout;
+	propertyEditor_ = new PropertyBrowser(editorState_);
+	assetInfoBox_ = new AssetInfoBox(editorState_);
+	rLayout->addWidget(propertyEditor_);
+	rLayout->addWidget(assetInfoBox_);
+	QWidget* rightSideWidget = new QWidget();
+	rightSideWidget->setLayout(rLayout);
+	layout->addWidget(rightSideWidget);
 	layout->setStretch(1,10);
 
 	mainLayout->addLayout(toolbarLayout);
@@ -99,13 +106,49 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 //! [0]
 void StateEditViewer::init()
 {
-	if(!experiment_)
+	if(!experiment_ || !experiment_->validateTree())
 	{
-		QMessageBox msg;
-		msg.setText("Failed to load current experiment.");
-		msg.exec();
+		QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
+
+		//read until we either see an experiment tag, or the end of the file
+		while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
+			xmlReader->readNext();
+
+		if(xmlReader->atEnd())
+		{
+			QMessageBox msg;
+			msg.setText("Experiment XML did not contain <Experiment> tag");
+			msg.exec();
+			return;
+		}
+
+		experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
+		//experiment_->clearErrors();
+		//experiment_->clear();
+		Picto::Asset::clearErrors();
+		
+		if(!experiment_->fromXml(xmlReader,false))
+		{
+			QMessageBox msg;
+			msg.setText("Failed to load current definition.  Please attempt to correct experiment in Text Editor");
+			msg.exec();
+			return;
+		}
+
 	}
-	topmostScene->setSceneAsset(experiment_.staticCast<Asset>());
+	editorState_->setWindowAsset(experiment_.staticCast<Asset>());
+
+	/*topmostScene->setSceneAsset(experiment_.staticCast<Asset>());*/
+}
+
+void StateEditViewer::deinit()
+{
+	insertEditBlock();
+}
+
+void StateEditViewer::aboutToSave()
+{
+	insertEditBlock();
 }
 //! [1]
 //void StateEditViewer::backgroundButtonGroupClicked(QAbstractButton *button)
@@ -132,7 +175,7 @@ void StateEditViewer::init()
 //! [4]
 void StateEditViewer::pointerGroupClicked(int)
 {
-    scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
+    editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
 }
 
 //! [6]
@@ -141,7 +184,7 @@ void StateEditViewer::pointerGroupClicked(int)
 void StateEditViewer::itemInserted(DiagramItem *)
 {
     pointerTypeGroup->button(int(DiagramScene::Select))->setChecked(true);
-    scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
+    editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
     
 }
 //! [7]
@@ -150,7 +193,7 @@ void StateEditViewer::itemInserted(DiagramItem *)
 void StateEditViewer::textInserted(QGraphicsTextItem *)
 {
     buttonGroup->button(InsertTextButton)->setChecked(false);
-    scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
+    editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
 }
 //! [8]
 
@@ -215,21 +258,21 @@ void StateEditViewer::lineColorChanged()
 //! [15]
 void StateEditViewer::textButtonTriggered()
 {
-    scene->setTextColor(qVariantValue<QColor>(textAction->data()));
+    editorState_->setTextColor(qVariantValue<QColor>(textAction->data()));
 }
 //! [15]
 
 //! [16]
 void StateEditViewer::fillButtonTriggered()
 {
-    scene->setItemColor(qVariantValue<QColor>(fillAction->data()));
+    editorState_->setItemColor(qVariantValue<QColor>(fillAction->data()));
 }
 //! [16]
 
 //! [17]
 void StateEditViewer::lineButtonTriggered()
 {
-    scene->setLineColor(qVariantValue<QColor>(lineAction->data()));
+    editorState_->setLineColor(qVariantValue<QColor>(lineAction->data()));
 }
 //! [17]
 
@@ -242,13 +285,13 @@ void StateEditViewer::handleFontChange()
     font.setItalic(italicAction->isChecked());
     font.setUnderline(underlineAction->isChecked());
 
-    scene->setFont(font);
+    editorState_->setFont(font);
 }
 //! [18]
-void StateEditViewer::assetSelected(QSharedPointer<Asset> asset)
-{
-	loadAssetProperties(asset);
-}
+//void StateEditViewer::assetSelected(QSharedPointer<Asset> asset)
+//{
+//	loadAssetProperties(asset);
+//}
 
 //! [19]
 void StateEditViewer::itemSelected(QGraphicsItem *item)
@@ -267,11 +310,11 @@ void StateEditViewer::itemSelected(QGraphicsItem *item)
 		underlineAction->setChecked(font.underline());
 		return;
 	}
-	AssetItem *assetItem = qgraphicsitem_cast<AssetItem *>(item);
-	if(assetItem)
-	{
-		loadAssetProperties(assetItem->getAsset());
-	}
+	//AssetItem *assetItem = qgraphicsitem_cast<AssetItem *>(item);
+	//if(assetItem)
+	//{
+	//	loadAssetProperties(assetItem->getAsset());
+	//}
 }
 //! [19]
 
@@ -322,43 +365,94 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
         this, SLOT(textInserted(QGraphicsTextItem *)));
     connect(newScene, SIGNAL(itemSelected(QGraphicsItem *)),
         this, SLOT(itemSelected(QGraphicsItem *)));
-	connect(newScene, SIGNAL(assetSelected(QSharedPointer<Asset>)),
-        this, SLOT(assetSelected(QSharedPointer<Asset>)));
-	connect(newScene, SIGNAL(sceneAssetChanged(QSharedPointer<Asset>)),
-		this, SLOT(loadAsset(QSharedPointer<Asset>)));
+	connect(editorState_.data(),SIGNAL(resetExperiment()),
+		this,SLOT(resetExperiment()));
+	//connect(editorState_.data(), SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),
+ //       this, SLOT(assetSelected(QSharedPointer<Asset>)));
+	//connect(editorState_.data(), SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),
+	//	this, SLOT(loadAsset(QSharedPointer<Asset>)));
 }
 
-void StateEditViewer::loadAsset(QSharedPointer<Asset> asset)
+//void StateEditViewer::loadAsset(QSharedPointer<Asset> asset)
+//{
+//	toolbox_->setAsset(asset);
+//	loadAssetProperties(asset);
+//}
+
+//void StateEditViewer::loadAssetProperties(QSharedPointer<Asset> asset)
+//{
+//	propertyEditor_->clear();
+//	if(asset.isNull())
+//		return;
+//					
+//	QSharedPointer<DataStore> dataStore(asset.dynamicCast<DataStore>());
+//	if(dataStore.isNull())
+//		return;
+//
+//	propertyEditor_->setFactoryForManager(dataStore->getPropertyContainer()->getPropertyManager().data(), propertyFactory_.data());
+//	QMap<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
+//	for(QMap<QString, QVector<QSharedPointer<Property>>>::iterator typeIter = properties.begin();typeIter !=properties.end();typeIter ++)
+//	{
+//		for(QVector<QSharedPointer<Property>>::iterator propIter = typeIter.value().begin(); propIter != typeIter.value().end(); propIter++)
+//		{
+//			propertyEditor_->addProperty((*propIter)->getVariantProperty().data());
+//		}
+//	}
+//	propertyEditor_->setMinimumWidth(propertyEditor_->childrenRect().width());
+//}
+
+void StateEditViewer::resetExperiment()
 {
-	toolbox_->setAsset(asset);
-	loadAssetProperties(asset);
+	insertEditBlock();
+	reloadExperimentFromDoc();
 }
 
-void StateEditViewer::loadAssetProperties(QSharedPointer<Asset> asset)
+void StateEditViewer::insertEditBlock()
 {
-	variantEditor_->clear();
-	if(asset.isNull())
+	Q_ASSERT(experimentText_);
+	QString newText = experiment_->toXml();
+	if(newText == experimentText_->toPlainText())
 		return;
-					
-	QSharedPointer<DataStore> dataStore(asset.dynamicCast<DataStore>());
-	if(dataStore.isNull())
-		return;
+	//experimentText_->setPlainText(experiment_->toXml());
+	//All of the operations below are in place of setPlainText
+	//because setPlainText is not undoable, whereas the operations
+	//below are.
+	QTextCursor cursor = QTextCursor(experimentText_);
+	cursor.beginEditBlock();
+	cursor.select(QTextCursor::Document);
+	cursor.removeSelectedText();
+	cursor.insertText(experiment_->toXml());
+	cursor.endEditBlock();
+}
 
-	variantEditor_->setFactoryForManager(dataStore->getPropertyContainer()->getPropertyManager().data(), variantFactory_.data());
-	QMap<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
-	for(QMap<QString, QVector<QSharedPointer<Property>>>::iterator typeIter = properties.begin();typeIter !=properties.end();typeIter ++)
-	{
-		for(QVector<QSharedPointer<Property>>::iterator propIter = typeIter.value().begin(); propIter != typeIter.value().end(); propIter++)
-		{
-			variantEditor_->addProperty((*propIter)->getVariantProperty().data());
-		}
-	}
-	variantEditor_->setMinimumWidth(variantEditor_->childrenRect().width());
+void StateEditViewer::performUndoAction()
+{
+	if(!experimentText_->isUndoAvailable())
+		return;
+	experimentText_->undo();
+	reloadExperimentFromDoc();
+}
+void StateEditViewer::performRedoAction()
+{
+	if(!experimentText_->isRedoAvailable())
+		return;
+	experimentText_->redo();
+	reloadExperimentFromDoc();
 }
 
 //! [23]
 void StateEditViewer::createActions()
 {
+	undoAction = new QAction(QIcon(""),
+                                tr("&Undo"), this);
+    undoAction->setShortcut(tr("Ctrl+Z"));
+    undoAction->setStatusTip(tr("Undo last action"));
+
+	redoAction = new QAction(QIcon(""),
+                                tr("&Redo"), this);
+    redoAction->setShortcut(tr("Ctrl+Y"));
+    redoAction->setStatusTip(tr("Redo action"));
+
     toFrontAction = new QAction(QIcon(":/icons/bringtofront.png"),
                                 tr("Bring to &Front"), this);
     toFrontAction->setShortcut(tr("Ctrl+F"));
@@ -400,6 +494,11 @@ void StateEditViewer::createActions()
 
 void StateEditViewer::connectActions()
 {
+	connect(undoAction, SIGNAL(triggered()),this, SLOT(performUndoAction()));
+	connect(redoAction, SIGNAL(triggered()),this, SLOT(performRedoAction()));
+	connect(experimentText_,SIGNAL(undoAvailable(bool)),undoAction,SLOT(setEnabled(bool)));
+	connect(experimentText_,SIGNAL(redoAvailable(bool)),redoAction,SLOT(setEnabled(bool)));
+
 	connect(toFrontAction, SIGNAL(triggered()),scene, SLOT(bringToFront()));
     connect(sendBackAction, SIGNAL(triggered()),scene, SLOT(sendToBack()));
     connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));
@@ -408,6 +507,7 @@ void StateEditViewer::connectActions()
     connect(italicAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
     connect(underlineAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
     connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
+	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
 }
 
 //! [24]
@@ -436,6 +536,8 @@ void StateEditViewer::createToolbars()
     editToolBar->addAction(deleteAction);
     editToolBar->addAction(toFrontAction);
     editToolBar->addAction(sendBackAction);
+	editToolBar->addAction(undoAction);
+	editToolBar->addAction(redoAction);
 
     fontCombo = new QFontComboBox();
     fontSizeCombo = new QComboBox();
@@ -525,7 +627,58 @@ void StateEditViewer::createToolbars()
     pointerToolbar->addWidget(sceneScaleCombo);
 //! [27]
 }
-//! [27]
+
+void StateEditViewer::reloadExperimentFromDoc()
+{
+	// Get current path (THE PATH IS CURRENTLY ACCORDING TO THE ORDER OF CHILDREN.  FIX THIS!!)
+	QList<QString> tags;
+	QList<int> tagIndeces;
+	QSharedPointer<Asset> curr = editorState_->getWindowAsset();
+	QSharedPointer<DataStore> parent = curr->getParentAsset().staticCast<DataStore>();
+	while(!parent.isNull())
+	{
+		tags.push_front(curr->identifier());
+		int i=0;
+		foreach(QSharedPointer<Picto::Asset> asset, parent->getGeneratedChildren(curr->identifier()))
+		{
+			if(asset == curr)
+			{
+				tagIndeces.push_front(i);
+				break;
+			}
+			i++;
+		}
+		curr = parent;
+		parent = curr->getParentAsset().staticCast<Picto::DataStore>();
+	}
+
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
+
+	//read until we either see an experiment tag, or the end of the file
+	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
+		xmlReader->readNext();
+
+	Q_ASSERT(!xmlReader->atEnd());
+
+	experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
+
+	if(!experiment_->fromXml(xmlReader,false))
+	{
+		Q_ASSERT_X(false,"StateEditViewer::resetExperiment",Serializable::getErrors().toAscii());
+	}
+
+	//Restore old path 
+	curr = experiment_;
+	while(tags.size())
+	{
+		QString tagName = tags.takeFirst();
+		int index = tagIndeces.takeFirst();
+		curr = curr.staticCast<Picto::DataStore>()->getGeneratedChildren(tagName).at(index);
+	}
+
+	editorState_->setWindowAsset(curr);
+	return;
+}
 
 //! [28]
 QWidget *StateEditViewer::createBackgroundCellWidget(const QString &text,
@@ -554,7 +707,7 @@ QWidget *StateEditViewer::createCellWidget(const QString &text,
                       DiagramItem::DiagramType type)
 {
 	// JOEY TOOK THE TYPE OUT BELOW... We will use the factory to replace this functionality
-    DiagramItem item(/*type, */itemMenu);
+    DiagramItem item(/*type, */editorState_,itemMenu);
     QIcon icon(item.image());
 
     QToolButton *button = new QToolButton;

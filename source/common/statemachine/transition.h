@@ -26,13 +26,17 @@ public:
 	Transition(QString source, QString sourceResult, QString destination);
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Transition());};
 
-	void setSource(QString source) { source_ = source; };
-	void setSourceResult(QString sourceResult) { sourceResult_ = sourceResult; };
-	void setDestination(QString destination) { destination_ = destination; };
+	void setSource(QString source);
+	void setSourceResult(QString sourceResult);
+	void setDestination(QString destination);
 
-	QString getSource() { return source_; };
-	QString getSourceResult() { return sourceResult_; };
-	QString getDestination() { return destination_; };
+	void setSource(QSharedPointer<Asset> source);
+	void setSourceResult(QSharedPointer<Asset> sourceResult);
+	void setDestination(QSharedPointer<Asset> destination);
+
+	QString getSource();
+	QString getSourceResult();
+	QString getDestination();
 	
 	//DataStore functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -41,12 +45,16 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "Transition";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QString source_;
-	QString sourceResult_;
-	QString destination_;
+	QSharedPointer<Asset> sourceAsset_;
+	QSharedPointer<Asset> sourceResultAsset_;
+	QSharedPointer<Asset> destinationAsset_;
+private slots:
+	void setValuesFromAssets();
+	void linkedAssetDeleted();
 
 };
 

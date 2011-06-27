@@ -6,6 +6,8 @@
 #include "../property/PropertyContainer.h"
 #include "../storage/DataStore.h"
 #include "../engine/PictoEngine.h"
+#include "../statemachine/result.h"
+#include "../statemachine/resultcontainer.h"
 
 #include <QObject>
 
@@ -24,9 +26,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ControlElement : public DataStore
+class PICTOLIB_API ControlElement : public ResultContainer
 #else
-class ControlElement : public DataStore
+class ControlElement : public ResultContainer
 #endif
 {
 	Q_OBJECT
@@ -37,6 +39,7 @@ public:
 	//isDone will return true if the ControlElement has completed.
 	virtual bool isDone(QSharedPointer<Engine::PictoEngine> engine) {return true;};
 
+	using ResultContainer::getResult;
 	//getResult returns the result from a completed ControlElement
 	//if the ControlElement hasn't completed, this returns an empty string
 	virtual QString getResult() {return "";};
@@ -44,10 +47,11 @@ public:
 	//called to start the controller running
 	virtual void start(QSharedPointer<Engine::PictoEngine> engine){};
 
-	void setName(QString name) { propertyContainer_->setPropertyValue("Name", name); };
-	QString getName() { return propertyContainer_->getPropertyValue("Name").toString(); };
+	//void setName(QString name) { propertyContainer_->setPropertyValue("Name", name); };
 
-	QStringList getResultList() { return results_; };
+	//QStringList getResultList() { return results_.keys(); };
+	//QSharedPointer<Result> getResult(QString name);
+
 	virtual QString assetType(){return "ControlElement";};
 
 	//DataStore Functions
@@ -56,8 +60,11 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "ControlElement";};
-	bool addResult(QString resultName);
-	QStringList results_;
+	//bool addResult(QSharedPointer<Result> result);
+	virtual void postSerialize();
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+	//QMap<QString,QSharedPointer<Result>> results_;
 
 	bool operatorVisible_;
 	bool subjectVisible_;

@@ -9,12 +9,9 @@ namespace Picto {
 
 PredicateExpression::PredicateExpression()
 {
-	AddDefinableProperty("Name","");
 	AddDefinableProperty(QVariant::Int,"Order",0);
-	AddDefinableProperty(QVariant::String,"LeftParameter","",0,1);
-	AddDefinableProperty(QVariant::String,"RightParameter","",0,1);
-	AddDefinableProperty(QVariant::String,"Comparison","",0,1);
-	AddDefinableProperty(QVariant::String,"Value","",0,1);
+	AddDefinableProperty(QVariant::String,"LeftParameter","");
+	AddDefinableProperty(QVariant::String,"Comparison","");
 
 	LHSParamName_ = "";
 	RHSParamName_ = "";
@@ -25,20 +22,18 @@ PredicateExpression::PredicateExpression()
 
 PredicateExpression::PredicateExpression(QString predicateName)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Int,"Order",0);
-	AddDefinableProperty(QVariant::String,"LeftParameter","",0,1);
-	AddDefinableProperty(QVariant::String,"RightParameter","",0,1);
-	AddDefinableProperty(QVariant::String,"Comparison","",0,1);
-	AddDefinableProperty(QVariant::String,"Value","",0,1);
+	AddDefinableProperty(QVariant::String,"LeftParameter","");
+	AddDefinableProperty(QVariant::String,"Comparison","");
 	initializePropertiesToDefaults();
-	propertyContainer_->setPropertyValue("Name",predicateName);
+	//We set the properties as edited because we want this to serialize out and not be mistaken for a default value.
+	propertyContainer_->getProperty("Name")->setEdited();
+	
 
 	LHSParamName_ = "";
 	RHSParamName_ = "";
 	useRHSVal_ = false;
-
-	predicateName_ = predicateName;
 }
 
 bool PredicateExpression::isValid()
@@ -60,7 +55,7 @@ bool PredicateExpression::evaluate()
 	PredicateFactory predFact;
 	QSharedPointer<Predicate> pred = predFact.createPredicate(predicateName_);
 
-	QSharedPointer<Parameter> LHSParam = parameters_->getParameter(LHSParamName_);
+	QSharedPointer<Parameter> LHSParam = getScriptable(LHSParamName_).staticCast<Parameter>();
 	if(LHSParam.isNull())
 		return false;
 	if(useRHSVal_)
@@ -69,19 +64,11 @@ bool PredicateExpression::evaluate()
 	}
 	else
 	{
-		QSharedPointer<Parameter> RHSParam = parameters_->getParameter(RHSParamName_);
+		QSharedPointer<Parameter> RHSParam = getScriptable(RHSParamName_).staticCast<Parameter>();
 		return pred->evaluate(*LHSParam, *RHSParam);
 	}
 }
 
-QString PredicateExpression::name()
-{
-	return propertyContainer_->getPropertyValue("Name").toString();
-}
-void PredicateExpression::setName(QString name)
-{
-	propertyContainer_->setPropertyValue("Name",name);
-}
 void PredicateExpression::setOrder(int order)
 {
 	propertyContainer_->setPropertyValue("Order",order);
@@ -99,19 +86,19 @@ QString PredicateExpression::toString(bool useLHSName, bool useRHSName)
 	PredicateFactory predFact;
 	QSharedPointer<Predicate> pred = predFact.createPredicate(predicateName_);
 
-	QSharedPointer<Parameter> LHSParam = parameters_->getParameter(LHSParamName_);
+	QSharedPointer<Parameter> LHSParam = getScriptable(LHSParamName_).staticCast<Parameter>();
 
 	QString LHSstring, RHSstring;
 	if(useLHSName)
-		LHSstring = LHSParam->name();
+		LHSstring = LHSParam->getName();
 	else
 		LHSstring = LHSParam->getValue().toString();
 
 	if(!useRHSVal_)
 	{
-		QSharedPointer<Parameter> RHSParam = parameters_->getParameter(RHSParamName_);
+		QSharedPointer<Parameter> RHSParam = getScriptable(RHSParamName_).staticCast<Parameter>();
 		if(useRHSName)
-			RHSstring=RHSParam->name();
+			RHSstring=RHSParam->getName();
 		else
 			RHSstring= RHSParam->getValue().toString();
 	}
@@ -143,9 +130,9 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 	//create left side image
 	//----------------------
 	QString LHSstring;
-	QSharedPointer<Parameter> LHSParam = parameters_->getParameter(LHSParamName_);
+	QSharedPointer<Parameter> LHSParam = getScriptable(LHSParamName_).staticCast<Parameter>();
 	if(useLHSName)
-		LHSstring = LHSParam->name();
+		LHSstring = LHSParam->getName();
 	else
 		LHSstring = LHSParam->getValue().toString();
 
@@ -171,9 +158,9 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 	//create right side image
 	//-----------------------
 	QString RHSstring;
-	QSharedPointer<Parameter> RHSParam = parameters_->getParameter(RHSParamName_);
+	QSharedPointer<Parameter> RHSParam = getScriptable(RHSParamName_).staticCast<Parameter>();
 	if(useRHSName & !useRHSVal_)
-		RHSstring = RHSParam->name();
+		RHSstring = RHSParam->getName();
 	else if(useRHSVal_)
 		RHSstring = RHSval_.toString();
 	else
@@ -262,7 +249,7 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 //
 //	xmlStreamWriter->writeStartElement("Expression");
 //	xmlStreamWriter->writeTextElement("Parameter",LHSParamName_);
-//	xmlStreamWriter->writeTextElement("Comparison",pred->name());
+//	xmlStreamWriter->writeTextElement("Comparison",pred->getName());
 //	if(useRHSVal_)
 //	{
 //		//Not all constant values can be converted to a string this way.  However,
@@ -290,7 +277,7 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 //bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{
 //	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Expression")
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->getName() != "Expression")
 //	{
 //		addError("PredicateExpression","Incorrect tag, expected <Expression>",xmlStreamReader);
 //		return false;
@@ -302,7 +289,7 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 //
 //	//loop through the XML modifying properties as we go.
 //	xmlStreamReader->readNext();
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Expression") && !xmlStreamReader->atEnd())
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->getName().toString() == "Expression") && !xmlStreamReader->atEnd())
 //	{
 //		if(!xmlStreamReader->isStartElement())
 //		{
@@ -310,7 +297,7 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 //			xmlStreamReader->readNext();
 //			continue;
 //		}
-//		QString name = xmlStreamReader->name().toString();
+//		QString name = xmlStreamReader->getName().toString();
 //
 //		if(name == "Parameter")
 //		{
@@ -389,44 +376,17 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 //	return true;
 //}
 
+void PredicateExpression::postSerialize()
+{
+	Result::postSerialize();
+	LHSParamName_ = propertyContainer_->getPropertyValue("LeftParameter").toString();
+	predicateName_ = propertyContainer_->getPropertyValue("Comparison").toString();
+}
+
 bool PredicateExpression::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	useRHSVal_ = true;
-	if(!hasChildrenOfType("LeftParameter"))
-	{
-		addError("PredicateExpression","Left hand side of expression not defined",xmlStreamReader);
+	if(!Result::validateObject(xmlStreamReader))
 		return false;
-	}
-	if(!hasChildrenOfType("Comparison"))
-	{
-		addError("PredicateExpression","Predicate operator not defined",xmlStreamReader);
-		return false;
-	}
-	if(hasChildrenOfType("RightParameter"))
-	{
-		useRHSVal_ = false;
-	}
-	if(hasChildrenOfType("Value"))
-	{
-		if(!useRHSVal_)
-		{
-			addError("PredicateExpression","Both a RightParameter and a Value were specified.",xmlStreamReader);
-			return false;
-		}
-	}
-	else if(useRHSVal_)
-	{		
-		addError("PredicateExpression","Right hand side of expression not defined",xmlStreamReader);
-		return false;
-	}
-
-	LHSParamName_ = propertyContainer_->getPropertyValue("LeftParameter").toString();
-	if(useRHSVal_)
-		RHSval_ = propertyContainer_->getPropertyValue("Value").toString();
-	else
-		RHSParamName_ = propertyContainer_->getPropertyValue("RightParameter").toString();
-		
-	predicateName_ = propertyContainer_->getPropertyValue("Comparison").toString();
 	return true;
 }
 

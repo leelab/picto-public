@@ -43,6 +43,7 @@ public:
 	void addOption(StringParameterOption option);
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

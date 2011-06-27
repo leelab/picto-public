@@ -1,12 +1,13 @@
 #include "ControlElementItem.h"
 #include "../../common/ControlElements/ControlElement.h"
-ControlElementItem::ControlElementItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-WireableItem(itemMenu,asset)
+ControlElementItem::ControlElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+WireableItem(editorState,contextMenu,asset)
 {
 	QSharedPointer<ControlElement> ctrlElem = asset.staticCast<ControlElement>();
-	QStringList results = ctrlElem->getResultList();
-	foreach(QString result,results)
+	QList<QSharedPointer<Asset>> results = ctrlElem->getGeneratedChildren("Result");
+	foreach(QSharedPointer<Asset> result,results)
 	{
-		addArrowSource(result);
+		addArrowSource(result->getName());
 	}
+	enableArrowDest();
 }

@@ -1,4 +1,6 @@
 #include "FlowElement.h"
+#include "CompareToParamExpression.h"
+#include "CompareToValExpression.h"
 
 #include <QCoreApplication>
 
@@ -11,14 +13,23 @@ bool conditionLessThan(const FlowElement::Condition &c1, const FlowElement::Cond
 
 FlowElement::FlowElement()
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty("Type","FlowElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
-	DefinePlaceholderTag("Conditions");
-	AddDefinableObjectFactory("Condition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PredicateExpression::Create))) );
-	AddDefinableObjectFactory("CompoundCondition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
+	addResultFactoryType("CompareParams",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompareToParamExpression::Create))));
+	addResultFactoryType("CompareParamToVal",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompareToValExpression::Create))));
+	addResultFactoryType("CompoundCompare",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))));
+	
+	//resultFactory_->addAssetType("CompareParams",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompareToParamExpression::Create))));
+	//resultFactory_->addAssetType("CompareParamToVal",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompareToValExpression::Create))));
+	//resultFactory_->addAssetType("CompoundCompare",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))));
+
+	//AddDefinableObjectFactory("CompoundCondition",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))) );
 	//really using the result list in this case...)
 	//Add the default result
-	addResult("default");
+	addRequiredResult("default");
 }
 
 QString FlowElement::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -65,7 +76,7 @@ bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr)
 	Condition newCond;
 	newCond.isCompound = false;
 	newCond.predExpr = predExpr;
-	newCond.name = predExpr->name();
+	newCond.name = predExpr->getName();
 	newCond.order = predExpr->order();
 
 	//Make sure that some variant of this condition doesn't already exist
@@ -76,7 +87,7 @@ bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr)
 		if(c.order == newCond.order)
 			return false;
 	}
-	newCond.predExpr->setParameterContainer(&parameterContainer_);
+	addChildScriptableContainer(newCond.predExpr);
 
 	conditions_.push_back(newCond);
 
@@ -85,9 +96,9 @@ bool FlowElement::addCondition(QSharedPointer<PredicateExpression> predExpr)
 	//Conditions.  Also, it's better to sort here, than when the FlowElement is run
 	qSort(conditions_.begin(), conditions_.end(), &conditionLessThan);
 
-	//add the condition name to our list of results (even though we aren't
-	//really using the result list in this case...)
-	addResult(newCond.name);
+	////add the condition name to our list of results (even though we aren't
+	////really using the result list in this case...)
+	//addRequiredResult(newCond.name)));
 
 	return true;
 }
@@ -97,7 +108,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 	Condition newCond;
 	newCond.isCompound = true;
 	newCond.compExpr = compExpr;
-	newCond.name = compExpr->name();
+	newCond.name = compExpr->getName();
 	newCond.order = compExpr->order();
 
 	//Make sure that some variant of this condition doesn't already exist
@@ -109,7 +120,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 			return false;
 	}
 	
-	newCond.compExpr->setParameterContainer(&parameterContainer_);
+	addChildScriptableContainer(newCond.compExpr);
 
 	conditions_.push_back(newCond);
 
@@ -118,9 +129,9 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 	//Conditions.  Also, it's better to sort here, than when the FlowElement is run
 	qSort(conditions_.begin(), conditions_.end(), &conditionLessThan);
 
-	//add the condition name to our list of results (even though we aren't
-	//really using the result list in this case...)
-	addResult(newCond.name);
+	////add the condition name to our list of results (even though we aren't
+	////really using the result list in this case...)
+	//addRequiredResult(newCond.name)));
 
 	return true;
 }
@@ -188,7 +199,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 //bool FlowElement::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{
 //	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateMachineElement")
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->getName() != "StateMachineElement")
 //	{
 //		addError("FlowElement","Incorrect tag, expected <StateMachineElement>",xmlStreamReader);
 //		return false;
@@ -204,7 +215,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 //	results_.clear();
 //
 //	xmlStreamReader->readNext();
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->getName().toString() == "StateMachineElement") && !xmlStreamReader->atEnd())
 //	{
 //		if(!xmlStreamReader->isStartElement())
 //		{
@@ -213,7 +224,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 //			continue;
 //		}
 //
-//		QString name = xmlStreamReader->name().toString();
+//		QString name = xmlStreamReader->getName().toString();
 //		if(name == "Name")
 //		{
 //			propertyContainer_->setPropertyValue("Name",QVariant(xmlStreamReader->readElementText()));
@@ -243,7 +254,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 //			bool initPredExpr = false;
 //
 //			xmlStreamReader->readNext();
-//			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Condition") && !xmlStreamReader->atEnd())
+//			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->getName().toString() == "Condition") && !xmlStreamReader->atEnd())
 //			{
 //				if(!xmlStreamReader->isStartElement())
 //				{
@@ -252,7 +263,7 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 //					continue;
 //				}
 //
-//				name = xmlStreamReader->name().toString();
+//				name = xmlStreamReader->getName().toString();
 //				if(name == "Name")
 //				{
 //					nameStr = xmlStreamReader->readElementText();
@@ -340,32 +351,47 @@ bool FlowElement::addCondition(QSharedPointer<CompoundExpression> compExpr)
 //	return true;
 //}
 
-bool FlowElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void FlowElement::postSerialize()
 {
-	//clear out the existing results and conditions
+	//clear out the existing conditions
 	conditions_.clear();
-	results_.clear();
 
-
-	QList<QSharedPointer<Asset>> newExprs = getGeneratedChildren("Condition");
+	QList<QSharedPointer<Asset>> newExprs = getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> newExpr,newExprs)
 	{
-		newExpr.staticCast<PredicateExpression>()->setParameterContainer(&parameterContainer_);
-		addCondition(newExpr.staticCast<PredicateExpression>());
-	}
-	QList<QSharedPointer<Asset>> newCompExprs = getGeneratedChildren("CompoundCondition");
-	foreach(QSharedPointer<Asset> newCompExpr,newCompExprs)
-	{
-		newCompExpr.staticCast<CompoundExpression>()->setParameterContainer(&parameterContainer_);
-		addCondition(newCompExpr.staticCast<PredicateExpression>());
+		if(newExpr.dynamicCast<PredicateExpression>())
+		{
+			addCondition(newExpr.staticCast<PredicateExpression>());
+		}
+		else if (newExpr.dynamicCast<CompoundExpression>())
+		{
+			addCondition(newExpr.staticCast<CompoundExpression>());
+		}
+		else
+			addRequiredResult(newExpr.staticCast<Result>());
 	}
 	//Sort the condition list
 	qSort(conditions_.begin(), conditions_.end(), &conditionLessThan);
 
+	StateMachineElement::postSerialize();
+}
+
+bool FlowElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
 	//Validate Results
 	if(!StateMachineElement::validateObject(xmlStreamReader))
 		return false;
-
+	QList<QSharedPointer<Asset>> results = getGeneratedChildren("Result");
+	foreach(QSharedPointer<Asset> result,results)
+	{
+		if(!result.dynamicCast<PredicateExpression>() && 
+			!result.dynamicCast<CompoundExpression>() &&
+			result->getName() != "default")
+		{
+			QString errMsg = QString("FlowElement: %1 has a result that is not an expression or default: %2").arg(getName()).arg(result->getName());
+			addError("FlowElement", errMsg, xmlStreamReader);
+		}
+	}
 	return true;
 }
 

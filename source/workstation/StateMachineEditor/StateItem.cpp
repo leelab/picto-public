@@ -1,5 +1,5 @@
 #include "StateItem.h"
-StateItem::StateItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-StateMachineElementItem(itemMenu,asset)
+StateItem::StateItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+StateMachineElementItem(editorState,contextMenu,asset)
 {
 }

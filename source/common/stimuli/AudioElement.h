@@ -2,8 +2,7 @@
 #define _AUDIOELEMENT_H_
 
 #include "../common.h"
-
-#include "StimulusElement.h"
+#include "../statemachine/UIEnabled.h"
 
 namespace Picto {
 
@@ -11,10 +10,12 @@ namespace Picto {
  *
  *	This is an unimplemented class that will eventually contain an audio element.
  */
-struct PICTOLIB_CLASS AudioElement /*: public StimulusElement*/
+	struct PICTOLIB_CLASS AudioElement /*: public StimulusElement*/: public UIEnabled
 {
 public:
 	AudioElement();
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new AudioElement());};
+	virtual QString assetType(){return "AudioElement";};
 };
 
 

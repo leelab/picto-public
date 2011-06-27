@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "ControlElement.h"
 #include "../engine/SignalChannel.h"
+#include "ControlTarget.h"
 #include <QList>
 
 namespace Picto {
@@ -39,8 +40,6 @@ public:
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ChoiceController());};
 	static QString ControllerType();
 
-	bool addTarget(QString targetName, QRect target);
-
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
 	QString getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
@@ -49,6 +48,7 @@ public:
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QString insideTarget(QSharedPointer<Engine::PictoEngine> engine);
@@ -72,7 +72,7 @@ private:
 	QString lastTarget_;
 
 	QSharedPointer<SignalChannel> signal_;
-	QList<QSharedPointer<Property>> targets_;
+	QList<QSharedPointer<ControlTarget>> targets_;
 
 };
 

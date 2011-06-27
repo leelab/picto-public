@@ -94,3 +94,21 @@ QString Serializable::getErrors()
 	return errorString;
 
 }
+
+QString Serializable::toXml()
+{
+	QString returnVal;
+	QSharedPointer<QXmlStreamWriter> xmlStreamWriter(new QXmlStreamWriter(&returnVal));
+	if(toXml(xmlStreamWriter))
+		return returnVal;
+	return "";
+}
+bool Serializable::fromXml(QString xmlText)
+{
+	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader(xmlText));
+	// Move read pointer to tag.
+	while(!xmlStreamReader->isStartElement() && !xmlStreamReader->atEnd()) 
+		xmlStreamReader->readNext();
+	Q_ASSERT_X(!xmlStreamReader->atEnd(),"Serializable::fromXml","Couldn't deserialize xmlText: " + xmlText.toAscii());
+	return fromXml(xmlStreamReader);
+}

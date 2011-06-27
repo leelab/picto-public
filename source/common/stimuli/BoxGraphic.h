@@ -40,6 +40,7 @@ public slots:
 	void setHeight(int height);
 
 protected:
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:

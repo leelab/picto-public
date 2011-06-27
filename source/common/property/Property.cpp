@@ -18,15 +18,14 @@ typeVal_("")
 Property::~Property()
 {
 	//We don't want the QtVariantPropertyManager to destory properties
-	//because we would like them to be accessible until know one needs them
+	//because we would like them to be accessible until no one needs them
 	//anymore.  For this reason, we store a shared pointer to the manager in
 	//this class.  That way, it can't be destroyed until all of its properties
 	//are destroyed.  It is important, however, that this objects contained 
 	//QtVariantProperty be destroy before the manager because when it does that
-	//it removes itself from the manager, thereby keeping the manager and the 
-	//manager doesn't try to delete it.  Otherwise, the manager would delete it
-	//and then we would try to delete it again when our shared pointer goes out 
-	//of scope.
+	//it removes itself from the manager, thereby keeping the manager from trying
+	//to delete it.  Otherwise, the manager would delete it and then we would try 
+	//to delete it again when our shared pointer goes out of scope.
 	variantProp_.clear();
 }
 
@@ -35,7 +34,7 @@ int Property::type()
 	return variantProp_->valueType();
 }
 
-QString Property::name()
+QString Property::getName()
 {
 	return variantProp_->propertyName();
 }
@@ -73,11 +72,24 @@ void Property::addSubProperty(QSharedPointer<Property> prop)
 
 bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
+	if(!isNew() && !wasEdited())
+	{
+		QXmlStreamReader copyReader(tagText_);
+		//Move to start element
+		while(!copyReader.isStartElement())
+			copyReader.readNext();
+		while(!copyReader.atEnd())
+		{
+			xmlStreamWriter->writeCurrentToken(copyReader);
+			copyReader.readNext();
+		}
+		return true;
+	}
 	if(tagName_ == "")
-		tagName_ = name();
+		tagName_ = getName();
 	xmlStreamWriter->writeStartElement(tagName_);
-	if(name() != tagName_)
-		xmlStreamWriter->writeAttribute("name",name());
+	if(getName() != tagName_)
+		xmlStreamWriter->writeAttribute("name",getName());
 	// In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
 	if(typeVal_ != "")
 		xmlStreamWriter->writeAttribute("type",typeVal_);
@@ -92,8 +104,13 @@ bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader,bool)
 {
+	//Create XMLStreamWriter to store this DataStore's tag text in a string
+	tagText_ = "";
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&tagText_));
+	xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets write the start tag to our tagText.
+
 	//Get Start tag name (depending on who the parent is, they may have given us different names.
 	tagName_ = xmlStreamReader->name().toString();
 	bool emptyTag = true;
@@ -129,7 +146,7 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 			{
 				allowedAttributes.append("\n").append(attrName);
 			}
-			addError(name().toAscii(), QString("Invalid attribute: \n%1\nThe following attributes are defined for this property:\n%2\n-----").arg(attribute.name().toString()).arg(allowedAttributes).toAscii(), xmlStreamReader);
+			addError(getName().toAscii(), QString("Invalid attribute: \n%1\nThe following attributes are defined for this property:\n%2\n-----").arg(attribute.name().toString()).arg(allowedAttributes).toAscii(), xmlStreamReader);
 			return false;
 		}
 	}
@@ -141,7 +158,23 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	//		emptyTag = false;
 	//	}
 	//}
-	QString value = xmlStreamReader->readElementText();
+
+
+//Loop until we're done with the tag or we reach the end of the XMLStream
+if(xmlStreamReader->readNext() == QXmlStreamReader::Invalid)
+{
+	addError(getName().toAscii(),QString("XML syntax has been violated.").toAscii(),xmlStreamReader);
+	return false;
+}
+xmlWriter->writeCurrentToken(*xmlStreamReader);// Write everything left to tagText.
+if(!xmlStreamReader->isCharacters() && !xmlStreamReader->isEndElement())
+{
+	addError(getName().toAscii(),QString("Unexpected value read.").toAscii(),xmlStreamReader);
+	return false;
+}
+QString value = xmlStreamReader->text().toString();
+
+//	QString value = xmlStreamReader->readElementText();
 	if(value != "")
 		emptyTag = false;
 	
@@ -154,11 +187,14 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 
 	//Loop until we're done with the tag or we reach the end of the XMLStream
 	while(!(xmlStreamReader->isEndElement() && (xmlStreamReader->name().toString() == tagName_)) && !xmlStreamReader->atEnd())
+	{
 		xmlStreamReader->readNext();
+		xmlWriter->writeCurrentToken(*xmlStreamReader);// Write everything left to tagText.
+	}
 	//Make sure we didn't finish the document.
 	if(xmlStreamReader->atEnd())
 	{
-		addError(name().toAscii(), "Unexpected end of document", xmlStreamReader);
+		addError(getName().toAscii(), "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
 	return true;

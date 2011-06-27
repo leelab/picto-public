@@ -9,11 +9,11 @@ PropertyFactory::PropertyFactory	(
 		int propertyType, 
 		QString propIdentifier,
 		QVariant defaultValue,
-		QMap<QString,QVariant> attributeMap,
-		QVector<QSharedPointer<Asset>> defaultAssets
+		QMap<QString,QVariant> attributeMap/*,
+		QVector<QSharedPointer<Asset>> defaultAssets*/
 
 									) :
-AssetFactory(minAssets,maxAssets,NULL,defaultAssets),
+AssetFactory(minAssets,maxAssets,NULL/*,defaultAssets*/),
 propContainer_(propContainer),
 propertyType_(propertyType),
 propIdentifier_(propIdentifier),

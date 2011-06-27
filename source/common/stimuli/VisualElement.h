@@ -4,7 +4,7 @@
 #include "../common.h"
 
 #include "StimulusElement.h"
-#include "../storage/DataStore.h"
+#include "../statemachine/scriptable.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
 #include "../property/PropertyContainer.h"
@@ -14,7 +14,6 @@
 #include <QString>
 #include <QMap>
 #include <QTime>
-#include <QScriptEngine>
 
 namespace Picto {
 
@@ -26,7 +25,7 @@ namespace Picto {
  *	them by generating a list of their properties.  This class also handles
  *	the compositing surfaces.
  */
-struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public DataStore
+struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public Scriptable
 {
 	Q_OBJECT
 public:
@@ -43,8 +42,6 @@ public:
 
 	void reset();
 
-	void bindToScriptEngine(QSharedPointer<QScriptEngine> engine);
-
 	QPoint getPosition();
 	QRect getBoundingRect();
 	void setPosition(QPoint position);
@@ -52,11 +49,9 @@ public:
 	QColor getColor();
 	void setColor(QColor color);
 
-	QString getName();
-	void setName(QString name);
-
-	void setOrder(int order) { order_ = order; };
-	int getOrder() { return order_; }
+	void setOrder(int order) { propertyContainer_->setPropertyValue("Order",order); };
+	int getOrder() { return propertyContainer_->getPropertyValue("Order").toInt(); }
+	virtual QString assetType(){return "VisualElement";};
 
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -77,6 +72,7 @@ protected:
 	void backupProperties();
 	void restoreProperties();
 
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	QImage image_;
@@ -88,8 +84,6 @@ protected:
 	MTRand random;
 
 	QMap<QString, QVariant> initialProperties_;
-
-	int order_;		//The order in which this visual element should be drawn within its layer
 };
 
 }; //namespace Picto

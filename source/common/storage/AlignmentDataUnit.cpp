@@ -66,6 +66,11 @@ bool AlignmentDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	return true;
 }
 
+void AlignmentDataUnit::postSerialize()
+{
+
+}
+
 bool AlignmentDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;

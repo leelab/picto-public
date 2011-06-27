@@ -2,11 +2,10 @@
 #define _PARAMETER_H_
 
 #include <QVariant>
-#include <QScriptEngine>
 #include <QScriptValue>
 
 #include "../common.h"
-#include "../storage/DataStore.h"
+#include "../statemachine/Scriptable.h"
 
 namespace Picto {
 
@@ -19,9 +18,9 @@ namespace Picto {
  *	functions.
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API Parameter : public DataStore
+	class PICTOLIB_API Parameter : public Scriptable
 #else
-	class Parameter : public DataStore
+	class Parameter : public UIEnabled
 #endif
 {
 	Q_OBJECT
@@ -29,17 +28,6 @@ namespace Picto {
 public:
 
 	Parameter();
-
-	//DataStore functions
-	////Since the Parameter subclasses are all really different, we'll make
-	////these pure virtual
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
-
-	void bindToScriptEngine(QScriptEngine &engine);
-
-	QString name();
-	void setName(QString parameterName);
 
 	void setOrder(int i) { order_ = i; };
 	int getOrder() { return order_; };
@@ -86,6 +74,7 @@ public:
 
 
 	QString type();
+	virtual QString assetType(){return "Parameter";};
 
 public slots:
 	//setters and getters are slots so we can bind them to scripts
@@ -96,7 +85,6 @@ public slots:
 protected:
 	virtual QString defaultTagName(){return "Parameter";};
 	QString type_;
-	QString name_;
 	bool bOperatorUI_;
 	int order_;
 };

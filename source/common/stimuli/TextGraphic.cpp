@@ -8,13 +8,20 @@ const QString TextGraphic::type = "Text Graphic";
 
 TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QString text)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
 	AddDefinableProperty(QVariant::String,"Text",text);
 	if((position != QPoint()) || (dimensions != QRect()) || (color != QColor()) || (text != QString()))
+	{
 		initializePropertiesToDefaults();
+		//We set the properties as edited because we want this to serialize out and not be mistaken for a default value.
+		propertyContainer_->getProperty("Position")->setEdited();
+		propertyContainer_->getProperty("Color")->setEdited();
+		propertyContainer_->getProperty("Dimensions")->setEdited();
+		propertyContainer_->getProperty("Text")->setEdited();
+	}
 
 	//propertyContainer_->setContainerName(type);
 
@@ -104,11 +111,16 @@ void TextGraphic::slotPropertyValueChanged(QString propertyName, int,
 	}
 }
 
+void TextGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	draw();
+}
+
 bool TextGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
 	return true;
 }
 

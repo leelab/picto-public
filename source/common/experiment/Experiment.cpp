@@ -5,10 +5,11 @@
 namespace Picto {
 
 Experiment::Experiment()
-	//:formatID_("1.0.0.0"),
+:latestSyntaxVersion_("0.0.1")
 {
-	AddDefinableProperty("Name","Unnamed Experiment");
-	DefinePlaceholderTag("Tasks");
+	
+	AddDefinableProperty("SyntaxVersion","");
+	//DefinePlaceholderTag("Tasks");
 	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
 }
 
@@ -17,18 +18,6 @@ QSharedPointer<Experiment> Experiment::Create()
 	QSharedPointer<Experiment> newExperiment(new Experiment());
 	newExperiment->setSelfPtr(newExperiment);
 	return newExperiment;
-};
-
-//! returns the name of this experiment
-QString Experiment::name()
-{
-	return propertyContainer_->getPropertyValue("Name").toString();
-}
-
-//! Sets the name of this experiment
-void Experiment::setName(QString name)
-{
-	propertyContainer_->setPropertyValue("Name",name);
 }
 
 void Experiment::addTask(QSharedPointer<Task> task)
@@ -41,7 +30,7 @@ QStringList Experiment::getTaskNames()
 	QStringList taskList;
 	foreach(QSharedPointer<Task> task, tasks_)
 	{
-		taskList.append(task->name());
+		taskList.append(task->getName());
 	}
 	return taskList;
 }
@@ -57,8 +46,8 @@ bool Experiment::runTask(QString taskName, QSharedPointer<Engine::PictoEngine> e
 	//removed, so we need to check that possibility
 	foreach(QSharedPointer<Task> task, tasks_)
 	{
-		if(task->name() == taskName ||
-		   task->name().simplified().remove(' ') == taskName)
+		if(task->getName() == taskName ||
+		   task->getName().simplified().remove(' ') == taskName)
 		{	
 			engine->clearEngineCommand();
 			engine->startAllSignalChannels();
@@ -78,21 +67,14 @@ bool Experiment::jumpToState(QStringList path, QString state)
 	QString taskName = path.takeFirst();
 	foreach(QSharedPointer<Task> task, tasks_)
 	{
-		if(task->name() == taskName ||
-		   task->name().simplified().remove(' ') == taskName)
+		if(task->getName() == taskName ||
+		   task->getName().simplified().remove(' ') == taskName)
 		{	
 			task->jumpToState(path,state);
 			return true;
 		}
 	}
 	return false;
-}
-
-//! Clears the experiment
-void Experiment::clear()
-{
-	tasks_.clear();	
-	propertyContainer_->setPropertyValue("Name","Unnamed Experiment");
 }
 
 /*! \brief Turns this experiment into an XML fragment
@@ -131,7 +113,7 @@ void Experiment::clear()
 //bool Experiment::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{
 //	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Experiment")
+//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->getName() != "Experiment")
 //	{
 //		addError("Experiment","Incorrect tag, expected <Experiment>",xmlStreamReader);
 //		return false;
@@ -143,7 +125,7 @@ void Experiment::clear()
 //
 //	xmlStreamReader->readNext();
 //	
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Experiment") && !xmlStreamReader->atEnd())
+//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->getName().toString() == "Experiment") && !xmlStreamReader->atEnd())
 //	{
 //		if(!xmlStreamReader->isStartElement())
 //		{
@@ -152,7 +134,7 @@ void Experiment::clear()
 //			continue;
 //		}
 //
-//		QString name = xmlStreamReader->name().toString();
+//		QString name = xmlStreamReader->getName().toString();
 //		if(name == "Name")
 //		{
 //			setName(xmlStreamReader->readElementText());
@@ -186,8 +168,13 @@ void Experiment::clear()
 //	return true;
 //}
 
-bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void Experiment::postSerialize()
 {
+	UIEnabled::postSerialize();
+	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
+	if(experimentSyntaxVer == "")
+		propertyContainer_->setPropertyValue("SyntaxVersion",latestSyntaxVersion_);
+	
 	//clear out the existing experiment
 	tasks_.clear();
 	QList<QSharedPointer<Asset>> newTasks = getGeneratedChildren("Task");
@@ -195,6 +182,12 @@ bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	{
 		addTask(newTask.staticCast<Task>());
 	}
+}
+
+bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+{
+	if(!UIEnabled::validateObject(xmlStreamReader))
+		return false;
 	return true;
 }
 

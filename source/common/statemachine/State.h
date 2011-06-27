@@ -2,17 +2,11 @@
 #define _STATE_H_
 
 #include "../common.h"
-#include "StateMachineElement.h"
-#include "Canvas.h"
-#include "Layer.h"
+#include "MachineContainer.h"
 #include "../controlelements/ControlElement.h"
 #include "../controlelements/ControlLink.h"
 #include "scene.h"
 #include "../engine/PictoEngine.h"
-
-
-
-#include <QScriptEngine>
 
 namespace Picto {
 
@@ -27,9 +21,9 @@ class SignalChannel;
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API State : public StateMachineElement
+class PICTOLIB_API State : public MachineContainer
 #else
-class State : public StateMachineElement
+class State : public MachineContainer
 #endif
 {
 public:
@@ -50,19 +44,26 @@ public:
 
 	void addControlLink(QSharedPointer<ControlLink> link);
 	void addControlElement(QSharedPointer<ControlElement> controlElement);
-	void removeControlElement(QString controlElementName);
+	//void removeControlElement(QString controlElementName);
 
 	void setScene(QSharedPointer<Scene> scene) { scene_ = scene; };
 
-	bool initScripting(QScriptEngine &qsEngine);
+	//bool initScripting(QScriptEngine &qsEngine);
+	//bool initScriptEngine(bool forScriptDefinitions = false);
 	virtual QString assetType(){return "State";};
 
 protected:
+	virtual void elementAdded(QSharedPointer<ResultContainer> element){};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool hasScripts();
+	//This returns a map of QMap<script name,script code>
+	virtual QMap<QString,QString> getScripts();
+
 
 private:
 	void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);
-	void runScript(QString scriptName);
+	//void runScript(QString scriptName);
 	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);
 	//void updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused=false);
 	int getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine);
@@ -70,7 +71,7 @@ private:
 	void reset();
 
 	QSharedPointer<Scene> scene_;
-	QMap<QString, QSharedPointer<ControlElement> > controlElements_;
+	//QMap<QString, QSharedPointer<ControlElement> > controlElements_;
 	int revision_;
 	int engineNeeded_;
 
@@ -80,7 +81,6 @@ private:
 
 	QSharedPointer<SignalChannel> sigChannel_;
 
-	QSharedPointer<QScriptEngine> qsEngine_;
 	QMultiMap<QString, QSharedPointer<ControlLink> > links_; //<source, link>
 };
 

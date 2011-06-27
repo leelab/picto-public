@@ -91,11 +91,16 @@ void CursorGraphic::slotPropertyValueChanged(QString propertyName, int,
 	}
 }
 
+void CursorGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	draw();
+}
+
 bool CursorGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
 	return true;
 }
 

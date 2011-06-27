@@ -35,10 +35,10 @@ private slots:
 	void TestParameter_data();
 	void TestParameter();
 	void TestParameterContainer();
-	void TestPredicateExpression();
-	void TestCompoundExpression();
+	//void TestPredicateExpression();
+	//void TestCompoundExpression();
 	void TestScene();
-	void TestStateMachine();
+	//void TestStateMachine();
 private:
 	Picto::MTRand randGen_;
 	Picto::VisualElementFactory visualElementFactory_;

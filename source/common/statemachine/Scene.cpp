@@ -1,128 +1,92 @@
 #include "Scene.h"
+using namespace Picto;
 
-namespace Picto {
+bool visualElementLessThan(const QSharedPointer<VisualElement> &e1, const QSharedPointer<VisualElement> &e2) 
+{ 
+	return e1->getOrder() < e2->getOrder(); 
+}
 
 Scene::Scene()
-: canvas_(QSharedPointer<Canvas>(new Canvas))
+: backgroundColor_(QColor(Qt::black)),
+  frame_(0)
 {
-	DefinePlaceholderTag("AudioElement");	//! \todo deal with audio elements
-	AddDefinableObjectFactory("Canvas",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(Canvas::Create))) );
+	elapsedTime_.start();
 }
 
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//! \TODO "render" the audio stuff
-	canvas_->draw(engine);
-}
+	//! \todo deal with the background layer color
 
-void Scene::bindToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
-{
-	canvas_->bindToScriptEngine(qsEngine);
+	//Grab the RenderingTargets from the engine
+	QList<QSharedPointer< RenderingTarget> > renderingTargets;
+	renderingTargets = engine->getRenderingTargets();
+
+	//Add any unadded visual elements to the visual elements list
+	if(!unaddedVisualElements_.isEmpty())
+	{
+		QSharedPointer<Picto::CompositingSurface> compositingSurface;
+
+		//add the appropriate compositing surfaces to the element
+		for(int i=0; i<unaddedVisualElements_.length(); i++)
+		{
+			foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+			{
+				compositingSurface = renderTarget->generateCompositingSurface();
+				unaddedVisualElements_[i]->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+			}
+			visualElements_.append(unaddedVisualElements_[i]);
+		}
+		unaddedVisualElements_.clear();
+	}
+	//Sort visual elements
+	qSort(visualElements_.begin(), visualElements_.end(), &visualElementLessThan);
+
+	//Render visual elements to each rendering target
+	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+	{
+		QSharedPointer<VisualTarget> visualTarget = renderTarget->getVisualTarget();
+
+		//run through all our visualElements updating the animation and drawing
+		foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
+		{
+			visualElement->updateAnimation(frame_,elapsedTime_);
+			visualTarget->draw(visualElement->getPosition(),visualElement->getCompositingSurface(visualTarget->getTypeName()));
+		}
+		
+		//Present it
+		visualTarget->present();
+	}
+	frame_++;
+	elapsedTime_.restart();
 }
 
 //! Resets the scene
 void Scene::reset()
 {
-	canvas_->reset();
+	
+	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
+	{
+		visualElement->reset();
+	}
+
+	foreach(QSharedPointer<VisualElement> visualElement, unaddedVisualElements_)
+	{
+		visualElement->reset();
+	}
+
 }
-
-/*	\brief Converts this scene into an XML fragment
- *
- *	The Scene will look something like this when converted to XML:
- *	<Scene>
- *		<Canvas>
- *			...
- *		</Canvas>
- *		<AudioElement>
- *			...
- *		<AudioElement>
- *	</Scene>
- */
-//bool Scene::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
-//{
-//	xmlStreamWriter->writeStartElement("Scene");
-//	canvas_->toXml(xmlStreamWriter);
-//
-//	//! \TODO We'll need to add AudioElement stuff here...
-//	xmlStreamWriter->writeTextElement("AudioElement","");
-//
-//	xmlStreamWriter->writeEndElement(); //Scene
-//	
-//	return true;
-//}
-///*	\brief Converts an XML fragment into XML
-// *
-// *	The XML fragment will look something like this:
-// *	<Scene>
-// *		<Canvas>
-// *			...
-// *		</Canvas>
-// *		<AudioElement>
-// *			...
-// *		<AudioElement>
-// *	</Scene>
-// */
-//bool Scene::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "Scene")
-//	{
-//		addError("Scene","Incorrect tag, expected <Scene>",xmlStreamReader);
-//		return false;
-//	}
-//
-//	xmlStreamReader->readNext();
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Scene") && !xmlStreamReader->atEnd())
-//	{
-//		if(!xmlStreamReader->isStartElement())
-//		{
-//			//Do nothing unless we're at a start element
-//			xmlStreamReader->readNext();
-//			continue;
-//		}
-//
-//		QString name = xmlStreamReader->name().toString();
-//		if(name == "Canvas")
-//		{
-//			canvas_ = QSharedPointer<Canvas>(new Canvas);
-//			if(!canvas_->fromXml(xmlStreamReader))
-//			{
-//				addError("Scene","Failed to deserialize Canvas",xmlStreamReader);
-//				return false;
-//			}
-//		}
-//		else if(name == "AudioElement")
-//		{
-//			//! \TODO deal with AudioElements here
-//		}
-//		else
-//		{
-//			addError("Scene", "Unexpected tag", xmlStreamReader);
-//			return false;
-//		}
-//		xmlStreamReader->readNext();
-//	}
-//
-//	if(xmlStreamReader->atEnd())
-//	{
-//		addError("Scene", "Unexpected end of document", xmlStreamReader);
-//		return false;
-//	}
-//
-//	if(xmlStreamReader->atEnd())
-//	{
-//		addError("Scene", "Unexpected end of document", xmlStreamReader);
-//		return false;
-//	}
-//	return true;
-//}
-
-bool Scene::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+void Scene::setBackgroundColor(QColor color)
 {
-	//! \TODO deal with AudioElements
-
-	canvas_ = getGeneratedChildren("Canvas").front().staticCast<Canvas>();
-	return true;
+	backgroundColor_ = color;
 }
 
-}; //namespace Picto
+void Scene::addVisualElement(QSharedPointer<VisualElement> element)
+{
+	unaddedVisualElements_.push_back(element);
+}
+
+void Scene::addAudioElement(QSharedPointer<AudioElement> element)
+{
+	unaddedAudioElements_.push_back(element);
+}

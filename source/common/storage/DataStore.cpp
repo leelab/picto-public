@@ -14,17 +14,9 @@ Asset()
 
 //Autoserialization Stuff-------------------------------------------------------------
 
-//!!!!!CURRENTLY THE ONLY TIME THE EXPERIMENT IS GETTING SERIALIZED IS WHEN IT IS
-//ALTERED IN THE TEXT WINDOW AND THEN A NEW EXPERIMENT IS ACTIVATED WITH THE BUTTON.
-//THIS CURRENTLY NEVER HAPPENS AND ALSO MAY NOT HAVE BEEN WORKING IN THE FIRST PLACE.
-//YOU HAVE SET UP SCRIPTELEMENT TO USE THIS SERIALIZEASXML CODE AS A TEST SO YOU'LL
-//WANT TO MAKE THAT STUFF WORK OR AT LEAST DO SOMETHING ELSE SO YOU CAN TEST THIS.
 bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	if(isDeleted())
-		return true;
-	if(isNew())
-		tagText_ = QString("<%1/>").arg(defaultTagName());
+	Q_ASSERT_X(tagText_ != "","DataStore::serializeAsXml","This datastore has no tag text, it was either not serialized in or not initialized to default values.");
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(tagText_));
 
 	//Move read pointer to the first token
@@ -61,7 +53,7 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 		//Check to see if this token corresponds to a child.
 		//Get Tag name
 		QString name = xmlReader->name().toString();
-		//See if there's a read iteratorfor this tag.
+		//See if there's a read iterator for this tag.
 		if(!readIterators.contains(name))
 		{
 			//It must be a comment.  Start the process of writing it out.
@@ -71,7 +63,7 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 		//Get the Asset for the tag 
 		Q_ASSERT_X(readIterators[name] != readEndIterators[name],"DataStore::serializeAsXml","The original deserialized xml string contains a tag for which there are no remaining children to deserialize.");
 		QSharedPointer<Asset> child = *(readIterators[name]++);
-		Q_ASSERT_X(!child.isNull(),"DataStore::serializeAsXml","A Asset child pointer in this DataStore's list is null.");
+		Q_ASSERT_X(!child.isNull(),"DataStore::serializeAsXml","A child asset pointer in this DataStore's list is null.");
 		//Deserialize all new children until you get to one that isn't new
 		while(child->isNew())
 		{
@@ -95,16 +87,15 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 		while((*dataIter) != (*endIter))
 		{
 			childAsset = (*(*dataIter));
-			//If anything was deleted, it must have been in the original XML,
-			//otherwise the system would have removed it from our list.
-			Q_ASSERT(!childAsset->isDeleted());
-			//If the childAsset wasEdited and it wasn't deserialized
-			//in from the XML, it must have been a default value that was
-			// altered by the user or a new user addition. It must now be 
-			// serialized out.  If the childAsset isNew() but was not edited
-			// it must have been an unedited default value that should not be 
-			// serialized out.
-			if(childAsset->wasEdited())
+			// If the childAsset is not New, the only explanation is that the asset was serialized in under one tag name,
+			// then copied to a list of child assets under another tag (as in the case of a choice controller's targets
+			// that are also used as results.  In these types of cases, the asset was already serialized under the correct
+			// tag name when we were going through our tagText_, so we skip childAssets that are not new here.
+			//
+			// If the childAsset IS new but was not edited, it must have been an unedited default 
+			// value and should not be serialized out.  Otherwise it must have been a 
+			// default value that was altered by the user or a new value altogether.  It must now be serialized out.
+			if(childAsset->isNew() && childAsset->wasEdited())
 				childAsset->toXml(xmlStreamWriter);
 			(*dataIter)++;
 		}
@@ -115,7 +106,7 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeCurrentToken(*xmlReader);	
 	return returnVal;
 }
-bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate)
 {
 	//Create XMLStreamWriter to store this DataStore's tag text in a string
 	tagText_ = "";
@@ -125,6 +116,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	//Initilialize this DataStore's deserialization
 	bool returnVal = true;
 	children_.clear();
+	propertyContainer_->clear();
 	foreach(QSharedPointer<AssetFactory> factory,factories_)
 	{
 		if(factory.isNull())
@@ -219,7 +211,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		//Lets add it to our list of children
 		AddChild(name,newChild);
 		//Lets deserialize it.
-		if(!newChild->fromXml(xmlStreamReader))
+		if(!newChild->fromXml(xmlStreamReader,validate))
 		{
 			//Child deserialization failed.  For now, just exit.
 			//We may want to attempt to continue deserialization in the futures in order
@@ -243,32 +235,34 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			continue;	//Its a placeholder tag
 		QSharedPointer<Asset> newChild;
 		forever{
-			newChild = iter.value()->getRequiredAsset();
+			QString returnedType = "";
+			newChild = iter.value()->getRequiredAsset(returnedType);
 			if(newChild.isNull())
 				break;
 			//We created the new child.  
 			//Lets add it to our list of children
 			AddChild(iter.key(),newChild);
-			//Generate new XMLStreamReader that is an empty tag to deserialize the child into a default state.
-			QString childTag = QString("<%1/>").arg(iter.key());
-			QSharedPointer<QXmlStreamReader> emptyTagXML(new QXmlStreamReader(childTag));
-			// Move read pointer to tag.
-			while(!emptyTagXML->isStartElement()) 
-				emptyTagXML->readNext();
-			newChild->fromXml(emptyTagXML);
+			//Initialize the child into a default state.
+			newChild->initializeToDefault(iter.key(),returnedType);
 			//continue the loop
 		}
 	}
-
-	if(returnVal)
-	{	
-		//The XML syntax was fine and all children have validated their code as well.  
-		//Lets make sure that the object doesn't contain any other errors (ie. Script Errors, etc)
-		returnVal &= validateObject(xmlStreamReader);
-		if(!returnVal)
-			addError(myTagName_.toAscii(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(myTagName_).toAscii(),xmlStreamReader);
-	}
 	xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets write the end tag to our tagText.
+	return returnVal;
+}
+
+bool DataStore::validateTree()
+{
+	bool returnVal = true;
+	foreach(QList<QSharedPointer<Asset>> childList,children_)
+	{
+		foreach(QSharedPointer<Asset> child,childList)
+		{
+			returnVal &= child->validateTree();
+		}
+	}
+	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader());
+	returnVal &= validateObject(xmlStreamReader);
 	return returnVal;
 }
 
@@ -286,25 +280,15 @@ void DataStore::setDeleted()
 
 void DataStore::initializePropertiesToDefaults()
 {
-	//Generate new XMLStreamReader that is an empty tag to deserialize the child into a default state.
-	QString emptyTag = QString("<%1/>").arg(defaultTagName());
-	QSharedPointer<QXmlStreamReader> emptyTagXML(new QXmlStreamReader(emptyTag));
-	// Move read pointer to tag.
-	while(!emptyTagXML->isStartElement()) 
-		emptyTagXML->readNext();
-	bool success = fromXml(emptyTagXML);
-	Q_ASSERT_X(success,"DataStore::initializePropertiesToDefaults","Failed to initialize DataStore object to default values.");
+	initializeToDefault();
 }
 
 void DataStore::AddDefinableProperty(
 		QString tagName, 
-		QVariant defaultValue, 
-		QMap<QString,QVariant> attributeMap,
-		int minNumOfThisType, 
-		int maxNumOfThisType
+		QVariant defaultValue
 		)
 {
-	AddDefinableProperty(defaultValue.type(),tagName,defaultValue,attributeMap,minNumOfThisType,maxNumOfThisType);
+	AddDefinableProperty(defaultValue.type(),tagName,defaultValue,QMap<QString,QVariant>(),1,1);
 }
 
 void DataStore::AddDefinableProperty(
@@ -312,26 +296,24 @@ void DataStore::AddDefinableProperty(
 		QString tagName, 
 		QVariant defaultValue, 
 		QString singleAttributeName,
-		QVariant singleAttributeValue,
-		int minNumOfThisType, 
-		int maxNumOfThisType
+		QVariant singleAttributeValue
 		)
 {
 	QMap<QString,QVariant> attributeMap;
 	attributeMap[singleAttributeName] = singleAttributeValue;
-	AddDefinableProperty(type,tagName,defaultValue,attributeMap,minNumOfThisType,maxNumOfThisType);
+	AddDefinableProperty(type,tagName,defaultValue,attributeMap,1,1);
 }
 
-void DataStore::AddDefinableProperty(
-		int type,
-		QString tagName, 
-		QVariant defaultValue,
-		int minNumOfThisType, 
-		int maxNumOfThisType
-		)
-{
-	AddDefinableProperty(type,tagName,defaultValue,QMap<QString,QVariant>(),minNumOfThisType,maxNumOfThisType);
-}
+//void DataStore::AddDefinableProperty(
+//		int type,
+//		QString tagName, 
+//		QVariant defaultValue,
+//		int minNumOfThisType, 
+//		int maxNumOfThisType
+//		)
+//{
+//	AddDefinableProperty(type,tagName,defaultValue,QMap<QString,QVariant>(),minNumOfThisType,maxNumOfThisType);
+//}
 
 void DataStore::AddDefinableProperty(
 		int type,
@@ -355,20 +337,15 @@ void DataStore::AddDefinableProperty(
 	AddDefinableObjectFactory(tagName,propFactory);
 }
 
-void DataStore::AddDefinableObject(QString tagName, QSharedPointer<Asset> object)
-{
-	QSharedPointer<AssetFactory> factory(new AssetFactory(object));
-	AddDefinableObjectFactory(tagName,factory);
-}
+//void DataStore::AddDefinableObject(QString tagName, QSharedPointer<Asset> object)
+//{
+//	QSharedPointer<AssetFactory> factory(new AssetFactory(object));
+//	AddDefinableObjectFactory(tagName,factory);
+//}
 
 void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory)
 {
 	factories_[tagName]=factory;
-}
-
-void DataStore::DefinePlaceholderTag(QString tagName)
-{
-	factories_[tagName] = QSharedPointer<AssetFactory>();
 }
 
 void DataStore::AddChild(QString tagName, QSharedPointer<Asset> child)
@@ -389,6 +366,46 @@ QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 QStringList DataStore::getValidChildTags()
 {
 	return factories_.keys();
+}
+
+QSharedPointer<AssetFactory> DataStore::getAssetFactory(QString tagName)
+{
+	if(factories_.contains(tagName))
+		return factories_[tagName];
+	return QSharedPointer<AssetFactory>();
+}
+QSharedPointer<Asset> DataStore::createChildAsset(QString tagName,QString type,QString& error)
+{
+	QSharedPointer<Asset> newAsset;
+	if(tagName == "")
+		return newAsset;
+	QSharedPointer<AssetFactory> factory = getAssetFactory(tagName);
+	if(factory.isNull())
+		return newAsset;
+	newAsset = factory->getAsset(error,type);
+	if(newAsset.isNull())
+		return newAsset;
+
+	AddChild(tagName,newAsset);
+	//Deserialize the child into a default state.
+	newAsset->initializeToDefault(tagName,type);
+	newAsset->setEdited();
+	return newAsset;
+}
+
+void DataStore::clear()
+{
+	propertyContainer_->clear();
+	//When we deserialize again, the datastore will be effectively cleared.  To
+	//clear it for serialization, just set all children to deleted, and none of
+	//them will be serialized out.
+	foreach(QList<QSharedPointer<Asset>> assetList,children_)
+	{
+		foreach(QSharedPointer<Asset> asset,assetList)
+		{
+			asset->setDeleted();
+		}
+	}
 }
 
 bool DataStore::hasChildrenOfType(QString tagName)

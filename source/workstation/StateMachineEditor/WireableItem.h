@@ -12,17 +12,15 @@ class WireableItem : public AssetItem
 {
 	Q_OBJECT
 public:
-	WireableItem(QMenu *itemMenu, QSharedPointer<Asset> asset);
-	QSharedPointer<Asset> getAsset(){return asset_;};
+	WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
+	virtual ~WireableItem();
 	void addArrowSource(QString name);
 	void enableArrowDest();
 	QList<DiagramItem*> getArrowSources();
 	DiagramItem* getArrowDest();
-	virtual void removeDependantGraphics();
 protected:
 	virtual void updateDependantGraphics(){};
 private:
-	QSharedPointer<Asset> asset_;
 	QList<DiagramItem*> arrowSources_;
 	DiagramItem* arrowDest_;
 	int lastSourcePos_;

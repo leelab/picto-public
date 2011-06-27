@@ -5,6 +5,7 @@
 #include <QXmlStreamWriter>
 
 #include "../common.h"
+#include "../statemachine/Result.h"
 #include "../parameter/parameter.h"
 #include "../parameter/ParameterContainer.h"
 #include "Predicate.h"
@@ -21,9 +22,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PredicateExpression : public DataStore
+class PICTOLIB_API PredicateExpression : public Result
 #else
-class PredicateExpression : public DataStore
+class PredicateExpression : public UIEnabled
 #endif
 {
 	Q_OBJECT
@@ -38,8 +39,6 @@ public:
 	bool evaluate();
 	
 	//Name
-	void setName(QString name);
-	QString name();
 	void setOrder(int order);
 	int order();
 	
@@ -55,20 +54,21 @@ public:
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	void setParameterContainer(ParameterContainer *params) { parameters_ = params; };
+	virtual QString assetType(){return "PredicateExpression";};
 
 protected:
-	virtual QString defaultTagName(){return "Expression";};
+	virtual QString defaultTagName(){return "Condition";};
+	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:
-	QString predicateName_;
-	QString LHSParamName_;
 	QString RHSParamName_;
 	QVariant RHSval_;
 	bool useRHSVal_;
 
-	ParameterContainer *parameters_;
+private:
+	QString predicateName_;
+	QString LHSParamName_;
+
+	//ParameterContainer *parameters_;
 };
 
 

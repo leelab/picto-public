@@ -8,7 +8,7 @@ const QString CircleGraphic::type = "Circle Graphic";
 
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 {
-	AddDefinableProperty("Name","");
+	
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
 
@@ -72,11 +72,16 @@ void CircleGraphic::slotPropertyValueChanged(QString propertyName, int,
 	}
 }
 
+void CircleGraphic::postSerialize()
+{
+	VisualElement::postSerialize();
+	draw();
+}
+
 bool CircleGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
 		return false;
-	draw();
 	return true;
 }
 

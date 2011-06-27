@@ -1,13 +1,13 @@
 #include "StateMachineElementItem.h"
 #include "../../common/StateMachine/StateMachineElement.h"
-StateMachineElementItem::StateMachineElementItem(QMenu *itemMenu, QSharedPointer<Asset> asset) :
-WireableItem(itemMenu,asset)
+StateMachineElementItem::StateMachineElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+WireableItem(editorState,contextMenu,asset)
 {
 	QSharedPointer<StateMachineElement> stateMachElem = asset.staticCast<StateMachineElement>();
-	QStringList results = stateMachElem->getResultList();
-	foreach(QString result,results)
+	QList<QSharedPointer<Asset>> results = stateMachElem->getGeneratedChildren("Result");
+	foreach(QSharedPointer<Asset> result,results)
 	{
-		addArrowSource(result);
+		addArrowSource(result->getName());
 	}
 	enableArrowDest();
 }

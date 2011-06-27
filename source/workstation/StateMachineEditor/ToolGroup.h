@@ -4,6 +4,7 @@
 #include <QList>
 #include <QMap>
 #include <QString>
+#include "EditorState.h"
 QT_BEGIN_NAMESPACE
 class QButtonGroup;
 class QToolButton;
@@ -18,18 +19,22 @@ class ToolGroup : public QWidget
     Q_OBJECT
 
 public:
-	ToolGroup(QWidget *parent=0);
+	ToolGroup(QSharedPointer<EditorState> editorState, QWidget *parent=0);
 	QString getSelectedButton(){return selectedButton_;};
-signals:
-	void insertionItemSelected(QString itemName);
+
 protected:
-	void AddButton(const QString &label, QIcon icon);
+	void AddButton(const QString &label, QIcon icon, bool enabled = true);
 	void clearButtons();
+	QSharedPointer<EditorState> getEditorState(){return editorState_;};
+
+	virtual void doButtonAction(int buttonId) = 0;
+	virtual void disableButtonActions(){};
 private slots:
     void buttonGroupClicked(int id);
-	void buttonGroupReleased(int id);
+	void disableAllButtons();
 
 private:
+	QSharedPointer<EditorState> editorState_;
 	QButtonGroup* buttonGroup_;
 	QGridLayout* layout_;
 	QList<QWidget*> widgets_;

@@ -44,6 +44,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QList>
+#include "EditorState.h"
 
 QT_BEGIN_NAMESPACE
 class QPixmap;
@@ -69,8 +70,9 @@ public:
     enum { Type = UserType + 15 };
     enum DiagramType { Step, Conditional, StartEnd, Io, ArrowSource, ArrowDestination};
 
-    DiagramItem(QMenu *contextMenu, QString name = "",
+    DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name = "",
         QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+	virtual ~DiagramItem();
 
 	void setName(QString name,QPointF pos = QPointF());
 	void setType(QString type);
@@ -81,7 +83,6 @@ public:
     QPixmap image() const;
     int type() const
         { return Type;}
-	virtual void removeDependantGraphics(){};
 
 signals:
 	void selectedChange(QGraphicsItem *item);
@@ -90,12 +91,15 @@ protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	virtual void updateDependantGraphics(){};
+	virtual void positionChanged(QPoint){};
+	QSharedPointer<EditorState> getEditorState(){return editorState_;};
 	QMenu *myContextMenu;
 
 private:
 	QString name_;
 	QString type_;
 	QGraphicsTextItem* nameText_;
+	QSharedPointer<EditorState> editorState_;
 };
 //! [0]
 

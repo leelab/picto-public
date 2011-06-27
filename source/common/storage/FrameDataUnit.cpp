@@ -90,6 +90,11 @@ bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	return true;
 }
 
+void FrameDataUnit::postSerialize()
+{
+
+}
+
 bool FrameDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	return true;

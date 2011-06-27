@@ -9,9 +9,10 @@ using namespace Picto;
 class DiagramItemFactory
 {
 public:
-	DiagramItemFactory(QMenu *contextMenu, QGraphicsScene *scene);
+	DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QGraphicsScene *scene);
 	DiagramItem* create(QSharedPointer<Asset> asset);
 private:
+	QSharedPointer<EditorState> editorState_;
 	QMenu* contextMenu_;
 	QGraphicsScene* scene_;
 };

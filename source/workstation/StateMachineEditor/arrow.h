@@ -43,7 +43,7 @@
 #define ARROW_H
 
 #include <QGraphicsLineItem>
-
+#include "../../common/statemachine/Transition.h"
 #include "ArrowPortItem.h"
 
 QT_BEGIN_NAMESPACE
@@ -60,8 +60,11 @@ class Arrow : public QGraphicsLineItem
 {
 public:
     enum { Type = UserType + 4 };
-	static Arrow* Create(DiagramItem *startItem, DiagramItem *endItem,
-      QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+	static Arrow* Create(QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
+		QMenu *contextMenu, QGraphicsItem *parent, QGraphicsScene *scene);
+	static Arrow* Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
+		QMenu *contextMenu, QGraphicsItem *parent, QGraphicsScene *scene);
+	virtual ~Arrow();
     int type() const
         { return Type; }
     QRectF boundingRect() const;
@@ -72,6 +75,7 @@ public:
         { return myStartItem; }
     DiagramItem *endItem() const
         { return myEndItem; }
+	QSharedPointer<Asset> getAsset(){return transition_;};
 
 
 public slots:
@@ -80,14 +84,18 @@ public slots:
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = 0);
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 private:
-	Arrow(DiagramItem *startItem, DiagramItem *endItem,
+	Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
       QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+	static QSharedPointer<Asset> getAssetAncestor(DiagramItem* item);
+	QSharedPointer<Asset> transition_;
     ArrowPortItem *myStartItem;
     ArrowPortItem *myEndItem;
     QColor myColor;
     QPolygonF arrowHead;
+	QMenu *myContextMenu;
 };
 //! [0]
 

@@ -45,14 +45,18 @@
 #include "arrow.h"
 
 //! [0]
-DiagramItem::DiagramItem(QMenu *contextMenu, QString name,
+DiagramItem::DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name,
              QGraphicsItem *parent, QGraphicsScene *scene)
     : QGraphicsPolygonItem(parent, scene)
 {
+	editorState_ = editorState;
     myContextMenu = contextMenu;
 	nameText_ = NULL;
 	setName(name);
 }
+
+DiagramItem::~DiagramItem()
+{}
 
 void DiagramItem::setName(QString name,QPointF pos)
 {
@@ -159,6 +163,7 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
 {
     if (change == QGraphicsItem::ItemPositionChange) {
 		updateDependantGraphics();
+		positionChanged(value.toPoint());		
     }
 	if (change == QGraphicsItem::ItemSelectedHasChanged)
 		emit selectedChange(this);

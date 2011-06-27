@@ -385,6 +385,11 @@ void MainWindow::changeMode()
 	//find and set the current widget
 	viewerStack_->setCurrentIndex(viewerIndex);
 	currViewer_ = qobject_cast<Viewer*>(viewerStack_->currentWidget());
+	
+	//Set the latest experiment and experiment text to the viewer
+	currViewer_->setExperiment(experiment_);
+	currViewer_->setExperimentText(&experimentText_);
+	
 	currViewer_->init();
 
 }
@@ -446,6 +451,7 @@ bool MainWindow::saveFile(const QString filename)
 	QFile file(filename);
 	if(file.open(QIODevice::WriteOnly))
 	{
+		currViewer_->aboutToSave();
 		if(!file.write(experimentText_.toPlainText().toAscii()))
 			success = false;
 		file.close();
@@ -497,7 +503,7 @@ void MainWindow::setCurrentFile(const QString &filename)
 	QString shownName = tr("Untitled");
 	if(!currFile_.isEmpty())
 	{
-		shownName = QFileInfo(filename).fileName();
+		shownName = QFileInfo(currFile_).fileName();
 		recentFiles_.removeAll(currFile_);
 		recentFiles_.prepend(currFile_);
 		updateRecentFileActions();
@@ -547,12 +553,12 @@ bool MainWindow::convertTextToExperiment()
 	Picto::Asset::clearErrors();
 	bool result = experiment_->fromXml(xmlReader);
 
-	//////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
+	////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
 	//QString serialTestString;
 	//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&serialTestString));
 	//experiment_->toXml(xmlWriter);
 	//Q_ASSERT(serialTestString == experimentText_.toPlainText());
-	////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	if(!result)
 	{
