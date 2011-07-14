@@ -25,6 +25,9 @@ public:
 	Scriptable();
 
 	bool bindToScriptEngine(QScriptEngine &engine);
+	/*! \brief Resets this scriptables data fields to their original values.
+	 */
+	virtual void reset()=0;
 
 protected:
 	virtual QString defaultTagName(){return "Scriptable";};

@@ -51,7 +51,8 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 		foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 		{
 			visualElement->updateAnimation(frame_,elapsedTime_);
-			visualTarget->draw(visualElement->getPosition(),visualElement->getCompositingSurface(visualTarget->getTypeName()));
+			if(visualElement->getVisible())
+				visualTarget->draw(visualElement->getPosition(),visualElement->getCompositingSurface(visualTarget->getTypeName()));
 		}
 		
 		//Present it

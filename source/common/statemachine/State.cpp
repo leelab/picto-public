@@ -13,14 +13,14 @@
 #include "../controlelements/StopwatchController.h"
 #include "../controlelements/TargetController.h"
 #include "../controlelements/ChoiceController.h"
-#include "../stimuli/ArrowGraphic.h"
-#include "../stimuli/BoxGraphic.h"
-#include "../stimuli/CircleGraphic.h"
-#include "../stimuli/EllipseGraphic.h"
-#include "../stimuli/LineGraphic.h"
-#include "../stimuli/PictureGraphic.h"
-#include "../stimuli/RandomlyFilledGridGraphic.h"
-#include "../stimuli/TextGraphic.h"
+//#include "../stimuli/ArrowGraphic.h"
+//#include "../stimuli/BoxGraphic.h"
+//#include "../stimuli/CircleGraphic.h"
+//#include "../stimuli/EllipseGraphic.h"
+//#include "../stimuli/LineGraphic.h"
+//#include "../stimuli/PictureGraphic.h"
+//#include "../stimuli/RandomlyFilledGridGraphic.h"
+//#include "../stimuli/TextGraphic.h"
 
 #include <QCoreApplication>
 #include <QUuid>
@@ -57,26 +57,26 @@ State::State() :
 
 	//Add UI Elements
 	//Add Audio Elements
-	AddDefinableObjectFactory("AudioElement",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))) );
-	//Add Visual Elements
-	QSharedPointer<AssetFactory> factory(new AssetFactory());
-	factory->addAssetType(ArrowGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
-	factory->addAssetType(BoxGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
-	factory->addAssetType(CircleGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
-	factory->addAssetType(EllipseGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
-	factory->addAssetType(LineGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
-	factory->addAssetType(PictureGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
-	factory->addAssetType(RandomlyFilledGridGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
-	factory->addAssetType(TextGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
-	AddDefinableObjectFactory("VisualElement",factory);
+	//AddDefinableObjectFactory("AudioElement",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))) );
+	////Add Visual Elements
+	//QSharedPointer<AssetFactory> factory(new AssetFactory());
+	//factory->addAssetType(ArrowGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
+	//factory->addAssetType(BoxGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
+	//factory->addAssetType(CircleGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
+	//factory->addAssetType(EllipseGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	//factory->addAssetType(LineGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	//factory->addAssetType(PictureGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
+	//factory->addAssetType(RandomlyFilledGridGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
+	//factory->addAssetType(TextGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
+	//AddDefinableObjectFactory("VisualElement",factory);
 	//Add background color property
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
 
@@ -92,7 +92,7 @@ State::State() :
 
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
-	reset();
+	resetScriptableValues();
 	frameCounter_ = -1; //We're zero-indexed
 
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
@@ -192,7 +192,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
  */
 QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
-	reset();
+	resetScriptableValues();
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 	lastFrameCheckTime_ = lastTransitionTime_;
 
@@ -273,15 +273,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		runScript(exitScriptName);
 
 	return result;
-}
-
-//!  Resets all of the contained visual stimuli back to their original state (in case they were modified by a script)
-void State::reset()
-{
-	scene_->reset();
-
-	//We may want to consider resetting the scripting environment as well.  At the moment, variables stored
-	//in script will maintain their state from run to run.  This could be good or bad...
 }
 
 /*! \brief Sends the current behavioral data to the server
@@ -694,16 +685,12 @@ void State::postSerialize()
 	revision_= propertyContainer_->getPropertyValue("Revision").toInt();
 	engineNeeded_= propertyContainer_->getPropertyValue("EngineNeeded").toInt();
 
-	scene_->reset();
-	QColor backgroundColor;
-	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
-	scene_->setBackgroundColor(backgroundColor);
-	QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
-	foreach(QSharedPointer<Asset> newVisElem,newVisElems)
-	{
-		scene_->addVisualElement(newVisElem.staticCast<VisualElement>());
-		addScriptable(newVisElem.staticCast<Scriptable>());
-	}
+	//QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
+	//foreach(QSharedPointer<Asset> newVisElem,newVisElems)
+	//{
+	//	scene_->addVisualElement(newVisElem.staticCast<VisualElement>());
+	//	addScriptable(newVisElem.staticCast<Scriptable>());
+	//}
 
 	MachineContainer::postSerialize();
 }
@@ -754,4 +741,22 @@ QMap<QString,QString> State::getScripts()
 	}
 	return scripts;
 }
+
+void State::scriptableContainerWasReinitialized()
+{
+	scene_ = QSharedPointer<Scene>(new Scene);
+	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
+	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
+	{
+		if(scriptable.dynamicCast<VisualElement>())
+		{
+			scene_->addVisualElement(scriptable.staticCast<VisualElement>());
+		}
+	}
+	
+	QColor backgroundColor;
+	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
+	scene_->setBackgroundColor(backgroundColor);
+}
+
 }; //namespace Picto

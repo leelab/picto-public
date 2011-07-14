@@ -233,7 +233,7 @@ void TestDataStore::TestParameter_data()
 	Picto::BooleanParameter *boolParam = new Picto::BooleanParameter;
 	boolParam->setName("My boolean Parameter");
 	boolParam->setOrder(31);
-	boolParam->setDefaultValue(true);
+	boolParam->setInitialValue(true);
 	boolParam->setTrueLabel("I'm true!");
 	boolParam->setFalseLabel("I'm false.");
 	QSharedPointer<Picto::Parameter> boolParamPtr(boolParam);
@@ -250,7 +250,7 @@ void TestDataStore::TestParameter_data()
 	choiceParamStrings->addChoice("A",QString("Choice A"));
 	choiceParamStrings->addChoice("B",QString("Choice B"));
 	choiceParamStrings->addChoice("C",QString("Choice C"));
-	choiceParamStrings->setDefaultOption("B");
+	choiceParamStrings->setInitialValue("B");
 	QSharedPointer<Picto::Parameter> choiceParamStrPtr(choiceParamStrings);
 
 	QTest::newRow("ChoiceParameter with strings") << choiceParamStrPtr;
@@ -264,7 +264,7 @@ void TestDataStore::TestParameter_data()
 	choiceParamInts->addChoice("One",1);
 	choiceParamInts->addChoice("Two",2);
 	choiceParamInts->addChoice("Five",5);
-	choiceParamInts->setDefaultOption("B");
+	choiceParamInts->setInitialValue("B");
 	QSharedPointer<Picto::Parameter> choiceParamIntPtr(choiceParamInts);
 
 	QTest::newRow("ChoiceParameter with integers") << choiceParamIntPtr;
@@ -278,7 +278,7 @@ void TestDataStore::TestParameter_data()
 	choiceParamColors->addChoice("Red",QColor(255,0,0));
 	choiceParamColors->addChoice("Green",QColor(0,255,0));
 	choiceParamColors->addChoice("Blue",QColor(0,0,255));
-	choiceParamColors->setDefaultOption("Blue");
+	choiceParamColors->setInitialValue("Blue");
 	QSharedPointer<Picto::Parameter> choiceParamColorsPtr(choiceParamColors);
 
 	QTest::newRow("ChoiceParameter with integers") << choiceParamColorsPtr;
@@ -292,7 +292,7 @@ void TestDataStore::TestParameter_data()
 	rangeParam->setIncrement(1);
 	rangeParam->setMax(200);
 	rangeParam->setMin(-50);
-	rangeParam->setDefault(45);
+	rangeParam->setInitialValue(45);
 	rangeParam->setUnits("light years");
 
 	QSharedPointer<Picto::Parameter> rangeParamPtr(rangeParam);
@@ -374,7 +374,7 @@ void TestDataStore::TestParameterContainer()
 	QSharedPointer<Picto::BooleanParameter> boolParam (new Picto::BooleanParameter);
 	boolParam->setName("My boolean Parameter");
 	boolParam->setOrder(31);
-	boolParam->setDefaultValue(true);
+	boolParam->setInitialValue(true);
 	boolParam->setTrueLabel("I'm true!");
 	boolParam->setFalseLabel("I'm false.");
 	originalParameterContainer->addScriptable(boolParam);
@@ -385,7 +385,7 @@ void TestDataStore::TestParameterContainer()
 	choiceParamStrings->addChoice("A",QString("Choice A"));
 	choiceParamStrings->addChoice("B",QString("Choice B"));
 	choiceParamStrings->addChoice("C",QString("Choice C"));
-	choiceParamStrings->setDefaultOption("B");
+	choiceParamStrings->setInitialValue("B");
 	originalParameterContainer->addScriptable(choiceParamStrings);
 
 	QSharedPointer<Picto::ChoiceParameter> choiceParamInts (new Picto::ChoiceParameter);
@@ -394,7 +394,7 @@ void TestDataStore::TestParameterContainer()
 	choiceParamInts->addChoice("One",1);
 	choiceParamInts->addChoice("Two",2);
 	choiceParamInts->addChoice("Five",5);
-	choiceParamInts->setDefaultOption("B");
+	choiceParamInts->setInitialValue("B");
 	originalParameterContainer->addScriptable(choiceParamInts);
 
 	QSharedPointer<Picto::ChoiceParameter> choiceParamColors (new Picto::ChoiceParameter);
@@ -403,7 +403,7 @@ void TestDataStore::TestParameterContainer()
 	choiceParamColors->addChoice("Red",QColor(255,0,0));
 	choiceParamColors->addChoice("Green",QColor(0,255,0));
 	choiceParamColors->addChoice("Blue",QColor(0,0,255));
-	choiceParamColors->setDefaultOption("Blue");
+	choiceParamColors->setInitialValue("Blue");
 	originalParameterContainer->addScriptable(choiceParamColors);
 
 	QSharedPointer<Picto::RangeParameter> rangeParam (new Picto::RangeParameter);
@@ -412,7 +412,7 @@ void TestDataStore::TestParameterContainer()
 	rangeParam->setIncrement(1);
 	rangeParam->setMax(200);
 	rangeParam->setMin(-50);
-	rangeParam->setDefault(45);
+	rangeParam->setInitialValue(45);
 	rangeParam->setUnits("light years");
 	originalParameterContainer->addScriptable(rangeParam);
 

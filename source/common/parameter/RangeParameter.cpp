@@ -3,10 +3,10 @@
 namespace Picto {
 
 RangeParameter::RangeParameter()
+: Parameter(QVariant::Int)
 {
 	
 	AddDefinableProperty(QVariant::Int,"Order",0);
-	AddDefinableProperty(QVariant::Int,"Default",0);
 	AddDefinableProperty(QVariant::Int,"Min",0);
 	AddDefinableProperty(QVariant::Int,"Max",0);
 	AddDefinableProperty(QVariant::Int,"Increment",0);
@@ -18,25 +18,6 @@ RangeParameter::RangeParameter()
 Parameter* RangeParameter::NewParameter()
 {
 	return new RangeParameter;
-}
-
-/*! Note that setValue sets the value to the closest value that is 
- * a multiple of the increment
- */
-void RangeParameter::setValue(QVariant value)
-{
-	if(value.toInt() < minValue_)
-		currentValue_ = minValue_;
-	else if(value.toInt() > maxValue_)
-		currentValue_ = maxValue_;
-	else
-	{
-		currentValue_ = value.toInt();
-	
-		//force the current value to be a multiple of the increment
-		currentValue_ = (currentValue_/increment_)*increment_;
-
-	}
 }
 
 void RangeParameter::setMin(int min) 
@@ -58,23 +39,11 @@ void RangeParameter::setMax(int max)
 	maxValue_ = (maxValue_/increment_)*increment_;
 }
 
-void RangeParameter::setDefault(int defualtValue) 
-{ 
-	if(defualtValue <= maxValue_ && defualtValue >= minValue_) 
-	{
-		defaultValue_ = defualtValue; 
-		//force the default value to be a multiple of the increment
-		defaultValue_ = (defaultValue_/increment_)*increment_;
-		currentValue_ = defaultValue_;
-	}
-}
-
 void RangeParameter::postSerialize()
 {
 	Parameter::postSerialize();
 	bOperatorUI_ = propertyContainer_->getPropertyValue("OperatorUI").toBool();
 	order_ = propertyContainer_->getPropertyValue("Order").toInt();
-	defaultValue_ = propertyContainer_->getPropertyValue("Default").toInt();
 	minValue_ = propertyContainer_->getPropertyValue("Min").toInt();
 	maxValue_ = propertyContainer_->getPropertyValue("Max").toInt();
 	increment_ = propertyContainer_->getPropertyValue("Increment").toInt();
@@ -86,6 +55,24 @@ bool RangeParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	if(!Parameter::validateObject(xmlStreamReader))
 		return false;
 	return true;
+}
+
+/*! Note that values should be set to the closest value that is 
+ * a multiple of the increment
+ */
+QVariant RangeParameter::verifyValue(QVariant value)
+{
+	if(value.toInt() < minValue_)
+		return minValue_;
+	else if(value.toInt() > maxValue_)
+		return maxValue_;
+	else
+	{
+		//force the current value to be a multiple of the increment
+		if(value.toInt() != (value.toInt()/increment_)*increment_)
+			return QVariant((currentValue_/increment_)*increment_);
+	}
+	return value;
 }
 
 }; //namespace Picto

@@ -3,6 +3,7 @@
 namespace Picto {
 
 StringParameter::StringParameter()
+: Parameter(QVariant::String)
 {
 	type_ = "String";
 }
@@ -14,18 +15,18 @@ Parameter* StringParameter::NewParameter()
 	return NULL;
 }
 
-void StringParameter::setValue(QVariant value)
-{
-	//StringParameters haven't been built yet...
-	Q_ASSERT(false);
-}
-
-QVariant StringParameter::getValue()
-{
-	//StringParameters haven't been built yet...
-	Q_ASSERT(false);
-	return QVariant();
-}
+//void StringParameter::setValue(QVariant value)
+//{
+//	//StringParameters haven't been built yet...
+//	Q_ASSERT(false);
+//}
+//
+//QVariant StringParameter::getValue()
+//{
+//	//StringParameters haven't been built yet...
+//	Q_ASSERT(false);
+//	return QVariant();
+//}
 
 
 void StringParameter::addOption(StringParameterOption option)

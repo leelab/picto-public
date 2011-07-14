@@ -129,6 +129,7 @@ void StateEditViewer::init()
 		
 		if(!experiment_->fromXml(xmlReader,false))
 		{
+			experiment_ = QSharedPointer<Picto::Experiment>();
 			QMessageBox msg;
 			msg.setText("Failed to load current definition.  Please attempt to correct experiment in Text Editor");
 			msg.exec();
@@ -143,6 +144,8 @@ void StateEditViewer::init()
 
 void StateEditViewer::deinit()
 {
+	if(experiment_.isNull())
+		return;
 	insertEditBlock();
 }
 

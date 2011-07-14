@@ -63,6 +63,7 @@ void ScriptElement::setScript(QString script)
 
 QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 {
+	resetScriptableValues();
 	bool returnVal = false;
 	runScript(getName().simplified().remove(' '),returnVal);
 	if(returnVal)
@@ -73,6 +74,7 @@ QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 
 QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
+	resetScriptableValues();
 	//This will execute the script
 	run(engine);
 

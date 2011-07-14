@@ -31,9 +31,9 @@ class RangeParameter : public Parameter
 #endif
 {
 	Q_OBJECT
-public slots:
-	void setValue(QVariant value);
-	QVariant getValue() { return QVariant(currentValue_); };
+//public slots:
+//	void setValue(QVariant value);
+//	QVariant getValue() { return QVariant(currentValue_); };
 
 public:
 	RangeParameter();
@@ -47,7 +47,6 @@ public:
 
 	void setMin(int min);
 	void setMax(int max);
-	void setDefault(int defualtValue);
 	void setIncrement(int increment) {increment_ = increment; }
 	void setUnits(QString units) { units_ = units; };
 
@@ -81,11 +80,11 @@ public:
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual QVariant verifyValue(QVariant value);
 
 private:
 	int maxValue_;
 	int minValue_;
-	int defaultValue_;
 	int currentValue_;
 	int increment_;
 	QString units_;

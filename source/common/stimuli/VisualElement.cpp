@@ -5,7 +5,8 @@
 namespace Picto {
 
 VisualElement::VisualElement() :
-	shouldUpdateCompositingSurfaces_(true)
+	shouldUpdateCompositingSurfaces_(true),
+	visible_(true)
 {
 	AddDefinableProperty(QVariant::Int,"Order",0);
 }

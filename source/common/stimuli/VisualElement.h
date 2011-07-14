@@ -67,6 +67,8 @@ public slots:
 	int getBlue() { return getColor().blue(); };
 	int getGreen() { return getColor().green(); };
 	void setColor(int r, int g, int b, int a=255) { setColor(QColor(r,g,b,a)); };
+	void setVisible(bool visible) { visible_ = visible; };
+	bool getVisible(){return visible_;};
 
 protected:
 	void backupProperties();
@@ -84,6 +86,7 @@ protected:
 	MTRand random;
 
 	QMap<QString, QVariant> initialProperties_;
+	bool visible_;
 };
 
 }; //namespace Picto

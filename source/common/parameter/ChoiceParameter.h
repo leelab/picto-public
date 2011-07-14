@@ -29,9 +29,9 @@ class ChoiceParameter : public Parameter
 #endif
 {
 	Q_OBJECT
-public slots:
-	void setValue(QVariant value);
-	QVariant getValue();
+//public slots:
+//	void setValue(QVariant value);
+//	QVariant getValue();
 
 public:
 	ChoiceParameter();
@@ -44,7 +44,6 @@ public:
 
 	bool addChoice(QString label, QVariant data);
 	bool removeChoice(QString label);
-	void setDefaultOption(QString label);
 
 	virtual bool equalTo(Parameter& RHS);
 	virtual bool equalTo(QVariant& RHS);
@@ -52,11 +51,11 @@ public:
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual QVariant verifyValue(QVariant value);
 
 private:
 	QMap<QString,ChoiceParameterOption> options_;
 	QString currentOption_;
-	QString defaultOption_;
 
 };
 

@@ -27,10 +27,12 @@ namespace Picto {
 
 public:
 
-	Parameter();
+	Parameter(int type);
 
 	void setOrder(int i) { order_ = i; };
 	int getOrder() { return order_; };
+	void reset();
+	void setInitialValue(QVariant val);
 
 	//comparators
 	//Note, all comparators, work with the current parameter value on the LHS
@@ -78,15 +80,18 @@ public:
 
 public slots:
 	//setters and getters are slots so we can bind them to scripts
-	virtual void setValue(QVariant value) = 0;
-	virtual QVariant getValue() = 0;
+	virtual void setValue(QVariant value);
+	virtual QVariant getValue();
 
 
 protected:
+	virtual QVariant verifyValue(QVariant value){return value;};
 	virtual QString defaultTagName(){return "Parameter";};
+	virtual void postSerialize();
 	QString type_;
 	bool bOperatorUI_;
 	int order_;
+	QVariant currValue_;
 };
 
 

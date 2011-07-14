@@ -114,6 +114,9 @@ bool ScriptableContainer::initScripting(bool forDesign)
 		}
 	}
 
+	//Inform child classes that the scriptable container has been reinitialized.
+	scriptableContainerWasReinitialized();
+
 	//Intialize Scripting on all child ScriptableContainers
 	foreach(QSharedPointer<ScriptableContainer> child,scriptableContainers_)
 	{
@@ -121,6 +124,15 @@ bool ScriptableContainer::initScripting(bool forDesign)
 	}
 	scriptingInitialized_ = true;
 	return true;
+}
+
+void ScriptableContainer::resetScriptableValues()
+{
+	QList<QSharedPointer<Asset>> scriptables = getGeneratedChildren("Scriptable");
+	foreach(QSharedPointer<Asset> scriptable,scriptables)
+	{
+		scriptable.staticCast<Scriptable>()->reset();
+	}
 }
 
 QString ScriptableContainer::getInfo()

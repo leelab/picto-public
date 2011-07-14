@@ -4,6 +4,7 @@
 namespace Picto {
 
 ChoiceParameter::ChoiceParameter()
+: Parameter(QVariant::String)
 {
 	
 	AddDefinableProperty(QVariant::Bool,"OperatorUI",false);
@@ -25,7 +26,6 @@ ChoiceParameter::ChoiceParameter()
 
 	type_ = "Choice";
 	currentOption_ = "";
-	defaultOption_ = "";
 }
 
 Parameter* ChoiceParameter::NewParameter()
@@ -58,32 +58,27 @@ bool ChoiceParameter::removeChoice(QString label)
 	return true;
 }
 
-void ChoiceParameter::setDefaultOption(QString label)
-{
-	defaultOption_ = label;
-}
 
-
-/* \brief Sets the current value to the passed in string
- *
- *	Searches through the choices and finds the choice with a 
- *	matching label and makes that the current choice
- *	NOTE: This function is case sensitive!
- */
-void ChoiceParameter::setValue(QVariant value)
-{
-	if(options_.contains(value.toString()))
-		currentOption_ = value.toString();
-}
-
-//Returns the current value as a string
-QVariant ChoiceParameter::getValue()
-{
-	if(options_.isEmpty() || !options_.contains(currentOption_))
-		return QVariant("");
-	else
-		return options_[currentOption_].data;
-}
+///* \brief Sets the current value to the passed in string
+// *
+// *	Searches through the choices and finds the choice with a 
+// *	matching label and makes that the current choice
+// *	NOTE: This function is case sensitive!
+// */
+//void ChoiceParameter::setValue(QVariant value)
+//{
+//	if(options_.contains(value.toString()))
+//		currentOption_ = value.toString();
+//}
+//
+////Returns the current value as a string
+//QVariant ChoiceParameter::getValue()
+//{
+//	if(options_.isEmpty() || !options_.contains(currentOption_))
+//		return QVariant("");
+//	else
+//		return options_[currentOption_].data;
+//}
 
 /*!	\brief Equal to operation
  *
@@ -130,7 +125,6 @@ void ChoiceParameter::postSerialize()
 
 	bOperatorUI_ = propertyContainer_->getPropertyValue("OperatorUI").toBool();
 	order_ = propertyContainer_->getPropertyValue("Order").toInt();
-	defaultOption_ = propertyContainer_->getPropertyValue("Default").toBool();
 
 	ChoiceParameterOption newOption;
 	QList<QSharedPointer<Asset>> options = getGeneratedChildren("Option");
@@ -146,7 +140,23 @@ bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 {
 	if(!Parameter::validateObject(xmlStreamReader))
 		return false;
+	if(!getGeneratedChildren("Option").size())
+	{
+		QString errMsg = QString("A Choice Parameter must contain at least one option");
+		addError("ChoiceParameter", errMsg,xmlStreamReader);
+		return false;
+	}
 	return true;
+}
+
+QVariant ChoiceParameter::verifyValue(QVariant value)
+{
+	Q_ASSERT(options_.size());
+	if(!options_.contains(value.toString()))
+	{
+		return("");
+	}
+	return value;
 }
 
 }; //namespace Picto

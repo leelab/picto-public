@@ -34,6 +34,7 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 		addError("Scriptable", "The name of a scriptable element cannot contain whitespace",xmlStreamReader);
 		return false;
 	}
+	return true;
 }
 
 }; //namespace Picto

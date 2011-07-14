@@ -6,7 +6,8 @@ namespace Picto
 NumericParameter::NumericParameter()
 : 
   value_(0),
-  units_("")
+  units_(""),
+  Parameter(QVariant::Int)
 {
 	
 	AddDefinableProperty(QVariant::Bool,"OperatorUI",false);
@@ -21,14 +22,14 @@ Parameter* NumericParameter::NewParameter()
 	return new NumericParameter;
 }
 
-void NumericParameter::setValue(QVariant value)
-{
-	bool ok;
-	int testValue;
-	testValue = value.toInt(&ok);
-	if(ok)
-		value_ = testValue;
-}
+//void NumericParameter::setValue(QVariant value)
+//{
+//	bool ok;
+//	int testValue;
+//	testValue = value.toInt(&ok);
+//	if(ok)
+//		value_ = testValue;
+//}
 
 //note that the lessThan & greaterThan functions aren't redefined, 
 //so they will always return false

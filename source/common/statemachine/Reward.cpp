@@ -16,7 +16,7 @@ Reward::Reward()
 
 QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 {
-
+	resetScriptableValues();
 	int numRewards = propertyContainer_->getPropertyValue("RewardQty").toInt();
 	int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
 
@@ -34,6 +34,7 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 
 QString Reward::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
+	resetScriptableValues();
 	QString result;// = run(engine);
 	QString masterResult;
 	while(masterResult.isEmpty())

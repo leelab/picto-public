@@ -127,7 +127,7 @@ void TestParameters::TestRangeParameter()
 	param1.setIncrement(param1Increment);
 	param1.setMin(param1Min);
 	param1.setMax(param1Max);
-	param1.setDefault(param1Default);
+	param1.setInitialValue(param1Default);
 
 	//confirm that param's current value is the default that was most recently set
 	QCOMPARE(param1.getValue().toInt(), (param1Default/param1Increment)*param1Increment);
@@ -164,7 +164,7 @@ void TestParameters::TestRangeParameter()
 	param2.setIncrement(param2Increment);
 	param2.setMin(param2Min);
 	param2.setMax(param2Max);
-	param2.setDefault(param2Default);
+	param2.setInitialValue(param2Default);
 
 	//test the comparison operators with random values
 	for(int i=0; i<100; i++)

@@ -22,9 +22,9 @@ class NumericParameter : public Parameter
 #endif
 {
 	Q_OBJECT
-public slots:
-	void setValue(QVariant value);
-	QVariant getValue() { return QVariant(value_); };
+//public slots:
+//	void setValue(QVariant value);
+//	QVariant getValue() { return QVariant(value_); };
 
 public:
 	NumericParameter();

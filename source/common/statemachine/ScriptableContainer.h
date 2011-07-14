@@ -38,6 +38,9 @@ public:
 	 * returns false if there was an initialization error.
 	 */
 	bool initScripting(bool forDesign = false);
+	/*! \brief Calls reset on the scriptables serialized into this container.
+	 */
+	void resetScriptableValues();
 
 	virtual QString assetType(){return "ScriptableContainer";};
 	virtual QString getInfo();
@@ -51,6 +54,7 @@ protected:
 	virtual bool hasScripts(){return false;};
 	//This returns a map of QMap<script name,script code>
 	virtual QMap<QString,QString> getScripts(){return QMap<QString,QString>();};
+	virtual void scriptableContainerWasReinitialized(){};
 	QSharedPointer<AssetFactory> scriptableFactory_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 

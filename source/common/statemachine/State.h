@@ -59,6 +59,7 @@ protected:
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
 	virtual QMap<QString,QString> getScripts();
+	virtual void scriptableContainerWasReinitialized();
 
 
 private:
@@ -68,7 +69,6 @@ private:
 	//void updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused=false);
 	int getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine);
 	void addCursor();
-	void reset();
 
 	QSharedPointer<Scene> scene_;
 	//QMap<QString, QSharedPointer<ControlElement> > controlElements_;

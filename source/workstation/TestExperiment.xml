@@ -37,15 +37,15 @@
 									<BackgroundColor>#000000</BackgroundColor>
 
 
-										<VisualElement type="Ellipse Graphic">
+										<Scriptable type="Ellipse Graphic">
 											<Order>1</Order>
 											<Name>Ellipse</Name>
 											<Position x="400" y="400"/>
 											<Dimensions x="0" y="0" width="300" height="300"/>
 											<Color R="255" G="0" B="0" A="255"/>
-										</VisualElement>
+										</Scriptable>
 								
-									<AudioElement><UIInfo><Pos x="100" y="100"/></UIInfo></AudioElement>
+								
 							
 							<EntryScript>
 									//Upon entry we set the ellipse's color
@@ -140,17 +140,16 @@
                     
                       <BackgroundColor>#000000</BackgroundColor>
 
-                        <VisualElement type="Ellipse Graphic">
+                        <Scriptable type="Ellipse Graphic">
                           <Name>Ellipse</Name>
                           <Order>1</Order>
                           <Position x="400" y="199"/>
                           <Dimensions x="0" y="0" width="300" height="300"/>
                           <Color R="255" G="0" B="0" A="255"/>
-                        </VisualElement>
+                        </Scriptable>
 
                     
                   
-                  <AudioElement/>
                 
                 
                   <FrameScript>
@@ -205,7 +204,7 @@
                 <Time>2000</Time>
               <UIInfo><Pos x="100" y="100"/></UIInfo></ControlElement>
                   <BackgroundColor>#000000</BackgroundColor>
-              <AudioElement/>
+
             	<Result><Name>Success</Name><UIInfo><Pos x="400" y="100"/></UIInfo></Result>
 			<Transition>
 				<Source>Stopwatch</Source>
@@ -298,15 +297,15 @@
 										
 											<BackgroundColor>#000000</BackgroundColor>
 											
-												<VisualElement type="Box Graphic">
+												<Scriptable type="Box Graphic">
 													<Name>LeftBox</Name>
 													<Order>1</Order>
 													<Position x="400" y="400"/>
 													<Dimensions x="0" y="0" width="100" height="100"/>
 													<Color R="255" G="0" B="0" A="255"/>
-												<UIInfo><Pos x="2200" y="100"/></UIInfo></VisualElement>
+												<UIInfo><Pos x="2200" y="100"/></UIInfo></Scriptable>
 
-									<AudioElement><UIInfo><Pos x="100" y="100"/></UIInfo></AudioElement>
+									
 								
 									<!-- Upon entry we set the box's color to red, yellow, or green -->
 									<!-- depending on the number of successful attempts -->
@@ -385,15 +384,15 @@
 										
 											<BackgroundColor>#000000</BackgroundColor>
 											
-							  <VisualElement type="Box Graphic">
+							  <Scriptable type="Box Graphic">
 								<Name>RightBox</Name>
 								<Order>1</Order>
 								<Position x="600" y="400"/>
 								<Dimensions x="0" y="0" width="100" height="100"/>
 								<Color R="255" G="0" B="0" A="255"/>
-							  </VisualElement>
+							  </Scriptable>
 
-									<AudioElement/>
+
 
 								
 									<!-- Upon exit we set the box's color to red, yellow, or green -->
@@ -562,24 +561,23 @@
 						  
 							<BackgroundColor>#000000</BackgroundColor>
 							
-							  <VisualElement type="Circle Graphic">
+							  <Scriptable type="Circle Graphic">
 								<Name>TopCircle</Name>
 								<Order>1</Order>
 								<Position x="400" y="300"/>
 								<Radius>75</Radius>
 								<Color R="255" G="255" B="0" A="255"/>
-							  <UIInfo><Pos x="1900" y="100"/></UIInfo></VisualElement>
-							  <VisualElement type="Circle Graphic">
+							  <UIInfo><Pos x="1900" y="100"/></UIInfo></Scriptable>
+							  <Scriptable type="Circle Graphic">
 								<Name>BottomCircle</Name>
 								<Order>1</Order>
 								<Position x="400" y="500"/>
 								<Radius>75</Radius>
 								<Color R="255" G="255" B="0" A="255"/>
-								<UIInfo><Pos x="2200" y="100"/></UIInfo></VisualElement>
+								<UIInfo><Pos x="2200" y="100"/></UIInfo></Scriptable>
 						  
 						
-						<AudioElement>
-						<UIInfo><Pos x="106" y="462"/></UIInfo></AudioElement>
+						
 
 					  
 						<Result><Name>TopTarget</Name><UIInfo><Pos x="522" y="602"/></UIInfo></Result>
@@ -692,17 +690,15 @@
 										
 											<BackgroundColor>#000000</BackgroundColor>
 
-							  						<VisualElement type="Box Graphic">
+							  						<Scriptable type="Box Graphic">
 														<Name>box</Name>
 														<Order>1</Order>
 														<Position x="30" y="30"/>
 														<Dimensions x="0" y="0" width="50" height="100"/>
 														<Color R="255" G="255" B="0" A="255"/>
-							 						</VisualElement>
+							 						</Scriptable>
 
-									<AudioElement/>
-
-								
+																	
 									<Result><Name>Success</Name><UIInfo><Pos x="400" y="100"/></UIInfo></Result>
 								
 					  			<Transition>
@@ -729,15 +725,15 @@
 										
 											<BackgroundColor>#000000</BackgroundColor>
 
-												<VisualElement type="Box Graphic">
+												<Scriptable type="Box Graphic">
 													<Name>box</Name>
 													<Order>1</Order>
 													<Position x="100" y="30"/>
 													<Dimensions x="0" y="0" width="50" height="100"/>
 													<Color R="255" G="0" B="255" A="255"/>
-												<UIInfo><Pos x="1000" y="100"/></UIInfo></VisualElement>
+												<UIInfo><Pos x="1000" y="100"/></UIInfo></Scriptable>
 
-									<AudioElement><UIInfo><Pos x="100" y="100"/></UIInfo></AudioElement>
+									
 								
 									<FrameScript>
 										x = box.getX();

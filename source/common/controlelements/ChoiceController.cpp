@@ -140,14 +140,12 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
  */
 QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 {
-	if(engine.isNull())
-		return false;
+	Q_ASSERT(!engine.isNull());
 	if(signal_.isNull())
 	{
 		//grab the signal channel
 		signal_ = engine->getSignalChannel(propertyContainer_->getPropertyValue("SignalChannel").toString());
-		if(signal_.isNull())
-			return false;
+		Q_ASSERT_X(!signal_.isNull(),"ChoiceController::insideTarget","There is no signal channel called: " + propertyContainer_->getPropertyValue("SignalChannel").toString().toAscii());
 
 		//confirm that the signal channel contains "xpos" and "ypos" subchannels
 		Q_ASSERT(signal_->getSubchannels().contains("xpos"));

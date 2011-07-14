@@ -21,9 +21,9 @@ class BooleanParameter : public Parameter
 #endif
 {
 	Q_OBJECT
-public slots:
-	void setValue(QVariant value) { value_ = value.toBool(); };
-	QVariant getValue() { return QVariant(value_); };
+//public slots:
+//	void setValue(QVariant value) { value_ = value.toBool(); };
+//	QVariant getValue() { return QVariant(value_); };
 
 public:
 	BooleanParameter();
@@ -35,7 +35,6 @@ public:
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	void setDefaultValue(bool defaultValue) { defaultValue_ = defaultValue; };
 	void setTrueLabel(QString label) { trueLabel_ = label; };
 	void setFalseLabel(QString label) { falseLabel_ = label; };
 
@@ -50,7 +49,6 @@ protected:
 
 private:
 	bool value_;
-	bool defaultValue_;
 	QString trueLabel_;
 	QString falseLabel_;
 

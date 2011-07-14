@@ -321,6 +321,7 @@ bool StateMachine::jumpToState(QStringList path, QString state)
  */
 QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave)
 {
+	resetScriptableValues();
 	path_.append(getName());
 	if(!initScripting())
 	{
