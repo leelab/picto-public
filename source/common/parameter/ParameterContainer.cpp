@@ -4,6 +4,8 @@
 #include "ChoiceParameter.h"
 #include "NumericParameter.h"
 #include "RangeParameter.h"
+#include "RandomIntParameter.h"
+#include "PseudorandomIntParameter.h"
 
 #include "../stimuli/ArrowGraphic.h"
 #include "../stimuli/BoxGraphic.h"
@@ -14,6 +16,8 @@
 #include "../stimuli/RandomlyFilledGridGraphic.h"
 #include "../stimuli/TextGraphic.h"
 #include "../stimuli/AudioElement.h"
+#include "../controlelements/circletarget.h"
+#include "../controlelements/recttarget.h"
 
 namespace Picto {
 
@@ -27,6 +31,11 @@ ParameterContainer::ParameterContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
 	scriptableFactory_->addAssetType("Range",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RangeParameter::Create))));
+	scriptableFactory_->addAssetType("RandomInt",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomIntParameter::Create))));
+	scriptableFactory_->addAssetType("PseudorandomInt",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
+
 
 	//For the sake of cleanliness, we should probably have a StimulusContainer class that adds all of the following.
 	//functionally, there is no problem with just adding them here.
@@ -48,6 +57,10 @@ ParameterContainer::ParameterContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
 	scriptableFactory_->addAssetType("AudioElement",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
+	scriptableFactory_->addAssetType("CircleTarget",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleTarget::Create))));
+	scriptableFactory_->addAssetType("RectTarget",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RectTarget::Create))));
 }
 
 //QSharedPointer<Parameter> ParameterContainer::getParameter(QString name)

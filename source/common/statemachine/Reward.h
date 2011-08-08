@@ -25,6 +25,7 @@ public:
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
+	virtual QString getUITemplate(){return "Reward";};
 	virtual QString assetType(){return "Reward";};
 	//! \TODO Add rewarding options here...
 

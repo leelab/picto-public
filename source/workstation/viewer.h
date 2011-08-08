@@ -2,6 +2,7 @@
 #define _VIEWER_H_
 
 #include "../common/experiment/experiment.h"
+#include "PictoData.h"
 
 #include <QWidget>
 #include <QSharedPointer>
@@ -14,7 +15,7 @@
  *	can also view the experiment as a running experiment, or as a test run, or within
  *	a debugger.
  *
- *	This base class atmepts to implemement the minimum neccessary functionality.  However
+ *	This base class attempts to implemement the minimum neccessary functionality.  However
  *	since the viewers are all so different, this will be a pretty simple class
  *	and most of the work withh be in the derived classes.
  *
@@ -22,10 +23,10 @@
  *	function is called by the mainwindow along with a menu which is being allocated to that 
  *	viewer.
  *
- *	The relationship between experiment_ and experimentText_ needs to be explained.  Since
+ *	The relationship between pictoData_ and pictoDataText_ needs to be explained.  Since
  *	it is likely that uring the early stages of developing an experiment, the XML for the
- *	experiment will be incomplete, we need to be able to store the actual text.  If the
- *	experiment text is legal, experiment_ will point to the object representation of the
+ *	pictoData will be incomplete, we need to be able to store the actual text.  If the
+ *	pictoData text is legal, pictoData_ will point to the object representation of the
  *	text.  Otherwise, it will be a null pointer.
  *
  *	When we change from one viewer to another, the process is:
@@ -44,8 +45,8 @@ class Viewer : public QWidget
 public:
 	Viewer(QWidget * parent=0);
 
-	void setExperiment(QSharedPointer<Picto::Experiment> experiment) { experiment_ = experiment; }
-	void setExperimentText(QTextDocument *experimentText) {experimentText_ = experimentText; }
+	void setPictoData(QSharedPointer<Picto::PictoData> pictoData) { pictoData_ = pictoData; }
+	void setPictoDataText(QTextDocument *pictoDataText) {pictoDataText_ = pictoDataText; }
 
 	//Returns the type of viewer (e.g "Text")
 	virtual QString type() = 0;
@@ -54,7 +55,7 @@ public:
 public slots:
 	virtual void init() = 0;  //Called just before displaying the viewer
 	virtual void deinit() = 0;	//Called just after the user switches out of the viewer
-	virtual void aboutToSave() {};  //Called just before the experimentText_ is saved to file.
+	virtual void aboutToSave() {};  //Called just before the pictoDataText_ is saved to file.
 
 signals:
 	void enableCutAction(bool enable);
@@ -62,8 +63,8 @@ signals:
 	void enablePasteAction(bool enable);
 
 protected:
-	QSharedPointer<Picto::Experiment> experiment_;
-	QTextDocument *experimentText_;
+	QSharedPointer<Picto::PictoData> pictoData_;
+	QTextDocument *pictoDataText_;
 };
 
 #endif

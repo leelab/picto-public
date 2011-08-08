@@ -2,12 +2,14 @@
 #include <QMap>
 #include <QDebug>
 #include <QScriptValueIterator>
+#include "../property/EnumProperty.h"
 
 using namespace Picto;
 
 ScriptableContainer::ScriptableContainer()
 : scriptableFactory_(new AssetFactory(0,-1)),
-  scriptingInitialized_(false)
+  scriptingInitialized_(false),
+  initializedForDesign_(false)
 {
 	AddDefinableObjectFactory("Scriptable",scriptableFactory_);
 }
@@ -53,17 +55,9 @@ void ScriptableContainer::addChildScriptableContainer(QSharedPointer<ScriptableC
 	if(scriptingInitialized_)
 	{	//Our engine and all child ScriptableContainers engines are initialized, so 
 		//initialize this one too.
-		child->initScripting();
+		child->initScripting(initializedForDesign_);
 	}
 }
-
-//QSharedPointer<Scriptable> ScriptableContainer::getScriptable(QString name)
-//{
-//	foreach(QSharedPointer<Scriptable> scriptable,scriptables_)
-//		if(scriptable->getName() == name)
-//			return scriptable;
-//	return QSharedPointer<Scriptable>();
-//}
 
 //! \brief Returns a list of all contained parameters
 QList<QSharedPointer<Scriptable>> ScriptableContainer::getScriptableList()
@@ -113,7 +107,7 @@ bool ScriptableContainer::initScripting(bool forDesign)
 			}
 		}
 	}
-
+	
 	//Inform child classes that the scriptable container has been reinitialized.
 	scriptableContainerWasReinitialized();
 
@@ -123,6 +117,7 @@ bool ScriptableContainer::initScripting(bool forDesign)
 		child->initScripting(forDesign);
 	}
 	scriptingInitialized_ = true;
+	initializedForDesign_ = forDesign;
 	return true;
 }
 
@@ -150,12 +145,21 @@ QString ScriptableContainer::getInfo()
 		{
 			returnVal.append(QString("%1\n").arg(it.name()));
 			QScriptValueIterator it1(it.value());
+			bool passedIrrelevantAncestors = false;
 			while(it1.hasNext())
 			{
 				it1.next();
 				if(!(it1.flags() & (QScriptValue::SkipInEnumeration | QScriptValue::Undeletable)))
 				{
-					returnVal.append(QString("\t%1\n").arg(it1.name()));
+					if(passedIrrelevantAncestors)
+						returnVal.append(QString("\t%1\n").arg(it1.name()));
+					//Currently, the last function that is being added by ancestors
+					//before the useful script functions is the one below.
+					//Lucky for us, ancestor scripts are added first.
+					//We should obviously find a better way to automate this, but 
+					//it will have to wait...
+					if(it1.name() == "nameEdited()")
+						passedIrrelevantAncestors = true;
 				}
 			}
 		}
@@ -165,16 +169,6 @@ QString ScriptableContainer::getInfo()
 	else
 		return "No Parameters Available";
 	return returnVal;
-}
-
-bool ScriptableContainer::bindToScriptEngine(QScriptEngine &engine)
-{
-	foreach(QSharedPointer<Scriptable> scriptable, scriptables_)
-	{
-		if(!scriptable->bindToScriptEngine(engine))
-			return false;
-	}
-	return true;
 }
 
 void ScriptableContainer::runScript(QString scriptName)
@@ -223,6 +217,16 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 				return false;
 			}
 		}
+	}
+	return true;
+}
+
+bool ScriptableContainer::bindToScriptEngine(QScriptEngine &engine)
+{
+	foreach(QSharedPointer<Scriptable> scriptable, scriptables_)
+	{
+		if(!scriptable->bindToScriptEngine(engine))
+			return false;
 	}
 	return true;
 }

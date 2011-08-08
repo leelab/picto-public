@@ -4,10 +4,12 @@
 
 namespace Picto {
 
-VisualElement::VisualElement() :
+VisualElement::VisualElement(QPoint position, QColor color) :
 	shouldUpdateCompositingSurfaces_(true),
 	visible_(true)
 {
+	AddDefinableProperty(QVariant::Point,"Position",position);
+	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Int,"Order",0);
 }
 
@@ -310,6 +312,12 @@ void VisualElement::postSerialize()
 {
 	Scriptable::postSerialize();
 	backupProperties();
+	draw();
+	connect(propertyContainer_.data(),
+	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
+	    this,
+		SLOT(slotPropertyValueChanged(QString, int, QVariant))
+		);
 }
 
 bool VisualElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -319,7 +327,14 @@ bool VisualElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	return true;
 }
 
-
+void VisualElement::slotPropertyValueChanged(QString propertyName, int,
+											  QVariant) //propertyValue
+{
+	if(propertyName != "Position" && propertyName != "Name")
+	{
+		draw();
+	}
+}
 
 }; //namespace Picto
 

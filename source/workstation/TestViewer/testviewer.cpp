@@ -32,6 +32,7 @@ TestViewer::TestViewer(QWidget *parent) :
 //! Called just before displaying the viewer
 void TestViewer::init()
 {
+	experiment_ = pictoData_->getExperiment();
 	//If we're stopped, load the current experiment.  If we are paused,
 	//then we shouldn't load the experiment.
 	if(status_ == Stopped)
@@ -208,7 +209,7 @@ void TestViewer::generateComboBox()
  */
 void TestViewer::resetExperiment()
 {
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experiment_->toXml()));
 	experiment_ = QSharedPointer<Picto::Experiment>();
 
 	//read until we either see an experiment tag, or the end of the file

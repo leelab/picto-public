@@ -24,21 +24,33 @@ QSharedPointer<Result> ResultContainer::getResult(QString name)
 
 void ResultContainer::addRequiredResult(QString resultName)
 {
-	addRequiredResult(QSharedPointer<Result>(new Result(resultName)));
+	if(maxOptionalResults_[""] != -1)
+	{
+		//This will increase the max results value in the factory according to 
+		//the new number of required results of this type.  If we didn't do
+		//this, we couldn't get a new result from the factory below.
+		//Note: if we didn't add the new result to requiredResults_ below, this
+		//would make the factories max Assets inconsistant with requireResults_.
+		resultFactoryByType_[""]->setMaxAssets(resultFactoryByType_[""]->getMaxAssets()+1);
+	}
+	QSharedPointer<Result> requiredResult = createChildAsset("Result","",QString()).staticCast<Result>();
+	Q_ASSERT(requiredResult);
+	requiredResult->setName(resultName);
+	requiredResults_.insert("",requiredResult);
 }
 
-void ResultContainer::addRequiredResult(QSharedPointer<Result> requiredResult, QString type)
-{
-	Q_ASSERT_X(resultFactoryByType_.contains(type),"ResultContainer",
-		QString("You must add an asset factory for type: \"%1\" before calling addRequiredResult"
-		" for that type.").arg(type).toAscii());
-	requiredResults_.insert(type,requiredResult);
-	if(maxOptionalResults_[type] != -1)
-	{
-		//This will reset the value in the factory according to the new number of required results of this type
-		setMaxOptionalResults(maxOptionalResults_[type],type);
-	}
-}
+//void ResultContainer::addRequiredResult(QSharedPointer<Result> requiredResult, QString type)
+//{
+//	Q_ASSERT_X(resultFactoryByType_.contains(type),"ResultContainer",
+//		QString("You must add an asset factory for type: \"%1\" before calling addRequiredResult"
+//		" for that type.").arg(type).toAscii());
+//	requiredResults_.insert(type,requiredResult);
+//	if(maxOptionalResults_[type] != -1)
+//	{
+//		//This will reset the value in the factory according to the new number of required results of this type
+//		setMaxOptionalResults(maxOptionalResults_[type],type);
+//	}
+//}
 
 void ResultContainer::setMaxOptionalResults(int max, QString type)
 {

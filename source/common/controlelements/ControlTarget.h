@@ -2,8 +2,7 @@
 #define _CONTROLTARGET_H_
 
 #include "../common.h"
-#include "../storage/DataStore.h"
-#include "../statemachine/result.h"
+#include "../stimuli/VisualElement.h"
 #include <QRect>
 
 namespace Picto {
@@ -13,21 +12,27 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ControlTarget : public Result
+class PICTOLIB_API ControlTarget : public VisualElement
 #else
-class ControlTarget : public Result
+class ControlTarget : public VisualElement
 #endif
 {
+	Q_OBJECT
 public:
-	ControlTarget();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ControlTarget());};
-	QRect getBounds();
-
+	ControlTarget(QPoint position=QPoint(), QColor color=Qt::green);
 	virtual QString assetType(){return "ControlTarget";};
-
+	void draw() = 0;
+	void setActive(bool active);
+	bool isActive(){return active_;};
+	virtual bool contains(int x, int y) = 0;
+//These public slots exist for binding visual element properties to scripts
+public slots:
+	virtual bool getVisible(){return active_ && visible_;};
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+private:
+	bool active_;
 };
 
 

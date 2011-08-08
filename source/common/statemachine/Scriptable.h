@@ -28,6 +28,7 @@ public:
 	/*! \brief Resets this scriptables data fields to their original values.
 	 */
 	virtual void reset()=0;
+	virtual QString getUITemplate(){return "Scriptable";};
 
 protected:
 	virtual QString defaultTagName(){return "Scriptable";};

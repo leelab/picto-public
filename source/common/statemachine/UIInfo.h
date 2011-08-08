@@ -3,6 +3,7 @@
 
 #include "../common.h"
 #include "../storage/DataStore.h"
+#include <QUuid>
 
 namespace Picto {
 
@@ -16,6 +17,7 @@ class PICTOLIB_API UIInfo : public DataStore
 class UIInfo : public DataStore
 #endif
 {
+	Q_OBJECT
 public:
 	UIInfo();
 
@@ -23,6 +25,7 @@ public:
 
 	void setPos(QPoint pos);
 	QPoint getPos();
+	QUuid getUniqueId();
 	virtual QString assetType(){return "UIInfo";};
 
 protected:

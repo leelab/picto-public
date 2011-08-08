@@ -66,7 +66,9 @@ Arrow::Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramIt
 	setZValue(maxZVal);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     myColor = Qt::black;
-    setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	QPen pen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	pen.setCosmetic(true);
+    setPen(pen);
 }
 
 Arrow::~Arrow()
@@ -142,8 +144,25 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 {
     //if (myStartItem->collidesWithItem(myEndItem))
     //    return;
-	QPointF startPos = mapFromItem(myStartItem,0,0);
-	QPointF endPos = mapFromItem(myEndItem,0,0);
+	QPointF startPos = mapFromItem(myStartItem,0,0)+QPointF(myStartItem->getWidth(),myStartItem->getHeight()/2.0);
+	//Find the end point with the nearest Y value.
+	QPointF endTop = mapFromItem(myEndItem,0,0);
+	QPointF endBottom = mapFromItem(myEndItem,0,myEndItem->boundingRect().height());
+	QPointF endPos;
+	if((startPos.y() >= endTop.y()) && (startPos.y() <= endBottom.y()) )
+	{ 
+		endPos = endTop;
+		endPos.setY(startPos.y());
+	}
+	else if(startPos.y() < endTop.y())
+	{
+		endPos = endTop;
+	}
+	else
+	{
+		endPos = endBottom;
+	}
+	//endPos = mapFromItem(myEndItem,0,0)+QPointF(0,myStartItem->myEndItem()/2.0);
 	if(startPos == endPos)
 	{
 		updatePosition();

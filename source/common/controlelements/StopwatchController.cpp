@@ -6,8 +6,6 @@ StopwatchController::StopwatchController()
 {
 	
 	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
-	AddDefinableProperty(QVariant::Bool,"OperatorVisible","false");
-	AddDefinableProperty(QVariant::Bool,"SubjectVisible","false");
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 	AddDefinableProperty(QVariant::Int,"Time",5);
@@ -16,7 +14,7 @@ StopwatchController::StopwatchController()
 
 	//QSharedPointer<Property> unitsEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"Units",0);
  //   unitList_ << "Sec" << "Ms" << "Us";
-	//unitsEnumProperty->addAttribute("enumNames", unitList_);
+	//unitsEnumProperty->setAttribute("enumNames", unitList_);
 
 	//propertyContainer_->addProperty(QVariant::Int,"Time",0);
 
@@ -75,8 +73,8 @@ bool StopwatchController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-
-	if(timer_.elapsedTime(units) > propertyContainer_->getPropertyValue("Time").toInt())
+	int time = timer_.elapsedTime(units);
+	if(timer_.elapsedTime(units) >= propertyContainer_->getPropertyValue("Time").toInt())
 	{
 		isDone_ = true;
 		return true;
@@ -98,8 +96,6 @@ QString StopwatchController::getResult()
 void StopwatchController::postSerialize()
 {
 	ControlElement::postSerialize();
-	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
-	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
 }
 
 

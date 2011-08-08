@@ -33,7 +33,7 @@ public:
 	virtual QString valueString();
 	QString getName();
 	virtual void setValue(QVariant _value);
-	void addAttribute(QString _attributeName, QVariant _attributeValue);
+	void setAttribute(QString _attributeName, QVariant _attributeValue);
 	QSharedPointer<QtVariantProperty> getVariantProperty(){return variantProp_;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

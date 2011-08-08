@@ -33,10 +33,6 @@ public:
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-
 	void setRevision(int rev) { revision_ = rev; };
 	int getRevision() { return revision_; };
 	void setEngineNeeded(int eng) { engineNeeded_ = eng; };
@@ -44,12 +40,10 @@ public:
 
 	void addControlLink(QSharedPointer<ControlLink> link);
 	void addControlElement(QSharedPointer<ControlElement> controlElement);
-	//void removeControlElement(QString controlElementName);
 
 	void setScene(QSharedPointer<Scene> scene) { scene_ = scene; };
 
-	//bool initScripting(QScriptEngine &qsEngine);
-	//bool initScriptEngine(bool forScriptDefinitions = false);
+	virtual QString getUITemplate(){return "State";};
 	virtual QString assetType(){return "State";};
 
 protected:

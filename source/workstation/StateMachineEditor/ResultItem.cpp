@@ -7,4 +7,7 @@ WireableItem(editorState,contextMenu,asset)
 	Q_ASSERT(!result.isNull());
 	setName(result->getName());
 	enableArrowDest();
+
+	setRect(QRectF(QPointF(-19,-30),QPointF(19,30)));
+	setSvgIcon(":/icons/result.svg");
 }

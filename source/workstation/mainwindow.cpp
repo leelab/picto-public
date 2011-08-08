@@ -299,30 +299,32 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::newExperiment()
 {
-	if(!experiment_)
+	if(!pictoData_)
 	{
-		experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
+		pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
 	}
 	if(okToContinue())
 	{
-		experiment_->clear();
-		experimentText_.clear();
+		pictoData_->clear();
+		pictoDataText_.clear();
 
-		QString experimentXml;
-		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&experimentXml));
+		QString pictoDataXml;
+		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&pictoDataXml));
 		xmlWriter->setAutoFormatting(true);
 		xmlWriter->setAutoFormattingIndent(-1);   //use 1 tab to indent
 		xmlWriter->writeStartDocument();
 
-		experiment_->toXml(xmlWriter);
-		experimentText_.setPlainText(experimentXml);
-		experimentText_.setModified(false);
+		pictoData_->toXml(xmlWriter);
+		pictoDataText_.setPlainText(pictoDataXml);
+		pictoDataText_.setModified(false);
+
+		setCurrentFile("");
 
 		for(int i=0; i<viewerStack_->count(); i++)
 		{
 			Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
-			viewer->setExperiment(experiment_);
-			viewer->setExperimentText(&experimentText_);
+			viewer->setPictoData(pictoData_);
+			viewer->setPictoDataText(&pictoDataText_);
 		}
 		currViewer_->init();
 	}
@@ -334,7 +336,7 @@ void MainWindow::openExperiment()
 	if(okToContinue())
 	{
 		QString filename = QFileDialog::getOpenFileName(this,
-				tr("Open Experiment"),".");
+				tr("Open Experiment"),".","XML files (*.xml)");
 		if(!filename.isEmpty())
 			loadFile(filename);
 	}
@@ -362,7 +364,7 @@ bool MainWindow::saveExperiment()
 bool MainWindow::saveAsExperiment()
 {
 	QString filename = QFileDialog::getSaveFileName(this,
-						tr("Save Experiment"),".");
+		tr("Save Experiment"),currFile_.isEmpty()?".":currFile_,"XML files (*.xml)");
 	if(filename.isEmpty())
 		return false;
 
@@ -379,16 +381,16 @@ void MainWindow::changeMode()
 
 	currViewer_->deinit();
 
-	//attempt to convert the experimentText_ to an Experiment
-	convertTextToExperiment();
+	//attempt to convert the pictoDataText_ to an PictoData object
+	convertTextToPictoData();
 
 	//find and set the current widget
 	viewerStack_->setCurrentIndex(viewerIndex);
 	currViewer_ = qobject_cast<Viewer*>(viewerStack_->currentWidget());
 	
-	//Set the latest experiment and experiment text to the viewer
-	currViewer_->setExperiment(experiment_);
-	currViewer_->setExperimentText(&experimentText_);
+	//Set the latest experiment, experiment text, uidata, uidatatext to the viewer
+	currViewer_->setPictoData(pictoData_);
+	currViewer_->setPictoDataText(&pictoDataText_);
 	
 	currViewer_->init();
 
@@ -398,7 +400,7 @@ void MainWindow::changeMode()
 void MainWindow::checkSyntax()
 {
 	errorList_->clear();
-	if(convertTextToExperiment())
+	if(convertTextToPictoData())
 	{
 		QMessageBox box;
 		box.setText("Syntax check passed");
@@ -429,7 +431,7 @@ void MainWindow::checkSyntax()
 //! Checks to see if we have unsaved changes
 bool MainWindow::okToContinue()
 {
-	if(experimentText_.isModified())
+	if(pictoDataText_.isModified())
 	{
 		int r = QMessageBox::warning(this,Picto::Names->workstationAppName,
 					tr("The experiment has been modified.\n"
@@ -452,7 +454,7 @@ bool MainWindow::saveFile(const QString filename)
 	if(file.open(QIODevice::WriteOnly))
 	{
 		currViewer_->aboutToSave();
-		if(!file.write(experimentText_.toPlainText().toAscii()))
+		if(!file.write(pictoDataText_.toPlainText().toAscii()))
 			success = false;
 		file.close();
 	}
@@ -469,7 +471,7 @@ bool MainWindow::saveFile(const QString filename)
 	{
 		setCurrentFile(filename);
 		currViewer_->init();
-		experimentText_.setModified(false);
+		pictoDataText_.setModified(false);
 		return true;
 	}
 }
@@ -485,8 +487,8 @@ bool MainWindow::loadFile(const QString filename)
 		return false;
 	}
 
-	experimentText_.setPlainText(file.readAll());
-	experimentText_.setModified(false);
+	pictoDataText_.setPlainText(file.readAll());
+	pictoDataText_.setModified(false);
 
 	file.close();
 
@@ -511,18 +513,18 @@ void MainWindow::setCurrentFile(const QString &filename)
 
 	setWindowTitle(QString("%1[*] - %2").arg(shownName)
 								   .arg(Picto::Names->workstationAppName));
-
-	bool legalXml = convertTextToExperiment();
+	bool legalPictoDataXml = convertTextToPictoData();
 
 	for(int i=0; i<viewerStack_->count(); i++)
 	{
 		Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
 
-		if(legalXml)
-			viewer->setExperiment(experiment_);
+		if(legalPictoDataXml)
+			viewer->setPictoData(pictoData_);
 		else
-			viewer->setExperiment(QSharedPointer<Picto::Experiment>());
-		viewer->setExperimentText(&experimentText_);
+			viewer->setPictoData(QSharedPointer<Picto::PictoData>());
+		
+		viewer->setPictoDataText(&pictoDataText_);
 	}
 	currViewer_->init();
 }
@@ -533,36 +535,34 @@ void MainWindow::setCurrentFile(const QString &filename)
  *	incorrect, this function emits an error signal containing the text of 
  *	the XML parsing error, and returns false.
  */
-bool MainWindow::convertTextToExperiment()
+bool MainWindow::convertTextToPictoData()
 {
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_.toPlainText()));
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(pictoDataText_.toPlainText()));
 
 	//read until we either see an experiment tag, or the end of the file
-	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
+	while(xmlReader->name() != "PictoData" && !xmlReader->atEnd()) 
 		xmlReader->readNext();
 
 	if(xmlReader->atEnd())
 	{
-		emit error("XML Parsing Error","Experiment XML did not contain <Experiment> tag");
+		emit error("XML Parsing Error","Picto Data XML did not contain <PictoData> tag");
 		return false;
 	}
 
-	experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
-	//experiment_->clearErrors();
-	//experiment_->clear();
+	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
 	Picto::Asset::clearErrors();
-	bool result = experiment_->fromXml(xmlReader);
+	bool result = pictoData_->fromXml(xmlReader);
 
 	////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
 	//QString serialTestString;
 	//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&serialTestString));
-	//experiment_->toXml(xmlWriter);
-	//Q_ASSERT(serialTestString == experimentText_.toPlainText());
+	//pictoData_->toXml(xmlWriter);
+	//Q_ASSERT(serialTestString == pictoDataText_.toPlainText());
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	if(!result)
 	{
-		emit error("XML Parsing Error",experiment_->getErrors());
+		emit error("XML Parsing Error",pictoData_->getErrors());
 		return false;
 	}
 	return true;

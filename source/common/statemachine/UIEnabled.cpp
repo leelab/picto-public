@@ -21,6 +21,11 @@ QPoint UIEnabled::getPos()
 	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getPos();
 }
 
+QUuid UIEnabled::getUniqueId()
+{
+	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getUniqueId();
+}
+
 void UIEnabled::postSerialize()
 {
 	DataStore::postSerialize();

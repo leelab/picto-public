@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "ControlElement.h"
 #include "../engine/SignalChannel.h"
+#include "ControlTarget.h"
 
 namespace Picto {
 
@@ -51,6 +52,7 @@ public:
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual void scriptableContainerWasReinitialized();
 
 private:
 	bool insideTarget(QSharedPointer<Engine::PictoEngine> engine);
@@ -58,13 +60,14 @@ private:
 	bool targetAcquired_;
 	bool initialAcquisitionOccurred_;
 	bool waitingForReacquisition_;
+	QSharedPointer<ControlTarget> controlTarget_;
 
 	Controller::Timer cumulativeTimer_;
 	Controller::Timer acquisitionTimer_;	
 	Controller::Timer reacquisitionTimer_;
 
 	QStringList unitList_;
-	QStringList shapeList_;
+	//QStringList shapeList_;
 	QStringList reacquisitionAllowedList_;
 
 	QString result_;

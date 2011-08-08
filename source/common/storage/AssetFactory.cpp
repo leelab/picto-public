@@ -1,4 +1,5 @@
 #include "AssetFactory.h"
+#include "../statemachine/uienabled.h"
 
 using namespace Picto;
 AssetFactory::AssetFactory(int minAssets,int maxAssets) :
@@ -6,7 +7,8 @@ minAssets_(minAssets),
 maxAssets_(maxAssets),
 newAssetFn_(NULL),
 numSourcedAssets_(0),
-isGroupFactory_(true)
+isGroupFactory_(true),
+uITemplateInitialized_(false)
 {
 }
 
@@ -19,7 +21,8 @@ minAssets_(minAssets),
 maxAssets_(maxAssets),
 newAssetFn_(newAssetFn),
 numSourcedAssets_(0),
-isGroupFactory_(false)
+isGroupFactory_(false),
+uITemplateInitialized_(false)
 {
 }
 
@@ -62,9 +65,20 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 	else
 	{
 		returnVal = generateNewAsset();
+		if(returnVal && !uITemplateInitialized_)
+		{
+			if(returnVal->inherits("Picto::UIEnabled"))
+				uITemplate_ = returnVal.staticCast<UIEnabled>()->getUITemplate();
+			else
+				uITemplate_ = "";
+			uITemplateInitialized_ = true;
+		}
 	}
 	if(!returnVal.isNull())
+	{
 		numSourcedAssets_++;
+		connect(returnVal.data(),SIGNAL(destroyed(QObject*)),this,SLOT(createdAssetDestroyed(QObject*)));
+	}
 	return returnVal;
 }
 
@@ -148,3 +162,22 @@ bool AssetFactory::reachedProductionLimit(QString type)
 	return false;
 }
 
+QString AssetFactory::getUITemplate(QString type)
+{
+	if(isGroupFactory_)
+	{
+		Q_ASSERT_X(factoriesByType_.contains(type),"AssetFactory::getUITemplate","This factory does not contain type: " + type.toAscii());
+		return factoriesByType_[type]->getUITemplate("");
+	}
+	//If uITemplate has not yet been initialized, create and throw out an asset so that it will be.
+	if(!uITemplateInitialized_)
+		getAsset(QString(""),"");
+	return uITemplate_;
+}
+
+/*! \brief Decreases the numSourcedAssets counter whenever an asset created by this factory is deleted.
+ */
+void AssetFactory::createdAssetDestroyed(QObject*)
+{
+	numSourcedAssets_--;
+}

@@ -7,18 +7,20 @@
 #include <QColor>
 #include <QString>
 #include <QGraphicsItem>
+#include "../PictoData.h"
 using namespace Picto;
 
 class EditorState : public QObject
 {
 	Q_OBJECT
 public:
-	enum EditMode { Select, InsertLine };
+	enum EditMode { Select = 0, Navigate, InsertLine };
 
 	EditorState();
 
 	//Get Functions
 	EditMode getEditMode(){return editMode_;};
+	EditMode getLastEditMode(){return lastEditMode_;};
 	QFont getFont(){return font_;};
 	QColor getTextColor(){return textColor_;};
 	QColor getItemColor(){return itemColor_;};
@@ -31,13 +33,15 @@ public:
 	QGraphicsItem *getSelectedItem(){return selectedItem_;};
 
 signals:
-	void editModeChanged(EditMode mode);
+	void editModeChanged(int mode);
+	void zoomChanged(double zoom);
 	void fontChanged(QFont font);
 	void textColorChanged(QColor color);
 	void itemColorChanged(QColor color);
 	void lineColorChanged(QColor color);
 	void backgroundPatternChanged(QPixmap pattern);
 	void insertionItemChanged(QString category, QString type);
+	void windowItemsLoaded();
 	void windowAssetChanged(QSharedPointer<Asset> asset);
 	void selectedAssetChanged(QSharedPointer<Asset> asset);
 	void itemSelected(QGraphicsItem *item);
@@ -47,7 +51,9 @@ signals:
 
 public slots:
 	//Set Functions
-	void setEditMode(EditMode mode){editMode_ = mode;emit editModeChanged(editMode_);};
+	void setPictoDataObject(QSharedPointer<PictoData> pictoData);
+	void setEditMode(int mode);
+	double setZoom(double zoom);
 	void setFont(const QFont font){font_ = font;emit fontChanged(font_);};
 	void setTextColor(const QColor color){textColor_ = color;emit textColorChanged(textColor_);};
 	void setItemColor(const QColor color){itemColor_ = color;emit itemColorChanged(itemColor_);};
@@ -55,6 +61,8 @@ public slots:
 	void setLineColor(const QColor color){lineColor_ = color;emit lineColorChanged(lineColor_);};
 	void setInsertionItem(QString category, QString type){insertItemCategory_ = category;insertItemType_ = type;emit insertionItemChanged(category,type);};
 	void setWindowAsset(QSharedPointer<Asset> asset);
+	void setWindowAssetToParent();
+	void setWindowItemsLoaded(){emit windowItemsLoaded();};
 	void setSelectedAsset(QSharedPointer<Asset> asset);
 	void setSelectedItem(QGraphicsItem *item);
 	void setLastActionUndoable(){emit undoableActionPerformed();};
@@ -63,7 +71,9 @@ public slots:
 	void triggerItemInserted(){emit itemInserted();};
 
 private:
+	void setWindowAssetAncestryOpen(bool open);
 	EditMode editMode_;
+	EditMode lastEditMode_;
 	QFont font_;
 	QColor textColor_;
 	QColor itemColor_;
@@ -73,7 +83,9 @@ private:
 	QString insertItemType_;
 	QSharedPointer<Asset> windowAsset_;
 	QSharedPointer<Asset> selectedAsset_;
+	QString windowAssetPath_;
 	QGraphicsItem *selectedItem_;
+	QSharedPointer<PictoData> pictoData_;
 
 };
 

@@ -7,12 +7,11 @@ TargetController::TargetController()
 {
 	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	
-	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
-	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
 	AddDefinableProperty("SignalChannel","");
-	shapeList_ << "Rectangle" << "Oval";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
-	AddDefinableProperty(QVariant::Rect,"Target",QRect());
+	//shapeList_ << "Rectangle" << "Oval";
+	//AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
+	//AddDefinableProperty(QVariant::Rect,"Target",QRect());
+	AddDefinableProperty("ControlTarget","");
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 	AddDefinableProperty(QVariant::Int,"FixationTime",1);
@@ -51,6 +50,8 @@ void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 	targetAcquired_ = false;
 	waitingForReacquisition_ = false;
 	initialAcquisitionOccurred_ = false;
+	Q_ASSERT(controlTarget_);
+	controlTarget_->setActive(true);
 
 	//We call isDone to initialize everything
 	isDone(engine);
@@ -76,6 +77,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		isDone_ = true;
 		result_ = "Total Time Excceeded";
+		controlTarget_->setActive(false);
 		return true;
 	}
 
@@ -107,6 +109,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = "Broke Fixation";
+			controlTarget_->setActive(false);
 			return true;
 		}
 		else
@@ -125,6 +128,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = "Success";
+			controlTarget_->setActive(false);
 			return true;
 		}
 
@@ -143,6 +147,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			{
 				isDone_ = true;
 				result_ = "Initial Aquistion Time Exceeded";
+				controlTarget_->setActive(false);
 				return true;
 			}
 		}
@@ -156,6 +161,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			{
 				isDone_ = true;
 				result_ = "Reaquistion Time Exceeded";
+				controlTarget_->setActive(false);
 				return true;
 			}
 		}
@@ -191,44 +197,45 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 	int x = signal_->peekValue("xpos");
 	int y = signal_->peekValue("ypos");
 
-	if("Rectangle" == shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt()))
-	{
-		QRect targetRect = propertyContainer_->getPropertyValue("Target").toRect();
-		if(targetRect.contains(x,y))
-			return true;
-		else
-			return false;
-	}
-	else if("Ellipse" == shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt()))
-	{
-		/*We're going to test this equation:
-			(x-x0)^2     (y-0)^2
-			--------  +  --------  <= 1
-			 width^2     height^2
-		*/
-		QRect targetRect = propertyContainer_->getPropertyValue("Target").toRect();
-		double x0 = targetRect.x() + targetRect.width()/2;
-		double y0 = targetRect.y() + targetRect.height()/2;
-		double width = targetRect.width();
-		double height = targetRect.height();
-		double term1 = (x-x0)*(x-x0)/(width*width);
-		double term2 = (y-y0)*(y-y0)/(height*height);
-		if(term1 + term2 <= 1.0)
-			return true;
-		else
-			return false;
-	}
-	else
-	{
-		return false;
-	}
+	if(controlTarget_->contains(x,y))
+		return true;
+	return false;
+	//if("Rectangle" == shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt()))
+	//{
+	//	QRect targetRect = QRect(controlTarget_->getX(),controlTarget_->getY(),controlTarget_->getBoundingRect().width(),controlTarget_->getBoundingRect().height());//propertyContainer_->getPropertyValue("Target").toRect();
+	//	if(targetRect.contains(x,y))
+	//		return true;
+	//	else
+	//		return false;
+	//}
+	//else if("Ellipse" == shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt()))
+	//{
+	//	/*We're going to test this equation:
+	//		(x-x0)^2     (y-0)^2
+	//		--------  +  --------  <= 1
+	//		 width^2     height^2
+	//	*/
+	//	QRect targetRect = QRect(controlTarget_->getX(),controlTarget_->getY(),controlTarget_->getBoundingRect().width(),controlTarget_->getBoundingRect().height());//propertyContainer_->getPropertyValue("Target").toRect();
+	//	double x0 = targetRect.x() + targetRect.width()/2;
+	//	double y0 = targetRect.y() + targetRect.height()/2;
+	//	double width = targetRect.width();
+	//	double height = targetRect.height();
+	//	double term1 = (x-x0)*(x-x0)/(width*width);
+	//	double term2 = (y-y0)*(y-y0)/(height*height);
+	//	if(term1 + term2 <= 1.0)
+	//		return true;
+	//	else
+	//		return false;
+	//}
+	//else
+	//{
+	//	return false;
+	//}
 }
 
 void TargetController::postSerialize()
 {
 	ControlElement::postSerialize();
-	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
-	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
 }
 
 
@@ -255,7 +262,23 @@ bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 {
 	if(!ControlElement::validateObject(xmlStreamReader))
 		return false;
+	//! \todo Add script verification once validate runs after full deserialization
 	return true;
+}
+
+void TargetController::scriptableContainerWasReinitialized()
+{
+	ControlElement::scriptableContainerWasReinitialized();
+	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
+	QString targetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
+	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
+	{
+		if(scriptable->getName() == targetName && scriptable->inherits("Picto::ControlTarget"))
+		{
+			controlTarget_ = scriptable.staticCast<ControlTarget>();
+			break;
+		}
+	}
 }
 
 } //namespace Picto

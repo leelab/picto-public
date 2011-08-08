@@ -66,9 +66,6 @@ protected:
 
 	//QMap<QString,QSharedPointer<Result>> results_;
 
-	bool operatorVisible_;
-	bool subjectVisible_;
-
 	bool isDone_;
 
 };

@@ -8,8 +8,6 @@ TestController::TestController()
 {
 	
 	AddDefinableProperty("Type",ControllerType());	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
-	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
-	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
 	AddDefinableProperty(QVariant::Int,"NumberOfFrames",120);
 
 	//Make sure to update the list of results...
@@ -159,8 +157,6 @@ void TestController::start(QSharedPointer<Engine::PictoEngine> engine)
 void TestController::postSerialize()
 {
 	ControlElement::postSerialize();
-	operatorVisible_ = propertyContainer_->getPropertyValue("OperatorVisible").toBool();
-	subjectVisible_ = propertyContainer_->getPropertyValue("SubjectVisible").toBool();
 }
 
 bool TestController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

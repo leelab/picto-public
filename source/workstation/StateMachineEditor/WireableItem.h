@@ -20,10 +20,12 @@ public:
 	DiagramItem* getArrowDest();
 protected:
 	virtual void updateDependantGraphics(){};
+	virtual void setRect(QRectF rect);
 private:
+	void updateArrowPortDimensions();
 	QList<DiagramItem*> arrowSources_;
 	DiagramItem* arrowDest_;
-	int lastSourcePos_;
+	float maxArrowSourceWidth_;
 
 };
 //! [0]

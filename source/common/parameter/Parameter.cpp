@@ -38,6 +38,7 @@ QVariant Parameter::getValue()
 
 void Parameter::postSerialize()
 {
+	Scriptable::postSerialize();
 	setInitialValue(propertyContainer_->getPropertyValue("InitialValue"));
 	reset();
 }

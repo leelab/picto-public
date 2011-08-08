@@ -60,7 +60,7 @@ void Property::setValue(QVariant _value)
 	//! \TODO:  Verify that edited is emited when setValue is called.
 }
 
-void Property::addAttribute(QString _attributeName, QVariant _attributeValue)
+void Property::setAttribute(QString _attributeName, QVariant _attributeValue)
 {
 	variantProp_->setAttribute(_attributeName,_attributeValue);
 }

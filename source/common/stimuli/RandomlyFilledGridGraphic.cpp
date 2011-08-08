@@ -11,10 +11,8 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 													 QColor color1, QColor color2, 
 													 int numHorizSquares, int numVertSquares,
 													 int numColor1, bool animated, int updateFrameRate)
+: VisualElement(position,color1)
 {
-	
-	AddDefinableProperty(QVariant::Point,"Position",position);
-	AddDefinableProperty(QVariant::Color,"Color",color1);
 	AddDefinableProperty(QVariant::Color,"Color2",color2);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
 	//NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
@@ -54,11 +52,11 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 
 	//draw();
 
-	connect(propertyContainer_.data(),
-		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-		    this,
-			SLOT(slotPropertyValueChanged(QString, int, QVariant))
-			);
+	//connect(propertyContainer_.data(),
+	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
+	//	    this,
+	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
+	//		);
 }
 
 VisualElement* RandomlyFilledGridGraphic::NewVisualElement()

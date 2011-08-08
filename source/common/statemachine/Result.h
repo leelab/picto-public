@@ -16,6 +16,7 @@ class PICTOLIB_API Result : public ScriptableContainer
 class Result : public ScriptableContainer
 #endif
 {
+	Q_OBJECT
 public:
 	Result();
 	/*! \brief Constructs new result with input name and option to define result as default.
@@ -25,6 +26,7 @@ public:
 	Result(QString name);
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Result());};
 
+	virtual QString getUITemplate(){return "Result";};
 	virtual QString assetType(){return "Result";};
 
 protected:

@@ -67,20 +67,7 @@ public:
 	virtual QString assetType(){return "StateMachineElement";};
 
 	virtual QPoint getDisplayLayoutPosition();
-
-	//virtual bool initScripting(QScriptEngine &qsEngine) { Q_UNUSED(qsEngine); return true; }
-
-	//These will need to be implemented in all subclasses for the GUI
-	/*virtual QRect getDisplayBoundingRect() = 0;
-	virtual void draw() = 0;*/
-
-	//DataStore functions
-	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
-
-	//bool serializeResults(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeResults(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
+	virtual QString getUITemplate(){return "StateMachineElement";};
 
 protected:
 	virtual QString defaultTagName(){return "StateMachineElement";};

@@ -141,9 +141,6 @@ DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF
 	DiagramItem *item = diagItemFactory_->create(asset);
 	if(!item)
 		return NULL;
-	item->setBrush(editorState_->getItemColor());
-	connect(item, SIGNAL(selectedChange(QGraphicsItem *)),
-			editorState_.data(), SLOT(setSelectedItem(QGraphicsItem *)));
 	if(item->pos() == QPointF())
 		item->setPos(pos);
 	addItem(item);
@@ -159,7 +156,7 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	clear();
 	newItemIndex_ = 1;
 	QStringList childTypes = dataStore->getDefinedChildTags();
-	QPointF childAssetLoc(100,100);
+	QPointF childAssetLoc(sceneRect().center().x(),sceneRect().center().y());
 	QList<QSharedPointer<Transition>> transitions;
 	QList<DiagramItem*> diagItems;
 	foreach(QString childType, childTypes)
@@ -232,17 +229,13 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 			insertTransition(start,end,transition);
 		}
 	}
+	editorState_->setWindowItemsLoaded();
 }
 
 void DiagramScene::setBackgroundPattern(QPixmap pattern)
 {
 	setBackgroundBrush(pattern);
 	update();
-}
-
-void DiagramScene::setInsertionItem(QString itemName)
-{
-	insertionItem_ = itemName;
 }
 
 //! [5]
@@ -266,10 +259,13 @@ void DiagramScene::deleteSelectedItems()
 		removeItem(item);
 		items.push_back(item);
     }
-	//Call the destructor on the DiagramItem so that all child virtual destructors
-	//will be called.
+
 	AssetItem* assetItem;
 	bool needsReset = false;
+	//We don't actually have to delte anything here, just set the assets as deleted.  This is because
+	//when we serialize out and back in, the deleted assets won't be included and all of their children
+	//are automatically not included as well.  Transitions are also set to delete themselves whenever 
+	//an attached asset is delete, so that's not a problem either.
 	foreach (QGraphicsItem *item, items) 
 	{
         if (item->type() == DiagramItem::Type) 
@@ -280,7 +276,7 @@ void DiagramScene::deleteSelectedItems()
 				assetItem->getAsset()->setDeleted();
 				needsReset = true;
 			}
-            delete qgraphicsitem_cast<DiagramItem *>(item);
+            //delete qgraphicsitem_cast<DiagramItem *>(item);
 		}
 		else if(item->type() == Arrow::Type)
 		{
@@ -290,10 +286,10 @@ void DiagramScene::deleteSelectedItems()
 				arrow->getAsset()->setDeleted();
 				needsReset = true;
 			}
-			delete qgraphicsitem_cast<DiagramItem *>(item);
+			//delete qgraphicsitem_cast<DiagramItem *>(item);
 		}
-		else
-			delete item;
+		//else
+			//delete item;
     }
 	if(needsReset)
 		editorState_->triggerExperimentReset();
@@ -371,20 +367,6 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 //! [9]
-void DiagramScene::mouseDoubleClickEvent( QGraphicsSceneMouseEvent *mouseEvent )
-{
-	if(mouseEvent->button() == Qt::LeftButton)
-	{
-		if(!editorState_->getSelectedAsset().isNull())
-			editorState_->setWindowAsset(editorState_->getSelectedAsset());
-	}
-	else if(mouseEvent->button() == Qt::RightButton)
-	{
-		if(!editorState_->getWindowAsset().isNull() && !editorState_->getWindowAsset()->getParentAsset().isNull())
-			editorState_->setWindowAsset(editorState_->getWindowAsset()->getParentAsset());
-	}
-	QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
-}
 
 //! [10]
 void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -414,11 +396,11 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 //! [11] //! [12]
 
 		//Ignore text graphics.
-		while(startItems.count() && (startItems.first()->type() == QGraphicsTextItem::Type))
+		while(startItems.count() && (!dynamic_cast<ArrowPortItem*>(startItems.first())))
 		{
 			startItems.removeFirst();
 		}
-		while(endItems.count() && (endItems.first()->type() == QGraphicsTextItem::Type))
+		while(endItems.count() && (!dynamic_cast<ArrowPortItem*>(endItems.first())))
 		{
 			endItems.removeFirst();
 		}
@@ -437,6 +419,28 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 //! [12] //! [13]
     line = 0;
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
+}
+
+void DiagramScene::keyPressEvent(QKeyEvent * event)
+{
+	if(event->key() == Qt::Key_Shift)
+	{
+		editorState_->setEditMode(EditorState::Navigate);
+		event->accept();
+		return;
+	}
+	QGraphicsScene::keyPressEvent(event);
+}
+
+void DiagramScene::keyReleaseEvent(QKeyEvent * event)
+{
+	if(event->key() == Qt::Key_Shift)
+	{
+		editorState_->setEditMode(editorState_->getLastEditMode());
+		event->accept();
+		return;
+	}
+	QGraphicsScene::keyReleaseEvent(event);
 }
 
 QSharedPointer<Asset> DiagramScene::createNewAsset()

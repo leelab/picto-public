@@ -13,6 +13,7 @@ public:
  	void addArrow(Arrow *arrow);
 	void removeArrow(Arrow *arrow);
     void removeArrows();
+	virtual QPointF getContactPoint() = 0;
 protected:
 	virtual void updateDependantGraphics();
 private:

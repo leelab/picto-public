@@ -7,10 +7,8 @@ namespace Picto {
 const QString CircleGraphic::type = "Circle Graphic";
 
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
+: VisualElement(position,color)
 {
-	
-	AddDefinableProperty(QVariant::Point,"Position",position);
-	AddDefinableProperty(QVariant::Color,"Color",color);
 
 	QMap<QString,QVariant> attributeMap;
 	attributeMap["minimum"] = 1;
@@ -23,19 +21,19 @@ CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 	//propertyContainer_->setPropertyValue("Position",position);
 
 	//QSharedPointer<Property> radiusProperty = propertyContainer_->addProperty(QVariant::Int,"Radius",radius);
-	//radiusProperty->addAttribute("minimum", 1);
-	//radiusProperty->addAttribute("maximum", 1000);
-	//radiusProperty->addAttribute("singleStep", 1);
+	//radiusProperty->setAttribute("minimum", 1);
+	//radiusProperty->setAttribute("maximum", 1000);
+	//radiusProperty->setAttribute("singleStep", 1);
 
 	//propertyContainer_->setPropertyValue("Color",color);
 
 	//draw();
 
-	connect(propertyContainer_.data(),
-		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-		    this,
-			SLOT(slotPropertyValueChanged(QString, int, QVariant))
-			);
+	//connect(propertyContainer_.data(),
+	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
+	//	    this,
+	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
+	//		);
 }
 
 void CircleGraphic::draw()
@@ -63,19 +61,18 @@ VisualElement* CircleGraphic::NewVisualElement()
 	return new CircleGraphic;
 }
 
-void CircleGraphic::slotPropertyValueChanged(QString propertyName, int,
-											  QVariant) //propertyValue
-{
-	if(propertyName != "Position" && propertyName != "Name")
-	{
-		draw();
-	}
-}
+//void CircleGraphic::slotPropertyValueChanged(QString propertyName, int,
+//											  QVariant) //propertyValue
+//{
+//	if(propertyName != "Position" && propertyName != "Name")
+//	{
+//		draw();
+//	}
+//}
 
 void CircleGraphic::postSerialize()
 {
 	VisualElement::postSerialize();
-	draw();
 }
 
 bool CircleGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

@@ -37,10 +37,10 @@ protected:
 	void addRequiredResult(QString resultName);
 	//Same as above except that the actual result object pointer is passed in.
 	//checking for a deserialized copy is still by result name.
-	void addRequiredResult(QSharedPointer<Result> requiredResult, QString type = "");
+	//void addRequiredResult(QSharedPointer<Result> requiredResult, QString type = "");
 	void setMaxOptionalResults(int max, QString type = "");
 	/*! \brief This is used to add a result factory type.
-	 * If, for example, an object can have regular results and ControlTarget results,
+	 * If, for example, an object can have regular results and ControlResults,
 	 * this function would be used to add a "target" type such that <Result type="Target">
 	 * tags would get their results from the input factory.
 	 */

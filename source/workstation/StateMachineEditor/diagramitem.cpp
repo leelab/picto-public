@@ -46,13 +46,19 @@
 
 //! [0]
 DiagramItem::DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name,
-             QGraphicsItem *parent, QGraphicsScene *scene)
-    : QGraphicsPolygonItem(parent, scene)
+             QGraphicsItem *parent, QGraphicsScene *scene) : 
+QGraphicsPolygonItem(parent, scene)
 {
 	editorState_ = editorState;
     myContextMenu = contextMenu;
 	nameText_ = NULL;
+	stickInPlace_ = true;
+	catchUpFrames_ = 0;
 	setName(name);
+	connect(editorState_.data(),SIGNAL(editModeChanged(int)),this,SLOT(editModeChanged(int)));
+
+	setFlag(QGraphicsItem::ItemIsMovable, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
 }
 
 DiagramItem::~DiagramItem()
@@ -78,11 +84,37 @@ QString DiagramItem::getType()
 {
 	return type_;
 }
+
+void DiagramItem::setWidth(float width)
+{
+	QRectF newRect = getRect();
+	newRect.setWidth(width);
+	setRect(newRect);
+}
+
+float DiagramItem::getWidth()
+{
+	return rect_.width();
+}
+
+void DiagramItem::setHeight(float height)
+{
+	QRectF newRect = getRect();
+	newRect.setHeight(height);
+	setRect(newRect);
+}
+
+float DiagramItem::getHeight()
+{
+	return rect_.height();
+}
+
 void DiagramItem::updateLabel()
 {
 	if(!nameText_)
 	{
 		nameText_ = new QGraphicsTextItem(this);
+		nameText_->setDefaultTextColor(QColor(Qt::white));
 		nameText_->setZValue(1000.0);
 	}
 	QString text = getName();
@@ -110,25 +142,15 @@ void DiagramItem::updateLabel()
 	}
 	if(needsToStretch)
 	{
-		setPolygonFromRect(polybound);
-		nameText_->setPos(QPointF(-polybound.width(),-polybound.height()));
+		setRect(polybound);
 	}
+	nameText_->setPos(rect_.topLeft());
 }
 //! [0]
 
 //! [1]
 
 //! [2]
-void DiagramItem::setPolygonFromRect(QRectF rect)
-{
-	QPolygonF myPolygon;
-	myPolygon	<< QPointF(-rect.width(),-rect.height()) 
-				<< QPointF(0,-rect.height()) 
-				<< QPointF(0,0)
-				<< QPointF(-rect.width(),0)
-				<< QPointF(-rect.width(),-rect.height());
-	setPolygon(myPolygon);
-}
 //! [3]
 
 
@@ -156,19 +178,122 @@ void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     myContextMenu->exec(event->screenPos());
 }
 //! [5]
-
 //! [6]
 QVariant DiagramItem::itemChange(GraphicsItemChange change,
                      const QVariant &value)
 {
-    if (change == QGraphicsItem::ItemPositionChange) {
-		updateDependantGraphics();
-		positionChanged(value.toPoint());		
+	QVariant inputVal = value;
+	//See if the change is a position change.
+	if	(	(editorState_->getEditMode() == EditorState::Select)
+		&&	(change == QGraphicsItem::ItemPositionChange)
+		)
+	{
+		//See how big the change is.  We don't accept small changes 
+		//because they can get triggered by double clicking.
+		QPointF translation = inputVal.toPointF() - pos();
+		QRectF bounds = boundingRect();
+		if	(
+				stickInPlace_
+			&&	isSelected()
+			&&	(	(abs(translation.x()) > (bounds.width()/3))
+				||	(abs(translation.y()) > (bounds.height()/3))
+				)	
+			)
+			//This is a large change, stop sticking the item in place
+			stickInPlace_ = false;
+
+		if(!stickInPlace_)
+		{
+			if(catchUpFrames_ < 60)
+			{
+				//We haven't yet caught our position up from sticking in place.
+				//This will move the item smoothly to the desired location after sticking.
+				catchUpFrames_++;
+				inputVal.setValue(pos()+((catchUpFrames_/60.0)*translation));
+			}
+		}
+		if(!stickInPlace_ || !isSelected())
+		{	//If we're not sticking, update graphics underneath this one and report
+			//to child classes that the position change.
+			//Note that we also do this if the item isn't selected.  This occurs when it
+			//is being placed in the scene when it is first created.
+			updateDependantGraphics();
+			positionChanged(inputVal.toPoint());
+		}
+		else
+		{	//The item is sticking right now.  Don't allow a position change.
+			return pos();
+		}
     }
-	if (change == QGraphicsItem::ItemSelectedHasChanged)
-		emit selectedChange(this);
+	else if (change == QGraphicsItem::ItemSelectedChange)
+	{	//Don't allow selection changes except in Select mode.
+		if(editorState_->getEditMode() != EditorState::Select)
+			return !inputVal.toBool();
+	}
+	else if (change == QGraphicsItem::ItemSelectedHasChanged)
+	{
+		if(inputVal.toBool())
+		{
+			editorState_->setSelectedItem(this);
+		}
+		else
+		{
+			//When an item is deselected, it should be reinitialized to stick in place.
+			stickInPlace_ = true;
+			catchUpFrames_ = 0;
+
+			//If this was the last selected item, set the selected item to NULL.  This
+			//has the effect of switching the selected asset to the window asset.
+			if(editorState_->getSelectedItem() == this)
+				editorState_->setSelectedItem(NULL);
+		}
+	}
 
 
-    return value;
+    return inputVal;
+}
+
+void DiagramItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent *mouseEvent )
+{
+	if(editorState_->getEditMode() == EditorState::Select 
+		&& mouseEvent->button() == Qt::LeftButton)
+	{
+		if(!editorState_->getSelectedAsset().isNull())
+		{
+			editorState_->setWindowAsset(editorState_->getSelectedAsset());
+		}
+	}
+}
+
+void DiagramItem::setRect(QRectF rect)
+{
+	QRectF textbound;
+	if(nameText_)
+	{
+		textbound = nameText_->boundingRect();
+		if(rect.width() < textbound.width())
+			rect.setWidth(textbound.width());
+	}
+	rect_ = rect;
+	iconRect_ = QRectF(rect_.left(),rect_.top()+textbound.height(),rect_.width(),rect_.height()-textbound.height());
+	setPolygon(QPolygonF(rect_));
+	updateLabel();
+}
+
+QRectF DiagramItem::getRect()
+{
+	return rect_;
+}
+
+void DiagramItem::editModeChanged(int mode)
+{
+	if(mode == EditorState::Select)
+	{
+		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+	}
+	else
+	{
+		setAcceptedMouseButtons(Qt::RightButton);
+	}
 }
 //! [6]

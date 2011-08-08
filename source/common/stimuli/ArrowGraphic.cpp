@@ -7,11 +7,8 @@ namespace Picto {
 const QString ArrowGraphic::type = "Arrow Graphic";
 
 ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, QColor color)
+: VisualElement(position,color)
 {
-	
-	
-	AddDefinableProperty(QVariant::Point,"Position",position);
-	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Point,"Start",start);
 	AddDefinableProperty(QVariant::Point,"End",end);
 	AddDefinableProperty(QVariant::Int,"Size", size);
@@ -28,11 +25,11 @@ ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, 
 
 	//draw();
 
-	connect(propertyContainer_.data(),
-		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-		    this,
-			SLOT(slotPropertyValueChanged(QString, int, QVariant))
-			);
+	//connect(propertyContainer_.data(),
+	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
+	//	    this,
+	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
+	//		);
 
 }
 
@@ -105,18 +102,17 @@ VisualElement* ArrowGraphic::NewVisualElement()
 	return new ArrowGraphic;
 }
 
-void ArrowGraphic::slotPropertyValueChanged(QString propertyName, int, QVariant propertyValue)
-{
-	if(propertyName != "Position" && propertyName != "Name")
-	{
-		draw();
-	}
-}
+//void ArrowGraphic::slotPropertyValueChanged(QString propertyName, int, QVariant propertyValue)
+//{
+//	if(propertyName != "Position" && propertyName != "Name")
+//	{
+//		draw();
+//	}
+//}
 
 void ArrowGraphic::postSerialize()
 {
 	VisualElement::postSerialize();
-	draw();
 }
 
 bool ArrowGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

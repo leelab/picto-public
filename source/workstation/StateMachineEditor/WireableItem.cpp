@@ -9,7 +9,7 @@ WireableItem::WireableItem(QSharedPointer<EditorState> editorState, QMenu *conte
 AssetItem(editorState,contextMenu,asset)
 {
 	arrowDest_ = NULL;
-	lastSourcePos_ = 0;
+	maxArrowSourceWidth_ = 0;
 }
 
 WireableItem::~WireableItem()
@@ -19,19 +19,23 @@ WireableItem::~WireableItem()
 void WireableItem::addArrowSource(QString name)
 {
 	DiagramItem* newArrowSource = new ArrowSourceItem(name,getEditorState(),this,scene());
-	newArrowSource->setPos(QPointF(boundingRect().width()/2.0,lastSourcePos_));
-	lastSourcePos_ += newArrowSource->boundingRect().height();
 	newArrowSource->setZValue(zValue()+1);
+	if(newArrowSource->getWidth() > maxArrowSourceWidth_)
+		maxArrowSourceWidth_ = newArrowSource->getWidth();
+	if(maxArrowSourceWidth_ > getRect().width())
+		setWidth(maxArrowSourceWidth_);
 	arrowSources_.push_back(newArrowSource);
+	updateArrowPortDimensions();
 }
 
 void WireableItem::enableArrowDest()
 {
 	if(arrowDest_)
 		return;
-	arrowDest_ = new ArrowDestinationItem("",getEditorState(),this,scene());
-	arrowDest_->setPos(QPointF(-boundingRect().width()/2.0+arrowDest_->boundingRect().width(),boundingRect().height()/2.0));
-	arrowDest_->setZValue(zValue()+1);	
+	arrowDest_ = new ArrowDestinationItem(getEditorState(),this,scene());
+	arrowDest_->setZValue(zValue()+1);
+	arrowDest_->setWidth(10);
+	updateArrowPortDimensions();	
 }
 
 QList<DiagramItem*> WireableItem::getArrowSources()
@@ -42,4 +46,35 @@ QList<DiagramItem*> WireableItem::getArrowSources()
 DiagramItem* WireableItem::getArrowDest()
 {
 	return arrowDest_;
+}
+
+void WireableItem::setRect(QRectF rect)
+{
+	if(rect.width() < maxArrowSourceWidth_)
+		rect.setWidth(maxArrowSourceWidth_);
+	AssetItem::setRect(rect);
+	updateArrowPortDimensions();
+}
+
+void WireableItem::updateArrowPortDimensions()
+{
+	float width = getWidth();
+	QPointF lastSourceOffset = QPointF(0,0);
+	bool keepTrying = true;
+	while(keepTrying)
+	{
+		keepTrying = false;
+		foreach(DiagramItem* source, arrowSources_)
+		{
+			source->setWidth(width);
+			source->setPos(getRect().bottomLeft()+lastSourceOffset);
+			lastSourceOffset = lastSourceOffset + QPointF(0,source->boundingRect().height());
+		}
+	}
+	float height = getHeight()+lastSourceOffset.y();
+	if(arrowDest_)
+	{
+		arrowDest_->setPos(getRect().topLeft()-QPointF(arrowDest_->getWidth(),0));
+		arrowDest_->setHeight(height);
+	}
 }

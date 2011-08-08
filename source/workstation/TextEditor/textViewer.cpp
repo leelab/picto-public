@@ -43,10 +43,10 @@ TextViewer::TextViewer(QAction* checkSyntaxAction, QWidget *parent)
 void TextViewer::init()
 {
 	//Put the current experiment text into the text editor
-	if(experimentText_)
+	if(pictoDataText_)
 	{
-		xmlEdit_->setDocument(experimentText_);
-		syntaxHighlight_->setDocument(experimentText_);
+		xmlEdit_->setDocument(pictoDataText_);
+		syntaxHighlight_->setDocument(pictoDataText_);
 
 		//set tabs equal to four spaces
 		QFont font("Courier",10);
@@ -81,12 +81,12 @@ void TextViewer::fillTaskComboBox()
 	taskComboBox_->clear();
 	taskComboBox_->addItem("Experiment top");
 
-	if(!experimentText_)
+	if(!pictoDataText_)
 		return;
 
 	//Parse the experiment text looking for all tasks, extract their names, and 
 	//add the name to the combo box
-	QXmlStreamReader xmlReader(experimentText_->toPlainText());
+	QXmlStreamReader xmlReader(pictoDataText_->toPlainText());
 
 	while(!xmlReader.atEnd())
 	{
@@ -121,7 +121,7 @@ void TextViewer::goToTask(QString taskname)
 	}
 
 	//Find the line number of the task with the matching name
-	QXmlStreamReader xmlReader(experimentText_->toPlainText());
+	QXmlStreamReader xmlReader(pictoDataText_->toPlainText());
 
 	int taskOffset;
 

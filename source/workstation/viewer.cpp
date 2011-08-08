@@ -2,8 +2,8 @@
 
 Viewer::Viewer(QWidget* parent)
 : QWidget(parent),
-experiment_(0),
-experimentText_(0)
+pictoData_(0),
+pictoDataText_(0)
 {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }

@@ -51,6 +51,7 @@
 #include "AssetItem.h"
 #include "PropertyBrowser.h"
 #include "AssetInfoBox.h"
+#include "ViewerWindow.h"
 
 const int InsertTextButton = 10;
 
@@ -77,10 +78,18 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
     toolbarLayout->addWidget(pointerToolbar);
 
     QHBoxLayout *layout = new QHBoxLayout;
+	QVBoxLayout *centralLayout = new QVBoxLayout;
+	QToolButton *upButton = new QToolButton;
+    upButton->setIcon(QIcon(":/icons/levelup.png"));
+	//upButton->setIconSize(QSize(50, 50));
+	upButton->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+	connect(upButton,SIGNAL(pressed()),editorState_.data(),SLOT(setWindowAssetToParent()));
+    centralLayout->addWidget(upButton);
+	centralLayout->addWidget(view);
 
 	toolbox_ = new Toolbox(editorState_);
 	layout->addWidget(toolbox_);
-    layout->addWidget(view);
+    layout->addLayout(centralLayout);
 
 	QVBoxLayout * rLayout = new QVBoxLayout;
 	propertyEditor_ = new PropertyBrowser(editorState_);
@@ -106,45 +115,43 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 //! [0]
 void StateEditViewer::init()
 {
-	if(!experiment_ || !experiment_->validateTree())
+	if(!pictoData_ || !pictoData_->validateTree())
 	{
-		QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
+		QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(pictoDataText_->toPlainText()));
 
 		//read until we either see an experiment tag, or the end of the file
-		while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
+		while(xmlReader->name() != "PictoData" && !xmlReader->atEnd()) 
 			xmlReader->readNext();
 
 		if(xmlReader->atEnd())
 		{
 			QMessageBox msg;
-			msg.setText("Experiment XML did not contain <Experiment> tag");
+			msg.setText("PictoData XML did not contain <PictoData> tag");
 			msg.exec();
 			return;
 		}
 
-		experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
-		//experiment_->clearErrors();
-		//experiment_->clear();
+		pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
+		//pictoData_->clearErrors();
+		//pictoData_->clear();
 		Picto::Asset::clearErrors();
 		
-		if(!experiment_->fromXml(xmlReader,false))
+		if(!pictoData_->fromXml(xmlReader,false))
 		{
-			experiment_ = QSharedPointer<Picto::Experiment>();
+			pictoData_ = QSharedPointer<Picto::PictoData>();
 			QMessageBox msg;
-			msg.setText("Failed to load current definition.  Please attempt to correct experiment in Text Editor");
+			msg.setText("Failed to load current definition.  Please attempt to correct PictoData XML in Text Editor");
 			msg.exec();
 			return;
 		}
 
 	}
-	editorState_->setWindowAsset(experiment_.staticCast<Asset>());
-
-	/*topmostScene->setSceneAsset(experiment_.staticCast<Asset>());*/
+	editorState_->setPictoDataObject(pictoData_);
 }
 
 void StateEditViewer::deinit()
 {
-	if(experiment_.isNull())
+	if(pictoData_.isNull())
 		return;
 	insertEditBlock();
 }
@@ -176,9 +183,9 @@ void StateEditViewer::aboutToSave()
 //}
 
 //! [4]
-void StateEditViewer::pointerGroupClicked(int)
+void StateEditViewer::updateEditModeButtons(int id)
 {
-    editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
+	pointerTypeGroup->button(id)->setChecked(true);
 }
 
 //! [6]
@@ -218,10 +225,7 @@ void StateEditViewer::fontSizeChanged(const QString &)
 void StateEditViewer::sceneScaleChanged(const QString &scale)
 {
     double newScale = scale.left(scale.indexOf(tr("%"))).toDouble() / 100.0;
-    QMatrix oldMatrix = view->matrix();
-    view->resetMatrix();
-    view->translate(oldMatrix.dx(), oldMatrix.dy());
-    view->scale(newScale, newScale);
+	editorState_->setZoom(newScale);
 }
 //! [11]
 
@@ -354,7 +358,7 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
 	//Load new Scene
 	newScene->setSceneRect(QRectF(0, 0, 4000, 4000));
 	if(view == NULL)
-		view = new QGraphicsView(newScene);
+		view = new ViewerWindow(editorState_,newScene);
 	view->setScene(newScene);
 	//In this version of Qt it looks like connecting signals to slots more than
 	//once does not have the effect of multiplying the number of times that the
@@ -407,40 +411,46 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
 void StateEditViewer::resetExperiment()
 {
 	insertEditBlock();
-	reloadExperimentFromDoc();
+	reloadPictoDataFromDoc();
 }
 
 void StateEditViewer::insertEditBlock()
 {
-	Q_ASSERT(experimentText_);
-	QString newText = experiment_->toXml();
-	if(newText == experimentText_->toPlainText())
+	Q_ASSERT(pictoDataText_);
+	QString newText = pictoData_->toXml();
+	if(newText == pictoDataText_->toPlainText())
 		return;
-	//experimentText_->setPlainText(experiment_->toXml());
-	//All of the operations below are in place of setPlainText
-	//because setPlainText is not undoable, whereas the operations
-	//below are.
-	QTextCursor cursor = QTextCursor(experimentText_);
+
+	//These operations make the change undoable
+	QTextCursor cursor = QTextCursor(pictoDataText_);
 	cursor.beginEditBlock();
 	cursor.select(QTextCursor::Document);
 	cursor.removeSelectedText();
-	cursor.insertText(experiment_->toXml());
+	cursor.insertText(newText);
 	cursor.endEditBlock();
 }
 
 void StateEditViewer::performUndoAction()
 {
-	if(!experimentText_->isUndoAvailable())
+	if(!pictoDataText_->isUndoAvailable())
 		return;
-	experimentText_->undo();
-	reloadExperimentFromDoc();
+	pictoDataText_->undo();
+	pictoDataText_->redo();
+	reloadPictoDataFromDoc();
+	QUuid openedID = pictoData_->getStateMachineEditorData()->getOpenedAssetId();
+	pictoDataText_->undo();
+	reloadPictoDataFromDoc();
+	//This puts the window where it should be.  Otherwise we would end up looking at the window
+	//that we were at before the undo took place.
+	pictoData_->getStateMachineEditorData()->setOpenedAssetId(openedID);
+	editorState_->setPictoDataObject(pictoData_);
 }
 void StateEditViewer::performRedoAction()
 {
-	if(!experimentText_->isRedoAvailable())
+	if(!pictoDataText_->isRedoAvailable())
 		return;
-	experimentText_->redo();
-	reloadExperimentFromDoc();
+	pictoDataText_->redo();
+	reloadPictoDataFromDoc();
 }
 
 //! [23]
@@ -499,8 +509,8 @@ void StateEditViewer::connectActions()
 {
 	connect(undoAction, SIGNAL(triggered()),this, SLOT(performUndoAction()));
 	connect(redoAction, SIGNAL(triggered()),this, SLOT(performRedoAction()));
-	connect(experimentText_,SIGNAL(undoAvailable(bool)),undoAction,SLOT(setEnabled(bool)));
-	connect(experimentText_,SIGNAL(redoAvailable(bool)),redoAction,SLOT(setEnabled(bool)));
+	connect(pictoDataText_,SIGNAL(undoAvailable(bool)),undoAction,SLOT(setEnabled(bool)));
+	connect(pictoDataText_,SIGNAL(redoAvailable(bool)),redoAction,SLOT(setEnabled(bool)));
 
 	connect(toFrontAction, SIGNAL(triggered()),scene, SLOT(bringToFront()));
     connect(sendBackAction, SIGNAL(triggered()),scene, SLOT(sendToBack()));
@@ -605,16 +615,24 @@ void StateEditViewer::createToolbars()
     pointerButton->setCheckable(true);
     pointerButton->setChecked(true);
     pointerButton->setIcon(QIcon(":/icons/pointer.png"));
+	QToolButton *navigateButton = new QToolButton;
+    navigateButton->setCheckable(true);
+    navigateButton->setIcon(QIcon(":/icons/cursor-openhand.png"));
     QToolButton *linePointerButton = new QToolButton;
     linePointerButton->setCheckable(true);
     linePointerButton->setIcon(QIcon(":/icons/linepointer.png"));
 
     pointerTypeGroup = new QButtonGroup;
     pointerTypeGroup->addButton(pointerButton, int(DiagramScene::Select));
+	pointerTypeGroup->addButton(navigateButton,
+                                int(DiagramScene::Navigate));
     pointerTypeGroup->addButton(linePointerButton,
                                 int(DiagramScene::InsertLine));
+	pointerTypeGroup->setExclusive(true);
     connect(pointerTypeGroup, SIGNAL(buttonClicked(int)),
-            this, SLOT(pointerGroupClicked(int)));
+            editorState_.data(), SLOT(setEditMode(int)));
+	connect(editorState_.data(), SIGNAL(editModeChanged(int)),
+            this, SLOT(updateEditModeButtons(int)));
 
     sceneScaleCombo = new QComboBox;
     QStringList scales;
@@ -626,60 +644,32 @@ void StateEditViewer::createToolbars()
 
     pointerToolbar = new QToolBar(tr("Pointer type"));
     pointerToolbar->addWidget(pointerButton);
+	pointerToolbar->addWidget(navigateButton);
     pointerToolbar->addWidget(linePointerButton);
     pointerToolbar->addWidget(sceneScaleCombo);
 //! [27]
 }
 
-void StateEditViewer::reloadExperimentFromDoc()
+void StateEditViewer::reloadPictoDataFromDoc()
 {
-	// Get current path (THE PATH IS CURRENTLY ACCORDING TO THE ORDER OF CHILDREN.  FIX THIS!!)
-	QList<QString> tags;
-	QList<int> tagIndeces;
-	QSharedPointer<Asset> curr = editorState_->getWindowAsset();
-	QSharedPointer<DataStore> parent = curr->getParentAsset().staticCast<DataStore>();
-	while(!parent.isNull())
-	{
-		tags.push_front(curr->identifier());
-		int i=0;
-		foreach(QSharedPointer<Picto::Asset> asset, parent->getGeneratedChildren(curr->identifier()))
-		{
-			if(asset == curr)
-			{
-				tagIndeces.push_front(i);
-				break;
-			}
-			i++;
-		}
-		curr = parent;
-		parent = curr->getParentAsset().staticCast<Picto::DataStore>();
-	}
 
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
+	scene->clear();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(pictoDataText_->toPlainText()));
 
-	//read until we either see an experiment tag, or the end of the file
-	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
+	//read until we either see an PictoData tag, or the end of the file
+	while(xmlReader->name() != "PictoData" && !xmlReader->atEnd()) 
 		xmlReader->readNext();
 
 	Q_ASSERT(!xmlReader->atEnd());
 
-	experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
+	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
 
-	if(!experiment_->fromXml(xmlReader,false))
+	if(!pictoData_->fromXml(xmlReader,false))
 	{
-		Q_ASSERT_X(false,"StateEditViewer::resetExperiment",Serializable::getErrors().toAscii());
+		Q_ASSERT_X(false,"StateEditViewer::reloadPictoDataFromDoc",Serializable::getErrors().toAscii());
 	}
-
-	//Restore old path 
-	curr = experiment_;
-	while(tags.size())
-	{
-		QString tagName = tags.takeFirst();
-		int index = tagIndeces.takeFirst();
-		curr = curr.staticCast<Picto::DataStore>()->getGeneratedChildren(tagName).at(index);
-	}
-
-	editorState_->setWindowAsset(curr);
+	
+	editorState_->setPictoDataObject(pictoData_);
 	return;
 }
 

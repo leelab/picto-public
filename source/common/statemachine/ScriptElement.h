@@ -38,7 +38,7 @@ public:
 
 	void setScript(QString script);
 
-	//bool initScripting(QScriptEngine &qsEngine);
+	virtual QString getUITemplate(){return "ScriptElement";};
 	virtual QString assetType(){return "ScriptElement";};
 
 	//DataStore functions

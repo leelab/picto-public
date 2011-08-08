@@ -10,4 +10,8 @@ WireableItem(editorState,contextMenu,asset)
 		addArrowSource(result->getName());
 	}
 	enableArrowDest();
+
+	//Set default size and icon
+	setRect(QRectF(QPointF(-19,-30),QPointF(19,30)));
+	setSvgIcon(":/icons/statemachineelement.svg");
 }

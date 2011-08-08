@@ -151,7 +151,6 @@ bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 
 QVariant ChoiceParameter::verifyValue(QVariant value)
 {
-	Q_ASSERT(options_.size());
 	if(!options_.contains(value.toString()))
 	{
 		return("");

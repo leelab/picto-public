@@ -11,11 +11,12 @@
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AssetFactory
+	class PICTOLIB_API AssetFactory : public QObject
 #else
 class AssetFactory
 #endif
 {
+	Q_OBJECT
 public:
 	typedef QSharedPointer<Asset> (*NewAssetFnPtr)();
 	AssetFactory(int minAssets = 0,int maxAssets = -1);
@@ -38,6 +39,7 @@ public:
 	void setMinAssets(int minAssets){minAssets_ = minAssets;};
 	int getGeneratedAssets(){return numSourcedAssets_;};
 	void setGeneratedAssets(int numGeneratedAssets){numSourcedAssets_ = numGeneratedAssets;};
+	QString getUITemplate(QString type);
 protected:
 	virtual QSharedPointer<Asset> generateNewAsset();
 private:
@@ -46,9 +48,13 @@ private:
 	int maxAssets_;
 	int numSourcedAssets_;
 	const bool isGroupFactory_;
+	QString uITemplate_;
+	bool uITemplateInitialized_;
 
 	NewAssetFnPtr newAssetFn_;
 	QMap<QString, QSharedPointer<AssetFactory>> factoriesByType_;
+private slots:
+	void createdAssetDestroyed(QObject* obj);
 };
 
 }; //namespace Picto

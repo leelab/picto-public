@@ -1,3 +1,4 @@
+<PictoData>
 <Experiment>
 	<Name>Test Experiment</Name>
 	
@@ -17,7 +18,7 @@
 					<Scriptable type="Boolean">
 						<Name>Increasing</Name>
 						<OperatorUI>False</OperatorUI>
-					<UIInfo><Pos x="100" y="100"/></UIInfo></Scriptable>
+					<UIInfo><Pos x="100" y="100"/><UniqueID>{ed78511c-50b2-408c-833a-4466596cb869}</UniqueID></UIInfo></Scriptable>
 
 				
 					<StateMachineElement type="State">
@@ -25,12 +26,10 @@
 						<EngineNeeded>-1</EngineNeeded>
 						<Name>TestState</Name>
 						<ControlElement type="Stopwatch Controller">
-							<OperatorVisible>false</OperatorVisible>
-							<SubjectVisible>false</SubjectVisible>
 							<Name>Stopwatch</Name>
 							<TimeUnits>Ms</TimeUnits>
 							<Time>4000</Time>
-						<UIInfo><Pos x="100" y="100"/></UIInfo></ControlElement>
+						<UIInfo><Pos x="100" y="100"/><UniqueID>{d84de8c1-6995-4f8e-a358-83675d9adc05}</UniqueID></UIInfo><Result><Name>Success</Name><UIInfo><UniqueID>{f0c09f81-54f3-49e9-a70a-c1bd89edc27b}</UniqueID></UIInfo></Result></ControlElement>
 						
 							
 								
@@ -43,7 +42,7 @@
 											<Position x="400" y="400"/>
 											<Dimensions x="0" y="0" width="300" height="300"/>
 											<Color R="255" G="0" B="0" A="255"/>
-										</Scriptable>
+										<UIInfo><Pos x="177" y="250"/><UniqueID>{bbb004c0-c780-4377-bdd3-59c7e6b36ec8}</UniqueID></UIInfo></Scriptable>
 								
 								
 							
@@ -76,17 +75,17 @@
 							</ExitScript>
 						
 						
-							<Result><Name>Success</Name><UIInfo><Pos x="334" y="97"/></UIInfo></Result>
+							<Result><Name>Success</Name><UIInfo><Pos x="327" y="123"/><UniqueID>{cc7bd416-26eb-4ba3-84f2-dc62935a00d0}</UniqueID></UIInfo></Result>
 						
 						<Transition>
 							<Source>Stopwatch</Source>
 							<SourceResult>Success</SourceResult>
 							<Destination>Success</Destination>
 						</Transition>
-					<UIInfo><Pos x="399" y="126"/></UIInfo></StateMachineElement>
+					<UIInfo><Pos x="113" y="201"/><UniqueID>{fc33aa1f-dcf7-4770-84cc-c786aaaa3172}</UniqueID></UIInfo></StateMachineElement>
 				
 				
-					<Result><Name>Done</Name><UIInfo><Pos x="183" y="361"/></UIInfo></Result>
+					<Result><Name>Done</Name><UIInfo><Pos x="206" y="219"/><UniqueID>{82390042-fa7b-445a-a0fb-f0c4b7f6129f}</UniqueID></UIInfo></Result>
 				
 				
 					<Transition>
@@ -95,9 +94,9 @@
 						<Destination>Done</Destination>
 					</Transition>
 				
-			<UIInfo><Pos x="92" y="99"/></UIInfo></StateMachine>
+			<UIInfo><Pos x="92" y="99"/><UniqueID>{d51edf0e-39cc-4d76-aefd-3d146aba1f0b}</UniqueID></UIInfo></StateMachine>
 
-		<UIInfo><Pos x="100" y="100"/></UIInfo></Task>
+		<UIInfo><Pos x="100" y="100"/><UniqueID>{8585c65d-c6c3-41e8-acbc-931ddc6ed9fa}</UniqueID></UIInfo></Task>
     <Task>
       <Name>Frame Rate Testing 2</Name>
       <!-- This is a simple state machine designed to test the frame rate 	-->
@@ -118,7 +117,7 @@
               <Scriptable type="Boolean">
                 <Name>MovingUp</Name>
 				<OperatorUI>False</OperatorUI>
-              </Scriptable>
+              <UIInfo><Pos x="2069" y="2000"/><UniqueID>{48ea39b3-3714-4a4e-8646-aa379faff67e}</UniqueID></UIInfo></Scriptable>
 
             
 
@@ -129,11 +128,9 @@
                 
                   <ControlElement type="Stopwatch Controller">
                     <Name>Stopwatch</Name>
-					<OperatorVisible>false</OperatorVisible>
-					<SubjectVisible>false</SubjectVisible>
 					<TimeUnits>Ms</TimeUnits>
                     <Time>5000</Time>
-                  </ControlElement>
+                  <Result><Name>Success</Name><UIInfo><UniqueID>{abf7bf49-e4e7-4e7c-a2d5-186674bb64f6}</UniqueID></UIInfo></Result><UIInfo><UniqueID>{a195b688-582c-4ccb-b7d5-2dc9fa124be6}</UniqueID></UIInfo></ControlElement>
                 
                 
                   
@@ -146,7 +143,7 @@
                           <Position x="400" y="199"/>
                           <Dimensions x="0" y="0" width="300" height="300"/>
                           <Color R="255" G="0" B="0" A="255"/>
-                        </Scriptable>
+                        <UIInfo><UniqueID>{7e447bee-5b07-4adb-9912-91d1860bab4f}</UniqueID></UIInfo></Scriptable>
 
                     
                   
@@ -170,17 +167,17 @@
                   </FrameScript>
                 
                 
-                  <Result><Name>Success</Name></Result>
+                  <Result><Name>Success</Name><UIInfo><UniqueID>{b67825d7-10a5-45fd-a1dd-f8fda82f8c96}</UniqueID></UIInfo></Result>
                 
 				<Transition>
 					<Source>Stopwatch</Source>
 					<SourceResult>Success</SourceResult>
 					<Destination>Success</Destination>
 				</Transition>
-              <UIInfo><Pos x="700" y="100"/></UIInfo></StateMachineElement>
+              <UIInfo><Pos x="2193" y="1892"/><UniqueID>{e2afff23-efdc-4add-9ea0-657c17e10a9a}</UniqueID></UIInfo></StateMachineElement>
             
 			
-				<Result><Name>Done</Name><UIInfo><Pos x="400" y="100"/></UIInfo></Result>
+				<Result><Name>Done</Name><UIInfo><Pos x="1893" y="1892"/><UniqueID>{237d404c-28a1-4fa9-9f48-29dce47df17b}</UniqueID></UIInfo></Result>
 			
             
               <Transition>
@@ -189,7 +186,7 @@
                 <Destination>Done</Destination>
               </Transition>
             
-          <UIInfo><Pos x="100" y="98"/></UIInfo></StateMachineElement>
+          <UIInfo><Pos x="100" y="98"/><UniqueID>{92588f22-5ccf-4eb1-8c32-198c95364522}</UniqueID></UIInfo></StateMachineElement>
 
           <StateMachineElement type="State">
             <Revision>-1</Revision>
@@ -197,21 +194,19 @@
             <Name>InterTrialInterval</Name>
             
               <ControlElement type="Stopwatch Controller">
-				<OperatorVisible>false</OperatorVisible>
-				<SubjectVisible>false</SubjectVisible>
                 <Name>Stopwatch</Name>
 				<TimeUnits>Ms</TimeUnits>
                 <Time>2000</Time>
-              <UIInfo><Pos x="100" y="100"/></UIInfo></ControlElement>
+              <UIInfo><Pos x="100" y="100"/><UniqueID>{5be30982-798f-4f20-a0b4-d2d427813cdd}</UniqueID></UIInfo><Result><Name>Success</Name><UIInfo><UniqueID>{99fc52fc-ac4c-4463-9ea3-19d0279b1766}</UniqueID></UIInfo></Result></ControlElement>
                   <BackgroundColor>#000000</BackgroundColor>
 
-            	<Result><Name>Success</Name><UIInfo><Pos x="400" y="100"/></UIInfo></Result>
+            	<Result><Name>Success</Name><UIInfo><Pos x="400" y="100"/><UniqueID>{91ff696e-1256-4477-82a9-03a296205620}</UniqueID></UIInfo></Result>
 			<Transition>
 				<Source>Stopwatch</Source>
 				<SourceResult>Success</SourceResult>
 				<Destination>Success</Destination>
 			</Transition>
-           <UIInfo><Pos x="400" y="100"/></UIInfo></StateMachineElement>
+           <UIInfo><Pos x="400" y="100"/><UniqueID>{da215f5d-4454-4360-9fc0-48da36d87277}</UniqueID></UIInfo></StateMachineElement>
 
         
         
@@ -227,8 +222,8 @@
           </Transition>
         
         
-     <UIInfo><Pos x="100" y="100"/></UIInfo></StateMachine>
-    <UIInfo><Pos x="400" y="100"/></UIInfo></Task>
+     <UIInfo><Pos x="100" y="100"/><UniqueID>{4ede858f-9b8d-41c6-9b8c-182d23f031c6}</UniqueID></UIInfo></StateMachine>
+    <UIInfo><Pos x="400" y="100"/><UniqueID>{84e5a9db-0279-4c69-bc38-9d2971c3a7b3}</UniqueID></UIInfo></Task>
  
     <Task>
 			<Name>Simple Test</Name>
@@ -251,7 +246,7 @@
 								<Name>SuccessfulAttempts</Name>
 								<OperatorUI>False</OperatorUI>
 								<Order>1</Order>
-							<UIInfo><Pos x="168" y="681"/></UIInfo></Scriptable>
+							<UIInfo><Pos x="168" y="681"/><UniqueID>{adc5d0d9-360b-499f-91b0-2a5aa32dd7ca}</UniqueID></UIInfo></Scriptable>
 
 						
 							<StateMachineElement type="ScriptElement">
@@ -263,13 +258,13 @@
 								</Script>
 
 								<!-- TEST3 -->
-							<UIInfo><Pos x="147" y="119"/></UIInfo></StateMachineElement>
+							<UIInfo><Pos x="147" y="119"/><UniqueID>{6d021652-892d-4f35-8969-2dd1d926af82}</UniqueID></UIInfo><Result><Name>false</Name><UIInfo><UniqueID>{1a620bcb-7004-4049-8a35-3dd3343d21de}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{5d6e4a4c-821c-4959-bcc2-b3e9f2d98877}</UniqueID></UIInfo></Result></StateMachineElement>
 							<StateMachineElement type="ScriptElement">
 								<Name>Increment successful attempts</Name>
 								<Script>
 									SuccessfulAttempts.setValue(SuccessfulAttempts.getValue()+1); return;
 								</Script>
-							<UIInfo><Pos x="141" y="371"/></UIInfo></StateMachineElement>
+							<UIInfo><Pos x="141" y="371"/><UniqueID>{ff4d2129-a133-4433-b68a-33792a45dbec}</UniqueID></UIInfo><Result><Name>false</Name><UIInfo><UniqueID>{5b2b4c79-f132-4777-96f9-74a9cb72689e}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{e411ccc1-d5b1-4ece-ac9c-d971352f0be0}</UniqueID></UIInfo></Result></StateMachineElement>
 
 							<StateMachineElement type="State">
 								<Revision>-1</Revision>
@@ -278,19 +273,14 @@
 								
 									<ControlElement type="Target Controller">
 										<Name>TargetCont</Name>
-										<OperatorVisible>false</OperatorVisible>
-										<SubjectVisible>false</SubjectVisible>
-										<SignalChannel>PositionChannel</SignalChannel>
-										<Shape>Rectangle</Shape>
-										<Target x="400" y="400" width="100" height="100"/>
-										<TimeUnits>Ms</TimeUnits>
+										<SignalChannel>PositionChannel</SignalChannel>																						<TimeUnits>Ms</TimeUnits>
 										<TotalTime>10000</TotalTime>
 										<FixationTime>1000</FixationTime>
 										<MinInitialAcquisitionTime>0</MinInitialAcquisitionTime>
 										<MaxInitialAcquisitionTime>4000</MaxInitialAcquisitionTime>
 										<MaxReacquisitionTime>1000</MaxReacquisitionTime>
 										<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
-									<UIInfo><Pos x="97" y="95"/></UIInfo><Result><Name>Broke Fixation</Name><UIInfo><Pos x="100" y="100"/></UIInfo></Result><Result><Name>Initial Aquistion Time Exceeded</Name><UIInfo><Pos x="354" y="253"/></UIInfo></Result><Result><Name>Reaquistion Time Exceeded</Name><UIInfo><Pos x="566" y="406"/></UIInfo></Result><Result><Name>Success</Name><UIInfo><Pos x="480" y="623"/></UIInfo></Result><Result><Name>Total Time Excceeded</Name><UIInfo><Pos x="297" y="840"/></UIInfo></Result></ControlElement>
+									<UIInfo><Pos x="97" y="95"/><UniqueID>{2c126c0e-9fb4-4b6d-9533-c2ff5a894965}</UniqueID></UIInfo><Result><Name>Broke Fixation</Name><UIInfo><Pos x="100" y="100"/><UniqueID>{782692ab-75ac-4077-9041-660008dcc896}</UniqueID></UIInfo></Result><Result><Name>Initial Aquistion Time Exceeded</Name><UIInfo><Pos x="354" y="253"/><UniqueID>{6ba8f19e-4895-4193-b503-f4b2ffb2628b}</UniqueID></UIInfo></Result><Result><Name>Reaquistion Time Exceeded</Name><UIInfo><Pos x="566" y="406"/><UniqueID>{eec7132a-f34b-4e6a-bb33-18c9b5c5c667}</UniqueID></UIInfo></Result><Result><Name>Success</Name><UIInfo><Pos x="480" y="623"/><UniqueID>{812c4a4d-0bbd-4876-8140-11bc25e879a2}</UniqueID></UIInfo></Result><Result><Name>Total Time Excceeded</Name><UIInfo><Pos x="297" y="840"/><UniqueID>{58c6ba6e-12e9-4106-8944-9a6d74b9e2d4}</UniqueID></UIInfo></Result><ControlTarget>LeftTarget</ControlTarget></ControlElement>
 								
 								
 									
@@ -303,7 +293,7 @@
 													<Position x="400" y="400"/>
 													<Dimensions x="0" y="0" width="100" height="100"/>
 													<Color R="255" G="0" B="0" A="255"/>
-												<UIInfo><Pos x="2200" y="100"/></UIInfo></Scriptable>
+												<UIInfo><Pos x="145" y="989"/><UniqueID>{76756fe6-7a07-482a-83cd-3f75769ca059}</UniqueID></UIInfo></Scriptable>
 
 									
 								
@@ -325,11 +315,11 @@
 									</EntryScript>
 								
 								
-									<Result><Name>Success</Name><UIInfo><Pos x="616" y="838"/></UIInfo></Result>
-									<Result><Name>Broke Fixation</Name><UIInfo><Pos x="895" y="149"/></UIInfo></Result>
-									<Result><Name>Total Time Excceeded</Name><UIInfo><Pos x="314" y="860"/></UIInfo></Result>
-									<Result><Name>Initial Aquistion Time Exceeded</Name><UIInfo><Pos x="942" y="404"/></UIInfo></Result>
-									<Result><Name>Reaquistion Time Exceeded</Name><UIInfo><Pos x="896" y="649"/></UIInfo></Result>
+									<Result><Name>Success</Name><UIInfo><Pos x="616" y="838"/><UniqueID>{7197b7a8-d96c-4cc2-866a-bbd2ac3a9c3d}</UniqueID></UIInfo></Result>
+									<Result><Name>Broke Fixation</Name><UIInfo><Pos x="895" y="149"/><UniqueID>{4bee7cc8-b84c-4584-871d-72ea2afc7ee3}</UniqueID></UIInfo></Result>
+									<Result><Name>Total Time Excceeded</Name><UIInfo><Pos x="314" y="860"/><UniqueID>{d446bf49-ba40-4956-b111-bed3db197bc3}</UniqueID></UIInfo></Result>
+									<Result><Name>Initial Aquistion Time Exceeded</Name><UIInfo><Pos x="942" y="404"/><UniqueID>{b25f647b-731f-4a49-bd05-f9b527ceeaf5}</UniqueID></UIInfo></Result>
+									<Result><Name>Reaquistion Time Exceeded</Name><UIInfo><Pos x="896" y="649"/><UniqueID>{ccbcb209-371a-4beb-944e-125cc10dacea}</UniqueID></UIInfo></Result>
 								
 								<Transition>
 									<Source>TargetCont</Source>
@@ -356,7 +346,7 @@
 									<SourceResult>Reaquistion Time Exceeded</SourceResult>
 									<Destination>Reaquistion Time Exceeded</Destination>
 								</Transition>
-							<UIInfo><Pos x="723" y="153"/></UIInfo></StateMachineElement>
+							<UIInfo><Pos x="723" y="153"/><UniqueID>{7e588641-c44e-41be-8bd0-04a9b06e01d7}</UniqueID></UIInfo><Scriptable type="RectTarget"><Dimensions height="100" width="100" x="0" y="0"/><Name>LeftTarget</Name><Position x="400" y="400"/><UIInfo><Pos x="118" y="715"/><UniqueID>{f2dcc90f-c149-4285-b538-c817e8ca1e8a}</UniqueID></UIInfo></Scriptable></StateMachineElement>
 							
 							<StateMachineElement type="State">
 								<Revision>-1</Revision>
@@ -365,19 +355,15 @@
 								
 									<ControlElement type="Target Controller">
 										<Name>TargetCont</Name>
-										<OperatorVisible>false</OperatorVisible>
-										<SubjectVisible>false</SubjectVisible>
 										<SignalChannel>PositionChannel</SignalChannel>
-										<Shape>Rectangle</Shape>
 										<TimeUnits>Ms</TimeUnits>
-										<Target x="600" y="400" width="100" height="100"/>
 										<TotalTime>10000</TotalTime>
 										<FixationTime>1000</FixationTime>
 										<MinInitialAcquisitionTime>0</MinInitialAcquisitionTime>
 										<MaxInitialAcquisitionTime>4000</MaxInitialAcquisitionTime>
 										<MaxReacquisitionTime>1000</MaxReacquisitionTime>
 										<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
-									<UIInfo><Pos x="100" y="100"/></UIInfo></ControlElement>
+									<UIInfo><Pos x="100" y="100"/><UniqueID>{cbf3e280-deca-40c4-9f40-d204a93d6a7c}</UniqueID></UIInfo><Result><Name>Reaquistion Time Exceeded</Name><UIInfo><UniqueID>{93d49735-1b23-4564-8668-7ff16b83da1c}</UniqueID></UIInfo></Result><Result><Name>Initial Aquistion Time Exceeded</Name><UIInfo><UniqueID>{80af56ac-e514-49f8-aa17-74b62cd919c0}</UniqueID></UIInfo></Result><Result><Name>Total Time Excceeded</Name><UIInfo><UniqueID>{81e7de42-60fa-4dfe-9b2b-d7314721b558}</UniqueID></UIInfo></Result><Result><Name>Broke Fixation</Name><UIInfo><UniqueID>{4e30b924-df8e-48bd-a59f-69620cab5b08}</UniqueID></UIInfo></Result><Result><Name>Success</Name><UIInfo><UniqueID>{72541ea5-9753-4f82-9d00-3bc8dd6509f5}</UniqueID></UIInfo></Result><ControlTarget>RightTarget</ControlTarget></ControlElement>
 								
 								
 									
@@ -390,7 +376,7 @@
 								<Position x="600" y="400"/>
 								<Dimensions x="0" y="0" width="100" height="100"/>
 								<Color R="255" G="0" B="0" A="255"/>
-							  </Scriptable>
+							  <UIInfo><Pos x="91" y="425"/><UniqueID>{81536342-01df-4126-b2b3-c196ea9ed588}</UniqueID></UIInfo></Scriptable>
 
 
 
@@ -411,11 +397,11 @@
 									</ExitScript>
 								
 								
-									<Result><Name>Success</Name><UIInfo><Pos x="373" y="585"/></UIInfo></Result>
-									<Result><Name>Broke Fixation</Name><UIInfo><Pos x="717" y="111"/></UIInfo></Result>
-									<Result><Name>Total Time Excceeded</Name><UIInfo><Pos x="242" y="808"/></UIInfo></Result>
-									<Result><Name>Initial Aquistion Time Exceeded</Name><UIInfo><Pos x="682" y="321"/></UIInfo></Result>
-									<Result><Name>Reaquistion Time Exceeded</Name><UIInfo><Pos x="670" y="537"/></UIInfo></Result>
+									<Result><Name>Success</Name><UIInfo><Pos x="373" y="585"/><UniqueID>{a443c169-cf27-4059-80f4-18f7b82907ab}</UniqueID></UIInfo></Result>
+									<Result><Name>Broke Fixation</Name><UIInfo><Pos x="717" y="111"/><UniqueID>{d6f5ea1f-9c46-42b4-94a1-a782a1c79f2a}</UniqueID></UIInfo></Result>
+									<Result><Name>Total Time Excceeded</Name><UIInfo><Pos x="242" y="808"/><UniqueID>{e1b5f0db-ee2f-4a1f-b78a-0f5fd5c77b0d}</UniqueID></UIInfo></Result>
+									<Result><Name>Initial Aquistion Time Exceeded</Name><UIInfo><Pos x="682" y="321"/><UniqueID>{a6d31631-11c2-4ccb-b681-dad5cffc936f}</UniqueID></UIInfo></Result>
+									<Result><Name>Reaquistion Time Exceeded</Name><UIInfo><Pos x="670" y="537"/><UniqueID>{d4b99090-11ed-45c6-8820-3183a932fceb}</UniqueID></UIInfo></Result>
 								
 								<Transition>
 									<Source>TargetCont</Source>
@@ -442,7 +428,7 @@
 									<SourceResult>Reaquistion Time Exceeded</SourceResult>
 									<Destination>Reaquistion Time Exceeded</Destination>
 								</Transition>
-							<UIInfo><Pos x="1027" y="142"/></UIInfo></StateMachineElement>
+							<UIInfo><Pos x="1027" y="142"/><UniqueID>{9b37b838-8d1c-45d2-b581-6760ebe1ad60}</UniqueID></UIInfo><Scriptable type="RectTarget"><Dimensions height="100" width="100" x="0" y="0"/><Name>RightTarget</Name><Position x="600" y="400"/><UIInfo><Pos x="90" y="514"/><UniqueID>{77599b85-a684-4308-a57a-0d4609a2a74c}</UniqueID></UIInfo></Scriptable></StateMachineElement>
 							
 							
 							
@@ -450,10 +436,10 @@
 								<Name>GiveReward</Name>
 								<RewardQty>5</RewardQty>
 								<RewardChan>1</RewardChan>
-							<UIInfo><Pos x="705" y="550"/></UIInfo></StateMachineElement>
+							<UIInfo><Pos x="705" y="550"/><UniqueID>{24e44337-4510-4ad5-b949-61e50c8dcc72}</UniqueID></UIInfo><Result><Name>done</Name><UIInfo><UniqueID>{5f5c1b7f-437d-435d-912c-ea04b83b0e4f}</UniqueID></UIInfo></Result></StateMachineElement>
 						
 						
-							<Result><Name>Success</Name><UIInfo><Pos x="934" y="469"/></UIInfo></Result>
+							<Result><Name>Success</Name><UIInfo><Pos x="934" y="469"/><UniqueID>{6cbfacf2-2b20-4bcc-8882-e83fc9687e4f}</UniqueID></UIInfo></Result>
 						
 						
 							<Transition>
@@ -519,7 +505,7 @@
 							<Name>Success</Name>
 							</Name></Result>
 						-->
-					<UIInfo><Pos x="153" y="347"/></UIInfo><Transition><Destination>State 1</Destination><Source>Initialize Values</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>State 1</Destination><Source>Initialize Values</Source><SourceResult>false</SourceResult></Transition><StateMachineElement type="StateMachine"><InitialElement>isFinished</InitialElement><Name>CheckIfFinished</Name><Result><Name>Finished</Name><UIInfo><Pos x="610" y="432"/></UIInfo></Result><Result><Name>NotFinished</Name><UIInfo><Pos x="840" y="213"/></UIInfo></Result><StateMachineElement type="ScriptElement"><Name>isFinished</Name><UIInfo><Pos x="397" y="160"/></UIInfo><Script>return (SuccessfulAttempts.getValue() &gt; 2);</Script><Result><Name>false</Name><UIInfo><Pos x="100" y="100"/></UIInfo></Result><Result><Name>true</Name><UIInfo><Pos x="400" y="100"/></UIInfo></Result></StateMachineElement><UIInfo><Pos x="434" y="400"/></UIInfo><Transition><Destination>NotFinished</Destination><Source>isFinished</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Finished</Destination><Source>isFinished</Source><SourceResult>true</SourceResult></Transition></StateMachineElement><Transition><Destination>GiveReward</Destination><Source>CheckIfFinished</Source><SourceResult>Finished</SourceResult></Transition><Transition><Destination>State 1</Destination><Source>CheckIfFinished</Source><SourceResult>NotFinished</SourceResult></Transition><Transition><Destination>CheckIfFinished</Destination><Source>Increment successful attempts</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>CheckIfFinished</Destination><Source>Increment successful attempts</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
+					<UIInfo><Pos x="153" y="347"/><UniqueID>{df471a92-9917-4b68-8323-01bd0671dc38}</UniqueID></UIInfo><Transition><Destination>State 1</Destination><Source>Initialize Values</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>State 1</Destination><Source>Initialize Values</Source><SourceResult>false</SourceResult></Transition><StateMachineElement type="StateMachine"><InitialElement>isFinished</InitialElement><Name>CheckIfFinished</Name><Result><Name>Finished</Name><UIInfo><Pos x="610" y="432"/><UniqueID>{863bf68c-343f-4da0-b2fe-66dd2b9f1735}</UniqueID></UIInfo></Result><Result><Name>NotFinished</Name><UIInfo><Pos x="840" y="213"/><UniqueID>{59ff57b7-2e26-4844-9c54-70cf10b8e112}</UniqueID></UIInfo></Result><StateMachineElement type="ScriptElement"><Name>isFinished</Name><UIInfo><Pos x="397" y="160"/><UniqueID>{f2923f46-69a4-4090-91f9-81a521a34291}</UniqueID></UIInfo><Script>return (SuccessfulAttempts.getValue() &gt; 2);</Script><Result><Name>false</Name><UIInfo><Pos x="100" y="100"/><UniqueID>{b3f57bee-01c9-4bab-a123-3dae07bdcd58}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><Pos x="400" y="100"/><UniqueID>{871d3c28-f4e5-4c81-9a02-d9bd623c475a}</UniqueID></UIInfo></Result></StateMachineElement><UIInfo><Pos x="434" y="400"/><UniqueID>{1729af13-1fe4-47f1-b105-200bfbe31d27}</UniqueID></UIInfo><Transition><Destination>NotFinished</Destination><Source>isFinished</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Finished</Destination><Source>isFinished</Source><SourceResult>true</SourceResult></Transition></StateMachineElement><Transition><Destination>GiveReward</Destination><Source>CheckIfFinished</Source><SourceResult>Finished</SourceResult></Transition><Transition><Destination>State 1</Destination><Source>CheckIfFinished</Source><SourceResult>NotFinished</SourceResult></Transition><Transition><Destination>CheckIfFinished</Destination><Source>Increment successful attempts</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>CheckIfFinished</Destination><Source>Increment successful attempts</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
 
 				<!-- This stage is used to test the ChoiceController.  It consists of -->
 				<!-- a single state with a top and bottom target.  Selecting the top -->
@@ -538,23 +524,18 @@
 					  
 						<ControlElement type="Choice Controller">
 						  <Name>MyChoiceController</Name>
-						  <OperatorVisible>true</OperatorVisible>
-						  <SubjectVisible>false</SubjectVisible>
 						  <SignalChannel>PositionChannel</SignalChannel>
-						  <Shape>Ellipse</Shape>
 						  <TimeUnits>Ms</TimeUnits>
 						  <TotalTime>10000</TotalTime>
 						  <FixationTime>1000</FixationTime>
 						  <AllowReentries>Yes</AllowReentries>
 						  <Result type="Target"> 
 						    <Name>TopTarget</Name> 
-							<Bounds x="400" y="300" width="150" height="150"/>
-						  <UIInfo><Pos x="100" y="98"/></UIInfo></Result>
+						  <UIInfo><Pos x="100" y="98"/></UIInfo><ControlTarget>TopCircleTarget</ControlTarget></Result>
 						  <Result type="Target"> 
 						    <Name>BottomTarget</Name> 
-							<Bounds x="400" y="500" width="150" height="150"/>
-						  <UIInfo><Pos x="400" y="99"/></UIInfo></Result>
-						<UIInfo><Pos x="100" y="100"/></UIInfo><Result><Name>Broke Fixation</Name><UIInfo><Pos x="700" y="100"/></UIInfo></Result><Result><Name>Total Time Exceeded</Name><UIInfo><Pos x="1000" y="99"/></UIInfo></Result></ControlElement>
+							<UIInfo><Pos x="400" y="99"/></UIInfo><ControlTarget>BottomCircleTarget</ControlTarget></Result>
+						<UIInfo><Pos x="100" y="100"/><UniqueID>{ccec2204-bea0-45ac-8609-b65f72901a5d}</UniqueID></UIInfo><Result><Name>Broke Fixation</Name><UIInfo><Pos x="700" y="100"/></UIInfo></Result><Result><Name>Total Time Exceeded</Name><UIInfo><Pos x="1000" y="99"/></UIInfo></Result></ControlElement>
 					  
 					  
 						
@@ -567,14 +548,14 @@
 								<Position x="400" y="300"/>
 								<Radius>75</Radius>
 								<Color R="255" G="255" B="0" A="255"/>
-							  <UIInfo><Pos x="1900" y="100"/></UIInfo></Scriptable>
+							  <UIInfo><Pos x="114" y="584"/></UIInfo></Scriptable>
 							  <Scriptable type="Circle Graphic">
 								<Name>BottomCircle</Name>
 								<Order>1</Order>
 								<Position x="400" y="500"/>
 								<Radius>75</Radius>
 								<Color R="255" G="255" B="0" A="255"/>
-								<UIInfo><Pos x="2200" y="100"/></UIInfo></Scriptable>
+								<UIInfo><Pos x="108" y="460"/></UIInfo></Scriptable>
 						  
 						
 						
@@ -605,20 +586,20 @@
 						<SourceResult>TopTarget</SourceResult>
 						<Destination>TopTarget</Destination>
 					  </Transition>
-					<UIInfo><Pos x="339" y="141"/></UIInfo></StateMachineElement>
+					<UIInfo><Pos x="340" y="141"/><UniqueID>{9b1668b1-1668-485a-83e6-3556c6296907}</UniqueID></UIInfo><Scriptable type="CircleTarget"><Name>TopCircleTarget</Name><Position x="400" y="300"/><Radius>75</Radius><UIInfo><Pos x="110" y="366"/></UIInfo></Scriptable><Scriptable type="CircleTarget"><Name>BottomCircleTarget</Name><Position x="400" y="500"/><Radius>75</Radius><UIInfo><Pos x="133" y="674"/></UIInfo></Scriptable></StateMachineElement>
 					<StateMachineElement type="Reward">
 					  <Name>KeepGoingReward</Name>
 					  <RewardQty>1</RewardQty>
 					  <RewardChan>1</RewardChan>
-					<UIInfo><Pos x="628" y="114"/></UIInfo></StateMachineElement>
+					<UIInfo><Pos x="628" y="114"/></UIInfo><Result><Name>done</Name></Result></StateMachineElement>
 					<StateMachineElement type="Reward">
 					  <Name>StopReward</Name>
-					<UIInfo><Pos x="660" y="402"/></UIInfo></StateMachineElement>
+					<UIInfo><Pos x="660" y="402"/></UIInfo><Result><Name>done</Name></Result></StateMachineElement>
 
 				  
 				  
-					<Result><Name>KeepGoing</Name><UIInfo><Pos x="922" y="144"/></UIInfo></Result>
-					<Result><Name>Stop</Name><UIInfo><Pos x="994" y="434"/></UIInfo></Result>
+					<Result><Name>KeepGoing</Name><UIInfo><Pos x="922" y="144"/><UniqueID>{7f4ddf70-4517-4c5d-b459-700a4f137722}</UniqueID></UIInfo></Result>
+					<Result><Name>Stop</Name><UIInfo><Pos x="994" y="434"/><UniqueID>{405e0792-551b-43fe-a7a8-d54edf63ba42}</UniqueID></UIInfo></Result>
 				  
 
 				  
@@ -662,7 +643,7 @@
 					  <Name>Stop</Name>
 					</Name></Result>
 				  -->
-				<UIInfo><Pos x="456" y="402"/></UIInfo></StateMachineElement>
+				<UIInfo><Pos x="456" y="402"/><UniqueID>{bf9ce50b-5070-43e2-8f3b-e918b079ac26}</UniqueID></UIInfo></StateMachineElement>
 
 
 
@@ -680,10 +661,8 @@
 								
 									<ControlElement type="Test Controller">
 										<Name>TestCont</Name>
-						 		 		<OperatorVisible>true</OperatorVisible>
-						  				<SubjectVisible>true</SubjectVisible>
 										<NumberOfFrames>120</NumberOfFrames>
-									<UIInfo><Pos x="100" y="100"/></UIInfo></ControlElement>
+									<UIInfo><Pos x="100" y="100"/></UIInfo><Result><Name>Success</Name></Result></ControlElement>
 								
 								
 									
@@ -696,7 +675,7 @@
 														<Position x="30" y="30"/>
 														<Dimensions x="0" y="0" width="50" height="100"/>
 														<Color R="255" G="255" B="0" A="255"/>
-							 						</Scriptable>
+							 						<UIInfo><Pos x="106" y="220"/></UIInfo></Scriptable>
 
 																	
 									<Result><Name>Success</Name><UIInfo><Pos x="400" y="100"/></UIInfo></Result>
@@ -706,19 +685,17 @@
 									<SourceResult>Success</SourceResult>
 									<Destination>Success</Destination>
 					  			</Transition>
-							<UIInfo><Pos x="346" y="138"/></UIInfo></StateMachineElement>
+							<UIInfo><Pos x="346" y="138"/><UniqueID>{fd3d7ecb-e951-4923-8c1c-17de0ed80f6f}</UniqueID></UIInfo></StateMachineElement>
 							<StateMachineElement type="State">
 								<Revision>-1</Revision>
 								<EngineNeeded>-1</EngineNeeded>
 								<Name>State 2</Name>
 								
 									<ControlElement type="Stopwatch Controller">
-										<OperatorVisible>true</OperatorVisible>
-										<SubjectVisible>true</SubjectVisible>
 										<Name>Stopwatch</Name>
 										<TimeUnits>Ms</TimeUnits>
 										<Time>5000</Time>
-									<UIInfo><Pos x="100" y="100"/></UIInfo></ControlElement>
+									<UIInfo><Pos x="100" y="100"/></UIInfo><Result><Name>Success</Name></Result></ControlElement>
 								
 								
 									
@@ -731,7 +708,7 @@
 													<Position x="100" y="30"/>
 													<Dimensions x="0" y="0" width="50" height="100"/>
 													<Color R="255" G="0" B="255" A="255"/>
-												<UIInfo><Pos x="1000" y="100"/></UIInfo></Scriptable>
+												<UIInfo><Pos x="165" y="260"/></UIInfo></Scriptable>
 
 									
 								
@@ -749,7 +726,7 @@
 									<SourceResult>Success</SourceResult>
 									<Destination>Success</Destination>
 					  			</Transition>
-							<UIInfo><Pos x="622" y="186"/></UIInfo></StateMachineElement>  
+							<UIInfo><Pos x="622" y="186"/><UniqueID>{f24d5022-da0e-4bbb-b6c6-820c391bdbd7}</UniqueID></UIInfo></StateMachineElement>  
 						
 						
 							<Result><Name>Done</Name><UIInfo><Pos x="858" y="194"/></UIInfo></Result>
@@ -766,10 +743,10 @@
 								<Destination>Done</Destination>
 							</Transition>
 						 
-					<UIInfo><Pos x="713" y="173"/></UIInfo></StateMachineElement>	
+					<UIInfo><Pos x="713" y="173"/><UniqueID>{72a5c8cf-e59f-4dc0-a7a1-f0df2c236c5e}</UniqueID></UIInfo></StateMachineElement>	
 				
 				
-					<Result><Name>Done</Name><UIInfo><Pos x="745" y="526"/></UIInfo></Result>
+					<Result><Name>Done</Name><UIInfo><Pos x="745" y="526"/><UniqueID>{abfa9bfc-aead-483b-92f1-09d09285802e}</UniqueID></UIInfo></Result>
 				
 				
 					<Transition>
@@ -793,7 +770,8 @@
 				  <Destination>Done</Destination>
 				</Transition>
 			  
-			<UIInfo><Pos x="111" y="105"/></UIInfo></StateMachine>
-		<UIInfo><Pos x="695" y="93"/></UIInfo></Task>
+			<UIInfo><Pos x="111" y="105"/><UniqueID>{09171d28-7303-4914-beef-581128741ddd}</UniqueID></UIInfo></StateMachine>
+		<UIInfo><Pos x="695" y="93"/><UniqueID>{042b405f-c9cb-43be-9f01-0e0c5f0b3779}</UniqueID></UIInfo></Task>
 	
-<SyntaxVersion>0.0.1</SyntaxVersion></Experiment>
+<SyntaxVersion>0.0.1</SyntaxVersion><UIInfo><UniqueID>{682e747b-b206-4da6-af36-492ba58e6f1d}</UniqueID></UIInfo></Experiment>
+<StateMachineEditorData><OpenedBlock>{9b1668b1-1668-485a-83e6-3556c6296907}</OpenedBlock></StateMachineEditorData></PictoData>

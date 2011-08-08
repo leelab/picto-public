@@ -29,7 +29,7 @@ struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public Scripta
 {
 	Q_OBJECT
 public:
-	VisualElement();
+	VisualElement(QPoint position=QPoint(), QColor color=QColor());
 	~VisualElement();
 
 	void addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface);
@@ -61,6 +61,8 @@ public slots:
 	int getX() { return getPosition().x(); };
 	int getY() { return getPosition().y(); };
 	void setPosition(int x, int y) { setPosition(QPoint(x,y)); };
+	void setX(int x){setPosition(x,getY());};
+	void setY(int y){setPosition(getX(),y);};
 
 	int getAlpha() { return getColor().alpha(); };
 	int getRed() { return getColor().red(); };
@@ -68,7 +70,7 @@ public slots:
 	int getGreen() { return getColor().green(); };
 	void setColor(int r, int g, int b, int a=255) { setColor(QColor(r,g,b,a)); };
 	void setVisible(bool visible) { visible_ = visible; };
-	bool getVisible(){return visible_;};
+	virtual bool getVisible(){return visible_;};
 
 protected:
 	void backupProperties();
@@ -87,6 +89,9 @@ protected:
 
 	QMap<QString, QVariant> initialProperties_;
 	bool visible_;
+
+private slots:
+	virtual void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 }; //namespace Picto

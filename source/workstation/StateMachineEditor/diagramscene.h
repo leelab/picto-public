@@ -68,7 +68,7 @@ class DiagramScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    enum Mode { Select, InsertLine};
+    enum Mode { Select, Navigate, InsertLine};
 
     DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent = 0);
 
@@ -82,7 +82,6 @@ public slots:
     void setItemColor(const QColor &color);
     void setFont(const QFont &font);
 	void setBackgroundPattern(QPixmap pattern);
-	void setInsertionItem(QString itemName);
     void editorLostFocus(DiagramTextItem *item);
 	void deleteSelectedItems();
 	void bringToFront();
@@ -97,9 +96,10 @@ signals:
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+	virtual void keyPressEvent(QKeyEvent * event);
+	virtual void keyReleaseEvent(QKeyEvent * event);
 
 private:
 	QSharedPointer<Asset> createNewAsset();

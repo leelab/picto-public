@@ -27,7 +27,6 @@ public:
 	void addScriptables(ScriptableContainer* scriptableContainer);
 	void addScriptable(QSharedPointer<Scriptable> scriptable);
 	void addChildScriptableContainer(QSharedPointer<ScriptableContainer> child);
-	//QSharedPointer<Scriptable> getScriptable(QString name);
 	QList<QSharedPointer<Scriptable>> getScriptableList();
 
 	/*! \brief Initializes scripting for this and all child ScriptableContainers
@@ -62,7 +61,9 @@ private:
 	bool bindToScriptEngine(QScriptEngine &engine);
 	QList<QSharedPointer<Scriptable> > scriptables_;
 	QList<QSharedPointer<ScriptableContainer> > scriptableContainers_;
+	QMap<QString,QString> scriptableListProperties_;
 	bool scriptingInitialized_;
+	bool initializedForDesign_;
 
 private slots:
 	//This is called if something about a scriptable changed, so that the script

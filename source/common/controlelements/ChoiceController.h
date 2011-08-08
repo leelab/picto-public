@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "ControlElement.h"
 #include "../engine/SignalChannel.h"
-#include "ControlTarget.h"
+#include "ControlResult.h"
 #include <QList>
 
 namespace Picto {
@@ -52,27 +52,27 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QString insideTarget(QSharedPointer<Engine::PictoEngine> engine);
-	bool checkSingleTarget(QRect targetRect);
+	//bool checkSingleTarget(QRect targetRect);
 
 	Controller::Timer cumulativeTimer_;
 	Controller::Timer acquisitionTimer_;	
 	Controller::Timer reacquisitionTimer_;
 
 	QStringList unitList_;
-	QStringList shapeList_;
+	//QStringList shapeList_;
 	QStringList reentriesAllowedList_;
 
 	bool isDone_;
 	bool targetAcquired_;
 	QString result_;
-	int shapeIndex_;
+	//int shapeIndex_;
 	int timeUnits_;
 	int reentriesAllowedListIndex_;
 
 	QString lastTarget_;
 
 	QSharedPointer<SignalChannel> signal_;
-	QList<QSharedPointer<ControlTarget>> targets_;
+	QList<QSharedPointer<ControlResult>> targets_;
 
 };
 

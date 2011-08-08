@@ -10,10 +10,10 @@ ChoiceController::ChoiceController()
 	//propertyContainer_->setPropertyValue("Type",ControllerType());
 	
 	AddDefinableProperty(QVariant::String,"SignalChannel","");
-	AddDefinableProperty(QVariant::String,"Shape","");
+	//AddDefinableProperty(QVariant::String,"Shape","");
 
-	shapeList_ << "Rectangle" << "Ellipse";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
+	//shapeList_ << "Rectangle" << "Ellipse";
+	//AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
@@ -26,12 +26,10 @@ ChoiceController::ChoiceController()
 	reentriesAllowedList_ << "No" << "Yes";
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"AllowReentries",0,"enumNames",reentriesAllowedList_);
 
-	AddDefinableProperty(QVariant::Bool,"OperatorVisible",false);
-	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
-	addResultFactoryType("Target",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlTarget::Create))));
+	addResultFactoryType("Target",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlResult::Create))));
 
 	//resultFactory_->addAssetType("Target",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlTarget::Create))));
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlResult::Create))));
 	//setMaxUntypedResults(2);
 	//Make sure to update the list of results...
 	addRequiredResult("Broke Fixation");
@@ -56,6 +54,8 @@ void ChoiceController::start(QSharedPointer<Engine::PictoEngine> engine)
 	isDone_ = false;
 	result_ = "";
 	targetAcquired_ = false;
+	foreach(QSharedPointer<ControlResult> target, targets_)
+		target->setActive(true);
 
 	//We call isDone to initialize everything
 	isDone(engine);
@@ -82,6 +82,8 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		isDone_ = true;
 		result_ = "Total Time Exceeded";
+		foreach(QSharedPointer<ControlResult> target, targets_)
+			target->setActive(false);
 		return true;
 	}
 
@@ -95,6 +97,8 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = "Broke Fixation";
+			foreach(QSharedPointer<ControlResult> target, targets_)
+				target->setActive(false);
 			return true;
 		}
 		if(currTarget == "NotATarget")
@@ -121,6 +125,8 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = currTarget;
+			foreach(QSharedPointer<ControlResult> target, targets_)
+				target->setActive(false);
 			return true;
 		}
 	}
@@ -153,10 +159,10 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 	}
 
 	//Run through the targets checking them
-	foreach(QSharedPointer<ControlTarget> target, targets_)
+	foreach(QSharedPointer<ControlResult> target, targets_)
 	{
-		QRect targetRect = target->getBounds();
-		if(checkSingleTarget(targetRect))
+		//QRect targetRect = target->getBounds();
+		if(target->contains(signal_->peekValue("xpos"),signal_->peekValue("ypos"))/*checkSingleTarget(targetRect)*/)
 		{
 			QString targetName = target->getName();
 			return targetName;
@@ -177,43 +183,43 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 
 }
 
-//! \Brief checks a single target to determine if the subject's focus is inside it.
-bool ChoiceController::checkSingleTarget(QRect targetRect)
-{
-	int x = signal_->peekValue("xpos");
-	int y = signal_->peekValue("ypos");
-
-	if("Rectangle" == shapeList_.value(shapeIndex_))
-	{
-		if(targetRect.contains(x,y))
-			return true;
-		else
-			return false;
-	}
-	else if("Ellipse" == shapeList_.value(shapeIndex_))
-	{
-		/*We're going to test this equation:
-			(x-x0)^2     (y-0)^2
-			--------  +  --------  <= 1
-			 width^2     height^2
-		*/
-		double x0 = targetRect.x() + targetRect.width()/2;
-		double y0 = targetRect.y() + targetRect.height()/2;
-		double width = targetRect.width();
-		double height = targetRect.height();
-		double term1 = (x-x0)*(x-x0)/(width*width);
-		double term2 = (y-y0)*(y-y0)/(height*height);
-		if(term1 + term2 <= 1.0)
-			return true;
-		else
-			return false;
-	}
-	else
-	{
-		return false;
-	}
-
-}
+////! \Brief checks a single target to determine if the subject's focus is inside it.
+//bool ChoiceController::checkSingleTarget(QRect targetRect)
+//{
+//	int x = signal_->peekValue("xpos");
+//	int y = signal_->peekValue("ypos");
+//
+//	if("Rectangle" == shapeList_.value(shapeIndex_))
+//	{
+//		if(targetRect.contains(x,y))
+//			return true;
+//		else
+//			return false;
+//	}
+//	else if("Ellipse" == shapeList_.value(shapeIndex_))
+//	{
+//		/*We're going to test this equation:
+//			(x-x0)^2     (y-0)^2
+//			--------  +  --------  <= 1
+//			 width^2     height^2
+//		*/
+//		double x0 = targetRect.x() + targetRect.width()/2;
+//		double y0 = targetRect.y() + targetRect.height()/2;
+//		double width = targetRect.width();
+//		double height = targetRect.height();
+//		double term1 = (x-x0)*(x-x0)/(width*width);
+//		double term2 = (y-y0)*(y-y0)/(height*height);
+//		if(term1 + term2 <= 1.0)
+//			return true;
+//		else
+//			return false;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//
+//}
 
 QString ChoiceController::getResult()
 {
@@ -223,15 +229,18 @@ QString ChoiceController::getResult()
 void ChoiceController::postSerialize()
 {
 	ControlElement::postSerialize();
-	shapeIndex_ = propertyContainer_->getPropertyValue("Shape").toInt();
+	//shapeIndex_ = propertyContainer_->getPropertyValue("Shape").toInt();
 	timeUnits_ = propertyContainer_->getPropertyValue("TimeUnits").toInt();
 
 	QString targetName;
 	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
-		if(target->assetType() == "ControlTarget")
-			targets_.push_back(target.staticCast<ControlTarget>());
+		if(target->assetType() == "ControlResult")
+		{
+			targets_.push_back(target.staticCast<ControlResult>());
+			addChildScriptableContainer(target.staticCast<ScriptableContainer>());
+		}
 	}
 }
 
@@ -255,9 +264,19 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 {
 	if(!ControlElement::validateObject(xmlStreamReader))
 		return false;
-	if(shapeIndex_ <0)
+	
+	bool hasValidChild = false;
+	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Result");
+	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
-		addError("ChoiceController","Unrecognized shape",xmlStreamReader);
+		if(target->assetType() == "ControlResult")
+		{
+			hasValidChild = true;
+		}
+	}
+	if(!hasValidChild)
+	{
+		addError("ChoiceController", "At least one Control Result must be defined inside this ChoiceController.");
 		return false;
 	}
 	if(timeUnits_<0)
@@ -268,10 +287,9 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 
 	QString targetName;
 	QMap<QString,bool> targetNameMap;
-	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
-		if(target->assetType() != "ControlTarget")
+		if(target->assetType() != "ControlResult")
 		{
 			if((target->getName() != "Broke Fixation")
 				&& (target->getName() != "Total Time Exceeded"))

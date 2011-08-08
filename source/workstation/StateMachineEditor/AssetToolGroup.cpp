@@ -2,6 +2,7 @@
 #include "AssetToolGroup.h"
 #include "../../common/storage/DataStore.h"
 #include "../../common/storage/PropertyFactory.h"
+#include "DiagramItemFactory.h"
 using namespace Picto;
 
 
@@ -24,6 +25,12 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 		QStringList types;
 		foreach(QString childTag,childTags)
 		{
+			//Don't show tranitions or UIInfo.  Transitions are added
+			//using wires.  UIInfo is added automatically.
+			if(childTag == "Transition")
+				continue;
+			if(childTag == "UIInfo")
+				continue;
 			assetFactory = dataStore->getAssetFactory(childTag);
 			if(!assetFactory.isNull() && assetFactory.dynamicCast<PropertyFactory>().isNull())
 			{
@@ -33,7 +40,7 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 					QString buttonName = childTag;
 					if(type != "")
 						buttonName.append(QString("\n(%1)").arg(type));
-					AddButton(buttonName,QIcon(),!assetFactory->reachedProductionLimit(type));
+					AddButton(buttonName,DiagramItemFactory::getIcon(assetFactory->getUITemplate(type)),!assetFactory->reachedProductionLimit(type));
 					ElemInfo info;
 					info.tag = childTag;
 					info.type = type;

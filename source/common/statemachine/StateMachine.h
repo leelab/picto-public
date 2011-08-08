@@ -82,6 +82,7 @@ public:
 	void setPath(QStringList path) { path_ = path; };
 
 	bool jumpToState(QStringList path, QString state);
+	virtual QString getUITemplate(){return "StateMachine";};
 	virtual QString assetType(){return "StateMachine";};
 
 	//DataStore functions

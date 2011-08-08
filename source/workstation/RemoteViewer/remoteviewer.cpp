@@ -89,6 +89,7 @@ void RemoteViewer::init()
 					   tr("Check your network connection, and ensure that ") + Picto::Names->serverAppName + tr(" is running."));
 		msg.exec();
 	}
+	experiment_ = pictoData_->getExperiment();
 	//If we're stopped, load the current experiment.  If we are paused,
 	//then we shouldn't load the experiment.
 	/*if(localStatus_ == Stopped)
@@ -1025,7 +1026,8 @@ bool RemoteViewer::startSession()
 	//a new copy instead
 	activeExperiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
 
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experimentText_->toPlainText()));
+	QString expXML = experiment_->toXml();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(expXML));
 	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
 		xmlReader->readNext();
 
@@ -1045,7 +1047,7 @@ bool RemoteViewer::startSession()
 
 	QSharedPointer<Picto::ProtocolCommand> startSessCommand(new Picto::ProtocolCommand(commandStr));
 
-	QByteArray experimentXml = experimentText_->toPlainText().toUtf8();
+	QByteArray experimentXml = expXML.toUtf8();
 	startSessCommand->setContent(experimentXml);
 	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(experimentXml.length()));
 	startSessCommand->setFieldValue("Observer-ID",observerId_.toString());

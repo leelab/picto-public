@@ -2,6 +2,7 @@
 #include <QTextDocument>
 
 #include "../common/experiment/experiment.h"
+#include "pictodata.h"
 
 class QAction;
 class Viewer;
@@ -21,11 +22,12 @@ class QStackedWidget;
  *
  *	Workstation operates on a single "experiment" at a time.
  *
- *	The relationship between experiment_ and experimentText_ needs to be clariefied.
- *	experimentText_ is the XML that defines an experiment.  This is what all of our
- *	file operations operate on.  The experiment_ object is the actual experiment.  This
- *	distinction is important, since it's possible to have experimentText_ that can't
- *	be deserialized.  In this case, experiment_ will be null.
+ *	The relationship between pictoData_ and pictoDataText_ needs to be clarified.
+ *	pictoDataText_ is the XML that defines a PictoData object.  This is what all of our
+ *	file operations operate on.  The pictoData_ object is the actual pictoData object that
+ *	includes an experiment and various data for the picto framework (GUI, etc).  This
+ *	distinction is important, since it's possible to have pictoDataText_ that can't
+ *	be deserialized.  In this case, pictoData_ will be null.
  */
 class MainWindow : public QMainWindow
 {
@@ -62,11 +64,11 @@ private:
 	bool okToContinue();
 	void setCurrentFile(const QString &filename);
 	void updateRecentFileActions();
-	bool convertTextToExperiment();
+	bool convertTextToPictoData();
 
 
-	QSharedPointer<Picto::Experiment> experiment_;
-	QTextDocument experimentText_;
+	QSharedPointer<Picto::PictoData> pictoData_;
+	QTextDocument pictoDataText_;
 
 	ErrorList *errorList_;
 

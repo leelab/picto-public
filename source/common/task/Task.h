@@ -43,6 +43,7 @@ public:
 
 	bool run(QSharedPointer<Engine::PictoEngine> engine);
 	bool jumpToState(QStringList path, QString state);
+	virtual QString getUITemplate(){return "Task";};
 	virtual QString assetType(){return "Task";};
 
 	//DataStore Functions
@@ -59,10 +60,7 @@ private:
 	void sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine);
 
 	bool sendStateData(QString source, QString sourceResult, QString destination, QSharedPointer<Engine::PictoEngine> engine);
-	//QUuid uuid_;
-	//unsigned int revision_;
 
-	//ParameterContainer parameterContainer_;
 	QSharedPointer<StateMachine> stateMachine_;
 	//QList<StageResult> stageResults_;
 	//QList<TrialResult> trialResults_;

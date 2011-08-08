@@ -5,6 +5,12 @@
 ArrowPortItem::ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene) :
 DiagramItem(editorState,NULL,name,parent,scene)
 {
+	QPen invisiblePen;
+	invisiblePen.setWidth(0);
+	invisiblePen.setColor(QColor(0,0,0,0));
+	setPen(invisiblePen);
+	setFlag(QGraphicsItem::ItemIsSelectable,false);
+	setFlag(QGraphicsItem::ItemIsMovable,false);
 }
 
 ArrowPortItem::~ArrowPortItem()

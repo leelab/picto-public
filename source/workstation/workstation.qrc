@@ -13,6 +13,8 @@
         <file>icons/linecolor.png</file>
         <file>icons/linepointer.png</file>
         <file>icons/pointer.png</file>
+        <file>icons/levelup.png</file>
+        <file>icons/cursor-openhand.png</file>
         <file>icons/sendtoback.png</file>
         <file>icons/textpointer.png</file>
         <file>icons/underline.png</file>
@@ -52,6 +54,16 @@
         <file>icons/statemachineeditmode.png</file>
         <file>icons/runmode.png</file>
         <file>icons/testmode.png</file>
+        <file>icons/start.png</file>
+        <file>icons/result.png</file>
+        <file>icons/statemachine.svg</file>
+        <file>icons/state.svg</file>
+        <file>icons/scriptelement.svg</file>
+        <file>icons/scriptable.svg</file>
+        <file>icons/statemachineelement.svg</file>
+        <file>icons/result.svg</file>
+        <file>icons/task.svg</file>
+        <file>icons/reward.svg</file>
 		<file>icons/x.png</file>
     </qresource>
 </RCC>

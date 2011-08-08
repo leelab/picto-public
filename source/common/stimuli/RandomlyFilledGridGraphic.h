@@ -83,15 +83,13 @@ protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-
-private slots:
-	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
-
-
 private:
 	void buildColorList();
 
 	QList<unsigned char> colorList_;
+
+private slots:
+	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

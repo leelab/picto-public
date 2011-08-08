@@ -89,6 +89,7 @@ private:
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
+	QSharedPointer<Picto::Experiment> experiment_;
 
 	QAction *playAction_;
 	QAction *pauseAction_;

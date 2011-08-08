@@ -7,10 +7,8 @@ namespace Picto {
 const QString LineGraphic::type = "Line Graphic";
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
+: VisualElement(position,color)
 {
-	
-	AddDefinableProperty(QVariant::Point,"Position",position);
-	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty("Points","(1,1)(2,2)...(n,n)");
 	//propertyContainer_->setContainerName(type);
 
@@ -25,11 +23,11 @@ LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 
 	//draw();
 
-	connect(propertyContainer_.data(),
-		    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-		    this,
-			SLOT(slotPropertyValueChanged(QString, int, QVariant))
-			);
+	//connect(propertyContainer_.data(),
+	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
+	//	    this,
+	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
+	//		);
 }
 
 void LineGraphic::draw()
@@ -69,14 +67,14 @@ VisualElement* LineGraphic::NewVisualElement()
 	return new LineGraphic;
 }
 
-void LineGraphic::slotPropertyValueChanged(QString propertyName, int,
-											  QVariant) //propertyValue
-{
-	if(propertyName != "Position" && propertyName != "Name")
-	{
-		draw();
-	}
-}
+//void LineGraphic::slotPropertyValueChanged(QString propertyName, int,
+//											  QVariant) //propertyValue
+//{
+//	if(propertyName != "Position" && propertyName != "Name")
+//	{
+//		draw();
+//	}
+//}
 
 void LineGraphic::postSerialize()
 {

@@ -51,6 +51,7 @@ private:
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
+	QSharedPointer<Picto::Experiment> experiment_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
 

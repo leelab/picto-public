@@ -29,7 +29,7 @@ QSharedPointer<Asset> PropertyFactory::generateNewAsset()
 	{
 		for(QMap<QString,QVariant>::iterator iter = attributeMap_.begin();iter != attributeMap_.end(); iter++)
 		{
-			prop->addAttribute(iter.key(),iter.value());
+			prop->setAttribute(iter.key(),iter.value());
 		}
 	}
 	return prop;

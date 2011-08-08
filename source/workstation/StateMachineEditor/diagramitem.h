@@ -78,20 +78,24 @@ public:
 	void setType(QString type);
 	QString getName();
 	QString getType();
+	void setWidth(float width);
+	float getWidth();
+	void setHeight(float height);
+	float getHeight();
 	void updateLabel();
-	void setPolygonFromRect(QRectF rect);
     QPixmap image() const;
     int type() const
         { return Type;}
 
-signals:
-	void selectedChange(QGraphicsItem *item);
-
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
 	virtual void updateDependantGraphics(){};
 	virtual void positionChanged(QPoint){};
+	virtual void setRect(QRectF rect);
+	QRectF getRect();
+	QRectF getIconRect(){return iconRect_;};
 	QSharedPointer<EditorState> getEditorState(){return editorState_;};
 	QMenu *myContextMenu;
 
@@ -100,6 +104,12 @@ private:
 	QString type_;
 	QGraphicsTextItem* nameText_;
 	QSharedPointer<EditorState> editorState_;
+	bool stickInPlace_;
+	int catchUpFrames_;
+	QRectF rect_;
+	QRectF iconRect_;
+private slots:
+	void editModeChanged(int mode);
 };
 //! [0]
 

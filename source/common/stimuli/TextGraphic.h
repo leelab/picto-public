@@ -59,7 +59,7 @@ private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
-	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
+	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };
 
 

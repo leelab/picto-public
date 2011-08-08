@@ -92,11 +92,11 @@ public:
 public slots:
 	virtual void init();  //Called just before displaying the viewer
 	virtual void deinit();	//Called just after the user switches out of the viewer
-	virtual void aboutToSave();  //Called just before the experimentText_ is saved to file.
+	virtual void aboutToSave();  //Called just before the pictoDataText_ is saved to file.
 
 
 private slots:
-    void pointerGroupClicked(int id);
+    void updateEditModeButtons(int id);
     void itemInserted(DiagramItem *item);
     void textInserted(QGraphicsTextItem *item);
     void currentFontChanged(const QFont &font);
@@ -125,7 +125,7 @@ private:
 	void connectActions();
     void createMenus();
     void createToolbars();
-	void reloadExperimentFromDoc();
+	void reloadPictoDataFromDoc();
 
 	QSharedPointer<EditorState> editorState_;
     QWidget *createBackgroundCellWidget(const QString &text,
