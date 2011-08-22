@@ -29,12 +29,18 @@ class Property : public Asset
 public:
 	virtual ~Property();
 	int type();
-	QVariant value();
+	//QVariant value();
 	virtual QString valueString();
 	QString getName();
-	virtual void setValue(QVariant _value);
+	//virtual void setValue(QVariant _value);
 	void setAttribute(QString _attributeName, QVariant _attributeValue);
+	QVariant attributeValue(QString _attributeName);
 	QSharedPointer<QtVariantProperty> getVariantProperty(){return variantProp_;};
+	QVariant value();
+	virtual void setValue(QVariant _value);
+	//Set this property as changeable during runtime.
+	void setRuntimeEditable(bool enabled = true){runtimeEnabled_ = enabled;};
+	bool isRuntimeEnabled(){return runtimeEnabled_;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
@@ -62,6 +68,8 @@ private:
 	QString tagText_;
 	QString typeVal_; // In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
 	QSharedPointer<QtVariantPropertyManager> manager_;
+	bool scriptEditable_;
+	bool runtimeEnabled_;
 
 private slots:
 	void valueChanged(QtProperty *property, const QVariant &val);

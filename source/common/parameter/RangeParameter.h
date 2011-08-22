@@ -31,6 +31,8 @@ class RangeParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int value READ getValue WRITE setValue)
+
 //public slots:
 //	void setValue(QVariant value);
 //	QVariant getValue() { return QVariant(currentValue_); };
@@ -49,44 +51,24 @@ public:
 	void setMax(int max);
 	void setIncrement(int increment) {increment_ = increment; }
 	void setUnits(QString units) { units_ = units; };
+	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
+	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
 	void increment() { currentValue_ += increment_; };
 	void decrement() { currentValue_ -= increment_; };
 
-	bool greaterThan(Parameter& RHS) { return currentValue_ > RHS.getValue().toInt(); };
-	bool lessThan(Parameter& RHS) { return currentValue_ < RHS.getValue().toInt(); };
-	bool equalTo(Parameter& RHS) { return currentValue_ == RHS.getValue().toInt(); } ;
-
-	bool greaterThan(QVariant& RHS)
-	{
-		bool ok;
-		int RHSValue = RHS.toInt(&ok);
-		return ok && currentValue_ > RHSValue; 
-	};
-	bool lessThan(QVariant& RHS)	
-	{
-		bool ok;
-		int RHSValue = RHS.toInt(&ok);
-		return ok && currentValue_ < RHSValue; 
-	};
-
-	bool equalTo(QVariant& RHS)	
-	{
-		bool ok;
-		int RHSValue = RHS.toInt(&ok);
-		return ok && currentValue_ == RHSValue; 
-	};
-
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual QVariant verifyValue(QVariant value);
+	virtual bool fixValues(QString& warning);
 
 private:
+	void updateFromProperties();
 	int maxValue_;
 	int minValue_;
 	int currentValue_;
 	int increment_;
+	int value_;
 	QString units_;
 
 };

@@ -7,7 +7,9 @@ namespace Picto
 Reward::Reward()
 {
 	setMaxOptionalResults(0);
-	scriptableFactory_->setMaxAssets(0);
+	parameterFactory_->setMaxAssets(0);
+	visualElementFactory_->setMaxAssets(0);
+	controlTargetFactory_->setMaxAssets(0);
 	AddDefinableProperty("Type","Reward");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Int,"RewardQty",0);
 	AddDefinableProperty(QVariant::Int,"RewardChan",0);

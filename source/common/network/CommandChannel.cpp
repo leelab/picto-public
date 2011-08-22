@@ -312,6 +312,8 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 	if(consumerSocket_->state() != QAbstractSocket::ConnectedState)
 	{
 		status_ = disconnected;
+		if(statusManager_ && statusManager_->getStatus() == idle)
+			statusManager_->setStatus(ComponentStatus::disconnected);
 		if(acceptableTimeoutMs > 0)
 		{
 			QTime timer;
@@ -332,6 +334,8 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 		if(status_ != connected)
 			lastReconnectTime_ = QDateTime::currentDateTime();
 		status_ = connected;
+		if(statusManager_ && statusManager_->getStatus() < idle)
+			statusManager_->setStatus(idle);
 		return true;
 	}
 	return false;

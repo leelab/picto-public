@@ -20,6 +20,7 @@ class ControlTarget : public VisualElement
 	Q_OBJECT
 public:
 	ControlTarget(QPoint position=QPoint(), QColor color=Qt::green);
+	virtual QString getUITemplate(){return "ControlTarget";};
 	virtual QString assetType(){return "ControlTarget";};
 	void draw() = 0;
 	void setActive(bool active);

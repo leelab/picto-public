@@ -408,6 +408,28 @@ void DataStore::clear()
 	}
 }
 
+QList<QSharedPointer<DataStore>> DataStore::getRuntimeEditableDescendants()
+{
+	QList<QSharedPointer<DataStore>> runtimeDesc;
+	if(isRuntimeEditable())
+		runtimeDesc.append(selfPtr().staticCast<DataStore>());
+		
+	QStringList childTags = getDefinedChildTags();
+	QList<QSharedPointer<Asset>> childList;
+	foreach(QString childTag,childTags)
+	{
+		childList = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> child,childList)
+		{
+			if(child->inherits("Picto::DataStore"))
+			{
+				runtimeDesc.append(child.staticCast<DataStore>()->getRuntimeEditableDescendants());
+			}
+		}
+	}
+	return runtimeDesc;
+}
+
 bool DataStore::hasChildrenOfType(QString tagName)
 {
 	return children_.contains(tagName);

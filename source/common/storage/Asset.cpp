@@ -23,7 +23,8 @@ bool Asset::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 bool Asset::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate)
 {
 	bool returnVal = deserializeFromXml(xmlStreamReader,validate);
-	postSerialize();
+	if(returnVal)
+		postSerialize();
 	edited_ = false;
 	isNew_ = false;
 	deleted_ = false;

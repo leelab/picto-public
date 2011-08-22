@@ -51,7 +51,7 @@ public:
 
 	//QStringList getResultList() { return results_.keys(); };
 	//QSharedPointer<Result> getResult(QString name);
-
+	virtual QString getUITemplate(){return "ControlElement";};
 	virtual QString assetType(){return "ControlElement";};
 
 	//DataStore Functions

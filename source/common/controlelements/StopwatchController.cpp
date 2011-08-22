@@ -73,7 +73,6 @@ bool StopwatchController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-	int time = timer_.elapsedTime(units);
 	if(timer_.elapsedTime(units) >= propertyContainer_->getPropertyValue("Time").toInt())
 	{
 		isDone_ = true;

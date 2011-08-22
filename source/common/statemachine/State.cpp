@@ -96,6 +96,8 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	frameCounter_ = -1; //We're zero-indexed
 
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
+	//Add a cursor for the user input
+	addCursor();
 
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
@@ -548,7 +550,7 @@ void State::addCursor()
 		return;
 
 	QSharedPointer<CursorGraphic> cursor(new CursorGraphic(sigChannel_, QColor(255,0,0,255)));
-	cursor->setOrder(100000);
+	cursor->setLayer(100000);
 
 	scene_->addVisualElement(cursor);
 
@@ -745,6 +747,7 @@ QMap<QString,QString> State::getScripts()
 void State::scriptableContainerWasReinitialized()
 {
 	scene_ = QSharedPointer<Scene>(new Scene);
+	hasCursor_ = false;
 	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
 	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
 	{
@@ -753,10 +756,9 @@ void State::scriptableContainerWasReinitialized()
 			scene_->addVisualElement(scriptable.staticCast<VisualElement>());
 		}
 	}
-	
 	QColor backgroundColor;
 	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
-	scene_->setBackgroundColor(backgroundColor);
+	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
 }
 
 }; //namespace Picto

@@ -3,7 +3,7 @@ using namespace Picto;
 
 bool visualElementLessThan(const QSharedPointer<VisualElement> &e1, const QSharedPointer<VisualElement> &e2) 
 { 
-	return e1->getOrder() < e2->getOrder(); 
+	return e1->getLayer() < e2->getLayer(); 
 }
 
 Scene::Scene()

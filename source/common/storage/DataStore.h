@@ -65,6 +65,8 @@ public:
 	QSharedPointer<AssetFactory> getAssetFactory(QString tagName);
 	QSharedPointer<Asset> createChildAsset(QString tagName,QString type,QString& error);
 	void clear();
+	QList<QSharedPointer<DataStore>> getRuntimeEditableDescendants();
+	virtual bool isRuntimeEditable(){return false;};
 
 public slots:
 	void childEdited();

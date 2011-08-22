@@ -20,6 +20,7 @@ CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color
 	}
 	propertyContainer_->addProperty(QVariant::String,"Name","");
 	propertyContainer_->setContainerName(type);
+	initializePropertiesToDefaults();
 	propertyContainer_->setPropertyValue("Position",QPoint(0,0));
 	propertyContainer_->setPropertyValue("Color",color);
 
@@ -68,7 +69,7 @@ void CursorGraphic::updateAnimation(int frame, QTime elapsedTime)
 		int x = (int)positionChannel_->peekValue("xpos");
 		int y = (int)positionChannel_->peekValue("ypos");
 
-		setPosition(x,y);
+		setPosition(QPoint(x,y));
 	}
 }
 

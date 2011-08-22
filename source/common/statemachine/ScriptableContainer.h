@@ -15,9 +15,9 @@ namespace Picto {
 /*! \brief A container for storing items that can be used in scripts
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ScriptableContainer : public UIEnabled
+class PICTOLIB_API ScriptableContainer : public Scriptable
 #else
-class ScriptableContainer : public UIEnabled
+class ScriptableContainer : public Scriptable
 #endif
 {
 	Q_OBJECT
@@ -36,7 +36,7 @@ public:
 	 * are available for the script designer.
 	 * returns false if there was an initialization error.
 	 */
-	bool initScripting(bool forDesign = false);
+	bool initScripting();
 	/*! \brief Calls reset on the scriptables serialized into this container.
 	 */
 	void resetScriptableValues();
@@ -50,11 +50,15 @@ protected:
 	virtual QString defaultTagName(){return "Scriptables";};
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool canHaveScripts(){return false;};
 	virtual bool hasScripts(){return false;};
 	//This returns a map of QMap<script name,script code>
 	virtual QMap<QString,QString> getScripts(){return QMap<QString,QString>();};
 	virtual void scriptableContainerWasReinitialized(){};
-	QSharedPointer<AssetFactory> scriptableFactory_;
+	QSharedPointer<AssetFactory> visualElementFactory_;
+	QSharedPointer<AssetFactory> parameterFactory_;
+	QSharedPointer<AssetFactory> controlTargetFactory_;
+	QSharedPointer<AssetFactory> audioElementFactory_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 
 private:
@@ -63,7 +67,6 @@ private:
 	QList<QSharedPointer<ScriptableContainer> > scriptableContainers_;
 	QMap<QString,QString> scriptableListProperties_;
 	bool scriptingInitialized_;
-	bool initializedForDesign_;
 
 private slots:
 	//This is called if something about a scriptable changed, so that the script

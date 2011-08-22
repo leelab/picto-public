@@ -16,7 +16,7 @@
 #include "../parameter/ChoiceParameter.h"
 #include "../parameter/RangeParameter.h"
 #include "../parameter/NumericParameter.h"
-#include "../parameter/ParameterContainer.h"
+//#include "../parameter/ParameterContainer.h"
 
 //#include "../statemachine/PredicateExpression.h"
 //#include "../statemachine/CompoundExpression.h"
@@ -83,12 +83,11 @@ void TestDataStore::TestVisualElement_data()
 	// Test Arrow graphic
 	//
 	{
-	QPoint position(randGen_.randInt(), randGen_.randInt());
 	QPoint start(randGen_.randInt(), randGen_.randInt());
 	QPoint end(randGen_.randInt(), randGen_.randInt());
 	int size = randGen_.randInt()%20;
 	QColor color(randGen_.randInt()%256, randGen_.randInt()%256,randGen_.randInt()%256,randGen_.randInt()%256);
-	QSharedPointer<Picto::VisualElement> arrow(new Picto::ArrowGraphic(position,start,end,size,color));
+	QSharedPointer<Picto::VisualElement> arrow(new Picto::ArrowGraphic(start,end,size,color));
 
 	QTest::newRow("Arrow Graphic") << arrow;
 	}
@@ -225,91 +224,91 @@ void TestDataStore::TestVisualElement()
 
 void TestDataStore::TestParameter_data()
 {
-	QTest::addColumn< QSharedPointer<Picto::Parameter> >("parameter");
+	//QTest::addColumn< QSharedPointer<Picto::Parameter> >("parameter");
 
-	//////////////////////
-	// Create a boolean parameter
-	//
-	Picto::BooleanParameter *boolParam = new Picto::BooleanParameter;
-	boolParam->setName("My boolean Parameter");
-	boolParam->setOrder(31);
-	boolParam->setInitialValue(true);
-	boolParam->setTrueLabel("I'm true!");
-	boolParam->setFalseLabel("I'm false.");
-	QSharedPointer<Picto::Parameter> boolParamPtr(boolParam);
+	////////////////////////
+	//// Create a boolean parameter
+	////
+	//Picto::BooleanParameter *boolParam = new Picto::BooleanParameter;
+	//boolParam->setName("My boolean Parameter");
+	//boolParam->setOrder(31);
+	//boolParam->setInitialValue(true);
+	//boolParam->setTrueLabel("I'm true!");
+	//boolParam->setFalseLabel("I'm false.");
+	//QSharedPointer<Picto::Parameter> boolParamPtr(boolParam);
 
-	QTest::newRow("Boolean Parameter") << boolParamPtr;
+	//QTest::newRow("Boolean Parameter") << boolParamPtr;
 
 
-	//////////////////////
-	// Create a choice parameter with string choices
-	//
-	Picto::ChoiceParameter *choiceParamStrings = new Picto::ChoiceParameter;
-	choiceParamStrings->setName("Choice parameter (strings)");
-	choiceParamStrings->setOrder(42);
-	choiceParamStrings->addChoice("A",QString("Choice A"));
-	choiceParamStrings->addChoice("B",QString("Choice B"));
-	choiceParamStrings->addChoice("C",QString("Choice C"));
-	choiceParamStrings->setInitialValue("B");
-	QSharedPointer<Picto::Parameter> choiceParamStrPtr(choiceParamStrings);
+	////////////////////////
+	//// Create a choice parameter with string choices
+	////
+	//Picto::ChoiceParameter *choiceParamStrings = new Picto::ChoiceParameter;
+	//choiceParamStrings->setName("Choice parameter (strings)");
+	//choiceParamStrings->setOrder(42);
+	//choiceParamStrings->addChoice("A",QString("Choice A"));
+	//choiceParamStrings->addChoice("B",QString("Choice B"));
+	//choiceParamStrings->addChoice("C",QString("Choice C"));
+	//choiceParamStrings->setInitialValue("B");
+	//QSharedPointer<Picto::Parameter> choiceParamStrPtr(choiceParamStrings);
 
-	QTest::newRow("ChoiceParameter with strings") << choiceParamStrPtr;
+	//QTest::newRow("ChoiceParameter with strings") << choiceParamStrPtr;
 
-	//////////////////////
-	// Create a choice parameter with integer choices
-	//
-	Picto::ChoiceParameter *choiceParamInts = new Picto::ChoiceParameter;
-	choiceParamInts->setName("Choice parameter (integers)");
-	choiceParamInts->setOrder(13);
-	choiceParamInts->addChoice("One",1);
-	choiceParamInts->addChoice("Two",2);
-	choiceParamInts->addChoice("Five",5);
-	choiceParamInts->setInitialValue("B");
-	QSharedPointer<Picto::Parameter> choiceParamIntPtr(choiceParamInts);
+	////////////////////////
+	//// Create a choice parameter with integer choices
+	////
+	//Picto::ChoiceParameter *choiceParamInts = new Picto::ChoiceParameter;
+	//choiceParamInts->setName("Choice parameter (integers)");
+	//choiceParamInts->setOrder(13);
+	//choiceParamInts->addChoice("One",1);
+	//choiceParamInts->addChoice("Two",2);
+	//choiceParamInts->addChoice("Five",5);
+	//choiceParamInts->setInitialValue("B");
+	//QSharedPointer<Picto::Parameter> choiceParamIntPtr(choiceParamInts);
 
-	QTest::newRow("ChoiceParameter with integers") << choiceParamIntPtr;
+	//QTest::newRow("ChoiceParameter with integers") << choiceParamIntPtr;
 
-	//////////////////////
-	// Create a choice parameter with color choices
-	//
-	Picto::ChoiceParameter *choiceParamColors = new Picto::ChoiceParameter;
-	choiceParamColors->setName("Choice parameter (colors)");
-	choiceParamColors->setOrder(13);
-	choiceParamColors->addChoice("Red",QColor(255,0,0));
-	choiceParamColors->addChoice("Green",QColor(0,255,0));
-	choiceParamColors->addChoice("Blue",QColor(0,0,255));
-	choiceParamColors->setInitialValue("Blue");
-	QSharedPointer<Picto::Parameter> choiceParamColorsPtr(choiceParamColors);
+	////////////////////////
+	//// Create a choice parameter with color choices
+	////
+	//Picto::ChoiceParameter *choiceParamColors = new Picto::ChoiceParameter;
+	//choiceParamColors->setName("Choice parameter (colors)");
+	//choiceParamColors->setOrder(13);
+	//choiceParamColors->addChoice("Red",QColor(255,0,0));
+	//choiceParamColors->addChoice("Green",QColor(0,255,0));
+	//choiceParamColors->addChoice("Blue",QColor(0,0,255));
+	//choiceParamColors->setInitialValue("Blue");
+	//QSharedPointer<Picto::Parameter> choiceParamColorsPtr(choiceParamColors);
 
-	QTest::newRow("ChoiceParameter with integers") << choiceParamColorsPtr;
+	//QTest::newRow("ChoiceParameter with integers") << choiceParamColorsPtr;
 
-	//////////////////////
-	// Create a range parameter
-	//
-	Picto::RangeParameter *rangeParam = new Picto::RangeParameter;
-	rangeParam->setName("Range Parameter");
-	rangeParam->setOrder(13);
-	rangeParam->setIncrement(1);
-	rangeParam->setMax(200);
-	rangeParam->setMin(-50);
-	rangeParam->setInitialValue(45);
-	rangeParam->setUnits("light years");
+	////////////////////////
+	//// Create a range parameter
+	////
+	//Picto::RangeParameter *rangeParam = new Picto::RangeParameter;
+	//rangeParam->setName("Range Parameter");
+	//rangeParam->setOrder(13);
+	//rangeParam->setIncrement(1);
+	//rangeParam->setMax(200);
+	//rangeParam->setMin(-50);
+	//rangeParam->setInitialValue(45);
+	//rangeParam->setUnits("light years");
 
-	QSharedPointer<Picto::Parameter> rangeParamPtr(rangeParam);
+	//QSharedPointer<Picto::Parameter> rangeParamPtr(rangeParam);
 
-	QTest::newRow("Range Parameter") << rangeParamPtr;
+	//QTest::newRow("Range Parameter") << rangeParamPtr;
 
-	//////////////////////
-	// Create a numeric parameter
-	//
-	Picto::NumericParameter *numParam = new Picto::NumericParameter;
-	numParam->setName("Numeric Parameter");
-	numParam->setOrder(13);
-	numParam->setUnits("weeks");
+	////////////////////////
+	//// Create a numeric parameter
+	////
+	//Picto::NumericParameter *numParam = new Picto::NumericParameter;
+	//numParam->setName("Numeric Parameter");
+	//numParam->setOrder(13);
+	//numParam->setUnits("weeks");
 
-	QSharedPointer<Picto::Parameter> numParamPtr(numParam);
+	//QSharedPointer<Picto::Parameter> numParamPtr(numParam);
 
-	QTest::newRow("Numeric Parameter") << numParamPtr;
+	//QTest::newRow("Numeric Parameter") << numParamPtr;
 
 
 }
@@ -367,56 +366,56 @@ void TestDataStore::TestParameter()
 
 void TestDataStore::TestParameterContainer()
 {
-	//Create a Parameter Container & fill it
-	QSharedPointer<Picto::ParameterContainer> originalParameterContainer(new Picto::ParameterContainer);
-	QSharedPointer<Picto::ParameterContainer> copyParameterContainer(new Picto::ParameterContainer);
+	////Create a Parameter Container & fill it
+	//QSharedPointer<Picto::ParameterContainer> originalParameterContainer(new Picto::ParameterContainer);
+	//QSharedPointer<Picto::ParameterContainer> copyParameterContainer(new Picto::ParameterContainer);
 
-	QSharedPointer<Picto::BooleanParameter> boolParam (new Picto::BooleanParameter);
-	boolParam->setName("My boolean Parameter");
-	boolParam->setOrder(31);
-	boolParam->setInitialValue(true);
-	boolParam->setTrueLabel("I'm true!");
-	boolParam->setFalseLabel("I'm false.");
-	originalParameterContainer->addScriptable(boolParam);
+	//QSharedPointer<Picto::BooleanParameter> boolParam (new Picto::BooleanParameter);
+	//boolParam->setName("My boolean Parameter");
+	//boolParam->setOrder(31);
+	//boolParam->setInitialValue(true);
+	//boolParam->setTrueLabel("I'm true!");
+	//boolParam->setFalseLabel("I'm false.");
+	//originalParameterContainer->addScriptable(boolParam);
 
-	QSharedPointer<Picto::ChoiceParameter> choiceParamStrings (new Picto::ChoiceParameter);
-	choiceParamStrings->setName("Choice parameter (strings)");
-	choiceParamStrings->setOrder(42);
-	choiceParamStrings->addChoice("A",QString("Choice A"));
-	choiceParamStrings->addChoice("B",QString("Choice B"));
-	choiceParamStrings->addChoice("C",QString("Choice C"));
-	choiceParamStrings->setInitialValue("B");
-	originalParameterContainer->addScriptable(choiceParamStrings);
+	//QSharedPointer<Picto::ChoiceParameter> choiceParamStrings (new Picto::ChoiceParameter);
+	//choiceParamStrings->setName("Choice parameter (strings)");
+	//choiceParamStrings->setOrder(42);
+	//choiceParamStrings->addChoice("A",QString("Choice A"));
+	//choiceParamStrings->addChoice("B",QString("Choice B"));
+	//choiceParamStrings->addChoice("C",QString("Choice C"));
+	//choiceParamStrings->setInitialValue("B");
+	//originalParameterContainer->addScriptable(choiceParamStrings);
 
-	QSharedPointer<Picto::ChoiceParameter> choiceParamInts (new Picto::ChoiceParameter);
-	choiceParamInts->setName("Choice parameter (integers)");
-	choiceParamInts->setOrder(13);
-	choiceParamInts->addChoice("One",1);
-	choiceParamInts->addChoice("Two",2);
-	choiceParamInts->addChoice("Five",5);
-	choiceParamInts->setInitialValue("B");
-	originalParameterContainer->addScriptable(choiceParamInts);
+	//QSharedPointer<Picto::ChoiceParameter> choiceParamInts (new Picto::ChoiceParameter);
+	//choiceParamInts->setName("Choice parameter (integers)");
+	//choiceParamInts->setOrder(13);
+	//choiceParamInts->addChoice("One",1);
+	//choiceParamInts->addChoice("Two",2);
+	//choiceParamInts->addChoice("Five",5);
+	//choiceParamInts->setInitialValue("B");
+	//originalParameterContainer->addScriptable(choiceParamInts);
 
-	QSharedPointer<Picto::ChoiceParameter> choiceParamColors (new Picto::ChoiceParameter);
-	choiceParamColors->setName("Choice parameter (colors)");
-	choiceParamColors->setOrder(13);
-	choiceParamColors->addChoice("Red",QColor(255,0,0));
-	choiceParamColors->addChoice("Green",QColor(0,255,0));
-	choiceParamColors->addChoice("Blue",QColor(0,0,255));
-	choiceParamColors->setInitialValue("Blue");
-	originalParameterContainer->addScriptable(choiceParamColors);
+	//QSharedPointer<Picto::ChoiceParameter> choiceParamColors (new Picto::ChoiceParameter);
+	//choiceParamColors->setName("Choice parameter (colors)");
+	//choiceParamColors->setOrder(13);
+	//choiceParamColors->addChoice("Red",QColor(255,0,0));
+	//choiceParamColors->addChoice("Green",QColor(0,255,0));
+	//choiceParamColors->addChoice("Blue",QColor(0,0,255));
+	//choiceParamColors->setInitialValue("Blue");
+	//originalParameterContainer->addScriptable(choiceParamColors);
 
-	QSharedPointer<Picto::RangeParameter> rangeParam (new Picto::RangeParameter);
-	rangeParam->setName("Range Parameter");
-	rangeParam->setOrder(13);
-	rangeParam->setIncrement(1);
-	rangeParam->setMax(200);
-	rangeParam->setMin(-50);
-	rangeParam->setInitialValue(45);
-	rangeParam->setUnits("light years");
-	originalParameterContainer->addScriptable(rangeParam);
+	//QSharedPointer<Picto::RangeParameter> rangeParam (new Picto::RangeParameter);
+	//rangeParam->setName("Range Parameter");
+	//rangeParam->setOrder(13);
+	//rangeParam->setIncrement(1);
+	//rangeParam->setMax(200);
+	//rangeParam->setMin(-50);
+	//rangeParam->setInitialValue(45);
+	//rangeParam->setUnits("light years");
+	//originalParameterContainer->addScriptable(rangeParam);
 
-	TestSimpleDataStore(originalParameterContainer,copyParameterContainer,"Parameters");
+	//TestSimpleDataStore(originalParameterContainer,copyParameterContainer,"Parameters");
 }
 
 
@@ -638,15 +637,14 @@ void TestDataStore::TestScene()
 	QSharedPointer<Picto::Scene> sceneCopy(new Picto::Scene());
 
 	//Arrow graphic
-	QPoint position(randGen_.randInt()%400, randGen_.randInt()%400);
 	QPoint start(randGen_.randInt()%400, randGen_.randInt()%400);
 	QPoint end(randGen_.randInt()%400, randGen_.randInt()%400);
 	int size = randGen_.randInt()%20;
 	QColor color(randGen_.randInt()%256, randGen_.randInt()%256,randGen_.randInt()%256,randGen_.randInt()%256);
-	QSharedPointer<Picto::VisualElement> arrow(new Picto::ArrowGraphic(position,start,end,size,color));
+	QSharedPointer<Picto::VisualElement> arrow(new Picto::ArrowGraphic(start,end,size,color));
 
 	//Circle graphic
-	position = QPoint(randGen_.randInt()%300, randGen_.randInt()%400);
+	QPoint position = QPoint(randGen_.randInt()%300, randGen_.randInt()%400);
 	int radius = randGen_.randInt()%200;
 	color = QColor(randGen_.randInt()%256, randGen_.randInt()%256,randGen_.randInt()%256,randGen_.randInt()%256);
 	QSharedPointer<Picto::VisualElement> circle(new Picto::CircleGraphic(position,radius,color));
@@ -657,12 +655,12 @@ void TestDataStore::TestScene()
 	color = QColor(randGen_.randInt()%256, randGen_.randInt()%256,randGen_.randInt()%256,randGen_.randInt()%256);
 	QSharedPointer<Picto::VisualElement> box(new Picto::BoxGraphic(position,dimensions,color));
 
-	//layer 1: arrow and circle
-	arrow->setOrder(1);
-	circle->setOrder(1);
+	////layer 1: arrow and circle
+	//arrow->setOrder(1);
+	//circle->setOrder(1);
 
-	//layer 2: box
-	box->setOrder(2);
+	////layer 2: box
+	//box->setOrder(2);
 
 	scene->addVisualElement(arrow);
 	scene->addVisualElement(circle);

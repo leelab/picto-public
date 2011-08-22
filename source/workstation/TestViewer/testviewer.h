@@ -54,6 +54,7 @@ private:
 	QSharedPointer<Picto::Experiment> experiment_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
+	QWidget *propertyFrame_;
 
 	QAction *playAction_;
 	QAction *pauseAction_;
@@ -65,6 +66,8 @@ private:
 
 	enum Status {Ending, Stopped, Running, Paused};
 	Status status_;
+private slots:
+	void taskListIndexChanged(int index);
 };
 
 #endif

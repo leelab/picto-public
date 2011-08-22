@@ -26,6 +26,11 @@ class PICTOLIB_API State : public MachineContainer
 class State : public MachineContainer
 #endif
 {
+	Q_OBJECT
+	//Q_PROPERTY(int red READ getRed WRITE setRed)
+	//Q_PROPERTY(int green READ getGreen WRITE setGreen)
+	//Q_PROPERTY(int blue READ getBlue WRITE setBlue)
+	//Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
 public:
 	State();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new State());};
@@ -46,10 +51,25 @@ public:
 	virtual QString getUITemplate(){return "State";};
 	virtual QString assetType(){return "State";};
 
+	QColor getColor(){return propertyContainer_->getPropertyValue("BackgroundColor").value<QColor>();};
+	void setColor(QColor color){propertyContainer_->setPropertyValue("BackgroundColor",color);};
+	int getRed() { return getColor().red(); };
+	int getGreen() { return getColor().green(); };
+	int getBlue() { return getColor().blue(); };
+	int getAlpha() { return getColor().alpha(); };
+	void setRed(int r){QColor val = getColor(); val.setRed(r);setColor(val);};
+	void setGreen(int g){QColor val = getColor(); val.setGreen(g);setColor(val);};
+	void setBlue(int b){QColor val = getColor(); val.setBlue(b);setColor(val);};
+	void setAlpha(int a){QColor val = getColor(); val.setAlpha(a);setColor(val);};
+
+//public slots:
+//	void setBackgroundColor(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
+
 protected:
 	virtual void elementAdded(QSharedPointer<ResultContainer> element){};
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
 	virtual QMap<QString,QString> getScripts();

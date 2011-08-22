@@ -6,12 +6,11 @@ namespace Picto {
 
 const QString ArrowGraphic::type = "Arrow Graphic";
 
-ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, QColor color)
-: VisualElement(position,color)
+ArrowGraphic::ArrowGraphic(QPoint start, QPoint end, int size, QColor color)
+: VisualElement(start,color)
 {
-	AddDefinableProperty(QVariant::Point,"Start",start);
 	AddDefinableProperty(QVariant::Point,"End",end);
-	AddDefinableProperty(QVariant::Int,"Size", size);
+	AddDefinableProperty(QVariant::Int,"HeadSize", size);
 
 
 
@@ -35,9 +34,9 @@ ArrowGraphic::ArrowGraphic(QPoint position, QPoint start, QPoint end, int size, 
 
 void ArrowGraphic::draw()
 {
-	QPoint start = propertyContainer_->getPropertyValue("Start").toPoint();
+	QPoint start = getPosition();
 	QPoint end = propertyContainer_->getPropertyValue("End").toPoint();
-	int size = propertyContainer_->getPropertyValue("Size").toInt();
+	int size = propertyContainer_->getPropertyValue("HeadSize").toInt();
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	//generate the point pairs that will draw the line and arrow

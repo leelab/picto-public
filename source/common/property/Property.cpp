@@ -9,7 +9,9 @@ Property::Property(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer
 variantProp_(variantProp),
 manager_(manager),
 tagName_(""),
-typeVal_("")
+typeVal_(""),
+scriptEditable_(true),
+runtimeEnabled_(false)
 {
 	connect(manager_.data(),SIGNAL(valueChanged(QtProperty *, const QVariant &)),this,SLOT(valueChanged(QtProperty *, const QVariant &)));
 	connect(manager_.data(),SIGNAL(attributeChanged(QtProperty*,const QString&, const QVariant&)),this,SLOT(attributeChanged(QtProperty*,const QString&, const QVariant&)));
@@ -63,6 +65,11 @@ void Property::setValue(QVariant _value)
 void Property::setAttribute(QString _attributeName, QVariant _attributeValue)
 {
 	variantProp_->setAttribute(_attributeName,_attributeValue);
+}
+
+QVariant Property::attributeValue(QString _attributeName)
+{
+	return variantProp_->attributeValue(_attributeName);
 }
 
 void Property::addSubProperty(QSharedPointer<Property> prop)

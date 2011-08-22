@@ -20,6 +20,8 @@ struct ChoiceParameterOption
  *	example, have a "red" value which would be a QColor returning 0xFF0000.  The equality operators
  *	are clearly defined, but since there isn't an obvious way to implement them, the cmoparison
  *	operators (> and <) are undefined and will always return false.
+ *
+ *	This parameter is currently not available until I reimplement it correctly.
  */
 
 #if defined WIN32 || defined WINCE
@@ -29,6 +31,7 @@ class ChoiceParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(QString value READ getValue WRITE setValue)
 //public slots:
 //	void setValue(QVariant value);
 //	QVariant getValue();
@@ -45,13 +48,15 @@ public:
 	bool addChoice(QString label, QVariant data);
 	bool removeChoice(QString label);
 
-	virtual bool equalTo(Parameter& RHS);
-	virtual bool equalTo(QVariant& RHS);
+	QString getValue(){return propertyContainer_->getPropertyValue("Value").toString();};
+	void setValue(QString val){propertyContainer_->setPropertyValue("Value",val);};
+	//virtual bool equalTo(Parameter& RHS);
+	//virtual bool equalTo(QVariant& RHS);
 
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual QVariant verifyValue(QVariant value);
+	virtual bool fixValues(QString& warning);
 
 private:
 	QMap<QString,ChoiceParameterOption> options_;

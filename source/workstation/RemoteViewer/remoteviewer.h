@@ -90,6 +90,7 @@ private:
 
 	Picto::VisualTargetHost *visualTargetHost_;
 	QSharedPointer<Picto::Experiment> experiment_;
+	QWidget *propertyFrame_;
 
 	QAction *playAction_;
 	QAction *pauseAction_;
@@ -120,7 +121,8 @@ private:
 	QUuid observerId_;
 
 	int rewardChannel_;  //Channel used for issuing manual rewards
-
+private slots:
+	void taskListIndexChanged(int index);
 };
 
 #endif

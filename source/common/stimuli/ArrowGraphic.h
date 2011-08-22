@@ -21,9 +21,12 @@ namespace Picto {
 class PICTOLIB_CLASS ArrowGraphic : public VisualElement
 {
 	Q_OBJECT
+	Q_PROPERTY(int endX READ getEndX WRITE setEndX)
+	Q_PROPERTY(int endY READ getEndY WRITE setEndY)
+	Q_PROPERTY(int headSize READ getHeadSize WRITE setHeadSize)
 
 public:
-	ArrowGraphic(QPoint position=QPoint(), QPoint start=QPoint(), QPoint end=QPoint(),
+	ArrowGraphic(QPoint start=QPoint(), QPoint end=QPoint(),
 				int size=0, QColor color=QColor());
 
 	void draw();
@@ -36,17 +39,16 @@ public:
 	void setStartPoint(QPoint point) { propertyContainer_->setPropertyValue("Start", point);};
 	void setEndPoint(QPoint point) { propertyContainer_->setPropertyValue("End", point);};
 
-	static const QString type;
+	int getHeadSize(){return propertyContainer_->getPropertyValue("HeadSize").toInt();};
+	void setHeadSize(int size) { propertyContainer_->setPropertyValue("HeadSize", size);};
+	int getEndX(){return getEndPoint().x();};
+	void setEndX(int x){setEndPoint(QPoint(x,getEndPoint().y()));};
+	int getEndY(){return getEndPoint().y();};
+	void setEndY(int y){setEndPoint(QPoint(getEndPoint().x(),y));};
 
+	static const QString type;
 public slots:
-	int getStartPointX() { return getStartPoint().x(); };
-	int getStartPointY() { return getStartPoint().y(); };
-	void setStartPoint(int x, int y) { setStartPoint(QPoint(x,y)); };
-	int getEndPointX() { return getEndPoint().x(); };
-	int getEndPointY() { return getEndPoint().y(); };
-	void setEndPoint(int x, int y) { setEndPoint(QPoint(x,y)); };
-	int getSize() {return propertyContainer_->getPropertyValue("Size").toInt(); };
-	void setSize(int size) { propertyContainer_->setPropertyValue("Size", size);};
+	void setEndPoint(int x, int y) { setEndPoint(QPoint(x,y));};
 
 protected:
 	virtual void postSerialize();

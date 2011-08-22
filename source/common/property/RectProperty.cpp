@@ -28,7 +28,7 @@ bool RectProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStream
 	rect.setY(GetSerializationAttributeValue("y").toInt());
 	rect.setWidth(GetSerializationAttributeValue("width").toInt());
 	rect.setHeight(GetSerializationAttributeValue("height").toInt());
-	setValue(rect);
+	Property::setValue(rect);
 	return true;
 }
 

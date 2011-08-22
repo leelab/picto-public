@@ -21,8 +21,8 @@ bool PointProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStrea
 {
 	QPoint point;
 	point.setX(GetSerializationAttributeValue("x").toInt());
-	point.setY(GetSerializationAttributeValue("y").toInt());\
-	setValue(point);
+	point.setY(GetSerializationAttributeValue("y").toInt());
+	Property::setValue(point);
 	return true;
 }
 

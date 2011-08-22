@@ -53,7 +53,8 @@ Director::Director(QString name,
 	}
 	//figure out our name
 	query.exec("SELECT value FROM directorinfo WHERE key='Name'");
-	Q_ASSERT(query.next());
+	bool rc = query.next();
+	Q_ASSERT(rc);
 	name_ = query.value(0).toString();
 
 }

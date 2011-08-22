@@ -36,7 +36,8 @@ ComponentInterface::ComponentInterface(QString type)
 		query.exec();
 	}
 	query.exec("SELECT value FROM componentinfo WHERE key='id'");
-	Q_ASSERT(query.next());
+	bool rc = query.next();
+	Q_ASSERT(rc);
 	componentId_ = QUuid(query.value(0).toString());
 }
 

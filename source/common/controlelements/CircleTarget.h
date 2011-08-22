@@ -18,14 +18,13 @@ class CircleTarget : public ControlTarget
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int radius READ getRadius WRITE setRadius)
 public:
 	CircleTarget();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new CircleTarget());};
 	virtual QString assetType(){return "CircleTarget";};
 	void draw();
 	virtual bool contains(int x, int y);
-//These public slots exist for binding visual element properties to scripts
-public slots:
 	int getRadius();
 	void setRadius(int radius);
 protected:

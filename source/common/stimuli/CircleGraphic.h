@@ -20,7 +20,7 @@ namespace Picto {
 class PICTOLIB_CLASS CircleGraphic : public VisualElement
 {
 	Q_OBJECT
-
+	Q_PROPERTY(int radius READ getRadius WRITE setRadius)
 public:
 	CircleGraphic(QPoint position=QPoint(), int radius=0, QColor color=QColor());
 
@@ -28,10 +28,8 @@ public:
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new CircleGraphic());};
 	static const QString type;
-
-public slots:
-	int getRadius() { return propertyContainer_->getPropertyValue("Radius").toInt(); };
-	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius",radius);};
+	int getRadius(){return propertyContainer_->getPropertyValue("Radius").toInt();};
+	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius", radius);};
 
 protected:
 	virtual void postSerialize();

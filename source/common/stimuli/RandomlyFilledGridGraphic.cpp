@@ -139,20 +139,6 @@ void RandomlyFilledGridGraphic::draw()
 	updateCompositingSurfaces();
 }
 
-void RandomlyFilledGridGraphic::setHeight(int height)
-{
-	QRect origDims = getDimensions();
-	origDims.setHeight(height);
-	setDimensions(origDims);
-}
-
-void RandomlyFilledGridGraphic::setWidth(int width)
-{
-	QRect origDims = getDimensions();
-	origDims.setWidth(width);
-	setDimensions(origDims);
-}
-
 void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName, int,
 											  QVariant) //propertyValue
 {

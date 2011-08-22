@@ -43,7 +43,6 @@ public:
 
 	static const QString type;
 
-public slots:
 
 protected:
 	virtual void postSerialize();

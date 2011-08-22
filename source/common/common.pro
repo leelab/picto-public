@@ -147,8 +147,6 @@ SOURCES += $$(PICTO_TREE)/source/common/network/ComponentInterface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/network/ComponentStatusManager.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ComponentStatusManager.cpp
 
-HEADERS += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.h
-SOURCES += $$(PICTO_TREE)/source/common/parameter/ParameterContainer.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/Parameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/Parameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/BooleanParameter.h

@@ -35,6 +35,27 @@ void DirectorStatusManager::updateSplashStatus(QString status)
 		target->showSplash();
 	}
 }
+
+void DirectorStatusManager::setStatus(ComponentStatus status)
+{
+	ComponentStatus oldStatus = getStatus();
+	ComponentStatusManager::setStatus(status);
+	ComponentStatus newStatus = getStatus();
+	if(newStatus <= idle && (newStatus != oldStatus ))
+	{
+		switch(newStatus)
+		{
+		case disconnected:
+			updateSplashStatus(QString("No Connection to Server"));
+			break;
+		case idle:
+			updateSplashStatus(QString("Connected to Server"));
+			break;
+		}
+		
+	}
+}
+
 void DirectorStatusManager::newSession()
 {
 	alignmentCode_ = 0;

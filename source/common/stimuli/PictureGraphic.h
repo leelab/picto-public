@@ -20,18 +20,17 @@ namespace Picto {
 class PICTOLIB_CLASS PictureGraphic : public VisualElement
 {
 	Q_OBJECT
-
+	Q_PROPERTY(QString imageFile READ getImageFile WRITE setImageFile)
 public:
 	PictureGraphic(QPoint position=QPoint(), QString imageFile="");
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new PictureGraphic());};
 	void draw();
 	static VisualElement* NewVisualElement();
 
-	static const QString type;
-
-public slots:
 	QString getImageFile() { return propertyContainer_->getPropertyValue("ImageFile").toString(); };
-	void setImageFile(QString filename) { propertyContainer_->setPropertyValue("ImageFile",filename);};
+	void setImageFile(QString fileName) { propertyContainer_->setPropertyValue("ImageFile",fileName); };
+
+	static const QString type;
 
 protected:
 	virtual QString defaultTagName(){return "Picture";};

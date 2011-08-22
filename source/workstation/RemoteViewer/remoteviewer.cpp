@@ -11,6 +11,7 @@
 #include "../../common/storage/BehavioralDataUnitPackage.h"
 #include "../../common/storage/StateDataUnit.h"
 #include "../../common/statemachine/statemachine.h"
+#include "../propertyframe.h"
 
 
 
@@ -73,7 +74,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 		query.exec();
 	}
 	query.exec("SELECT value FROM workstationinfo WHERE key='id'");
-	Q_ASSERT(query.next());
+	bool rc = query.next();
+	Q_ASSERT(rc);
 	observerId_ = QUuid(query.value(0).toString());
 }
 
@@ -89,7 +91,25 @@ void RemoteViewer::init()
 					   tr("Check your network connection, and ensure that ") + Picto::Names->serverAppName + tr(" is running."));
 		msg.exec();
 	}
-	experiment_ = pictoData_->getExperiment();
+	if(sessionId_ == QUuid())
+	{
+		//Only load a new experiment if we're not already in a session
+		experiment_ = pictoData_->getExperiment();
+		if(!experiment_)
+		{
+			QMessageBox msg;
+			msg.setText("Failed to load current experiment.");
+			msg.exec();
+
+		}
+		else
+		{
+			static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(experiment_.staticCast<DataStore>());
+		}
+
+	}
+	
+
 	//If we're stopped, load the current experiment.  If we are paused,
 	//then we shouldn't load the experiment.
 	/*if(localStatus_ == Stopped)
@@ -252,9 +272,17 @@ void RemoteViewer::setupUi()
 	statusBar_ = new QLabel();
 	updateStatus();
 
+	QHBoxLayout *operationLayout = new QHBoxLayout;
+	propertyFrame_ = new PropertyFrame();
+	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
+	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
+	operationLayout->addWidget(visualTargetHost_);
+	operationLayout->setStretch(0,0);
+	operationLayout->addStretch();
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addWidget(visualTargetHost_);
+	mainLayout->addLayout(operationLayout);
 	mainLayout->addStretch(1);
 	mainLayout->addWidget(statusBar_);
 	setLayout(mainLayout);
@@ -1496,3 +1524,12 @@ bool RemoteViewer::sendTaskCommand(QString target)
 	}
 }
 
+void RemoteViewer::taskListIndexChanged(int)
+{
+	if(!experiment_)
+		return;
+	QSharedPointer<Task> task = experiment_->getTaskByName(taskListBox_->currentText());
+	if(!task)
+		return;
+	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
+}

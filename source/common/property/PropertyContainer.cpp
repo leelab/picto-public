@@ -34,6 +34,24 @@ QSharedPointer<PropertyContainer> PropertyContainer::create(QString _containerNa
 	return returnVal;
 }
 
+void PropertyContainer::copyProperties(QSharedPointer<PropertyContainer> container2)
+{
+	QMap<QString, QVector<QSharedPointer<Property>>> cont2Props = container2->getProperties();
+	QSharedPointer<Property> newProp;
+	foreach(QVector<QSharedPointer<Property>> propVec,cont2Props)
+	{
+		foreach(QSharedPointer<Property> prop,propVec)
+		{
+			newProp = addProperty(prop->type(),prop->getName(),prop->value());
+			QStringList attributes = container2->getPropertyManager()->attributes(prop->type());
+			foreach(QString attribute,attributes)
+			{
+				newProp->setAttribute(attribute,prop->attributeValue(attribute));
+			}
+		}
+	}
+}
+
 void PropertyContainer::setContainerName(QString _containerName)
 {
 	containerGroupItem_->setName(_containerName);
@@ -95,6 +113,20 @@ QStringList PropertyContainer::getPropertyList()
 			list.push_back(propIterator.key());
 	}
 	return list;
+}
+
+QList<QSharedPointer<Property>> PropertyContainer::getRuntimeProperties()
+{
+	QList<QSharedPointer<Property>> runtimeProps;
+	foreach(QVector<QSharedPointer<Property>> propVec,properties_)
+	{
+		foreach(QSharedPointer<Property> prop,propVec)
+		{
+			if(prop->isRuntimeEnabled())
+				runtimeProps.push_back(prop);
+		}
+	}
+	return runtimeProps;
 }
 
 QSharedPointer<Property> PropertyContainer::getProperty(QString _identifier,int index)

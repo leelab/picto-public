@@ -7,7 +7,7 @@ QMap<ComponentStatus,QString> ComponentStatusManager::statusNameDictionary_;
 
 ComponentStatusManager::ComponentStatusManager()
 {
-	status_ = idle;
+	status_ = disconnected;
 	if(statusTransitionDictionary_.isEmpty())
 	{
 		statusTransitionDictionary_["NEWSESSION"] = stopped;

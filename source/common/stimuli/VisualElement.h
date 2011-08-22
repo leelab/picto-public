@@ -28,6 +28,14 @@ namespace Picto {
 struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public Scriptable
 {
 	Q_OBJECT
+	Q_PROPERTY(int layer READ getLayer WRITE setLayer)
+	Q_PROPERTY(bool visible READ getVisible WRITE setVisible)
+	Q_PROPERTY(int x READ getX WRITE setX)
+	Q_PROPERTY(int y READ getY WRITE setY)
+	Q_PROPERTY(int red READ getRed WRITE setRed)
+	Q_PROPERTY(int green READ getGreen WRITE setGreen)
+	Q_PROPERTY(int blue READ getBlue WRITE setBlue)
+	Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
 public:
 	VisualElement(QPoint position=QPoint(), QColor color=QColor());
 	~VisualElement();
@@ -40,8 +48,6 @@ public:
 	void setRandomNumberGeneratorState(MTRand::uint32 * rng);
 	MTRand::uint32 * getRandomNumberGeneratorState();
 
-	void reset();
-
 	QPoint getPosition();
 	QRect getBoundingRect();
 	void setPosition(QPoint position);
@@ -49,32 +55,33 @@ public:
 	QColor getColor();
 	void setColor(QColor color);
 
-	void setOrder(int order) { propertyContainer_->setPropertyValue("Order",order); };
-	int getOrder() { return propertyContainer_->getPropertyValue("Order").toInt(); }
+	void setLayer(int layer) { propertyContainer_->setPropertyValue("Layer",layer); };
+	int getLayer() { return propertyContainer_->getPropertyValue("Layer").toInt(); }
+	virtual void setVisible(bool visible){propertyContainer_->setPropertyValue("Visible",visible);};
+	virtual bool getVisible(){return propertyContainer_->getPropertyValue("Visible").toBool();};
+	int getX(){return getPosition().x();};
+	void setX(int x){return setPosition(QPoint(x,getPosition().y()));};
+	int getY(){return getPosition().y();};
+	void setY(int y){return setPosition(QPoint(getPosition().x(),y));};
+	virtual QString getUITemplate(){return "VisualElement";};
 	virtual QString assetType(){return "VisualElement";};
+	int getRed() { return getColor().red(); };
+	int getGreen() { return getColor().green(); };
+	int getBlue() { return getColor().blue(); };
+	int getAlpha() { return getColor().alpha(); };
+	void setRed(int r){QColor val = getColor(); val.setRed(r);setColor(val);};
+	void setGreen(int g){QColor val = getColor(); val.setGreen(g);setColor(val);};
+	void setBlue(int b){QColor val = getColor(); val.setBlue(b);setColor(val);};
+	void setAlpha(int a){QColor val = getColor(); val.setAlpha(a);setColor(val);};
+
+public slots:
+	void setColor(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
+	void setPos(int x, int y){setPosition(QPoint(x,y));};
 
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-//These public slots exist for binding visual element properties to scripts
-public slots:
-	int getX() { return getPosition().x(); };
-	int getY() { return getPosition().y(); };
-	void setPosition(int x, int y) { setPosition(QPoint(x,y)); };
-	void setX(int x){setPosition(x,getY());};
-	void setY(int y){setPosition(getX(),y);};
-
-	int getAlpha() { return getColor().alpha(); };
-	int getRed() { return getColor().red(); };
-	int getBlue() { return getColor().blue(); };
-	int getGreen() { return getColor().green(); };
-	void setColor(int r, int g, int b, int a=255) { setColor(QColor(r,g,b,a)); };
-	void setVisible(bool visible) { visible_ = visible; };
-	virtual bool getVisible(){return visible_;};
-
 protected:
-	void backupProperties();
-	void restoreProperties();
 
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -87,9 +94,8 @@ protected:
 
 	MTRand random;
 
-	QMap<QString, QVariant> initialProperties_;
+	//QMap<QString, QVariant> initialProperties_;
 	bool visible_;
-
 private slots:
 	virtual void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };

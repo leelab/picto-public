@@ -25,8 +25,8 @@ ParameterContainer::ParameterContainer()
 {
 	scriptableFactory_->addAssetType("Boolean",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
-	scriptableFactory_->addAssetType("Choice",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
+	//scriptableFactory_->addAssetType("Choice",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
 	scriptableFactory_->addAssetType("Numeric",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
 	scriptableFactory_->addAssetType("Range",

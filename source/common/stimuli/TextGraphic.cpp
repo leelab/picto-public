@@ -39,39 +39,6 @@ TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QStrin
 	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
 	//		);
 }
-QRect TextGraphic::getDimensions()
-{
-	return propertyContainer_->getPropertyValue("Dimensions").toRect();
-}
-
-void TextGraphic::setDimensions(QRect dimensions)
-{
-	propertyContainer_->setPropertyValue("Dimensions",dimensions);
-}
-
-void TextGraphic::setHeight(int height)
-{
-	QRect origDims = getDimensions();
-	origDims.setHeight(height);
-	setDimensions(origDims);
-}
-
-void TextGraphic::setWidth(int width)
-{
-	QRect origDims = getDimensions();
-	origDims.setWidth(width);
-	setDimensions(origDims);
-}
-
-QString TextGraphic::getText()
-{
-	return propertyContainer_->getPropertyValue("Text").toString();
-}
-
-void TextGraphic::setText(QString text)
-{
-	propertyContainer_->setPropertyValue("Text",text);
-}
 
 void TextGraphic::draw()
 {
@@ -112,6 +79,7 @@ VisualElement* TextGraphic::NewVisualElement()
 void TextGraphic::postSerialize()
 {
 	VisualElement::postSerialize();
+	setPropertyRuntimeEditable("Text");
 }
 
 bool TextGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

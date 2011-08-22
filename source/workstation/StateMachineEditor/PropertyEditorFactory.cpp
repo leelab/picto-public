@@ -4,15 +4,31 @@
 #include "../../common/property/PropertyContainer.h"
 #include "ScriptWidget.h"
 #include "DeletableWidget.h"
+#include "PropertyEditTracker.h"
 using namespace Picto;
 
 //! [0]
-PropertyEditorFactory::PropertyEditorFactory(QSharedPointer<EditorState> editorState,QWidget *parent) :
-	editorState_(editorState),
-	QtVariantEditorFactory(parent),
-	childPropWasChanged_(false)
+PropertyEditorFactory::PropertyEditorFactory(QWidget *parent) :
+	QtVariantEditorFactory(parent)
 {
 
+}
+
+//Sets the next property who's QtProperties will be requested in create editor
+//This should be called just before callind a propertybrowser's addProperty function
+//with a Property's QtProperty.  It tells this object which Property the next QtProperty
+//is associated with, allowing that property to be included in propertyEdited signals.
+void PropertyEditorFactory::setNextProperty(QSharedPointer<Picto::Property> nextProp)
+{
+	editTrackers_.prepend(QSharedPointer<PropertyEditTracker>(new PropertyEditTracker(nextProp)));
+	connect(editTrackers_.first().data(),SIGNAL(propertyEdited(QSharedPointer<Picto::Property>)),this,SIGNAL(propertyEdited(QSharedPointer<Picto::Property>)));
+}
+
+//Clear should be called whenever creating more propertyWidgets if the previously created propertyWidgets
+//are no longer visible.
+void PropertyEditorFactory::clear()
+{
+	editTrackers_.clear();
 }
 
 QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent)
@@ -29,14 +45,13 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	{
 		resultWidget = QtVariantEditorFactory::createEditor(manager,property,NULL);
 	}
-	if(resultWidget)
-		resultWidget->installEventFilter(this);
-	return resultWidget;
-}
 
-bool PropertyEditorFactory::eventFilter(QObject *obj, QEvent *event)
-{
-	if (event->type() == QEvent::FocusOut)
-		emit propertyChanged();
-	return false;
+	if(!resultWidget)
+		return NULL;
+
+	//Add this widget to the edit tracker for the current property so that
+	//it will tell us when it is changed by the user.
+	if(editTrackers_.size())
+		editTrackers_.first()->addTrackedWidget(resultWidget);
+	return resultWidget;
 }

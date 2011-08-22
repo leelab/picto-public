@@ -50,19 +50,6 @@ VisualElement* EllipseGraphic::NewVisualElement()
 	return new EllipseGraphic;
 }
 
-void EllipseGraphic::setHeight(int height)
-{
-	QRect origDims = getDimensions();
-	origDims.setHeight(height);
-	setDimensions(origDims);
-}
-
-void EllipseGraphic::setWidth(int width)
-{
-	QRect origDims = getDimensions();
-	origDims.setWidth(width);
-	setDimensions(origDims);
-}
 //void EllipseGraphic::slotPropertyValueChanged(QString propertyName, int,
 //											  QVariant) //propertyValue
 //{

@@ -4,11 +4,9 @@
 namespace Picto {
 
 ChoiceParameter::ChoiceParameter()
-: Parameter(QVariant::String)
+: Parameter()
 {
-	
-	AddDefinableProperty(QVariant::Bool,"OperatorUI",false);
-	AddDefinableProperty(QVariant::Int,"Order",0);
+	AddDefinableProperty(QVariant::String,"Value",QVariant());
 	AddDefinableProperty("Choice","");
 
 	QSharedPointer<AssetFactory> factory(new AssetFactory());
@@ -24,7 +22,6 @@ ChoiceParameter::ChoiceParameter()
 		(new PropertyFactory(0,-1,propertyContainer_,QVariant::Color,"Color")));
 	AddDefinableObjectFactory("Option",factory);
 
-	type_ = "Choice";
 	currentOption_ = "";
 }
 
@@ -80,41 +77,41 @@ bool ChoiceParameter::removeChoice(QString label)
 //		return options_[currentOption_].data;
 //}
 
-/*!	\brief Equal to operation
- *
- *	Returns true if the passed in parameter's current choice data is equal
- *	to our current choice.  Note that this only compares the data, so there
- *	could be some weird issues...
- */
-bool ChoiceParameter::equalTo(Parameter& RHS)
-{
-	return options_[currentOption_].data == RHS.getValue();
-}
-
-/*! \brief Equal to operation with a constant as RHS
- *
- *	There are a number of different types of constants that might be passed in
- *	and we can handle all of them.  If a string is passed in, we check to see 
- *	if it matches the label in the current choice.  If that fails (either because
- *	the passed in value isn't a string, or it doesn't match), we check to see if 
- *	it matches the type and value of the current data.
- */
-bool ChoiceParameter::equalTo(QVariant& RHS)
-{
-	//check the passed in value to see if it matches our current label
-	if(RHS.type() == QVariant::String &&
-		RHS.toString() == currentOption_)
-		return true;
-
-	//check the passed in value to see if it matches our current data (in 
-	//type and value)
-	if(RHS.typeName() == options_[currentOption_].type)
-	{
-		if(options_[currentOption_].data == RHS)
-			return true;
-	}
-	return false;
-}
+///*!	\brief Equal to operation
+// *
+// *	Returns true if the passed in parameter's current choice data is equal
+// *	to our current choice.  Note that this only compares the data, so there
+// *	could be some weird issues...
+// */
+//bool ChoiceParameter::equalTo(Parameter& RHS)
+//{
+//	return options_[currentOption_].data == RHS.getValue();
+//}
+//
+///*! \brief Equal to operation with a constant as RHS
+// *
+// *	There are a number of different types of constants that might be passed in
+// *	and we can handle all of them.  If a string is passed in, we check to see 
+// *	if it matches the label in the current choice.  If that fails (either because
+// *	the passed in value isn't a string, or it doesn't match), we check to see if 
+// *	it matches the type and value of the current data.
+// */
+//bool ChoiceParameter::equalTo(QVariant& RHS)
+//{
+//	//check the passed in value to see if it matches our current label
+//	if(RHS.type() == QVariant::String &&
+//		RHS.toString() == currentOption_)
+//		return true;
+//
+//	//check the passed in value to see if it matches our current data (in 
+//	//type and value)
+//	if(RHS.typeName() == options_[currentOption_].type)
+//	{
+//		if(options_[currentOption_].data == RHS)
+//			return true;
+//	}
+//	return false;
+//}
 
 void ChoiceParameter::postSerialize()
 {
@@ -123,8 +120,6 @@ void ChoiceParameter::postSerialize()
 	//fresh instance
 	options_.clear();
 
-	bOperatorUI_ = propertyContainer_->getPropertyValue("OperatorUI").toBool();
-	order_ = propertyContainer_->getPropertyValue("Order").toInt();
 
 	ChoiceParameterOption newOption;
 	QList<QSharedPointer<Asset>> options = getGeneratedChildren("Option");
@@ -134,6 +129,7 @@ void ChoiceParameter::postSerialize()
 		newOption.type = newOption.data.type();
 		options_[option.staticCast<Property>()->getName()] = newOption;
 	}
+	setPropertyRuntimeEditable("Value");
 }
 
 bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -149,13 +145,16 @@ bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	return true;
 }
 
-QVariant ChoiceParameter::verifyValue(QVariant value)
+bool ChoiceParameter::fixValues(QString& warning)
 {
-	if(!options_.contains(value.toString()))
+	Q_ASSERT(options_.size());
+	QString value = propertyContainer_->getPropertyValue("Value").toString();
+	if(!options_.contains(value))
 	{
-		return("");
+		propertyContainer_->setPropertyValue("Value",options_.begin().key());
+		return false;
 	}
-	return value;
+	return true;
 }
 
 }; //namespace Picto

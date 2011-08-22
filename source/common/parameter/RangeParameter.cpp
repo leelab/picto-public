@@ -3,15 +3,13 @@
 namespace Picto {
 
 RangeParameter::RangeParameter()
-: Parameter(QVariant::Int)
+: Parameter()
 {
-	
-	AddDefinableProperty(QVariant::Int,"Order",0);
+	AddDefinableProperty(QVariant::Int,"Value",QVariant());
 	AddDefinableProperty(QVariant::Int,"Min",0);
 	AddDefinableProperty(QVariant::Int,"Max",0);
 	AddDefinableProperty(QVariant::Int,"Increment",0);
 	AddDefinableProperty("Units","");
-	type_ = "Range";
 	increment_ = 1;
 }
 
@@ -42,12 +40,8 @@ void RangeParameter::setMax(int max)
 void RangeParameter::postSerialize()
 {
 	Parameter::postSerialize();
-	bOperatorUI_ = propertyContainer_->getPropertyValue("OperatorUI").toBool();
-	order_ = propertyContainer_->getPropertyValue("Order").toInt();
-	minValue_ = propertyContainer_->getPropertyValue("Min").toInt();
-	maxValue_ = propertyContainer_->getPropertyValue("Max").toInt();
-	increment_ = propertyContainer_->getPropertyValue("Increment").toInt();
-	units_ = propertyContainer_->getPropertyValue("Units").toString();
+	updateFromProperties();
+	setPropertyRuntimeEditable("Value");
 }
 
 bool RangeParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -60,19 +54,66 @@ bool RangeParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 /*! Note that values should be set to the closest value that is 
  * a multiple of the increment
  */
-QVariant RangeParameter::verifyValue(QVariant value)
+bool RangeParameter::fixValues(QString&)
 {
-	if(value.toInt() < minValue_)
-		return minValue_;
-	else if(value.toInt() > maxValue_)
-		return maxValue_;
-	else
+	updateFromProperties();
+	bool returnVal = true;
+	if(minValue_ > maxValue_)
 	{
-		//force the current value to be a multiple of the increment
-		if(value.toInt() != (value.toInt()/increment_)*increment_)
-			return QVariant((currentValue_/increment_)*increment_);
+		minValue_ = maxValue_;
+		propertyContainer_->setPropertyValue("Min",minValue_);
+		returnVal = false;
 	}
-	return value;
+
+	if(increment_ > (maxValue_ - minValue_))
+	{
+		increment_ = maxValue_ - minValue_;
+		propertyContainer_->setPropertyValue("Increment",increment_);
+		returnVal = false;
+	}
+
+	if(value_ < minValue_)
+	{
+		value_ = minValue_;
+		propertyContainer_->setPropertyValue("Value",value_);
+		returnVal = false;
+	}
+	if(value_ > maxValue_)
+	{
+		value_ = maxValue_;
+		propertyContainer_->setPropertyValue("Value",value_);
+		returnVal = false;
+	}
+
+	//If increment is less than or equal to zero, it is set to zero and ignored.
+	if(increment_ < 0)
+	{
+		increment_ = 0;
+		propertyContainer_->setPropertyValue("Increment",increment_);
+		returnVal = false;
+	}
+
+	if(increment_ > 0) 
+	{//force the current value to be a multiple of the increment.  
+		
+		int distFromMin = value_ - minValue_;
+		if(distFromMin != ((distFromMin/increment_)*increment_))
+		{
+			value_ = minValue_ + (distFromMin/increment_)*increment_;
+			propertyContainer_->setPropertyValue("Value",value_);
+			returnVal = false;
+		}
+	}
+	return returnVal;
+}
+
+void RangeParameter::updateFromProperties()
+{
+	minValue_ = propertyContainer_->getPropertyValue("Min").toInt();
+	maxValue_ = propertyContainer_->getPropertyValue("Max").toInt();
+	increment_ = propertyContainer_->getPropertyValue("Increment").toInt();
+	units_ = propertyContainer_->getPropertyValue("Units").toString();
+	value_ = propertyContainer_->getPropertyValue("Value").toInt();
 }
 
 }; //namespace Picto

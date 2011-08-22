@@ -58,6 +58,7 @@ class PICTOLIB_API StateMachine : public MachineContainer
 class StateMachine : public MachineContainer
 #endif
 {
+	Q_OBJECT
 public:
 	StateMachine();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StateMachine());};
@@ -74,8 +75,6 @@ public:
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
-
-	void reset();
 
 	//bool initScripting(QScriptEngine &qsEngine);
 
@@ -94,6 +93,7 @@ protected:
 	virtual QString defaultTagName(){return "StateMachine";};
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool canHaveScripts(){return false;};
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
 	virtual QMap<QString,QString> getScripts();

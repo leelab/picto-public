@@ -22,6 +22,7 @@ class NumericParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int value READ getValue WRITE setValue)
 //public slots:
 //	void setValue(QVariant value);
 //	QVariant getValue() { return QVariant(value_); };
@@ -40,15 +41,18 @@ public:
 
 	QString getUnits() { return units_; };
 
+	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
+	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
+
 	//note that the lessThan & greaterThan functions aren't redefined, 
 	//so they will always return false
-	bool greaterThan(Parameter& RHS);
-	bool equalTo(Parameter& RHS);
-	bool lessThan(Parameter& RHS);
+	//bool greaterThan(Parameter& RHS);
+	//bool equalTo(Parameter& RHS);
+	//bool lessThan(Parameter& RHS);
 
-	bool greaterThan(QVariant& RHS);
-	bool equalTo(QVariant& RHS);
-	bool lessThan(QVariant& RHS);
+	//bool greaterThan(QVariant& RHS);
+	//bool equalTo(QVariant& RHS);
+	//bool lessThan(QVariant& RHS);
 
 protected:
 	virtual void postSerialize();

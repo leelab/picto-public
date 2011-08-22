@@ -35,6 +35,25 @@ QStringList Experiment::getTaskNames()
 	return taskList;
 }
 
+QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
+{
+	QSharedPointer<Task> returnVal;
+	if(tasks_.isEmpty())
+		return returnVal;
+	//search through tasks_ for a matching task!
+	//note that the taskname here may have had all of it's whitespace 
+	//removed, so we need to check that possibility
+	foreach(QSharedPointer<Task> task, tasks_)
+	{
+		if(task->getName() == taskName ||
+		   task->getName().simplified().remove(' ') == taskName)
+		{	
+			returnVal = task;
+			break;
+		}
+	}
+	return returnVal;
+}
 
 bool Experiment::runTask(QString taskName, QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -44,20 +63,29 @@ bool Experiment::runTask(QString taskName, QSharedPointer<Engine::PictoEngine> e
 	//search through tasks_ for a matching task and run it!
 	//note that the taskname here may have had all of it's whitespace 
 	//removed, so we need to check that possibility
-	foreach(QSharedPointer<Task> task, tasks_)
-	{
-		if(task->getName() == taskName ||
-		   task->getName().simplified().remove(' ') == taskName)
-		{	
-			engine->clearEngineCommand();
-			engine->startAllSignalChannels();
-			bool success = task->run(engine);
-			engine->stopAllSignalChannels();
+	QSharedPointer<Task> task = getTaskByName(taskName);
+	if(!task)
+		return false;
+	engine->clearEngineCommand();
+	engine->startAllSignalChannels();
+	bool success = task->run(engine);
+	engine->stopAllSignalChannels();
 
-			return success;
-		}
-	}
-	return false;
+	return success;
+	//foreach(QSharedPointer<Task> task, tasks_)
+	//{
+	//	if(task->getName() == taskName ||
+	//	   task->getName().simplified().remove(' ') == taskName)
+	//	{	
+	//		engine->clearEngineCommand();
+	//		engine->startAllSignalChannels();
+	//		bool success = task->run(engine);
+	//		engine->stopAllSignalChannels();
+
+	//		return success;
+	//	}
+	//}
+	//return false;
 }
 
 

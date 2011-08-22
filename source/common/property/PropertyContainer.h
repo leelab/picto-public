@@ -30,6 +30,7 @@ class PropertyContainer : public QObject
 
 public:
 	static QSharedPointer<PropertyContainer> create(QString _containerName);
+	void copyProperties(QSharedPointer<PropertyContainer> container2);
 	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple = false);
 	QVariant getPropertyValue(QString _identifier, int index=0);
 	QString getPropertyName(QString _identifier, int index=0);
@@ -40,7 +41,9 @@ public:
 	QStringList getPropertyList();
 	QSharedPointer<QtVariantPropertyManager> getPropertyManager(){return propManager_;};
 	QMap<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
+	QList<QSharedPointer<Property>> getRuntimeProperties();
 	QSharedPointer<Property> getProperty(QString _identifier,int index=0);
+	QSharedPointer<Property> getContainerGroupProperty(){return containerGroupItem_;};
 	void clear();
 signals:
 	void signalPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

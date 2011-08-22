@@ -22,18 +22,12 @@ public:
    PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget *parent=0);
 public slots:
 	void assetSelected(QSharedPointer<Asset> asset);
-	void propertyLostFocus();
 
-protected:
-	 virtual void mousePressEvent(QMouseEvent *mouseEvent);
-	 virtual void itemChanged (QtBrowserItem* item);
 private:
-	void checkForUndoableOp();
 	QSharedPointer<EditorState> editorState_;
 	QSharedPointer<PropertyEditorFactory> propertyFactory_;
-	QSharedPointer<QtVariantPropertyManager> manager_;
-	bool dataChanged_;
-	QtBrowserItem* lastChangedItem;
+private slots:
+	void propertyEdited(QSharedPointer<Picto::Property> prop);
 };
 //! [0]
 #endif

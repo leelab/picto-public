@@ -27,6 +27,7 @@ class StringParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(QString value READ getValue WRITE setValue)
 //public slots:
 //	void setValue(QVariant value);
 //	QVariant getValue();
@@ -41,6 +42,8 @@ public:
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void addOption(StringParameterOption option);
+	QString getValue(){return propertyContainer_->getPropertyValue("Value").toString();};
+	void setValue(QString val){propertyContainer_->setPropertyValue("Value",val);};
 
 protected:
 	virtual void postSerialize();

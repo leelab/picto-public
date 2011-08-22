@@ -21,6 +21,7 @@ class BooleanParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(bool value READ getValue WRITE setValue)
 //public slots:
 //	void setValue(QVariant value) { value_ = value.toBool(); };
 //	QVariant getValue() { return QVariant(value_); };
@@ -38,10 +39,13 @@ public:
 	void setTrueLabel(QString label) { trueLabel_ = label; };
 	void setFalseLabel(QString label) { falseLabel_ = label; };
 
+	bool getValue(){return propertyContainer_->getPropertyValue("Value").toBool();};
+	void setValue(bool val){propertyContainer_->setPropertyValue("Value",val);};
+
 	//note that the lessThan & greaterThan functions aren't redefined, 
 	//so they will always return false
-	bool equalTo(Parameter& RHS) { return RHS.getValue().toBool() == value_ && RHS.type() == "Boolean"; };
-	bool equalTo(QVariant& RHS) { return (RHS.type() == QVariant::Bool) && (RHS.toBool() == value_); };
+	//bool equalTo(Parameter& RHS) { return RHS.getValue().toBool() == value_ && RHS.type() == "Boolean"; };
+	//bool equalTo(QVariant& RHS) { return (RHS.type() == QVariant::Bool) && (RHS.toBool() == value_); };
 
 protected:
 	virtual void postSerialize();

@@ -54,6 +54,7 @@ void CircleTarget::setRadius(int radius)
 void CircleTarget::postSerialize()
 {
 	ControlTarget::postSerialize();
+	setPropertyRuntimeEditable("Radius");
 }
 
 

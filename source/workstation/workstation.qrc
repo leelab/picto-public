@@ -60,6 +60,10 @@
         <file>icons/state.svg</file>
         <file>icons/scriptelement.svg</file>
         <file>icons/scriptable.svg</file>
+        <file>icons/parameter.svg</file>
+        <file>icons/visualelement.svg</file>
+        <file>icons/controltarget.svg</file>
+        <file>icons/controlelement.svg</file>
         <file>icons/statemachineelement.svg</file>
         <file>icons/result.svg</file>
         <file>icons/task.svg</file>

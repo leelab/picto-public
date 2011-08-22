@@ -8,6 +8,8 @@ AssetInfoBox::AssetInfoBox(QSharedPointer<EditorState> editorState,QWidget *pare
 	QTextEdit(parent),
 	editorState_(editorState)
 {
+	setLineWrapMode(NoWrap);
+	setTabStopWidth(16);
 	setReadOnly(true);
 	connect(editorState_.data(), SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),
         this, SLOT(assetSelected(QSharedPointer<Asset>)));

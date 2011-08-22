@@ -5,7 +5,8 @@
 ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QWidget *parent) :
 	QTextEdit(parent),
 	manager_(manager),
-	property_(property)
+	property_(property),
+	textEdited_(false)
 {
 	setLineWrapMode(NoWrap);
 	setMinimumWidth(100);
@@ -54,6 +55,14 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	connect(this, SIGNAL(textChanged()),this, SLOT(setScriptValue()));
 }
 
+void ScriptWidget::focusOutEvent(QFocusEvent *e)
+{
+	QTextEdit::focusOutEvent(e);
+	if(textEdited_)
+		emit editingFinishedAndTextEdited();
+	textEdited_ = false;
+}
+
 void ScriptWidget::setScriptValue()
 {
 	//Restore leading tabs.
@@ -72,4 +81,5 @@ void ScriptWidget::setScriptValue()
 
 	//Set fixed text value to property.
 	manager_->setValue(property_,finalText);
+	textEdited_ = true;
 }

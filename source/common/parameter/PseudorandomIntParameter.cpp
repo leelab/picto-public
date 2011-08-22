@@ -7,17 +7,15 @@ PseudorandomIntParameter::PseudorandomIntParameter()
 : 
   value_(0),
   units_(""),
-  Parameter(QVariant::Int),
+  Parameter(),
   currIndex_(-1)
 {
-	
-	AddDefinableProperty(QVariant::Bool,"OperatorUI",false);
+	AddDefinableProperty(QVariant::Int,"Value",QVariant());
 	AddDefinableProperty(QVariant::Bool,"UseSeed",false);
 	AddDefinableProperty(QVariant::Bool,"DontRepeatAnyValue",false);
 	AddDefinableProperty(QVariant::Int,"Seed",0);
 	AddDefinableProperty(QVariant::Int,"Min",0);
 	AddDefinableProperty(QVariant::Int,"Max",1);
-	type_ = "Numeric";
 
 }
 
@@ -26,11 +24,7 @@ Parameter* PseudorandomIntParameter::NewParameter()
 	return new PseudorandomIntParameter;
 }
 
-QVariant PseudorandomIntParameter::getLastValue()
-{
-	return Parameter::getValue();
-}
-QVariant PseudorandomIntParameter::getValue()
+void PseudorandomIntParameter::randomize()
 {
 	checkForPropertyChanges();
 
@@ -50,11 +44,10 @@ QVariant PseudorandomIntParameter::getValue()
 	randomArray_[currIndex_] = randomArray_[currIndex_+swapLoc];
 	randomArray_[currIndex_+swapLoc] = swapVal;
 
-	currValue_ = randomArray_[currIndex_];
-	return Parameter::getValue();
+	propertyContainer_->setPropertyValue("Value",randomArray_[currIndex_]);
 }
 
-void PseudorandomIntParameter::redoValue(QVariant value)
+void PseudorandomIntParameter::reuseValue(QVariant value)
 {
 	Q_ASSERT(value.toInt() >= min_);
 	Q_ASSERT(value.toInt() <= max_);
@@ -64,12 +57,14 @@ void PseudorandomIntParameter::redoValue(QVariant value)
 void PseudorandomIntParameter::postSerialize()
 {
 	Parameter::postSerialize();
-	bOperatorUI_ = propertyContainer_->getPropertyValue("OperatorUI").toBool();
 	useSeed_ = propertyContainer_->getPropertyValue("UseSeed").toBool();
 	seed_ = propertyContainer_->getPropertyValue("Seed").toInt();
+	if(useSeed_)
+		mtRand_.seed(seed_);
 	min_ = propertyContainer_->getPropertyValue("Min").toInt();
 	max_ = propertyContainer_->getPropertyValue("Max").toInt();
 	currValue_ = min_-1;
+	setPropertyRuntimeEditable("Value");
 }
 
 bool PseudorandomIntParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -83,6 +78,34 @@ bool PseudorandomIntParameter::validateObject(QSharedPointer<QXmlStreamReader> x
 		return false;
 	}
 	return true;
+}
+
+bool PseudorandomIntParameter::fixValues(QString&)
+{
+	bool returnVal = true;
+	int min = propertyContainer_->getPropertyValue("Min").toInt();
+	int max = propertyContainer_->getPropertyValue("Max").toInt();
+	int value = propertyContainer_->getPropertyValue("Value").toInt();
+	if(min > max)
+	{
+		min = max;
+		propertyContainer_->setPropertyValue("Min",min);
+		returnVal = false;
+	}
+
+	if(value < min)
+	{
+		value = min;
+		propertyContainer_->setPropertyValue("Value",value);
+		returnVal = false;
+	}
+	if(value > max)
+	{
+		value = max;
+		propertyContainer_->setPropertyValue("Value",value);
+		returnVal = false;
+	}
+	return returnVal;
 }
 
 void PseudorandomIntParameter::checkForPropertyChanges()
@@ -106,7 +129,7 @@ void PseudorandomIntParameter::checkForPropertyChanges()
 		randomArray_.resize(max_-min+1);
 		for(int i=min_;i<=max_;i++)
 		{
-			randomArray_[i] = i;
+			randomArray_[i-min_] = i;
 		}
 	}
 }

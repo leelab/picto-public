@@ -9,7 +9,6 @@
 #include <QSharedPointer>
 #include <QStringList>
 
-#include "../parameter/ParameterContainer.h"
 #include "../parameter/Parameter.h"
 #include "../property/PropertyContainer.h"
 #include "../storage/DataStore.h"
@@ -17,7 +16,7 @@
 #include "../network/CommandChannel.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../statemachine/result.h"
-#include "../parameter/ParameterContainer.h"
+#include "ResultContainer.h"
 
 namespace Picto {
 
@@ -41,7 +40,7 @@ class Result;
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API StateMachineElement : public ParameterContainer
+class PICTOLIB_API StateMachineElement : public ResultContainer
 #else
 class StateMachineElement : public ResultContainer
 #endif

@@ -40,7 +40,7 @@ public:
 	QSharedPointer<Asset> getParentAsset(){return QSharedPointer<Asset>(parent_);};
 	void setSelfPtr(QSharedPointer<Asset> selfPtr){self_ = selfPtr;};
 	void reinitialize();
-	virtual QString getInfo(){return QString("AssetType: %1").arg(assetType());};
+	virtual QString getInfo(){return QString("<h3 style=\"color:red\">%1</h3>").arg(assetType());};
 signals:
 	void edited();
 	void deleted();

@@ -5,6 +5,7 @@
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
 #include "../../common/engine/MouseSignalChannel.h"
+#include "../propertyframe.h"
 
 
 
@@ -32,16 +33,20 @@ TestViewer::TestViewer(QWidget *parent) :
 //! Called just before displaying the viewer
 void TestViewer::init()
 {
-	experiment_ = pictoData_->getExperiment();
 	//If we're stopped, load the current experiment.  If we are paused,
 	//then we shouldn't load the experiment.
 	if(status_ == Stopped)
 	{
+		experiment_ = pictoData_->getExperiment();
 		if(!experiment_)
 		{
 			QMessageBox msg;
 			msg.setText("Failed to load current experiment.");
 			msg.exec();
+		}
+		else
+		{
+			static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(experiment_.staticCast<DataStore>());
 		}
 	}
 
@@ -128,9 +133,17 @@ void TestViewer::setupUi()
 	toolbarLayout->addWidget(testToolbar_);
 	toolbarLayout->addStretch();
 
+	QHBoxLayout *operationLayout = new QHBoxLayout;
+	propertyFrame_ = new PropertyFrame();
+	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
+	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
+	operationLayout->addWidget(visualTargetHost_);
+	operationLayout->setStretch(0,0);
+	operationLayout->addStretch();
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addWidget(visualTargetHost_);
+	mainLayout->addLayout(operationLayout);
 	mainLayout->addStretch(1);
 	setLayout(mainLayout);
 
@@ -227,4 +240,15 @@ void TestViewer::resetExperiment()
 	}
 	return;
 
+}
+
+
+void TestViewer::taskListIndexChanged(int)
+{
+	if(!experiment_)
+		return;
+	QSharedPointer<Task> task = experiment_->getTaskByName(taskListBox_->currentText());
+	if(!task)
+		return;
+	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 }

@@ -7,15 +7,13 @@ RandomIntParameter::RandomIntParameter()
 : 
   value_(0),
   units_(""),
-  Parameter(QVariant::Int)
+  Parameter()
 {
-	
-	AddDefinableProperty(QVariant::Bool,"OperatorUI",false);
+	AddDefinableProperty(QVariant::Int,"Value",QVariant());
 	AddDefinableProperty(QVariant::Bool,"UseSeed",false);
 	AddDefinableProperty(QVariant::Int,"Seed",0);
 	AddDefinableProperty(QVariant::Int,"Min",0);
 	AddDefinableProperty(QVariant::Int,"Max",1);
-	type_ = "Numeric";
 
 }
 
@@ -24,33 +22,22 @@ Parameter* RandomIntParameter::NewParameter()
 	return new RandomIntParameter;
 }
 
-QVariant RandomIntParameter::getLastValue()
-{
-	return Parameter::getValue();
-}
-QVariant RandomIntParameter::getValue()
+void RandomIntParameter::randomize()
 {
 	checkForPropertyChanges();
 	int min = propertyContainer_->getPropertyValue("Min").toInt();
 	int max = propertyContainer_->getPropertyValue("Max").toInt();
-	currValue_ = QVariant(int(min+mtRand_.randInt(max-min)));
-	return Parameter::getValue();
+	propertyContainer_->setPropertyValue("Value",QVariant(int(min+mtRand_.randInt(max-min))));
 }
-//void RandomIntParameter::setValue(QVariant value)
-//{
-//	bool ok;
-//	int testValue;
-//	testValue = value.toInt(&ok);
-//	if(ok)
-//		value_ = testValue;
-//}
 
 void RandomIntParameter::postSerialize()
 {
 	Parameter::postSerialize();
-	bOperatorUI_ = propertyContainer_->getPropertyValue("OperatorUI").toBool();
 	useSeed_ = propertyContainer_->getPropertyValue("UseSeed").toBool();
 	seed_ = propertyContainer_->getPropertyValue("Seed").toInt();
+	if(useSeed_)
+		mtRand_.seed(seed_);
+	setPropertyRuntimeEditable("Value");
 }
 
 bool RandomIntParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -64,6 +51,34 @@ bool RandomIntParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 		return false;
 	}
 	return true;
+}
+
+bool RandomIntParameter::fixValues(QString&)
+{
+	bool returnVal = true;
+	int min = propertyContainer_->getPropertyValue("Min").toInt();
+	int max = propertyContainer_->getPropertyValue("Max").toInt();
+	int value = propertyContainer_->getPropertyValue("Value").toInt();
+	if(min > max)
+	{
+		min = max;
+		propertyContainer_->setPropertyValue("Min",min);
+		returnVal = false;
+	}
+
+	if(value < min)
+	{
+		value = min;
+		propertyContainer_->setPropertyValue("Value",value);
+		returnVal = false;
+	}
+	if(value > max)
+	{
+		value = max;
+		propertyContainer_->setPropertyValue("Value",value);
+		returnVal = false;
+	}
+	return returnVal;
 }
 
 void RandomIntParameter::checkForPropertyChanges()

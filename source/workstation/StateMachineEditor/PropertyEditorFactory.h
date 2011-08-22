@@ -4,6 +4,8 @@
 #include <QSharedPointer>
 #include <QtVariantPropertyManager>
 #include "EditorState.h"
+#include <QMap>
+#include "PropertyEditTracker.h"
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -16,16 +18,18 @@ class PropertyEditorFactory : public QtVariantEditorFactory
     Q_OBJECT
 
 public:
-   PropertyEditorFactory(QSharedPointer<EditorState> editorState,QWidget *parent=0);
+   PropertyEditorFactory(QWidget *parent=0);
+   void setNextProperty(QSharedPointer<Picto::Property> nextProp);
+   void clear();
 signals:
-	void propertyChanged();
+	void propertyEdited(QSharedPointer<Picto::Property> prop);
 
 protected:
 	virtual QWidget* createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent);
-	virtual bool eventFilter(QObject *obj, QEvent *event);
 private:
-	QSharedPointer<EditorState> editorState_;
-	bool childPropWasChanged_;
+	QList<QSharedPointer<PropertyEditTracker>> editTrackers_;
+
+
 };
 //! [0]
 #endif

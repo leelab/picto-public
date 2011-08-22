@@ -9,7 +9,7 @@
 
 enum ComponentStatus
 {
-	idle, ending, stopped, paused, running
+	disconnected=0,idle, ending, stopped, paused, running
 };
 
 #if defined WIN32 || defined WINCE
@@ -22,7 +22,7 @@ public:
 	ComponentStatusManager();
 	void setName(QString name){name_ = name;};
 	QString getName(){return name_;};
-	void setStatus(ComponentStatus status);
+	virtual void setStatus(ComponentStatus status);
 	void setStatus(QString status);
 	void setSessionID(QUuid sessionID){if(sessionID_ != sessionID){ newSession(); sessionID_ = sessionID;}};
 	QUuid getSessionID(){return sessionID_;};

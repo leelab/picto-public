@@ -49,6 +49,7 @@ public:
 	bool jumpToState(QStringList path, QString state);
 
 	QStringList getTaskNames();
+	QSharedPointer<Task> getTaskByName(QString taskName);
 
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

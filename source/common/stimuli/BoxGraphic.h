@@ -20,6 +20,8 @@ namespace Picto {
 class PICTOLIB_CLASS BoxGraphic : public VisualElement
 {
 	Q_OBJECT
+	Q_PROPERTY(int width READ getWidth WRITE setWidth)
+	Q_PROPERTY(int height READ getHeight WRITE setHeight)
 
 public:
 	BoxGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
@@ -30,14 +32,14 @@ public:
 
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);
+	int getWidth(){return getDimensions().width();};
+	int getHeight(){return getDimensions().height();};
+	void setWidth(int w){QRect dims = getDimensions(); dims.setWidth(w);setDimensions(dims);};
+	void setHeight(int h){QRect dims = getDimensions(); dims.setHeight(h);setDimensions(dims);};
 
 	static const QString type;
-
 public slots:
-	int getWidth() { return getDimensions().width(); };
-	void setWidth(int width);
-	int getHeight() { return getDimensions().height(); };
-	void setHeight(int height);
+	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 
 protected:
 	virtual void postSerialize();

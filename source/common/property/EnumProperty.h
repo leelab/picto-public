@@ -16,9 +16,13 @@ class EnumProperty : public Property
 	Q_OBJECT
 public:
 	EnumProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
-	virtual QString valueString();
+	
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual QString valueString();
 private:
+	void set(QVariant _value) { SetValueFromString(_value,QSharedPointer<QXmlStreamReader>()); };
+	QVariant get(){return (QVariant)valueString();};
+	QVariant getIndex(){return (QVariant)value().toInt();};
 	friend class PropertyContainer;
 };
 

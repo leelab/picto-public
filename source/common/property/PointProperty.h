@@ -14,11 +14,17 @@ class PointProperty : public Property
 #endif
 {
 	Q_OBJECT
+public slots:
+	void set(int x, int y){Property::setValue(QPoint(x,y));};
 protected:
 	PointProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
+	void setX(QVariant x) {set(x.toInt(),value().toPoint().y());};
+	void setY(QVariant y) {set(value().toPoint().x(),y.toInt());};
+	QVariant getX() {return (QVariant)value().toPoint().x();};
+	QVariant getY() {return (QVariant)value().toPoint().y();};
 	friend class PropertyContainer;
 };
 

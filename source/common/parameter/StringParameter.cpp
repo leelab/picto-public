@@ -3,9 +3,9 @@
 namespace Picto {
 
 StringParameter::StringParameter()
-: Parameter(QVariant::String)
+: Parameter()
 {
-	type_ = "String";
+	AddDefinableProperty(QVariant::String,"Value",QVariant());
 }
 
 Parameter* StringParameter::NewParameter()
@@ -47,6 +47,7 @@ void StringParameter::addOption(StringParameterOption option)
 void StringParameter::postSerialize()
 {
 	Parameter::postSerialize();
+	setPropertyRuntimeEditable("Value");
 }
 
 bool StringParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

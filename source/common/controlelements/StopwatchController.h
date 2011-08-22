@@ -22,7 +22,6 @@ class StopwatchController : public ControlElement
 #endif
 {
 	Q_OBJECT
-
 public:
 	StopwatchController();
 

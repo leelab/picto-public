@@ -23,11 +23,10 @@ class PseudorandomIntParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int value READ getValue WRITE setValue)
 public slots:
-	QVariant getLastValue();
-	void setValue(QVariant value){};
-	QVariant getValue();
-	void redoValue(QVariant value);
+	void randomize();
+	void reuseValue(QVariant value);
 
 public:
 	PseudorandomIntParameter();
@@ -36,9 +35,13 @@ public:
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new PseudorandomIntParameter());};
 	virtual QString assetType(){return "PseudorandomInt";};
 
+	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
+	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
+
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool fixValues(QString& warning);
 
 private:
 	void checkForPropertyChanges();

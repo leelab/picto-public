@@ -4,14 +4,80 @@
 #include <QScriptValueIterator>
 #include "../property/EnumProperty.h"
 
+#include "../parameter/BooleanParameter.h"
+#include "../parameter/ChoiceParameter.h"
+#include "../parameter/NumericParameter.h"
+#include "../parameter/RangeParameter.h"
+#include "../parameter/RandomIntParameter.h"
+#include "../parameter/PseudorandomIntParameter.h"
+
+#include "../stimuli/ArrowGraphic.h"
+#include "../stimuli/BoxGraphic.h"
+#include "../stimuli/CircleGraphic.h"
+#include "../stimuli/EllipseGraphic.h"
+#include "../stimuli/LineGraphic.h"
+#include "../stimuli/PictureGraphic.h"
+#include "../stimuli/RandomlyFilledGridGraphic.h"
+#include "../stimuli/TextGraphic.h"
+#include "../stimuli/AudioElement.h"
+#include "../controlelements/circletarget.h"
+#include "../controlelements/recttarget.h"
+
 using namespace Picto;
 
 ScriptableContainer::ScriptableContainer()
-: scriptableFactory_(new AssetFactory(0,-1)),
-  scriptingInitialized_(false),
-  initializedForDesign_(false)
+:	parameterFactory_(new AssetFactory(0,-1)),
+	visualElementFactory_(new AssetFactory(0,-1)),
+	controlTargetFactory_(new AssetFactory(0,-1)),
+	audioElementFactory_(new AssetFactory(0,-1)),
+	scriptingInitialized_(false)
 {
-	AddDefinableObjectFactory("Scriptable",scriptableFactory_);
+	AddDefinableObjectFactory("Parameter",parameterFactory_);
+	parameterFactory_->addAssetType("Boolean",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
+	//parameterFactory_->addAssetType("Choice",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
+	parameterFactory_->addAssetType("Numeric",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
+	parameterFactory_->addAssetType("Range",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RangeParameter::Create))));
+	parameterFactory_->addAssetType("RandomInt",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomIntParameter::Create))));
+	parameterFactory_->addAssetType("PseudorandomInt",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
+
+
+	AddDefinableObjectFactory("VisualElement",visualElementFactory_);
+	//For the sake of cleanliness, we should probably have a StimulusContainer class that adds all of the following.
+	//functionally, there is no problem with just adding them here.
+	visualElementFactory_->addAssetType(ArrowGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
+	visualElementFactory_->addAssetType(BoxGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
+	visualElementFactory_->addAssetType(CircleGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
+	visualElementFactory_->addAssetType(EllipseGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	visualElementFactory_->addAssetType(LineGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	visualElementFactory_->addAssetType(PictureGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
+	visualElementFactory_->addAssetType(RandomlyFilledGridGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
+	visualElementFactory_->addAssetType(TextGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
+
+	AddDefinableObjectFactory("ControlTarget",controlTargetFactory_);
+	controlTargetFactory_->addAssetType("CircleTarget",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleTarget::Create))));
+	controlTargetFactory_->addAssetType("RectTarget",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RectTarget::Create))));
+
+	AddDefinableObjectFactory("AudioElement",audioElementFactory_);
+	audioElementFactory_->addAssetType("AudioElement",
+		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
+
+
 }
 
 /*! \brief Copies the scriptables from the passed in container
@@ -55,7 +121,7 @@ void ScriptableContainer::addChildScriptableContainer(QSharedPointer<ScriptableC
 	if(scriptingInitialized_)
 	{	//Our engine and all child ScriptableContainers engines are initialized, so 
 		//initialize this one too.
-		child->initScripting(initializedForDesign_);
+		child->initScripting();
 	}
 }
 
@@ -65,13 +131,13 @@ QList<QSharedPointer<Scriptable>> ScriptableContainer::getScriptableList()
 	return scriptables_;
 }
 
-bool ScriptableContainer::initScripting(bool forDesign)
+bool ScriptableContainer::initScripting()
 {
 	if(	scriptingInitialized_ )
 		return true;
 
 	//Initialize scripting on this ScriptableContainer
-	if(forDesign || hasScripts() )
+	if(canHaveScripts() && hasScripts() )
 	{
 		//Looks like we're going to need a script engine
 		//create the engine
@@ -114,60 +180,47 @@ bool ScriptableContainer::initScripting(bool forDesign)
 	//Intialize Scripting on all child ScriptableContainers
 	foreach(QSharedPointer<ScriptableContainer> child,scriptableContainers_)
 	{
-		child->initScripting(forDesign);
+		child->initScripting();
 	}
 	scriptingInitialized_ = true;
-	initializedForDesign_ = forDesign;
 	return true;
 }
 
 void ScriptableContainer::resetScriptableValues()
 {
-	QList<QSharedPointer<Asset>> scriptables = getGeneratedChildren("Scriptable");
-	foreach(QSharedPointer<Asset> scriptable,scriptables)
+
+	QStringList childTags = getDefinedChildTags();
+	foreach(QString childTag,childTags)
 	{
-		scriptable.staticCast<Scriptable>()->reset();
+		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> tagChild,tagChildren)
+		{
+			if(tagChild->inherits("Picto::Scriptable"))
+			{
+				tagChild.staticCast<Scriptable>()->reset();
+			}
+		}
 	}
 }
 
 QString ScriptableContainer::getInfo()
 {
-	if(!initScripting(true))
-		return "Script Parsing Error.";
-	if(!qsEngine_)
-		return "No Parameters Available";
-	QString returnVal;
-	QScriptValueIterator it(qsEngine_->globalObject());
-	while (it.hasNext())
+	QString returnVal = Scriptable::getInfo();
+	QString scriptMemberStr;
+	if(canHaveScripts())
 	{
-		it.next();
-		if(!(it.flags() & (QScriptValue::SkipInEnumeration | QScriptValue::Undeletable)))
+		foreach(QSharedPointer<Scriptable> scriptable, scriptables_)
 		{
-			returnVal.append(QString("%1\n").arg(it.name()));
-			QScriptValueIterator it1(it.value());
-			bool passedIrrelevantAncestors = false;
-			while(it1.hasNext())
-			{
-				it1.next();
-				if(!(it1.flags() & (QScriptValue::SkipInEnumeration | QScriptValue::Undeletable)))
-				{
-					if(passedIrrelevantAncestors)
-						returnVal.append(QString("\t%1\n").arg(it1.name()));
-					//Currently, the last function that is being added by ancestors
-					//before the useful script functions is the one below.
-					//Lucky for us, ancestor scripts are added first.
-					//We should obviously find a better way to automate this, but 
-					//it will have to wait...
-					if(it1.name() == "nameEdited()")
-						passedIrrelevantAncestors = true;
-				}
-			}
+			scriptMemberStr.append(scriptable->getScriptingInfo());
 		}
+		if(returnVal.length())
+		{
+			scriptMemberStr.prepend("<h4>Available Scriptable Members</h4>");
+		}
+		else
+			scriptMemberStr.append("<h4>No Scriptable Members Available</h4>");
+		returnVal.append(scriptMemberStr);
 	}
-	if(returnVal.length())
-		returnVal.prepend("Available Members:\n");
-	else
-		return "No Parameters Available";
 	return returnVal;
 }
 
@@ -193,11 +246,17 @@ void ScriptableContainer::runScript(QString scriptName, bool& scriptReturnVal)
 void ScriptableContainer::postSerialize()
 {
 	UIEnabled::postSerialize();
-	QList<QSharedPointer<Asset>> newScriptables = getGeneratedChildren("Scriptable");
-	foreach(QSharedPointer<Asset> newScriptable,newScriptables)
+	QStringList childTags = getDefinedChildTags();
+	foreach(QString childTag,childTags)
 	{
-		QString name = newScriptable->getName();
-		addScriptable(newScriptable.staticCast<Scriptable>());
+		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> tagChild,tagChildren)
+		{
+			if(tagChild->inherits("Picto::Scriptable"))
+			{
+				addScriptable(tagChild.staticCast<Scriptable>());
+			}
+		}
 	}
 }
 
@@ -205,19 +264,25 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 {
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
-	QList<QSharedPointer<Asset>> newScriptables = getGeneratedChildren("Scriptable");
-	QList<QSharedPointer<Asset>>::iterator ita,itb;
-	for(ita = newScriptables.begin();ita != newScriptables.end();ita++)
-	{
-		for(itb = ita+1;itb != newScriptables.end();itb++)
-		{
-			if((*itb)->getName() == (*ita)->getName())
-			{
-				addError("ScriptableContainer", QString("Muliple scriptables have the same name: \"%1\"").arg((*ita)->getName()).toAscii(), xmlStreamReader);
-				return false;
-			}
-		}
-	}
+	
+	//We were checking whether multiple scriptables had the same name below.  This wasn't a complete
+	//check though because we didn't check scriptable names from our children against scriptable names
+	//that are also in scope from above us.  In any event, when we implement script validation, we should
+	//get an error when the second scriptable attempts to add itself to the script engine.
+
+	//QList<QSharedPointer<Asset>> newScriptables = getGeneratedChildren("Scriptable");
+	//QList<QSharedPointer<Asset>>::iterator ita,itb;
+	//for(ita = newScriptables.begin();ita != newScriptables.end();ita++)
+	//{
+	//	for(itb = ita+1;itb != newScriptables.end();itb++)
+	//	{
+	//		if((*itb)->getName() == (*ita)->getName())
+	//		{
+	//			addError("ScriptableContainer", QString("Muliple scriptables have the same name: \"%1\"").arg((*ita)->getName()).toAscii(), xmlStreamReader);
+	//			return false;
+	//		}
+	//	}
+	//}
 	return true;
 }
 

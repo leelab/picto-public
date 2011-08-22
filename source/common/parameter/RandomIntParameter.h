@@ -23,16 +23,18 @@ class RandomIntParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int value READ getValue WRITE setValue)
 public slots:
-	QVariant getLastValue();
-	void setValue(QVariant value){};
-	QVariant getValue();
+	void randomize();
 
 public:
 	RandomIntParameter();
 
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new RandomIntParameter());};
+
+	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
+	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -40,6 +42,7 @@ public:
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool fixValues(QString& warning);
 
 private:
 	void checkForPropertyChanges();

@@ -18,6 +18,8 @@ class RectTarget : public ControlTarget
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int width READ getWidth WRITE setWidth)
+	Q_PROPERTY(int height READ getHeight WRITE setHeight)
 public:
 	RectTarget();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new RectTarget());};
@@ -25,8 +27,7 @@ public:
 	virtual QString assetType(){return "RectTarget";};
 	void draw();
 	virtual bool contains(int x, int y);
-//These public slots exist for binding visual element properties to scripts
-public slots:
+
 	int getWidth() { return getBounds().width(); };
 	void setWidth(int width);
 	int getHeight() { return getBounds().height(); };
