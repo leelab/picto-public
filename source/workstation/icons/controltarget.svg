@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="200"
+   height="150"
+   viewBox="0 0 200 150"
+   id="svg2"
+   inkscape:version="0.48.1 "
+   sodipodi:docname="controltarget.svg">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="1004"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="1.94"
+     inkscape:cx="19.587629"
+     inkscape:cy="75"
+     inkscape:window-x="-8"
+     inkscape:window-y="168"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <desc
+     id="desc4">Created with Raven (http://www.aviary.com)</desc>
+  <defs
+     id="defs6">
+    <linearGradient
+       id="linearGradient3792">
+      <stop
+         id="stop3794"
+         offset="0"
+         style="stop-color:#dc0000;stop-opacity:1;" />
+      <stop
+         id="stop3796"
+         offset="1"
+         style="stop-color:#320000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3792"
+       id="linearGradient3790"
+       x1="249"
+       y1="285"
+       x2="321"
+       y2="285"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     id="Layer_EC920C22-602B-DB2F-B09A-BFA17C842900"
+     opacity="1" />
+  <path
+     d="M250 250L320 250L320 320L250 320L250 250z"
+     id="EGGNode_1313180030508"
+     stroke="#ffffff"
+     stroke-opacity="1"
+     stroke-width="2"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:url(#linearGradient3790);fill-opacity:1.0;opacity:1;fill-rule:nonzero"
+     transform="matrix(1,0,0,1,-156,-208)"
+     opacity="1" />
+  <path
+     d="M372 300C372 253.0558005 331.03405005 215 280.5 215C229.96594995 215 189 253.0558005 189 300C189 346.94419949999997 229.96594995 385 280.5 385C331.03405005 385 372 346.94419949999997 372 300z"
+     id="EGGNode_1313180030512"
+     stroke="#00ff00"
+     stroke-opacity="1"
+     stroke-width="5"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:#ffffff;fill-opacity:0"
+     transform="matrix(0.6569767594337463,0,0,0.6569767594337463,-56,-120.5)"
+     opacity="1" />
+  <path
+     d="M293 220M293 220L311 220"
+     id="EGGNode_1313180030516"
+     stroke="#ff0000"
+     stroke-opacity="1"
+     stroke-width="2"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:#ffffff;fill-opacity:0"
+     transform="matrix(1,0,0,1,-285,-144.75)"
+     opacity="1" />
+  <path
+     d="M293 220M293 220L311 220"
+     id="EGGNode_1313180030520"
+     stroke="#ff0000"
+     stroke-opacity="1"
+     stroke-width="2"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:#ffffff;fill-opacity:0"
+     transform="matrix(0.004114092327654362,0.9999915361404419,-0.9999915361404419,0.004114092327654362,236,-227.5)"
+     opacity="1" />
+  <path
+     d="M293 220M293 220L311 220"
+     id="EGGNode_1313180030524"
+     stroke="#ff0000"
+     stroke-opacity="0.4980392156862745"
+     stroke-width="2"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:#ffffff;fill-opacity:0"
+     transform="matrix(1,0,0,1,-268.5,-162.5)"
+     opacity="1" />
+  <path
+     d="M293 220M293 220L311 220"
+     id="EGGNode_1313180030528"
+     stroke="#ff0000"
+     stroke-opacity="0.4980392156862745"
+     stroke-width="2"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:#ffffff;fill-opacity:0"
+     transform="matrix(0.004114092327654362,0.9999915361404419,-0.9999915361404419,0.004114092327654362,252.25,-245.25)"
+     opacity="1" />
+  <path
+     d="M293 220M293 220L311 220"
+     id="EGGNode_1313180030532"
+     stroke="#ff0000"
+     stroke-opacity="0.24705882352941178"
+     stroke-width="2"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:#ffffff;fill-opacity:0"
+     transform="matrix(1,0,0,1,-247,-166.25)"
+     opacity="1" />
+  <path
+     d="M293 220M293 220L311 220"
+     id="EGGNode_1313180030536"
+     stroke="#ff0000"
+     stroke-opacity="0.24705882352941178"
+     stroke-width="2"
+     stroke-linejoin="miter"
+     stroke-miterlimit="4"
+     style="fill:#ffffff;fill-opacity:0"
+     transform="matrix(0.004114092327654362,0.9999915361404419,-0.9999915361404419,0.004114092327654362,273.75,-249)"
+     opacity="1" />
+</svg>

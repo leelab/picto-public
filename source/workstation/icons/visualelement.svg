@@ -1,0 +1,11 @@
+<svg version="1.1" width="100" height="100" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Raven (http://www.aviary.com)</desc>
+  <defs>
+    <linearGradient id="linearGradient2" x1="449" x2="537.5166604983954" y1="284.8948822334847" y2="284.8948822334847" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1,0,0,1,0,0)">
+      <stop offset="0" style="stop-color:#0000ff;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#000000;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <g id="Layer_674FE9DD-14E6-6273-8D0A-BF9795363EBB" opacity="1"/>
+  <path d="M449 362L537.5166604983954 361.1051177665153L492.48333950160463 284.8948822334847L449 362z" id="EGGNode_1313179403583" stroke="#0000ff" stroke-opacity="0" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#linearGradient2);color-interpolation:rgb" transform="matrix(0.9001814723014832,-3.092678491383225e-16,-3.319757556571451e-19,0.9001814723014832,-392.25,-241.75)" opacity="1"/>
+</svg>
