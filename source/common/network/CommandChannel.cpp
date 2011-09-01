@@ -114,8 +114,8 @@ void CommandChannel::setStatusManager(QSharedPointer<ComponentStatusManager> sta
 void CommandChannel::addResponseHandler(QSharedPointer<ProtocolResponseHandler> responseHandler, bool replaceExisting)
 {
 	QString directive = "";
-	if(!responseHandler.isNull())
-		directive = responseHandler->method();
+	Q_ASSERT(responseHandler);
+	directive = responseHandler->method();
 	if(directive != "" && (!responseHandlerMap_.contains(directive) || replaceExisting))
 		responseHandlerMap_[directive] = responseHandler;
 }

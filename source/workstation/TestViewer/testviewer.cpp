@@ -6,7 +6,7 @@
 #include "../../common/iodevices/NullEventCodeGenerator.h"
 #include "../../common/engine/MouseSignalChannel.h"
 #include "../propertyframe.h"
-
+#include "../../common/parameter/OperatorClickParameter.h"
 
 
 #include <QToolBar>
@@ -75,8 +75,9 @@ void TestViewer::setupEngine()
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
-	visualTargetHost_ = new Picto::VisualTargetHost;
+	visualTargetHost_ = new Picto::VisualTargetHost();
 	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
+	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
 
 	//set up mouse signal channel
 	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,visualTargetHost_));
@@ -161,7 +162,10 @@ void TestViewer::play()
 	{
 		status_ = Running;
 		if(experiment_)
-			experiment_->runTask(taskListBox_->currentText(),engine_);
+		{
+			experiment_->setEngine(engine_);
+			experiment_->runTask(taskListBox_->currentText());
+		}
 		stop();
 	}
 	else if(status_ == Paused)
@@ -251,4 +255,9 @@ void TestViewer::taskListIndexChanged(int)
 	if(!task)
 		return;
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
+}
+
+void TestViewer::operatorClickDetected(QPoint pos)
+{
+	OperatorClickParameter::addClick(pos);
 }

@@ -44,6 +44,8 @@ private:
 	QSharedPointer<Picto::ProtocolResponse> pause();
 	QSharedPointer<Picto::ProtocolResponse> resume();
 	QSharedPointer<Picto::ProtocolResponse> reward(int channel);
+	QSharedPointer<Picto::ProtocolResponse> parameter(QString paramId, QString details);
+	QSharedPointer<Picto::ProtocolResponse> click(QString details);
 
 	QUuid sessionId_;
 	ConnectionManager *conMgr_;

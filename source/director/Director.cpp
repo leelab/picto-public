@@ -10,6 +10,8 @@
 #include "protocol/DirectorRewardResponseHandler.h"
 #include "protocol/DirectorStartResponseHandler.h"
 #include "protocol/DirectorStopResponseHandler.h"
+#include "protocol/DirectorParameterResponseHandler.h"
+#include "protocol/DirectorClickResponseHandler.h"
 using namespace Picto;
 
 Director::Director(QString name,
@@ -107,6 +109,8 @@ int Director::openDevice()
 	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorRewardResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
 	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorStartResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
 	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorStopResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorParameterResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new DirectorClickResponseHandler(statusManager_.staticCast<DirectorStatusManager>())));
 
 
 	//Put up our splash screen

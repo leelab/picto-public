@@ -6,6 +6,7 @@
 
 #include <QSharedPointer>
 #include <QWidget>
+#include <QMouseEvent>
 
 namespace Picto {
 
@@ -45,10 +46,13 @@ public:
 
 	void setVisualTarget(QSharedPointer<VisualTarget> target);
 	QSharedPointer<VisualTarget> getVisualTarget() { return target_; };
+signals:
+	void clickDetected(QPoint pos);
 	 
 protected:
 	void paintEvent(QPaintEvent *);
-
+	virtual void mousePressEvent(QMouseEvent *event);
+	
 private:
 	QSharedPointer<VisualTarget> target_;
 };

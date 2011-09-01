@@ -1,7 +1,6 @@
 #include "VisualTargetHost.h"
 
 #include <QRect>
-
 namespace Picto {
 
 VisualTargetHost::VisualTargetHost()
@@ -30,6 +29,12 @@ void VisualTargetHost::paintEvent(QPaintEvent*)
 {
 	if(!target_.isNull())
 		target_->paint(this);
+}
+
+void VisualTargetHost::mousePressEvent(QMouseEvent *event)
+{
+	emit clickDetected(event->pos());
+	QWidget::mousePressEvent (event);
 }
 
 }; //namespace Picto

@@ -34,7 +34,7 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BehavioralDataUnit")
 	{
-		addError("BehavioralDataUnitPackage","Incorrect tag, expected <BehavioralDataUnitPackage>",xmlStreamReader);
+		addError("BehavioralDataUnit","Incorrect tag, expected <BehavioralDataUnit>",xmlStreamReader);
 		return false;
 	}
 

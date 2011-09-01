@@ -13,8 +13,8 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
         this, SLOT(assetSelected(QSharedPointer<Asset>)));
 	//connect(propertyFactory_.data(), SIGNAL(propertyChanged(QtProperty*,bool)),
  //       this, SLOT(propertyFocusChanged(QtProperty*,bool)));
-	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Picto::Property>)),
-        this, SLOT(propertyEdited(QSharedPointer<Picto::Property>)));
+	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>)),
+        this, SLOT(propertyEdited(QSharedPointer<Property>)));
 }
 
 void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
@@ -45,7 +45,7 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 	setMinimumWidth(childrenRect().width());
 }
 
-void PropertyBrowser::propertyEdited(QSharedPointer<Picto::Property>)
+void PropertyBrowser::propertyEdited(QSharedPointer<Property>)
 {
 	editorState_->setLastActionUndoable();
 }

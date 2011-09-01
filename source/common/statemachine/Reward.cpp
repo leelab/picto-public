@@ -36,7 +36,7 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 
 QString Reward::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
-	resetScriptableValues();
+	//resetScriptableValues();
 	QString result;// = run(engine);
 	QString masterResult;
 	while(masterResult.isEmpty())

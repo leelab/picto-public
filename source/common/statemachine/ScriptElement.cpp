@@ -74,9 +74,9 @@ QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 
 QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
-	resetScriptableValues();
+	//resetScriptableValues();
 	//This will execute the script
-	run(engine);
+	//run(engine);
 
 	QString result;
 	while(result.isEmpty())

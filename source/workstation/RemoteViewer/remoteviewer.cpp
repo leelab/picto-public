@@ -31,6 +31,7 @@
 #include <QCloseEvent>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+using namespace Picto;
 
 
 RemoteViewer::RemoteViewer(QWidget *parent) :
@@ -185,8 +186,9 @@ void RemoteViewer::setupEngine()
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
-	visualTargetHost_ = new Picto::VisualTargetHost;
+	visualTargetHost_ = new Picto::VisualTargetHost();
 	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
+	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
 
 	//set up signal channel
 	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::NetworkSignalChannel(behavioralDataChannel_));
@@ -274,7 +276,9 @@ void RemoteViewer::setupUi()
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	propertyFrame_ = new PropertyFrame();
+	propertyFrame_->setEnabled(false);
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
+	connect(propertyFrame_,SIGNAL(parameterMessageReady(QSharedPointer<Property>)),this,SLOT(parameterMessageReady(QSharedPointer<Property>)));
 	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
 	operationLayout->addWidget(visualTargetHost_);
 	operationLayout->setStretch(0,0);
@@ -377,6 +381,23 @@ void RemoteViewer::reward()
 	{
 		engine_->giveReward(rewardChannel_);
 	}
+}
+
+void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
+{
+	Q_ASSERT(changedProp);
+	QString path = changedProp->getPath();
+	QString name = changedProp->getName();
+	if(changedProp->getIndex()<0)
+		return;
+	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getIndex())),changedProp->toXml());
+}
+
+void RemoteViewer::operatorClickDetected(QPoint pos)
+{
+	if(localStatus_ <= stopped)
+		return;
+	sendTaskCommand(QString("click:%1,%2").arg(pos.x()).arg(pos.y()));
 }
 
 //! \brief Called whenever the connected button changes state
@@ -794,7 +815,9 @@ RemoteViewer::ComponentStatus RemoteViewer::proxyStatus(QString id)
  */  
 QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 {
-	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
+	//Get rid of any incoming responses that were ignored.
+	while(serverChannel_->incomingResponsesWaiting() != 0)
+		serverChannel_->getResponse();
 	QList<ComponentInstance> directors;
 
 	if(!serverChannel_->assureConnection())
@@ -1365,6 +1388,12 @@ bool RemoteViewer::joinSession()
 	QSharedPointer<Picto::NetworkSignalChannel> sigChan;
 	sigChan = engine_->getSignalChannel("PositionChannel").staticCast<Picto::NetworkSignalChannel>();
 	sigChan->setLastTimeDataCollected(lastTransitionTime);
+	
+	//Tell the engine to update its properties from the beginning of the list
+	//of changes.  We need to do this because we created a new experiment from XML but the engine
+	//may have already been used to update properties which means that it wouldn't get all of the 
+	//property changes from the director since the beginning of the session.
+	engine_->setLastTimePropertiesRequested(0);
 
 	//Start the timeout timer
 	if(!timeoutTimer_)
@@ -1383,11 +1412,12 @@ bool RemoteViewer::joinSession()
 	{
 		enableTaskCommands_ = true;
 		startedSession_ = true;
+		propertyFrame_->setEnabled(true);
 	}
 	else
 		enableTaskCommands_ = false;
 
-
+	activeExperiment_->setEngine(engine_);
 
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.
@@ -1430,7 +1460,7 @@ bool RemoteViewer::joinSession()
 		updateActions();
 
 		//WARNING:  Nothing after this line will be processed until the task is finished running
-		activeExperiment_->runTask(taskName.simplified().remove(' '), engine_);
+		activeExperiment_->runTask(taskName.simplified().remove(' '));
 		localStatus_ = Stopped;
 		updateActions();
 		renderingTarget_->showSplash();
@@ -1456,7 +1486,7 @@ bool RemoteViewer::disjoinSession()
 	//	setStatus(tr("Not currently in a session"));
 	//	return false;
 	//}
-
+	propertyFrame_->setEnabled(false);
 	timeoutTimer_->stop();
 
 	//If we're running, we should stop the local engine
@@ -1481,10 +1511,16 @@ bool RemoteViewer::disjoinSession()
 }
 
 //! Sends a task command with the given target.  Returns true if execution was successful
-bool RemoteViewer::sendTaskCommand(QString target)
+bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 {
 	QSharedPointer<Picto::ProtocolCommand> cmd(new Picto::ProtocolCommand("TASK "+target+" PICTO/1.0"));
 	cmd->setFieldValue("Observer-ID",observerId_.toString());
+	if(!msgContent.isEmpty())
+	{
+		QByteArray byteContent = msgContent.toAscii();
+		cmd->setContent(byteContent);
+		cmd->setFieldValue("Content-Length",QString::number(byteContent.length()));
+	}
 	
 	QSharedPointer<Picto::ProtocolResponse> cmdResponse;
 
@@ -1504,7 +1540,7 @@ bool RemoteViewer::sendTaskCommand(QString target)
 	}
 	else if(cmdResponse->getResponseCode() == 400)
 	{
-		setStatus("TASK "+target+tr(" command failed: Unreasonable request"));
+		setStatus("TASK "+target+tr(" command failed: ")+QString(cmdResponse->getContent()));
 		return false;
 	}
 	else if(cmdResponse->getResponseCode() == 404)
@@ -1526,9 +1562,9 @@ bool RemoteViewer::sendTaskCommand(QString target)
 
 void RemoteViewer::taskListIndexChanged(int)
 {
-	if(!experiment_)
+	if(!activeExperiment_)
 		return;
-	QSharedPointer<Task> task = experiment_->getTaskByName(taskListBox_->currentText());
+	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());

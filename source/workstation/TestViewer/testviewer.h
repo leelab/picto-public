@@ -68,6 +68,7 @@ private:
 	Status status_;
 private slots:
 	void taskListIndexChanged(int index);
+	void operatorClickDetected(QPoint pos);
 };
 
 #endif

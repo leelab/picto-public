@@ -194,7 +194,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
  */
 QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
-	resetScriptableValues();
+	//resetScriptableValues();
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 	lastFrameCheckTime_ = lastTransitionTime_;
 
@@ -202,17 +202,17 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	addCursor();
 	
 	//Figure out which scripts we will be running
-	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
-	bool runFrameScript = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
-	bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
+	//bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+	//bool runFrameScript = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
+	//bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
 
-	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
-	QString frameScriptName = getName().simplified().remove(' ')+"Frame";
-	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
+	//QString entryScriptName = getName().simplified().remove(' ')+"Entry";
+	//QString frameScriptName = getName().simplified().remove(' ')+"Frame";
+	//QString exitScriptName = getName().simplified().remove(' ')+"Exit";
 
-	//run the entry script
-	if(runEntryScript)
-		runScript(entryScriptName);
+	////run the entry script
+	//if(runEntryScript)
+	//	runScript(entryScriptName);
 
 	QString result = "";
 	bool isDone = false;
@@ -255,14 +255,16 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		}
 
 
-		//Run the frame scripts enough to catch up
-		if(!isDone && runFrameScript)
-		{
-			for(int i=0; i<masterFrame - frameCounter_; i++)
-			{
-				runScript(frameScriptName);
-			}
-		}
+		////Run the frame scripts enough to catch up
+		//if(!isDone && runFrameScript)
+		//{
+		//	for(int i=0; i<masterFrame - frameCounter_; i++)
+		//	{
+		//		runScript(frameScriptName);
+		//	}
+		//}
+		//Update properties to latest values
+		engine->updatePropertiesFromServer();
 
 		//----------  Draw the scene --------------
 		scene_->render(engine);
@@ -270,9 +272,9 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		frameCounter_ = masterFrame;
 	}
 
-	//run the exit script
-	if(runExitScript)
-		runScript(exitScriptName);
+	////run the exit script
+	//if(runExitScript)
+	//	runScript(exitScriptName);
 
 	return result;
 }
@@ -307,6 +309,8 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	behavData.emptyData();
 	behavData.addData(sigChannel_->getValues());
 
+	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
+
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
 	QString status = "running";
@@ -333,6 +337,8 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	frameData.toXml(xmlWriter);
 	if(behavData.length())
 		behavData.toXml(xmlWriter);
+	if(propPack && propPack->length())
+		propPack->toXml(xmlWriter);
 	xmlWriter->writeEndElement();
 
 	dataCommand->setContent(dataXml);

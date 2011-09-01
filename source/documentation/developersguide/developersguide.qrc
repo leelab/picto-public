@@ -70,6 +70,8 @@
    <file alias="_circle_graphic_8h-source.html">../../../output/documentation/main/html/_circle_graphic_8h-source.html</file>
    <file alias="_circle_target_8cpp-source.html">../../../output/documentation/main/html/_circle_target_8cpp-source.html</file>
    <file alias="_circle_target_8h-source.html">../../../output/documentation/main/html/_circle_target_8h-source.html</file>
+   <file alias="_click_response_handler_8cpp-source.html">../../../output/documentation/main/html/_click_response_handler_8cpp-source.html</file>
+   <file alias="_click_response_handler_8h-source.html">../../../output/documentation/main/html/_click_response_handler_8h-source.html</file>
    <file alias="_color_property_8cpp-source.html">../../../output/documentation/main/html/_color_property_8cpp-source.html</file>
    <file alias="_color_property_8h-source.html">../../../output/documentation/main/html/_color_property_8h-source.html</file>
    <file alias="_command_channel_8cpp-source.html">../../../output/documentation/main/html/_command_channel_8cpp-source.html</file>
@@ -142,6 +144,8 @@
    <file alias="_diagram_item_factory_8h-source.html">../../../output/documentation/main/html/_diagram_item_factory_8h-source.html</file>
    <file alias="_director_8cpp-source.html">../../../output/documentation/main/html/_director_8cpp-source.html</file>
    <file alias="_director_8h-source.html">../../../output/documentation/main/html/_director_8h-source.html</file>
+   <file alias="_director_click_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_click_response_handler_8cpp-source.html</file>
+   <file alias="_director_click_response_handler_8h-source.html">../../../output/documentation/main/html/_director_click_response_handler_8h-source.html</file>
    <file alias="_director_end_session_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_end_session_response_handler_8cpp-source.html</file>
    <file alias="_director_end_session_response_handler_8h-source.html">../../../output/documentation/main/html/_director_end_session_response_handler_8h-source.html</file>
    <file alias="_director_error_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_error_response_handler_8cpp-source.html</file>
@@ -152,6 +156,8 @@
    <file alias="_director_load_exp_response_handler_8h-source.html">../../../output/documentation/main/html/_director_load_exp_response_handler_8h-source.html</file>
    <file alias="_director_new_session_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_new_session_response_handler_8cpp-source.html</file>
    <file alias="_director_new_session_response_handler_8h-source.html">../../../output/documentation/main/html/_director_new_session_response_handler_8h-source.html</file>
+   <file alias="_director_parameter_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_parameter_response_handler_8cpp-source.html</file>
+   <file alias="_director_parameter_response_handler_8h-source.html">../../../output/documentation/main/html/_director_parameter_response_handler_8h-source.html</file>
    <file alias="_director_pause_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_pause_response_handler_8cpp-source.html</file>
    <file alias="_director_pause_response_handler_8h-source.html">../../../output/documentation/main/html/_director_pause_response_handler_8h-source.html</file>
    <file alias="_director_resume_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_resume_response_handler_8cpp-source.html</file>
@@ -269,6 +275,8 @@
    <file alias="_o_k_response_handler_8h-source.html">../../../output/documentation/main/html/_o_k_response_handler_8h-source.html</file>
    <file alias="_old_01workstation_2mainwindow_8cpp-source.html">../../../output/documentation/main/html/_old_01workstation_2mainwindow_8cpp-source.html</file>
    <file alias="_old_01workstation_2mainwindow_8h-source.html">../../../output/documentation/main/html/_old_01workstation_2mainwindow_8h-source.html</file>
+   <file alias="_operator_click_parameter_8cpp-source.html">../../../output/documentation/main/html/_operator_click_parameter_8cpp-source.html</file>
+   <file alias="_operator_click_parameter_8h-source.html">../../../output/documentation/main/html/_operator_click_parameter_8h-source.html</file>
    <file alias="_p_c_m_aural_target_8cpp-source.html">../../../output/documentation/main/html/_p_c_m_aural_target_8cpp-source.html</file>
    <file alias="_p_c_m_aural_target_8h-source.html">../../../output/documentation/main/html/_p_c_m_aural_target_8h-source.html</file>
    <file alias="_p_c_m_mixing_sample_8cpp-source.html">../../../output/documentation/main/html/_p_c_m_mixing_sample_8cpp-source.html</file>
@@ -279,6 +287,8 @@
    <file alias="_parameter_container_8h-source.html">../../../output/documentation/main/html/_parameter_container_8h-source.html</file>
    <file alias="_parameter_factory_8cpp-source.html">../../../output/documentation/main/html/_parameter_factory_8cpp-source.html</file>
    <file alias="_parameter_factory_8h-source.html">../../../output/documentation/main/html/_parameter_factory_8h-source.html</file>
+   <file alias="_parameter_response_handler_8cpp-source.html">../../../output/documentation/main/html/_parameter_response_handler_8cpp-source.html</file>
+   <file alias="_parameter_response_handler_8h-source.html">../../../output/documentation/main/html/_parameter_response_handler_8h-source.html</file>
    <file alias="_pause_response_handler_8cpp-source.html">../../../output/documentation/main/html/_pause_response_handler_8cpp-source.html</file>
    <file alias="_pause_response_handler_8h-source.html">../../../output/documentation/main/html/_pause_response_handler_8h-source.html</file>
    <file alias="_physiological_data_store_8cpp-source.html">../../../output/documentation/main/html/_physiological_data_store_8cpp-source.html</file>
@@ -339,8 +349,14 @@
    <file alias="_property_8h-source.html">../../../output/documentation/main/html/_property_8h-source.html</file>
    <file alias="_property_browser_8cpp-source.html">../../../output/documentation/main/html/_property_browser_8cpp-source.html</file>
    <file alias="_property_browser_8h-source.html">../../../output/documentation/main/html/_property_browser_8h-source.html</file>
+   <file alias="_property_channel_8cpp-source.html">../../../output/documentation/main/html/_property_channel_8cpp-source.html</file>
+   <file alias="_property_channel_8h-source.html">../../../output/documentation/main/html/_property_channel_8h-source.html</file>
    <file alias="_property_container_8cpp-source.html">../../../output/documentation/main/html/_property_container_8cpp-source.html</file>
    <file alias="_property_container_8h-source.html">../../../output/documentation/main/html/_property_container_8h-source.html</file>
+   <file alias="_property_data_unit_8cpp-source.html">../../../output/documentation/main/html/_property_data_unit_8cpp-source.html</file>
+   <file alias="_property_data_unit_8h-source.html">../../../output/documentation/main/html/_property_data_unit_8h-source.html</file>
+   <file alias="_property_data_unit_package_8cpp-source.html">../../../output/documentation/main/html/_property_data_unit_package_8cpp-source.html</file>
+   <file alias="_property_data_unit_package_8h-source.html">../../../output/documentation/main/html/_property_data_unit_package_8h-source.html</file>
    <file alias="_property_edit_tracker_8cpp-source.html">../../../output/documentation/main/html/_property_edit_tracker_8cpp-source.html</file>
    <file alias="_property_edit_tracker_8h-source.html">../../../output/documentation/main/html/_property_edit_tracker_8h-source.html</file>
    <file alias="_property_editor_factory_8cpp-source.html">../../../output/documentation/main/html/_property_editor_factory_8cpp-source.html</file>
@@ -349,6 +365,8 @@
    <file alias="_property_factory_8h-source.html">../../../output/documentation/main/html/_property_factory_8h-source.html</file>
    <file alias="_property_frame_8cpp-source.html">../../../output/documentation/main/html/_property_frame_8cpp-source.html</file>
    <file alias="_property_frame_8h-source.html">../../../output/documentation/main/html/_property_frame_8h-source.html</file>
+   <file alias="_property_table_8cpp-source.html">../../../output/documentation/main/html/_property_table_8cpp-source.html</file>
+   <file alias="_property_table_8h-source.html">../../../output/documentation/main/html/_property_table_8h-source.html</file>
    <file alias="_property_tool_group_8cpp-source.html">../../../output/documentation/main/html/_property_tool_group_8cpp-source.html</file>
    <file alias="_property_tool_group_8h-source.html">../../../output/documentation/main/html/_property_tool_group_8h-source.html</file>
    <file alias="_property_widget_8cpp-source.html">../../../output/documentation/main/html/_property_widget_8cpp-source.html</file>
@@ -815,6 +833,9 @@
    <file alias="class_picto_1_1_numeric_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_numeric_parameter-members.html</file>
    <file alias="class_picto_1_1_numeric_parameter.html">../../../output/documentation/main/html/class_picto_1_1_numeric_parameter.html</file>
    <file alias="class_picto_1_1_numeric_parameter.png">../../../output/documentation/main/html/class_picto_1_1_numeric_parameter.png</file>
+   <file alias="class_picto_1_1_operator_click_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter-members.html</file>
+   <file alias="class_picto_1_1_operator_click_parameter.html">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter.html</file>
+   <file alias="class_picto_1_1_operator_click_parameter.png">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter.png</file>
    <file alias="class_picto_1_1_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_parameter-members.html</file>
    <file alias="class_picto_1_1_parameter.html">../../../output/documentation/main/html/class_picto_1_1_parameter.html</file>
    <file alias="class_picto_1_1_parameter.png">../../../output/documentation/main/html/class_picto_1_1_parameter.png</file>
@@ -883,8 +904,18 @@
    <file alias="class_picto_1_1_property-members.html">../../../output/documentation/main/html/class_picto_1_1_property-members.html</file>
    <file alias="class_picto_1_1_property.html">../../../output/documentation/main/html/class_picto_1_1_property.html</file>
    <file alias="class_picto_1_1_property.png">../../../output/documentation/main/html/class_picto_1_1_property.png</file>
+   <file alias="class_picto_1_1_property_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_property_channel-members.html</file>
+   <file alias="class_picto_1_1_property_channel.html">../../../output/documentation/main/html/class_picto_1_1_property_channel.html</file>
    <file alias="class_picto_1_1_property_container-members.html">../../../output/documentation/main/html/class_picto_1_1_property_container-members.html</file>
    <file alias="class_picto_1_1_property_container.html">../../../output/documentation/main/html/class_picto_1_1_property_container.html</file>
+   <file alias="class_picto_1_1_property_data_unit-members.html">../../../output/documentation/main/html/class_picto_1_1_property_data_unit-members.html</file>
+   <file alias="class_picto_1_1_property_data_unit.html">../../../output/documentation/main/html/class_picto_1_1_property_data_unit.html</file>
+   <file alias="class_picto_1_1_property_data_unit.png">../../../output/documentation/main/html/class_picto_1_1_property_data_unit.png</file>
+   <file alias="class_picto_1_1_property_data_unit_package-members.html">../../../output/documentation/main/html/class_picto_1_1_property_data_unit_package-members.html</file>
+   <file alias="class_picto_1_1_property_data_unit_package.html">../../../output/documentation/main/html/class_picto_1_1_property_data_unit_package.html</file>
+   <file alias="class_picto_1_1_property_data_unit_package.png">../../../output/documentation/main/html/class_picto_1_1_property_data_unit_package.png</file>
+   <file alias="class_picto_1_1_property_table-members.html">../../../output/documentation/main/html/class_picto_1_1_property_table-members.html</file>
+   <file alias="class_picto_1_1_property_table.html">../../../output/documentation/main/html/class_picto_1_1_property_table.html</file>
    <file alias="class_picto_1_1_pseudorandom_int_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_pseudorandom_int_parameter-members.html</file>
    <file alias="class_picto_1_1_pseudorandom_int_parameter.html">../../../output/documentation/main/html/class_picto_1_1_pseudorandom_int_parameter.html</file>
    <file alias="class_picto_1_1_pseudorandom_int_parameter.png">../../../output/documentation/main/html/class_picto_1_1_pseudorandom_int_parameter.png</file>
@@ -1417,6 +1448,9 @@
    <file alias="struct_director_new_session_response_handler-members.html">../../../output/documentation/main/html/struct_director_new_session_response_handler-members.html</file>
    <file alias="struct_director_new_session_response_handler.html">../../../output/documentation/main/html/struct_director_new_session_response_handler.html</file>
    <file alias="struct_director_new_session_response_handler.png">../../../output/documentation/main/html/struct_director_new_session_response_handler.png</file>
+   <file alias="struct_director_parameter_response_handler-members.html">../../../output/documentation/main/html/struct_director_parameter_response_handler-members.html</file>
+   <file alias="struct_director_parameter_response_handler.html">../../../output/documentation/main/html/struct_director_parameter_response_handler.html</file>
+   <file alias="struct_director_parameter_response_handler.png">../../../output/documentation/main/html/struct_director_parameter_response_handler.png</file>
    <file alias="struct_director_pause_response_handler-members.html">../../../output/documentation/main/html/struct_director_pause_response_handler-members.html</file>
    <file alias="struct_director_pause_response_handler.html">../../../output/documentation/main/html/struct_director_pause_response_handler.html</file>
    <file alias="struct_director_pause_response_handler.png">../../../output/documentation/main/html/struct_director_pause_response_handler.png</file>
@@ -1500,6 +1534,9 @@
    <file alias="struct_picto_1_1_p_c_m_mixing_sample-members.html">../../../output/documentation/main/html/struct_picto_1_1_p_c_m_mixing_sample-members.html</file>
    <file alias="struct_picto_1_1_p_c_m_mixing_sample.html">../../../output/documentation/main/html/struct_picto_1_1_p_c_m_mixing_sample.html</file>
    <file alias="struct_picto_1_1_p_c_m_mixing_sample.png">../../../output/documentation/main/html/struct_picto_1_1_p_c_m_mixing_sample.png</file>
+   <file alias="struct_picto_1_1_parameter_response_handler-members.html">../../../output/documentation/main/html/struct_picto_1_1_parameter_response_handler-members.html</file>
+   <file alias="struct_picto_1_1_parameter_response_handler.html">../../../output/documentation/main/html/struct_picto_1_1_parameter_response_handler.html</file>
+   <file alias="struct_picto_1_1_parameter_response_handler.png">../../../output/documentation/main/html/struct_picto_1_1_parameter_response_handler.png</file>
    <file alias="struct_picto_1_1_pause_response_handler-members.html">../../../output/documentation/main/html/struct_picto_1_1_pause_response_handler-members.html</file>
    <file alias="struct_picto_1_1_pause_response_handler.html">../../../output/documentation/main/html/struct_picto_1_1_pause_response_handler.html</file>
    <file alias="struct_picto_1_1_pause_response_handler.png">../../../output/documentation/main/html/struct_picto_1_1_pause_response_handler.png</file>

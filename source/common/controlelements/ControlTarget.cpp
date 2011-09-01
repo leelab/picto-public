@@ -8,8 +8,9 @@ ControlTarget::ControlTarget(QPoint position, QColor color)
 VisualElement(position,color)
 {
 	setActive(false);
-	AddDefinableProperty(QVariant::Bool,"OperatorVisible",true);
-	AddDefinableProperty(QVariant::Bool,"SubjectVisible",false);
+	//These are redefined from Visual Element to fix the default values.
+	AddDefinableProperty(QVariant::Bool,"OperatorView",true);
+	AddDefinableProperty(QVariant::Bool,"SubjectView",false);
 }
 
 void ControlTarget::setActive(bool active)

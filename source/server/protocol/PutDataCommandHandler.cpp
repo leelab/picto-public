@@ -106,6 +106,14 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertBehavioralData(behaveData);
 		}
+		else if(dataType == "PropertyDataUnitPackage")
+		{
+			//Extract the PropertyDataUnitPackage
+			QSharedPointer<Picto::PropertyDataUnitPackage> propData(new Picto::PropertyDataUnitPackage());
+			propData->fromXml(xmlReader);
+
+			sessionInfo->insertPropertyData(propData);
+		}
 		else if(dataType == "StateDataUnit")
 		{
 			//deserialize the data store

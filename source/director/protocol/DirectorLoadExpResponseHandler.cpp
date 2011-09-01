@@ -29,6 +29,8 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 	{
 		statusManager_.staticCast<DirectorStatusManager>()->setExperiment(experiment);
 		statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus("Loaded experiment, Session ID: " + engine->getSessionId().toString());
+		QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.staticCast<DirectorStatusManager>()->getEngine();
+		experiment->setEngine(engine);
 	}
 	return true;
 }

@@ -66,6 +66,7 @@ public:
 	QSharedPointer<Asset> createChildAsset(QString tagName,QString type,QString& error);
 	void clear();
 	QList<QSharedPointer<DataStore>> getRuntimeEditableDescendants();
+	virtual QList<QSharedPointer<Property>> getDescendantsProperties();
 	virtual bool isRuntimeEditable(){return false;};
 
 public slots:

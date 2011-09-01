@@ -5,13 +5,14 @@
 namespace Picto {
 
 VisualElement::VisualElement(QPoint position, QColor color) :
-	shouldUpdateCompositingSurfaces_(true),
-	visible_(true)
+	shouldUpdateCompositingSurfaces_(true)
 {
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
 	AddDefinableProperty(QVariant::Int,"Layer",0);
 	AddDefinableProperty(QVariant::Bool,"Visible",true);
+	AddDefinableProperty(QVariant::Bool,"OperatorView",true);
+	AddDefinableProperty(QVariant::Bool,"SubjectView",true);
 }
 
 VisualElement::~VisualElement()
@@ -53,6 +54,18 @@ void VisualElement::setColor(QColor color)
 {
 	propertyContainer_->setPropertyValue("Color",color);
 }
+
+/*! \brief Returns whether the object is visible to the input user.
+ *	The input is true for subject, false for operator
+ */
+bool VisualElement::getVisibleByUser(bool subject)
+{
+	if(subject)
+		return getVisible() && getSubjectView();
+	return getVisible() && getOperatorView();
+
+}
+
 
 void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface)
 {
@@ -106,6 +119,8 @@ void VisualElement::postSerialize()
 	setPropertyRuntimeEditable("Color");
 	setPropertyRuntimeEditable("Layer");
 	setPropertyRuntimeEditable("Visible");
+	setPropertyRuntimeEditable("OperatorView");
+	setPropertyRuntimeEditable("SubjectView");
 }
 
 bool VisualElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

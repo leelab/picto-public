@@ -15,6 +15,8 @@
 #include "SignalChannel.h"
 #include "../iodevices/RewardController.h"
 #include "../iodevices/EventCodeGenerator.h"
+#include "../storage/PropertyDataUnitPackage.h"
+#include "propertytable.h"
 
 #include <QSharedPointer>
 #include <QUuid>
@@ -62,12 +64,14 @@ namespace PictoEngineTimingType
  * PictoServer instance.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PictoEngine
+class PICTOLIB_API PictoEngine : public QObject
 #else
-class PictoEngine
+class PictoEngine : public QObject
 #endif
 {
+		Q_OBJECT
 public:
+
 	PictoEngine();
 
 	/*! Sets the timing control for the PictoEngine to \a _timingType.
@@ -108,11 +112,20 @@ public:
 	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
 	void giveReward(int channel);
 
+	//! \brief Retrieves the latest package of changed properties.
+	//! Note that a package can only be retrieved once after which a new package is created.
+	QSharedPointer<PropertyDataUnitPackage> getChangedPropertyPackage();
+	void updatePropertiesFromServer();
+	void clearChangedPropertyPackage(){propPackage_.clear();};
+
 	bool setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getDataCommandChannel();
 
 	bool setUpdateCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getUpdateCommandChannel();
+
+	void setPropertyTable(QSharedPointer<PropertyTable> propTable);
+	QSharedPointer<PropertyTable> getPropertyTable(){return propTable_;};
 
 	void setSessionId(QUuid sessionId);
 	QUuid getSessionId() { return sessionId_; };
@@ -123,6 +136,7 @@ public:
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
 	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
+	void setLastTimePropertiesRequested(double time){lastTimePropChangesRequested_ = time;};
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -132,9 +146,11 @@ private:
 	QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
 	QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	QSharedPointer<RewardController> rewardController_;
+	QSharedPointer<PropertyDataUnitPackage> propPackage_;
 	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server
 	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
 	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode
+	QSharedPointer<PropertyTable> propTable_;
 
 	QUuid sessionId_;
 	QString name_;
@@ -142,6 +158,9 @@ private:
 	int engineCommand_;
 
 	bool slave_;
+	double lastTimePropChangesRequested_;
+private slots:
+	void addChangedProperty(QSharedPointer<Property> changedProp);
 };
 
 /*! @} */

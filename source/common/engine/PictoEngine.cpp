@@ -18,7 +18,9 @@ namespace Picto {
 
 PictoEngine::PictoEngine() :
 	timingType_(PictoEngineTimingType::precise),
-	slave_(false)
+	propTable_(NULL),
+	slave_(false),
+	lastTimePropChangesRequested_(0)
 {
 	bExclusiveMode_ = true;
 	setSessionId(QUuid());
@@ -156,6 +158,80 @@ void PictoEngine::giveReward(int channel)
 
 }
 
+void PictoEngine::addChangedProperty(QSharedPointer<Property> changedProp)
+{
+	if(slave_)
+		return;
+	if(!propPackage_)
+		propPackage_ = QSharedPointer<PropertyDataUnitPackage>(new PropertyDataUnitPackage());
+	Timestamper stamper;
+	//If the changedProp has no parent, its a UI parameter.  Set the path as such.
+	propPackage_->addData(changedProp->getIndex(),changedProp->getParentAsset()?changedProp->getPath():"UIParameter",changedProp->toXml(),stamper.stampSec());
+}
+//! \brief Retrieves the latest package of changed properties.
+//! Note that a package can only be retrieved once after which a new package is created.
+QSharedPointer<PropertyDataUnitPackage> PictoEngine::getChangedPropertyPackage()
+{
+	QSharedPointer<PropertyDataUnitPackage> returnVal = propPackage_;
+	propPackage_.clear();
+	return returnVal;
+}
+
+//! \brief Gets the latest property changes from the server and applies them to the local properties.
+void PictoEngine::updatePropertiesFromServer()
+{
+	if(propTable_.isNull())
+		return;
+	//Collect the data from the server
+	QString commandStr = QString("GETDATA PropertyDataUnitPackage:%1 PICTO/1.0").arg(lastTimePropChangesRequested_,0,'e',6);
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolResponse> response;
+
+	slaveCommandChannel_->sendCommand(command);
+	//No response
+	if(!slaveCommandChannel_->waitForResponse(1000))
+		return;
+
+	response = slaveCommandChannel_->getResponse();
+
+	//Response not 200:OK
+	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
+		return;
+	
+	QByteArray xmlFragment = response->getContent();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
+
+	while(xmlReader->readNext() && xmlReader->name() != "Data");
+
+	Q_ASSERT(!xmlReader->atEnd());
+
+	PropertyDataUnitPackage propData;
+
+	xmlReader->readNext();
+	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
+	{
+		if(xmlReader->name() == "PropertyDataUnitPackage")
+		{
+			propData.fromXml(xmlReader);
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	while(propData.length() > 0)
+	{
+		// Push the data into our signal channel
+		QSharedPointer<Picto::PropertyDataUnit> dataPoint;
+		dataPoint = propData.takeFirstDataPoint();
+
+		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
+		qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
+		lastTimePropChangesRequested_ = dataPoint->time_;
+	}
+}
+
 //! Sets the CommandChannel used for data.  Returns true if the channel's status is connected
 bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel)
 {
@@ -190,6 +266,16 @@ bool PictoEngine::setUpdateCommandChannel(QSharedPointer<CommandChannel> command
 QSharedPointer<CommandChannel> PictoEngine::getUpdateCommandChannel()
 {
 	return updateCommandChannel_;
+}
+
+void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
+{
+	if(propTable_ == propTable)
+		return;
+	if(propTable_)
+		disconnect(propTable_.data(),SIGNAL(propertyChanged(QSharedPointer<Property>)),this,SLOT(addChangedProperty(QSharedPointer<Property>)));
+	propTable_ = propTable;	
+	connect(propTable_.data(),SIGNAL(propertyChanged(QSharedPointer<Property>)),this,SLOT(addChangedProperty(QSharedPointer<Property>)));
 }
 
 void PictoEngine::setSessionId(QUuid sessionId)

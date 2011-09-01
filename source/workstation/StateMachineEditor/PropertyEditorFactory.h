@@ -6,6 +6,7 @@
 #include "EditorState.h"
 #include <QMap>
 #include "PropertyEditTracker.h"
+using namespace Picto;
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -22,7 +23,7 @@ public:
    void setNextProperty(QSharedPointer<Picto::Property> nextProp);
    void clear();
 signals:
-	void propertyEdited(QSharedPointer<Picto::Property> prop);
+	void propertyEdited(QSharedPointer<Property> prop);
 
 protected:
 	virtual QWidget* createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent);

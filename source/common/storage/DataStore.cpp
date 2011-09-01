@@ -429,6 +429,33 @@ QList<QSharedPointer<DataStore>> DataStore::getRuntimeEditableDescendants()
 	}
 	return runtimeDesc;
 }
+QList<QSharedPointer<Property>> DataStore::getDescendantsProperties()
+{
+	QList<QSharedPointer<Property>> descendantProps;
+	QMap<QString, QVector<QSharedPointer<Property>>> propMap = propertyContainer_->getProperties();
+	foreach(QVector<QSharedPointer<Property>> propVec, propMap)
+	{
+		foreach(QSharedPointer<Property> prop, propVec)
+		{
+			descendantProps.append(prop);
+		}
+	}
+
+	QStringList childTags = getDefinedChildTags();
+	QList<QSharedPointer<Asset>> childList;
+	foreach(QString childTag,childTags)
+	{
+		childList = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> child,childList)
+		{
+			if(child->inherits("Picto::DataStore"))
+			{
+				descendantProps.append(child.staticCast<DataStore>()->getDescendantsProperties());
+			}
+		}
+	}
+	return descendantProps;
+}
 
 bool DataStore::hasChildrenOfType(QString tagName)
 {

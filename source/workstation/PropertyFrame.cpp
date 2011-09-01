@@ -9,8 +9,8 @@ PropertyFrame::PropertyFrame(QWidget *parent) :
 	propertyFactory_(new PropertyEditorFactory()),
 	mainWidget_(NULL)
 {
-	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Picto::Property>)),
-        this, SLOT(propertyEdited(QSharedPointer<Picto::Property>)));
+	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>)),
+        this, SLOT(propertyEdited(QSharedPointer<Property>)));
 }
 
 void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
@@ -56,8 +56,9 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	setFixedWidth((reqWidth<350)?reqWidth:350);
 }
 
-void PropertyFrame::propertyEdited(QSharedPointer<Picto::Property>)
+void PropertyFrame::propertyEdited(QSharedPointer<Property> prop)
 {
 	setWidget(mainWidget_);
 	//Send it to director
+	emit parameterMessageReady(prop);
 }

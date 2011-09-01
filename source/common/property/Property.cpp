@@ -11,7 +11,8 @@ manager_(manager),
 tagName_(""),
 typeVal_(""),
 scriptEditable_(true),
-runtimeEnabled_(false)
+runtimeEnabled_(false),
+index_(-1)
 {
 	connect(manager_.data(),SIGNAL(valueChanged(QtProperty *, const QVariant &)),this,SLOT(valueChanged(QtProperty *, const QVariant &)));
 	connect(manager_.data(),SIGNAL(attributeChanged(QtProperty*,const QString&, const QVariant&)),this,SLOT(attributeChanged(QtProperty*,const QString&, const QVariant&)));
@@ -207,6 +208,11 @@ QString value = xmlStreamReader->text().toString();
 	return true;
 }
 
+void Property::setValueFromProp(QSharedPointer<Property> prop)
+{
+	setValue(prop->value());
+}
+
 void Property::AddSerializationAttribute(QString name)
 {
 	SetSerializationAttributeValue(name,QVariant());
@@ -237,13 +243,19 @@ bool Property::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamRead
 void Property::valueChanged(QtProperty *property, const QVariant &)
 {
 	if(property == variantProp_.data())
+	{
 		emit edited();
+		emit valueChanged(selfPtr().staticCast<Property>());
+	}
 }
 void Property::attributeChanged(QtProperty *property,
             const QString &, const QVariant &)
 {
 	if(property == variantProp_.data())
+	{
 		emit edited();
+		emit valueChanged(selfPtr().staticCast<Property>());
+	}
 }
 
 }; //namespace Picto

@@ -9,6 +9,7 @@
 #include "../../common/network/ServerDiscoverer.h"
 
 #include <QUuid>
+using namespace Picto;
 
 class QAction;
 class QToolBar;
@@ -41,6 +42,8 @@ private slots:
 	void pause();
 	void stop();
 	void reward();
+	void parameterMessageReady(QSharedPointer<Property> changedProp);
+	void operatorClickDetected(QPoint pos);
 
 	void changeConnectionState(bool checked);
 	
@@ -68,7 +71,7 @@ private:
 	void generateTaskList();
 
 	void setStatus(QString status);
-	bool sendTaskCommand(QString target);
+	bool sendTaskCommand(QString target, QString msgContent = "");
 	bool startSession();
 	bool endSession();
 	bool joinSession();

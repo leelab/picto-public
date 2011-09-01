@@ -30,6 +30,8 @@ struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public Scripta
 	Q_OBJECT
 	Q_PROPERTY(int layer READ getLayer WRITE setLayer)
 	Q_PROPERTY(bool visible READ getVisible WRITE setVisible)
+	Q_PROPERTY(bool operatorView READ getOperatorView WRITE setOperatorView)
+	Q_PROPERTY(bool subjectView READ getSubjectView WRITE setSubjectView)
 	Q_PROPERTY(int x READ getX WRITE setX)
 	Q_PROPERTY(int y READ getY WRITE setY)
 	Q_PROPERTY(int red READ getRed WRITE setRed)
@@ -59,6 +61,11 @@ public:
 	int getLayer() { return propertyContainer_->getPropertyValue("Layer").toInt(); }
 	virtual void setVisible(bool visible){propertyContainer_->setPropertyValue("Visible",visible);};
 	virtual bool getVisible(){return propertyContainer_->getPropertyValue("Visible").toBool();};
+	bool getVisibleByUser(bool subject);
+	virtual void setOperatorView(bool visible){propertyContainer_->setPropertyValue("OperatorView",visible);};
+	virtual bool getOperatorView(){return propertyContainer_->getPropertyValue("OperatorView").toBool();};
+	virtual void setSubjectView(bool visible){propertyContainer_->setPropertyValue("SubjectView",visible);};
+	virtual bool getSubjectView(){return propertyContainer_->getPropertyValue("SubjectView").toBool();};
 	int getX(){return getPosition().x();};
 	void setX(int x){return setPosition(QPoint(x,getPosition().y()));};
 	int getY(){return getPosition().y();};

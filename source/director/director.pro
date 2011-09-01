@@ -35,6 +35,10 @@ HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorRewardResponseHandler
 SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorRewardResponseHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorErrorResponseHandler.h
 SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorErrorResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorParameterResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorParameterResponseHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorClickResponseHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorClickResponseHandler.cpp
 
 
 win32 {

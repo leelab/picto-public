@@ -31,7 +31,7 @@ void PropertyEditorFactory::clear()
 	editTrackers_.clear();
 }
 
-QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent)
+QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget*)
 {
 	QWidget* resultWidget = NULL;
 	QString propName = property->propertyName();

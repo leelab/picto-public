@@ -41,12 +41,19 @@ public:
 	//Set this property as changeable during runtime.
 	void setRuntimeEditable(bool enabled = true){runtimeEnabled_ = enabled;};
 	bool isRuntimeEnabled(){return runtimeEnabled_;};
+	int getIndex(){return index_;};
+	void setIndex(int index){index_ = index;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
 
 	virtual QString identifier(){return tagName_;};
 	virtual QString assetType(){return "Property";};
+
+signals:
+	void valueChanged(QSharedPointer<Property> changedProp);
+public slots:
+	void setValueFromProp(QSharedPointer<Property> prop);
 
 protected:
 	Property(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
@@ -64,6 +71,7 @@ private:
 	friend class PropertyContainer;
 	void addSubProperty(QSharedPointer<Property> prop);
 	void setName(QString name);
+	int index_;
 	QString tagName_;
 	QString tagText_;
 	QString typeVal_; // In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.

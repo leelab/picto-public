@@ -88,4 +88,16 @@ void Asset::reinitialize()
 	//Ideally postSerialize calls will be callable over and over again, but in practice, this isn't yet the case.
 	//postSerialize();
 }
+
+QString Asset::getPath()
+{
+	QString returnVal = getName();
+	QSharedPointer<Asset> curr = getParentAsset();
+	while(curr)
+	{
+		returnVal.prepend(QString("%1::").arg(curr->getName()));
+		curr = curr->getParentAsset();
+	}
+	return returnVal;
+}
 }; //namespace Picto

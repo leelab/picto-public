@@ -48,6 +48,7 @@ void PropertyContainer::copyProperties(QSharedPointer<PropertyContainer> contain
 			{
 				newProp->setAttribute(attribute,prop->attributeValue(attribute));
 			}
+			newProp->setSelfPtr(newProp);
 		}
 	}
 }

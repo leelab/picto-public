@@ -7,6 +7,7 @@
 #include <qttreepropertybrowser>
 #include "PropertyEditorFactory.h"
 #include "EditorState.h"
+using namespace Picto;
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -27,7 +28,7 @@ private:
 	QSharedPointer<EditorState> editorState_;
 	QSharedPointer<PropertyEditorFactory> propertyFactory_;
 private slots:
-	void propertyEdited(QSharedPointer<Picto::Property> prop);
+	void propertyEdited(QSharedPointer<Property> prop);
 };
 //! [0]
 #endif

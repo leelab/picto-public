@@ -48,6 +48,12 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 		dataStore = sessionInfo->selectBehavioralData(timestamp);
 		dataStore->toXml(xmlWriter);
 	}
+	else if(dataType.compare("PropertyDataUnitPackage",Qt::CaseInsensitive) == 0)
+	{
+		QSharedPointer<Picto::PropertyDataUnitPackage> dataStore;
+		dataStore = sessionInfo->selectPropertyData(timestamp);
+		dataStore->toXml(xmlWriter);
+	}
 	else if(dataType.compare("StateDataUnit",Qt::CaseInsensitive) == 0)
 	{
 		QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStores;

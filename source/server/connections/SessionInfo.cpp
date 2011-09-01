@@ -255,6 +255,7 @@ void SessionInfo::alignTimestampsTo(QString componentType)
 //! Returns the next pending directive
 QString SessionInfo::pendingDirective(QUuid componentID)
 {
+	QMutexLocker locker(&directiveMutex_);
 	if(!pendingDirectives_.contains(componentID) || pendingDirectives_[componentID].isEmpty())
 		return QString();
 	else
@@ -262,15 +263,26 @@ QString SessionInfo::pendingDirective(QUuid componentID)
 }
 
 /*!	\brief Adds the input directive to the pendingDirectives list for the component with the input type
+ * If overwriteRedundantDirective is set (default) and the last directive type is the same as the new one, it will be overwritten.
  */
-void SessionInfo::addPendingDirective(QString directive, QString componentType)
+void SessionInfo::addPendingDirective(QString directive, QString componentType, bool overwriteRedundantDirective)
 {
 	QSharedPointer<ComponentInfo> component = getComponentByType(componentType);
 	if(component.isNull())
 		return;
 	QStringList* directives = &pendingDirectives_[component->getUuid()];
-	if(!directives->size() || (directives->first() != directive))
-		directives->append(directive); 
+	if(overwriteRedundantDirective)
+	{
+		QMutexLocker locker(&directiveMutex_);
+		if(directives->size())
+		{
+			if(directives->first().split(" ").first() == directive.split(" ").first())
+			{	//Directive is redundant.  Replace last.
+				directives->takeFirst();
+			}
+		}
+	}
+	directives->append(directive); 
 };
 
 
@@ -476,6 +488,27 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 		cacheQ.bindValue(":xpos",dataPoint->x);
 		cacheQ.bindValue(":ypos",dataPoint->y);
 		cacheQ.bindValue(":time",dataPoint->t);
+		executeWriteQuery(&cacheQ,"",false);	
+	}
+}
+
+//! \brief inserts a behavioral data point in the cache database
+void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPackage> data)
+{
+	QSqlDatabase cacheDb = getCacheDb();
+	QSqlQuery cacheQ(cacheDb);
+
+	QSharedPointer<Picto::PropertyDataUnit> dataPoint;
+	while(data->length() > 0)
+	{
+		dataPoint = data->takeFirstDataPoint();
+		cacheQ.prepare("INSERT INTO properties (dataid, propid, path, value, time)"
+			"VALUES(:dataid, :index, :path, :value, :time)");
+		cacheQ.bindValue(":dataid", dataPoint->getDataID());
+		cacheQ.bindValue(":propid", dataPoint->index_);
+		cacheQ.bindValue(":path",dataPoint->path_);
+		cacheQ.bindValue(":value",dataPoint->value_);
+		cacheQ.bindValue(":time",dataPoint->time_);
 		executeWriteQuery(&cacheQ,"",false);	
 	}
 }
@@ -803,6 +836,60 @@ QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralDa
 	return dataStore;
 }
 
+/*! \brief Returns a propertyDataUnitPackage with all of the data collected after the timestamp
+ *
+ *	This functions creates a new propertyDataUnitPackage object, and fills it with
+ *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
+ *	then all data is returned.  This is actually a bit tricky, since the data could be
+ *	either the session database or the cache database.
+ */
+QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(double timestamp)
+{
+	QSqlDatabase cacheDb = getCacheDb();
+	QSharedPointer<Picto::PropertyDataUnitPackage> dataStore(new Picto::PropertyDataUnitPackage());
+	QSqlQuery query(cacheDb);
+	bool justFirst = false;
+	if(timestamp < 0)
+	{
+		justFirst = true;
+		timestamp = 0;
+		query.prepare("SELECT propid, path, value, time FROM properties WHERE time > :time1 UNION "
+		"SELECT propid, path, value, time FROM diskdb.properties WHERE time > :time2 ORDER BY time DESC LIMIT 1");
+	}
+	else
+	{
+		if(timestamp == 0)
+			timestamp = -1;
+		query.prepare("SELECT propid, path, value, time FROM properties WHERE time > :time1 UNION "
+		"SELECT diskdb.properties.propid, diskdb.properties.path, diskdb.properties.value, diskdb.properties.time "
+		"FROM diskdb.properties WHERE time > :time2 ORDER BY time ASC");
+	}
+	
+	query.bindValue(":time1",timestamp);
+	query.bindValue(":time2",timestamp);
+	QMutexLocker locker(databaseWriteMutex_.data());
+	executeReadQuery(&query,"",true);
+	if(justFirst && query.next())
+	{
+		dataStore->addData(query.value(0).toInt(),
+							query.value(1).toString(),
+						  query.value(2).toString(),
+						  query.value(3).toDouble());
+		query.finish();
+	}
+	else
+	{
+		while(query.next())
+		{
+			dataStore->addData(query.value(0).toInt(),
+							query.value(1).toString(),
+						  query.value(2).toString(),
+						  query.value(3).toDouble());
+		}
+		query.finish();
+	}
+	return dataStore;
+}
 
 /*! \brief Returns a frame datastore with all of the data collected after the timestamp
  *
@@ -982,6 +1069,11 @@ void SessionInfo::InitializeVariables()
 	tableColumns_["statetransitions"] = " dataid,machinepath,source,sourceresult,destination,time ";
 	tableColumnTypes_["statetransitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,TEXT,TEXT,TEXT,REAL ";
 	tableDataProviders_["statetransitions"] = "DIRECTOR";
+
+	tables_.push_back("properties");
+	tableColumns_["properties"] = " dataid,propid,path,value,time ";
+	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,REAL ";
+	tableDataProviders_["properties"] = "DIRECTOR";
 
 	tables_.push_back("framedata");
 	tableColumns_["framedata"] = " dataid,frame,time,state ";

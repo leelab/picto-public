@@ -41,6 +41,7 @@ public:
 	void setSelfPtr(QSharedPointer<Asset> selfPtr){self_ = selfPtr;};
 	void reinitialize();
 	virtual QString getInfo(){return QString("<h3 style=\"color:red\">%1</h3>").arg(assetType());};
+	QString getPath();
 signals:
 	void edited();
 	void deleted();

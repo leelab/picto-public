@@ -90,6 +90,19 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 		//will return 401:Unauthorized, otherwise, we do nothing, and return 200:OK
 		return okResponse;
 	}
+	else if(target.startsWith("parameter", Qt::CaseInsensitive))
+	{
+		int colonIndex = target.indexOf(":");
+		QString paramId = target.mid(colonIndex+1);
+		QString directive(command->getContent());
+		return parameter(paramId,directive);
+	}
+	else if(target.startsWith("click", Qt::CaseInsensitive))
+	{
+		int colonIndex = target.indexOf(":");
+		QString details = target.mid(colonIndex+1);
+		return click(details);
+	}
 	else
 	{
 		return notFoundResponse;
@@ -286,8 +299,25 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel),"DIRECTOR");
+	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel),"DIRECTOR",false);
 
 	return okResponse;
 
+}
+
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::parameter(QString paramId, QString details)
+{
+	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	//QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
+	details.prepend(QString("id=%1\n").arg(paramId));
+	sessInfo_->addPendingDirective(QString("PARAMETER %1").arg(details),"DIRECTOR");
+
+	return okResponse;
+}
+
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::click(QString details)
+{
+	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	sessInfo_->addPendingDirective(QString("CLICK %1").arg(details),"DIRECTOR");
+	return okResponse;
 }

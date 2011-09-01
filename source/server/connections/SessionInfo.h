@@ -5,6 +5,7 @@
 #include "../network/serverthread.h"
 #include "../../common/storage/NeuralDataUnit.h"
 #include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/PropertyDataUnitPackage.h"
 #include "../../common/storage/StateDataUnit.h"
 #include "../../common/storage/FrameDataUnitPackage.h"
 #include "../../common/storage/RewardDataUnit.h"
@@ -68,7 +69,8 @@ public:
 
 	void flushCache(QString sourceType = "");
 	//void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID );
-	void insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data);
+	void insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data);\
+	void insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPackage> data);
 	void insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitPackage> data);
 	void insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> data);
 	void insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data);
@@ -76,6 +78,7 @@ public:
 	void insertRewardData(QSharedPointer<Picto::RewardDataUnit> data);
 
 	QSharedPointer<Picto::BehavioralDataUnitPackage> selectBehavioralData(double timestamp);
+	QSharedPointer<Picto::PropertyDataUnitPackage> selectPropertyData(double timestamp);
 	void insertStateData(QSharedPointer<Picto::StateDataUnit> data);
 	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> selectStateData(double timestamp);
 	QSharedPointer<Picto::FrameDataUnitPackage> selectFrameData(double timestamp);
@@ -88,7 +91,7 @@ public:
 	QByteArray experimentXml() { return experimentXml_; };
 
 	QString pendingDirective(QUuid componentID);
-	void addPendingDirective(QString directive, QString componentType);
+	void addPendingDirective(QString directive, QString componentType, bool overwriteRedundantDirective = true);
 
 	//! clears the state of activity and returns it.
 	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
@@ -121,6 +124,7 @@ private:
 	QSharedPointer<AlignmentTool> alignmentTool_;
 	bool timestampsAligned_;	//Indicates whether initial timestamp alignment has occured
 	QMutex alignmentMutex_;
+	QMutex directiveMutex_;
 	QSharedPointer<QMutex> databaseWriteMutex_;
 	QTimer timeoutTimer_;
 	QMap<QUuid,QStringList> pendingDirectives_; //Uuid is the Uuid of the component who's pending directives are stored in the QStringList

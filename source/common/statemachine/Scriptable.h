@@ -34,6 +34,7 @@ public:
 	int getUIOrder(){return propertyContainer_->getPropertyValue("UIOrder").toInt();};
 	virtual bool isRuntimeEditable(){return isUIEnabled();};
 	void setPropertyRuntimeEditable(QString propName, bool editable = true);
+	virtual QList<QSharedPointer<Property>> getDescendantsProperties();
 	QString getScriptingInfo();
 	QString getInfo();
 
@@ -41,11 +42,11 @@ protected:
 	virtual QString defaultTagName(){return "Scriptable";};
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	QSharedPointer<PropertyContainer> initPropertyContainer_;
 
 private:
 	void backupProperties();
 	void restoreProperties();
-	QSharedPointer<PropertyContainer> initPropertyContainer_;
 };
 
 

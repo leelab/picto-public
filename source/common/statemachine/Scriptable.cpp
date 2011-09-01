@@ -92,6 +92,20 @@ void Scriptable::setPropertyRuntimeEditable(QString propName, bool editable)
 	initPropertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
 }
 
+QList<QSharedPointer<Property>> Scriptable::getDescendantsProperties()
+{
+	QList<QSharedPointer<Property>> descendantProps;
+	QMap<QString, QVector<QSharedPointer<Property>>> propMap = initPropertyContainer_->getProperties();
+	foreach(QVector<QSharedPointer<Property>> propVec, propMap)
+	{
+		foreach(QSharedPointer<Property> prop, propVec)
+		{
+			descendantProps.append(prop);
+		}
+	}
+	descendantProps.append(UIEnabled::getDescendantsProperties());
+	return descendantProps;
+}
 QString Scriptable::getScriptingInfo()
 {
 	QString returnVal;

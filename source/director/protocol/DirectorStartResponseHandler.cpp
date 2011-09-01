@@ -12,7 +12,7 @@ bool DirectorStartResponseHandler::processResponse(QString directive)
 	if(!engine.isNull() && !experiment.isNull())
 	{
 		statusManager_->setStatus(running);
-		experiment->runTask(directive, engine);
+		experiment->runTask(directive);
 	}
 	statusManager_->setStatus(stopped);
 	statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus("Engine Stopped");

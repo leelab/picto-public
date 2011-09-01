@@ -13,6 +13,7 @@
 //#include "Calibration.h"
 
 #include "../engine/PictoEngine.h"
+#include "../engine/propertytable.h"
 
 
 #include <QList>
@@ -44,8 +45,9 @@ class Experiment : public UIEnabled
 	Q_OBJECT
 public:
 	static QSharedPointer<Experiment> Create();
+	void setEngine(QSharedPointer<Engine::PictoEngine> engine);
 	void addTask(QSharedPointer<Task> task);
-	bool runTask(QString taskName, QSharedPointer<Engine::PictoEngine> engine);
+	bool runTask(QString taskName);
 	bool jumpToState(QStringList path, QString state);
 
 	QStringList getTaskNames();
@@ -68,6 +70,8 @@ private:
 	//unsigned int revision_;
 	QList<QSharedPointer<Task> > tasks_;
 	const QString latestSyntaxVersion_;
+	QSharedPointer<PropertyTable> propTable_;
+	QSharedPointer<Engine::PictoEngine> engine_;
 	//QList<QSharedPointer<SessionData> > sessionDataElements_;
 	//QList<QSharedPointer<Calibration> > calibrations_;
 	//QList<QSharedPointer<MediaItem> > mediaItems_;
