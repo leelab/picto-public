@@ -27,6 +27,7 @@ public:
 
 	PropertyDataUnitPackage();
 	void addData(int index, QString path, QString value, double time);
+	void addData(int index, QString path, QString value, QString time);
 
 	void emptyData() { data_.clear(); };
 

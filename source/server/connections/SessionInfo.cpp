@@ -178,6 +178,7 @@ void SessionInfo::AddComponent(QSharedPointer<ComponentInfo> component)
 	query.bindValue(":active", false);
 	executeWriteQuery(&query);
 	components_[component->getType()] = component;
+	flushEnabled_[component->getType()] = false;
 }
 
 void SessionInfo::UpdateComponentActivity()
@@ -255,7 +256,7 @@ void SessionInfo::alignTimestampsTo(QString componentType)
 //! Returns the next pending directive
 QString SessionInfo::pendingDirective(QUuid componentID)
 {
-	QMutexLocker locker(&directiveMutex_);
+	//QMutexLocker locker(&directiveMutex_);
 	if(!pendingDirectives_.contains(componentID) || pendingDirectives_[componentID].isEmpty())
 		return QString();
 	else
@@ -273,7 +274,7 @@ void SessionInfo::addPendingDirective(QString directive, QString componentType, 
 	QStringList* directives = &pendingDirectives_[component->getUuid()];
 	if(overwriteRedundantDirective)
 	{
-		QMutexLocker locker(&directiveMutex_);
+		//QMutexLocker locker(&directiveMutex_);
 		if(directives->size())
 		{
 			if(directives->first().split(" ").first() == directive.split(" ").first())
@@ -790,23 +791,23 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
  *	then all data is returned.  This is actually a bit tricky, since the data could be
  *	either the session database or the cache database.
  */
-QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralData(double timestamp)
+QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralData(QString timestamp)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<Picto::BehavioralDataUnitPackage> dataStore(new Picto::BehavioralDataUnitPackage());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
-	if(timestamp < 0)
+	if(timestamp.toDouble() < 0)
 	{
 		justFirst = true;
-		timestamp = 0;
+		timestamp = "0";
 		query.prepare("SELECT xpos, ypos, time FROM behavioraldata WHERE time > :time1 UNION "
 		"SELECT xpos, ypos, time FROM diskdb.behavioraldata WHERE time > :time2 ORDER BY time DESC LIMIT 1");
 	}
 	else
 	{
-		if(timestamp == 0)
-			timestamp = -1;
+		if(timestamp.toDouble() == 0)
+			timestamp = "-1";
 		query.prepare("SELECT xpos, ypos, time FROM behavioraldata WHERE time > :time1 UNION "
 		"SELECT diskdb.behavioraldata.xpos, diskdb.behavioraldata.ypos, diskdb.behavioraldata.time "
 		"FROM diskdb.behavioraldata WHERE time > :time2 ORDER BY time ASC");
@@ -816,23 +817,27 @@ QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralDa
 	query.bindValue(":time2",timestamp);
 	QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
-	if(justFirst && query.next())
+	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
+	//The checks after query.next() below takes care of this.
+	if(query.next() && ((query.value(2).toString() != timestamp)||query.next()))
 	{
-		dataStore->addData(query.value(0).toDouble(),
-						  query.value(1).toDouble(),
-						  query.value(2).toDouble());
-		query.finish();
-	}
-	else
-	{
-		while(query.next())
+		if(justFirst)
 		{
 			dataStore->addData(query.value(0).toDouble(),
 							  query.value(1).toDouble(),
-							  query.value(2).toDouble());
+							  query.value(2).toString());
 		}
-		query.finish();
+		else
+		{
+			do
+			{
+				dataStore->addData(query.value(0).toDouble(),
+								  query.value(1).toDouble(),
+								  query.value(2).toString());
+			}while(query.next());
+		}
 	}
+	query.finish();
 	return dataStore;
 }
 
@@ -843,23 +848,23 @@ QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralDa
  *	then all data is returned.  This is actually a bit tricky, since the data could be
  *	either the session database or the cache database.
  */
-QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(double timestamp)
+QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(QString timestamp)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<Picto::PropertyDataUnitPackage> dataStore(new Picto::PropertyDataUnitPackage());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
-	if(timestamp < 0)
+	if(timestamp.toDouble() < 0)
 	{
 		justFirst = true;
-		timestamp = 0;
+		timestamp = "0";
 		query.prepare("SELECT propid, path, value, time FROM properties WHERE time > :time1 UNION "
 		"SELECT propid, path, value, time FROM diskdb.properties WHERE time > :time2 ORDER BY time DESC LIMIT 1");
 	}
 	else
 	{
-		if(timestamp == 0)
-			timestamp = -1;
+		if(timestamp.toDouble() == 0)
+			timestamp = "-1";
 		query.prepare("SELECT propid, path, value, time FROM properties WHERE time > :time1 UNION "
 		"SELECT diskdb.properties.propid, diskdb.properties.path, diskdb.properties.value, diskdb.properties.time "
 		"FROM diskdb.properties WHERE time > :time2 ORDER BY time ASC");
@@ -869,25 +874,29 @@ QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(d
 	query.bindValue(":time2",timestamp);
 	QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
-	if(justFirst && query.next())
+	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
+	//The checks after query.next() below takes care of this.
+	if(query.next() && ((query.value(3).toString() != timestamp)||query.next()))
 	{
-		dataStore->addData(query.value(0).toInt(),
-							query.value(1).toString(),
-						  query.value(2).toString(),
-						  query.value(3).toDouble());
-		query.finish();
-	}
-	else
-	{
-		while(query.next())
+		if(justFirst)
 		{
 			dataStore->addData(query.value(0).toInt(),
-							query.value(1).toString(),
-						  query.value(2).toString(),
-						  query.value(3).toDouble());
+								query.value(1).toString(),
+							  query.value(2).toString(),
+							  query.value(3).toString());
 		}
-		query.finish();
+		else
+		{
+			do
+			{
+				dataStore->addData(query.value(0).toInt(),
+								query.value(1).toString(),
+							  query.value(2).toString(),
+							  query.value(3).toString());
+			}while(query.next());
+		}
 	}
+	query.finish();
 	return dataStore;
 }
 
@@ -898,23 +907,23 @@ QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(d
  *	then all data is returned.  This is actually a bit tricky, since the data could be
  *	either the session database or the cache database.
  */
-QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(double timestamp)
+QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(QString timestamp)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<Picto::FrameDataUnitPackage> dataStore(new Picto::FrameDataUnitPackage());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
-	if(timestamp < 0)
+	if(timestamp.toDouble() < 0)
 	{
 		justFirst = true;
-		timestamp = 0;
+		timestamp = "0";
 		query.prepare("SELECT frame,time,state FROM framedata WHERE time > :time1 UNION "
 		"SELECT diskdb.framedata.frame,diskdb.framedata.time,diskdb.framedata.state FROM diskdb.framedata WHERE time > :time2 ORDER BY time DESC LIMIT 1");
 	}
 	else
 	{
-		if(timestamp == 0)
-			timestamp = -1;
+		if(timestamp.toDouble() == 0)
+			timestamp = "-1";
 		query.prepare("SELECT frame,time,state FROM framedata WHERE time > :time1 UNION "
 		"SELECT diskdb.framedata.frame,diskdb.framedata.time,diskdb.framedata.state FROM diskdb.framedata WHERE time > :time2 ORDER BY time ASC");
 	}
@@ -923,23 +932,27 @@ QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(double 
 	query.bindValue(":time2",timestamp);
 	QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
-	if(justFirst && query.next())
+	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
+	//The checks after query.next() below takes care of this.
+	if(query.next() && ((query.value(1).toString() != timestamp)||query.next()))
 	{
-		dataStore->addFrame(query.value(0).toInt(),
-						  query.value(1).toDouble(),
-						  query.value(2).toString());
-		query.finish();
-	}
-	else
-	{
-		while(query.next())
+		if(justFirst)
 		{
 			dataStore->addFrame(query.value(0).toInt(),
-							   query.value(1).toDouble(),
-							   query.value(2).toString());
+							  query.value(1).toString(),
+							  query.value(2).toString());
 		}
-		query.finish();
+		else
+		{
+			do
+			{
+				dataStore->addFrame(query.value(0).toInt(),
+								   query.value(1).toString(),
+								   query.value(2).toString());
+			}while(query.next());
+		}
 	}
+	query.finish();
 	return dataStore;
 }
 
@@ -949,25 +962,25 @@ QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(double 
  *	This function creates a list of state data stores and returns it.  If the timestamp is 0, 
  *	then all data is returned.
  */
-QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectStateData(double timestamp)
+QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectStateData(QString timestamp)
 {
 
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStoreList(new QList<QSharedPointer<Picto::StateDataUnit>>());
 	QSqlQuery query(cacheDb);
 	bool justFirst = false;
-	if(timestamp < 0)
+	if(timestamp.toDouble() < 0)
 	{
 		justFirst = true;
-		timestamp = -1;
+		timestamp = "-1";
 		query.prepare("SELECT source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
 		"SELECT diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, diskdb.statetransitions.time, "
 		"diskdb.statetransitions.machinepath FROM diskdb.statetransitions WHERE time > :time2 ORDER BY time DESC LIMIT 1");
 	}
 	else
 	{
-		if(timestamp == 0)
-			timestamp = -1;
+		if(timestamp.toDouble() == 0)
+			timestamp = "-1";
 		query.prepare("SELECT source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
 		"SELECT diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, "
 		"diskdb.statetransitions.time, diskdb.statetransitions.machinepath FROM diskdb.statetransitions WHERE time > :time2 ORDER BY time ASC");
@@ -977,31 +990,36 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectS
 	query.bindValue(":time2",timestamp);
 	QMutexLocker locker(databaseWriteMutex_.data());
 	executeReadQuery(&query,"",true);
-	if(justFirst && query.next())
+	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
+	//The checks after query.next() below takes care of this.
+	if(query.next() && ((query.value(3).toString() != timestamp)||query.next()))
 	{
-		QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
-		data->setTransition(query.value(0).toString(),
-						   query.value(1).toString(),
-						   query.value(2).toString(),
-						   query.value(3).toDouble(),
-						   query.value(4).toString());
-		dataStoreList->append(data);
-		query.finish();
-	}
-	else
-	{
-		while(query.next())
+
+		if(justFirst)
 		{
 			QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
 			data->setTransition(query.value(0).toString(),
 							   query.value(1).toString(),
 							   query.value(2).toString(),
-							   query.value(3).toDouble(),
+							   query.value(3).toString(),
 							   query.value(4).toString());
 			dataStoreList->append(data);
 		}
-		query.finish();
+		else
+		{
+			do
+			{
+				QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
+				data->setTransition(query.value(0).toString(),
+								   query.value(1).toString(),
+								   query.value(2).toString(),
+								   query.value(3).toString(),
+								   query.value(4).toString());
+				dataStoreList->append(data);
+			}while(query.next());
+		}
 	}
+	query.finish();
 	return dataStoreList;
 }
 

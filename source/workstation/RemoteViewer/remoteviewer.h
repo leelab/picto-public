@@ -29,6 +29,7 @@ class RemoteViewer : public Viewer
 	Q_OBJECT
 public:
 	RemoteViewer(QWidget *parent=0);
+	~RemoteViewer();
 
 	QString type() { return "Remote"; };
 	bool aboutToQuit();
@@ -124,6 +125,9 @@ private:
 	QUuid observerId_;
 
 	int rewardChannel_;  //Channel used for issuing manual rewards
+
+	QList<ComponentInstance> currDirectorList_;
+	QList<ComponentInstance> currProxyList_;
 private slots:
 	void taskListIndexChanged(int index);
 };

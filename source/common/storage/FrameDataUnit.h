@@ -21,13 +21,14 @@ class FrameDataUnit : public DataUnit
 public:
 	FrameDataUnit();
 	FrameDataUnit(int frameNum, double timestamp, QString statename);
+	FrameDataUnit(int frameNum, QString timestamp, QString statename);
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	int frameNumber; 
-	double time;
+	QString time;
 	QString stateName;
 
 protected:

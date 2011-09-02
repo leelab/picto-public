@@ -18,9 +18,11 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 	printf("JOINSESSION handler: %d\n", QThread::currentThreadId());
 
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
+	notFoundResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> unauthorizedResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::Unauthorized));
-
+	unauthorizedResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
 	

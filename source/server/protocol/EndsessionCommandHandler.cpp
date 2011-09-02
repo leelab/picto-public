@@ -16,9 +16,13 @@ QSharedPointer<Picto::ProtocolResponse> EndsessionCommandHandler::processCommand
 	printf("ENDSESSION handler: %d\n", QThread::currentThreadId());
 
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
+	notFoundResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> unauthResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::Unauthorized));
+	unauthResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
+	badReqResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	
 	QString targetSession = command->getTarget();
 

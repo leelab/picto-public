@@ -35,7 +35,7 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	if(sessionInfo.isNull())
 		return notFoundResponse;
 
-	double timestamp = command->getTarget().split(':').value(1).toDouble();
+	QString timestamp = command->getTarget().split(':').value(1);
 	QString dataType = command->getTarget().split(':').value(0,"");
 
 	QByteArray xmlContent;
@@ -81,6 +81,7 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	xmlWriter->writeEndElement();
 
 	response->setContent(xmlContent);
+	response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 
 	return response;
 

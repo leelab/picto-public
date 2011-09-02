@@ -11,6 +11,7 @@
 #include "../stimuli/CursorGraphic.h"
 #include "../controlelements/TestController.h"
 #include "../controlelements/StopwatchController.h"
+#include "../controlelements/ScriptController.h"
 #include "../controlelements/TargetController.h"
 #include "../controlelements/ChoiceController.h"
 //#include "../stimuli/ArrowGraphic.h"
@@ -38,13 +39,15 @@ State::State() :
 	
 	//Define generatable control elements.
 	elementFactory_->addAssetType(TestController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TestController::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(TestController::Create))));
 	elementFactory_->addAssetType(StopwatchController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(StopwatchController::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(StopwatchController::Create))));
+	elementFactory_->addAssetType(ScriptController::ControllerType(),
+		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ScriptController::Create))));
 	elementFactory_->addAssetType(TargetController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
 	elementFactory_->addAssetType(ChoiceController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
 
 	//AddDefinableObjectFactory("Scene",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Scene::Create))) );
 	//AddDefinableObjectFactory("Link",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlLink::Create))) );
@@ -428,7 +431,7 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
  */
 int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 {
-	QString commandStr = QString("GETDATA FrameDataUnitPackage:%1 PICTO/1.0").arg(lastFrameCheckTime_,0,'e',6);
+	QString commandStr = QString("GETDATA FrameDataUnitPackage:%1 PICTO/1.0").arg(lastFrameCheckTime_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
@@ -509,7 +512,7 @@ int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 
 	updateChan->sendCommand(updateCommand);
 
-	if(!updateChan->waitForResponse(100))
+	if(!updateChan->waitForResponse(50))
 	{
 		Q_ASSERT_X(false,"State::updateServer", "Server failed to reply to COMPONENTUPDATE command within 100 ms");
 		return;

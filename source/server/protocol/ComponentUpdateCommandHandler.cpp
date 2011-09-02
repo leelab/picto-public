@@ -84,13 +84,16 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 			if(directive.isEmpty())
 			{
 				response->setContent("OK");
+				if(sessionInfo->needsFlush(sourceType))
+				{
+					sessionInfo->flushCache(sourceType);
+					response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+				}
 			}
 			else
 			{
 				qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
 				response->setContent(directive.toUtf8());
-				sessionInfo->flushCache(sourceType);
-				response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 			}
 		}
 	}

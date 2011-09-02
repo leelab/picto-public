@@ -3,6 +3,7 @@
 #include <QComboBox>
 #include <QtVariantPropertyManager>
 #include "../../common/property/property.h"
+using namespace Picto;
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -18,7 +19,7 @@ public:
 	PropertyEditTracker(QSharedPointer<Picto::Property> prop);
 	void addTrackedWidget(QWidget* widget);
 signals:
-	void propertyEdited(QSharedPointer<Picto::Property> prop);
+	void propertyEdited(QSharedPointer<Property> prop);
 protected:
 	QSharedPointer<Picto::Property> prop_;
 private:

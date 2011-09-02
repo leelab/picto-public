@@ -128,10 +128,14 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	//response (this allows the client to match up commands and responses).
 	if(_command->hasField("Command-ID"))
 	{
-		response->setFieldValue("Command-ID",_command->getFieldValue("Command-ID"));
-		if(response->getRegisteredType() == Picto::RegisteredResponseType::NotRegistered)
-			response->setRegisteredType(Picto::RegisteredResponseType::Delayed);
+		pendingCommandIDs_.append(_command->getFieldValue("Command-ID"));
 	}
+	if(response->getRegisteredType() == Picto::RegisteredResponseType::Immediate)
+	{
+		response->setFieldValue("Command-ID",pendingCommandIDs_.join(","));
+		pendingCommandIDs_.clear();
+	}
+	Q_ASSERT(response->getRegisteredType() != Picto::RegisteredResponseType::Delayed);
 
 	return response;
 }

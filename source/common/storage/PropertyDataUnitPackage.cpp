@@ -13,6 +13,11 @@ void PropertyDataUnitPackage::addData(int index, QString path, QString value, do
 	data_.append(newPoint);
 }
 
+void PropertyDataUnitPackage::addData(int index, QString path, QString value, QString time)
+{
+	QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit(index, path,value,time));
+	data_.append(newPoint);
+}
 
 /*! \brief Turns the PropertyDataUnitPackage into an XML fragment
  *

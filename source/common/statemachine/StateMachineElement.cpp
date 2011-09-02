@@ -8,7 +8,7 @@
 
 namespace Picto {
 
-	double StateMachineElement::lastTransitionTime_;
+	QString StateMachineElement::lastTransitionTime_;
 
 StateMachineElement::StateMachineElement()
 {
@@ -43,18 +43,24 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 	//6 places after the decimal point and we need to make sure that new data will be after old data.
 	//The reason we need this level of precision is that we found that some transitions were occuring at
 	//the same millisecond, and we need these to be differentiated.
-	QString commandStr = QString("GETDATA StateDataUnit:%1 PICTO/1.0").arg(lastTransitionTime_,0,'e',6);
+	QString commandStr = QString("GETDATA StateDataUnit:%1 PICTO/1.0").arg(lastTransitionTime_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
 	CommandChannel* slaveToServerChan = engine->getSlaveCommandChannel();
 
-	slaveToServerChan->sendCommand(command);
-	//No response
-	if(!slaveToServerChan->waitForResponse(1000))
-		return "";
+	slaveToServerChan->sendRegisteredCommand(command);
+	QString commandID = command->getFieldValue("Command-ID");
+	//Get the response to this command
+	do
+	{
+		if(!slaveToServerChan->waitForResponse(50))
+		{
+			return "";
+		}
+		response = slaveToServerChan->getResponse();
+	}while(!response || response->getFieldValue("Command-ID") != commandID);
 
-	response = slaveToServerChan->getResponse();
 	//Response not 200:OK
 	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
 		return "";
@@ -73,10 +79,10 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 	{
 		if(xmlReader->name() == "StateDataUnit")
 		{
-
 			StateDataUnit data;
 			data.fromXml(xmlReader);
-			
+			Q_ASSERT(data.getTime() != lastTransitionTime_);
+
 			//Even if multiple transitions have stacked up, we are expecting that data to be
 			//in temporal order, so we can simply return the first response.  However, we are
 			//going to confirm that the source name matches as well

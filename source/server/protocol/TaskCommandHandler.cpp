@@ -29,10 +29,13 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 	printf("TASK handler: %d\n", QThread::currentThreadId());
 
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
-	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
+	notFoundResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> unauthResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::Unauthorized));
-
+	unauthResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
+	badReqResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 
 	//grab the session info and connection manager
 	sessionId_ = QUuid(command->getFieldValue("Session-ID"));
@@ -115,8 +118,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskname)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
-
+	badReqResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	//Check that we have a Director and that it is stopped
 	ComponentStatus::ComponentStatus dirStatus = conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR");
 
@@ -205,8 +209,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
-
+	badReqResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	if(conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") < ComponentStatus::paused)
 	{
 		badReqResponse->setContent("Director not currently running");
@@ -253,8 +258,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
-
+	badReqResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	if(conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") != ComponentStatus::running)
 	{
 		badReqResponse->setContent("Director not currently running");
@@ -273,8 +279,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
-
+	badReqResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	if(conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") != ComponentStatus::paused)
 	{
 		badReqResponse->setContent("Director not currently puased");
@@ -291,8 +298,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
-
+	badReqResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	if(channel <1 || channel >4)
 	{
 		badReqResponse->setContent("Non-existant reward channel");
@@ -308,7 +316,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::parameter(QString paramId, QString details)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
-	//QSharedPointer<Picto::ProtocolResponse> badReqResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::BadRequest));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	details.prepend(QString("id=%1\n").arg(paramId));
 	sessInfo_->addPendingDirective(QString("PARAMETER %1").arg(details),"DIRECTOR");
 
@@ -318,6 +326,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::parameter(QString pa
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::click(QString details)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	sessInfo_->addPendingDirective(QString("CLICK %1").arg(details),"DIRECTOR");
 	return okResponse;
 }

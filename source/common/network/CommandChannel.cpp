@@ -43,7 +43,7 @@ CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress 
 	connect(consumerSocket_.data(), SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
 	
 	//set multipart boundary to a null string
-	connectToServer(serverAddr_,serverPort_);
+	connectToServer();
 }
 
 CommandChannel::~CommandChannel()
@@ -55,26 +55,14 @@ CommandChannel::~CommandChannel()
 }
 
 //! \brief Don't call from time sensitive zone
-void CommandChannel::connectToServer(QHostAddress serverAddress, quint16 serverPort_)
-{
-	if(status_ != disconnected)
-		return;
-
-	this->serverAddr_ = serverAddress;
-	this->serverPort_ = serverPort_;
-
-	status_ = disconnected;
-	consumerSocket_->disconnectFromHost();
-	//set multipart boundary to a null string
-	multipartBoundary_ = "";
-
-	QTime timer;
-	timer.restart();
-	if(!assureConnection(5000))
+void CommandChannel::connectToServer()
+{	
+	if(!assureConnection(100))
+	{
+		QCoreApplication::processEvents();
 		emit connectAttemptFailed();
+	}
 }
-
-
 /*!	\brief Closes the channel (also called from the destructor)
  *
  */
@@ -251,30 +239,30 @@ void CommandChannel::readIncomingResponse()
 				multipartBoundary_="";
 
 			//Check to see if this is a registered response
-			QString commandId = response->getFieldValue("Command-ID");
-			if(!commandId.isEmpty())
+			QString commandIdField = response->getFieldValue("Command-ID");
+			if(!commandIdField.isEmpty())
 			{
-				if(pendingCommands_.contains(commandId.toULongLong()))
+				QStringList commandIDs = commandIdField.split(",");
+				foreach(QString commandId,commandIDs)
 				{
-					pendingCommand = pendingCommands_.take(commandId.toULongLong());
-					incomingResponseQueue_.push_back(response);
-					QString serverBytesStr = response->getFieldValue("Server-Bytes");
-					if(serverBytesStr != "")
+					if(pendingCommands_.contains(commandId.toULongLong()))
 					{
-						int serverBytes = serverBytesStr.toInt();
-						if(serverBytes == 0)
-							resendEnabled_ = true;
-						else
-							resendEnabled_ = false;
-						qDebug("serverBytesStr: " + serverBytesStr.toAscii());
+						pendingCommand = pendingCommands_.take(commandId.toULongLong());
+						QString serverBytesStr = response->getFieldValue("Server-Bytes");
+						if(serverBytesStr != "")
+						{
+							int serverBytes = serverBytesStr.toInt();
+							if(serverBytes == 0)
+								resendEnabled_ = true;
+							else
+								resendEnabled_ = false;
+							qDebug("serverBytesStr: " + serverBytesStr.toAscii());
+						}
+						
 					}
-					
 				}
 			}
-			else
-			{
-				incomingResponseQueue_.push_back(response);
-			}
+			incomingResponseQueue_.push_back(response);
 		}
 		else
 		{
@@ -477,13 +465,14 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
  *	"registered" allows us to see if a response was received for that command
  *	and to resend any commands which didn't receive responses.
  */
-bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command)
+bool CommandChannel::sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command, bool enabledResend)
 {
-	Q_ASSERT_X(sessionId_ != QUuid(),"CommandChannel::sendRegisteredCommand","Registered commands may only be sent on command channels with session IDs!");
+	//Q_ASSERT_X(sessionId_ != QUuid(),"CommandChannel::sendRegisteredCommand","Registered commands may only be sent on command channels with session IDs!");
 	command->setFieldValue("Command-ID",QString::number(currRegCmdID_));
 	command->setFieldValue("Time-Created",QDateTime::currentDateTime().toString());
 	command->setFieldValue("Time-Sent",QDateTime::currentDateTime().toString());
-	pendingCommands_[currRegCmdID_++] = command;
+	if(enabledResend)
+		pendingCommands_[currRegCmdID_++] = command;
 	return sendCommand(command);
 }
 

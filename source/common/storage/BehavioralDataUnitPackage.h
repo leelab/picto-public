@@ -27,6 +27,7 @@ public:
 
 	BehavioralDataUnitPackage();
 	void addData(double x, double y, double t);
+	void addData(double x, double y, QString t);
 	void addData(QMap<QString, QList<double>> signalChannelData);
 
 	void emptyData() { data_.clear(); };

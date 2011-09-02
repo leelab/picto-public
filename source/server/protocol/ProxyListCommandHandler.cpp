@@ -14,7 +14,9 @@ ProxyListCommandHandler::ProxyListCommandHandler()
 QSharedPointer<Picto::ProtocolResponse> ProxyListCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
+	notFoundResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 
 	if(command->getTarget() != "/")
 		return notFoundResponse;
@@ -23,5 +25,6 @@ QSharedPointer<Picto::ProtocolResponse> ProxyListCommandHandler::processCommand(
 	QString proxiesXML = conMgr->getProxyList();
 
 	response->setContent(proxiesXML.toUtf8());
+	response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	return response;
 }

@@ -96,13 +96,13 @@ void ConnectionManager::checkForTimeouts()
 			if(!component.isNull())
 			{
 				component->setActivity();
-				sessionInfo->addPendingDirective("OK","DIRECTOR");
+				sessionInfo->enableFlush("DIRECTOR");
 			}
 			component = sessionInfo->getComponentByType("PROXY");
 			if(!component.isNull())
 			{
 				component->setActivity();
-				sessionInfo->addPendingDirective("OK","PROXY");
+				sessionInfo->enableFlush("PROXY");
 			}
 		}
 	}

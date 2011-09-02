@@ -34,16 +34,19 @@ bool NetworkSignalChannel::stop()
 void NetworkSignalChannel::updateDataBuffer()
 {
 	//Collect the data from the server
-	QString commandStr = QString("GETDATA BehavioralDataUnitPackage:%1 PICTO/1.0").arg(lastTimeDataCollected_,0,'e',6);
+	QString commandStr = QString("GETDATA BehavioralDataUnitPackage:%1 PICTO/1.0").arg(lastTimeDataCollected_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
-	serverChannel_->sendCommand(command);
-	//No response
-	if(!serverChannel_->waitForResponse(1000))
-		return;
-
-	response = serverChannel_->getResponse();
+	serverChannel_->sendRegisteredCommand(command);
+	QString commandID = command->getFieldValue("Command-ID");
+	//Get the response to this command
+	do
+	{
+		if(!serverChannel_->waitForResponse(50))
+			return;
+		response = serverChannel_->getResponse();
+	}while(!response || response->getFieldValue("Command-ID") != commandID);
 
 	//Response not 200:OK
 	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
@@ -79,7 +82,7 @@ void NetworkSignalChannel::updateDataBuffer()
 		
 		rawDataBuffer_["xpos"].append(dataPoint->x);
 		rawDataBuffer_["ypos"].append(dataPoint->y);
-		rawDataBuffer_["time"].append(dataPoint->t);
+		rawDataBuffer_["time"].append(dataPoint->t.toDouble());
 
 		lastTimeDataCollected_ = dataPoint->t;
 	}

@@ -40,7 +40,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	serverChannel_(0),
 	timeoutTimer_(0),
 	startedSession_(false),
-	activeExperiment_(0)
+	activeExperiment_(0),
+	statusBar_(NULL)
 {
 	setupServerChannel();
 	setupEngine();
@@ -80,9 +81,24 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	observerId_ = QUuid(query.value(0).toString());
 }
 
+RemoteViewer::~RemoteViewer()
+{
+	disconnect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
+	disconnect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
+	disconnect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
+
+	disconnect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
+	disconnect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
+	disconnect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
+
+}
 //! Called just before displaying the viewer
 void RemoteViewer::init()
 {
+	if(!serverChannel_->assureConnection())serverChannel_->connectToServer();
+	if(!engineSlaveChannel_->assureConnection())engineSlaveChannel_->connectToServer();
+	if(!behavioralDataChannel_->assureConnection())behavioralDataChannel_->connectToServer();
+
 	if(serverChannel_ == 0 || 
 		serverChannel_->getChannelStatus() == Picto::CommandChannel::disconnected)
 	{
@@ -136,6 +152,7 @@ void RemoteViewer::init()
 void RemoteViewer::deinit()
 {
 	//stop the engine running
+
 
 	updateTimer_->stop();
 
@@ -301,23 +318,14 @@ void RemoteViewer::setupServerChannel()
 	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 	behavioralDataChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 
-	serverDiscoverer_ = new Picto::ServerDiscoverer(this);
+	connect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
+	connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
+	connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
 
-	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), serverChannel_, SLOT(connectToServer(QHostAddress, quint16)));
-	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), engineSlaveChannel_, SLOT(connectToServer(QHostAddress, quint16)));
-	connect(serverDiscoverer_, SIGNAL(foundServer(QHostAddress, quint16)), behavioralDataChannel_, SLOT(connectToServer(QHostAddress, quint16)));
+	connect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
+	connect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
+	connect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
 
-	connect(serverChannel_, SIGNAL(connectAttemptFailed()), serverDiscoverer_, SLOT(discover()));
-	connect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), serverDiscoverer_, SLOT(discover()));
-	connect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), serverDiscoverer_, SLOT(discover()));
-
-	connect(serverChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
-	connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
-	connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), serverDiscoverer_, SLOT(discover()));
-
-	connect(serverDiscoverer_, SIGNAL(discoverFailed()), serverDiscoverer_, SLOT(discover()));
-
-	serverDiscoverer_->discover(30000);
 }
 
 
@@ -520,6 +528,8 @@ void RemoteViewer::updateStatus()
 //! \brief Sets the status message to the passed in string for 5 seconds
 void RemoteViewer::setStatus(QString status)
 {
+	if(!statusBar_)
+		return;
 	statusBar_->setText(status);
 	updateTimer_->start();	//This gaurantees that the message stays up for 5 seconds
 }
@@ -818,24 +828,30 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 	//Get rid of any incoming responses that were ignored.
 	while(serverChannel_->incomingResponsesWaiting() != 0)
 		serverChannel_->getResponse();
-	QList<ComponentInstance> directors;
 
 	if(!serverChannel_->assureConnection())
 	{
-		return directors;
+		return currDirectorList_;
 	}
 
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand("DIRECTORLIST / PICTO/1.0"));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
-	serverChannel_->sendCommand(command);
-	if(!serverChannel_->waitForResponse(1000))
+	serverChannel_->sendRegisteredCommand(command);
+	QString commandID = command->getFieldValue("Command-ID");
+	//Get the response to this command
+	do
 	{
-		setStatus(tr("Server did not respond to DIRECTORLIST command"));
-		return directors;
-	}
-	response = serverChannel_->getResponse();
+		if(!serverChannel_->waitForResponse(50))
+		{
+			setStatus(tr("Server did not respond to DIRECTORLIST command"));
+			return currDirectorList_;
+		}
+		response = serverChannel_->getResponse();
+	}while(!response || response->getFieldValue("Command-ID") != commandID);
 	
+	currDirectorList_.clear();
+
 	QByteArray xmlFragment = response->getContent();
 	QXmlStreamReader xmlReader(xmlFragment);
 
@@ -873,13 +889,13 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 				}
 				else if(xmlReader.name() == "Director" && xmlReader.isEndElement())
 				{
-					directors.append(director);
+					currDirectorList_.append(director);
 					break;
 				}
 			}
 		}
 	}
-	return directors;
+	return currDirectorList_;
 }
 
 /*! \brief Returns a list of proxy servers and their address
@@ -892,24 +908,30 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 {
 	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
-	QList<ComponentInstance> proxies;
 
 	if(!serverChannel_->assureConnection())
 	{
-		return proxies;
+		return currProxyList_;
 	}
 
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand("PROXYLIST / PICTO/1.0"));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
-	serverChannel_->sendCommand(command);
-	if(!serverChannel_->waitForResponse(1000))
+	serverChannel_->sendRegisteredCommand(command);
+	QString commandID = command->getFieldValue("Command-ID");
+	//Get the response to this command
+	do
 	{
-		setStatus(tr("Server did not respond to PROXYLIST command"));
-		return proxies;
-	}
-	response = serverChannel_->getResponse();
+		if(!serverChannel_->waitForResponse(50))
+		{
+			setStatus(tr("Server did not respond to PROXYLIST command"));
+			return currProxyList_;
+		}
+		response = serverChannel_->getResponse();
+	}while(!response || response->getFieldValue("Command-ID") != commandID);
 	
+	currProxyList_.clear();
+
 	QByteArray xmlFragment = response->getContent();
 	QXmlStreamReader xmlReader(xmlFragment);
 
@@ -943,13 +965,13 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 				}
 				else if(xmlReader.name() == "Proxy" && xmlReader.isEndElement())
 				{
-					proxies.append(proxy);
+					currProxyList_.append(proxy);
 					break;
 				}
 			}
 		}
 	}
-	return proxies;
+	return currProxyList_;
 }
 
 /*! \brief checks to see if the current proxy or director has timed out, or if we have lost contact with the server
@@ -1105,14 +1127,20 @@ bool RemoteViewer::startSession()
 
 	QSharedPointer<Picto::ProtocolResponse> loadExpResponse;
 
-	serverChannel_->sendCommand(startSessCommand);
-	if(!serverChannel_->waitForResponse(5000))
+	serverChannel_->sendRegisteredCommand(startSessCommand);
+	QString commandID = startSessCommand->getFieldValue("Command-ID");
+	//Get the response to this command
+	do
 	{
-		setStatus(tr("Server did not respond to STARTSESSION command"));
-		return false;
-	}
+		if(!serverChannel_->waitForResponse(5000))
+		{
+			setStatus(tr("Server did not respond to STARTSESSION command"));
+			return false;
+		}
+		loadExpResponse = serverChannel_->getResponse();
+	}while(!loadExpResponse || loadExpResponse->getFieldValue("Command-ID") != commandID);
 
-	loadExpResponse = serverChannel_->getResponse();
+
 	if(loadExpResponse.isNull())
 	{
 		setStatus(tr("No response received from server.\nExperiment not loaded."));
@@ -1177,15 +1205,20 @@ bool RemoteViewer::endSession()
 
 	QSharedPointer<Picto::ProtocolResponse> endSessResponse;
 
-	serverChannel_->sendCommand(endSessCommand);
-	if(!serverChannel_->waitForResponse(5000))
+	serverChannel_->sendRegisteredCommand(endSessCommand);
+	QString commandID = endSessCommand->getFieldValue("Command-ID");
+	//Get the response to this command
+	do
 	{
-		setStatus(tr("Server did not respond to ENDSESSION command"));
-		qDebug()<<(tr("Server did not respond to ENDSESSION command"));
-		return false;
-	}
+		if(!serverChannel_->waitForResponse(5000))
+		{
+			setStatus(tr("Server did not respond to ENDSESSION command"));
+			qDebug()<<(tr("Server did not respond to ENDSESSION command"));
+			return false;
+		}
+		endSessResponse = serverChannel_->getResponse();
+	}while(!endSessResponse || endSessResponse->getFieldValue("Command-ID") != commandID);
 
-	endSessResponse = serverChannel_->getResponse();
 	if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::NotFound)
 	{
 		setStatus(tr("Session ID not found, session not ended"));
@@ -1240,14 +1273,19 @@ bool RemoteViewer::joinSession()
 		QSharedPointer<Picto::ProtocolCommand> joinSessCommand(new Picto::ProtocolCommand(commandStr));
 		QSharedPointer<Picto::ProtocolResponse> joinSessResponse;
 
-		serverChannel_->sendCommand(joinSessCommand);
-		if(!serverChannel_->waitForResponse(5000))
+		serverChannel_->sendRegisteredCommand(joinSessCommand);
+		QString commandID = joinSessCommand->getFieldValue("Command-ID");
+		//Get the response to this command
+		do
 		{
-			setStatus(tr("Server did not respond to JOINSESSION command"));
-			return false;
-		}
+			if(!serverChannel_->waitForResponse(3000))
+			{
+				setStatus(tr("Server did not respond to JOINSESSION command"));
+				return false;
+			}
+			joinSessResponse = serverChannel_->getResponse();
+		}while(!joinSessResponse || joinSessResponse->getFieldValue("Command-ID") != commandID);
 
-		joinSessResponse = serverChannel_->getResponse();
 		if(joinSessResponse.isNull() || joinSessResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
 		{
 			setStatus(tr("Unexpected response to JOINSESSION. Unable to join session."));
@@ -1298,7 +1336,7 @@ bool RemoteViewer::joinSession()
 	behavioralDataChannel_->setSessionId(sessionId_);
 
 	bool tryAgain;
-	double lastTransitionTime;
+	QString lastTransitionTime;
 	QString taskName;
 	QStringList currentStateMachinePath;
 	QString currentState;
@@ -1311,14 +1349,18 @@ bool RemoteViewer::joinSession()
 		QSharedPointer<Picto::ProtocolCommand> getDataCommand(new Picto::ProtocolCommand(commandStr));
 		QSharedPointer<Picto::ProtocolResponse> getDataResponse;
 
-		serverChannel_->sendCommand(getDataCommand);
-		if(!serverChannel_->waitForResponse(5000))
+		serverChannel_->sendRegisteredCommand(getDataCommand);
+		QString commandID = getDataCommand->getFieldValue("Command-ID");
+		//Get the response to this command
+		do
 		{
-			setStatus(tr("Server did not respond to GETDATA command"));
-			return false;
-		}
-
-		getDataResponse = serverChannel_->getResponse();
+			if(!serverChannel_->waitForResponse(50))
+			{
+				setStatus(tr("Server did not respond to GETDATA command"));
+				return false;
+			}
+			getDataResponse = serverChannel_->getResponse();
+		}while(!getDataResponse || getDataResponse->getFieldValue("Command-ID") != commandID);
 
 		if(getDataResponse.isNull() || getDataResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
 		{
@@ -1363,7 +1405,7 @@ bool RemoteViewer::joinSession()
 			//If we're here, then there is no state data, which means that a session was just 
 			//started.
 			
-			lastTransitionTime = 0.0;
+			lastTransitionTime = QString("0.00000");
 			currentStateMachinePath = QStringList();
 			currentState = "";
 			taskName="";
@@ -1524,14 +1566,18 @@ bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 	
 	QSharedPointer<Picto::ProtocolResponse> cmdResponse;
 
-	serverChannel_->sendCommand(cmd);
-	if(!serverChannel_->waitForResponse(5000))
+	serverChannel_->sendRegisteredCommand(cmd);
+	QString commandID = cmd->getFieldValue("Command-ID");
+	//Get the response to this command
+	do
 	{
-		setStatus(tr("Server did not respond to commmand: TASK ")+target);
-		return false;
-	}
-
-	cmdResponse = serverChannel_->getResponse();
+		if(!serverChannel_->waitForResponse(50))
+		{
+			setStatus(tr("Server did not respond to commmand: TASK ")+target);
+			return false;
+		}
+		cmdResponse = serverChannel_->getResponse();
+	}while(!cmdResponse || cmdResponse->getFieldValue("Command-ID") != commandID);
 
 	if(cmdResponse->getResponseType() == "OK")
 	{

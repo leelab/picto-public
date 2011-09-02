@@ -8,13 +8,17 @@ StateDataUnit::StateDataUnit()
 
 void StateDataUnit::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
 {
-	transition_ = transition; 
-	timestamp_ = timestamp;
-	machinePath_ = stateMachinePath;
+	setTransition(transition->getSource(),transition->getSourceResult(),transition->getDestination(),QString("%1").arg(timestamp,0,'e',6),stateMachinePath);
 }
 void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath)
 {
-	transition_ = QSharedPointer<Transition>(new Transition(source, sourceResult, destination));
+	setTransition(source,sourceResult,destination,QString("%1").arg(timestamp,0,'e',6),stateMachinePath);
+}
+void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, QString timestamp, QString stateMachinePath)
+{
+	source_ = source;
+	sourceResult_ = sourceResult;
+	destination_ = destination;
 	timestamp_ = timestamp;
 	machinePath_ = stateMachinePath;
 }
@@ -33,11 +37,11 @@ void StateDataUnit::setTransition(QString source, QString sourceResult, QString 
 bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("StateDataUnit");
-	xmlStreamWriter->writeAttribute("timestamp",QString::number(timestamp_,'e',6));
+	xmlStreamWriter->writeAttribute("timestamp",timestamp_);
 	xmlStreamWriter->writeAttribute("statemachinepath",machinePath_);
-
-	if(transition_)
-		transition_->toXml(xmlStreamWriter);
+	xmlStreamWriter->writeAttribute("src",source_);
+	xmlStreamWriter->writeAttribute("srcRes",sourceResult_);
+	xmlStreamWriter->writeAttribute("dest",destination_);
 	DataUnit::serializeDataID(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //StateDataUnit
@@ -54,10 +58,11 @@ bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		return false;
 	}
 
-	timestamp_ = xmlStreamReader->attributes().value("timestamp").toString().toDouble();
+	timestamp_ = xmlStreamReader->attributes().value("timestamp").toString();
 	machinePath_ = xmlStreamReader->attributes().value("statemachinepath").toString();
-	transition_ = QSharedPointer<Transition>(new Transition());
-
+	source_ = xmlStreamReader->attributes().value("src").toString();
+	sourceResult_ = xmlStreamReader->attributes().value("srcRes").toString();
+	destination_ = xmlStreamReader->attributes().value("dest").toString();
 	xmlStreamReader->readNext();
 	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateDataUnit") && !xmlStreamReader->atEnd())
 	{
@@ -68,19 +73,7 @@ bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 			continue;
 		}
 
-		QString name = xmlStreamReader->name().toString();
-		if(name == "Transition")
-		{
-			if(!transition_->fromXml(xmlStreamReader))
-			{
-				addError("StateDataUnit", "Failed to deserialize Transition element", xmlStreamReader);
-				return false;
-			}
-		}
-		else
-		{
-			DataUnit::deserializeDataID(xmlStreamReader);
-		}
+		DataUnit::deserializeDataID(xmlStreamReader);
 		xmlStreamReader->readNext();
 	}
 

@@ -228,6 +228,8 @@
    <file alias="_get_data_command_handler_8h-source.html">../../../output/documentation/main/html/_get_data_command_handler_8h-source.html</file>
    <file alias="_get_p_i_d_8c-source.html">../../../output/documentation/main/html/_get_p_i_d_8c-source.html</file>
    <file alias="_get_p_i_d_8h-source.html">../../../output/documentation/main/html/_get_p_i_d_8h-source.html</file>
+   <file alias="_grid_graphic_8cpp-source.html">../../../output/documentation/main/html/_grid_graphic_8cpp-source.html</file>
+   <file alias="_grid_graphic_8h-source.html">../../../output/documentation/main/html/_grid_graphic_8h-source.html</file>
    <file alias="_h_t_t_p_get_command_handler_8cpp-source.html">../../../output/documentation/main/html/_h_t_t_p_get_command_handler_8cpp-source.html</file>
    <file alias="_h_t_t_p_get_command_handler_8h-source.html">../../../output/documentation/main/html/_h_t_t_p_get_command_handler_8h-source.html</file>
    <file alias="_hardware_setup_8cpp-source.html">../../../output/documentation/main/html/_hardware_setup_8cpp-source.html</file>
@@ -451,6 +453,8 @@
    <file alias="_run_task_dialog_8h-source.html">../../../output/documentation/main/html/_run_task_dialog_8h-source.html</file>
    <file alias="_scene_8cpp-source.html">../../../output/documentation/main/html/_scene_8cpp-source.html</file>
    <file alias="_scene_8h-source.html">../../../output/documentation/main/html/_scene_8h-source.html</file>
+   <file alias="_script_controller_8cpp-source.html">../../../output/documentation/main/html/_script_controller_8cpp-source.html</file>
+   <file alias="_script_controller_8h-source.html">../../../output/documentation/main/html/_script_controller_8h-source.html</file>
    <file alias="_script_element_8cpp-source.html">../../../output/documentation/main/html/_script_element_8cpp-source.html</file>
    <file alias="_script_element_8h-source.html">../../../output/documentation/main/html/_script_element_8h-source.html</file>
    <file alias="_script_element_item_8cpp-source.html">../../../output/documentation/main/html/_script_element_item_8cpp-source.html</file>
@@ -961,6 +965,9 @@
    <file alias="class_picto_1_1_scene-members.html">../../../output/documentation/main/html/class_picto_1_1_scene-members.html</file>
    <file alias="class_picto_1_1_scene.html">../../../output/documentation/main/html/class_picto_1_1_scene.html</file>
    <file alias="class_picto_1_1_scene.png">../../../output/documentation/main/html/class_picto_1_1_scene.png</file>
+   <file alias="class_picto_1_1_script_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_script_controller-members.html</file>
+   <file alias="class_picto_1_1_script_controller.html">../../../output/documentation/main/html/class_picto_1_1_script_controller.html</file>
+   <file alias="class_picto_1_1_script_controller.png">../../../output/documentation/main/html/class_picto_1_1_script_controller.png</file>
    <file alias="class_picto_1_1_script_element-members.html">../../../output/documentation/main/html/class_picto_1_1_script_element-members.html</file>
    <file alias="class_picto_1_1_script_element.html">../../../output/documentation/main/html/class_picto_1_1_script_element.html</file>
    <file alias="class_picto_1_1_script_element.png">../../../output/documentation/main/html/class_picto_1_1_script_element.png</file>
@@ -1433,6 +1440,9 @@
    <file alias="struct_component_update_command_handler.png">../../../output/documentation/main/html/struct_component_update_command_handler.png</file>
    <file alias="struct_daq_board_1_1ai_channel__st-members.html">../../../output/documentation/main/html/struct_daq_board_1_1ai_channel__st-members.html</file>
    <file alias="struct_daq_board_1_1ai_channel__st.html">../../../output/documentation/main/html/struct_daq_board_1_1ai_channel__st.html</file>
+   <file alias="struct_director_click_response_handler-members.html">../../../output/documentation/main/html/struct_director_click_response_handler-members.html</file>
+   <file alias="struct_director_click_response_handler.html">../../../output/documentation/main/html/struct_director_click_response_handler.html</file>
+   <file alias="struct_director_click_response_handler.png">../../../output/documentation/main/html/struct_director_click_response_handler.png</file>
    <file alias="struct_director_end_session_response_handler-members.html">../../../output/documentation/main/html/struct_director_end_session_response_handler-members.html</file>
    <file alias="struct_director_end_session_response_handler.html">../../../output/documentation/main/html/struct_director_end_session_response_handler.html</file>
    <file alias="struct_director_end_session_response_handler.png">../../../output/documentation/main/html/struct_director_end_session_response_handler.png</file>
@@ -1502,6 +1512,9 @@
    <file alias="struct_picto_1_1_audio_element-members.html">../../../output/documentation/main/html/struct_picto_1_1_audio_element-members.html</file>
    <file alias="struct_picto_1_1_audio_element.html">../../../output/documentation/main/html/struct_picto_1_1_audio_element.html</file>
    <file alias="struct_picto_1_1_audio_element.png">../../../output/documentation/main/html/struct_picto_1_1_audio_element.png</file>
+   <file alias="struct_picto_1_1_click_response_handler-members.html">../../../output/documentation/main/html/struct_picto_1_1_click_response_handler-members.html</file>
+   <file alias="struct_picto_1_1_click_response_handler.html">../../../output/documentation/main/html/struct_picto_1_1_click_response_handler.html</file>
+   <file alias="struct_picto_1_1_click_response_handler.png">../../../output/documentation/main/html/struct_picto_1_1_click_response_handler.png</file>
    <file alias="struct_picto_1_1_compositing_surface-members.html">../../../output/documentation/main/html/struct_picto_1_1_compositing_surface-members.html</file>
    <file alias="struct_picto_1_1_compositing_surface.html">../../../output/documentation/main/html/struct_picto_1_1_compositing_surface.html</file>
    <file alias="struct_picto_1_1_compositing_surface.png">../../../output/documentation/main/html/struct_picto_1_1_compositing_surface.png</file>

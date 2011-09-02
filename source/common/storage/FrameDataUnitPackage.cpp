@@ -12,6 +12,12 @@ void FrameDataUnitPackage::addFrame(int frameNumber, double time, QString stateN
 	data_.append(data);
 }
 
+void FrameDataUnitPackage::addFrame(int frameNumber, QString time, QString stateName)
+{
+	QSharedPointer<FrameDataUnit> data(new FrameDataUnit(frameNumber, time, stateName));
+	data_.append(data);
+}
+
 
 
 /*! \brief Turns the FrameDataUnitPackage into an XML fragment

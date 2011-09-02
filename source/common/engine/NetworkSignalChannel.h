@@ -34,11 +34,11 @@ public:
 	bool stop();
 	void updateDataBuffer();
 
-	void setLastTimeDataCollected(double time) { lastTimeDataCollected_ = time; };
+	void setLastTimeDataCollected(QString time) { lastTimeDataCollected_ = time; };
 
 private:
 	CommandChannel *serverChannel_;
-	double lastTimeDataCollected_;
+	QString lastTimeDataCollected_;
 };
 
 };

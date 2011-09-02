@@ -17,6 +17,7 @@
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
 #include "../stimuli/LineGraphic.h"
+#include "../stimuli/GridGraphic.h"
 #include "../stimuli/PictureGraphic.h"
 #include "../stimuli/RandomlyFilledGridGraphic.h"
 #include "../stimuli/TextGraphic.h"
@@ -63,6 +64,8 @@ ScriptableContainer::ScriptableContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
 	visualElementFactory_->addAssetType(LineGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	visualElementFactory_->addAssetType(GridGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(GridGraphic::Create))));
 	visualElementFactory_->addAssetType(PictureGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
 	visualElementFactory_->addAssetType(RandomlyFilledGridGraphic::type,

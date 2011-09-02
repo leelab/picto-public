@@ -20,7 +20,7 @@ class PropertyEditorFactory : public QtVariantEditorFactory
 
 public:
    PropertyEditorFactory(QWidget *parent=0);
-   void setNextProperty(QSharedPointer<Picto::Property> nextProp);
+   void setNextProperty(QSharedPointer<Property> nextProp);
    void clear();
 signals:
 	void propertyEdited(QSharedPointer<Property> prop);

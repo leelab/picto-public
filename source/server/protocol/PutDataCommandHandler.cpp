@@ -177,13 +177,18 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		qDebug("Proxy Total  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 	QString directive = sessionInfo->pendingDirective(sourceID);
 	if(directive.isEmpty())
+	{
 		response->setContent("OK");
+		if(sessionInfo->needsFlush(sourceType))
+		{
+			sessionInfo->flushCache(sourceType);
+			response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+		}
+	}
 	else
 	{
-						qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
+		qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
 		response->setContent(directive.toUtf8());
-		sessionInfo->flushCache(sourceType);
-		response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	}
 	return response;
 }

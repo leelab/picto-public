@@ -26,6 +26,7 @@ public:
 	FrameDataUnitPackage();
 
 	void addFrame(int frameNumber, double time, QString stateName);
+	void addFrame(int frameNumber, QString time, QString stateName);
 	void clearFrames() { data_.clear(); };
 	int length() { return data_.length(); }
 	QSharedPointer<FrameDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };

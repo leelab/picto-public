@@ -11,8 +11,16 @@ PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, doubl
 	index_ = index;
 	path_ = path; 
 	value_ = value; 
+	time_ = QString("%1").arg(time,0,'e',6);
+}
+
+PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, QString time)
+{
+	index_ = index;
+	path_ = path; 
+	value_ = value; 
 	time_ = time;
-};
+}
 
 /*! \brief Turns the PropertyDataUnit into an XML fragment
  *
@@ -22,7 +30,7 @@ PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, doubl
 bool PropertyDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("PropertyDataUnit");
-	xmlStreamWriter->writeAttribute("t",QString("%1").arg(time_,0,'e',6));
+	xmlStreamWriter->writeAttribute("t",time_);
 	xmlStreamWriter->writeAttribute("i",QString("%1").arg(index_));
 	xmlStreamWriter->writeAttribute("p",QString("%1").arg(path_));
 	xmlStreamWriter->writeAttribute("v",QString("%1").arg(value_));
@@ -84,7 +92,7 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 
 			if(xmlStreamReader->attributes().hasAttribute("t"))
 			{
-				time_ = xmlStreamReader->attributes().value("t").toString().toDouble();
+				time_ = xmlStreamReader->attributes().value("t").toString();
 			}
 			else
 			{

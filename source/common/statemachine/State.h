@@ -90,7 +90,7 @@ private:
 	int engineNeeded_;
 
 	int frameCounter_;
-	double lastFrameCheckTime_;
+	QString lastFrameCheckTime_;
 	bool hasCursor_;
 
 	QSharedPointer<SignalChannel> sigChannel_;

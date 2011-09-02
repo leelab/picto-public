@@ -23,6 +23,7 @@ class PropertyDataUnit : public DataUnit
 public:
 	PropertyDataUnit();
 	PropertyDataUnit(int index, QString path, QString value, double time);
+	PropertyDataUnit(int index, QString path, QString value, QString time);
 	
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -31,7 +32,7 @@ public:
 	int index_;
 	QString path_;
 	QString value_;
-	double time_;
+	QString time_;
 
 protected:
 	virtual void postSerialize();

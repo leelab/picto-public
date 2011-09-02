@@ -77,11 +77,11 @@ public:
 	void insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data);
 	void insertRewardData(QSharedPointer<Picto::RewardDataUnit> data);
 
-	QSharedPointer<Picto::BehavioralDataUnitPackage> selectBehavioralData(double timestamp);
-	QSharedPointer<Picto::PropertyDataUnitPackage> selectPropertyData(double timestamp);
+	QSharedPointer<Picto::BehavioralDataUnitPackage> selectBehavioralData(QString timestamp);
+	QSharedPointer<Picto::PropertyDataUnitPackage> selectPropertyData(QString timestamp);
 	void insertStateData(QSharedPointer<Picto::StateDataUnit> data);
-	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> selectStateData(double timestamp);
-	QSharedPointer<Picto::FrameDataUnitPackage> selectFrameData(double timestamp);
+	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> selectStateData(QString timestamp);
+	QSharedPointer<Picto::FrameDataUnitPackage> selectFrameData(QString timestamp);
 
 	//getters/setters
 	QUuid sessionId() { return uuid_; };
@@ -92,6 +92,9 @@ public:
 
 	QString pendingDirective(QUuid componentID);
 	void addPendingDirective(QString directive, QString componentType, bool overwriteRedundantDirective = true);
+
+	void enableFlush(QString componentType){flushEnabled_[componentType] = true;};
+	bool needsFlush(QString componentType){bool r = flushEnabled_[componentType]; flushEnabled_[componentType]=false; return r;};
 
 	//! clears the state of activity and returns it.
 	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
@@ -133,6 +136,7 @@ private:
 	QString alignToType_;	//The component type who's timeframe should be used as a baseline in timing alignment.
 	bool activity_;
 	bool ignoreComponents_;
+	QMap<QString,bool> flushEnabled_;
 	QByteArray experimentXml_;
 	QString baseSessionDbFilepath_;
 	QString timeCreated_;

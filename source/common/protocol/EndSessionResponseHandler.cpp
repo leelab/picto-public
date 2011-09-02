@@ -12,7 +12,7 @@ commandChannel_(commandChannel)
 bool EndSessionResponseHandler::processResponse(QString directive)
 {
 	statusManager_->setStatus(ending);
-	while(!commandChannel_->processResponses(0));
+	while(!commandChannel_->processResponses(5000));
 	commandChannel_->setSessionId(QUuid());
 	return true;
 }

@@ -8,6 +8,7 @@
 #include <QSharedPointer>
 #include <QUuid>
 #include <QTime>
+#include <QStringList>
 
 #include "../common/common.h"
 #include "../common/protocol/ProtocolCommand.h"
@@ -51,6 +52,7 @@ private:
 	QSharedPointer<ServerProtocols> protocols_;
 	QString peerAddress_;
 	QList<QSharedPointer<Picto::ProtocolResponse> > delayedResponses_;
+	QStringList pendingCommandIDs_;
 
 	static const int timeoutInterval_ = 10000;
 

@@ -10,6 +10,13 @@ BehavioralDataUnit::BehavioralDataUnit(double X, double Y, double T)
 {
 	x = X; 
 	y = Y; 
+	t = QString("%1").arg(T,0,'e',6);;
+};
+
+BehavioralDataUnit::BehavioralDataUnit(double X, double Y, QString T)
+{
+	x = X; 
+	y = Y; 
 	t = T;
 };
 
@@ -21,7 +28,7 @@ BehavioralDataUnit::BehavioralDataUnit(double X, double Y, double T)
 bool BehavioralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("BehavioralDataUnit");
-	xmlStreamWriter->writeAttribute("time",QString("%1").arg(t,0,'e',6));
+	xmlStreamWriter->writeAttribute("time",t);
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(x));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(y));
 	DataUnit::serializeDataID(xmlStreamWriter);
@@ -72,7 +79,7 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 
 			if(xmlStreamReader->attributes().hasAttribute("time"))
 			{
-				t = xmlStreamReader->attributes().value("time").toString().toDouble();
+				t = xmlStreamReader->attributes().value("time").toString();
 			}
 			else
 			{

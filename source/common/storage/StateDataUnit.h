@@ -36,13 +36,13 @@ public:
 
 	void setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath);
 	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath);
-	void clearTransition() { transition_ = QSharedPointer<Transition>(); };
+	void setTransition(QString source, QString sourceResult, QString destination, QString timestamp, QString stateMachinePath);
 
 	QString getMachinePath() { return machinePath_; };
-	double getTime() { return timestamp_; };
-	QString getSource() { return transition_->getSource(); };
-	QString getSourceResult() { return transition_->getSourceResult(); };
-	QString getDestination() { return transition_->getDestination(); };
+	QString getTime() { return timestamp_; };
+	QString getSource() { return source_; };
+	QString getSourceResult() { return sourceResult_; };
+	QString getDestination() { return destination_; };
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -53,8 +53,10 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QSharedPointer<Transition> transition_;
-	double timestamp_;
+	QString source_;
+	QString sourceResult_;
+	QString destination_;
+	QString timestamp_;
 	QString machinePath_;
 };
 

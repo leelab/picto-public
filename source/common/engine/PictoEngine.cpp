@@ -20,7 +20,7 @@ PictoEngine::PictoEngine() :
 	timingType_(PictoEngineTimingType::precise),
 	propTable_(NULL),
 	slave_(false),
-	lastTimePropChangesRequested_(0)
+	lastTimePropChangesRequested_("0.0")
 {
 	bExclusiveMode_ = true;
 	setSessionId(QUuid());
@@ -183,7 +183,7 @@ void PictoEngine::updatePropertiesFromServer()
 	if(propTable_.isNull())
 		return;
 	//Collect the data from the server
-	QString commandStr = QString("GETDATA PropertyDataUnitPackage:%1 PICTO/1.0").arg(lastTimePropChangesRequested_,0,'e',6);
+	QString commandStr = QString("GETDATA PropertyDataUnitPackage:%1 PICTO/1.0").arg(lastTimePropChangesRequested_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;
 
@@ -201,9 +201,10 @@ void PictoEngine::updatePropertiesFromServer()
 	QByteArray xmlFragment = response->getContent();
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
 
-	while(xmlReader->readNext() && xmlReader->name() != "Data");
+	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
 
-	Q_ASSERT(!xmlReader->atEnd());
+	if(xmlReader->atEnd())
+		return;
 
 	PropertyDataUnitPackage propData;
 

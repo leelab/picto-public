@@ -6,10 +6,18 @@ namespace Picto {
 FrameDataUnit::FrameDataUnit()
 {
 }
+
+FrameDataUnit::FrameDataUnit(int frameNum, QString timestamp, QString statename)
+{
+	frameNumber = frameNum;
+	time = timestamp;
+	stateName = statename;
+}
+
 FrameDataUnit::FrameDataUnit(int frameNum, double timestamp, QString statename)
 {
 	frameNumber = frameNum;
-	time = timestamp; 
+	time = QString("%1").arg(timestamp,0,'e',6);
 	stateName = statename;
 }
 
@@ -22,7 +30,7 @@ FrameDataUnit::FrameDataUnit(int frameNum, double timestamp, QString statename)
 bool FrameDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("FrameDataUnit");
-	xmlStreamWriter->writeAttribute("time",QString("%1").arg(time,0,'e',6));
+	xmlStreamWriter->writeAttribute("time",time);
 	xmlStreamWriter->writeAttribute("state",QString("%1").arg(stateName));
 	xmlStreamWriter->writeTextElement("framenumber",QString::number(frameNumber));
 	DataUnit::serializeDataID(xmlStreamWriter);
@@ -53,7 +61,7 @@ bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		{
 			if(xmlStreamReader->attributes().hasAttribute("time"))
 			{
-				time = xmlStreamReader->attributes().value("time").toString().toDouble();
+				time = xmlStreamReader->attributes().value("time").toString();
 			}
 			else
 			{

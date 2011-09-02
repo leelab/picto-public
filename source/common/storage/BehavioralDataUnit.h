@@ -23,6 +23,7 @@ class BehavioralDataUnit : public DataUnit
 public:
 	BehavioralDataUnit();
 	BehavioralDataUnit(double X, double Y, double T);
+	BehavioralDataUnit(double X, double Y, QString T);
 	
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -30,7 +31,7 @@ public:
 		
 	double x;
 	double y;
-	double t;
+	QString t;
 
 protected:
 	virtual void postSerialize();

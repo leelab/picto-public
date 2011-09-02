@@ -136,7 +136,7 @@ public:
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
 	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
-	void setLastTimePropertiesRequested(double time){lastTimePropChangesRequested_ = time;};
+	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -158,7 +158,7 @@ private:
 	int engineCommand_;
 
 	bool slave_;
-	double lastTimePropChangesRequested_;
+	QString lastTimePropChangesRequested_;
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);
 };

@@ -12,6 +12,11 @@ void BehavioralDataUnitPackage::addData(double x, double y, double t)
 	QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit(x,y,t));
 	data_.append(newPoint);
 }
+void BehavioralDataUnitPackage::addData(double x, double y, QString t)
+{
+	QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit(x,y,t));
+	data_.append(newPoint);
+}
 
 /*!	\brief Adds the map returned from a behavioral data signal channel
  *

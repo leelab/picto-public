@@ -88,7 +88,7 @@ public:
 	int incomingResponsesWaiting();
 
 	bool sendCommand(QSharedPointer<Picto::ProtocolCommand> command);
-	bool sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command);
+	bool sendRegisteredCommand(QSharedPointer<Picto::ProtocolCommand> command, bool enabledResend = true);
 	QSharedPointer<ProtocolResponse> getResponse();
 
 	void setStatusManager(QSharedPointer<ComponentStatusManager> statusManager);
@@ -120,7 +120,7 @@ public:
 
 	void closeChannel();
 public slots:
-	void connectToServer(QHostAddress serverAddress, quint16 serverPort_);
+	void connectToServer();
 
 signals:
 	void connectAttemptFailed();

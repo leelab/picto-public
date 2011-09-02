@@ -21,7 +21,7 @@ PropertyEditorFactory::PropertyEditorFactory(QWidget *parent) :
 void PropertyEditorFactory::setNextProperty(QSharedPointer<Picto::Property> nextProp)
 {
 	editTrackers_.prepend(QSharedPointer<PropertyEditTracker>(new PropertyEditTracker(nextProp)));
-	connect(editTrackers_.first().data(),SIGNAL(propertyEdited(QSharedPointer<Picto::Property>)),this,SIGNAL(propertyEdited(QSharedPointer<Picto::Property>)));
+	connect(editTrackers_.first().data(),SIGNAL(propertyEdited(QSharedPointer<Property>)),this,SIGNAL(propertyEdited(QSharedPointer<Property>)));
 }
 
 //Clear should be called whenever creating more propertyWidgets if the previously created propertyWidgets
