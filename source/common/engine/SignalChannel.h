@@ -51,7 +51,7 @@ public:
 
 
 	void setsampleRate_(int sampsPerSec);
-	void setCalibrationRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue);
+	void setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue);
 	void setCalibrationCoefficients(QString subchannel, double A, double B);
 	QList<QString> getSubchannels() { return rawDataBuffer_.keys(); };
 

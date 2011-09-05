@@ -128,6 +128,7 @@ private:
 
 	QList<ComponentInstance> currDirectorList_;
 	QList<ComponentInstance> currProxyList_;
+	bool channelSignalsConnected_;
 private slots:
 	void taskListIndexChanged(int index);
 };

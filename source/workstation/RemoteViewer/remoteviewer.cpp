@@ -41,7 +41,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	timeoutTimer_(0),
 	startedSession_(false),
 	activeExperiment_(0),
-	statusBar_(NULL)
+	statusBar_(NULL),
+	channelSignalsConnected_(false)
 {
 	setupServerChannel();
 	setupEngine();
@@ -95,19 +96,34 @@ RemoteViewer::~RemoteViewer()
 //! Called just before displaying the viewer
 void RemoteViewer::init()
 {
-	if(!serverChannel_->assureConnection())serverChannel_->connectToServer();
-	if(!engineSlaveChannel_->assureConnection())engineSlaveChannel_->connectToServer();
-	if(!behavioralDataChannel_->assureConnection())behavioralDataChannel_->connectToServer();
+	if(!channelSignalsConnected_)
+	{		
+		connect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
+		connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
+		connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
 
-	if(serverChannel_ == 0 || 
-		serverChannel_->getChannelStatus() == Picto::CommandChannel::disconnected)
-	{
-		QMessageBox msg;
-		msg.setIcon(QMessageBox::Warning);
-		msg.setText(Picto::Names->workstationAppName + tr(" is not connected to ") + Picto::Names->serverAppName + "\n"+
-					   tr("Check your network connection, and ensure that ") + Picto::Names->serverAppName + tr(" is running."));
-		msg.exec();
+		connect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
+		connect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
+		connect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
+
+		channelSignalsConnected_ = true;
 	}
+	bool servConnect = serverChannel_->assureConnection();
+	bool engConnect = engineSlaveChannel_->assureConnection();
+	bool behavConnect = behavioralDataChannel_->assureConnection();
+
+	//if(!(servConnect || engConnect || behavConnect))
+	//{
+	//	QMessageBox msg;
+	//	msg.setIcon(QMessageBox::Warning);
+	//	msg.setText(Picto::Names->workstationAppName + tr(" is not connected to ") + Picto::Names->serverAppName + "\n"+
+	//				   tr("Check your network connection, and ensure that ") + Picto::Names->serverAppName + tr(" is running."));
+	//	msg.exec();
+	//}
+	if(!servConnect)serverChannel_->connectToServer();
+	if(!engConnect)engineSlaveChannel_->connectToServer();
+	if(!behavConnect)behavioralDataChannel_->connectToServer();
+
 	if(sessionId_ == QUuid())
 	{
 		//Only load a new experiment if we're not already in a session
@@ -152,7 +168,22 @@ void RemoteViewer::init()
 void RemoteViewer::deinit()
 {
 	//stop the engine running
+	if(	channelSignalsConnected_ && 
+		(	!serverChannel_->assureConnection() 
+			|| !engineSlaveChannel_->assureConnection()
+			|| !behavioralDataChannel_->assureConnection()
+		)
+	)
+	{
+		disconnect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
+		disconnect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
+		disconnect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
 
+		disconnect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
+		disconnect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
+		disconnect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
+		channelSignalsConnected_ = false;
+	}
 
 	updateTimer_->stop();
 
@@ -318,13 +349,15 @@ void RemoteViewer::setupServerChannel()
 	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 	behavioralDataChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 
-	connect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
-	connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
-	connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
+	//connect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
+	//connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
+	//connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
 
-	connect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
-	connect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
-	connect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
+	//connect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
+	//connect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
+	//connect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
+
+	//channelSignalsConnected_ = true;
 
 }
 

@@ -17,7 +17,7 @@ void SignalChannel::setsampleRate_(int sampsPerSec)
 	sampleRate_ = sampsPerSec;
 }
 
-void SignalChannel::setCalibrationRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue)
+void SignalChannel::setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue)
 {
 	//set the scaling values (we're assuming a linear scaling with 
 	//y = A + Bx

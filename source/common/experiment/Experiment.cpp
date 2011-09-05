@@ -12,6 +12,11 @@ engine_(NULL)
 	
 	AddDefinableProperty("SyntaxVersion","");
 	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
+	AddDefinableProperty(QVariant::Int,"MinXSignal",-10000);
+	AddDefinableProperty(QVariant::Int,"MaxXSignal",10000);
+	AddDefinableProperty(QVariant::Int,"MinYSignal",-10000);
+	AddDefinableProperty(QVariant::Int,"MaxYSignal",10000);
+	AddDefinableProperty(QVariant::Int,"XYSignalShear",0);
 }
 
 QSharedPointer<Experiment> Experiment::Create()

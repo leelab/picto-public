@@ -35,8 +35,8 @@ void SignalChannelTest::exec()
 	aiChannel->addAiChannel("yeye",0);
 
 	QRect visualTargetRect = d3dVisualTarget->getDimensions();
-	aiChannel->setCalibrationRange("xeye", 0.0,10.0,0.0,(double)visualTargetRect.width());
-	aiChannel->setCalibrationRange("yeye", 0.0,10.0,0.0,(double)visualTargetRect.height());
+	aiChannel->setCalibrationCoefficientsFromRange("xeye", 0.0,10.0,0.0,(double)visualTargetRect.width());
+	aiChannel->setCalibrationCoefficientsFromRange("yeye", 0.0,10.0,0.0,(double)visualTargetRect.height());
 	aiChannel->start();
 
 	QSharedPointer<Picto::CompositingSurface> compositingSurface = 
