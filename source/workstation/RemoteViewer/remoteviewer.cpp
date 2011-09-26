@@ -432,7 +432,7 @@ void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 	QString name = changedProp->getName();
 	if(changedProp->getIndex()<0)
 		return;
-	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getIndex())),changedProp->toXml());
+	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getIndex())),changedProp->toUserString());
 }
 
 void RemoteViewer::operatorClickDetected(QPoint pos)
