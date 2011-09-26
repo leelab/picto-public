@@ -22,7 +22,6 @@ VisualElement::~VisualElement()
 QPoint VisualElement::getPosition()
 {
 	QVariant positionVariant = propertyContainer_->getPropertyValue("Position");
-
 	if(positionVariant == QVariant::Invalid)
 	{
 		return QPoint(0,0);

@@ -84,7 +84,8 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	if(dataChannel.isNull())
 		return;
 
-	Q_ASSERT(sendStateData("NULL","NULL",stateMachine_->getName(),engine));
+	bool sendStateDataSucceeded = sendStateData("NULL","NULL",stateMachine_->getName(),engine);
+	Q_ASSERT(sendStateDataSucceeded);
 }
 
 

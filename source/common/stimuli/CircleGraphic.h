@@ -28,13 +28,15 @@ public:
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new CircleGraphic());};
 	static const QString type;
+	QPoint getPositionOffset();
 	int getRadius(){return propertyContainer_->getPropertyValue("Radius").toInt();};
 	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius", radius);};
 
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
+private:
+	QPoint posOffset_;
 private slots:
 	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };

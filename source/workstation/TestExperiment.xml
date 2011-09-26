@@ -26,7 +26,7 @@
 					<BackgroundColor>#000000</BackgroundColor>
 					<VisualElement type="Ellipse Graphic"><Layer>1</Layer>
 						<Name>Ellipse</Name>
-						<Position x="400" y="400"/>
+						<Position x="400" y="300"/>
 						<Dimensions x="0" y="0" width="300" height="300"/>
 						<Color R="255" G="0" B="0" A="255"/>
 						<UIInfo><Pos x="177" y="250"/><UniqueID>{bbb004c0-c780-4377-bdd3-59c7e6b36ec8}</UniqueID></UIInfo><UIEnabled>true</UIEnabled></VisualElement><EntryScript>
@@ -97,24 +97,24 @@
 						<BackgroundColor>#000000</BackgroundColor>
 						<VisualElement type="Ellipse Graphic"><Name>Ellipse</Name>
 							<Layer>1</Layer>
-							<Position x="400" y="199"/>
+							<Position x="400" y="300"/>
 							<Dimensions x="0" y="0" width="300" height="300"/>
 							<Color R="255" G="0" B="0" A="255"/>
 							<UIInfo><UniqueID>{7e447bee-5b07-4adb-9912-91d1860bab4f}</UniqueID><Pos x="2209" y="2000"/></UIInfo><UIEnabled>true</UIEnabled></VisualElement><FrameScript>
-																																																																																                    //Every frame, we move the ellipse
-																																																																																                    x = Ellipse.x;
-																																																																																                    y = Ellipse.y;
+																																																																																																				                    //Every frame, we move the ellipse
+																																																																																																				                    x = Ellipse.x;
+																																																																																																				                    y = Ellipse.y;
                     
 
-																																																																																                    if(y &gt;= 600)
-																																																																																                      MovingUp.value = true;
-																																																																																                    if(y &lt;= 200)
-																																																																																                    MovingUp.value = false;
+																																																																																																				                    if(y &gt;= 450)
+																																																																																																				                      MovingUp.value = true;
+																																																																																																				                    if(y &lt;= 150)
+																																																																																																				                    MovingUp.value = false;
 
-																																																																																                    if(MovingUp.value == true)
-																																																																																                      Ellipse.setPos(x,y-10);
-																																																																																                    else
-																																																																																                      Ellipse.setPos(x,y+10);
+																																																																																																				                    if(MovingUp.value == true)
+																																																																																																				                      Ellipse.setPos(x,y-10);
+																																																																																																				                    else
+																																																																																																				                      Ellipse.setPos(x,y+10);
                   </FrameScript>
 						<Result><Name>Success</Name><UIInfo><UniqueID>{b67825d7-10a5-45fd-a1dd-f8fda82f8c96}</UniqueID><Pos x="2134" y="2000"/></UIInfo></Result>
 						<Transition>
@@ -515,14 +515,14 @@
 						<ControlElement type="Test Controller">
 							<Name>TestCont</Name>
 							<NumberOfFrames>120</NumberOfFrames>
-							<UIInfo><Pos x="100" y="100"/></UIInfo><Result><Name>Success</Name></Result></ControlElement>
+							<UIInfo><Pos x="100" y="100"/><UniqueID>{0d242af9-24dc-40df-9ba8-084540132744}</UniqueID></UIInfo><Result><Name>Success</Name><UIInfo><UniqueID>{b122f94d-b762-440c-b76d-ccbd2cb942ba}</UniqueID></UIInfo></Result></ControlElement>
 						<BackgroundColor>#000000</BackgroundColor>
 						<VisualElement type="Box Graphic"><Name>box</Name>
 							<Layer>1</Layer>
-							<Position x="30" y="30"/>
+							<Position x="25" y="50"/>
 							<Dimensions x="0" y="0" width="50" height="100"/>
 							<Color R="255" G="255" B="0" A="255"/>
-							<UIInfo><Pos x="106" y="220"/></UIInfo><UIEnabled>true</UIEnabled></VisualElement><Result><Name>Success</Name><UIInfo><Pos x="400" y="100"/></UIInfo></Result>
+							<UIInfo><Pos x="106" y="220"/><UniqueID>{76b977b1-cb09-4c59-bc73-3ecda4e34284}</UniqueID></UIInfo><UIEnabled>true</UIEnabled></VisualElement><Result><Name>Success</Name><UIInfo><Pos x="400" y="100"/><UniqueID>{6a635122-5bf9-4386-ba2d-cc0a9bc7acf8}</UniqueID></UIInfo></Result>
 						<Transition>
 							<Source>TestCont</Source>
 							<SourceResult>Success</SourceResult>
@@ -541,7 +541,7 @@
 						<BackgroundColor>#000000</BackgroundColor>
 						<VisualElement type="Box Graphic"><Name>box</Name>
 							<Layer>1</Layer>
-							<Position x="100" y="30"/>
+							<Position x="100" y="50"/>
 							<Dimensions x="0" y="0" width="50" height="100"/>
 							<Color R="255" G="0" B="255" A="255"/>
 							<UIInfo><Pos x="165" y="260"/></UIInfo><UIEnabled>true</UIEnabled></VisualElement><FrameScript>
@@ -554,7 +554,7 @@
 							<Destination>Success</Destination>
 						</Transition>
 						<UIInfo><Pos x="626" y="186"/><UniqueID>{f24d5022-da0e-4bbb-b6c6-820c391bdbd7}</UniqueID></UIInfo></StateMachineElement>
-					<Result><Name>Done</Name><UIInfo><Pos x="858" y="194"/></UIInfo></Result>
+					<Result><Name>Done</Name><UIInfo><Pos x="858" y="194"/><UniqueID>{ca496a7c-bf92-4178-9b1f-68bf8ace3f39}</UniqueID></UIInfo></Result>
 					<Transition>
 						<Source>State 1</Source>
 						<SourceResult>Success</SourceResult>
@@ -590,4 +590,4 @@
 				<UIInfo><Pos x="111" y="105"/><UniqueID>{09171d28-7303-4914-beef-581128741ddd}</UniqueID></UIInfo></StateMachine>
 			<UIInfo><Pos x="695" y="93"/><UniqueID>{042b405f-c9cb-43be-9f01-0e0c5f0b3779}</UniqueID></UIInfo></Task>
 		<SyntaxVersion>0.0.1</SyntaxVersion><UIInfo><UniqueID>{682e747b-b206-4da6-af36-492ba58e6f1d}</UniqueID></UIInfo></Experiment>
-	<StateMachineEditorData><OpenedBlock>{fc33aa1f-dcf7-4770-84cc-c786aaaa3172}</OpenedBlock></StateMachineEditorData></PictoData>
+	<StateMachineEditorData><OpenedBlock>{f24d5022-da0e-4bbb-b6c6-820c391bdbd7}</OpenedBlock></StateMachineEditorData></PictoData>

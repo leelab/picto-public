@@ -9,14 +9,14 @@ Experiment::Experiment()
 latestSyntaxVersion_("0.0.1"),
 engine_(NULL)
 {
-	
+	signalCoeffInitialized_ = false;
 	AddDefinableProperty("SyntaxVersion","");
 	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
-	AddDefinableProperty(QVariant::Int,"MinXSignal",-10000);
-	AddDefinableProperty(QVariant::Int,"MaxXSignal",10000);
-	AddDefinableProperty(QVariant::Int,"MinYSignal",-10000);
-	AddDefinableProperty(QVariant::Int,"MaxYSignal",10000);
-	AddDefinableProperty(QVariant::Int,"XYSignalShear",0);
+	AddDefinableProperty(QVariant::Int,"XSignalLeftEdge",-10000);
+	AddDefinableProperty(QVariant::Int,"XSignalRightEdge",10000);
+	AddDefinableProperty(QVariant::Int,"YSignalTopEdge",-10000);
+	AddDefinableProperty(QVariant::Int,"YSignalBottomEdge",10000);
+	AddDefinableProperty(QVariant::Double,"XYSignalShear",0);
 }
 
 QSharedPointer<Experiment> Experiment::Create()
@@ -83,7 +83,12 @@ bool Experiment::runTask(QString taskName)
 		return false;
 	engine_->clearChangedPropertyPackage();
 	engine_->clearEngineCommand();
+	//Start out by sending all starting property values to the server
+	engine_->sendAllPropertyValuesToServer();
+
 	engine_->startAllSignalChannels();
+	//Initialize signal channel coefficients
+	updateSignalCoefficients(QSharedPointer<Property>());
 	bool success = task->run(engine_);
 	engine_->stopAllSignalChannels();
 	return success;
@@ -126,6 +131,19 @@ void Experiment::postSerialize()
 	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
 	if(experimentSyntaxVer == "")
 		propertyContainer_->setPropertyValue("SyntaxVersion",latestSyntaxVersion_);
+
+	//connect the signal properties to the updateSignalCoefficients function
+	connect(propertyContainer_->getProperty("XSignalLeftEdge").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
+	connect(propertyContainer_->getProperty("XSignalRightEdge").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
+	connect(propertyContainer_->getProperty("YSignalTopEdge").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
+	connect(propertyContainer_->getProperty("YSignalBottomEdge").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
+	connect(propertyContainer_->getProperty("XYSignalShear").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
+	//Set the signal properties runtime editable
+	setPropertyRuntimeEditable("XSignalLeftEdge");
+	setPropertyRuntimeEditable("XSignalRightEdge");
+	setPropertyRuntimeEditable("YSignalTopEdge");
+	setPropertyRuntimeEditable("YSignalBottomEdge");
+	setPropertyRuntimeEditable("XYSignalShear");
 	
 	//clear out the existing experiment
 	tasks_.clear();
@@ -153,6 +171,42 @@ bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
 	return true;
+}
+
+void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
+{
+	if(engine_.isNull())
+		return;
+	QSharedPointer<SignalChannel> posChannel = engine_->getSignalChannel("PositionChannel");
+	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
+
+	if(!signalCoeffInitialized_)
+	{
+		signalCoeffInitialized_ = true;
+		//If we're using a mouse channel, ignore the saved signal parameters since we know how to set them up automatically.
+		//We will still allow these values to be adjusted by the user later though for testing purposes.
+		bool isMouseChannel = posChannel->inherits("Picto::MouseSignalChannel");
+		if(isMouseChannel)
+		{	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
+			propertyContainer_->setPropertyValue("XSignalLeftEdge",0);
+			propertyContainer_->setPropertyValue("XSignalRightEdge",windowDims.width());
+			propertyContainer_->setPropertyValue("YSignalTopEdge",0);
+			propertyContainer_->setPropertyValue("YSignalBottomEdge",windowDims.height());
+			propertyContainer_->setPropertyValue("XYSignalShear",0);
+		}
+	}
+	posChannel->setCalibrationCoefficientsFromRange("xpos",
+													propertyContainer_->getPropertyValue("XSignalLeftEdge").toInt(),
+													propertyContainer_->getPropertyValue("XSignalRightEdge").toInt(),
+													0,
+													windowDims.width());
+	posChannel->setCalibrationCoefficientsFromRange("ypos",
+													propertyContainer_->getPropertyValue("YSignalTopEdge").toInt(),
+													propertyContainer_->getPropertyValue("YSignalBottomEdge").toInt(),
+													0,
+													windowDims.height());
+	posChannel->setShear("xpos","ypos",propertyContainer_->getPropertyValue("XYSignalShear").toDouble());
+
 }
 
 }; //namespace Picto

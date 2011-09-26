@@ -27,6 +27,7 @@ public:
 	void clear(){propTable_.clear();};
 	void addProperty(QSharedPointer<Property> prop);
 	void updatePropertyValue(int index,QString value);
+	void reportChangeInAllProperties();
 signals:
 	void propertyChanged(QSharedPointer<Property> changedProp);
 private:

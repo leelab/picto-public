@@ -27,12 +27,12 @@ public:
 
 	void setDataID(qulonglong dataID);
 	qulonglong getDataID();
+	static void resetDataIDGenerator();
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 private:
-	
 	static qulonglong generateDataID();
 	static qulonglong lastDataID_;
 	qulonglong dataID_;

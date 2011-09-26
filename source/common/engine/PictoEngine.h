@@ -126,6 +126,7 @@ public:
 
 	void setPropertyTable(QSharedPointer<PropertyTable> propTable);
 	QSharedPointer<PropertyTable> getPropertyTable(){return propTable_;};
+	void sendAllPropertyValuesToServer();
 
 	void setSessionId(QUuid sessionId);
 	QUuid getSessionId() { return sessionId_; };
@@ -133,6 +134,8 @@ public:
 	void setName(QString name) { name_ = name; };
 	QString getName() { return name_; };
 
+	void setOperatorAsUser(bool operatorMode = true){userIsOperator_ = operatorMode;};
+	bool operatorIsUser(){return userIsOperator_;};
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
 	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
@@ -158,6 +161,7 @@ private:
 	int engineCommand_;
 
 	bool slave_;
+	bool userIsOperator_;
 	QString lastTimePropChangesRequested_;
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);

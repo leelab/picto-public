@@ -20,6 +20,8 @@ protected:
 	RectProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual QString toUserString();
+	virtual void fromUserString(QString userString);
 private:
 	void setX(QVariant x) {set(x.toInt(),value().toRect().y(),value().toRect().width(),value().toRect().height());};
 	void setY(QVariant y) {set(value().toRect().x(),y.toInt(),value().toRect().width(),value().toRect().height());};

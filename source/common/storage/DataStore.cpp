@@ -408,6 +408,11 @@ void DataStore::clear()
 	}
 }
 
+void DataStore::setPropertyRuntimeEditable(QString propName, bool editable)
+{
+	propertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
+}
+
 QList<QSharedPointer<DataStore>> DataStore::getRuntimeEditableDescendants()
 {
 	QList<QSharedPointer<DataStore>> runtimeDesc;

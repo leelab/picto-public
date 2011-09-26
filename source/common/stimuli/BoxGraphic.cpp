@@ -40,6 +40,11 @@ void BoxGraphic::setDimensions(QRect dimensions)
 	propertyContainer_->setPropertyValue("Dimensions",dimensions);
 }
 
+QPoint BoxGraphic::getPositionOffset()
+{
+	return posOffset_;
+}
+
 void BoxGraphic::draw()
 {
 	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
@@ -54,7 +59,7 @@ void BoxGraphic::draw()
 	p.drawRect(dimensions);
 	p.end();
 	image_ = image;
-
+	posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;

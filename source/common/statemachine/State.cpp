@@ -100,7 +100,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 	//Add a cursor for the user input
-	addCursor();
+	//addCursor();
 
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();

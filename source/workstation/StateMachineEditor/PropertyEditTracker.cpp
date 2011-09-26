@@ -14,6 +14,7 @@ PropertyEditTracker::PropertyEditTracker(QSharedPointer<Picto::Property> prop) :
 void PropertyEditTracker::addTrackedWidget(QWidget* widget)
 {
 	QList<QSpinBox*> spinKids = widget->findChildren<QSpinBox*>();
+	QList<QDoubleSpinBox*> doubleSpinKids = widget->findChildren<QDoubleSpinBox*>();
 	QList<QCheckBox*> checkKids = widget->findChildren<QCheckBox*>();
 	QList<QLineEdit*> lineKids = widget->findChildren<QLineEdit*>();
 	QList<ScriptWidget*> scriptKids = widget->findChildren<ScriptWidget*>();
@@ -21,6 +22,11 @@ void PropertyEditTracker::addTrackedWidget(QWidget* widget)
 	{
 		lineKids.clear();//Spinboxes include lineedits and we don't want the signal twice
 		spinKids.append(static_cast<QSpinBox*>(widget));
+	}
+	else if(widget->inherits("QDoubleSpinBox"))
+	{
+		lineKids.clear();//DoubleSpinboxes include lineedits and we don't want the signal twice
+		doubleSpinKids.append(static_cast<QDoubleSpinBox*>(widget));
 	}
 	else if(widget->inherits("QCheckBox"))
 		checkKids.append(static_cast<QCheckBox*>(widget));
@@ -48,11 +54,15 @@ void PropertyEditTracker::addTrackedWidget(QWidget* widget)
 		comboBoxWidget_ = qobject_cast<QComboBox*>(widget);
 		
 	}
+
 	foreach(QSpinBox* kid, spinKids)
 	{
 		connect(kid,SIGNAL(valueChanged(int)),this,SLOT(valueEdited(int)));
 	}
-	
+	foreach(QDoubleSpinBox* kid, doubleSpinKids)
+	{
+		connect(kid,SIGNAL(valueChanged(double)),this,SLOT(valueEdited(double)));
+	}	
 	foreach(QCheckBox* kid, checkKids)
 	{
 		connect(kid,SIGNAL(stateChanged(int)),this,SLOT(valueEdited(int)));

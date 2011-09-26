@@ -18,6 +18,7 @@ NetworkSignalChannel::NetworkSignalChannel(CommandChannel *serverChannel)
 	addSubchannel("xpos");
 	addSubchannel("ypos");
 	addSubchannel("time");
+	useScaleFactors_ = false;
 }
 
 bool NetworkSignalChannel::start()

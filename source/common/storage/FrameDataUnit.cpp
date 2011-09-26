@@ -17,7 +17,7 @@ FrameDataUnit::FrameDataUnit(int frameNum, QString timestamp, QString statename)
 FrameDataUnit::FrameDataUnit(int frameNum, double timestamp, QString statename)
 {
 	frameNumber = frameNum;
-	time = QString("%1").arg(timestamp,0,'e',6);
+	time = QString("%1").arg(timestamp,0,'f',6);
 	stateName = statename;
 }
 

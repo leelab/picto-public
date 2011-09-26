@@ -36,6 +36,7 @@ public:
 	int getHeight(){return getDimensions().height();};
 	void setWidth(int w){QRect dims = getDimensions(); dims.setWidth(w);setDimensions(dims);};
 	void setHeight(int h){QRect dims = getDimensions(); dims.setHeight(h);setDimensions(dims);};
+	QPoint getPositionOffset();
 	static const QString type;
 
 public slots:
@@ -45,7 +46,8 @@ protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-
+private:
+	QPoint posOffset_;
 private slots:
 	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };

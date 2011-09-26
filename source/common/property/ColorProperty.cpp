@@ -13,6 +13,18 @@ Property(variantProp,manager)
 	AddSerializationAttribute("B");
 	AddSerializationAttribute("A");
 }
+QString ColorProperty::toUserString()
+{
+	QColor color = value().value<QColor>();
+	return QString("%1,%2,%3,%4").arg(color.red()).arg(color.green()).arg(color.blue()).arg(color.alpha());
+}
+void ColorProperty::fromUserString(QString userString)
+{
+	QStringList colors = userString.split(",");
+	Q_ASSERT(colors.size() == 4);
+	QColor newVal(colors[0].toInt(),colors[1].toInt(),colors[2].toInt(),colors[3].toInt());
+	setValue(newVal);
+}
 void ColorProperty::UpdateSerializationAttributesFromValue()
 {
 	QColor color = value().value<QColor>();

@@ -16,7 +16,7 @@ void CircleTarget::draw()
 	int radius = propertyContainer_->getPropertyValue("Radius").toInt();
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
-	QImage image(radius*2+1,radius*2+1,QImage::Format_ARGB32);
+	QImage image(radius*2,radius*2,QImage::Format_ARGB32);
 	image.fill(0);
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);
@@ -25,6 +25,7 @@ void CircleTarget::draw()
 	p.drawEllipse(image.rect());
 	p.end();
 	image_ = image;
+	posOffset_ = QPoint(radius,radius);
 
 	//updateCompositingSurfaces();
 
@@ -34,11 +35,16 @@ void CircleTarget::draw()
 bool CircleTarget::contains(int x, int y)
 {
 	int radius = propertyContainer_->getPropertyValue("Radius").toInt();
-	QPoint center = getPosition()+QPoint(radius,radius);
+	QPoint center = (getPosition()-getPositionOffset())+QPoint(radius,radius);
 	QPoint offset = QPoint(x,y)-center;
 	if( ( ((offset.rx()*offset.rx())+(offset.ry()*offset.ry())) > (radius * radius) ) )
 		return false;
 	return true;
+}
+
+QPoint CircleTarget::getPositionOffset()
+{
+	return posOffset_;
 }
 
 int CircleTarget::getRadius()

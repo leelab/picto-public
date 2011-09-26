@@ -1,7 +1,6 @@
 #ifndef _NETWORK_SIGNAL_CHANNEL_H
 #define _NETWORK_SIGNAL_CHANNEL_H
 
-#include <QObject>
 #include <QSharedPointer>
 
 #include "../common.h"
@@ -19,9 +18,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API NetworkSignalChannel : public QObject, public SignalChannel
+class PICTOLIB_API NetworkSignalChannel : public SignalChannel
 #else
-class NetworkSignalChannel :  public QObject, public SignalChannel
+class NetworkSignalChannel : public SignalChannel
 #endif
 {
 	Q_OBJECT

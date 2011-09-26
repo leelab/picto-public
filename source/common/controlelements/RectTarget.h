@@ -32,11 +32,13 @@ public:
 	void setWidth(int width);
 	int getHeight() { return getBounds().height(); };
 	void setHeight(int height);
+	QPoint getPositionOffset();
 protected:
 	void setBounds(QRect bounds);
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
+	QPoint posOffset_;
 	bool active_;
 };
 

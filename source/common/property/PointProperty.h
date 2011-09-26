@@ -20,6 +20,9 @@ protected:
 	PointProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual QString toUserString();
+	virtual void fromUserString(QString userString);
+
 private:
 	void setX(QVariant x) {set(x.toInt(),value().toPoint().y());};
 	void setY(QVariant y) {set(value().toPoint().x(),y.toInt());};

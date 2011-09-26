@@ -11,7 +11,7 @@ PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, doubl
 	index_ = index;
 	path_ = path; 
 	value_ = value; 
-	time_ = QString("%1").arg(time,0,'e',6);
+	time_ = QString("%1").arg(time,0,'f',6);
 }
 
 PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, QString time)

@@ -58,6 +58,10 @@ qulonglong DataUnit::getDataID()
 	return dataID_;
 }
 
+void DataUnit::resetDataIDGenerator()
+{
+	lastDataID_ = 0;
+}
 
 qulonglong DataUnit::generateDataID()
 {

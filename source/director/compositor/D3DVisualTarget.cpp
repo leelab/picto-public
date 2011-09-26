@@ -13,7 +13,7 @@ namespace Picto {
 
 
 D3DVisualTarget::D3DVisualTarget() :
-	VisualTarget(false, 640,480)
+	VisualTarget(false, 800,600)
 {
 	//zero all of the pointers
 	pD3D_ = 0;  
@@ -22,6 +22,11 @@ D3DVisualTarget::D3DVisualTarget() :
 
 	HWND hWnd;
 
+	//If we don't put in the line below.  All mouse values will be
+	//about 25 pixels off of their screen locations since Qt will
+	//take the invisible window frame into account when computing
+	//mouse position.
+	QWidget::setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 	QRect screenRect = QApplication::desktop()->screenGeometry(-1);
 	width_ = screenRect.width();
 	height_ = screenRect.height();

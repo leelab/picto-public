@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/" >
-
+        <file>BuiltInExperiments/EyeCalibration.xml</file>
+      
         <file>icons/background1.png</file>
         <file>icons/background2.png</file>
         <file>icons/background3.png</file>
@@ -68,6 +69,6 @@
         <file>icons/result.svg</file>
         <file>icons/task.svg</file>
         <file>icons/reward.svg</file>
-		<file>icons/x.png</file>
+		    <file>icons/x.png</file>
     </qresource>
 </RCC>

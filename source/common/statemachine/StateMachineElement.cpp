@@ -99,6 +99,11 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 				return "";
 			else
 			{
+				if("Path: Simple Test::Dumb Trial::Stage 3, Source: State 2, SourceResult: Success, Destination: Done" == (QString("Path: %1, Source: %2, SourceResult: %3, Destination: %4").arg(data.getMachinePath()).arg(data.getSource()).arg(data.getSourceResult()).arg(data.getDestination()).toAscii()))
+				{
+					int i = 0;
+					i++;
+				}
 				qDebug(QString("Path: %1, Source: %2, SourceResult: %3, Destination: %4").arg(data.getMachinePath()).arg(data.getSource()).arg(data.getSourceResult()).arg(data.getDestination()).toAscii());
 				return result;
 			}

@@ -25,12 +25,14 @@ public:
 	virtual QString assetType(){return "CircleTarget";};
 	void draw();
 	virtual bool contains(int x, int y);
+	QPoint getPositionOffset();
 	int getRadius();
 	void setRadius(int radius);
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
+	QPoint posOffset_;
 	bool active_;
 };
 

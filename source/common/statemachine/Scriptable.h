@@ -33,7 +33,7 @@ public:
 	bool isUIEnabled(){return propertyContainer_->getPropertyValue("UIEnabled").toBool();};
 	int getUIOrder(){return propertyContainer_->getPropertyValue("UIOrder").toInt();};
 	virtual bool isRuntimeEditable(){return isUIEnabled();};
-	void setPropertyRuntimeEditable(QString propName, bool editable = true);
+	virtual void setPropertyRuntimeEditable(QString propName, bool editable = true);
 	virtual QList<QSharedPointer<Property>> getDescendantsProperties();
 	QString getScriptingInfo();
 	QString getInfo();

@@ -14,6 +14,9 @@ class ColorProperty : public Property
 #endif
 {
 	Q_OBJECT
+public:
+	virtual QString toUserString();
+	virtual void fromUserString(QString userString);
 public slots:
 	void set(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
 protected:

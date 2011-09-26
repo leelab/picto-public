@@ -224,6 +224,7 @@ void RemoteViewer::setupEngine()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setSlaveMode(true,engineSlaveChannel_);
+	engine_->setOperatorAsUser(true);
 
 	//Set up the rendering target
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());

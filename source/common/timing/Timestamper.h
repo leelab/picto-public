@@ -35,7 +35,7 @@ public:
 	double stampMs();
 	double stampUs();
 
-	void reset();
+	static void reset();
 
 private:
 #if defined WIN32 || defined WINCE

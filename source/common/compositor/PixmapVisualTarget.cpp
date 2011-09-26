@@ -13,6 +13,10 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 {
 	if(!bWindowed_)
 	{
+		//If we don't put in the line below.  All mouse values will be
+		//about 25 pixels off of their screen locations since Qt will
+		//take the invisible window frame into account when computing
+		//mouse position.
 		QWidget::setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
 		QRect screenRect = QApplication::desktop()->screenGeometry(-1);

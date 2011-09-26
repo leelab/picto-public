@@ -25,6 +25,7 @@ void RectTarget::draw()
 	p.drawRect(dimensions);
 	p.end();
 	image_ = image;
+	posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 
 	//updateCompositingSurfaces();
 
@@ -34,7 +35,7 @@ void RectTarget::draw()
 bool RectTarget::contains(int x, int y)
 {
 	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
-	QPoint topLeft = getPosition();
+	QPoint topLeft = getPosition()-getPositionOffset();
 	QRect myRect(topLeft.x(),topLeft.y(),dimensions.width(),dimensions.height());
 	if(myRect.contains(x,y))
 		return true;
@@ -57,6 +58,11 @@ void RectTarget::setHeight(int height)
 	QRect bounds = getBounds();
 	bounds.setRect(bounds.x(),bounds.y(),bounds.width(),height);
 	setBounds(bounds);
+}
+
+QPoint RectTarget::getPositionOffset()
+{
+	return posOffset_;
 }
 
 void RectTarget::setBounds(QRect bounds)

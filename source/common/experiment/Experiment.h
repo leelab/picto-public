@@ -72,9 +72,12 @@ private:
 	const QString latestSyntaxVersion_;
 	QSharedPointer<PropertyTable> propTable_;
 	QSharedPointer<Engine::PictoEngine> engine_;
+	bool signalCoeffInitialized_;
 	//QList<QSharedPointer<SessionData> > sessionDataElements_;
 	//QList<QSharedPointer<Calibration> > calibrations_;
 	//QList<QSharedPointer<MediaItem> > mediaItems_;
+private slots:
+	void updateSignalCoefficients(QSharedPointer<Property> changedProp);
 };
 
 

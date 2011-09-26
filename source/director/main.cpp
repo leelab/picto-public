@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 		visTarget = HardwareSetup::Pixmap;
 
 	//For now, just use pixmap ------- Remove this/////////////////////
-	visTarget = HardwareSetup::Pixmap;
+	//visTarget = HardwareSetup::Pixmap;
 	///////////////////////////////////////////////////////////////////	
 
 	QSharedPointer<Director> director(new Director(newName,HardwareSetup::Mouse,visTarget,HardwareSetup::NullReward,HardwareSetup::NullGen));

@@ -10,7 +10,7 @@ BehavioralDataUnit::BehavioralDataUnit(double X, double Y, double T)
 {
 	x = X; 
 	y = Y; 
-	t = QString("%1").arg(T,0,'e',6);;
+	t = QString("%1").arg(T,0,'f',6);;
 };
 
 BehavioralDataUnit::BehavioralDataUnit(double X, double Y, QString T)

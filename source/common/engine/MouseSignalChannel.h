@@ -2,7 +2,6 @@
 #define _MOUSESIGNALCHANNEL_H
 
 #include <QTimer>
-#include <QObject>
 #include <QWidget>
 #include <QSharedPointer>
 
@@ -23,9 +22,9 @@ namespace Picto {
  *	far this hasn't been an issue.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API MouseSignalChannel : public QObject, public SignalChannel
+class PICTOLIB_API MouseSignalChannel : public SignalChannel
 #else
-class MouseSignalChannel :  public QObject, public SignalChannel
+class MouseSignalChannel : public SignalChannel
 #endif
 {
 	Q_OBJECT

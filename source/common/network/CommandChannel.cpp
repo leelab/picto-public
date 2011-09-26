@@ -256,7 +256,7 @@ void CommandChannel::readIncomingResponse()
 								resendEnabled_ = true;
 							else
 								resendEnabled_ = false;
-							qDebug("serverBytesStr: " + serverBytesStr.toAscii());
+							//qDebug("serverBytesStr: " + serverBytesStr.toAscii());
 						}
 						
 					}

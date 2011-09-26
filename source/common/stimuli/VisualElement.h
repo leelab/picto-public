@@ -51,6 +51,9 @@ public:
 	MTRand::uint32 * getRandomNumberGeneratorState();
 
 	QPoint getPosition();
+	//This should return the offset from the top left visual element corner to the visual element center
+	//for visual elements that need to be drawn with their center's at the element position.
+	virtual QPoint getPositionOffset(){return QPoint(0,0);};
 	QRect getBoundingRect();
 	void setPosition(QPoint position);
 

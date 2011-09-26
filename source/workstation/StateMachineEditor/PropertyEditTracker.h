@@ -32,6 +32,7 @@ private slots:
 	//the various EditBoxes and translate them into one unified propertyEdited()
 	//signal
 	void valueEdited(int){emit propertyEdited(prop_);};
+	void valueEdited(double){emit propertyEdited(prop_);};
 	void valueEdited(const QString &);
 	void valueEdited(){emit propertyEdited(prop_);};
 	void valueEdited(QColor){emit propertyEdited(prop_);};

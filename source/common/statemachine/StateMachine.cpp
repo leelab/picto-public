@@ -324,6 +324,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	if(!slave)
 		resetScriptableValues();
 	path_.append(getName());
+	qDebug(QString("Entering: %1").arg(path_.join("::")).toAscii());
 	if(!initScripting())
 	{
 		//! \TODO Make some sort of intelligent error reporting...
@@ -425,20 +426,26 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		//Find the transition from our current source with a SourceResult string that matches the result
 		//Yeah, this is kind of ugly...
 		nextElementName = "";
+		bool foundTransition = false;
 		foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
 		{
 			if(tran->getSourceResult() == result)
 			{
 				nextElementName = tran->getDestination();
 				sendStateDataToServer(tran, engine);
+				foundTransition = true;
 				break;
 			}
 		}
+		Q_ASSERT(foundTransition);
 		// If we transitioned to a result, then we're done and should return that result
 		if(results_.contains(nextElementName))
 		{
 			result = nextElementName;
-			if(slave)
+			//If this asset's parent is a task then a result here means that we've already reached the last transition and the 
+			//task is over.  Otherwise, we need to get the Master state result here because it will be the transition 
+			//that tells us where we're going to go next in this StateMachine's parent.
+			if(slave && !getParentAsset()->inherits("Picto::Task"))
 			{
 				QString masterResult;
 				//Make sure we're exiting with the same result as the master
@@ -458,6 +465,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 	}
 	//Since we're backing out of this state machine we need to remove it from the path
+	qDebug(QString("Exiting: %1").arg(path_.join("::")).toAscii());
 	path_.takeLast();
 	return result;
 }

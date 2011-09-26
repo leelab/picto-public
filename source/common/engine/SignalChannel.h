@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QString>
 #include <QList>
+#include <QObject>
 
 namespace Picto {
 
@@ -38,11 +39,13 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API SignalChannel
+class PICTOLIB_API SignalChannel : public QObject
 #else
-class SignalChannel
+class SignalChannel : public QObject
 #endif
 {
+	Q_OBJECT
+
 public:
 	SignalChannel();
 	SignalChannel(int sampsPerSec);
@@ -52,7 +55,7 @@ public:
 
 	void setsampleRate_(int sampsPerSec);
 	void setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue);
-	void setCalibrationCoefficients(QString subchannel, double A, double B);
+	void setShear(QString subchannel, QString asFuncOfSubChannel, double shearFactor);
 	QList<QString> getSubchannels() { return rawDataBuffer_.keys(); };
 
 	virtual bool start() = 0;
@@ -77,14 +80,19 @@ protected:
 	QMap<QString, QList<double> > rawDataBuffer_;
 
 	int sampleRate_;			//samples per second collected by the channel
+	bool useScaleFactors_;
 
 private:
 	double scaleData(int subchannel, double rawData);
 	
 	struct scaleFactors
 	{
+		scaleFactors(){scaleA = 0;scaleB = 1;shearFactor = 0;shearAsFuncOf = "";centerVal = 0;};
 		double scaleA;
 		double scaleB;
+		double shearFactor;
+		QString shearAsFuncOf;
+		double centerVal;
 	};
 
 	QMap<QString, scaleFactors> scaleFactorsMap_;

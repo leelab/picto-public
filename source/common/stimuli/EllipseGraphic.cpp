@@ -41,6 +41,7 @@ void EllipseGraphic::draw()
 	p.drawEllipse(dimensions);
 	p.end();
 	image_ = image;
+	posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 
 	shouldUpdateCompositingSurfaces_ = true;
 }
@@ -48,6 +49,11 @@ void EllipseGraphic::draw()
 VisualElement* EllipseGraphic::NewVisualElement()
 {
 	return new EllipseGraphic;
+}
+
+QPoint EllipseGraphic::getPositionOffset()
+{
+	return posOffset_;
 }
 
 //void EllipseGraphic::slotPropertyValueChanged(QString propertyName, int,

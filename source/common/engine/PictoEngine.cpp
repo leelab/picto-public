@@ -20,6 +20,7 @@ PictoEngine::PictoEngine() :
 	timingType_(PictoEngineTimingType::precise),
 	propTable_(NULL),
 	slave_(false),
+	userIsOperator_(false),
 	lastTimePropChangesRequested_("0.0")
 {
 	bExclusiveMode_ = true;
@@ -166,7 +167,7 @@ void PictoEngine::addChangedProperty(QSharedPointer<Property> changedProp)
 		propPackage_ = QSharedPointer<PropertyDataUnitPackage>(new PropertyDataUnitPackage());
 	Timestamper stamper;
 	//If the changedProp has no parent, its a UI parameter.  Set the path as such.
-	propPackage_->addData(changedProp->getIndex(),changedProp->getParentAsset()?changedProp->getPath():"UIParameter",changedProp->toXml(),stamper.stampSec());
+	propPackage_->addData(changedProp->getIndex(),changedProp->getParentAsset()?changedProp->getPath():"UIParameter",changedProp->toUserString(),stamper.stampSec());
 }
 //! \brief Retrieves the latest package of changed properties.
 //! Note that a package can only be retrieved once after which a new package is created.
@@ -228,7 +229,7 @@ void PictoEngine::updatePropertiesFromServer()
 		dataPoint = propData.takeFirstDataPoint();
 
 		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
-		qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
+		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
 		lastTimePropChangesRequested_ = dataPoint->time_;
 	}
 }
@@ -277,6 +278,12 @@ void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
 		disconnect(propTable_.data(),SIGNAL(propertyChanged(QSharedPointer<Property>)),this,SLOT(addChangedProperty(QSharedPointer<Property>)));
 	propTable_ = propTable;	
 	connect(propTable_.data(),SIGNAL(propertyChanged(QSharedPointer<Property>)),this,SLOT(addChangedProperty(QSharedPointer<Property>)));
+}
+
+void PictoEngine::sendAllPropertyValuesToServer()
+{
+	Q_ASSERT(propTable_);
+	propTable_->reportChangeInAllProperties();
 }
 
 void PictoEngine::setSessionId(QUuid sessionId)

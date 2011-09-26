@@ -30,7 +30,7 @@ RewardDataUnit::RewardDataUnit(int durationMs, int channel, double time) :
 bool RewardDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("RewardDataUnit");
-	xmlStreamWriter->writeAttribute("timestamp",QString("%1").arg(time_,0,'e',6));
+	xmlStreamWriter->writeAttribute("timestamp",QString("%1").arg(time_,0,'f',6));
 
 	xmlStreamWriter->writeTextElement("Channel",QString::number(channel_));
 	xmlStreamWriter->writeTextElement("Duration",QString::number(durationMs_));

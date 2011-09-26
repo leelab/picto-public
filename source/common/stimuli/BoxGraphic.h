@@ -12,7 +12,7 @@ namespace Picto {
 	/*!	\brief A box graphic (a rectangle).
  *
  *	A BoxGraphic has the following properties:
- *	- Position: the position of the top-left corner of the box (in screen coordinates)
+ *	- Position: the position of the middle corner of the box (in screen coordinates)
  *	- Dimensions: the size of the rectangle
  *	- Color: The color of the rectangle
  */
@@ -36,6 +36,7 @@ public:
 	int getHeight(){return getDimensions().height();};
 	void setWidth(int w){QRect dims = getDimensions(); dims.setWidth(w);setDimensions(dims);};
 	void setHeight(int h){QRect dims = getDimensions(); dims.setHeight(h);setDimensions(dims);};
+	QPoint getPositionOffset();
 
 	static const QString type;
 public slots:
@@ -44,7 +45,8 @@ public slots:
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
+private:
+	QPoint posOffset_;
 private slots:
 	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };

@@ -305,28 +305,30 @@ void MainWindow::newExperiment()
 	}
 	if(okToContinue())
 	{
-		pictoData_->clear();
-		pictoDataText_.clear();
+		loadFile(":/BuiltInExperiments/EyeCalibration.xml");
+		//pictoData_->clear();
+		//pictoDataText_.clear();
 
-		QString pictoDataXml;
-		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&pictoDataXml));
-		xmlWriter->setAutoFormatting(true);
-		xmlWriter->setAutoFormattingIndent(-1);   //use 1 tab to indent
-		xmlWriter->writeStartDocument();
+		//QString pictoDataXml;
+		//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&pictoDataXml));
+		//xmlWriter->setAutoFormatting(true);
+		//xmlWriter->setAutoFormattingIndent(-1);   //use 1 tab to indent
+		//xmlWriter->writeStartDocument();
 
-		pictoData_->toXml(xmlWriter);
-		pictoDataText_.setPlainText(pictoDataXml);
-		pictoDataText_.setModified(false);
+		//pictoData_->toXml(xmlWriter);
+		//pictoDataText_.setPlainText(pictoDataXml);
+		//pictoDataText_.setModified(false);
 
+		//setCurrentFile("");
+
+		//for(int i=0; i<viewerStack_->count(); i++)
+		//{
+		//	Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
+		//	viewer->setPictoData(pictoData_);
+		//	viewer->setPictoDataText(&pictoDataText_);
+		//}
+		//currViewer_->init();
 		setCurrentFile("");
-
-		for(int i=0; i<viewerStack_->count(); i++)
-		{
-			Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
-			viewer->setPictoData(pictoData_);
-			viewer->setPictoDataText(&pictoDataText_);
-		}
-		currViewer_->init();
 	}
 
 }

@@ -8,11 +8,11 @@ StateDataUnit::StateDataUnit()
 
 void StateDataUnit::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
 {
-	setTransition(transition->getSource(),transition->getSourceResult(),transition->getDestination(),QString("%1").arg(timestamp,0,'e',6),stateMachinePath);
+	setTransition(transition->getSource(),transition->getSourceResult(),transition->getDestination(),QString("%1").arg(timestamp,0,'f',6),stateMachinePath);
 }
 void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath)
 {
-	setTransition(source,sourceResult,destination,QString("%1").arg(timestamp,0,'e',6),stateMachinePath);
+	setTransition(source,sourceResult,destination,QString("%1").arg(timestamp,0,'f',6),stateMachinePath);
 }
 void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, QString timestamp, QString stateMachinePath)
 {

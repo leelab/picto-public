@@ -26,4 +26,16 @@ bool PointProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStrea
 	return true;
 }
 
+QString PointProperty::toUserString()
+{
+	QPoint point = value().toPoint();
+	return QString("%1,%2").arg(point.x()).arg(point.y());
+}
+void PointProperty::fromUserString(QString userString)
+{
+	QStringList xy = userString.split(",");
+	Q_ASSERT(xy.size() == 2);
+	QPoint newVal(xy[0].toInt(),xy[1].toInt());
+	setValue(newVal);
+}
 }; //namespace Picto

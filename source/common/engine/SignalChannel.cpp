@@ -5,10 +5,12 @@ namespace Picto {
 SignalChannel::SignalChannel()
 {
 	sampleRate_ = 1;
+	useScaleFactors_ = true;
 }
 SignalChannel::SignalChannel(int sampsPerSec)
 {
 	sampleRate_ = sampsPerSec;
+	useScaleFactors_ = true;
 }
 
 
@@ -19,24 +21,27 @@ void SignalChannel::setsampleRate_(int sampsPerSec)
 
 void SignalChannel::setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue)
 {
+	if(!useScaleFactors_)
+		return;
 	//set the scaling values (we're assuming a linear scaling with 
 	//y = A + Bx
 	scaleFactorsMap_[subchannel].scaleB = (maxScaledValue-minScaledValue)/(maxRawValue-minRawValue);
 	scaleFactorsMap_[subchannel].scaleA = maxScaledValue-scaleFactorsMap_[subchannel].scaleB*maxRawValue;
+	scaleFactorsMap_[subchannel].centerVal = (maxScaledValue-minScaledValue)/2.0;
 }
-
-//! Set the scaling coefficients directly (A + Bx)
 
 /*!
- *	Each value is linearly scaled using the formula A + Bx.  This function
- *	sets the scaling coefficients directly.
+ *	Each value is sheared after applying scale factors.  The new value x = x + shearFactor*asFuncOfSubChannel_Value
  */
-void SignalChannel::setCalibrationCoefficients(QString subchannel, double A, double B)
+void SignalChannel::setShear(QString subchannel, QString asFuncOfSubChannel, double shearFactor)
 {
-	scaleFactorsMap_[subchannel].scaleA = A;
-	scaleFactorsMap_[subchannel].scaleB = B;
+	if(!useScaleFactors_)
+		return;
+	Q_ASSERT(scaleFactorsMap_.contains(asFuncOfSubChannel));
+	Q_ASSERT(scaleFactorsMap_.value(asFuncOfSubChannel).shearAsFuncOf.isEmpty());
+	scaleFactorsMap_[subchannel].shearAsFuncOf = asFuncOfSubChannel;
+	scaleFactorsMap_[subchannel].shearFactor = shearFactor;
 }
-
 
 void SignalChannel::addSubchannel(QString subchannelName)
 {
@@ -65,6 +70,14 @@ double SignalChannel::peekValue(QString subchannel)
 	double rawValue = rawDataBuffer_.value(subchannel).last();
 	double scaledValue = scaleFactorsMap_.value(subchannel).scaleA + 
 				scaleFactorsMap_.value(subchannel).scaleB * rawValue;
+	QString scaleAsFuncOf = scaleFactorsMap_.value(subchannel).shearAsFuncOf;
+	if(!scaleAsFuncOf.isEmpty())
+	{
+		double otherRawValue = rawDataBuffer_.value(scaleAsFuncOf).last();
+		double otherScaledValue = scaleFactorsMap_.value(scaleAsFuncOf).scaleA + 
+			scaleFactorsMap_.value(scaleAsFuncOf).scaleB * otherRawValue;
+		scaledValue = scaledValue + scaleFactorsMap_.value(subchannel).shearFactor * (otherScaledValue - scaleFactorsMap_.value(scaleAsFuncOf).centerVal);
+	}
 	return scaledValue;
 }
 
@@ -78,11 +91,36 @@ QMap<QString, QList<double> > SignalChannel::getValues()
 
 	while(x != dataBuffer.end())
 	{
-		for(int y=0; y<x.value().size(); y++)
+		for(QList<double>::iterator subChanValIter = x.value().begin(); 
+			subChanValIter != x.value().end(); 
+			subChanValIter++)
 		{
 			double scaledValue = scaleFactorsMap_.value(x.key()).scaleA + 
-				scaleFactorsMap_.value(x.key()).scaleB * x.value().at(y);
-			x.value().replace(y,scaledValue);
+				scaleFactorsMap_.value(x.key()).scaleB * (*subChanValIter);
+			(*subChanValIter) = scaledValue;
+		}
+		x++;
+	}
+
+	//Add shear
+	x = dataBuffer.begin();
+	while(x != dataBuffer.end())
+	{
+		QString shearAsFuncOf = scaleFactorsMap_.value(x.key()).shearAsFuncOf;
+		if(shearAsFuncOf.isEmpty())
+		{
+			x++;
+			continue;
+		}
+
+		QList<double>::iterator funcOfIterator = dataBuffer.find(shearAsFuncOf).value().begin();
+		for(QList<double>::iterator subChanValIter = x.value().begin(); 
+			subChanValIter != x.value().end(); 
+			subChanValIter++,funcOfIterator++)
+		{
+			double shearedVal = (*subChanValIter) + 
+								scaleFactorsMap_.value(x.key()).shearFactor * ((*funcOfIterator)-scaleFactorsMap_.value(shearAsFuncOf).centerVal);
+			(*subChanValIter) = shearedVal;
 		}
 		x++;
 	}
