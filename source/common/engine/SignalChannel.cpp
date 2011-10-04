@@ -30,6 +30,17 @@ void SignalChannel::setCalibrationCoefficientsFromRange(QString subchannel, doub
 	scaleFactorsMap_[subchannel].centerVal = (maxScaledValue-minScaledValue)/2.0;
 }
 
+void SignalChannel::setCalibrationCoefficients(QString subchannel, double gain, int offset, double scaledCenterValue)
+{
+	if(!useScaleFactors_)
+		return;
+	//set the scaling values (we're assuming a linear scaling with 
+	//y = A + Bx
+	scaleFactorsMap_[subchannel].scaleB = gain;
+	scaleFactorsMap_[subchannel].scaleA = offset;
+	scaleFactorsMap_[subchannel].centerVal = scaledCenterValue;
+}
+
 /*!
  *	Each value is sheared after applying scale factors.  The new value x = x + shearFactor*asFuncOfSubChannel_Value
  */

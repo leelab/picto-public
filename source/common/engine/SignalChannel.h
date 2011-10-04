@@ -55,6 +55,7 @@ public:
 
 	void setsampleRate_(int sampsPerSec);
 	void setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue);
+	void setCalibrationCoefficients(QString subchannel, double gain, int offset, double scaledCenterValue);
 	void setShear(QString subchannel, QString asFuncOfSubChannel, double shearFactor);
 	QList<QString> getSubchannels() { return rawDataBuffer_.keys(); };
 
