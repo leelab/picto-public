@@ -43,6 +43,7 @@ public:
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
 	QString getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
+	void stop(QSharedPointer<Engine::PictoEngine> engine);
 
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

@@ -9,6 +9,8 @@ const QString EllipseGraphic::type = "Ellipse Graphic";
 EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 : VisualElement(position,color)
 {
+	AddDefinableProperty(QVariant::Bool,"Outline",false);
+	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
 	//propertyContainer_->setContainerName(type);
 
@@ -35,9 +37,15 @@ void EllipseGraphic::draw()
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
 	image.fill(0);
 	QPainter p(&image);
-	p.setRenderHint(QPainter::Antialiasing, true);
+	QPen pen(color);
 	p.setBrush(color);
-	p.setPen(color);
+	if(propertyContainer_->getPropertyValue("Outline").toBool())
+	{
+		p.setBrush(QColor(0,0,0,0));
+		pen.setWidth(propertyContainer_->getPropertyValue("OutlineThickness").toInt());
+	}
+	p.setPen(pen);
+	p.setRenderHint(QPainter::Antialiasing, true);
 	p.drawEllipse(dimensions);
 	p.end();
 	image_ = image;

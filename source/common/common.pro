@@ -169,6 +169,8 @@ HEADERS += $$(PICTO_TREE)/source/common/parameter/PseudorandomIntParameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/PseudorandomIntParameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/RandomIntParameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/RandomIntParameter.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/TimerParameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/TimerParameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/ParameterFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/ParameterFactory.cpp
 

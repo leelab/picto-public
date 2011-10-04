@@ -57,11 +57,17 @@ HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.cpp
 HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.h
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.cpp
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPEventCodeGenerator.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPEventCodeGenerator.cpp
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPRewardController.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPRewardController.cpp
 INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
 LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
 
 HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.h
 SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputSignalChannel.h
+SOURCES += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputSignalChannel.cpp
 
 }
 

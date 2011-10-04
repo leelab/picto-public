@@ -57,6 +57,11 @@ void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 	isDone(engine);
 }
 
+void TargetController::stop(QSharedPointer<Engine::PictoEngine> engine)
+{
+	controlTarget_->setActive(false);
+}
+
 bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 {
 	Controller::TimerUnits::TimerUnits timeUnits;
@@ -77,7 +82,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		isDone_ = true;
 		result_ = "Total Time Excceeded";
-		controlTarget_->setActive(false);
 		return true;
 	}
 
@@ -109,7 +113,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = "Broke Fixation";
-			controlTarget_->setActive(false);
 			return true;
 		}
 		else
@@ -128,7 +131,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = "Success";
-			controlTarget_->setActive(false);
 			return true;
 		}
 
@@ -147,7 +149,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			{
 				isDone_ = true;
 				result_ = "Initial Aquistion Time Exceeded";
-				controlTarget_->setActive(false);
 				return true;
 			}
 		}
@@ -161,7 +162,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			{
 				isDone_ = true;
 				result_ = "Reaquistion Time Exceeded";
-				controlTarget_->setActive(false);
 				return true;
 			}
 		}

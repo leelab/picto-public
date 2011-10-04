@@ -102,9 +102,15 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 		return;
 
 	if(result == "EngineAbort")
-		Q_ASSERT(sendStateData("NULL",result,"NULL",engine));
+	{
+		bool rc = sendStateData("NULL",result,"NULL",engine);
+		Q_ASSERT(rc);
+	}
 	else
-		Q_ASSERT(sendStateData(stateMachine_->getName(),result,"NULL",engine));
+	{
+		bool rc = sendStateData(stateMachine_->getName(),result,"NULL",engine);
+		Q_ASSERT(rc);
+	}
 
 	//while(dataChannel->pendingResponses())
 	//{

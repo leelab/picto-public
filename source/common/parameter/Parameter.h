@@ -44,7 +44,7 @@ public slots:
 protected:
 	//Returns false if something got changed.  If a warning should be issued, it goes in QString& warning.
 	//If true is returned warning will not be checked.
-	virtual bool fixValues(QString&){return false;};
+	virtual bool fixValues(QString&){return true;};
 	virtual QString defaultTagName(){return "Parameter";};
 	virtual void postSerialize();
 	QVariant currValue_;

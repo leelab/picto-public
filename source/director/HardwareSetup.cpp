@@ -35,6 +35,7 @@
 #include "../common/engine/MouseSignalChannel.h"
 #if defined WIN32 && defined NI_STUFF
 #include "engine/PictoBoxXPAnalogInputSignalChannel.h"
+#include "engine/LegacySystemXPAnalogInputSignalChannel.h"
 #endif
 
 #include "../common/iodevices/RewardController.h"
@@ -43,6 +44,7 @@
 #include "../common/iodevices/NullEventCodeGenerator.h"
 #if defined WIN32 && defined NI_STUFF
 #include "iodevices/PictoBoxXPRewardController.h"
+#include "iodevices/LegacySystemXPRewardController.h"
 #include "iodevices/PictoBoxXPEventCodeGenerator.h"
 #endif
 
@@ -55,6 +57,8 @@ HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 	signalChannelSetup_ = false;
 	rewardControllerSetup_ = false;
 	eventCodeGenSetup_ = false;
+	xChan_ = 0;
+	yChan_ = 1;
 }
 
 //! Returns true if everything has been setup
@@ -107,7 +111,8 @@ bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType)
  *	else.  This function sets that up.  The channelType string is used to determine
  *	the type of channel we wish to set up.  The legal choices are:
  *		mouse
- *		eyetrackerXP
+ *		EyetrackerLegacySystemXp
+ *		EyetrackerPictoBoxXp
  *	Additional choice will be added as we expand platforms (actually, the CE stuff would be
  *	really easy to add, but I don't have time to test it...)
  *
@@ -127,12 +132,23 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,visualTarget.data()));
 		engine_->addSignalChannel("PositionChannel",mouseChannel);
 	}
-	else if(channelType == EyetrackerXp)
+	else if(channelType == EyetrackerLegacySystemXp)
+	{
+#if defined WIN32 && defined NI_STUFF
+		QSharedPointer<Picto::LegacySystemXPAnalogInputSignalChannel> aiChannel(new Picto::LegacySystemXPAnalogInputSignalChannel(250));
+		aiChannel->addAiChannel("xpos",xChan_);
+		aiChannel->addAiChannel("ypos",yChan_);
+		engine_->addSignalChannel("PositionChannel",aiChannel);
+#else
+		return false;
+#endif
+	}
+	else if(channelType == EyetrackerPictoBoxXp)
 	{
 #if defined WIN32 && defined NI_STUFF
 		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
-		aiChannel->addAiChannel("xpos",0);
-		aiChannel->addAiChannel("ypos",1);
+		aiChannel->addAiChannel("xpos",xChan_);
+		aiChannel->addAiChannel("ypos",yChan_);
 		engine_->addSignalChannel("PositionChannel",aiChannel);
 #else
 		return false;
@@ -160,6 +176,10 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 #else
 		return false;
 #endif
+	}
+	else if(controllerType == LegacySystemXpReward)
+	{
+		rewardController = QSharedPointer<Picto::RewardController>(new Picto::LegacySystemXPRewardController(1));
 	}
 	else if(controllerType == NullReward)
 	{

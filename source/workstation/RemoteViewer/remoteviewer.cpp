@@ -941,7 +941,8 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
  */  
 QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 {
-	Q_ASSERT(serverChannel_->incomingResponsesWaiting() == 0);
+	while(serverChannel_->incomingResponsesWaiting() != 0)
+		serverChannel_->getResponse();
 
 	if(!serverChannel_->assureConnection())
 	{

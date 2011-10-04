@@ -21,7 +21,7 @@ public:
 
 	typedef enum
 	{
-		Mouse,EyetrackerXp
+		Mouse,EyetrackerLegacySystemXp,EyetrackerPictoBoxXp
 	} SignalChannelType;
 
 	typedef enum
@@ -31,7 +31,7 @@ public:
 
 	typedef enum
 	{
-		PictoBoxXpReward, NullReward
+		PictoBoxXpReward, LegacySystemXpReward, NullReward
 	} RewardControllerType;
 
 	typedef enum
@@ -43,6 +43,7 @@ public:
 	bool setupSignalChannel(SignalChannelType channelType);
 	bool setupRewardController(RewardControllerType controllerType);
 	bool setupEventCodeGenerator(EventCodeGeneratorType generatorType);
+	bool setXYChannelNums(int xChan, int yChan){xChan_ = xChan;yChan_ = yChan;return true;};
 
 	bool isSetup();
 
@@ -53,6 +54,8 @@ private:
 	bool signalChannelSetup_;
 	bool rewardControllerSetup_;
 	bool eventCodeGenSetup_;
+	int xChan_;
+	int yChan_;
 
 };
 

@@ -61,6 +61,11 @@ void ChoiceController::start(QSharedPointer<Engine::PictoEngine> engine)
 	isDone(engine);
 
 }
+void ChoiceController::stop(QSharedPointer<Engine::PictoEngine> engine)
+{
+	foreach(QSharedPointer<ControlResult> target, targets_)
+		target->setActive(false);
+}
 
 bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -82,8 +87,6 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		isDone_ = true;
 		result_ = "Total Time Exceeded";
-		foreach(QSharedPointer<ControlResult> target, targets_)
-			target->setActive(false);
 		return true;
 	}
 
@@ -97,8 +100,6 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = "Broke Fixation";
-			foreach(QSharedPointer<ControlResult> target, targets_)
-				target->setActive(false);
 			return true;
 		}
 		if(currTarget == "NotATarget")
@@ -125,8 +126,6 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			isDone_ = true;
 			result_ = currTarget;
-			foreach(QSharedPointer<ControlResult> target, targets_)
-				target->setActive(false);
 			return true;
 		}
 	}

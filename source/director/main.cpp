@@ -74,11 +74,41 @@ int main(int argc, char *argv[])
 	if(app.arguments().contains("-pixmap"))
 		visTarget = HardwareSetup::Pixmap;
 
+	//If there is a command of "-xChan", "-yChan" we should use an eye tracker.
+	//and set the appropriate channels.  Otherwise, just use the mouse.
+	HardwareSetup::SignalChannelType sigChan = HardwareSetup::Mouse;
+	int chanArgIdx = args.indexOf("-xChan");
+	int xChan = 0;
+	if(chanArgIdx > 0)
+	{
+		xChan = args[chanArgIdx+1].toInt();
+		sigChan = HardwareSetup::EyetrackerPictoBoxXp;
+	}
+	chanArgIdx = args.indexOf("-yChan");
+	int yChan = 0;
+	if(chanArgIdx > 0)
+	{
+		yChan = args[chanArgIdx+1].toInt();
+		sigChan = HardwareSetup::EyetrackerPictoBoxXp;
+	}
+
+	//If there is a command argument of "-legacy", we should use 
+	//LegacySystemXPRewardController otherwise use NullReward.
+	//We should also switch an eye tracking signal channel to the 
+	//legacy system's eye tracker.
+	HardwareSetup::RewardControllerType rewCont = HardwareSetup::NullReward;
+	if(app.arguments().contains("-legacy"))
+	{
+		rewCont = HardwareSetup::LegacySystemXpReward;
+		if(sigChan != HardwareSetup::Mouse)
+			sigChan = HardwareSetup::EyetrackerLegacySystemXp;
+	}
+
 	//For now, just use pixmap ------- Remove this/////////////////////
 	//visTarget = HardwareSetup::Pixmap;
 	///////////////////////////////////////////////////////////////////	
 
-	QSharedPointer<Director> director(new Director(newName,HardwareSetup::Mouse,visTarget,HardwareSetup::NullReward,HardwareSetup::NullGen));
+	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,HardwareSetup::NullGen,xChan,yChan));
 	director->activate();
 	return 0;
 }

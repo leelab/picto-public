@@ -243,6 +243,12 @@
    <file alias="_l_f_p_data_unit_package_8h-source.html">../../../output/documentation/main/html/_l_f_p_data_unit_package_8h-source.html</file>
    <file alias="_layer_8cpp-source.html">../../../output/documentation/main/html/_layer_8cpp-source.html</file>
    <file alias="_layer_8h-source.html">../../../output/documentation/main/html/_layer_8h-source.html</file>
+   <file alias="_legacy_system_x_p_analog_input_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_signal_channel_8cpp-source.html</file>
+   <file alias="_legacy_system_x_p_analog_input_signal_channel_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_signal_channel_8h-source.html</file>
+   <file alias="_legacy_system_x_p_event_code_generator_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8cpp-source.html</file>
+   <file alias="_legacy_system_x_p_event_code_generator_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8h-source.html</file>
+   <file alias="_legacy_system_x_p_reward_controller_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_reward_controller_8cpp-source.html</file>
+   <file alias="_legacy_system_x_p_reward_controller_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_reward_controller_8h-source.html</file>
    <file alias="_line_graphic_8cpp-source.html">../../../output/documentation/main/html/_line_graphic_8cpp-source.html</file>
    <file alias="_line_graphic_8h-source.html">../../../output/documentation/main/html/_line_graphic_8h-source.html</file>
    <file alias="_load_exp_response_handler_8cpp-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8cpp-source.html</file>
@@ -409,6 +415,8 @@
    <file alias="_pupil_diameter_data_store_8h-source.html">../../../output/documentation/main/html/_pupil_diameter_data_store_8h-source.html</file>
    <file alias="_put_data_command_handler_8cpp-source.html">../../../output/documentation/main/html/_put_data_command_handler_8cpp-source.html</file>
    <file alias="_put_data_command_handler_8h-source.html">../../../output/documentation/main/html/_put_data_command_handler_8h-source.html</file>
+   <file alias="_random_int_parameter_01-_01_copy_8cpp-source.html">../../../output/documentation/main/html/_random_int_parameter_01-_01_copy_8cpp-source.html</file>
+   <file alias="_random_int_parameter_01-_01_copy_8h-source.html">../../../output/documentation/main/html/_random_int_parameter_01-_01_copy_8h-source.html</file>
    <file alias="_random_int_parameter_8cpp-source.html">../../../output/documentation/main/html/_random_int_parameter_8cpp-source.html</file>
    <file alias="_random_int_parameter_8h-source.html">../../../output/documentation/main/html/_random_int_parameter_8h-source.html</file>
    <file alias="_randomly_filled_grid_graphic_8cpp-source.html">../../../output/documentation/main/html/_randomly_filled_grid_graphic_8cpp-source.html</file>
@@ -808,6 +816,15 @@
    <file alias="class_picto_1_1_layer-members.html">../../../output/documentation/main/html/class_picto_1_1_layer-members.html</file>
    <file alias="class_picto_1_1_layer.html">../../../output/documentation/main/html/class_picto_1_1_layer.html</file>
    <file alias="class_picto_1_1_layer.png">../../../output/documentation/main/html/class_picto_1_1_layer.png</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_analog_input_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_signal_channel-members.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.png</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_event_code_generator-members.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_event_code_generator-members.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_event_code_generator.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_event_code_generator.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_event_code_generator.png">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_event_code_generator.png</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_reward_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_reward_controller-members.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_reward_controller.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_reward_controller.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_reward_controller.png">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_reward_controller.png</file>
    <file alias="class_picto_1_1_line_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_line_graphic-members.html</file>
    <file alias="class_picto_1_1_line_graphic.html">../../../output/documentation/main/html/class_picto_1_1_line_graphic.html</file>
    <file alias="class_picto_1_1_line_graphic.png">../../../output/documentation/main/html/class_picto_1_1_line_graphic.png</file>

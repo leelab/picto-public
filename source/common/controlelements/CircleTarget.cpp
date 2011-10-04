@@ -16,16 +16,17 @@ void CircleTarget::draw()
 	int radius = propertyContainer_->getPropertyValue("Radius").toInt();
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
-	QImage image(radius*2,radius*2,QImage::Format_ARGB32);
+	QImage image(radius*2+2,radius*2+2,QImage::Format_ARGB32);
 	image.fill(0);
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(QColor(0,0,0,0));
 	p.setPen(color);
-	p.drawEllipse(image.rect());
+	QRect ellipseRect(1,1,radius*2,radius*2);
+	p.drawEllipse(ellipseRect);
 	p.end();
 	image_ = image;
-	posOffset_ = QPoint(radius,radius);
+	posOffset_ = QPoint(radius+1,radius+1);
 
 	//updateCompositingSurfaces();
 

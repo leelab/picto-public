@@ -18,12 +18,16 @@ Director::Director(QString name,
 		HardwareSetup::SignalChannelType sigChannel,
 		HardwareSetup::VisualTargetType visualTarget,
 		HardwareSetup::RewardControllerType rewardController,
-		HardwareSetup::EventCodeGeneratorType eventCodeGenerator):
+		HardwareSetup::EventCodeGeneratorType eventCodeGenerator,
+		int xEyeChannel,
+		int yEyeChannel):
 	ComponentInterface("DIRECTOR"),
 	sigChannel_(sigChannel),
 	visualTarget_(visualTarget),
 	rewardController_(rewardController),
-	eventCodeGenerator_(eventCodeGenerator)
+	eventCodeGenerator_(eventCodeGenerator),
+	xChannel_(xEyeChannel),
+	yChannel_(yEyeChannel)
 {
 	//! \TODO Set up random number generator?
 
@@ -83,6 +87,8 @@ int Director::openDevice()
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering
 	//otherwise use d3d.
 	if(!hwSetup.setupRenderingTargets(visualTarget_)) 
+		return 1;
+	if(!hwSetup.setXYChannelNums(xChannel_,yChannel_))
 		return 1;
 	if(!hwSetup.setupSignalChannel(sigChannel_)) 
 		return 1;

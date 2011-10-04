@@ -46,6 +46,7 @@ public:
 
 	//called to start the controller running
 	virtual void start(QSharedPointer<Engine::PictoEngine> engine){};
+	virtual void stop(QSharedPointer<Engine::PictoEngine> engine){};
 
 	//void setName(QString name) { propertyContainer_->setPropertyValue("Name", name); };
 

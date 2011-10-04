@@ -7,10 +7,10 @@ RewardController::RewardController(unsigned int channelCount)
 {
 	//initialize the rewrad durations to 250 ms (this is arbitrary)
 	for(int i=0; i<4; i++)
-		rewardDurations_.append(250);
+		rewardDurations_.append(50);
 	//initialize the reset time to 100 ms (this is also arbitrary
 	for(int i=0; i<4; i++)
-		rewardResetTimes_.append(250);
+		rewardResetTimes_.append(50);
 
 }
 

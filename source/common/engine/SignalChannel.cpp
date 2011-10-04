@@ -47,7 +47,10 @@ void SignalChannel::addSubchannel(QString subchannelName)
 {
 	QList<double> data;
 	if(!rawDataBuffer_.contains(subchannelName))
+	{
 		rawDataBuffer_[subchannelName] = data;
+		rawDataLastValue_[subchannelName] = 0.0;
+	}
 	
 	if(!scaleFactorsMap_.contains(subchannelName))
 	{
@@ -62,22 +65,34 @@ double SignalChannel::peekValue(QString subchannel)
 {
 	updateDataBuffer();
 
-	if(rawDataBuffer_.isEmpty())
+	if(!rawDataBuffer_.contains(subchannel))
 		return 0.0;
-	if(rawDataBuffer_.value(subchannel).isEmpty())
-		return 0.0;
+	QString shearAsFuncOf = scaleFactorsMap_.value(subchannel).shearAsFuncOf;
+	Q_ASSERT(shearAsFuncOf.isEmpty() || rawDataBuffer_.contains(shearAsFuncOf));
+	//Update the rawDataLastValue_ map with this subchannel and a shearAsFuncOf channel
+	if(!rawDataBuffer_.value(subchannel).isEmpty())
+	{
+		rawDataLastValue_[subchannel] = rawDataBuffer_.value(subchannel).last();
+	}
+	if(!shearAsFuncOf.isEmpty() && !rawDataBuffer_.value(shearAsFuncOf).isEmpty())
+	{
+		rawDataLastValue_[shearAsFuncOf] = rawDataBuffer_.value(shearAsFuncOf).last();
+	}
+	Q_ASSERT(rawDataLastValue_.contains(subchannel));
+	Q_ASSERT(shearAsFuncOf.isEmpty() || rawDataLastValue_.contains(subchannel));
 
-	double rawValue = rawDataBuffer_.value(subchannel).last();
+	//Get the lastRawDataValue, scale and shear it.
+	double rawValue = rawDataLastValue_.value(subchannel);
 	double scaledValue = scaleFactorsMap_.value(subchannel).scaleA + 
 				scaleFactorsMap_.value(subchannel).scaleB * rawValue;
-	QString scaleAsFuncOf = scaleFactorsMap_.value(subchannel).shearAsFuncOf;
-	if(!scaleAsFuncOf.isEmpty())
+	if(!shearAsFuncOf.isEmpty())
 	{
-		double otherRawValue = rawDataBuffer_.value(scaleAsFuncOf).last();
-		double otherScaledValue = scaleFactorsMap_.value(scaleAsFuncOf).scaleA + 
-			scaleFactorsMap_.value(scaleAsFuncOf).scaleB * otherRawValue;
-		scaledValue = scaledValue + scaleFactorsMap_.value(subchannel).shearFactor * (otherScaledValue - scaleFactorsMap_.value(scaleAsFuncOf).centerVal);
+		double otherRawValue = rawDataLastValue_.value(shearAsFuncOf);
+		double otherScaledValue = scaleFactorsMap_.value(shearAsFuncOf).scaleA + 
+			scaleFactorsMap_.value(shearAsFuncOf).scaleB * otherRawValue;
+		scaledValue = scaledValue + scaleFactorsMap_.value(subchannel).shearFactor * (otherScaledValue - scaleFactorsMap_.value(shearAsFuncOf).centerVal);
 	}
+	qDebug(QString("%1: Last: %2 Scaled: %3").arg(rawDataLastValue_[subchannel]).arg(subchannel).arg(scaledValue).toAscii());
 	return scaledValue;
 }
 
@@ -139,6 +154,9 @@ QMap<QString, QList<double> > SignalChannel::getRawValues()
 
 	while(x != rawDataBuffer_.end())
 	{
+		//Update the last raw value that was read.
+		if(!x.value().isEmpty())
+			rawDataLastValue_[x.key()] = x.value().last();
 		x.value().clear();
 		x++;
 	}
@@ -159,6 +177,7 @@ void SignalChannel::insertValue(QString subchannel, double val)
 	if(rawDataBuffer_.contains(subchannel))
 	{
 		rawDataBuffer_[subchannel].append(val);
+		rawDataLastValue_[subchannel] = val;
 	}
 }
 
@@ -167,6 +186,7 @@ void SignalChannel::insertValues(QString subchannel, QList<double> vals)
 	if(rawDataBuffer_.contains(subchannel))
 	{
 		rawDataBuffer_[subchannel].append(vals);
+		rawDataLastValue_[subchannel] = vals.last();
 	}
 }
 

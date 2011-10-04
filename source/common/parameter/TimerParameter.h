@@ -1,10 +1,10 @@
-#ifndef _PSEUDOPseudorandomIntParameter_H_
-#define _PSEUDOPseudorandomIntParameter_H_
+#ifndef _TIMERPARAMETER_H_
+#define _TIMERPARAMETER_H_
 
 #include "../common.h"
 
 #include "parameter.h"
-#include "../random/MersenneTwister.h"
+#include "../controlelements/Timer.h"
 
 namespace Picto {
 
@@ -17,44 +17,38 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API PseudorandomIntParameter : public Parameter
+	class PICTOLIB_API TimerParameter : public Parameter
 #else
-class PseudorandomIntParameter : public Parameter
+class TimerParameter : public Parameter
 #endif
 {
 	Q_OBJECT
 	Q_PROPERTY(int value READ getValue WRITE setValue)
 public slots:
-	void randomize();
-	void reshuffleLastValue();
-	void reset();
+	void restart();
+	void updateTimeValue();
 
 public:
-	PseudorandomIntParameter();
+	TimerParameter();
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new PseudorandomIntParameter());};
-	virtual QString assetType(){return "PseudorandomInt";};
+	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TimerParameter());};
 
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
+	//DataStore functions
+	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
+	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool fixValues(QString& warning);
 
 private:
-	void checkForPropertyChanges();
-	MTRand mtRand_;
-	QVector<int> randomArray_;
-	bool useSeed_;
-	int seed_;
-	int value_;
-	int min_;
-	int max_;
-	QString units_;
-	int currIndex_;
+	Controller::Timer timer_;
+	QStringList unitList_;
+
+
 };
 
 

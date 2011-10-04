@@ -16,7 +16,9 @@ public:
 		HardwareSetup::SignalChannelType sigChannel = HardwareSetup::Mouse,
 		HardwareSetup::VisualTargetType visualTarget = HardwareSetup::Pixmap,
 		HardwareSetup::RewardControllerType rewardController = HardwareSetup::NullReward,
-		HardwareSetup::EventCodeGeneratorType eventCodeGenerator = HardwareSetup::NullGen);
+		HardwareSetup::EventCodeGeneratorType eventCodeGenerator = HardwareSetup::NullGen,
+		int xEyeChannel = 0,
+		int yEyeChannel = 1);
 	~Director();
 protected:
 	virtual QString name();
@@ -31,6 +33,8 @@ private:
 	HardwareSetup::VisualTargetType visualTarget_;
 	HardwareSetup::RewardControllerType rewardController_;
 	HardwareSetup::EventCodeGeneratorType eventCodeGenerator_;
+	int xChannel_;
+	int yChannel_;
 
 };
 #endif

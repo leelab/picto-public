@@ -350,7 +350,8 @@ void MainWindow::openRecentExperiment()
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 		if(action)
-			loadFile(action->data().toString());
+			if(!loadFile(action->data().toString()))
+				newExperiment();
 	}
 }
 

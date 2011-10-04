@@ -102,10 +102,10 @@ protected:
 	
 	void updateCompositingSurfaces();
 
-	MTRand random;
+	//MTRand random;
 
 	//QMap<QString, QVariant> initialProperties_;
-	bool visible_;
+	//bool visible_;
 private slots:
 	virtual void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };

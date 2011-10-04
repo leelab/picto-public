@@ -2,13 +2,13 @@
 #include <NIDAQmx.h>
 #include <QString>
 
-#include "PictoBoxXPEventCodeGenerator.h"
+#include "LegacySystemXPEventCodeGenerator.h"
 
 
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
 							DAQmxClearTask(daqTaskHandle_); \
-							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", "DAQ function failure");\
+							Q_ASSERT_X(!rc, "LegacySystemXPEventCodeGenerator", "DAQ function failure");\
 						 } }
 //JOEY - Adding define for using this on an old orion machine for debugging purposes.  Once this type
 //of debugging is no longer necessary, sections that depend on this definition can be safely removed.
@@ -16,7 +16,7 @@
 #ifdef DEBUG_ON_ORION_MACHINE
 	#define PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS "Dev1/line0:15"
 #else
-	// NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
+	// NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on LegacySystem 
 	//		 where we have full hardware control.  If this is meant to run elsewhere, a more
 	//		 generic RewardController will need to be written
 	#define PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS "Dev1/port1/line0:7"
@@ -25,7 +25,7 @@
 namespace Picto
 {
 
-PictoBoxXPEventCodeGenerator::PictoBoxXPEventCodeGenerator()
+LegacySystemXPEventCodeGenerator::LegacySystemXPEventCodeGenerator()
 {
 	DAQmxErrChk(DAQmxCreateTask("EventTask",(TaskHandle*)&daqTaskHandle_));
 	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS,"",DAQmx_Val_ChanForAllLines));
@@ -44,12 +44,12 @@ PictoBoxXPEventCodeGenerator::PictoBoxXPEventCodeGenerator()
 
 }
 
-PictoBoxXPEventCodeGenerator::~PictoBoxXPEventCodeGenerator()
+LegacySystemXPEventCodeGenerator::~LegacySystemXPEventCodeGenerator()
 {	
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
 }
 
-void PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
+void LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 {
 	int32 sampsPerChanWritten;
 
@@ -98,7 +98,7 @@ void PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 #ifdef DEBUG_ON_ORION_MACHINE
 	//reset the event lines to 0 
 	for(int i=0; i<16; i++)
-		data[i] = 0;	//WHAT'S UP HERE!!!!?!?!?!?!!?!?? THIS ISN'T BIG ENOUGH TO HANDLE 16 WRITES.
+		data[i] = 0;
 	DAQmxErrChk(DAQmxWriteDigitalU16(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 #else
 	//reset the event lines to 0 

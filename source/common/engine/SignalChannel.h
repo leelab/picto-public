@@ -78,6 +78,7 @@ protected:
 	void addSubchannel(QString subchannelName);
 
 	QMap<QString, QList<double> > rawDataBuffer_;
+	QMap<QString, double > rawDataLastValue_;
 
 	int sampleRate_;			//samples per second collected by the channel
 	bool useScaleFactors_;

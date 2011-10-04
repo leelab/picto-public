@@ -35,23 +35,50 @@ void PseudorandomIntParameter::randomize()
 	//The method below works.  Really.  
 	//See http://adrianquark.blogspot.com/2008/09/how-to-shuffle-array-correctly.html
 	int swapVal = randomArray_[currIndex_];
-	int swapRange = max_-min_-currIndex_;
-	if((currIndex_ == 0) && (max_-min_ > 0) && propertyContainer_->getPropertyValue("DontRepeatAnyValue").toBool())
+	int maxSwapIndex = randomArray_.size()-1-currIndex_;
+	if(propertyContainer_->getPropertyValue("DontRepeatAnyValue").toBool() && maxSwapIndex)
 	{	//We aren't allowed to repeat the last value in the array, so we subtract 1 from the swapRange
-		swapRange--;
+		maxSwapIndex--;
 	}
-	int swapLoc = mtRand_.randInt(swapRange);
+	int swapLoc = mtRand_.randInt(maxSwapIndex);	//Returns a value between 0 and the input, including zero
 	randomArray_[currIndex_] = randomArray_[currIndex_+swapLoc];
 	randomArray_[currIndex_+swapLoc] = swapVal;
 
 	propertyContainer_->setPropertyValue("Value",randomArray_[currIndex_]);
 }
 
-void PseudorandomIntParameter::reuseValue(QVariant value)
+void PseudorandomIntParameter::reshuffleLastValue()
 {
-	Q_ASSERT(value.toInt() >= min_);
-	Q_ASSERT(value.toInt() <= max_);
-	randomArray_.push_back(value.toInt());
+	if(currIndex_ < 0)
+	{
+		//We haven't started yet.  There's nothing to reshuffle.
+		return;
+	}
+	//Swap the last value in the array with the latest returned value and decrement the currIndex_
+	//We could just decrement the current index, but swapping with the last value assures us that
+	//we won't end up repeating a value if "DontRepeatAnyValue" is set (unless its the last value
+	//to be used in the list, in which case we should be repeating it anyway since there's nothing
+	//else to replace it).
+	int lastVal = randomArray_[currIndex_];
+	randomArray_[currIndex_] = randomArray_[randomArray_.size()-1];
+	randomArray_[randomArray_.size()-1] = lastVal;
+	if(currIndex_ == 0)
+		currIndex_ = randomArray_.size()-1;
+	else
+		currIndex_--;
+}
+
+//Resets the object to its original state as if no values have yet been
+//randomized.
+void PseudorandomIntParameter::reset()
+{
+	//First we reshuffle last value.  This has the effect of putting the
+	//last value at the end of the list, so it won't be repeated if 
+	//"DontRepeatAnyValue" is set.
+	reshuffleLastValue();
+	//Set the current index to the last index in the array, so that we
+	//will start over next time.
+	currIndex_ = randomArray_.size()-1;
 }
 
 void PseudorandomIntParameter::postSerialize()
@@ -126,7 +153,9 @@ void PseudorandomIntParameter::checkForPropertyChanges()
 	int max = propertyContainer_->getPropertyValue("Max").toInt();
 	if((randomArray_.size() == 0) || (min != min_) || (max != max_))
 	{	//the max or min values changed.  Rebuild the pseudorandom vector.
-		randomArray_.resize(max_-min+1);
+		max_ = max;
+		min_ = min;
+		randomArray_.resize(max_-min_+1);
 		for(int i=min_;i<=max_;i++)
 		{
 			randomArray_[i-min_] = i;

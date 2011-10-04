@@ -28,7 +28,7 @@ public:
 	virtual bool contains(int x, int y) = 0;
 //These public slots exist for binding visual element properties to scripts
 public slots:
-	virtual bool getVisible(){return active_ && visible_;};
+	virtual bool getVisible(){return active_ && VisualElement::getVisible();};
 protected:
 	virtual void postSerialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
