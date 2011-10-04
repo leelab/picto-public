@@ -100,7 +100,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 	//Add a cursor for the user input
-	addCursor();
+	//addCursor();
 
 	//Figure out which scripts we will be running
 	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
@@ -227,6 +227,15 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	bool isDone = false;
 	frameCounter_ = -1;
 
+	//Start up all of the control elements.
+	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
+	//CONTROL TARGETS AS ACTIVE.  WE SHOULD PROBABLY BREAK OUT A FUNCTION TO JUST
+	//DO THAT
+	foreach(QSharedPointer<ResultContainer> control, elements_)
+	{
+		control.staticCast<ControlElement>()->start(engine);
+	}
+
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
@@ -281,6 +290,14 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		frameCounter_ = masterFrame;
 	}
 
+	//Stop all of the control elements
+	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
+	//CONTROL TARGETS AS ACTIVE.  WE SHOULD PROBABLY BREAK OUT A FUNCTION TO JUST
+	//DO THAT
+	foreach(QSharedPointer<ResultContainer> control, elements_)
+	{
+		control.staticCast<ControlElement>()->stop(engine);
+	}
 	////run the exit script
 	//if(runExitScript)
 	//	runScript(exitScriptName);
