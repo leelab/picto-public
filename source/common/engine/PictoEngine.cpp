@@ -7,6 +7,8 @@
 
 #include "../timing/Timestamper.h"
 #include "../storage/RewardDataUnit.h"
+#include "../storage/PropertyDataUnit.h"
+#include "../storage/FrameDataUnit.h"
 
 #include <QApplication>
 #include <QTime>
@@ -21,7 +23,12 @@ PictoEngine::PictoEngine() :
 	propTable_(NULL),
 	slave_(false),
 	userIsOperator_(false),
-	lastTimePropChangesRequested_("0.0")
+	lastTimePropChangesRequested_("0.0"),
+	lastTimeStateDataRequested_("0.0"),
+	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
+	currStateUnit_(QSharedPointer<StateDataUnit>(new StateDataUnit())),
+	runningPath_(""),
+	engineCommand_(NoCommand)
 {
 	bExclusiveMode_ = true;
 	setSessionId(QUuid());
@@ -181,6 +188,7 @@ QSharedPointer<PropertyDataUnitPackage> PictoEngine::getChangedPropertyPackage()
 //! \brief Gets the latest property changes from the server and applies them to the local properties.
 void PictoEngine::updatePropertiesFromServer()
 {
+	return;
 	if(propTable_.isNull())
 		return;
 	//Collect the data from the server
@@ -232,6 +240,127 @@ void PictoEngine::updatePropertiesFromServer()
 		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
 		lastTimePropChangesRequested_ = dataPoint->time_;
 	}
+}
+
+
+bool PictoEngine::updateCurrentStateFromServer()
+{
+	//Clear any old responses out of the response queue
+	while(slaveCommandChannel_->incomingResponsesWaiting())
+		slaveCommandChannel_->getResponse();
+	if(!slaveCommandChannel_->assureConnection(100))
+		return false;
+
+	//Collect the data from the server
+	QString commandStr = QString("GETDATA CurrentState:%1 PICTO/1.0").arg(lastTimeStateDataRequested_);
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolResponse> response;
+
+	slaveCommandChannel_->sendRegisteredCommand(command);
+	QString commandID = command->getFieldValue("Command-ID");
+	//qDebug(QString("Sent command: %1 at Time:%2").arg(commandID).arg(command->getFieldValue("Time-Sent")).toAscii());
+
+	do
+	{
+		QCoreApplication::processEvents();
+		if(!slaveCommandChannel_->waitForResponse(1000))
+		{
+			return false;
+		}
+		response = slaveCommandChannel_->getResponse();
+		//if(response)
+		//	qDebug(QString("Received command: %1 sent by server at Time:%2").arg(response->getFieldValue("Command-ID")).arg(response->getFieldValue("Time-Sent")).toAscii());
+	}while(!response || response->getFieldValue("Command-ID") != commandID);
+
+	////No response
+	//if(!slaveCommandChannel_->waitForResponse(1000))
+	//	return false;
+
+	//response = slaveCommandChannel_->getResponse();
+
+	//Response not 200:OK
+	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
+		return false;
+	
+	QByteArray xmlFragment = response->getContent();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
+
+	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
+
+	if(xmlReader->atEnd())
+		return false;
+
+	PropertyDataUnitPackage propData;
+
+	xmlReader->readNext();
+	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
+	{
+		if(xmlReader->name() == "PropertyDataUnit")
+		{
+			PropertyDataUnit unit;
+			unit.fromXml(xmlReader);
+			propData.addData(unit.index_,unit.path_,unit.value_,unit.time_);
+			if(unit.time_.toDouble() > lastTimeStateDataRequested_.toDouble())
+				lastTimeStateDataRequested_ = unit.time_;
+		}
+		else if(xmlReader->name() == "BehavioralDataUnit")
+		{
+			currBehavUnit_->fromXml(xmlReader);
+			getSignalChannel("PositionChannel")->insertValue("xpos",currBehavUnit_->x);
+			getSignalChannel("PositionChannel")->insertValue("ypos",currBehavUnit_->y);
+			getSignalChannel("PositionChannel")->insertValue("time",currBehavUnit_->t.toDouble());
+			if(currBehavUnit_->t.toDouble() > lastTimeStateDataRequested_.toDouble())
+				lastTimeStateDataRequested_ = currBehavUnit_->t;
+		}
+		else if(xmlReader->name() == "StateDataUnit")
+		{
+			currStateUnit_->fromXml(xmlReader);
+			if(currStateUnit_->getTime().toDouble() > lastTimeStateDataRequested_.toDouble())
+				lastTimeStateDataRequested_ = currStateUnit_->getTime();
+		}
+		else if(xmlReader->name() == "FrameDataUnit")
+		{
+			FrameDataUnit unit;
+			unit.fromXml(xmlReader);
+			if(unit.time.toDouble() > lastTimeStateDataRequested_.toDouble())
+				lastTimeStateDataRequested_ = unit.time;
+			//qDebug(QString("WORKSTATION: RECEIVED FRAME: %1").arg(unit.frameNumber).toAscii());
+		}
+		xmlReader->readNext();
+	}
+
+	while(propData.length() > 0)
+	{
+		// Push the data into our signal channel
+		QSharedPointer<Picto::PropertyDataUnit> dataPoint;
+		dataPoint = propData.takeFirstDataPoint();
+
+		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
+		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
+	}
+	return true;
+}
+
+void PictoEngine::setRunningPath(QString path)
+{
+	runningPath_ = path;
+}
+
+QString PictoEngine::getServerPathUpdate()
+{
+	QString result = currStateUnit_->getDestination();
+	if(result == "NULL")
+		result = "";
+	if(result != "EngineAbort")
+		result.prepend(currStateUnit_->getMachinePath()+"::");
+	if(result == runningPath_)
+		result = "";
+	setRunningPath(currStateUnit_->getMachinePath()+"::"+currStateUnit_->getDestination());
+	return result;
+}
+QSharedPointer<Picto::BehavioralDataUnit> PictoEngine::getCurrentBehavioralData()
+{
+	return currBehavUnit_;
 }
 
 //! Sets the CommandChannel used for data.  Returns true if the channel's status is connected

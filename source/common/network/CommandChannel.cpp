@@ -306,7 +306,7 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 		{
 			QTime timer;
 			timer.start();
-			if(!discoverServer(acceptableTimeoutMs))
+			if((acceptableTimeoutMs > 50) && !discoverServer(acceptableTimeoutMs))
 				return false;
 			if(timer.elapsed() >= acceptableTimeoutMs)
 				return false;

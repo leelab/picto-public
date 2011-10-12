@@ -5,6 +5,7 @@
 #include "../protocol/ProtocolResponse.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/AssetFactory.h"
+#include <QCoreApplication>
 
 namespace Picto {
 
@@ -38,6 +39,8 @@ QString StateMachineElement::type()
  */
 QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine)
 {
+	Q_ASSERT(false);
+	return "";
 	//Collect the data from the server
 	//Note that below we use 6 places after the time decimal point.  We do this because we get
 	//6 places after the decimal point and we need to make sure that new data will be after old data.
@@ -92,19 +95,22 @@ QString StateMachineElement::getMasterStateResult(QSharedPointer<Engine::PictoEn
 				msg.toAscii());
 			lastTransitionTime_ = data.getTime();
 
-			QString result = data.getSourceResult();
+			QString result = data.getDestination();
+			if(result == "NULL")
+				result = "";
+			if(result != "EngineAbort")
+				result.prepend(data.getMachinePath()+"::");
 
 			//The result will be "NULL" if this was the starting "transition"
 			if(result.toUpper() == "NULL")
 				return "";
 			else
 			{
-				if("Path: Simple Test::Dumb Trial::Stage 3, Source: State 2, SourceResult: Success, Destination: Done" == (QString("Path: %1, Source: %2, SourceResult: %3, Destination: %4").arg(data.getMachinePath()).arg(data.getSource()).arg(data.getSourceResult()).arg(data.getDestination()).toAscii()))
-				{
-					int i = 0;
-					i++;
-				}
-				qDebug(QString("Path: %1, Source: %2, SourceResult: %3, Destination: %4").arg(data.getMachinePath()).arg(data.getSource()).arg(data.getSourceResult()).arg(data.getDestination()).toAscii());
+				QString msg = QString("Path: %1, Source: %2, SourceResult: %3, Destination: %4").arg(data.getMachinePath()).arg(data.getSource()).arg(data.getSourceResult()).arg(data.getDestination());
+				if(data.getSource() != getName() || data.getSource().toUpper() == "NULL")
+					msg = QString("Transition source: %1 doesn't match current state: %2 at time: %3")
+						.arg(data.getSource()).arg(getName()).arg(data.getTime());
+				qDebug(msg.toAscii());
 				return result;
 			}
 		}

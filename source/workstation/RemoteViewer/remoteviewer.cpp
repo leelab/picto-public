@@ -1365,6 +1365,7 @@ bool RemoteViewer::joinSession()
 		}
 
 	}
+	activeExperiment_->setEngine(engine_);
 
 	serverChannel_->setSessionId(sessionId_);
 	engineSlaveChannel_->setSessionId(sessionId_);
@@ -1375,59 +1376,70 @@ bool RemoteViewer::joinSession()
 	QString taskName;
 	QStringList currentStateMachinePath;
 	QString currentState;
+
 	do
 	{
 		tryAgain = false;
 		//Figure out where we are in the state machine, and what the current time is
-		commandStr = "GETDATA StateDataUnit:-1.0 PICTO/1.0";
+		//commandStr = "GETDATA StateDataUnit:-1.0 PICTO/1.0";
 
-		QSharedPointer<Picto::ProtocolCommand> getDataCommand(new Picto::ProtocolCommand(commandStr));
-		QSharedPointer<Picto::ProtocolResponse> getDataResponse;
+		//QSharedPointer<Picto::ProtocolCommand> getDataCommand(new Picto::ProtocolCommand(commandStr));
+		//QSharedPointer<Picto::ProtocolResponse> getDataResponse;
 
-		serverChannel_->sendRegisteredCommand(getDataCommand);
-		QString commandID = getDataCommand->getFieldValue("Command-ID");
-		//Get the response to this command
-		do
+		//serverChannel_->sendRegisteredCommand(getDataCommand);
+		//QString commandID = getDataCommand->getFieldValue("Command-ID");
+		////Get the response to this command
+		//do
+		//{
+		//	if(!serverChannel_->waitForResponse(50))
+		//	{
+		//		setStatus(tr("Server did not respond to GETDATA command"));
+		//		return false;
+		//	}
+		//	getDataResponse = serverChannel_->getResponse();
+		//}while(!getDataResponse || getDataResponse->getFieldValue("Command-ID") != commandID);
+
+		//if(getDataResponse.isNull() || getDataResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
+		//{
+		//	setStatus("Unexpected response to GETDATA command");
+		//	return false;
+		//}
+
+		//content = getDataResponse->getDecodedContent();
+		//xmlReader = QSharedPointer<QXmlStreamReader>(new QXmlStreamReader(content));
+		//
+		////Grab the data
+		//while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
+
+		////This means that the response didn't contain a <DATA> tag
+		//if(xmlReader->atEnd())
+		//{
+		//	setStatus("GETDATA response didn't contain <Data> tag");
+		//	return false;
+		//}
+
+		//while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataUnit");
+		engine_->setLastTimeStateDataRequested("0");
+		if(!engine_->updateCurrentStateFromServer())
 		{
-			if(!serverChannel_->waitForResponse(50))
-			{
-				setStatus(tr("Server did not respond to GETDATA command"));
-				return false;
-			}
-			getDataResponse = serverChannel_->getResponse();
-		}while(!getDataResponse || getDataResponse->getFieldValue("Command-ID") != commandID);
-
-		if(getDataResponse.isNull() || getDataResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
-		{
-			setStatus("Unexpected response to GETDATA command");
+			setStatus("Server failed to respond to Current State request");
 			return false;
 		}
-
-		content = getDataResponse->getDecodedContent();
-		xmlReader = QSharedPointer<QXmlStreamReader>(new QXmlStreamReader(content));
-		
-		//Grab the data
-		while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
-
-		//This means that the response didn't contain a <DATA> tag
-		if(xmlReader->atEnd())
+		QString fullPath = engine_->getServerPathUpdate();
+		int lastSepIndex = fullPath.lastIndexOf("::");
+		QString machinePath = fullPath.left(lastSepIndex);
+		currentState = fullPath.mid(lastSepIndex+2);
+		if(!machinePath.isEmpty())
 		{
-			setStatus("GETDATA response didn't contain <Data> tag");
-			return false;
-		}
+			//If we're here an experiment is in progress
 
-		while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataUnit");
+			//Picto::StateDataUnit data;
+			//data.fromXml(xmlReader);
 
-		if(!xmlReader->atEnd())
-		{
-			//If we're here, there is state data to read, meaning that an experiment is in progress
-
-			Picto::StateDataUnit data;
-			data.fromXml(xmlReader);
-
-			lastTransitionTime = data.getTime();
-			currentStateMachinePath = data.getMachinePath().split("::");
-			currentState = data.getDestination();
+			//lastTransitionTime = data.getTime();
+			//currentStateMachinePath = data.getMachinePath().split("::");
+			//currentState = data.getDestination();
+			currentStateMachinePath = machinePath.split("::");
 			taskName = currentStateMachinePath.first();
 
 			//Update the task list box
@@ -1470,7 +1482,7 @@ bool RemoteViewer::joinSession()
 	//of changes.  We need to do this because we created a new experiment from XML but the engine
 	//may have already been used to update properties which means that it wouldn't get all of the 
 	//property changes from the director since the beginning of the session.
-	engine_->setLastTimePropertiesRequested(0);
+	//engine_->setLastTimePropertiesRequested("0");
 
 	//Start the timeout timer
 	if(!timeoutTimer_)
@@ -1493,8 +1505,6 @@ bool RemoteViewer::joinSession()
 	}
 	else
 		enableTaskCommands_ = false;
-
-	activeExperiment_->setEngine(engine_);
 
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.

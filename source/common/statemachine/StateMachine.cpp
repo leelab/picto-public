@@ -21,8 +21,8 @@ int StateMachine::trialNum_;
 
 StateMachine::StateMachine() : 
 	MachineContainer("Transition","StateMachineElement"),
-	ignoreInitialElement_(false)
-
+	ignoreInitialElement_(false),
+	dontRunElement_(false)
 {
 	
 	AddDefinableProperty("Type","StateMachine");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
@@ -154,21 +154,34 @@ bool StateMachine::jumpToState(QStringList path, QString state)
 		QString nextMachine = path.takeFirst();
 		if(elements_.contains(nextMachine))
 		{
-			currElement_ = elements_[nextMachine].staticCast<StateMachineElement>();
-			if(!currElement_.dynamicCast<StateMachine>()->jumpToState(path,state))
+			QSharedPointer<StateMachineElement> childElement_ = elements_[nextMachine].staticCast<StateMachineElement>();
+			if(!childElement_.dynamicCast<StateMachine>()->jumpToState(path,state))
 				return false;
+			currElement_ = childElement_;
+
 		}
 		else
 		{
+			Q_ASSERT_X(false,"StateMachine::jumpToState","Path entered into jumpToState was invalid");
 			return false;
 		}
 	}
 	else
 	{
 		if(elements_.contains(state))
+		{
 			currElement_ = elements_[state].staticCast<StateMachineElement>();
+		}
+		else if(results_.contains(state))
+		{
+			Q_ASSERT(false);
+			dontRunElement_ = true;
+		}
 		else
+		{
+			Q_ASSERT_X(false,"StateMachine::jumpToState","Path entered into jumpToState was invalid");
 			return false;
+		}
 	}
 	ignoreInitialElement_ = true;
 	return true;
@@ -324,7 +337,8 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	if(!slave)
 		resetScriptableValues();
 	path_.append(getName());
-	qDebug(QString("Entering: %1").arg(path_.join("::")).toAscii());
+	QString pathStr = path_.join("::");
+	//qDebug(QString("Entering: %1").arg(path_.join("::")).toAscii());
 	if(!initScripting())
 	{
 		//! \TODO Make some sort of intelligent error reporting...
@@ -415,7 +429,24 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		//else
 		//{
 			if(slave)
-				result = currElement_->runAsSlave(engine);
+			{
+				//qDebug(QString("Latest x,y: %1,%2").arg(engine->getCurrentBehavioralData()->x).arg(engine->getCurrentBehavioralData()->y).toAscii());
+				if(dontRunElement_)
+				{
+					Q_ASSERT(false);
+					while(result.isEmpty())
+					{
+						engine->updateCurrentStateFromServer();
+						result = engine->getServerPathUpdate();
+					}
+
+					dontRunElement_ = false;
+				}
+				else
+				{
+					result = currElement_->runAsSlave(engine);
+				}
+			}
 			else
 				result = currElement_->run(engine);
 
@@ -426,18 +457,54 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		//Find the transition from our current source with a SourceResult string that matches the result
 		//Yeah, this is kind of ugly...
 		nextElementName = "";
-		bool foundTransition = false;
-		foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
+		if(!slave)
 		{
-			if(tran->getSourceResult() == result)
+			bool foundTransition = false;
+			foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
 			{
-				nextElementName = tran->getDestination();
-				sendStateDataToServer(tran, engine);
-				foundTransition = true;
-				break;
+				if(tran->getSourceResult() == result)
+				{
+					nextElementName = tran->getDestination();
+					sendStateDataToServer(tran, engine);
+					foundTransition = true;
+					break;
+				}
 			}
+			Q_ASSERT(foundTransition);
 		}
-		Q_ASSERT(foundTransition);
+		else
+		{	//We're a Slave
+			//Get path to destination
+			int lastSepIndex = result.lastIndexOf("::");
+			QString destinationPath = result.left(lastSepIndex);
+			QString destination = result.mid(lastSepIndex+2);
+			if(destinationPath == pathStr)
+				nextElementName = destination;
+			else if(destinationPath.startsWith(pathStr))
+			{
+				//The destination is in an element somewhere below this statemachine.
+				//Call jumpToState to set this element and all elements in the path below 
+				//to have the correct next element. (skipping the initialelement), 
+				//then continue the loop.
+				QStringList descendantPath = destinationPath.mid(pathStr.length()+2).split("::");
+				nextElementName = descendantPath.first();
+				bool rc = jumpToState(descendantPath,destination);
+				//The jump to state function sets this elements "ignoreInitialElement"
+				//value to true, which we don't want in this case because we aren't
+				//leave this loop and nothing will set it back to false.  For that
+				//reason we do it here.
+				ignoreInitialElement_ = false;	
+				Q_ASSERT_X(rc,"StateMachine::runPrivate",QString("Could not jump to \"%1\" from StateMachine at \"%2\"").arg(descendantPath.join("::")).arg(pathStr).toAscii());
+				currElementName = nextElementName;
+				continue;
+			}
+			else	
+				//The path is not below this statemachine.  
+				//Return the result to the level above and it will check if the path is below it.
+				break;
+			
+
+		}
 		// If we transitioned to a result, then we're done and should return that result
 		if(results_.contains(nextElementName))
 		{
@@ -447,11 +514,12 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 			//that tells us where we're going to go next in this StateMachine's parent.
 			if(slave && !getParentAsset()->inherits("Picto::Task"))
 			{
+				Q_ASSERT(false);
 				QString masterResult;
-				//Make sure we're exiting with the same result as the master
+				//Make sure we're exiting with the next result (after the transition to our own result).
 				while(masterResult.isEmpty())
 					masterResult = getMasterStateResult(engine);
-				Q_ASSERT(masterResult == result);
+				//Q_ASSERT(masterResult == result);
 				result = masterResult;
 			}
 			break;
@@ -465,7 +533,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 	}
 	//Since we're backing out of this state machine we need to remove it from the path
-	qDebug(QString("Exiting: %1").arg(path_.join("::")).toAscii());
+	//qDebug(QString("Exiting: %1").arg(path_.join("::")).toAscii());
 	path_.takeLast();
 	return result;
 }

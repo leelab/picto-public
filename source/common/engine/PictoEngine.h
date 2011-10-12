@@ -16,6 +16,8 @@
 #include "../iodevices/RewardController.h"
 #include "../iodevices/EventCodeGenerator.h"
 #include "../storage/PropertyDataUnitPackage.h"
+#include "../storage/BehavioralDataUnit.h"
+#include "../storage/StateDataUnit.h"
 #include "propertytable.h"
 
 #include <QSharedPointer>
@@ -118,6 +120,11 @@ public:
 	void updatePropertiesFromServer();
 	void clearChangedPropertyPackage(){propPackage_.clear();};
 
+	bool updateCurrentStateFromServer();
+	void setRunningPath(QString path);
+	QString getServerPathUpdate();
+	QSharedPointer<Picto::BehavioralDataUnit> getCurrentBehavioralData();
+
 	bool setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getDataCommandChannel();
 
@@ -140,6 +147,7 @@ public:
 	bool slaveMode() { return slave_; }
 	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
+	void setLastTimeStateDataRequested(QString time){lastTimeStateDataRequested_ = time;};
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -163,6 +171,10 @@ private:
 	bool slave_;
 	bool userIsOperator_;
 	QString lastTimePropChangesRequested_;
+	QString lastTimeStateDataRequested_;
+	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
+	QSharedPointer<StateDataUnit> currStateUnit_;
+	QString runningPath_;
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);
 };

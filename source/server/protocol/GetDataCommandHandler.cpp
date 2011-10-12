@@ -5,7 +5,7 @@
 #include "../../common/storage/StateDataUnit.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
-
+#include "../../common/timing/Timestamper.h"
 
 #include <QXmlStreamWriter>
 #include <QSqlDatabase>
@@ -39,46 +39,55 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	QString dataType = command->getTarget().split(':').value(0,"");
 
 	QByteArray xmlContent;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&xmlContent));
-	xmlWriter->writeStartElement("Data");
-
-	if(dataType.compare("BehavioralDataUnitPackage",Qt::CaseInsensitive) == 0)
+	if(dataType.compare("CurrentState",Qt::CaseInsensitive) == 0)
 	{
-		QSharedPointer<Picto::BehavioralDataUnitPackage> dataStore;
-		dataStore = sessionInfo->selectBehavioralData(timestamp);
-		dataStore->toXml(xmlWriter);
-	}
-	else if(dataType.compare("PropertyDataUnitPackage",Qt::CaseInsensitive) == 0)
-	{
-		QSharedPointer<Picto::PropertyDataUnitPackage> dataStore;
-		dataStore = sessionInfo->selectPropertyData(timestamp);
-		dataStore->toXml(xmlWriter);
-	}
-	else if(dataType.compare("StateDataUnit",Qt::CaseInsensitive) == 0)
-	{
-		QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStores;
-		dataStores = sessionInfo->selectStateData(timestamp);
-		foreach(QSharedPointer<Picto::StateDataUnit> data, *dataStores)
-		{
-			data->toXml(xmlWriter);
-		}
-	}
-	else if(dataType.compare("FrameDataUnitPackage",Qt::CaseInsensitive) == 0)
-	{
-		QSharedPointer<Picto::FrameDataUnitPackage> dataStore;
-		dataStore = sessionInfo->selectFrameData(timestamp);
-		dataStore->toXml(xmlWriter);
+		//Picto::Timestamper tStamper;
+		//double startVal = tStamper.stampMs();
+		xmlContent = QString("<Data>").append(sessionInfo->selectStateVariables(timestamp)).append("</Data>").toAscii();
+		//qDebug(QString("Select at %1ms took: %2ms").arg(tStamper.stampMs()).arg(tStamper.stampMs()-startVal).toAscii());
 	}
 	else
 	{
-		QString msg = "Unrecognized data type: " + dataType;
-		Q_ASSERT_X(false, "GetDataCommandHandler", msg.toAscii());
+		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&xmlContent));
+		xmlWriter->writeStartElement("Data");
+		if(dataType.compare("BehavioralDataUnitPackage",Qt::CaseInsensitive) == 0)
+		{
+			QSharedPointer<Picto::BehavioralDataUnitPackage> dataStore;
+			dataStore = sessionInfo->selectBehavioralData(timestamp);
+			dataStore->toXml(xmlWriter);
+		}
+		else if(dataType.compare("PropertyDataUnitPackage",Qt::CaseInsensitive) == 0)
+		{
+			QSharedPointer<Picto::PropertyDataUnitPackage> dataStore;
+			dataStore = sessionInfo->selectPropertyData(timestamp);
+			dataStore->toXml(xmlWriter);
+		}
+		else if(dataType.compare("StateDataUnit",Qt::CaseInsensitive) == 0)
+		{
+			QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStores;
+			dataStores = sessionInfo->selectStateData(timestamp);
+			foreach(QSharedPointer<Picto::StateDataUnit> data, *dataStores)
+			{
+				data->toXml(xmlWriter);
+			}
+		}
+		else if(dataType.compare("FrameDataUnitPackage",Qt::CaseInsensitive) == 0)
+		{
+			QSharedPointer<Picto::FrameDataUnitPackage> dataStore;
+			dataStore = sessionInfo->selectFrameData(timestamp);
+			dataStore->toXml(xmlWriter);
+		}
+		else
+		{
+			QString msg = "Unrecognized data type: " + dataType;
+			Q_ASSERT_X(false, "GetDataCommandHandler", msg.toAscii());
+		}
+
+
+		//! \TODO add state transistions here...
+
+		xmlWriter->writeEndElement();
 	}
-
-
-	//! \TODO add state transistions here...
-
-	xmlWriter->writeEndElement();
 
 	response->setContent(xmlContent);
 	response->setRegisteredType(Picto::RegisteredResponseType::Immediate);

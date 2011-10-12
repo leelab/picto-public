@@ -82,6 +82,7 @@ public:
 	void insertStateData(QSharedPointer<Picto::StateDataUnit> data);
 	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> selectStateData(QString timestamp);
 	QSharedPointer<Picto::FrameDataUnitPackage> selectFrameData(QString timestamp);
+	QString selectStateVariables(QString fromTime);
 
 	//getters/setters
 	QUuid sessionId() { return uuid_; };
@@ -116,6 +117,8 @@ private:
 	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
 	void recalculateFittedTimes();
+	void setStateVariable(int id,QString timestamp, QString serializedValue);
+	void setCurrentStatesFrame(QString timestamp, QString serializedValue);
 	QSqlDatabase getSessionDb();
 	QSqlDatabase getCacheDb();
 
@@ -148,6 +151,10 @@ private:
 	QMap<QString,QString> tableColumnTypes_;
 	QMap<QString,QString> tableColumnConstraints_;
 	QMap<QString,QString> tableDataProviders_;
+	struct Variable{int id;QString time;QString serial;};
+	QList<Variable> currentStateQuery_;
+	QString latestStateVarTime_;
+	QString latestWrittenStateVarTime_;
 
 	qulonglong maxReceivedDataID_;
 

@@ -34,6 +34,7 @@ public:
 
 	int length() { return data_.length(); }
 	QSharedPointer<BehavioralDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };
+	QSharedPointer<BehavioralDataUnit> takeLastDataPoint() { return data_.takeLast(); };
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

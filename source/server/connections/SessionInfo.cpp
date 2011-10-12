@@ -10,6 +10,10 @@
 #include <QMutexLocker>
 #include <QStringList>
 #include <QSqlRecord>
+
+#define FRAME_STATE_VAR_ID -1
+#define TRANSITION_STATE_VAR_ID -2
+#define EYE_STATE_VAR_ID -3
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
@@ -148,6 +152,12 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	if(sessionQ.next())
 		alignToType_ = sessionQ.value(0).toString();
 	sessionQ.finish();
+
+	// Load Current State
+	QSqlDatabase cacheDb = getCacheDb();
+	QSqlQuery cacheQuery(cacheDb);
+	executeReadQuery(&cacheQuery,"INSERT INTO currentstate(variableid, time, data) SELECT variableid, time, data FROM diskdb.currentstate",true);
+	cacheQuery.finish();
 	locker.unlock();
 
 	////Redoalignment and flush
@@ -428,9 +438,18 @@ void SessionInfo::flushCache(QString sourceType)
 			{
 				QString queryString = "INSERT INTO diskdb.%1(%2) SELECT %2 FROM %1";
 				executeWriteQuery(&cacheQuery,QString("INSERT INTO diskdb.%1(%2) SELECT %2 FROM %1").arg(table).arg(tableColumns_[table]));
-				executeWriteQuery(&cacheQuery,QString("DELETE FROM %1%2").arg(table).arg(table.contains("ralalignevents")?" WHERE matched<>0":""));
+				if(table != "currentstate")
+					executeWriteQuery(&cacheQuery,QString("DELETE FROM %1%2").arg(table).arg(table.contains("ralalignevents")?" WHERE matched<>0":""));
 			}
 		}
+
+		// Store the latest "current table" entries
+		cacheQuery.prepare(QString("INSERT INTO diskdb.currentstate (variableid, time, data) SELECT variableid, time, data FROM currentstate WHERE time > :last"));
+		cacheQuery.bindValue(":last",latestWrittenStateVarTime_);
+		executeWriteQuery(&cacheQuery,"",true);
+
+		//Our latest written state var time has now caught up with the latest one in memory
+		latestWrittenStateVarTime_ = latestStateVarTime_;
 		cacheQuery.clear();
 		//End Transaction
 		success = cacheDb.commit();
@@ -483,6 +502,8 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	while(data->length() > 0)
 	{
 		dataPoint = data->takeFirstDataPoint();
+		if(data->length() == 0)	//No need to setStateVariable for any except the last one
+			setStateVariable(EYE_STATE_VAR_ID,dataPoint->t,dataPoint->toXml());
 		cacheQ.prepare("INSERT INTO behavioraldata (dataid, xpos, ypos, time)"
 			"VALUES(:dataid, :xpos, :ypos, :time)");
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
@@ -503,6 +524,7 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 	while(data->length() > 0)
 	{
 		dataPoint = data->takeFirstDataPoint();
+		setStateVariable(dataPoint->index_,dataPoint->time_,dataPoint->toXml());
 		cacheQ.prepare("INSERT INTO properties (dataid, propid, path, value, time)"
 			"VALUES(:dataid, :index, :path, :value, :time)");
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
@@ -734,6 +756,7 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 //! \brief inserts a state change record in the session database
 void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnit> data)
 {
+	setStateVariable(TRANSITION_STATE_VAR_ID,data->getTime(),data->toXml());
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 
@@ -754,10 +777,11 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQ(cacheDb);
-
 	QSharedPointer<Picto::FrameDataUnit> framedata;
+	bool hadData = false;
 	while(data->length() > 0)
 	{
+		hadData = true;
 		framedata = data->takeFirstDataPoint();
 		cacheQ.prepare("INSERT INTO framedata (dataid, frame, time, state)"
 			"VALUES(:dataid, :frame, :time, :state)");
@@ -766,6 +790,15 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 		cacheQ.bindValue(":time",framedata->time);
 		cacheQ.bindValue(":state",framedata->stateName);
 		executeWriteQuery(&cacheQ,"",false);	
+	}
+	//Currently we require that frame data be sent to the server when as soon as all 
+	//data that were valid for that frame has been sent and before any other data arrives.
+	//This means that as soon as we insert frame data, its time to flushStateBufferToCurrentState
+	//so that any workstations reading in current state data will have a picture of the latest valid
+	//state
+	if(hadData)
+	{
+		setCurrentStatesFrame(framedata->time,framedata->toXml());
 	}
 }
 
@@ -796,10 +829,10 @@ QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralDa
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<Picto::BehavioralDataUnitPackage> dataStore(new Picto::BehavioralDataUnitPackage());
 	QSqlQuery query(cacheDb);
-	bool justFirst = false;
+	bool justLatest = false;
 	if(timestamp.toDouble() < 0)
 	{
-		justFirst = true;
+		justLatest = true;
 		timestamp = "0";
 		query.prepare("SELECT xpos, ypos, time FROM behavioraldata WHERE time > :time1 UNION "
 		"SELECT xpos, ypos, time FROM diskdb.behavioraldata WHERE time > :time2 ORDER BY time DESC LIMIT 1");
@@ -821,7 +854,7 @@ QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralDa
 	//The checks after query.next() below takes care of this.
 	if(query.next() && ((query.value(2).toString() != timestamp)||query.next()))
 	{
-		if(justFirst)
+		if(justLatest)
 		{
 			dataStore->addData(query.value(0).toDouble(),
 							  query.value(1).toDouble(),
@@ -853,10 +886,10 @@ QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(Q
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<Picto::PropertyDataUnitPackage> dataStore(new Picto::PropertyDataUnitPackage());
 	QSqlQuery query(cacheDb);
-	bool justFirst = false;
+	bool justLatest = false;
 	if(timestamp.toDouble() < 0)
 	{
-		justFirst = true;
+		justLatest = true;
 		timestamp = "0";
 		query.prepare("SELECT propid, path, value, time FROM properties WHERE time > :time1 UNION "
 		"SELECT propid, path, value, time FROM diskdb.properties WHERE time > :time2 ORDER BY time DESC LIMIT 1");
@@ -878,7 +911,7 @@ QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(Q
 	//The checks after query.next() below takes care of this.
 	if(query.next() && ((query.value(3).toString() != timestamp)||query.next()))
 	{
-		if(justFirst)
+		if(justLatest)
 		{
 			dataStore->addData(query.value(0).toInt(),
 								query.value(1).toString(),
@@ -912,10 +945,10 @@ QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(QString
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<Picto::FrameDataUnitPackage> dataStore(new Picto::FrameDataUnitPackage());
 	QSqlQuery query(cacheDb);
-	bool justFirst = false;
+	bool justLatest = false;
 	if(timestamp.toDouble() < 0)
 	{
-		justFirst = true;
+		justLatest = true;
 		timestamp = "0";
 		query.prepare("SELECT frame,time,state FROM framedata WHERE time > :time1 UNION "
 		"SELECT diskdb.framedata.frame,diskdb.framedata.time,diskdb.framedata.state FROM diskdb.framedata WHERE time > :time2 ORDER BY time DESC LIMIT 1");
@@ -936,7 +969,7 @@ QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(QString
 	//The checks after query.next() below takes care of this.
 	if(query.next() && ((query.value(1).toString() != timestamp)||query.next()))
 	{
-		if(justFirst)
+		if(justLatest)
 		{
 			dataStore->addFrame(query.value(0).toInt(),
 							  query.value(1).toString(),
@@ -956,7 +989,31 @@ QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(QString
 	return dataStore;
 }
 
-
+//We use a single table to track the latest state of all variables pertinant to running
+//a picto workstation.  Using this table, we can assure requests for the latest picto
+//state will have constant runtime independant of the previous runtime of the current
+//experiment.  New variable values always update existing values with the same id if 
+//their timestamp is greater than that of their predecessor.  Calling selectStateVariables
+//will return a string that can be sent to a workstation.  This string contains all of the
+//stateVariables that have changed after (not including) the input time.  The format of 
+//the returned variables is just the serialization that the director used when sending
+//them to the server.
+QString SessionInfo::selectStateVariables(QString fromTime)
+{
+	QString result;
+	QSqlDatabase cacheDb = getCacheDb();
+	QSqlQuery query(cacheDb);
+	query.prepare("SELECT data FROM currentstate WHERE time > :time");
+	query.bindValue(":time",fromTime);
+	QMutexLocker locker(databaseWriteMutex_.data());
+	executeReadQuery(&query,"",true);
+	while(query.next())
+	{
+		result.append(query.value(0).toString());
+	}
+	query.finish();
+	return result;
+}
 /*! \brief Returns a list of state datastores with all of the data collected after the timestamp
  *
  *	This function creates a list of state data stores and returns it.  If the timestamp is 0, 
@@ -968,10 +1025,10 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectS
 	QSqlDatabase cacheDb = getCacheDb();
 	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStoreList(new QList<QSharedPointer<Picto::StateDataUnit>>());
 	QSqlQuery query(cacheDb);
-	bool justFirst = false;
+	bool justLatest = false;
 	if(timestamp.toDouble() < 0)
 	{
-		justFirst = true;
+		justLatest = true;
 		timestamp = "-1";
 		query.prepare("SELECT source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
 		"SELECT diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, diskdb.statetransitions.time, "
@@ -995,7 +1052,7 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectS
 	if(query.next() && ((query.value(3).toString() != timestamp)||query.next()))
 	{
 
-		if(justFirst)
+		if(justLatest)
 		{
 			QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
 			data->setTransition(query.value(0).toString(),
@@ -1029,6 +1086,8 @@ void SessionInfo::InitializeVariables()
 	databaseWriteMutex_ = QSharedPointer<QMutex>(new QMutex(QMutex::Recursive));
 	activity_ = true;
 	ignoreComponents_ = false;
+	latestStateVarTime_ = "0.0";
+	latestWrittenStateVarTime_ = "0.0";
 	timestampsAligned_ = (false);
 	//CreateUUID
 	if(uuid_ == QUuid())
@@ -1102,6 +1161,15 @@ void SessionInfo::InitializeVariables()
 	tableColumns_["rewards"] = " dataid,duration,channel,time ";
 	tableColumnTypes_["rewards"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,INTEGER,REAL ";
 	tableDataProviders_["rewards"] = "DIRECTOR";
+
+	//This tables is used internally by the session and accessed by workstations to get
+	//the latest experimental state.
+	//A sql INSERT query is constantly built up with the latest state info.  Whenever a frame input is
+	//received, the query gets performed creating contains a valid state that
+	//was in place at the time that frame was presented.
+	tables_.push_back("currentstate");
+	tableColumns_["currentstate"] = " variableid,time,data ";
+	tableColumnTypes_["currentstate"] = " INTEGER UNIQUE ON CONFLICT REPLACE,REAL,TEXT ";
 
 	//create alignment tool
 	alignToType_ = "";
@@ -1347,6 +1415,74 @@ void SessionInfo::recalculateFittedTimes()
 	////queryString = "UPDATE lfp SET "+alignmentTool_->getSQLTimeConversionEquation("fittedtime","timestamp","correlation");
 	////executeWriteQuery(&query,queryString);
 }
+
+//We use a single table to track the latest state of all variables pertinant to running
+//a picto workstation.  Using this table, we can assure requests for the latest picto
+//state will have constant runtime independant of the previous runtime of the current
+//experiment.  New variable values always update existing values with the same id if 
+//their timestamp is greater than that of their predecessor.  
+void SessionInfo::setStateVariable(int id,QString timestamp, QString serializedValue)
+{
+	Variable var;
+	var.id = id;
+	var.time = timestamp;
+	var.serial = serializedValue;
+	currentStateQuery_.append(var);
+	//currentStateQuery_.append(QString("INSERT OR REPLACE INTO currentstate (variableid, time, data) VALUES(%1, %2, %3)").arg(id).arg(timestamp).arg(serializedValue));
+}
+
+void SessionInfo::setCurrentStatesFrame(QString timestamp, QString serializedValue)
+{
+	QSqlDatabase cacheDb = getCacheDb();
+	QSqlQuery cacheQuery(cacheDb);
+	//Since we are encapsulating all of these operations in a single transaction, we put the whole thing in a mutex.
+	QMutexLocker locker(databaseWriteMutex_.data());
+	setStateVariable(FRAME_STATE_VAR_ID,timestamp,serializedValue);
+	bool success = false;
+	do
+	{
+		//Start transaction
+		success = cacheDb.transaction();
+		if(!success)
+		{
+			qDebug("Failed to initiate transaction when writing current state. Error was: " + cacheDb.lastError().text().toAscii() + "...Reattempting.");
+			continue;
+		}
+
+		// Loop through all tables.  If this sourceType is responsible for that table, flush its contents to the diskdb and erase cache.
+		// In the case of the neural/behavioralalignevents, don't erase unvisited, unmatched alignevents
+		foreach(Variable queryVars,currentStateQuery_)
+		{
+			//Make sure that the row is there.
+			cacheQuery.prepare("INSERT OR IGNORE INTO currentstate (variableid,time,data) VALUES (:id, -1, '')");
+			cacheQuery.bindValue(":id",queryVars.id);
+			executeWriteQuery(&cacheQuery,"",true);
+			//Update the value of the row if the time increased.
+			cacheQuery.prepare("UPDATE currentstate SET time = :time, data = :data WHERE variableid = :id AND time < :time1");
+			cacheQuery.bindValue(":time",queryVars.time);
+			cacheQuery.bindValue(":data",queryVars.serial);
+			cacheQuery.bindValue(":id",queryVars.id);
+			cacheQuery.bindValue(":time1",queryVars.time);
+			executeWriteQuery(&cacheQuery,"",true);
+			//Update latest written state variable.
+			if(queryVars.time.toDouble() > latestStateVarTime_.toDouble())
+				latestStateVarTime_ = queryVars.time;
+		}
+		cacheQuery.clear();
+		//End Transaction
+		success = cacheDb.commit();
+		//If Transaction failed, rollback and try again.
+		if(!success)
+		{
+			qDebug("writing current state failed for session: " + sessionId().toString().toAscii() + " rolling back transaction and reattempting.");
+			cacheDb.rollback();
+		}
+	}while(!success);
+	currentStateQuery_.clear();
+	locker.unlock();
+	return;
+}
+
 
 /*! \brief Generates a thread-specific connection to the Session database
  *

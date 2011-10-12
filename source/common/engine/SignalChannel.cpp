@@ -107,6 +107,20 @@ double SignalChannel::peekValue(QString subchannel)
 	return scaledValue;
 }
 
+void SignalChannel::clearValues()
+{
+	//clear out the raw data
+	QMap<QString, QList<double> >::iterator x = rawDataBuffer_.begin();
+
+	while(x != rawDataBuffer_.end())
+	{
+		//Update the last raw value that was read.
+		if(!x.value().isEmpty())
+			rawDataLastValue_[x.key()] = x.value().last();
+		x.value().clear();
+		x++;
+	}
+}
 
 QMap<QString, QList<double> > SignalChannel::getValues()
 {
@@ -185,11 +199,10 @@ QMap<QString, QList<double> > SignalChannel::getRawValues()
 //Should this become an issue, we'll want to add timestamps.
 void SignalChannel::insertValue(QString subchannel, double val)
 {
-	if(rawDataBuffer_.contains(subchannel))
-	{
-		rawDataBuffer_[subchannel].append(val);
-		rawDataLastValue_[subchannel] = val;
-	}
+	Q_ASSERT(rawDataBuffer_.contains(subchannel));
+	rawDataBuffer_[subchannel].append(val);
+	rawDataLastValue_[subchannel] = val;
+	
 }
 
 void SignalChannel::insertValues(QString subchannel, QList<double> vals)

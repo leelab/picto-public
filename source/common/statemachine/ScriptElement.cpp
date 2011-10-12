@@ -81,7 +81,8 @@ QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	QString result;
 	while(result.isEmpty())
 	{
-		result = getMasterStateResult(engine);
+		engine->updateCurrentStateFromServer();
+		result = engine->getServerPathUpdate();
 		QCoreApplication::processEvents();
 	}
 

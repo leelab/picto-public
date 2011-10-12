@@ -50,7 +50,8 @@ QString Reward::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 			engine->giveReward(rewardChan);
 			rewardsSupplied++;
 		}
-		masterResult = getMasterStateResult(engine);
+		engine->updateCurrentStateFromServer();
+		masterResult = engine->getServerPathUpdate();
 		QCoreApplication::processEvents();
 	}
 	//Q_ASSERT_X(masterResult == result,"Reward::runAsSlave","Reward result was not equal to master's reward result.");

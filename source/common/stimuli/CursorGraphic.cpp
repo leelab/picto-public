@@ -68,6 +68,13 @@ void CursorGraphic::updateAnimation(int frame, QTime elapsedTime)
 	{
 		int x = (int)positionChannel_->peekValue("xpos");
 		int y = (int)positionChannel_->peekValue("ypos");
+		//In the director, every time the positionChannel values are sent to the server they are cleared.
+		//We need something in the remoteViewer to clear the positionChannel values as well.
+		//For this purpose, we call clear here since the Cursor Graphic is the only thing in the
+		//Remote viewer to use the positionChannel anyway.  We check if we're running on the remote
+		//viewer by seeing if this positionChannel is a network signal channel.
+		if(positionChannel_->inherits("Picto::NetworkSignalChannel"))
+			positionChannel_->clearValues();	
 
 		setPosition(QPoint(x,y));
 	}

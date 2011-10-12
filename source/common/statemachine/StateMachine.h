@@ -125,6 +125,7 @@ private:
 
 	QSharedPointer<StateMachineElement> currElement_;
 	bool ignoreInitialElement_;
+	bool dontRunElement_;
 	QStringList path_;
 
 

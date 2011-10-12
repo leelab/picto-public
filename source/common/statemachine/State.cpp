@@ -127,7 +127,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
-
+		
 		//----------  Draw the scene --------------
 		scene_->render(engine);
 		frameCounter_ ++;
@@ -225,7 +225,7 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 	QString result = "";
 	bool isDone = false;
-	frameCounter_ = -1;
+	//frameCounter_ = -1;
 
 	//Start up all of the control elements.
 	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
@@ -246,10 +246,41 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 		//In slave mode, we always process events
 		QCoreApplication::processEvents();
-		
+
+		//--------- Check for master frame ------------
+		//Since this "continues" the loop, it has to occur after checking
+		//for a state change
+
+		//int masterFrame = getMasterFramenumber(engine);
+		//if(!isDone && masterFrame <= frameCounter_)
+		//{
+		//	qDebug("Waiting");
+		//	continue;
+		//}
+
+
+		////Run the frame scripts enough to catch up
+		//if(!isDone && runFrameScript)
+		//{
+		//	for(int i=0; i<masterFrame - frameCounter_; i++)
+		//	{
+		//		runScript(frameScriptName);
+		//	}
+		//}
+		//Update properties to latest values
+		//engine->updatePropertiesFromServer();
+		//engine->updateCurrentStateFromServer();
+
+		//----------  Draw the scene --------------
+		scene_->render(engine);
+
 		//--------- Check for master state change ------------
 
-		result = getMasterStateResult(engine);
+		if(!engine->updateCurrentStateFromServer())
+		{	//The server connection has been lost
+			engine->stop();
+		}
+		result = engine->getServerPathUpdate();
 		if(!result.isEmpty())
 			isDone = true;
 
@@ -262,32 +293,7 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 			result = "EngineAbort";
 		}
 
-		//--------- Check for master frame ------------
-		//Since this "continues" the loop, it has to occur after checking
-		//for a state change
-
-		int masterFrame = getMasterFramenumber(engine);
-		if(!isDone && masterFrame <= frameCounter_)
-		{
-			continue;
-		}
-
-
-		////Run the frame scripts enough to catch up
-		//if(!isDone && runFrameScript)
-		//{
-		//	for(int i=0; i<masterFrame - frameCounter_; i++)
-		//	{
-		//		runScript(frameScriptName);
-		//	}
-		//}
-		//Update properties to latest values
-		engine->updatePropertiesFromServer();
-
-		//----------  Draw the scene --------------
-		scene_->render(engine);
-
-		frameCounter_ = masterFrame;
+		//frameCounter_ = masterFrame;
 	}
 
 	//Stop all of the control elements
@@ -321,6 +327,7 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	Timestamper stamper;
 
 	frameData.addFrame(frameCounter_,stamper.stampSec(),getName());
+	//qDebug(QString("DIRECTOR: SENDING FRAME: %1").arg(frameCounter_).toAscii());
 
 	//Update the BehavioralDataUnitPackage
 	BehavioralDataUnitPackage behavData;
@@ -360,11 +367,13 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
 	xmlWriter->writeStartElement("Data");
-	frameData.toXml(xmlWriter);
 	if(behavData.length())
 		behavData.toXml(xmlWriter);
 	if(propPack && propPack->length())
 		propPack->toXml(xmlWriter);
+	frameData.toXml(xmlWriter);	//Frame data must go last so that server knows when it reads
+								//in a frame, that the data it has defines the state that was
+								//in place at that frame.
 	xmlWriter->writeEndElement();
 
 	dataCommand->setContent(dataXml);
@@ -374,6 +383,13 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	dataChannel->sendRegisteredCommand(dataCommand);
 
 	dataChannel->processResponses(0);
+	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
+	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
+	//next frame.
+	QTime timer;
+	timer.start();
+	dataChannel->assureConnection(5);
+	qDebug(QString("ASSURECONNECTION time: %1").arg(timer.elapsed()).toAscii());
 	////check for and process responses
 	//while(dataChannel->waitForResponse(0))
 	//{
@@ -454,6 +470,8 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
  */
 int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
 {
+	Q_ASSERT(false);
+	return 0;
 	QString commandStr = QString("GETDATA FrameDataUnitPackage:%1 PICTO/1.0").arg(lastFrameCheckTime_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
 	QSharedPointer<Picto::ProtocolResponse> response;

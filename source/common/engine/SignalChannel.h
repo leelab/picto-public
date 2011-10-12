@@ -65,6 +65,7 @@ public:
 	QMap<QString, QList<double>> getValues();
 	QMap<QString, QList<double>> getRawValues();
 	double peekValue(QString subchannel);
+	void clearValues();
 
 	void insertValue(QString subchannel, double val);
 	void insertValues(QString subchannel, QList<double> vals);

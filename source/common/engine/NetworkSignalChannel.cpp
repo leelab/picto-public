@@ -34,6 +34,7 @@ bool NetworkSignalChannel::stop()
 //!	\brief Grabs the most recent data from the server
 void NetworkSignalChannel::updateDataBuffer()
 {
+	return;
 	//Collect the data from the server
 	QString commandStr = QString("GETDATA BehavioralDataUnitPackage:%1 PICTO/1.0").arg(lastTimeDataCollected_);
 	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));

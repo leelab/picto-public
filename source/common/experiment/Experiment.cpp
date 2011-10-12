@@ -7,7 +7,8 @@ namespace Picto {
 Experiment::Experiment()
 :
 latestSyntaxVersion_("0.0.1"),
-engine_(NULL)
+engine_(NULL),
+propTable_(QSharedPointer<PropertyTable>(new PropertyTable()))
 {
 	signalCoeffInitialized_ = false;
 	AddDefinableProperty("SyntaxVersion","");
@@ -157,7 +158,6 @@ void Experiment::postSerialize()
 	//engine->setLastTimePropertiesRequested(0);	//If this is slave mode, this will assure that
 	//											//we get all properties that have been changed
 	//											//since director started.
-	propTable_ = QSharedPointer<PropertyTable>(new PropertyTable());
 	propTable_->clear();//Empties property table so director/viewer props will match up
 	QList<QSharedPointer<Property>> descendantProps = getDescendantsProperties();
 	foreach(QSharedPointer<Property> prop,descendantProps)
