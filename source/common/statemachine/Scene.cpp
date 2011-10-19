@@ -15,13 +15,12 @@ Scene::Scene()
 
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 {
-	//! \TODO "render" the audio stuff
-	//! \todo deal with the background layer color
-
 	//Grab the RenderingTargets from the engine
 	QList<QSharedPointer< RenderingTarget> > renderingTargets;
 	renderingTargets = engine->getRenderingTargets();
 
+	//! \TODO "render" the audio stuff
+	//! \todo deal with the background layer color
 	//Add any unadded visual elements to the visual elements list
 	if(!unaddedVisualElements_.isEmpty())
 	{
@@ -46,7 +45,7 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
 	{
 		QSharedPointer<VisualTarget> visualTarget = renderTarget->getVisualTarget();
-
+		
 		//run through all our visualElements updating the animation and drawing
 		foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 		{

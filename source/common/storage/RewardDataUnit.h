@@ -25,11 +25,11 @@ public:
 
 	void setDuration(int durationMs) { durationMs_ = durationMs; };
 	void setChannel(int channel) {channel_ = channel; };
-	void setTime(double timestamp) {time_ = timestamp; };
+	void setTime(double timestamp) {time_ = QString("%1").arg(timestamp,0,'f',6);};
 
 	int getDuration() { return durationMs_; };
 	int getChannel() { return channel_; };
-	double getTime() { return time_; };
+	QString getTime() { return time_; };
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -42,7 +42,7 @@ protected:
 private:
 	int durationMs_;
 	int channel_;
-	double time_;
+	QString time_;
 };
 
 

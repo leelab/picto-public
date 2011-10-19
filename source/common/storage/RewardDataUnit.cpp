@@ -12,7 +12,7 @@ RewardDataUnit::RewardDataUnit() :
 RewardDataUnit::RewardDataUnit(int durationMs, int channel, double time) :
 		durationMs_(durationMs),
 		channel_(channel),
-		time_(time)
+		time_(QString("%1").arg(time,0,'f',6))
 {
 }
 
@@ -30,7 +30,7 @@ RewardDataUnit::RewardDataUnit(int durationMs, int channel, double time) :
 bool RewardDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("RewardDataUnit");
-	xmlStreamWriter->writeAttribute("timestamp",QString("%1").arg(time_,0,'f',6));
+	xmlStreamWriter->writeAttribute("timestamp",QString("%1").arg(time_));
 
 	xmlStreamWriter->writeTextElement("Channel",QString::number(channel_));
 	xmlStreamWriter->writeTextElement("Duration",QString::number(durationMs_));
@@ -44,7 +44,7 @@ bool RewardDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Clear exiting data
-	time_ = -1;
+	time_ = "-1.0";
 	channel_ = -1;
 	durationMs_ = -1;
 
@@ -57,8 +57,9 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 
 	//read the timestamp
 	bool ok;
-	time_ = xmlStreamReader->attributes().value("timestamp").toString().toDouble(&ok);
-	if(!ok || time_ < 0)
+	time_ = xmlStreamReader->attributes().value("timestamp").toString();
+	time_.toDouble(&ok);
+	if(!ok || time_.toDouble() < 0)
 	{
 		addError("RewardDataUnit","<RewardDataUnit> tag missing timestamp attribute",xmlStreamReader);
 		return false;
@@ -119,7 +120,7 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		return false;
 	}
 
-	if( time_ < 0)
+	if( time_.toDouble() < 0)
 	{
 		addError("RewardDataUnit", "timestamp attribute not found or invalid", xmlStreamReader);
 		return false;

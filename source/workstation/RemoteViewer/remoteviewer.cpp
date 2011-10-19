@@ -419,9 +419,13 @@ void RemoteViewer::stop()
 
 void RemoteViewer::reward()
 {
-	if(sendTaskCommand(QString("reward:%1").arg(rewardChannel_)))
+	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+	//We need to possibbly start a session, and always join a session
+	ComponentStatus remoteStatus = directorStatus(directorID);
+	if(!sendTaskCommand(QString("reward:%1").arg(rewardChannel_)))
 	{
-		engine_->giveReward(rewardChannel_);
+		statusBar_->setText("Failed to send reward command to server.");
+		return;
 	}
 }
 
@@ -1081,6 +1085,12 @@ void RemoteViewer::checkForTimeouts()
 		return;
 	}
 
+	if(engine_ && (localStatus_ != Running))
+	{	//Since their's no experiment running.  The remoteViewer is responsibile
+		//for updating the latest values.
+		engine_->updateCurrentStateFromServer();
+	}
+
 	//Check the proxy
 	//If there's no Proxy in this experiment, don't worry about it.
 	if(proxyListBox_->currentIndex() == 0)
@@ -1419,7 +1429,7 @@ bool RemoteViewer::joinSession()
 		//}
 
 		//while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "StateDataUnit");
-		engine_->setLastTimeStateDataRequested("0");
+		engine_->resetLastTimeStateDataRequested();
 		if(!engine_->updateCurrentStateFromServer())
 		{
 			setStatus("Server failed to respond to Current State request");

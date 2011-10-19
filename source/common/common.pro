@@ -169,6 +169,8 @@ HEADERS += $$(PICTO_TREE)/source/common/parameter/PseudorandomIntParameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/PseudorandomIntParameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/RandomIntParameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/RandomIntParameter.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/RandomDoubleParameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/RandomDoubleParameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/TimerParameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/TimerParameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/ParameterFactory.h
@@ -468,4 +470,13 @@ build_pass:CONFIG(debug, debug|release) {
 
 build_pass:CONFIG(release, debug|release) {
   QMAKE_POST_LINK = copy "$(TargetPath)" $$(PICTO_TREE)\output\tests\bin\release
+}
+
+# Copy sounds directory to output directory
+build_pass:CONFIG(debug, debug|release) {
+  QMAKE_PRE_LINK = xcopy /Y $$(PICTO_TREE)\source\common\sounds\*.*  $$(PICTO_TREE)\output\bin\debug\sounds\\
+}
+
+build_pass:CONFIG(release, debug|release) {
+  QMAKE_PRE_LINK = xcopy /Y $$(PICTO_TREE)\source\common\sounds\*.*  $$(PICTO_TREE)\output\bin\release\sounds\\
 }

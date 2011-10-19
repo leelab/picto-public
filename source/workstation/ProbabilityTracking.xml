@@ -1915,8 +1915,14 @@ for(i=0;i&lt;RedRewards.value;i++)
 	RewardSelector.randomize();
 	RedRewardList[RewardSelector.value].visible = true;
 }
+
+//Calculate Variable Delay and start time
+randDouble.randomize();
+trunc_exp = (1-Math.pow(Math.E,-2.5))*(randDouble.value);
+trialFixationTargetOverlapTime = 500 - Math.log(1-trunc_exp)*250;   
+Delay.value = trialFixationTargetOverlapTime;
 Timer.restart();</EntryScript>
-                  <Parameter type="Timer"><Name>Timer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="764" y="841"/></UIInfo></Parameter><ControlElement type="Stopwatch Controller"><Name>Countdown</Name><Result><Name>Success</Name></Result><Time>500</Time><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="750" y="102"/></UIInfo></ControlElement><Transition><Destination>ContinuedFixation</Destination><Source>Countdown</Source><SourceResult>Success</SourceResult></Transition></StateMachineElement>
+                  <Parameter type="Timer"><Name>Timer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="721" y="696"/></UIInfo></Parameter><ControlElement type="Script Controller"><Name>RandCountdown</Name><Result><Name>Done</Name></Result><UIInfo><Pos x="781" y="160"/></UIInfo><Script>Timer.updateTimeValue();  return Timer.value &gt;= Delay.value;</Script></ControlElement><Transition><Destination>ContinuedFixation</Destination><Source>RandCountdown</Source><SourceResult>Done</SourceResult></Transition><Parameter type="RandomDouble"><Name>randDouble</Name><UIInfo><Pos x="837" y="696"/></UIInfo></Parameter><Parameter type="Numeric"><Name>Delay</Name><UIInfo><Pos x="946" y="700"/></UIInfo></Parameter></StateMachineElement>
                   <UIInfo>
                     <Pos x="1110" y="400"/>
                   <UniqueID>{2fdc3789-3af3-4b3f-a6d4-acae31da6a4a}</UniqueID></UIInfo>
@@ -2036,7 +2042,7 @@ case 9:
               <Result>
                 <Name>true</Name>
               </Result>
-              <Script>if(LongBlock.value) return TrialsSoFar.value++ &lt; 80;else return TrailsSoFar.value++&lt;20; </Script>
+              <Script>if(LongBlock.value) return TrialsSoFar.value++ &lt; 80;else return TrialsSoFar.value++&lt;20; </Script>
               <UIInfo>
                 <Pos x="1038" y="771"/>
               </UIInfo>
@@ -2308,6 +2314,6 @@ case 9:
     </Task>
   </Experiment>
   <StateMachineEditorData>
-    <OpenedBlock>{86e04362-4f93-44d6-a321-8828f6a5be82}</OpenedBlock>
+    <OpenedBlock>{b703bd91-82ba-48d9-9fa8-ad5a47467061}</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

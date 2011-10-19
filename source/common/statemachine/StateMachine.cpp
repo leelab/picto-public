@@ -478,6 +478,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 			int lastSepIndex = result.lastIndexOf("::");
 			QString destinationPath = result.left(lastSepIndex);
 			QString destination = result.mid(lastSepIndex+2);
+			qDebug(destination.toAscii());
 			if(destinationPath == pathStr)
 				nextElementName = destination;
 			else if(destinationPath.startsWith(pathStr))

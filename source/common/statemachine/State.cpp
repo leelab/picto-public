@@ -127,7 +127,6 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
-		
 		//----------  Draw the scene --------------
 		scene_->render(engine);
 		frameCounter_ ++;
@@ -371,6 +370,11 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 		behavData.toXml(xmlWriter);
 	if(propPack && propPack->length())
 		propPack->toXml(xmlWriter);
+	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
+	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+	{
+		reward->toXml(xmlWriter);
+	}
 	frameData.toXml(xmlWriter);	//Frame data must go last so that server knows when it reads
 								//in a frame, that the data it has defines the state that was
 								//in place at that frame.
@@ -389,7 +393,7 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	QTime timer;
 	timer.start();
 	dataChannel->assureConnection(5);
-	qDebug(QString("ASSURECONNECTION time: %1").arg(timer.elapsed()).toAscii());
+	//qDebug(QString("ASSURECONNECTION time: %1").arg(timer.elapsed()).toAscii());
 	////check for and process responses
 	//while(dataChannel->waitForResponse(0))
 	//{
@@ -441,11 +445,15 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 		QSharedPointer<Picto::CommandChannel> dataChannel = engine->getDataCommandChannel();
 		while(command == Engine::PictoEngine::PauseEngine)
 		{
-			//waste 30 ms
+			////waste 30 ms
 			QTime timer;
 			timer.start();
-			//updateServer(engine, true);
+			//----------  Draw the scene in paused state --------------
+			//scene_->render(engine);
+			//frameCounter_ ++;
+			//------------- Send Behavioral data to server --------------
 			sendBehavioralData(engine);
+
 			if(dataChannel.isNull())
 				QCoreApplication::processEvents();
 			command = engine->getEngineCommand();
@@ -752,7 +760,13 @@ bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	////Validate Results (so they're ready for link checking)
 	if(!MachineContainer::validateObject(xmlStreamReader))
 		return false;
-
+	
+	//Start up all of the control elements
+	if(!elements_.size())
+	{
+		addError("State", "At least one Control Element must be defined inside a State.");
+		return false;
+	}
 	//! \todo Validate Scripts
 
 	return true;

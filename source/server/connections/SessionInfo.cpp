@@ -14,6 +14,7 @@
 #define FRAME_STATE_VAR_ID -1
 #define TRANSITION_STATE_VAR_ID -2
 #define EYE_STATE_VAR_ID -3
+#define REWARD_STATE_VAR_ID -4
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
@@ -797,8 +798,10 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 	//so that any workstations reading in current state data will have a picture of the latest valid
 	//state
 	if(hadData)
-	{
-		setCurrentStatesFrame(framedata->time,framedata->toXml());
+	{	
+		QMutexLocker locker(databaseWriteMutex_.data());
+		setStateVariable(FRAME_STATE_VAR_ID,framedata->time,framedata->toXml());
+		updateCurrentStateTable();
 	}
 }
 
@@ -813,7 +816,16 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 	query.bindValue(":duration",data->getDuration());
 	query.bindValue(":channel", data->getChannel());
 	query.bindValue(":time",data->getTime());
-	executeWriteQuery(&query,"",false);	
+	executeWriteQuery(&query,"",false);
+	setStateVariable(REWARD_STATE_VAR_ID,data->getTime(),data->toXml());
+	
+	QSharedPointer<ComponentInfo> sourceComponent = getComponentByType("DIRECTOR");
+	//When the experiment is not running, Update the current state
+	//table right away.
+	if(sourceComponent && (sourceComponent->getStatus() != ComponentStatus::running))
+	{
+		updateCurrentStateTable();
+	}
 }
 
 
@@ -1428,16 +1440,14 @@ void SessionInfo::setStateVariable(int id,QString timestamp, QString serializedV
 	var.time = timestamp;
 	var.serial = serializedValue;
 	currentStateQuery_.append(var);
-	//currentStateQuery_.append(QString("INSERT OR REPLACE INTO currentstate (variableid, time, data) VALUES(%1, %2, %3)").arg(id).arg(timestamp).arg(serializedValue));
 }
 
-void SessionInfo::setCurrentStatesFrame(QString timestamp, QString serializedValue)
+void SessionInfo::updateCurrentStateTable()
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQuery(cacheDb);
 	//Since we are encapsulating all of these operations in a single transaction, we put the whole thing in a mutex.
 	QMutexLocker locker(databaseWriteMutex_.data());
-	setStateVariable(FRAME_STATE_VAR_ID,timestamp,serializedValue);
 	bool success = false;
 	do
 	{

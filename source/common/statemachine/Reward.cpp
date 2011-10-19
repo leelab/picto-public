@@ -39,20 +39,23 @@ QString Reward::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	//resetScriptableValues();
 	QString result;// = run(engine);
 	QString masterResult;
-	int numRewards = propertyContainer_->getPropertyValue("RewardQty").toInt();
-	int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
+	//int numRewards = propertyContainer_->getPropertyValue("RewardQty").toInt();
+	//int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
 
-	int rewardsSupplied = 0;
+	//int rewardsSupplied = 0;
+	//while(rewardsSupplied < numRewards)
+	//{
+	//	if(rewardsSupplied < numRewards)
+	//	{
+	//		engine->giveReward(rewardChan);
+	//		rewardsSupplied++;
+	//	}
+	//	QCoreApplication::processEvents();
+	//}
 	while(masterResult.isEmpty())
 	{
-		if(rewardsSupplied < numRewards)
-		{
-			engine->giveReward(rewardChan);
-			rewardsSupplied++;
-		}
 		engine->updateCurrentStateFromServer();
 		masterResult = engine->getServerPathUpdate();
-		QCoreApplication::processEvents();
 	}
 	//Q_ASSERT_X(masterResult == result,"Reward::runAsSlave","Reward result was not equal to master's reward result.");
 	result = masterResult;

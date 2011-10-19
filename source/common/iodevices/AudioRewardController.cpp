@@ -6,13 +6,17 @@
 namespace Picto
 {
 
+AudioRewardController::AudioRewardController() : 
+RewardController(1) ,
+tick_("sounds/tick.wav")
+{}
+
 void AudioRewardController::giveReward(unsigned int channel)
 {
 	//if(channel == 1)
 	//{
-		QApplication::beep();
-		QCoreApplication::processEvents();
 		
+		tick_.play();
 		////If we call beep too quickly, they all run together, 
 		////so we have to pause after each call
 		//QTime timer;

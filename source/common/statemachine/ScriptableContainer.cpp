@@ -9,6 +9,7 @@
 #include "../parameter/NumericParameter.h"
 #include "../parameter/RangeParameter.h"
 #include "../parameter/RandomIntParameter.h"
+#include "../parameter/RandomDoubleParameter.h"
 #include "../parameter/PseudorandomIntParameter.h"
 #include "../parameter/TimerParameter.h"
 #include "../parameter/OperatorClickParameter.h"
@@ -46,6 +47,8 @@ ScriptableContainer::ScriptableContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RangeParameter::Create))));
 	parameterFactory_->addAssetType("RandomInt",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomIntParameter::Create))));
+	parameterFactory_->addAssetType("RandomDouble",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomDoubleParameter::Create))));
 	parameterFactory_->addAssetType("PseudorandomInt",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
 	parameterFactory_->addAssetType("Timer",

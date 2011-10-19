@@ -118,7 +118,7 @@ private:
 	void alignTimeBases(bool realignAll = false);
 	void recalculateFittedTimes();
 	void setStateVariable(int id,QString timestamp, QString serializedValue);
-	void setCurrentStatesFrame(QString timestamp, QString serializedValue);
+	void updateCurrentStateTable();
 	QSqlDatabase getSessionDb();
 	QSqlDatabase getCacheDb();
 

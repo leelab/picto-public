@@ -415,6 +415,8 @@
    <file alias="_pupil_diameter_data_store_8h-source.html">../../../output/documentation/main/html/_pupil_diameter_data_store_8h-source.html</file>
    <file alias="_put_data_command_handler_8cpp-source.html">../../../output/documentation/main/html/_put_data_command_handler_8cpp-source.html</file>
    <file alias="_put_data_command_handler_8h-source.html">../../../output/documentation/main/html/_put_data_command_handler_8h-source.html</file>
+   <file alias="_random_double_parameter_8cpp-source.html">../../../output/documentation/main/html/_random_double_parameter_8cpp-source.html</file>
+   <file alias="_random_double_parameter_8h-source.html">../../../output/documentation/main/html/_random_double_parameter_8h-source.html</file>
    <file alias="_random_int_parameter_01-_01_copy_8cpp-source.html">../../../output/documentation/main/html/_random_int_parameter_01-_01_copy_8cpp-source.html</file>
    <file alias="_random_int_parameter_01-_01_copy_8h-source.html">../../../output/documentation/main/html/_random_int_parameter_01-_01_copy_8h-source.html</file>
    <file alias="_random_int_parameter_8cpp-source.html">../../../output/documentation/main/html/_random_int_parameter_8cpp-source.html</file>
@@ -557,6 +559,8 @@
    <file alias="_test_label_8h-source.html">../../../output/documentation/main/html/_test_label_8h-source.html</file>
    <file alias="_text_graphic_8cpp-source.html">../../../output/documentation/main/html/_text_graphic_8cpp-source.html</file>
    <file alias="_text_graphic_8h-source.html">../../../output/documentation/main/html/_text_graphic_8h-source.html</file>
+   <file alias="_timer_parameter_8cpp-source.html">../../../output/documentation/main/html/_timer_parameter_8cpp-source.html</file>
+   <file alias="_timer_parameter_8h-source.html">../../../output/documentation/main/html/_timer_parameter_8h-source.html</file>
    <file alias="_timestamper_8cpp-source.html">../../../output/documentation/main/html/_timestamper_8cpp-source.html</file>
    <file alias="_timestamper_8h-source.html">../../../output/documentation/main/html/_timestamper_8h-source.html</file>
    <file alias="_tool_box_8cpp-source.html">../../../output/documentation/main/html/_tool_box_8cpp-source.html</file>
@@ -945,6 +949,9 @@
    <file alias="class_picto_1_1_pseudorandom_int_parameter.png">../../../output/documentation/main/html/class_picto_1_1_pseudorandom_int_parameter.png</file>
    <file alias="class_picto_1_1_pupil_diameter_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_pupil_diameter_data_store-members.html</file>
    <file alias="class_picto_1_1_pupil_diameter_data_store.html">../../../output/documentation/main/html/class_picto_1_1_pupil_diameter_data_store.html</file>
+   <file alias="class_picto_1_1_random_double_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_random_double_parameter-members.html</file>
+   <file alias="class_picto_1_1_random_double_parameter.html">../../../output/documentation/main/html/class_picto_1_1_random_double_parameter.html</file>
+   <file alias="class_picto_1_1_random_double_parameter.png">../../../output/documentation/main/html/class_picto_1_1_random_double_parameter.png</file>
    <file alias="class_picto_1_1_random_int_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_random_int_parameter-members.html</file>
    <file alias="class_picto_1_1_random_int_parameter.html">../../../output/documentation/main/html/class_picto_1_1_random_int_parameter.html</file>
    <file alias="class_picto_1_1_random_int_parameter.png">../../../output/documentation/main/html/class_picto_1_1_random_int_parameter.png</file>
@@ -1052,6 +1059,9 @@
    <file alias="class_picto_1_1_text_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_text_graphic-members.html</file>
    <file alias="class_picto_1_1_text_graphic.html">../../../output/documentation/main/html/class_picto_1_1_text_graphic.html</file>
    <file alias="class_picto_1_1_text_graphic.png">../../../output/documentation/main/html/class_picto_1_1_text_graphic.png</file>
+   <file alias="class_picto_1_1_timer_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_timer_parameter-members.html</file>
+   <file alias="class_picto_1_1_timer_parameter.html">../../../output/documentation/main/html/class_picto_1_1_timer_parameter.html</file>
+   <file alias="class_picto_1_1_timer_parameter.png">../../../output/documentation/main/html/class_picto_1_1_timer_parameter.png</file>
    <file alias="class_picto_1_1_timestamper-members.html">../../../output/documentation/main/html/class_picto_1_1_timestamper-members.html</file>
    <file alias="class_picto_1_1_timestamper.html">../../../output/documentation/main/html/class_picto_1_1_timestamper.html</file>
    <file alias="class_picto_1_1_transition-members.html">../../../output/documentation/main/html/class_picto_1_1_transition-members.html</file>

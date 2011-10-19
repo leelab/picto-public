@@ -3,6 +3,7 @@
 #define _AUDIO_REWARD_CONTROLLER_H_
 
 #include "RewardController.h"
+#include <QSound>
 
 
 namespace Picto
@@ -26,12 +27,14 @@ class AudioRewardController :  public RewardController
 #endif
 {
 public:
-	AudioRewardController() : RewardController(1) {};
+	AudioRewardController();
 	~AudioRewardController() {};
 
 public slots:
 	void giveReward(unsigned int channel);
 	void flush(unsigned int channel,bool flush);
+private:
+	QSound tick_;
 
 };
 

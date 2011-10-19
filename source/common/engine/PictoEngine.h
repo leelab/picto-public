@@ -18,10 +18,13 @@
 #include "../storage/PropertyDataUnitPackage.h"
 #include "../storage/BehavioralDataUnit.h"
 #include "../storage/StateDataUnit.h"
+#include "../storage/RewardDataUnit.h"
 #include "propertytable.h"
 
 #include <QSharedPointer>
+#include <QFuture>
 #include <QUuid>
+#include <QList>
 
 namespace Picto {
 	namespace Engine {
@@ -113,6 +116,7 @@ public:
 
 	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
 	void giveReward(int channel);
+	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards(){QList<QSharedPointer<RewardDataUnit>> returnVal = deliveredRewards_; deliveredRewards_.clear();return returnVal;};
 
 	//! \brief Retrieves the latest package of changed properties.
 	//! Note that a package can only be retrieved once after which a new package is created.
@@ -147,7 +151,7 @@ public:
 	bool slaveMode() { return slave_; }
 	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
-	void setLastTimeStateDataRequested(QString time){lastTimeStateDataRequested_ = time;};
+	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";firstCurrStateUpdate_ = true;};
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -162,6 +166,8 @@ private:
 	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
 	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode
 	QSharedPointer<PropertyTable> propTable_;
+	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
+	bool firstCurrStateUpdate_;
 
 	QUuid sessionId_;
 	QString name_;

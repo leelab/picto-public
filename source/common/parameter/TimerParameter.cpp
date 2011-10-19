@@ -33,8 +33,8 @@ void TimerParameter::updateTimeValue()
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-	propertyContainer_->setProperty("Value",QVariant(timer_.elapsedTime(units)));
-	qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toAscii());
+	propertyContainer_->setPropertyValue("Value",timer_.elapsedTime(units));
+	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toAscii());
 }
 
 void TimerParameter::postSerialize()

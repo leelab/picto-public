@@ -25,6 +25,7 @@ PictoEngine::PictoEngine() :
 	userIsOperator_(false),
 	lastTimePropChangesRequested_("0.0"),
 	lastTimeStateDataRequested_("0.0"),
+	firstCurrStateUpdate_(true),
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
 	currStateUnit_(QSharedPointer<StateDataUnit>(new StateDataUnit())),
 	runningPath_(""),
@@ -102,12 +103,12 @@ void PictoEngine::giveReward(int channel)
 
 	Timestamper stamper;
 	double timestamp = stamper.stampSec();
-	double lastMsgTime = 0;
+	//double lastMsgTime = 0;
 
 	//Since we don't want the server to timeout the director, we make sure that we
 	//update the server at least once per second by running th giveReward function
 	//in as separate thread.
-	QFuture<void> future = QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel);
+	QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel);
 	//while(!future.isFinished())
 	//{
 	//	QCoreApplication::processEvents();
@@ -142,26 +143,48 @@ void PictoEngine::giveReward(int channel)
 	if(slave_)
 		return;
 
-	int duration = rewardController_->getRewardDurationMs(channel);
-	RewardDataUnit rewardData(duration,channel,timestamp);
+	deliveredRewards_.append(QSharedPointer<RewardDataUnit>(new RewardDataUnit(rewardController_->getRewardDurationMs(channel),channel,timestamp)));
 
-	QString dataCommandStr = "PUTDATA "+getName()+" PICTO/1.0";
-	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+	QString status;
+	int engCmd = getEngineCommand();
+	if(engCmd != ResumeEngine)
+	{	//The experiment is not currently running.  We are responsible for
+		//sending reward updates.
+		switch(engCmd)
+		{
+		case Engine::PictoEngine::ResumeEngine:
+			return;
+		case Engine::PictoEngine::PauseEngine:
+			status = "paused";
+			break;
+		case Engine::PictoEngine::StopEngine:
+			status = "stopped";
+			break;
+		default:
+			return;
+		}
+		//If we got here, we're not running.  Send reward data to server.
+		QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
+		QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
-	QByteArray dataXml;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+		QByteArray dataXml;
+		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
-	xmlWriter->writeStartElement("Data");
+		xmlWriter->writeStartElement("Data");
+		QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
+		foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+		{
+			reward->toXml(xmlWriter);
+		}
+		xmlWriter->writeEndElement();
 
-	rewardData.toXml(xmlWriter);
+		dataCommand->setContent(dataXml);
+		dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+		QUuid commandUuid = QUuid::createUuid();
 
-	xmlWriter->writeEndElement();  //End Data
-
-	dataCommand->setContent(dataXml);
-	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
-
-	//Send the command in registered mode (so we don't have to wait for a response)
-	dataCommandChannel_->sendRegisteredCommand(dataCommand);
+		dataCommandChannel_->sendRegisteredCommand(dataCommand);
+		dataCommandChannel_->processResponses(0);
+	}
 
 
 }
@@ -295,13 +318,13 @@ bool PictoEngine::updateCurrentStateFromServer()
 	xmlReader->readNext();
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
+		QString currUnitTime = "-1.0";
 		if(xmlReader->name() == "PropertyDataUnit")
 		{
 			PropertyDataUnit unit;
 			unit.fromXml(xmlReader);
 			propData.addData(unit.index_,unit.path_,unit.value_,unit.time_);
-			if(unit.time_.toDouble() > lastTimeStateDataRequested_.toDouble())
-				lastTimeStateDataRequested_ = unit.time_;
+			currUnitTime = unit.time_;
 		}
 		else if(xmlReader->name() == "BehavioralDataUnit")
 		{
@@ -309,23 +332,31 @@ bool PictoEngine::updateCurrentStateFromServer()
 			getSignalChannel("PositionChannel")->insertValue("xpos",currBehavUnit_->x);
 			getSignalChannel("PositionChannel")->insertValue("ypos",currBehavUnit_->y);
 			getSignalChannel("PositionChannel")->insertValue("time",currBehavUnit_->t.toDouble());
-			if(currBehavUnit_->t.toDouble() > lastTimeStateDataRequested_.toDouble())
-				lastTimeStateDataRequested_ = currBehavUnit_->t;
+			currUnitTime = currBehavUnit_->t;
 		}
 		else if(xmlReader->name() == "StateDataUnit")
 		{
 			currStateUnit_->fromXml(xmlReader);
-			if(currStateUnit_->getTime().toDouble() > lastTimeStateDataRequested_.toDouble())
-				lastTimeStateDataRequested_ = currStateUnit_->getTime();
+			currUnitTime = currStateUnit_->getTime();
 		}
 		else if(xmlReader->name() == "FrameDataUnit")
 		{
 			FrameDataUnit unit;
 			unit.fromXml(xmlReader);
-			if(unit.time.toDouble() > lastTimeStateDataRequested_.toDouble())
-				lastTimeStateDataRequested_ = unit.time;
+			currUnitTime = unit.time;
 			//qDebug(QString("WORKSTATION: RECEIVED FRAME: %1").arg(unit.frameNumber).toAscii());
 		}
+		else if(xmlReader->name() == "RewardDataUnit")
+		{
+			RewardDataUnit unit;
+			unit.fromXml(xmlReader);
+			currUnitTime = unit.getTime();
+			if(!firstCurrStateUpdate_)	
+				giveReward(unit.getChannel());
+			//qDebug(QString("WORKSTATION: RECEIVED FRAME: %1").arg(unit.frameNumber).toAscii());
+		}
+		if(currUnitTime.toDouble() > lastTimeStateDataRequested_.toDouble())
+			lastTimeStateDataRequested_ = currUnitTime;
 		xmlReader->readNext();
 	}
 
@@ -338,6 +369,7 @@ bool PictoEngine::updateCurrentStateFromServer()
 		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
 		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
 	}
+	firstCurrStateUpdate_ = false;
 	return true;
 }
 
@@ -349,13 +381,16 @@ void PictoEngine::setRunningPath(QString path)
 QString PictoEngine::getServerPathUpdate()
 {
 	QString result = currStateUnit_->getDestination();
+	QString runningPath = runningPath_;
 	if(result == "NULL")
 		result = "";
 	if(result != "EngineAbort")
+	{
 		result.prepend(currStateUnit_->getMachinePath()+"::");
-	if(result == runningPath_)
+		setRunningPath(result);
+	}
+	if(result == runningPath)
 		result = "";
-	setRunningPath(currStateUnit_->getMachinePath()+"::"+currStateUnit_->getDestination());
 	return result;
 }
 QSharedPointer<Picto::BehavioralDataUnit> PictoEngine::getCurrentBehavioralData()
