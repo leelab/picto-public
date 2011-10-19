@@ -454,9 +454,8 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 			//------------- Send Behavioral data to server --------------
 			sendBehavioralData(engine);
 
-			if(dataChannel.isNull())
-				QCoreApplication::processEvents();
 			command = engine->getEngineCommand();
+			QCoreApplication::processEvents();
 			while(timer.elapsed()<30);
 
 		}

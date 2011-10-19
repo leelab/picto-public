@@ -1498,7 +1498,7 @@ bool RemoteViewer::joinSession()
 	if(!timeoutTimer_)
 	{
 		timeoutTimer_ = new QTimer(this);
-		timeoutTimer_->setInterval(500);
+		timeoutTimer_->setInterval(100);
 		connect(timeoutTimer_, SIGNAL(timeout()), this, SLOT(checkForTimeouts()));
 	}
 	timeoutTimer_->start();
