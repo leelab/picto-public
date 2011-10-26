@@ -35,10 +35,11 @@ public:
 	StateDataUnit();
 
 	void setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath);
-	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath);
-	void setTransition(QString source, QString sourceResult, QString destination, QString timestamp, QString stateMachinePath);
+	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, int id, QString stateMachinePath);
+	void setTransition(QString source, QString sourceResult, QString destination, QString timestamp, int id, QString stateMachinePath);
 
 	QString getMachinePath() { return machinePath_; };
+	int		getTransitionID(){return id_;};
 	QString getTime() { return timestamp_; };
 	QString getSource() { return source_; };
 	QString getSourceResult() { return sourceResult_; };
@@ -58,6 +59,7 @@ private:
 	QString destination_;
 	QString timestamp_;
 	QString machinePath_;
+	int id_;
 };
 
 

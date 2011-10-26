@@ -300,16 +300,16 @@
                 <UniqueID>{2d6837c9-0656-4222-b663-4c83d44ac671}</UniqueID>
               </UIInfo>
               <Result>
-                <Name>TrialTypeSucceeded</Name>
+                <Name>NormalSuccess</Name>
                 <UIInfo>
-                  <Pos x="1859" y="282"/>
+                  <Pos x="2047" y="424"/>
                   <UniqueID>{773dce8c-d1e7-47aa-a5e1-bca4862b4eed}</UniqueID>
                 </UIInfo>
               </Result>
               <Result>
-                <Name>ReshuffleTrialType</Name>
+                <Name>Failure</Name>
                 <UIInfo>
-                  <Pos x="1850" y="600"/>
+                  <Pos x="2007" y="608"/>
                   <UniqueID>{234bc152-4236-4c60-b885-024aef2496f0}</UniqueID>
                 </UIInfo>
               </Result>
@@ -440,17 +440,13 @@
                     <UniqueID>{4c8e9e6d-b44f-426b-9fda-f7d9c8cfa910}</UniqueID>
                   </UIInfo>
                 </StateMachineElement>
-                <Transition>
-                  <Destination>Succeeded</Destination>
-                  <Source>WaitForFixation</Source>
-                  <SourceResult>Fixated</SourceResult>
-                </Transition>
+                
                 <Transition>
                   <Destination>Failed</Destination>
                   <Source>WaitForFixation</Source>
                   <SourceResult>NoFixation</SourceResult>
                 </Transition>
-              </StateMachineElement>
+              <StateMachineElement type="Reward"><Name>Reward</Name><Result><Name>done</Name></Result><RewardChan>1</RewardChan><RewardQty>1</RewardQty><UIInfo><Pos x="1296" y="360"/></UIInfo></StateMachineElement><Transition><Destination>Reward</Destination><Source>WaitForFixation</Source><SourceResult>Fixated</SourceResult></Transition><Transition><Destination>Succeeded</Destination><Source>Reward</Source><SourceResult>done</SourceResult></Transition></StateMachineElement>
               <StateMachineElement type="StateMachine">
                 <Name>NormalTrial</Name>
                 <UIInfo>
@@ -1151,9 +1147,9 @@
                       </UIInfo>
                     </Result>
                     <Script>
-                      if(RightGraphic.visible) FeedbackRing.x = 600;
+                      if(RightGraphic.visible) FeedbackRing.x = 525;
                       else
-                      FeedbackRing.x = 200; return true;
+                      FeedbackRing.x = 275; return true;
                     </Script>
                     <UIInfo>
                       <Pos x="312" y="381"/>
@@ -1164,7 +1160,7 @@
                     <Color A="255" B="255" G="170" R="0">#00aaff</Color>
                     <Name>FeedbackRing</Name>
                     <Position x="200" y="300"/>
-                    <Radius>40</Radius>
+                    <Radius>70</Radius>
                     <UIInfo>
                       <Pos x="471" y="677"/>
                     <UniqueID>{9dbd5d98-e685-46ec-8455-22a1768edd4b}</UniqueID></UIInfo>
@@ -1549,7 +1545,7 @@ else
                       <SourceResult>Broke Fixation</SourceResult>
                     </Transition>
                     <UIInfo>
-                      <Pos x="973" y="382"/>
+                      <Pos x="974" y="382"/>
                       <UniqueID>{b38e61c4-12c4-4f0f-90c1-3d9804bc385c}</UniqueID>
                     </UIInfo>
                   </StateMachineElement>
@@ -1572,7 +1568,7 @@ else
                 </Transition>
                 <ControlTarget type="CircleTarget">
                   <Name>LeftTarget</Name>
-                  <Position x="200" y="300"/>
+                  <Position x="275" y="300"/>
                   <Radius>40</Radius>
                   <UIEnabled>true</UIEnabled>
                   <UIInfo>
@@ -1583,7 +1579,7 @@ else
                 </ControlTarget>
                 <ControlTarget type="CircleTarget">
                   <Name>RightTarget</Name>
-                  <Position x="600" y="300"/>
+                  <Position x="525" y="300"/>
                   <Radius>40</Radius>
                   <UIInfo>
                     <Pos x="1000" y="822"/>
@@ -1599,7 +1595,7 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="0" R="255">#ff0000</Color>
                   <Name>LeftGraphic</Name>
-                  <Position x="200" y="300"/>
+                  <Position x="275" y="300"/>
                   <Radius>20</Radius>
                   <UIInfo>
                     <Pos x="884" y="719"/>
@@ -1609,7 +1605,7 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="0">#00ff00</Color>
                   <Name>RightGraphic</Name>
-                  <Position x="600" y="300"/>
+                  <Position x="525" y="300"/>
                   <Radius>20</Radius>
                   <UIInfo>
                     <Pos x="990" y="723"/>
@@ -1645,8 +1641,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL1</Name>
-                  <Position x="200" y="250"/>
-                  <Radius>5</Radius>
+                  <Position x="275" y="260"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1579" y="764"/>
                   </UIInfo>
@@ -1655,8 +1651,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL2</Name>
-                  <Position x="235" y="265"/>
-                  <Radius>5</Radius>
+                  <Position x="303" y="272"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1684" y="821"/>
                   <UniqueID>{f8427622-5da7-4c8a-a575-55c00a114d63}</UniqueID></UIInfo>
@@ -1665,8 +1661,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL3</Name>
-                  <Position x="250" y="300"/>
-                  <Radius>5</Radius>
+                  <Position x="315" y="300"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1743" y="910"/>
                   </UIInfo>
@@ -1675,8 +1671,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL4</Name>
-                  <Position x="235" y="335"/>
-                  <Radius>5</Radius>
+                  <Position x="303" y="328"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1684" y="998"/>
                   </UIInfo>
@@ -1685,8 +1681,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL5</Name>
-                  <Position x="200" y="350"/>
-                  <Radius>5</Radius>
+                  <Position x="275" y="340"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1582" y="1041"/>
                   </UIInfo>
@@ -1695,8 +1691,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL6</Name>
-                  <Position x="165" y="335"/>
-                  <Radius>5</Radius>
+                  <Position x="247" y="328"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1507" y="994"/>
                   </UIInfo>
@@ -1705,8 +1701,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL7</Name>
-                  <Position x="150" y="300"/>
-                  <Radius>5</Radius>
+                  <Position x="235" y="300"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1449" y="904"/>
                   </UIInfo>
@@ -1715,8 +1711,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardL8</Name>
-                  <Position x="165" y="265"/>
-                  <Radius>5</Radius>
+                  <Position x="247" y="272"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1499" y="834"/>
                   </UIInfo>
@@ -1726,8 +1722,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR1</Name>
-                  <Position x="600" y="250"/>
-                  <Radius>5</Radius>
+                  <Position x="525" y="260"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="2003" y="734"/>
                   </UIInfo>
@@ -1736,8 +1732,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR2</Name>
-                  <Position x="635" y="265"/>
-                  <Radius>5</Radius>
+                  <Position x="553" y="272"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="2098" y="788"/>
                   </UIInfo>
@@ -1746,8 +1742,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR3</Name>
-                  <Position x="650" y="300"/>
-                  <Radius>5</Radius>
+                  <Position x="565" y="300"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="2158" y="878"/>
                   </UIInfo>
@@ -1756,8 +1752,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR4</Name>
-                  <Position x="635" y="335"/>
-                  <Radius>5</Radius>
+                  <Position x="553" y="328"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="2139" y="964"/>
                   </UIInfo>
@@ -1766,8 +1762,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR5</Name>
-                  <Position x="600" y="350"/>
-                  <Radius>5</Radius>
+                  <Position x="525" y="340"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="2057" y="1018"/>
                   </UIInfo>
@@ -1776,8 +1772,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR6</Name>
-                  <Position x="565" y="335"/>
-                  <Radius>5</Radius>
+                  <Position x="497" y="328"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1952" y="953"/>
                   </UIInfo>
@@ -1786,8 +1782,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR7</Name>
-                  <Position x="550" y="300"/>
-                  <Radius>5</Radius>
+                  <Position x="485" y="300"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1866" y="866"/>
                   </UIInfo>
@@ -1796,8 +1792,8 @@ else
                 <VisualElement type="Circle Graphic">
                   <Color A="255" B="0" G="255" R="255">#ffff00</Color>
                   <Name>RewardR8</Name>
-                  <Position x="565" y="265"/>
-                  <Radius>5</Radius>
+                  <Position x="497" y="272"/>
+                  <Radius>9</Radius>
                   <UIInfo>
                     <Pos x="1912" y="775"/>
                   </UIInfo>
@@ -1971,13 +1967,9 @@ case 9:
 }</Script></StateMachineElement><Transition><Destination>ContinuedFixation</Destination><Source>DisplayRewards</Source><SourceResult>ContinuedFixation</SourceResult></Transition><Transition><Destination>BrokeFixation</Destination><Source>DisplayRewards</Source><SourceResult>BrokeFixation</SourceResult></Transition><InitialElement>SetRewardAmounts</InitialElement><Parameter type="PseudorandomInt"><Name>RewardSelector</Name><UIInfo><Pos x="1137" y="743"/><UniqueID>{c14a4e41-6017-446e-987f-6ae0cb3ed113}</UniqueID></UIInfo><Max>7</Max></Parameter><Transition><Destination>DisplayRewards</Destination><Source>SetRewardAmounts</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>DisplayRewards</Destination><Source>SetRewardAmounts</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
               <Transition><Destination>GetChoice</Destination><Source>PresentRewards</Source><SourceResult>ContinuedFixation</SourceResult></Transition><Transition><Destination>Failed</Destination><Source>PresentRewards</Source><SourceResult>BrokeFixation</SourceResult></Transition><Transition><Destination>PresentRewards</Destination><Source>PresentTargets</Source><SourceResult>ContinuedFixating</SourceResult></Transition></StateMachineElement>
               <InitialElement>ChooseTrialMode</InitialElement>
+              
               <Transition>
-                <Destination>TrialTypeSucceeded</Destination>
-                <Source>NormalTrial</Source>
-                <SourceResult>Succeeded</SourceResult>
-              </Transition>
-              <Transition>
-                <Destination>ReshuffleTrialType</Destination>
+                <Destination>Failure</Destination>
                 <Source>NormalTrial</Source>
                 <SourceResult>Failed</SourceResult>
               </Transition>
@@ -1994,13 +1986,9 @@ case 9:
                   <Pos x="1174" y="163"/>
                 </UIInfo>
               </StateMachineElement>
+              
               <Transition>
-                <Destination>ReshuffleTrialType</Destination>
-                <Source>FixationTrial</Source>
-                <SourceResult>Succeeded</SourceResult>
-              </Transition>
-              <Transition>
-                <Destination>ReshuffleTrialType</Destination>
+                <Destination>Failure</Destination>
                 <Source>FixationTrial</Source>
                 <SourceResult>Failed</SourceResult>
               </Transition>
@@ -2016,7 +2004,7 @@ case 9:
               </Transition>
               <VisualElement type="Box Graphic">
                 <Color A="255" B="255" G="255" R="255">#ffffff</Color>
-                <Dimensions height="30" width="30" x="0" y="0"/>
+                <Dimensions height="20" width="20" x="0" y="0"/>
                 <Name>FixationGraphic</Name>
                 <Position x="400" y="300"/>
                 <UIInfo>
@@ -2033,7 +2021,7 @@ case 9:
                 </UIInfo>
                 <UIEnabled>true</UIEnabled>
               </ControlTarget>
-            </StateMachineElement>
+            <Result><Name>FixationSuccess</Name><UIInfo><Pos x="2029" y="138"/></UIInfo></Result><StateMachineElement type="ScriptElement"><Name>IncSuccessfulTrial</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>CorrectTrials.value++;if(TrialModeSelect.value &gt; FixationTrialPercentage.value)return true;return false;</Script><UIInfo><Pos x="1889" y="338"/></UIInfo></StateMachineElement><Transition><Destination>FixationSuccess</Destination><Source>IncSuccessfulTrial</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>NormalSuccess</Destination><Source>IncSuccessfulTrial</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>IncSuccessfulTrial</Destination><Source>FixationTrial</Source><SourceResult>Succeeded</SourceResult></Transition><Transition><Destination>IncSuccessfulTrial</Destination><Source>NormalTrial</Source><SourceResult>Succeeded</SourceResult></Transition></StateMachineElement>
             <StateMachineElement type="ScriptElement">
               <Name>NeedsMoreTrials</Name>
               <Result>
@@ -2090,7 +2078,7 @@ case 9:
             <Transition>
               <Destination>NeedsMoreTrials</Destination>
               <Source>Trial</Source>
-              <SourceResult>TrialTypeSucceeded</SourceResult>
+              <SourceResult>NormalSuccess</SourceResult>
             </Transition>
             <InitialElement>NeedsMoreTrials</InitialElement>
             <StateMachineElement type="ScriptElement">
@@ -2109,7 +2097,7 @@ case 9:
             <Transition>
               <Destination>ReshuffleTrialType</Destination>
               <Source>Trial</Source>
-              <SourceResult>ReshuffleTrialType</SourceResult>
+              <SourceResult>Failure</SourceResult>
             </Transition>
             <Transition>
               <Destination>ChooseTrialType</Destination>
@@ -2145,10 +2133,24 @@ case 9:
                 <SourceResult>Success</SourceResult>
               </Transition>
               <UIInfo>
-                <Pos x="1590" y="918"/>
+                <Pos x="1592" y="918"/>
                 <UniqueID>{b04bbc81-b0d4-49d9-99c9-986341c3f52c}</UniqueID>
               </UIInfo>
-            </StateMachineElement>
+            <EntryScript>//TrialTimer.updateTimeValue();
+RawTrial.value++;
+GeneralInfoDisplay.text = 
+RawTrial.value + &quot;,&quot;
++ CorrectTrials.value
+ ;/*+ &quot;,&quot; + 9 + &quot;,&quot;
++ &quot;3&quot; + &quot;,&quot;
++TrialTimer.value;*/</EntryScript><ExitScript>/*TrialTimer.updateTimeValue();
+GeneralInfoDisplay.text = 
+RawTrial.value + &quot;,&quot;
++ CorrectTrials.value + &quot;,&quot;
++ 9 + &quot;,&quot;
++ &quot;2&quot; + &quot;,&quot;
++TrialTimer.value;
+TrialTimer.restart();*/</ExitScript></StateMachineElement>
             <Transition>
               <Destination>Trial</Destination>
               <Source>IntertrialInterval</Source>
@@ -2164,7 +2166,7 @@ case 9:
               <Source>ChooseTrialType</Source>
               <SourceResult>false</SourceResult>
             </Transition>
-          </StateMachineElement>
+          <Transition><Destination>ReshuffleTrialType</Destination><Source>Trial</Source><SourceResult>FixationSuccess</SourceResult></Transition><VisualElement type="Text Graphic"><Color A="255" B="0" G="255" R="0">#00ff00</Color><Dimensions height="50" width="300" x="0" y="0"/><Name>LastTrialDisplay</Name><Position x="500" y="500"/><SubjectView>false</SubjectView><UIInfo><Pos x="1254" y="1415"/></UIInfo></VisualElement><Parameter type="Timer"><Name>TrialTimer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1122" y="1413"/></UIInfo><Value>0</Value></Parameter><VisualElement type="Text Graphic"><Color A="255" B="0" G="255" R="0">#00ff00</Color><Dimensions height="50" width="300" x="0" y="0"/><Name>GeneralInfoDisplay</Name><Position x="500" y="550"/><SubjectView>false</SubjectView><UIInfo><Pos x="1255" y="1496"/></UIInfo></VisualElement></StateMachineElement>
           <StateMachineElement type="ScriptElement">
             <Name>NeedsMoreBlocks</Name>
             <Result>
@@ -2310,10 +2312,10 @@ case 9:
           <Source>Superblock</Source>
           <SourceResult>SuperblockDone</SourceResult>
         </Transition>
-      </StateMachine>
+      <Parameter type="Numeric"><Name>RawTrial</Name><UIInfo><Pos x="2125" y="1908"/><UniqueID>{538cc1ae-3248-4a0d-bc7b-c12460283b3b}</UniqueID></UIInfo><Value>-1</Value></Parameter><Parameter type="Numeric"><Name>CorrectTrials</Name><UIInfo><Pos x="2243" y="1913"/><UniqueID>{35511958-04d2-4f57-b907-54336e9bcfd9}</UniqueID></UIInfo><Value>0</Value></Parameter></StateMachine>
     </Task>
   </Experiment>
   <StateMachineEditorData>
-    <OpenedBlock>{b703bd91-82ba-48d9-9fa8-ad5a47467061}</OpenedBlock>
+    <OpenedBlock>{eee68aaa-79c9-46fc-873f-a56f10562632}</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

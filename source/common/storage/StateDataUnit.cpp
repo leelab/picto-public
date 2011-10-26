@@ -8,18 +8,19 @@ StateDataUnit::StateDataUnit()
 
 void StateDataUnit::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
 {
-	setTransition(transition->getSource(),transition->getSourceResult(),transition->getDestination(),QString("%1").arg(timestamp,0,'f',6),stateMachinePath);
+	setTransition(transition->getSource(),transition->getSourceResult(),transition->getDestination(),QString("%1").arg(timestamp,0,'f',6),transition->getTransitionID(),stateMachinePath);
 }
-void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, double timestamp, QString stateMachinePath)
+void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, double timestamp, int id, QString stateMachinePath)
 {
-	setTransition(source,sourceResult,destination,QString("%1").arg(timestamp,0,'f',6),stateMachinePath);
+	setTransition(source,sourceResult,destination,QString("%1").arg(timestamp,0,'f',6),id, stateMachinePath);
 }
-void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, QString timestamp, QString stateMachinePath)
+void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, QString timestamp, int id, QString stateMachinePath)
 {
 	source_ = source;
 	sourceResult_ = sourceResult;
 	destination_ = destination;
 	timestamp_ = timestamp;
+	id_ = id;
 	machinePath_ = stateMachinePath;
 }
 
@@ -42,6 +43,7 @@ bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 	xmlStreamWriter->writeAttribute("src",source_);
 	xmlStreamWriter->writeAttribute("srcRes",sourceResult_);
 	xmlStreamWriter->writeAttribute("dest",destination_);
+	xmlStreamWriter->writeAttribute("id",QString::number(id_));
 	DataUnit::serializeDataID(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //StateDataUnit
@@ -63,6 +65,7 @@ bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	source_ = xmlStreamReader->attributes().value("src").toString();
 	sourceResult_ = xmlStreamReader->attributes().value("srcRes").toString();
 	destination_ = xmlStreamReader->attributes().value("dest").toString();
+	id_ = xmlStreamReader->attributes().value("id").toString().toInt();
 	xmlStreamReader->readNext();
 	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateDataUnit") && !xmlStreamReader->atEnd())
 	{

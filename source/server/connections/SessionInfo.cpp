@@ -762,9 +762,10 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnit> data)
 	QSqlQuery query(cacheDb);
 
 	query.prepare("INSERT INTO statetransitions "
-		"(dataid, machinepath, source, sourceresult, destination, time) "
-		"VALUES(:dataid, :machinepath, :source, :sourceresult, :destination, :time) ");
+		"(dataid, transid, machinepath, source, sourceresult, destination, time) "
+		"VALUES(:dataid, :transid, :machinepath, :source, :sourceresult, :destination, :time) ");
 	query.bindValue(":dataid", data->getDataID());
+	query.bindValue(":transid", data->getTransitionID());
 	query.bindValue(":machinepath", data->getMachinePath());
 	query.bindValue(":source", data->getSource()); 
 	query.bindValue(":sourceresult",data->getSourceResult());
@@ -1042,16 +1043,16 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectS
 	{
 		justLatest = true;
 		timestamp = "-1";
-		query.prepare("SELECT source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
-		"SELECT diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, diskdb.statetransitions.time, "
+		query.prepare("SELECT transid, source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
+		"SELECT diskdb.statetransitions,transid, diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, diskdb.statetransitions.time, "
 		"diskdb.statetransitions.machinepath FROM diskdb.statetransitions WHERE time > :time2 ORDER BY time DESC LIMIT 1");
 	}
 	else
 	{
 		if(timestamp.toDouble() == 0)
 			timestamp = "-1";
-		query.prepare("SELECT source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
-		"SELECT diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, "
+		query.prepare("SELECT transid, source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
+		"SELECT diskdb.statetransitions,transid, diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, "
 		"diskdb.statetransitions.time, diskdb.statetransitions.machinepath FROM diskdb.statetransitions WHERE time > :time2 ORDER BY time ASC");
 	}
 	
@@ -1067,11 +1068,12 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectS
 		if(justLatest)
 		{
 			QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
-			data->setTransition(query.value(0).toString(),
-							   query.value(1).toString(),
+			data->setTransition(query.value(1).toString(),
 							   query.value(2).toString(),
 							   query.value(3).toString(),
-							   query.value(4).toString());
+							   query.value(4).toString(),
+							   query.value(0).toInt(),
+							   query.value(5).toString());
 			dataStoreList->append(data);
 		}
 		else
@@ -1079,11 +1081,12 @@ QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectS
 			do
 			{
 				QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
-				data->setTransition(query.value(0).toString(),
-								   query.value(1).toString(),
-								   query.value(2).toString(),
-								   query.value(3).toString(),
-								   query.value(4).toString());
+				data->setTransition(query.value(1).toString(),
+									query.value(2).toString(),
+									query.value(3).toString(),
+									query.value(4).toString(),
+									query.value(0).toInt(),
+									query.value(5).toString());
 				dataStoreList->append(data);
 			}while(query.next());
 		}
@@ -1155,8 +1158,8 @@ void SessionInfo::InitializeVariables()
 	tableDataProviders_["behavioraldata"] = "DIRECTOR";
 
 	tables_.push_back("statetransitions");
-	tableColumns_["statetransitions"] = " dataid,machinepath,source,sourceresult,destination,time ";
-	tableColumnTypes_["statetransitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,TEXT,TEXT,TEXT,REAL ";
+	tableColumns_["statetransitions"] = " dataid,transid,machinepath,source,sourceresult,destination,time ";
+	tableColumnTypes_["statetransitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,TEXT,TEXT,REAL ";
 	tableDataProviders_["statetransitions"] = "DIRECTOR";
 
 	tables_.push_back("properties");

@@ -84,7 +84,7 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	if(dataChannel.isNull())
 		return;
 
-	bool sendStateDataSucceeded = sendStateData("NULL","NULL",stateMachine_->getName(),engine);
+	bool sendStateDataSucceeded = sendStateData("NULL","NULL",stateMachine_->getName(),-1,engine);
 	Q_ASSERT(sendStateDataSucceeded);
 }
 
@@ -103,12 +103,12 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 
 	if(result == "EngineAbort")
 	{
-		bool rc = sendStateData("NULL",result,"NULL",engine);
+		bool rc = sendStateData("NULL",result,"NULL",-2,engine);
 		Q_ASSERT(rc);
 	}
 	else
 	{
-		bool rc = sendStateData(stateMachine_->getName(),result,"NULL",engine);
+		bool rc = sendStateData(stateMachine_->getName(),result,"NULL",-3,engine);
 		Q_ASSERT(rc);
 	}
 
@@ -137,7 +137,7 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 }
 
 //! \brief Sends state data to the server
-bool Task::sendStateData(QString source, QString sourceResult, QString destination, QSharedPointer<Engine::PictoEngine> engine)
+bool Task::sendStateData(QString source, QString sourceResult, QString destination, int id, QSharedPointer<Engine::PictoEngine> engine)
 {
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 	if(dataChannel.isNull())
@@ -169,7 +169,7 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 	double timestamp = stamper.stampSec();
 
 	StateDataUnit stateData;
-	stateData.setTransition(source,sourceResult,destination,timestamp,getName());
+	stateData.setTransition(source,sourceResult,destination,timestamp,id,getName());
 
 	xmlWriter->writeStartElement("Data");
 	stateData.toXml(xmlWriter);

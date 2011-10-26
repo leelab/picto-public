@@ -92,6 +92,9 @@ SOURCES += $$(PICTO_TREE)/source/workstation/testviewer/testviewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.cpp
 
+HEADERS += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.cpp
+
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp
 #HEADERS += $$(PICTO_TREE)/source/workstation/document.h

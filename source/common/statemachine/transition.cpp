@@ -2,12 +2,14 @@
 
 namespace Picto
 {
+int Transition::lastTransitionId_ = -1;
 
 Transition::Transition()
 {
 	AddDefinableProperty("Source","");
 	AddDefinableProperty("SourceResult","");
 	AddDefinableProperty("Destination","");
+	id_ = ++lastTransitionId_;
 }
 
 Transition::Transition(QString source, QString sourceResult, QString destination)
