@@ -278,7 +278,7 @@ void RemoteViewer::setupUi()
 	connect(rewardAction_, SIGNAL(triggered()),this, SLOT(reward()));
 	rewardChannel_ = 1;
 
-	loadPropsAction_ = new QAction(tr("&Load values from Session"),this);
+	loadPropsAction_ = new QAction(tr("&Load Values from Session"),this);
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 

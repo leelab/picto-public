@@ -9,6 +9,7 @@
 #include "testviewer/testviewer.h"
 #include "remoteviewer/remoteviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
+#include "analysis/analysisviewer.h"
 
 MainWindow::MainWindow()
 {	
@@ -220,6 +221,18 @@ void MainWindow::createViewers()
 	viewerAction->setShortcut(tr("Ctrl+4"));
 	viewerAction->setIcon(QIcon(":/icons/remote.png"));
 	viewerAction->setData(3);
+	viewerToolbar_->addAction(viewerAction);
+	modeMenu_->addAction(viewerAction);
+	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+
+	//Analysis Viewer
+	viewer = new AnalysisViewer(this);
+	viewerNames_.append(viewer->type());
+	viewerStack_->addWidget(viewer);
+	viewerAction = new QAction(tr("&Analyze experiment"),this);
+	viewerAction->setShortcut(tr("Ctrl+4"));
+	viewerAction->setIcon(QIcon(":/icons/analyze.png"));
+	viewerAction->setData(4);
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));

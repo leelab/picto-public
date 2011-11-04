@@ -119,7 +119,7 @@ void TestViewer::setupUi()
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 	stopAction_->setEnabled(false);
 
-	loadPropsAction_ = new QAction(tr("&Load values from Session"),this);
+	loadPropsAction_ = new QAction(tr("&Load Values from Session"),this);
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 

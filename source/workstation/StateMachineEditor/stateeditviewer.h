@@ -99,18 +99,9 @@ private slots:
     void updateEditModeButtons(int id);
     void itemInserted(DiagramItem *item);
     void textInserted(QGraphicsTextItem *item);
-    void currentFontChanged(const QFont &font);
-    void fontSizeChanged(const QString &size);
     void sceneScaleChanged(const QString &scale);
-    void textColorChanged();
-    void itemColorChanged();
-    void lineColorChanged();
-    void textButtonTriggered();
-    void fillButtonTriggered();
-    void lineButtonTriggered();
-    void handleFontChange();
 	//void assetSelected(QSharedPointer<Asset> asset);
-    void itemSelected(QGraphicsItem *item);
+    //void itemSelected(QGraphicsItem *item);
     void about();
 	void loadScene(DiagramScene* newScene);
 	void resetExperiment();
@@ -128,14 +119,6 @@ private:
 	void reloadPictoDataFromDoc();
 
 	QSharedPointer<EditorState> editorState_;
-    QWidget *createBackgroundCellWidget(const QString &text,
-                                        const QString &image);
-    QWidget *createCellWidget(const QString &text,
-                              DiagramItem::DiagramType type);
-    QMenu *createColorMenu(const char *slot, QColor defaultColor);
-    QIcon createColorToolButtonIcon(const QString &image, QColor color);
-    QIcon createColorIcon(QColor color);
-
     DiagramScene *scene;
 	DiagramScene *topmostScene;
 	Toolbox *toolbox_;
@@ -156,21 +139,14 @@ private:
     QMenu *itemMenu;
     QMenu *aboutMenu;
 
-    QToolBar *textToolBar;
     QToolBar *editToolBar;
-    QToolBar *colorToolBar;
     QToolBar *pointerToolbar;
 
     QComboBox *sceneScaleCombo;
-    QComboBox *itemColorCombo;
-    QComboBox *textColorCombo;
-    QComboBox *fontSizeCombo;
-    QFontComboBox *fontCombo;
 
     QButtonGroup *buttonGroup;
     QButtonGroup *pointerTypeGroup;
     QButtonGroup *backgroundButtonGroup;
-    QToolButton *fontColorToolButton;
     QToolButton *fillColorToolButton;
     QToolButton *lineColorToolButton;
     QAction *boldAction;

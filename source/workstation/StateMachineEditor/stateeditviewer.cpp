@@ -73,9 +73,8 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(editToolBar);
-	toolbarLayout->addWidget(textToolBar);
-    toolbarLayout->addWidget(colorToolBar);
     toolbarLayout->addWidget(pointerToolbar);
+	toolbarLayout->addStretch();
 
     QHBoxLayout *layout = new QHBoxLayout;
 	QVBoxLayout *centralLayout = new QVBoxLayout;
@@ -207,20 +206,6 @@ void StateEditViewer::textInserted(QGraphicsTextItem *)
 }
 //! [8]
 
-//! [9]
-void StateEditViewer::currentFontChanged(const QFont &)
-{
-    handleFontChange();
-}
-//! [9]
-
-//! [10]
-void StateEditViewer::fontSizeChanged(const QString &)
-{
-    handleFontChange();
-}
-//! [10]
-
 //! [11]
 void StateEditViewer::sceneScaleChanged(const QString &scale)
 {
@@ -228,101 +213,34 @@ void StateEditViewer::sceneScaleChanged(const QString &scale)
 	editorState_->setZoom(newScale);
 }
 //! [11]
-
-//! [12]
-void StateEditViewer::textColorChanged()
-{
-    textAction = qobject_cast<QAction *>(sender());
-    fontColorToolButton->setIcon(createColorToolButtonIcon(
-                ":/icons/textpointer.png",
-                qVariantValue<QColor>(textAction->data())));
-    textButtonTriggered();
-}
-//! [12]
-
-//! [13]
-void StateEditViewer::itemColorChanged()
-{
-    fillAction = qobject_cast<QAction *>(sender());
-    fillColorToolButton->setIcon(createColorToolButtonIcon(
-                 ":/icons/floodfill.png",
-                 qVariantValue<QColor>(fillAction->data())));
-    fillButtonTriggered();
-}
-//! [13]
-
-//! [14]
-void StateEditViewer::lineColorChanged()
-{
-    lineAction = qobject_cast<QAction *>(sender());
-    lineColorToolButton->setIcon(createColorToolButtonIcon(
-                 ":/icons/linecolor.png",
-                 qVariantValue<QColor>(lineAction->data())));
-    lineButtonTriggered();
-}
-//! [14]
-
-//! [15]
-void StateEditViewer::textButtonTriggered()
-{
-    editorState_->setTextColor(qVariantValue<QColor>(textAction->data()));
-}
-//! [15]
-
-//! [16]
-void StateEditViewer::fillButtonTriggered()
-{
-    editorState_->setItemColor(qVariantValue<QColor>(fillAction->data()));
-}
-//! [16]
-
-//! [17]
-void StateEditViewer::lineButtonTriggered()
-{
-    editorState_->setLineColor(qVariantValue<QColor>(lineAction->data()));
-}
-//! [17]
-
-//! [18]
-void StateEditViewer::handleFontChange()
-{
-    QFont font = fontCombo->currentFont();
-    font.setPointSize(fontSizeCombo->currentText().toInt());
-    font.setWeight(boldAction->isChecked() ? QFont::Bold : QFont::Normal);
-    font.setItalic(italicAction->isChecked());
-    font.setUnderline(underlineAction->isChecked());
-
-    editorState_->setFont(font);
-}
-//! [18]
 //void StateEditViewer::assetSelected(QSharedPointer<Asset> asset)
 //{
 //	loadAssetProperties(asset);
 //}
 
-//! [19]
-void StateEditViewer::itemSelected(QGraphicsItem *item)
-{
-    DiagramTextItem *textItem =
-    qgraphicsitem_cast<DiagramTextItem *>(item);
-
-	if(textItem)
-	{
-		QFont font = textItem->font();
-		QColor color = textItem->defaultTextColor();
-		fontCombo->setCurrentFont(font);
-		fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
-		boldAction->setChecked(font.weight() == QFont::Bold);
-		italicAction->setChecked(font.italic());
-		underlineAction->setChecked(font.underline());
-		return;
-	}
-	//AssetItem *assetItem = qgraphicsitem_cast<AssetItem *>(item);
-	//if(assetItem)
-	//{
-	//	loadAssetProperties(assetItem->getAsset());
-	//}
-}
+////! [19]
+//void StateEditViewer::itemSelected(QGraphicsItem *item)
+//{
+//    DiagramTextItem *textItem =
+//    qgraphicsitem_cast<DiagramTextItem *>(item);
+//
+//	if(textItem)
+//	{
+//		QFont font = textItem->font();
+//		QColor color = textItem->defaultTextColor();
+//		fontCombo->setCurrentFont(font);
+//		fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
+//		boldAction->setChecked(font.weight() == QFont::Bold);
+//		italicAction->setChecked(font.italic());
+//		underlineAction->setChecked(font.underline());
+//		return;
+//	}
+//	//AssetItem *assetItem = qgraphicsitem_cast<AssetItem *>(item);
+//	//if(assetItem)
+//	//{
+//	//	loadAssetProperties(assetItem->getAsset());
+//	//}
+//}
 //! [19]
 
 //! [20]
@@ -370,8 +288,8 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
             this, SLOT(itemInserted(DiagramItem *)));
     connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),
         this, SLOT(textInserted(QGraphicsTextItem *)));
-    connect(newScene, SIGNAL(itemSelected(QGraphicsItem *)),
-        this, SLOT(itemSelected(QGraphicsItem *)));
+    //connect(newScene, SIGNAL(itemSelected(QGraphicsItem *)),
+    //    this, SLOT(itemSelected(QGraphicsItem *)));
 	connect(editorState_.data(),SIGNAL(resetExperiment()),
 		this,SLOT(resetExperiment()));
 	//connect(editorState_.data(), SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),
@@ -552,65 +470,6 @@ void StateEditViewer::createToolbars()
 	editToolBar->addAction(undoAction);
 	editToolBar->addAction(redoAction);
 
-    fontCombo = new QFontComboBox();
-    fontSizeCombo = new QComboBox();
-    connect(fontCombo, SIGNAL(currentFontChanged(const QFont &)),
-            this, SLOT(currentFontChanged(const QFont &)));
-
-    fontSizeCombo = new QComboBox;
-    fontSizeCombo->setEditable(true);
-    for (int i = 8; i < 30; i = i + 2)
-        fontSizeCombo->addItem(QString().setNum(i));
-    QIntValidator *validator = new QIntValidator(2, 64, this);
-    fontSizeCombo->setValidator(validator);
-    connect(fontSizeCombo, SIGNAL(currentIndexChanged(const QString &)),
-            this, SLOT(fontSizeChanged(const QString &)));
-
-    fontColorToolButton = new QToolButton;
-    fontColorToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-    fontColorToolButton->setMenu(createColorMenu(SLOT(textColorChanged()),
-                                                 Qt::black));
-    textAction = fontColorToolButton->menu()->defaultAction();
-    fontColorToolButton->setIcon(createColorToolButtonIcon(
-    ":/icons/textpointer.png", Qt::black));
-    fontColorToolButton->setAutoFillBackground(true);
-    connect(fontColorToolButton, SIGNAL(clicked()),
-            this, SLOT(textButtonTriggered()));
-
-//! [26]
-    fillColorToolButton = new QToolButton;
-    fillColorToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-    fillColorToolButton->setMenu(createColorMenu(SLOT(itemColorChanged()),
-                         Qt::white));
-    fillAction = fillColorToolButton->menu()->defaultAction();
-    fillColorToolButton->setIcon(createColorToolButtonIcon(
-    ":/icons/floodfill.png", Qt::white));
-    connect(fillColorToolButton, SIGNAL(clicked()),
-            this, SLOT(fillButtonTriggered()));
-//! [26]
-
-    lineColorToolButton = new QToolButton;
-    lineColorToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-    lineColorToolButton->setMenu(createColorMenu(SLOT(lineColorChanged()),
-                                 Qt::black));
-    lineAction = lineColorToolButton->menu()->defaultAction();
-    lineColorToolButton->setIcon(createColorToolButtonIcon(
-        ":/icons/linecolor.png", Qt::black));
-    connect(lineColorToolButton, SIGNAL(clicked()),
-            this, SLOT(lineButtonTriggered()));
-
-    textToolBar = new QToolBar(tr("Font"));
-    textToolBar->addWidget(fontCombo);
-    textToolBar->addWidget(fontSizeCombo);
-    textToolBar->addAction(boldAction);
-    textToolBar->addAction(italicAction);
-    textToolBar->addAction(underlineAction);
-
-    colorToolBar = new QToolBar(tr("Color"));
-    colorToolBar->addWidget(fontColorToolButton);
-    colorToolBar->addWidget(fillColorToolButton);
-    colorToolBar->addWidget(lineColorToolButton);
-
     QToolButton *pointerButton = new QToolButton;
     pointerButton->setCheckable(true);
     pointerButton->setChecked(true);
@@ -672,104 +531,3 @@ void StateEditViewer::reloadPictoDataFromDoc()
 	editorState_->setPictoDataObject(pictoData_);
 	return;
 }
-
-//! [28]
-QWidget *StateEditViewer::createBackgroundCellWidget(const QString &text,
-                        const QString &image)
-{
-    QToolButton *button = new QToolButton;
-    button->setText(text);
-    button->setIcon(QIcon(image));
-    button->setIconSize(QSize(50, 50));
-    button->setCheckable(true);
-    backgroundButtonGroup->addButton(button);
-
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(button, 0, 0, Qt::AlignHCenter);
-    layout->addWidget(new QLabel(text), 1, 0, Qt::AlignCenter);
-
-    QWidget *widget = new QWidget;
-    widget->setLayout(layout);
-
-    return widget;
-}
-//! [28]
-
-//! [29]
-QWidget *StateEditViewer::createCellWidget(const QString &text,
-                      DiagramItem::DiagramType type)
-{
-	// JOEY TOOK THE TYPE OUT BELOW... We will use the factory to replace this functionality
-    DiagramItem item(/*type, */editorState_,itemMenu);
-    QIcon icon(item.image());
-
-    QToolButton *button = new QToolButton;
-    button->setIcon(icon);
-    button->setIconSize(QSize(50, 50));
-    button->setCheckable(true);
-    buttonGroup->addButton(button, int(type));
-
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(button, 0, 0, Qt::AlignHCenter);
-    layout->addWidget(new QLabel(text), 1, 0, Qt::AlignCenter);
-
-    QWidget *widget = new QWidget;
-    widget->setLayout(layout);
-
-    return widget;
-}
-//! [29]
-
-//! [30]
-QMenu *StateEditViewer::createColorMenu(const char *slot, QColor defaultColor)
-{
-    QList<QColor> colors;
-    colors << Qt::black << Qt::white << Qt::red << Qt::blue << Qt::yellow;
-    QStringList names;
-    names << tr("black") << tr("white") << tr("red") << tr("blue")
-          << tr("yellow");
-
-    QMenu *colorMenu = new QMenu;
-    for (int i = 0; i < colors.count(); ++i) {
-        QAction *action = new QAction(names.at(i), this);
-        action->setData(colors.at(i));
-        action->setIcon(createColorIcon(colors.at(i)));
-        connect(action, SIGNAL(triggered()),
-                this, slot);
-        colorMenu->addAction(action);
-        if (colors.at(i) == defaultColor) {
-            colorMenu->setDefaultAction(action);
-        }
-    }
-    return colorMenu;
-}
-//! [30]
-
-//! [31]
-QIcon StateEditViewer::createColorToolButtonIcon(const QString &imageFile,
-                        QColor color)
-{
-    QPixmap pixmap(50, 80);
-    pixmap.fill(Qt::transparent);
-    QPainter painter(&pixmap);
-    QPixmap image(imageFile);
-    QRect target(0, 0, 50, 60);
-    QRect source(0, 0, 42, 42);
-    painter.fillRect(QRect(0, 60, 50, 80), color);
-    painter.drawPixmap(target, image, source);
-
-    return QIcon(pixmap);
-}
-//! [31]
-
-//! [32]
-QIcon StateEditViewer::createColorIcon(QColor color)
-{
-    QPixmap pixmap(20, 20);
-    QPainter painter(&pixmap);
-    painter.setPen(Qt::NoPen);
-    painter.fillRect(QRect(0, 0, 20, 20), color);
-
-    return QIcon(pixmap);
-}
-//! [32]

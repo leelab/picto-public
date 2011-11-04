@@ -99,7 +99,13 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 	propValsSession_ = QSqlDatabase::addDatabase("QSQLITE",filename.mid(lastSlash+1));
 	propValsSession_.setDatabaseName(filename);
 	propValsSession_.open();
-	Q_ASSERT(propValsSession_.isOpen());
+	if(!propValsSession_.isOpen())
+	{
+		QMessageBox msg;
+		msg.setText("Error: Could not open session.");
+		msg.exec();
+		return;
+	}
 
 	//Query and Write Results
 	QStringList missingProps;
