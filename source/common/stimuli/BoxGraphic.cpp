@@ -86,9 +86,9 @@ VisualElement* BoxGraphic::NewVisualElement()
 //	}
 //}
 
-void BoxGraphic::postSerialize()
+void BoxGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 }
 
 bool BoxGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

@@ -109,9 +109,9 @@ VisualElement* ArrowGraphic::NewVisualElement()
 //	}
 //}
 
-void ArrowGraphic::postSerialize()
+void ArrowGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 }
 
 bool ArrowGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

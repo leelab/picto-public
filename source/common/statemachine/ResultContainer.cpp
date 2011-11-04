@@ -70,9 +70,9 @@ void ResultContainer::addResultFactoryType(QString type,QSharedPointer<AssetFact
 	maxOptionalResults_[type] = -1;
 }
 
-void ResultContainer::postSerialize()
+void ResultContainer::postDeserialize()
 {
-	ScriptableContainer::postSerialize();
+	ScriptableContainer::postDeserialize();
 	//Check child list to see if any of the requiredResults were serialized in, if not, add them to the child
 	//list.
 	QList<QSharedPointer<Asset>> deserializedResults = getGeneratedChildren("Result");

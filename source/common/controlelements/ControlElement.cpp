@@ -31,9 +31,9 @@ ControlElement::ControlElement()
 //	return QSharedPointer<Result>();
 //}
 
-void ControlElement::postSerialize()
+void ControlElement::postDeserialize()
 {
-	ResultContainer::postSerialize();
+	ResultContainer::postDeserialize();
 	////Re-Add all default results as children since serialization clears the child list.
 	//QStringList resultKeys = results_.keys();
 	//foreach(QString resultKey,resultKeys)

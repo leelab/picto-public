@@ -92,9 +92,9 @@ QString StopwatchController::getResult()
 		return "";
 }
 
-void StopwatchController::postSerialize()
+void StopwatchController::postDeserialize()
 {
-	ControlElement::postSerialize();
+	ControlElement::postDeserialize();
 }
 
 

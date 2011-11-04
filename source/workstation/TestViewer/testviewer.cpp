@@ -19,6 +19,7 @@
 #include <QLabel>
 #include <QXmlStreamReader>
 #include <QMenu>
+#include <QFileDialog>
 
 
 TestViewer::TestViewer(QWidget *parent) :
@@ -46,7 +47,9 @@ void TestViewer::init()
 		}
 		else
 		{
+			experiment_->setEngine(engine_);
 			static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(experiment_.staticCast<DataStore>());
+			loadPropsAction_->setEnabled(true);
 		}
 	}
 
@@ -116,6 +119,10 @@ void TestViewer::setupUi()
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 	stopAction_->setEnabled(false);
 
+	loadPropsAction_ = new QAction(tr("&Load values from Session"),this);
+	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
+	loadPropsAction_->setEnabled(false);
+
 	//TaskList combo box
 	taskListBox_ = new QComboBox(this);
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -129,6 +136,7 @@ void TestViewer::setupUi()
 	testToolbar_->addWidget(new QLabel("Task:", this));
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(taskListBox_);
+	testToolbar_->addAction(loadPropsAction_);
 
 	
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
@@ -164,7 +172,6 @@ void TestViewer::play()
 		status_ = Running;
 		if(experiment_)
 		{
-			experiment_->setEngine(engine_);
 			experiment_->runTask(taskListBox_->currentText());
 		}
 		stop();
@@ -205,6 +212,14 @@ void TestViewer::stop()
 	renderingTarget_->showSplash();
 }
 
+void TestViewer::LoadPropValsFromFile()
+{
+	QString filename = QFileDialog::getOpenFileName(this,
+			tr("Load Properties From Session"),".","Sqlite files (*.sqlite)");
+	if(propertyFrame_)
+		static_cast<PropertyFrame*>(propertyFrame_)->updatePropertiesFromFile(filename);
+}
+
 void TestViewer::generateComboBox()
 {
 	Q_ASSERT(taskListBox_);
@@ -243,6 +258,10 @@ void TestViewer::resetExperiment()
 	{
 		experiment_ = QSharedPointer<Picto::Experiment>();
 	}
+	else
+	{
+		experiment_->setEngine(engine_);
+	}
 	return;
 
 }
@@ -256,6 +275,7 @@ void TestViewer::taskListIndexChanged(int)
 	if(!task)
 		return;
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
+	loadPropsAction_->setEnabled(true);
 }
 
 void TestViewer::operatorClickDetected(QPoint pos)

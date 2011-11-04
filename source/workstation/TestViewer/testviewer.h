@@ -40,6 +40,7 @@ public slots:
 	void play();
 	void pause();
 	void stop();
+	void LoadPropValsFromFile();
 
 
 private:
@@ -59,6 +60,7 @@ private:
 	QAction *playAction_;
 	QAction *pauseAction_;
 	QAction *stopAction_;
+	QAction *loadPropsAction_;
 
 	QToolBar* testToolbar_;
 

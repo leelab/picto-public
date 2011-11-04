@@ -51,7 +51,7 @@ public slots:
 	void setEndPoint(int x, int y) { setEndPoint(QPoint(x,y));};
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:

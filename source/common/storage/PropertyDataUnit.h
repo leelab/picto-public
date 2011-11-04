@@ -35,7 +35,7 @@ public:
 	QString time_;
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 };

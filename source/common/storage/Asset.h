@@ -48,7 +48,8 @@ signals:
 
 protected:
 	QSharedPointer<Asset> selfPtr(){return QSharedPointer<Asset>(self_);};
-	virtual void postSerialize(){};
+	virtual void preSerialize(){};
+	virtual void postDeserialize(){};
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader){return true;};
 	// In some cases, an asset may not want to be considered edited, even if it already has been, 
 	// unless it gets changed after a certain point.

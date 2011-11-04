@@ -81,9 +81,9 @@ void PseudorandomIntParameter::reset()
 	currIndex_ = randomArray_.size()-1;
 }
 
-void PseudorandomIntParameter::postSerialize()
+void PseudorandomIntParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 	useSeed_ = propertyContainer_->getPropertyValue("UseSeed").toBool();
 	seed_ = propertyContainer_->getPropertyValue("Seed").toInt();
 	if(useSeed_)

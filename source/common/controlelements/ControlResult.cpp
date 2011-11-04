@@ -21,9 +21,9 @@ void ControlResult::setActive(bool active)
 	controlTarget_->setActive(active);
 }
 
-void ControlResult::postSerialize()
+void ControlResult::postDeserialize()
 {
-	Result::postSerialize();
+	Result::postDeserialize();
 }
 
 

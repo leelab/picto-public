@@ -53,9 +53,9 @@ VisualElement* GridGraphic::NewVisualElement()
 	return new GridGraphic;
 }
 
-void GridGraphic::postSerialize()
+void GridGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 	setPropertyRuntimeEditable("Rows");
 	setPropertyRuntimeEditable("Columns");
 	draw();

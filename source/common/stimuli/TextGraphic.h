@@ -55,7 +55,7 @@ public slots:
 
 protected:
 	virtual QString defaultTagName(){return "Text";};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 

@@ -8,9 +8,9 @@ PictoData::PictoData()
 	AddDefinableObjectFactory("StateMachineEditorData",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachineEditorData::Create))));
 }
 
-void PictoData::postSerialize()
+void PictoData::postDeserialize()
 {
-	DataStore::postSerialize();
+	DataStore::postDeserialize();
 }
 
 QSharedPointer<Asset> PictoData::Create()

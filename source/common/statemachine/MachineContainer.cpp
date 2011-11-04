@@ -11,6 +11,8 @@ elementTag_(elementTag)
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Transition::Create))));
 	elementFactory_ = QSharedPointer<AssetFactory>(new AssetFactory(0,-1));
 	AddDefinableObjectFactory(elementTag_,elementFactory_);
+	AddDefinableProperty("EntryScript","");
+	AddDefinableProperty("ExitScript","");
 }
 
 //! \brief Adds a transition to this machineContainer
@@ -56,9 +58,9 @@ void MachineContainer::addElement(QSharedPointer<ResultContainer> element)
 	addChildScriptableContainer(element);
 }
 
-void MachineContainer::postSerialize()
+void MachineContainer::postDeserialize()
 {
-	StateMachineElement::postSerialize();
+	StateMachineElement::postDeserialize();
 	updateListsFromChildren();
 }
 
@@ -185,6 +187,32 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	//If we made it this far, all the transitions are "legal"
 	return true;
 }
+
+bool MachineContainer::hasScripts()
+{
+	return (!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty()
+		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
+}
+
+QMap<QString,QString> MachineContainer::getScripts()
+{
+	QMap<QString,QString> scripts;
+	if(!hasScripts())
+		return scripts;
+
+	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
+	{
+		QString scriptName = getName().simplified().remove(' ')+"Entry";
+		scripts[scriptName] = propertyContainer_->getPropertyValue("EntryScript").toString();
+	}
+	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
+	{
+		QString scriptName = getName().simplified().remove(' ')+"Exit";
+		scripts[scriptName] = propertyContainer_->getPropertyValue("ExitScript").toString();
+	}
+	return scripts;
+}
+
 
 bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition, QSharedPointer<ResultContainer>& source, QSharedPointer<ResultContainer>& sourceResult, QSharedPointer<ResultContainer>& destination)
 {

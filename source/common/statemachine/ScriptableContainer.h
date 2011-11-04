@@ -48,7 +48,7 @@ protected:
 	void runScript(QString scriptName);
 	void runScript(QString scriptName, bool& scriptReturnVal);
 	virtual QString defaultTagName(){return "Scriptables";};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return false;};
 	virtual bool hasScripts(){return false;};

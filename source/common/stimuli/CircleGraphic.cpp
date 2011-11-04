@@ -86,9 +86,9 @@ QPoint CircleGraphic::getPositionOffset()
 	return posOffset_;
 }
 
-void CircleGraphic::postSerialize()
+void CircleGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 }
 
 bool CircleGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

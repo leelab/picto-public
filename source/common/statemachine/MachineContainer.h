@@ -27,8 +27,10 @@ public:
 
 protected:
 	//virtual void elementAdded(QSharedPointer<ResultContainer> element) = 0;
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool hasScripts();
+	virtual QMap<QString,QString> getScripts();
 	QSharedPointer<AssetFactory> elementFactory_;
 	QMap<QString, QSharedPointer<ResultContainer> > elements_;
 	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>

@@ -37,9 +37,9 @@ void TimerParameter::updateTimeValue()
 	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toAscii());
 }
 
-void TimerParameter::postSerialize()
+void TimerParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 }
 
 bool TimerParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

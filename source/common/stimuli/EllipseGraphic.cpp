@@ -73,9 +73,9 @@ QPoint EllipseGraphic::getPositionOffset()
 //	}
 //}
 
-void EllipseGraphic::postSerialize()
+void EllipseGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 }
 
 bool EllipseGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

@@ -58,7 +58,7 @@ public:
 	void decrement() { currentValue_ -= increment_; };
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool fixValues(QString& warning);
 

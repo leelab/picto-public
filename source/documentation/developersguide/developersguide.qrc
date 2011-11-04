@@ -285,6 +285,10 @@
    <file alias="_old_01workstation_2mainwindow_8h-source.html">../../../output/documentation/main/html/_old_01workstation_2mainwindow_8h-source.html</file>
    <file alias="_operator_click_parameter_8cpp-source.html">../../../output/documentation/main/html/_operator_click_parameter_8cpp-source.html</file>
    <file alias="_operator_click_parameter_8h-source.html">../../../output/documentation/main/html/_operator_click_parameter_8h-source.html</file>
+   <file alias="_operator_info_graphic_8cpp-source.html">../../../output/documentation/main/html/_operator_info_graphic_8cpp-source.html</file>
+   <file alias="_operator_info_graphic_8h-source.html">../../../output/documentation/main/html/_operator_info_graphic_8h-source.html</file>
+   <file alias="_operator_info_parameter_8cpp-source.html">../../../output/documentation/main/html/_operator_info_parameter_8cpp-source.html</file>
+   <file alias="_operator_info_parameter_8h-source.html">../../../output/documentation/main/html/_operator_info_parameter_8h-source.html</file>
    <file alias="_p_c_m_aural_target_8cpp-source.html">../../../output/documentation/main/html/_p_c_m_aural_target_8cpp-source.html</file>
    <file alias="_p_c_m_aural_target_8h-source.html">../../../output/documentation/main/html/_p_c_m_aural_target_8h-source.html</file>
    <file alias="_p_c_m_mixing_sample_8cpp-source.html">../../../output/documentation/main/html/_p_c_m_mixing_sample_8cpp-source.html</file>
@@ -373,6 +377,8 @@
    <file alias="_property_factory_8h-source.html">../../../output/documentation/main/html/_property_factory_8h-source.html</file>
    <file alias="_property_frame_8cpp-source.html">../../../output/documentation/main/html/_property_frame_8cpp-source.html</file>
    <file alias="_property_frame_8h-source.html">../../../output/documentation/main/html/_property_frame_8h-source.html</file>
+   <file alias="_property_frame_data_8cpp-source.html">../../../output/documentation/main/html/_property_frame_data_8cpp-source.html</file>
+   <file alias="_property_frame_data_8h-source.html">../../../output/documentation/main/html/_property_frame_data_8h-source.html</file>
    <file alias="_property_table_8cpp-source.html">../../../output/documentation/main/html/_property_table_8cpp-source.html</file>
    <file alias="_property_table_8h-source.html">../../../output/documentation/main/html/_property_table_8h-source.html</file>
    <file alias="_property_tool_group_8cpp-source.html">../../../output/documentation/main/html/_property_tool_group_8cpp-source.html</file>
@@ -613,6 +619,9 @@
    <file alias="build_environment_preparation.html">../../../output/documentation/main/html/build_environment_preparation.html</file>
    <file alias="class_alignment_tool-members.html">../../../output/documentation/main/html/class_alignment_tool-members.html</file>
    <file alias="class_alignment_tool.html">../../../output/documentation/main/html/class_alignment_tool.html</file>
+   <file alias="class_analysis_viewer-members.html">../../../output/documentation/main/html/class_analysis_viewer-members.html</file>
+   <file alias="class_analysis_viewer.html">../../../output/documentation/main/html/class_analysis_viewer.html</file>
+   <file alias="class_analysis_viewer.png">../../../output/documentation/main/html/class_analysis_viewer.png</file>
    <file alias="class_arrow-members.html">../../../output/documentation/main/html/class_arrow-members.html</file>
    <file alias="class_arrow.html">../../../output/documentation/main/html/class_arrow.html</file>
    <file alias="class_arrow_destination_item-members.html">../../../output/documentation/main/html/class_arrow_destination_item-members.html</file>
@@ -866,6 +875,12 @@
    <file alias="class_picto_1_1_operator_click_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter-members.html</file>
    <file alias="class_picto_1_1_operator_click_parameter.html">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter.html</file>
    <file alias="class_picto_1_1_operator_click_parameter.png">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter.png</file>
+   <file alias="class_picto_1_1_operator_info_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_operator_info_graphic-members.html</file>
+   <file alias="class_picto_1_1_operator_info_graphic.html">../../../output/documentation/main/html/class_picto_1_1_operator_info_graphic.html</file>
+   <file alias="class_picto_1_1_operator_info_graphic.png">../../../output/documentation/main/html/class_picto_1_1_operator_info_graphic.png</file>
+   <file alias="class_picto_1_1_operator_info_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_operator_info_parameter-members.html</file>
+   <file alias="class_picto_1_1_operator_info_parameter.html">../../../output/documentation/main/html/class_picto_1_1_operator_info_parameter.html</file>
+   <file alias="class_picto_1_1_operator_info_parameter.png">../../../output/documentation/main/html/class_picto_1_1_operator_info_parameter.png</file>
    <file alias="class_picto_1_1_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_parameter-members.html</file>
    <file alias="class_picto_1_1_parameter.html">../../../output/documentation/main/html/class_picto_1_1_parameter.html</file>
    <file alias="class_picto_1_1_parameter.png">../../../output/documentation/main/html/class_picto_1_1_parameter.png</file>
@@ -944,6 +959,9 @@
    <file alias="class_picto_1_1_property_data_unit_package-members.html">../../../output/documentation/main/html/class_picto_1_1_property_data_unit_package-members.html</file>
    <file alias="class_picto_1_1_property_data_unit_package.html">../../../output/documentation/main/html/class_picto_1_1_property_data_unit_package.html</file>
    <file alias="class_picto_1_1_property_data_unit_package.png">../../../output/documentation/main/html/class_picto_1_1_property_data_unit_package.png</file>
+   <file alias="class_picto_1_1_property_frame_data-members.html">../../../output/documentation/main/html/class_picto_1_1_property_frame_data-members.html</file>
+   <file alias="class_picto_1_1_property_frame_data.html">../../../output/documentation/main/html/class_picto_1_1_property_frame_data.html</file>
+   <file alias="class_picto_1_1_property_frame_data.png">../../../output/documentation/main/html/class_picto_1_1_property_frame_data.png</file>
    <file alias="class_picto_1_1_property_table-members.html">../../../output/documentation/main/html/class_picto_1_1_property_table-members.html</file>
    <file alias="class_picto_1_1_property_table.html">../../../output/documentation/main/html/class_picto_1_1_property_table.html</file>
    <file alias="class_picto_1_1_pseudorandom_int_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_pseudorandom_int_parameter-members.html</file>

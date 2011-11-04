@@ -86,7 +86,7 @@ bool PropertyDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader
 	return true;
 }
 
-void PropertyDataUnitPackage::postSerialize()
+void PropertyDataUnitPackage::postDeserialize()
 {
 
 }

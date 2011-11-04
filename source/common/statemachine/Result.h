@@ -31,7 +31,7 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "Result";};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 

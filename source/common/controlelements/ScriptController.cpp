@@ -53,9 +53,9 @@ QString ScriptController::getResult()
 		return "";
 }
 
-void ScriptController::postSerialize()
+void ScriptController::postDeserialize()
 {
-	ControlElement::postSerialize();
+	ControlElement::postDeserialize();
 }
 
 bool ScriptController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

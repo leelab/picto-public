@@ -345,17 +345,13 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		return "scriptingError";
 	}
 
-	//Generate the start trial event
-	//if(getLevel() == StateMachineLevel::Trial && !slave)
-	//{
-	//	//Generating an event on the neural recorder takes ~250 us, while generating a 
-	//	//Picto event requires sending a command to the server and waiting for a response.
-	//	//Because of this, we generate the nerual recorder event first.
-	//	(trialEventCode_ == 0x7F)? trialEventCode_ = 0 : trialEventCode_++;
-	//	trialNum_++;
-	//	engine->generateEvent(trialEventCode_);
-	//	sendTrialEventToServer(engine);
-	//}
+	//Figure out which scripts we will be running
+	bool runEntryScript = !slave && !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+	bool runExitScript = !slave && !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
+
+	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
+	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
+
 	//Reset trialNum_ if we just entered a new Task
 	if(getLevel() == StateMachineLevel::Task)
 	{
@@ -378,6 +374,9 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	}
 
 	QString result;
+		//run the entry script
+	if(runEntryScript)
+		runScript(entryScriptName);
 	while(true)
 	{
 		
@@ -533,6 +532,10 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		currElementName = nextElementName;
 
 	}
+	//run the exit script
+	if(runExitScript)
+		runScript(exitScriptName);
+	
 	//Since we're backing out of this state machine we need to remove it from the path
 	//qDebug(QString("Exiting: %1").arg(path_.join("::")).toAscii());
 	path_.takeLast();
@@ -739,9 +742,9 @@ void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
 	engine->stop();
 }
 
-void StateMachine::postSerialize()
+void StateMachine::postDeserialize()
 {
-	MachineContainer::postSerialize();
+	MachineContainer::postDeserialize();
 }
 
 bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -809,12 +812,9 @@ bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRead
 
 bool StateMachine::hasScripts()
 {
+	if(MachineContainer::hasScripts())
+		return true;
 	return false;
-}
-
-QMap<QString,QString> StateMachine::getScripts()
-{
-	return QMap<QString,QString>();
 }
 
 

@@ -17,9 +17,9 @@ Result::Result(QString name)
 	setUnedited();
 }
 
-void Result::postSerialize()
+void Result::postDeserialize()
 {
-	ScriptableContainer::postSerialize();
+	ScriptableContainer::postDeserialize();
 }
 
 

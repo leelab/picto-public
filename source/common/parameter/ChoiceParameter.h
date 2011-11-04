@@ -54,7 +54,7 @@ public:
 	//virtual bool equalTo(QVariant& RHS);
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool fixValues(QString& warning);
 

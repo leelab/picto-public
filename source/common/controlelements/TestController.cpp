@@ -154,9 +154,9 @@ void TestController::start(QSharedPointer<Engine::PictoEngine> engine)
 //
 //}
 
-void TestController::postSerialize()
+void TestController::postDeserialize()
 {
-	ControlElement::postSerialize();
+	ControlElement::postDeserialize();
 }
 
 bool TestController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

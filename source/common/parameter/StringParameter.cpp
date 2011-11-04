@@ -44,9 +44,9 @@ void StringParameter::addOption(StringParameterOption option)
 //	return false;
 //}
 
-void StringParameter::postSerialize()
+void StringParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 	setPropertyRuntimeEditable("Value");
 }
 

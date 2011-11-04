@@ -89,9 +89,9 @@ QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	return result; 
 }
 
-void ScriptElement::postSerialize()
+void ScriptElement::postDeserialize()
 {
-	StateMachineElement::postSerialize();
+	StateMachineElement::postDeserialize();
 }
 
 bool ScriptElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

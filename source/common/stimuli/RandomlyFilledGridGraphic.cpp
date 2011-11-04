@@ -169,9 +169,9 @@ void RandomlyFilledGridGraphic::updateAnimation(int frame, QTime elapsedTime)
 	return;
 }
 
-void RandomlyFilledGridGraphic::postSerialize()
+void RandomlyFilledGridGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 	buildColorList();
 	draw();
 }

@@ -18,9 +18,9 @@ void ControlTarget::setActive(bool active)
 	active_ = active;
 }
 
-void ControlTarget::postSerialize()
+void ControlTarget::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 }
 
 

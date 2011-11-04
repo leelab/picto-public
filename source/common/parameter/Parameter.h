@@ -46,7 +46,7 @@ protected:
 	//If true is returned warning will not be checked.
 	virtual bool fixValues(QString&){return true;};
 	virtual QString defaultTagName(){return "Parameter";};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	QVariant currValue_;
 private:
 	bool fixingValues_;

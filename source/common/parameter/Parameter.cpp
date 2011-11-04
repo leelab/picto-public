@@ -28,9 +28,9 @@ Parameter::Parameter() :
 //	return propertyContainer_->getPropertyValue("Value");
 //}
 
-void Parameter::postSerialize()
+void Parameter::postDeserialize()
 {
-	Scriptable::postSerialize();
+	Scriptable::postDeserialize();
 	connect(this,SIGNAL(edited()),this,SLOT(valueEdited()));
 	//setInitialValue(propertyContainer_->getPropertyValue("Value"));
 	//reset();

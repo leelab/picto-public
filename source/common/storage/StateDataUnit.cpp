@@ -88,7 +88,7 @@ bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	return true;
 }
 
-void StateDataUnit::postSerialize()
+void StateDataUnit::postDeserialize()
 {
 
 }

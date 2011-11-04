@@ -43,6 +43,7 @@ private slots:
 	void pause();
 	void stop();
 	void reward();
+	void LoadPropValsFromFile();
 	void parameterMessageReady(QSharedPointer<Property> changedProp);
 	void operatorClickDetected(QPoint pos);
 
@@ -101,6 +102,7 @@ private:
 	QAction *stopAction_;
 	QAction *rewardAction_;
 	QAction *connectAction_;
+	QAction *loadPropsAction_;
 
 	QToolBar *toolBar_;
 	QComboBox *taskListBox_;

@@ -34,7 +34,7 @@ public:
 	QString t;
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 };

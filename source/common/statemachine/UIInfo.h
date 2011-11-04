@@ -29,7 +29,7 @@ public:
 	virtual QString assetType(){return "UIInfo";};
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 

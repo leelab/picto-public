@@ -12,7 +12,7 @@
           </UIInfo>
         </Parameter>
         <UIInfo>
-          <Pos x="2000" y="2000"/>
+          <Pos x="2004" y="2000"/>
           <UniqueID>{b72b5b25-bb3e-4078-a333-a9ac653751b4}</UniqueID>
         </UIInfo>
         <InitialElement>PresentSingleStimulus</InitialElement>
@@ -26,44 +26,27 @@
             <UniqueID>{86e04362-4f93-44d6-a321-8828f6a5be82}</UniqueID>
           </UIInfo>
           <StateMachineElement type="State">
-            <ControlElement type="Stopwatch Controller">
-              <Name>OneSecTimer</Name>
-              <Result>
-                <Name>Success</Name>
-                <UIInfo>
-                  <UniqueID>{69ddaab9-9313-4f24-a1cb-db550075c822}</UniqueID>
-                </UIInfo>
-              </Result>
-              <Time>1</Time>
-              <UIInfo>
-                <Pos x="1457" y="1562"/>
-                <UniqueID>{e78192fd-e97f-4543-949c-34fb7fe2f746}</UniqueID>
-              </UIInfo>
-            </ControlElement>
             <EntryScript>
-														              Square.alpha = 255;
-														              colWidth = Grid.width/Grid.columns;
-														              rowHeight = Grid.height/Grid.rows;
-														              Square.x = operatorClick.x-(operatorClick.x%colWidth)+colWidth/2;
-														              Square.y = operatorClick.y-(operatorClick.y%rowHeight)+rowHeight/2;
-														              Square.width = SquareDimension.value;
-														              Square.height = SquareDimension.value;
-														              Square.subjectView = true;
+              Square.alpha = 255;
+              colWidth = Grid.width/Grid.columns;
+              rowHeight = Grid.height/Grid.rows;
+              Square.x = operatorClick.x-(operatorClick.x%colWidth)+colWidth/2;
+              Square.y = operatorClick.y-(operatorClick.y%rowHeight)+rowHeight/2;
+              Square.width = SquareDimension.value;
+              Square.height = SquareDimension.value;
+              Square.subjectView = true;
+              Target.x = Square.x;
+              Target.y = Square.y;
             </EntryScript>
             <FrameScript/>
             <Name>PresentStimulus</Name>
             <Result>
-              <Name>TimesUp</Name>
+              <Name>Failed</Name>
               <UIInfo>
-                <Pos x="2002" y="1593"/>
+                <Pos x="1998" y="1547"/>
                 <UniqueID>{b6eca9d5-bad0-4009-b29f-4c52ede33807}</UniqueID>
               </UIInfo>
             </Result>
-            <Transition>
-              <Destination>TimesUp</Destination>
-              <Source>OneSecTimer</Source>
-              <SourceResult>Success</SourceResult>
-            </Transition>
             <UIInfo>
               <Pos x="1677" y="1712"/>
               <UniqueID>{b7e2ebbf-e870-4b61-b02e-4a1855595fae}</UniqueID>
@@ -73,32 +56,86 @@
               Square.alpha = 122;
             </ExitScript>
             <Revision>0</Revision>
+            <ControlElement type="Target Controller">
+              <Name>FixationTracker</Name>
+              <Result>
+                <Name>Reaquistion Time Exceeded</Name>
+              </Result>
+              <Result>
+                <Name>Initial Aquistion Time Exceeded</Name>
+              </Result>
+              <Result>
+                <Name>Total Time Excceeded</Name>
+              </Result>
+              <Result>
+                <Name>Broke Fixation</Name>
+              </Result>
+              <Result>
+                <Name>Success</Name>
+              </Result>
+              <UIInfo>
+                <Pos x="1471" y="1498"/>
+              </UIInfo>
+              <ControlTarget>Target</ControlTarget>
+              <FixationTime>400</FixationTime>
+              <MaxInitialAcquisitionTime>600</MaxInitialAcquisitionTime>
+              <SignalChannel>PositionChannel</SignalChannel>
+              <TimeUnits>Ms</TimeUnits>
+              <TotalTime>1000</TotalTime>
+            </ControlElement>
+            <Result>
+              <Name>Fixated</Name>
+              <UIInfo>
+                <Pos x="1992" y="1665"/>
+              </UIInfo>
+            </Result>
+            <Transition>
+              <Destination>Failed</Destination>
+              <Source>FixationTracker</Source>
+              <SourceResult>Reaquistion Time Exceeded</SourceResult>
+            </Transition>
+            <Transition>
+              <Destination>Failed</Destination>
+              <Source>FixationTracker</Source>
+              <SourceResult>Initial Aquistion Time Exceeded</SourceResult>
+            </Transition>
+            <Transition>
+              <Destination>Failed</Destination>
+              <Source>FixationTracker</Source>
+              <SourceResult>Total Time Excceeded</SourceResult>
+            </Transition>
+            <Transition>
+              <Destination>Failed</Destination>
+              <Source>FixationTracker</Source>
+              <SourceResult>Broke Fixation</SourceResult>
+            </Transition>
+            <Transition>
+              <Destination>Fixated</Destination>
+              <Source>FixationTracker</Source>
+              <SourceResult>Success</SourceResult>
+            </Transition>
           </StateMachineElement>
           <Result>
             <Name>StimulusPresented</Name>
             <UIInfo>
-              <Pos x="1870" y="1714"/>
+              <Pos x="1904" y="1636"/>
               <UniqueID>{5931e290-a820-45f3-8257-807b671cb567}</UniqueID>
             </UIInfo>
           </Result>
           <Transition>
             <Destination>StimulusPresented</Destination>
             <Source>PresentStimulus</Source>
-            <SourceResult>TimesUp</SourceResult>
+            <SourceResult>Failed</SourceResult>
           </Transition>
           <StateMachineElement type="State">
             <ControlElement type="Script Controller">
               <Name>WaitForOperatorClick</Name>
               <Result>
                 <Name>Done</Name>
-                <UIInfo>
-                  <UniqueID>{435cb869-c968-4517-b611-d8b84f5ce8c1}</UniqueID>
-                </UIInfo>
               </Result>
               <Script>return operatorClick.newClick;</Script>
               <UIInfo>
                 <Pos x="1189" y="1347"/>
-                <UniqueID>{48d4343a-5929-40de-b520-a24324925b73}</UniqueID>
               </UIInfo>
             </ControlElement>
             <Name>WaitForClick</Name>
@@ -106,7 +143,6 @@
               <Name>OperatorClicked</Name>
               <UIInfo>
                 <Pos x="1601" y="1367"/>
-                <UniqueID>{15851acd-5506-4c68-975a-bb9331557be3}</UniqueID>
               </UIInfo>
             </Result>
             <UIInfo>
@@ -118,6 +154,7 @@
               <Source>WaitForOperatorClick</Source>
               <SourceResult>Done</SourceResult>
             </Transition>
+            <ExitScript>Square.red = 255;</ExitScript>
           </StateMachineElement>
           <Transition>
             <Destination>PresentStimulus</Destination>
@@ -130,7 +167,6 @@
             <Name>Grid</Name>
             <UIInfo>
               <Pos x="1502" y="1919"/>
-              <UniqueID>{80901cc3-fc5e-46ee-9e11-b9cb7fa4a09c}</UniqueID>
             </UIInfo>
             <UIEnabled>true</UIEnabled>
             <Columns>7</Columns>
@@ -143,11 +179,74 @@
             <Name>SquareDimension</Name>
             <UIInfo>
               <Pos x="1639" y="1919"/>
-              <UniqueID>{317ff927-c696-4cef-abbb-f9401fa54994}</UniqueID>
+              <UniqueID>{c53276ba-3864-4b9a-a842-64e180a8d807}</UniqueID>
             </UIInfo>
             <Value>50</Value>
             <UIEnabled>true</UIEnabled>
           </Parameter>
+          <StateMachineElement type="StateMachine">
+            <InitialElement>SetTargetRed</InitialElement>
+            <Name>FixationFeedback</Name>
+            <Result>
+              <Name>Done</Name>
+              <UIInfo>
+                <Pos x="1591" y="1463"/>
+              </UIInfo>
+            </Result>
+            <StateMachineElement type="ScriptElement">
+              <Name>SetTargetRed</Name>
+              <Result>
+                <Name>false</Name>
+              </Result>
+              <Result>
+                <Name>true</Name>
+              </Result>
+              <Script>Square.red = 0;</Script>
+              <UIInfo>
+                <Pos x="1132" y="1573"/>
+              </UIInfo>
+            </StateMachineElement>
+            <StateMachineElement type="Reward">
+              <Name>Reward</Name>
+              <Result>
+                <Name>done</Name>
+              </Result>
+              <RewardChan>1</RewardChan>
+              <RewardQty>1</RewardQty>
+              <UIInfo>
+                <Pos x="1385" y="1585"/>
+              </UIInfo>
+            </StateMachineElement>
+            <Transition>
+              <Destination>Reward</Destination>
+              <Source>SetTargetRed</Source>
+              <SourceResult>false</SourceResult>
+            </Transition>
+            <Transition>
+              <Destination>Reward</Destination>
+              <Source>SetTargetRed</Source>
+              <SourceResult>true</SourceResult>
+            </Transition>
+            <Transition>
+              <Destination>Done</Destination>
+              <Source>Reward</Source>
+              <SourceResult>done</SourceResult>
+            </Transition>
+            <UIInfo>
+              <Pos x="1815" y="1841"/>
+              <UniqueID>{76894020-3dc8-47d6-8c9b-f454336aa840}</UniqueID>
+            </UIInfo>
+          </StateMachineElement>
+          <Transition>
+            <Destination>FixationFeedback</Destination>
+            <Source>PresentStimulus</Source>
+            <SourceResult>Fixated</SourceResult>
+          </Transition>
+          <Transition>
+            <Destination>StimulusPresented</Destination>
+            <Source>FixationFeedback</Source>
+            <SourceResult>Done</SourceResult>
+          </Transition>
         </StateMachineElement>
         <VisualElement type="Box Graphic">
           <Color A="255" B="0" G="255" R="255">#ffff00</Color>
@@ -155,7 +254,6 @@
           <Name>Square</Name>
           <UIInfo>
             <Pos x="1741" y="2018"/>
-            <UniqueID>{88961d0d-f8e2-40c4-8543-73c27896bb58}</UniqueID>
           </UIInfo>
           <Visible>true</Visible>
           <SubjectView>false</SubjectView>
@@ -171,20 +269,13 @@
           <Name>IncrementStimulusCounter</Name>
           <Result>
             <Name>false</Name>
-            <UIInfo>
-              <UniqueID>{2c441f2b-4939-45e8-8194-d2c406e474e9}</UniqueID>
-            </UIInfo>
           </Result>
           <Result>
             <Name>true</Name>
-            <UIInfo>
-              <UniqueID>{a4885c1e-ad92-4756-8757-897a233359a1}</UniqueID>
-            </UIInfo>
           </Result>
           <Script>StimuliPresented.value++; return true;</Script>
           <UIInfo>
             <Pos x="1960" y="1830"/>
-            <UniqueID>{381965e8-350a-4d59-a0ee-3f7f69f24cbf}</UniqueID>
           </UIInfo>
         </StateMachineElement>
         <Transition>
@@ -202,6 +293,14 @@
           <Source>IncrementStimulusCounter</Source>
           <SourceResult>true</SourceResult>
         </Transition>
+        <ControlTarget type="CircleTarget">
+          <Name>Target</Name>
+          <UIInfo>
+            <Pos x="1758" y="2112"/>
+            <UniqueID>{47aed124-52ca-4e81-b844-cf3f8bb88cd9}</UniqueID>
+          </UIInfo>
+          <Radius>40</Radius>
+        </ControlTarget>
       </StateMachine>
       <UIInfo>
         <Pos x="2000" y="2000"/>
@@ -220,7 +319,7 @@
         <UniqueID>{313b76a9-58e3-4974-b063-0abe86e59e30}</UniqueID>
       </UIInfo>
       <StateMachine>
-        <InitialElement>RandomizeInitVals</InitialElement>
+        <InitialElement>LessThan4Superblocks</InitialElement>
         <Name>Top</Name>
         <Parameter type="Numeric">
           <Name>SuperblockNum</Name>
@@ -247,7 +346,7 @@
         <Result>
           <Name>AllSuperblocksComplete</Name>
           <UIInfo>
-            <Pos x="2183" y="1783"/>
+            <Pos x="2083" y="1791"/>
             <UniqueID>{00377fbb-bbd5-468f-90fc-8bdc5e93fe3a}</UniqueID>
           </UIInfo>
         </Result>
@@ -261,7 +360,7 @@
             </UIInfo>
           </Result>
           <UIInfo>
-            <Pos x="1766" y="1401"/>
+            <Pos x="1968" y="1422"/>
             <UniqueID>{8744c750-281a-4592-bfb2-d67c27162d1b}</UniqueID>
           </UIInfo>
           <Parameter type="Numeric">
@@ -277,7 +376,7 @@
             <Result>
               <Name>BlockDone</Name>
               <UIInfo>
-                <Pos x="1235" y="767"/>
+                <Pos x="1534" y="759"/>
                 <UniqueID>{18218bf2-a15b-40ee-8926-b561e0449efe}</UniqueID>
               </UIInfo>
             </Result>
@@ -291,25 +390,25 @@
                 <Pos x="1175" y="1274"/>
                 <UniqueID>{17e6dd07-8d03-4f08-ba8c-3eefd51a3446}</UniqueID>
               </UIInfo>
-              <Value>-1</Value>
+              <Value>0</Value>
             </Parameter>
             <StateMachineElement type="StateMachine">
               <Name>Trial</Name>
               <UIInfo>
-                <Pos x="1669" y="1149"/>
+                <Pos x="1029" y="875"/>
                 <UniqueID>{2d6837c9-0656-4222-b663-4c83d44ac671}</UniqueID>
               </UIInfo>
               <Result>
-                <Name>NormalSuccess</Name>
+                <Name>TrialTypeComplete</Name>
                 <UIInfo>
-                  <Pos x="2047" y="424"/>
+                  <Pos x="2078" y="315"/>
                   <UniqueID>{773dce8c-d1e7-47aa-a5e1-bca4862b4eed}</UniqueID>
                 </UIInfo>
               </Result>
               <Result>
-                <Name>Failure</Name>
+                <Name>ReshuffleTrialType</Name>
                 <UIInfo>
-                  <Pos x="2007" y="608"/>
+                  <Pos x="2079" y="489"/>
                   <UniqueID>{234bc152-4236-4c60-b885-024aef2496f0}</UniqueID>
                 </UIInfo>
               </Result>
@@ -338,7 +437,7 @@
                 <InitialElement>WaitForFixation</InitialElement>
                 <Name>FixationTrial</Name>
                 <UIInfo>
-                  <Pos x="1617" y="273"/>
+                  <Pos x="1566" y="254"/>
                   <UniqueID>{484350e1-7fd5-4311-a825-26e64d81ff89}</UniqueID>
                 </UIInfo>
                 <Result>
@@ -394,7 +493,7 @@
                       <Pos x="1132" y="115"/>
                       <UniqueID>{4a6f449b-aaa2-486b-b6df-8838d2b57e4e}</UniqueID>
                     </UIInfo>
-                  </ControlElement>
+                  <TargetEntryScript>EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript><TargetExitScript>EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript></ControlElement>
                   <Name>WaitForFixation</Name>
                   <Result>
                     <Name>Fixated</Name>
@@ -436,21 +535,27 @@
                     <SourceResult>Broke Fixation</SourceResult>
                   </Transition>
                   <UIInfo>
-                    <Pos x="1061" y="401"/>
+                    <Pos x="1064" y="401"/>
                     <UniqueID>{4c8e9e6d-b44f-426b-9fda-f7d9c8cfa910}</UniqueID>
                   </UIInfo>
-                </StateMachineElement>
+                <EntryScript>EventInfo.setData(&quot;Event&quot;,7);
+EventInfo.updateValue();
+</EntryScript><ExitScript/></StateMachineElement>
                 
                 <Transition>
                   <Destination>Failed</Destination>
                   <Source>WaitForFixation</Source>
                   <SourceResult>NoFixation</SourceResult>
                 </Transition>
-              <StateMachineElement type="Reward"><Name>Reward</Name><Result><Name>done</Name></Result><RewardChan>1</RewardChan><RewardQty>1</RewardQty><UIInfo><Pos x="1296" y="360"/></UIInfo></StateMachineElement><Transition><Destination>Reward</Destination><Source>WaitForFixation</Source><SourceResult>Fixated</SourceResult></Transition><Transition><Destination>Succeeded</Destination><Source>Reward</Source><SourceResult>done</SourceResult></Transition></StateMachineElement>
+              <StateMachineElement type="Reward"><Name>Reward</Name><Result><Name>done</Name><UIInfo><UniqueID>{d99c8916-92e0-4001-9eaf-419ec4cebf3d}</UniqueID></UIInfo></Result><RewardChan>1</RewardChan><RewardQty>1</RewardQty><UIInfo><Pos x="1296" y="360"/><UniqueID>{a240f5a2-8169-49ed-a2ba-e3d8ee07af6a}</UniqueID></UIInfo></StateMachineElement><Transition><Destination>Succeeded</Destination><Source>Reward</Source><SourceResult>done</SourceResult></Transition><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</ExitScript><EntryScript>EventInfo.setData(&quot;Stage&quot;,2);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();
+</EntryScript><StateMachineElement type="ScriptElement"><Name>SetRewardInfo</Name><Result><Name>false</Name><UIInfo><UniqueID>{fad0ca3e-d9d4-46c4-b4f9-cb716e98c66c}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{0ad1800e-4f12-4d78-9868-cfd88938de68}</UniqueID></UIInfo></Result><Script>TrialInfo.setData(&quot;Rewarded&quot;,1);</Script><UIInfo><Pos x="1182" y="269"/><UniqueID>{95ad2219-5260-45b2-be63-626aff71a9e8}</UniqueID></UIInfo></StateMachineElement><Transition><Destination>SetRewardInfo</Destination><Source>WaitForFixation</Source><SourceResult>Fixated</SourceResult></Transition><Transition><Destination>Reward</Destination><Source>SetRewardInfo</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Reward</Destination><Source>SetRewardInfo</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
               <StateMachineElement type="StateMachine">
                 <Name>NormalTrial</Name>
                 <UIInfo>
-                  <Pos x="1628" y="538"/>
+                  <Pos x="1571" y="530"/>
                   <UniqueID>{ab53f908-fa19-4f10-9650-29e152d2f912}</UniqueID>
                 </UIInfo>
                 <Result>
@@ -515,7 +620,7 @@
                       <Pos x="535" y="172"/>
                       <UniqueID>{5a0a0cf5-dad9-4b88-b488-ee42585526eb}</UniqueID>
                     </UIInfo>
-                  </ControlElement>
+                  <TargetEntryScript>EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript><TargetExitScript>EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript></ControlElement>
                   <Result>
                     <Name>Fixated</Name>
                     <UIInfo>
@@ -555,7 +660,10 @@
                     <Source>FixationTracker</Source>
                     <SourceResult>Broke Fixation</SourceResult>
                   </Transition>
-                </StateMachineElement>
+                <EntryScript>EventInfo.setData(&quot;Event&quot;,7);
+EventInfo.updateValue();
+</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</ExitScript></StateMachineElement>
                 <StateMachineElement type="StateMachine">
                   <Name>GetChoice</Name>
                   <UIInfo>
@@ -565,7 +673,7 @@
                   <StateMachineElement type="State">
                     <Name>WaitForTargetEntry</Name>
                     <UIInfo>
-                      <Pos x="835" y="331"/>
+                      <Pos x="591" y="358"/>
                       <UniqueID>{8706ac10-3519-4adc-839c-8570edf64ae0}</UniqueID>
                     </UIInfo>
                     <ControlElement type="Choice Controller">
@@ -607,9 +715,11 @@
                           <UniqueID>{36816f86-98c9-41a8-ba03-b4c7d0448c8c}</UniqueID>
                         </UIInfo>
                       </Result>
-                    </ControlElement>
-                    <EntryScript>
-                      FixationGraphic.visible = false;
+                    <TargetEntryScript>EventInfo.setData(&quot;Event&quot;,5);
+EventInfo.updateValue();</TargetEntryScript><TargetExitScript>EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript></ControlElement>
+                    <EntryScript>																						FixationGraphic.visible = false;
+																						EventInfo.setData(&quot;Event&quot;,8);
+																						EventInfo.updateValue();
                     </EntryScript>
                     <Result>
                       <Name>ChoseLeft</Name>
@@ -652,7 +762,8 @@
                       <Source>ChoiceTracker</Source>
                       <SourceResult>Total Time Exceeded</SourceResult>
                     </Transition>
-                    <ExitScript/>
+                    <ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</ExitScript>
                   </StateMachineElement>
                   <StateMachineElement type="State">
                     <Name>RequireLeftFixation</Name>
@@ -660,7 +771,10 @@
                       <Pos x="995" y="220"/>
                       <UniqueID>{1f595a01-4f18-4ba6-ac33-4244485f0dc3}</UniqueID>
                     </UIInfo>
-                    <EntryScript>																						RightGraphic.visible = false;
+                    <EntryScript>																						EventInfo.setData(&quot;Stage&quot;,6);
+																						EventInfo.setData(&quot;Event&quot;,3);
+																						EventInfo.updateValue();
+																						RightGraphic.visible = false;
 																						RewardR1.visible = false;
 																						RewardR2.visible = false;
 																						RewardR3.visible = false;
@@ -712,7 +826,7 @@
                         <Pos x="638" y="133"/>
                         <UniqueID>{c495b3f7-0679-4394-adbc-3f34f2c51143}</UniqueID>
                       </UIInfo>
-                    </ControlElement>
+                    <TargetEntryScript>EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript><TargetExitScript>EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript></ControlElement>
                     <ExitScript/>
                     <Result>
                       <Name>ContinuedFixation</Name>
@@ -753,7 +867,12 @@
                       <Source>FixationTracker</Source>
                       <SourceResult>Broke Fixation</SourceResult>
                     </Transition>
-                  </StateMachineElement>
+                  <FrameScript>if(FrameCounter.value&lt;1)
+{
+	FrameCounter.value = 1;
+	EventInfo.setData(&quot;Event&quot;,9);
+	EventInfo.updateValue();
+}</FrameScript><Parameter type="Numeric"><Name>FrameCounter</Name><UIInfo><Pos x="618" y="600"/><UniqueID>{c6975415-6d08-4218-90d3-17ff95f62ff9}</UniqueID></UIInfo></Parameter></StateMachineElement>
                   <Result>
                     <Name>DidntChoose</Name>
                     <UIInfo>
@@ -767,7 +886,10 @@
                       <Pos x="998" y="425"/>
                       <UniqueID>{42025fd6-e7c4-447f-a16c-8bd41df7269d}</UniqueID>
                     </UIInfo>
-                    <EntryScript>																						LeftGraphic.visible = false;
+                    <EntryScript>																						EventInfo.setData(&quot;Stage&quot;,6);
+																						EventInfo.setData(&quot;Event&quot;,3);
+																						EventInfo.updateValue();
+																						LeftGraphic.visible = false;
 																						RewardL1.visible = false;
 																						RewardL2.visible = false;
 																						RewardL3.visible = false;
@@ -818,7 +940,7 @@
                         <Pos x="516" y="183"/>
                         <UniqueID>{5bb94072-f995-4ea0-ba6b-68297171136f}</UniqueID>
                       </UIInfo>
-                    </ControlElement>
+                    <TargetEntryScript>EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript><TargetExitScript>EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript></ControlElement>
                     <ExitScript/>
                     <Result>
                       <Name>BrokeFixation</Name>
@@ -859,22 +981,15 @@
                       <Source>FixationTracker</Source>
                       <SourceResult>Reaquistion Time Exceeded</SourceResult>
                     </Transition>
-                  </StateMachineElement>
-                  <Transition>
-                    <Destination>DidntChoose</Destination>
-                    <Source>WaitForTargetEntry</Source>
-                    <SourceResult>DidntChoose</SourceResult>
-                  </Transition>
-                  <Transition>
-                    <Destination>RequireLeftFixation</Destination>
-                    <Source>WaitForTargetEntry</Source>
-                    <SourceResult>ChoseLeft</SourceResult>
-                  </Transition>
-                  <Transition>
-                    <Destination>RequireRightFixation</Destination>
-                    <Source>WaitForTargetEntry</Source>
-                    <SourceResult>ChoseRight</SourceResult>
-                  </Transition>
+                  <FrameScript>if(FrameCounter.value&lt;1)
+{
+	FrameCounter.value = 1;
+	EventInfo.setData(&quot;Event&quot;,9);
+	EventInfo.updateValue();
+}</FrameScript><Parameter type="Numeric"><Name>FrameCounter</Name><UIInfo><Pos x="441" y="589"/><UniqueID>{47ec31dd-5e6b-4922-845b-672a1c01b268}</UniqueID></UIInfo></Parameter></StateMachineElement>
+                  
+                  
+                  
                   <InitialElement>WaitForTargetEntry</InitialElement>
                   <Result>
                     <Name>BrokeFixation</Name>
@@ -910,7 +1025,20 @@
                     <Source>RequireRightFixation</Source>
                     <SourceResult>ContinuedFixating</SourceResult>
                   </Transition>
-                </StateMachineElement>
+                <EntryScript>EventInfo.setData(&quot;Stage&quot;,5);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</ExitScript><StateMachineElement type="ScriptElement"><Name>MarkTargetHoldLeft</Name><Result><Name>false</Name><UIInfo><UniqueID>{628383ed-ca8b-42d6-a4ee-609b2cc8af28}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{c79a8765-da12-46e0-bf1a-fa315505df16}</UniqueID></UIInfo></Result><Script>EventInfo.setData(&quot;Stage&quot;,6);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();
+TrialInfo.setData(&quot;ChosenSide&quot;,0);
+TrialInfo.setData(&quot;ChosenCol&quot;,Number(LeftGraphic.red&gt;0));
+return true;</Script><UIInfo><Pos x="802" y="265"/><UniqueID>{a82c6c27-3dbe-44ca-8669-e3736fe15e18}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>MarkTargetHoldRight</Name><Result><Name>false</Name><UIInfo><UniqueID>{50ba625a-cf05-4328-a29c-62474b5137e0}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{9f9ed0e6-1996-40c7-bfc9-ffb08d58ee8e}</UniqueID></UIInfo></Result><Script>EventInfo.setData(&quot;Stage&quot;,6);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();
+TrialInfo.setData(&quot;ChosenSide&quot;,1);
+TrialInfo.setData(&quot;ChosenCol&quot;,Number(RightGraphic.red&gt;0));
+return true;</Script><UIInfo><Pos x="802" y="407"/><UniqueID>{c0c93110-4b9f-494e-a5df-89b7a25ddc6d}</UniqueID></UIInfo></StateMachineElement><Transition><Destination>MarkTargetHoldLeft</Destination><Source>WaitForTargetEntry</Source><SourceResult>ChoseLeft</SourceResult></Transition><Transition><Destination>RequireLeftFixation</Destination><Source>MarkTargetHoldLeft</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>RequireLeftFixation</Destination><Source>MarkTargetHoldLeft</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>MarkTargetHoldRight</Destination><Source>WaitForTargetEntry</Source><SourceResult>ChoseRight</SourceResult></Transition><Transition><Destination>RequireRightFixation</Destination><Source>MarkTargetHoldRight</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>RequireRightFixation</Destination><Source>MarkTargetHoldRight</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>DidntChoose</Destination><Source>WaitForTargetEntry</Source><SourceResult>DidntChoose</SourceResult></Transition></StateMachineElement>
                 <StateMachineElement type="StateMachine">
                   <Name>RewardFeedback</Name>
                   <UIInfo>
@@ -1146,10 +1274,10 @@
                         <UniqueID>{4268846d-9388-4a93-9ec1-1dc5aea45521}</UniqueID>
                       </UIInfo>
                     </Result>
-                    <Script>
-                      if(RightGraphic.visible) FeedbackRing.x = 525;
-                      else
-                      FeedbackRing.x = 275; return true;
+                    <Script>																						if(RightGraphic.visible) 
+																							FeedbackRing.x = 525;
+																						else
+																							FeedbackRing.x = 275; return true;
                     </Script>
                     <UIInfo>
                       <Pos x="312" y="381"/>
@@ -1160,11 +1288,11 @@
                     <Color A="255" B="255" G="170" R="0">#00aaff</Color>
                     <Name>FeedbackRing</Name>
                     <Position x="200" y="300"/>
-                    <Radius>70</Radius>
+                    <Radius>69</Radius>
                     <UIInfo>
                       <Pos x="471" y="677"/>
                     <UniqueID>{9dbd5d98-e685-46ec-8455-22a1768edd4b}</UniqueID></UIInfo>
-                  <Outline>true</Outline><OutlineThickness>10</OutlineThickness></VisualElement>
+                  <Outline>true</Outline><OutlineThickness>3</OutlineThickness></VisualElement>
                   <Transition>
                     <Destination>RewardDecision</Destination>
                     <Source>SetFeedbackRingPosition</Source>
@@ -1189,18 +1317,19 @@
                       <Result>
                         <Name>true</Name>
                       <UIInfo><UniqueID>{19994d27-8bbf-4d19-b10e-65c9eb90f06b}</UniqueID></UIInfo></Result>
-                      <Script>
-                        if(RightGraphic.visible) FeedbackRing.setColor( RightGraphic.red, RightGraphic.green, RightGraphic.blue);
-                        else FeedbackRing.setColor( LeftGraphic.red, LeftGraphic.green, LeftGraphic.blue); return true;
+                      <Script>																								if(RightGraphic.visible) 
+																									FeedbackRing.setColor( RightGraphic.red, RightGraphic.green, RightGraphic.blue);
+																								else 
+																									FeedbackRing.setColor( LeftGraphic.red, LeftGraphic.green, LeftGraphic.blue); return true;
                       </Script>
                       <UIInfo>
-                        <Pos x="524" y="308"/>
+                        <Pos x="423" y="130"/>
                       <UniqueID>{f3f3ac52-b1c6-4e7b-96e5-0ad4221368a7}</UniqueID></UIInfo>
                     </StateMachineElement>
                     <StateMachineElement type="State">
                       <Name>PresentFeedbackRing</Name>
                       <UIInfo>
-                        <Pos x="695" y="318"/>
+                        <Pos x="652" y="149"/>
                         <UniqueID>{8e508e85-0f51-4850-8371-5fef33a5c40e}</UniqueID>
                       </UIInfo>
                       <ControlElement type="Stopwatch Controller">
@@ -1218,8 +1347,12 @@
                           <UniqueID>{ad1bffb4-659f-4490-9ecf-f1ac269697d4}</UniqueID>
                         </UIInfo>
                       </ControlElement>
-                      <EntryScript>FeedbackRing.visible = true;</EntryScript>
-                      <ExitScript>FeedbackRing.visible = false;</ExitScript>
+                      <EntryScript>FeedbackRing.visible = true;
+EventInfo.setData(&quot;Event&quot;,9);
+EventInfo.updateValue();</EntryScript>
+                      <ExitScript>FeedbackRing.visible = false;
+EventInfo.setData(&quot;Event&quot;,8);
+EventInfo.updateValue();</ExitScript>
                       <Result>
                         <Name>Done</Name>
                         <UIInfo>
@@ -1248,7 +1381,7 @@
                         </UIInfo>
                       </Result>
                       <UIInfo>
-                        <Pos x="848" y="316"/>
+                        <Pos x="1067" y="307"/>
                         <UniqueID>{fecfdef5-605d-400f-b4f0-9e056d356f5a}</UniqueID>
                       </UIInfo>
                       <Script>RewardList = [RewardL1,RewardL2,RewardL3,RewardL4,RewardL5,RewardL6,RewardL7,RewardL8];
@@ -1275,7 +1408,7 @@ return false;</Script>
                         </UIInfo>
                       </Result>
                       <UIInfo>
-                        <Pos x="1121" y="287"/>
+                        <Pos x="1285" y="282"/>
                         <UniqueID>{435d1acb-680a-44be-84ed-14f13104f198}</UniqueID>
                       </UIInfo>
                       <RewardQty>1</RewardQty>
@@ -1290,7 +1423,7 @@ return false;</Script>
                     <StateMachineElement type="State">
                       <Name>TimeoutPeriod</Name>
                       <UIInfo>
-                        <Pos x="1242" y="483"/>
+                        <Pos x="1399" y="469"/>
                         <UniqueID>{6efdc442-af15-4530-93b4-b3a2c93dba0a}</UniqueID>
                       </UIInfo>
                       <ControlElement type="Stopwatch Controller">
@@ -1333,7 +1466,7 @@ else
                     <Result>
                       <Name>Done</Name>
                       <UIInfo>
-                        <Pos x="1020" y="139"/>
+                        <Pos x="1208" y="124"/>
                         <UniqueID>{8767a067-3f08-4f71-922b-e0c5641d4fdd}</UniqueID>
                       </UIInfo>
                     </Result>
@@ -1348,24 +1481,33 @@ else
                       <Source>ChangeRingColor</Source>
                       <SourceResult>true</SourceResult>
                     </Transition>
-                    <Transition>
-                      <Destination>hasNextReward</Destination>
-                      <Source>PresentFeedbackRing</Source>
-                      <SourceResult>Done</SourceResult>
-                    </Transition>
+                    
                     <Transition>
                       <Destination>TimeoutPeriod</Destination>
                       <Source>Juice</Source>
                       <SourceResult>done</SourceResult>
                     </Transition>
                     
-                  <Parameter type="PseudorandomInt"><Max>7</Max><Min>0</Min><Name>RewardSelector</Name><UIInfo><Pos x="879" y="568"/><UniqueID>{afc4b315-563a-4411-a134-038773bcc700}</UniqueID></UIInfo><Value>1</Value></Parameter><Parameter type="Numeric"><Name>RewardsChecked</Name><UIInfo><Pos x="1027" y="566"/><UniqueID>{8111e445-e0ba-4b71-82f1-7f18e86bf67b}</UniqueID></UIInfo><Value>0</Value></Parameter><Transition><Destination>Done</Destination><Source>hasNextReward</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>hasNextReward</Destination><Source>TimeoutPeriod</Source><SourceResult>done</SourceResult></Transition><Parameter type="Range"><Increment>1</Increment><Max>8</Max><Min>0</Min><Name>CurrentReward</Name><UIInfo><Pos x="952" y="696"/><UniqueID>{22480de2-8c1e-4312-8a21-fbedddfb5d24}</UniqueID></UIInfo></Parameter></StateMachineElement>
+                  <Parameter type="PseudorandomInt"><Max>7</Max><Min>0</Min><Name>RewardSelector</Name><UIInfo><Pos x="879" y="568"/><UniqueID>{afc4b315-563a-4411-a134-038773bcc700}</UniqueID></UIInfo><Value>1</Value></Parameter><Parameter type="Numeric"><Name>RewardsChecked</Name><UIInfo><Pos x="1027" y="566"/><UniqueID>{8111e445-e0ba-4b71-82f1-7f18e86bf67b}</UniqueID></UIInfo><Value>0</Value></Parameter><Transition><Destination>Done</Destination><Source>hasNextReward</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>hasNextReward</Destination><Source>TimeoutPeriod</Source><SourceResult>done</SourceResult></Transition><Parameter type="Range"><Increment>1</Increment><Max>8</Max><Min>0</Min><Name>CurrentReward</Name><UIInfo><Pos x="952" y="696"/><UniqueID>{22480de2-8c1e-4312-8a21-fbedddfb5d24}</UniqueID></UIInfo></Parameter><EntryScript>TrialInfo.setData(&quot;Rewarded&quot;,1);</EntryScript><StateMachineElement type="ScriptElement"><Name>MarkRewardStage</Name><Result><Name>false</Name><UIInfo><UniqueID>{eeb26a80-148b-4271-8a2e-42300c2c7cdf}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{d7953560-e7ba-499d-8e17-ee041594468a}</UniqueID></UIInfo></Result><Script>EventInfo.setData(&quot;Stage&quot;,8);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();</Script><UIInfo><Pos x="674" y="335"/><UniqueID>{1b315438-7d53-4de0-a4a4-2c6f88ac034b}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>MarkEndFeedbackStage</Name><Result><Name>false</Name><UIInfo><UniqueID>{3724a7d4-bc1e-4e73-a1cd-3559dbd3c554}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{d4077e69-0f8c-4ce8-a6db-a5e5384153c8}</UniqueID></UIInfo></Result><Script>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</Script><UIInfo><Pos x="458" y="338"/><UniqueID>{d5958f7e-a6f2-42fd-9e61-67c303d4b92f}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>MarkColorRewarded</Name><Result><Name>false</Name><UIInfo><UniqueID>{b4375834-3305-424a-88ff-e180f3234d23}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{a798b9af-f49c-4b43-9fbc-764431b637f5}</UniqueID></UIInfo></Result><UIInfo><Pos x="846" y="330"/><UniqueID>{0c9b40a3-8858-41a5-b2af-b65984b3dbb7}</UniqueID></UIInfo><Script>if(RightGraphic.visible) 
+	if(RightGraphic.green != 0)
+		EventInfo.setData(&quot;Event&quot;,10);
+	else
+		EventInfo.setData(&quot;Event&quot;,12);
+else 
+	if(LeftGraphic.green != 0)
+		EventInfo.setData(&quot;Event&quot;,10);
+	else
+		EventInfo.setData(&quot;Event&quot;,12);
+EventInfo.updateValue();</Script></StateMachineElement><Transition><Destination>MarkEndFeedbackStage</Destination><Source>PresentFeedbackRing</Source><SourceResult>Done</SourceResult></Transition><Transition><Destination>MarkRewardStage</Destination><Source>MarkEndFeedbackStage</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>MarkRewardStage</Destination><Source>MarkEndFeedbackStage</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>MarkColorRewarded</Destination><Source>MarkRewardStage</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>MarkColorRewarded</Destination><Source>MarkRewardStage</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>hasNextReward</Destination><Source>MarkColorRewarded</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>hasNextReward</Destination><Source>MarkColorRewarded</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
                   <StateMachineElement type="StateMachine">
                     <Name>NoRewardFeedback</Name>
                     <StateMachineElement type="State">
                       <Name>PresentFeedbackRing</Name>
                       <UIInfo>
-                        <Pos x="746" y="400"/>
+                        <Pos x="475" y="151"/>
                         <UniqueID>{8e508e85-0f51-4850-8371-5fef33a5c40e}</UniqueID>
                       </UIInfo>
                       <ControlElement type="Stopwatch Controller">
@@ -1383,8 +1525,12 @@ else
                           <UniqueID>{ad1bffb4-659f-4490-9ecf-f1ac269697d4}</UniqueID>
                         </UIInfo>
                       </ControlElement>
-                      <EntryScript>FeedbackRing.visible = true;</EntryScript>
-                      <ExitScript>FeedbackRing.visible = false;</ExitScript>
+                      <EntryScript>EventInfo.setData(&quot;Event&quot;,9);
+EventInfo.updateValue();
+FeedbackRing.visible = true;</EntryScript>
+                      <ExitScript>FeedbackRing.visible = false;
+EventInfo.setData(&quot;Event&quot;,8);
+EventInfo.updateValue();</ExitScript>
                       <Result>
                         <Name>Done</Name>
                         <UIInfo>
@@ -1402,19 +1548,30 @@ else
                       <Pos x="671" y="521"/>
                       <UniqueID>{3d2a42cf-ee95-4766-b10d-51797dd0cfae}</UniqueID>
                     </UIInfo>
-                    <InitialElement>CheckForGreyFeedback</InitialElement>
+                    <InitialElement>SetFeedbackColor</InitialElement>
                     <Result>
                       <Name>Done</Name>
                       <UIInfo>
-                        <Pos x="919" y="410"/>
+                        <Pos x="809" y="470"/>
                       <UniqueID>{31db135d-7e10-4854-aeb3-7f51bd44e7cb}</UniqueID></UIInfo>
                     </Result>
-                    <Transition>
-                      <Destination>Done</Destination>
-                      <Source>PresentFeedbackRing</Source>
-                      <SourceResult>Done</SourceResult>
-                    </Transition>
-                  <Parameter type="RandomInt"><Name>UseGrey</Name><UIInfo><Pos x="727" y="590"/><UniqueID>{415b10d7-7928-4ebc-aefa-3f3b7935d559}</UniqueID></UIInfo></Parameter><StateMachineElement type="ScriptElement"><Name>CheckForGreyFeedback</Name><Result><Name>false</Name><UIInfo><UniqueID>{f8600956-9397-4d32-89e4-8a313f673199}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{3723d0a4-a848-4e79-bafe-80c095bfcdb7}</UniqueID></UIInfo></Result><Script>UseGrey.randomize();if(UseGrey.value)FeedbackRing.setColor(128,128,128);return true;</Script><UIInfo><Pos x="537" y="386"/><UniqueID>{dcbd556a-8b0d-4255-85e5-d6d2858e8bba}</UniqueID></UIInfo></StateMachineElement><Transition><Destination>PresentFeedbackRing</Destination><Source>CheckForGreyFeedback</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>PresentFeedbackRing</Destination><Source>CheckForGreyFeedback</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
+                    
+                  <Parameter type="RandomInt"><Name>UseGrey</Name><UIInfo><Pos x="458" y="602"/><UniqueID>{415b10d7-7928-4ebc-aefa-3f3b7935d559}</UniqueID></UIInfo></Parameter><StateMachineElement type="ScriptElement"><Name>SetFeedbackColor</Name><Result><Name>false</Name><UIInfo><UniqueID>{f8600956-9397-4d32-89e4-8a313f673199}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{3723d0a4-a848-4e79-bafe-80c095bfcdb7}</UniqueID></UIInfo></Result><Script>if(GreyFeedback.value)
+	FeedbackRing.setColor(128,128,128);
+return true;</Script><UIInfo><Pos x="199" y="139"/><UniqueID>{dcbd556a-8b0d-4255-85e5-d6d2858e8bba}</UniqueID></UIInfo></StateMachineElement><Transition><Destination>PresentFeedbackRing</Destination><Source>SetFeedbackColor</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>PresentFeedbackRing</Destination><Source>SetFeedbackColor</Source><SourceResult>true</SourceResult></Transition><StateMachineElement type="ScriptElement"><Name>MarkEndFeedbackStage</Name><Result><Name>false</Name><UIInfo><UniqueID>{fb8e200a-e40b-4e31-b11b-6cae5cef3307}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{b3c0e7ff-9ff1-47d5-ac10-d6ae8a848b07}</UniqueID></UIInfo></Result><Script>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</Script><UIInfo><Pos x="614" y="239"/><UniqueID>{7f32c64b-854f-4946-ad4e-bc5821d2464b}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>MarkRewardStage</Name><Result><Name>false</Name><UIInfo><UniqueID>{d693dad4-bc63-4e38-8e9c-450bebf605c7}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{e0465adc-d261-4686-9e32-0419fa73851c}</UniqueID></UIInfo></Result><Script>EventInfo.setData(&quot;Stage&quot;,8);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();</Script><UIInfo><Pos x="209" y="369"/><UniqueID>{0226d55f-c4f5-4560-aa77-802fd5e65ea1}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>MarkColorNotRewarded</Name><Result><Name>false</Name><UIInfo><UniqueID>{d559746d-12fc-4eb8-87da-815eef9e47e8}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{a0e15644-c58f-4b37-af2f-cc3b9ebf6ffa}</UniqueID></UIInfo></Result><Script>if(RightGraphic.visible) 
+	if(RightGraphic.green != 0)
+		EventInfo.setData(&quot;Event&quot;,11);
+	else
+		EventInfo.setData(&quot;Event&quot;,13);
+else 
+	if(LeftGraphic.green != 0)
+		EventInfo.setData(&quot;Event&quot;,11);
+	else
+		EventInfo.setData(&quot;Event&quot;,13);
+EventInfo.updateValue();</Script><UIInfo><Pos x="494" y="448"/><UniqueID>{822f9f22-7766-4953-8573-f866583a11fa}</UniqueID></UIInfo></StateMachineElement><Transition><Destination>MarkEndFeedbackStage</Destination><Source>PresentFeedbackRing</Source><SourceResult>Done</SourceResult></Transition><Transition><Destination>MarkRewardStage</Destination><Source>MarkEndFeedbackStage</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>MarkRewardStage</Destination><Source>MarkEndFeedbackStage</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>MarkColorNotRewarded</Destination><Source>MarkRewardStage</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>MarkColorNotRewarded</Destination><Source>MarkRewardStage</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>Done</Destination><Source>MarkColorNotRewarded</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Done</Destination><Source>MarkColorNotRewarded</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
                   <Transition>
                     <Destination>RewardFeedback</Destination>
                     <Source>RewardDecision</Source>
@@ -1442,7 +1599,10 @@ else
                     <Source>NoRewardFeedback</Source>
                     <SourceResult>Done</SourceResult>
                   </Transition>
-                </StateMachineElement>
+                <EntryScript>EventInfo.setData(&quot;Stage&quot;,7);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</ExitScript></StateMachineElement>
                 <InitialElement>WaitForFixation</InitialElement>
                 <StateMachineElement type="StateMachine">
                   <Name>PresentTargets</Name>
@@ -1491,20 +1651,22 @@ else
                       <UIInfo>
                         <Pos x="912" y="174"/>
                       <UniqueID>{4d7b1b3c-5115-4878-89b0-a6287322058a}</UniqueID></UIInfo>
-                    </ControlElement>
-                    <EntryScript>
-																						                      if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
-																						                      {
-																						                      LeftGraphic.setColor(255,0,0);
-																						                      RightGraphic.setColor(0,255,0);
-																						                      }
-																						                      else
-																						                      {
-																						                      LeftGraphic.setColor(0,255,0);
-																						                      RightGraphic.setColor(255,0,0);
-																						                      }
-																						                      LeftGraphic.visible = true;
-																						                      RightGraphic.visible = true;
+                    <TargetExitScript>EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript></ControlElement>
+                    <EntryScript>																																												EventInfo.setData(&quot;Event&quot;,9);
+																																												EventInfo.updateValue();
+
+																																												if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
+																																												{
+																																													LeftGraphic.setColor(255,0,0);
+																																													RightGraphic.setColor(0,255,0);
+																																												}
+																																												else
+																																												{
+																																													LeftGraphic.setColor(0,255,0);
+																																													RightGraphic.setColor(255,0,0);
+																																												}
+																																												LeftGraphic.visible = true;
+																																												RightGraphic.visible = true;
                     </EntryScript>
                     <Name>TargetsAppear</Name>
                     <Result>
@@ -1560,7 +1722,11 @@ else
                     <SourceResult>BrokeFixation</SourceResult>
                   </Transition>
                   <InitialElement>TargetsAppear</InitialElement>
-                <Parameter type="Boolean"><Name>ForceRedLeft</Name><UIInfo><Pos x="927" y="598"/><UniqueID>{0a9d5f15-446d-4f1c-bc6a-b0219ba001f7}</UniqueID></UIInfo><UIEnabled>true</UIEnabled></Parameter><Parameter type="Boolean"><Name>ForceGreenLeft</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1073" y="599"/><UniqueID>{e9468a09-dfb5-4549-9ae0-f5376ebdfd28}</UniqueID></UIInfo></Parameter></StateMachineElement>
+                <Parameter type="Boolean"><Name>ForceRedLeft</Name><UIInfo><Pos x="927" y="598"/><UniqueID>{0a9d5f15-446d-4f1c-bc6a-b0219ba001f7}</UniqueID></UIInfo><UIEnabled>true</UIEnabled></Parameter><Parameter type="Boolean"><Name>ForceGreenLeft</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1073" y="599"/><UniqueID>{e9468a09-dfb5-4549-9ae0-f5376ebdfd28}</UniqueID></UIInfo></Parameter><EntryScript>EventInfo.setData(&quot;Stage&quot;,3);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();
+</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</ExitScript></StateMachineElement>
                 <Transition>
                   <Destination>Failed</Destination>
                   <Source>WaitForFixation</Source>
@@ -1599,7 +1765,7 @@ else
                   <Radius>20</Radius>
                   <UIInfo>
                     <Pos x="884" y="719"/>
-                  </UIInfo>
+                  <UniqueID>{efb3eecb-4886-493e-89dc-67982c481727}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1609,7 +1775,7 @@ else
                   <Radius>20</Radius>
                   <UIInfo>
                     <Pos x="990" y="723"/>
-                  </UIInfo>
+                  <UniqueID>{751c88fe-e075-4246-9766-fd5f1756e56f}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <Transition>
@@ -1644,8 +1810,8 @@ else
                   <Position x="275" y="260"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1579" y="764"/>
-                  </UIInfo>
+                    <Pos x="1421" y="764"/>
+                  <UniqueID>{fa25f56c-51ee-414e-bdc8-fef4bee429b3}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1654,7 +1820,7 @@ else
                   <Position x="303" y="272"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1684" y="821"/>
+                    <Pos x="1526" y="821"/>
                   <UniqueID>{f8427622-5da7-4c8a-a575-55c00a114d63}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
@@ -1664,8 +1830,8 @@ else
                   <Position x="315" y="300"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1743" y="910"/>
-                  </UIInfo>
+                    <Pos x="1585" y="910"/>
+                  <UniqueID>{58fea7a3-c883-4efc-b8c4-096a95d05fe5}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1674,8 +1840,8 @@ else
                   <Position x="303" y="328"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1684" y="998"/>
-                  </UIInfo>
+                    <Pos x="1526" y="998"/>
+                  <UniqueID>{b77c150d-37f1-42f3-a14e-7dbc5b97b493}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1684,8 +1850,8 @@ else
                   <Position x="275" y="340"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1582" y="1041"/>
-                  </UIInfo>
+                    <Pos x="1424" y="1041"/>
+                  <UniqueID>{b9ec2cf7-e4bd-419d-8304-9108796acf1e}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1694,8 +1860,8 @@ else
                   <Position x="247" y="328"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1507" y="994"/>
-                  </UIInfo>
+                    <Pos x="1349" y="994"/>
+                  <UniqueID>{d75f7cc2-b767-4d04-aeb7-037757e90d09}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1704,8 +1870,8 @@ else
                   <Position x="235" y="300"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1449" y="904"/>
-                  </UIInfo>
+                    <Pos x="1291" y="904"/>
+                  <UniqueID>{351c98bf-85e8-4ee3-a621-980cd078e368}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1714,8 +1880,8 @@ else
                   <Position x="247" y="272"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1499" y="834"/>
-                  </UIInfo>
+                    <Pos x="1341" y="834"/>
+                  <UniqueID>{5a461bfb-b2f7-472b-9a43-0673077205f9}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
 
@@ -1725,8 +1891,8 @@ else
                   <Position x="525" y="260"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="2003" y="734"/>
-                  </UIInfo>
+                    <Pos x="1845" y="734"/>
+                  <UniqueID>{532e4062-0507-43c8-a095-ff8abb80db6d}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1735,8 +1901,8 @@ else
                   <Position x="553" y="272"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="2098" y="788"/>
-                  </UIInfo>
+                    <Pos x="1940" y="788"/>
+                  <UniqueID>{f9e624e6-9e73-4253-bca2-02b134c973bb}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1745,8 +1911,8 @@ else
                   <Position x="565" y="300"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="2158" y="878"/>
-                  </UIInfo>
+                    <Pos x="2000" y="878"/>
+                  <UniqueID>{800dc63c-2b8b-439e-8a7f-f8edc11e2da8}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1755,8 +1921,8 @@ else
                   <Position x="553" y="328"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="2139" y="964"/>
-                  </UIInfo>
+                    <Pos x="1981" y="964"/>
+                  <UniqueID>{362384b2-b511-4037-9f27-995e7ec7b4cd}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1765,8 +1931,8 @@ else
                   <Position x="525" y="340"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="2057" y="1018"/>
-                  </UIInfo>
+                    <Pos x="1899" y="1018"/>
+                  <UniqueID>{2c0fcaac-0e65-447c-9c2f-84304ba36a13}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1775,8 +1941,8 @@ else
                   <Position x="497" y="328"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1952" y="953"/>
-                  </UIInfo>
+                    <Pos x="1794" y="953"/>
+                  <UniqueID>{558a3012-0fd9-43ad-ac2b-712cdc091eba}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1785,8 +1951,8 @@ else
                   <Position x="485" y="300"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1866" y="866"/>
-                  </UIInfo>
+                    <Pos x="1708" y="866"/>
+                  <UniqueID>{5889c5fc-a7e7-4ea4-9dd0-59c0aca455a7}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <VisualElement type="Circle Graphic">
@@ -1795,8 +1961,8 @@ else
                   <Position x="497" y="272"/>
                   <Radius>9</Radius>
                   <UIInfo>
-                    <Pos x="1912" y="775"/>
-                  </UIInfo>
+                    <Pos x="1754" y="775"/>
+                  <UniqueID>{ae225bc2-226e-4cf9-8480-b75cfddd0c1b}</UniqueID></UIInfo>
                   <Visible>false</Visible>
                 </VisualElement>
                 <StateMachineElement type="StateMachine">
@@ -1850,7 +2016,7 @@ else
                       </UIInfo>
                       <SignalChannel>PositionChannel</SignalChannel>
                       <TimeUnits>Ms</TimeUnits>
-                    </ControlElement>
+                    <TargetExitScript>EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript></ControlElement>
                     <Result>
                       <Name>ContinuedFixation</Name>
                       <UIInfo>
@@ -1891,10 +2057,12 @@ else
                       <Source>FixationTracker</Source>
                       <SourceResult>Success</SourceResult>
                     </Transition>
-                    <EntryScript>LRewards =[RewardL1,RewardL2,RewardL3,RewardL4,RewardL5,RewardL6,RewardL7,RewardL8];
+                    <EntryScript>EventInfo.setData(&quot;Event&quot;,9);
+EventInfo.updateValue();
+LRewards =[RewardL1,RewardL2,RewardL3,RewardL4,RewardL5,RewardL6,RewardL7,RewardL8];
 RRewards =[RewardR1,RewardR2,RewardR3,RewardR4,RewardR5,RewardR6,RewardR7,RewardR8];
-GreenRewardList = LRewards;
-RedRewardList = RRewards;
+GreenRewardList = RRewards;
+RedRewardList = LRewards;
 if(LeftGraphic.green &gt; 0)
 {
 	GreenRewardList = LRewards;
@@ -1918,11 +2086,35 @@ trunc_exp = (1-Math.pow(Math.E,-2.5))*(randDouble.value);
 trialFixationTargetOverlapTime = 500 - Math.log(1-trunc_exp)*250;   
 Delay.value = trialFixationTargetOverlapTime;
 Timer.restart();</EntryScript>
-                  <Parameter type="Timer"><Name>Timer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="721" y="696"/></UIInfo></Parameter><ControlElement type="Script Controller"><Name>RandCountdown</Name><Result><Name>Done</Name></Result><UIInfo><Pos x="781" y="160"/></UIInfo><Script>Timer.updateTimeValue();  return Timer.value &gt;= Delay.value;</Script></ControlElement><Transition><Destination>ContinuedFixation</Destination><Source>RandCountdown</Source><SourceResult>Done</SourceResult></Transition><Parameter type="RandomDouble"><Name>randDouble</Name><UIInfo><Pos x="837" y="696"/></UIInfo></Parameter><Parameter type="Numeric"><Name>Delay</Name><UIInfo><Pos x="946" y="700"/></UIInfo></Parameter></StateMachineElement>
+                  <Parameter type="Timer"><Name>Timer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="721" y="696"/><UniqueID>{da694444-0c85-4047-9b22-62e362e1cc8b}</UniqueID></UIInfo></Parameter><ControlElement type="Script Controller"><Name>RandCountdown</Name><Result><Name>Done</Name><UIInfo><UniqueID>{4312706c-d46e-4449-9038-a4dc7ce392c1}</UniqueID></UIInfo></Result><UIInfo><Pos x="781" y="160"/><UniqueID>{ca31cf29-715a-4cbd-9836-beb0b7f2c274}</UniqueID></UIInfo><Script>Timer.updateTimeValue();  return Timer.value &gt;= Delay.value;</Script></ControlElement><Transition><Destination>ContinuedFixation</Destination><Source>RandCountdown</Source><SourceResult>Done</SourceResult></Transition><Parameter type="RandomDouble"><Name>randDouble</Name><UIInfo><Pos x="837" y="696"/><UniqueID>{9ba2fba2-5a0a-4c83-84c0-64ad46477a06}</UniqueID></UIInfo></Parameter><Parameter type="Numeric"><Name>Delay</Name><UIInfo><Pos x="946" y="700"/><UniqueID>{e9e0051a-0435-4b35-8504-f6d59c7909ec}</UniqueID></UIInfo></Parameter></StateMachineElement>
                   <UIInfo>
                     <Pos x="1110" y="400"/>
                   <UniqueID>{2fdc3789-3af3-4b3f-a6d4-acae31da6a4a}</UniqueID></UIInfo>
-                <Result><Name>ContinuedFixation</Name><UIInfo><Pos x="1390" y="356"/><UniqueID>{cc8eef23-74af-4c11-9193-72bc19e30e09}</UniqueID></UIInfo></Result><Result><Name>BrokeFixation</Name><UIInfo><Pos x="1378" y="463"/><UniqueID>{21745791-11d8-4628-8f08-82a5fd5f4aef}</UniqueID></UIInfo></Result><Parameter type="Numeric"><Name>GreenRewards</Name><UIInfo><Pos x="911" y="738"/><UniqueID>{61e50414-4b4e-4336-bdb9-d9d1b9744868}</UniqueID></UIInfo></Parameter><Parameter type="Numeric"><Name>RedRewards</Name><UIInfo><Pos x="1015" y="741"/><UniqueID>{69e1c515-9c51-4728-a8a5-a51f378618ab}</UniqueID></UIInfo></Parameter><StateMachineElement type="ScriptElement"><Name>SetRewardAmounts</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><UIInfo><Pos x="864" y="413"/></UIInfo><Script>switch(TrialType.value%10)
+                <Result><Name>ContinuedFixation</Name><UIInfo><Pos x="1390" y="356"/><UniqueID>{cc8eef23-74af-4c11-9193-72bc19e30e09}</UniqueID></UIInfo></Result><Result><Name>BrokeFixation</Name><UIInfo><Pos x="1475" y="536"/><UniqueID>{21745791-11d8-4628-8f08-82a5fd5f4aef}</UniqueID></UIInfo></Result><Transition><Destination>ContinuedFixation</Destination><Source>DisplayRewards</Source><SourceResult>ContinuedFixation</SourceResult></Transition><InitialElement>DisplayRewards</InitialElement><Parameter type="PseudorandomInt"><Name>RewardSelector</Name><UIInfo><Pos x="1137" y="743"/><UniqueID>{c14a4e41-6017-446e-987f-6ae0cb3ed113}</UniqueID></UIInfo><Max>7</Max></Parameter><EntryScript>EventInfo.setData(&quot;Stage&quot;,4);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();
+</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();</ExitScript><StateMachineElement type="ScriptElement"><Name>MarkBrokenFixation</Name><Result><Name>false</Name><UIInfo><UniqueID>{fd5d0d02-e51b-40c3-8e3f-99cb35ea9860}</UniqueID></UIInfo></Result><Result><Name>true</Name><UIInfo><UniqueID>{480f89ff-54bb-4665-bfe0-86256735b251}</UniqueID></UIInfo></Result><Script>EventInfo.setData(&quot;Event&quot;,6);
+EventInfo.updateValue();
+return true;</Script><UIInfo><Pos x="1284" y="547"/><UniqueID>{efd9e4f4-bd03-4340-b22e-5a934579d5c3}</UniqueID></UIInfo></StateMachineElement><Transition><Destination>MarkBrokenFixation</Destination><Source>DisplayRewards</Source><SourceResult>BrokeFixation</SourceResult></Transition><Transition><Destination>BrokeFixation</Destination><Source>MarkBrokenFixation</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>BrokeFixation</Destination><Source>MarkBrokenFixation</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
+              <Transition><Destination>GetChoice</Destination><Source>PresentRewards</Source><SourceResult>ContinuedFixation</SourceResult></Transition><Transition><Destination>Failed</Destination><Source>PresentRewards</Source><SourceResult>BrokeFixation</SourceResult></Transition><Transition><Destination>PresentRewards</Destination><Source>PresentTargets</Source><SourceResult>ContinuedFixating</SourceResult></Transition><EntryScript>EventInfo.setData(&quot;Stage&quot;,2);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();</EntryScript></StateMachineElement>
+              <InitialElement>PreTrialInterval</InitialElement>
+              
+              
+              <StateMachineElement type="ScriptElement">
+                <Name>ChooseTrialValues</Name>
+                <Result>
+                  <Name>false</Name>
+                <UIInfo><Pos x="2000" y="2000"/><UniqueID>{44edd862-17fa-453f-ac02-cf7f66f92bb7}</UniqueID></UIInfo></Result>
+                <Result>
+                  <Name>true</Name>
+                <UIInfo><Pos x="2075" y="2000"/><UniqueID>{a651e13b-e371-4c29-8c8f-4c7d9681590a}</UniqueID></UIInfo></Result>
+                <Script>TrialModeSelect.randomize();
+
+//Select Reward amounts
+switch(TrialType.value%10)
 {
 case 0:
   GreenRewards.value = 8;
@@ -1964,42 +2156,33 @@ case 9:
   GreenRewards.value = 1;
   RedRewards.value = 8;
   break;
-}</Script></StateMachineElement><Transition><Destination>ContinuedFixation</Destination><Source>DisplayRewards</Source><SourceResult>ContinuedFixation</SourceResult></Transition><Transition><Destination>BrokeFixation</Destination><Source>DisplayRewards</Source><SourceResult>BrokeFixation</SourceResult></Transition><InitialElement>SetRewardAmounts</InitialElement><Parameter type="PseudorandomInt"><Name>RewardSelector</Name><UIInfo><Pos x="1137" y="743"/><UniqueID>{c14a4e41-6017-446e-987f-6ae0cb3ed113}</UniqueID></UIInfo><Max>7</Max></Parameter><Transition><Destination>DisplayRewards</Destination><Source>SetRewardAmounts</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>DisplayRewards</Destination><Source>SetRewardAmounts</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
-              <Transition><Destination>GetChoice</Destination><Source>PresentRewards</Source><SourceResult>ContinuedFixation</SourceResult></Transition><Transition><Destination>Failed</Destination><Source>PresentRewards</Source><SourceResult>BrokeFixation</SourceResult></Transition><Transition><Destination>PresentRewards</Destination><Source>PresentTargets</Source><SourceResult>ContinuedFixating</SourceResult></Transition></StateMachineElement>
-              <InitialElement>ChooseTrialMode</InitialElement>
-              
-              <Transition>
-                <Destination>Failure</Destination>
-                <Source>NormalTrial</Source>
-                <SourceResult>Failed</SourceResult>
-              </Transition>
-              <StateMachineElement type="ScriptElement">
-                <Name>ChooseTrialMode</Name>
-                <Result>
-                  <Name>false</Name>
-                </Result>
-                <Result>
-                  <Name>true</Name>
-                </Result>
-                <Script>TrialModeSelect.randomize();if(TrialModeSelect.value &gt; FixationTrialPercentage.value)return true;else return false;</Script>
+}
+TrialInfo.setData(&quot;GreenRew&quot;,GreenRewards.value);
+TrialInfo.setData(&quot;RedRew&quot;,RedRewards.value);
+
+//Choose Reward Feedback Color
+GreyFeedback.randomize();
+TrialInfo.setData(&quot;FeedbackCol&quot;,Number(!GreyFeedback.value));
+
+//Choose Trial Mode
+if(TrialModeSelect.value &gt; FixationTrialPercentage.value)
+	return true;
+else 
+	return false;</Script>
                 <UIInfo>
-                  <Pos x="1174" y="163"/>
-                </UIInfo>
+                  <Pos x="1390" y="360"/>
+                <UniqueID>{674afa53-0c82-4887-80a2-f8f6839e2290}</UniqueID></UIInfo>
               </StateMachineElement>
               
-              <Transition>
-                <Destination>Failure</Destination>
-                <Source>FixationTrial</Source>
-                <SourceResult>Failed</SourceResult>
-              </Transition>
+              
               <Transition>
                 <Destination>NormalTrial</Destination>
-                <Source>ChooseTrialMode</Source>
+                <Source>ChooseTrialValues</Source>
                 <SourceResult>true</SourceResult>
               </Transition>
               <Transition>
                 <Destination>FixationTrial</Destination>
-                <Source>ChooseTrialMode</Source>
+                <Source>ChooseTrialValues</Source>
                 <SourceResult>false</SourceResult>
               </Transition>
               <VisualElement type="Box Graphic">
@@ -2009,8 +2192,8 @@ case 9:
                 <Position x="400" y="300"/>
                 <UIInfo>
                   <Pos x="1536" y="840"/>
-                </UIInfo>
-              </VisualElement>
+                <UniqueID>{3d4a1fff-f301-418c-af33-17bdcaf7b4ce}</UniqueID></UIInfo>
+              <Visible>false</Visible></VisualElement>
               <ControlTarget type="CircleTarget">
                 <Name>FixationTarget</Name>
                 <Position x="400" y="300"/>
@@ -2021,19 +2204,64 @@ case 9:
                 </UIInfo>
                 <UIEnabled>true</UIEnabled>
               </ControlTarget>
-            <Result><Name>FixationSuccess</Name><UIInfo><Pos x="2029" y="138"/></UIInfo></Result><StateMachineElement type="ScriptElement"><Name>IncSuccessfulTrial</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>CorrectTrials.value++;if(TrialModeSelect.value &gt; FixationTrialPercentage.value)return true;return false;</Script><UIInfo><Pos x="1889" y="338"/></UIInfo></StateMachineElement><Transition><Destination>FixationSuccess</Destination><Source>IncSuccessfulTrial</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>NormalSuccess</Destination><Source>IncSuccessfulTrial</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>IncSuccessfulTrial</Destination><Source>FixationTrial</Source><SourceResult>Succeeded</SourceResult></Transition><Transition><Destination>IncSuccessfulTrial</Destination><Source>NormalTrial</Source><SourceResult>Succeeded</SourceResult></Transition></StateMachineElement>
+            <EntryScript>EventInfo.setData(&quot;Stage&quot;,0);
+EventInfo.setData(&quot;Event&quot;,1);
+EventInfo.updateValue();
+
+//Reset TrialInfo
+TrialInfo.setData(&quot;CorrectTrial&quot;,0);
+TrialInfo.setData(&quot;Rewarded&quot;,0);
+TrialInfo.setData(&quot;Override&quot;,0);
+if(RedMoreLikely.value)
+{
+	TrialInfo.setData(&quot;GreenProb&quot;,20.0);
+	TrialInfo.setData(&quot;RedProb&quot;,80.0);
+}
+else
+{
+	TrialInfo.setData(&quot;RedProb&quot;,20.0);
+	TrialInfo.setData(&quot;GreenProb&quot;,80.0);
+}
+
+TrialInfo.setData(&quot;GreenRew&quot;,-1);
+TrialInfo.setData(&quot;RedRew&quot;,-1);
+TrialInfo.setData(&quot;FeedbackCol&quot;,-1);
+TrialInfo.setData(&quot;ChosenCol&quot;,-1);
+TrialInfo.setData(&quot;ChosenSide&quot;,-1);</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,2);
+EventInfo.updateValue();
+EventInfo.setData(&quot;Trial&quot;,EventInfo.getDataAsInt(&quot;Trial&quot;)+1);
+</ExitScript><StateMachineElement type="State"><ControlElement type="Stopwatch Controller"><Name>PreTrialInterval</Name><Result><Name>Success</Name><UIInfo><UniqueID>{cb50b3d0-9882-4cb9-8b9b-7ab4661a107a}</UniqueID></UIInfo></Result><Time>400</Time><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1371" y="119"/><UniqueID>{df5546d3-2807-433e-9377-de47c14249a1}</UniqueID></UIInfo></ControlElement><Name>PreTrialInterval</Name><Result><Name>Done</Name><UIInfo><Pos x="1665" y="142"/><UniqueID>{b97438dd-acc2-4074-b631-10db118caef0}</UniqueID></UIInfo></Result><Transition><Destination>Done</Destination><Source>PreTrialInterval</Source><SourceResult>Success</SourceResult></Transition><UIInfo><Pos x="1242" y="365"/><UniqueID>{21a1278b-ca6b-4e09-bbe7-af171bfcde99}</UniqueID></UIInfo><EntryScript>EventInfo.setData(&quot;Stage&quot;,1);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();
+FixationGraphic.visible = true;</ExitScript></StateMachineElement><Transition><Destination>ChooseTrialValues</Destination><Source>PreTrialInterval</Source><SourceResult>Done</SourceResult></Transition><Parameter type="Numeric"><Name>ResultBuffer</Name><UIInfo><Pos x="1718" y="807"/><UniqueID>{d4bfc994-7f57-4a7c-b34e-b6afa331e612}</UniqueID></UIInfo></Parameter><StateMachineElement type="State"><ControlElement type="Stopwatch Controller"><Name>Timer</Name><Result><Name>Success</Name></Result><Time>400</Time><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1340" y="162"/></UIInfo></ControlElement><EntryScript>FixationGraphic.visible = false;
+EventInfo.setData(&quot;Stage&quot;,9);
+EventInfo.setData(&quot;Event&quot;,3);
+EventInfo.updateValue();</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
+EventInfo.updateValue();
+
+//Increment correct trials
+EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
+TrialInfo.setData(&quot;CorrectTrial&quot;,1);</ExitScript><Name>PostTrialInterval</Name><Result><Name>Done</Name><UIInfo><Pos x="1706" y="188"/></UIInfo></Result><Transition><Destination>Done</Destination><Source>Timer</Source><SourceResult>Success</SourceResult></Transition><UIInfo><Pos x="1782" y="475"/><UniqueID>{ff20a26a-75e7-463c-bcbc-c4a7662dc88a}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>IncCorrectTrials</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
+TrialInfo.setData(&quot;CorrectTrial&quot;,1);</Script><UIInfo><Pos x="1788" y="244"/></UIInfo></StateMachineElement><Transition><Destination>IncCorrectTrials</Destination><Source>FixationTrial</Source><SourceResult>Succeeded</SourceResult></Transition><Transition><Destination>PostTrialInterval</Destination><Source>NormalTrial</Source><SourceResult>Succeeded</SourceResult></Transition><Transition><Destination>TrialTypeComplete</Destination><Source>PostTrialInterval</Source><SourceResult>Done</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>IncCorrectTrials</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>IncCorrectTrials</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>NormalTrial</Source><SourceResult>Failed</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>FixationTrial</Source><SourceResult>Failed</SourceResult></Transition><Parameter type="Numeric"><Name>GreenRewards</Name><UIInfo><Pos x="1162" y="582"/><UniqueID>{ececdc7c-5d9b-4c14-b8be-2e62870d22a0}</UniqueID></UIInfo></Parameter><Parameter type="Numeric"><Name>RedRewards</Name><UIInfo><Pos x="1271" y="587"/><UniqueID>{23ba834d-baeb-4f20-8595-d09d9b96af54}</UniqueID></UIInfo></Parameter><Parameter type="RandomInt"><Name>GreyFeedback</Name><UIInfo><Pos x="1368" y="591"/><UniqueID>{7f987f72-9b13-4517-990b-7ee741dafc31}</UniqueID></UIInfo></Parameter></StateMachineElement>
             <StateMachineElement type="ScriptElement">
               <Name>NeedsMoreTrials</Name>
               <Result>
                 <Name>false</Name>
-              </Result>
+              <UIInfo><UniqueID>{65b0be1f-cbb7-4e39-8a23-4fc2785dd316}</UniqueID></UIInfo></Result>
               <Result>
                 <Name>true</Name>
-              </Result>
-              <Script>if(LongBlock.value) return TrialsSoFar.value++ &lt; 80;else return TrialsSoFar.value++&lt;20; </Script>
+              <UIInfo><UniqueID>{94c6eda0-fe77-438a-8253-c4a6e74afb49}</UniqueID></UIInfo></Result>
+              <Script>TrialInfo.updateValue();
+TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
+TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
+if(LongBlock.value) 
+	return ++TrialsSoFar.value &lt; 80;
+else 
+	return ++TrialsSoFar.value &lt; 20; </Script>
               <UIInfo>
-                <Pos x="1038" y="771"/>
-              </UIInfo>
+                <Pos x="1304" y="750"/>
+              <UniqueID>{3eb3c9b2-6262-40a6-a0e7-a17287218220}</UniqueID></UIInfo>
             </StateMachineElement>
             <Transition>
               <Destination>BlockDone</Destination>
@@ -2049,26 +2277,27 @@ case 9:
                 <UniqueID>{43f1936e-745a-427c-a194-c099292e7ac5}</UniqueID>
               </UIInfo>
               <Value>1</Value>
-            </Parameter>
+            <DontRepeatAnyValue>true</DontRepeatAnyValue></Parameter>
             <StateMachineElement type="ScriptElement">
               <Name>ChooseTrialType</Name>
               <Result>
                 <Name>false</Name>
                 <UIInfo>
                   <Pos x="2000" y="2000"/>
-                </UIInfo>
+                <UniqueID>{5a8b8131-9e85-4ffb-bfaf-4fcf06d17802}</UniqueID></UIInfo>
               </Result>
               <Result>
                 <Name>true</Name>
                 <UIInfo>
                   <Pos x="2075" y="2000"/>
-                </UIInfo>
+                <UniqueID>{238cd10a-e2e3-4e45-a782-22acd3b97798}</UniqueID></UIInfo>
               </Result>
               <UIInfo>
-                <Pos x="1322" y="899"/>
+                <Pos x="1452" y="1112"/>
                 <UniqueID>{95850cb4-e5ff-480f-b239-0e9b844e2eda}</UniqueID>
               </UIInfo>
-              <Script>TrialType.randomize();return true;</Script>
+              <Script>TrialType.randomize();
+return true;</Script>
             </StateMachineElement>
             <Transition>
               <Destination>ChooseTrialType</Destination>
@@ -2078,95 +2307,22 @@ case 9:
             <Transition>
               <Destination>NeedsMoreTrials</Destination>
               <Source>Trial</Source>
-              <SourceResult>NormalSuccess</SourceResult>
+              <SourceResult>TrialTypeComplete</SourceResult>
             </Transition>
-            <InitialElement>NeedsMoreTrials</InitialElement>
-            <StateMachineElement type="ScriptElement">
-              <Name>ReshuffleTrialType</Name>
-              <Result>
-                <Name>false</Name>
-              </Result>
-              <Result>
-                <Name>true</Name>
-              </Result>
-              <Script>TrialType.reshuffleLastValue();return true;</Script>
-              <UIInfo>
-                <Pos x="1698" y="749"/>
-              </UIInfo>
-            </StateMachineElement>
-            <Transition>
-              <Destination>ReshuffleTrialType</Destination>
-              <Source>Trial</Source>
-              <SourceResult>Failure</SourceResult>
-            </Transition>
-            <Transition>
-              <Destination>ChooseTrialType</Destination>
-              <Source>ReshuffleTrialType</Source>
-              <SourceResult>false</SourceResult>
-            </Transition>
-            <Transition>
-              <Destination>ChooseTrialType</Destination>
-              <Source>ReshuffleTrialType</Source>
-              <SourceResult>true</SourceResult>
-            </Transition>
-            <StateMachineElement type="State">
-              <ControlElement type="Stopwatch Controller">
-                <Name>CountDown</Name>
-                <Result>
-                  <Name>Success</Name>
-                </Result>
-                <Time>2</Time>
-                <UIInfo>
-                  <Pos x="992" y="104"/>
-                </UIInfo>
-              </ControlElement>
-              <Name>IntertrialInterval</Name>
-              <Result>
-                <Name>Done</Name>
-                <UIInfo>
-                  <Pos x="1174" y="107"/>
-                </UIInfo>
-              </Result>
-              <Transition>
-                <Destination>Done</Destination>
-                <Source>CountDown</Source>
-                <SourceResult>Success</SourceResult>
-              </Transition>
-              <UIInfo>
-                <Pos x="1592" y="918"/>
-                <UniqueID>{b04bbc81-b0d4-49d9-99c9-986341c3f52c}</UniqueID>
-              </UIInfo>
-            <EntryScript>//TrialTimer.updateTimeValue();
-RawTrial.value++;
-GeneralInfoDisplay.text = 
-RawTrial.value + &quot;,&quot;
-+ CorrectTrials.value
- ;/*+ &quot;,&quot; + 9 + &quot;,&quot;
-+ &quot;3&quot; + &quot;,&quot;
-+TrialTimer.value;*/</EntryScript><ExitScript>/*TrialTimer.updateTimeValue();
-GeneralInfoDisplay.text = 
-RawTrial.value + &quot;,&quot;
-+ CorrectTrials.value + &quot;,&quot;
-+ 9 + &quot;,&quot;
-+ &quot;2&quot; + &quot;,&quot;
-+TrialTimer.value;
-TrialTimer.restart();*/</ExitScript></StateMachineElement>
-            <Transition>
-              <Destination>Trial</Destination>
-              <Source>IntertrialInterval</Source>
-              <SourceResult>Done</SourceResult>
-            </Transition>
-            <Transition>
-              <Destination>IntertrialInterval</Destination>
-              <Source>ChooseTrialType</Source>
-              <SourceResult>true</SourceResult>
-            </Transition>
-            <Transition>
-              <Destination>IntertrialInterval</Destination>
-              <Source>ChooseTrialType</Source>
-              <SourceResult>false</SourceResult>
-            </Transition>
-          <Transition><Destination>ReshuffleTrialType</Destination><Source>Trial</Source><SourceResult>FixationSuccess</SourceResult></Transition><VisualElement type="Text Graphic"><Color A="255" B="0" G="255" R="0">#00ff00</Color><Dimensions height="50" width="300" x="0" y="0"/><Name>LastTrialDisplay</Name><Position x="500" y="500"/><SubjectView>false</SubjectView><UIInfo><Pos x="1254" y="1415"/></UIInfo></VisualElement><Parameter type="Timer"><Name>TrialTimer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1122" y="1413"/></UIInfo><Value>0</Value></Parameter><VisualElement type="Text Graphic"><Color A="255" B="0" G="255" R="0">#00ff00</Color><Dimensions height="50" width="300" x="0" y="0"/><Name>GeneralInfoDisplay</Name><Position x="500" y="550"/><SubjectView>false</SubjectView><UIInfo><Pos x="1255" y="1496"/></UIInfo></VisualElement></StateMachineElement>
+            <InitialElement>ChooseTrialType</InitialElement>
+            
+            
+            
+            
+            
+            
+            
+            
+          <Parameter type="Timer"><Name>TrialTimer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1122" y="1413"/><UniqueID>{e62361bd-b6fb-493f-8756-4dd1a248b6fc}</UniqueID></UIInfo><Value>0</Value></Parameter><EntryScript>TrialType.randomize();
+TrialInfo.setData(&quot;Block&quot;,BlocksSoFar.value);
+TrialInfo.setData(&quot;TrialInBlock&quot;,0);</EntryScript><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>true</SourceResult></Transition><StateMachineElement type="ScriptElement"><Name>ReshuffleTrialType</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>TrialInfo.updateValue();
+TrialType.reshuffleLastValue();
+return true;</Script><UIInfo><Pos x="1219" y="931"/></UIInfo></StateMachineElement><Transition><Destination>ReshuffleTrialType</Destination><Source>Trial</Source><SourceResult>ReshuffleTrialType</SourceResult></Transition><Transition><Destination>ChooseTrialType</Destination><Source>ReshuffleTrialType</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>ChooseTrialType</Destination><Source>ReshuffleTrialType</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
           <StateMachineElement type="ScriptElement">
             <Name>NeedsMoreBlocks</Name>
             <Result>
@@ -2231,28 +2387,16 @@ TrialTimer.restart();*/</ExitScript></StateMachineElement>
           <Name>LessThan4Superblocks</Name>
           <Result>
             <Name>false</Name>
-          </Result>
+          <UIInfo><Pos x="2000" y="2000"/></UIInfo></Result>
           <Result>
             <Name>true</Name>
-          </Result>
+          <UIInfo><Pos x="2075" y="2000"/></UIInfo></Result>
           <Script>return SuperblockNum.value++ &lt; 4;</Script>
           <UIInfo>
             <Pos x="1746" y="1741"/>
-          </UIInfo>
+          <UniqueID>{91f5b58e-3fec-49e3-abb3-c8c2100c07fc}</UniqueID></UIInfo>
         </StateMachineElement>
-        <StateMachineElement type="ScriptElement">
-          <Name>RandomizeInitVals</Name>
-          <Result>
-            <Name>false</Name>
-          </Result>
-          <Result>
-            <Name>true</Name>
-          </Result>
-          <Script>LongBlock.randomize(); RedMoreLikely.randomize();return true;</Script>
-          <UIInfo>
-            <Pos x="1558" y="1748"/>
-          </UIInfo>
-        </StateMachineElement>
+        
         <StateMachineElement type="ScriptElement">
           <Name>FlipBlockType</Name>
           <Result>
@@ -2267,9 +2411,10 @@ TrialTimer.restart();*/</ExitScript></StateMachineElement>
               <Pos x="2075" y="2000"/>
             </UIInfo>
           </Result>
-          <Script>LongBlock.value = !LongBlock.value; return true;</Script>
+          <Script>LongBlock.value = !LongBlock.value; 
+return true;</Script>
           <UIInfo>
-            <Pos x="2126" y="1503"/>
+            <Pos x="2280" y="1523"/>
             <UniqueID>{8daaa3aa-5ec3-4891-8dd4-d40f98d70dc5}</UniqueID>
           </UIInfo>
         </StateMachineElement>
@@ -2283,16 +2428,8 @@ TrialTimer.restart();*/</ExitScript></StateMachineElement>
           <Source>LessThan4Superblocks</Source>
           <SourceResult>false</SourceResult>
         </Transition>
-        <Transition>
-          <Destination>LessThan4Superblocks</Destination>
-          <Source>RandomizeInitVals</Source>
-          <SourceResult>false</SourceResult>
-        </Transition>
-        <Transition>
-          <Destination>LessThan4Superblocks</Destination>
-          <Source>RandomizeInitVals</Source>
-          <SourceResult>true</SourceResult>
-        </Transition>
+        
+        
         <UIInfo>
           <Pos x="2000" y="2000"/>
           <UniqueID>{8c067672-12e7-4b62-9bac-6bf3a4570262}</UniqueID>
@@ -2312,7 +2449,29 @@ TrialTimer.restart();*/</ExitScript></StateMachineElement>
           <Source>Superblock</Source>
           <SourceResult>SuperblockDone</SourceResult>
         </Transition>
-      <Parameter type="Numeric"><Name>RawTrial</Name><UIInfo><Pos x="2125" y="1908"/><UniqueID>{538cc1ae-3248-4a0d-bc7b-c12460283b3b}</UniqueID></UIInfo><Value>-1</Value></Parameter><Parameter type="Numeric"><Name>CorrectTrials</Name><UIInfo><Pos x="2243" y="1913"/><UniqueID>{35511958-04d2-4f57-b907-54336e9bcfd9}</UniqueID></UIInfo><Value>0</Value></Parameter></StateMachine>
+      <VisualElement type="Operator Info Graphic"><Dimensions height="50" width="800" x="0" y="0"/><Name>EventInfo</Name><Position x="0" y="550"/><UIInfo><Pos x="1927" y="2016"/></UIInfo></VisualElement><EntryScript>//Setup EventInfo
+EventInfo.setData(&quot;Trial&quot;,1);
+EventInfo.setData(&quot;CorrectTrials&quot;,0);
+EventInfo.setData(&quot;Stage&quot;,-1);
+EventInfo.setData(&quot;Event&quot;,-1);
+
+//Setup TrialInfo
+TrialInfo.setData(&quot;CorrectTrial&quot;,-1);
+TrialInfo.setData(&quot;Rewarded&quot;,-1);
+TrialInfo.setData(&quot;Override&quot;,-1);
+TrialInfo.setData(&quot;Block&quot;,-1);
+TrialInfo.setData(&quot;TrialInBlock&quot;,0);
+TrialInfo.setData(&quot;Trial&quot;,0);
+TrialInfo.setData(&quot;GreenProb&quot;,-1);
+TrialInfo.setData(&quot;RedProb&quot;,-1);
+TrialInfo.setData(&quot;GreenRew&quot;,-1);
+TrialInfo.setData(&quot;RedRew&quot;,-1);
+TrialInfo.setData(&quot;FeedbackCol&quot;,-1);
+TrialInfo.setData(&quot;ChosenCol&quot;,-1);
+TrialInfo.setData(&quot;ChosenSide&quot;,-1);
+
+LongBlock.randomize();
+RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graphic"><Name>TrialInfo</Name><UIInfo><Pos x="2063" y="2014"/></UIInfo><Dimensions height="50" width="800" x="0" y="0"/><Position x="0" y="0"/><UIEnabled>true</UIEnabled><Color A="255" B="0" G="0" R="255">#ff0000</Color></VisualElement><ExitScript/></StateMachine>
     </Task>
   </Experiment>
   <StateMachineEditorData>

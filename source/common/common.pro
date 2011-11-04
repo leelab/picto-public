@@ -298,6 +298,8 @@ HEADERS += $$(PICTO_TREE)/source/common/stimuli/RandomlyFilledGridGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/RandomlyFilledGridGraphic.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/TextGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/TextGraphic.cpp
+HEADERS += $$(PICTO_TREE)/source/common/stimuli/OperatorInfoGraphic.h
+SOURCES += $$(PICTO_TREE)/source/common/stimuli/OperatorInfoGraphic.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.cpp
 

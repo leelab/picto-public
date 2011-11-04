@@ -39,7 +39,7 @@ public:
 	static void addClick(QPoint point);
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	OperatorClickParameter();

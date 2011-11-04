@@ -30,7 +30,7 @@ public:
 public slots:
 	virtual bool getVisible(){return active_ && VisualElement::getVisible();};
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	bool active_;

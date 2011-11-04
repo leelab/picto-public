@@ -100,9 +100,9 @@ VisualElement* CursorGraphic::NewVisualElement()
 //	}
 //}
 
-void CursorGraphic::postSerialize()
+void CursorGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 }
 
 bool CursorGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

@@ -33,13 +33,15 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 	//}
 	QSharedPointer<QtVariantPropertyManager> manager = dataStore->getPropertyContainer()->getPropertyManager();
 	setFactoryForManager(manager.data(), propertyFactory_.data());
-	QMap<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
-	for(QMap<QString, QVector<QSharedPointer<Property>>>::iterator typeIter = properties.begin();typeIter !=properties.end();typeIter ++)
+	QHash<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
+	QStringList orderedProps = dataStore->getOrderedPropertyList();
+	foreach(QString propTag,orderedProps)
 	{
-		for(QVector<QSharedPointer<Property>>::iterator propIter = typeIter.value().begin(); propIter != typeIter.value().end(); propIter++)
+		QVector<QSharedPointer<Property>> propVec = properties.value(propTag);
+		foreach(QSharedPointer<Property> prop,propVec)
 		{
-			propertyFactory_->setNextProperty(*propIter);
-			addProperty((*propIter)->getVariantProperty().data());
+			propertyFactory_->setNextProperty(prop);
+			addProperty(prop->getVariantProperty().data());
 		}
 	}
 	setMinimumWidth(childrenRect().width());

@@ -76,9 +76,9 @@ VisualElement* TextGraphic::NewVisualElement()
 //	}
 //}
 
-void TextGraphic::postSerialize()
+void TextGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 	setPropertyRuntimeEditable("Text");
 }
 

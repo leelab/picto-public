@@ -277,23 +277,12 @@ QString SessionInfo::pendingDirective(QUuid componentID)
 /*!	\brief Adds the input directive to the pendingDirectives list for the component with the input type
  * If overwriteRedundantDirective is set (default) and the last directive type is the same as the new one, it will be overwritten.
  */
-void SessionInfo::addPendingDirective(QString directive, QString componentType, bool overwriteRedundantDirective)
+void SessionInfo::addPendingDirective(QString directive, QString componentType)
 {
 	QSharedPointer<ComponentInfo> component = getComponentByType(componentType);
 	if(component.isNull())
 		return;
 	QStringList* directives = &pendingDirectives_[component->getUuid()];
-	if(overwriteRedundantDirective)
-	{
-		//QMutexLocker locker(&directiveMutex_);
-		if(directives->size())
-		{
-			if(directives->first().split(" ").first() == directive.split(" ").first())
-			{	//Directive is redundant.  Replace last.
-				directives->takeFirst();
-			}
-		}
-	}
 	directives->append(directive); 
 };
 

@@ -113,9 +113,9 @@ bool ChoiceParameter::removeChoice(QString label)
 //	return false;
 //}
 
-void ChoiceParameter::postSerialize()
+void ChoiceParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 	//We should clear out the option list in cse this isn't a 
 	//fresh instance
 	options_.clear();

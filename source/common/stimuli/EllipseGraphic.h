@@ -43,7 +43,7 @@ public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

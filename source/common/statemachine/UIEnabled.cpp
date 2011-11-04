@@ -26,9 +26,9 @@ QUuid UIEnabled::getUniqueId()
 	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getUniqueId();
 }
 
-void UIEnabled::postSerialize()
+void UIEnabled::postDeserialize()
 {
-	DataStore::postSerialize();
+	DataStore::postDeserialize();
 	connect(propertyContainer_->getProperty("Name").data(),SIGNAL(edited()),this,SIGNAL(nameEdited()));
 }
 

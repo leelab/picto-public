@@ -276,9 +276,9 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 //	}
 //}
 
-void Task::postSerialize()
+void Task::postDeserialize()
 {
-	UIEnabled::postSerialize();
+	UIEnabled::postDeserialize();
 	QList<QSharedPointer<Asset>> stateMachines = getGeneratedChildren("StateMachine");
 	if(!stateMachines.isEmpty())
 	{

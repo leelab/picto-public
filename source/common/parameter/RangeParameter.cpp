@@ -37,9 +37,9 @@ void RangeParameter::setMax(int max)
 	maxValue_ = (maxValue_/increment_)*increment_;
 }
 
-void RangeParameter::postSerialize()
+void RangeParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 	updateFromProperties();
 	setPropertyRuntimeEditable("Value");
 }

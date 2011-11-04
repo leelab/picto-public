@@ -97,7 +97,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	return true;
 }
 
-void LFPDataUnitPackage::postSerialize()
+void LFPDataUnitPackage::postDeserialize()
 {
 
 }

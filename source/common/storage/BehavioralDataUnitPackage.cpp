@@ -122,7 +122,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	return true;
 }
 
-void BehavioralDataUnitPackage::postSerialize()
+void BehavioralDataUnitPackage::postDeserialize()
 {
 
 }

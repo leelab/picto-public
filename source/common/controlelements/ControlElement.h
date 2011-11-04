@@ -62,7 +62,7 @@ public:
 protected:
 	virtual QString defaultTagName(){return "ControlElement";};
 	//bool addResult(QSharedPointer<Result> result);
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	//QMap<QString,QSharedPointer<Result>> results_;

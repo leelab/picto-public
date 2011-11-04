@@ -91,12 +91,10 @@ public:
 protected:
 	//virtual void elementAdded(QSharedPointer<ResultContainer> element);
 	virtual QString defaultTagName(){return "StateMachine";};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool canHaveScripts(){return false;};
+	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
-	//This returns a map of QMap<script name,script code>
-	virtual QMap<QString,QString> getScripts();
 
 
 private:

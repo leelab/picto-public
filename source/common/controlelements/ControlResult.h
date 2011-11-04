@@ -29,7 +29,7 @@ public:
 	void setActive(bool active);
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual void scriptableContainerWasReinitialized();
 private:

@@ -40,7 +40,7 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "Scriptable";};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QSharedPointer<PropertyContainer> initPropertyContainer_;
 

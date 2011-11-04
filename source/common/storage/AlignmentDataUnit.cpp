@@ -66,7 +66,7 @@ bool AlignmentDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	return true;
 }
 
-void AlignmentDataUnit::postSerialize()
+void AlignmentDataUnit::postDeserialize()
 {
 
 }

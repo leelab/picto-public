@@ -36,7 +36,7 @@ QSharedPointer<PropertyContainer> PropertyContainer::create(QString _containerNa
 
 void PropertyContainer::copyProperties(QSharedPointer<PropertyContainer> container2)
 {
-	QMap<QString, QVector<QSharedPointer<Property>>> cont2Props = container2->getProperties();
+	QHash<QString, QVector<QSharedPointer<Property>>> cont2Props = container2->getProperties();
 	QSharedPointer<Property> newProp;
 	foreach(QVector<QSharedPointer<Property>> propVec,cont2Props)
 	{
@@ -106,7 +106,7 @@ QStringList PropertyContainer::getPropertyList()
 {
 	QStringList list;
 
-	QMapIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+	QHashIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
 	while(propIterator.hasNext())
 	{
 		propIterator.next();
@@ -201,7 +201,7 @@ QSharedPointer<Property> PropertyContainer::setPropertyValue(QString _propertyNa
 
 QSharedPointer<Property> PropertyContainer::getPropertyFromQtProperty(QtProperty *property)
 {
-	QMapIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+	QHashIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
 	while(propIterator.hasNext())
 	{
 		propIterator.next();
@@ -221,7 +221,7 @@ QSharedPointer<Property> PropertyContainer::getPropertyFromQtProperty(QtProperty
 void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
 														 const QVariant & value)
 {
-	QMapIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+	QHashIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
 	while(propIterator.hasNext())
 	{
 		propIterator.next();

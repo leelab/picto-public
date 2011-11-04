@@ -46,7 +46,7 @@ public:
 	void setValue(QString val){propertyContainer_->setPropertyValue("Value",val);};
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

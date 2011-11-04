@@ -33,7 +33,9 @@ State::State() :
 	scene_(QSharedPointer<Scene>(new Scene)),
 	hasCursor_(false)
 {
-	
+	//Define script properties
+	AddDefinableProperty("FrameScript","");
+	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
 	AddDefinableProperty(QVariant::Int,"Revision",-1);
 	AddDefinableProperty(QVariant::Int,"EngineNeeded",-1);
 	
@@ -51,11 +53,6 @@ State::State() :
 
 	//AddDefinableObjectFactory("Scene",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Scene::Create))) );
 	//AddDefinableObjectFactory("Link",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlLink::Create))) );
-	
-	//Define script properties
-	AddDefinableProperty("EntryScript","");
-	AddDefinableProperty("FrameScript","");
-	AddDefinableProperty("ExitScript","");
 
 
 	//Add UI Elements
@@ -81,7 +78,6 @@ State::State() :
 	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
 	//AddDefinableObjectFactory("VisualElement",factory);
 	//Add background color property
-	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
 
 
 
@@ -739,7 +735,7 @@ void State::addCursor()
 //	return returnVal;
 //}
 
-void State::postSerialize()
+void State::postDeserialize()
 {
 	revision_= propertyContainer_->getPropertyValue("Revision").toInt();
 	engineNeeded_= propertyContainer_->getPropertyValue("EngineNeeded").toInt();
@@ -751,7 +747,7 @@ void State::postSerialize()
 	//	addScriptable(newVisElem.staticCast<Scriptable>());
 	//}
 
-	MachineContainer::postSerialize();
+	MachineContainer::postDeserialize();
 }
 
 bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -773,36 +769,21 @@ bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 
 bool State::hasScripts()
 {
-	return (!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty()
-		|| !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty()
-		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
+	if(MachineContainer::hasScripts())
+		return true;
+	return !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
 }
 
 QMap<QString,QString> State::getScripts()
 {
-	QMap<QString,QString> scripts;
+	QMap<QString,QString> scripts = MachineContainer::getScripts();
 	if(!hasScripts())
 		return scripts;
 
-	QStringList scriptTypes;
-	scriptTypes<<"Entry"<<"Frame"<<"Exit";
-
-	//Figure out which scripts we will be running
-	bool scriptsToRun[3];
-	scriptsToRun[0] = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
-	scriptsToRun[1] = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
-	scriptsToRun[2] = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
-
-	//create the scripts map
-	for(int i=0; i<3; i++)
+	if(!propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty())
 	{
-		if(!scriptsToRun[i])
-			continue;
-
-		//We allow ScriptElement names to have whitespace, so we need 
-		//to get rid of it for a script function name
-		QString scriptName = getName().simplified().remove(' ')+scriptTypes[i];
-		scripts[scriptName] = propertyContainer_->getPropertyValue(scriptTypes[i]+"Script").toString();
+		QString scriptName = getName().simplified().remove(' ')+"Frame";
+		scripts[scriptName] = propertyContainer_->getPropertyValue("FrameScript").toString();
 	}
 	return scripts;
 }

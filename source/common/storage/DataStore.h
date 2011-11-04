@@ -57,6 +57,7 @@ public:
 	virtual bool validateTree();
 	virtual void setDeleted();
 	QStringList getDefinedChildTags(){return factories_.keys();};
+	QStringList getOrderedPropertyList(){return orderedPropList_;};
 	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
 	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
 	virtual QString assetType(){return "DataStore";};
@@ -118,6 +119,7 @@ private:
 	//AutoSerialization Stuff---------------------------------
 	QMap<QString,QList<QSharedPointer<Asset>>> children_;
 	QMap<QString,QSharedPointer<AssetFactory>> factories_;
+	QStringList orderedPropList_;
 	QString tagText_;
 	//--------------------------------------------------------
 

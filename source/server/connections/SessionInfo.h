@@ -92,7 +92,7 @@ public:
 	QByteArray experimentXml() { return experimentXml_; };
 
 	QString pendingDirective(QUuid componentID);
-	void addPendingDirective(QString directive, QString componentType, bool overwriteRedundantDirective = true);
+	void addPendingDirective(QString directive, QString componentType);
 
 	void enableFlush(QString componentType){flushEnabled_[componentType] = true;};
 	bool needsFlush(QString componentType){bool r = flushEnabled_[componentType]; flushEnabled_[componentType]=false; return r;};

@@ -15,8 +15,8 @@ propTable_(QSharedPointer<PropertyTable>(new PropertyTable()))
 	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
 	AddDefinableProperty(QVariant::Double,"XGain",1.0);
 	AddDefinableProperty(QVariant::Double,"YGain",1.0);
-	AddDefinableProperty(QVariant::Int,"XOffset",0);
-	AddDefinableProperty(QVariant::Int,"YOffset",0);
+	AddDefinableProperty(QVariant::Double,"XOffset",0);
+	AddDefinableProperty(QVariant::Double,"YOffset",0);
 	AddDefinableProperty(QVariant::Double,"XYSignalShear",0);
 }
 
@@ -32,6 +32,11 @@ void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 	Q_ASSERT(propTable_);
 	engine_ = engine;
 	engine_->setPropertyTable(propTable_);
+	//We call the function below here so that the Gain/Offset values will be
+	//set to their initial states (for mouse signal) as early as possible and 
+	//values set by the user before running the experiment won't need to be 
+	//reset.
+	updateSignalCoefficients(QSharedPointer<Property>());
 };
 
 void Experiment::addTask(QSharedPointer<Task> task)
@@ -126,9 +131,9 @@ bool Experiment::jumpToState(QStringList path, QString state)
 	return false;
 }
 
-void Experiment::postSerialize()
+void Experiment::postDeserialize()
 {
-	UIEnabled::postSerialize();
+	UIEnabled::postDeserialize();
 	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
 	if(experimentSyntaxVer == "")
 		propertyContainer_->setPropertyValue("SyntaxVersion",latestSyntaxVersion_);
@@ -188,26 +193,25 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 		bool isMouseChannel = posChannel->inherits("Picto::MouseSignalChannel");
 		if(isMouseChannel)
 		{	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
-			//propertyContainer_->setPropertyValue("XSignalLeftEdge",0);
-			//propertyContainer_->setPropertyValue("XSignalRightEdge",windowDims.width());
-			//propertyContainer_->setPropertyValue("YSignalTopEdge",0);
-			//propertyContainer_->setPropertyValue("YSignalBottomEdge",windowDims.height());
-			//propertyContainer_->setPropertyValue("XYSignalShear",0);
-			propertyContainer_->setPropertyValue("XOffset",0);
+			propertyContainer_->setPropertyValue("XOffset",-.5);
 			propertyContainer_->setPropertyValue("XGain",1.0);
-			propertyContainer_->setPropertyValue("YOffset",0);
+			propertyContainer_->setPropertyValue("YOffset",-.5);
 			propertyContainer_->setPropertyValue("YGain",1.0);
 			propertyContainer_->setPropertyValue("XYSignalShear",0.0);
 		}
 	}
-	posChannel->setCalibrationCoefficients("xpos",
-											propertyContainer_->getPropertyValue("XGain").toDouble(),
-													propertyContainer_->getPropertyValue("XOffset").toInt(),
-													400/*double(windowDims.width())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
-	posChannel->setCalibrationCoefficients("ypos",
-													propertyContainer_->getPropertyValue("YGain").toDouble(),
-													propertyContainer_->getPropertyValue("YOffset").toInt(),
-													300/*double(windowDims.height())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
+
+	int displayWidth = 800;
+	int displayHeight = 600;
+	double xZoom = propertyContainer_->getPropertyValue("XGain").toDouble();
+	double yZoom = propertyContainer_->getPropertyValue("YGain").toDouble();
+	double xGain = xZoom;
+	double yGain = yZoom;
+	int xOffset = displayWidth/2 + propertyContainer_->getPropertyValue("XOffset").toDouble()*displayWidth;
+	int yOffset = displayHeight/2 + propertyContainer_->getPropertyValue("YOffset").toDouble()*displayHeight;
+
+	posChannel->setCalibrationCoefficients("xpos",xGain,xOffset,400/*double(windowDims.width())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
+	posChannel->setCalibrationCoefficients("ypos",yGain,yOffset,300/*double(windowDims.height())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
 	posChannel->setShear("xpos","ypos",propertyContainer_->getPropertyValue("XYSignalShear").toDouble());
 
 }

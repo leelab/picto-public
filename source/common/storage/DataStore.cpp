@@ -335,6 +335,7 @@ void DataStore::AddDefinableProperty(
 													);
 
 	AddDefinableObjectFactory(tagName,propFactory);
+	orderedPropList_.append(tagName);
 }
 
 //void DataStore::AddDefinableObject(QString tagName, QSharedPointer<Asset> object)
@@ -437,7 +438,7 @@ QList<QSharedPointer<DataStore>> DataStore::getRuntimeEditableDescendants()
 QList<QSharedPointer<Property>> DataStore::getDescendantsProperties()
 {
 	QList<QSharedPointer<Property>> descendantProps;
-	QMap<QString, QVector<QSharedPointer<Property>>> propMap = propertyContainer_->getProperties();
+	QHash<QString, QVector<QSharedPointer<Property>>> propMap = propertyContainer_->getProperties();
 	foreach(QVector<QSharedPointer<Property>> propVec, propMap)
 	{
 		foreach(QSharedPointer<Property> prop, propVec)

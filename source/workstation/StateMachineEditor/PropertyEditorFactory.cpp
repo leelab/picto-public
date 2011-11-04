@@ -37,7 +37,8 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	QString propName = property->propertyName();
 	if((propName == "EntryScript")
 		|| (propName == "FrameScript")
-		|| (propName == "ExitScript"))
+		|| (propName == "ExitScript")
+		|| (propName == "Script"))
 	{
 		resultWidget = new ScriptWidget(manager,property);
 	}
@@ -53,5 +54,11 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	//it will tell us when it is changed by the user.
 	if(editTrackers_.size())
 		editTrackers_.first()->addTrackedWidget(resultWidget);
+	//Change default widget behavior for doubles
+	if(resultWidget->inherits("QDoubleSpinBox"))
+	{
+		qobject_cast<QDoubleSpinBox*>(resultWidget)->setDecimals(4);
+		qobject_cast<QDoubleSpinBox*>(resultWidget)->setSingleStep(.01);
+	}
 	return resultWidget;
 }

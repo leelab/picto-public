@@ -29,7 +29,7 @@ public:
 	int getRadius();
 	void setRadius(int radius);
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QPoint posOffset_;

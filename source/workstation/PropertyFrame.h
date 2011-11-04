@@ -8,6 +8,7 @@
 #include "statemachineeditor/PropertyEditorFactory.h"
 #include "../common/experiment/experiment.h"
 #include <QScrollArea>
+#include <QSqlDatabase>
 using namespace Picto;
 
 QT_BEGIN_NAMESPACE
@@ -23,11 +24,14 @@ class PropertyFrame : public QScrollArea
 public:
    PropertyFrame(QWidget *parent=0);
    void setTopLevelDataStore(QSharedPointer<DataStore> dataStore);
+   void updatePropertiesFromFile(QString filename);
 signals:
    void parameterMessageReady(QSharedPointer<Property> changedProp);
 private:
 	QSharedPointer<PropertyEditorFactory> propertyFactory_;
 	QWidget* mainWidget_;
+	QSqlDatabase propValsSession_;
+	QHash<QString,QSharedPointer<Property>> pathMap_;
 private slots:
 	void propertyEdited(QSharedPointer<Property> prop);
 };

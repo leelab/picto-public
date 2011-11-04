@@ -67,7 +67,7 @@ public:
 
 protected:
 	virtual void elementAdded(QSharedPointer<ResultContainer> element){};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();

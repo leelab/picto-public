@@ -88,7 +88,7 @@ bool FrameDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 	return true;
 }
 
-void FrameDataUnitPackage::postSerialize()
+void FrameDataUnitPackage::postDeserialize()
 {
 
 }

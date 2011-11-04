@@ -33,7 +33,7 @@ public:
 	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius", radius);};
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QPoint posOffset_;

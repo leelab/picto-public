@@ -46,7 +46,7 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "Transition";};
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	static int lastTransitionId_;
 

@@ -21,6 +21,8 @@ TargetController::TargetController()
 	AddDefinableProperty(QVariant::Int,"MaxReacquisitionTime",0);
 	reacquisitionAllowedList_ << "No" << "Yes";
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"ReacquisitionAllowed",0,"enumNames",reacquisitionAllowedList_);
+	AddDefinableProperty(QVariant::String,"TargetEntryScript","");
+	AddDefinableProperty(QVariant::String,"TargetExitScript","");
 
 	//Make sure to update the list of results...
 	addRequiredResult("Success");
@@ -99,7 +101,8 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			acquisitionTimer_.start();
 			targetAcquired_ = true;
 			initialAcquisitionOccurred_ = true;
-
+			if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+				runScript(getName().simplified().remove(' ').append("_TargetEntry"));
 		}
 
 	}
@@ -107,6 +110,8 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	else if(targetAcquired_ && !isInsideTarget)
 	{
 		targetAcquired_ = false;
+		if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
+			runScript(getName().simplified().remove(' ').append("_TargetExit"));
 
 		//If reacquisition isn't allowed, then we're done with a failure value.
 		if("No" == reacquisitionAllowedList_.value(propertyContainer_->getPropertyValue("ReacquisitionAllowed").toInt(),"No"))
@@ -176,6 +181,40 @@ QString TargetController::getResult()
 	return result_;
 }
 
+
+bool TargetController::hasScripts()
+{
+	return (propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+		|| (propertyContainer_->getPropertyValue("TargetExitScript").toString() != "");
+}
+
+QMap<QString,QString> TargetController::getScripts()
+{
+	QMap<QString,QString> scripts;
+	if(!hasScripts())
+		return scripts;
+	if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+		scripts[getName().simplified().remove(' ').append("_TargetEntry")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
+	if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
+		scripts[getName().simplified().remove(' ').append("_TargetExit")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
+	return scripts;
+}
+
+void TargetController::scriptableContainerWasReinitialized()
+{
+	ControlElement::scriptableContainerWasReinitialized();
+	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
+	QString targetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
+	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
+	{
+		if(scriptable->getName() == targetName && scriptable->inherits("Picto::ControlTarget"))
+		{
+			controlTarget_ = scriptable.staticCast<ControlTarget>();
+			break;
+		}
+	}
+}
+
 /*!	\brief Returns true if the signalChannel coordinates are within the target area
  */
 bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
@@ -233,9 +272,9 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 	//}
 }
 
-void TargetController::postSerialize()
+void TargetController::postDeserialize()
 {
-	ControlElement::postSerialize();
+	ControlElement::postDeserialize();
 }
 
 
@@ -264,21 +303,6 @@ bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 		return false;
 	//! \todo Add script verification once validate runs after full deserialization
 	return true;
-}
-
-void TargetController::scriptableContainerWasReinitialized()
-{
-	ControlElement::scriptableContainerWasReinitialized();
-	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
-	QString targetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
-	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
-	{
-		if(scriptable->getName() == targetName && scriptable->inherits("Picto::ControlTarget"))
-		{
-			controlTarget_ = scriptable.staticCast<ControlTarget>();
-			break;
-		}
-	}
 }
 
 } //namespace Picto

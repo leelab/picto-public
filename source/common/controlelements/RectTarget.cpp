@@ -70,9 +70,9 @@ void RectTarget::setBounds(QRect bounds)
 	propertyContainer_->setPropertyValue("Dimensions",bounds);
 }
 
-void RectTarget::postSerialize()
+void RectTarget::postDeserialize()
 {
-	ControlTarget::postSerialize();
+	ControlTarget::postDeserialize();
 	setPropertyRuntimeEditable("Dimensions");
 }
 

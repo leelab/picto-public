@@ -23,6 +23,7 @@
 #include "../stimuli/PictureGraphic.h"
 #include "../stimuli/RandomlyFilledGridGraphic.h"
 #include "../stimuli/TextGraphic.h"
+#include "../stimuli/OperatorInfoGraphic.h"
 #include "../stimuli/AudioElement.h"
 #include "../controlelements/circletarget.h"
 #include "../controlelements/recttarget.h"
@@ -78,6 +79,9 @@ ScriptableContainer::ScriptableContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
 	visualElementFactory_->addAssetType(TextGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
+	visualElementFactory_->addAssetType(OperatorInfoGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorInfoGraphic::Create))));
+
 
 	AddDefinableObjectFactory("ControlTarget",controlTargetFactory_);
 	controlTargetFactory_->addAssetType("CircleTarget",
@@ -255,9 +259,9 @@ void ScriptableContainer::runScript(QString scriptName, bool& scriptReturnVal)
 	}
 }
 
-void ScriptableContainer::postSerialize()
+void ScriptableContainer::postDeserialize()
 {
-	UIEnabled::postSerialize();
+	UIEnabled::postDeserialize();
 	QStringList childTags = getDefinedChildTags();
 	foreach(QString childTag,childTags)
 	{

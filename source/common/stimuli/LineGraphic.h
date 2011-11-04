@@ -39,7 +39,7 @@ public:
 	//! \TODO At some point, we might want to expose some getter and setter slots for script binding
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QVector<QPoint> points_;

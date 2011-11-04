@@ -62,9 +62,9 @@ QString Reward::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	return result; 
 }
 
-void Reward::postSerialize()
+void Reward::postDeserialize()
 {
-	StateMachineElement::postSerialize();
+	StateMachineElement::postDeserialize();
 }
 
 bool Reward::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

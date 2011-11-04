@@ -40,7 +40,7 @@ public:
 	QString getContainerName();
 	QStringList getPropertyList();
 	QSharedPointer<QtVariantPropertyManager> getPropertyManager(){return propManager_;};
-	QMap<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
+	QHash<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
 	QList<QSharedPointer<Property>> getRuntimeProperties();
 	QSharedPointer<Property> getProperty(QString _identifier,int index=0);
 	QSharedPointer<Property> getContainerGroupProperty(){return containerGroupItem_;};
@@ -52,7 +52,7 @@ private:
 	QSharedPointer<QtVariantPropertyManager> propManager_;
 	PropertyContainer(QString _containerName);
 	QSharedPointer<Property> containerGroupItem_;
-	QMap<QString, QVector<QSharedPointer<Property>>> properties_;
+	QHash<QString, QVector<QSharedPointer<Property>>> properties_;
 	QString containerName_;
 
 private slots:

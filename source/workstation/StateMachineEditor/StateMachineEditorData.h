@@ -21,7 +21,7 @@ public:
 	QUuid getOpenedAssetId();
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QSharedPointer<Asset> findAssetWithID(QSharedPointer<Asset> root, QUuid id);

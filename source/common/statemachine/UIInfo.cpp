@@ -29,9 +29,9 @@ QUuid UIInfo::getUniqueId()
 	 return uuid;
 }
 
-void UIInfo::postSerialize()
+void UIInfo::postDeserialize()
 {
-	DataStore::postSerialize();
+	DataStore::postDeserialize();
 }
 
 

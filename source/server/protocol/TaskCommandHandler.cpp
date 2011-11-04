@@ -307,7 +307,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel),"DIRECTOR",false);
+	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel),"DIRECTOR");
 
 	return okResponse;
 

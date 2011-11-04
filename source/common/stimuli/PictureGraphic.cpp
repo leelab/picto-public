@@ -57,9 +57,9 @@ VisualElement* PictureGraphic::NewVisualElement()
 //	}
 //}
 
-void PictureGraphic::postSerialize()
+void PictureGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 }
 
 bool PictureGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

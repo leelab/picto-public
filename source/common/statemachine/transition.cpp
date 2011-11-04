@@ -151,9 +151,9 @@ QString Transition::getDestination()
 //	return true;
 //}
 
-void Transition::postSerialize()
+void Transition::postDeserialize()
 {
-	DataStore::postSerialize();
+	DataStore::postDeserialize();
 }
 
 bool Transition::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

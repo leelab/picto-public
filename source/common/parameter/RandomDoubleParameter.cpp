@@ -30,9 +30,9 @@ void RandomDoubleParameter::randomize()
 	propertyContainer_->setPropertyValue("Value",QVariant(double(min+mtRand_.rand(max-min))));
 }
 
-void RandomDoubleParameter::postSerialize()
+void RandomDoubleParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 	useSeed_ = propertyContainer_->getPropertyValue("UseSeed").toBool();
 	seed_ = propertyContainer_->getPropertyValue("Seed").toInt();
 	if(useSeed_)

@@ -157,9 +157,9 @@ void StateMachineElement::processStatusDirective(QSharedPointer<Engine::PictoEng
 		}
 }
 
-void StateMachineElement::postSerialize()
+void StateMachineElement::postDeserialize()
 {
-	ResultContainer::postSerialize();
+	ResultContainer::postDeserialize();
 }
 
 bool StateMachineElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

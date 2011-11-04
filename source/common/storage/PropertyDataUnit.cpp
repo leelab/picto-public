@@ -109,7 +109,7 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 	return true;
 }
 
-void PropertyDataUnit::postSerialize()
+void PropertyDataUnit::postDeserialize()
 {
 
 }

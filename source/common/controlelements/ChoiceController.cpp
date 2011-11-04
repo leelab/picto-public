@@ -25,6 +25,8 @@ ChoiceController::ChoiceController()
 
 	reentriesAllowedList_ << "No" << "Yes";
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"AllowReentries",0,"enumNames",reentriesAllowedList_);
+	AddDefinableProperty(QVariant::String,"TargetEntryScript","");
+	AddDefinableProperty(QVariant::String,"TargetExitScript","");
 
 	addResultFactoryType("Target",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlResult::Create))));
 
@@ -95,6 +97,8 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	//just left a target
 	if(currTarget != lastTarget_ && targetAcquired_)
 	{
+		if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
+			runScript(getName().simplified().remove(' ').append("_TargetExit"));
 		//Are reentries allowed?
 		if("No" == reentriesAllowedList_.value(propertyContainer_->getPropertyValue("AllowReentries").toInt(),"No"))
 		{
@@ -113,6 +117,8 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	//just entered a target
 	else if(currTarget != "NotATarget" && !targetAcquired_)
 	{
+		if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+			runScript(getName().simplified().remove(' ').append("_TargetEntry"));
 		targetAcquired_ = true;
 		acquisitionTimer_.start();
 	}
@@ -225,9 +231,9 @@ QString ChoiceController::getResult()
 	return result_;
 }
 
-void ChoiceController::postSerialize()
+void ChoiceController::postDeserialize()
 {
-	ControlElement::postSerialize();
+	ControlElement::postDeserialize();
 	//shapeIndex_ = propertyContainer_->getPropertyValue("Shape").toInt();
 	timeUnits_ = propertyContainer_->getPropertyValue("TimeUnits").toInt();
 
@@ -312,4 +318,22 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 		targetNameMap[targetName] = true;
 	}
 	return true;
+}
+
+bool ChoiceController::hasScripts()
+{
+	return (propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+		|| (propertyContainer_->getPropertyValue("TargetExitScript").toString() != "");
+}
+
+QMap<QString,QString> ChoiceController::getScripts()
+{
+	QMap<QString,QString> scripts;
+	if(!hasScripts())
+		return scripts;
+	if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+		scripts[getName().simplified().remove(' ').append("_TargetEntry")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
+	if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
+		scripts[getName().simplified().remove(' ').append("_TargetExit")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
+	return scripts;
 }

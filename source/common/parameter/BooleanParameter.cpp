@@ -17,9 +17,9 @@ Parameter* BooleanParameter::NewParameter()
 	return new BooleanParameter;
 }
 
-void BooleanParameter::postSerialize()
+void BooleanParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 	trueLabel_ = propertyContainer_->getPropertyValue("TrueLabel").toString();
 	falseLabel_ = propertyContainer_->getPropertyValue("FalseLabel").toString();
 	setPropertyRuntimeEditable("Value");

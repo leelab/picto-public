@@ -45,7 +45,7 @@ protected:
 	 * tags would get their results from the input factory.
 	 */
 	void addResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory);
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QMap<QString, QSharedPointer<Result> > results_;
 private:

@@ -89,9 +89,9 @@ Parameter* NumericParameter::NewParameter()
 //		return value_ < rhsValue;
 //}
 
-void NumericParameter::postSerialize()
+void NumericParameter::postDeserialize()
 {
-	Parameter::postSerialize();
+	Parameter::postDeserialize();
 	units_ = propertyContainer_->getPropertyValue("Units").toString();
 	setPropertyRuntimeEditable("Value");
 }

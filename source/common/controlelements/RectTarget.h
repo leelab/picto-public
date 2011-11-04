@@ -35,7 +35,7 @@ public:
 	QPoint getPositionOffset();
 protected:
 	void setBounds(QRect bounds);
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QPoint posOffset_;

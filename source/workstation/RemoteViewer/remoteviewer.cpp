@@ -31,6 +31,7 @@
 #include <QCloseEvent>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QFileDialog>
 using namespace Picto;
 
 
@@ -277,6 +278,10 @@ void RemoteViewer::setupUi()
 	connect(rewardAction_, SIGNAL(triggered()),this, SLOT(reward()));
 	rewardChannel_ = 1;
 
+	loadPropsAction_ = new QAction(tr("&Load values from Session"),this);
+	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
+	loadPropsAction_->setEnabled(false);
+
 	//TaskList combo box
 	taskListBox_ = new QComboBox;
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -292,6 +297,7 @@ void RemoteViewer::setupUi()
 	toolBar_->addSeparator();
 	toolBar_->addWidget(new QLabel("Task: ", this));
 	toolBar_->addWidget(taskListBox_);
+	toolBar_->addAction(loadPropsAction_);
 	toolBar_->addSeparator();
 
 	//----- Connection Actions -----
@@ -427,6 +433,14 @@ void RemoteViewer::reward()
 		statusBar_->setText("Failed to send reward command to server.");
 		return;
 	}
+}
+
+void RemoteViewer::LoadPropValsFromFile()
+{
+	QString filename = QFileDialog::getOpenFileName(this,
+			tr("Load Properties From Session"),".","Sqlite files (*.sqlite)");
+	if(propertyFrame_)
+		static_cast<PropertyFrame*>(propertyFrame_)->updatePropertiesFromFile(filename);
 }
 
 void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
@@ -1512,6 +1526,7 @@ bool RemoteViewer::joinSession()
 		enableTaskCommands_ = true;
 		startedSession_ = true;
 		propertyFrame_->setEnabled(true);
+		loadPropsAction_->setEnabled(true);
 	}
 	else
 		enableTaskCommands_ = false;
@@ -1584,6 +1599,7 @@ bool RemoteViewer::disjoinSession()
 	//	return false;
 	//}
 	propertyFrame_->setEnabled(false);
+	loadPropsAction_->setEnabled(false);
 	timeoutTimer_->stop();
 
 	//If we're running, we should stop the local engine

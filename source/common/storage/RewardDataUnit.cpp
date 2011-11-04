@@ -130,7 +130,7 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
-void RewardDataUnit::postSerialize()
+void RewardDataUnit::postDeserialize()
 {
 
 }

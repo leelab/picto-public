@@ -40,7 +40,7 @@ public:
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool fixValues(QString& warning);
 

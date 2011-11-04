@@ -95,7 +95,7 @@ void Scriptable::setPropertyRuntimeEditable(QString propName, bool editable)
 QList<QSharedPointer<Property>> Scriptable::getDescendantsProperties()
 {
 	QList<QSharedPointer<Property>> descendantProps;
-	QMap<QString, QVector<QSharedPointer<Property>>> propMap = initPropertyContainer_->getProperties();
+	QHash<QString, QVector<QSharedPointer<Property>>> propMap = initPropertyContainer_->getProperties();
 	foreach(QVector<QSharedPointer<Property>> propVec, propMap)
 	{
 		foreach(QSharedPointer<Property> prop, propVec)
@@ -193,9 +193,9 @@ QString Scriptable::getInfo()
 	}
 	return returnVal;
 }
-void Scriptable::postSerialize()
+void Scriptable::postDeserialize()
 {
-	UIEnabled::postSerialize();
+	UIEnabled::postDeserialize();
 	backupProperties();
 }
 

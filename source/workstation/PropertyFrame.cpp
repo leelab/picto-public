@@ -1,4 +1,6 @@
 #include <QtGui>
+#include <QSqlQuery>
+#include <QSqlError>
 #include "PropertyFrame.h"
 #include "../common/storage/datastore.h"
 using namespace Picto;
@@ -23,6 +25,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	QVBoxLayout* layout = new QVBoxLayout();
 	mainWidget_->setLayout(layout);
 
+	pathMap_.clear();
 	propertyFactory_->clear();
 	if(dataStore.isNull())
 		return;
@@ -39,14 +42,29 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	runtimeDescendants.push_front(experiment.staticCast<DataStore>());
 	foreach(QSharedPointer<DataStore> runtimeDesc,runtimeDescendants)
 	{
+		QString parentPath = runtimeDesc->getPath();
+		QHash<QString, QVector<QSharedPointer<Property>>> properties;
 		QList<QSharedPointer<Property>> runTimeProps;
 		//If its a scritable, we only want to change the initialization properties.  If its something else
 		//(currently only experiment uses this) we want to change the properties immediately.
 		if(runtimeDesc->inherits("Picto::Scriptable"))
-			runTimeProps = runtimeDesc.staticCast<Scriptable>()->getInitPropertyContainer()->getRuntimeProperties();
+			properties = runtimeDesc.staticCast<Scriptable>()->getInitPropertyContainer()->getProperties();
 		else
-			runTimeProps = runtimeDesc->getPropertyContainer()->getRuntimeProperties();
-
+			properties = runtimeDesc->getPropertyContainer()->getProperties();
+		QStringList orderedProps = runtimeDesc->getOrderedPropertyList();
+		foreach(QString propTag,orderedProps)
+		{
+			QVector<QSharedPointer<Property>> propVec = properties.value(propTag);
+			foreach(QSharedPointer<Property> prop,propVec)
+			{
+				if(prop->isRuntimeEnabled())
+				{
+					runTimeProps.append(prop);
+					//Add prop to the pathMap so that it can be updated with saved values
+					pathMap_[parentPath+"::"+prop->getName()] = prop;
+				}
+			}
+		}
 		if(!runTimeProps.size())
 			continue;
 		QGroupBox* assetBox = new QGroupBox(runtimeDesc->getName());
@@ -66,12 +84,72 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 		layout->addWidget(assetBox);
 	}
 	layout->setAlignment(Qt::AlignTop);
-	layout->addStretch(1);
-	//mainWidget_->setFixedWidth(250);
 	setWidget(mainWidget_);
-	setWidgetResizable(true);
 	int reqWidth = mainWidget_->sizeHint().width()+25;
 	setFixedWidth((reqWidth<350)?reqWidth:350);
+}
+
+void PropertyFrame::updatePropertiesFromFile(QString filename)
+{
+	if(filename.isEmpty())
+		return;
+	//Load Sqlite Database
+	int lastSlash = filename.lastIndexOf("/");
+	Q_ASSERT(lastSlash >=0);
+	propValsSession_ = QSqlDatabase::addDatabase("QSQLITE",filename.mid(lastSlash+1));
+	propValsSession_.setDatabaseName(filename);
+	propValsSession_.open();
+	Q_ASSERT(propValsSession_.isOpen());
+
+	//Query and Write Results
+	QStringList missingProps;
+	bool propFound = false;
+	QSqlQuery query(propValsSession_);
+	QHash<QString,QSharedPointer<Property>>::iterator it ;
+	for(it = pathMap_.begin();it!=pathMap_.end();it++)
+	{
+		QString path = it.key();
+		query.prepare("SELECT value FROM properties WHERE path=:path ORDER BY time DESC LIMIT 1");
+		query.bindValue(":path",it.key());
+		bool success = query.exec();
+		Q_ASSERT_X(success,"PropertyFrame::updatePropertiesFromFile","Error: "+query.lastError().text().toAscii());
+		if(query.next())
+		{
+			propFound = true;
+			QString currValue = it.value()->toUserString();
+			QString newValue = query.value(0).toString();
+			it.value()->fromUserString(newValue);
+			if(newValue != currValue)
+				propertyEdited(it.value());
+		}
+		else
+		{
+			QStringList ancestors = it.key().split("::");
+			QString propName = ancestors.takeLast();
+			if(ancestors.size())
+				propName.prepend("::").prepend(ancestors.takeLast());
+			missingProps.append(propName);
+		}
+
+	}
+
+	//Write Results to Properties
+	if(!missingProps.isEmpty())
+	{
+		QString warningString("None of the properties were found in the loaded Session.");
+		if(propFound)
+		{
+			missingProps.sort();
+			QString warningString("No values found for the following properties:\n");
+			foreach(QString path,missingProps)
+			{
+				warningString.append(QString("- %1\n").arg(path));
+			}
+		}
+		QMessageBox msg;
+		msg.setText(warningString);
+		msg.exec();
+	}
 }
 
 void PropertyFrame::propertyEdited(QSharedPointer<Property> prop)

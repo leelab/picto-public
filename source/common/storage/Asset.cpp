@@ -17,6 +17,7 @@ bool Asset::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	if(isDeleted())
 		return true;
+	preSerialize();
 	return serializeAsXml(xmlStreamWriter);
 }
 
@@ -24,7 +25,7 @@ bool Asset::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool valid
 {
 	bool returnVal = deserializeFromXml(xmlStreamReader,validate);
 	if(returnVal)
-		postSerialize();
+		postDeserialize();
 	edited_ = false;
 	isNew_ = false;
 	deleted_ = false;
@@ -79,23 +80,27 @@ void Asset::receivedDeletedSignal()
 
 /*!	\brief Reinitializes this asset from its child assets.
  *
- *	This just calls postSerialize(), which is the function that is called after
+ *	This just calls postDeserialize(), which is the function that is called after
  *	serialization to allow the object to set itself up based on its recently added
  *	children.
  */
 void Asset::reinitialize()
 {
-	//Ideally postSerialize calls will be callable over and over again, but in practice, this isn't yet the case.
-	//postSerialize();
+	//Ideally postDeserialize calls will be callable over and over again, but in practice, this isn't yet the case.
+	//postDeserialize();
 }
 
 QString Asset::getPath()
 {
 	QString returnVal = getName();
+	if(inherits("Picto::Experiment"))
+		return returnVal;
 	QSharedPointer<Asset> curr = getParentAsset();
 	while(curr)
 	{
 		returnVal.prepend(QString("%1::").arg(curr->getName()));
+		if(curr->inherits("Picto::Experiment"))
+			break;
 		curr = curr->getParentAsset();
 	}
 	return returnVal;

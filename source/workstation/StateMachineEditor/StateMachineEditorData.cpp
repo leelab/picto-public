@@ -40,9 +40,9 @@ QUuid StateMachineEditorData::getOpenedAssetId()
 	return openID;
 }
 
-void StateMachineEditorData::postSerialize()
+void StateMachineEditorData::postDeserialize()
 {
-	DataStore::postSerialize();
+	DataStore::postDeserialize();
 }
 
 

@@ -45,7 +45,7 @@ public:
 //	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 //	bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
-	virtual void postSerialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();

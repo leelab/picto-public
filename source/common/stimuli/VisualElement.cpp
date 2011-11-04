@@ -104,9 +104,9 @@ void VisualElement::updateAnimation(int frame, QTime elapsedTime)
 	return;
 }
 
-void VisualElement::postSerialize()
+void VisualElement::postDeserialize()
 {
-	Scriptable::postSerialize();
+	Scriptable::postDeserialize();
 	draw();
 	connect(propertyContainer_.data(),
 	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),

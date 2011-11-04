@@ -76,9 +76,9 @@ VisualElement* LineGraphic::NewVisualElement()
 //	}
 //}
 
-void LineGraphic::postSerialize()
+void LineGraphic::postDeserialize()
 {
-	VisualElement::postSerialize();
+	VisualElement::postDeserialize();
 
 	QString pointsStr = propertyContainer_->getPropertyValue("Points").toString();
 	QStringList pointsSep = pointsStr.split(")",QString::SkipEmptyParts);
