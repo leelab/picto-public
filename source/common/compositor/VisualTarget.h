@@ -5,6 +5,7 @@
 #include "../common.h"
 
 #include "CompositingSurface.h"
+#include "../timing/Timestamper.h" 
 
 #include <QSharedPointer>
 #include <QWidget>
@@ -50,6 +51,7 @@ public:
 	virtual void draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface) = 0;
 	virtual void present() = 0;
 	virtual void clear() = 0;
+	double getLatestFirstPhosphor(){return lastFrameTime_;};
 	virtual QRect getDimensions();
 
 	//! \todo Add a function that returns time to VSynch
@@ -61,10 +63,14 @@ protected:
 	//contents onto a different widget.  This is needed for the VisualTargetHost.
 	virtual void paint(QPaintDevice *widget) = 0;
 	void paintEvent(QPaintEvent *) { paint(this); };
+	void setFirstPhosphorTime(){lastFrameTime_ = stamper_.stampSec();};
 
 	bool bWindowed_;
 	int width_;
 	int height_;
+	Timestamper stamper_;
+	double lastFrameTime_;
+
 };
 
 

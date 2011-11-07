@@ -33,6 +33,7 @@ public:
 	Scene();
 
 	void render(QSharedPointer<Engine::PictoEngine> engine);
+	double getLatestFirstPhosphorTime();
 
 	void reset();
 	void setBackgroundColor(QColor color);
@@ -59,6 +60,7 @@ private:
 	
 	int frame_;
 	QTime elapsedTime_;
+	double firstPhosphorTime_;
 
 	//QSharedPointer<Canvas> canvas_;
 	//QMap<QString, QSharedPointer<ControlElement> > controlElements_;

@@ -47,6 +47,7 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 	pixmapCompositingSurfaces_[1].fill(QColor(0,0,0,0));
 
 	surfaceActingAsBackBuffer_=1;
+	lastFrameTime_ = -1;
 }
 
 PixmapVisualTarget::~PixmapVisualTarget()
@@ -90,6 +91,8 @@ void PixmapVisualTarget::present()
 
 	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,127,0,0));
 
+	//Set first phosphor time !! THIS IS NOT ACCURATE YET
+	setFirstPhosphorTime();
 	repaint();
 
 	//This signal is here so that if this VisualTarget belongs to a 
@@ -110,6 +113,8 @@ void PixmapVisualTarget::clear()
 {
 	pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1].fill(QColor(0,0,0,0));
 
+	//Set first phosphor time !! THIS IS NOT ACCURATE YET
+	setFirstPhosphorTime();
 	repaint();
 
 	//This signal is here so that if this VisualTarget belongs to a 

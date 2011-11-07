@@ -11,6 +11,7 @@ Scene::Scene()
   frame_(0)
 {
 	elapsedTime_.start();
+	firstPhosphorTime_ = -1;
 }
 
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
@@ -57,8 +58,21 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 		//Present it
 		visualTarget->present();
 	}
+	if(renderingTargets.size() && renderingTargets.first()->getVisualTarget())
+		firstPhosphorTime_ = renderingTargets.first()->getVisualTarget()->getLatestFirstPhosphor();
 	frame_++;
 	elapsedTime_.restart();
+}
+
+//! Gets the time that the first phosphor appeared on the first visual target
+//! In the current code iteration, visual targets block until the first phosphor of their
+//!	scene is drawn to the display.  This means that if there are multiple visual targets, things
+//! are not going to be synchronized.  In keeping with this deficiency, the recorded first phosphor
+//! time is simply the time that the first phosphor appeared on the first screen.  Down the line
+//! we should synchronize multiple displays.
+double Scene::getLatestFirstPhosphorTime()
+{
+	return firstPhosphorTime_;
 }
 
 //! Resets the scene

@@ -19,6 +19,7 @@ D3DVisualTarget::D3DVisualTarget() :
 	pD3D_ = 0;  
 	pD3dDevice_ = 0;
 	pVertexBuffer_ = 0;
+	lastFrameTime_ = -1;
 
 	HWND hWnd;
 
@@ -291,6 +292,16 @@ void D3DVisualTarget::present()
 	//BYTE outBuf;
 	//DWORD bytesReturned;
 		//DeviceIoControl(hCRT,IOCTRL_WAIT_VBLANK_START,NULL,0,&outBuf,1,&bytesReturned,NULL);
+	
+	//Wait For Vertical Blank
+	D3DRASTER_STATUS rastStat;
+	hr = pD3dDevice_->GetRasterStatus(0,&rastStat);
+	while(!hr && !rastStat.InVBlank)
+	{
+		hr = pD3dDevice_->GetRasterStatus(0,&rastStat);
+	}
+	if(hr)
+		d3dFail("D3DVisualTarget: Monitor does not support reading of the current scan line.");
 
 	static int test = 0;
 
@@ -298,6 +309,13 @@ void D3DVisualTarget::present()
     hr = pD3dDevice_->Present( NULL, NULL, NULL, NULL );
     if(hr)
 		d3dFail("D3DVisualTarget: Present FAILED");
+
+	//Wait for rastering to begin
+	while(!hr && !rastStat.InVBlank)
+	{
+		hr = pD3dDevice_->GetRasterStatus(0,&rastStat);
+	}
+	setFirstPhosphorTime();
 
 	//clear the back buffer
     pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );

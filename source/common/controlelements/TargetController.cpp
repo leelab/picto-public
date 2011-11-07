@@ -101,7 +101,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			acquisitionTimer_.start();
 			targetAcquired_ = true;
 			initialAcquisitionOccurred_ = true;
-			if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+			if(!engine->slaveMode() && propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
 				runScript(getName().simplified().remove(' ').append("_TargetEntry"));
 		}
 

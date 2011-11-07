@@ -117,7 +117,7 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	//just entered a target
 	else if(currTarget != "NotATarget" && !targetAcquired_)
 	{
-		if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+		if(!engine->slaveMode() && propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
 			runScript(getName().simplified().remove(' ').append("_TargetEntry"));
 		targetAcquired_ = true;
 		acquisitionTimer_.start();

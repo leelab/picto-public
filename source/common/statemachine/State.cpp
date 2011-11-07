@@ -321,7 +321,7 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	FrameDataUnitPackage frameData;
 	Timestamper stamper;
 
-	frameData.addFrame(frameCounter_,stamper.stampSec(),getName());
+	frameData.addFrame(frameCounter_,scene_->getLatestFirstPhosphorTime(),getName());
 	//qDebug(QString("DIRECTOR: SENDING FRAME: %1").arg(frameCounter_).toAscii());
 
 	//Update the BehavioralDataUnitPackage

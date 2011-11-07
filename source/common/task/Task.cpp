@@ -3,6 +3,7 @@
 #include "../timing/Timestamper.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
+#include "../storage/BehavioralDataUnitPackage.h"
 
 namespace Picto {
 
@@ -171,8 +172,28 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 	StateDataUnit stateData;
 	stateData.setTransition(source,sourceResult,destination,timestamp,id,getName());
 
+	//The first time we send properties and eye data, there's a lot to send, so we
+	//do it here instead of in state.cpp.  Otherwise, the first frame ends up taking too long.
+	//Update the BehavioralDataUnitPackage
+	BehavioralDataUnitPackage behavData;
+	//Note that the call to getValues clears out any existing values,
+	//so it should only be made once per frame.
+	behavData.emptyData();
+	QSharedPointer<SignalChannel> sigChannel = engine->getSignalChannel("PositionChannel");
+	behavData.addData(sigChannel->getValues());
+	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
+
 	xmlWriter->writeStartElement("Data");
 	stateData.toXml(xmlWriter);
+	if(behavData.length())
+		behavData.toXml(xmlWriter);
+	if(propPack && propPack->length())
+		propPack->toXml(xmlWriter);
+	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
+	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+	{
+		reward->toXml(xmlWriter);
+	}
 	xmlWriter->writeEndElement();
 
 	dataCommand->setContent(stateDataXml);
