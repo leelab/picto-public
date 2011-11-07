@@ -311,7 +311,7 @@ void D3DVisualTarget::present()
 		d3dFail("D3DVisualTarget: Present FAILED");
 
 	//Wait for rastering to begin
-	while(!hr && !rastStat.InVBlank)
+	while(!hr && rastStat.InVBlank)
 	{
 		hr = pD3dDevice_->GetRasterStatus(0,&rastStat);
 	}
