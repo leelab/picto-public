@@ -2341,7 +2341,7 @@ return true;</Script><UIInfo><Pos x="1219" y="931"/></UIInfo></StateMachineEleme
               <Pos x="1906" y="1285"/>
               <UniqueID>{014ecc22-4e38-487e-bd59-f03f71ff4b6b}</UniqueID>
             </UIInfo>
-            <Script>if(LongBlock.value) ++return BlocksSoFar.value &lt; 2;else ++return BlocksSoFar.value &lt;8; </Script>
+            <Script>if(LongBlock.value) return ++BlocksSoFar.value &lt; 2;else return ++BlocksSoFar.value &lt;8; </Script>
           </StateMachineElement>
           <StateMachineElement type="ScriptElement">
             <Name>FlipLikelyColor</Name>
@@ -2475,6 +2475,6 @@ RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graph
     </Task>
   </Experiment>
   <StateMachineEditorData>
-    <OpenedBlock>{8c067672-12e7-4b62-9bac-6bf3a4570262}</OpenedBlock>
+    <OpenedBlock>{8744c750-281a-4592-bfb2-d67c27162d1b}</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>
