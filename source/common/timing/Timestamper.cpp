@@ -76,8 +76,9 @@ double Timestamper::stampUs()
 void Timestamper::reset()
 {
 #if defined WIN32 || defined WINCE
-	startTicks_.LowPart = 0;
-	startTicks_.HighPart = 0;
+	//startTicks_.LowPart = 0;
+	//startTicks_.HighPart = 0;
+	QueryPerformanceCounter(&startTicks_);
 #else
 	startTime_ = QTime();
 #endif

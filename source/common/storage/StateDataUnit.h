@@ -38,6 +38,9 @@ public:
 	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, int id, QString stateMachinePath);
 	void setTransition(QString source, QString sourceResult, QString destination, QString timestamp, int id, QString stateMachinePath);
 
+	void setTime(double time);
+	void setTime(QString time);
+
 	QString getMachinePath() { return machinePath_; };
 	int		getTransitionID(){return id_;};
 	QString getTime() { return timestamp_; };

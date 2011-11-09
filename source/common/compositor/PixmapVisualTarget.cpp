@@ -47,7 +47,6 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 	pixmapCompositingSurfaces_[1].fill(QColor(0,0,0,0));
 
 	surfaceActingAsBackBuffer_=1;
-	lastFrameTime_ = -1;
 }
 
 PixmapVisualTarget::~PixmapVisualTarget()

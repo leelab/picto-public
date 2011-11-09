@@ -24,6 +24,9 @@ public:
 	PropertyDataUnit();
 	PropertyDataUnit(int index, QString path, QString value, double time);
 	PropertyDataUnit(int index, QString path, QString value, QString time);
+
+	void setTime(double time);
+	void setTime(QString time);
 	
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

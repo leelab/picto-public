@@ -38,6 +38,7 @@ public:
 	QString getSourceResult();
 	QString getDestination();
 	int getTransitionID(){return id_;};
+	void setSpecialTransitionID(int id){Q_ASSERT(id<0);id_ = id;};
 	
 	//DataStore functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

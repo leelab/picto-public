@@ -19,6 +19,15 @@ void PropertyDataUnitPackage::addData(int index, QString path, QString value, QS
 	data_.append(newPoint);
 }
 
+
+void PropertyDataUnitPackage::setAllTimestamps(double newTime)
+{
+	QString timeStr = QString("%1").arg(newTime,0,'f',6);
+	for(QList<QSharedPointer<PropertyDataUnit>>::iterator it = data_.begin();it != data_.end();it++)
+	{
+		(*it)->setTime(timeStr);
+	}
+}
 /*! \brief Turns the PropertyDataUnitPackage into an XML fragment
  *
  *	The XML will look like this:

@@ -24,6 +24,16 @@ void StateDataUnit::setTransition(QString source, QString sourceResult, QString 
 	machinePath_ = stateMachinePath;
 }
 
+void StateDataUnit::setTime(double time)
+{
+	timestamp_ = QString("%1").arg(time,0,'f',6);
+}
+
+void StateDataUnit::setTime(QString time)
+{
+	timestamp_ = time;
+}
+
 /*! \brief Turns the StateDataUnit into an XML fragment
  *
  *	The XML will look like this:

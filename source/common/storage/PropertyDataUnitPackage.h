@@ -29,6 +29,8 @@ public:
 	void addData(int index, QString path, QString value, double time);
 	void addData(int index, QString path, QString value, QString time);
 
+	void setAllTimestamps(double newTime);
+
 	void emptyData() { data_.clear(); };
 
 	int length() { return data_.length(); }

@@ -16,6 +16,7 @@
 #include "../iodevices/RewardController.h"
 #include "../iodevices/EventCodeGenerator.h"
 #include "../storage/PropertyDataUnitPackage.h"
+#include "../storage/StateDataUnitPackage.h"
 #include "../storage/BehavioralDataUnit.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
@@ -124,6 +125,10 @@ public:
 	void updatePropertiesFromServer();
 	void clearChangedPropertyPackage(){propPackage_.clear();};
 
+	void addStateTransitionForServer(QSharedPointer<Transition> stateTrans, QString stateMachinePath);
+	QSharedPointer<StateDataUnitPackage> getStateDataPackage();
+	void clearStateDataPackage(){propPackage_.clear();};
+
 	bool updateCurrentStateFromServer();
 	void setRunningPath(QString path);
 	QString getServerPathUpdate();
@@ -162,6 +167,7 @@ private:
 	QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	QSharedPointer<RewardController> rewardController_;
 	QSharedPointer<PropertyDataUnitPackage> propPackage_;
+	QSharedPointer<StateDataUnitPackage> stateDataPackage_;
 	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server
 	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
 	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode

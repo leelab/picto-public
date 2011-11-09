@@ -338,6 +338,7 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	behavData.addData(sigChannel_->getValues());
 
 	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
+	QSharedPointer<StateDataUnitPackage> statePack = engine->getStateDataPackage();
 
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
@@ -366,6 +367,8 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 		behavData.toXml(xmlWriter);
 	if(propPack && propPack->length())
 		propPack->toXml(xmlWriter);
+	if(statePack && statePack->length())
+		statePack->toXml(xmlWriter);
 	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
 	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
 	{

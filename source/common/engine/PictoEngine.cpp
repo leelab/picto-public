@@ -204,7 +204,62 @@ void PictoEngine::addChangedProperty(QSharedPointer<Property> changedProp)
 QSharedPointer<PropertyDataUnitPackage> PictoEngine::getChangedPropertyPackage()
 {
 	QSharedPointer<PropertyDataUnitPackage> returnVal = propPackage_;
+
+	//Get the latest first phosphor time
+	double latestFirstPhosphor = -1;
+	bool needsFirst = true;
+	QSharedPointer<VisualTarget> visualTarget;
+	foreach(QSharedPointer<RenderingTarget> rendTarget,renderingTargets_)
+	{
+		visualTarget = rendTarget->getVisualTarget();
+		if(visualTarget && (needsFirst || (visualTarget->getLatestFirstPhosphor() < latestFirstPhosphor)))
+		{
+			latestFirstPhosphor = visualTarget->getLatestFirstPhosphor();
+			needsFirst = false;
+		}
+	}
+	//Remove these properties from the engine and let the caller deal with them
 	propPackage_.clear();
+
+	//Reset the timestamps of these properties to the latest first phosphor value
+	if(returnVal)
+		returnVal->setAllTimestamps(latestFirstPhosphor);
+
+	//Return the list of properties
+	return returnVal;
+}
+
+void PictoEngine::addStateTransitionForServer(QSharedPointer<Transition> stateTrans, QString stateMachinePath)
+{
+	if(!stateDataPackage_)
+		stateDataPackage_ = QSharedPointer<StateDataUnitPackage>(new StateDataUnitPackage());
+	stateDataPackage_->addTransition(stateTrans,-1.0,stateMachinePath);
+}
+
+QSharedPointer<StateDataUnitPackage> PictoEngine::getStateDataPackage()
+{
+	QSharedPointer<StateDataUnitPackage> returnVal = stateDataPackage_;
+	
+	//Get the latest first phosphor time
+	double latestFirstPhosphor = -1;
+	bool needsFirst = true;
+	QSharedPointer<VisualTarget> visualTarget;
+	foreach(QSharedPointer<RenderingTarget> rendTarget,renderingTargets_)
+	{
+		visualTarget = rendTarget->getVisualTarget();
+		if(visualTarget && (needsFirst || (visualTarget->getLatestFirstPhosphor() < latestFirstPhosphor)))
+		{
+			latestFirstPhosphor = visualTarget->getLatestFirstPhosphor();
+			needsFirst = false;
+		}
+	}
+	//Remove these StateDataUnits from the engine and let the caller deal with them
+	stateDataPackage_.clear();
+
+	//Reset the timestamps of these StateDataUnits to the latest first phosphor value
+	if(returnVal)
+		returnVal->setAllTimestamps(latestFirstPhosphor);
+
 	return returnVal;
 }
 

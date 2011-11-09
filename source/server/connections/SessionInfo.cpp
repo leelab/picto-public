@@ -157,7 +157,7 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	// Load Current State
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQuery(cacheDb);
-	executeReadQuery(&cacheQuery,"INSERT INTO currentstate(variableid, time, data) SELECT variableid, time, data FROM diskdb.currentstate",true);
+	executeReadQuery(&cacheQuery,"INSERT INTO currentstate(dataid, variableid, time, data) SELECT dataid, variableid, time, data FROM diskdb.currentstate",true);
 	cacheQuery.finish();
 	locker.unlock();
 
@@ -434,7 +434,7 @@ void SessionInfo::flushCache(QString sourceType)
 		}
 
 		// Store the latest "current table" entries
-		cacheQuery.prepare(QString("INSERT INTO diskdb.currentstate (variableid, time, data) SELECT variableid, time, data FROM currentstate WHERE time > :last"));
+		cacheQuery.prepare(QString("INSERT INTO diskdb.currentstate (dataid, variableid, time, data) SELECT dataid, variableid, time, data FROM currentstate WHERE time > :last"));
 		cacheQuery.bindValue(":last",latestWrittenStateVarTime_);
 		executeWriteQuery(&cacheQuery,"",true);
 
@@ -493,7 +493,7 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	{
 		dataPoint = data->takeFirstDataPoint();
 		if(data->length() == 0)	//No need to setStateVariable for any except the last one
-			setStateVariable(EYE_STATE_VAR_ID,dataPoint->t,dataPoint->toXml());
+			setStateVariable(dataPoint->getDataID(),EYE_STATE_VAR_ID,dataPoint->t,dataPoint->toXml());
 		cacheQ.prepare("INSERT INTO behavioraldata (dataid, xpos, ypos, time)"
 			"VALUES(:dataid, :xpos, :ypos, :time)");
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
@@ -514,7 +514,7 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 	while(data->length() > 0)
 	{
 		dataPoint = data->takeFirstDataPoint();
-		setStateVariable(dataPoint->index_,dataPoint->time_,dataPoint->toXml());
+		setStateVariable(dataPoint->getDataID(),dataPoint->index_,dataPoint->time_,dataPoint->toXml());
 		cacheQ.prepare("INSERT INTO properties (dataid, propid, path, value, time)"
 			"VALUES(:dataid, :index, :path, :value, :time)");
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
@@ -744,23 +744,53 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 }
 
 //! \brief inserts a state change record in the session database
-void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnit> data)
+void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data)
 {
-	setStateVariable(TRANSITION_STATE_VAR_ID,data->getTime(),data->toXml());
+
+
+
+
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 
-	query.prepare("INSERT INTO statetransitions "
+	QSharedPointer<Picto::StateDataUnit> dataPoint;
+	while(data->length() > 0)
+	{
+		dataPoint = data->takeFirstDataPoint();
+		setStateVariable(dataPoint->getDataID(),TRANSITION_STATE_VAR_ID,dataPoint->getTime(),dataPoint->toXml());
+		query.prepare("INSERT INTO statetransitions "
 		"(dataid, transid, machinepath, source, sourceresult, destination, time) "
 		"VALUES(:dataid, :transid, :machinepath, :source, :sourceresult, :destination, :time) ");
-	query.bindValue(":dataid", data->getDataID());
-	query.bindValue(":transid", data->getTransitionID());
-	query.bindValue(":machinepath", data->getMachinePath());
-	query.bindValue(":source", data->getSource()); 
-	query.bindValue(":sourceresult",data->getSourceResult());
-	query.bindValue(":destination",data->getDestination());
-	query.bindValue(":time",data->getTime());
-	executeWriteQuery(&query,"",false);	
+		query.bindValue(":dataid", dataPoint->getDataID());
+		query.bindValue(":transid", dataPoint->getTransitionID());
+		query.bindValue(":machinepath", dataPoint->getMachinePath());
+		query.bindValue(":source", dataPoint->getSource()); 
+		query.bindValue(":sourceresult",dataPoint->getSourceResult());
+		query.bindValue(":destination",dataPoint->getDestination());
+		query.bindValue(":time",dataPoint->getTime());
+		executeWriteQuery(&query,"",false);	
+	}
+
+
+
+
+
+
+	//setStateVariable(data->getDataID(),TRANSITION_STATE_VAR_ID,data->getTime(),data->toXml());
+	//QSqlDatabase cacheDb = getCacheDb();
+	//QSqlQuery query(cacheDb);
+
+	//query.prepare("INSERT INTO statetransitions "
+	//	"(dataid, transid, machinepath, source, sourceresult, destination, time) "
+	//	"VALUES(:dataid, :transid, :machinepath, :source, :sourceresult, :destination, :time) ");
+	//query.bindValue(":dataid", data->getDataID());
+	//query.bindValue(":transid", data->getTransitionID());
+	//query.bindValue(":machinepath", data->getMachinePath());
+	//query.bindValue(":source", data->getSource()); 
+	//query.bindValue(":sourceresult",data->getSourceResult());
+	//query.bindValue(":destination",data->getDestination());
+	//query.bindValue(":time",data->getTime());
+	//executeWriteQuery(&query,"",false);	
 }
 
 //! \brief Inserts the passed in frame data into the cache database
@@ -790,7 +820,7 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 	if(hadData)
 	{	
 		QMutexLocker locker(databaseWriteMutex_.data());
-		setStateVariable(FRAME_STATE_VAR_ID,framedata->time,framedata->toXml());
+		setStateVariable(framedata->getDataID(),FRAME_STATE_VAR_ID,framedata->time,framedata->toXml());
 		updateCurrentStateTable();
 	}
 }
@@ -807,7 +837,7 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 	query.bindValue(":channel", data->getChannel());
 	query.bindValue(":time",data->getTime());
 	executeWriteQuery(&query,"",false);
-	setStateVariable(REWARD_STATE_VAR_ID,data->getTime(),data->toXml());
+	setStateVariable(data->getDataID(),REWARD_STATE_VAR_ID,data->getTime(),data->toXml());
 	
 	QSharedPointer<ComponentInfo> sourceComponent = getComponentByType("DIRECTOR");
 	//When the experiment is not running, Update the current state
@@ -1172,8 +1202,8 @@ void SessionInfo::InitializeVariables()
 	//received, the query gets performed creating contains a valid state that
 	//was in place at the time that frame was presented.
 	tables_.push_back("currentstate");
-	tableColumns_["currentstate"] = " variableid,time,data ";
-	tableColumnTypes_["currentstate"] = " INTEGER UNIQUE ON CONFLICT REPLACE,REAL,TEXT ";
+	tableColumns_["currentstate"] = " dataid,variableid,time,data ";
+	tableColumnTypes_["currentstate"] = " INTEGER,INTEGER UNIQUE ON CONFLICT REPLACE,REAL,TEXT ";
 
 	//create alignment tool
 	alignToType_ = "";
@@ -1425,10 +1455,11 @@ void SessionInfo::recalculateFittedTimes()
 //state will have constant runtime independant of the previous runtime of the current
 //experiment.  New variable values always update existing values with the same id if 
 //their timestamp is greater than that of their predecessor.  
-void SessionInfo::setStateVariable(int id,QString timestamp, QString serializedValue)
+void SessionInfo::setStateVariable(int dataid, int varid, QString timestamp, QString serializedValue)
 {
 	Variable var;
-	var.id = id;
+	var.dataid = dataid;
+	var.varid = varid;
 	var.time = timestamp;
 	var.serial = serializedValue;
 	currentStateQuery_.append(var);
@@ -1456,15 +1487,17 @@ void SessionInfo::updateCurrentStateTable()
 		foreach(Variable queryVars,currentStateQuery_)
 		{
 			//Make sure that the row is there.
-			cacheQuery.prepare("INSERT OR IGNORE INTO currentstate (variableid,time,data) VALUES (:id, -1, '')");
-			cacheQuery.bindValue(":id",queryVars.id);
+			cacheQuery.prepare("INSERT OR IGNORE INTO currentstate (dataid,variableid,time,data) VALUES (-1,:variableid, -1, '')");
+			cacheQuery.bindValue(":variableid",queryVars.varid);
 			executeWriteQuery(&cacheQuery,"",true);
 			//Update the value of the row if the time increased.
-			cacheQuery.prepare("UPDATE currentstate SET time = :time, data = :data WHERE variableid = :id AND time < :time1");
+			cacheQuery.prepare("UPDATE currentstate SET time = :time, data = :data, dataid = :dataid WHERE variableid = :variableid AND time <= :time1 AND dataid < :dataid1");
 			cacheQuery.bindValue(":time",queryVars.time);
 			cacheQuery.bindValue(":data",queryVars.serial);
-			cacheQuery.bindValue(":id",queryVars.id);
+			cacheQuery.bindValue(":dataid",queryVars.dataid);
+			cacheQuery.bindValue(":variableid",queryVars.varid);
 			cacheQuery.bindValue(":time1",queryVars.time);
+			cacheQuery.bindValue(":dataid1",queryVars.dataid);
 			executeWriteQuery(&cacheQuery,"",true);
 			//Update latest written state variable.
 			if(queryVars.time.toDouble() > latestStateVarTime_.toDouble())

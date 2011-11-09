@@ -63,7 +63,7 @@ protected:
 	//contents onto a different widget.  This is needed for the VisualTargetHost.
 	virtual void paint(QPaintDevice *widget) = 0;
 	void paintEvent(QPaintEvent *) { paint(this); };
-	void setFirstPhosphorTime(){lastFrameTime_ = stamper_.stampSec();};
+	void setFirstPhosphorTime();
 
 	bool bWindowed_;
 	int width_;

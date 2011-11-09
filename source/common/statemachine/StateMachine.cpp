@@ -464,7 +464,8 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 				if(tran->getSourceResult() == result)
 				{
 					nextElementName = tran->getDestination();
-					sendStateDataToServer(tran, engine);
+					engine->addStateTransitionForServer(tran,path_.join("::"));
+					//sendStateDataToServer(tran, engine);
 					foundTransition = true;
 					break;
 				}

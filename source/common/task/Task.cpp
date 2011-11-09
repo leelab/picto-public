@@ -85,8 +85,11 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	if(dataChannel.isNull())
 		return;
 
-	bool sendStateDataSucceeded = sendStateData("NULL","NULL",stateMachine_->getName(),-1,engine);
-	Q_ASSERT(sendStateDataSucceeded);
+	QSharedPointer<Transition> tran(new Transition("NULL","NULL",stateMachine_->getName()));
+	tran->setSpecialTransitionID(-1);
+	engine->addStateTransitionForServer(tran,getName());
+	//bool sendStateDataSucceeded = sendStateData("NULL","NULL",stateMachine_->getName(),-1,engine);
+	//Q_ASSERT(sendStateDataSucceeded);
 }
 
 
@@ -104,14 +107,22 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 
 	if(result == "EngineAbort")
 	{
-		bool rc = sendStateData("NULL",result,"NULL",-2,engine);
-		Q_ASSERT(rc);
+
+		QSharedPointer<Transition> tran(new Transition("NULL",result,"NULL"));
+		tran->setSpecialTransitionID(-2);
+		engine->addStateTransitionForServer(tran,getName());
+		//bool rc = sendStateData("NULL",result,"NULL",-2,engine);
+		//Q_ASSERT(rc);
 	}
 	else
 	{
-		bool rc = sendStateData(stateMachine_->getName(),result,"NULL",-3,engine);
-		Q_ASSERT(rc);
+		QSharedPointer<Transition> tran(new Transition(stateMachine_->getName(),result,"NULL"));
+		engine->addStateTransitionForServer(tran,getName());
+		tran->setSpecialTransitionID(-3);
+		//bool rc = sendStateData(stateMachine_->getName(),result,"NULL",-3,engine);
+		//Q_ASSERT(rc);
 	}
+	sendStateData(engine);
 
 	//while(dataChannel->pendingResponses())
 	//{
@@ -138,12 +149,92 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 }
 
 //! \brief Sends state data to the server
-bool Task::sendStateData(QString source, QString sourceResult, QString destination, int id, QSharedPointer<Engine::PictoEngine> engine)
+//bool Task::sendStateData(QString source, QString sourceResult, QString destination, int id, QSharedPointer<Engine::PictoEngine> engine)
+//{
+//	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+//	if(dataChannel.isNull())
+//		return false;
+//	
+//	QString status = "running";
+//	int engCmd = engine->getEngineCommand();
+//	switch(engCmd)
+//	{
+//	case Engine::PictoEngine::ResumeEngine:
+//		status = "running";
+//		break;
+//	case Engine::PictoEngine::PauseEngine:
+//		status = "paused";
+//		break;
+//	case Engine::PictoEngine::StopEngine:
+//		status = "stopped";
+//		break;
+//	}
+//	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
+//
+//	QSharedPointer<Picto::ProtocolResponse> dataResponse;
+//	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+//
+//	QByteArray stateDataXml;
+//	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&stateDataXml));
+//
+//	Timestamper stamper;
+//	double timestamp = stamper.stampSec();
+//
+//	StateDataUnit stateData;
+//	stateData.setTransition(source,sourceResult,destination,timestamp,id,getName());
+//
+//	//The first time we send properties and eye data, there's a lot to send, so we
+//	//do it here instead of in state.cpp.  Otherwise, the first frame ends up taking too long.
+//	//Update the BehavioralDataUnitPackage
+//	BehavioralDataUnitPackage behavData;
+//	//Note that the call to getValues clears out any existing values,
+//	//so it should only be made once per frame.
+//	behavData.emptyData();
+//	QSharedPointer<SignalChannel> sigChannel = engine->getSignalChannel("PositionChannel");
+//	behavData.addData(sigChannel->getValues());
+//	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
+//
+//	xmlWriter->writeStartElement("Data");
+//	stateData.toXml(xmlWriter);
+//	if(behavData.length())
+//		behavData.toXml(xmlWriter);
+//	if(propPack && propPack->length())
+//		propPack->toXml(xmlWriter);
+//	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
+//	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+//	{
+//		reward->toXml(xmlWriter);
+//	}
+//	xmlWriter->writeEndElement();
+//
+//	dataCommand->setContent(stateDataXml);
+//	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
+//
+//	dataChannel->sendRegisteredCommand(dataCommand);
+//	dataChannel->processResponses(0);
+//
+//	//if(!dataChannel->waitForResponse(1000))
+//	//	return false;
+//	//dataResponse = dataChannel->getResponse();
+//	//if(dataResponse->getResponseCode() != ProtocolResponseType::OK)
+//	//	return false;
+//
+//	return true;
+//}
+//
+
+bool Task::sendStateData(QSharedPointer<Engine::PictoEngine> engine)
 {
+
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+
 	if(dataChannel.isNull())
 		return false;
-	
+
+	QSharedPointer<StateDataUnitPackage> statePack = engine->getStateDataPackage();
+
+	//send a PUTDATA command to the server with the most recent behavioral data
+	QSharedPointer<Picto::ProtocolResponse> dataResponse;
 	QString status = "running";
 	int engCmd = engine->getEngineCommand();
 	switch(engCmd)
@@ -159,58 +250,31 @@ bool Task::sendStateData(QString source, QString sourceResult, QString destinati
 		break;
 	}
 	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
-
-	QSharedPointer<Picto::ProtocolResponse> dataResponse;
 	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
-	QByteArray stateDataXml;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&stateDataXml));
-
-	Timestamper stamper;
-	double timestamp = stamper.stampSec();
-
-	StateDataUnit stateData;
-	stateData.setTransition(source,sourceResult,destination,timestamp,id,getName());
-
-	//The first time we send properties and eye data, there's a lot to send, so we
-	//do it here instead of in state.cpp.  Otherwise, the first frame ends up taking too long.
-	//Update the BehavioralDataUnitPackage
-	BehavioralDataUnitPackage behavData;
-	//Note that the call to getValues clears out any existing values,
-	//so it should only be made once per frame.
-	behavData.emptyData();
-	QSharedPointer<SignalChannel> sigChannel = engine->getSignalChannel("PositionChannel");
-	behavData.addData(sigChannel->getValues());
-	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
+	QByteArray dataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
 	xmlWriter->writeStartElement("Data");
-	stateData.toXml(xmlWriter);
-	if(behavData.length())
-		behavData.toXml(xmlWriter);
-	if(propPack && propPack->length())
-		propPack->toXml(xmlWriter);
-	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
-	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
-	{
-		reward->toXml(xmlWriter);
-	}
+	if(statePack && statePack->length())
+		statePack->toXml(xmlWriter);
 	xmlWriter->writeEndElement();
 
-	dataCommand->setContent(stateDataXml);
-	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
+	dataCommand->setContent(dataXml);
+	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+	QUuid commandUuid = QUuid::createUuid();
 
 	dataChannel->sendRegisteredCommand(dataCommand);
+
 	dataChannel->processResponses(0);
-
-	//if(!dataChannel->waitForResponse(1000))
-	//	return false;
-	//dataResponse = dataChannel->getResponse();
-	//if(dataResponse->getResponseCode() != ProtocolResponseType::OK)
-	//	return false;
-
+	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
+	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
+	//next frame.
+	QTime timer;
+	timer.start();
+	dataChannel->assureConnection(5);
 	return true;
 }
-
 
 /*! \brief Turns this task into an XML fragment
  *

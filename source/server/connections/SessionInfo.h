@@ -6,7 +6,7 @@
 #include "../../common/storage/NeuralDataUnit.h"
 #include "../../common/storage/BehavioralDataUnitPackage.h"
 #include "../../common/storage/PropertyDataUnitPackage.h"
-#include "../../common/storage/StateDataUnit.h"
+#include "../../common/storage/StateDataUnitPackage.h"
 #include "../../common/storage/FrameDataUnitPackage.h"
 #include "../../common/storage/RewardDataUnit.h"
 #include "../../common/storage/AlignmentDataUnit.h"
@@ -79,7 +79,7 @@ public:
 
 	QSharedPointer<Picto::BehavioralDataUnitPackage> selectBehavioralData(QString timestamp);
 	QSharedPointer<Picto::PropertyDataUnitPackage> selectPropertyData(QString timestamp);
-	void insertStateData(QSharedPointer<Picto::StateDataUnit> data);
+	void insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data);
 	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> selectStateData(QString timestamp);
 	QSharedPointer<Picto::FrameDataUnitPackage> selectFrameData(QString timestamp);
 	QString selectStateVariables(QString fromTime);
@@ -117,7 +117,7 @@ private:
 	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
 	void recalculateFittedTimes();
-	void setStateVariable(int id,QString timestamp, QString serializedValue);
+	void setStateVariable(int dataid, int varid, QString timestamp, QString serializedValue);
 	void updateCurrentStateTable();
 	QSqlDatabase getSessionDb();
 	QSqlDatabase getCacheDb();
@@ -151,7 +151,7 @@ private:
 	QMap<QString,QString> tableColumnTypes_;
 	QMap<QString,QString> tableColumnConstraints_;
 	QMap<QString,QString> tableDataProviders_;
-	struct Variable{int id;QString time;QString serial;};
+	struct Variable{int dataid;int varid;QString time;QString serial;};
 	QList<Variable> currentStateQuery_;
 	QString latestStateVarTime_;
 	QString latestWrittenStateVarTime_;

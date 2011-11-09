@@ -114,10 +114,10 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertPropertyData(propData);
 		}
-		else if(dataType == "StateDataUnit")
+		else if(dataType == "StateDataUnitPackage")
 		{
 			//deserialize the data store
-			QSharedPointer<Picto::StateDataUnit> stateData(new Picto::StateDataUnit());
+			QSharedPointer<Picto::StateDataUnitPackage> stateData(new Picto::StateDataUnitPackage());
 			stateData->fromXml(xmlReader);
 
 			sessionInfo->insertStateData(stateData);

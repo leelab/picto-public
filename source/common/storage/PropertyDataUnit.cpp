@@ -11,7 +11,7 @@ PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, doubl
 	index_ = index;
 	path_ = path; 
 	value_ = value; 
-	time_ = QString("%1").arg(time,0,'f',6);
+	setTime(time);
 }
 
 PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, QString time)
@@ -22,6 +22,15 @@ PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, QStri
 	time_ = time;
 }
 
+void PropertyDataUnit::setTime(double time)
+{
+	time_ = QString("%1").arg(time,0,'f',6);
+}
+
+void PropertyDataUnit::setTime(QString time)
+{
+	time_ = time;
+}
 /*! \brief Turns the PropertyDataUnit into an XML fragment
  *
  *	The XML will look like this:

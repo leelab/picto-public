@@ -19,7 +19,6 @@ D3DVisualTarget::D3DVisualTarget() :
 	pD3D_ = 0;  
 	pD3dDevice_ = 0;
 	pVertexBuffer_ = 0;
-	lastFrameTime_ = -1;
 
 	HWND hWnd;
 
