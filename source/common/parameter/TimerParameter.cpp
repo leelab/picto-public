@@ -9,7 +9,8 @@ TimerParameter::TimerParameter()
 {
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
-	AddDefinableProperty(QVariant::Int,"Value",-1);
+	restart();
+	//AddDefinableProperty(QVariant::Int,"Value",-1);
 }
 
 Parameter* TimerParameter::NewParameter()
@@ -19,10 +20,17 @@ Parameter* TimerParameter::NewParameter()
 
 void TimerParameter::restart()
 {
+	time_ = 0;
 	timer_.restart();
 }
 
-void TimerParameter::updateTimeValue()
+void TimerParameter::reset()
+{
+	Parameter::reset();
+	restart();
+}
+
+int TimerParameter::getValue()
 {
 	Controller::TimerUnits::TimerUnits units;
 	if(unitList_.value(propertyContainer_->getPropertyValue("TimeUnits").toInt(),"") == "Sec")
@@ -33,7 +41,7 @@ void TimerParameter::updateTimeValue()
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-	propertyContainer_->setPropertyValue("Value",timer_.elapsedTime(units));
+	return time_ + timer_.elapsedTime(units);
 	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toAscii());
 }
 

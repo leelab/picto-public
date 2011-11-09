@@ -26,7 +26,6 @@ class TimerParameter : public Parameter
 	Q_PROPERTY(int value READ getValue WRITE setValue)
 public slots:
 	void restart();
-	void updateTimeValue();
 
 public:
 	TimerParameter();
@@ -34,8 +33,9 @@ public:
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TimerParameter());};
 
-	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
-	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
+	virtual void reset();
+	int getValue();
+	void setValue(int val){restart();time_ = val;};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -47,6 +47,7 @@ protected:
 private:
 	Controller::Timer timer_;
 	QStringList unitList_;
+	int time_;
 
 
 };

@@ -6,7 +6,9 @@ qulonglong DataUnit::lastDataID_ = 0;
 
 DataUnit::DataUnit():
 Serializable(),
-dataID_(0)
+dataID_(generateDataID())	//Since the data id is used to determine the order in which things occured
+							//when they have the same timestamp, it must be generated when the object
+							//is generated
 {
 }
 
@@ -28,8 +30,6 @@ bool DataUnit::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
  */
 bool DataUnit::serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	if(dataID_ == 0)
-		dataID_ = generateDataID();
 	xmlStreamWriter->writeTextElement("dataid",QString::number(dataID_));
 	return true;
 } 
@@ -45,11 +45,6 @@ bool DataUnit::deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReade
 	}
 	dataID_ = xmlStreamReader->readElementText().toLongLong();
 	return true;
-}
-
-void DataUnit::setDataID(qulonglong dataID)
-{
-	dataID_ = dataID;
 }
 
 //! \brief Returns this DataUnit's dataID

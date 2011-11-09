@@ -60,22 +60,22 @@
               <Name>FixationTracker</Name>
               <Result>
                 <Name>Reaquistion Time Exceeded</Name>
-              </Result>
+              <UIInfo><UniqueID>{6a7b51da-009f-4924-8c0b-0d012ebd4bc8}</UniqueID></UIInfo></Result>
               <Result>
                 <Name>Initial Aquistion Time Exceeded</Name>
-              </Result>
+              <UIInfo><UniqueID>{964c003b-8cb6-4c8e-a15b-25b885609823}</UniqueID></UIInfo></Result>
               <Result>
                 <Name>Total Time Excceeded</Name>
-              </Result>
+              <UIInfo><UniqueID>{cb444799-d6e4-42e1-ae7c-0023167e9d59}</UniqueID></UIInfo></Result>
               <Result>
                 <Name>Broke Fixation</Name>
-              </Result>
+              <UIInfo><UniqueID>{74c7421f-9989-4315-8770-36f9aa3aa4b6}</UniqueID></UIInfo></Result>
               <Result>
                 <Name>Success</Name>
-              </Result>
+              <UIInfo><UniqueID>{3a1d5270-d4dc-4bc0-bcc0-b4b9fa2bcca1}</UniqueID></UIInfo></Result>
               <UIInfo>
                 <Pos x="1471" y="1498"/>
-              </UIInfo>
+              <UniqueID>{8e8f6549-2ad7-4041-82db-b72a43d2f138}</UniqueID></UIInfo>
               <ControlTarget>Target</ControlTarget>
               <FixationTime>400</FixationTime>
               <MaxInitialAcquisitionTime>600</MaxInitialAcquisitionTime>
@@ -87,7 +87,7 @@
               <Name>Fixated</Name>
               <UIInfo>
                 <Pos x="1992" y="1665"/>
-              </UIInfo>
+              <UniqueID>{2cb664f0-3a8a-4b42-8057-220a94f996b4}</UniqueID></UIInfo>
             </Result>
             <Transition>
               <Destination>Failed</Destination>
@@ -132,18 +132,18 @@
               <Name>WaitForOperatorClick</Name>
               <Result>
                 <Name>Done</Name>
-              </Result>
+              <UIInfo><UniqueID>{efc28a78-37b2-46f2-90d6-d47290896738}</UniqueID></UIInfo></Result>
               <Script>return operatorClick.newClick;</Script>
               <UIInfo>
                 <Pos x="1189" y="1347"/>
-              </UIInfo>
+              <UniqueID>{fa8f4b41-51d5-427b-bd11-9a31fa6750e3}</UniqueID></UIInfo>
             </ControlElement>
             <Name>WaitForClick</Name>
             <Result>
               <Name>OperatorClicked</Name>
               <UIInfo>
                 <Pos x="1601" y="1367"/>
-              </UIInfo>
+              <UniqueID>{af91fc05-906d-444a-a0ad-a7f19c54d83c}</UniqueID></UIInfo>
             </Result>
             <UIInfo>
               <Pos x="1470" y="1713"/>
@@ -167,7 +167,7 @@
             <Name>Grid</Name>
             <UIInfo>
               <Pos x="1502" y="1919"/>
-            </UIInfo>
+            <UniqueID>{69dd1350-ecc1-4926-82ad-7d350b605ab1}</UniqueID></UIInfo>
             <UIEnabled>true</UIEnabled>
             <Columns>7</Columns>
             <Rows>7</Rows>
@@ -191,31 +191,31 @@
               <Name>Done</Name>
               <UIInfo>
                 <Pos x="1591" y="1463"/>
-              </UIInfo>
+              <UniqueID>{58d7c7b6-17e4-4dcd-aef4-348274e3f67b}</UniqueID></UIInfo>
             </Result>
             <StateMachineElement type="ScriptElement">
               <Name>SetTargetRed</Name>
               <Result>
                 <Name>false</Name>
-              </Result>
+              <UIInfo><UniqueID>{28cbb8f3-4ec6-4204-a87a-b49b4a2ed0e1}</UniqueID></UIInfo></Result>
               <Result>
                 <Name>true</Name>
-              </Result>
+              <UIInfo><UniqueID>{23fb535d-700c-433a-8526-279be6fc8ccb}</UniqueID></UIInfo></Result>
               <Script>Square.red = 0;</Script>
               <UIInfo>
                 <Pos x="1132" y="1573"/>
-              </UIInfo>
+              <UniqueID>{01bcdca0-1985-46a6-b08a-8823cef8516f}</UniqueID></UIInfo>
             </StateMachineElement>
             <StateMachineElement type="Reward">
               <Name>Reward</Name>
               <Result>
                 <Name>done</Name>
-              </Result>
+              <UIInfo><UniqueID>{ff57f771-a34b-4eee-ba45-3f181c1e3966}</UniqueID></UIInfo></Result>
               <RewardChan>1</RewardChan>
               <RewardQty>1</RewardQty>
               <UIInfo>
                 <Pos x="1385" y="1585"/>
-              </UIInfo>
+              <UniqueID>{7c1b2668-e687-471f-a016-96333cecf6ce}</UniqueID></UIInfo>
             </StateMachineElement>
             <Transition>
               <Destination>Reward</Destination>
@@ -254,7 +254,7 @@
           <Name>Square</Name>
           <UIInfo>
             <Pos x="1741" y="2018"/>
-          </UIInfo>
+          <UniqueID>{2315077a-d820-472b-a2a7-5472d9c32823}</UniqueID></UIInfo>
           <Visible>true</Visible>
           <SubjectView>false</SubjectView>
         </VisualElement>
@@ -269,14 +269,14 @@
           <Name>IncrementStimulusCounter</Name>
           <Result>
             <Name>false</Name>
-          </Result>
+          <UIInfo><UniqueID>{f17b1a5f-6be8-401a-9d17-97efcfba55a0}</UniqueID></UIInfo></Result>
           <Result>
             <Name>true</Name>
-          </Result>
+          <UIInfo><UniqueID>{cc6db9f9-fac5-4069-ac9a-85bc353277cc}</UniqueID></UIInfo></Result>
           <Script>StimuliPresented.value++; return true;</Script>
           <UIInfo>
             <Pos x="1960" y="1830"/>
-          </UIInfo>
+          <UniqueID>{01132aa9-2fa9-4046-9e87-8f8810e7a42a}</UniqueID></UIInfo>
         </StateMachineElement>
         <Transition>
           <Destination>IncrementStimulusCounter</Destination>
@@ -2086,7 +2086,7 @@ trunc_exp = (1-Math.pow(Math.E,-2.5))*(randDouble.value);
 trialFixationTargetOverlapTime = 500 - Math.log(1-trunc_exp)*250;   
 Delay.value = trialFixationTargetOverlapTime;
 Timer.restart();</EntryScript>
-                  <Parameter type="Timer"><Name>Timer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="721" y="696"/><UniqueID>{da694444-0c85-4047-9b22-62e362e1cc8b}</UniqueID></UIInfo></Parameter><ControlElement type="Script Controller"><Name>RandCountdown</Name><Result><Name>Done</Name><UIInfo><UniqueID>{4312706c-d46e-4449-9038-a4dc7ce392c1}</UniqueID></UIInfo></Result><UIInfo><Pos x="781" y="160"/><UniqueID>{ca31cf29-715a-4cbd-9836-beb0b7f2c274}</UniqueID></UIInfo><Script>Timer.updateTimeValue();  return Timer.value &gt;= Delay.value;</Script></ControlElement><Transition><Destination>ContinuedFixation</Destination><Source>RandCountdown</Source><SourceResult>Done</SourceResult></Transition><Parameter type="RandomDouble"><Name>randDouble</Name><UIInfo><Pos x="837" y="696"/><UniqueID>{9ba2fba2-5a0a-4c83-84c0-64ad46477a06}</UniqueID></UIInfo></Parameter><Parameter type="Numeric"><Name>Delay</Name><UIInfo><Pos x="946" y="700"/><UniqueID>{e9e0051a-0435-4b35-8504-f6d59c7909ec}</UniqueID></UIInfo></Parameter></StateMachineElement>
+                  <Parameter type="Timer"><Name>Timer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="721" y="696"/><UniqueID>{da694444-0c85-4047-9b22-62e362e1cc8b}</UniqueID></UIInfo></Parameter><ControlElement type="Script Controller"><Name>RandCountdown</Name><Result><Name>Done</Name><UIInfo><UniqueID>{4312706c-d46e-4449-9038-a4dc7ce392c1}</UniqueID></UIInfo></Result><UIInfo><Pos x="781" y="160"/><UniqueID>{ca31cf29-715a-4cbd-9836-beb0b7f2c274}</UniqueID></UIInfo><Script>return Timer.value &gt;= Delay.value;</Script></ControlElement><Transition><Destination>ContinuedFixation</Destination><Source>RandCountdown</Source><SourceResult>Done</SourceResult></Transition><Parameter type="RandomDouble"><Name>randDouble</Name><UIInfo><Pos x="837" y="696"/><UniqueID>{9ba2fba2-5a0a-4c83-84c0-64ad46477a06}</UniqueID></UIInfo></Parameter><Parameter type="Numeric"><Name>Delay</Name><UIInfo><Pos x="946" y="700"/><UniqueID>{e9e0051a-0435-4b35-8504-f6d59c7909ec}</UniqueID></UIInfo></Parameter></StateMachineElement>
                   <UIInfo>
                     <Pos x="1110" y="400"/>
                   <UniqueID>{2fdc3789-3af3-4b3f-a6d4-acae31da6a4a}</UniqueID></UIInfo>
@@ -2318,7 +2318,7 @@ return true;</Script>
             
             
             
-          <Parameter type="Timer"><Name>TrialTimer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1122" y="1413"/><UniqueID>{e62361bd-b6fb-493f-8756-4dd1a248b6fc}</UniqueID></UIInfo><Value>0</Value></Parameter><EntryScript>TrialType.randomize();
+          <Parameter type="Timer"><Name>TrialTimer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1122" y="1413"/><UniqueID>{e62361bd-b6fb-493f-8756-4dd1a248b6fc}</UniqueID></UIInfo></Parameter><EntryScript>TrialType.randomize();
 TrialInfo.setData(&quot;Block&quot;,BlocksSoFar.value);
 TrialInfo.setData(&quot;TrialInBlock&quot;,0);</EntryScript><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>true</SourceResult></Transition><StateMachineElement type="ScriptElement"><Name>ReshuffleTrialType</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>TrialInfo.updateValue();
 TrialType.reshuffleLastValue();
@@ -2475,6 +2475,6 @@ RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graph
     </Task>
   </Experiment>
   <StateMachineEditorData>
-    <OpenedBlock>{eee68aaa-79c9-46fc-873f-a56f10562632}</OpenedBlock>
+    <OpenedBlock>{2d6837c9-0656-4222-b663-4c83d44ac671}</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

@@ -25,7 +25,6 @@ public:
 	virtual bool serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	void setDataID(qulonglong dataID);
 	qulonglong getDataID();
 	static void resetDataIDGenerator();
 
