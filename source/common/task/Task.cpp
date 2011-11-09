@@ -231,7 +231,19 @@ bool Task::sendStateData(QSharedPointer<Engine::PictoEngine> engine)
 	if(dataChannel.isNull())
 		return false;
 
+	QSharedPointer<SignalChannel> sigChannel = engine->getSignalChannel("PositionChannel");
+
+	//Send the property package too because otherwise we might miss some final properties at the
+	//end of an experiment
+	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
 	QSharedPointer<StateDataUnitPackage> statePack = engine->getStateDataPackage();
+	//Update the BehavioralDataUnitPackage
+	BehavioralDataUnitPackage behavData;
+	//Note that the call to getValues clears out any existing values,
+	//so it should only be made once per frame.  In this case since its the
+	//beginning or end of an experiment we do it anyway
+	behavData.emptyData();
+	behavData.addData(sigChannel->getValues());
 
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
@@ -256,6 +268,10 @@ bool Task::sendStateData(QSharedPointer<Engine::PictoEngine> engine)
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
 	xmlWriter->writeStartElement("Data");
+	if(behavData.length())
+		behavData.toXml(xmlWriter);
+	if(propPack && propPack->length())
+		propPack->toXml(xmlWriter);
 	if(statePack && statePack->length())
 		statePack->toXml(xmlWriter);
 	xmlWriter->writeEndElement();

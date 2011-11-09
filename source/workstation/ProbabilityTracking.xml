@@ -2471,10 +2471,10 @@ TrialInfo.setData(&quot;ChosenCol&quot;,-1);
 TrialInfo.setData(&quot;ChosenSide&quot;,-1);
 
 LongBlock.randomize();
-RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graphic"><Name>TrialInfo</Name><UIInfo><Pos x="2063" y="2014"/></UIInfo><Dimensions height="50" width="800" x="0" y="0"/><Position x="0" y="0"/><UIEnabled>true</UIEnabled><Color A="255" B="0" G="0" R="255">#ff0000</Color></VisualElement><ExitScript>TrialInfo.updateValue();</ExitScript></StateMachine>
+RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graphic"><Name>TrialInfo</Name><UIInfo><Pos x="2063" y="2014"/></UIInfo><Dimensions height="50" width="800" x="0" y="0"/><Position x="0" y="0"/><UIEnabled>true</UIEnabled><Color A="255" B="0" G="0" R="255">#ff0000</Color></VisualElement><ExitScript/></StateMachine>
     </Task>
   </Experiment>
   <StateMachineEditorData>
-    <OpenedBlock>{8744c750-281a-4592-bfb2-d67c27162d1b}</OpenedBlock>
+    <OpenedBlock>{8c067672-12e7-4b62-9bac-6bf3a4570262}</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>
