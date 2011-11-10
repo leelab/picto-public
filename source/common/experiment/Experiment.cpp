@@ -15,8 +15,8 @@ propTable_(QSharedPointer<PropertyTable>(new PropertyTable()))
 	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
 	AddDefinableProperty(QVariant::Double,"XGain",1.0);
 	AddDefinableProperty(QVariant::Double,"YGain",1.0);
-	AddDefinableProperty(QVariant::Double,"XOffset",0);
-	AddDefinableProperty(QVariant::Double,"YOffset",0);
+	AddDefinableProperty(QVariant::Int,"XOffset",0);
+	AddDefinableProperty(QVariant::Int,"YOffset",0);
 	AddDefinableProperty(QVariant::Double,"XYSignalShear",0);
 }
 
@@ -193,9 +193,9 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 		bool isMouseChannel = posChannel->inherits("Picto::MouseSignalChannel");
 		if(isMouseChannel)
 		{	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
-			propertyContainer_->setPropertyValue("XOffset",-.5);
+			propertyContainer_->setPropertyValue("XOffset",-400);
 			propertyContainer_->setPropertyValue("XGain",1.0);
-			propertyContainer_->setPropertyValue("YOffset",-.5);
+			propertyContainer_->setPropertyValue("YOffset",300);
 			propertyContainer_->setPropertyValue("YGain",1.0);
 			propertyContainer_->setPropertyValue("XYSignalShear",0.0);
 		}
@@ -207,8 +207,8 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 	double yZoom = propertyContainer_->getPropertyValue("YGain").toDouble();
 	double xGain = xZoom;
 	double yGain = yZoom;
-	int xOffset = displayWidth/2 + propertyContainer_->getPropertyValue("XOffset").toDouble()*displayWidth;
-	int yOffset = displayHeight/2 + propertyContainer_->getPropertyValue("YOffset").toDouble()*displayHeight;
+	int xOffset = displayWidth/2 + propertyContainer_->getPropertyValue("XOffset").toDouble()*xZoom;
+	int yOffset = displayHeight/2 + -propertyContainer_->getPropertyValue("YOffset").toDouble()*yZoom;
 
 	posChannel->setCalibrationCoefficients("xpos",xGain,xOffset,400/*double(windowDims.width())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
 	posChannel->setCalibrationCoefficients("ypos",yGain,yOffset,300/*double(windowDims.height())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
