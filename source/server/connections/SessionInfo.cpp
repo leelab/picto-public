@@ -16,7 +16,7 @@
 #define EYE_STATE_VAR_ID -3
 #define REWARD_STATE_VAR_ID -4
 //This turns on and off the authorized user permission setup on SessionInfo
-//#define NO_AUTH_REQUIRED
+#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
 QSharedPointer<SessionInfo> SessionInfo::CreateSession(QByteArray experimentXml, QUuid initialObserverId)
 {

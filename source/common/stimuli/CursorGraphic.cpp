@@ -37,15 +37,17 @@ void CursorGraphic::draw()
 {
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
-	QImage image(9,9,QImage::Format_ARGB32);
+	QImage image(14,14,QImage::Format_ARGB32);
 	image.fill(0);
 	QPainter p(&image);
+	QPen pen(color);
+	pen.setWidth(2);
 	p.setRenderHint(QPainter::Antialiasing, true);
+	p.setPen(pen);
 	p.setBrush(color);
-	p.setPen(color);
 	
-	p.drawLine(4,0,4,8);
-	p.drawLine(0,4,8,4);
+	p.drawLine(7,0,7,13);
+	p.drawLine(0,7,13,7);
 
 	p.end();
 	image_ = image;

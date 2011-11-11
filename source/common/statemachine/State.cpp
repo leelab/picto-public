@@ -605,7 +605,7 @@ void State::addCursor()
 	if(hasCursor_)
 		return;
 
-	QSharedPointer<CursorGraphic> cursor(new CursorGraphic(sigChannel_, QColor(255,0,0,255)));
+	QSharedPointer<CursorGraphic> cursor(new CursorGraphic(sigChannel_, QColor(255,50,0,255)));
 	cursor->setLayer(100000);
 
 	scene_->addVisualElement(cursor);
