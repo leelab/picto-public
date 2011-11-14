@@ -60,6 +60,21 @@
  */
 #define IGNORED_PARAMETER(P) (P)
 
+/*! The various ports used by components of the system are changed for release and development versions of the code.
+ *	This allows us to develop and debug picto on a network running picto experiments.  Otherwise, we could not have
+ *	two separate PictoServers open at the same time.
+ */
+//#define DEVELOPMENTBUILD
+#ifdef DEVELOPMENTBUILD
+#define PORTPREFIX 70000
+#else
+#define PORTPREFIX 40000
+#endif
+#define DISCOVERSERVERPORT PORTPREFIX+2425
+#define SERVERPORT PORTPREFIX+2424
+#define LCDCOMMANDPORT PORTPREFIX+2422
+#define LCDEVENTPORT PORTPREFIX+2421
+
 #endif
 
 /*! @} */

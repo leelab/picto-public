@@ -275,6 +275,8 @@ void RemoteViewer::setupUi()
 
 	rewardAction_ = new QAction(tr("&Reward"), this);
 	rewardAction_->setIcon(QIcon(":/icons/reward.png"));
+	rewardAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Space));
+	rewardAction_->setToolTip("Reward (Ctrl+Space)");
 	connect(rewardAction_, SIGNAL(triggered()),this, SLOT(reward()));
 	rewardChannel_ = 1;
 

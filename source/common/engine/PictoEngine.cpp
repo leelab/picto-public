@@ -158,6 +158,7 @@ void PictoEngine::giveReward(int channel)
 			status = "paused";
 			break;
 		case Engine::PictoEngine::StopEngine:
+		case Engine::PictoEngine::NoCommand:
 			status = "stopped";
 			break;
 		default:

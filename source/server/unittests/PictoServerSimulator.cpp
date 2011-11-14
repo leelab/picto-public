@@ -1,6 +1,7 @@
 #include "PictoServerSimulator.h"
 #include <QNetworkInterface>
 #include <QEventLoop>
+#include "../../common/common.h"
 using namespace PictoSim;
 using namespace Server;
 //Not Yet Implemented
@@ -92,12 +93,12 @@ void PictoServerSimulator::CreateConnection(int timeout)
 		if(addr.toString().startsWith("192."))
 			serverAddress.setAddress(addr.toIPv4Address());
 	}
-	// Listen on my ip address (which we just found) on port 42424 (which is the server's port)
-	tcpServer_->listen(serverAddress,42424);
+	// Listen on my ip address (which we just found) on port SERVERPORT (which is the server's port)
+	tcpServer_->listen(serverAddress,SERVERPORT);
 
-	//Start UDP Port listening on 42424
+	//Start UDP Port listening on SERVERPORT
 	udpSocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
-	udpSocket_->bind(42424);
+	udpSocket_->bind(SERVERPORT);
 	
 	//Wait for a UDP message
 	QHostAddress hostAddr;

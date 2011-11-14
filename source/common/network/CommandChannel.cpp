@@ -350,7 +350,7 @@ bool CommandChannel::discoverServer(int timeoutMs)
 	{
 		discoverySocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
 		QHostAddress serverAddress(QHostAddress::Any);	
-		quint16 port = 42425;
+		quint16 port = DISCOVERSERVERPORT;
 		while(!discoverySocket_->bind(serverAddress, port) && port < 42500)
 		{
 			if(timer.elapsed() >= timeoutMs)
@@ -361,7 +361,7 @@ bool CommandChannel::discoverServer(int timeoutMs)
 			port++;
 		}
 		QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(port).toAscii();
-		discoverySocket_->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, 42424);
+		discoverySocket_->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, SERVERPORT);
 		discoverMsgSentTime_ = QDateTime::currentDateTime();
 	}
 	int remainingMs = timeoutMs - timer.elapsed();

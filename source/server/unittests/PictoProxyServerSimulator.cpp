@@ -66,7 +66,7 @@ void PictoProxyServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			QUdpSocket udpSendSocket;
 			QByteArray datagram = QString("ANNOUNCE %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42420).toAscii();
 			udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
-										QHostAddress::Broadcast, 42424);
+										QHostAddress::Broadcast, SERVERPORT);
 			// Wait for the PictoServer to connect to me.  Make sure to call InterruptableSleep() every so often
 			// so that the testbench can break me out of this action if necessary.
 			while( tcpSocket_.isNull() && !tcpServer_->waitForNewConnection(500) && !InterruptableSleep(0) );
@@ -99,7 +99,7 @@ void PictoProxyServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 		QByteArray datagram = QString("DEPART %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42420).toAscii();
 
 		udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
-										QHostAddress::Broadcast, 42424);
+										QHostAddress::Broadcast, SERVERPORT);
 		break;
 	}
 }

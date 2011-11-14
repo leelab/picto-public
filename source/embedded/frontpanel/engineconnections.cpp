@@ -13,13 +13,13 @@ EngineConnections::EngineConnections(FrontPanelInfo *panelInfo, QObject* parent)
 	//Set up the command channel.  This is the connection used to send commands
 	//to the engine, and read the responses from the engine
 	commandChannel = new QTcpServer(this);
-	commandChannel->listen(QHostAddress::LocalHost, 42422);
+	commandChannel->listen(QHostAddress::LocalHost, LCDCOMMANDPORT);
 	connect(commandChannel, SIGNAL(newConnection()), this, SLOT(setupCommandConnection()));
 
 	//Set up the event channel.  This is the connection used to send events from the 
 	//engine to the front panel (e.g. trial start, new block, etc)
 	eventChannel = new QTcpServer(this);
-	eventChannel->listen(QHostAddress::LocalHost, 42421);
+	eventChannel->listen(QHostAddress::LocalHost, LCDEVENTPORT);
 	connect(eventChannel, SIGNAL(newConnection()), this, SLOT(setupEventConnection()));
 
 

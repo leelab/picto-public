@@ -1,4 +1,5 @@
 #include "ServerDiscoverer.h"
+#include "../common.h"
 
 #include <QStringList>
 
@@ -11,7 +12,7 @@ ServerDiscoverer::ServerDiscoverer(QObject *parent) :
 {
 	QHostAddress serverAddress(QHostAddress::Any);
 	
-	port_ = 42425;
+	port_ = DISCOVERSERVERPORT;
 
     while(!udpSocket_.bind(serverAddress, port_) && port_ < 42500)
 	{
@@ -62,7 +63,7 @@ void ServerDiscoverer::discover(int timeout)
 	timeoutTimer_.setSingleShot(true);
 
 	udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
-								QHostAddress::Broadcast, 42424);
+								QHostAddress::Broadcast, SERVERPORT);
 		
 	timeoutTimer_.start();
 }

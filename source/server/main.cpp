@@ -86,7 +86,7 @@ int serviceMain(SystemService *)
 	 *        configuration database.
 	 */
 	Server httpServer(80, httpProtocols);
-	Server pictoServer(42424, pictoProtocols);
+	Server pictoServer(SERVERPORT, pictoProtocols);
 
 
 	return eventLoop.exec();
