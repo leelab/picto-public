@@ -2135,7 +2135,7 @@ TrialInfo.setData(&quot;ChosenSide&quot;,-1);</EntryScript><ExitScript>EventInfo
 EventInfo.updateValue();
 EventInfo.setData(&quot;Trial&quot;,EventInfo.getDataAsInt(&quot;Trial&quot;)+1);
 AttemptedTrials.value++;
-BlockPerformance.setData(&quot;%Correct Curr Block&quot;,100*CorrectTrials.value/AttemptedTrials.value);
+BlockPerformance.setData(&quot;%Correct Curr Block&quot;,(100*CorrectTrials.value/AttemptedTrials.value).toFixed(2));
 BlockPerformance.updateValue();</ExitScript><StateMachineElement type="State"><ControlElement type="Stopwatch Controller"><Name>PreTrialInterval</Name><Result><Name>Success</Name><UIInfo><UniqueID>{cb50b3d0-9882-4cb9-8b9b-7ab4661a107a}</UniqueID></UIInfo></Result><Time>400</Time><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1371" y="119"/><UniqueID>{df5546d3-2807-433e-9377-de47c14249a1}</UniqueID></UIInfo></ControlElement><Name>PreTrialInterval</Name><Result><Name>Done</Name><UIInfo><Pos x="1665" y="142"/><UniqueID>{b97438dd-acc2-4074-b631-10db118caef0}</UniqueID></UIInfo></Result><Transition><Destination>Done</Destination><Source>PreTrialInterval</Source><SourceResult>Success</SourceResult></Transition><UIInfo><Pos x="1242" y="365"/><UniqueID>{21a1278b-ca6b-4e09-bbe7-af171bfcde99}</UniqueID></UIInfo><EntryScript>EventInfo.setData(&quot;Stage&quot;,1);
 EventInfo.setData(&quot;Event&quot;,3);
 EventInfo.updateValue();</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
