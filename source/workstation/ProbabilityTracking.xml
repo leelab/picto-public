@@ -1998,50 +1998,77 @@ else
                 <UIInfo><Pos x="2075" y="2000"/><UniqueID>{a651e13b-e371-4c29-8c8f-4c7d9681590a}</UniqueID></UIInfo></Result>
                 <Script>TrialModeSelect.randomize();
 
-//Select Reward amounts
-switch(TrialType.value%10)
+tryAgain = false;
+do
 {
-case 0:
-  GreenRewards.value = 8;
-  RedRewards.value = 1;
-  break;
-case 1:
-  GreenRewards.value = 4;
-  RedRewards.value = 1;
-  break;
-case 2:
-  GreenRewards.value = 2;
-  RedRewards.value = 1;
-  break;
-case 3:
-  GreenRewards.value = 1;
-  RedRewards.value = 1;
-  break;
-case 4:
-  GreenRewards.value = 4;
-  RedRewards.value = 2;
-  break;
-case 5:
-  GreenRewards.value = 1;
-  RedRewards.value = 2;
-  break;
-case 6:
-  GreenRewards.value = 4;
-  RedRewards.value = 4;
-  break;
-case 7:
-  GreenRewards.value = 2;
-  RedRewards.value = 4;
-  break;
-case 8:
-  GreenRewards.value = 1;
-  RedRewards.value = 4;
-  break;
-case 9:
-  GreenRewards.value = 1;
-  RedRewards.value = 8;
-  break;
-}
+	tryAgain = false;
+	//Select Reward amounts
+	switch(TrialType.value%10)
+	{
+	case 0:
+		if(!Use8_1Combo.value)
+		{
+			tryAgain = true;
+			break;
+		}
+		GreenRewards.value = 8;
+		RedRewards.value = 1;
+		break;
+	case 1:
+		if(!Use4_1Combo.value)
+		{
+			tryAgain = true;
+			break;
+		}
+	  	GreenRewards.value = 4;
+	  	RedRewards.value = 1;
+	  	break;
+	case 2:
+	  	GreenRewards.value = 2;
+	  	RedRewards.value = 1;
+	  	break;
+	case 3:
+	  	GreenRewards.value = 1;
+	  	RedRewards.value = 1;
+	  	break;
+	case 4:
+	  	GreenRewards.value = 4;
+	  	RedRewards.value = 2;
+	  	break;
+	case 5:
+	  	GreenRewards.value = 1;
+	 	 RedRewards.value = 2;
+	  	break;
+	case 6:
+	  	GreenRewards.value = 4;
+	  	RedRewards.value = 4;
+	  	break;
+	case 7:
+	  	GreenRewards.value = 2;
+	  	RedRewards.value = 4;
+	  	break;
+	case 8:
+		if(!Use4_1Combo.value)
+		{
+			tryAgain = true;
+			break;
+		}
+	  	GreenRewards.value = 1;
+	  	RedRewards.value = 4;
+	  	break;
+	case 9:
+		if(!Use8_1Combo.value)
+		{
+			tryAgain = true;
+			break;
+		}
+	  	GreenRewards.value = 1;
+	  	RedRewards.value = 8;
+	  	break;
+	}
+	if(tryAgain)
+		TrialType.randomize();
+} while(tryAgain);
 TrialInfo.setData(&quot;GreenRew&quot;,GreenRewards.value);
 TrialInfo.setData(&quot;RedRew&quot;,RedRewards.value);
 
@@ -2107,7 +2134,9 @@ TrialInfo.setData(&quot;ChosenCol&quot;,-1);
 TrialInfo.setData(&quot;ChosenSide&quot;,-1);</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,2);
 EventInfo.updateValue();
 EventInfo.setData(&quot;Trial&quot;,EventInfo.getDataAsInt(&quot;Trial&quot;)+1);
-</ExitScript><StateMachineElement type="State"><ControlElement type="Stopwatch Controller"><Name>PreTrialInterval</Name><Result><Name>Success</Name><UIInfo><UniqueID>{cb50b3d0-9882-4cb9-8b9b-7ab4661a107a}</UniqueID></UIInfo></Result><Time>400</Time><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1371" y="119"/><UniqueID>{df5546d3-2807-433e-9377-de47c14249a1}</UniqueID></UIInfo></ControlElement><Name>PreTrialInterval</Name><Result><Name>Done</Name><UIInfo><Pos x="1665" y="142"/><UniqueID>{b97438dd-acc2-4074-b631-10db118caef0}</UniqueID></UIInfo></Result><Transition><Destination>Done</Destination><Source>PreTrialInterval</Source><SourceResult>Success</SourceResult></Transition><UIInfo><Pos x="1242" y="365"/><UniqueID>{21a1278b-ca6b-4e09-bbe7-af171bfcde99}</UniqueID></UIInfo><EntryScript>EventInfo.setData(&quot;Stage&quot;,1);
+AttemptedTrials.value++;
+BlockPerformance.setData(&quot;%Correct Curr Block&quot;,CorrectTrials.value/AttemptedTrials.value);
+BlockPerformance.updateValue();</ExitScript><StateMachineElement type="State"><ControlElement type="Stopwatch Controller"><Name>PreTrialInterval</Name><Result><Name>Success</Name><UIInfo><UniqueID>{cb50b3d0-9882-4cb9-8b9b-7ab4661a107a}</UniqueID></UIInfo></Result><Time>400</Time><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1371" y="119"/><UniqueID>{df5546d3-2807-433e-9377-de47c14249a1}</UniqueID></UIInfo></ControlElement><Name>PreTrialInterval</Name><Result><Name>Done</Name><UIInfo><Pos x="1665" y="142"/><UniqueID>{b97438dd-acc2-4074-b631-10db118caef0}</UniqueID></UIInfo></Result><Transition><Destination>Done</Destination><Source>PreTrialInterval</Source><SourceResult>Success</SourceResult></Transition><UIInfo><Pos x="1242" y="365"/><UniqueID>{21a1278b-ca6b-4e09-bbe7-af171bfcde99}</UniqueID></UIInfo><EntryScript>EventInfo.setData(&quot;Stage&quot;,1);
 EventInfo.setData(&quot;Event&quot;,3);
 EventInfo.updateValue();</EntryScript><ExitScript>EventInfo.setData(&quot;Event&quot;,4);
 EventInfo.updateValue();
@@ -2119,8 +2148,10 @@ EventInfo.updateValue();
 
 //Increment correct trials
 EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
-TrialInfo.setData(&quot;CorrectTrial&quot;,1);</ExitScript><Name>PostTrialInterval</Name><Result><Name>Done</Name><UIInfo><Pos x="1706" y="188"/></UIInfo></Result><Transition><Destination>Done</Destination><Source>Timer</Source><SourceResult>Success</SourceResult></Transition><UIInfo><Pos x="1776" y="215"/><UniqueID>{ff20a26a-75e7-463c-bcbc-c4a7662dc88a}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>IncCorrectTrials</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
-TrialInfo.setData(&quot;CorrectTrial&quot;,1);</Script><UIInfo><Pos x="1825" y="660"/></UIInfo></StateMachineElement><Transition><Destination>PostTrialInterval</Destination><Source>TrialLogic</Source><SourceResult>Succeeded</SourceResult></Transition><Transition><Destination>TrialTypeComplete</Destination><Source>PostTrialInterval</Source><SourceResult>Done</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>IncCorrectTrials</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>IncCorrectTrials</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>TrialLogic</Source><SourceResult>Failed</SourceResult></Transition><Parameter type="Numeric"><Name>GreenRewards</Name><UIInfo><Pos x="1162" y="582"/><UniqueID>{ececdc7c-5d9b-4c14-b8be-2e62870d22a0}</UniqueID></UIInfo></Parameter><Parameter type="Numeric"><Name>RedRewards</Name><UIInfo><Pos x="1271" y="587"/><UniqueID>{23ba834d-baeb-4f20-8595-d09d9b96af54}</UniqueID></UIInfo></Parameter><Parameter type="RandomInt"><Name>GreyFeedback</Name><UIInfo><Pos x="1368" y="591"/><UniqueID>{7f987f72-9b13-4517-990b-7ee741dafc31}</UniqueID></UIInfo></Parameter><Transition><Destination>IncCorrectTrials</Destination><Source>TrialLogic</Source><SourceResult>FixTrialSuccess</SourceResult></Transition><Transition><Destination>TrialLogic</Destination><Source>ChooseTrialValues</Source><SourceResult>false</SourceResult></Transition><Parameter type="Range"><Increment>1</Increment><Max>100</Max><Min>1</Min><Name>LowProbability</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1176" y="699"/><UniqueID>{a5ada2af-5b74-456c-af47-aff6de9d4ad9}</UniqueID></UIInfo><Value>10</Value></Parameter><Parameter type="Range"><Increment>1</Increment><Max>100</Max><Min>1</Min><Name>HighProbability</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1290" y="706"/><UniqueID>{796e00b4-7171-4b30-b542-ee17183ede13}</UniqueID></UIInfo><Value>90</Value></Parameter></StateMachineElement>
+TrialInfo.setData(&quot;CorrectTrial&quot;,1);
+CorrectTrials.value++;</ExitScript><Name>PostTrialInterval</Name><Result><Name>Done</Name><UIInfo><Pos x="1706" y="188"/></UIInfo></Result><Transition><Destination>Done</Destination><Source>Timer</Source><SourceResult>Success</SourceResult></Transition><UIInfo><Pos x="1776" y="215"/><UniqueID>{ff20a26a-75e7-463c-bcbc-c4a7662dc88a}</UniqueID></UIInfo></StateMachineElement><StateMachineElement type="ScriptElement"><Name>IncCorrectTrials</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
+TrialInfo.setData(&quot;CorrectTrial&quot;,1);
+CorrectTrials.value++;</Script><UIInfo><Pos x="1825" y="660"/></UIInfo></StateMachineElement><Transition><Destination>PostTrialInterval</Destination><Source>TrialLogic</Source><SourceResult>Succeeded</SourceResult></Transition><Transition><Destination>TrialTypeComplete</Destination><Source>PostTrialInterval</Source><SourceResult>Done</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>IncCorrectTrials</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>IncCorrectTrials</Source><SourceResult>true</SourceResult></Transition><Transition><Destination>ReshuffleTrialType</Destination><Source>TrialLogic</Source><SourceResult>Failed</SourceResult></Transition><Parameter type="Numeric"><Name>GreenRewards</Name><UIInfo><Pos x="1162" y="582"/><UniqueID>{ececdc7c-5d9b-4c14-b8be-2e62870d22a0}</UniqueID></UIInfo></Parameter><Parameter type="Numeric"><Name>RedRewards</Name><UIInfo><Pos x="1271" y="587"/><UniqueID>{23ba834d-baeb-4f20-8595-d09d9b96af54}</UniqueID></UIInfo></Parameter><Parameter type="RandomInt"><Name>GreyFeedback</Name><UIInfo><Pos x="1368" y="591"/><UniqueID>{7f987f72-9b13-4517-990b-7ee741dafc31}</UniqueID></UIInfo></Parameter><Transition><Destination>IncCorrectTrials</Destination><Source>TrialLogic</Source><SourceResult>FixTrialSuccess</SourceResult></Transition><Transition><Destination>TrialLogic</Destination><Source>ChooseTrialValues</Source><SourceResult>false</SourceResult></Transition><Parameter type="Range"><Increment>1</Increment><Max>100</Max><Min>1</Min><Name>LowProbability</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1176" y="699"/><UniqueID>{a5ada2af-5b74-456c-af47-aff6de9d4ad9}</UniqueID></UIInfo><Value>10</Value></Parameter><Parameter type="Range"><Increment>1</Increment><Max>100</Max><Min>1</Min><Name>HighProbability</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1290" y="706"/><UniqueID>{796e00b4-7171-4b30-b542-ee17183ede13}</UniqueID></UIInfo><Value>90</Value></Parameter><Parameter type="Boolean"><Name>Use8_1Combo</Name><UIInfo><Pos x="1179" y="817"/></UIInfo><Value>true</Value><UIEnabled>true</UIEnabled></Parameter><Parameter type="Boolean"><Name>Use4_1Combo</Name><UIInfo><Pos x="1181" y="905"/></UIInfo><Value>true</Value><UIEnabled>true</UIEnabled></Parameter></StateMachineElement>
             <StateMachineElement type="ScriptElement">
               <Name>NeedsMoreTrials</Name>
               <Result>
@@ -2195,11 +2226,12 @@ return true;</Script>
             
             
             
-          <Parameter type="Timer"><Name>TrialTimer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1122" y="1413"/><UniqueID>{e62361bd-b6fb-493f-8756-4dd1a248b6fc}</UniqueID></UIInfo></Parameter><EntryScript>TrialType.randomize();
-TrialInfo.setData(&quot;Block&quot;,BlocksSoFar.value);
-TrialInfo.setData(&quot;TrialInBlock&quot;,0);</EntryScript><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>true</SourceResult></Transition><StateMachineElement type="ScriptElement"><Name>ReshuffleTrialType</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>TrialInfo.updateValue();
+          <Parameter type="Timer"><Name>TrialTimer</Name><TimeUnits>Ms</TimeUnits><UIInfo><Pos x="1122" y="1413"/><UniqueID>{e62361bd-b6fb-493f-8756-4dd1a248b6fc}</UniqueID></UIInfo></Parameter><EntryScript>TrialInfo.setData(&quot;Block&quot;,BlocksSoFar.value);
+TrialInfo.setData(&quot;TrialInBlock&quot;,0);
+BlockPerformance.setData(&quot;%Correct Curr Block&quot;,0);
+BlockPerformance.updateValue();</EntryScript><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>Trial</Destination><Source>ChooseTrialType</Source><SourceResult>true</SourceResult></Transition><StateMachineElement type="ScriptElement"><Name>ReshuffleTrialType</Name><Result><Name>false</Name></Result><Result><Name>true</Name></Result><Script>TrialInfo.updateValue();
 TrialType.reshuffleLastValue();
-return true;</Script><UIInfo><Pos x="1219" y="931"/></UIInfo></StateMachineElement><Transition><Destination>ReshuffleTrialType</Destination><Source>Trial</Source><SourceResult>ReshuffleTrialType</SourceResult></Transition><Transition><Destination>ChooseTrialType</Destination><Source>ReshuffleTrialType</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>ChooseTrialType</Destination><Source>ReshuffleTrialType</Source><SourceResult>true</SourceResult></Transition></StateMachineElement>
+return true;</Script><UIInfo><Pos x="1219" y="931"/></UIInfo></StateMachineElement><Transition><Destination>ReshuffleTrialType</Destination><Source>Trial</Source><SourceResult>ReshuffleTrialType</SourceResult></Transition><Transition><Destination>ChooseTrialType</Destination><Source>ReshuffleTrialType</Source><SourceResult>false</SourceResult></Transition><Transition><Destination>ChooseTrialType</Destination><Source>ReshuffleTrialType</Source><SourceResult>true</SourceResult></Transition><Parameter type="Numeric"><Name>CorrectTrials</Name><UIInfo><Pos x="867" y="1259"/></UIInfo></Parameter><Parameter type="Numeric"><Name>AttemptedTrials</Name><UIInfo><Pos x="993" y="1261"/></UIInfo></Parameter><VisualElement type="Operator Info Graphic"><Name>BlockPerformance</Name><Position x="600" y="300"/><UIInfo><Pos x="1247" y="1405"/></UIInfo><Dimensions height="50" width="200" x="0" y="0"/></VisualElement></StateMachineElement>
           <StateMachineElement type="ScriptElement">
             <Name>NeedsMoreBlocks</Name>
             <Result>
@@ -2259,7 +2291,7 @@ return true;</Script><UIInfo><Pos x="1219" y="931"/></UIInfo></StateMachineEleme
             <SourceResult>BlockDone</SourceResult>
           </Transition>
           <InitialElement>NeedsMoreBlocks</InitialElement>
-        <Parameter type="Range"><Increment>20</Increment><Max>640</Max><Min>20</Min><Name>ShortBlockLength</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1795" y="1559"/><UniqueID>{ba5eecbe-c3c3-4eb6-ac3d-3b0e4c62e7da}</UniqueID></UIInfo><Value>40</Value></Parameter><Parameter type="Range"><Increment>20</Increment><Max>640</Max><Min>20</Min><Name>LongBlockLength</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1917" y="1540"/><UniqueID>{cc230440-9f4a-46fb-acea-df14887bc1a4}</UniqueID></UIInfo><Value>80</Value></Parameter></StateMachineElement>
+        <Parameter type="Range"><Increment>1</Increment><Max>640</Max><Min>1</Min><Name>ShortBlockLength</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1795" y="1559"/><UniqueID>{ba5eecbe-c3c3-4eb6-ac3d-3b0e4c62e7da}</UniqueID></UIInfo><Value>40</Value></Parameter><Parameter type="Range"><Increment>1</Increment><Max>640</Max><Min>1</Min><Name>LongBlockLength</Name><UIEnabled>true</UIEnabled><UIInfo><Pos x="1917" y="1540"/><UniqueID>{cc230440-9f4a-46fb-acea-df14887bc1a4}</UniqueID></UIInfo><Value>80</Value></Parameter></StateMachineElement>
         <StateMachineElement type="ScriptElement">
           <Name>LessThan4Superblocks</Name>
           <Result>
@@ -2352,6 +2384,6 @@ RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graph
     </Task>
   </Experiment>
   <StateMachineEditorData>
-    <OpenedBlock>{bb73d081-ec38-4b46-a23b-62e3418ee9ce}</OpenedBlock>
+    <OpenedBlock>{8744c750-281a-4592-bfb2-d67c27162d1b}</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>
