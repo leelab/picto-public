@@ -2,9 +2,11 @@
 #define _ASSET_H_
 
 #include "../common.h"
+#include "experimentconfig.h"
 #include "Serializable.h"
 
 #include <QSharedPointer>
+#include <QMap>
 
 namespace Picto {
 #if defined WIN32 || defined WINCE
@@ -42,6 +44,12 @@ public:
 	void reinitialize();
 	virtual QString getInfo(){return QString("<h3 style=\"color:red\">%1</h3>").arg(assetType());};
 	QString getPath();
+
+	virtual	int getAssetId(){return 0;};
+	virtual void setAssetId(int){};
+
+	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig);
+	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 signals:
 	void edited();
 	void deleted();
@@ -49,11 +57,13 @@ signals:
 protected:
 	QSharedPointer<Asset> selfPtr(){return QSharedPointer<Asset>(self_);};
 	virtual void preSerialize(){};
-	virtual void postDeserialize(){};
+	virtual void preDeserialize();
+	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader){return true;};
 	// In some cases, an asset may not want to be considered edited, even if it already has been, 
 	// unless it gets changed after a certain point.
 	void setUnedited(){edited_ = false;};
+	QSharedPointer<ExperimentConfig> expConfig_;
 private:
 
 	bool edited_;
@@ -61,6 +71,8 @@ private:
 	bool deleted_;
 	QWeakPointer<Asset> parent_;
 	QWeakPointer<Asset> self_;
+	int assetId_;
+	bool hasAssetId_;
 
 private slots:
 	void receivedEditedSignal();

@@ -14,6 +14,8 @@
 
 #include "../engine/PictoEngine.h"
 #include "../engine/propertytable.h"
+#include "../storage/propertylookup.h"
+#include "../storage/transitionlookup.h"
 
 
 #include <QList>
@@ -53,6 +55,9 @@ public:
 	QStringList getTaskNames();
 	QSharedPointer<Task> getTaskByName(QString taskName);
 
+	//QString getPropLookupXml();
+	//QString getTransLookupXml();
+
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -71,6 +76,7 @@ private:
 	QList<QSharedPointer<Task> > tasks_;
 	const QString latestSyntaxVersion_;
 	QSharedPointer<PropertyTable> propTable_;
+	QSharedPointer<TransitionLookup> transLookup_;
 	QSharedPointer<Engine::PictoEngine> engine_;
 	bool signalCoeffInitialized_;
 	//QList<QSharedPointer<SessionData> > sessionDataElements_;

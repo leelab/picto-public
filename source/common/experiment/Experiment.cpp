@@ -8,7 +8,7 @@ Experiment::Experiment()
 :
 latestSyntaxVersion_("0.0.1"),
 engine_(NULL),
-propTable_(QSharedPointer<PropertyTable>(new PropertyTable()))
+transLookup_(QSharedPointer<TransitionLookup>(new TransitionLookup()))
 {
 	signalCoeffInitialized_ = false;
 	AddDefinableProperty("SyntaxVersion","");
@@ -24,6 +24,8 @@ QSharedPointer<Experiment> Experiment::Create()
 {
 	QSharedPointer<Experiment> newExperiment(new Experiment());
 	newExperiment->setSelfPtr(newExperiment);
+	newExperiment->setExperimentConfig(QSharedPointer<ExperimentConfig>(new ExperimentConfig()));
+	newExperiment->propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(newExperiment->getExperimentConfig()));
 	return newExperiment;
 }
 
@@ -32,6 +34,7 @@ void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 	Q_ASSERT(propTable_);
 	engine_ = engine;
 	engine_->setPropertyTable(propTable_);
+	engine_->setExperimentConfig(expConfig_);
 	//We call the function below here so that the Gain/Offset values will be
 	//set to their initial states (for mouse signal) as early as possible and 
 	//values set by the user before running the experiment won't need to be 
@@ -42,6 +45,7 @@ void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 void Experiment::addTask(QSharedPointer<Task> task)
 {
 	tasks_.append(task);
+	task->setTaskNumber(tasks_.size());
 }
 
 QStringList Experiment::getTaskNames()
@@ -73,6 +77,23 @@ QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
 	}
 	return returnVal;
 }
+
+//QString Experiment::getPropLookupXml()
+//{
+//	QString returnVal;
+//	if(propTable_)
+//		returnVal = propTable_->getPropLookup()->toXml();
+//	return returnVal;
+//}
+
+//QString Experiment::getTransLookupXml()
+//{
+//	QString returnVal;
+//	if(transLookup_)
+//		returnVal = transLookup_->toXml();
+//	return returnVal;
+//}
+	
 
 bool Experiment::runTask(QString taskName)
 {
@@ -133,6 +154,7 @@ bool Experiment::jumpToState(QStringList path, QString state)
 
 void Experiment::postDeserialize()
 {
+	expConfig_->disallowIdDuplication();
 	UIEnabled::postDeserialize();
 	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
 	if(experimentSyntaxVer == "")
@@ -169,6 +191,14 @@ void Experiment::postDeserialize()
 	{
 		propTable_->addProperty(prop);	// This adds the property to the property table and gives it an index for use in transmission
 	}
+
+	transLookup_->clear();//Empties trans lookup
+	QList<QSharedPointer<Transition>> descendantTrans = getDescendantsTransitions();
+	foreach(QSharedPointer<Transition> trans,descendantTrans)
+	{
+		transLookup_->addTransition(trans);	// This adds the transition to lookup
+	}
+
 }
 
 bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

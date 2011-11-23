@@ -12,8 +12,12 @@ tagName_(""),
 typeVal_(""),
 scriptEditable_(true),
 runtimeEnabled_(false),
-index_(-1)
+index_(-1),
+assetId_(0)
 {
+	//Add the ID serialization attribute so that we can read in this property's ID.
+	AddSerializationAttribute("id");
+
 	connect(manager_.data(),SIGNAL(valueChanged(QtProperty *, const QVariant &)),this,SLOT(valueChanged(QtProperty *, const QVariant &)));
 	connect(manager_.data(),SIGNAL(attributeChanged(QtProperty*,const QString&, const QVariant&)),this,SLOT(attributeChanged(QtProperty*,const QString&, const QVariant&)));
 }
@@ -217,6 +221,16 @@ QString Property::toUserString()
 void Property::fromUserString(QString userString)
 {
 	setValue(userString);
+}
+
+int Property::getAssetId()
+{
+	return GetSerializationAttributeValue("id").toInt();
+}
+void Property::setAssetId(int id)
+{
+	SetSerializationAttributeValue("id",QVariant(id));
+	emit edited();
 }
 
 void Property::setValueFromProp(QSharedPointer<Property> prop)

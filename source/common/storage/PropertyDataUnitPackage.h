@@ -26,10 +26,9 @@ class PropertyDataUnitPackage : public DataUnit
 public:
 
 	PropertyDataUnitPackage();
-	void addData(int index, QString path, QString value, double time);
-	void addData(int index, QString path, QString value, QString time);
+	void addData(int index, QString value);
 
-	void setAllTimestamps(double newTime);
+	void setActionFrame(qulonglong frameId);
 
 	void emptyData() { data_.clear(); };
 

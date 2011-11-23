@@ -5,7 +5,7 @@ namespace Picto
 UIInfo::UIInfo()
 {
 	AddDefinableProperty(QVariant::Point,"Pos",QPoint());
-	AddDefinableProperty(QVariant::String,"UniqueID","");
+	AddDefinableProperty(QVariant::Point,"UniqueID",QString());
 }
 
 void UIInfo::setPos(QPoint pos)
@@ -18,20 +18,10 @@ QPoint UIInfo::getPos()
 	return propertyContainer_->getPropertyValue("Pos").toPoint();
 }
 
-QUuid UIInfo::getUniqueId()
-{
-	 QUuid uuid(propertyContainer_->getPropertyValue("UniqueID").toString());
-	 if(uuid.isNull())
-	 {
-		 uuid = QUuid::createUuid();
-		 propertyContainer_->setPropertyValue("UniqueID",uuid.toString());
-	 }
-	 return uuid;
-}
-
 void UIInfo::postDeserialize()
 {
 	DataStore::postDeserialize();
+	propertyContainer_->getProperty("UniqueID")->setDeleted();
 }
 
 

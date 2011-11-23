@@ -17,12 +17,12 @@ bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 {
 	xmlStreamWriter->setAutoFormatting(true);
 
-	xmlStreamWriter->writeStartElement("NeuralDataUnit");
+	xmlStreamWriter->writeStartElement("NDU");
 	DataUnit::serializeDataID(xmlStreamWriter);
-	xmlStreamWriter->writeTextElement("timestamp",QString("%1").arg(getTimestamp(),0,'f',6));
-	xmlStreamWriter->writeTextElement("channel",QString("%1").arg(getChannel()));
-	xmlStreamWriter->writeTextElement("unit",QString("%1").arg(getUnit()));
-	xmlStreamWriter->writeTextElement("wave",getWaveformAsString());		
+	xmlStreamWriter->writeTextElement("t",QString("%1").arg(getTimestamp(),0,'f',6));
+	xmlStreamWriter->writeTextElement("c",QString("%1").arg(getChannel()));
+	xmlStreamWriter->writeTextElement("u",QString("%1").arg(getUnit()));
+	xmlStreamWriter->writeTextElement("w",getWaveformAsString());		
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
@@ -32,28 +32,28 @@ bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
- 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "NeuralDataUnit")
+ 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "NDU")
 	{
-		addError("NeuralDataUnit","Incorrect tag, expected <NeuralDataUnit>",xmlStreamReader);
+		addError("NeuralDataUnit","Incorrect tag, expected <NDU>",xmlStreamReader);
 		return false;
 	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "NeuralDataUnit") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "NDU") && !xmlStreamReader->atEnd())
 	{	
-		if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "timestamp")
+		if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "t")
 		{
 			setTimestamp(xmlStreamReader->readElementText().toDouble());
 		}
-		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "channel")
+		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "c")
 		{
 			setChannel(xmlStreamReader->readElementText().toInt());
 		}
-		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "unit")
+		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "u")
 		{
 			setUnit(xmlStreamReader->readElementText().toInt());
 		}
-		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "wave")
+		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "w")
 		{
 			setWaveformFromString(xmlStreamReader->readElementText());
 		}

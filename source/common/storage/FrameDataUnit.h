@@ -20,16 +20,15 @@ class FrameDataUnit : public DataUnit
 {
 public:
 	FrameDataUnit();
-	FrameDataUnit(int frameNum, double timestamp, QString statename);
-	FrameDataUnit(int frameNum, QString timestamp, QString statename);
+	FrameDataUnit(double timestamp, int stateId);
+	FrameDataUnit(QString timestamp, int stateId);
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	int frameNumber; 
 	QString time;
-	QString stateName;
+	int stateId_;
 
 protected:
 	virtual void postDeserialize();

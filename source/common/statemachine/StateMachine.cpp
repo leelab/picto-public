@@ -464,7 +464,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 				if(tran->getSourceResult() == result)
 				{
 					nextElementName = tran->getDestination();
-					engine->addStateTransitionForServer(tran,path_.join("::"));
+					engine->addStateTransitionForServer(tran);
 					//sendStateDataToServer(tran, engine);
 					foundTransition = true;
 					break;
@@ -510,19 +510,19 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		if(results_.contains(nextElementName))
 		{
 			result = nextElementName;
-			//If this asset's parent is a task then a result here means that we've already reached the last transition and the 
-			//task is over.  Otherwise, we need to get the Master state result here because it will be the transition 
-			//that tells us where we're going to go next in this StateMachine's parent.
-			if(slave && !getParentAsset()->inherits("Picto::Task"))
-			{
-				Q_ASSERT(false);
-				QString masterResult;
-				//Make sure we're exiting with the next result (after the transition to our own result).
-				while(masterResult.isEmpty())
-					masterResult = getMasterStateResult(engine);
-				//Q_ASSERT(masterResult == result);
-				result = masterResult;
-			}
+			////If this asset's parent is a task then a result here means that we've already reached the last transition and the 
+			////task is over.  Otherwise, we need to get the Master state result here because it will be the transition 
+			////that tells us where we're going to go next in this StateMachine's parent.
+			//if(slave && !getParentAsset()->inherits("Picto::Task"))
+			//{
+			//	Q_ASSERT(false);
+			//	QString masterResult;
+			//	//Make sure we're exiting with the next result (after the transition to our own result).
+			//	while(masterResult.isEmpty())
+			//		masterResult = getMasterStateResult(engine);
+			//	//Q_ASSERT(masterResult == result);
+			//	result = masterResult;
+			//}
 			break;
 		}
 		//! \TODO come up with a more elegant error handling scheme...
@@ -670,62 +670,62 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	//}
 }
 
-/*!	\brief Sends a StateDataUnit to the server to let it know that we are transitioning
- *
- *	To keep master and slave engines in synch, we send StateDataUnits to the server
- *	everytime there is a change in state.
- *
- *	This command is sent as a registered command, which means that we don't need to 
- *	worry about checking for a response, as that will be taken care of in either the
- *	State rendering loop, or the cleanup at the end of a trial.
- */
-void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, QSharedPointer<Engine::PictoEngine> engine)
-{
-	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
-
-	if(dataChannel.isNull())
-		return;
-	
-
-	//send a PUTDATA command to the server with the state transition data
-	QString status = "running";
-	int engCmd = engine->getEngineCommand();
-	switch(engCmd)
-	{
-	case Engine::PictoEngine::ResumeEngine:
-		status = "running";
-		break;
-	case Engine::PictoEngine::PauseEngine:
-		status = "paused";
-		break;
-	case Engine::PictoEngine::StopEngine:
-		status = "stopped";
-		break;
-	}
-	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
-	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
-
-	QByteArray stateDataXml;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&stateDataXml));
-
-	Timestamper stamper;
-	double timestamp = stamper.stampSec();
-	QString qualifiedName = path_.join("::");
-
-	StateDataUnit stateData;
-	stateData.setTransition(transition,timestamp,qualifiedName);
-
-	xmlWriter->writeStartElement("Data");
-	stateData.toXml(xmlWriter);
-	xmlWriter->writeEndElement();
-
-
-	dataCommand->setContent(stateDataXml);
-	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
-
-	dataChannel->sendRegisteredCommand(dataCommand);
-	dataChannel->processResponses(0);
-}
+///*!	\brief Sends a StateDataUnit to the server to let it know that we are transitioning
+// *
+// *	To keep master and slave engines in synch, we send StateDataUnits to the server
+// *	everytime there is a change in state.
+// *
+// *	This command is sent as a registered command, which means that we don't need to 
+// *	worry about checking for a response, as that will be taken care of in either the
+// *	State rendering loop, or the cleanup at the end of a trial.
+// */
+//void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, QSharedPointer<Engine::PictoEngine> engine)
+//{
+//	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+//
+//	if(dataChannel.isNull())
+//		return;
+//	
+//
+//	//send a PUTDATA command to the server with the state transition data
+//	QString status = "running";
+//	int engCmd = engine->getEngineCommand();
+//	switch(engCmd)
+//	{
+//	case Engine::PictoEngine::ResumeEngine:
+//		status = "running";
+//		break;
+//	case Engine::PictoEngine::PauseEngine:
+//		status = "paused";
+//		break;
+//	case Engine::PictoEngine::StopEngine:
+//		status = "stopped";
+//		break;
+//	}
+//	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
+//	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+//
+//	QByteArray stateDataXml;
+//	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&stateDataXml));
+//
+//	Timestamper stamper;
+//	double timestamp = stamper.stampSec();
+//	QString qualifiedName = path_.join("::");
+//
+//	StateDataUnit stateData;
+//	stateData.setTransition(transition,timestamp,qualifiedName);
+//
+//	xmlWriter->writeStartElement("Data");
+//	stateData.toXml(xmlWriter);
+//	xmlWriter->writeEndElement();
+//
+//
+//	dataCommand->setContent(stateDataXml);
+//	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
+//
+//	dataChannel->sendRegisteredCommand(dataCommand);
+//	dataChannel->processResponses(0);
+//}
 
 /*	\brief Called when we seem to have lost contact with the server
  *

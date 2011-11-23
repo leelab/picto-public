@@ -25,12 +25,13 @@ public:
 
 	FrameDataUnitPackage();
 
-	void addFrame(int frameNumber, double time, QString stateName);
-	void addFrame(int frameNumber, QString time, QString stateName);
+	void addFrame(double time, int stateId);
+	void addFrame(QString time, int stateId);
 	void clearFrames() { data_.clear(); };
 	int length() { return data_.length(); }
 	QSharedPointer<FrameDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };
 	QSharedPointer<FrameDataUnit> takeLastDataPoint() { return data_.takeLast(); };
+	qulonglong getLatestFrameId(){if(!data_.size())return -1;return data_.last()->getDataID();};
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

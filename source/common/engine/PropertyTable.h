@@ -6,6 +6,8 @@
 #include <QString>
 #include <QSharedPointer>
 #include "../property/property.h"
+#include "../storage/propertylookup.h"
+#include "../storage/ExperimentConfig.h"
 
 namespace Picto {
 
@@ -23,15 +25,18 @@ class PropertyTable : public QObject
 {
 	Q_OBJECT
 public:
-	PropertyTable();
+	PropertyTable(QSharedPointer<ExperimentConfig> expConfig);
 	void clear(){propTable_.clear();};
 	void addProperty(QSharedPointer<Property> prop);
 	void updatePropertyValue(int index,QString value);
 	void reportChangeInAllProperties();
+	QVector<QSharedPointer<Property>> propTable_;
+	//QSharedPointer<PropertyLookup> getPropLookup();
 signals:
 	void propertyChanged(QSharedPointer<Property> changedProp);
 private:
-	QVector<QSharedPointer<Property>> propTable_;
+	QSharedPointer<ExperimentConfig> expConfig_;
+	//QSharedPointer<PropertyLookup> propLookup_;
 };
 
 

@@ -27,8 +27,8 @@ BehavioralDataUnit::BehavioralDataUnit(double X, double Y, QString T)
  */
 bool BehavioralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("BehavioralDataUnit");
-	xmlStreamWriter->writeAttribute("time",t);
+	xmlStreamWriter->writeStartElement("BDU");
+	xmlStreamWriter->writeAttribute("t",t);
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(x));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(y));
 	DataUnit::serializeDataID(xmlStreamWriter);
@@ -39,13 +39,13 @@ bool BehavioralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BehavioralDataUnit")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BDU")
 	{
-		addError("BehavioralDataUnit","Incorrect tag, expected <BehavioralDataUnit>",xmlStreamReader);
+		addError("BehavioralDataUnit","Incorrect tag, expected <BDU>",xmlStreamReader);
 		return false;
 	}
 
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "BehavioralDataUnit") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "BDU") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -55,8 +55,18 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "BehavioralDataUnit")
+		if(name == "BDU")
 		{
+			if(xmlStreamReader->attributes().hasAttribute("t"))
+			{
+				t = xmlStreamReader->attributes().value("t").toString();
+			}
+			else
+			{
+				addError("BehavioralDataUnit","Data missing t (time) attribute",xmlStreamReader);
+				return false;
+			}
+
 			if(xmlStreamReader->attributes().hasAttribute("x"))
 			{
 				x = xmlStreamReader->attributes().value("x").toString().toDouble();
@@ -74,16 +84,6 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			else
 			{
 				addError("BehavioralDataUnit","Data missing y attribute",xmlStreamReader);
-				return false;
-			}
-
-			if(xmlStreamReader->attributes().hasAttribute("time"))
-			{
-				t = xmlStreamReader->attributes().value("time").toString();
-			}
-			else
-			{
-				addError("BehavioralDataUnit","Data missing time attribute",xmlStreamReader);
 				return false;
 			}
 		}

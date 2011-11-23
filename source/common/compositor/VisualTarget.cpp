@@ -25,11 +25,6 @@ QRect VisualTarget::getDimensions()
 void VisualTarget::setFirstPhosphorTime()
 {
 	lastFrameTime_ = stamper_.stampSec();
-	if(lastFrameTime_ > 10000)
-	{
-		int i=0;
-		i++;
-	}
 }
 
 }; //namespace Picto

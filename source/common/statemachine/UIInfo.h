@@ -25,7 +25,6 @@ public:
 
 	void setPos(QPoint pos);
 	QPoint getPos();
-	QUuid getUniqueId();
 	virtual QString assetType(){return "UIInfo";};
 
 protected:

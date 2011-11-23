@@ -92,7 +92,6 @@ State::State() :
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
-	frameCounter_ = -1; //We're zero-indexed
 
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
 	//Add a cursor for the user input
@@ -125,7 +124,6 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		//----------  Draw the scene --------------
 		scene_->render(engine);
-		frameCounter_ ++;
 
 		//------------- Send Behavioral data to server --------------
 		sendBehavioralData(engine);
@@ -220,7 +218,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 	QString result = "";
 	bool isDone = false;
-	//frameCounter_ = -1;
 
 	//Start up all of the control elements.
 	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
@@ -241,30 +238,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 		//In slave mode, we always process events
 		QCoreApplication::processEvents();
-
-		//--------- Check for master frame ------------
-		//Since this "continues" the loop, it has to occur after checking
-		//for a state change
-
-		//int masterFrame = getMasterFramenumber(engine);
-		//if(!isDone && masterFrame <= frameCounter_)
-		//{
-		//	qDebug("Waiting");
-		//	continue;
-		//}
-
-
-		////Run the frame scripts enough to catch up
-		//if(!isDone && runFrameScript)
-		//{
-		//	for(int i=0; i<masterFrame - frameCounter_; i++)
-		//	{
-		//		runScript(frameScriptName);
-		//	}
-		//}
-		//Update properties to latest values
-		//engine->updatePropertiesFromServer();
-		//engine->updateCurrentStateFromServer();
 
 		//----------  Draw the scene --------------
 		scene_->render(engine);
@@ -287,8 +260,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 			isDone = true;
 			result = "EngineAbort";
 		}
-
-		//frameCounter_ = masterFrame;
 	}
 
 	//Stop all of the control elements
@@ -321,8 +292,8 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	FrameDataUnitPackage frameData;
 	Timestamper stamper;
 
-	frameData.addFrame(frameCounter_,scene_->getLatestFirstPhosphorTime(),getName());
-	//qDebug(QString("DIRECTOR: SENDING FRAME: %1").arg(frameCounter_).toAscii());
+	frameData.addFrame(scene_->getLatestFirstPhosphorTime(),getAssetId());
+	engine->setLastFrame(frameData.getLatestFrameId());
 
 	//Update the BehavioralDataUnitPackage
 	BehavioralDataUnitPackage behavData;
@@ -449,7 +420,6 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 			timer.start();
 			//----------  Draw the scene in paused state --------------
 			//scene_->render(engine);
-			//frameCounter_ ++;
 			//------------- Send Behavioral data to server --------------
 			sendBehavioralData(engine);
 
@@ -465,66 +435,6 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	}
 
 	return false;
-}
-
-/*! \brief returns the frame of the master state machine
- *
- *	When running in slave mode, we need to figure out what the current frame number 
- *	of the master engine is.  This function returns that value.  To figure out the 
- *	frame number we use GETDATA FrameDataUnitPackage.  If something goes wrong, this functio
- *	returns a negative value.
- */
-int State::getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine)
-{
-	Q_ASSERT(false);
-	return 0;
-	QString commandStr = QString("GETDATA FrameDataUnitPackage:%1 PICTO/1.0").arg(lastFrameCheckTime_);
-	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
-	QSharedPointer<Picto::ProtocolResponse> response;
-
-	CommandChannel* slaveToServerChan = engine->getSlaveCommandChannel();
-	slaveToServerChan->sendCommand(command);
-
-	if(!slaveToServerChan->waitForResponse(1000))
-		return -1;
-
-	response = slaveToServerChan->getResponse();
-
-	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
-		return -2;
-
-	QByteArray xmlFragment = response->getContent();
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
-
-	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
-
-	if(xmlReader->atEnd())
-		return -3;
-
-	xmlReader->readNext();
-	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
-	{
-		if(xmlReader->name() == "FrameDataUnitPackage")
-		{
-			FrameDataUnitPackage dataStore;
-			dataStore.fromXml(xmlReader);
-			if(dataStore.length() <1)
-				return -1;
-			
-			//Since the frames are returned in order, we can simply pull off the 
-			//last frame, and know that it is the most recently reported frame
-			QSharedPointer<FrameDataUnit> data;
-			data = dataStore.takeLastDataPoint();
-
-			lastFrameCheckTime_ = data->time;
-			return data->frameNumber;
-		}
-		else
-		{
-			return -1;
-		}
-	}
-	return -1;
 }
 
 /*	\brief Sends an UPDATECOMPONENT command and deals with any directives included in the response

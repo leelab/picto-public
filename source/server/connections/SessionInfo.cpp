@@ -1,5 +1,6 @@
 #include "SessionInfo.h"
 #include "ConnectionManager.h"
+#include "../../common/storage/experimentconfig.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -18,11 +19,11 @@
 //This turns on and off the authorized user permission setup on SessionInfo
 #define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
-QSharedPointer<SessionInfo> SessionInfo::CreateSession(QByteArray experimentXml, QUuid initialObserverId)
+QSharedPointer<SessionInfo> SessionInfo::CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId)
 {
 	//Creates a shared pointer for the object that will use the deleteSession function to actually delete
 	//the object
-	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentXml,initialObserverId),&deleteSession);
+	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentXml,experimentConfig,initialObserverId),&deleteSession);
 	loadedSessions_[returnVal->sessionId()] = QWeakPointer<SessionInfo>(returnVal);
 	return returnVal;
 }
@@ -61,8 +62,9 @@ void SessionInfo::deleteSession(SessionInfo* session)
 	delete session;
 }
 
-SessionInfo::SessionInfo(QByteArray experimentXml, QUuid initialObserverId):
-	experimentXml_(experimentXml)
+SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId):
+	experimentXml_(experimentXml),
+	experimentConfig_(experimentConfig)
 {
 	InitializeVariables();
 	
@@ -493,7 +495,7 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	{
 		dataPoint = data->takeFirstDataPoint();
 		if(data->length() == 0)	//No need to setStateVariable for any except the last one
-			setStateVariable(dataPoint->getDataID(),EYE_STATE_VAR_ID,dataPoint->t,dataPoint->toXml());
+			setStateVariable(dataPoint->getDataID(),EYE_STATE_VAR_ID,dataPoint->toXml());
 		cacheQ.prepare("INSERT INTO behavioraldata (dataid, xpos, ypos, time)"
 			"VALUES(:dataid, :xpos, :ypos, :time)");
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
@@ -514,14 +516,13 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 	while(data->length() > 0)
 	{
 		dataPoint = data->takeFirstDataPoint();
-		setStateVariable(dataPoint->getDataID(),dataPoint->index_,dataPoint->time_,dataPoint->toXml());
-		cacheQ.prepare("INSERT INTO properties (dataid, propid, path, value, time)"
-			"VALUES(:dataid, :index, :path, :value, :time)");
+		setStateVariable(dataPoint->getDataID(),dataPoint->index_,dataPoint->toXml());
+		cacheQ.prepare("INSERT INTO properties (dataid, assetid, value, frameid)"
+			"VALUES(:dataid, :assetid, :value, :frameid)");
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
-		cacheQ.bindValue(":propid", dataPoint->index_);
-		cacheQ.bindValue(":path",dataPoint->path_);
+		cacheQ.bindValue(":assetid", dataPoint->index_);
 		cacheQ.bindValue(":value",dataPoint->value_);
-		cacheQ.bindValue(":time",dataPoint->time_);
+		cacheQ.bindValue(":frameid",dataPoint->getActionFrame());
 		executeWriteQuery(&cacheQ,"",false);	
 	}
 }
@@ -757,17 +758,13 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> da
 	while(data->length() > 0)
 	{
 		dataPoint = data->takeFirstDataPoint();
-		setStateVariable(dataPoint->getDataID(),TRANSITION_STATE_VAR_ID,dataPoint->getTime(),dataPoint->toXml());
-		query.prepare("INSERT INTO statetransitions "
-		"(dataid, transid, machinepath, source, sourceresult, destination, time) "
-		"VALUES(:dataid, :transid, :machinepath, :source, :sourceresult, :destination, :time) ");
+		setStateVariable(dataPoint->getDataID(),TRANSITION_STATE_VAR_ID,dataPoint->toXml());
+		query.prepare("INSERT INTO transitions "
+		"(dataid, transid, frameid) "
+		"VALUES(:dataid, :transid, :frameid) ");
 		query.bindValue(":dataid", dataPoint->getDataID());
 		query.bindValue(":transid", dataPoint->getTransitionID());
-		query.bindValue(":machinepath", dataPoint->getMachinePath());
-		query.bindValue(":source", dataPoint->getSource()); 
-		query.bindValue(":sourceresult",dataPoint->getSourceResult());
-		query.bindValue(":destination",dataPoint->getDestination());
-		query.bindValue(":time",dataPoint->getTime());
+		query.bindValue(":frameid",dataPoint->getActionFrame());
 		executeWriteQuery(&query,"",false);	
 	}
 
@@ -780,7 +777,7 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> da
 	//QSqlDatabase cacheDb = getCacheDb();
 	//QSqlQuery query(cacheDb);
 
-	//query.prepare("INSERT INTO statetransitions "
+	//query.prepare("INSERT INTO transitions "
 	//	"(dataid, transid, machinepath, source, sourceresult, destination, time) "
 	//	"VALUES(:dataid, :transid, :machinepath, :source, :sourceresult, :destination, :time) ");
 	//query.bindValue(":dataid", data->getDataID());
@@ -804,12 +801,11 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 	{
 		hadData = true;
 		framedata = data->takeFirstDataPoint();
-		cacheQ.prepare("INSERT INTO framedata (dataid, frame, time, state)"
-			"VALUES(:dataid, :frame, :time, :state)");
+		cacheQ.prepare("INSERT INTO frames (dataid, time, state)"
+			"VALUES(:dataid, :time, :state)");
 		cacheQ.bindValue(":dataid", framedata->getDataID());
-		cacheQ.bindValue(":frame",framedata->frameNumber);
 		cacheQ.bindValue(":time",framedata->time);
-		cacheQ.bindValue(":state",framedata->stateName);
+		cacheQ.bindValue(":state",framedata->stateId_);
 		executeWriteQuery(&cacheQ,"",false);	
 	}
 	//Currently we require that frame data be sent to the server when as soon as all 
@@ -820,8 +816,8 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 	if(hadData)
 	{	
 		QMutexLocker locker(databaseWriteMutex_.data());
-		setStateVariable(framedata->getDataID(),FRAME_STATE_VAR_ID,framedata->time,framedata->toXml());
-		updateCurrentStateTable();
+		setStateVariable(framedata->getDataID(),FRAME_STATE_VAR_ID,framedata->toXml());
+		updateCurrentStateTable(framedata->time);
 	}
 }
 
@@ -837,188 +833,15 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 	query.bindValue(":channel", data->getChannel());
 	query.bindValue(":time",data->getTime());
 	executeWriteQuery(&query,"",false);
-	setStateVariable(data->getDataID(),REWARD_STATE_VAR_ID,data->getTime(),data->toXml());
+	setStateVariable(data->getDataID(),REWARD_STATE_VAR_ID,data->toXml());
 	
 	QSharedPointer<ComponentInfo> sourceComponent = getComponentByType("DIRECTOR");
 	//When the experiment is not running, Update the current state
 	//table right away.
 	if(sourceComponent && (sourceComponent->getStatus() != ComponentStatus::running))
 	{
-		updateCurrentStateTable();
+		updateCurrentStateTable(data->getTime());
 	}
-}
-
-
-/*! \brief Returns a behavioral datastore with all of the data collected after the timestamp
- *
- *	This functions creates a new BehavioralDataUnitPackage object, and fills it with
- *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
- *	then all data is returned.  This is actually a bit tricky, since the data could be
- *	either the session database or the cache database.
- */
-QSharedPointer<Picto::BehavioralDataUnitPackage> SessionInfo::selectBehavioralData(QString timestamp)
-{
-	QSqlDatabase cacheDb = getCacheDb();
-	QSharedPointer<Picto::BehavioralDataUnitPackage> dataStore(new Picto::BehavioralDataUnitPackage());
-	QSqlQuery query(cacheDb);
-	bool justLatest = false;
-	if(timestamp.toDouble() < 0)
-	{
-		justLatest = true;
-		timestamp = "0";
-		query.prepare("SELECT xpos, ypos, time FROM behavioraldata WHERE time > :time1 UNION "
-		"SELECT xpos, ypos, time FROM diskdb.behavioraldata WHERE time > :time2 ORDER BY time DESC LIMIT 1");
-	}
-	else
-	{
-		if(timestamp.toDouble() == 0)
-			timestamp = "-1";
-		query.prepare("SELECT xpos, ypos, time FROM behavioraldata WHERE time > :time1 UNION "
-		"SELECT diskdb.behavioraldata.xpos, diskdb.behavioraldata.ypos, diskdb.behavioraldata.time "
-		"FROM diskdb.behavioraldata WHERE time > :time2 ORDER BY time ASC");
-	}
-	
-	query.bindValue(":time1",timestamp);
-	query.bindValue(":time2",timestamp);
-	QMutexLocker locker(databaseWriteMutex_.data());
-	executeReadQuery(&query,"",true);
-	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
-	//The checks after query.next() below takes care of this.
-	if(query.next() && ((query.value(2).toString() != timestamp)||query.next()))
-	{
-		if(justLatest)
-		{
-			dataStore->addData(query.value(0).toDouble(),
-							  query.value(1).toDouble(),
-							  query.value(2).toString());
-		}
-		else
-		{
-			do
-			{
-				dataStore->addData(query.value(0).toDouble(),
-								  query.value(1).toDouble(),
-								  query.value(2).toString());
-			}while(query.next());
-		}
-	}
-	query.finish();
-	return dataStore;
-}
-
-/*! \brief Returns a propertyDataUnitPackage with all of the data collected after the timestamp
- *
- *	This functions creates a new propertyDataUnitPackage object, and fills it with
- *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
- *	then all data is returned.  This is actually a bit tricky, since the data could be
- *	either the session database or the cache database.
- */
-QSharedPointer<Picto::PropertyDataUnitPackage> SessionInfo::selectPropertyData(QString timestamp)
-{
-	QSqlDatabase cacheDb = getCacheDb();
-	QSharedPointer<Picto::PropertyDataUnitPackage> dataStore(new Picto::PropertyDataUnitPackage());
-	QSqlQuery query(cacheDb);
-	bool justLatest = false;
-	if(timestamp.toDouble() < 0)
-	{
-		justLatest = true;
-		timestamp = "0";
-		query.prepare("SELECT propid, path, value, time FROM properties WHERE time > :time1 UNION "
-		"SELECT propid, path, value, time FROM diskdb.properties WHERE time > :time2 ORDER BY time DESC LIMIT 1");
-	}
-	else
-	{
-		if(timestamp.toDouble() == 0)
-			timestamp = "-1";
-		query.prepare("SELECT propid, path, value, time FROM properties WHERE time > :time1 UNION "
-		"SELECT diskdb.properties.propid, diskdb.properties.path, diskdb.properties.value, diskdb.properties.time "
-		"FROM diskdb.properties WHERE time > :time2 ORDER BY time ASC");
-	}
-	
-	query.bindValue(":time1",timestamp);
-	query.bindValue(":time2",timestamp);
-	QMutexLocker locker(databaseWriteMutex_.data());
-	executeReadQuery(&query,"",true);
-	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
-	//The checks after query.next() below takes care of this.
-	if(query.next() && ((query.value(3).toString() != timestamp)||query.next()))
-	{
-		if(justLatest)
-		{
-			dataStore->addData(query.value(0).toInt(),
-								query.value(1).toString(),
-							  query.value(2).toString(),
-							  query.value(3).toString());
-		}
-		else
-		{
-			do
-			{
-				dataStore->addData(query.value(0).toInt(),
-								query.value(1).toString(),
-							  query.value(2).toString(),
-							  query.value(3).toString());
-			}while(query.next());
-		}
-	}
-	query.finish();
-	return dataStore;
-}
-
-/*! \brief Returns a frame datastore with all of the data collected after the timestamp
- *
- *	This functions creates a new FrameDataUnitPackage object, and fills it with
- *	all of the data collected after the passed in timestamp.  If the timestamp is 0, 
- *	then all data is returned.  This is actually a bit tricky, since the data could be
- *	either the session database or the cache database.
- */
-QSharedPointer<Picto::FrameDataUnitPackage> SessionInfo::selectFrameData(QString timestamp)
-{
-	QSqlDatabase cacheDb = getCacheDb();
-	QSharedPointer<Picto::FrameDataUnitPackage> dataStore(new Picto::FrameDataUnitPackage());
-	QSqlQuery query(cacheDb);
-	bool justLatest = false;
-	if(timestamp.toDouble() < 0)
-	{
-		justLatest = true;
-		timestamp = "0";
-		query.prepare("SELECT frame,time,state FROM framedata WHERE time > :time1 UNION "
-		"SELECT diskdb.framedata.frame,diskdb.framedata.time,diskdb.framedata.state FROM diskdb.framedata WHERE time > :time2 ORDER BY time DESC LIMIT 1");
-	}
-	else
-	{
-		if(timestamp.toDouble() == 0)
-			timestamp = "-1";
-		query.prepare("SELECT frame,time,state FROM framedata WHERE time > :time1 UNION "
-		"SELECT diskdb.framedata.frame,diskdb.framedata.time,diskdb.framedata.state FROM diskdb.framedata WHERE time > :time2 ORDER BY time ASC");
-	}
-	
-	query.bindValue(":time1",timestamp);
-	query.bindValue(":time2",timestamp);
-	QMutexLocker locker(databaseWriteMutex_.data());
-	executeReadQuery(&query,"",true);
-	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
-	//The checks after query.next() below takes care of this.
-	if(query.next() && ((query.value(1).toString() != timestamp)||query.next()))
-	{
-		if(justLatest)
-		{
-			dataStore->addFrame(query.value(0).toInt(),
-							  query.value(1).toString(),
-							  query.value(2).toString());
-		}
-		else
-		{
-			do
-			{
-				dataStore->addFrame(query.value(0).toInt(),
-								   query.value(1).toString(),
-								   query.value(2).toString());
-			}while(query.next());
-		}
-	}
-	query.finish();
-	return dataStore;
 }
 
 //We use a single table to track the latest state of all variables pertinant to running
@@ -1045,73 +868,6 @@ QString SessionInfo::selectStateVariables(QString fromTime)
 	}
 	query.finish();
 	return result;
-}
-/*! \brief Returns a list of state datastores with all of the data collected after the timestamp
- *
- *	This function creates a list of state data stores and returns it.  If the timestamp is 0, 
- *	then all data is returned.
- */
-QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> SessionInfo::selectStateData(QString timestamp)
-{
-
-	QSqlDatabase cacheDb = getCacheDb();
-	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> dataStoreList(new QList<QSharedPointer<Picto::StateDataUnit>>());
-	QSqlQuery query(cacheDb);
-	bool justLatest = false;
-	if(timestamp.toDouble() < 0)
-	{
-		justLatest = true;
-		timestamp = "-1";
-		query.prepare("SELECT transid, source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
-		"SELECT diskdb.statetransitions,transid, diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, diskdb.statetransitions.time, "
-		"diskdb.statetransitions.machinepath FROM diskdb.statetransitions WHERE time > :time2 ORDER BY time DESC LIMIT 1");
-	}
-	else
-	{
-		if(timestamp.toDouble() == 0)
-			timestamp = "-1";
-		query.prepare("SELECT transid, source, sourceresult, destination, time, machinepath FROM statetransitions WHERE time > :time1 UNION "
-		"SELECT diskdb.statetransitions,transid, diskdb.statetransitions.source, diskdb.statetransitions.sourceresult, diskdb.statetransitions.destination, "
-		"diskdb.statetransitions.time, diskdb.statetransitions.machinepath FROM diskdb.statetransitions WHERE time > :time2 ORDER BY time ASC");
-	}
-	
-	query.bindValue(":time1",timestamp);
-	query.bindValue(":time2",timestamp);
-	QMutexLocker locker(databaseWriteMutex_.data());
-	executeReadQuery(&query,"",true);
-	//Since things are stored as floating point.  Sometimes the select above functions as a >= instead of >
-	//The checks after query.next() below takes care of this.
-	if(query.next() && ((query.value(3).toString() != timestamp)||query.next()))
-	{
-
-		if(justLatest)
-		{
-			QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
-			data->setTransition(query.value(1).toString(),
-							   query.value(2).toString(),
-							   query.value(3).toString(),
-							   query.value(4).toString(),
-							   query.value(0).toInt(),
-							   query.value(5).toString());
-			dataStoreList->append(data);
-		}
-		else
-		{
-			do
-			{
-				QSharedPointer<Picto::StateDataUnit> data(new Picto::StateDataUnit());
-				data->setTransition(query.value(1).toString(),
-									query.value(2).toString(),
-									query.value(3).toString(),
-									query.value(4).toString(),
-									query.value(0).toInt(),
-									query.value(5).toString());
-				dataStoreList->append(data);
-			}while(query.next());
-		}
-	}
-	query.finish();
-	return dataStoreList;
 }
 
 void SessionInfo::InitializeVariables()
@@ -1176,20 +932,32 @@ void SessionInfo::InitializeVariables()
 	tableColumnTypes_["behavioraldata"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL ";
 	tableDataProviders_["behavioraldata"] = "DIRECTOR";
 
-	tables_.push_back("statetransitions");
-	tableColumns_["statetransitions"] = " dataid,transid,machinepath,source,sourceresult,destination,time ";
-	tableColumnTypes_["statetransitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,TEXT,TEXT,REAL ";
-	tableDataProviders_["statetransitions"] = "DIRECTOR";
+	tables_.push_back("transitions");
+	tableColumns_["transitions"] = " dataid,transid,frameid ";
+	tableColumnTypes_["transitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,INTEGER ";
+	tableDataProviders_["transitions"] = "DIRECTOR";
+
+	tables_.push_back("transitionlookup");
+	tableColumns_["transitionlookup"] = " assetid,parent,source,sourceresult,destination ";
+	tableColumnTypes_["transitionlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,TEXT ";
 
 	tables_.push_back("properties");
-	tableColumns_["properties"] = " dataid,propid,path,value,time ";
-	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,REAL ";
+	tableColumns_["properties"] = " dataid,assetid,value,frameid ";
+	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,INTEGER ";
 	tableDataProviders_["properties"] = "DIRECTOR";
 
-	tables_.push_back("framedata");
-	tableColumns_["framedata"] = " dataid,frame,time,state ";
-	tableColumnTypes_["framedata"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,REAL,TEXT ";
-	tableDataProviders_["framedata"] = "DIRECTOR";
+	tables_.push_back("propertylookup");
+	tableColumns_["propertylookup"] = " assetid,name,parent ";
+	tableColumnTypes_["propertylookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,INTEGER ";
+
+	tables_.push_back("elementlookup");
+	tableColumns_["elementlookup"] = " assetid,path ";
+	tableColumnTypes_["elementlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT ";
+
+	tables_.push_back("frames");
+	tableColumns_["frames"] = " dataid,time,state ";
+	tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INT ";
+	tableDataProviders_["frames"] = "DIRECTOR";
 
 	tables_.push_back("rewards");
 	tableColumns_["rewards"] = " dataid,duration,channel,time ";
@@ -1223,6 +991,10 @@ void SessionInfo::SetupBaseSessionDatabase()
 
 	// If the database doesn't yet contain a session info table, we need to add the session info.
 	bool insertSessionInfo = !baseSessionDbConnection_.tables().contains("sessioninfo");
+	bool insertTransLookup = !baseSessionDbConnection_.tables().contains("transitionlookup");
+	bool insertPropLookup = !baseSessionDbConnection_.tables().contains("propertylookup");
+	bool insertElemLookup = !baseSessionDbConnection_.tables().contains("elementlookup");
+	QSharedPointer<Picto::ExperimentConfig> expConfig;
 
 	AddTablesToDatabase(&sessionQ);
 
@@ -1253,6 +1025,75 @@ void SessionInfo::SetupBaseSessionDatabase()
 		sessionQ.bindValue(":xml", QString(experimentXml_));
 		executeWriteQuery(&sessionQ);
 	}
+
+	//Create Experiment Lookup tables
+	if(insertTransLookup || insertPropLookup || insertElemLookup)
+	{	//Only build the experimentConfig object if you need it.
+		expConfig = QSharedPointer<Picto::ExperimentConfig>(new Picto::ExperimentConfig());
+		expConfig->fromXml(experimentConfig_);
+	}
+	if(expConfig)
+	{
+		// If the database doesn't yet contain a transition lookup table, we need to add it.
+		QList<Picto::TransInfo> transInfo;
+		QList<Picto::PropInfo> propInfo;
+		QList<Picto::AssetInfo> elemInfo;
+		if(insertTransLookup)
+			transInfo = expConfig->getTransitionInfo();
+		// If the database doesn't yet contain a property lookup table, we need to add it.
+		if(insertPropLookup)
+			propInfo = expConfig->getPropertyInfo();
+		// If the database doesn't yet contain an element lookup table, we need to add it.
+		if(insertElemLookup)
+			elemInfo = expConfig->getElementInfo();
+
+		bool success;
+		do
+		{
+			//Start transaction
+			success = baseSessionDbConnection_.transaction();
+			if(!success)
+			{
+				qDebug("Failed to initiate transaction when writing lookup tables. Error was: " + sessionQ.lastError().text().toAscii() + "...Reattempting.");
+				continue;
+			}
+			foreach(Picto::TransInfo infounit, transInfo)
+			{
+				sessionQ.prepare("INSERT INTO transitionlookup(assetid,parent,source,sourceresult,destination) VALUES (:assetid,:parent,:source,:sourceresult,:destination) ");
+				sessionQ.bindValue(":assetid",infounit.id);
+				sessionQ.bindValue(":parent",infounit.parent);
+				sessionQ.bindValue(":source",infounit.source);
+				sessionQ.bindValue(":sourceresult",infounit.result);
+				sessionQ.bindValue(":destination",infounit.dest);
+				executeWriteQuery(&sessionQ,"",true);
+			}
+			foreach(Picto::PropInfo infounit, propInfo)
+			{
+				sessionQ.prepare("INSERT INTO propertylookup(assetid,name,parent) VALUES (:assetid,:name,:parent) ");
+				sessionQ.bindValue(":assetid",infounit.id);
+				sessionQ.bindValue(":name",infounit.name);
+				sessionQ.bindValue(":parent",infounit.parent);
+				executeWriteQuery(&sessionQ,"",true);
+			}
+			foreach(Picto::AssetInfo infounit, elemInfo)
+			{
+				sessionQ.prepare("INSERT INTO elementlookup(assetid,path) VALUES (:assetid,:path) ");
+				sessionQ.bindValue(":assetid",infounit.id);
+				sessionQ.bindValue(":path",infounit.path);
+				executeWriteQuery(&sessionQ,"",true);
+			}
+			sessionQ.clear();
+			//End Transaction
+			success = baseSessionDbConnection_.commit();
+			//If Transaction failed, rollback and try again.
+			if(!success)
+			{
+				qDebug("writing lookup tables failed for session: " + sessionId().toString().toAscii() + " rolling back transaction and reattempting.");
+				baseSessionDbConnection_.rollback();
+			}
+		}while(!success);
+	}
+
 }
 void SessionInfo::CreateCacheDatabase(QString databaseName)
 {
@@ -1455,17 +1296,16 @@ void SessionInfo::recalculateFittedTimes()
 //state will have constant runtime independant of the previous runtime of the current
 //experiment.  New variable values always update existing values with the same id if 
 //their timestamp is greater than that of their predecessor.  
-void SessionInfo::setStateVariable(int dataid, int varid, QString timestamp, QString serializedValue)
+void SessionInfo::setStateVariable(int dataid, int varid, QString serializedValue)
 {
 	Variable var;
 	var.dataid = dataid;
 	var.varid = varid;
-	var.time = timestamp;
 	var.serial = serializedValue;
 	currentStateQuery_.append(var);
 }
 
-void SessionInfo::updateCurrentStateTable()
+void SessionInfo::updateCurrentStateTable(QString updateTime)
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQuery(cacheDb);
@@ -1492,17 +1332,18 @@ void SessionInfo::updateCurrentStateTable()
 			executeWriteQuery(&cacheQuery,"",true);
 			//Update the value of the row if the time increased.
 			cacheQuery.prepare("UPDATE currentstate SET time = :time, data = :data, dataid = :dataid WHERE variableid = :variableid AND time <= :time1 AND dataid < :dataid1");
-			cacheQuery.bindValue(":time",queryVars.time);
+			cacheQuery.bindValue(":time",updateTime);
 			cacheQuery.bindValue(":data",queryVars.serial);
 			cacheQuery.bindValue(":dataid",queryVars.dataid);
 			cacheQuery.bindValue(":variableid",queryVars.varid);
-			cacheQuery.bindValue(":time1",queryVars.time);
+			cacheQuery.bindValue(":time1",updateTime);
 			cacheQuery.bindValue(":dataid1",queryVars.dataid);
 			executeWriteQuery(&cacheQuery,"",true);
-			//Update latest written state variable.
-			if(queryVars.time.toDouble() > latestStateVarTime_.toDouble())
-				latestStateVarTime_ = queryVars.time;
 		}
+		//Update latest written state variable.
+		if(updateTime.toDouble() > latestStateVarTime_.toDouble())
+			latestStateVarTime_ = updateTime;
+
 		cacheQuery.clear();
 		//End Transaction
 		success = cacheDb.commit();

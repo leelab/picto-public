@@ -13,7 +13,7 @@ StateMachineEditorData::StateMachineEditorData()
 void StateMachineEditorData::setOpenedAsset(QSharedPointer<Asset> openedAsset)
 {
 	Q_ASSERT(openedAsset.dynamicCast<UIEnabled>());
-	propertyContainer_->setPropertyValue("OpenedBlock",openedAsset.staticCast<UIEnabled>()->getUniqueId().toString());
+	propertyContainer_->setPropertyValue("OpenedBlock",openedAsset.staticCast<UIEnabled>()->getAssetId());
 }
 
 QSharedPointer<Asset> StateMachineEditorData::getOpenedAsset()
@@ -21,8 +21,8 @@ QSharedPointer<Asset> StateMachineEditorData::getOpenedAsset()
 	QSharedPointer<Asset> rootAsset = getParentAsset();
 	rootAsset = rootAsset.staticCast<PictoData>()->getExperiment();
 	Q_ASSERT(!rootAsset.isNull());
-	QUuid openID(propertyContainer_->getPropertyValue("OpenedBlock").toString());
-	if(openID.isNull())
+	int openID(propertyContainer_->getPropertyValue("OpenedBlock").toInt());
+	if(openID == 0)
 		return rootAsset;
 	QSharedPointer<Asset> savedAsset = findAssetWithID(rootAsset,openID);	
 	if(savedAsset.isNull())
@@ -53,13 +53,13 @@ bool StateMachineEditorData::validateObject(QSharedPointer<QXmlStreamReader> xml
 	return true;
 }
 
-QSharedPointer<Asset> StateMachineEditorData::findAssetWithID(QSharedPointer<Asset> root, QUuid id)
+QSharedPointer<Asset> StateMachineEditorData::findAssetWithID(QSharedPointer<Asset> root, int id)
 {
 	QSharedPointer<Asset> result;
 	QSharedPointer<UIEnabled> uienabled = root.dynamicCast<UIEnabled>();
 	if(uienabled.isNull())
 		return result;
-	if(!uienabled.isNull() && (uienabled->getUniqueId() == id))
+	if(!uienabled.isNull() && (uienabled->getAssetId() == id))
 	{	//This is the asset with that id, return it.
 		return root;
 	}

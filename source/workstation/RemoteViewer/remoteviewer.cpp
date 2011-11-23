@@ -1172,6 +1172,7 @@ bool RemoteViewer::startSession()
 		//delete activeExperiment_;
 		return false;
 	}
+	expXML = "";				//Just to free up a little memory from these giant string buffers.
 
 
 	QString commandStr;
@@ -1181,9 +1182,14 @@ bool RemoteViewer::startSession()
 
 	QSharedPointer<Picto::ProtocolCommand> startSessCommand(new Picto::ProtocolCommand(commandStr));
 
-	QByteArray experimentXml = expXML.toUtf8();
-	startSessCommand->setContent(experimentXml);
-	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(experimentXml.length()));
+	QByteArray dataXml = pictoDataText_->toPlainText().toUtf8();
+
+	QSharedPointer<ExperimentConfig> expConfig = experiment_->getExperimentConfig();
+	if(!expConfig)
+		return false;
+	dataXml.append(expConfig->toXml().toUtf8());
+	startSessCommand->setContent(dataXml);
+	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(dataXml.length()));
 	startSessCommand->setFieldValue("Observer-ID",observerId_.toString());
 
 	QSharedPointer<Picto::ProtocolResponse> loadExpResponse;

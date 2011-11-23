@@ -7,18 +7,16 @@ FrameDataUnit::FrameDataUnit()
 {
 }
 
-FrameDataUnit::FrameDataUnit(int frameNum, QString timestamp, QString statename)
+FrameDataUnit::FrameDataUnit(QString timestamp, int stateId)
 {
-	frameNumber = frameNum;
 	time = timestamp;
-	stateName = statename;
+	stateId_ = stateId;
 }
 
-FrameDataUnit::FrameDataUnit(int frameNum, double timestamp, QString statename)
+FrameDataUnit::FrameDataUnit(double timestamp, int stateId)
 {
-	frameNumber = frameNum;
 	time = QString("%1").arg(timestamp,0,'f',6);
-	stateName = statename;
+	stateId_ = stateId;
 }
 
 /*! \brief Turns the FrameDataUnitPackage into an XML fragment
@@ -29,10 +27,9 @@ FrameDataUnit::FrameDataUnit(int frameNum, double timestamp, QString statename)
  */
 bool FrameDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("FrameDataUnit");
-	xmlStreamWriter->writeAttribute("time",time);
-	xmlStreamWriter->writeAttribute("state",QString("%1").arg(stateName));
-	xmlStreamWriter->writeTextElement("framenumber",QString::number(frameNumber));
+	xmlStreamWriter->writeStartElement("FDU");
+	xmlStreamWriter->writeAttribute("t",time);
+	xmlStreamWriter->writeAttribute("s",QString("%1").arg(stateId_));
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
@@ -41,13 +38,13 @@ bool FrameDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "FrameDataUnit")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "FDU")
 	{
-		addError("FrameDataUnit","Incorrect tag, expected <FrameDataUnit>",xmlStreamReader);
+		addError("FrameDataUnit","Incorrect tag, expected <FDU>",xmlStreamReader);
 		return false;
 	}
 
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "FrameDataUnit") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "FDU") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -57,35 +54,25 @@ bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "FrameDataUnit")
+		if(name == "FDU")
 		{
-			if(xmlStreamReader->attributes().hasAttribute("time"))
+			if(xmlStreamReader->attributes().hasAttribute("t"))
 			{
-				time = xmlStreamReader->attributes().value("time").toString();
+				time = xmlStreamReader->attributes().value("t").toString();
 			}
 			else
 			{
-				addError("FrameDataUnit","Frame missing time attribute",xmlStreamReader);
+				addError("FrameDataUnit","Frame missing t (time) attribute",xmlStreamReader);
 				return false;
 			}
 
-			if(xmlStreamReader->attributes().hasAttribute("state"))
+			if(xmlStreamReader->attributes().hasAttribute("s"))
 			{
-				stateName = xmlStreamReader->attributes().value("state").toString();
+				stateId_ = xmlStreamReader->attributes().value("s").toString().toInt();
 			}
 			else
 			{
-				addError("FrameDataUnit","Frame missing state attribute",xmlStreamReader);
-				return false;
-			}
-		}
-		else if(name == "framenumber")
-		{
-			bool ok;
-			frameNumber = xmlStreamReader->readElementText().toInt(&ok);
-			if(!ok)
-			{
-				addError("FrameDataUnit","Frame number not an integer",xmlStreamReader);
+				addError("FrameDataUnit","Frame missing s (state) attribute",xmlStreamReader);
 				return false;
 			}
 		}

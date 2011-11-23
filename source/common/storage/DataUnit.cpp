@@ -30,7 +30,7 @@ bool DataUnit::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
  */
 bool DataUnit::serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeTextElement("dataid",QString::number(dataID_));
+	xmlStreamWriter->writeTextElement("D",QString::number(dataID_));
 	return true;
 } 
 
@@ -38,7 +38,7 @@ bool DataUnit::serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
  */
 bool DataUnit::deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "dataid")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "D")
 	{
 		addError("DataUnit", "Unexpected tag", xmlStreamReader);
 		return false;

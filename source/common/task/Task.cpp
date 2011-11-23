@@ -9,7 +9,7 @@ namespace Picto {
 
 Task::Task() 
 {
-		
+		taskNumber_ = 0;
 		AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 
@@ -62,6 +62,19 @@ bool Task::jumpToState(QStringList path, QString state)
 	return stateMachine_->jumpToState(path,state);
 }
 
+void Task::setTaskNumber(int num)
+{
+	taskNumber_ = num;
+	initTransition_ = QSharedPointer<Transition>(new Transition("NULL","NULL",stateMachine_->getName()));
+	initTransition_->setAssetId(-taskNumber_);
+	initTransition_->setSelfPtr(initTransition_);
+	initTransition_->setParentAsset(selfPtr());
+	expConfig_->addManagedAsset(initTransition_);	//This adds the transition to the expConfig list so that it will be recognized
+													//By the server and remote workstations.  In the future we will add transitions
+													//into initial states which will make all of this unnecessary.
+	expConfig_->fixDuplicatedAssetIds();
+}
+
 /*! \brief Sends the initial state transition to the server
  *
  *	If a task is stopped, and then restarted, the transitions recordered by the server
@@ -86,8 +99,9 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 		return;
 
 	QSharedPointer<Transition> tran(new Transition("NULL","NULL",stateMachine_->getName()));
-	tran->setSpecialTransitionID(-1);
-	engine->addStateTransitionForServer(tran,getName());
+	tran->setAssetId(-taskNumber_);
+	//tran->setSpecialTransitionID(-1);
+	engine->addStateTransitionForServer(tran);
 	//bool sendStateDataSucceeded = sendStateData("NULL","NULL",stateMachine_->getName(),-1,engine);
 	//Q_ASSERT(sendStateDataSucceeded);
 }
@@ -109,16 +123,16 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	{
 
 		QSharedPointer<Transition> tran(new Transition("NULL",result,"NULL"));
-		tran->setSpecialTransitionID(-2);
-		engine->addStateTransitionForServer(tran,getName());
+		//tran->setSpecialTransitionID(-2);
+		engine->addStateTransitionForServer(tran);
 		//bool rc = sendStateData("NULL",result,"NULL",-2,engine);
 		//Q_ASSERT(rc);
 	}
 	else
 	{
 		QSharedPointer<Transition> tran(new Transition(stateMachine_->getName(),result,"NULL"));
-		engine->addStateTransitionForServer(tran,getName());
-		tran->setSpecialTransitionID(-3);
+		engine->addStateTransitionForServer(tran);
+		//tran->setSpecialTransitionID(-3);
 		//bool rc = sendStateData(stateMachine_->getName(),result,"NULL",-3,engine);
 		//Q_ASSERT(rc);
 	}

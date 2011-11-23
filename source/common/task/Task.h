@@ -45,6 +45,7 @@ public:
 	bool jumpToState(QStringList path, QString state);
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString assetType(){return "Task";};
+	void setTaskNumber(int num);
 
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -63,6 +64,8 @@ private:
 	bool sendStateData(QSharedPointer<Engine::PictoEngine> engine);
 
 	QSharedPointer<StateMachine> stateMachine_;
+	int taskNumber_;
+	QSharedPointer<Transition> initTransition_;
 	//QList<StageResult> stageResults_;
 	//QList<TrialResult> trialResults_;
 	//QList<Constraint> constraints_;

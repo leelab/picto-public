@@ -6,30 +6,10 @@ PropertyDataUnit::PropertyDataUnit()
 {
 }
 
-PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, double time)
+PropertyDataUnit::PropertyDataUnit(int index, QString value)
 {
-	index_ = index;
-	path_ = path; 
+	index_ = index; 
 	value_ = value; 
-	setTime(time);
-}
-
-PropertyDataUnit::PropertyDataUnit(int index, QString path, QString value, QString time)
-{
-	index_ = index;
-	path_ = path; 
-	value_ = value; 
-	time_ = time;
-}
-
-void PropertyDataUnit::setTime(double time)
-{
-	time_ = QString("%1").arg(time,0,'f',6);
-}
-
-void PropertyDataUnit::setTime(QString time)
-{
-	time_ = time;
 }
 /*! \brief Turns the PropertyDataUnit into an XML fragment
  *
@@ -38,10 +18,9 @@ void PropertyDataUnit::setTime(QString time)
  */
 bool PropertyDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("PropertyDataUnit");
-	xmlStreamWriter->writeAttribute("t",time_);
+	xmlStreamWriter->writeStartElement("PDU");
+	xmlStreamWriter->writeAttribute("f",QString::number(actionFrame_));
 	xmlStreamWriter->writeAttribute("i",QString("%1").arg(index_));
-	xmlStreamWriter->writeAttribute("p",QString("%1").arg(path_));
 	xmlStreamWriter->writeAttribute("v",QString("%1").arg(value_));
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
@@ -51,13 +30,13 @@ bool PropertyDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStream
 bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "PropertyDataUnit")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "PDU")
 	{
-		addError("PropertyDataUnit","Incorrect tag, expected <PropertyDataUnit>",xmlStreamReader);
+		addError("PropertyDataUnit","Incorrect tag, expected <PDU>",xmlStreamReader);
 		return false;
 	}
 
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "PropertyDataUnit") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "PDU") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -67,25 +46,15 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "PropertyDataUnit")
+		if(name == "PDU")
 		{
-			if(xmlStreamReader->attributes().hasAttribute("p"))
+			if(xmlStreamReader->attributes().hasAttribute("f"))
 			{
-				path_ = xmlStreamReader->attributes().value("p").toString();
+				actionFrame_ = xmlStreamReader->attributes().value("f").toString().toLongLong();
 			}
 			else
 			{
-				addError("PropertyDataUnit","Data missing p (path) attribute",xmlStreamReader);
-				return false;
-			}
-
-			if(xmlStreamReader->attributes().hasAttribute("v"))
-			{
-				value_ = xmlStreamReader->attributes().value("v").toString();
-			}
-			else
-			{
-				addError("PropertyDataUnit","Data missing v (value) attribute",xmlStreamReader);
+				addError("PropertyDataUnit","Data missing f (frame) attribute",xmlStreamReader);
 				return false;
 			}
 
@@ -99,13 +68,13 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 				return false;
 			}
 
-			if(xmlStreamReader->attributes().hasAttribute("t"))
+			if(xmlStreamReader->attributes().hasAttribute("v"))
 			{
-				time_ = xmlStreamReader->attributes().value("t").toString();
+				value_ = xmlStreamReader->attributes().value("v").toString();
 			}
 			else
 			{
-				addError("PropertyDataUnit","Data missing t (time) attribute",xmlStreamReader);
+				addError("PropertyDataUnit","Data missing v (value) attribute",xmlStreamReader);
 				return false;
 			}
 		}

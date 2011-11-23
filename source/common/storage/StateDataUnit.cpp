@@ -6,32 +6,13 @@ StateDataUnit::StateDataUnit()
 {
 }
 
-void StateDataUnit::setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
+void StateDataUnit::setTransition(QSharedPointer<Transition> transition)
 {
-	setTransition(transition->getSource(),transition->getSourceResult(),transition->getDestination(),QString("%1").arg(timestamp,0,'f',6),transition->getTransitionID(),stateMachinePath);
+	setTransition(transition->getAssetId());
 }
-void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, double timestamp, int id, QString stateMachinePath)
+void StateDataUnit::setTransition(int id)
 {
-	setTransition(source,sourceResult,destination,QString("%1").arg(timestamp,0,'f',6),id, stateMachinePath);
-}
-void StateDataUnit::setTransition(QString source, QString sourceResult, QString destination, QString timestamp, int id, QString stateMachinePath)
-{
-	source_ = source;
-	sourceResult_ = sourceResult;
-	destination_ = destination;
-	timestamp_ = timestamp;
 	id_ = id;
-	machinePath_ = stateMachinePath;
-}
-
-void StateDataUnit::setTime(double time)
-{
-	timestamp_ = QString("%1").arg(time,0,'f',6);
-}
-
-void StateDataUnit::setTime(QString time)
-{
-	timestamp_ = time;
 }
 
 /*! \brief Turns the StateDataUnit into an XML fragment
@@ -47,13 +28,9 @@ void StateDataUnit::setTime(QString time)
  */
 bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("StateDataUnit");
-	xmlStreamWriter->writeAttribute("timestamp",timestamp_);
-	xmlStreamWriter->writeAttribute("statemachinepath",machinePath_);
-	xmlStreamWriter->writeAttribute("src",source_);
-	xmlStreamWriter->writeAttribute("srcRes",sourceResult_);
-	xmlStreamWriter->writeAttribute("dest",destination_);
-	xmlStreamWriter->writeAttribute("id",QString::number(id_));
+	xmlStreamWriter->writeStartElement("SDU");
+	xmlStreamWriter->writeAttribute("f",QString::number(actionFrame_));
+	xmlStreamWriter->writeAttribute("i",QString::number(id_));
 	DataUnit::serializeDataID(xmlStreamWriter);
 
 	xmlStreamWriter->writeEndElement(); //StateDataUnit
@@ -64,20 +41,16 @@ bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
- 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateDataUnit")
+ 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "SDU")
 	{
-		addError("StateDataUnit","Incorrect tag, expected <StateDataUnit>",xmlStreamReader);
+		addError("StateDataUnit","Incorrect tag, expected <SDU>",xmlStreamReader);
 		return false;
 	}
 
-	timestamp_ = xmlStreamReader->attributes().value("timestamp").toString();
-	machinePath_ = xmlStreamReader->attributes().value("statemachinepath").toString();
-	source_ = xmlStreamReader->attributes().value("src").toString();
-	sourceResult_ = xmlStreamReader->attributes().value("srcRes").toString();
-	destination_ = xmlStreamReader->attributes().value("dest").toString();
-	id_ = xmlStreamReader->attributes().value("id").toString().toInt();
+	actionFrame_ = xmlStreamReader->attributes().value("f").toString().toLongLong();
+	id_ = xmlStreamReader->attributes().value("i").toString().toInt();
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "StateDataUnit") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "SDU") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{

@@ -16,10 +16,10 @@ bool AlignmentDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStrea
 {
 	xmlStreamWriter->setAutoFormatting(true);
 
-	xmlStreamWriter->writeStartElement("AlignmentDataUnit");
-	xmlStreamWriter->writeTextElement("Time",QString("%1").arg(getTimestamp(),0,'f',6));
-	xmlStreamWriter->writeTextElement("EventCode",QString("%1").arg(getAlignCode()));
-	xmlStreamWriter->writeTextElement("TrialNum",QString("%1").arg(getAlignNumber()));
+	xmlStreamWriter->writeStartElement("ADU");
+	xmlStreamWriter->writeTextElement("t",QString("%1").arg(getTimestamp(),0,'f',6));
+	xmlStreamWriter->writeTextElement("e",QString("%1").arg(getAlignCode()));
+	xmlStreamWriter->writeTextElement("n",QString("%1").arg(getAlignNumber()));
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
@@ -30,24 +30,24 @@ bool AlignmentDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStrea
 bool AlignmentDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
- 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "AlignmentDataUnit")
+ 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "ADU")
 	{
-		addError("AlignmentDataUnit","Incorrect tag, expected <AlignmentDataUnit>",xmlStreamReader);
+		addError("AlignmentDataUnit","Incorrect tag, expected <ADU>",xmlStreamReader);
 		return false;
 	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "AlignmentDataUnit") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "ADU") && !xmlStreamReader->atEnd())
 	{	
-		if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "Time")
+		if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "t")
 		{
 			setTimestamp(xmlStreamReader->readElementText().toDouble());
 		}
-		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "EventCode")
+		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "e")
 		{
 			setAlignCode(xmlStreamReader->readElementText().toInt());
 		}
-		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "TrialNum")
+		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "n")
 		{
 			setAlignNumber(xmlStreamReader->readElementText().toInt());
 		}

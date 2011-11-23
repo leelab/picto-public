@@ -6,33 +6,25 @@ StateDataUnitPackage::StateDataUnitPackage()
 {
 }
 
-void StateDataUnitPackage::addTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath)
+void StateDataUnitPackage::addTransition(QSharedPointer<Transition> transition)
 {
 	QSharedPointer<StateDataUnit> data(new StateDataUnit());
-	data->setTransition(transition,timestamp,stateMachinePath);
+	data->setTransition(transition);
 	data_.append(data);
 }
 
-void StateDataUnitPackage::addTransition(QString source, QString sourceResult, QString destination, double timestamp, int id, QString stateMachinePath)
+void StateDataUnitPackage::addTransition(int id)
 {
 	QSharedPointer<StateDataUnit> data(new StateDataUnit());
-	data->setTransition(source,sourceResult,destination,timestamp,id,stateMachinePath);
+	data->setTransition(id);
 	data_.append(data);
 }
 
-void StateDataUnitPackage::addTransition(QString source, QString sourceResult, QString destination, QString timestamp, int id, QString stateMachinePath)
+void StateDataUnitPackage::setActionFrame(qulonglong frameId)
 {
-	QSharedPointer<StateDataUnit> data(new StateDataUnit());
-	data->setTransition(source,sourceResult,destination,timestamp,id,stateMachinePath);
-	data_.append(data);
-}
-
-void StateDataUnitPackage::setAllTimestamps(double newTime)
-{
-	QString timeStr = QString("%1").arg(newTime,0,'f',6);
 	for(QList<QSharedPointer<StateDataUnit>>::iterator it = data_.begin();it != data_.end();it++)
 	{
-		(*it)->setTime(timeStr);
+		(*it)->setActionFrame(frameId);
 	}
 }
 
@@ -82,7 +74,7 @@ bool StateDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "StateDataUnit")
+		if(name == "SDU")
 		{
 			QSharedPointer<StateDataUnit> data(new StateDataUnit());
 			data->fromXml(xmlStreamReader);

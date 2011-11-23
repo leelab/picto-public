@@ -7,7 +7,9 @@ Serializable(),
 QObject(NULL),
 isNew_(true),	//!!!!!!!!THIS NEEDS TO BE INITIALIZED TO TRUE.  I JUST CHANGED IT FOR DEBUGGING PURPOSES!!!!!!!!!!!!!
 edited_(false),
-deleted_(false)
+deleted_(false),
+assetId_(9),
+hasAssetId_(false)
 {
 	connect(this, SIGNAL(edited()), this, SLOT(receivedEditedSignal()));
 	connect(this, SIGNAL(deleted()), this, SLOT(receivedDeletedSignal()));
@@ -23,12 +25,13 @@ bool Asset::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 
 bool Asset::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate)
 {
+	preDeserialize();
 	bool returnVal = deserializeFromXml(xmlStreamReader,validate);
-	if(returnVal)
-		postDeserialize();
 	edited_ = false;
 	isNew_ = false;
 	deleted_ = false;
+	if(returnVal)
+		postDeserialize();
 	if(validate)
 	{	
 		//The XML syntax was fine.  Lets make sure that the object is initialized and valid.
@@ -92,17 +95,46 @@ void Asset::reinitialize()
 
 QString Asset::getPath()
 {
-	QString returnVal = getName();
 	if(inherits("Picto::Experiment"))
-		return returnVal;
+		return "";
+	QString returnVal = getName();
 	QSharedPointer<Asset> curr = getParentAsset();
 	while(curr)
 	{
-		returnVal.prepend(QString("%1::").arg(curr->getName()));
 		if(curr->inherits("Picto::Experiment"))
 			break;
+		returnVal.prepend(QString("%1::").arg(curr->getName()));
 		curr = curr->getParentAsset();
 	}
 	return returnVal;
+}
+
+void Asset::setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig)
+{
+	expConfig_ = expConfig;
+	expConfig_->addManagedAsset(selfPtr());
+}
+
+void Asset::preDeserialize()
+{
+	QSharedPointer<Asset> parent = getParentAsset();
+	if(!parent)
+		return;
+	QSharedPointer<ExperimentConfig> expConfig = parent->getExperimentConfig();
+	if(!expConfig)
+		return;
+	setExperimentConfig(expConfig);
+}
+
+void Asset::postDeserialize()
+{
+	//This makes sure my id isn't duplicated.  It only
+	//actually does anything after someone called disallowDuplicateAssetIds()
+	//which doesn't happen until the end of experiment deserialization so that
+	//we're not crazily rewriting asset ids every time we deserialize.  This
+	//does, however, assure us that assets that are created after experiments
+	//are deserialized will be setup with nonduplicated ids.
+	if(expConfig_)
+		expConfig_->fixDuplicatedAssetIds();
 }
 }; //namespace Picto

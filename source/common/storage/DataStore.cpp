@@ -9,6 +9,7 @@ namespace Picto {
 DataStore::DataStore():
 Asset()
 {
+	assetId_ = 0;
 	propertyContainer_ = PropertyContainer::create("DataStore");
 }
 
@@ -24,7 +25,35 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 		xmlReader->readNext();
 
 	//Write out first token (ie. My tag name).
-	xmlStreamWriter->writeCurrentToken(*xmlReader);
+
+	//Check if the token includes an id and if that id has changed
+	if(xmlReader->attributes().hasAttribute("id"))
+	{
+		//Check if the id value has changed
+		if(xmlReader->attributes().value("id").toString().toInt()!=assetId_)
+		{
+			xmlStreamWriter->writeStartElement(xmlReader->name().toString());
+			foreach(QXmlStreamAttribute attribute,xmlReader->attributes())
+			{
+				if(attribute.name() == "id")
+					continue;
+				xmlStreamWriter->writeAttribute(attribute.name().toString(),attribute.value().toString());
+			}
+			//Write the new Id.
+			xmlStreamWriter->writeAttribute("id",QString::number(assetId_));
+		}
+		else
+		{
+			//Nothing changed.  Just write out old value.
+			xmlStreamWriter->writeCurrentToken(*xmlReader);
+		}
+	}
+	else
+	{
+		//There is no id value.  Add it.
+		xmlStreamWriter->writeCurrentToken(*xmlReader);
+		xmlStreamWriter->writeAttribute("id",QString::number(assetId_));
+	}
 
 	//Get this DataStore's tag name from the stored xml.
 	myTagName_ = xmlReader->name().toString();
@@ -134,14 +163,33 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		return returnVal;
 	}
 
-	//Make sure that there are no attributes besides "type"
-	int numAttributes = xmlStreamReader->attributes().size();
-	if((numAttributes > 1) || ((numAttributes == 1) && !xmlStreamReader->attributes().hasAttribute("type")))
+
+	foreach(QXmlStreamAttribute attribute,xmlStreamReader->attributes())
 	{
-		addError(myTagName_.toAscii(),QString("Incorrect attribute(s), only \"type\" attributes are allowed"),xmlStreamReader);
-		returnVal = false;
-		return returnVal;
+		if(attribute.name() == "id")
+		{
+			assetId_ = attribute.value().toString().toInt();
+		}
+		else if(attribute.name() == "type")
+		{
+		}
+		else
+		{
+			//Make sure that there are no attributes besides "type" and "id"
+			addError(myTagName_.toAscii(),QString("Incorrect attribute:\"%1\", only \"type\" and \"id\" attributes are allowed").arg(attribute.name().toString()),xmlStreamReader);
+			returnVal = false;
+			return returnVal;
+		}
 	}
+
+	////Make sure that there are no attributes besides "type"
+	//int numAttributes = xmlStreamReader->attributes().size();
+	//if((numAttributes > 1) || ((numAttributes == 1) && !xmlStreamReader->attributes().hasAttribute("type")))
+	//{
+	//	addError(myTagName_.toAscii(),QString("Incorrect attribute(s), only \"type\" attributes are allowed"),xmlStreamReader);
+	//	returnVal = false;
+	//	return returnVal;
+	//}
 
 	//Loop until we're done with the tag or we reach the end of the XMLStream
 	bool childWithSameTag = false;	//If this is true, we just deserialized a child with the same tag, so we should ignore its end tag.
@@ -248,6 +296,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		}
 	}
 	xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets write the end tag to our tagText.
+
 	return returnVal;
 }
 
@@ -276,6 +325,11 @@ void DataStore::setDeleted()
 			child->setDeleted();
 		}
 	}
+}
+
+void DataStore::postDeserialize()
+{
+	Asset::postDeserialize();
 }
 
 void DataStore::initializePropertiesToDefaults()
@@ -463,6 +517,15 @@ QList<QSharedPointer<Property>> DataStore::getDescendantsProperties()
 	return descendantProps;
 }
 
+int DataStore::getAssetId()
+{
+	return assetId_;
+}
+void DataStore::setAssetId(int id)
+{
+	assetId_ = id;
+}
+
 bool DataStore::hasChildrenOfType(QString tagName)
 {
 	return children_.contains(tagName);
@@ -472,75 +535,5 @@ void DataStore::childEdited()
 {
 	emit edited();
 }
-//------------------------------------------------------------------------------------
-
-//void DataStore::serializeQPoint(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-//						QString name, QPoint point)
-//{
-//	Q_ASSERT(!name.isEmpty());
-//	xmlStreamWriter->writeStartElement(name);
-//	xmlStreamWriter->writeAttribute("datatype", "QPoint");
-//	xmlStreamWriter->writeAttribute("x",QString("%1").arg(point.x()));
-//	xmlStreamWriter->writeAttribute("y",QString("%1").arg(point.y()));
-//	xmlStreamWriter->writeEndElement();
-//
-//}
-//
-//void DataStore::serializeQRect(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-//						QString name, QRect rect)
-//{
-//	Q_ASSERT(!name.isEmpty());
-//	xmlStreamWriter->writeStartElement(name);
-//	xmlStreamWriter->writeAttribute("datatype", "QRect");
-//	xmlStreamWriter->writeAttribute("x",QString("%1").arg(rect.x()));
-//	xmlStreamWriter->writeAttribute("y",QString("%1").arg(rect.y()));
-//	xmlStreamWriter->writeAttribute("width",QString("%1").arg(rect.width()));
-//	xmlStreamWriter->writeAttribute("height",QString("%1").arg(rect.height()));
-//	xmlStreamWriter->writeEndElement();
-//
-//}
-//
-//void DataStore::serializeQColor(QSharedPointer<QXmlStreamWriter> xmlStreamWriter, 
-//					QString name, QColor color)
-//{
-//	Q_ASSERT(!name.isEmpty());
-//	xmlStreamWriter->writeStartElement(name);
-//	xmlStreamWriter->writeAttribute("datatype", "QColor");
-//	xmlStreamWriter->writeAttribute("R",QString("%1").arg(color.red()));
-//	xmlStreamWriter->writeAttribute("G",QString("%1").arg(color.green()));
-//	xmlStreamWriter->writeAttribute("B",QString("%1").arg(color.blue()));
-//	xmlStreamWriter->writeAttribute("A",QString("%1").arg(color.alpha()));
-//	xmlStreamWriter->writeEndElement();
-//
-//}
-//
-//
-//QPoint DataStore::deserializeQPoint(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	QPoint point;
-//	point.setX(xmlStreamReader->attributes().value("x").toString().toInt());
-//	point.setY(xmlStreamReader->attributes().value("y").toString().toInt());
-//	return point;
-//}
-//
-//QRect DataStore::deserializeQRect(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	QRect rect;
-//	rect.setX(xmlStreamReader->attributes().value("x").toString().toInt());
-//	rect.setY(xmlStreamReader->attributes().value("y").toString().toInt());
-//	rect.setWidth(xmlStreamReader->attributes().value("width").toString().toInt());
-//	rect.setHeight(xmlStreamReader->attributes().value("height").toString().toInt());
-//	return rect;
-//}
-//
-//QColor DataStore::deserializeQColor(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	QColor color;
-//	color.setRed(xmlStreamReader->attributes().value("R").toString().toInt());
-//	color.setGreen(xmlStreamReader->attributes().value("G").toString().toInt());
-//	color.setBlue(xmlStreamReader->attributes().value("B").toString().toInt());
-//	color.setAlpha(xmlStreamReader->attributes().value("A").toString().toInt());
-//	return color;
-//}
 
 }; //namespace Picto

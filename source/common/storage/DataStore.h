@@ -71,10 +71,14 @@ public:
 	virtual QList<QSharedPointer<Property>> getDescendantsProperties();
 	virtual bool isRuntimeEditable(){return false;};
 
+	virtual	int getAssetId();
+	virtual void setAssetId(int id);
+
 public slots:
 	void childEdited();
 
 protected:
+	virtual void postDeserialize();
 	//AutoSerialization Stuff---------------------------------
 	virtual QString defaultTagName(){return "Default";};
 	void initializePropertiesToDefaults();
@@ -124,6 +128,7 @@ private:
 	//--------------------------------------------------------
 
 	QString myTagName_;
+	int assetId_;
 
 };
 

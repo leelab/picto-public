@@ -129,14 +129,14 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertFrameData(frameData);
 		}
-		else if(dataType == "RewardDataUnit")
+		else if(dataType == "RDU")
 		{
 			QSharedPointer<Picto::RewardDataUnit> rewardData(new Picto::RewardDataUnit());
 			rewardData->fromXml(xmlReader);
 
 			sessionInfo->insertRewardData(rewardData);
 		}
-		else if(dataType == "NeuralDataUnit")
+		else if(dataType == "NDU")
 		{
 			/*commandProcessingTimer.start();*/
 			QSharedPointer<Picto::NeuralDataUnit> neuralData(new Picto::NeuralDataUnit());
@@ -145,7 +145,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 			sessionInfo->insertNeuralData(neuralData);
 			//qDebug("NEURAL " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 		}
-		else if(dataType == "AlignmentDataUnit")
+		else if(dataType == "ADU")
 		{
 			/*commandProcessingTimer.start();*/
 			QSharedPointer<Picto::AlignmentDataUnit> alignmentData(new Picto::AlignmentDataUnit());

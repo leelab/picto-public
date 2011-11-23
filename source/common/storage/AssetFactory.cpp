@@ -2,7 +2,7 @@
 #include "../statemachine/uienabled.h"
 
 using namespace Picto;
-AssetFactory::AssetFactory(int minAssets,int maxAssets) :
+AssetFactory::AssetFactory(int minAssets,int maxAssets ) :
 minAssets_(minAssets),
 maxAssets_(maxAssets),
 newAssetFn_(NULL),
@@ -12,7 +12,7 @@ uITemplateInitialized_(false)
 {
 }
 
-AssetFactory::AssetFactory	(	
+AssetFactory::AssetFactory	( 
 	int minAssets,
 	int maxAssets,
 	NewAssetFnPtr newAssetFn

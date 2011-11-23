@@ -198,6 +198,8 @@
    <file alias="_event_code_generator_8h-source.html">../../../output/documentation/main/html/_event_code_generator_8h-source.html</file>
    <file alias="_experiment_8cpp-source.html">../../../output/documentation/main/html/_experiment_8cpp-source.html</file>
    <file alias="_experiment_8h-source.html">../../../output/documentation/main/html/_experiment_8h-source.html</file>
+   <file alias="_experiment_config_8cpp-source.html">../../../output/documentation/main/html/_experiment_config_8cpp-source.html</file>
+   <file alias="_experiment_config_8h-source.html">../../../output/documentation/main/html/_experiment_config_8h-source.html</file>
    <file alias="_experimental_system_8cpp-source.html">../../../output/documentation/main/html/_experimental_system_8cpp-source.html</file>
    <file alias="_experimental_system_8h-source.html">../../../output/documentation/main/html/_experimental_system_8h-source.html</file>
    <file alias="_eye_tracker_calibration_8cpp-source.html">../../../output/documentation/main/html/_eye_tracker_calibration_8cpp-source.html</file>
@@ -379,6 +381,8 @@
    <file alias="_property_frame_8h-source.html">../../../output/documentation/main/html/_property_frame_8h-source.html</file>
    <file alias="_property_frame_data_8cpp-source.html">../../../output/documentation/main/html/_property_frame_data_8cpp-source.html</file>
    <file alias="_property_frame_data_8h-source.html">../../../output/documentation/main/html/_property_frame_data_8h-source.html</file>
+   <file alias="_property_lookup_8cpp-source.html">../../../output/documentation/main/html/_property_lookup_8cpp-source.html</file>
+   <file alias="_property_lookup_8h-source.html">../../../output/documentation/main/html/_property_lookup_8h-source.html</file>
    <file alias="_property_table_8cpp-source.html">../../../output/documentation/main/html/_property_table_8cpp-source.html</file>
    <file alias="_property_table_8h-source.html">../../../output/documentation/main/html/_property_table_8h-source.html</file>
    <file alias="_property_tool_group_8cpp-source.html">../../../output/documentation/main/html/_property_tool_group_8cpp-source.html</file>
@@ -577,6 +581,8 @@
    <file alias="_tool_group_8h-source.html">../../../output/documentation/main/html/_tool_group_8h-source.html</file>
    <file alias="_transition_container_8cpp-source.html">../../../output/documentation/main/html/_transition_container_8cpp-source.html</file>
    <file alias="_transition_container_8h-source.html">../../../output/documentation/main/html/_transition_container_8h-source.html</file>
+   <file alias="_transition_lookup_8cpp-source.html">../../../output/documentation/main/html/_transition_lookup_8cpp-source.html</file>
+   <file alias="_transition_lookup_8h-source.html">../../../output/documentation/main/html/_transition_lookup_8h-source.html</file>
    <file alias="_trial_command_handler_8cpp-source.html">../../../output/documentation/main/html/_trial_command_handler_8cpp-source.html</file>
    <file alias="_trial_command_handler_8h-source.html">../../../output/documentation/main/html/_trial_command_handler_8h-source.html</file>
    <file alias="_trial_data_8cpp-source.html">../../../output/documentation/main/html/_trial_data_8cpp-source.html</file>
@@ -964,6 +970,9 @@
    <file alias="class_picto_1_1_property_frame_data-members.html">../../../output/documentation/main/html/class_picto_1_1_property_frame_data-members.html</file>
    <file alias="class_picto_1_1_property_frame_data.html">../../../output/documentation/main/html/class_picto_1_1_property_frame_data.html</file>
    <file alias="class_picto_1_1_property_frame_data.png">../../../output/documentation/main/html/class_picto_1_1_property_frame_data.png</file>
+   <file alias="class_picto_1_1_property_lookup-members.html">../../../output/documentation/main/html/class_picto_1_1_property_lookup-members.html</file>
+   <file alias="class_picto_1_1_property_lookup.html">../../../output/documentation/main/html/class_picto_1_1_property_lookup.html</file>
+   <file alias="class_picto_1_1_property_lookup.png">../../../output/documentation/main/html/class_picto_1_1_property_lookup.png</file>
    <file alias="class_picto_1_1_property_table-members.html">../../../output/documentation/main/html/class_picto_1_1_property_table-members.html</file>
    <file alias="class_picto_1_1_property_table.html">../../../output/documentation/main/html/class_picto_1_1_property_table.html</file>
    <file alias="class_picto_1_1_pseudorandom_int_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_pseudorandom_int_parameter-members.html</file>
@@ -1048,6 +1057,9 @@
    <file alias="class_picto_1_1_state_data_unit-members.html">../../../output/documentation/main/html/class_picto_1_1_state_data_unit-members.html</file>
    <file alias="class_picto_1_1_state_data_unit.html">../../../output/documentation/main/html/class_picto_1_1_state_data_unit.html</file>
    <file alias="class_picto_1_1_state_data_unit.png">../../../output/documentation/main/html/class_picto_1_1_state_data_unit.png</file>
+   <file alias="class_picto_1_1_state_data_unit_package-members.html">../../../output/documentation/main/html/class_picto_1_1_state_data_unit_package-members.html</file>
+   <file alias="class_picto_1_1_state_data_unit_package.html">../../../output/documentation/main/html/class_picto_1_1_state_data_unit_package.html</file>
+   <file alias="class_picto_1_1_state_data_unit_package.png">../../../output/documentation/main/html/class_picto_1_1_state_data_unit_package.png</file>
    <file alias="class_picto_1_1_state_machine-members.html">../../../output/documentation/main/html/class_picto_1_1_state_machine-members.html</file>
    <file alias="class_picto_1_1_state_machine.html">../../../output/documentation/main/html/class_picto_1_1_state_machine.html</file>
    <file alias="class_picto_1_1_state_machine.png">../../../output/documentation/main/html/class_picto_1_1_state_machine.png</file>
@@ -1092,6 +1104,9 @@
    <file alias="class_picto_1_1_transition_container-members.html">../../../output/documentation/main/html/class_picto_1_1_transition_container-members.html</file>
    <file alias="class_picto_1_1_transition_container.html">../../../output/documentation/main/html/class_picto_1_1_transition_container.html</file>
    <file alias="class_picto_1_1_transition_container.png">../../../output/documentation/main/html/class_picto_1_1_transition_container.png</file>
+   <file alias="class_picto_1_1_transition_lookup-members.html">../../../output/documentation/main/html/class_picto_1_1_transition_lookup-members.html</file>
+   <file alias="class_picto_1_1_transition_lookup.html">../../../output/documentation/main/html/class_picto_1_1_transition_lookup.html</file>
+   <file alias="class_picto_1_1_transition_lookup.png">../../../output/documentation/main/html/class_picto_1_1_transition_lookup.png</file>
    <file alias="class_picto_1_1_translated_names-members.html">../../../output/documentation/main/html/class_picto_1_1_translated_names-members.html</file>
    <file alias="class_picto_1_1_translated_names.html">../../../output/documentation/main/html/class_picto_1_1_translated_names.html</file>
    <file alias="class_picto_1_1_trial_data-members.html">../../../output/documentation/main/html/class_picto_1_1_trial_data-members.html</file>

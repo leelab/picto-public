@@ -34,19 +34,20 @@ class StateDataUnit : public DataUnit
 public:
 	StateDataUnit();
 
-	void setTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath);
-	void setTransition(QString source, QString sourceResult, QString destination, double timestamp, int id, QString stateMachinePath);
-	void setTransition(QString source, QString sourceResult, QString destination, QString timestamp, int id, QString stateMachinePath);
+	void setTransition(QSharedPointer<Transition> transition);
+	void setTransition(int id);
 
-	void setTime(double time);
-	void setTime(QString time);
+	//void setTime(double time);
+	//void setTime(QString time);
+	void setActionFrame(qulonglong frameId){actionFrame_ = frameId;};
 
-	QString getMachinePath() { return machinePath_; };
+	//QString getMachinePath() { return machinePath_; };
 	int		getTransitionID(){return id_;};
-	QString getTime() { return timestamp_; };
-	QString getSource() { return source_; };
-	QString getSourceResult() { return sourceResult_; };
-	QString getDestination() { return destination_; };
+	qulonglong getActionFrame(){return actionFrame_;};
+	//QString getTime() { return timestamp_; };
+	//QString getSource() { return source_; };
+	//QString getSourceResult() { return sourceResult_; };
+	//QString getDestination() { return destination_; };
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -57,11 +58,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QString source_;
-	QString sourceResult_;
-	QString destination_;
-	QString timestamp_;
-	QString machinePath_;
+	qulonglong actionFrame_;
 	int id_;
 };
 

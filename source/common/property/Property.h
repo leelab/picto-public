@@ -55,6 +55,9 @@ public:
 	virtual QString identifier(){return tagName_;};
 	virtual QString assetType(){return "Property";};
 
+	virtual	int getAssetId();
+	virtual void setAssetId(int id);
+
 signals:
 	void valueChanged(QSharedPointer<Property> changedProp);
 public slots:
@@ -83,6 +86,7 @@ private:
 	QSharedPointer<QtVariantPropertyManager> manager_;
 	bool scriptEditable_;
 	bool runtimeEnabled_;
+	int assetId_;
 
 private slots:
 	void valueChanged(QtProperty *property, const QVariant &val);

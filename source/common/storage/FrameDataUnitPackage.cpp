@@ -6,15 +6,15 @@ FrameDataUnitPackage::FrameDataUnitPackage()
 {
 }
 
-void FrameDataUnitPackage::addFrame(int frameNumber, double time, QString stateName)
+void FrameDataUnitPackage::addFrame(double time, int stateId)
 {
-	QSharedPointer<FrameDataUnit> data(new FrameDataUnit(frameNumber, time, stateName));
+	QSharedPointer<FrameDataUnit> data(new FrameDataUnit(time, stateId));
 	data_.append(data);
 }
 
-void FrameDataUnitPackage::addFrame(int frameNumber, QString time, QString stateName)
+void FrameDataUnitPackage::addFrame(QString time, int stateId)
 {
-	QSharedPointer<FrameDataUnit> data(new FrameDataUnit(frameNumber, time, stateName));
+	QSharedPointer<FrameDataUnit> data(new FrameDataUnit(time, stateId));
 	data_.append(data);
 }
 
@@ -66,7 +66,7 @@ bool FrameDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "FrameDataUnit")
+		if(name == "FDU")
 		{
 			QSharedPointer<FrameDataUnit> data(new FrameDataUnit());
 			data->fromXml(xmlStreamReader);

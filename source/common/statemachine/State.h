@@ -81,7 +81,6 @@ private:
 	//void runScript(QString scriptName);
 	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);
 	//void updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused=false);
-	int getMasterFramenumber(QSharedPointer<Engine::PictoEngine> engine);
 	void addCursor();
 
 	QSharedPointer<Scene> scene_;
@@ -89,7 +88,6 @@ private:
 	int revision_;
 	int engineNeeded_;
 
-	int frameCounter_;
 	QString lastFrameCheckTime_;
 	bool hasCursor_;
 

@@ -22,10 +22,9 @@ public:
 
 	StateDataUnitPackage();
 
-	void addTransition(QSharedPointer<Transition> transition, double timestamp, QString stateMachinePath);
-	void addTransition(QString source, QString sourceResult, QString destination, double timestamp, int id, QString stateMachinePath);
-	void addTransition(QString source, QString sourceResult, QString destination, QString timestamp, int id, QString stateMachinePath);
-	void setAllTimestamps(double newTime);
+	void addTransition(QSharedPointer<Transition> transition);
+	void addTransition(int id);
+	void setActionFrame(qulonglong frameId);
 	int length() { return data_.length(); }
 	void clear() { data_.clear(); };
 	QSharedPointer<StateDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };

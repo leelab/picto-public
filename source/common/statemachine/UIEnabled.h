@@ -3,6 +3,7 @@
 
 #include "../common.h"
 #include "../storage/DataStore.h"
+#include "../statemachine/transition.h"
 #include <QUuid>
 
 namespace Picto {
@@ -26,9 +27,9 @@ public:
 	void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
 	void setPos(QPoint pos);
 	QPoint getPos();
-	QUuid getUniqueId();
 	virtual QString getUITemplate(){return "UIEnabled";};
 	virtual QString assetType(){return "UIEnabled";};
+		virtual QList<QSharedPointer<Transition>> getDescendantsTransitions();
 signals:
 	void nameEdited();
 

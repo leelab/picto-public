@@ -21,9 +21,29 @@ QPoint UIEnabled::getPos()
 	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getPos();
 }
 
-QUuid UIEnabled::getUniqueId()
+QList<QSharedPointer<Transition>> UIEnabled::getDescendantsTransitions()
 {
-	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getUniqueId();
+	QList<QSharedPointer<Transition>> descendantTrans;
+	QList<QSharedPointer<Asset>> descendantAssets = getGeneratedChildren("Transition");
+	while(descendantAssets.size())
+	{
+		descendantTrans.append(descendantAssets.takeFirst().staticCast<Transition>());
+	}
+
+	QStringList childTags = getDefinedChildTags();
+	QList<QSharedPointer<Asset>> childList;
+	foreach(QString childTag,childTags)
+	{
+		childList = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> child,childList)
+		{
+			if(child->inherits("Picto::UIEnabled"))
+			{
+				descendantTrans.append(child.staticCast<UIEnabled>()->getDescendantsTransitions());
+			}
+		}
+	}
+	return descendantTrans;
 }
 
 void UIEnabled::postDeserialize()

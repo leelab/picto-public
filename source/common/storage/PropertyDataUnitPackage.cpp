@@ -7,25 +7,18 @@ PropertyDataUnitPackage::PropertyDataUnitPackage()
 }
 
 //! Adds a simple (path,value,time) data point
-void PropertyDataUnitPackage::addData(int index, QString path, QString value, double time)
+void PropertyDataUnitPackage::addData(int index, QString value)
 {
-	QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit(index, path,value,time));
-	data_.append(newPoint);
-}
-
-void PropertyDataUnitPackage::addData(int index, QString path, QString value, QString time)
-{
-	QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit(index, path,value,time));
+	QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit(index, value));
 	data_.append(newPoint);
 }
 
 
-void PropertyDataUnitPackage::setAllTimestamps(double newTime)
+void PropertyDataUnitPackage::setActionFrame(qulonglong frameId)
 {
-	QString timeStr = QString("%1").arg(newTime,0,'f',6);
 	for(QList<QSharedPointer<PropertyDataUnit>>::iterator it = data_.begin();it != data_.end();it++)
 	{
-		(*it)->setTime(timeStr);
+		(*it)->setActionFrame(frameId);
 	}
 }
 /*! \brief Turns the PropertyDataUnitPackage into an XML fragment
@@ -73,7 +66,7 @@ bool PropertyDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "PropertyDataUnit")
+		if(name == "PDU")
 		{
 			QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit());
 			newPoint->fromXml(xmlStreamReader);

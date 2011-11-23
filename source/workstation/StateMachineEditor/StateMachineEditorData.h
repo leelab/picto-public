@@ -24,7 +24,7 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
-	QSharedPointer<Asset> findAssetWithID(QSharedPointer<Asset> root, QUuid id);
+	QSharedPointer<Asset> findAssetWithID(QSharedPointer<Asset> root, int id);
 };
 
 

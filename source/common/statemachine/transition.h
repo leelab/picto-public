@@ -37,8 +37,7 @@ public:
 	QString getSource();
 	QString getSourceResult();
 	QString getDestination();
-	int getTransitionID(){return id_;};
-	void setSpecialTransitionID(int id){Q_ASSERT(id<0);id_ = id;};
+	//void setSpecialTransitionID(int id){Q_ASSERT(id<0);id_ = id;};
 	
 	//DataStore functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -49,13 +48,11 @@ protected:
 	virtual QString defaultTagName(){return "Transition";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	static int lastTransitionId_;
 
 private:
 	QSharedPointer<Asset> sourceAsset_;
 	QSharedPointer<Asset> sourceResultAsset_;
 	QSharedPointer<Asset> destinationAsset_;
-	int id_;
 private slots:
 	void setValuesFromAssets();
 	void linkedAssetDeleted();

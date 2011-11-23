@@ -29,6 +29,7 @@ PictoEngine::PictoEngine() :
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
 	currStateUnit_(QSharedPointer<StateDataUnit>(new StateDataUnit())),
 	runningPath_(""),
+	lastFrameId_(-1),
 	engineCommand_(NoCommand)
 {
 	bExclusiveMode_ = true;
@@ -198,7 +199,7 @@ void PictoEngine::addChangedProperty(QSharedPointer<Property> changedProp)
 		propPackage_ = QSharedPointer<PropertyDataUnitPackage>(new PropertyDataUnitPackage());
 	Timestamper stamper;
 	//If the changedProp has no parent, its a UI parameter.  Set the path as such.
-	propPackage_->addData(changedProp->getIndex(),changedProp->getParentAsset()?changedProp->getPath():"UIParameter",changedProp->toUserString(),stamper.stampSec());
+	propPackage_->addData(changedProp->getAssetId(),changedProp->toUserString());
 }
 //! \brief Retrieves the latest package of changed properties.
 //! Note that a package can only be retrieved once after which a new package is created.
@@ -206,120 +207,94 @@ QSharedPointer<PropertyDataUnitPackage> PictoEngine::getChangedPropertyPackage()
 {
 	QSharedPointer<PropertyDataUnitPackage> returnVal = propPackage_;
 
-	//Get the latest first phosphor time
-	double latestFirstPhosphor = -1;
-	bool needsFirst = true;
-	QSharedPointer<VisualTarget> visualTarget;
-	foreach(QSharedPointer<RenderingTarget> rendTarget,renderingTargets_)
-	{
-		visualTarget = rendTarget->getVisualTarget();
-		if(visualTarget && (needsFirst || (visualTarget->getLatestFirstPhosphor() < latestFirstPhosphor)))
-		{
-			latestFirstPhosphor = visualTarget->getLatestFirstPhosphor();
-			needsFirst = false;
-		}
-	}
 	//Remove these properties from the engine and let the caller deal with them
 	propPackage_.clear();
 
 	//Reset the timestamps of these properties to the latest first phosphor value
 	if(returnVal)
-		returnVal->setAllTimestamps(latestFirstPhosphor);
+		returnVal->setActionFrame(getLastFrameId());
 
 	//Return the list of properties
 	return returnVal;
 }
 
-void PictoEngine::addStateTransitionForServer(QSharedPointer<Transition> stateTrans, QString stateMachinePath)
+void PictoEngine::addStateTransitionForServer(QSharedPointer<Transition> stateTrans)
 {
 	if(!stateDataPackage_)
 		stateDataPackage_ = QSharedPointer<StateDataUnitPackage>(new StateDataUnitPackage());
-	stateDataPackage_->addTransition(stateTrans,-1.0,stateMachinePath);
+	stateDataPackage_->addTransition(stateTrans);
 }
 
 QSharedPointer<StateDataUnitPackage> PictoEngine::getStateDataPackage()
 {
 	QSharedPointer<StateDataUnitPackage> returnVal = stateDataPackage_;
 	
-	//Get the latest first phosphor time
-	double latestFirstPhosphor = -1;
-	bool needsFirst = true;
-	QSharedPointer<VisualTarget> visualTarget;
-	foreach(QSharedPointer<RenderingTarget> rendTarget,renderingTargets_)
-	{
-		visualTarget = rendTarget->getVisualTarget();
-		if(visualTarget && (needsFirst || (visualTarget->getLatestFirstPhosphor() < latestFirstPhosphor)))
-		{
-			latestFirstPhosphor = visualTarget->getLatestFirstPhosphor();
-			needsFirst = false;
-		}
-	}
 	//Remove these StateDataUnits from the engine and let the caller deal with them
 	stateDataPackage_.clear();
 
 	//Reset the timestamps of these StateDataUnits to the latest first phosphor value
 	if(returnVal)
-		returnVal->setAllTimestamps(latestFirstPhosphor);
+		returnVal->setActionFrame(getLastFrameId());
 
 	return returnVal;
 }
 
-//! \brief Gets the latest property changes from the server and applies them to the local properties.
-void PictoEngine::updatePropertiesFromServer()
-{
-	return;
-	if(propTable_.isNull())
-		return;
-	//Collect the data from the server
-	QString commandStr = QString("GETDATA PropertyDataUnitPackage:%1 PICTO/1.0").arg(lastTimePropChangesRequested_);
-	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
-	QSharedPointer<Picto::ProtocolResponse> response;
-
-	slaveCommandChannel_->sendCommand(command);
-	//No response
-	if(!slaveCommandChannel_->waitForResponse(1000))
-		return;
-
-	response = slaveCommandChannel_->getResponse();
-
-	//Response not 200:OK
-	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
-		return;
-	
-	QByteArray xmlFragment = response->getContent();
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
-
-	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
-
-	if(xmlReader->atEnd())
-		return;
-
-	PropertyDataUnitPackage propData;
-
-	xmlReader->readNext();
-	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
-	{
-		if(xmlReader->name() == "PropertyDataUnitPackage")
-		{
-			propData.fromXml(xmlReader);
-		}
-		else
-		{
-			return;
-		}
-	}
-
-	while(propData.length() > 0)
-	{
-		// Push the data into our signal channel
-		QSharedPointer<Picto::PropertyDataUnit> dataPoint;
-		dataPoint = propData.takeFirstDataPoint();
-
-		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
-		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
-		lastTimePropChangesRequested_ = dataPoint->time_;
-	}
-}
+////! \brief Gets the latest property changes from the server and applies them to the local properties.
+//void PictoEngine::updatePropertiesFromServer()
+//{
+//	return;
+//	if(propTable_.isNull())
+//		return;
+//	//Collect the data from the server
+//	QString commandStr = QString("GETDATA PropertyDataUnitPackage:%1 PICTO/1.0").arg(lastTimePropChangesRequested_);
+//	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
+//	QSharedPointer<Picto::ProtocolResponse> response;
+//
+//	slaveCommandChannel_->sendCommand(command);
+//	//No response
+//	if(!slaveCommandChannel_->waitForResponse(1000))
+//		return;
+//
+//	response = slaveCommandChannel_->getResponse();
+//
+//	//Response not 200:OK
+//	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
+//		return;
+//	
+//	QByteArray xmlFragment = response->getContent();
+//	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
+//
+//	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
+//
+//	if(xmlReader->atEnd())
+//		return;
+//
+//	PropertyDataUnitPackage propData;
+//
+//	xmlReader->readNext();
+//	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
+//	{
+//		if(xmlReader->name() == "PropertyDataUnitPackage")
+//		{
+//			propData.fromXml(xmlReader);
+//		}
+//		else
+//		{
+//			return;
+//		}
+//	}
+//
+//	while(propData.length() > 0)
+//	{
+//		// Push the data into our signal channel
+//		QSharedPointer<Picto::PropertyDataUnit> dataPoint;
+//		dataPoint = propData.takeFirstDataPoint();
+//
+//		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
+//		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
+//		lastTimePropChangesRequested_ = dataPoint->time_;
+//	}
+//}
 
 
 bool PictoEngine::updateCurrentStateFromServer()
@@ -375,41 +350,39 @@ bool PictoEngine::updateCurrentStateFromServer()
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
 		QString currUnitTime = "-1.0";
-		if(xmlReader->name() == "PropertyDataUnit")
+		if(xmlReader->name() == "PDU")
 		{
 			PropertyDataUnit unit;
 			unit.fromXml(xmlReader);
-			propData.addData(unit.index_,unit.path_,unit.value_,unit.time_);
-			currUnitTime = unit.time_;
+			propData.addData(unit.index_,unit.value_);
+			//currUnitTime = unit.time_;
 		}
-		else if(xmlReader->name() == "BehavioralDataUnit")
+		else if(xmlReader->name() == "BDU")
 		{
 			currBehavUnit_->fromXml(xmlReader);
 			getSignalChannel("PositionChannel")->insertValue("xpos",currBehavUnit_->x);
 			getSignalChannel("PositionChannel")->insertValue("ypos",currBehavUnit_->y);
 			getSignalChannel("PositionChannel")->insertValue("time",currBehavUnit_->t.toDouble());
-			currUnitTime = currBehavUnit_->t;
+			//currUnitTime = currBehavUnit_->t;
 		}
-		else if(xmlReader->name() == "StateDataUnit")
+		else if(xmlReader->name() == "SDU")
 		{
 			currStateUnit_->fromXml(xmlReader);
-			currUnitTime = currStateUnit_->getTime();
+			//currUnitTime = currStateUnit_->getTime();
 		}
-		else if(xmlReader->name() == "FrameDataUnit")
+		else if(xmlReader->name() == "FDU")
 		{
 			FrameDataUnit unit;
 			unit.fromXml(xmlReader);
-			currUnitTime = unit.time;
-			//qDebug(QString("WORKSTATION: RECEIVED FRAME: %1").arg(unit.frameNumber).toAscii());
+			currUnitTime = unit.time;		//Both frame and rewards (while pause or stopped) can cause state update
 		}
-		else if(xmlReader->name() == "RewardDataUnit")
+		else if(xmlReader->name() == "RDU")
 		{
 			RewardDataUnit unit;
 			unit.fromXml(xmlReader);
-			currUnitTime = unit.getTime();
+			currUnitTime = unit.getTime();	//Both frame and rewards (while pause or stopped) can cause state update
 			if(!firstCurrStateUpdate_)	
 				giveReward(unit.getChannel());
-			//qDebug(QString("WORKSTATION: RECEIVED FRAME: %1").arg(unit.frameNumber).toAscii());
 		}
 		if(currUnitTime.toDouble() > lastTimeStateDataRequested_.toDouble())
 			lastTimeStateDataRequested_ = currUnitTime;
@@ -436,17 +409,31 @@ void PictoEngine::setRunningPath(QString path)
 
 QString PictoEngine::getServerPathUpdate()
 {
-	QString result = currStateUnit_->getDestination();
+	QSharedPointer<Asset> asset = expConfig_->getAsset(currStateUnit_->getTransitionID());
+	QSharedPointer<Transition> trans;
+	QString result = "";
+	if(asset)
+	{
+		trans = asset.staticCast<Transition>();
+		result = trans->getDestination();
+	}
+	else
+	{
+		qDebug("PathUpdate: NO ASSET");
+		return "";
+	}
 	QString runningPath = runningPath_;
 	if(result == "NULL")
 		result = "";
 	if(result != "EngineAbort")
 	{
-		result.prepend(currStateUnit_->getMachinePath()+"::");
+		if(trans)
+			result.prepend(trans->getPath());
 		setRunningPath(result);
 	}
 	if(result == runningPath)
 		result = "";
+	qDebug("PathUpdate: " + result.toAscii());
 	return result;
 }
 QSharedPointer<Picto::BehavioralDataUnit> PictoEngine::getCurrentBehavioralData()

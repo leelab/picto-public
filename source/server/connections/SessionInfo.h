@@ -52,7 +52,7 @@
 class SessionInfo
 {
 public:
-	static QSharedPointer<SessionInfo> CreateSession(QByteArray experimentXml, QUuid initialObserverId);
+	static QSharedPointer<SessionInfo> CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId);
 	static QSharedPointer<SessionInfo> LoadSession(QString sessionID, QString databaseFilePath);
 	static void deleteSession(SessionInfo* session);
 	~SessionInfo();
@@ -76,12 +76,8 @@ public:
 	void insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data);
 	void insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data);
 	void insertRewardData(QSharedPointer<Picto::RewardDataUnit> data);
-
-	QSharedPointer<Picto::BehavioralDataUnitPackage> selectBehavioralData(QString timestamp);
-	QSharedPointer<Picto::PropertyDataUnitPackage> selectPropertyData(QString timestamp);
 	void insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data);
-	QSharedPointer<QList<QSharedPointer<Picto::StateDataUnit>>> selectStateData(QString timestamp);
-	QSharedPointer<Picto::FrameDataUnitPackage> selectFrameData(QString timestamp);
+
 	QString selectStateVariables(QString fromTime);
 
 	//getters/setters
@@ -106,7 +102,7 @@ public:
 	friend class ConnectionManager;
 
 private:
-	SessionInfo(QByteArray experimentXml, QUuid initialObserverId);
+	SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId);
 	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
 	void LoadBaseSessionDatabase(QString databaseName);
@@ -117,8 +113,8 @@ private:
 	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
 	void recalculateFittedTimes();
-	void setStateVariable(int dataid, int varid, QString timestamp, QString serializedValue);
-	void updateCurrentStateTable();
+	void setStateVariable(int dataid, int varid, QString serializedValue);
+	void updateCurrentStateTable(QString updateTime);
 	QSqlDatabase getSessionDb();
 	QSqlDatabase getCacheDb();
 
@@ -141,6 +137,7 @@ private:
 	bool ignoreComponents_;
 	QMap<QString,bool> flushEnabled_;
 	QByteArray experimentXml_;
+	QByteArray experimentConfig_;
 	QString baseSessionDbFilepath_;
 	QString timeCreated_;
 	double latestNeuralTimestamp_;
@@ -151,7 +148,7 @@ private:
 	QMap<QString,QString> tableColumnTypes_;
 	QMap<QString,QString> tableColumnConstraints_;
 	QMap<QString,QString> tableDataProviders_;
-	struct Variable{int dataid;int varid;QString time;QString serial;};
+	struct Variable{int dataid;int varid;QString serial;};
 	QList<Variable> currentStateQuery_;
 	QString latestStateVarTime_;
 	QString latestWrittenStateVarTime_;

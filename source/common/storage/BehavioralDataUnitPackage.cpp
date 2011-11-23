@@ -100,7 +100,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 		}
 
 		QString name = xmlStreamReader->name().toString();
-		if(name == "BehavioralDataUnit")
+		if(name == "BDU")
 		{
 			QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit());
 			newPoint->fromXml(xmlStreamReader);

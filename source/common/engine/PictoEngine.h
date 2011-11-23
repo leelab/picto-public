@@ -20,6 +20,7 @@
 #include "../storage/BehavioralDataUnit.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
+#include "../storage/experimentconfig.h"
 #include "propertytable.h"
 
 #include <QSharedPointer>
@@ -122,12 +123,16 @@ public:
 	//! \brief Retrieves the latest package of changed properties.
 	//! Note that a package can only be retrieved once after which a new package is created.
 	QSharedPointer<PropertyDataUnitPackage> getChangedPropertyPackage();
-	void updatePropertiesFromServer();
+	//void updatePropertiesFromServer();
 	void clearChangedPropertyPackage(){propPackage_.clear();};
 
-	void addStateTransitionForServer(QSharedPointer<Transition> stateTrans, QString stateMachinePath);
+	void addStateTransitionForServer(QSharedPointer<Transition> stateTrans);
 	QSharedPointer<StateDataUnitPackage> getStateDataPackage();
 	void clearStateDataPackage(){propPackage_.clear();};
+
+	void setLastFrame(qulonglong frameId){lastFrameId_ = frameId;};
+	qulonglong getLastFrameId(){return lastFrameId_;};
+	QString getLastFrameTime(){return lastFrameTime_;};
 
 	bool updateCurrentStateFromServer();
 	void setRunningPath(QString path);
@@ -157,6 +162,8 @@ public:
 	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
 	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";firstCurrStateUpdate_ = true;};
+	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};
+	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -173,6 +180,7 @@ private:
 	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode
 	QSharedPointer<PropertyTable> propTable_;
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
+	QSharedPointer<ExperimentConfig> expConfig_;
 	bool firstCurrStateUpdate_;
 
 	QUuid sessionId_;
@@ -186,6 +194,9 @@ private:
 	QString lastTimeStateDataRequested_;
 	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	QSharedPointer<StateDataUnit> currStateUnit_;
+	qulonglong lastFrameId_;
+	QString lastFrameTime_;
+
 	QString runningPath_;
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);

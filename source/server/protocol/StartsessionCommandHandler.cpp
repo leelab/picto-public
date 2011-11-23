@@ -29,12 +29,20 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	QString target = command->getTarget();
 	QString directorID;
 	QString proxyID;
+	QByteArray sessionDefs;
 	QByteArray experimentXml;
+	QByteArray experimentConfig;
 	QUuid observerId;
 
 	directorID = target.left(target.indexOf('/'));
 	proxyID = target.right(target.indexOf('/'));
-	experimentXml = command->getContent();
+	sessionDefs = command->getContent();
+
+	int configStart = sessionDefs.indexOf("<ExperimentConfig>");
+	Q_ASSERT(configStart>-1);
+	experimentXml = sessionDefs.left(configStart);
+	experimentConfig = sessionDefs.mid(configStart);
+
 	observerId = QUuid(command->getFieldValue("Observer-ID"));
 	
 	if(observerId.isNull())
@@ -79,7 +87,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	}
 
 	//create the session
-	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentXml, observerId);
+	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentXml, experimentConfig, observerId);
 	
 	if(sessionInfo.isNull())
 	{
