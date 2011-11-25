@@ -450,9 +450,9 @@ void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 	Q_ASSERT(changedProp);
 	QString path = changedProp->getPath();
 	QString name = changedProp->getName();
-	if(changedProp->getIndex()<0)
+	if(changedProp->getAssetId()<0)
 		return;
-	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getIndex())),changedProp->toUserString());
+	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getAssetId())),changedProp->toUserString());
 }
 
 void RemoteViewer::operatorClickDetected(QPoint pos)

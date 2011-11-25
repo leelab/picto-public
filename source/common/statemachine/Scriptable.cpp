@@ -195,8 +195,24 @@ QString Scriptable::getInfo()
 }
 void Scriptable::postDeserialize()
 {
+	// All property values are stored in an init property container.  This container
+	// is used to reset properties to their initial values whenever an state machine 
+	// element is entered.
+	initPropertyContainer_->clear();
+	initPropertyContainer_->copyProperties(propertyContainer_);
+	foreach(QVector<QSharedPointer<Property>> propVec,initPropertyContainer_->getProperties())
+	{
+		foreach(QSharedPointer<Property> prop,propVec)
+		{	//We need to add these properties to the experimentConfig so that they'll appear
+			//in the database file.  Since they're not serialized though, we always want to add them
+			//at the end of the list of ids so that nothing else's id is pushed back by them.  The
+			//addManagedUnserializedAsset takes care of this for us.  Unserialized assets are always
+			//added to experimentConfig's lists last.
+			if(getExperimentConfig())
+				getExperimentConfig()->addManagedUnserializedAsset(prop);
+		}
+	}
 	UIEnabled::postDeserialize();
-	backupProperties();
 }
 
 bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -209,29 +225,6 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 		return false;
 	}
 	return true;
-}
-
-/*	\brief Stores the elements properties in a map.
- *
- *	Since everything important about a Scriptable is stored in its properties,
- *	we can "back up" the element by recording those properties.  Since a property 
- *	can be set with nothing more than a name and value, we store all of that info 
- *	in a QMap<QString, QVariant>.
- */
-void Scriptable::backupProperties()
-{
-	initPropertyContainer_->clear();
-	initPropertyContainer_->copyProperties(propertyContainer_);
-
-	//initialProperties_.clear();
-
-	////iterate through the properties storing their values by name
-	//QStringList properties = propertyContainer_->getPropertyList();
-
-	//foreach(QString name, properties)
-	//{
-	//	initialProperties_[name] = propertyContainer_->getPropertyValue(name);
-	//}
 }
 
 /* \brief Relads the property container with the values backed up in backupProperties()

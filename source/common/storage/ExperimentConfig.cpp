@@ -267,7 +267,7 @@ int ExperimentConfig::getNewDataId()
 	return lastUsedId_;
 }
 
-void ExperimentConfig::addManagedAsset(QSharedPointer<Asset> asset)
+void ExperimentConfig::addAsset(QSharedPointer<Asset> asset, bool serialized)
 {
 	QWeakPointer<Asset> wAsset(asset);
 	Q_ASSERT(!assetHash_.contains(asset.data()));
@@ -284,7 +284,20 @@ void ExperimentConfig::addManagedAsset(QSharedPointer<Asset> asset)
 	{
 		managedElements_.append(wAsset);
 	}
-	unsortedIdAssets_.append(wAsset);
+	if(serialized)
+		unsortedIdSerializedAssets_.append(wAsset);
+	else
+		unsortedIdUnSerializedAssets_.append(wAsset);
+}
+
+void ExperimentConfig::addManagedSerializedAsset(QSharedPointer<Asset> asset)
+{
+	addAsset(asset,true);
+}
+
+void ExperimentConfig::addManagedUnserializedAsset(QSharedPointer<Asset> asset)
+{
+	addAsset(asset,false);
 }
 
 void ExperimentConfig::fixDuplicatedAssetIds()
@@ -293,19 +306,28 @@ void ExperimentConfig::fixDuplicatedAssetIds()
 		return;
 	QSharedPointer<Asset> sAsset;
 	int id;
-	while(unsortedIdAssets_.size())
+	QList<QWeakPointer<Asset>>* currList;
+	for(int i=0;i<2;i++)
 	{
-		QWeakPointer<Asset> wAsset = unsortedIdAssets_.takeFirst();
-		sAsset = QSharedPointer<Asset>(wAsset);
-		if(!sAsset)
-			continue;	//This asset was already deleted
-		id = sAsset->getAssetId();
-		if((id == 0 ) || assetsById_.contains(id))	//This assets id is the zero (reserved) or has already been used.
+		switch(i)
 		{
-			id = getNewDataId();		//Get a new asset id and set it to the asset.
-			sAsset->setAssetId(id);
+			case 0: currList = &unsortedIdSerializedAssets_; break;
+			case 1: currList = &unsortedIdUnSerializedAssets_; break;
 		}
-		assetsById_[id] = wAsset;		//Add the asset to the id map with its id.
+		while(currList->size())
+		{
+			QWeakPointer<Asset> wAsset = currList->takeFirst();
+			sAsset = QSharedPointer<Asset>(wAsset);
+			if(!sAsset)
+				continue;	//This asset was already deleted
+			id = sAsset->getAssetId();
+			if((id == 0 ) || assetsById_.contains(id))	//This assets id is the zero (reserved) or has already been used.
+			{
+				id = getNewDataId();		//Get a new asset id and set it to the asset.
+				sAsset->setAssetId(id);
+			}
+			assetsById_[id] = wAsset;		//Add the asset to the id map with its id.
+		}
 	}
 }
 

@@ -45,7 +45,6 @@ protected:
 	QSharedPointer<PropertyContainer> initPropertyContainer_;
 
 private:
-	void backupProperties();
 	void restoreProperties();
 };
 

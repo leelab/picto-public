@@ -28,7 +28,8 @@ public:
 	bool toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	void disallowIdDuplication();
-	void addManagedAsset(QSharedPointer<Asset> asset);
+	void addManagedSerializedAsset(QSharedPointer<Asset> asset);
+	void addManagedUnserializedAsset(QSharedPointer<Asset> asset);
 	void fixDuplicatedAssetIds();
 	QSharedPointer<Asset> getAsset(int id);
 	QList<QWeakPointer<Asset>> getProperties(){return managedProperties_;};
@@ -40,6 +41,7 @@ protected:
 	
 private:
 	int getNewDataId();
+	void addAsset(QSharedPointer<Asset> asset, bool serialized);
 	QMap<int,QWeakPointer<Asset>> assetsById_;
 	QList<QWeakPointer<Asset>> managedElements_;
 	QList<QWeakPointer<Asset>> managedProperties_;
@@ -49,7 +51,8 @@ private:
 	QList<PropInfo> propInfo_;
 	QList<TransInfo> transInfo_;
 	QHash<Asset*,QWeakPointer<Asset>> assetHash_;
-	QList<QWeakPointer<Asset>> unsortedIdAssets_;
+	QList<QWeakPointer<Asset>> unsortedIdSerializedAssets_;
+	QList<QWeakPointer<Asset>> unsortedIdUnSerializedAssets_;
 	int lastUsedId_;
 	bool allowIdDuplication_;
 

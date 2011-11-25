@@ -112,7 +112,7 @@ QString Asset::getPath()
 void Asset::setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig)
 {
 	expConfig_ = expConfig;
-	expConfig_->addManagedAsset(selfPtr());
+	expConfig_->addManagedSerializedAsset(selfPtr());
 }
 
 void Asset::preDeserialize()

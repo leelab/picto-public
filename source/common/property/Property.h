@@ -41,8 +41,6 @@ public:
 	//Set this property as changeable during runtime.
 	void setRuntimeEditable(bool enabled = true){runtimeEnabled_ = enabled;};
 	bool isRuntimeEnabled(){return runtimeEnabled_;};
-	int getIndex(){return index_;};
-	void setIndex(int index){index_ = index;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
