@@ -360,8 +360,8 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
 	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
 	//next frame.
-	QTime timer;
-	timer.start();
+	//QTime timer;
+	//timer.start();
 	dataChannel->assureConnection(5);
 	//qDebug(QString("ASSURECONNECTION time: %1").arg(timer.elapsed()).toAscii());
 	////check for and process responses

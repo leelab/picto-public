@@ -3,7 +3,7 @@
 
 #include "../common.h"
 
-#include <QTime>
+#include <QDateTime>
 
 #ifdef WIN32
 #include "Windows.h"
@@ -69,7 +69,7 @@ private:
 
 	LARGE_INTEGER startTicks_;
 #else
-	QTime time_;
+	QDateTime time_;
 #endif
 };
 

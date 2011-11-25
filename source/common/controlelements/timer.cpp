@@ -18,7 +18,7 @@ void Timer::start()
 #if defined WIN32 || defined WINCE
 	QueryPerformanceCounter(&startTicks_);
 #else
-	time_ = QTime::currentTime();
+	time_ = QDateTime::currentDateTime();
 #endif
 }
 

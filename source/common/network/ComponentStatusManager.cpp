@@ -26,7 +26,7 @@ ComponentStatusManager::ComponentStatusManager()
 		statusNameDictionary_[running] = "Running";
 		statusNameDictionary_[paused] = "Paused";
 	}
-	lastUpdateTime_ = QTime::currentTime();
+	lastUpdateTime_ = QDateTime::currentDateTime();
 }
 void ComponentStatusManager::setStatus(ComponentStatus status)
 {
@@ -44,13 +44,13 @@ void ComponentStatusManager::setStatus(QString status)
 
 void ComponentStatusManager::update(int timeoutMs)
 {
-	QTime startTime = QTime::currentTime();
-	if(lastUpdateTime_.msecsTo(startTime)>1000)
+	QDateTime startTime = QDateTime::currentDateTime();
+	if(lastUpdateTime_.secsTo(startTime)>1)
 	{
 		doServerUpdate();
-		lastUpdateTime_ = QTime::currentTime();
+		lastUpdateTime_ = QDateTime::currentDateTime();
 	}
-	if((timeoutMs < 0) || (timeoutMs - (startTime.msecsTo(QTime::currentTime())) >= 40))
+	if((timeoutMs < 0) || (timeoutMs - (startTime.time().msecsTo(QDateTime::currentDateTime().time())) >= 40))
 	{
 		//if(getStatus() != running)
 		//{

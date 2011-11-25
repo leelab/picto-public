@@ -25,6 +25,6 @@ private:
 	static QMap<ComponentStatus,QString> statusNameDictionary_;
 	int alignmentCode_;
 	int alignmentID_;
-	QTime lastAlignTime_;
+	QDateTime lastAlignTime_;
 };
 #endif

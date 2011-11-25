@@ -3,7 +3,7 @@
 
 #include <QMap>
 #include <QString>
-#include <QTime>
+#include <QDateTime>
 #include <QUuid>
 #include "../common.h"
 
@@ -37,7 +37,7 @@ private:
 	ComponentStatus status_;
 	static QMap<QString,ComponentStatus> statusTransitionDictionary_;
 	static QMap<ComponentStatus,QString> statusNameDictionary_;
-	QTime lastUpdateTime_;
+	QDateTime lastUpdateTime_;
 	QUuid sessionID_;
 };
 #endif

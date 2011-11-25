@@ -10,7 +10,7 @@ void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine>
 	engine_ = engine;
 	alignmentCode_ = 0;
 	alignmentID_ = 0;
-	lastAlignTime_ = QTime::currentTime();
+	lastAlignTime_ = QDateTime::currentDateTime();
 }
 QSharedPointer<Picto::Engine::PictoEngine> DirectorStatusManager::getEngine()
 {
@@ -60,14 +60,14 @@ void DirectorStatusManager::newSession()
 {
 	alignmentCode_ = 0;
 	alignmentID_ = 0;
-	lastAlignTime_ = QTime::currentTime();
+	lastAlignTime_ = QDateTime::currentDateTime();
 }
 void DirectorStatusManager::doServerUpdate()
 {
 	QSharedPointer<CommandChannel> dataChannel = engine_->getDataCommandChannel();
 	if(dataChannel.isNull())
 		return;
-	if((getStatus() > stopped) && (lastAlignTime_.secsTo(QTime::currentTime()) > 5))
+	if((getStatus() > stopped) && (lastAlignTime_.secsTo(QDateTime::currentDateTime()) > 5))
 	{
 		alignmentCode_ = (alignmentCode_ == 0x7F)? 0 : alignmentCode_+1;
 		alignmentID_++;
@@ -98,7 +98,7 @@ void DirectorStatusManager::doServerUpdate()
 		command->setFieldValue("Content-Length",QString::number(alignDataXml.length()));
 
 		dataChannel->sendRegisteredCommand(command);
-		lastAlignTime_ = QTime::currentTime();
+		lastAlignTime_ = QDateTime::currentDateTime();
 	}
 	else
 	{
