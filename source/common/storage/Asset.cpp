@@ -5,10 +5,10 @@ namespace Picto {
 Asset::Asset():
 Serializable(),
 QObject(NULL),
-isNew_(true),	//!!!!!!!!THIS NEEDS TO BE INITIALIZED TO TRUE.  I JUST CHANGED IT FOR DEBUGGING PURPOSES!!!!!!!!!!!!!
+isNew_(true),
 edited_(false),
 deleted_(false),
-assetId_(9),
+assetId_(0),
 hasAssetId_(false)
 {
 	connect(this, SIGNAL(edited()), this, SLOT(receivedEditedSignal()));
@@ -112,7 +112,7 @@ QString Asset::getPath()
 void Asset::setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig)
 {
 	expConfig_ = expConfig;
-	expConfig_->addManagedSerializedAsset(selfPtr());
+	expConfig_->addManagedAsset(selfPtr());
 }
 
 void Asset::preDeserialize()

@@ -69,7 +69,7 @@ void Task::setTaskNumber(int num)
 	initTransition_->setAssetId(-taskNumber_);
 	initTransition_->setSelfPtr(initTransition_);
 	initTransition_->setParentAsset(selfPtr());
-	expConfig_->addManagedSerializedAsset(initTransition_);	//This adds the transition to the expConfig list so that it will be recognized
+	expConfig_->addManagedAsset(initTransition_);	//This adds the transition to the expConfig list so that it will be recognized
 													//By the server and remote workstations.  In the future we will add transitions
 													//into initial states which will make all of this unnecessary.
 	expConfig_->fixDuplicatedAssetIds();

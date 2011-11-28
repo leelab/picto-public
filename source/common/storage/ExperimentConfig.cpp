@@ -267,7 +267,7 @@ int ExperimentConfig::getNewDataId()
 	return lastUsedId_;
 }
 
-void ExperimentConfig::addAsset(QSharedPointer<Asset> asset, bool serialized)
+void ExperimentConfig::addManagedAsset(QSharedPointer<Asset> asset)
 {
 	QWeakPointer<Asset> wAsset(asset);
 	Q_ASSERT(!assetHash_.contains(asset.data()));
@@ -284,20 +284,7 @@ void ExperimentConfig::addAsset(QSharedPointer<Asset> asset, bool serialized)
 	{
 		managedElements_.append(wAsset);
 	}
-	if(serialized)
-		unsortedIdSerializedAssets_.append(wAsset);
-	else
-		unsortedIdUnSerializedAssets_.append(wAsset);
-}
-
-void ExperimentConfig::addManagedSerializedAsset(QSharedPointer<Asset> asset)
-{
-	addAsset(asset,true);
-}
-
-void ExperimentConfig::addManagedUnserializedAsset(QSharedPointer<Asset> asset)
-{
-	addAsset(asset,false);
+	unsortedIdAssets_.append(wAsset);
 }
 
 void ExperimentConfig::fixDuplicatedAssetIds()
@@ -306,28 +293,28 @@ void ExperimentConfig::fixDuplicatedAssetIds()
 		return;
 	QSharedPointer<Asset> sAsset;
 	int id;
-	QList<QWeakPointer<Asset>>* currList;
-	for(int i=0;i<2;i++)
+	QList<QSharedPointer<Asset>> fixList;
+	
+	while(unsortedIdAssets_.size())
 	{
-		switch(i)
+		QWeakPointer<Asset> wAsset = unsortedIdAssets_.takeFirst();
+		sAsset = QSharedPointer<Asset>(wAsset);
+		if(!sAsset)
+			continue;	//This asset was already deleted
+		id = sAsset->getAssetId();
+		if(id == 0 || assetsById_.contains(id))
 		{
-			case 0: currList = &unsortedIdSerializedAssets_; break;
-			case 1: currList = &unsortedIdUnSerializedAssets_; break;
+			fixList.append(sAsset);
+			continue;
 		}
-		while(currList->size())
-		{
-			QWeakPointer<Asset> wAsset = currList->takeFirst();
-			sAsset = QSharedPointer<Asset>(wAsset);
-			if(!sAsset)
-				continue;	//This asset was already deleted
-			id = sAsset->getAssetId();
-			if((id == 0 ) || assetsById_.contains(id))	//This assets id is the zero (reserved) or has already been used.
-			{
-				id = getNewDataId();		//Get a new asset id and set it to the asset.
-				sAsset->setAssetId(id);
-			}
-			assetsById_[id] = wAsset;		//Add the asset to the id map with its id.
-		}
+		assetsById_[id] = wAsset;		//Add the asset to the id map with its id.
+	}
+	while(fixList.size())
+	{
+		sAsset = fixList.takeFirst();
+		id = getNewDataId();		//Get a new asset id and set it to the asset.
+		sAsset->setAssetId(id);
+		assetsById_[id] = QWeakPointer<Asset>(sAsset);		//Add the asset to the id map with its id.
 	}
 }
 
