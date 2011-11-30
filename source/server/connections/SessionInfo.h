@@ -148,6 +148,7 @@ private:
 	QMap<QString,QString> tableColumnTypes_;
 	QMap<QString,QString> tableColumnConstraints_;
 	QMap<QString,QString> tableDataProviders_;
+	QMap<QString,QString> tableIndexedColumns_;
 	struct Variable{int dataid;int varid;QString serial;};
 	QList<Variable> currentStateQuery_;
 	QString latestStateVarTime_;

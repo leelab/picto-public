@@ -20,6 +20,7 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QFileDialog>
+#include <QSqlField>
 using namespace Picto;
 
 
@@ -148,27 +149,60 @@ void AnalysisViewer::executeCommand()
 	if(!session_.isOpen())
 		return;
 	QSqlQuery query(session_);
+	query.setForwardOnly(true);
 	query.prepare(queryText);
 	success = query.exec();
 
-	QString output;
+	QString text;
 	if(!success)
 	{
-		output = "SQL Error: " + query.lastError().text().toAscii();
+		text = "SQL Error: " + query.lastError().text().toAscii();
 	}
 	else
 	{
+		int colsPerRec=-1;
+		int approxRowLength = 0;
+		int numRecs = query.size();
+		int arraySize = 20;
+		int currRow = 0;
+		QTime timer;
+		timer.restart();
 		while(query.next())
 		{
-			QSqlRecord currRec = query.record();
-			for(int i=0;i<currRec.count();i++)
+			qDebug("A"+QString::number(timer.elapsed()).toAscii());timer.restart();
+			if(colsPerRec < 0)
 			{
-				output.append(currRec.value(i).toString());
-				if(i<currRec.count()-1)
-					output.append(",");
+				//Get information about the query output
+				colsPerRec = query.record().count();
+				//approxRowLength = 0;
+				//numRecs = query.size();
+				//for(int i=0;i<colsPerRec;i++)
+				//{
+				//	approxRowLength += query.record().field(i).length()+1;
+				//}
+				//arraySize = numRecs*approxRowLength;
+				//text.resize(arraySize);
 			}
-			output.append("\n");
+			qDebug("B"+QString::number(timer.elapsed()).toAscii());timer.restart();
+			for(int i=0;i<colsPerRec;i++)
+			{
+				//if(text.length()+20>=arraySize)
+				//{	//Expand the array
+				//	arraySize *= 2;
+				//	text.reserve(arraySize);
+				//}
+				text.append(query.value(i).toString());
+				if(i<colsPerRec-1)
+				{
+					text.append(",");
+				}
+			}
+			text.append("\n");
+			//currRow++;
+			qDebug("C"+QString::number(timer.elapsed()).toAscii());timer.restart();
 		}
+		//text.append("\0");
+		query.clear();
 	}
-	outputBox_->setText(output);
+	outputBox_->setText(text);
 }

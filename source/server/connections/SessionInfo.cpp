@@ -934,30 +934,36 @@ void SessionInfo::InitializeVariables()
 
 	tables_.push_back("transitions");
 	tableColumns_["transitions"] = " dataid,transid,frameid ";
-	tableColumnTypes_["transitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,INTEGER ";
+	tableColumnTypes_["transitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER REFERENCES transitionlookup(assetid),INTEGER REFERENCES frames(dataid)";
 	tableDataProviders_["transitions"] = "DIRECTOR";
+	tableIndexedColumns_["transitions"] = " transid,frameid ";
 
 	tables_.push_back("transitionlookup");
 	tableColumns_["transitionlookup"] = " assetid,parent,source,sourceresult,destination ";
-	tableColumnTypes_["transitionlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,TEXT ";
+	tableColumnTypes_["transitionlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER REFERENCES elementlookup(assetid),TEXT,TEXT,TEXT ";
+	tableIndexedColumns_["transitionlookup"] = " parent,source,sourceresult,destination ";
 
 	tables_.push_back("properties");
 	tableColumns_["properties"] = " dataid,assetid,value,frameid ";
-	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,INTEGER ";
+	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER REFERENCES propertylookup(assetid),TEXT,INTEGER REFERENCES frames(dataid)";
 	tableDataProviders_["properties"] = "DIRECTOR";
+	tableIndexedColumns_["properties"] = " assetid,frameid ";
 
 	tables_.push_back("propertylookup");
 	tableColumns_["propertylookup"] = " assetid,name,parent ";
-	tableColumnTypes_["propertylookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,INTEGER ";
+	tableColumnTypes_["propertylookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,INTEGER REFERENCES elementlookup(assetid)";
+	tableIndexedColumns_["propertylookup"] = " name,parent ";
 
 	tables_.push_back("elementlookup");
 	tableColumns_["elementlookup"] = " assetid,path ";
 	tableColumnTypes_["elementlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT ";
+	tableIndexedColumns_["elementlookup"] = " path ";
 
 	tables_.push_back("frames");
 	tableColumns_["frames"] = " dataid,time,state ";
-	tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INT ";
+	tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER REFERENCES elementlookup(assetid) ";
 	tableDataProviders_["frames"] = "DIRECTOR";
+	tableIndexedColumns_["frames"] = " state ";
 
 	tables_.push_back("rewards");
 	tableColumns_["rewards"] = " dataid,duration,channel,time ";
@@ -1122,10 +1128,14 @@ void SessionInfo::CreateCacheDatabase(QString databaseName)
 
 void SessionInfo::AddTablesToDatabase(QSqlQuery* query)
 {
+	QStringList createIndexQueries;
 	foreach(QString table, tables_)
 	{
 		QStringList tableColumns = tableColumns_[table].split(",");
 		QStringList tableColumnTypes = tableColumnTypes_[table].split(",");
+		QStringList tableIndeces;
+		if(tableIndexedColumns_.contains(table))
+			tableIndeces = tableIndexedColumns_[table].split(",",QString::SkipEmptyParts);
 		QString columnDefString;
 		int colLength = tableColumns.size();
 		int typeLength = tableColumnTypes.size();
@@ -1135,9 +1145,21 @@ void SessionInfo::AddTablesToDatabase(QSqlQuery* query)
 		}
 		if(tableColumnConstraints_.contains(table))
 			columnDefString.append(QString(",") + tableColumnConstraints_[table]);
-		QString createTableString = "CREATE TABLE IF NOT EXISTS "+table+" (id  INTEGER PRIMARY KEY"+columnDefString+")";
+		QString createTableString = "CREATE TABLE IF NOT EXISTS "+table+" (id  INTEGER PRIMARY KEY"+columnDefString+");";
+		
+		foreach(QString index,tableIndeces)
+		{
+			createIndexQueries.append("CREATE INDEX IF NOT EXISTS "+table+"_"+index.trimmed()+"_index ON "+table+"("+index+");");
+		}
 		executeWriteQuery(query,createTableString);
 	}
+	
+	//Create Indeces
+	foreach(QString createIndexQuery,createIndexQueries)
+	{
+		executeWriteQuery(query,createIndexQuery);
+	}
+
 }
 
 /*! \brief Adds optional debuggion to read query executions.  
