@@ -28,9 +28,10 @@ class BooleanParameter : public Parameter
 
 public:
 	BooleanParameter();
+	virtual ~BooleanParameter(){};
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new BooleanParameter());};
+	static QSharedPointer<Asset> Create();
 
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

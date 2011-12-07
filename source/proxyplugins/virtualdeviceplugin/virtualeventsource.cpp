@@ -1,4 +1,5 @@
 #include "virtualeventsource.h"
+#include "../../common/memleakdetect.h"
 
 bool VirtualEventSource::start(double time)
 {

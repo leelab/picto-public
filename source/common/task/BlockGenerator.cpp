@@ -1,4 +1,5 @@
 #include "BlockGenerator.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

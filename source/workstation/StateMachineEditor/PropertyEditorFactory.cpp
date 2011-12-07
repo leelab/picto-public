@@ -5,6 +5,7 @@
 #include "ScriptWidget.h"
 #include "DeletableWidget.h"
 #include "PropertyEditTracker.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]

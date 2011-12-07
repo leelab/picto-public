@@ -24,7 +24,9 @@ public:
 	 *	need not be serialized out.
 	 */
 	Result(QString name);
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Result());};
+	virtual ~Result(){};
+
+	static QSharedPointer<Asset> Create();
 
 	virtual QString getUITemplate(){return "Result";};
 	virtual QString assetType(){return "Result";};

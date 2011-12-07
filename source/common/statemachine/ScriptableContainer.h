@@ -1,14 +1,14 @@
 #ifndef _SCRIPTABLECONTAINER_H_
 #define _SCRIPTABLECONTAINER_H_
 
+#include <QSharedPointer>
+#include <QList>
+#include <QScriptEngine>
+
 #include "../common.h"
 #include "../statemachine/UIEnabled.h"
 
 #include "Scriptable.h"
-
-#include <QSharedPointer>
-#include <QList>
-#include <QScriptEngine>
 
 namespace Picto {
 
@@ -23,11 +23,13 @@ class ScriptableContainer : public Scriptable
 	Q_OBJECT
 public:
 	ScriptableContainer();
+	virtual ~ScriptableContainer(){};
+
 	void addScriptables(QSharedPointer<ScriptableContainer> scriptableContainer);
 	void addScriptables(ScriptableContainer* scriptableContainer);
-	void addScriptable(QSharedPointer<Scriptable> scriptable);
+	void addScriptable(QWeakPointer<Scriptable> scriptable);
 	void addChildScriptableContainer(QSharedPointer<ScriptableContainer> child);
-	QList<QSharedPointer<Scriptable>> getScriptableList();
+	QList<QWeakPointer<Scriptable>> getScriptableList();
 
 	/*! \brief Initializes scripting for this and all child ScriptableContainers
 	 * If for design is true, all child ScriptableContainers will
@@ -63,7 +65,7 @@ protected:
 
 private:
 	bool bindToScriptEngine(QScriptEngine &engine);
-	QList<QSharedPointer<Scriptable> > scriptables_;
+	QList<QWeakPointer<Scriptable> > scriptables_;	//This has to be weak because it will contain pointers to its parents.
 	QList<QSharedPointer<ScriptableContainer> > scriptableContainers_;
 	QMap<QString,QString> scriptableListProperties_;
 	bool scriptingInitialized_;

@@ -1,4 +1,5 @@
 #include "ErrorResponseHandler.h"
+#include "../memleakdetect.h"
 using namespace Picto;
 
 ErrorResponseHandler::ErrorResponseHandler(QSharedPointer<ComponentStatusManager> statusManager):

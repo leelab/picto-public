@@ -1,9 +1,9 @@
 #ifndef _CONTROLTARGET_H_
 #define _CONTROLTARGET_H_
+#include <QRect>
 
 #include "../common.h"
 #include "../stimuli/VisualElement.h"
-#include <QRect>
 
 namespace Picto {
 

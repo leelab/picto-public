@@ -1,4 +1,5 @@
 #include "DirectorStartResponseHandler.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 DirectorStartResponseHandler::DirectorStartResponseHandler(QSharedPointer<DirectorStatusManager> statusManager):
@@ -7,15 +8,16 @@ StartResponseHandler(statusManager)
 
 bool DirectorStartResponseHandler::processResponse(QString directive)
 {
-	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.staticCast<DirectorStatusManager>()->getEngine();
-	QSharedPointer<Picto::Experiment> experiment = statusManager_.staticCast<DirectorStatusManager>()->getExperiment();
+	Q_ASSERT(!statusManager_.isNull());
+	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
+	QSharedPointer<Picto::Experiment> experiment = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getExperiment();
 	if(!engine.isNull() && !experiment.isNull())
 	{
-		statusManager_->setStatus(running);
+		statusManager_.toStrongRef()->setStatus(running);
 		experiment->runTask(directive);
 	}
-	statusManager_->setStatus(stopped);
-	statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus("Engine Stopped");
+	statusManager_.toStrongRef()->setStatus(stopped);
+	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("Engine Stopped");
 	return false;
 
 }

@@ -1,8 +1,9 @@
-#include "NullRewardController.h"
-
 #include <QtDebug>
 #include <QCoreApplication>
 #include <QTime>
+
+#include "NullRewardController.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {

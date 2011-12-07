@@ -1,4 +1,5 @@
 #include "RewardController.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {

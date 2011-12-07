@@ -13,6 +13,7 @@
 #include "../timing/Timestamper.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/AlignmentDataUnit.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -125,6 +126,11 @@ StateMachineLevel::StateMachineLevel StateMachine::getLevel()
 //	addScriptable(parameter);
 //	//localParameterContainer_->addScriptable(parameter);
 //}
+
+QSharedPointer<Asset> StateMachine::Create()
+{
+	return QSharedPointer<Asset>(new StateMachine());
+}
 
 
 bool StateMachine::setInitialElement(QString elementName)

@@ -1,6 +1,7 @@
 #include <QtGui>
 #include "PropertyBrowser.h"
 #include "../../common/storage/datastore.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]
@@ -41,7 +42,7 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 		foreach(QSharedPointer<Property> prop,propVec)
 		{
 			propertyFactory_->setNextProperty(prop);
-			addProperty(prop->getVariantProperty().data());
+			addProperty(prop->getVariantProperty());
 		}
 	}
 	setMinimumWidth(childrenRect().width());

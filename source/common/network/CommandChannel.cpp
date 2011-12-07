@@ -2,6 +2,7 @@
 #include <QCoreApplication>
 
 #include "CommandChannel.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 #define RECONNECT_POLL_INTERVAL_MS 100 
@@ -154,7 +155,7 @@ bool CommandChannel::processResponses(int timeoutMs)
 			if(!statusManager_.isNull())
 			{
 				remainingMs = timeoutMs - timeoutTimer.elapsed();
-				statusManager_->update((timeoutMs<=0)?timeoutMs:(remainingMs<0)?0:remainingMs);
+				statusManager_.toStrongRef()->update((timeoutMs<=0)?timeoutMs:(remainingMs<0)?0:remainingMs);
 			}
 			remainingMs = timeoutMs - timeoutTimer.elapsed();
 			if(!loopForever && QDateTime::currentDateTime().addMSecs(remainingMs) < nextPendingMessageTime)
@@ -300,8 +301,8 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 	if(consumerSocket_->state() != QAbstractSocket::ConnectedState)
 	{
 		status_ = disconnected;
-		if(statusManager_ && statusManager_->getStatus() == idle)
-			statusManager_->setStatus(ComponentStatus::disconnected);
+		if(!statusManager_.isNull() && statusManager_.toStrongRef()->getStatus() == idle)
+			statusManager_.toStrongRef()->setStatus(ComponentStatus::disconnected);
 		if(acceptableTimeoutMs > 0)
 		{
 			QTime timer;
@@ -322,8 +323,8 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 		if(status_ != connected)
 			lastReconnectTime_ = QDateTime::currentDateTime();
 		status_ = connected;
-		if(statusManager_ && statusManager_->getStatus() < idle)
-			statusManager_->setStatus(idle);
+		if(!statusManager_.isNull() && statusManager_.toStrongRef()->getStatus() < idle)
+			statusManager_.toStrongRef()->setStatus(idle);
 		return true;
 	}
 	return false;
@@ -439,8 +440,8 @@ bool CommandChannel::sendCommand(QSharedPointer<Picto::ProtocolCommand> command)
 	//For messages that have a status element, update it to the latest status.
 	if(!statusManager_.isNull() && ((command->getMethod() == "PUTDATA") || (command->getMethod() == "COMPONENTUPDATE")))
 	{
-		command->setTarget(statusManager_->getName()+":"+statusManager_->getStatusAsString());
-		command->setFieldValue("Session-ID",statusManager_->getSessionID().toString());
+		command->setTarget(statusManager_.toStrongRef()->getName()+":"+statusManager_.toStrongRef()->getStatusAsString());
+		command->setFieldValue("Session-ID",statusManager_.toStrongRef()->getSessionID().toString());
 	}
 	else
 	{
@@ -567,7 +568,7 @@ void CommandChannel::setSessionId(QUuid sessionId)
 	if(sessionId_ == sessionId)
 		return;
 	if(!statusManager_.isNull())
-		statusManager_->setSessionID(sessionId);
+		statusManager_.toStrongRef()->setSessionID(sessionId);
 	currRegCmdID_ = Q_UINT64_C(1);
 	sessionId_ = sessionId; 
 };

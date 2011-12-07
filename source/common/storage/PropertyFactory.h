@@ -1,13 +1,13 @@
 #ifndef _PROPERTYFACTORY_H_
 #define _PROPERTYFACTORY_H_
 
-#include "AssetFactory.h"
-#include "../Property/PropertyContainer.h"
-
 #include <QSharedPointer>
 #include <QString>
 #include <QVector>
 #include <QMap>
+
+#include "AssetFactory.h"
+#include "../Property/PropertyContainer.h"
 
 namespace Picto {
 
@@ -28,6 +28,7 @@ public:
 		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>()/*,
 		QVector<QSharedPointer<Asset>> defaultAssets = QVector<QSharedPointer<Asset>>()*/
 		);
+	virtual ~PropertyFactory(){};
 	
 protected:
 	virtual QSharedPointer<Asset> generateNewAsset();

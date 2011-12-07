@@ -1,5 +1,5 @@
 #include "TestStateMachine.h"
-
+#include "../memleakdetect.h"
 
 TestStateMachine::TestStateMachine()
 {

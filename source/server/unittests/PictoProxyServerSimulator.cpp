@@ -2,6 +2,7 @@
 #include "../../common/network/serverdiscoverer.h"
 #include <QUdpSocket>
 #include <QNetworkInterface>
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 using namespace ProxyServer;
 

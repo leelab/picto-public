@@ -13,6 +13,7 @@
 #include <QVariant>
 #include <QUuid>
 #include <QTime>
+#include "../../common/memleakdetect.h"
 
 PutDataCommandHandler::PutDataCommandHandler()
 {

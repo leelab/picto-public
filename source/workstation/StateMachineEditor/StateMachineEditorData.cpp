@@ -1,6 +1,7 @@
 #include "StateMachineEditorData.h"
 #include "../common/statemachine/uienabled.h"
 #include "../pictodata.h"
+#include "../../common/memleakdetect.h"
 
 namespace Picto
 {
@@ -8,6 +9,11 @@ namespace Picto
 StateMachineEditorData::StateMachineEditorData()
 {
 	AddDefinableProperty(QVariant::String,"OpenedBlock","");
+}
+
+QSharedPointer<Asset> StateMachineEditorData::Create()
+{
+	return QSharedPointer<Asset>(new StateMachineEditorData());
 }
 
 void StateMachineEditorData::setOpenedAsset(QSharedPointer<Asset> openedAsset)

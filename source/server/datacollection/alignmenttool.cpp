@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <QSqlError>
 #include "alignmenttool.h"
+#include "../../common/memleakdetect.h"
 
 //We should relocate all of the database accesses to SessionInfo
 AlignmentTool::AlignmentTool()

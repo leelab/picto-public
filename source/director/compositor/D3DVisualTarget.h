@@ -23,7 +23,7 @@ class D3DVisualTarget : public VisualTarget
 {
 public:
 	D3DVisualTarget();
-	~D3DVisualTarget();
+	virtual ~D3DVisualTarget();
 
 	QSharedPointer<CompositingSurface> generateCompositingSurface();
 	QString getTypeName();

@@ -29,9 +29,10 @@ public slots:
 
 public:
 	RandomIntParameter();
+	virtual ~RandomIntParameter(){};
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new RandomIntParameter());};
+	static QSharedPointer<Asset> Create();
 
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};

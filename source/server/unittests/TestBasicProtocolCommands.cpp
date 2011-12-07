@@ -3,6 +3,7 @@
 #include <QString>
 #include <QTcpSocket>
 #include <QHostAddress>
+#include "../../common/memleakdetect.h"
 
 TestBasicProtocolCommands::TestBasicProtocolCommands(QHostAddress _serverAddress,quint16 _port) :
 	serverAddress_(_serverAddress),

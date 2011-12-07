@@ -26,7 +26,7 @@ class SignalChannelTest : public QObject
 
 public:
 	SignalChannelTest();
-	~SignalChannelTest();
+	virtual ~SignalChannelTest();
 
 	void exec();
 

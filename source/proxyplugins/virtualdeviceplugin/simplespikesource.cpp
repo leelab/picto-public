@@ -1,5 +1,6 @@
 #include "simplespikesource.h"
 #include "..\..\common\storage\NeuralDataUnit.h"
+#include "../../common/memleakdetect.h"
 
 SimpleSpikeSource::SimpleSpikeSource(double secPerEvent, double secPerSample)
 :SimpleEventSource(secPerEvent,secPerSample)

@@ -36,7 +36,7 @@ class AlignmentTool
 {
 public:
 	AlignmentTool();
-	~AlignmentTool();
+	virtual ~AlignmentTool();
 
 	void resetValues();
 	double convertToBehavioralTimebase(double neuralTime);

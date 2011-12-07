@@ -12,6 +12,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVariant>
+#include "../../common/memleakdetect.h"
 
 TrialCommandHandler::TrialCommandHandler()
 {

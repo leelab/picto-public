@@ -22,9 +22,10 @@ class ScriptController : public ControlElement
 	Q_OBJECT
 public:
 	ScriptController();
+	virtual ~ScriptController(){};
 
 	static ControlElement* NewScriptController();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ScriptController());};
+	static QSharedPointer<Asset> Create();
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);

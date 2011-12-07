@@ -3,6 +3,7 @@
 #include "../../common/statemachine/uienabled.h"
 #include <QPen>
 #include <QBrush>
+#include "../../common/memleakdetect.h"
 AssetItem::AssetItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 DiagramItem(editorState,contextMenu),
 asset_(asset),

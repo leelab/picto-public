@@ -11,6 +11,7 @@
 #include "protocol/ProxyStartResponseHandler.h"
 #include "network/ProxyStatusManager.h"
 #include "../common/protocol/ProtocolResponseHandler.h"
+#include "../common/memleakdetect.h"
 
 ProxyMainWindow::ProxyMainWindow()
 :ComponentInterface("PROXY")

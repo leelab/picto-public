@@ -9,12 +9,12 @@
 #include <iostream>
 #include <limits.h>
 #include <stdio.h>
+#include <math.h>
 #ifdef WINCE
 #include "../time_ce/time_ce.h"
 #else
 #include <time.h>
 #endif
-#include <math.h>
 #include "../common.h"
 
 namespace Picto

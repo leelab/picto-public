@@ -1,5 +1,6 @@
 #include <QtGui>
 #include "BackgroundToolGroup.h"
+#include "../../common/memleakdetect.h"
 
 
 BackgroundToolGroup::BackgroundToolGroup(QSharedPointer<EditorState> editorState,QWidget *parent) :

@@ -1,4 +1,5 @@
 #include "ProxyStatusManager.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 ProxyStatusManager::ProxyStatusManager(QSharedPointer<CommandChannel> commandChannel):

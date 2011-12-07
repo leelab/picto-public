@@ -1,6 +1,7 @@
 #include "DirectorClickResponseHandler.h"
 #include "../../common/engine/propertyTable.h"
 #include "../../common/parameter/operatorclickparameter.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 DirectorClickResponseHandler::DirectorClickResponseHandler(QSharedPointer<DirectorStatusManager> statusManager):

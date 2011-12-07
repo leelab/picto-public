@@ -1,5 +1,6 @@
 #include "StateMachineElementItem.h"
 #include "../../common/StateMachine/StateMachineElement.h"
+#include "../../common/memleakdetect.h"
 StateMachineElementItem::StateMachineElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 WireableItem(editorState,contextMenu,asset)
 {

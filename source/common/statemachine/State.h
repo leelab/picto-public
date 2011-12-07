@@ -33,7 +33,8 @@ class State : public MachineContainer
 	//Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
 public:
 	State();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new State());};
+	virtual ~State(){};
+	static QSharedPointer<Asset> Create();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

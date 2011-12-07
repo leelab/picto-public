@@ -1,4 +1,5 @@
 #include "ProtocolCommandHandler.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

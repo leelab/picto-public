@@ -1,4 +1,5 @@
 #include "PropertyFactory.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 

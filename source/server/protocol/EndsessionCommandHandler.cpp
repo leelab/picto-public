@@ -3,6 +3,7 @@
 #include "../../common/globals.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
+#include "../../common/memleakdetect.h"
 
 EndsessionCommandHandler::EndsessionCommandHandler()
 {

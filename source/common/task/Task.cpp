@@ -4,6 +4,7 @@
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../storage/BehavioralDataUnitPackage.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -13,6 +14,11 @@ Task::Task()
 		AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 
+}
+
+QSharedPointer<Task> Task::Create()
+{
+	return QSharedPointer<Task>(new Task());
 }
 
 bool Task::run(QSharedPointer<Engine::PictoEngine> engine)

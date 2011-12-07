@@ -1,4 +1,5 @@
 #include "BooleanParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -16,6 +17,12 @@ Parameter* BooleanParameter::NewParameter()
 {
 	return new BooleanParameter;
 }
+
+QSharedPointer<Asset> BooleanParameter::Create()
+{
+	return QSharedPointer<Asset>(new BooleanParameter());
+}
+
 
 void BooleanParameter::postDeserialize()
 {

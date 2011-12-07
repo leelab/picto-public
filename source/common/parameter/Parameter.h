@@ -20,7 +20,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Parameter : public Scriptable
 #else
-	class Parameter : public UIEnabled
+	class Parameter : public Scriptable
 #endif
 {
 	Q_OBJECT
@@ -28,6 +28,7 @@ namespace Picto {
 public:
 
 	Parameter();
+	virtual ~Parameter(){};
 
 	//void setInitialValue(QVariant val);
 	//virtual void setValue(QVariant value);

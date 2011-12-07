@@ -3,6 +3,7 @@
 #include "PictoDirectorSimulator.h"
 #include "PictoProxyServerSimulator.h"
 #include "PictoServerSimulator.h"
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 
 /*! \brief Constructs a PictoSystemActivityReport with a failure message an expected value and a non matching actual value.

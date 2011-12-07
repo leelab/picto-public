@@ -12,14 +12,14 @@
 //#include "MediaItem.h"
 //#include "Calibration.h"
 
+
+#include <QList>
+#include <QSharedPointer>
+
 #include "../engine/PictoEngine.h"
 #include "../engine/propertytable.h"
 #include "../storage/propertylookup.h"
 #include "../storage/transitionlookup.h"
-
-
-#include <QList>
-#include <QSharedPointer>
 
 namespace Picto {
 
@@ -47,6 +47,7 @@ class Experiment : public UIEnabled
 	Q_OBJECT
 public:
 	static QSharedPointer<Experiment> Create();
+	virtual ~Experiment(){};
 	void setEngine(QSharedPointer<Engine::PictoEngine> engine);
 	void addTask(QSharedPointer<Task> task);
 	bool runTask(QString taskName);

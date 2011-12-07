@@ -29,9 +29,10 @@ public slots:
 
 public:
 	RandomDoubleParameter();
+	virtual ~RandomDoubleParameter(){};
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new RandomDoubleParameter());};
+	static QSharedPointer<Asset> Create();
 
 	double getValue(){return propertyContainer_->getPropertyValue("Value").toDouble();};
 	void setValue(double val){propertyContainer_->setPropertyValue("Value",val);};

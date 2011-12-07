@@ -1,4 +1,5 @@
 #include "PlexonInterface.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

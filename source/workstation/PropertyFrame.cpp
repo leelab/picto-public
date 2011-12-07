@@ -3,6 +3,7 @@
 #include <QSqlError>
 #include "PropertyFrame.h"
 #include "../common/storage/datastore.h"
+#include "../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]
@@ -78,7 +79,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 		foreach(QSharedPointer<Property> runTimeProp, runTimeProps) 
 		{
 			propertyFactory_->setNextProperty(runTimeProp);
-			browser->addProperty(runTimeProp->getVariantProperty().data());
+			browser->addProperty(runTimeProp->getVariantProperty());
 		}
 		assetLayout->addWidget(browser);
 		layout->addWidget(assetBox);

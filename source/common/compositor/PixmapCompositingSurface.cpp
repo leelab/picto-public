@@ -1,4 +1,5 @@
 #include "PixmapCompositingSurface.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

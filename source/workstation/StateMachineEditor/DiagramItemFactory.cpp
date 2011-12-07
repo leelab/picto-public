@@ -7,6 +7,7 @@
 #include "../../common/property/property.h"
 #include "../../common/statemachine/uienabled.h"
 #include <string>
+#include "../../common/memleakdetect.h"
 using namespace std;
 
 QMap<QString,IconDef> DiagramItemFactory::iconDefs_;

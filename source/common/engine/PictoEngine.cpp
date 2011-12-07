@@ -2,6 +2,9 @@
  * \ingroup picto_engine
  * \brief
  */
+#include <QApplication>
+#include <QTime>
+#include <QtConcurrentRun>
 
 #include "PictoEngine.h"
 
@@ -9,10 +12,8 @@
 #include "../storage/RewardDataUnit.h"
 #include "../storage/PropertyDataUnit.h"
 #include "../storage/FrameDataUnit.h"
+#include "../memleakdetect.h"
 
-#include <QApplication>
-#include <QTime>
-#include <QtConcurrentRun>
 
 namespace Picto {
 	namespace Engine {

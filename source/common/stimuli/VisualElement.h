@@ -1,5 +1,10 @@
 #ifndef _VISUALELEMENT_H_
 #define _VISUALELEMENT_H_
+#include <QImage>
+#include <QSharedPointer>
+#include <QString>
+#include <QMap>
+#include <QTime>
 
 #include "../common.h"
 
@@ -8,12 +13,6 @@
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
 #include "../property/PropertyContainer.h"
-
-#include <QImage>
-#include <QSharedPointer>
-#include <QString>
-#include <QMap>
-#include <QTime>
 
 namespace Picto {
 
@@ -40,7 +39,7 @@ struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public Scripta
 	Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
 public:
 	VisualElement(QPoint position=QPoint(), QColor color=QColor());
-	~VisualElement();
+	virtual ~VisualElement();
 
 	void addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface);
 	QSharedPointer<CompositingSurface> getCompositingSurface(QString surfaceType);

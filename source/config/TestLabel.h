@@ -13,5 +13,5 @@ class TestLabel : public QLabel
 
 public:
 	TestLabel(QWidget * parent = 0);
-	~TestLabel();
+	virtual ~TestLabel();
 };

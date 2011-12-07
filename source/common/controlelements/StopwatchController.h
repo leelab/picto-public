@@ -24,9 +24,10 @@ class StopwatchController : public ControlElement
 	Q_OBJECT
 public:
 	StopwatchController();
+	virtual ~StopwatchController(){};
 
 	static ControlElement* NewStopwatchController();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StopwatchController());};
+	static QSharedPointer<Asset> Create();
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);

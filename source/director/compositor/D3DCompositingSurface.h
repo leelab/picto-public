@@ -18,7 +18,7 @@ class D3DCompositingSurface : public CompositingSurface
 {
 public:
 	D3DCompositingSurface(IDirect3DDevice9 *_pD3dDevice);
-	~D3DCompositingSurface();
+	virtual ~D3DCompositingSurface();
 
 	void convertImage(QImage image);
 	QString getTypeName();

@@ -1,7 +1,7 @@
+#include <QStringList>
 #include "ServerDiscoverer.h"
 #include "../common.h"
-
-#include <QStringList>
+#include "../memleakdetect.h"
 
 namespace Picto {
 

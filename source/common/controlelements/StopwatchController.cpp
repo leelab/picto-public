@@ -28,6 +28,11 @@ ControlElement* StopwatchController::NewStopwatchController()
 	return new StopwatchController;
 }
 
+QSharedPointer<Asset> StopwatchController::Create()
+{
+	return QSharedPointer<Asset>(new StopwatchController());
+}
+
 QString StopwatchController::ControllerType()
 {
 	return "Stopwatch Controller";

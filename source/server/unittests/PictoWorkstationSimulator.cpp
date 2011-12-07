@@ -4,6 +4,7 @@
 #include "PictoDirectorSimulator.h"
 #include <QXMLStreamReader>
 #include <QUuid>
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 using namespace Workstation;
 

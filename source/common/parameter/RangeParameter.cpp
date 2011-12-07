@@ -1,4 +1,5 @@
 #include "RangeParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -16,6 +17,11 @@ RangeParameter::RangeParameter()
 Parameter* RangeParameter::NewParameter()
 {
 	return new RangeParameter;
+}
+
+QSharedPointer<Asset> RangeParameter::Create()
+{
+	return QSharedPointer<Asset>(new RangeParameter());
 }
 
 void RangeParameter::setMin(int min) 

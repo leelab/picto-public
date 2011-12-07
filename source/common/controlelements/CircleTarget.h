@@ -1,9 +1,8 @@
 #ifndef _CIRCLETARGET_H_
 #define _CIRCLETARGET_H_
-
+#include <QRect>
 #include "../common.h"
 #include "controltarget.h"
-#include <QRect>
 
 namespace Picto {
 
@@ -21,7 +20,7 @@ class CircleTarget : public ControlTarget
 	Q_PROPERTY(int radius READ getRadius WRITE setRadius)
 public:
 	CircleTarget();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new CircleTarget());};
+	static QSharedPointer<Asset> Create();
 	virtual QString assetType(){return "CircleTarget";};
 	void draw();
 	virtual bool contains(int x, int y);

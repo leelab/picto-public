@@ -55,7 +55,7 @@ public:
 	static QSharedPointer<SessionInfo> CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId);
 	static QSharedPointer<SessionInfo> LoadSession(QString sessionID, QString databaseFilePath);
 	static void deleteSession(SessionInfo* session);
-	~SessionInfo();
+	virtual ~SessionInfo();
 
 	void AddComponent(QSharedPointer<ComponentInfo> component);
 	void UpdateComponentActivity();
@@ -112,6 +112,7 @@ private:
 	bool executeReadQuery(QSqlQuery* query, QString optionalString = "",bool debug = false);
 	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
+	void createSessionIndeces();
 	void recalculateFittedTimes();
 	void setStateVariable(int dataid, int varid, QString serializedValue);
 	void updateCurrentStateTable(QString updateTime);

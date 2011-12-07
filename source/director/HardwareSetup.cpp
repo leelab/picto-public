@@ -47,7 +47,7 @@
 #include "iodevices/LegacySystemXPRewardController.h"
 #include "iodevices/PictoBoxXPEventCodeGenerator.h"
 #endif
-
+#include "../common/memleakdetect.h"
 
 HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 {

@@ -1,4 +1,5 @@
 #include "PauseResponseHandler.h"
+#include "../memleakdetect.h"
 using namespace Picto;
 
 PauseResponseHandler::PauseResponseHandler(QSharedPointer<ComponentStatusManager> statusManager):

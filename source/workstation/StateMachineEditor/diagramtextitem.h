@@ -61,6 +61,7 @@ public:
     enum { Type = UserType + 3 };
 
     DiagramTextItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+	virtual ~DiagramTextItem(){};
 
     int type() const
         { return Type; }

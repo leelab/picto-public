@@ -1,4 +1,5 @@
 #include "BehavioralDataUnit.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

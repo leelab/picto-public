@@ -40,6 +40,7 @@ class ConnectionManager : public QObject
 public:
 
 	static ConnectionManager* Instance();
+	~ConnectionManager();
 
 	//Director related functions
 	void updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status);

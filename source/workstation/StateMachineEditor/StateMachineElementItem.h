@@ -12,7 +12,7 @@ class StateMachineElementItem : public WireableItem
 	Q_OBJECT
 public:
 	 StateMachineElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
-
+	virtual ~StateMachineElementItem(){};
 };
 //! [0]
 

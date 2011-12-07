@@ -1,5 +1,5 @@
-#include "CircleTarget.h"
 #include <QPainter>
+#include "CircleTarget.h"
 namespace Picto
 {
 
@@ -9,6 +9,11 @@ ControlTarget(),
 active_(false)
 {
 	AddDefinableProperty(QVariant::Int,"Radius",1);
+}
+
+QSharedPointer<Asset> CircleTarget::Create()
+{
+	return QSharedPointer<Asset>(new CircleTarget());
 }
 
 void CircleTarget::draw()

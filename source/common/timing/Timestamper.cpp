@@ -1,4 +1,5 @@
 #include "Timestamper.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {

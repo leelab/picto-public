@@ -44,6 +44,7 @@ class QAction;
     public:
     
         SyntaxHighlighter(QObject *parent);
+		virtual ~SyntaxHighlighter(){};
     protected:
     
         void highlightBlock(const QString &text);

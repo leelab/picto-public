@@ -13,4 +13,8 @@ ControlLink::ControlLink(QString source, QString sourceResult, QString destinati
 {
 }
 
+QSharedPointer<Asset> ControlLink::Create()
+{
+	return QSharedPointer<Asset>(new ControlLink());
+}
 }

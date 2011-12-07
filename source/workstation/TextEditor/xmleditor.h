@@ -22,6 +22,7 @@ class XmlEditor : public QTextEdit
 	Q_OBJECT
 public:
 	XmlEditor(QWidget *parent = 0);
+	virtual ~XmlEditor(){};
 
 	void addContextMenuAction(QAction *action);
 

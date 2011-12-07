@@ -1,4 +1,5 @@
 #include "LFPDataUnitPackage.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 LFPDataUnitPackage::LFPDataUnitPackage()
@@ -163,7 +164,7 @@ void LFPDataUnitPackage::addDataByBlock(lfpDataBlock* block)
 		addData(timestamp,data,maxChan+1);
 		timestamp += block->timePerSample_;
 	}
-	delete data;
+	delete[] data;
 	
 
 }

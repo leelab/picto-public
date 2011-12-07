@@ -16,6 +16,7 @@ class DataUnit : public  Serializable
 {
 public:
 	DataUnit();
+	virtual ~DataUnit(){};
 
 	using Serializable::toXml;
 	using Serializable::fromXml;

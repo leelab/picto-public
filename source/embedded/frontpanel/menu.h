@@ -44,7 +44,7 @@ class Menu : public QObject
 
 public:
 	Menu(FrontPanelInfo *panelInfo);
-	~Menu();
+	virtual ~Menu();
 
 	void initMenu();
 

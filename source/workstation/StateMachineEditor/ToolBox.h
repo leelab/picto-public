@@ -23,7 +23,8 @@ class Toolbox : public QToolBox
     Q_OBJECT
 
 public:
-   Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent=0);
+	Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent=0);
+	virtual ~Toolbox(){};
 
 public slots:
    void setAsset(QSharedPointer<Asset> asset);

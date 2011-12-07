@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QThread>
 #include <QMutexLocker>
+#include "../../common/memleakdetect.h"
 
 QMutex ServerConfig::fileAccessMutex_;
 

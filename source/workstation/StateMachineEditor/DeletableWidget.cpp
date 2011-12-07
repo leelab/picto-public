@@ -2,6 +2,7 @@
 #include "DeletableWidget.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/property/Property.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]
@@ -18,14 +19,14 @@ DeletableWidget::DeletableWidget(QSharedPointer<EditorState> editorState, QtVari
 	QHBoxLayout *layout = new QHBoxLayout;
 	layout->addWidget(child_,0,Qt::AlignRight);
 	QToolButton *button = new QToolButton;
-	QButtonGroup* buttonGroup = new QButtonGroup;
+	QSharedPointer<QButtonGroup> buttonGroup(new QButtonGroup());
 	buttonGroup->addButton(button);
 	button->setIcon(QIcon(":/icons/delete.png"));
 	button->setIconSize(QSize(10,10));
 	layout->addWidget(button);
 	layout->setContentsMargins(0,0,0,0);
 	setLayout(layout);
-	connect(buttonGroup, SIGNAL(buttonClicked(int)),this, SLOT(triggered(int)));
+	connect(buttonGroup.data(), SIGNAL(buttonClicked(int)),this, SLOT(triggered(int)));
 }
 
 void DeletableWidget::triggered(int)

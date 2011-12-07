@@ -4,6 +4,7 @@
 #include <Psapi.h>
 
 #include "WinGetPID.h"
+#include "../../common/memleakdetect.h"
 
 bool winParentProcessIsGUI()
 {

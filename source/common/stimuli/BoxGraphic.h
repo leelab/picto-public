@@ -28,7 +28,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new BoxGraphic());};
+	static QSharedPointer<Asset> Create();
 
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);

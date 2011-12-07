@@ -2,6 +2,7 @@
 #include "ArrowSourceItem.h"
 #include "Arrow.h"
 #include <QGraphicsScene>
+#include "../../common/memleakdetect.h"
 ArrowDestinationItem::ArrowDestinationItem(QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene) :
 ArrowPortItem("",editorState,parent,scene)
 {

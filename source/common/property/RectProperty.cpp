@@ -2,10 +2,11 @@
 #include <QObject>
 
 #include "RectProperty.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
-RectProperty::RectProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager):
+RectProperty::RectProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager):
 Property(variantProp,manager)
 {
 	AddSerializationAttribute("x");

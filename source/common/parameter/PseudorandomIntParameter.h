@@ -31,9 +31,10 @@ public slots:
 
 public:
 	PseudorandomIntParameter();
+	virtual ~PseudorandomIntParameter(){};
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new PseudorandomIntParameter());};
+	static QSharedPointer<Asset> Create();
 	virtual QString assetType(){return "PseudorandomInt";};
 
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};

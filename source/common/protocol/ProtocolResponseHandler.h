@@ -31,7 +31,7 @@ public:
 
 protected:
 	virtual bool processResponse(QString directive) = 0;
-	QSharedPointer<ComponentStatusManager> statusManager_;
+	QWeakPointer<ComponentStatusManager> statusManager_;	//Status manager owns this, not the other way around
 	bool processingResponse_;
 	
 };

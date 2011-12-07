@@ -1,7 +1,7 @@
-#include "PictureGraphic.h"
-
 #include <QPainter>
 
+#include "PictureGraphic.h"
+#include "../memleakdetect.h"
 namespace Picto {
 
 const QString PictureGraphic::type = "Picture Graphic";
@@ -31,6 +31,11 @@ PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 	//	    this,
 	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
 	//		);
+}
+
+QSharedPointer<Asset> PictureGraphic::Create()
+{
+	return QSharedPointer<Asset>(new PictureGraphic());
 }
 
 void PictureGraphic::draw()

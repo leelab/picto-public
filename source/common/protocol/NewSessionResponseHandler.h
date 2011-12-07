@@ -20,7 +20,7 @@ public:
 	QString method(){return "NEWSESSION";};
 protected:
 	virtual bool processResponse(QString directive);
-	QSharedPointer<CommandChannel> commandChannel_;
+	QWeakPointer<CommandChannel> commandChannel_;
 };
 
 }; //namespace Picto

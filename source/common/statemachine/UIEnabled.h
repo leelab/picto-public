@@ -1,10 +1,10 @@
 #ifndef _UIENABLED_H_
 #define _UIENABLED_H_
+#include <QUuid>
 
 #include "../common.h"
 #include "../storage/DataStore.h"
 #include "../statemachine/transition.h"
-#include <QUuid>
 
 namespace Picto {
 
@@ -21,8 +21,9 @@ class UIEnabled : public DataStore
 	Q_OBJECT
 public:
 	UIEnabled();
+	virtual ~UIEnabled(){};
 
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new UIEnabled());};
+	static QSharedPointer<Asset> Create();
 	virtual QString getName(){return propertyContainer_->getPropertyValue("Name").toString();};
 	void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
 	void setPos(QPoint pos);

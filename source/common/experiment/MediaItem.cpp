@@ -1,4 +1,5 @@
 #include "MediaItem.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

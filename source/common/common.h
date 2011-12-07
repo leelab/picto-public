@@ -75,6 +75,23 @@
 #define LCDCOMMANDPORT PORTPREFIX+2422
 #define LCDEVENTPORT PORTPREFIX+2421
 
+
+#ifdef _DEBUG 
+	//Uncomment this to enable memory leak detection
+	//#define DETECTMEMLEAKS
+#endif
+
+////Any file that includes this file will have memory leak detection enabled.
+////Note that this file must be included after all predefined headers (ie. 
+////#include <QSharedPointer>).  Also, all non-predefined headers 
+////(ie. picto headers) must be included after all predefined headers in general
+////or else this will effectively be before some predefined headers
+//// See http://www.qtcentre.org/wiki/index.php?title=Memory_Leak_Detection_in_VS
+//#if defined (DETECTMEMLEAKS) && defined(WIN32) && defined(_DEBUG)
+//	#define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+//	#define new DEBUG_NEW
+//#endif
+
 #endif
 
 /*! @} */

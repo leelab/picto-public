@@ -12,6 +12,7 @@
 #include <math.h>
 
 #include "../../common/globals.h"
+#include "../../common/memleakdetect.h"
 
 HTTPGetCommandHandler::HTTPGetCommandHandler()
 {

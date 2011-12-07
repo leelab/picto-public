@@ -26,7 +26,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new CircleGraphic());};
+	static QSharedPointer<Asset> Create();
 	static const QString type;
 	QPoint getPositionOffset();
 	int getRadius(){return propertyContainer_->getPropertyValue("Radius").toInt();};

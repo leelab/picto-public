@@ -1,5 +1,6 @@
 #include "EndSessionResponseHandler.h"
 #include <QUuid>
+#include "../memleakdetect.h"
 using namespace Picto;
 
 EndSessionResponseHandler::EndSessionResponseHandler(QSharedPointer<ComponentStatusManager> statusManager, QSharedPointer<CommandChannel> commandChannel):
@@ -11,8 +12,10 @@ commandChannel_(commandChannel)
 
 bool EndSessionResponseHandler::processResponse(QString directive)
 {
-	statusManager_->setStatus(ending);
-	while(!commandChannel_->processResponses(5000));
-	commandChannel_->setSessionId(QUuid());
+	Q_ASSERT(!statusManager_.isNull());
+	Q_ASSERT(!commandChannel_.isNull());
+	statusManager_.toStrongRef()->setStatus(ending);
+	while(!commandChannel_.toStrongRef()->processResponses(5000));
+	commandChannel_.toStrongRef()->setSessionId(QUuid());
 	return true;
 }

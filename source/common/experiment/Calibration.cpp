@@ -1,4 +1,5 @@
 #include "Calibration.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

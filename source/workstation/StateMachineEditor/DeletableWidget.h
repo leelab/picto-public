@@ -12,6 +12,7 @@ class DeletableWidget : public QWidget
 
 public:
 	DeletableWidget(QSharedPointer<EditorState> editorState, QtVariantPropertyManager* manager, QtProperty* property, QWidget* child, QWidget *parent=0);
+	virtual ~DeletableWidget(){};
 private:
 	QtVariantPropertyManager *manager_;
 	QtProperty *property_;

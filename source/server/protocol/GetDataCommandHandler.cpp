@@ -12,6 +12,7 @@
 #include <QSqlQuery>
 #include <QVariant>
 #include <QUuid>
+#include "../../common/memleakdetect.h"
 
 GetDataCommandHandler::GetDataCommandHandler()
 {

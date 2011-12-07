@@ -31,6 +31,7 @@ class TestViewer : public Viewer
 	Q_OBJECT
 public:
 	TestViewer(QWidget *parent=0);
+	virtual ~TestViewer(){};
 	QString type() { return "Test"; };
 
 public slots:

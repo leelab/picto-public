@@ -1,6 +1,7 @@
-#include "ArrowGraphic.h"
-
 #include <QPainter>
+
+#include "ArrowGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -99,6 +100,11 @@ void ArrowGraphic::draw()
 VisualElement* ArrowGraphic::NewVisualElement()
 {
 	return new ArrowGraphic;
+}
+
+QSharedPointer<Asset> ArrowGraphic::Create()
+{
+	return QSharedPointer<Asset>(new ArrowGraphic());
 }
 
 //void ArrowGraphic::slotPropertyValueChanged(QString propertyName, int, QVariant propertyValue)

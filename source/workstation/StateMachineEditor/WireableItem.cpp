@@ -5,6 +5,7 @@
 #include "ArrowDestinationItem.h"
 #include "arrow.h"
 #include <QGraphicsScene>
+#include "../../common/memleakdetect.h"
 WireableItem::WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 AssetItem(editorState,contextMenu,asset)
 {

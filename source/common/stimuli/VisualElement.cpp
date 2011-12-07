@@ -1,6 +1,7 @@
-#include "VisualElement.h"
-
 #include <QScriptValue>
+
+#include "VisualElement.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

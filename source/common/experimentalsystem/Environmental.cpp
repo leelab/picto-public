@@ -1,4 +1,5 @@
 #include "Environmental.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

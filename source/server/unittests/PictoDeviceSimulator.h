@@ -28,7 +28,7 @@ class PictoDeviceSimulator : public QThread
 {
 public:
 	PictoDeviceSimulator(PictoSystemState* systemState, QString deviceName);
-	~PictoDeviceSimulator();
+	virtual ~PictoDeviceSimulator();
 	
 	QString GetDeviceName();
 	virtual QString GetDeviceTypeName() = 0;

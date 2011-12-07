@@ -24,7 +24,7 @@ class EventCodeGenerator : public QObject
 	Q_OBJECT
 public:
 	EventCodeGenerator();
-	~EventCodeGenerator();
+	virtual ~EventCodeGenerator();
 
 	virtual int getBitsPerEvent()=0;
 

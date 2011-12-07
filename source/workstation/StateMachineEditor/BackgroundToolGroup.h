@@ -8,6 +8,7 @@ class BackgroundToolGroup : public ToolGroup
 
 public:
    BackgroundToolGroup(QSharedPointer<EditorState> editorState,QWidget *parent=0);
+   virtual ~BackgroundToolGroup(){};
 protected:
    virtual void doButtonAction(int buttonId);
 };

@@ -9,6 +9,7 @@ class ArrowSourceItem : public ArrowPortItem
 	Q_OBJECT
 public:
 	ArrowSourceItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene);
+	virtual ~ArrowSourceItem(){};
 	virtual QPointF getContactPoint();
 protected:
 	virtual void setRect(QRectF rect);

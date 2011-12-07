@@ -1,6 +1,6 @@
-#include "LineGraphic.h"
-
 #include <QPainter>
+#include "LineGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -65,6 +65,11 @@ void LineGraphic::draw()
 VisualElement* LineGraphic::NewVisualElement()
 {
 	return new LineGraphic;
+}
+
+QSharedPointer<Asset> LineGraphic::Create()
+{
+	return QSharedPointer<Asset>(new LineGraphic());
 }
 
 //void LineGraphic::slotPropertyValueChanged(QString propertyName, int,

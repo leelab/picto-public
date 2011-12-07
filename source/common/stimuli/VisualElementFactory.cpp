@@ -1,4 +1,5 @@
 #include "VisualElementFactory.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {

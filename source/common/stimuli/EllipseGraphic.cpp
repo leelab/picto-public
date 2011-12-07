@@ -1,6 +1,6 @@
-#include "EllipseGraphic.h"
-
 #include <QPainter>
+#include "EllipseGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -57,6 +57,11 @@ void EllipseGraphic::draw()
 VisualElement* EllipseGraphic::NewVisualElement()
 {
 	return new EllipseGraphic;
+}
+
+QSharedPointer<Asset> EllipseGraphic::Create()
+{
+	return QSharedPointer<Asset>(new EllipseGraphic());
 }
 
 QPoint EllipseGraphic::getPositionOffset()

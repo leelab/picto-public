@@ -13,6 +13,7 @@ class ViewerWindow : public QGraphicsView
 
 public:
 	ViewerWindow(QSharedPointer<EditorState> editorState,QGraphicsScene * scene, QWidget *parent=0);
+	virtual ~ViewerWindow(){};
 protected:
 	virtual void wheelEvent(QWheelEvent *event);
 private:

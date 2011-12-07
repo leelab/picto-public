@@ -26,6 +26,7 @@ class StartSessionDialog : public QDialog
 	Q_OBJECT
 public:
 	StartSessionDialog(QSharedPointer<Picto::CommandChannel> commandChannel);
+	virtual ~StartSessionDialog(){};
 
 	QString getExperimentFile() { return currentDir_.absoluteFilePath(filename_); };
 	QString getDirectorID();

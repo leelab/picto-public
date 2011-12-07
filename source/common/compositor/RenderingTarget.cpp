@@ -6,6 +6,7 @@
 #include "RenderingTarget.h"
 #include "../stimuli/PictureGraphic.h"
 #include "../stimuli/TextGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

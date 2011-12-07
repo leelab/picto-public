@@ -1,6 +1,7 @@
-#include "OperatorInfoGraphic.h"
-
 #include <QPainter>
+
+#include "OperatorInfoGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -54,6 +55,11 @@ void OperatorInfoGraphic::draw()
 VisualElement* OperatorInfoGraphic::NewVisualElement()
 {
 	return new OperatorInfoGraphic;
+}
+
+QSharedPointer<Asset> OperatorInfoGraphic::Create()
+{
+	return QSharedPointer<Asset>(new OperatorInfoGraphic());
 }
 
 void OperatorInfoGraphic::setData(QString field, QString value)

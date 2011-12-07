@@ -38,8 +38,9 @@ class Task : public UIEnabled
 	Q_OBJECT
 public:
 	Task();
+	virtual ~Task(){};
 
-	static QSharedPointer<Task> Create(){return QSharedPointer<Task>(new Task());};
+	static QSharedPointer<Task> Create();
 
 	bool run(QSharedPointer<Engine::PictoEngine> engine);
 	bool jumpToState(QStringList path, QString state);

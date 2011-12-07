@@ -31,7 +31,8 @@ class ScriptElement : public StateMachineElement
 {
 public:
 	ScriptElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ScriptElement());};
+	virtual ~ScriptElement(){};
+	static QSharedPointer<Asset> Create();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

@@ -4,7 +4,7 @@
 #include <QString>
 
 #include "SignalChannelTest.h"
-
+#include "../common/memleakdetect.h"
 
 SignalChannelTest::SignalChannelTest()
 {

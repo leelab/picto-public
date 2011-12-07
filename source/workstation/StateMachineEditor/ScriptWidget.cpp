@@ -1,5 +1,6 @@
 #include <QtGui>
 #include "ScriptWidget.h"
+#include "../../common/memleakdetect.h"
 
 //! [0]
 ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QWidget *parent) :

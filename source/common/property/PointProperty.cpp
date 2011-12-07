@@ -2,10 +2,11 @@
 #include <QObject>
 
 #include "PointProperty.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
-PointProperty::PointProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager):
+PointProperty::PointProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager):
 Property(variantProp,manager)
 {
 	AddSerializationAttribute("x");

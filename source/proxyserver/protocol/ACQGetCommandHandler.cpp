@@ -10,6 +10,7 @@
 #include <windows.h>
 #include "plexon.h"
 #include "NeuralDataAcqInterface.h"
+#include "../../common/memleakdetect.h"
 
 #define MAX_MAP_EVENTS_PER_READ 5000
 

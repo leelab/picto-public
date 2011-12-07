@@ -1,5 +1,6 @@
 #include "simplelfpsource.h"
 #include "..\..\common\storage\LFPDataUnitPackage.h"
+#include "../../common/memleakdetect.h"
 SimpleLFPSource::SimpleLFPSource(double secPerEvent, double secPerSample)
 :SimpleEventSource(secPerEvent,secPerSample)
 {

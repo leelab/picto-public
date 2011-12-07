@@ -1,9 +1,9 @@
 #ifndef _COMPOSITINGSURFACE_H_
 #define _COMPOSITINGSURFACE_H_
 
-#include "../common.h"
-
 #include <QImage>
+
+#include "../common.h"
 
 namespace Picto {
 

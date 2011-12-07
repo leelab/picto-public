@@ -6,6 +6,7 @@
 #include <QMessageBox>
 
 #include <tchar.h>
+#include "../../common/memleakdetect.h"
 
 
 namespace Picto {
@@ -401,6 +402,8 @@ void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect
 	pD3dDevice_->EndScene();
 
 	d3dFont->Release();
+
+	delete[] textW;
 
 
 }

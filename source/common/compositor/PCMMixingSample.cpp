@@ -1,4 +1,5 @@
 #include "PCMMixingSample.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

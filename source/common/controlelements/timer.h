@@ -1,9 +1,8 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
+#include <QDateTime>
 
 #include "../common.h"
-
-#include <QDateTime>
 
 #ifdef WIN32
 #include "Windows.h"

@@ -46,6 +46,7 @@
 #include "../common/parameter/BooleanParameter.h"
 
 #include "../common/network/ServerDiscoverer.h"
+#include "../common/memleakdetect.h"
 
 //Define this if we're actually running on PictoBox
 //#define USING_PICTOBOX

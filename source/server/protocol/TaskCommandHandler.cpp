@@ -6,6 +6,7 @@
 #include <QXmlStreamWriter>
 #include <QThread>
 #include <QTime>
+#include "../../common/memleakdetect.h"
 
 TaskCommandHandler::TaskCommandHandler()
 {

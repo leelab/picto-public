@@ -20,6 +20,7 @@
 #include "TaskCommandHandler.h"
 #include "TestCommandHandler.h"
 #include "TrialCommandHandler.h"
+#include "../../common/memleakdetect.h"
 
 ServerPictoProtocol::ServerPictoProtocol()
 {

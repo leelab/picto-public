@@ -32,6 +32,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QFileDialog>
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 
@@ -92,7 +93,6 @@ RemoteViewer::~RemoteViewer()
 	disconnect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
 	disconnect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
 	disconnect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
-
 }
 //! Called just before displaying the viewer
 void RemoteViewer::init()

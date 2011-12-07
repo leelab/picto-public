@@ -1,4 +1,5 @@
 #include "PseudorandomIntParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {
@@ -22,6 +23,11 @@ PseudorandomIntParameter::PseudorandomIntParameter()
 Parameter* PseudorandomIntParameter::NewParameter()
 {
 	return new PseudorandomIntParameter;
+}
+
+QSharedPointer<Asset> PseudorandomIntParameter::Create()
+{
+	return QSharedPointer<Asset>(new PseudorandomIntParameter());
 }
 
 void PseudorandomIntParameter::randomize()

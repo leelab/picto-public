@@ -2,10 +2,11 @@
 #include <QObject>
 
 #include "ColorProperty.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
-ColorProperty::ColorProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager):
+ColorProperty::ColorProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager):
 Property(variantProp,manager)
 {
 	AddSerializationAttribute("R");

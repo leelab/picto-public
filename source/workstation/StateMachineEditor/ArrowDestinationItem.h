@@ -9,6 +9,7 @@ class ArrowDestinationItem : public ArrowPortItem
 	Q_OBJECT
 public:
 	ArrowDestinationItem(QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene);
+	virtual ~ArrowDestinationItem(){};
 	virtual QPointF getContactPoint();
 protected:
 	virtual void setRect(QRectF rect);

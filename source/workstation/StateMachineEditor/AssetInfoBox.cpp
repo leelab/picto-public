@@ -1,6 +1,7 @@
 #include <QtGui>
 #include "AssetInfoBox.h"
 #include "../../common/storage/datastore.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]

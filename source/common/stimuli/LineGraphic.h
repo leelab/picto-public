@@ -1,14 +1,13 @@
 #ifndef _LINEGRAPHIC_H_
 #define _LINEGRAPHIC_H_
+#include <QVector>
+#include <QPoint>
 
 #include "../common.h"
 
 #include "VisualElement.h"
 #include "../property/PropertyContainer.h"
 #include "../property/Property.h"
-
-#include <QVector>
-#include <QPoint>
 
 namespace Picto {
 
@@ -33,7 +32,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new LineGraphic());};
+	static QSharedPointer<Asset> Create();
 	static const QString type;
 
 	//! \TODO At some point, we might want to expose some getter and setter slots for script binding

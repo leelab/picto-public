@@ -28,7 +28,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new EllipseGraphic());};
+	static QSharedPointer<Asset> Create();
 	QRect getDimensions(){ return propertyContainer_->getPropertyValue("Dimensions").toRect(); };
 	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Dimensions",dimensions);};
 

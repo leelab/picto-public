@@ -22,7 +22,7 @@ class NullRewardController :  public RewardController
 {
 public:
 	NullRewardController() : RewardController(0) {};
-	~NullRewardController() {};
+	virtual ~NullRewardController() {};
 
 public slots:
 	void giveReward(unsigned int channel);

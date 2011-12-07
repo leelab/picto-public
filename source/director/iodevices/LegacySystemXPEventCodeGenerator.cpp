@@ -3,6 +3,7 @@
 #include <QString>
 
 #include "LegacySystemXPEventCodeGenerator.h"
+#include "../../common/memleakdetect.h"
 
 
 #define DAQmxErrChk(rc) { if (rc) { \
@@ -71,7 +72,7 @@ void LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	//data[7] = 1;
 
 #ifdef DEBUG_ON_ORION_MACHINE
-	uInt16 data[] = {(eventCode & 0x7F) | 0x8000};
+	uInt16 data[1] = {(eventCode & 0x7F) | 0x8000};
 	//set the event lines
 	DAQmxErrChk(DAQmxWriteDigitalU16(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 #else
@@ -97,8 +98,9 @@ void LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	
 #ifdef DEBUG_ON_ORION_MACHINE
 	//reset the event lines to 0 
-	for(int i=0; i<16; i++)
-		data[i] = 0;
+	//for(int i=0; i<16; i++)
+	//	data[i] = 0;
+	data[0] = 0;
 	DAQmxErrChk(DAQmxWriteDigitalU16(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 #else
 	//reset the event lines to 0 

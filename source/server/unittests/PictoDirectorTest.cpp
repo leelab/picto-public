@@ -1,5 +1,6 @@
 #include "PictoDirectorTest.h"
 #include <QString>
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 
 PictoDirectorTest::PictoDirectorTest()

@@ -1,12 +1,13 @@
 #ifndef _CHOICECONTROLLER_H_
 #define _CHOICECONTROLLER_H_
 
+#include <QList>
+
 #include "../common.h"
 #include "Timer.h"
 #include "ControlElement.h"
 #include "../engine/SignalChannel.h"
 #include "ControlResult.h"
-#include <QList>
 
 namespace Picto {
 
@@ -35,9 +36,10 @@ class ChoiceController : public ControlElement
 {
 public:
 	ChoiceController();
+	virtual ~ChoiceController(){};
 
 	static ControlElement* NewChoiceController();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ChoiceController());};
+	static QSharedPointer<Asset> Create();
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);

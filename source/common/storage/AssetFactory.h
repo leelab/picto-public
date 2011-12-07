@@ -1,12 +1,12 @@
 #ifndef _ASSETFACTORY_H_
 #define _ASSETFACTORY_H_
 
-#include "Asset.h"
-
 #include <QSharedPointer>
 #include <QString>
 #include <QVector>
 #include <QMap>
+
+#include "Asset.h"
 
 namespace Picto {
 
@@ -22,6 +22,7 @@ public:
 	AssetFactory(int minAssets = 0,int maxAssets = -1);
 	//AssetFactory(QSharedPointer<Asset> singleDefaultAsset);
 	AssetFactory(	int minAssets,int maxAssets,NewAssetFnPtr newAssetFn/*,QVector<QSharedPointer<Asset>> defaultAssets = QVector<QSharedPointer<Asset>>()*/);
+	virtual ~AssetFactory(){};
 	void addAssetType(QString type,QSharedPointer<AssetFactory> factory);
 	QStringList getTypes();
 

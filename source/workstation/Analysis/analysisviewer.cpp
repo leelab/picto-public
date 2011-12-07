@@ -21,6 +21,7 @@
 #include <QSqlRecord>
 #include <QFileDialog>
 #include <QSqlField>
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 

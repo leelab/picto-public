@@ -1,3 +1,5 @@
+#include <QCoreApplication>
+#include <QUuid>
 
 #include "State.h"
 #include "../controlelements/ControlElementFactory.h"
@@ -22,9 +24,7 @@
 //#include "../stimuli/PictureGraphic.h"
 //#include "../stimuli/RandomlyFilledGridGraphic.h"
 //#include "../stimuli/TextGraphic.h"
-
-#include <QCoreApplication>
-#include <QUuid>
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -87,6 +87,11 @@ State::State() :
 	revision_ = -1;
 	engineNeeded_ = -1;
 
+}
+
+QSharedPointer<Asset> State::Create()
+{
+	return QSharedPointer<Asset>(new State());
 }
 
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -705,12 +710,14 @@ void State::scriptableContainerWasReinitialized()
 {
 	scene_ = QSharedPointer<Scene>(new Scene);
 	hasCursor_ = false;
-	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
-	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
+	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
+	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
 	{
-		if(scriptable.dynamicCast<VisualElement>())
+		if(scriptable.isNull())
+			continue;
+		if(scriptable.toStrongRef().dynamicCast<VisualElement>())
 		{
-			scene_->addVisualElement(scriptable.staticCast<VisualElement>());
+			scene_->addVisualElement(scriptable.toStrongRef().staticCast<VisualElement>());
 		}
 	}
 	QColor backgroundColor;

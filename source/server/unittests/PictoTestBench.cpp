@@ -1,6 +1,7 @@
 #include "PictoTestBench.h"
 #include "PictoWorkstationSimulator.h"
 #include <QTest>
+#include "../../common/memleakdetect.h"
 
 using namespace PictoSim;
 using namespace TestBench;

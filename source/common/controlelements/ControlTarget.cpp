@@ -1,5 +1,6 @@
-#include "ControlTarget.h"
 #include <QPainter>
+#include "ControlTarget.h"
+
 namespace Picto
 {
 

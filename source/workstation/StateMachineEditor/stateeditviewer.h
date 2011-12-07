@@ -44,6 +44,7 @@
 
 #include <QMainWindow>
 #include <QPointer>
+#include <QButtonGroup>
 
 
 
@@ -85,6 +86,7 @@ class StateEditViewer : public Viewer
 
 public:
    StateEditViewer(QWidget *parent=0);
+   virtual ~StateEditViewer();
 
 
 
@@ -144,9 +146,9 @@ private:
 
     QComboBox *sceneScaleCombo;
 
-    QButtonGroup *buttonGroup;
-    QButtonGroup *pointerTypeGroup;
-    QButtonGroup *backgroundButtonGroup;
+    QSharedPointer<QButtonGroup> buttonGroup;
+    QSharedPointer<QButtonGroup> pointerTypeGroup;
+    QSharedPointer<QButtonGroup> backgroundButtonGroup;
     QToolButton *fillColorToolButton;
     QToolButton *lineColorToolButton;
     QAction *boldAction;

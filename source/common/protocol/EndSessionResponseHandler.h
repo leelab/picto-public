@@ -20,7 +20,7 @@ public:
 	QString method(){return "ENDSESSION";};
 protected:
 	virtual bool processResponse(QString directive);
-	QSharedPointer<CommandChannel> commandChannel_;
+	QWeakPointer<CommandChannel> commandChannel_;	//Command channel owns this, not the other way around
 private:
 
 };

@@ -46,6 +46,11 @@ Layer::Layer()
 	elapsedTime_.start();
 }
 
+QSharedPointer<Asset> Layer::Create()
+{
+	return QSharedPointer<Asset>(new Layer());
+}
+
 void Layer::bindToScriptEngine(QScriptEngine& qsEngine)
 {
 	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)

@@ -6,6 +6,7 @@
 
 #include "NetworkSignalChannel.h"
 #include "../storage/BehavioralDataUnitPackage.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

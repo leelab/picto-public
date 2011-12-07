@@ -28,6 +28,7 @@ class OperatorClickParameter : public Parameter
 public:
 
 	static QSharedPointer<Asset> Create();
+	virtual ~OperatorClickParameter(){};
 
 	int getX(){propertyContainer_->setPropertyValue("NewClick",false);return propertyContainer_->getPropertyValue("Pos").toPoint().x();};
 	void setX(int){};

@@ -5,6 +5,7 @@
 #include "../../common/statemachine/uienabled.h"
 #include "../../common/statemachine/uiinfo.h"
 #include "AssetItem.h"
+#include "../../common/memleakdetect.h"
 EditorState::EditorState()
 :
 editMode_(Select),

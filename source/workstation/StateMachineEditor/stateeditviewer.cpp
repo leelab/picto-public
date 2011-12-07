@@ -52,6 +52,7 @@
 #include "PropertyBrowser.h"
 #include "AssetInfoBox.h"
 #include "ViewerWindow.h"
+#include "../../common/memleakdetect.h"
 
 const int InsertTextButton = 10;
 
@@ -110,6 +111,12 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 
     //setCentralWidget(widget);
     //setWindowTitle(tr("Diagramscene"));
+}
+
+StateEditViewer::~StateEditViewer()
+{
+	int i=0;
+	i++;
 }
 //! [0]
 void StateEditViewer::init()
@@ -298,34 +305,6 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
 	//	this, SLOT(loadAsset(QSharedPointer<Asset>)));
 }
 
-//void StateEditViewer::loadAsset(QSharedPointer<Asset> asset)
-//{
-//	toolbox_->setAsset(asset);
-//	loadAssetProperties(asset);
-//}
-
-//void StateEditViewer::loadAssetProperties(QSharedPointer<Asset> asset)
-//{
-//	propertyEditor_->clear();
-//	if(asset.isNull())
-//		return;
-//					
-//	QSharedPointer<DataStore> dataStore(asset.dynamicCast<DataStore>());
-//	if(dataStore.isNull())
-//		return;
-//
-//	propertyEditor_->setFactoryForManager(dataStore->getPropertyContainer()->getPropertyManager().data(), propertyFactory_.data());
-//	QMap<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
-//	for(QMap<QString, QVector<QSharedPointer<Property>>>::iterator typeIter = properties.begin();typeIter !=properties.end();typeIter ++)
-//	{
-//		for(QVector<QSharedPointer<Property>>::iterator propIter = typeIter.value().begin(); propIter != typeIter.value().end(); propIter++)
-//		{
-//			propertyEditor_->addProperty((*propIter)->getVariantProperty().data());
-//		}
-//	}
-//	propertyEditor_->setMinimumWidth(propertyEditor_->childrenRect().width());
-//}
-
 void StateEditViewer::resetExperiment()
 {
 	insertEditBlock();
@@ -481,14 +460,14 @@ void StateEditViewer::createToolbars()
     linePointerButton->setCheckable(true);
     linePointerButton->setIcon(QIcon(":/icons/linepointer.png"));
 
-    pointerTypeGroup = new QButtonGroup;
+    pointerTypeGroup = QSharedPointer<QButtonGroup>(new QButtonGroup);
     pointerTypeGroup->addButton(pointerButton, int(DiagramScene::Select));
 	pointerTypeGroup->addButton(navigateButton,
                                 int(DiagramScene::Navigate));
     pointerTypeGroup->addButton(linePointerButton,
                                 int(DiagramScene::InsertLine));
 	pointerTypeGroup->setExclusive(true);
-    connect(pointerTypeGroup, SIGNAL(buttonClicked(int)),
+    connect(pointerTypeGroup.data(), SIGNAL(buttonClicked(int)),
             editorState_.data(), SLOT(setEditMode(int)));
 	connect(editorState_.data(), SIGNAL(editModeChanged(int)),
             this, SLOT(updateEditModeButtons(int)));

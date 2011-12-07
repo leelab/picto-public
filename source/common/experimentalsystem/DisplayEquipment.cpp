@@ -1,4 +1,5 @@
 #include "DisplayEquipment.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

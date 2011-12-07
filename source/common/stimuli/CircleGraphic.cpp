@@ -1,6 +1,6 @@
-#include "CircleGraphic.h"
-
 #include <QPainter>
+#include "CircleGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -70,6 +70,11 @@ void CircleGraphic::draw()
 VisualElement* CircleGraphic::NewVisualElement()
 {
 	return new CircleGraphic;
+}
+
+QSharedPointer<Asset> CircleGraphic::Create()
+{
+	return QSharedPointer<Asset>(new CircleGraphic());
 }
 
 //void CircleGraphic::slotPropertyValueChanged(QString propertyName, int,

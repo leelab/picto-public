@@ -1,4 +1,5 @@
 #include "Result.h"
+#include "../memleakdetect.h"
 namespace Picto
 {
 
@@ -15,6 +16,11 @@ Result::Result(QString name)
 	//this to serialize out with its name, but only if something else about it changes.
 	setName(name);
 	setUnedited();
+}
+
+QSharedPointer<Asset> Result::Create()
+{
+	return QSharedPointer<Asset>(new Result());
 }
 
 void Result::postDeserialize()

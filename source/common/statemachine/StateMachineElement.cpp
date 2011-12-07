@@ -1,3 +1,4 @@
+#include <QCoreApplication>
 #include "StateMachineElement.h"
 
 #include "../property/Property.h"
@@ -5,7 +6,7 @@
 #include "../protocol/ProtocolResponse.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/AssetFactory.h"
-#include <QCoreApplication>
+#include "../memleakdetect.h"
 
 namespace Picto {
 

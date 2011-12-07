@@ -22,7 +22,7 @@ class NullEventCodeGenerator : public EventCodeGenerator
 	Q_OBJECT
 public:
 	NullEventCodeGenerator();
-	~NullEventCodeGenerator();
+	virtual ~NullEventCodeGenerator();
 
 	int getBitsPerEvent();
 

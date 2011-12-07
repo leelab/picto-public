@@ -1431,9 +1431,11 @@
    <file alias="ioapi_8h-source.html">../../../output/documentation/main/html/ioapi_8h-source.html</file>
    <file alias="iowin32_8c-source.html">../../../output/documentation/main/html/iowin32_8c-source.html</file>
    <file alias="iowin32_8h-source.html">../../../output/documentation/main/html/iowin32_8h-source.html</file>
+   <file alias="mainmemleakdetect_8h-source.html">../../../output/documentation/main/html/mainmemleakdetect_8h-source.html</file>
    <file alias="mainpage_8h-source.html">../../../output/documentation/main/html/mainpage_8h-source.html</file>
    <file alias="mainwindow_8cpp-source.html">../../../output/documentation/main/html/mainwindow_8cpp-source.html</file>
    <file alias="mainwindow_8h-source.html">../../../output/documentation/main/html/mainwindow_8h-source.html</file>
+   <file alias="memleakdetect_8h-source.html">../../../output/documentation/main/html/memleakdetect_8h-source.html</file>
    <file alias="menu_8cpp-source.html">../../../output/documentation/main/html/menu_8cpp-source.html</file>
    <file alias="menu_8h-source.html">../../../output/documentation/main/html/menu_8h-source.html</file>
    <file alias="modules.html">../../../output/documentation/main/html/modules.html</file>

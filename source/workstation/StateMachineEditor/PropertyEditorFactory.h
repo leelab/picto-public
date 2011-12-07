@@ -20,6 +20,7 @@ class PropertyEditorFactory : public QtVariantEditorFactory
 
 public:
    PropertyEditorFactory(QWidget *parent=0);
+   virtual ~PropertyEditorFactory(){};
    void setNextProperty(QSharedPointer<Property> nextProp);
    void clear();
 signals:

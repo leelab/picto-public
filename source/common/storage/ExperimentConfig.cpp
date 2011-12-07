@@ -1,6 +1,7 @@
 #include "ExperimentConfig.h"
 #include "Asset.h"
 #include "../statemachine/Transition.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 

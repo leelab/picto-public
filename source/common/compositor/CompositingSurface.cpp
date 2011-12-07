@@ -1,4 +1,5 @@
 #include "CompositingSurface.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

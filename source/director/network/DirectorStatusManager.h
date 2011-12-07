@@ -19,7 +19,7 @@ protected:
 	virtual void doServerUpdate();
 private:
 	ComponentStatus status_;
-	QSharedPointer<Picto::Engine::PictoEngine> engine_;
+	QWeakPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<Picto::Experiment> experiment_;
 	static QMap<QString,ComponentStatus> statusTransitionDictionary_;
 	static QMap<ComponentStatus,QString> statusNameDictionary_;

@@ -20,6 +20,7 @@
 #include <QXmlStreamReader>
 #include <QMenu>
 #include <QFileDialog>
+#include "../../common/memleakdetect.h"
 
 
 TestViewer::TestViewer(QWidget *parent) :

@@ -3,6 +3,7 @@
 #include "DataStore.h"
 #include "../property/Property.h"
 #include "PropertyFactory.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -13,6 +14,12 @@ Asset()
 	propertyContainer_ = PropertyContainer::create("DataStore");
 }
 
+
+DataStore::~DataStore()
+{
+	int noOp=0;
+	noOp++;
+}
 //Autoserialization Stuff-------------------------------------------------------------
 
 bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)

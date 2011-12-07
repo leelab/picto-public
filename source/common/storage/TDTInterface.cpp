@@ -1,4 +1,5 @@
 #include "TDTInterface.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

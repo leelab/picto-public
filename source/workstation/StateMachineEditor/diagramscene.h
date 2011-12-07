@@ -71,6 +71,7 @@ public:
     enum Mode { Select, Navigate, InsertLine};
 
     DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent = 0);
+	virtual ~DiagramScene(){};
 
 	QGraphicsLineItem* insertTransition(DiagramItem* source, DiagramItem* dest, QSharedPointer<Asset> transition = QSharedPointer<Asset>());
 	DiagramItem* insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos);

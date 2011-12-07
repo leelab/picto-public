@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QSharedPointer>
+#include <QWeakPointer>
 #include <QHostAddress>
 #include <QTcpSocket>
 #include <QUdpSocket>
@@ -83,7 +84,7 @@ class CommandChannel : public QObject
 public:
 	CommandChannel(QUuid sourceId, QString sourceType, QObject *parent = 0);
 	CommandChannel(QUuid sourceId, QString sourceType, QHostAddress serverAddress, quint16 serverPort_, QObject *parent = 0);
-	~CommandChannel();
+	virtual ~CommandChannel();
 
 	int incomingResponsesWaiting();
 
@@ -157,8 +158,8 @@ private:
 	QUuid sourceId_;
 	QString sourceType_;
 
-	QSharedPointer<ComponentStatusManager> statusManager_;
-	QMap<QString,QSharedPointer<ProtocolResponseHandler>> responseHandlerMap_;
+	QWeakPointer<ComponentStatusManager> statusManager_;						//This pointers must be weak to aviod circular references
+	QMap<QString,QSharedPointer<ProtocolResponseHandler>> responseHandlerMap_;	
 	QDateTime discoverMsgSentTime_;
 	QDateTime earliestPendingCommand_;
 	QDateTime lastReconnectTime_;

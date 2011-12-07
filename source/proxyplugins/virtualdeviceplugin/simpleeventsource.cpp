@@ -1,4 +1,5 @@
 #include "simpleeventsource.h"
+#include "../../common/memleakdetect.h"
 
 SimpleEventSource::SimpleEventSource(double secPerEvent, double secPerSample)
 {

@@ -1,4 +1,5 @@
 #include "UIInfo.h"
+#include "../memleakdetect.h"
 namespace Picto
 {
 
@@ -6,6 +7,11 @@ UIInfo::UIInfo()
 {
 	AddDefinableProperty(QVariant::Point,"Pos",QPoint());
 	AddDefinableProperty(QVariant::Point,"UniqueID",QString());
+}
+
+QSharedPointer<Asset> UIInfo::Create()
+{
+	return QSharedPointer<Asset>(new UIInfo());
 }
 
 void UIInfo::setPos(QPoint pos)

@@ -1,4 +1,5 @@
 #include "TimerParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {
@@ -16,6 +17,11 @@ TimerParameter::TimerParameter()
 Parameter* TimerParameter::NewParameter()
 {
 	return new TimerParameter;
+}
+
+QSharedPointer<Asset> TimerParameter::Create()
+{
+	return QSharedPointer<Asset>(new TimerParameter());
 }
 
 void TimerParameter::restart()

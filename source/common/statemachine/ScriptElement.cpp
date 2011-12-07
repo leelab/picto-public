@@ -2,6 +2,7 @@
 
 #include "ScriptElement.h"
 #include "../storage/AssetFactory.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {
@@ -60,6 +61,11 @@ void ScriptElement::setScript(QString script)
 //
 //	return true;
 //}
+
+QSharedPointer<Asset> ScriptElement::Create()
+{
+	return QSharedPointer<Asset>(new ScriptElement());
+}
 
 QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 {

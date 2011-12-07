@@ -1,12 +1,13 @@
-#include "ProtocolResponse.h"
-
-#include "../globals.h"
-
 #include <QDateTime>
 #include <QBuffer>
 #include <QtIOCompressor>
 #include <QRegExp>
 #include <QStringList>
+
+#include "ProtocolResponse.h"
+
+#include "../globals.h"
+#include "../memleakdetect.h"
 
 
 namespace Picto {

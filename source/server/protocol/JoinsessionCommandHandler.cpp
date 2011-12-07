@@ -5,6 +5,7 @@
 #include "../connections/ConnectionManager.h"
 
 #include <QXmlStreamWriter>
+#include "../../common/memleakdetect.h"
 
 JoinsessionCommandHandler::JoinsessionCommandHandler()
 {

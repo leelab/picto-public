@@ -14,6 +14,7 @@ class AssetInfoBox : public QTextEdit
 
 public:
    AssetInfoBox(QSharedPointer<EditorState> editorState,QWidget *parent=0);
+   virtual ~AssetInfoBox(){};
 public slots:
 	void assetSelected(QSharedPointer<Asset> asset);
 

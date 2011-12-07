@@ -1,12 +1,15 @@
 TEMPLATE = app
 TARGET = BlankScreen
-QT = core gui xml
+QT = core gui xml network script scripttools sql svg
 CONFIG += qt warn_on debug_and_release
 DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/embedded/blankscreen/main.cpp
+
+include($$(PICTO_THIRD_PARTY)/qtpropertybrowser-2.5-opensource/src/qtpropertybrowser.pri)
+
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
@@ -52,4 +55,23 @@ build_pass:CONFIG(debug, debug|release) {
 }
 build_pass:CONFIG(release, debug|release) {
   OBJECTS_DIR	= $$member(OBJECTS_DIR, 0)./release
+}
+
+# Libraries
+build_pass:CONFIG(debug, debug|release) {
+win32:LIBPATH += $$(PICTO_TREE)/intermediates/lib/debug
+unix:!macx:LIBPATH += $$(PICTO_TREE)/output/bin/debug/shared
+macx:LIBPATH += $$(PICTO_TREE)/intermediates/lib/debug
+win32:LIBS += libPicto_debug.lib
+unix:LIBS += -lPicto_debug
+macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/debug/
+}
+
+build_pass:CONFIG(release, debug|release) {
+win32:LIBPATH += $$(PICTO_TREE)/intermediates/lib/release
+unix:!macx:LIBPATH += $$(PICTO_TREE)/output/bin/release/shared
+macx:LIBPATH += $$(PICTO_TREE)/intermediates/lib/release
+win32:LIBS += libPicto.lib
+unix:LIBS += -lPicto
+macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/
 }

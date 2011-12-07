@@ -17,6 +17,7 @@ public:
 	enum EditMode { Select = 0, Navigate, InsertLine };
 
 	EditorState();
+	virtual ~EditorState(){};
 
 	//Get Functions
 	EditMode getEditMode(){return editMode_;};

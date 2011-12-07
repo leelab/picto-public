@@ -16,6 +16,7 @@ class PictoData : public DataStore
 {
 public:
 	static QSharedPointer<Asset> Create();
+	virtual ~PictoData(){};
 	virtual QString assetType(){return "PictoData";};
 	QSharedPointer<Experiment> getExperiment();
 	QSharedPointer<StateMachineEditorData> getStateMachineEditorData();

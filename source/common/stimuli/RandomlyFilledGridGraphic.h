@@ -41,7 +41,7 @@ public:
 	void draw();
 	void updateAnimation(int frame, QTime elapsedTime);
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new RandomlyFilledGridGraphic());};
+	static QSharedPointer<Asset> Create();
 	static const QString type;
 
 	void setColor2(QColor color) { propertyContainer_->setPropertyValue("Color2",color); draw(); };

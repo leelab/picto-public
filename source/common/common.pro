@@ -16,6 +16,8 @@ HEADERS += $$(PICTO_TREE)/source/common/namedefs.h
 SOURCES += $$(PICTO_TREE)/source/common/namedefs.cpp
 HEADERS += $$(PICTO_TREE)/source/common/globals.h
 SOURCES += $$(PICTO_TREE)/source/common/globals.cpp
+HEADERS += $$(PICTO_TREE)/source/common/mainmemleakdetect.h
+HEADERS += $$(PICTO_TREE)/source/common/memleakdetect.h
 
 
 HEADERS += $$(PICTO_TREE)/source/common/analysis/AnalysisModule.h

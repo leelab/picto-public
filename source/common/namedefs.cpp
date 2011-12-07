@@ -1,4 +1,5 @@
 #include "namedefs.h"
+#include "memleakdetect.h"
 
 namespace Picto {
 

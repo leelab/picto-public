@@ -1,6 +1,7 @@
-#include "ComponentStatusManager.h"
 #include <QApplication>
 #include <QTimer>
+#include "ComponentStatusManager.h"
+#include "../memleakdetect.h"
 
 QMap<QString,ComponentStatus> ComponentStatusManager::statusTransitionDictionary_;
 QMap<ComponentStatus,QString> ComponentStatusManager::statusNameDictionary_;

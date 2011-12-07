@@ -1,6 +1,8 @@
-#include "VisualTargetHost.h"
 
 #include <QRect>
+
+#include "VisualTargetHost.h"
+#include "../memleakdetect.h"
 namespace Picto {
 
 VisualTargetHost::VisualTargetHost()

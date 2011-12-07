@@ -12,6 +12,7 @@
 #include <QUuid>
 
 #include <QDebug>
+#include "../../common/memleakdetect.h"
 
 Q_DECLARE_METATYPE(QSharedPointer<Picto::ProtocolResponse>)
 Q_DECLARE_METATYPE(QSharedPointer<Picto::ProtocolCommand>)

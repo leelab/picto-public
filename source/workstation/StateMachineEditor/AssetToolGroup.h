@@ -10,6 +10,7 @@ class AssetToolGroup : public ToolGroup
 
 public:
    AssetToolGroup(QSharedPointer<EditorState> editorState,QSharedPointer<Asset> asset = QSharedPointer<Asset>(),QWidget *parent=0);
+   virtual ~AssetToolGroup(){};
    void setAsset(QSharedPointer<Asset> asset);
 protected:
 	virtual void doButtonAction(int buttonId);

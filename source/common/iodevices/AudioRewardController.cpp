@@ -1,7 +1,8 @@
-#include "AudioRewardController.h"
-
 #include <QApplication>
 #include <QTime>
+
+#include "AudioRewardController.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {

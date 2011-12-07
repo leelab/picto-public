@@ -1,4 +1,5 @@
 #include "NeuralDataUnit.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

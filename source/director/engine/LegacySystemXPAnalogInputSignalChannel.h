@@ -23,7 +23,7 @@ class LegacySystemXPAnalogInputSignalChannel : public SignalChannel
 {
 public:
 	LegacySystemXPAnalogInputSignalChannel(int sampsPerSecond);
-	~LegacySystemXPAnalogInputSignalChannel() { stop(); };
+	virtual ~LegacySystemXPAnalogInputSignalChannel() { stop(); };
 
 	bool start();
 	bool stop();

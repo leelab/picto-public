@@ -26,7 +26,7 @@ class LegacySystemXPRewardController :  public RewardController
 {
 public:
 	LegacySystemXPRewardController(unsigned int channelCount);
-	~LegacySystemXPRewardController();
+	virtual ~LegacySystemXPRewardController();
 
 public slots:
 	void giveReward(unsigned int channel);

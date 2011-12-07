@@ -1,4 +1,5 @@
 #include "AlignmentDataUnit.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

@@ -17,6 +17,7 @@ class PropertyEditTracker : public QObject
 
 public:
 	PropertyEditTracker(QSharedPointer<Picto::Property> prop);
+	virtual ~PropertyEditTracker(){};
 	void addTrackedWidget(QWidget* widget);
 signals:
 	void propertyEdited(QSharedPointer<Property> prop);

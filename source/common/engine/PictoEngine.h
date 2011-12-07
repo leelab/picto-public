@@ -6,6 +6,11 @@
 #ifndef _PICTOENGINE_H_
 #define _PICTOENGINE_H_
 
+#include <QSharedPointer>
+#include <QFuture>
+#include <QUuid>
+#include <QList>
+
 #include "../common.h"
 #include "../compositor/RenderingTarget.h"
 //#include "../task/Task.h"
@@ -22,11 +27,6 @@
 #include "../storage/RewardDataUnit.h"
 #include "../storage/experimentconfig.h"
 #include "propertytable.h"
-
-#include <QSharedPointer>
-#include <QFuture>
-#include <QUuid>
-#include <QList>
 
 namespace Picto {
 	namespace Engine {
@@ -159,7 +159,6 @@ public:
 	bool operatorIsUser(){return userIsOperator_;};
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
-	CommandChannel* getSlaveCommandChannel() { return slaveCommandChannel_; };
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
 	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";firstCurrStateUpdate_ = true;};
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};

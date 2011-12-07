@@ -1,5 +1,6 @@
-#include "ProtocolResponseHandler.h"
 #include <QStringList>
+#include "ProtocolResponseHandler.h"
+#include "../memleakdetect.h"
 using namespace Picto;
 
 ProtocolResponseHandler::ProtocolResponseHandler(QSharedPointer<ComponentStatusManager> statusManager):
@@ -27,8 +28,15 @@ void ProtocolResponseHandler::acceptResponse(QSharedPointer<ProtocolResponse> re
 	QString statusDirective = directive.left(directiveEnd);
 	directive.remove(0,directiveEnd+1);
 	processingResponse_ = true;
+	Q_ASSERT(!statusManager_.isNull());
 	if(processResponse(directive))
-		statusManager_->setStatus(statusDirective);
+		statusManager_.toStrongRef()->setStatus(statusDirective);
+	#ifdef ENABLE_MEMORY_LEAK_DETECTION
+	//This Enables Memory Leak Detection
+	if(method() == "START")
+		_CrtDumpMemoryLeaks();
+	/////////////////////////////////////////////////////////////////
+	#endif
 	processingResponse_ = false;
 }
 

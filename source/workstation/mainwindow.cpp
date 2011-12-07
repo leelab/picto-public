@@ -10,6 +10,7 @@
 #include "remoteviewer/remoteviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
 #include "analysis/analysisviewer.h"
+#include "../common/memleakdetect.h"
 
 MainWindow::MainWindow()
 {	

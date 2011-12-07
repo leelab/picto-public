@@ -1,5 +1,5 @@
-#include "RectTarget.h"
 #include <QPainter>
+#include "RectTarget.h"
 namespace Picto
 {
 
@@ -40,6 +40,11 @@ bool RectTarget::contains(int x, int y)
 	if(myRect.contains(x,y))
 		return true;
 	return false;
+}
+
+QSharedPointer<Asset> RectTarget::Create()
+{
+	return QSharedPointer<Asset>(new RectTarget());
 }
 
 QRect RectTarget::getBounds()

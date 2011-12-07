@@ -31,7 +31,7 @@ class PictoBoxXPRewardController :  public RewardController
 {
 public:
 	PictoBoxXPRewardController(unsigned int channelCount);
-	~PictoBoxXPRewardController();
+	virtual ~PictoBoxXPRewardController();
 
 public slots:
 	void giveReward(unsigned int channel);

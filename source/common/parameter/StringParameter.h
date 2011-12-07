@@ -34,9 +34,10 @@ class StringParameter : public Parameter
 
 public:
 	StringParameter();
+	virtual ~StringParameter(){};
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StringParameter());};
+	static QSharedPointer<Asset> Create();
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

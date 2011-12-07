@@ -32,7 +32,7 @@ class PictoBoxXPEventCodeGenerator : public EventCodeGenerator
 	Q_OBJECT
 public:
 	PictoBoxXPEventCodeGenerator();
-	~PictoBoxXPEventCodeGenerator();
+	virtual ~PictoBoxXPEventCodeGenerator();
 
 	int getBitsPerEvent() { return 7; };
 

@@ -9,6 +9,7 @@
 #include <QAction>
 
 #include <QXmlStreamReader>
+#include "../../common/memleakdetect.h"
 
 TextViewer::TextViewer(QAction* checkSyntaxAction, QWidget *parent)
 : Viewer(parent)

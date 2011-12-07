@@ -24,9 +24,10 @@ class TestController : public ControlElement
 
 public:
 	TestController();
+	virtual ~TestController(){};
 
 	static ControlElement* NewTestController();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TestController());};
+	static QSharedPointer<Asset> Create();
 
 	static QString ControllerType();
 

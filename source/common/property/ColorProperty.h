@@ -15,12 +15,13 @@ class ColorProperty : public Property
 {
 	Q_OBJECT
 public:
+	virtual ~ColorProperty(){};
 	virtual QString toUserString();
 	virtual void fromUserString(QString userString);
 public slots:
 	void set(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
 protected:
-	ColorProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
+	ColorProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:

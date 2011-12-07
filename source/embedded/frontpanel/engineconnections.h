@@ -16,7 +16,7 @@ class EngineConnections : public QObject
 	Q_OBJECT
 public:
 	EngineConnections(FrontPanelInfo *panelInfo, QObject* parent = 0);
-	~EngineConnections();
+	virtual ~EngineConnections();
 
 private slots:
 	void setupCommandConnection();

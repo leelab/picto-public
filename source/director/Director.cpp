@@ -12,6 +12,7 @@
 #include "protocol/DirectorStopResponseHandler.h"
 #include "protocol/DirectorParameterResponseHandler.h"
 #include "protocol/DirectorClickResponseHandler.h"
+#include "../common/memleakdetect.h"
 using namespace Picto;
 
 Director::Director(QString name,

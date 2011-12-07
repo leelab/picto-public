@@ -8,6 +8,7 @@
 //
 //#include "neuraldatacollector.h"
 ////#include "../connections/ServerConfig.h"
+#include "../../common/memleakdetect.h"
 //
 //NeuralDataCollector::NeuralDataCollector(int proxyId, QString sessionDbName, int interval, QObject *parent):
 //		QThread(parent),

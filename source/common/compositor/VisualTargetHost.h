@@ -2,11 +2,12 @@
 #ifndef _VISUAL_TARGET_HOST_H_
 #define _VISUAL_TARGET_HOST_H_
 
-#include "VisualTarget.h"
 
 #include <QSharedPointer>
 #include <QWidget>
 #include <QMouseEvent>
+
+#include "VisualTarget.h"
 
 namespace Picto {
 

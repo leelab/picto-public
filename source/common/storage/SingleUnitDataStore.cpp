@@ -1,4 +1,5 @@
 #include "SingleUnitDataStore.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

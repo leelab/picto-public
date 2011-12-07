@@ -4,6 +4,7 @@
 #include <QMenu>
 #include <QContextMenuEvent>
 #include <QCursor>
+#include "../../common/memleakdetect.h"
 
 
 XmlEditor::XmlEditor(QWidget *parent) :

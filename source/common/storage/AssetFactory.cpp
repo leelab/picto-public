@@ -1,5 +1,6 @@
 #include "AssetFactory.h"
 #include "../statemachine/uienabled.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 AssetFactory::AssetFactory(int minAssets,int maxAssets ) :
@@ -28,6 +29,7 @@ uITemplateInitialized_(false)
 
 void AssetFactory::addAssetType(QString type,QSharedPointer<AssetFactory> factory)
 {
+	Q_ASSERT(factory.data() != this);
 	Q_ASSERT_X(isGroupFactory_,"AssetFactory::addAssetType","Asset Types can only be added to AssetFactories created with the AssetFactory(int minAssets,int maxAssets) constructor");
 	factoriesByType_[type] = factory;
 }

@@ -2,6 +2,7 @@
 #include <QNetworkInterface>
 #include <QEventLoop>
 #include "../../common/common.h"
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 using namespace Server;
 //Not Yet Implemented

@@ -9,6 +9,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include "../common/memleakdetect.h"
 
 RunTaskDialog::RunTaskDialog(QSharedPointer<Picto::CommandChannel> commandChannel, QSharedPointer<Picto::Experiment> experiment, QUuid sessionId)
 	: commandChannel_(commandChannel),
@@ -26,7 +27,8 @@ void RunTaskDialog::createDialog()
 	taskLabel_ = new QLabel(tr("Task"));
 
 	taskComboBox_ = new QComboBox();
-	QStringList taskList = experiment_->getTaskNames();
+	Q_ASSERT(!experiment_.isNull());
+	QStringList taskList = experiment_.toStrongRef()->getTaskNames();
 	taskList.sort();
 	taskComboBox_->addItems(taskList);
 

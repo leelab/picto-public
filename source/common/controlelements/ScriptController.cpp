@@ -18,6 +18,11 @@ ControlElement* ScriptController::NewScriptController()
 	return new ScriptController;
 }
 
+QSharedPointer<Asset> ScriptController::Create()
+{
+	return QSharedPointer<Asset>(new ScriptController());
+}
+
 QString ScriptController::ControllerType()
 {
 	return "Script Controller";

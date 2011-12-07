@@ -27,7 +27,7 @@
 //
 //public:
 //	NeuralDataCollector(int proxyId, QString sessionDbName, int interval=1000, QObject *parent=0);
-//	~NeuralDataCollector() { printf("~NeuralDataCollector\n"); };
+//	virtual ~NeuralDataCollector() { printf("~NeuralDataCollector\n"); };
 //
 //	void setCollectionInterval(int interval) { collectionInterval_ = interval;};
 //	int getCollectionInterval() { return collectionInterval_; };

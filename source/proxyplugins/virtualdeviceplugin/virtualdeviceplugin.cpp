@@ -4,6 +4,7 @@
 #include "simplespikesource.h"
 #include "simplemarksource.h"
 #include "simplelfpsource.h"
+#include "../../common/memleakdetect.h"
 
 QSharedPointer<Picto::Timestamper> VirtualDevicePlugin::timeStamper_ = QSharedPointer<Picto::Timestamper>(new Picto::Timestamper());
 

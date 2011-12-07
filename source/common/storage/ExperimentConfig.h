@@ -22,6 +22,7 @@ class ExperimentConfig : public QObject, public Serializable
 	Q_OBJECT
 public:
 	ExperimentConfig();
+	virtual ~ExperimentConfig(){};
 
 	using Serializable::toXml;
 	using Serializable::fromXml;

@@ -27,7 +27,7 @@ class NetworkSignalChannel : public SignalChannel
 
 public:
 	NetworkSignalChannel(CommandChannel *serverChannel);
-	~NetworkSignalChannel() {};
+	virtual ~NetworkSignalChannel() {};
 
 	bool start();
 	bool stop();

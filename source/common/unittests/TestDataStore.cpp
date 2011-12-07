@@ -35,6 +35,7 @@
 #include "../controlelements/TestController.h"
 #include "../controlelements/StopwatchController.h"
 #include "../controlelements/TargetController.h"
+#include "../memleakdetect.h"
 
 Q_DECLARE_METATYPE(QSharedPointer<Picto::VisualElement>)
 Q_DECLARE_METATYPE(QSharedPointer<Picto::Parameter>)

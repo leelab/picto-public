@@ -1,7 +1,7 @@
-#include "RandomlyFilledGridGraphic.h"
-
 #include <QPainter>
 #include <algorithm>
+#include "RandomlyFilledGridGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -62,6 +62,11 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 VisualElement* RandomlyFilledGridGraphic::NewVisualElement()
 {
 	return new RandomlyFilledGridGraphic;
+}
+
+QSharedPointer<Asset> RandomlyFilledGridGraphic::Create()
+{
+	return QSharedPointer<Asset>(new RandomlyFilledGridGraphic());
 }
 
 

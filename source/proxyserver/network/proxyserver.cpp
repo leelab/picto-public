@@ -9,6 +9,7 @@
 #include <QVariant>
 
 #include "proxyserverthread.h"
+#include "../../common/memleakdetect.h"
 
 ProxyServer::ProxyServer(quint16 port, QSharedPointer<ProxyServerProtocols> _protocols, QObject *parent) :
 	protocols(_protocols),

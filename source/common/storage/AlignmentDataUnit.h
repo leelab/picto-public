@@ -1,10 +1,10 @@
 #ifndef _ALIGNMENTDATAUNIT_H_
 #define _ALIGNMENTDATAUNIT_H_
+#include <QString>
+#include <QList>
 
 #include "../common.h"
 #include "DataUnit.h"
-#include <QString>
-#include <QList>
 
 namespace Picto {
 

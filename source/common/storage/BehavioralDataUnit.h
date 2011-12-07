@@ -1,11 +1,10 @@
 #ifndef _BEHAVIORALDATAUNIT_H_
 #define _BEHAVIORALDATAUNIT_H_
+#include <QList>
+#include <QMap>
 
 #include "../common.h"
 #include "DataUnit.h"
-
-#include <QList>
-#include <QMap>
 
 namespace Picto {
 

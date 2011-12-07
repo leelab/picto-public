@@ -61,7 +61,9 @@ class StateMachine : public MachineContainer
 	Q_OBJECT
 public:
 	StateMachine();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StateMachine());};
+	virtual ~StateMachine(){};
+
+	static QSharedPointer<Asset> Create();
 
 	//void addTransition(QSharedPointer<Transition> transition);
 	//void addScriptable(QSharedPointer<Parameter> parameter);

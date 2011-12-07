@@ -1,4 +1,5 @@
 #include "RandomIntParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {
@@ -20,6 +21,11 @@ RandomIntParameter::RandomIntParameter()
 Parameter* RandomIntParameter::NewParameter()
 {
 	return new RandomIntParameter;
+}
+
+QSharedPointer<Asset> RandomIntParameter::Create()
+{
+	return QSharedPointer<Asset>(new RandomIntParameter());
 }
 
 void RandomIntParameter::randomize()

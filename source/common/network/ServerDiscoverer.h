@@ -1,12 +1,12 @@
 #ifndef _SERVERDISCOVERER_H_
 #define _SERVERDISCOVERER_H_
 
-#include "../common.h"
-
 #include <QUdpSocket>
 #include <QThread>
 #include <QTimer>
 #include <QEventLoop>
+
+#include "../common.h"
 
 namespace Picto {
 

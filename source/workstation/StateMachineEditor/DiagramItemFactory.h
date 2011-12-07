@@ -13,6 +13,7 @@ class DiagramItemFactory
 {
 public:
 	DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QGraphicsScene *scene);
+	virtual ~DiagramItemFactory(){};
 	DiagramItem* create(QSharedPointer<Asset> asset);
 	static QIcon getIcon(QString uITemplate);
 	static void addIconDefinition(QString assetType, QString fileName,float width, float height);

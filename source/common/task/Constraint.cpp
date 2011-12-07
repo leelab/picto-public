@@ -1,4 +1,5 @@
 #include "Constraint.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

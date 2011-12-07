@@ -50,6 +50,7 @@
 #include "../../common/statemachine/ResultContainer.h"
 #include "../../common/statemachine/Result.h"
 #include "arrow.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]

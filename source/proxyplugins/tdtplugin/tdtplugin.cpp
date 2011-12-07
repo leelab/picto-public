@@ -8,6 +8,7 @@
 
 #include "tdtplugin.h"
 #include "dialog.h"
+#include "../../common/memleakdetect.h"
 
 
 QString TdtPlugin::device() const

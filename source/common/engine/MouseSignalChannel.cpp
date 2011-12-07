@@ -5,6 +5,9 @@
 
 #include "MouseSignalChannel.h"
 #include "../timing/Timestamper.h"
+#include "../memleakdetect.h"
+#include "../memleakdetect.h"
+
 
 namespace Picto {
 

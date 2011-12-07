@@ -3,6 +3,7 @@
 #include "../../common/common.h"
 
 #include "HTTPGetCommandHandler.h"
+#include "../../common/memleakdetect.h"
 
 ServerHTTPProtocol::ServerHTTPProtocol()
 {

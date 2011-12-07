@@ -36,6 +36,7 @@
 #include "HardwareSetup.h"
 
 #include "Director.h"
+#include "../common/mainmemleakdetect.h"
 
 QSharedPointer<Picto::CommandChannel> connectToServer(QUuid directorID);
 void updateSplashStatus(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status);
@@ -43,6 +44,10 @@ void updateSplashStatus(QSharedPointer<Picto::Engine::PictoEngine> engine, QStri
 
 int main(int argc, char *argv[])
 {
+	//This will cause memory leaks to print out on exit if they're enabled
+	#if defined (DETECTMEMLEAKS) && defined(_MSC_VER) && defined(_DEBUG)
+		_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	#endif
 
 	///////////////////////////////////////
 	// Setup app
@@ -110,5 +115,6 @@ int main(int argc, char *argv[])
 
 	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,HardwareSetup::NullGen,xChan,yChan));
 	director->activate();
+	Picto::CloseLib();
 	return 0;
 }

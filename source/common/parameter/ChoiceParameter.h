@@ -38,9 +38,10 @@ class ChoiceParameter : public Parameter
 
 public:
 	ChoiceParameter();
+	virtual ~ChoiceParameter(){};
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ChoiceParameter());};
+	static QSharedPointer<Asset> Create();
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

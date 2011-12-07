@@ -3,6 +3,7 @@
 #include "LegacySystemXPAnalogInputSignalChannel.h"
 
 #include "../../common/timing/Timestamper.h"
+#include "../../common/memleakdetect.h"
 
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
@@ -140,6 +141,7 @@ void LegacySystemXPAnalogInputSignalChannel::updateDataBuffer()
 
 	}while(sampsPerChanRead == bufferSizePerChan);
 
+	delete[] buffer;
 }
 
 };

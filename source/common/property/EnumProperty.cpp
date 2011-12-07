@@ -2,10 +2,11 @@
 #include <QObject>
 
 #include "EnumProperty.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
-EnumProperty::EnumProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager):
+EnumProperty::EnumProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager):
 Property(variantProp,manager)
 {}
 QString EnumProperty::valueString()

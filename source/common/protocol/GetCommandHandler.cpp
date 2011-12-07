@@ -1,5 +1,6 @@
 #include "GetCommandHandler.h"
 #include "../common/globals.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

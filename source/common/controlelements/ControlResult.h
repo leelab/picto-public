@@ -22,7 +22,8 @@ class ControlResult : public Result
 	Q_OBJECT
 public:
 	ControlResult();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ControlResult());};
+	virtual ~ControlResult(){};
+	static QSharedPointer<Asset> Create();
 
 	virtual QString assetType(){return "ControlResult";};
 	bool contains(int x, int y);
@@ -33,7 +34,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual void scriptableContainerWasReinitialized();
 private:
-	QSharedPointer<ControlTarget> controlTarget_;
+	QWeakPointer<ControlTarget> controlTarget_;
 };
 
 

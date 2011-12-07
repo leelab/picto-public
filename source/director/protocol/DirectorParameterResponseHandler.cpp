@@ -1,5 +1,6 @@
 #include "DirectorParameterResponseHandler.h"
 #include "../../common/engine/propertyTable.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 DirectorParameterResponseHandler::DirectorParameterResponseHandler(QSharedPointer<DirectorStatusManager> statusManager):
@@ -21,7 +22,7 @@ bool DirectorParameterResponseHandler::processResponse(QString directive)
 	if(valStr.isEmpty())
 		return false;
 
-	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.staticCast<DirectorStatusManager>()->getEngine();
+	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	QSharedPointer<PropertyTable> propTable = engine->getPropertyTable();
 	propTable->updatePropertyValue(paramId,valStr);
 	//Use ID to set parameter value.

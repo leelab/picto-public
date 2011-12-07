@@ -1,4 +1,5 @@
 #include "Transition.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {
@@ -21,6 +22,11 @@ Transition::Transition(QString source, QString sourceResult, QString destination
 	propertyContainer_->getProperty("Source")->setEdited();
 	propertyContainer_->getProperty("SourceResult")->setEdited();
 	propertyContainer_->getProperty("Destination")->setEdited();
+}
+
+QSharedPointer<Asset> Transition::Create()
+{
+	return QSharedPointer<Asset>(new Transition());
 }
 
 

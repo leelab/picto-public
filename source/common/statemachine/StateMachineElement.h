@@ -1,13 +1,12 @@
 #ifndef _STATEMACHINEELEMENT_H_
 #define _STATEMACHINEELEMENT_H_
-
-#include "../common.h"
-
 #include <QObject>
 #include <QPoint>
 #include <QRect>
 #include <QSharedPointer>
 #include <QStringList>
+
+#include "../common.h"
 
 #include "../parameter/Parameter.h"
 #include "../property/PropertyContainer.h"
@@ -49,6 +48,8 @@ class StateMachineElement : public ResultContainer
 
 public:
 	StateMachineElement();
+	virtual ~StateMachineElement(){};
+
 
 	//All StateMachineElements must implement a run function that returns a string
 	//The returned string should correspond to a result contained by the element

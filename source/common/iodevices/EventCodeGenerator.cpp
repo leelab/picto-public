@@ -1,4 +1,5 @@
 #include "EventCodeGenerator.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {

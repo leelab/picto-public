@@ -1,15 +1,15 @@
 #ifndef _PROPERTY_H_
 #define _PROPERTY_H_
 
-#include "../common.h"
-#include "../storage/Asset.h"
-
 #include <QtVariantPropertyManager>
 #include <QVariant>
 #include <QString>
 #include <QMap>
 #include <QXmlStreamWriter>
 #include <QSharedPointer>
+
+#include "../common.h"
+#include "../storage/Asset.h"
 
 namespace Picto {
 class PropertyContainer;
@@ -35,7 +35,7 @@ public:
 	//virtual void setValue(QVariant _value);
 	void setAttribute(QString _attributeName, QVariant _attributeValue);
 	QVariant attributeValue(QString _attributeName);
-	QSharedPointer<QtVariantProperty> getVariantProperty(){return variantProp_;};
+	QtVariantProperty* getVariantProperty(){return variantProp_;};
 	QVariant value();
 	virtual void setValue(QVariant _value);
 	//Set this property as changeable during runtime.
@@ -62,8 +62,8 @@ public slots:
 	void setValueFromProp(QSharedPointer<Property> prop);
 
 protected:
-	Property(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
-	QSharedPointer<QtVariantProperty> variantProp_;
+	Property(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
+	QtVariantProperty* variantProp_;
 
 	//Fields used by subclases that need serialization attributes
 	void AddSerializationAttribute(QString name);
@@ -81,7 +81,6 @@ private:
 	QString tagName_;
 	QString tagText_;
 	QString typeVal_; // In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
-	QSharedPointer<QtVariantPropertyManager> manager_;
 	bool scriptEditable_;
 	bool runtimeEnabled_;
 	int assetId_;

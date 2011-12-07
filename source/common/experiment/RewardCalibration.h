@@ -30,7 +30,7 @@ class RewardCalibration
 {
 public:
 	RewardCalibration(RewardController *rewardController);
-	~RewardCalibration();
+	virtual ~RewardCalibration();
 
 	bool RunCalibration(unsigned int drops, unsigned int durationMs, unsigned int intervalMs = 250, unsigned int controllerNum=1); 
 	double CalcDropVolumeUl(unsigned int drops, unsigned int totalVolumeMl);

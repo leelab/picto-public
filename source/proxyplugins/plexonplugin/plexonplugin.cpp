@@ -2,6 +2,7 @@
 #include <windows.h>
 #include "plexon.h"
 #include "plexonplugin.h"
+#include "../../common/memleakdetect.h"
 
 QString PlexonPlugin::device() const
 {

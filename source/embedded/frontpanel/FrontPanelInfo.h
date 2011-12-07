@@ -33,7 +33,7 @@ class FrontPanelInfo
 {
 public:
 	FrontPanelInfo();
-	~FrontPanelInfo() {};
+	virtual ~FrontPanelInfo() {};
 
 	int getRewardDuration() { return rewardDuration; };
 	void setRewardDuration(int dur) { rewardDuration = dur; };
@@ -110,7 +110,7 @@ private:
 {
 public:
 	FrontPanelInfo();
-	~FrontPanelInfo() {};
+	virtual ~FrontPanelInfo() {};
 
 	int getRewardDuration() { QMutexLocker locker(&mutex); return rewardDuration; };
 	void setRewardDuration(int dur) { QMutexLocker locker(&mutex); rewardDuration = dur; };

@@ -5,6 +5,7 @@
 
 #include <QtNetwork>
 #include <QDateTime>
+#include "../../common/memleakdetect.h"
 
 ServerThread::ServerThread(int socketDescriptor_, QSharedPointer<ServerProtocols> protocols, QObject *parent)
     : QThread(parent),

@@ -1,13 +1,13 @@
 #ifndef _RESULTCONTAINER_H
 #define _RESULTCONTAINER_H
+#include <QString>
+#include <QSharedPointer>
+#include <QMap>
 
 #include "../common.h"
 #include "../statemachine/ScriptableContainer.h"
 #include "Transition.h"
 #include "Result.h"
-#include <QString>
-#include <QSharedPointer>
-#include <QMap>
 namespace Picto {
 
 /*!	\brief An ancestor class for DataStores's that container results
@@ -24,6 +24,8 @@ class ResultContainer : public ScriptableContainer
 	Q_OBJECT
 public:
 	ResultContainer();
+	virtual ~ResultContainer(){};
+
 	QStringList getResultList();
 	QSharedPointer<Result> getResult(QString name);
 

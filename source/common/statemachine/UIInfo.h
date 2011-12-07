@@ -1,9 +1,9 @@
 #ifndef _UIInfo_H_
 #define _UIInfo_H_
+#include <QUuid>
 
 #include "../common.h"
 #include "../storage/DataStore.h"
-#include <QUuid>
 
 namespace Picto {
 
@@ -20,8 +20,9 @@ class UIInfo : public DataStore
 	Q_OBJECT
 public:
 	UIInfo();
+	virtual ~UIInfo(){};
 
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new UIInfo());};
+	static QSharedPointer<Asset> Create();
 
 	void setPos(QPoint pos);
 	QPoint getPos();

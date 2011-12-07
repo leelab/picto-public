@@ -43,6 +43,7 @@
 
 #include "diagramtextitem.h"
 #include "diagramscene.h"
+#include "../../common/memleakdetect.h"
 
 //! [0]
 DiagramTextItem::DiagramTextItem(QGraphicsItem *parent, QGraphicsScene *scene)

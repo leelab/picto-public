@@ -1,5 +1,6 @@
 #ifndef _DIRECTOR_H_
 #define _DIRECTOR_H_
+
 #include <QString>
 #include <QUuid>
 #include <QSqlDatabase>
@@ -19,7 +20,7 @@ public:
 		HardwareSetup::EventCodeGeneratorType eventCodeGenerator = HardwareSetup::NullGen,
 		int xEyeChannel = 0,
 		int yEyeChannel = 1);
-	~Director();
+	virtual ~Director();
 protected:
 	virtual QString name();
 	virtual int openDevice();

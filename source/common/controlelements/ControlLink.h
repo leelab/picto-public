@@ -22,8 +22,9 @@ class ControlLink  : public Transition
 	Q_OBJECT
 public:
 	ControlLink();
+	virtual ~ControlLink(){};
 	ControlLink(QString source, QString sourceResult, QString destination);
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new ControlLink());};
+	static QSharedPointer<Asset> Create();
 
 	virtual QString assetType(){return "ControlLink";};
 

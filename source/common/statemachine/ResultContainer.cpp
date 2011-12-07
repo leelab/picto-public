@@ -1,4 +1,5 @@
 #include "ResultContainer.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 

@@ -29,7 +29,7 @@ class RemoteViewer : public Viewer
 	Q_OBJECT
 public:
 	RemoteViewer(QWidget *parent=0);
-	~RemoteViewer();
+	virtual ~RemoteViewer();
 
 	QString type() { return "Remote"; };
 	bool aboutToQuit();

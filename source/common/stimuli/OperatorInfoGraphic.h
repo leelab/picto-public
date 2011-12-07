@@ -29,7 +29,7 @@ public:
 
 	void draw();
 	static VisualElement* NewVisualElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new OperatorInfoGraphic());};
+	static QSharedPointer<Asset> Create();
 	static const QString type;
 
 public slots:

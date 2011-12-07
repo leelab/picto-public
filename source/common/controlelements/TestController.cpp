@@ -20,6 +20,11 @@ ControlElement* TestController::NewTestController()
 	return new TestController;
 }
 
+QSharedPointer<Asset> TestController::Create()
+{
+	return QSharedPointer<Asset>(new TestController());
+}
+
 QString TestController::ControllerType()
 {
 	return "Test Controller";

@@ -22,6 +22,7 @@ class RunTaskDialog : public QDialog
 	Q_OBJECT
 public:
 	RunTaskDialog(QSharedPointer<Picto::CommandChannel> commandChannel, QSharedPointer<Picto::Experiment> experiment, QUuid sessionId);
+	virtual ~RunTaskDialog(){};
 
 private slots:
 	void runTask();
@@ -34,7 +35,7 @@ private:
 	QDialogButtonBox *buttonBox_;
 
 	QSharedPointer<Picto::CommandChannel> commandChannel_;
-	QSharedPointer<Picto::Experiment> experiment_;
+	QWeakPointer<Picto::Experiment> experiment_;
 	QUuid sessionId_;
 };
 

@@ -32,7 +32,7 @@ class LegacySystemXPEventCodeGenerator : public EventCodeGenerator
 	Q_OBJECT
 public:
 	LegacySystemXPEventCodeGenerator();
-	~LegacySystemXPEventCodeGenerator();
+	virtual ~LegacySystemXPEventCodeGenerator();
 
 	int getBitsPerEvent() { return 7; };
 

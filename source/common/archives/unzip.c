@@ -38,9 +38,6 @@ woven in by Terry Thorsen 1/2003.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "zlib.h"
-#include "unzip.h"
-#include "../common.h"
 
 #ifdef STDC
 #  include <stddef.h>
@@ -53,6 +50,9 @@ woven in by Terry Thorsen 1/2003.
 #   include <errno.h>
 #endif
 
+#include "zlib.h"
+#include "unzip.h"
+#include "../common.h"
 
 #ifndef local
 #  define local static

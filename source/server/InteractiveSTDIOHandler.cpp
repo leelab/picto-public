@@ -2,6 +2,8 @@
 
 #include <QTextStream>
 #include <QApplication>
+#include "../common/memleakdetect.h"
+
 
 InteractiveSTDIOHandler::InteractiveSTDIOHandler()
 {

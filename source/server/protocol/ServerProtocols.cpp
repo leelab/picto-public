@@ -1,4 +1,5 @@
 #include "ServerProtocols.h"
+#include "../../common/memleakdetect.h"
 
 ServerProtocols::ServerProtocols()
 {

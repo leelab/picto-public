@@ -1,6 +1,8 @@
 #ifndef _CONTROLELEMENT_H_
 #define _CONTROLELEMENT_H_
 
+#include <QObject>
+
 #include "../common.h"
 
 #include "../property/PropertyContainer.h"
@@ -9,7 +11,6 @@
 #include "../statemachine/result.h"
 #include "../statemachine/resultcontainer.h"
 
-#include <QObject>
 
 namespace Picto {
 
@@ -35,6 +36,7 @@ class ControlElement : public ResultContainer
 
 public:
 	ControlElement();
+	virtual ~ControlElement(){};
 
 	//isDone will return true if the ControlElement has completed.
 	virtual bool isDone(QSharedPointer<Engine::PictoEngine> engine) {return true;};

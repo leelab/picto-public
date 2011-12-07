@@ -8,6 +8,7 @@
 #include "../parameter/RangeParameter.h"
 #include "../parameter/ChoiceParameter.h"
 #include "../parameter/NumericParameter.h"
+#include "../memleakdetect.h"
 
 TestParameters::TestParameters()
 {

@@ -39,7 +39,7 @@ class RewardController : public QObject
 	Q_OBJECT
 public:
 	RewardController(unsigned int channelCount);
-	~RewardController();
+	virtual ~RewardController();
 
 	bool setRewardVolume(unsigned int channel, float volume);
 	bool setRewardDurationMs(unsigned int channel, unsigned int duration);

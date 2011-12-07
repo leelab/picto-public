@@ -1,6 +1,6 @@
-#include "GridGraphic.h"
-
 #include <QPainter>
+#include "GridGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -51,6 +51,11 @@ void GridGraphic::draw()
 VisualElement* GridGraphic::NewVisualElement()
 {
 	return new GridGraphic;
+}
+
+QSharedPointer<Asset> GridGraphic::Create()
+{
+	return QSharedPointer<Asset>(new GridGraphic());
 }
 
 void GridGraphic::postDeserialize()

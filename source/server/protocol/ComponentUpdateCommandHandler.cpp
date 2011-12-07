@@ -6,6 +6,7 @@
 
 #include <QFile>
 #include <QUuid>
+#include "../../common/memleakdetect.h"
 
 ComponentUpdateCommandHandler::ComponentUpdateCommandHandler()
 {

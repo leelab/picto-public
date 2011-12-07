@@ -1,4 +1,5 @@
 #include "TransitionLookup.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

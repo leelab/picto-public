@@ -1,6 +1,7 @@
 #include <QtGui>
 #include "PropertyEditTracker.h"
 #include "ScriptWidget.h"
+#include "../../common/memleakdetect.h"
 
 //! [0]
 PropertyEditTracker::PropertyEditTracker(QSharedPointer<Picto::Property> prop) :

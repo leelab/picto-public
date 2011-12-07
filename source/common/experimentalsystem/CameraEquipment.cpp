@@ -1,4 +1,5 @@
 #include "CameraEquipment.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

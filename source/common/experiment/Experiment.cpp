@@ -1,6 +1,7 @@
 #include "Experiment.h"
 
 #include "../engine/PictoEngine.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

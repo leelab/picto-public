@@ -1,4 +1,5 @@
 #include "RandomDoubleParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {
@@ -20,6 +21,11 @@ RandomDoubleParameter::RandomDoubleParameter()
 Parameter* RandomDoubleParameter::NewParameter()
 {
 	return new RandomDoubleParameter;
+}
+
+QSharedPointer<Asset> RandomDoubleParameter::Create()
+{
+	return QSharedPointer<Asset>(new RandomDoubleParameter());
 }
 
 void RandomDoubleParameter::randomize()

@@ -1,13 +1,14 @@
 #ifndef _PCMAURALTARGET_H_
 #define _PCMAURALTARGET_H_
 
+
+#include <QSharedPointer>
+
 #include "../common.h"
 
 #include "AuralTarget.h"
 #include "MixingSample.h"
 #include "PCMMixingSample.h"
-
-#include <QSharedPointer>
 
 namespace Picto {
 

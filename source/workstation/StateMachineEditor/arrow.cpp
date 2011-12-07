@@ -48,6 +48,7 @@
 #include "../../common/storage/datastore.h"
 #include "../../common/statemachine/MachineContainer.h"
 #include "AssetItem.h"
+#include "../../common/memleakdetect.h"
 
 const qreal Pi = 3.14;
 

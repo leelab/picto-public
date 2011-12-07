@@ -12,7 +12,7 @@
 #include "../stimuli/LineGraphic.h"
 #include "../stimuli/PictureGraphic.h"
 #include "../stimuli/RandomlyFilledGridGraphic.h"
-
+#include "../memleakdetect.h"
 
 TestScripts::TestScripts()
 {

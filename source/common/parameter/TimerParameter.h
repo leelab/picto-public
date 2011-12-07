@@ -29,9 +29,10 @@ public slots:
 
 public:
 	TimerParameter();
+	virtual ~TimerParameter(){};
 
 	static Parameter* NewParameter();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TimerParameter());};
+	static QSharedPointer<Asset> Create();
 
 	virtual void reset();
 	int getValue();

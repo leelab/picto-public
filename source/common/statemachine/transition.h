@@ -23,8 +23,9 @@ class Transition  : public DataStore
 	Q_OBJECT
 public:
 	Transition();
+	virtual ~Transition(){};
 	Transition(QString source, QString sourceResult, QString destination);
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Transition());};
+	static QSharedPointer<Asset> Create();
 
 	void setSource(QString source);
 	void setSourceResult(QString sourceResult);

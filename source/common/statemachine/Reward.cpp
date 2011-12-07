@@ -1,6 +1,7 @@
+#include <QCoreApplication>
 #include "Reward.h"
 #include "../engine/PictoEngine.h"
-#include <QCoreApplication>
+#include "../memleakdetect.h"
 namespace Picto
 {
 
@@ -14,6 +15,11 @@ Reward::Reward()
 	AddDefinableProperty(QVariant::Int,"RewardQty",0);
 	AddDefinableProperty(QVariant::Int,"RewardChan",0);
 	addRequiredResult("done");
+}
+
+QSharedPointer<Asset> Reward::Create()
+{
+	return QSharedPointer<Asset>(new Reward());
 }
 
 QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)

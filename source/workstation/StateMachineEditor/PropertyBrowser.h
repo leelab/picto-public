@@ -21,6 +21,7 @@ class PropertyBrowser : public QtButtonPropertyBrowser
 
 public:
    PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget *parent=0);
+   virtual ~PropertyBrowser(){};
 public slots:
 	void assetSelected(QSharedPointer<Asset> asset);
 

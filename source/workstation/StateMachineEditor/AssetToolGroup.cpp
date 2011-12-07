@@ -3,6 +3,7 @@
 #include "../../common/storage/DataStore.h"
 #include "../../common/storage/PropertyFactory.h"
 #include "DiagramItemFactory.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 

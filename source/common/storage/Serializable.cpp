@@ -1,4 +1,5 @@
 #include "Serializable.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 

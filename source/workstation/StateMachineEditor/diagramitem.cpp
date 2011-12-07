@@ -43,6 +43,7 @@
 
 #include "diagramitem.h"
 #include "arrow.h"
+#include "../../common/memleakdetect.h"
 
 //! [0]
 DiagramItem::DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name,

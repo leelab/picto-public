@@ -3,6 +3,7 @@
 
 
 #include "D3DCompositingSurface.h"
+#include "../../common/memleakdetect.h"
 
 namespace Picto {
 

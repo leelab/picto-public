@@ -23,6 +23,7 @@ namespace Picto {
 public:
 
 	Scriptable();
+	virtual ~Scriptable(){};
 
 	bool bindToScriptEngine(QScriptEngine &engine);
 	/*! \brief Resets this scriptables data fields to their original values.

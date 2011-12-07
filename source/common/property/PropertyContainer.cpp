@@ -1,10 +1,11 @@
-#include "PropertyContainer.h"
 #include <QtVariantProperty>
 #include <QtProperty>
+#include "PropertyContainer.h"
 #include "EnumProperty.h"
 #include "ColorProperty.h"
 #include "PointProperty.h"
 #include "RectProperty.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 
@@ -27,6 +28,9 @@ containerName_(_containerName)
 //deleted, they remove themselves from their parent PropertyManager's list.  
 //This way, when the PropertyManager is deleted, all of its children will 
 //have already been removed from its list and there will be no problem.
+//Also note that in order for this to work we need to make sure that the
+//property container only contains weak pointers to its properties, otherwise
+//neither one will ever be deleted.
 //Tada!
 QSharedPointer<PropertyContainer> PropertyContainer::create(QString _containerName)
 {
@@ -78,22 +82,22 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 
 	QSharedPointer<Property> newProperty;
 	if(_type == QtVariantPropertyManager::enumTypeId())
-		newProperty = QSharedPointer<Property>( new EnumProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+		newProperty = QSharedPointer<Property>( new EnumProperty(item,propManager_.data()) );
 	else
 	{
 		switch(_type)
 		{
 		case QVariant::Rect:
-			newProperty = QSharedPointer<Property>( new RectProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			newProperty = QSharedPointer<Property>( new RectProperty(item,propManager_.data()) );
 			break;
 		case QVariant::Point:
-			newProperty = QSharedPointer<Property>( new PointProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			newProperty = QSharedPointer<Property>( new PointProperty(item,propManager_.data()) );
 			break;
 		case QVariant::Color:
-			newProperty = QSharedPointer<Property>( new ColorProperty(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			newProperty = QSharedPointer<Property>( new ColorProperty(item,propManager_.data()) );
 			break;
 		default:
-			newProperty = QSharedPointer<Property>( new Property(QSharedPointer<QtVariantProperty>(item),propManager_) );
+			newProperty = QSharedPointer<Property>( new Property(item,propManager_.data()) );
 			break;
 		}
 	}
@@ -151,7 +155,7 @@ void PropertyContainer::clear()
 	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
 														  containerName_);
 	Q_ASSERT(item);
-	containerGroupItem_ = QSharedPointer<Property>( new Property(QSharedPointer<QtVariantProperty>(item),propManager_) );
+	containerGroupItem_ = QSharedPointer<Property>( new Property(item,propManager_.data()) );
 
 	connect(propManager_.data(),
 		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
@@ -208,7 +212,7 @@ QSharedPointer<Property> PropertyContainer::getPropertyFromQtProperty(QtProperty
 		int index = 0;
 		foreach(QSharedPointer<Property> prop,propIterator.value())
 		{
-			if(prop->variantProp_.staticCast<QtProperty>().data() == property)
+			if(static_cast<QtProperty*>(prop->variantProp_) == property)
 			{
 				return prop;
 			}
@@ -228,7 +232,7 @@ void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
 		int index = 0;
 		foreach(QSharedPointer<Property> prop,propIterator.value())
 		{
-			if(prop->variantProp_.data() == property)
+			if(prop->variantProp_ == property)
 			{
 				emit signalPropertyValueChanged(propIterator.key(), index, value);
 				break;

@@ -1,5 +1,6 @@
 #include "PictoDeviceSimulator.h"
 #include <QTime>
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 
 PictoDeviceSimulator::PictoDeviceSimulator(PictoSystemState* systemState, QString deviceName)

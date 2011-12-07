@@ -215,6 +215,7 @@ void SystemService::serviceMainThread( void * _arg )
 #elif WIN32
 
 #include <stdio.h>
+#include "../../common/memleakdetect.h"
 
 SystemService * 	SystemService::s_this = NULL;
 SERVICE_STATUS		SystemService::s_status;

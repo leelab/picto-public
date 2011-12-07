@@ -1,7 +1,9 @@
-#include "ProtocolCommand.h"
 
 #include <QStringList>
 #include <limits>
+
+#include "ProtocolCommand.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

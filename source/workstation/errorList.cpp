@@ -1,4 +1,5 @@
 #include "ErrorList.h"
+#include "../common/memleakdetect.h"
 
 ErrorList::ErrorList(QWidget *parent)
 : QWidget(parent)

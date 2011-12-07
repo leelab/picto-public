@@ -23,7 +23,7 @@ class PICTOLIB_CLASS PictureGraphic : public VisualElement
 	Q_PROPERTY(QString imageFile READ getImageFile WRITE setImageFile)
 public:
 	PictureGraphic(QPoint position=QPoint(), QString imageFile="");
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new PictureGraphic());};
+	static QSharedPointer<Asset> Create();
 	void draw();
 	static VisualElement* NewVisualElement();
 

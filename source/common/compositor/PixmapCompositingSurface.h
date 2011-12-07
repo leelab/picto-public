@@ -1,11 +1,11 @@
 #ifndef _PIXMAPCOMPOSITINGSURFACE_H_
 #define _PIXMAPCOMPOSITINGSURFACE_H_
 
+#include <QPixmap>
+
 #include "../common.h"
 
 #include "CompositingSurface.h"
-
-#include <QPixmap>
 
 namespace Picto {
 

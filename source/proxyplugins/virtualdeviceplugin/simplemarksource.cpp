@@ -1,5 +1,6 @@
 #include "simplemarksource.h"
 #include "..\..\common\storage\AlignmentDataUnit.h"
+#include "../../common/memleakdetect.h"
 
 SimpleMarkSource::SimpleMarkSource(double secPerEvent, double secPerSample)
 :SimpleEventSource(secPerEvent,secPerSample)

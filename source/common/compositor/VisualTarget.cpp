@@ -1,4 +1,5 @@
 #include "VisualTarget.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

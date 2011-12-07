@@ -1,6 +1,6 @@
-#include "CursorGraphic.h"
-
 #include <QPainter>
+#include "CursorGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

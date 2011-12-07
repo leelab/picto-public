@@ -6,6 +6,7 @@
 
 #include <QXmlStreamWriter>
 #include <QUuid>
+#include "../../common/memleakdetect.h"
 
 StartsessionCommandHandler::StartsessionCommandHandler()
 {

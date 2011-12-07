@@ -1,6 +1,7 @@
-#include "TextGraphic.h"
-
 #include <QPainter>
+
+#include "TextGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -65,6 +66,11 @@ void TextGraphic::draw()
 VisualElement* TextGraphic::NewVisualElement()
 {
 	return new TextGraphic;
+}
+
+QSharedPointer<Asset> TextGraphic::Create()
+{
+	return QSharedPointer<Asset>(new TextGraphic());
 }
 
 //void TextGraphic::slotPropertyValueChanged(QString propertyName, int,

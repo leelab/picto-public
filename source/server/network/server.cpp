@@ -9,6 +9,7 @@
 #include <QCoreApplication>
 #include <QSqlRecord>
 #include <QVariant>
+#include "../../common/memleakdetect.h"
 
 Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject *parent) :
 	protocols(_protocols),
@@ -48,6 +49,11 @@ Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject
 	//I want to make sure that the ConnectionManager singleton is initially created in 
 	//the server's main thread, so I create an instance here.
 	ConnectionManager::Instance();
+}
+
+Server::~Server()
+{
+	delete udpSocket;
 }
 
 void Server::incomingConnection(int socketDescriptor)

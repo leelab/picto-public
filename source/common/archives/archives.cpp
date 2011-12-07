@@ -1,9 +1,9 @@
-#include "archives.h"
-
 #include <QtCore>
 
+#include "archives.h"
 #include "zip.h"
 #include "unzip.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

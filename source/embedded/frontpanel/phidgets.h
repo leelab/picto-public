@@ -41,7 +41,7 @@ signals:
 
 public:
 	Phidgets(FrontPanelInfo *panelInfo);
-	~Phidgets();
+	virtual ~Phidgets();
 
 	void buttonClicked();
 	void dialTurnedLeft();

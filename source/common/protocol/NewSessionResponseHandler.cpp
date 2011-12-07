@@ -1,7 +1,8 @@
-#include "NewSessionResponseHandler.h"
 #include <QUuid>
+#include "NewSessionResponseHandler.h"
 #include "..\storage\DataUnit.h"
 #include "..\timing\Timestamper.h"
+#include "../memleakdetect.h"
 using namespace Picto;
 
 NewSessionResponseHandler::NewSessionResponseHandler(QSharedPointer<ComponentStatusManager> statusManager, QSharedPointer<CommandChannel> commandChannel):
@@ -14,7 +15,8 @@ commandChannel_(commandChannel)
 bool NewSessionResponseHandler::processResponse(QString directive)
 {
 	QUuid sessionID(directive);
-	commandChannel_->setSessionId(sessionID);
+	Q_ASSERT(!commandChannel_.isNull());
+	commandChannel_.toStrongRef()->setSessionId(sessionID);
 	DataUnit::resetDataIDGenerator();
 	Timestamper::reset();
 	return true;

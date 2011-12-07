@@ -1,4 +1,5 @@
 #include "TrialData.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

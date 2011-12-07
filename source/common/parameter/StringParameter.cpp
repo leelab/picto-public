@@ -1,4 +1,5 @@
 #include "StringParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -13,6 +14,11 @@ Parameter* StringParameter::NewParameter()
 	//This parameter isn't finished yet
 	Q_ASSERT(false);
 	return NULL;
+}
+
+QSharedPointer<Asset> StringParameter::Create()
+{
+	return QSharedPointer<Asset>(new StringParameter());
 }
 
 //void StringParameter::setValue(QVariant value)

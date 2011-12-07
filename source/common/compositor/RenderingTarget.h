@@ -6,13 +6,14 @@
 #ifndef _RENDERINGTARGET_H_
 #define _RENDERINGTARGET_H_
 
+
+#include <QSharedPointer>
+#include <QString>
+
 #include "../common.h"
 
 #include "VisualTarget.h"
 #include "AuralTarget.h"
-
-#include <QSharedPointer>
-#include <QString>
 
 namespace Picto {
 
@@ -38,7 +39,7 @@ struct RenderingTarget
 {
 public:
     RenderingTarget(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<AuralTarget> auralTarget);
-	~RenderingTarget();
+	virtual ~RenderingTarget();
 
 	virtual QSharedPointer<CompositingSurface> generateCompositingSurface();
 	virtual QSharedPointer<MixingSample> generateMixingSample();

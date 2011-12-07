@@ -1,4 +1,5 @@
 #include "PCMAuralTarget.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

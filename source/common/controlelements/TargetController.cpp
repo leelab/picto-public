@@ -38,6 +38,11 @@ ControlElement* TargetController::NewTargetController()
 	return new TargetController;
 }
 
+QSharedPointer<Asset> TargetController::Create()
+{
+	return QSharedPointer<Asset>(new TargetController());
+}
+
 QString TargetController::ControllerType()
 {
 	return "Target Controller";
@@ -52,8 +57,8 @@ void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 	targetAcquired_ = false;
 	waitingForReacquisition_ = false;
 	initialAcquisitionOccurred_ = false;
-	Q_ASSERT(controlTarget_);
-	controlTarget_->setActive(true);
+	Q_ASSERT(!controlTarget_.isNull());
+	controlTarget_.toStrongRef()->setActive(true);
 
 	//We call isDone to initialize everything
 	isDone(engine);
@@ -61,7 +66,8 @@ void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 
 void TargetController::stop(QSharedPointer<Engine::PictoEngine> engine)
 {
-	controlTarget_->setActive(false);
+	Q_ASSERT(!controlTarget_.isNull());
+	controlTarget_.toStrongRef()->setActive(false);
 }
 
 bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
@@ -203,13 +209,15 @@ QMap<QString,QString> TargetController::getScripts()
 void TargetController::scriptableContainerWasReinitialized()
 {
 	ControlElement::scriptableContainerWasReinitialized();
-	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
+	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
 	QString targetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
-	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
+	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
 	{
-		if(scriptable->getName() == targetName && scriptable->inherits("Picto::ControlTarget"))
+		if(scriptable.isNull())
+			continue;
+		if(scriptable.toStrongRef()->getName() == targetName && scriptable.toStrongRef()->inherits("Picto::ControlTarget"))
 		{
-			controlTarget_ = scriptable.staticCast<ControlTarget>();
+			controlTarget_ = scriptable.toStrongRef().staticCast<ControlTarget>();
 			break;
 		}
 	}
@@ -235,8 +243,8 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 
 	int x = signal_->peekValue("xpos");
 	int y = signal_->peekValue("ypos");
-
-	if(controlTarget_->contains(x,y))
+	Q_ASSERT(!controlTarget_.isNull());
+	if(controlTarget_.toStrongRef()->contains(x,y))
 		return true;
 	return false;
 	//if("Rectangle" == shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt()))

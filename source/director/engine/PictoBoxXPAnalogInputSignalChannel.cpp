@@ -3,6 +3,7 @@
 #include "PictoBoxXPAnalogInputSignalChannel.h"
 
 #include "../../common/timing/Timestamper.h"
+#include "../../common/memleakdetect.h"
 
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
@@ -124,6 +125,7 @@ void PictoBoxXPAnalogInputSignalChannel::updateDataBuffer()
 
 	}while(sampsPerChanRead == bufferSizePerChan);
 
+	delete[] buffer;
 }
 
 };

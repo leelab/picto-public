@@ -1,5 +1,6 @@
 #include "PictoServerTest.h"
 #include <QString>
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 
 PictoServerTest::PictoServerTest()

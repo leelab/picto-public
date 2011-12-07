@@ -21,6 +21,7 @@ class Serializable
 {
 public:
 	Serializable();
+	virtual ~Serializable(){};
 
 	static QString getErrors();
 	static void clearErrors() { errors_.clear(); };

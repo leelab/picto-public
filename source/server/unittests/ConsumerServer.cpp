@@ -7,6 +7,7 @@
 
 #include "../../common/protocol/ProtocolCommand.h"
 #include "../../common/protocol/ProtocolResponse.h"
+#include "../../common/memleakdetect.h"
 
 ConsumerServer::ConsumerServer(int port, QObject *parent) :
 	QTcpServer(parent)

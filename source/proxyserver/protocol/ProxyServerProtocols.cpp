@@ -1,4 +1,5 @@
 #include "ProxyServerProtocols.h"
+#include "../../common/memleakdetect.h"
 
 ProxyServerProtocols::ProxyServerProtocols()
 {

@@ -3,6 +3,7 @@
 #include "AssetToolGroup.h"
 #include "PropertyToolGroup.h"
 #include "BackgroundToolGroup.h"
+#include "../../common/memleakdetect.h"
 
 //! [0]
 Toolbox::Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent) :

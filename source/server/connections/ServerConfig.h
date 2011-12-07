@@ -25,7 +25,7 @@ class ServerConfig
 {
 public:
 	ServerConfig();
-	~ServerConfig();
+	virtual ~ServerConfig();
 
 	void addSession(QString sessionID, QString filepath, QString directorID, QString proxyID);
 	void removeSession(QString sessionID);

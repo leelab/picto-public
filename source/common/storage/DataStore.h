@@ -50,6 +50,7 @@ class DataStore : public  Asset
 
 public:
 	DataStore();
+	virtual ~DataStore();
 
 	//AutoSerialization Stuff---------------------------------
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

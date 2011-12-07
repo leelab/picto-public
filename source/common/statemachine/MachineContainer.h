@@ -21,6 +21,7 @@ class MachineContainer : public StateMachineElement
 	Q_OBJECT
 public:
 	MachineContainer(QString transitionTag, QString elementTag);
+	virtual ~MachineContainer(){};
 
 	bool addTransition(QSharedPointer<Transition> transition);
 	void addElement(QSharedPointer<ResultContainer> element);

@@ -1,4 +1,5 @@
 #include "ViewerWindow.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]

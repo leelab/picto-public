@@ -1,5 +1,6 @@
 #include "UIEnabled.h"
 #include "../statemachine/uiinfo.h"
+#include "../memleakdetect.h"
 namespace Picto
 {
 
@@ -9,6 +10,11 @@ UIEnabled::UIEnabled()
 	AddDefinableProperty("Name","Not Yet Named");
 	AddDefinableObjectFactory("UIInfo",
 			QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(UIInfo::Create))));
+}
+
+QSharedPointer<Asset> UIEnabled::Create()
+{
+	return QSharedPointer<Asset>(new UIEnabled());
 }
 
 void UIEnabled::setPos(QPoint pos)

@@ -1,5 +1,6 @@
 #include "mtrand.h"
 #include "random/MersenneTwister.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

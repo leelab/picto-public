@@ -2,6 +2,7 @@
 #include "PropertyToolGroup.h"
 #include "../../common/storage/DataStore.h"
 #include "../../common/storage/propertyfactory.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 

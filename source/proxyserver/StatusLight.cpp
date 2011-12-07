@@ -6,6 +6,7 @@
 #include <QSizePolicy>
 
 #include "StatusLight.h"
+#include "../common/memleakdetect.h"
 
 
 StatusLight::StatusLight(QWidget *parent, QColor color, int radius)

@@ -1,6 +1,7 @@
 #include "ProxyStartResponseHandler.h"
 #include "NeuralDataAcqInterface.h"
 #include "../../common/protocol/ProtocolCommand.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 ProxyStartResponseHandler::ProxyStartResponseHandler(QSharedPointer<ComponentStatusManager> statusManager, QSharedPointer<CommandChannel> dataCommandChannel, QObject* acqPlugin):
@@ -11,7 +12,8 @@ acqPlugin_(acqPlugin)
 
 bool ProxyStartResponseHandler::processResponse(QString directive)
 {
-	statusManager_->setStatus(running);
+	Q_ASSERT(!statusManager_.isNull());
+	statusManager_.toStrongRef()->setStatus(running);
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 	forever
 	{
@@ -21,7 +23,7 @@ bool ProxyStartResponseHandler::processResponse(QString directive)
 		{
 			//Generate PUTDATA commands with limited length until we're out of data
 			QSharedPointer<Picto::ProtocolResponse> dataResponse;
-			QString dataCommandStr = "PUTDATA "+statusManager_->getName()+":"+ statusManager_->getStatusAsString() + " PICTO/1.0";
+			QString dataCommandStr = "PUTDATA "+statusManager_.toStrongRef()->getName()+":"+ statusManager_.toStrongRef()->getStatusAsString() + " PICTO/1.0";
 			QSharedPointer<Picto::ProtocolCommand> response(new Picto::ProtocolCommand(dataCommandStr));
 
 			//set up XML writer
@@ -65,7 +67,7 @@ bool ProxyStartResponseHandler::processResponse(QString directive)
 		while(timer.elapsed() < 5000)
 		{
 			dataCommandChannel_->processResponses(5000);
-			if(statusManager_->getStatus() <= stopped)
+			if(statusManager_.toStrongRef()->getStatus() <= stopped)
 			{
 				done = true;
 				break;

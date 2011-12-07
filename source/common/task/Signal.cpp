@@ -1,4 +1,5 @@
 #include "Signal.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

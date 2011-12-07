@@ -1,4 +1,5 @@
 #include "SyntaxHighlighter.h"
+#include "../../common/memleakdetect.h"
 
 #define USE_NEXT_CONSTRUCT "**"
 enum{eBASE = -1, eENTITY, eSTARTTAG, eENDTAG, eSELFENDSLASH, eTAGNAME, eTAGPROPERTY, eCOMMENT, eCOMMENTTEXT, eSTRING, 

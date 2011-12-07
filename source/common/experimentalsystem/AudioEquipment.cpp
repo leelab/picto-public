@@ -1,4 +1,5 @@
 #include "AudioEquipment.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

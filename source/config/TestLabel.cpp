@@ -1,6 +1,7 @@
 #include "TestLabel.h"
 
 #include "../common/network/ServerDiscoverer.h"
+#include "../common/memleakdetect.h"
 
 TestLabel::TestLabel(QWidget * parent) :
 	QLabel("", parent)

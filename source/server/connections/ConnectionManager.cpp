@@ -12,6 +12,7 @@
 #include <QTimer>
 #include <QtConcurrentRun>
 #include "ServerConfig.h"
+#include "../../common/memleakdetect.h"
 
 #define DROPPED_SESSION_TIMEOUT_DAYS 1
 ConnectionManager* ConnectionManager::conMan_ = 0;
@@ -41,6 +42,12 @@ ConnectionManager* ConnectionManager::Instance()
 		conMan_ = new ConnectionManager;
 
 	return conMan_;
+}
+
+ConnectionManager::~ConnectionManager()
+{
+	delete timeoutTimer_;
+	delete mutex_;
 }
 
 /*!	\brief Checks for timed out connections.

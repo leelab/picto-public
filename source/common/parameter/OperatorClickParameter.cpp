@@ -1,4 +1,5 @@
 #include "OperatorClickParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

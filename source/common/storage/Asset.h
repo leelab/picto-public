@@ -1,13 +1,12 @@
 #ifndef _ASSET_H_
 #define _ASSET_H_
 
-#include "../common.h"
-#include "experimentconfig.h"
-#include "Serializable.h"
-
 #include <QSharedPointer>
 #include <QMap>
 
+#include "../common.h"
+#include "experimentconfig.h"
+#include "Serializable.h"
 namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Asset : public QObject, public Serializable
@@ -18,6 +17,7 @@ class Asset : public QObject, public Serializable
 	Q_OBJECT
 public:
 	Asset();
+	virtual ~Asset(){};
 
 	using Serializable::toXml;
 	using Serializable::fromXml;

@@ -1,5 +1,5 @@
 #include "Asset.h"
-
+#include "../memleakdetect.h"
 namespace Picto {
 
 Asset::Asset():

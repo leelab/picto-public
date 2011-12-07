@@ -4,6 +4,7 @@
 #include <QSharedPointer>
 
 #include "../../common/common.h"
+#include "../../common/memleakdetect.h"
 
 
 ProxyServerAcqProtocol::ProxyServerAcqProtocol(QObject *acqPlugin)

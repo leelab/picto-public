@@ -15,6 +15,7 @@ class ComponentInterface
 {
 public:
 	ComponentInterface(QString type);
+	virtual ~ComponentInterface();
 	QString componentType();
 	virtual int activate();
 	virtual int deActivate();

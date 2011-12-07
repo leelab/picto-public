@@ -23,7 +23,7 @@ class PictoBoxXPAnalogInputSignalChannel : public SignalChannel
 {
 public:
 	PictoBoxXPAnalogInputSignalChannel(int sampsPerSecond);
-	~PictoBoxXPAnalogInputSignalChannel() { stop(); };
+	virtual ~PictoBoxXPAnalogInputSignalChannel() { stop(); };
 
 	bool start();
 	bool stop();

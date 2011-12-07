@@ -28,6 +28,7 @@ class TextViewer : public Viewer
 	Q_OBJECT
 public:
 	TextViewer(QAction* checkSyntaxAction, QWidget *parent=0);
+	virtual ~TextViewer(){};
 	QString type() { return "Text"; };
 
 public slots:

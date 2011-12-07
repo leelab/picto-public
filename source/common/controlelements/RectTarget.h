@@ -1,9 +1,9 @@
 #ifndef _RECTTARGET_H_
 #define _RECTTARGET_H_
+#include <QRect>
 
 #include "../common.h"
 #include "controltarget.h"
-#include <QRect>
 
 namespace Picto {
 
@@ -22,7 +22,7 @@ class RectTarget : public ControlTarget
 	Q_PROPERTY(int height READ getHeight WRITE setHeight)
 public:
 	RectTarget();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new RectTarget());};
+	static QSharedPointer<Asset> Create();
 	QRect getBounds();
 	virtual QString assetType(){return "RectTarget";};
 	void draw();

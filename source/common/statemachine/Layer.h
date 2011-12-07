@@ -27,7 +27,7 @@ class Layer : public UIEnabled
 public:
 	Layer();
 
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Layer());};
+	static QSharedPointer<Asset> Create();
 	void bindToScriptEngine(QScriptEngine& qsEngine);
 
 	void reset();

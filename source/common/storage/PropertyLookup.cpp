@@ -1,4 +1,5 @@
 //#include "PropertyLookup.h"
+#include "../memleakdetect.h"
 //
 //namespace Picto {
 //

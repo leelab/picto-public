@@ -26,7 +26,7 @@ struct PixmapVisualTarget : public VisualTarget
 {
 public:
 	PixmapVisualTarget(bool _bWindowed = false, int _width = 800, int _height = 600);
-	~PixmapVisualTarget();
+	virtual ~PixmapVisualTarget();
 
 	QSharedPointer<CompositingSurface> generateCompositingSurface();
 	QString getTypeName();

@@ -31,7 +31,7 @@ class AnalysisViewer : public Viewer
 	Q_OBJECT
 public:
 	AnalysisViewer(QWidget *parent=0);
-	~AnalysisViewer();
+	virtual ~AnalysisViewer();
 
 	QString type() { return "Remote"; };
 	bool aboutToQuit();

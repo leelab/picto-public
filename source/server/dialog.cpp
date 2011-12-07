@@ -5,6 +5,7 @@
 //#include "../common/namedefs.h"
 
 #include "dialog.h"
+#include "../common/memleakdetect.h"
 
 Dialog::Dialog(SystemService * systemService, QWidget *parent) :	
   QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),

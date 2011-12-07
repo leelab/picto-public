@@ -7,18 +7,23 @@ ControlResult::ControlResult()
 	AddDefinableProperty("ControlTarget","");
 }
 
+QSharedPointer<Asset> ControlResult::Create()
+{
+	return QSharedPointer<Asset>(new ControlResult());
+}
+
 bool ControlResult::contains(int x, int y)
 {
 	if(controlTarget_.isNull())
 		return false;
-	return controlTarget_->contains(x,y);
+	return controlTarget_.toStrongRef()->contains(x,y);
 }
 
 void ControlResult::setActive(bool active)
 {
 	if(controlTarget_.isNull())
 		return;
-	controlTarget_->setActive(active);
+	controlTarget_.toStrongRef()->setActive(active);
 }
 
 void ControlResult::postDeserialize()
@@ -38,13 +43,15 @@ bool ControlResult::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 void ControlResult::scriptableContainerWasReinitialized()
 {
 	Result::scriptableContainerWasReinitialized();
-	QList<QSharedPointer<Scriptable>> scriptables = getScriptableList();
+	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
 	QString targetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
-	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
+	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
 	{
-		if(scriptable->getName() == targetName && scriptable->inherits("Picto::ControlTarget"))
+		if(scriptable.isNull())
+			continue;
+		if(scriptable.toStrongRef()->getName() == targetName && scriptable.toStrongRef()->inherits("Picto::ControlTarget"))
 		{
-			controlTarget_ = scriptable.staticCast<ControlTarget>();
+			controlTarget_ = scriptable.toStrongRef().staticCast<ControlTarget>();
 			break;
 		}
 	}

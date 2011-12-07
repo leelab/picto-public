@@ -37,9 +37,10 @@ class TargetController : public ControlElement
 {
 public:
 	TargetController();
+	virtual ~TargetController(){};
 
 	static ControlElement* NewTargetController();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new TargetController());};
+	static QSharedPointer<Asset> Create();
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
@@ -66,7 +67,7 @@ private:
 	bool targetAcquired_;
 	bool initialAcquisitionOccurred_;
 	bool waitingForReacquisition_;
-	QSharedPointer<ControlTarget> controlTarget_;
+	QWeakPointer<ControlTarget> controlTarget_;
 
 	Controller::Timer cumulativeTimer_;
 	Controller::Timer acquisitionTimer_;	

@@ -1,7 +1,8 @@
-#include "ScriptableContainer.h"
 #include <QMap>
 #include <QDebug>
 #include <QScriptValueIterator>
+
+#include "ScriptableContainer.h"
 #include "../property/EnumProperty.h"
 
 #include "../parameter/BooleanParameter.h"
@@ -27,6 +28,7 @@
 #include "../stimuli/AudioElement.h"
 #include "../controlelements/circletarget.h"
 #include "../controlelements/recttarget.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 
@@ -110,20 +112,22 @@ void ScriptableContainer::addScriptables(QSharedPointer<ScriptableContainer> scr
 
 void ScriptableContainer::addScriptables(ScriptableContainer *scriptableContainer)
 {
-	QList<QSharedPointer<Scriptable>> scriptables = scriptableContainer->getScriptableList();
-	foreach(QSharedPointer<Scriptable> scriptable,scriptables)
+	QList<QWeakPointer<Scriptable>> scriptables = scriptableContainer->getScriptableList();
+	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
 	{
 		addScriptable(scriptable);
 	}
 }
 
-void ScriptableContainer::addScriptable(QSharedPointer<Scriptable> scriptable)
+void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 {
+	if(scriptable.isNull())
+		return;
 	scriptables_.push_back(scriptable);
 	//If we added a new scriptable, scripting is no longer properly initialized.
 	scriptingInitialized_ = false;
 	//If the new scriptable's name edited, we'll need to reinitialize scripting again.
-	connect(scriptable.data(),SIGNAL(nameEdited()),this,SLOT(deinitScripting()));
+	connect(scriptable.toStrongRef().data(),SIGNAL(nameEdited()),this,SLOT(deinitScripting()));
 	foreach(QSharedPointer<ScriptableContainer> child,scriptableContainers_)
 	{
 		child->addScriptable(scriptable);
@@ -142,7 +146,7 @@ void ScriptableContainer::addChildScriptableContainer(QSharedPointer<ScriptableC
 }
 
 //! \brief Returns a list of all contained parameters
-QList<QSharedPointer<Scriptable>> ScriptableContainer::getScriptableList()
+QList<QWeakPointer<Scriptable>> ScriptableContainer::getScriptableList()
 {
 	return scriptables_;
 }

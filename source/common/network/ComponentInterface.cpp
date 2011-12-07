@@ -1,9 +1,10 @@
 #include <QApplication>
-#include "ComponentInterface.h"
-#include "../common/network/ServerDiscoverer.h"
 #include <QStringList>
 #include <QSqlQuery>
 #include <QVariant>
+
+#include "ComponentInterface.h"
+#include "../common/network/ServerDiscoverer.h"
 
 #include "../common/protocol/EndSessionResponseHandler.h"
 #include "../common/protocol/ErrorResponseHandler.h"
@@ -15,6 +16,7 @@
 #include "../common/protocol/RewardResponseHandler.h"
 #include "../common/protocol/StartResponseHandler.h"
 #include "../common/protocol/StopResponseHandler.h"
+#include "../memleakdetect.h"
 using namespace Picto;
 ComponentInterface::ComponentInterface(QString type)
 :componentType_(type)
@@ -39,6 +41,11 @@ ComponentInterface::ComponentInterface(QString type)
 	bool rc = query.next();
 	Q_ASSERT(rc);
 	componentId_ = QUuid(query.value(0).toString());
+}
+
+ComponentInterface::~ComponentInterface()
+{
+	configDb_.close();
 }
 
 QString ComponentInterface::componentType()

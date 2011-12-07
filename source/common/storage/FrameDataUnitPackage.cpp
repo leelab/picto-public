@@ -1,4 +1,5 @@
 #include "FrameDataUnitPackage.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

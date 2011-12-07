@@ -4,6 +4,7 @@
 #include <QList>
 #include <QMap>
 #include <QString>
+#include <QButtonGroup>
 #include "EditorState.h"
 QT_BEGIN_NAMESPACE
 class QButtonGroup;
@@ -20,6 +21,7 @@ class ToolGroup : public QWidget
 
 public:
 	ToolGroup(QSharedPointer<EditorState> editorState, QWidget *parent=0);
+	virtual ~ToolGroup(){};
 	QString getSelectedButton(){return selectedButton_;};
 
 protected:
@@ -35,7 +37,7 @@ private slots:
 
 private:
 	QSharedPointer<EditorState> editorState_;
-	QButtonGroup* buttonGroup_;
+	QSharedPointer<QButtonGroup> buttonGroup_;
 	QGridLayout* layout_;
 	QList<QWidget*> widgets_;
 	QMap<int,QString> nameMap_;

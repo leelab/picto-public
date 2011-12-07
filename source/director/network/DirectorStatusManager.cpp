@@ -3,6 +3,7 @@
 #include "../../common/network/CommandChannel.h"
 #include "../../common/timing/timestamper.h"
 #include "../../common/storage/AlignmentDataUnit.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine)
@@ -14,7 +15,8 @@ void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine>
 }
 QSharedPointer<Picto::Engine::PictoEngine> DirectorStatusManager::getEngine()
 {
-	return engine_;
+	Q_ASSERT(!engine_.isNull());
+	return engine_.toStrongRef();
 }
 void DirectorStatusManager::setExperiment(QSharedPointer<Picto::Experiment> experiment)
 {
@@ -28,7 +30,7 @@ void DirectorStatusManager::updateSplashStatus(QString status)
 {
 	if(engine_.isNull())
 		return;
-	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine_->getRenderingTargets();
+	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = getEngine()->getRenderingTargets();
 	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
 	{
 		target->updateStatus(status);
@@ -64,7 +66,7 @@ void DirectorStatusManager::newSession()
 }
 void DirectorStatusManager::doServerUpdate()
 {
-	QSharedPointer<CommandChannel> dataChannel = engine_->getDataCommandChannel();
+	QSharedPointer<CommandChannel> dataChannel = getEngine()->getDataCommandChannel();
 	if(dataChannel.isNull())
 		return;
 	if((getStatus() > stopped) && (lastAlignTime_.secsTo(QDateTime::currentDateTime()) > 5))
@@ -72,7 +74,7 @@ void DirectorStatusManager::doServerUpdate()
 		alignmentCode_ = (alignmentCode_ == 0x7F)? 0 : alignmentCode_+1;
 		alignmentID_++;
 		Timestamper timestamper;
-		engine_->generateEvent(alignmentCode_);
+		getEngine()->generateEvent(alignmentCode_);
 		double timestamp = timestamper.stampSec();
 
 		//Create an alignment command

@@ -11,6 +11,7 @@
 #include <QMutexLocker>
 #include <QStringList>
 #include <QSqlRecord>
+#include "../../common/memleakdetect.h"
 
 #define FRAME_STATE_VAR_ID -1
 #define TRANSITION_STATE_VAR_ID -2
@@ -357,6 +358,9 @@ bool SessionInfo::endSession()
 	
 	//Realign timebases now that we have all the data
 	alignTimeBases(true);
+
+	//Create indeces in session database for quicker analysis
+	createSessionIndeces();
 
 	//Flush the database cache
 	flushCache();
@@ -934,24 +938,24 @@ void SessionInfo::InitializeVariables()
 
 	tables_.push_back("transitions");
 	tableColumns_["transitions"] = " dataid,transid,frameid ";
-	tableColumnTypes_["transitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER REFERENCES transitionlookup(assetid),INTEGER REFERENCES frames(dataid)";
+	tableColumnTypes_["transitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,INTEGER";
 	tableDataProviders_["transitions"] = "DIRECTOR";
 	tableIndexedColumns_["transitions"] = " transid,frameid ";
 
 	tables_.push_back("transitionlookup");
 	tableColumns_["transitionlookup"] = " assetid,parent,source,sourceresult,destination ";
-	tableColumnTypes_["transitionlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER REFERENCES elementlookup(assetid),TEXT,TEXT,TEXT ";
+	tableColumnTypes_["transitionlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,TEXT ";
 	tableIndexedColumns_["transitionlookup"] = " parent,source,sourceresult,destination ";
 
 	tables_.push_back("properties");
 	tableColumns_["properties"] = " dataid,assetid,value,frameid ";
-	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER REFERENCES propertylookup(assetid),TEXT,INTEGER REFERENCES frames(dataid)";
+	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,INTEGER ";
 	tableDataProviders_["properties"] = "DIRECTOR";
 	tableIndexedColumns_["properties"] = " assetid,frameid ";
 
 	tables_.push_back("propertylookup");
 	tableColumns_["propertylookup"] = " assetid,name,parent ";
-	tableColumnTypes_["propertylookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,INTEGER REFERENCES elementlookup(assetid)";
+	tableColumnTypes_["propertylookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,INTEGER ";
 	tableIndexedColumns_["propertylookup"] = " name,parent ";
 
 	tables_.push_back("elementlookup");
@@ -961,7 +965,7 @@ void SessionInfo::InitializeVariables()
 
 	tables_.push_back("frames");
 	tableColumns_["frames"] = " dataid,time,state ";
-	tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER REFERENCES elementlookup(assetid) ";
+	tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER ";
 	tableDataProviders_["frames"] = "DIRECTOR";
 	tableIndexedColumns_["frames"] = " state ";
 
@@ -1128,14 +1132,10 @@ void SessionInfo::CreateCacheDatabase(QString databaseName)
 
 void SessionInfo::AddTablesToDatabase(QSqlQuery* query)
 {
-	QStringList createIndexQueries;
 	foreach(QString table, tables_)
 	{
 		QStringList tableColumns = tableColumns_[table].split(",");
 		QStringList tableColumnTypes = tableColumnTypes_[table].split(",");
-		QStringList tableIndeces;
-		if(tableIndexedColumns_.contains(table))
-			tableIndeces = tableIndexedColumns_[table].split(",",QString::SkipEmptyParts);
 		QString columnDefString;
 		int colLength = tableColumns.size();
 		int typeLength = tableColumnTypes.size();
@@ -1147,19 +1147,8 @@ void SessionInfo::AddTablesToDatabase(QSqlQuery* query)
 			columnDefString.append(QString(",") + tableColumnConstraints_[table]);
 		QString createTableString = "CREATE TABLE IF NOT EXISTS "+table+" (id  INTEGER PRIMARY KEY"+columnDefString+");";
 		
-		foreach(QString index,tableIndeces)
-		{
-			createIndexQueries.append("CREATE INDEX IF NOT EXISTS "+table+"_"+index.trimmed()+"_index ON "+table+"("+index+");");
-		}
 		executeWriteQuery(query,createTableString);
 	}
-	
-	//Create Indeces
-	foreach(QString createIndexQuery,createIndexQueries)
-	{
-		executeWriteQuery(query,createIndexQuery);
-	}
-
 }
 
 /*! \brief Adds optional debuggion to read query executions.  
@@ -1281,6 +1270,26 @@ void SessionInfo::alignTimeBases(bool realignAll)
 			timestampsAligned_ = true;
 	}
 	locker.unlock();
+
+}
+
+void SessionInfo::createSessionIndeces()
+{
+	Q_ASSERT(baseSessionDbConnection_.isOpen());
+	QSqlQuery query(baseSessionDbConnection_);
+
+	QStringList createIndexQueries;
+	foreach(QString table, tables_)
+	{
+		QStringList tableIndeces;
+		if(tableIndexedColumns_.contains(table))
+			tableIndeces = tableIndexedColumns_[table].split(",",QString::SkipEmptyParts);
+
+		foreach(QString index,tableIndeces)
+		{
+			executeWriteQuery(&query,"CREATE INDEX IF NOT EXISTS "+table+"_"+index.trimmed()+"_index ON "+table+"("+index+");");
+		}
+	}
 
 }
 

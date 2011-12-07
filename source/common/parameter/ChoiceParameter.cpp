@@ -1,5 +1,6 @@
 #include "ChoiceParameter.h"
 #include "../Storage/PropertyFactory.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -29,6 +30,12 @@ Parameter* ChoiceParameter::NewParameter()
 {
 	return new ChoiceParameter;
 }
+
+QSharedPointer<Asset> ChoiceParameter::Create()
+{
+	return QSharedPointer<Asset>(new ChoiceParameter());
+}
+
 
 /*!	\brief Adds a new choice to the end of the list */
 bool ChoiceParameter::addChoice(QString label, QVariant data)

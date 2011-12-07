@@ -1,15 +1,16 @@
 #include <QtGui>
 #include <QLayoutIterator>
 #include "ToolGroup.h"
+#include "../../common/memleakdetect.h"
 
 
 ToolGroup::ToolGroup(QSharedPointer<EditorState> editorState, QWidget *parent) :
 	editorState_(editorState),
 	QWidget(parent)
 {
-	buttonGroup_ = new QButtonGroup;
+	buttonGroup_ = QSharedPointer<QButtonGroup>(new QButtonGroup);
 	buttonGroup_->setExclusive(false);
-	connect(buttonGroup_, SIGNAL(buttonClicked(int)),this, SLOT(buttonGroupClicked(int)));
+	connect(buttonGroup_.data(), SIGNAL(buttonClicked(int)),this, SLOT(buttonGroupClicked(int)));
 	connect(editorState.data(), SIGNAL(itemInserted()),this, SLOT(disableAllButtons()));
 	layout_ = new QGridLayout;
 	setLayout(layout_);

@@ -14,10 +14,12 @@ class RectProperty : public Property
 #endif
 {
 	Q_OBJECT
+public:
+	virtual ~RectProperty(){};
 public slots:
 	void set(int x, int y, int width, int height){Property::setValue(QRect(x,y,width,height));};
 protected:
-	RectProperty(QSharedPointer<QtVariantProperty> variantProp, QSharedPointer<QtVariantPropertyManager> manager);
+	RectProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual QString toUserString();

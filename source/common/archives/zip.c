@@ -14,9 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "zlib.h"
-#include "zip.h"
-#include "../common.h"
 
 #ifdef STDC
 #  include <stddef.h>
@@ -29,6 +26,9 @@
 #   include <errno.h>
 #endif
 
+#include "zlib.h"
+#include "zip.h"
+#include "../common.h"
 
 #ifndef local
 #  define local static

@@ -1,4 +1,5 @@
 #include "DirectorLoadExpResponseHandler.h"
+#include "../../common/memleakdetect.h"
 
 using namespace Picto;
 
@@ -8,6 +9,7 @@ LoadExpResponseHandler(statusManager)
 
 bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 {
+	Q_ASSERT(!statusManager_.isNull());
 	//Load the experiment
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(directive.toUtf8()));
 	QSharedPointer<Picto::Experiment> experiment(Picto::Experiment::Create());
@@ -18,18 +20,18 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 		xmlReader->readNext();
 	}
 
-	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.staticCast<DirectorStatusManager>()->getEngine();
+	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine->getRenderingTargets();
 	if(!experiment->fromXml(xmlReader))
 	{
-		statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus(QString("Error loading experiment: %1").arg(experiment->getErrors()));
+		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus(QString("Error loading experiment: %1").arg(experiment->getErrors()));
 		return false;
 	}
 	else
 	{
-		statusManager_.staticCast<DirectorStatusManager>()->setExperiment(experiment);
-		statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus("Loaded experiment, Session ID: " + engine->getSessionId().toString());
-		QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.staticCast<DirectorStatusManager>()->getEngine();
+		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setExperiment(experiment);
+		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("Loaded experiment, Session ID: " + engine->getSessionId().toString());
+		QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 		experiment->setEngine(engine);
 	}
 	return true;

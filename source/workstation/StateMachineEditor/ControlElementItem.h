@@ -11,6 +11,7 @@ class ControlElementItem : public WireableItem
 	Q_OBJECT
 public:
 	 ControlElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
+	 virtual ~ControlElementItem(){};
 private:
 
 };

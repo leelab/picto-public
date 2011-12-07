@@ -21,7 +21,8 @@ class Reward : public StateMachineElement
 {
 public:
 	Reward();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new Reward());};
+	virtual ~Reward(){};
+	static QSharedPointer<Asset> Create();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);

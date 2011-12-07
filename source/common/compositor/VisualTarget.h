@@ -2,14 +2,13 @@
 #define _VISUALTARGET_H_
 
 #include <QColor>
+#include <QSharedPointer>
+#include <QWidget>
+
 #include "../common.h"
 
 #include "CompositingSurface.h"
 #include "../timing/Timestamper.h" 
-
-#include <QSharedPointer>
-#include <QWidget>
-
 namespace Picto {
 
 /*!	\brief Handles the visual rendering

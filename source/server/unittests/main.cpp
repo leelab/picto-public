@@ -19,9 +19,14 @@
 #include "TestCommandChannel.h"
 #include "PictoServerTest.h"
 #include "PictoDirectorTest.h"
+#include "../../common/mainmemleakdetect.h"
 
 int main(int argc, char *argv[])
 {
+	//This will cause memory leaks to print out on exit if they're enabled
+	#if defined (DETECTMEMLEAKS) && defined(_MSC_VER) && defined(_DEBUG)
+		_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	#endif
 	int result=0;
 	// SETUP
     QCoreApplication app(argc, argv);
@@ -61,6 +66,7 @@ int main(int argc, char *argv[])
 	result += QTest::qExec(&serverTest, testOptionList);
 	//result += QTest::qExec(&directorTest, testOptionList);
 
+	Picto::CloseLib();
 	return result;
 }
 
@@ -68,6 +74,10 @@ int main(int argc, char *argv[])
 // The Original Main method for these tests appears below.  It has been replaced with the main method above.
 //int main(int argc, char *argv[])
 //{
+//	//This will cause memory leaks to print out on exit if they're enabled
+//	#if defined (DETECTMEMLEAKS) && defined(_MSC_VER) && defined(_DEBUG)
+//		_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+//	#endif
 //    QCoreApplication app(argc, argv);
 //
 //	QLocale systemLocale = QLocale();

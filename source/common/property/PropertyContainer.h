@@ -1,14 +1,13 @@
 #ifndef _PROPERTYCONTAINER_H_
 #define _PROPERTYCONTAINER_H_
-
-#include "../common.h"
-
-#include "Property.h"
-
 #include <QtVariantPropertyManager>
 #include <QtProperty>
 #include <QString>
 #include <QSharedPointer>
+
+#include "../common.h"
+
+#include "Property.h"
 
 namespace Picto {
 
@@ -30,6 +29,7 @@ class PropertyContainer : public QObject
 
 public:
 	static QSharedPointer<PropertyContainer> create(QString _containerName);
+	virtual ~PropertyContainer(){};
 	void copyProperties(QSharedPointer<PropertyContainer> container2);
 	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple = false);
 	QVariant getPropertyValue(QString _identifier, int index=0);

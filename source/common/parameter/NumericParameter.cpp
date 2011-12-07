@@ -1,4 +1,5 @@
 #include "NumericParameter.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {
@@ -17,6 +18,11 @@ NumericParameter::NumericParameter()
 Parameter* NumericParameter::NewParameter()
 {
 	return new NumericParameter;
+}
+
+QSharedPointer<Asset> NumericParameter::Create()
+{
+	return QSharedPointer<Asset>(new NumericParameter());
 }
 
 //void NumericParameter::setValue(QVariant value)

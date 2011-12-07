@@ -15,6 +15,7 @@ class ErrorList : public QWidget
 	Q_OBJECT
 public:
 	ErrorList(QWidget *parent = 0);
+	virtual ~ErrorList(){};
 	QStringList getAllErrors();
 
 public slots:

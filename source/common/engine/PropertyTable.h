@@ -1,10 +1,10 @@
 #ifndef _PropertyTable_H_
 #define _PropertyTable_H_
-
-#include "../common.h"
 #include <QVector>
 #include <QString>
 #include <QSharedPointer>
+
+#include "../common.h"
 #include "../property/property.h"
 #include "../storage/propertylookup.h"
 #include "../storage/ExperimentConfig.h"

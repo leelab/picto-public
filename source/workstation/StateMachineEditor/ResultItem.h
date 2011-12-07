@@ -12,6 +12,7 @@ class ResultItem : public WireableItem
 	Q_OBJECT
 public:
 	 ResultItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
+	 virtual ~ResultItem(){};
 
 };
 //! [0]

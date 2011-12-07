@@ -1,10 +1,10 @@
-#include "PixmapVisualTarget.h"
-
-#include "PixmapCompositingSurface.h"
-
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPainter>
+
+#include "PixmapVisualTarget.h"
+#include "PixmapCompositingSurface.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

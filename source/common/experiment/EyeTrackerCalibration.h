@@ -50,7 +50,7 @@ class EyeTrackerCalibration
 {
 public:
 	EyeTrackerCalibration();
-	~EyeTrackerCalibration();
+	virtual ~EyeTrackerCalibration();
 
 	//void RunAutoCalibration(QSharedPointer<VisualTarget> visualTarget, 
 	//						QSharedPointer<RewardController> rewardController,

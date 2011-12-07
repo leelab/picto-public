@@ -13,6 +13,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QXmlStreamReader>
+#include "../common/memleakdetect.h"
 
 
 QString StartSessionDialog::filename_ = "";

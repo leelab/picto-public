@@ -1,4 +1,5 @@
 #include "ProxyLoadExpResponseHandler.h"
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 ProxyLoadExpResponseHandler::ProxyLoadExpResponseHandler(QSharedPointer<ComponentStatusManager> statusManager):

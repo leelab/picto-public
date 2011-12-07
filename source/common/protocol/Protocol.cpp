@@ -1,11 +1,11 @@
-#include "Protocol.h"
-
 #include <QSharedPointer>
+#include "Protocol.h"
 
 #include "../common.h"
 
 #include "AnnounceCommandHandler.h"
 #include "GetCommandHandler.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

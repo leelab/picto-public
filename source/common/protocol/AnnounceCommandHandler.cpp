@@ -5,6 +5,7 @@
 
 #include "AnnounceCommandHandler.h"
 #include "../common/globals.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

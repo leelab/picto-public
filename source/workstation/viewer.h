@@ -44,6 +44,7 @@ class Viewer : public QWidget
 	Q_OBJECT
 public:
 	Viewer(QWidget * parent=0);
+	virtual ~Viewer(){};
 
 	void setPictoData(QSharedPointer<Picto::PictoData> pictoData) { pictoData_ = pictoData; }
 	void setPictoDataText(QTextDocument *pictoDataText) {pictoDataText_ = pictoDataText; }

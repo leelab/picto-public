@@ -1,4 +1,5 @@
 #include "MagneticResonanceImagingDataStore.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

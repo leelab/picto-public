@@ -1,6 +1,7 @@
 #include "PictoDirectorSimulator.h"
 #include "PictoServerSimulator.h"
 #include "../../common/network/serverdiscoverer.h"
+#include "../../common/memleakdetect.h"
 using namespace PictoSim;
 using namespace Director;
 

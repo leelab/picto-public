@@ -1,4 +1,5 @@
 #include "PropertyDataUnitPackage.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 

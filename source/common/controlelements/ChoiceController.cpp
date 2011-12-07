@@ -45,6 +45,11 @@ ControlElement* ChoiceController::NewChoiceController()
 	return new ChoiceController;
 }
 
+QSharedPointer<Asset> ChoiceController::Create()
+{
+	return QSharedPointer<Asset>(new ChoiceController());
+}
+
 QString ChoiceController::ControllerType()
 {
 	return "Choice Controller";

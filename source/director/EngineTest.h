@@ -12,7 +12,7 @@ class EngineTest : public QObject
 
 public:
 	EngineTest();
-	~EngineTest() {};
+	virtual ~EngineTest() {};
 
 	void exec();
 	void TestLayerRendering();

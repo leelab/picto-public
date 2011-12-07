@@ -1,6 +1,6 @@
-#include "NullEventCodeGenerator.h"
-
 #include <QtDebug>
+#include "NullEventCodeGenerator.h"
+#include "../memleakdetect.h"
 
 namespace Picto
 {

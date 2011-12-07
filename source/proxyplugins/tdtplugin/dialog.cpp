@@ -1,6 +1,7 @@
 #include <QtGui>
 
 #include "dialog.h"
+#include "../../common/memleakdetect.h"
 
 Dialog::Dialog(QWidget *parent) :	
   QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)

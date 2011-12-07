@@ -14,7 +14,8 @@ namespace Picto {
 {
 public:
 	AudioElement();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new AudioElement());};
+	virtual ~AudioElement(){};
+	static QSharedPointer<Asset> Create();
 	virtual QString assetType(){return "AudioElement";};
 };
 

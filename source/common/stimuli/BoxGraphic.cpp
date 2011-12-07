@@ -1,6 +1,6 @@
-#include "BoxGraphic.h"
-
 #include <QPainter>
+#include "BoxGraphic.h"
+#include "../memleakdetect.h"
 
 namespace Picto {
 
@@ -75,6 +75,11 @@ void BoxGraphic::draw()
 VisualElement* BoxGraphic::NewVisualElement()
 {
 	return new BoxGraphic;
+}
+
+QSharedPointer<Asset> BoxGraphic::Create()
+{
+	return QSharedPointer<Asset>(new BoxGraphic());
 }
 
 //void BoxGraphic::slotPropertyValueChanged(QString propertyName, int,

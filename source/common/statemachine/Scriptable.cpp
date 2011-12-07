@@ -1,6 +1,7 @@
-#include "Scriptable.h"
 #include <QDebug>
 #include <QMetaProperty>
+#include "Scriptable.h"
+#include "../memleakdetect.h"
 namespace Picto {
 
 Scriptable::Scriptable()

@@ -14,7 +14,8 @@ class StateMachineEditorData : public DataStore
 {
 public:
 	StateMachineEditorData();
-	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new StateMachineEditorData());};
+	virtual ~StateMachineEditorData(){};
+	static QSharedPointer<Asset> Create();
 	void setOpenedAsset(QSharedPointer<Asset> openedAsset);
 	QSharedPointer<Asset> getOpenedAsset();
 	void setOpenedAssetId(QUuid openedAsset);

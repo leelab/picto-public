@@ -1,6 +1,7 @@
 #include "PictoBoxXPRewardController.h"
 #include <windows.h>
 #include <NIDAQmx.h>
+#include "../../common/memleakdetect.h"
 
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \

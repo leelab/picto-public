@@ -3,6 +3,8 @@
 #include <QMutexLocker>
 #include <QApplication>
 #include <QThread>
+#include "../../common/memleakdetect.h"
+
 
 ComponentInfo::ComponentInfo()
 {
