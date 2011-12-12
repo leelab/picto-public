@@ -289,6 +289,8 @@ void RemoteViewer::setupUi()
 	rewardQuantity_ = new QSpinBox();
 	rewardQuantity_->setValue(60);
 	rewardQuantity_->setMinimum(1);
+	rewardQuantity_->setMaximum(999999);
+	rewardQuantity_->setSingleStep(10);
 
 	loadPropsAction_ = new QAction(tr("&Load Values from Session"),this);
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
@@ -1215,12 +1217,14 @@ bool RemoteViewer::startSession()
 	if(!sessionId_.isNull())
 		return true;
 
+#ifndef DEVELOPMENTBUILD
 	//Require a password to start a session
 	if(passwordEdit_->text().isEmpty())
 	{
 		QMessageBox::warning(0,"Enter Session Key","You must enter a session key to start a new session.");
 		return false;
 	}
+#endif
 
 	//Make a copy of the experiment
 	//It would be 100 times easier to copy the experiment object directly, but it contains a

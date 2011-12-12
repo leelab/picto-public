@@ -415,8 +415,10 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 	if((proxyID != QUuid()) && !components_.contains(proxyID))
 		return QSharedPointer<SessionInfo>();
 
+#ifndef DEVELOPMENTBUILD
 	if(password.isEmpty())
 		return QSharedPointer<SessionInfo>();
+#endif
 
 	QSharedPointer<SessionInfo> sessInfo(SessionInfo::CreateSession(experimentXml,experimentConfig,initialObserverId, password));
 	sessInfo->AddComponent(components_[directorID]);

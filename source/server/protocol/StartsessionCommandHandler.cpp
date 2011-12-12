@@ -50,9 +50,13 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	if(observerId.isNull())
 		return notFoundResponse;
 
+#ifndef DEVELOPMENTBUILD
 	if(password.isEmpty())
+	{
+		unauthorizedResponse->setContent("Empty Session Key's are not allowed");
 		return unauthorizedResponse;
-
+	}
+#endif
 
 	//Check that the Director is ready to go
 	if(conMgr->getComponentStatus(directorID) == ComponentStatus::notFound)
