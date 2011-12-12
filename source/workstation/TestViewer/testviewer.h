@@ -9,6 +9,7 @@
 class QAction;
 class QToolBar;
 class QComboBox;
+class QSlider;
 
 /*!	\brief	This views the experiment as a running test
  *
@@ -62,6 +63,7 @@ private:
 	QAction *pauseAction_;
 	QAction *stopAction_;
 	QAction *loadPropsAction_;
+	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 
 	QToolBar* testToolbar_;
 
@@ -72,6 +74,8 @@ private:
 private slots:
 	void taskListIndexChanged(int index);
 	void operatorClickDetected(QPoint pos);
+	//void zoomChanged(int zoom);
+
 };
 
 #endif

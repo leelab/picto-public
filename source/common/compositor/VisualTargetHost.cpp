@@ -35,7 +35,9 @@ void VisualTargetHost::paintEvent(QPaintEvent*)
 
 void VisualTargetHost::mousePressEvent(QMouseEvent *event)
 {
-	emit clickDetected(event->pos());
+	if(target_.isNull())
+		return;
+	emit clickDetected(target_->viewportPointToTargetPoint(event->pos()));
 	QWidget::mousePressEvent (event);
 }
 

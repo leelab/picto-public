@@ -15,6 +15,9 @@ class QAction;
 class QToolBar;
 class QComboBox;
 class QLabel;
+class QSlider;
+class QSpinBox;
+class QLineEdit;
 
 /*!	\brief	This views and controls a remotely running experiment
  *
@@ -46,6 +49,7 @@ private slots:
 	void LoadPropValsFromFile();
 	void parameterMessageReady(QSharedPointer<Property> changedProp);
 	void operatorClickDetected(QPoint pos);
+	void zoomChanged(int zoom);
 
 	void changeConnectionState(bool checked);
 	
@@ -101,13 +105,17 @@ private:
 	QAction *pauseAction_;
 	QAction *stopAction_;
 	QAction *rewardAction_;
+	QSpinBox *rewardQuantity_;
 	QAction *connectAction_;
+	QLineEdit *passwordEdit_;
 	QAction *loadPropsAction_;
 
 	QToolBar *toolBar_;
 	QComboBox *taskListBox_;
 	QComboBox *directorListBox_;
 	QComboBox *proxyListBox_;
+	QSlider *zoomSlider_;
+	QLabel *zoomPercentage_;
 	QLabel *statusBar_;
 
 	QTimer *updateTimer_;
@@ -131,6 +139,8 @@ private:
 	QList<ComponentInstance> currDirectorList_;
 	QList<ComponentInstance> currProxyList_;
 	bool channelSignalsConnected_;
+	bool showingSplash_;
+
 private slots:
 	void taskListIndexChanged(int index);
 };

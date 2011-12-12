@@ -18,13 +18,13 @@
 #define EYE_STATE_VAR_ID -3
 #define REWARD_STATE_VAR_ID -4
 //This turns on and off the authorized user permission setup on SessionInfo
-#define NO_AUTH_REQUIRED
+//#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
-QSharedPointer<SessionInfo> SessionInfo::CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId)
+QSharedPointer<SessionInfo> SessionInfo::CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password)
 {
 	//Creates a shared pointer for the object that will use the deleteSession function to actually delete
 	//the object
-	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentXml,experimentConfig,initialObserverId),&deleteSession);
+	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentXml,experimentConfig,initialObserverId, password),&deleteSession);
 	loadedSessions_[returnVal->sessionId()] = QWeakPointer<SessionInfo>(returnVal);
 	return returnVal;
 }
@@ -63,9 +63,10 @@ void SessionInfo::deleteSession(SessionInfo* session)
 	delete session;
 }
 
-SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId):
+SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password):
 	experimentXml_(experimentXml),
-	experimentConfig_(experimentConfig)
+	experimentConfig_(experimentConfig),
+	password_(password)
 {
 	InitializeVariables();
 	
@@ -115,6 +116,12 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"SessionID\"");
 	if(sessionQ.next())
 		uuid_ = QUuid(sessionQ.value(0).toString());
+	sessionQ.finish();
+
+	// Load SessionPassword
+	executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"Password\"");
+	if(sessionQ.next())
+		password_ = sessionQ.value(0).toString();
 	sessionQ.finish();
 	
 	// Load ExperimentXML
@@ -393,6 +400,26 @@ bool SessionInfo::isAuthorizedObserver(QUuid observerId)
 		return true;
 	else
 		return false;
+}
+
+/*! \brief Dumps the cache database into the session database
+ *	Adds the input observerId to the list of authorized ids if
+ *  the correct password is input.
+ *	Returns true if the password was correct and the observer is authorized now
+ */
+bool SessionInfo::addAuthorizedObserver(QUuid observerId, QString password)
+{
+	if(password == password_)
+	{
+		addAuthorizedObserver(observerId);
+		return true;
+	}
+	return  false;
+}
+
+QString SessionInfo::getPassword()
+{
+	return password_;
 }
 
 /*! \brief Dumps the cache database into the session database
@@ -1023,6 +1050,11 @@ void SessionInfo::SetupBaseSessionDatabase()
 		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"SessionID\", :id)");
 		sessionQ.bindValue(":id", uuid_.toString());
 		executeWriteQuery(&sessionQ);
+		//Add the password
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Password\", :password)");
+		sessionQ.bindValue(":password", password_);
+		executeWriteQuery(&sessionQ);
+
 		//Add authorized observers
 		foreach(QUuid observer, authorizedObservers_)
 		{
@@ -1390,6 +1422,18 @@ void SessionInfo::updateCurrentStateTable(QString updateTime)
 	return;
 }
 
+void SessionInfo::addAuthorizedObserver(QUuid observerId)
+{
+	if(isAuthorizedObserver(observerId))
+		return;
+	Q_ASSERT(baseSessionDbConnection_.isOpen());
+	QSqlQuery sessionQ(baseSessionDbConnection_);
+
+	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"AuthObserverID\", :id)");
+	sessionQ.bindValue(":id", observerId.toString());
+	executeWriteQuery(&sessionQ);
+	authorizedObservers_.append(observerId);
+}
 
 /*! \brief Generates a thread-specific connection to the Session database
  *

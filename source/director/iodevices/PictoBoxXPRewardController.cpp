@@ -47,7 +47,7 @@ PictoBoxXPRewardController::~PictoBoxXPRewardController()
 
 
 
-void PictoBoxXPRewardController::giveReward(unsigned int channel)
+void PictoBoxXPRewardController::giveReward(unsigned int channel,int quantity)
 {
 	if(channel > 4 || channel < 1)
 		return;
@@ -71,7 +71,7 @@ void PictoBoxXPRewardController::giveReward(unsigned int channel)
 		QueryPerformanceCounter(&tock);
 		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
 	}
-	while(elapsedTime * 1000.0 < rewardDurations_[channel-1]);
+	while(elapsedTime * 1000.0 < quantity);
 
 	data[channel-1] = 1;
 	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));

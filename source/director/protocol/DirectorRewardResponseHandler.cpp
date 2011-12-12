@@ -9,8 +9,10 @@ RewardResponseHandler(statusManager)
 bool DirectorRewardResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());
-	int channel = directive.toInt();
+	int channelEndLoc = directive.indexOf("\n");
+	int channel = directive.left(channelEndLoc).toInt();
+	int quantity = directive.mid(channelEndLoc+1).toInt();
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
-	engine->giveReward(channel);
+	engine->giveReward(channel,quantity);
 	return true;
 }

@@ -35,12 +35,12 @@ bool RewardCalibration::RunCalibration(unsigned int drops,
 	//is used by PictoDirector (which doesn't have an event loop), and
 	//we don't really care that much about the actual time, a Qtime loop
 	//is the best solution.
-	rewardController_->setRewardDurationMs(controllerNum,durationMs);
+	//rewardController_->setRewardDurationMs(controllerNum,durationMs);
 	QTime time;
 
 	for(unsigned int i=0; i<drops; i++)
 	{
-		rewardController_->giveReward(controllerNum);
+		rewardController_->giveReward(controllerNum,durationMs);
 		time.start();
 		while(time.elapsed() < (int)intervalMs);
 	}

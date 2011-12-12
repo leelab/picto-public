@@ -52,7 +52,7 @@
 class SessionInfo
 {
 public:
-	static QSharedPointer<SessionInfo> CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId);
+	static QSharedPointer<SessionInfo> CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
 	static QSharedPointer<SessionInfo> LoadSession(QString sessionID, QString databaseFilePath);
 	static void deleteSession(SessionInfo* session);
 	virtual ~SessionInfo();
@@ -99,10 +99,13 @@ public:
 
 	bool isAuthorizedObserver(QUuid observerId);
 
+	bool addAuthorizedObserver(QUuid observerId, QString password);
+	QString getPassword();
+
 	friend class ConnectionManager;
 
 private:
-	SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId);
+	SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
 	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
 	void LoadBaseSessionDatabase(QString databaseName);
@@ -116,11 +119,13 @@ private:
 	void recalculateFittedTimes();
 	void setStateVariable(int dataid, int varid, QString serializedValue);
 	void updateCurrentStateTable(QString updateTime);
+	void addAuthorizedObserver(QUuid observerId);
 	QSqlDatabase getSessionDb();
 	QSqlDatabase getCacheDb();
 
 	static QMap<QUuid,QWeakPointer<SessionInfo>> loadedSessions_;
 	QUuid uuid_;
+	QString password_;
 	QSqlDatabase baseSessionDbConnection_;
 	QSqlDatabase cacheDb_;
 

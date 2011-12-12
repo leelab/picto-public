@@ -38,10 +38,12 @@ public:
 
 	void draw();
 	void updateAnimation(int frame, QTime elapsedTime);
+	QPoint getPositionOffset();
 
 	static VisualElement* NewVisualElement();
 
 	static const QString type;
+	static void setZoom(float zoom){globalZoom_ = zoom;};
 
 
 protected:
@@ -53,6 +55,9 @@ private slots:
 
 private:
 	QSharedPointer<SignalChannel> positionChannel_;
+	int size_;
+	static float globalZoom_;
+	float localZoom_;
 };
 
 

@@ -27,7 +27,9 @@ void GridGraphic::draw()
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(color);
-	p.setPen(color);
+	QPen pen(color);
+	pen.setWidth(0);	//0 means its a cosmetic line that should not disappear at any zoom level
+	p.setPen(pen);
 
 	//Draw it
 	int rowHeight = dims.height()/rows;

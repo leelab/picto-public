@@ -212,11 +212,11 @@
                 <Name id="246">done</Name>
               <UIInfo id="247"><Pos id="249" x="0" y="0"/></UIInfo><UIEnabled id="250">false</UIEnabled><UIOrder id="251">0</UIOrder></Result>
               <RewardChan id="252">1</RewardChan>
-              <RewardQty id="253">1</RewardQty>
+              <RewardQty id="253">60</RewardQty>
               <UIInfo id="254">
                 <Pos id="255" x="1385" y="1585"/>
               </UIInfo>
-            <Type id="257">Reward</Type><UIEnabled id="258">false</UIEnabled><UIOrder id="259">0</UIOrder></StateMachineElement>
+            <Type id="257">Reward</Type><UIEnabled id="258">true</UIEnabled><UIOrder id="259">0</UIOrder><NumRewards id="1421">1</NumRewards></StateMachineElement>
             <Transition id="260">
               <Destination id="261">Reward</Destination>
               <Source id="262">SetTargetRed</Source>
@@ -1271,7 +1271,7 @@ while(RewardsChecked.value&lt;8)
 return false;</Script>
                     <Type id="1436">ScriptElement</Type><UIEnabled id="1437">false</UIEnabled><UIOrder id="1438">0</UIOrder></StateMachineElement>
                     <StateMachineElement type="Reward" id="1439">
-                      <Name id="1440">Juice</Name>
+                      <Name id="1440">TrialReward</Name>
                       <Result id="1441">
                         <Name id="1442">done</Name>
                         <UIInfo id="1443">
@@ -1282,12 +1282,12 @@ return false;</Script>
                         <Pos id="1449" x="1285" y="282"/>
                         
                       </UIInfo>
-                      <RewardQty id="1451">1</RewardQty>
+                      <RewardQty id="1451">60</RewardQty>
                       <RewardChan id="1452">1</RewardChan>
-                    <Type id="1453">Reward</Type><UIEnabled id="1454">false</UIEnabled><UIOrder id="1455">0</UIOrder></StateMachineElement>
+                    <Type id="1453">Reward</Type><UIEnabled id="1454">true</UIEnabled><UIOrder id="1455">0</UIOrder><NumRewards id="3961">1</NumRewards></StateMachineElement>
                     
                     <Transition id="1456">
-                      <Destination id="1457">Juice</Destination>
+                      <Destination id="1457">TrialReward</Destination>
                       <Source id="1458">hasNextReward</Source>
                       <SourceResult id="1459">true</SourceResult>
                     </Transition>
@@ -1355,7 +1355,7 @@ else
                     
                     <Transition id="1517">
                       <Destination id="1518">TimeoutPeriod</Destination>
-                      <Source id="1519">Juice</Source>
+                      <Source id="1519">TrialReward</Source>
                       <SourceResult id="1520">done</SourceResult>
                     </Transition>
                     
@@ -1978,7 +1978,7 @@ else
 {
 	TrialInfo.setData(&quot;Rewarded&quot;,1);
 	return false;
-}</Script><UIInfo id="2656"><Pos id="2657" x="1246" y="406"/></UIInfo><Type id="2659">ScriptElement</Type><UIEnabled id="2660">false</UIEnabled><UIOrder id="2661">0</UIOrder></StateMachineElement><Transition id="2662"><Destination id="2663">GetChoice</Destination><Source id="2664">IsNormalTrail</Source><SourceResult id="2665">true</SourceResult></Transition><StateMachineElement type="Reward" id="2666"><Name id="2667">FixTrialReward</Name><Result id="2668"><Name id="2669">done</Name><UIInfo id="2670"><Pos id="2672" x="0" y="0"/></UIInfo><UIEnabled id="2673">false</UIEnabled><UIOrder id="2674">0</UIOrder></Result><UIInfo id="2675"><Pos id="2676" x="1184" y="188"/></UIInfo><RewardChan id="2678">1</RewardChan><RewardQty id="2679">1</RewardQty><Type id="2680">Reward</Type><UIEnabled id="2681">false</UIEnabled><UIOrder id="2682">0</UIOrder></StateMachineElement><Transition id="2683"><Destination id="2684">IsNormalTrail</Destination><Source id="2685">PresentRewards</Source><SourceResult id="2686">ContinuedFixation</SourceResult></Transition><Transition id="2687"><Destination id="2688">FixTrialReward</Destination><Source id="2689">IsNormalTrail</Source><SourceResult id="2690">false</SourceResult></Transition><Transition id="2691"><Destination id="2692">FixTrialSuccess</Destination><Source id="2693">FixTrialReward</Source><SourceResult id="2694">done</SourceResult></Transition><Parameter type="Range" id="2695"><Max id="2696">1000</Max><Min id="2697">0</Min><Name id="2698">FixationTargetRadius</Name><UIEnabled id="2699">true</UIEnabled><UIInfo id="2700"><Pos id="2701" x="923" y="977"/></UIInfo><Value id="2703">40</Value><Increment id="2704">0</Increment><UIOrder id="2705">0</UIOrder><Units id="2706"/></Parameter><ExitScript id="2707"/><Level id="2708">Stage</Level><Type id="2709">StateMachine</Type><UIEnabled id="2710">false</UIEnabled><UIOrder id="2711">0</UIOrder></StateMachineElement>
+}</Script><UIInfo id="2656"><Pos id="2657" x="1246" y="406"/></UIInfo><Type id="2659">ScriptElement</Type><UIEnabled id="2660">false</UIEnabled><UIOrder id="2661">0</UIOrder></StateMachineElement><Transition id="2662"><Destination id="2663">GetChoice</Destination><Source id="2664">IsNormalTrail</Source><SourceResult id="2665">true</SourceResult></Transition><StateMachineElement type="Reward" id="2666"><Name id="2667">FixTrialReward</Name><Result id="2668"><Name id="2669">done</Name><UIInfo id="2670"><Pos id="2672" x="0" y="0"/></UIInfo><UIEnabled id="2673">false</UIEnabled><UIOrder id="2674">0</UIOrder></Result><UIInfo id="2675"><Pos id="2676" x="1184" y="188"/></UIInfo><RewardChan id="2678">1</RewardChan><RewardQty id="2679">60</RewardQty><Type id="2680">Reward</Type><UIEnabled id="2681">true</UIEnabled><UIOrder id="2682">0</UIOrder><NumRewards id="4677">1</NumRewards></StateMachineElement><Transition id="2683"><Destination id="2684">IsNormalTrail</Destination><Source id="2685">PresentRewards</Source><SourceResult id="2686">ContinuedFixation</SourceResult></Transition><Transition id="2687"><Destination id="2688">FixTrialReward</Destination><Source id="2689">IsNormalTrail</Source><SourceResult id="2690">false</SourceResult></Transition><Transition id="2691"><Destination id="2692">FixTrialSuccess</Destination><Source id="2693">FixTrialReward</Source><SourceResult id="2694">done</SourceResult></Transition><Parameter type="Range" id="2695"><Max id="2696">1000</Max><Min id="2697">0</Min><Name id="2698">FixationTargetRadius</Name><UIEnabled id="2699">true</UIEnabled><UIInfo id="2700"><Pos id="2701" x="923" y="977"/></UIInfo><Value id="2703">40</Value><Increment id="2704">0</Increment><UIOrder id="2705">0</UIOrder><Units id="2706"/></Parameter><ExitScript id="2707"/><Level id="2708">Stage</Level><Type id="2709">StateMachine</Type><UIEnabled id="2710">false</UIEnabled><UIOrder id="2711">0</UIOrder></StateMachineElement>
               <InitialElement id="2712">PreTrialInterval</InitialElement>
               
               
@@ -2374,6 +2374,6 @@ RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graph
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">399</OpenedBlock>
+    <OpenedBlock id="">1089</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

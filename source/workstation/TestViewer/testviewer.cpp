@@ -20,6 +20,7 @@
 #include <QXmlStreamReader>
 #include <QMenu>
 #include <QFileDialog>
+#include <QSlider>
 #include "../../common/memleakdetect.h"
 
 
@@ -124,6 +125,15 @@ void TestViewer::setupUi()
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 
+	////Zoom slider
+	//zoomSlider_ = new QSlider;
+	//zoomSlider_->setRange(1,59);
+	//zoomSlider_->setSingleStep(1);
+	//zoomSlider_->setValue(30);
+	//zoomSlider_->setOrientation(Qt::Horizontal);
+	//connect(zoomSlider_, SIGNAL(sliderMoved(int)), this, SLOT(zoomChanged(int)));
+
+
 	//TaskList combo box
 	taskListBox_ = new QComboBox(this);
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -138,6 +148,7 @@ void TestViewer::setupUi()
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(taskListBox_);
 	testToolbar_->addAction(loadPropsAction_);
+	//testToolbar_->addWidget(zoomSlider_);
 
 	
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
@@ -283,3 +294,12 @@ void TestViewer::operatorClickDetected(QPoint pos)
 {
 	OperatorClickParameter::addClick(pos);
 }
+
+//void TestViewer::zoomChanged(int zoom)
+//{
+//	if(!pixmapVisualTarget_)
+//		return;
+//	//Fix zoom so that each tick is worth 3.333%
+//	float fixedZoom = float(zoom)/30.0;
+//	pixmapVisualTarget_->setZoom(fixedZoom);
+//}

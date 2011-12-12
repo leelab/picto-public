@@ -11,6 +11,7 @@
 #include "../../common/storage/BehavioralDataUnitPackage.h"
 #include "../../common/storage/StateDataUnit.h"
 #include "../../common/statemachine/statemachine.h"
+#include "../../common/stimuli/cursorgraphic.h"
 #include "../propertyframe.h"
 
 
@@ -32,6 +33,9 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QFileDialog>
+#include <QSlider>
+#include <QSpinBox>
+#include <QLineEdit>
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -44,7 +48,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	startedSession_(false),
 	activeExperiment_(0),
 	statusBar_(NULL),
-	channelSignalsConnected_(false)
+	channelSignalsConnected_(false),
+	showingSplash_(true)
 {
 	setupServerChannel();
 	setupEngine();
@@ -255,6 +260,7 @@ void RemoteViewer::setupEngine()
 	engine_->setRewardController(rewardController);
 
 	renderingTarget_->showSplash();
+	showingSplash_ = true;
 }
 
 //! Sets up the user interface portions of the GUI
@@ -280,6 +286,10 @@ void RemoteViewer::setupUi()
 	connect(rewardAction_, SIGNAL(triggered()),this, SLOT(reward()));
 	rewardChannel_ = 1;
 
+	rewardQuantity_ = new QSpinBox();
+	rewardQuantity_->setValue(60);
+	rewardQuantity_->setMinimum(1);
+
 	loadPropsAction_ = new QAction(tr("&Load Values from Session"),this);
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
@@ -296,6 +306,7 @@ void RemoteViewer::setupUi()
 	toolBar_->addAction(pauseAction_);
 	toolBar_->addAction(stopAction_);
 	toolBar_->addAction(rewardAction_);
+	toolBar_->addWidget(rewardQuantity_);
 	toolBar_->addSeparator();
 	toolBar_->addWidget(new QLabel("Task: ", this));
 	toolBar_->addWidget(taskListBox_);
@@ -308,6 +319,9 @@ void RemoteViewer::setupUi()
 	connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
 	connect(connectAction_, SIGNAL(triggered(bool)), this, SLOT(changeConnectionState(bool)));
 
+	//Password Line Edit
+	passwordEdit_ = new QLineEdit();
+	passwordEdit_->setEnabled(false);
 
 	directorListBox_ = new QComboBox;
 	directorListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -317,12 +331,25 @@ void RemoteViewer::setupUi()
 	proxyListBox_->addItem("No Proxy",QUuid().toString());
 	updateLists();
 
+	//Zoom slider
+	zoomSlider_ = new QSlider;
+	zoomSlider_->setRange(2,20);
+	zoomSlider_->setSingleStep(1);
+	zoomSlider_->setPageStep(2);
+	zoomSlider_->setValue(20);
+	zoomSlider_->setOrientation(Qt::Horizontal);
+	connect(zoomSlider_, SIGNAL(valueChanged(int)), this, SLOT(zoomChanged(int)));
+
+	zoomPercentage_ = new QLabel("100%");
+
 	toolBar_->addAction(connectAction_);
 	toolBar_->addWidget(new QLabel(Picto::Names->directorAppName + ": ", this));
 	toolBar_->addWidget(directorListBox_);
 	toolBar_->addWidget(new QLabel(Picto::Names->proxyServerAppName + ": ", this));
 	toolBar_->addWidget(proxyListBox_);
-	
+	toolBar_->addWidget(new QLabel("Session Key:"));
+	toolBar_->addWidget(passwordEdit_);
+
 	//------ Main layout -----------
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(toolBar_);
@@ -331,12 +358,21 @@ void RemoteViewer::setupUi()
 	statusBar_ = new QLabel();
 	updateStatus();
 
-	QHBoxLayout *operationLayout = new QHBoxLayout;
 	propertyFrame_ = new PropertyFrame();
 	propertyFrame_->setEnabled(false);
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
 	connect(propertyFrame_,SIGNAL(parameterMessageReady(QSharedPointer<Property>)),this,SLOT(parameterMessageReady(QSharedPointer<Property>)));
-	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
+	QHBoxLayout* zoomLayout = new QHBoxLayout();
+	zoomLayout->addWidget(new QLabel("Zoom: ", this));
+	zoomLayout->addWidget(zoomSlider_);
+	zoomLayout->addWidget(zoomPercentage_);
+		
+	QVBoxLayout *leftPane = new QVBoxLayout;
+	leftPane->addLayout(zoomLayout);
+	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
+
+	QHBoxLayout *operationLayout = new QHBoxLayout;
+	operationLayout->addLayout(leftPane);
 	operationLayout->addWidget(visualTargetHost_);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
@@ -430,7 +466,7 @@ void RemoteViewer::reward()
 	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 	//We need to possibbly start a session, and always join a session
 	ComponentStatus remoteStatus = directorStatus(directorID);
-	if(!sendTaskCommand(QString("reward:%1").arg(rewardChannel_)))
+	if(!sendTaskCommand(QString("reward:%1").arg(rewardChannel_),QString::number(rewardQuantity_->value())))
 	{
 		statusBar_->setText("Failed to send reward command to server.");
 		return;
@@ -460,6 +496,21 @@ void RemoteViewer::operatorClickDetected(QPoint pos)
 	if(localStatus_ <= stopped)
 		return;
 	sendTaskCommand(QString("click:%1,%2").arg(pos.x()).arg(pos.y()));
+}
+
+void RemoteViewer::zoomChanged(int zoom)
+{
+	if(!pixmapVisualTarget_)
+		return;
+	//Fix zoom so that each tick is worth 3.333%
+	float fixedZoom = float(zoom*.05);
+	zoomPercentage_->setText(QString::number(fixedZoom*100)+QString("%"));
+	pixmapVisualTarget_->setZoom(fixedZoom);
+	//We don't want the cursor to change size just because we're zooming in and out of experiment.
+	//This takes care of that.
+	CursorGraphic::setZoom(fixedZoom);
+	if(showingSplash_)
+		renderingTarget_->showSplash();
 }
 
 //! \brief Called whenever the connected button changes state
@@ -664,9 +715,15 @@ void RemoteViewer::updateActions()
 	disableReward |= !connectAction_->isChecked();
 
 	if(disableReward)
+	{
 		rewardAction_->setEnabled(false);
+		rewardQuantity_->setEnabled(false);
+	}
 	else
+	{
 		rewardAction_->setEnabled(true);
+		rewardQuantity_->setEnabled(true);
+	}
 
 	//Connect Action
 	bool disableConnect = false;
@@ -685,11 +742,14 @@ void RemoteViewer::updateActions()
 	{
 		directorListBox_->setEnabled(false);
 		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
 	}
 	else
 	{
 		directorListBox_->setEnabled(true);
 		proxyListBox_->setEnabled(true);
+		if(!disableConnect)
+			passwordEdit_->setEnabled(true);
 	}
 
 	//Task list combo box
@@ -720,6 +780,7 @@ void RemoteViewer::updateLists()
 	{
 		directorListBox_->setEnabled(false);
 		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
 		return;
 	}
 
@@ -1154,6 +1215,13 @@ bool RemoteViewer::startSession()
 	if(!sessionId_.isNull())
 		return true;
 
+	//Require a password to start a session
+	if(passwordEdit_->text().isEmpty())
+	{
+		QMessageBox::warning(0,"Enter Session Key","You must enter a session key to start a new session.");
+		return false;
+	}
+
 	//Make a copy of the experiment
 	//It would be 100 times easier to copy the experiment object directly, but it contains a
 	//parameter container, which is a QObject, and can't be copied.  So instead, we generate
@@ -1191,6 +1259,7 @@ bool RemoteViewer::startSession()
 	startSessCommand->setContent(dataXml);
 	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(dataXml.length()));
 	startSessCommand->setFieldValue("Observer-ID",observerId_.toString());
+	startSessCommand->setFieldValue("Password",passwordEdit_->text());
 
 	QSharedPointer<Picto::ProtocolResponse> loadExpResponse;
 
@@ -1338,6 +1407,8 @@ bool RemoteViewer::joinSession()
 		commandStr = "JOINSESSION "+directorID+" PICTO/1.0";
 
 		QSharedPointer<Picto::ProtocolCommand> joinSessCommand(new Picto::ProtocolCommand(commandStr));
+		joinSessCommand->setFieldValue("Password",passwordEdit_->text());
+		joinSessCommand->setFieldValue("Observer-ID",observerId_.toString());
 		QSharedPointer<Picto::ProtocolResponse> joinSessResponse;
 
 		serverChannel_->sendRegisteredCommand(joinSessCommand);
@@ -1580,10 +1651,13 @@ bool RemoteViewer::joinSession()
 		updateActions();
 
 		//WARNING:  Nothing after this line will be processed until the task is finished running
+		showingSplash_ = false;
 		activeExperiment_->runTask(taskName.simplified().remove(' '));
+		showingSplash_ = true;
 		localStatus_ = Stopped;
 		updateActions();
 		renderingTarget_->showSplash();
+		showingSplash_ = true;
 		return true;
 	}
 
@@ -1657,6 +1731,9 @@ bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 		}
 		cmdResponse = serverChannel_->getResponse();
 	}while(!cmdResponse || cmdResponse->getFieldValue("Command-ID") != commandID);
+
+	if(cmdResponse->getFieldValue("Password")!="")
+		passwordEdit_->setText(cmdResponse->getFieldValue("Password"));
 
 	if(cmdResponse->getResponseType() == "OK")
 	{

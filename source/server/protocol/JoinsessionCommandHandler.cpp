@@ -65,6 +65,13 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 	}
 	QUuid sessionId = sessInfo->sessionId();
 
+	QUuid observerId = QUuid(command->getFieldValue("Observer-ID"));
+	if(observerId != QUuid() && !sessInfo->isAuthorizedObserver(observerId))
+	{
+		QString password = command->getFieldValue("Password");
+		sessInfo->addAuthorizedObserver(observerId,password);
+	}
+
 	//Find the experiment's XML
 	QByteArray experimentXml;
 	experimentXml = sessInfo->experimentXml();

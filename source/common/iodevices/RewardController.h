@@ -42,20 +42,17 @@ public:
 	virtual ~RewardController();
 
 	bool setRewardVolume(unsigned int channel, float volume);
-	bool setRewardDurationMs(unsigned int channel, unsigned int duration);
-	int getRewardDurationMs(unsigned int channel);
 	bool setRewardResetTimeMs(unsigned int channel, unsigned int time);
 
 	int getChannelCount() { return channelCount_; };
 
 public slots:
-	virtual void giveReward(unsigned int channel) = 0;  //must return duration of reward
+	virtual void giveReward(unsigned int channel,int quantity) = 0;  //must return duration of reward
 	virtual void flush(unsigned int channel,bool flush) = 0;
 
 protected:
 	int channelCount_;
 	QList<float> rewardVolumes_;
-	QList<int> rewardDurations_;
 	QList<int> rewardResetTimes_;
 };
 

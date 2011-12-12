@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "../memleakdetect.h"
+#include "../stimuli/boxgraphic.h"
 using namespace Picto;
 
 bool visualElementLessThan(const QSharedPointer<VisualElement> &e1, const QSharedPointer<VisualElement> &e2) 

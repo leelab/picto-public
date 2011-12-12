@@ -32,7 +32,7 @@ public:
 	virtual ~AudioRewardController() {};
 
 public slots:
-	void giveReward(unsigned int channel);
+	void giveReward(unsigned int channel,int quantity);
 	void flush(unsigned int channel,bool flush);
 private:
 	QSound tick_;

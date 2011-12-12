@@ -55,7 +55,7 @@ LegacySystemXPRewardController::~LegacySystemXPRewardController()
 
 
 
-void LegacySystemXPRewardController::giveReward(unsigned int)
+void LegacySystemXPRewardController::giveReward(unsigned int,int quantity)
 {
 	if(!hasDevice_)
 		return;
@@ -82,7 +82,7 @@ void LegacySystemXPRewardController::giveReward(unsigned int)
 		QueryPerformanceCounter(&tock);
 		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
 	}
-	while(elapsedTime * 1000.0 < rewardDurations_[0/*channel-1*/]);
+	while(elapsedTime * 1000.0 < quantity);
 
 	data[0] = 0;
 	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));

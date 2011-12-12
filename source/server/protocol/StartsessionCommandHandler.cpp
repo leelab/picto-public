@@ -30,6 +30,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	QString target = command->getTarget();
 	QString directorID;
 	QString proxyID;
+	QString password = command->getFieldValue("Password");
 	QByteArray sessionDefs;
 	QByteArray experimentXml;
 	QByteArray experimentConfig;
@@ -48,6 +49,9 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	
 	if(observerId.isNull())
 		return notFoundResponse;
+
+	if(password.isEmpty())
+		return unauthorizedResponse;
 
 
 	//Check that the Director is ready to go
@@ -88,7 +92,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	}
 
 	//create the session
-	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentXml, experimentConfig, observerId);
+	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentXml, experimentConfig, observerId, password);
 	
 	if(sessionInfo.isNull())
 	{

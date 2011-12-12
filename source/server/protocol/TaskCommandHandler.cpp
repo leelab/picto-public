@@ -82,16 +82,18 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 		int colonIndex = target.indexOf(":");
 		bool ok;
 		channel = target.mid(colonIndex+1).toInt(&ok);
+		QString directive(command->getContent());
 		if(!ok)
 			return notFoundResponse;
 		else
-			return reward(channel);
+			return reward(channel,directive);
 	}
 	else if(target.startsWith("isauthorized", Qt::CaseInsensitive))
 	{
 		//This is a weird little command.  It's basically a check so that a workstation can determine
 		//if it is authorized to send task commands.  If the workstation isn't authorized, the command
 		//will return 401:Unauthorized, otherwise, we do nothing, and return 200:OK
+		okResponse->setFieldValue("Password",sessInfo_->getPassword());
 		return okResponse;
 	}
 	else if(target.startsWith("parameter", Qt::CaseInsensitive))
@@ -296,7 +298,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 }
 
 //! Delivers a reward
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel, QString details)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
@@ -308,7 +310,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel)
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective(QString("REWARD %1").arg(channel),"DIRECTOR");
+	sessInfo_->addPendingDirective(QString("REWARD %1\n%2").arg(channel).arg(details),"DIRECTOR");
 
 	return okResponse;
 

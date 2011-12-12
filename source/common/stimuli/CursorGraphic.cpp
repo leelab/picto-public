@@ -5,9 +5,11 @@
 namespace Picto {
 
 const QString CursorGraphic::type = "Cursor Graphic";
+float CursorGraphic::globalZoom_ = 1.0;
 
 CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color)
-: VisualElement(QPoint(0,0),color)
+: VisualElement(QPoint(0,0),color),
+size_(16)
 {
 	// This is never serialized, so I didn't update it to use the new serialization routine.
 	// It does bring to light the fact that most of our Asset objects must be deserialized
@@ -36,21 +38,26 @@ CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color
 void CursorGraphic::draw()
 {
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
-
-	QImage image(14,14,QImage::Format_ARGB32);
+	
+	int zoomedSize = size_/localZoom_;
+	QImage image(zoomedSize,zoomedSize,QImage::Format_ARGB32);
 	image.fill(0);
 	QPainter p(&image);
 	QPen pen(color);
-	pen.setWidth(2);
+	int penWidth = float(zoomedSize)/5.0+.5;
+	if(penWidth == 0)
+		penWidth = 1;
+	pen.setWidth(penWidth);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setPen(pen);
 	p.setBrush(color);
 	
-	p.drawLine(7,0,7,13);
-	p.drawLine(0,7,13,7);
+	p.drawLine(zoomedSize/2,0,zoomedSize/2,zoomedSize-1);
+	p.drawLine(0,zoomedSize/2,zoomedSize-1,zoomedSize/2);
 
 	p.end();
 	image_ = image;
+
 
 	//updateCompositingSurfaces();
 
@@ -80,6 +87,18 @@ void CursorGraphic::updateAnimation(int frame, QTime elapsedTime)
 
 		setPosition(QPoint(x,y));
 	}
+	if(localZoom_ < globalZoom_ || localZoom_ > globalZoom_)
+	{
+		localZoom_ = globalZoom_;
+		draw();
+	}
+
+}
+
+QPoint CursorGraphic::getPositionOffset()
+{
+	int zoomedSize = size_/localZoom_;
+	return QPoint(zoomedSize/2,zoomedSize/2);
 }
 
 VisualElement* CursorGraphic::NewVisualElement()

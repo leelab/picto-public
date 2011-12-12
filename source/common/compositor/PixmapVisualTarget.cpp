@@ -58,14 +58,12 @@ void PixmapVisualTarget::paint(QPaintDevice *widget)
 {
 	//Note that we aren't assuming that we're drawing on ourselves.
 	QPainter painter(widget);
-
 	painter.drawPixmap(QPoint(0,0),pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1]);
 }
 
 QSharedPointer<CompositingSurface> PixmapVisualTarget::generateCompositingSurface()
 {
 	QSharedPointer<PixmapCompositingSurface> pixmapCompositingSurface(new PixmapCompositingSurface());
-
 	return pixmapCompositingSurface;
 }
 
@@ -76,10 +74,13 @@ QString PixmapVisualTarget::getTypeName()
 
 void PixmapVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface)
 {
+	Q_ASSERT(zoom_ > 0);
 	if(compositingSurface->getTypeName()=="Pixmap")
 	{
 		QPainter painter(&pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_]);
-
+		painter.setRenderHint(QPainter::Antialiasing); 
+		painter.setRenderHint(QPainter::TextAntialiasing);
+		painter.setViewport((width_-(width_*zoom_))/2.0,(height_-(height_*zoom_))/2.0,width_*zoom_,height_*zoom_);
 		painter.drawPixmap(location, compositingSurface.staticCast<PixmapCompositingSurface>()->getPixmap());
 	}
 }
@@ -88,7 +89,7 @@ void PixmapVisualTarget::present()
 {
 	surfaceActingAsBackBuffer_ = ~surfaceActingAsBackBuffer_ & 1;
 
-	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,127,0,0));
+	pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,0,0,0));
 
 	//Set first phosphor time !! THIS IS NOT ACCURATE YET
 	setFirstPhosphorTime();
@@ -106,6 +107,21 @@ void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect r
 	painter.setPen(color);
 	painter.setFont(font);
 	painter.drawText(rect, alignment, text);
+}
+
+QPoint PixmapVisualTarget::viewportPointToTargetPoint(QPoint viewportPoint)
+{
+	float x = (viewportPoint.x()-(width_-(width_*zoom_))/2.0)/zoom_;
+	float y = (viewportPoint.y()-(height_-(height_*zoom_))/2.0)/zoom_;
+	return QPoint(x,y);
+}
+
+QPoint PixmapVisualTarget::targetPointToViewportPoint(QPoint targetPoint)
+{
+	float x = (zoom_*targetPoint.x())+(width_-(width_*zoom_))/2.0;
+	float y = (zoom_*targetPoint.y())+(height_-(height_*zoom_))/2.0;
+	return QPoint(x,y);
+
 }
 
 void PixmapVisualTarget::clear()

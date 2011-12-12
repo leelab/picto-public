@@ -72,7 +72,6 @@ public:
 protected:
 	virtual QString defaultTagName(){return "StateMachineElement";};
 	//QString getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine);
-	void processStatusDirective(QSharedPointer<Engine::PictoEngine> engine, QSharedPointer<ProtocolResponse> dataResponse);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

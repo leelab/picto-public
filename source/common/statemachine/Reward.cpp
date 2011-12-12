@@ -12,8 +12,9 @@ Reward::Reward()
 	visualElementFactory_->setMaxAssets(0);
 	controlTargetFactory_->setMaxAssets(0);
 	AddDefinableProperty("Type","Reward");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
-	AddDefinableProperty(QVariant::Int,"RewardQty",0);
-	AddDefinableProperty(QVariant::Int,"RewardChan",0);
+	AddDefinableProperty(QVariant::Int,"NumRewards",1);
+	AddDefinableProperty(QVariant::Int,"RewardQty",60);
+	AddDefinableProperty(QVariant::Int,"RewardChan",1);
 	addRequiredResult("done");
 }
 
@@ -25,7 +26,8 @@ QSharedPointer<Asset> Reward::Create()
 QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
-	int numRewards = propertyContainer_->getPropertyValue("RewardQty").toInt();
+	int numRewards = propertyContainer_->getPropertyValue("NumRewards").toInt();
+	int rewardQty = propertyContainer_->getPropertyValue("RewardQty").toInt();
 	int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
 
 	//Give the rewards
@@ -33,7 +35,7 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		for(int i=0; i<numRewards; i++)
 		{
-			engine->giveReward(rewardChan);
+			engine->giveReward(rewardChan,rewardQty);
 		}
 	}
 
@@ -71,6 +73,8 @@ QString Reward::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 void Reward::postDeserialize()
 {
 	StateMachineElement::postDeserialize();
+	setPropertyRuntimeEditable("NumRewards");
+	setPropertyRuntimeEditable("RewardQty");
 }
 
 bool Reward::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -81,6 +85,12 @@ bool Reward::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	if(propertyContainer_->getPropertyValue("Name").toString() == "EngineAbort")
 	{
 		addError("Reward", "EngineAbort is a resticted keyword, and may not be used as the name of a reward", xmlStreamReader);
+		return false;
+	}
+
+	if(propertyContainer_->getPropertyValue("NumRewards").toInt() < 0)
+	{
+		addError("Reward", "NumRewards must have a value greater than or equal to zero", xmlStreamReader);
 		return false;
 	}
 

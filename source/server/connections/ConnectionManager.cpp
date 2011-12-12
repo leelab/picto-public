@@ -405,7 +405,7 @@ QUuid ConnectionManager::pendingSession(QUuid componentID)
 }
 
 //! Creates a new session and returns a pointer to the SessinoInfo object
-QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, QUuid proxyID, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId)
+QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, QUuid proxyID, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password)
 {
 	QMutexLocker locker(mutex_);
 
@@ -415,7 +415,10 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 	if((proxyID != QUuid()) && !components_.contains(proxyID))
 		return QSharedPointer<SessionInfo>();
 
-	QSharedPointer<SessionInfo> sessInfo(SessionInfo::CreateSession(experimentXml,experimentConfig,initialObserverId));
+	if(password.isEmpty())
+		return QSharedPointer<SessionInfo>();
+
+	QSharedPointer<SessionInfo> sessInfo(SessionInfo::CreateSession(experimentXml,experimentConfig,initialObserverId, password));
 	sessInfo->AddComponent(components_[directorID]);
 	if(proxyID != QUuid())
 	{

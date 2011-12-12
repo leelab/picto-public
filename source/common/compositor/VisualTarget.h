@@ -50,8 +50,11 @@ public:
 	virtual void draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface) = 0;
 	virtual void present() = 0;
 	virtual void clear() = 0;
+	virtual void setZoom(float zoom);
 	double getLatestFirstPhosphor(){return lastFrameTime_;};
 	virtual QRect getDimensions();
+	virtual QPoint viewportPointToTargetPoint(QPoint viewportPoint);
+	virtual QPoint targetPointToViewportPoint(QPoint targetPoint);
 
 	//! \todo Add a function that returns time to VSynch
 signals:
@@ -67,6 +70,7 @@ protected:
 	bool bWindowed_;
 	int width_;
 	int height_;
+	float zoom_;
 	Timestamper stamper_;
 	double lastFrameTime_;
 

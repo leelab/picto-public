@@ -1,11 +1,11 @@
 #ifndef _PIXMAPVISUALTARGET_H_
 #define _PIXMAPVISUALTARGET_H_
 
+#include <QPixmap>
+
 #include "../common.h"
 
 #include "VisualTarget.h"
-
-#include <QPixmap>
 
 namespace Picto {
 
@@ -35,6 +35,8 @@ public:
 	void clear();
 
 	void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text);
+	virtual QPoint viewportPointToTargetPoint(QPoint viewportPoint);
+	virtual QPoint targetPointToViewportPoint(QPoint targetPoint);
 
 protected:
 	void paint(QPaintDevice *widget);

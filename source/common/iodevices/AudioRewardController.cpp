@@ -12,7 +12,7 @@ RewardController(1) ,
 tick_("sounds/tick.wav")
 {}
 
-void AudioRewardController::giveReward(unsigned int channel)
+void AudioRewardController::giveReward(unsigned int channel,int)
 {
 	//if(channel == 1)
 	//{
