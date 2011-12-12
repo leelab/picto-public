@@ -13,7 +13,12 @@ Scriptable::Scriptable()
 
 bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
 {
-	//Add object to scripting environment.
+	//Add object to scripting environment unless its name is empty or contains whitespace.
+	if(getName().isEmpty())
+		return true;
+
+	if(getName().contains(" "))
+		return true;
 
 	//If the object has no Q_PROPERTIES OR local public slots, don't add it.
 	int numScriptableClassProps = Scriptable::staticMetaObject.propertyCount();
@@ -220,11 +225,13 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 {
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
-	if(getName().contains(" "))
-	{
-		addError("Scriptable", "The name of a scriptable element cannot contain whitespace",xmlStreamReader);
-		return false;
-	}
+	//Since a lot of things is scriptable now, this is an unreasonable requirement.  We're taking it out for now
+	//and just not adding anything with no name or whitespace in its name to the scripting system.
+	//if(getName().contains(" "))
+	//{
+	//	addError("Scriptable", "The name of a scriptable element cannot contain whitespace",xmlStreamReader);
+	//	return false;
+	//}
 	return true;
 }
 

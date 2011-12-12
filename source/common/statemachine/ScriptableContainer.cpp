@@ -265,7 +265,7 @@ void ScriptableContainer::runScript(QString scriptName, bool& scriptReturnVal)
 
 void ScriptableContainer::postDeserialize()
 {
-	UIEnabled::postDeserialize();
+	Scriptable::postDeserialize();
 	QStringList childTags = getDefinedChildTags();
 	foreach(QString childTag,childTags)
 	{
@@ -282,7 +282,7 @@ void ScriptableContainer::postDeserialize()
 
 bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!UIEnabled::validateObject(xmlStreamReader))
+	if(!Scriptable::validateObject(xmlStreamReader))
 		return false;
 	
 	//We were checking whether multiple scriptables had the same name below.  This wasn't a complete
