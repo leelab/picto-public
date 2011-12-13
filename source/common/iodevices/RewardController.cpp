@@ -6,9 +6,9 @@ namespace Picto
 RewardController::RewardController(unsigned int channelCount)
 	:channelCount_(channelCount)
 {
-	//initialize the reset time to 50 ms (this is arbitrary
+	//initialize the reset time to 150 ms (this is arbitrary
 	for(int i=0; i<4; i++)
-		rewardResetTimes_.append(50);
+		rewardResetTimes_.append(150);
 
 }
 

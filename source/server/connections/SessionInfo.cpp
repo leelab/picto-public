@@ -58,9 +58,20 @@ QSharedPointer<SessionInfo> SessionInfo::LoadSession(QString sessionID, QString 
  */
 void SessionInfo::deleteSession(SessionInfo* session)
 {
+	Q_ASSERT(session);
 	if(loadedSessions_.contains(session->sessionId()))
 		loadedSessions_.remove(session->sessionId());
+	QString sessionId = session->sessionId().toString();
+	QStringList connectionNames = session->openDatabaseConnections_;
+	QString baseSessionDbConName = session->getSessionDb().connectionName();
 	delete session;
+	//The database connections must be removed from the QSqlDatabase internal driver after the actual
+	//QSqlDatabase instances have been closed
+	foreach(QString connectionName, connectionNames)
+	{
+		QSqlDatabase::removeDatabase(connectionName);
+	}
+	qDebug("Session: " + sessionId.toAscii() + " has been unloaded!");
 }
 
 SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password):
@@ -181,7 +192,12 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 
 SessionInfo::~SessionInfo()
 {
-	qDebug("Session: " + sessionId().toString().toAscii() + " is destructing!");
+	foreach(QString connectionName, openDatabaseConnections_)
+	{
+		QSqlDatabase connection = QSqlDatabase::database(connectionName);
+		if(connection.isValid())
+			connection.close();
+	}
 }
 
 //! \brief Adds a component to this session (ie. Director or proxy)
@@ -307,53 +323,6 @@ void SessionInfo::addPendingDirective(QString directive, QString componentType)
  */
 bool SessionInfo::endSession()
 {
-	//ConnectionManager *conMgr = ConnectionManager::Instance();
-	//Q_ASSERT(conMgr->getComponentStatusBySession(uuid_,"DIRECTOR") > ComponentStatus::idle);
-
-
-	//QTime timer;
-	//foreach(QSharedPointer<ComponentInfo> component,components_)
-	//{
-	//	//Let the Component know that we want to end the session
-	//	addPendingDirective("ENDSESSION",component->getType());
-	//}
-	////Sit around waiting for the components' states to change. If a component is not found, also sitting
-	////around.  The session will end up timing out, and we don't want to end if there may still be some 
-	////data coming in.
-	//timer.start();
-	//foreach(QSharedPointer<ComponentInfo> component,components_)
-	//{
-	//	while((component->getStatus() == ComponentStatus::notFound) 
-	//		|| (component->getStatus() > ComponentStatus::ending))
-	//	{
-	//		//Keep waiting until either both components start the ending process
-	//		while(timer.elapsed() < 5000)
-	//		{
-	//			//Wait for it.
-	//			QThread::yieldCurrentThread();
-	//			QCoreApplication::processEvents();
-	//		}
-	//		if(component->getStatus() > ComponentStatus::ending)
-	//		{	//Maybe it didn't get the message.
-	//			//Try telling the component again
-	//			addPendingDirective("ENDSESSION",component->getType());
-	//			qDebug("SessionInfo::endSession",QString("%1 failed to start ending session within 5 seconds").arg(component->getName()).toAscii());
-	//			timer.start();
-	//		}
-	//	}
-	//}
-	////Now they're all either ending, idle, or not found.  Wait for them to finish the job.
-	//foreach(QSharedPointer<ComponentInfo> component,components_)
-	//{
-	//	while( (component->getStatus() == ComponentStatus::notFound)
-	//		|| (component->getStatus() > ComponentStatus::idle))
-	//	{
-	//		//Wait for it.
-	//		QThread::yieldCurrentThread();
-	//		QCoreApplication::processEvents();
-	//	}
-	//}
-
 	QSqlDatabase sessionDb = getSessionDb();
 
 	//Add the end time to the session db
@@ -1017,6 +986,7 @@ void SessionInfo::InitializeVariables()
 void SessionInfo::LoadBaseSessionDatabase(QString databaseName)
 {
 	baseSessionDbConnection_ = QSqlDatabase::addDatabase("QSQLITE",databaseName);
+	openDatabaseConnections_.append(databaseName);
 	baseSessionDbFilepath_ = QCoreApplication::applicationDirPath() + "/" + databaseName;
 	baseSessionDbConnection_.setDatabaseName(baseSessionDbFilepath_);
 	baseSessionDbConnection_.open();
@@ -1142,6 +1112,7 @@ void SessionInfo::CreateCacheDatabase(QString databaseName)
 	//Create the cacheDB
 	QString cacheDatabaseName = databaseName+"_cache";
 	cacheDb_ = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
+	openDatabaseConnections_.append(cacheDatabaseName);
 	cacheDb_.setDatabaseName(":memory:");
 	//baseCacheDbConnection_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + cacheDatabaseName + ".sqlite");
 	bool success = cacheDb_.open();
@@ -1463,6 +1434,7 @@ QSqlDatabase SessionInfo::getSessionDb()
 	}
 	else
 	{
+		openDatabaseConnections_.append(connectionName);
 		sessionDb = QSqlDatabase::cloneDatabase(baseSessionDbConnection_,connectionName);
 		sessionDb.open();
 	}

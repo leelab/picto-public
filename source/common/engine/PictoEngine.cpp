@@ -410,6 +410,8 @@ void PictoEngine::setRunningPath(QString path)
 
 QString PictoEngine::getServerPathUpdate()
 {
+	if(!currStateUnit_)
+		return "";
 	QSharedPointer<Asset> asset = expConfig_->getAsset(currStateUnit_->getTransitionID());
 	QSharedPointer<Transition> trans;
 	QString result = "";

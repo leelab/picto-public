@@ -39,13 +39,13 @@ public:
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 
 private:
-	QSharedPointer<Picto::ProtocolResponse> start(QString taskname);
-	QSharedPointer<Picto::ProtocolResponse> stop();
-	QSharedPointer<Picto::ProtocolResponse> pause();
-	QSharedPointer<Picto::ProtocolResponse> resume();
-	QSharedPointer<Picto::ProtocolResponse> reward(int channel, QString details);
-	QSharedPointer<Picto::ProtocolResponse> parameter(QString paramId, QString details);
-	QSharedPointer<Picto::ProtocolResponse> click(QString details);
+	QSharedPointer<Picto::ProtocolResponse> start(QString taskname,QSharedPointer<SessionInfo> sessInfo);
+	QSharedPointer<Picto::ProtocolResponse> stop(QSharedPointer<SessionInfo> sessInfo);
+	QSharedPointer<Picto::ProtocolResponse> pause(QSharedPointer<SessionInfo> sessInfo);
+	QSharedPointer<Picto::ProtocolResponse> resume(QSharedPointer<SessionInfo> sessInfo);
+	QSharedPointer<Picto::ProtocolResponse> reward(int channel, QString details,QSharedPointer<SessionInfo> sessInfo);
+	QSharedPointer<Picto::ProtocolResponse> parameter(QString paramId, QString details,QSharedPointer<SessionInfo> sessInfo);
+	QSharedPointer<Picto::ProtocolResponse> click(QString details,QSharedPointer<SessionInfo> sessInfo);
 
 	QUuid sessionId_;
 	ConnectionManager *conMgr_;

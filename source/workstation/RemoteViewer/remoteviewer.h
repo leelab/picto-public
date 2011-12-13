@@ -119,6 +119,7 @@ private:
 	QLabel *statusBar_;
 
 	QTimer *updateTimer_;
+	QTimer *reconnectTimer_;
 	QTimer *timeoutTimer_;
 
 	Picto::CommandChannel *serverChannel_;
@@ -128,7 +129,6 @@ private:
 
 	ComponentStatus localStatus_;
 	
-	bool startedSession_;
 	bool enableTaskCommands_;
 
 	QUuid sessionId_;
@@ -140,9 +140,13 @@ private:
 	QList<ComponentInstance> currProxyList_;
 	bool channelSignalsConnected_;
 	bool showingSplash_;
+	QWeakPointer<Asset> lastTask_;
+	QWeakPointer<Asset> lastActiveExperiment_;
 
 private slots:
 	void taskListIndexChanged(int index);
+	void assureChannelConnections();
+
 };
 
 #endif

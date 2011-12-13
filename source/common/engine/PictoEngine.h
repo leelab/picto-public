@@ -160,7 +160,7 @@ public:
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
-	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";firstCurrStateUpdate_ = true;};
+	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";runningPath_="";firstCurrStateUpdate_ = true;};
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 private:

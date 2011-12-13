@@ -41,9 +41,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 	//grab the session info and connection manager
 	sessionId_ = QUuid(command->getFieldValue("Session-ID"));
 	conMgr_ = ConnectionManager::Instance();
-	sessInfo_ = conMgr_->getSessionInfo(sessionId_);
+	QSharedPointer<SessionInfo> sessInfo = conMgr_->getSessionInfo(sessionId_);
 
-	if(sessInfo_.isNull())
+	if(sessInfo.isNull())
 	{
 		badReqResponse->setContent("Session not found");
 		return badReqResponse;
@@ -51,7 +51,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 
 	//Figure out if the observer sending the command is an authorized user
 	QUuid observerId = QUuid(command->getFieldValue("Observer-ID"));
-	if(!sessInfo_->isAuthorizedObserver(observerId))
+	if(!sessInfo->isAuthorizedObserver(observerId))
 		return unauthResponse;
 
 	//Parse the command
@@ -62,19 +62,19 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 		QString taskname;
 		int colonIndex = target.indexOf(":");
 		taskname = target.mid(colonIndex+1);
-		return start(taskname);
+		return start(taskname,sessInfo);
 	}
 	else if(target.startsWith("pause",Qt::CaseInsensitive))
 	{
-		return pause();
+		return pause(sessInfo);
 	}
 	else if(target.startsWith("stop",Qt::CaseInsensitive))
 	{
-		return stop();
+		return stop(sessInfo);
 	}
 	else if(target.startsWith("resume",Qt::CaseInsensitive))
 	{
-		return resume();
+		return resume(sessInfo);
 	}
 	else if(target.startsWith("reward", Qt::CaseInsensitive))
 	{
@@ -86,14 +86,14 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 		if(!ok)
 			return notFoundResponse;
 		else
-			return reward(channel,directive);
+			return reward(channel,directive,sessInfo);
 	}
 	else if(target.startsWith("isauthorized", Qt::CaseInsensitive))
 	{
 		//This is a weird little command.  It's basically a check so that a workstation can determine
 		//if it is authorized to send task commands.  If the workstation isn't authorized, the command
 		//will return 401:Unauthorized, otherwise, we do nothing, and return 200:OK
-		okResponse->setFieldValue("Password",sessInfo_->getPassword());
+		okResponse->setFieldValue("Password",sessInfo->getPassword());
 		return okResponse;
 	}
 	else if(target.startsWith("parameter", Qt::CaseInsensitive))
@@ -101,13 +101,13 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 		int colonIndex = target.indexOf(":");
 		QString paramId = target.mid(colonIndex+1);
 		QString directive(command->getContent());
-		return parameter(paramId,directive);
+		return parameter(paramId,directive,sessInfo);
 	}
 	else if(target.startsWith("click", Qt::CaseInsensitive))
 	{
 		int colonIndex = target.indexOf(":");
 		QString details = target.mid(colonIndex+1);
-		return click(details);
+		return click(details,sessInfo);
 	}
 	else
 	{
@@ -118,7 +118,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 
 
 //! Starts a task running either from the beginning or from a paused state
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskname)
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskname,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
@@ -147,7 +147,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 	}
 
 	QTime timer;
-	if(!sessInfo_->getComponentByType("PROXY").isNull())
+	if(!sessInfo->getComponentByType("PROXY").isNull())
 	{
 		//Check that we have a Proxy and that it is stopped
 		ComponentStatus::ComponentStatus proxyStatus = conMgr_->getComponentStatusBySession(sessionId_,"PROXY");
@@ -173,7 +173,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 
 		//Add a START directive to the session info
 		timer.start();
-		sessInfo_->addPendingDirective("START "+taskname,"PROXY");
+		sessInfo->addPendingDirective("START "+taskname,"PROXY");
 		do
 		{
 			QThread::yieldCurrentThread();
@@ -186,7 +186,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 		}
 	}
 
-	sessInfo_->addPendingDirective("START "+taskname,"DIRECTOR");
+	sessInfo->addPendingDirective("START "+taskname,"DIRECTOR");
 
 	//Wait around until the Director's status changes to "running"
 	timer.start();
@@ -209,7 +209,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 }
 
 //! \brief Stops a running task
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop(QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
@@ -221,7 +221,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 		return badReqResponse;
 	}
 	
-	sessInfo_->addPendingDirective("STOP","DIRECTOR");
+	sessInfo->addPendingDirective("STOP","DIRECTOR");
 	QTime timer;
 	timer.start();
 	do
@@ -234,9 +234,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 		badReqResponse->setContent("Director failed to stop");
 		return badReqResponse;
 	}
-	if(!sessInfo_->getComponentByType("PROXY").isNull())
+	if(!sessInfo->getComponentByType("PROXY").isNull())
 	{
-		sessInfo_->addPendingDirective("STOP","PROXY");
+		sessInfo->addPendingDirective("STOP","PROXY");
 		timer.start();
 		do
 		{
@@ -258,7 +258,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop()
 }
 
 //! \brief Pauses a running task
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause(QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
@@ -270,7 +270,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective("PAUSE","DIRECTOR");
+	sessInfo->addPendingDirective("PAUSE","DIRECTOR");
 	conMgr_->setComponentStatus(sessionId_,"DIRECTOR",ComponentStatus::paused);
 
 
@@ -279,7 +279,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause()
 
 
 //! \brief resumes a paused task
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume(QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
@@ -291,14 +291,14 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume()
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective("RESUME","DIRECTOR");
+	sessInfo->addPendingDirective("RESUME","DIRECTOR");
 	conMgr_->setComponentStatus(sessionId_,"DIRECTOR",ComponentStatus::running);
 	
 	return okResponse;
 }
 
 //! Delivers a reward
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel, QString details)
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel, QString details,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
@@ -310,26 +310,26 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel, 
 		return badReqResponse;
 	}
 
-	sessInfo_->addPendingDirective(QString("REWARD %1\n%2").arg(channel).arg(details),"DIRECTOR");
+	sessInfo->addPendingDirective(QString("REWARD %1\n%2").arg(channel).arg(details),"DIRECTOR");
 
 	return okResponse;
 
 }
 
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::parameter(QString paramId, QString details)
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::parameter(QString paramId, QString details,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	details.prepend(QString("id=%1\n").arg(paramId));
-	sessInfo_->addPendingDirective(QString("PARAMETER %1").arg(details),"DIRECTOR");
+	sessInfo->addPendingDirective(QString("PARAMETER %1").arg(details),"DIRECTOR");
 
 	return okResponse;
 }
 
-QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::click(QString details)
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::click(QString details,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
-	sessInfo_->addPendingDirective(QString("CLICK %1").arg(details),"DIRECTOR");
+	sessInfo->addPendingDirective(QString("CLICK %1").arg(details),"DIRECTOR");
 	return okResponse;
 }

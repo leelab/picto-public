@@ -111,6 +111,7 @@ void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect r
 
 QPoint PixmapVisualTarget::viewportPointToTargetPoint(QPoint viewportPoint)
 {
+	Q_ASSERT(zoom_ > 0);
 	float x = (viewportPoint.x()-(width_-(width_*zoom_))/2.0)/zoom_;
 	float y = (viewportPoint.y()-(height_-(height_*zoom_))/2.0)/zoom_;
 	return QPoint(x,y);

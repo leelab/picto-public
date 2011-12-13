@@ -24,6 +24,7 @@ class PropertyFrame : public QScrollArea
 public:
    PropertyFrame(QWidget *parent=0);
    virtual ~PropertyFrame(){};
+   void clearProperties(){setTopLevelDataStore(QSharedPointer<DataStore>());};
    void setTopLevelDataStore(QSharedPointer<DataStore> dataStore);
    void updatePropertiesFromFile(QString filename);
 signals:

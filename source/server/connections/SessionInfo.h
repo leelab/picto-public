@@ -159,6 +159,7 @@ private:
 	QList<Variable> currentStateQuery_;
 	QString latestStateVarTime_;
 	QString latestWrittenStateVarTime_;
+	QStringList openDatabaseConnections_;
 
 	qulonglong maxReceivedDataID_;
 
