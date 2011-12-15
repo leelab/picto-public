@@ -41,6 +41,7 @@
 #include "../common/iodevices/RewardController.h"
 #include "../common/iodevices/EventCodeGenerator.h"
 #include "../common/iodevices/NullRewardController.h"
+#include "../common/iodevices/AudioRewardController.h"
 #include "../common/iodevices/NullEventCodeGenerator.h"
 #if defined WIN32 && defined NI_STUFF
 #include "iodevices/PictoBoxXPRewardController.h"
@@ -184,6 +185,10 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 	else if(controllerType == NullReward)
 	{
 		rewardController = QSharedPointer<Picto::RewardController>(new Picto::NullRewardController());
+	}
+	else if(controllerType == AudioReward)
+	{
+		rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
 	}
 
 	engine_->setRewardController(rewardController);

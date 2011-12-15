@@ -31,7 +31,7 @@ public:
 
 	typedef enum
 	{
-		PictoBoxXpReward, LegacySystemXpReward, NullReward
+		PictoBoxXpReward, LegacySystemXpReward, AudioReward, NullReward
 	} RewardControllerType;
 
 	typedef enum

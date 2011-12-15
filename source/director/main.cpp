@@ -108,6 +108,10 @@ int main(int argc, char *argv[])
 		if(sigChan != HardwareSetup::Mouse)
 			sigChan = HardwareSetup::EyetrackerLegacySystemXp;
 	}
+	else if(app.arguments().contains("-test"))
+	{
+		rewCont = HardwareSetup::AudioReward;
+	}
 
 	//For now, just use pixmap ------- Remove this/////////////////////
 	//visTarget = HardwareSetup::Pixmap;

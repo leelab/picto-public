@@ -394,7 +394,7 @@ void RemoteViewer::play()
 	{
 		if(sendTaskCommand("resume"))
 		{
-			engine_->resume();
+			engine_->play();
 			localStatus_ = Running;
 			updateActions();
 		}
@@ -1093,7 +1093,7 @@ void RemoteViewer::checkForTimeouts()
 		if(localStatus_ == Paused)
 		{
 			localStatus_ = Running;
-			engine_->resume();
+			engine_->play();
 		}
 		else if(localStatus_ == Stopped)
 		{

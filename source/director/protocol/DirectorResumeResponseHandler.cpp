@@ -12,6 +12,6 @@ bool DirectorResumeResponseHandler::processResponse(QString directive)
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	if(engine.isNull())
 		return false;
-	engine->resume();
+	engine->play();
 	return true;
 }

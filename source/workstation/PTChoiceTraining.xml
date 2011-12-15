@@ -82,7 +82,7 @@
               <SignalChannel id="85">PositionChannel</SignalChannel>
               <TimeUnits id="86">Ms</TimeUnits>
               <TotalTime id="87">1500</TotalTime>
-            <MaxReacquisitionTime id="88">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="90">No</ReacquisitionAllowed><TargetEntryScript id="91"/><TargetExitScript id="92"/><Type id="93"/><UIEnabled id="94">false</UIEnabled><UIOrder id="95">0</UIOrder></ControlElement>
+            <MaxReacquisitionTime id="88">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="90">false</ReacquisitionAllowed><TargetEntryScript id="91"/><TargetExitScript id="92"/><Type id="93"/><UIEnabled id="94">false</UIEnabled><UIOrder id="95">0</UIOrder></ControlElement>
             <Result id="96">
               <Name id="97">Fixated</Name>
               <UIInfo id="98">

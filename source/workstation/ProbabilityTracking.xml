@@ -82,7 +82,7 @@
               <SignalChannel id="85">PositionChannel</SignalChannel>
               <TimeUnits id="86">Ms</TimeUnits>
               <TotalTime id="87">1500</TotalTime>
-            <MaxReacquisitionTime id="88">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="90">No</ReacquisitionAllowed><TargetEntryScript id="91"/><TargetExitScript id="92"/><Type id="93"/><UIEnabled id="94">false</UIEnabled><UIOrder id="95">0</UIOrder></ControlElement>
+            <MaxReacquisitionTime id="88">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="90">false</ReacquisitionAllowed><TargetEntryScript id="91"/><TargetExitScript id="92"/><Type id="93"/><UIEnabled id="94">false</UIEnabled><UIOrder id="95">0</UIOrder></ControlElement>
             <Result id="96">
               <Name id="97">Fixated</Name>
               <UIInfo id="98">
@@ -1965,7 +1965,7 @@ Timer.restart();</EntryScript>
 EventInfo.setData(&quot;Event&quot;,3);
 EventInfo.updateValue();
 </EntryScript><ExitScript id="2583">EventInfo.setData(&quot;Event&quot;,4);
-EventInfo.updateValue();</ExitScript><Level id="2619">Stage</Level><Type id="2620">StateMachine</Type><UIEnabled id="2621">false</UIEnabled><UIOrder id="2622">0</UIOrder><Transition id="0"><Destination id="">BrokeFixation</Destination><Source id="">DisplayRewards</Source><SourceResult id="">BrokeFixation</SourceResult></Transition></StateMachineElement>
+EventInfo.updateValue();</ExitScript><Level id="2619">Stage</Level><Type id="2620">StateMachine</Type><UIEnabled id="2621">false</UIEnabled><UIOrder id="2622">0</UIOrder><Transition id="4600"><Destination id="4601">BrokeFixation</Destination><Source id="4602">DisplayRewards</Source><SourceResult id="4603">BrokeFixation</SourceResult></Transition></StateMachineElement>
               <Transition id="2623"><Destination id="2624">Failed</Destination><Source id="2625">PresentRewards</Source><SourceResult id="2626">BrokeFixation</SourceResult></Transition><Transition id="2627"><Destination id="2628">PresentRewards</Destination><Source id="2629">PresentTargets</Source><SourceResult id="2630">ContinuedFixating</SourceResult></Transition><EntryScript id="2631">EventInfo.setData(&quot;Stage&quot;,2);
 EventInfo.setData(&quot;Event&quot;,3);
 EventInfo.updateValue();
@@ -2372,6 +2372,6 @@ RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graph
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">520</OpenedBlock>
+    <OpenedBlock id="">1</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

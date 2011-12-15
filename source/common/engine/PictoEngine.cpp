@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QTime>
 #include <QtConcurrentRun>
+#include <QMutexLocker>
 
 #include "PictoEngine.h"
 
@@ -31,7 +32,7 @@ PictoEngine::PictoEngine() :
 	currStateUnit_(QSharedPointer<StateDataUnit>(new StateDataUnit())),
 	runningPath_(""),
 	lastFrameId_(-1),
-	engineCommand_(NoCommand)
+	engineCommand_(StopEngine)
 {
 	bExclusiveMode_ = true;
 	setSessionId(QUuid());
@@ -110,7 +111,7 @@ void PictoEngine::giveReward(int channel, int quantity)
 	//Since we don't want the server to timeout the director, we make sure that we
 	//update the server at least once per second by running th giveReward function
 	//in as separate thread.
-	QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel,quantity);
+	QFuture<void> future = QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel,quantity,!(dataCommandChannel_.isNull() || slave_));
 	//while(!future.isFinished())
 	//{
 	//	QCoreApplication::processEvents();
@@ -122,7 +123,7 @@ void PictoEngine::giveReward(int channel, int quantity)
 	//			int engCmd = getEngineCommand();
 	//			switch(engCmd)
 	//			{
-	//			case Engine::PictoEngine::ResumeEngine:
+	//			case Engine::PictoEngine::PlayEngine:
 	//				status = "running";
 	//				break;
 	//			case Engine::PictoEngine::PauseEngine:
@@ -145,28 +146,29 @@ void PictoEngine::giveReward(int channel, int quantity)
 	if(slave_)
 		return;
 
-	deliveredRewards_.append(QSharedPointer<RewardDataUnit>(new RewardDataUnit(quantity,channel,timestamp)));
+	//appendDeliveredRewards(QSharedPointer<RewardDataUnit>(new RewardDataUnit(quantity,channel,timestamp)));
 
 	QString status;
 	int engCmd = getEngineCommand();
-	if(engCmd != ResumeEngine)
+	if(engCmd != PlayEngine)
 	{	//The experiment is not currently running.  We are responsible for
 		//sending reward updates.
 		switch(engCmd)
 		{
-		case Engine::PictoEngine::ResumeEngine:
+		case Engine::PictoEngine::PlayEngine:
 			return;
 		case Engine::PictoEngine::PauseEngine:
 			status = "paused";
 			break;
 		case Engine::PictoEngine::StopEngine:
-		case Engine::PictoEngine::NoCommand:
 			status = "stopped";
 			break;
 		default:
 			return;
 		}
-		//If we got here, we're not running.  Send reward data to server.
+		//If we got here, we're not running.  Wait for reward to be given, then send reward data to server.
+		while(!future.isFinished())
+			QCoreApplication::processEvents();
 		QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
 		QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
@@ -191,6 +193,14 @@ void PictoEngine::giveReward(int channel, int quantity)
 
 
 }
+
+QList<QSharedPointer<RewardDataUnit>> PictoEngine::getDeliveredRewards()
+{
+	if(rewardController_.isNull())
+		return QList<QSharedPointer<RewardDataUnit>>();
+	return rewardController_->getDeliveredRewards();
+}
+
 
 void PictoEngine::addChangedProperty(QSharedPointer<Property> changedProp)
 {
@@ -422,7 +432,7 @@ QString PictoEngine::getServerPathUpdate()
 	}
 	else
 	{
-		qDebug("PathUpdate: NO ASSET");
+		//qDebug("PathUpdate: NO ASSET");
 		return "";
 	}
 	QString runningPath = runningPath_;
@@ -436,7 +446,7 @@ QString PictoEngine::getServerPathUpdate()
 	}
 	if(result == runningPath)
 		result = "";
-	qDebug("PathUpdate: " + result.toAscii());
+	//qDebug("PathUpdate: " + result.toAscii());
 	return result;
 }
 QSharedPointer<Picto::BehavioralDataUnit> PictoEngine::getCurrentBehavioralData()
@@ -515,7 +525,6 @@ void PictoEngine::stop()
 	engineCommand_ = StopEngine; 
 	stopAllSignalChannels();
 }
-
 
 }; //namespace Engine
 }; //namespace Picto

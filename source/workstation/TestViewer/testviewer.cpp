@@ -191,7 +191,7 @@ void TestViewer::play()
 	else if(status_ == Paused)
 	{
 		status_ = Running;
-		engine_->resume();
+		engine_->play();
 	}
 }
 

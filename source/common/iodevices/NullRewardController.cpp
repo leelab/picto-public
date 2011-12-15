@@ -9,7 +9,7 @@ namespace Picto
 {
 
 
-void NullRewardController::giveReward(unsigned int channel,int quantity)
+void NullRewardController::doReward(unsigned int channel,int quantity)
 {
 	qDebug()<<"Reward given on channel "<<channel;
 	QTime timer;

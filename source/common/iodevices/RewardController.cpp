@@ -1,5 +1,6 @@
 #include "RewardController.h"
 #include "../memleakdetect.h"
+#include "../timing/Timestamper.h"
 
 namespace Picto
 {
@@ -30,6 +31,36 @@ bool RewardController::setRewardResetTimeMs(unsigned int channel, unsigned int t
 		return false;
 	rewardResetTimes_[channel-1] = time;
 	return true;
+}
+
+void RewardController::giveReward(unsigned int channel,int quantity,bool appendToList)
+{
+	QMutexLocker locker(&giveRewardMutex_);
+	doReward(channel,quantity);
+	if(!appendToList)
+		return;
+	Timestamper stamper;
+	appendDeliveredRewards(QSharedPointer<RewardDataUnit>(new RewardDataUnit(quantity,channel,stamper.stampSec())));
+
+}
+
+void RewardController::appendDeliveredRewards(QSharedPointer<RewardDataUnit> rewardUnit)
+{
+	listLock_.lockForWrite();
+	deliveredRewards_.append(rewardUnit);
+	listLock_.unlock();
+}
+
+QList<QSharedPointer<RewardDataUnit>> RewardController::getDeliveredRewards()
+{
+	QList<QSharedPointer<RewardDataUnit>> returnVal;
+	if(listLock_.tryLockForRead())
+	{
+		returnVal = deliveredRewards_; 
+		deliveredRewards_.clear();
+		listLock_.unlock();
+	}
+	return returnVal;
 }
 
 } //namespace Picto

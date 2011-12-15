@@ -10,6 +10,7 @@
 #include <QFuture>
 #include <QUuid>
 #include <QList>
+#include <QMutex>
 
 #include "../common.h"
 #include "../compositor/RenderingTarget.h"
@@ -97,11 +98,10 @@ public:
 	//bool runTask(QString taskName);
 
 	//The engine commands are only used when the engine is being run locally
-	enum {NoCommand, ResumeEngine, StopEngine, PauseEngine};
-	void resume() { engineCommand_ = ResumeEngine; };
+	enum {NoCommand, PlayEngine, StopEngine, PauseEngine};
+	void play() { engineCommand_ = PlayEngine; };
 	void pause() { engineCommand_ = PauseEngine; };
 	void stop();
-	void clearEngineCommand() {engineCommand_ = NoCommand; };
 	int getEngineCommand();
 
 	QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
@@ -118,7 +118,7 @@ public:
 
 	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
 	void giveReward(int channel, int quantity);
-	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards(){QList<QSharedPointer<RewardDataUnit>> returnVal = deliveredRewards_; deliveredRewards_.clear();return returnVal;};
+	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards();
 
 	//! \brief Retrieves the latest package of changed properties.
 	//! Note that a package can only be retrieved once after which a new package is created.
@@ -181,6 +181,8 @@ private:
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
 	QSharedPointer<ExperimentConfig> expConfig_;
 	bool firstCurrStateUpdate_;
+	QMutex rewardListMutex_;
+	QMutex rewardMutex_;
 
 	QUuid sessionId_;
 	QString name_;

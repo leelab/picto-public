@@ -698,7 +698,7 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 //	int engCmd = engine->getEngineCommand();
 //	switch(engCmd)
 //	{
-//	case Engine::PictoEngine::ResumeEngine:
+//	case Engine::PictoEngine::PlayEngine:
 //		status = "running";
 //		break;
 //	case Engine::PictoEngine::PauseEngine:

@@ -110,7 +110,7 @@ bool Experiment::runTask(QString taskName)
 	if(!task)
 		return false;
 	engine_->clearChangedPropertyPackage();
-	engine_->clearEngineCommand();
+	engine_->play();
 	//Start out by sending all starting property values to the server
 	engine_->sendAllPropertyValuesToServer();
 

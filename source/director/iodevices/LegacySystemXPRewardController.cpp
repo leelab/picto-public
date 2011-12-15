@@ -55,7 +55,7 @@ LegacySystemXPRewardController::~LegacySystemXPRewardController()
 
 
 
-void LegacySystemXPRewardController::giveReward(unsigned int,int quantity)
+void LegacySystemXPRewardController::doReward(unsigned int,int quantity)
 {
 	if(!hasDevice_)
 		return;

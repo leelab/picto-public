@@ -322,7 +322,7 @@ void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
 	int engCmd = engine->getEngineCommand();
 	switch(engCmd)
 	{
-	case Engine::PictoEngine::ResumeEngine:
+	case Engine::PictoEngine::PlayEngine:
 		status = "running";
 		break;
 	case Engine::PictoEngine::PauseEngine:
@@ -500,7 +500,7 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	}
 	else if(statusDirective.startsWith("RESUME"))
 	{
-		engine->resume();
+		engine->play();
 	}
 	else if(statusDirective.startsWith("REWARD"))
 	{

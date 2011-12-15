@@ -3,6 +3,9 @@
 
 #include <QList>
 #include <QObject>
+#include <QMutex>
+#include <QReadWriteLock>
+#include "../storage/RewardDataUnit.h"
 
 #include "../common.h"
 
@@ -45,15 +48,24 @@ public:
 	bool setRewardResetTimeMs(unsigned int channel, unsigned int time);
 
 	int getChannelCount() { return channelCount_; };
+	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards();
+
 
 public slots:
-	virtual void giveReward(unsigned int channel,int quantity) = 0;  //must return duration of reward
+	virtual void giveReward(unsigned int channel,int quantity,bool appendToList=false);
 	virtual void flush(unsigned int channel,bool flush) = 0;
 
 protected:
+	virtual void doReward(unsigned int channel,int quantity) = 0;
 	int channelCount_;
 	QList<float> rewardVolumes_;
 	QList<int> rewardResetTimes_;
+private:
+	void appendDeliveredRewards(QSharedPointer<RewardDataUnit> rewardUnit);
+	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
+	QMutex giveRewardMutex_;
+	QReadWriteLock listLock_;
+
 };
 
 } //namespace Picto

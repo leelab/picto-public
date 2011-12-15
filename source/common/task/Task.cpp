@@ -179,7 +179,7 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 //	int engCmd = engine->getEngineCommand();
 //	switch(engCmd)
 //	{
-//	case Engine::PictoEngine::ResumeEngine:
+//	case Engine::PictoEngine::PlayEngine:
 //		status = "running";
 //		break;
 //	case Engine::PictoEngine::PauseEngine:
@@ -271,7 +271,7 @@ bool Task::sendStateData(QSharedPointer<Engine::PictoEngine> engine)
 	int engCmd = engine->getEngineCommand();
 	switch(engCmd)
 	{
-	case Engine::PictoEngine::ResumeEngine:
+	case Engine::PictoEngine::PlayEngine:
 		status = "running";
 		break;
 	case Engine::PictoEngine::PauseEngine:

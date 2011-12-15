@@ -12,7 +12,7 @@ RewardController(1) ,
 tick_("sounds/tick.wav")
 {}
 
-void AudioRewardController::giveReward(unsigned int channel,int quantity)
+void AudioRewardController::doReward(unsigned int channel,int quantity)
 {
 		QTime timer;
 		timer.start();

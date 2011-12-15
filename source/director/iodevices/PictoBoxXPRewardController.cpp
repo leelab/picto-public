@@ -47,7 +47,7 @@ PictoBoxXPRewardController::~PictoBoxXPRewardController()
 
 
 
-void PictoBoxXPRewardController::giveReward(unsigned int channel,int quantity)
+void PictoBoxXPRewardController::doReward(unsigned int channel,int quantity)
 {
 	if(channel > 4 || channel < 1)
 		return;
