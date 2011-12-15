@@ -34,6 +34,9 @@ class PICTOLIB_API ChoiceController : public ControlElement
 class ChoiceController : public ControlElement
 #endif
 {
+	Q_OBJECT
+	Q_PROPERTY(int fixationTime READ getFixationTime WRITE setFixationTime)
+	Q_PROPERTY(int totalTime READ getTotalTime WRITE setTotalTime)
 public:
 	ChoiceController();
 	virtual ~ChoiceController(){};
@@ -46,6 +49,11 @@ public:
 	QString getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 	void stop(QSharedPointer<Engine::PictoEngine> engine);
+
+	int getFixationTime(){return propertyContainer_->getPropertyValue("FixationTime").toInt();}; 
+	void setFixationTime(int time){propertyContainer_->setPropertyValue("FixationTime",time);};
+	int getTotalTime(){return propertyContainer_->getPropertyValue("TotalTime").toInt();};
+	void setTotalTime(int time){propertyContainer_->setPropertyValue("TotalTime",time);};
 
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -68,7 +76,6 @@ private:
 
 	QStringList unitList_;
 	//QStringList shapeList_;
-	QStringList reentriesAllowedList_;
 
 	bool isDone_;
 	bool targetAcquired_;

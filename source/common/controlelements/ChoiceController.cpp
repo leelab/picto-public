@@ -23,8 +23,7 @@ ChoiceController::ChoiceController()
 
 	AddDefinableProperty(QVariant::Int,"TotalTime",5);
 
-	reentriesAllowedList_ << "No" << "Yes";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"AllowReentries",0,"enumNames",reentriesAllowedList_);
+	AddDefinableProperty(QVariant::Bool,"AllowReentries",false);
 	AddDefinableProperty(QVariant::String,"TargetEntryScript","");
 	AddDefinableProperty(QVariant::String,"TargetExitScript","");
 
@@ -105,7 +104,7 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
 			runScript(getName().simplified().remove(' ').append("_TargetExit"));
 		//Are reentries allowed?
-		if("No" == reentriesAllowedList_.value(propertyContainer_->getPropertyValue("AllowReentries").toInt(),"No"))
+		if(!propertyContainer_->getPropertyValue("AllowReentries").toBool())
 		{
 			isDone_ = true;
 			result_ = "Broke Fixation";
@@ -252,6 +251,8 @@ void ChoiceController::postDeserialize()
 			addChildScriptableContainer(target.staticCast<ScriptableContainer>());
 		}
 	}
+	setPropertyRuntimeEditable("FixationTime");
+	setPropertyRuntimeEditable("TotalTime");
 }
 
 ///*! \Brief turns a choice controller into XML

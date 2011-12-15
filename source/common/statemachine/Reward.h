@@ -19,6 +19,9 @@ class PICTOLIB_API Reward : public StateMachineElement
 class Reward : public StateMachineElement
 #endif
 {
+	Q_OBJECT
+	Q_PROPERTY(int number READ getNumber WRITE setNumber)
+	Q_PROPERTY(int unitQuantity READ getUnitQuantity WRITE setUnitQuantity)
 public:
 	Reward();
 	virtual ~Reward(){};
@@ -28,6 +31,11 @@ public:
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString getUITemplate(){return "Reward";};
 	virtual QString assetType(){return "Reward";};
+
+	int getNumber(){return propertyContainer_->getPropertyValue("NumRewards").toInt();};
+	void setNumber(int num){propertyContainer_->setPropertyValue("NumRewards",num);};
+	int getUnitQuantity(){return propertyContainer_->getPropertyValue("RewardQty").toInt();};
+	void setUnitQuantity(int quant){propertyContainer_->setPropertyValue("RewardQty",quant);};
 	//! \TODO Add rewarding options here...
 
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

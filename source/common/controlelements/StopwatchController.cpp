@@ -100,6 +100,7 @@ QString StopwatchController::getResult()
 void StopwatchController::postDeserialize()
 {
 	ControlElement::postDeserialize();
+	setPropertyRuntimeEditable("Time");
 }
 
 

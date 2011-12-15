@@ -19,8 +19,7 @@ TargetController::TargetController()
 	AddDefinableProperty(QVariant::Int,"MinInitialAcquisitionTime",0);
 	AddDefinableProperty(QVariant::Int,"MaxInitialAcquisitionTime",1);
 	AddDefinableProperty(QVariant::Int,"MaxReacquisitionTime",0);
-	reacquisitionAllowedList_ << "No" << "Yes";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"ReacquisitionAllowed",0,"enumNames",reacquisitionAllowedList_);
+	AddDefinableProperty(QVariant::Bool,"ReacquisitionAllowed",false);
 	AddDefinableProperty(QVariant::String,"TargetEntryScript","");
 	AddDefinableProperty(QVariant::String,"TargetExitScript","");
 
@@ -120,7 +119,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			runScript(getName().simplified().remove(' ').append("_TargetExit"));
 
 		//If reacquisition isn't allowed, then we're done with a failure value.
-		if("No" == reacquisitionAllowedList_.value(propertyContainer_->getPropertyValue("ReacquisitionAllowed").toInt(),"No"))
+		if(!propertyContainer_->getPropertyValue("ReacquisitionAllowed").toBool())
 		{
 			isDone_ = true;
 			result_ = "Broke Fixation";
@@ -283,6 +282,12 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 void TargetController::postDeserialize()
 {
 	ControlElement::postDeserialize();
+	setPropertyRuntimeEditable("FixationTime");
+	setPropertyRuntimeEditable("TotalTime");
+	setPropertyRuntimeEditable("MinInitialAcquisitionTime");
+	setPropertyRuntimeEditable("MaxInitialAcquisitionTime");
+	setPropertyRuntimeEditable("MaxReacquisitionTime");
+	setPropertyRuntimeEditable("ReacquisitionAllowed");
 }
 
 

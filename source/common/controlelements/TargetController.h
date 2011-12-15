@@ -35,6 +35,14 @@ class PICTOLIB_API TargetController : public ControlElement
 class TargetController : public ControlElement
 #endif
 {
+	Q_OBJECT
+	Q_PROPERTY(int fixationTime READ getFixationTime WRITE setFixationTime)
+	Q_PROPERTY(int totalTime READ getTotalTime WRITE setTotalTime)
+	Q_PROPERTY(int minAcquisitionTime READ getMinAcqTime WRITE setMinAcqTime)
+	Q_PROPERTY(int maxAcquisitionTime READ getMaxAcqTime WRITE setMaxAcqTime)
+	Q_PROPERTY(int maxReacquisitionTime READ getMaxReacqTime WRITE setMaxReacqTime)
+	Q_PROPERTY(bool reacquisitionAllowed READ getReacqAllowed WRITE setReacqAllowed)
+
 public:
 	TargetController();
 	virtual ~TargetController(){};
@@ -47,6 +55,19 @@ public:
 	QString getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 	void stop(QSharedPointer<Engine::PictoEngine> engine);
+
+	int getFixationTime(){return propertyContainer_->getPropertyValue("FixationTime").toInt();}; 
+	void setFixationTime(int time){propertyContainer_->setPropertyValue("FixationTime",time);};
+	int getTotalTime(){return propertyContainer_->getPropertyValue("TotalTime").toInt();};
+	void setTotalTime(int time){propertyContainer_->setPropertyValue("TotalTime",time);};
+	int getMinAcqTime(){return propertyContainer_->getPropertyValue("MinInitialAcquisitionTime").toInt();};
+	void setMinAcqTime(int time){propertyContainer_->setPropertyValue("MinInitialAcquisitionTime",time);};
+	int getMaxAcqTime(){return propertyContainer_->getPropertyValue("MaxInitialAcquisitionTime").toInt();};
+	void setMaxAcqTime(int time){propertyContainer_->setPropertyValue("MaxInitialAcquisitionTime",time);};
+	int getMaxReacqTime(){return propertyContainer_->getPropertyValue("MaxReacquisitionTime").toInt();};
+	void setMaxReacqTime(int time){propertyContainer_->setPropertyValue("MaxReacquisitionTime",time);};
+	bool getReacqAllowed(){return propertyContainer_->getPropertyValue("ReacquisitionAllowed").toInt();};
+	void setReacqAllowed(bool allowed){propertyContainer_->setPropertyValue("ReacquisitionAllowed",allowed);};
 
 	////DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -75,7 +96,6 @@ private:
 
 	QStringList unitList_;
 	//QStringList shapeList_;
-	QStringList reacquisitionAllowedList_;
 
 	QString result_;
 
