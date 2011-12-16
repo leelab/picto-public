@@ -143,12 +143,7 @@ void RemoteViewer::init()
 void RemoteViewer::deinit()
 {
 	//stop the engine running
-	if(	channelSignalsConnected_ && 
-		(	!serverChannel_->assureConnection() 
-			|| !engineSlaveChannel_->assureConnection()
-			|| !behavioralDataChannel_->assureConnection()
-		)
-	)
+	if(	channelSignalsConnected_ )
 	{
 		disconnect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
 		disconnect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
@@ -167,10 +162,9 @@ void RemoteViewer::deinit()
 
 bool RemoteViewer::aboutToQuit()
 {
-	if(!connectAction_->isChecked())
-		return true;
-	
-	changeConnectionState(false);
+	if(connectAction_->isChecked())
+		changeConnectionState(false);
+	deinit();
 	return true;
 
 	//int r = QMessageBox::warning(this,Picto::Names->workstationAppName,
