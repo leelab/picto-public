@@ -251,15 +251,15 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 		if(!engine->updateCurrentStateFromServer())
 		{	//The server connection has been lost
-			engine->stop();
+			//engine->stop();
 		}
 		result = engine->getServerPathUpdate();
 		if(!result.isEmpty())
 			isDone = true;
 
-		//------ Check for engine stop commands ---------------
-		//This has to be done first, otherwise if we are caught up with the master, 
-		//we'll never check for a stop
+		////------ Check for engine stop commands ---------------
+		////This has to be done first, otherwise if we are caught up with the master, 
+		////we'll never check for a stop
 		if(checkForEngineStop(engine))
 		{
 			isDone = true;
@@ -415,7 +415,7 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		return true;
 	}
-	else if(command == Engine::PictoEngine::PauseEngine)
+	else if(!engine->slaveMode() && (command == Engine::PictoEngine::PauseEngine))
 	{
 		QSharedPointer<Picto::CommandChannel> dataChannel = engine->getDataCommandChannel();
 		while(command == Engine::PictoEngine::PauseEngine)
@@ -424,13 +424,14 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 			QTime timer;
 			timer.start();
 			//----------  Draw the scene in paused state --------------
-			//scene_->render(engine);
+			scene_->render(engine);
 			//------------- Send Behavioral data to server --------------
 			sendBehavioralData(engine);
 
 			command = engine->getEngineCommand();
+			//while(timer.elapsed()<30){
 			QCoreApplication::processEvents();
-			while(timer.elapsed()<30);
+			//}
 
 		}
 		if(command == Engine::PictoEngine::StopEngine)

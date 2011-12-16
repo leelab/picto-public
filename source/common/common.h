@@ -64,7 +64,7 @@
  *	This allows us to develop and debug picto on a network running picto experiments.  Otherwise, we could not have
  *	two separate PictoServers open at the same time.
  */
-#define DEVELOPMENTBUILD
+//#define DEVELOPMENTBUILD
 #ifdef DEVELOPMENTBUILD
 #define PORTPREFIX 70000
 #else

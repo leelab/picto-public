@@ -598,13 +598,21 @@ void RemoteViewer::setStatus(QString status)
 void RemoteViewer::generateTaskList()
 {
 	Q_ASSERT(taskListBox_);
+	QString currText = "";
+	int currInd = 0;
+	if(taskListBox_)
+	{
+		currText = taskListBox_->currentText();
+		currInd = taskListBox_->currentIndex();
+	}
 	taskListBox_->clear();
 
 	if(activeExperiment_)
 		taskListBox_->addItems(activeExperiment_->getTaskNames());
 	else
 		return;
-	
+	if((taskListBox_->itemText(currInd) == currText) && (taskListBox_->itemText(currInd) != ""))
+		taskListBox_->setCurrentIndex(currInd);
 	taskListBox_->setEnabled(taskListBox_->count() > 0);
 
 	updateActions();
@@ -1085,8 +1093,8 @@ void RemoteViewer::checkForTimeouts()
 	}
 	else if(remoteStatus == Paused && localStatus_ != Paused)
 	{
-			engine_->pause();
-			localStatus_ = Paused;
+		engine_->pause();
+		localStatus_ = Paused;
 	}
 	else if(remoteStatus == Running)
 	{
@@ -1686,7 +1694,11 @@ void RemoteViewer::taskListIndexChanged(int)
 	if(!activeExperiment_ || !connectAction_->isChecked())
 	{
 		if(propertyFrame_)
+		{
 			qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
+			lastTask_.clear();
+			lastActiveExperiment_.clear();
+		}
 		return;
 	}
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
