@@ -1208,7 +1208,7 @@ bool RemoteViewer::startSession()
 
 	QByteArray dataXml = pictoDataText_->toPlainText().toUtf8();
 
-	QSharedPointer<ExperimentConfig> expConfig = experiment_->getExperimentConfig();
+	QSharedPointer<ExperimentConfig> expConfig = activeExperiment_->getExperimentConfig();
 	if(!expConfig)
 		return false;
 	dataXml.append(expConfig->toXml().toUtf8());
