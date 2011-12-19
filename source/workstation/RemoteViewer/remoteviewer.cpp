@@ -1182,6 +1182,7 @@ bool RemoteViewer::startSession()
 	//It would be 100 times easier to copy the experiment object directly, but it contains a
 	//parameter container, which is a QObject, and can't be copied.  So instead, we generate
 	//a new copy instead
+	sessionId_ = QUuid();
 	activeExperiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
 
 	QString expXML = experiment_->toXml();
@@ -1259,7 +1260,7 @@ bool RemoteViewer::startSession()
 
 		if(!xmlReader.atEnd())
 		{
-			sessionId_ = QUuid(xmlReader.readElementText());
+			//sessionId_ = QUuid(xmlReader.readElementText());
 			setStatus(tr("Experiment loaded on remote Director instance. Session ID: ")+ sessionId_.toString());
 			return true;
 		}

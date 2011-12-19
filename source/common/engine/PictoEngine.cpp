@@ -29,7 +29,6 @@ PictoEngine::PictoEngine() :
 	lastTimeStateDataRequested_("0.0"),
 	firstCurrStateUpdate_(true),
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
-	currStateUnit_(QSharedPointer<StateDataUnit>(new StateDataUnit())),
 	runningPath_(""),
 	lastFrameId_(-1),
 	engineCommand_(StopEngine)
@@ -378,6 +377,8 @@ bool PictoEngine::updateCurrentStateFromServer()
 		}
 		else if(xmlReader->name() == "SDU")
 		{
+			if(!currStateUnit_)
+				currStateUnit_ = QSharedPointer<StateDataUnit>(new StateDataUnit());
 			currStateUnit_->fromXml(xmlReader);
 			//currUnitTime = currStateUnit_->getTime();
 		}
@@ -427,6 +428,7 @@ QString PictoEngine::getServerPathUpdate()
 	QString result = "";
 	if(asset)
 	{
+		Q_ASSERT(asset->inherits("Picto::Transition"));
 		trans = asset.staticCast<Transition>();
 		result = trans->getDestination();
 	}

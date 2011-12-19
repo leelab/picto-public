@@ -161,7 +161,7 @@ public:
 	bool slaveMode() { return slave_; }
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
 	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";runningPath_="";firstCurrStateUpdate_ = true;};
-	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};
+	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;currStateUnit_.clear();};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 private:
 	//QSharedPointer<Experiment> experiment_;

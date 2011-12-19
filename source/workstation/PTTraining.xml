@@ -328,7 +328,7 @@
     <Task id="394">
       <Name id="395">FixationTraining</Name>
       <UIInfo id="396">
-        <Pos id="397" x="1804" y="1743"/>
+        <Pos id="397" x="1784" y="1745"/>
 
       </UIInfo>
       <StateMachine id="399">
