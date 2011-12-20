@@ -1446,7 +1446,7 @@
     <Task id="3486">
       <Name id="3487">DelaySaccadeTraining</Name>
       <UIInfo id="3488">
-        <Pos id="3489" x="1924" y="1740"/>
+        <Pos id="3489" x="1890" y="1744"/>
 
       </UIInfo>
       <StateMachine id="3491">
@@ -2219,31 +2219,35 @@
                       <UIOrder id="1969">0</UIOrder>
                     </ControlElement>
                     <EntryScript id="1970">
-																						                      EventInfo.setData(&quot;Event&quot;,9);
-																						                      EventInfo.updateValue();
-																						                      TargetGraphic.visible = true;
+                      EventInfo.setData(&quot;Event&quot;,9);
+                      EventInfo.updateValue();
+                      TargetGraphic.visible = true;
 
-																						                      if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
-																						                      {
-																						                      TargetGraphic.x = 275;
-																						                      TargetWindow.x = 275;
-																						                      }
-																						                      else
-																						                      {
-																						                      TargetGraphic.x = 525;
-																						                      TargetWindow.x = 525;
-																						                      }
+                      if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
+                      {
+                      TargetGraphic.x = 275;
+                      TargetWindow.x = 275;
+                      }
+                      else
+                      {
+                      TargetGraphic.x = 525;
+                      TargetWindow.x = 525;
+                      }
 
-																						                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
-																						                      {
-																						                      TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
-																						                      }
-																						                      else
-																						                      {
-																						                      TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
-																						                      }
-																														OverlapFixationTracker.totalTime = OverlapTime.value+500;
-																										OverlapFixationTracker.fixationTime = OverlapTime.value;
+                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
+                      {
+                      TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
+                      TrialInfo.setData(&quot;GreenProb&quot;,100);
+                      TrialInfo.setData(&quot;GreenRew&quot;,TrialReward.number);
+                      }
+                      else
+                      {
+                      TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
+                      TrialInfo.setData(&quot;RedProb&quot;,100);
+                      TrialInfo.setData(&quot;RedRew&quot;,TrialReward.number);
+                      }
+                      OverlapFixationTracker.totalTime = OverlapTime.value+500;
+                      OverlapFixationTracker.fixationTime = OverlapTime.value;
                     </EntryScript>
                     <Name id="1971">TargetsAppear</Name>
                     <Result id="1972">
@@ -2389,7 +2393,20 @@
                     <Units id="1893"/>
                     <Value id="1894">100</Value>
                   </Parameter>
-                <Parameter type="Range" id="8006"><Increment id="8007">1</Increment><Max id="8008">10000</Max><Min id="8009">0</Min><Name id="8010">OverlapTime</Name><UIEnabled id="8011">true</UIEnabled><UIInfo id="8012"><Pos id="8013" x="761" y="682"/></UIInfo><UIOrder id="8015">0</UIOrder><Units id="8016"/><Value id="8017">500</Value></Parameter></StateMachineElement>
+                  <Parameter type="Range" id="8006">
+                    <Increment id="8007">1</Increment>
+                    <Max id="8008">10000</Max>
+                    <Min id="8009">0</Min>
+                    <Name id="8010">OverlapTime</Name>
+                    <UIEnabled id="8011">true</UIEnabled>
+                    <UIInfo id="8012">
+                      <Pos id="8013" x="761" y="682"/>
+                    </UIInfo>
+                    <UIOrder id="8015">0</UIOrder>
+                    <Units id="8016"/>
+                    <Value id="8017">500</Value>
+                  </Parameter>
+                </StateMachineElement>
                 <Transition id="4079">
                   <Destination id="4080">Failed</Destination>
                   <Source id="4081">WaitForFixation</Source>
@@ -3360,7 +3377,7 @@
 
 
         <UIInfo id="4972">
-          <Pos id="4973" x="2008" y="2000"/>
+          <Pos id="4973" x="2012" y="2000"/>
 
         </UIInfo>
         <Transition id="4975">
@@ -5600,7 +5617,7 @@
                       <TimeUnits id="6715">Ms</TimeUnits>
                       <TotalTime id="6716">1000</TotalTime>
                       <UIInfo id="6717">
-                        <Pos id="6718" x="912" y="174"/>
+                        <Pos id="6718" x="967" y="175"/>
                       </UIInfo>
                       <TargetExitScript id="6720">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript>
                       <MaxReacquisitionTime id="6721">0</MaxReacquisitionTime>
