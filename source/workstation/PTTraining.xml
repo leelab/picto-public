@@ -2219,29 +2219,31 @@
                       <UIOrder id="1969">0</UIOrder>
                     </ControlElement>
                     <EntryScript id="1970">
-                      EventInfo.setData(&quot;Event&quot;,9);
-                      EventInfo.updateValue();
-                      TargetGraphic.visible = true;
+																						                      EventInfo.setData(&quot;Event&quot;,9);
+																						                      EventInfo.updateValue();
+																						                      TargetGraphic.visible = true;
 
-                      if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
-                      {
-                      TargetGraphic.x = 275;
-                      TargetWindow.x = 275;
-                      }
-                      else
-                      {
-                      TargetGraphic.x = 525;
-                      TargetWindow.x = 525;
-                      }
+																						                      if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
+																						                      {
+																						                      TargetGraphic.x = 275;
+																						                      TargetWindow.x = 275;
+																						                      }
+																						                      else
+																						                      {
+																						                      TargetGraphic.x = 525;
+																						                      TargetWindow.x = 525;
+																						                      }
 
-                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
-                      {
-                      TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
-                      }
-                      else
-                      {
-                      TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
-                      }
+																						                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
+																						                      {
+																						                      TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
+																						                      }
+																						                      else
+																						                      {
+																						                      TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
+																						                      }
+																														OverlapFixationTracker.totalTime = OverlapTime.value+500;
+																										OverlapFixationTracker.fixationTime = OverlapTime.value;
                     </EntryScript>
                     <Name id="1971">TargetsAppear</Name>
                     <Result id="1972">
@@ -2387,7 +2389,7 @@
                     <Units id="1893"/>
                     <Value id="1894">100</Value>
                   </Parameter>
-                </StateMachineElement>
+                <Parameter type="Range" id="8006"><Increment id="8007">1</Increment><Max id="8008">10000</Max><Min id="8009">0</Min><Name id="8010">OverlapTime</Name><UIEnabled id="8011">true</UIEnabled><UIInfo id="8012"><Pos id="8013" x="761" y="682"/></UIInfo><UIOrder id="8015">0</UIOrder><Units id="8016"/><Value id="8017">500</Value></Parameter></StateMachineElement>
                 <Transition id="4079">
                   <Destination id="4080">Failed</Destination>
                   <Source id="4081">WaitForFixation</Source>
@@ -3358,7 +3360,7 @@
 
 
         <UIInfo id="4972">
-          <Pos id="4973" x="2004" y="2000"/>
+          <Pos id="4973" x="2008" y="2000"/>
 
         </UIInfo>
         <Transition id="4975">
@@ -5610,25 +5612,36 @@
                       <UIOrder id="6727">0</UIOrder>
                     </ControlElement>
                     <EntryScript id="6743">
-                      EventInfo.setData(&quot;Event&quot;,9);
-                      EventInfo.updateValue();
+																						EventInfo.setData(&quot;Event&quot;,9);
+																						EventInfo.updateValue();
 
-                      colorMag = 2.55*TargetLuminosityPercent.value;
-                      if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
-                      {
-                      LeftGraphic.setColor(colorMag,0,0);
-                      RightGraphic.setColor(0,colorMag,0);
-                      }
-                      else
-                      {
-                      LeftGraphic.setColor(0,colorMag,0);
-                      RightGraphic.setColor(colorMag,0,0);
-                      }
-                      LeftGraphic.visible = true;
-                      RightGraphic.visible = true;
+																						colorMag = 2.55*TargetLuminosityPercent.value;
+																						if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
+																						{
+																							LeftGraphic.setColor(colorMag,0,0);
+																						     RightGraphic.setColor(0,colorMag,0);
+																						}
+																						else
+																						{
+																							LeftGraphic.setColor(0,colorMag,0);
+																							RightGraphic.setColor(colorMag,0,0);
+																						}
+																						LeftGraphic.visible = true;
+																						RightGraphic.visible = true;
 
-                      OverlapFixationTracker.fixationTime = OverlapTime.value;
-                      OverlapFixationTracker.totalTime = OverlapTime.value+1000;
+																						RandDouble.randomize();
+																						x = (MinOverlapTime.value-MaxOverlapTime.value)/Math.log(.05);
+																						time = MinOverlapTime.value-x*Math.log(RandDouble.value);
+																						if(time &gt; MaxOverlapTime.value)time = MaxOverlapTime.value;
+																						if(time &lt; MinOverlapTime.value)time = MinOverlapTime.value;
+																						OverlapFixationTracker.fixationTime = time;
+																						OverlapFixationTracker.totalTime = time+500;
+                      
+
+
+
+
+																						OverlapFixationTracker.totalTime = OverlapTime.value+1000;
                     </EntryScript>
                     <Name id="6744">TargetsAppear</Name>
                     <Result id="6745">
@@ -5758,7 +5771,7 @@
                     <Increment id="4331">1</Increment>
                     <Max id="4332">10000</Max>
                     <Min id="4333">0</Min>
-                    <Name id="4334">OverlapTime</Name>
+                    <Name id="4334">MinOverlapTime</Name>
                     <UIEnabled id="4335">true</UIEnabled>
                     <UIInfo id="4336">
                       <Pos id="4337" x="760" y="662"/>
@@ -5767,7 +5780,7 @@
                     <Units id="4340"/>
                     <Value id="4341">500</Value>
                   </Parameter>
-                </StateMachineElement>
+                <Parameter type="Range" id="8026"><Increment id="8027">1</Increment><Max id="8028">10000</Max><Min id="8029">0</Min><Name id="8030">MaxOverlapTime</Name><UIEnabled id="8031">true</UIEnabled><UIInfo id="8032"><Pos id="8033" x="765" y="768"/></UIInfo><UIOrder id="8035">0</UIOrder><Units id="8036"/><Value id="8037">1500</Value></Parameter><Parameter type="RandomDouble" id="8046"><Max id="8047">1</Max><Min id="8048">0</Min><Name id="8049">RandDouble</Name><Seed id="8050">0</Seed><UIEnabled id="8051">false</UIEnabled><UIInfo id="8052"><Pos id="8053" x="765" y="866"/></UIInfo><UIOrder id="8055">0</UIOrder><UseSeed id="8056">false</UseSeed><Value id="8057">0</Value></Parameter></StateMachineElement>
                 <Transition id="6877">
                   <Destination id="6878">Failed</Destination>
                   <Source id="6879">WaitForFixation</Source>
@@ -7017,6 +7030,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1</OpenedBlock>
+    <OpenedBlock id="">6658</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

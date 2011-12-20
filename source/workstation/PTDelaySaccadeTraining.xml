@@ -325,262 +325,430 @@
       
     <Pos id="392" x="0" y="0"/></UIInfo>
     <Name id="393">ProbabilityTracking</Name>
-    <Task id="394">
-      <Name id="395">DelaySaccadeTraining</Name>
-      <UIInfo id="396">
-        <Pos id="397" x="2171" y="2002"/>
-        
+    <Task id="3486">
+      <Name id="3487">DelaySaccadeTraining</Name>
+      <UIInfo id="3488">
+        <Pos id="3489" x="1890" y="1744"/>
+
       </UIInfo>
-      <StateMachine id="399">
-        <InitialElement id="400">LessThanMaxSuperblocks</InitialElement>
-        <Name id="401">Top</Name>
-        <Parameter type="Numeric" id="402">
-          <Name id="403">SuperblockNum</Name>
-          <UIInfo id="404">
-            <Pos id="405" x="1936" y="1911"/>
-            
+      <StateMachine id="3491">
+        <InitialElement id="3492">LessThanMaxSuperblocks</InitialElement>
+        <Name id="3493">Top</Name>
+        <Parameter type="Numeric" id="3494">
+          <Name id="3495">SuperblockNum</Name>
+          <UIInfo id="3496">
+            <Pos id="3497" x="1936" y="1911"/>
+
           </UIInfo>
-          <Value id="407">-1</Value>
-        <UIEnabled id="408">false</UIEnabled><UIOrder id="409">0</UIOrder><Units id="410"/></Parameter>
-        <Parameter type="RandomInt" id="411">
-          <Name id="412">LongBlock</Name>
-          <UIInfo id="413">
-            <Pos id="414" x="1738" y="1923"/>
-            
+          <Value id="3499">-1</Value>
+          <UIEnabled id="3500">false</UIEnabled>
+          <UIOrder id="3501">0</UIOrder>
+          <Units id="3502"/>
+        </Parameter>
+        <Parameter type="RandomInt" id="3508">
+          <Name id="3509">LongBlock</Name>
+          <UIInfo id="3510">
+            <Pos id="3511" x="1738" y="1923"/>
+
           </UIInfo>
-        <Max id="416">1</Max><Min id="417">0</Min><Seed id="418">0</Seed><UIEnabled id="419">false</UIEnabled><UIOrder id="420">0</UIOrder><UseSeed id="421">false</UseSeed><Value id="422">0</Value></Parameter>
-        
-        
-        <StateMachineElement type="StateMachine" id="435">
-          <Name id="436">Superblock</Name>
-          <Result id="437">
-            <Name id="438">SuperblockDone</Name>
-            <UIInfo id="439">
-              <Pos id="440" x="2229" y="1159"/>
-              
+          <Max id="3513">1</Max>
+          <Min id="3514">0</Min>
+          <Seed id="3515">0</Seed>
+          <UIEnabled id="3516">false</UIEnabled>
+          <UIOrder id="3517">0</UIOrder>
+          <UseSeed id="3518">false</UseSeed>
+          <Value id="3519">0</Value>
+        </Parameter>
+
+
+        <StateMachineElement type="StateMachine" id="3528">
+          <Name id="3529">Superblock</Name>
+          <Result id="3530">
+            <Name id="3531">SuperblockDone</Name>
+            <UIInfo id="3532">
+              <Pos id="3533" x="2229" y="1159"/>
+
             </UIInfo>
-          <UIEnabled id="442">false</UIEnabled><UIOrder id="443">0</UIOrder></Result>
-          <UIInfo id="444">
-            <Pos id="445" x="1968" y="1422"/>
-            
+            <UIEnabled id="3535">false</UIEnabled>
+            <UIOrder id="3536">0</UIOrder>
+          </Result>
+          <UIInfo id="3540">
+            <Pos id="3541" x="1968" y="1422"/>
+
           </UIInfo>
-          <Parameter type="Numeric" id="447">
-            <Name id="448">BlocksSoFar</Name>
-            <UIInfo id="449">
-              <Pos id="450" x="2064" y="1535"/>
-              
+          <Parameter type="Numeric" id="3543">
+            <Name id="3544">BlocksSoFar</Name>
+            <UIInfo id="3545">
+              <Pos id="3546" x="2064" y="1535"/>
+
             </UIInfo>
-            <Value id="452">-1</Value>
-          <UIEnabled id="453">false</UIEnabled><UIOrder id="454">0</UIOrder><Units id="455"/></Parameter>
-          <StateMachineElement type="StateMachine" id="456">
-            <Name id="457">Block</Name>
-            <Result id="458">
-              <Name id="459">BlockDone</Name>
-              <UIInfo id="460">
-                <Pos id="461" x="1383" y="800"/>
-                
+            <Value id="3548">-1</Value>
+            <UIEnabled id="3549">false</UIEnabled>
+            <UIOrder id="3550">0</UIOrder>
+            <Units id="3551"/>
+          </Parameter>
+          <StateMachineElement type="StateMachine" id="3557">
+            <Name id="3558">Block</Name>
+            <Result id="3559">
+              <Name id="3560">BlockDone</Name>
+              <UIInfo id="3561">
+                <Pos id="3562" x="1383" y="800"/>
+
               </UIInfo>
-            <UIEnabled id="463">false</UIEnabled><UIOrder id="464">0</UIOrder></Result>
-            <UIInfo id="465">
-              <Pos id="466" x="2223" y="1354"/>
-              
+              <UIEnabled id="3564">false</UIEnabled>
+              <UIOrder id="3565">0</UIOrder>
+            </Result>
+            <UIInfo id="3569">
+              <Pos id="3570" x="2223" y="1354"/>
+
             </UIInfo>
-            <Parameter type="Numeric" id="468">
-              <Name id="469">TrialsSoFar</Name>
-              <UIInfo id="470">
-                <Pos id="471" x="1175" y="1274"/>
-                
+            <Parameter type="Numeric" id="3572">
+              <Name id="3573">TrialsSoFar</Name>
+              <UIInfo id="3574">
+                <Pos id="3575" x="1175" y="1274"/>
+
               </UIInfo>
-              <Value id="473">0</Value>
-            <UIEnabled id="474">false</UIEnabled><UIOrder id="475">0</UIOrder><Units id="476"/></Parameter>
-            <StateMachineElement type="StateMachine" id="477">
-              <Name id="478">Trial</Name>
-              <UIInfo id="479">
-                <Pos id="480" x="1029" y="875"/>
-                
+              <Value id="3577">0</Value>
+              <UIEnabled id="3578">false</UIEnabled>
+              <UIOrder id="3579">0</UIOrder>
+              <Units id="3580"/>
+            </Parameter>
+            <StateMachineElement type="StateMachine" id="3586">
+              <Name id="3587">Trial</Name>
+              <UIInfo id="3588">
+                <Pos id="3589" x="1029" y="875"/>
+
               </UIInfo>
-              <Result id="482">
-                <Name id="483">TrialTypeComplete</Name>
-                <UIInfo id="484">
-                  <Pos id="485" x="1690" y="377"/>
-                  
+              <Result id="3591">
+                <Name id="3592">TrialTypeComplete</Name>
+                <UIInfo id="3593">
+                  <Pos id="3594" x="1690" y="377"/>
+
                 </UIInfo>
-              <UIEnabled id="487">false</UIEnabled><UIOrder id="488">0</UIOrder></Result>
-              <Result id="489">
-                <Name id="490">ReshuffleTrialType</Name>
-                <UIInfo id="491">
-                  <Pos id="492" x="1691" y="551"/>
-                  
+                <UIEnabled id="3596">false</UIEnabled>
+                <UIOrder id="3597">0</UIOrder>
+              </Result>
+              <Result id="3601">
+                <Name id="3602">ReshuffleTrialType</Name>
+                <UIInfo id="3603">
+                  <Pos id="3604" x="1691" y="551"/>
+
                 </UIInfo>
-              <UIEnabled id="494">false</UIEnabled><UIOrder id="495">0</UIOrder></Result>
-              
-              
-              
-              <StateMachineElement type="StateMachine" id="520">
-                <Name id="521">TrialLogic</Name>
-                <UIInfo id="522">
-                  <Pos id="523" x="1389" y="355"/>
-                  
+                <UIEnabled id="3606">false</UIEnabled>
+                <UIOrder id="3607">0</UIOrder>
+              </Result>
+
+
+
+              <StateMachineElement type="StateMachine" id="3611">
+                <Name id="3612">TrialLogic</Name>
+                <UIInfo id="3613">
+                  <Pos id="3614" x="1389" y="355"/>
+
                 </UIInfo>
-                <Result id="525">
-                  <Name id="526">Succeeded</Name>
-                  <UIInfo id="527">
-                    <Pos id="528" x="1633" y="433"/>
-                    
+                <Result id="3616">
+                  <Name id="3617">Succeeded</Name>
+                  <UIInfo id="3618">
+                    <Pos id="3619" x="1633" y="433"/>
+
                   </UIInfo>
-                <UIEnabled id="530">false</UIEnabled><UIOrder id="531">0</UIOrder></Result>
-                <Result id="532">
-                  <Name id="533">Failed</Name>
-                  <UIInfo id="534">
-                    <Pos id="535" x="1136" y="700"/>
-                    
+                  <UIEnabled id="3621">false</UIEnabled>
+                  <UIOrder id="3622">0</UIOrder>
+                </Result>
+                <Result id="3626">
+                  <Name id="3627">Failed</Name>
+                  <UIInfo id="3628">
+                    <Pos id="3629" x="1136" y="700"/>
+
                   </UIInfo>
-                <UIEnabled id="537">false</UIEnabled><UIOrder id="538">0</UIOrder></Result>
-                <StateMachineElement type="State" id="539">
-                  <Name id="540">WaitForFixation</Name>
-                  <UIInfo id="541">
-                    <Pos id="542" x="846" y="396"/>
-                    
+                  <UIEnabled id="3631">false</UIEnabled>
+                  <UIOrder id="3632">0</UIOrder>
+                </Result>
+                <StateMachineElement type="State" id="3636">
+                  <Name id="3637">WaitForFixation</Name>
+                  <UIInfo id="3638">
+                    <Pos id="3639" x="846" y="396"/>
+
                   </UIInfo>
-                  <ControlElement type="Target Controller" id="544">
-                    <ControlTarget id="545">FixationTarget</ControlTarget>
-                    <FixationTime id="546">500</FixationTime>
-                    <MaxInitialAcquisitionTime id="547">1500</MaxInitialAcquisitionTime>
-                    <Name id="548">InitialFixationTracker</Name>
-                    <Result id="549">
-                      <Name id="550">Reaquistion Time Exceeded</Name>
-                      <UIInfo id="551">
-                        
-                      <Pos id="553" x="0" y="0"/></UIInfo>
-                    <UIEnabled id="554">false</UIEnabled><UIOrder id="555">0</UIOrder></Result>
-                    <Result id="556">
-                      <Name id="557">Initial Aquistion Time Exceeded</Name>
-                      <UIInfo id="558">
-                        
-                      <Pos id="560" x="0" y="0"/></UIInfo>
-                    <UIEnabled id="561">false</UIEnabled><UIOrder id="562">0</UIOrder></Result>
-                    <Result id="563">
-                      <Name id="564">Total Time Excceeded</Name>
-                      <UIInfo id="565">
-                        
-                      <Pos id="567" x="0" y="0"/></UIInfo>
-                    <UIEnabled id="568">false</UIEnabled><UIOrder id="569">0</UIOrder></Result>
-                    <Result id="570">
-                      <Name id="571">Broke Fixation</Name>
-                      <UIInfo id="572">
-                        
-                      <Pos id="574" x="0" y="0"/></UIInfo>
-                    <UIEnabled id="575">false</UIEnabled><UIOrder id="576">0</UIOrder></Result>
-                    <Result id="577">
-                      <Name id="578">Success</Name>
-                      <UIInfo id="579">
-                        
-                      <Pos id="581" x="0" y="0"/></UIInfo>
-                    <UIEnabled id="582">false</UIEnabled><UIOrder id="583">0</UIOrder></Result>
-                    <SignalChannel id="584">PositionChannel</SignalChannel>
-                    <TimeUnits id="585">Ms</TimeUnits>
-                    <TotalTime id="586">2000</TotalTime>
-                    <UIInfo id="587">
-                      <Pos id="588" x="535" y="172"/>
-                      
+                  <ControlElement type="Target Controller" id="3641">
+                    <ControlTarget id="3642">FixationTarget</ControlTarget>
+                    <FixationTime id="3643">500</FixationTime>
+                    <MaxInitialAcquisitionTime id="3644">1500</MaxInitialAcquisitionTime>
+                    <Name id="3645">InitialFixationTracker</Name>
+                    <Result id="3646">
+                      <Name id="3647">Reaquistion Time Exceeded</Name>
+                      <UIInfo id="3648">
+
+                        <Pos id="3649" x="0" y="0"/>
+                      </UIInfo>
+                      <UIEnabled id="3651">false</UIEnabled>
+                      <UIOrder id="3652">0</UIOrder>
+                    </Result>
+                    <Result id="3656">
+                      <Name id="3657">Initial Aquistion Time Exceeded</Name>
+                      <UIInfo id="3658">
+
+                        <Pos id="3659" x="0" y="0"/>
+                      </UIInfo>
+                      <UIEnabled id="3661">false</UIEnabled>
+                      <UIOrder id="3662">0</UIOrder>
+                    </Result>
+                    <Result id="3666">
+                      <Name id="3667">Total Time Excceeded</Name>
+                      <UIInfo id="3668">
+
+                        <Pos id="3669" x="0" y="0"/>
+                      </UIInfo>
+                      <UIEnabled id="3671">false</UIEnabled>
+                      <UIOrder id="3672">0</UIOrder>
+                    </Result>
+                    <Result id="3676">
+                      <Name id="3677">Broke Fixation</Name>
+                      <UIInfo id="3678">
+
+                        <Pos id="3679" x="0" y="0"/>
+                      </UIInfo>
+                      <UIEnabled id="3681">false</UIEnabled>
+                      <UIOrder id="3682">0</UIOrder>
+                    </Result>
+                    <Result id="3686">
+                      <Name id="3687">Success</Name>
+                      <UIInfo id="3688">
+
+                        <Pos id="3689" x="0" y="0"/>
+                      </UIInfo>
+                      <UIEnabled id="3691">false</UIEnabled>
+                      <UIOrder id="3692">0</UIOrder>
+                    </Result>
+                    <SignalChannel id="3696">PositionChannel</SignalChannel>
+                    <TimeUnits id="3697">Ms</TimeUnits>
+                    <TotalTime id="3698">2000</TotalTime>
+                    <UIInfo id="3699">
+                      <Pos id="3700" x="535" y="172"/>
+
                     </UIInfo>
-                  <TargetEntryScript id="590">EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript><TargetExitScript id="591">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript><MaxReacquisitionTime id="592">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="593">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="594">false</ReacquisitionAllowed><Type id="595"/><UIEnabled id="596">true</UIEnabled><UIOrder id="597">0</UIOrder></ControlElement>
-                  <Result id="598">
-                    <Name id="599">Fixated</Name>
-                    <UIInfo id="600">
-                      <Pos id="601" x="966" y="151"/>
-                      
+                    <TargetEntryScript id="3702">EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript>
+                    <TargetExitScript id="3703">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript>
+                    <MaxReacquisitionTime id="3704">0</MaxReacquisitionTime>
+                    <MinInitialAcquisitionTime id="3705">0</MinInitialAcquisitionTime>
+                    <ReacquisitionAllowed id="3706">false</ReacquisitionAllowed>
+                    <Type id="3707"/>
+                    <UIEnabled id="3708">true</UIEnabled>
+                    <UIOrder id="3709">0</UIOrder>
+                  </ControlElement>
+                  <Result id="3725">
+                    <Name id="3726">Fixated</Name>
+                    <UIInfo id="3727">
+                      <Pos id="3728" x="966" y="151"/>
+
                     </UIInfo>
-                  <UIEnabled id="603">false</UIEnabled><UIOrder id="604">0</UIOrder></Result>
-                  <Result id="605">
-                    <Name id="606">DidntFixate</Name>
-                    <UIInfo id="607">
-                      <Pos id="608" x="961" y="286"/>
-                      
+                    <UIEnabled id="3730">false</UIEnabled>
+                    <UIOrder id="3731">0</UIOrder>
+                  </Result>
+                  <Result id="3735">
+                    <Name id="3736">DidntFixate</Name>
+                    <UIInfo id="3737">
+                      <Pos id="3738" x="961" y="286"/>
+
                     </UIInfo>
-                  <UIEnabled id="610">false</UIEnabled><UIOrder id="611">0</UIOrder></Result>
-                  <Transition id="612">
-                    <Destination id="613">Fixated</Destination>
-                    <Source id="614">InitialFixationTracker</Source>
-                    <SourceResult id="615">Success</SourceResult>
+                    <UIEnabled id="3740">false</UIEnabled>
+                    <UIOrder id="3741">0</UIOrder>
+                  </Result>
+                  <Transition id="3745">
+                    <Destination id="3746">Fixated</Destination>
+                    <Source id="3747">InitialFixationTracker</Source>
+                    <SourceResult id="3748">Success</SourceResult>
                   </Transition>
-                  <Transition id="616">
-                    <Destination id="617">DidntFixate</Destination>
-                    <Source id="618">InitialFixationTracker</Source>
-                    <SourceResult id="619">Reaquistion Time Exceeded</SourceResult>
+                  <Transition id="3749">
+                    <Destination id="3750">DidntFixate</Destination>
+                    <Source id="3751">InitialFixationTracker</Source>
+                    <SourceResult id="3752">Reaquistion Time Exceeded</SourceResult>
                   </Transition>
-                  <Transition id="620">
-                    <Destination id="621">DidntFixate</Destination>
-                    <Source id="622">InitialFixationTracker</Source>
-                    <SourceResult id="623">Initial Aquistion Time Exceeded</SourceResult>
+                  <Transition id="3753">
+                    <Destination id="3754">DidntFixate</Destination>
+                    <Source id="3755">InitialFixationTracker</Source>
+                    <SourceResult id="3756">Initial Aquistion Time Exceeded</SourceResult>
                   </Transition>
-                  <Transition id="624">
-                    <Destination id="625">DidntFixate</Destination>
-                    <Source id="626">InitialFixationTracker</Source>
-                    <SourceResult id="627">Total Time Excceeded</SourceResult>
+                  <Transition id="3757">
+                    <Destination id="3758">DidntFixate</Destination>
+                    <Source id="3759">InitialFixationTracker</Source>
+                    <SourceResult id="3760">Total Time Excceeded</SourceResult>
                   </Transition>
-                  <Transition id="628">
-                    <Destination id="629">DidntFixate</Destination>
-                    <Source id="630">InitialFixationTracker</Source>
-                    <SourceResult id="631">Broke Fixation</SourceResult>
+                  <Transition id="3761">
+                    <Destination id="3762">DidntFixate</Destination>
+                    <Source id="3763">InitialFixationTracker</Source>
+                    <SourceResult id="3764">Broke Fixation</SourceResult>
                   </Transition>
-                <EntryScript id="632">EventInfo.setData(&quot;Event&quot;,7);
-EventInfo.updateValue();
-</EntryScript><ExitScript id="633">EventInfo.setData(&quot;Event&quot;,4);
-EventInfo.updateValue();</ExitScript><BackgroundColor A="255" B="0" G="0" R="0" id="634">#000000</BackgroundColor><EngineNeeded id="635">-1</EngineNeeded><FrameScript id="636"/><Revision id="637">-1</Revision><UIEnabled id="638">false</UIEnabled><UIOrder id="639">0</UIOrder></StateMachineElement>
+                  <EntryScript id="3765">
+                    EventInfo.setData(&quot;Event&quot;,7);
+                    EventInfo.updateValue();
+                  </EntryScript>
+                  <ExitScript id="3766">
+                    EventInfo.setData(&quot;Event&quot;,4);
+                    EventInfo.updateValue();
+                  </ExitScript>
+                  <BackgroundColor A="255" B="0" G="0" R="0" id="3767">#000000</BackgroundColor>
+                  <EngineNeeded id="3768">-1</EngineNeeded>
+                  <FrameScript id="3769"/>
+                  <Revision id="3770">-1</Revision>
+                  <UIEnabled id="3771">false</UIEnabled>
+                  <UIOrder id="3772">0</UIOrder>
+                </StateMachineElement>
                 <StateMachineElement type="StateMachine" id="640">
                   <Name id="641">TargetFixation</Name>
                   <UIInfo id="642">
                     <Pos id="643" x="1240" y="399"/>
-                    
+
                   </UIInfo>
                   <StateMachineElement type="State" id="645">
                     <Name id="646">WaitForTargetEntry</Name>
                     <UIInfo id="647">
                       <Pos id="648" x="608" y="223"/>
-                      
+
                     </UIInfo>
-                    
-                    <EntryScript id="694">TargetEntryTracker.totalTime = ChoiceTime.value;
-TargetEntryTracker.maxAcquisitionTime = ChoiceTime.value;
+
+                    <EntryScript id="694">
+                      TargetEntryTracker.totalTime = ChoiceTime.value;
+                      TargetEntryTracker.maxAcquisitionTime = ChoiceTime.value;
                     </EntryScript>
                     <Result id="695">
                       <Name id="696">EnteredTarget</Name>
                       <UIInfo id="697">
                         <Pos id="698" x="902" y="131"/>
-                        
+
                       </UIInfo>
-                    <UIEnabled id="700">false</UIEnabled><UIOrder id="701">0</UIOrder></Result>
-                    
+                      <UIEnabled id="700">false</UIEnabled>
+                      <UIOrder id="701">0</UIOrder>
+                    </Result>
+
                     <Result id="709">
                       <Name id="710">DidntEnterTarget</Name>
                       <UIInfo id="711">
                         <Pos id="712" x="900" y="340"/>
-                        
+
                       </UIInfo>
-                    <UIEnabled id="714">false</UIEnabled><UIOrder id="715">0</UIOrder></Result>
-                    
-                    
-                    
-                    
-                    <ExitScript id="732">EventInfo.setData(&quot;Event&quot;,4);
-EventInfo.updateValue();</ExitScript>
-                  <BackgroundColor A="255" B="0" G="0" R="0" id="733">#000000</BackgroundColor><EngineNeeded id="734">-1</EngineNeeded><FrameScript id="735"/><Revision id="736">-1</Revision><UIEnabled id="737">false</UIEnabled><UIOrder id="738">0</UIOrder><ControlElement type="Target Controller" id="2311"><ControlTarget id="2312">TargetWindow</ControlTarget><FixationTime id="2313">1</FixationTime><MaxInitialAcquisitionTime id="2314">1000</MaxInitialAcquisitionTime><MaxReacquisitionTime id="2315">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="2316">0</MinInitialAcquisitionTime><Name id="2317">TargetEntryTracker</Name><ReacquisitionAllowed id="2318">false</ReacquisitionAllowed><Result id="1235"><Name id="1236">Reaquistion Time Exceeded</Name><UIEnabled id="1237">false</UIEnabled><UIInfo id="1238"><Pos id="1239" x="0" y="0"/></UIInfo><UIOrder id="1241">0</UIOrder></Result><Result id="1245"><Name id="1246">Initial Aquistion Time Exceeded</Name><UIEnabled id="1247">false</UIEnabled><UIInfo id="1248"><Pos id="1249" x="0" y="0"/></UIInfo><UIOrder id="1251">0</UIOrder></Result><Result id="1255"><Name id="1256">Total Time Excceeded</Name><UIEnabled id="1257">false</UIEnabled><UIInfo id="1258"><Pos id="1259" x="0" y="0"/></UIInfo><UIOrder id="1261">0</UIOrder></Result><Result id="1265"><Name id="1266">Broke Fixation</Name><UIEnabled id="1267">false</UIEnabled><UIInfo id="1268"><Pos id="1269" x="0" y="0"/></UIInfo><UIOrder id="1271">0</UIOrder></Result><Result id="1275"><Name id="1276">Success</Name><UIEnabled id="1277">false</UIEnabled><UIInfo id="1278"><Pos id="1279" x="0" y="0"/></UIInfo><UIOrder id="1281">0</UIOrder></Result><SignalChannel id="2319">PositionChannel</SignalChannel><TargetEntryScript id="2320">EventInfo.setData(&quot;Event&quot;,5);
-EventInfo.updateValue();</TargetEntryScript><TargetExitScript id="2321">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript><TimeUnits id="2322">Ms</TimeUnits><TotalTime id="2323">1000</TotalTime><Type id="2324"/><UIEnabled id="2325">false</UIEnabled><UIInfo id="2326"><Pos id="2327" x="577" y="197"/></UIInfo><UIOrder id="2329">0</UIOrder></ControlElement><Transition id="1287"><Destination id="1288">DidntEnterTarget</Destination><Source id="1289">TargetEntryTracker</Source><SourceResult id="1290">Reaquistion Time Exceeded</SourceResult></Transition><Transition id="1291"><Destination id="1292">DidntEnterTarget</Destination><Source id="1293">TargetEntryTracker</Source><SourceResult id="1294">Initial Aquistion Time Exceeded</SourceResult></Transition><Transition id="1295"><Destination id="1296">DidntEnterTarget</Destination><Source id="1297">TargetEntryTracker</Source><SourceResult id="1298">Total Time Excceeded</SourceResult></Transition><Transition id="1299"><Destination id="1300">DidntEnterTarget</Destination><Source id="1301">TargetEntryTracker</Source><SourceResult id="1302">Broke Fixation</SourceResult></Transition><Transition id="1303"><Destination id="1304">EnteredTarget</Destination><Source id="1305">TargetEntryTracker</Source><SourceResult id="1306">Success</SourceResult></Transition></StateMachineElement>
+                      <UIEnabled id="714">false</UIEnabled>
+                      <UIOrder id="715">0</UIOrder>
+                    </Result>
+
+
+
+
+                    <ExitScript id="732">
+                      EventInfo.setData(&quot;Event&quot;,4);
+                      EventInfo.updateValue();
+                    </ExitScript>
+                    <BackgroundColor A="255" B="0" G="0" R="0" id="733">#000000</BackgroundColor>
+                    <EngineNeeded id="734">-1</EngineNeeded>
+                    <FrameScript id="735"/>
+                    <Revision id="736">-1</Revision>
+                    <UIEnabled id="737">false</UIEnabled>
+                    <UIOrder id="738">0</UIOrder>
+                    <ControlElement type="Target Controller" id="2311">
+                      <ControlTarget id="2312">TargetWindow</ControlTarget>
+                      <FixationTime id="2313">1</FixationTime>
+                      <MaxInitialAcquisitionTime id="2314">1000</MaxInitialAcquisitionTime>
+                      <MaxReacquisitionTime id="2315">0</MaxReacquisitionTime>
+                      <MinInitialAcquisitionTime id="2316">0</MinInitialAcquisitionTime>
+                      <Name id="2317">TargetEntryTracker</Name>
+                      <ReacquisitionAllowed id="2318">false</ReacquisitionAllowed>
+                      <Result id="1235">
+                        <Name id="1236">Reaquistion Time Exceeded</Name>
+                        <UIEnabled id="1237">false</UIEnabled>
+                        <UIInfo id="1238">
+                          <Pos id="1239" x="0" y="0"/>
+                        </UIInfo>
+                        <UIOrder id="1241">0</UIOrder>
+                      </Result>
+                      <Result id="1245">
+                        <Name id="1246">Initial Aquistion Time Exceeded</Name>
+                        <UIEnabled id="1247">false</UIEnabled>
+                        <UIInfo id="1248">
+                          <Pos id="3796" x="0" y="0"/>
+                        </UIInfo>
+                        <UIOrder id="3798">0</UIOrder>
+                      </Result>
+                      <Result id="3802">
+                        <Name id="3803">Total Time Excceeded</Name>
+                        <UIEnabled id="3804">false</UIEnabled>
+                        <UIInfo id="1258">
+                          <Pos id="1259" x="0" y="0"/>
+                        </UIInfo>
+                        <UIOrder id="1261">0</UIOrder>
+                      </Result>
+                      <Result id="3809">
+                        <Name id="3810">Broke Fixation</Name>
+                        <UIEnabled id="3811">false</UIEnabled>
+                        <UIInfo id="1268">
+                          <Pos id="3812" x="0" y="0"/>
+                        </UIInfo>
+                        <UIOrder id="3814">0</UIOrder>
+                      </Result>
+                      <Result id="1275">
+                        <Name id="1276">Success</Name>
+                        <UIEnabled id="3818">false</UIEnabled>
+                        <UIInfo id="3819">
+                          <Pos id="3820" x="0" y="0"/>
+                        </UIInfo>
+                        <UIOrder id="3822">0</UIOrder>
+                      </Result>
+                      <SignalChannel id="2319">PositionChannel</SignalChannel>
+                      <TargetEntryScript id="2320">
+                        EventInfo.setData(&quot;Event&quot;,5);
+                        EventInfo.updateValue();
+                      </TargetEntryScript>
+                      <TargetExitScript id="2321">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript>
+                      <TimeUnits id="2322">Ms</TimeUnits>
+                      <TotalTime id="2323">1000</TotalTime>
+                      <Type id="2324"/>
+                      <UIEnabled id="2325">false</UIEnabled>
+                      <UIInfo id="2326">
+                        <Pos id="2327" x="577" y="197"/>
+                      </UIInfo>
+                      <UIOrder id="2329">0</UIOrder>
+                    </ControlElement>
+                    <Transition id="1287">
+                      <Destination id="1288">DidntEnterTarget</Destination>
+                      <Source id="1289">TargetEntryTracker</Source>
+                      <SourceResult id="1290">Reaquistion Time Exceeded</SourceResult>
+                    </Transition>
+                    <Transition id="1291">
+                      <Destination id="1292">DidntEnterTarget</Destination>
+                      <Source id="1293">TargetEntryTracker</Source>
+                      <SourceResult id="1294">Initial Aquistion Time Exceeded</SourceResult>
+                    </Transition>
+                    <Transition id="1295">
+                      <Destination id="1296">DidntEnterTarget</Destination>
+                      <Source id="1297">TargetEntryTracker</Source>
+                      <SourceResult id="1298">Total Time Excceeded</SourceResult>
+                    </Transition>
+                    <Transition id="1299">
+                      <Destination id="1300">DidntEnterTarget</Destination>
+                      <Source id="1301">TargetEntryTracker</Source>
+                      <SourceResult id="1302">Broke Fixation</SourceResult>
+                    </Transition>
+                    <Transition id="1303">
+                      <Destination id="1304">EnteredTarget</Destination>
+                      <Source id="1305">TargetEntryTracker</Source>
+                      <SourceResult id="1306">Success</SourceResult>
+                    </Transition>
+                  </StateMachineElement>
                   <StateMachineElement type="State" id="739">
                     <Name id="740">RequireContinuedFixation</Name>
                     <UIInfo id="741">
                       <Pos id="742" x="995" y="227"/>
-                      
-                    </UIInfo>
-                    <EntryScript id="744">																						EventInfo.setData(&quot;Stage&quot;,6);
-																						EventInfo.setData(&quot;Event&quot;,3);
-																						EventInfo.updateValue();
-																						EventInfo.setData(&quot;Event&quot;,9);
-																						EventInfo.updateValue();
 
-																						TargetFixationTracker.fixationTime = PeripheralFixationHoldTime.value; 
-																						TargetFixationTracker.totalTime = PeripheralFixationHoldTime.value+1000;</EntryScript>
+                    </UIInfo>
+                    <EntryScript id="744">
+                      EventInfo.setData(&quot;Stage&quot;,6);
+                      EventInfo.setData(&quot;Event&quot;,3);
+                      EventInfo.updateValue();
+                      EventInfo.setData(&quot;Event&quot;,9);
+                      EventInfo.updateValue();
+
+                      TargetFixationTracker.fixationTime = PeripheralFixationHoldTime.value;
+                      TargetFixationTracker.totalTime = PeripheralFixationHoldTime.value+1000;
+                    </EntryScript>
                     <ControlElement type="Target Controller" id="745">
                       <ControlTarget id="746">TargetWindow</ControlTarget>
                       <FixationTime id="747">500</FixationTime>
@@ -589,56 +757,83 @@ EventInfo.updateValue();</TargetEntryScript><TargetExitScript id="2321">EventInf
                       <Result id="750">
                         <Name id="751">Reaquistion Time Exceeded</Name>
                         <UIInfo id="752">
-                          
-                        <Pos id="754" x="0" y="0"/></UIInfo>
-                      <UIEnabled id="755">false</UIEnabled><UIOrder id="756">0</UIOrder></Result>
+
+                          <Pos id="754" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="755">false</UIEnabled>
+                        <UIOrder id="756">0</UIOrder>
+                      </Result>
                       <Result id="757">
                         <Name id="758">Initial Aquistion Time Exceeded</Name>
                         <UIInfo id="759">
-                          
-                        <Pos id="761" x="0" y="0"/></UIInfo>
-                      <UIEnabled id="762">false</UIEnabled><UIOrder id="763">0</UIOrder></Result>
+
+                          <Pos id="761" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="762">false</UIEnabled>
+                        <UIOrder id="763">0</UIOrder>
+                      </Result>
                       <Result id="764">
                         <Name id="765">Total Time Excceeded</Name>
                         <UIInfo id="766">
-                          
-                        <Pos id="768" x="0" y="0"/></UIInfo>
-                      <UIEnabled id="769">false</UIEnabled><UIOrder id="770">0</UIOrder></Result>
+
+                          <Pos id="768" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="769">false</UIEnabled>
+                        <UIOrder id="770">0</UIOrder>
+                      </Result>
                       <Result id="771">
                         <Name id="772">Broke Fixation</Name>
                         <UIInfo id="773">
-                          
-                        <Pos id="775" x="0" y="0"/></UIInfo>
-                      <UIEnabled id="776">false</UIEnabled><UIOrder id="777">0</UIOrder></Result>
+
+                          <Pos id="775" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="776">false</UIEnabled>
+                        <UIOrder id="777">0</UIOrder>
+                      </Result>
                       <Result id="778">
                         <Name id="779">Success</Name>
                         <UIInfo id="780">
-                          
-                        <Pos id="782" x="0" y="0"/></UIInfo>
-                      <UIEnabled id="783">false</UIEnabled><UIOrder id="784">0</UIOrder></Result>
+
+                          <Pos id="782" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="783">false</UIEnabled>
+                        <UIOrder id="784">0</UIOrder>
+                      </Result>
                       <SignalChannel id="785">PositionChannel</SignalChannel>
                       <TimeUnits id="786">Ms</TimeUnits>
                       <TotalTime id="787">1000</TotalTime>
                       <UIInfo id="788">
                         <Pos id="789" x="638" y="133"/>
-                        
+
                       </UIInfo>
-                    <TargetEntryScript id="791">EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript><TargetExitScript id="792">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript><MaxReacquisitionTime id="793">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="794">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="795">false</ReacquisitionAllowed><Type id="796"/><UIEnabled id="797">false</UIEnabled><UIOrder id="798">0</UIOrder></ControlElement>
+                      <TargetEntryScript id="791">EventInfo.setData(&quot;Event&quot;,5);EventInfo.updateValue();</TargetEntryScript>
+                      <TargetExitScript id="792">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript>
+                      <MaxReacquisitionTime id="793">0</MaxReacquisitionTime>
+                      <MinInitialAcquisitionTime id="794">0</MinInitialAcquisitionTime>
+                      <ReacquisitionAllowed id="795">false</ReacquisitionAllowed>
+                      <Type id="796"/>
+                      <UIEnabled id="797">false</UIEnabled>
+                      <UIOrder id="798">0</UIOrder>
+                    </ControlElement>
                     <ExitScript id="799"/>
                     <Result id="800">
                       <Name id="801">ContinuedFixation</Name>
                       <UIInfo id="802">
                         <Pos id="803" x="1145" y="144"/>
-                        
+
                       </UIInfo>
-                    <UIEnabled id="805">false</UIEnabled><UIOrder id="806">0</UIOrder></Result>
+                      <UIEnabled id="805">false</UIEnabled>
+                      <UIOrder id="806">0</UIOrder>
+                    </Result>
                     <Result id="807">
                       <Name id="808">BrokeFixation</Name>
                       <UIInfo id="809">
                         <Pos id="810" x="1135" y="258"/>
-                        
+
                       </UIInfo>
-                    <UIEnabled id="812">false</UIEnabled><UIOrder id="813">0</UIOrder></Result>
+                      <UIEnabled id="812">false</UIEnabled>
+                      <UIOrder id="813">0</UIOrder>
+                    </Result>
                     <Transition id="814">
                       <Destination id="815">ContinuedFixation</Destination>
                       <Source id="816">TargetFixationTracker</Source>
@@ -664,28 +859,38 @@ EventInfo.updateValue();</TargetEntryScript><TargetExitScript id="2321">EventInf
                       <Source id="832">TargetFixationTracker</Source>
                       <SourceResult id="833">Broke Fixation</SourceResult>
                     </Transition>
-                  <FrameScript id="834"/><BackgroundColor A="255" B="0" G="0" R="0" id="844">#000000</BackgroundColor><EngineNeeded id="845">-1</EngineNeeded><Revision id="846">-1</Revision><UIEnabled id="847">false</UIEnabled><UIOrder id="848">0</UIOrder></StateMachineElement>
-                  
-                  
-                  
-                  
-                  
+                    <FrameScript id="834"/>
+                    <BackgroundColor A="255" B="0" G="0" R="0" id="844">#000000</BackgroundColor>
+                    <EngineNeeded id="845">-1</EngineNeeded>
+                    <Revision id="846">-1</Revision>
+                    <UIEnabled id="847">false</UIEnabled>
+                    <UIOrder id="848">0</UIOrder>
+                  </StateMachineElement>
+
+
+
+
+
                   <InitialElement id="966">WaitForTargetEntry</InitialElement>
                   <Result id="967">
                     <Name id="968">BrokeFixation</Name>
                     <UIInfo id="969">
                       <Pos id="970" x="1068" y="435"/>
-                      
+
                     </UIInfo>
-                  <UIEnabled id="972">false</UIEnabled><UIOrder id="973">0</UIOrder></Result>
+                    <UIEnabled id="972">false</UIEnabled>
+                    <UIOrder id="973">0</UIOrder>
+                  </Result>
                   <Result id="974">
                     <Name id="975">Success</Name>
                     <UIInfo id="976">
                       <Pos id="977" x="1188" y="216"/>
-                      
+
                     </UIInfo>
-                  <UIEnabled id="979">false</UIEnabled><UIOrder id="980">0</UIOrder></Result>
-                  
+                    <UIEnabled id="979">false</UIEnabled>
+                    <UIOrder id="980">0</UIOrder>
+                  </Result>
+
                   <Transition id="985">
                     <Destination id="986">BrokeFixation</Destination>
                     <Source id="987">RequireContinuedFixation</Source>
@@ -696,48 +901,144 @@ EventInfo.updateValue();</TargetEntryScript><TargetExitScript id="2321">EventInf
                     <Source id="991">RequireContinuedFixation</Source>
                     <SourceResult id="992">ContinuedFixation</SourceResult>
                   </Transition>
-                  
-                <EntryScript id="997">EventInfo.setData(&quot;Stage&quot;,5);
-EventInfo.setData(&quot;Event&quot;,3);
-EventInfo.updateValue();
-FixationGraphic.visible = false;
-EventInfo.setData(&quot;Event&quot;,8);
-EventInfo.updateValue();</EntryScript><ExitScript id="998">EventInfo.setData(&quot;Event&quot;,4);
-EventInfo.updateValue();</ExitScript><StateMachineElement type="ScriptElement" id="999"><Name id="1000">MarkTargetValues</Name><Result id="1001"><Name id="1002">false</Name><UIInfo id="1003"><Pos id="1005" x="0" y="0"/></UIInfo><UIEnabled id="1006">false</UIEnabled><UIOrder id="1007">0</UIOrder></Result><Result id="1008"><Name id="1009">true</Name><UIInfo id="1010"><Pos id="1012" x="0" y="0"/></UIInfo><UIEnabled id="1013">false</UIEnabled><UIOrder id="1014">0</UIOrder></Result><Script id="1015">EventInfo.setData(&quot;Stage&quot;,6);
-EventInfo.setData(&quot;Event&quot;,3);
-EventInfo.updateValue();
-if(TargetGraphic.x &lt; 400)
-{
-	TrialInfo.setData(&quot;ChosenSide&quot;,0);
-}
-else
-{
-	TrialInfo.setData(&quot;ChosenSide&quot;,1);
-}
-TrialInfo.setData(&quot;ChosenCol&quot;,Number(TargetGraphic.red&gt;0));
-return true;</Script><UIInfo id="1016"><Pos id="1017" x="800" y="211"/></UIInfo><Type id="1019">ScriptElement</Type><UIEnabled id="1020">false</UIEnabled><UIOrder id="1021">0</UIOrder></StateMachineElement><Transition id="1045"><Destination id="1046">MarkTargetValues</Destination><Source id="1047">WaitForTargetEntry</Source><SourceResult id="1048">EnteredTarget</SourceResult></Transition><Transition id="1049"><Destination id="1050">RequireContinuedFixation</Destination><Source id="1051">MarkTargetValues</Source><SourceResult id="1052">false</SourceResult></Transition><Transition id="1053"><Destination id="1054">RequireContinuedFixation</Destination><Source id="1055">MarkTargetValues</Source><SourceResult id="1056">true</SourceResult></Transition><Level id="1085">Stage</Level><Type id="1086">StateMachine</Type><UIEnabled id="1087">false</UIEnabled><UIOrder id="1088">0</UIOrder><Result id="1801"><Name id="1802">DidntEnterTarget</Name><UIEnabled id="1803">false</UIEnabled><UIInfo id="1804"><Pos id="1805" x="802" y="416"/></UIInfo><UIOrder id="1807">0</UIOrder></Result><Transition id="1211"><Destination id="1212">DidntEnterTarget</Destination><Source id="1213">WaitForTargetEntry</Source><SourceResult id="1214">DidntEnterTarget</SourceResult></Transition><Parameter type="Range" id="2239"><Increment id="2240">1</Increment><Max id="2241">10000</Max><Min id="2242">1</Min><Name id="2243">ChoiceTime</Name><UIEnabled id="2244">true</UIEnabled><UIInfo id="2245"><Pos id="2246" x="592" y="491"/></UIInfo><UIOrder id="2248">0</UIOrder><Units id="2249"/><Value id="2250">1000</Value></Parameter><Parameter type="Range" id="2259"><Increment id="2260">1</Increment><Max id="2261">10000</Max><Min id="2262">0</Min><Name id="2263">PeripheralFixationHoldTime</Name><UIEnabled id="2264">true</UIEnabled><UIInfo id="2265"><Pos id="2266" x="748" y="515"/></UIInfo><UIOrder id="2268">0</UIOrder><Units id="2269"/><Value id="2270">500</Value></Parameter></StateMachineElement>
-                
-                <InitialElement id="1895">WaitForFixation</InitialElement>
+
+                  <EntryScript id="997">
+                    EventInfo.setData(&quot;Stage&quot;,5);
+                    EventInfo.setData(&quot;Event&quot;,3);
+                    EventInfo.updateValue();
+                    FixationGraphic.visible = false;
+                    EventInfo.setData(&quot;Event&quot;,8);
+                    EventInfo.updateValue();
+                  </EntryScript>
+                  <ExitScript id="998">
+                    EventInfo.setData(&quot;Event&quot;,4);
+                    EventInfo.updateValue();
+                  </ExitScript>
+                  <StateMachineElement type="ScriptElement" id="999">
+                    <Name id="1000">MarkTargetValues</Name>
+                    <Result id="1001">
+                      <Name id="1002">false</Name>
+                      <UIInfo id="1003">
+                        <Pos id="1005" x="0" y="0"/>
+                      </UIInfo>
+                      <UIEnabled id="1006">false</UIEnabled>
+                      <UIOrder id="1007">0</UIOrder>
+                    </Result>
+                    <Result id="1008">
+                      <Name id="1009">true</Name>
+                      <UIInfo id="1010">
+                        <Pos id="1012" x="0" y="0"/>
+                      </UIInfo>
+                      <UIEnabled id="1013">false</UIEnabled>
+                      <UIOrder id="1014">0</UIOrder>
+                    </Result>
+                    <Script id="1015">
+                      EventInfo.setData(&quot;Stage&quot;,6);
+                      EventInfo.setData(&quot;Event&quot;,3);
+                      EventInfo.updateValue();
+                      if(TargetGraphic.x &lt; 400)
+                      {
+                      TrialInfo.setData(&quot;ChosenSide&quot;,0);
+                      }
+                      else
+                      {
+                      TrialInfo.setData(&quot;ChosenSide&quot;,1);
+                      }
+                      TrialInfo.setData(&quot;ChosenCol&quot;,Number(TargetGraphic.red&gt;0));
+                      return true;
+                    </Script>
+                    <UIInfo id="1016">
+                      <Pos id="1017" x="800" y="211"/>
+                    </UIInfo>
+                    <Type id="1019">ScriptElement</Type>
+                    <UIEnabled id="1020">false</UIEnabled>
+                    <UIOrder id="1021">0</UIOrder>
+                  </StateMachineElement>
+                  <Transition id="1045">
+                    <Destination id="3931">MarkTargetValues</Destination>
+                    <Source id="3932">WaitForTargetEntry</Source>
+                    <SourceResult id="3933">EnteredTarget</SourceResult>
+                  </Transition>
+                  <Transition id="3934">
+                    <Destination id="1050">RequireContinuedFixation</Destination>
+                    <Source id="1051">MarkTargetValues</Source>
+                    <SourceResult id="1052">false</SourceResult>
+                  </Transition>
+                  <Transition id="1053">
+                    <Destination id="1054">RequireContinuedFixation</Destination>
+                    <Source id="1055">MarkTargetValues</Source>
+                    <SourceResult id="1056">true</SourceResult>
+                  </Transition>
+                  <Level id="3935">Stage</Level>
+                  <Type id="3936">StateMachine</Type>
+                  <UIEnabled id="3937">false</UIEnabled>
+                  <UIOrder id="3938">0</UIOrder>
+                  <Result id="1801">
+                    <Name id="1802">DidntEnterTarget</Name>
+                    <UIEnabled id="1803">false</UIEnabled>
+                    <UIInfo id="1804">
+                      <Pos id="1805" x="802" y="416"/>
+                    </UIInfo>
+                    <UIOrder id="1807">0</UIOrder>
+                  </Result>
+                  <Transition id="1211">
+                    <Destination id="1212">DidntEnterTarget</Destination>
+                    <Source id="1213">WaitForTargetEntry</Source>
+                    <SourceResult id="1214">DidntEnterTarget</SourceResult>
+                  </Transition>
+                  <Parameter type="Range" id="2239">
+                    <Increment id="2240">1</Increment>
+                    <Max id="2241">10000</Max>
+                    <Min id="2242">1</Min>
+                    <Name id="2243">ChoiceTime</Name>
+                    <UIEnabled id="2244">true</UIEnabled>
+                    <UIInfo id="2245">
+                      <Pos id="2246" x="592" y="491"/>
+                    </UIInfo>
+                    <UIOrder id="2248">0</UIOrder>
+                    <Units id="2249"/>
+                    <Value id="2250">1000</Value>
+                  </Parameter>
+                  <Parameter type="Range" id="2259">
+                    <Increment id="2260">1</Increment>
+                    <Max id="2261">10000</Max>
+                    <Min id="2262">0</Min>
+                    <Name id="2263">PeripheralFixationHoldTime</Name>
+                    <UIEnabled id="2264">true</UIEnabled>
+                    <UIInfo id="2265">
+                      <Pos id="2266" x="748" y="515"/>
+                    </UIInfo>
+                    <UIOrder id="2268">0</UIOrder>
+                    <Units id="2269"/>
+                    <Value id="2270">500</Value>
+                  </Parameter>
+                </StateMachineElement>
+
+                <InitialElement id="3970">WaitForFixation</InitialElement>
                 <StateMachineElement type="StateMachine" id="1896">
                   <Name id="1897">PresentTargets</Name>
                   <UIInfo id="1898">
                     <Pos id="1899" x="966" y="399"/>
-                    
+
                   </UIInfo>
                   <Result id="1901">
                     <Name id="1902">ContinuedFixating</Name>
                     <UIInfo id="1903">
                       <Pos id="1904" x="1232" y="338"/>
-                      
+
                     </UIInfo>
-                  <UIEnabled id="1906">false</UIEnabled><UIOrder id="1907">0</UIOrder></Result>
+                    <UIEnabled id="1906">false</UIEnabled>
+                    <UIOrder id="1907">0</UIOrder>
+                  </Result>
                   <Result id="1908">
                     <Name id="1909">BrokeFixation</Name>
                     <UIInfo id="1910">
                       <Pos id="1911" x="1238" y="437"/>
-                      
+
                     </UIInfo>
-                  <UIEnabled id="1913">false</UIEnabled><UIOrder id="1914">0</UIOrder></Result>
+                    <UIEnabled id="1913">false</UIEnabled>
+                    <UIOrder id="1914">0</UIOrder>
+                  </Result>
                   <StateMachineElement type="State" id="1915">
                     <ControlElement type="Target Controller" id="1916">
                       <ControlTarget id="1917">FixationTarget</ControlTarget>
@@ -746,62 +1047,103 @@ return true;</Script><UIInfo id="1016"><Pos id="1017" x="800" y="211"/></UIInfo>
                       <Name id="1920">OverlapFixationTracker</Name>
                       <Result id="1921">
                         <Name id="1922">Reaquistion Time Exceeded</Name>
-                      <UIInfo id="1923"><Pos id="1925" x="0" y="0"/></UIInfo><UIEnabled id="1926">false</UIEnabled><UIOrder id="1927">0</UIOrder></Result>
+                        <UIInfo id="1923">
+                          <Pos id="1925" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="1926">false</UIEnabled>
+                        <UIOrder id="1927">0</UIOrder>
+                      </Result>
                       <Result id="1928">
                         <Name id="1929">Initial Aquistion Time Exceeded</Name>
-                      <UIInfo id="1930"><Pos id="1932" x="0" y="0"/></UIInfo><UIEnabled id="1933">false</UIEnabled><UIOrder id="1934">0</UIOrder></Result>
+                        <UIInfo id="1930">
+                          <Pos id="1932" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="1933">false</UIEnabled>
+                        <UIOrder id="1934">0</UIOrder>
+                      </Result>
                       <Result id="1935">
                         <Name id="1936">Total Time Excceeded</Name>
-                      <UIInfo id="1937"><Pos id="1939" x="0" y="0"/></UIInfo><UIEnabled id="1940">false</UIEnabled><UIOrder id="1941">0</UIOrder></Result>
+                        <UIInfo id="1937">
+                          <Pos id="1939" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="1940">false</UIEnabled>
+                        <UIOrder id="1941">0</UIOrder>
+                      </Result>
                       <Result id="1942">
                         <Name id="1943">Broke Fixation</Name>
-                      <UIInfo id="1944"><Pos id="1946" x="0" y="0"/></UIInfo><UIEnabled id="1947">false</UIEnabled><UIOrder id="1948">0</UIOrder></Result>
+                        <UIInfo id="1944">
+                          <Pos id="1946" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="1947">false</UIEnabled>
+                        <UIOrder id="1948">0</UIOrder>
+                      </Result>
                       <Result id="1949">
                         <Name id="1950">Success</Name>
-                      <UIInfo id="1951"><Pos id="1953" x="0" y="0"/></UIInfo><UIEnabled id="1954">false</UIEnabled><UIOrder id="1955">0</UIOrder></Result>
+                        <UIInfo id="1951">
+                          <Pos id="1953" x="0" y="0"/>
+                        </UIInfo>
+                        <UIEnabled id="1954">false</UIEnabled>
+                        <UIOrder id="1955">0</UIOrder>
+                      </Result>
                       <SignalChannel id="1956">PositionChannel</SignalChannel>
                       <TimeUnits id="1957">Ms</TimeUnits>
                       <TotalTime id="1958">1000</TotalTime>
                       <UIInfo id="1959">
                         <Pos id="1960" x="912" y="174"/>
                       </UIInfo>
-                    <TargetExitScript id="1962">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript><MaxReacquisitionTime id="1963">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="1964">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="1965">false</ReacquisitionAllowed><TargetEntryScript id="1966"/><Type id="1967"/><UIEnabled id="1968">true</UIEnabled><UIOrder id="1969">0</UIOrder></ControlElement>
-                    <EntryScript id="1970">																																												EventInfo.setData(&quot;Event&quot;,9);
-																																												EventInfo.updateValue();
-																																												TargetGraphic.visible = true;
+                      <TargetExitScript id="1962">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript>
+                      <MaxReacquisitionTime id="1963">0</MaxReacquisitionTime>
+                      <MinInitialAcquisitionTime id="1964">0</MinInitialAcquisitionTime>
+                      <ReacquisitionAllowed id="1965">false</ReacquisitionAllowed>
+                      <TargetEntryScript id="1966"/>
+                      <Type id="1967"/>
+                      <UIEnabled id="1968">true</UIEnabled>
+                      <UIOrder id="1969">0</UIOrder>
+                    </ControlElement>
+                    <EntryScript id="1970">
+                      EventInfo.setData(&quot;Event&quot;,9);
+                      EventInfo.updateValue();
+                      TargetGraphic.visible = true;
 
-																																												if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
-																																												{
-																																													TargetGraphic.x = 275;
-																																													TargetWindow.x = 275;
-																																												}
-																																												else
-																																												{
-																																													TargetGraphic.x = 525;
-																																													TargetWindow.x = 525;
-																																												}          
+                      if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
+                      {
+                      TargetGraphic.x = 275;
+                      TargetWindow.x = 275;
+                      }
+                      else
+                      {
+                      TargetGraphic.x = 525;
+                      TargetWindow.x = 525;
+                      }
 
-																																												if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
-																																												{
-																																													TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
-																																												}
-																																												else
-																																												{
-																																													TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
-																																												}        </EntryScript>
+                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
+                      {
+                      TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
+                      }
+                      else
+                      {
+                      TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
+                      }
+                      OverlapFixationTracker.totalTime = OverlapTime.value+500;
+                      OverlapFixationTracker.fixationTime = OverlapTime.value;
+                    </EntryScript>
                     <Name id="1971">TargetsAppear</Name>
                     <Result id="1972">
                       <Name id="1973">Continued</Name>
                       <UIInfo id="1974">
                         <Pos id="1975" x="1320" y="166"/>
                       </UIInfo>
-                    <UIEnabled id="1977">false</UIEnabled><UIOrder id="1978">0</UIOrder></Result>
+                      <UIEnabled id="1977">false</UIEnabled>
+                      <UIOrder id="1978">0</UIOrder>
+                    </Result>
                     <Result id="1979">
                       <Name id="1980">BrokeFixation</Name>
                       <UIInfo id="1981">
                         <Pos id="1982" x="1330" y="258"/>
                       </UIInfo>
-                    <UIEnabled id="1984">false</UIEnabled><UIOrder id="1985">0</UIOrder></Result>
+                      <UIEnabled id="1984">false</UIEnabled>
+                      <UIOrder id="1985">0</UIOrder>
+                    </Result>
                     <Transition id="1986">
                       <Destination id="1987">Continued</Destination>
                       <Source id="1988">OverlapFixationTracker</Source>
@@ -829,16 +1171,25 @@ return true;</Script><UIInfo id="1016"><Pos id="1017" x="800" y="211"/></UIInfo>
                     </Transition>
                     <UIInfo id="2006">
                       <Pos id="2007" x="974" y="382"/>
-                      
+
                     </UIInfo>
-                  <BackgroundColor A="255" B="0" G="0" R="0" id="2009">#000000</BackgroundColor><EngineNeeded id="2010">-1</EngineNeeded><ExitScript id="2011">if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
-{
-	TargetGraphic.setColor(255,0,0);
-}
-else
-{
-	TargetGraphic.setColor(0,255,0);
-} </ExitScript><FrameScript id="2012"/><Revision id="2013">-1</Revision><UIEnabled id="2014">false</UIEnabled><UIOrder id="2015">0</UIOrder></StateMachineElement>
+                    <BackgroundColor A="255" B="0" G="0" R="0" id="2009">#000000</BackgroundColor>
+                    <EngineNeeded id="2010">-1</EngineNeeded>
+                    <ExitScript id="2011">
+                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
+                      {
+                      TargetGraphic.setColor(255,0,0);
+                      }
+                      else
+                      {
+                      TargetGraphic.setColor(0,255,0);
+                      }
+                    </ExitScript>
+                    <FrameScript id="2012"/>
+                    <Revision id="2013">-1</Revision>
+                    <UIEnabled id="2014">false</UIEnabled>
+                    <UIOrder id="2015">0</UIOrder>
+                  </StateMachineElement>
                   <Transition id="2016">
                     <Destination id="2017">ContinuedFixating</Destination>
                     <Source id="2018">TargetsAppear</Source>
@@ -850,14 +1201,94 @@ else
                     <SourceResult id="2023">BrokeFixation</SourceResult>
                   </Transition>
                   <InitialElement id="2024">TargetsAppear</InitialElement>
-                <Parameter type="Boolean" id="2025"><Name id="2026">RedOnly</Name><UIInfo id="2027"><Pos id="2028" x="927" y="598"/></UIInfo><UIEnabled id="2030">true</UIEnabled><FalseLabel id="2031">False</FalseLabel><TrueLabel id="2032">True</TrueLabel><UIOrder id="2033">0</UIOrder><Value id="2034">false</Value></Parameter><Parameter type="Boolean" id="2035"><Name id="2036">GreenOnly</Name><UIEnabled id="2037">true</UIEnabled><UIInfo id="2038"><Pos id="2039" x="1073" y="599"/></UIInfo><FalseLabel id="2041">False</FalseLabel><TrueLabel id="2042">True</TrueLabel><UIOrder id="2043">0</UIOrder><Value id="2044">false</Value></Parameter><EntryScript id="2045">EventInfo.setData(&quot;Stage&quot;,3);
-EventInfo.setData(&quot;Event&quot;,3);
-EventInfo.updateValue();</EntryScript><ExitScript id="2046">EventInfo.setData(&quot;Event&quot;,4);
-EventInfo.updateValue();</ExitScript><Level id="2047">Stage</Level><Type id="2048">StateMachine</Type><UIEnabled id="2049">false</UIEnabled><UIOrder id="2050">0</UIOrder><Parameter type="Boolean" id="2283"><FalseLabel id="2284">False</FalseLabel><Name id="2285">LeftOnly</Name><TrueLabel id="2286">True</TrueLabel><UIEnabled id="2287">true</UIEnabled><UIInfo id="2288"><Pos id="2289" x="919" y="693"/></UIInfo><UIOrder id="2291">0</UIOrder><Value id="2292">false</Value></Parameter><Parameter type="Boolean" id="2299"><FalseLabel id="2300">False</FalseLabel><Name id="2301">RightOnly</Name><TrueLabel id="2302">True</TrueLabel><UIEnabled id="2303">true</UIEnabled><UIInfo id="2304"><Pos id="2305" x="1064" y="691"/></UIInfo><UIOrder id="2307">0</UIOrder><Value id="2308">false</Value></Parameter><Parameter type="Range" id="1883"><Increment id="1884">1</Increment><Max id="1885">100</Max><Min id="1886">0</Min><Name id="1887">TargetLuminosityPercent</Name><UIEnabled id="1888">true</UIEnabled><UIInfo id="1889"><Pos id="1890" x="755" y="586"/></UIInfo><UIOrder id="1892">0</UIOrder><Units id="1893"/><Value id="1894">100</Value></Parameter></StateMachineElement>
-                <Transition id="2051">
-                  <Destination id="2052">Failed</Destination>
-                  <Source id="2053">WaitForFixation</Source>
-                  <SourceResult id="2054">DidntFixate</SourceResult>
+                  <Parameter type="Boolean" id="2025">
+                    <Name id="2026">RedOnly</Name>
+                    <UIInfo id="2027">
+                      <Pos id="2028" x="927" y="598"/>
+                    </UIInfo>
+                    <UIEnabled id="2030">true</UIEnabled>
+                    <FalseLabel id="2031">False</FalseLabel>
+                    <TrueLabel id="2032">True</TrueLabel>
+                    <UIOrder id="2033">0</UIOrder>
+                    <Value id="2034">false</Value>
+                  </Parameter>
+                  <Parameter type="Boolean" id="2035">
+                    <Name id="2036">GreenOnly</Name>
+                    <UIEnabled id="2037">true</UIEnabled>
+                    <UIInfo id="2038">
+                      <Pos id="2039" x="1073" y="599"/>
+                    </UIInfo>
+                    <FalseLabel id="2041">False</FalseLabel>
+                    <TrueLabel id="2042">True</TrueLabel>
+                    <UIOrder id="2043">0</UIOrder>
+                    <Value id="2044">false</Value>
+                  </Parameter>
+                  <EntryScript id="2045">
+                    EventInfo.setData(&quot;Stage&quot;,3);
+                    EventInfo.setData(&quot;Event&quot;,3);
+                    EventInfo.updateValue();
+                  </EntryScript>
+                  <ExitScript id="2046">
+                    EventInfo.setData(&quot;Event&quot;,4);
+                    EventInfo.updateValue();
+                  </ExitScript>
+                  <Level id="2047">Stage</Level>
+                  <Type id="2048">StateMachine</Type>
+                  <UIEnabled id="2049">false</UIEnabled>
+                  <UIOrder id="2050">0</UIOrder>
+                  <Parameter type="Boolean" id="2283">
+                    <FalseLabel id="2284">False</FalseLabel>
+                    <Name id="2285">LeftOnly</Name>
+                    <TrueLabel id="2286">True</TrueLabel>
+                    <UIEnabled id="2287">true</UIEnabled>
+                    <UIInfo id="2288">
+                      <Pos id="2289" x="919" y="693"/>
+                    </UIInfo>
+                    <UIOrder id="2291">0</UIOrder>
+                    <Value id="2292">false</Value>
+                  </Parameter>
+                  <Parameter type="Boolean" id="2299">
+                    <FalseLabel id="2300">False</FalseLabel>
+                    <Name id="2301">RightOnly</Name>
+                    <TrueLabel id="2302">True</TrueLabel>
+                    <UIEnabled id="2303">true</UIEnabled>
+                    <UIInfo id="2304">
+                      <Pos id="2305" x="1064" y="691"/>
+                    </UIInfo>
+                    <UIOrder id="2307">0</UIOrder>
+                    <Value id="2308">false</Value>
+                  </Parameter>
+                  <Parameter type="Range" id="1883">
+                    <Increment id="1884">1</Increment>
+                    <Max id="1885">100</Max>
+                    <Min id="1886">0</Min>
+                    <Name id="1887">TargetLuminosityPercent</Name>
+                    <UIEnabled id="1888">true</UIEnabled>
+                    <UIInfo id="1889">
+                      <Pos id="1890" x="755" y="586"/>
+                    </UIInfo>
+                    <UIOrder id="1892">0</UIOrder>
+                    <Units id="1893"/>
+                    <Value id="1894">100</Value>
+                  </Parameter>
+                  <Parameter type="Range" id="8006">
+                    <Increment id="8007">1</Increment>
+                    <Max id="8008">10000</Max>
+                    <Min id="8009">0</Min>
+                    <Name id="8010">OverlapTime</Name>
+                    <UIEnabled id="8011">true</UIEnabled>
+                    <UIInfo id="8012">
+                      <Pos id="8013" x="761" y="682"/>
+                    </UIInfo>
+                    <UIOrder id="8015">0</UIOrder>
+                    <Units id="8016"/>
+                    <Value id="8017">500</Value>
+                  </Parameter>
+                </StateMachineElement>
+                <Transition id="4079">
+                  <Destination id="4080">Failed</Destination>
+                  <Source id="4081">WaitForFixation</Source>
+                  <SourceResult id="4082">DidntFixate</SourceResult>
                 </Transition>
                 <ControlTarget type="CircleTarget" id="2055">
                   <Name id="2056">TargetWindow</Name>
@@ -866,11 +1297,16 @@ EventInfo.updateValue();</ExitScript><Level id="2047">Stage</Level><Type id="204
                   <UIEnabled id="2059">false</UIEnabled>
                   <UIInfo id="2060">
                     <Pos id="2061" x="891" y="820"/>
-                    
+
                   </UIInfo>
                   <Visible id="2063">true</Visible>
-                <Color A="255" B="0" G="255" R="0" id="2064">#00ff00</Color><Layer id="2065">0</Layer><OperatorView id="2066">true</OperatorView><SubjectView id="2067">false</SubjectView><UIOrder id="2068">0</UIOrder></ControlTarget>
-                
+                  <Color A="255" B="0" G="255" R="0" id="2064">#00ff00</Color>
+                  <Layer id="2065">0</Layer>
+                  <OperatorView id="2066">true</OperatorView>
+                  <SubjectView id="2067">false</SubjectView>
+                  <UIOrder id="2068">0</UIOrder>
+                </ControlTarget>
+
                 <Transition id="2083">
                   <Destination id="2084">PresentTargets</Destination>
                   <Source id="2085">WaitForFixation</Source>
@@ -885,8 +1321,15 @@ EventInfo.updateValue();</ExitScript><Level id="2047">Stage</Level><Type id="204
                     <Pos id="2093" x="884" y="719"/>
                   </UIInfo>
                   <Visible id="2095">false</Visible>
-                <Layer id="2096">0</Layer><OperatorView id="2097">true</OperatorView><Outline id="2098">false</Outline><OutlineThickness id="2099">0</OutlineThickness><SubjectView id="2100">true</SubjectView><UIEnabled id="2101">false</UIEnabled><UIOrder id="2102">0</UIOrder></VisualElement>
-                
+                  <Layer id="2096">0</Layer>
+                  <OperatorView id="2097">true</OperatorView>
+                  <Outline id="2098">false</Outline>
+                  <OutlineThickness id="2099">0</OutlineThickness>
+                  <SubjectView id="2100">true</SubjectView>
+                  <UIEnabled id="2101">false</UIEnabled>
+                  <UIOrder id="2102">0</UIOrder>
+                </VisualElement>
+
                 <Transition id="2119">
                   <Destination id="2120">Failed</Destination>
                   <Source id="2121">PresentTargets</Source>
@@ -897,261 +1340,1136 @@ EventInfo.updateValue();</ExitScript><Level id="2047">Stage</Level><Type id="204
                   <Source id="2125">TargetFixation</Source>
                   <SourceResult id="2126">BrokeFixation</SourceResult>
                 </Transition>
-                
-                
 
-                
-                
-                
-                
-                
-                
-                
-                
-                
 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-              <EntryScript id="2631">TrialModeSelect.randomize();
-EventInfo.setData(&quot;Stage&quot;,2);
-EventInfo.setData(&quot;Event&quot;,3);
-EventInfo.updateValue();
-FixationTarget.radius = FixationWindowRadius.value;
-FixationGraphic.setDimensions(FixationGraphicSize.value,FixationGraphicSize.value);
 
-TargetWindow.radius = TargetWindowRadius.value;
-TargetGraphic.radius = TargetGraphicRadius.value;
-FixTrialReward.unitQuantity = UnitRewardQuantity.value;
-TrialReward.unitQuantity = UnitRewardQuantity.value;
-TrialReward.number = NumTargetRewards.value;
-NumTargetRewards</EntryScript><StateMachineElement type="ScriptElement" id="2639"><Name id="2640">SetTrialRewarded</Name><Result id="2641"><Name id="2642">false</Name><UIInfo id="2643"><Pos id="2645" x="2000" y="2000"/></UIInfo><UIEnabled id="2646">false</UIEnabled><UIOrder id="2647">0</UIOrder></Result><Result id="2648"><Name id="2649">true</Name><UIInfo id="2650"><Pos id="2652" x="2075" y="2000"/></UIInfo><UIEnabled id="2653">false</UIEnabled><UIOrder id="2654">0</UIOrder></Result><Script id="2655">TrialInfo.setData(&quot;Rewarded&quot;,1);
-return true;
-</Script><UIInfo id="2656"><Pos id="2657" x="1367" y="404"/></UIInfo><Type id="2659">ScriptElement</Type><UIEnabled id="2660">false</UIEnabled><UIOrder id="2661">0</UIOrder></StateMachineElement><StateMachineElement type="Reward" id="2666"><Name id="2667">TrialReward</Name><Result id="2668"><Name id="2669">done</Name><UIInfo id="2670"><Pos id="2672" x="0" y="0"/></UIInfo><UIEnabled id="2673">false</UIEnabled><UIOrder id="2674">0</UIOrder></Result><UIInfo id="2675"><Pos id="2676" x="1539" y="409"/></UIInfo><RewardChan id="2678">1</RewardChan><RewardQty id="2679">60</RewardQty><Type id="2680">Reward</Type><UIEnabled id="2681">false</UIEnabled><UIOrder id="2682">0</UIOrder><NumRewards id="4677">1</NumRewards></StateMachineElement><Parameter type="Range" id="2695"><Max id="2696">1000</Max><Min id="2697">0</Min><Name id="2698">FixationWindowRadius</Name><UIEnabled id="2699">true</UIEnabled><UIInfo id="2700"><Pos id="2701" x="1219" y="924"/></UIInfo><Value id="2703">40</Value><Increment id="2704">0</Increment><UIOrder id="2705">0</UIOrder><Units id="2706"/></Parameter><ExitScript id="2707"/><Level id="2708">Stage</Level><Type id="2709">StateMachine</Type><UIEnabled id="2710">false</UIEnabled><UIOrder id="2711">0</UIOrder><ControlTarget type="CircleTarget" id="2632"><Color A="255" B="0" G="255" R="0" id="2633">#00ff00</Color><Layer id="2634">0</Layer><Name id="2635">FixationTarget</Name><OperatorView id="2636">true</OperatorView><Position id="2637" x="400" y="300"/><Radius id="2638">40</Radius><SubjectView id="2644">false</SubjectView><UIEnabled id="2651">false</UIEnabled><UIInfo id="2658"><Pos id="2671" x="1139" y="929"/></UIInfo><UIOrder id="2687">0</UIOrder><Visible id="2688">true</Visible></ControlTarget><Transition id="1824"><Destination id="1825">Succeeded</Destination><Source id="1826">TrialReward</Source><SourceResult id="1827">done</SourceResult></Transition><VisualElement type="Box Graphic" id="2388"><Color A="255" B="255" G="255" R="255" id="2389">#ffffff</Color><Dimensions height="20" id="2390" width="20" x="0" y="0"/><Layer id="2391">0</Layer><Name id="2392">FixationGraphic</Name><OperatorView id="2393">true</OperatorView><Outline id="2394">false</Outline><OutlineThickness id="2401">0</OutlineThickness><Position id="2410" x="400" y="300"/><SubjectView id="2417">true</SubjectView><UIEnabled id="2424">false</UIEnabled><UIInfo id="2431"><Pos id="2438" x="1122" y="818"/></UIInfo><UIOrder id="2460">0</UIOrder><Visible id="2467">true</Visible></VisualElement><Transition id="1708"><Destination id="1709">SetTrialRewarded</Destination><Source id="1710">TargetFixation</Source><SourceResult id="1711">Success</SourceResult></Transition><Transition id="1712"><Destination id="1713">TrialReward</Destination><Source id="1714">SetTrialRewarded</Source><SourceResult id="1715">false</SourceResult></Transition><Transition id="1716"><Destination id="1717">TrialReward</Destination><Source id="1718">SetTrialRewarded</Source><SourceResult id="1719">true</SourceResult></Transition><Transition id="1456"><Destination id="1457">Failed</Destination><Source id="1458">TargetFixation</Source><SourceResult id="1459">DidntEnterTarget</SourceResult></Transition><Parameter type="Range" id="1819"><Increment id="1820">1</Increment><Max id="1821">1000</Max><Min id="1822">0</Min><Name id="1823">FixationGraphicSize</Name><UIEnabled id="1828">true</UIEnabled><UIInfo id="1829"><Pos id="1830" x="1223" y="828"/></UIInfo><UIOrder id="1832">0</UIOrder><Units id="1833"/><Value id="1834">20</Value></Parameter><Parameter type="Range" id="1843"><Increment id="1844">1</Increment><Max id="1845">1000</Max><Min id="1846">0</Min><Name id="1847">TargetGraphicRadius</Name><UIEnabled id="1848">true</UIEnabled><UIInfo id="1849"><Pos id="1850" x="775" y="721"/></UIInfo><UIOrder id="1852">0</UIOrder><Units id="1853"/><Value id="1854">20</Value></Parameter><Parameter type="Range" id="1863"><Increment id="1864">1</Increment><Max id="1865">1000</Max><Min id="1866">0</Min><Name id="1867">TargetWindowRadius</Name><UIEnabled id="1868">true</UIEnabled><UIInfo id="1869"><Pos id="1870" x="763" y="819"/></UIInfo><UIOrder id="1872">0</UIOrder><Units id="1873"/><Value id="1874">40</Value></Parameter><StateMachineElement type="ScriptElement" id="1961"><Name id="1976">IsNormalTrial</Name><Result id="1496"><Name id="1497">false</Name><UIEnabled id="1498">false</UIEnabled><UIInfo id="1499"><Pos id="1500" x="0" y="0"/></UIInfo><UIOrder id="1502">0</UIOrder></Result><Result id="1506"><Name id="1507">true</Name><UIEnabled id="1508">false</UIEnabled><UIInfo id="1509"><Pos id="1510" x="0" y="0"/></UIInfo><UIOrder id="1512">0</UIOrder></Result><Script id="1983">//Choose Trial Mode 
-if(TrialModeSelect.value &gt; FixationTrialPercentage.value)
-	return true;
-else 
-{
-	TrialInfo.setData(&quot;Rewarded&quot;,1);
-	return false;
-}</Script><Type id="2008">ScriptElement</Type><UIEnabled id="2029">false</UIEnabled><UIInfo id="2040"><Pos id="2062" x="1116" y="398"/></UIInfo><UIOrder id="2070">0</UIOrder></StateMachineElement><Transition id="1526"><Destination id="1527">TargetFixation</Destination><Source id="1528">IsNormalTrial</Source><SourceResult id="1529">true</SourceResult></Transition><Result id="2181"><Name id="2182">FixTrialSuccess</Name><UIEnabled id="2183">false</UIEnabled><UIInfo id="2184"><Pos id="2185" x="1362" y="276"/></UIInfo><UIOrder id="2187">0</UIOrder></Result><StateMachineElement type="Reward" id="2191"><Name id="2192">FixTrialReward</Name><NumRewards id="2193">1</NumRewards><Result id="1534"><Name id="1535">done</Name><UIEnabled id="1536">false</UIEnabled><UIInfo id="1537"><Pos id="1538" x="0" y="0"/></UIInfo><UIOrder id="1540">0</UIOrder></Result><RewardChan id="2194">1</RewardChan><RewardQty id="2195">60</RewardQty><Type id="2196">Reward</Type><UIEnabled id="2197">false</UIEnabled><UIInfo id="2198"><Pos id="2199" x="1244" y="248"/></UIInfo><UIOrder id="2201">0</UIOrder></StateMachineElement><Transition id="1552"><Destination id="1553">IsNormalTrial</Destination><Source id="1554">PresentTargets</Source><SourceResult id="1555">ContinuedFixating</SourceResult></Transition><Transition id="1548"><Destination id="1549">FixTrialReward</Destination><Source id="1550">IsNormalTrial</Source><SourceResult id="1551">false</SourceResult></Transition><Transition id="1556"><Destination id="1557">FixTrialSuccess</Destination><Source id="1558">FixTrialReward</Source><SourceResult id="1559">done</SourceResult></Transition><Parameter type="Range" id="2279"><Increment id="2280">1</Increment><Max id="2281">10000</Max><Min id="2282">0</Min><Name id="2290">UnitRewardQuantity</Name><UIEnabled id="2293">true</UIEnabled><UIInfo id="2294"><Pos id="2295" x="944" y="917"/></UIInfo><UIOrder id="2297">0</UIOrder><Units id="2298"/><Value id="2306">60</Value></Parameter></StateMachineElement>
-              <InitialElement id="2712">PreTrialInterval</InitialElement>
-              
-              
-              
-              
-              
-              
-              
-              
-              
-            <EntryScript id="2770">EventInfo.setData(&quot;Stage&quot;,0);
-EventInfo.setData(&quot;Event&quot;,1);
-EventInfo.updateValue();
 
-//Reset TrialInfo
-TrialInfo.setData(&quot;CorrectTrial&quot;,0);
-TrialInfo.setData(&quot;Rewarded&quot;,0);
-TrialInfo.setData(&quot;Override&quot;,0);
-TrialInfo.setData(&quot;GreenProb&quot;,-1);
-TrialInfo.setData(&quot;RedProb&quot;,-1);
-TrialInfo.setData(&quot;GreenRew&quot;,-1);
-TrialInfo.setData(&quot;RedRew&quot;,-1);
-TrialInfo.setData(&quot;FeedbackCol&quot;,-1);
-TrialInfo.setData(&quot;ChosenCol&quot;,-1);
-TrialInfo.setData(&quot;ChosenSide&quot;,-1);</EntryScript><ExitScript id="2771">EventInfo.setData(&quot;Event&quot;,2);
-EventInfo.updateValue();
-EventInfo.setData(&quot;Trial&quot;,EventInfo.getDataAsInt(&quot;Trial&quot;)+1);
-AttemptedTrials.value++;
-BlockPerformance.setData(&quot;%Correct Curr Block&quot;,(100*CorrectTrials.value/AttemptedTrials.value).toFixed(2));
-BlockPerformance.updateValue();</ExitScript><StateMachineElement type="State" id="2772"><ControlElement type="Stopwatch Controller" id="2773"><Name id="2774">PreTrialInterval</Name><Result id="2775"><Name id="2776">Success</Name><UIInfo id="2777"><Pos id="2779" x="0" y="0"/></UIInfo><UIEnabled id="2780">false</UIEnabled><UIOrder id="2781">0</UIOrder></Result><Time id="2782">400</Time><TimeUnits id="2783">Ms</TimeUnits><UIInfo id="2784"><Pos id="2785" x="1371" y="119"/></UIInfo><Type id="2787"/><UIEnabled id="2788">true</UIEnabled><UIOrder id="2789">0</UIOrder></ControlElement><Name id="2790">PreTrialInterval</Name><Result id="2791"><Name id="2792">Done</Name><UIInfo id="2793"><Pos id="2794" x="1665" y="142"/></UIInfo><UIEnabled id="2796">false</UIEnabled><UIOrder id="2797">0</UIOrder></Result><Transition id="2798"><Destination id="2799">Done</Destination><Source id="2800">PreTrialInterval</Source><SourceResult id="2801">Success</SourceResult></Transition><UIInfo id="2802"><Pos id="2803" x="1242" y="365"/></UIInfo><EntryScript id="2805">EventInfo.setData(&quot;Stage&quot;,1);
-EventInfo.setData(&quot;Event&quot;,3);
-EventInfo.updateValue();</EntryScript><ExitScript id="2806">EventInfo.setData(&quot;Event&quot;,4);
-EventInfo.updateValue();</ExitScript><BackgroundColor A="255" B="0" G="0" R="0" id="2807">#000000</BackgroundColor><EngineNeeded id="2808">-1</EngineNeeded><FrameScript id="2809"/><Revision id="2810">-1</Revision><UIEnabled id="2811">false</UIEnabled><UIOrder id="2812">0</UIOrder></StateMachineElement><StateMachineElement type="State" id="2826"><ControlElement type="Stopwatch Controller" id="2827"><Name id="2828">PostTrialInterval</Name><Result id="2829"><Name id="2830">Success</Name><UIInfo id="2831"><Pos id="2833" x="0" y="0"/></UIInfo><UIEnabled id="2834">false</UIEnabled><UIOrder id="2835">0</UIOrder></Result><Time id="2836">400</Time><TimeUnits id="2837">Ms</TimeUnits><UIInfo id="2838"><Pos id="2839" x="1340" y="162"/></UIInfo><Type id="2841"/><UIEnabled id="2842">true</UIEnabled><UIOrder id="2843">0</UIOrder></ControlElement><EntryScript id="2844">EventInfo.setData(&quot;Stage&quot;,9);
-EventInfo.setData(&quot;Event&quot;,3);
-EventInfo.updateValue();</EntryScript><ExitScript id="2845">EventInfo.setData(&quot;Event&quot;,4);
-EventInfo.updateValue();
 
-//Increment correct trials
-EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
-TrialInfo.setData(&quot;CorrectTrial&quot;,1);
-CorrectTrials.value++;</ExitScript><Name id="2846">PostTrialInterval</Name><Result id="2847"><Name id="2848">Done</Name><UIInfo id="2849"><Pos id="2850" x="1706" y="188"/></UIInfo><UIEnabled id="2852">false</UIEnabled><UIOrder id="2853">0</UIOrder></Result><Transition id="2854"><Destination id="2855">Done</Destination><Source id="2856">PostTrialInterval</Source><SourceResult id="2857">Success</SourceResult></Transition><UIInfo id="2858"><Pos id="2859" x="1562" y="277"/></UIInfo><BackgroundColor A="255" B="0" G="0" R="0" id="2861">#000000</BackgroundColor><EngineNeeded id="2862">-1</EngineNeeded><FrameScript id="2863"/><Revision id="2864">-1</Revision><UIEnabled id="2865">false</UIEnabled><UIOrder id="2866">0</UIOrder></StateMachineElement><Transition id="2890"><Destination id="2891">PostTrialInterval</Destination><Source id="2892">TrialLogic</Source><SourceResult id="2893">Succeeded</SourceResult></Transition><Transition id="2894"><Destination id="2895">TrialTypeComplete</Destination><Source id="2896">PostTrialInterval</Source><SourceResult id="2897">Done</SourceResult></Transition><Transition id="2906"><Destination id="2907">ReshuffleTrialType</Destination><Source id="2908">TrialLogic</Source><SourceResult id="2909">Failed</SourceResult></Transition><Level id="2992">Stage</Level><Type id="2993">StateMachine</Type><UIEnabled id="2994">false</UIEnabled><UIOrder id="2995">0</UIOrder><Transition id="4478"><Destination id="4479">TrialLogic</Destination><Source id="4480">PreTrialInterval</Source><SourceResult id="4481">Done</SourceResult></Transition><Parameter type="RandomInt" id="2127"><Max id="2128">100</Max><Min id="2129">1</Min><Name id="2130">TrialModeSelect</Name><Seed id="2131">0</Seed><UIEnabled id="2132">false</UIEnabled><UIInfo id="2133"><Pos id="2134" x="1377" y="590"/></UIInfo><UIOrder id="2136">0</UIOrder><UseSeed id="2137">false</UseSeed><Value id="2138">1</Value></Parameter><Parameter type="Range" id="2147"><Increment id="2148">1</Increment><Max id="2149">100</Max><Min id="2150">1</Min><Name id="2151">FixationTrialPercentage</Name><UIEnabled id="2152">true</UIEnabled><UIInfo id="2153"><Pos id="2154" x="1339" y="683"/></UIInfo><UIOrder id="2156">0</UIOrder><Units id="2157"/><Value id="2158">20</Value></Parameter><StateMachineElement type="ScriptElement" id="2167"><Name id="2168">IncCorrectTrials</Name><Result id="1632"><Name id="1633">false</Name><UIEnabled id="1634">false</UIEnabled><UIInfo id="1635"><Pos id="1636" x="0" y="0"/></UIInfo><UIOrder id="1638">0</UIOrder></Result><Result id="1642"><Name id="1643">true</Name><UIEnabled id="1644">false</UIEnabled><UIInfo id="1645"><Pos id="1646" x="0" y="0"/></UIInfo><UIOrder id="1648">0</UIOrder></Result><Script id="2169">EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1); 
-TrialInfo.setData(&quot;CorrectTrial&quot;,1);
-CorrectTrials.value++;</Script><Type id="2170">ScriptElement</Type><UIEnabled id="2171">false</UIEnabled><UIInfo id="2172"><Pos id="2173" x="1544" y="652"/></UIInfo><UIOrder id="2175">0</UIOrder></StateMachineElement><Transition id="1658"><Destination id="1659">ReshuffleTrialType</Destination><Source id="1660">IncCorrectTrials</Source><SourceResult id="1661">false</SourceResult></Transition><Transition id="1662"><Destination id="1663">ReshuffleTrialType</Destination><Source id="1664">IncCorrectTrials</Source><SourceResult id="1665">true</SourceResult></Transition><Transition id="1666"><Destination id="1667">IncCorrectTrials</Destination><Source id="1668">TrialLogic</Source><SourceResult id="1669">FixTrialSuccess</SourceResult></Transition><Parameter type="Range" id="2335"><Increment id="2336">1</Increment><Max id="2337">50</Max><Min id="2338">1</Min><Name id="2339">NumTargetRewards</Name><UIEnabled id="2340">true</UIEnabled><UIInfo id="2341"><Pos id="2342" x="1187" y="684"/></UIInfo><UIOrder id="2344">0</UIOrder><Units id="2345"/><Value id="2346">1</Value></Parameter></StateMachineElement>
-            <StateMachineElement type="ScriptElement" id="2996">
-              <Name id="2997">NeedsMoreTrials</Name>
-              <Result id="2998">
-                <Name id="2999">false</Name>
-              <UIInfo id="3000"><Pos id="3002" x="0" y="0"/></UIInfo><UIEnabled id="3003">false</UIEnabled><UIOrder id="3004">0</UIOrder></Result>
-              <Result id="3005">
-                <Name id="3006">true</Name>
-              <UIInfo id="3007"><Pos id="3009" x="0" y="0"/></UIInfo><UIEnabled id="3010">false</UIEnabled><UIOrder id="3011">0</UIOrder></Result>
-              <Script id="3012">TrialInfo.updateValue();
-TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
-TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
-if(LongBlock.value) 
-	return ++TrialsSoFar.value &lt; LongBlockLength.value;
-else 
-	return ++TrialsSoFar.value &lt; ShortBlockLength.value; </Script>
-              <UIInfo id="3013">
-                <Pos id="3014" x="1230" y="782"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <EntryScript id="4107">
+                  TrialModeSelect.randomize();
+                  EventInfo.setData(&quot;Stage&quot;,2);
+                  EventInfo.setData(&quot;Event&quot;,3);
+                  EventInfo.updateValue();
+                  FixationTarget.radius = FixationWindowRadius.value;
+                  FixationGraphic.setDimensions(FixationGraphicSize.value,FixationGraphicSize.value);
+
+                  TargetWindow.radius = TargetWindowRadius.value;
+                  TargetGraphic.radius = TargetGraphicRadius.value;
+                  FixTrialReward.unitQuantity = UnitRewardQuantity.value;
+                  TrialReward.unitQuantity = UnitRewardQuantity.value;
+                  TrialReward.number = NumTargetRewards.value;
+                  NumTargetRewards
+                </EntryScript>
+                <StateMachineElement type="ScriptElement" id="4108">
+                  <Name id="4109">SetTrialRewarded</Name>
+                  <Result id="4110">
+                    <Name id="4111">false</Name>
+                    <UIInfo id="4112">
+                      <Pos id="4113" x="2000" y="2000"/>
+                    </UIInfo>
+                    <UIEnabled id="4115">false</UIEnabled>
+                    <UIOrder id="4116">0</UIOrder>
+                  </Result>
+                  <Result id="4120">
+                    <Name id="4121">true</Name>
+                    <UIInfo id="4122">
+                      <Pos id="4123" x="2075" y="2000"/>
+                    </UIInfo>
+                    <UIEnabled id="4125">false</UIEnabled>
+                    <UIOrder id="4126">0</UIOrder>
+                  </Result>
+                  <Script id="4130">
+                    TrialInfo.setData(&quot;Rewarded&quot;,1);
+                    return true;
+                  </Script>
+                  <UIInfo id="4131">
+                    <Pos id="4132" x="1367" y="404"/>
+                  </UIInfo>
+                  <Type id="4134">ScriptElement</Type>
+                  <UIEnabled id="4135">false</UIEnabled>
+                  <UIOrder id="4136">0</UIOrder>
+                </StateMachineElement>
+                <StateMachineElement type="Reward" id="4172">
+                  <Name id="4173">TrialReward</Name>
+                  <Result id="4174">
+                    <Name id="4175">done</Name>
+                    <UIInfo id="4176">
+                      <Pos id="4177" x="0" y="0"/>
+                    </UIInfo>
+                    <UIEnabled id="4179">false</UIEnabled>
+                    <UIOrder id="4180">0</UIOrder>
+                  </Result>
+                  <UIInfo id="4184">
+                    <Pos id="4185" x="1539" y="409"/>
+                  </UIInfo>
+                  <RewardChan id="4193">1</RewardChan>
+                  <RewardQty id="4194">60</RewardQty>
+                  <Type id="4195">Reward</Type>
+                  <UIEnabled id="4201">false</UIEnabled>
+                  <UIOrder id="4203">0</UIOrder>
+                  <NumRewards id="4204">1</NumRewards>
+                </StateMachineElement>
+                <Parameter type="Range" id="2695">
+                  <Max id="2696">1000</Max>
+                  <Min id="2697">0</Min>
+                  <Name id="2698">FixationWindowRadius</Name>
+                  <UIEnabled id="2699">true</UIEnabled>
+                  <UIInfo id="2700">
+                    <Pos id="2701" x="1219" y="924"/>
+                  </UIInfo>
+                  <Value id="2703">40</Value>
+                  <Increment id="2704">0</Increment>
+                  <UIOrder id="2705">0</UIOrder>
+                  <Units id="2706"/>
+                </Parameter>
+                <ExitScript id="4221"/>
+                <Level id="4222">Stage</Level>
+                <Type id="4223">StateMachine</Type>
+                <UIEnabled id="4224">false</UIEnabled>
+                <UIOrder id="4225">0</UIOrder>
+                <ControlTarget type="CircleTarget" id="2632">
+                  <Color A="255" B="0" G="255" R="0" id="2633">#00ff00</Color>
+                  <Layer id="2634">0</Layer>
+                  <Name id="2635">FixationTarget</Name>
+                  <OperatorView id="2636">true</OperatorView>
+                  <Position id="2637" x="400" y="300"/>
+                  <Radius id="2638">40</Radius>
+                  <SubjectView id="2644">false</SubjectView>
+                  <UIEnabled id="2651">false</UIEnabled>
+                  <UIInfo id="2658">
+                    <Pos id="2671" x="1139" y="929"/>
+                  </UIInfo>
+                  <UIOrder id="4227">0</UIOrder>
+                  <Visible id="4228">true</Visible>
+                </ControlTarget>
+                <Transition id="1824">
+                  <Destination id="1825">Succeeded</Destination>
+                  <Source id="1826">TrialReward</Source>
+                  <SourceResult id="1827">done</SourceResult>
+                </Transition>
+                <VisualElement type="Box Graphic" id="2388">
+                  <Color A="255" B="255" G="255" R="255" id="2389">#ffffff</Color>
+                  <Dimensions height="20" id="2390" width="20" x="0" y="0"/>
+                  <Layer id="2391">0</Layer>
+                  <Name id="2392">FixationGraphic</Name>
+                  <OperatorView id="2393">true</OperatorView>
+                  <Outline id="2394">false</Outline>
+                  <OutlineThickness id="2401">0</OutlineThickness>
+                  <Position id="2410" x="400" y="300"/>
+                  <SubjectView id="2417">true</SubjectView>
+                  <UIEnabled id="2424">false</UIEnabled>
+                  <UIInfo id="2431">
+                    <Pos id="2438" x="1122" y="818"/>
+                  </UIInfo>
+                  <UIOrder id="2460">0</UIOrder>
+                  <Visible id="2467">true</Visible>
+                </VisualElement>
+                <Transition id="1708">
+                  <Destination id="1709">SetTrialRewarded</Destination>
+                  <Source id="1710">TargetFixation</Source>
+                  <SourceResult id="1711">Success</SourceResult>
+                </Transition>
+                <Transition id="1712">
+                  <Destination id="1713">TrialReward</Destination>
+                  <Source id="1714">SetTrialRewarded</Source>
+                  <SourceResult id="1715">false</SourceResult>
+                </Transition>
+                <Transition id="1716">
+                  <Destination id="1717">TrialReward</Destination>
+                  <Source id="1718">SetTrialRewarded</Source>
+                  <SourceResult id="1719">true</SourceResult>
+                </Transition>
+                <Transition id="1456">
+                  <Destination id="1457">Failed</Destination>
+                  <Source id="1458">TargetFixation</Source>
+                  <SourceResult id="1459">DidntEnterTarget</SourceResult>
+                </Transition>
+                <Parameter type="Range" id="1819">
+                  <Increment id="1820">1</Increment>
+                  <Max id="1821">1000</Max>
+                  <Min id="1822">0</Min>
+                  <Name id="1823">FixationGraphicSize</Name>
+                  <UIEnabled id="1828">true</UIEnabled>
+                  <UIInfo id="1829">
+                    <Pos id="1830" x="1223" y="828"/>
+                  </UIInfo>
+                  <UIOrder id="1832">0</UIOrder>
+                  <Units id="1833"/>
+                  <Value id="1834">20</Value>
+                </Parameter>
+                <Parameter type="Range" id="1843">
+                  <Increment id="1844">1</Increment>
+                  <Max id="1845">1000</Max>
+                  <Min id="1846">0</Min>
+                  <Name id="1847">TargetGraphicRadius</Name>
+                  <UIEnabled id="1848">true</UIEnabled>
+                  <UIInfo id="1849">
+                    <Pos id="1850" x="775" y="721"/>
+                  </UIInfo>
+                  <UIOrder id="1852">0</UIOrder>
+                  <Units id="1853"/>
+                  <Value id="1854">20</Value>
+                </Parameter>
+                <Parameter type="Range" id="1863">
+                  <Increment id="1864">1</Increment>
+                  <Max id="1865">1000</Max>
+                  <Min id="1866">0</Min>
+                  <Name id="1867">TargetWindowRadius</Name>
+                  <UIEnabled id="1868">true</UIEnabled>
+                  <UIInfo id="1869">
+                    <Pos id="1870" x="763" y="819"/>
+                  </UIInfo>
+                  <UIOrder id="1872">0</UIOrder>
+                  <Units id="1873"/>
+                  <Value id="1874">40</Value>
+                </Parameter>
+                <StateMachineElement type="ScriptElement" id="1961">
+                  <Name id="1976">IsNormalTrial</Name>
+                  <Result id="1496">
+                    <Name id="1497">false</Name>
+                    <UIEnabled id="1498">false</UIEnabled>
+                    <UIInfo id="1499">
+                      <Pos id="1500" x="0" y="0"/>
+                    </UIInfo>
+                    <UIOrder id="1502">0</UIOrder>
+                  </Result>
+                  <Result id="1506">
+                    <Name id="1507">true</Name>
+                    <UIEnabled id="1508">false</UIEnabled>
+                    <UIInfo id="1509">
+                      <Pos id="1510" x="0" y="0"/>
+                    </UIInfo>
+                    <UIOrder id="1512">0</UIOrder>
+                  </Result>
+                  <Script id="1983">
+                    //Choose Trial Mode
+                    if(TrialModeSelect.value &gt; FixationTrialPercentage.value)
+                    return true;
+                    else
+                    {
+                    TrialInfo.setData(&quot;Rewarded&quot;,1);
+                    return false;
+                    }
+                  </Script>
+                  <Type id="2008">ScriptElement</Type>
+                  <UIEnabled id="2029">false</UIEnabled>
+                  <UIInfo id="2040">
+                    <Pos id="2062" x="1116" y="398"/>
+                  </UIInfo>
+                  <UIOrder id="2070">0</UIOrder>
+                </StateMachineElement>
+                <Transition id="1526">
+                  <Destination id="1527">TargetFixation</Destination>
+                  <Source id="1528">IsNormalTrial</Source>
+                  <SourceResult id="1529">true</SourceResult>
+                </Transition>
+                <Result id="2181">
+                  <Name id="2182">FixTrialSuccess</Name>
+                  <UIEnabled id="2183">false</UIEnabled>
+                  <UIInfo id="2184">
+                    <Pos id="2185" x="1362" y="276"/>
+                  </UIInfo>
+                  <UIOrder id="2187">0</UIOrder>
+                </Result>
+                <StateMachineElement type="Reward" id="2191">
+                  <Name id="2192">FixTrialReward</Name>
+                  <NumRewards id="2193">1</NumRewards>
+                  <Result id="1534">
+                    <Name id="1535">done</Name>
+                    <UIEnabled id="1536">false</UIEnabled>
+                    <UIInfo id="1537">
+                      <Pos id="1538" x="0" y="0"/>
+                    </UIInfo>
+                    <UIOrder id="1540">0</UIOrder>
+                  </Result>
+                  <RewardChan id="2194">1</RewardChan>
+                  <RewardQty id="2195">60</RewardQty>
+                  <Type id="2196">Reward</Type>
+                  <UIEnabled id="2197">false</UIEnabled>
+                  <UIInfo id="2198">
+                    <Pos id="2199" x="1244" y="248"/>
+                  </UIInfo>
+                  <UIOrder id="2201">0</UIOrder>
+                </StateMachineElement>
+                <Transition id="1552">
+                  <Destination id="1553">IsNormalTrial</Destination>
+                  <Source id="1554">PresentTargets</Source>
+                  <SourceResult id="1555">ContinuedFixating</SourceResult>
+                </Transition>
+                <Transition id="1548">
+                  <Destination id="1549">FixTrialReward</Destination>
+                  <Source id="1550">IsNormalTrial</Source>
+                  <SourceResult id="1551">false</SourceResult>
+                </Transition>
+                <Transition id="1556">
+                  <Destination id="1557">FixTrialSuccess</Destination>
+                  <Source id="1558">FixTrialReward</Source>
+                  <SourceResult id="1559">done</SourceResult>
+                </Transition>
+                <Parameter type="Range" id="2279">
+                  <Increment id="2280">1</Increment>
+                  <Max id="2281">10000</Max>
+                  <Min id="2282">0</Min>
+                  <Name id="2290">UnitRewardQuantity</Name>
+                  <UIEnabled id="2293">true</UIEnabled>
+                  <UIInfo id="2294">
+                    <Pos id="2295" x="944" y="917"/>
+                  </UIInfo>
+                  <UIOrder id="2297">0</UIOrder>
+                  <Units id="2298"/>
+                  <Value id="2306">60</Value>
+                </Parameter>
+              </StateMachineElement>
+              <InitialElement id="4403">PreTrialInterval</InitialElement>
+
+
+
+
+
+
+
+
+
+              <EntryScript id="4404">
+                EventInfo.setData(&quot;Stage&quot;,0);
+                EventInfo.setData(&quot;Event&quot;,1);
+                EventInfo.updateValue();
+
+                //Reset TrialInfo
+                TrialInfo.setData(&quot;CorrectTrial&quot;,0);
+                TrialInfo.setData(&quot;Rewarded&quot;,0);
+                TrialInfo.setData(&quot;Override&quot;,0);
+                TrialInfo.setData(&quot;GreenProb&quot;,-1);
+                TrialInfo.setData(&quot;RedProb&quot;,-1);
+                TrialInfo.setData(&quot;GreenRew&quot;,-1);
+                TrialInfo.setData(&quot;RedRew&quot;,-1);
+                TrialInfo.setData(&quot;FeedbackCol&quot;,-1);
+                TrialInfo.setData(&quot;ChosenCol&quot;,-1);
+                TrialInfo.setData(&quot;ChosenSide&quot;,-1);
+              </EntryScript>
+              <ExitScript id="4405">
+                EventInfo.setData(&quot;Event&quot;,2);
+                EventInfo.updateValue();
+                EventInfo.setData(&quot;Trial&quot;,EventInfo.getDataAsInt(&quot;Trial&quot;)+1);
+                AttemptedTrials.value++;
+                BlockPerformance.setData(&quot;%Correct Curr Block&quot;,(100*CorrectTrials.value/AttemptedTrials.value).toFixed(2));
+                BlockPerformance.updateValue();
+              </ExitScript>
+              <StateMachineElement type="State" id="4406">
+                <ControlElement type="Stopwatch Controller" id="4415">
+                  <Name id="4419">PreTrialInterval</Name>
+                  <Result id="4420">
+                    <Name id="4421">Success</Name>
+                    <UIInfo id="4422">
+                      <Pos id="4423" x="0" y="0"/>
+                    </UIInfo>
+                    <UIEnabled id="4425">false</UIEnabled>
+                    <UIOrder id="4426">0</UIOrder>
+                  </Result>
+                  <Time id="4430">400</Time>
+                  <TimeUnits id="4431">Ms</TimeUnits>
+                  <UIInfo id="4432">
+                    <Pos id="4433" x="1371" y="119"/>
+                  </UIInfo>
+                  <Type id="4435"/>
+                  <UIEnabled id="4436">true</UIEnabled>
+                  <UIOrder id="4437">0</UIOrder>
+                </ControlElement>
+                <Name id="4444">PreTrialInterval</Name>
+                <Result id="4445">
+                  <Name id="4446">Done</Name>
+                  <UIInfo id="4447">
+                    <Pos id="4448" x="1665" y="142"/>
+                  </UIInfo>
+                  <UIEnabled id="4450">false</UIEnabled>
+                  <UIOrder id="4451">0</UIOrder>
+                </Result>
+                <Transition id="4455">
+                  <Destination id="4456">Done</Destination>
+                  <Source id="4457">PreTrialInterval</Source>
+                  <SourceResult id="4458">Success</SourceResult>
+                </Transition>
+                <UIInfo id="4459">
+                  <Pos id="4460" x="1242" y="365"/>
+                </UIInfo>
+                <EntryScript id="4462">
+                  EventInfo.setData(&quot;Stage&quot;,1);
+                  EventInfo.setData(&quot;Event&quot;,3);
+                  EventInfo.updateValue();
+                </EntryScript>
+                <ExitScript id="4463">
+                  EventInfo.setData(&quot;Event&quot;,4);
+                  EventInfo.updateValue();
+                </ExitScript>
+                <BackgroundColor A="255" B="0" G="0" R="0" id="4464">#000000</BackgroundColor>
+                <EngineNeeded id="4465">-1</EngineNeeded>
+                <FrameScript id="4466"/>
+                <Revision id="4467">-1</Revision>
+                <UIEnabled id="4468">false</UIEnabled>
+                <UIOrder id="4469">0</UIOrder>
+              </StateMachineElement>
+              <StateMachineElement type="State" id="4483">
+                <ControlElement type="Stopwatch Controller" id="4484">
+                  <Name id="4485">PostTrialInterval</Name>
+                  <Result id="4486">
+                    <Name id="4487">Success</Name>
+                    <UIInfo id="4488">
+                      <Pos id="4489" x="0" y="0"/>
+                    </UIInfo>
+                    <UIEnabled id="4491">false</UIEnabled>
+                    <UIOrder id="4492">0</UIOrder>
+                  </Result>
+                  <Time id="4496">400</Time>
+                  <TimeUnits id="4497">Ms</TimeUnits>
+                  <UIInfo id="4498">
+                    <Pos id="4499" x="1340" y="162"/>
+                  </UIInfo>
+                  <Type id="4501"/>
+                  <UIEnabled id="4502">true</UIEnabled>
+                  <UIOrder id="4503">0</UIOrder>
+                </ControlElement>
+                <EntryScript id="4510">
+                  EventInfo.setData(&quot;Stage&quot;,9);
+                  EventInfo.setData(&quot;Event&quot;,3);
+                  EventInfo.updateValue();
+                </EntryScript>
+                <ExitScript id="4511">
+                  EventInfo.setData(&quot;Event&quot;,4);
+                  EventInfo.updateValue();
+
+                  //Increment correct trials
+                  EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
+                  TrialInfo.setData(&quot;CorrectTrial&quot;,1);
+                  CorrectTrials.value++;
+                </ExitScript>
+                <Name id="4512">PostTrialInterval</Name>
+                <Result id="4513">
+                  <Name id="4514">Done</Name>
+                  <UIInfo id="4515">
+                    <Pos id="4516" x="1706" y="188"/>
+                  </UIInfo>
+                  <UIEnabled id="4518">false</UIEnabled>
+                  <UIOrder id="4519">0</UIOrder>
+                </Result>
+                <Transition id="4523">
+                  <Destination id="4524">Done</Destination>
+                  <Source id="4525">PostTrialInterval</Source>
+                  <SourceResult id="4526">Success</SourceResult>
+                </Transition>
+                <UIInfo id="4527">
+                  <Pos id="4528" x="1562" y="277"/>
+                </UIInfo>
+                <BackgroundColor A="255" B="0" G="0" R="0" id="4530">#000000</BackgroundColor>
+                <EngineNeeded id="4531">-1</EngineNeeded>
+                <FrameScript id="4532"/>
+                <Revision id="4533">-1</Revision>
+                <UIEnabled id="4534">false</UIEnabled>
+                <UIOrder id="4535">0</UIOrder>
+              </StateMachineElement>
+              <Transition id="4545">
+                <Destination id="4546">PostTrialInterval</Destination>
+                <Source id="4547">TrialLogic</Source>
+                <SourceResult id="4548">Succeeded</SourceResult>
+              </Transition>
+              <Transition id="4549">
+                <Destination id="4550">TrialTypeComplete</Destination>
+                <Source id="4551">PostTrialInterval</Source>
+                <SourceResult id="4552">Done</SourceResult>
+              </Transition>
+              <Transition id="4553">
+                <Destination id="4554">ReshuffleTrialType</Destination>
+                <Source id="4555">TrialLogic</Source>
+                <SourceResult id="4556">Failed</SourceResult>
+              </Transition>
+              <Level id="4557">Stage</Level>
+              <Type id="4558">StateMachine</Type>
+              <UIEnabled id="4559">false</UIEnabled>
+              <UIOrder id="4560">0</UIOrder>
+              <Transition id="4478">
+                <Destination id="4479">TrialLogic</Destination>
+                <Source id="4480">PreTrialInterval</Source>
+                <SourceResult id="4481">Done</SourceResult>
+              </Transition>
+              <Parameter type="RandomInt" id="2127">
+                <Max id="2128">100</Max>
+                <Min id="2129">1</Min>
+                <Name id="2130">TrialModeSelect</Name>
+                <Seed id="2131">0</Seed>
+                <UIEnabled id="2132">false</UIEnabled>
+                <UIInfo id="2133">
+                  <Pos id="2134" x="1377" y="590"/>
+                </UIInfo>
+                <UIOrder id="2136">0</UIOrder>
+                <UseSeed id="2137">false</UseSeed>
+                <Value id="2138">1</Value>
+              </Parameter>
+              <Parameter type="Range" id="2147">
+                <Increment id="2148">1</Increment>
+                <Max id="2149">100</Max>
+                <Min id="2150">1</Min>
+                <Name id="2151">FixationTrialPercentage</Name>
+                <UIEnabled id="2152">true</UIEnabled>
+                <UIInfo id="2153">
+                  <Pos id="2154" x="1339" y="683"/>
+                </UIInfo>
+                <UIOrder id="2156">0</UIOrder>
+                <Units id="2157"/>
+                <Value id="2158">20</Value>
+              </Parameter>
+              <StateMachineElement type="ScriptElement" id="2167">
+                <Name id="2168">IncCorrectTrials</Name>
+                <Result id="1632">
+                  <Name id="1633">false</Name>
+                  <UIEnabled id="1634">false</UIEnabled>
+                  <UIInfo id="1635">
+                    <Pos id="1636" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="1638">0</UIOrder>
+                </Result>
+                <Result id="1642">
+                  <Name id="1643">true</Name>
+                  <UIEnabled id="1644">false</UIEnabled>
+                  <UIInfo id="1645">
+                    <Pos id="1646" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="1648">0</UIOrder>
+                </Result>
+                <Script id="2169">
+                  EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
+                  TrialInfo.setData(&quot;CorrectTrial&quot;,1);
+                  CorrectTrials.value++;
+                </Script>
+                <Type id="2170">ScriptElement</Type>
+                <UIEnabled id="2171">false</UIEnabled>
+                <UIInfo id="2172">
+                  <Pos id="2173" x="1544" y="652"/>
+                </UIInfo>
+                <UIOrder id="2175">0</UIOrder>
+              </StateMachineElement>
+              <Transition id="1658">
+                <Destination id="1659">ReshuffleTrialType</Destination>
+                <Source id="1660">IncCorrectTrials</Source>
+                <SourceResult id="1661">false</SourceResult>
+              </Transition>
+              <Transition id="1662">
+                <Destination id="1663">ReshuffleTrialType</Destination>
+                <Source id="1664">IncCorrectTrials</Source>
+                <SourceResult id="1665">true</SourceResult>
+              </Transition>
+              <Transition id="1666">
+                <Destination id="1667">IncCorrectTrials</Destination>
+                <Source id="1668">TrialLogic</Source>
+                <SourceResult id="1669">FixTrialSuccess</SourceResult>
+              </Transition>
+              <Parameter type="Range" id="2335">
+                <Increment id="2336">1</Increment>
+                <Max id="2337">50</Max>
+                <Min id="2338">1</Min>
+                <Name id="2339">NumTargetRewards</Name>
+                <UIEnabled id="2340">true</UIEnabled>
+                <UIInfo id="2341">
+                  <Pos id="2342" x="1187" y="684"/>
+                </UIInfo>
+                <UIOrder id="2344">0</UIOrder>
+                <Units id="2345"/>
+                <Value id="2346">1</Value>
+              </Parameter>
+            </StateMachineElement>
+            <StateMachineElement type="ScriptElement" id="4610">
+              <Name id="4611">NeedsMoreTrials</Name>
+              <Result id="4612">
+                <Name id="4613">false</Name>
+                <UIInfo id="4614">
+                  <Pos id="4615" x="0" y="0"/>
+                </UIInfo>
+                <UIEnabled id="4617">false</UIEnabled>
+                <UIOrder id="4618">0</UIOrder>
+              </Result>
+              <Result id="4622">
+                <Name id="4623">true</Name>
+                <UIInfo id="4624">
+                  <Pos id="4625" x="0" y="0"/>
+                </UIInfo>
+                <UIEnabled id="4627">false</UIEnabled>
+                <UIOrder id="4628">0</UIOrder>
+              </Result>
+              <Script id="4632">
+                TrialInfo.updateValue();
+                TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
+                TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
+                if(LongBlock.value)
+                return ++TrialsSoFar.value &lt; LongBlockLength.value;
+                else
+                return ++TrialsSoFar.value &lt; ShortBlockLength.value;
+              </Script>
+              <UIInfo id="4633">
+                <Pos id="4634" x="1230" y="782"/>
               </UIInfo>
-            <Type id="3016">ScriptElement</Type><UIEnabled id="3017">false</UIEnabled><UIOrder id="3018">0</UIOrder></StateMachineElement>
-            <Transition id="3019">
-              <Destination id="3020">BlockDone</Destination>
-              <Source id="3021">NeedsMoreTrials</Source>
-              <SourceResult id="3022">false</SourceResult>
+              <Type id="4636">ScriptElement</Type>
+              <UIEnabled id="4637">false</UIEnabled>
+              <UIOrder id="4638">0</UIOrder>
+            </StateMachineElement>
+            <Transition id="4644">
+              <Destination id="4645">BlockDone</Destination>
+              <Source id="4646">NeedsMoreTrials</Source>
+              <SourceResult id="4647">false</SourceResult>
             </Transition>
-            
-            
-            
-            <Transition id="3063">
-              <Destination id="3064">NeedsMoreTrials</Destination>
-              <Source id="3065">Trial</Source>
-              <SourceResult id="3066">TrialTypeComplete</SourceResult>
+
+
+
+            <Transition id="4648">
+              <Destination id="4649">NeedsMoreTrials</Destination>
+              <Source id="4650">Trial</Source>
+              <SourceResult id="4651">TrialTypeComplete</SourceResult>
             </Transition>
-            <InitialElement id="3067">ChooseTrialType</InitialElement>
-            
-            
-            
-            
-            
-            
-            
-            
-          <Parameter type="Timer" id="3068"><Name id="3069">TrialTimer</Name><TimeUnits id="3070">Ms</TimeUnits><UIInfo id="3071"><Pos id="3072" x="1122" y="1413"/></UIInfo><UIEnabled id="3074">false</UIEnabled><UIOrder id="3075">0</UIOrder></Parameter><EntryScript id="3076">TrialInfo.setData(&quot;Block&quot;,BlocksSoFar.value);
-TrialInfo.setData(&quot;TrialInBlock&quot;,0);
-BlockPerformance.setData(&quot;%Correct Curr Block&quot;,0);
-BlockPerformance.updateValue();</EntryScript><StateMachineElement type="ScriptElement" id="3085"><Name id="3086">ReshuffleTrialType</Name><Result id="3087"><Name id="3088">false</Name><UIInfo id="3089"><Pos id="3091" x="0" y="0"/></UIInfo><UIEnabled id="3092">false</UIEnabled><UIOrder id="3093">0</UIOrder></Result><Result id="3094"><Name id="3095">true</Name><UIInfo id="3096"><Pos id="3098" x="0" y="0"/></UIInfo><UIEnabled id="3099">false</UIEnabled><UIOrder id="3100">0</UIOrder></Result><Script id="3101">TrialInfo.updateValue();
-TrialType.reshuffleLastValue();
-return true;</Script><UIInfo id="3102"><Pos id="3103" x="1221" y="932"/></UIInfo><Type id="3105">ScriptElement</Type><UIEnabled id="3106">false</UIEnabled><UIOrder id="3107">0</UIOrder></StateMachineElement><Transition id="3108"><Destination id="3109">ReshuffleTrialType</Destination><Source id="3110">Trial</Source><SourceResult id="3111">ReshuffleTrialType</SourceResult></Transition><Parameter type="Numeric" id="3120"><Name id="3121">CorrectTrials</Name><UIInfo id="3122"><Pos id="3123" x="867" y="1259"/></UIInfo><UIEnabled id="3125">false</UIEnabled><UIOrder id="3126">0</UIOrder><Units id="3127"/><Value id="3128">0</Value></Parameter><Parameter type="Numeric" id="3129"><Name id="3130">AttemptedTrials</Name><UIInfo id="3131"><Pos id="3132" x="993" y="1261"/></UIInfo><UIEnabled id="3134">false</UIEnabled><UIOrder id="3135">0</UIOrder><Units id="3136"/><Value id="3137">0</Value></Parameter><VisualElement type="Operator Info Graphic" id="3138"><Name id="3139">BlockPerformance</Name><Position id="3140" x="600" y="300"/><UIInfo id="3141"><Pos id="3142" x="1247" y="1405"/></UIInfo><Dimensions height="50" id="3144" width="200" x="0" y="0"/><Color A="255" B="0" G="255" R="0" id="3145">#00ff00</Color><Fields id="3146"/><Layer id="3147">0</Layer><OperatorView id="3148">true</OperatorView><SubjectView id="3149">false</SubjectView><UIEnabled id="3150">false</UIEnabled><UIOrder id="3151">0</UIOrder><Values id="3152"/><Visible id="3153">true</Visible></VisualElement><ExitScript id="3154"/><Level id="3155">Stage</Level><Type id="3156">StateMachine</Type><UIEnabled id="3157">false</UIEnabled><UIOrder id="3158">0</UIOrder><Parameter type="PseudorandomInt" id="5030"><DontRepeatAnyValue id="5031">true</DontRepeatAnyValue><Max id="5032">20</Max><Min id="5033">1</Min><Name id="5034">TrialType</Name><Seed id="5035">0</Seed><UIEnabled id="5036">false</UIEnabled><UIInfo id="5037"><Pos id="5038" x="1331" y="1276"/></UIInfo><UIOrder id="5040">0</UIOrder><UseSeed id="5041">false</UseSeed><Value id="5042">1</Value></Parameter><StateMachineElement type="ScriptElement" id="5052"><Name id="5053">ChooseTrialType</Name><Result id="4847"><Name id="4848">false</Name><UIEnabled id="4849">false</UIEnabled><UIInfo id="4850"><Pos id="4851" x="0" y="0"/></UIInfo><UIOrder id="4853">0</UIOrder></Result><Result id="4857"><Name id="4858">true</Name><UIEnabled id="4859">false</UIEnabled><UIInfo id="4860"><Pos id="4861" x="0" y="0"/></UIInfo><UIOrder id="4863">0</UIOrder></Result><Script id="5054">TrialType.randomize(); 
-return true;</Script><Type id="5055">ScriptElement</Type><UIEnabled id="5056">false</UIEnabled><UIInfo id="5057"><Pos id="5058" x="1409" y="1050"/></UIInfo><UIOrder id="5060">0</UIOrder></StateMachineElement><Transition id="4855"><Destination id="4856">Trial</Destination><Source id="4862">ChooseTrialType</Source><SourceResult id="4864">false</SourceResult></Transition><Transition id="4865"><Destination id="4866">Trial</Destination><Source id="4867">ChooseTrialType</Source><SourceResult id="4868">true</SourceResult></Transition><Transition id="4869"><Destination id="4870">ChooseTrialType</Destination><Source id="4871">ReshuffleTrialType</Source><SourceResult id="4872">false</SourceResult></Transition><Transition id="4873"><Destination id="4874">ChooseTrialType</Destination><Source id="4875">ReshuffleTrialType</Source><SourceResult id="4876">true</SourceResult></Transition><Transition id="4877"><Destination id="4878">ChooseTrialType</Destination><Source id="4879">NeedsMoreTrials</Source><SourceResult id="4880">true</SourceResult></Transition></StateMachineElement>
-          <StateMachineElement type="ScriptElement" id="3159">
-            <Name id="3160">NeedsMoreBlocks</Name>
-            <Result id="3161">
-              <Name id="3162">false</Name>
-              <UIInfo id="3163">
-                <Pos id="3164" x="2000" y="2000"/>
+            <InitialElement id="4652">ChooseTrialType</InitialElement>
+
+
+
+
+
+
+
+
+            <Parameter type="Timer" id="3068">
+              <Name id="3069">TrialTimer</Name>
+              <TimeUnits id="3070">Ms</TimeUnits>
+              <UIInfo id="3071">
+                <Pos id="3072" x="1122" y="1413"/>
               </UIInfo>
-            <UIEnabled id="3166">false</UIEnabled><UIOrder id="3167">0</UIOrder></Result>
-            <Result id="3168">
-              <Name id="3169">true</Name>
-              <UIInfo id="3170">
-                <Pos id="3171" x="2075" y="2000"/>
+              <UIEnabled id="3074">false</UIEnabled>
+              <UIOrder id="3075">0</UIOrder>
+            </Parameter>
+            <EntryScript id="4658">
+              TrialInfo.setData(&quot;Block&quot;,BlocksSoFar.value);
+              TrialInfo.setData(&quot;TrialInBlock&quot;,0);
+              BlockPerformance.setData(&quot;%Correct Curr Block&quot;,0);
+              BlockPerformance.updateValue();
+            </EntryScript>
+            <StateMachineElement type="ScriptElement" id="3085">
+              <Name id="3086">ReshuffleTrialType</Name>
+              <Result id="3087">
+                <Name id="3088">false</Name>
+                <UIInfo id="3089">
+                  <Pos id="3091" x="0" y="0"/>
+                </UIInfo>
+                <UIEnabled id="3092">false</UIEnabled>
+                <UIOrder id="3093">0</UIOrder>
+              </Result>
+              <Result id="3094">
+                <Name id="3095">true</Name>
+                <UIInfo id="3096">
+                  <Pos id="3098" x="0" y="0"/>
+                </UIInfo>
+                <UIEnabled id="3099">false</UIEnabled>
+                <UIOrder id="3100">0</UIOrder>
+              </Result>
+              <Script id="3101">
+                TrialInfo.updateValue();
+                TrialType.reshuffleLastValue();
+                return true;
+              </Script>
+              <UIInfo id="3102">
+                <Pos id="3103" x="1221" y="932"/>
               </UIInfo>
-            <UIEnabled id="3173">false</UIEnabled><UIOrder id="3174">0</UIOrder></Result>
-            <UIInfo id="3175">
-              <Pos id="3176" x="1906" y="1285"/>
-              
+              <Type id="3105">ScriptElement</Type>
+              <UIEnabled id="3106">false</UIEnabled>
+              <UIOrder id="3107">0</UIOrder>
+            </StateMachineElement>
+            <Transition id="3108">
+              <Destination id="3109">ReshuffleTrialType</Destination>
+              <Source id="3110">Trial</Source>
+              <SourceResult id="3111">ReshuffleTrialType</SourceResult>
+            </Transition>
+            <Parameter type="Numeric" id="4673">
+              <Name id="4674">CorrectTrials</Name>
+              <UIInfo id="4675">
+                <Pos id="4676" x="867" y="1259"/>
+              </UIInfo>
+              <UIEnabled id="4679">false</UIEnabled>
+              <UIOrder id="4680">0</UIOrder>
+              <Units id="4681"/>
+              <Value id="4682">0</Value>
+            </Parameter>
+            <Parameter type="Numeric" id="4688">
+              <Name id="4689">AttemptedTrials</Name>
+              <UIInfo id="4690">
+                <Pos id="4691" x="993" y="1261"/>
+              </UIInfo>
+              <UIEnabled id="4693">false</UIEnabled>
+              <UIOrder id="4694">0</UIOrder>
+              <Units id="4695"/>
+              <Value id="4696">0</Value>
+            </Parameter>
+            <VisualElement type="Operator Info Graphic" id="4702">
+              <Name id="4703">BlockPerformance</Name>
+              <Position id="4704" x="600" y="300"/>
+              <UIInfo id="4705">
+                <Pos id="4706" x="1247" y="1405"/>
+              </UIInfo>
+              <Dimensions height="50" id="4708" width="200" x="0" y="0"/>
+              <Color A="255" B="0" G="255" R="0" id="4709">#00ff00</Color>
+              <Fields id="4710"/>
+              <Layer id="4711">0</Layer>
+              <OperatorView id="4712">true</OperatorView>
+              <SubjectView id="4713">false</SubjectView>
+              <UIEnabled id="4714">false</UIEnabled>
+              <UIOrder id="4715">0</UIOrder>
+              <Values id="4716"/>
+              <Visible id="4717">true</Visible>
+            </VisualElement>
+            <ExitScript id="4730"/>
+            <Level id="4731">Stage</Level>
+            <Type id="4732">StateMachine</Type>
+            <UIEnabled id="4733">false</UIEnabled>
+            <UIOrder id="4734">0</UIOrder>
+            <Parameter type="PseudorandomInt" id="5030">
+              <DontRepeatAnyValue id="5031">true</DontRepeatAnyValue>
+              <Max id="5032">20</Max>
+              <Min id="5033">1</Min>
+              <Name id="5034">TrialType</Name>
+              <Seed id="5035">0</Seed>
+              <UIEnabled id="5036">false</UIEnabled>
+              <UIInfo id="5037">
+                <Pos id="5038" x="1331" y="1276"/>
+              </UIInfo>
+              <UIOrder id="5040">0</UIOrder>
+              <UseSeed id="5041">false</UseSeed>
+              <Value id="5042">1</Value>
+            </Parameter>
+            <StateMachineElement type="ScriptElement" id="5052">
+              <Name id="5053">ChooseTrialType</Name>
+              <Result id="4847">
+                <Name id="4848">false</Name>
+                <UIEnabled id="4849">false</UIEnabled>
+                <UIInfo id="4850">
+                  <Pos id="4851" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="4853">0</UIOrder>
+              </Result>
+              <Result id="4857">
+                <Name id="4858">true</Name>
+                <UIEnabled id="4859">false</UIEnabled>
+                <UIInfo id="4860">
+                  <Pos id="4861" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="4863">0</UIOrder>
+              </Result>
+              <Script id="5054">
+                TrialType.randomize();
+                return true;
+              </Script>
+              <Type id="5055">ScriptElement</Type>
+              <UIEnabled id="5056">false</UIEnabled>
+              <UIInfo id="5057">
+                <Pos id="5058" x="1409" y="1050"/>
+              </UIInfo>
+              <UIOrder id="5060">0</UIOrder>
+            </StateMachineElement>
+            <Transition id="4855">
+              <Destination id="4856">Trial</Destination>
+              <Source id="4862">ChooseTrialType</Source>
+              <SourceResult id="4864">false</SourceResult>
+            </Transition>
+            <Transition id="4865">
+              <Destination id="4866">Trial</Destination>
+              <Source id="4867">ChooseTrialType</Source>
+              <SourceResult id="4868">true</SourceResult>
+            </Transition>
+            <Transition id="4869">
+              <Destination id="4870">ChooseTrialType</Destination>
+              <Source id="4871">ReshuffleTrialType</Source>
+              <SourceResult id="4872">false</SourceResult>
+            </Transition>
+            <Transition id="4873">
+              <Destination id="4874">ChooseTrialType</Destination>
+              <Source id="4875">ReshuffleTrialType</Source>
+              <SourceResult id="4876">true</SourceResult>
+            </Transition>
+            <Transition id="4877">
+              <Destination id="4878">ChooseTrialType</Destination>
+              <Source id="4879">NeedsMoreTrials</Source>
+              <SourceResult id="4880">true</SourceResult>
+            </Transition>
+          </StateMachineElement>
+          <StateMachineElement type="ScriptElement" id="4767">
+            <Name id="4768">NeedsMoreBlocks</Name>
+            <Result id="4769">
+              <Name id="4770">false</Name>
+              <UIInfo id="4771">
+                <Pos id="4772" x="2000" y="2000"/>
+              </UIInfo>
+              <UIEnabled id="4774">false</UIEnabled>
+              <UIOrder id="4775">0</UIOrder>
+            </Result>
+            <Result id="4779">
+              <Name id="4780">true</Name>
+              <UIInfo id="4781">
+                <Pos id="4782" x="2075" y="2000"/>
+              </UIInfo>
+              <UIEnabled id="4784">false</UIEnabled>
+              <UIOrder id="4785">0</UIOrder>
+            </Result>
+            <UIInfo id="4789">
+              <Pos id="4790" x="1906" y="1285"/>
+
             </UIInfo>
-            <Script id="3178">if(LongBlock.value) return ++BlocksSoFar.value &lt; (SuperBlockLength.value/LongBlockLength.value);else return ++BlocksSoFar.value &lt; (SuperBlockLength.value/ShortBlockLength.value); </Script>
-          <Type id="3179">ScriptElement</Type><UIEnabled id="3180">false</UIEnabled><UIOrder id="3181">0</UIOrder></StateMachineElement>
-          
-          <Transition id="3205">
-            <Destination id="3206">Block</Destination>
-            <Source id="3207">NeedsMoreBlocks</Source>
-            <SourceResult id="3208">true</SourceResult>
+            <Script id="4792">if(LongBlock.value) return ++BlocksSoFar.value &lt; (SuperBlockLength.value/LongBlockLength.value);else return ++BlocksSoFar.value &lt; (SuperBlockLength.value/ShortBlockLength.value); </Script>
+            <Type id="4793">ScriptElement</Type>
+            <UIEnabled id="4794">false</UIEnabled>
+            <UIOrder id="4795">0</UIOrder>
+          </StateMachineElement>
+
+          <Transition id="4801">
+            <Destination id="4802">Block</Destination>
+            <Source id="4803">NeedsMoreBlocks</Source>
+            <SourceResult id="4804">true</SourceResult>
           </Transition>
-          <Transition id="3209">
-            <Destination id="3210">SuperblockDone</Destination>
-            <Source id="3211">NeedsMoreBlocks</Source>
-            <SourceResult id="3212">false</SourceResult>
+          <Transition id="4805">
+            <Destination id="4806">SuperblockDone</Destination>
+            <Source id="4807">NeedsMoreBlocks</Source>
+            <SourceResult id="4808">false</SourceResult>
           </Transition>
-          
-          
-          
-          <InitialElement id="3225">NeedsMoreBlocks</InitialElement>
-        <Parameter type="Range" id="3226"><Increment id="3227">1</Increment><Max id="3228">640</Max><Min id="3229">1</Min><Name id="3230">ShortBlockLength</Name><UIEnabled id="3231">true</UIEnabled><UIInfo id="3232"><Pos id="3233" x="1795" y="1559"/></UIInfo><Value id="3235">40</Value><UIOrder id="3236">0</UIOrder><Units id="3237"/></Parameter><Parameter type="Range" id="3238"><Increment id="3239">1</Increment><Max id="3240">640</Max><Min id="3241">1</Min><Name id="3242">LongBlockLength</Name><UIEnabled id="3243">true</UIEnabled><UIInfo id="3244"><Pos id="3245" x="1917" y="1540"/></UIInfo><Value id="3247">80</Value><UIOrder id="3248">0</UIOrder><Units id="3249"/></Parameter><EntryScript id="3250"/><ExitScript id="3251"/><Level id="3252">Stage</Level><Type id="3253">StateMachine</Type><UIEnabled id="3254">false</UIEnabled><UIOrder id="3255">0</UIOrder><Transition id="4919"><Destination id="4920">NeedsMoreBlocks</Destination><Source id="4921">Block</Source><SourceResult id="4922">BlockDone</SourceResult></Transition></StateMachineElement>
-        <StateMachineElement type="ScriptElement" id="3256">
-          <Name id="3257">LessThanMaxSuperblocks</Name>
-          <Result id="3258">
-            <Name id="3259">false</Name>
-          <UIInfo id="3260"><Pos id="3261" x="2000" y="2000"/></UIInfo><UIEnabled id="3263">false</UIEnabled><UIOrder id="3264">0</UIOrder></Result>
-          <Result id="3265">
-            <Name id="3266">true</Name>
-          <UIInfo id="3267"><Pos id="3268" x="2075" y="2000"/></UIInfo><UIEnabled id="3270">false</UIEnabled><UIOrder id="3271">0</UIOrder></Result>
-          <Script id="3272">return ++SuperblockNum.value &lt; (NumberRestarts.value+1)*SuperBlocksPerSession.value;</Script>
-          <UIInfo id="3273">
-            <Pos id="3274" x="1746" y="1741"/>
-          </UIInfo>
-        <Type id="3276">ScriptElement</Type><UIEnabled id="3277">false</UIEnabled><UIOrder id="3278">0</UIOrder></StateMachineElement>
-        
-        <StateMachineElement type="ScriptElement" id="3279">
-          <Name id="3280">FlipBlockType</Name>
-          <Result id="3281">
-            <Name id="3282">false</Name>
-            <UIInfo id="3283">
-              <Pos id="3284" x="2000" y="2000"/>
+
+
+
+          <InitialElement id="4809">NeedsMoreBlocks</InitialElement>
+          <Parameter type="Range" id="4810">
+            <Increment id="4811">1</Increment>
+            <Max id="4812">640</Max>
+            <Min id="4813">1</Min>
+            <Name id="4814">ShortBlockLength</Name>
+            <UIEnabled id="4815">true</UIEnabled>
+            <UIInfo id="4816">
+              <Pos id="4817" x="1795" y="1559"/>
             </UIInfo>
-          <UIEnabled id="3286">false</UIEnabled><UIOrder id="3287">0</UIOrder></Result>
-          <Result id="3288">
-            <Name id="3289">true</Name>
-            <UIInfo id="3290">
-              <Pos id="3291" x="2075" y="2000"/>
+            <Value id="4819">40</Value>
+            <UIOrder id="4820">0</UIOrder>
+            <Units id="4821"/>
+          </Parameter>
+          <Parameter type="Range" id="4830">
+            <Increment id="4831">1</Increment>
+            <Max id="4832">640</Max>
+            <Min id="4833">1</Min>
+            <Name id="4834">LongBlockLength</Name>
+            <UIEnabled id="4835">true</UIEnabled>
+            <UIInfo id="4836">
+              <Pos id="4837" x="1917" y="1540"/>
             </UIInfo>
-          <UIEnabled id="3293">false</UIEnabled><UIOrder id="3294">0</UIOrder></Result>
-          <Script id="3295">LongBlock.value = !LongBlock.value; 
-return true;</Script>
-          <UIInfo id="3296">
-            <Pos id="3297" x="2280" y="1523"/>
-            
+            <Value id="4839">80</Value>
+            <UIOrder id="4840">0</UIOrder>
+            <Units id="4841"/>
+          </Parameter>
+          <EntryScript id="4882"/>
+          <ExitScript id="4883"/>
+          <Level id="4884">Stage</Level>
+          <Type id="4885">StateMachine</Type>
+          <UIEnabled id="4886">false</UIEnabled>
+          <UIOrder id="4887">0</UIOrder>
+          <Transition id="4919">
+            <Destination id="4920">NeedsMoreBlocks</Destination>
+            <Source id="4921">Block</Source>
+            <SourceResult id="4922">BlockDone</SourceResult>
+          </Transition>
+        </StateMachineElement>
+        <StateMachineElement type="ScriptElement" id="4896">
+          <Name id="4897">LessThanMaxSuperblocks</Name>
+          <Result id="4898">
+            <Name id="4899">false</Name>
+            <UIInfo id="4900">
+              <Pos id="4901" x="2000" y="2000"/>
+            </UIInfo>
+            <UIEnabled id="4903">false</UIEnabled>
+            <UIOrder id="4904">0</UIOrder>
+          </Result>
+          <Result id="4908">
+            <Name id="4909">true</Name>
+            <UIInfo id="4910">
+              <Pos id="4911" x="2075" y="2000"/>
+            </UIInfo>
+            <UIEnabled id="4913">false</UIEnabled>
+            <UIOrder id="4914">0</UIOrder>
+          </Result>
+          <Script id="4918">return ++SuperblockNum.value &lt; (NumberRestarts.value+1)*SuperBlocksPerSession.value;</Script>
+          <UIInfo id="4923">
+            <Pos id="4924" x="1746" y="1741"/>
           </UIInfo>
-        <Type id="3299">ScriptElement</Type><UIEnabled id="3300">false</UIEnabled><UIOrder id="3301">0</UIOrder></StateMachineElement>
-        <Transition id="3302">
-          <Destination id="3303">Superblock</Destination>
-          <Source id="3304">LessThanMaxSuperblocks</Source>
-          <SourceResult id="3305">true</SourceResult>
+          <Type id="4926">ScriptElement</Type>
+          <UIEnabled id="4927">false</UIEnabled>
+          <UIOrder id="4928">0</UIOrder>
+        </StateMachineElement>
+
+        <StateMachineElement type="ScriptElement" id="4934">
+          <Name id="4935">FlipBlockType</Name>
+          <Result id="4936">
+            <Name id="4937">false</Name>
+            <UIInfo id="4938">
+              <Pos id="4939" x="2000" y="2000"/>
+            </UIInfo>
+            <UIEnabled id="4941">false</UIEnabled>
+            <UIOrder id="4942">0</UIOrder>
+          </Result>
+          <Result id="4946">
+            <Name id="4947">true</Name>
+            <UIInfo id="4948">
+              <Pos id="4949" x="2075" y="2000"/>
+            </UIInfo>
+            <UIEnabled id="4951">false</UIEnabled>
+            <UIOrder id="4952">0</UIOrder>
+          </Result>
+          <Script id="4956">
+            LongBlock.value = !LongBlock.value;
+            return true;
+          </Script>
+          <UIInfo id="4957">
+            <Pos id="4958" x="2280" y="1523"/>
+
+          </UIInfo>
+          <Type id="4960">ScriptElement</Type>
+          <UIEnabled id="4961">false</UIEnabled>
+          <UIOrder id="4962">0</UIOrder>
+        </StateMachineElement>
+        <Transition id="4968">
+          <Destination id="4969">Superblock</Destination>
+          <Source id="4970">LessThanMaxSuperblocks</Source>
+          <SourceResult id="4971">true</SourceResult>
         </Transition>
-        
-        
-        
-        <UIInfo id="3306">
-          <Pos id="3307" x="2004" y="2000"/>
-          
+
+
+
+        <UIInfo id="4972">
+          <Pos id="4973" x="2008" y="2000"/>
+
         </UIInfo>
-        <Transition id="3309">
-          <Destination id="3310">LessThanMaxSuperblocks</Destination>
-          <Source id="3311">FlipBlockType</Source>
-          <SourceResult id="3312">false</SourceResult>
+        <Transition id="4975">
+          <Destination id="4976">LessThanMaxSuperblocks</Destination>
+          <Source id="4977">FlipBlockType</Source>
+          <SourceResult id="4978">false</SourceResult>
         </Transition>
-        <Transition id="3313">
-          <Destination id="3314">LessThanMaxSuperblocks</Destination>
-          <Source id="3315">FlipBlockType</Source>
-          <SourceResult id="3316">true</SourceResult>
+        <Transition id="4979">
+          <Destination id="4980">LessThanMaxSuperblocks</Destination>
+          <Source id="4981">FlipBlockType</Source>
+          <SourceResult id="4982">true</SourceResult>
         </Transition>
-        <Transition id="3317">
-          <Destination id="3318">FlipBlockType</Destination>
-          <Source id="3319">Superblock</Source>
-          <SourceResult id="3320">SuperblockDone</SourceResult>
+        <Transition id="4983">
+          <Destination id="4984">FlipBlockType</Destination>
+          <Source id="4985">Superblock</Source>
+          <SourceResult id="4986">SuperblockDone</SourceResult>
         </Transition>
-      <VisualElement type="Operator Info Graphic" id="3321"><Dimensions height="50" id="3322" width="800" x="0" y="0"/><Name id="3323">EventInfo</Name><Position id="3324" x="0" y="550"/><UIInfo id="3325"><Pos id="3326" x="1927" y="2016"/></UIInfo><Color A="255" B="0" G="255" R="0" id="3328">#00ff00</Color><Fields id="3329"/><Layer id="3330">0</Layer><OperatorView id="3331">true</OperatorView><SubjectView id="3332">false</SubjectView><UIEnabled id="3333">false</UIEnabled><UIOrder id="3334">0</UIOrder><Values id="3335"/><Visible id="3336">true</Visible></VisualElement><EntryScript id="3337">//Setup EventInfo
-EventInfo.setData(&quot;Trial&quot;,1);
-EventInfo.setData(&quot;CorrectTrials&quot;,0);
-EventInfo.setData(&quot;Stage&quot;,-1);
-EventInfo.setData(&quot;Event&quot;,-1);
+        <VisualElement type="Operator Info Graphic" id="4987">
+          <Dimensions height="50" id="4988" width="800" x="0" y="0"/>
+          <Name id="4989">EventInfo</Name>
+          <Position id="4990" x="0" y="550"/>
+          <UIInfo id="4991">
+            <Pos id="4992" x="1927" y="2016"/>
+          </UIInfo>
+          <Color A="255" B="0" G="255" R="0" id="4994">#00ff00</Color>
+          <Fields id="4995"/>
+          <Layer id="4996">0</Layer>
+          <OperatorView id="4997">true</OperatorView>
+          <SubjectView id="4998">false</SubjectView>
+          <UIEnabled id="4999">false</UIEnabled>
+          <UIOrder id="5000">0</UIOrder>
+          <Values id="5001"/>
+          <Visible id="5002">true</Visible>
+        </VisualElement>
+        <EntryScript id="5015">
+          //Setup EventInfo
+          EventInfo.setData(&quot;Trial&quot;,1);
+          EventInfo.setData(&quot;CorrectTrials&quot;,0);
+          EventInfo.setData(&quot;Stage&quot;,-1);
+          EventInfo.setData(&quot;Event&quot;,-1);
 
-//Setup TrialInfo
-TrialInfo.setData(&quot;CorrectTrial&quot;,-1);
-TrialInfo.setData(&quot;Rewarded&quot;,-1);
-TrialInfo.setData(&quot;Override&quot;,-1);
-TrialInfo.setData(&quot;Block&quot;,-1);
-TrialInfo.setData(&quot;TrialInBlock&quot;,0);
-TrialInfo.setData(&quot;Trial&quot;,0);
-TrialInfo.setData(&quot;GreenProb&quot;,-1);
-TrialInfo.setData(&quot;RedProb&quot;,-1);
-TrialInfo.setData(&quot;GreenRew&quot;,-1);
-TrialInfo.setData(&quot;RedRew&quot;,-1);
-TrialInfo.setData(&quot;FeedbackCol&quot;,-1);
-TrialInfo.setData(&quot;ChosenCol&quot;,-1);
-TrialInfo.setData(&quot;ChosenSide&quot;,-1);
+          //Setup TrialInfo
+          TrialInfo.setData(&quot;CorrectTrial&quot;,-1);
+          TrialInfo.setData(&quot;Rewarded&quot;,-1);
+          TrialInfo.setData(&quot;Override&quot;,-1);
+          TrialInfo.setData(&quot;Block&quot;,-1);
+          TrialInfo.setData(&quot;TrialInBlock&quot;,0);
+          TrialInfo.setData(&quot;Trial&quot;,0);
+          TrialInfo.setData(&quot;GreenProb&quot;,-1);
+          TrialInfo.setData(&quot;RedProb&quot;,-1);
+          TrialInfo.setData(&quot;GreenRew&quot;,-1);
+          TrialInfo.setData(&quot;RedRew&quot;,-1);
+          TrialInfo.setData(&quot;FeedbackCol&quot;,-1);
+          TrialInfo.setData(&quot;ChosenCol&quot;,-1);
+          TrialInfo.setData(&quot;ChosenSide&quot;,-1);
 
-LongBlock.randomize();</EntryScript><VisualElement type="Operator Info Graphic" id="3338"><Name id="3339">TrialInfo</Name><UIInfo id="3340"><Pos id="3341" x="2063" y="2014"/></UIInfo><Dimensions height="50" id="3343" width="800" x="0" y="0"/><Position id="3344" x="0" y="0"/><UIEnabled id="3345">false</UIEnabled><Color A="255" B="0" G="0" R="255" id="3346">#ff0000</Color><Fields id="3347"/><Layer id="3348">0</Layer><OperatorView id="3349">true</OperatorView><SubjectView id="3350">false</SubjectView><UIOrder id="3351">0</UIOrder><Values id="3352"/><Visible id="3353">true</Visible></VisualElement><ExitScript id="3354"/><Parameter type="Range" id="3355"><Increment id="3356">1</Increment><Max id="3357">640</Max><Min id="3358">1</Min><Name id="3359">SuperBlockLength</Name><UIEnabled id="3360">true</UIEnabled><UIInfo id="3361"><Pos id="3362" x="2206" y="2009"/></UIInfo><Value id="3364">160</Value><UIOrder id="3365">0</UIOrder><Units id="3366"/></Parameter><Parameter type="Range" id="3367"><Increment id="3368">1</Increment><Max id="3369">10</Max><Min id="3370">0</Min><Name id="3371">SuperBlocksPerSession</Name><UIEnabled id="3372">true</UIEnabled><UIInfo id="3373"><Pos id="3374" x="2354" y="2008"/></UIInfo><Value id="3376">4</Value><UIOrder id="3377">0</UIOrder><Units id="3378"/></Parameter><Parameter type="Numeric" id="3379"><Name id="3380">NumberRestarts</Name><UIInfo id="3381"><Pos id="3382" x="1734" y="2125"/></UIInfo><UIEnabled id="3384">false</UIEnabled><UIOrder id="3385">0</UIOrder><Units id="3386"/><Value id="3387">0</Value></Parameter><StateMachineElement type="State" id="3388"><ControlElement type="Script Controller" id="3389"><Name id="3390">WaitForWindowClick</Name><Result id="3391"><Name id="3392">Done</Name><UIEnabled id="3393">false</UIEnabled><UIInfo id="3394"><Pos id="3395" x="2000" y="2000"/></UIInfo><UIOrder id="3397">0</UIOrder></Result><Script id="3398">return OperatorClick.newClick;</Script><UIInfo id="3399"><Pos id="3400" x="1683" y="1413"/></UIInfo><Type id="3402"/><UIEnabled id="3403">false</UIEnabled><UIOrder id="3404">0</UIOrder></ControlElement><Name id="3405">WaitForRestart</Name><Parameter type="OperatorClick" id="3406"><Name id="3407">OperatorClick</Name><UIInfo id="3408"><Pos id="3409" x="1665" y="1603"/></UIInfo><NewClick id="3411">false</NewClick><Pos id="3412" x="0" y="0"/><UIEnabled id="3413">false</UIEnabled><UIOrder id="3414">0</UIOrder></Parameter><Result id="3415"><Name id="3416">Restart</Name><UIInfo id="3417"><Pos id="3418" x="1953" y="1463"/></UIInfo><UIEnabled id="3420">false</UIEnabled><UIOrder id="3421">0</UIOrder></Result><Transition id="3422"><Destination id="3423">Restart</Destination><Source id="3424">WaitForWindowClick</Source><SourceResult id="3425">Done</SourceResult></Transition><UIInfo id="3426"><Pos id="3427" x="1980" y="1772"/></UIInfo><VisualElement type="Text Graphic" id="3429"><Color A="255" B="255" G="170" R="85" id="3430">#55aaff</Color><Dimensions height="50" id="3431" width="800" x="0" y="0"/><Name id="3432">Instructions1</Name><Position id="3433" x="325" y="250"/><SubjectView id="3434">false</SubjectView><Text id="3435">Session Complete!</Text><UIInfo id="3436"><Pos id="3437" x="1796" y="1578"/></UIInfo><Layer id="3439">0</Layer><OperatorView id="3440">true</OperatorView><UIEnabled id="3441">false</UIEnabled><UIOrder id="3442">0</UIOrder><Visible id="3443">true</Visible></VisualElement><ExitScript id="3444">NumberRestarts.value++;</ExitScript><VisualElement type="Text Graphic" id="3445"><Color A="255" B="255" G="170" R="85" id="3446">#55aaff</Color><Dimensions height="50" id="3447" width="800" x="0" y="0"/><Name id="3448">Instructions2</Name><Position id="3449" x="200" y="350"/><SubjectView id="3450">false</SubjectView><Text id="3451">Click in window to continue the session.  Press Stop button to end.</Text><UIInfo id="3452"><Pos id="3453" x="1793" y="1666"/></UIInfo><Layer id="3455">0</Layer><OperatorView id="3456">true</OperatorView><UIEnabled id="3457">false</UIEnabled><UIOrder id="3458">0</UIOrder><Visible id="3459">true</Visible></VisualElement><BackgroundColor A="255" B="0" G="0" R="0" id="3460">#000000</BackgroundColor><EngineNeeded id="3461">-1</EngineNeeded><EntryScript id="3462"/><FrameScript id="3463"/><Revision id="3464">-1</Revision><UIEnabled id="3465">false</UIEnabled><UIOrder id="3466">0</UIOrder></StateMachineElement><Transition id="3467"><Destination id="3468">WaitForRestart</Destination><Source id="3469">LessThanMaxSuperblocks</Source><SourceResult id="3470">false</SourceResult></Transition><Transition id="3471"><Destination id="3472">Superblock</Destination><Source id="3473">WaitForRestart</Source><SourceResult id="3474">Restart</SourceResult></Transition><Level id="3475">Stage</Level><Type id="3476">StateMachine</Type><UIEnabled id="3477">false</UIEnabled><UIOrder id="3478">0</UIOrder></StateMachine>
+          LongBlock.randomize();
+        </EntryScript>
+        <VisualElement type="Operator Info Graphic" id="5016">
+          <Name id="5017">TrialInfo</Name>
+          <UIInfo id="5018">
+            <Pos id="5019" x="2063" y="2014"/>
+          </UIInfo>
+          <Dimensions height="50" id="5021" width="800" x="0" y="0"/>
+          <Position id="5022" x="0" y="0"/>
+          <UIEnabled id="5023">false</UIEnabled>
+          <Color A="255" B="0" G="0" R="255" id="5024">#ff0000</Color>
+          <Fields id="5025"/>
+          <Layer id="5026">0</Layer>
+          <OperatorView id="5027">true</OperatorView>
+          <SubjectView id="5028">false</SubjectView>
+          <UIOrder id="5029">0</UIOrder>
+          <Values id="5039"/>
+          <Visible id="5043">true</Visible>
+        </VisualElement>
+        <ExitScript id="5064"/>
+        <Parameter type="Range" id="5065">
+          <Increment id="5066">1</Increment>
+          <Max id="5067">640</Max>
+          <Min id="5068">1</Min>
+          <Name id="5069">SuperBlockLength</Name>
+          <UIEnabled id="5070">true</UIEnabled>
+          <UIInfo id="5071">
+            <Pos id="5072" x="2206" y="2009"/>
+          </UIInfo>
+          <Value id="5074">160</Value>
+          <UIOrder id="5075">0</UIOrder>
+          <Units id="5076"/>
+        </Parameter>
+        <Parameter type="Range" id="5085">
+          <Increment id="5086">1</Increment>
+          <Max id="5087">10</Max>
+          <Min id="5088">0</Min>
+          <Name id="5089">SuperBlocksPerSession</Name>
+          <UIEnabled id="5090">true</UIEnabled>
+          <UIInfo id="5091">
+            <Pos id="5092" x="2354" y="2008"/>
+          </UIInfo>
+          <Value id="5094">4</Value>
+          <UIOrder id="5095">0</UIOrder>
+          <Units id="5096"/>
+        </Parameter>
+        <Parameter type="Numeric" id="5105">
+          <Name id="5106">NumberRestarts</Name>
+          <UIInfo id="5107">
+            <Pos id="5108" x="1734" y="2125"/>
+          </UIInfo>
+          <UIEnabled id="5110">false</UIEnabled>
+          <UIOrder id="5111">0</UIOrder>
+          <Units id="5112"/>
+          <Value id="5113">0</Value>
+        </Parameter>
+        <StateMachineElement type="State" id="5119">
+          <ControlElement type="Script Controller" id="5120">
+            <Name id="5121">WaitForWindowClick</Name>
+            <Result id="5122">
+              <Name id="5123">Done</Name>
+              <UIEnabled id="5124">false</UIEnabled>
+              <UIInfo id="5125">
+                <Pos id="5126" x="2000" y="2000"/>
+              </UIInfo>
+              <UIOrder id="5128">0</UIOrder>
+            </Result>
+            <Script id="5132">return OperatorClick.newClick;</Script>
+            <UIInfo id="5133">
+              <Pos id="5134" x="1683" y="1413"/>
+            </UIInfo>
+            <Type id="5136"/>
+            <UIEnabled id="5137">false</UIEnabled>
+            <UIOrder id="5138">0</UIOrder>
+          </ControlElement>
+          <Name id="5144">WaitForRestart</Name>
+          <Parameter type="OperatorClick" id="5145">
+            <Name id="5146">OperatorClick</Name>
+            <UIInfo id="5147">
+              <Pos id="5148" x="1665" y="1603"/>
+            </UIInfo>
+            <NewClick id="5150">false</NewClick>
+            <Pos id="5151" x="0" y="0"/>
+            <UIEnabled id="5152">false</UIEnabled>
+            <UIOrder id="5153">0</UIOrder>
+          </Parameter>
+          <Result id="5159">
+            <Name id="5160">Restart</Name>
+            <UIInfo id="5161">
+              <Pos id="5162" x="1953" y="1463"/>
+            </UIInfo>
+            <UIEnabled id="5164">false</UIEnabled>
+            <UIOrder id="5165">0</UIOrder>
+          </Result>
+          <Transition id="5169">
+            <Destination id="5170">Restart</Destination>
+            <Source id="5171">WaitForWindowClick</Source>
+            <SourceResult id="5172">Done</SourceResult>
+          </Transition>
+          <UIInfo id="5173">
+            <Pos id="5174" x="1980" y="1772"/>
+          </UIInfo>
+          <VisualElement type="Text Graphic" id="5176">
+            <Color A="255" B="255" G="170" R="85" id="5177">#55aaff</Color>
+            <Dimensions height="50" id="5178" width="800" x="0" y="0"/>
+            <Name id="5179">Instructions1</Name>
+            <Position id="5180" x="325" y="250"/>
+            <SubjectView id="5181">false</SubjectView>
+            <Text id="5182">Session Complete!</Text>
+            <UIInfo id="5183">
+              <Pos id="5184" x="1796" y="1578"/>
+            </UIInfo>
+            <Layer id="5186">0</Layer>
+            <OperatorView id="5187">true</OperatorView>
+            <UIEnabled id="5188">false</UIEnabled>
+            <UIOrder id="5189">0</UIOrder>
+            <Visible id="5190">true</Visible>
+          </VisualElement>
+          <ExitScript id="5202">NumberRestarts.value++;</ExitScript>
+          <VisualElement type="Text Graphic" id="5203">
+            <Color A="255" B="255" G="170" R="85" id="5204">#55aaff</Color>
+            <Dimensions height="50" id="5205" width="800" x="0" y="0"/>
+            <Name id="5206">Instructions2</Name>
+            <Position id="5207" x="200" y="350"/>
+            <SubjectView id="5208">false</SubjectView>
+            <Text id="5209">Click in window to continue the session.  Press Stop button to end.</Text>
+            <UIInfo id="5210">
+              <Pos id="5211" x="1793" y="1666"/>
+            </UIInfo>
+            <Layer id="5213">0</Layer>
+            <OperatorView id="5214">true</OperatorView>
+            <UIEnabled id="5215">false</UIEnabled>
+            <UIOrder id="5216">0</UIOrder>
+            <Visible id="5217">true</Visible>
+          </VisualElement>
+          <BackgroundColor A="255" B="0" G="0" R="0" id="5229">#000000</BackgroundColor>
+          <EngineNeeded id="5230">-1</EngineNeeded>
+          <EntryScript id="5231"/>
+          <FrameScript id="5232"/>
+          <Revision id="5233">-1</Revision>
+          <UIEnabled id="5234">false</UIEnabled>
+          <UIOrder id="5235">0</UIOrder>
+        </StateMachineElement>
+        <Transition id="5245">
+          <Destination id="5246">WaitForRestart</Destination>
+          <Source id="5247">LessThanMaxSuperblocks</Source>
+          <SourceResult id="5248">false</SourceResult>
+        </Transition>
+        <Transition id="5249">
+          <Destination id="5250">Superblock</Destination>
+          <Source id="5251">WaitForRestart</Source>
+          <SourceResult id="5252">Restart</SourceResult>
+        </Transition>
+        <Level id="5253">Stage</Level>
+        <Type id="5254">StateMachine</Type>
+        <UIEnabled id="5255">false</UIEnabled>
+        <UIOrder id="5256">0</UIOrder>
+      </StateMachine>
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
