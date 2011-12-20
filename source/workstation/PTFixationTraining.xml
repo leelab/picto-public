@@ -8,12 +8,14 @@
           <Name id="6">operatorClick</Name>
           <UIInfo id="7">
             <Pos id="8" x="1628" y="2016"/>
-            
           </UIInfo>
-        <NewClick id="10">false</NewClick><Pos id="11" x="0" y="0"/><UIEnabled id="12">false</UIEnabled><UIOrder id="13">0</UIOrder></Parameter>
+          <NewClick id="10">false</NewClick>
+          <Pos id="11" x="0" y="0"/>
+          <UIEnabled id="12">false</UIEnabled>
+          <UIOrder id="13">0</UIOrder>
+        </Parameter>
         <UIInfo id="14">
-          <Pos id="15" x="2008" y="2000"/>
-          
+          <Pos id="15" x="2012" y="2000"/>
         </UIInfo>
         <InitialElement id="17">PresentSingleStimulus</InitialElement>
         <Name id="18">PresentStimuli</Name>
@@ -23,7 +25,6 @@
           <Name id="22">PresentSingleStimulus</Name>
           <UIInfo id="23">
             <Pos id="24" x="1754" y="1853"/>
-            
           </UIInfo>
           <StateMachineElement type="State" id="26">
             <EntryScript id="27">
@@ -44,12 +45,12 @@
               <Name id="31">Failed</Name>
               <UIInfo id="32">
                 <Pos id="33" x="1998" y="1547"/>
-                
               </UIInfo>
-            <UIEnabled id="35">false</UIEnabled><UIOrder id="36">0</UIOrder></Result>
+              <UIEnabled id="35">false</UIEnabled>
+              <UIOrder id="36">0</UIOrder>
+            </Result>
             <UIInfo id="37">
               <Pos id="38" x="1677" y="1712"/>
-              
             </UIInfo>
             <ExitScript id="40">
               Square.subjectView = false;
@@ -60,19 +61,44 @@
               <Name id="43">FixationTracker</Name>
               <Result id="44">
                 <Name id="45">Reaquistion Time Exceeded</Name>
-              <UIInfo id="46"><Pos id="48" x="0" y="0"/></UIInfo><UIEnabled id="49">false</UIEnabled><UIOrder id="50">0</UIOrder></Result>
+                <UIEnabled id="46">false</UIEnabled>
+                <UIInfo id="47">
+                  <Pos id="48" x="2000" y="2000"/>
+                </UIInfo>
+                <UIOrder id="50">0</UIOrder>
+              </Result>
               <Result id="51">
                 <Name id="52">Initial Aquistion Time Exceeded</Name>
-              <UIInfo id="53"><Pos id="55" x="0" y="0"/></UIInfo><UIEnabled id="56">false</UIEnabled><UIOrder id="57">0</UIOrder></Result>
+                <UIEnabled id="53">false</UIEnabled>
+                <UIInfo id="54">
+                  <Pos id="55" x="2209" y="2000"/>
+                </UIInfo>
+                <UIOrder id="57">0</UIOrder>
+              </Result>
               <Result id="58">
                 <Name id="59">Total Time Excceeded</Name>
-              <UIInfo id="60"><Pos id="62" x="0" y="0"/></UIInfo><UIEnabled id="63">false</UIEnabled><UIOrder id="64">0</UIOrder></Result>
+                <UIEnabled id="60">false</UIEnabled>
+                <UIInfo id="61">
+                  <Pos id="62" x="2443" y="2000"/>
+                </UIInfo>
+                <UIOrder id="64">0</UIOrder>
+              </Result>
               <Result id="65">
                 <Name id="66">Broke Fixation</Name>
-              <UIInfo id="67"><Pos id="69" x="0" y="0"/></UIInfo><UIEnabled id="70">false</UIEnabled><UIOrder id="71">0</UIOrder></Result>
+                <UIEnabled id="67">false</UIEnabled>
+                <UIInfo id="68">
+                  <Pos id="69" x="2609" y="2000"/>
+                </UIInfo>
+                <UIOrder id="71">0</UIOrder>
+              </Result>
               <Result id="72">
                 <Name id="73">Success</Name>
-              <UIInfo id="74"><Pos id="76" x="0" y="0"/></UIInfo><UIEnabled id="77">false</UIEnabled><UIOrder id="78">0</UIOrder></Result>
+                <UIEnabled id="74">false</UIEnabled>
+                <UIInfo id="75">
+                  <Pos id="76" x="2723" y="2000"/>
+                </UIInfo>
+                <UIOrder id="78">0</UIOrder>
+              </Result>
               <UIInfo id="79">
                 <Pos id="80" x="1471" y="1498"/>
               </UIInfo>
@@ -82,13 +108,23 @@
               <SignalChannel id="85">PositionChannel</SignalChannel>
               <TimeUnits id="86">Ms</TimeUnits>
               <TotalTime id="87">1500</TotalTime>
-            <MaxReacquisitionTime id="88">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="90">false</ReacquisitionAllowed><TargetEntryScript id="91"/><TargetExitScript id="92"/><Type id="93"/><UIEnabled id="94">false</UIEnabled><UIOrder id="95">0</UIOrder></ControlElement>
+              <MaxReacquisitionTime id="88">1100</MaxReacquisitionTime>
+              <MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime>
+              <ReacquisitionAllowed id="90">true</ReacquisitionAllowed>
+              <TargetEntryScript id="91"/>
+              <TargetExitScript id="92"/>
+              <Type id="93"/>
+              <UIEnabled id="94">true</UIEnabled>
+              <UIOrder id="95">0</UIOrder>
+            </ControlElement>
             <Result id="96">
               <Name id="97">Fixated</Name>
               <UIInfo id="98">
                 <Pos id="99" x="1992" y="1665"/>
               </UIInfo>
-            <UIEnabled id="101">false</UIEnabled><UIOrder id="102">0</UIOrder></Result>
+              <UIEnabled id="101">false</UIEnabled>
+              <UIOrder id="102">0</UIOrder>
+            </Result>
             <Transition id="103">
               <Destination id="104">Failed</Destination>
               <Source id="105">FixationTracker</Source>
@@ -114,14 +150,19 @@
               <Source id="121">FixationTracker</Source>
               <SourceResult id="122">Success</SourceResult>
             </Transition>
-          <BackgroundColor A="255" B="0" G="0" R="0" id="123">#000000</BackgroundColor><EngineNeeded id="124">-1</EngineNeeded><UIEnabled id="125">false</UIEnabled><UIOrder id="126">0</UIOrder></StateMachineElement>
+            <BackgroundColor A="255" B="0" G="0" R="0" id="123">#000000</BackgroundColor>
+            <EngineNeeded id="124">-1</EngineNeeded>
+            <UIEnabled id="125">false</UIEnabled>
+            <UIOrder id="126">0</UIOrder>
+          </StateMachineElement>
           <Result id="127">
             <Name id="128">StimulusPresented</Name>
             <UIInfo id="129">
               <Pos id="130" x="1904" y="1636"/>
-              
             </UIInfo>
-          <UIEnabled id="132">false</UIEnabled><UIOrder id="133">0</UIOrder></Result>
+            <UIEnabled id="132">false</UIEnabled>
+            <UIOrder id="133">0</UIOrder>
+          </Result>
           <Transition id="134">
             <Destination id="135">StimulusPresented</Destination>
             <Source id="136">PresentStimulus</Source>
@@ -132,22 +173,31 @@
               <Name id="140">WaitForOperatorClick</Name>
               <Result id="141">
                 <Name id="142">Done</Name>
-              <UIInfo id="143"><Pos id="145" x="0" y="0"/></UIInfo><UIEnabled id="146">false</UIEnabled><UIOrder id="147">0</UIOrder></Result>
+                <UIEnabled id="143">false</UIEnabled>
+                <UIInfo id="144">
+                  <Pos id="145" x="2000" y="2000"/>
+                </UIInfo>
+                <UIOrder id="147">0</UIOrder>
+              </Result>
               <Script id="148">return operatorClick.newClick;</Script>
               <UIInfo id="149">
                 <Pos id="150" x="1189" y="1347"/>
               </UIInfo>
-            <Type id="152"/><UIEnabled id="153">false</UIEnabled><UIOrder id="154">0</UIOrder></ControlElement>
+              <Type id="152"/>
+              <UIEnabled id="153">false</UIEnabled>
+              <UIOrder id="154">0</UIOrder>
+            </ControlElement>
             <Name id="155">WaitForClick</Name>
             <Result id="156">
               <Name id="157">OperatorClicked</Name>
               <UIInfo id="158">
                 <Pos id="159" x="1601" y="1367"/>
               </UIInfo>
-            <UIEnabled id="161">false</UIEnabled><UIOrder id="162">0</UIOrder></Result>
+              <UIEnabled id="161">false</UIEnabled>
+              <UIOrder id="162">0</UIOrder>
+            </Result>
             <UIInfo id="163">
               <Pos id="164" x="1470" y="1713"/>
-              
             </UIInfo>
             <Transition id="166">
               <Destination id="167">OperatorClicked</Destination>
@@ -155,7 +205,14 @@
               <SourceResult id="169">Done</SourceResult>
             </Transition>
             <ExitScript id="170">Square.red = 255;</ExitScript>
-          <BackgroundColor A="255" B="0" G="0" R="0" id="171">#000000</BackgroundColor><EngineNeeded id="172">-1</EngineNeeded><EntryScript id="173"/><FrameScript id="174"/><Revision id="175">-1</Revision><UIEnabled id="176">false</UIEnabled><UIOrder id="177">0</UIOrder></StateMachineElement>
+            <BackgroundColor A="255" B="0" G="0" R="0" id="171">#000000</BackgroundColor>
+            <EngineNeeded id="172">-1</EngineNeeded>
+            <EntryScript id="173"/>
+            <FrameScript id="174"/>
+            <Revision id="175">-1</Revision>
+            <UIEnabled id="176">false</UIEnabled>
+            <UIOrder id="177">0</UIOrder>
+          </StateMachineElement>
           <Transition id="178">
             <Destination id="179">PresentStimulus</Destination>
             <Source id="180">WaitForClick</Source>
@@ -172,18 +229,25 @@
             <Columns id="190">7</Columns>
             <Rows id="191">7</Rows>
             <SubjectView id="192">false</SubjectView>
-          <Layer id="193">0</Layer><OperatorView id="194">true</OperatorView><Position id="195" x="0" y="0"/><UIOrder id="196">0</UIOrder><Visible id="197">true</Visible></VisualElement>
+            <Layer id="193">0</Layer>
+            <OperatorView id="194">true</OperatorView>
+            <Position id="195" x="0" y="0"/>
+            <UIOrder id="196">0</UIOrder>
+            <Visible id="197">true</Visible>
+          </VisualElement>
           <Parameter type="Range" id="198">
             <Increment id="199">1</Increment>
             <Max id="200">200</Max>
             <Name id="201">SquareDimension</Name>
             <UIInfo id="202">
               <Pos id="203" x="1639" y="1919"/>
-              
             </UIInfo>
             <Value id="205">50</Value>
             <UIEnabled id="206">true</UIEnabled>
-          <Min id="207">0</Min><UIOrder id="208">0</UIOrder><Units id="209"/></Parameter>
+            <Min id="207">0</Min>
+            <UIOrder id="208">0</UIOrder>
+            <Units id="209"/>
+          </Parameter>
           <StateMachineElement type="StateMachine" id="210">
             <InitialElement id="211">SetTargetRed</InitialElement>
             <Name id="212">FixationFeedback</Name>
@@ -192,31 +256,55 @@
               <UIInfo id="215">
                 <Pos id="216" x="1591" y="1463"/>
               </UIInfo>
-            <UIEnabled id="218">false</UIEnabled><UIOrder id="219">0</UIOrder></Result>
+              <UIEnabled id="218">false</UIEnabled>
+              <UIOrder id="219">0</UIOrder>
+            </Result>
             <StateMachineElement type="ScriptElement" id="220">
               <Name id="221">SetTargetRed</Name>
               <Result id="222">
                 <Name id="223">false</Name>
-              <UIInfo id="224"><Pos id="226" x="0" y="0"/></UIInfo><UIEnabled id="227">false</UIEnabled><UIOrder id="228">0</UIOrder></Result>
+                <UIEnabled id="224">false</UIEnabled>
+                <UIInfo id="225">
+                  <Pos id="226" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="228">0</UIOrder>
+              </Result>
               <Result id="229">
                 <Name id="230">true</Name>
-              <UIInfo id="231"><Pos id="233" x="0" y="0"/></UIInfo><UIEnabled id="234">false</UIEnabled><UIOrder id="235">0</UIOrder></Result>
+                <UIEnabled id="231">false</UIEnabled>
+                <UIInfo id="232">
+                  <Pos id="233" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="235">0</UIOrder>
+              </Result>
               <Script id="236">Square.red = 0;</Script>
               <UIInfo id="237">
                 <Pos id="238" x="1132" y="1573"/>
               </UIInfo>
-            <Type id="240">ScriptElement</Type><UIEnabled id="241">false</UIEnabled><UIOrder id="242">0</UIOrder></StateMachineElement>
+              <Type id="240">ScriptElement</Type>
+              <UIEnabled id="241">false</UIEnabled>
+              <UIOrder id="242">0</UIOrder>
+            </StateMachineElement>
             <StateMachineElement type="Reward" id="243">
               <Name id="244">Reward</Name>
               <Result id="245">
                 <Name id="246">done</Name>
-              <UIInfo id="247"><Pos id="249" x="0" y="0"/></UIInfo><UIEnabled id="250">false</UIEnabled><UIOrder id="251">0</UIOrder></Result>
+                <UIEnabled id="247">false</UIEnabled>
+                <UIInfo id="248">
+                  <Pos id="249" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="251">0</UIOrder>
+              </Result>
               <RewardChan id="252">1</RewardChan>
               <RewardQty id="253">60</RewardQty>
               <UIInfo id="254">
                 <Pos id="255" x="1385" y="1585"/>
               </UIInfo>
-            <Type id="257">Reward</Type><UIEnabled id="258">true</UIEnabled><UIOrder id="259">0</UIOrder><NumRewards id="1421">1</NumRewards></StateMachineElement>
+              <Type id="257">Reward</Type>
+              <UIEnabled id="258">true</UIEnabled>
+              <UIOrder id="259">0</UIOrder>
+              <NumRewards id="499">1</NumRewards>
+            </StateMachineElement>
             <Transition id="260">
               <Destination id="261">Reward</Destination>
               <Source id="262">SetTargetRed</Source>
@@ -234,9 +322,14 @@
             </Transition>
             <UIInfo id="272">
               <Pos id="273" x="1815" y="1841"/>
-              
             </UIInfo>
-          <EntryScript id="275"/><ExitScript id="276"/><Level id="277">Stage</Level><Type id="278">StateMachine</Type><UIEnabled id="279">false</UIEnabled><UIOrder id="280">0</UIOrder></StateMachineElement>
+            <EntryScript id="275"/>
+            <ExitScript id="276"/>
+            <Level id="277">Stage</Level>
+            <Type id="278">StateMachine</Type>
+            <UIEnabled id="279">false</UIEnabled>
+            <UIOrder id="280">0</UIOrder>
+          </StateMachineElement>
           <Transition id="281">
             <Destination id="282">FixationFeedback</Destination>
             <Source id="283">PresentStimulus</Source>
@@ -256,11 +349,17 @@
             <UIEnabled id="295">true</UIEnabled>
             <UIInfo id="296">
               <Pos id="297" x="1371" y="1913"/>
-              
             </UIInfo>
             <Value id="299">80</Value>
-          <UIOrder id="300">0</UIOrder><Units id="301"/></Parameter>
-        <ExitScript id="302"/><Level id="303">Stage</Level><Type id="304">StateMachine</Type><UIEnabled id="305">false</UIEnabled><UIOrder id="306">0</UIOrder></StateMachineElement>
+            <UIOrder id="300">0</UIOrder>
+            <Units id="301"/>
+          </Parameter>
+          <ExitScript id="302"/>
+          <Level id="303">Stage</Level>
+          <Type id="304">StateMachine</Type>
+          <UIEnabled id="305">false</UIEnabled>
+          <UIOrder id="306">0</UIOrder>
+        </StateMachineElement>
         <VisualElement type="Box Graphic" id="307">
           <Color A="255" B="0" G="255" R="255" id="308">#ffff00</Color>
           <Dimensions height="10" id="309" width="10" x="0" y="0"/>
@@ -270,27 +369,50 @@
           </UIInfo>
           <Visible id="314">true</Visible>
           <SubjectView id="315">false</SubjectView>
-        <Layer id="316">0</Layer><OperatorView id="317">true</OperatorView><Outline id="318">false</Outline><OutlineThickness id="319">0</OutlineThickness><Position id="320" x="0" y="0"/><UIEnabled id="321">false</UIEnabled><UIOrder id="322">0</UIOrder></VisualElement>
+          <Layer id="316">0</Layer>
+          <OperatorView id="317">true</OperatorView>
+          <Outline id="318">false</Outline>
+          <OutlineThickness id="319">0</OutlineThickness>
+          <Position id="320" x="0" y="0"/>
+          <UIEnabled id="321">false</UIEnabled>
+          <UIOrder id="322">0</UIOrder>
+        </VisualElement>
         <Parameter type="Numeric" id="323">
           <Name id="324">StimuliPresented</Name>
           <UIInfo id="325">
             <Pos id="326" x="1864" y="2016"/>
-            
           </UIInfo>
-        <UIEnabled id="328">false</UIEnabled><UIOrder id="329">0</UIOrder><Units id="330"/><Value id="331">0</Value></Parameter>
+          <UIEnabled id="328">false</UIEnabled>
+          <UIOrder id="329">0</UIOrder>
+          <Units id="330"/>
+          <Value id="331">0</Value>
+        </Parameter>
         <StateMachineElement type="ScriptElement" id="332">
           <Name id="333">IncrementStimulusCounter</Name>
           <Result id="334">
             <Name id="335">false</Name>
-          <UIInfo id="336"><Pos id="338" x="0" y="0"/></UIInfo><UIEnabled id="339">false</UIEnabled><UIOrder id="340">0</UIOrder></Result>
+            <UIEnabled id="336">false</UIEnabled>
+            <UIInfo id="337">
+              <Pos id="338" x="0" y="0"/>
+            </UIInfo>
+            <UIOrder id="340">0</UIOrder>
+          </Result>
           <Result id="341">
             <Name id="342">true</Name>
-          <UIInfo id="343"><Pos id="345" x="0" y="0"/></UIInfo><UIEnabled id="346">false</UIEnabled><UIOrder id="347">0</UIOrder></Result>
+            <UIEnabled id="343">false</UIEnabled>
+            <UIInfo id="344">
+              <Pos id="345" x="0" y="0"/>
+            </UIInfo>
+            <UIOrder id="347">0</UIOrder>
+          </Result>
           <Script id="348">StimuliPresented.value++; return true;</Script>
           <UIInfo id="349">
             <Pos id="350" x="2060" y="1772"/>
           </UIInfo>
-        <Type id="352">ScriptElement</Type><UIEnabled id="353">false</UIEnabled><UIOrder id="354">0</UIOrder></StateMachineElement>
+          <Type id="352">ScriptElement</Type>
+          <UIEnabled id="353">false</UIEnabled>
+          <UIOrder id="354">0</UIOrder>
+        </StateMachineElement>
         <Transition id="355">
           <Destination id="356">IncrementStimulusCounter</Destination>
           <Source id="357">PresentSingleStimulus</Source>
@@ -310,14 +432,25 @@
           <Name id="368">Target</Name>
           <UIInfo id="369">
             <Pos id="370" x="1758" y="2112"/>
-            
           </UIInfo>
           <Radius id="372">80</Radius>
-        <Color A="255" B="0" G="255" R="0" id="373">#00ff00</Color><Layer id="374">0</Layer><OperatorView id="375">true</OperatorView><Position id="376" x="0" y="0"/><SubjectView id="377">false</SubjectView><UIEnabled id="378">false</UIEnabled><UIOrder id="379">0</UIOrder><Visible id="380">true</Visible></ControlTarget>
-      <EntryScript id="381"/><ExitScript id="382"/><Level id="383">Stage</Level><UIEnabled id="384">false</UIEnabled><UIOrder id="385">0</UIOrder></StateMachine>
+          <Color A="255" B="0" G="255" R="0" id="373">#00ff00</Color>
+          <Layer id="374">0</Layer>
+          <OperatorView id="375">true</OperatorView>
+          <Position id="376" x="0" y="0"/>
+          <SubjectView id="377">false</SubjectView>
+          <UIEnabled id="378">false</UIEnabled>
+          <UIOrder id="379">0</UIOrder>
+          <Visible id="380">true</Visible>
+        </ControlTarget>
+        <EntryScript id="381"/>
+        <ExitScript id="382"/>
+        <Level id="383">Stage</Level>
+        <UIEnabled id="384">false</UIEnabled>
+        <UIOrder id="385">0</UIOrder>
+      </StateMachine>
       <UIInfo id="386">
         <Pos id="387" x="1668" y="1744"/>
-        
       </UIInfo>
       <Name id="389">Eye Calibration</Name>
     </Task>
