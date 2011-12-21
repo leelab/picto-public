@@ -2379,8 +2379,14 @@
                       TrialInfo.setData(&quot;RedProb&quot;,100);
                       TrialInfo.setData(&quot;RedRew&quot;,TrialReward.number);
                       }
-                      OverlapFixationTracker.totalTime = OverlapTime.value+500;
-                      OverlapFixationTracker.fixationTime = OverlapTime.value;
+
+                      RandDouble.randomize();
+                      x = (MinOverlapTime.value-MaxOverlapTime.value)/Math.log(.05);
+                      time = MinOverlapTime.value-x*Math.log(RandDouble.value);
+                      if(time &gt; MaxOverlapTime.value)time = MaxOverlapTime.value;
+                      if(time &lt; MinOverlapTime.value)time = MinOverlapTime.value;
+                      OverlapFixationTracker.fixationTime = time;
+                      OverlapFixationTracker.totalTime = time+500;
                     </EntryScript>
                     <Name id="1971">TargetsAppear</Name>
                     <Result id="1972">
@@ -2530,7 +2536,7 @@
                     <Increment id="8007">1</Increment>
                     <Max id="8008">10000</Max>
                     <Min id="8009">0</Min>
-                    <Name id="8010">OverlapTime</Name>
+                    <Name id="8010">MinOverlapTime</Name>
                     <UIEnabled id="8011">true</UIEnabled>
                     <UIInfo id="8012">
                       <Pos id="8013" x="761" y="682"/>
@@ -2538,6 +2544,32 @@
                     <UIOrder id="8015">0</UIOrder>
                     <Units id="8016"/>
                     <Value id="8017">500</Value>
+                  </Parameter>
+                  <Parameter type="Range" id="1782">
+                    <Increment id="1783">1</Increment>
+                    <Max id="1784">10000</Max>
+                    <Min id="1785">0</Min>
+                    <Name id="1786">MaxOverlapTime</Name>
+                    <UIEnabled id="1787">true</UIEnabled>
+                    <UIInfo id="1788">
+                      <Pos id="1789" x="757" y="767"/>
+                    </UIInfo>
+                    <UIOrder id="1791">0</UIOrder>
+                    <Units id="1792"/>
+                    <Value id="1793">1500</Value>
+                  </Parameter>
+                  <Parameter type="RandomDouble" id="1808">
+                    <Max id="1809">1</Max>
+                    <Min id="1810">0</Min>
+                    <Name id="1811">RandDouble</Name>
+                    <Seed id="1812">0</Seed>
+                    <UIEnabled id="1813">false</UIEnabled>
+                    <UIInfo id="1814">
+                      <Pos id="1815" x="768" y="870"/>
+                    </UIInfo>
+                    <UIOrder id="1817">0</UIOrder>
+                    <UseSeed id="1818">false</UseSeed>
+                    <Value id="1831">0</Value>
                   </Parameter>
                 </StateMachineElement>
                 <Transition id="4079">
@@ -3729,7 +3761,7 @@
     <Task id="5265">
       <Name id="5266">ChoiceTraining</Name>
       <UIInfo id="5267">
-        <Pos id="5268" x="2064" y="1738"/>
+        <Pos id="5268" x="2015" y="1747"/>
 
       </UIInfo>
       <StateMachine id="5270">
@@ -3854,7 +3886,7 @@
               <Parameter type="Range" id="496">
                 <Increment id="497">1</Increment>
                 <Max id="498">100</Max>
-                <Min id="5407">1</Min>
+                <Min id="5459">1</Min>
                 <Name id="500">FixationTrialPercentage</Name>
                 <UIInfo id="501">
                   <Pos id="502" x="1309" y="930"/>
@@ -5518,18 +5550,18 @@
                       <UIInfo id="1780">
                         <Pos id="1781" x="614" y="239"/>
                       </UIInfo>
-                      <Type id="1783">ScriptElement</Type>
-                      <UIEnabled id="1784">false</UIEnabled>
-                      <UIOrder id="1785">0</UIOrder>
+                      <Type id="6573">ScriptElement</Type>
+                      <UIEnabled id="6574">false</UIEnabled>
+                      <UIOrder id="6575">0</UIOrder>
                     </StateMachineElement>
-                    <StateMachineElement type="ScriptElement" id="1786">
-                      <Name id="1787">MarkRewardStage</Name>
-                      <Result id="1788">
-                        <Name id="1789">false</Name>
+                    <StateMachineElement type="ScriptElement" id="6598">
+                      <Name id="6599">MarkRewardStage</Name>
+                      <Result id="6600">
+                        <Name id="6609">false</Name>
                         <UIInfo id="1790">
-                          <Pos id="1792" x="0" y="0"/>
+                          <Pos id="6610" x="0" y="0"/>
                         </UIInfo>
-                        <UIEnabled id="1793">false</UIEnabled>
+                        <UIEnabled id="6612">false</UIEnabled>
                         <UIOrder id="1794">0</UIOrder>
                       </Result>
                       <Result id="1795">
@@ -5550,19 +5582,19 @@
                       </UIInfo>
                       <Type id="1806">ScriptElement</Type>
                       <UIEnabled id="6546">false</UIEnabled>
-                      <UIOrder id="1808">0</UIOrder>
+                      <UIOrder id="6637">0</UIOrder>
                     </StateMachineElement>
-                    <StateMachineElement type="ScriptElement" id="1809">
-                      <Name id="1810">MarkColorNotRewarded</Name>
-                      <Result id="1811">
-                        <Name id="1812">false</Name>
-                        <UIInfo id="1813">
-                          <Pos id="1815" x="0" y="0"/>
+                    <StateMachineElement type="ScriptElement" id="6655">
+                      <Name id="6656">MarkColorNotRewarded</Name>
+                      <Result id="6657">
+                        <Name id="6668">false</Name>
+                        <UIInfo id="6671">
+                          <Pos id="6672" x="0" y="0"/>
                         </UIInfo>
                         <UIEnabled id="1816">false</UIEnabled>
-                        <UIOrder id="1817">0</UIOrder>
+                        <UIOrder id="6678">0</UIOrder>
                       </Result>
-                      <Result id="1818">
+                      <Result id="6688">
                         <Name id="6556">true</Name>
                         <UIInfo id="6557">
                           <Pos id="6558" x="0" y="0"/>
@@ -5588,7 +5620,7 @@
                       </UIInfo>
                       <Type id="6569">ScriptElement</Type>
                       <UIEnabled id="6570">false</UIEnabled>
-                      <UIOrder id="1831">0</UIOrder>
+                      <UIOrder id="6702">0</UIOrder>
                     </StateMachineElement>
                     <Transition id="6576">
                       <Destination id="6577">MarkEndFeedbackStage</Destination>
@@ -5750,7 +5782,7 @@
                       <TimeUnits id="6715">Ms</TimeUnits>
                       <TotalTime id="6716">1000</TotalTime>
                       <UIInfo id="6717">
-                        <Pos id="6718" x="967" y="175"/>
+                        <Pos id="6718" x="912" y="174"/>
                       </UIInfo>
                       <TargetExitScript id="6720">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript>
                       <MaxReacquisitionTime id="6721">0</MaxReacquisitionTime>
@@ -5762,36 +5794,31 @@
                       <UIOrder id="6727">0</UIOrder>
                     </ControlElement>
                     <EntryScript id="6743">
-																						EventInfo.setData(&quot;Event&quot;,9);
-																						EventInfo.updateValue();
+                      EventInfo.setData(&quot;Event&quot;,9);
+                      EventInfo.updateValue();
 
-																						colorMag = 2.55*TargetLuminosityPercent.value;
-																						if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
-																						{
-																							LeftGraphic.setColor(colorMag,0,0);
-																						     RightGraphic.setColor(0,colorMag,0);
-																						}
-																						else
-																						{
-																							LeftGraphic.setColor(0,colorMag,0);
-																							RightGraphic.setColor(colorMag,0,0);
-																						}
-																						LeftGraphic.visible = true;
-																						RightGraphic.visible = true;
+                      colorMag = 2.55*TargetLuminosityPercent.value;
+                      if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
+                      {
+                      LeftGraphic.setColor(colorMag,0,0);
+                      RightGraphic.setColor(0,colorMag,0);
+                      }
+                      else
+                      {
+                      LeftGraphic.setColor(0,colorMag,0);
+                      RightGraphic.setColor(colorMag,0,0);
+                      }
+                      LeftGraphic.visible = true;
+                      RightGraphic.visible = true;
 
-																						RandDouble.randomize();
-																						x = (MinOverlapTime.value-MaxOverlapTime.value)/Math.log(.05);
-																						time = MinOverlapTime.value-x*Math.log(RandDouble.value);
-																						if(time &gt; MaxOverlapTime.value)time = MaxOverlapTime.value;
-																						if(time &lt; MinOverlapTime.value)time = MinOverlapTime.value;
-																						OverlapFixationTracker.fixationTime = time;
-																						OverlapFixationTracker.totalTime = time+500;
-                      
+                      RandDouble.randomize();
+                      x = (MinOverlapTime.value-MaxOverlapTime.value)/Math.log(.05);
+                      time = MinOverlapTime.value-x*Math.log(RandDouble.value);
+                      if(time &gt; MaxOverlapTime.value)time = MaxOverlapTime.value;
+                      if(time &lt; MinOverlapTime.value)time = MinOverlapTime.value;
+                      OverlapFixationTracker.fixationTime = time;
+                      OverlapFixationTracker.totalTime = time+500;
 
-
-
-
-																						OverlapFixationTracker.totalTime = OverlapTime.value+1000;
                     </EntryScript>
                     <Name id="6744">TargetsAppear</Name>
                     <Result id="6745">
@@ -5930,7 +5957,33 @@
                     <Units id="4340"/>
                     <Value id="4341">500</Value>
                   </Parameter>
-                <Parameter type="Range" id="8026"><Increment id="8027">1</Increment><Max id="8028">10000</Max><Min id="8029">0</Min><Name id="8030">MaxOverlapTime</Name><UIEnabled id="8031">true</UIEnabled><UIInfo id="8032"><Pos id="8033" x="765" y="768"/></UIInfo><UIOrder id="8035">0</UIOrder><Units id="8036"/><Value id="8037">1500</Value></Parameter><Parameter type="RandomDouble" id="8046"><Max id="8047">1</Max><Min id="8048">0</Min><Name id="8049">RandDouble</Name><Seed id="8050">0</Seed><UIEnabled id="8051">false</UIEnabled><UIInfo id="8052"><Pos id="8053" x="765" y="866"/></UIInfo><UIOrder id="8055">0</UIOrder><UseSeed id="8056">false</UseSeed><Value id="8057">0</Value></Parameter></StateMachineElement>
+                  <Parameter type="Range" id="8026">
+                    <Increment id="8027">1</Increment>
+                    <Max id="8028">10000</Max>
+                    <Min id="8029">0</Min>
+                    <Name id="8030">MaxOverlapTime</Name>
+                    <UIEnabled id="8031">true</UIEnabled>
+                    <UIInfo id="8032">
+                      <Pos id="8033" x="765" y="768"/>
+                    </UIInfo>
+                    <UIOrder id="8035">0</UIOrder>
+                    <Units id="8036"/>
+                    <Value id="8037">1500</Value>
+                  </Parameter>
+                  <Parameter type="RandomDouble" id="8046">
+                    <Max id="8047">1</Max>
+                    <Min id="8048">0</Min>
+                    <Name id="8049">RandDouble</Name>
+                    <Seed id="8050">0</Seed>
+                    <UIEnabled id="8051">false</UIEnabled>
+                    <UIInfo id="8052">
+                      <Pos id="8053" x="765" y="866"/>
+                    </UIInfo>
+                    <UIOrder id="8055">0</UIOrder>
+                    <UseSeed id="8056">false</UseSeed>
+                    <Value id="8057">0</Value>
+                  </Parameter>
+                </StateMachineElement>
                 <Transition id="6877">
                   <Destination id="6878">Failed</Destination>
                   <Source id="6879">WaitForFixation</Source>
@@ -7180,6 +7233,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">6658</OpenedBlock>
+    <OpenedBlock id="">1</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

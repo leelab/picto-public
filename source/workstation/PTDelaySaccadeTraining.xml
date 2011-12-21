@@ -1234,35 +1234,41 @@
                       <UIOrder id="1969">0</UIOrder>
                     </ControlElement>
                     <EntryScript id="1970">
-																														                      EventInfo.setData(&quot;Event&quot;,9);
-																														                      EventInfo.updateValue();
-																														                      TargetGraphic.visible = true;
+																																		                      EventInfo.setData(&quot;Event&quot;,9);
+																																		                      EventInfo.updateValue();
+																																		                      TargetGraphic.visible = true;
 
-																														                      if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
-																														                      {
-																														                      TargetGraphic.x = 275;
-																														                      TargetWindow.x = 275;
-																														                      }
-																														                      else
-																														                      {
-																														                      TargetGraphic.x = 525;
-																														                      TargetWindow.x = 525;
-																														                      }
+																																		                      if(  (!RightOnly.value &amp;&amp; ((TrialType.value%10)&lt;5 ))  || LeftOnly.value )
+																																		                      {
+																																		                      TargetGraphic.x = 275;
+																																		                      TargetWindow.x = 275;
+																																		                      }
+																																		                      else
+																																		                      {
+																																		                      TargetGraphic.x = 525;
+																																		                      TargetWindow.x = 525;
+																																		                      }
 
-																														                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
-																														                      {
-																														                      TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
+																																		                      if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
+																																		                      {
+																																		                      TargetGraphic.setColor(2.55*TargetLuminosityPercent.value,0,0);
 																																		TrialInfo.setData(&quot;GreenProb&quot;,100);
 																																		TrialInfo.setData(&quot;GreenRew&quot;,TrialReward.number);
-																														                      }
-																														                      else
-																														                      {
-																														                      TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
+																																		                      }
+																																		                      else
+																																		                      {
+																																		                      TargetGraphic.setColor(0,2.55*TargetLuminosityPercent.value,0);
 																																		TrialInfo.setData(&quot;RedProb&quot;,100);
 																																		TrialInfo.setData(&quot;RedRew&quot;,TrialReward.number);
-																														                      }
-																														                      OverlapFixationTracker.totalTime = OverlapTime.value+500;
-																														                      OverlapFixationTracker.fixationTime = OverlapTime.value;
+																																		                      }
+           
+																																		RandDouble.randomize(); 
+																																		x = (MinOverlapTime.value-MaxOverlapTime.value)/Math.log(.05);
+																																		time = MinOverlapTime.value-x*Math.log(RandDouble.value);
+																																		if(time &gt; MaxOverlapTime.value)time = MaxOverlapTime.value;
+																																		if(time &lt; MinOverlapTime.value)time = MinOverlapTime.value;
+																																		OverlapFixationTracker.fixationTime = time;
+																																		OverlapFixationTracker.totalTime = time+500;
                     </EntryScript>
                     <Name id="1971">TargetsAppear</Name>
                     <Result id="1972">
@@ -1412,7 +1418,7 @@
                     <Increment id="8007">1</Increment>
                     <Max id="8008">10000</Max>
                     <Min id="8009">0</Min>
-                    <Name id="8010">OverlapTime</Name>
+                    <Name id="8010">MinOverlapTime</Name>
                     <UIEnabled id="8011">true</UIEnabled>
                     <UIInfo id="8012">
                       <Pos id="8013" x="761" y="682"/>
@@ -1421,7 +1427,7 @@
                     <Units id="8016"/>
                     <Value id="8017">500</Value>
                   </Parameter>
-                </StateMachineElement>
+                <Parameter type="Range" id="1782"><Increment id="1783">1</Increment><Max id="1784">10000</Max><Min id="1785">0</Min><Name id="1786">MaxOverlapTime</Name><UIEnabled id="1787">true</UIEnabled><UIInfo id="1788"><Pos id="1789" x="757" y="767"/></UIInfo><UIOrder id="1791">0</UIOrder><Units id="1792"/><Value id="1793">1500</Value></Parameter><Parameter type="RandomDouble" id="1808"><Max id="1809">1</Max><Min id="1810">0</Min><Name id="1811">RandDouble</Name><Seed id="1812">0</Seed><UIEnabled id="1813">false</UIEnabled><UIInfo id="1814"><Pos id="1815" x="768" y="870"/></UIInfo><UIOrder id="1817">0</UIOrder><UseSeed id="1818">false</UseSeed><Value id="1831">0</Value></Parameter></StateMachineElement>
                 <Transition id="4079">
                   <Destination id="4080">Failed</Destination>
                   <Source id="4081">WaitForFixation</Source>
@@ -2610,6 +2616,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1896</OpenedBlock>
+    <OpenedBlock id="">1</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

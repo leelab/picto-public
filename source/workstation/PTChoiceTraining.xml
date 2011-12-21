@@ -2494,36 +2494,31 @@
                       <UIOrder id="6727">0</UIOrder>
                     </ControlElement>
                     <EntryScript id="6743">
-                      EventInfo.setData(&quot;Event&quot;,9);
-                      EventInfo.updateValue();
+																						                      EventInfo.setData(&quot;Event&quot;,9);
+																						                      EventInfo.updateValue();
 
-                      colorMag = 2.55*TargetLuminosityPercent.value;
-                      if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
-                      {
-                      LeftGraphic.setColor(colorMag,0,0);
-                      RightGraphic.setColor(0,colorMag,0);
-                      }
-                      else
-                      {
-                      LeftGraphic.setColor(0,colorMag,0);
-                      RightGraphic.setColor(colorMag,0,0);
-                      }
-                      LeftGraphic.visible = true;
-                      RightGraphic.visible = true;
+																						                      colorMag = 2.55*TargetLuminosityPercent.value;
+																						                      if(!ForceGreenLeft.value &amp;&amp; (ForceRedLeft.value || (TrialType.value&lt;=10)))
+																						                      {
+																						                      LeftGraphic.setColor(colorMag,0,0);
+																						                      RightGraphic.setColor(0,colorMag,0);
+																						                      }
+																						                      else
+																						                      {
+																						                      LeftGraphic.setColor(0,colorMag,0);
+																						                      RightGraphic.setColor(colorMag,0,0);
+																						                      }
+																						                      LeftGraphic.visible = true;
+																						                      RightGraphic.visible = true;
 
-                      RandDouble.randomize();
-                      x = (MinOverlapTime.value-MaxOverlapTime.value)/Math.log(.05);
-                      time = MinOverlapTime.value-x*Math.log(RandDouble.value);
-                      if(time &gt; MaxOverlapTime.value)time = MaxOverlapTime.value;
-                      if(time &lt; MinOverlapTime.value)time = MinOverlapTime.value;
-                      OverlapFixationTracker.fixationTime = time;
-                      OverlapFixationTracker.totalTime = time+500;
+																						                      RandDouble.randomize();
+																						                      x = (MinOverlapTime.value-MaxOverlapTime.value)/Math.log(.05);
+																						                      time = MinOverlapTime.value-x*Math.log(RandDouble.value);
+																						                      if(time &gt; MaxOverlapTime.value)time = MaxOverlapTime.value;
+																						                      if(time &lt; MinOverlapTime.value)time = MinOverlapTime.value;
+																						                      OverlapFixationTracker.fixationTime = time;
+																						                      OverlapFixationTracker.totalTime = time+500;
 
-
-
-
-
-                      OverlapFixationTracker.totalTime = OverlapTime.value+1000;
                     </EntryScript>
                     <Name id="6744">TargetsAppear</Name>
                     <Result id="6745">
