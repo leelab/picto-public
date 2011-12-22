@@ -1808,12 +1808,13 @@
                 TrialInfo.setData(&quot;ChosenSide&quot;,-1);
               </EntryScript>
               <ExitScript id="4405">
-																			                EventInfo.setData(&quot;Event&quot;,2);
-																			                EventInfo.updateValue();
-																			                EventInfo.setData(&quot;Trial&quot;,EventInfo.getDataAsInt(&quot;Trial&quot;)+1);
-																			                AttemptedTrials.value++;
-																			                BlockPerformance.setData(&quot;%Correct Curr Block&quot;,(100*CorrectTrials.value/AttemptedTrials.value).toFixed(2));
-																			                BlockPerformance.updateValue();
+																																			                EventInfo.setData(&quot;Event&quot;,2);
+																																			                EventInfo.updateValue();
+																																			                EventInfo.setData(&quot;Trial&quot;,EventInfo.getDataAsInt(&quot;Trial&quot;)+1);
+																																			                AttemptedTrials.value++;
+																																			                BlockPerformance.setData(&quot;%Correct Curr Block&quot;,(100*CorrectTrials.value/AttemptedTrials.value).toFixed(2));
+																																			                BlockPerformance.updateValue();
+																																			                TrialInfo.updateValue();
               </ExitScript>
               <StateMachineElement type="State" id="4406">
                 <ControlElement type="Stopwatch Controller" id="4415">
@@ -2054,13 +2055,12 @@
                 <UIOrder id="4628">0</UIOrder>
               </Result>
               <Script id="4632">
-                TrialInfo.updateValue();
-                TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
-                TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
-                if(LongBlock.value)
-                return ++TrialsSoFar.value &lt; LongBlockLength.value;
-                else
-                return ++TrialsSoFar.value &lt; ShortBlockLength.value;
+																                TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
+																                TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
+																                if(LongBlock.value)
+																                return ++TrialsSoFar.value &lt; LongBlockLength.value;
+																                else
+																                return ++TrialsSoFar.value &lt; ShortBlockLength.value;
               </Script>
               <UIInfo id="4633">
                 <Pos id="4634" x="1230" y="782"/>
@@ -2125,9 +2125,8 @@
                 <UIOrder id="3100">0</UIOrder>
               </Result>
               <Script id="3101">
-                TrialInfo.updateValue();
-                TrialType.reshuffleLastValue();
-                return true;
+																                TrialType.reshuffleLastValue();
+																                return true;
               </Script>
               <UIInfo id="3102">
                 <Pos id="3103" x="1221" y="932"/>
@@ -2616,6 +2615,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1</OpenedBlock>
+    <OpenedBlock id="">3557</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>
