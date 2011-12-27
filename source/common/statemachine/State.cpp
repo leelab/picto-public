@@ -247,6 +247,9 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		//----------  Draw the scene --------------
 		scene_->render(engine);
 
+		//---------   Erase the latest cursor values (sendBehavioralData takes care of this in master)
+		sigChannel_->getValues();
+
 		//--------- Check for master state change ------------
 
 		if(!engine->updateCurrentStateFromServer())

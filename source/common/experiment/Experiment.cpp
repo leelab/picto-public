@@ -117,9 +117,9 @@ bool Experiment::runTask(QString taskName)
 	engine_->startAllSignalChannels();
 	//Initialize signal channel coefficients
 	updateSignalCoefficients(QSharedPointer<Property>());
-	bool success = task->run(engine_);
+	task->run(engine_);
 	engine_->stopAllSignalChannels();
-	return success;
+	return true;
 	//foreach(QSharedPointer<Task> task, tasks_)
 	//{
 	//	if(task->getName() == taskName ||

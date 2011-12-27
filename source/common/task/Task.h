@@ -42,7 +42,7 @@ public:
 
 	static QSharedPointer<Task> Create();
 
-	bool run(QSharedPointer<Engine::PictoEngine> engine);
+	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	bool jumpToState(QStringList path, QString state);
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString assetType(){return "Task";};

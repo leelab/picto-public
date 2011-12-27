@@ -21,11 +21,12 @@ QSharedPointer<Task> Task::Create()
 	return QSharedPointer<Task>(new Task());
 }
 
-bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
+QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 {
+	QString result = "";
 	if(stateMachine_.isNull())
 	{
-		return false;
+		return result;
 	}
 	else
 	{
@@ -34,22 +35,22 @@ bool Task::run(QSharedPointer<Engine::PictoEngine> engine)
 
 		if(engine->slaveMode())
 		{
-			stateMachine_->runAsSlave(engine);
+			result = stateMachine_->runAsSlave(engine);
 		}
 		else
 		{
 			sendInitialStateDataToServer(engine);
 
-			QString result;
 			result = stateMachine_->run(engine);
 
 			//After the task has finished running, we need to report the final result.
 			//This can't be done within the state machine, because the state machine
 			//has no idea if it's the top level.
 			sendFinalStateDataToServer(result, engine);
+			result = "";
 		}
 
-		return true;
+		return result;
 	}
 }
 

@@ -18,6 +18,7 @@ class QComboBox;
 class QLabel;
 class QTextEdit;
 class QLineEdit;
+class QProgressBar;
 
 /*!	\brief	This views and controls a remotely running experiment
  *
@@ -61,6 +62,7 @@ private:
 	QLabel *currSessionLabel_;
 	QTextEdit *outputBox_;
 	QToolBar *toolBar_;
+	QProgressBar *progressBar_;
 
 
 	enum eventType{CHANGES, STARTS, ENDS};

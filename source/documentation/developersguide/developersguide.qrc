@@ -106,6 +106,8 @@
    <file alias="_control_result_8h-source.html">../../../output/documentation/main/html/_control_result_8h-source.html</file>
    <file alias="_control_target_8cpp-source.html">../../../output/documentation/main/html/_control_target_8cpp-source.html</file>
    <file alias="_control_target_8h-source.html">../../../output/documentation/main/html/_control_target_8h-source.html</file>
+   <file alias="_creating_session_state_8cpp-source.html">../../../output/documentation/main/html/_creating_session_state_8cpp-source.html</file>
+   <file alias="_creating_session_state_8h-source.html">../../../output/documentation/main/html/_creating_session_state_8h-source.html</file>
    <file alias="_cursor_graphic_8cpp-source.html">../../../output/documentation/main/html/_cursor_graphic_8cpp-source.html</file>
    <file alias="_cursor_graphic_8h-source.html">../../../output/documentation/main/html/_cursor_graphic_8h-source.html</file>
    <file alias="_custom_controller_8cpp-source.html">../../../output/documentation/main/html/_custom_controller_8cpp-source.html</file>
@@ -184,6 +186,8 @@
    <file alias="_ellipse_graphic_8h-source.html">../../../output/documentation/main/html/_ellipse_graphic_8h-source.html</file>
    <file alias="_end_session_response_handler_8cpp-source.html">../../../output/documentation/main/html/_end_session_response_handler_8cpp-source.html</file>
    <file alias="_end_session_response_handler_8h-source.html">../../../output/documentation/main/html/_end_session_response_handler_8h-source.html</file>
+   <file alias="_ending_session_state_8cpp-source.html">../../../output/documentation/main/html/_ending_session_state_8cpp-source.html</file>
+   <file alias="_ending_session_state_8h-source.html">../../../output/documentation/main/html/_ending_session_state_8h-source.html</file>
    <file alias="_endsession_command_handler_8cpp-source.html">../../../output/documentation/main/html/_endsession_command_handler_8cpp-source.html</file>
    <file alias="_endsession_command_handler_8h-source.html">../../../output/documentation/main/html/_endsession_command_handler_8h-source.html</file>
    <file alias="_engine_test_8cpp-source.html">../../../output/documentation/main/html/_engine_test_8cpp-source.html</file>
@@ -239,6 +243,8 @@
    <file alias="_hello_q_t_8cpp-source.html">../../../output/documentation/main/html/_hello_q_t_8cpp-source.html</file>
    <file alias="_interval_controller_8cpp-source.html">../../../output/documentation/main/html/_interval_controller_8cpp-source.html</file>
    <file alias="_interval_controller_8h-source.html">../../../output/documentation/main/html/_interval_controller_8h-source.html</file>
+   <file alias="_joining_session_state_8cpp-source.html">../../../output/documentation/main/html/_joining_session_state_8cpp-source.html</file>
+   <file alias="_joining_session_state_8h-source.html">../../../output/documentation/main/html/_joining_session_state_8h-source.html</file>
    <file alias="_joinsession_command_handler_8cpp-source.html">../../../output/documentation/main/html/_joinsession_command_handler_8cpp-source.html</file>
    <file alias="_joinsession_command_handler_8h-source.html">../../../output/documentation/main/html/_joinsession_command_handler_8h-source.html</file>
    <file alias="_l_f_p_data_unit_package_8cpp-source.html">../../../output/documentation/main/html/_l_f_p_data_unit_package_8cpp-source.html</file>
@@ -305,6 +311,8 @@
    <file alias="_parameter_response_handler_8h-source.html">../../../output/documentation/main/html/_parameter_response_handler_8h-source.html</file>
    <file alias="_pause_response_handler_8cpp-source.html">../../../output/documentation/main/html/_pause_response_handler_8cpp-source.html</file>
    <file alias="_pause_response_handler_8h-source.html">../../../output/documentation/main/html/_pause_response_handler_8h-source.html</file>
+   <file alias="_paused_session_state_8cpp-source.html">../../../output/documentation/main/html/_paused_session_state_8cpp-source.html</file>
+   <file alias="_paused_session_state_8h-source.html">../../../output/documentation/main/html/_paused_session_state_8h-source.html</file>
    <file alias="_physiological_data_store_8cpp-source.html">../../../output/documentation/main/html/_physiological_data_store_8cpp-source.html</file>
    <file alias="_physiological_data_store_8h-source.html">../../../output/documentation/main/html/_physiological_data_store_8h-source.html</file>
    <file alias="_picto_box_analog_input_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_picto_box_analog_input_signal_channel_8cpp-source.html</file>
@@ -471,6 +479,8 @@
    <file alias="_reward_response_handler_8h-source.html">../../../output/documentation/main/html/_reward_response_handler_8h-source.html</file>
    <file alias="_run_task_dialog_8cpp-source.html">../../../output/documentation/main/html/_run_task_dialog_8cpp-source.html</file>
    <file alias="_run_task_dialog_8h-source.html">../../../output/documentation/main/html/_run_task_dialog_8h-source.html</file>
+   <file alias="_running_session_state_8cpp-source.html">../../../output/documentation/main/html/_running_session_state_8cpp-source.html</file>
+   <file alias="_running_session_state_8h-source.html">../../../output/documentation/main/html/_running_session_state_8h-source.html</file>
    <file alias="_scene_8cpp-source.html">../../../output/documentation/main/html/_scene_8cpp-source.html</file>
    <file alias="_scene_8h-source.html">../../../output/documentation/main/html/_scene_8h-source.html</file>
    <file alias="_script_controller_8cpp-source.html">../../../output/documentation/main/html/_script_controller_8cpp-source.html</file>
@@ -545,6 +555,8 @@
    <file alias="_stimulus_element_8h-source.html">../../../output/documentation/main/html/_stimulus_element_8h-source.html</file>
    <file alias="_stop_response_handler_8cpp-source.html">../../../output/documentation/main/html/_stop_response_handler_8cpp-source.html</file>
    <file alias="_stop_response_handler_8h-source.html">../../../output/documentation/main/html/_stop_response_handler_8h-source.html</file>
+   <file alias="_stopped_session_state_8cpp-source.html">../../../output/documentation/main/html/_stopped_session_state_8cpp-source.html</file>
+   <file alias="_stopped_session_state_8h-source.html">../../../output/documentation/main/html/_stopped_session_state_8h-source.html</file>
    <file alias="_stopwatch_controller_8cpp-source.html">../../../output/documentation/main/html/_stopwatch_controller_8cpp-source.html</file>
    <file alias="_stopwatch_controller_8h-source.html">../../../output/documentation/main/html/_stopwatch_controller_8h-source.html</file>
    <file alias="_string_parameter_8cpp-source.html">../../../output/documentation/main/html/_string_parameter_8cpp-source.html</file>
@@ -605,6 +617,10 @@
    <file alias="_visual_target_8h-source.html">../../../output/documentation/main/html/_visual_target_8h-source.html</file>
    <file alias="_visual_target_host_8cpp-source.html">../../../output/documentation/main/html/_visual_target_host_8cpp-source.html</file>
    <file alias="_visual_target_host_8h-source.html">../../../output/documentation/main/html/_visual_target_host_8h-source.html</file>
+   <file alias="_wait_for_connect_state_8cpp-source.html">../../../output/documentation/main/html/_wait_for_connect_state_8cpp-source.html</file>
+   <file alias="_wait_for_connect_state_8h-source.html">../../../output/documentation/main/html/_wait_for_connect_state_8h-source.html</file>
+   <file alias="_wait_for_join_state_8cpp-source.html">../../../output/documentation/main/html/_wait_for_join_state_8cpp-source.html</file>
+   <file alias="_wait_for_join_state_8h-source.html">../../../output/documentation/main/html/_wait_for_join_state_8h-source.html</file>
    <file alias="_wave_sound_8cpp-source.html">../../../output/documentation/main/html/_wave_sound_8cpp-source.html</file>
    <file alias="_wave_sound_8h-source.html">../../../output/documentation/main/html/_wave_sound_8h-source.html</file>
    <file alias="_win_get_p_i_d_8cpp-source.html">../../../output/documentation/main/html/_win_get_p_i_d_8cpp-source.html</file>
@@ -1131,6 +1147,9 @@
    <file alias="class_picto_1_1_visual_target_host.html">../../../output/documentation/main/html/class_picto_1_1_visual_target_host.html</file>
    <file alias="class_picto_1_1_wave_sound-members.html">../../../output/documentation/main/html/class_picto_1_1_wave_sound-members.html</file>
    <file alias="class_picto_1_1_wave_sound.html">../../../output/documentation/main/html/class_picto_1_1_wave_sound.html</file>
+   <file alias="class_picto_1_1_x_y_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel-members.html</file>
+   <file alias="class_picto_1_1_x_y_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel.html</file>
+   <file alias="class_picto_1_1_x_y_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel.png</file>
    <file alias="class_plexon_plugin-members.html">../../../output/documentation/main/html/class_plexon_plugin-members.html</file>
    <file alias="class_plexon_plugin.html">../../../output/documentation/main/html/class_plexon_plugin.html</file>
    <file alias="class_plexon_plugin.png">../../../output/documentation/main/html/class_plexon_plugin.png</file>
@@ -1479,6 +1498,10 @@
    <file alias="proxyserverthread_8h-source.html">../../../output/documentation/main/html/proxyserverthread_8h-source.html</file>
    <file alias="remoteviewer_8cpp-source.html">../../../output/documentation/main/html/remoteviewer_8cpp-source.html</file>
    <file alias="remoteviewer_8h-source.html">../../../output/documentation/main/html/remoteviewer_8h-source.html</file>
+   <file alias="remoteviewerstate_8cpp-source.html">../../../output/documentation/main/html/remoteviewerstate_8cpp-source.html</file>
+   <file alias="remoteviewerstate_8h-source.html">../../../output/documentation/main/html/remoteviewerstate_8h-source.html</file>
+   <file alias="remoteviewertoolbox_8cpp-source.html">../../../output/documentation/main/html/remoteviewertoolbox_8cpp-source.html</file>
+   <file alias="remoteviewertoolbox_8h-source.html">../../../output/documentation/main/html/remoteviewertoolbox_8h-source.html</file>
    <file alias="server_2_interactive_s_t_d_i_o_handler_8cpp-source.html">../../../output/documentation/main/html/server_2_interactive_s_t_d_i_o_handler_8cpp-source.html</file>
    <file alias="server_2_interactive_s_t_d_i_o_handler_8h-source.html">../../../output/documentation/main/html/server_2_interactive_s_t_d_i_o_handler_8h-source.html</file>
    <file alias="server_2dialog_8cpp-source.html">../../../output/documentation/main/html/server_2dialog_8cpp-source.html</file>
@@ -1746,6 +1769,8 @@
    <file alias="virtualeventsource_8h-source.html">../../../output/documentation/main/html/virtualeventsource_8h-source.html</file>
    <file alias="workstation_2main_8cpp-source.html">../../../output/documentation/main/html/workstation_2main_8cpp-source.html</file>
    <file alias="workstation_2main_8cpp.html">../../../output/documentation/main/html/workstation_2main_8cpp.html</file>
+   <file alias="x_y_signal_channel_8cpp-source.html">../../../output/documentation/main/html/x_y_signal_channel_8cpp-source.html</file>
+   <file alias="x_y_signal_channel_8h-source.html">../../../output/documentation/main/html/x_y_signal_channel_8h-source.html</file>
    <file alias="xmleditor_8cpp-source.html">../../../output/documentation/main/html/xmleditor_8cpp-source.html</file>
    <file alias="xmleditor_8h-source.html">../../../output/documentation/main/html/xmleditor_8h-source.html</file>
    <file alias="zip_8c-source.html">../../../output/documentation/main/html/zip_8c-source.html</file>

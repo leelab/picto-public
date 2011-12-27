@@ -91,6 +91,26 @@ SOURCES += $$(PICTO_TREE)/source/workstation/testviewer/testviewer.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewertoolbox.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewertoolbox.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewerstate.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewerstate.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/WaitForConnectState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/WaitForConnectState.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/WaitForJoinState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/WaitForJoinState.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/JoiningSessionState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/JoiningSessionState.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/CreatingSessionState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/CreatingSessionState.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/StoppedSessionState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/StoppedSessionState.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/PausedSessionState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/PausedSessionState.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/RunningSessionState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/RunningSessionState.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/EndingSessionState.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/EndingSessionState.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.cpp

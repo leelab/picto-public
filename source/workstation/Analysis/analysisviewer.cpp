@@ -23,6 +23,7 @@
 #include <QFileDialog>
 #include <QSqlField>
 #include <QLinkedList>
+#include <QProgressBar>
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -101,6 +102,9 @@ void AnalysisViewer::setupUi()
 	loadSessionAction_->setEnabled(true);
 
 	currSessionLabel_ = new QLabel(tr("No Loaded Session"));
+	progressBar_ = new QProgressBar();
+	progressBar_->setRange(0,100);
+	progressBar_->reset();
 	//inputBox_ = new QTextEdit("");
 	outputBox_ = new QTextEdit("SQL results show up here...");
 
@@ -113,13 +117,15 @@ void AnalysisViewer::setupUi()
 	toolBar_->addAction(loadSessionAction_);
 	toolBar_->addSeparator();
 	toolBar_->addWidget(currSessionLabel_);
+	toolBar_->addSeparator();
+	toolBar_->addWidget(progressBar_);
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(toolBar_);
 	toolbarLayout->addStretch();
 
 	// New Analysis System
-	QHBoxLayout *newSysLayout = new QHBoxLayout;
+	QHBoxLayout *queryBuilderLayout = new QHBoxLayout;
 	printPath_ = new QLineEdit();
 	connect(printPath_,SIGNAL(editingFinished()),this,SLOT(updateUI()));
 	whenPath_ = new QLineEdit();
@@ -133,21 +139,21 @@ void AnalysisViewer::setupUi()
 	timeSince_ = new QLineEdit();
 	connect(timeSince_,SIGNAL(editingFinished()),this,SLOT(updateUI()));
 	timeSinceEventType_ = new QComboBox();
-	newSysLayout->addWidget(new QLabel("When element/property at path: "));
-	newSysLayout->addWidget(whenPath_);
-	newSysLayout->addWidget(eventType_);
-	newSysLayout->addWidget(new QLabel(", print value of property at path: "));
-	newSysLayout->addWidget(printPath_);
-	newSysLayout->addWidget(new QLabel(".  "));
-	newSysLayout->addWidget(shouldStampTime_);
-	newSysLayout->addWidget(timeSinceLabel_);
-	newSysLayout->addWidget(timeSince_);
-	newSysLayout->addWidget(timeSinceEventType_);
+	queryBuilderLayout->addWidget(new QLabel("When element/property at path: "));
+	queryBuilderLayout->addWidget(whenPath_);
+	queryBuilderLayout->addWidget(eventType_);
+	queryBuilderLayout->addWidget(new QLabel(", print value of property at path: "));
+	queryBuilderLayout->addWidget(printPath_);
+	queryBuilderLayout->addWidget(new QLabel(".  "));
+	queryBuilderLayout->addWidget(shouldStampTime_);
+	queryBuilderLayout->addWidget(timeSinceLabel_);
+	queryBuilderLayout->addWidget(timeSince_);
+	queryBuilderLayout->addWidget(timeSinceEventType_);
 	
 	//------ Main layout -----------
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addLayout(newSysLayout);
+	mainLayout->addLayout(queryBuilderLayout);
 	mainLayout->setStretch(1,1);
 	mainLayout->addWidget(outputBox_);
 	mainLayout->setStretch(2,4);
@@ -345,9 +351,11 @@ void AnalysisViewer::loadSession()
 
 void AnalysisViewer::executeCommand()
 {
+	progressBar_->setRange(0,0);
 	if(!session_.isOpen())
 	{
 		outputBox_->setText("Session isn't open");
+		progressBar_->setRange(0,100);
 		return;
 	}
 	getQueryParameters();
@@ -363,6 +371,7 @@ void AnalysisViewer::executeCommand()
 	if(!success || !query.next())
 	{
 		outputBox_->setText("Query Failed: " + query.lastError().text().toAscii());
+		progressBar_->setRange(0,100);
 		return;
 	}
 	do{
@@ -379,6 +388,7 @@ void AnalysisViewer::executeCommand()
 		if(!success)
 		{
 			outputBox_->setText("Query Failed: " + query.lastError().text().toAscii());
+			progressBar_->setRange(0,100);
 			return;
 		}
 		while(query.next()){
@@ -395,6 +405,7 @@ void AnalysisViewer::executeCommand()
 		if(!success)
 		{
 			outputBox_->setText("Query Failed: " + query.lastError().text().toAscii());
+			progressBar_->setRange(0,100);
 			return;
 		}
 		while(query.next())
@@ -414,6 +425,7 @@ void AnalysisViewer::executeCommand()
 		if(!success)
 		{
 			outputBox_->setText("Query Failed: " + query.lastError().text().toAscii());
+			progressBar_->setRange(0,100);
 			return;
 		}
 		while(query.next())
@@ -431,6 +443,7 @@ void AnalysisViewer::executeCommand()
 		if(!success)
 		{
 			outputBox_->setText("Query Failed: " + query.lastError().text().toAscii());
+			progressBar_->setRange(0,100);
 			return;
 		}
 		while(query.next())
@@ -447,11 +460,13 @@ void AnalysisViewer::executeCommand()
 		if(!success || !query.next())
 		{
 			outputBox_->setText("Query Failed: " + query.lastError().text().toAscii());
+			progressBar_->setRange(0,100);
 			return;
 		}
 		timeSinceDataVals.append(TimeData(query.value(0).toLongLong(),query.value(1).toDouble()));
 	}
-
+	//Now that we know how much data we're dealing with, we can setup the progress bar
+	progressBar_->setRange(0,propVals.count()+1);
 	QString output;
 	//We now have three lists: propVals,printTimeData,timeSinceDataVals.
 	//Loop through timeSinceDataVals marking each new start time.
@@ -475,6 +490,7 @@ void AnalysisViewer::executeCommand()
 			while(!propVals.empty() && (propVals.first().dataId <= nextPrintTimeData.dataId))
 			{
 				currPropVal = propVals.takeFirst().value;
+				progressBar_->setValue(progressBar_->value()+1);
 			}
 			output.append(currPropVal);
 			if(shouldStampTime_->currentIndex())
@@ -486,6 +502,7 @@ void AnalysisViewer::executeCommand()
 		lastTimeSinceData = nextTimeSinceData;
 	}while(!timeSinceDataVals.empty());
 	outputBox_->setText(output);
+	progressBar_->setValue(progressBar_->maximum());
 
 
 	//QString queryText = inputBox_->toPlainText();
@@ -559,6 +576,8 @@ void AnalysisViewer::executeCommand()
 void AnalysisViewer::updateUI()
 {
 	currSessionLabel_->setText(session_.connectionName());
+	progressBar_->setRange(0,100);
+	progressBar_->reset();
 
 	getQueryParameters();
 	//Update eventType combo box based on whenAsset type

@@ -5,7 +5,7 @@
 #include "../../common/compositor/PCMAuralTarget.h"
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
-#include "../../common/engine/NetworkSignalChannel.h"
+#include "../../common/engine/XYSignalChannel.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 #include "../../common/storage/BehavioralDataUnitPackage.h"
@@ -36,6 +36,7 @@
 #include <QSlider>
 #include <QSpinBox>
 #include <QLineEdit>
+#include <QtConcurrentRun>
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -48,26 +49,13 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	activeExperiment_(0),
 	statusBar_(NULL),
 	channelSignalsConnected_(false),
-	showingSplash_(true),
-	enableTaskCommands_(false),
+	isAuthorized_(false),
+	runningEngine_(false),
 	propertyFrame_(NULL)
 {
 	setupServerChannel();
 	setupEngine();
 	setupUi();
-
-	updateTimer_ = new QTimer(this);
-	updateTimer_->setInterval(5000);
-	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateStatus()));
-	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateLists()));
-	connect(updateTimer_, SIGNAL(timeout()), this, SLOT(updateActions()));
-
-
-
-
-
-
-
 
 	QString dbName = "PictoWorkstation";
 	dbName = dbName.toLower();
@@ -88,54 +76,563 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	bool rc = query.next();
 	Q_ASSERT(rc);
 	observerId_ = QUuid(query.value(0).toString());
+
+	currState_ = WaitForConnect;
+	latestTrigger_ = NoViewerTrigger;
+	engineTrigger_ = NoEngineTrigger;
+	stateUpdateTimer_ = new QTimer(this);
+	stateUpdateTimer_->setInterval(0);
+	connect(stateUpdateTimer_,SIGNAL(timeout()),this,SLOT(updateState()));
+	engineUpdateTimer_ = new QTimer(this);
+	engineUpdateTimer_->setInterval(0);
+	connect(engineUpdateTimer_,SIGNAL(timeout()),this,SLOT(updateEngine()));
+	updatingState_ = false;
+	refreshSplash_ = true;
 }
 
 RemoteViewer::~RemoteViewer()
 {
 }
+void RemoteViewer::updateState()
+{
+	if(engineTrigger_ != NoEngineTrigger)
+	{	//If the engine has been triggered to start or stop, we must always wait for it
+		//to do that before updating our own state
+		return;
+	}
+	updatingState_ = true;
+	updateComponentLists();
+	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+	ComponentStatus remoteStatus;
+	if(latestTrigger_ != NoViewerTrigger)
+		remoteStatus = directorStatus(directorID);
+	ViewerState nextState = currState_;
+	switch(currState_)
+	{
+	case WaitForConnect:
+		switch(latestTrigger_)
+		{
+		case Connected:
+			nextState = WaitForJoin;
+			break;
+		}
+		break;
+	case WaitForJoin:
+		switch(latestTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case StartSessionRequest:
+			nextState = CreatingSession;
+			break;
+		case JoinSessionRequest:
+			nextState = JoiningSession;
+			break;
+		}
+		break;
+	case JoiningSession:
+		switch(latestTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case SessionStopped:
+			nextState = StoppedSession;
+			break;
+		case SessionPaused:
+			nextState = PausedSession;
+			break;
+		case SessionRunning:
+			nextState = RunningSession;
+			break;
+		case DisjoinSessionRequest:
+			nextState = WaitForJoin;
+			break;
+		}
+		break;
+	case CreatingSession:
+		switch(latestTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case SessionStarted:
+			nextState = JoiningSession;
+			break;
+		case SessionDidntStart:
+			nextState = JoiningSession;
+		}
+		break;
+	case StoppedSession:
+		switch(latestTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case DisjoinSessionRequest:
+			nextState = WaitForJoin;
+			break;
+		case EndSessionRequest:
+			nextState = EndingSession;
+			break;
+		case SessionRunning:
+			nextState = RunningSession;
+			break;
+		}
+		break;
+	case PausedSession:
+		switch(latestTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case DisjoinSessionRequest:
+			nextState = WaitForJoin;
+			break;
+		case SessionRunning:
+			nextState = RunningSession;
+			break;
+		case SessionStopped:
+			nextState = StoppedSession;
+			break;
+		}
+		break;
+	case RunningSession:
+		switch(latestTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case DisjoinSessionRequest:
+			nextState = WaitForJoin;
+			break;
+		case SessionPaused:
+			nextState = PausedSession;
+			break;
+		case SessionStopped:
+			nextState = StoppedSession;
+			break;
+		}
+		break;
+	case EndingSession:
+		switch(latestTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case SessionEnded:
+			nextState = WaitForJoin;
+			break;
+		}
+		break;
+	}
+	latestTrigger_ = NoViewerTrigger;
+	if(nextState != currState_)
+	{
+		currState_ = nextState;
+		enterState();
+	}
+	runState();
+	updatingState_ = false;
+}
+
+void RemoteViewer::updateEngine()
+{
+	//We don't want to start running the engine from somewhere within the updateState() function
+	//or else we'll block that function from continuing to operate.  Calling updateState() from 
+	//within this function somewhere is okay because updateState calls don't block for long periods
+	//of time the way the engine does.
+	if(updatingState_)
+		return;
+	if(engineTrigger_ == StopEngine)
+	{
+		engineTrigger_ = NoEngineTrigger;
+		return;
+	}
+	if(engineTrigger_ == StartEngine)
+	{
+		engine_->resetLastTimeStateDataRequested();
+		if(!engine_->updateCurrentStateFromServer())
+		{
+			setStatus("Server failed to respond to Current State request");
+			return;
+		}
+		QString fullPath = engine_->getServerPathUpdate();
+		int lastSepIndex = fullPath.lastIndexOf("::");
+		QString machinePath = fullPath.left(lastSepIndex);
+		QString initState = fullPath.mid(lastSepIndex+2);
+		if(machinePath.isEmpty())
+			return;
+		
+		QStringList initStateMachinePath = machinePath.split("::");
+		QString taskName = initStateMachinePath.first();
+
+		//Update the task list box
+		int taskIdx = taskListBox_->findText(taskName);
+		Q_ASSERT_X(taskIdx >= 0,"RemoteViewer::joinSession", "Task name not found in out list of experiments.");
+		taskListBox_->setCurrentIndex(taskIdx);
+
+		///////TESTING
+		//We'll need to actually determine the task name directly....
+		//modifiedTaskName = taskListBox_->currentText();
+		//modifiedTaskName = modifiedTaskName.simplified().remove(' ');
+		
+		//Set ouselves up so we are synched with the remote director
+		Picto::StateMachine::resetSlaveElements();
+
+		////////////TESTING
+		qDebug()<<"JumpToState "<<initStateMachinePath<<initState;
+
+		if(!activeExperiment_->jumpToState(initStateMachinePath, initState))
+		{
+			////////TESTING
+			Q_ASSERT(false);
+
+			setStatus("Failed to jump into the state machine correctly");
+			return;
+		}
+
+		if(!activeExperiment_->jumpToState(initStateMachinePath, initState))
+		{
+			////////TESTING
+			Q_ASSERT(false);
+
+			setStatus("Failed to jump into the state machine correctly");
+			return;
+		}
+		taskName = initStateMachinePath.first();
+		runningEngine_ = true;
+		engineTrigger_ = NoEngineTrigger;
+		//WARNING:  Nothing after this line will be processed until the task is finished running
+		activeExperiment_->runTask(taskName.simplified().remove(' '));
+		runningEngine_ = false;
+		if(engineTrigger_ == StopEngine)
+		{
+			engineTrigger_ = NoEngineTrigger;
+			refreshSplash_ = true;
+		}
+		else
+		{	//If there's no stopEngine trigger, either the experiment failed, or the task changed.
+			//Either way we need to try to start again.
+			engineTrigger_ = StartEngine;
+		}
+	}
+}
+
+void RemoteViewer::runState()
+{
+	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
+	ComponentStatus remoteStatus = directorStatus(directorID);
+	switch(currState_)
+	{
+	case WaitForConnect:
+		if(assureChannelConnections())
+			latestTrigger_ = Connected;
+		break;
+	case WaitForJoin:
+		if(connectAction_->isChecked())
+		{
+				
+			if(remoteStatus == Idle)
+				latestTrigger_ = StartSessionRequest;
+			if(remoteStatus > Ending)
+				latestTrigger_ = JoinSessionRequest;
+		}
+		break;
+	case JoiningSession:
+		if(joinSession())
+		{
+			if(remoteStatus == Running)
+				latestTrigger_ = SessionRunning;
+			else if(remoteStatus == Paused)
+				latestTrigger_ = SessionPaused;
+			else
+				latestTrigger_ = SessionStopped;
+		}
+		if(remoteStatus < Stopped)
+		{
+			disjoinSession();
+			latestTrigger_ = DisjoinSessionRequest;
+		}
+		break;
+	case CreatingSession:
+		if(startSession())
+			latestTrigger_ = SessionStarted;
+		else
+			latestTrigger_ = SessionDidntStart;
+		break;
+	case StoppedSession:
+		if(remoteStatus == Running)
+			latestTrigger_ = SessionRunning;
+		if(!connectAction_->isChecked())
+		{
+			if(!isAuthorized_)
+			{
+				disjoinSession();
+				latestTrigger_ = DisjoinSessionRequest;
+			}
+			else
+			{
+				int	r = QMessageBox::warning(this,Picto::Names->workstationAppName,
+					tr("You are disconnecting from a session that is not currently running an experiment.\n"
+					"Would you like to end the session as well?"),
+					   QMessageBox::Yes|QMessageBox::No);
+
+				if(r == QMessageBox::Yes)
+				{
+					latestTrigger_ = EndSessionRequest;
+				}
+				else
+				{
+					disjoinSession();
+					latestTrigger_ = DisjoinSessionRequest;
+				}
+			}
+		}
+		if(remoteStatus < Stopped)
+		{
+			disjoinSession();
+			latestTrigger_ = DisjoinSessionRequest;
+		}
+		if(refreshSplash_)
+		{
+			renderingTarget_->showSplash();
+			refreshSplash_ = false;
+		}
+		break;
+	case PausedSession:
+		if(remoteStatus == Running)
+			latestTrigger_ = SessionRunning;
+		if(remoteStatus == Stopped)
+			latestTrigger_ = SessionStopped;
+		if(!connectAction_->isChecked() || (remoteStatus < Stopped))
+		{
+			disjoinSession();
+			latestTrigger_ = DisjoinSessionRequest;
+		}
+		if(latestTrigger_ != NoViewerTrigger)
+			stopExperiment();
+
+		break;
+	case RunningSession:
+		if(remoteStatus == Paused)
+			latestTrigger_ = SessionPaused;
+		if(remoteStatus == Stopped)
+			latestTrigger_ = SessionStopped;
+		if(!connectAction_->isChecked() || (remoteStatus < Stopped))
+		{
+			disjoinSession();
+			latestTrigger_ = DisjoinSessionRequest;
+		}
+		if(latestTrigger_ != NoViewerTrigger)
+			stopExperiment();
+		break;
+	case EndingSession:
+		if(endSession() || remoteStatus < Stopped)
+			disjoinSession();
+			latestTrigger_ = SessionEnded;
+		break;
+	}
+	if(!assureChannelConnections())
+	{
+		latestTrigger_ = Disconnected;
+	}
+}
+
+void RemoteViewer::enterState()
+{
+	switch(currState_)
+	{
+	case WaitForConnect:
+		setStatus(tr("Looking for Picto Server"));
+		playAction_->setEnabled(false);
+		stopAction_->setEnabled(false);
+		pauseAction_->setEnabled(false);
+		rewardAction_->setEnabled(false);
+		rewardQuantity_->setEnabled(false);
+		connectAction_->setEnabled(false);
+		connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+		connectAction_->setChecked(false);
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		zoomSlider_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		propertyFrame_->setEnabled(false);
+		activeExpName_->setText(experiment_->getName());
+		renderingTarget_->showSplash();
+		taskListBox_->clear();
+		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
+		break;
+	case WaitForJoin:
+		setStatus(tr("Connected to Picto Server"));
+		playAction_->setEnabled(false);
+		stopAction_->setEnabled(false);
+		pauseAction_->setEnabled(false);
+		rewardAction_->setEnabled(false);
+		rewardQuantity_->setEnabled(false);
+		connectAction_->setEnabled(true);
+		connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+		connectAction_->setChecked(false);
+		directorListBox_->setEnabled(true);
+		proxyListBox_->setEnabled(true);
+		passwordEdit_->setEnabled(true);
+		taskListBox_->setEnabled(false);
+		zoomSlider_->setEnabled(false);
+		updateComponentLists(true);
+		taskListBox_->setEnabled(false);
+		propertyFrame_->setEnabled(false);
+		activeExpName_->setText(experiment_->getName());
+		renderingTarget_->showSplash();
+		taskListBox_->clear();
+		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
+		break;
+	case JoiningSession:
+		setStatus(tr("Joining active session"));
+		playAction_->setEnabled(false);
+		stopAction_->setEnabled(false);
+		pauseAction_->setEnabled(false);
+		rewardAction_->setEnabled(false);
+		rewardQuantity_->setEnabled(false);
+		connectAction_->setEnabled(true);
+		connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+		connectAction_->setChecked(true);
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		zoomSlider_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		propertyFrame_->setEnabled(false);
+		activeExpName_->setText(experiment_->getName());
+		renderingTarget_->showSplash();
+		taskListBox_->clear();
+		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
+		break;
+	case CreatingSession:
+		setStatus(tr("Starting new session"));
+		playAction_->setEnabled(false);
+		stopAction_->setEnabled(false);
+		pauseAction_->setEnabled(false);
+		rewardAction_->setEnabled(false);
+		rewardQuantity_->setEnabled(false);
+		connectAction_->setEnabled(true);
+		connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+		connectAction_->setChecked(true);
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		zoomSlider_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		propertyFrame_->setEnabled(false);
+		activeExpName_->setText(experiment_->getName());
+		renderingTarget_->showSplash();
+		taskListBox_->clear();
+		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
+		break;
+	case StoppedSession:
+		setStatus(tr("In Session: Stopped"));
+		playAction_->setEnabled(isAuthorized_);
+		stopAction_->setEnabled(false);
+		pauseAction_->setEnabled(false);
+		rewardAction_->setEnabled(isAuthorized_);
+		rewardQuantity_->setEnabled(isAuthorized_);
+		connectAction_->setEnabled(true);
+		connectAction_->setIcon(QIcon(":/icons/connected.png"));
+		connectAction_->setChecked(true);
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
+		taskListBox_->setEnabled(isAuthorized_);
+		zoomSlider_->setEnabled(true);
+		activeExpName_->setText(activeExperiment_->getName());
+		propertyFrame_->setEnabled(isAuthorized_);
+		generateTaskList();
+		break;
+	case PausedSession:
+		setStatus(tr("In Session: Paused"));
+		playAction_->setEnabled(isAuthorized_);
+		stopAction_->setEnabled(isAuthorized_);
+		pauseAction_->setEnabled(false);
+		rewardAction_->setEnabled(isAuthorized_);
+		rewardQuantity_->setEnabled(isAuthorized_);
+		connectAction_->setEnabled(true);
+		connectAction_->setIcon(QIcon(":/icons/connected.png"));
+		connectAction_->setChecked(true);
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		zoomSlider_->setEnabled(true);
+		taskListBox_->setEnabled(false);
+		activeExpName_->setText(activeExperiment_->getName());
+		propertyFrame_->setEnabled(isAuthorized_);
+		generateTaskList();
+		syncExperiment();
+		break;
+	case RunningSession:
+		setStatus(tr("In Session: Running"));
+		playAction_->setEnabled(false);
+		stopAction_->setEnabled(isAuthorized_);
+		pauseAction_->setEnabled(isAuthorized_);
+		rewardAction_->setEnabled(isAuthorized_);
+		rewardQuantity_->setEnabled(isAuthorized_);
+		connectAction_->setEnabled(true);
+		connectAction_->setIcon(QIcon(":/icons/connected.png"));
+		connectAction_->setChecked(true);
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		zoomSlider_->setEnabled(true);
+		taskListBox_->setEnabled(false);
+		activeExpName_->setText(activeExperiment_->getName());
+		propertyFrame_->setEnabled(isAuthorized_);
+		generateTaskList();
+		syncExperiment();
+		break;
+	case EndingSession:
+		setStatus(tr("Ending Session"));
+		playAction_->setEnabled(false);
+		stopAction_->setEnabled(false);
+		pauseAction_->setEnabled(false);
+		rewardAction_->setEnabled(false);
+		rewardQuantity_->setEnabled(false);
+		connectAction_->setEnabled(true);
+		connectAction_->setIcon(QIcon(":/icons/connected.png"));
+		connectAction_->setChecked(false);
+		directorListBox_->setEnabled(false);
+		proxyListBox_->setEnabled(false);
+		passwordEdit_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		zoomSlider_->setEnabled(false);
+		taskListBox_->setEnabled(false);
+		propertyFrame_->setEnabled(false);
+		activeExpName_->setText(activeExperiment_->getName());
+		renderingTarget_->showSplash();
+		taskListBox_->clear();
+		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
+		break;
+	}
+}
+
 //! Called just before displaying the viewer
 void RemoteViewer::init()
 {
-	if(!channelSignalsConnected_)
-	{		
-		connect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
-		connect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
-		connect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
-
-		connect(updateTimer_, SIGNAL(timeout()), serverChannel_, SLOT(connectToServer()));
-		connect(updateTimer_, SIGNAL(timeout()), engineSlaveChannel_, SLOT(connectToServer()));
-		connect(updateTimer_, SIGNAL(timeout()), behavioralDataChannel_, SLOT(connectToServer()));
-
-		channelSignalsConnected_ = true;
-	}
-	bool servConnect = serverChannel_->assureConnection();
-	bool engConnect = engineSlaveChannel_->assureConnection();
-	bool behavConnect = behavioralDataChannel_->assureConnection();
-
-	//if(!(servConnect || engConnect || behavConnect))
-	//{
-	//	QMessageBox msg;
-	//	msg.setIcon(QMessageBox::Warning);
-	//	msg.setText(Picto::Names->workstationAppName + tr(" is not connected to ") + Picto::Names->serverAppName + "\n"+
-	//				   tr("Check your network connection, and ensure that ") + Picto::Names->serverAppName + tr(" is running."));
-	//	msg.exec();
-	//}
-	if(!servConnect)serverChannel_->connectToServer();
-	if(!engConnect)engineSlaveChannel_->connectToServer();
-	if(!behavConnect)behavioralDataChannel_->connectToServer();
-
 	experiment_ = pictoData_->getExperiment();
 	if(!experiment_)
 	{
 		QMessageBox msg;
 		msg.setText("Failed to load current experiment.");
 		msg.exec();
-
 	}
 
-	updateActions();
-	updateLists();
-	updateTimer_->start();
+	componentListsTimer_.restart();
+	stateUpdateTimer_->start();
+	engineUpdateTimer_->start();
 }
 
 //!Called just before hiding the viewer
@@ -143,41 +640,19 @@ void RemoteViewer::init()
 void RemoteViewer::deinit()
 {
 	//stop the engine running
-	if(	channelSignalsConnected_ )
-	{
-		disconnect(serverChannel_, SIGNAL(channelDisconnected()), serverChannel_, SLOT(connectToServer()));
-		disconnect(engineSlaveChannel_, SIGNAL(channelDisconnected()), engineSlaveChannel_, SLOT(connectToServer()));
-		disconnect(behavioralDataChannel_, SIGNAL(channelDisconnected()), behavioralDataChannel_, SLOT(connectToServer()));
+	stopExperiment();
 
-		disconnect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
-		disconnect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
-		disconnect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
-		channelSignalsConnected_ = false;
-	}
-
-	updateTimer_->stop();
+	//updateTimer_->stop();
+	stateUpdateTimer_->stop();
+	engineUpdateTimer_->stop();
 
 }
 
 
 bool RemoteViewer::aboutToQuit()
 {
-	if(connectAction_->isChecked())
-		changeConnectionState(false);
 	deinit();
 	return true;
-
-	//int r = QMessageBox::warning(this,Picto::Names->workstationAppName,
-	//			tr("There is an active session.\nQuitting will end the session\n"
-	//			"Do you still want to quit?"),
-	//			   QMessageBox::Yes|QMessageBox::No);
-	//if(r == QMessageBox::Yes)
-	//{
-	//	changeConnectionState(false);
-	//	return true;
-	//}
-	//else
-	//	return false;	
 }
 
 //! Initializes the engine with all of the appropriate pieces for testing
@@ -203,7 +678,7 @@ void RemoteViewer::setupEngine()
 	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
 
 	//set up signal channel
-	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::NetworkSignalChannel(behavioralDataChannel_));
+	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::XYSignalChannel());
 	engine_->addSignalChannel("PositionChannel",signalChannel);
 
 	//Set up event code generator
@@ -216,8 +691,7 @@ void RemoteViewer::setupEngine()
 	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
 	engine_->setRewardController(rewardController);
 
-	renderingTarget_->showSplash();
-	showingSplash_ = true;
+	refreshSplash_ = true;
 }
 
 //! Sets up the user interface portions of the GUI
@@ -226,7 +700,7 @@ void RemoteViewer::setupUi()
 	//----- Task Action -----
 	playAction_ = new QAction(tr("P&lay"),this);
 	playAction_->setIcon(QIcon(":/icons/play.png"));
-	connect(playAction_,SIGNAL(triggered()),this, SLOT(play()));
+	connect(playAction_,SIGNAL(triggered()),this, SLOT(playAction()));
 
 	pauseAction_ = new QAction(tr("&Pause"),this);
 	pauseAction_->setIcon(QIcon(":/icons/pause.png"));
@@ -275,7 +749,7 @@ void RemoteViewer::setupUi()
 	connectAction_ = new QAction(tr("&Connect"), this);
 	connectAction_->setCheckable(true);
 	connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
-	connect(connectAction_, SIGNAL(triggered(bool)), this, SLOT(changeConnectionState(bool)));
+	//connect(connectAction_, SIGNAL(triggered(bool)), this, SLOT(changeConnectionState(bool)));
 
 	//Password Line Edit
 	passwordEdit_ = new QLineEdit();
@@ -287,8 +761,10 @@ void RemoteViewer::setupUi()
 	proxyListBox_ = new QComboBox;
 	proxyListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	proxyListBox_->addItem("No Proxy",QUuid().toString());
-	updateLists();
+	//updateComponentLists();
 
+	//Active Experiment name
+	activeExpName_ = new QLabel();
 	//Zoom slider
 	zoomSlider_ = new QSlider;
 	zoomSlider_->setRange(2,20);
@@ -314,18 +790,22 @@ void RemoteViewer::setupUi()
 	toolbarLayout->addStretch();
 
 	statusBar_ = new QLabel();
-	updateStatus();
 
 	propertyFrame_ = new PropertyFrame();
 	propertyFrame_->setEnabled(false);
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
 	connect(propertyFrame_,SIGNAL(parameterMessageReady(QSharedPointer<Property>)),this,SLOT(parameterMessageReady(QSharedPointer<Property>)));
+	QHBoxLayout* activeExpLayout = new QHBoxLayout();
+	activeExpLayout->addWidget(new QLabel("Active Experiment: "));
+	activeExpLayout->addWidget(activeExpName_);
+	
 	QHBoxLayout* zoomLayout = new QHBoxLayout();
 	zoomLayout->addWidget(new QLabel("Zoom: ", this));
 	zoomLayout->addWidget(zoomSlider_);
 	zoomLayout->addWidget(zoomPercentage_);
 		
 	QVBoxLayout *leftPane = new QVBoxLayout;
+	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
 	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
 
@@ -342,94 +822,46 @@ void RemoteViewer::setupUi()
 	mainLayout->addWidget(statusBar_);
 	setLayout(mainLayout);
 
-	updateActions();
-
 }
 
 void RemoteViewer::setupServerChannel()
 {
-	reconnectTimer_ = new QTimer(this);
-	reconnectTimer_->setInterval(500);
-
 	serverChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
-	behavioralDataChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
-
-	connect(reconnectTimer_, SIGNAL(timeout()), this, SLOT(assureChannelConnections()));
-
-	//connect(serverChannel_, SIGNAL(connectAttemptFailed()), serverChannel_, SLOT(connectToServer()));
-	//connect(engineSlaveChannel_, SIGNAL(connectAttemptFailed()), engineSlaveChannel_, SLOT(connectToServer()));
-	//connect(behavioralDataChannel_, SIGNAL(connectAttemptFailed()), behavioralDataChannel_, SLOT(connectToServer()));
-
-	//channelSignalsConnected_ = true;
-
 }
 
 
+void RemoteViewer::playAction()
+{
+	if(currState_ == StoppedSession)
+		play();
+	else
+		resume();
+}
 void RemoteViewer::play()
 {
-	qDebug()<<"Play slot";
-
-	timeoutTimer_->stop();
-	if(localStatus_ == Stopped)
-	{
-		QString modifiedTaskName = taskListBox_->currentText();
-		modifiedTaskName = modifiedTaskName.simplified().remove(' ');
-
-		if(sendTaskCommand("start:"+modifiedTaskName))
-		{
-			//Once we've sent the start command, we can disjoin and then rejoin the session
-			//This gaurantees that our state machine is in the corerct state.
-			disjoinSession();
-			joinSession();
-		}
-	}
-	else if(localStatus_ == Paused)
-	{
-		if(sendTaskCommand("resume"))
-		{
-			engine_->play();
-			localStatus_ = Running;
-			updateActions();
-		}
-	}
-	updateActions();
-	timeoutTimer_->start();
+	QString modifiedTaskName = taskListBox_->currentText();
+	modifiedTaskName = modifiedTaskName.simplified().remove(' ');
+	sendTaskCommand("start:"+modifiedTaskName);
+}
+void RemoteViewer::resume()
+{
+	sendTaskCommand("resume");
 }
 
 void RemoteViewer::pause()
 {
-	timeoutTimer_->stop();
-
-	if(sendTaskCommand("pause"))
-	{
-		localStatus_ = Paused;
-		engine_->pause();
-	}
-	updateActions();
-	timeoutTimer_->start();
+	sendTaskCommand("pause");
 }
 
 void RemoteViewer::stop()
 {
-	timeoutTimer_->stop();
 	sendTaskCommand("stop");
-	localStatus_ = Stopped;
-	engine_->stop();
-	updateActions();
-	timeoutTimer_->start();
 }
 
 void RemoteViewer::reward()
 {
-	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
-	//We need to possibbly start a session, and always join a session
-	ComponentStatus remoteStatus = directorStatus(directorID);
-	if(!sendTaskCommand(QString("reward:%1").arg(rewardChannel_),QString::number(rewardQuantity_->value())))
-	{
-		statusBar_->setText("Failed to send reward command to server.");
-		return;
-	}
+	sendTaskCommand(QString("reward:%1").arg(rewardChannel_),QString::number(rewardQuantity_->value()));
 }
 
 void RemoteViewer::LoadPropValsFromFile()
@@ -452,9 +884,8 @@ void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 
 void RemoteViewer::operatorClickDetected(QPoint pos)
 {
-	if(localStatus_ <= stopped)
-		return;
-	sendTaskCommand(QString("click:%1,%2").arg(pos.x()).arg(pos.y()));
+	if(currState_ == RunningSession)
+		sendTaskCommand(QString("click:%1,%2").arg(pos.x()).arg(pos.y()));
 }
 
 void RemoteViewer::zoomChanged(int zoom)
@@ -468,116 +899,7 @@ void RemoteViewer::zoomChanged(int zoom)
 	//This takes care of that.
 	CursorGraphic::setZoom(fixedZoom);
 	pixmapVisualTarget_->setZoom(fixedZoom);
-	if(showingSplash_)
-		renderingTarget_->showSplash();
-}
-
-//! \brief Called whenever the connected button changes state
-void RemoteViewer::changeConnectionState(bool checked)
-{
-	if(checked)
-	{
-		QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
-		//We need to possibbly start a session, and always join a session
-		ComponentStatus remoteStatus = directorStatus(directorID);
-		if(remoteStatus == NotFound)
-		{
-			connectAction_->setChecked(false);
-			return;
-		}
-
-		//If the remote Director is not already in a session, we must start a new one
-		if(remoteStatus == Idle)
-		{
-			if(!startSession())
-			{
-				connectAction_->setChecked(false);
-				return;
-			}
-		}
-
-		//We always need to join the session
-
-		//joinSession doesn't return until the session ends (this could be fixed
-		//by using a signal to run the task, but  tasks were designed to be run in 
-		//an environment without event loops).  This means that we need to handle
-		//everything before calling it.
-		if(!joinSession())
-		{
-			connectAction_->setChecked(false);
-			connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
-		}
-	}
-	else
-	{ 
-		QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
-		ComponentStatus remoteStatus = directorStatus(directorID);
-		int r = QMessageBox::No;
-		if(remoteStatus == Stopped)
-		{
-			r = QMessageBox::warning(this,Picto::Names->workstationAppName,
-				tr("You are disconnecting from a session that is not currently running an experiment.\n"
-				"Would you like to end the session as well?"),
-				   QMessageBox::Yes|QMessageBox::No);
-
-			if(r == QMessageBox::Yes)
-			{
-				stop();
-
-				//wait for the remote engine to stop
-				QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
-				QTime timer;
-				timer.start();
-				while(directorStatus(directorID) > Stopped && timer.elapsed() < 2000);
-
-				Q_ASSERT_X(timer.elapsed()<2000, "RemoteViewer::changeConnectionState", "Remote director never stopped");
-
-				if(!endSession())
-				{
-					QMessageBox::critical(0,tr("Failed to End Session"),
-					tr("Failed to end the session.  Please reconnect to the session and try again."));
-				}
-			}
-		}
-
-		//Stop the local experiment
-		if(r == QMessageBox::No)
-		{
-			engine_->stop();
-			localStatus_= Stopped;
-			updateActions();
-		}
-
-		//We should disjoin the session first (this will alwys occur
-		if(disjoinSession())
-			connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
-		else
-			connectAction_->setChecked(true);
-
-	}
-	updateActions();
-}
-
-
-//! \brief Updates the status bar (called by a 5 sec timer)
-void RemoteViewer::updateStatus()
-{
-	QString statusLine;
-
-	//Check server connection
-	//I'm going to assume that if one of our signal channels is connected that they
-	//all are.  this may prove to be a faulty assumption, but I doubt it...
-	if(serverChannel_->isConnected() &&
-	   engineSlaveChannel_->isConnected() &&
-	   behavioralDataChannel_->isConnected())
-		statusLine += tr("Server: connected");
-	else
-		statusLine += tr("Server: disconnected");
-
-	if(!sessionId_.isNull())
-		statusLine += tr("    Session Id: ") + sessionId_.toString();
-
-	statusBar_->setText(statusLine);
+	refreshSplash_ = true;
 }
 
 //! \brief Sets the status message to the passed in string for 5 seconds
@@ -586,140 +908,17 @@ void RemoteViewer::setStatus(QString status)
 	if(!statusBar_)
 		return;
 	statusBar_->setText(status);
-	updateTimer_->start();	//This gaurantees that the message stays up for 5 seconds
+	//updateTimer_->start();	//This gaurantees that the message stays up for 5 seconds
 }
 
 void RemoteViewer::generateTaskList()
 {
-	Q_ASSERT(taskListBox_);
-	QString currText = "";
-	int currInd = 0;
-	if(taskListBox_)
+	if(taskListBox_->count() == 0)
 	{
-		currText = taskListBox_->currentText();
-		currInd = taskListBox_->currentIndex();
-	}
-	taskListBox_->clear();
-
-	if(activeExperiment_)
 		taskListBox_->addItems(activeExperiment_->getTaskNames());
-	else
-		return;
-	if((taskListBox_->itemText(currInd) == currText) && (taskListBox_->itemText(currInd) != ""))
-		taskListBox_->setCurrentIndex(currInd);
-	taskListBox_->setEnabled(taskListBox_->count() > 0);
-
-	updateActions();
+		taskListBox_->setCurrentIndex(0);
+	}
 }
-
-/*!	\brief Updates the status of the actions
- *
- *	This viewer has a lot of different actions, so this centralized function
- *	handles the process of enabling and disabling them all.  It should be called
- *	directly, whenever a state change is made.
- *
- *	Be careful when modifying this function.  It is easy to make logic errors.
- *	To reduce the chances of logic errors, each action is enabled/disabled by
- *	a single disable boolean.
- */
-void RemoteViewer::updateActions()
-{
-	//Play action
-	bool disablePlay = false;
-	disablePlay |= !enableTaskCommands_;
-	disablePlay |= !serverChannel_->isConnected();
-	disablePlay |= !connectAction_->isChecked();
-	disablePlay |= (taskListBox_->count() == 0);
-	disablePlay |= (directorListBox_->count() == 0);
-	disablePlay |= (localStatus_ == Running);
-	disablePlay |= experiment_.isNull();
-
-	if(disablePlay)
-		playAction_->setEnabled(false);
-	else
-		playAction_->setEnabled(true);
-
-	//Stop action
-	bool disableStop = false;
-	disableStop |= !enableTaskCommands_;
-	disableStop |= !(localStatus_ == Running || localStatus_ == Paused);
-	disableStop |= !connectAction_->isChecked();
-
-	if(disableStop)
-		stopAction_->setEnabled(false);
-	else
-		stopAction_->setEnabled(true);
-
-
-	//Pause action
-	bool disablePause = false;
-	disablePause |= !enableTaskCommands_;
-	disablePause |= (localStatus_ != Running);
-	disablePause |= !connectAction_->isChecked();
-
-	if(disablePause)
-		pauseAction_->setEnabled(false);
-	else
-		pauseAction_->setEnabled(true);
-
-	//Reward action
-	bool disableReward = false;
-	disableReward |= !enableTaskCommands_;
-	disableReward |= !connectAction_->isChecked();
-
-	if(disableReward)
-	{
-		rewardAction_->setEnabled(false);
-		rewardQuantity_->setEnabled(false);
-	}
-	else
-	{
-		rewardAction_->setEnabled(true);
-		rewardQuantity_->setEnabled(true);
-	}
-
-	//Connect Action
-	bool disableConnect = false;
-	disableConnect |= (directorListBox_->count() == 0);
-
-	if(disableConnect)
-		connectAction_->setEnabled(false);
-	else
-		connectAction_->setEnabled(true);
-
-	//Director and Proxy combo boxes
-	bool disableDirectorAndProxyLists = false;
-	disableDirectorAndProxyLists |= (connectAction_->isChecked());
-
-	if(disableDirectorAndProxyLists)
-	{
-		directorListBox_->setEnabled(false);
-		proxyListBox_->setEnabled(false);
-		passwordEdit_->setEnabled(false);
-	}
-	else
-	{
-		directorListBox_->setEnabled(true);
-		proxyListBox_->setEnabled(true);
-		if(!disableConnect)
-			passwordEdit_->setEnabled(true);
-	}
-
-	//Task list combo box
-	bool disableTaskList = false;
-	disableTaskList |= !enableTaskCommands_;
-	disableTaskList |= (localStatus_ == Running);
-	disableTaskList |= (localStatus_ == Paused);
-	disableTaskList |= !(connectAction_->isChecked());
-
-	if(disableTaskList)
-		taskListBox_->setEnabled(false);
-	else
-		taskListBox_->setEnabled(true);
-
-	taskListIndexChanged(-1);	//This will bring the parameter window to the correct state
-}
-
 
 /*! \brief updates the combo boxes containing Director instances and proxy servers
  *
@@ -727,17 +926,14 @@ void RemoteViewer::updateActions()
  *	then adds new ones to the combo box and removes old ones, as needed.  The same
  *	is done for the proxy servers
  */
-void RemoteViewer::updateLists()
+void RemoteViewer::updateComponentLists(bool immediate)
 {
-
-	if(connectAction_->isChecked())
+	if(!immediate)
 	{
-		directorListBox_->setEnabled(false);
-		proxyListBox_->setEnabled(false);
-		passwordEdit_->setEnabled(false);
-		return;
+		if(componentListsTimer_.elapsed() < 1000)
+			return;
+		componentListsTimer_.restart();
 	}
-
 	QIcon runningIcon(QIcon(":/icons/runningWorkstation.png"));
 	QIcon endingSession(QIcon(":/icons/endingSession.png"));
 
@@ -825,8 +1021,6 @@ void RemoteViewer::updateLists()
 		if(remove)
 			proxyListBox_->removeItem(i);
 	}
-
-	updateActions();
 }
 
 /*! \brief returns the current status of a remote director
@@ -1044,102 +1238,6 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 	return currProxyList_;
 }
 
-/*! \brief checks to see if the current proxy or director has timed out, or if we have lost contact with the server
- *
- *	When we are in a session, this slot is called periodically, to confirm that the
- *	proxy and director being used haven't disapearred from the network.  Since this
- *	gives us access to the director status, it makes sense to use this time to see
- *	if the director sttae has been modified by someone else (for example, if the 
- *	director has been paused by another Workstation, we should change our state to paused)
- */
-void RemoteViewer::checkForTimeouts()
-{
-	//check that the command channels are still connected
-	if(!serverChannel_->assureConnection() ||
-	   !engineSlaveChannel_->assureConnection() ||
-	   !behavioralDataChannel_->assureConnection())
-	{
-		//connectAction_->setChecked(false);//For a checkable action, the checked property is toggled during the trigger call.
-		if(connectAction_->isChecked())
-		{
-			connectAction_->trigger();
-			QMessageBox::critical(0,tr("Server Connection Lost"),
-				tr("Workstation is no longer able to connect to the server.  " 
-				"The session has been ended."));
-		}
-		return;
-	}
-
-	//Check that the director is still alive and possibly modify our state to match it's state
-	//(In case another workstation changed its state.
-	ComponentStatus remoteStatus = directorStatus(directorListBox_->itemData(directorListBox_->currentIndex()).toString());
-
-	if((remoteStatus < Stopped) && (localStatus_ != Idle))
-	{
-		//This means that the session has ended, so we must  disconnect
-		connectAction_->setChecked(false);
-		changeConnectionState(false);
-	}
-	else if(remoteStatus == Stopped && localStatus_ != Stopped)
-	{
-		engine_->stop();
-		localStatus_ = Stopped;
-	}
-	else if(remoteStatus == Paused && localStatus_ != Paused)
-	{
-		engine_->pause();
-		localStatus_ = Paused;
-	}
-	else if(remoteStatus == Running)
-	{
-		if(localStatus_ == Paused)
-		{
-			localStatus_ = Running;
-			engine_->play();
-		}
-		else if(localStatus_ == Stopped)
-		{
-			//If director went from stopped to running, then
-			//a new task was started.  The easiest way for us to handle
-			//this will be to disjoin and then rejoin the session,
-			//but that only works if we were the observers
-			disjoinSession();
-			joinSession();
-		}
-	}
-	else if(remoteStatus == NotFound)
-	{
-		//connectAction_->setChecked(false); //For a checkable action, the checked property is toggled during the trigger call.
-		connectAction_->trigger();
-		QMessageBox::critical(0,tr("Director Lost"),
-			tr("The Director instance being used is no longer on the network."));
-		return;
-	}
-
-	if(engine_ && (localStatus_ != Running))
-	{	//Since their's no experiment running.  The remoteViewer is responsibile
-		//for updating the latest values.
-		engine_->updateCurrentStateFromServer();
-	}
-
-	//Check the proxy
-	//If there's no Proxy in this experiment, don't worry about it.
-	if(proxyListBox_->currentIndex() == 0)
-		return;
-	//Check that the proxy is still alive.
-	remoteStatus = proxyStatus(proxyListBox_->itemData(proxyListBox_->currentIndex()).toString());
-	if(remoteStatus == NotFound)
-	{
-		//connectAction_->setChecked(false);//For a checkable action, the checked property is toggled during the trigger call.
-		connectAction_->trigger();
-		QMessageBox::critical(0,tr("Proxy Lost"),
-			tr("The Proxy instance being used is no longer on the network."));
-		return;
-	}
-
-}
-
-
 /*! \brief Starts a new session
  *
  *	This starts a new session on the server.  The act of starting a session basically 
@@ -1178,28 +1276,6 @@ bool RemoteViewer::startSession()
 	}
 #endif
 
-	//Make a copy of the experiment
-	//It would be 100 times easier to copy the experiment object directly, but it contains a
-	//parameter container, which is a QObject, and can't be copied.  So instead, we generate
-	//a new copy instead
-	sessionId_ = QUuid();
-	activeExperiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
-
-	QString expXML = experiment_->toXml();
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(expXML));
-	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
-		xmlReader->readNext();
-
-	if(xmlReader->atEnd())
-		return false;
-	if(!activeExperiment_->fromXml(xmlReader))
-	{
-		//delete activeExperiment_;
-		return false;
-	}
-	expXML = "";				//Just to free up a little memory from these giant string buffers.
-
-
 	QString commandStr;
 	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 	QString proxyID = proxyListBox_->itemData(proxyListBox_->currentIndex()).toString();
@@ -1209,7 +1285,7 @@ bool RemoteViewer::startSession()
 
 	QByteArray dataXml = pictoDataText_->toPlainText().toUtf8();
 
-	QSharedPointer<ExperimentConfig> expConfig = activeExperiment_->getExperimentConfig();
+	QSharedPointer<ExperimentConfig> expConfig = experiment_->getExperimentConfig();
 	if(!expConfig)
 		return false;
 	dataXml.append(expConfig->toXml().toUtf8());
@@ -1225,7 +1301,7 @@ bool RemoteViewer::startSession()
 	//Get the response to this command
 	do
 	{
-		if(!serverChannel_->waitForResponse(5000))
+		if(!serverChannel_->waitForResponse(10000))
 		{
 			setStatus(tr("Server did not respond to STARTSESSION command"));
 			return false;
@@ -1260,8 +1336,8 @@ bool RemoteViewer::startSession()
 
 		if(!xmlReader.atEnd())
 		{
-			//sessionId_ = QUuid(xmlReader.readElementText());
-			setStatus(tr("Experiment loaded on remote Director instance. Session ID: ")+ sessionId_.toString());
+			QUuid newSessionId = QUuid(xmlReader.readElementText());
+			setStatus(tr("Experiment loaded on remote Director instance. Session ID: ")+ newSessionId.toString());
 			return true;
 		}
 		else
@@ -1330,9 +1406,7 @@ bool RemoteViewer::endSession()
 		setStatus(tr("Unexpected response to ENDSESSION command"));
 	}
 	sessionId_ = QUuid();
-	serverChannel_->setSessionId(QUuid());
-	//if(activeExperiment_)
-		//delete activeExperiment_;
+
 	return true;
 
 }
@@ -1349,12 +1423,6 @@ bool RemoteViewer::endSession()
  */	
 bool RemoteViewer::joinSession()
 {
-	if(localStatus_ > stopped)
-	{
-		//This could happen if we're calling joinSession just after disjoining
-		//a session and our last call to joinSession didn't quite end yet.
-		return false;
-	}
 	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 
 	QByteArray content;
@@ -1408,7 +1476,7 @@ bool RemoteViewer::joinSession()
 		return false;
 	}
 
-	//If we didn't start the session, we'll need to also put the experiment in activeExperiment
+	//If we didn't already, we'll need to also put the experiment in activeExperiment
 	if(sessionId_.isNull() || (remoteSessionId != sessionId_))
 	{
 		sessionId_ = remoteSessionId;
@@ -1424,7 +1492,6 @@ bool RemoteViewer::joinSession()
 				setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"));
 				return false;
 			}
-			generateTaskList();
 		}
 		else
 		{
@@ -1437,104 +1504,15 @@ bool RemoteViewer::joinSession()
 
 	serverChannel_->setSessionId(sessionId_);
 	engineSlaveChannel_->setSessionId(sessionId_);
-	behavioralDataChannel_->setSessionId(sessionId_);
-
-	bool tryAgain;
-	QString lastTransitionTime;
-	QString taskName;
-	QStringList currentStateMachinePath;
-	QString currentState;
-
-	do
-	{
-		tryAgain = false;
-		
-		engine_->resetLastTimeStateDataRequested();
-		if(!engine_->updateCurrentStateFromServer())
-		{
-			setStatus("Server failed to respond to Current State request");
-			return false;
-		}
-		QString fullPath = engine_->getServerPathUpdate();
-		int lastSepIndex = fullPath.lastIndexOf("::");
-		QString machinePath = fullPath.left(lastSepIndex);
-		currentState = fullPath.mid(lastSepIndex+2);
-		if(!machinePath.isEmpty())
-		{
-			//If we're here an experiment is in progress
-
-			//Picto::StateDataUnit data;
-			//data.fromXml(xmlReader);
-
-			//lastTransitionTime = data.getTime();
-			//currentStateMachinePath = data.getMachinePath().split("::");
-			//currentState = data.getDestination();
-			currentStateMachinePath = machinePath.split("::");
-			taskName = currentStateMachinePath.first();
-
-			//Update the task list box
-			int taskIdx = taskListBox_->findText(taskName);
-			Q_ASSERT_X(taskIdx >= 0,"RemoteViewer::joinSession", "Task name not found in out list of experiments.");
-			taskListBox_->setCurrentIndex(taskIdx);
-		}
-		else
-		{
-			//If we're here, then there is no state data, which means that a session was just 
-			//started.
-			
-			lastTransitionTime = QString("0.00000");
-			currentStateMachinePath = QStringList();
-			currentState = "";
-			taskName="";
-			ComponentStatus remoteStatus = directorStatus(directorID);
-			// In some cases we happen to request data exactly when the director
-			// has started running but hasn't yet reported its state, or has stopped
-			// and has no currentState but hasn't yet informed us of the stop.  
-			// This should catch these cases.
-			if((remoteStatus == Running) || (remoteStatus == Paused))
-				tryAgain = true;
-		}
-		
-	} while(tryAgain);
-
-	///////TESTING
-	//We'll need to actually determine the task name directly....
-	//modifiedTaskName = taskListBox_->currentText();
-	//modifiedTaskName = modifiedTaskName.simplified().remove(' ');
-	
-	//Set ouselves up so we are synched with the remote director
-	Picto::StateMachine::resetSlaveElements(lastTransitionTime);
-	QSharedPointer<Picto::NetworkSignalChannel> sigChan;
-	sigChan = engine_->getSignalChannel("PositionChannel").staticCast<Picto::NetworkSignalChannel>();
-	sigChan->setLastTimeDataCollected(lastTransitionTime);
-	
-	//Tell the engine to update its properties from the beginning of the list
-	//of changes.  We need to do this because we created a new experiment from XML but the engine
-	//may have already been used to update properties which means that it wouldn't get all of the 
-	//property changes from the director since the beginning of the session.
-	//engine_->setLastTimePropertiesRequested("0");
-
-	//Start the timeout timer
-	if(!timeoutTimer_)
-	{
-		timeoutTimer_ = new QTimer(this);
-		timeoutTimer_->setInterval(100);
-		connect(timeoutTimer_, SIGNAL(timeout()), this, SLOT(checkForTimeouts()));
-	}
-	timeoutTimer_->start();
 
 	setStatus(tr("Existing session joined. Session ID: ")+ sessionId_.toString());
 
 	//Send an isauthorized TASK command to figure out if we're authorized to send commands
 	//on this session.
 	if(sendTaskCommand("isauthorized"))
-	{
-		enableTaskCommands_ = true;
-		propertyFrame_->setEnabled(true);
-		loadPropsAction_->setEnabled(true);
-	}
+		isAuthorized_ = true;
 	else
-		enableTaskCommands_ = false;
+		isAuthorized_ = false;
 
 	//Finally figure out what the status of the remote director is (stopped, running, or paused)
 	//and get our director running in that state.
@@ -1544,58 +1522,24 @@ bool RemoteViewer::joinSession()
 		setStatus("Attempted to join a session with a director that isn't in an active session");
 		return false;
 	}
-	connectAction_->setIcon(QIcon(":/icons/connected.png"));
-	generateTaskList();
-	updateActions();
 
-	if(remoteStatus == Stopped)
-	{
-		localStatus_ = Stopped;
-		updateActions();
-		return true;
-	}
-	else if(remoteStatus == Running || remoteStatus == Paused)
-	{
-		////////////TESTING
-		qDebug()<<"JumpToState "<<currentStateMachinePath<<currentState;
-
-		if(!activeExperiment_->jumpToState(currentStateMachinePath, currentState))
-		{
-			////////TESTING
-			Q_ASSERT(false);
-
-			setStatus("Failed to jump into the state machine correctly");
-			return false;
-		}
-		
-		if(remoteStatus == Paused)
-		{
-			localStatus_ = Paused;
-			engine_->pause();
-		}
-		else
-		{
-			localStatus_ = Running;
-		}
-
-		updateActions();
-
-		//WARNING:  Nothing after this line will be processed until the task is finished running
-		showingSplash_ = false;
-		activeExperiment_->runTask(taskName.simplified().remove(' '));
-		showingSplash_ = true;
-		localStatus_ = Stopped;
-		updateActions();
-		renderingTarget_->showSplash();
-		showingSplash_ = true;
-		return true;
-	}
-
-	return false;
-
+	return true;
 }
 
 
+
+bool RemoteViewer::syncExperiment()
+{
+	engineTrigger_ = StartEngine;
+	return true;
+}
+
+void RemoteViewer::stopExperiment()
+{
+	Q_ASSERT(engine_);
+	engine_->stop();
+	engineTrigger_ = StopEngine;
+}
 
 /*! \brief Disjoins a currently running session
  *
@@ -1604,25 +1548,8 @@ bool RemoteViewer::joinSession()
  */
 bool RemoteViewer::disjoinSession()
 {
-	//Check for a currently running session
-	//if(sessionId_.isNull())
-	//{
-	//	setStatus(tr("Not currently in a session"));
-	//	return false;
-	//}
-	propertyFrame_->setEnabled(false);
-	loadPropsAction_->setEnabled(false);
-	timeoutTimer_->stop();
-
-	//If we're running, we should stop the local engine
-	if(localStatus_ > Stopped)
-		engine_->stop();
-
-	localStatus_ = Stopped;
+	serverChannel_->setSessionId(QUuid());
 	engineSlaveChannel_->setSessionId(QUuid());
-	behavioralDataChannel_->setSessionId(QUuid());
-
-	setStatus("Disjoined session");
 
 	return true;
 }
@@ -1686,35 +1613,26 @@ bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 
 void RemoteViewer::taskListIndexChanged(int)
 {
-	if(!activeExperiment_ || !connectAction_->isChecked())
-	{
-		if(propertyFrame_)
-		{
-			qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
-			lastTask_.clear();
-			lastActiveExperiment_.clear();
-		}
-		return;
-	}
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
-	if((activeExperiment_.data() == lastActiveExperiment_.toStrongRef().data())
-		&& (task.data() == lastTask_.toStrongRef().data()))
-	{
-		return;
-	}
-	lastTask_ = task;
-	lastActiveExperiment_ = activeExperiment_;
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 }
 
-void RemoteViewer::assureChannelConnections()
+bool RemoteViewer::assureChannelConnections()
 {
+	bool hadDisconnect = false;
 	if(!serverChannel_->isConnected())
+	{
 		serverChannel_->connectToServer();
+		if(!serverChannel_->isConnected())
+			hadDisconnect = true;
+	}
 	if(!engineSlaveChannel_->isConnected())
+	{
 		engineSlaveChannel_->connectToServer();
-	if(!behavioralDataChannel_->isConnected())
-		behavioralDataChannel_->connectToServer();
+		if(!engineSlaveChannel_->isConnected())
+			hadDisconnect = true;
+	}
+	return !hadDisconnect;
 }

@@ -9,6 +9,7 @@
 #include "../../common/network/ServerDiscoverer.h"
 
 #include <QUuid>
+#include <QFuture>
 using namespace Picto;
 
 class QAction;
@@ -42,7 +43,9 @@ public slots:
 	void deinit();	//Called just after the user switches out of the viewer
 
 private slots:
+	void playAction();
 	void play();
+	void resume();
 	void pause();
 	void stop();
 	void reward();
@@ -51,15 +54,107 @@ private slots:
 	void operatorClickDetected(QPoint pos);
 	void zoomChanged(int zoom);
 
-	void changeConnectionState(bool checked);
-	
-	void updateStatus();
-	void updateLists();
-	void updateActions();
 
-	void checkForTimeouts();
+
+
+
+
+
+
+
+
+
+	void updateState();
+	void updateEngine();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//void changeConnectionState(bool checked);
+	void updateComponentLists(bool immediate = false);
+
 
 private:
+
+
+	void enterState();
+	void runState();
+	QTime componentListsTimer_;
+
+
+
+
+
+
+
+
+	enum ViewerState
+	{
+		WaitForConnect,
+		WaitForJoin,
+		JoiningSession,
+		CreatingSession,
+		StoppedSession,
+		PausedSession,
+		RunningSession,
+		EndingSession
+	} currState_;
+
+	enum ViewerTrigger
+	{
+		NoViewerTrigger,
+		Connected,
+		Disconnected,
+		JoinSessionRequest,
+		StartSessionRequest,
+		DisjoinSessionRequest,
+		SessionStarted,
+		SessionDidntStart,
+		SessionStopped,
+		SessionPaused,
+		SessionRunning,
+		EndSessionRequest,
+		SessionEnded
+	} latestTrigger_;
+
+	enum EngineTrigger
+	{
+		NoEngineTrigger,
+		StartEngine,
+		StopEngine
+	} engineTrigger_;
+
+	
+	QTimer *stateUpdateTimer_;
+	QTimer *engineUpdateTimer_;
+	QString initState_;
+	bool refreshSplash_;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	typedef struct
 	{
 		QString name;
@@ -75,12 +170,15 @@ private:
 	void setupServerChannel();
 	void setupUi();
 	void generateTaskList();
+	void updateUI();
 
 	void setStatus(QString status);
 	bool sendTaskCommand(QString target, QString msgContent = "");
 	bool startSession();
 	bool endSession();
 	bool joinSession();
+	bool syncExperiment();
+	void stopExperiment();
 	bool disjoinSession();
 
 	ComponentStatus directorStatus(QString id);
@@ -114,6 +212,7 @@ private:
 	QComboBox *taskListBox_;
 	QComboBox *directorListBox_;
 	QComboBox *proxyListBox_;
+	QLabel *activeExpName_;
 	QSlider *zoomSlider_;
 	QLabel *zoomPercentage_;
 	QLabel *statusBar_;
@@ -124,12 +223,11 @@ private:
 
 	Picto::CommandChannel *serverChannel_;
 	Picto::CommandChannel *engineSlaveChannel_;
-	Picto::CommandChannel *behavioralDataChannel_;
 	Picto::ServerDiscoverer *serverDiscoverer_;
 
 	ComponentStatus localStatus_;
 	
-	bool enableTaskCommands_;
+	bool isAuthorized_;
 
 	QUuid sessionId_;
 	QUuid observerId_;
@@ -139,13 +237,14 @@ private:
 	QList<ComponentInstance> currDirectorList_;
 	QList<ComponentInstance> currProxyList_;
 	bool channelSignalsConnected_;
-	bool showingSplash_;
 	QWeakPointer<Asset> lastTask_;
 	QWeakPointer<Asset> lastActiveExperiment_;
+	bool runningEngine_;
+	bool updatingState_;
 
 private slots:
 	void taskListIndexChanged(int index);
-	void assureChannelConnections();
+	bool assureChannelConnections();
 
 };
 
