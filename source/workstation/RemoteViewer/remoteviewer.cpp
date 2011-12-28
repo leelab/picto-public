@@ -40,17 +40,15 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+#define COMPONENT_UPDATE_PERIOD 500 
+#define SPECIAL_STATUS_PERIOD 5000
 
 RemoteViewer::RemoteViewer(QWidget *parent) :
 	Viewer(parent),
-	localStatus_(Stopped),
 	serverChannel_(0),
-	timeoutTimer_(0),
 	activeExperiment_(0),
 	statusBar_(NULL),
-	channelSignalsConnected_(false),
 	isAuthorized_(false),
-	runningEngine_(false),
 	propertyFrame_(NULL)
 {
 	setupServerChannel();
@@ -77,8 +75,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	Q_ASSERT(rc);
 	observerId_ = QUuid(query.value(0).toString());
 
-	currState_ = WaitForConnect;
-	latestTrigger_ = NoViewerTrigger;
+	currState_ = InitState;
+	stateTrigger_ = Disconnected;
 	engineTrigger_ = NoEngineTrigger;
 	stateUpdateTimer_ = new QTimer(this);
 	stateUpdateTimer_->setInterval(0);
@@ -93,6 +91,17 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 RemoteViewer::~RemoteViewer()
 {
 }
+/*! \brief The remote viewer is implemented as a state machine.  This is the main state machine run loop.
+ *	Each time this function is called, it checks for state change triggers.  If they have occured, the
+ *	state is changed, the new state's enter state function is called, and the new states runState function
+ *	is called continuously until the next state change.
+ *	Note: If we were to actually start an experiment running from inside this function, the function could not be
+ *	entered again until the experiment ended.  For this reason we have an external engine state machine
+ *	that runs separately from this one.  If the engine is waiting for a state change to occur, this 
+ *	function exits without doing anything.  In this way, any actions to start or stop the engine from
+ *	within this function are guaranteed to occur before the next time the function operates.
+
+ */
 void RemoteViewer::updateState()
 {
 	if(engineTrigger_ != NoEngineTrigger)
@@ -104,13 +113,16 @@ void RemoteViewer::updateState()
 	updateComponentLists();
 	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
 	ComponentStatus remoteStatus;
-	if(latestTrigger_ != NoViewerTrigger)
+	if(stateTrigger_ != NoViewerTrigger)
 		remoteStatus = directorStatus(directorID);
 	ViewerState nextState = currState_;
 	switch(currState_)
 	{
+	case InitState:
+		nextState = WaitForConnect;
+		break;
 	case WaitForConnect:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Connected:
 			nextState = WaitForJoin;
@@ -118,7 +130,7 @@ void RemoteViewer::updateState()
 		}
 		break;
 	case WaitForJoin:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Disconnected:
 			nextState = WaitForConnect;
@@ -132,7 +144,7 @@ void RemoteViewer::updateState()
 		}
 		break;
 	case JoiningSession:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Disconnected:
 			nextState = WaitForConnect;
@@ -152,7 +164,7 @@ void RemoteViewer::updateState()
 		}
 		break;
 	case CreatingSession:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Disconnected:
 			nextState = WaitForConnect;
@@ -161,11 +173,11 @@ void RemoteViewer::updateState()
 			nextState = JoiningSession;
 			break;
 		case SessionDidntStart:
-			nextState = JoiningSession;
+			nextState = WaitForJoin;
 		}
 		break;
 	case StoppedSession:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Disconnected:
 			nextState = WaitForConnect;
@@ -182,7 +194,7 @@ void RemoteViewer::updateState()
 		}
 		break;
 	case PausedSession:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Disconnected:
 			nextState = WaitForConnect;
@@ -199,7 +211,7 @@ void RemoteViewer::updateState()
 		}
 		break;
 	case RunningSession:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Disconnected:
 			nextState = WaitForConnect;
@@ -216,7 +228,7 @@ void RemoteViewer::updateState()
 		}
 		break;
 	case EndingSession:
-		switch(latestTrigger_)
+		switch(stateTrigger_)
 		{
 		case Disconnected:
 			nextState = WaitForConnect;
@@ -227,16 +239,34 @@ void RemoteViewer::updateState()
 		}
 		break;
 	}
-	latestTrigger_ = NoViewerTrigger;
+	stateTrigger_ = NoViewerTrigger;
 	if(nextState != currState_)
 	{
 		currState_ = nextState;
 		enterState();
 	}
 	runState();
+	if(stateTrigger_ != NoViewerTrigger)
+		endState();
+	updateStatus();
 	updatingState_ = false;
 }
 
+/*! \brief This is the main function for the engine's simple state machine.
+ *	As described in updateState, we need a separate state machine for engine
+ *	activity so that starting an experiment doesn't effectively stop the operation
+ *	of the main state machine.  The function must never be called from within
+ *	updateState() to prevent that same problem, which is why it returns right away
+ *	if an updateState() call is in progress.  The function waits for a startEngine
+ *	trigger, then starts the engine at the current state of the pictoDirector's 
+ *	experiment.  When an experiment stops, the function checks for a StopEngine trigger
+ *	which implies that the main state machine has triggered for this engine to stop.
+ *	If the trigger is found then the engine will no longer run until the next StartEngine
+ *	trigger.  If the StopTrigger isn't found, the engine will start up again the next
+ *	time the updateEngine function is called by its timer.  With this system in place,
+ *	even if something goes wrong and the engine exits before a task is done, it will just
+ *	restart it.
+ */
 void RemoteViewer::updateEngine()
 {
 	//We don't want to start running the engine from somewhere within the updateState() function
@@ -255,7 +285,7 @@ void RemoteViewer::updateEngine()
 		engine_->resetLastTimeStateDataRequested();
 		if(!engine_->updateCurrentStateFromServer())
 		{
-			setStatus("Server failed to respond to Current State request");
+			setStatus("Server failed to respond to Current State request",true);
 			return;
 		}
 		QString fullPath = engine_->getServerPathUpdate();
@@ -272,11 +302,6 @@ void RemoteViewer::updateEngine()
 		int taskIdx = taskListBox_->findText(taskName);
 		Q_ASSERT_X(taskIdx >= 0,"RemoteViewer::joinSession", "Task name not found in out list of experiments.");
 		taskListBox_->setCurrentIndex(taskIdx);
-
-		///////TESTING
-		//We'll need to actually determine the task name directly....
-		//modifiedTaskName = taskListBox_->currentText();
-		//modifiedTaskName = modifiedTaskName.simplified().remove(' ');
 		
 		//Set ouselves up so we are synched with the remote director
 		Picto::StateMachine::resetSlaveElements();
@@ -289,7 +314,7 @@ void RemoteViewer::updateEngine()
 			////////TESTING
 			Q_ASSERT(false);
 
-			setStatus("Failed to jump into the state machine correctly");
+			setStatus("Failed to jump into the state machine correctly",true);
 			return;
 		}
 
@@ -298,15 +323,13 @@ void RemoteViewer::updateEngine()
 			////////TESTING
 			Q_ASSERT(false);
 
-			setStatus("Failed to jump into the state machine correctly");
+			setStatus("Failed to jump into the state machine correctly",true);
 			return;
 		}
 		taskName = initStateMachinePath.first();
-		runningEngine_ = true;
 		engineTrigger_ = NoEngineTrigger;
 		//WARNING:  Nothing after this line will be processed until the task is finished running
 		activeExperiment_->runTask(taskName.simplified().remove(' '));
-		runningEngine_ = false;
 		if(engineTrigger_ == StopEngine)
 		{
 			engineTrigger_ = NoEngineTrigger;
@@ -320,6 +343,12 @@ void RemoteViewer::updateEngine()
 	}
 }
 
+/*! \brief This function is called once per state machine loop.
+ * This function is used to run periodic state specific checks and check 
+ * for new state transitions.  A state signifies a new state transition by 
+ * setting stateTrigger_ to a new value.  This trigger will then be used to 
+ * select the next state in updateState()
+ */
 void RemoteViewer::runState()
 {
 	QString directorID = directorListBox_->itemData(directorListBox_->currentIndex()).toString();
@@ -327,50 +356,54 @@ void RemoteViewer::runState()
 	switch(currState_)
 	{
 	case WaitForConnect:
+		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
 		if(assureChannelConnections())
-			latestTrigger_ = Connected;
+			stateTrigger_ = Connected;
 		break;
 	case WaitForJoin:
+		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
 		if(connectAction_->isChecked())
 		{
 				
 			if(remoteStatus == Idle)
-				latestTrigger_ = StartSessionRequest;
+				stateTrigger_ = StartSessionRequest;
 			if(remoteStatus > Ending)
-				latestTrigger_ = JoinSessionRequest;
+				stateTrigger_ = JoinSessionRequest;
 		}
 		break;
 	case JoiningSession:
+		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
 		if(joinSession())
 		{
 			if(remoteStatus == Running)
-				latestTrigger_ = SessionRunning;
+				stateTrigger_ = SessionRunning;
 			else if(remoteStatus == Paused)
-				latestTrigger_ = SessionPaused;
+				stateTrigger_ = SessionPaused;
 			else
-				latestTrigger_ = SessionStopped;
+				stateTrigger_ = SessionStopped;
 		}
 		if(remoteStatus < Stopped)
 		{
 			disjoinSession();
-			latestTrigger_ = DisjoinSessionRequest;
+			stateTrigger_ = DisjoinSessionRequest;
 		}
 		break;
 	case CreatingSession:
+		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
 		if(startSession())
-			latestTrigger_ = SessionStarted;
+			stateTrigger_ = SessionStarted;
 		else
-			latestTrigger_ = SessionDidntStart;
+			stateTrigger_ = SessionDidntStart;
 		break;
 	case StoppedSession:
 		if(remoteStatus == Running)
-			latestTrigger_ = SessionRunning;
+			stateTrigger_ = SessionRunning;
 		if(!connectAction_->isChecked())
 		{
 			if(!isAuthorized_)
 			{
 				disjoinSession();
-				latestTrigger_ = DisjoinSessionRequest;
+				stateTrigger_ = DisjoinSessionRequest;
 			}
 			else
 			{
@@ -381,19 +414,19 @@ void RemoteViewer::runState()
 
 				if(r == QMessageBox::Yes)
 				{
-					latestTrigger_ = EndSessionRequest;
+					stateTrigger_ = EndSessionRequest;
 				}
 				else
 				{
 					disjoinSession();
-					latestTrigger_ = DisjoinSessionRequest;
+					stateTrigger_ = DisjoinSessionRequest;
 				}
 			}
 		}
 		if(remoteStatus < Stopped)
 		{
 			disjoinSession();
-			latestTrigger_ = DisjoinSessionRequest;
+			stateTrigger_ = DisjoinSessionRequest;
 		}
 		if(refreshSplash_)
 		{
@@ -403,43 +436,93 @@ void RemoteViewer::runState()
 		break;
 	case PausedSession:
 		if(remoteStatus == Running)
-			latestTrigger_ = SessionRunning;
+			stateTrigger_ = SessionRunning;
 		if(remoteStatus == Stopped)
-			latestTrigger_ = SessionStopped;
+			stateTrigger_ = SessionStopped;
 		if(!connectAction_->isChecked() || (remoteStatus < Stopped))
 		{
 			disjoinSession();
-			latestTrigger_ = DisjoinSessionRequest;
+			stateTrigger_ = DisjoinSessionRequest;
 		}
-		if(latestTrigger_ != NoViewerTrigger)
+		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
 
 		break;
 	case RunningSession:
 		if(remoteStatus == Paused)
-			latestTrigger_ = SessionPaused;
+			stateTrigger_ = SessionPaused;
 		if(remoteStatus == Stopped)
-			latestTrigger_ = SessionStopped;
+			stateTrigger_ = SessionStopped;
 		if(!connectAction_->isChecked() || (remoteStatus < Stopped))
 		{
 			disjoinSession();
-			latestTrigger_ = DisjoinSessionRequest;
+			stateTrigger_ = DisjoinSessionRequest;
 		}
-		if(latestTrigger_ != NoViewerTrigger)
+		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
 		break;
 	case EndingSession:
 		if(endSession() || remoteStatus < Stopped)
 			disjoinSession();
-			latestTrigger_ = SessionEnded;
+			stateTrigger_ = SessionEnded;
 		break;
 	}
 	if(!assureChannelConnections())
 	{
-		latestTrigger_ = Disconnected;
+		stateTrigger_ = Disconnected;
 	}
 }
 
+/*! \brief The function is called when a state is ending and a new state will start on the next updateState call.
+ *	A state may have different ending actions depending on the trigger that it is ending
+ *	with.  This function is called after that trigger has been determined.  
+ *	It is important to note that actions on the engine by this function (ie. stop)
+ *	will always be completed before the next call to updateState().
+ */
+void RemoteViewer::endState()
+{
+	switch(currState_)
+	{
+	case WaitForConnect:
+		break;
+	case WaitForJoin:
+		break;
+	case JoiningSession:
+		if(	(stateTrigger_ == DisjoinSessionRequest)
+			|| (stateTrigger_ == Disconnected)	)
+			disjoinSession();
+		break;
+	case CreatingSession:
+		break;
+	case StoppedSession:
+		if(	(stateTrigger_ == DisjoinSessionRequest)
+			|| (stateTrigger_ == Disconnected)	)
+			disjoinSession();
+		break;
+	case PausedSession:
+		stopExperiment();
+		if(	(stateTrigger_ == DisjoinSessionRequest)
+			|| (stateTrigger_ == Disconnected)	)
+			disjoinSession();
+		break;
+	case RunningSession:
+		stopExperiment();
+		if(	(stateTrigger_ == DisjoinSessionRequest)
+			|| (stateTrigger_ == Disconnected)	)
+			disjoinSession();
+		break;
+	case EndingSession:
+		if(	(stateTrigger_ == SessionEnded)
+			|| (stateTrigger_ == Disconnected)	)
+			disjoinSession();
+		break;
+	}
+}
+
+/*! \brief This function is called once each time a new state is entered.
+ *	The function is used to update the UI such that it logically reflects
+ *	the actions available in the new state.
+ */
 void RemoteViewer::enterState()
 {
 	switch(currState_)
@@ -461,6 +544,7 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(false);
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
+		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
@@ -484,6 +568,7 @@ void RemoteViewer::enterState()
 		updateComponentLists(true);
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
+		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
@@ -506,6 +591,7 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(false);
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
+		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
@@ -528,6 +614,7 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(false);
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
+		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
@@ -548,6 +635,7 @@ void RemoteViewer::enterState()
 		passwordEdit_->setEnabled(false);
 		taskListBox_->setEnabled(isAuthorized_);
 		zoomSlider_->setEnabled(true);
+		loadPropsAction_->setEnabled(true);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -568,6 +656,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		zoomSlider_->setEnabled(true);
 		taskListBox_->setEnabled(false);
+		loadPropsAction_->setEnabled(true);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -589,6 +678,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		zoomSlider_->setEnabled(true);
 		taskListBox_->setEnabled(false);
+		loadPropsAction_->setEnabled(true);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -619,7 +709,7 @@ void RemoteViewer::enterState()
 	}
 }
 
-//! Called just before displaying the viewer
+//! \brief Called just before displaying the viewer
 void RemoteViewer::init()
 {
 	experiment_ = pictoData_->getExperiment();
@@ -629,33 +719,40 @@ void RemoteViewer::init()
 		msg.setText("Failed to load current experiment.");
 		msg.exec();
 	}
-
+	if(currState_ == InitState)
+	{	//The remote viewer was just created.  Initialize it by running updateState once.
+		updateState();
+	}
+	//This timer assures that we don't update component lists more often than necessary
 	componentListsTimer_.restart();
+	//This timer triggers each new run of updateState()
 	stateUpdateTimer_->start();
+	//This timer triggers each new run of updateEngine()
 	engineUpdateTimer_->start();
 }
 
-//!Called just before hiding the viewer
-
+//! \brief Called just before hiding the viewer
 void RemoteViewer::deinit()
 {
 	//stop the engine running
 	stopExperiment();
 
-	//updateTimer_->stop();
+	//Stop the timers so that our state update functions won't get called anymore.
 	stateUpdateTimer_->stop();
 	engineUpdateTimer_->stop();
-
 }
 
-
+//! \brief Called when the application is about to quit.  Takes care of closing this windows resources
 bool RemoteViewer::aboutToQuit()
 {
+	//Calling deinit is important because it stops the experiment.  Otherwise, the 
+	//experiment would keep on going even though the window was closed and this
+	//process would stick around in the task manager for eternity.
 	deinit();
 	return true;
 }
 
-//! Initializes the engine with all of the appropriate pieces for testing
+//! \brief Initializes the engine with all of the appropriate pieces for testing
 void RemoteViewer::setupEngine()
 {
 	//set up the engine
@@ -694,7 +791,7 @@ void RemoteViewer::setupEngine()
 	refreshSplash_ = true;
 }
 
-//! Sets up the user interface portions of the GUI
+//! \brief Sets up the user interface portions of the GUI
 void RemoteViewer::setupUi()
 {
 	//----- Task Action -----
@@ -723,7 +820,8 @@ void RemoteViewer::setupUi()
 	rewardQuantity_->setMaximum(999999);
 	rewardQuantity_->setSingleStep(10);
 
-	loadPropsAction_ = new QAction(tr("&Load Values from Session"),this);
+	loadPropsAction_ = new QAction(tr("&Load Task Properties from Session"),this);
+	loadPropsAction_->setIcon(QIcon(":/icons/loadvalues.png"));
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 
@@ -765,6 +863,7 @@ void RemoteViewer::setupUi()
 
 	//Active Experiment name
 	activeExpName_ = new QLabel();
+
 	//Zoom slider
 	zoomSlider_ = new QSlider;
 	zoomSlider_->setRange(2,20);
@@ -824,13 +923,14 @@ void RemoteViewer::setupUi()
 
 }
 
+//! \brief Creates the server and engineSlaveChannels for UI actions affecting the server, and experimental state requests respectively.
 void RemoteViewer::setupServerChannel()
 {
 	serverChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 }
 
-
+//! \brief Called when the play button is pressed
 void RemoteViewer::playAction()
 {
 	if(currState_ == StoppedSession)
@@ -838,32 +938,40 @@ void RemoteViewer::playAction()
 	else
 		resume();
 }
+
+//! \brief Tells the server to start running a task
 void RemoteViewer::play()
 {
 	QString modifiedTaskName = taskListBox_->currentText();
 	modifiedTaskName = modifiedTaskName.simplified().remove(' ');
 	sendTaskCommand("start:"+modifiedTaskName);
 }
+
+//! \brief Tells the server to resume running the current task from its paused state
 void RemoteViewer::resume()
 {
 	sendTaskCommand("resume");
 }
 
+//! \brief Tells the server to pause the current task
 void RemoteViewer::pause()
 {
 	sendTaskCommand("pause");
 }
 
+//! Tells the server to stop running the current task
 void RemoteViewer::stop()
 {
 	sendTaskCommand("stop");
 }
 
+//! \brief Requests that a new reward be given to the user.
 void RemoteViewer::reward()
 {
 	sendTaskCommand(QString("reward:%1").arg(rewardChannel_),QString::number(rewardQuantity_->value()));
 }
 
+//! \brief Loads property values from a previous session to replace those in the current experiment.
 void RemoteViewer::LoadPropValsFromFile()
 {
 	QString filename = QFileDialog::getOpenFileName(this,
@@ -872,6 +980,7 @@ void RemoteViewer::LoadPropValsFromFile()
 		static_cast<PropertyFrame*>(propertyFrame_)->updatePropertiesFromFile(filename);
 }
 
+//! \brief Called whenever an experiment paramter is changed.  Sends a request to the server to change that parameter value in the experiment.
 void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 {
 	Q_ASSERT(changedProp);
@@ -882,12 +991,14 @@ void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getAssetId())),changedProp->toUserString());
 }
 
+//! \brief Tells the server that the operator just clicked on the main window, and where the click occured.
 void RemoteViewer::operatorClickDetected(QPoint pos)
 {
 	if(currState_ == RunningSession)
 		sendTaskCommand(QString("click:%1,%2").arg(pos.x()).arg(pos.y()));
 }
 
+//! \brief Adjusts the experimental zoom.
 void RemoteViewer::zoomChanged(int zoom)
 {
 	if(!pixmapVisualTarget_)
@@ -902,15 +1013,32 @@ void RemoteViewer::zoomChanged(int zoom)
 	refreshSplash_ = true;
 }
 
-//! \brief Sets the status message to the passed in string for 5 seconds
-void RemoteViewer::setStatus(QString status)
+//! \brief Sets the status message to the passed in string
+void RemoteViewer::setStatus(QString status, bool highPriority)
 {
 	if(!statusBar_)
 		return;
-	statusBar_->setText(status);
-	//updateTimer_->start();	//This gaurantees that the message stays up for 5 seconds
+	if(highPriority)
+	{
+		specialStatus_ = status;
+		statusTimer_.restart();
+	}
+	else
+		defaultStatus_ = status;
 }
 
+/*! \brief Called once per updateState(), this displays statuses at the bottom of window, giving 
+ *	special statuses precedence over defaults for a set length of time
+ */
+void RemoteViewer::updateStatus()
+{
+	if(statusTimer_.elapsed() < SPECIAL_STATUS_PERIOD)
+		statusBar_->setText(specialStatus_);
+	else
+		statusBar_->setText(defaultStatus_);
+}
+
+//! \brief Generates the UI task list if it is empty
 void RemoteViewer::generateTaskList()
 {
 	if(taskListBox_->count() == 0)
@@ -922,15 +1050,14 @@ void RemoteViewer::generateTaskList()
 
 /*! \brief updates the combo boxes containing Director instances and proxy servers
  *
- *	This function asks the server for a current list of Director instances, and 
- *	then adds new ones to the combo box and removes old ones, as needed.  The same
- *	is done for the proxy servers
+ *	This function asks the server for a current list of Director/Proxy instances, and 
+ *	then adds new ones to the combo box and removes old ones, as needed.
  */
 void RemoteViewer::updateComponentLists(bool immediate)
 {
 	if(!immediate)
 	{
-		if(componentListsTimer_.elapsed() < 1000)
+		if(componentListsTimer_.elapsed() < COMPONENT_UPDATE_PERIOD)
 			return;
 		componentListsTimer_.restart();
 	}
@@ -1105,9 +1232,9 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 	//Get the response to this command
 	do
 	{
-		if(!serverChannel_->waitForResponse(50))
+		if(!serverChannel_->waitForResponse(100))
 		{
-			setStatus(tr("Server did not respond to DIRECTORLIST command"));
+			setStatus(tr("DIRECTORLIST command timed out"),true);
 			return currDirectorList_;
 		}
 		response = serverChannel_->getResponse();
@@ -1186,9 +1313,9 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 	//Get the response to this command
 	do
 	{
-		if(!serverChannel_->waitForResponse(50))
+		if(!serverChannel_->waitForResponse(100))
 		{
-			setStatus(tr("Server did not respond to PROXYLIST command"));
+			setStatus(tr("SPROXYLIST command timed out"),true);
 			return currProxyList_;
 		}
 		response = serverChannel_->getResponse();
@@ -1303,7 +1430,7 @@ bool RemoteViewer::startSession()
 	{
 		if(!serverChannel_->waitForResponse(10000))
 		{
-			setStatus(tr("Server did not respond to STARTSESSION command"));
+			setStatus(tr("STARTSESSION command timed out"),true);
 			return false;
 		}
 		loadExpResponse = serverChannel_->getResponse();
@@ -1312,43 +1439,27 @@ bool RemoteViewer::startSession()
 
 	if(loadExpResponse.isNull())
 	{
-		setStatus(tr("No response received from server.\nExperiment not loaded."));
+		setStatus(tr("No response received from server.\nExperiment not loaded."),true);
 		return false;
 	}
 	else if(loadExpResponse->getResponseCode() == Picto::ProtocolResponseType::NotFound)
 	{
-		setStatus(tr("Director instance not found with ID:") + directorID + tr(".  Experiment not loaded."));
+		setStatus(tr("Director instance not found with ID:") + directorID + tr(".  Experiment not loaded."),true);
 		return false;
 	}
 	else if(loadExpResponse->getResponseCode() == Picto::ProtocolResponseType::Unauthorized)
 	{
-		setStatus(tr("Director instance has already loaded an experiment.  Experiment not loaded."));
+		setStatus(tr("Director instance has already loaded an experiment.  Experiment not loaded."),true);
 		return false;
 	}
 	else if(loadExpResponse->getResponseCode() == Picto::ProtocolResponseType::OK)
 	{
-
-		QByteArray content = loadExpResponse->getDecodedContent();
-		QXmlStreamReader xmlReader(content);
-
-		while(!xmlReader.atEnd() && !(xmlReader.isStartElement() && xmlReader.name() == "SessionID"))
-			xmlReader.readNext();
-
-		if(!xmlReader.atEnd())
-		{
-			QUuid newSessionId = QUuid(xmlReader.readElementText());
-			setStatus(tr("Experiment loaded on remote Director instance. Session ID: ")+ newSessionId.toString());
-			return true;
-		}
-		else
-		{
-			setStatus(tr("SessionID not found in response from server."));
-			return false;
-		}
+		setStatus(tr("Experiment loaded on remote Director instance."),true);
+		return true;
 	}
 	else
 	{
-		setStatus(tr("Unexpected response from server.\nExperiment not loaded."));
+		setStatus(tr("Unexpected response from server.\nExperiment not loaded."),true);
 		return false;
 	}
 
@@ -1365,7 +1476,7 @@ bool RemoteViewer::endSession()
 	//Check for a currently running session
 	if(sessionId_.isNull())
 	{
-		setStatus(tr("Not currently in a session"));
+		setStatus(tr("Not currently in a session"),true);
 		return false;
 	}
 
@@ -1382,8 +1493,8 @@ bool RemoteViewer::endSession()
 	{
 		if(!serverChannel_->waitForResponse(5000))
 		{
-			setStatus(tr("Server did not respond to ENDSESSION command"));
-			qDebug()<<(tr("Server did not respond to ENDSESSION command"));
+			setStatus(tr("ENDSESSION command timed out"),true);
+			qDebug()<<(tr("ENDSESSION command timed out"));
 			return false;
 		}
 		endSessResponse = serverChannel_->getResponse();
@@ -1391,19 +1502,19 @@ bool RemoteViewer::endSession()
 
 	if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::NotFound)
 	{
-		setStatus(tr("Session ID not found, session not ended"));
+		setStatus(tr("Session ID not found, session not ended"),true);
 	}
 	else if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::OK)
 	{
-		setStatus(tr("Session ended"));
+		setStatus(tr("Session ended"),true);
 	}
 	else if(endSessResponse->getResponseCode() == Picto::ProtocolResponseType::Unauthorized)
 	{
-		setStatus(tr("Workstation instance not authorized to end session"));
+		setStatus(tr("Workstation instance not authorized to end session"),true);
 	}
 	else
 	{
-		setStatus(tr("Unexpected response to ENDSESSION command"));
+		setStatus(tr("Unexpected response to ENDSESSION command"),true);
 	}
 	sessionId_ = QUuid();
 
@@ -1417,9 +1528,8 @@ bool RemoteViewer::endSession()
  *	running session.  This is what allows us to see the session on the workstation
  *	screen.
  *
- *	If we just called startSession, we already know the session ID and can simply start
- *	observing that session.  If we didn't start the session, we'll use a JOINSESSION
- *	command to find the session ID attached to the director we want to watch
+ *	We always keep the latest active experiment in memory so that this function
+ *	will go quickly if we rejoin a sessin that we were previously connected too.
  */	
 bool RemoteViewer::joinSession()
 {
@@ -1446,7 +1556,7 @@ bool RemoteViewer::joinSession()
 	{
 		if(!serverChannel_->waitForResponse(3000))
 		{
-			setStatus(tr("Server did not respond to JOINSESSION command"));
+			setStatus(tr("JOINSESSION command timed out"),true);
 			return false;
 		}
 		joinSessResponse = serverChannel_->getResponse();
@@ -1454,7 +1564,7 @@ bool RemoteViewer::joinSession()
 
 	if(joinSessResponse.isNull() || joinSessResponse->getResponseCode() != Picto::ProtocolResponseType::OK)
 	{
-		setStatus(tr("Unexpected response to JOINSESSION. Unable to join session."));
+		setStatus(tr("Unexpected response to JOINSESSION. Unable to join session."),true);
 		return false;
 	}
 
@@ -1472,7 +1582,7 @@ bool RemoteViewer::joinSession()
 	}
 	else
 	{
-		setStatus(tr("SessionID not found in response from server."));
+		setStatus(tr("SessionID not found in response from server."),true);
 		return false;
 	}
 
@@ -1489,13 +1599,13 @@ bool RemoteViewer::joinSession()
 		{
 			if(!activeExperiment_->fromXml(xmlReader))
 			{
-				setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"));
+				setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"),true);
 				return false;
 			}
 		}
 		else
 		{
-			setStatus(tr("No Experiment returned by JOINSESSION"));
+			setStatus(tr("No Experiment returned by JOINSESSION"),true);
 			return false;
 		}
 
@@ -1505,7 +1615,7 @@ bool RemoteViewer::joinSession()
 	serverChannel_->setSessionId(sessionId_);
 	engineSlaveChannel_->setSessionId(sessionId_);
 
-	setStatus(tr("Existing session joined. Session ID: ")+ sessionId_.toString());
+	setStatus(tr("Existing session joined. Session ID: ")+ sessionId_.toString(),true);
 
 	//Send an isauthorized TASK command to figure out if we're authorized to send commands
 	//on this session.
@@ -1519,7 +1629,7 @@ bool RemoteViewer::joinSession()
 	ComponentStatus remoteStatus = directorStatus(directorID);
 	if(remoteStatus < Stopped)
 	{
-		setStatus("Attempted to join a session with a director that isn't in an active session");
+		setStatus("Attempted to join a session with a director that isn't in an active session",true);
 		return false;
 	}
 
@@ -1528,12 +1638,19 @@ bool RemoteViewer::joinSession()
 
 
 
+
+/*! \brief Causes the engine to start running the experiment the next time updateEngine() is called.
+ *
+ */
 bool RemoteViewer::syncExperiment()
 {
 	engineTrigger_ = StartEngine;
 	return true;
 }
 
+/*! \brief Causes the engine to stop the currently running experiment before the next time updateState() runs.
+ *
+ */
 void RemoteViewer::stopExperiment()
 {
 	Q_ASSERT(engine_);
@@ -1573,9 +1690,9 @@ bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 	//Get the response to this command
 	do
 	{
-		if(!serverChannel_->waitForResponse(50))
+		if(!serverChannel_->waitForResponse(100))
 		{
-			setStatus(tr("Server did not respond to commmand: TASK ")+target);
+			setStatus(tr("TASK ")+target+" command timed out",true);
 			return false;
 		}
 		cmdResponse = serverChannel_->getResponse();
@@ -1586,22 +1703,22 @@ bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 
 	if(cmdResponse->getResponseType() == "OK")
 	{
-		setStatus("TASK "+target+tr(" command completed"));
+		setStatus("TASK "+target+tr(" command completed"),true);
 		return true;
 	}
 	else if(cmdResponse->getResponseCode() == 400)
 	{
-		setStatus("TASK "+target+tr(" command failed: ")+QString(cmdResponse->getContent()));
+		setStatus("TASK "+target+tr(" command failed: ")+QString(cmdResponse->getContent()),true);
 		return false;
 	}
 	else if(cmdResponse->getResponseCode() == 404)
 	{
-		setStatus("TASK "+target+tr(" command failed: Session ID not recognized"));
+		setStatus("TASK "+target+tr(" command failed: Session ID not recognized"),true);
 		return false;
 	}
 	else if(cmdResponse->getResponseCode() == Picto::ProtocolResponseType::Unauthorized)
 	{
-		setStatus("TASK "+target+tr(" command failed: Workstation instance not authorized"));
+		setStatus("TASK "+target+tr(" command failed: Workstation instance not authorized"),true);
 		return false;
 	}
 	else
@@ -1611,6 +1728,9 @@ bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 	}
 }
 
+/*! \brief Called whenever a new task is selected.  
+ *	Updates the values in the property frame to reflect the new task.
+ */
 void RemoteViewer::taskListIndexChanged(int)
 {
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
@@ -1619,6 +1739,9 @@ void RemoteViewer::taskListIndexChanged(int)
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 }
 
+/*! \brief Assures that the server channels are connected and signifies if the connection is lost
+ * This function is called for each runState() call.
+ */
 bool RemoteViewer::assureChannelConnections()
 {
 	bool hadDisconnect = false;

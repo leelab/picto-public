@@ -2,6 +2,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include "PropertyFrame.h"
+#include "../common/storage/PropertyDataUnit.h"
 #include "../common/storage/datastore.h"
 #include "../common/memleakdetect.h"
 using namespace Picto;
@@ -115,16 +116,23 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 	QHash<QString,QSharedPointer<Property>>::iterator it ;
 	for(it = pathMap_.begin();it!=pathMap_.end();it++)
 	{
-		QString path = it.key();
-		query.prepare("SELECT value FROM properties WHERE path=:path ORDER BY time DESC LIMIT 1");
-		query.bindValue(":path",it.key());
+		int lastSep = it.key().lastIndexOf("::");
+		QString path = it.key().left(lastSep);
+		QString name = "";
+		if(lastSep >=0)
+			name = it.key().mid(lastSep+2);
+		query.prepare("SELECT c.data FROM currentstate c, propertylookup p, elementlookup e WHERE e.path=:path AND e.assetid = p.parent AND p.name = :name AND c.variableid = p.assetid ORDER BY c.dataid DESC LIMIT 1");
+		query.bindValue(":path",path);
+		query.bindValue(":name",name);
 		bool success = query.exec();
 		Q_ASSERT_X(success,"PropertyFrame::updatePropertiesFromFile","Error: "+query.lastError().text().toAscii());
 		if(query.next())
 		{
 			propFound = true;
+			PropertyDataUnit unit;
+			unit.fromXml(query.value(0).toString());
 			QString currValue = it.value()->toUserString();
-			QString newValue = query.value(0).toString();
+			QString newValue = unit.value_;
 			it.value()->fromUserString(newValue);
 			if(newValue != currValue)
 				propertyEdited(it.value());
@@ -147,7 +155,7 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 		if(propFound)
 		{
 			missingProps.sort();
-			QString warningString("No values found for the following properties:\n");
+			warningString = "No values found in the loaded session for the following properties:\n";
 			foreach(QString path,missingProps)
 			{
 				warningString.append(QString("- %1\n").arg(path));
@@ -155,6 +163,14 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 		}
 		QMessageBox msg;
 		msg.setText(warningString);
+		msg.setIcon(QMessageBox::Warning);
+		msg.exec();
+	}
+	else
+	{
+		QMessageBox msg;
+		msg.setText("All property values for this task were updated from the input session.");
+		msg.setIcon(QMessageBox::Information);
 		msg.exec();
 	}
 }

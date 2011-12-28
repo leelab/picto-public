@@ -91,17 +91,12 @@ private:
 
 	void enterState();
 	void runState();
+	void endState();
 	QTime componentListsTimer_;
-
-
-
-
-
-
-
 
 	enum ViewerState
 	{
+		InitState,
 		WaitForConnect,
 		WaitForJoin,
 		JoiningSession,
@@ -127,7 +122,7 @@ private:
 		SessionRunning,
 		EndSessionRequest,
 		SessionEnded
-	} latestTrigger_;
+	} stateTrigger_;
 
 	enum EngineTrigger
 	{
@@ -141,19 +136,6 @@ private:
 	QTimer *engineUpdateTimer_;
 	QString initState_;
 	bool refreshSplash_;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	typedef struct
 	{
@@ -172,7 +154,8 @@ private:
 	void generateTaskList();
 	void updateUI();
 
-	void setStatus(QString status);
+	void setStatus(QString status,bool highPriority=false);
+	void updateStatus();
 	bool sendTaskCommand(QString target, QString msgContent = "");
 	bool startSession();
 	bool endSession();
@@ -223,9 +206,6 @@ private:
 
 	Picto::CommandChannel *serverChannel_;
 	Picto::CommandChannel *engineSlaveChannel_;
-	Picto::ServerDiscoverer *serverDiscoverer_;
-
-	ComponentStatus localStatus_;
 	
 	bool isAuthorized_;
 
@@ -239,8 +219,10 @@ private:
 	bool channelSignalsConnected_;
 	QWeakPointer<Asset> lastTask_;
 	QWeakPointer<Asset> lastActiveExperiment_;
-	bool runningEngine_;
 	bool updatingState_;
+	QString specialStatus_;
+	QString defaultStatus_;
+	QTime statusTimer_;
 
 private slots:
 	void taskListIndexChanged(int index);

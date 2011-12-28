@@ -121,7 +121,8 @@ void TestViewer::setupUi()
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 	stopAction_->setEnabled(false);
 
-	loadPropsAction_ = new QAction(tr("&Load Values from Session"),this);
+	loadPropsAction_ = new QAction(tr("&Load Task Properties from Session"),this);
+	loadPropsAction_->setIcon(QIcon(":/icons/loadvalues.png"));
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 
