@@ -39,6 +39,7 @@ public:
 	void setBackgroundColor(QColor color);
 	void addVisualElement(QSharedPointer<VisualElement> element);
 	void addAudioElement(QSharedPointer<AudioElement> element);
+	static void setZoom(float zoom){zoom_ = zoom;};
 	//virtual QString assetType(){return "Scene";};
 
 	//DataStore functions
@@ -61,6 +62,7 @@ private:
 	int frame_;
 	QTime elapsedTime_;
 	double firstPhosphorTime_;
+	static float zoom_;
 
 	//QSharedPointer<Canvas> canvas_;
 	//QMap<QString, QSharedPointer<ControlElement> > controlElements_;

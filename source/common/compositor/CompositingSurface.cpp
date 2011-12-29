@@ -5,6 +5,7 @@ namespace Picto {
 
 CompositingSurface::CompositingSurface()
 {
+	scalable_ = true;
 }
 
 CompositingSurface::~CompositingSurface()

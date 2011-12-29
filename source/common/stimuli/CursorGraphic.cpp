@@ -5,7 +5,6 @@
 namespace Picto {
 
 const QString CursorGraphic::type = "Cursor Graphic";
-float CursorGraphic::globalZoom_ = 1.0;
 
 CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color)
 : VisualElement(QPoint(0,0),color),
@@ -25,6 +24,7 @@ size_(16)
 	initializePropertiesToDefaults();
 	propertyContainer_->setPropertyValue("Position",QPoint(0,0));
 	propertyContainer_->setPropertyValue("Color",color);
+	setScalable(false);
 
 	draw();
 
@@ -39,12 +39,11 @@ void CursorGraphic::draw()
 {
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 	
-	int zoomedSize = size_/localZoom_;
-	QImage image(zoomedSize,zoomedSize,QImage::Format_ARGB32);
+	QImage image(size_,size_,QImage::Format_ARGB32);
 	image.fill(0);
 	QPainter p(&image);
 	QPen pen(color);
-	int penWidth = float(zoomedSize)/5.0+.5;
+	int penWidth = float(size_)/5.0+.5;
 	if(penWidth == 0)
 		penWidth = 1;
 	pen.setWidth(penWidth);
@@ -52,12 +51,12 @@ void CursorGraphic::draw()
 	p.setPen(pen);
 	p.setBrush(color);
 	
-	p.drawLine(zoomedSize/2,0,zoomedSize/2,zoomedSize-1);
-	p.drawLine(0,zoomedSize/2,zoomedSize-1,zoomedSize/2);
+	p.drawLine(size_/2,0,size_/2,size_-1);
+	p.drawLine(0,size_/2,size_-1,size_/2);
 
 	p.end();
 	image_ = image;
-
+	//image_ = image_.scaled(image_.size()/localZoom_);
 
 	//updateCompositingSurfaces();
 
@@ -87,18 +86,12 @@ void CursorGraphic::updateAnimation(int frame, QTime elapsedTime)
 
 		setPosition(QPoint(x,y));
 	}
-	if(localZoom_ < globalZoom_ || localZoom_ > globalZoom_)
-	{
-		localZoom_ = globalZoom_;
-		draw();
-	}
-
+	draw();
 }
 
 QPoint CursorGraphic::getPositionOffset()
 {
-	int zoomedSize = size_/localZoom_;
-	return QPoint(zoomedSize/2,zoomedSize/2);
+	return QPoint(size_/2,size_/2);
 }
 
 VisualElement* CursorGraphic::NewVisualElement()

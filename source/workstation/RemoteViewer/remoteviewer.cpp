@@ -12,6 +12,7 @@
 #include "../../common/storage/StateDataUnit.h"
 #include "../../common/statemachine/statemachine.h"
 #include "../../common/stimuli/cursorgraphic.h"
+#include "../../common/statemachine/scene.h"
 #include "../propertyframe.h"
 
 
@@ -85,7 +86,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	engineUpdateTimer_->setInterval(0);
 	connect(engineUpdateTimer_,SIGNAL(timeout()),this,SLOT(updateEngine()));
 	updatingState_ = false;
-	refreshSplash_ = true;
+	zoomChanged_ = false;
+	zoomValue_ = 1.0;
 }
 
 RemoteViewer::~RemoteViewer()
@@ -333,7 +335,6 @@ void RemoteViewer::updateEngine()
 		if(engineTrigger_ == StopEngine)
 		{
 			engineTrigger_ = NoEngineTrigger;
-			refreshSplash_ = true;
 		}
 		else
 		{	//If there's no stopEngine trigger, either the experiment failed, or the task changed.
@@ -396,31 +397,22 @@ void RemoteViewer::runState()
 			stateTrigger_ = SessionDidntStart;
 		break;
 	case StoppedSession:
+		if(zoomChanged_)
+		{
+			zoomChanged_ = false;
+			pixmapVisualTarget_->setZoom(zoomValue_);
+			renderingTarget_->showSplash();
+		}
 		if(remoteStatus == Running)
 			stateTrigger_ = SessionRunning;
 		if(!connectAction_->isChecked())
 		{
-			if(!isAuthorized_)
+			if(shouldEndSession())
+				stateTrigger_ = EndSessionRequest;
+			else
 			{
 				disjoinSession();
 				stateTrigger_ = DisjoinSessionRequest;
-			}
-			else
-			{
-				int	r = QMessageBox::warning(this,Picto::Names->workstationAppName,
-					tr("You are disconnecting from a session that is not currently running an experiment.\n"
-					"Would you like to end the session as well?"),
-					   QMessageBox::Yes|QMessageBox::No);
-
-				if(r == QMessageBox::Yes)
-				{
-					stateTrigger_ = EndSessionRequest;
-				}
-				else
-				{
-					disjoinSession();
-					stateTrigger_ = DisjoinSessionRequest;
-				}
 			}
 		}
 		if(remoteStatus < Stopped)
@@ -428,13 +420,13 @@ void RemoteViewer::runState()
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
 		}
-		if(refreshSplash_)
-		{
-			renderingTarget_->showSplash();
-			refreshSplash_ = false;
-		}
 		break;
 	case PausedSession:
+		if(zoomChanged_)
+		{
+			zoomChanged_ = false;
+			Scene::setZoom(zoomValue_);
+		}
 		if(remoteStatus == Running)
 			stateTrigger_ = SessionRunning;
 		if(remoteStatus == Stopped)
@@ -449,6 +441,11 @@ void RemoteViewer::runState()
 
 		break;
 	case RunningSession:
+		if(zoomChanged_)
+		{
+			zoomChanged_ = false;
+			Scene::setZoom(zoomValue_);
+		}
 		if(remoteStatus == Paused)
 			stateTrigger_ = SessionPaused;
 		if(remoteStatus == Stopped)
@@ -636,6 +633,8 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(isAuthorized_);
 		zoomSlider_->setEnabled(true);
 		loadPropsAction_->setEnabled(true);
+		pixmapVisualTarget_->setZoom(zoomValue_);
+		renderingTarget_->showSplash();
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -657,6 +656,7 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(true);
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
+		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -679,6 +679,7 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(true);
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
+		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -745,6 +746,12 @@ void RemoteViewer::deinit()
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources
 bool RemoteViewer::aboutToQuit()
 {
+	//Its not so pretty to have to work outside the state machine like this, but if we're about to
+	//quit, we don't know what's going to be happening to the state machine before the process is released
+	//so we have to take care of possibly ending the current session here. :(
+	if((currState_ == StoppedSession) && shouldEndSession())
+		endSession();
+
 	//Calling deinit is important because it stops the experiment.  Otherwise, the 
 	//experiment would keep on going even though the window was closed and this
 	//process would stick around in the task manager for eternity.
@@ -787,8 +794,6 @@ void RemoteViewer::setupEngine()
 	QSharedPointer<Picto::RewardController> rewardController;
 	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
 	engine_->setRewardController(rewardController);
-
-	refreshSplash_ = true;
 }
 
 //! \brief Sets up the user interface portions of the GUI
@@ -1006,11 +1011,9 @@ void RemoteViewer::zoomChanged(int zoom)
 	//Fix zoom so that each tick is worth 3.333%
 	float fixedZoom = float(zoom*.05);
 	zoomPercentage_->setText(QString::number(fixedZoom*100)+QString("%"));
-	//We don't want the cursor to change size just because we're zooming in and out of experiment.
-	//This takes care of that.
-	CursorGraphic::setZoom(fixedZoom);
-	pixmapVisualTarget_->setZoom(fixedZoom);
-	refreshSplash_ = true;
+	zoomValue_ = fixedZoom;
+	//Set the zoomChanged_ flag so that it will be picked up by the state machine the next time it cares.
+	zoomChanged_ = true;
 }
 
 //! \brief Sets the status message to the passed in string
@@ -1669,6 +1672,25 @@ bool RemoteViewer::disjoinSession()
 	engineSlaveChannel_->setSessionId(QUuid());
 
 	return true;
+}
+
+/*!	\brief Gets feedback from the user as whether they would like to end the current session.
+ *	If the user is not authorized, this will always return false.
+ */
+bool RemoteViewer::shouldEndSession()
+{
+	if(!isAuthorized_)
+		return false;
+	int	r = QMessageBox::warning(this,Picto::Names->workstationAppName,
+		tr("You are disconnecting from a session that is not currently running an experiment.\n"
+		"Would you like to end the session as well?"),
+		   QMessageBox::Yes|QMessageBox::No);
+
+	if(r == QMessageBox::Yes)
+	{
+		return true;
+	}
+	return false;
 }
 
 //! Sends a task command with the given target.  Returns true if execution was successful

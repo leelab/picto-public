@@ -45,7 +45,19 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 	}
 
 	//Find the session ID
-	QSharedPointer<SessionInfo> sessInfo = ConnectionManager::Instance()->getSessionInfoByComponent(directorID);
+	//It is important that we get the session ID from the component rather than looking for
+	//a component that matches the one we want in the open sessions.  This is because it is
+	//possible that an old session is currently timing out and ending.  This would mean that there
+	//could be more than one session open that contains the input director ID.  By selecting the
+	//session from the Component, we assure that the caller joins the session that the director
+	//is currently attached to.
+	QUuid sessionId = ConnectionManager::Instance()->GetComponentsSessionId(directorID);
+	if(sessionId == QUuid())
+	{
+		notFoundResponse->setContent("Director is not currently in a session.");
+		return notFoundResponse;
+	}
+	QSharedPointer<SessionInfo> sessInfo = ConnectionManager::Instance()->getSessionInfo(sessionId);
 	if(sessInfo.isNull())
 		return notFoundResponse;
 	QSharedPointer<ComponentInfo> proxy = sessInfo->getComponentByType("PROXY");
@@ -63,7 +75,6 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 			return unauthorizedResponse;
 		}
 	}
-	QUuid sessionId = sessInfo->sessionId();
 
 	QUuid observerId = QUuid(command->getFieldValue("Observer-ID"));
 	if(observerId != QUuid() && !sessInfo->isAuthorizedObserver(observerId))

@@ -339,6 +339,32 @@ void ConnectionManager::setComponentStatus(QUuid sessionId, QString componentTyp
 
 }
 
+/*! \brief Returns the sessionID associated with the input ComponentID
+ *  Unlike getSessionInfoByComponent, this function looks up the sessionID
+ *  That the component thinks its associated with rather than looking through
+ *	all sessions to see if any session is associated with the input component.
+ *	There is a distinction because in the case of sessions that were run before
+ *	and now timing out, there may be more than one session associated with a given
+ *	component, but the component itself will only ever report that its associated
+ *	with the session that it's running.
+ */
+QUuid ConnectionManager::GetComponentsSessionId(QUuid componentId)
+{
+	QMutexLocker locker(mutex_);
+	if(components_.contains(componentId))
+	{
+		//checking the components SessionID is a form of activity
+		components_[componentId]->setActivity();
+		return components_[componentId]->getSessionID();
+	}
+	return QUuid();
+}
+
+QUuid ConnectionManager::GetComponentsSessionId(QString componentId)
+{
+	return GetComponentsSessionId(QUuid(componentId));
+}
+
 //! Returns the session info for the session attached to the component with the given ID
 QSharedPointer<SessionInfo> ConnectionManager::getSessionInfoByComponent(QUuid componentID)
 {

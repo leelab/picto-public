@@ -6,7 +6,8 @@
 namespace Picto {
 
 VisualElement::VisualElement(QPoint position, QColor color) :
-	shouldUpdateCompositingSurfaces_(true)
+	shouldUpdateCompositingSurfaces_(true),
+	scalable_(true)
 {
 	AddDefinableProperty(QVariant::Point,"Position",position);
 	AddDefinableProperty(QVariant::Color,"Color",color);
@@ -66,11 +67,22 @@ bool VisualElement::getVisibleByUser(bool subject)
 
 }
 
-
+/*! \Brief Sets this Visual Element scalable/non-scalable.  Visual Elements are scalable by default.
+ *	The only reason a visual element would make itself non-scalable is if it is a kind of UI only element that should not
+ *	scale down with the rest of the scene.  A good example of this type of functionality would be a cursor visible
+ *	only by the operator.  If the operator zooms out, he doesn't want the cursor graphic
+ *	to get smaller.  It should stay the same size.  For that reason, the cursor graphic is set as non-scalable.
+ */
+void VisualElement::setScalable(bool scalable)
+{
+	scalable_ = scalable;
+}
 void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface)
 {
 	compositingSurface->convertImage(image_);
 	compositingSurfaces_[surfaceType] = compositingSurface;
+	if(!scalable())
+		compositingSurface->dontAllowScaling();
 }
 
 QSharedPointer<CompositingSurface> VisualElement::getCompositingSurface(QString surfaceType)

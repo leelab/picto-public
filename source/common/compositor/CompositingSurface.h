@@ -27,6 +27,12 @@ public:
 
 	//! \brief Returns the name of the compositing surface (e.g. "Direct3D")
 	virtual QString getTypeName() = 0;
+
+	void dontAllowScaling(){ scalable_ = false;};
+	bool scalable(){return scalable_;};
+private:
+	bool scalable_;
+
 };
 
 

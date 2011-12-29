@@ -457,7 +457,7 @@
     <UIInfo id="390">
       
     <Pos id="392" x="0" y="0"/></UIInfo>
-    <Name id="393">ProbabilityTracking</Name>
+    <Name id="393">PTDelaySaccadeTraining</Name>
     <Task id="3486">
       <Name id="3487">DelaySaccadeTraining</Name>
       <UIInfo id="3488">
@@ -1506,19 +1506,20 @@
 
 
                 <EntryScript id="4107">
-                  TrialModeSelect.randomize();
-                  EventInfo.setData(&quot;Stage&quot;,2);
-                  EventInfo.setData(&quot;Event&quot;,3);
-                  EventInfo.updateValue();
-                  FixationTarget.radius = FixationWindowRadius.value;
-                  FixationGraphic.setDimensions(FixationGraphicSize.value,FixationGraphicSize.value);
+																		                  TrialModeSelect.randomize();
+																		                  EventInfo.setData(&quot;Stage&quot;,2);
+																		                  EventInfo.setData(&quot;Event&quot;,3);
+																		                  EventInfo.updateValue();
+																		                  FixationTarget.radius = FixationWindowRadius.value;
+																		                  FixationGraphic.setDimensions(FixationGraphicSize.value,FixationGraphicSize.value);
 
-                  TargetWindow.radius = TargetWindowRadius.value;
-                  TargetGraphic.radius = TargetGraphicRadius.value;
-                  FixTrialReward.unitQuantity = UnitRewardQuantity.value;
-                  TrialReward.unitQuantity = UnitRewardQuantity.value;
-                  TrialReward.number = NumTargetRewards.value;
-                  NumTargetRewards
+																		                  TargetWindow.radius = TargetWindowRadius.value;
+																		                  TargetGraphic.radius = TargetGraphicRadius.value;
+																		                  FixTrialReward.unitQuantity = UnitRewardQuantity.value;
+																		                  TrialReward.unitQuantity = UnitRewardQuantity.value;
+																		                  TrialReward.number = NumTargetRewards.value;
+																		                  FixTrialReward.number = NumFixationRewards.value;
+																		                  NumTargetRewards
                 </EntryScript>
                 <StateMachineElement type="ScriptElement" id="4108">
                   <Name id="4109">SetTrialRewarded</Name>
@@ -2035,7 +2036,7 @@
                 <Units id="2345"/>
                 <Value id="2346">1</Value>
               </Parameter>
-            </StateMachineElement>
+            <Parameter type="Range" id="1851"><Increment id="1855">1</Increment><Max id="1856">50</Max><Min id="1857">1</Min><Name id="1858">NumFixationRewards</Name><UIEnabled id="1859">true</UIEnabled><UIInfo id="1860"><Pos id="1861" x="1201" y="567"/></UIInfo><UIOrder id="1871">0</UIOrder><Units id="1875"/><Value id="1876">1</Value></Parameter></StateMachineElement>
             <StateMachineElement type="ScriptElement" id="4610">
               <Name id="4611">NeedsMoreTrials</Name>
               <Result id="4612">
@@ -2615,6 +2616,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">3557</OpenedBlock>
+    <OpenedBlock id="">1</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

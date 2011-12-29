@@ -8,6 +8,8 @@ bool visualElementLessThan(const QSharedPointer<VisualElement> &e1, const QShare
 	return e1->getLayer() < e2->getLayer(); 
 }
 
+float Scene::zoom_ = 1.0;
+
 Scene::Scene()
 : backgroundColor_(QColor(Qt::black)),
   frame_(0)
@@ -21,7 +23,7 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 	//Grab the RenderingTargets from the engine
 	QList<QSharedPointer< RenderingTarget> > renderingTargets;
 	renderingTargets = engine->getRenderingTargets();
-
+	
 	//! \TODO "render" the audio stuff
 	//! \todo deal with the background layer color
 	//Add any unadded visual elements to the visual elements list
@@ -45,10 +47,13 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 	qSort(visualElements_.begin(), visualElements_.end(), &visualElementLessThan);
 
 	//Render visual elements to each rendering target
+	float frameZoom = zoom_;
 	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
 	{
 		QSharedPointer<VisualTarget> visualTarget = renderTarget->getVisualTarget();
-		
+		//Update zoom value for visual target.
+		visualTarget->setZoom(frameZoom);
+
 		//run through all our visualElements updating the animation and drawing
 		foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 		{

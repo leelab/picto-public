@@ -16,6 +16,7 @@ XYSignalChannel::XYSignalChannel()
 	addSubchannel("xpos");
 	addSubchannel("ypos");
 	addSubchannel("time");
+	useScaleFactors_ = false;
 }
 
 XYSignalChannel::XYSignalChannel(int sampsPerSecond)

@@ -44,6 +44,7 @@ protected:
 private:
 	unsigned int surfaceActingAsBackBuffer_;
 	std::vector<QPixmap> pixmapCompositingSurfaces_;
+	float frameSynchedZoom_;
 };
 
 }; //namespace Picto

@@ -83,6 +83,9 @@ public:
 	void setBlue(int b){QColor val = getColor(); val.setBlue(b);setColor(val);};
 	void setAlpha(int a){QColor val = getColor(); val.setAlpha(a);setColor(val);};
 
+	void setScalable(bool scalable);
+	bool scalable(){return scalable_;};
+
 public slots:
 	void setColor(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
 	void setPos(int x, int y){setPosition(QPoint(x,y));};
@@ -105,6 +108,8 @@ protected:
 
 	//QMap<QString, QVariant> initialProperties_;
 	//bool visible_;
+private:
+	bool scalable_;
 private slots:
 	virtual void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };

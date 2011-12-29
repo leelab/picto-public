@@ -135,7 +135,6 @@ private:
 	QTimer *stateUpdateTimer_;
 	QTimer *engineUpdateTimer_;
 	QString initState_;
-	bool refreshSplash_;
 
 	typedef struct
 	{
@@ -163,6 +162,7 @@ private:
 	bool syncExperiment();
 	void stopExperiment();
 	bool disjoinSession();
+	bool shouldEndSession();
 
 	ComponentStatus directorStatus(QString id);
 	ComponentStatus proxyStatus(QString id);
@@ -223,6 +223,8 @@ private:
 	QString specialStatus_;
 	QString defaultStatus_;
 	QTime statusTimer_;
+	bool zoomChanged_;
+	float zoomValue_;
 
 private slots:
 	void taskListIndexChanged(int index);

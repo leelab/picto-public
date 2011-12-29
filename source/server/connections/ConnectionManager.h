@@ -51,6 +51,9 @@ public:
 	ComponentStatus::ComponentStatus getComponentStatusBySession(QUuid sessionId, QString componentType);
 	void setComponentStatus(QUuid sessionId, QString componentType, ComponentStatus::ComponentStatus status);
 
+	QUuid GetComponentsSessionId(QUuid componentId);
+	QUuid GetComponentsSessionId(QString componentId);
+
 	QString getDirectorList();
 
 	QString getProxyList();

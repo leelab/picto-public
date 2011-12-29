@@ -457,7 +457,7 @@
     <UIInfo id="390">
       
     <Pos id="392" x="0" y="0"/></UIInfo>
-    <Name id="393">ProbabilityTracking</Name>
+    <Name id="393">PTChoiceTraining</Name>
     <Task id="5265">
       <Name id="5266">ChoiceTraining</Name>
       <UIInfo id="5267">
@@ -2805,15 +2805,15 @@
 
 
                 <EntryScript id="6981">
-                  EventInfo.setData(&quot;Stage&quot;,2);
-                  EventInfo.setData(&quot;Event&quot;,3);
-                  EventInfo.updateValue();
-                  FixationTarget.radius = FixationTargetRadius.value;
-                  FixationGraphic.setDimensions(FixationGraphicSize.value,FixationGraphicSize.value);
-                  LeftGraphic.radius = RightGraphic.radius = PeripheralGraphicRadius.value;
+																		                  EventInfo.setData(&quot;Stage&quot;,2);
+																		                  EventInfo.setData(&quot;Event&quot;,3);
+																		                  EventInfo.updateValue();
+																		                  FixationTarget.radius = FixationTargetRadius.value;
+																		                  FixationGraphic.setDimensions(FixationGraphicSize.value,FixationGraphicSize.value);
+																		                  LeftGraphic.radius = RightGraphic.radius = PeripheralGraphicRadius.value;
 
-                  FixTrialReward.unitQuantity = UnitRewardQuantity.value;
-                </EntryScript>
+																		                  FixTrialReward.unitQuantity = UnitRewardQuantity.value;
+																		                  FixTrialReward.number = NumFixationRewards.value;</EntryScript>
                 <Result id="6982">
                   <Name id="6983">FixTrialSuccess</Name>
                   <UIInfo id="6984">
@@ -3320,7 +3320,7 @@
                 <Units id="4320"/>
                 <Value id="4321">1</Value>
               </Parameter>
-            </StateMachineElement>
+            <Parameter type="Range" id="2812"><Increment id="2821">1</Increment><Max id="2826">50</Max><Min id="2827">1</Min><Name id="2828">NumFixationRewards</Name><UIEnabled id="2829">true</UIEnabled><UIInfo id="2830"><Pos id="2831" x="1157" y="590"/></UIInfo><UIOrder id="2833">0</UIOrder><Units id="2834"/><Value id="2835">1</Value></Parameter></StateMachineElement>
             <StateMachineElement type="ScriptElement" id="7363">
               <Name id="7364">NeedsMoreTrials</Name>
               <Result id="7365">
@@ -3934,6 +3934,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">5345</OpenedBlock>
+    <OpenedBlock id="">1</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

@@ -47,6 +47,7 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 	pixmapCompositingSurfaces_[1].fill(QColor(0,0,0,0));
 
 	surfaceActingAsBackBuffer_=1;
+	frameSynchedZoom_ = zoom_;
 }
 
 PixmapVisualTarget::~PixmapVisualTarget()
@@ -74,13 +75,15 @@ QString PixmapVisualTarget::getTypeName()
 
 void PixmapVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface)
 {
-	Q_ASSERT(zoom_ > 0);
+	frameSynchedZoom_ = zoom_;
+	Q_ASSERT(frameSynchedZoom_ > 0);
 	if(compositingSurface->getTypeName()=="Pixmap")
 	{
 		QPainter painter(&pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_]);
 		painter.setRenderHint(QPainter::Antialiasing); 
 		painter.setRenderHint(QPainter::TextAntialiasing);
-		painter.setViewport((width_-(width_*zoom_))/2.0,(height_-(height_*zoom_))/2.0,width_*zoom_,height_*zoom_);
+		if(compositingSurface->scalable())
+			painter.setViewport((width_-(width_*frameSynchedZoom_))/2.0,(height_-(height_*frameSynchedZoom_))/2.0,width_*frameSynchedZoom_,height_*frameSynchedZoom_);
 		painter.drawPixmap(location, compositingSurface.staticCast<PixmapCompositingSurface>()->getPixmap());
 	}
 }
@@ -111,16 +114,16 @@ void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect r
 
 QPoint PixmapVisualTarget::viewportPointToTargetPoint(QPoint viewportPoint)
 {
-	Q_ASSERT(zoom_ > 0);
-	float x = (viewportPoint.x()-(width_-(width_*zoom_))/2.0)/zoom_;
-	float y = (viewportPoint.y()-(height_-(height_*zoom_))/2.0)/zoom_;
+	Q_ASSERT(frameSynchedZoom_ > 0);
+	float x = (viewportPoint.x()-(width_-(width_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;
+	float y = (viewportPoint.y()-(height_-(height_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;
 	return QPoint(x,y);
 }
 
 QPoint PixmapVisualTarget::targetPointToViewportPoint(QPoint targetPoint)
 {
-	float x = (zoom_*targetPoint.x())+(width_-(width_*zoom_))/2.0;
-	float y = (zoom_*targetPoint.y())+(height_-(height_*zoom_))/2.0;
+	float x = (frameSynchedZoom_*targetPoint.x())+(width_-(width_*frameSynchedZoom_))/2.0;
+	float y = (frameSynchedZoom_*targetPoint.y())+(height_-(height_*frameSynchedZoom_))/2.0;
 	return QPoint(x,y);
 
 }
