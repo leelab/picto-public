@@ -48,7 +48,7 @@ void RenderingTarget::showSplash()
 	QRect visualTargetRect = visualTarget_->getDimensions();
 	pictureGraphic->setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,
 								       (visualTargetRect.height()-splashScreenRect.height())/2));
-	visualTarget_->draw(pictureGraphic->getPosition(), pictureGraphic->getCompositingSurface(compositingSurface->getTypeName()));
+	visualTarget_->draw(pictureGraphic->getPosition(), QPoint(),pictureGraphic->getCompositingSurface(compositingSurface->getTypeName()));
 
 	compositingSurface = generateCompositingSurface();
 	int textHeight = 20;
@@ -56,7 +56,7 @@ void RenderingTarget::showSplash()
 	QRect textRect = QRect(0,0,visualTargetRect.width(), textHeight);
 	QSharedPointer<TextGraphic> textGraphic(new TextGraphic(textPos,textRect,QColor(255,255,255),status_));
 	textGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
-	visualTarget_->draw(textGraphic->getPosition(), textGraphic->getCompositingSurface(compositingSurface->getTypeName()));
+	visualTarget_->draw(textGraphic->getPosition(),QPoint(),textGraphic->getCompositingSurface(compositingSurface->getTypeName()));
 	
 	visualTarget_->present();
 }

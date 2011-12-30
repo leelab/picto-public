@@ -73,7 +73,7 @@ QString PixmapVisualTarget::getTypeName()
 	return QString("Pixmap");
 }
 
-void PixmapVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface)
+void PixmapVisualTarget::draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface)
 {
 	frameSynchedZoom_ = zoom_;
 	Q_ASSERT(frameSynchedZoom_ > 0);
@@ -83,7 +83,15 @@ void PixmapVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface
 		painter.setRenderHint(QPainter::Antialiasing); 
 		painter.setRenderHint(QPainter::TextAntialiasing);
 		if(compositingSurface->scalable())
+		{
+			location = location-compositingSurfaceOffset;
 			painter.setViewport((width_-(width_*frameSynchedZoom_))/2.0,(height_-(height_*frameSynchedZoom_))/2.0,width_*frameSynchedZoom_,height_*frameSynchedZoom_);
+		}
+		else
+		{	
+			location = targetPointToViewportPoint(location)-compositingSurfaceOffset;
+		}
+
 		painter.drawPixmap(location, compositingSurface.staticCast<PixmapCompositingSurface>()->getPixmap());
 	}
 }
@@ -122,7 +130,7 @@ QPoint PixmapVisualTarget::viewportPointToTargetPoint(QPoint viewportPoint)
 
 QPoint PixmapVisualTarget::targetPointToViewportPoint(QPoint targetPoint)
 {
-	float x = (frameSynchedZoom_*targetPoint.x())+(width_-(width_*frameSynchedZoom_))/2.0;
+	float x = (frameSynchedZoom_*targetPoint.x())+(width_-(width_ *frameSynchedZoom_))/2.0;
 	float y = (frameSynchedZoom_*targetPoint.y())+(height_-(height_*frameSynchedZoom_))/2.0;
 	return QPoint(x,y);
 

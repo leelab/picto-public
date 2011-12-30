@@ -112,7 +112,7 @@ void SignalChannelTest::doFrame()
 											  eyePos);
 
 	//d3dVisualTarget->draw(QPoint((int) eyeX,(int) eyeY), circleGraphic->getCompositingSurface("Direct3D"));
-	d3dVisualTarget->draw(QPoint((int) xpos,(int) ypos), circleGraphic->getCompositingSurface("Direct3D"));
+	d3dVisualTarget->draw(QPoint((int) xpos,(int) ypos),QPoint(), circleGraphic->getCompositingSurface("Direct3D"));
 	//d3dVisualTarget->draw(QPoint(200,200), circleGraphic->getCompositingSurface("Direct3D"));
 
 	//Present the image

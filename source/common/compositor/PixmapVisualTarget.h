@@ -30,7 +30,7 @@ public:
 
 	QSharedPointer<CompositingSurface> generateCompositingSurface();
 	QString getTypeName();
-	void draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface);
+	void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface);
 	void present();
 	void clear();
 

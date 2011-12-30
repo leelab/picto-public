@@ -218,8 +218,9 @@ QString D3DVisualTarget::getTypeName()
 	return QString("Direct3D");
 }
 
-void D3DVisualTarget::draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface)
+void D3DVisualTarget::draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface)
 {
+	location = location-compositingSurfaceOffset;
 	if(compositingSurface->getTypeName() == "Direct3D")
 	{
 		//retreive a pointer to the texture

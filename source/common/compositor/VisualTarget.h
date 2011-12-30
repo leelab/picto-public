@@ -47,7 +47,17 @@ public:
 
 	virtual QSharedPointer<CompositingSurface> generateCompositingSurface() = 0;
 	virtual QString getTypeName() = 0;
-	virtual void draw(QPoint location, QSharedPointer<CompositingSurface> compositingSurface) = 0;
+	/*!	\brief Draws the compositing surface onto the visual target.  The compositingSurfaceOffset is 
+	 *	the offset at which the compositing surface should be drawn from location to assure that the 
+	 *	"zero" point of the compositing surface is at location.  For example, a cursor compositing 
+	 *	surface might request to be drawn at 0,0, however the center of the cursor might be at position 
+	 *	5,5 or 7,7 within the compositing surface depending on the size of the cursor.  The offset 
+	 *	tells the system, move the compositing surface up and to the left by 5,5 or 7,7 so that the 
+	 *	center of the cursor is at 0,0.
+	 *	We cant simply pass location-compositingSurfaceOffset into this function because in zooming
+	 *	these two components need to be treated differently (See the pixmap implementation of this function)
+	 */
+	virtual void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface) = 0;
 	virtual void present() = 0;
 	virtual void clear() = 0;
 	virtual void setZoom(float zoom);
