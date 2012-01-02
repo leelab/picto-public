@@ -163,6 +163,7 @@ private:
 	void stopExperiment();
 	bool disjoinSession();
 	bool shouldEndSession();
+	QSharedPointer<Picto::ProtocolResponse> sendCommandGetReply(QSharedPointer<Picto::ProtocolCommand> cmd,int nonDefaultTimeoutMs = -1);
 
 	ComponentStatus directorStatus(QString id);
 	ComponentStatus proxyStatus(QString id);
@@ -180,6 +181,7 @@ private:
 
 	Picto::VisualTargetHost *visualTargetHost_;
 	QSharedPointer<Picto::Experiment> experiment_;
+	QHash<QUuid,QSharedPointer<Picto::ProtocolResponse>> pendingResponses_;
 	QWidget *propertyFrame_;
 
 	QAction *playAction_;
@@ -225,6 +227,7 @@ private:
 	QTime statusTimer_;
 	bool zoomChanged_;
 	float zoomValue_;
+	QHash<QString,int> adaptiveResponseDelays_;
 
 private slots:
 	void taskListIndexChanged(int index);

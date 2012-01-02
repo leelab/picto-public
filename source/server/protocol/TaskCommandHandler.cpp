@@ -222,33 +222,33 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop(QSharedPointer<
 	}
 	
 	sessInfo->addPendingDirective("STOP","DIRECTOR");
-	QTime timer;
-	timer.start();
-	do
-	{
-		QThread::yieldCurrentThread();
-		QCoreApplication::processEvents();
-	}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
-	if(timer.elapsed() >=10000)
-	{
-		badReqResponse->setContent("Director failed to stop");
-		return badReqResponse;
-	}
-	if(!sessInfo->getComponentByType("PROXY").isNull())
-	{
-		sessInfo->addPendingDirective("STOP","PROXY");
-		timer.start();
-		do
-		{
-			QThread::yieldCurrentThread();
-			QCoreApplication::processEvents();
-		}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
-		if(timer.elapsed() >=10000)
-		{
-			badReqResponse->setContent("Proxy failed to stop");
-			return badReqResponse;
-		}
-	}
+	//QTime timer;
+	//timer.start();
+	//do
+	//{
+	//	QThread::yieldCurrentThread();
+	//	QCoreApplication::processEvents();
+	//}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
+	//if(timer.elapsed() >=10000)
+	//{
+	//	badReqResponse->setContent("Director failed to stop");
+	//	return badReqResponse;
+	//}
+	//if(!sessInfo->getComponentByType("PROXY").isNull())
+	//{
+	//	sessInfo->addPendingDirective("STOP","PROXY");
+	//	timer.start();
+	//	do
+	//	{
+	//		QThread::yieldCurrentThread();
+	//		QCoreApplication::processEvents();
+	//	}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
+	//	if(timer.elapsed() >=10000)
+	//	{
+	//		badReqResponse->setContent("Proxy failed to stop");
+	//		return badReqResponse;
+	//	}
+	//}
 
 	//conMgr_->setComponentStatus(sessionId_,"DIRECTOR"ComponentStatus::stopped);
 
