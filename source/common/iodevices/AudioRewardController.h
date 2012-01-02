@@ -34,7 +34,7 @@ public:
 public slots:
 	void flush(unsigned int channel,bool flush);
 protected:
-	void doReward(unsigned int channel,int quantity);
+	void doReward(unsigned int channel,int quantity, int minRewardPeriod);
 private:
 	QSound tick_;
 

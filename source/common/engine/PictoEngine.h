@@ -117,7 +117,7 @@ public:
 	void generateEvent(unsigned int eventCode);
 
 	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
-	void giveReward(int channel, int quantity);
+	void giveReward(int channel, int quantity, int minRewardPeriod);
 	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards();
 
 	//! \brief Retrieves the latest package of changed properties.

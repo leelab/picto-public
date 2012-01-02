@@ -12,12 +12,15 @@ RewardController(1) ,
 tick_("sounds/tick.wav")
 {}
 
-void AudioRewardController::doReward(unsigned int channel,int quantity)
+void AudioRewardController::doReward(unsigned int,int quantity, int minRewardPeriod)
 {
 		QTime timer;
 		timer.start();
 		tick_.play();
-		while(timer.elapsed() < (quantity+rewardResetTimes_[channel-1]))
+		int totalTime = minRewardPeriod;
+		if(quantity > totalTime)
+			totalTime = quantity;
+		while(timer.elapsed() < totalTime)
 			QCoreApplication::processEvents();
 }
 

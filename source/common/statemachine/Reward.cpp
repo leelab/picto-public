@@ -14,6 +14,7 @@ Reward::Reward()
 	AddDefinableProperty("Type","Reward");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Int,"NumRewards",1);
 	AddDefinableProperty(QVariant::Int,"RewardQty",60);
+	AddDefinableProperty(QVariant::Int,"MinRewardPeriod",125);
 	AddDefinableProperty(QVariant::Int,"RewardChan",1);
 	addRequiredResult("done");
 }
@@ -29,13 +30,14 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 	int numRewards = propertyContainer_->getPropertyValue("NumRewards").toInt();
 	int rewardQty = propertyContainer_->getPropertyValue("RewardQty").toInt();
 	int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
+	int minRewardPeriod = propertyContainer_->getPropertyValue("MinRewardPeriod").toInt();
 
 	//Give the rewards
 	if(numRewards > 0)
 	{
 		for(int i=0; i<numRewards; i++)
 		{
-			engine->giveReward(rewardChan,rewardQty);
+			engine->giveReward(rewardChan,rewardQty,minRewardPeriod);
 		}
 	}
 

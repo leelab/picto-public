@@ -22,6 +22,7 @@ class Reward : public StateMachineElement
 	Q_OBJECT
 	Q_PROPERTY(int number READ getNumber WRITE setNumber)
 	Q_PROPERTY(int unitQuantity READ getUnitQuantity WRITE setUnitQuantity)
+	Q_PROPERTY(int minRewardPeriod READ getMinRewardPeriod WRITE setMinRewardPeriod)
 public:
 	Reward();
 	virtual ~Reward(){};
@@ -36,6 +37,8 @@ public:
 	void setNumber(int num){propertyContainer_->setPropertyValue("NumRewards",num);};
 	int getUnitQuantity(){return propertyContainer_->getPropertyValue("RewardQty").toInt();};
 	void setUnitQuantity(int quant){propertyContainer_->setPropertyValue("RewardQty",quant);};
+	int getMinRewardPeriod(){return propertyContainer_->getPropertyValue("minRewardPeriod").toInt();};
+	void setMinRewardPeriod(int delay){propertyContainer_->setPropertyValue("minRewardPeriod",delay);};
 	//! \TODO Add rewarding options here...
 
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

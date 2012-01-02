@@ -55,7 +55,7 @@ LegacySystemXPRewardController::~LegacySystemXPRewardController()
 
 
 
-void LegacySystemXPRewardController::doReward(unsigned int,int quantity)
+void LegacySystemXPRewardController::doReward(unsigned int,int quantity, int minRewardPeriod)
 {
 	if(!hasDevice_)
 		return;
@@ -88,19 +88,11 @@ void LegacySystemXPRewardController::doReward(unsigned int,int quantity)
 	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 
 	//wait for the reset time
-	if(rewardResetTimes_[0] <= 0)
-		return;
-
-	QueryPerformanceCounter(&tick);
-	do
+	while(elapsedTime * 1000.0 < minRewardPeriod)
 	{
 		QueryPerformanceCounter(&tock);
 		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
 	}
-	while(elapsedTime * 1000.0 < rewardResetTimes_[0]);
-
-
-
 }
 
 void LegacySystemXPRewardController::flush(unsigned int, bool flush)

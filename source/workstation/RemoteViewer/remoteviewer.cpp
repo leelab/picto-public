@@ -1628,7 +1628,7 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 	QTime timer;
 	timer.start();
 	serverChannel_->sendRegisteredCommand(cmd);
-	qDebug("Sent " + cmd->getMethod().toAscii() + " Command.");
+	//qDebug("Sent " + cmd->getMethod().toAscii() + " Command.");
 	bool useAdaptiveTimeout = (nonDefaultTimeoutMs == -1);
 	QString method = cmd->getMethod();
 	int* responseDelay = &nonDefaultTimeoutMs;
@@ -1685,7 +1685,7 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 				(*responseDelay)  = MAX_ADAPTIVE_TIMEOUT;
 			if(lastAdaptDelay != (*responseDelay))
 				statusMessage += " Compensating... Timeout: " + QString::number((*responseDelay)) + " ms.";
-			qDebug(cmd->getMethod().toAscii() + " command timed out.");
+			//qDebug(cmd->getMethod().toAscii() + " command timed out.");
 		}
 		if(currState_ != WaitForConnect)
 		{	//If we're not even connected, there will obviously be timeouts here.  No need to keep on whining about them.
@@ -1697,7 +1697,7 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 
 	//If we're here, we got a response.  Update the adaptive timeout for this command type according to the time it took to 
 	//receive the reply.
-	qDebug(cmd->getMethod().toAscii() + " command reply received.");
+	//qDebug(cmd->getMethod().toAscii() + " command reply received.");
 	if(useAdaptiveTimeout)
 	{
 		(*responseDelay) = 2*timer.elapsed();

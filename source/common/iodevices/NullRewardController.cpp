@@ -9,12 +9,15 @@ namespace Picto
 {
 
 
-void NullRewardController::doReward(unsigned int channel,int quantity)
+void NullRewardController::doReward(unsigned int channel,int quantity, int minRewardPeriod)
 {
 	qDebug()<<"Reward given on channel "<<channel;
 	QTime timer;
 	timer.start();
-	while(timer.elapsed() < rewardResetTimes_[channel-1] + quantity)
+	int totalTime = minRewardPeriod;
+	if(quantity > totalTime)
+		totalTime = quantity;
+	while(timer.elapsed() < totalTime)
 		QCoreApplication::processEvents();
 }
 

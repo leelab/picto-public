@@ -13,6 +13,6 @@ bool DirectorRewardResponseHandler::processResponse(QString directive)
 	int channel = directive.left(channelEndLoc).toInt();
 	int quantity = directive.mid(channelEndLoc+1).toInt();
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
-	engine->giveReward(channel,quantity);
+	engine->giveReward(channel,quantity,50);
 	return true;
 }

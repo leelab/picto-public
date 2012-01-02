@@ -97,20 +97,20 @@ void PictoEngine::generateEvent(unsigned int eventCode)
 }
 
 
-//! \brief Issues a reward and sends notfication to the server
-void PictoEngine::giveReward(int channel, int quantity)
+//! \brief Issues a reward and sends notfication to the server.  quantity is the number of ms to supply reward.  minRewardPeriod is the time between start of one reward and start of the next.
+void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 {
 	if(rewardController_.isNull())
 		return;
 
 	Timestamper stamper;
-	double timestamp = stamper.stampSec();
+	//double timestamp = stamper.stampSec();
 	//double lastMsgTime = 0;
 
 	//Since we don't want the server to timeout the director, we make sure that we
 	//update the server at least once per second by running th giveReward function
 	//in as separate thread.
-	QFuture<void> future = QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel,quantity,!(dataCommandChannel_.isNull() || slave_));
+	QFuture<void> future = QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel,quantity,minRewardPeriod,!(dataCommandChannel_.isNull() || slave_));
 	//while(!future.isFinished())
 	//{
 	//	QCoreApplication::processEvents();
@@ -394,7 +394,7 @@ bool PictoEngine::updateCurrentStateFromServer()
 			unit.fromXml(xmlReader);
 			currUnitTime = unit.getTime();	//Both frame and rewards (while pause or stopped) can cause state update
 			if(!firstCurrStateUpdate_)	
-				giveReward(unit.getChannel(),unit.getDuration());
+				giveReward(unit.getChannel(),unit.getDuration(),0);
 		}
 		if(currUnitTime.toDouble() > lastTimeStateDataRequested_.toDouble())
 			lastTimeStateDataRequested_ = currUnitTime;
