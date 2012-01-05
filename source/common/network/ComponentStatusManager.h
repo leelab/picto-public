@@ -24,6 +24,7 @@ public:
 	QString getName(){return name_;};
 	virtual void setStatus(ComponentStatus status);
 	void setStatus(QString status);
+	virtual void setUserInfo(QString info){};
 	void setSessionID(QUuid sessionID){if(sessionID_ != sessionID){ newSession(); sessionID_ = sessionID;}};
 	QUuid getSessionID(){return sessionID_;};
 	void update(int timeoutMs);

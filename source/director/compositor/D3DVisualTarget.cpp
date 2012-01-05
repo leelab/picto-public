@@ -255,32 +255,27 @@ void D3DVisualTarget::draw(QPoint location, QPoint compositingSurfaceOffset, QSh
 void D3DVisualTarget::present()
 {
 	renderSuccess_ = false;
-	if(pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
+	HRESULT coopLevel = pD3dDevice_->TestCooperativeLevel();
+	while(coopLevel == D3DERR_DEVICELOST || coopLevel == D3DERR_DEVICENOTRESET)
 	{
-		initializeD3DDevice();
+		if(coopLevel == D3DERR_DEVICENOTRESET)
+		{
+			initializeD3DDevice();
+		}
+		else
+		{
+			//This code remaximizes the window-----------------------------
+			WINDOWPLACEMENT window_placement;
+			window_placement.length = sizeof(WINDOWPLACEMENT);
+			GetWindowPlacement( hWnd_, &window_placement );
+			window_placement.showCmd = SW_SHOWMAXIMIZED ;
+			SetWindowPlacement( hWnd_, &window_placement );
+			///////////////////////////////////////////////////////////////
+		}
+		QCoreApplication::processEvents();
+		coopLevel = pD3dDevice_->TestCooperativeLevel();
 	}
-	if(pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICELOST
-		|| pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
-	{
-		//qDebug("DirectX Device Lost");
-
-		//This code remaximizes the window-----------------------------
-		WINDOWPLACEMENT window_placement;
-		window_placement.length = sizeof(WINDOWPLACEMENT);
-		GetWindowPlacement( hWnd_, &window_placement );
-		window_placement.showCmd = SW_SHOWMAXIMIZED ;
-		SetWindowPlacement( hWnd_, &window_placement );
-		///////////////////////////////////////////////////////////////
-
-		textureList_.clear();
-		positionList_.clear();
-		QTime timer;
-		timer.start();
-		while(timer.elapsed() < 200)
-			QCoreApplication::processEvents();
-		emit presented();
-		return;
-	}
+	
 	//	initializeD3DDevice();
 	LPDIRECT3DTEXTURE9 tex;
 	QPointF quadPoint;

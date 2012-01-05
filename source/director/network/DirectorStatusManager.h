@@ -12,7 +12,7 @@ public:
 	QSharedPointer<Picto::Engine::PictoEngine> getEngine();
 	void setExperiment(QSharedPointer<Picto::Experiment> experiment);
 	QSharedPointer<Picto::Experiment> getExperiment();
-	void updateSplashStatus(QString status);
+	virtual void setUserInfo(QString info);
 	virtual void setStatus(ComponentStatus status);
 protected:
 	virtual void newSession();

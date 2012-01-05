@@ -51,6 +51,7 @@ void ComponentStatusManager::update(int timeoutMs)
 		doServerUpdate();
 		lastUpdateTime_ = QDateTime::currentDateTime();
 	}
+
 	if((timeoutMs < 0) || (timeoutMs - (startTime.time().msecsTo(QDateTime::currentDateTime().time())) >= 40))
 	{
 		//if(getStatus() != running)

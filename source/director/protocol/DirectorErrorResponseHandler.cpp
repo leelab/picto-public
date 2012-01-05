@@ -9,6 +9,6 @@ ErrorResponseHandler(statusManager)
 bool DirectorErrorResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());
-	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("ERROR: "+directive);
+	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo("ERROR: "+directive);
 	return true;
 }

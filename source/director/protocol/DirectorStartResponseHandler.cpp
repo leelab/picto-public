@@ -17,7 +17,7 @@ bool DirectorStartResponseHandler::processResponse(QString directive)
 		experiment->runTask(directive);
 	}
 	statusManager_.toStrongRef()->setStatus(stopped);
-	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("Engine Stopped");
+	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo("Engine Stopped");
 	return false;
 
 }

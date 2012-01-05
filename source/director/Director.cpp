@@ -121,7 +121,7 @@ int Director::openDevice()
 
 
 	//Put up our splash screen
-	statusManager_.staticCast<DirectorStatusManager>()->updateSplashStatus("PictoDirector started");
+	statusManager_.staticCast<DirectorStatusManager>()->setUserInfo("PictoDirector started");
 	return 0;
 }
 

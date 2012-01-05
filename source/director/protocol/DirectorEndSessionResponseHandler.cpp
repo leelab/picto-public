@@ -13,6 +13,6 @@ bool DirectorEndSessionResponseHandler::processResponse(QString directive)
 		return false;
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	engine->setSessionId(QUuid());
-	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("Session Ended");
+	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo("Session Ended");
 	return true;
 }

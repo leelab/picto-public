@@ -13,6 +13,6 @@ bool DirectorNewSessionResponseHandler::processResponse(QString directive)
 	NewSessionResponseHandler::processResponse(directive);	
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	engine->setSessionId(commandChannel_.toStrongRef()->getSessionId());
-	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("New Session, Session ID: " + engine->getSessionId().toString());
+	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo("New Session, Session ID: " + engine->getSessionId().toString());
 	return true;
 }

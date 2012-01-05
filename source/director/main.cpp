@@ -39,7 +39,7 @@
 #include "../common/mainmemleakdetect.h"
 
 QSharedPointer<Picto::CommandChannel> connectToServer(QUuid directorID);
-void updateSplashStatus(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status);
+void setUserInfo(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status);
 
 
 int main(int argc, char *argv[])

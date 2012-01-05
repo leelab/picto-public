@@ -26,14 +26,15 @@ QSharedPointer<Picto::Experiment> DirectorStatusManager::getExperiment()
 {
 	return experiment_;
 }
-void DirectorStatusManager::updateSplashStatus(QString status)
+
+void DirectorStatusManager::setUserInfo(QString info)
 {
 	if(engine_.isNull())
 		return;
 	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = getEngine()->getRenderingTargets();
 	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
 	{
-		target->updateStatus(status);
+		target->updateStatus(info);
 		target->showSplash();
 	}
 }
@@ -43,15 +44,15 @@ void DirectorStatusManager::setStatus(ComponentStatus status)
 	ComponentStatus oldStatus = getStatus();
 	ComponentStatusManager::setStatus(status);
 	ComponentStatus newStatus = getStatus();
-	if(newStatus <= idle && (newStatus != oldStatus ))
+	if(newStatus <= idle)
 	{
 		switch(newStatus)
 		{
 		case disconnected:
-			updateSplashStatus(QString("No Connection to Server"));
+			setUserInfo(QString("No Connection to Server"));
 			break;
 		case idle:
-			updateSplashStatus(QString("Connected to Server"));
+			setUserInfo(QString("Connected to Server"));
 			break;
 		}
 		
@@ -66,6 +67,14 @@ void DirectorStatusManager::newSession()
 }
 void DirectorStatusManager::doServerUpdate()
 {
+	//We keep on setting status/user info here just in case the director got minimized.  These actions will cause the splash
+	//screen to re-present which will cause the director to remaximize and take focus.  I really shouldn't be talking about the
+	//director here in its parent, but this will be useful 
+	if(getStatus() <= idle)
+		setStatus(getStatus());
+	else if(getStatus() == stopped)
+		setUserInfo("Engine Stopped");
+
 	QSharedPointer<CommandChannel> dataChannel = getEngine()->getDataCommandChannel();
 	if(dataChannel.isNull())
 		return;

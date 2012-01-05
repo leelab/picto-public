@@ -13,6 +13,6 @@ bool DirectorStopResponseHandler::processResponse(QString directive)
 	if(engine.isNull())
 		return true;
 	engine->stop();
-	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("Engine Stopped");
+	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo("Engine Stopped");
 	return false;	// status will be set to stopped by START handler when it exits and engine actually stops
 }

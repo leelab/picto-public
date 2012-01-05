@@ -24,13 +24,13 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = engine->getRenderingTargets();
 	if(!experiment->fromXml(xmlReader))
 	{
-		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus(QString("Error loading experiment: %1").arg(experiment->getErrors()));
+		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: %1").arg(experiment->getErrors()));
 		return false;
 	}
 	else
 	{
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setExperiment(experiment);
-		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->updateSplashStatus("Loaded experiment, Session ID: " + engine->getSessionId().toString());
+		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo("Loaded experiment, Session ID: " + engine->getSessionId().toString());
 		QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 		experiment->setEngine(engine);
 	}
