@@ -262,7 +262,16 @@ void D3DVisualTarget::present()
 	if(pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICELOST
 		|| pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
 	{
-		qDebug("DirectX Device Lost");
+		//qDebug("DirectX Device Lost");
+
+		//This code remaximizes the window-----------------------------
+		WINDOWPLACEMENT window_placement;
+		window_placement.length = sizeof(WINDOWPLACEMENT);
+		GetWindowPlacement( hWnd_, &window_placement );
+		window_placement.showCmd = SW_SHOWMAXIMIZED ;
+		SetWindowPlacement( hWnd_, &window_placement );
+		///////////////////////////////////////////////////////////////
+
 		textureList_.clear();
 		positionList_.clear();
 		QTime timer;
