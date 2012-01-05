@@ -62,6 +62,7 @@ public:
 	virtual void clear() = 0;
 	virtual void setZoom(float zoom);
 	double getLatestFirstPhosphor(){return lastFrameTime_;};
+	virtual bool latestFrameSuccesfullyRendered() = 0;
 	virtual QRect getDimensions();
 	virtual QPoint viewportPointToTargetPoint(QPoint viewportPoint);
 	virtual QPoint targetPointToViewportPoint(QPoint targetPoint);

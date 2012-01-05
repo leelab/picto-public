@@ -30,6 +30,7 @@ public:
 	void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface);
 	void present();
 	void clear();
+	bool latestFrameSuccesfullyRendered(){return renderSuccess_;};
 
 	void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text);
 
@@ -38,11 +39,14 @@ protected:
 	void closeEvent(QCloseEvent *event);
 
 private:
+	void initializeD3DDevice();
 	void d3dFail(QString);
 
 	IDirect3D9*        pD3D_;  // Used to create the D3DDevice
 	IDirect3DDevice9*  pD3dDevice_;  // Our rendering device
 	HANDLE hCRT;
+	HWND hWnd_;
+	D3DPRESENT_PARAMETERS d3dpp_; 
 
 
 
@@ -65,6 +69,7 @@ private:
 	//is in the bottom left corner, and the units are pixels
 	QList<LPDIRECT3DTEXTURE9> textureList_;
 	QList<QPointF> positionList_;
+	bool renderSuccess_;
 
 
 };

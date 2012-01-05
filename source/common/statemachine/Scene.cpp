@@ -20,53 +20,60 @@ Scene::Scene()
 
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine)
 {
-	//Grab the RenderingTargets from the engine
-	QList<QSharedPointer< RenderingTarget> > renderingTargets;
-	renderingTargets = engine->getRenderingTargets();
-	
-	//! \TODO "render" the audio stuff
-	//! \todo deal with the background layer color
-	//Add any unadded visual elements to the visual elements list
-	if(!unaddedVisualElements_.isEmpty())
+	bool sceneRendered = false;
+	do
 	{
-		QSharedPointer<Picto::CompositingSurface> compositingSurface;
-
-		//add the appropriate compositing surfaces to the element
-		for(int i=0; i<unaddedVisualElements_.length(); i++)
-		{
-			foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
-			{
-				compositingSurface = renderTarget->generateCompositingSurface();
-				unaddedVisualElements_[i]->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
-			}
-			visualElements_.append(unaddedVisualElements_[i]);
-		}
-		unaddedVisualElements_.clear();
-	}
-	//Sort visual elements
-	qSort(visualElements_.begin(), visualElements_.end(), &visualElementLessThan);
-
-	//Render visual elements to each rendering target
-	float frameZoom = zoom_;
-	foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
-	{
-		QSharedPointer<VisualTarget> visualTarget = renderTarget->getVisualTarget();
-		//Update zoom value for visual target.
-		visualTarget->setZoom(frameZoom);
-
-		//run through all our visualElements updating the animation and drawing
-		foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
-		{
-			visualElement->updateAnimation(frame_,elapsedTime_);
-			if(visualElement->getVisibleByUser(!engine->operatorIsUser()))
-				visualTarget->draw(visualElement->getPosition(),visualElement->getPositionOffset(),visualElement->getCompositingSurface(visualTarget->getTypeName()));
-		}
+		//Grab the RenderingTargets from the engine
+		QList<QSharedPointer< RenderingTarget> > renderingTargets;
+		renderingTargets = engine->getRenderingTargets();
 		
-		//Present it
-		visualTarget->present();
-	}
-	if(renderingTargets.size() && renderingTargets.first()->getVisualTarget())
-		firstPhosphorTime_ = renderingTargets.first()->getVisualTarget()->getLatestFirstPhosphor();
+		//! \TODO "render" the audio stuff
+		//! \todo deal with the background layer color
+		//Add any unadded visual elements to the visual elements list
+		if(!unaddedVisualElements_.isEmpty())
+		{
+			QSharedPointer<Picto::CompositingSurface> compositingSurface;
+
+			//add the appropriate compositing surfaces to the element
+			for(int i=0; i<unaddedVisualElements_.length(); i++)
+			{
+				foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+				{
+					compositingSurface = renderTarget->generateCompositingSurface();
+					unaddedVisualElements_[i]->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
+				}
+				visualElements_.append(unaddedVisualElements_[i]);
+			}
+			unaddedVisualElements_.clear();
+		}
+		//Sort visual elements
+		qSort(visualElements_.begin(), visualElements_.end(), &visualElementLessThan);
+
+		//Render visual elements to each rendering target
+		float frameZoom = zoom_;
+		foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+		{
+			QSharedPointer<VisualTarget> visualTarget = renderTarget->getVisualTarget();
+			//Update zoom value for visual target.
+			visualTarget->setZoom(frameZoom);
+
+			//run through all our visualElements updating the animation and drawing
+			foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
+			{
+				visualElement->updateAnimation(frame_,elapsedTime_);
+				if(visualElement->getVisibleByUser(!engine->operatorIsUser()))
+					visualTarget->draw(visualElement->getPosition(),visualElement->getPositionOffset(),visualElement->getCompositingSurface(visualTarget->getTypeName()));
+			}
+			
+			//Present it
+			visualTarget->present();
+		}
+		if(renderingTargets.size() && renderingTargets.first()->getVisualTarget())
+		{
+			firstPhosphorTime_ = renderingTargets.first()->getVisualTarget()->getLatestFirstPhosphor();
+			sceneRendered = renderingTargets.first()->getVisualTarget()->latestFrameSuccesfullyRendered();
+		}
+	}while(!sceneRendered);
 	frame_++;
 	elapsedTime_.restart();
 }

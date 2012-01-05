@@ -132,7 +132,6 @@ public:
 
 	void setLastFrame(qulonglong frameId){lastFrameId_ = frameId;};
 	qulonglong getLastFrameId(){return lastFrameId_;};
-	QString getLastFrameTime(){return lastFrameTime_;};
 
 	bool updateCurrentStateFromServer();
 	void setRunningPath(QString path);
@@ -196,7 +195,6 @@ private:
 	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	QSharedPointer<StateDataUnit> currStateUnit_;
 	qulonglong lastFrameId_;
-	QString lastFrameTime_;
 
 	QString runningPath_;
 private slots:

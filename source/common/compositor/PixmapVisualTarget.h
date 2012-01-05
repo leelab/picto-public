@@ -33,6 +33,7 @@ public:
 	void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface);
 	void present();
 	void clear();
+	bool latestFrameSuccesfullyRendered(){return true;};
 
 	void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text);
 	virtual QPoint viewportPointToTargetPoint(QPoint viewportPoint);

@@ -21,7 +21,7 @@ D3DVisualTarget::D3DVisualTarget() :
 	pD3dDevice_ = 0;
 	pVertexBuffer_ = 0;
 
-	HWND hWnd;
+	//HWND hWnd;
 
 	//If we don't put in the line below.  All mouse values will be
 	//about 25 pixels off of their screen locations since Qt will
@@ -35,7 +35,7 @@ D3DVisualTarget::D3DVisualTarget() :
 	move(0,0);
 
 	setAttribute(Qt::WA_NativeWindow,true);
-	hWnd = (HWND)winId();
+	hWnd_ = (HWND)winId();
 	setAttribute(Qt::WA_PaintOnScreen,true);
 
     QPalette pal = palette();
@@ -60,101 +60,103 @@ D3DVisualTarget::D3DVisualTarget() :
 
 
 	// Set up the presentation parameters
-    D3DPRESENT_PARAMETERS d3dpp; 
-    memset( &d3dpp, 0, sizeof(d3dpp) );
-	d3dpp.BackBufferCount = 1;
-	d3dpp.BackBufferFormat = DisplayMode.Format;
-	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_FLIP;
-	d3dpp.hDeviceWindow = hWnd;
-	d3dpp.Windowed = false; 
-	d3dpp.BackBufferHeight = DisplayMode.Height;
-	d3dpp.BackBufferWidth = DisplayMode.Width;
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
-	d3dpp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
+    memset( &d3dpp_, 0, sizeof(d3dpp_) );
+	d3dpp_.BackBufferCount = 1;
+	d3dpp_.BackBufferFormat = DisplayMode.Format;
+	d3dpp_.MultiSampleType = D3DMULTISAMPLE_NONE;
+	d3dpp_.SwapEffect = D3DSWAPEFFECT_FLIP;
+	d3dpp_.hDeviceWindow = hWnd_;
+	d3dpp_.Windowed = false; 
+	d3dpp_.BackBufferHeight = DisplayMode.Height;
+	d3dpp_.BackBufferWidth = DisplayMode.Width;
+	d3dpp_.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
+	d3dpp_.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
 
-	HRESULT hr;
+	renderSuccess_ = false;
 
-	hr = pD3D_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_FPU_PRESERVE,&d3dpp, &pD3dDevice_);
-	
-	if(hr)
-	{
-		d3dFail("D3DVisualTarget: CreateDevice FAILED");
-		printf("D3DVisualTarget: CreateDevice FAILED %x\n", hr);
-	}
+	initializeD3DDevice();
+	//HRESULT hr;
 
-    // Turn off D3D lighting
-    pD3dDevice_->SetRenderState( D3DRS_LIGHTING, FALSE );
+	//hr = pD3D_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_FPU_PRESERVE,&d3dpp_, &pD3dDevice_);
+	//
+	//if(hr)
+	//{
+	//	d3dFail("D3DVisualTarget: CreateDevice FAILED");
+	//	printf("D3DVisualTarget: CreateDevice FAILED %x\n", hr);
+	//}
 
-    // Turn on alpha blending
-	//NOTE: at various stages during development, we had to use inverse alpha values
-	//so it's possible that if alpha blending isn't working, that may be a cause
-    pD3dDevice_->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
-	pD3dDevice_->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
-	pD3dDevice_->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
+ //   // Turn off D3D lighting
+ //   pD3dDevice_->SetRenderState( D3DRS_LIGHTING, FALSE );
 
-	//get device capabilities
-	D3DCAPS9 caps;
-    hr = pD3dDevice_->GetDeviceCaps(&caps);
-	if(hr)
-		d3dFail("D3DVisualTarget: GetDeviceCaps FAILED");
+ //   // Turn on alpha blending
+	////NOTE: at various stages during development, we had to use inverse alpha values
+	////so it's possible that if alpha blending isn't working, that may be a cause
+ //   pD3dDevice_->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
+	//pD3dDevice_->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
+	//pD3dDevice_->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
 
-	//----------------------------------
-	//Set up the Vertex Stream
-	//----------------------------------
-	//Note that the texture y-coordinates are flipped.  This is because Picto coordinates
-	//start in the top right corner, while D3D coordinates start in the bottom left.
-	CUSTOMVERTEX quadVertexData[] =
-	{
-	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
-	  { 0.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 0.0f },
-	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
-	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
-	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
-	  { 1.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 1.0f },
-	};
+	////get device capabilities
+	//D3DCAPS9 caps;
+ //   hr = pD3dDevice_->GetDeviceCaps(&caps);
+	//if(hr)
+	//	d3dFail("D3DVisualTarget: GetDeviceCaps FAILED");
 
-    // Create the vertex buffer.
-    hr = pD3dDevice_->CreateVertexBuffer(sizeof(quadVertexData), 0,
-											D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1,
-											D3DPOOL_DEFAULT, &pVertexBuffer_, NULL);
-	if(hr)
-		d3dFail("D3DVisualTarget: CreateVertexBuffer FAILED");
+	////----------------------------------
+	////Set up the Vertex Stream
+	////----------------------------------
+	////Note that the texture y-coordinates are flipped.  This is because Picto coordinates
+	////start in the top right corner, while D3D coordinates start in the bottom left.
+	//CUSTOMVERTEX quadVertexData[] =
+	//{
+	//  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
+	//  { 0.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 0.0f },
+	//  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
+	//  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
+	//  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
+	//  { 1.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 1.0f },
+	//};
 
-    // Fill the vertex buffer.
-    void* pVertices;
-    hr = pVertexBuffer_->Lock(0, 0, &pVertices, 0);
-	if(hr)
-		d3dFail("D3DVisualTarget: pVertexBuffer_->Lock FAILED");
+ //   // Create the vertex buffer.
+ //   hr = pD3dDevice_->CreateVertexBuffer(sizeof(quadVertexData), 0,
+	//										D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1,
+	//										D3DPOOL_DEFAULT, &pVertexBuffer_, NULL);
+	//if(hr)
+	//	d3dFail("D3DVisualTarget: CreateVertexBuffer FAILED");
 
-	memcpy(pVertices, quadVertexData, sizeof(quadVertexData));
-    pVertexBuffer_->Unlock();
+ //   // Fill the vertex buffer.
+ //   void* pVertices;
+ //   hr = pVertexBuffer_->Lock(0, 0, &pVertices, 0);
+	//if(hr)
+	//	d3dFail("D3DVisualTarget: pVertexBuffer_->Lock FAILED");
 
-	//Traditionally, the stream source would be set at the beginning of rendering each frame
-	//However to save CPU cycles (and since the rendering is kind of trivial), we'll
-	//set the Stream source here).
-	pD3dDevice_->SetStreamSource(0, pVertexBuffer_, 0, sizeof(CUSTOMVERTEX));
-	pD3dDevice_->SetFVF( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 );
+	//memcpy(pVertices, quadVertexData, sizeof(quadVertexData));
+ //   pVertexBuffer_->Unlock();
+
+	////Traditionally, the stream source would be set at the beginning of rendering each frame
+	////However to save CPU cycles (and since the rendering is kind of trivial), we'll
+	////set the Stream source here).
+	//pD3dDevice_->SetStreamSource(0, pVertexBuffer_, 0, sizeof(CUSTOMVERTEX));
+	//pD3dDevice_->SetFVF( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 );
 
 
-	//----------------------------------
-	//Set up Matrices
-	//----------------------------------
-	// Set up our view matrix as an identity matrix
-	D3DXMATRIX matView;
-	D3DXMatrixIdentity( &matView );
-	pD3dDevice_->SetTransform( D3DTS_VIEW, (D3DMATRIX*)&matView);
+	////----------------------------------
+	////Set up Matrices
+	////----------------------------------
+	//// Set up our view matrix as an identity matrix
+	//D3DXMATRIX matView;
+	//D3DXMatrixIdentity( &matView );
+	//pD3dDevice_->SetTransform( D3DTS_VIEW, (D3DMATRIX*)&matView);
 
-	// For the projection matrix, we use a simple orthogonal matrix
-	// Basic Orthographic transform.
-	// Left   = 0  Right = width_
-	// Bottom = 0  Top   = height_
-	// Near   = -1 Far   = 1
-	D3DXMATRIX matProj;
-	D3DXMatrixOrthoOffCenterLH(&matProj,0.0f,(float)width_,0.0f,(float)height_,-1.0f,1.0f);
-	pD3dDevice_->SetTransform( D3DTS_PROJECTION, (D3DMATRIX*)&(matProj*matView));
+	//// For the projection matrix, we use a simple orthogonal matrix
+	//// Basic Orthographic transform.
+	//// Left   = 0  Right = width_
+	//// Bottom = 0  Top   = height_
+	//// Near   = -1 Far   = 1
+	//D3DXMATRIX matProj;
+	//D3DXMatrixOrthoOffCenterLH(&matProj,0.0f,(float)width_,0.0f,(float)height_,-1.0f,1.0f);
+	//pD3dDevice_->SetTransform( D3DTS_PROJECTION, (D3DMATRIX*)&(matProj*matView));
 
-	//The world matrix changes for each sprite, so we deal with that while rendering...
+	////The world matrix changes for each sprite, so we deal with that while rendering...
 
 	//----------------------------------
 	//Increase thread priority
@@ -252,6 +254,25 @@ void D3DVisualTarget::draw(QPoint location, QPoint compositingSurfaceOffset, QSh
 
 void D3DVisualTarget::present()
 {
+	renderSuccess_ = false;
+	if(pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
+	{
+		initializeD3DDevice();
+	}
+	if(pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICELOST
+		|| pD3dDevice_->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
+	{
+		qDebug("DirectX Device Lost");
+		textureList_.clear();
+		positionList_.clear();
+		QTime timer;
+		timer.start();
+		while(timer.elapsed() < 200)
+			QCoreApplication::processEvents();
+		emit presented();
+		return;
+	}
+	//	initializeD3DDevice();
 	LPDIRECT3DTEXTURE9 tex;
 	QPointF quadPoint;
 	D3DXMATRIX matScale, matTrans;
@@ -296,8 +317,8 @@ void D3DVisualTarget::present()
 	
 	//Wait For Vertical Blank
 	D3DRASTER_STATUS rastStat;
-	hr = pD3dDevice_->GetRasterStatus(0,&rastStat);
-	while(!hr && !rastStat.InVBlank)
+	HRESULT hRastRes = pD3dDevice_->GetRasterStatus(0,&rastStat);
+	while(!hRastRes && !rastStat.InVBlank)
 	{
 		hr = pD3dDevice_->GetRasterStatus(0,&rastStat);
 	}
@@ -309,14 +330,17 @@ void D3DVisualTarget::present()
 	//present the back buffer
     hr = pD3dDevice_->Present( NULL, NULL, NULL, NULL );
     if(hr)
+	{
 		d3dFail("D3DVisualTarget: Present FAILED");
+	}
 
 	//Wait for rastering to begin
-	while(!hr && rastStat.InVBlank)
+	while(!hRastRes && rastStat.InVBlank)
 	{
-		hr = pD3dDevice_->GetRasterStatus(0,&rastStat);
+		hRastRes = pD3dDevice_->GetRasterStatus(0,&rastStat);
 	}
 	setFirstPhosphorTime();
+	renderSuccess_ = true;
 
 	//clear the back buffer
     pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );
@@ -409,7 +433,107 @@ void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect
 
 }
 
+void D3DVisualTarget::initializeD3DDevice()
+{
+	if(pVertexBuffer_)
+	{
+        pVertexBuffer_->Release();
+	}
 
+	HRESULT hr;
+
+	if(pD3dDevice_) 
+	{
+		hr = pD3dDevice_->Reset(&d3dpp_);
+		if(hr)
+			return;
+	}
+	else
+	{		
+		hr = pD3D_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd_, D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_FPU_PRESERVE,&d3dpp_, &pD3dDevice_);
+		
+		if(hr)
+		{
+			d3dFail("D3DVisualTarget: CreateDevice FAILED");
+			printf("D3DVisualTarget: CreateDevice FAILED %x\n", hr);
+		}
+	}
+	
+
+    // Turn off D3D lighting
+    pD3dDevice_->SetRenderState( D3DRS_LIGHTING, FALSE );
+
+    // Turn on alpha blending
+	//NOTE: at various stages during development, we had to use inverse alpha values
+	//so it's possible that if alpha blending isn't working, that may be a cause
+    pD3dDevice_->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
+	pD3dDevice_->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
+	pD3dDevice_->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
+
+	//get device capabilities
+	D3DCAPS9 caps;
+    hr = pD3dDevice_->GetDeviceCaps(&caps);
+	if(hr)
+		d3dFail("D3DVisualTarget: GetDeviceCaps FAILED");
+
+	//----------------------------------
+	//Set up the Vertex Stream
+	//----------------------------------
+	//Note that the texture y-coordinates are flipped.  This is because Picto coordinates
+	//start in the top right corner, while D3D coordinates start in the bottom left.
+	CUSTOMVERTEX quadVertexData[] =
+	{
+	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
+	  { 0.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 0.0f },
+	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
+	  { 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 0.0f, 1.0f },
+	  { 1.0f, 1.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0.0f },
+	  { 1.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 1.0f },
+	};
+
+    // Create the vertex buffer.
+    hr = pD3dDevice_->CreateVertexBuffer(sizeof(quadVertexData), 0,
+											D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1,
+											D3DPOOL_DEFAULT, &pVertexBuffer_, NULL);
+	if(hr)
+		d3dFail("D3DVisualTarget: CreateVertexBuffer FAILED");
+
+    // Fill the vertex buffer.
+    void* pVertices;
+    hr = pVertexBuffer_->Lock(0, 0, &pVertices, 0);
+	if(hr)
+		d3dFail("D3DVisualTarget: pVertexBuffer_->Lock FAILED");
+
+	memcpy(pVertices, quadVertexData, sizeof(quadVertexData));
+    pVertexBuffer_->Unlock();
+
+	//Traditionally, the stream source would be set at the beginning of rendering each frame
+	//However to save CPU cycles (and since the rendering is kind of trivial), we'll
+	//set the Stream source here).
+	pD3dDevice_->SetStreamSource(0, pVertexBuffer_, 0, sizeof(CUSTOMVERTEX));
+	pD3dDevice_->SetFVF( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 );
+
+
+	//----------------------------------
+	//Set up Matrices
+	//----------------------------------
+	// Set up our view matrix as an identity matrix
+	D3DXMATRIX matView;
+	D3DXMatrixIdentity( &matView );
+	pD3dDevice_->SetTransform( D3DTS_VIEW, (D3DMATRIX*)&matView);
+
+	// For the projection matrix, we use a simple orthogonal matrix
+	// Basic Orthographic transform.
+	// Left   = 0  Right = width_
+	// Bottom = 0  Top   = height_
+	// Near   = -1 Far   = 1
+	D3DXMATRIX matProj;
+	D3DXMatrixOrthoOffCenterLH(&matProj,0.0f,(float)width_,0.0f,(float)height_,-1.0f,1.0f);
+	pD3dDevice_->SetTransform( D3DTS_PROJECTION, (D3DMATRIX*)&(matProj*matView));
+
+	//The world matrix changes for each sprite, so we deal with that while rendering...
+
+}
 
 //outputs an error message if something goes wrong with Direct3DMobile
 void D3DVisualTarget::d3dFail(QString errorMsg)

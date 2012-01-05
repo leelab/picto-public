@@ -95,6 +95,7 @@ private:
 	QSharedPointer<SignalChannel> sigChannel_;
 
 	QMultiMap<QString, QSharedPointer<ControlLink> > links_; //<source, link>
+	double lastFrameTime_;
 };
 
 

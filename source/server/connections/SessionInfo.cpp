@@ -808,8 +808,8 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 		cacheQ.bindValue(":state",framedata->stateId_);
 		executeWriteQuery(&cacheQ,"",false);	
 	}
-	//Currently we require that frame data be sent to the server when as soon as all 
-	//data that were valid for that frame has been sent and before any other data arrives.
+	//Currently we require that frame data be sent to the server as soon as all 
+	//data that was valid for that frame has been sent and before any other data arrives.
 	//This means that as soon as we insert frame data, its time to flushStateBufferToCurrentState
 	//so that any workstations reading in current state data will have a picture of the latest valid
 	//state
