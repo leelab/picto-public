@@ -26,6 +26,7 @@ public:
     virtual ~NeuralDataAcqInterface() {}
 
     virtual QString device() const = 0;
+	virtual void deviceSelected(){};
 	virtual deviceStatus startDevice() = 0;
 	virtual deviceStatus stopDevice() = 0;
 	virtual deviceStatus getDeviceStatus() = 0;

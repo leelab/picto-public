@@ -28,6 +28,7 @@ ComponentStatusManager::ComponentStatusManager()
 		statusNameDictionary_[paused] = "Paused";
 	}
 	lastUpdateTime_ = QDateTime::currentDateTime();
+	forceExit_ = false;
 }
 void ComponentStatusManager::setStatus(ComponentStatus status)
 {

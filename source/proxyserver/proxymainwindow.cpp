@@ -8,7 +8,7 @@
 #include "../common/globals.h"
 #include "../common/network/CommandChannel.h"
 #include "../common/timing/timestamper.h"
-#include "protocol/ProxyStartResponseHandler.h"
+#include "protocol/ProxyNewSessionResponseHandler.h"
 #include "network/ProxyStatusManager.h"
 #include "../common/protocol/ProtocolResponseHandler.h"
 #include "../common/memleakdetect.h"
@@ -25,7 +25,6 @@ ProxyMainWindow::ProxyMainWindow()
 	createLineEdits();
 	createComboBox();
 	createLayout();
-	createTimer();
 
 	readSettings();
 
@@ -33,131 +32,130 @@ ProxyMainWindow::ProxyMainWindow()
 	controlPanel->setLayout(layout_);
 	
 	setCentralWidget(controlPanel);
+
+
+
+
+
+
+	currState_ = InitState;
+	stateTrigger_ = NoProxyTrigger;
+	stateUpdateTimer_ = new QTimer(this);
+	stateUpdateTimer_->setInterval(0);
+	connect(stateUpdateTimer_,SIGNAL(timeout()),this,SLOT(updateState()));
+	updatingState_ = false;
+
+	//This timer triggers each new run of updateState()
+	stateUpdateTimer_->start();
+
+	//Since the startConnecting function effectively never returns, we can't
+	//call it from here, or else this constructor will never return.  We can't
+	//start it in the updateState() function, or that function will only get
+	//called once and never exit.  We therefore create a single shot timer that
+	//calls that function such that it will be called by the top level event
+	//delivery framework
+	QTimer::singleShot(1,this,SLOT(startConnecting()));
 }
 
 //! \brief Sets the plugin to the value in the plugin list
 void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 {
-	acqPlugin_ = acqPluginList_[index];
+	if(acqPlugin_ != acqPluginList_[index])
+	{
+		NeuralDataAcqInterface *iNDAcq;
+		if(acqPlugin_)
+		{
+			iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+			iNDAcq->stopDevice();
+		}
+		acqPlugin_ = acqPluginList_[index];
+		iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+		iNDAcq->deviceSelected();
+	}
+	if(statusManager_)
+		statusManager_.staticCast<ProxyStatusManager>()->setPlugin(acqPlugin_);
+
 	return;
 }
 
-//! \brief Called by the button signal, this starts or stops ProxyClient activity.
-void ProxyMainWindow::startStopClient()
+//! \brief This is called to confirm that the neural acquisition is running, or attempt to start it running.
+bool ProxyMainWindow::assureDeviceRunning()
 {
-	if(startStopClientButton_->text() == startServerMsg)
-		activate();
-	else
-		deActivate();
-}
-
-//! \brief This is called every 5 seconds just to confirm that the neural acquisition device hasn't failed out from under us.
-void ProxyMainWindow::checkDevStatus()
-{
-	//Is the server supposed to be running?
-	if(startStopClientButton_->text() == startServerMsg)
-		return;
-
 	//Is the device running?
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	if(!iNDAcq)
+		return false;
 	if(iNDAcq->getDeviceStatus() == NeuralDataAcqInterface::running)
-		return;
+		return true;
 	
-	//attempt to recover
+	//attempt to start/restart device
 	iNDAcq->stopDevice();
 	iNDAcq->startDevice();
 
 	//did we recover?
 	if(iNDAcq->getDeviceStatus() == NeuralDataAcqInterface::running)
-		return;
+		return true;
 
-	//stop device and server
+	//stop device
 	iNDAcq->stopDevice();
-	startStopClient();
+	//startStopClient();
 
-	//put up a message box
-	QMessageBox deviceErrorBox;
-	QString errorMsg = tr("Device \"%2\" has stopped running.  Confirm that "
-						  "all the needed hardware and software is turned "
-						  "on and started up, then restart the server.").
-						  arg(iNDAcq->device());
-	deviceErrorBox.setText(tr("Device not running"));
-	deviceErrorBox.setInformativeText(errorMsg);
-	deviceErrorBox.exec();
-	return;
+	return false;
 }
-//! \brief This is called every 5 seconds just to confirm that the server connection is still active.
-void ProxyMainWindow::checkConnectionStatus()
+//! \brief This is called to confirm that the server connection is active and reconnect if its not.
+bool ProxyMainWindow::isServerConnected()
 {
-	//Is the server supposed to be running?
-	if(startStopClientButton_->text() == startServerMsg)
-		return;
-
 	if(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection())
 	{
-		connectionStatus_->turnRed();
-		return;
+		return false;
 	}
-	connectionStatus_->turnGreen();
+	return true;
 	
 }
 
-//! \brief This is called every 5 seconds just to confirm that the proxy is in a session.
-void ProxyMainWindow::checkSessionStatus()
+//! \brief Comfirms that the proxy is in a session.
+bool ProxyMainWindow::isSessionActive()
 {
-	//Is the server supposed to be running?
-	if(startStopClientButton_->text() == startServerMsg)
-		return;
-
-	if(statusManager_.isNull() || (statusManager_->getStatus() < stopped))
+	if(statusManager_.isNull())
+		return false;
+	ComponentStatus status = statusManager_->getStatus();
+	if((status == idle) || (status == ending))
 	{
-		sessionStatus_->turnRed();
-		return;
+		return false;
 	}
-	sessionStatus_->turnGreen();
+	return true;
 }
 
-//! \brief This is called every 5 seconds just to confirm that the proxy is running.
-void ProxyMainWindow::checkRunStatus()
+void ProxyMainWindow::closeEvent(QCloseEvent *event)
 {
-	//Is the server supposed to be running?
-	if(startStopClientButton_->text() == startServerMsg)
-		return;
+	if(currState_ > WaitForSession)
+	{	//We're in a session.  Assure that the proxy should be closed.
+		
+		int	r = QMessageBox::warning(this,Picto::Names->workstationAppName,
+			tr("The proxy cannot reconnect to a session once it has been closed."
+			"  Are you sure you want to quit?"),
+			   QMessageBox::Yes|QMessageBox::No);
 
-	if(statusManager_.isNull() || (statusManager_->getStatus() <= stopped))
-	{
-		runStatus_->turnRed();
-		return;
+		if(r == QMessageBox::No)
+		{
+			return event->ignore();
+		}
 	}
-	runStatus_->turnGreen();
-	
-}
 
-//! \brief Called when the window is closed, this ends all activity and saves settings
-void ProxyMainWindow::closeEvent(QCloseEvent *ev)
-{
-	deActivate();
-
+	if(!statusManager_.isNull())
+	{
+		statusManager_->forceExit();
+	}
 	writeSettings();
-	//accept the close event
-	ev->accept();
-}
-
-//! \brief This signals to the UI that activity is detected from the server.
-void ProxyMainWindow::serverActivity()
-{
-	activityTimer_->start();
-	connectionStatus_->turnGreen();
+	event->accept();
 }
 
 void ProxyMainWindow::createStatusLights()
 {
-	readyStatus_ = new StatusLight(this,Qt::red,10);
 	connectionStatus_ = new StatusLight(this,Qt::red,10);
 	sessionStatus_ = new StatusLight(this,Qt::red,10);
 	runStatus_ = new StatusLight(this,Qt::red,10);
 
-	readyStatusLabel_ = new QLabel(tr("Ready"));
 	connectionStatusLabel_ = new QLabel(tr("Connected"));
 	sessionStatusLabel_ = new QLabel(tr("In Session"));
 	runStatusLabel_ = new QLabel(tr("Running"));
@@ -199,6 +197,7 @@ void ProxyMainWindow::createComboBox()
 
 	foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
 	{
+		qDebug(pluginsDir.absoluteFilePath(fileName).toAscii());
 		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
 		QObject *plugin = loader.instance();
 		//QString error = loader.errorString();
@@ -226,29 +225,21 @@ void ProxyMainWindow::createComboBox()
 		noPluginMsgBox.setInformativeText(errorMsg);
 		noPluginMsgBox.exec();
 
-		startStopClientButton_->setEnabled(false);
+		//startStopClientButton_->setEnabled(false);
 
 		return;
 	}
 
 	setNeuralDataAcquisitionDevice(0);
-	connect(pluginCombo_,SIGNAL(currentIndexChanged(int)),this,SLOT(setNeuralDataAcquisitionDevice(int)));
+	//connect(pluginCombo_,SIGNAL(currentIndexChanged(int)),this,SLOT(setNeuralDataAcquisitionDevice(int)));
 
 	return;
 }
 
 void ProxyMainWindow::createButtons()
 {
-	startServerMsg = tr("&Start");
-	stopServerMsg_ = tr("&Stop");
-	startStopClientButton_ = new QPushButton(startServerMsg);
-	startStopClientButton_->setDefault(true);
-
-	quitButton_ = new QPushButton(tr("&Quit"));
-	quitButton_->setDefault(false);
-
-	connect(startStopClientButton_,SIGNAL(clicked()),this,SLOT(startStopClient()));
-	connect(quitButton_,SIGNAL(clicked()),this,SLOT(close()));
+	//connect(startStopClientButton_,SIGNAL(clicked()),this,SLOT(startStopClient()));
+	//connect(quitButton_,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 void ProxyMainWindow::createLineEdits()
@@ -268,11 +259,6 @@ void ProxyMainWindow::createLayout()
 	HLayout->addWidget(lineEditNameLabel_);
 	HLayout->addWidget(lineEditName_);
 	layout_->addLayout(HLayout);
-
-	HLayout = new QHBoxLayout();
-	HLayout->addWidget(readyStatus_);
-	HLayout->addWidget(readyStatusLabel_);
-	layout_->addLayout(HLayout);
 	
 	HLayout = new QHBoxLayout();
 	HLayout->addWidget(connectionStatus_);
@@ -290,24 +276,8 @@ void ProxyMainWindow::createLayout()
 	layout_->addLayout(HLayout);
 
 	layout_->addWidget(pluginCombo_);
-	layout_->addWidget(startStopClientButton_);
-	layout_->addWidget(quitButton_);
-}
-
-void ProxyMainWindow::createTimer()
-{
-	QTimer *statusTimer = new QTimer(this);
-	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkDevStatus()));
-	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkConnectionStatus()));
-	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkSessionStatus()));
-	connect(statusTimer,SIGNAL(timeout()),this,SLOT(checkRunStatus()));
-	statusTimer->start(5000);
-
-	activityTimer_ = new QTimer();
-	activityTimer_->setInterval(2000);
-	activityTimer_->setSingleShot(true);
-	connect(activityTimer_,SIGNAL(timeout()),connectionStatus_,SLOT(turnRed()));
-
+	//layout_->addWidget(startStopClientButton_);
+	//layout_->addWidget(quitButton_);
 }
 
 /*****************************************************
@@ -350,37 +320,202 @@ QString ProxyMainWindow::name()
 }
 int ProxyMainWindow::openDevice()
 {
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
-	//start the Neural Data Acquisition Device
-	iNDAcq->startDevice();
-	if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
-	{
-		QMessageBox startErrorBox;
-		QString errorMsg = tr("%1 failed to start server.  "
-							  "Device: \"%2\" is not running.  Confirm that "
-							  "all the needed hardware and software is turned "
-							  "on and started up, then try again.").
-							  arg(Picto::Names->proxyServerAppName).
-							  arg(iNDAcq->device());
-		startErrorBox.setText(tr("Server failed to start"));
-		startErrorBox.setInformativeText(errorMsg);
-		startErrorBox.exec();
-		return 1;
-	}
-	pluginCombo_->setEnabled(false);
-	lineEditName_->setEnabled(false);
-	startStopClientButton_->setText(stopServerMsg_);
-	readyStatus_->turnGreen();
+	//NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	////start the Neural Data Acquisition Device
+	//iNDAcq->startDevice();
+	//if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
+	//{
+	//	QMessageBox startErrorBox;
+	//	QString errorMsg = tr("%1 failed to start server.  "
+	//						  "Device: \"%2\" is not running.  Confirm that "
+	//						  "all the needed hardware and software is turned "
+	//						  "on and started up, then try again.").
+	//						  arg(Picto::Names->proxyServerAppName).
+	//						  arg(iNDAcq->device());
+	//	startErrorBox.setText(tr("Server failed to start"));
+	//	startErrorBox.setInformativeText(errorMsg);
+	//	startErrorBox.exec();
+	//	return 1;
+	//}
+	//pluginCombo_->setEnabled(false);
+	//lineEditName_->setEnabled(false);
+	//startStopClientButton_->setText(stopServerMsg_);
 	statusManager_ = QSharedPointer<ComponentStatusManager>(new ProxyStatusManager(dataCommandChannel_));
-	dataCommandChannel_->addResponseHandler(QSharedPointer<Picto::ProtocolResponseHandler>(new ProxyStartResponseHandler(statusManager_,dataCommandChannel_,acqPlugin_)));
+	dataCommandChannel_->addResponseHandler(QSharedPointer<Picto::ProtocolResponseHandler>(new ProxyNewSessionResponseHandler(statusManager_,dataCommandChannel_)));
 	return 0;
 }
 int ProxyMainWindow::closeDevice()
 {
-	startStopClientButton_->setText(startServerMsg);
+	//startStopClientButton_->setText(startServerMsg);
 
-	pluginCombo_->setEnabled(true);
-	lineEditName_->setEnabled(true);
-	readyStatus_->turnRed();
+	//pluginCombo_->setEnabled(true);
+	//lineEditName_->setEnabled(true);
 	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+void ProxyMainWindow::updateState()
+{
+	updatingState_ = true;
+	ProxyState nextState = currState_;
+	switch(currState_)
+	{
+	case InitState:
+		nextState = WaitForConnect;
+		break;
+	case WaitForConnect:
+		switch(stateTrigger_)
+		{
+		case Connected:
+			nextState = WaitForSession;
+			break;
+		}
+		break;
+	case WaitForSession:
+		switch(stateTrigger_)
+		{
+		case Disconnected:
+			nextState = WaitForConnect;
+			break;
+		case StartSessionRequest:
+			nextState = WaitForDevice;
+			break;
+		}
+		break;
+	case WaitForDevice:
+		switch(stateTrigger_)
+		{
+		case SessionEnded:
+			nextState = WaitForSession;
+			break;
+		case DeviceStarted:
+			nextState = Running;
+			break;
+		}
+		break;
+	case Running:
+		switch(stateTrigger_)
+		{
+		case DeviceStopped:
+			nextState = WaitForDevice;
+			break;
+		case SessionEnded:
+			nextState = WaitForSession;
+		}
+		break;
+	}
+	stateTrigger_ = NoProxyTrigger;
+	if(nextState != currState_)
+	{
+		currState_ = nextState;
+		enterState();
+	}
+	runState();
+	if(stateTrigger_ != NoProxyTrigger)
+		endState();
+	//updateStatus();
+	updatingState_ = false;
+}
+void ProxyMainWindow::startConnecting()
+{
+	activate();
+}
+
+void ProxyMainWindow::runState()
+{
+	switch(currState_)
+	{
+	case WaitForConnect:
+		if(statusManager_)
+			statusManager_->setName(name());
+		if(!dataCommandChannel_.isNull() && dataCommandChannel_->assureConnection())
+			stateTrigger_ = Connected;
+		break;
+	case WaitForSession:
+		setNeuralDataAcquisitionDevice(pluginCombo_->currentIndex());
+		if(statusManager_)
+			statusManager_->setName(name());
+		if(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection())
+			stateTrigger_ = Disconnected;
+		if(isSessionActive())
+			stateTrigger_ = StartSessionRequest;
+		break;
+	case WaitForDevice:
+		if(assureDeviceRunning())
+			stateTrigger_ = DeviceStarted;
+		if(!isSessionActive())
+			stateTrigger_ = SessionEnded;
+		break;
+	case Running:
+		if(!assureDeviceRunning())
+			stateTrigger_ = DeviceStopped;
+		if(!isSessionActive())
+			stateTrigger_ = SessionEnded;
+		break;
+	}
+	if(currState_ != WaitForConnect)
+	{
+		if(isServerConnected())
+			connectionStatus_->turnGreen();
+		else
+			connectionStatus_->turnRed();
+	}
+}
+
+void ProxyMainWindow::endState()
+{
+	switch(currState_)
+	{
+	case WaitForConnect:
+		break;
+	case WaitForSession:
+		break;
+	case WaitForDevice:
+		break;
+	case Running:
+		break;
+	}
+}
+
+void ProxyMainWindow::enterState()
+{
+	switch(currState_)
+	{
+	case WaitForConnect:
+		lineEditName_->setEnabled(true);
+		runStatus_->turnRed();
+		sessionStatus_->turnRed();
+		pluginCombo_->setEnabled(true);
+		qDebug("Entering WaitForConnect");
+		break;
+	case WaitForSession:
+		lineEditName_->setEnabled(true);
+		runStatus_->turnRed();
+		sessionStatus_->turnRed();
+		pluginCombo_->setEnabled(true);
+		qDebug("Entering WaitForSession");
+		break;
+	case WaitForDevice:
+		lineEditName_->setEnabled(false);
+		runStatus_->turnRed();
+		sessionStatus_->turnGreen();
+		pluginCombo_->setEnabled(true);
+		qDebug("Entering WaitForDevice");
+		break;
+	case Running:
+		lineEditName_->setEnabled(false);
+		runStatus_->turnGreen();
+		sessionStatus_->turnGreen();
+		pluginCombo_->setEnabled(false);
+		qDebug("Entering Running");
+		break;
+	}
 }

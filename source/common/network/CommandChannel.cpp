@@ -160,7 +160,7 @@ bool CommandChannel::processResponses(int timeoutMs)
 			remainingMs = timeoutMs - timeoutTimer.elapsed();
 			if(!loopForever && QDateTime::currentDateTime().addMSecs(remainingMs) < nextPendingMessageTime)
 				keepLooping = false;
-		}while(loopForever || ((pendingResponses() > 0) && (timeoutTimer.elapsed() < timeoutMs) && keepLooping));
+		}while((loopForever || ((pendingResponses() > 0) && (timeoutTimer.elapsed() < timeoutMs) && keepLooping)) && !(statusManager_.toStrongRef() && statusManager_.toStrongRef()->exitTriggered()) );
 		if(pendingResponses() == 0)
 			return true;
 		return false;

@@ -413,6 +413,8 @@
    <file alias="_proxy_list_command_handler_8h-source.html">../../../output/documentation/main/html/_proxy_list_command_handler_8h-source.html</file>
    <file alias="_proxy_load_exp_response_handler_8cpp-source.html">../../../output/documentation/main/html/_proxy_load_exp_response_handler_8cpp-source.html</file>
    <file alias="_proxy_load_exp_response_handler_8h-source.html">../../../output/documentation/main/html/_proxy_load_exp_response_handler_8h-source.html</file>
+   <file alias="_proxy_new_session_response_handler_8cpp-source.html">../../../output/documentation/main/html/_proxy_new_session_response_handler_8cpp-source.html</file>
+   <file alias="_proxy_new_session_response_handler_8h-source.html">../../../output/documentation/main/html/_proxy_new_session_response_handler_8h-source.html</file>
    <file alias="_proxy_pause_response_handler_8cpp-source.html">../../../output/documentation/main/html/_proxy_pause_response_handler_8cpp-source.html</file>
    <file alias="_proxy_pause_response_handler_8h-source.html">../../../output/documentation/main/html/_proxy_pause_response_handler_8h-source.html</file>
    <file alias="_proxy_resume_response_handler_8cpp-source.html">../../../output/documentation/main/html/_proxy_resume_response_handler_8cpp-source.html</file>
@@ -1697,6 +1699,9 @@
    <file alias="struct_proxy_load_exp_response_handler-members.html">../../../output/documentation/main/html/struct_proxy_load_exp_response_handler-members.html</file>
    <file alias="struct_proxy_load_exp_response_handler.html">../../../output/documentation/main/html/struct_proxy_load_exp_response_handler.html</file>
    <file alias="struct_proxy_load_exp_response_handler.png">../../../output/documentation/main/html/struct_proxy_load_exp_response_handler.png</file>
+   <file alias="struct_proxy_new_session_response_handler-members.html">../../../output/documentation/main/html/struct_proxy_new_session_response_handler-members.html</file>
+   <file alias="struct_proxy_new_session_response_handler.html">../../../output/documentation/main/html/struct_proxy_new_session_response_handler.html</file>
+   <file alias="struct_proxy_new_session_response_handler.png">../../../output/documentation/main/html/struct_proxy_new_session_response_handler.png</file>
    <file alias="struct_proxy_pause_response_handler-members.html">../../../output/documentation/main/html/struct_proxy_pause_response_handler-members.html</file>
    <file alias="struct_proxy_pause_response_handler.html">../../../output/documentation/main/html/struct_proxy_pause_response_handler.html</file>
    <file alias="struct_proxy_pause_response_handler.png">../../../output/documentation/main/html/struct_proxy_pause_response_handler.png</file>

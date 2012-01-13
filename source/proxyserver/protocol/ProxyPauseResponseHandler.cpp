@@ -7,4 +7,7 @@ PauseResponseHandler(statusManager)
 {}
 
 bool ProxyPauseResponseHandler::processResponse(QString directive)
-{return true;}
+{
+	PauseResponseHandler::processResponse(directive);
+	return true;
+}

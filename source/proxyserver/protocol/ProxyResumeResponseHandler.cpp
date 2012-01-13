@@ -7,4 +7,7 @@ ResumeResponseHandler(statusManager)
 {}
 
 bool ProxyResumeResponseHandler::processResponse(QString directive)
-{return true;}
+{
+	ResumeResponseHandler::processResponse(directive);
+	return true;
+}

@@ -23,7 +23,9 @@ class TdtPlugin : public QObject, public NeuralDataAcqInterface
     Q_INTERFACES(NeuralDataAcqInterface)
 
 public:
+	TdtPlugin();
     QString device() const;
+	virtual void deviceSelected();
 	NeuralDataAcqInterface::deviceStatus startDevice();
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();

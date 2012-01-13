@@ -7,4 +7,7 @@ LoadExpResponseHandler(statusManager)
 {}
 
 bool ProxyLoadExpResponseHandler::processResponse(QString directive)
-{return true;}
+{
+	LoadExpResponseHandler::processResponse(directive);
+	return true;
+}

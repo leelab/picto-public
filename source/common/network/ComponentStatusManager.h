@@ -30,6 +30,8 @@ public:
 	void update(int timeoutMs);
 	ComponentStatus getStatus();
 	QString getStatusAsString();
+	void forceExit(){forceExit_ = true;};
+	bool exitTriggered(){return forceExit_;};
 protected:
 	virtual void newSession() = 0;
 	virtual void doServerUpdate() = 0;
@@ -40,5 +42,6 @@ private:
 	static QMap<ComponentStatus,QString> statusNameDictionary_;
 	QDateTime lastUpdateTime_;
 	QUuid sessionID_;
+	bool forceExit_;
 };
 #endif

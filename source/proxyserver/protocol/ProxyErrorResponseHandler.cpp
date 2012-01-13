@@ -7,4 +7,7 @@ ErrorResponseHandler(statusManager)
 {}
 
 bool ProxyErrorResponseHandler::processResponse(QString directive)
-{return true;}
+{
+	ErrorResponseHandler::processResponse(directive);
+	return true;
+}

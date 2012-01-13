@@ -30,21 +30,47 @@ public:
 	ProxyMainWindow();
 
 private slots:
+
+	void updateState();
+	void enterState();
+	void runState();
+	void endState();
+	void startConnecting();
+
 	void setNeuralDataAcquisitionDevice(int index);
-	void startStopClient();
-	void checkDevStatus();
-	void checkConnectionStatus();
-	void checkSessionStatus();
-	void checkRunStatus();
+	//void startStopClient();
+	bool assureDeviceRunning();
+
+	bool isServerConnected();
+	bool isSessionActive();
 	void closeEvent(QCloseEvent *event);
-	void serverActivity();
+
 private:
+	enum ProxyState
+	{
+		InitState,
+		WaitForConnect,
+		WaitForSession,
+		WaitForDevice,
+		Running
+	} currState_;
+
+	enum ProxyTrigger
+	{
+		NoProxyTrigger,
+		Connected,
+		Disconnected,
+		StartSessionRequest,
+		DeviceStarted,
+		DeviceStopped,
+		SessionEnded
+	} stateTrigger_;
+
 	void createStatusLights();
 	void createComboBox();
 	void createButtons();
 	void createLineEdits();
 	void createLayout();
-	void createTimer();
 
 	void readSettings();
 	void writeSettings();
@@ -54,21 +80,25 @@ private:
 	virtual int openDevice();
 	virtual int closeDevice();	//Should make any of the calls below that are running end
 
-	StatusLight *readyStatus_,*connectionStatus_,*sessionStatus_,*runStatus_;
-	QLabel *readyStatusLabel_, *connectionStatusLabel_, *sessionStatusLabel_, *runStatusLabel_;
+	StatusLight *connectionStatus_,*sessionStatus_,*runStatus_;
+	QLabel *connectionStatusLabel_, *sessionStatusLabel_, *runStatusLabel_;
 	QComboBox *pluginCombo_;
-	QPushButton *startStopClientButton_;
-	QPushButton *quitButton_;
+	//QPushButton *startStopClientButton_;
+	//QPushButton *quitButton_;
 	QVBoxLayout *layout_;
 	QLabel *lineEditNameLabel_;
 	QLineEdit *lineEditName_;
 
-	QTimer *activityTimer_;
+	//QTimer *activityTimer_;
 
 	QObject *acqPlugin_;
 	QList<QObject*> acqPluginList_;
 
-	QString startServerMsg, stopServerMsg_;
+	QTimer* stateUpdateTimer_;
+
+	bool updatingState_;
+
+	//QString startServerMsg, stopServerMsg_;
 
 	int port_;
 };

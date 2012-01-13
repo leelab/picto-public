@@ -4,7 +4,8 @@ using namespace Picto;
 
 ProxyStatusManager::ProxyStatusManager(QSharedPointer<CommandChannel> commandChannel):
 ComponentStatusManager(),
-commandChannel_(commandChannel)
+commandChannel_(commandChannel),
+acqPlugin_(NULL)
 {}
 void ProxyStatusManager::newSession()
 {
