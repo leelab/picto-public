@@ -13,9 +13,13 @@
 class SimpleLFPSource : public SimpleEventSource
 {
 public:
-	SimpleLFPSource(double secPerEvent, double secPerSample);
+	SimpleLFPSource(double secPerEvent, double secPerSample, int channel);
+	virtual ~SimpleLFPSource();
 	virtual QSharedPointer<Picto::DataUnit> buildEvent(double time);
 private:
-	double latestTime_;
+	double nextTime_;
+	int channel_;
+	double* vals_;
+	int sampsPerUnit_;
 };
 #endif

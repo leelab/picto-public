@@ -31,6 +31,8 @@ public:
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
+private:
+	QVector<QSharedPointer<Picto::LFPDataUnitPackage>> lfpData_;
 };
 
 

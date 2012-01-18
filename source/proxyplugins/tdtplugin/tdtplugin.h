@@ -65,6 +65,7 @@ private:
 	wchar_t *szServerName;
 	wchar_t *szTankName;
 	wchar_t *szBlockName;
+	QVector<QSharedPointer<Picto::LFPDataUnitPackage>> lfpData_;
 
 
 

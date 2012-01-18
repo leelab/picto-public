@@ -646,102 +646,32 @@ void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> d
 //! \brief inserts an LFP data point in the cache database
 void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 {
-	bool addedColumns;
 	QSqlDatabase cacheDb = getCacheDb();
 	//Get Fitted Times
-	QStringList timestamps = data->getTimes().split(" ",QString::SkipEmptyParts);
-	QVector<QString> potentialsVec = data->getPotentials();
-	QVector<QStringList> potentials;
-	for(int i=0;i<potentialsVec.size();i++)
-		potentials.push_back(potentialsVec[i].split(" ",QString::SkipEmptyParts));
-	QVariantList timestampList;
-	QVariantList fittedTimeList;
-	QVariantList dataIDList;
-	QVariantList correlationList;
-	QVector<QVariantList> potentialLists;
+	//QStringList timestamps = data->getTimes().split(" ",QString::SkipEmptyParts);
+	QString neuralTimestamp = data->getTimestamp();
+	QString potentials = data->getPotentials();
 	double correlation = alignmentTool_->getCorrelationCoefficient();
+	double resolution = data->getResolution();
 	qulonglong dataID = data->getDataID();
-	foreach(QString time,timestamps)
-	{
-		timestampList << time;
-		fittedTimeList << alignmentTool_->convertToBehavioralTimebase(time.toDouble());
-		correlationList << correlation;
-		dataIDList << dataID;
-	}
-	for(int i=0;i<potentials.size();i++)
-	{
-		potentialLists.push_back(QVariantList());
-		foreach(QString potent,potentials[i])
-		{
-			potentialLists[i] << potent;
-		}
-	}
-	QString channels;
-	QString chanVals;
-	for(int i=0;i<potentialLists.size();i++)
-	{
-		channels.append(",ch"+QString::number(i).toAscii());
-		chanVals.append(",?");
-	}
-
-
-
-
-
-	//Check if all the necessary rows are there
-	//This records is used to check if our columns already exists
-	QSqlRecord cacheLFPRecord = cacheDb.record("lfp");
-	if(cacheLFPRecord.count() != 5+potentialsVec.size())
-	{
-		//If we're here then we need to add columns to our table (cache and potentially disk)
-		QSqlRecord diskLFPRecord = cacheDb.record("diskdb.lfp");
-		QSqlQuery cacheAlterQ(cacheDb);
-		foreach(QString channel, channels.split(",",QString::SkipEmptyParts))
-		{
-			int cacheIndex = cacheLFPRecord.indexOf(channel);
-			if(cacheIndex > -1)
-				continue;//This column is already in the cache database.
-			int diskIndex = diskLFPRecord.indexOf(channel);
-			if(diskIndex == -1)	// The column may also be in the disk database if we reloaded a dropped session, so we need to check.
-				executeWriteQuery(&cacheAlterQ,QString("ALTER TABLE diskdb.lfp ADD COLUMN %1 INTEGER").arg(channel));
-			executeWriteQuery(&cacheAlterQ,QString("ALTER TABLE lfp ADD COLUMN %1 INTEGER").arg(channel));
-			//Now that we added the column to the tables, make sure its added in our lists.
-			tableColumns_["lfp"].append(",").append(channel).append(" ");
-			tableColumnTypes_["lfp"].append(",").append("INTEGER ");
-			addedColumns = true;
-			qDebug(QString("Added %1 column to lfp database").arg(channel).toAscii());
-		}
-	}
+	double fittedTimestamp = alignmentTool_->convertToBehavioralTimebase(neuralTimestamp.toDouble());
+	int channel = data->getChannel();
 
 	//Now that the tables are ready.  Do the insertion.
 	QSqlQuery query(cacheDb);
-	QString queryString = QString("INSERT INTO lfp "
-		"(dataid,correlation,timestamp,fittedtime%1) VALUES (?,?,?,?%2)").arg(channels).arg(chanVals);
+	query.prepare("INSERT INTO lfp "
+		"(dataid,timestamp,fittedtime,correlation,resolution,channel,data) VALUES (:dataid,:timestamp,:fittedtime,:correlation,:resolution,:channel,:data)");
 
-	int rows = timestampList.size();
-	//QMutexLocker locker(databaseWriteMutex_.data());
-	QTime timer;
-	timer.start();
-	//executeWriteQuery(&query,"BEGIN TRANSACTION",);
-	query.prepare(queryString.toAscii());
-	query.addBindValue(dataIDList);
-	query.addBindValue(correlationList);
-	query.addBindValue(timestampList);
-	query.addBindValue(fittedTimeList);
-	foreach(QVariantList pots,potentialLists)
-	{
-		query.addBindValue(pots);
-	}
-	//DONT - I REPEAT - DONT PUT A STRING LIST INTO A QUERY BIND VALUE.  USE A VARIANT LIST.  IF YOU
-	//USE A STRING LIST IT WILL TAKE SO MUCH LONGER THAT YOU WON'T EVEN HAVE THE PATIENCE TO TEST TO 
-	//SEE HOW LONG IT DOES TAKE
-	bool success = query.execBatch();
+	query.bindValue(":dataid",dataID);
+	query.bindValue(":timestamp",neuralTimestamp);
+	query.bindValue(":fittedtime",fittedTimestamp);
+	query.bindValue(":correlation",correlation);
+	query.bindValue(":resolution",resolution);
+	query.bindValue(":channel",channel);
+	query.bindValue(":data",potentials);
+
+	executeWriteQuery(&query);
 	query.finish();
-	Q_ASSERT_X(success,"SessionInfo::insertLFPData","Error: "+query.lastError().text().toAscii()+"\nPrepared query was: "+queryString.toAscii());
-	//executeWriteQuery(&query,"END TRANSACTION");
-	//locker.unlock();
-	if(rows > 0)
-		qDebug("Time per insert: " + QString::number(double(timer.elapsed())/(double(rows)*1000.0)).toAscii() + " seconds");
 }
 
 //! \brief inserts a state change record in the session database
@@ -913,8 +843,8 @@ void SessionInfo::InitializeVariables()
 	tableDataProviders_["neuralalignevents"] = "PROXY";
 
 	tables_.push_back("lfp");
-	tableColumns_["lfp"] = " dataid,correlation,timestamp,fittedtime ";
-	tableColumnTypes_["lfp"] = " INTEGER,REAL,REAL UNIQUE ON CONFLICT IGNORE,REAL ";
+	tableColumns_["lfp"] = " dataid,timestamp,fittedtime,correlation,resolution,channel,data ";
+	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,REAL,INTEGER,TEXT ";
 	tableDataProviders_["lfp"] = "PROXY";
 	
 	tables_.push_back("behavioralalignevents");

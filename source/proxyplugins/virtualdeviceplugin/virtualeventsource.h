@@ -28,6 +28,7 @@ struct VirtualEvent
 class VirtualEventSource
 {
 public:
+	virtual ~VirtualEventSource(){};
 	virtual bool start(double time);
 	virtual bool stop();
 	virtual float samplingRate() = 0;

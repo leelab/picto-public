@@ -154,7 +154,6 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	QList<QSharedPointer<Picto::DataUnit>> returnList;
 	QSharedPointer<Picto::NeuralDataUnit> neuralData;
 	QSharedPointer<Picto::AlignmentDataUnit> alignData;
-	QSharedPointer<Picto::LFPDataUnitPackage> lfpData;
 	if(!startCOM())
 	{
 		return returnList;
@@ -277,10 +276,10 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 		double secPerSamp(1.0/sampPerSec);
 		int numChans;
 		int maxChan;
-		double* potentials;
+		//double* potentials;
 		int* chans;
 		double currTime;
-		lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
+		//lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 
 		for(int i=0; i<numLFP; i=i+numChans)
 		{
@@ -306,9 +305,14 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 				if(chans[arrayInd]>maxChan)
 					maxChan = chans[arrayInd];
 			}
-			//Create potentials array.  Use maxChan+1 so that each channel number can be placed in its index.  ie. If maxchan is 6 it needs to go 
+			////Create potentials array.  Use maxChan+1 so that each channel number can be placed in its index.  ie. If maxchan is 6 it needs to go 
+			////into index 6 which is the 7th index.
+			//potentials = new double[maxChan+1];
+
+			//Resize lfpData_ such that each channel number can be placed in its index.  ie. If maxchan is 6 it needs to go
 			//into index 6 which is the 7th index.
-			potentials = new double[maxChan+1];
+			if(lfpData_.size() < maxChan+1)
+				lfpData_.resize(maxChan+1);
 			
 			//Loop through the list of "sec per sample" separated enties for all channels that start with the same timestamp.
 			//We assume here that all entries have the same "sec per sample" value, which is currently a valid assumption for the
@@ -317,31 +321,50 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 			{
 				for(int arrayInd = 0;arrayInd<numChans;arrayInd++)
 				{
-					//Initialize potentials array to have zero values
-					for(int n=0;n<maxChan;n++)
+					////Initialize potentials array to have zero values
+					//for(int n=0;n<maxChan;n++)
+					//{
+					//	potentials[n] = 0;
+					//}
+					////If the lfpDataStore object is getting too big, add it to the list and make a new one.
+					//if(lfpData->numSamples() >= 10000)
+					//{
+					//	returnList.push_back(lfpData);
+					//	lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
+					//}
+					
+					//If the current channel's lfppackage is big enough.  (ie. on the next entry it will include over 500 ms of data)
+					//Add it to the list.
+					if(!lfpData_[chans[arrayInd]].isNull() 
+						&& (lfpData_[chans[arrayInd]]->numSamples()*lfpData_[chans[arrayInd]]->getResolution()) >= 0.5)
 					{
-						potentials[n] = 0;
+						returnList.push_back(lfpData_[chans[arrayInd]]);
+						lfpData_[chans[arrayInd]].clear();
 					}
-					//If the lfpDataStore object is getting too big, add it to the list and make a new one.
-					if(lfpData->numSamples() >= 10000)
+					
+					//If the current channel's index in lfpData_ has no lfppackage, make a new one.
+					if(lfpData_[chans[arrayInd]].isNull())
 					{
-						returnList.push_back(lfpData);
-						lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
+						lfpData_[chans[arrayInd]] = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
+						lfpData_[chans[arrayInd]]->setChannel(chans[arrayInd]);
+						lfpData_[chans[arrayInd]]->setResolution(secPerSamp);
+						lfpData_[chans[arrayInd]]->setTimestamp(currTime);
 					}
-					potentials[chans[arrayInd]] = ((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j];
-					lfpData->addData(currTime,potentials,numChans);
+					//potentials[chans[arrayInd]] = ((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j];
+					lfpData_[chans[arrayInd]]->addDataAtNextIndex(((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j]);
+					//lfpData->addData(currTime,potentials,numChans);
 				}
 				currTime += secPerSamp;
 			}
 			//Get rid of the dynamically constructed arrays
-			delete potentials;
+			//delete potentials;
 			delete chans;
 			if(currTime > lastLFPTimestamp)
 				lastLFPTimestamp = currTime;
 		}
-		//Add the last LFPDataUnitPackage to the return list
-		if(lfpData->numSamples() > 0)
-			returnList.push_back(lfpData);
+		////Add the last LFPDataUnitPackage to the return list
+		//if(lfpData->numSamples() > 0)
+		//	returnList.push_back(lfpData);
 	}
 
 

@@ -53,16 +53,20 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+	void setChannel(int channel){channel_ = channel;};
 	void setCorrelation(double correlation){correlation_ = correlation;}
-	void addData(double timestamp, double* potentials, int numVals);
-	void addData(double timestamp, double* potentials, int numVals, double fittedtime);
-	void addDataByBlock(lfpDataBlock* block);
+	void setTimestamp(double timestamp){timestamp_ = QString::number(timestamp,'e',6);};
+	void setResolution(double resolution){resolution_ = resolution;};
+	void addData(double* potentials, int numVals, int timeIndex);
+	void addData(double potential,int timeIndex);
+	void addDataAtNextIndex(double potential);
 	int numSamples(){return numSamples_;};
 
 	double getCorrelation(){return correlation_;}
-	QString getTimes(){return times_;};
-	QString getFittedTimes(){return fittedTimes_;};
-	QVector<QString> getPotentials(){return potentials_;};
+	QString getTimestamp(){return timestamp_;};
+	double getResolution(){return resolution_;};
+	QString getPotentials(){return potentials_;};
+	int getChannel(){return channel_;};
 
 protected:
 	virtual void postDeserialize();
@@ -71,9 +75,9 @@ protected:
 private:
 	int channel_;
 	double correlation_;
-	QString times_;
-	QString fittedTimes_;
-	QVector<QString> potentials_;
+	QString timestamp_;
+	double resolution_;
+	QString potentials_;
 	int numSamples_;
 
 };
