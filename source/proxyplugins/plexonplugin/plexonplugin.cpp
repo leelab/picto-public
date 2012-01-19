@@ -85,7 +85,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 		//double lastLFPTimestamp = -1;
 		int serverDropped,mmfDropped;
 		//Joey, before we were using PL_GetWaveFormStructures but the lfp waveforms
-		//were longer than the regular PL_WaveLong's allowed
+		//could be longer than the regular PL_WaveLong's allowed.  Now were using the longWaveForm structure.
 		PL_GetLongWaveFormStructures(&NumMAPEvents, pServerEventBuffer,&serverDropped,&mmfDropped);
 		QSharedPointer<Picto::lfpDataBlock> dataBlock;
 		lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
@@ -102,7 +102,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
 				neuralData->setTimestamp(timestampSec);
 				neuralData->setChannel(pServerEventBuffer[MAPEvent].Channel);
-				char chUnit = 'a'+pServerEventBuffer[MAPEvent].Unit-1;
+				int chUnit = pServerEventBuffer[MAPEvent].Unit;
 				neuralData->setUnit(chUnit);
 
 				QSharedPointer<QList<int>> waveform(new QList<int>);
