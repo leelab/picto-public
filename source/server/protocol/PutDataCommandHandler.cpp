@@ -28,8 +28,8 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 {
 	int messageIndex=0;
 	//qDebug((QString("PUTDATA  handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
-	QTime commandProcessingTimer;
-	commandProcessingTimer.start();
+	//QTime commandProcessingTimer;
+	//commandProcessingTimer.start();
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
 
@@ -174,8 +174,8 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 		xmlReader->readNext();
 	}
-	if(sourceType == "PROXY")
-		qDebug("Proxy Total  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
+	//if(sourceType == "PROXY")
+	//	qDebug("Proxy Total  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
 	QString directive = sessionInfo->pendingDirective(sourceID);
 	if(directive.isEmpty())
 	{

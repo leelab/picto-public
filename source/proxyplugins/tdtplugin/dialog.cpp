@@ -7,9 +7,9 @@ Dialog::Dialog(QWidget *parent) :
   QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	//set up the dialog box
-	serverLine = new QLineEdit(tr("local"));
-	tankLine = new QLineEdit("Quincy_OFC");
-	blockLine = new QLineEdit("Block-225");
+	serverLine = new QLineEdit(tr("tdt405"));
+	tankLine = new QLineEdit("Uba_ACC");
+	blockLine = new QLineEdit("Uba_091411_1");
 
 	okButton = new QPushButton(tr("OK"));
 	okButton->setDefault(true);

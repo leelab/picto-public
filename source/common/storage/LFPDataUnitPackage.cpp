@@ -1,15 +1,16 @@
 #include "LFPDataUnitPackage.h"
 #include "../memleakdetect.h"
 
-#define LFPDECPLACES 6
 using namespace Picto;
 LFPDataUnitPackage::LFPDataUnitPackage()
 {
 	channel_ = -1;
 	correlation_ = 0;
 	timestamp_ = QString::number(0,'e',6);;
+	fittedTimestamp_ = QString::number(0,'e',6);;
 	potentials_.clear();
 	numSamples_ = 0;
+	potArray_ = NULL;
 }
 
 /*! \brief Turns the FrameDataUnitPackage into an XML fragment
@@ -23,9 +24,10 @@ bool LFPDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 	xmlStreamWriter->writeStartElement("LFPDataUnitPackage");
 	xmlStreamWriter->writeAttribute("ch",QString("%1").arg(channel_));
 	xmlStreamWriter->writeAttribute("timestamp",QString("%1").arg(timestamp_));
+	xmlStreamWriter->writeAttribute("ftimestamp",QString("%1").arg(fittedTimestamp_));
 	xmlStreamWriter->writeAttribute("correlation",QString("%1").arg(correlation_));
 	xmlStreamWriter->writeAttribute("resolution",QString("%1").arg(resolution_,13,'e',6));
-	xmlStreamWriter->writeAttribute("pots",potentials_);
+	xmlStreamWriter->writeAttribute("pots",getPotentials());
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
@@ -72,6 +74,16 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 				return false;
 			}
 
+			if(xmlStreamReader->attributes().hasAttribute("ftimestamp"))
+			{
+				fittedTimestamp_ = xmlStreamReader->attributes().value("ftimestamp").toString();
+			}
+			else
+			{
+				addError("LFPDataUnitPackage","LFPDataUnitPackage missing ftimestamp (fitted timestamp) attribute",xmlStreamReader);
+				return false;
+			}
+
 			if(xmlStreamReader->attributes().hasAttribute("correlation"))
 			{
 				correlation_ = xmlStreamReader->attributes().value("correlation").toString().toDouble();
@@ -94,7 +106,8 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 
 			if(xmlStreamReader->attributes().hasAttribute("pots"))
 			{
-				potentials_ = xmlStreamReader->attributes().value("pots").toString();
+				potentials_ = xmlStreamReader->attributes().value("pots").toString().split(" ",QString::SkipEmptyParts);
+				numSamples_ = potentials_.size();
 			}
 			else
 			{
@@ -121,60 +134,62 @@ bool LFPDataUnitPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
-void LFPDataUnitPackage::addData(double* potentials, int numVals, int timeIndex)
+void LFPDataUnitPackage::appendData(const float* adPotentialReadings, int numVals)
 {
 	QString newVals;
 	for(int i=0;i<numVals;i++)
 	{
-		newVals.append(QString("%1 ").arg(potentials[i],7+LFPDECPLACES,'e',LFPDECPLACES));
+		potentials_.push_back(QString("%1 ").arg(adPotentialReadings[i]));
 	}
-	potentials_.replace(timeIndex*(8+LFPDECPLACES),newVals.length(),newVals);	//8+LFPDECPLACES=sign+first digit + decimal + LFPDECPLACES decimal places + "e+??" + space
-	numSamples_ = potentials_.length()/(8+LFPDECPLACES);
+	numSamples_ = potentials_.length();
 	Q_ASSERT_X(numSamples_ <= 10000,"LFPDataUnitPackage::addData","No more than 10000 lfp samples should be stored in a lfpdatastore");
 }
-void LFPDataUnitPackage::addData(double potential,int timeIndex)
+void LFPDataUnitPackage::appendData(float adPotentialReading)
 {
-	addData(&potential,1,timeIndex);
+	appendData(&adPotentialReading,1);
 }
-void LFPDataUnitPackage::addDataAtNextIndex(double potential)
+
+QByteArray LFPDataUnitPackage::getPotentialsAsByteArray()
 {
-	addData(potential,numSamples());
+	float* pots = new float[potentials_.size()];
+	for(int i=0;i<potentials_.size();i++)
+	{
+		pots[i] = potentials_[i].toFloat();
+	}
+	//Note: We must create the byte array with the constructor (not setRawData of fromRawData)
+	//So that we can then delete the pots array without problems.
+	QByteArray returnVal(reinterpret_cast<const char*>(pots),potentials_.size()*sizeof(float));
+	delete[] pots;
+	return returnVal;
 }
-//void LFPDataUnitPackage::addDataByBlock(lfpDataBlock* block)
-//{
-//	if(!block->data.size())
-//		return;
-//	QMap<int,QList<double>::Iterator> iters;
-//	int maxChan = -1;
-//	for(QMap<int,QList<double>>::iterator iter = block->data.begin();iter!=block->data.end();iter++)
-//	{
-//		iters[iter.key()] = iter.value().begin();
-//		if(iter.key() > maxChan)
-//			maxChan = iter.key();
-//	}
-//	double *data = new double[maxChan+1];
-//	bool done = false;
-//	double timestamp = block->timestamp_;
-//	while(!done)
-//	{
-//		for(int i=0;i<maxChan+1;i++)
-//		{
-//			if(iters.contains(i))
-//			{
-//				data[i] = (*(iters[i]));
-//				iters[i]++;
-//				if(iters[i] == block->data[i].end())
-//					done = true;
-//			}
-//			else
-//				data[i] = 0;
-//		}
-//		addData(timestamp,data,maxChan+1);
-//		timestamp += block->timePerSample_;
-//	}
-//	delete[] data;
-//	
-//
-//}
+
+QVector<double> LFPDataUnitPackage::getPotentialsAsDoubleVec()
+{
+	QVector<double> returnVal;
+	foreach(QString potential,potentials_)
+	{
+		returnVal.push_back(potential.toDouble());
+	}
+	return returnVal;
+}
+
+QVector<double> LFPDataUnitPackage::getFittedTimesAsDoubleVec()
+{
+	QVector<double> returnVal;
+	double dTimestamp = getFittedTimestamp().toDouble();
+	double resolution = getResolution();
+	for(int i=0;i<numSamples();i++)
+	{
+		returnVal.push_back(dTimestamp+(i*resolution));
+	}
+	return returnVal;
+}
+
+void LFPDataUnitPackage::setPotentialsFromByteArray(QByteArray potentials)
+{
+	const float* pots = reinterpret_cast<const float*>(potentials.constData());
+	potentials.clear();
+	appendData(pots,potentials.size()/sizeof(float));
+}
 
 

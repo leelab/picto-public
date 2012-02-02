@@ -3,7 +3,7 @@
 #include "../../common/memleakdetect.h"
 
 SimpleMarkSource::SimpleMarkSource(double secPerEvent, double secPerSample)
-:SimpleEventSource(secPerEvent,secPerSample)
+:SimpleEventSource(secPerEvent,secPerSample,.001)
 {
 	currEventCode = 0;
 }

@@ -137,7 +137,9 @@ float TdtPlugin::samplingRate()
 	int numSpikeSamples;
 
 	//Read spike samples
-	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,0.0,0.0,"All");
+	//NOTE: The name of this event stream was changed somewhere along the line from "Snip" to "eNeu".  To read some of Hiroshi's old data, you
+	//may need to change it back to Snip
+	numSpikeSamples = tdtTank->ReadEventsV(1000000,"eNeu",0,0,0.0,0.0,"All");
 	
 	_variant_t spikeSampleFrequencyArray;
 
@@ -168,13 +170,14 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	}
 
 	int numSpikeSamples;
-	double readUntilTime = 0.0;
+	//double readUntilTime = 0.0;
 	QVector<SpikeDetails> spikeList;
 	QVector<EventDetails> eventList;
 
 	//Read spike samples
-	numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,lastTimestamp,0.0,"ALL");
-	//numSpikeSamples = tdtTank->ReadEventsV(1000000,"Snip",0,0,0.0,0.0,"All");
+	//NOTE: The name of this event stream was changed somewhere along the line from "Snip" to "eNeu".  To read some of Hiroshi's old data, you
+	//may need to change it back to Snip
+	numSpikeSamples = tdtTank->ReadEventsV(1000000,"eNeu",0,0,lastSpikeTimestamp_,0.0,"ALL");
 
 	//This is really only used in simulations where we are pulling data from a tank that
 	//is already full.  We do this to avoid taking forever to respond.
@@ -205,23 +208,29 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 		spikeDetails.timeStamp = ((double *) spikeTimestampArray.parray->pvData)[i];
 		for(unsigned int j=0;j<spikeSampleArray.parray->rgsabound[1].cElements;j++)
 		{
-			double spikeVoltage = ((float *) spikeSampleArray.parray->pvData)[i*spikeSampleArray.parray->rgsabound[1].cElements+j];
+			float spikeVoltage = ((float *) spikeSampleArray.parray->pvData)[i*spikeSampleArray.parray->rgsabound[1].cElements+j];
 
 			spikeDetails.sampleWaveform.append(spikeVoltage);
 		}
 		spikeList.append(spikeDetails);
 	}
-	if(numSpikeSamples == 1000)
-		readUntilTime = spikeList.last().timeStamp;
-	else
-		readUntilTime = 0.0;
+	if(!spikeList.isEmpty())
+		lastSpikeTimestamp_ = spikeList.last().timeStamp;
+	//if(numSpikeSamples >= 1000)
+	//	readUntilTime = spikeList.last().timeStamp;
+	//else
+	//	readUntilTime = 0.0;
 
 
 
 	//Read event codes
 	int numEvents;
-	numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,lastTimestamp,readUntilTime,"All");
-	//numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,0.0,lastSpikeTimestamp,"All");
+	numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,lastEventTimestamp_,0.0,"All");
+	
+	//This is really only used in simulations where we are pulling data from a tank that
+	//is already full.  We do this to avoid taking forever to respond.
+	if(numEvents >1000)
+		numEvents = 1000;
 
 	_variant_t eventCodeArray, eventTimestampArray;
 
@@ -242,6 +251,8 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 
 		eventList.append(eventDetails);
 	}
+	if(!eventList.isEmpty())
+		lastEventTimestamp_ = eventList.last().timeStamp;
 
 
 
@@ -253,11 +264,13 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 
 	//Read lfp codes
 	int numLFP;
-	numLFP = tdtTank->ReadEventsV(1000000,"LDec",0,0,lastTimestamp,readUntilTime,"All");
-	//numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,0.0,lastSpikeTimestamp,"All");
+	numLFP = tdtTank->ReadEventsV(1000000,"LDec",0,0,lastLFPTimestamp_,0.0,"All");
+	//This is really only used in simulations where we are pulling data from a tank that
+	//is already full.  We do this to avoid taking forever to respond.
+	if(numLFP >1000)
+		numLFP = 1000;
 
 	_variant_t lfpSampleArray, lfpChannelArray, lfpTimestampArray, lfpFreqArray;
-	double lastLFPTimestamp = lastTimestamp;
 	if(numLFP > 0)
 	{
 		lfpSampleArray = tdtTank->ParseEvV(0,numLFP);
@@ -351,7 +364,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 						lfpData_[chans[arrayInd]]->setTimestamp(currTime);
 					}
 					//potentials[chans[arrayInd]] = ((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j];
-					lfpData_[chans[arrayInd]]->addDataAtNextIndex(((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j]);
+					lfpData_[chans[arrayInd]]->appendData(((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j]);
 					//lfpData->addData(currTime,potentials,numChans);
 				}
 				currTime += secPerSamp;
@@ -359,8 +372,8 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 			//Get rid of the dynamically constructed arrays
 			//delete potentials;
 			delete chans;
-			if(currTime > lastLFPTimestamp)
-				lastLFPTimestamp = currTime;
+			if(currTime > lastLFPTimestamp_)
+				lastLFPTimestamp_ = currTime;
 		}
 		////Add the last LFPDataUnitPackage to the return list
 		//if(lfpData->numSamples() > 0)
@@ -388,14 +401,8 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 
 	//record the last timestamp
 	//(This is annoying because calling last on an empty QList crashes things)
-	double lastEventTimestamp = eventList.isEmpty()?lastTimestamp: eventList.last().timeStamp;
-	double lastSpikeTimestamp = spikeList.isEmpty()?lastTimestamp: spikeList.last().timeStamp;
-	if(lastEventTimestamp > lastTimestamp)
-		lastTimestamp = lastEventTimestamp;
-	if(lastSpikeTimestamp > lastTimestamp)
-		lastTimestamp = lastSpikeTimestamp;
-	if(lastLFPTimestamp > lastTimestamp)
-		lastTimestamp = lastLFPTimestamp;
+	//double lastEventTimestamp = eventList.isEmpty()?lastTimestamp: eventList.last().timeStamp;
+	//double lastSpikeTimestamp = spikeList.isEmpty()?lastTimestamp: spikeList.last().timeStamp;
 
 	while(spikeList.size() != 0 && eventList.size() !=0)
 	{
@@ -408,7 +415,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 			neuralData->setUnit(spikeList.begin()->unitNum);
 
 			//waveform data
-			QSharedPointer<QList<int>> waveform(new QList<int>);
+			QSharedPointer<QVector<float>> waveform(new QVector<float>);
 			for(int i=0; i<spikeList.begin()->sampleWaveform.size(); i++)
 			{
 				waveform->push_back(spikeList.begin()->sampleWaveform[i]);
@@ -538,7 +545,9 @@ void TdtPlugin::deviceSelected()
 		
 
 		sampleRate=0;
-		lastTimestamp=0;
+		lastEventTimestamp_ = 0;
+		lastSpikeTimestamp_ = 0;
+		lastLFPTimestamp_ = 0;
 
 		//Close everything back up...
 		tdtTank->CloseTank();

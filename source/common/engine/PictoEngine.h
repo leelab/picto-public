@@ -135,6 +135,7 @@ public:
 
 	bool updateCurrentStateFromServer();
 	void setRunningPath(QString path);
+	QString getRunningPath(){return runningPath_;};
 	QString getServerPathUpdate();
 	QSharedPointer<Picto::BehavioralDataUnit> getCurrentBehavioralData();
 
@@ -160,6 +161,7 @@ public:
 	bool slaveMode() { return slave_; }
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
 	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";runningPath_="";currStateUnit_.clear();firstCurrStateUpdate_ = true;};
+	double getLastTimeStateDataRequested(){return lastTimeStateDataRequested_.toDouble();};
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;currStateUnit_.clear();};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 private:

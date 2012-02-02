@@ -4,6 +4,7 @@ QT = core gui xml network script scripttools sql svg
 CONFIG += qt warn_on debug_and_release
 DEPENDPATH += .
 INCLUDEPATH += .
+INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/workstation/main.cpp
@@ -91,6 +92,8 @@ SOURCES += $$(PICTO_TREE)/source/workstation/testviewer/testviewer.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.cpp
@@ -129,7 +132,10 @@ unix:!macx:LIBPATH += $$(PICTO_TREE)/output/bin/debug/shared
 macx:LIBPATH += $$(PICTO_TREE)/intermediates/lib/debug
 win32:LIBS += libPicto_debug.lib
 unix:LIBS += -lPicto_debug
+win32:LIBPATH += $$(PICTO_TREE)/3rdparty/lib
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/debug/
+win32:LIBS += qwtd.lib
+win32:LIBS += qwtmathmld.lib
 }
 
 build_pass:CONFIG(release, debug|release) {
@@ -138,7 +144,10 @@ unix:!macx:LIBPATH += $$(PICTO_TREE)/output/bin/release/shared
 macx:LIBPATH += $$(PICTO_TREE)/intermediates/lib/release
 win32:LIBS += libPicto.lib
 unix:LIBS += -lPicto
+win32:LIBPATH += $$(PICTO_TREE)/3rdparty/lib
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/
+win32:LIBS += qwt.lib
+win32:LIBS += qwtmathml.lib
 }
 
 # Platform Specific Configuration

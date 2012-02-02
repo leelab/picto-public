@@ -13,6 +13,8 @@
 #include "../../common/statemachine/statemachine.h"
 #include "../../common/stimuli/cursorgraphic.h"
 #include "../../common/statemachine/scene.h"
+#include "../../common/storage/NeuralDataUnit.h"
+#include "../../common/storage/LFPDataUnitPackage.h"
 #include "../propertyframe.h"
 
 
@@ -42,10 +44,10 @@
 using namespace Picto;
 
 #define COMPONENT_UPDATE_PERIOD 1000 
+#define NEURAL_DATA_UPDATE_PERIOD 50 
 #define SPECIAL_STATUS_PERIOD 1000
 #define MIN_ADAPTIVE_TIMEOUT 50
 #define MAX_ADAPTIVE_TIMEOUT 500
-
 RemoteViewer::RemoteViewer(QWidget *parent) :
 	Viewer(parent),
 	serverChannel_(0),
@@ -418,6 +420,8 @@ void RemoteViewer::runState()
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
 		}
+		if(proxyListBox_->currentIndex() > 0)
+			updateNeuralData();
 		break;
 	case PausedSession:
 		if(zoomChanged_)
@@ -436,7 +440,8 @@ void RemoteViewer::runState()
 		}
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
-
+		if(proxyListBox_->currentIndex() > 0)
+			updateNeuralData();
 		break;
 	case RunningSession:
 		if(zoomChanged_)
@@ -455,6 +460,8 @@ void RemoteViewer::runState()
 		}
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
+		if(proxyListBox_->currentIndex() > 0)
+			updateNeuralData();
 		break;
 	case EndingSession:
 		if(endSession() || remoteStatus < Stopped)
@@ -541,6 +548,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
+		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
@@ -565,6 +573,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
+		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
@@ -588,6 +597,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
+		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
@@ -611,6 +621,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		activeExpName_->setText(experiment_->getName());
+		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
@@ -701,6 +712,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		activeExpName_->setText(activeExperiment_->getName());
+		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
@@ -724,6 +736,8 @@ void RemoteViewer::init()
 	}
 	//This timer assures that we don't update component lists more often than necessary
 	componentListsTimer_.restart();
+	//This timer assures that we don't update neural data more often than necessary
+	neuralDataTimer_.restart();
 	//This timer triggers each new run of updateState()
 	stateUpdateTimer_->start();
 	//This timer triggers each new run of updateEngine()
@@ -891,6 +905,10 @@ void RemoteViewer::setupUi()
 	toolbarLayout->addWidget(toolBar_);
 	toolbarLayout->addStretch();
 
+	//----------Plots---------------
+	neuralDataViewer_ = new NeuralDataViewer(engine_);
+
+
 	statusBar_ = new QLabel();
 
 	propertyFrame_ = new PropertyFrame();
@@ -917,20 +935,24 @@ void RemoteViewer::setupUi()
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
 
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
 	mainLayout->addLayout(operationLayout);
-	mainLayout->addStretch(1);
+	mainLayout->addWidget(neuralDataViewer_);
+	//mainLayout->addStretch(1);
 	mainLayout->addWidget(statusBar_);
+	
 	setLayout(mainLayout);
 
 }
 
-//! \brief Creates the server and engineSlaveChannels for UI actions affecting the server, and experimental state requests respectively.
+//! \brief Creates the channels for UI actions affecting the server and experimental state request.
 void RemoteViewer::setupServerChannel()
 {
 	serverChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 	engineSlaveChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
+	neuralSlaveChannel_ = new Picto::CommandChannel(observerId_,"WORKSTATION",this);
 }
 
 //! \brief Called when the play button is pressed
@@ -1149,6 +1171,75 @@ void RemoteViewer::updateComponentLists(bool immediate)
 		if(remove)
 			proxyListBox_->removeItem(i);
 	}
+}
+
+void RemoteViewer::updateNeuralData()
+{
+	//Don't run this too often
+	if(neuralDataTimer_.elapsed() < NEURAL_DATA_UPDATE_PERIOD)
+		return;
+	neuralDataTimer_.restart();	
+
+	while(neuralSlaveChannel_->incomingResponsesWaiting())
+		neuralSlaveChannel_->getResponse();
+	if(!neuralSlaveChannel_->assureConnection(100))
+	{
+		return;
+	}
+
+	//Collect the data from the server
+	QString commandStr = QString("GETDATA LatestNeural:%1 PICTO/1.0").arg(neuralDataViewer_->getLatestId());
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
+	QSharedPointer<Picto::ProtocolResponse> response;
+
+	neuralSlaveChannel_->sendRegisteredCommand(command);
+	QString commandID = command->getFieldValue("Command-ID");
+	//qDebug(QString("Sent command: %1 at Time:%2").arg(commandID).arg(command->getFieldValue("Time-Sent")).toAscii());
+
+	do
+	{
+		QCoreApplication::processEvents();
+		if(!neuralSlaveChannel_->waitForResponse(1000))
+		{
+			return;
+		}
+		response = neuralSlaveChannel_->getResponse();
+	}while(!response || response->getFieldValue("Command-ID") != commandID);
+
+	//Response not 200:OK
+	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
+	{
+		return;
+	}
+	
+	QByteArray xmlFragment = response->getContent();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
+
+	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
+
+	if(xmlReader->atEnd())
+	{
+		return;
+	}
+
+	xmlReader->readNext();
+	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
+	{
+		if(xmlReader->name() == "LFPDataUnitPackage")
+		{
+			LFPDataUnitPackage pack;
+			pack.fromXml(xmlReader);
+			neuralDataViewer_->addLFPData(pack);
+		}
+		else if(xmlReader->name() == "NDU")
+		{
+			NeuralDataUnit unit;
+			unit.fromXml(xmlReader);
+			neuralDataViewer_->addSpikeData(unit);
+		}
+		xmlReader->readNext();
+	}
+	neuralDataViewer_->replot();
 }
 
 /*! \brief returns the current status of a remote director
@@ -1543,6 +1634,7 @@ bool RemoteViewer::joinSession()
 
 	serverChannel_->setSessionId(sessionId_);
 	engineSlaveChannel_->setSessionId(sessionId_);
+	neuralSlaveChannel_->setSessionId(sessionId_);
 
 	setStatus(tr("Existing session joined. Session ID: ")+ sessionId_.toString(),true);
 
@@ -1596,6 +1688,9 @@ bool RemoteViewer::disjoinSession()
 {
 	serverChannel_->setSessionId(QUuid());
 	engineSlaveChannel_->setSessionId(QUuid());
+	neuralSlaveChannel_->setSessionId(QUuid());
+	engine_->resetLastTimeStateDataRequested();
+
 
 	return true;
 }
@@ -1796,6 +1891,10 @@ bool RemoteViewer::assureChannelConnections()
 		//reconnecting it, but we don't tell the user when it gets disconnected and we don't let that
 		//affect the remoteViewer state.
 		engineSlaveChannel_->connectToServer();
+	}
+	if(!neuralSlaveChannel_->isConnected())
+	{
+		neuralSlaveChannel_->connectToServer();
 	}
 	return !hadDisconnect;
 }

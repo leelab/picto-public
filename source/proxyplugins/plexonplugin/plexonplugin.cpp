@@ -105,7 +105,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 				int chUnit = pServerEventBuffer[MAPEvent].Unit;
 				neuralData->setUnit(chUnit);
 
-				QSharedPointer<QList<int>> waveform(new QList<int>);
+				QSharedPointer<QVector<float>> waveform(new QVector<float>);
 				//waveform data
 				for(int i=0; i<pServerEventBuffer[MAPEvent].NumberOfDataWords; i++)
 				{
@@ -164,7 +164,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 					//The results of all this were compared to results in neuroexplorer and to values returned from Orion for a single file and things matched up.  
 					//It does seem like older versions of plexon may have had different A/D operating ranges and/or preamp gains.
 					//We really need to just run a test to figure out what the precise values are here...
-					lfpData_[pServerEventBuffer[MAPEvent].Channel]->addDataAtNextIndex(5000.0*double(pServerEventBuffer[MAPEvent].WaveForm[i])/2048.0); 
+					lfpData_[pServerEventBuffer[MAPEvent].Channel]->appendData(5000.0*double(pServerEventBuffer[MAPEvent].WaveForm[i])/2048.0); 
 				}
 			}
 		}

@@ -68,7 +68,8 @@ bool ProxyNewSessionResponseHandler::processResponse(QString directive)
 		}
 
 		//check for and process responses
-		dataCommandChannel_->processResponses(5000);
+		dataCommandChannel_->assureConnection(5000);	//If a disconnect occured, this will allow up to 5 seconds for a reconnect.
+		dataCommandChannel_->processResponses(0);
 		QCoreApplication::processEvents();
 	}
 	// If we got here, we got a message that changed the state to stopped or less or the 

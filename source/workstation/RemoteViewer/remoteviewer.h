@@ -7,6 +7,7 @@
 #include "../../common/compositor/VisualTargetHost.h"
 #include "../../common/network/CommandChannel.h"
 #include "../../common/network/ServerDiscoverer.h"
+#include "neuraldataviewer.h"
 
 #include <QUuid>
 #include <QFuture>
@@ -84,6 +85,7 @@ private slots:
 
 	//void changeConnectionState(bool checked);
 	void updateComponentLists(bool immediate = false);
+	void updateNeuralData();
 
 
 private:
@@ -93,6 +95,7 @@ private:
 	void runState();
 	void endState();
 	QTime componentListsTimer_;
+	QTime neuralDataTimer_;
 
 	enum ViewerState
 	{
@@ -170,6 +173,7 @@ private:
 
 	QList<ComponentInstance> getDirectorList();
 	QList<ComponentInstance> getProxyList();
+	void updatePlotOptions();
 
 	//Since we don't want the experiemnt to be changed while it is being run
 	//we keep a local copy here.
@@ -201,6 +205,7 @@ private:
 	QSlider *zoomSlider_;
 	QLabel *zoomPercentage_;
 	QLabel *statusBar_;
+	NeuralDataViewer* neuralDataViewer_;
 
 	QTimer *updateTimer_;
 	QTimer *reconnectTimer_;
@@ -208,6 +213,7 @@ private:
 
 	Picto::CommandChannel *serverChannel_;
 	Picto::CommandChannel *engineSlaveChannel_;
+	Picto::CommandChannel *neuralSlaveChannel_;
 	
 	bool isAuthorized_;
 

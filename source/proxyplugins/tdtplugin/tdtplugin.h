@@ -35,7 +35,7 @@ public:
 private:
 	struct SpikeDetails
 	{
-		QVector<double> sampleWaveform;
+		QVector<float> sampleWaveform;
 		int chanNum;
 		int unitNum;
 		double timeStamp;
@@ -54,7 +54,9 @@ private:
 
 	TTANKXLib::_DTTankXPtr tdtTank;
 	float sampleRate;
-	double lastTimestamp;
+	double lastEventTimestamp_;
+	double lastSpikeTimestamp_;
+	double lastLFPTimestamp_;
 	bool bDeviceRunning;
 
 	QMutex COMMutex;

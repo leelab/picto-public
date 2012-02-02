@@ -17,9 +17,8 @@ public:
 	virtual ~SimpleLFPSource();
 	virtual QSharedPointer<Picto::DataUnit> buildEvent(double time);
 private:
-	double nextTime_;
 	int channel_;
-	double* vals_;
+	float* vals_;
 	int sampsPerUnit_;
 };
 #endif

@@ -17,6 +17,7 @@
 #define TRANSITION_STATE_VAR_ID -2
 #define EYE_STATE_VAR_ID -3
 #define REWARD_STATE_VAR_ID -4
+#define NEURAL_DATA_BUFFER_SECS 60
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
@@ -293,7 +294,6 @@ void SessionInfo::alignTimestampsTo(QString componentType)
 //! Returns the next pending directive
 QString SessionInfo::pendingDirective(QUuid componentID)
 {
-	//QMutexLocker locker(&directiveMutex_);
 	if(!pendingDirectives_.contains(componentID) || pendingDirectives_[componentID].isEmpty())
 		return QString();
 	else
@@ -466,12 +466,11 @@ void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 
-	//QMutexLocker locker(&alignmentMutex_);
 	//! Use the alignment tool to fit the time
 	data->setFittedtime(alignmentTool_->convertToBehavioralTimebase(data->getTimestamp()));
 	data->setCorrelation(alignmentTool_->getCorrelationCoefficient());
 	//locker.unlock();
-	
+
 	query.prepare("INSERT INTO spikes (dataid, timestamp, fittedtime, correlation, channel, unit, waveform) "
 		"VALUES(:dataid, :timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
 	query.bindValue(":dataid", data->getDataID());
@@ -480,8 +479,10 @@ void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 	query.bindValue(":correlation", data->getCorrelation());
 	query.bindValue(":channel", data->getChannel());
 	query.bindValue(":unit", data->getUnit());
-	query.bindValue(":waveform", data->getWaveformAsString());
-	executeWriteQuery(&query,"",false);	
+	query.bindValue(":waveform", data->getWaveformAsByteArray());
+	executeWriteQuery(&query,"",false);
+
+	setLatestNeuralData(data->getDataID(),data->toXml(),data->getFittedtime());
 }
 
 //! \brief inserts a behavioral data point in the cache database
@@ -649,12 +650,14 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 	QSqlDatabase cacheDb = getCacheDb();
 	//Get Fitted Times
 	//QStringList timestamps = data->getTimes().split(" ",QString::SkipEmptyParts);
-	QString neuralTimestamp = data->getTimestamp();
-	QString potentials = data->getPotentials();
+	double neuralTimestamp = data->getTimestamp().toDouble();
+	//QString potentials = data->getPotentials();
+
 	double correlation = alignmentTool_->getCorrelationCoefficient();
 	double resolution = data->getResolution();
 	qulonglong dataID = data->getDataID();
-	double fittedTimestamp = alignmentTool_->convertToBehavioralTimebase(neuralTimestamp.toDouble());
+	double fittedTimestamp = alignmentTool_->convertToBehavioralTimebase(neuralTimestamp);
+	data->setFittedTimestamp(fittedTimestamp);
 	int channel = data->getChannel();
 
 	//Now that the tables are ready.  Do the insertion.
@@ -668,10 +671,12 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 	query.bindValue(":correlation",correlation);
 	query.bindValue(":resolution",resolution);
 	query.bindValue(":channel",channel);
-	query.bindValue(":data",potentials);
+	query.bindValue(":data",data->getPotentialsAsByteArray());
 
 	executeWriteQuery(&query);
 	query.finish();
+	
+	setLatestNeuralData(data->getDataID(),data->toXml(),fittedTimestamp);
 }
 
 //! \brief inserts a state change record in the session database
@@ -800,6 +805,33 @@ QString SessionInfo::selectStateVariables(QString fromTime)
 	return result;
 }
 
+QString SessionInfo::selectLatestNeuralData(QString fromDataId)
+{
+	QString result;
+	int afterDataId = fromDataId.toInt();
+	latestNeuralDataMutex_.lock();
+	QLinkedList<NeuralVariable>::iterator iter;
+	//Find the afterDataId entry and append everything after that.
+	//Don't just look for when DataID's are higher, because in the case
+	//of lfp blocks dataIDs might be out of order.
+	//If the afterDataID isn't found, just append everything.
+	bool startAppending = false;
+	for(iter = latestNeuralData_.end()-1;iter != latestNeuralData_.begin();iter--)
+	{
+		if((*iter).dataid == afterDataId)
+		{
+			iter++;
+			break;
+		}
+	}
+	for(;iter != latestNeuralData_.end();iter++)
+	{
+		result.append((*iter).serial);
+	}
+	latestNeuralDataMutex_.unlock();
+	return result;
+}
+
 void SessionInfo::InitializeVariables()
 {
 
@@ -834,7 +866,7 @@ void SessionInfo::InitializeVariables()
 
 	tables_.push_back("spikes");
 	tableColumns_["spikes"] = " dataid,timestamp,fittedtime,correlation,channel,unit,waveform ";
-	tableColumnTypes_["spikes"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,TEXT,TEXT,TEXT ";
+	tableColumnTypes_["spikes"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,TEXT,TEXT,BLOB ";
 	tableDataProviders_["spikes"] = "PROXY";
 
 	tables_.push_back("neuralalignevents");
@@ -844,7 +876,7 @@ void SessionInfo::InitializeVariables()
 
 	tables_.push_back("lfp");
 	tableColumns_["lfp"] = " dataid,timestamp,fittedtime,correlation,resolution,channel,data ";
-	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,REAL,INTEGER,TEXT ";
+	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,REAL,INTEGER,BLOB ";
 	tableDataProviders_["lfp"] = "PROXY";
 	
 	tables_.push_back("behavioralalignevents");
@@ -1267,6 +1299,28 @@ void SessionInfo::setStateVariable(int dataid, int varid, QString serializedValu
 	var.varid = varid;
 	var.serial = serializedValue;
 	currentStateQuery_.append(var);
+}
+
+void SessionInfo::setLatestNeuralData(int dataid, QString serializedValue, double fittedTime)
+{
+	NeuralVariable newVar;
+	newVar.dataid = dataid;
+	newVar.serial = serializedValue;
+	newVar.fittedTime = fittedTime;
+	latestNeuralDataMutex_.lock();
+	latestNeuralData_.append(newVar);
+	latestNeuralDataMutex_.unlock();
+
+	bool removed = false;
+	while(latestNeuralData_.first().fittedTime < latestNeuralData_.last().fittedTime-NEURAL_DATA_BUFFER_SECS)
+	{
+		if(!removed)
+			latestNeuralDataMutex_.lock();
+		removed = true;
+		latestNeuralData_.removeFirst();
+	}
+	if(removed)
+		latestNeuralDataMutex_.unlock();
 }
 
 void SessionInfo::updateCurrentStateTable(QString updateTime)

@@ -21,6 +21,7 @@ bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 	xmlStreamWriter->writeStartElement("NDU");
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeTextElement("t",QString("%1").arg(getTimestamp(),0,'f',6));
+	xmlStreamWriter->writeTextElement("f",QString("%1").arg(getFittedtime(),0,'f',6));
 	xmlStreamWriter->writeTextElement("c",QString("%1").arg(getChannel()));
 	xmlStreamWriter->writeTextElement("u",QString("%1").arg(getUnit()));
 	xmlStreamWriter->writeTextElement("w",getWaveformAsString());		
@@ -45,6 +46,10 @@ bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "t")
 		{
 			setTimestamp(xmlStreamReader->readElementText().toDouble());
+		}
+		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "f")
+		{
+			setFittedtime(xmlStreamReader->readElementText().toDouble());
 		}
 		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "c")
 		{
@@ -83,26 +88,49 @@ bool NeuralDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	return true;
 }
 
+void NeuralDataUnit::setWaveform(QSharedPointer<QVector<float>> waveform)
+{
+	waveform_.clear();
+	for(int i=0;i<waveform->size();i++)
+	{
+		waveform_.push_back(QString("%1").arg((*waveform)[i]));
+	}
+}
+
 //! \brief Waveform should be formatted as "X X X X " where each X is an int
 void NeuralDataUnit::setWaveformFromString(QString waveform)
 {
-	waveform_ = QSharedPointer<QList<int>>(new QList<int>);
-	QStringList vals = waveform.split(" ",QString::SkipEmptyParts);
-	foreach(QString val, vals)
-	{
-		waveform_->push_back(val.toInt());
-	}
+	waveform_.clear();
+	waveform_ = waveform.split(" ",QString::SkipEmptyParts);
 }
 
 QString NeuralDataUnit::getWaveformAsString()
 {
-	QString returnVal;
-	QList<int>::Iterator it;
-	for(it = waveform_->begin();it != waveform_->end(); it++)
+	return waveform_.join(" ");
+}
+
+QByteArray NeuralDataUnit::getWaveformAsByteArray()
+{
+	float* pots = new float[waveform_.size()];
+	for(int i=0;i<waveform_.size();i++)
 	{
-		returnVal += QString("%1 ").arg((*it));
+		pots[i] = waveform_[i].toFloat();
 	}
+	//Note: We must create the byte array with the constructor (not setRawData of fromRawData)
+	//So that we can then delete the pots array without problems.
+	QByteArray returnVal(reinterpret_cast<const char*>(pots),waveform_.size()*sizeof(float));
+	delete[] pots;
 	return returnVal;
+}
+
+void NeuralDataUnit::setWaveformFromByteArray(QByteArray waveform)
+{
+	const float* pots = reinterpret_cast<const float*>(waveform.constData());
+	waveform_.clear();
+	for(unsigned int i=0;i<waveform.size()/sizeof(float);i++)
+	{
+		waveform_.append(QString("%1").arg(pots[i]));
+	}
 }
 
 }; //namespace Picto

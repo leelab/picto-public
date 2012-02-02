@@ -56,16 +56,21 @@ public:
 	void setChannel(int channel){channel_ = channel;};
 	void setCorrelation(double correlation){correlation_ = correlation;}
 	void setTimestamp(double timestamp){timestamp_ = QString::number(timestamp,'e',6);};
+	void setFittedTimestamp(double timestamp){fittedTimestamp_ = QString::number(timestamp,'e',6);};
 	void setResolution(double resolution){resolution_ = resolution;};
-	void addData(double* potentials, int numVals, int timeIndex);
-	void addData(double potential,int timeIndex);
-	void addDataAtNextIndex(double potential);
+	void appendData(const float* adPotentialReadings, int numVals);
+	void appendData(float adPotentialReading);
 	int numSamples(){return numSamples_;};
 
 	double getCorrelation(){return correlation_;}
 	QString getTimestamp(){return timestamp_;};
+	QString getFittedTimestamp(){return fittedTimestamp_;};
 	double getResolution(){return resolution_;};
-	QString getPotentials(){return potentials_;};
+	QString getPotentials(){return potentials_.join(" ");};
+	QByteArray getPotentialsAsByteArray();
+	QVector<double> getPotentialsAsDoubleVec();
+	QVector<double> getFittedTimesAsDoubleVec();
+	void setPotentialsFromByteArray(QByteArray potentials);
 	int getChannel(){return channel_;};
 
 protected:
@@ -76,8 +81,10 @@ private:
 	int channel_;
 	double correlation_;
 	QString timestamp_;
+	QString fittedTimestamp_;
 	double resolution_;
-	QString potentials_;
+	QStringList potentials_;
+	float* potArray_;
 	int numSamples_;
 
 };

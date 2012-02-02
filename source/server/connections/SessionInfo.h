@@ -19,6 +19,7 @@
 #include <QUuid>
 #include <QStringList>
 #include <QMutex>
+#include <QLinkedList>
 
 /*!	\brief Contains info about a single session
  *
@@ -79,6 +80,7 @@ public:
 	void insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data);
 
 	QString selectStateVariables(QString fromTime);
+	QString selectLatestNeuralData(QString fromDataId);
 
 	//getters/setters
 	QUuid sessionId() { return uuid_; };
@@ -118,6 +120,8 @@ private:
 	void createSessionIndeces();
 	void recalculateFittedTimes();
 	void setStateVariable(int dataid, int varid, QString serializedValue);
+	void setLatestNeuralData(int dataid, QString serializedValue, double fittedTime); 
+
 	void updateCurrentStateTable(QString updateTime);
 	void addAuthorizedObserver(QUuid observerId);
 	QSqlDatabase getSessionDb();
@@ -131,8 +135,7 @@ private:
 
 	QSharedPointer<AlignmentTool> alignmentTool_;
 	bool timestampsAligned_;	//Indicates whether initial timestamp alignment has occured
-	QMutex alignmentMutex_;
-	QMutex directiveMutex_;
+	QMutex latestNeuralDataMutex_;
 	QSharedPointer<QMutex> databaseWriteMutex_;
 	QTimer timeoutTimer_;
 	QMap<QUuid,QStringList> pendingDirectives_; //Uuid is the Uuid of the component who's pending directives are stored in the QStringList
@@ -157,6 +160,8 @@ private:
 	QMap<QString,QString> tableIndexedColumns_;
 	struct Variable{int dataid;int varid;QString serial;};
 	QList<Variable> currentStateQuery_;
+	struct NeuralVariable{int dataid;QString serial;double fittedTime;};
+	QLinkedList<NeuralVariable> latestNeuralData_;
 	QString latestStateVarTime_;
 	QString latestWrittenStateVarTime_;
 	QStringList openDatabaseConnections_;

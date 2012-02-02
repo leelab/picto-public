@@ -304,7 +304,7 @@
               <UIEnabled id="258">true</UIEnabled>
               <UIOrder id="259">0</UIOrder>
               <NumRewards id="499">1</NumRewards>
-            </StateMachineElement>
+            <MinRewardPeriod id="527">125</MinRewardPeriod></StateMachineElement>
             <Transition id="260">
               <Destination id="261">Reward</Destination>
               <Source id="262">SetTargetRed</Source>
@@ -1849,7 +1849,7 @@
                       <UIEnabled id="1454">false</UIEnabled>
                       <UIOrder id="1455">0</UIOrder>
                       <NumRewards id="3961">1</NumRewards>
-                    </StateMachineElement>
+                    <MinRewardPeriod id="1636">125</MinRewardPeriod></StateMachineElement>
 
                     <Transition id="6317">
                       <Destination id="6318">NormalRewardUnit</Destination>
@@ -2881,7 +2881,7 @@
                   <UIEnabled id="7044">false</UIEnabled>
                   <UIOrder id="7045">0</UIOrder>
                   <NumRewards id="7046">1</NumRewards>
-                </StateMachineElement>
+                <MinRewardPeriod id="2226">125</MinRewardPeriod></StateMachineElement>
                 <Transition id="7054">
                   <Destination id="7055">FixTrialReward</Destination>
                   <Source id="7056">IsNormalTrail</Source>
@@ -3280,7 +3280,7 @@
               <Parameter type="Range" id="2948">
                 <Increment id="2949">1</Increment>
                 <Max id="2950">100</Max>
-                <Min id="2951">1</Min>
+                <Min id="2951">0</Min>
                 <Name id="2952">LowProbability</Name>
                 <UIEnabled id="2953">true</UIEnabled>
                 <UIInfo id="2954">
@@ -3293,7 +3293,7 @@
               <Parameter type="Range" id="2960">
                 <Increment id="2961">1</Increment>
                 <Max id="2962">100</Max>
-                <Min id="2963">1</Min>
+                <Min id="2963">0</Min>
                 <Name id="2964">HighProbability</Name>
                 <UIEnabled id="2965">true</UIEnabled>
                 <UIInfo id="2966">
@@ -3934,6 +3934,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1</OpenedBlock>
+    <OpenedBlock id="">5374</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

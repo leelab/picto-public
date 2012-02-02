@@ -4,7 +4,7 @@
 #include "../common.h"
 #include "DataUnit.h"
 #include <QString>
-#include <QList>
+#include <QVector>
 
 namespace Picto {
 
@@ -32,7 +32,7 @@ public:
 	void setCorrelation(double correlation){correlation_ = correlation;}
 	void setChannel(int channel){channel_ = channel;}
 	void setUnit(int unit){unit_ = unit;}
-	void setWaveform(QSharedPointer<QList<int>> waveform){waveform_ = waveform;}
+	void setWaveform(QSharedPointer<QVector<float>> waveform);
 	void setWaveformFromString(QString waveform);
 
 	double getTimestamp(){return timestamp_;}
@@ -40,8 +40,9 @@ public:
 	double getCorrelation(){return correlation_;}
 	int getChannel(){return channel_;}
 	int getUnit(){return unit_;}
-	QSharedPointer<QList<int>> getWaveform(){return waveform_;}
 	QString getWaveformAsString();
+	QByteArray getWaveformAsByteArray();
+	void setWaveformFromByteArray(QByteArray waveform);
 
 protected:
 	virtual void postDeserialize();
@@ -53,7 +54,7 @@ double fittedtime_;
 double correlation_;
 int channel_;
 int unit_;
-QSharedPointer<QList<int>> waveform_;
+QStringList waveform_;
 };
 
 

@@ -304,7 +304,7 @@
               <UIEnabled id="258">true</UIEnabled>
               <UIOrder id="259">0</UIOrder>
               <NumRewards id="499">1</NumRewards>
-            </StateMachineElement>
+            <MinRewardPeriod id="1421">125</MinRewardPeriod></StateMachineElement>
             <Transition id="260">
               <Destination id="261">Reward</Destination>
               <Source id="262">SetTargetRed</Source>
@@ -1417,7 +1417,7 @@ return false;</Script>
                       </UIInfo>
                       <RewardQty id="1451">60</RewardQty>
                       <RewardChan id="1452">1</RewardChan>
-                    <Type id="1453">Reward</Type><UIEnabled id="1454">true</UIEnabled><UIOrder id="1455">0</UIOrder><NumRewards id="3961">1</NumRewards></StateMachineElement>
+                    <Type id="1453">Reward</Type><UIEnabled id="1454">true</UIEnabled><UIOrder id="1455">0</UIOrder><NumRewards id="3961">1</NumRewards><MinRewardPeriod id="3931">125</MinRewardPeriod></StateMachineElement>
                     
                     <Transition id="1456">
                       <Destination id="1457">TrialReward</Destination>
@@ -2109,7 +2109,7 @@ else
 {
 	TrialInfo.setData(&quot;Rewarded&quot;,1);
 	return false;
-}</Script><UIInfo id="2656"><Pos id="2657" x="1246" y="406"/></UIInfo><Type id="2659">ScriptElement</Type><UIEnabled id="2660">false</UIEnabled><UIOrder id="2661">0</UIOrder></StateMachineElement><Transition id="2662"><Destination id="2663">GetChoice</Destination><Source id="2664">IsNormalTrail</Source><SourceResult id="2665">true</SourceResult></Transition><StateMachineElement type="Reward" id="2666"><Name id="2667">FixTrialReward</Name><Result id="2668"><Name id="2669">done</Name><UIInfo id="2670"><Pos id="2672" x="0" y="0"/></UIInfo><UIEnabled id="2673">false</UIEnabled><UIOrder id="2674">0</UIOrder></Result><UIInfo id="2675"><Pos id="2676" x="1184" y="188"/></UIInfo><RewardChan id="2678">1</RewardChan><RewardQty id="2679">60</RewardQty><Type id="2680">Reward</Type><UIEnabled id="2681">true</UIEnabled><UIOrder id="2682">0</UIOrder><NumRewards id="4677">1</NumRewards></StateMachineElement><Transition id="2683"><Destination id="2684">IsNormalTrail</Destination><Source id="2685">PresentRewards</Source><SourceResult id="2686">ContinuedFixation</SourceResult></Transition><Transition id="2687"><Destination id="2688">FixTrialReward</Destination><Source id="2689">IsNormalTrail</Source><SourceResult id="2690">false</SourceResult></Transition><Transition id="2691"><Destination id="2692">FixTrialSuccess</Destination><Source id="2693">FixTrialReward</Source><SourceResult id="2694">done</SourceResult></Transition><Parameter type="Range" id="2695"><Max id="2696">1000</Max><Min id="2697">0</Min><Name id="2698">FixationTargetRadius</Name><UIEnabled id="2699">true</UIEnabled><UIInfo id="2700"><Pos id="2701" x="923" y="977"/></UIInfo><Value id="2703">40</Value><Increment id="2704">0</Increment><UIOrder id="2705">0</UIOrder><Units id="2706"/></Parameter><ExitScript id="2707"/><Level id="2708">Stage</Level><Type id="2709">StateMachine</Type><UIEnabled id="2710">false</UIEnabled><UIOrder id="2711">0</UIOrder></StateMachineElement>
+}</Script><UIInfo id="2656"><Pos id="2657" x="1246" y="406"/></UIInfo><Type id="2659">ScriptElement</Type><UIEnabled id="2660">false</UIEnabled><UIOrder id="2661">0</UIOrder></StateMachineElement><Transition id="2662"><Destination id="2663">GetChoice</Destination><Source id="2664">IsNormalTrail</Source><SourceResult id="2665">true</SourceResult></Transition><StateMachineElement type="Reward" id="2666"><Name id="2667">FixTrialReward</Name><Result id="2668"><Name id="2669">done</Name><UIInfo id="2670"><Pos id="2672" x="0" y="0"/></UIInfo><UIEnabled id="2673">false</UIEnabled><UIOrder id="2674">0</UIOrder></Result><UIInfo id="2675"><Pos id="2676" x="1184" y="188"/></UIInfo><RewardChan id="2678">1</RewardChan><RewardQty id="2679">60</RewardQty><Type id="2680">Reward</Type><UIEnabled id="2681">true</UIEnabled><UIOrder id="2682">0</UIOrder><NumRewards id="4677">1</NumRewards><MinRewardPeriod id="4639">125</MinRewardPeriod></StateMachineElement><Transition id="2683"><Destination id="2684">IsNormalTrail</Destination><Source id="2685">PresentRewards</Source><SourceResult id="2686">ContinuedFixation</SourceResult></Transition><Transition id="2687"><Destination id="2688">FixTrialReward</Destination><Source id="2689">IsNormalTrail</Source><SourceResult id="2690">false</SourceResult></Transition><Transition id="2691"><Destination id="2692">FixTrialSuccess</Destination><Source id="2693">FixTrialReward</Source><SourceResult id="2694">done</SourceResult></Transition><Parameter type="Range" id="2695"><Max id="2696">1000</Max><Min id="2697">0</Min><Name id="2698">FixationTargetRadius</Name><UIEnabled id="2699">true</UIEnabled><UIInfo id="2700"><Pos id="2701" x="923" y="977"/></UIInfo><Value id="2703">40</Value><Increment id="2704">0</Increment><UIOrder id="2705">0</UIOrder><Units id="2706"/></Parameter><ExitScript id="2707"/><Level id="2708">Stage</Level><Type id="2709">StateMachine</Type><UIEnabled id="2710">false</UIEnabled><UIOrder id="2711">0</UIOrder></StateMachineElement>
               <InitialElement id="2712">PreTrialInterval</InitialElement>
               
               
@@ -2131,7 +2131,7 @@ do
 	switch(TrialType.value%10)
 	{
 	case 0:
-		if(!Use8_1Combo.value)
+		if(!Use8_1Combo.value || ExpValueTraining.value || ExtremeExpValueTraining.value)
 		{
 			tryAgain = true;
 			break;
@@ -2140,7 +2140,7 @@ do
 		RedRewards.value = 1;
 		break;
 	case 1:
-		if(!Use4_1Combo.value)
+		if(!Use4_1Combo.value || ExpValueTraining.value || ExtremeExpValueTraining.value)
 		{
 			tryAgain = true;
 			break;
@@ -2149,31 +2149,65 @@ do
 	  	RedRewards.value = 1;
 	  	break;
 	case 2:
+		if(!RedMoreLikely.value &amp;&amp; (ExpValueTraining.value || ExtremeExpValueTraining.value))
+		{
+			tryAgain = true;
+			break;
+		}
 	  	GreenRewards.value = 2;
 	  	RedRewards.value = 1;
 	  	break;
 	case 3:
+		if(ExtremeExpValueTraining.value)
+		{
+			ExtTrainRand.randomize();
+			if(ExtTrainRand.value &lt;= ExtTraining1_1IgnoreProb.value)
+			{
+				tryAgain = true;
+				break;
+			}
+		}
 	  	GreenRewards.value = 1;
 	  	RedRewards.value = 1;
 	  	break;
 	case 4:
+		if(ExpValueTraining.value || ExtremeExpValueTraining.value)
+		{
+			tryAgain = true;
+			break;
+		}
 	  	GreenRewards.value = 4;
 	  	RedRewards.value = 2;
 	  	break;
 	case 5:
+		if(RedMoreLikely.value &amp;&amp; (ExpValueTraining.value || ExtremeExpValueTraining.value))
+		{
+			tryAgain = true;
+			break;
+		}
 	  	GreenRewards.value = 1;
 	 	 RedRewards.value = 2;
 	  	break;
 	case 6:
+		if(ExtremeExpValueTraining.value)
+		{
+			tryAgain = true;
+			break;
+		}
 	  	GreenRewards.value = 4;
 	  	RedRewards.value = 4;
 	  	break;
 	case 7:
+		if(ExpValueTraining.value || ExtremeExpValueTraining.value)
+		{
+			tryAgain = true;
+			break;
+		}
 	  	GreenRewards.value = 2;
 	  	RedRewards.value = 4;
 	  	break;
 	case 8:
-		if(!Use4_1Combo.value)
+		if(!Use4_1Combo.value || ExpValueTraining.value || ExtremeExpValueTraining.value)
 		{
 			tryAgain = true;
 			break;
@@ -2182,7 +2216,7 @@ do
 	  	RedRewards.value = 4;
 	  	break;
 	case 9:
-		if(!Use8_1Combo.value)
+		if(!Use8_1Combo.value || ExpValueTraining.value || ExtremeExpValueTraining.value)
 		{
 			tryAgain = true;
 			break;
@@ -2277,7 +2311,7 @@ EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;Correct
 TrialInfo.setData(&quot;CorrectTrial&quot;,1);
 CorrectTrials.value++;</ExitScript><Name id="2846">PostTrialInterval</Name><Result id="2847"><Name id="2848">Done</Name><UIInfo id="2849"><Pos id="2850" x="1706" y="188"/></UIInfo><UIEnabled id="2852">false</UIEnabled><UIOrder id="2853">0</UIOrder></Result><Transition id="2854"><Destination id="2855">Done</Destination><Source id="2856">Timer</Source><SourceResult id="2857">Success</SourceResult></Transition><UIInfo id="2858"><Pos id="2859" x="1776" y="215"/></UIInfo><BackgroundColor A="255" B="0" G="0" R="0" id="2861">#000000</BackgroundColor><EngineNeeded id="2862">-1</EngineNeeded><FrameScript id="2863"/><Revision id="2864">-1</Revision><UIEnabled id="2865">false</UIEnabled><UIOrder id="2866">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="2867"><Name id="2868">IncCorrectTrials</Name><Result id="2869"><Name id="2870">false</Name><UIInfo id="2871"><Pos id="2873" x="0" y="0"/></UIInfo><UIEnabled id="2874">false</UIEnabled><UIOrder id="2875">0</UIOrder></Result><Result id="2876"><Name id="2877">true</Name><UIInfo id="2878"><Pos id="2880" x="0" y="0"/></UIInfo><UIEnabled id="2881">false</UIEnabled><UIOrder id="2882">0</UIOrder></Result><Script id="2883">EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
 TrialInfo.setData(&quot;CorrectTrial&quot;,1);
-CorrectTrials.value++;</Script><UIInfo id="2884"><Pos id="2885" x="1825" y="660"/></UIInfo><Type id="2887">ScriptElement</Type><UIEnabled id="2888">false</UIEnabled><UIOrder id="2889">0</UIOrder></StateMachineElement><Transition id="2890"><Destination id="2891">PostTrialInterval</Destination><Source id="2892">TrialLogic</Source><SourceResult id="2893">Succeeded</SourceResult></Transition><Transition id="2894"><Destination id="2895">TrialTypeComplete</Destination><Source id="2896">PostTrialInterval</Source><SourceResult id="2897">Done</SourceResult></Transition><Transition id="2898"><Destination id="2899">ReshuffleTrialType</Destination><Source id="2900">IncCorrectTrials</Source><SourceResult id="2901">false</SourceResult></Transition><Transition id="2902"><Destination id="2903">ReshuffleTrialType</Destination><Source id="2904">IncCorrectTrials</Source><SourceResult id="2905">true</SourceResult></Transition><Transition id="2906"><Destination id="2907">ReshuffleTrialType</Destination><Source id="2908">TrialLogic</Source><SourceResult id="2909">Failed</SourceResult></Transition><Parameter type="Numeric" id="2910"><Name id="2911">GreenRewards</Name><UIInfo id="2912"><Pos id="2913" x="1162" y="582"/></UIInfo><UIEnabled id="2915">false</UIEnabled><UIOrder id="2916">0</UIOrder><Units id="2917"/><Value id="2918">0</Value></Parameter><Parameter type="Numeric" id="2919"><Name id="2920">RedRewards</Name><UIInfo id="2921"><Pos id="2922" x="1271" y="587"/></UIInfo><UIEnabled id="2924">false</UIEnabled><UIOrder id="2925">0</UIOrder><Units id="2926"/><Value id="2927">0</Value></Parameter><Parameter type="RandomInt" id="2928"><Name id="2929">GreyFeedback</Name><UIInfo id="2930"><Pos id="2931" x="1368" y="591"/></UIInfo><Max id="2933">1</Max><Min id="2934">0</Min><Seed id="2935">0</Seed><UIEnabled id="2936">false</UIEnabled><UIOrder id="2937">0</UIOrder><UseSeed id="2938">false</UseSeed><Value id="2939">0</Value></Parameter><Transition id="2940"><Destination id="2941">IncCorrectTrials</Destination><Source id="2942">TrialLogic</Source><SourceResult id="2943">FixTrialSuccess</SourceResult></Transition><Transition id="2944"><Destination id="2945">TrialLogic</Destination><Source id="2946">ChooseTrialValues</Source><SourceResult id="2947">false</SourceResult></Transition><Parameter type="Range" id="2948"><Increment id="2949">1</Increment><Max id="2950">100</Max><Min id="2951">1</Min><Name id="2952">LowProbability</Name><UIEnabled id="2953">true</UIEnabled><UIInfo id="2954"><Pos id="2955" x="1176" y="699"/></UIInfo><Value id="2957">10</Value><UIOrder id="2958">0</UIOrder><Units id="2959"/></Parameter><Parameter type="Range" id="2960"><Increment id="2961">1</Increment><Max id="2962">100</Max><Min id="2963">1</Min><Name id="2964">HighProbability</Name><UIEnabled id="2965">true</UIEnabled><UIInfo id="2966"><Pos id="2967" x="1290" y="706"/></UIInfo><Value id="2969">90</Value><UIOrder id="2970">0</UIOrder><Units id="2971"/></Parameter><Parameter type="Boolean" id="2972"><Name id="2973">Use8_1Combo</Name><UIInfo id="2974"><Pos id="2975" x="1179" y="817"/></UIInfo><Value id="2977">true</Value><UIEnabled id="2978">true</UIEnabled><FalseLabel id="2979">False</FalseLabel><TrueLabel id="2980">True</TrueLabel><UIOrder id="2981">0</UIOrder></Parameter><Parameter type="Boolean" id="2982"><Name id="2983">Use4_1Combo</Name><UIInfo id="2984"><Pos id="2985" x="1181" y="905"/></UIInfo><Value id="2987">true</Value><UIEnabled id="2988">true</UIEnabled><FalseLabel id="2989">False</FalseLabel><TrueLabel id="2990">True</TrueLabel><UIOrder id="2991">0</UIOrder></Parameter><Level id="2992">Stage</Level><Type id="2993">StateMachine</Type><UIEnabled id="2994">false</UIEnabled><UIOrder id="2995">0</UIOrder></StateMachineElement>
+CorrectTrials.value++;</Script><UIInfo id="2884"><Pos id="2885" x="1825" y="660"/></UIInfo><Type id="2887">ScriptElement</Type><UIEnabled id="2888">false</UIEnabled><UIOrder id="2889">0</UIOrder></StateMachineElement><Transition id="2890"><Destination id="2891">PostTrialInterval</Destination><Source id="2892">TrialLogic</Source><SourceResult id="2893">Succeeded</SourceResult></Transition><Transition id="2894"><Destination id="2895">TrialTypeComplete</Destination><Source id="2896">PostTrialInterval</Source><SourceResult id="2897">Done</SourceResult></Transition><Transition id="2898"><Destination id="2899">ReshuffleTrialType</Destination><Source id="2900">IncCorrectTrials</Source><SourceResult id="2901">false</SourceResult></Transition><Transition id="2902"><Destination id="2903">ReshuffleTrialType</Destination><Source id="2904">IncCorrectTrials</Source><SourceResult id="2905">true</SourceResult></Transition><Transition id="2906"><Destination id="2907">ReshuffleTrialType</Destination><Source id="2908">TrialLogic</Source><SourceResult id="2909">Failed</SourceResult></Transition><Parameter type="Numeric" id="2910"><Name id="2911">GreenRewards</Name><UIInfo id="2912"><Pos id="2913" x="1162" y="582"/></UIInfo><UIEnabled id="2915">false</UIEnabled><UIOrder id="2916">0</UIOrder><Units id="2917"/><Value id="2918">0</Value></Parameter><Parameter type="Numeric" id="2919"><Name id="2920">RedRewards</Name><UIInfo id="2921"><Pos id="2922" x="1271" y="587"/></UIInfo><UIEnabled id="2924">false</UIEnabled><UIOrder id="2925">0</UIOrder><Units id="2926"/><Value id="2927">0</Value></Parameter><Parameter type="RandomInt" id="2928"><Name id="2929">GreyFeedback</Name><UIInfo id="2930"><Pos id="2931" x="1368" y="591"/></UIInfo><Max id="2933">1</Max><Min id="2934">0</Min><Seed id="2935">0</Seed><UIEnabled id="2936">false</UIEnabled><UIOrder id="2937">0</UIOrder><UseSeed id="2938">false</UseSeed><Value id="2939">0</Value></Parameter><Transition id="2940"><Destination id="2941">IncCorrectTrials</Destination><Source id="2942">TrialLogic</Source><SourceResult id="2943">FixTrialSuccess</SourceResult></Transition><Transition id="2944"><Destination id="2945">TrialLogic</Destination><Source id="2946">ChooseTrialValues</Source><SourceResult id="2947">false</SourceResult></Transition><Parameter type="Range" id="2948"><Increment id="2949">1</Increment><Max id="2950">100</Max><Min id="2951">0</Min><Name id="2952">LowProbability</Name><UIEnabled id="2953">true</UIEnabled><UIInfo id="2954"><Pos id="2955" x="1176" y="699"/></UIInfo><Value id="2957">10</Value><UIOrder id="2958">0</UIOrder><Units id="2959"/></Parameter><Parameter type="Range" id="2960"><Increment id="2961">1</Increment><Max id="2962">100</Max><Min id="2963">0</Min><Name id="2964">HighProbability</Name><UIEnabled id="2965">true</UIEnabled><UIInfo id="2966"><Pos id="2967" x="1290" y="706"/></UIInfo><Value id="2969">90</Value><UIOrder id="2970">0</UIOrder><Units id="2971"/></Parameter><Parameter type="Boolean" id="2972"><Name id="2973">Use8_1Combo</Name><UIInfo id="2974"><Pos id="2975" x="1179" y="817"/></UIInfo><Value id="2977">true</Value><UIEnabled id="2978">true</UIEnabled><FalseLabel id="2979">False</FalseLabel><TrueLabel id="2980">True</TrueLabel><UIOrder id="2981">0</UIOrder></Parameter><Parameter type="Boolean" id="2982"><Name id="2983">Use4_1Combo</Name><UIInfo id="2984"><Pos id="2985" x="1181" y="905"/></UIInfo><Value id="2987">true</Value><UIEnabled id="2988">true</UIEnabled><FalseLabel id="2989">False</FalseLabel><TrueLabel id="2990">True</TrueLabel><UIOrder id="2991">0</UIOrder></Parameter><Level id="2992">Stage</Level><Type id="2993">StateMachine</Type><UIEnabled id="2994">false</UIEnabled><UIOrder id="2995">0</UIOrder><Parameter type="Boolean" id="5120"><FalseLabel id="5121">False</FalseLabel><Name id="5122">ExpValueTraining</Name><TrueLabel id="5123">True</TrueLabel><UIEnabled id="5124">true</UIEnabled><UIInfo id="5125"><Pos id="5126" x="1187" y="1006"/></UIInfo><UIOrder id="5128">0</UIOrder><Value id="5129">false</Value></Parameter><Parameter type="Boolean" id="5136"><FalseLabel id="5137">False</FalseLabel><Name id="5138">ExtremeExpValueTraining</Name><TrueLabel id="5139">True</TrueLabel><UIEnabled id="5140">true</UIEnabled><UIInfo id="5141"><Pos id="5142" x="1192" y="1111"/></UIInfo><UIOrder id="5144">0</UIOrder><Value id="5145">false</Value></Parameter><Parameter type="Range" id="5152"><Increment id="5153">1</Increment><Max id="5154">100</Max><Min id="5155">0</Min><Name id="5156">ExtTraining1_1IgnoreProb</Name><UIEnabled id="5157">true</UIEnabled><UIInfo id="5158"><Pos id="5159" x="1189" y="1202"/></UIInfo><UIOrder id="5161">0</UIOrder><Units id="5162"/><Value id="5163">0</Value></Parameter><Parameter type="RandomInt" id="5172"><Max id="5173">100</Max><Min id="5174">1</Min><Name id="5175">ExtTrainRand</Name><Seed id="5176">0</Seed><UIEnabled id="5177">false</UIEnabled><UIInfo id="5178"><Pos id="5179" x="1192" y="1305"/></UIInfo><UIOrder id="5181">0</UIOrder><UseSeed id="5182">false</UseSeed><Value id="5183">1</Value></Parameter></StateMachineElement>
             <StateMachineElement type="ScriptElement" id="2996">
               <Name id="2997">NeedsMoreTrials</Name>
               <Result id="2998">
@@ -2506,6 +2540,6 @@ RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graph
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">456</OpenedBlock>
+    <OpenedBlock id="">477</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

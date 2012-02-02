@@ -16,37 +16,52 @@ QSharedPointer<Picto::Timestamper> VirtualDevicePlugin::timeStamper_ = QSharedPo
  */
 void VirtualDevicePlugin::CreateEventSources()
 {
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleMarkSource(5.0, 0.001)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,0,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,1,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,2,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,3,0)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleMarkSource(6.0, 0.001)));
+
+	//Heavy Insane Recording------------------------------------------------------------------------
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,0,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,1,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,2,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,3,0)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,4,0)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,5,0)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,6,0)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,7,0)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,8,0)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,9,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,0,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,1,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,2,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.2, .2,3,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,0,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,1,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,2,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,3,1)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,4,1)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,5,1)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,6,1)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,7,1)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,8,1)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.01,9,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,2)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,3)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,2)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,3)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,4)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,5)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,6)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,7)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,8)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,9)));
+	//-----------------------------------------------------------------------------------------------
+
+	//Heavy Standard Recording--------------------------------------------------------------------
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001,1,0)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001,1,1)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.06, 0.001,3,0)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.08, 0.001,4,0)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,1)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,2)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,3)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,4)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,5)));
+	//--------------------------------------------------------------------------------------------
 }
 
 QString VirtualDevicePlugin::device() const

@@ -24,7 +24,13 @@ win32 {
 contains(DEFINES, QT_QTPROPERTYBROWSER_EXPORT):DEFINES -= QT_QTPROPERTYBROWSER_EXPORT
 !contains(DEFINES, QT_QTPROPERTYBROWSER_IMPORT):DEFINES += QT_QTPROPERTYBROWSER_IMPORT
 }
+
+# Include QWT header's and libs
+INCLUDEPATH += $$(PICTO_THIRD_PARTY)/qwt-6.0/include
+win32:LIBPATH += $$(PICTO_THIRD_PARTY)/qwt-6.0/lib
+
 # Tell everyone that we're running Windows XP SP 2
 win32:!wince*:DEFINES += _WIN32_WINNT=0x0502
 win32:!wince*:DEFINES += _WINVER=0x502
+
 

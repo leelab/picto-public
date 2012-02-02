@@ -4,7 +4,7 @@
 
 SimpleSpikeSource::SimpleSpikeSource(double secPerEvent, double secPerSample, int channel, int unit)
 :
-SimpleEventSource(secPerEvent,secPerSample),
+SimpleEventSource(secPerEvent,secPerSample,secPerEvent),
 channel_(channel),
 unit_(unit)
 {}
@@ -14,8 +14,8 @@ QSharedPointer<Picto::DataUnit> SimpleSpikeSource::buildEvent(double time)
 	newEvent->setChannel(channel_);
 	newEvent->setTimestamp(time);
 	newEvent->setUnit(unit_);
-	QSharedPointer<QList<int>> waveform(new QList<int>());
-	for(int i=0;i<10;i++)
+	QSharedPointer<QVector<float>> waveform(new QVector<float>());
+	for(int i=0;i<40;i++)
 		waveform->push_back(i);
 	newEvent->setWaveform(waveform);
 	return newEvent;
