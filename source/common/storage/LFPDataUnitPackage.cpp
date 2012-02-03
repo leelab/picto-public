@@ -163,24 +163,16 @@ QByteArray LFPDataUnitPackage::getPotentialsAsByteArray()
 	return returnVal;
 }
 
-QVector<double> LFPDataUnitPackage::getPotentialsAsDoubleVec()
+QLinkedList<QPointF> LFPDataUnitPackage::getAlignedDataAsLinkedList()
 {
-	QVector<double> returnVal;
-	foreach(QString potential,potentials_)
-	{
-		returnVal.push_back(potential.toDouble());
-	}
-	return returnVal;
-}
-
-QVector<double> LFPDataUnitPackage::getFittedTimesAsDoubleVec()
-{
-	QVector<double> returnVal;
+	QLinkedList<QPointF> returnVal;
 	double dTimestamp = getFittedTimestamp().toDouble();
 	double resolution = getResolution();
-	for(int i=0;i<numSamples();i++)
+	int i=0;
+	foreach(QString potential,potentials_)
 	{
-		returnVal.push_back(dTimestamp+(i*resolution));
+		returnVal.push_back(QPointF(dTimestamp+(i*resolution),potential.toDouble()));
+		i++;
 	}
 	return returnVal;
 }

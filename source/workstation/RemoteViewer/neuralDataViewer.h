@@ -12,6 +12,7 @@
 
 #include <QUuid>
 #include <QFuture>
+#include <QLinkedList>
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_marker.h>
@@ -38,6 +39,8 @@ public:
 	void addSpikeData(NeuralDataUnit &data);
 	void replot();
 	int getLatestId(){return latestNeuralDataId_;};
+	int currChannel();
+	int currUnit();
 
 private:
 	void setupUi();
@@ -53,13 +56,23 @@ private:
 	QComboBox *unitBox_;
 	QwtPlot *lfpPlot_;
 	QwtPlot *spikePlot_;
-	QVector<QwtPlotCurve*> lfpPlotCurves_;
+	struct DataList
+	{
+		DataList(){exists = false;};
+		QLinkedList<QPointF> d;
+		bool exists;
+	};
+	QVector<DataList> lfpPlotData_;
 	QwtPlotMarker* lfpCurrTimeBar_;
 	QVector<QwtPlotMarker*> lfpStateChangeMarkers_;
-	QVector<QVector<QwtPlotCurve*>> spikePlotCurves_;
+	QwtPlotCurve* lfpPlotCurve_;
+	bool lfpPlotNeedsUpdate_;
+	QVector<QVector<DataList>> spikePlotData_;
 	QwtPlotMarker* spikeCurrTimeBar_;
-	QVector<QVector<int>> spikePlotRowMap_;
 	QVector<QwtPlotMarker*> spikeStateChangeMarkers_;
+	QwtPlotCurve* spikePlotCurve_;
+	bool spikePlotNeedsUpdate_;
+	QMap<int,bool> units_;
 	QString latestRunningPath_;
 
 	int latestNeuralDataId_;

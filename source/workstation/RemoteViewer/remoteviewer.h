@@ -20,6 +20,7 @@ class QLabel;
 class QSlider;
 class QSpinBox;
 class QLineEdit;
+class QTabWidget;
 
 /*!	\brief	This views and controls a remotely running experiment
  *
@@ -204,6 +205,7 @@ private:
 	QLabel *activeExpName_;
 	QSlider *zoomSlider_;
 	QLabel *zoomPercentage_;
+	QTabWidget *mainTabbedFrame_;
 	QLabel *statusBar_;
 	NeuralDataViewer* neuralDataViewer_;
 

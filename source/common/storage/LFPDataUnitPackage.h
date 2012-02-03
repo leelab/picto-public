@@ -6,6 +6,7 @@
 #include <QString>
 #include <QVector>
 #include <QList>
+#include <QLinkedList>
 #include <QMap>
 
 
@@ -68,8 +69,7 @@ public:
 	double getResolution(){return resolution_;};
 	QString getPotentials(){return potentials_.join(" ");};
 	QByteArray getPotentialsAsByteArray();
-	QVector<double> getPotentialsAsDoubleVec();
-	QVector<double> getFittedTimesAsDoubleVec();
+	QLinkedList<QPointF> getAlignedDataAsLinkedList();
 	void setPotentialsFromByteArray(QByteArray potentials);
 	int getChannel(){return channel_;};
 

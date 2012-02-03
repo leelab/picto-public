@@ -795,13 +795,15 @@ QString SessionInfo::selectStateVariables(QString fromTime)
 	QSqlQuery query(cacheDb);
 	query.prepare("SELECT data FROM currentstate WHERE time > :time");
 	query.bindValue(":time",fromTime);
-	QMutexLocker locker(databaseWriteMutex_.data());
+	if(!databaseWriteMutex_->tryLock())
+		return result;
 	executeReadQuery(&query,"",true);
 	while(query.next())
 	{
 		result.append(query.value(0).toString());
 	}
 	query.finish();
+	databaseWriteMutex_->unlock();
 	return result;
 }
 
@@ -809,7 +811,8 @@ QString SessionInfo::selectLatestNeuralData(QString fromDataId)
 {
 	QString result;
 	int afterDataId = fromDataId.toInt();
-	latestNeuralDataMutex_.lock();
+	if(!latestNeuralDataMutex_.tryLock())
+		return result;
 	QLinkedList<NeuralVariable>::iterator iter;
 	//Find the afterDataId entry and append everything after that.
 	//Don't just look for when DataID's are higher, because in the case

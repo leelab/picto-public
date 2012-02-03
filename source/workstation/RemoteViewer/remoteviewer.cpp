@@ -40,6 +40,7 @@
 #include <QSpinBox>
 #include <QLineEdit>
 #include <QtConcurrentRun>
+#include <QTabWidget>
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -421,7 +422,10 @@ void RemoteViewer::runState()
 			stateTrigger_ = DisjoinSessionRequest;
 		}
 		if(proxyListBox_->currentIndex() > 0)
+		{
 			updateNeuralData();
+			neuralDataViewer_->replot();
+		}
 		break;
 	case PausedSession:
 		if(zoomChanged_)
@@ -441,7 +445,10 @@ void RemoteViewer::runState()
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
 		if(proxyListBox_->currentIndex() > 0)
+		{
 			updateNeuralData();
+			neuralDataViewer_->replot();
+		}
 		break;
 	case RunningSession:
 		if(zoomChanged_)
@@ -461,7 +468,10 @@ void RemoteViewer::runState()
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
 		if(proxyListBox_->currentIndex() > 0)
+		{
 			updateNeuralData();
+			neuralDataViewer_->replot();
+		}
 		break;
 	case EndingSession:
 		if(endSession() || remoteStatus < Stopped)
@@ -550,6 +560,10 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
+		mainTabbedFrame_->setCurrentIndex(0);
+		mainTabbedFrame_->setTabEnabled(0,false);
+		mainTabbedFrame_->setTabEnabled(1,false);
+		mainTabbedFrame_->setTabIcon(1,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -575,6 +589,10 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
+		mainTabbedFrame_->setCurrentIndex(0);
+		mainTabbedFrame_->setTabEnabled(0,false);
+		mainTabbedFrame_->setTabEnabled(1,false);
+		mainTabbedFrame_->setTabIcon(1,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -599,6 +617,10 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
+		mainTabbedFrame_->setCurrentIndex(0);
+		mainTabbedFrame_->setTabEnabled(0,false);
+		mainTabbedFrame_->setTabEnabled(1,false);
+		mainTabbedFrame_->setTabIcon(1,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -623,6 +645,10 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
+		mainTabbedFrame_->setCurrentIndex(0);
+		mainTabbedFrame_->setTabEnabled(0,false);
+		mainTabbedFrame_->setTabEnabled(1,false);
+		mainTabbedFrame_->setTabIcon(1,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -644,6 +670,7 @@ void RemoteViewer::enterState()
 		loadPropsAction_->setEnabled(true);
 		pixmapVisualTarget_->setZoom(zoomValue_);
 		renderingTarget_->showSplash();
+		mainTabbedFrame_->setTabEnabled(0,true);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -665,6 +692,7 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(true);
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
+		mainTabbedFrame_->setTabEnabled(0,true);
 		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
@@ -688,6 +716,7 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(true);
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
+		mainTabbedFrame_->setTabEnabled(0,true);
 		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
@@ -714,6 +743,10 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(activeExperiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
+		mainTabbedFrame_->setCurrentIndex(0);
+		mainTabbedFrame_->setTabEnabled(0,false);
+		mainTabbedFrame_->setTabEnabled(1,false);
+		mainTabbedFrame_->setTabIcon(1,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -929,9 +962,15 @@ void RemoteViewer::setupUi()
 	leftPane->addLayout(zoomLayout);
 	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
 
+	mainTabbedFrame_ = new QTabWidget(this);
+	mainTabbedFrame_->addTab(visualTargetHost_,"Behavioral");
+	mainTabbedFrame_->addTab(neuralDataViewer_,"Neural");
+	mainTabbedFrame_->setTabEnabled(0,false);
+	mainTabbedFrame_->setTabEnabled(1,false);
+
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	operationLayout->addLayout(leftPane);
-	operationLayout->addWidget(visualTargetHost_);
+	operationLayout->addWidget(mainTabbedFrame_);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
 
@@ -939,7 +978,6 @@ void RemoteViewer::setupUi()
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
 	mainLayout->addLayout(operationLayout);
-	mainLayout->addWidget(neuralDataViewer_);
 	//mainLayout->addStretch(1);
 	mainLayout->addWidget(statusBar_);
 	
@@ -1239,7 +1277,12 @@ void RemoteViewer::updateNeuralData()
 		}
 		xmlReader->readNext();
 	}
-	neuralDataViewer_->replot();
+	//Only once we actually receive neural data do we enable the neural tab of the mainTabbedFrame
+	mainTabbedFrame_->setTabEnabled(1,true);
+	if(mainTabbedFrame_->tabIcon(1).isNull())
+	{
+		mainTabbedFrame_->setTabIcon(1,QIcon(":/icons/runningWorkstation.png"));
+	}
 }
 
 /*! \brief returns the current status of a remote director

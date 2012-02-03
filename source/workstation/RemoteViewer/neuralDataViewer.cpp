@@ -54,6 +54,8 @@ NeuralDataViewer::NeuralDataViewer(QSharedPointer<Picto::Engine::PictoEngine> en
 	latestNeuralDataId_ = -1;
 	axisMin_ = 0;
 	axisMax_ = NEURAL_PLOT_WINDOW_SECS;
+	lfpPlotNeedsUpdate_ = true;
+	spikePlotNeedsUpdate_ = true;
 }
 
 NeuralDataViewer::~NeuralDataViewer()
@@ -71,24 +73,8 @@ void NeuralDataViewer::initialize()
 
 void NeuralDataViewer::deinitialize()
 {
-	foreach(QwtPlotCurve* curve,lfpPlotCurves_)
-	{
-		if(!curve)
-			continue;
-		curve->detach();
-		delete curve;
-	}
-
-	foreach(QVector<QwtPlotCurve*> curveVec,spikePlotCurves_)
-	{
-		foreach(QwtPlotCurve* curve,curveVec)
-		{
-			if(!curve)
-				continue;
-			curve->detach();
-			delete curve;
-		}
-	}
+	lfpPlotData_.clear();
+	spikePlotData_.clear();
 
 	foreach(QwtPlotMarker* stateMarker,spikeStateChangeMarkers_)
 	{
@@ -102,12 +88,8 @@ void NeuralDataViewer::deinitialize()
 		delete stateMarker;
 	}
 
-	lfpPlotCurves_.clear();
-	spikePlotCurves_.clear();
 	spikeStateChangeMarkers_.clear();
 	lfpStateChangeMarkers_.clear();
-	lfpPlot_->replot();
-	spikePlot_->replot();
 	updatePlotOptions();
 }
 
@@ -116,38 +98,35 @@ void NeuralDataViewer::addLFPData(LFPDataUnitPackage &data)
 	int currDataId = data.getDataID();
 	if(currDataId > latestNeuralDataId_)
 		latestNeuralDataId_ = currDataId;
-	while(lfpPlotCurves_.size() <= data.getChannel())
+	
+	//If there aren't enough data lists yet, make the lists
+	while(lfpPlotData_.size() <= data.getChannel())
 	{
-		lfpPlotCurves_.push_back(NULL);
+		lfpPlotData_.push_back(DataList());
+	}
+	if(!lfpPlotData_[data.getChannel()].exists)
+	{
+		lfpPlotData_[data.getChannel()].exists = true;
 		updatePlotOptions();
 	}
-	QwtPointArrayData* pointData;
-	if(!lfpPlotCurves_[data.getChannel()])
+
+	//Add new data to linked list
+	lfpPlotData_[data.getChannel()].d += data.getAlignedDataAsLinkedList();
+
+	//Remove all data points from times before the beginning of the current plot
+	QLinkedList<QPointF>::iterator it;
+	for(it = lfpPlotData_[data.getChannel()].d.begin();
+		it != lfpPlotData_[data.getChannel()].d.end(); 
+		it++)
 	{
-		lfpPlotCurves_[data.getChannel()] = new QwtPlotCurve(QString("Ch%1").arg(data.getChannel()));
-		lfpPlotCurves_[data.getChannel()]->setPen(QPen(Qt::darkGreen));
-		pointData = new QwtPointArrayData(QVector<double>(),QVector<double>());
-		lfpPlotCurves_[data.getChannel()]->setData(pointData);
-	}
-	else
-	{
-		pointData = static_cast<QwtPointArrayData*>(lfpPlotCurves_[data.getChannel()]->data());
-	}
-	QVector<double> times = pointData->xData();
-	QVector<double> pots = pointData->yData();
-	times += data.getFittedTimesAsDoubleVec();
-	pots += data.getPotentialsAsDoubleVec();
-	for(int i=0;i<times.size();i++)
-	{
-		if(times[i] >= axisMin_)
+		if(it->x() >= axisMin_)
 		{
-			times.remove(0,i);
-			pots.remove(0,i);
 			break;
 		}
 	}
-	pointData = new QwtPointArrayData(times,pots);
-	lfpPlotCurves_[data.getChannel()]->setData(pointData);
+	lfpPlotData_[data.getChannel()].d.erase(lfpPlotData_[data.getChannel()].d.begin(),it);
+	if(data.getChannel() == currChannel())
+		lfpPlotNeedsUpdate_ = true;
 }
 void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
 {
@@ -155,52 +134,47 @@ void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
 	if(currDataId > latestNeuralDataId_)
 		latestNeuralDataId_ = currDataId;
 
-	while(spikePlotCurves_.size() <= data.getChannel())
+	//If there aren't enough curves slots yet, make the slots
+	while(spikePlotData_.size() <= data.getChannel())
 	{
-		spikePlotCurves_.push_back(QVector<QwtPlotCurve*>());
+		spikePlotData_.push_back(QVector<DataList>());
+	}
+	while(spikePlotData_[data.getChannel()].size() <= data.getUnit())
+	{
+		spikePlotData_[data.getChannel()].push_back(DataList());
+	}
+	if(!spikePlotData_[data.getChannel()][data.getUnit()].exists)
+	{
+		spikePlotData_[data.getChannel()][data.getUnit()].exists = true;
 		updatePlotOptions();
 	}
-	while(spikePlotCurves_[data.getChannel()].size() <= data.getUnit())
+	
+	//Add new data to linked list
+	spikePlotData_[data.getChannel()][data.getUnit()].d.push_back(QPointF(data.getFittedtime()-.000001,0));
+	spikePlotData_[data.getChannel()][data.getUnit()].d.push_back(QPointF(data.getFittedtime(),1));
+	spikePlotData_[data.getChannel()][data.getUnit()].d.push_back(QPointF(data.getFittedtime()+.000001,0));
+	
+	//Remove all data points from times before the beginning of the current plot
+	QLinkedList<QPointF>::iterator it;
+	for(it = spikePlotData_[data.getChannel()][data.getUnit()].d.begin();
+		it != spikePlotData_[data.getChannel()][data.getUnit()].d.end(); 
+		it++)
 	{
-		spikePlotCurves_[data.getChannel()].push_back(NULL);
-	}
-	QwtPointArrayData* pointData;
-	if(!spikePlotCurves_[data.getChannel()][data.getUnit()])
-	{
-		spikePlotCurves_[data.getChannel()][data.getUnit()] = new QwtPlotCurve(QString("Ch%1 Un%2").arg(data.getChannel()).arg(data.getUnit()));
-		spikePlotCurves_[data.getChannel()][data.getUnit()]->setPen(QPen(Qt::darkGreen));
-		pointData = new QwtPointArrayData(QVector<double>(),QVector<double>());
-		spikePlotCurves_[data.getChannel()][data.getUnit()]->setData(pointData);
-		updatePlotOptions();
-	}
-	else
-	{
-		pointData = static_cast<QwtPointArrayData*>(spikePlotCurves_[data.getChannel()][data.getUnit()]->data());
-	}
-	QVector<double> times = pointData->xData();
-	QVector<double> y = pointData->yData();
-	times.push_back(data.getFittedtime()-.000001);
-	times.push_back(data.getFittedtime());
-	times.push_back(data.getFittedtime()+.000001);
-	y.push_back(0);
-	y.push_back(1);
-	y.push_back(0);
-	for(int i=0;i<times.size();i++)
-	{
-		if(times[i] >= axisMin_)
+		if(it->x() >= axisMin_)
 		{
-			times.remove(0,i);
-			y.remove(0,i);
 			break;
 		}
 	}
-	pointData = new QwtPointArrayData(times,y);
-	spikePlotCurves_[data.getChannel()][data.getUnit()]->setData(pointData);
+	spikePlotData_[data.getChannel()][data.getUnit()].d.erase(spikePlotData_[data.getChannel()][data.getUnit()].d.begin(),it);
+	if((data.getChannel() == currChannel()) && (data.getUnit() == currUnit()))
+		spikePlotNeedsUpdate_ = true;
 }
+
 
 void NeuralDataViewer::replot()
 {
 	//Move plot axes with time
+	bool marksAdded_ = false;
 	if(engine_)
 	{
 		double currTime = engine_->getLastTimeStateDataRequested();
@@ -224,6 +198,7 @@ void NeuralDataViewer::replot()
 		if(!runningPath.isEmpty() && runningPath != latestRunningPath_)
 		{
 			latestRunningPath_ = runningPath;
+			//Add a mark to the spike plot
 			QwtPlotMarker* newMark = new QwtPlotMarker();
 			newMark->setLineStyle(QwtPlotMarker::VLine);
 			newMark->setLinePen(QPen(Qt::darkBlue));
@@ -235,7 +210,21 @@ void NeuralDataViewer::replot()
 			newMark->setLabelAlignment(Qt::AlignRight);
 			newMark->attach(spikePlot_);
 			spikeStateChangeMarkers_.append(newMark);
+			
+			//Add a mark to the lfp plot
+			newMark = new QwtPlotMarker();
+			newMark->setLineStyle(QwtPlotMarker::VLine);
+			newMark->setLinePen(QPen(Qt::darkBlue));
+			newMark->setXValue(currTime);
+			makerLabel.setColor(QColor(Qt::yellow));
+			newMark->setLabel(makerLabel);
+			newMark->setLabelOrientation(Qt::Vertical);
+			newMark->setLabelAlignment(Qt::AlignRight);
+			newMark->attach(lfpPlot_);
+			marksAdded_ = true;
 		}
+		
+		//Remove old markers from spikePlot
 		for(int i=0;i<spikeStateChangeMarkers_.size();i++)
 		{
 			if(spikeStateChangeMarkers_[i]->xValue()>=axisMin_)
@@ -251,9 +240,100 @@ void NeuralDataViewer::replot()
 				spikeStateChangeMarkers_.clear();
 			}
 		}
+
+		//Remove old markers from lfpPlot
+		for(int i=0;i<lfpStateChangeMarkers_.size();i++)
+		{
+			if(lfpStateChangeMarkers_[i]->xValue()>=axisMin_)
+			{
+				lfpStateChangeMarkers_.remove(0,i);
+				break;
+			}
+			lfpStateChangeMarkers_[i]->detach();
+			delete lfpStateChangeMarkers_[i];
+			if(i == lfpStateChangeMarkers_.size()-1)
+			{	//In this case we won't return through the loop and remove
+				//deleted markers, so just clear everything now.
+				lfpStateChangeMarkers_.clear();
+			}
+		}
 	}
+
+	//Add data to lfp curve
+	if(lfpPlotNeedsUpdate_)
+	{
+		int lfpPlotSize = 0;
+		if((currChannel() >=0) && (currChannel() < lfpPlotData_.size()))
+			lfpPlotSize = lfpPlotData_[currChannel()].d.size();
+		QwtPointSeriesData* pointData;
+		QVector<QPointF> dataPoints;
+		dataPoints.resize(lfpPlotSize);
+		if(lfpPlotSize) 
+		{
+			int i=0;
+			foreach(QPointF point,lfpPlotData_[currChannel()].d)
+			{
+				dataPoints[i] = point;
+				i++;
+			}
+		}
+		pointData = new QwtPointSeriesData(dataPoints);
+		lfpPlotCurve_->setData(pointData);
+		lfpPlotNeedsUpdate_ = false;
+	}
+
+	//Add data to spike curve
+	if(spikePlotNeedsUpdate_)
+	{
+		int spikePlotSize = 0;
+		if((currChannel() >=0) 
+			&& (currChannel() < lfpPlotData_.size()) 
+			&& (currUnit()>=0) 
+			&& (currUnit()<spikePlotData_[currChannel()].size()))
+			spikePlotSize = spikePlotData_[currChannel()][currUnit()].d.size();
+		
+		QwtPointSeriesData* pointData;
+		QVector<QPointF> dataPoints;
+		dataPoints.resize(spikePlotSize);
+		if(spikePlotSize)
+		{
+			int i=0;
+			foreach(QPointF point,spikePlotData_[currChannel()][currUnit()].d)
+			{
+				dataPoints[i] = point;
+				i++;
+			}
+		}
+		pointData = new QwtPointSeriesData(dataPoints);
+		spikePlotCurve_->setData(pointData);
+		spikePlotNeedsUpdate_ = false;
+	}
+
+	////If something changed, plot the lfp curve
+	//if(marksAdded_ || lfpPlotNeedsUpdate_)
+	//{
+	//	lfpPlot_->replot();
+	//	lfpPlotNeedsUpdate_ = false;
+	//}
+	////If something changed, plot the spike curve
+	//if(marksAdded_ || spikePlotNeedsUpdate_)
+	//{
+	//	spikePlot_->replot();
+	//	spikePlotNeedsUpdate_ = false;
+	//}
 	lfpPlot_->replot();
 	spikePlot_->replot();
+
+}
+
+int NeuralDataViewer::currChannel()
+{
+	return channelBox_->itemData(channelBox_->currentIndex()).toInt();
+}
+
+int NeuralDataViewer::currUnit()
+{
+	return unitBox_->itemData(unitBox_->currentIndex()).toInt();
 }
 
 //! \brief Sets up the user interface portions of the GUI
@@ -273,6 +353,11 @@ void NeuralDataViewer::setupUi()
 	lfpCurrTimeBar_->setLineStyle(QwtPlotMarker::VLine);
 	lfpCurrTimeBar_->setLinePen(QPen(Qt::red));
 	lfpCurrTimeBar_->attach(lfpPlot_);
+	lfpPlotCurve_ = new QwtPlotCurve();
+	lfpPlotCurve_->setPen(QPen(Qt::darkGreen));
+	lfpPlotCurve_->setData(new QwtPointSeriesData(QVector<QPointF>()));
+	lfpPlotCurve_->attach(lfpPlot_);
+	
 	spikePlot_ = new QwtPlot(QwtText("Spike Plot"),this);
 	spikePlot_->setCanvasBackground(QBrush(Qt::black));
 	spikePlot_->insertLegend(new QwtLegend(this),QwtPlot::BottomLegend);
@@ -280,11 +365,16 @@ void NeuralDataViewer::setupUi()
 	spikeCurrTimeBar_->setLineStyle(QwtPlotMarker::VLine);
 	spikeCurrTimeBar_->setLinePen(QPen(Qt::red));
 	spikeCurrTimeBar_->attach(spikePlot_);
+	spikePlotCurve_ = new QwtPlotCurve();
+	spikePlotCurve_->setPen(QPen(Qt::darkGreen));
+	spikePlotCurve_->setData(new QwtPointSeriesData(QVector<QPointF>()));
+	spikePlotCurve_->attach(spikePlot_);
+
 
 	//Plot layout
-	QVBoxLayout* plotOpsLayout = new QVBoxLayout;
+	QHBoxLayout* plotOpsLayout = new QHBoxLayout;
 	QVBoxLayout* plotWinLayout = new QVBoxLayout;
-	QHBoxLayout* plotLayout = new QHBoxLayout;
+	QVBoxLayout* plotLayout = new QVBoxLayout;
 	plotOpsLayout->addWidget(channelBox_);
 	plotOpsLayout->addWidget(unitBox_);
 	plotOpsLayout->addStretch(1);
@@ -304,27 +394,22 @@ void NeuralDataViewer::updatePlotOptions()
 	int currUnit = unitBox_->itemData(unitBox_->currentIndex()).toInt();
 	channelBox_->clear();
 	unitBox_->clear();
-	QHash<int,bool> channels_;
-	//Build up list of channels according to lfpPlotCurves_ and spikePlotCurves_
-	for(int i=0;i<lfpPlotCurves_.size();i++)
-	{
-		if(lfpPlotCurves_[i])
-		{
-			channels_[i] = true;
-		}
-	}
-	for(int i=0;i<spikePlotCurves_.size();i++)
-	{
-		if(spikePlotCurves_[i].size())
-		{
-			channels_[i] = true;
-		}
-	}
 
 	//Add the channels to the combobox
-	for(QHash<int,bool>::iterator it = channels_.begin();it != channels_.end();it++)
+	QMap<int,bool> channels;
+	for(int i=0;i<lfpPlotData_.size();i++)
 	{
-		channelBox_->addItem(QString("Channel %1").arg(it.key()),it.key());
+		if(lfpPlotData_[i].exists)
+			channels[i] = true;
+	}
+	for(int i=0;i<spikePlotData_.size();i++)
+	{
+		if(spikePlotData_[i].size())
+			channels[i] = true;
+	}
+	foreach(int ch,channels.keys())
+	{
+		channelBox_->addItem(QString("Channel %1").arg(ch),ch);
 	}
 		
 	//Reset channel to what it was before
@@ -349,63 +434,36 @@ void NeuralDataViewer::updatePlotOptions()
 			break;
 		}
 	}
-
 }
 
 void NeuralDataViewer::plotChannelChanged(int)
 {
 	int ch = channelBox_->itemData(channelBox_->currentIndex()).toInt();
 	unitBox_->clear();
-	//Detach current curve from plot
-	foreach(QwtPlotCurve* curve,lfpPlotCurves_)
-	{
-		if(curve)
-			curve->detach();
-	}
 
-	if(spikePlotCurves_.size() <= ch)
-	{
-		lfpPlot_->replot();
-		spikePlot_->replot();
-		return;
-	}
-
-	for(int i=0;i<spikePlotCurves_[ch].size();i++)
-	{
-		if(spikePlotCurves_[ch][i])
-		{
-			unitBox_->addItem(QString("Unit %1").arg(i),i);
+	QMap<int,bool> units;
+	if(spikePlotData_.size() > ch)
+	{	//If spikePlotData_ is empty, we might still get called with a zero ch.
+		for(int i=0;i<spikePlotData_[ch].size();i++)
+		{// Create map of all units in this channel.
+			if(spikePlotData_[ch][i].exists)
+				units[i] = true;
 		}
 	}
-
-	if((ch >=0) 
-		&& (ch < lfpPlotCurves_.size()) 
-		&& lfpPlotCurves_[ch])
-		lfpPlotCurves_[ch]->attach(lfpPlot_);
+	foreach(int unit,units.keys())
+	{
+		unitBox_->addItem(QString("Unit %1").arg(unit),unit);
+	}
 
 	//This will take care of resetting the spike plot for the
 	//case where channel changes but unit index doesn't change.
 	plotUnitChanged(unitBox_->currentIndex());
-	lfpPlot_->replot();
+	lfpPlotNeedsUpdate_ = true;
+	replot();
 }
 
 void NeuralDataViewer::plotUnitChanged(int)
 {
-	int ch = channelBox_->itemData(channelBox_->currentIndex()).toInt();
-	int unit = unitBox_->itemData(unitBox_->currentIndex()).toInt();
-	foreach(QVector<QwtPlotCurve*> curveVec,spikePlotCurves_)
-	{
-		foreach(QwtPlotCurve* curve,curveVec)
-		{
-			if(curve)
-				curve->detach();
-		}
-	}
-	if((ch >=0) 
-		&& (ch < spikePlotCurves_.size()) 
-		&& (unit >= 0)
-		&& unit < spikePlotCurves_[ch].size()
-		&& spikePlotCurves_[ch][unit])
-	spikePlotCurves_[ch][unit]->attach(spikePlot_);
-	spikePlot_->replot();
+	spikePlotNeedsUpdate_ = true;
+	replot();
 }

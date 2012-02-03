@@ -1,3 +1,4 @@
+#include <QApplication>
 #include "HardwareSetup.h"
 
 #define NI_STUFF
@@ -123,7 +124,7 @@ bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType)
  *	been setup.  This is because the MouseSignalChannel requires a visual target.
  */
 bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
-{
+{ 
 	if(channelType == Mouse)
 	{
 		if(!renderingTargetsSetup_)
@@ -135,6 +136,7 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 	}
 	else if(channelType == EyetrackerLegacySystemXp)
 	{
+		QApplication::setOverrideCursor(Qt::BlankCursor);	//In case mouse happens to be on monkey screen
 #if defined WIN32 && defined NI_STUFF
 		QSharedPointer<Picto::LegacySystemXPAnalogInputSignalChannel> aiChannel(new Picto::LegacySystemXPAnalogInputSignalChannel(250));
 		aiChannel->addAiChannel("xpos",xChan_);
@@ -146,6 +148,7 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 	}
 	else if(channelType == EyetrackerPictoBoxXp)
 	{
+		QApplication::setOverrideCursor(Qt::BlankCursor);	//In case mouse happens to be on monkey screen
 #if defined WIN32 && defined NI_STUFF
 		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
 		aiChannel->addAiChannel("xpos",xChan_);
