@@ -363,68 +363,6 @@ void AnalysisViewer::executeCommand()
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-double inArray[]={1.0,2.0,3.0,4.0,5.0,9.0,8.0,7.0,6.0};
-QByteArray byteArray = QByteArray::fromRawData(reinterpret_cast<const char*>(inArray),sizeof(inArray));
-QByteArray outputArray;
-query.prepare("UPDATE lfp SET data=:data");
-query.bindValue(":data",byteArray);
-bool done = query.exec();
-if(!done)
-{
-	outputBox_->setText("Update Query Failed: " + query.lastError().text().toAscii());
-	progressBar_->setRange(0,100);
-	return;
-}
-query.prepare("SELECT data FROM lfp LIMIT 1");
-done = query.exec();
-if(!done || !query.next())
-{
-	outputBox_->setText("Select Query Failed: " + query.lastError().text().toAscii());
-	progressBar_->setRange(0,100);
-	return;
-}
-outputArray = query.value(0).toByteArray();
-const double* outArray = reinterpret_cast<const double*>(outputArray.constData());
-for(int i=0;i<(sizeof(inArray)/sizeof(double));i++)
-{
-	outputBox_->append(QString("InArray Val: %1 ").arg(QString::number(inArray[i])));
-	if(inArray[i] == outArray[i])
-		outputBox_->append("matches ");
-	else
-		outputBox_->append("doesn't match ");
-	outputBox_->append(QString("OutArray Val: %1\n").arg(QString::number(outArray[i])));
-}
-progressBar_->setRange(0,100);
-return;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//Get Prop Vals
 	QLinkedList<PropData> propVals;
 	query.prepare("SELECT p.value, p.dataid FROM properties p WHERE p.assetid=:assetid ORDER BY p.dataid");
