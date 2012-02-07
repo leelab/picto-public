@@ -287,7 +287,7 @@ void NeuralDataViewer::replot()
 	{
 		int spikePlotSize = 0;
 		if((currChannel() >=0) 
-			&& (currChannel() < lfpPlotData_.size()) 
+			&& (currChannel() < spikePlotData_.size()) 
 			&& (currUnit()>=0) 
 			&& (currUnit()<spikePlotData_[currChannel()].size()))
 			spikePlotSize = spikePlotData_[currChannel()][currUnit()].d.size();

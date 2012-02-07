@@ -91,7 +91,6 @@ public:
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
-	//virtual void elementAdded(QSharedPointer<ResultContainer> element);
 	virtual QString defaultTagName(){return "StateMachine";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

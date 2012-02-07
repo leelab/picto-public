@@ -8,8 +8,8 @@ MachineContainer::MachineContainer(QString transitionTag, QString elementTag)
 transitionTag_(transitionTag),
 elementTag_(elementTag)
 {
-	AddDefinableObjectFactory(transitionTag_,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Transition::Create))));
+	transitionFactory_ = QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Transition::Create)));
+	AddDefinableObjectFactory(transitionTag_,transitionFactory_);
 	elementFactory_ = QSharedPointer<AssetFactory>(new AssetFactory(0,-1));
 	AddDefinableObjectFactory(elementTag_,elementFactory_);
 	AddDefinableProperty("EntryScript","");

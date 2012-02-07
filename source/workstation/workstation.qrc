@@ -60,6 +60,7 @@
         <file>icons/result.png</file>
         <file>icons/statemachine.svg</file>
         <file>icons/state.svg</file>
+        <file>icons/pausepoint.svg</file>
         <file>icons/scriptelement.svg</file>
         <file>icons/scriptable.svg</file>
         <file>icons/parameter.svg</file>

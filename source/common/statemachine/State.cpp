@@ -36,8 +36,6 @@ State::State() :
 	//Define script properties
 	AddDefinableProperty("FrameScript","");
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
-	AddDefinableProperty(QVariant::Int,"Revision",-1);
-	AddDefinableProperty(QVariant::Int,"EngineNeeded",-1);
 	
 	//Define generatable control elements.
 	elementFactory_->addAssetType(TestController::ControllerType(),
@@ -50,43 +48,6 @@ State::State() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
 	elementFactory_->addAssetType(ChoiceController::ControllerType(),
 		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
-
-	//AddDefinableObjectFactory("Scene",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Scene::Create))) );
-	//AddDefinableObjectFactory("Link",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlLink::Create))) );
-
-
-	//Add UI Elements
-	//Add Audio Elements
-	//AddDefinableObjectFactory("AudioElement",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))) );
-	////Add Visual Elements
-	//QSharedPointer<AssetFactory> factory(new AssetFactory());
-	//factory->addAssetType(ArrowGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
-	//factory->addAssetType(BoxGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
-	//factory->addAssetType(CircleGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
-	//factory->addAssetType(EllipseGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
-	//factory->addAssetType(LineGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
-	//factory->addAssetType(PictureGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
-	//factory->addAssetType(RandomlyFilledGridGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
-	//factory->addAssetType(TextGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
-	//AddDefinableObjectFactory("VisualElement",factory);
-	//Add background color property
-
-
-
-
-	//at some point, these should actually do something, but for the moment
-	//we'll leave them as -1 to show that they aren't being used
-	revision_ = -1;
-	engineNeeded_ = -1;
-
 }
 
 QSharedPointer<Asset> State::Create()
@@ -98,7 +59,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
 
-	sigChannel_ = engine->getSignalChannel("PositionChannel");
+	//sigChannel_ = engine->getSignalChannel("PositionChannel");
 	//Add a cursor for the user input
 	//addCursor();
 
@@ -127,11 +88,11 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
-		//----------  Draw the scene --------------
-		scene_->render(engine);
+		//----------  Draw the scene.  This will automatically send behavioral data to server --------------
+		scene_->render(engine,getAssetId());
 
-		//------------- Send Behavioral data to server --------------
-		sendBehavioralData(engine);
+		////------------- Send Behavioral data to server --------------
+		//sendBehavioralData(engine);
 
 		//---------- Check for directives from the server -----------
 		//updateServer(engine);
@@ -203,7 +164,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//resetScriptableValues();
 	sigChannel_ = engine->getSignalChannel("PositionChannel");
-	lastFrameCheckTime_ = lastTransitionTime_;
 
 	//Add a cursor for the user input
 	addCursor();
@@ -245,9 +205,9 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		QCoreApplication::processEvents();
 
 		//----------  Draw the scene --------------
-		scene_->render(engine);
+		scene_->render(engine,getAssetId());
 
-		//---------   Erase the latest cursor values (sendBehavioralData takes care of this in master)
+		//---------   Erase the latest cursor values (This happens in master when data is sent to server)
 		sigChannel_->getValues();
 
 		//--------- Check for master state change ------------
@@ -285,107 +245,108 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-/*! \brief Sends the current behavioral data to the server
- *
- *	We update the server with all of the usefule behavioral data.  This includes 
- *	the time at which the most recent frame was drawn, as well as all the input
- *	coordinates from the subject.  Since we're in a hurry, we use the "registered"
- *	command functions in the command channel to send commands without having to 
- *	wait for reponses.  The responses we get will all contain directives, so we 
- *	have to handle those here as well.
- */
-void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
-{
-	//Create a new frame data store
-	FrameDataUnitPackage frameData;
-	Timestamper stamper;
-
-	frameData.addFrame(scene_->getLatestFirstPhosphorTime(),getAssetId());
-	engine->setLastFrame(frameData.getLatestFrameId());
-
-	//Update the BehavioralDataUnitPackage
-	BehavioralDataUnitPackage behavData;
-
-	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
-
-	if(dataChannel.isNull())
-		return;
-
-	//Note that the call to getValues clears out any existing values,
-	//so it should only be made once per frame.
-	behavData.emptyData();
-	behavData.addData(sigChannel_->getValues());
-
-	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
-	QSharedPointer<StateDataUnitPackage> statePack = engine->getStateDataPackage();
-
-	//send a PUTDATA command to the server with the most recent behavioral data
-	QSharedPointer<Picto::ProtocolResponse> dataResponse;
-	QString status = "running";
-	int engCmd = engine->getEngineCommand();
-	switch(engCmd)
-	{
-	case Engine::PictoEngine::PlayEngine:
-		status = "running";
-		break;
-	case Engine::PictoEngine::PauseEngine:
-		status = "paused";
-		break;
-	case Engine::PictoEngine::StopEngine:
-		status = "stopped";
-		break;
-	}
-	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
-	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
-
-	QByteArray dataXml;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
-
-	xmlWriter->writeStartElement("Data");
-	if(behavData.length())
-		behavData.toXml(xmlWriter);
-	if(propPack && propPack->length())
-		propPack->toXml(xmlWriter);
-	if(statePack && statePack->length())
-		statePack->toXml(xmlWriter);
-	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
-	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
-	{
-		reward->toXml(xmlWriter);
-	}
-	frameData.toXml(xmlWriter);	//Frame data must go last so that server knows when it reads
-								//in a frame, that the data it has defines the state that was
-								//in place at that frame.
-	xmlWriter->writeEndElement();
-
-	dataCommand->setContent(dataXml);
-	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
-	QUuid commandUuid = QUuid::createUuid();
-
-	dataChannel->sendRegisteredCommand(dataCommand);
-
-	dataChannel->processResponses(0);
-	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
-	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
-	//next frame.
-	//QTime timer;
-	//timer.start();
-	dataChannel->assureConnection(5);
-	//qDebug(QString("ASSURECONNECTION time: %1").arg(timer.elapsed()).toAscii());
-	////check for and process responses
-	//while(dataChannel->waitForResponse(0))
-	//{
-	//	dataResponse = dataChannel->getResponse();
-	//	Q_ASSERT(!dataResponse.isNull());
-	//	Q_ASSERT(dataResponse->getResponseType() == "OK");
-	//	processStatusDirective(engine,dataResponse);
-
-	//}
-
-	//This is useful for debugging, but we should let the state machine handle server drop-outs
-	//Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
-
-}
+///*! \brief Sends the current behavioral data to the server
+// *
+// *	We update the server with all of the usefule behavioral data.  This includes 
+// *	the time at which the most recent frame was drawn, as well as all the input
+// *	coordinates from the subject.  Since we're in a hurry, we use the "registered"
+// *	command functions in the command channel to send commands without having to 
+// *	wait for reponses.  The responses we get will all contain directives, so we 
+// *	have to handle those here as well.
+// */
+//void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
+//{
+//	//Create a new frame data store
+//	FrameDataUnitPackage frameData;
+//	Timestamper stamper;
+//
+//	frameData.addFrame(scene_->getLatestFirstPhosphorTime(),getAssetId());
+//	engine->setLastFrame(frameData.getLatestFrameId());
+//
+//	//Update the BehavioralDataUnitPackage
+//	BehavioralDataUnitPackage behavData;
+//
+//	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
+//
+//	if(dataChannel.isNull())
+//		return;
+//
+//	//Note that the call to getValues clears out any existing values,
+//	//so it should only be made once per frame.
+//	behavData.emptyData();
+//	behavData.addData(sigChannel_->getValues());
+//
+//	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
+//	QSharedPointer<StateDataUnitPackage> statePack = engine->getStateDataPackage();
+//
+//	//send a PUTDATA command to the server with the most recent behavioral data
+//	QSharedPointer<Picto::ProtocolResponse> dataResponse;
+//	QString status = "running";
+//	int engCmd = engine->getEngineCommand();
+//	switch(engCmd)
+//	{
+//	case Engine::PictoEngine::PlayEngine:
+//		status = "running";
+//		break;
+//	case Engine::PictoEngine::PauseEngine:
+//		status = "paused";
+//		break;
+//	case Engine::PictoEngine::StopEngine:
+//		status = "stopped";
+//		break;
+//	}
+//	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
+//	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+//
+//	QByteArray dataXml;
+//	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+//
+//	xmlWriter->writeStartElement("Data");
+//	if(behavData.length())
+//		behavData.toXml(xmlWriter);
+//	if(propPack && propPack->length())
+//		propPack->toXml(xmlWriter);
+//	if(statePack && statePack->length())
+//		statePack->toXml(xmlWriter);
+//	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
+//	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+//	{
+//		reward->toXml(xmlWriter);
+//	}
+//	frameData.toXml(xmlWriter);	//Frame data must go last so that server knows when it reads
+//								//in a frame, that the data it has defines the state that was
+//								//in place at that frame.
+//	xmlWriter->writeEndElement();
+//
+//	dataCommand->setContent(dataXml);
+//	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+//	QUuid commandUuid = QUuid::createUuid();
+//
+//	dataChannel->sendRegisteredCommand(dataCommand);
+//
+//	dataChannel->processResponses(0);
+//	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
+//	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
+//	//next frame.
+//	//QTime timer;
+//	//timer.start();
+//	dataChannel->assureConnection(5);
+//	//qDebug(QString("ASSURECONNECTION time: %1").arg(timer.elapsed()).toAscii());
+//	////check for and process responses
+//	//while(dataChannel->waitForResponse(0))
+//	//{
+//	//	dataResponse = dataChannel->getResponse();
+//	//	Q_ASSERT(!dataResponse.isNull());
+//	//	Q_ASSERT(dataResponse->getResponseType() == "OK");
+//	//	processStatusDirective(engine,dataResponse);
+//
+//	//}
+//
+//	//This is useful for debugging, but we should let the state machine handle server drop-outs
+//	//Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
+//
+//}
+//
 
 
 //! Runs a script
@@ -418,105 +379,33 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		return true;
 	}
-	else if(!engine->slaveMode() && (command == Engine::PictoEngine::PauseEngine))
-	{
-		QSharedPointer<Picto::CommandChannel> dataChannel = engine->getDataCommandChannel();
-		while(command == Engine::PictoEngine::PauseEngine)
-		{
-			////waste 30 ms
-			QTime timer;
-			timer.start();
-			//----------  Draw the scene in paused state --------------
-			scene_->render(engine);
-			//------------- Send Behavioral data to server --------------
-			sendBehavioralData(engine);
+	//else if(!engine->slaveMode() && (command == Engine::PictoEngine::PauseEngine))
+	//{
+	//	QSharedPointer<Picto::CommandChannel> dataChannel = engine->getDataCommandChannel();
+	//	while(command == Engine::PictoEngine::PauseEngine)
+	//	{
+	//		////waste 30 ms
+	//		QTime timer;
+	//		timer.start();
+	//		//----------  Draw the scene in paused state.  This will automatically send behavioral data to server --------------
+	//		scene_->render(engine,getAssetId());
+	//		////------------- Send Behavioral data to server --------------
+	//		//sendBehavioralData(engine);
 
-			command = engine->getEngineCommand();
-			//while(timer.elapsed()<30){
-			QCoreApplication::processEvents();
-			//}
+	//		command = engine->getEngineCommand();
+	//		//while(timer.elapsed()<30){
+	//		QCoreApplication::processEvents();
+	//		//}
 
-		}
-		if(command == Engine::PictoEngine::StopEngine)
-		{
-			return true;
-		}
-	}
+	//	}
+	//	if(command == Engine::PictoEngine::StopEngine)
+	//	{
+	//		return true;
+	//	}
+	//}
 
 	return false;
 }
-
-/*	\brief Sends an UPDATECOMPONENT command and deals with any directives included in the response
- *
- *	Once per frame, we need to check in with the server.  The response from the server
- *  may contain a "directive", which we will handle here as well (e.g. stop, pause, etc).
- */
-/*void State::updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused)
-{
-	QSharedPointer<Picto::CommandChannel>updateChan = engine->getUpdateCommandChannel();
-	
-	if(updateChan.isNull())
-		return;
-
-	while(updateChan->incomingResponsesWaiting())
-	{
-		updateChan->getResponse();
-		Q_ASSERT(false);	//This will break things in debug, but ignore issues in release
-	}
-
-
-	QSharedPointer<Picto::ProtocolResponse> updateResponse;
-
-	QString updateCommandStr;
-
-	if(paused)
-		updateCommandStr = "COMPONENTUPDATE "+engine->getName()+":paused PICTO/1.0";
-	else
-		updateCommandStr = "COMPONENTUPDATE "+engine->getName()+":running PICTO/1.0";
-
-	QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
-
-	updateChan->sendCommand(updateCommand);
-
-	if(!updateChan->waitForResponse(50))
-	{
-		Q_ASSERT_X(false,"State::updateServer", "Server failed to reply to COMPONENTUPDATE command within 100 ms");
-		return;
-	}
-
-	updateResponse = updateChan->getResponse();
-	Q_ASSERT(updateResponse);
-	Q_ASSERT(updateResponse->getResponseType() == "OK");
-
-	QString statusDirective = updateResponse->getDecodedContent().toUpper();
-
-	if(statusDirective.startsWith("OK"))
-	{
-		//do nothing
-	}
-	else if(statusDirective.startsWith("STOP"))
-	{
-		engine->stop();
-	}
-	else if(statusDirective.startsWith("PAUSE"))
-	{
-		engine->pause();
-	}
-	else if(statusDirective.startsWith("RESUME"))
-	{
-		engine->play();
-	}
-	else if(statusDirective.startsWith("REWARD"))
-	{
-		int channel = statusDirective.split(" ").value(1).toInt();
-		engine->giveReward(channel);	
-	}
-	else
-	{
-		Q_ASSERT_X(false, "State::updateServer", "Unrecognized directive received from server");
-	}
-
-}*/
 
 void State::addCursor()
 {
@@ -659,16 +548,12 @@ void State::addCursor()
 
 void State::postDeserialize()
 {
-	revision_= propertyContainer_->getPropertyValue("Revision").toInt();
-	engineNeeded_= propertyContainer_->getPropertyValue("EngineNeeded").toInt();
-
 	//QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
 	//foreach(QSharedPointer<Asset> newVisElem,newVisElems)
 	//{
 	//	scene_->addVisualElement(newVisElem.staticCast<VisualElement>());
 	//	addScriptable(newVisElem.staticCast<Scriptable>());
 	//}
-
 	MachineContainer::postDeserialize();
 }
 

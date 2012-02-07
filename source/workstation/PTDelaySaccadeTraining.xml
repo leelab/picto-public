@@ -24,7 +24,7 @@
           <InitialElement id="21">WaitForClick</InitialElement>
           <Name id="22">PresentSingleStimulus</Name>
           <UIInfo id="23">
-            <Pos id="24" x="1754" y="1853"/>
+            <Pos id="24" x="1685" y="1716"/>
           </UIInfo>
           <StateMachineElement type="State" id="26">
             <EntryScript id="27">
@@ -56,7 +56,7 @@
               Square.subjectView = false;
               Square.alpha = 122;
             </ExitScript>
-            <Revision id="41">0</Revision>
+            
             <ControlElement type="Target Controller" id="42">
               <Name id="43">FixationTracker</Name>
               <Result id="44">
@@ -151,7 +151,7 @@
               <SourceResult id="122">Success</SourceResult>
             </Transition>
             <BackgroundColor A="255" B="0" G="0" R="0" id="123">#000000</BackgroundColor>
-            <EngineNeeded id="124">-1</EngineNeeded>
+            
             <UIEnabled id="125">false</UIEnabled>
             <UIOrder id="126">0</UIOrder>
           </StateMachineElement>
@@ -206,10 +206,10 @@
             </Transition>
             <ExitScript id="170">Square.red = 255;</ExitScript>
             <BackgroundColor A="255" B="0" G="0" R="0" id="171">#000000</BackgroundColor>
-            <EngineNeeded id="172">-1</EngineNeeded>
+            
             <EntryScript id="173"/>
             <FrameScript id="174"/>
-            <Revision id="175">-1</Revision>
+            
             <UIEnabled id="176">false</UIEnabled>
             <UIOrder id="177">0</UIOrder>
           </StateMachineElement>
@@ -304,7 +304,7 @@
               <UIEnabled id="258">true</UIEnabled>
               <UIOrder id="259">0</UIOrder>
               <NumRewards id="499">1</NumRewards>
-            </StateMachineElement>
+            <MinRewardPeriod id="494">125</MinRewardPeriod></StateMachineElement>
             <Transition id="260">
               <Destination id="261">Reward</Destination>
               <Source id="262">SetTargetRed</Source>
@@ -407,27 +407,15 @@
           </Result>
           <Script id="348">StimuliPresented.value++; return true;</Script>
           <UIInfo id="349">
-            <Pos id="350" x="2060" y="1772"/>
+            <Pos id="350" x="2040" y="1681"/>
           </UIInfo>
           <Type id="352">ScriptElement</Type>
           <UIEnabled id="353">false</UIEnabled>
           <UIOrder id="354">0</UIOrder>
         </StateMachineElement>
-        <Transition id="355">
-          <Destination id="356">IncrementStimulusCounter</Destination>
-          <Source id="357">PresentSingleStimulus</Source>
-          <SourceResult id="358">StimulusPresented</SourceResult>
-        </Transition>
-        <Transition id="359">
-          <Destination id="360">PresentSingleStimulus</Destination>
-          <Source id="361">IncrementStimulusCounter</Source>
-          <SourceResult id="362">false</SourceResult>
-        </Transition>
-        <Transition id="363">
-          <Destination id="364">PresentSingleStimulus</Destination>
-          <Source id="365">IncrementStimulusCounter</Source>
-          <SourceResult id="366">true</SourceResult>
-        </Transition>
+        
+        
+        
         <ControlTarget type="CircleTarget" id="367">
           <Name id="368">Target</Name>
           <UIInfo id="369">
@@ -448,7 +436,7 @@
         <Level id="383">Stage</Level>
         <UIEnabled id="384">false</UIEnabled>
         <UIOrder id="385">0</UIOrder>
-      </StateMachine>
+      <StateMachineElement type="PausePoint" id="1800"><Name id="1806">Pause</Name><Result id="562"><Name id="563">done</Name><UIEnabled id="564">false</UIEnabled><UIInfo id="565"><Pos id="566" x="0" y="0"/></UIInfo><UIOrder id="568">0</UIOrder></Result><Type id="1816">PausePoint</Type><UIEnabled id="1835">false</UIEnabled><UIInfo id="1836"><Pos id="1837" x="1871" y="1568"/></UIInfo><UIOrder id="1839">0</UIOrder></StateMachineElement><Transition id="0"><Destination id="">IncrementStimulusCounter</Destination><Source id="">PresentSingleStimulus</Source><SourceResult id="">StimulusPresented</SourceResult></Transition><Transition id="0"><Destination id="">Pause</Destination><Source id="">IncrementStimulusCounter</Source><SourceResult id="">false</SourceResult></Transition><Transition id="0"><Destination id="">Pause</Destination><Source id="">IncrementStimulusCounter</Source><SourceResult id="">true</SourceResult></Transition><Transition id="0"><Destination id="">PresentSingleStimulus</Destination><Source id="">Pause</Source><SourceResult id="">done</SourceResult></Transition></StateMachine>
       <UIInfo id="386">
         <Pos id="387" x="1668" y="1744"/>
       </UIInfo>
@@ -721,9 +709,9 @@
                     EventInfo.updateValue();
                   </ExitScript>
                   <BackgroundColor A="255" B="0" G="0" R="0" id="3767">#000000</BackgroundColor>
-                  <EngineNeeded id="3768">-1</EngineNeeded>
+                  
                   <FrameScript id="3769"/>
-                  <Revision id="3770">-1</Revision>
+                  
                   <UIEnabled id="3771">false</UIEnabled>
                   <UIOrder id="3772">0</UIOrder>
                 </StateMachineElement>
@@ -772,9 +760,9 @@
                       EventInfo.updateValue();
                     </ExitScript>
                     <BackgroundColor A="255" B="0" G="0" R="0" id="733">#000000</BackgroundColor>
-                    <EngineNeeded id="734">-1</EngineNeeded>
+                    
                     <FrameScript id="735"/>
-                    <Revision id="736">-1</Revision>
+                    
                     <UIEnabled id="737">false</UIEnabled>
                     <UIOrder id="738">0</UIOrder>
                     <ControlElement type="Target Controller" id="2311">
@@ -994,8 +982,8 @@
                     </Transition>
                     <FrameScript id="834"/>
                     <BackgroundColor A="255" B="0" G="0" R="0" id="844">#000000</BackgroundColor>
-                    <EngineNeeded id="845">-1</EngineNeeded>
-                    <Revision id="846">-1</Revision>
+                    
+                    
                     <UIEnabled id="847">false</UIEnabled>
                     <UIOrder id="848">0</UIOrder>
                   </StateMachineElement>
@@ -1317,7 +1305,7 @@
 
                     </UIInfo>
                     <BackgroundColor A="255" B="0" G="0" R="0" id="2009">#000000</BackgroundColor>
-                    <EngineNeeded id="2010">-1</EngineNeeded>
+                    
                     <ExitScript id="2011">
                       if(!GreenOnly.value &amp;&amp; (RedOnly.value || (TrialType.value&lt;=10)))
                       {
@@ -1329,7 +1317,7 @@
                       }
                     </ExitScript>
                     <FrameScript id="2012"/>
-                    <Revision id="2013">-1</Revision>
+                    
                     <UIEnabled id="2014">false</UIEnabled>
                     <UIOrder id="2015">0</UIOrder>
                   </StateMachineElement>
@@ -1569,7 +1557,7 @@
                   <UIEnabled id="4201">false</UIEnabled>
                   <UIOrder id="4203">0</UIOrder>
                   <NumRewards id="4204">1</NumRewards>
-                </StateMachineElement>
+                <MinRewardPeriod id="1204">125</MinRewardPeriod></StateMachineElement>
                 <Parameter type="Range" id="2695">
                   <Max id="2696">1000</Max>
                   <Min id="2697">0</Min>
@@ -1751,7 +1739,7 @@
                     <Pos id="2199" x="1244" y="248"/>
                   </UIInfo>
                   <UIOrder id="2201">0</UIOrder>
-                </StateMachineElement>
+                <MinRewardPeriod id="1336">125</MinRewardPeriod></StateMachineElement>
                 <Transition id="1552">
                   <Destination id="1553">IsNormalTrial</Destination>
                   <Source id="1554">PresentTargets</Source>
@@ -1864,9 +1852,9 @@
                   EventInfo.updateValue();
                 </ExitScript>
                 <BackgroundColor A="255" B="0" G="0" R="0" id="4464">#000000</BackgroundColor>
-                <EngineNeeded id="4465">-1</EngineNeeded>
+                
                 <FrameScript id="4466"/>
-                <Revision id="4467">-1</Revision>
+                
                 <UIEnabled id="4468">false</UIEnabled>
                 <UIOrder id="4469">0</UIOrder>
               </StateMachineElement>
@@ -1922,9 +1910,9 @@
                   <Pos id="4528" x="1562" y="277"/>
                 </UIInfo>
                 <BackgroundColor A="255" B="0" G="0" R="0" id="4530">#000000</BackgroundColor>
-                <EngineNeeded id="4531">-1</EngineNeeded>
+                
                 <FrameScript id="4532"/>
-                <Revision id="4533">-1</Revision>
+                
                 <UIEnabled id="4534">false</UIEnabled>
                 <UIOrder id="4535">0</UIOrder>
               </StateMachineElement>
@@ -2226,16 +2214,8 @@
               </UIInfo>
               <UIOrder id="5060">0</UIOrder>
             </StateMachineElement>
-            <Transition id="4855">
-              <Destination id="4856">Trial</Destination>
-              <Source id="4862">ChooseTrialType</Source>
-              <SourceResult id="4864">false</SourceResult>
-            </Transition>
-            <Transition id="4865">
-              <Destination id="4866">Trial</Destination>
-              <Source id="4867">ChooseTrialType</Source>
-              <SourceResult id="4868">true</SourceResult>
-            </Transition>
+            
+            
             <Transition id="4869">
               <Destination id="4870">ChooseTrialType</Destination>
               <Source id="4871">ReshuffleTrialType</Source>
@@ -2251,7 +2231,7 @@
               <Source id="4879">NeedsMoreTrials</Source>
               <SourceResult id="4880">true</SourceResult>
             </Transition>
-          </StateMachineElement>
+          <StateMachineElement type="PausePoint" id="1945"><Name id="1952">Pause</Name><Result id="1585"><Name id="1586">done</Name><UIEnabled id="1587">false</UIEnabled><UIInfo id="1588"><Pos id="1589" x="0" y="0"/></UIInfo><UIOrder id="1591">0</UIOrder></Result><Type id="2010">PausePoint</Type><UIEnabled id="2013">false</UIEnabled><UIInfo id="2051"><Pos id="2052" x="884" y="951"/></UIInfo><UIOrder id="2054">0</UIOrder></StateMachineElement><Transition id="1600"><Destination id="1601">Trial</Destination><Source id="1602">Pause</Source><SourceResult id="1603">done</SourceResult></Transition><Transition id="1604"><Destination id="1605">Pause</Destination><Source id="1606">ChooseTrialType</Source><SourceResult id="1607">false</SourceResult></Transition><Transition id="1608"><Destination id="1609">Pause</Destination><Source id="1610">ChooseTrialType</Source><SourceResult id="1611">true</SourceResult></Transition></StateMachineElement>
           <StateMachineElement type="ScriptElement" id="4767">
             <Name id="4768">NeedsMoreBlocks</Name>
             <Result id="4769">
@@ -2591,10 +2571,10 @@
             <Visible id="5217">true</Visible>
           </VisualElement>
           <BackgroundColor A="255" B="0" G="0" R="0" id="5229">#000000</BackgroundColor>
-          <EngineNeeded id="5230">-1</EngineNeeded>
+          
           <EntryScript id="5231"/>
           <FrameScript id="5232"/>
-          <Revision id="5233">-1</Revision>
+          
           <UIEnabled id="5234">false</UIEnabled>
           <UIOrder id="5235">0</UIOrder>
         </StateMachineElement>

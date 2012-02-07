@@ -4,6 +4,7 @@
 #include "Reward.h"
 //#include "FlowElement.h"
 #include "ScriptElement.h"
+#include "PausePoint.h"
 
 #include "../engine/PictoEngine.h"
 #include "../timing/Timestamper.h"
@@ -48,6 +49,8 @@ StateMachine::StateMachine() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(State::Create))));
 	elementFactory_->addAssetType("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
+	elementFactory_->addAssetType("PausePoint",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PausePoint::Create))));
 	//AddDefinableObjectFactory("StateMachineElement",factory);
 
 	//AddDefinableObjectFactory("Parameters",
@@ -116,10 +119,6 @@ StateMachineLevel::StateMachineLevel StateMachine::getLevel()
 //
 //	//Add all of our parameters to the element
 //	element->addParameters(parameterContainer_);
-//}
-//void StateMachine::elementAdded(QSharedPointer<ResultContainer> element)
-//{
-//	element.staticCast<StateMachineElement>()->addScriptables(this);
 //}
 //void StateMachine::addScriptable(QSharedPointer<Parameter> parameter)
 //{

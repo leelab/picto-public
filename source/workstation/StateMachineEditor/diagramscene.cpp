@@ -47,6 +47,7 @@
 #include "../common/statemachine/transition.h"
 #include "../../common/statemachine/StateMachine.h"
 #include "../../common/statemachine/state.h"
+#include "../../common/statemachine/pausepoint.h"
 #include "../../common/statemachine/ResultContainer.h"
 #include "../../common/statemachine/Result.h"
 #include "arrow.h"

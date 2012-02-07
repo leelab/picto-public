@@ -32,8 +32,7 @@ class Scene
 public:
 	Scene();
 
-	void render(QSharedPointer<Engine::PictoEngine> engine);
-	double getLatestFirstPhosphorTime();
+	void render(QSharedPointer<Engine::PictoEngine> engine,int callerId);
 
 	void reset();
 	void setBackgroundColor(QColor color);

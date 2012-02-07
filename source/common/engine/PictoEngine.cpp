@@ -10,9 +10,11 @@
 #include "PictoEngine.h"
 
 #include "../timing/Timestamper.h"
+#include "../storage/BehavioralDataUnitPackage.h"
 #include "../storage/RewardDataUnit.h"
 #include "../storage/PropertyDataUnit.h"
 #include "../storage/FrameDataUnit.h"
+#include "../storage/FrameDataUnitPackage.h"
 #include "../memleakdetect.h"
 
 
@@ -249,62 +251,92 @@ QSharedPointer<StateDataUnitPackage> PictoEngine::getStateDataPackage()
 	return returnVal;
 }
 
-////! \brief Gets the latest property changes from the server and applies them to the local properties.
-//void PictoEngine::updatePropertiesFromServer()
-//{
-//	return;
-//	if(propTable_.isNull())
-//		return;
-//	//Collect the data from the server
-//	QString commandStr = QString("GETDATA PropertyDataUnitPackage:%1 PICTO/1.0").arg(lastTimePropChangesRequested_);
-//	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
-//	QSharedPointer<Picto::ProtocolResponse> response;
-//
-//	slaveCommandChannel_->sendCommand(command);
-//	//No response
-//	if(!slaveCommandChannel_->waitForResponse(1000))
-//		return;
-//
-//	response = slaveCommandChannel_->getResponse();
-//
-//	//Response not 200:OK
-//	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
-//		return;
-//	
-//	QByteArray xmlFragment = response->getContent();
-//	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
-//
-//	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
-//
-//	if(xmlReader->atEnd())
-//		return;
-//
-//	PropertyDataUnitPackage propData;
-//
-//	xmlReader->readNext();
-//	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
-//	{
-//		if(xmlReader->name() == "PropertyDataUnitPackage")
-//		{
-//			propData.fromXml(xmlReader);
-//		}
-//		else
-//		{
-//			return;
-//		}
-//	}
-//
-//	while(propData.length() > 0)
-//	{
-//		// Push the data into our signal channel
-//		QSharedPointer<Picto::PropertyDataUnit> dataPoint;
-//		dataPoint = propData.takeFirstDataPoint();
-//
-//		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
-//		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
-//		lastTimePropChangesRequested_ = dataPoint->time_;
-//	}
-//}
+/*! \brief Sends the latest behavioral data to the server aligned with this frame time
+ *
+ *	We update the server with all of the useful behavioral data.  This includes 
+ *	the time at which the most recent frame was drawn, as well as all the input
+ *	coordinates from the subject and all changed properties.  This data is important
+ *	so we send it as a registered command, which means that we will get confirmation
+ *	when it's written to disk.  It also means we don't have to wait around for a 
+ *	response before continuing experimental execution.
+ */
+void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
+{
+	//Create a new frame data store
+	FrameDataUnitPackage frameData;
+
+	frameData.addFrame(frameTime,runningStateId);
+	setLastFrame(frameData.getLatestFrameId());
+
+	//Update the BehavioralDataUnitPackage
+	BehavioralDataUnitPackage behavData;
+	QSharedPointer<CommandChannel> dataChannel = getDataCommandChannel();
+
+	if(dataChannel.isNull())
+		return;
+
+	//Note that the call to getValues clears out any existing values,
+	//so it should only be made once per frame.
+	QSharedPointer<SignalChannel> sigChannel = getSignalChannel("PositionChannel");
+	behavData.emptyData();
+	behavData.addData(sigChannel->getValues());
+
+	QSharedPointer<PropertyDataUnitPackage> propPack = getChangedPropertyPackage();
+	QSharedPointer<StateDataUnitPackage> statePack = getStateDataPackage();
+
+	//send a PUTDATA command to the server with the most recent behavioral data
+	QSharedPointer<Picto::ProtocolResponse> dataResponse;
+	QString status = "running";
+	int engCmd = getEngineCommand();
+	switch(engCmd)
+	{
+	case PlayEngine:
+		status = "running";
+		break;
+	case PauseEngine:
+		status = "paused";
+		break;
+	case StopEngine:
+		status = "stopped";
+		break;
+	}
+	QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
+	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+	QByteArray dataXml;
+	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+
+	xmlWriter->writeStartElement("Data");
+	if(behavData.length())
+		behavData.toXml(xmlWriter);
+	if(propPack && propPack->length())
+		propPack->toXml(xmlWriter);
+	if(statePack && statePack->length())
+		statePack->toXml(xmlWriter);
+	QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
+	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+	{
+		reward->toXml(xmlWriter);
+	}
+	frameData.toXml(xmlWriter);	//Frame data must go last so that server knows when it reads
+								//in a frame, that the data it has defines the state that was
+								//in place at that frame.
+	xmlWriter->writeEndElement();
+
+	dataCommand->setContent(dataXml);
+	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+	QUuid commandUuid = QUuid::createUuid();
+
+	dataChannel->sendRegisteredCommand(dataCommand);
+
+	dataChannel->processResponses(0);
+	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
+	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
+	//next frame.
+	dataChannel->assureConnection(5);
+
+
+}
 
 
 bool PictoEngine::updateCurrentStateFromServer()

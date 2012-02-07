@@ -309,6 +309,8 @@
    <file alias="_parameter_factory_8h-source.html">../../../output/documentation/main/html/_parameter_factory_8h-source.html</file>
    <file alias="_parameter_response_handler_8cpp-source.html">../../../output/documentation/main/html/_parameter_response_handler_8cpp-source.html</file>
    <file alias="_parameter_response_handler_8h-source.html">../../../output/documentation/main/html/_parameter_response_handler_8h-source.html</file>
+   <file alias="_pause_point_8cpp-source.html">../../../output/documentation/main/html/_pause_point_8cpp-source.html</file>
+   <file alias="_pause_point_8h-source.html">../../../output/documentation/main/html/_pause_point_8h-source.html</file>
    <file alias="_pause_response_handler_8cpp-source.html">../../../output/documentation/main/html/_pause_response_handler_8cpp-source.html</file>
    <file alias="_pause_response_handler_8h-source.html">../../../output/documentation/main/html/_pause_response_handler_8h-source.html</file>
    <file alias="_paused_session_state_8cpp-source.html">../../../output/documentation/main/html/_paused_session_state_8cpp-source.html</file>
@@ -487,6 +489,8 @@
    <file alias="_running_session_state_8h-source.html">../../../output/documentation/main/html/_running_session_state_8h-source.html</file>
    <file alias="_scene_8cpp-source.html">../../../output/documentation/main/html/_scene_8cpp-source.html</file>
    <file alias="_scene_8h-source.html">../../../output/documentation/main/html/_scene_8h-source.html</file>
+   <file alias="_scene_presenter_8cpp-source.html">../../../output/documentation/main/html/_scene_presenter_8cpp-source.html</file>
+   <file alias="_scene_presenter_8h-source.html">../../../output/documentation/main/html/_scene_presenter_8h-source.html</file>
    <file alias="_script_controller_8cpp-source.html">../../../output/documentation/main/html/_script_controller_8cpp-source.html</file>
    <file alias="_script_controller_8h-source.html">../../../output/documentation/main/html/_script_controller_8h-source.html</file>
    <file alias="_script_element_8cpp-source.html">../../../output/documentation/main/html/_script_element_8cpp-source.html</file>
@@ -917,6 +921,9 @@
    <file alias="class_picto_1_1_parameter_container.png">../../../output/documentation/main/html/class_picto_1_1_parameter_container.png</file>
    <file alias="class_picto_1_1_parameter_factory-members.html">../../../output/documentation/main/html/class_picto_1_1_parameter_factory-members.html</file>
    <file alias="class_picto_1_1_parameter_factory.html">../../../output/documentation/main/html/class_picto_1_1_parameter_factory.html</file>
+   <file alias="class_picto_1_1_pause_point-members.html">../../../output/documentation/main/html/class_picto_1_1_pause_point-members.html</file>
+   <file alias="class_picto_1_1_pause_point.html">../../../output/documentation/main/html/class_picto_1_1_pause_point.html</file>
+   <file alias="class_picto_1_1_pause_point.png">../../../output/documentation/main/html/class_picto_1_1_pause_point.png</file>
    <file alias="class_picto_1_1_physiological_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_physiological_data_store-members.html</file>
    <file alias="class_picto_1_1_physiological_data_store.html">../../../output/documentation/main/html/class_picto_1_1_physiological_data_store.html</file>
    <file alias="class_picto_1_1_picto_box_daq_board-members.html">../../../output/documentation/main/html/class_picto_1_1_picto_box_daq_board-members.html</file>
@@ -1043,6 +1050,9 @@
    <file alias="class_picto_1_1_scene-members.html">../../../output/documentation/main/html/class_picto_1_1_scene-members.html</file>
    <file alias="class_picto_1_1_scene.html">../../../output/documentation/main/html/class_picto_1_1_scene.html</file>
    <file alias="class_picto_1_1_scene.png">../../../output/documentation/main/html/class_picto_1_1_scene.png</file>
+   <file alias="class_picto_1_1_scene_presenter-members.html">../../../output/documentation/main/html/class_picto_1_1_scene_presenter-members.html</file>
+   <file alias="class_picto_1_1_scene_presenter.html">../../../output/documentation/main/html/class_picto_1_1_scene_presenter.html</file>
+   <file alias="class_picto_1_1_scene_presenter.png">../../../output/documentation/main/html/class_picto_1_1_scene_presenter.png</file>
    <file alias="class_picto_1_1_script_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_script_controller-members.html</file>
    <file alias="class_picto_1_1_script_controller.html">../../../output/documentation/main/html/class_picto_1_1_script_controller.html</file>
    <file alias="class_picto_1_1_script_controller.png">../../../output/documentation/main/html/class_picto_1_1_script_controller.png</file>

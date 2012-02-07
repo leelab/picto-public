@@ -99,8 +99,8 @@ public:
 
 	//The engine commands are only used when the engine is being run locally
 	enum {NoCommand, PlayEngine, StopEngine, PauseEngine};
-	void play() { engineCommand_ = PlayEngine; };
-	void pause() { engineCommand_ = PauseEngine; };
+	void play() { engineCommand_ = PlayEngine;};
+	void pause(){ engineCommand_ = PauseEngine;};
 	void stop();
 	int getEngineCommand();
 
@@ -130,6 +130,7 @@ public:
 	QSharedPointer<StateDataUnitPackage> getStateDataPackage();
 	void clearStateDataPackage(){propPackage_.clear();};
 
+	void reportNewFrame(double frameTime,int runningStateId);
 	void setLastFrame(qulonglong frameId){lastFrameId_ = frameId;};
 	qulonglong getLastFrameId(){return lastFrameId_;};
 

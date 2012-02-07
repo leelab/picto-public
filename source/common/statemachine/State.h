@@ -39,15 +39,7 @@ public:
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
 
-	void setRevision(int rev) { revision_ = rev; };
-	int getRevision() { return revision_; };
-	void setEngineNeeded(int eng) { engineNeeded_ = eng; };
-	int getEngineNeeded() { return engineNeeded_; };
-
-	void addControlLink(QSharedPointer<ControlLink> link);
 	void addControlElement(QSharedPointer<ControlElement> controlElement);
-
-	void setScene(QSharedPointer<Scene> scene) { scene_ = scene; };
 
 	virtual QString getUITemplate(){return "State";};
 	virtual QString assetType(){return "State";};
@@ -67,7 +59,6 @@ public:
 //	void setBackgroundColor(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
 
 protected:
-	virtual void elementAdded(QSharedPointer<ResultContainer> element){};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};
@@ -78,24 +69,17 @@ protected:
 
 
 private:
-	void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);
+	//void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);
 	//void runScript(QString scriptName);
 	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);
 	//void updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused=false);
 	void addCursor();
 
 	QSharedPointer<Scene> scene_;
-	//QMap<QString, QSharedPointer<ControlElement> > controlElements_;
-	int revision_;
-	int engineNeeded_;
 
-	QString lastFrameCheckTime_;
 	bool hasCursor_;
 
 	QSharedPointer<SignalChannel> sigChannel_;
-
-	QMultiMap<QString, QSharedPointer<ControlLink> > links_; //<source, link>
-	double lastFrameTime_;
 };
 
 

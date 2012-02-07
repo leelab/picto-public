@@ -21,6 +21,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("StateMachineElement",":/icons/statemachineelement.svg",50,100);
 		addIconDefinition("StateMachine",":/icons/statemachine.svg",50,100);
 		addIconDefinition("State",":/icons/state.svg",100,100);
+		addIconDefinition("PausePoint",":/icons/pausepoint.svg",100,100);
 		addIconDefinition("ScriptElement",":/icons/scriptelement.svg",50,75);
 		addIconDefinition("Parameter",":/icons/parameter.svg",50,75);
 		addIconDefinition("ControlTarget",":/icons/controltarget.svg",75,75);
