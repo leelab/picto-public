@@ -5,6 +5,7 @@
 #include <QString>
 #include <QDateTime>
 #include <QUuid>
+#include <QObject>
 #include "../common.h"
 
 enum ComponentStatus
@@ -13,11 +14,12 @@ enum ComponentStatus
 };
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ComponentStatusManager
+class PICTOLIB_API ComponentStatusManager : public QObject
 #else
 class ComponentStatusManager
 #endif
 {
+	Q_OBJECT
 public:
 	ComponentStatusManager();
 	void setName(QString name){name_ = name;};

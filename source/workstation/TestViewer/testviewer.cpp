@@ -71,6 +71,7 @@ void TestViewer::setupEngine()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(true);
+	connect(engine_.data(),SIGNAL(pauseRequested()),this,SLOT(pause()));
 
 	//Set up the rendering target
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());

@@ -98,9 +98,15 @@ public:
 	//bool runTask(QString taskName);
 
 	//The engine commands are only used when the engine is being run locally
+	//They should also only be used by the master of the engine (ie. The ComponentStatusManager,
+	//or the remoteviewer/testviewer).  If an experiment itself wants to pause, it should use
+	//the requestPause() command, which will Signal to the engine master that it should make
+	//a pause happen.  This way everything is in sync, and the engine never things one thing 
+	//while the engine master thinks something else.
 	enum {NoCommand, PlayEngine, StopEngine, PauseEngine};
 	void play() { engineCommand_ = PlayEngine;};
 	void pause(){ engineCommand_ = PauseEngine;};
+	void requestPause(){emit pauseRequested();};
 	void stop();
 	int getEngineCommand();
 
@@ -165,6 +171,9 @@ public:
 	double getLastTimeStateDataRequested(){return lastTimeStateDataRequested_.toDouble();};
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;currStateUnit_.clear();};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
+
+signals:
+	void pauseRequested();
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;

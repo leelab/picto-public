@@ -39,7 +39,9 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	if((propName == "EntryScript")
 		|| (propName == "FrameScript")
 		|| (propName == "ExitScript")
-		|| (propName == "Script"))
+		|| (propName == "Script")
+		|| (propName == "PausingScript")
+		|| (propName == "RestartingScript"))
 	{
 		resultWidget = new ScriptWidget(manager,property);
 	}

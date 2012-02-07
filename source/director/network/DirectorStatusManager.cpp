@@ -12,6 +12,7 @@ void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine>
 	alignmentCode_ = 0;
 	alignmentID_ = 0;
 	lastAlignTime_ = QDateTime::currentDateTime();
+	connect(engine.data(),SIGNAL(pauseRequested()),this,SLOT(pauseRequested()));
 }
 QSharedPointer<Picto::Engine::PictoEngine> DirectorStatusManager::getEngine()
 {
@@ -119,4 +120,10 @@ void DirectorStatusManager::doServerUpdate()
 		updateCommand->setProtocolVersion("1.0");
 		dataChannel->sendCommand(updateCommand);
 	}
+}
+
+void DirectorStatusManager::pauseRequested()
+{
+	setStatus(paused);
+	getEngine()->pause();
 }

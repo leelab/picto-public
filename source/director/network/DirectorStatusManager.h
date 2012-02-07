@@ -7,6 +7,7 @@
 
 class DirectorStatusManager : public ComponentStatusManager
 {
+	Q_OBJECT
 public:
 	void setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine);
 	QSharedPointer<Picto::Engine::PictoEngine> getEngine();
@@ -26,5 +27,8 @@ private:
 	int alignmentCode_;
 	int alignmentID_;
 	QDateTime lastAlignTime_;
+private slots:
+	void pauseRequested();
+
 };
 #endif

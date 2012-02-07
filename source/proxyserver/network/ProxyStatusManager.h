@@ -7,6 +7,7 @@
 
 class ProxyStatusManager : public ComponentStatusManager
 {
+	Q_OBJECT
 public:
 	ProxyStatusManager(QSharedPointer<Picto::CommandChannel> commandChannel);
 	void setPlugin(QObject* acqPlugin){acqPlugin_ = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);};

@@ -12,7 +12,6 @@ bool DirectorPauseResponseHandler::processResponse(QString directive)
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	if(engine.isNull())
 		return true;
-	//engine->schedulePause();
 	engine->pause();
 	return true;
 }
