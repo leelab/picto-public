@@ -384,6 +384,8 @@ SOURCES += $$(PICTO_TREE)/source/common/task/BlockGenerator.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/timing/Timestamper.h
 SOURCES += $$(PICTO_TREE)/source/common/timing/Timestamper.cpp
+HEADERS += $$(PICTO_TREE)/source/common/timing/Stopwatch.h
+SOURCES += $$(PICTO_TREE)/source/common/timing/Stopwatch.cpp
 
 win32 {
 

@@ -12,22 +12,24 @@ RewardController(1) ,
 tick_("sounds/tick.wav")
 {}
 
-void AudioRewardController::doReward(unsigned int,int quantity, int minRewardPeriod)
+void AudioRewardController::startReward(unsigned int,int quantity)
 {
-		QTime timer;
-		timer.start();
-		tick_.play();
-		int totalTime = minRewardPeriod;
-		if(quantity > totalTime)
-			totalTime = quantity;
-		while(timer.elapsed() < totalTime)
-			QCoreApplication::processEvents();
+	audioThreadFuture_ = QtConcurrent::run(this,&AudioRewardController::playSound,quantity);
 }
 
+bool AudioRewardController::rewardWasSupplied(unsigned int channel)
+{
+	return audioThreadFuture_.isFinished();
+}
 void AudioRewardController::flush(unsigned int channel,bool flush)
 {
 	Q_UNUSED(channel);
 	Q_UNUSED(flush);
+}
+
+void AudioRewardController::playSound(int)
+{
+	tick_.play();
 }
 
 } //namespace Picto

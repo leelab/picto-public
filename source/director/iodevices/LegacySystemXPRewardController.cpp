@@ -4,10 +4,10 @@
 #include "../../common/memleakdetect.h"
 
 #define DAQmxErrChk(rc) { if (rc) { \
-							DAQmxStopTask(daqTaskHandle_); \
-							DAQmxClearTask(daqTaskHandle_); \
 							char error[512]; \
 							DAQmxGetErrorString(rc, error,512); \
+							DAQmxStopTask(daqTaskHandle_); \
+							DAQmxClearTask(daqTaskHandle_); \
 							QString msg = "DAQ function error:"; \
 							msg.append(error); \
 							Q_ASSERT_X(!rc, "LegacySystemXPEventCodeGenerator", msg.toAscii());\
@@ -15,8 +15,8 @@
 
 // NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run our LegacySystem 
 //		 If this is meant to run elsewhere, a more generic RewardController will need to be written
-#define DEVICE_NAME "Dev1"
-#define PICTO_BOX_NIDAQ_REWARD_CHANNELS "Dev1/port2/line7"
+#define DEVICE_NAME "Dev2"
+#define PICTO_BOX_NIDAQ_REWARD_CHANNELS "Dev2/ao1"
 
 namespace Picto
 {
@@ -25,6 +25,8 @@ namespace Picto
 LegacySystemXPRewardController::LegacySystemXPRewardController(unsigned int channelCount)
 : RewardController(channelCount)
 {
+	outputData[0] = 5.0;
+	outputData[1] = 0.0;
 	Q_ASSERT(channelCount <= 1);	//LegacySystem only has 1 reward channel...
 	// Skip if device doesn't exist
 	uInt32 tmp;
@@ -35,27 +37,33 @@ LegacySystemXPRewardController::LegacySystemXPRewardController(unsigned int chan
 		return;
 
 	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
-	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_REWARD_CHANNELS,"",DAQmx_Val_ChanForAllLines));
-	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_,"Dev2/ao0","",0.0,5.0,DAQmx_Val_Volts,NULL));
 
 	//Leave the solenoid closed by setting lines to 0
 	int32 sampsPerChanWritten;
-	unsigned char data[] = {0};
-	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	float64 data[] = {0};
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_,1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	taskExists_ = false;
 }
 
 LegacySystemXPRewardController::~LegacySystemXPRewardController()
 {
 	if(!hasDevice_)
 		return;
-	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	if(taskExists_)
+	{
+		DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	}
 }
 
 
 
 
 
-void LegacySystemXPRewardController::doReward(unsigned int,int quantity, int minRewardPeriod)
+void LegacySystemXPRewardController::startReward(unsigned int,int quantity)
 {
 	if(!hasDevice_)
 		return;
@@ -64,35 +72,33 @@ void LegacySystemXPRewardController::doReward(unsigned int,int quantity, int min
 	//if(channel > 1 || channel < 1)
 	//	return;
 
-	//Since this code can only run in Win32 devices anyway (LegacySystem), we might
-	//as well use the PerformanceCounter for maximum timing resolution
-	LARGE_INTEGER ticksPerSec;
-	LARGE_INTEGER tick, tock;
-	double elapsedTime;
-	QueryPerformanceFrequency(&ticksPerSec);
-
-	//turn on the reward controller (remember, we're using active high logic)
+	////turn on the reward controller (remember, we're using active high logic)
+	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
+	taskExists_ = true;
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_,"Dev2/ao0","",0.0,5.0,DAQmx_Val_Volts,NULL));
+	DAQmxErrChk (DAQmxCfgSampClkTiming(daqTaskHandle_,"",1000.0/float64(quantity),DAQmx_Val_Rising,DAQmx_Val_FiniteSamps,2));
 	int32 sampsPerChanWritten;
-	unsigned char data[] = {1};
-	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_,2,0,-1,DAQmx_Val_GroupByChannel,outputData,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
+	//Since this code creates a task that raises the voltage for quantity ms and then lowers it for quantity ms, as it is it 
+	//doesn't support inter reward intervals of less than quantity.  Since we couldn't find a better way to do this, we just
+	//set our own timer and stop/clear the task anytime that it still exists and more than quantity ms have passed.
+	stopwatch_.startWatch();
+	latestOnTime_ = quantity;
+}
 
-	QueryPerformanceCounter(&tick);
-	do
-	{
-		QueryPerformanceCounter(&tock);
-		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
-	}
-	while(elapsedTime * 1000.0 < quantity);
-
-	data[0] = 0;
-	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-
-	//wait for the reset time
-	while(elapsedTime * 1000.0 < minRewardPeriod)
-	{
-		QueryPerformanceCounter(&tock);
-		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
-	}
+bool LegacySystemXPRewardController::rewardWasSupplied(unsigned int)
+{
+	if(!taskExists_)
+		return true;
+	//The "+.5" below is just to avoid possible weird racing effects where the Nidaq doesn't turn the 
+	//signal off.  This hasn't ever actually happened, I'm just doing it to be safe.
+	if(stopwatch_.elapsedMs() <= latestOnTime_+.5)
+		return false;
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	taskExists_ = false;
+	return true;
 }
 
 void LegacySystemXPRewardController::flush(unsigned int, bool flush)
@@ -103,22 +109,19 @@ void LegacySystemXPRewardController::flush(unsigned int, bool flush)
 	//only one channel supported in picto for the legacy system.
 	//if(channel > 1 || channel < 1)
 	//	return;
-
-	if(flush)
+	if(taskExists_)
 	{
-		//turn on the reward controller (remember, we're using active high logic)
-		int32 sampsPerChanWritten;
-		unsigned char data[] = {1};
-		DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+		DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+		taskExists_ = false;
 	}
-	else
-	{
-		//turn off the reward controller (remember, we're using active low logic)
-		int32 sampsPerChanWritten;
-		unsigned char data[] = {0};
-		DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-	}
-
+	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_,"Dev2/ao0","",0.0,5.0,DAQmx_Val_Volts,NULL));
+	int32 sampsPerChanWritten;
+	float64 data[] = {flush?1:0};
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_,1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
 }
 
 

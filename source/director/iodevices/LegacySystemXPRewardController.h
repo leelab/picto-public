@@ -2,6 +2,7 @@
 #define _LEGACYSYSTEMXPREWARDCONTROLLER_H_
 
 #include "../../common/iodevices/RewardController.h"
+#include "../../common/timing/stopwatch.h"
 
 
 namespace Picto
@@ -31,11 +32,17 @@ public:
 public slots:
 	void flush(unsigned int channel,bool flush);
 protected:
-	void doReward(unsigned int channel,int quantity, int minRewardPeriod);
+	void startReward(unsigned int channel,int quantity);
+	virtual bool rewardWasSupplied(unsigned int channel);
 private:
-	quint32 daqTaskHandle_;
+	quint32 daqTaskHandle_; // For Nidaqmx 8.5
+	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 	int rewardLines_[4];
 	bool hasDevice_;
+	double outputData[2];
+	bool taskExists_;
+	Stopwatch stopwatch_;
+	int latestOnTime_;
 
 };
 

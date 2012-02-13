@@ -4,10 +4,10 @@
 #include "../../common/memleakdetect.h"
 
 #define DAQmxErrChk(rc) { if (rc) { \
-							DAQmxStopTask(daqTaskHandle_); \
-							DAQmxClearTask(daqTaskHandle_); \
 							char error[512]; \
 							DAQmxGetErrorString(rc, error,512); \
+							DAQmxStopTask(daqTaskHandle_[channel]); \
+							DAQmxClearTask(daqTaskHandle_[channel]); \
 							QString msg = "DAQ function error:"; \
 							msg.append(error); \
 							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", msg.toAscii());\
@@ -25,89 +25,91 @@ namespace Picto
 PictoBoxXPRewardController::PictoBoxXPRewardController(unsigned int channelCount)
 : RewardController(channelCount)
 {
+	outputData[0] = 1.0;
+	outputData[1] = 0.0;
 	Q_ASSERT(channelCount <= 4);	//PictoBox only has 4 reward channels...
 
-
-	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
-	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_REWARD_CHANNELS,"",DAQmx_Val_ChanForAllLines));
-	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
+	int channel = 0;
+	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_[channel]));
+	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_[channel],PICTO_BOX_NIDAQ_REWARD_CHANNELS,"",DAQmx_Val_ChanForAllLines));
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
 
 	//Leave the solenoids closed by setting all lines to 1
 	int32 sampsPerChanWritten;
 	unsigned char data[8] = {1,1,1,1,1,1,1,1};
-	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_[channel],1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
+	taskExists_[0] = false;
+	taskExists_[1] = false;
+	taskExists_[2] = false;
+	taskExists_[3] = false;
 }
 
 PictoBoxXPRewardController::~PictoBoxXPRewardController()
 {
-	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	for(int channel=0;channel<4;channel++)
+	{
+		if(taskExists_)
+			DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
+	}
 }
 
 
 
 
 
-void PictoBoxXPRewardController::doReward(unsigned int channel,int quantity, int minRewardPeriod)
+void PictoBoxXPRewardController::startReward(unsigned int channel,int quantity)
 {
 	if(channel > 4 || channel < 1)
 		return;
 
-	//Since this code can only run in Win32 devices anyway (PictoBox), we might
-	//as well use the PerformanceCounter for maximum timing resolution
-	LARGE_INTEGER ticksPerSec;
-	LARGE_INTEGER tick, tock;
-	double elapsedTime;
-	QueryPerformanceFrequency(&ticksPerSec);
-
-	//turn on the reward controller (remember, we're using active low logic)
+	DAQmxErrChk(DAQmxCreateTask(QString("RewardTask%1").arg(channel).toAscii(),(TaskHandle*)&daqTaskHandle_[channel]));
+	taskExists_[channel] = true;
+	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_[channel],QString("Dev1/port0/line%1").arg(channel).toAscii(),"",DAQmx_Val_ChanForAllLines));
+	DAQmxErrChk (DAQmxCfgSampClkTiming(daqTaskHandle_[channel],"",1000.0/float64(quantity),DAQmx_Val_Rising,DAQmx_Val_FiniteSamps,2));
+	//(remember, we're using active low logic)
 	int32 sampsPerChanWritten;
-	unsigned char data[4] = {1,1,1,1};
-	data[channel-1] = 0;
-	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_[channel],2,0,-1,DAQmx_Val_GroupByChannel,outputData,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
+	//Since this code creates a task that raises the voltage for quantity ms and then lowers it for quantity ms, as it is it 
+	//doesn't support inter reward intervals of less than quantity.  Since we couldn't find a better way to do this, we just
+	//set our own timer and stop/clear the task anytime that it still exists and more than quantity ms have passed.
+	stopwatch_[channel].startWatch();
+	latestOnTime_[channel] = quantity;
+}
 
-	QueryPerformanceCounter(&tick);
-	do
-	{
-		QueryPerformanceCounter(&tock);
-		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
-	}
-	while(elapsedTime * 1000.0 < quantity);
-
-	data[channel-1] = 1;
-	DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-
-	//wait for the reset time
-	while(elapsedTime * 1000.0 < minRewardPeriod)
-	{
-		QueryPerformanceCounter(&tock);
-		elapsedTime = (double)(tock.LowPart-tick.LowPart)/(double)(ticksPerSec.LowPart);
-	}
-
-
-
+bool PictoBoxXPRewardController::rewardWasSupplied(unsigned int channel)
+{
+	if(!taskExists_[channel])
+		return true;
+	//The "+.5" below is just to avoid possible weird racing effects where the Nidaq doesn't turn the 
+	//signal off.  This hasn't ever actually happened, I'm just doing it to be safe.
+	if(stopwatch_[channel].elapsedMs() <= latestOnTime_[channel]+.5)
+		return false;
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
+	taskExists_[channel] = false;
+	return true;
 }
 
 void PictoBoxXPRewardController::flush(unsigned int channel, bool flush)
 {
 	if(channel > 4 || channel < 1)
 		return;
-
-	if(flush)
+	if(taskExists_[channel])
 	{
-		//turn on the reward controller (remember, we're using active low logic)
-		int32 sampsPerChanWritten;
-		unsigned char data[4] = {1,1,1,1};
-		data[channel-1] = 0;
-		DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+		DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
+		taskExists_[channel] = false;
 	}
-	else
-	{
-		//turn off the reward controller (remember, we're using active low logic)
-		int32 sampsPerChanWritten;
-		unsigned char data[4] = {1,1,1,1};
-		DAQmxErrChk(DAQmxWriteDigitalLines(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-	}
-
+	DAQmxErrChk(DAQmxCreateTask(QString("RewardTask%1").arg(channel).toAscii(),(TaskHandle*)&daqTaskHandle_[channel]));
+	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_[channel],QString("Dev1/port0/line%1").arg(channel).toAscii(),"",DAQmx_Val_ChanForAllLines));
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
+	int32 sampsPerChanWritten;
+	const uInt8 data[] = {flush?1:0};
+	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
 }
 
 

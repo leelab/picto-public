@@ -43,6 +43,10 @@ QPoint VisualTarget::targetPointToViewportPoint(QPoint targetPoint)
 void VisualTarget::setFirstPhosphorTime()
 {
 	lastFrameTime_ = stamper_.stampSec();
+	
+	//If this VisualTarget belongs to a VisualTargetHost, we will know that a repaint occured.
+	//Also, others can use this as a signal that the firstPhosphor just occured.
+	emit presented();
 }
 
 }; //namespace Picto

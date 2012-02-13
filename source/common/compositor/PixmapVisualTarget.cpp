@@ -105,10 +105,6 @@ void PixmapVisualTarget::present()
 	//Set first phosphor time !! THIS IS NOT ACCURATE YET
 	setFirstPhosphorTime();
 	repaint();
-
-	//This signal is here so that if this VisualTarget belongs to a 
-	//VisualTargetHost, we will know that a repaint occured.
-	emit presented();
 }
 
 void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)

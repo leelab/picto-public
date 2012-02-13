@@ -211,6 +211,7 @@ private:
 	QString runningPath_;
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);
+	void firstPhosphorOperations();
 };
 
 /*! @} */

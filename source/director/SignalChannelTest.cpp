@@ -17,7 +17,7 @@ void SignalChannelTest::exec()
 
 	//set up graphics
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
-	d3dVisualTarget = QSharedPointer<Picto::D3DVisualTarget>(new Picto::D3DVisualTarget());
+	d3dVisualTarget = QSharedPointer<Picto::D3DVisualTarget>(new Picto::D3DVisualTarget(false));
 
 	Picto::RenderingTarget renderingTarget(d3dVisualTarget, pcmAuralTarget);
 

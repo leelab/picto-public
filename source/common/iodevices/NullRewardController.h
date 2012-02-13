@@ -28,7 +28,8 @@ public slots:
 	void flush(unsigned int channel,bool flush);
 
 protected:
-	void doReward(unsigned int channel,int quantity, int minRewardPeriod);
+	void startReward(unsigned int channel,int quantity);
+	virtual bool rewardWasSupplied(unsigned int channel);
 
 };
 

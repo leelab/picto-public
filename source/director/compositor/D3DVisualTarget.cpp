@@ -12,8 +12,10 @@
 namespace Picto {
 
 
-
-D3DVisualTarget::D3DVisualTarget() :
+//timingCritical indicates that this process/thread should run at maximum
+//priority.  This makes the mouse unresponsive, which is okay 
+//when input is from the eye tracker.
+D3DVisualTarget::D3DVisualTarget(bool timingCritical) :
 	VisualTarget(false, 800,600)
 {
 	//zero all of the pointers
@@ -166,16 +168,20 @@ D3DVisualTarget::D3DVisualTarget() :
 	HANDLE hProcess, hThread;
 	hProcess = GetCurrentProcess();
 	hThread = GetCurrentThread();
-	//SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS);
-	SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
+	if(timingCritical)
+	{
+		//Doing the following makes the mouse non-responsive.
+		//This is fine when using an eye-tracker input, but unacceptable
+		//when testing
+		SetPriorityClass(hProcess, REALTIME_PRIORITY_CLASS);
+		SetThreadPriority(hThread, THREAD_PRIORITY_HIGHEST);
+	}
+	else
+	{
+		SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
+		SetThreadPriority(hThread, THREAD_PRIORITY_NORMAL);
+	}
 
-	//Doing the following makes the mouse non-responsive.
-	//This is fine when using an eye-tracker input, but unacceptable
-	//when testing
-	//SetPriorityClass(hProcess, REALTIME_PRIORITY_CLASS);
-
-	//SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);
-	SetThreadPriority(hThread, THREAD_PRIORITY_NORMAL);
 
 }
 void D3DVisualTarget::closeEvent(QCloseEvent *event)
@@ -348,8 +354,6 @@ void D3DVisualTarget::present()
 
 	//clear the back buffer
     pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );
-
-	emit presented();
 
 }
 

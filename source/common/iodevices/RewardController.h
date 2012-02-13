@@ -5,7 +5,11 @@
 #include <QObject>
 #include <QMutex>
 #include <QReadWriteLock>
+#include <QHash>
+#include <QLinkedList>
 #include "../storage/RewardDataUnit.h"
+#include "../timing/Timestamper.h"
+#include "../timing/Stopwatch.h"
 
 #include "../common.h"
 
@@ -51,18 +55,43 @@ public:
 
 
 public slots:
-	void giveReward(unsigned int channel,int quantity, int minRewardPeriod, bool appendToList/*=false*/);
+	// \brief Appends a reward to the list of startable rewards.
+	void addReward(unsigned int channel,int quantity, int minRewardPeriod);
+	// \brief Triggers any pending rewards to be given if possible.
+	void triggerRewards(bool appendToList);
+	// \brief returns true if there are still rewards to send.
+	bool hasPendingRewards();
 	virtual void flush(unsigned int channel,bool flush) = 0;
 
 protected:
-	virtual void doReward(unsigned int channel,int quantity, int minRewardPeriod) = 0;
+	// \brief Starts a reward without blocking during reward supply.
+	// Reward time is marked just after this is called, so actual reward should be given as close as possible
+	// to the end of the function.
+	virtual void startReward(unsigned int channel,int quantity) = 0;
+	// \brief Returns true if the latest reward is no longer being supplied.  
+	// startReward won't be called until this returns true.
+	virtual bool rewardWasSupplied(unsigned int channel) = 0;
 	int channelCount_;
 	QList<float> rewardVolumes_;
 private:
+	struct RewardUnit
+	{
+		RewardUnit(int q, int m){quantity = q;minRewardPeriod = m;};
+		int quantity;
+		int minRewardPeriod;
+	};
+	struct RewardChannel
+	{
+		RewardChannel():lastRewardPeriod(0){};
+		Stopwatch stopwatch;
+		int lastRewardPeriod;
+		QLinkedList<RewardUnit> pendingRewards;
+	};
+	QHash<int,RewardChannel> rewardChannels_;
 	void appendDeliveredRewards(QSharedPointer<RewardDataUnit> rewardUnit);
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
-	QMutex giveRewardMutex_;
-	QReadWriteLock listLock_;
+	Timestamper stamper_;
+
 
 };
 

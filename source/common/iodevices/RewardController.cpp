@@ -1,6 +1,5 @@
 #include "RewardController.h"
 #include "../memleakdetect.h"
-#include "../timing/Timestamper.h"
 
 namespace Picto
 {
@@ -21,34 +20,63 @@ bool RewardController::setRewardVolume(unsigned int channel, float volume)
 	return true;
 }
 
-void RewardController::giveReward(unsigned int channel,int quantity, int minRewardPeriod, bool appendToList)
+void RewardController::addReward(unsigned int channel,int quantity, int minRewardPeriod)
 {
-	QMutexLocker locker(&giveRewardMutex_);
-	Timestamper stamper;
-	double rewardTime = stamper.stampSec();
-	doReward(channel,quantity,minRewardPeriod);
-	if(!appendToList)
-		return;
-	appendDeliveredRewards(QSharedPointer<RewardDataUnit>(new RewardDataUnit(quantity,channel,rewardTime)));
+	rewardChannels_[channel].pendingRewards.append(RewardUnit(quantity,minRewardPeriod));
+}
 
+void RewardController::triggerRewards(bool appendToList)
+{
+	QHash<int,RewardChannel>::iterator it;
+	for(it = rewardChannels_.begin();it!=rewardChannels_.end();it++)
+	{
+		//Check if this channel has any new rewards
+		if(!it.value().pendingRewards.size())
+			continue;
+		//Check if the last reward is still being supplied
+		if(!rewardWasSupplied(it.key()))
+			continue;
+		//Check if the inter reward interval has been met
+		if( it.value().stopwatch.elapsedMs() < it.value().lastRewardPeriod)
+			continue;
+
+		//Get the new reward for this channel
+		RewardUnit reward = it.value().pendingRewards.takeFirst();
+		//Start reward
+		startReward(it.key(),reward.quantity);
+		double rewardTime = stamper_.stampSec();
+		it.value().stopwatch.startWatch();
+		it.value().lastRewardPeriod = reward.minRewardPeriod;
+		if(!appendToList)
+			continue;
+		appendDeliveredRewards(QSharedPointer<RewardDataUnit>(new RewardDataUnit(reward.quantity,it.key(),rewardTime)));
+	}
+}
+
+bool RewardController::hasPendingRewards()
+{
+	bool returnVal = false;
+	foreach(RewardChannel rewardChan,rewardChannels_)
+	{
+		if(rewardChan.pendingRewards.size())
+		{
+			returnVal = true;
+			break;
+		}
+	}
+	return returnVal;
 }
 
 void RewardController::appendDeliveredRewards(QSharedPointer<RewardDataUnit> rewardUnit)
 {
-	listLock_.lockForWrite();
 	deliveredRewards_.append(rewardUnit);
-	listLock_.unlock();
 }
 
 QList<QSharedPointer<RewardDataUnit>> RewardController::getDeliveredRewards()
 {
 	QList<QSharedPointer<RewardDataUnit>> returnVal;
-	if(listLock_.tryLockForRead())
-	{
-		returnVal = deliveredRewards_; 
-		deliveredRewards_.clear();
-		listLock_.unlock();
-	}
+	returnVal = deliveredRewards_; 
+	deliveredRewards_.clear();
 	return returnVal;
 }
 

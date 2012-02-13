@@ -255,6 +255,7 @@
    <file alias="_legacy_system_x_p_analog_input_signal_channel_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_signal_channel_8h-source.html</file>
    <file alias="_legacy_system_x_p_event_code_generator_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8cpp-source.html</file>
    <file alias="_legacy_system_x_p_event_code_generator_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8h-source.html</file>
+   <file alias="_legacy_system_x_p_reward_controller_01-_01_copy_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_reward_controller_01-_01_copy_8cpp-source.html</file>
    <file alias="_legacy_system_x_p_reward_controller_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_reward_controller_8cpp-source.html</file>
    <file alias="_legacy_system_x_p_reward_controller_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_reward_controller_8h-source.html</file>
    <file alias="_line_graphic_8cpp-source.html">../../../output/documentation/main/html/_line_graphic_8cpp-source.html</file>
@@ -565,6 +566,8 @@
    <file alias="_stop_response_handler_8h-source.html">../../../output/documentation/main/html/_stop_response_handler_8h-source.html</file>
    <file alias="_stopped_session_state_8cpp-source.html">../../../output/documentation/main/html/_stopped_session_state_8cpp-source.html</file>
    <file alias="_stopped_session_state_8h-source.html">../../../output/documentation/main/html/_stopped_session_state_8h-source.html</file>
+   <file alias="_stopwatch_8cpp-source.html">../../../output/documentation/main/html/_stopwatch_8cpp-source.html</file>
+   <file alias="_stopwatch_8h-source.html">../../../output/documentation/main/html/_stopwatch_8h-source.html</file>
    <file alias="_stopwatch_controller_8cpp-source.html">../../../output/documentation/main/html/_stopwatch_controller_8cpp-source.html</file>
    <file alias="_stopwatch_controller_8h-source.html">../../../output/documentation/main/html/_stopwatch_controller_8h-source.html</file>
    <file alias="_string_parameter_8cpp-source.html">../../../output/documentation/main/html/_string_parameter_8cpp-source.html</file>

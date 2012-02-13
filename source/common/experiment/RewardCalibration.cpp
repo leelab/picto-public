@@ -40,7 +40,8 @@ bool RewardCalibration::RunCalibration(unsigned int drops,
 
 	for(unsigned int i=0; i<drops; i++)
 	{
-		rewardController_->giveReward(controllerNum,durationMs,50,false);
+		rewardController_->addReward(controllerNum,durationMs,50);
+		rewardController_->triggerRewards(false);
 		time.start();
 		while(time.elapsed() < (int)intervalMs);
 	}

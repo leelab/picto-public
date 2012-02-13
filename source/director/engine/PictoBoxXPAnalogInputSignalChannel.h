@@ -35,7 +35,8 @@ public:
 
 private:
 
-	unsigned long  daqTaskHandle_;
+	unsigned long  daqTaskHandle_; // For Nidaqmx 8.5
+	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 
 	//maps channel name to daq board ai channel number
 	QMap<QString, int> aiChannelNums_;  

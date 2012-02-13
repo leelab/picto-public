@@ -8,6 +8,7 @@ namespace Picto
 {
 /*!	\brief A reward controller for the PictoBox used when running Windows XP
  *
+ *	WARNING: SINCE UPDATING THIS CODE FOR HARDWARE TIMED REWARDING, IT IS UNTESTED!! - Joey
  *	PictoBox uses a National Instruments PCI-6221 data acquisition board
  *	to deliver rewards (the same board is used for a number of other 
  *	functions as well).  As long as PictoBox is running Windows XP, we can 
@@ -36,11 +37,17 @@ public:
 public slots:
 	void flush(unsigned int channel,bool flush);
 protected:
-	void doReward(unsigned int channel, int quantity, int minRewardPeriod);
+	void startReward(unsigned int channel, int quantity);
+	virtual bool rewardWasSupplied(unsigned int channel);
 
 private:
-	quint32 daqTaskHandle_;
+	quint32 daqTaskHandle_[4]; // For Nidaqmx 8.5
+	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 	int rewardLines_[4];
+	bool taskExists_[4];
+	Stopwatch stopwatch_[4];
+	int latestOnTime_[4];
+	unsigned char outputData[2];
 
 };
 

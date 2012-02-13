@@ -3,6 +3,7 @@
 #define _AUDIO_REWARD_CONTROLLER_H_
 
 #include <QSound>
+#include <QtConcurrentRun>
 
 #include "RewardController.h"
 
@@ -34,9 +35,12 @@ public:
 public slots:
 	void flush(unsigned int channel,bool flush);
 protected:
-	void doReward(unsigned int channel,int quantity, int minRewardPeriod);
+	void startReward(unsigned int channel,int quantity);
+	virtual bool rewardWasSupplied(unsigned int channel);
 private:
+	void playSound(int lengthMs);
 	QSound tick_;
+	QFuture<void> audioThreadFuture_;
 
 };
 

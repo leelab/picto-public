@@ -78,8 +78,12 @@ bool HardwareSetup::isSetup()
  *
  *	Note that if the visual target is of a type not supported by the 
  *	platform, we return false
+ *
+ *	timingCritical indicates that this process/thread should run at maximum
+ *	priority.  This makes the mouse unresponsive, which is okay 
+ *	when input is from the eye tracker.
  */
-bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType)
+bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical)
 {
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
 	QSharedPointer<Picto::VisualTarget> visualTarget;
@@ -94,7 +98,7 @@ bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType)
 #ifndef WIN32
 		return false;
 #else
-		visualTarget = QSharedPointer<Picto::D3DVisualTarget>(new Picto::D3DVisualTarget());
+		visualTarget = QSharedPointer<Picto::D3DVisualTarget>(new Picto::D3DVisualTarget(timingCritical));
 		visualTarget->show();
 #endif
 	}

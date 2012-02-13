@@ -39,7 +39,7 @@ public:
 		PictoBoxXpGen, NullGen
 	} EventCodeGeneratorType;
 
-	bool setupRenderingTargets(VisualTargetType visualTargetType);
+	bool setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical);
 	bool setupSignalChannel(SignalChannelType channelType);
 	bool setupRewardController(RewardControllerType controllerType);
 	bool setupEventCodeGenerator(EventCodeGeneratorType generatorType);

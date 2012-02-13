@@ -52,6 +52,7 @@ QList<QSharedPointer<RenderingTarget> > PictoEngine::getRenderingTargets()
 void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
 {	
 	renderingTargets_.append(target);
+	connect(target->getVisualTarget().data(), SIGNAL(presented()), this, SLOT(firstPhosphorOperations()));
 }
 
 bool PictoEngine::hasVisibleRenderingTargets()
@@ -106,48 +107,18 @@ void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 		return;
 
 	Timestamper stamper;
-	//double timestamp = stamper.stampSec();
-	//double lastMsgTime = 0;
 
-	//Since we don't want the server to timeout the director, we make sure that we
-	//update the server at least once per second by running th giveReward function
-	//in as separate thread.
-	QFuture<void> future = QtConcurrent::run(rewardController_.data(),&RewardController::giveReward,channel,quantity,minRewardPeriod,!(dataCommandChannel_.isNull() || slave_));
-	//while(!future.isFinished())
-	//{
-	//	QCoreApplication::processEvents();
-	//	if(stamper.stampSec() > (lastMsgTime+1))
-	//	{
-	//		if((!dataCommandChannel_.isNull()) && (!slave_))
-	//		{
-	//			QString status = "running";
-	//			int engCmd = getEngineCommand();
-	//			switch(engCmd)
-	//			{
-	//			case Engine::PictoEngine::PlayEngine:
-	//				status = "running";
-	//				break;
-	//			case Engine::PictoEngine::PauseEngine:
-	//				status = "paused";
-	//				break;
-	//			case Engine::PictoEngine::StopEngine:
-	//				status = "stopped";
-	//				break;
-	//			}
-	//			QString updateCommandStr = "COMPONENTUPDATE "+getName()+":"+status+" PICTO/1.0";
-	//			QSharedPointer<Picto::ProtocolCommand> updateCommand(new Picto::ProtocolCommand(updateCommandStr));
-	//			dataCommandChannel_->sendCommand(updateCommand);
-	//		}
-	//		lastMsgTime = stamper.stampSec();
-	//	}
-	//}
+	//Rewards are added to the reward controller when this function is called.  They are actually performed just
+	//after the following firstPhosphor time.
+	rewardController_->addReward(channel,quantity,minRewardPeriod);
+	
+	//If this is the master and we're stopped, we need to make sure the reward gets sent (usually this happens on
+	//new frames being displayed, but here the system just sticks with the splash screen).
 	if(dataCommandChannel_.isNull())
 		return;
 
 	if(slave_)
 		return;
-
-	//appendDeliveredRewards(QSharedPointer<RewardDataUnit>(new RewardDataUnit(quantity,channel,timestamp)));
 
 	QString status;
 	int engCmd = getEngineCommand();
@@ -167,29 +138,32 @@ void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 		default:
 			return;
 		}
-		//If we got here, we're not running.  Wait for reward to be given, then send reward data to server.
-		while(!future.isFinished())
+		//If we got here, we're not running.  Wait for all rewards to be given, sending them to the server as they go out.
+		while(rewardController_->hasPendingRewards())
+		{	
+			rewardController_->triggerRewards(true);
+			QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
+			QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+			QByteArray dataXml;
+			QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+
+			xmlWriter->writeStartElement("Data");
+			QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
+			foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+			{
+				reward->toXml(xmlWriter);
+			}
+			xmlWriter->writeEndElement();
+
+			dataCommand->setContent(dataXml);
+			dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+			QUuid commandUuid = QUuid::createUuid();
+
+			dataCommandChannel_->sendRegisteredCommand(dataCommand);
+			dataCommandChannel_->processResponses(0);
 			QCoreApplication::processEvents();
-		QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
-		QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
-
-		QByteArray dataXml;
-		QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
-
-		xmlWriter->writeStartElement("Data");
-		QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
-		foreach(QSharedPointer<RewardDataUnit> reward,rewards)
-		{
-			reward->toXml(xmlWriter);
 		}
-		xmlWriter->writeEndElement();
-
-		dataCommand->setContent(dataXml);
-		dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
-		QUuid commandUuid = QUuid::createUuid();
-
-		dataCommandChannel_->sendRegisteredCommand(dataCommand);
-		dataCommandChannel_->processResponses(0);
 	}
 
 
@@ -558,6 +532,11 @@ void PictoEngine::stop()
 { 
 	engineCommand_ = StopEngine; 
 	stopAllSignalChannels();
+}
+
+void PictoEngine::firstPhosphorOperations()
+{
+	rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || slave_));
 }
 
 }; //namespace Engine

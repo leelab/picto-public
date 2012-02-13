@@ -87,7 +87,7 @@ int Director::openDevice()
 	
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering
 	//otherwise use d3d.
-	if(!hwSetup.setupRenderingTargets(visualTarget_)) 
+	if(!hwSetup.setupRenderingTargets(visualTarget_,sigChannel_ != HardwareSetup::Mouse)) 
 		return 1;
 	if(!hwSetup.setXYChannelNums(xChannel_,yChannel_))
 		return 1;

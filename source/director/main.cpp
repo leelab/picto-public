@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 		sigChan = HardwareSetup::EyetrackerPictoBoxXp;
 	}
 	chanArgIdx = args.indexOf("-yChan");
-	int yChan = 0;
+	int yChan = 1;
 	if(chanArgIdx > 0)
 	{
 		yChan = args[chanArgIdx+1].toInt();

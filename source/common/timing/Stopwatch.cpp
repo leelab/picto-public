@@ -1,38 +1,29 @@
-#include "Timestamper.h"
+#include "Stopwatch.h"
 #include "../memleakdetect.h"
 
-namespace Picto
-{
-
-#if defined WIN32 || defined WINCE
-	LARGE_INTEGER Timestamper::startTicks_ = {0,0};
-#else
-	QDateTime Timestamper::startTime_;
-#endif
-
-
-Timestamper::Timestamper()
+using namespace Picto;
+Stopwatch::Stopwatch()
 {
 #if defined WIN32 || defined WINCE
 	QueryPerformanceFrequency(&ticksPerSec_);
 	ticksPerMs_.QuadPart = ticksPerSec_.QuadPart/1000;
 	ticksPerUs_.QuadPart = ticksPerMs_.QuadPart/1000;
+#endif
+	startWatch();
+}
 
-	if(startTicks_.LowPart == 0 && startTicks_.HighPart == 0)
-	{
-		reset();
-	}
+void Stopwatch::startWatch()
+{
+#if defined WIN32 || defined WINCE
+	QueryPerformanceCounter(&startTicks_);
 #else
-	if(startTime_.isNull())
-	{
-		reset();
-	}
+	startTime_ = QDateTime::currentDateTime();
 #endif
 }
 
-double Timestamper::stampSec()
+double Stopwatch::elapsedSec()
 {
-#if defined WIN32 || defined WINCE
+	#if defined WIN32 || defined WINCE
 	LARGE_INTEGER currTicks;
 	QueryPerformanceCounter(&currTicks);
 	return (currTicks.QuadPart - startTicks_.QuadPart)/(double)ticksPerSec_.QuadPart;
@@ -44,9 +35,9 @@ double Timestamper::stampSec()
 #endif
 }
 
-double Timestamper::stampMs()
+double Stopwatch::elapsedMs()
 {
-#if defined WIN32 || defined WINCE
+	#if defined WIN32 || defined WINCE
 	LARGE_INTEGER currTicks;
 	QueryPerformanceCounter(&currTicks);
 	return (currTicks.QuadPart - startTicks_.QuadPart)/ticksPerMs_.QuadPart;
@@ -58,7 +49,7 @@ double Timestamper::stampMs()
 #endif
 }
 
-double Timestamper::stampUs()
+double Stopwatch::elapsedUs()
 {
 #if defined WIN32 || defined WINCE
 	LARGE_INTEGER currTicks;
@@ -71,17 +62,3 @@ double Timestamper::stampUs()
 	return timeSec/1000000.0;
 #endif
 }
-
-//! Resets the timestamper to 0
-void Timestamper::reset()
-{
-#if defined WIN32 || defined WINCE
-	//startTicks_.LowPart = 0;
-	//startTicks_.HighPart = 0;
-	QueryPerformanceCounter(&startTicks_);
-#else
-	startTime_ = QDateTime::currentDateTime();
-#endif
-}
-
-}//namespace Picto
