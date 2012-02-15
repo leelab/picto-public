@@ -39,7 +39,10 @@ private slots:
 
 	void setNeuralDataAcquisitionDevice(int index);
 	//void startStopClient();
-	bool assureDeviceRunning();
+	bool deviceIsRunning();
+	bool deviceHasData();
+	bool startDevice();
+	void stopDevice();
 
 	bool isServerConnected();
 	bool isSessionActive();
@@ -60,7 +63,7 @@ private:
 		NoProxyTrigger,
 		Connected,
 		Disconnected,
-		StartSessionRequest,
+		ConnectDeviceRequest,
 		DeviceStarted,
 		DeviceStopped,
 		SessionEnded

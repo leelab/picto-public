@@ -31,12 +31,15 @@ class VirtualDevicePlugin : public QObject, public NeuralDataAcqInterface
     Q_INTERFACES(NeuralDataAcqInterface)
 
 public:
+	VirtualDevicePlugin();
     QString device() const;
 	NeuralDataAcqInterface::deviceStatus startDevice();
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
+	bool acqDataAfterNow();
+
 private:
 	void updateData();
 	deviceStatus status_;

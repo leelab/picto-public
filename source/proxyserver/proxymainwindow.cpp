@@ -78,30 +78,51 @@ void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 	return;
 }
 
-//! \brief This is called to confirm that the neural acquisition is running, or attempt to start it running.
-bool ProxyMainWindow::assureDeviceRunning()
+bool ProxyMainWindow::deviceIsRunning()
 {
 	//Is the device running?
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 	if(!iNDAcq)
 		return false;
-	if(iNDAcq->getDeviceStatus() == NeuralDataAcqInterface::running)
-		return true;
-	
-	//attempt to start/restart device
-	iNDAcq->stopDevice();
-	iNDAcq->startDevice();
-
-	//did we recover?
-	if(iNDAcq->getDeviceStatus() == NeuralDataAcqInterface::running)
-		return true;
-
-	//stop device
-	iNDAcq->stopDevice();
-	//startStopClient();
-
-	return false;
+	return iNDAcq->getDeviceStatus() > NeuralDataAcqInterface::notStarted;
 }
+
+//! \brief This is called to confirm that the neural acquisition is running, or attempt to start it running.
+bool ProxyMainWindow::deviceHasData()
+{
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	if(!iNDAcq)
+		return false;
+	bool returnVal = false;
+	switch(iNDAcq->getDeviceStatus())
+	{
+	case NeuralDataAcqInterface::notStarted:
+	case NeuralDataAcqInterface::started:
+	case NeuralDataAcqInterface::noData:
+		returnVal = false;
+		break;
+	case NeuralDataAcqInterface::hasData:
+		returnVal = true;
+	}
+	return returnVal;
+}
+
+bool ProxyMainWindow::startDevice()
+{
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	if(!iNDAcq)
+		return false;
+	return (iNDAcq->startDevice() > NeuralDataAcqInterface::notStarted);
+}
+
+void ProxyMainWindow::stopDevice()
+{
+	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
+	if(!iNDAcq)
+		return;
+	iNDAcq->stopDevice();
+}
+
 //! \brief This is called to confirm that the server connection is active and reconnect if its not.
 bool ProxyMainWindow::isServerConnected()
 {
@@ -320,36 +341,12 @@ QString ProxyMainWindow::name()
 }
 int ProxyMainWindow::openDevice()
 {
-	//NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
-	////start the Neural Data Acquisition Device
-	//iNDAcq->startDevice();
-	//if(iNDAcq->getDeviceStatus() != NeuralDataAcqInterface::running)
-	//{
-	//	QMessageBox startErrorBox;
-	//	QString errorMsg = tr("%1 failed to start server.  "
-	//						  "Device: \"%2\" is not running.  Confirm that "
-	//						  "all the needed hardware and software is turned "
-	//						  "on and started up, then try again.").
-	//						  arg(Picto::Names->proxyServerAppName).
-	//						  arg(iNDAcq->device());
-	//	startErrorBox.setText(tr("Server failed to start"));
-	//	startErrorBox.setInformativeText(errorMsg);
-	//	startErrorBox.exec();
-	//	return 1;
-	//}
-	//pluginCombo_->setEnabled(false);
-	//lineEditName_->setEnabled(false);
-	//startStopClientButton_->setText(stopServerMsg_);
 	statusManager_ = QSharedPointer<ComponentStatusManager>(new ProxyStatusManager(dataCommandChannel_));
 	dataCommandChannel_->addResponseHandler(QSharedPointer<Picto::ProtocolResponseHandler>(new ProxyNewSessionResponseHandler(statusManager_,dataCommandChannel_)));
 	return 0;
 }
 int ProxyMainWindow::closeDevice()
 {
-	//startStopClientButton_->setText(startServerMsg);
-
-	//pluginCombo_->setEnabled(true);
-	//lineEditName_->setEnabled(true);
 	return 0;
 }
 
@@ -385,7 +382,7 @@ void ProxyMainWindow::updateState()
 		case Disconnected:
 			nextState = WaitForConnect;
 			break;
-		case StartSessionRequest:
+		case ConnectDeviceRequest:
 			nextState = WaitForDevice;
 			break;
 		}
@@ -446,19 +443,32 @@ void ProxyMainWindow::runState()
 		if(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection())
 			stateTrigger_ = Disconnected;
 		if(isSessionActive())
-			stateTrigger_ = StartSessionRequest;
+			stateTrigger_ = ConnectDeviceRequest;
 		break;
 	case WaitForDevice:
-		if(assureDeviceRunning())
-			stateTrigger_ = DeviceStarted;
+		if(deviceIsRunning())
+		{
+			if(deviceHasData())
+				stateTrigger_ = DeviceStarted;
+		}
+		else
+		{
+			startDevice();
+		}
 		if(!isSessionActive())
+		{
 			stateTrigger_ = SessionEnded;
+			stopDevice();
+		}
 		break;
 	case Running:
-		if(!assureDeviceRunning())
+		if(!deviceHasData())
 			stateTrigger_ = DeviceStopped;
 		if(!isSessionActive())
+		{
 			stateTrigger_ = SessionEnded;
+			stopDevice();
+		}
 		break;
 	}
 	if(currState_ != WaitForConnect)

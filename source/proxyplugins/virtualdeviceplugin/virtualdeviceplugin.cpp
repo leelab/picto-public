@@ -8,6 +8,11 @@
 
 QSharedPointer<Picto::Timestamper> VirtualDevicePlugin::timeStamper_ = QSharedPointer<Picto::Timestamper>(new Picto::Timestamper());
 
+VirtualDevicePlugin::VirtualDevicePlugin()
+{
+	status_ = notStarted;
+}
+
 /*!	\brief	Used to define the VirtualEventSources to which this VirtualDevicePlugin is attached.
  *
  *	To use a different type of VirtualEventSource, include it above and replace the two 
@@ -75,18 +80,18 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 	lastEvent_ = QSharedPointer<VirtualEvent>();
 	CreateEventSources();
 	latestEvents_.clear();
-	bool started = true;
+	bool deviceStarted = true;
 	foreach(QSharedPointer<VirtualEventSource> source,sources_)
 	{
 		if(!source->start(currTime))
 		{
-			started = false;
+			deviceStarted = false;
 			break;
 		}
 	}
-	if(started)
+	if(deviceStarted)
 	{
-		status_ = running;
+		status_ = hasData;
 	}
 	else
 	{
@@ -94,7 +99,7 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 		{
 			source->stop();
 		}
-		status_ = failedToStart;
+		status_ = notStarted;
 	}
 	return status_;
 }
@@ -105,7 +110,8 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::stopDevice()
 	{
 		source->stop();
 	}
-	return stopped;
+	status_ = notStarted;
+	return status_;
 }
 
 NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::getDeviceStatus()
@@ -166,6 +172,13 @@ void VirtualDevicePlugin::updateData()
 		dataList_.push_back(currEvent);
 		currEvent = getNextEvent(currTime);
 	}
+}
+
+bool VirtualDevicePlugin::acqDataAfterNow()
+{
+	dumpData();
+
+	return true;
 }
 
 Q_EXPORT_PLUGIN2(ProxyPluginVirtualDevice, VirtualDevicePlugin)

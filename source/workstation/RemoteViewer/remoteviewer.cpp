@@ -1218,6 +1218,7 @@ void RemoteViewer::updateNeuralData()
 		return;
 	neuralDataTimer_.restart();	
 
+	mainTabbedFrame_->setTabIcon(1,QIcon(":/icons/circle.png"));
 	while(neuralSlaveChannel_->incomingResponsesWaiting())
 		neuralSlaveChannel_->getResponse();
 	if(!neuralSlaveChannel_->assureConnection(100))
@@ -1259,7 +1260,8 @@ void RemoteViewer::updateNeuralData()
 	{
 		return;
 	}
-
+	
+	bool hadData = false;
 	xmlReader->readNext();
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
@@ -1268,18 +1270,20 @@ void RemoteViewer::updateNeuralData()
 			LFPDataUnitPackage pack;
 			pack.fromXml(xmlReader);
 			neuralDataViewer_->addLFPData(pack);
+			hadData = true;
 		}
 		else if(xmlReader->name() == "NDU")
 		{
 			NeuralDataUnit unit;
 			unit.fromXml(xmlReader);
 			neuralDataViewer_->addSpikeData(unit);
+			hadData = true;
 		}
 		xmlReader->readNext();
 	}
 	//Only once we actually receive neural data do we enable the neural tab of the mainTabbedFrame
 	mainTabbedFrame_->setTabEnabled(1,true);
-	if(mainTabbedFrame_->tabIcon(1).isNull())
+	if(hadData)
 	{
 		mainTabbedFrame_->setTabIcon(1,QIcon(":/icons/runningWorkstation.png"));
 	}

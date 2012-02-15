@@ -31,6 +31,7 @@ public:
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
+	bool acqDataAfterNow();
 
 private:
 	struct SpikeDetails
@@ -57,7 +58,6 @@ private:
 	double lastEventTimestamp_;
 	double lastSpikeTimestamp_;
 	double lastLFPTimestamp_;
-	bool bDeviceRunning;
 
 	QMutex COMMutex;
 
@@ -68,6 +68,8 @@ private:
 	wchar_t *szTankName;
 	wchar_t *szBlockName;
 	QVector<QSharedPointer<Picto::LFPDataUnitPackage>> lfpData_;
+
+	deviceStatus deviceStatus_;
 
 
 

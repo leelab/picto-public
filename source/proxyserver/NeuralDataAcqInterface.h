@@ -17,10 +17,10 @@ class NeuralDataAcqInterface
 public:
 	enum deviceStatus
 	{
-		stopped,
+		notStarted,
 		started,
-		running,
-		failedToStart
+		noData,
+		hasData
 	};
 
     virtual ~NeuralDataAcqInterface() {}
@@ -32,6 +32,10 @@ public:
 	virtual deviceStatus getDeviceStatus() = 0;
 	virtual float samplingRate() = 0;
 	virtual QList<QSharedPointer<Picto::DataUnit>> dumpData() = 0;
+	//Causes the Acquisition device to throw out all data collected before
+	//now.  No data gathered before this point should be returned by dumpData();
+	//Returns true if this was accomplished, false if we'll need to try again.
+	virtual bool acqDataAfterNow() = 0;
 };
 
 QT_BEGIN_NAMESPACE

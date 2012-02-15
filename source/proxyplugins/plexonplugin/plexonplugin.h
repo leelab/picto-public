@@ -25,14 +25,17 @@ class PlexonPlugin : public QObject, public NeuralDataAcqInterface
     Q_INTERFACES(NeuralDataAcqInterface)
 
 public:
+	PlexonPlugin();
     QString device() const;
 	NeuralDataAcqInterface::deviceStatus startDevice();
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
+	bool acqDataAfterNow();
 private:
 	QVector<QSharedPointer<Picto::LFPDataUnitPackage>> lfpData_;
+	NeuralDataAcqInterface::deviceStatus deviceStatus_; 
 };
 
 

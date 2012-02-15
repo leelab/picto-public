@@ -4,6 +4,10 @@
 #include "plexonplugin.h"
 #include "../../common/memleakdetect.h"
 
+PlexonPlugin::PlexonPlugin()
+{
+	deviceStatus_ = notStarted;
+}
 QString PlexonPlugin::device() const
 {
 	return "Plexon";
@@ -13,38 +17,32 @@ QString PlexonPlugin::device() const
 NeuralDataAcqInterface::deviceStatus PlexonPlugin::startDevice()
 {
 	PL_CloseClient();
-	PL_InitClientEx3(0, NULL, NULL);
-
-	if(PL_IsSortClientRunning())
-	{
-		return started;
-	}
-	else
-	{
-		return failedToStart;
-	}
+	PL_InitClientEx3(0, NULL, NULL);	//! \todo Check if the return value indicates success!
+	deviceStatus_ = started;
+	return deviceStatus_;
 }
 
 NeuralDataAcqInterface::deviceStatus PlexonPlugin::stopDevice()
 {
 	PL_CloseClient();
-
-	return stopped;
+	deviceStatus_ = notStarted;
+	return deviceStatus_;
 }
 
 NeuralDataAcqInterface::deviceStatus PlexonPlugin::getDeviceStatus()
 {
-	deviceStatus status;
-
-	if(!PL_IsSortClientRunning())
+	if(deviceStatus_ > notStarted)
 	{
-		status = stopped;
+		if(!PL_IsSortClientRunning())
+		{
+			deviceStatus_ = noData;
+		}
+		else
+		{
+			deviceStatus_ = hasData;
+		}
 	}
-	else
-	{
-		status = running;
-	}
-	return status;
+	return deviceStatus_;
 }
 
 
@@ -182,6 +180,23 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 	}
 	free(pServerEventBuffer);
 	return returnList;
+}
+
+bool PlexonPlugin::acqDataAfterNow()
+{
+	int NumMAPEvents = MAX_MAP_EVENTS_PER_READ;
+	PL_Event* pServerSkipDataBuffer = (PL_Event*)malloc(sizeof(PL_Event)*MAX_MAP_EVENTS_PER_READ);
+	//Every time we call PL_GetTimeStampArrays it moves the plexon's read pointer forward
+	//we just have to call it until it stops returning data to move the read pointer to
+	//the current time.
+	while(NumMAPEvents == MAX_MAP_EVENTS_PER_READ)
+	{
+		NumMAPEvents = MAX_MAP_EVENTS_PER_READ;
+		PL_GetTimeStampStructures(&NumMAPEvents,pServerSkipDataBuffer);
+	}
+	free(pServerSkipDataBuffer);
+
+	return true;
 }
 
 Q_EXPORT_PLUGIN2(ProxyPluginPlexon, PlexonPlugin)

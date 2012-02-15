@@ -17,12 +17,28 @@ bool ProxyNewSessionResponseHandler::processResponse(QString directive)
 	Q_ASSERT(!statusManager_.isNull());
 	statusManager_.toStrongRef()->setStatus(running);
 	NeuralDataAcqInterface *iNDAcq;
+	bool firstTime = true;
 	while(statusManager_.toStrongRef()->getStatus() > ending 
 			&& !statusManager_.toStrongRef()->exitTriggered())
 	{
 		iNDAcq = statusManager_.toStrongRef().staticCast<ProxyStatusManager>()->getPlugin();
 		if(iNDAcq)
 		{
+			//If this is the first time we're requesting data, throw out any data that was acquired so far
+			//because it comes from before this session started.
+			if(firstTime)
+			{
+				if(!iNDAcq->acqDataAfterNow())
+				{
+					//check for and process responses
+					dataCommandChannel_->assureConnection();
+					dataCommandChannel_->processResponses(0);
+					QCoreApplication::processEvents();
+					continue;
+				}
+				firstTime = false;
+			}
+
 			//get the data from the neural acquisition device 
 			QList<QSharedPointer<Picto::DataUnit>> dataList = iNDAcq->dumpData();
 			while(dataList.size())

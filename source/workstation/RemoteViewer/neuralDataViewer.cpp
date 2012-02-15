@@ -51,11 +51,7 @@ NeuralDataViewer::NeuralDataViewer(QSharedPointer<Picto::Engine::PictoEngine> en
 	engine_(engine)
 {
 	setupUi();
-	latestNeuralDataId_ = -1;
-	axisMin_ = 0;
-	axisMax_ = NEURAL_PLOT_WINDOW_SECS;
-	lfpPlotNeedsUpdate_ = true;
-	spikePlotNeedsUpdate_ = true;
+	initialize();
 }
 
 NeuralDataViewer::~NeuralDataViewer()
@@ -69,6 +65,11 @@ void NeuralDataViewer::initialize()
 
 	//No path has been running yet
 	latestRunningPath_ = "";
+
+	axisMin_ = 0;
+	axisMax_ = NEURAL_PLOT_WINDOW_SECS;
+	lfpPlotNeedsUpdate_ = true;
+	spikePlotNeedsUpdate_ = true;
 }
 
 void NeuralDataViewer::deinitialize()
@@ -95,9 +96,13 @@ void NeuralDataViewer::deinitialize()
 
 void NeuralDataViewer::addLFPData(LFPDataUnitPackage &data)
 {
-	int currDataId = data.getDataID();
-	if(currDataId > latestNeuralDataId_)
-		latestNeuralDataId_ = currDataId;
+	//We set the latestNeuralDataId_ to whatever came in regardless
+	//of whether its greater than the last one.  This is because the
+	//dataids may not be in order.  The LFP dataid would have been
+	//generated when the lfp object was first created even though it
+	//contains data from 500ms later.  Also, if the server goes down and
+	//restarts, data may come in out of order.
+	latestNeuralDataId_ = data.getDataID();
 	
 	//If there aren't enough data lists yet, make the lists
 	while(lfpPlotData_.size() <= data.getChannel())
@@ -130,9 +135,7 @@ void NeuralDataViewer::addLFPData(LFPDataUnitPackage &data)
 }
 void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
 {
-	int currDataId = data.getDataID();
-	if(currDataId > latestNeuralDataId_)
-		latestNeuralDataId_ = currDataId;
+	latestNeuralDataId_ = data.getDataID();
 
 	//If there aren't enough curves slots yet, make the slots
 	while(spikePlotData_.size() <= data.getChannel())
@@ -221,6 +224,7 @@ void NeuralDataViewer::replot()
 			newMark->setLabelOrientation(Qt::Vertical);
 			newMark->setLabelAlignment(Qt::AlignRight);
 			newMark->attach(lfpPlot_);
+			lfpStateChangeMarkers_.append(newMark);
 			marksAdded_ = true;
 		}
 		
@@ -267,12 +271,21 @@ void NeuralDataViewer::replot()
 			lfpPlotSize = lfpPlotData_[currChannel()].d.size();
 		QwtPointSeriesData* pointData;
 		QVector<QPointF> dataPoints;
-		dataPoints.resize(lfpPlotSize);
 		if(lfpPlotSize) 
 		{
 			int i=0;
 			foreach(QPointF point,lfpPlotData_[currChannel()].d)
 			{
+				if(point.x() > axisMax_)
+					break;
+				i++;
+			}
+			dataPoints.resize(i);
+			i=0;
+			foreach(QPointF point,lfpPlotData_[currChannel()].d)
+			{
+				if(point.x() > axisMax_)
+					break;
 				dataPoints[i] = point;
 				i++;
 			}
@@ -294,12 +307,21 @@ void NeuralDataViewer::replot()
 		
 		QwtPointSeriesData* pointData;
 		QVector<QPointF> dataPoints;
-		dataPoints.resize(spikePlotSize);
 		if(spikePlotSize)
 		{
 			int i=0;
 			foreach(QPointF point,spikePlotData_[currChannel()][currUnit()].d)
 			{
+				if(point.x() > axisMax_)
+					break;
+				i++;
+			}
+			dataPoints.resize(i);
+			i=0;
+			foreach(QPointF point,spikePlotData_[currChannel()][currUnit()].d)
+			{
+				if(point.x() > axisMax_)
+					break;
 				dataPoints[i] = point;
 				i++;
 			}

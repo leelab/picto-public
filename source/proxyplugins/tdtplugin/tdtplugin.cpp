@@ -12,7 +12,7 @@
 
 TdtPlugin::TdtPlugin()
 {
-	bDeviceRunning = false;
+	deviceStatus_ = notStarted;
 }
 
 QString TdtPlugin::device() const
@@ -22,9 +22,8 @@ QString TdtPlugin::device() const
 
 bool TdtPlugin::startCOM()
 {
-	if(!bDeviceRunning)
-		if(startDevice() != NeuralDataAcqInterface::started)
-			return false;
+	if(deviceStatus_ > notStarted)
+		return true;
 	COMMutex.lock();
 	//set up the connection
 	//Initialize ActiveX object
@@ -37,7 +36,6 @@ bool TdtPlugin::startCOM()
 
 	if (FAILED(hr)) 
 	{
-		bDeviceRunning = false;
 		COMMutex.unlock();
 		return false;
 	}
@@ -46,14 +44,12 @@ bool TdtPlugin::startCOM()
 	{
 		if(!(tdtTank->ConnectServer(szServerName,"PictoProxyServer")))
 		{
-			bDeviceRunning = false;
 			COMMutex.unlock();
 			return false;
 		}
 	}
 	catch(_com_error e)
 	{
-		bDeviceRunning = false;
 		COMMutex.unlock();
 		return false;
 	}
@@ -61,7 +57,6 @@ bool TdtPlugin::startCOM()
 	if(!(tdtTank->OpenTank(szTankName,"R")))
 	{
 		tdtTank->ReleaseServer();
-		bDeviceRunning = false;
 		COMMutex.unlock();
 		return false;
 	}
@@ -70,11 +65,9 @@ bool TdtPlugin::startCOM()
 	{
 		tdtTank->CloseTank();
 		tdtTank->ReleaseServer();
-		bDeviceRunning = false;
 		COMMutex.unlock();
 		return false;
 	}
-
 	return true;
 }
 
@@ -83,36 +76,44 @@ void TdtPlugin::stopCOM()
 	tdtTank->CloseTank();
 	tdtTank->ReleaseServer();
 	CoUninitialize();
-
 	COMMutex.unlock();
 }
 
 
 NeuralDataAcqInterface::deviceStatus TdtPlugin::startDevice()
 {
-	bDeviceRunning = true;
 	sampleRate = 0.0f;
+	lastEventTimestamp_ = 0;
+	lastSpikeTimestamp_ = 0;
+	lastLFPTimestamp_ = 0;
+	if(startCOM())
+		deviceStatus_ = started;
 
-	return NeuralDataAcqInterface::started;
+	return deviceStatus_;
 }
 
 NeuralDataAcqInterface::deviceStatus TdtPlugin::stopDevice()
 {
-	bDeviceRunning = false;
+	stopCOM();
 	sampleRate = 0.0f;
-
-	return NeuralDataAcqInterface::stopped;
+	deviceStatus_ = notStarted;
+	return deviceStatus_;
 }
 NeuralDataAcqInterface::deviceStatus TdtPlugin::getDeviceStatus()
 {
-	if(	bDeviceRunning )
+	if(deviceStatus_ > notStarted)
 	{
-		return NeuralDataAcqInterface::running;
+		long tankStatus = tdtTank->CheckTank(szTankName);
+		if(tankStatus != 79 && tankStatus != 82)
+		{
+			deviceStatus_ = noData;
+		}
+		else
+		{
+			deviceStatus_ = hasData;
+		}
 	}
-	else
-	{
-		return NeuralDataAcqInterface::stopped;
-	}
+	return deviceStatus_;
 }
 
 float TdtPlugin::samplingRate()
@@ -124,13 +125,12 @@ float TdtPlugin::samplingRate()
 	if(sampleRate != 0.0f)
 		return sampleRate;
 
-	if(!startCOM())
+	if(deviceStatus_ == notStarted)
 		return 0;
 	
 	long tankStatus = tdtTank->CheckTank(szTankName);
 	if(tankStatus != 79 && tankStatus != 82)
 	{
-		stopCOM();
 		return 0;
 	}
 
@@ -146,8 +146,6 @@ float TdtPlugin::samplingRate()
 	spikeSampleFrequencyArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,9);
 	
 	sampleRate = (float)((double *) spikeSampleFrequencyArray.parray->pvData)[0];
-
-	stopCOM();
 	return sampleRate;
 }
 
@@ -156,7 +154,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	QList<QSharedPointer<Picto::DataUnit>> returnList;
 	QSharedPointer<Picto::NeuralDataUnit> neuralData;
 	QSharedPointer<Picto::AlignmentDataUnit> alignData;
-	if(!startCOM())
+	if(deviceStatus_ == notStarted)
 	{
 		return returnList;
 	}
@@ -164,8 +162,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	long tankStatus = tdtTank->CheckTank(szTankName);
 	if(tankStatus != 79 && tankStatus != 82)
 	{
-		//TDT Tank not open
-		stopCOM();
+		//TDT Tank not open.
 		return returnList;
 	}
 
@@ -179,10 +176,12 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	//may need to change it back to Snip
 	numSpikeSamples = tdtTank->ReadEventsV(1000000,"eNeu",0,0,lastSpikeTimestamp_,0.0,"ALL");
 
+#ifdef DEVELOPMENTBUILD
 	//This is really only used in simulations where we are pulling data from a tank that
 	//is already full.  We do this to avoid taking forever to respond.
 	if(numSpikeSamples >1000)
 		numSpikeSamples = 1000;
+#endif
 
 	//load spike samples
 	_variant_t spikeSampleArray, spikeTimestampArray, spikeChannelArray, spikeUnitArray, spikeSampleFrequencyArray;
@@ -226,11 +225,13 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	//Read event codes
 	int numEvents;
 	numEvents = tdtTank->ReadEventsV(1000000,"Evnt",0,0,lastEventTimestamp_,0.0,"All");
-	
+
+#ifdef DEVELOPMENTBUILD
 	//This is really only used in simulations where we are pulling data from a tank that
 	//is already full.  We do this to avoid taking forever to respond.
 	if(numEvents >1000)
 		numEvents = 1000;
+#endif
 
 	_variant_t eventCodeArray, eventTimestampArray;
 
@@ -265,10 +266,13 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	//Read lfp codes
 	int numLFP;
 	numLFP = tdtTank->ReadEventsV(1000000,"LDec",0,0,lastLFPTimestamp_,0.0,"All");
+
+#ifdef DEVELOPMENTBUILD
 	//This is really only used in simulations where we are pulling data from a tank that
 	//is already full.  We do this to avoid taking forever to respond.
 	if(numLFP >1000)
 		numLFP = 1000;
+#endif
 
 	_variant_t lfpSampleArray, lfpChannelArray, lfpTimestampArray, lfpFreqArray;
 	if(numLFP > 0)
@@ -438,8 +442,13 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 			eventList.erase(eventList.begin());
 		}
 	}
-	stopCOM();
 	return returnList;
+}
+
+bool TdtPlugin::acqDataAfterNow()
+{
+	dumpData();
+	return true;
 }
 
 void TdtPlugin::deviceSelected()
