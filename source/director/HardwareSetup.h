@@ -36,7 +36,7 @@ public:
 
 	typedef enum
 	{
-		PictoBoxXpGen, NullGen
+		PictoBoxXpGen, LegacyGen, NullGen
 	} EventCodeGeneratorType;
 
 	bool setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical);

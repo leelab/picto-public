@@ -98,13 +98,16 @@ int main(int argc, char *argv[])
 	}
 
 	//If there is a command argument of "-legacy", we should use 
-	//LegacySystemXPRewardController otherwise use NullReward.
+	//LegacySystemXPRewardController and LegacySystenXPEventCodeGenerator
+	//otherwise use NullReward.
 	//We should also switch an eye tracking signal channel to the 
 	//legacy system's eye tracker.
 	HardwareSetup::RewardControllerType rewCont = HardwareSetup::NullReward;
+	HardwareSetup::EventCodeGeneratorType eventGen = HardwareSetup::NullGen;
 	if(app.arguments().contains("-legacy"))
 	{
 		rewCont = HardwareSetup::LegacySystemXpReward;
+		eventGen = HardwareSetup::LegacyGen;
 		if(sigChan != HardwareSetup::Mouse)
 			sigChan = HardwareSetup::EyetrackerLegacySystemXp;
 	}
@@ -117,7 +120,7 @@ int main(int argc, char *argv[])
 	//visTarget = HardwareSetup::Pixmap;
 	///////////////////////////////////////////////////////////////////	
 
-	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,HardwareSetup::NullGen,xChan,yChan));
+	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,eventGen,xChan,yChan));
 	director->activate();
 	Picto::CloseLib();
 	return 0;

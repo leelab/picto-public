@@ -25,7 +25,7 @@ class TdtPlugin : public QObject, public NeuralDataAcqInterface
 public:
 	TdtPlugin();
     QString device() const;
-	virtual void deviceSelected();
+	virtual void deviceSelected(){};
 	NeuralDataAcqInterface::deviceStatus startDevice();
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
@@ -47,6 +47,7 @@ private:
 		double timeStamp;
 	};
 
+	bool getRunningBlockInfo();
 	bool startCOM();
 	void stopCOM();
 	static bool spikeTimestampLessThan(const SpikeDetails &sd1, const SpikeDetails &sd2);
@@ -58,8 +59,6 @@ private:
 	double lastEventTimestamp_;
 	double lastSpikeTimestamp_;
 	double lastLFPTimestamp_;
-
-	QMutex COMMutex;
 
 
 	

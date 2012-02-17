@@ -47,6 +47,7 @@
 #if defined WIN32 && defined NI_STUFF
 #include "iodevices/PictoBoxXPRewardController.h"
 #include "iodevices/LegacySystemXPRewardController.h"
+#include "iodevices/LegacySystemXPEventCodeGenerator.h"
 #include "iodevices/PictoBoxXPEventCodeGenerator.h"
 #endif
 #include "../common/memleakdetect.h"
@@ -221,6 +222,10 @@ bool HardwareSetup::setupEventCodeGenerator(HardwareSetup::EventCodeGeneratorTyp
 #else
 		return false;
 #endif
+	}
+	else if(generatorType == LegacyGen)
+	{
+		generator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::LegacySystemXPEventCodeGenerator());
 	}
 	else if(generatorType == NullGen)
 	{

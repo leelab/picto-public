@@ -961,6 +961,14 @@ void SessionInfo::SetupBaseSessionDatabase()
 	Q_ASSERT(baseSessionDbConnection_.isOpen());
 	QSqlQuery sessionQ(baseSessionDbConnection_);
 
+	//Set the synchronous setting: 
+	//FULL is fully protected from application crash and system failure - This is the Sqlite default
+	//NORMAL is fully protected from application crash and most system failure case won't corrupt
+	//			the database.  In practice, a catastrophic disk or hardware fault is more likely to
+	//			occur.
+	//OFF is fully protected from application crash.  System failures could corrupt data.
+	//executeWriteQuery(&sessionQ,"PRAGMA synchronous = OFF");
+
 	// If the database doesn't yet contain a session info table, we need to add the session info.
 	bool insertSessionInfo = !baseSessionDbConnection_.tables().contains("sessioninfo");
 	bool insertTransLookup = !baseSessionDbConnection_.tables().contains("transitionlookup");

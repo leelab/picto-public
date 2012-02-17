@@ -17,6 +17,8 @@
 
 #include "../stimuli/ArrowGraphic.h"
 #include "../stimuli/BoxGraphic.h"
+#include "../stimuli/DiamondGraphic.h"
+#include "../stimuli/ShapeShifterGraphic.h"
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
 #include "../stimuli/LineGraphic.h"
@@ -67,10 +69,14 @@ ScriptableContainer::ScriptableContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
 	visualElementFactory_->addAssetType(BoxGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
+	visualElementFactory_->addAssetType(DiamondGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DiamondGraphic::Create))));
 	visualElementFactory_->addAssetType(CircleGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
 	visualElementFactory_->addAssetType(EllipseGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	visualElementFactory_->addAssetType(ShapeShifterGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
 	visualElementFactory_->addAssetType(LineGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
 	visualElementFactory_->addAssetType(GridGraphic::type,

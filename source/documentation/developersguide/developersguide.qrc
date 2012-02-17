@@ -144,6 +144,8 @@
    <file alias="_device_interface_8h-source.html">../../../output/documentation/main/html/_device_interface_8h-source.html</file>
    <file alias="_diagram_item_factory_8cpp-source.html">../../../output/documentation/main/html/_diagram_item_factory_8cpp-source.html</file>
    <file alias="_diagram_item_factory_8h-source.html">../../../output/documentation/main/html/_diagram_item_factory_8h-source.html</file>
+   <file alias="_diamond_graphic_8cpp-source.html">../../../output/documentation/main/html/_diamond_graphic_8cpp-source.html</file>
+   <file alias="_diamond_graphic_8h-source.html">../../../output/documentation/main/html/_diamond_graphic_8h-source.html</file>
    <file alias="_director_8cpp-source.html">../../../output/documentation/main/html/_director_8cpp-source.html</file>
    <file alias="_director_8h-source.html">../../../output/documentation/main/html/_director_8h-source.html</file>
    <file alias="_director_click_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_click_response_handler_8cpp-source.html</file>
@@ -522,6 +524,8 @@
    <file alias="_session_data_store_8h-source.html">../../../output/documentation/main/html/_session_data_store_8h-source.html</file>
    <file alias="_session_info_8cpp-source.html">../../../output/documentation/main/html/_session_info_8cpp-source.html</file>
    <file alias="_session_info_8h-source.html">../../../output/documentation/main/html/_session_info_8h-source.html</file>
+   <file alias="_shape_shifter_graphic_8cpp-source.html">../../../output/documentation/main/html/_shape_shifter_graphic_8cpp-source.html</file>
+   <file alias="_shape_shifter_graphic_8h-source.html">../../../output/documentation/main/html/_shape_shifter_graphic_8h-source.html</file>
    <file alias="_signal_8cpp-source.html">../../../output/documentation/main/html/_signal_8cpp-source.html</file>
    <file alias="_signal_8h-source.html">../../../output/documentation/main/html/_signal_8h-source.html</file>
    <file alias="_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_signal_channel_8cpp-source.html</file>
@@ -826,6 +830,9 @@
    <file alias="class_picto_1_1_data_store.png">../../../output/documentation/main/html/class_picto_1_1_data_store.png</file>
    <file alias="class_picto_1_1_device_interface-members.html">../../../output/documentation/main/html/class_picto_1_1_device_interface-members.html</file>
    <file alias="class_picto_1_1_device_interface.html">../../../output/documentation/main/html/class_picto_1_1_device_interface.html</file>
+   <file alias="class_picto_1_1_diamond_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic-members.html</file>
+   <file alias="class_picto_1_1_diamond_graphic.html">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic.html</file>
+   <file alias="class_picto_1_1_diamond_graphic.png">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic.png</file>
    <file alias="class_picto_1_1_display_equipment-members.html">../../../output/documentation/main/html/class_picto_1_1_display_equipment-members.html</file>
    <file alias="class_picto_1_1_display_equipment.html">../../../output/documentation/main/html/class_picto_1_1_display_equipment.html</file>
    <file alias="class_picto_1_1_ellipse_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_ellipse_graphic-members.html</file>
@@ -1104,6 +1111,8 @@
    <file alias="class_picto_1_1_state_machine_element.png">../../../output/documentation/main/html/class_picto_1_1_state_machine_element.png</file>
    <file alias="class_picto_1_1_stimulus_element-members.html">../../../output/documentation/main/html/class_picto_1_1_stimulus_element-members.html</file>
    <file alias="class_picto_1_1_stimulus_element.html">../../../output/documentation/main/html/class_picto_1_1_stimulus_element.html</file>
+   <file alias="class_picto_1_1_stopwatch-members.html">../../../output/documentation/main/html/class_picto_1_1_stopwatch-members.html</file>
+   <file alias="class_picto_1_1_stopwatch.html">../../../output/documentation/main/html/class_picto_1_1_stopwatch.html</file>
    <file alias="class_picto_1_1_stopwatch_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_stopwatch_controller-members.html</file>
    <file alias="class_picto_1_1_stopwatch_controller.html">../../../output/documentation/main/html/class_picto_1_1_stopwatch_controller.html</file>
    <file alias="class_picto_1_1_stopwatch_controller.png">../../../output/documentation/main/html/class_picto_1_1_stopwatch_controller.png</file>

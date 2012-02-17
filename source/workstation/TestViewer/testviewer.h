@@ -38,6 +38,7 @@ public:
 public slots:
 	void init();  //Called just before displaying the viewer
 	void deinit();	//Called just after the user switches out of the viewer
+	bool aboutToQuit();
 
 	void play();
 	void pause();

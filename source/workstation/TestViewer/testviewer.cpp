@@ -62,6 +62,17 @@ void TestViewer::init()
 void TestViewer::deinit()
 {
 	//stop the engine running
+	stop();
+}
+
+//! \brief Called when the application is about to quit.  Takes care of closing this windows resources
+bool TestViewer::aboutToQuit()
+{
+	//Calling deinit is important because it stops the experiment.  Otherwise, the 
+	//experiment would keep on going even though the window was closed and this
+	//process would stick around in the task manager for eternity.
+	deinit();
+	return true;
 }
 
 //! Initializes the engine with all of the appropriate pieces for testing

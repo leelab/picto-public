@@ -23,13 +23,6 @@ class Dialog : public QDialog
 public:
     Dialog(QWidget *parent = 0);
 	QLineEdit * serverLine;
-	QLineEdit * tankLine;
-	QLineEdit * blockLine;
-
-//private slots:
-//private signals:
-	//void initTdtServer(QString server, QString tank, QString block
-
 
 private:
 	QPushButton * okButton;

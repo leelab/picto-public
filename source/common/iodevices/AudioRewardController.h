@@ -41,6 +41,8 @@ private:
 	void playSound(int lengthMs);
 	QSound tick_;
 	QFuture<void> audioThreadFuture_;
+	QTime timer_;
+	int latestQuantity_;
 
 };
 
