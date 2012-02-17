@@ -20,6 +20,8 @@ public:
 	
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual QString valueString();
+	QString toUserString();
+	void fromUserString(QString userString);
 private:
 	void set(QVariant _value) { SetValueFromString(_value,QSharedPointer<QXmlStreamReader>()); };
 	QVariant get(){return (QVariant)valueString();};
