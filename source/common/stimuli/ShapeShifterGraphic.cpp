@@ -70,11 +70,13 @@ void ShapeShifterGraphic::draw()
 	else if(shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt(),"") == "Diamond")
 	{
 		QPolygon diamond;
-		diamond << QPoint(dimensions.width()/2,0)
-				<< QPoint(dimensions.width(),dimensions.height()/2)
-				<< QPoint(dimensions.width()/2,dimensions.height())
-				<< QPoint(0,dimensions.height()/2)
-				<< QPoint(dimensions.width()/2,0);
+		int maxWPoint = dimensions.width()-1;
+		int maxHPoint = dimensions.height()-1;
+		diamond << QPoint(maxWPoint/2,0)
+				<< QPoint(maxWPoint,maxHPoint/2)
+				<< QPoint(maxWPoint/2,maxHPoint)
+				<< QPoint(0,maxHPoint/2)
+				<< QPoint(maxWPoint/2,0);
 		p.drawPolygon(diamond);
 	}
 

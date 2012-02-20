@@ -1680,6 +1680,8 @@ EventInfo.updateValue();</ExitScript><Level id="1891">Stage</Level><Type id="189
 																																														{
 																																															LeftGraphic.shape = &quot;Rectangle&quot;;
 																																															RightGraphic.shape = &quot;Diamond&quot;;
+																																															LeftGraphic.setDimensions(35,35);
+																																															RightGraphic.setDimensions(49,49);
 																																														}
 																																														else
 																																														{
@@ -1702,6 +1704,8 @@ EventInfo.updateValue();</ExitScript><Level id="1891">Stage</Level><Type id="189
 																																														{
 																																															RightGraphic.shape = &quot;Rectangle&quot;;
 																																															LeftGraphic.shape = &quot;Diamond&quot;;
+																																															LeftGraphic.setDimensions(49,49);
+																																															RightGraphic.setDimensions(35,35);
 																																														}
 																																														else
 																																														{
@@ -2480,6 +2484,6 @@ SuperblockType.randomize();</EntryScript><VisualElement type="Operator Info Grap
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1347</OpenedBlock>
+    <OpenedBlock id="">1896</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>
