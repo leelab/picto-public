@@ -6,6 +6,7 @@
 #include <QList>
 #include <QObject>
 
+#include "../storage/BehavioralDataUnitPackage.h"
 #include "../common.h"
 
 namespace Picto {
@@ -48,8 +49,8 @@ class SignalChannel : public QObject
 	Q_OBJECT
 
 public:
-	SignalChannel();
-	SignalChannel(int sampsPerSec);
+	SignalChannel(QString name);
+	SignalChannel(QString name, int sampsPerSec);
 
 	virtual ~SignalChannel() {};
 
@@ -65,6 +66,9 @@ public:
 
 	QMap<QString, QList<double>> getValues();
 	QMap<QString, QList<double>> getRawValues();
+	QSharedPointer<BehavioralDataUnitPackage> getDataPackage();
+	QString getName(){return name_;};
+
 	double peekValue(QString subchannel);
 	void clearValues();
 
@@ -85,6 +89,7 @@ protected:
 
 	int sampleRate_;			//samples per second collected by the channel
 	bool useScaleFactors_;
+	QString name_;
 
 private:
 	double scaleData(int subchannel, double rawData);

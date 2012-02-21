@@ -105,7 +105,7 @@
               <ControlTarget id="82">Target</ControlTarget>
               <FixationTime id="83">400</FixationTime>
               <MaxInitialAcquisitionTime id="84">1100</MaxInitialAcquisitionTime>
-              <SignalChannel id="85">PositionChannel</SignalChannel>
+              <SignalChannel id="85">Position</SignalChannel>
               <TimeUnits id="86">Ms</TimeUnits>
               <TotalTime id="87">1500</TotalTime>
               <MaxReacquisitionTime id="88">1100</MaxReacquisitionTime>
@@ -641,7 +641,7 @@
                       <UIEnabled id="582">false</UIEnabled>
                       <UIOrder id="583">0</UIOrder>
                     </Result>
-                    <SignalChannel id="584">PositionChannel</SignalChannel>
+                    <SignalChannel id="584">Position</SignalChannel>
                     <TimeUnits id="585">Ms</TimeUnits>
                     <TotalTime id="586">2000</TotalTime>
                     <UIInfo id="587">

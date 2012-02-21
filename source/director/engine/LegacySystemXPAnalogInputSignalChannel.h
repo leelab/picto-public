@@ -22,7 +22,7 @@ namespace Picto {
 class LegacySystemXPAnalogInputSignalChannel : public SignalChannel
 {
 public:
-	LegacySystemXPAnalogInputSignalChannel(int sampsPerSecond);
+	LegacySystemXPAnalogInputSignalChannel(QString name, int sampsPerSecond);
 	virtual ~LegacySystemXPAnalogInputSignalChannel() { stop(); };
 
 	bool start();

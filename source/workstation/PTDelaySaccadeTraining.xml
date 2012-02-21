@@ -105,7 +105,7 @@
               <ControlTarget id="82">Target</ControlTarget>
               <FixationTime id="83">400</FixationTime>
               <MaxInitialAcquisitionTime id="84">1100</MaxInitialAcquisitionTime>
-              <SignalChannel id="85">PositionChannel</SignalChannel>
+              <SignalChannel id="85">Position</SignalChannel>
               <TimeUnits id="86">Ms</TimeUnits>
               <TotalTime id="87">1500</TotalTime>
               <MaxReacquisitionTime id="88">1100</MaxReacquisitionTime>
@@ -641,7 +641,7 @@
                       <UIEnabled id="3691">false</UIEnabled>
                       <UIOrder id="3692">0</UIOrder>
                     </Result>
-                    <SignalChannel id="3696">PositionChannel</SignalChannel>
+                    <SignalChannel id="3696">Position</SignalChannel>
                     <TimeUnits id="3697">Ms</TimeUnits>
                     <TotalTime id="3698">2000</TotalTime>
                     <UIInfo id="3699">
@@ -813,7 +813,7 @@
                         </UIInfo>
                         <UIOrder id="3822">0</UIOrder>
                       </Result>
-                      <SignalChannel id="2319">PositionChannel</SignalChannel>
+                      <SignalChannel id="2319">Position</SignalChannel>
                       <TargetEntryScript id="2320">
                         EventInfo.setData(&quot;Event&quot;,5);
                         EventInfo.updateValue();
@@ -920,7 +920,7 @@
                         <UIEnabled id="783">false</UIEnabled>
                         <UIOrder id="784">0</UIOrder>
                       </Result>
-                      <SignalChannel id="785">PositionChannel</SignalChannel>
+                      <SignalChannel id="785">Position</SignalChannel>
                       <TimeUnits id="786">Ms</TimeUnits>
                       <TotalTime id="787">1000</TotalTime>
                       <UIInfo id="788">
@@ -1206,7 +1206,7 @@
                         <UIEnabled id="1954">false</UIEnabled>
                         <UIOrder id="1955">0</UIOrder>
                       </Result>
-                      <SignalChannel id="1956">PositionChannel</SignalChannel>
+                      <SignalChannel id="1956">Position</SignalChannel>
                       <TimeUnits id="1957">Ms</TimeUnits>
                       <TotalTime id="1958">1000</TotalTime>
                       <UIInfo id="1959">

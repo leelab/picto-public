@@ -11,13 +11,13 @@
 
 namespace Picto {
 
-MouseSignalChannel::MouseSignalChannel(int sampsPerSecond, QWidget *widget)
-	: SignalChannel(sampsPerSecond),
+MouseSignalChannel::MouseSignalChannel(QString name, int sampsPerSecond, QWidget *widget)
+	: SignalChannel(name,sampsPerSecond),
 	  widget_(widget)
 {
 	//add our subchannels to the list
-	addSubchannel("xpos");
-	addSubchannel("ypos");
+	addSubchannel("x");
+	addSubchannel("y");
 	addSubchannel("time");
 
 	//pollingTimer_.setInterval(1000/sampsPerSecond);
@@ -50,8 +50,8 @@ void MouseSignalChannel::pollMouse()
 	QPoint point = QCursor::pos();
 	point = widget_->mapFromGlobal(point);
 
-	rawDataBuffer_["xpos"].append((double)point.x());
-	rawDataBuffer_["ypos"].append((double)point.y());
+	rawDataBuffer_["x"].append((double)point.x());
+	rawDataBuffer_["y"].append((double)point.y());
 	rawDataBuffer_["time"].append(stamper.stampSec());
 }
 

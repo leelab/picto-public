@@ -99,7 +99,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		QString dataType = xmlReader->name().toString();
 
 		//We do different things depending on the type of data being sent
-		if(dataType == "BehavioralDataUnitPackage")
+		if(dataType == "BDUP")
 		{
 			//Extract the BehavioralDataUnitPackage
 			QSharedPointer<Picto::BehavioralDataUnitPackage> behaveData(new Picto::BehavioralDataUnitPackage());

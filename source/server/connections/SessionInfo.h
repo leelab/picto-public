@@ -169,6 +169,8 @@ private:
 	qulonglong maxReceivedDataID_;
 
 	QList<QUuid> authorizedObservers_;
+	QMap<QString,int> sigChanVarIDs_;
+	int nextSigChanVarId_;
 };
 
 #endif

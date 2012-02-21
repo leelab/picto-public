@@ -44,6 +44,7 @@ public:
 	bool setupRewardController(RewardControllerType controllerType);
 	bool setupEventCodeGenerator(EventCodeGeneratorType generatorType);
 	bool setXYChannelNums(int xChan, int yChan){xChan_ = xChan;yChan_ = yChan;return true;};
+	bool setXYDiamChannelNums(int xDiamChan, int yDiamChan){xDiamChan_ = xDiamChan;yDiamChan_ = yDiamChan;return true;};
 
 	bool isSetup();
 
@@ -56,7 +57,8 @@ private:
 	bool eventCodeGenSetup_;
 	int xChan_;
 	int yChan_;
-
+	int xDiamChan_;
+	int yDiamChan_;
 };
 
 #endif

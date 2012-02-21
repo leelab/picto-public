@@ -16,8 +16,8 @@ size_(16)
 	positionChannel_ = channel;
 	if(positionChannel_)
 	{
-		Q_ASSERT(positionChannel_->getSubchannels().contains("xpos"));
-		Q_ASSERT(positionChannel_->getSubchannels().contains("ypos"));
+		Q_ASSERT(positionChannel_->getSubchannels().contains("x"));
+		Q_ASSERT(positionChannel_->getSubchannels().contains("y"));
 	}
 	propertyContainer_->addProperty(QVariant::String,"Name","");
 	propertyContainer_->setContainerName(type);
@@ -74,15 +74,8 @@ void CursorGraphic::updateAnimation(int frame, QTime elapsedTime)
 	
 	if(positionChannel_)
 	{
-		int x = (int)positionChannel_->peekValue("xpos");
-		int y = (int)positionChannel_->peekValue("ypos");
-		//In the director, every time the positionChannel values are sent to the server they are cleared.
-		//We need something in the remoteViewer to clear the positionChannel values as well.
-		//For this purpose, we call clear here since the Cursor Graphic is the only thing in the
-		//Remote viewer to use the positionChannel anyway.  We check if we're running on the remote
-		//viewer by seeing if this positionChannel is a network signal channel.
-		if(positionChannel_->inherits("Picto::NetworkSignalChannel"))
-			positionChannel_->clearValues();	
+		int x = (int)positionChannel_->peekValue("x");
+		int y = (int)positionChannel_->peekValue("y");	
 
 		setPosition(QPoint(x,y));
 	}

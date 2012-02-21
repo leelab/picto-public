@@ -13,8 +13,8 @@
 
 namespace Picto {
 
-PictoBoxXPAnalogInputSignalChannel::PictoBoxXPAnalogInputSignalChannel(int sampsPerSecond)
-	: SignalChannel(sampsPerSecond)
+PictoBoxXPAnalogInputSignalChannel::PictoBoxXPAnalogInputSignalChannel(QString name, int sampsPerSecond)
+	: SignalChannel(name,sampsPerSecond)
 {
 	//all of the initialization takes place in start, while all of the
 	//cleanup takes place in stop
@@ -46,7 +46,7 @@ bool PictoBoxXPAnalogInputSignalChannel::start()
 		DAQmxErrChk (DAQmxClearTask(daqTaskHandle_));
 
 	//Create the new task
-	DAQmxErrChk (DAQmxCreateTask("AnalogInput",&daqTaskHandle_));
+	DAQmxErrChk (DAQmxCreateTask(getName().toAscii(),&daqTaskHandle_));
 	QString physicalChannel;
 	foreach(int aiChannel,aiChannelNums_)
 	{

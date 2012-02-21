@@ -6,7 +6,6 @@
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../engine/PictoEngine.h"
-#include "../storage/BehavioralDataUnitPackage.h"
 #include "../storage/FrameDataUnitPackage.h"
 #include "../engine/SignalChannel.h"
 #include "../timing/Timestamper.h"
@@ -59,7 +58,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
 
-	//sigChannel_ = engine->getSignalChannel("PositionChannel");
+	//sigChannel_ = engine->getSignalChannel("Position");
 	//Add a cursor for the user input
 	//addCursor();
 
@@ -163,7 +162,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//resetScriptableValues();
-	sigChannel_ = engine->getSignalChannel("PositionChannel");
+	sigChannel_ = engine->getSignalChannel("Position");
 
 	//Add a cursor for the user input
 	addCursor();
@@ -244,124 +243,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 
 	return result;
 }
-
-///*! \brief Sends the current behavioral data to the server
-// *
-// *	We update the server with all of the usefule behavioral data.  This includes 
-// *	the time at which the most recent frame was drawn, as well as all the input
-// *	coordinates from the subject.  Since we're in a hurry, we use the "registered"
-// *	command functions in the command channel to send commands without having to 
-// *	wait for reponses.  The responses we get will all contain directives, so we 
-// *	have to handle those here as well.
-// */
-//void State::sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine)
-//{
-//	//Create a new frame data store
-//	FrameDataUnitPackage frameData;
-//	Timestamper stamper;
-//
-//	frameData.addFrame(scene_->getLatestFirstPhosphorTime(),getAssetId());
-//	engine->setLastFrame(frameData.getLatestFrameId());
-//
-//	//Update the BehavioralDataUnitPackage
-//	BehavioralDataUnitPackage behavData;
-//
-//	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
-//
-//	if(dataChannel.isNull())
-//		return;
-//
-//	//Note that the call to getValues clears out any existing values,
-//	//so it should only be made once per frame.
-//	behavData.emptyData();
-//	behavData.addData(sigChannel_->getValues());
-//
-//	QSharedPointer<PropertyDataUnitPackage> propPack = engine->getChangedPropertyPackage();
-//	QSharedPointer<StateDataUnitPackage> statePack = engine->getStateDataPackage();
-//
-//	//send a PUTDATA command to the server with the most recent behavioral data
-//	QSharedPointer<Picto::ProtocolResponse> dataResponse;
-//	QString status = "running";
-//	int engCmd = engine->getEngineCommand();
-//	switch(engCmd)
-//	{
-//	case Engine::PictoEngine::PlayEngine:
-//		status = "running";
-//		break;
-//	case Engine::PictoEngine::PauseEngine:
-//		status = "paused";
-//		break;
-//	case Engine::PictoEngine::StopEngine:
-//		status = "stopped";
-//		break;
-//	}
-//	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
-//	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
-//
-//	QByteArray dataXml;
-//	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
-//
-//	xmlWriter->writeStartElement("Data");
-//	if(behavData.length())
-//		behavData.toXml(xmlWriter);
-//	if(propPack && propPack->length())
-//		propPack->toXml(xmlWriter);
-//	if(statePack && statePack->length())
-//		statePack->toXml(xmlWriter);
-//	QList<QSharedPointer<RewardDataUnit>> rewards = engine->getDeliveredRewards();
-//	foreach(QSharedPointer<RewardDataUnit> reward,rewards)
-//	{
-//		reward->toXml(xmlWriter);
-//	}
-//	frameData.toXml(xmlWriter);	//Frame data must go last so that server knows when it reads
-//								//in a frame, that the data it has defines the state that was
-//								//in place at that frame.
-//	xmlWriter->writeEndElement();
-//
-//	dataCommand->setContent(dataXml);
-//	dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
-//	QUuid commandUuid = QUuid::createUuid();
-//
-//	dataChannel->sendRegisteredCommand(dataCommand);
-//
-//	dataChannel->processResponses(0);
-//	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
-//	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
-//	//next frame.
-//	//QTime timer;
-//	//timer.start();
-//	dataChannel->assureConnection(5);
-//	//qDebug(QString("ASSURECONNECTION time: %1").arg(timer.elapsed()).toAscii());
-//	////check for and process responses
-//	//while(dataChannel->waitForResponse(0))
-//	//{
-//	//	dataResponse = dataChannel->getResponse();
-//	//	Q_ASSERT(!dataResponse.isNull());
-//	//	Q_ASSERT(dataResponse->getResponseType() == "OK");
-//	//	processStatusDirective(engine,dataResponse);
-//
-//	//}
-//
-//	//This is useful for debugging, but we should let the state machine handle server drop-outs
-//	//Q_ASSERT_X(dataChannel->pendingResponses() < 10, "State::Run()","Too many commands sent without receiving responses");
-//
-//}
-//
-
-
-//! Runs a script
-//void State::runScript(QString scriptName)
-//{
-//	qsEngine_->globalObject().property(scriptName).call();
-//	if(qsEngine_->hasUncaughtException())
-//	{
-//		QString errorMsg = "Uncaught exception in State" + getName() +", script "+scriptName+"\n";
-//		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-//										  .arg(qsEngine_->uncaughtException().toString());
-//		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-//		qDebug()<<errorMsg;
-//	}
-//}
 
 /*! \brief Checks for engine commands and returns true if we need to stop
  *

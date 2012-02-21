@@ -1,7 +1,6 @@
 #include "GetDataCommandHandler.h"
 
 #include "../../common/globals.h"
-#include "../../common/storage/BehavioralDataUnitPackage.h"
 #include "../../common/storage/StateDataUnit.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"

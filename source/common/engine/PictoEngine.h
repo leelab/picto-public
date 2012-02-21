@@ -23,7 +23,7 @@
 #include "../iodevices/EventCodeGenerator.h"
 #include "../storage/PropertyDataUnitPackage.h"
 #include "../storage/StateDataUnitPackage.h"
-#include "../storage/BehavioralDataUnit.h"
+#include "../storage/BehavioralDataUnitPackage.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
 #include "../storage/experimentconfig.h"
@@ -115,7 +115,7 @@ public:
 	bool hasVisibleRenderingTargets();
 
 	QSharedPointer<SignalChannel> getSignalChannel(QString name);
-	void addSignalChannel(QString name, QSharedPointer<SignalChannel> channel);
+	void addSignalChannel(QSharedPointer<SignalChannel> channel);
 	void startAllSignalChannels();
 	void stopAllSignalChannels();
 
@@ -144,7 +144,6 @@ public:
 	void setRunningPath(QString path);
 	QString getRunningPath(){return runningPath_;};
 	QString getServerPathUpdate();
-	QSharedPointer<Picto::BehavioralDataUnit> getCurrentBehavioralData();
 
 	bool setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getDataCommandChannel();
@@ -204,6 +203,7 @@ private:
 	bool userIsOperator_;
 	QString lastTimePropChangesRequested_;
 	QString lastTimeStateDataRequested_;
+	QSharedPointer<BehavioralDataUnitPackage> currBehavUnitPack_;
 	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	QSharedPointer<StateDataUnit> currStateUnit_;
 	qulonglong lastFrameId_;

@@ -30,6 +30,7 @@ PictoEngine::PictoEngine() :
 	lastTimePropChangesRequested_("0.0"),
 	lastTimeStateDataRequested_("0.0"),
 	firstCurrStateUpdate_(true),
+	currBehavUnitPack_(QSharedPointer<BehavioralDataUnitPackage>(new BehavioralDataUnitPackage())),
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
 	runningPath_(""),
 	lastFrameId_(-1),
@@ -70,9 +71,9 @@ QSharedPointer<SignalChannel> PictoEngine::getSignalChannel(QString name)
 	return signalChannels_.value(name, QSharedPointer<SignalChannel>());
 }
 
-void PictoEngine::addSignalChannel(QString name, QSharedPointer<SignalChannel> channel)
+void PictoEngine::addSignalChannel(QSharedPointer<SignalChannel> channel)
 {
-	signalChannels_.insert(name, channel);
+	signalChannels_.insert(channel->getName(), channel);
 }
 
 //! \brief Starts every signal channel in the engine
@@ -242,18 +243,10 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	frameData.addFrame(frameTime,runningStateId);
 	setLastFrame(frameData.getLatestFrameId());
 
-	//Update the BehavioralDataUnitPackage
-	BehavioralDataUnitPackage behavData;
 	QSharedPointer<CommandChannel> dataChannel = getDataCommandChannel();
 
 	if(dataChannel.isNull())
 		return;
-
-	//Note that the call to getValues clears out any existing values,
-	//so it should only be made once per frame.
-	QSharedPointer<SignalChannel> sigChannel = getSignalChannel("PositionChannel");
-	behavData.emptyData();
-	behavData.addData(sigChannel->getValues());
 
 	QSharedPointer<PropertyDataUnitPackage> propPack = getChangedPropertyPackage();
 	QSharedPointer<StateDataUnitPackage> statePack = getStateDataPackage();
@@ -281,8 +274,16 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
 	xmlWriter->writeStartElement("Data");
-	if(behavData.length())
-		behavData.toXml(xmlWriter);
+
+	//Note that the call to getDataPackage() clears out any existing values,
+	//so it should only be made once per frame on each signalChannel
+	QSharedPointer<BehavioralDataUnitPackage> behavData;
+	foreach(QSharedPointer<Picto::SignalChannel> chan,signalChannels_)
+	{
+		behavData = chan->getDataPackage();
+		if(behavData && behavData->length())
+			behavData->toXml(xmlWriter);
+	}
 	if(propPack && propPack->length())
 		propPack->toXml(xmlWriter);
 	if(statePack && statePack->length())
@@ -373,13 +374,22 @@ bool PictoEngine::updateCurrentStateFromServer()
 			propData.addData(unit.index_,unit.value_);
 			//currUnitTime = unit.time_;
 		}
-		else if(xmlReader->name() == "BDU")
+		else if(xmlReader->name() == "BDUP")
 		{
-			currBehavUnit_->fromXml(xmlReader);
-			getSignalChannel("PositionChannel")->insertValue("xpos",currBehavUnit_->x);
-			getSignalChannel("PositionChannel")->insertValue("ypos",currBehavUnit_->y);
-			getSignalChannel("PositionChannel")->insertValue("time",currBehavUnit_->t.toDouble());
-			//currUnitTime = currBehavUnit_->t;
+			currBehavUnitPack_->fromXml(xmlReader);
+			if(currBehavUnitPack_->getChannel() == "Position")
+			{
+				currBehavUnit_ = currBehavUnitPack_->takeFirstDataPoint();
+				getSignalChannel("Position")->insertValue("x",currBehavUnit_->x);
+				getSignalChannel("Position")->insertValue("y",currBehavUnit_->y);
+				getSignalChannel("Position")->insertValue("time",currBehavUnit_->t.toDouble());
+			}
+			else
+			{
+				currBehavUnit_ = currBehavUnitPack_->takeFirstDataPoint();
+				qDebug(currBehavUnitPack_->getChannel().toAscii() + " " +currBehavUnit_->toXml().toAscii());
+			}
+				
 		}
 		else if(xmlReader->name() == "SDU")
 		{
@@ -456,10 +466,6 @@ QString PictoEngine::getServerPathUpdate()
 		result = "";
 	//qDebug("PathUpdate: " + result.toAscii());
 	return result;
-}
-QSharedPointer<Picto::BehavioralDataUnit> PictoEngine::getCurrentBehavioralData()
-{
-	return currBehavUnit_;
 }
 
 //! Sets the CommandChannel used for data.  Returns true if the channel's status is connected

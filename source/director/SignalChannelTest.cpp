@@ -26,11 +26,11 @@ void SignalChannelTest::exec()
 	frameCounter = 0;
 
 	//set up mouse channel
-	mouseChannel = new Picto::MouseSignalChannel(120, d3dVisualTarget.data());
+	mouseChannel = new Picto::MouseSignalChannel("MouseChannel", 120, d3dVisualTarget.data());
 	mouseChannel->start();
 
 	//set up ai channels
-	aiChannel = new Picto::PictoBoxXPAnalogInputSignalChannel(250);
+	aiChannel = new Picto::PictoBoxXPAnalogInputSignalChannel("AnalogChannel",250);
 	aiChannel->addAiChannel("xeye",1);
 	aiChannel->addAiChannel("yeye",0);
 
@@ -67,13 +67,13 @@ void SignalChannelTest::doFrame()
 
 	int xpos,ypos;
 
-	if(!mouseData.value("xpos").isEmpty())
-		xpos = mouseData.value("xpos").at(0);
+	if(!mouseData.value("x").isEmpty())
+		xpos = mouseData.value("x").at(0);
 	else
 		xpos = 0;
 
-	if(!mouseData.value("ypos").isEmpty())
-		ypos = mouseData.value("ypos").at(0);
+	if(!mouseData.value("y").isEmpty())
+		ypos = mouseData.value("y").at(0);
 	else
 		ypos = 0;
 

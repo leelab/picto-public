@@ -136,17 +136,38 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 			return false;
 
 		QSharedPointer<Picto::VisualTarget> visualTarget = engine_->getRenderingTargets().first()->getVisualTarget();
-		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,visualTarget.data()));
-		engine_->addSignalChannel("PositionChannel",mouseChannel);
+		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",250,visualTarget.data()));
+		engine_->addSignalChannel(mouseChannel);
+#ifdef DEVELOPMENTBUILD
+		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
+		{
+			//Setup DiameterChannel
+			QSharedPointer<Picto::MouseSignalChannel> aiChannel(new Picto::MouseSignalChannel("Diameter",250,visualTarget.data()));
+			engine_->addSignalChannel(aiChannel);
+		}
+#endif
 	}
 	else if(channelType == EyetrackerLegacySystemXp)
 	{
 		QApplication::setOverrideCursor(Qt::BlankCursor);	//In case mouse happens to be on monkey screen
 #if defined WIN32 && defined NI_STUFF
-		QSharedPointer<Picto::LegacySystemXPAnalogInputSignalChannel> aiChannel(new Picto::LegacySystemXPAnalogInputSignalChannel(250));
-		aiChannel->addAiChannel("xpos",xChan_);
-		aiChannel->addAiChannel("ypos",yChan_);
-		engine_->addSignalChannel("PositionChannel",aiChannel);
+		//Setup PositionChannel
+		QSharedPointer<Picto::LegacySystemXPAnalogInputSignalChannel> aiChannel(new Picto::LegacySystemXPAnalogInputSignalChannel("Position",250));
+		aiChannel->addAiChannel("x",xChan_);
+		aiChannel->addAiChannel("y",yChan_);
+		engine_->addSignalChannel(aiChannel);
+
+		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
+		{
+			//Setup DiameterChannel
+			QSharedPointer<Picto::LegacySystemXPAnalogInputSignalChannel> aiChannel(new Picto::LegacySystemXPAnalogInputSignalChannel("Diameter",250));
+			if(xDiamChan_ >= 0)
+				aiChannel->addAiChannel("x",xDiamChan_);
+			if(yDiamChan_ >= 0)
+				aiChannel->addAiChannel("y",yDiamChan_);
+			engine_->addSignalChannel(aiChannel);
+		}
+
 #else
 		return false;
 #endif
@@ -155,10 +176,22 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 	{
 		QApplication::setOverrideCursor(Qt::BlankCursor);	//In case mouse happens to be on monkey screen
 #if defined WIN32 && defined NI_STUFF
-		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel(250));
-		aiChannel->addAiChannel("xpos",xChan_);
-		aiChannel->addAiChannel("ypos",yChan_);
-		engine_->addSignalChannel("PositionChannel",aiChannel);
+		//Setup PositionChannel
+		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel("Position",250));
+		aiChannel->addAiChannel("x",xChan_);
+		aiChannel->addAiChannel("y",yChan_);
+		engine_->addSignalChannel(aiChannel);
+
+		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
+		{
+			//Setup PositionChannel
+			QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel("Diameter",250));
+			if(xDiamChan_ >= 0)
+				aiChannel->addAiChannel("x",xDiamChan_);
+			if(yDiamChan_ >= 0)
+				aiChannel->addAiChannel("y",yDiamChan_);
+			engine_->addSignalChannel(aiChannel);
+		}
 #else
 		return false;
 #endif

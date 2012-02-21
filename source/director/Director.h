@@ -19,7 +19,9 @@ public:
 		HardwareSetup::RewardControllerType rewardController = HardwareSetup::NullReward,
 		HardwareSetup::EventCodeGeneratorType eventCodeGenerator = HardwareSetup::NullGen,
 		int xEyeChannel = 0,
-		int yEyeChannel = 1);
+		int yEyeChannel = 1,
+		int xDiamChannel = -1,
+		int yDiamChannel = -1);
 	virtual ~Director();
 protected:
 	virtual QString name();
@@ -36,6 +38,8 @@ private:
 	HardwareSetup::EventCodeGeneratorType eventCodeGenerator_;
 	int xChannel_;
 	int yChannel_;
+	int xDiamChannel_;
+	int yDiamChannel_;
 
 };
 #endif

@@ -434,7 +434,6 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		//{
 			if(slave)
 			{
-				//qDebug(QString("Latest x,y: %1,%2").arg(engine->getCurrentBehavioralData()->x).arg(engine->getCurrentBehavioralData()->y).toAscii());
 				if(dontRunElement_)
 				{
 					Q_ASSERT(false);

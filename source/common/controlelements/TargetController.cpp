@@ -235,13 +235,13 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 		if(signal_.isNull())
 			return false;
 
-		//confirm that the signal channel contains "xpos" and "ypos" subchannels
-		Q_ASSERT(signal_->getSubchannels().contains("xpos"));
-		Q_ASSERT(signal_->getSubchannels().contains("ypos"));
+		//confirm that the signal channel contains "x" and "y" subchannels
+		Q_ASSERT(signal_->getSubchannels().contains("x"));
+		Q_ASSERT(signal_->getSubchannels().contains("y"));
 	}
 
-	int x = signal_->peekValue("xpos");
-	int y = signal_->peekValue("ypos");
+	int x = signal_->peekValue("x");
+	int y = signal_->peekValue("y");
 	Q_ASSERT(!controlTarget_.isNull());
 	if(controlTarget_.toStrongRef()->contains(x,y))
 		return true;

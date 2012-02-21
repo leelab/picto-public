@@ -61,17 +61,16 @@ void TestViewer::init()
 //!Called just before hiding the viewer
 void TestViewer::deinit()
 {
-	//stop the engine running
-	stop();
 }
 
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources
 bool TestViewer::aboutToQuit()
 {
-	//Calling deinit is important because it stops the experiment.  Otherwise, the 
+	//Stop the engine running. Otherwise, the 
 	//experiment would keep on going even though the window was closed and this
 	//process would stick around in the task manager for eternity.
-	deinit();
+	//
+	stop();
 	return true;
 }
 
@@ -98,8 +97,8 @@ void TestViewer::setupEngine()
 	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
 
 	//set up mouse signal channel
-	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,visualTargetHost_));
-	engine_->addSignalChannel("PositionChannel",mouseChannel);
+	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",10,visualTargetHost_));
+	engine_->addSignalChannel(mouseChannel);
 
 	//Set up event code generator
 	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;

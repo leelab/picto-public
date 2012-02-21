@@ -26,6 +26,7 @@ class BehavioralDataUnitPackage : public DataUnit
 public:
 
 	BehavioralDataUnitPackage();
+	void setChannel(QString channel);
 	void addData(double x, double y, double t);
 	void addData(double x, double y, QString t);
 	void addData(QMap<QString, QList<double>> signalChannelData);
@@ -33,7 +34,9 @@ public:
 	void emptyData() { data_.clear(); };
 
 	int length() { return data_.length(); }
+	QString getChannel(){return channel_;};
 	QSharedPointer<BehavioralDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };
+	QSharedPointer<BehavioralDataUnit> peekFirstDataPoint() { return data_.first(); };
 	QSharedPointer<BehavioralDataUnit> takeLastDataPoint() { return data_.takeLast(); };
 
 	//Data store functions
@@ -45,7 +48,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-
+	QString channel_;	//The signal channel from which this data was drawn
 	QList<QSharedPointer<BehavioralDataUnit>> data_;
 };
 

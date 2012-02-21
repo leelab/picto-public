@@ -40,7 +40,7 @@ bool FrameDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlSt
 		data->toXml(xmlStreamWriter);
 	}
 
-	xmlStreamWriter->writeEndElement(); //BehavioralDataUnitPackage
+	xmlStreamWriter->writeEndElement();
 
 	return true;
 }

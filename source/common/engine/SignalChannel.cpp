@@ -3,13 +3,15 @@
 
 namespace Picto {
 
-SignalChannel::SignalChannel()
+SignalChannel::SignalChannel(QString name)
 {
+	name_ = name;
 	sampleRate_ = 1;
 	useScaleFactors_ = true;
 }
-SignalChannel::SignalChannel(int sampsPerSec)
+SignalChannel::SignalChannel(QString name, int sampsPerSec)
 {
+	name_ = name;
 	sampleRate_ = sampsPerSec;
 	useScaleFactors_ = true;
 }
@@ -190,7 +192,17 @@ QMap<QString, QList<double> > SignalChannel::getRawValues()
 	return dataBuffer;
 }
 
-
+/*! \brief Gets Signal Channel data in the form of a BehavioralDataUnitPackage.
+ *	This function internally calls getValues and therefore has the effect of clearing
+ *	the value buffer.
+ */
+QSharedPointer<BehavioralDataUnitPackage> SignalChannel::getDataPackage()
+{
+	QSharedPointer<BehavioralDataUnitPackage> returnVal(new BehavioralDataUnitPackage());
+	returnVal->setChannel(getName());
+	returnVal->addData(getValues());
+	return returnVal;
+}
 
 //When this is called, the passed in value is immediately added to the 
 //rawDataBuffer_.  Since real data is only added to the rawDataBuffer_

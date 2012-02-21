@@ -13,8 +13,8 @@
 #define DEVICE_NAME "Dev2"
 namespace Picto {
 
-LegacySystemXPAnalogInputSignalChannel::LegacySystemXPAnalogInputSignalChannel(int sampsPerSecond)
-	: SignalChannel(sampsPerSecond)
+LegacySystemXPAnalogInputSignalChannel::LegacySystemXPAnalogInputSignalChannel(QString name, int sampsPerSecond)
+	: SignalChannel(name,sampsPerSecond)
 {
 	//all of the initialization takes place in start, while all of the
 	//cleanup takes place in stop
@@ -59,7 +59,7 @@ bool LegacySystemXPAnalogInputSignalChannel::start()
 		return false;
 	
 	//Create the new task
-	DAQmxErrChk (DAQmxCreateTask("AnalogInput",&daqTaskHandle_));
+	DAQmxErrChk (DAQmxCreateTask(getName().toAscii(),&daqTaskHandle_));
 	QString physicalChannel;
 	foreach(int aiChannel,aiChannelNums_)
 	{

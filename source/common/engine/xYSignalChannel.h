@@ -24,8 +24,8 @@ class XYSignalChannel : public SignalChannel
 	Q_OBJECT
 
 public:
-	XYSignalChannel();
-	XYSignalChannel(int sampsPerSecond);
+	XYSignalChannel(QString name);
+	XYSignalChannel(QString name, int sampsPerSecond);
 
 	bool start(){return true;};
 	bool stop(){return true;};

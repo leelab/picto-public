@@ -72,7 +72,7 @@ QString PausePoint::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	//Add the cursor to the scene if it isn't there already
 	if(!hasCursor_)
 	{
-		sigChannel_ = engine->getSignalChannel("PositionChannel");
+		sigChannel_ = engine->getSignalChannel("Position");
 		QSharedPointer<CursorGraphic> cursor(new CursorGraphic(sigChannel_, QColor(255,50,0,255)));
 		cursor->setLayer(100000);
 		scene_->addVisualElement(cursor);

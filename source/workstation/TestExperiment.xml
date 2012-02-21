@@ -191,7 +191,7 @@
 						<Name id="478">State 1</Name>
 						<ControlElement type="Target Controller" id="479">
 							<Name id="480">TargetCont</Name>
-							<SignalChannel id="481">PositionChannel</SignalChannel>
+							<SignalChannel id="481">Position</SignalChannel>
 							<TimeUnits id="482">Ms</TimeUnits>
 							<TotalTime id="483">10000</TotalTime>
 							<FixationTime id="484">1000</FixationTime>
@@ -259,7 +259,7 @@
 						<Name id="706">State 2</Name>
 						<ControlElement type="Target Controller" id="707">
 							<Name id="708">TargetCont</Name>
-							<SignalChannel id="709">PositionChannel</SignalChannel>
+							<SignalChannel id="709">Position</SignalChannel>
 							<TimeUnits id="710">Ms</TimeUnits>
 							<TotalTime id="711">10000</TotalTime>
 							<FixationTime id="712">1000</FixationTime>
@@ -401,7 +401,7 @@
 						<Name id="1144">State 1</Name>
 						<ControlElement type="Choice Controller" id="1145">
 							<Name id="1146">MyChoiceController</Name>
-							<SignalChannel id="1147">PositionChannel</SignalChannel>
+							<SignalChannel id="1147">Position</SignalChannel>
 							<TimeUnits id="1148">Ms</TimeUnits>
 							<TotalTime id="1149">10000</TotalTime>
 							<FixationTime id="1150">1000</FixationTime>

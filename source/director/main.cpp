@@ -29,6 +29,7 @@
 
 #include <QApplication>
 #include <QTranslator>
+#include <QMessageBox>
 #include <QSharedPointer>
 
 #include "../common/globals.h"
@@ -97,6 +98,44 @@ int main(int argc, char *argv[])
 		sigChan = HardwareSetup::EyetrackerPictoBoxXp;
 	}
 
+	//Check if pupilDiameter should be recorded and on which channels.
+	int diamChanArgIdx = args.indexOf("-xDiamChan");
+	int xDiamChan = -1;
+	if(diamChanArgIdx > 0)
+	{
+		xDiamChan = args[diamChanArgIdx+1].toInt();
+#ifndef DEVELOPMENTBUILD
+		if(sigChan == HardwareSetup::Mouse)
+		{
+			QMessageBox error;
+			//The extra spaces are to resize the MessageBox
+			error.setText("Error setting up Picto Director");
+			error.setIcon(QMessageBox::Critical);
+			error.setDetailedText("Pupil Diameter is not available when the mouse is used for the position channel");
+			error.exec();
+			return EXIT_FAILURE;
+		}
+#endif
+	}
+	diamChanArgIdx = args.indexOf("-yDiamChan");
+	int yDiamChan = -1;
+	if(diamChanArgIdx > 0)
+	{
+		yDiamChan = args[diamChanArgIdx+1].toInt();
+#ifndef DEVELOPMENTBUILD
+		if(sigChan == HardwareSetup::Mouse)
+		{
+			QMessageBox error;
+			//The extra spaces are to resize the MessageBox
+			error.setText("Error setting up Picto Director");
+			error.setIcon(QMessageBox::Critical);
+			error.setDetailedText("Pupil Diameter is not available when the mouse is used for the position channel");
+			error.exec();
+			return EXIT_FAILURE;
+		}
+#endif
+	}
+
 	//If there is a command argument of "-legacy", we should use 
 	//LegacySystemXPRewardController and LegacySystenXPEventCodeGenerator
 	//otherwise use NullReward.
@@ -120,8 +159,8 @@ int main(int argc, char *argv[])
 	//visTarget = HardwareSetup::Pixmap;
 	///////////////////////////////////////////////////////////////////	
 
-	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,eventGen,xChan,yChan));
+	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,eventGen,xChan,yChan,xDiamChan,yDiamChan));
 	director->activate();
 	Picto::CloseLib();
-	return 0;
+	return EXIT_SUCCESS;
 }

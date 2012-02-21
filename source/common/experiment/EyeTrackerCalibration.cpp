@@ -86,8 +86,8 @@ EyeTrackerCalibration::~EyeTrackerCalibration()
 			//targetCoordList)
 			QMap<QString,QList<double> > eyeData;
 			eyeData = eyeChannel->getValues();
-			QPoint newPoint(eyeData.value("xpos").last(),
-							eyeData.value("ypos").last());
+			QPoint newPoint(eyeData.value("x").last(),
+							eyeData.value("y").last());
 
 			//****************************
 			//  THIS IS UNFINISHED CODE

@@ -162,16 +162,16 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 		signal_ = engine->getSignalChannel(propertyContainer_->getPropertyValue("SignalChannel").toString());
 		Q_ASSERT_X(!signal_.isNull(),"ChoiceController::insideTarget","There is no signal channel called: " + propertyContainer_->getPropertyValue("SignalChannel").toString().toAscii());
 
-		//confirm that the signal channel contains "xpos" and "ypos" subchannels
-		Q_ASSERT(signal_->getSubchannels().contains("xpos"));
-		Q_ASSERT(signal_->getSubchannels().contains("ypos"));
+		//confirm that the signal channel contains "x" and "y" subchannels
+		Q_ASSERT(signal_->getSubchannels().contains("x"));
+		Q_ASSERT(signal_->getSubchannels().contains("y"));
 	}
 
 	//Run through the targets checking them
 	foreach(QSharedPointer<ControlResult> target, targets_)
 	{
 		//QRect targetRect = target->getBounds();
-		if(target->contains(signal_->peekValue("xpos"),signal_->peekValue("ypos"))/*checkSingleTarget(targetRect)*/)
+		if(target->contains(signal_->peekValue("x"),signal_->peekValue("y"))/*checkSingleTarget(targetRect)*/)
 		{
 			QString targetName = target->getName();
 			return targetName;
@@ -195,8 +195,8 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 ////! \Brief checks a single target to determine if the subject's focus is inside it.
 //bool ChoiceController::checkSingleTarget(QRect targetRect)
 //{
-//	int x = signal_->peekValue("xpos");
-//	int y = signal_->peekValue("ypos");
+//	int x = signal_->peekValue("x");
+//	int y = signal_->peekValue("y");
 //
 //	if("Rectangle" == shapeList_.value(shapeIndex_))
 //	{

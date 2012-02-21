@@ -10,7 +10,6 @@
 
 namespace Picto {
 
-class BehavioralDataUnitPackage;
 class CommandChannel;
 class SignalChannel;
 

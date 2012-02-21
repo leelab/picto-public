@@ -3,8 +3,18 @@
 
 namespace Picto {
 
+/*! \brief Contains all data from a single signal channel.
+ * The name of the channel is passed in as input.
+ */
 BehavioralDataUnitPackage::BehavioralDataUnitPackage()
 {
+}
+
+/*! \brief Sets the signal channel from which this data was drawn.
+ */
+void BehavioralDataUnitPackage::setChannel(QString channel)
+{
+	channel_ = channel;
 }
 
 //! Adds a simple (x,y,t) data point
@@ -28,22 +38,22 @@ void BehavioralDataUnitPackage::addData(double x, double y, QString t)
 void BehavioralDataUnitPackage::addData(QMap<QString, QList<double>> signalChannelData)
 {
 	//First, check that the signal channel data has the expected subchannels
-	Q_ASSERT(signalChannelData.contains("xpos"));
-	Q_ASSERT(signalChannelData.contains("ypos"));
+	Q_ASSERT(signalChannelData.contains("x"));
+	Q_ASSERT(signalChannelData.contains("y"));
 	Q_ASSERT(signalChannelData.contains("time"));
 
 	//Next, run through the three lists generating data points and adding them
 	//to our list
-	QList<double> xposList = signalChannelData.value("xpos");
-	QList<double> yposList = signalChannelData.value("ypos");
+	QList<double> xposList = signalChannelData.value("x");
+	QList<double> yposList = signalChannelData.value("y");
 	QList<double> timeList = signalChannelData.value("time");
 
-	QList<double>::const_iterator xpos = signalChannelData.value("xpos").begin();
-	QList<double>::const_iterator ypos = signalChannelData.value("ypos").begin();
+	QList<double>::const_iterator xpos = signalChannelData.value("x").begin();
+	QList<double>::const_iterator ypos = signalChannelData.value("y").begin();
 	QList<double>::const_iterator time = signalChannelData.value("time").begin();
 
-	while(xpos != signalChannelData.value("xpos").end() &&
-		  ypos != signalChannelData.value("ypos").end() &&
+	while(xpos != signalChannelData.value("x").end() &&
+		  ypos != signalChannelData.value("y").end() &&
 		  time != signalChannelData.value("time").end())
 	{
 		QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit(*xpos,*ypos,*time));
@@ -67,7 +77,8 @@ void BehavioralDataUnitPackage::addData(QMap<QString, QList<double>> signalChann
  */
 bool BehavioralDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
-	xmlStreamWriter->writeStartElement("BehavioralDataUnitPackage");
+	xmlStreamWriter->writeStartElement("BDUP");
+	xmlStreamWriter->writeAttribute("chan",getChannel());
 
 	foreach(QSharedPointer<BehavioralDataUnit> dataPoint, data_)
 	{
@@ -84,14 +95,23 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	emptyData();
 
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BehavioralDataUnitPackage")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BDUP")
 	{
-		addError("BehavioralDataUnitPackage","Incorrect tag, expected <BehavioralDataUnitPackage>",xmlStreamReader);
+		addError("BehavioralDataUnitPackage","Incorrect tag, expected <BDUP>",xmlStreamReader);
+		return false;
+	}
+	if(xmlStreamReader->attributes().hasAttribute("chan"))
+	{
+		setChannel(xmlStreamReader->attributes().value("chan").toString());
+	}
+	else
+	{
+		addError("BehavioralDataUnitPackage","LFPDataUnitPackage missing chan (Signal Channel) attribute",xmlStreamReader);
 		return false;
 	}
 
 	xmlStreamReader->readNext();
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "BehavioralDataUnitPackage") && !xmlStreamReader->atEnd())
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "BDUP") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{

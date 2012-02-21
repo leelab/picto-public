@@ -8,7 +8,6 @@
 #include "../../common/engine/XYSignalChannel.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
-#include "../../common/storage/BehavioralDataUnitPackage.h"
 #include "../../common/storage/StateDataUnit.h"
 #include "../../common/statemachine/statemachine.h"
 #include "../../common/stimuli/cursorgraphic.h"
@@ -827,8 +826,8 @@ void RemoteViewer::setupEngine()
 	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
 
 	//set up signal channel
-	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::XYSignalChannel());
-	engine_->addSignalChannel("PositionChannel",signalChannel);
+	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::XYSignalChannel("Position"));
+	engine_->addSignalChannel(signalChannel);
 
 	//Set up event code generator
 	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;

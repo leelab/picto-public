@@ -105,7 +105,7 @@
               <ControlTarget id="82">Target</ControlTarget>
               <FixationTime id="83">400</FixationTime>
               <MaxInitialAcquisitionTime id="84">1100</MaxInitialAcquisitionTime>
-              <SignalChannel id="85">PositionChannel</SignalChannel>
+              <SignalChannel id="85">Position</SignalChannel>
               <TimeUnits id="86">Ms</TimeUnits>
               <TotalTime id="87">1500</TotalTime>
               <MaxReacquisitionTime id="88">1100</MaxReacquisitionTime>
@@ -598,7 +598,7 @@
                         
                       <Pos id="581" x="0" y="0"/></UIInfo>
                     <UIEnabled id="582">false</UIEnabled><UIOrder id="583">0</UIOrder></Result>
-                    <SignalChannel id="584">PositionChannel</SignalChannel>
+                    <SignalChannel id="584">Position</SignalChannel>
                     <TimeUnits id="585">Ms</TimeUnits>
                     <TotalTime id="586">2000</TotalTime>
                     <UIInfo id="587">
@@ -677,7 +677,7 @@ EventInfo.updateValue();</ExitScript><BackgroundColor A="255" B="0" G="0" R="0" 
                           
                         </UIInfo>
                       <UIEnabled id="664">false</UIEnabled><UIOrder id="665">0</UIOrder></Result>
-                      <SignalChannel id="666">PositionChannel</SignalChannel>
+                      <SignalChannel id="666">Position</SignalChannel>
                       <TimeUnits id="667">Ms</TimeUnits>
                       <TotalTime id="668">1000</TotalTime>
                       <UIInfo id="669">
@@ -806,7 +806,7 @@ EventInfo.updateValue();</ExitScript>
                           
                         <Pos id="782" x="0" y="0"/></UIInfo>
                       <UIEnabled id="783">false</UIEnabled><UIOrder id="784">0</UIOrder></Result>
-                      <SignalChannel id="785">PositionChannel</SignalChannel>
+                      <SignalChannel id="785">Position</SignalChannel>
                       <TimeUnits id="786">Ms</TimeUnits>
                       <TotalTime id="787">1000</TotalTime>
                       <UIInfo id="788">
@@ -920,7 +920,7 @@ EventInfo.updateValue();</ExitScript>
                           
                         <Pos id="899" x="0" y="0"/></UIInfo>
                       <UIEnabled id="900">false</UIEnabled><UIOrder id="901">0</UIOrder></Result>
-                      <SignalChannel id="902">PositionChannel</SignalChannel>
+                      <SignalChannel id="902">Position</SignalChannel>
                       <TimeUnits id="903">Ms</TimeUnits>
                       <TotalTime id="904">1000</TotalTime>
                       <UIInfo id="905">
@@ -1656,7 +1656,7 @@ EventInfo.updateValue();</ExitScript><Level id="1891">Stage</Level><Type id="189
                       <Result id="1949">
                         <Name id="1950">Success</Name>
                       <UIInfo id="1951"><Pos id="1953" x="2723" y="2000"/></UIInfo><UIEnabled id="1954">false</UIEnabled><UIOrder id="1955">0</UIOrder></Result>
-                      <SignalChannel id="1956">PositionChannel</SignalChannel>
+                      <SignalChannel id="1956">Position</SignalChannel>
                       <TimeUnits id="1957">Ms</TimeUnits>
                       <TotalTime id="1958">1000</TotalTime>
                       <UIInfo id="1959">
@@ -2045,7 +2045,7 @@ EventInfo.updateValue();</ExitScript><Level id="2047">Stage</Level><Type id="204
                         <Pos id="2444" x="773" y="401"/>
                         
                       </UIInfo>
-                      <SignalChannel id="2446">PositionChannel</SignalChannel>
+                      <SignalChannel id="2446">Position</SignalChannel>
                       <TimeUnits id="2447">Ms</TimeUnits>
                     <TargetExitScript id="2448">EventInfo.setData(&quot;Event&quot;,6);EventInfo.updateValue();</TargetExitScript><MaxReacquisitionTime id="2449">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="2450">0</MinInitialAcquisitionTime><ReacquisitionAllowed id="2451">false</ReacquisitionAllowed><TargetEntryScript id="2452"/><Type id="2453"/><UIEnabled id="2454">false</UIEnabled><UIOrder id="2455">0</UIOrder></ControlElement>
                     <Result id="2456">

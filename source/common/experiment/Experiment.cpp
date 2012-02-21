@@ -213,7 +213,7 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 {
 	if(engine_.isNull())
 		return;
-	QSharedPointer<SignalChannel> posChannel = engine_->getSignalChannel("PositionChannel");
+	QSharedPointer<SignalChannel> posChannel = engine_->getSignalChannel("Position");
 	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
 
 	if(!signalCoeffInitialized_)
@@ -241,9 +241,9 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 	int xOffset = displayWidth/2 + propertyContainer_->getPropertyValue("XOffset").toDouble()*xZoom;
 	int yOffset = displayHeight/2 + -propertyContainer_->getPropertyValue("YOffset").toDouble()*yZoom;
 
-	posChannel->setCalibrationCoefficients("xpos",xGain,xOffset,400/*double(windowDims.width())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
-	posChannel->setCalibrationCoefficients("ypos",yGain,yOffset,300/*double(windowDims.height())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
-	posChannel->setShear("xpos","ypos",propertyContainer_->getPropertyValue("XYSignalShear").toDouble());
+	posChannel->setCalibrationCoefficients("x",xGain,xOffset,400/*double(windowDims.width())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
+	posChannel->setCalibrationCoefficients("y",yGain,yOffset,300/*double(windowDims.height())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
+	posChannel->setShear("x","y",propertyContainer_->getPropertyValue("XYSignalShear").toDouble());
 
 }
 

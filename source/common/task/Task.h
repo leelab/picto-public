@@ -61,9 +61,6 @@ private:
 	void sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engine);
 	void sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine);
 
-	//bool sendStateData(QString source, QString sourceResult, QString destination, int id, QSharedPointer<Engine::PictoEngine> engine);
-	bool sendStateData(QSharedPointer<Engine::PictoEngine> engine);
-
 	QSharedPointer<StateMachine> stateMachine_;
 	int taskNumber_;
 	QSharedPointer<Transition> initTransition_;

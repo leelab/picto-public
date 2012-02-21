@@ -21,14 +21,18 @@ Director::Director(QString name,
 		HardwareSetup::RewardControllerType rewardController,
 		HardwareSetup::EventCodeGeneratorType eventCodeGenerator,
 		int xEyeChannel,
-		int yEyeChannel):
+		int yEyeChannel,
+		int xDiamChannel,
+		int yDiamChannel):
 	ComponentInterface("DIRECTOR"),
 	sigChannel_(sigChannel),
 	visualTarget_(visualTarget),
 	rewardController_(rewardController),
 	eventCodeGenerator_(eventCodeGenerator),
 	xChannel_(xEyeChannel),
-	yChannel_(yEyeChannel)
+	yChannel_(yEyeChannel),
+	xDiamChannel_(xDiamChannel),
+	yDiamChannel_(yDiamChannel)
 {
 	//! \TODO Set up random number generator?
 

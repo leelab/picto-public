@@ -15,8 +15,8 @@
 
 #define FRAME_STATE_VAR_ID -1
 #define TRANSITION_STATE_VAR_ID -2
-#define EYE_STATE_VAR_ID -3
-#define REWARD_STATE_VAR_ID -4
+#define REWARD_STATE_VAR_ID -3
+#define MAX_SIG_CHAN_VAR_ID -4
 #define NEURAL_DATA_BUFFER_SECS 60
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
@@ -114,7 +114,7 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	Q_ASSERT(baseSessionDbConnection_.tables().contains("sessioninfo"));
 
 	SetupBaseSessionDatabase();
-	CreateCacheDatabase(databaseName);
+	//CreateCacheDatabase(databaseName);
 
 	QSqlQuery sessionQ(baseSessionDbConnection_);
 	QMutexLocker locker(databaseWriteMutex_.data());
@@ -175,6 +175,29 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	if(sessionQ.next())
 		alignToType_ = sessionQ.value(0).toString();
 	sessionQ.finish();
+
+	// Load signal channel variable ids.
+	executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"Signal\"");
+	int currId;
+	while(sessionQ.next())
+	{
+		QStringList strs = sessionQ.value(0).toString().split(':');
+		currId = strs[1].toInt();
+		sigChanVarIDs_[strs[0]] = currId;
+		if(currId < nextSigChanVarId_)
+			nextSigChanVarId_ = currId - 1;
+
+		//Add the cache table for this signal channel to the list since it was dynamically created during
+		//the pre-disconnect run and will not have been added to the lists during InitializeVariables()
+		QString tableName = QString("signal_%1").arg(strs[0]);
+		tables_.push_back(tableName);
+		tableColumns_[tableName] = " dataid,x,y,time ";
+		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL ";
+		tableDataProviders_[tableName] = "DIRECTOR";
+	}
+	sessionQ.finish();
+
+	CreateCacheDatabase(databaseName);
 
 	// Load Current State
 	QSqlDatabase cacheDb = getCacheDb();
@@ -490,18 +513,64 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 {
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery cacheQ(cacheDb);
+	//BECAUSE OF THIS LINE, NON "Position" CHANNELS ARE
+	//IGNORED.  WHEN REMOVING THIS LINE, YOU ALSO HAVE TO WRITE
+	//CODE TO RECORD EACH CHANNEL IN A SEPERATE TABLE AND ONLY
+	//WRITE THE "Position" AS A STATE VARIABLE!!!!!!!!!!
+	//qDebug("Received data from chan: " + data->getChannel().toAscii());
+	//if(data->getChannel() != "Position")
+	//	return;
+
+	//Get this signal channels State Variable ID.
+	//If it doesn't have one yet, add it to the map and store
+	//it in the session database.
+	QString sigChan = data->getChannel().toLower();
+	QString tableName = QString("signal_%1").arg(sigChan);
+	int stateVarId;
+	if(sigChanVarIDs_.contains(sigChan))
+		stateVarId = sigChanVarIDs_.value(sigChan);
+	else
+	{
+		stateVarId = nextSigChanVarId_--;
+		sigChanVarIDs_[sigChan] = stateVarId;
+
+		//Add the signal channel variable ID to the session database.
+		QSqlQuery sessionQ(getSessionDb());
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Signal\", :value)");
+		sessionQ.bindValue(":value", QString("%1:%2").arg(sigChan).arg(stateVarId));
+		executeWriteQuery(&sessionQ);
+
+		//Create the table for this signal channel. !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		tables_.push_back(tableName);
+		tableColumns_[tableName] = " dataid,x,y,time ";
+		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL ";
+		tableDataProviders_[tableName] = "DIRECTOR";
+
+		AddTablesToDatabase(&sessionQ);
+		AddTablesToDatabase(&cacheQ);
+	}
 
 	QSharedPointer<Picto::BehavioralDataUnit> dataPoint;
 	while(data->length() > 0)
 	{
+		//Only write behavioralDataUnitPackage once
+		//it only contains the latest data unit.
+		//Use the package because that contains the signal channel name.
+		//Use the unit id because that was generated when the last data unit
+		//was generated and will preserve the information generation order
+		//in the stateVariable list.
+		if(data->length() == 1)
+		{
+			dataPoint = data->peekFirstDataPoint();
+			setStateVariable(dataPoint->getDataID(),stateVarId,data->toXml());
+		}
+
 		dataPoint = data->takeFirstDataPoint();
-		if(data->length() == 0)	//No need to setStateVariable for any except the last one
-			setStateVariable(dataPoint->getDataID(),EYE_STATE_VAR_ID,dataPoint->toXml());
-		cacheQ.prepare("INSERT INTO behavioraldata (dataid, xpos, ypos, time)"
-			"VALUES(:dataid, :xpos, :ypos, :time)");
+		cacheQ.prepare(QString("INSERT INTO %1 (dataid, x, y, time)"
+			"VALUES(:dataid, :x, :y, :time)").arg(tableName));
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
-		cacheQ.bindValue(":xpos",dataPoint->x);
-		cacheQ.bindValue(":ypos",dataPoint->y);
+		cacheQ.bindValue(":x",dataPoint->x);
+		cacheQ.bindValue(":y",dataPoint->y);
 		cacheQ.bindValue(":time",dataPoint->t);
 		executeWriteQuery(&cacheQ,"",false);	
 	}
@@ -850,6 +919,7 @@ void SessionInfo::InitializeVariables()
 		uuid_ = QUuid::createUuid();
 	}
 	databaseVersion_ = "1.0";
+	nextSigChanVarId_ = MAX_SIG_CHAN_VAR_ID;
 
 #ifdef NO_AUTH_REQUIRED
 	//Add a null QUuid so that everyone is considered an authorized user
@@ -891,11 +961,6 @@ void SessionInfo::InitializeVariables()
 	tableColumns_["alignevents"] = " aligneventnumber,aligncode,neuraltime,behavioraltime,jitter,correlation ";
 	tableColumnTypes_["alignevents"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,REAL,REAL,REAL,REAL ";
 	tableDataProviders_["alignevents"] = "DIRECTOR";
-
-	tables_.push_back("behavioraldata");
-	tableColumns_["behavioraldata"] = " dataid,xpos,ypos,time ";
-	tableColumnTypes_["behavioraldata"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL ";
-	tableDataProviders_["behavioraldata"] = "DIRECTOR";
 
 	tables_.push_back("transitions");
 	tableColumns_["transitions"] = " dataid,transid,frameid ";

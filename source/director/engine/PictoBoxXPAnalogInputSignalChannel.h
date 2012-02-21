@@ -22,7 +22,7 @@ namespace Picto {
 class PictoBoxXPAnalogInputSignalChannel : public SignalChannel
 {
 public:
-	PictoBoxXPAnalogInputSignalChannel(int sampsPerSecond);
+	PictoBoxXPAnalogInputSignalChannel(QString name, int sampsPerSecond);
 	virtual ~PictoBoxXPAnalogInputSignalChannel() { stop(); };
 
 	bool start();
