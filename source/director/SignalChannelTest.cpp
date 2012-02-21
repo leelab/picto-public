@@ -26,7 +26,7 @@ void SignalChannelTest::exec()
 	frameCounter = 0;
 
 	//set up mouse channel
-	mouseChannel = new Picto::MouseSignalChannel("MouseChannel", 120, d3dVisualTarget.data());
+	mouseChannel = new Picto::MouseSignalChannel("MouseChannel", d3dVisualTarget.data());
 	mouseChannel->start();
 
 	//set up ai channels

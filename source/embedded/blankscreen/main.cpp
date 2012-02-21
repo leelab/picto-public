@@ -106,7 +106,7 @@ public:
 	setLayout(operationLayout);
 
 	//set up mouse signal channel
-	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",10,visualTargetHost_));
+	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",visualTargetHost_));
 	engine_->addSignalChannel(mouseChannel);
 
 	//Set up event code generator

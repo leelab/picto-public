@@ -11,8 +11,8 @@
 
 namespace Picto {
 
-MouseSignalChannel::MouseSignalChannel(QString name, int sampsPerSecond, QWidget *widget)
-	: SignalChannel(name,sampsPerSecond),
+MouseSignalChannel::MouseSignalChannel(QString name, QWidget *widget)
+	: SignalChannel(name,-1),
 	  widget_(widget)
 {
 	//add our subchannels to the list

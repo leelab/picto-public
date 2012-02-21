@@ -97,7 +97,7 @@ void TestViewer::setupEngine()
 	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
 
 	//set up mouse signal channel
-	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",10,visualTargetHost_));
+	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",visualTargetHost_));
 	engine_->addSignalChannel(mouseChannel);
 
 	//Set up event code generator

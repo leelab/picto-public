@@ -7,18 +7,10 @@ BehavioralDataUnit::BehavioralDataUnit()
 {
 }
 
-BehavioralDataUnit::BehavioralDataUnit(double X, double Y, double T)
+BehavioralDataUnit::BehavioralDataUnit(double X, double Y)
 {
 	x = X; 
-	y = Y; 
-	t = QString("%1").arg(T,0,'f',6);;
-};
-
-BehavioralDataUnit::BehavioralDataUnit(double X, double Y, QString T)
-{
-	x = X; 
-	y = Y; 
-	t = T;
+	y = Y;
 };
 
 /*! \brief Turns the BehavioralDataUnit into an XML fragment
@@ -29,7 +21,6 @@ BehavioralDataUnit::BehavioralDataUnit(double X, double Y, QString T)
 bool BehavioralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("BDU");
-	xmlStreamWriter->writeAttribute("t",t);
 	xmlStreamWriter->writeAttribute("x",QString("%1").arg(x));
 	xmlStreamWriter->writeAttribute("y",QString("%1").arg(y));
 	DataUnit::serializeDataID(xmlStreamWriter);
@@ -58,16 +49,6 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 		QString name = xmlStreamReader->name().toString();
 		if(name == "BDU")
 		{
-			if(xmlStreamReader->attributes().hasAttribute("t"))
-			{
-				t = xmlStreamReader->attributes().value("t").toString();
-			}
-			else
-			{
-				addError("BehavioralDataUnit","Data missing t (time) attribute",xmlStreamReader);
-				return false;
-			}
-
 			if(xmlStreamReader->attributes().hasAttribute("x"))
 			{
 				x = xmlStreamReader->attributes().value("x").toString().toDouble();

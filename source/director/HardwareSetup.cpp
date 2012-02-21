@@ -136,13 +136,13 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 			return false;
 
 		QSharedPointer<Picto::VisualTarget> visualTarget = engine_->getRenderingTargets().first()->getVisualTarget();
-		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",250,visualTarget.data()));
+		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",visualTarget.data()));
 		engine_->addSignalChannel(mouseChannel);
 #ifdef DEVELOPMENTBUILD
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::MouseSignalChannel> aiChannel(new Picto::MouseSignalChannel("Diameter",250,visualTarget.data()));
+			QSharedPointer<Picto::MouseSignalChannel> aiChannel(new Picto::MouseSignalChannel("Diameter",visualTarget.data()));
 			engine_->addSignalChannel(aiChannel);
 		}
 #endif

@@ -6,19 +6,20 @@ namespace Picto {
 SignalChannel::SignalChannel(QString name)
 {
 	name_ = name;
-	sampleRate_ = 1;
+	setsampleRate_(1);
 	useScaleFactors_ = true;
 }
 SignalChannel::SignalChannel(QString name, int sampsPerSec)
 {
 	name_ = name;
-	sampleRate_ = sampsPerSec;
+	setsampleRate_(sampsPerSec);
 	useScaleFactors_ = true;
 }
 
 
 void SignalChannel::setsampleRate_(int sampsPerSec)
 {
+	Q_ASSERT(sampsPerSec != 0);
 	sampleRate_ = sampsPerSec;
 }
 
@@ -200,6 +201,7 @@ QSharedPointer<BehavioralDataUnitPackage> SignalChannel::getDataPackage()
 {
 	QSharedPointer<BehavioralDataUnitPackage> returnVal(new BehavioralDataUnitPackage());
 	returnVal->setChannel(getName());
+	returnVal->setResolution(1.0/sampleRate_);
 	returnVal->addData(getValues());
 	return returnVal;
 }

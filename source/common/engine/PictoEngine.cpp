@@ -382,14 +382,8 @@ bool PictoEngine::updateCurrentStateFromServer()
 				currBehavUnit_ = currBehavUnitPack_->takeFirstDataPoint();
 				getSignalChannel("Position")->insertValue("x",currBehavUnit_->x);
 				getSignalChannel("Position")->insertValue("y",currBehavUnit_->y);
-				getSignalChannel("Position")->insertValue("time",currBehavUnit_->t.toDouble());
 			}
-			else
-			{
-				currBehavUnit_ = currBehavUnitPack_->takeFirstDataPoint();
-				qDebug(currBehavUnitPack_->getChannel().toAscii() + " " +currBehavUnit_->toXml().toAscii());
-			}
-				
+			//Currently we don't do anything with any signal channels besides "Position"	
 		}
 		else if(xmlReader->name() == "SDU")
 		{

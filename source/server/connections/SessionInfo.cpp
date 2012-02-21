@@ -1,6 +1,7 @@
 #include "SessionInfo.h"
 #include "ConnectionManager.h"
 #include "../../common/storage/experimentconfig.h"
+#include "../../common/storage/SignalChannelInfo.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -181,18 +182,19 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	int currId;
 	while(sessionQ.next())
 	{
-		QStringList strs = sessionQ.value(0).toString().split(':');
-		currId = strs[1].toInt();
-		sigChanVarIDs_[strs[0]] = currId;
+		Picto::SignalChannelInfo sigInfo;
+		sigInfo.fromXml(sessionQ.value(0).toString());
+		currId = sigInfo.getStateVariableId();
+		sigChanVarIDs_[sigInfo.getName()] = currId;
 		if(currId < nextSigChanVarId_)
 			nextSigChanVarId_ = currId - 1;
 
 		//Add the cache table for this signal channel to the list since it was dynamically created during
 		//the pre-disconnect run and will not have been added to the lists during InitializeVariables()
-		QString tableName = QString("signal_%1").arg(strs[0]);
+		QString tableName = QString("signal_%1").arg(sigInfo.getName());
 		tables_.push_back(tableName);
-		tableColumns_[tableName] = " dataid,x,y,time ";
-		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL ";
+		tableColumns_[tableName] = " dataid,time,resolution,data ";
+		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB ";
 		tableDataProviders_[tableName] = "DIRECTOR";
 	}
 	sessionQ.finish();
@@ -534,45 +536,51 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 		stateVarId = nextSigChanVarId_--;
 		sigChanVarIDs_[sigChan] = stateVarId;
 
-		//Add the signal channel variable ID to the session database.
+		//Create the table for this signal channel.
 		QSqlQuery sessionQ(getSessionDb());
-		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Signal\", :value)");
-		sessionQ.bindValue(":value", QString("%1:%2").arg(sigChan).arg(stateVarId));
-		executeWriteQuery(&sessionQ);
-
-		//Create the table for this signal channel. !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		tables_.push_back(tableName);
-		tableColumns_[tableName] = " dataid,x,y,time ";
-		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL ";
+		tableColumns_[tableName] = " dataid,time,resolution,data ";
+		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB ";
 		tableDataProviders_[tableName] = "DIRECTOR";
 
 		AddTablesToDatabase(&sessionQ);
 		AddTablesToDatabase(&cacheQ);
+
+		//Add the signal channel info to the session database
+		Picto::SignalChannelInfo sigInfo(	sigChan,
+											tableName,
+											stateVarId,
+											data->getResolution(),
+											data->getDescriptor().split(",",QString::SkipEmptyParts).size(),
+											data->getDescriptor());
+
+		//Add the signal channel info to the session database.
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Signal\", :value)");
+		sessionQ.bindValue(":value", sigInfo.toXml());
+		executeWriteQuery(&sessionQ);
 	}
 
-	QSharedPointer<Picto::BehavioralDataUnit> dataPoint;
-	while(data->length() > 0)
+	if(data->length())
 	{
-		//Only write behavioralDataUnitPackage once
-		//it only contains the latest data unit.
-		//Use the package because that contains the signal channel name.
+		cacheQ.prepare(QString("INSERT INTO %1 (dataid, time, resolution, data)"
+			"VALUES(:dataid, :time, :resolution, :data)").arg(tableName));
+		cacheQ.bindValue(":dataid", data->getDataID());
+		cacheQ.bindValue(":time",data->getTime());
+		cacheQ.bindValue(":resolution",data->getResolution());
+		cacheQ.bindValue(":data",data->getDataAsByteArray());
+		executeWriteQuery(&cacheQ,"",false);
+
+		//Only write a behavioralDataUnitPackage with the last data unit
+		//
+		//Use the package text because that contains the signal channel name, time, resolution.
 		//Use the unit id because that was generated when the last data unit
 		//was generated and will preserve the information generation order
 		//in the stateVariable list.
+		data->clearAllButLastDataPoints();
 		if(data->length() == 1)
 		{
-			dataPoint = data->peekFirstDataPoint();
-			setStateVariable(dataPoint->getDataID(),stateVarId,data->toXml());
+			setStateVariable(data->getDataID(),stateVarId,data->toXml());
 		}
-
-		dataPoint = data->takeFirstDataPoint();
-		cacheQ.prepare(QString("INSERT INTO %1 (dataid, x, y, time)"
-			"VALUES(:dataid, :x, :y, :time)").arg(tableName));
-		cacheQ.bindValue(":dataid", dataPoint->getDataID());
-		cacheQ.bindValue(":x",dataPoint->x);
-		cacheQ.bindValue(":y",dataPoint->y);
-		cacheQ.bindValue(":time",dataPoint->t);
-		executeWriteQuery(&cacheQ,"",false);	
 	}
 }
 

@@ -26,9 +26,15 @@ class BehavioralDataUnitPackage : public DataUnit
 public:
 
 	BehavioralDataUnitPackage();
+	void setDescriptor(QString descriptor);
+	QString getDescriptor(){return descriptor_;};
 	void setChannel(QString channel);
-	void addData(double x, double y, double t);
-	void addData(double x, double y, QString t);
+	void setTime(double t){time_ = QString::number(t,'e',6);};
+	void setTime(QString t){time_ = t;};
+	QString getTime(){return time_;};
+	void setResolution(double r){resolution_ = r;};
+	double getResolution(){return resolution_;};
+	void addData(double x, double y);
 	void addData(QMap<QString, QList<double>> signalChannelData);
 
 	void emptyData() { data_.clear(); };
@@ -38,6 +44,9 @@ public:
 	QSharedPointer<BehavioralDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };
 	QSharedPointer<BehavioralDataUnit> peekFirstDataPoint() { return data_.first(); };
 	QSharedPointer<BehavioralDataUnit> takeLastDataPoint() { return data_.takeLast(); };
+	void clearAllButLastDataPoints();
+
+	QByteArray getDataAsByteArray();
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -49,6 +58,9 @@ protected:
 
 private:
 	QString channel_;	//The signal channel from which this data was drawn
+	double resolution_;
+	QString time_;
+	QString descriptor_;
 	QList<QSharedPointer<BehavioralDataUnit>> data_;
 };
 

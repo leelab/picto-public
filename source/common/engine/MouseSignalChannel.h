@@ -30,7 +30,7 @@ class MouseSignalChannel : public SignalChannel
 	Q_OBJECT
 
 public:
-	MouseSignalChannel(QString name, int sampsPerSecond, QWidget *widget);
+	MouseSignalChannel(QString name, QWidget *widget);
 
 	bool start();
 	bool stop();
