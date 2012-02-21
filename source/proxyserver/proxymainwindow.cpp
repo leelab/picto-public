@@ -442,7 +442,7 @@ void ProxyMainWindow::runState()
 			statusManager_->setName(name());
 		if(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection())
 			stateTrigger_ = Disconnected;
-		if(isSessionActive())
+		else if(isSessionActive())
 			stateTrigger_ = ConnectDeviceRequest;
 		break;
 	case WaitForDevice:
