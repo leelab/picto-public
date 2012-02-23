@@ -95,6 +95,8 @@ int Director::openDevice()
 		return 1;
 	if(!hwSetup.setXYChannelNums(xChannel_,yChannel_))
 		return 1;
+	if(!hwSetup.setXYDiamChannelNums(xDiamChannel_,yDiamChannel_))
+		return 1;
 	if(!hwSetup.setupSignalChannel(sigChannel_)) 
 		return 1;
 	if(!hwSetup.setupRewardController(rewardController_)) 

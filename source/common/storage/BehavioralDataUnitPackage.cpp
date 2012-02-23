@@ -54,7 +54,8 @@ void BehavioralDataUnitPackage::addData(QMap<QString, QList<double>> signalChann
 	QList<double> xposList = signalChannelData.value("x");
 	QList<double> yposList = signalChannelData.value("y");
 	QList<double> timeList = signalChannelData.value("time");
-	setTime(timeList.takeFirst());
+
+	setTime(timeList.size()?timeList.takeFirst():-1);
 
 	QList<double>::const_iterator xpos = signalChannelData.value("x").begin();
 	QList<double>::const_iterator ypos = signalChannelData.value("y").begin();

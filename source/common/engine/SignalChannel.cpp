@@ -203,7 +203,9 @@ QSharedPointer<BehavioralDataUnitPackage> SignalChannel::getDataPackage()
 	returnVal->setChannel(getName());
 	returnVal->setResolution(1.0/sampleRate_);
 	returnVal->addData(getValues());
-	return returnVal;
+	if(returnVal->length())
+		return returnVal;
+	return QSharedPointer<BehavioralDataUnitPackage>();
 }
 
 //When this is called, the passed in value is immediately added to the 

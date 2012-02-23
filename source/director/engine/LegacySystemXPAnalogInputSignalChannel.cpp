@@ -6,10 +6,16 @@
 #include "../../common/memleakdetect.h"
 
 #define DAQmxErrChk(rc) { if (rc) { \
+							char error[512]; \
+							DAQmxGetErrorString(rc, error,512); \
 							DAQmxStopTask(daqTaskHandle_); \
 							DAQmxClearTask(daqTaskHandle_); \
-							Q_ASSERT_X(!rc, "LegacySystemXPAnalogInputSignalChannel", "DAQ function failure");\
-						 } }
+							QString msg = "DAQ function error:"; \
+							msg.append(error); \
+							Q_ASSERT_X(!rc, "LegacySystemXPAnalogInputSignalChannel", msg.toAscii()); \
+						} }
+						
+
 #define DEVICE_NAME "Dev2"
 namespace Picto {
 
