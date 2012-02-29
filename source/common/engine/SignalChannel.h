@@ -7,6 +7,7 @@
 #include <QObject>
 
 #include "../storage/BehavioralDataUnitPackage.h"
+#include "../engine/inputport.h"
 #include "../common.h"
 
 namespace Picto {
@@ -49,45 +50,46 @@ class SignalChannel : public QObject
 	Q_OBJECT
 
 public:
-	SignalChannel(QString name);
-	SignalChannel(QString name, int sampsPerSec);
+	SignalChannel(QString name,QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
+	SignalChannel(QString name,int msPerSample,QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
 
 	virtual ~SignalChannel() {};
 
-
-	void setsampleRate_(int sampsPerSec);
+	void addSubchannel(QString subchannelName, int channelIndex);
+	void setSampleResolution(int msPerSample);
 	void setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue);
 	void setCalibrationCoefficients(QString subchannel, double gain, int offset, double scaledCenterValue);
 	void setShear(QString subchannel, QString asFuncOfSubChannel, double shearFactor);
 	QList<QString> getSubchannels() { return rawDataBuffer_.keys(); };
+	double latestUpdateEventOffset();
 
-	virtual bool start() = 0;
-	virtual bool stop() = 0;
+	bool start();
+	bool stop();
 
-	QMap<QString, QList<double>> getValues();
-	QMap<QString, QList<double>> getRawValues();
+	QMap<QString, QVector<double>> getValues();
+	void updateData(double currentTime);
+	QMap<QString, QVector<double>> getRawValues();
 	QSharedPointer<BehavioralDataUnitPackage> getDataPackage();
 	QString getName(){return name_;};
+	QString getPortType(){return port_?port_->type():"";};
 
 	double peekValue(QString subchannel);
 	void clearValues();
 
 	void insertValue(QString subchannel, double val);
-	void insertValues(QString subchannel, QList<double> vals);
+	void insertValues(QString subchannel, QVector<double> vals);
 
 protected:
 	//This function places current data (everything that has been generated
 	//since the last call) into rawDataBuffer_.  The buffer should not be assumed
 	//to be empty (nor should it be emptied), since an insertValue call may have 
 	//added data.
-	virtual void updateDataBuffer()=0;
-	
-	void addSubchannel(QString subchannelName);
+	void getDataFromPort();
 
-	QMap<QString, QList<double> > rawDataBuffer_;
+	QMap<QString, QVector<double> > rawDataBuffer_;
 	QMap<QString, double > rawDataLastValue_;
 
-	int sampleRate_;			//samples per second collected by the channel
+	int msPerSample_;			//samples per second collected by the channel
 	bool useScaleFactors_;
 	QString name_;
 
@@ -105,6 +107,8 @@ private:
 	};
 
 	QMap<QString, scaleFactors> scaleFactorsMap_;
+	QMap<QString, int> channelIndexMap_;
+	QSharedPointer<InputPort> port_;
 
 };
 

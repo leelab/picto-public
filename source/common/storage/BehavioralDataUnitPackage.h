@@ -29,13 +29,15 @@ public:
 	void setDescriptor(QString descriptor);
 	QString getDescriptor(){return descriptor_;};
 	void setChannel(QString channel);
-	void setTime(double t){time_ = QString::number(t,'e',6);};
-	void setTime(QString t){time_ = t;};
-	QString getTime(){return time_;};
+	void setOffsetTime(double t){time_ = QString::number(t,'e',6);};
+	void setOffsetTime(QString t){time_ = t;};
+	QString getOffsetTime(){return time_;};
 	void setResolution(double r){resolution_ = r;};
 	double getResolution(){return resolution_;};
+	void setActionFrame(qulonglong frameId){actionFrame_ = frameId;};
+	qulonglong getActionFrame(){return actionFrame_;};
 	void addData(double x, double y);
-	void addData(QMap<QString, QList<double>> signalChannelData);
+	void addData(QMap<QString, QVector<double>> signalChannelData, double frameToSampleOffset);
 
 	void emptyData() { data_.clear(); };
 
@@ -60,6 +62,7 @@ private:
 	QString channel_;	//The signal channel from which this data was drawn
 	double resolution_;
 	QString time_;
+	qulonglong actionFrame_;
 	QString descriptor_;
 	QList<QSharedPointer<BehavioralDataUnit>> data_;
 };

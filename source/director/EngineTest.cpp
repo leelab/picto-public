@@ -67,7 +67,7 @@ EngineTest::EngineTest()
 	engine_.addRenderingTarget(renderingTarget);
 
 	//Create a mouse signal channel
-	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(10,d3dVisualTarget.data()));
+	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel(100,d3dVisualTarget.data()));
 	engine_.addSignalChannel("Position",mouseChannel);
 
 	//Create a rewardController

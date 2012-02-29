@@ -69,7 +69,7 @@ public:
 
 	//! \todo Add a function that returns time to VSynch
 signals:
-	void presented();
+	void presented(double frameTime);
 
 protected:
 	//The seperate paint and paintEven functions allow us to paint this widget's

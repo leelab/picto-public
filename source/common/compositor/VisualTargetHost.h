@@ -56,6 +56,8 @@ protected:
 	
 private:
 	QSharedPointer<VisualTarget> target_;
+private slots:
+	void presented(double frameTime);
 };
 
 

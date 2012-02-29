@@ -243,6 +243,8 @@
    <file alias="_hardware_setup_8cpp-source.html">../../../output/documentation/main/html/_hardware_setup_8cpp-source.html</file>
    <file alias="_hardware_setup_8h-source.html">../../../output/documentation/main/html/_hardware_setup_8h-source.html</file>
    <file alias="_hello_q_t_8cpp-source.html">../../../output/documentation/main/html/_hello_q_t_8cpp-source.html</file>
+   <file alias="_input_port_8cpp-source.html">../../../output/documentation/main/html/_input_port_8cpp-source.html</file>
+   <file alias="_input_port_8h-source.html">../../../output/documentation/main/html/_input_port_8h-source.html</file>
    <file alias="_interval_controller_8cpp-source.html">../../../output/documentation/main/html/_interval_controller_8cpp-source.html</file>
    <file alias="_interval_controller_8h-source.html">../../../output/documentation/main/html/_interval_controller_8h-source.html</file>
    <file alias="_joining_session_state_8cpp-source.html">../../../output/documentation/main/html/_joining_session_state_8cpp-source.html</file>
@@ -253,6 +255,8 @@
    <file alias="_l_f_p_data_unit_package_8h-source.html">../../../output/documentation/main/html/_l_f_p_data_unit_package_8h-source.html</file>
    <file alias="_layer_8cpp-source.html">../../../output/documentation/main/html/_layer_8cpp-source.html</file>
    <file alias="_layer_8h-source.html">../../../output/documentation/main/html/_layer_8h-source.html</file>
+   <file alias="_legacy_system_x_p_analog_input_port_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_port_8cpp-source.html</file>
+   <file alias="_legacy_system_x_p_analog_input_port_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_port_8h-source.html</file>
    <file alias="_legacy_system_x_p_analog_input_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_signal_channel_8cpp-source.html</file>
    <file alias="_legacy_system_x_p_analog_input_signal_channel_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_signal_channel_8h-source.html</file>
    <file alias="_legacy_system_x_p_event_code_generator_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8cpp-source.html</file>
@@ -273,6 +277,8 @@
    <file alias="_mersenne_twister_8h-source.html">../../../output/documentation/main/html/_mersenne_twister_8h-source.html</file>
    <file alias="_mixing_sample_8cpp-source.html">../../../output/documentation/main/html/_mixing_sample_8cpp-source.html</file>
    <file alias="_mixing_sample_8h-source.html">../../../output/documentation/main/html/_mixing_sample_8h-source.html</file>
+   <file alias="_mouse_input_port_8cpp-source.html">../../../output/documentation/main/html/_mouse_input_port_8cpp-source.html</file>
+   <file alias="_mouse_input_port_8h-source.html">../../../output/documentation/main/html/_mouse_input_port_8h-source.html</file>
    <file alias="_mouse_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_mouse_signal_channel_8cpp-source.html</file>
    <file alias="_mouse_signal_channel_8h-source.html">../../../output/documentation/main/html/_mouse_signal_channel_8h-source.html</file>
    <file alias="_network_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_network_signal_channel_8cpp-source.html</file>
@@ -328,6 +334,8 @@
    <file alias="_picto_box_daq_board_register_map_8h-source.html">../../../output/documentation/main/html/_picto_box_daq_board_register_map_8h-source.html</file>
    <file alias="_picto_box_reward_controller_c_e_8cpp-source.html">../../../output/documentation/main/html/_picto_box_reward_controller_c_e_8cpp-source.html</file>
    <file alias="_picto_box_reward_controller_c_e_8h-source.html">../../../output/documentation/main/html/_picto_box_reward_controller_c_e_8h-source.html</file>
+   <file alias="_picto_box_x_p_analog_input_port_8cpp-source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_port_8cpp-source.html</file>
+   <file alias="_picto_box_x_p_analog_input_port_8h-source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_port_8h-source.html</file>
    <file alias="_picto_box_x_p_analog_input_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_signal_channel_8cpp-source.html</file>
    <file alias="_picto_box_x_p_analog_input_signal_channel_8h-source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_signal_channel_8h-source.html</file>
    <file alias="_picto_box_x_p_event_code_generator_8cpp-source.html">../../../output/documentation/main/html/_picto_box_x_p_event_code_generator_8cpp-source.html</file>
@@ -869,12 +877,18 @@
    <file alias="class_picto_1_1_grid_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_grid_graphic-members.html</file>
    <file alias="class_picto_1_1_grid_graphic.html">../../../output/documentation/main/html/class_picto_1_1_grid_graphic.html</file>
    <file alias="class_picto_1_1_grid_graphic.png">../../../output/documentation/main/html/class_picto_1_1_grid_graphic.png</file>
+   <file alias="class_picto_1_1_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_input_port-members.html</file>
+   <file alias="class_picto_1_1_input_port.html">../../../output/documentation/main/html/class_picto_1_1_input_port.html</file>
+   <file alias="class_picto_1_1_input_port.png">../../../output/documentation/main/html/class_picto_1_1_input_port.png</file>
    <file alias="class_picto_1_1_l_f_p_data_unit_package-members.html">../../../output/documentation/main/html/class_picto_1_1_l_f_p_data_unit_package-members.html</file>
    <file alias="class_picto_1_1_l_f_p_data_unit_package.html">../../../output/documentation/main/html/class_picto_1_1_l_f_p_data_unit_package.html</file>
    <file alias="class_picto_1_1_l_f_p_data_unit_package.png">../../../output/documentation/main/html/class_picto_1_1_l_f_p_data_unit_package.png</file>
    <file alias="class_picto_1_1_layer-members.html">../../../output/documentation/main/html/class_picto_1_1_layer-members.html</file>
    <file alias="class_picto_1_1_layer.html">../../../output/documentation/main/html/class_picto_1_1_layer.html</file>
    <file alias="class_picto_1_1_layer.png">../../../output/documentation/main/html/class_picto_1_1_layer.png</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_analog_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_port-members.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_analog_input_port.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_port.html</file>
+   <file alias="class_picto_1_1_legacy_system_x_p_analog_input_port.png">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_port.png</file>
    <file alias="class_picto_1_1_legacy_system_x_p_analog_input_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_signal_channel-members.html</file>
    <file alias="class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.html</file>
    <file alias="class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_analog_input_signal_channel.png</file>
@@ -896,6 +910,9 @@
    <file alias="class_picto_1_1_magnetic_resonance_imaging_data_store.html">../../../output/documentation/main/html/class_picto_1_1_magnetic_resonance_imaging_data_store.html</file>
    <file alias="class_picto_1_1_media_item-members.html">../../../output/documentation/main/html/class_picto_1_1_media_item-members.html</file>
    <file alias="class_picto_1_1_media_item.html">../../../output/documentation/main/html/class_picto_1_1_media_item.html</file>
+   <file alias="class_picto_1_1_mouse_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_mouse_input_port-members.html</file>
+   <file alias="class_picto_1_1_mouse_input_port.html">../../../output/documentation/main/html/class_picto_1_1_mouse_input_port.html</file>
+   <file alias="class_picto_1_1_mouse_input_port.png">../../../output/documentation/main/html/class_picto_1_1_mouse_input_port.png</file>
    <file alias="class_picto_1_1_mouse_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_mouse_signal_channel-members.html</file>
    <file alias="class_picto_1_1_mouse_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_mouse_signal_channel.html</file>
    <file alias="class_picto_1_1_mouse_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_mouse_signal_channel.png</file>
@@ -940,6 +957,9 @@
    <file alias="class_picto_1_1_physiological_data_store.html">../../../output/documentation/main/html/class_picto_1_1_physiological_data_store.html</file>
    <file alias="class_picto_1_1_picto_box_daq_board-members.html">../../../output/documentation/main/html/class_picto_1_1_picto_box_daq_board-members.html</file>
    <file alias="class_picto_1_1_picto_box_daq_board.html">../../../output/documentation/main/html/class_picto_1_1_picto_box_daq_board.html</file>
+   <file alias="class_picto_1_1_picto_box_x_p_analog_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_picto_box_x_p_analog_input_port-members.html</file>
+   <file alias="class_picto_1_1_picto_box_x_p_analog_input_port.html">../../../output/documentation/main/html/class_picto_1_1_picto_box_x_p_analog_input_port.html</file>
+   <file alias="class_picto_1_1_picto_box_x_p_analog_input_port.png">../../../output/documentation/main/html/class_picto_1_1_picto_box_x_p_analog_input_port.png</file>
    <file alias="class_picto_1_1_picto_box_x_p_analog_input_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_picto_box_x_p_analog_input_signal_channel-members.html</file>
    <file alias="class_picto_1_1_picto_box_x_p_analog_input_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_picto_box_x_p_analog_input_signal_channel.html</file>
    <file alias="class_picto_1_1_picto_box_x_p_analog_input_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_picto_box_x_p_analog_input_signal_channel.png</file>
@@ -1092,6 +1112,9 @@
    <file alias="class_picto_1_1_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_signal_channel-members.html</file>
    <file alias="class_picto_1_1_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_signal_channel.html</file>
    <file alias="class_picto_1_1_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_signal_channel.png</file>
+   <file alias="class_picto_1_1_signal_channel_info-members.html">../../../output/documentation/main/html/class_picto_1_1_signal_channel_info-members.html</file>
+   <file alias="class_picto_1_1_signal_channel_info.html">../../../output/documentation/main/html/class_picto_1_1_signal_channel_info.html</file>
+   <file alias="class_picto_1_1_signal_channel_info.png">../../../output/documentation/main/html/class_picto_1_1_signal_channel_info.png</file>
    <file alias="class_picto_1_1_single_unit_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_single_unit_data_store-members.html</file>
    <file alias="class_picto_1_1_single_unit_data_store.html">../../../output/documentation/main/html/class_picto_1_1_single_unit_data_store.html</file>
    <file alias="class_picto_1_1_software_compositing_surface-members.html">../../../output/documentation/main/html/class_picto_1_1_software_compositing_surface-members.html</file>
@@ -1484,6 +1507,7 @@
    <file alias="ioapi_8h-source.html">../../../output/documentation/main/html/ioapi_8h-source.html</file>
    <file alias="iowin32_8c-source.html">../../../output/documentation/main/html/iowin32_8c-source.html</file>
    <file alias="iowin32_8h-source.html">../../../output/documentation/main/html/iowin32_8h-source.html</file>
+   <file alias="legacysystemxpanaloginputport_8h-source.html">../../../output/documentation/main/html/legacysystemxpanaloginputport_8h-source.html</file>
    <file alias="mainmemleakdetect_8h-source.html">../../../output/documentation/main/html/mainmemleakdetect_8h-source.html</file>
    <file alias="mainpage_8h-source.html">../../../output/documentation/main/html/mainpage_8h-source.html</file>
    <file alias="mainwindow_8cpp-source.html">../../../output/documentation/main/html/mainwindow_8cpp-source.html</file>

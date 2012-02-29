@@ -39,7 +39,8 @@
 #include "../../common/compositor/PCMAuralTarget.h"
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
-#include "../../common/engine/MouseSignalChannel.h"
+#include "../../common/engine/MouseInputPort.h"
+#include "../../common/engine/XYSignalChannel.h"
 #include "../../common/mainmemleakdetect.h"
 
 using namespace Picto;
@@ -106,7 +107,8 @@ public:
 	setLayout(operationLayout);
 
 	//set up mouse signal channel
-	QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",visualTargetHost_));
+	QSharedPointer<Picto::MouseInputPort> mousePort(new Picto::MouseInputPort(visualTargetHost_));
+	QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,8,mousePort));
 	engine_->addSignalChannel(mouseChannel);
 
 	//Set up event code generator

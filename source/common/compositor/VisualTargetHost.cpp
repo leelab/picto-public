@@ -24,7 +24,7 @@ void VisualTargetHost::setVisualTarget(QSharedPointer<VisualTarget> target)
 	setFixedSize(dims.width(),dims.height());
 	resize(dims.width(),dims.height());
 
-	connect(target_.data(), SIGNAL(presented()), this, SLOT(update()));
+	connect(target_.data(), SIGNAL(presented(double)), this, SLOT(presented(double)));
 }
 
 void VisualTargetHost::paintEvent(QPaintEvent*)
@@ -39,6 +39,11 @@ void VisualTargetHost::mousePressEvent(QMouseEvent *event)
 		return;
 	emit clickDetected(target_->viewportPointToTargetPoint(event->pos()));
 	QWidget::mousePressEvent (event);
+}
+
+void VisualTargetHost::presented(double)
+{
+	update();
 }
 
 }; //namespace Picto

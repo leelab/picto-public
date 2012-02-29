@@ -64,10 +64,10 @@ SOURCES += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPRewardControll
 INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
 LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
 
-HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.h
-SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputSignalChannel.cpp
-HEADERS += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputSignalChannel.h
-SOURCES += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputSignalChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputPort.h
+SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputPort.cpp
+HEADERS += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputPort.h
+SOURCES += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputPort.cpp
 
 }
 

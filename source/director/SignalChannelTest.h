@@ -8,9 +8,7 @@
 #include "../common/compositor/PCMAuralTarget.h"
 #include "../common/compositor/CompositingSurface.h"
 #include "../common/compositor/RenderingTarget.h"
-#include "../common/engine/MouseSignalChannel.h"
 #include "../common/stimuli/CircleGraphic.h"
-#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
 #include "compositor/D3DVisualTarget.h"
 
 /*!	\brief A test class for playing with signal channels
@@ -39,8 +37,8 @@ private:
 	QSharedPointer<Picto::D3DVisualTarget> d3dVisualTarget;
 	QSharedPointer<Picto::CircleGraphic> circleGraphic;
 
-	Picto::MouseSignalChannel *mouseChannel;
-	Picto::PictoBoxXPAnalogInputSignalChannel *aiChannel;
+	//Picto::MouseSignalChannel *mouseChannel;
+	//Picto::PictoBoxXPAnalogInputSignalChannel *aiChannel;
 
 	int frameCounter;
 };

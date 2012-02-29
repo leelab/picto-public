@@ -90,12 +90,14 @@ SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlLink.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlElementFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlElementFactory.cpp
 
+HEADERS += $$(PICTO_TREE)/source/common/engine/InputPort.h
+SOURCES += $$(PICTO_TREE)/source/common/engine/InputPort.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/SignalChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/SignalChannel.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/PropertyTable.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/PropertyTable.cpp
-HEADERS += $$(PICTO_TREE)/source/common/engine/MouseSignalChannel.h
-SOURCES += $$(PICTO_TREE)/source/common/engine/MouseSignalChannel.cpp
+HEADERS += $$(PICTO_TREE)/source/common/engine/MouseInputPort.h
+SOURCES += $$(PICTO_TREE)/source/common/engine/MouseInputPort.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/xYSignalChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/xYSignalChannel.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/PictoEngine.h

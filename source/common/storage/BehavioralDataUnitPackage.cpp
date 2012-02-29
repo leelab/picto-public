@@ -40,25 +40,20 @@ void BehavioralDataUnitPackage::addData(double x, double y)
  *	exactly the same Map used by SignalChannel::getValues, allowing
  *	us to add the data directly to our data store.
  */
-void BehavioralDataUnitPackage::addData(QMap<QString, QList<double>> signalChannelData)
+void BehavioralDataUnitPackage::addData(QMap<QString, QVector<double>> signalChannelData, double frameToSampleOffset)
 {
 	//First, check that the signal channel data has the expected subchannels
 	Q_ASSERT(signalChannelData.contains("x"));
 	Q_ASSERT(signalChannelData.contains("y"));
-	Q_ASSERT(signalChannelData.contains("time"));
 
 	setDescriptor("x,y");	//! \todo This should be automatic later.
 
-	//Next, run through the three lists generating data points and adding them
+	//Next, run through the two lists generating data points and adding them
 	//to our list
-	QList<double> xposList = signalChannelData.value("x");
-	QList<double> yposList = signalChannelData.value("y");
-	QList<double> timeList = signalChannelData.value("time");
+	setOffsetTime(frameToSampleOffset);
 
-	setTime(timeList.size()?timeList.takeFirst():-1);
-
-	QList<double>::const_iterator xpos = signalChannelData.value("x").begin();
-	QList<double>::const_iterator ypos = signalChannelData.value("y").begin();
+	QVector<double>::const_iterator xpos = signalChannelData.value("x").begin();
+	QVector<double>::const_iterator ypos = signalChannelData.value("y").begin();
 
 	while(xpos != signalChannelData.value("x").end() &&
 		  ypos != signalChannelData.value("y").end())
@@ -110,7 +105,8 @@ bool BehavioralDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> 
 	xmlStreamWriter->writeStartElement("BDUP");
 	xmlStreamWriter->writeAttribute("chan",getChannel());
 	xmlStreamWriter->writeAttribute("res",QString::number(getResolution()));
-	xmlStreamWriter->writeAttribute("time",getTime());
+	xmlStreamWriter->writeAttribute("offtime",getOffsetTime());
+	xmlStreamWriter->writeAttribute("fr",QString::number(actionFrame_));
 	xmlStreamWriter->writeAttribute("desc",getDescriptor());
 
 	foreach(QSharedPointer<BehavioralDataUnit> dataPoint, data_)
@@ -153,13 +149,23 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 		return false;
 	}
 	
-	if(xmlStreamReader->attributes().hasAttribute("time"))
+	if(xmlStreamReader->attributes().hasAttribute("offtime"))
 	{
-		setTime(xmlStreamReader->attributes().value("time").toString());
+		setOffsetTime(xmlStreamReader->attributes().value("offtime").toString());
 	}
 	else
 	{
-		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing time attribute",xmlStreamReader);
+		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing offtime (offset time) attribute",xmlStreamReader);
+		return false;
+	}
+
+	if(xmlStreamReader->attributes().hasAttribute("fr"))
+	{
+		setActionFrame(xmlStreamReader->attributes().value("fr").toString().toLongLong());
+	}
+	else
+	{
+		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing fr (action frame) attribute",xmlStreamReader);
 		return false;
 	}
 

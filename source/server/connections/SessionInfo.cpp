@@ -193,8 +193,8 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 		//the pre-disconnect run and will not have been added to the lists during InitializeVariables()
 		QString tableName = QString("signal_%1").arg(sigInfo.getName());
 		tables_.push_back(tableName);
-		tableColumns_[tableName] = " dataid,time,resolution,data ";
-		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB ";
+		tableColumns_[tableName] = " dataid,offsettime,sampleperiod,data,frameid ";
+		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB,INTEGER ";
 		tableDataProviders_[tableName] = "DIRECTOR";
 	}
 	sessionQ.finish();
@@ -539,8 +539,8 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 		//Create the table for this signal channel.
 		QSqlQuery sessionQ(getSessionDb());
 		tables_.push_back(tableName);
-		tableColumns_[tableName] = " dataid,time,resolution,data ";
-		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB ";
+		tableColumns_[tableName] = " dataid,offsettime,sampleperiod,data,frameid ";
+		tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB,INTEGER ";
 		tableDataProviders_[tableName] = "DIRECTOR";
 
 		AddTablesToDatabase(&sessionQ);
@@ -562,17 +562,18 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 
 	if(data->length())
 	{
-		cacheQ.prepare(QString("INSERT INTO %1 (dataid, time, resolution, data)"
-			"VALUES(:dataid, :time, :resolution, :data)").arg(tableName));
+		cacheQ.prepare(QString("INSERT INTO %1 (dataid, offsettime, sampleperiod, data, frameid)"
+			"VALUES(:dataid, :offsettime, :sampleperiod, :data, :frameid)").arg(tableName));
 		cacheQ.bindValue(":dataid", data->getDataID());
-		cacheQ.bindValue(":time",data->getTime());
-		cacheQ.bindValue(":resolution",data->getResolution());
+		cacheQ.bindValue(":offsettime",data->getOffsetTime());
+		cacheQ.bindValue(":sampleperiod",data->getResolution());
 		cacheQ.bindValue(":data",data->getDataAsByteArray());
+		cacheQ.bindValue(":frameid",data->getActionFrame());
 		executeWriteQuery(&cacheQ,"",false);
 
 		//Only write a behavioralDataUnitPackage with the last data unit
 		//
-		//Use the package text because that contains the signal channel name, time, resolution.
+		//Use the package text because that contains the signal channel name, time, sampleperiod.
 		//Use the unit id because that was generated when the last data unit
 		//was generated and will preserve the information generation order
 		//in the stateVariable list.
@@ -740,13 +741,13 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 	//Now that the tables are ready.  Do the insertion.
 	QSqlQuery query(cacheDb);
 	query.prepare("INSERT INTO lfp "
-		"(dataid,timestamp,fittedtime,correlation,resolution,channel,data) VALUES (:dataid,:timestamp,:fittedtime,:correlation,:resolution,:channel,:data)");
+		"(dataid,timestamp,fittedtime,correlation,sampleperiod,channel,data) VALUES (:dataid,:timestamp,:fittedtime,:correlation,:resolution,:channel,:data)");
 
 	query.bindValue(":dataid",dataID);
 	query.bindValue(":timestamp",neuralTimestamp);
 	query.bindValue(":fittedtime",fittedTimestamp);
 	query.bindValue(":correlation",correlation);
-	query.bindValue(":resolution",resolution);
+	query.bindValue(":sampleperiod",resolution);
 	query.bindValue(":channel",channel);
 	query.bindValue(":data",data->getPotentialsAsByteArray());
 
@@ -956,7 +957,7 @@ void SessionInfo::InitializeVariables()
 	tableDataProviders_["neuralalignevents"] = "PROXY";
 
 	tables_.push_back("lfp");
-	tableColumns_["lfp"] = " dataid,timestamp,fittedtime,correlation,resolution,channel,data ";
+	tableColumns_["lfp"] = " dataid,timestamp,fittedtime,correlation,sampleperiod,channel,data ";
 	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,REAL,INTEGER,BLOB ";
 	tableDataProviders_["lfp"] = "PROXY";
 	

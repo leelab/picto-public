@@ -3,24 +3,52 @@
 
 namespace Picto {
 
-SignalChannel::SignalChannel(QString name)
+SignalChannel::SignalChannel(QString name,QSharedPointer<InputPort> port)
 {
 	name_ = name;
-	setsampleRate_(1);
-	useScaleFactors_ = true;
-}
-SignalChannel::SignalChannel(QString name, int sampsPerSec)
-{
-	name_ = name;
-	setsampleRate_(sampsPerSec);
+	port_ = port;
+	setSampleResolution(1);
 	useScaleFactors_ = true;
 }
 
-
-void SignalChannel::setsampleRate_(int sampsPerSec)
+SignalChannel::SignalChannel(QString name, int msPerSample, QSharedPointer<InputPort> port)
 {
-	Q_ASSERT(sampsPerSec != 0);
-	sampleRate_ = sampsPerSec;
+	name_ = name;
+	port_ = port;
+	setSampleResolution(msPerSample);
+	useScaleFactors_ = true;
+}
+
+void SignalChannel::addSubchannel(QString subchannelName, int channelIndex)
+{
+	QVector<double> data;
+	if(!rawDataBuffer_.contains(subchannelName))
+	{
+		rawDataBuffer_[subchannelName] = data;
+		rawDataLastValue_[subchannelName] = 0.0;
+	}
+	
+	if(!scaleFactorsMap_.contains(subchannelName))
+	{
+		scaleFactorsMap_[subchannelName].scaleB = 1;
+		scaleFactorsMap_[subchannelName].scaleA = 0;
+	}
+
+	if(port_)
+	{
+		port_->addInputChannel(channelIndex,msPerSample_);
+		if(!channelIndexMap_.contains(subchannelName))
+		{
+			channelIndexMap_[subchannelName] = channelIndex;
+		}
+	}
+
+}
+
+void SignalChannel::setSampleResolution(int msPerSample)
+{
+	Q_ASSERT(msPerSample != 0);
+	msPerSample_ = msPerSample;
 }
 
 void SignalChannel::setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue)
@@ -58,27 +86,17 @@ void SignalChannel::setShear(QString subchannel, QString asFuncOfSubChannel, dou
 	scaleFactorsMap_[subchannel].shearFactor = shearFactor;
 }
 
-void SignalChannel::addSubchannel(QString subchannelName)
+double SignalChannel::latestUpdateEventOffset()
 {
-	QList<double> data;
-	if(!rawDataBuffer_.contains(subchannelName))
-	{
-		rawDataBuffer_[subchannelName] = data;
-		rawDataLastValue_[subchannelName] = 0.0;
-	}
-	
-	if(!scaleFactorsMap_.contains(subchannelName))
-	{
-		scaleFactorsMap_[subchannelName].scaleB = 1;
-		scaleFactorsMap_[subchannelName].scaleA = 0;
-	}
-
+	if(!port_)
+		return 0;
+	return port_->getFrameToSampleOffset(channelIndexMap_.begin().value());
 }
 
 //! Grabs the most recent value from the subchannel, scales it, and returns it
 double SignalChannel::peekValue(QString subchannel)
 {
-	updateDataBuffer();
+	getDataFromPort();
 
 	if(!rawDataBuffer_.contains(subchannel))
 		return 0.0;
@@ -114,7 +132,7 @@ double SignalChannel::peekValue(QString subchannel)
 void SignalChannel::clearValues()
 {
 	//clear out the raw data
-	QMap<QString, QList<double> >::iterator x = rawDataBuffer_.begin();
+	QMap<QString, QVector<double> >::iterator x = rawDataBuffer_.begin();
 
 	while(x != rawDataBuffer_.end())
 	{
@@ -126,16 +144,33 @@ void SignalChannel::clearValues()
 	}
 }
 
-QMap<QString, QList<double> > SignalChannel::getValues()
+bool SignalChannel::start()
 {
-	QMap<QString, QList<double> > dataBuffer = getRawValues();
+	if(!port_)
+		return true;
+	port_->enable(true);
+	return true;
+}
+
+bool SignalChannel::stop()
+{
+	if(!port_)
+		return true;
+	port_->enable(false);
+	clearValues();
+	return true;
+}
+
+QMap<QString, QVector<double> > SignalChannel::getValues()
+{
+	QMap<QString, QVector<double> > dataBuffer = getRawValues();
 
 	//scale the values
-	QMap<QString, QList<double> >::iterator x = dataBuffer.begin();
+	QMap<QString, QVector<double> >::iterator x = dataBuffer.begin();
 
 	while(x != dataBuffer.end())
 	{
-		for(QList<double>::iterator subChanValIter = x.value().begin(); 
+		for(QVector<double>::iterator subChanValIter = x.value().begin(); 
 			subChanValIter != x.value().end(); 
 			subChanValIter++)
 		{
@@ -157,8 +192,8 @@ QMap<QString, QList<double> > SignalChannel::getValues()
 			continue;
 		}
 
-		QList<double>::iterator funcOfIterator = dataBuffer.find(shearAsFuncOf).value().begin();
-		for(QList<double>::iterator subChanValIter = x.value().begin(); 
+		QVector<double>::iterator funcOfIterator = dataBuffer.find(shearAsFuncOf).value().begin();
+		for(QVector<double>::iterator subChanValIter = x.value().begin(); 
 			subChanValIter != x.value().end(); 
 			subChanValIter++,funcOfIterator++)
 		{
@@ -172,14 +207,20 @@ QMap<QString, QList<double> > SignalChannel::getValues()
 	return dataBuffer;
 }
 
-QMap<QString, QList<double> > SignalChannel::getRawValues()
+void SignalChannel::updateData(double currentTime)
 {
-	updateDataBuffer();
+	if(port_)
+		port_->updateDataBuffer(currentTime);
+}
 
-	QMap<QString, QList<double> > dataBuffer = rawDataBuffer_;
+QMap<QString, QVector<double> > SignalChannel::getRawValues()
+{
+	getDataFromPort();
+
+	QMap<QString, QVector<double> > dataBuffer = rawDataBuffer_;
 	
 	//clear out the raw data
-	QMap<QString, QList<double> >::iterator x = rawDataBuffer_.begin();
+	QMap<QString, QVector<double> >::iterator x = rawDataBuffer_.begin();
 
 	while(x != rawDataBuffer_.end())
 	{
@@ -201,8 +242,8 @@ QSharedPointer<BehavioralDataUnitPackage> SignalChannel::getDataPackage()
 {
 	QSharedPointer<BehavioralDataUnitPackage> returnVal(new BehavioralDataUnitPackage());
 	returnVal->setChannel(getName());
-	returnVal->setResolution(1.0/sampleRate_);
-	returnVal->addData(getValues());
+	returnVal->setResolution(msPerSample_);
+	returnVal->addData(getValues(),latestUpdateEventOffset());
 	if(returnVal->length())
 		return returnVal;
 	return QSharedPointer<BehavioralDataUnitPackage>();
@@ -222,14 +263,28 @@ void SignalChannel::insertValue(QString subchannel, double val)
 	
 }
 
-void SignalChannel::insertValues(QString subchannel, QList<double> vals)
+void SignalChannel::insertValues(QString subchannel, QVector<double> vals)
 {
 	if(rawDataBuffer_.contains(subchannel))
 	{
-		rawDataBuffer_[subchannel].append(vals);
-		rawDataLastValue_[subchannel] = vals.last();
+		rawDataBuffer_[subchannel] << vals;
+		if(rawDataBuffer_[subchannel].size())
+			rawDataLastValue_[subchannel] = vals.last();
 	}
 }
 
+void SignalChannel::getDataFromPort()
+{
+	if(!port_)
+		return;
+	QMap<QString, int>::iterator it;
+	for(it = channelIndexMap_.begin();it != channelIndexMap_.end();it++)
+	{
+		rawDataBuffer_[it.key()] << port_->getData(it.value());
+		if(rawDataBuffer_[it.key()].size())
+			rawDataLastValue_[it.key()] = rawDataBuffer_[it.key()].last();
+	}
+
+}
 
 }; //namespace Picto

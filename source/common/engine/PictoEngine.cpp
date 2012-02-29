@@ -53,7 +53,7 @@ QList<QSharedPointer<RenderingTarget> > PictoEngine::getRenderingTargets()
 void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
 {	
 	renderingTargets_.append(target);
-	connect(target->getVisualTarget().data(), SIGNAL(presented()), this, SLOT(firstPhosphorOperations()));
+	connect(target->getVisualTarget().data(), SIGNAL(presented(double)), this, SLOT(firstPhosphorOperations(double)));
 }
 
 bool PictoEngine::hasVisibleRenderingTargets()
@@ -226,6 +226,24 @@ QSharedPointer<StateDataUnitPackage> PictoEngine::getStateDataPackage()
 	return returnVal;
 }
 
+QList<QSharedPointer<BehavioralDataUnitPackage>> PictoEngine::getBehavioralDataPackages()
+{
+	//Note that the call to getDataPackage() clears out any existing values,
+	//so it should only be made once per frame on each signalChannel
+	QList<QSharedPointer<BehavioralDataUnitPackage>> returnList;
+	QSharedPointer<BehavioralDataUnitPackage> pack;
+	foreach(QSharedPointer<Picto::SignalChannel> chan,signalChannels_)
+	{
+		pack = chan->getDataPackage();
+		if(pack)
+		{
+			pack->setActionFrame(getLastFrameId());
+			returnList.append(pack);
+		}
+	}
+	return returnList;
+}
+
 /*! \brief Sends the latest behavioral data to the server aligned with this frame time
  *
  *	We update the server with all of the useful behavioral data.  This includes 
@@ -239,6 +257,13 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 {
 	//Create a new frame data store
 	FrameDataUnitPackage frameData;
+
+	//Behavioral data occured during the course of the
+	//previous frame and so its offsettime value is with respect to the 
+	//first phosphor time of the previous frame.  The frame is stamped
+	//when we call getBehavioralDataPackages, so we need to call it before
+	//we call setLastFrame with the new frame id.
+	QList<QSharedPointer<BehavioralDataUnitPackage>> behavPackList = getBehavioralDataPackages();
 
 	frameData.addFrame(frameTime,runningStateId);
 	setLastFrame(frameData.getLatestFrameId());
@@ -275,14 +300,10 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 
 	xmlWriter->writeStartElement("Data");
 
-	//Note that the call to getDataPackage() clears out any existing values,
-	//so it should only be made once per frame on each signalChannel
-	QSharedPointer<BehavioralDataUnitPackage> behavData;
-	foreach(QSharedPointer<Picto::SignalChannel> chan,signalChannels_)
+	foreach(QSharedPointer<BehavioralDataUnitPackage> behavPack,behavPackList)
 	{
-		behavData = chan->getDataPackage();
-		if(behavData && behavData->length())
-			behavData->toXml(xmlWriter);
+		if(behavPack && behavPack->length())
+			behavPack->toXml(xmlWriter);
 	}
 	if(propPack && propPack->length())
 		propPack->toXml(xmlWriter);
@@ -534,9 +555,14 @@ void PictoEngine::stop()
 	stopAllSignalChannels();
 }
 
-void PictoEngine::firstPhosphorOperations()
+void PictoEngine::firstPhosphorOperations(double frameTime)
 {
 	rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || slave_));
+
+	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
+	{
+		channel->updateData(frameTime);
+	}
 }
 
 }; //namespace Engine

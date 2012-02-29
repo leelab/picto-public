@@ -3,7 +3,7 @@
 
 
 //#include "../common.h"
-#include "../../common/engine/SignalChannel.h"
+#include "../../common/engine/InputPort.h"
 
 namespace Picto {
 
@@ -19,31 +19,23 @@ namespace Picto {
  *	- The development box has the NIDAQmx libraries and headers installed
  */
 
-class LegacySystemXPAnalogInputSignalChannel : public SignalChannel
+class LegacySystemXPAnalogInputPort : public InputPort
 {
 public:
-	LegacySystemXPAnalogInputSignalChannel(QString name, int sampsPerSecond);
-	virtual ~LegacySystemXPAnalogInputSignalChannel() { stop(); };
+	LegacySystemXPAnalogInputPort();
+	virtual ~LegacySystemXPAnalogInputPort() { stopSampling(); };
+	virtual QString type(){return "legacy";};
 
-	bool start();
-	bool stop();
-	void updateDataBuffer();
-
-	//adds a subcahnnel to the signal channel.  The subchannel will contain data
-	//from the DAQ board's AI channel with the number aiChannelNum
-	void addAiChannel(QString subchannelName, int aiChannelNum);
-
+protected:
+	virtual bool startSampling();
+	virtual void stopSampling();
+	virtual double updateDataBuffer();
 private:
 
 	unsigned long  daqTaskHandle_; // For Nidaqmx 8.5
-	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
-
-	//maps channel name to daq board ai channel number
-	QMap<QString, int> aiChannelNums_;  
-
-	double startTime_;
-	int sampsCollected_;
-	bool hasDevice_;
+	//static void*  daqTaskHandle_;	// For Nidaqmx after 8.5
+	unsigned int bufferSize_;
+	short *dataBuffer_;
 
 };
 

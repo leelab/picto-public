@@ -9,21 +9,19 @@
 #include "../memleakdetect.h"
 using namespace Picto;
 
-XYSignalChannel::XYSignalChannel(QString name)
-	: SignalChannel(name)
+XYSignalChannel::XYSignalChannel(QString name,QSharedPointer<InputPort> port)
+	: SignalChannel(name,4,port)
 {
 	//add our subchannels to the list
-	addSubchannel("x");
-	addSubchannel("y");
-	addSubchannel("time");
+	addSubchannel("x",0);
+	addSubchannel("y",1);
 	useScaleFactors_ = false;
 }
 
-XYSignalChannel::XYSignalChannel(QString name, int sampsPerSecond)
-	: SignalChannel(name,sampsPerSecond)
+XYSignalChannel::XYSignalChannel(QString name,int xChan, int yChan, int msPerSample,QSharedPointer<InputPort> port)
+	: SignalChannel(name,msPerSample,port)
 {
 	//add our subchannels to the list
-	addSubchannel("x");
-	addSubchannel("y");
-	addSubchannel("time");
+	addSubchannel("x",xChan);
+	addSubchannel("y",yChan);
 }

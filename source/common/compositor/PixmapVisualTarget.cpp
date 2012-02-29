@@ -139,10 +139,6 @@ void PixmapVisualTarget::clear()
 	//Set first phosphor time !! THIS IS NOT ACCURATE YET
 	setFirstPhosphorTime();
 	repaint();
-
-	//This signal is here so that if this VisualTarget belongs to a 
-	//VisualTargetHost, we will know that a repaint occured.
-	emit presented();
 }
 
 }; //namespace Picto

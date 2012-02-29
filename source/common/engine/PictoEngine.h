@@ -136,6 +136,8 @@ public:
 	QSharedPointer<StateDataUnitPackage> getStateDataPackage();
 	void clearStateDataPackage(){propPackage_.clear();};
 
+	QList<QSharedPointer<BehavioralDataUnitPackage>> getBehavioralDataPackages();
+
 	void reportNewFrame(double frameTime,int runningStateId);
 	void setLastFrame(qulonglong frameId){lastFrameId_ = frameId;};
 	qulonglong getLastFrameId(){return lastFrameId_;};
@@ -211,7 +213,7 @@ private:
 	QString runningPath_;
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);
-	void firstPhosphorOperations();
+	void firstPhosphorOperations(double frameTime);
 };
 
 /*! @} */

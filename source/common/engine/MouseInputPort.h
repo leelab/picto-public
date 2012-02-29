@@ -1,12 +1,13 @@
-#ifndef _MOUSESIGNALCHANNEL_H
-#define _MOUSESIGNALCHANNEL_H
+#ifndef _MOUSEINPUTPORT_H
+#define _MOUSEINPUTPORT_H
 
 #include <QTimer>
 #include <QWidget>
 #include <QSharedPointer>
+#include <QPoint>
 
 #include "../common.h"
-#include "SignalChannel.h"
+#include "InputPort.h"
 
 
 
@@ -22,26 +23,28 @@ namespace Picto {
  *	far this hasn't been an issue.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API MouseSignalChannel : public SignalChannel
+class PICTOLIB_API MouseInputPort : public InputPort
 #else
-class MouseSignalChannel : public SignalChannel
+class MouseInputPort : public InputPort
 #endif
 {
-	Q_OBJECT
 
 public:
-	MouseSignalChannel(QString name, QWidget *widget);
+	MouseInputPort( QWidget *widget);
+	virtual QString type(){return "mouse";};
 
-	bool start();
-	bool stop();
-	void updateDataBuffer();
-
-private slots:
-	void pollMouse();
+protected:
+	virtual bool startSampling();
+	virtual void stopSampling();
+	virtual double updateDataBuffer();
 
 private:
-	QTimer pollingTimer_;
+	QPoint pollMouse();
+
+private:
+	//QTimer pollingTimer_;
 	QWidget *widget_;  //used for coordinate translation
+	double lastTime_;
 
 };
 

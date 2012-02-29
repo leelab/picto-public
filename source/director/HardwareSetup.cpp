@@ -33,10 +33,11 @@
 #include "../common/compositor/PCMAuralTarget.h"
 
 
-#include "../common/engine/MouseSignalChannel.h"
+#include "../common/engine/XYSignalChannel.h"
+#include "../common/engine/MouseInputPort.h"
 #if defined WIN32 && defined NI_STUFF
-#include "engine/PictoBoxXPAnalogInputSignalChannel.h"
-#include "engine/LegacySystemXPAnalogInputSignalChannel.h"
+#include "engine/PictoBoxXPAnalogInputPort.h"
+#include "engine/LegacySystemXPAnalogInputPort.h"
 #endif
 
 #include "../common/iodevices/RewardController.h"
@@ -136,14 +137,15 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 			return false;
 
 		QSharedPointer<Picto::VisualTarget> visualTarget = engine_->getRenderingTargets().first()->getVisualTarget();
-		QSharedPointer<Picto::MouseSignalChannel> mouseChannel(new Picto::MouseSignalChannel("Position",visualTarget.data()));
+		QSharedPointer<Picto::MouseInputPort> mousePort(new Picto::MouseInputPort(visualTarget.data()));
+		QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,4,mousePort));
 		engine_->addSignalChannel(mouseChannel);
 #ifdef DEVELOPMENTBUILD
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::MouseSignalChannel> aiChannel(new Picto::MouseSignalChannel("Diameter",visualTarget.data()));
-			engine_->addSignalChannel(aiChannel);
+			QSharedPointer<Picto::XYSignalChannel> daimMouseChannel(new Picto::XYSignalChannel("Diameter",2,3,4,mousePort));
+			engine_->addSignalChannel(daimMouseChannel);
 		}
 #endif
 	}
@@ -152,19 +154,14 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		QApplication::setOverrideCursor(Qt::BlankCursor);	//In case mouse happens to be on monkey screen
 #if defined WIN32 && defined NI_STUFF
 		//Setup PositionChannel
-		QSharedPointer<Picto::LegacySystemXPAnalogInputSignalChannel> aiChannel(new Picto::LegacySystemXPAnalogInputSignalChannel("Position",250));
-		aiChannel->addAiChannel("x",xChan_);
-		aiChannel->addAiChannel("y",yChan_);
+		QSharedPointer<Picto::LegacySystemXPAnalogInputPort> daqPort(new Picto::LegacySystemXPAnalogInputPort());
+		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,4,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::LegacySystemXPAnalogInputSignalChannel> aiChannel(new Picto::LegacySystemXPAnalogInputSignalChannel("Diameter",250));
-			if(xDiamChan_ >= 0)
-				aiChannel->addAiChannel("x",xDiamChan_);
-			if(yDiamChan_ >= 0)
-				aiChannel->addAiChannel("y",yDiamChan_);
+			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,4,daqPort));
 			engine_->addSignalChannel(aiChannel);
 		}
 
@@ -177,19 +174,14 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		QApplication::setOverrideCursor(Qt::BlankCursor);	//In case mouse happens to be on monkey screen
 #if defined WIN32 && defined NI_STUFF
 		//Setup PositionChannel
-		QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel("Position",250));
-		aiChannel->addAiChannel("x",xChan_);
-		aiChannel->addAiChannel("y",yChan_);
+		QSharedPointer<Picto::PictoBoxXPAnalogInputPort> daqPort(new Picto::PictoBoxXPAnalogInputPort());
+		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,4,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
-			//Setup PositionChannel
-			QSharedPointer<Picto::PictoBoxXPAnalogInputSignalChannel> aiChannel(new Picto::PictoBoxXPAnalogInputSignalChannel("Diameter",250));
-			if(xDiamChan_ >= 0)
-				aiChannel->addAiChannel("x",xDiamChan_);
-			if(yDiamChan_ >= 0)
-				aiChannel->addAiChannel("y",yDiamChan_);
+			//Setup DiameterChannel
+			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,4,daqPort));
 			engine_->addSignalChannel(aiChannel);
 		}
 #else

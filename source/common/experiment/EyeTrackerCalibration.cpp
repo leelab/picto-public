@@ -44,7 +44,7 @@ EyeTrackerCalibration::~EyeTrackerCalibration()
 	//Set up Signal Channel
 	//-------------------------------------------------
 	Picto::PictoBoxAnalogInputSignalChannel *eyeChannel;
-	eyeChannel = new Picto::PictoBoxAnalogInputSignalChannel(daqBoard,250);
+	eyeChannel = new Picto::PictoBoxAnalogInputSignalChannel(daqBoard,4);
 	eyeChannel->addAiChannel("xeye",0);
 	eyeChannel->addAiChannel("yeye",1);
 	eyeChannel->start();

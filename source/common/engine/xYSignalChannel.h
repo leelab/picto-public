@@ -24,14 +24,8 @@ class XYSignalChannel : public SignalChannel
 	Q_OBJECT
 
 public:
-	XYSignalChannel(QString name);
-	XYSignalChannel(QString name, int sampsPerSecond);
-
-	bool start(){return true;};
-	bool stop(){return true;};
-	void updateDataBuffer(){};
-
-
+	XYSignalChannel(QString name,QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
+	XYSignalChannel(QString name,int xChan, int yChan, int msPerSample,QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
 };
 
 };

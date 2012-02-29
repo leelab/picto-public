@@ -221,7 +221,7 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 		signalCoeffInitialized_ = true;
 		//If we're using a mouse channel, ignore the saved signal parameters since we know how to set them up automatically.
 		//We will still allow these values to be adjusted by the user later though for testing purposes.
-		bool isMouseChannel = posChannel->inherits("Picto::MouseSignalChannel");
+		bool isMouseChannel = posChannel->getPortType() == "mouse";
 		if(isMouseChannel)
 		{	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
 			propertyContainer_->setPropertyValue("XOffset",-400);
