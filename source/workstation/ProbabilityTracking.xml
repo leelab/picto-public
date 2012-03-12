@@ -2294,8 +2294,7 @@ EventInfo.setData(&quot;Event&quot;,3);
 EventInfo.updateValue();</EntryScript><ExitScript id="2845">EventInfo.setData(&quot;Event&quot;,4);
 EventInfo.updateValue();
 
-//Increment correct trials
-EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
+//Mark correct trial
 TrialInfo.setData(&quot;CorrectTrial&quot;,1);
 CorrectTrials.value++;</ExitScript><Name id="2846">PostTrialInterval</Name><Result id="2847"><Name id="2848">Done</Name><UIInfo id="2849"><Pos id="2850" x="1706" y="188"/></UIInfo><UIEnabled id="2852">false</UIEnabled><UIOrder id="2853">0</UIOrder></Result><Transition id="2854"><Destination id="2855">Done</Destination><Source id="2856">Timer</Source><SourceResult id="2857">Success</SourceResult></Transition><UIInfo id="2858"><Pos id="2859" x="1776" y="215"/></UIInfo><BackgroundColor A="255" B="0" G="0" R="0" id="2861">#000000</BackgroundColor><FrameScript id="2863"/><UIEnabled id="2865">false</UIEnabled><UIOrder id="2866">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="2867"><Name id="2868">IncCorrectTrials</Name><Result id="2869"><Name id="2870">false</Name><UIInfo id="2871"><Pos id="2873" x="0" y="0"/></UIInfo><UIEnabled id="2874">false</UIEnabled><UIOrder id="2875">0</UIOrder></Result><Result id="2876"><Name id="2877">true</Name><UIInfo id="2878"><Pos id="2880" x="0" y="0"/></UIInfo><UIEnabled id="2881">false</UIEnabled><UIOrder id="2882">0</UIOrder></Result><Script id="2883">EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
 TrialInfo.setData(&quot;CorrectTrial&quot;,1);
@@ -2308,7 +2307,8 @@ CorrectTrials.value++;</Script><UIInfo id="2884"><Pos id="2885" x="1825" y="660"
               <Result id="3005">
                 <Name id="3006">true</Name>
               <UIInfo id="3007"><Pos id="3009" x="0" y="0"/></UIInfo><UIEnabled id="3010">false</UIEnabled><UIOrder id="3011">0</UIOrder></Result>
-              <Script id="3012">
+              <Script id="3012">//Increment correct trials
+EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
 TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
 TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
 if(LongBlock.value) 
@@ -2528,6 +2528,6 @@ RedMoreLikely.randomize();</EntryScript><VisualElement type="Operator Info Graph
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1460</OpenedBlock>
+    <OpenedBlock id="">456</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

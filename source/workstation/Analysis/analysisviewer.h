@@ -7,6 +7,9 @@
 #include "../../common/compositor/VisualTargetHost.h"
 #include "../../common/network/CommandChannel.h"
 #include "../../common/network/ServerDiscoverer.h"
+#include "AnalysisOutputDisplay.h"
+#include "AnalysisParameterSelector.h"
+#include "../../common/analysis/AnalysisDefinition.h"
 
 #include <QUuid>
 #include <QSqlDatabase>
@@ -37,8 +40,6 @@ public:
 
 	QString type() { return "Remote"; };
 	bool aboutToQuit();
-	struct PropData{PropData(QString val,qulonglong dataIndex){value = val;dataId = dataIndex;};QString value;qulonglong dataId;};
-	struct TimeData{TimeData(qulonglong dataIndex,double time){dataId = dataIndex;frameTime = time;};qulonglong dataId;double frameTime;};
 
 public slots:
 	void init();  //Called just before displaying the viewer
@@ -56,37 +57,17 @@ private:
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 
 	QSharedPointer<Picto::Experiment> experiment_;
+	QSharedPointer<AnalysisDefinition> analysisDefinition_; 
 
 	QAction *executeAction_;
 	QAction *loadSessionAction_;
 	QLabel *currSessionLabel_;
-	QTextEdit *outputBox_;
+	AnalysisOutputDisplay *outputDisplay_;
+	
+	QTextEdit* analysisDef_;
+	
 	QToolBar *toolBar_;
 	QProgressBar *progressBar_;
-
-
-	enum eventType{CHANGES, STARTS, ENDS};
-	QLineEdit *printPath_;
-	QLineEdit *whenPath_;
-	QComboBox *eventType_;
-	QComboBox *shouldStampTime_;
-	QLabel *timeSinceLabel_;
-	QLineEdit *timeSince_;
-	QComboBox *timeSinceEventType_;
-	int printAssetId_;
-	bool printAssetIsProperty_;
-	QString lastPrintAssetPath_;
-	int whenAssetId_;
-	QString lastWhenAssetPath_;
-	QString whenSourceTransitions_;
-	QString whenDestTransitions_;
-	bool whenAssetIsProperty_;
-	int timeSinceAssetId_;
-	QString lastTimeSinceAssetPath_;
-	bool timeSinceIsProperty_;
-	QString timeSinceSourceTransitions_;
-	QString timeSinceDestTransitions_;
-
 
 	QSqlDatabase configDb_;
 	QSqlDatabase session_;
@@ -96,6 +77,7 @@ private slots:
 	void executeCommand();
 
 	void updateUI();
+	void updateProgressBar(int percentRemaining);
 };
 
 #endif

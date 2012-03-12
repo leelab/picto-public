@@ -97,6 +97,10 @@ SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisParameterSelector.h
+SOURCES += $$(PICTO_TREE)/source/workstation/analysis/AnalysisParameterSelector.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.h
+SOURCES += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.cpp
 
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp

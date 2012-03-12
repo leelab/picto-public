@@ -436,7 +436,7 @@
         <Level id="383">Stage</Level>
         <UIEnabled id="384">false</UIEnabled>
         <UIOrder id="385">0</UIOrder>
-      <StateMachineElement type="PausePoint" id="2842"><Name id="2843">Pause</Name><Result id="594"><Name id="595">done</Name><UIEnabled id="596">false</UIEnabled><UIInfo id="597"><Pos id="598" x="0" y="0"/></UIInfo><UIOrder id="600">0</UIOrder></Result><Type id="2844">PausePoint</Type><UIEnabled id="2845">false</UIEnabled><UIInfo id="2846"><Pos id="2847" x="1867" y="1590"/></UIInfo><UIOrder id="2849">0</UIOrder></StateMachineElement><Transition id="601"><Destination id="602">IncrementStimulusCounter</Destination><Source id="603">PresentSingleStimulus</Source><SourceResult id="604">StimulusPresented</SourceResult></Transition><Transition id="605"><Destination id="606">Pause</Destination><Source id="607">IncrementStimulusCounter</Source><SourceResult id="608">false</SourceResult></Transition><Transition id="609"><Destination id="610">Pause</Destination><Source id="611">IncrementStimulusCounter</Source><SourceResult id="612">true</SourceResult></Transition><Transition id="613"><Destination id="614">PresentSingleStimulus</Destination><Source id="615">Pause</Source><SourceResult id="616">done</SourceResult></Transition></StateMachine>
+      <StateMachineElement type="PausePoint" id="2842"><Name id="2843">Pause</Name><Result id="594"><Name id="595">done</Name><UIEnabled id="596">false</UIEnabled><UIInfo id="597"><Pos id="598" x="0" y="0"/></UIInfo><UIOrder id="600">0</UIOrder></Result><Type id="2844">PausePoint</Type><UIEnabled id="2845">false</UIEnabled><UIInfo id="2846"><Pos id="2847" x="1867" y="1590"/></UIInfo><UIOrder id="2849">0</UIOrder><BackgroundColor A="255" B="0" G="0" R="0" id="591">#000000</BackgroundColor><ForcePause id="592">false</ForcePause><PausingScript id="593"/><RestartingScript id="599"/></StateMachineElement><Transition id="601"><Destination id="602">IncrementStimulusCounter</Destination><Source id="603">PresentSingleStimulus</Source><SourceResult id="604">StimulusPresented</SourceResult></Transition><Transition id="605"><Destination id="606">Pause</Destination><Source id="607">IncrementStimulusCounter</Source><SourceResult id="608">false</SourceResult></Transition><Transition id="609"><Destination id="610">Pause</Destination><Source id="611">IncrementStimulusCounter</Source><SourceResult id="612">true</SourceResult></Transition><Transition id="613"><Destination id="614">PresentSingleStimulus</Destination><Source id="615">Pause</Source><SourceResult id="616">done</SourceResult></Transition></StateMachine>
       <UIInfo id="386">
         <Pos id="387" x="1668" y="1744"/>
       </UIInfo>
@@ -3155,13 +3155,12 @@
                   EventInfo.updateValue();
                 </EntryScript>
                 <ExitScript id="7255">
-                  EventInfo.setData(&quot;Event&quot;,4);
-                  EventInfo.updateValue();
+																		                  EventInfo.setData(&quot;Event&quot;,4);
+																		                  EventInfo.updateValue();
 
-                  //Increment correct trials
-                  EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
-                  TrialInfo.setData(&quot;CorrectTrial&quot;,1);
-                  CorrectTrials.value++;
+																		                  //Mark correct trial
+																		                  TrialInfo.setData(&quot;CorrectTrial&quot;,1);
+																		                  CorrectTrials.value++;
                 </ExitScript>
                 <Name id="7256">PostTrialInterval</Name>
                 <Result id="7257">
@@ -3327,14 +3326,15 @@
                 <UIEnabled id="7380">false</UIEnabled>
                 <UIOrder id="7381">0</UIOrder>
               </Result>
-              <Script id="7385">
+              <Script id="7385">																																                  //Increment correct trials
+																																                  EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
                
-																                TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
-																                TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
-																                if(LongBlock.value)
-																                return ++TrialsSoFar.value &lt; LongBlockLength.value;
-																                else
-																                return ++TrialsSoFar.value &lt; ShortBlockLength.value;
+																																                TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
+																																                TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
+																																                if(LongBlock.value)
+																																                return ++TrialsSoFar.value &lt; LongBlockLength.value;
+																																                else
+																																                return ++TrialsSoFar.value &lt; ShortBlockLength.value;
               </Script>
               <UIInfo id="7386">
                 <Pos id="7387" x="1304" y="750"/>
@@ -3516,7 +3516,7 @@
             <Type id="7539">StateMachine</Type>
             <UIEnabled id="7540">false</UIEnabled>
             <UIOrder id="7541">0</UIOrder>
-          <StateMachineElement type="PausePoint" id="2793"><Name id="2794">Pause</Name><Result id="2532"><Name id="2533">done</Name><UIEnabled id="2534">false</UIEnabled><UIInfo id="2535"><Pos id="2536" x="0" y="0"/></UIInfo><UIOrder id="2538">0</UIOrder></Result><Type id="2795">PausePoint</Type><UIEnabled id="2796">false</UIEnabled><UIInfo id="2797"><Pos id="2798" x="874" y="963"/></UIInfo><UIOrder id="2800">0</UIOrder></StateMachineElement><Transition id="2547"><Destination id="2548">Trial</Destination><Source id="2549">Pause</Source><SourceResult id="2550">done</SourceResult></Transition><Transition id="2562"><Destination id="2563">Pause</Destination><Source id="2564">ChooseTrialType</Source><SourceResult id="2565">false</SourceResult></Transition><Transition id="2566"><Destination id="2567">Pause</Destination><Source id="2568">ChooseTrialType</Source><SourceResult id="2569">true</SourceResult></Transition></StateMachineElement>
+          <StateMachineElement type="PausePoint" id="2793"><Name id="2794">Pause</Name><Result id="2532"><Name id="2533">done</Name><UIEnabled id="2534">false</UIEnabled><UIInfo id="2535"><Pos id="2536" x="0" y="0"/></UIInfo><UIOrder id="2538">0</UIOrder></Result><Type id="2795">PausePoint</Type><UIEnabled id="2796">false</UIEnabled><UIInfo id="2797"><Pos id="2798" x="874" y="963"/></UIInfo><UIOrder id="2800">0</UIOrder><BackgroundColor A="255" B="0" G="0" R="0" id="2582">#000000</BackgroundColor><ForcePause id="2583">false</ForcePause><PausingScript id="2584"/><RestartingScript id="2585"/></StateMachineElement><Transition id="2547"><Destination id="2548">Trial</Destination><Source id="2549">Pause</Source><SourceResult id="2550">done</SourceResult></Transition><Transition id="2562"><Destination id="2563">Pause</Destination><Source id="2564">ChooseTrialType</Source><SourceResult id="2565">false</SourceResult></Transition><Transition id="2566"><Destination id="2567">Pause</Destination><Source id="2568">ChooseTrialType</Source><SourceResult id="2569">true</SourceResult></Transition></StateMachineElement>
           <StateMachineElement type="ScriptElement" id="7550">
             <Name id="7551">NeedsMoreBlocks</Name>
             <Result id="7552">
@@ -3914,6 +3914,6 @@
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1</OpenedBlock>
+    <OpenedBlock id="">5345</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>

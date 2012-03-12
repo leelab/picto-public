@@ -2264,8 +2264,7 @@ EventInfo.setData(&quot;Event&quot;,3);
 EventInfo.updateValue();</EntryScript><ExitScript id="2845">EventInfo.setData(&quot;Event&quot;,4);
 EventInfo.updateValue();
 
-//Increment correct trials
-EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
+//Mark Correct Trial
 TrialInfo.setData(&quot;CorrectTrial&quot;,1);
 CorrectTrials.value++;</ExitScript><Name id="2846">PostTrialInterval</Name><Result id="2847"><Name id="2848">Done</Name><UIInfo id="2849"><Pos id="2850" x="1706" y="188"/></UIInfo><UIEnabled id="2852">false</UIEnabled><UIOrder id="2853">0</UIOrder></Result><Transition id="2854"><Destination id="2855">Done</Destination><Source id="2856">Timer</Source><SourceResult id="2857">Success</SourceResult></Transition><UIInfo id="2858"><Pos id="2859" x="1776" y="215"/></UIInfo><BackgroundColor A="255" B="0" G="0" R="0" id="2861">#000000</BackgroundColor><FrameScript id="2863"/><UIEnabled id="2865">false</UIEnabled><UIOrder id="2866">0</UIOrder></StateMachineElement><Transition id="2890"><Destination id="2891">PostTrialInterval</Destination><Source id="2892">TrialLogic</Source><SourceResult id="2893">Succeeded</SourceResult></Transition><Transition id="2894"><Destination id="2895">TrialTypeComplete</Destination><Source id="2896">PostTrialInterval</Source><SourceResult id="2897">Done</SourceResult></Transition><Transition id="2906"><Destination id="2907">ReshuffleTrialType</Destination><Source id="2908">TrialLogic</Source><SourceResult id="2909">Failed</SourceResult></Transition><Parameter type="Numeric" id="2910"><Name id="2911">GreenRewards</Name><UIInfo id="2912"><Pos id="2913" x="1162" y="582"/></UIInfo><UIEnabled id="2915">false</UIEnabled><UIOrder id="2916">0</UIOrder><Units id="2917"/><Value id="2918">0</Value></Parameter><Parameter type="Numeric" id="2919"><Name id="2920">RedRewards</Name><UIInfo id="2921"><Pos id="2922" x="1271" y="587"/></UIInfo><UIEnabled id="2924">false</UIEnabled><UIOrder id="2925">0</UIOrder><Units id="2926"/><Value id="2927">0</Value></Parameter><Parameter type="RandomInt" id="2928"><Name id="2929">GreyFeedback</Name><UIInfo id="2930"><Pos id="2931" x="1368" y="591"/></UIInfo><Max id="2933">1</Max><Min id="2934">0</Min><Seed id="2935">0</Seed><UIEnabled id="2936">false</UIEnabled><UIOrder id="2937">0</UIOrder><UseSeed id="2938">false</UseSeed><Value id="2939">0</Value></Parameter><Transition id="2944"><Destination id="2945">TrialLogic</Destination><Source id="2946">ChooseTrialValues</Source><SourceResult id="2947">false</SourceResult></Transition><Parameter type="Range" id="2948"><Increment id="2949">1</Increment><Max id="2950">100</Max><Min id="2951">0</Min><Name id="2952">LowProbability</Name><UIEnabled id="2953">false</UIEnabled><UIInfo id="2954"><Pos id="2955" x="1176" y="699"/></UIInfo><Value id="2957">20</Value><UIOrder id="2958">0</UIOrder><Units id="2959"/></Parameter><Parameter type="Range" id="2960"><Increment id="2961">1</Increment><Max id="2962">100</Max><Min id="2963">0</Min><Name id="2964">HighProbability</Name><UIEnabled id="2965">false</UIEnabled><UIInfo id="2966"><Pos id="2967" x="1290" y="706"/></UIInfo><Value id="2969">80</Value><UIOrder id="2970">0</UIOrder><Units id="2971"/></Parameter><Level id="2992">Stage</Level><Type id="2993">StateMachine</Type><UIEnabled id="2994">false</UIEnabled><UIOrder id="2995">0</UIOrder></StateMachineElement>
             <StateMachineElement type="ScriptElement" id="2996">
@@ -2276,7 +2275,7 @@ CorrectTrials.value++;</ExitScript><Name id="2846">PostTrialInterval</Name><Resu
               <Result id="3005">
                 <Name id="3006">true</Name>
               <UIInfo id="3007"><Pos id="3009" x="0" y="0"/></UIInfo><UIEnabled id="3010">false</UIEnabled><UIOrder id="3011">0</UIOrder></Result>
-              <Script id="3012">
+              <Script id="3012">EventInfo.setData(&quot;CorrectTrials&quot;,EventInfo.getDataAsInt(&quot;CorrectTrials&quot;)+1);
 TrialInfo.setData(&quot;Trial&quot;,TrialInfo.getDataAsInt(&quot;Trial&quot;)+1);
 TrialInfo.setData(&quot;TrialInBlock&quot;,TrialsSoFar.value+1);
 return ++TrialsSoFar.value &lt; BlockLength.value; </Script>
@@ -2484,6 +2483,6 @@ SuperblockType.randomize();</EntryScript><VisualElement type="Operator Info Grap
     </Task>
   <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
   <StateMachineEditorData id="0">
-    <OpenedBlock id="">1896</OpenedBlock>
+    <OpenedBlock id="">477</OpenedBlock>
   </StateMachineEditorData>
 </PictoData>
