@@ -24,6 +24,9 @@ public:
 	//Should be overloaded to return a pointer to an output widget that
 	//presents the information written into this AnalysisTool object.
 	virtual QPointer<QWidget> getOutputWidget() = 0;
+	//Called to end the analysis.  Should be overloaded to finish any operations that
+	//need to be finished before analysis ends.
+	virtual void finishUp() = 0;
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisTool";};

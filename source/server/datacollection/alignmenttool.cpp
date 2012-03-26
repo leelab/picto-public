@@ -48,6 +48,17 @@ double AlignmentTool::convertToNeuralTimebase(double behavioralTime)
 	return (coeff_.B)?(behavioralTime - coeff_.A)/coeff_.B:-1;
 }
 
+double AlignmentTool::convertSamplePeriodToBehavioralTimebase(double neuralSamplePeriod)
+{
+	QMutexLocker locker(alignmentMutex_.data());
+	return coeff_.B*neuralSamplePeriod;
+}
+double AlignmentTool::convertSamplePeriodToNeuralTimebase(double behavioralSamplePeriod)
+{
+	QMutexLocker locker(alignmentMutex_.data());
+	return (coeff_.B)?behavioralSamplePeriod/coeff_.B:-1;
+}
+
 double AlignmentTool::getJitter(double bAlignTimestamp, double nAlignTimestamp)
 {
 	return bAlignTimestamp - convertToBehavioralTimebase(nAlignTimestamp);
@@ -397,11 +408,16 @@ void AlignmentTool::updateCoefficients(double bAlignTimestamp,
 		coeff_.corr = (SSxy*SSxy)/(SSxx*SSyy);
 }
 
-QString AlignmentTool::getSQLTimeConversionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn)
+QString AlignmentTool::getSQLTimeConversionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn, QString fittedSampPeriodColumn, QString neuralSampPeriodColumn)
 {
 	QMutexLocker locker(alignmentMutex_.data());
-	return fittedTimeColumn + "=" + QString::number(coeff_.A) + "+(" + QString::number(coeff_.B)+"*"+neuralTimebaseColumn+")"+
-		"," + correlationColumn + "=" + QString::number(getCorrelationCoefficient());
+	QString returnVal = fittedTimeColumn + "=" + QString::number(coeff_.A,'f',14) + "+(" + QString::number(coeff_.B,'f',14)+"*"+neuralTimebaseColumn+")"+
+		"," + correlationColumn + "=" + QString::number(getCorrelationCoefficient(),'f',14);
+	if(!fittedSampPeriodColumn.isEmpty() && !neuralSampPeriodColumn.isEmpty())
+	{
+		returnVal.append(QString(",") + fittedSampPeriodColumn + "=" + "(" + QString::number(coeff_.B,'f',14)+"*"+neuralSampPeriodColumn+")");
+	}
+	return returnVal;
 }
 
 QString AlignmentTool::getSQLJitterEquation(QString jitterColumn, 
@@ -410,8 +426,8 @@ QString AlignmentTool::getSQLJitterEquation(QString jitterColumn,
 							QString correlationColumn)
 {
 	QMutexLocker locker(alignmentMutex_.data());
-	return jitterColumn + "=" + behavioralTimebaseColumn + "-(" + QString::number(coeff_.A) + "+(" + QString::number(coeff_.B)+"*"+neuralTimebaseColumn+"))"+
-		"," + correlationColumn + "=" + QString::number(getCorrelationCoefficient());
+	return jitterColumn + "=" + behavioralTimebaseColumn + "-(" + QString::number(coeff_.A,'f',14) + "+(" + QString::number(coeff_.B,'f',14)+"*"+neuralTimebaseColumn+"))"+
+		"," + correlationColumn + "=" + QString::number(getCorrelationCoefficient(),'f',14);
 
 }
 

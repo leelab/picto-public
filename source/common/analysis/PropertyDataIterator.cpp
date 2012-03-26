@@ -1,4 +1,5 @@
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QVariant>
 #include <QStringList>
 #include "PropertyDataIterator.h"
@@ -10,7 +11,10 @@ PropertyDataIterator::PropertyDataIterator(QSqlDatabase session,QString property
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
 	propertyId_ = getPropertyId(propertyPath);
-	totalValues_ = 0;
+	totalQueries_ = 0;
+	readQueries_ = 0;
+
+	updateTotalQueryCount();
 }
 
 PropertyDataIterator::~PropertyDataIterator()
@@ -18,7 +22,7 @@ PropertyDataIterator::~PropertyDataIterator()
 
 }
 
-PropData PropertyDataIterator::getNextPropertyChange()
+QSharedPointer<PropData> PropertyDataIterator::getNextPropertyChange()
 {
 	if(propVals_.size())
 		return propVals_.takeFirst();
@@ -27,48 +31,60 @@ PropData PropertyDataIterator::getNextPropertyChange()
 	if(propVals_.size())
 		return propVals_.takeFirst();
 	//No new data, return an empty propData()
-	return PropData();
+	return QSharedPointer<PropData>(new PropData());
 }
 
 void PropertyDataIterator::updatePropValsList()
 {
+	if(!isValid())
+		return;
+	if(readQueries_ >= totalQueries_)
+		return;
 	Q_ASSERT(session_.isValid() && session_.isOpen());
 	QSqlQuery query(session_);
-	
-	//Get dataid of last frame in session
-	query.prepare("SELECT dataid FROM frames ORDER BY time DESC LIMIT 1");
-	bool success = query.exec();
-	if(!success || !query.next())
-	{
-		lastSessionDataId_ = 0;
-		return;
-	}
-	qulonglong lastFrameDataId = query.value(0).toLongLong();
+	query.setForwardOnly(true);
 
 	//Get property value list.
 	query.prepare("SELECT p.value, p.dataid, f.time FROM properties p, frames f "
 		"WHERE p.assetid=:assetid AND f.dataid=p.frameid AND p.dataid > :lastdataid "
-		"ORDER BY p.dataid");
+		"ORDER BY p.dataid LIMIT 10000");
 	query.bindValue(":assetid",propertyId_);
 	query.bindValue(":lastdataid",lastSessionDataId_);
-	success = query.exec();
+	bool success = query.exec();
 	if(!success)
 	{
 		return;
 	}
-	qulonglong lastDataId = 0;
+	qulonglong lastDataId = lastSessionDataId_;
 	while(query.next()){
-		propVals_.append(PropData(query.value(0).toString(),query.value(1).toLongLong(),query.value(2).toDouble()));
+		propVals_.append(QSharedPointer<PropData>(new PropData(query.value(0).toString(),query.value(1).toLongLong(),query.value(2).toDouble())));
 		lastDataId = query.value(1).toLongLong();
+		readQueries_++;
 	}
-	totalValues_ = propVals_.size();
+	if(readQueries_ > totalQueries_)
+		updateTotalQueryCount();
 
-	//Update lastSessionDataId_ to either the last frame in the session or the last property dataid.  
-	//Whichever is higher.
-	if(lastDataId > lastFrameDataId)
-		lastSessionDataId_ = lastDataId;
-	else
-		lastSessionDataId_ = lastFrameDataId;
+	lastSessionDataId_ = lastDataId;
+}
+
+void PropertyDataIterator::updateTotalQueryCount()
+{
+	Q_ASSERT(session_.isValid() && session_.isOpen());
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+
+	QString queryString = QString("SELECT COUNT(dataid) FROM properties WHERE assetid=:assetid");
+	query.prepare(queryString);
+	query.bindValue(":assetid",propertyId_);
+	bool success = query.exec();
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return;
+	}
+
+	if(query.next())
+		totalQueries_ = query.value(0).toInt();
 }
 
 int PropertyDataIterator::getElementId(QString path)

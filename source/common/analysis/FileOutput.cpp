@@ -3,6 +3,8 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+#define CHARS_BEFORE_FLUSH 10000
+
 QString FileOutput::outputDir_("");
 int FileOutput::loadedObjects_(0);
 
@@ -12,6 +14,7 @@ FileOutput::FileOutput()
 	AddDefinableProperty("FileName","");
 	outputWidget_ = NULL;
 	loadedObjects_++;
+	charsWritten_ = 0;
 }
 
 FileOutput::~FileOutput()
@@ -62,6 +65,14 @@ QPointer<QWidget> FileOutput::getOutputWidget()
 	return outputWidget_;
 }
 
+void FileOutput::finishUp()
+{
+	if(isValid())
+	{
+		file_->close();
+	}
+}
+
 QString FileOutput::getTempOutputDir()
 {
 	return outputDir_;
@@ -76,9 +87,15 @@ void FileOutput::writeText(QString text)
 {
 	if(isValid())
 	{
+		charsWritten_ += text.size();
 		(*outputFileStream_) << text;
-		qobject_cast<QTextEdit*>(outputWidget_)->moveCursor(QTextCursor::End);
-		qobject_cast<QTextEdit*>(outputWidget_)->insertPlainText(text);
+		//qobject_cast<QTextEdit*>(outputWidget_)->moveCursor(QTextCursor::End);
+		//qobject_cast<QTextEdit*>(outputWidget_)->insertPlainText(text);
+		if(charsWritten_ > CHARS_BEFORE_FLUSH)
+		{
+			file_->flush();
+			charsWritten_ = 0;
+		}
 	}
 }
 
@@ -103,8 +120,8 @@ void FileOutput::initTempOutputDir()
 	if(!outputDir_.isEmpty())
 		return;
 	QDir dir(QDir::current());
-	dir.rmdir("AnalysisTool");
-	dir.mkdir("AnalysisTool");
-	dir.cd("AnalysisTool");
+	dir.rmdir("FileOutputTool");
+	dir.mkdir("FileOutputTool");
+	dir.cd("FileOutputTool");
 	outputDir_ = dir.absolutePath();
 }

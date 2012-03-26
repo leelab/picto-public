@@ -4,7 +4,8 @@ using namespace Picto;
 
 TimeTrigger::TimeTrigger()
 {
-	AddDefinableProperty("PropertyPath","");
+	AddDefinableProperty(QVariant::Double,"TriggerPeriod",.01);
+	restart();
 }
 
 TimeTrigger::~TimeTrigger()
@@ -19,30 +20,47 @@ QSharedPointer<Asset> TimeTrigger::Create()
 
 EventOrderIndex TimeTrigger::getNextTriggerTime()
 {
-	if(!propIterator_)
+	if(totalSessionTime_ < 0)
+		recheckSessionData();
+	currTime_.time_ += propertyContainer_->getPropertyValue("TriggerPeriod").toDouble();
+	if(currTime_ > totalSessionTime_)
 	{
-		propIterator_ = QSharedPointer<PropertyDataIterator>(
-							new PropertyDataIterator(session_,
-								propertyContainer_->getPropertyValue("PropertyPath").toString())
-							);
-		Q_ASSERT(propIterator_->isValid());
+		return EventOrderIndex();
 	}
-	return propIterator_->getNextPropertyChange().index;
+	return currTime_;
 }
 
 void TimeTrigger::restart()
 {
-	propIterator_.clear();
+	currTime_ = EventOrderIndex(0.0);
+	totalSessionTime_ = -1;
 }
 
 unsigned int TimeTrigger::totalKnownTriggers()
 {
-	return propIterator_->totalValues();
+	Q_ASSERT(totalSessionTime_ >= 0);
+	return totalSessionTime_/propertyContainer_->getPropertyValue("TriggerPeriod").toDouble();
 }
 
 unsigned int TimeTrigger::remainingKnownTriggers()
 {
-	return propIterator_->remainingValues();
+	Q_ASSERT(totalSessionTime_ >= 0);
+	return (totalSessionTime_-currTime_.time_)/propertyContainer_->getPropertyValue("TriggerPeriod").toDouble();
+}
+
+void TimeTrigger::recheckSessionData()
+{
+	totalSessionTime_ = 0;
+	Q_ASSERT(session_.isValid() && session_.isOpen());
+	QSqlQuery query(session_);
+
+	//Get dataid of last frame in session
+	query.prepare("SELECT time FROM frames ORDER BY time DESC LIMIT 1");
+	bool success = query.exec();
+	if(success && query.next())
+	{
+		totalSessionTime_ = query.value(0).toDouble();
+	}
 }
 
 void TimeTrigger::postDeserialize()
@@ -54,5 +72,11 @@ bool TimeTrigger::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReade
 {
 	if(!AnalysisTrigger::validateObject(xmlStreamReader))
 		return false;
+	if(propertyContainer_->getPropertyValue("TriggerPeriod").toDouble() <= 0)
+	{
+		QString errMsg = QString("TimeTrigger: Trigger Period must be greater than zero.");
+		addError("TimeTrigger", errMsg,xmlStreamReader);
+		return false;
+	}
 	return true;
 }

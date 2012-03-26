@@ -4,7 +4,6 @@ using namespace Picto;
 
 SpikeTrigger::SpikeTrigger()
 {
-	AddDefinableProperty("PropertyPath","");
 }
 
 SpikeTrigger::~SpikeTrigger()
@@ -19,30 +18,42 @@ QSharedPointer<Asset> SpikeTrigger::Create()
 
 EventOrderIndex SpikeTrigger::getNextTriggerTime()
 {
-	if(!propIterator_)
+	if(!spikeIterator_)
 	{
-		propIterator_ = QSharedPointer<PropertyDataIterator>(
-							new PropertyDataIterator(session_,
-								propertyContainer_->getPropertyValue("PropertyPath").toString())
+		spikeIterator_ = QSharedPointer<SpikeDataIterator>(
+							new SpikeDataIterator(session_)
 							);
-		Q_ASSERT(propIterator_->isValid());
 	}
-	return propIterator_->getNextPropertyChange().index;
+	latestData_ = spikeIterator_->getNextSpikeVals();
+	return latestData_->index;
 }
 
 void SpikeTrigger::restart()
 {
-	propIterator_.clear();
+	spikeIterator_.clear();
 }
 
 unsigned int SpikeTrigger::totalKnownTriggers()
 {
-	return propIterator_->totalValues();
+	return spikeIterator_->totalValues();
 }
 
 unsigned int SpikeTrigger::remainingKnownTriggers()
 {
-	return propIterator_->remainingValues();
+	return spikeIterator_->remainingValues();
+}
+
+
+QSharedPointer<SpikeData> SpikeTrigger::getLatestValue()
+{
+	return latestData_;
+}
+
+void SpikeTrigger::recheckSessionData()
+{
+	if(!spikeIterator_)
+		return;
+	spikeIterator_->recheckSessionData();
 }
 
 void SpikeTrigger::postDeserialize()

@@ -1,6 +1,8 @@
 #include <QScriptValueIterator>
 #include <QDebug>
 #include <QMessageBox>
+#include <QTime>
+#include <QCoreApplication>
 #include "AnalysisPeriod.h"
 
 #include "ElementTrigger.h"
@@ -78,19 +80,31 @@ void AnalysisPeriod::reset()
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
 		trigger->reset();
 	}
-	QList<QSharedPointer<Asset>> outputObjs = getGeneratedChildren("Output");
-	QSharedPointer<AnalysisTool> outputObj;
-	foreach(QSharedPointer<Asset> outputAsset,outputObjs)
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
+	QSharedPointer<AnalysisTool> analysisTool;
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		outputObj = outputAsset.staticCast<AnalysisTool>();
-		outputObj->reset();
+		analysisTool = toolAsset.staticCast<AnalysisTool>();
+		analysisTool->reset();
 	}
 	startIndex_ = EventOrderIndex();
 	endIndex_ = EventOrderIndex();
+	periodNumber_ = 0;
 }
 
 bool AnalysisPeriod::runTo(double time)
 {
+	//Tell triggers that they need to recheck the session
+	//database for new data.
+	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
+	QSharedPointer<AnalysisTrigger> trigger;
+	foreach(QSharedPointer<Asset> triggerAsset,triggers)
+	{
+		trigger = triggerAsset.staticCast<AnalysisTrigger>();
+		trigger->sessionDatabaseUpdated();
+	}
+		
+
 	QString returnVal;
 	if(!startIndex_.isValid())
 	{	//Either this is the first runTo() call since reset() or last call finished with
@@ -112,6 +126,8 @@ bool AnalysisPeriod::runTo(double time)
 			return false;
 	}
 	
+	QTime timer;
+	timer.start();
 	//Get data until there are no more triggers or we've passed the input time.
 	while( (startIndex_.isValid()) && (endIndex_.isValid() ) 
 		&& ((time < 0)||((startIndex_.time_ <= time) && (endIndex_.time_ <= time))) )
@@ -124,6 +140,8 @@ bool AnalysisPeriod::runTo(double time)
 		//GET DATA AND ADD IT TO SCRIPT ENGINE////////////////////////////////////////
 		QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 		QSharedPointer<AnalysisTrigger> trigger;
+		int totalTriggers = 0;
+		int totalRemaining = 0;
 		foreach(QSharedPointer<Asset> triggerAsset,triggers)
 		{
 			trigger = triggerAsset.staticCast<AnalysisTrigger>();
@@ -135,28 +153,41 @@ bool AnalysisPeriod::runTo(double time)
 			int startBufferMs = propertyContainer_->getPropertyValue("StartBufferMs").toInt();
 			int endBufferMs = propertyContainer_->getPropertyValue("EndBufferMs").toInt();
 			if(startBufferMs)
-				trigger->setPeriodStart(EventOrderIndex(startIndex_.time_-double(startBufferMs)));
+				trigger->setPeriodStart(EventOrderIndex(startIndex_.time_-double(startBufferMs*.001)));
 			else
 				trigger->setPeriodStart(startIndex_);
 			if(endBufferMs)
-				trigger->fillArraysTo(EventOrderIndex(endIndex_.time_+double(endBufferMs)));
+				trigger->fillArraysTo(EventOrderIndex(endIndex_.time_+double(endBufferMs*.001)));
 			else
 				trigger->fillArraysTo(endIndex_);
-			trigger->addScriptableArrayToEngine(qsEngine);
+			trigger->addDataSourcesToScriptEngine(qsEngine);
+			
+			//Update total known/remaining triggers and emit progress
+			totalTriggers += trigger->totalKnownTriggers();
+			totalRemaining += trigger->remainingKnownTriggers();
+
+			if(timer.elapsed() > 100)
+			{	//If things take a long time, process events periodically.
+				QCoreApplication::processEvents();
+				timer.start();
+			}
 		}
+		if(totalTriggers > 0)
+			emit percentRemaining(100*totalRemaining/totalTriggers);
 		//////////////////////////////////////////////////////////////////////////////
 
-		//Add start and end times as properties to script engine
+		//Add start, end times, and period number as properties to script engine
 		qsEngine->globalObject().setProperty("startTime", startIndex_.time_);
 		qsEngine->globalObject().setProperty("endTime", endIndex_.time_);
+		qsEngine->globalObject().setProperty("periodNumber", periodNumber_);
 
 		//Add AnalysisTool objects to script engine
-		QList<QSharedPointer<Asset>> outputObjs = getGeneratedChildren("Output");
-		QSharedPointer<AnalysisTool> outputObj;
-		foreach(QSharedPointer<Asset> outputAsset,outputObjs)
+		QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
+		QSharedPointer<AnalysisTool> analysisTool;
+		foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 		{
-			outputObj = outputAsset.staticCast<AnalysisTool>();
-			outputObj->bindToScriptEngine(*qsEngine);
+			analysisTool = toolAsset.staticCast<AnalysisTool>();
+			analysisTool->bindToScriptEngine(*qsEngine);
 		}
 
 		//RUN SCRIPT//////////////////////////////////////////////////////////////////
@@ -199,16 +230,8 @@ bool AnalysisPeriod::runTo(double time)
 
 		//////////////////////////////////////////////////////////////////////////////
 
-			//Emit progress
-		int totalTriggers = 0;
-		int totalRemaining = 0;
-		foreach(QSharedPointer<Asset> triggerAsset,triggers)
-		{
-			trigger = triggerAsset.staticCast<AnalysisTrigger>();
-			totalTriggers += trigger->totalKnownTriggers();
-			totalRemaining += trigger->remainingKnownTriggers();
-		}
-		emit percentRemaining(100*totalRemaining/totalTriggers);
+		//Increment period number
+		periodNumber_++;
 
 		//Get the next period times
 		if((startTrigger_ == endTrigger_) || !endTrigger_)
@@ -230,12 +253,23 @@ bool AnalysisPeriod::runTo(double time)
 	return true;
 }
 
+void AnalysisPeriod::finishUp()
+{
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
+	QSharedPointer<AnalysisTool> analysisTool;
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+	{
+		analysisTool = toolAsset.staticCast<AnalysisTool>();
+		analysisTool->finishUp();
+	}
+}
+
 QLinkedList<QPointer<QWidget>> AnalysisPeriod::getOutputWidgets()
 {
 	QLinkedList<QPointer<QWidget>> returnVal;
-	QList<QSharedPointer<Asset>> outputObjs = getGeneratedChildren("Output");
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
 	QSharedPointer<AnalysisTool> outputObj;
-	foreach(QSharedPointer<Asset> outputAsset,outputObjs)
+	foreach(QSharedPointer<Asset> outputAsset,analysisTools)
 	{
 		outputObj = outputAsset.staticCast<AnalysisTool>();
 		returnVal.append(outputObj->getOutputWidget());

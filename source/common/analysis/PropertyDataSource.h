@@ -24,18 +24,22 @@ public:
 	virtual void restart();
 
 	//Return the value of this object's property at the input time.
-	virtual QString getValue(const EventOrderIndex& index);
+	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
+
+public slots:
+	QString value(int triggerIndex);
 
 protected:
 
 	//Inherited
+	virtual void recheckSessionData();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
 	QSharedPointer<PropertyDataIterator> propIterator_;
-	PropData lastDataUnit_;
-	QString latestValue_;
+	QSharedPointer<PropData> lastDataUnit_;
+	QSharedPointer<PropData> latestValue_;
 };
 }; //namespace Picto
 #endif

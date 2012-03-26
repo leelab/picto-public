@@ -104,7 +104,7 @@ bool BehavioralDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> 
 {
 	xmlStreamWriter->writeStartElement("BDUP");
 	xmlStreamWriter->writeAttribute("chan",getChannel());
-	xmlStreamWriter->writeAttribute("res",QString::number(getResolution()));
+	xmlStreamWriter->writeAttribute("res",QString::number(getResolution(),'f',14));
 	xmlStreamWriter->writeAttribute("offtime",getOffsetTime());
 	xmlStreamWriter->writeAttribute("fr",QString::number(actionFrame_));
 	xmlStreamWriter->writeAttribute("desc",getDescriptor());

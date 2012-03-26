@@ -5,7 +5,6 @@ using namespace Picto;
 PropertyDataSource::PropertyDataSource()
 {
 	AddDefinableProperty("PropertyPath","");
-	latestValue_ = "";
 }
 
 PropertyDataSource::~PropertyDataSource()
@@ -22,35 +21,53 @@ void PropertyDataSource::restart()
 	propIterator_.clear();
 }
 
-QString PropertyDataSource::getValue(const EventOrderIndex& index)
+QSharedPointer<AnalysisValue> PropertyDataSource::getValue(const EventOrderIndex& index)
 {
+	QString name = getName();
 	if(!propIterator_)
 	{
 		propIterator_ = QSharedPointer<PropertyDataIterator>(
 							new PropertyDataIterator(session_,
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
-		Q_ASSERT(propIterator_->isValid());
 	}
-	PropData prev = lastDataUnit_;
+	QSharedPointer<PropData> prev = lastDataUnit_;
 	//Check if the last value we read last time is beyond the input time.
 	//If so, nothing has changed, return the last value.
-	if(prev.index > index)
+	if(prev && (prev->index > index))
 		return latestValue_;
-	
 	//Get new property values until the newest one is beyond the input
 	//time or non-existant, then return the prior property value.
-	PropData curr = propIterator_->getNextPropertyChange();
-	while((curr.index <= index) && (curr.index.time_ >= 0))
+	QSharedPointer<PropData> curr = propIterator_->getNextPropertyChange();
+	while(curr && (curr->index <= index) && (curr->index.isValid()))
 	{
 		prev = curr;
 		curr = propIterator_->getNextPropertyChange();
 	}
+	if(!curr || !curr->index.isValid())
+	{
+		curr = prev;
+	}
 	//Store the last read property change (which should be beyond the input time or empty)
 	lastDataUnit_ = curr;
 	//Store the latest value of our property
-	latestValue_ = prev.value;
+	latestValue_ = prev;
 	return latestValue_;
+}
+
+QString PropertyDataSource::value(int triggerIndex)
+{
+	QSharedPointer<PropData> data = getScriptValue(triggerIndex).staticCast<PropData>();
+	if(data)
+		return data->value;
+	return "";
+}
+
+void PropertyDataSource::recheckSessionData()
+{
+	if(!propIterator_)
+		return;
+	propIterator_->recheckSessionData();
 }
 
 void PropertyDataSource::postDeserialize()

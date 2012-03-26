@@ -4,23 +4,26 @@ using namespace Picto;
 
 EventOrderIndex::EventOrderIndex()
 {
-	time_ = -1;
+	time_ = INT_MIN;
 	dataId_ = 0;
+	idSource_ = EventOrderIndex::BEHAVIORAL;
 }
-EventOrderIndex::EventOrderIndex(qulonglong dataId)
+EventOrderIndex::EventOrderIndex(qulonglong dataId,IDSource idSource)
 {
-	time_ = -1;
+	time_ = INT_MIN;
 	dataId_ = dataId;
+	idSource_ = idSource;
 }
 EventOrderIndex::EventOrderIndex(double time)
 {
 	time_ = time;
 	dataId_ = 0;
 }
-EventOrderIndex::EventOrderIndex(qulonglong dataId, double time)
+EventOrderIndex::EventOrderIndex(double time, qulonglong dataId, IDSource idSource)
 {
 	time_ = time;
 	dataId_ = dataId;
+	idSource_ = idSource;
 }
 EventOrderIndex::~EventOrderIndex()
 {

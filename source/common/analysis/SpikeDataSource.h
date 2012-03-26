@@ -4,7 +4,6 @@
 #include <QSharedPointer>
 #include <QScriptValue>
 #include "AnalysisDataSource.h"
-#include "PropertyDataIterator.h"
 
 namespace Picto {
 
@@ -24,18 +23,26 @@ public:
 	virtual void restart();
 
 	//Return the value of this object's property at the input time.
-	virtual QString getValue(const EventOrderIndex& index);
+	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
+
+
+public slots:
+	unsigned int channel(int triggerIndex);
+	unsigned int unit(int triggerIndex);
+	double samplePeriod(int triggerIndex);
+	unsigned int waveSize(int triggerIndex);
+	QString wave(int triggerIndex);
+	double waveValue(int waveValueIndex, int triggerIndex);
 
 protected:
 
 	//Inherited
+	virtual void recheckSessionData();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QSharedPointer<PropertyDataIterator> propIterator_;
-	PropData lastDataUnit_;
-	QString latestValue_;
+	QStringList dataTypes_;
 };
 }; //namespace Picto
 #endif

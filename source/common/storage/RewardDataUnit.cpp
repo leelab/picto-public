@@ -13,7 +13,7 @@ RewardDataUnit::RewardDataUnit() :
 RewardDataUnit::RewardDataUnit(int durationMs, int channel, double time) :
 		durationMs_(durationMs),
 		channel_(channel),
-		time_(QString("%1").arg(time,0,'f',6))
+		time_(QString("%1").arg(time,0,'f',14))
 {
 }
 

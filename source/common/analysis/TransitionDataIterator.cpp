@@ -1,4 +1,5 @@
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QVariant>
 #include <QStringList>
 #include "TransitionDataIterator.h"
@@ -10,7 +11,8 @@ TransitionDataIterator::TransitionDataIterator(QSqlDatabase session)
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
 	valid_ = true;
-	totalValues_ = 0;
+	totalQueries_ = 0;
+	readQueries_ = 0;
 }
 
 TransitionDataIterator::~TransitionDataIterator()
@@ -28,7 +30,7 @@ void TransitionDataIterator::registerTransitions(QString parentPath,QString sour
 		return;
 	}
 
-	QStringList transIds = transIdString.split(",",QString::SkipEmptyParts);
+	QStringList transIds = transIdString_.split(",",QString::SkipEmptyParts);
 	QSqlQuery query(session_);
 	QString queryString("SELECT assetid FROM transitionlookup WHERE parent=:parentId");
 	if(!sourceName.isEmpty())
@@ -56,7 +58,8 @@ void TransitionDataIterator::registerTransitions(QString parentPath,QString sour
 	{
 		transIds.append(query.value(0).toString());		
 	}
-	transIdString = transIds.join(",");
+	transIdString_ = transIds.join(",");
+	updateTotalQueryCount();
 }
 
 void TransitionDataIterator::registerTransitionsByNode(QString nodePath,bool isSource)
@@ -93,40 +96,49 @@ EventOrderIndex TransitionDataIterator::getNextTransitionTraversal()
 
 void TransitionDataIterator::updateTraversalList()
 {
+	if(!isValid())
+		return;
+	if(readQueries_ >= totalQueries_)
+		return;
 	Q_ASSERT(session_.isValid() && session_.isOpen());
 	QSqlQuery query(session_);
-	
-	//Get dataid of last frame in session
-	query.prepare("SELECT dataid FROM frames ORDER BY time DESC LIMIT 1");
-	bool success = query.exec();
-	if(!success || !query.next())
-	{
-		lastSessionDataId_ = 0;
-		return;
-	}
-	qulonglong lastFrameDataId = query.value(0).toLongLong();
 
 	//Get traversal list.
-	query.prepare(QString("SELECT t.dataid, f.time FROM transitions t, frames f WHERE t.transid IN (%1) AND t.frameid=f.dataid AND t.dataid > :lastdataid ORDER BY t.dataid").arg(transIdString));
+	query.prepare(QString("SELECT t.dataid, f.time FROM transitions t, frames f WHERE t.transid IN (%1) AND t.frameid=f.dataid AND t.dataid > :lastdataid ORDER BY t.dataid").arg(transIdString_));
 	query.bindValue(":lastdataid",lastSessionDataId_);
-	query.bindValue(":lastdataid",lastSessionDataId_);
-	success = query.exec();
+	bool success = query.exec();
 	if(!success)
 	{
 		return;
 	}
-	qulonglong lastDataId = 0;
+	qulonglong lastDataId = lastSessionDataId_;
 	while(query.next()){
-		traversals_.append(EventOrderIndex(query.value(0).toLongLong(),query.value(1).toDouble()));
+		traversals_.append(EventOrderIndex(query.value(1).toDouble(),query.value(0).toLongLong(),EventOrderIndex::BEHAVIORAL));
 		lastDataId = query.value(0).toLongLong();
+		readQueries_++;
 	}
-	totalValues_ = traversals_.size();
-	//Update lastSessionDataId_ to either the last frame in the session or the last property dataid.  
-	//Whichever is higher.
-	if(lastDataId > lastFrameDataId)
-		lastSessionDataId_ = lastDataId;
-	else
-		lastSessionDataId_ = lastFrameDataId;
+	updateTotalQueryCount();
+	
+	lastSessionDataId_ = lastDataId;
+}
+
+void TransitionDataIterator::updateTotalQueryCount()
+{
+	Q_ASSERT(session_.isValid() && session_.isOpen());
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+
+	QString queryString = QString("SELECT COUNT(dataid) FROM transitions WHERE transid IN (%1)").arg(transIdString_);
+	query.prepare(queryString);
+	bool success = query.exec();
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return;
+	}
+
+	if(query.next())
+		totalQueries_ = query.value(0).toInt();
 }
 
 int TransitionDataIterator::getElementId(QString path)

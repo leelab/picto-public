@@ -51,6 +51,17 @@ bool AnalysisDefinition::runTo(double time)
 	return true;
 }
 
+void AnalysisDefinition::finish()
+{
+		QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
+	QSharedPointer<AnalysisPeriod> period;
+	foreach(QSharedPointer<Asset> periodAsset,periods)
+	{
+		period = periodAsset.staticCast<AnalysisPeriod>();
+		period->finishUp();
+	}
+}
+
 QLinkedList<QPointer<QWidget>> AnalysisDefinition::getOutputWidgets()
 {
 	QLinkedList<QPointer<QWidget>> returnVal;

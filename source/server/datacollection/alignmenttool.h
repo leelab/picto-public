@@ -41,10 +41,12 @@ public:
 	void resetValues();
 	double convertToBehavioralTimebase(double neuralTime);
 	double convertToNeuralTimebase(double behavioralTime);
+	double convertSamplePeriodToBehavioralTimebase(double neuralSamplePeriod);
+	double convertSamplePeriodToNeuralTimebase(double behavioralSamplePeriod);
 	double getJitter(double bAlignTimestamp, double nAlignTimestamp);
 	double getCorrelationCoefficient();
 	void updateCoefficients(double bAlignTimestamp, double nAlignTimestamp);
-	QString getSQLTimeConversionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn);
+	QString getSQLTimeConversionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn, QString fittedSampPeriodColumn = "", QString neuralSampPeriodColumn = "");
 	QString getSQLJitterEquation(	QString jitterColumn, 
 									QString neuralTimebaseColumn, 
 									QString behavioralTimebaseColumn,

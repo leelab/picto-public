@@ -1,11 +1,10 @@
+#include "SpikeTrigger.h"
 #include "SpikeDataSource.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
 SpikeDataSource::SpikeDataSource()
 {
-	AddDefinableProperty("PropertyPath","");
-	latestValue_ = "";
 }
 
 SpikeDataSource::~SpikeDataSource()
@@ -19,38 +18,68 @@ QSharedPointer<Asset> SpikeDataSource::Create()
 
 void SpikeDataSource::restart()
 {
-	propIterator_.clear();
 }
 
-QString SpikeDataSource::getValue(const EventOrderIndex& index)
+//Note: This data source is only useful if the trigger is a spikeTrigger.  If it isn't
+//there will be an error.
+QSharedPointer<AnalysisValue> SpikeDataSource::getValue(const EventOrderIndex& index)
 {
-	if(!propIterator_)
-	{
-		propIterator_ = QSharedPointer<PropertyDataIterator>(
-							new PropertyDataIterator(session_,
-								propertyContainer_->getPropertyValue("PropertyPath").toString())
-							);
-		Q_ASSERT(propIterator_->isValid());
-	}
-	PropData prev = lastDataUnit_;
-	//Check if the last value we read last time is beyond the input time.
-	//If so, nothing has changed, return the last value.
-	if(prev.index > index)
-		return latestValue_;
-	
-	//Get new property values until the newest one is beyond the input
-	//time or non-existant, then return the prior property value.
-	PropData curr = propIterator_->getNextPropertyChange();
-	while((curr.index <= index) && (curr.index.time_ >= 0))
-	{
-		prev = curr;
-		curr = propIterator_->getNextPropertyChange();
-	}
-	//Store the last read property change (which should be beyond the input time or empty)
-	lastDataUnit_ = curr;
-	//Store the latest value of our property
-	latestValue_ = prev.value;
-	return latestValue_;
+	return getParentAsset().staticCast<SpikeTrigger>()->getLatestValue();
+}
+
+unsigned int SpikeDataSource::channel(int triggerIndex)
+{
+	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
+	if(data)
+		return data->channel;
+	return -1;
+}
+
+unsigned int SpikeDataSource::unit(int triggerIndex)
+{
+	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
+	if(data)
+		return data->unit;
+	return -1;
+}
+
+double SpikeDataSource::samplePeriod(int triggerIndex)
+{
+	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
+	if(data)
+		return data->samplePeriod;
+	return 0;
+}
+
+unsigned int SpikeDataSource::waveSize(int triggerIndex)
+{
+	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
+	if(data)
+		return data->waveSize;
+	return 0;
+}
+
+QString SpikeDataSource::wave(int triggerIndex)
+{
+	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
+	if(data)
+		return data->wave;
+	return "";
+}
+
+double SpikeDataSource::waveValue(int waveValueIndex, int triggerIndex)
+{
+	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
+	if(!data)
+		return 0.0;
+	if(waveValueIndex >= data->waveSize)
+		return 0.0;
+	return data->wave.split(",",QString::SkipEmptyParts)[waveValueIndex].toDouble();
+}
+
+void SpikeDataSource::recheckSessionData()
+{
+		return;
 }
 
 void SpikeDataSource::postDeserialize()
@@ -62,5 +91,10 @@ bool SpikeDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 {
 	if(!AnalysisDataSource::validateObject(xmlStreamReader))
 		return false;
+	if(!getParentAsset()->inherits("Picto::SpikeTrigger"))
+	{
+		addError("SpikeDataSource", "Spike data sources must be defined within a SpikeTrigger.");
+		return false;
+	}
 	return true;
 }

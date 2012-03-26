@@ -6,11 +6,13 @@ LFPDataUnitPackage::LFPDataUnitPackage()
 {
 	channel_ = -1;
 	correlation_ = 0;
-	timestamp_ = QString::number(0,'e',6);;
-	fittedTimestamp_ = QString::number(0,'e',6);;
+	timestamp_ = QString::number(0,'e',14);;
+	fittedTimestamp_ = QString::number(0,'e',14);;
 	potentials_.clear();
 	numSamples_ = 0;
 	potArray_ = NULL;
+	fittedResolution_ = 0;
+	resolution_ = 0;
 }
 
 /*! \brief Turns the FrameDataUnitPackage into an XML fragment
@@ -26,7 +28,8 @@ bool LFPDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 	xmlStreamWriter->writeAttribute("timestamp",QString("%1").arg(timestamp_));
 	xmlStreamWriter->writeAttribute("ftimestamp",QString("%1").arg(fittedTimestamp_));
 	xmlStreamWriter->writeAttribute("correlation",QString("%1").arg(correlation_));
-	xmlStreamWriter->writeAttribute("resolution",QString("%1").arg(resolution_,13,'e',6));
+	xmlStreamWriter->writeAttribute("resolution",QString("%1").arg(resolution_,0,'e',14));
+	xmlStreamWriter->writeAttribute("fresolution",QString("%1").arg(fittedResolution_,0,'e',14));
 	xmlStreamWriter->writeAttribute("pots",getPotentials());
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
@@ -104,6 +107,17 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 				return false;
 			}
 
+			if(xmlStreamReader->attributes().hasAttribute("fresolution"))
+			{
+				fittedResolution_ = xmlStreamReader->attributes().value("fresolution").toString().toDouble();
+			}
+			else
+			{
+				addError("LFPDataUnitPackage","LFPDataUnitPackage missing fresolution (fitted resolution) attribute",xmlStreamReader);
+				return false;
+			}
+
+
 			if(xmlStreamReader->attributes().hasAttribute("pots"))
 			{
 				potentials_ = xmlStreamReader->attributes().value("pots").toString().split(" ",QString::SkipEmptyParts);
@@ -139,7 +153,7 @@ void LFPDataUnitPackage::appendData(const float* adPotentialReadings, int numVal
 	QString newVals;
 	for(int i=0;i<numVals;i++)
 	{
-		potentials_.push_back(QString("%1 ").arg(adPotentialReadings[i]));
+		potentials_.push_back(QString("%1").arg(adPotentialReadings[i]));
 	}
 	numSamples_ = potentials_.length();
 	Q_ASSERT_X(numSamples_ <= 10000,"LFPDataUnitPackage::addData","No more than 10000 lfp samples should be stored in a lfpdatastore");
@@ -167,7 +181,7 @@ QLinkedList<QPointF> LFPDataUnitPackage::getAlignedDataAsLinkedList()
 {
 	QLinkedList<QPointF> returnVal;
 	double dTimestamp = getFittedTimestamp().toDouble();
-	double resolution = getResolution();
+	double resolution = getFittedResolution();
 	int i=0;
 	foreach(QString potential,potentials_)
 	{

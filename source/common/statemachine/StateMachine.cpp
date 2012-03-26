@@ -636,29 +636,6 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	command->setContent(alignDataXml);
 	command->setFieldValue("Content-Length",QString::number(alignDataXml.length()));
 
-
-	//xmlWriter.writeStartElement("Trial");
-
-	//xmlWriter.writeStartElement("Time");
-	//Timestamper timestamper;
-	//xmlWriter.writeCharacters(QString("%1").arg(timestamper.stampSec(),0,'f',4));
-	//xmlWriter.writeEndElement();
-
-	//xmlWriter.writeTextElement("EventCode",QString::number(trialEventCode_));
-	//xmlWriter.writeTextElement("TrialNum",QString::number(trialNum_));
-
-	//xmlWriter.writeEndElement(); //Trial
-
-	////Add the content to the command
-	//QByteArray contentArr = content.toUtf8();
-	//command->setFieldValue("Content-Length",QString("%1").arg(contentArr.length()));
-	////Check that the Content-Length field matches the actual content
-	//Q_ASSERT(0 == command->setContent(contentArr));
-
-	////Send out the command
-	//QSharedPointer<ProtocolResponse> response;
-
-
 	dataChannel->sendRegisteredCommand(command);
 	//if(!dataChannel->waitForResponse(10000))
 	//{

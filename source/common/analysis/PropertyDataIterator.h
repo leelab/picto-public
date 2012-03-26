@@ -4,6 +4,7 @@
 #include <QLinkedList>
 #include <QSqlDatabase>
 #include "EventOrderIndex.h"
+#include "AnalysisValue.h"
 
 namespace Picto {
 struct PropData;
@@ -17,12 +18,14 @@ public:
 	//Gets the next property change following the last one returned.  
 	//If there are no more property changes available it returns a PropData struct
 	//with negative time.
-	PropData getNextPropertyChange();
-	unsigned int totalValues(){return totalValues_;};
-	unsigned int remainingValues(){return propVals_.size();};
+	QSharedPointer<PropData> getNextPropertyChange();
+	unsigned int totalValues(){return totalQueries_;};
+	unsigned int remainingValues(){return totalValues() - readQueries_ + propVals_.size();};
+	void recheckSessionData(){updateTotalQueryCount();};
 
 private:
 	void updatePropValsList();
+	void updateTotalQueryCount();
 	int getElementId(QString path);
 	int getPropertyId(QString fullPath);
 	static QString getParentElementPath(QString fullPath);
@@ -31,16 +34,17 @@ private:
 	int propertyId_;
 	qulonglong lastSessionDataId_;
 
-	QLinkedList<PropData> propVals_;
+	QLinkedList<QSharedPointer<PropData>> propVals_;
 	QSqlDatabase session_;
-	unsigned int totalValues_;
+	unsigned int totalQueries_;
+	unsigned int readQueries_;
+
 };
 
-struct PropData{
+struct PropData : public AnalysisValue {
 	PropData(){value="";}
-	PropData(QString val,qulonglong dataIndex,double frameTime){value = val;index.dataId_ = dataIndex;index.time_ = frameTime;};
+	PropData(QString val,qulonglong dataIndex,double frameTime){value = val;index.dataId_ = dataIndex;index.time_ = frameTime; index.idSource_ = EventOrderIndex::BEHAVIORAL;};
 	QString value;
-	EventOrderIndex index;
 };
 
 }; //namespace Picto

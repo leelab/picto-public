@@ -4,7 +4,6 @@
 #include <QLinkedList>
 #include <QSharedPointer>
 #include "AnalysisTrigger.h"
-#include "PropertyDataIterator.h"
 
 namespace Picto {
 
@@ -39,11 +38,13 @@ public:
 protected:
 
 	//Inherited
+	virtual void recheckSessionData();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QSharedPointer<PropertyDataIterator> propIterator_;
+	EventOrderIndex currTime_;
+	double totalSessionTime_;
 };
 }; //namespace Picto
 #endif

@@ -29,7 +29,7 @@ public:
 	void setDescriptor(QString descriptor);
 	QString getDescriptor(){return descriptor_;};
 	void setChannel(QString channel);
-	void setOffsetTime(double t){time_ = QString::number(t,'e',6);};
+	void setOffsetTime(double t){time_ = QString::number(t,'e',14);};
 	void setOffsetTime(QString t){time_ = t;};
 	QString getOffsetTime(){return time_;};
 	void setResolution(double r){resolution_ = r;};

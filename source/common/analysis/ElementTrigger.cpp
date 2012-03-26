@@ -30,7 +30,6 @@ EventOrderIndex ElementTrigger::getNextTriggerTime()
 						propertyContainer_->getPropertyValue("ElementPath").toString(),
 						boundaryList_.value(propertyContainer_->getPropertyValue("When").toInt(),"") == "Ends"
 						);
-		Q_ASSERT(transIterator_->isValid());
 	}
 	return transIterator_->getNextTransitionTraversal();
 }
@@ -48,6 +47,13 @@ unsigned int ElementTrigger::totalKnownTriggers()
 unsigned int ElementTrigger::remainingKnownTriggers()
 {
 	return transIterator_->remainingValues();
+}
+
+void ElementTrigger::recheckSessionData()
+{
+	if(!transIterator_)
+		return;
+	transIterator_->recheckSessionData();
 }
 
 void ElementTrigger::postDeserialize()

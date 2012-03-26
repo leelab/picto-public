@@ -5,7 +5,6 @@ using namespace Picto;
 SignalTrigger::SignalTrigger()
 {
 	AddDefinableProperty("SignalName","");
-	AddDefinableProperty("SubChannelName","");
 }
 
 SignalTrigger::~SignalTrigger()
@@ -24,12 +23,10 @@ EventOrderIndex SignalTrigger::getNextTriggerTime()
 	{
 		signalIterator_ = QSharedPointer<SignalDataIterator>(
 							new SignalDataIterator(session_,
-								propertyContainer_->getPropertyValue("SignalName").toString(),
-								propertyContainer_->getPropertyValue("SubChannelName").toString())
+								propertyContainer_->getPropertyValue("SignalName").toString())
 							);
-		Q_ASSERT(signalIterator_->isValid());
 	}
-	return signalIterator_->getNextSignalVals().index;
+	return signalIterator_->getNextSignalVals()->index;
 }
 
 void SignalTrigger::restart()
@@ -45,6 +42,13 @@ unsigned int SignalTrigger::totalKnownTriggers()
 unsigned int SignalTrigger::remainingKnownTriggers()
 {
 	return signalIterator_->remainingValues();
+}
+
+void SignalTrigger::recheckSessionData()
+{
+	if(!signalIterator_)
+		return;
+	signalIterator_->recheckSessionData();
 }
 
 void SignalTrigger::postDeserialize()

@@ -16,7 +16,7 @@ FrameDataUnit::FrameDataUnit(QString timestamp, int stateId)
 
 FrameDataUnit::FrameDataUnit(double timestamp, int stateId)
 {
-	time = QString("%1").arg(timestamp,0,'f',6);
+	time = QString("%1").arg(timestamp,0,'f',14);
 	stateId_ = stateId;
 }
 

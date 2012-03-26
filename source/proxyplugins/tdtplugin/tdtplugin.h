@@ -66,7 +66,13 @@ private:
 	wchar_t *szServerName;
 	wchar_t *szTankName;
 	wchar_t *szBlockName;
-	QVector<QSharedPointer<Picto::LFPDataUnitPackage>> lfpData_;
+	struct LFPData
+	{
+		LFPData(){currTime = -1;};
+		double currTime;
+		QSharedPointer<Picto::LFPDataUnitPackage> lfpPackage;
+	};
+	QVector<LFPData> lfpData_;
 
 	deviceStatus deviceStatus_;
 

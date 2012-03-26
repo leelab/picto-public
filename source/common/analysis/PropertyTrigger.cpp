@@ -25,9 +25,8 @@ EventOrderIndex PropertyTrigger::getNextTriggerTime()
 							new PropertyDataIterator(session_,
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
-		Q_ASSERT(propIterator_->isValid());
 	}
-	return propIterator_->getNextPropertyChange().index;
+	return propIterator_->getNextPropertyChange()->index;
 }
 
 void PropertyTrigger::restart()
@@ -43,6 +42,13 @@ unsigned int PropertyTrigger::totalKnownTriggers()
 unsigned int PropertyTrigger::remainingKnownTriggers()
 {
 	return propIterator_->remainingValues();
+}
+
+void PropertyTrigger::recheckSessionData()
+{
+	if(!propIterator_)
+		return;
+	propIterator_->recheckSessionData();
 }
 
 void PropertyTrigger::postDeserialize()

@@ -736,18 +736,21 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 	qulonglong dataID = data->getDataID();
 	double fittedTimestamp = alignmentTool_->convertToBehavioralTimebase(neuralTimestamp);
 	data->setFittedTimestamp(fittedTimestamp);
+	double fittedResolution = alignmentTool_->convertSamplePeriodToBehavioralTimebase(resolution);
+	data->setFittedResolution(fittedResolution);
 	int channel = data->getChannel();
 
 	//Now that the tables are ready.  Do the insertion.
 	QSqlQuery query(cacheDb);
 	query.prepare("INSERT INTO lfp "
-		"(dataid,timestamp,fittedtime,correlation,sampleperiod,channel,data) VALUES (:dataid,:timestamp,:fittedtime,:correlation,:resolution,:channel,:data)");
+		"(dataid,timestamp,fittedtime,correlation,sampleperiod,fittedsampleperiod,channel,data) VALUES (:dataid,:timestamp,:fittedtime,:correlation,:resolution,:fittedresolution,:channel,:data)");
 
 	query.bindValue(":dataid",dataID);
 	query.bindValue(":timestamp",neuralTimestamp);
 	query.bindValue(":fittedtime",fittedTimestamp);
 	query.bindValue(":correlation",correlation);
 	query.bindValue(":sampleperiod",resolution);
+	query.bindValue(":fittedresolution",fittedResolution);
 	query.bindValue(":channel",channel);
 	query.bindValue(":data",data->getPotentialsAsByteArray());
 
@@ -957,8 +960,8 @@ void SessionInfo::InitializeVariables()
 	tableDataProviders_["neuralalignevents"] = "PROXY";
 
 	tables_.push_back("lfp");
-	tableColumns_["lfp"] = " dataid,timestamp,fittedtime,correlation,sampleperiod,channel,data ";
-	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,REAL,INTEGER,BLOB ";
+	tableColumns_["lfp"] = " dataid,timestamp,fittedtime,correlation,sampleperiod,fittedsampleperiod,channel,data ";
+	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,REAL,REAL,INTEGER,BLOB ";
 	tableDataProviders_["lfp"] = "PROXY";
 	
 	tables_.push_back("behavioralalignevents");
@@ -1351,7 +1354,7 @@ void SessionInfo::recalculateFittedTimes()
 	flushCache();
 	QString queryString = "UPDATE spikes SET "+alignmentTool_->getSQLTimeConversionEquation("fittedtime","timestamp","correlation");
 	executeWriteQuery(&query,queryString);
-	queryString = "UPDATE lfp SET "+alignmentTool_->getSQLTimeConversionEquation("fittedtime","timestamp","correlation");
+	queryString = "UPDATE lfp SET "+alignmentTool_->getSQLTimeConversionEquation("fittedtime","timestamp","correlation","fittedsampleperiod","sampleperiod");
 	executeWriteQuery(&query,queryString);
 	//executeReadQuery(&query,"SELECT dataid,timestamps FROM lfp");
 	//while(query.next())

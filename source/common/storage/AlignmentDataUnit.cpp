@@ -18,7 +18,7 @@ bool AlignmentDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStrea
 	xmlStreamWriter->setAutoFormatting(true);
 
 	xmlStreamWriter->writeStartElement("ADU");
-	xmlStreamWriter->writeTextElement("t",QString("%1").arg(getTimestamp(),0,'f',6));
+	xmlStreamWriter->writeTextElement("t",QString("%1").arg(getTimestamp(),0,'f',14));
 	xmlStreamWriter->writeTextElement("e",QString("%1").arg(getAlignCode()));
 	xmlStreamWriter->writeTextElement("n",QString("%1").arg(getAlignNumber()));
 	DataUnit::serializeDataID(xmlStreamWriter);

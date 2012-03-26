@@ -39,6 +39,7 @@ public:
 protected:
 
 	//Inherited
+	virtual void recheckSessionData();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

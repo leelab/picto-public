@@ -25,7 +25,7 @@ public:
 
 	void setDuration(int durationMs) { durationMs_ = durationMs; };
 	void setChannel(int channel) {channel_ = channel; };
-	void setTime(double timestamp) {time_ = QString("%1").arg(timestamp,0,'f',6);};
+	void setTime(double timestamp) {time_ = QString("%1").arg(timestamp,0,'f',14);};
 
 	int getDuration() { return durationMs_; };
 	int getChannel() { return channel_; };

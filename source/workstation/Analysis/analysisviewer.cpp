@@ -175,10 +175,13 @@ void AnalysisViewer::executeCommand()
 		return;
 	}
 	executeAction_->setEnabled(false);
+	loadSessionAction_->setEnabled(false);
 	analysisDefinition_->loadSession(session_);
 	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
 	QString result = analysisDefinition_->runTo(-1);
+	analysisDefinition_->finish();
 	progressBar_->setRange(0,100);	//Returns progress bar to normal range if it wasn't done in updateProgressBar.
+	progressBar_->setValue(100);
 	
 	outputDisplay_->clear();
 	QLinkedList<QPointer<QWidget>> outputWidgets = analysisDefinition_->getOutputWidgets();
@@ -188,6 +191,7 @@ void AnalysisViewer::executeCommand()
 	}
 	QCoreApplication::processEvents();	//Get rid of any multiple presses on the execute button before we reenable it.
 	executeAction_->setEnabled(true);
+	loadSessionAction_->setEnabled(true);
 }
 
 void AnalysisViewer::updateUI()

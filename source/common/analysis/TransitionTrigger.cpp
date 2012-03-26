@@ -25,9 +25,8 @@ EventOrderIndex TransitionTrigger::getNextTriggerTime()
 							new PropertyDataIterator(session_,
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
-		Q_ASSERT(propIterator_->isValid());
 	}
-	return propIterator_->getNextPropertyChange().index;
+	return propIterator_->getNextPropertyChange()->index;
 }
 
 void TransitionTrigger::restart()
@@ -43,6 +42,13 @@ unsigned int TransitionTrigger::totalKnownTriggers()
 unsigned int TransitionTrigger::remainingKnownTriggers()
 {
 	return propIterator_->remainingValues();
+}
+
+void TransitionTrigger::recheckSessionData()
+{
+	if(!propIterator_)
+		return;
+	propIterator_->recheckSessionData();
 }
 
 void TransitionTrigger::postDeserialize()

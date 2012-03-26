@@ -15,54 +15,56 @@ class EventOrderIndex
 #endif
 {
 public:
+	enum IDSource { BEHAVIORAL,NEURAL };
 	EventOrderIndex();
-	EventOrderIndex(qulonglong dataId);
+	EventOrderIndex(qulonglong dataId,IDSource idSource);
 	EventOrderIndex(double time);
-	EventOrderIndex(qulonglong dataId, double time);
+	EventOrderIndex(double time, qulonglong dataId, IDSource idSource);
 	virtual ~EventOrderIndex();
 	
 	//Variables
 	qulonglong dataId_;
+	IDSource idSource_;
 	double time_;
 
 	inline bool operator>(const EventOrderIndex &otherIndex) const 
 	{
-		if((dataId_>0)&&(otherIndex.dataId_>0))
+		if((dataId_>0)&&(otherIndex.dataId_>0)&&(idSource_ == otherIndex.idSource_))
 			return dataId_>otherIndex.dataId_;
 		else
 			return time_>otherIndex.time_;
 	}
 	inline bool operator>=(const EventOrderIndex &otherIndex) const
 	{
-		if((dataId_>0)&&(otherIndex.dataId_>0))
+		if((dataId_>0)&&(otherIndex.dataId_>0)&&(idSource_ == otherIndex.idSource_))
 			return dataId_>=otherIndex.dataId_;
 		else
 			return time_>=otherIndex.time_;
 	}
 	inline bool operator<(const EventOrderIndex &otherIndex) const 
 	{
-		if((dataId_>0)&&(otherIndex.dataId_>0))
+		if((dataId_>0)&&(otherIndex.dataId_>0)&&(idSource_ == otherIndex.idSource_))
 			return dataId_<otherIndex.dataId_;
 		else
 			return time_<otherIndex.time_;
 	}
 	inline bool operator<=(const EventOrderIndex &otherIndex) const 
 	{
-		if((dataId_>0)&&(otherIndex.dataId_>0))
+		if((dataId_>0)&&(otherIndex.dataId_>0)&&(idSource_ == otherIndex.idSource_))
 			return dataId_<=otherIndex.dataId_;
 		else
 			return time_<=otherIndex.time_;
 	}
 	inline bool operator==(const EventOrderIndex &otherIndex) const 
 	{
-		if((dataId_>0)&&(otherIndex.dataId_>0))
+		if((dataId_>0)&&(otherIndex.dataId_>0)&&(idSource_ == otherIndex.idSource_))
 			return dataId_==otherIndex.dataId_;
 		else
 			return time_==otherIndex.time_;
 	}
 	inline bool operator!=(const EventOrderIndex &otherIndex) const 
 	{
-		if((dataId_>0)&&(otherIndex.dataId_>0))
+		if((dataId_>0)&&(otherIndex.dataId_>0)&&(idSource_ == otherIndex.idSource_))
 			return dataId_!=otherIndex.dataId_;
 		else
 			return time_!=otherIndex.time_;
@@ -87,7 +89,7 @@ public:
 	inline bool operator==(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ == otherValue;};
 	inline bool operator!=(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ != otherValue;};
 	inline EventOrderIndex& operator=(const qulonglong otherValue) {dataId_ = otherValue;return *this;};
-	bool isValid(){return time_ >= 0;};
+	bool isValid(){return time_ > INT_MIN;};
 };
 }; //namespace Picto
 #endif

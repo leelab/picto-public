@@ -30,6 +30,7 @@ public:
 	//the AnalysisDefinition until the are no more AnalysisDefinitions available 
 	//in the session, input a negative number.
 	bool runTo(double time);
+	void finish();
 	QLinkedList<QPointer<QWidget>> getOutputWidgets();
 
 	//Inherited

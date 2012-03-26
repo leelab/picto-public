@@ -33,6 +33,7 @@ public:
 	//the analysisPeriod until the are no more AnalysisPeriods available 
 	//in the session, input a negative number.
 	bool runTo(double time);
+	void finishUp();
 	QLinkedList<QPointer<QWidget>> getOutputWidgets();
 
 	//Inherited
@@ -56,6 +57,7 @@ private:
 	QSharedPointer<AnalysisTrigger> endTrigger_;
 	EventOrderIndex startIndex_;
 	EventOrderIndex endIndex_;
+	unsigned int periodNumber_;
 	QLinkedList<QPointer<QWidget>> outputWidgets_;
 };
 }; //namespace Picto

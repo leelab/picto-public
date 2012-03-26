@@ -314,7 +314,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	//Read spike samples
 	//NOTE: The name of this event stream was changed somewhere along the line from "Snip" to "eNeu".  To read some of Hiroshi's old data, you
 	//may need to change it back to Snip
-	numSpikeSamples = tdtTank->ReadEventsV(1000000,"eNeu",0,0,lastSpikeTimestamp_,0.0,"ALL");
+	numSpikeSamples = tdtTank->ReadEventsV(1000000,"eNeu",0,0,lastSpikeTimestamp_,0.0,"All");
 
 #ifdef DEVELOPMENTBUILD
 	//This is really only used in simulations where we are pulling data from a tank that
@@ -342,22 +342,24 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 	{
 		SpikeDetails spikeDetails;
 
-		spikeDetails.chanNum = (int) ((double *) spikeChannelArray.parray->pvData)[i];
-		spikeDetails.unitNum = (int) ((double *) spikeUnitArray.parray->pvData)[i] + 1;
-		
 		spikeDetails.timeStamp = ((double *) spikeTimestampArray.parray->pvData)[i];
-		if(spikeDetails.timeStamp == lastSpikeTimestamp_)
-		{	//Since TDT reads events with timestamps >= t1 and < t2, we have to just cut out
-			//all of the events that occured at t1 every time.
-			continue;
-		}
-		for(unsigned int j=0;j<spikeSampleArray.parray->rgsabound[1].cElements;j++)
+		spikeDetails.unitNum = (int) ((double *) spikeUnitArray.parray->pvData)[i];
+		if(spikeDetails.unitNum > 0)
 		{
-			float spikeVoltage = ((float *) spikeSampleArray.parray->pvData)[i*spikeSampleArray.parray->rgsabound[1].cElements+j];
+			spikeDetails.chanNum = (int) ((double *) spikeChannelArray.parray->pvData)[i];
+			if(spikeDetails.timeStamp <= lastSpikeTimestamp_)
+			{	//Since TDT reads events with timestamps >= t1 and < t2, we have to just cut out
+				//all of the events that occured at t1 every time.
+				continue;
+			}
+			for(unsigned int j=0;j<spikeSampleArray.parray->rgsabound[1].cElements;j++)
+			{
+				float spikeVoltage = ((float *) spikeSampleArray.parray->pvData)[i*spikeSampleArray.parray->rgsabound[1].cElements+j];
 
-			spikeDetails.sampleWaveform.append(spikeVoltage);
+				spikeDetails.sampleWaveform.append(spikeVoltage);
+			}
+			spikeList.append(spikeDetails);
 		}
-		spikeList.append(spikeDetails);
 		if(spikeDetails.timeStamp > nextReadTimestamp)
 			nextReadTimestamp = spikeDetails.timeStamp;
 	}
@@ -394,7 +396,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 		EventDetails eventDetails;
 		eventDetails.timeStamp = ((double *) eventTimestampArray.parray->pvData)[i];
 		eventDetails.code = (int) ((double *) eventCodeArray.parray->pvData)[i];
-		if(eventDetails.timeStamp == lastEventTimestamp_)
+		if(eventDetails.timeStamp <= lastEventTimestamp_)
 		{	//Since TDT reads events with timestamps >= t1 and < t2, we have to just cut out
 			//all of the events that occured at t1 every time.
 			continue;
@@ -432,102 +434,73 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 		//corresponds to a timestamp/channel in the timestamp/channel arrays, and
 		//each row corresponds to a new time = columntimestamp + 1/freqArray value.
 
-		double sampPerSec(((double *) lfpFreqArray.parray->pvData)[0]);
-		double secPerSamp(1.0/sampPerSec);
-		int numChans;
-		int maxChan;
+		double sampPerSec;
+		double secPerSamp;
+		double incomingTime;
 		//double* potentials;
-		int* chans;
-		double currTime;
-		nextReadTimestamp = lastLFPTimestamp_;
-		for(int i=0; i<numLFP; i=i+numChans)
+		int currChan;
+		int sampsPerChanEntry = lfpSampleArray.parray->rgsabound[1].cElements;
+
+		bool nextReadTimestampSet = false;
+		for(int i=0; i<numLFP; i++)
 		{
-			//The minimum num of channels with the same timestamp is one.
-			numChans = 1;
-			maxChan = 0;
-			
+			//Get the channel at this index of the returned array
+			currChan = (int) ((double *) lfpChannelArray.parray->pvData)[i];
+
+			//lfpData_ is sized such that each channel number can be placed in its index.  
+			//If its not big enough.  Resize it.
+			if(lfpData_.size() < currChan)
+			{
+				lfpData_.resize(currChan+1);
+			}
+
 			//Get the next timestamp, "samples per second" and "seconds per sample"
-			currTime = ((double *) lfpTimestampArray.parray->pvData)[i];
+			incomingTime = ((double *) lfpTimestampArray.parray->pvData)[i];
 			sampPerSec = ((double *) lfpFreqArray.parray->pvData)[i];
 			secPerSamp = 1.0/sampPerSec;
 			
-			//Find how many channels start with this time and which is greatest
-			while(currTime==((double *) lfpTimestampArray.parray->pvData)[i+numChans])
-				numChans++;
-
-			//Create index to potentials array map
-			chans = new int[numChans];
-			// fill the index to potentials array map
-			for(int arrayInd = 0;arrayInd<numChans;arrayInd++)
-			{
-				chans[arrayInd] = (int) ((double *) lfpChannelArray.parray->pvData)[i+arrayInd];
-				if(chans[arrayInd]>maxChan)
-					maxChan = chans[arrayInd];
-			}
-			////Create potentials array.  Use maxChan+1 so that each channel number can be placed in its index.  ie. If maxchan is 6 it needs to go 
-			////into index 6 which is the 7th index.
-			//potentials = new double[maxChan+1];
-
-			//Resize lfpData_ such that each channel number can be placed in its index.  ie. If maxchan is 6 it needs to go
-			//into index 6 which is the 7th index.
-			if(lfpData_.size() < maxChan+1)
-				lfpData_.resize(maxChan+1);
-			
-			//Loop through the list of "sec per sample" separated enties for all channels that start with the same timestamp.
-			//We assume here that all entries have the same "sec per sample" value, which is currently a valid assumption for the
-			//tdt system.
-			for(unsigned int j=0;j<lfpSampleArray.parray->rgsabound[1].cElements;j++)
-			{
-				for(int arrayInd = 0;arrayInd<numChans;arrayInd++)
+			//Loop through the list of "sec per sample" separated enties for the current channel adding
+			//them to the LFPDataUnitPackage
+			for(unsigned int j=0;j<sampsPerChanEntry;j++)
+			{	
+				//Make sure that the latest read time is greater than the last time that we recorded data for.
+				if(incomingTime > lfpData_[currChan].currTime)
 				{
-					////Initialize potentials array to have zero values
-					//for(int n=0;n<maxChan;n++)
-					//{
-					//	potentials[n] = 0;
-					//}
-					////If the lfpDataStore object is getting too big, add it to the list and make a new one.
-					//if(lfpData->numSamples() >= 10000)
-					//{
-					//	returnList.push_back(lfpData);
-					//	lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
-					//}
-					
-					//If the current channel's lfppackage is big enough.  (ie. on the next entry it will include over 500 ms of data)
-					//Add it to the list.
-					if(!lfpData_[chans[arrayInd]].isNull() 
-						&& (lfpData_[chans[arrayInd]]->numSamples()*lfpData_[chans[arrayInd]]->getResolution()) >= 0.5)
-					{
-						returnList.push_back(lfpData_[chans[arrayInd]]);
-						lfpData_[chans[arrayInd]].clear();
-					}
-					
+					lfpData_[currChan].currTime = incomingTime;
 					//If the current channel's index in lfpData_ has no lfppackage, make a new one.
-					if(lfpData_[chans[arrayInd]].isNull())
+					if(lfpData_[currChan].lfpPackage.isNull())
 					{
-						lfpData_[chans[arrayInd]] = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
-						lfpData_[chans[arrayInd]]->setChannel(chans[arrayInd]);
-						lfpData_[chans[arrayInd]]->setResolution(secPerSamp);
-						lfpData_[chans[arrayInd]]->setTimestamp(currTime);
+						lfpData_[currChan].lfpPackage = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
+						lfpData_[currChan].lfpPackage->setChannel(currChan);
+						lfpData_[currChan].lfpPackage->setResolution(secPerSamp);
+						lfpData_[currChan].lfpPackage->setTimestamp(lfpData_[currChan].currTime);
 					}
-					//potentials[chans[arrayInd]] = ((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j];
-					lfpData_[chans[arrayInd]]->appendData(((short *) lfpSampleArray.parray->pvData)[((i+arrayInd)*lfpSampleArray.parray->rgsabound[1].cElements)+j]);
-					//lfpData->addData(currTime,potentials,numChans);
+
+					//Add the next data point to the lfppackage
+					lfpData_[currChan].lfpPackage->appendData(((short *) lfpSampleArray.parray->pvData)[(i*sampsPerChanEntry)+j]);
+
+					//If the current channel's lfppackage is big enough.  (ie. on the next entry it will include over 500 ms of data)
+					//Add it to the list and clear the pointer to it from lfpData_
+					if((lfpData_[currChan].lfpPackage->numSamples()*secPerSamp) >= 0.5)
+					{
+						returnList.push_back(lfpData_[currChan].lfpPackage);
+						lfpData_[currChan].lfpPackage.clear();
+					}
 				}
-				currTime += secPerSamp;
+				
+				//Increment the currTime value for the next sample.
+				incomingTime += secPerSamp;
 			}
-			//Get rid of the dynamically constructed arrays
-			//delete potentials;
-			delete chans;
-			//Since we added secPerSamp to currTime after the last lfp entry, our nextReadTimestamp is actually
-			//at the next timestamp and we don't need to worry about the fact that TDT reads from times >= the 
-			//input starting time in ReadEventsV.
-			//We could use this same method for eventcodes and spikes but in those cases we don't need to store
-			//the resolution, so it would be a waste to read it in for every event.  In those cases the solution
-			//is to simply ignore events that were already reported in a previous ReadEventsV call..
-			if(currTime > nextReadTimestamp)
-				nextReadTimestamp = currTime;
+
+			//TDT reads from times >= the input starting time in ReadEventsV.
+			if(sampsPerChanEntry && (!nextReadTimestampSet || (lfpData_[currChan].currTime < nextReadTimestamp)))
+			{
+				nextReadTimestamp = lfpData_[currChan].currTime;
+				nextReadTimestampSet = true;
+			}
 		}
-		lastLFPTimestamp_ = nextReadTimestamp;
+		if(nextReadTimestampSet)
+			lastLFPTimestamp_ = nextReadTimestamp;
 	}
 
 

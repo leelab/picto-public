@@ -4,7 +4,7 @@
 #include <QLinkedList>
 #include <QSharedPointer>
 #include "AnalysisTrigger.h"
-#include "PropertyDataIterator.h"
+#include "SpikeDataIterator.h"
 
 namespace Picto {
 
@@ -36,14 +36,18 @@ public:
 	//be processed for this session (that this object knows about).
 	virtual unsigned int remainingKnownTriggers();
 
+	QSharedPointer<SpikeData> getLatestValue();
+
 protected:
 
 	//Inherited
+	virtual void recheckSessionData();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QSharedPointer<PropertyDataIterator> propIterator_;
+	QSharedPointer<SpikeDataIterator> spikeIterator_;
+	QSharedPointer<SpikeData> latestData_;
 };
 }; //namespace Picto
 #endif

@@ -8,6 +8,7 @@
 #include <QSqlDatabase>
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
+#include "AnalysisDataSource.h"
 
 namespace Picto {
 
@@ -39,7 +40,7 @@ public:
 	//The input value must always increase until reset() is called.
 	void fillArraysTo(EventOrderIndex beforeIndex);
 
-	void addScriptableArrayToEngine(QSharedPointer<QScriptEngine> qsEngine);
+	void addDataSourcesToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
 	QString scriptInfo();
 
@@ -52,6 +53,7 @@ public:
 	//After this function is called, the first trigger in the session should 
 	//be returned from getNextTriggerTime()
 	virtual void restart() = 0;
+	void sessionDatabaseUpdated();
 
 	//Should be implemented to return the total number of triggers in this session
 	//that this object knows about.
@@ -66,6 +68,7 @@ public:
 
 protected:
 
+	virtual void recheckSessionData() = 0;
 	//Inherited
 	virtual QString defaultTagName(){return "AnalysisTrigger";};
 	virtual void postDeserialize();
@@ -86,6 +89,7 @@ private:
 	};
 	QLinkedList<TriggerData> periodData_;
 	QLinkedList<TriggerData>::iterator nextPeriodsDataLoc_;
+	QSharedPointer<AnalysisDataSource> defaultSource_;
 };
 }; //namespace Picto
 #endif

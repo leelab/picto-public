@@ -27,6 +27,7 @@ public:
 	//Returns a pointer to an output widget that
 	//presents the information written into this AnalysisTool object.
 	QPointer<QWidget> getOutputWidget();
+	void finishUp();
 
 	static QString getTempOutputDir();
 
@@ -48,6 +49,7 @@ private:
 	static void initTempOutputDir();
 	static QString outputDir_;
 	static int loadedObjects_;
+	unsigned int charsWritten_;
 	QSharedPointer<QFile> file_;
 	QSharedPointer<QTextStream> outputFileStream_;
 	QPointer<QWidget> outputWidget_;

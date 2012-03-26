@@ -56,9 +56,10 @@ public:
 
 	void setChannel(int channel){channel_ = channel;};
 	void setCorrelation(double correlation){correlation_ = correlation;}
-	void setTimestamp(double timestamp){timestamp_ = QString::number(timestamp,'e',6);};
-	void setFittedTimestamp(double timestamp){fittedTimestamp_ = QString::number(timestamp,'e',6);};
+	void setTimestamp(double timestamp){timestamp_ = QString::number(timestamp,'e',14);};
+	void setFittedTimestamp(double timestamp){fittedTimestamp_ = QString::number(timestamp,'e',14);};
 	void setResolution(double resolution){resolution_ = resolution;};
+	void setFittedResolution(double fittedresolution){fittedResolution_ = fittedresolution;};
 	void appendData(const float* adPotentialReadings, int numVals);
 	void appendData(float adPotentialReading);
 	int numSamples(){return numSamples_;};
@@ -67,6 +68,7 @@ public:
 	QString getTimestamp(){return timestamp_;};
 	QString getFittedTimestamp(){return fittedTimestamp_;};
 	double getResolution(){return resolution_;};
+	double getFittedResolution(){return fittedResolution_;};
 	QString getPotentials(){return potentials_.join(" ");};
 	QByteArray getPotentialsAsByteArray();
 	QLinkedList<QPointF> getAlignedDataAsLinkedList();
@@ -83,6 +85,7 @@ private:
 	QString timestamp_;
 	QString fittedTimestamp_;
 	double resolution_;
+	double fittedResolution_;
 	QStringList potentials_;
 	float* potArray_;
 	int numSamples_;
