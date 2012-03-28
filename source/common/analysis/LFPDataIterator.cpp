@@ -212,4 +212,5 @@ bool LFPDataIterator::needMoreData()
 		return false;
 	if(lfpVals_.first()->index >= notReadyYetTime_)
 		return true;
+	return false;
 }

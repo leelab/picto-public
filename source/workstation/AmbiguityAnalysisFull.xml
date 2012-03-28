@@ -47,7 +47,7 @@
       {
       blobFile.writeLine(Blob.data.value(i));
       if(correct.length)
-      blobFile.writeLine(Blob.data.value(i));
+      blobFileCorrect.writeLine(Blob.data.value(i));
       }
     </Script>
     <Trigger type="Element">

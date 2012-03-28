@@ -12,7 +12,7 @@ FileOutput::FileOutput()
 {
 	initTempOutputDir();
 	AddDefinableProperty("FileName","");
-	outputWidget_ = NULL;
+	outputWidget_ = QPointer<FileOutputWidget>(new FileOutputWidget(1000));
 	loadedObjects_++;
 	charsWritten_ = 0;
 }
@@ -42,27 +42,42 @@ QSharedPointer<Asset> FileOutput::Create()
 }
 
 void FileOutput::reset()
-{	if(outputWidget_)
-	{
-		outputWidget_->setParent(NULL);
-		delete outputWidget_;
-	}
-	outputWidget_ = QPointer<QWidget>(new QTextEdit());
-	qobject_cast<QTextEdit*>(outputWidget_)->setReadOnly(true);
-	outputWidget_->setObjectName(propertyContainer_->getPropertyValue("FileName").toString());
+{	
 	if(outputDir_.isEmpty())
 		return;
 	outputFileStream_.clear();
-	file_ = QSharedPointer<QFile>(new QFile(getTempOutputDir()+"/"+propertyContainer_->getPropertyValue("FileName").toString()));
+	QString fileName = getTempOutputDir()+"/"+propertyContainer_->getPropertyValue("FileName").toString();
+	file_ = QSharedPointer<QFile>(new QFile(fileName));
 	if(!file_->open(QIODevice::WriteOnly | QIODevice::Text))
 		return;
 	outputFileStream_ = QSharedPointer<QTextStream>(new QTextStream(file_.data()));
+	outputWidget_->setFile(fileName);
 	setValid(true);
 }
 
 QPointer<QWidget> FileOutput::getOutputWidget()
 {
-	return outputWidget_;
+	return qobject_cast<QWidget*>(outputWidget_);
+}
+
+bool FileOutput::saveOutputData(QString directory, QString filename)
+{
+	QString origName = propertyContainer_->getPropertyValue("FileName").toString();
+	QFile tempFile(getTempOutputDir()+"/"+origName);
+	if(!tempFile.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		return false;
+	}
+	if(!QFile::exists(directory))
+	{	//The directory doesn't exist yet.  Make it.
+		QDir dir;
+		dir.mkdir(directory);
+	}
+	QString newFileName = directory + "/" + filename + origName.mid(origName.indexOf("."));
+	QFile::remove(newFileName);
+	bool result = tempFile.copy(newFileName);
+	tempFile.close();
+	return result;
 }
 
 void FileOutput::finishUp()
@@ -70,6 +85,7 @@ void FileOutput::finishUp()
 	if(isValid())
 	{
 		file_->close();
+		outputWidget_->refreshContents();
 	}
 }
 
@@ -89,8 +105,6 @@ void FileOutput::writeText(QString text)
 	{
 		charsWritten_ += text.size();
 		(*outputFileStream_) << text;
-		//qobject_cast<QTextEdit*>(outputWidget_)->moveCursor(QTextCursor::End);
-		//qobject_cast<QTextEdit*>(outputWidget_)->insertPlainText(text);
 		if(charsWritten_ > CHARS_BEFORE_FLUSH)
 		{
 			file_->flush();

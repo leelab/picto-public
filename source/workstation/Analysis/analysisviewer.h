@@ -59,8 +59,10 @@ private:
 	QSharedPointer<Picto::Experiment> experiment_;
 	QSharedPointer<AnalysisDefinition> analysisDefinition_; 
 
+	QString defaultOutputName_;
 	QAction *executeAction_;
 	QAction *loadSessionAction_;
+	QAction *saveOutputAction_;
 	QLabel *currSessionLabel_;
 	AnalysisOutputDisplay *outputDisplay_;
 	
@@ -74,6 +76,7 @@ private:
 
 private slots:
 	void loadSession();
+	void saveOutput();
 	void executeCommand();
 
 	void updateUI();

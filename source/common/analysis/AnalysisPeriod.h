@@ -35,6 +35,8 @@ public:
 	bool runTo(double time);
 	void finishUp();
 	QLinkedList<QPointer<QWidget>> getOutputWidgets();
+	bool outputCanBeSaved();
+	bool saveOutputToDirectory(QString directory, QString filename);
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisPeriod";};

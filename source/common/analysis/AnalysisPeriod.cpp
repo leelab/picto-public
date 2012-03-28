@@ -12,7 +12,7 @@
 #include "SpikeTrigger.h"
 #include "TimeTrigger.h"
 #include "TransitionTrigger.h"
-#include "AnalysisTool.h"
+#include "AnalysisOutput.h"
 #include "FileOutput.h"
 
 #include "../../common/memleakdetect.h"
@@ -255,26 +255,52 @@ bool AnalysisPeriod::runTo(double time)
 
 void AnalysisPeriod::finishUp()
 {
-	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
-	QSharedPointer<AnalysisTool> analysisTool;
-	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QSharedPointer<AnalysisOutput> analysisOutput;
+	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
 	{
-		analysisTool = toolAsset.staticCast<AnalysisTool>();
-		analysisTool->finishUp();
+		analysisOutput = outputAsset.staticCast<AnalysisOutput>();
+		analysisOutput->finishUp();
 	}
 }
 
 QLinkedList<QPointer<QWidget>> AnalysisPeriod::getOutputWidgets()
 {
 	QLinkedList<QPointer<QWidget>> returnVal;
-	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
-	QSharedPointer<AnalysisTool> outputObj;
-	foreach(QSharedPointer<Asset> outputAsset,analysisTools)
+	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QSharedPointer<AnalysisOutput> outputObj;
+	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
 	{
-		outputObj = outputAsset.staticCast<AnalysisTool>();
+		outputObj = outputAsset.staticCast<AnalysisOutput>();
 		returnVal.append(outputObj->getOutputWidget());
 	}
 	return returnVal;
+}
+
+bool AnalysisPeriod::outputCanBeSaved()
+{
+	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QSharedPointer<AnalysisOutput> outputObj;
+	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
+	{
+		outputObj = outputAsset.staticCast<AnalysisOutput>();
+		if(outputObj->supportsSaving())
+			return true;
+	}
+	return false;
+}
+
+bool AnalysisPeriod::saveOutputToDirectory(QString directory, QString filename)
+{
+	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QSharedPointer<AnalysisOutput> outputObj;
+	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
+	{
+		outputObj = outputAsset.staticCast<AnalysisOutput>();
+		if(!outputObj->saveOutputData(directory,filename))
+			return false;
+	}
+	return true;
 }
 
 void AnalysisPeriod::postDeserialize()

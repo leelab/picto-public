@@ -31,6 +31,8 @@ public:
 	//in the session, input a negative number.
 	bool runTo(double time);
 	void finish();
+	bool outputCanBeSaved();
+	bool saveOutputToDirectory(QString directory, QString filename);
 	QLinkedList<QPointer<QWidget>> getOutputWidgets();
 
 	//Inherited

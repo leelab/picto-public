@@ -248,6 +248,8 @@
    <file alias="_f_p_s_t_o_p_f_l_u_s_h_command_handler_8h-source.html">../../../output/documentation/main/html/_f_p_s_t_o_p_f_l_u_s_h_command_handler_8h-source.html</file>
    <file alias="_file_output_8cpp-source.html">../../../output/documentation/main/html/_file_output_8cpp-source.html</file>
    <file alias="_file_output_8h-source.html">../../../output/documentation/main/html/_file_output_8h-source.html</file>
+   <file alias="_file_output_widget_8cpp-source.html">../../../output/documentation/main/html/_file_output_widget_8cpp-source.html</file>
+   <file alias="_file_output_widget_8h-source.html">../../../output/documentation/main/html/_file_output_widget_8h-source.html</file>
    <file alias="_flow_element_8cpp-source.html">../../../output/documentation/main/html/_flow_element_8cpp-source.html</file>
    <file alias="_flow_element_8h-source.html">../../../output/documentation/main/html/_flow_element_8h-source.html</file>
    <file alias="_flow_element_item_8cpp-source.html">../../../output/documentation/main/html/_flow_element_item_8cpp-source.html</file>
@@ -908,6 +910,9 @@
    <file alias="class_picto_1_1_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_data_store-members.html</file>
    <file alias="class_picto_1_1_data_store.html">../../../output/documentation/main/html/class_picto_1_1_data_store.html</file>
    <file alias="class_picto_1_1_data_store.png">../../../output/documentation/main/html/class_picto_1_1_data_store.png</file>
+   <file alias="class_picto_1_1_default_data_source-members.html">../../../output/documentation/main/html/class_picto_1_1_default_data_source-members.html</file>
+   <file alias="class_picto_1_1_default_data_source.html">../../../output/documentation/main/html/class_picto_1_1_default_data_source.html</file>
+   <file alias="class_picto_1_1_default_data_source.png">../../../output/documentation/main/html/class_picto_1_1_default_data_source.png</file>
    <file alias="class_picto_1_1_device_interface-members.html">../../../output/documentation/main/html/class_picto_1_1_device_interface-members.html</file>
    <file alias="class_picto_1_1_device_interface.html">../../../output/documentation/main/html/class_picto_1_1_device_interface.html</file>
    <file alias="class_picto_1_1_diamond_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic-members.html</file>

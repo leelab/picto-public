@@ -53,13 +53,43 @@ bool AnalysisDefinition::runTo(double time)
 
 void AnalysisDefinition::finish()
 {
-		QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
+	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
 		period = periodAsset.staticCast<AnalysisPeriod>();
 		period->finishUp();
 	}
+}
+
+bool AnalysisDefinition::outputCanBeSaved()
+{
+	bool returnVal = true;
+	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
+	QSharedPointer<AnalysisPeriod> period;
+	foreach(QSharedPointer<Asset> periodAsset,periods)
+	{
+		period = periodAsset.staticCast<AnalysisPeriod>();
+		returnVal  = returnVal & period->outputCanBeSaved();
+	}
+	if(periods.size() == 0)
+		returnVal = false;
+	return returnVal;
+}
+
+bool AnalysisDefinition::saveOutputToDirectory(QString directory, QString filename)
+{
+	bool returnVal = true;
+	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
+	QSharedPointer<AnalysisPeriod> period;
+	foreach(QSharedPointer<Asset> periodAsset,periods)
+	{
+		period = periodAsset.staticCast<AnalysisPeriod>();
+		returnVal  = returnVal & period->saveOutputToDirectory(directory,filename);
+	}
+	if(periods.size() == 0)
+		returnVal = false;
+	return returnVal;
 }
 
 QLinkedList<QPointer<QWidget>> AnalysisDefinition::getOutputWidgets()

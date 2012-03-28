@@ -72,5 +72,8 @@
         <file>icons/task.svg</file>
         <file>icons/reward.svg</file>
 		    <file>icons/x.png</file>
+        <file>icons/prev.png</file>
+        <file>icons/next.png</file>
+        <file>icons/goto.png</file>
     </qresource>
 </RCC>

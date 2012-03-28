@@ -14,12 +14,12 @@ AnalysisTool::~AnalysisTool()
 
 void AnalysisTool::postDeserialize()
 {
-	UIEnabled::postDeserialize();
+	Scriptable::postDeserialize();
 }
 
 bool AnalysisTool::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!UIEnabled::validateObject(xmlStreamReader))
+	if(!Scriptable::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

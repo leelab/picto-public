@@ -5,14 +5,15 @@
 #include <QTextStream>
 #include <QSharedPointer>
 #include <QTextEdit>
-#include "AnalysisTool.h"
+#include "AnalysisOutput.h"
+#include "FileOutputWidget.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API FileOutput : public AnalysisTool
+class PICTOLIB_API FileOutput : public AnalysisOutput
 #else
-class FileOutput : public AnalysisTool
+class FileOutput : public AnalysisOutput
 #endif
 {
 	Q_OBJECT
@@ -27,6 +28,8 @@ public:
 	//Returns a pointer to an output widget that
 	//presents the information written into this AnalysisTool object.
 	QPointer<QWidget> getOutputWidget();
+	bool supportsSaving(){return true;};
+	bool saveOutputData(QString directory, QString filename);
 	void finishUp();
 
 	static QString getTempOutputDir();
@@ -52,7 +55,7 @@ private:
 	unsigned int charsWritten_;
 	QSharedPointer<QFile> file_;
 	QSharedPointer<QTextStream> outputFileStream_;
-	QPointer<QWidget> outputWidget_;
+	QPointer<FileOutputWidget> outputWidget_;
 
 
 };

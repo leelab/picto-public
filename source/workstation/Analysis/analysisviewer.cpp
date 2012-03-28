@@ -94,6 +94,10 @@ void AnalysisViewer::setupUi()
 	progressBar_ = new QProgressBar();
 	progressBar_->setRange(0,100);
 	progressBar_->reset();
+
+	saveOutputAction_ = new QAction(tr("&Save Output"),this);
+	connect(saveOutputAction_, SIGNAL(triggered()),this, SLOT(saveOutput()));
+	saveOutputAction_->setEnabled(false);
 	
 	outputDisplay_ = new AnalysisOutputDisplay();
 
@@ -111,6 +115,8 @@ void AnalysisViewer::setupUi()
 	toolBar_->addWidget(currSessionLabel_);
 	toolBar_->addSeparator();
 	toolBar_->addWidget(progressBar_);
+	toolBar_->addSeparator();
+	toolBar_->addAction(saveOutputAction_);
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(toolBar_);
@@ -137,13 +143,16 @@ void AnalysisViewer::loadSession()
 	if(filename.isEmpty())
 		return;
 	//Load Sqlite Database
-	int lastSlash = filename.lastIndexOf("/");
-	Q_ASSERT(lastSlash >=0);
 	//Check if this session is already open
 	if(session_.isValid() && (session_.databaseName() == filename))
 		return;
 
-	QSqlDatabase newSession = QSqlDatabase::addDatabase("QSQLITE",filename.mid(lastSlash+1));
+	Q_ASSERT(filename.lastIndexOf("/") >=0);
+	Q_ASSERT(filename.lastIndexOf(".") >=0);
+	QString connectionName = filename.mid(filename.lastIndexOf("/")+1);
+	connectionName = connectionName.left(connectionName.lastIndexOf("."));
+
+	QSqlDatabase newSession = QSqlDatabase::addDatabase("QSQLITE",connectionName);
 	newSession.setDatabaseName(filename);
 	newSession.open();
 	if(!newSession.isOpen())
@@ -158,6 +167,16 @@ void AnalysisViewer::loadSession()
 	session_ = QSqlDatabase::database(newSession.connectionName());
 	Q_ASSERT(session_.isValid() && session_.isOpen());
 	updateUI();
+}
+
+void AnalysisViewer::saveOutput()
+{
+	QString dirName = QFileDialog::getExistingDirectory(this,
+			tr("Output Data Directory"),".", QFileDialog::ShowDirsOnly);
+	if(dirName.isEmpty())
+		return;
+
+	analysisDefinition_->saveOutputToDirectory(dirName+"/"+defaultOutputName_,defaultOutputName_);
 }
 
 void AnalysisViewer::executeCommand()
@@ -176,6 +195,7 @@ void AnalysisViewer::executeCommand()
 	}
 	executeAction_->setEnabled(false);
 	loadSessionAction_->setEnabled(false);
+	saveOutputAction_->setEnabled(false);
 	analysisDefinition_->loadSession(session_);
 	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
 	QString result = analysisDefinition_->runTo(-1);
@@ -192,6 +212,11 @@ void AnalysisViewer::executeCommand()
 	QCoreApplication::processEvents();	//Get rid of any multiple presses on the execute button before we reenable it.
 	executeAction_->setEnabled(true);
 	loadSessionAction_->setEnabled(true);
+	if(analysisDefinition_->outputCanBeSaved())
+	{
+		saveOutputAction_->setEnabled(true);
+		defaultOutputName_ = session_.connectionName();
+	}
 }
 
 void AnalysisViewer::updateUI()
