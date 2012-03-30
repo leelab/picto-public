@@ -100,6 +100,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
 				neuralData->setTimestamp(timestampSec);
 				neuralData->setChannel(pServerEventBuffer[MAPEvent].Channel);
+				neuralData->setResolution(samplePeriodSec);
 				int chUnit = pServerEventBuffer[MAPEvent].Unit;
 				neuralData->setUnit(chUnit);
 

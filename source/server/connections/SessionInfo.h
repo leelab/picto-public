@@ -11,6 +11,8 @@
 #include "../../common/storage/RewardDataUnit.h"
 #include "../../common/storage/AlignmentDataUnit.h"
 #include "../../common/storage/LFPDataUnitPackage.h"
+#include "../../common/storage/DataSourceInfo.h"
+#include "../../common/storage/AlignmentInfo.h"
 #include "ComponentInfo.h"
 
 #include <QSharedPointer>
@@ -118,7 +120,6 @@ private:
 	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
 	void createSessionIndeces();
-	void recalculateFittedTimes();
 	void setStateVariable(int dataid, int varid, QString serializedValue);
 	void setLatestNeuralData(int dataid, QString serializedValue, double fittedTime); 
 
@@ -134,7 +135,6 @@ private:
 	QSqlDatabase cacheDb_;
 
 	QSharedPointer<AlignmentTool> alignmentTool_;
-	bool timestampsAligned_;	//Indicates whether initial timestamp alignment has occured
 	QMutex latestNeuralDataMutex_;
 	QSharedPointer<QMutex> databaseWriteMutex_;
 	QTimer timeoutTimer_;
@@ -170,6 +170,8 @@ private:
 
 	QList<QUuid> authorizedObservers_;
 	QMap<QString,int> sigChanVarIDs_;
+	QMap<QString,QSharedPointer<Picto::DataSourceInfo>> dataSourceInfoMap_;
+	QMap<QString,QSharedPointer<Picto::AlignmentInfo>> alignmentInfoMap_;
 	int nextSigChanVarId_;
 };
 

@@ -73,6 +73,7 @@ public:
 	{
 		time_ = otherIndex.time_;
 		dataId_ = otherIndex.dataId_;
+		idSource_ = otherIndex.idSource_;
 		return *this;
 	};
 	inline bool operator>(const double otherValue) const {return time_ > otherValue;};
@@ -82,13 +83,6 @@ public:
 	inline bool operator==(const double otherValue) const {return time_ == otherValue;};
 	inline bool operator!=(const double otherValue) const {return time_ != otherValue;};
 	inline EventOrderIndex& operator=(const double otherValue) {time_ = otherValue;return *this;};
-	inline bool operator>(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ > otherValue;};
-	inline bool operator>=(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ >= otherValue;};
-	inline bool operator<(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ < otherValue;};
-	inline bool operator<=(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ <= otherValue;};
-	inline bool operator==(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ == otherValue;};
-	inline bool operator!=(const qulonglong otherValue) const {Q_ASSERT(dataId_>0);return dataId_ != otherValue;};
-	inline EventOrderIndex& operator=(const qulonglong otherValue) {dataId_ = otherValue;return *this;};
 	bool isValid(){return time_ > INT_MIN;};
 };
 }; //namespace Picto

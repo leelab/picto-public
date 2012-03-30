@@ -8,6 +8,7 @@ NeuralDataUnit::NeuralDataUnit()
 	setTimestamp(0.0);
 	setChannel(0);
 	setUnit(0);
+	setResolution(0);
 	setWaveformFromString("");
 }
 
@@ -24,6 +25,7 @@ bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 	xmlStreamWriter->writeTextElement("f",QString("%1").arg(getFittedtime(),0,'f',14));
 	xmlStreamWriter->writeTextElement("c",QString("%1").arg(getChannel()));
 	xmlStreamWriter->writeTextElement("u",QString("%1").arg(getUnit()));
+	xmlStreamWriter->writeTextElement("r",QString("%1").arg(getResolution(),0,'e',14));
 	xmlStreamWriter->writeTextElement("w",getWaveformAsString());		
 	xmlStreamWriter->writeEndElement();
 	return true;
@@ -58,6 +60,10 @@ bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "u")
 		{
 			setUnit(xmlStreamReader->readElementText().toInt());
+		}
+		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "r")
+		{
+			setResolution(xmlStreamReader->readElementText().toDouble());
 		}
 		else if(xmlStreamReader->isStartElement() && xmlStreamReader->name() == "w")
 		{

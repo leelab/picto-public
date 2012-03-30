@@ -14,6 +14,7 @@ QSharedPointer<Picto::DataUnit> SimpleSpikeSource::buildEvent(double time)
 	newEvent->setChannel(channel_);
 	newEvent->setTimestamp(time);
 	newEvent->setUnit(unit_);
+	newEvent->setResolution(0.000001);
 	QSharedPointer<QVector<float>> waveform(new QVector<float>());
 	for(int i=0;i<40;i++)
 		waveform->push_back(i);

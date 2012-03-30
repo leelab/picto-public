@@ -335,6 +335,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 		spikeSampleFrequencyArray = tdtTank->ParseEvInfoV(0,numSpikeSamples,9);
 
 		sampleRate = (float)((double *) spikeSampleFrequencyArray.parray->pvData)[0];
+		samplePeriod = (sampleRate != 0.0)?(1.0/sampleRate):0.0;
 	}
 
 	double nextReadTimestamp = lastSpikeTimestamp_;
@@ -344,6 +345,9 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 
 		spikeDetails.timeStamp = ((double *) spikeTimestampArray.parray->pvData)[i];
 		spikeDetails.unitNum = (int) ((double *) spikeUnitArray.parray->pvData)[i];
+		spikeDetails.resolution = (float)((double *) spikeSampleFrequencyArray.parray->pvData)[i];
+		if(spikeDetails.resolution > 0.0)
+			spikeDetails.resolution = 1.0/spikeDetails.resolution;
 		if(spikeDetails.unitNum > 0)
 		{
 			spikeDetails.chanNum = (int) ((double *) spikeChannelArray.parray->pvData)[i];
@@ -536,6 +540,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 			neuralData->setTimestamp(spikeList.begin()->timeStamp);
 			neuralData->setChannel(spikeList.begin()->chanNum);
 			neuralData->setUnit(spikeList.begin()->unitNum);
+			neuralData->setResolution(spikeList.begin()->resolution);
 
 			//waveform data
 			QSharedPointer<QVector<float>> waveform(new QVector<float>);

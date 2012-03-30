@@ -40,6 +40,7 @@ private:
 		int chanNum;
 		int unitNum;
 		double timeStamp;
+		double resolution;
 	};
 	struct EventDetails
 	{
@@ -56,6 +57,7 @@ private:
 
 	TTANKXLib::_DTTankXPtr tdtTank;
 	float sampleRate;
+	float samplePeriod;
 	double lastEventTimestamp_;
 	double lastSpikeTimestamp_;
 	double lastLFPTimestamp_;

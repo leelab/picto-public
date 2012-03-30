@@ -71,6 +71,18 @@ double AlignmentTool::getCorrelationCoefficient()
 	return coeff_.corr;
 }
 
+double AlignmentTool::getNeuralOffsetTime()
+{
+	QMutexLocker locker(alignmentMutex_.data());
+	return coeff_.A;
+}
+
+double AlignmentTool::getNeuralTemporalFactor()
+{
+	QMutexLocker locker(alignmentMutex_.data());
+	return coeff_.B;
+}
+
 /*! \brief Does a complete alignment on the session database
  *
  *	A complete alignment involves running through all of the trial start/stop events
@@ -406,18 +418,6 @@ void AlignmentTool::updateCoefficients(double bAlignTimestamp,
 		coeff_.corr = 0;
 	else
 		coeff_.corr = (SSxy*SSxy)/(SSxx*SSyy);
-}
-
-QString AlignmentTool::getSQLTimeConversionEquation(QString fittedTimeColumn, QString neuralTimebaseColumn, QString correlationColumn, QString fittedSampPeriodColumn, QString neuralSampPeriodColumn)
-{
-	QMutexLocker locker(alignmentMutex_.data());
-	QString returnVal = fittedTimeColumn + "=" + QString::number(coeff_.A,'f',14) + "+(" + QString::number(coeff_.B,'f',14)+"*"+neuralTimebaseColumn+")"+
-		"," + correlationColumn + "=" + QString::number(getCorrelationCoefficient(),'f',14);
-	if(!fittedSampPeriodColumn.isEmpty() && !neuralSampPeriodColumn.isEmpty())
-	{
-		returnVal.append(QString(",") + fittedSampPeriodColumn + "=" + "(" + QString::number(coeff_.B,'f',14)+"*"+neuralSampPeriodColumn+")");
-	}
-	return returnVal;
 }
 
 QString AlignmentTool::getSQLJitterEquation(QString jitterColumn, 

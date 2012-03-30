@@ -26,6 +26,8 @@ public:
 
 private:
 	void updateLFPValsList();
+	void getSamplePeriod();
+	void getAlignCoefficients();
 	void updateTotalQueryCount();
 	bool needMoreData();
 
@@ -51,6 +53,8 @@ private:
 	QSqlDatabase session_;
 	QString tableName_;
 	double samplePeriod_;
+	double offsetTime_;
+	double temporalFactor_;
 	double notReadyYetTime_;
 	bool sessionEnded_;
 	unsigned int totalQueries_;

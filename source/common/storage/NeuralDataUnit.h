@@ -32,6 +32,7 @@ public:
 	void setCorrelation(double correlation){correlation_ = correlation;}
 	void setChannel(int channel){channel_ = channel;}
 	void setUnit(int unit){unit_ = unit;}
+	void setResolution(double secPerSamp){resolution_ = secPerSamp;};
 	void setWaveform(QSharedPointer<QVector<float>> waveform);
 	void setWaveformFromString(QString waveform);
 
@@ -40,6 +41,7 @@ public:
 	double getCorrelation(){return correlation_;}
 	int getChannel(){return channel_;}
 	int getUnit(){return unit_;}
+	double getResolution(){return resolution_;};
 	QString getWaveformAsString();
 	QByteArray getWaveformAsByteArray();
 	void setWaveformFromByteArray(QByteArray waveform);
@@ -52,6 +54,7 @@ private:
 double timestamp_;
 double fittedtime_;
 double correlation_;
+double resolution_;
 int channel_;
 int unit_;
 QStringList waveform_;

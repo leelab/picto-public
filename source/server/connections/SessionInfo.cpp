@@ -199,6 +199,16 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	}
 	sessionQ.finish();
 
+	// Load data source info.
+	executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"DataSource\"");
+	while(sessionQ.next())
+	{
+		QSharedPointer<Picto::DataSourceInfo> srcInfo(new Picto::DataSourceInfo());
+		srcInfo->fromXml(sessionQ.value(0).toString());
+		dataSourceInfoMap_[srcInfo->getName()] = srcInfo;
+	}
+	sessionQ.finish();
+
 	CreateCacheDatabase(databaseName);
 
 	// Load Current State
@@ -488,6 +498,18 @@ void SessionInfo::flushCache(QString sourceType)
  */
 void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 {
+	if(!dataSourceInfoMap_.contains("spikes"))
+	{
+		QSharedPointer<Picto::DataSourceInfo> srcInfo(new Picto::DataSourceInfo("spikes","spikes",data->getResolution()));
+		//Add the lfp data source info to the session database and our dataSourceInfoMap_ map
+		QSqlQuery sessionQ(getSessionDb());
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"DataSource\", :value)");
+		sessionQ.bindValue(":value", srcInfo->toXml());
+		if(executeWriteQuery(&sessionQ))
+			dataSourceInfoMap_["spikes"] = srcInfo;
+		sessionQ.finish();
+	}
+
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 
@@ -496,12 +518,10 @@ void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 	data->setCorrelation(alignmentTool_->getCorrelationCoefficient());
 	//locker.unlock();
 
-	query.prepare("INSERT INTO spikes (dataid, timestamp, fittedtime, correlation, channel, unit, waveform) "
-		"VALUES(:dataid, :timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
+	query.prepare("INSERT INTO spikes (dataid, timestamp, channel, unit, waveform) "
+		"VALUES(:dataid, :timestamp, :channel, :unit, :waveform)");
 	query.bindValue(":dataid", data->getDataID());
 	query.bindValue(":timestamp", data->getTimestamp());
-	query.bindValue(":fittedtime", data->getFittedtime());
-	query.bindValue(":correlation", data->getCorrelation());
 	query.bindValue(":channel", data->getChannel());
 	query.bindValue(":unit", data->getUnit());
 	query.bindValue(":waveform", data->getWaveformAsByteArray());
@@ -534,7 +554,6 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	else
 	{
 		stateVarId = nextSigChanVarId_--;
-		sigChanVarIDs_[sigChan] = stateVarId;
 
 		//Create the table for this signal channel.
 		QSqlQuery sessionQ(getSessionDb());
@@ -557,7 +576,9 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 		//Add the signal channel info to the session database.
 		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Signal\", :value)");
 		sessionQ.bindValue(":value", sigInfo.toXml());
-		executeWriteQuery(&sessionQ);
+		if(executeWriteQuery(&sessionQ))
+			sigChanVarIDs_[sigChan] = stateVarId;
+		sessionQ.finish();
 	}
 
 	if(data->length())
@@ -638,90 +659,6 @@ void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> d
 		alignTimeBases();
 }
 
-////! \brief inserts an LFP data point in the cache database
-//void SessionInfo::insertLFPData(Picto::LFPDataUnitPackage data)
-//{
-//	QSqlDatabase cacheDb = getCacheDb();
-//	QSqlQuery cacheQ(cacheDb);
-//
-//	// Create a 2D matrix with the lfp data (ie. each row is a channel, each column is a new time.
-//	QSharedPointer<QList<Picto::LFPDataPoint>> dataPoints = data.getData();
-//	QVector<QVector<int>> dataMatrix;
-//	QVector<QString> channels;
-//	QString columns;
-//	int maxRowLength = 0;
-//	for(QList<Picto::LFPDataPoint>::iterator iter = dataPoints->begin();iter != dataPoints->end();iter++)
-//	{
-//		dataMatrix.push_back(iter->potentials_->toVector());
-//		if(dataMatrix.last().size() > maxRowLength)
-//			maxRowLength = dataMatrix.last().size();
-//		channels.push_back(QString("ch").append(QString::number(iter->channel_)));
-//		columns.append(",").append(channels.last());
-//	}
-//	bool addedColumns;
-//	QMutexLocker locker(databaseWriteMutex_.data());
-//	QTime debugTimer;
-//	do
-//	{
-//		addedColumns = false;
-//		int currCol = 0;
-//		double currTime = data.getTimestamp();
-//		bool cmdFailed = false;
-//		QString command = QString("INSERT INTO lfp (dataid,timestamp,fittedtime,correlation%1) ").arg(columns);
-//		for(int currCol = 0;currCol<maxRowLength;currCol++,currTime += data.getSecPerSample())
-//		{
-//
-//			QString values;
-//			//Iterate through the channels in this timestamp, creating the column and data commands for the INSERT.
-//			for(int i=0;i<channels.size();i++)
-//			{
-//				if(dataMatrix[i].size() <= currCol)
-//					continue; // There's no more data for this channel
-//				values.append(",");
-//				values.append(QString::number(dataMatrix[i][currCol]));
-//			}
-//			command.append(QString("SELECT %2,%3,%4,%5%6")
-//				
-//				.arg(data.getDataID())
-//				.arg(currTime)
-//				.arg(alignmentTool_->convertToBehavioralTimebase(currTime))
-//				.arg(alignmentTool_->getCorrelationCoefficient())
-//				.arg(values));
-//			if(currCol < maxRowLength-1)
-//				command.append(" UNION ");
-//		}
-//debugTimer.start();
-//		if(!executeWriteQuery(&cacheQ,command,false))
-//		{
-//			//If we're here then we failed to write one of the queries.  Maybe its because the data columns being used aren't in the database yet.
-//
-//			//These records are used to check if our column already exists
-//			QSqlRecord cacheLFPRecord = cacheDb.record("lfp");
-//			QSqlRecord diskLFPRecord = cacheDb.record("diskdb.lfp");
-//			QSqlQuery cacheAlterQ(cacheDb);
-//			foreach(QString channel, channels)
-//			{
-//				int cacheIndex = cacheLFPRecord.indexOf(channel);
-//				if(cacheIndex > -1)
-//					continue;//This column is already in the cache database.
-//				int diskIndex = diskLFPRecord.indexOf(channel);
-//				if(diskIndex == -1)	// The column may also be in the disk database if we reloaded a dropped session, so we need to check.
-//					executeWriteQuery(&cacheAlterQ,QString("ALTER TABLE diskdb.lfp ADD COLUMN %1 INTEGER").arg(channel));
-//				executeWriteQuery(&cacheAlterQ,QString("ALTER TABLE lfp ADD COLUMN %1 INTEGER").arg(channel));
-//				//Now that we added the column to the tables, make sure its added in our lists.
-//				tableColumns_["lfp"].append(",").append(channel).append(" ");
-//				tableColumnTypes_["lfp"].append(",").append("INTEGER ");
-//				addedColumns = true;
-//				qDebug(QString("Added %1 column to lfp database").arg(channel).toAscii());
-//			}
-//			// If the command failed and we didn't add any columns, the error must have been for some other reason.  Report it.
-//			Q_ASSERT_X(!cmdFailed || addedColumns,"SessionInfo::insertLFPData","Error: "+cacheQ.lastError().text().toAscii());
-//		}
-//
-//	}while(addedColumns);	// If we added columns, then the data wasn't added.  Do it again.
-////qDebug("LFPwrite to sql total  " + QString::number(debugTimer.elapsed()).toAscii());
-//}
-
 //! \brief inserts an LFP data point in the cache database
 void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 {
@@ -730,6 +667,18 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 	//QStringList timestamps = data->getTimes().split(" ",QString::SkipEmptyParts);
 	double neuralTimestamp = data->getTimestamp().toDouble();
 	//QString potentials = data->getPotentials();
+
+	if(!dataSourceInfoMap_.contains("lfp"))
+	{
+		QSharedPointer<Picto::DataSourceInfo> srcInfo(new Picto::DataSourceInfo("lfp","lfp",data->getResolution()));
+		//Add the lfp data source info to the session database and our dataSourceInfoMap_ map
+		QSqlQuery sessionQ(getSessionDb());
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"DataSource\", :value)");
+		sessionQ.bindValue(":value", srcInfo->toXml());
+		if(executeWriteQuery(&sessionQ))
+			dataSourceInfoMap_["lfp"] = srcInfo;
+		sessionQ.finish();
+	}
 
 	double correlation = alignmentTool_->getCorrelationCoefficient();
 	double resolution = data->getResolution();
@@ -743,14 +692,10 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 	//Now that the tables are ready.  Do the insertion.
 	QSqlQuery query(cacheDb);
 	query.prepare("INSERT INTO lfp "
-		"(dataid,timestamp,fittedtime,correlation,sampleperiod,fittedsampleperiod,channel,data) VALUES (:dataid,:timestamp,:fittedtime,:correlation,:resolution,:fittedresolution,:channel,:data)");
+		"(dataid,timestamp,channel,data) VALUES (:dataid,:timestamp,:channel,:data)");
 
 	query.bindValue(":dataid",dataID);
 	query.bindValue(":timestamp",neuralTimestamp);
-	query.bindValue(":fittedtime",fittedTimestamp);
-	query.bindValue(":correlation",correlation);
-	query.bindValue(":sampleperiod",resolution);
-	query.bindValue(":fittedresolution",fittedResolution);
 	query.bindValue(":channel",channel);
 	query.bindValue(":data",data->getPotentialsAsByteArray());
 
@@ -924,7 +869,6 @@ void SessionInfo::InitializeVariables()
 	ignoreComponents_ = false;
 	latestStateVarTime_ = "0.0";
 	latestWrittenStateVarTime_ = "0.0";
-	timestampsAligned_ = (false);
 	//CreateUUID
 	if(uuid_ == QUuid())
 	{
@@ -950,8 +894,8 @@ void SessionInfo::InitializeVariables()
 	tableColumnTypes_["componentinfo"] = " TEXT,TEXT,TEXT,TEXT,INTEGER ";
 
 	tables_.push_back("spikes");
-	tableColumns_["spikes"] = " dataid,timestamp,fittedtime,correlation,channel,unit,waveform ";
-	tableColumnTypes_["spikes"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,TEXT,TEXT,BLOB ";
+	tableColumns_["spikes"] = " dataid,timestamp,channel,unit,waveform ";
+	tableColumnTypes_["spikes"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER,INTEGER,BLOB ";
 	tableDataProviders_["spikes"] = "PROXY";
 
 	tables_.push_back("neuralalignevents");
@@ -960,8 +904,8 @@ void SessionInfo::InitializeVariables()
 	tableDataProviders_["neuralalignevents"] = "PROXY";
 
 	tables_.push_back("lfp");
-	tableColumns_["lfp"] = " dataid,timestamp,fittedtime,correlation,sampleperiod,fittedsampleperiod,channel,data ";
-	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,REAL,REAL,REAL,INTEGER,BLOB ";
+	tableColumns_["lfp"] = " dataid,timestamp,channel,data ";
+	tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER,BLOB ";
 	tableDataProviders_["lfp"] = "PROXY";
 	
 	tables_.push_back("behavioralalignevents");
@@ -1316,12 +1260,32 @@ void SessionInfo::alignTimeBases(bool realignAll)
 	query.finish();
 	// Update all jitter and correlation values with the latest calculated alignment coefficients.
 	executeWriteQuery(&query,(QString("UPDATE alignevents SET ")+alignmentTool_->getSQLJitterEquation("jitter","neuraltime","behavioraltime","correlation")).toAscii());
-	if( realignAll || (!timestampsAligned_ && hadData && (alignmentTool_->getCorrelationCoefficient() > 0)) )
+	
+	//Update stored alignment coefficients
+	double nOffset = alignmentTool_->getNeuralOffsetTime();
+	double nFactor = alignmentTool_->getNeuralTemporalFactor();
+	QSharedPointer<Picto::AlignmentInfo> inf;
+	if(alignmentInfoMap_.contains("Neural"))
 	{
-		recalculateFittedTimes();
-		if(hadData && (alignmentTool_->getCorrelationCoefficient() > 0))
-			timestampsAligned_ = true;
+		inf = alignmentInfoMap_["Neural"];
+		inf->setOffsetTime(nOffset);
+		inf->setTemporalFactor(nFactor);
 	}
+	else
+	{
+		alignmentInfoMap_["Neural"] = inf = QSharedPointer<Picto::AlignmentInfo>(new Picto::AlignmentInfo(nOffset,nFactor));
+	}
+
+	//Replace the previous alignment info with updated data.
+	QSqlQuery sessionQ(getSessionDb());
+	sessionQ.prepare("DELETE FROM sessioninfo WHERE key=\"AlignmentInfo\"");
+	executeWriteQuery(&sessionQ);
+	sessionQ.finish();
+	sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"AlignmentInfo\", :value)");
+	sessionQ.bindValue(":value", inf->toXml());
+	executeWriteQuery(&sessionQ);
+	sessionQ.finish();
+
 	locker.unlock();
 
 }
@@ -1344,35 +1308,6 @@ void SessionInfo::createSessionIndeces()
 		}
 	}
 
-}
-
-void SessionInfo::recalculateFittedTimes()
-{
-	QSqlDatabase sessionDb = getSessionDb();
-	QSqlQuery query(sessionDb);
-	QSqlQuery query1(sessionDb);
-	flushCache();
-	QString queryString = "UPDATE spikes SET "+alignmentTool_->getSQLTimeConversionEquation("fittedtime","timestamp","correlation");
-	executeWriteQuery(&query,queryString);
-	queryString = "UPDATE lfp SET "+alignmentTool_->getSQLTimeConversionEquation("fittedtime","timestamp","correlation","fittedsampleperiod","sampleperiod");
-	executeWriteQuery(&query,queryString);
-	//executeReadQuery(&query,"SELECT dataid,timestamps FROM lfp");
-	//while(query.next())
-	//{
-	//	QStringList timestamps = query.value(1).toString().split(" ",QString::SkipEmptyParts);
-	//	QString fittedTimes;
-	//	foreach(QString time,timestamps)
-	//	{
-	//		fittedTimes.append(" ");
-	//		fittedTimes.append(QString::number(alignmentTool_->convertToBehavioralTimebase(time.toDouble())));
-	//	}
-	//	query1.prepare("UPDATE lfp SET fittedtimes=:fittedtimes,correlation=:correlation WHERE dataid=:dataid");
-	//	query1.bindValue(":fittedtimes",fittedTimes);
-	//	query1.bindValue(":correlation",alignmentTool_->getCorrelationCoefficient());
-	//	query1.bindValue(":dataid",query.value(0));
-	//}
-	////queryString = "UPDATE lfp SET "+alignmentTool_->getSQLTimeConversionEquation("fittedtime","timestamp","correlation");
-	////executeWriteQuery(&query,queryString);
 }
 
 //We use a single table to track the latest state of all variables pertinant to running

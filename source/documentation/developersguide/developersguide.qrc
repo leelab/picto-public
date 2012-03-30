@@ -5,6 +5,8 @@
    <file alias="_a_c_q_get_command_handler_8h-source.html">../../../output/documentation/main/html/_a_c_q_get_command_handler_8h-source.html</file>
    <file alias="_alignment_data_unit_8cpp-source.html">../../../output/documentation/main/html/_alignment_data_unit_8cpp-source.html</file>
    <file alias="_alignment_data_unit_8h-source.html">../../../output/documentation/main/html/_alignment_data_unit_8h-source.html</file>
+   <file alias="_alignment_info_8cpp-source.html">../../../output/documentation/main/html/_alignment_info_8cpp-source.html</file>
+   <file alias="_alignment_info_8h-source.html">../../../output/documentation/main/html/_alignment_info_8h-source.html</file>
    <file alias="_analysis_data_source_8cpp-source.html">../../../output/documentation/main/html/_analysis_data_source_8cpp-source.html</file>
    <file alias="_analysis_data_source_8h-source.html">../../../output/documentation/main/html/_analysis_data_source_8h-source.html</file>
    <file alias="_analysis_definition_8cpp-source.html">../../../output/documentation/main/html/_analysis_definition_8cpp-source.html</file>
@@ -152,6 +154,8 @@
    <file alias="_daq_board__test_8cpp-source.html">../../../output/documentation/main/html/_daq_board__test_8cpp-source.html</file>
    <file alias="_data_source_equipment_8cpp-source.html">../../../output/documentation/main/html/_data_source_equipment_8cpp-source.html</file>
    <file alias="_data_source_equipment_8h-source.html">../../../output/documentation/main/html/_data_source_equipment_8h-source.html</file>
+   <file alias="_data_source_info_8cpp-source.html">../../../output/documentation/main/html/_data_source_info_8cpp-source.html</file>
+   <file alias="_data_source_info_8h-source.html">../../../output/documentation/main/html/_data_source_info_8h-source.html</file>
    <file alias="_data_store_8cpp-source.html">../../../output/documentation/main/html/_data_store_8cpp-source.html</file>
    <file alias="_data_store_8h-source.html">../../../output/documentation/main/html/_data_store_8h-source.html</file>
    <file alias="_data_unit_8cpp-source.html">../../../output/documentation/main/html/_data_unit_8cpp-source.html</file>
@@ -814,6 +818,9 @@
    <file alias="class_picto_1_1_alignment_data_unit-members.html">../../../output/documentation/main/html/class_picto_1_1_alignment_data_unit-members.html</file>
    <file alias="class_picto_1_1_alignment_data_unit.html">../../../output/documentation/main/html/class_picto_1_1_alignment_data_unit.html</file>
    <file alias="class_picto_1_1_alignment_data_unit.png">../../../output/documentation/main/html/class_picto_1_1_alignment_data_unit.png</file>
+   <file alias="class_picto_1_1_alignment_info-members.html">../../../output/documentation/main/html/class_picto_1_1_alignment_info-members.html</file>
+   <file alias="class_picto_1_1_alignment_info.html">../../../output/documentation/main/html/class_picto_1_1_alignment_info.html</file>
+   <file alias="class_picto_1_1_alignment_info.png">../../../output/documentation/main/html/class_picto_1_1_alignment_info.png</file>
    <file alias="class_picto_1_1_analysis_module-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_module-members.html</file>
    <file alias="class_picto_1_1_analysis_module.html">../../../output/documentation/main/html/class_picto_1_1_analysis_module.html</file>
    <file alias="class_picto_1_1_analysis_output_display-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_output_display-members.html</file>
@@ -907,6 +914,9 @@
    <file alias="class_picto_1_1_d3_d_visual_target.png">../../../output/documentation/main/html/class_picto_1_1_d3_d_visual_target.png</file>
    <file alias="class_picto_1_1_data_source_equipment-members.html">../../../output/documentation/main/html/class_picto_1_1_data_source_equipment-members.html</file>
    <file alias="class_picto_1_1_data_source_equipment.html">../../../output/documentation/main/html/class_picto_1_1_data_source_equipment.html</file>
+   <file alias="class_picto_1_1_data_source_info-members.html">../../../output/documentation/main/html/class_picto_1_1_data_source_info-members.html</file>
+   <file alias="class_picto_1_1_data_source_info.html">../../../output/documentation/main/html/class_picto_1_1_data_source_info.html</file>
+   <file alias="class_picto_1_1_data_source_info.png">../../../output/documentation/main/html/class_picto_1_1_data_source_info.png</file>
    <file alias="class_picto_1_1_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_data_store-members.html</file>
    <file alias="class_picto_1_1_data_store.html">../../../output/documentation/main/html/class_picto_1_1_data_store.html</file>
    <file alias="class_picto_1_1_data_store.png">../../../output/documentation/main/html/class_picto_1_1_data_store.png</file>

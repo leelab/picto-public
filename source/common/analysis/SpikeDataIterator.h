@@ -25,6 +25,8 @@ public:
 
 private:
 	void updateSpikeValsList();
+	void getSamplePeriod();
+	void getAlignCoefficients();
 	void updateTotalQueryCount();
 
 	qulonglong lastSessionDataId_;
@@ -32,14 +34,17 @@ private:
 	QLinkedList<QSharedPointer<SpikeData>> spikeVals_;
 	QSqlDatabase session_;
 	QString tableName_;
+	bool sessionEnded_;
 	double samplePeriod_;
+	double offsetTime_;
+	double temporalFactor_;
 	unsigned int totalQueries_;
 	unsigned int readQueries_;
 
 };
 
 struct SpikeData : public AnalysisValue{
-	SpikeData(){}
+	SpikeData(){index.idSource_ = EventOrderIndex::NEURAL;}
 	SpikeData(qulonglong dataId, 
 				double time, 
 				unsigned int chan, 

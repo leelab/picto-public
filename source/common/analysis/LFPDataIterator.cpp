@@ -3,6 +3,8 @@
 #include <QVariant>
 #include <QStringList>
 #include <QByteArray>
+#include "../storage/datasourceinfo.h"
+#include "../storage/alignmentinfo.h"
 #include "LFPDataIterator.h"
 using namespace Picto;
 
@@ -17,6 +19,7 @@ LFPDataIterator::LFPDataIterator(QSqlDatabase session)
 	notReadyYetTime_ = 0;
 	sessionEnded_ = false;
 
+	getSamplePeriod();
 	updateTotalQueryCount();
 }
 
@@ -48,6 +51,9 @@ void LFPDataIterator::updateLFPValsList()
 	if(readQueries_ >= totalQueries_)
 		return;
 
+	if(!sessionEnded_)
+		getAlignCoefficients();
+
 	Q_ASSERT(session_.isValid() && session_.isOpen());
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
@@ -64,7 +70,7 @@ void LFPDataIterator::updateLFPValsList()
 	sessionEnded_ = query.next();
 
 	//Get lfp value list.
-	QString queryString = QString("SELECT dataid,fittedtime,fittedsampleperiod,data,channel "
+	QString queryString = QString("SELECT dataid,timestamp,data,channel "
 		"FROM lfp WHERE dataid > :lastDataId ORDER BY dataid LIMIT 1000");
 	query.prepare(queryString);
 	query.bindValue(":lastdataid",lastSessionDataId_);
@@ -81,15 +87,15 @@ void LFPDataIterator::updateLFPValsList()
 	double increment;
 	unsigned int chan;
 	while(query.next()){
-		if(query.value(2).toDouble() <= 0)
+
+		startTime = offsetTime_+temporalFactor_*query.value(1).toDouble();
+		increment = temporalFactor_*samplePeriod_;
+		chan = query.value(3).toInt();
+		if(increment <= 0)
 		{
 			//The fittedsampleperiod is invalid.  Return.
 			return;
 		}
-
-		startTime = query.value(1).toDouble();
-		increment = query.value(2).toDouble();
-		chan = query.value(4).toInt();
 		
 		//If this is a new channel move back in the array until we find the entry after where this data should be
 		//added.
@@ -126,7 +132,7 @@ void LFPDataIterator::updateLFPValsList()
 
 		//Convert data from blob to float array.  Get the relevant subchannel
 		//and calculate its time.
-		QByteArray dataByteArray = query.value(3).toByteArray();
+		QByteArray dataByteArray = query.value(2).toByteArray();
 		int numEntries = dataByteArray.size()/sizeof(float);
 		float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
 		for(int i=0;i<numEntries;i++)
@@ -183,6 +189,58 @@ void LFPDataIterator::updateLFPValsList()
 
 	if(readQueries_ > totalQueries_)
 		updateTotalQueryCount();
+}
+
+void LFPDataIterator::getSamplePeriod()
+{
+	samplePeriod_ = 0;
+	Q_ASSERT(session_.isValid() && session_.isOpen());
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+
+	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"DataSource\"");
+	query.prepare(queryString);
+	bool success = query.exec();
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return;
+	}
+	while(query.next())
+	{
+		DataSourceInfo src;
+		src.fromXml(query.value(0).toString());
+		if(src.getName() == "lfp")
+		{
+			samplePeriod_ = src.getResolution();
+			break;
+		}
+	}
+}
+
+void LFPDataIterator::getAlignCoefficients()
+{
+	offsetTime_ = 0;
+	temporalFactor_ = 0;
+	Q_ASSERT(session_.isValid() && session_.isOpen());
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+
+	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
+	query.prepare(queryString);
+	bool success = query.exec();
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return;
+	}
+	if(query.next())
+	{
+		AlignmentInfo inf;
+		inf.fromXml(query.value(0).toString());
+		offsetTime_ = inf.getOffsetTime();
+		temporalFactor_ = inf.getTemporalFactor();
+	}
 }
 
 void LFPDataIterator::updateTotalQueryCount()
