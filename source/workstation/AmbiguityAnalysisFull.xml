@@ -8,14 +8,14 @@
       for(i=0;i&lt;eye.length;i++)
       {
       eyeFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-                        +&quot;,&quot;+eye.trialInSeq.value(i)
+                        +&quot;,&quot;+eye.trialInSeq.value(eye.length-1)
                         +&quot;,&quot;+String( Math.round( 1000*(Number(eye.time.value(i))-Number(startTime)) ))
                         +&quot;,&quot;+eye.data.value(0,i)
                         +&quot;,&quot;+eye.data.value(1,i)
       );
       if(correct.length)
       eyeFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+eye.trialInSeq.value(i)
+      +&quot;,&quot;+eye.trialInSeq.value(eye.length-1)
       +&quot;,&quot;+String( Math.round( 1000*(Number(eye.time.value(i))-Number(startTime)) ))
       +&quot;,&quot;+eye.data.value(0,i)
       +&quot;,&quot;+eye.data.value(1,i)
@@ -24,14 +24,14 @@
       for(i=0;i&lt;diam.length;i++)
       {
       diamFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+diam.trialInSeq.value(i)
+      +&quot;,&quot;+diam.trialInSeq.value(diam.length-1)
       +&quot;,&quot;+String( Math.round( 1000*(Number(diam.time.value(i))-Number(startTime)) ))
       +&quot;,&quot;+diam.data.value(0,i)
       +&quot;,&quot;+diam.data.value(1,i)
       );
       if(correct.length)
       diamFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+diam.trialInSeq.value(i)
+      +&quot;,&quot;+diam.trialInSeq.value(diam.length-1)
       +&quot;,&quot;+String( Math.round( 1000*(Number(diam.time.value(i))-Number(startTime)) ))
       +&quot;,&quot;+diam.data.value(0,i)
       +&quot;,&quot;+diam.data.value(1,i)
@@ -159,7 +159,7 @@
       for(i=0;i&lt;spike.length;i++)
       {
        spikeFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+spike.trialInSeq.value(i)
+      +&quot;,&quot;+spike.trialInSeq.value(spike.length-1)
       +&quot;,&quot;+Math.round(1000*(spike.time.value(i)-Number(startTime)))
       +&quot;,&quot;+spike.data.channel(i)
       +&quot;,&quot;+spike.data.unit(i)
@@ -167,7 +167,7 @@
        +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))
       );
       waveFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+spike.trialInSeq.value(i)
+      +&quot;,&quot;+spike.trialInSeq.value(spike.length-1)
       +&quot;,&quot;+spike.data.channel(i)
       +&quot;,&quot;+spike.data.unit(i)
       +&quot;,&quot;+Math.round(1000*(spike.time.value(i)-Number(startTime)))
@@ -179,7 +179,7 @@
       if(wasCorrect)
       {
       spikeFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+spike.trialInSeq.value(i)
+      +&quot;,&quot;+spike.trialInSeq.value(spike.length-1)
       +&quot;,&quot;+Math.round(1000*(spike.time.value(i)-Number(startTime)))
       +&quot;,&quot;+spike.data.channel(i)
       +&quot;,&quot;+spike.data.unit(i)
@@ -187,7 +187,7 @@
       +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))
       );
       waveFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+spike.trialInSeq.value(i)
+      +&quot;,&quot;+spike.trialInSeq.value(spike.length-1)
       +&quot;,&quot;+spike.data.channel(i)
       +&quot;,&quot;+spike.data.unit(i)
       +&quot;,&quot;+Math.round(1000*(spike.time.value(i)-Number(startTime)))
@@ -201,7 +201,7 @@
       //for(i=0;i&lt;lfp.length;i++)
       //{
       //lfpFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      //+&quot;,&quot;+lfp.trialInSeq.value(i)
+      //+&quot;,&quot;+lfp.trialInSeq.value(lfp.length-1)
       //+&quot;,&quot;+lfp.data.channel(i)
       //+&quot;,&quot;+Math.round(1000*(lfp.time.value(i)-Number(startTime)))
       //+&quot;,&quot;+lfp.data.value(i)
@@ -209,7 +209,7 @@
       //if(wasCorrect)
       //{
       //lfpFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-      //+&quot;,&quot;+lfp.trialInSeq.value(i)
+      //+&quot;,&quot;+lfp.trialInSeq.value(lfp.length-1)
       //+&quot;,&quot;+lfp.data.channel(i)
       //+&quot;,&quot;+Math.round(1000*(lfp.time.value(i)-Number(startTime)))
       //+&quot;,&quot;+lfp.data.value(i)

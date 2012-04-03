@@ -762,11 +762,10 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 	{
 		hadData = true;
 		framedata = data->takeFirstDataPoint();
-		cacheQ.prepare("INSERT INTO frames (dataid, time, state)"
-			"VALUES(:dataid, :time, :state)");
+		cacheQ.prepare("INSERT INTO frames (dataid, time)"
+			"VALUES(:dataid, :time)");
 		cacheQ.bindValue(":dataid", framedata->getDataID());
 		cacheQ.bindValue(":time",framedata->time);
-		cacheQ.bindValue(":state",framedata->stateId_);
 		executeWriteQuery(&cacheQ,"",false);	
 	}
 	//Currently we require that frame data be sent to the server as soon as all 
@@ -946,10 +945,9 @@ void SessionInfo::InitializeVariables()
 	tableIndexedColumns_["elementlookup"] = " path ";
 
 	tables_.push_back("frames");
-	tableColumns_["frames"] = " dataid,time,state ";
-	tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER ";
+	tableColumns_["frames"] = " dataid,time ";
+	tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL ";
 	tableDataProviders_["frames"] = "DIRECTOR";
-	tableIndexedColumns_["frames"] = " state ";
 
 	tables_.push_back("rewards");
 	tableColumns_["rewards"] = " dataid,duration,channel,time ";
