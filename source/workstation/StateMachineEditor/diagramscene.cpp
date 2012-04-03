@@ -50,6 +50,7 @@
 #include "../../common/statemachine/pausepoint.h"
 #include "../../common/statemachine/ResultContainer.h"
 #include "../../common/statemachine/Result.h"
+#include "StartBarItem.h"
 #include "arrow.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -156,11 +157,18 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	QSharedPointer<DataStore> dataStore(asset.staticCast<DataStore>());
 
 	clear();
+	//Add a start bar
+	DiagramItem* startBar = NULL;
 	newItemIndex_ = 1;
 	QStringList childTypes = dataStore->getDefinedChildTags();
 	QPointF childAssetLoc(sceneRect().center().x(),sceneRect().center().y());
 	QList<QSharedPointer<Transition>> transitions;
 	QList<DiagramItem*> diagItems;
+	if(dataStore->inherits("Picto::StateMachine"))
+	{
+		startBar = new StartBarItem("",editorState_,NULL,this);
+		diagItems.push_back(startBar);
+	}
 	foreach(QString childType, childTypes)
 	{
 		QList<QSharedPointer<Asset>> assets = dataStore->getGeneratedChildren(childType);
@@ -195,6 +203,8 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 		QString source = transition->getSource();
 		QString sourceResult = transition->getSourceResult();
 		QString dest = transition->getDestination();
+		if(source.isEmpty() && sourceResult.isEmpty() && startBar)
+			start = startBar;
 		WireableItem* wireItem;
 		QSharedPointer<Asset> asset;
 		foreach(DiagramItem* diagItem,diagItems)

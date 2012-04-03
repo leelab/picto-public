@@ -30,7 +30,6 @@ public:
 	QPoint getPos();
 	virtual QString getUITemplate(){return "UIEnabled";};
 	virtual QString assetType(){return "UIEnabled";};
-		virtual QList<QSharedPointer<Transition>> getDescendantsTransitions();
 signals:
 	void nameEdited();
 

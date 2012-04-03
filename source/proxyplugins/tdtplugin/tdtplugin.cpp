@@ -22,11 +22,13 @@ QString TdtPlugin::device() const
 
 bool TdtPlugin::getRunningBlockInfo()
 {
+	QString serverName = "local";
+	#ifdef DEVELOPMENTBUILD
 	//get the server/tank/block name
 	Dialog *getServerInfo = new Dialog();
 	getServerInfo->exec();
-
-	QString serverName = getServerInfo->serverLine->text();
+	serverName = getServerInfo->serverLine->text();
+	#endif
 
 	//convert everything from QString to wchar_t*
 	//This is ugly....

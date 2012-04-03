@@ -35,6 +35,7 @@ protected:
 	QSharedPointer<AssetFactory> transitionFactory_;
 	QMap<QString, QSharedPointer<ResultContainer> > elements_;
 	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
+	QSharedPointer<Transition> initTransition_;
 
 private:
 	bool getTransitionAssets(QSharedPointer<Transition> transition, QSharedPointer<ResultContainer>& source,QSharedPointer<ResultContainer>& sourceResult, QSharedPointer<ResultContainer>& destination);

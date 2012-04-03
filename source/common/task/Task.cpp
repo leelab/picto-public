@@ -72,7 +72,7 @@ bool Task::jumpToState(QStringList path, QString state)
 void Task::setTaskNumber(int num)
 {
 	taskNumber_ = num;
-	initTransition_ = QSharedPointer<Transition>(new Transition("NULL","NULL",stateMachine_->getName()));
+	initTransition_ = QSharedPointer<Transition>(new Transition("","",stateMachine_->getName()));
 	initTransition_->setAssetId(-taskNumber_);
 	initTransition_->setSelfPtr(initTransition_);
 	initTransition_->setParentAsset(selfPtr());
@@ -105,7 +105,7 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	if(dataChannel.isNull())
 		return;
 
-	QSharedPointer<Transition> tran(new Transition("NULL","NULL",stateMachine_->getName()));
+	QSharedPointer<Transition> tran(new Transition("","",stateMachine_->getName()));
 	tran->setAssetId(-taskNumber_);
 	engine->addStateTransitionForServer(tran);
 }
@@ -126,12 +126,12 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	if(result == "EngineAbort")
 	{
 
-		QSharedPointer<Transition> tran(new Transition("NULL",result,"NULL"));
+		QSharedPointer<Transition> tran(new Transition("",result,""));
 		engine->addStateTransitionForServer(tran);
 	}
 	else
 	{
-		QSharedPointer<Transition> tran(new Transition(stateMachine_->getName(),result,"NULL"));
+		QSharedPointer<Transition> tran(new Transition(stateMachine_->getName(),result,""));
 		engine->addStateTransitionForServer(tran);
 	}
 	//Even though there's no actual frame here, calling reportNewFrame has the effect of 

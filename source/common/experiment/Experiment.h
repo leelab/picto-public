@@ -19,7 +19,6 @@
 #include "../engine/PictoEngine.h"
 #include "../engine/propertytable.h"
 #include "../storage/propertylookup.h"
-#include "../storage/transitionlookup.h"
 
 namespace Picto {
 
@@ -77,7 +76,6 @@ private:
 	QList<QSharedPointer<Task> > tasks_;
 	const QString latestSyntaxVersion_;
 	QSharedPointer<PropertyTable> propTable_;
-	QSharedPointer<TransitionLookup> transLookup_;
 	QSharedPointer<Engine::PictoEngine> engine_;
 	bool signalCoeffInitialized_;
 	//QList<QSharedPointer<SessionData> > sessionDataElements_;

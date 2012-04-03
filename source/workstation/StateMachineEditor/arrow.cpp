@@ -45,6 +45,7 @@
 #include <math.h>
 #include "ArrowSourceItem.h"
 #include "ArrowDestinationItem.h"
+#include "StartBarItem.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/statemachine/MachineContainer.h"
 #include "AssetItem.h"
@@ -100,10 +101,16 @@ Arrow* Arrow::Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, 
 	//Find Asset Item ancestors
 	QSharedPointer<Asset> source = getAssetAncestor(startItem);
 	QSharedPointer<Asset> dest = getAssetAncestor(endItem);
+	if(dynamic_cast<StartBarItem*>(startItem))
+		source = windowAsset;
 	if(source.isNull() || dest.isNull())
 		return NULL;
 	QString result = static_cast<ArrowSourceItem*>(startItem)->getName();
-	QSharedPointer<Transition> newTrans(new Transition(source->getName(),result,dest->getName()));
+	QSharedPointer<Transition> newTrans;
+	if(source == windowAsset)
+		newTrans = QSharedPointer<Transition>(new Transition("","",dest->getName()));
+	else
+		newTrans = QSharedPointer<Transition>(new Transition(source->getName(),result,dest->getName()));
 	if(!windowAsset.staticCast<MachineContainer>()->addTransition(newTrans))
 		return NULL;
 	return new Arrow(newTrans,startItem,endItem,contextMenu,parent,scene);

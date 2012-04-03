@@ -29,7 +29,7 @@ StateMachine::StateMachine() :
 	
 	AddDefinableProperty("Type","StateMachine");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 
-	AddDefinableProperty("InitialElement","");
+	//AddDefinableProperty("InitialElement","");
 	
 	//Note that this is the same order as the enum to allow the enum to be
 	//used as an index
@@ -74,76 +74,24 @@ StateMachineLevel::StateMachineLevel StateMachine::getLevel()
 	return (StateMachineLevel::StateMachineLevel) propertyContainer_->getPropertyValue("Level").toInt();
 }
 
-////! \brief Adds a transition to this state machine
-//void StateMachine::addTransition(QSharedPointer<Transition> transition)
-//{
-//	if(		!elements_.contains(transition->getSource())
-//		||	elements_[transition->getSource()]->getResult(transition->getSourceResult()).isNull())
-//		return;
-//	if(elements_.contains(transition->getDestination()))
-//		transition->setDestination(elements_[transition->getDestination()]);
-//	else if(results_.contains(transition->getDestination()))
-//		transition->setDestination(results_[transition->getDestination()]);
-//	else
-//		return;
-//
-//	transition->setSource(elements_[transition->getSource()]);
-//	transition->setSourceResult(elements_[transition->getSource()]->getResult(transition->getSourceResult()));
-//
-//	QList<QSharedPointer<Asset>> transChildren = getGeneratedChildren("Transition");
-//	bool found = false;
-//	foreach(QSharedPointer<Asset> transChild,transChildren)
-//	{
-//		if(transChild == transition)
-//		{
-//			found = true;
-//			break;
-//		}
-//	}
-//	if(!found)
-//		AddChild("Transition",transition);
-//
-//	transitions_.insert(transition->getSource(), transition);
-//}
-//
-////! \brief adds an element to this state machine
-//void StateMachine::addElement(QSharedPointer<StateMachineElement> element)
-//{
-//	elements_[element->getName()] = element;
-//
-//	////if the element is a Reward, we need to add to our Reward list
-//	//if(element->type() == "Reward")
-//	//{
-//	//	addResult(element->getName());
-//	//}
-//
-//	//Add all of our parameters to the element
-//	element->addParameters(parameterContainer_);
-//}
-//void StateMachine::addScriptable(QSharedPointer<Parameter> parameter)
-//{
-//	addScriptable(parameter);
-//	//localParameterContainer_->addScriptable(parameter);
-//}
-
 QSharedPointer<Asset> StateMachine::Create()
 {
 	return QSharedPointer<Asset>(new StateMachine());
 }
 
 
-bool StateMachine::setInitialElement(QString elementName)
-{
-	if(elements_.contains(elementName))
-	{
-		propertyContainer_->setPropertyValue("InitialElement", elementName);
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+//bool StateMachine::setInitialElement(QString elementName)
+//{
+//	if(elements_.contains(elementName))
+//	{
+//		propertyContainer_->setPropertyValue("InitialElement", elementName);
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
 
 /*!	\brief Sets the machine in a specific state
  *	
@@ -192,145 +140,6 @@ bool StateMachine::jumpToState(QStringList path, QString state)
 	return true;
 }
 
-///*! \brief Confirms that the state machine is legal
-// *
-// *	This function will mostly be used in the deserialization function to
-// *	confirm that the passed in XML is legal.  However it is possible that
-// *	it could be used elsewhere...
-// *
-// *	The validation process consists of:
-// *		- check that the contained state machines are of a legal level
-// *		- check each transition to confirm that the source, 
-// *		  sourceResult, and destination all exist.
-// *		- check that every element has all its results connected to
-// *		  a transition
-// *		- check that the initial element is a real element
-// *		- validate all contained state machines
-// *		
-// */
-//bool StateMachine::validateStateMachine()
-//{
-//	QString name = propertyContainer_->getPropertyValue("Name").toString();
-//
-//	//Confirm that any contained StateMachines are of the correct level
-//	foreach(QSharedPointer<StateMachineElement> element, elements_)
-//	{
-//		if(element->type() == "StateMachine")
-//		{
-//			StateMachineLevel::StateMachineLevel containedLevel;
-//			containedLevel = element.staticCast<StateMachine>()->getLevel();
-//
-//			StateMachineLevel::StateMachineLevel thisLevel;
-//			thisLevel = getLevel();
-//
-//			QString errMsg = QString("StateMachine: %1 contains a statemachine of incorrect level.  "
-//				"E.g. A statemachine of level \"Trial\" may not contain a statemachine of level \"Task\"")
-//				.arg(name);
-//			if(thisLevel == StateMachineLevel::Stage)
-//			{
-//				if(containedLevel > thisLevel)
-//				{
-//					addError("ValidateStateMachine", errMsg);
-//					return false;
-//				}
-//			}
-//			else
-//			{
-//				if(containedLevel >= thisLevel)
-//				{
-//					addError("ValidateStateMachine", errMsg);
-//					return false;
-//				}
-//			}
-//		}
-//		
-//	}
-//
-//	//Confirm that all transitions are legal
-//	foreach(QSharedPointer<Transition> tran, transitions_)
-//	{
-//		QString source = tran->getSource();
-//		if(!elements_.contains(source))
-//		{
-//			QString errMsg = QString("State Machine: %1 has an illegal transition.  "
-//				"Source: %2 is not a element.").arg(name).arg(source);
-//			addError("ValidateStateMachine", errMsg);
-//			return false;
-//		}
-//		
-//		QString dest = tran->getDestination();
-//		if(!elements_.contains(dest) && !results_.contains(dest))
-//		{
-//			QString errMsg = QString("State Machine: %1 has an illegal transition.  "
-//				"Destination: %2 is not a element.").arg(name).arg(dest);
-//			addError("ValidateStateMachine", errMsg);
-//			return false;
-//		}
-//
-//		QString sourceResult = tran->getSourceResult();
-//		QSharedPointer<StateMachineElement> sourceElement;
-//		sourceElement = elements_.value(source);
-//		if(!sourceElement->getResultList().contains(sourceResult))
-//		{
-//			QString errMsg = QString("State Machine: %1 has an illegal transition.  "
-//				"Result: %2 is not a result generated by source: %3").arg(name)
-//				.arg(sourceResult).arg(sourceElement->getName());
-//			addError("ValidateStateMachine", errMsg);
-//			return false;
-//		}
-//	}
-//
-//	//Confrim that every element has all of its transitions connected
-//	foreach(QSharedPointer<StateMachineElement> element, elements_)
-//	{
-//		QStringList results = element->getResultList();
-//		foreach(QString result, results)
-//		{
-//			bool found = false;
-//			foreach(QSharedPointer<Transition> tran, transitions_.values(element->getName()))
-//			{
-//				if(tran->getSourceResult() == result)
-//				{
-//					found = true;
-//					continue;
-//				}
-//			}
-//			if(!found)
-//			{
-//				QString elementName = element->getName();
-//				QString unconnectedResult = result;
-//				QString errMsg = QString("State Machine: %1 Element %2 has an "
-//					"unconnected result of %3").arg(name).arg(elementName).arg(unconnectedResult);
-//				addError("ValidateStateMachine", errMsg);
-//				return false;
-//			}
-//		}			
-//	}
-//
-//	//Confirm that the initial element is a real element
-//	QString initialElement = propertyContainer_->getPropertyValue("InitialElement").toString();
-//	if(!elements_.contains(initialElement))
-//	{
-//		QString errMsg = QString("InitialElement: %1 is not an element of state achine: %2")
-//			.arg(initialElement).arg(name);
-//		addError("ValidateStateMachine", errMsg);
-//		return false;
-//	}
-//
-//	//Do the same for all state machines contained within this state machine
-//	foreach(QSharedPointer<StateMachineElement> element, elements_)
-//	{
-//		if(element->type() == "StateMachine")
-//		{
-//			if(!element.staticCast<StateMachine>()->validateStateMachine())
-//				return false;
-//		}
-//	}
-//
-//	//If we made it this far, all the transitions are "legal"
-//	return true;
-//}
-
 
 /*	\brief The "run" function
  *
@@ -369,8 +178,10 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 	if(!ignoreInitialElement_)
 	{
-		currElementName = propertyContainer_->getPropertyValue("InitialElement").toString();
+		//currElementName = propertyContainer_->getPropertyValue("InitialElement").toString();
+		currElementName = initTransition_->getDestination();
 		currElement_ = elements_.value(currElementName).staticCast<StateMachineElement>();
+		engine->addStateTransitionForServer(initTransition_);
 	}
 	else
 	{
@@ -726,6 +537,15 @@ void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
 
 void StateMachine::postDeserialize()
 {
+	////Remove me when all experiments are updated to have init transitions!!!!!!!!!!!!!!!!!!!!!!
+	//QSharedPointer<Transition> newTrans(new Transition("","",propertyContainer_->getPropertyValue("InitialElement").toString()));
+	//if(addTransition(newTrans))
+	//{
+	//	newTrans->setExperimentConfig(getExperimentConfig());
+	//	propertyContainer_->getProperty("InitialElement")->setDeleted();
+	//}
+	/////////////////////////////////////////////////////////////////////////////////////////////7
+
 	MachineContainer::postDeserialize();
 }
 
@@ -778,13 +598,22 @@ bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRead
 		}
 	}
 
-	//Confirm that the initial element is a real element
-	QString initialElement = propertyContainer_->getPropertyValue("InitialElement").toString();
-	if(!elements_.contains(initialElement))
+	////Confirm that the initial element is a real element
+	//QString initialElement = propertyContainer_->getPropertyValue("InitialElement").toString();
+	//if(!elements_.contains(initialElement))
+	//{
+	//	QString errMsg = QString("InitialElement: %1 is not an element of state machine: %2")
+	//		.arg(initialElement).arg(myName);
+	//	addError("StateMachine", errMsg,xmlStreamReader);
+	//	return false;
+	//}
+
+	//Confirm that there is an initial state transition
+	if(initTransition_.isNull())
 	{
-		QString errMsg = QString("InitialElement: %1 is not an element of state machine: %2")
-			.arg(initialElement).arg(myName);
-		addError("StateMachine", errMsg,xmlStreamReader);
+		QString errMsg = QString(
+								"MachineContainer: %1 does not have an initial state transition").arg(getName());
+		addError("MachineContainer", errMsg, xmlStreamReader);
 		return false;
 	}
 

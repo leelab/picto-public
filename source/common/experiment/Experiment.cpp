@@ -8,8 +8,7 @@ namespace Picto {
 Experiment::Experiment()
 :
 latestSyntaxVersion_("0.0.1"),
-engine_(NULL),
-transLookup_(QSharedPointer<TransitionLookup>(new TransitionLookup()))
+engine_(NULL)
 {
 	signalCoeffInitialized_ = false;
 	AddDefinableProperty("SyntaxVersion","");
@@ -78,24 +77,7 @@ QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
 	}
 	return returnVal;
 }
-
-//QString Experiment::getPropLookupXml()
-//{
-//	QString returnVal;
-//	if(propTable_)
-//		returnVal = propTable_->getPropLookup()->toXml();
-//	return returnVal;
-//}
-
-//QString Experiment::getTransLookupXml()
-//{
-//	QString returnVal;
-//	if(transLookup_)
-//		returnVal = transLookup_->toXml();
-//	return returnVal;
-//}
 	
-
 bool Experiment::runTask(QString taskName)
 {
 	if(engine_.isNull())
@@ -191,13 +173,6 @@ void Experiment::postDeserialize()
 	foreach(QSharedPointer<Property> prop,descendantProps)
 	{
 		propTable_->addProperty(prop);	// This adds the property to the property table and gives it an index for use in transmission
-	}
-
-	transLookup_->clear();//Empties trans lookup
-	QList<QSharedPointer<Transition>> descendantTrans = getDescendantsTransitions();
-	foreach(QSharedPointer<Transition> trans,descendantTrans)
-	{
-		transLookup_->addTransition(trans);	// This adds the transition to lookup
 	}
 
 }

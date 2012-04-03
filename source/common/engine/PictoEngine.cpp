@@ -456,7 +456,7 @@ QString PictoEngine::getServerPathUpdate()
 		return "";
 	QSharedPointer<Asset> asset = expConfig_->getAsset(currStateUnit_->getTransitionID());
 	QSharedPointer<Transition> trans;
-	QString result = "";
+	QString result;
 	if(asset)
 	{
 		Q_ASSERT(asset->inherits("Picto::Transition"));
@@ -469,8 +469,6 @@ QString PictoEngine::getServerPathUpdate()
 		return "";
 	}
 	QString runningPath = runningPath_;
-	if(result == "NULL")
-		result = "";
 	if(result != "EngineAbort")
 	{
 		if(trans)

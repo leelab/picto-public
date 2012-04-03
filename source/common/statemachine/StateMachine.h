@@ -68,7 +68,7 @@ public:
 	//void addTransition(QSharedPointer<Transition> transition);
 	//void addScriptable(QSharedPointer<Parameter> parameter);
 	//void addElement(QSharedPointer<StateMachineElement> element);
-	bool setInitialElement(QString elementName);
+	//bool setInitialElement(QString elementName);
 
 	void setLevel(StateMachineLevel::StateMachineLevel level);
 	StateMachineLevel::StateMachineLevel getLevel();
