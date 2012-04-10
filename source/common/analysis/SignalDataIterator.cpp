@@ -50,6 +50,15 @@ void SignalDataIterator::updateSignalValsList()
 	query.setForwardOnly(true);
 
 	//Get signal value list.
+	//NOTE: In the case of all values in the picto session that reference a frameid EXCEPT for signalchannels,
+	//The frame reference is the frame on which the value took effect (ie. Visible=true may have been set in 
+	//picto at some time during the presentation of frame 1, but it only affected the user when the object actually
+	//became visible sometime during frame 2, so it is marked with frame 2).
+	//In the case of signal channels however, the data is an input into the system.  The system, and the operator
+	//care about what the user was responding to and so signal channel readings are marked with the frame that
+	//was displayed just before they occured.  The offsettime value of the signal channel is therefore an offset
+	//from the time of the channel's marked frame id.  It is the offset in time from when the frame marked frame
+	//id occured to the time of the first signal channel reading.
 	QString queryString = QString("SELECT s.dataid,f.time,s.offsettime,s.data "
 							"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
 							"s.dataid > :lastdataid ORDER BY s.dataid LIMIT 10000").arg(tableName_);

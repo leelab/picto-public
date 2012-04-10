@@ -10,15 +10,15 @@
       eyeFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
                         +&quot;,&quot;+eye.trialInSeq.value(eye.length-1)
                         +&quot;,&quot;+String( Math.round( 1000*(Number(eye.time.value(i))-Number(startTime)) ))
-                        +&quot;,&quot;+eye.data.value(0,i)
-                        +&quot;,&quot;+eye.data.value(1,i)
+                        +&quot;,&quot;+Math.round(eye.data.value(0,i))
+                        +&quot;,&quot;+Math.round(eye.data.value(1,i))
       );
       if(correct.length)
       eyeFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+eye.trialInSeq.value(eye.length-1)
       +&quot;,&quot;+String( Math.round( 1000*(Number(eye.time.value(i))-Number(startTime)) ))
-      +&quot;,&quot;+eye.data.value(0,i)
-      +&quot;,&quot;+eye.data.value(1,i)
+      +&quot;,&quot;+Math.round(eye.data.value(0,i))
+      +&quot;,&quot;+Math.round(eye.data.value(1,i))
       );
       }
       for(i=0;i&lt;diam.length;i++)
@@ -26,15 +26,15 @@
       diamFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+diam.trialInSeq.value(diam.length-1)
       +&quot;,&quot;+String( Math.round( 1000*(Number(diam.time.value(i))-Number(startTime)) ))
-      +&quot;,&quot;+diam.data.value(0,i)
-      +&quot;,&quot;+diam.data.value(1,i)
+      +&quot;,&quot;+Math.round(diam.data.value(0,i))
+      +&quot;,&quot;+Math.round(diam.data.value(1,i))
       );
       if(correct.length)
       diamFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+diam.trialInSeq.value(diam.length-1)
       +&quot;,&quot;+String( Math.round( 1000*(Number(diam.time.value(i))-Number(startTime)) ))
-      +&quot;,&quot;+diam.data.value(0,i)
-      +&quot;,&quot;+diam.data.value(1,i)
+      +&quot;,&quot;+Math.round(diam.data.value(0,i))
+      +&quot;,&quot;+Math.round(diam.data.value(1,i))
       );
       }
       for(i=0;i&lt;Event.length;i++)
@@ -171,7 +171,7 @@
       +&quot;,&quot;+spike.data.channel(i)
       +&quot;,&quot;+spike.data.unit(i)
       +&quot;,&quot;+Math.round(1000*(spike.time.value(i)-Number(startTime)))
-      +&quot;,&quot;+spike.data.samplePeriod(i)
+      +&quot;,&quot;+Math.round(1000000000*spike.data.samplePeriod(i))/1000000
       +&quot;,&quot;+spike.data.waveSize(i)
       +&quot;,&quot;+spike.data.wave(i)
       );
@@ -191,7 +191,7 @@
       +&quot;,&quot;+spike.data.channel(i)
       +&quot;,&quot;+spike.data.unit(i)
       +&quot;,&quot;+Math.round(1000*(spike.time.value(i)-Number(startTime)))
-      +&quot;,&quot;+spike.data.samplePeriod(i)
+      +&quot;,&quot;+Math.round(1000000000*spike.data.samplePeriod(i))/1000000
       +&quot;,&quot;+spike.data.waveSize(i)
       +&quot;,&quot;+spike.data.wave(i)
       );
@@ -227,6 +227,8 @@
       <Name>spike</Name>
       <DataSource type="Spike">
         <Name>data</Name>
+        <ScaleFactor>1000</ScaleFactor>
+        <DecimalPlaces>6</DecimalPlaces>
       </DataSource>
       <DataSource type="Property">
         <Name>trialInSeq</Name>

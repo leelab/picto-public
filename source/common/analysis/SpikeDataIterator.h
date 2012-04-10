@@ -52,6 +52,7 @@ struct SpikeData : public AnalysisValue{
 				double sampPer,
 				unsigned int wSize,
 				QString waveDat){index.time_ = time;index.dataId_ = dataId;index.idSource_ = EventOrderIndex::NEURAL;channel=chan;unit=un;samplePeriod=sampPer;waveSize=wSize;wave=waveDat;};
+	QString scaleWave(double scaleFactor = 1.0, unsigned int decimalPlaces = 6);
 	unsigned int channel;
 	unsigned int unit;
 	double samplePeriod;

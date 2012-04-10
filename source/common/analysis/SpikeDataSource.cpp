@@ -5,6 +5,8 @@ using namespace Picto;
 
 SpikeDataSource::SpikeDataSource()
 {
+	AddDefinableProperty(QVariant::Double,"ScaleFactor",1.0);
+	AddDefinableProperty(QVariant::Int,"DecimalPlaces",6);
 }
 
 SpikeDataSource::~SpikeDataSource()
@@ -63,7 +65,7 @@ QString SpikeDataSource::wave(int triggerIndex)
 {
 	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
 	if(data)
-		return data->wave;
+		return data->scaleWave(propertyContainer_->getPropertyValue("ScaleFactor").toDouble(),propertyContainer_->getPropertyValue("DecimalPlaces").toInt());
 	return "";
 }
 

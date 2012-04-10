@@ -9,6 +9,7 @@
 #include "SignalDataSource.h"
 #include "SpikeDataSource.h"
 #include "TimeDataSource.h"
+#include "FrameDataSource.h"
 #include "DefaultDataSource.h"
 
 #include "../../common/memleakdetect.h"
@@ -21,13 +22,15 @@ AnalysisTrigger::AnalysisTrigger()
 	dataSourceFactory->addAssetType("LFP",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LFPDataSource::Create))));	
 	dataSourceFactory->addAssetType("Property",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PropertyDataSource::Create))));	
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PropertyDataSource::Create))));
+	dataSourceFactory->addAssetType("Frame",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FrameDataSource::Create))));	
 	dataSourceFactory->addAssetType("Signal",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalDataSource::Create))));	
 	dataSourceFactory->addAssetType("Spike",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SpikeDataSource::Create))));	
 	dataSourceFactory->addAssetType("Time",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimeDataSource::Create))));	
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimeDataSource::Create))));
 	reset();
 }
 

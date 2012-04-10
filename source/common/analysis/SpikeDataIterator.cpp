@@ -174,3 +174,13 @@ void SpikeDataIterator::updateTotalQueryCount()
 	if(query.next())
 		totalQueries_ = query.value(0).toInt();
 }
+
+QString SpikeData::scaleWave(double scaleFactor, unsigned int decimalPlaces)
+{
+	QStringList vals = wave.split(",",QString::SkipEmptyParts);
+	for(int i=0;i<vals.size();i++)
+	{
+		vals[i] = QString::number(vals[i].toDouble()*scaleFactor,'f',decimalPlaces);
+	}
+	return vals.join(",");
+}

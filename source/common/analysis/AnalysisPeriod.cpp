@@ -11,6 +11,7 @@
 #include "SignalTrigger.h"
 #include "SpikeTrigger.h"
 #include "TimeTrigger.h"
+#include "FrameTrigger.h"
 #include "TransitionTrigger.h"
 #include "AnalysisOutput.h"
 #include "FileOutput.h"
@@ -33,7 +34,9 @@ AnalysisPeriod::AnalysisPeriod()
 	triggerFactory->addAssetType("LFP",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LFPTrigger::Create))));	
 	triggerFactory->addAssetType("Property",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PropertyTrigger::Create))));	
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PropertyTrigger::Create))));
+	triggerFactory->addAssetType("Frame",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FrameTrigger::Create))));	
 	triggerFactory->addAssetType("Signal",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalTrigger::Create))));	
 	triggerFactory->addAssetType("Spike",

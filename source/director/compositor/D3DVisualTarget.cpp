@@ -71,7 +71,7 @@ D3DVisualTarget::D3DVisualTarget(bool timingCritical) :
 	d3dpp_.Windowed = false; 
 	d3dpp_.BackBufferHeight = DisplayMode.Height;
 	d3dpp_.BackBufferWidth = DisplayMode.Width;
-	d3dpp_.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
+	d3dpp_.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE ;//D3DPRESENT_INTERVAL_DEFAULT;
 	d3dpp_.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
 
 	renderSuccess_ = false;
