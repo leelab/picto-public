@@ -13,6 +13,7 @@
 #include "../../common/storage/LFPDataUnitPackage.h"
 #include "../../common/storage/DataSourceInfo.h"
 #include "../../common/storage/AlignmentInfo.h"
+#include "../../common/storage/TaskRunDataUnit.h"
 #include "ComponentInfo.h"
 
 #include <QSharedPointer>
@@ -80,6 +81,7 @@ public:
 	void insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data);
 	void insertRewardData(QSharedPointer<Picto::RewardDataUnit> data);
 	void insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data);
+	void insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data);
 
 	QString selectStateVariables(QString fromTime);
 	QString selectLatestNeuralData(QString fromDataId);
@@ -173,6 +175,7 @@ private:
 	QMap<QString,QSharedPointer<Picto::DataSourceInfo>> dataSourceInfoMap_;
 	QMap<QString,QSharedPointer<Picto::AlignmentInfo>> alignmentInfoMap_;
 	int nextSigChanVarId_;
+	int nextTaskRunId_;
 };
 
 #endif

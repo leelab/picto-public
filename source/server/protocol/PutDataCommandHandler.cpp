@@ -3,6 +3,7 @@
 #include "../../common/globals.h"
 #include "../../common/storage/BehavioralDataUnitPackage.h"
 #include "../../common/storage/StateDataUnit.h"
+#include "../../common/storage/TaskRunDataUnit.h"
 #include "../connections/SessionInfo.h"
 #include "../connections/ConnectionManager.h"
 
@@ -74,6 +75,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));
+
 
 	if(sessionInfo.isNull())
 		return notFoundResponse;
@@ -165,6 +167,13 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertLFPData(lfpData);
 			//qDebug("LFPTotal  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
+		}
+		else if(dataType == "TaskRunDataUnit")
+		{
+			/*commandProcessingTimer.start();*/
+			QSharedPointer<Picto::TaskRunDataUnit> taskRunData(new Picto::TaskRunDataUnit());
+			taskRunData->fromXml(xmlReader);
+			sessionInfo->insertTaskRunData(taskRunData);
 		}
 		else
 		{

@@ -108,6 +108,9 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	QSharedPointer<Transition> tran(new Transition("","",stateMachine_->getName()));
 	tran->setAssetId(-taskNumber_);
 	engine->addStateTransitionForServer(tran);
+	Timestamper stamper;
+	double startTime = stamper.stampSec();
+	engine->markTaskRunStart(getName().append("_Started_%1").arg(startTime));
 }
 
 
@@ -139,7 +142,9 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	//Since there's no frame after the end of the experiment, this "fake last frame" takes 
 	//its place.
 	Timestamper stamper;
-	engine->reportNewFrame(stamper.stampSec(),getAssetId());
+	double frameTime = stamper.stampSec();
+	engine->markTaskRunStop();
+	engine->reportNewFrame(frameTime,getAssetId());
 }
 /*! \brief Turns this task into an XML fragment
  *

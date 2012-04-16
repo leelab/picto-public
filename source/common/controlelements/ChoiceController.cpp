@@ -89,7 +89,10 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	//check to see if we've met or exceeded the total time
 	int totalTime = propertyContainer_->getPropertyValue("TotalTime").toInt();
 	int currTotalTime = cumulativeTimer_.elapsedTime(timeUnits);
-	if(currTotalTime >= totalTime)
+	int fixTime = propertyContainer_->getPropertyValue("FixationTime").toInt();
+	int currAcqTime = acquisitionTimer_.elapsedTime(timeUnits);
+	int remainingFixTime = targetAcquired_?fixTime-currAcqTime:fixTime;
+	if(currTotalTime+remainingFixTime > totalTime)
 	{
 		isDone_ = true;
 		result_ = "Total Time Exceeded";
@@ -101,7 +104,7 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	//just left a target
 	if(currTarget != lastTarget_ && targetAcquired_)
 	{
-		if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
+		if(!engine->slaveMode() && propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
 			runScript(getName().simplified().remove(' ').append("_TargetExit"));
 		//Are reentries allowed?
 		if(!propertyContainer_->getPropertyValue("AllowReentries").toBool())
@@ -117,6 +120,14 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			acquisitionTimer_.start();
 			targetAcquired_ = true;
 		}
+		
+		//Recheck if fixation is possible in the timeframe since a target was left
+		if(currTotalTime+fixTime > totalTime)
+		{
+			isDone_ = true;
+			result_ = "Total Time Exceeded";
+			return true;
+		}
 	}
 	//just entered a target
 	else if(currTarget != "NotATarget" && !targetAcquired_)
@@ -129,9 +140,6 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	//staying inside a target
 	else if(currTarget == lastTarget_ && targetAcquired_)
 	{
-		int fixTime = propertyContainer_->getPropertyValue("FixationTime").toInt();
-		int currAcqTime = acquisitionTimer_.elapsedTime(timeUnits);
-
 		if(currAcqTime > fixTime)
 		{
 			isDone_ = true;
@@ -340,6 +348,6 @@ QMap<QString,QString> ChoiceController::getScripts()
 	if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
 		scripts[getName().simplified().remove(' ').append("_TargetEntry")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
 	if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
-		scripts[getName().simplified().remove(' ').append("_TargetExit")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
+		scripts[getName().simplified().remove(' ').append("_TargetExit")] = propertyContainer_->getPropertyValue("TargetExitScript").toString();
 	return scripts;
 }

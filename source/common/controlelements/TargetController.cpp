@@ -85,7 +85,11 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	//check to see if we've met or exceeded the total time
 	int totalTime = propertyContainer_->getPropertyValue("TotalTime").toInt();
 	int currTotalTime = cumulativeTimer_.elapsedTime(timeUnits);
-	if(currTotalTime >= totalTime)
+	int currAcqTime = acquisitionTimer_.elapsedTime(timeUnits);
+	int currReAcqTime = reacquisitionTimer_.elapsedTime(timeUnits);
+	int fixTime = propertyContainer_->getPropertyValue("FixationTime").toInt();
+	int remainingFixTime = targetAcquired_?fixTime-currAcqTime:fixTime;
+	if(currTotalTime+remainingFixTime > totalTime)
 	{
 		isDone_ = true;
 		result_ = "Total Time Excceeded";
@@ -100,8 +104,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		//if we're past the Min Initial Acquisition Time mark the target as acquired
 		//and start running the timer
 		int minAcqTime = propertyContainer_->getPropertyValue("MinInitialAcquisitionTime").toInt();
-		int currTime = cumulativeTimer_.elapsedTime(timeUnits);
-		if(currTime >= minAcqTime)
+		if(currTotalTime >= minAcqTime)
 		{
 			acquisitionTimer_.start();
 			targetAcquired_ = true;
@@ -115,7 +118,7 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	else if(targetAcquired_ && !isInsideTarget)
 	{
 		targetAcquired_ = false;
-		if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
+		if(!engine->slaveMode() && propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
 			runScript(getName().simplified().remove(' ').append("_TargetExit"));
 
 		//If reacquisition isn't allowed, then we're done with a failure value.
@@ -127,6 +130,12 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		}
 		else
 		{
+			if(currTotalTime+fixTime > totalTime)
+			{	//There's not enough time left for a complete fixation.
+				isDone_ = true;
+				result_ = "Total Time Excceeded";
+				return true;
+			}
 			waitingForReacquisition_ = true;
 			reacquisitionTimer_.start();
 		}
@@ -135,8 +144,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	else if(targetAcquired_ && isInsideTarget)
 	{
 		//check to see if we've met or exceeded the fixation time
-		int fixTime = propertyContainer_->getPropertyValue("FixationTime").toInt();
-		int currAcqTime = acquisitionTimer_.elapsedTime(timeUnits);
 		if(currAcqTime >= fixTime)
 		{
 			isDone_ = true;
@@ -150,7 +157,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		//check to see if we've met or exceeded the total time
 		int maxAcqTime = propertyContainer_->getPropertyValue("MaxInitialAcquisitionTime").toInt();
-		int currTotalTime = cumulativeTimer_.elapsedTime(timeUnits);
 
 		//check to see if we've met or exceeded the max acquisition time (if relevant)
 		if(!initialAcquisitionOccurred_)
@@ -167,7 +173,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		if(waitingForReacquisition_)
 		{
 			int reAcqTime = propertyContainer_->getPropertyValue("MaxReacquisitionTime").toInt();
-			int currReAcqTime = reacquisitionTimer_.elapsedTime(timeUnits);
 			if(currReAcqTime >= reAcqTime)
 			{
 				isDone_ = true;
@@ -201,7 +206,7 @@ QMap<QString,QString> TargetController::getScripts()
 	if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
 		scripts[getName().simplified().remove(' ').append("_TargetEntry")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
 	if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
-		scripts[getName().simplified().remove(' ').append("_TargetExit")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
+		scripts[getName().simplified().remove(' ').append("_TargetExit")] = propertyContainer_->getPropertyValue("TargetExitScript").toString();
 	return scripts;
 }
 

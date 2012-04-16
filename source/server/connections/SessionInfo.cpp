@@ -751,6 +751,32 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> da
 	//executeWriteQuery(&query,"",false);	
 }
 
+void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
+{
+	QSqlDatabase sessionDb = getSessionDb();
+	//Add the component to the session db
+	QSqlQuery query(sessionDb);
+	if(data->endFrame_ == 0)
+	{	//This is the beginning of the run
+		query.prepare("INSERT INTO runs(runid,name,notes,firstframe,lastframe,saved)"
+			" VALUES (:runid,:name,:notes,:firstframe,:lastframe,:saved)");
+		query.bindValue(":runid", data->getDataID());
+		query.bindValue(":name",data->name_);
+		query.bindValue(":notes",data->notes_);
+		query.bindValue(":firstframe", data->startFrame_);
+		query.bindValue(":lastframe", data->endFrame_);
+		query.bindValue(":saved", false);
+	}
+	else
+	{	//This is the end of the run, just update the endFrame column
+		query.prepare("UPDATE runs SET lastframe=:lastframe WHERE runid=:runid");
+		query.bindValue(":lastframe", data->endFrame_);
+		query.bindValue(":runid", data->getDataID());
+	}
+	executeWriteQuery(&query);
+}
+
+
 //! \brief Inserts the passed in frame data into the cache database
 void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data)
 {
@@ -875,6 +901,7 @@ void SessionInfo::InitializeVariables()
 	}
 	databaseVersion_ = "1.0";
 	nextSigChanVarId_ = MAX_SIG_CHAN_VAR_ID;
+	nextTaskRunId_ = 0;
 
 #ifdef NO_AUTH_REQUIRED
 	//Add a null QUuid so that everyone is considered an authorized user
@@ -891,6 +918,10 @@ void SessionInfo::InitializeVariables()
 	tables_.push_back("componentinfo");
 	tableColumns_["componentinfo"] = " componentid,address,name,type,active ";
 	tableColumnTypes_["componentinfo"] = " TEXT,TEXT,TEXT,TEXT,INTEGER ";
+
+	tables_.push_back("runs");
+	tableColumns_["runs"] = " runid,name,notes,firstframe,lastframe,saved ";
+	tableColumnTypes_["runs"] = " INTEGER UNIQUE ON CONFLICT REPLACE,TEXT,TEXT,INTEGER,INTEGER,INTEGER ";
 
 	tables_.push_back("spikes");
 	tableColumns_["spikes"] = " dataid,timestamp,channel,unit,waveform ";

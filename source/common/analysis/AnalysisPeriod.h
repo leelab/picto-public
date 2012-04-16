@@ -61,6 +61,7 @@ private:
 	EventOrderIndex endIndex_;
 	unsigned int periodNumber_;
 	QLinkedList<QPointer<QWidget>> outputWidgets_;
+	QSharedPointer<QScriptEngine> qsEngine_;
 };
 }; //namespace Picto
 #endif

@@ -139,20 +139,15 @@ void AnalysisTrigger::fillArraysTo(EventOrderIndex beforeIndex)
 
 void AnalysisTrigger::addDataSourcesToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 {
-	QScriptValue triggerObject = qsEngine->newObject();
+	QScriptValue triggerObject = qsEngine->newQObject(this,QScriptEngine::QtOwnership);
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
 	QSharedPointer<AnalysisDataSource> dataSource;
-	unsigned int length;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
 		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		length = dataSource->getNumScriptValues();
 		QScriptValue dataSourceObject = qsEngine->newQObject(dataSource.data(),QScriptEngine::QtOwnership);
 		triggerObject.setProperty(dataSource->getName(),dataSourceObject);
 	}
-	if(defaultSource_)
-		length = defaultSource_->getNumScriptValues();
-	triggerObject.setProperty("length",length);
 	qsEngine->globalObject().setProperty(getName(),triggerObject);
 
 	//QLinkedList<QScriptValue> scriptRowList;
@@ -214,4 +209,14 @@ bool AnalysisTrigger::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
 	return true;
+}
+
+int AnalysisTrigger::getLength()
+{
+	if(defaultSource_)
+		return defaultSource_->getNumScriptValues();
+	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
+	if(dataSources.length())
+		return dataSources.first().staticCast<AnalysisDataSource>()->getNumScriptValues();
+	return 0;
 }

@@ -27,6 +27,8 @@
    <file alias="_analysis_trigger_8h-source.html">../../../output/documentation/main/html/_analysis_trigger_8h-source.html</file>
    <file alias="_analysis_value_8cpp-source.html">../../../output/documentation/main/html/_analysis_value_8cpp-source.html</file>
    <file alias="_analysis_value_8h-source.html">../../../output/documentation/main/html/_analysis_value_8h-source.html</file>
+   <file alias="_analysis_variable_8cpp-source.html">../../../output/documentation/main/html/_analysis_variable_8cpp-source.html</file>
+   <file alias="_analysis_variable_8h-source.html">../../../output/documentation/main/html/_analysis_variable_8h-source.html</file>
    <file alias="_announce_command_handler_8cpp-source.html">../../../output/documentation/main/html/_announce_command_handler_8cpp-source.html</file>
    <file alias="_announce_command_handler_8cpp.html">../../../output/documentation/main/html/_announce_command_handler_8cpp.html</file>
    <file alias="_announce_command_handler_8h-source.html">../../../output/documentation/main/html/_announce_command_handler_8h-source.html</file>
@@ -342,6 +344,8 @@
    <file alias="_null_reward_controller_8h-source.html">../../../output/documentation/main/html/_null_reward_controller_8h-source.html</file>
    <file alias="_numeric_parameter_8cpp-source.html">../../../output/documentation/main/html/_numeric_parameter_8cpp-source.html</file>
    <file alias="_numeric_parameter_8h-source.html">../../../output/documentation/main/html/_numeric_parameter_8h-source.html</file>
+   <file alias="_numeric_variable_8cpp-source.html">../../../output/documentation/main/html/_numeric_variable_8cpp-source.html</file>
+   <file alias="_numeric_variable_8h-source.html">../../../output/documentation/main/html/_numeric_variable_8h-source.html</file>
    <file alias="_o_k_response_handler_8cpp-source.html">../../../output/documentation/main/html/_o_k_response_handler_8cpp-source.html</file>
    <file alias="_o_k_response_handler_8h-source.html">../../../output/documentation/main/html/_o_k_response_handler_8h-source.html</file>
    <file alias="_old_01workstation_2mainwindow_8cpp-source.html">../../../output/documentation/main/html/_old_01workstation_2mainwindow_8cpp-source.html</file>
@@ -666,6 +670,8 @@
    <file alias="_task_command_handler_8h-source.html">../../../output/documentation/main/html/_task_command_handler_8h-source.html</file>
    <file alias="_task_item_8cpp-source.html">../../../output/documentation/main/html/_task_item_8cpp-source.html</file>
    <file alias="_task_item_8h-source.html">../../../output/documentation/main/html/_task_item_8h-source.html</file>
+   <file alias="_task_run_data_unit_8cpp-source.html">../../../output/documentation/main/html/_task_run_data_unit_8cpp-source.html</file>
+   <file alias="_task_run_data_unit_8h-source.html">../../../output/documentation/main/html/_task_run_data_unit_8h-source.html</file>
    <file alias="_terminate_command_handler_8cpp-source.html">../../../output/documentation/main/html/_terminate_command_handler_8cpp-source.html</file>
    <file alias="_terminate_command_handler_8h-source.html">../../../output/documentation/main/html/_terminate_command_handler_8h-source.html</file>
    <file alias="_test_controller_8cpp-source.html">../../../output/documentation/main/html/_test_controller_8cpp-source.html</file>
@@ -1251,6 +1257,9 @@
    <file alias="class_picto_1_1_task-members.html">../../../output/documentation/main/html/class_picto_1_1_task-members.html</file>
    <file alias="class_picto_1_1_task.html">../../../output/documentation/main/html/class_picto_1_1_task.html</file>
    <file alias="class_picto_1_1_task.png">../../../output/documentation/main/html/class_picto_1_1_task.png</file>
+   <file alias="class_picto_1_1_task_run_data_unit-members.html">../../../output/documentation/main/html/class_picto_1_1_task_run_data_unit-members.html</file>
+   <file alias="class_picto_1_1_task_run_data_unit.html">../../../output/documentation/main/html/class_picto_1_1_task_run_data_unit.html</file>
+   <file alias="class_picto_1_1_task_run_data_unit.png">../../../output/documentation/main/html/class_picto_1_1_task_run_data_unit.png</file>
    <file alias="class_picto_1_1_test_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_test_controller-members.html</file>
    <file alias="class_picto_1_1_test_controller.html">../../../output/documentation/main/html/class_picto_1_1_test_controller.html</file>
    <file alias="class_picto_1_1_test_controller.png">../../../output/documentation/main/html/class_picto_1_1_test_controller.png</file>

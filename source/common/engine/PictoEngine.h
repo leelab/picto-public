@@ -26,6 +26,7 @@
 #include "../storage/BehavioralDataUnitPackage.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
+#include "../storage/TaskRunDataUnit.h"
 #include "../storage/experimentconfig.h"
 #include "propertytable.h"
 
@@ -118,6 +119,8 @@ public:
 	void addSignalChannel(QSharedPointer<SignalChannel> channel);
 	void startAllSignalChannels();
 	void stopAllSignalChannels();
+	void markTaskRunStart(QString name);
+	void markTaskRunStop();
 
 	void setEventCodeGenerator(QSharedPointer<EventCodeGenerator> eventCodeGenerator) { eventCodeGenerator_ = eventCodeGenerator; };
 	void generateEvent(unsigned int eventCode);
@@ -139,7 +142,7 @@ public:
 	QList<QSharedPointer<BehavioralDataUnitPackage>> getBehavioralDataPackages();
 
 	void reportNewFrame(double frameTime,int runningStateId);
-	void setLastFrame(qulonglong frameId){lastFrameId_ = frameId;};
+	void setLastFrame(qulonglong frameId);
 	qulonglong getLastFrameId(){return lastFrameId_;};
 
 	bool updateCurrentStateFromServer();
@@ -191,6 +194,10 @@ private:
 	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode
 	QSharedPointer<PropertyTable> propTable_;
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
+	bool taskRunStarting_;
+	bool taskRunEnding_;
+	QString taskRunName_;
+	QSharedPointer<TaskRunDataUnit> taskRunUnit_;
 	QSharedPointer<ExperimentConfig> expConfig_;
 	bool firstCurrStateUpdate_;
 	QMutex rewardListMutex_;

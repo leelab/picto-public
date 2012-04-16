@@ -19,6 +19,7 @@ class AnalysisTrigger : public UIEnabled
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int length READ getLength)
 public:
 	AnalysisTrigger();
 	virtual ~AnalysisTrigger();
@@ -76,6 +77,7 @@ protected:
 	QSqlDatabase session_;
 
 private:
+	int getLength();
 	EventOrderIndex periodStart_;
 	struct SourceDataUnit
 	{

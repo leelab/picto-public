@@ -34,7 +34,9 @@ PictoEngine::PictoEngine() :
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
 	runningPath_(""),
 	lastFrameId_(-1),
-	engineCommand_(StopEngine)
+	engineCommand_(StopEngine),
+	taskRunStarting_(false),
+	taskRunEnding_(false)
 {
 	bExclusiveMode_ = true;
 	setSessionId(QUuid());
@@ -93,6 +95,19 @@ void PictoEngine::stopAllSignalChannels()
 		channel->stop();
 	}
 }
+
+void PictoEngine::markTaskRunStart(QString name)
+{
+	taskRunName_ = name;
+	taskRunUnit_ = QSharedPointer<TaskRunDataUnit>();
+	taskRunStarting_ = true;
+}
+
+void PictoEngine::markTaskRunStop()
+{
+	taskRunEnding_ = true;
+}
+
 
 void PictoEngine::generateEvent(unsigned int eventCode)
 {
@@ -275,6 +290,11 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 
 	QSharedPointer<PropertyDataUnitPackage> propPack = getChangedPropertyPackage();
 	QSharedPointer<StateDataUnitPackage> statePack = getStateDataPackage();
+	
+	if(taskRunStarting_)
+		taskRunUnit_->endFrame_ = 0;
+	else if(taskRunEnding_)
+		taskRunUnit_->endFrame_ = getLastFrameId();
 
 	//send a PUTDATA command to the server with the most recent behavioral data
 	QSharedPointer<Picto::ProtocolResponse> dataResponse;
@@ -314,6 +334,12 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	{
 		reward->toXml(xmlWriter);
 	}
+	if((taskRunStarting_ || taskRunEnding_) && taskRunUnit_)
+	{
+		taskRunUnit_->toXml(xmlWriter);
+		taskRunStarting_ = false;
+		taskRunEnding_ = false;
+	}
 	frameData.toXml(xmlWriter);	//Frame data must go last so that server knows when it reads
 								//in a frame, that the data it has defines the state that was
 								//in place at that frame.
@@ -334,6 +360,12 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 
 }
 
+void PictoEngine::setLastFrame(qulonglong frameId)
+{
+	lastFrameId_ = frameId;
+	if(!taskRunUnit_)
+		taskRunUnit_ = QSharedPointer<TaskRunDataUnit>(new TaskRunDataUnit(frameId,taskRunName_,""));
+}
 
 bool PictoEngine::updateCurrentStateFromServer()
 {

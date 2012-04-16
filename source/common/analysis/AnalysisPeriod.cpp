@@ -14,6 +14,7 @@
 #include "FrameTrigger.h"
 #include "TransitionTrigger.h"
 #include "AnalysisOutput.h"
+#include "NumericVariable.h"
 #include "FileOutput.h"
 
 #include "../../common/memleakdetect.h"
@@ -45,11 +46,14 @@ AnalysisPeriod::AnalysisPeriod()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimeTrigger::Create))));	
 	triggerFactory->addAssetType("Transition",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TransitionTrigger::Create))));	
-	
-	QSharedPointer<AssetFactory> outputFactory(new AssetFactory(0,-1));
-	AddDefinableObjectFactory("Output",outputFactory);
-	outputFactory->addAssetType("File",
+
+	QSharedPointer<AssetFactory> toolFactory(new AssetFactory(0,-1));
+	AddDefinableObjectFactory("Tool",toolFactory);
+	toolFactory->addAssetType("NumericVariable",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericVariable::Create))));	
+	toolFactory->addAssetType("File",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FileOutput::Create))));	
+
 	reset();
 }
 
@@ -76,20 +80,45 @@ void AnalysisPeriod::loadSession(QSqlDatabase session)
 
 void AnalysisPeriod::reset()
 {
+	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
+
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 	QSharedPointer<AnalysisTrigger> trigger;
 	foreach(QSharedPointer<Asset> triggerAsset,triggers)
 	{
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
 		trigger->reset();
+		trigger->addDataSourcesToScriptEngine(qsEngine_);
 	}
-	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisTool> analysisTool;
 	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
 		analysisTool = toolAsset.staticCast<AnalysisTool>();
 		analysisTool->reset();
+		analysisTool->bindToScriptEngine(*qsEngine_);
 	}
+
+	//Make a Qt Script Function out of the script and its name
+	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toAscii() + "}";
+
+	//add the function to the engine by calling evaluate on it
+	qsEngine_->evaluate(function);
+	//Check for errors
+	if(qsEngine_->hasUncaughtException())
+	{
+		QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
+		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+										  .arg(qsEngine_->uncaughtException().toString());
+		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+					QMessageBox box;
+		box.setText("Script Error                                      ");
+		box.setDetailedText(errorMsg);
+		box.setIconPixmap(QPixmap(":/icons/x.png"));
+		box.exec();
+		return;
+	}
+
 	startIndex_ = EventOrderIndex();
 	endIndex_ = EventOrderIndex();
 	periodNumber_ = 0;
@@ -135,11 +164,6 @@ bool AnalysisPeriod::runTo(double time)
 	while( (startIndex_.isValid()) && (endIndex_.isValid() ) 
 		&& ((time < 0)||((startIndex_.time_ <= time) && (endIndex_.time_ <= time))) )
 	{
-		//Currently we build a new script engine for every period.  This is not the most
-		//efficient way to do it, but I want to get this all working before I figure out how
-		//to clear out old script objects from the script engine.
-		QSharedPointer<QScriptEngine> qsEngine = QSharedPointer<QScriptEngine>(new QScriptEngine());
-
 		//GET DATA AND ADD IT TO SCRIPT ENGINE////////////////////////////////////////
 		QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 		QSharedPointer<AnalysisTrigger> trigger;
@@ -163,7 +187,6 @@ bool AnalysisPeriod::runTo(double time)
 				trigger->fillArraysTo(EventOrderIndex(endIndex_.time_+double(endBufferMs*.001)));
 			else
 				trigger->fillArraysTo(endIndex_);
-			trigger->addDataSourcesToScriptEngine(qsEngine);
 			
 			//Update total known/remaining triggers and emit progress
 			totalTriggers += trigger->totalKnownTriggers();
@@ -179,49 +202,21 @@ bool AnalysisPeriod::runTo(double time)
 			emit percentRemaining(100*totalRemaining/totalTriggers);
 		//////////////////////////////////////////////////////////////////////////////
 
-		//Add start, end times, and period number as properties to script engine
-		qsEngine->globalObject().setProperty("startTime", startIndex_.time_);
-		qsEngine->globalObject().setProperty("endTime", endIndex_.time_);
-		qsEngine->globalObject().setProperty("periodNumber", periodNumber_);
-
-		//Add AnalysisTool objects to script engine
-		QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Output");
-		QSharedPointer<AnalysisTool> analysisTool;
-		foreach(QSharedPointer<Asset> toolAsset,analysisTools)
-		{
-			analysisTool = toolAsset.staticCast<AnalysisTool>();
-			analysisTool->bindToScriptEngine(*qsEngine);
-		}
+		//Add/Update start, end times, and period number as properties to script engine
+		qsEngine_->globalObject().setProperty("startTime", startIndex_.time_);
+		qsEngine_->globalObject().setProperty("endTime", endIndex_.time_);
+		qsEngine_->globalObject().setProperty("periodNumber", periodNumber_);
 
 		//RUN SCRIPT//////////////////////////////////////////////////////////////////
-		//Make a Qt Script Function out of the script and its name
-		QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toAscii() + "}";
-
-		//add the function to the engine by calling evaluate on it
-		qsEngine->evaluate(function);
-		//Check for errors
-		if(qsEngine->hasUncaughtException())
-		{
-			QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
-			errorMsg += QString("Line %1: %2\n").arg(qsEngine->uncaughtExceptionLineNumber())
-											  .arg(qsEngine->uncaughtException().toString());
-			errorMsg += QString("Backtrace: %1\n").arg(qsEngine->uncaughtExceptionBacktrace().join(", "));
-						QMessageBox box;
-			box.setText("Script Error                                      ");
-			box.setDetailedText(errorMsg);
-			box.setIconPixmap(QPixmap(":/icons/x.png"));
-			box.exec();
-			return false;
-		}
 
 		//Run the script
-		qsEngine->globalObject().property("TestScriptName").call().toString();
-		if(qsEngine->hasUncaughtException())
+		qsEngine_->globalObject().property("TestScriptName").call().toString();
+		if(qsEngine_->hasUncaughtException())
 		{
 			QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
-			errorMsg += QString("Line %1: %2\n").arg(qsEngine->uncaughtExceptionLineNumber())
-											  .arg(qsEngine->uncaughtException().toString());
-			errorMsg += QString("Backtrace: %1\n").arg(qsEngine->uncaughtExceptionBacktrace().join(", "));
+			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+											  .arg(qsEngine_->uncaughtException().toString());
+			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
 			QMessageBox box;
 			box.setText("Script Error                                      ");
 			box.setDetailedText(errorMsg);
@@ -258,50 +253,62 @@ bool AnalysisPeriod::runTo(double time)
 
 void AnalysisPeriod::finishUp()
 {
-	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisOutput> analysisOutput;
-	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		analysisOutput = outputAsset.staticCast<AnalysisOutput>();
-		analysisOutput->finishUp();
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
+			analysisOutput->finishUp();
+		}
 	}
 }
 
 QLinkedList<QPointer<QWidget>> AnalysisPeriod::getOutputWidgets()
 {
 	QLinkedList<QPointer<QWidget>> returnVal;
-	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisOutput> outputObj;
-	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		outputObj = outputAsset.staticCast<AnalysisOutput>();
-		returnVal.append(outputObj->getOutputWidget());
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			outputObj = toolAsset.staticCast<AnalysisOutput>();
+			returnVal.append(outputObj->getOutputWidget());
+		}
 	}
 	return returnVal;
 }
 
 bool AnalysisPeriod::outputCanBeSaved()
 {
-	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisOutput> outputObj;
-	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		outputObj = outputAsset.staticCast<AnalysisOutput>();
-		if(outputObj->supportsSaving())
-			return true;
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			outputObj = toolAsset.staticCast<AnalysisOutput>();
+			if(outputObj->supportsSaving())
+				return true;
+		}
 	}
 	return false;
 }
 
 bool AnalysisPeriod::saveOutputToDirectory(QString directory, QString filename)
 {
-	QList<QSharedPointer<Asset>> analysisOutputers = getGeneratedChildren("Output");
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisOutput> outputObj;
-	foreach(QSharedPointer<Asset> outputAsset,analysisOutputers)
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		outputObj = outputAsset.staticCast<AnalysisOutput>();
-		if(!outputObj->saveOutputData(directory,filename))
-			return false;
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			outputObj = toolAsset.staticCast<AnalysisOutput>();
+			if(!outputObj->saveOutputData(directory,filename))
+				return false;
+		}
 	}
 	return true;
 }
