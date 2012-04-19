@@ -151,9 +151,11 @@ void TaskRunViewer::updateComboBox()
 		QSharedPointer<Picto::TaskRunDataUnit> latestRun = getLatestRun();
 		bool latestIsSaved = getLatestRun()->saved_;
 		availableRuns_->setItemIcon(availableRuns_->count()-1,latestIsSaved?QIcon(":/icons/savedrunning.png"):QIcon(":/icons/unsavedrunning.png"));
-		
 	}
-
+	//This may have already happened if the selected item changed, but it also may not have... 
+	//we'll do it once more for good luck (and to make sure changes from one workstation are
+	//reflected right away on others).
+	updateFieldsFromCurrentRun();
 }
 
 void TaskRunViewer::updateFieldsFromCurrentRun()
