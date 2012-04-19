@@ -18,7 +18,7 @@ TaskRunViewer::TaskRunViewer(QWidget *parent) :
 	runSaved_ = new QToolButton();
 	runSaved_->setCheckable(true);
 	connect(runSaved_,SIGNAL(toggled(bool)),this,SLOT(saveToggled(bool)));
-	saveToggled(false);//Initializes the save button to a default state.
+	updateSaveButtonIcon();
 
 
 	actButton_ = new QPushButton("Modify",this);
@@ -54,6 +54,8 @@ void TaskRunViewer::setTaskRunData(QMap<qulonglong,QSharedPointer<Picto::TaskRun
 {
 	currTaskRuns_ = dataMap;
 	updateComboBox();
+	updateSaveButtonIcon(); //This assures that the saved/unsaved icon reflects whether the selected item is active regardless of whether
+							//the operator is editing or not.
 }
 
 void TaskRunViewer::markLatestAsRunning(bool isRunning)
@@ -61,7 +63,9 @@ void TaskRunViewer::markLatestAsRunning(bool isRunning)
 	bool prevRunningValue = latestIsRunning_;
 	latestIsRunning_ = isRunning;
 	if(prevRunningValue != latestIsRunning_)
+	{
 		updateComboBox();
+	}
 }
 
 void TaskRunViewer::clear()
@@ -73,11 +77,28 @@ void TaskRunViewer::clear()
 	latestIsRunning_ = false;
 }
 
-QSharedPointer<TaskRunDataUnit> TaskRunViewer::getCurrentRun()
+QSharedPointer<TaskRunDataUnit> TaskRunViewer::getSelectedRun()
 {
 	if(!currTaskRuns_.contains(availableRuns_->itemData(availableRuns_->currentIndex()).toLongLong()))
 		return QSharedPointer<TaskRunDataUnit>();
 	return currTaskRuns_.value(availableRuns_->itemData(availableRuns_->currentIndex()).toLongLong());
+}
+
+QSharedPointer<Picto::TaskRunDataUnit> TaskRunViewer::getLatestRun()
+{
+	if(!currTaskRuns_.size())
+		return QSharedPointer<Picto::TaskRunDataUnit>();
+	QMap<qulonglong,QSharedPointer<Picto::TaskRunDataUnit>>::iterator it = currTaskRuns_.end()-1;
+	return it.value();
+}
+
+bool TaskRunViewer::selectedRunIsActive()
+{
+	QSharedPointer<Picto::TaskRunDataUnit> currRun = getSelectedRun();
+	QSharedPointer<Picto::TaskRunDataUnit> latestRun = getLatestRun();
+	if(latestIsRunning_ && currRun && latestRun && (currRun->getDataID() == latestRun->getDataID()))
+		return true;
+	return false;
 }
 
 void TaskRunViewer::updateComboBox()
@@ -127,9 +148,8 @@ void TaskRunViewer::updateComboBox()
 	if(availableRuns_->count() && latestIsRunning_)
 	{	//Since list is built up in the order of the currTaskRuns_ map which is
 		//ordered by runid, the last one in the list is always the latest.
-		int latestRunListIndex = availableRuns_->count()-1;
-		qulonglong latestRunId = availableRuns_->itemData(latestRunListIndex).toLongLong();
-		bool latestIsSaved = currTaskRuns_[latestRunId]->saved_;
+		QSharedPointer<Picto::TaskRunDataUnit> latestRun = getLatestRun();
+		bool latestIsSaved = getLatestRun()->saved_;
 		availableRuns_->setItemIcon(availableRuns_->count()-1,latestIsSaved?QIcon(":/icons/savedrunning.png"):QIcon(":/icons/unsavedrunning.png"));
 		
 	}
@@ -140,7 +160,7 @@ void TaskRunViewer::updateFieldsFromCurrentRun()
 {
 	if(editing_)
 		return;
-	QSharedPointer<TaskRunDataUnit> currRun = getCurrentRun();
+	QSharedPointer<TaskRunDataUnit> currRun = getSelectedRun();
 	if(!currRun)
 		return;
 	if(currRun->name_ != runName_->text())
@@ -148,11 +168,13 @@ void TaskRunViewer::updateFieldsFromCurrentRun()
 	if(currRun->notes_ != runNotes_->toPlainText())
 		runNotes_->setText(currRun->notes_);
 	runSaved_->setChecked(currRun->saved_);
+	updateSaveButtonIcon();  //Putting this up here means that when a Run stops the save icon will change to the inactive version of the icon.
+
 }
 
 void TaskRunViewer::updateCurrentRunFromFields()
 {
-	QSharedPointer<TaskRunDataUnit> currRun = getCurrentRun();
+	QSharedPointer<TaskRunDataUnit> currRun = getSelectedRun();
 	if(!currRun)
 		return;
 
@@ -164,6 +186,16 @@ void TaskRunViewer::updateCurrentRunFromFields()
 	//of the change, and the new values will be available to it in
 	//its own data structures.
 	emit taskRunDataChanged(currRun->getDataID());
+}
+
+void TaskRunViewer::updateSaveButtonIcon()
+{
+	bool selectedRunActive = selectedRunIsActive();
+	if(runSaved_->isChecked())
+		runSaved_->setIcon(selectedRunActive?QIcon(":/icons/savedrunning.png"):QIcon("://icons/filesave.png"));
+	else
+		runSaved_->setIcon(selectedRunActive?QIcon(":/icons/unsavedrunning.png"):QIcon("://icons/delete.png"));
+
 }
 
 void TaskRunViewer::setStateToEditing()
@@ -211,6 +243,7 @@ void TaskRunViewer::actTriggered()
 		setStateToReadOnly();
 		return;
 	}
+	updateFieldsFromCurrentRun();
 	setStateToEditing();
 }
 
@@ -224,10 +257,7 @@ void TaskRunViewer::availableRunsIndexChanged(int)
 	updateFieldsFromCurrentRun();
 }
 
-void TaskRunViewer::saveToggled(bool checked)
+void TaskRunViewer::saveToggled(bool)
 {
-	if(checked)
-		runSaved_->setIcon(QIcon("://icons/filesave.png"));
-	else
-		runSaved_->setIcon(QIcon("://icons/delete.png"));
+	updateSaveButtonIcon();
 }

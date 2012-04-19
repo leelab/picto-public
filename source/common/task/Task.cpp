@@ -1,3 +1,4 @@
+#include <QDateTime>
 #include "Task.h"
 #include "../storage/StateDataUnit.h"
 #include "../timing/Timestamper.h"
@@ -108,9 +109,9 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	QSharedPointer<Transition> tran(new Transition("","",stateMachine_->getName()));
 	tran->setAssetId(-taskNumber_);
 	engine->addStateTransitionForServer(tran);
-	Timestamper stamper;
-	double startTime = stamper.stampSec();
-	engine->markTaskRunStart(getName().append("_Started_%1").arg(startTime));
+	QDateTime dateTime = QDateTime::currentDateTime();
+	QString taskRunName = getName()+"_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");	
+	engine->markTaskRunStart(taskRunName);
 }
 
 

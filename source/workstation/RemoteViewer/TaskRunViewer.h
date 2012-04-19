@@ -27,10 +27,13 @@ public:
 signals:
 	void taskRunDataChanged(qulonglong runId);
 private:
-	QSharedPointer<Picto::TaskRunDataUnit> getCurrentRun();
+	QSharedPointer<Picto::TaskRunDataUnit> getSelectedRun();
+	QSharedPointer<Picto::TaskRunDataUnit> getLatestRun();
+	bool selectedRunIsActive();
 	void updateComboBox();
 	void updateFieldsFromCurrentRun();
 	void updateCurrentRunFromFields();
+	void updateSaveButtonIcon();
 	void setStateToEditing();
 	void setStateToReadOnly();
 	QVBoxLayout *mainLayout_;
