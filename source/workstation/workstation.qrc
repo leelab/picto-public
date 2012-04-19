@@ -75,5 +75,7 @@
         <file>icons/prev.png</file>
         <file>icons/next.png</file>
         <file>icons/goto.png</file>
+        <file>icons/unsavedrunning.png</file>
+        <file>icons/savedrunning.png</file>
     </qresource>
 </RCC>

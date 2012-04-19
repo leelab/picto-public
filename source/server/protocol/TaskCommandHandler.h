@@ -46,6 +46,7 @@ private:
 	QSharedPointer<Picto::ProtocolResponse> reward(int channel, QString details,QSharedPointer<SessionInfo> sessInfo);
 	QSharedPointer<Picto::ProtocolResponse> parameter(QString paramId, QString details,QSharedPointer<SessionInfo> sessInfo);
 	QSharedPointer<Picto::ProtocolResponse> click(QString details,QSharedPointer<SessionInfo> sessInfo);
+	QSharedPointer<Picto::ProtocolResponse> updateServerData(QString data,QSharedPointer<SessionInfo> sessInfo);
 
 	QUuid sessionId_;
 	ConnectionManager *conMgr_;

@@ -14,6 +14,7 @@
 #include "../../common/storage/DataSourceInfo.h"
 #include "../../common/storage/AlignmentInfo.h"
 #include "../../common/storage/TaskRunDataUnit.h"
+#include "../../common/storage/SessionDataPackage.h"
 #include "ComponentInfo.h"
 
 #include <QSharedPointer>
@@ -82,9 +83,11 @@ public:
 	void insertRewardData(QSharedPointer<Picto::RewardDataUnit> data);
 	void insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data);
 	void insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data);
+	void modifyTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data);
 
 	QString selectStateVariables(QString fromTime);
 	QString selectLatestNeuralData(QString fromDataId);
+	QString selectSessionDataPackage();
 
 	//getters/setters
 	QUuid sessionId() { return uuid_; };
@@ -175,7 +178,8 @@ private:
 	QMap<QString,QSharedPointer<Picto::DataSourceInfo>> dataSourceInfoMap_;
 	QMap<QString,QSharedPointer<Picto::AlignmentInfo>> alignmentInfoMap_;
 	int nextSigChanVarId_;
-	int nextTaskRunId_;
+	QSharedPointer<Picto::SessionDataPackage> currSessionDataPack_;
+	QMutex sessionDataMutex_;
 };
 
 #endif

@@ -109,6 +109,11 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 		QString details = target.mid(colonIndex+1);
 		return click(details,sessInfo);
 	}
+	else if(target.startsWith("updatedata", Qt::CaseInsensitive))
+	{
+		QString data(command->getContent());
+		return updateServerData(data,sessInfo);
+	}
 	else
 	{
 		return notFoundResponse;
@@ -333,4 +338,43 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::click(QString detail
 	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 	sessInfo->addPendingDirective(QString("CLICK %1").arg(details),"DIRECTOR");
 	return okResponse;
+}
+
+QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::updateServerData(QString data,QSharedPointer<SessionInfo> sessInfo)
+{
+	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
+	okResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
+	notFoundResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+		
+	//Read the content
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(data));
+	bool foundSomething = false;
+	while(!xmlReader->atEnd())
+	{
+		xmlReader->readNext();
+		if(!xmlReader->isStartElement())
+		{
+			continue;
+		}
+
+		//We do different things depending on the type of data being sent
+		QString dataType = xmlReader->name().toString();
+		if(dataType == "TaskRunDataUnit")
+		{
+			QSharedPointer<Picto::TaskRunDataUnit> runUnit(new Picto::TaskRunDataUnit());
+			runUnit->fromXml(data);
+			sessInfo->modifyTaskRunData(runUnit);
+			foundSomething = true;
+		}
+		else
+		{
+			return notFoundResponse;
+		}
+	}
+	if(!foundSomething)
+	{
+		return notFoundResponse;
+	}
+	return okResponse;	
 }

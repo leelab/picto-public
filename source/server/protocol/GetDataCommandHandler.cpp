@@ -50,6 +50,10 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	{
 		xmlContent = QString("<Data>").append(sessionInfo->selectLatestNeuralData(dataTypeIndex)).append("</Data>").toAscii();
 	} 
+	else if(dataType.compare("SessionData",Qt::CaseInsensitive) == 0)
+	{
+		xmlContent = QString("<Data>").append(sessionInfo->selectSessionDataPackage()).append("</Data>").toAscii();
+	} 
 	else
 	{
 		notFoundResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);

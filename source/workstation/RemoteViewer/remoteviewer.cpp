@@ -45,6 +45,7 @@ using namespace Picto;
 
 #define COMPONENT_UPDATE_PERIOD 1000 
 #define NEURAL_DATA_UPDATE_PERIOD 50 
+#define SESSION_DATA_UPDATE_PERIOD 1000 
 #define SPECIAL_STATUS_PERIOD 1000
 #define MIN_ADAPTIVE_TIMEOUT 50
 #define MAX_ADAPTIVE_TIMEOUT 500
@@ -420,6 +421,7 @@ void RemoteViewer::runState()
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
 		}
+		updateSessionDataPackage();
 		if(proxyListBox_->currentIndex() > 0)
 		{
 			updateNeuralData();
@@ -443,6 +445,7 @@ void RemoteViewer::runState()
 		}
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
+		updateSessionDataPackage();
 		if(proxyListBox_->currentIndex() > 0)
 		{
 			updateNeuralData();
@@ -466,6 +469,7 @@ void RemoteViewer::runState()
 		}
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
+		updateSessionDataPackage();
 		if(proxyListBox_->currentIndex() > 0)
 		{
 			updateNeuralData();
@@ -556,6 +560,8 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
+		currentRunViewer_->hide();
+		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
@@ -585,6 +591,8 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
+		currentRunViewer_->hide();
+		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
@@ -613,6 +621,8 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
+		currentRunViewer_->hide();
+		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
@@ -641,6 +651,8 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
+		currentRunViewer_->hide();
+		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
@@ -667,6 +679,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(isAuthorized_);
 		zoomSlider_->setEnabled(true);
 		loadPropsAction_->setEnabled(true);
+		currentRunViewer_->markLatestAsRunning(false);
 		pixmapVisualTarget_->setZoom(zoomValue_);
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setTabEnabled(0,true);
@@ -692,6 +705,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
 		mainTabbedFrame_->setTabEnabled(0,true);
+		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
@@ -716,6 +730,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
 		mainTabbedFrame_->setTabEnabled(0,true);
+		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
@@ -739,6 +754,8 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(false);
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
+		currentRunViewer_->hide();
+		currentRunViewer_->clear();
 		activeExpName_->setText(activeExperiment_->getName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
@@ -770,6 +787,8 @@ void RemoteViewer::init()
 	componentListsTimer_.restart();
 	//This timer assures that we don't update neural data more often than necessary
 	neuralDataTimer_.restart();
+	//This timer assures that we don't update session data more often than necessary
+	sessionDataTimer_.restart();
 	//This timer triggers each new run of updateState()
 	stateUpdateTimer_->start();
 	//This timer triggers each new run of updateEngine()
@@ -966,10 +985,20 @@ void RemoteViewer::setupUi()
 	mainTabbedFrame_->addTab(neuralDataViewer_,"Neural");
 	mainTabbedFrame_->setTabEnabled(0,false);
 	mainTabbedFrame_->setTabEnabled(1,false);
+	currentRunViewer_ = new TaskRunViewer();
+	connect(	currentRunViewer_,
+				SIGNAL(taskRunDataChanged(qulonglong)),
+				this,
+				SLOT(modifyRunDataUnit(qulonglong))
+			);
+
+	QVBoxLayout *centerPane = new QVBoxLayout;
+	centerPane->addWidget(mainTabbedFrame_);
+	centerPane->addWidget(currentRunViewer_);
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	operationLayout->addLayout(leftPane);
-	operationLayout->addWidget(mainTabbedFrame_);
+	operationLayout->addLayout(centerPane);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
 
@@ -1031,6 +1060,20 @@ void RemoteViewer::stop()
 void RemoteViewer::reward()
 {
 	sendTaskCommand(QString("reward:%1").arg(rewardChannel_),QString::number(rewardQuantity_->value()));
+}
+
+//! \brief Requests that the session's data package be updated with our latest values.
+void RemoteViewer::modifyRunDataUnit(qulonglong runId)
+{
+	Q_ASSERT(currSessionDataPack_);
+	if(!currSessionDataPack_)
+		return;
+	QSharedPointer<TaskRunDataUnit> runUnit = currSessionDataPack_->getTaskRunByRunId(runId);
+	Q_ASSERT(runUnit);
+	if(runUnit.isNull())
+		return;
+	sendTaskCommand("updatedata",runUnit->toXml());
+	updateSessionDataPackage(true);
 }
 
 //! \brief Loads property values from a previous session to replace those in the current experiment.
@@ -1464,6 +1507,46 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 		}
 	}
 	return currProxyList_;
+}
+
+void RemoteViewer::updateSessionDataPackage(bool immediate)
+{
+	if(!immediate)
+	{
+		//Don't run this too often
+		if(sessionDataTimer_.elapsed() < SESSION_DATA_UPDATE_PERIOD)
+			return;
+	}
+	sessionDataTimer_.restart();	
+
+	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand("GETDATA SessionData PICTO/1.0"));
+	QSharedPointer<Picto::ProtocolResponse> response;
+
+	response = sendCommandGetReply(command);
+	if(response.isNull())
+		return;
+
+	QByteArray xmlFragment = response->getContent();
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
+
+	while(!xmlReader->atEnd())
+	{
+		xmlReader->readNext();
+
+		if(xmlReader->isStartElement() && xmlReader->name() == "SessionDataPackage")
+		{
+			QSharedPointer<Picto::SessionDataPackage> newPack(new Picto::SessionDataPackage());
+			newPack->fromXml(xmlReader);
+			if(newPack)
+				currSessionDataPack_ = newPack;
+
+			if(currSessionDataPack_ && currSessionDataPack_->getNumRuns())
+			{
+				currentRunViewer_->setTaskRunData(currSessionDataPack_->getRunsMap());
+				currentRunViewer_->show();
+			}
+		}
+	}
 }
 
 /*! \brief Starts a new session

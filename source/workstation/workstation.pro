@@ -96,6 +96,8 @@ HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/TaskRunViewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/TaskRunViewer.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.cpp

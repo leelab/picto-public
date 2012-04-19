@@ -209,6 +209,23 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	}
 	sessionQ.finish();
 
+	// Load Session Data Pack
+	executeReadQuery(&sessionQ,"SELECT runid,name,notes,firstframe,lastframe,saved FROM runs");
+	while(sessionQ.next())
+	{
+		QSharedPointer<Picto::TaskRunDataUnit> taskRun(
+			new Picto::TaskRunDataUnit(
+				sessionQ.value(3).toString().toLongLong(),
+				sessionQ.value(4).toString().toLongLong(),
+				sessionQ.value(1).toString(),	
+				sessionQ.value(2).toString(),
+				sessionQ.value(5).toString().toInt()
+			));
+		taskRun->setDataID(sessionQ.value(0).toLongLong());
+		currSessionDataPack_->setTaskRun(taskRun);
+	}
+	sessionQ.finish();
+
 	CreateCacheDatabase(databaseName);
 
 	// Load Current State
@@ -753,8 +770,9 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> da
 
 void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 {
+	QMutexLocker locker(&sessionDataMutex_);
 	QSqlDatabase sessionDb = getSessionDb();
-	//Add the component to the session db
+
 	QSqlQuery query(sessionDb);
 	if(data->endFrame_ == 0)
 	{	//This is the beginning of the run
@@ -766,16 +784,43 @@ void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 		query.bindValue(":firstframe", data->startFrame_);
 		query.bindValue(":lastframe", data->endFrame_);
 		query.bindValue(":saved", false);
+		currSessionDataPack_->setTaskRun(data);
 	}
 	else
 	{	//This is the end of the run, just update the endFrame column
 		query.prepare("UPDATE runs SET lastframe=:lastframe WHERE runid=:runid");
 		query.bindValue(":lastframe", data->endFrame_);
 		query.bindValue(":runid", data->getDataID());
+		QSharedPointer<Picto::TaskRunDataUnit> run = currSessionDataPack_->getTaskRunByRunId(data->getDataID());
+		if(run)
+			run->endFrame_ = data->endFrame_;
 	}
 	executeWriteQuery(&query);
 }
 
+void SessionInfo::modifyTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
+{
+	QMutexLocker locker(&sessionDataMutex_);
+	QSharedPointer<Picto::TaskRunDataUnit> run = currSessionDataPack_->getTaskRunByRunId(data->getDataID());
+	if(run)
+	{
+		run->name_ = data->name_;
+		run->notes_ = data->notes_;
+		run->saved_ = data->saved_;
+	}
+
+	QSqlDatabase sessionDb = getSessionDb();
+	//Add the component to the session db
+	QSqlQuery query(sessionDb);
+
+	query.prepare("UPDATE runs SET name=:name,notes=:notes,saved=:saved WHERE runid=:runid");
+	query.bindValue(":name",data->name_);
+	query.bindValue(":notes",data->notes_);
+	query.bindValue(":saved", data->saved_);
+	query.bindValue(":runid", data->getDataID());
+
+	executeWriteQuery(&query);
+}
 
 //! \brief Inserts the passed in frame data into the cache database
 void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data)
@@ -886,6 +931,16 @@ QString SessionInfo::selectLatestNeuralData(QString fromDataId)
 	return result;
 }
 
+QString SessionInfo::selectSessionDataPackage()
+{
+	QString result;
+	if(!sessionDataMutex_.tryLock())
+		return result;
+	result = currSessionDataPack_->toXml();
+	sessionDataMutex_.unlock();
+	return result;
+}
+
 void SessionInfo::InitializeVariables()
 {
 
@@ -901,7 +956,6 @@ void SessionInfo::InitializeVariables()
 	}
 	databaseVersion_ = "1.0";
 	nextSigChanVarId_ = MAX_SIG_CHAN_VAR_ID;
-	nextTaskRunId_ = 0;
 
 #ifdef NO_AUTH_REQUIRED
 	//Add a null QUuid so that everyone is considered an authorized user
@@ -909,6 +963,7 @@ void SessionInfo::InitializeVariables()
 #endif
 	latestNeuralTimestamp_ = 0;
 	latestBehavioralTimestamp_ = 0;
+	currSessionDataPack_ = QSharedPointer<Picto::SessionDataPackage>(new Picto::SessionDataPackage());
 
 	//Define database
 	tables_.push_back("sessioninfo");

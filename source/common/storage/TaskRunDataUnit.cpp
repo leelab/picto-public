@@ -8,20 +8,22 @@ TaskRunDataUnit::TaskRunDataUnit()
 {
 }
 
-TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, QString name, QString notes)
+TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, QString name, QString notes, bool saved)
 {
 	startFrame_ = startFrame;
 	endFrame_ = 0;
 	name_ = name;
 	notes_ = notes;
+	saved_ = saved;
 }
 
-TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, qulonglong endFrame, QString name, QString notes)
+TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, qulonglong endFrame, QString name, QString notes, bool saved)
 {
 	startFrame_ = startFrame;
 	endFrame_ = endFrame;
 	name_ = name;
 	notes_ = notes;
+	saved_ = saved;
 }
 
 /*! \brief Turns the TaskRunDataUnitPackage into an XML fragment
@@ -35,6 +37,7 @@ bool TaskRunDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 	xmlStreamWriter->writeAttribute("endframe",QString("%1").arg(endFrame_));
 	xmlStreamWriter->writeAttribute("name",name_);
 	xmlStreamWriter->writeAttribute("notes",notes_);
+	xmlStreamWriter->writeAttribute("saved",QString("%1").arg(saved_));
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
 	return true;
@@ -98,6 +101,16 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 			else
 			{
 				addError("TaskRunDataUnit","Frame missing notes attribute",xmlStreamReader);
+				return false;
+			}
+
+			if(xmlStreamReader->attributes().hasAttribute("saved"))
+			{
+				saved_ = xmlStreamReader->attributes().value("saved").toString().toInt();
+			}
+			else
+			{
+				addError("TaskRunDataUnit","Frame missing saved attribute",xmlStreamReader);
 				return false;
 			}
 		}

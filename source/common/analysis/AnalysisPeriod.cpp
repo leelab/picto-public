@@ -111,7 +111,7 @@ void AnalysisPeriod::reset()
 		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
 										  .arg(qsEngine_->uncaughtException().toString());
 		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-					QMessageBox box;
+		QMessageBox box;
 		box.setText("Script Error                                      ");
 		box.setDetailedText(errorMsg);
 		box.setIconPixmap(QPixmap(":/icons/x.png"));

@@ -20,8 +20,8 @@ class TaskRunDataUnit : public DataUnit
 {
 public:
 	TaskRunDataUnit();
-	TaskRunDataUnit(qulonglong startFrame, QString name, QString notes);
-	TaskRunDataUnit(qulonglong startFrame, qulonglong endFrame, QString name, QString notes);
+	TaskRunDataUnit(qulonglong startFrame, QString name, QString notes, bool saved=false);
+	TaskRunDataUnit(qulonglong startFrame, qulonglong endFrame, QString name, QString notes, bool saved=false);
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
@@ -31,6 +31,7 @@ public:
 	qulonglong endFrame_;
 	QString name_;
 	QString notes_;
+	bool saved_;
 
 protected:
 	virtual void postDeserialize();

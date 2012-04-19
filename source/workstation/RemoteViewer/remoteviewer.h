@@ -7,7 +7,9 @@
 #include "../../common/compositor/VisualTargetHost.h"
 #include "../../common/network/CommandChannel.h"
 #include "../../common/network/ServerDiscoverer.h"
+#include "../../common/storage/SessionDataPackage.h"
 #include "neuraldataviewer.h"
+#include "TaskRunViewer.h"
 
 #include <QUuid>
 #include <QFuture>
@@ -51,6 +53,7 @@ private slots:
 	void pause();
 	void stop();
 	void reward();
+	void modifyRunDataUnit(qulonglong runId);
 	void LoadPropValsFromFile();
 	void parameterMessageReady(QSharedPointer<Property> changedProp);
 	void operatorClickDetected(QPoint pos);
@@ -97,6 +100,7 @@ private:
 	void endState();
 	QTime componentListsTimer_;
 	QTime neuralDataTimer_;
+	QTime sessionDataTimer_;
 
 	enum ViewerState
 	{
@@ -174,6 +178,7 @@ private:
 
 	QList<ComponentInstance> getDirectorList();
 	QList<ComponentInstance> getProxyList();
+	void updateSessionDataPackage(bool immediate = false);
 	void updatePlotOptions();
 
 	//Since we don't want the experiemnt to be changed while it is being run
@@ -208,6 +213,7 @@ private:
 	QTabWidget *mainTabbedFrame_;
 	QLabel *statusBar_;
 	NeuralDataViewer* neuralDataViewer_;
+	TaskRunViewer* currentRunViewer_;
 
 	QTimer *updateTimer_;
 	QTimer *reconnectTimer_;
@@ -226,6 +232,7 @@ private:
 
 	QList<ComponentInstance> currDirectorList_;
 	QList<ComponentInstance> currProxyList_;
+	QSharedPointer<Picto::SessionDataPackage> currSessionDataPack_;
 	bool channelSignalsConnected_;
 	QWeakPointer<Asset> lastTask_;
 	QWeakPointer<Asset> lastActiveExperiment_;
