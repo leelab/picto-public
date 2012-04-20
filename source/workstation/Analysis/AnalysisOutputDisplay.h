@@ -5,6 +5,7 @@
 #include <QSqlQuery>
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QDir>
 
 /*!	\brief	This views and controls a remotely running experiment
  *
@@ -20,11 +21,13 @@ class AnalysisOutputDisplay : public QWidget
 public:
 	AnalysisOutputDisplay(QWidget *parent=0);
 	virtual ~AnalysisOutputDisplay();
-	void addOutputTab(QString name,QWidget* widget);
+	int addTopLevelTab(QString name);
+	void addSubTab(int topLevelIndex,QString name,QWidget* widget);
+	bool saveOutputToDirectory(QDir directory);
 	void clear();
 
 private:
-	QTabWidget *outputBox_;
+	QTabWidget *topLevelTabs_;
 	QVBoxLayout *mainLayout_;
 };
 

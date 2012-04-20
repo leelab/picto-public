@@ -5,15 +5,9 @@ using namespace Picto;
 
 #define CHARS_BEFORE_FLUSH 10000
 
-QString FileOutput::outputDir_("");
-int FileOutput::loadedObjects_(0);
-
 FileOutput::FileOutput()
 {
-	initTempOutputDir();
 	AddDefinableProperty("FileName","");
-	outputWidget_ = QPointer<FileOutputWidget>(new FileOutputWidget(1000));
-	loadedObjects_++;
 	charsWritten_ = 0;
 }
 
@@ -23,17 +17,6 @@ FileOutput::~FileOutput()
 	//the file system.
 	if(file_->isOpen())
 		file_->remove();
-	loadedObjects_--;
-	//If their are no more FileOutput objects loaded and the AnalysisTool 
-	//directory is empty, remove it.
-	if(!loadedObjects_)
-	{
-		QDir dir(QDir::current());
-		dir.cd("AnalysisTool");
-		dir.cdUp();
-		dir.rmdir("AnalysisTool");
-		outputDir_ = "";
-	}
 }
 
 QSharedPointer<Asset> FileOutput::Create()
@@ -43,55 +26,56 @@ QSharedPointer<Asset> FileOutput::Create()
 
 void FileOutput::reset()
 {	
-	if(outputDir_.isEmpty())
-		return;
+	//If the output sub director for this file doesn't exist yet, make it.
+	if(!QFile::exists(getTempOutputDir()+"/"+getOutputNamePrefix()))
+	{	//The directory doesn't exist yet.  Make it.
+		QDir dir;
+		dir.mkdir(getTempOutputDir()+"/"+getOutputNamePrefix());
+	}
 	outputFileStream_.clear();
-	QString fileName = getTempOutputDir()+"/"+propertyContainer_->getPropertyValue("FileName").toString();
+	QString fileName = getTempOutputDir()+"/"+getOutputNamePrefix()+"/"+getOutputNamePrefix()+propertyContainer_->getPropertyValue("FileName").toString();
 	file_ = QSharedPointer<QFile>(new QFile(fileName));
 	if(!file_->open(QIODevice::WriteOnly | QIODevice::Text))
 		return;
 	outputFileStream_ = QSharedPointer<QTextStream>(new QTextStream(file_.data()));
-	outputWidget_->setFile(fileName);
 	setValid(true);
 }
 
-QPointer<QWidget> FileOutput::getOutputWidget()
+QPointer<AnalysisOutputWidget> FileOutput::getOutputWidget()
 {
-	return qobject_cast<QWidget*>(outputWidget_);
+	if(!file_)
+		return QPointer<AnalysisOutputWidget>();
+	QPointer<FileOutputWidget> outputWidget(new FileOutputWidget(1000));
+	outputWidget->setFile(file_->fileName());
+	return qobject_cast<AnalysisOutputWidget*>(outputWidget);
 }
 
-bool FileOutput::saveOutputData(QString directory, QString filename)
-{
-	QString origName = propertyContainer_->getPropertyValue("FileName").toString();
-	QFile tempFile(getTempOutputDir()+"/"+origName);
-	if(!tempFile.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		return false;
-	}
-	if(!QFile::exists(directory))
-	{	//The directory doesn't exist yet.  Make it.
-		QDir dir;
-		dir.mkdir(directory);
-	}
-	QString newFileName = directory + "/" + filename + origName.mid(origName.indexOf("."));
-	QFile::remove(newFileName);
-	bool result = tempFile.copy(newFileName);
-	tempFile.close();
-	return result;
-}
+//bool FileOutput::saveOutputData(QString directory, QString filename)
+//{
+//	QString origName = propertyContainer_->getPropertyValue("FileName").toString();
+//	QFile tempFile(getTempOutputDir()+"/"+origName);
+//	if(!tempFile.open(QIODevice::ReadOnly | QIODevice::Text))
+//	{
+//		return false;
+//	}
+//	if(!QFile::exists(directory))
+//	{	//The directory doesn't exist yet.  Make it.
+//		QDir dir;
+//		dir.mkdir(directory);
+//	}
+//	QString newFileName = directory + "/" + filename + origName.mid(origName.indexOf("."));
+//	QFile::remove(newFileName);
+//	bool result = tempFile.copy(newFileName);
+//	tempFile.close();
+//	return result;
+//}
 
 void FileOutput::finishUp()
 {
 	if(isValid())
 	{
 		file_->close();
-		outputWidget_->refreshContents();
 	}
-}
-
-QString FileOutput::getTempOutputDir()
-{
-	return outputDir_;
 }
 
 void FileOutput::writeLine(QString text)
@@ -124,18 +108,4 @@ bool FileOutput::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
 	return true;
-}
-
-//Will create an empty AnalysisTool directory in the runpath once
-//per executable run, clearing out any previous contents if there 
-//were any.
-void FileOutput::initTempOutputDir()
-{
-	if(!outputDir_.isEmpty())
-		return;
-	QDir dir(QDir::current());
-	dir.rmdir("FileOutputTool");
-	dir.mkdir("FileOutputTool");
-	dir.cd("FileOutputTool");
-	outputDir_ = dir.absolutePath();
 }

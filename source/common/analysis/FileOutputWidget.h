@@ -9,10 +9,11 @@
 #include <QPushButton>
 #include <QVector>
 #include <QLabel>
+#include "AnalysisOutputWidget.h"
 
 namespace Picto {
 
-class FileOutputWidget : public QWidget
+class FileOutputWidget : public AnalysisOutputWidget
 {
 	Q_OBJECT
 public:
@@ -21,6 +22,8 @@ public:
 
 	bool setFile(QString filename);
 	void refreshContents(){pages_.clear();currPage_ = -1;loadCurrPage();};
+	virtual bool isSaveable();
+	virtual bool saveOutputTo(QDir directory);
 private:
 	void loadCurrPage();
 	QSharedPointer<QFile> file_;

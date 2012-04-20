@@ -8,6 +8,7 @@
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
 #include "AnalysisTrigger.h"
+#include "AnalysisOutputWidget.h"
 
 namespace Picto {
 
@@ -28,15 +29,18 @@ public:
 	//AnalysisPeriod specific functions
 	//Resets the AnalysisPeriod to its initial state
 	void reset();
-	//Runs the analysisPeriod analysis from the last time runTo was called
-	//(or time zero if we just reset) to the input time value.  To run
-	//the analysisPeriod until the are no more AnalysisPeriods available 
-	//in the session, input a negative number.
-	bool runTo(double time);
+	//Marks that a new run has started.  Period will update everything that
+	//uses the run name.
+	void startNewRun(QString runName);
+	//Runs the analysisPeriod analysis from the fromIndex to the toIndex.
+	//Note that if this function is called multiple times before a reset, they
+	//must be in increasing order (ie. Each new fromIndex must be greater than
+	//the toIndex from the preceding call).
+	bool run(EventOrderIndex fromIndex,EventOrderIndex toIndex);
 	void finishUp();
-	QLinkedList<QPointer<QWidget>> getOutputWidgets();
+	QLinkedList<QPointer<AnalysisOutputWidget>> getOutputWidgets();
 	bool outputCanBeSaved();
-	bool saveOutputToDirectory(QString directory, QString filename);
+	//bool saveOutputToDirectory(QString directory, QString filename);
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisPeriod";};
@@ -54,6 +58,7 @@ protected:
 	QSqlDatabase session_;
 
 private:
+	bool runTo(EventOrderIndex index);
 	QString scriptInfo();
 	QSharedPointer<AnalysisTrigger> startTrigger_;
 	QSharedPointer<AnalysisTrigger> endTrigger_;

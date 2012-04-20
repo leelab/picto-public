@@ -17,6 +17,8 @@
    <file alias="_analysis_output_8h-source.html">../../../output/documentation/main/html/_analysis_output_8h-source.html</file>
    <file alias="_analysis_output_display_8cpp-source.html">../../../output/documentation/main/html/_analysis_output_display_8cpp-source.html</file>
    <file alias="_analysis_output_display_8h-source.html">../../../output/documentation/main/html/_analysis_output_display_8h-source.html</file>
+   <file alias="_analysis_output_widget_8cpp-source.html">../../../output/documentation/main/html/_analysis_output_widget_8cpp-source.html</file>
+   <file alias="_analysis_output_widget_8h-source.html">../../../output/documentation/main/html/_analysis_output_widget_8h-source.html</file>
    <file alias="_analysis_parameter_selector_8cpp-source.html">../../../output/documentation/main/html/_analysis_parameter_selector_8cpp-source.html</file>
    <file alias="_analysis_parameter_selector_8h-source.html">../../../output/documentation/main/html/_analysis_parameter_selector_8h-source.html</file>
    <file alias="_analysis_period_8cpp-source.html">../../../output/documentation/main/html/_analysis_period_8cpp-source.html</file>
@@ -676,6 +678,8 @@
    <file alias="_task_item_8h-source.html">../../../output/documentation/main/html/_task_item_8h-source.html</file>
    <file alias="_task_run_data_unit_8cpp-source.html">../../../output/documentation/main/html/_task_run_data_unit_8cpp-source.html</file>
    <file alias="_task_run_data_unit_8h-source.html">../../../output/documentation/main/html/_task_run_data_unit_8h-source.html</file>
+   <file alias="_task_run_selector_8cpp-source.html">../../../output/documentation/main/html/_task_run_selector_8cpp-source.html</file>
+   <file alias="_task_run_selector_8h-source.html">../../../output/documentation/main/html/_task_run_selector_8h-source.html</file>
    <file alias="_task_run_viewer_8cpp-source.html">../../../output/documentation/main/html/_task_run_viewer_8cpp-source.html</file>
    <file alias="_task_run_viewer_8h-source.html">../../../output/documentation/main/html/_task_run_viewer_8h-source.html</file>
    <file alias="_terminate_command_handler_8cpp-source.html">../../../output/documentation/main/html/_terminate_command_handler_8cpp-source.html</file>
@@ -1403,6 +1407,8 @@
    <file alias="class_task_item-members.html">../../../output/documentation/main/html/class_task_item-members.html</file>
    <file alias="class_task_item.html">../../../output/documentation/main/html/class_task_item.html</file>
    <file alias="class_task_item.png">../../../output/documentation/main/html/class_task_item.png</file>
+   <file alias="class_task_run_selector-members.html">../../../output/documentation/main/html/class_task_run_selector-members.html</file>
+   <file alias="class_task_run_selector.html">../../../output/documentation/main/html/class_task_run_selector.html</file>
    <file alias="class_task_run_viewer-members.html">../../../output/documentation/main/html/class_task_run_viewer-members.html</file>
    <file alias="class_task_run_viewer.html">../../../output/documentation/main/html/class_task_run_viewer.html</file>
    <file alias="class_tdt_plugin-members.html">../../../output/documentation/main/html/class_tdt_plugin-members.html</file>

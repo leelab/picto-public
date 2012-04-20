@@ -105,6 +105,8 @@ HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisParameterSelector.
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/AnalysisParameterSelector.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/analysis/TaskRunSelector.h
+SOURCES += $$(PICTO_TREE)/source/workstation/analysis/TaskRunSelector.cpp
 
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp

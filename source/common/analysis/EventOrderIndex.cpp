@@ -8,12 +8,6 @@ EventOrderIndex::EventOrderIndex()
 	dataId_ = 0;
 	idSource_ = EventOrderIndex::BEHAVIORAL;
 }
-EventOrderIndex::EventOrderIndex(qulonglong dataId,IDSource idSource)
-{
-	time_ = INT_MIN;
-	dataId_ = dataId;
-	idSource_ = idSource;
-}
 EventOrderIndex::EventOrderIndex(double time)
 {
 	time_ = time;

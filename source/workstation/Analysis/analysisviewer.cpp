@@ -24,6 +24,8 @@
 #include <QSqlField>
 #include <QLinkedList>
 #include <QProgressBar>
+#include <QTabWidget>
+#include "../../common/analysis/AnalysisOutputWidget.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -104,6 +106,7 @@ void AnalysisViewer::setupUi()
 
 	analysisDef_ = new QTextEdit();
 
+	runSelector_ = new TaskRunSelector();
 
 	//The toolbar
 	toolBar_ = new QToolBar;
@@ -124,14 +127,23 @@ void AnalysisViewer::setupUi()
 	
 
 	//------ Main layout -----------
+	mainTabWindow_ = new QTabWidget();
+	QVBoxLayout *runDefinitionLayout = new QVBoxLayout;
+	runDefinitionLayout->addWidget(runSelector_);
+	runDefinitionLayout->setStretch(1,3);
+	runDefinitionLayout->addWidget(new QLabel("Enter Analysis Code:"));
+	runDefinitionLayout->setStretch(2,1);
+	runDefinitionLayout->addWidget(analysisDef_);
+	runDefinitionLayout->setStretch(3,7);
+	QWidget* runDefWidget = new QWidget();
+	runDefWidget->setLayout(runDefinitionLayout);
+	mainTabWindow_->addTab(runDefWidget,"Analysis Parameters");
+	mainTabWindow_->addTab(outputDisplay_,"Analysis Output");
+	mainTabWindow_->setTabEnabled(1,false);
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
-	
-	
-	mainLayout->addWidget(analysisDef_);
-	mainLayout->setStretch(1,1);
-	mainLayout->addWidget(outputDisplay_);
-	mainLayout->setStretch(2,6);
+	mainLayout->addWidget(mainTabWindow_);
 
 	setLayout(mainLayout);
 }
@@ -165,6 +177,7 @@ void AnalysisViewer::loadSession()
 	if(session_.isValid())
 		session_.close();
 	session_ = QSqlDatabase::database(newSession.connectionName());
+	runSelector_->loadSession(session_);
 	Q_ASSERT(session_.isValid() && session_.isOpen());
 	updateUI();
 }
@@ -175,8 +188,7 @@ void AnalysisViewer::saveOutput()
 			tr("Output Data Directory"),".", QFileDialog::ShowDirsOnly);
 	if(dirName.isEmpty())
 		return;
-
-	analysisDefinition_->saveOutputToDirectory(dirName+"/"+defaultOutputName_,defaultOutputName_);
+	outputDisplay_->saveOutputToDirectory(dirName);
 }
 
 void AnalysisViewer::executeCommand()
@@ -193,25 +205,50 @@ void AnalysisViewer::executeCommand()
 		Serializable::clearErrors();
 		return;
 	}
+	this->setFocus();
+	mainTabWindow_->setTabEnabled(1,false);
 	executeAction_->setEnabled(false);
 	loadSessionAction_->setEnabled(false);
 	saveOutputAction_->setEnabled(false);
+	runSelector_->setEnabled(false);
+	analysisDef_->setEnabled(false);
 	analysisDefinition_->loadSession(session_);
+	outputDisplay_->clear();
+	runsRemaining_ = 0;
 	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
-	QString result = analysisDefinition_->runTo(-1);
-	analysisDefinition_->finish();
+	runsRemaining_ = runSelector_->selectedRunCount();
+	for(int i=0;i<runSelector_->selectedRunCount();i++)
+	{
+		analysisDefinition_->startNewRun(runSelector_->nameOfSelectedRun(i));
+		QString result = analysisDefinition_->run(
+			EventOrderIndex(
+				runSelector_->startTimeOfSelectedRun(i),
+				runSelector_->startFrameOfSelectedRun(i),
+				Picto::EventOrderIndex::BEHAVIORAL
+				),
+			EventOrderIndex(
+				runSelector_->endTimeOfSelectedRun(i),
+				runSelector_->endFrameOfSelectedRun(i),
+				Picto::EventOrderIndex::BEHAVIORAL
+				)
+			);
+		analysisDefinition_->finish();
+		int currTabId = outputDisplay_->addTopLevelTab(runSelector_->nameOfSelectedRun(i));
+		QLinkedList<QPointer<AnalysisOutputWidget>> outputWidgets = analysisDefinition_->getOutputWidgets();
+		foreach(QPointer<QWidget> widget, outputWidgets)
+		{
+			outputDisplay_->addSubTab(currTabId,widget->objectName(),widget);
+		}
+		runsRemaining_--;
+	}
 	progressBar_->setRange(0,100);	//Returns progress bar to normal range if it wasn't done in updateProgressBar.
 	progressBar_->setValue(100);
-	
-	outputDisplay_->clear();
-	QLinkedList<QPointer<QWidget>> outputWidgets = analysisDefinition_->getOutputWidgets();
-	foreach(QPointer<QWidget> widget, outputWidgets)
-	{
-		outputDisplay_->addOutputTab(widget->objectName(),widget);
-	}
 	QCoreApplication::processEvents();	//Get rid of any multiple presses on the execute button before we reenable it.
 	executeAction_->setEnabled(true);
 	loadSessionAction_->setEnabled(true);
+	mainTabWindow_->setTabEnabled(1,true);
+	runSelector_->setEnabled(true);
+	analysisDef_->setEnabled(true);
 	if(analysisDefinition_->outputCanBeSaved())
 	{
 		saveOutputAction_->setEnabled(true);
@@ -228,6 +265,11 @@ void AnalysisViewer::updateUI()
 
 void AnalysisViewer::updateProgressBar(int percentRemaining)
 {
+	//The calling function sends in the percent remaining of the current run,
+	//we need to update this value to reflect the portion of all runs completed.
 	progressBar_->setRange(0,100);
-	progressBar_->setValue(100-percentRemaining);
+	double totalRuns = runSelector_->selectedRunCount();
+	double completed = totalRuns-runsRemaining_;
+	double totalFraction = completed+1.0-(double(percentRemaining)/100.0)/totalRuns;
+	progressBar_->setValue(100.0*totalFraction);
 }

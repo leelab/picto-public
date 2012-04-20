@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QPointer>
 #include "AnalysisTool.h"
+#include "AnalysisOutputWidget.h"
 
 namespace Picto {
 
@@ -19,15 +20,16 @@ public:
 	AnalysisOutput();
 	virtual ~AnalysisOutput();
 
+	void setOutputNamePrefix(QString prefix){prefix_ = prefix;};
 	//Should be overloaded to return a pointer to an output widget that
 	//presents the information written into this AnalysisOutput object.
-	virtual QPointer<QWidget> getOutputWidget(){return QPointer<QWidget>();};
+	virtual QPointer<AnalysisOutputWidget> getOutputWidget(){return QPointer<AnalysisOutputWidget>();};
 	//Should be overloaded to return true if this Output object supports saving.
 	virtual bool supportsSaving(){return false;};
 	//If saving is supported, should be overloaded to save data with input filename
 	//to input directory.  Return true on success.  Input filename should not include
 	//an extension.
-	virtual bool saveOutputData(QString directory, QString filename){return false;};
+	//virtual bool saveOutputData(QString directory, QString filename){return false;};
 	//Called to end the analysis.  Should be overloaded to finish any operations that
 	//need to be finished before analysis ends.
 	virtual void finishUp(){};
@@ -35,6 +37,8 @@ public:
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisOutput";};
 	virtual QString assetType(){return "AnalysisOutput";};
+
+	static QString getTempOutputDir();
 
 protected:
 
@@ -44,7 +48,12 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	void setValid(bool isValid){valid_ = isValid;};
 	bool isValid(){return valid_;};
+	QString getOutputNamePrefix(){return prefix_;};
 private:
+	static void initTempOutputDir();
+	static QString outputDir_;
+	static int loadedObjects_;
+	QString prefix_;
 	bool valid_;
 
 };

@@ -9,10 +9,12 @@
 #include "../../common/network/ServerDiscoverer.h"
 #include "AnalysisOutputDisplay.h"
 #include "AnalysisParameterSelector.h"
+#include "TaskRunSelector.h"
 #include "../../common/analysis/AnalysisDefinition.h"
 
 #include <QUuid>
 #include <QSqlDatabase>
+#include <QTabWidget>
 using namespace Picto;
 
 class QAction;
@@ -66,7 +68,10 @@ private:
 	QLabel *currSessionLabel_;
 	AnalysisOutputDisplay *outputDisplay_;
 	
+	QTabWidget* mainTabWindow_;
 	QTextEdit* analysisDef_;
+	TaskRunSelector* runSelector_;
+	int runsRemaining_;
 	
 	QToolBar *toolBar_;
 	QProgressBar *progressBar_;

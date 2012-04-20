@@ -115,35 +115,35 @@
     </Trigger>
     <Tool type="File">
       <Name>blobFile</Name>
-      <FileName>untitled.blob.all.txt</FileName>
+      <FileName>.blob.all.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>eventFile</Name>
-      <FileName>untitled.event.all.txt</FileName>
+      <FileName>.event.all.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>eyeFile</Name>
-      <FileName>untitled.eye.all.txt</FileName>
+      <FileName>.eye.all.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>diamFile</Name>
-      <FileName>untitled.joy.all.txt</FileName>
+      <FileName>.joy.all.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>blobFileCorrect</Name>
-      <FileName>untitled.blob.correct.txt</FileName>
+      <FileName>.blob.correct.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>eventFileCorrect</Name>
-      <FileName>untitled.event.correct.txt</FileName>
+      <FileName>.event.correct.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>eyeFileCorrect</Name>
-      <FileName>untitled.eye.correct.txt</FileName>
+      <FileName>.eye.correct.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>diamFileCorrect</Name>
-      <FileName>untitled.joy.correct.txt</FileName>
+      <FileName>.joy.correct.txt</FileName>
     </Tool>
     <Tool type="NumericVariable">
       <Name>correctTrialNum</Name>
@@ -271,27 +271,27 @@
     </Trigger>-->
     <Tool type="File">
       <Name>spikeFile</Name>
-      <FileName>untitled.spikes.all.txt</FileName>
+      <FileName>.spikes.all.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>waveFile</Name>
-      <FileName>untitled.wave.all.txt</FileName>
+      <FileName>.wave.all.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>lfpFile</Name>
-      <FileName>untitled.lfp.all.txt</FileName>
+      <FileName>.lfp.all.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>spikeFileCorrect</Name>
-      <FileName>untitled.spikes.correct.txt</FileName>
+      <FileName>.spikes.correct.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>waveFileCorrect</Name>
-      <FileName>untitled.wave.correct.txt</FileName>
+      <FileName>.wave.correct.txt</FileName>
     </Tool>
     <Tool type="File">
       <Name>lfpFileCorrect</Name>
-      <FileName>untitled.lfp.correct.txt</FileName>
+      <FileName>.lfp.correct.txt</FileName>
     </Tool>
     <Tool type="NumericVariable">
       <Name>correctTrialNum</Name>

@@ -17,7 +17,6 @@ class EventOrderIndex
 public:
 	enum IDSource { BEHAVIORAL,NEURAL };
 	EventOrderIndex();
-	EventOrderIndex(qulonglong dataId,IDSource idSource);
 	EventOrderIndex(double time);
 	EventOrderIndex(double time, qulonglong dataId, IDSource idSource);
 	virtual ~EventOrderIndex();

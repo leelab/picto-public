@@ -124,8 +124,27 @@ void AnalysisPeriod::reset()
 	periodNumber_ = 0;
 }
 
-bool AnalysisPeriod::runTo(double time)
+void AnalysisPeriod::startNewRun(QString runName)
 {
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
+	QSharedPointer<AnalysisOutput> analysisOutput;
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+	{
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
+			analysisOutput->setOutputNamePrefix(runName);
+			analysisOutput->reset();
+		}
+	}
+	periodNumber_ = 0;
+}
+
+bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
+{
+	if(!fromIndex.isValid() || !toIndex.isValid())
+		return false;
+
 	//Tell triggers that they need to recheck the session
 	//database for new data.
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
@@ -138,13 +157,23 @@ bool AnalysisPeriod::runTo(double time)
 		
 
 	QString returnVal;
-	if(!startIndex_.isValid())
+	while(startIndex_ < fromIndex)
 	{	//Either this is the first runTo() call since reset() or last call finished with
 		//no startTrigger.  
 		//Try to get a new startIndex_.
-		startIndex_ = startTrigger_->getNextTriggerTime();
-		if(!startIndex_.isValid())
-			return false;
+		if(!endTrigger_ && (endIndex_ > startIndex_))
+		{	//This is the case where the start and end indeces are the same and last time
+			//run was called it ended with an endIndex_ beyond the input toIndex and a 
+			//startIndex_ lower than the input toIndex_.   We need to replace our startIndex_
+			//with last times endIndex_ so that we don't end up skipping a period.
+			startIndex_ = endIndex_;
+		}
+		else
+		{
+			startIndex_ = startTrigger_->getNextTriggerTime();
+			if(!startIndex_.isValid())
+				return false;
+		}
 	}
 	while(endIndex_ <= startIndex_)
 	{	//Either this is the first runTo() call since reset() or last call finished with
@@ -160,9 +189,9 @@ bool AnalysisPeriod::runTo(double time)
 	
 	QTime timer;
 	timer.start();
-	//Get data until there are no more triggers or we've passed the input time.
+	//Get data until there are no more triggers or we've passed the input index.
 	while( (startIndex_.isValid()) && (endIndex_.isValid() ) 
-		&& ((time < 0)||((startIndex_.time_ <= time) && (endIndex_.time_ <= time))) )
+		&& (((startIndex_ <= toIndex) && (endIndex_ <= toIndex))) )
 	{
 		//GET DATA AND ADD IT TO SCRIPT ENGINE////////////////////////////////////////
 		QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
@@ -251,6 +280,21 @@ bool AnalysisPeriod::runTo(double time)
 	return true;
 }
 
+QString AnalysisPeriod::scriptInfo()
+{
+	QString returnVal;
+	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
+	QSharedPointer<AnalysisTrigger> trigger;
+	foreach(QSharedPointer<Asset> triggerAsset,triggers)
+	{
+		trigger = triggerAsset.staticCast<AnalysisTrigger>();
+		if((trigger == startTrigger_) || (trigger == endTrigger_))
+			continue;
+		returnVal.append(trigger->scriptInfo()).append("\n");
+	}
+	return returnVal;
+}
+
 void AnalysisPeriod::finishUp()
 {
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
@@ -265,9 +309,9 @@ void AnalysisPeriod::finishUp()
 	}
 }
 
-QLinkedList<QPointer<QWidget>> AnalysisPeriod::getOutputWidgets()
+QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisPeriod::getOutputWidgets()
 {
-	QLinkedList<QPointer<QWidget>> returnVal;
+	QLinkedList<QPointer<AnalysisOutputWidget>> returnVal;
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisOutput> outputObj;
 	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
@@ -297,21 +341,21 @@ bool AnalysisPeriod::outputCanBeSaved()
 	return false;
 }
 
-bool AnalysisPeriod::saveOutputToDirectory(QString directory, QString filename)
-{
-	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisOutput> outputObj;
-	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
-	{
-		if(toolAsset->inherits("Picto::AnalysisOutput"))
-		{
-			outputObj = toolAsset.staticCast<AnalysisOutput>();
-			if(!outputObj->saveOutputData(directory,filename))
-				return false;
-		}
-	}
-	return true;
-}
+//bool AnalysisPeriod::saveOutputToDirectory(QString directory, QString filename)
+//{
+//	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
+//	QSharedPointer<AnalysisOutput> outputObj;
+//	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+//	{
+//		if(toolAsset->inherits("Picto::AnalysisOutput"))
+//		{
+//			outputObj = toolAsset.staticCast<AnalysisOutput>();
+//			if(!outputObj->saveOutputData(directory,filename))
+//				return false;
+//		}
+//	}
+//	return true;
+//}
 
 void AnalysisPeriod::postDeserialize()
 {
@@ -340,19 +384,4 @@ bool AnalysisPeriod::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
 	return true;
-}
-
-QString AnalysisPeriod::scriptInfo()
-{
-	QString returnVal;
-	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
-	QSharedPointer<AnalysisTrigger> trigger;
-	foreach(QSharedPointer<Asset> triggerAsset,triggers)
-	{
-		trigger = triggerAsset.staticCast<AnalysisTrigger>();
-		if((trigger == startTrigger_) || (trigger == endTrigger_))
-			continue;
-		returnVal.append(trigger->scriptInfo()).append("\n");
-	}
-	return returnVal;
 }

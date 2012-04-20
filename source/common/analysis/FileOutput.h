@@ -27,12 +27,10 @@ public:
 	
 	//Returns a pointer to an output widget that
 	//presents the information written into this AnalysisTool object.
-	QPointer<QWidget> getOutputWidget();
+	QPointer<AnalysisOutputWidget> getOutputWidget();
 	bool supportsSaving(){return true;};
-	bool saveOutputData(QString directory, QString filename);
+	//bool saveOutputData(QString directory, QString filename);
 	void finishUp();
-
-	static QString getTempOutputDir();
 
 	//Inherited
 	virtual QString getUITemplate(){return "FileOutput";};
@@ -49,13 +47,9 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
-	static void initTempOutputDir();
-	static QString outputDir_;
-	static int loadedObjects_;
 	unsigned int charsWritten_;
 	QSharedPointer<QFile> file_;
 	QSharedPointer<QTextStream> outputFileStream_;
-	QPointer<FileOutputWidget> outputWidget_;
 
 
 };

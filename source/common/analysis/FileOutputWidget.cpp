@@ -1,11 +1,12 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QMessageBox>
 #include "FileOutputWidget.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
 FileOutputWidget::FileOutputWidget(unsigned int linesPerPage, QWidget* parent)
-: QWidget(parent)
+: AnalysisOutputWidget(parent)
 {
 	linesPerPage_ = linesPerPage;
 	textEdit_ = new QTextEdit();
@@ -30,6 +31,8 @@ FileOutputWidget::FileOutputWidget(unsigned int linesPerPage, QWidget* parent)
 
 FileOutputWidget::~FileOutputWidget()
 {
+	if(file_)
+		file_->close();
 }
 
 bool FileOutputWidget::setFile(QString filename)
@@ -41,6 +44,8 @@ bool FileOutputWidget::setFile(QString filename)
 	if(objName.isEmpty())
 		objName = filename;
 	setObjectName(objName);
+	if(file_)
+		file_->close();
 	file_ = QSharedPointer<QFile>(new QFile(filename));
 	if(!file_->open(QIODevice::ReadOnly | QIODevice::Text))
 		return false;
@@ -60,6 +65,33 @@ void FileOutputWidget::nextPage()
 {
 	currPage_++;
 	loadCurrPage();
+}
+
+bool FileOutputWidget::isSaveable()
+{
+	return true;
+}
+
+bool FileOutputWidget::saveOutputTo(QDir directory)
+{	
+	if(!file_)
+		return false;
+	if(!directory.exists())
+		return false;	//Caller must verify that directory exists.
+	QString directoryPath = directory.absolutePath();
+	QString newFileName = directoryPath + "/" + objectName();
+	QFile::remove(newFileName);
+	bool result = file_->copy(newFileName);
+	if(!result)
+	{
+		QMessageBox error;
+		error.setText("Could not create save file");
+		error.setDetailedText("Could not create: " + directory.absolutePath() + "/" + newFileName);
+		error.setIcon(QMessageBox::Critical);
+		error.exec();
+		return false;
+	}
+	return result;
 }
 
 void FileOutputWidget::loadCurrPage()

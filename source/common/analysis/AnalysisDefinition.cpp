@@ -37,7 +37,7 @@ void AnalysisDefinition::reset()
 	currPeriod_ = 0;
 }
 
-bool AnalysisDefinition::runTo(double time)
+void AnalysisDefinition::startNewRun(QString runName)
 {
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
@@ -45,7 +45,20 @@ bool AnalysisDefinition::runTo(double time)
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
 		period = periodAsset.staticCast<AnalysisPeriod>();
-		period->runTo(time);
+		period->startNewRun(runName);
+		currPeriod_++;
+	}
+}
+
+bool AnalysisDefinition::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
+{
+	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
+	QSharedPointer<AnalysisPeriod> period;
+	currPeriod_ = 0;
+	foreach(QSharedPointer<Asset> periodAsset,periods)
+	{
+		period = periodAsset.staticCast<AnalysisPeriod>();
+		period->run(fromIndex,toIndex);
 		currPeriod_++;
 	}
 	return true;
@@ -77,24 +90,24 @@ bool AnalysisDefinition::outputCanBeSaved()
 	return returnVal;
 }
 
-bool AnalysisDefinition::saveOutputToDirectory(QString directory, QString filename)
-{
-	bool returnVal = true;
-	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
-	QSharedPointer<AnalysisPeriod> period;
-	foreach(QSharedPointer<Asset> periodAsset,periods)
-	{
-		period = periodAsset.staticCast<AnalysisPeriod>();
-		returnVal  = returnVal & period->saveOutputToDirectory(directory,filename);
-	}
-	if(periods.size() == 0)
-		returnVal = false;
-	return returnVal;
-}
+//bool AnalysisDefinition::saveOutputToDirectory(QString directory, QString filename)
+//{
+//	bool returnVal = true;
+//	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
+//	QSharedPointer<AnalysisPeriod> period;
+//	foreach(QSharedPointer<Asset> periodAsset,periods)
+//	{
+//		period = periodAsset.staticCast<AnalysisPeriod>();
+//		returnVal  = returnVal & period->saveOutputToDirectory(directory,filename);
+//	}
+//	if(periods.size() == 0)
+//		returnVal = false;
+//	return returnVal;
+//}
 
-QLinkedList<QPointer<QWidget>> AnalysisDefinition::getOutputWidgets()
+QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets()
 {
-	QLinkedList<QPointer<QWidget>> returnVal;
+	QLinkedList<QPointer<AnalysisOutputWidget>> returnVal;
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
