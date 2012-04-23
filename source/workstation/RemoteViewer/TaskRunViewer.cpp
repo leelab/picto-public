@@ -68,6 +68,17 @@ void TaskRunViewer::markLatestAsRunning(bool isRunning)
 	}
 }
 
+QIcon TaskRunViewer::getLatestRunIcon()
+{
+	QSharedPointer<Picto::TaskRunDataUnit> latestRun = getLatestRun();
+	if(latestRun.isNull())
+		return QIcon();
+	if(latestRun->saved_)
+		return latestIsRunning_?QIcon(":/icons/savedrunning.png"):QIcon("://icons/filesave.png");
+	else
+		return latestIsRunning_?QIcon(":/icons/unsavedrunning.png"):QIcon("://icons/delete.png");
+}
+
 void TaskRunViewer::clear()
 {
 	currTaskRuns_.clear();

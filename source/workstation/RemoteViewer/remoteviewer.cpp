@@ -560,7 +560,6 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
-		currentRunViewer_->hide();
 		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
@@ -569,6 +568,8 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
+		mainTabbedFrame_->setTabEnabled(2,false);
+		mainTabbedFrame_->setTabIcon(2,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -591,7 +592,6 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
-		currentRunViewer_->hide();
 		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
@@ -599,6 +599,8 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setCurrentIndex(0);
 		mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
+		mainTabbedFrame_->setTabEnabled(2,false);
+		mainTabbedFrame_->setTabIcon(2,QIcon());
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
@@ -621,7 +623,6 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
-		currentRunViewer_->hide();
 		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
@@ -630,6 +631,8 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
+		mainTabbedFrame_->setTabEnabled(2,false);
+		mainTabbedFrame_->setTabIcon(2,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -651,7 +654,6 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
-		currentRunViewer_->hide();
 		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->initialize();
@@ -660,6 +662,8 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
+		mainTabbedFrame_->setTabEnabled(2,false);
+		mainTabbedFrame_->setTabIcon(2,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -683,6 +687,7 @@ void RemoteViewer::enterState()
 		pixmapVisualTarget_->setZoom(zoomValue_);
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setTabEnabled(0,true);
+		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		activeExpName_->setText(activeExperiment_->getName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
@@ -705,6 +710,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
 		mainTabbedFrame_->setTabEnabled(0,true);
+		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
@@ -730,6 +736,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
 		mainTabbedFrame_->setTabEnabled(0,true);
+		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
 		activeExpName_->setText(activeExperiment_->getName());
@@ -754,7 +761,6 @@ void RemoteViewer::enterState()
 		zoomSlider_->setEnabled(false);
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
-		currentRunViewer_->hide();
 		currentRunViewer_->clear();
 		activeExpName_->setText(activeExperiment_->getName());
 		neuralDataViewer_->deinitialize();
@@ -763,6 +769,8 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
+		mainTabbedFrame_->setTabEnabled(2,false);
+		mainTabbedFrame_->setTabIcon(2,QIcon());
 		taskListBox_->clear();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
@@ -959,6 +967,13 @@ void RemoteViewer::setupUi()
 	//----------Plots---------------
 	neuralDataViewer_ = new NeuralDataViewer(engine_);
 
+	//--------Run Info--------------
+	currentRunViewer_ = new TaskRunViewer();
+	connect(	currentRunViewer_,
+				SIGNAL(taskRunDataChanged(qulonglong)),
+				this,
+				SLOT(modifyRunDataUnit(qulonglong))
+			);
 
 	statusBar_ = new QLabel();
 
@@ -983,22 +998,13 @@ void RemoteViewer::setupUi()
 	mainTabbedFrame_ = new QTabWidget(this);
 	mainTabbedFrame_->addTab(visualTargetHost_,"Behavioral");
 	mainTabbedFrame_->addTab(neuralDataViewer_,"Neural");
+	mainTabbedFrame_->addTab(currentRunViewer_,"Run Info");
 	mainTabbedFrame_->setTabEnabled(0,false);
 	mainTabbedFrame_->setTabEnabled(1,false);
-	currentRunViewer_ = new TaskRunViewer();
-	connect(	currentRunViewer_,
-				SIGNAL(taskRunDataChanged(qulonglong)),
-				this,
-				SLOT(modifyRunDataUnit(qulonglong))
-			);
-
-	QVBoxLayout *centerPane = new QVBoxLayout;
-	centerPane->addWidget(mainTabbedFrame_);
-	centerPane->addWidget(currentRunViewer_);
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	operationLayout->addLayout(leftPane);
-	operationLayout->addLayout(centerPane);
+	operationLayout->addWidget(mainTabbedFrame_);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
 
@@ -1543,7 +1549,8 @@ void RemoteViewer::updateSessionDataPackage(bool immediate)
 			if(currSessionDataPack_ && currSessionDataPack_->getNumRuns())
 			{
 				currentRunViewer_->setTaskRunData(currSessionDataPack_->getRunsMap());
-				currentRunViewer_->show();
+				mainTabbedFrame_->setTabEnabled(2,true);
+				mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 			}
 		}
 	}

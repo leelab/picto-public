@@ -270,6 +270,6 @@ void AnalysisViewer::updateProgressBar(int percentRemaining)
 	progressBar_->setRange(0,100);
 	double totalRuns = runSelector_->selectedRunCount();
 	double completed = totalRuns-runsRemaining_;
-	double totalFraction = completed+1.0-(double(percentRemaining)/100.0)/totalRuns;
+	double totalFraction = (completed+1.0-(double(percentRemaining)/100.0))/totalRuns;
 	progressBar_->setValue(100.0*totalFraction);
 }

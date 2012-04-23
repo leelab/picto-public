@@ -144,7 +144,7 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::XYSignalChannel> daimMouseChannel(new Picto::XYSignalChannel("Diameter",2,3,2,mousePort));
+			QSharedPointer<Picto::XYSignalChannel> daimMouseChannel(new Picto::XYSignalChannel("Diameter",2,3,4,mousePort));
 			engine_->addSignalChannel(daimMouseChannel);
 		}
 #endif
@@ -161,7 +161,7 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,2,daqPort));
+			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,4,daqPort));
 			engine_->addSignalChannel(aiChannel);
 		}
 
@@ -181,7 +181,7 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,2,daqPort));
+			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,4,daqPort));
 			engine_->addSignalChannel(aiChannel);
 		}
 #else

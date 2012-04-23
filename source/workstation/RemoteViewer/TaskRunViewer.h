@@ -23,6 +23,7 @@ public:
 	virtual ~TaskRunViewer();
 	void setTaskRunData(QMap<qulonglong,QSharedPointer<Picto::TaskRunDataUnit>> dataMap);
 	void markLatestAsRunning(bool isRunning);
+	QIcon getLatestRunIcon();
 	void clear();
 signals:
 	void taskRunDataChanged(qulonglong runId);

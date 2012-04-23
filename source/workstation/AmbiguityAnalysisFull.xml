@@ -95,7 +95,7 @@
     </Trigger>
     <Trigger type="Signal">
       <Name>diam</Name>
-      <SignalName>Position</SignalName>
+      <SignalName>Diameter</SignalName>
       <DataSource type="Signal">
         <Name>data</Name>
         <SignalName>Diameter</SignalName>
