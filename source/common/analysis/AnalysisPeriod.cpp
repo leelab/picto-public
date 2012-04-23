@@ -128,14 +128,20 @@ void AnalysisPeriod::startNewRun(QString runName)
 {
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisOutput> analysisOutput;
+	QSharedPointer<AnalysisTool> analysisTool;
 	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
 		if(toolAsset->inherits("Picto::AnalysisOutput"))
 		{
 			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
 			analysisOutput->setOutputNamePrefix(runName);
-			analysisOutput->reset();
 		}
+		if(toolAsset->inherits("Picto::AnalysisTool"))
+		{
+			analysisTool = toolAsset.staticCast<AnalysisTool>();
+			analysisTool->reset();
+		}
+
 	}
 	periodNumber_ = 0;
 }
