@@ -21,6 +21,7 @@ public:
 	virtual ~TaskRunSelector();
 	void loadSession(QSqlDatabase session);
 	int selectedRunCount();
+	QSharedPointer<Picto::TaskRunDataUnit> getSelectedRun(int index);
 	qulonglong startFrameOfSelectedRun(int index);
 	qulonglong endFrameOfSelectedRun(int index);
 	double startTimeOfSelectedRun(int index);

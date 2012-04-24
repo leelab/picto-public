@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <AnalysisDefinition>
   <Name>EventAndEye</Name>
+  <Script>
+    readme.writeLine(&quot;Name:\t&quot; + name);
+    readme.writeLine(&quot;Started:\t&quot; +startTime);
+    readme.writeLine(&quot;Ended:\t&quot; +endTime);
+    readme.writeLine(&quot;Run Number:\t&quot; + runNumber);
+    readme.writeLine(&quot;-----Notes-----&quot;);
+    readme.writeLine(notes);
+  </Script>
+  <Tool type="File">
+    <Name>readme</Name>
+    <FileName>.readme.txt</FileName>
+  </Tool>
   <Period>
     <Name>TestPeriod</Name>
     <StartTrigger>start</StartTrigger>

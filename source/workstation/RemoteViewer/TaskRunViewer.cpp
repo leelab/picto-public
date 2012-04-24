@@ -9,6 +9,8 @@ using namespace Picto;
 TaskRunViewer::TaskRunViewer(QWidget *parent) :
 	QWidget(parent)
 {
+	editingEnabled_ = false;
+
 	mainLayout_ = new QVBoxLayout;
 	availableRuns_ = new QComboBox();
 	availableRuns_->setEditable(false);
@@ -23,6 +25,7 @@ TaskRunViewer::TaskRunViewer(QWidget *parent) :
 
 	actButton_ = new QPushButton("Modify",this);
 	connect(actButton_,SIGNAL(released()),this,SLOT(actTriggered()));
+	actButton_->hide();
 	cancelButton_ = new QPushButton("Cancel",this);
 	connect(cancelButton_,SIGNAL(released()),this,SLOT(cancelTriggered()));
 
@@ -77,6 +80,17 @@ QIcon TaskRunViewer::getLatestRunIcon()
 		return latestIsRunning_?QIcon(":/icons/savedrunning.png"):QIcon("://icons/filesave.png");
 	else
 		return latestIsRunning_?QIcon(":/icons/unsavedrunning.png"):QIcon("://icons/delete.png");
+}
+
+void TaskRunViewer::enableEditing(bool enable)
+{
+	editingEnabled_ = enable;
+	if(editingEnabled_)
+		actButton_->show();
+	else
+		actButton_->hide();
+	if(!editingEnabled_ && editing_)
+		setStateToReadOnly();
 }
 
 void TaskRunViewer::clear()
@@ -187,6 +201,9 @@ void TaskRunViewer::updateFieldsFromCurrentRun()
 
 void TaskRunViewer::updateCurrentRunFromFields()
 {
+	if(!editingEnabled_)
+		return;
+
 	QSharedPointer<TaskRunDataUnit> currRun = getSelectedRun();
 	if(!currRun)
 		return;
@@ -213,6 +230,9 @@ void TaskRunViewer::updateSaveButtonIcon()
 
 void TaskRunViewer::setStateToEditing()
 {
+	if(!editingEnabled_)
+		return;
+
 	runNotes_->setReadOnly(false);
 	runNotes_->setFrameShape(QFrame::StyledPanel);
 	runSaved_->show();
@@ -237,6 +257,9 @@ void TaskRunViewer::setStateToReadOnly()
 
 void TaskRunViewer::actTriggered()
 {
+	if(!editingEnabled_)
+		return;
+
 	if(editing_)
 	{
 		//Due to a bug in our current version of qt (4.5.2) discussed in http://www.qtcentre.org/threads/28361-Possilble-Bug-QXmlStreamReader

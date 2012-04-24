@@ -89,6 +89,12 @@ int TaskRunSelector::selectedRunCount()
 {
 	return selectArea_->selectedItems().count();
 }
+
+QSharedPointer<Picto::TaskRunDataUnit> TaskRunSelector::getSelectedRun(int index)
+{
+	return getRunDataFromSelectedIndex(index).run;
+}
+
 qulonglong TaskRunSelector::startFrameOfSelectedRun(int index)
 {
 	return getRunDataFromSelectedIndex(index).run->startFrame_;

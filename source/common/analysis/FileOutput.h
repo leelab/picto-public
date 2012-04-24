@@ -28,7 +28,6 @@ public:
 	//Returns a pointer to an output widget that
 	//presents the information written into this AnalysisTool object.
 	QPointer<AnalysisOutputWidget> getOutputWidget();
-	bool supportsSaving(){return true;};
 	//bool saveOutputData(QString directory, QString filename);
 	void finishUp();
 

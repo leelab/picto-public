@@ -24,6 +24,7 @@ public:
 	void setTaskRunData(QMap<qulonglong,QSharedPointer<Picto::TaskRunDataUnit>> dataMap);
 	void markLatestAsRunning(bool isRunning);
 	QIcon getLatestRunIcon();
+	void enableEditing(bool enable);
 	void clear();
 signals:
 	void taskRunDataChanged(qulonglong runId);
@@ -48,6 +49,7 @@ private:
 	QMap<qulonglong,QSharedPointer<Picto::TaskRunDataUnit>> currTaskRuns_;
 	bool editing_;
 	bool latestIsRunning_;
+	bool editingEnabled_;
 private slots:
 	void actTriggered();
 	void cancelTriggered();

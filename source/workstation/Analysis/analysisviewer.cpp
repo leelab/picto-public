@@ -219,19 +219,8 @@ void AnalysisViewer::executeCommand()
 	runsRemaining_ = runSelector_->selectedRunCount();
 	for(int i=0;i<runSelector_->selectedRunCount();i++)
 	{
-		analysisDefinition_->startNewRun(runSelector_->nameOfSelectedRun(i));
-		QString result = analysisDefinition_->run(
-			EventOrderIndex(
-				runSelector_->startTimeOfSelectedRun(i),
-				runSelector_->startFrameOfSelectedRun(i),
-				Picto::EventOrderIndex::BEHAVIORAL
-				),
-			EventOrderIndex(
-				runSelector_->endTimeOfSelectedRun(i),
-				runSelector_->endFrameOfSelectedRun(i),
-				Picto::EventOrderIndex::BEHAVIORAL
-				)
-			);
+		analysisDefinition_->startNewRun(runSelector_->getSelectedRun(i));
+		QString result = analysisDefinition_->run();
 		analysisDefinition_->finish();
 		int currTabId = outputDisplay_->addTopLevelTab(runSelector_->nameOfSelectedRun(i));
 		QLinkedList<QPointer<AnalysisOutputWidget>> outputWidgets = analysisDefinition_->getOutputWidgets();
@@ -249,10 +238,9 @@ void AnalysisViewer::executeCommand()
 	mainTabWindow_->setTabEnabled(1,true);
 	runSelector_->setEnabled(true);
 	analysisDef_->setEnabled(true);
-	if(analysisDefinition_->outputCanBeSaved())
+	if(outputDisplay_->supportsSaving())
 	{
 		saveOutputAction_->setEnabled(true);
-		defaultOutputName_ = session_.connectionName();
 	}
 }
 

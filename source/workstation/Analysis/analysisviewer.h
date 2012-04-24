@@ -61,7 +61,6 @@ private:
 	QSharedPointer<Picto::Experiment> experiment_;
 	QSharedPointer<AnalysisDefinition> analysisDefinition_; 
 
-	QString defaultOutputName_;
 	QAction *executeAction_;
 	QAction *loadSessionAction_;
 	QAction *saveOutputAction_;

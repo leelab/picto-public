@@ -1548,6 +1548,7 @@ void RemoteViewer::updateSessionDataPackage(bool immediate)
 
 			if(currSessionDataPack_ && currSessionDataPack_->getNumRuns())
 			{
+				currentRunViewer_->enableEditing(isAuthorized_);
 				currentRunViewer_->setTaskRunData(currSessionDataPack_->getRunsMap());
 				mainTabbedFrame_->setTabEnabled(2,true);
 				mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());

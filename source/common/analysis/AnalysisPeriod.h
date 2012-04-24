@@ -39,7 +39,6 @@ public:
 	bool run(EventOrderIndex fromIndex,EventOrderIndex toIndex);
 	void finishUp();
 	QLinkedList<QPointer<AnalysisOutputWidget>> getOutputWidgets();
-	bool outputCanBeSaved();
 	//bool saveOutputToDirectory(QString directory, QString filename);
 
 	//Inherited

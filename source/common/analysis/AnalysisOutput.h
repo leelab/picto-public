@@ -24,8 +24,6 @@ public:
 	//Should be overloaded to return a pointer to an output widget that
 	//presents the information written into this AnalysisOutput object.
 	virtual QPointer<AnalysisOutputWidget> getOutputWidget(){return QPointer<AnalysisOutputWidget>();};
-	//Should be overloaded to return true if this Output object supports saving.
-	virtual bool supportsSaving(){return false;};
 	//If saving is supported, should be overloaded to save data with input filename
 	//to input directory.  Return true on success.  Input filename should not include
 	//an extension.

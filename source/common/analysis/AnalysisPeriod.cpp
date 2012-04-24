@@ -148,7 +148,7 @@ void AnalysisPeriod::startNewRun(QString runName)
 
 bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 {
-	if(!fromIndex.isValid() || !toIndex.isValid())
+	if(!fromIndex.isValid())	//Invalid toIndex => we don't know when it will end yet.
 		return false;
 
 	//Tell triggers that they need to recheck the session
@@ -197,7 +197,7 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 	timer.start();
 	//Get data until there are no more triggers or we've passed the input index.
 	while( (startIndex_.isValid()) && (endIndex_.isValid() ) 
-		&& (((startIndex_ <= toIndex) && (endIndex_ <= toIndex))) )
+		&& (!toIndex.isValid() || ((startIndex_ <= toIndex) && (endIndex_ <= toIndex))) )
 	{
 		//GET DATA AND ADD IT TO SCRIPT ENGINE////////////////////////////////////////
 		QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
@@ -329,22 +329,6 @@ QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisPeriod::getOutputWidgets()
 		}
 	}
 	return returnVal;
-}
-
-bool AnalysisPeriod::outputCanBeSaved()
-{
-	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisOutput> outputObj;
-	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
-	{
-		if(toolAsset->inherits("Picto::AnalysisOutput"))
-		{
-			outputObj = toolAsset.staticCast<AnalysisOutput>();
-			if(outputObj->supportsSaving())
-				return true;
-		}
-	}
-	return false;
 }
 
 //bool AnalysisPeriod::saveOutputToDirectory(QString directory, QString filename)

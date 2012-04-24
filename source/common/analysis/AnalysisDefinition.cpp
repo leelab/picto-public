@@ -1,11 +1,25 @@
+#include <QMessageBox>
+#include <QSqlQuery>
 #include "AnalysisDefinition.h"
+#include "AnalysisOutput.h"
+#include "NumericVariable.h"
+#include "FileOutput.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
 AnalysisDefinition::AnalysisDefinition()
 {
 	QSharedPointer<AssetFactory> periodFactory(new AssetFactory(0,-1));
+	AddDefinableProperty("Script","");
 	AddDefinableObjectFactory("Period",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisPeriod::Create))));	
+
+	QSharedPointer<AssetFactory> toolFactory(new AssetFactory(0,-1));
+	AddDefinableObjectFactory("Tool",toolFactory);
+	toolFactory->addAssetType("NumericVariable",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericVariable::Create))));	
+	toolFactory->addAssetType("File",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FileOutput::Create))));	
+
 	reset();
 }
 
@@ -27,6 +41,17 @@ void AnalysisDefinition::loadSession(QSqlDatabase session)
 
 void AnalysisDefinition::reset()
 {
+	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
+
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
+	QSharedPointer<AnalysisTool> analysisTool;
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+	{
+		analysisTool = toolAsset.staticCast<AnalysisTool>();
+		analysisTool->reset();
+		analysisTool->bindToScriptEngine(*qsEngine_);
+	}
+
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
@@ -34,24 +59,80 @@ void AnalysisDefinition::reset()
 		period = periodAsset.staticCast<AnalysisPeriod>();
 		period->reset();
 	}
+
+	//Make a Qt Script Function out of the script and its name
+	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toAscii() + "}";
+
+	//add the function to the engine by calling evaluate on it
+	qsEngine_->evaluate(function);
+	//Check for errors
+	if(qsEngine_->hasUncaughtException())
+	{
+		QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
+		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+										  .arg(qsEngine_->uncaughtException().toString());
+		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+		QMessageBox box;
+		box.setText("Script Error                                      ");
+		box.setDetailedText(errorMsg);
+		box.setIconPixmap(QPixmap(":/icons/x.png"));
+		box.exec();
+		return;
+	}
+
+	currRunNum_ = 0;
 	currPeriod_ = 0;
 }
 
-void AnalysisDefinition::startNewRun(QString runName)
+void AnalysisDefinition::startNewRun(QSharedPointer<TaskRunDataUnit> runInfo)
 {
+	Q_ASSERT(runInfo);
+	currRun_ = runInfo;
+	currRunNum_++;
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	currPeriod_ = 0;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
 		period = periodAsset.staticCast<AnalysisPeriod>();
-		period->startNewRun(runName);
+		period->startNewRun(currRun_->name_);
 		currPeriod_++;
+	}
+
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
+	QSharedPointer<AnalysisOutput> analysisOutput;
+	QSharedPointer<AnalysisTool> analysisTool;
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+	{
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
+			analysisOutput->setOutputNamePrefix(currRun_->name_);
+		}
+		if(toolAsset->inherits("Picto::AnalysisTool"))
+		{
+			analysisTool = toolAsset.staticCast<AnalysisTool>();
+			analysisTool->reset();
+		}
+
 	}
 }
 
-bool AnalysisDefinition::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
+bool AnalysisDefinition::run()
 {
+	double startTime = getFrameTime(currRun_->startFrame_);
+	double stopTime = getFrameTime(currRun_->endFrame_);
+	EventOrderIndex fromIndex(
+		startTime,
+		currRun_->startFrame_,
+		Picto::EventOrderIndex::BEHAVIORAL
+	);
+	EventOrderIndex toIndex(
+		stopTime,
+		currRun_->endFrame_,
+		Picto::EventOrderIndex::BEHAVIORAL
+	);
+
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	currPeriod_ = 0;
@@ -60,6 +141,31 @@ bool AnalysisDefinition::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		period = periodAsset.staticCast<AnalysisPeriod>();
 		period->run(fromIndex,toIndex);
 		currPeriod_++;
+	}
+
+	//Add/Update start, end times, and period number as properties to script engine
+	qsEngine_->globalObject().setProperty("name", currRun_->name_);
+	qsEngine_->globalObject().setProperty("notes", currRun_->notes_);
+	qsEngine_->globalObject().setProperty("startTime", startTime);
+	qsEngine_->globalObject().setProperty("endTime", stopTime);
+	qsEngine_->globalObject().setProperty("runNumber", currRunNum_);
+
+	//RUN SCRIPT//////////////////////////////////////////////////////////////////
+
+	//Run the script
+	qsEngine_->globalObject().property("TestScriptName").call().toString();
+	if(qsEngine_->hasUncaughtException())
+	{
+		QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
+		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
+										  .arg(qsEngine_->uncaughtException().toString());
+		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
+		QMessageBox box;
+		box.setText("Script Error                                      ");
+		box.setDetailedText(errorMsg);
+		box.setIconPixmap(QPixmap(":/icons/x.png"));
+		box.exec();
+		return false;
 	}
 	return true;
 }
@@ -73,21 +179,17 @@ void AnalysisDefinition::finish()
 		period = periodAsset.staticCast<AnalysisPeriod>();
 		period->finishUp();
 	}
-}
 
-bool AnalysisDefinition::outputCanBeSaved()
-{
-	bool returnVal = true;
-	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
-	QSharedPointer<AnalysisPeriod> period;
-	foreach(QSharedPointer<Asset> periodAsset,periods)
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
+	QSharedPointer<AnalysisOutput> analysisOutput;
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		period = periodAsset.staticCast<AnalysisPeriod>();
-		returnVal  = returnVal & period->outputCanBeSaved();
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
+			analysisOutput->finishUp();
+		}
 	}
-	if(periods.size() == 0)
-		returnVal = false;
-	return returnVal;
 }
 
 //bool AnalysisDefinition::saveOutputToDirectory(QString directory, QString filename)
@@ -108,6 +210,18 @@ bool AnalysisDefinition::outputCanBeSaved()
 QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets()
 {
 	QLinkedList<QPointer<AnalysisOutputWidget>> returnVal;
+
+	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
+	QSharedPointer<AnalysisOutput> outputObj;
+	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+	{
+		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		{
+			outputObj = toolAsset.staticCast<AnalysisOutput>();
+			returnVal.append(outputObj->getOutputWidget());
+		}
+	}
+
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
@@ -115,13 +229,13 @@ QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets
 		period = periodAsset.staticCast<AnalysisPeriod>();
 		returnVal << period->getOutputWidgets();
 	}
+
 	return returnVal;
 }
 
 void AnalysisDefinition::postDeserialize()
 {
 	UIEnabled::postDeserialize();
-	reset();
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
@@ -130,6 +244,7 @@ void AnalysisDefinition::postDeserialize()
 		connect(period.data(),SIGNAL(percentRemaining(int)),this,SLOT(updateProgressBar(int)));
 	}
 	numPeriods_ = periods.size();
+	reset();
 }
 
 bool AnalysisDefinition::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -137,6 +252,23 @@ bool AnalysisDefinition::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
 	return true;
+}
+
+double AnalysisDefinition::getFrameTime(qulonglong frameId)
+{
+	Q_ASSERT(session_.isValid() && session_.isOpen());
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+
+	//Get property value list.
+	query.prepare("SELECT time FROM frames WHERE dataid=:frameid");
+	query.bindValue(":frameid",frameId);
+	bool success = query.exec();
+	if(!success || !query.next())
+	{
+		return -1;
+	}
+	return query.value(0).toDouble();
 }
 
 void AnalysisDefinition::updateProgressBar(int periodPercentRemaining)

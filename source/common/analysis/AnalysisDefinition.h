@@ -4,9 +4,11 @@
 #include <QSqlDatabase>
 #include <QWidget>
 #include <QPointer>
+#include <QScriptEngine>
 #include "../statemachine/UIEnabled.h"
 #include "AnalysisPeriod.h"
 #include "AnalysisOutputWidget.h"
+#include "../storage/TaskRunDataUnit.h"
 
 namespace Picto {
 
@@ -28,14 +30,12 @@ public:
 	void reset();
 	//Marks that a new run has started.  Periods will update everything that
 	//uses the run name.
-	void startNewRun(QString runName);
-	//Runs the AnalysisDefinition analysis from the fromIndex to the toIndex.
-	//Note that if this function is called multiple times before a reset, they
-	//must be in increasing order (ie. Each new fromIndex must be greater than
-	//the toIndex from the preceding call).
-	bool run(EventOrderIndex fromIndex,EventOrderIndex toIndex);
+	void startNewRun(QSharedPointer<TaskRunDataUnit> runInfo);
+	//Runs the AnalysisDefinition analysis from the current run's firstIndex to its last index.
+	//Note that this function may called multiple times if the lastIndex of the run is not
+	//yet available.
+	bool run();
 	void finish();
-	bool outputCanBeSaved();
 	//bool saveOutputToDirectory(QString directory, QString filename);
 	QLinkedList<QPointer<AnalysisOutputWidget>> getOutputWidgets();
 
@@ -54,8 +54,12 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QSqlDatabase session_;
 private:
+	double getFrameTime(qulonglong frameId);
+	QSharedPointer<TaskRunDataUnit> currRun_;
+	QSharedPointer<QScriptEngine> qsEngine_;
 	unsigned int currPeriod_;
 	unsigned int numPeriods_;
+	unsigned int currRunNum_;
 
 private slots:
 	void updateProgressBar(int periodPercentRemaining);

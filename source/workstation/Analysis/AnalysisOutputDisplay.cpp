@@ -37,6 +37,21 @@ void AnalysisOutputDisplay::addSubTab(int topLevelIndex,QString name,QWidget* wi
 	subTabs->addTab(widget,name);
 }
 
+bool AnalysisOutputDisplay::supportsSaving()
+{
+	for(int i=0;i<topLevelTabs_->count();i++)
+	{
+		QTabWidget* subTabs = qobject_cast<QTabWidget*>(topLevelTabs_->widget(i));
+		for(int j=0;j<subTabs->count();j++)
+		{
+			Picto::AnalysisOutputWidget *subWidget = qobject_cast<Picto::AnalysisOutputWidget *>(subTabs->widget(j));
+			if(subWidget->isSaveable())
+				return true;
+		}
+	}
+	return false;
+}
+
 bool AnalysisOutputDisplay::saveOutputToDirectory(QDir directory)
 {
 	if(!directory.exists())
