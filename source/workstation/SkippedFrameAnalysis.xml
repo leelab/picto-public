@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AnalysisDefinition>
+  <Name>EventAndEye</Name>
+  <Script>
+    readme.writeLine(&quot;Name:\t&quot; + name);
+    readme.writeLine(&quot;Started:\t&quot; +startTime);
+    readme.writeLine(&quot;Ended:\t&quot; +endTime);
+    readme.writeLine(&quot;Run Number:\t&quot; + runNumber);
+    readme.writeLine(&quot;-----Notes-----&quot;);
+    readme.writeLine(notes);
+  </Script>
+  <Tool type="File">
+    <Name>readme</Name>
+    <FileName>.readme.txt</FileName>
+  </Tool>
+  <Period>
+    <Name>TestPeriod</Name>
+    <StartTrigger>start</StartTrigger>
+    <Script>
+      for(i=0;i&lt;frame.length;i++)
+      {
+      framesSoFar.value++;
+      if(lastFrameTime.value &lt; 0)
+      {
+      lastFrameTime.value = frame.time.value(i);
+      continue;
+      }
+      frameLength = frame.time.value(i)-lastFrameTime.value;
+      lastFrameTime.value = frame.time.value(i);
+      if(frameLength > .02)
+      {
+      outFile.writeLine(  &quot;&quot;+frameLength
+                          +&quot;,&quot;+frame.time.value(i)
+                          +&quot;,&quot;+frame.currElem.name(i)
+                          +&quot;,&quot;+framesSoFar.value
+      );
+      }
+      }
+    </Script>
+    <Trigger type="Frame">
+      <Name>start</Name>
+    </Trigger>
+    <Trigger type="Frame">
+      <Name>frame</Name>
+      <DataSource type="Element">
+        <Name>currElem</Name>
+      </DataSource>
+      <DataSource type="Time">
+        <Name>time</Name>
+      </DataSource>
+    </Trigger>
+    <Tool type="NumericVariable">
+      <Name>lastFrameTime</Name>
+      <InitValue>-1</InitValue>
+    </Tool>
+    <Tool type="NumericVariable">
+      <Name>framesSoFar</Name>
+      <InitValue>0</InitValue>
+    </Tool>
+    <Tool type="File">
+      <Name>outFile</Name>
+      <FileName>.skips.csv</FileName>
+    </Tool>
+  </Period>
+</AnalysisDefinition>

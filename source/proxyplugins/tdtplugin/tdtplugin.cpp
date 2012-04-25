@@ -227,6 +227,7 @@ NeuralDataAcqInterface::deviceStatus TdtPlugin::startDevice()
 		lastEventTimestamp_ = 0;
 		lastSpikeTimestamp_ = 0;
 		lastLFPTimestamp_ = 0;
+		lfpData_.clear();
 		if(startCOM())
 			deviceStatus_ = started;
 	}
@@ -239,6 +240,7 @@ NeuralDataAcqInterface::deviceStatus TdtPlugin::stopDevice()
 	stopCOM();
 	sampleRate = 0.0f;
 	deviceStatus_ = notStarted;
+	lfpData_.clear();
 	return deviceStatus_;
 }
 NeuralDataAcqInterface::deviceStatus TdtPlugin::getDeviceStatus()
