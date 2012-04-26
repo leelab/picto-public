@@ -5,6 +5,7 @@
 #include <QScriptValue>
 #include <QWidget>
 #include <QPointer>
+#include <QList>
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
 #include "AnalysisTrigger.h"
@@ -57,10 +58,10 @@ protected:
 	QSqlDatabase session_;
 
 private:
-	bool runTo(EventOrderIndex index);
+	EventOrderIndex getNextTriggerInList(QString tagName, EventOrderIndex afterIndex);
 	QString scriptInfo();
-	QSharedPointer<AnalysisTrigger> startTrigger_;
-	QSharedPointer<AnalysisTrigger> endTrigger_;
+	QList<QSharedPointer<AnalysisTrigger>> startTriggers_;
+	QList<QSharedPointer<AnalysisTrigger>> endTriggers_;
 	EventOrderIndex startIndex_;
 	EventOrderIndex endIndex_;
 	unsigned int periodNumber_;

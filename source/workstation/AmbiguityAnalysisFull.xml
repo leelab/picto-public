@@ -15,7 +15,6 @@
   </Tool>
   <Period>
     <Name>TestPeriod</Name>
-    <StartTrigger>start</StartTrigger>
     <Script>
       for(i=0;i&lt;eye.length;i++)
       {
@@ -64,11 +63,21 @@
       if(correct.length)
         correctTrialNum.value++;
     </Script>
-    <Trigger type="Element">
+    <StartTrigger type="Element">
       <Name>start</Name>
       <When>Starts</When>
       <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
-    </Trigger>
+    </StartTrigger>
+    <EndTrigger type="Element">
+      <Name>end</Name>
+      <When>Ends</When>
+      <ElementPath>ProbabilityTracking::Top::Superblock::Block::ReshuffleTrialType</ElementPath>
+    </EndTrigger>
+    <EndTrigger type="Element">
+      <Name>end</Name>
+      <When>Ends</When>
+      <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
+    </EndTrigger>
     <Trigger type="Element">
       <Name>correct</Name>
       <When>Starts</When>
@@ -164,7 +173,6 @@
   </Period>
   <Period>
     <Name>TestPeriod</Name>
-    <StartTrigger>start</StartTrigger>
     <StartBufferMs>1000</StartBufferMs>
     <EndBufferMs>1000</EndBufferMs>
     <Script>      
@@ -239,11 +247,21 @@
         correctTrialNum.value++;
 
     </Script>
-    <Trigger type="Element">
+    <StartTrigger type="Element">
       <Name>start</Name>
       <When>Starts</When>
       <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
-    </Trigger>
+    </StartTrigger>
+    <EndTrigger type="Element">
+      <Name>end</Name>
+      <When>Ends</When>
+      <ElementPath>ProbabilityTracking::Top::Superblock::Block::ReshuffleTrialType</ElementPath>
+    </EndTrigger>
+    <EndTrigger type="Element">
+      <Name>end</Name>
+      <When>Ends</When>
+      <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
+    </EndTrigger>
     <Trigger type="Spike">
       <Name>spike</Name>
       <DataSource type="Spike">

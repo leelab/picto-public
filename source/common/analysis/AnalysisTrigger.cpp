@@ -65,6 +65,7 @@ void AnalysisTrigger::reset()
 	}
 	if(defaultSource_)
 		defaultSource_->restart();
+	currentTriggerIndex_ = EventOrderIndex();
 }
 
 void AnalysisTrigger::setPeriodStart(EventOrderIndex startIndex)
@@ -99,7 +100,7 @@ void AnalysisTrigger::fillArraysTo(EventOrderIndex beforeIndex)
 		timer.start();
 		while(triggerIndex < beforeIndex)
 		{
-			triggerIndex = getNextTriggerTime();
+			triggerIndex = getNextTrigger();
 			if(!triggerIndex.isValid())	
 				break;	//Looks like there are no more triggers
 
@@ -186,6 +187,17 @@ QString AnalysisTrigger::scriptInfo()
 		returnVal.append(QString("\n\t\t%1").arg(dataSource->getName()));
 	}
 	return returnVal;
+}
+
+EventOrderIndex AnalysisTrigger::getNextTrigger()
+{
+	currentTriggerIndex_ = getNextTriggerTime();
+	return currentTriggerIndex_;
+}
+
+EventOrderIndex AnalysisTrigger::getCurrentTrigger()
+{
+	return currentTriggerIndex_;
 }
 
 void AnalysisTrigger::sessionDatabaseUpdated()

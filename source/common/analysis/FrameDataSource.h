@@ -20,6 +20,7 @@ public:
 	virtual ~FrameDataSource();
 	static QSharedPointer<Asset> Create();
 
+	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::BEHAVIORAL;};
 	//AnalysisDataSource specific functions
 	virtual void restart();
 

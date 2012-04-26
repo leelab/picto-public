@@ -44,12 +44,16 @@ public:
 	void addDataSourcesToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
 	QString scriptInfo();
+	virtual EventOrderIndex::IDSource getDataSource() = 0;
 
-	//Should be implemented by child classes to get the next trigger time
-	//following the last one returned.  After restart() is called, it will return
-	//the first trigger time in the session.  If there are no more triggers available
-	//it should return a negative value.
-	virtual EventOrderIndex getNextTriggerTime() = 0;
+	//Returns the Event Order Index at the occurence of the next trigger.
+	//If no more triggers are available, it will return an invalid
+	//EventOrderIndex.
+	EventOrderIndex getNextTrigger();
+
+	//Returns the Event Order Index that was returned at the most recent
+	//getNextTrigger() call.
+	EventOrderIndex getCurrentTrigger();
 
 	//After this function is called, the first trigger in the session should 
 	//be returned from getNextTriggerTime()
@@ -69,6 +73,12 @@ public:
 
 protected:
 
+	//Should be implemented by child classes to get the next trigger time
+	//following the last one returned.  After restart() is called, it will return
+	//the first trigger time in the session.  If there are no more triggers available
+	//it should return a negative value.
+	virtual EventOrderIndex getNextTriggerTime() = 0;
+
 	virtual void recheckSessionData() = 0;
 	//Inherited
 	virtual QString defaultTagName(){return "AnalysisTrigger";};
@@ -77,6 +87,7 @@ protected:
 	QSqlDatabase session_;
 
 private:
+	EventOrderIndex currentTriggerIndex_;
 	int getLength();
 	EventOrderIndex periodStart_;
 	struct SourceDataUnit

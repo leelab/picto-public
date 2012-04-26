@@ -15,7 +15,7 @@ class EventOrderIndex
 #endif
 {
 public:
-	enum IDSource { BEHAVIORAL,NEURAL };
+	enum IDSource { BEHAVIORAL,NEURAL,OTHER };
 	EventOrderIndex();
 	EventOrderIndex(double time);
 	EventOrderIndex(double time, qulonglong dataId, IDSource idSource);

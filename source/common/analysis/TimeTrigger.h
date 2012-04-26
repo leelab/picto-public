@@ -19,11 +19,7 @@ public:
 	virtual ~TimeTrigger();
 	static QSharedPointer<Asset> Create();
 
-	//Gets the next trigger time following the last one returned.  
-	//After restart() is called, it returns the first trigger time in the session.  
-	//If there are no more triggers available it returns a negative value.
-	virtual EventOrderIndex getNextTriggerTime();
-
+	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::OTHER;};
 	//After this function is called, the first trigger in the session should 
 	//be returned from getNextTriggerTime()
 	virtual void restart();
@@ -38,6 +34,10 @@ public:
 protected:
 
 	//Inherited
+	//Gets the next trigger time following the last one returned.  
+	//After restart() is called, it returns the first trigger time in the session.  
+	//If there are no more triggers available it returns a negative value.
+	virtual EventOrderIndex getNextTriggerTime();
 	virtual void recheckSessionData();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
