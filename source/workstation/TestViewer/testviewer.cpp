@@ -122,20 +122,26 @@ void TestViewer::setupUi()
 	///play/pause/stop actions and toolbar
 	playAction_ = new QAction(tr("&Start task"),this);
 	playAction_->setIcon(QIcon(":/icons/play.png"));
+	playAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_R));
+	playAction_->setToolTip("Run (Ctrl+R)");
 	connect(playAction_,SIGNAL(triggered()),this, SLOT(play()));
 
 	pauseAction_ = new QAction(tr("&Pause task"),this);
 	pauseAction_->setIcon(QIcon(":/icons/pause.png"));
+	pauseAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_P));
+	pauseAction_->setToolTip("Pause (Ctrl+P)");
 	connect(pauseAction_,SIGNAL(triggered()),this, SLOT(pause()));
 	pauseAction_->setEnabled(false);
 
 	stopAction_ = new QAction(tr("S&top task"),this);
 	stopAction_->setIcon(QIcon(":/icons/stop.png"));
+	stopAction_->setToolTip("Stop");
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 	stopAction_->setEnabled(false);
 
 	loadPropsAction_ = new QAction(tr("&Load Task Properties from Session"),this);
 	loadPropsAction_->setIcon(QIcon(":/icons/loadvalues.png"));
+	loadPropsAction_->setToolTip("Load Task Properties from Session");
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 
@@ -151,16 +157,15 @@ void TestViewer::setupUi()
 	//TaskList combo box
 	taskListBox_ = new QComboBox(this);
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	taskListBox_->setToolTip("Select Task");
 	generateComboBox();
 
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(playAction_);
 	testToolbar_->addAction(pauseAction_);
-	testToolbar_->addAction(stopAction_);
-	
-	testToolbar_->addWidget(new QLabel("Task:", this));
-	testToolbar_->addSeparator();
 	testToolbar_->addWidget(taskListBox_);
+	testToolbar_->addAction(stopAction_);
+	testToolbar_->addSeparator();
 	testToolbar_->addAction(loadPropsAction_);
 	//testToolbar_->addWidget(zoomSlider_);
 

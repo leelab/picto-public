@@ -871,16 +871,21 @@ void RemoteViewer::setupEngine()
 void RemoteViewer::setupUi()
 {
 	//----- Task Action -----
-	playAction_ = new QAction(tr("P&lay"),this);
+	playAction_ = new QAction(tr("R&un"),this);
 	playAction_->setIcon(QIcon(":/icons/play.png"));
+	playAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_R));
+	playAction_->setToolTip("Run (Ctrl+R)");
 	connect(playAction_,SIGNAL(triggered()),this, SLOT(playAction()));
 
 	pauseAction_ = new QAction(tr("&Pause"),this);
 	pauseAction_->setIcon(QIcon(":/icons/pause.png"));
+	pauseAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_P));
+	pauseAction_->setToolTip("Pause (Ctrl+P)");
 	connect(pauseAction_,SIGNAL(triggered()),this, SLOT(pause()));
 
 	stopAction_ = new QAction(tr("&Stop"),this);
 	stopAction_->setIcon(QIcon(":/icons/stop.png"));
+	stopAction_->setToolTip("Stop");
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 
 	rewardAction_ = new QAction(tr("&Reward"), this);
@@ -895,46 +900,54 @@ void RemoteViewer::setupUi()
 	rewardQuantity_->setMinimum(1);
 	rewardQuantity_->setMaximum(999999);
 	rewardQuantity_->setSingleStep(10);
+	rewardQuantity_->setToolTip("Reward Quantity (Ms)");
 
 	loadPropsAction_ = new QAction(tr("&Load Task Properties from Session"),this);
 	loadPropsAction_->setIcon(QIcon(":/icons/loadvalues.png"));
+	loadPropsAction_->setToolTip("Load Task Properties from Session");
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 
 	//TaskList combo box
 	taskListBox_ = new QComboBox;
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	taskListBox_->setToolTip("Select Task");
 
 	//The toolbar
 	toolBar_ = new QToolBar;
 
 	toolBar_->addAction(playAction_);
 	toolBar_->addAction(pauseAction_);
-	toolBar_->addAction(stopAction_);
-	toolBar_->addAction(rewardAction_);
-	toolBar_->addWidget(rewardQuantity_);
-	toolBar_->addSeparator();
-	toolBar_->addWidget(new QLabel("Task: ", this));
 	toolBar_->addWidget(taskListBox_);
+	toolBar_->addAction(stopAction_);
+	toolBar_->addSeparator();
 	toolBar_->addAction(loadPropsAction_);
+	toolBar_->addSeparator();
+	toolBar_->addWidget(rewardQuantity_);
+	toolBar_->addAction(rewardAction_);
 	toolBar_->addSeparator();
 
 	//----- Connection Actions -----
 	connectAction_ = new QAction(tr("&Connect"), this);
 	connectAction_->setCheckable(true);
 	connectAction_->setIcon(QIcon(":/icons/disconnected.png"));
+	connectAction_->setToolTip("Join a Session");
+
 	//connect(connectAction_, SIGNAL(triggered(bool)), this, SLOT(changeConnectionState(bool)));
 
 	//Password Line Edit
 	passwordEdit_ = new QLineEdit();
 	passwordEdit_->setEnabled(false);
+	passwordEdit_->setToolTip("Enter Session Key");
 
 	directorListBox_ = new QComboBox;
 	directorListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	directorListBox_->setToolTip("Select a Director");
 
 	proxyListBox_ = new QComboBox;
 	proxyListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	proxyListBox_->addItem("No Proxy",QUuid().toString());
+	proxyListBox_->setToolTip("Select a Neural Proxy");
 	//updateComponentLists();
 
 	//Active Experiment name
@@ -951,13 +964,13 @@ void RemoteViewer::setupUi()
 
 	zoomPercentage_ = new QLabel("100%");
 
-	toolBar_->addAction(connectAction_);
 	toolBar_->addWidget(new QLabel(Picto::Names->directorAppName + ": ", this));
 	toolBar_->addWidget(directorListBox_);
 	toolBar_->addWidget(new QLabel(Picto::Names->proxyServerAppName + ": ", this));
 	toolBar_->addWidget(proxyListBox_);
 	toolBar_->addWidget(new QLabel("Session Key:"));
 	toolBar_->addWidget(passwordEdit_);
+	toolBar_->addAction(connectAction_);
 
 	//------ Main layout -----------
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;

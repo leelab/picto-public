@@ -15,7 +15,6 @@
   </Tool>
   <Period>
     <Name>TestPeriod</Name>
-    <StartTrigger>start</StartTrigger>
     <Script>
       for(i=0;i&lt;frame.length;i++)
       {
@@ -37,9 +36,12 @@
       }
       }
     </Script>
-    <Trigger type="Frame">
+    <StartTrigger type="Frame">
       <Name>start</Name>
-    </Trigger>
+    </StartTrigger>
+    <EndTrigger type="Frame">
+      <Name>start</Name>
+    </EndTrigger>
     <Trigger type="Frame">
       <Name>frame</Name>
       <DataSource type="Element">

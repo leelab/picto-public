@@ -36,6 +36,7 @@ TaskRunSelector::~TaskRunSelector()
 void TaskRunSelector::loadSession(QSqlDatabase session)
 {
 	selectArea_->clear();
+	runs_.clear();
 	session_ = session;
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
