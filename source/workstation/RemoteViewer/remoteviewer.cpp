@@ -626,6 +626,7 @@ void RemoteViewer::enterState()
 		currentRunViewer_->clear();
 		activeExpName_->setText(experiment_->getName());
 		neuralDataViewer_->deinitialize();
+		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
 		mainTabbedFrame_->setTabEnabled(0,false);
