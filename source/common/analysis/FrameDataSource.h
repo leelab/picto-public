@@ -27,9 +27,6 @@ public:
 	//Return the frame's AnalysisValue at the input time.
 	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
 
-public slots:
-	double time(int triggerIndex);
-
 protected:
 
 	//Inherited

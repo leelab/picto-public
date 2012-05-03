@@ -5,8 +5,9 @@
 #include "ElementDataIterator.h"
 using namespace Picto;
 
-ElementDataIterator::ElementDataIterator(QSqlDatabase session)
+ElementDataIterator::ElementDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
 {
+	qsEngine_ = qsEngine;
 	session_ = session;
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
@@ -52,7 +53,7 @@ void ElementDataIterator::updateElementList()
 	}
 	qulonglong lastDataId = lastSessionDataId_;
 	while(query.next()){
-		elements_.append(QSharedPointer<ElementData>(new ElementData(query.value(0).toLongLong(),query.value(1).toDouble(),query.value(3).toString()+"::"+query.value(2).toString())));
+		elements_.append(QSharedPointer<ElementData>(new ElementData(qsEngine_,query.value(0).toLongLong(),query.value(1).toDouble(),query.value(3).toString()+"::"+query.value(2).toString())));
 		lastDataId = query.value(0).toLongLong();
 		readQueries_++;
 	}

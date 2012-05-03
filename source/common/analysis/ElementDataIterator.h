@@ -11,7 +11,7 @@ struct ElementData;
 class ElementDataIterator
 {
 public:
-	ElementDataIterator(QSqlDatabase session);
+	ElementDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~ElementDataIterator();
 
 	//Gets the Element that ran next after the last one returned.  
@@ -31,11 +31,13 @@ private:
 	QSqlDatabase session_;
 	unsigned int totalQueries_;
 	unsigned int readQueries_;
+	QSharedPointer<QScriptEngine> qsEngine_;
 };
 
 struct ElementData : public AnalysisValue {
-	ElementData(){}
-	ElementData(qulonglong dataIndex,double time,QString path){index.dataId_ = dataIndex;index.time_ = time; index.idSource_ = EventOrderIndex::BEHAVIORAL;path_ = path;};
+	//ElementData(){}
+	ElementData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){}
+	ElementData(QSharedPointer<QScriptEngine> qsEngine,qulonglong dataIndex,double time,QString path):AnalysisValue(qsEngine,EventOrderIndex(time,dataIndex,EventOrderIndex::BEHAVIORAL)){/*index.dataId_ = dataIndex;index.time_ = time; index.idSource_ = EventOrderIndex::BEHAVIORAL;*/path_ = path;scriptVal.setProperty("time",time);scriptVal.setProperty("name",path);};
 	QString path_;
 };
 

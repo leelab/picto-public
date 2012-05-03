@@ -1,6 +1,5 @@
 #ifndef _TIME_DATA_SOURCE_H_
 #define _TIME_DATA_SOURCE_H_
-
 #include <QSharedPointer>
 #include <QScriptValue>
 #include "AnalysisDataSource.h"
@@ -26,9 +25,6 @@ public:
 	//Returns the time of the input index.
 	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
 
-public slots:
-	double value(int triggerIndex);
-
 protected:
 
 	//Inherited
@@ -38,7 +34,8 @@ protected:
 };
 struct TimeData : public AnalysisValue
 {
-	TimeData(double t){time=t;};
+	TimeData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){time=-1;}
+	TimeData(QSharedPointer<QScriptEngine> qsEngine,double t):AnalysisValue(qsEngine,EventOrderIndex(t)){/*index.time_ = t;*/time=t;scriptVal.setProperty("value",t);};
 	double time;
 };
 

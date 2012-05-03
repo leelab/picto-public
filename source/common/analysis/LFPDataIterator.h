@@ -1,5 +1,6 @@
 #ifndef _LFP_DATA_ITERATOR_H_
 #define _LFP_DATA_ITERATOR_H_
+#include <QScriptEngine>
 #include <QString>
 #include <QLinkedList>
 #include <QSqlDatabase>
@@ -12,7 +13,7 @@ struct LFPData;
 class LFPDataIterator
 {
 public:
-	LFPDataIterator(QSqlDatabase session);
+	LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~LFPDataIterator();
 	bool isValid(){return true;};
 
@@ -60,12 +61,12 @@ private:
 	unsigned int totalQueries_;
 	unsigned int readValues_;
 	unsigned int readQueries_;
-
+	QSharedPointer<QScriptEngine> qsEngine_;
 };
 
 struct LFPData : public AnalysisValue{
-	LFPData(){value=0;}
-	LFPData(double time,float val,unsigned int chan){index.time_ = time;value = val;channel = chan;};
+	LFPData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){value=0;channel=-1;}
+	LFPData(QSharedPointer<QScriptEngine> qsEngine,double time,float val,unsigned int chan):AnalysisValue(qsEngine,EventOrderIndex(time)){/*index.time_ = time;*/value = val;channel = chan;scriptVal.setProperty("time",time);scriptVal.setProperty("value",value);scriptVal.setProperty("channel",channel);};
 	float value;
 	unsigned int channel;
 };

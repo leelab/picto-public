@@ -7,8 +7,9 @@
 #include "../storage/SignalChannelInfo.h"
 using namespace Picto;
 
-SignalDataIterator::SignalDataIterator(QSqlDatabase session,QString signalName)
+SignalDataIterator::SignalDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString signalName)
 {
+	qsEngine_ = qsEngine;
 	session_ = session;
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
@@ -36,7 +37,7 @@ QSharedPointer<SignalData> SignalDataIterator::getNextSignalVals()
 	if(signalVals_.size())
 		return signalVals_.takeFirst();
 	//No new data, return an empty propData()
-	return QSharedPointer<SignalData>(new SignalData());
+	return QSharedPointer<SignalData>(new SignalData(qsEngine_));
 }
 
 void SignalDataIterator::updateSignalValsList()
@@ -86,14 +87,14 @@ void SignalDataIterator::updateSignalValsList()
 			//(ie. If we copied the dataid into the SignalData structs of each of a single row's
 			//sub entries and we then used the signal as a trigger and a data source, we would 
 			//end up missing signal points in the final readout.)
-			signalVals_.append(QSharedPointer<SignalData>( new SignalData(
+			signalVals_.append(QSharedPointer<SignalData>( new SignalData(qsEngine_,
 					0,
 					query.value(1).toDouble()+query.value(2).toDouble()+((i/numSubChans_)*samplePeriod_),
 					numSubChans_)));
 			for(int j=0;j<numSubChans_;j++)
 			{
 				float newVal = floatArray[i+j];
-				signalVals_.last()->values[j] = floatArray[i+j];
+				signalVals_.last()->setSignalVal(j,floatArray[i+j]);
 			}
 
 			if(query.value(0).toLongLong() > lastDataId)

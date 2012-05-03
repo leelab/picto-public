@@ -26,9 +26,6 @@ public:
 	//Return the value of this object's property at the input time.
 	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
 
-public slots:
-	QString value(int triggerIndex);
-
 protected:
 
 	//Inherited

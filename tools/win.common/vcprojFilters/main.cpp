@@ -1,4 +1,3 @@
-#include <QApplication>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QFile>
@@ -13,8 +12,6 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv, false);
-
 	if(argc<2) return -1;
 
 	QFile file(argv[1]);

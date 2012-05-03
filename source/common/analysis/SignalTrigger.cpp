@@ -22,7 +22,7 @@ EventOrderIndex SignalTrigger::getNextTriggerTime()
 	if(!signalIterator_)
 	{
 		signalIterator_ = QSharedPointer<SignalDataIterator>(
-							new SignalDataIterator(session_,
+							new SignalDataIterator(qsEngine_,session_,
 								propertyContainer_->getPropertyValue("SignalName").toString())
 							);
 	}

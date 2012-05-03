@@ -5,8 +5,9 @@
 #include "PropertyDataIterator.h"
 using namespace Picto;
 
-PropertyDataIterator::PropertyDataIterator(QSqlDatabase session,QString propertyPath)
+PropertyDataIterator::PropertyDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString propertyPath)
 {
+	qsEngine_ = qsEngine;
 	session_ = session;
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
@@ -31,7 +32,7 @@ QSharedPointer<PropData> PropertyDataIterator::getNextPropertyChange()
 	if(propVals_.size())
 		return propVals_.takeFirst();
 	//No new data, return an empty propData()
-	return QSharedPointer<PropData>(new PropData());
+	return QSharedPointer<PropData>(new PropData(qsEngine_));
 }
 
 void PropertyDataIterator::updatePropValsList()
@@ -57,7 +58,7 @@ void PropertyDataIterator::updatePropValsList()
 	}
 	qulonglong lastDataId = lastSessionDataId_;
 	while(query.next()){
-		propVals_.append(QSharedPointer<PropData>(new PropData(query.value(0).toString(),query.value(1).toLongLong(),query.value(2).toDouble())));
+		propVals_.append(QSharedPointer<PropData>(new PropData(qsEngine_,query.value(0).toString(),query.value(1).toLongLong(),query.value(2).toDouble())));
 		lastDataId = query.value(1).toLongLong();
 		readQueries_++;
 	}

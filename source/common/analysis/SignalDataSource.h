@@ -26,11 +26,6 @@ public:
 	//Return the value of this object's property at the input time.
 	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
 
-public slots:
-	unsigned int numSubChannels();
-	QString subChannelName(int subChanIndex);
-	float value(int subChanIndex, int triggerIndex);
-
 protected:
 
 	//Inherited

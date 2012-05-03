@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = vcprojFilters
-QT = core gui xml
+QT = core xml
 CONFIG += qt warn_on release
 win32:CONFIG += console
 DEPENDPATH += .

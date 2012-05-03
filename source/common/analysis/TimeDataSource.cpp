@@ -21,15 +21,7 @@ void TimeDataSource::restart()
 
 QSharedPointer<AnalysisValue> TimeDataSource::getValue(const EventOrderIndex& index)
 {
-	return QSharedPointer<TimeData>(new TimeData(index.time_));
-}
-
-double TimeDataSource::value(int triggerIndex)
-{
-	QSharedPointer<TimeData> data = getScriptValue(triggerIndex).staticCast<TimeData>();
-	if(data)
-		return data->time;
-	return -1;
+	return QSharedPointer<TimeData>(new TimeData(qsEngine_,index.time_));
 }
 
 void TimeDataSource::recheckSessionData()

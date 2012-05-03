@@ -25,7 +25,7 @@ QSharedPointer<AnalysisValue> ElementDataSource::getValue(const EventOrderIndex&
 	if(!elemIterator_)
 	{
 		elemIterator_ = QSharedPointer<ElementDataIterator>(
-							new ElementDataIterator(session_)
+							new ElementDataIterator(qsEngine_,session_)
 							);
 	}
 	QSharedPointer<ElementData> prev = lastDataUnit_;
@@ -50,14 +50,6 @@ QSharedPointer<AnalysisValue> ElementDataSource::getValue(const EventOrderIndex&
 	//Store the latest value of our property
 	latestValue_ = prev;
 	return latestValue_;
-}
-
-QString ElementDataSource::name(int triggerIndex)
-{
-	QSharedPointer<ElementData> data = getScriptValue(triggerIndex).staticCast<ElementData>();
-	if(data)
-		return data->path_;
-	return "";
 }
 
 void ElementDataSource::recheckSessionData()

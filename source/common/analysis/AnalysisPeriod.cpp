@@ -91,7 +91,7 @@ void AnalysisPeriod::reset()
 	{
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
 		trigger->reset();
-		trigger->addDataSourcesToScriptEngine(qsEngine_);
+		trigger->setScriptEngine(qsEngine_);
 	}
 	
 	triggers = getGeneratedChildren("StartTrigger");
@@ -113,9 +113,11 @@ void AnalysisPeriod::reset()
 
 	//Make a Qt Script Function out of the script and its name
 	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toAscii() + "}";
+	//periodScript_ = QScriptProgram(propertyContainer_->getPropertyValue("Script").toString().toAscii());
 
 	//add the function to the engine by calling evaluate on it
 	qsEngine_->evaluate(function);
+	//qsEngine_->evaluate(periodScript_);
 	//Check for errors
 	if(qsEngine_->hasUncaughtException())
 	{
@@ -160,6 +162,10 @@ void AnalysisPeriod::startNewRun(QString runName)
 
 bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 {
+	double scriptTime;
+	double otherTime;
+	QTime timer;
+	timer.start();
 	if(!fromIndex.isValid())	//Invalid toIndex => we don't know when it will end yet.
 		return false;
 
@@ -187,8 +193,8 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 	if(!endIndex_.isValid())
 		return false;
 	
-	QTime timer;
-	timer.start();
+	QTime performTimer;
+	performTimer.start();
 	//Get data until there are no more triggers or we've passed the input index.
 	while( (startIndex_.isValid()) && (endIndex_.isValid() ) 
 		&& (!toIndex.isValid() || ((startIndex_ <= toIndex) && (endIndex_ <= toIndex))) )
@@ -234,10 +240,14 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		qsEngine_->globalObject().setProperty("endTime", endIndex_.time_);
 		qsEngine_->globalObject().setProperty("periodNumber", periodNumber_);
 
+		otherTime += performTimer.elapsed();
+		performTimer.start();
+
 		//RUN SCRIPT//////////////////////////////////////////////////////////////////
 
 		//Run the script
 		qsEngine_->globalObject().property("TestScriptName").call().toString();
+		//qsEngine_->evaluate(periodScript_);
 		if(qsEngine_->hasUncaughtException())
 		{
 			QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
@@ -251,12 +261,14 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 			box.exec();
 			return false;
 		}
-		
+		scriptTime+=performTimer.elapsed();
+		performTimer.start();
 
 		//////////////////////////////////////////////////////////////////////////////
 
 		//Increment period number
 		periodNumber_++;
+		qDebug(QString("ScriptTime/OtherTime Ratio: %1").arg(scriptTime/otherTime).toAscii());
 
 		//Get the next period times
 		while(startIndex_ < endIndex_)

@@ -21,7 +21,7 @@ void DefaultDataSource::restart()
 
 QSharedPointer<AnalysisValue> DefaultDataSource::getValue(const EventOrderIndex& index)
 {
-	return QSharedPointer<AnalysisValue>(new AnalysisValue());
+	return QSharedPointer<AnalysisValue>(new AnalysisValue(qsEngine_));
 }
 
 void DefaultDataSource::recheckSessionData()

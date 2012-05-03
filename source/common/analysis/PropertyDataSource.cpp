@@ -27,7 +27,7 @@ QSharedPointer<AnalysisValue> PropertyDataSource::getValue(const EventOrderIndex
 	if(!propIterator_)
 	{
 		propIterator_ = QSharedPointer<PropertyDataIterator>(
-							new PropertyDataIterator(session_,
+							new PropertyDataIterator(qsEngine_,session_,
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
 	}
@@ -53,14 +53,6 @@ QSharedPointer<AnalysisValue> PropertyDataSource::getValue(const EventOrderIndex
 	//Store the latest value of our property
 	latestValue_ = prev;
 	return latestValue_;
-}
-
-QString PropertyDataSource::value(int triggerIndex)
-{
-	QSharedPointer<PropData> data = getScriptValue(triggerIndex).staticCast<PropData>();
-	if(data)
-		return data->value;
-	return "";
 }
 
 void PropertyDataSource::recheckSessionData()

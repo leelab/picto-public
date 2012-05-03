@@ -1,5 +1,6 @@
 #ifndef _SPIKE_DATA_ITERATOR_H_
 #define _SPIKE_DATA_ITERATOR_H_
+#include <QScriptEngine>
 #include <QString>
 #include <QLinkedList>
 #include <QSqlDatabase>
@@ -11,7 +12,7 @@ struct SpikeData;
 class SpikeDataIterator
 {
 public:
-	SpikeDataIterator(QSqlDatabase session);
+	SpikeDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~SpikeDataIterator();
 	bool isValid(){return true;};
 
@@ -40,18 +41,20 @@ private:
 	double temporalFactor_;
 	unsigned int totalQueries_;
 	unsigned int readQueries_;
+	QSharedPointer<QScriptEngine> qsEngine_;
 
 };
 
 struct SpikeData : public AnalysisValue{
-	SpikeData(){index.idSource_ = EventOrderIndex::NEURAL;}
-	SpikeData(qulonglong dataId, 
+	//SpikeData(){index.idSource_ = EventOrderIndex::NEURAL;}
+	SpikeData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){channel=-1;unit=-1;samplePeriod=-1;waveSize=-1;wave="";}
+	SpikeData(QSharedPointer<QScriptEngine> qsEngine,qulonglong dataId, 
 				double time, 
 				unsigned int chan, 
 				unsigned int un,
 				double sampPer,
 				unsigned int wSize,
-				QString waveDat){index.time_ = time;index.dataId_ = dataId;index.idSource_ = EventOrderIndex::NEURAL;channel=chan;unit=un;samplePeriod=sampPer;waveSize=wSize;wave=waveDat;};
+				QString waveDat):AnalysisValue(qsEngine,EventOrderIndex(time,dataId,EventOrderIndex::NEURAL)){/*index.time_ = time;index.dataId_ = dataId;index.idSource_ = EventOrderIndex::NEURAL;*/channel=chan;unit=un;samplePeriod=sampPer;waveSize=wSize;wave=waveDat;scriptVal.setProperty("channel",chan);scriptVal.setProperty("unit",un);scriptVal.setProperty("samplePeriod",sampPer);scriptVal.setProperty("waveSize",wSize);scriptVal.setProperty("wave",waveDat);QScriptValue wArray = qsEngine->newArray(wSize);scriptVal.setProperty("waveValue",wArray);QStringList wVals = waveDat.split(",",QString::SkipEmptyParts);for(int i=0;i<wSize;i++){wArray.setProperty(i,wVals[i]);}};
 	QString scaleWave(double scaleFactor = 1.0, unsigned int decimalPlaces = 6);
 	unsigned int channel;
 	unsigned int unit;

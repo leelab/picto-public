@@ -8,8 +8,9 @@
 #include "LFPDataIterator.h"
 using namespace Picto;
 
-LFPDataIterator::LFPDataIterator(QSqlDatabase session)
+LFPDataIterator::LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
 {
+	qsEngine_ = qsEngine;
 	session_ = session;
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
@@ -41,7 +42,7 @@ QSharedPointer<LFPData> LFPDataIterator::getNextLFPVals()
 		return lfpVals_.takeFirst();
 	}
 	//No new data, return an empty propData()
-	return QSharedPointer<LFPData>(new LFPData());
+	return QSharedPointer<LFPData>(new LFPData(qsEngine_));
 }
 
 void LFPDataIterator::updateLFPValsList()
@@ -141,7 +142,7 @@ void LFPDataIterator::updateLFPValsList()
 			while(	(iter != lfpVals_.end())
 					&& ((*iter)->index <= currTime) )
 				iter++;
-			iter = lfpVals_.insert(iter,QSharedPointer<LFPData>(new LFPData(currTime,floatArray[i],chan)));
+			iter = lfpVals_.insert(iter,QSharedPointer<LFPData>(new LFPData(qsEngine_,currTime,floatArray[i],chan)));
 			lastSessionDataId_ = query.value(0).toLongLong();
 			readValues_++;
 		}

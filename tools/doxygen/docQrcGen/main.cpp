@@ -1,4 +1,3 @@
-#include <QApplication>
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
@@ -7,8 +6,6 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv, false);
-
 	if(argc<4)
 	{
         std::cout << "Usage: " << std::endl << std::endl

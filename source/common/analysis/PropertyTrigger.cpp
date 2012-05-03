@@ -22,7 +22,7 @@ EventOrderIndex PropertyTrigger::getNextTriggerTime()
 	if(!propIterator_)
 	{
 		propIterator_ = QSharedPointer<PropertyDataIterator>(
-							new PropertyDataIterator(session_,
+							new PropertyDataIterator(qsEngine_,session_,
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
 	}

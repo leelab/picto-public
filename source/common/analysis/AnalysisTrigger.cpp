@@ -63,8 +63,6 @@ void AnalysisTrigger::reset()
 		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
 		dataSource->restart();
 	}
-	if(defaultSource_)
-		defaultSource_->restart();
 	currentTriggerIndex_ = EventOrderIndex();
 }
 
@@ -73,17 +71,11 @@ void AnalysisTrigger::setPeriodStart(EventOrderIndex startIndex)
 	Q_ASSERT_X(periodStart_ <= startIndex,"AnalysisTrigger::setPeriodStart",
 		"AnalysisTrigger start indeces must be greater than the start indeces of their predecessors.");
 	periodStart_ = startIndex;
-	
-	//Tell data sources to erase values up to periodStart_.
-	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
-	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
-	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		dataSource->clearValuesTo(periodStart_);
-	}
-	if(defaultSource_)
-		defaultSource_->clearValuesTo(periodStart_);
+
+	QLinkedList<TriggerData>::iterator iter = periodData_.begin();
+	while(iter != periodData_.end() && (*iter).index < startIndex)
+		iter++;
+	periodData_.erase(periodData_.begin(),iter);
 }
 
 void AnalysisTrigger::fillArraysTo(EventOrderIndex beforeIndex)
@@ -110,16 +102,17 @@ void AnalysisTrigger::fillArraysTo(EventOrderIndex beforeIndex)
 			if(triggerIndex < periodStart_)
 				continue;
 			
+			QScriptValue currScript = qsEngine_->newObject();
 			//This trigger falls beyond periodStart_.  Tell the data sources to store it.  
 			QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
 			QSharedPointer<AnalysisDataSource> dataSource;
 			foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 			{
 				dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-				dataSource->storeValue(triggerIndex);
+				dataSource->storeValue(currScript,triggerIndex);
 			}
-			if(defaultSource_)
-				defaultSource_->storeValue(triggerIndex);
+			
+			periodData_.append(TriggerData(triggerIndex,currScript));
 
 			if(timer.elapsed() > 100)
 			{	//Reading in data can take a long time.  If it does, process events periodically.
@@ -129,30 +122,42 @@ void AnalysisTrigger::fillArraysTo(EventOrderIndex beforeIndex)
 		}
 	}
 
-	//We're done loading our data sources.  Tell them to prepare for scripting.
-	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
-	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
+
+	//Update triggerArray with latest data.
+	int i=0;
+	foreach(TriggerData value,periodData_)
 	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		dataSource->prepareValuesForScript(beforeIndex);
+		if(value.index >= beforeIndex)
+			break;
+		triggerArray_.setProperty(i++,value.rowScript);
 	}
-	if(defaultSource_)
-		defaultSource_->prepareValuesForScript(beforeIndex);
+	triggerArray_.setProperty("length",i);
 }
 
-void AnalysisTrigger::addDataSourcesToScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
+void AnalysisTrigger::setScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
 {
-	QScriptValue triggerObject = qsEngine->newQObject(this,QScriptEngine::QtOwnership);
+	qsEngine_ = qsEngine;
+	triggerArray_ = qsEngine->newArray();
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
 	QSharedPointer<AnalysisDataSource> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
 		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		QScriptValue dataSourceObject = qsEngine->newQObject(dataSource.data(),QScriptEngine::QtOwnership);
-		triggerObject.setProperty(dataSource->getName(),dataSourceObject);
+		dataSource->setScriptObjects(qsEngine,triggerArray_);
 	}
-	qsEngine->globalObject().setProperty(getName(),triggerObject);
+	qsEngine->globalObject().setProperty(getName(),triggerArray_);
+
+
+	//QScriptValue triggerObject = qsEngine->newQObject(this,QScriptEngine::QtOwnership);
+	//QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
+	//QSharedPointer<AnalysisDataSource> dataSource;
+	//foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
+	//{
+	//	dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
+	//	QScriptValue dataSourceObject = qsEngine->newQObject(dataSource.data(),QScriptEngine::QtOwnership);
+	//	triggerObject.setProperty(dataSource->getName(),dataSourceObject);
+	//}
+	//qsEngine->globalObject().setProperty(getName(),triggerObject);
 
 	//QLinkedList<QScriptValue> scriptRowList;
 	//QLinkedList<TriggerData>::iterator it;
@@ -215,8 +220,6 @@ void AnalysisTrigger::sessionDatabaseUpdated()
 void AnalysisTrigger::postDeserialize()
 {
 	UIEnabled::postDeserialize();
-	if(getGeneratedChildren("DataSource").isEmpty())
-		defaultSource_ = QSharedPointer<DefaultDataSource>(new DefaultDataSource());
 }
 
 bool AnalysisTrigger::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -224,14 +227,4 @@ bool AnalysisTrigger::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
 	return true;
-}
-
-int AnalysisTrigger::getLength()
-{
-	if(defaultSource_)
-		return defaultSource_->getNumScriptValues();
-	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	if(dataSources.length())
-		return dataSources.first().staticCast<AnalysisDataSource>()->getNumScriptValues();
-	return 0;
 }

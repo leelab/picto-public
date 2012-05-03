@@ -25,15 +25,6 @@ public:
 	//Return the value of this object's property at the input time.
 	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
 
-
-public slots:
-	unsigned int channel(int triggerIndex);
-	unsigned int unit(int triggerIndex);
-	double samplePeriod(int triggerIndex);
-	unsigned int waveSize(int triggerIndex);
-	QString wave(int triggerIndex);
-	double waveValue(int waveValueIndex, int triggerIndex);
-
 protected:
 
 	//Inherited

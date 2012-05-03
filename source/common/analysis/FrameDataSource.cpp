@@ -26,7 +26,7 @@ QSharedPointer<AnalysisValue> FrameDataSource::getValue(const EventOrderIndex& i
 	if(!frameIterator_)
 	{
 		frameIterator_ = QSharedPointer<FrameDataIterator>(
-							new FrameDataIterator(session_)
+							new FrameDataIterator(qsEngine_,session_)
 							);
 	}
 	QSharedPointer<FrameData> prev = lastDataUnit_;
@@ -51,14 +51,6 @@ QSharedPointer<AnalysisValue> FrameDataSource::getValue(const EventOrderIndex& i
 	//Store the latest value of our frame
 	latestValue_ = prev;
 	return latestValue_;
-}
-
-double FrameDataSource::time(int triggerIndex)
-{
-	QSharedPointer<FrameData> data = getScriptValue(triggerIndex).staticCast<FrameData>();
-	if(data)
-		return data->index.time_;
-	return -1;
 }
 
 void FrameDataSource::recheckSessionData()

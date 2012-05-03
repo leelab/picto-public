@@ -193,6 +193,8 @@ void AnalysisViewer::saveOutput()
 
 void AnalysisViewer::executeCommand()
 {
+	QTime timer;
+	timer.start();
 	analysisDefinition_ = QSharedPointer<AnalysisDefinition>(new AnalysisDefinition());
 	connect(analysisDefinition_.data(),SIGNAL(percentRemaining(int)),this,SLOT(updateProgressBar(int)));
 	if(!analysisDefinition_->fromXml(analysisDef_->toPlainText()))
@@ -242,6 +244,7 @@ void AnalysisViewer::executeCommand()
 	{
 		saveOutputAction_->setEnabled(true);
 	}
+	qDebug("Total Analysis Time: " + QString::number(timer.elapsed()).toAscii());
 }
 
 void AnalysisViewer::updateUI()

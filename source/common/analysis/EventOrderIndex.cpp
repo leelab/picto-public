@@ -12,6 +12,7 @@ EventOrderIndex::EventOrderIndex(double time)
 {
 	time_ = time;
 	dataId_ = 0;
+	idSource_ = EventOrderIndex::OTHER;
 }
 EventOrderIndex::EventOrderIndex(double time, qulonglong dataId, IDSource idSource)
 {

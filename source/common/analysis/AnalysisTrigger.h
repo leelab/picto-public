@@ -19,7 +19,6 @@ class AnalysisTrigger : public UIEnabled
 #endif
 {
 	Q_OBJECT
-	Q_PROPERTY(int length READ getLength)
 public:
 	AnalysisTrigger();
 	virtual ~AnalysisTrigger();
@@ -41,7 +40,7 @@ public:
 	//The input value must always increase until reset() is called.
 	void fillArraysTo(EventOrderIndex beforeIndex);
 
-	void addDataSourcesToScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
+	void setScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
 	QString scriptInfo();
 	virtual EventOrderIndex::IDSource getDataSource() = 0;
@@ -85,10 +84,10 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QSqlDatabase session_;
+	QSharedPointer<QScriptEngine> qsEngine_;
 
 private:
 	EventOrderIndex currentTriggerIndex_;
-	int getLength();
 	EventOrderIndex periodStart_;
 	struct SourceDataUnit
 	{
@@ -97,12 +96,14 @@ private:
 	};
 	struct TriggerData
 	{
+		TriggerData(EventOrderIndex id,QScriptValue script){index=id;rowScript=script;};
 		EventOrderIndex index;
-		QVector<SourceDataUnit> dataBlock;
+		QScriptValue rowScript;
+		/*QVector<SourceDataUnit> dataBlock;*/
 	};
 	QLinkedList<TriggerData> periodData_;
 	QLinkedList<TriggerData>::iterator nextPeriodsDataLoc_;
-	QSharedPointer<AnalysisDataSource> defaultSource_;
+	QScriptValue triggerArray_;
 };
 }; //namespace Picto
 #endif

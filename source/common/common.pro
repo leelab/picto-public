@@ -561,18 +561,18 @@ build_pass:CONFIG(debug, debug|release) {
 
 # Copy Output dll to Test Directories for Testing
 build_pass:CONFIG(debug, debug|release) {
-  QMAKE_POST_LINK = copy "$(TargetPath)"  $$(PICTO_TREE)\output\tests\bin\debug
+  QMAKE_POST_LINK = copy "$(TargetPath)"  $$(PICTO_TREE)\\output\\tests\\bin\\debug
 }
 
 build_pass:CONFIG(release, debug|release) {
-  QMAKE_POST_LINK = copy "$(TargetPath)" $$(PICTO_TREE)\output\tests\bin\release
+  QMAKE_POST_LINK = copy "$(TargetPath)" $$(PICTO_TREE)\\output\\tests\\bin\\release
 }
 
 # Copy sounds directory to output directory
 build_pass:CONFIG(debug, debug|release) {
-  QMAKE_PRE_LINK = xcopy /Y $$(PICTO_TREE)\source\common\sounds\*.*  $$(PICTO_TREE)\output\bin\debug\sounds\\
+  QMAKE_PRE_LINK = xcopy $$(PICTO_TREE)\\source\\common\\sounds\\*.*  $$(PICTO_TREE)\\output\\bin\\debug\\sounds\\ /Y
 }
 
 build_pass:CONFIG(release, debug|release) {
-  QMAKE_PRE_LINK = xcopy /Y $$(PICTO_TREE)\source\common\sounds\*.*  $$(PICTO_TREE)\output\bin\release\sounds\\
+  QMAKE_PRE_LINK = xcopy $$(PICTO_TREE)\\source\\common\\sounds\\*.*  $$(PICTO_TREE)\\output\\bin\\release\\sounds\\ /Y
 }

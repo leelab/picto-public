@@ -21,7 +21,7 @@ EventOrderIndex SpikeTrigger::getNextTriggerTime()
 	if(!spikeIterator_)
 	{
 		spikeIterator_ = QSharedPointer<SpikeDataIterator>(
-							new SpikeDataIterator(session_)
+							new SpikeDataIterator(qsEngine_,session_)
 							);
 	}
 	latestData_ = spikeIterator_->getNextSpikeVals();

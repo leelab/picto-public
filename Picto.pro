@@ -119,16 +119,16 @@ INSTALLS += SSLLIBS_DEBUG
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" "$$(PICTO_TREE)\output\bin\release\Microsoft.VC90.CRT"
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" "$$(PICTO_TREE)/output/bin/release/Microsoft.VC90.CRT"
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/release/imageformats/Microsoft.VC90.CRT
     }
     contains(MACHINE_TYPE,X64) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\release\imageformats\Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/release/Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/release/imageformats/Microsoft.VC90.CRT
     }
 }
 wince* {
-    CRUNTIMEPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??.dll\" $$(PICTO_TREE)\output\bin\release
+    CRUNTIMEPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??.dll\" $$(PICTO_TREE)/output/bin/release
 }
 CRUNTIMEPRIVATEASSEMBLY.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += CRUNTIMEPRIVATEASSEMBLY
@@ -147,20 +147,20 @@ INSTALLS += CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS
 
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.DebugCRT
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\imageformats\Microsoft.VC90.DebugCRT
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/x86/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.DebugCRT
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/x86/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/imageformats/Microsoft.VC90.DebugCRT
     }
     contains(MACHINE_TYPE,X64) {
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\amd64\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.DebugCRT
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\bin\debug\Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\amd64\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\bin\debug\imageformats\Microsoft.VC90.DebugCRT
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/amd64/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.DebugCRT
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.CRT
+    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/amd64/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/imageformats/Microsoft.VC90.DebugCRT
     }
 }
 wince* {
 	# !!! WARNING !!!
 	# I set this up without looking at an actual CE dev environment.  This path may be incorrect.
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??d.dll\" $$(PICTO_TREE)\output\bin\release
+    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??d.dll\" $$(PICTO_TREE)/output/bin/release
 }
 CRUNTIMEPRIVATEASSEMBLY_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG
@@ -173,7 +173,7 @@ INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT
 
 
 
-TESTS.extra = copy $$(PICTO_TREE)\output\bin\release\*.dll $$(PICTO_TREE)\output\tests\bin\release
+TESTS.extra = copy $$(PICTO_TREE)/output/bin/release/*.dll $$(PICTO_TREE)/output/tests/bin/release
 TESTS.files = $$[QT_INSTALL_PREFIX]/lib/QtTest4.dll
 TESTS.path = $$(PICTO_TREE)/output/tests/bin/release
 INSTALLS += TESTS
@@ -185,14 +185,14 @@ INSTALLS += PICTOLIB_DEBUG
 
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC90.CRT
+    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/release/Microsoft.VC90.CRT
     }
     contains(MACHINE_TYPE,X64) {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\release\Microsoft.VC90.CRT
+    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/release/Microsoft.VC90.CRT
     }
 }
 wince* {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??.dll\" $$(PICTO_TREE)\output\bin\release
+    CRUNTIMETESTSPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??.dll\" $$(PICTO_TREE)/output/bin/release
 }
 CRUNTIMETESTSPRIVATEASSEMBLY.path = $$(PICTO_TREE)/output/tests/bin/release
 INSTALLS += CRUNTIMETESTSPRIVATEASSEMBLY
@@ -201,21 +201,21 @@ INSTALLS += CRUNTIMETESTSPRIVATEASSEMBLY
 # Don't redistribute the debug builds.
 !wince* {
     contains(MACHINE_TYPE,X86) {
-    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.DebugCRT
-    CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\x86\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.CRT
+    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/x86/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.DebugCRT
+    CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.CRT
     }
     contains(MACHINE_TYPE,X64) {
-    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\Debug_NonRedist\amd64\Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.DebugCRT
-     CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)\..\..\VC\redist\amd64\Microsoft.VC90.CRT\" $$(PICTO_TREE)\output\tests\bin\debug\Microsoft.VC90.CRT
+    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/amd64/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.DebugCRT
+     CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.CRT
    }
 }
 wince* {
-    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)\..\..\VC\ce\dll\x86\msvcr??d.dll\" $$(PICTO_TREE)\output\bin\debug
+    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??d.dll\" $$(PICTO_TREE)/output/bin/debug
 }
-CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug\
+CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug/
 INSTALLS += CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG
 
-TESTS_DEBUG.extra = copy $$(PICTO_TREE)\output\bin\debug\*.dll $$(PICTO_TREE)\output\tests\bin\debug
+TESTS_DEBUG.extra = copy $$(PICTO_TREE)/output/bin/debug/*.dll $$(PICTO_TREE)/output/tests/bin/debug
 TESTS_DEBUG.files = $$[QT_INSTALL_PREFIX]/lib/QtTestd4.dll
 TESTS_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug
 INSTALLS += TESTS_DEBUG

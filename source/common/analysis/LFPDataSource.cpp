@@ -25,22 +25,6 @@ QSharedPointer<AnalysisValue> LFPDataSource::getValue(const EventOrderIndex& ind
 	return getParentAsset().staticCast<LFPTrigger>()->getLatestValue();
 }
 
-unsigned int LFPDataSource::channel(int triggerIndex)
-{
-	QSharedPointer<LFPData> data = getScriptValue(triggerIndex).staticCast<LFPData>();
-	if(data)
-		return data->channel;
-	return -1;
-}
-
-float LFPDataSource::value(int triggerIndex)
-{
-	QSharedPointer<LFPData> data = getScriptValue(triggerIndex).staticCast<LFPData>();
-	if(data)
-		return data->value;
-	return 0.0;
-}
-
 void LFPDataSource::recheckSessionData()
 {
 	return;

@@ -21,7 +21,7 @@ EventOrderIndex FrameTrigger::getNextTriggerTime()
 	if(!frameIterator_)
 	{
 		frameIterator_ = QSharedPointer<FrameDataIterator>(
-							new FrameDataIterator(session_)
+							new FrameDataIterator(qsEngine_,session_)
 							);
 	}
 	return frameIterator_->getNextFrameChange()->index;

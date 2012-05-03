@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QPointer>
 #include <QList>
+#include <QScriptProgram>
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
 #include "AnalysisTrigger.h"
@@ -67,6 +68,7 @@ private:
 	unsigned int periodNumber_;
 	QLinkedList<QPointer<QWidget>> outputWidgets_;
 	QSharedPointer<QScriptEngine> qsEngine_;
+	QScriptProgram periodScript_;
 };
 }; //namespace Picto
 #endif

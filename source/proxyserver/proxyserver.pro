@@ -73,20 +73,20 @@ ICON = $$(PICTO_TREE)/source/proxyserver/images/scope.icns
 
 # Libraries
 build_pass:CONFIG(debug, debug|release) {
-win32:LIBPATH += $$(PICTO_TREE)/intermediates/lib/debug
-unix:!macx:LIBPATH += $$(PICTO_TREE)/output/bin/debug/shared
-macx:LIBPATH += $$(PICTO_TREE)/intermediates/lib/debug
+win32:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/debug
+unix:!macx:QMAKE_LIBDIR += $$(PICTO_TREE)/output/bin/debug/shared
+macx:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/debug
 win32:LIBS += libPicto_debug.lib
 unix:LIBS += -lPicto_debug
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/debug/
-win32:LIBPATH += $$(PICTO_TREE)/3rdparty/lib
+win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
 win32:LIBS += PlexClient.lib
 }
 
 build_pass:CONFIG(release, debug|release) {
-win32:LIBPATH += $$(PICTO_TREE)/intermediates/lib/release
-unix:!macx:LIBPATH += $$(PICTO_TREE)/output/bin/release/shared
-macx:LIBPATH += $$(PICTO_TREE)/intermediates/lib/release
+win32:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/release
+unix:!macx:QMAKE_LIBDIR += $$(PICTO_TREE)/output/bin/release/shared
+macx:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/release
 win32:LIBS += libPicto.lib
 unix:LIBS += -lPicto
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/

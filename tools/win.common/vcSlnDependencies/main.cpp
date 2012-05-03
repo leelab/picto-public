@@ -1,4 +1,3 @@
-#include <QApplication>
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
@@ -15,8 +14,6 @@ std::vector<QString> dependencies;
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv, false);
-
 	if(argc<3)
 	{
 		std::cout << "Usage:" << std::endl << std::endl << "vcSlnDependencies filename.sln dependency1 dependency2 dependency3 ..." << std::endl;

@@ -29,56 +29,6 @@ QSharedPointer<AnalysisValue> SpikeDataSource::getValue(const EventOrderIndex& i
 	return getParentAsset().staticCast<SpikeTrigger>()->getLatestValue();
 }
 
-unsigned int SpikeDataSource::channel(int triggerIndex)
-{
-	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
-	if(data)
-		return data->channel;
-	return -1;
-}
-
-unsigned int SpikeDataSource::unit(int triggerIndex)
-{
-	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
-	if(data)
-		return data->unit;
-	return -1;
-}
-
-double SpikeDataSource::samplePeriod(int triggerIndex)
-{
-	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
-	if(data)
-		return data->samplePeriod;
-	return 0;
-}
-
-unsigned int SpikeDataSource::waveSize(int triggerIndex)
-{
-	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
-	if(data)
-		return data->waveSize;
-	return 0;
-}
-
-QString SpikeDataSource::wave(int triggerIndex)
-{
-	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
-	if(data)
-		return data->scaleWave(propertyContainer_->getPropertyValue("ScaleFactor").toDouble(),propertyContainer_->getPropertyValue("DecimalPlaces").toInt());
-	return "";
-}
-
-double SpikeDataSource::waveValue(int waveValueIndex, int triggerIndex)
-{
-	QSharedPointer<SpikeData> data = getScriptValue(triggerIndex).staticCast<SpikeData>();
-	if(!data)
-		return 0.0;
-	if(waveValueIndex >= data->waveSize)
-		return 0.0;
-	return data->wave.split(",",QString::SkipEmptyParts)[waveValueIndex].toDouble();
-}
-
 void SpikeDataSource::recheckSessionData()
 {
 		return;

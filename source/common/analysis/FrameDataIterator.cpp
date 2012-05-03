@@ -5,8 +5,9 @@
 #include "FrameDataIterator.h"
 using namespace Picto;
 
-FrameDataIterator::FrameDataIterator(QSqlDatabase session)
+FrameDataIterator::FrameDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
 {
+	qsEngine_ = qsEngine;
 	session_ = session;
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
@@ -30,7 +31,7 @@ QSharedPointer<FrameData> FrameDataIterator::getNextFrameChange()
 	if(frameVals_.size())
 		return frameVals_.takeFirst();
 	//No new data, return an empty frameData()
-	return QSharedPointer<FrameData>(new FrameData());
+	return QSharedPointer<FrameData>(new FrameData(qsEngine_));
 }
 
 void FrameDataIterator::updateFrameValsList()
@@ -51,7 +52,7 @@ void FrameDataIterator::updateFrameValsList()
 	}
 	qulonglong lastDataId = lastSessionDataId_;
 	while(query.next()){
-		frameVals_.append(QSharedPointer<FrameData>(new FrameData(query.value(0).toLongLong(),query.value(1).toDouble())));
+		frameVals_.append(QSharedPointer<FrameData>(new FrameData(qsEngine_,query.value(0).toLongLong(),query.value(1).toDouble())));
 		lastDataId = query.value(0).toLongLong();
 		readQueries_++;
 	}

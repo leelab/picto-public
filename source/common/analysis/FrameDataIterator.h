@@ -1,5 +1,6 @@
 #ifndef _FRAME_DATA_ITERATOR_H_
 #define _FRAME_DATA_ITERATOR_H_
+#include <QScriptEngine>
 #include <QString>
 #include <QLinkedList>
 #include <QSqlDatabase>
@@ -11,7 +12,7 @@ struct FrameData;
 class FrameDataIterator
 {
 public:
-	FrameDataIterator(QSqlDatabase session);
+	FrameDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~FrameDataIterator();
 
 	//Gets the next property change following the last one returned.  
@@ -32,12 +33,13 @@ private:
 	QSqlDatabase session_;
 	unsigned int totalQueries_;
 	unsigned int readQueries_;
-
+	QSharedPointer<QScriptEngine> qsEngine_;
 };
 
 struct FrameData : public AnalysisValue {
-	FrameData(){}
-	FrameData(qulonglong dataIndex,double frameTime){index.dataId_ = dataIndex;index.time_ = frameTime; index.idSource_ = EventOrderIndex::BEHAVIORAL;};
+	//FrameData(){}
+	FrameData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){}
+	FrameData(QSharedPointer<QScriptEngine> qsEngine,qulonglong dataIndex,double frameTime):AnalysisValue(qsEngine,EventOrderIndex(frameTime,dataIndex,EventOrderIndex::BEHAVIORAL)){/*index.dataId_ = dataIndex;index.time_ = frameTime; index.idSource_ = EventOrderIndex::BEHAVIORAL;*/scriptVal.setProperty("time",frameTime);};
 };
 
 }; //namespace Picto

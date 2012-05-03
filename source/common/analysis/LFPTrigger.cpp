@@ -21,7 +21,7 @@ EventOrderIndex LFPTrigger::getNextTriggerTime()
 	if(!lfpIterator_)
 	{
 		lfpIterator_ = QSharedPointer<LFPDataIterator>(
-							new LFPDataIterator(session_)
+							new LFPDataIterator(qsEngine_,session_)
 							);
 	}
 	latestValue_ = lfpIterator_->getNextLFPVals();

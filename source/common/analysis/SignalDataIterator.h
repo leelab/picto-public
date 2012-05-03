@@ -1,5 +1,6 @@
 #ifndef _SIGNAL_DATA_ITERATOR_H_
 #define _SIGNAL_DATA_ITERATOR_H_
+#include <QScriptEngine>
 #include <QString>
 #include <QLinkedList>
 #include <QSqlDatabase>
@@ -11,7 +12,7 @@ struct SignalData;
 class SignalDataIterator
 {
 public:
-	SignalDataIterator(QSqlDatabase session,QString signalName);
+	SignalDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString signalName);
 	virtual ~SignalDataIterator();
 	bool isValid(){return numSubChans_ > 0;};
 
@@ -41,13 +42,13 @@ private:
 	unsigned int totalQueries_;
 	unsigned int readValues_;
 	unsigned int readQueries_;
-
+	QSharedPointer<QScriptEngine> qsEngine_;
 };
 
 struct SignalData : public AnalysisValue{
-	SignalData(){}
-	SignalData(qulonglong dataIndex,double time,int vals){index.dataId_ = dataIndex; index.idSource_ = EventOrderIndex::BEHAVIORAL; index.time_ = time;values.resize(vals);};
-	QVector<float> values;
+	SignalData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){}
+	SignalData(QSharedPointer<QScriptEngine> qsEngine,qulonglong dataIndex,double time,int vals):AnalysisValue(qsEngine,EventOrderIndex(time,dataIndex,EventOrderIndex::BEHAVIORAL)){/*index.dataId_ = dataIndex; index.idSource_ = EventOrderIndex::BEHAVIORAL; index.time_ = time;*/scriptVal.setProperty("value",qsEngine->newArray(vals));};
+	void setSignalVal(int index,float val){scriptVal.property("value").setProperty(index,val);};
 };
 
 }; //namespace Picto

@@ -1,5 +1,6 @@
 #ifndef _PROPERTY_DATA_ITERATOR_H_
 #define _PROPERTY_DATA_ITERATOR_H_
+#include <QScriptEngine>
 #include <QString>
 #include <QLinkedList>
 #include <QSqlDatabase>
@@ -11,7 +12,7 @@ struct PropData;
 class PropertyDataIterator
 {
 public:
-	PropertyDataIterator(QSqlDatabase session,QString propertyPath);
+	PropertyDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString propertyPath);
 	virtual ~PropertyDataIterator();
 	bool isValid(){return propertyId_ > 0;};
 
@@ -38,12 +39,12 @@ private:
 	QSqlDatabase session_;
 	unsigned int totalQueries_;
 	unsigned int readQueries_;
-
+	QSharedPointer<QScriptEngine> qsEngine_;
 };
 
 struct PropData : public AnalysisValue {
-	PropData(){value="";}
-	PropData(QString val,qulonglong dataIndex,double frameTime){value = val;index.dataId_ = dataIndex;index.time_ = frameTime; index.idSource_ = EventOrderIndex::BEHAVIORAL;};
+	PropData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){value="";}
+	PropData(QSharedPointer<QScriptEngine> qsEngine,QString val,qulonglong dataIndex,double frameTime):AnalysisValue(qsEngine,EventOrderIndex(frameTime,dataIndex,EventOrderIndex::BEHAVIORAL)){value = val;/*index.dataId_ = dataIndex;index.time_ = frameTime; index.idSource_ = EventOrderIndex::BEHAVIORAL*/;scriptVal.setProperty("time",frameTime);scriptVal.setProperty("value",value);};
 	QString value;
 };
 

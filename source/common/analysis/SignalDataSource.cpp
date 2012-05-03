@@ -26,9 +26,15 @@ QSharedPointer<AnalysisValue> SignalDataSource::getValue(const EventOrderIndex& 
 	if(!signalIterator_)
 	{
 		signalIterator_ = QSharedPointer<SignalDataIterator>(
-							new SignalDataIterator(session_,
+							new SignalDataIterator(qsEngine_,session_,
 								propertyContainer_->getPropertyValue("SignalName").toString())
 							);
+		int numSubChans = signalIterator_->numSubChannels();
+		setScriptInfo("numSubChannels",numSubChans);
+		QScriptValue subChanNames = qsEngine_->newArray(numSubChans);
+		for(int i=0;i<numSubChans;i++)
+			subChanNames.setProperty(i,signalIterator_->subChanName(i));
+		setScriptInfo("subChannelName",subChanNames);
 	}
 	QSharedPointer<SignalData> prev = nextValue_;
 	//Check if the last value we read last time is beyond the input time.
@@ -53,28 +59,6 @@ QSharedPointer<AnalysisValue> SignalDataSource::getValue(const EventOrderIndex& 
 	//Store the latest value of our property
 	latestValue_ = prev;
 	return latestValue_;
-}
-
-unsigned int SignalDataSource::numSubChannels()
-{
-	if(!signalIterator_)
-		return 0;
-	return signalIterator_->numSubChannels();
-}
-
-QString SignalDataSource::subChannelName(int subChanIndex)
-{
-	if(!signalIterator_)
-		return "";
-	return signalIterator_->subChanName(subChanIndex);
-}
-
-float SignalDataSource::value(int subChanIndex, int triggerIndex)
-{
-	QSharedPointer<SignalData> data = getScriptValue(triggerIndex).staticCast<SignalData>();
-	if(data && (subChanIndex < data->values.size()))
-		return data->values[subChanIndex];
-	return 0.0;
 }
 
 void SignalDataSource::recheckSessionData()

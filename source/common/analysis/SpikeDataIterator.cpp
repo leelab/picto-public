@@ -8,8 +8,9 @@
 #include "SpikeDataIterator.h"
 using namespace Picto;
 
-SpikeDataIterator::SpikeDataIterator(QSqlDatabase session)
+SpikeDataIterator::SpikeDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
 {
+	qsEngine_ = qsEngine;
 	session_ = session;
 	Q_ASSERT(session_.isValid() && session.isOpen());
 	lastSessionDataId_ = 0;
@@ -35,7 +36,7 @@ QSharedPointer<SpikeData> SpikeDataIterator::getNextSpikeVals()
 	if(spikeVals_.size())
 		return spikeVals_.takeFirst();
 	//No new data, return an empty SpikeData()
-	return QSharedPointer<SpikeData>( new SpikeData());
+	return QSharedPointer<SpikeData>( new SpikeData(qsEngine_));
 }
 
 void SpikeDataIterator::updateSpikeValsList()
@@ -91,7 +92,7 @@ void SpikeDataIterator::updateSpikeValsList()
 			wave.resize(wave.size()-1);//Get rid of last comma
 
 		//Add data to list
-		spikeVals_.append(QSharedPointer<SpikeData>(new SpikeData(query.value(0).toLongLong()
+		spikeVals_.append(QSharedPointer<SpikeData>(new SpikeData(qsEngine_,query.value(0).toLongLong()
 							,offsetTime_ + temporalFactor_*query.value(1).toDouble()
 							,query.value(2).toInt()
 							,query.value(3).toInt(),
