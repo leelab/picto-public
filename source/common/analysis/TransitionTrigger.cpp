@@ -26,7 +26,7 @@ EventOrderIndex TransitionTrigger::getNextTriggerTime()
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
 	}
-	return propIterator_->getNextPropertyChange()->index;
+	return propIterator_->getNextValue()->index;
 }
 
 void TransitionTrigger::restart()
@@ -34,14 +34,10 @@ void TransitionTrigger::restart()
 	propIterator_.clear();
 }
 
-unsigned int TransitionTrigger::totalKnownTriggers()
+float TransitionTrigger::fractionTriggersRemaining()
 {
-	return propIterator_->totalValues();
-}
-
-unsigned int TransitionTrigger::remainingKnownTriggers()
-{
-	return propIterator_->remainingValues();
+	if(!propIterator_) return 1.0;
+	return propIterator_->fractionRemaining();
 }
 
 void TransitionTrigger::recheckSessionData()

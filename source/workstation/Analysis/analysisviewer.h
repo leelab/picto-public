@@ -78,13 +78,15 @@ private:
 	QSqlDatabase configDb_;
 	QSqlDatabase session_;
 
+	QTimer* progressBarTimer_;
+
 private slots:
 	void loadSession();
 	void saveOutput();
 	void executeCommand();
 
 	void updateUI();
-	void updateProgressBar(int percentRemaining);
+	void updateProgressBar();
 };
 
 #endif

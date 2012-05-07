@@ -35,8 +35,8 @@ protected:
 
 private:
 	QSharedPointer<PropertyDataIterator> propIterator_;
-	QSharedPointer<PropData> lastDataUnit_;
-	QSharedPointer<PropData> latestValue_;
+	QSharedPointer<AnalysisValue> lastDataUnit_;
+	QSharedPointer<AnalysisValue> latestValue_;
 };
 }; //namespace Picto
 #endif

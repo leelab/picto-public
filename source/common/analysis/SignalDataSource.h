@@ -35,8 +35,8 @@ protected:
 
 private:
 	QSharedPointer<SignalDataIterator> signalIterator_;
-	QSharedPointer<SignalData> nextValue_;
-	QSharedPointer<SignalData> latestValue_;
+	QSharedPointer<AnalysisValue> nextValue_;
+	QSharedPointer<AnalysisValue> latestValue_;
 };
 
 }; //namespace Picto

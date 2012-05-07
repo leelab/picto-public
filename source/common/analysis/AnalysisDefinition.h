@@ -38,13 +38,11 @@ public:
 	void finish();
 	//bool saveOutputToDirectory(QString directory, QString filename);
 	QLinkedList<QPointer<AnalysisOutputWidget>> getOutputWidgets();
+	unsigned int getPercentRemaining();
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisDefinition";};
 	virtual QString assetType(){return "AnalysisDefinition";};
-
-signals:
-	void percentRemaining(int percent);
 
 protected:
 
@@ -57,12 +55,10 @@ private:
 	double getFrameTime(qulonglong frameId);
 	QSharedPointer<TaskRunDataUnit> currRun_;
 	QSharedPointer<QScriptEngine> qsEngine_;
-	unsigned int currPeriod_;
+	QSharedPointer<AnalysisPeriod> currPeriod_;
+	unsigned int currPeriodNum_;
 	unsigned int numPeriods_;
 	unsigned int currRunNum_;
-
-private slots:
-	void updateProgressBar(int periodPercentRemaining);
 
 };
 }; //namespace Picto

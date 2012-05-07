@@ -25,14 +25,11 @@ public:
 	//be returned from getNextTriggerTime()
 	virtual void restart();
 
-	//Returns the total number of triggers in this session
-	//that this object knows about.
-	virtual unsigned int totalKnownTriggers();
-	//Returns the number of triggers that still need to
+	//Returns the fraction of triggers that still need to
 	//be processed for this session (that this object knows about).
-	virtual unsigned int remainingKnownTriggers();
+	virtual float fractionTriggersRemaining();
 
-	QSharedPointer<SpikeData> getLatestValue();
+	QSharedPointer<AnalysisValue> getLatestValue();
 
 protected:
 
@@ -47,7 +44,7 @@ protected:
 
 private:
 	QSharedPointer<SpikeDataIterator> spikeIterator_;
-	QSharedPointer<SpikeData> latestData_;
+	QSharedPointer<AnalysisValue> latestData_;
 };
 }; //namespace Picto
 #endif

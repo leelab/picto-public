@@ -26,7 +26,7 @@ EventOrderIndex PropertyTrigger::getNextTriggerTime()
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
 	}
-	return propIterator_->getNextPropertyChange()->index;
+	return propIterator_->getNextValue()->index;
 }
 
 void PropertyTrigger::restart()
@@ -34,14 +34,10 @@ void PropertyTrigger::restart()
 	propIterator_.clear();
 }
 
-unsigned int PropertyTrigger::totalKnownTriggers()
+float PropertyTrigger::fractionTriggersRemaining()
 {
-	return propIterator_->totalValues();
-}
-
-unsigned int PropertyTrigger::remainingKnownTriggers()
-{
-	return propIterator_->remainingValues();
+	if(!propIterator_) return 1.0;
+	return propIterator_->fractionRemaining();
 }
 
 void PropertyTrigger::recheckSessionData()

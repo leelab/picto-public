@@ -36,13 +36,7 @@ void TimeTrigger::restart()
 	totalSessionTime_ = -1;
 }
 
-unsigned int TimeTrigger::totalKnownTriggers()
-{
-	Q_ASSERT(totalSessionTime_ >= 0);
-	return totalSessionTime_/propertyContainer_->getPropertyValue("TriggerPeriod").toDouble();
-}
-
-unsigned int TimeTrigger::remainingKnownTriggers()
+float TimeTrigger::fractionTriggersRemaining()
 {
 	Q_ASSERT(totalSessionTime_ >= 0);
 	return (totalSessionTime_-currTime_.time_)/propertyContainer_->getPropertyValue("TriggerPeriod").toDouble();

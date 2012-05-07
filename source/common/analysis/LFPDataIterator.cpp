@@ -9,19 +9,9 @@
 using namespace Picto;
 
 LFPDataIterator::LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
+: AnalysisDataIterator(qsEngine,session)
 {
-	qsEngine_ = qsEngine;
-	session_ = session;
-	Q_ASSERT(session_.isValid() && session.isOpen());
-	lastSessionDataId_ = 0;
-	totalQueries_ = 0;
-	readValues_ = 0;
-	readQueries_ = 0;
-	notReadyYetTime_ = 0;
-	sessionEnded_ = false;
-
 	getSamplePeriod();
-	updateTotalQueryCount();
 }
 
 LFPDataIterator::~LFPDataIterator()
@@ -29,174 +19,137 @@ LFPDataIterator::~LFPDataIterator()
 
 }
 
-QSharedPointer<LFPData> LFPDataIterator::getNextLFPVals()
+void LFPDataIterator::updateVariableSessionConstants()
 {
-	if(!needMoreData())
-	{
-		return lfpVals_.takeFirst();
-	}
-	//Try getting new data.
-	updateLFPValsList();
-	if(!needMoreData())
-	{
-		return lfpVals_.takeFirst();
-	}
-	//No new data, return an empty propData()
-	return QSharedPointer<LFPData>(new LFPData(qsEngine_));
-}
-
-void LFPDataIterator::updateLFPValsList()
-{
-	if(!isValid())
-		return;
-	if(readQueries_ >= totalQueries_)
-		return;
-
-	if(!sessionEnded_)
-		getAlignCoefficients();
-
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
+	offsetTime_ = 0;
+	temporalFactor_ = 0;
+	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
-	//Check if session has ended
-	query.prepare("SELECT key "
-		"FROM sessioninfo WHERE key='sessionend'");
+	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
+	query.prepare(queryString);
 	bool success = query.exec();
 	if(!success)
 	{
 		qDebug("Query Failed: " + query.lastError().text().toAscii());
 		return;
 	}
-	sessionEnded_ = query.next();
+	if(query.next())
+	{
+		AlignmentInfo inf;
+		inf.fromXml(query.value(0).toString());
+		offsetTime_ = inf.getOffsetTime();
+		temporalFactor_ = inf.getTemporalFactor();
+	}
+}
 
-	//Get lfp value list.
+bool LFPDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+{
 	QString queryString = QString("SELECT dataid,timestamp,data,channel "
 		"FROM lfp WHERE dataid > :lastDataId ORDER BY dataid LIMIT 1000");
-	query.prepare(queryString);
-	query.bindValue(":lastdataid",lastSessionDataId_);
-	success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+	query->prepare(queryString);
+	query->bindValue(":lastdataid",lastDataId);
+	return true;
+}
+
+void LFPDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
+{
+	query->prepare("SELECT COUNT(dataid) FROM lfp");
+}
+
+qulonglong LFPDataIterator::readOutRecordData(QSqlRecord* record)
+{
+	double startTime = offsetTime_+temporalFactor_*record->value(1).toDouble();
+	unsigned int chan = record->value(3).toInt();
+	Q_ASSERT((temporalFactor_ > 0) && (samplePeriod_ > 0));
+	//Size latestRecords_ list so that this channel has a spot.
+	while(timesByChannel_.size() <= chan)
+		timesByChannel_.append(-1);
+	//Get the previous timestamp for this channel
+	double lastTimeForChan = timesByChannel_[chan];
+	timesByChannel_[chan] = startTime;
+	//Append this record to the time sorted map
+	timeSortedRecords_[startTime][chan]=QSqlRecord(*record);
+	//In a live recording, If a channel had data with a timestamp earlier than lastTimeForChan
+	//and it didn't arrive yet, it would mean that either the lfp recording 
+	//system skipped that channel's data for some reason (which we assume 
+	//won't occur).  That that channel is no longer collecting data. Or that that channel's 
+	//data packet was delivered late to the server due to connectivity issues.  
+	//We aren't going to worry about connectivity issues since the data will all be at 
+	//the server eventually and our live analysis is not too important.  For that reason,
+	//we go through the timeSortedRecords_ at this point, remove all records that have
+	//timestamp before lastTimeForChan and generate analysis values with them.
+	outputEverythingBefore(lastTimeForChan);
+	return record->value(0).toLongLong();
+}
+
+void LFPDataIterator::dataFinishedWithSessionEnded()
+{
+	if(!timeSortedRecords_.size())
 		return;
-	}
+	double lastTime = (timeSortedRecords_.end()-1).key();
+	outputEverythingBefore(lastTime+1);
+}
 
-	QLinkedList<QSharedPointer<LFPData>>::iterator iter;
-	double startTime;
+void LFPDataIterator::outputEverythingBefore(double beforeTime)
+{
+	QMap<double,QMap<unsigned int,QSqlRecord>>::iterator outIter = timeSortedRecords_.begin();
+	QMap<unsigned int,QSqlRecord>::iterator inIter;
+	while((outIter.key() < beforeTime) && (outIter != timeSortedRecords_.end()))
+	{
+		//We want to add the channel in order so that the stable sort
+		//will put them in order in the output AnalysisValues.
+		inIter = outIter.value().begin();
+		while(inIter != outIter.value().end())
+		{
+			addToOutputData(inIter.value());
+			inIter = outIter.value().erase(inIter);
+		}
+		outIter = timeSortedRecords_.erase(outIter);
+	}
+	//Sort the data and create AnalysisValues with it
+	sortOutputDataAndCreateAnalysisValues();
+}
+
+void LFPDataIterator::addToOutputData(QSqlRecord record)
+{
+	//Convert data from blob to float array.  Get the relevant subchannel
+	//and calculate its time.
+	double startTime = offsetTime_+temporalFactor_*record.value(1).toDouble();
+	double increment = temporalFactor_*samplePeriod_;
+	unsigned int chan = record.value(3).toInt();
+	QByteArray dataByteArray = record.value(2).toByteArray();
+	int numEntries = dataByteArray.size()/sizeof(float);
+	float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
+	int startingSize = sortedData_.size();
+	sortedData_.resize(startingSize+numEntries);
 	double currTime;
-	double increment;
-	unsigned int chan;
-	while(query.next()){
-
-		startTime = offsetTime_+temporalFactor_*query.value(1).toDouble();
-		increment = temporalFactor_*samplePeriod_;
-		chan = query.value(3).toInt();
-		if(increment <= 0)
-		{
-			//The fittedsampleperiod is invalid.  Return.
-			return;
-		}
-		
-		//If this is a new channel move back in the array until we find the entry after where this data should be
-		//added.
-		if(!latestChEntries_.contains(chan))
-		{
-			iter = lfpVals_.end()-1;
-			while(	(iter != lfpVals_.begin()) 
-			&&(*iter)->index > currTime)
-			{
-				iter--;
-			}
-			latestChEntries_[chan] = iter;
-		}
-		//Set the iterator to the position where data was last entered by this channel.
-		iter = latestChEntries_[chan];
-		
-		//IMPORTANT NOTE:
-		//There are two issues that we need to deal with when returning lfp data to the analysis
-		//system.  First of all, it could always occur that we will be asked for data up to a certain
-		//time when one lfp channel has that time available, and another channel will have that time 
-		//available, but it hasn't been written to the session yet (if this is running on a live experiment).
-		//The second issue that we need to deal with is the fact that lfp data on a given channel could stop
-		//coming in at a certain point if a user makes a change.
-		//For this reason, we always store the last to lfp timestamps for each channel.  When we're done
-		//sorting the incoming data, we look at the lowest value of the latest timestamp for each sample, 
-		//we then compare this timestamp with the timestamps for each channel's second to last lfp
-		//package.  If any of these timestamps are greater than the "lowest of the latest" timestamp, the
-		//implication is that a channel's data stopped being recorded because if it hadn't it would be 
-		//a full package late.  We keep doing this until we find a "lowest of the latest" timestamp that
-		//is after all of the "second to last" timestamps, and we consider all data with timestamp after
-		//that point to be "not yet ready."
-		timeRecs_[chan].penult = timeRecs_[chan].last;
-		timeRecs_[chan].last = startTime;
-
-		//Convert data from blob to float array.  Get the relevant subchannel
-		//and calculate its time.
-		QByteArray dataByteArray = query.value(2).toByteArray();
-		int numEntries = dataByteArray.size()/sizeof(float);
-		float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
-		for(int i=0;i<numEntries;i++)
-		{
-			currTime = startTime + i*increment;
-			while(	(iter != lfpVals_.end())
-					&& ((*iter)->index <= currTime) )
-				iter++;
-			iter = lfpVals_.insert(iter,QSharedPointer<LFPData>(new LFPData(qsEngine_,currTime,floatArray[i],chan)));
-			lastSessionDataId_ = query.value(0).toLongLong();
-			readValues_++;
-		}
-		latestChEntries_[chan] = iter;	//Record the point of this channels latest entry
-
-		readQueries_++;
+	for(int i=0;i<numEntries;i++)
+	{
+		currTime = startTime + i*increment;
+		sortedData_[startingSize+i] = lfpData(currTime,chan,floatArray[i]);
 	}
+}
 
-	//Find the first "notReadyYet" time.
-	int minCh = -1;
-	double minLast = -1;
-	do {
-		//Get minimum "last" time.
-		minCh = -1;
-		minLast = -1;
-		for(QHash<int,TimestampRecord>::iterator iter = timeRecs_.begin();
-			iter != timeRecs_.end();
-			iter++)
-		{
-			if(minCh == -1)
-			{
-				minCh = iter.key();
-				minLast = iter->last;
-			}
-			if(iter->last < minLast)
-			{
-				minCh = iter.key();
-				minLast = iter->last;
-			}
-		}
-		//Check for a penultimate time that's greater than min last time.
-		for(QHash<int,TimestampRecord>::iterator iter = timeRecs_.begin();
-		iter != timeRecs_.end();
-		iter++)
-		{
-			if(iter->penult > minLast)
-			{
-				timeRecs_.remove(minCh);
-				break;
-			}
-		}
-	}while(!timeRecs_.contains(minCh));	//Keep looping until no penultimate time is greater than the min last time.  
-										//Then the min last time is our notReadyYetTime_;
-	notReadyYetTime_ = minLast;
-
-	if(readQueries_ > totalQueries_)
-		updateTotalQueryCount();
+void LFPDataIterator::sortOutputDataAndCreateAnalysisValues()
+{
+	qStableSort(sortedData_.begin(),sortedData_.end());
+	QSharedPointer<AnalysisValue> val;
+	for(int i=0;i<sortedData_.size();i++)
+	{
+		val = createNextAnalysisValue(EventOrderIndex(sortedData_[i].time));
+		val->index.idSource_ = EventOrderIndex::NEURAL;
+		val->scriptVal.setProperty("time",sortedData_[i].time);
+		val->scriptVal.setProperty("value",sortedData_[i].value);
+		val->scriptVal.setProperty("channel",sortedData_[i].channel);
+	}
+	sortedData_.clear();
 }
 
 void LFPDataIterator::getSamplePeriod()
 {
 	samplePeriod_ = 0;
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
+	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
 	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"DataSource\"");
@@ -217,59 +170,4 @@ void LFPDataIterator::getSamplePeriod()
 			break;
 		}
 	}
-}
-
-void LFPDataIterator::getAlignCoefficients()
-{
-	offsetTime_ = 0;
-	temporalFactor_ = 0;
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-
-	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
-	query.prepare(queryString);
-	bool success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
-		return;
-	}
-	if(query.next())
-	{
-		AlignmentInfo inf;
-		inf.fromXml(query.value(0).toString());
-		offsetTime_ = inf.getOffsetTime();
-		temporalFactor_ = inf.getTemporalFactor();
-	}
-}
-
-void LFPDataIterator::updateTotalQueryCount()
-{
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-
-	QString queryString = QString("SELECT COUNT(dataid) FROM lfp");
-	query.prepare(queryString);
-	bool success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
-		return;
-	}
-
-	if(query.next())
-		totalQueries_ = query.value(0).toInt();
-}
-
-bool LFPDataIterator::needMoreData()
-{
-	if(!lfpVals_.size())
-		return true;
-	if(sessionEnded_&&(readQueries_ >= totalQueries_))
-		return false;
-	if(lfpVals_.first()->index >= notReadyYetTime_)
-		return true;
-	return false;
 }

@@ -1,74 +1,47 @@
 #ifndef _LFP_DATA_ITERATOR_H_
 #define _LFP_DATA_ITERATOR_H_
-#include <QScriptEngine>
-#include <QString>
-#include <QLinkedList>
-#include <QSqlDatabase>
-#include <QHash>
-#include "EventOrderIndex.h"
-#include "AnalysisValue.h"
+#include <QMultiMap>
+#include "AnalysisDataIterator.h"
 
 namespace Picto {
-struct LFPData;
-class LFPDataIterator
+	class LFPDataIterator : public AnalysisDataIterator
 {
 public:
 	LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~LFPDataIterator();
-	bool isValid(){return true;};
 
-	//Gets the next property change following the last one returned.  
-	//If there are no more property changes available it returns a PropData struct
-	//with negative time.
-	QSharedPointer<LFPData> getNextLFPVals();
-	unsigned int totalValues(){return readQueries_?totalQueries_ * (readValues_/readQueries_):totalQueries_;};
-	unsigned int remainingValues(){return totalValues() - readValues_ + lfpVals_.size();};
-	void recheckSessionData(){updateTotalQueryCount();};
+protected:
+	virtual void updateVariableSessionConstants();
+	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);
+	virtual void prepareSqlQueryForTotalRowCount(QSqlQuery* query);
+	virtual qulonglong readOutRecordData(QSqlRecord* record);
+	virtual void dataFinishedWithSessionEnded();
 
 private:
-	void updateLFPValsList();
+	void outputEverythingBefore(double beforeTime);
+	void addToOutputData(QSqlRecord record);
+	void sortOutputDataAndCreateAnalysisValues();
 	void getSamplePeriod();
-	void getAlignCoefficients();
-	void updateTotalQueryCount();
-	bool needMoreData();
 
-	qulonglong lastSessionDataId_;
-	struct lfpDBData
+	struct lfpData
 	{
-		lfpDBData(double t,double st,unsigned int ch,QByteArray d){time=t;sampleTime=st;channel=ch;data=d;};
+		lfpData(){time=-1;channel=-1;value=0;};
+		lfpData(double t,unsigned int ch,float val){time=t;channel=ch;value=val;};
+		inline bool operator<(const lfpData &other) const 
+		{
+			return time<other.time;
+		}
 		double time;
-		double sampleTime;
 		unsigned int channel;
-		QByteArray data;
+		float value;
 	};
-	
-	QLinkedList<QSharedPointer<LFPData>> lfpVals_;
-	struct TimestampRecord
-	{
-		TimestampRecord(){last = penult = -1;};
-		double last;
-		double penult;
-	};
-	QHash<int,TimestampRecord> timeRecs_;
-	QHash<int,QLinkedList<QSharedPointer<LFPData>>::iterator> latestChEntries_;
-	QSqlDatabase session_;
-	QString tableName_;
+	QVector<lfpData> sortedData_;
+
 	double samplePeriod_;
 	double offsetTime_;
 	double temporalFactor_;
-	double notReadyYetTime_;
-	bool sessionEnded_;
-	unsigned int totalQueries_;
-	unsigned int readValues_;
-	unsigned int readQueries_;
-	QSharedPointer<QScriptEngine> qsEngine_;
-};
-
-struct LFPData : public AnalysisValue{
-	LFPData(QSharedPointer<QScriptEngine> qsEngine):AnalysisValue(qsEngine){value=0;channel=-1;}
-	LFPData(QSharedPointer<QScriptEngine> qsEngine,double time,float val,unsigned int chan):AnalysisValue(qsEngine,EventOrderIndex(time)){/*index.time_ = time;*/value = val;channel = chan;scriptVal.setProperty("time",time);scriptVal.setProperty("value",value);scriptVal.setProperty("channel",channel);};
-	float value;
-	unsigned int channel;
+	QMap<double,QMap<unsigned int,QSqlRecord>> timeSortedRecords_;
+	QList<double> timesByChannel_;
 };
 
 }; //namespace Picto

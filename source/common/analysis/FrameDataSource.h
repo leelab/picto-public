@@ -36,8 +36,8 @@ protected:
 
 private:
 	QSharedPointer<FrameDataIterator> frameIterator_;
-	QSharedPointer<FrameData> lastDataUnit_;
-	QSharedPointer<FrameData> latestValue_;
+	QSharedPointer<AnalysisValue> lastDataUnit_;
+	QSharedPointer<AnalysisValue> latestValue_;
 };
 }; //namespace Picto
 #endif

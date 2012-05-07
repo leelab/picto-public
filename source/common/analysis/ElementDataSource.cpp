@@ -28,18 +28,18 @@ QSharedPointer<AnalysisValue> ElementDataSource::getValue(const EventOrderIndex&
 							new ElementDataIterator(qsEngine_,session_)
 							);
 	}
-	QSharedPointer<ElementData> prev = lastDataUnit_;
+	QSharedPointer<AnalysisValue> prev = lastDataUnit_;
 	//Check if the last value we read last time is beyond the input time.
 	//If so, nothing has changed, return the last value.
 	if(prev && (prev->index > index))
 		return latestValue_;
 	//Get new element values until the newest one is beyond the input
 	//time or non-existant, then return the prior element value.
-	QSharedPointer<ElementData> curr = elemIterator_->getNextElement();
+	QSharedPointer<AnalysisValue> curr = elemIterator_->getNextValue();
 	while(curr && (curr->index <= index) && (curr->index.isValid()))
 	{
 		prev = curr;
-		curr = elemIterator_->getNextElement();
+		curr = elemIterator_->getNextValue();
 	}
 	if(!curr || !curr->index.isValid())
 	{

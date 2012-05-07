@@ -16,50 +16,68 @@
   <Period>
     <Name>TestPeriod</Name>
     <Script>
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
       for(i=0;i&lt;eye.length;i++)
       {
-      eyeFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
-                        +&quot;,&quot;+correctTrialNum.value
-                        +&quot;,&quot;+String( Math.round( 1000*(Number(eye[i].time.value)-Number(startTime)) ))
-                        +&quot;,&quot;+Math.round(eye[i].data.value[0])
-                        +&quot;,&quot;+Math.round(eye[i].data.value[1])
-      );
-      if(correct.length)
-      eyeFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str1+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+String( Math.round( 1000*(Number(eye[i].time.value)-Number(startTime)) ))
       +&quot;,&quot;+Math.round(eye[i].data.value[0])
-      +&quot;,&quot;+Math.round(eye[i].data.value[1])
+      +&quot;,&quot;+Math.round(eye[i].data.value[1])+&quot;\n&quot;
+      );
+      if(correct.length)
+      str2+=(&quot;&quot;+(Number(periodNumber)+1)
+      +&quot;,&quot;+correctTrialNum.value
+      +&quot;,&quot;+String( Math.round( 1000*(Number(eye[i].time.value)-Number(startTime)) ))
+      +&quot;,&quot;+Math.round(eye[i].data.value[0])
+      +&quot;,&quot;+Math.round(eye[i].data.value[1])+&quot;\n&quot;
       );
       }
+      eyeFile.writeText(str1);
+      eyeFileCorrect.writeText(str2);
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
       for(i=0;i&lt;diam.length;i++)
       {
-      diamFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str1+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+String( Math.round( 1000*(Number(diam[i].time.value)-Number(startTime)) ))
       +&quot;,&quot;+Math.round(diam[i].data.value[0])
-      +&quot;,&quot;+Math.round(diam[i].data.value[1])
+      +&quot;,&quot;+Math.round(diam[i].data.value[1])+&quot;\n&quot;
       );
       if(correct.length)
-      diamFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str2+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+String( Math.round( 1000*(Number(diam[i].time.value)-Number(startTime)) ))
       +&quot;,&quot;+Math.round(diam[i].data.value[0])
-      +&quot;,&quot;+Math.round(diam[i].data.value[1])
+      +&quot;,&quot;+Math.round(diam[i].data.value[1])+&quot;\n&quot;
       );
       }
+      diamFile.writeText(str1);
+      diamFileCorrect.writeText(str2);
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
       for(i=0;i&lt;Event.length;i++)
       {
-      eventFile.writeLine(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime))))));
+      str1+=(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime)))))+&quot;\n&quot;);
       if(correct.length)
-      eventFileCorrect.writeLine(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime))))));
+      str2+=(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime)))))+&quot;\n&quot;);
       }
+      eventFile.writeText(str1);
+      eventFileCorrect.writeText(str2);
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
       for(i=0;i&lt;Blob.length;i++)
       {
-      blobFile.writeLine(Blob[i].data.value);
+      str1+=(Blob[i].data.value+&quot;\n&quot;);
       if(correct.length)
-      blobFileCorrect.writeLine(Blob[i].data.value);
+      str2+=(Blob[i].data.value+&quot;\n&quot;);
       }
+      blobFile.writeText(str1);
+      blobFileCorrect.writeText(str2);
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
       if(correct.length)
       correctTrialNum.value++;
     </Script>
@@ -175,81 +193,92 @@
     <Name>TestPeriod</Name>
     <StartBufferMs>1000</StartBufferMs>
     <EndBufferMs>1000</EndBufferMs>
-    <Script>      
+    <Script>
       wasCorrect = false;
       for(i=0;i&lt;correct.length;i++)
       {
       if(correct[i].time.value>Number(startTime))
-        wasCorrect = true;
+      wasCorrect = true;
       }
 
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
+      str3=&quot;&quot;;
+      str4=&quot;&quot;;
       for(i=0;i&lt;spike.length;i++)
       {
-       spikeFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str1+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
       +&quot;,&quot;+spike[i].data.channel
       +&quot;,&quot;+spike[i].data.unit
       +&quot;,&quot;+"-1000"
-       +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))
+      +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))+&quot;\n&quot;
       );
       wave = &quot;&quot;;
       for(j=0;j&lt;spike[i].data.waveSize;j++)
       {
-        wave += (1000*Number(spike[i].data.waveValue[j])).toFixed(6);
-        if(j&lt;spike[i].data.waveSize-1)
-          wave += &quot;,&quot;;
+      wave += (1000*Number(spike[i].data.waveValue[j])).toFixed(6);
+      if(j&lt;spike[i].data.waveSize-1)
+      wave += &quot;,&quot;;
       }
-      waveFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str2+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+spike[i].data.channel
       +&quot;,&quot;+spike[i].data.unit
       +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
       +&quot;,&quot;+Math.round(1000000000*spike[i].data.samplePeriod)/1000000
       +&quot;,&quot;+spike[i].data.waveSize
-      +&quot;,&quot;+wave
+      +&quot;,&quot;+wave+&quot;\n&quot;
       );
 
       if(wasCorrect)
       {
-      spikeFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str3+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
       +&quot;,&quot;+spike[i].data.channel
       +&quot;,&quot;+spike[i].data.unit
       +&quot;,&quot;+"-1000"
-      +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))
+      +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))+&quot;\n&quot;
       );
-      waveFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str4+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+spike[i].data.channel
       +&quot;,&quot;+spike[i].data.unit
       +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
       +&quot;,&quot;+Math.round(1000000000*spike[i].data.samplePeriod)/1000000
       +&quot;,&quot;+spike[i].data.waveSize
-      +&quot;,&quot;+wave
+      +&quot;,&quot;+wave+&quot;\n&quot;
       );
       }
       }
-
+      spikeFile.writeText(str1);
+      waveFile.writeText(str2);
+      spikeFileCorrect.writeText(str3);
+      waveFileCorrect.writeText(str4);
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
       for(i=0;i&lt;lfp.length;i++)
       {
-      lfpFile.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str1+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+lfp[i].data.channel
       +&quot;,&quot;+Math.round(1000*(lfp[i].time.value-Number(startTime)))
-      +&quot;,&quot;+lfp[i].data.value
+      +&quot;,&quot;+lfp[i].data.value+&quot;\n&quot;
       );
       if(wasCorrect)
       {
-      lfpFileCorrect.writeLine(&quot;&quot;+(Number(periodNumber)+1)
+      str2+=(&quot;&quot;+(Number(periodNumber)+1)
       +&quot;,&quot;+correctTrialNum.value
       +&quot;,&quot;+lfp[i].data.channel
       +&quot;,&quot;+Math.round(1000*(lfp[i].time.value-Number(startTime)))
-      +&quot;,&quot;+lfp[i].data.value
+      +&quot;,&quot;+lfp[i].data.value+&quot;\n&quot;
       );
       }
       }
+      lfpFile.writeText(str1);
+      lfpFileCorrect.writeText(str2);
       if(wasCorrect)
       correctTrialNum.value++;
 

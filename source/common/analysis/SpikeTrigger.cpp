@@ -24,7 +24,7 @@ EventOrderIndex SpikeTrigger::getNextTriggerTime()
 							new SpikeDataIterator(qsEngine_,session_)
 							);
 	}
-	latestData_ = spikeIterator_->getNextSpikeVals();
+	latestData_ = spikeIterator_->getNextValue();
 	return latestData_->index;
 }
 
@@ -33,18 +33,14 @@ void SpikeTrigger::restart()
 	spikeIterator_.clear();
 }
 
-unsigned int SpikeTrigger::totalKnownTriggers()
+float SpikeTrigger::fractionTriggersRemaining()
 {
-	return spikeIterator_->totalValues();
-}
-
-unsigned int SpikeTrigger::remainingKnownTriggers()
-{
-	return spikeIterator_->remainingValues();
+	if(!spikeIterator_) return 1.0;
+	return spikeIterator_->fractionRemaining();
 }
 
 
-QSharedPointer<SpikeData> SpikeTrigger::getLatestValue()
+QSharedPointer<AnalysisValue> SpikeTrigger::getLatestValue()
 {
 	return latestData_;
 }

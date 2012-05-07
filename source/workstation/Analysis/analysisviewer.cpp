@@ -97,6 +97,12 @@ void AnalysisViewer::setupUi()
 	progressBar_->setRange(0,100);
 	progressBar_->reset();
 
+	progressBarTimer_ = new QTimer(this);
+	progressBarTimer_->setInterval(100);
+	progressBarTimer_->stop();
+	connect(progressBarTimer_,SIGNAL(timeout()),this,SLOT(updateProgressBar()));
+
+
 	saveOutputAction_ = new QAction(tr("&Save Output"),this);
 	connect(saveOutputAction_, SIGNAL(triggered()),this, SLOT(saveOutput()));
 	saveOutputAction_->setEnabled(false);
@@ -196,7 +202,6 @@ void AnalysisViewer::executeCommand()
 	QTime timer;
 	timer.start();
 	analysisDefinition_ = QSharedPointer<AnalysisDefinition>(new AnalysisDefinition());
-	connect(analysisDefinition_.data(),SIGNAL(percentRemaining(int)),this,SLOT(updateProgressBar(int)));
 	if(!analysisDefinition_->fromXml(analysisDef_->toPlainText()))
 	{
 		QMessageBox box;
@@ -218,6 +223,7 @@ void AnalysisViewer::executeCommand()
 	outputDisplay_->clear();
 	runsRemaining_ = 0;
 	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
+	progressBarTimer_->start();
 	runsRemaining_ = runSelector_->selectedRunCount();
 	for(int i=0;i<runSelector_->selectedRunCount();i++)
 	{
@@ -232,6 +238,7 @@ void AnalysisViewer::executeCommand()
 		}
 		runsRemaining_--;
 	}
+	progressBarTimer_->stop();
 	progressBar_->setRange(0,100);	//Returns progress bar to normal range if it wasn't done in updateProgressBar.
 	progressBar_->setValue(100);
 	QCoreApplication::processEvents();	//Get rid of any multiple presses on the execute button before we reenable it.
@@ -254,13 +261,16 @@ void AnalysisViewer::updateUI()
 	progressBar_->reset();
 }
 
-void AnalysisViewer::updateProgressBar(int percentRemaining)
+void AnalysisViewer::updateProgressBar()
 {
-	//The calling function sends in the percent remaining of the current run,
+	if(!analysisDefinition_)
+		return;
+	int currRunPercentRemaining = analysisDefinition_->getPercentRemaining();
+	//The analysisDefinition_ gives us the percent remaining of the current run,
 	//we need to update this value to reflect the portion of all runs completed.
 	progressBar_->setRange(0,100);
 	double totalRuns = runSelector_->selectedRunCount();
 	double completed = totalRuns-runsRemaining_;
-	double totalFraction = (completed+1.0-(double(percentRemaining)/100.0))/totalRuns;
+	double totalFraction = (completed+1.0-(double(currRunPercentRemaining)/100.0))/totalRuns;
 	progressBar_->setValue(100.0*totalFraction);
 }

@@ -59,12 +59,9 @@ public:
 	virtual void restart() = 0;
 	void sessionDatabaseUpdated();
 
-	//Should be implemented to return the total number of triggers in this session
-	//that this object knows about.
-	virtual unsigned int totalKnownTriggers() = 0;
-	//Should be implemented to return the number of triggers that still need to
+	//Should be implemented to return the fraction of triggers that still need to
 	//be processed for this session (that this object knows about).
-	virtual unsigned int remainingKnownTriggers() = 0;
+	virtual float fractionTriggersRemaining() = 0;
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisTrigger";};

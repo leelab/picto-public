@@ -41,14 +41,12 @@ public:
 	bool run(EventOrderIndex fromIndex,EventOrderIndex toIndex);
 	void finishUp();
 	QLinkedList<QPointer<AnalysisOutputWidget>> getOutputWidgets();
+	unsigned int getPercentRemaining();
 	//bool saveOutputToDirectory(QString directory, QString filename);
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisPeriod";};
 	virtual QString assetType(){return "AnalysisPeriod";};
-
-signals:
-	void percentRemaining(int percent);
 
 protected:
 

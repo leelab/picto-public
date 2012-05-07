@@ -24,7 +24,7 @@ EventOrderIndex LFPTrigger::getNextTriggerTime()
 							new LFPDataIterator(qsEngine_,session_)
 							);
 	}
-	latestValue_ = lfpIterator_->getNextLFPVals();
+	latestValue_ = lfpIterator_->getNextValue();
 	return latestValue_->index;
 }
 
@@ -33,17 +33,13 @@ void LFPTrigger::restart()
 	lfpIterator_.clear();
 }
 
-unsigned int LFPTrigger::totalKnownTriggers()
+float LFPTrigger::fractionTriggersRemaining()
 {
-	return lfpIterator_->totalValues();
+	if(!lfpIterator_) return 1.0;
+	return lfpIterator_->fractionRemaining();
 }
 
-unsigned int LFPTrigger::remainingKnownTriggers()
-{
-	return lfpIterator_->remainingValues();
-}
-
-QSharedPointer<LFPData> LFPTrigger::getLatestValue()
+QSharedPointer<AnalysisValue> LFPTrigger::getLatestValue()
 {
 	return latestValue_;
 }

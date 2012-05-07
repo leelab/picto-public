@@ -162,8 +162,8 @@ void AnalysisPeriod::startNewRun(QString runName)
 
 bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 {
-	double scriptTime;
-	double otherTime;
+	double scriptTime = 0;
+	double otherTime = 0;
 	QTime timer;
 	timer.start();
 	if(!fromIndex.isValid())	//Invalid toIndex => we don't know when it will end yet.
@@ -202,8 +202,7 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		//GET DATA AND ADD IT TO SCRIPT ENGINE////////////////////////////////////////
 		QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 		QSharedPointer<AnalysisTrigger> trigger;
-		int totalTriggers = 0;
-		int totalRemaining = 0;
+		int numTriggers = triggers.size();
 		foreach(QSharedPointer<Asset> triggerAsset,triggers)
 		{
 			trigger = triggerAsset.staticCast<AnalysisTrigger>();
@@ -220,19 +219,8 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 				trigger->fillArraysTo(EventOrderIndex(endIndex_.time_+double(endBufferMs*.001)));
 			else
 				trigger->fillArraysTo(endIndex_);
-			
-			//Update total known/remaining triggers and emit progress
-			totalTriggers += trigger->totalKnownTriggers();
-			totalRemaining += trigger->remainingKnownTriggers();
-
-			if(timer.elapsed() > 100)
-			{	//If things take a long time, process events periodically.
-				QCoreApplication::processEvents();
-				timer.start();
-			}
+			QCoreApplication::processEvents();
 		}
-		if(totalTriggers > 0)
-			emit percentRemaining(100*totalRemaining/totalTriggers);
 		//////////////////////////////////////////////////////////////////////////////
 
 		//Add/Update start, end times, and period number as properties to script engine
@@ -352,6 +340,20 @@ QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisPeriod::getOutputWidgets()
 		}
 	}
 	return returnVal;
+}
+
+unsigned int AnalysisPeriod::getPercentRemaining()
+{
+		QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
+		int numTriggerObjects = triggers.size();
+		QSharedPointer<AnalysisTrigger> trigger;
+		float avgFractionRemaining = 0;
+		foreach(QSharedPointer<Asset> triggerAsset,triggers)
+		{
+			trigger = triggerAsset.staticCast<AnalysisTrigger>();
+			avgFractionRemaining += trigger->fractionTriggersRemaining()/numTriggerObjects;
+		}
+		return 100*avgFractionRemaining;
 }
 
 //bool AnalysisPeriod::saveOutputToDirectory(QString directory, QString filename)

@@ -25,13 +25,13 @@ EventOrderIndex ElementTrigger::getNextTriggerTime()
 	if(!transIterator_)
 	{
 		transIterator_ = QSharedPointer<TransitionDataIterator>(
-							new TransitionDataIterator(session_));
+							new TransitionDataIterator(qsEngine_,session_));
 		transIterator_->registerTransitionsByNode(
 						propertyContainer_->getPropertyValue("ElementPath").toString(),
 						boundaryList_.value(propertyContainer_->getPropertyValue("When").toInt(),"") == "Ends"
 						);
 	}
-	return transIterator_->getNextTransitionTraversal();
+	return transIterator_->getNextValue()->index;
 }
 
 void ElementTrigger::restart()
@@ -39,14 +39,10 @@ void ElementTrigger::restart()
 	transIterator_.clear();
 }
 
-unsigned int ElementTrigger::totalKnownTriggers()
+float ElementTrigger::fractionTriggersRemaining()
 {
-	return transIterator_->totalValues();
-}
-
-unsigned int ElementTrigger::remainingKnownTriggers()
-{
-	return transIterator_->remainingValues();
+	if(!transIterator_) return 1.0;
+	return transIterator_->fractionRemaining();
 }
 
 void ElementTrigger::recheckSessionData()

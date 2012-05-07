@@ -81,7 +81,7 @@ void AnalysisDefinition::reset()
 	}
 
 	currRunNum_ = 0;
-	currPeriod_ = 0;
+	currPeriodNum_ = 0;
 }
 
 void AnalysisDefinition::startNewRun(QSharedPointer<TaskRunDataUnit> runInfo)
@@ -91,12 +91,10 @@ void AnalysisDefinition::startNewRun(QSharedPointer<TaskRunDataUnit> runInfo)
 	currRunNum_++;
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
-	currPeriod_ = 0;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
 		period = periodAsset.staticCast<AnalysisPeriod>();
 		period->startNewRun(currRun_->name_);
-		currPeriod_++;
 	}
 
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
@@ -134,13 +132,12 @@ bool AnalysisDefinition::run()
 	);
 
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
-	QSharedPointer<AnalysisPeriod> period;
-	currPeriod_ = 0;
+	currPeriodNum_ = 0;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
-		period = periodAsset.staticCast<AnalysisPeriod>();
-		period->run(fromIndex,toIndex);
-		currPeriod_++;
+		currPeriod_ = periodAsset.staticCast<AnalysisPeriod>();
+		currPeriod_->run(fromIndex,toIndex);
+		currPeriodNum_++;
 	}
 
 	//Add/Update start, end times, and period number as properties to script engine
@@ -233,16 +230,24 @@ QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets
 	return returnVal;
 }
 
+unsigned int AnalysisDefinition::getPercentRemaining()
+{
+	if(!currPeriod_)
+		return 100;
+	unsigned int periodPercentRemaining = currPeriod_->getPercentRemaining();
+	int totalPercentRemaining = 0;
+	if(numPeriods_ > 0)
+	{
+		totalPercentRemaining = ( (numPeriods_-currPeriodNum_ - 1)*100 
+							+ periodPercentRemaining)/numPeriods_;
+	}
+	return totalPercentRemaining;
+}
+
 void AnalysisDefinition::postDeserialize()
 {
 	UIEnabled::postDeserialize();
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
-	QSharedPointer<AnalysisPeriod> period;
-	foreach(QSharedPointer<Asset> periodAsset,periods)
-	{
-		period = periodAsset.staticCast<AnalysisPeriod>();
-		connect(period.data(),SIGNAL(percentRemaining(int)),this,SLOT(updateProgressBar(int)));
-	}
 	numPeriods_ = periods.size();
 	reset();
 }
@@ -269,15 +274,4 @@ double AnalysisDefinition::getFrameTime(qulonglong frameId)
 		return -1;
 	}
 	return query.value(0).toDouble();
-}
-
-void AnalysisDefinition::updateProgressBar(int periodPercentRemaining)
-{
-	int totalPercentRemaining = 0;
-	if(numPeriods_ > 0)
-	{
-		totalPercentRemaining = ( (numPeriods_-currPeriod_ - 1)*100 
-							+ periodPercentRemaining)/numPeriods_;
-	}
-	emit percentRemaining(totalPercentRemaining);
 }

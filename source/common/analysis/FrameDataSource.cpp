@@ -29,18 +29,18 @@ QSharedPointer<AnalysisValue> FrameDataSource::getValue(const EventOrderIndex& i
 							new FrameDataIterator(qsEngine_,session_)
 							);
 	}
-	QSharedPointer<FrameData> prev = lastDataUnit_;
+	QSharedPointer<AnalysisValue> prev = lastDataUnit_;
 	//Check if the last value we read last time is beyond the input time.
 	//If so, nothing has changed, return the last value.
 	if(prev && (prev->index > index))
 		return latestValue_;
 	//Get new frame values until the newest one is beyond the input
 	//time or non-existant, then return the prior frame value.
-	QSharedPointer<FrameData> curr = frameIterator_->getNextFrameChange();
+	QSharedPointer<AnalysisValue> curr = frameIterator_->getNextValue();
 	while(curr && (curr->index <= index) && (curr->index.isValid()))
 	{
 		prev = curr;
-		curr = frameIterator_->getNextFrameChange();
+		curr = frameIterator_->getNextValue();
 	}
 	if(!curr || !curr->index.isValid())
 	{

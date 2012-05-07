@@ -6,16 +6,9 @@
 using namespace Picto;
 
 PropertyDataIterator::PropertyDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString propertyPath)
+: AnalysisDataIterator(qsEngine,session)
 {
-	qsEngine_ = qsEngine;
-	session_ = session;
-	Q_ASSERT(session_.isValid() && session.isOpen());
-	lastSessionDataId_ = 0;
 	propertyId_ = getPropertyId(propertyPath);
-	totalQueries_ = 0;
-	readQueries_ = 0;
-
-	updateTotalQueryCount();
 }
 
 PropertyDataIterator::~PropertyDataIterator()
@@ -23,76 +16,35 @@ PropertyDataIterator::~PropertyDataIterator()
 
 }
 
-QSharedPointer<PropData> PropertyDataIterator::getNextPropertyChange()
+bool PropertyDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
 {
-	if(propVals_.size())
-		return propVals_.takeFirst();
-	//Maybe the session wasn't over last time.  Try getting new data.
-	updatePropValsList();
-	if(propVals_.size())
-		return propVals_.takeFirst();
-	//No new data, return an empty propData()
-	return QSharedPointer<PropData>(new PropData(qsEngine_));
-}
-
-void PropertyDataIterator::updatePropValsList()
-{
-	if(!isValid())
-		return;
-	if(readQueries_ >= totalQueries_)
-		return;
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-
-	//Get property value list.
-	query.prepare("SELECT p.value, p.dataid, f.time FROM properties p, frames f "
+	if(propertyId_ <= 0)
+		return false;
+	query->prepare("SELECT p.value, p.dataid, f.time FROM properties p, frames f "
 		"WHERE p.assetid=:assetid AND f.dataid=p.frameid AND p.dataid > :lastdataid "
 		"ORDER BY p.dataid LIMIT 10000");
-	query.bindValue(":assetid",propertyId_);
-	query.bindValue(":lastdataid",lastSessionDataId_);
-	bool success = query.exec();
-	if(!success)
-	{
-		return;
-	}
-	qulonglong lastDataId = lastSessionDataId_;
-	while(query.next()){
-		propVals_.append(QSharedPointer<PropData>(new PropData(qsEngine_,query.value(0).toString(),query.value(1).toLongLong(),query.value(2).toDouble())));
-		lastDataId = query.value(1).toLongLong();
-		readQueries_++;
-	}
-	if(readQueries_ > totalQueries_)
-		updateTotalQueryCount();
-
-	lastSessionDataId_ = lastDataId;
+	query->bindValue(":assetid",propertyId_);
+	query->bindValue(":lastdataid",lastDataId);
+	return true;
 }
 
-void PropertyDataIterator::updateTotalQueryCount()
+void PropertyDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
+	query->prepare("SELECT COUNT(dataid) FROM properties WHERE assetid=:assetid");
+	query->bindValue(":assetid",propertyId_);
+}
 
-	QString queryString = QString("SELECT COUNT(dataid) FROM properties WHERE assetid=:assetid");
-	query.prepare(queryString);
-	query.bindValue(":assetid",propertyId_);
-	bool success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
-		return;
-	}
-
-	if(query.next())
-		totalQueries_ = query.value(0).toInt();
+qulonglong PropertyDataIterator::readOutRecordData(QSqlRecord* record)
+{
+	QSharedPointer<AnalysisValue> val = createNextAnalysisValue(EventOrderIndex(record->value(2).toDouble(),record->value(1).toLongLong(),EventOrderIndex::BEHAVIORAL));
+	val->scriptVal.setProperty("time",record->value(2).toDouble());
+	val->scriptVal.setProperty("value",record->value(0).toString());
+	return record->value(1).toLongLong();
 }
 
 int PropertyDataIterator::getElementId(QString path)
 {
-	if(!session_.isOpen())
-		return 0;
-	QSqlQuery query(session_);
+	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 	query.prepare("SELECT assetid FROM elementlookup WHERE path=:path");
 	query.bindValue(":path",path);
@@ -122,7 +74,7 @@ int PropertyDataIterator::getPropertyId(QString fullPath)
 	if(propName.isEmpty())
 		return 0;
 
-	QSqlQuery query(session_);
+	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 	query.prepare("SELECT assetid FROM propertylookup WHERE parent=:parentId AND name=:name");
 	query.bindValue(":parentId",parentId);

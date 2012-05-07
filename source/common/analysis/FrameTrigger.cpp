@@ -24,7 +24,7 @@ EventOrderIndex FrameTrigger::getNextTriggerTime()
 							new FrameDataIterator(qsEngine_,session_)
 							);
 	}
-	return frameIterator_->getNextFrameChange()->index;
+	return frameIterator_->getNextValue()->index;
 }
 
 void FrameTrigger::restart()
@@ -32,14 +32,10 @@ void FrameTrigger::restart()
 	frameIterator_.clear();
 }
 
-unsigned int FrameTrigger::totalKnownTriggers()
+float FrameTrigger::fractionTriggersRemaining()
 {
-	return frameIterator_->totalValues();
-}
-
-unsigned int FrameTrigger::remainingKnownTriggers()
-{
-	return frameIterator_->remainingValues();
+	if(!frameIterator_) return 1.0;
+	return frameIterator_->fractionRemaining();
 }
 
 void FrameTrigger::recheckSessionData()

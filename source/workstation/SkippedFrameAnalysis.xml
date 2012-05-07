@@ -16,352 +16,52 @@
   <Period>
     <Name>TestPeriod</Name>
     <Script>
-      str1=&quot;&quot;;
-      str2=&quot;&quot;;
-      for(i=0;i&lt;eye.length;i++)
+      for(i=0;i&lt;frame.length;i++)
       {
-      str1+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+String( Math.round( 1000*(Number(eye[i].time.value)-Number(startTime)) ))
-      +&quot;,&quot;+Math.round(eye[i].data.value[0])
-      +&quot;,&quot;+Math.round(eye[i].data.value[1])+&quot;\n&quot;
-      );
-      if(correct.length)
-      str2+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+String( Math.round( 1000*(Number(eye[i].time.value)-Number(startTime)) ))
-      +&quot;,&quot;+Math.round(eye[i].data.value[0])
-      +&quot;,&quot;+Math.round(eye[i].data.value[1])+&quot;\n&quot;
-      );
+      framesSoFar.value++;
+      if(lastFrameTime.value &lt; 0)
+      {
+      lastFrameTime.value = frame[i].time.value;
+      continue;
       }
-      eyeFile.writeText(str1);
-      eyeFileCorrect.writeText(str2);
-      str1=&quot;&quot;;
-      str2=&quot;&quot;;
-      for(i=0;i&lt;diam.length;i++)
+      frameLength = frame[i].time.value-lastFrameTime.value;
+      lastFrameTime.value = frame[i].time.value;
+      if(frameLength > .02)
       {
-      str1+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+String( Math.round( 1000*(Number(diam[i].time.value)-Number(startTime)) ))
-      +&quot;,&quot;+Math.round(diam[i].data.value[0])
-      +&quot;,&quot;+Math.round(diam[i].data.value[1])+&quot;\n&quot;
-      );
-      if(correct.length)
-      str2+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+String( Math.round( 1000*(Number(diam[i].time.value)-Number(startTime)) ))
-      +&quot;,&quot;+Math.round(diam[i].data.value[0])
-      +&quot;,&quot;+Math.round(diam[i].data.value[1])+&quot;\n&quot;
+      outFile.writeLine(  &quot;&quot;+frameLength
+                          +&quot;,&quot;+frame[i].time.value
+                          +&quot;,&quot;+frame[i].currElem.name
+                          +&quot;,&quot;+framesSoFar.value
       );
       }
-      diamFile.writeText(str1);
-      diamFileCorrect.writeText(str2);
-      str1=&quot;&quot;;
-      str2=&quot;&quot;;
-      for(i=0;i&lt;Event.length;i++)
-      {
-      str1+=(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime)))))+&quot;\n&quot;);
-      if(correct.length)
-      str2+=(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime)))))+&quot;\n&quot;);
       }
-      eventFile.writeText(str1);
-      eventFileCorrect.writeText(str2);
-      str1=&quot;&quot;;
-      str2=&quot;&quot;;
-      for(i=0;i&lt;Blob.length;i++)
-      {
-      str1+=(Blob[i].data.value+&quot;\n&quot;);
-      if(correct.length)
-      str2+=(Blob[i].data.value+&quot;\n&quot;);
-      }
-      blobFile.writeText(str1);
-      blobFileCorrect.writeText(str2);
-      str1=&quot;&quot;;
-      str2=&quot;&quot;;
-      if(correct.length)
-      correctTrialNum.value++;
     </Script>
-    <StartTrigger type="Element">
+    <StartTrigger type="Frame">
       <Name>start</Name>
-      <When>Starts</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
     </StartTrigger>
-    <EndTrigger type="Element">
-      <Name>end</Name>
-      <When>Ends</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::ReshuffleTrialType</ElementPath>
+    <EndTrigger type="Frame">
+      <Name>start</Name>
     </EndTrigger>
-    <EndTrigger type="Element">
-      <Name>end</Name>
-      <When>Ends</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
-    </EndTrigger>
-    <Trigger type="Element">
-      <Name>correct</Name>
-      <When>Starts</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
-    </Trigger>
-    <Trigger type="Property">
-      <Name>Event</Name>
-      <PropertyPath>ProbabilityTracking::Top::EventInfo::Values</PropertyPath>
-      <DataSource type="Property">
-        <Name>data</Name>
-        <PropertyPath>ProbabilityTracking::Top::EventInfo::Values</PropertyPath>
+    <Trigger type="Frame">
+      <Name>frame</Name>
+      <DataSource type="Element">
+        <Name>currElem</Name>
       </DataSource>
       <DataSource type="Time">
         <Name>time</Name>
       </DataSource>
     </Trigger>
-    <Trigger type="Element">
-      <Name>Blob</Name>
-      <When>Ends</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
-      <DataSource type="Property">
-        <Name>data</Name>
-        <PropertyPath>ProbabilityTracking::Top::TrialInfo::Values</PropertyPath>
-      </DataSource>
-    </Trigger>
-    <Trigger type="Signal">
-      <Name>eye</Name>
-      <SignalName>Position</SignalName>
-      <DataSource type="Signal">
-        <Name>data</Name>
-        <SignalName>Position</SignalName>
-      </DataSource>
-      <DataSource type="Time">
-        <Name>time</Name>
-      </DataSource>
-    </Trigger>
-    <Trigger type="Signal">
-      <Name>diam</Name>
-      <SignalName>Diameter</SignalName>
-      <DataSource type="Signal">
-        <Name>data</Name>
-        <SignalName>Diameter</SignalName>
-      </DataSource>
-      <DataSource type="Time">
-        <Name>time</Name>
-      </DataSource>
-    </Trigger>
-    <Trigger type="Element">
-      <Name>beginTrial</Name>
-      <When>Starts</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
-      <DataSource type="Property">
-        <Name>trialInSeq</Name>
-        <PropertyPath>ProbabilityTracking::Top::Superblock::Block::TrialsSoFar::Value</PropertyPath>
-      </DataSource>
-    </Trigger>
-    <Tool type="File">
-      <Name>blobFile</Name>
-      <FileName>.blob.all.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>eventFile</Name>
-      <FileName>.event.all.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>eyeFile</Name>
-      <FileName>.eye.all.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>diamFile</Name>
-      <FileName>.joy.all.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>blobFileCorrect</Name>
-      <FileName>.blob.correct.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>eventFileCorrect</Name>
-      <FileName>.event.correct.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>eyeFileCorrect</Name>
-      <FileName>.eye.correct.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>diamFileCorrect</Name>
-      <FileName>.joy.correct.txt</FileName>
+    <Tool type="NumericVariable">
+      <Name>lastFrameTime</Name>
+      <InitValue>-1</InitValue>
     </Tool>
     <Tool type="NumericVariable">
-      <Name>correctTrialNum</Name>
+      <Name>framesSoFar</Name>
       <InitValue>0</InitValue>
     </Tool>
-  </Period>
-  <Period>
-    <Name>TestPeriod</Name>
-    <StartBufferMs>1000</StartBufferMs>
-    <EndBufferMs>1000</EndBufferMs>
-    <Script>
-      wasCorrect = false;
-      for(i=0;i&lt;correct.length;i++)
-      {
-      if(correct[i].time.value>Number(startTime))
-      wasCorrect = true;
-      }
-
-      str1=&quot;&quot;;
-      str2=&quot;&quot;;
-      str3=&quot;&quot;;
-      str4=&quot;&quot;;
-      for(i=0;i&lt;spike.length;i++)
-      {
-      str1+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
-      +&quot;,&quot;+spike[i].data.channel
-      +&quot;,&quot;+spike[i].data.unit
-      +&quot;,&quot;+"-1000"
-      +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))+&quot;\n&quot;
-      );
-      wave = &quot;&quot;;
-      for(j=0;j&lt;spike[i].data.waveSize;j++)
-      {
-      wave += (1000*Number(spike[i].data.waveValue[j])).toFixed(6);
-      if(j&lt;spike[i].data.waveSize-1)
-      wave += &quot;,&quot;;
-      }
-      str2+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+spike[i].data.channel
-      +&quot;,&quot;+spike[i].data.unit
-      +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
-      +&quot;,&quot;+Math.round(1000000000*spike[i].data.samplePeriod)/1000000
-      +&quot;,&quot;+spike[i].data.waveSize
-      +&quot;,&quot;+wave+&quot;\n&quot;
-      );
-
-      if(wasCorrect)
-      {
-      str3+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
-      +&quot;,&quot;+spike[i].data.channel
-      +&quot;,&quot;+spike[i].data.unit
-      +&quot;,&quot;+"-1000"
-      +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))+&quot;\n&quot;
-      );
-      str4+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+spike[i].data.channel
-      +&quot;,&quot;+spike[i].data.unit
-      +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
-      +&quot;,&quot;+Math.round(1000000000*spike[i].data.samplePeriod)/1000000
-      +&quot;,&quot;+spike[i].data.waveSize
-      +&quot;,&quot;+wave+&quot;\n&quot;
-      );
-      }
-      }
-      spikeFile.writeText(str1);
-      waveFile.writeText(str2);
-      spikeFileCorrect.writeText(str3);
-      waveFileCorrect.writeText(str4);
-      str1=&quot;&quot;;
-      str2=&quot;&quot;;
-      for(i=0;i&lt;lfp.length;i++)
-      {
-      str1+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+lfp[i].data.channel
-      +&quot;,&quot;+Math.round(1000*(lfp[i].time.value-Number(startTime)))
-      +&quot;,&quot;+lfp[i].data.value+&quot;\n&quot;
-      );
-      if(wasCorrect)
-      {
-      str2+=(&quot;&quot;+(Number(periodNumber)+1)
-      +&quot;,&quot;+correctTrialNum.value
-      +&quot;,&quot;+lfp[i].data.channel
-      +&quot;,&quot;+Math.round(1000*(lfp[i].time.value-Number(startTime)))
-      +&quot;,&quot;+lfp[i].data.value+&quot;\n&quot;
-      );
-      }
-      }
-      lfpFile.writeText(str1);
-      lfpFileCorrect.writeText(str2);
-      if(wasCorrect)
-      correctTrialNum.value++;
-
-    </Script>
-    <StartTrigger type="Element">
-      <Name>start</Name>
-      <When>Starts</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
-    </StartTrigger>
-    <EndTrigger type="Element">
-      <Name>end</Name>
-      <When>Ends</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::ReshuffleTrialType</ElementPath>
-    </EndTrigger>
-    <EndTrigger type="Element">
-      <Name>end</Name>
-      <When>Ends</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
-    </EndTrigger>
-    <Trigger type="Spike">
-      <Name>spike</Name>
-      <DataSource type="Spike">
-        <Name>data</Name>
-        <ScaleFactor>1000</ScaleFactor>
-        <DecimalPlaces>6</DecimalPlaces>
-      </DataSource>
-      <DataSource type="Time">
-        <Name>time</Name>
-      </DataSource>
-    </Trigger>
-    <Trigger type="Element">
-      <Name>correct</Name>
-      <When>Starts</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
-      <DataSource type="Time">
-        <Name>time</Name>
-      </DataSource>
-    </Trigger>
-    <Trigger type="Element">
-      <Name>beginTrial</Name>
-      <When>Starts</When>
-      <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
-      <DataSource type="Property">
-        <Name>trialInSeq</Name>
-        <PropertyPath>ProbabilityTracking::Top::Superblock::Block::TrialsSoFar::Value</PropertyPath>
-      </DataSource>
-    </Trigger>
-    <Trigger type="LFP">
-      <Name>lfp</Name>
-      <DataSource type="LFP">
-        <Name>data</Name>
-      </DataSource>
-      <DataSource type="Time">
-        <Name>time</Name>
-      </DataSource>
-    </Trigger>
     <Tool type="File">
-      <Name>spikeFile</Name>
-      <FileName>.spikes.all.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>waveFile</Name>
-      <FileName>.wave.all.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>lfpFile</Name>
-      <FileName>.lfp.all.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>spikeFileCorrect</Name>
-      <FileName>.spikes.correct.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>waveFileCorrect</Name>
-      <FileName>.wave.correct.txt</FileName>
-    </Tool>
-    <Tool type="File">
-      <Name>lfpFileCorrect</Name>
-      <FileName>.lfp.correct.txt</FileName>
-    </Tool>
-    <Tool type="NumericVariable">
-      <Name>correctTrialNum</Name>
-      <InitValue>0</InitValue>
+      <Name>outFile</Name>
+      <FileName>.skips.csv</FileName>
     </Tool>
   </Period>
 </AnalysisDefinition>

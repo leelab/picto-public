@@ -8,18 +8,13 @@
 using namespace Picto;
 
 SignalDataIterator::SignalDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString signalName)
+: AnalysisDataIterator(qsEngine,session)
 {
-	qsEngine_ = qsEngine;
-	session_ = session;
-	Q_ASSERT(session_.isValid() && session.isOpen());
-	lastSessionDataId_ = 0;
 	getSubChanInfo(signalName);
-	totalQueries_ = 0;
 	readValues_ = 0;
 	readQueries_ = 0;
 	numSubChans_ = 0;
 
-	updateTotalQueryCount();
 	getSubChanInfo(signalName);
 }
 
@@ -28,28 +23,10 @@ SignalDataIterator::~SignalDataIterator()
 
 }
 
-QSharedPointer<SignalData> SignalDataIterator::getNextSignalVals()
-{
-	if(signalVals_.size())
-		return signalVals_.takeFirst();
-	//Maybe the session wasn't over last time.  Try getting new data.
-	updateSignalValsList();
-	if(signalVals_.size())
-		return signalVals_.takeFirst();
-	//No new data, return an empty propData()
-	return QSharedPointer<SignalData>(new SignalData(qsEngine_));
-}
-
-void SignalDataIterator::updateSignalValsList()
+bool SignalDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
 {
 	if(!isValid())
-		return;
-	if(readQueries_ >= totalQueries_)
-		return;
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-
+		return false;
 	//Get signal value list.
 	//NOTE: In the case of all values in the picto session that reference a frameid EXCEPT for signalchannels,
 	//The frame reference is the frame on which the value took effect (ie. Visible=true may have been set in 
@@ -63,77 +40,51 @@ void SignalDataIterator::updateSignalValsList()
 	QString queryString = QString("SELECT s.dataid,f.time,s.offsettime,s.data "
 							"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
 							"s.dataid > :lastdataid ORDER BY s.dataid LIMIT 10000").arg(tableName_);
-	query.prepare(queryString);
-	query.bindValue(":lastdataid",lastSessionDataId_);
-	bool success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
-		return;
-	}
-
-	qulonglong lastDataId = lastSessionDataId_;
-	while(query.next()){
-		//Convert data from blob to float array.  Get the relevant subchannel
-		//and calculate its time.
-		QByteArray dataByteArray = query.value(3).toByteArray();
-		int numEntries = dataByteArray.size()/sizeof(float);
-		float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
-		for(int i=0;i<numEntries;i+=numSubChans_)
-		{
-			//Don't enter the data id.  Since the individual readings don't have data ids, but
-			//do have different times, we want to use time as the index to be sure that it will
-			//be possible to use eye readings as a trigger.
-			//(ie. If we copied the dataid into the SignalData structs of each of a single row's
-			//sub entries and we then used the signal as a trigger and a data source, we would 
-			//end up missing signal points in the final readout.)
-			signalVals_.append(QSharedPointer<SignalData>( new SignalData(qsEngine_,
-					0,
-					query.value(1).toDouble()+query.value(2).toDouble()+((i/numSubChans_)*samplePeriod_),
-					numSubChans_)));
-			for(int j=0;j<numSubChans_;j++)
-			{
-				float newVal = floatArray[i+j];
-				signalVals_.last()->setSignalVal(j,floatArray[i+j]);
-			}
-
-			if(query.value(0).toLongLong() > lastDataId)
-				lastDataId = query.value(0).toLongLong();
-			readValues_++;
-		}
-		readQueries_++;
-	}
-	if(readQueries_ > totalQueries_)
-		updateTotalQueryCount();
-	
-	lastSessionDataId_ = lastDataId;
+	query->prepare(queryString);
+	query->bindValue(":lastdataid",lastDataId);
+	return true;
 }
 
-void SignalDataIterator::updateTotalQueryCount()
+void SignalDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-
 	QString queryString = QString("SELECT COUNT(dataid) FROM %1").arg(tableName_);
-	query.prepare(queryString);
-	bool success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
-		return;
-	}
+	query->prepare(queryString);
+}
 
-	if(query.next())
-		totalQueries_ = query.value(0).toInt();
+qulonglong SignalDataIterator::readOutRecordData(QSqlRecord* record)
+{
+	//Convert data from blob to float array.  Get the relevant subchannel
+	//and calculate its time.
+	QByteArray dataByteArray = record->value(3).toByteArray();
+	int numEntries = dataByteArray.size()/sizeof(float);
+	float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
+	for(int i=0;i<numEntries;i+=numSubChans_)
+	{
+		//Don't enter the data id.  Since the individual readings don't have data ids, but
+		//do have different times, we want to use time as the index to be sure that it will
+		//be possible to use eye readings as a trigger.
+		//(ie. If we copied the dataid into the SignalData structs of each of a single row's
+		//sub entries and we then used the signal as a trigger and a data source, we would 
+		//end up missing signal points in the final readout.)
+		QSharedPointer<AnalysisValue> val = createNextAnalysisValue(EventOrderIndex(record->value(1).toDouble()+record->value(2).toDouble()+((i/numSubChans_)*samplePeriod_)));
+		val->index.idSource_ = EventOrderIndex::BEHAVIORAL;
+		QScriptValue dimensionArray = createScriptArray(numSubChans_);
+		for(int j=0;j<numSubChans_;j++)
+		{
+			dimensionArray.setProperty(j,floatArray[i+j]);
+		}
+		val->scriptVal.setProperty("value",dimensionArray);
+		val->scriptVal.setProperty("time",val->index.time_);
+		readValues_++;
+	}
+	readQueries_++;
+	return record->value(0).toLongLong();
 }
 
 void SignalDataIterator::getSubChanInfo(QString signalName)
 {
 	numSubChans_ = -1;
-	if(!session_.isOpen())
-		return;
-	QSqlQuery query(session_);
+	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 	query.prepare("SELECT value FROM sessioninfo WHERE key='Signal'");
 	bool success = query.exec();

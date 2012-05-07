@@ -36,7 +36,7 @@ QSharedPointer<AnalysisValue> SignalDataSource::getValue(const EventOrderIndex& 
 			subChanNames.setProperty(i,signalIterator_->subChanName(i));
 		setScriptInfo("subChannelName",subChanNames);
 	}
-	QSharedPointer<SignalData> prev = nextValue_;
+	QSharedPointer<AnalysisValue> prev = nextValue_;
 	//Check if the last value we read last time is beyond the input time.
 	//If so, nothing has changed, return the last value.
 	if(prev && (prev->index > index))
@@ -44,11 +44,11 @@ QSharedPointer<AnalysisValue> SignalDataSource::getValue(const EventOrderIndex& 
 	
 	//Get new property values until the newest one is beyond the input
 	//time or non-existant, then return the prior property value.
-	QSharedPointer<SignalData> curr = signalIterator_->getNextSignalVals();
+	QSharedPointer<AnalysisValue> curr = signalIterator_->getNextValue();
 	while(curr && (curr->index <= index) && (curr->index.isValid()))
 	{
 		prev = curr;
-		curr = signalIterator_->getNextSignalVals();
+		curr = signalIterator_->getNextValue();
 	}
 	if(!curr || !curr->index.isValid())
 	{

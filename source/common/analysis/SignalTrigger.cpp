@@ -26,7 +26,7 @@ EventOrderIndex SignalTrigger::getNextTriggerTime()
 								propertyContainer_->getPropertyValue("SignalName").toString())
 							);
 	}
-	return signalIterator_->getNextSignalVals()->index;
+	return signalIterator_->getNextValue()->index;
 }
 
 void SignalTrigger::restart()
@@ -34,14 +34,10 @@ void SignalTrigger::restart()
 	signalIterator_.clear();
 }
 
-unsigned int SignalTrigger::totalKnownTriggers()
+float SignalTrigger::fractionTriggersRemaining()
 {
-	return signalIterator_->totalValues();
-}
-
-unsigned int SignalTrigger::remainingKnownTriggers()
-{
-	return signalIterator_->remainingValues();
+	if(!signalIterator_) return 1.0;
+	return signalIterator_->fractionRemaining();
 }
 
 void SignalTrigger::recheckSessionData()

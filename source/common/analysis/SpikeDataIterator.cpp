@@ -9,17 +9,9 @@
 using namespace Picto;
 
 SpikeDataIterator::SpikeDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
+: AnalysisDataIterator(qsEngine,session)
 {
-	qsEngine_ = qsEngine;
-	session_ = session;
-	Q_ASSERT(session_.isValid() && session.isOpen());
-	lastSessionDataId_ = 0;
-	totalQueries_ = 0;
-	readQueries_ = 0;
-	sessionEnded_ = false;
-
 	getSamplePeriod();
-	updateTotalQueryCount();
 }
 
 SpikeDataIterator::~SpikeDataIterator()
@@ -27,89 +19,75 @@ SpikeDataIterator::~SpikeDataIterator()
 
 }
 
-QSharedPointer<SpikeData> SpikeDataIterator::getNextSpikeVals()
+void SpikeDataIterator::updateVariableSessionConstants()
 {
-	if(spikeVals_.size())
-		return spikeVals_.takeFirst();
-	//Maybe the session wasn't over last time.  Try getting new data.
-	updateSpikeValsList();
-	if(spikeVals_.size())
-		return spikeVals_.takeFirst();
-	//No new data, return an empty SpikeData()
-	return QSharedPointer<SpikeData>( new SpikeData(qsEngine_));
-}
-
-void SpikeDataIterator::updateSpikeValsList()
-{
-	if(!isValid())
-		return;
-	if(readQueries_ >= totalQueries_)
-		return;
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
+	offsetTime_ = 0;
+	temporalFactor_ = 0;
+	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
-	if(!sessionEnded_)
-	{
-		//Get latest align coefficients
-		getAlignCoefficients();
-
-		//Check if session has ended
-		query.prepare("SELECT key "
-			"FROM sessioninfo WHERE key='sessionend'");
-		bool success = query.exec();
-		if(!success)
-		{
-			qDebug("Query Failed: " + query.lastError().text().toAscii());
-			return;
-		}
-		sessionEnded_ = query.next();
-	}
-
-	//Get spike value list.
-	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
-		"FROM spikes WHERE dataid > :lastDataId ORDER BY dataid LIMIT 10000");
+	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
 	query.prepare(queryString);
-	query.bindValue(":lastdataid",lastSessionDataId_);
 	bool success = query.exec();
 	if(!success)
 	{
 		qDebug("Query Failed: " + query.lastError().text().toAscii());
 		return;
 	}
-
-	while(query.next()){
-		//Build waveform
-		QByteArray dataByteArray = query.value(4).toByteArray();
-		int numEntries = dataByteArray.size()/sizeof(float);
-		float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
-		QString wave;
-		for(int i=0;i<numEntries;i++)
-		{
-			wave.append(QString::number(floatArray[i])+",");
-		}
-		if(numEntries)
-			wave.resize(wave.size()-1);//Get rid of last comma
-
-		//Add data to list
-		spikeVals_.append(QSharedPointer<SpikeData>(new SpikeData(qsEngine_,query.value(0).toLongLong()
-							,offsetTime_ + temporalFactor_*query.value(1).toDouble()
-							,query.value(2).toInt()
-							,query.value(3).toInt(),
-							temporalFactor_*samplePeriod_,numEntries,wave)) );
-		if(query.value(0).toLongLong() > lastSessionDataId_)
-			lastSessionDataId_ = query.value(0).toLongLong();
-		readQueries_++;
+	if(query.next())
+	{
+		AlignmentInfo inf;
+		inf.fromXml(query.value(0).toString());
+		offsetTime_ = inf.getOffsetTime();
+		temporalFactor_ = inf.getTemporalFactor();
 	}
-	if(readQueries_ > totalQueries_)
-		updateTotalQueryCount();
+}
+
+bool SpikeDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+{
+	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
+		"FROM spikes WHERE dataid > :lastDataId ORDER BY dataid LIMIT 10000");
+	query->prepare(queryString);
+	query->bindValue(":lastdataid",lastDataId);
+	return true;
+}
+
+void SpikeDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
+{
+	query->prepare("SELECT COUNT(dataid) FROM spikes");
+}
+
+qulonglong SpikeDataIterator::readOutRecordData(QSqlRecord* record)
+{
+	//Build waveform
+	QByteArray dataByteArray = record->value(4).toByteArray();
+	int numEntries = dataByteArray.size()/sizeof(float);
+	float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
+	QStringList wave;
+	for(int i=0;i<numEntries;i++)
+	{
+		wave.append(QString::number(floatArray[i]));
+	}
+
+	QSharedPointer<AnalysisValue> val = createNextAnalysisValue(EventOrderIndex(offsetTime_ + temporalFactor_*record->value(1).toDouble(),record->value(0).toLongLong(),EventOrderIndex::NEURAL));
+	val->scriptVal.setProperty("channel",record->value(2).toInt());
+	val->scriptVal.setProperty("unit",record->value(3).toInt());
+	val->scriptVal.setProperty("samplePeriod",temporalFactor_*samplePeriod_);
+	val->scriptVal.setProperty("waveSize",numEntries);
+	val->scriptVal.setProperty("wave",wave.join(","));
+	QScriptValue waveScriptArray = createScriptArray(numEntries);
+	for(int i=0;i<numEntries;i++)
+	{
+		waveScriptArray.setProperty(i,wave[i]);
+	}
+	val->scriptVal.setProperty("waveValue",waveScriptArray);
+	return record->value(0).toLongLong();
 }
 
 void SpikeDataIterator::getSamplePeriod()
 {
 	samplePeriod_ = 0;
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
+	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
 	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"DataSource\"");
@@ -130,58 +108,4 @@ void SpikeDataIterator::getSamplePeriod()
 			break;
 		}
 	}
-}
-
-void SpikeDataIterator::getAlignCoefficients()
-{
-	offsetTime_ = 0;
-	temporalFactor_ = 0;
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-
-	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
-	query.prepare(queryString);
-	bool success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
-		return;
-	}
-	if(query.next())
-	{
-		AlignmentInfo inf;
-		inf.fromXml(query.value(0).toString());
-		offsetTime_ = inf.getOffsetTime();
-		temporalFactor_ = inf.getTemporalFactor();
-	}
-}
-
-void SpikeDataIterator::updateTotalQueryCount()
-{
-	Q_ASSERT(session_.isValid() && session_.isOpen());
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-
-	QString queryString = QString("SELECT COUNT(dataid) FROM spikes");
-	query.prepare(queryString);
-	bool success = query.exec();
-	if(!success)
-	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
-		return;
-	}
-
-	if(query.next())
-		totalQueries_ = query.value(0).toInt();
-}
-
-QString SpikeData::scaleWave(double scaleFactor, unsigned int decimalPlaces)
-{
-	QStringList vals = wave.split(",",QString::SkipEmptyParts);
-	for(int i=0;i<vals.size();i++)
-	{
-		vals[i] = QString::number(vals[i].toDouble()*scaleFactor,'f',decimalPlaces);
-	}
-	return vals.join(",");
 }

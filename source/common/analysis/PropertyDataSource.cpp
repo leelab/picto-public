@@ -31,18 +31,18 @@ QSharedPointer<AnalysisValue> PropertyDataSource::getValue(const EventOrderIndex
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
 	}
-	QSharedPointer<PropData> prev = lastDataUnit_;
+	QSharedPointer<AnalysisValue> prev = lastDataUnit_;
 	//Check if the last value we read last time is beyond the input time.
 	//If so, nothing has changed, return the last value.
 	if(prev && (prev->index > index))
 		return latestValue_;
 	//Get new property values until the newest one is beyond the input
 	//time or non-existant, then return the prior property value.
-	QSharedPointer<PropData> curr = propIterator_->getNextPropertyChange();
+	QSharedPointer<AnalysisValue> curr = propIterator_->getNextValue();
 	while(curr && (curr->index <= index) && (curr->index.isValid()))
 	{
 		prev = curr;
-		curr = propIterator_->getNextPropertyChange();
+		curr = propIterator_->getNextValue();
 	}
 	if(!curr || !curr->index.isValid())
 	{
