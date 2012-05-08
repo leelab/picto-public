@@ -5,6 +5,7 @@
 namespace Picto {
 	class TransitionDataIterator : public AnalysisDataIterator
 {
+	Q_OBJECT
 public:
 	TransitionDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~TransitionDataIterator();
@@ -12,6 +13,7 @@ public:
 	void registerTransitionsByNode(QString nodePath,bool isSource);
 	void registerTransitionsByResult(QString resultPath);
 	void registerTransitionsBySource(QString sourcePath);
+	virtual QString propertyDescriptor();
 
 protected:
 	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);

@@ -5,10 +5,11 @@
 namespace Picto {
 class PropertyDataIterator : public AnalysisDataIterator
 {
+	Q_OBJECT
 public:
 	PropertyDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString propertyPath);
 	virtual ~PropertyDataIterator();
-	//bool isValid(){return propertyId_ > 0;};
+	virtual QString propertyDescriptor();
 
 protected:
 	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);

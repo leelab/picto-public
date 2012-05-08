@@ -20,24 +20,12 @@ public:
 	virtual ~FrameDataSource();
 	static QSharedPointer<Asset> Create();
 
-	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::BEHAVIORAL;};
-	//AnalysisDataSource specific functions
-	virtual void restart();
-
-	//Return the frame's AnalysisValue at the input time.
-	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
-
 protected:
 
 	//Inherited
-	virtual void recheckSessionData();
+	virtual QSharedPointer<AnalysisDataIterator> createDataIterator();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:
-	QSharedPointer<FrameDataIterator> frameIterator_;
-	QSharedPointer<AnalysisValue> lastDataUnit_;
-	QSharedPointer<AnalysisValue> latestValue_;
 };
 }; //namespace Picto
 #endif

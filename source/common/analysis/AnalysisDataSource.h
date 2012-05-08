@@ -6,6 +6,7 @@
 #include <QScriptEngine>
 #include <QSqlDatabase>
 #include <QLinkedList>
+#include "AnalysisDataIterator.h"
 #include "EventOrderIndex.h"
 #include "../statemachine/UIEnabled.h"
 #include "AnalysisValue.h"
@@ -22,23 +23,22 @@ public:
 	AnalysisDataSource();
 	virtual ~AnalysisDataSource();
 
-	void loadSession(QSqlDatabase session){session_ = session;};
+	void loadSession(QSqlDatabase session);
 
 	//AnalysisDataSource specific functions
-	//Should be implemented by child classes to reset to an initial state.
+	//Resets to an initial state.
 	//In particular, getValue(time) will always have an increasing input
 	//time until reset is called.
-	virtual void restart() = 0;
+	void reset();
 	void sessionDatabaseUpdated();
 
 	void storeValue(QScriptValue triggerScript,const EventOrderIndex& index);
 	void setScriptObjects(QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent);
 
-	//Should be extended by child classes to return their value at the input time.  The input
-	//value to this function will always increase until restart is called.  This means that 
-	//child classes can store previous values and iterate forward to get the value at a new 
-	//time rather than always restarting their search at zero.
-	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index) = 0;
+	//Returns the Data Source value at the input time.  The input
+	//value to this function is assumed to always increase until reset is called.
+	QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
+	QString getIteratorDescriptor();
 
 	//Inherited
 	virtual QString getUITemplate(){return "DataSource";};
@@ -46,8 +46,11 @@ public:
 
 protected:
 
+	virtual QSharedPointer<AnalysisDataIterator> createDataIterator(){return QSharedPointer<AnalysisDataIterator>();};
+	virtual void fillOutScriptValue(QSharedPointer<AnalysisValue> val);
+	QScriptValue createScriptArray(unsigned int length=0);
 	void setScriptInfo(QString name,QScriptValue value);
-	virtual void recheckSessionData() = 0;
+	void recheckSessionData();
 	//Inherited
 	virtual QString defaultTagName(){return "AnalysisDataSource";};
 	virtual void postDeserialize();
@@ -57,6 +60,10 @@ protected:
 	QScriptValue parentScript_;
 
 private:
+	QSharedPointer<AnalysisDataIterator> dataIterator_;
+	bool parentUsesSameIterator_;
+	QSharedPointer<AnalysisValue> nextValue_;
+	QSharedPointer<AnalysisValue> latestValue_;
 
 };
 

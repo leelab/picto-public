@@ -15,18 +15,9 @@ QSharedPointer<Asset> TimeDataSource::Create()
 	return QSharedPointer<Asset>(new TimeDataSource());
 }
 
-void TimeDataSource::restart()
+void TimeDataSource::fillOutScriptValue(QSharedPointer<AnalysisValue> val)
 {
-}
-
-QSharedPointer<AnalysisValue> TimeDataSource::getValue(const EventOrderIndex& index)
-{
-	return QSharedPointer<TimeData>(new TimeData(qsEngine_,index.time_));
-}
-
-void TimeDataSource::recheckSessionData()
-{
-	return;
+	val->scriptVal.setProperty("value",val->index.time_);
 }
 
 void TimeDataSource::postDeserialize()

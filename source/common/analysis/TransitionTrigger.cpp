@@ -17,34 +17,12 @@ QSharedPointer<Asset> TransitionTrigger::Create()
 	return QSharedPointer<Asset>(new TransitionTrigger());
 }
 
-EventOrderIndex TransitionTrigger::getNextTriggerTime()
+QSharedPointer<AnalysisDataIterator> TransitionTrigger::createDataIterator()
 {
-	if(!propIterator_)
-	{
-		propIterator_ = QSharedPointer<PropertyDataIterator>(
+	return QSharedPointer<PropertyDataIterator>(
 							new PropertyDataIterator(qsEngine_,session_,
 								propertyContainer_->getPropertyValue("PropertyPath").toString())
 							);
-	}
-	return propIterator_->getNextValue()->index;
-}
-
-void TransitionTrigger::restart()
-{
-	propIterator_.clear();
-}
-
-float TransitionTrigger::fractionTriggersRemaining()
-{
-	if(!propIterator_) return 1.0;
-	return propIterator_->fractionRemaining();
-}
-
-void TransitionTrigger::recheckSessionData()
-{
-	if(!propIterator_)
-		return;
-	propIterator_->recheckSessionData();
 }
 
 void TransitionTrigger::postDeserialize()

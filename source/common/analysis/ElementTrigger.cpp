@@ -20,36 +20,15 @@ QSharedPointer<Asset> ElementTrigger::Create()
 	return QSharedPointer<Asset>(new ElementTrigger());
 }
 
-EventOrderIndex ElementTrigger::getNextTriggerTime()
+QSharedPointer<AnalysisDataIterator> ElementTrigger::createDataIterator()
 {
-	if(!transIterator_)
-	{
-		transIterator_ = QSharedPointer<TransitionDataIterator>(
+	QSharedPointer<TransitionDataIterator> returnVal = QSharedPointer<TransitionDataIterator>(
 							new TransitionDataIterator(qsEngine_,session_));
-		transIterator_->registerTransitionsByNode(
-						propertyContainer_->getPropertyValue("ElementPath").toString(),
-						boundaryList_.value(propertyContainer_->getPropertyValue("When").toInt(),"") == "Ends"
-						);
-	}
-	return transIterator_->getNextValue()->index;
-}
-
-void ElementTrigger::restart()
-{
-	transIterator_.clear();
-}
-
-float ElementTrigger::fractionTriggersRemaining()
-{
-	if(!transIterator_) return 1.0;
-	return transIterator_->fractionRemaining();
-}
-
-void ElementTrigger::recheckSessionData()
-{
-	if(!transIterator_)
-		return;
-	transIterator_->recheckSessionData();
+	returnVal->registerTransitionsByNode(
+				propertyContainer_->getPropertyValue("ElementPath").toString(),
+				boundaryList_.value(propertyContainer_->getPropertyValue("When").toInt(),"") == "Ends"
+				);
+	return returnVal;
 }
 
 void ElementTrigger::postDeserialize()

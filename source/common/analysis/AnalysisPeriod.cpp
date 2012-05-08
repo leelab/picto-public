@@ -356,22 +356,6 @@ unsigned int AnalysisPeriod::getPercentRemaining()
 		return 100*avgFractionRemaining;
 }
 
-//bool AnalysisPeriod::saveOutputToDirectory(QString directory, QString filename)
-//{
-//	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-//	QSharedPointer<AnalysisOutput> outputObj;
-//	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
-//	{
-//		if(toolAsset->inherits("Picto::AnalysisOutput"))
-//		{
-//			outputObj = toolAsset.staticCast<AnalysisOutput>();
-//			if(!outputObj->saveOutputData(directory,filename))
-//				return false;
-//		}
-//	}
-//	return true;
-//}
-
 void AnalysisPeriod::postDeserialize()
 {
 	UIEnabled::postDeserialize();

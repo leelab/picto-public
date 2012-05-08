@@ -17,34 +17,12 @@ QSharedPointer<Asset> SignalTrigger::Create()
 	return QSharedPointer<Asset>(new SignalTrigger());
 }
 
-EventOrderIndex SignalTrigger::getNextTriggerTime()
+QSharedPointer<AnalysisDataIterator> SignalTrigger::createDataIterator()
 {
-	if(!signalIterator_)
-	{
-		signalIterator_ = QSharedPointer<SignalDataIterator>(
+	return QSharedPointer<SignalDataIterator>(
 							new SignalDataIterator(qsEngine_,session_,
 								propertyContainer_->getPropertyValue("SignalName").toString())
 							);
-	}
-	return signalIterator_->getNextValue()->index;
-}
-
-void SignalTrigger::restart()
-{
-	signalIterator_.clear();
-}
-
-float SignalTrigger::fractionTriggersRemaining()
-{
-	if(!signalIterator_) return 1.0;
-	return signalIterator_->fractionRemaining();
-}
-
-void SignalTrigger::recheckSessionData()
-{
-	if(!signalIterator_)
-		return;
-	signalIterator_->recheckSessionData();
 }
 
 void SignalTrigger::postDeserialize()

@@ -26,15 +26,10 @@ public:
 	virtual ~DefaultDataSource();
 	static QSharedPointer<Asset> Create();
 
-	virtual void restart();
-
-	//Returns the time of the input index.
-	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
-
 protected:
 
 	//Inherited
-	virtual void recheckSessionData();
+	virtual void fillOutScriptValue(QSharedPointer<AnalysisValue> val);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };

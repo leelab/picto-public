@@ -18,20 +18,11 @@ QSharedPointer<Asset> SpikeDataSource::Create()
 	return QSharedPointer<Asset>(new SpikeDataSource());
 }
 
-void SpikeDataSource::restart()
+QSharedPointer<AnalysisDataIterator> SpikeDataSource::createDataIterator()
 {
-}
-
-//Note: This data source is only useful if the trigger is a spikeTrigger.  If it isn't
-//there will be an error.
-QSharedPointer<AnalysisValue> SpikeDataSource::getValue(const EventOrderIndex& index)
-{
-	return getParentAsset().staticCast<SpikeTrigger>()->getLatestValue();
-}
-
-void SpikeDataSource::recheckSessionData()
-{
-		return;
+	return QSharedPointer<SpikeDataIterator>(
+							new SpikeDataIterator(qsEngine_,session_)
+							);
 }
 
 void SpikeDataSource::postDeserialize()

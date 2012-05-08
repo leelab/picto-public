@@ -20,23 +20,12 @@ public:
 	virtual ~ElementDataSource();
 	static QSharedPointer<Asset> Create();
 
-	//AnalysisDataSource specific functions
-	virtual void restart();
-
-	//Return the value of this object's property at the input time.
-	virtual QSharedPointer<AnalysisValue> getValue(const EventOrderIndex& index);
-
 protected:
 
 	//Inherited
-	virtual void recheckSessionData();
+	virtual QSharedPointer<AnalysisDataIterator> createDataIterator();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:
-	QSharedPointer<ElementDataIterator> elemIterator_;
-	QSharedPointer<AnalysisValue> lastDataUnit_;
-	QSharedPointer<AnalysisValue> latestValue_;
 };
 }; //namespace Picto
 #endif

@@ -5,12 +5,14 @@
 #include <QLinkedList>
 #include <QSqlDatabase>
 #include <QSqlRecord>
+#include <QObject>
 #include "EventOrderIndex.h"
 #include "AnalysisValue.h"
 
 namespace Picto {
-class AnalysisDataIterator
+	class AnalysisDataIterator : public QObject
 {
+	Q_OBJECT
 public:
 	AnalysisDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~AnalysisDataIterator();
@@ -21,6 +23,7 @@ public:
 	QSharedPointer<AnalysisValue> getNextValue();
 	float fractionRemaining();
 	void recheckSessionData(){updateTotalQueryCount();updateVariableSessionConstants();};
+	virtual QString propertyDescriptor(){return "";};
 
 protected:
 	virtual void updateVariableSessionConstants(){};

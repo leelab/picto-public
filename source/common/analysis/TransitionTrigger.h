@@ -20,28 +20,14 @@ public:
 	virtual ~TransitionTrigger();
 	static QSharedPointer<Asset> Create();
 
-		virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::BEHAVIORAL;};
-	//After this function is called, the first trigger in the session should 
-	//be returned from getNextTriggerTime()
-	virtual void restart();
-
-	//Returns the fraction of triggers that still need to
-	//be processed for this session (that this object knows about).
-	virtual float fractionTriggersRemaining();
+	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::BEHAVIORAL;};
 
 protected:
 
 	//Inherited
-	//Gets the next trigger time following the last one returned.  
-	//After restart() is called, it returns the first trigger time in the session.  
-	//If there are no more triggers available it returns a negative value.
-	virtual EventOrderIndex getNextTriggerTime();
-	virtual void recheckSessionData();
+	virtual QSharedPointer<AnalysisDataIterator> createDataIterator();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:
-	QSharedPointer<PropertyDataIterator> propIterator_;
 };
 }; //namespace Picto
 #endif

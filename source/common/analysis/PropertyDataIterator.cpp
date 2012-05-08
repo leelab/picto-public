@@ -16,6 +16,11 @@ PropertyDataIterator::~PropertyDataIterator()
 
 }
 
+QString PropertyDataIterator::propertyDescriptor()
+{
+	return "PropId:"+QString::number(propertyId_);
+}
+
 bool PropertyDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
 {
 	if(propertyId_ <= 0)

@@ -23,6 +23,11 @@ SignalDataIterator::~SignalDataIterator()
 
 }
 
+QString SignalDataIterator::propertyDescriptor()
+{
+	return "SigTable:"+tableName_;
+}
+
 bool SignalDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
 {
 	if(!isValid())
@@ -47,8 +52,10 @@ bool SignalDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
 
 void SignalDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	QString queryString = QString("SELECT COUNT(dataid) FROM %1").arg(tableName_);
-	query->prepare(queryString);
+	if(tableName_.isEmpty())
+		query->prepare(QString("SELECT 0"));
+	else
+		query->prepare(QString("SELECT COUNT(dataid) FROM %1").arg(tableName_));
 }
 
 qulonglong SignalDataIterator::readOutRecordData(QSqlRecord* record)
@@ -88,7 +95,12 @@ void SignalDataIterator::getSubChanInfo(QString signalName)
 	query.setForwardOnly(true);
 	query.prepare("SELECT value FROM sessioninfo WHERE key='Signal'");
 	bool success = query.exec();
-	if(!success || !query.next())
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return;
+	}
+	if(!query.next())
 	{
 		return;
 	}

@@ -5,6 +5,7 @@
 namespace Picto {
 class FrameDataIterator : public AnalysisDataIterator
 {
+	Q_OBJECT
 public:
 	FrameDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~FrameDataIterator();

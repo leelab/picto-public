@@ -6,6 +6,7 @@
 namespace Picto {
 	class LFPDataIterator : public AnalysisDataIterator
 {
+	Q_OBJECT
 public:
 	LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~LFPDataIterator();

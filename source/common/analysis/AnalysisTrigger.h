@@ -8,6 +8,7 @@
 #include <QSqlDatabase>
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
+#include "AnalysisDataIterator.h"
 #include "AnalysisDataSource.h"
 
 namespace Picto {
@@ -54,14 +55,14 @@ public:
 	//getNextTrigger() call.
 	EventOrderIndex getCurrentTrigger();
 
-	//After this function is called, the first trigger in the session should 
-	//be returned from getNextTriggerTime()
-	virtual void restart() = 0;
 	void sessionDatabaseUpdated();
 
 	//Should be implemented to return the fraction of triggers that still need to
 	//be processed for this session (that this object knows about).
-	virtual float fractionTriggersRemaining() = 0;
+	float fractionTriggersRemaining();
+
+	QSharedPointer<AnalysisValue> getLatestValue();
+	QString getIteratorDescriptor();
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisTrigger";};
@@ -69,21 +70,19 @@ public:
 
 protected:
 
-	//Should be implemented by child classes to get the next trigger time
-	//following the last one returned.  After restart() is called, it will return
-	//the first trigger time in the session.  If there are no more triggers available
-	//it should return a negative value.
-	virtual EventOrderIndex getNextTriggerTime() = 0;
+	virtual QSharedPointer<AnalysisDataIterator> createDataIterator() = 0;
 
-	virtual void recheckSessionData() = 0;
+	void recheckSessionData();
 	//Inherited
 	virtual QString defaultTagName(){return "AnalysisTrigger";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 	QSqlDatabase session_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 
 private:
+	QSharedPointer<AnalysisValue> latestValue_;
 	EventOrderIndex currentTriggerIndex_;
 	EventOrderIndex periodStart_;
 	struct SourceDataUnit
@@ -100,6 +99,7 @@ private:
 	};
 	QLinkedList<TriggerData> periodData_;
 	QLinkedList<TriggerData>::iterator nextPeriodsDataLoc_;
+	QSharedPointer<AnalysisDataIterator> dataIterator_;
 	QScriptValue triggerArray_;
 };
 }; //namespace Picto

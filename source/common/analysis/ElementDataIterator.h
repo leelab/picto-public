@@ -5,6 +5,7 @@
 namespace Picto {
 class ElementDataIterator : public AnalysisDataIterator
 {
+	Q_OBJECT
 public:
 	ElementDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~ElementDataIterator();

@@ -5,12 +5,14 @@
 namespace Picto {
 class SignalDataIterator : public AnalysisDataIterator
 {
+	Q_OBJECT
 public:
 	SignalDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session,QString signalName);
 	virtual ~SignalDataIterator();
 
 	unsigned int numSubChannels(){return numSubChans_;};
 	QString subChanName(int subChanIndex){if(subChanNames_.size() < subChanIndex) return ""; return subChanNames_[subChanIndex];};
+	virtual QString propertyDescriptor();
 
 protected:
 	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);

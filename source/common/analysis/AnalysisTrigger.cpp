@@ -43,6 +43,7 @@ AnalysisTrigger::~AnalysisTrigger()
 void AnalysisTrigger::loadSession(QSqlDatabase session)
 {
 	session_ = session;
+	reset();
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
 	QSharedPointer<AnalysisDataSource> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
@@ -56,14 +57,18 @@ void AnalysisTrigger::reset()
 {
 	periodData_.clear();
 	nextPeriodsDataLoc_ = periodData_.end();
+	currentTriggerIndex_ = EventOrderIndex();
+	latestValue_.clear();
+	dataIterator_.clear();
+	if(session_.isValid())
+		dataIterator_ = createDataIterator();
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
 	QSharedPointer<AnalysisDataSource> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
 		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		dataSource->restart();
+		dataSource->reset();
 	}
-	currentTriggerIndex_ = EventOrderIndex();
 }
 
 void AnalysisTrigger::setPeriodStart(EventOrderIndex startIndex)
@@ -196,7 +201,8 @@ QString AnalysisTrigger::scriptInfo()
 
 EventOrderIndex AnalysisTrigger::getNextTrigger()
 {
-	currentTriggerIndex_ = getNextTriggerTime();
+	latestValue_ = dataIterator_->getNextValue();
+	currentTriggerIndex_ = latestValue_->index;
 	return currentTriggerIndex_;
 }
 
@@ -215,6 +221,31 @@ void AnalysisTrigger::sessionDatabaseUpdated()
 		dataSource->sessionDatabaseUpdated();
 	}
 	recheckSessionData();
+}
+
+float AnalysisTrigger::fractionTriggersRemaining()
+{
+	if(!dataIterator_) return 1.0;
+	return dataIterator_->fractionRemaining();
+}
+
+QSharedPointer<AnalysisValue> AnalysisTrigger::getLatestValue()
+{
+	return latestValue_;
+}
+
+QString AnalysisTrigger::getIteratorDescriptor()
+{
+	if(!dataIterator_)
+		return "";
+	return QString(dataIterator_->metaObject()->className())+"-Desc-"+dataIterator_->propertyDescriptor();
+}
+
+void AnalysisTrigger::recheckSessionData()
+{
+	if(!dataIterator_)
+		return;
+	dataIterator_->recheckSessionData();
 }
 
 void AnalysisTrigger::postDeserialize()

@@ -78,6 +78,11 @@ void TransitionDataIterator::registerTransitionsByResult(QString resultPath)
 	registerTransitions(parentPath,sourceName,resultName);
 }
 
+QString TransitionDataIterator::propertyDescriptor()
+{
+	return "TransIds:"+transIdString_;
+}
+
 bool TransitionDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
 {
 	Q_ASSERT(isValid());

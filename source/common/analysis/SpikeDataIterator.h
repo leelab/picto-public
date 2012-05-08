@@ -5,6 +5,7 @@
 namespace Picto {
 	class SpikeDataIterator : public AnalysisDataIterator
 {
+	Q_OBJECT
 public:
 	SpikeDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~SpikeDataIterator();

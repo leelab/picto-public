@@ -15,18 +15,8 @@ QSharedPointer<Asset> DefaultDataSource::Create()
 	return QSharedPointer<Asset>(new DefaultDataSource());
 }
 
-void DefaultDataSource::restart()
+void DefaultDataSource::fillOutScriptValue(QSharedPointer<AnalysisValue> val)
 {
-}
-
-QSharedPointer<AnalysisValue> DefaultDataSource::getValue(const EventOrderIndex& index)
-{
-	return QSharedPointer<AnalysisValue>(new AnalysisValue(qsEngine_));
-}
-
-void DefaultDataSource::recheckSessionData()
-{
-	return;
 }
 
 void DefaultDataSource::postDeserialize()

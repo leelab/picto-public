@@ -16,18 +16,11 @@ QSharedPointer<Asset> LFPDataSource::Create()
 	return QSharedPointer<Asset>(new LFPDataSource());
 }
 
-void LFPDataSource::restart()
+QSharedPointer<AnalysisDataIterator> LFPDataSource::createDataIterator()
 {
-}
-
-QSharedPointer<AnalysisValue> LFPDataSource::getValue(const EventOrderIndex& index)
-{
-	return getParentAsset().staticCast<LFPTrigger>()->getLatestValue();
-}
-
-void LFPDataSource::recheckSessionData()
-{
-	return;
+	return QSharedPointer<LFPDataIterator>(
+							new LFPDataIterator(qsEngine_,session_)
+							);
 }
 
 void LFPDataSource::postDeserialize()
