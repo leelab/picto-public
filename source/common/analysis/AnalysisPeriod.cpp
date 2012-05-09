@@ -178,6 +178,8 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 	foreach(QSharedPointer<Asset> triggerAsset,triggers)
 	{
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
+		if(periodNumber_ == 0)
+			trigger->setDataWindow(fromIndex,toIndex);
 		trigger->sessionDatabaseUpdated();
 	}
 		

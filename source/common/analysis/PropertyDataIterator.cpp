@@ -21,15 +21,29 @@ QString PropertyDataIterator::propertyDescriptor()
 	return "PropId:"+QString::number(propertyId_);
 }
 
-bool PropertyDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+bool PropertyDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
 	if(propertyId_ <= 0)
 		return false;
 	query->prepare("SELECT p.value, p.dataid, f.time FROM properties p, frames f "
 		"WHERE p.assetid=:assetid AND f.dataid=p.frameid AND p.dataid > :lastdataid "
-		"ORDER BY p.dataid LIMIT 10000");
+		"AND f.time <= :stoptime ORDER BY p.dataid LIMIT :maxrows");
 	query->bindValue(":assetid",propertyId_);
 	query->bindValue(":lastdataid",lastDataId);
+	query->bindValue(":stoptime",stopTime);
+	query->bindValue(":maxrows",maxRows);
+	return true;
+}
+
+bool PropertyDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
+{
+	if(propertyId_ <= 0)
+		return false;
+	query->prepare("SELECT p.value, p.dataid, f.time FROM properties p, frames f "
+		"WHERE p.assetid=:assetid AND f.dataid=p.frameid AND f.time < :beforetime "
+		"ORDER BY p.dataid DESC LIMIT 1");
+	query->bindValue(":assetid",propertyId_);
+	query->bindValue(":beforetime",beforeTime);
 	return true;
 }
 
@@ -44,7 +58,7 @@ qulonglong PropertyDataIterator::readOutRecordData(QSqlRecord* record)
 	QSharedPointer<AnalysisValue> val = createNextAnalysisValue(EventOrderIndex(record->value(2).toDouble(),record->value(1).toLongLong(),EventOrderIndex::BEHAVIORAL));
 	val->scriptVal.setProperty("time",record->value(2).toDouble());
 	val->scriptVal.setProperty("value",record->value(0).toString());
-	return record->value(1).toLongLong();
+	return val->index.dataId_;
 }
 
 int PropertyDataIterator::getElementId(QString path)

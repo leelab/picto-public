@@ -24,6 +24,8 @@ public:
 	virtual ~AnalysisDataSource();
 
 	void loadSession(QSqlDatabase session);
+	void setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore);
+
 
 	//AnalysisDataSource specific functions
 	//Resets to an initial state.
@@ -50,7 +52,6 @@ protected:
 	virtual void fillOutScriptValue(QSharedPointer<AnalysisValue> val);
 	QScriptValue createScriptArray(unsigned int length=0);
 	void setScriptInfo(QString name,QScriptValue value);
-	void recheckSessionData();
 	//Inherited
 	virtual QString defaultTagName(){return "AnalysisDataSource";};
 	virtual void postDeserialize();

@@ -11,6 +11,7 @@ using namespace Picto;
 LFPDataIterator::LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
 : AnalysisDataIterator(qsEngine,session)
 {
+	approxValsPerRow_ = 0;
 	getSamplePeriod();
 }
 
@@ -43,12 +44,24 @@ void LFPDataIterator::updateVariableSessionConstants()
 	}
 }
 
-bool LFPDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+bool LFPDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
+	Q_ASSERT(temporalFactor_ > 0);
 	QString queryString = QString("SELECT dataid,timestamp,data,channel "
-		"FROM lfp WHERE dataid > :lastDataId ORDER BY dataid LIMIT 1000");
+		"FROM lfp WHERE dataid > :lastDataId AND timestamp <= :stoptime ORDER BY dataid LIMIT :maxrows");
 	query->prepare(queryString);
 	query->bindValue(":lastdataid",lastDataId);
+	query->bindValue(":stoptime",(stopTime-offsetTime_)/temporalFactor_);
+	query->bindValue(":maxrows",maxRows);
+	return true;
+}
+
+bool LFPDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
+{
+	QString queryString = QString("SELECT dataid,timestamp,data,channel "
+		"FROM lfp WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT (SELECT COUNT(DISTINCT channel) FROM lfp)");
+	query->prepare(queryString);
+	query->bindValue(":beforetime",beforeTime);
 	return true;
 }
 
@@ -59,6 +72,11 @@ void LFPDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 
 qulonglong LFPDataIterator::readOutRecordData(QSqlRecord* record)
 {
+	if(approxValsPerRow_ == 0)
+	{
+		QByteArray dataByteArray = record->value(2).toByteArray();
+		approxValsPerRow_ = dataByteArray.size()/sizeof(float);
+	}
 	double startTime = offsetTime_+temporalFactor_*record->value(1).toDouble();
 	unsigned int chan = record->value(3).toInt();
 	Q_ASSERT((temporalFactor_ > 0) && (samplePeriod_ > 0));

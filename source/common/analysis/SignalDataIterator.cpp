@@ -11,9 +11,8 @@ SignalDataIterator::SignalDataIterator(QSharedPointer<QScriptEngine> qsEngine,QS
 : AnalysisDataIterator(qsEngine,session)
 {
 	getSubChanInfo(signalName);
-	readValues_ = 0;
-	readQueries_ = 0;
 	numSubChans_ = 0;
+	approxValsPerRow_ = 1;
 
 	getSubChanInfo(signalName);
 }
@@ -28,7 +27,7 @@ QString SignalDataIterator::propertyDescriptor()
 	return "SigTable:"+tableName_;
 }
 
-bool SignalDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+bool SignalDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
 	if(!isValid())
 		return false;
@@ -44,9 +43,33 @@ bool SignalDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
 	//id occured to the time of the first signal channel reading.
 	QString queryString = QString("SELECT s.dataid,f.time,s.offsettime,s.data "
 							"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
-							"s.dataid > :lastdataid ORDER BY s.dataid LIMIT 10000").arg(tableName_);
+							"s.dataid > :lastdataid AND f.time <= :stoptime ORDER BY s.dataid LIMIT :maxrows").arg(tableName_);
 	query->prepare(queryString);
 	query->bindValue(":lastdataid",lastDataId);
+	query->bindValue(":stoptime",stopTime);
+	query->bindValue(":maxrows",maxRows);
+	return true;
+}
+
+bool SignalDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
+{
+	if(!isValid())
+		return false;
+	//Get signal value list.
+	//NOTE: In the case of all values in the picto session that reference a frameid EXCEPT for signalchannels,
+	//The frame reference is the frame on which the value took effect (ie. Visible=true may have been set in 
+	//picto at some time during the presentation of frame 1, but it only affected the user when the object actually
+	//became visible sometime during frame 2, so it is marked with frame 2).
+	//In the case of signal channels however, the data is an input into the system.  The system, and the operator
+	//care about what the user was responding to and so signal channel readings are marked with the frame that
+	//was displayed just before they occured.  The offsettime value of the signal channel is therefore an offset
+	//from the time of the channel's marked frame id.  It is the offset in time from when the frame marked frame
+	//id occured to the time of the first signal channel reading.
+	QString queryString = QString("SELECT s.dataid,f.time,s.offsettime,s.data "
+							"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
+							"f.time < :beforetime ORDER BY s.dataid DESC LIMIT 1").arg(tableName_);
+	query->prepare(queryString);
+	query->bindValue(":beforetime",beforeTime);
 	return true;
 }
 
@@ -64,6 +87,8 @@ qulonglong SignalDataIterator::readOutRecordData(QSqlRecord* record)
 	//and calculate its time.
 	QByteArray dataByteArray = record->value(3).toByteArray();
 	int numEntries = dataByteArray.size()/sizeof(float);
+	if(approxValsPerRow_ == 0)
+		approxValsPerRow_ = numEntries;
 	float* floatArray = reinterpret_cast<float*>(dataByteArray.data());
 	for(int i=0;i<numEntries;i+=numSubChans_)
 	{
@@ -82,9 +107,7 @@ qulonglong SignalDataIterator::readOutRecordData(QSqlRecord* record)
 		}
 		val->scriptVal.setProperty("value",dimensionArray);
 		val->scriptVal.setProperty("time",val->index.time_);
-		readValues_++;
 	}
-	readQueries_++;
 	return record->value(0).toLongLong();
 }
 

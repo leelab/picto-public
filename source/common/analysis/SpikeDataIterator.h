@@ -9,10 +9,12 @@ namespace Picto {
 public:
 	SpikeDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~SpikeDataIterator();
+	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::NEURAL;};
 
 protected:
 	virtual void updateVariableSessionConstants();
-	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);
+	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows);
+	virtual bool prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime);
 	virtual void prepareSqlQueryForTotalRowCount(QSqlQuery* query);
 	virtual qulonglong readOutRecordData(QSqlRecord* record);
 

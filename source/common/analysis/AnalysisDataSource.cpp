@@ -81,7 +81,14 @@ void AnalysisDataSource::loadSession(QSqlDatabase session)
 {
 	session_ = session;
 	reset();
-};
+}
+
+void AnalysisDataSource::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
+{
+	if(!dataIterator_ || parentUsesSameIterator_)
+		return;
+	dataIterator_->setDataWindow(startFrom,endBefore);
+}
 
 void AnalysisDataSource::reset()
 {
@@ -99,19 +106,14 @@ void AnalysisDataSource::reset()
 
 void AnalysisDataSource::sessionDatabaseUpdated()
 {
-	recheckSessionData();
+	if(!dataIterator_)
+		return;
+	dataIterator_->sessionDatabaseUpdated();
 }
 
 void AnalysisDataSource::setScriptInfo(QString name,QScriptValue value)
 {
 	parentScript_.setProperty(name,value);
-}
-
-void AnalysisDataSource::recheckSessionData()
-{
-	if(!dataIterator_)
-		return;
-	dataIterator_->recheckSessionData();
 }
 
 void AnalysisDataSource::postDeserialize()

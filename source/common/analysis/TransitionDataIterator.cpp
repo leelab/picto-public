@@ -55,7 +55,6 @@ void TransitionDataIterator::registerTransitions(QString parentPath,QString sour
 		transIds.append(query.value(0).toString());		
 	}
 	transIdString_ = transIds.join(",");
-	recheckSessionData();
 }
 
 void TransitionDataIterator::registerTransitionsByNode(QString nodePath,bool isSource)
@@ -83,11 +82,21 @@ QString TransitionDataIterator::propertyDescriptor()
 	return "TransIds:"+transIdString_;
 }
 
-bool TransitionDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+bool TransitionDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
 	Q_ASSERT(isValid());
-	query->prepare(QString("SELECT t.dataid, f.time FROM transitions t, frames f WHERE t.transid IN (%1) AND t.frameid=f.dataid AND t.dataid > :lastdataid ORDER BY t.dataid").arg(transIdString_));
+	query->prepare(QString("SELECT t.dataid, f.time FROM transitions t, frames f WHERE t.transid IN (%1) AND t.frameid=f.dataid AND t.dataid > :lastdataid AND f.time <= :stoptime ORDER BY t.dataid LIMIT :maxrows").arg(transIdString_));
 	query->bindValue(":lastdataid",lastDataId);
+	query->bindValue(":stoptime",stopTime);
+	query->bindValue(":maxrows",maxRows);
+	return true;
+}
+
+bool TransitionDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
+{
+	Q_ASSERT(isValid());
+	query->prepare(QString("SELECT t.dataid, f.time FROM transitions t, frames f WHERE t.transid IN (%1) AND t.frameid=f.dataid AND f.time < :beforetime ORDER BY t.dataid DESC LIMIT 1").arg(transIdString_));
+	query->bindValue(":beforetime",beforeTime);
 	return true;
 }
 
@@ -100,7 +109,7 @@ void TransitionDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 qulonglong TransitionDataIterator::readOutRecordData(QSqlRecord* record)
 {
 	QSharedPointer<AnalysisValue> val = createNextAnalysisValue(EventOrderIndex(record->value(1).toDouble(),record->value(0).toLongLong(),EventOrderIndex::BEHAVIORAL));
-	return record->value(0).toLongLong();
+	return val->index.dataId_;
 }
 
 int TransitionDataIterator::getElementId(QString path)

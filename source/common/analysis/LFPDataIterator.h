@@ -10,12 +10,15 @@ namespace Picto {
 public:
 	LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session);
 	virtual ~LFPDataIterator();
+	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::NEURAL;};
 
 protected:
 	virtual void updateVariableSessionConstants();
-	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);
+	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows);
+	virtual bool prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime);
 	virtual void prepareSqlQueryForTotalRowCount(QSqlQuery* query);
 	virtual qulonglong readOutRecordData(QSqlRecord* record);
+	virtual unsigned int approxValsPerRow(){return approxValsPerRow_;};
 	virtual void dataFinishedWithSessionEnded();
 
 private:
@@ -41,6 +44,7 @@ private:
 	double samplePeriod_;
 	double offsetTime_;
 	double temporalFactor_;
+	unsigned int approxValsPerRow_;
 	QMap<double,QMap<unsigned int,QSqlRecord>> timeSortedRecords_;
 	QList<double> timesByChannel_;
 };

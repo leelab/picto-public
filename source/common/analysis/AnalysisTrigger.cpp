@@ -53,6 +53,19 @@ void AnalysisTrigger::loadSession(QSqlDatabase session)
 	}
 }
 
+void AnalysisTrigger::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
+{
+	if(dataIterator_)
+		dataIterator_->setDataWindow(startFrom,endBefore);
+	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
+	QSharedPointer<AnalysisDataSource> dataSource;
+	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
+	{
+		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
+		dataSource->setDataWindow(startFrom,endBefore);
+	}
+}
+
 void AnalysisTrigger::reset()
 {
 	periodData_.clear();
@@ -220,7 +233,9 @@ void AnalysisTrigger::sessionDatabaseUpdated()
 		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
 		dataSource->sessionDatabaseUpdated();
 	}
-	recheckSessionData();
+	if(!dataIterator_)
+		return;
+	dataIterator_->sessionDatabaseUpdated();
 }
 
 float AnalysisTrigger::fractionTriggersRemaining()
@@ -239,13 +254,6 @@ QString AnalysisTrigger::getIteratorDescriptor()
 	if(!dataIterator_)
 		return "";
 	return QString(dataIterator_->metaObject()->className())+"-Desc-"+dataIterator_->propertyDescriptor();
-}
-
-void AnalysisTrigger::recheckSessionData()
-{
-	if(!dataIterator_)
-		return;
-	dataIterator_->recheckSessionData();
 }
 
 void AnalysisTrigger::postDeserialize()

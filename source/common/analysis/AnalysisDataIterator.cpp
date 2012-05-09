@@ -6,6 +6,8 @@
 #include "AnalysisDataIterator.h"
 using namespace Picto;
 
+#define MAX_ANALYSIS_VALS_SIZE 100000
+
 AnalysisDataIterator::AnalysisDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
 {
 	qsEngine_ = qsEngine;
@@ -16,7 +18,8 @@ AnalysisDataIterator::AnalysisDataIterator(QSharedPointer<QScriptEngine> qsEngin
 	readQueries_ = 0;
 	avgValsPerRow_ = 0;
 	totalValsCreated_ = 0;
-	initialized_ = false;
+	firstValTime_ = lastValTime_ = -1;
+
 }
 
 AnalysisDataIterator::~AnalysisDataIterator()
@@ -26,15 +29,12 @@ AnalysisDataIterator::~AnalysisDataIterator()
 
 QSharedPointer<AnalysisValue> AnalysisDataIterator::getNextValue()
 {
-	if(!initialized_)
-	{
-		recheckSessionData();
-		initialized_ = true;
-	}
+	Q_ASSERT_X(startFrom_.isValid(),"AnalysisDataIterator::getNextValue",
+				"Window start time must be set before requesting a value");
 	QCoreApplication::processEvents();
 	if(analysisVals_.size())
 		return analysisVals_.takeFirst();
-	//Maybe the session wasn't over last time.  Try getting new data.
+	//Try getting more data.
 	updateAnalysisValsList();
 	if(analysisVals_.size())
 		return analysisVals_.takeFirst();
@@ -42,18 +42,61 @@ QSharedPointer<AnalysisValue> AnalysisDataIterator::getNextValue()
 	return QSharedPointer<AnalysisValue>(new AnalysisValue(qsEngine_));
 }
 
+void AnalysisDataIterator::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
+{
+	if((startFrom == startFrom_)&&(endBefore==endBefore_))
+		return;
+	Q_ASSERT(startFrom.isValid() && (!endBefore.isValid() || (endBefore>=startFrom)));
+	startFrom_ = startFrom;
+	endBefore_ = endBefore;
+	analysisVals_.clear();
+	totalValsCreated_ = 0;
+	totalQueries_ = 0;
+	sessionDatabaseUpdated();
+
+	//Get one value from before this window so that the initial data state is available
+	EventOrderIndex beginning = startFrom;
+	beginning.dataId_ = 0;
+	beginning.time_ = 0;
+
+	Q_ASSERT(session_.isValid() && session_.isOpen());
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+	if(!prepareSqlQueryForLastRowBeforeStart(&query,startFrom_.isValid()?startFrom_.time_:100000000000))
+		return;
+	if(!query.exec())
+	{
+		Q_ASSERT(false);
+		return;
+	}
+	if(!query.next())
+		return;
+	do
+	{
+		extractMainQueryResult(&query);
+	}while(query.next());
+}
+
 float AnalysisDataIterator::fractionRemaining()
 {
-	if(!totalQueries_ || !totalValsCreated_)
+	if(firstValTime_ == lastValTime_)
 		return 1.0;
-	float fracQueriesRead = float(readQueries_)/float(totalQueries_);
-	float fracValsRead = float(totalValsCreated_-analysisVals_.size())/float(totalValsCreated_);
-	return 1.0-(fracQueriesRead*fracValsRead);
+	double timeSoFar = lastValTime_ - firstValTime_;
+	double valsPerSec = double(totalValsCreated_)/timeSoFar;
+	int approxTotalVals = (endBefore_.time_-startFrom_.time_)*valsPerSec;
+	int remainingVals = approxTotalVals-totalValsCreated_+analysisVals_.size();
+	float returnVal = float(remainingVals)/float(approxTotalVals);
+	if(returnVal < 0)
+		returnVal = 0;
+	return returnVal;
 }
 
 QSharedPointer<AnalysisValue> AnalysisDataIterator::createNextAnalysisValue(EventOrderIndex index)
 {
 	totalValsCreated_++;
+	if(firstValTime_ == -1)
+		firstValTime_ = index.time_;
+	lastValTime_ = index.time_;
 	QSharedPointer<AnalysisValue> returnVal(new AnalysisValue(qsEngine_,index));
 	analysisVals_.append(returnVal);
 	return returnVal;
@@ -71,29 +114,32 @@ QScriptValue AnalysisDataIterator::createScriptArray(unsigned int length)
 	return qsEngine_->newArray(length);
 }
 
+void AnalysisDataIterator::extractMainQueryResult(QSqlQuery* query)
+{
+	readQueries_++;
+	lastSessionDataId_ = readOutRecordData(&(query->record()));
+}
+
 void AnalysisDataIterator::updateAnalysisValsList()
 {
-	if(readQueries_ >= totalQueries_)
-		return;
 	Q_ASSERT(session_.isValid() && session_.isOpen());
+	Q_ASSERT(startFrom_.isValid() && (!endBefore_.isValid() || (endBefore_>=startFrom_)));
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
-
-	//Get frame value list.
-	if(!prepareSqlQuery(&query,lastSessionDataId_))
+	bool res;
+	Q_ASSERT(approxValsPerRow());
+	int maxRows = MAX_ANALYSIS_VALS_SIZE/(avgValsPerRow_?avgValsPerRow_:approxValsPerRow());
+	if(!prepareSqlQuery(&query,lastSessionDataId_,endBefore_.isValid()?endBefore_.time_:100000000000,maxRows))
 		return;
-	bool success = query.exec();
-	if(!success)
+	if(!query.exec())
 	{
-		return;
+		Q_ASSERT(false);
 	}
-	qulonglong lastDataId = lastSessionDataId_;
 	if(!query.next())
 	{
 		//There is no more data available.  Check if session has ended and if so
 		//tell the child class to finish up with any data it may have been holding 
 		//on too.
-		QSqlQuery query = getSessionQuery();
 
 		//Check if session has ended
 		query.prepare("SELECT key "
@@ -110,14 +156,10 @@ void AnalysisDataIterator::updateAnalysisValsList()
 		}
 		return;
 	}
+	totalQueries_ = query.size()+readQueries_;
 	do{
-		readQueries_++;
-		lastDataId = readOutRecordData(&query.record());
-	}while(query.next());
-	if(readQueries_ > totalQueries_)
-		recheckSessionData();
-
-	lastSessionDataId_ = lastDataId;
+		extractMainQueryResult(&query);
+	}while(query.next() && (analysisVals_.size() < MAX_ANALYSIS_VALS_SIZE));
 }
 
 void AnalysisDataIterator::updateTotalQueryCount()

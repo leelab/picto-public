@@ -13,11 +13,14 @@ public:
 	unsigned int numSubChannels(){return numSubChans_;};
 	QString subChanName(int subChanIndex){if(subChanNames_.size() < subChanIndex) return ""; return subChanNames_[subChanIndex];};
 	virtual QString propertyDescriptor();
+	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::BEHAVIORAL;};
 
 protected:
-	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);
+	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows);
+	virtual bool prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime);
 	virtual void prepareSqlQueryForTotalRowCount(QSqlQuery* query);
 	virtual qulonglong readOutRecordData(QSqlRecord* record);
+	virtual unsigned int approxValsPerRow(){return approxValsPerRow_;};
 
 private:
 	bool isValid(){return numSubChans_ > 0;};
@@ -27,8 +30,7 @@ private:
 	int numSubChans_;
 	QStringList subChanNames_;
 	double samplePeriod_;
-	unsigned int readValues_;
-	unsigned int readQueries_;
+	unsigned int approxValsPerRow_;
 };
 
 }; //namespace Picto

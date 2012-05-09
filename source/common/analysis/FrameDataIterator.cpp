@@ -15,10 +15,19 @@ FrameDataIterator::~FrameDataIterator()
 
 }
 
-bool FrameDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+bool FrameDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
-	query->prepare("SELECT f.dataid, f.time FROM frames f WHERE f.dataid > :lastdataid ORDER BY f.dataid LIMIT 10000");
+	query->prepare("SELECT f.dataid, f.time FROM frames f WHERE f.dataid > :lastdataid AND f.time <= :stoptime ORDER BY f.dataid LIMIT :maxrows");
 	query->bindValue(":lastdataid",lastDataId);
+	query->bindValue(":stoptime",stopTime);
+	query->bindValue(":maxrows",maxRows);
+	return true;
+}
+
+bool FrameDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
+{
+	query->prepare("SELECT f.dataid, f.time FROM frames f WHERE f.time < :beforetime ORDER BY f.dataid DESC LIMIT 1");
+	query->bindValue(":beforetime",beforeTime);
 	return true;
 }
 
@@ -31,5 +40,5 @@ qulonglong FrameDataIterator::readOutRecordData(QSqlRecord* record)
 {
 	QSharedPointer<AnalysisValue> val = createNextAnalysisValue(EventOrderIndex(record->value(1).toDouble(),record->value(0).toLongLong(),EventOrderIndex::BEHAVIORAL));
 	val->scriptVal.setProperty("time",record->value(1).toDouble());
-	return record->value(0).toLongLong();
+	return val->index.dataId_;
 }

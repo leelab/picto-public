@@ -25,6 +25,8 @@ public:
 	virtual ~AnalysisTrigger();
 
 	void loadSession(QSqlDatabase session);
+	void setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore);
+
 
 	//AnalysisTrigger specific functions
 	//Resets the AnalysisTrigger to its initial state
@@ -72,7 +74,6 @@ protected:
 
 	virtual QSharedPointer<AnalysisDataIterator> createDataIterator() = 0;
 
-	void recheckSessionData();
 	//Inherited
 	virtual QString defaultTagName(){return "AnalysisTrigger";};
 	virtual void postDeserialize();

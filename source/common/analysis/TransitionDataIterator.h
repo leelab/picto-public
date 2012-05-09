@@ -14,9 +14,11 @@ public:
 	void registerTransitionsByResult(QString resultPath);
 	void registerTransitionsBySource(QString sourcePath);
 	virtual QString propertyDescriptor();
+	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::BEHAVIORAL;};
 
 protected:
-	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId);
+	virtual bool prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows);
+	virtual bool prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime);
 	virtual void prepareSqlQueryForTotalRowCount(QSqlQuery* query);
 	virtual qulonglong readOutRecordData(QSqlRecord* record);
 

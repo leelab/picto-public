@@ -43,12 +43,24 @@ void SpikeDataIterator::updateVariableSessionConstants()
 	}
 }
 
-bool SpikeDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId)
+bool SpikeDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
+	Q_ASSERT(temporalFactor_ > 0);
 	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
-		"FROM spikes WHERE dataid > :lastDataId ORDER BY dataid LIMIT 10000");
+		"FROM spikes WHERE dataid > :lastDataId AND timestamp <= :stoptime ORDER BY dataid LIMIT :maxrows");
 	query->prepare(queryString);
 	query->bindValue(":lastdataid",lastDataId);
+	query->bindValue(":stoptime",(stopTime-offsetTime_)/temporalFactor_);
+	query->bindValue(":maxrows",maxRows);
+	return true;
+}
+
+bool SpikeDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
+{
+	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
+		"FROM spikes WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT 1");
+	query->prepare(queryString);
+	query->bindValue(":beforetime",beforeTime);
 	return true;
 }
 
@@ -81,7 +93,7 @@ qulonglong SpikeDataIterator::readOutRecordData(QSqlRecord* record)
 		waveScriptArray.setProperty(i,wave[i]);
 	}
 	val->scriptVal.setProperty("waveValue",waveScriptArray);
-	return record->value(0).toLongLong();
+	return val->index.dataId_;
 }
 
 void SpikeDataIterator::getSamplePeriod()
