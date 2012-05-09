@@ -125,11 +125,11 @@ bool AnalysisDefinition::run()
 		currRun_->startFrame_,
 		Picto::EventOrderIndex::BEHAVIORAL
 	);
-	EventOrderIndex toIndex(
+	EventOrderIndex toIndex = (stopTime >= 0)?EventOrderIndex(
 		stopTime,
 		currRun_->endFrame_,
 		Picto::EventOrderIndex::BEHAVIORAL
-	);
+		):EventOrderIndex();
 
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	currPeriodNum_ = 0;

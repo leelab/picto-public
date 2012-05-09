@@ -53,6 +53,7 @@ protected:
 	QSqlDatabase session_;
 private:
 	double getFrameTime(qulonglong frameId);
+	qulonglong getLastFrame();
 	QSharedPointer<TaskRunDataUnit> currRun_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 	QSharedPointer<AnalysisPeriod> currPeriod_;

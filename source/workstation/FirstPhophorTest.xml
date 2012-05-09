@@ -460,7 +460,7 @@
 <YOffset id="398">0</YOffset>
 <Task id="587"><Name id="588">FirstPhosphorTest</Name><StateMachine id="589"><EntryScript id="590"/><ExitScript id="591"/><Level id="592">Stage</Level><Name id="593">Top</Name><StateMachineElement type="State" id="610"><BackgroundColor A="255" B="0" G="0" R="0" id="611">#000000</BackgroundColor><ControlElement type="Stopwatch Controller" id="676"><Name id="677">Timeout</Name><Result id="598"><Name id="600">Success</Name><UIEnabled id="601">false</UIEnabled><UIInfo id="602"><Pos id="603" x="0" y="0"/></UIInfo><UIOrder id="605">0</UIOrder></Result><Time id="678">1000</Time><TimeUnits id="679">Ms</TimeUnits><Type id="680"/><UIEnabled id="681">false</UIEnabled><UIInfo id="682"><Pos id="683" x="227" y="83"/></UIInfo><UIOrder id="685">0</UIOrder></ControlElement><EntryScript id="612">Box.visible = true;</EntryScript><ExitScript id="613">Box.visible = false;</ExitScript><FrameScript id="614">if(FrameCounter.value == 0)
 {
-	FramesUntilTrigger.value++;
+	FramesUntilTrigger.value=2;//++;
 	FrameCounter.value = FramesUntilTrigger.value;
 	Box.visible = true;
 }

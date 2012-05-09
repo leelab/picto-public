@@ -83,7 +83,7 @@ float AnalysisDataIterator::fractionRemaining()
 		return 1.0;
 	double timeSoFar = lastValTime_ - firstValTime_;
 	double valsPerSec = double(totalValsCreated_)/timeSoFar;
-	int approxTotalVals = (endBefore_.time_-startFrom_.time_)*valsPerSec;
+	int approxTotalVals = endBefore_.isValid()?(endBefore_.time_-startFrom_.time_)*valsPerSec:100000000000*valsPerSec;
 	int remainingVals = approxTotalVals-totalValsCreated_+analysisVals_.size();
 	float returnVal = float(remainingVals)/float(approxTotalVals);
 	if(returnVal < 0)

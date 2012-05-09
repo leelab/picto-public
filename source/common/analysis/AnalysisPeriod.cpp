@@ -185,8 +185,17 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 			//If we just started this run, set the data window to all triggers.
 			//If there are non-zero buffer values, create new time only indeces, otherwise
 			//use the start and end indeces as they are.
-			trigger->setDataWindow(	startBufferMs?EventOrderIndex(fromIndex.time_-double(startBufferMs*.001)):fromIndex,
+			if(toIndex.isValid())
+			{
+				trigger->setDataWindow(	startBufferMs?EventOrderIndex(fromIndex.time_-double(startBufferMs*.001)):fromIndex,
 									endBufferMs?EventOrderIndex(toIndex.time_+double(endBufferMs*.001)):toIndex);
+			}
+			else
+			{
+				trigger->setDataWindow(	startBufferMs?EventOrderIndex(fromIndex.time_-double(startBufferMs*.001)):fromIndex,
+									toIndex);
+
+			}
 
 		}
 		trigger->sessionDatabaseUpdated();

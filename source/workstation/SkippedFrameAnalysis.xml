@@ -28,10 +28,11 @@
       lastFrameTime.value = frame[i].time.value;
       if(frameLength > .02)
       {
-      outFile.writeLine(  &quot;&quot;+frameLength
-                          +&quot;,&quot;+frame[i].time.value
-                          +&quot;,&quot;+frame[i].currElem.name
-                          +&quot;,&quot;+framesSoFar.value
+      outFile.writeLine(
+                        &quot;&quot;+framesSoFar.value
+                        +&quot;,&quot;+Math.round(1000*frameLength)/1000
+                        +&quot;,&quot;+frame[i].currElem.name
+                        +&quot;,&quot;+Math.round(1000*frame[i].time.value)/1000
       );
       }
       }

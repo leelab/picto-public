@@ -41,9 +41,11 @@ void TaskRunSelector::loadSession(QSqlDatabase session)
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
 
-	//Get frame value list.
+	//Get frame value list.  If there is no last frame listed, the run might still be in progress or 
+	//their was a failure somewhere and the session ended while the Run was still in progress.
 	query.prepare("SELECT r.runid,r.name,r.notes,r.saved,r.firstframe,r.lastframe,s.time,e.time "
-		"FROM runs r, frames s, frames e WHERE s.dataid=r.firstframe AND e.dataid=r.lastframe ORDER BY runid");
+		"FROM runs r, frames s, frames e WHERE s.dataid=r.firstframe AND ((r.lastframe>0 AND e.dataid=r.lastframe) "
+		"OR e.dataid=(SELECT dataid FROM frames ORDER BY dataid DESC LIMIT 1)) ORDER BY runid");
 	bool success = query.exec();
 	if(!success)
 	{
