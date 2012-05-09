@@ -60,7 +60,7 @@ bool SpikeDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,do
 	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
 		"FROM spikes WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT 1");
 	query->prepare(queryString);
-	query->bindValue(":beforetime",beforeTime);
+	query->bindValue(":beforetime",(beforeTime-offsetTime_)/temporalFactor_);
 	return true;
 }
 

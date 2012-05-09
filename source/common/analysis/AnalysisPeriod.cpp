@@ -164,6 +164,8 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 {
 	double scriptTime = 0;
 	double otherTime = 0;
+	int startBufferMs = propertyContainer_->getPropertyValue("StartBufferMs").toInt();
+	int endBufferMs = propertyContainer_->getPropertyValue("EndBufferMs").toInt();
 	QTime timer;
 	timer.start();
 	if(!fromIndex.isValid())	//Invalid toIndex => we don't know when it will end yet.
@@ -179,7 +181,14 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 	{
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
 		if(periodNumber_ == 0)
-			trigger->setDataWindow(fromIndex,toIndex);
+		{
+			//If we just started this run, set the data window to all triggers.
+			//If there are non-zero buffer values, create new time only indeces, otherwise
+			//use the start and end indeces as they are.
+			trigger->setDataWindow(	startBufferMs?EventOrderIndex(fromIndex.time_-double(startBufferMs*.001)):fromIndex,
+									endBufferMs?EventOrderIndex(toIndex.time_+double(endBufferMs*.001)):toIndex);
+
+		}
 		trigger->sessionDatabaseUpdated();
 	}
 		
@@ -211,8 +220,6 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 			//If there are non-zero buffer values, create new time only indeces, otherwise
 			//use the start and end indeces as they are.  This will prevent overlapping
 			//of periods for cases where behavioral based triggers are used with no buffers.
-			int startBufferMs = propertyContainer_->getPropertyValue("StartBufferMs").toInt();
-			int endBufferMs = propertyContainer_->getPropertyValue("EndBufferMs").toInt();
 			if(startBufferMs)
 				trigger->setPeriodStart(EventOrderIndex(startIndex_.time_-double(startBufferMs*.001)));
 			else

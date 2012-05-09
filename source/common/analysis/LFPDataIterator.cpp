@@ -61,7 +61,7 @@ bool LFPDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,doub
 	QString queryString = QString("SELECT dataid,timestamp,data,channel "
 		"FROM lfp WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT (SELECT COUNT(DISTINCT channel) FROM lfp)");
 	query->prepare(queryString);
-	query->bindValue(":beforetime",beforeTime);
+	query->bindValue(":beforetime",(beforeTime-offsetTime_)/temporalFactor_);
 	return true;
 }
 
