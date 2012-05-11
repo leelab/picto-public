@@ -86,7 +86,7 @@ bool FileOutputWidget::saveOutputTo(QDir directory)
 	{
 		QMessageBox error;
 		error.setText("Could not create save file");
-		error.setDetailedText("Could not create: " + directory.absolutePath() + "/" + newFileName);
+		error.setDetailedText("Could not create: " + newFileName);
 		error.setIcon(QMessageBox::Critical);
 		error.exec();
 		return false;

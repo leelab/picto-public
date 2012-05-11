@@ -10,8 +10,8 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 #include "../../common/protocol/protocolcommandhandler.h"
-#include "../../common/iodevices/PictoBoxXPEventCodeGenerator.h"
-#include "../../common/iodevices/PictoBoxXPRewardController.h"
+//#include "../../common/iodevices/NullEventCodeGenerator.h"
+//#include "../../common/iodevices/AudioRewardController.h"
 
 
 class Engine : public QObject
@@ -92,8 +92,8 @@ private:
 	QMap<QString, QSharedPointer<Picto::ProtocolCommandHandler>> commandHandlers;
 
 	//IOstuff
-	Picto::PictoBoxXPEventCodeGenerator *eventGen;
-	Picto::PictoBoxXPRewardController *rewardController;
+	//Picto::NullEventCodeGenerator *eventGen;
+	//Picto::AudioRewardController *rewardController;
 
 };
 

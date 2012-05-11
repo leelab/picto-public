@@ -13,32 +13,11 @@ FileOutput::FileOutput()
 
 FileOutput::~FileOutput()
 {
-	//When this object is destroyed, remove its associated file from
-	//the file system.
-	if(file_->isOpen())
-		file_->remove();
 }
 
 QSharedPointer<Asset> FileOutput::Create()
 {
 	return QSharedPointer<Asset>(new FileOutput());
-}
-
-void FileOutput::reset()
-{	
-	//If the output sub director for this file doesn't exist yet, make it.
-	if(!QFile::exists(getTempOutputDir()+"/"+getOutputNamePrefix()))
-	{	//The directory doesn't exist yet.  Make it.
-		QDir dir;
-		dir.mkdir(getTempOutputDir()+"/"+getOutputNamePrefix());
-	}
-	outputFileStream_.clear();
-	QString fileName = getTempOutputDir()+"/"+getOutputNamePrefix()+"/"+getOutputNamePrefix()+propertyContainer_->getPropertyValue("FileName").toString();
-	file_ = QSharedPointer<QFile>(new QFile(fileName));
-	if(!file_->open(QIODevice::WriteOnly | QIODevice::Text))
-		return;
-	outputFileStream_ = QSharedPointer<QTextStream>(new QTextStream(file_.data()));
-	setValid(true);
 }
 
 QPointer<AnalysisOutputWidget> FileOutput::getOutputWidget()
@@ -49,26 +28,6 @@ QPointer<AnalysisOutputWidget> FileOutput::getOutputWidget()
 	outputWidget->setFile(file_->fileName());
 	return qobject_cast<AnalysisOutputWidget*>(outputWidget);
 }
-
-//bool FileOutput::saveOutputData(QString directory, QString filename)
-//{
-//	QString origName = propertyContainer_->getPropertyValue("FileName").toString();
-//	QFile tempFile(getTempOutputDir()+"/"+origName);
-//	if(!tempFile.open(QIODevice::ReadOnly | QIODevice::Text))
-//	{
-//		return false;
-//	}
-//	if(!QFile::exists(directory))
-//	{	//The directory doesn't exist yet.  Make it.
-//		QDir dir;
-//		dir.mkdir(directory);
-//	}
-//	QString newFileName = directory + "/" + filename + origName.mid(origName.indexOf("."));
-//	QFile::remove(newFileName);
-//	bool result = tempFile.copy(newFileName);
-//	tempFile.close();
-//	return result;
-//}
 
 void FileOutput::finishUp()
 {
@@ -96,6 +55,25 @@ void FileOutput::writeText(QString text)
 		}
 	}
 }
+
+void FileOutput::reset()
+{	
+	//If the output sub director for this file doesn't exist yet, make it.
+	QString outputDir = getTempOutputDir();
+	if(!QFile::exists(outputDir+"/"+getOutputNamePrefix()))
+	{	//The directory doesn't exist yet.  Make it.
+		QDir dir;
+		dir.mkpath(outputDir+"/"+getOutputNamePrefix());
+	}
+	outputFileStream_.clear();
+	QString fileName = outputDir+"/"+getOutputNamePrefix()+"/"+getOutputNamePrefix()+propertyContainer_->getPropertyValue("FileName").toString();
+	file_ = QSharedPointer<QFile>(new QFile(fileName));
+	if(!file_->open(QIODevice::WriteOnly | QIODevice::Text))
+		return;
+	outputFileStream_ = QSharedPointer<QTextStream>(new QTextStream(file_.data()));
+	setValid(true);
+}
+
 
 void FileOutput::postDeserialize()
 {

@@ -74,9 +74,10 @@ private:
 	
 	QToolBar *toolBar_;
 	QProgressBar *progressBar_;
+	enum {ANALYZING,SAVING} status_;
 
 	QSqlDatabase configDb_;
-	QSqlDatabase session_;
+	QList<QSqlDatabase> sessions_;
 
 	QTimer* progressBarTimer_;
 

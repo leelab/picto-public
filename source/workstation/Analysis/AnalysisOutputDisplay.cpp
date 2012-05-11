@@ -15,6 +15,7 @@ AnalysisOutputDisplay::AnalysisOutputDisplay(QWidget *parent) :
 {
 	topLevelTabs_ = NULL;
 	mainLayout_ = new QVBoxLayout;
+	fractionOutputSaved_ = 0;
 	setLayout(mainLayout_);
 	clear();
 }
@@ -26,7 +27,26 @@ AnalysisOutputDisplay::~AnalysisOutputDisplay()
 int AnalysisOutputDisplay::addTopLevelTab(QString name)
 {
 	QTabWidget* subTabs(new QTabWidget());
-	topLevelTabs_->addTab(subTabs,name);
+	int suffixNum = 0;
+	QString tabName = name;
+	bool unique;
+	do
+	{
+		unique = true;
+		if(suffixNum > 0)
+			tabName = name+"_"+QString::number(suffixNum);
+		for(int i=0;i<topLevelTabs_->count();i++)
+		{	//If another top level tab has the same name, append a number to the end of this tab's name.
+			if(topLevelTabs_->tabText(i) == tabName)
+			{
+				suffixNum++;
+				unique = false;
+				continue;
+			}
+		}
+	}
+	while(!unique);
+	topLevelTabs_->addTab(subTabs,tabName);
 	return topLevelTabs_->count()-1;
 }
 
@@ -54,6 +74,7 @@ bool AnalysisOutputDisplay::supportsSaving()
 
 bool AnalysisOutputDisplay::saveOutputToDirectory(QDir directory)
 {
+	fractionOutputSaved_ = 0;
 	if(!directory.exists())
 		return false;	//Caller must verify that directory exists.
 	for(int i=0;i<topLevelTabs_->count();i++)
@@ -77,6 +98,8 @@ bool AnalysisOutputDisplay::saveOutputToDirectory(QDir directory)
 			if(subWidget->isSaveable())
 				if(!subWidget->saveOutputTo(subDir))
 					return false;
+			fractionOutputSaved_ += 1.0/subTabs->count();
+			QCoreApplication::processEvents();
 		}
 	}
 	return true;

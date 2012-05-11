@@ -23,7 +23,7 @@ public:
 	AnalysisDataSource();
 	virtual ~AnalysisDataSource();
 
-	void loadSession(QSqlDatabase session);
+	void loadSessionAndScriptTools(QSqlDatabase session,QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent);
 	void setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore);
 
 
@@ -31,11 +31,10 @@ public:
 	//Resets to an initial state.
 	//In particular, getValue(time) will always have an increasing input
 	//time until reset is called.
-	void reset();
+	//void reset();
 	void sessionDatabaseUpdated();
 
 	void storeValue(QScriptValue triggerScript,const EventOrderIndex& index);
-	void setScriptObjects(QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent);
 
 	//Returns the Data Source value at the input time.  The input
 	//value to this function is assumed to always increase until reset is called.

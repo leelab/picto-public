@@ -19,9 +19,10 @@ class TaskRunSelector : public QWidget
 public:
 	TaskRunSelector(QWidget *parent=0);
 	virtual ~TaskRunSelector();
-	void loadSession(QSqlDatabase session);
+	void loadSessions(QList<QSqlDatabase> sessions);
 	int selectedRunCount();
 	QSharedPointer<Picto::TaskRunDataUnit> getSelectedRun(int index);
+	QSqlDatabase getSessionForSelectedRun(int index);
 	qulonglong startFrameOfSelectedRun(int index);
 	qulonglong endFrameOfSelectedRun(int index);
 	double startTimeOfSelectedRun(int index);
@@ -41,7 +42,7 @@ private:
 	QListWidget* selectArea_;
 	QPushButton* clear_;
 	QPushButton* selectAll_;
-	QSqlDatabase session_;
+	QList<QSqlDatabase> sessions_;
 	QList<RunData> runs_;
 
 private slots:

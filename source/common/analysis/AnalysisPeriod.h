@@ -7,6 +7,7 @@
 #include <QPointer>
 #include <QList>
 #include <QScriptProgram>
+#include <QUuid>
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
 #include "AnalysisTrigger.h"
@@ -30,10 +31,10 @@ public:
 
 	//AnalysisPeriod specific functions
 	//Resets the AnalysisPeriod to its initial state
-	void reset();
+	//void reset();
 	//Marks that a new run has started.  Period will update everything that
 	//uses the run name.
-	void startNewRun(QString runName);
+	void startNewRun(QString runName,QUuid runUuid);
 	//Runs the analysisPeriod analysis from the fromIndex to the toIndex.
 	//Note that if this function is called multiple times before a reset, they
 	//must be in increasing order (ie. Each new fromIndex must be greater than
@@ -64,6 +65,7 @@ private:
 	EventOrderIndex startIndex_;
 	EventOrderIndex endIndex_;
 	unsigned int periodNumber_;
+	QUuid runUuid_;
 	QLinkedList<QPointer<QWidget>> outputWidgets_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 	QScriptProgram periodScript_;

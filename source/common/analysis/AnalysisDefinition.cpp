@@ -19,8 +19,6 @@ AnalysisDefinition::AnalysisDefinition()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericVariable::Create))));	
 	toolFactory->addAssetType("File",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FileOutput::Create))));	
-
-	reset();
 }
 
 AnalysisDefinition::~AnalysisDefinition()
@@ -30,6 +28,17 @@ AnalysisDefinition::~AnalysisDefinition()
 void AnalysisDefinition::loadSession(QSqlDatabase session)
 {
 	session_ = session;
+
+	if(!session_.isValid() || !session_.isOpen())
+	{
+		QMessageBox box;
+		box.setText("Session Error                                      ");
+		box.setDetailedText("This input session was invalid.");
+		box.setIconPixmap(QPixmap(":/icons/x.png"));
+		box.exec();
+		return;
+	}
+
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
@@ -37,28 +46,9 @@ void AnalysisDefinition::loadSession(QSqlDatabase session)
 		period = periodAsset.staticCast<AnalysisPeriod>();
 		period->loadSession(session_);
 	}
-}
 
-void AnalysisDefinition::reset()
-{
+	//Setup Scripting
 	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
-
-	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisTool> analysisTool;
-	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
-	{
-		analysisTool = toolAsset.staticCast<AnalysisTool>();
-		analysisTool->reset();
-		analysisTool->bindToScriptEngine(*qsEngine_);
-	}
-
-	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
-	QSharedPointer<AnalysisPeriod> period;
-	foreach(QSharedPointer<Asset> periodAsset,periods)
-	{
-		period = periodAsset.staticCast<AnalysisPeriod>();
-		period->reset();
-	}
 
 	//Make a Qt Script Function out of the script and its name
 	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toAscii() + "}";
@@ -89,35 +79,30 @@ void AnalysisDefinition::startNewRun(QSharedPointer<TaskRunDataUnit> runInfo)
 	Q_ASSERT(runInfo);
 	currRun_ = runInfo;
 	currRunNum_++;
+	QUuid runUuid(QUuid::createUuid());
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
 		period = periodAsset.staticCast<AnalysisPeriod>();
-		period->startNewRun(currRun_->name_);
+		period->startNewRun(currRun_->name_,runUuid);
 	}
 
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisOutput> analysisOutput;
 	QSharedPointer<AnalysisTool> analysisTool;
 	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		if(toolAsset->inherits("Picto::AnalysisOutput"))
-		{
-			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
-			analysisOutput->setOutputNamePrefix(currRun_->name_);
-		}
-		if(toolAsset->inherits("Picto::AnalysisTool"))
-		{
-			analysisTool = toolAsset.staticCast<AnalysisTool>();
-			analysisTool->reset();
-		}
-
+		analysisTool = toolAsset.staticCast<AnalysisTool>();
+		analysisTool->initialize(currRun_->name_,runUuid);
+		analysisTool->bindToScriptEngine(*qsEngine_);
 	}
 }
 
 bool AnalysisDefinition::run()
 {
+	if(!session_.isValid() || !session_.isOpen())
+		return false;
+
 	double startTime = getFrameTime(currRun_->startFrame_);
 	double stopTime = getFrameTime(currRun_->endFrame_);
 	EventOrderIndex fromIndex(
@@ -189,21 +174,6 @@ void AnalysisDefinition::finish()
 	}
 }
 
-//bool AnalysisDefinition::saveOutputToDirectory(QString directory, QString filename)
-//{
-//	bool returnVal = true;
-//	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
-//	QSharedPointer<AnalysisPeriod> period;
-//	foreach(QSharedPointer<Asset> periodAsset,periods)
-//	{
-//		period = periodAsset.staticCast<AnalysisPeriod>();
-//		returnVal  = returnVal & period->saveOutputToDirectory(directory,filename);
-//	}
-//	if(periods.size() == 0)
-//		returnVal = false;
-//	return returnVal;
-//}
-
 QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets()
 {
 	QLinkedList<QPointer<AnalysisOutputWidget>> returnVal;
@@ -249,7 +219,6 @@ void AnalysisDefinition::postDeserialize()
 	UIEnabled::postDeserialize();
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	numPeriods_ = periods.size();
-	reset();
 }
 
 bool AnalysisDefinition::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

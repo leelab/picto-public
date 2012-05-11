@@ -82,18 +82,18 @@ Engine::Engine(QString boxName, QHostAddress addr, QObject *parent) :
 	commandHandlers[fpstopflushCommandHandler->method()] = fpstopflushCommandHandler;
 
 	//set up the rewardController
-	rewardController = new Picto::PictoBoxXPRewardController(4);
-	for(int i=0; i<4; i++)
-		rewardController->setRewardDurationMs(i+1,rewardDurations[i]);
+	//rewardController = new Picto::AudioRewardController();
+	//for(int i=0; i<4; i++)
+	//	rewardController->setRewardDurationMs(i+1,rewardDurations[i]);
 
 	//set up the event code generator
-	eventGen = new Picto::PictoBoxXPEventCodeGenerator();
+//	eventGen = new Picto::NullEventCodeGenerator();
 }
 
 Engine::~Engine()
 {
-	delete eventGen;
-	delete rewardController;
+//	delete eventGen;
+	//delete rewardController;
 }
 
 void Engine::runExperiment(int trialsPerBlock, int blocks)
@@ -147,7 +147,7 @@ void Engine::startTrial()
 	eventCodeCounter++;
 	if(eventCodeCounter >127)
 		eventCodeCounter = 0;
-	eventGen->sendEvent(eventCodeCounter);
+//	eventGen->sendEvent(eventCodeCounter);
 
 	interTrialTimer->stop();
 	trialTimer->start();
@@ -197,7 +197,7 @@ void Engine::endTrial()
 	QString eventXml = QString("<event type=\"trialend\" trial=\"%1\"/>").arg(currTrial);
 	sendEngineEvent(eventXml);
 
-	eventGen->sendEvent(eventCodeCounter);
+//	eventGen->sendEvent(eventCodeCounter);
 }
 
 //called every frame
@@ -380,7 +380,7 @@ void Engine::startFlush(int controller)
 	}
 
 	out<<"Flushing on controller "<<controller<<"\n";
-	rewardController->flush(controller, true);
+//	rewardController->flush(controller, true);
 
 	flushTimeRemain = flushDurations[controller-1];
 	flushingController = controller;
@@ -397,7 +397,7 @@ void Engine::stopFlush(int controller)
 
 	flushTimeRemain = -1;
 
-	rewardController->flush(controller, false);
+//	rewardController->flush(controller, false);
 
 	//stop the clock.
 	flushingTimer->stop();
@@ -415,18 +415,18 @@ void Engine::decrementFlushTime()
 
 void Engine::giveReward(int controller)
 {
-	rewardController->giveReward(controller);
+//	rewardController->startReward(0,1);
 }
 
 int Engine::getRewardDuration(int controller) 
 {
-	return (unsigned int)rewardController->getRewardDurationMs(controller);
+	return (unsigned int)50;//rewardController->getRewardDurationMs(controller);
 
 }
 
 void Engine::setRewardDuration(int controller, int duration) 
 {
-	rewardController->setRewardDurationMs(controller,duration);
+//	rewardController->setRewardDurationMs(controller,duration);
 }
 
 

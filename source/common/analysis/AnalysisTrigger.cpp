@@ -34,53 +34,47 @@ AnalysisTrigger::AnalysisTrigger()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ElementDataSource::Create))));
 	dataSourceFactory->addAssetType("Time",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimeDataSource::Create))));
-	reset();
 }
 
 AnalysisTrigger::~AnalysisTrigger()
 {}
 
-void AnalysisTrigger::loadSession(QSqlDatabase session)
+void AnalysisTrigger::loadSessionAndScriptTools(QSqlDatabase session,QSharedPointer<QScriptEngine> qsEngine)
 {
 	session_ = session;
-	reset();
+	qsEngine_ = qsEngine;
+	if(qsEngine)
+		triggerArray_ = qsEngine->newArray();
+	else
+		triggerArray_ = QScriptValue();
+	periodData_.clear();
+	periodStart_ = EventOrderIndex();
+	nextPeriodsDataLoc_ = periodData_.end();
+	currentTriggerIndex_ = EventOrderIndex();
+	latestValue_.clear();
+	dataIterator_.clear();
+	dataIterator_ = createDataIterator();
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
 	QSharedPointer<AnalysisDataSource> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
 		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		dataSource->loadSession(session_);
+		dataSource->loadSessionAndScriptTools(session_,qsEngine,triggerArray_);
 	}
+
+	if(qsEngine)
+		qsEngine->globalObject().setProperty(getName(),triggerArray_);
 }
 
 void AnalysisTrigger::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
 {
-	if(dataIterator_)
-		dataIterator_->setDataWindow(startFrom,endBefore);
+	dataIterator_->setDataWindow(startFrom,endBefore);
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
 	QSharedPointer<AnalysisDataSource> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
 		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
 		dataSource->setDataWindow(startFrom,endBefore);
-	}
-}
-
-void AnalysisTrigger::reset()
-{
-	periodData_.clear();
-	nextPeriodsDataLoc_ = periodData_.end();
-	currentTriggerIndex_ = EventOrderIndex();
-	latestValue_.clear();
-	dataIterator_.clear();
-	if(session_.isValid())
-		dataIterator_ = createDataIterator();
-	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
-	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
-	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		dataSource->reset();
 	}
 }
 
@@ -150,53 +144,6 @@ void AnalysisTrigger::fillArraysTo(EventOrderIndex beforeIndex)
 		triggerArray_.setProperty(i++,value.rowScript);
 	}
 	triggerArray_.setProperty("length",i);
-}
-
-void AnalysisTrigger::setScriptEngine(QSharedPointer<QScriptEngine> qsEngine)
-{
-	qsEngine_ = qsEngine;
-	triggerArray_ = qsEngine->newArray();
-	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
-	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
-	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-		dataSource->setScriptObjects(qsEngine,triggerArray_);
-	}
-	qsEngine->globalObject().setProperty(getName(),triggerArray_);
-
-
-	//QScriptValue triggerObject = qsEngine->newQObject(this,QScriptEngine::QtOwnership);
-	//QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	//QSharedPointer<AnalysisDataSource> dataSource;
-	//foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
-	//{
-	//	dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
-	//	QScriptValue dataSourceObject = qsEngine->newQObject(dataSource.data(),QScriptEngine::QtOwnership);
-	//	triggerObject.setProperty(dataSource->getName(),dataSourceObject);
-	//}
-	//qsEngine->globalObject().setProperty(getName(),triggerObject);
-
-	//QLinkedList<QScriptValue> scriptRowList;
-	//QLinkedList<TriggerData>::iterator it;
-	//for(it = periodData_.begin();
-	//	(it != nextPeriodsDataLoc_) && (it != periodData_.end());
-	//	it++)
-	//{
-	//	QScriptValue scriptArrayRow = qsEngine->newObject();
-	//	foreach(SourceDataUnit dataUnit,it->dataBlock)
-	//	{
-	//		scriptArrayRow.setProperty(dataUnit.name,dataUnit.value);
-	//	}
-	//	scriptRowList.push_back(scriptArrayRow);
-	//}
-	//QScriptValue dataArray = qsEngine->newArray(scriptRowList.size());
-	//int i=0;
-	//foreach(QScriptValue scriptArrayRow,scriptRowList)
-	//{
-	//	dataArray.setProperty(QString::number(i++),scriptArrayRow);
-	//}
-	//qsEngine->globalObject().setProperty(getName(),dataArray);
 }
 
 QString AnalysisTrigger::scriptInfo()

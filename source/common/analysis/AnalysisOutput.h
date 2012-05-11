@@ -4,6 +4,8 @@
 #include <QScriptValue>
 #include <QWidget>
 #include <QPointer>
+#include <QUuid>
+#include <QFile>
 #include "AnalysisTool.h"
 #include "AnalysisOutputWidget.h"
 
@@ -20,7 +22,6 @@ public:
 	AnalysisOutput();
 	virtual ~AnalysisOutput();
 
-	void setOutputNamePrefix(QString prefix){prefix_ = prefix;};
 	//Should be overloaded to return a pointer to an output widget that
 	//presents the information written into this AnalysisOutput object.
 	virtual QPointer<AnalysisOutputWidget> getOutputWidget(){return QPointer<AnalysisOutputWidget>();};
@@ -36,7 +37,7 @@ public:
 	virtual QString getUITemplate(){return "AnalysisOutput";};
 	virtual QString assetType(){return "AnalysisOutput";};
 
-	static QString getTempOutputDir();
+	QString getTempOutputDir();
 
 protected:
 
@@ -46,12 +47,13 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	void setValid(bool isValid){valid_ = isValid;};
 	bool isValid(){return valid_;};
-	QString getOutputNamePrefix(){return prefix_;};
+	QString getOutputNamePrefix(){return runName_;};
 private:
 	static void initTempOutputDir();
+	static void removeFilesThenDirectories(QDir container);
 	static QString outputDir_;
 	static int loadedObjects_;
-	QString prefix_;
+	static QSharedPointer<QFile> lockFile_;	//File that is kept open while the application is active to prevent the directory from being deleted.
 	bool valid_;
 
 };

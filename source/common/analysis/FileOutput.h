@@ -21,9 +21,6 @@ public:
 	FileOutput();
 	virtual ~FileOutput();
 	static QSharedPointer<Asset> Create();
-
-	//Should reset the FileOutput Object to its initial state.
-	void reset();
 	
 	//Returns a pointer to an output widget that
 	//presents the information written into this AnalysisTool object.
@@ -42,6 +39,8 @@ public slots:
 protected:
 
 	//Inherited
+	//Should reset the FileOutput Object to its initial state.
+	void reset();
 	virtual QString defaultTagName(){return "FileOutput";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

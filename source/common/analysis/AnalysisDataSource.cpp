@@ -17,12 +17,6 @@ void AnalysisDataSource::storeValue(QScriptValue triggerScript,const EventOrderI
 	triggerScript.setProperty(getName(),getValue(index)->scriptVal);
 }
 
-void AnalysisDataSource::setScriptObjects(QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent)
-{
-	qsEngine_ = qsEngine;
-	parentScript_ = parent;
-}
-
 QSharedPointer<AnalysisValue> AnalysisDataSource::getValue(const EventOrderIndex& index)
 {
 	if(parentUsesSameIterator_)
@@ -77,23 +71,15 @@ QScriptValue AnalysisDataSource::createScriptArray(unsigned int length)
 	return qsEngine_->newArray(length);
 }
 
-void AnalysisDataSource::loadSession(QSqlDatabase session)
+void AnalysisDataSource::loadSessionAndScriptTools(QSqlDatabase session,QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent)
 {
 	session_ = session;
-	reset();
-}
+	qsEngine_ = qsEngine;
+	parentScript_ = parent;
 
-void AnalysisDataSource::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
-{
-	if(!dataIterator_ || parentUsesSameIterator_)
-		return;
-	dataIterator_->setDataWindow(startFrom,endBefore);
-}
-
-void AnalysisDataSource::reset()
-{
 	dataIterator_.clear();
 	parentUsesSameIterator_ = false;
+	nextValue_.clear();
 	if(!session_.isValid())
 		return;
 	dataIterator_=createDataIterator();
@@ -102,6 +88,13 @@ void AnalysisDataSource::reset()
 	if((getIteratorDescriptor() == getParentAsset().staticCast<AnalysisTrigger>()->getIteratorDescriptor())
 		&& !getIteratorDescriptor().isEmpty())
 		parentUsesSameIterator_ = true;
+}
+
+void AnalysisDataSource::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
+{
+	if(!dataIterator_ || parentUsesSameIterator_)
+		return;
+	dataIterator_->setDataWindow(startFrom,endBefore);
 }
 
 void AnalysisDataSource::sessionDatabaseUpdated()

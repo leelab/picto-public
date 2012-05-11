@@ -54,8 +54,6 @@ AnalysisPeriod::AnalysisPeriod()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericVariable::Create))));	
 	toolFactory->addAssetType("File",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FileOutput::Create))));	
-
-	reset();
 }
 
 AnalysisPeriod::~AnalysisPeriod()
@@ -70,19 +68,7 @@ QSharedPointer<Asset> AnalysisPeriod::Create()
 void AnalysisPeriod::loadSession(QSqlDatabase session)
 {
 	session_ = session;
-	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
-	triggers << getGeneratedChildren("StartTrigger");
-	triggers << getGeneratedChildren("EndTrigger");
-	QSharedPointer<AnalysisTrigger> trigger;
-	foreach(QSharedPointer<Asset> triggerAsset,triggers)
-	{
-		trigger = triggerAsset.staticCast<AnalysisTrigger>();
-		trigger->loadSession(session_);
-	}
-}
-
-void AnalysisPeriod::reset()
-{
+	//Setup scripting
 	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
 
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
@@ -90,25 +76,16 @@ void AnalysisPeriod::reset()
 	foreach(QSharedPointer<Asset> triggerAsset,triggers)
 	{
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
-		trigger->reset();
-		trigger->setScriptEngine(qsEngine_);
-	}
-	
-	triggers = getGeneratedChildren("StartTrigger");
-	triggers.append(getGeneratedChildren("EndTrigger"));
-	foreach(QSharedPointer<Asset> triggerAsset,triggers)
-	{
-		trigger = triggerAsset.staticCast<AnalysisTrigger>();
-		trigger->reset();
+		trigger->loadSessionAndScriptTools(session_,qsEngine_);
 	}
 
-	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisTool> analysisTool;
-	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
+	QList<QSharedPointer<Asset>> periodDefTriggers;
+	periodDefTriggers << getGeneratedChildren("StartTrigger");
+	periodDefTriggers << getGeneratedChildren("EndTrigger");
+	foreach(QSharedPointer<Asset> triggerAsset,periodDefTriggers)
 	{
-		analysisTool = toolAsset.staticCast<AnalysisTool>();
-		analysisTool->reset();
-		analysisTool->bindToScriptEngine(*qsEngine_);
+		trigger = triggerAsset.staticCast<AnalysisTrigger>();
+		trigger->loadSessionAndScriptTools(session_,QSharedPointer<QScriptEngine>());
 	}
 
 	//Make a Qt Script Function out of the script and its name
@@ -138,24 +115,15 @@ void AnalysisPeriod::reset()
 	periodNumber_ = 0;
 }
 
-void AnalysisPeriod::startNewRun(QString runName)
+void AnalysisPeriod::startNewRun(QString runName,QUuid runUuid)
 {
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisOutput> analysisOutput;
 	QSharedPointer<AnalysisTool> analysisTool;
 	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		if(toolAsset->inherits("Picto::AnalysisOutput"))
-		{
-			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
-			analysisOutput->setOutputNamePrefix(runName);
-		}
-		if(toolAsset->inherits("Picto::AnalysisTool"))
-		{
-			analysisTool = toolAsset.staticCast<AnalysisTool>();
-			analysisTool->reset();
-		}
-
+		analysisTool = toolAsset.staticCast<AnalysisTool>();
+		analysisTool->initialize(runName,runUuid);
+		analysisTool->bindToScriptEngine(*qsEngine_);
 	}
 	periodNumber_ = 0;
 }
@@ -377,7 +345,6 @@ unsigned int AnalysisPeriod::getPercentRemaining()
 void AnalysisPeriod::postDeserialize()
 {
 	UIEnabled::postDeserialize();
-	reset();
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("StartTrigger");
 	QSharedPointer<AnalysisTrigger> trigger;
 	foreach(QSharedPointer<Asset> triggerAsset,triggers)

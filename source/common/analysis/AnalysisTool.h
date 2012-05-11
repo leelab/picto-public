@@ -19,8 +19,7 @@ public:
 	AnalysisTool();
 	virtual ~AnalysisTool();
 
-	//Should reset the AnalysisTool Object to its initial state.
-	virtual void reset() = 0;
+	void initialize(QString runName,QUuid runUuid){runName_ = runName;runUuid_=runUuid;reset();};
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisTool";};
@@ -28,12 +27,17 @@ public:
 
 protected:
 
+	//Should reset the AnalysisTool Object to its initial state.
+	virtual void reset() = 0;
+
 	//Inherited
 	virtual QString defaultTagName(){return "AnalysisTool";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	void setValid(bool isValid){valid_ = isValid;};
 	bool isValid(){return valid_;};
+	QString runName_;
+	QUuid runUuid_;
 private:
 	bool valid_;
 

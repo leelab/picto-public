@@ -25,11 +25,13 @@ public:
 	void addSubTab(int topLevelIndex,QString name,QWidget* widget);
 	bool supportsSaving();
 	bool saveOutputToDirectory(QDir directory);
+	float fractionOutputSaved(){return fractionOutputSaved_;};
 	void clear();
 
 private:
 	QTabWidget *topLevelTabs_;
 	QVBoxLayout *mainLayout_;
+	float fractionOutputSaved_;
 };
 
 #endif

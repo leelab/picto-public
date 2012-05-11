@@ -27,7 +27,7 @@ public:
 
 	//AnalysisDefinition specific functions
 	//Resets the AnalysisDefinition to its initial state
-	void reset();
+	//void reset();
 	//Marks that a new run has started.  Periods will update everything that
 	//uses the run name.
 	void startNewRun(QSharedPointer<TaskRunDataUnit> runInfo);

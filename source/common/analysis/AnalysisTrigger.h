@@ -24,13 +24,13 @@ public:
 	AnalysisTrigger();
 	virtual ~AnalysisTrigger();
 
-	void loadSession(QSqlDatabase session);
+	void loadSessionAndScriptTools(QSqlDatabase session,QSharedPointer<QScriptEngine> qsEngine);
 	void setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore);
 
 
 	//AnalysisTrigger specific functions
 	//Resets the AnalysisTrigger to its initial state
-	void reset();
+	//void reset();
 	//Sets the start index of the current analysis period.  Internally, this
 	//causes the AnalysisTrigger to clear all data from its arrays that occured
 	//before this index.  It must always increase until reset() is called, although
@@ -42,8 +42,6 @@ public:
 	//values filled in will be up to but not including beforeIndex.
 	//The input value must always increase until reset() is called.
 	void fillArraysTo(EventOrderIndex beforeIndex);
-
-	void setScriptEngine(QSharedPointer<QScriptEngine> qsEngine);
 
 	QString scriptInfo();
 	virtual EventOrderIndex::IDSource getDataSource() = 0;

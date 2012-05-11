@@ -93,6 +93,7 @@ void AnalysisViewer::setupUi()
 	loadSessionAction_->setEnabled(true);
 
 	currSessionLabel_ = new QLabel(tr("No Loaded Session"));
+
 	progressBar_ = new QProgressBar();
 	progressBar_->setRange(0,100);
 	progressBar_->reset();
@@ -121,11 +122,9 @@ void AnalysisViewer::setupUi()
 	toolBar_->addSeparator();
 	toolBar_->addAction(loadSessionAction_);
 	toolBar_->addSeparator();
-	toolBar_->addWidget(currSessionLabel_);
-	toolBar_->addSeparator();
-	toolBar_->addWidget(progressBar_);
-	toolBar_->addSeparator();
 	toolBar_->addAction(saveOutputAction_);
+	toolBar_->addSeparator();
+	toolBar_->addWidget(currSessionLabel_);
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(toolBar_);
@@ -149,6 +148,7 @@ void AnalysisViewer::setupUi()
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
+	mainLayout->addWidget(progressBar_);
 	mainLayout->addWidget(mainTabWindow_);
 
 	setLayout(mainLayout);
@@ -156,35 +156,45 @@ void AnalysisViewer::setupUi()
 
 void AnalysisViewer::loadSession()
 {
-	QString filename = QFileDialog::getOpenFileName(this,
-			tr("Load Session"),".","Sqlite files (*.sqlite)");
-	if(filename.isEmpty())
+	QStringList filenames = QFileDialog::getOpenFileNames(	this,
+															tr("Select sessions"),
+															".",
+															"Picto Sessions(*.sqlite)");
+	if(!filenames.size())
 		return;
-	//Load Sqlite Database
-	//Check if this session is already open
-	if(session_.isValid() && (session_.databaseName() == filename))
-		return;
-
-	Q_ASSERT(filename.lastIndexOf("/") >=0);
-	Q_ASSERT(filename.lastIndexOf(".") >=0);
-	QString connectionName = filename.mid(filename.lastIndexOf("/")+1);
-	connectionName = connectionName.left(connectionName.lastIndexOf("."));
-
-	QSqlDatabase newSession = QSqlDatabase::addDatabase("QSQLITE",connectionName);
-	newSession.setDatabaseName(filename);
-	newSession.open();
-	if(!newSession.isOpen())
+	filenames.sort();
+	foreach(QSqlDatabase session,sessions_)
 	{
-		QMessageBox msg;
-		msg.setText("Error: Could not open session file.");
-		msg.exec();
-		return;
+		if(session.isValid())
+			session.close();
 	}
-	if(session_.isValid())
-		session_.close();
-	session_ = QSqlDatabase::database(newSession.connectionName());
-	runSelector_->loadSession(session_);
-	Q_ASSERT(session_.isValid() && session_.isOpen());
+	sessions_.clear();
+	foreach(QString filename,filenames)
+	{
+		//Load Sqlite Database
+		filename = filename.replace("\\","/");
+		Q_ASSERT(filename.lastIndexOf("/") >=0);
+		Q_ASSERT(filename.lastIndexOf(".") >=0);
+		QString connectionName = filename.mid(filename.lastIndexOf("/")+1);
+		connectionName = connectionName.left(connectionName.lastIndexOf("."));
+
+		QSqlDatabase newSession = QSqlDatabase::addDatabase("QSQLITE",connectionName);
+		newSession.setDatabaseName(filename);
+		newSession.open();
+		if(!newSession.isOpen())
+		{
+			QMessageBox msg;
+			msg.setText("Error: Could not open session file.");
+			msg.exec();
+			return;
+		}
+		mainTabWindow_->setTabEnabled(1,false);
+		outputDisplay_->clear();
+		sessions_.append(newSession);
+		Q_ASSERT(sessions_.last().isValid() && sessions_.last().isOpen());
+	}
+	runSelector_->loadSessions(sessions_);
+	
 	updateUI();
 }
 
@@ -194,7 +204,19 @@ void AnalysisViewer::saveOutput()
 			tr("Output Data Directory"),".", QFileDialog::ShowDirsOnly);
 	if(dirName.isEmpty())
 		return;
+	status_ = SAVING;
+	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
+	progressBarTimer_->start();
+	executeAction_->setEnabled(false);
+	loadSessionAction_->setEnabled(false);
+	saveOutputAction_->setEnabled(false);
 	outputDisplay_->saveOutputToDirectory(dirName);
+	progressBarTimer_->stop();
+	progressBar_->setRange(0,100);	//Returns progress bar to normal range if it wasn't done in updateProgressBar.
+	progressBar_->setValue(100);
+	executeAction_->setEnabled(true);
+	loadSessionAction_->setEnabled(true);
+	saveOutputAction_->setEnabled(true);
 }
 
 void AnalysisViewer::executeCommand()
@@ -212,14 +234,14 @@ void AnalysisViewer::executeCommand()
 		Serializable::clearErrors();
 		return;
 	}
+	status_ = ANALYZING;
 	this->setFocus();
-	mainTabWindow_->setTabEnabled(1,false);
+	//mainTabWindow_->setTabEnabled(1,false);
 	executeAction_->setEnabled(false);
 	loadSessionAction_->setEnabled(false);
 	saveOutputAction_->setEnabled(false);
 	runSelector_->setEnabled(false);
 	analysisDef_->setEnabled(false);
-	analysisDefinition_->loadSession(session_);
 	outputDisplay_->clear();
 	runsRemaining_ = 0;
 	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
@@ -227,6 +249,7 @@ void AnalysisViewer::executeCommand()
 	runsRemaining_ = runSelector_->selectedRunCount();
 	for(int i=0;i<runSelector_->selectedRunCount();i++)
 	{
+		analysisDefinition_->loadSession(runSelector_->getSessionForSelectedRun(i));
 		analysisDefinition_->startNewRun(runSelector_->getSelectedRun(i));
 		QString result = analysisDefinition_->run();
 		analysisDefinition_->finish();
@@ -235,6 +258,7 @@ void AnalysisViewer::executeCommand()
 		foreach(QPointer<QWidget> widget, outputWidgets)
 		{
 			outputDisplay_->addSubTab(currTabId,widget->objectName(),widget);
+			mainTabWindow_->setTabEnabled(1,true);
 		}
 		runsRemaining_--;
 	}
@@ -244,7 +268,6 @@ void AnalysisViewer::executeCommand()
 	QCoreApplication::processEvents();	//Get rid of any multiple presses on the execute button before we reenable it.
 	executeAction_->setEnabled(true);
 	loadSessionAction_->setEnabled(true);
-	mainTabWindow_->setTabEnabled(1,true);
 	runSelector_->setEnabled(true);
 	analysisDef_->setEnabled(true);
 	if(outputDisplay_->supportsSaving())
@@ -256,21 +279,40 @@ void AnalysisViewer::executeCommand()
 
 void AnalysisViewer::updateUI()
 {
-	currSessionLabel_->setText(session_.connectionName());
+	if(sessions_.length() == 0)
+		currSessionLabel_->setText(tr("No Loaded Session"));
+	else if(sessions_.length() == 1)
+		currSessionLabel_->setText(sessions_[0].connectionName());
+	else
+		currSessionLabel_->setText(sessions_[0].connectionName()+" - " + sessions_.last().connectionName());
 	progressBar_->setRange(0,100);
 	progressBar_->reset();
 }
 
 void AnalysisViewer::updateProgressBar()
 {
-	if(!analysisDefinition_)
-		return;
-	int currRunPercentRemaining = analysisDefinition_->getPercentRemaining();
-	//The analysisDefinition_ gives us the percent remaining of the current run,
-	//we need to update this value to reflect the portion of all runs completed.
 	progressBar_->setRange(0,100);
-	double totalRuns = runSelector_->selectedRunCount();
-	double completed = totalRuns-runsRemaining_;
-	double totalFraction = (completed+1.0-(double(currRunPercentRemaining)/100.0))/totalRuns;
+	double totalFraction = 0;
+	switch(status_)
+	{
+	case ANALYZING:
+		{
+			if(!analysisDefinition_)
+				return;
+			int currRunPercentRemaining = analysisDefinition_->getPercentRemaining();
+			//The analysisDefinition_ gives us the percent remaining of the current run,
+			//we need to update this value to reflect the portion of all runs completed.
+			double totalRuns = runSelector_->selectedRunCount();
+			double completed = totalRuns-runsRemaining_;
+			totalFraction = (completed+1.0-(double(currRunPercentRemaining)/100.0))/totalRuns;
+			
+		}
+	break;
+	case SAVING:
+		{
+			totalFraction = outputDisplay_->fractionOutputSaved();
+		}
+		break;
+	}
 	progressBar_->setValue(100.0*totalFraction);
 }
