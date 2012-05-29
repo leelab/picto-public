@@ -11,6 +11,9 @@
 							DAQmxClearTask(daqTaskHandle_); \
 							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", "DAQ function failure");\
 						 } }
+
+#define EVENT_CODE_HOLD_TIME .000250  //250 microseconds
+
 //JOEY - Adding define for using this on an old orion machine for debugging purposes.  Once this type
 //of debugging is no longer necessary, sections that depend on this definition can be safely removed.
 #define DEBUG_ON_ORION_MACHINE
@@ -50,7 +53,7 @@ PictoBoxXPEventCodeGenerator::~PictoBoxXPEventCodeGenerator()
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
 }
 
-void PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
+double PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 {
 	int32 sampsPerChanWritten;
 
@@ -85,7 +88,7 @@ void PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	LARGE_INTEGER ticksPerSec;
 	LARGE_INTEGER tick, tock;
 	double elapsedTime;
-	double delayTime = 0.000250; //250 microseconds
+	double delayTime = EVENT_CODE_HOLD_TIME;
 
 	QueryPerformanceFrequency(&ticksPerSec);
 	QueryPerformanceCounter(&tick);
@@ -109,7 +112,7 @@ void PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 #endif
 
-
+return EVENT_CODE_HOLD_TIME;
 
 }
 

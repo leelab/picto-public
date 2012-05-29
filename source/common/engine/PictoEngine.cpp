@@ -109,10 +109,11 @@ void PictoEngine::markTaskRunStop()
 }
 
 
-void PictoEngine::generateEvent(unsigned int eventCode)
+double PictoEngine::generateEvent(unsigned int eventCode)
 {
 	if(!eventCodeGenerator_.isNull())
-		eventCodeGenerator_->sendEvent(eventCode);
+		return eventCodeGenerator_->sendEvent(eventCode);
+	return 0.0;
 }
 
 

@@ -135,6 +135,24 @@ int main(int argc, char *argv[])
 		}
 #endif
 	}
+	
+	//If there is a command of -positionPeriod use it to configure the number of ms per 
+	//eye position reading
+	int posPerArgIdx = args.indexOf("-positionPeriod");
+	int posPer = 2;
+	if(posPerArgIdx > 0)
+	{
+		posPer = args[posPerArgIdx+1].toInt();
+	}
+
+	//If there is a command of -diamPeriod use it to configure the number of ms per 
+	//eye diameter reading
+	int diamPerArgIdx = args.indexOf("-diamPeriod");
+	int diamPer = 4;
+	if(diamPerArgIdx > 0)
+	{
+		diamPer = args[diamPerArgIdx+1].toInt();
+	}
 
 	//If there is a command argument of "-legacy", we should use 
 	//LegacySystemXPRewardController and LegacySystenXPEventCodeGenerator
@@ -155,11 +173,12 @@ int main(int argc, char *argv[])
 		rewCont = HardwareSetup::AudioReward;
 	}
 
+
 	//For now, just use pixmap ------- Remove this/////////////////////
 	//visTarget = HardwareSetup::Pixmap;
 	///////////////////////////////////////////////////////////////////	
 
-	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,eventGen,xChan,yChan,xDiamChan,yDiamChan));
+	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,eventGen,xChan,yChan,xDiamChan,yDiamChan,posPer,diamPer));
 	director->activate();
 	Picto::CloseLib();
 	return EXIT_SUCCESS;

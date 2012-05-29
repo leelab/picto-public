@@ -63,6 +63,8 @@ HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 	eventCodeGenSetup_ = false;
 	xChan_ = 0;
 	yChan_ = 1;
+	posSampPer_ = 2;
+	diamSampPer_ = 4;
 }
 
 //! Returns true if everything has been setup
@@ -138,13 +140,13 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 
 		QSharedPointer<Picto::VisualTarget> visualTarget = engine_->getRenderingTargets().first()->getVisualTarget();
 		QSharedPointer<Picto::MouseInputPort> mousePort(new Picto::MouseInputPort(visualTarget.data()));
-		QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,2,mousePort));
+		QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,posSampPer_,mousePort));
 		engine_->addSignalChannel(mouseChannel);
 #ifdef DEVELOPMENTBUILD
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::XYSignalChannel> daimMouseChannel(new Picto::XYSignalChannel("Diameter",2,3,4,mousePort));
+			QSharedPointer<Picto::XYSignalChannel> daimMouseChannel(new Picto::XYSignalChannel("Diameter",2,3,diamSampPer_,mousePort));
 			engine_->addSignalChannel(daimMouseChannel);
 		}
 #endif
@@ -155,13 +157,13 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 #if defined WIN32 && defined NI_STUFF
 		//Setup PositionChannel
 		QSharedPointer<Picto::LegacySystemXPAnalogInputPort> daqPort(new Picto::LegacySystemXPAnalogInputPort());
-		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,2,daqPort));
+		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,posSampPer_,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,4,daqPort));
+			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,diamSampPer_,daqPort));
 			engine_->addSignalChannel(aiChannel);
 		}
 
@@ -175,13 +177,13 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 #if defined WIN32 && defined NI_STUFF
 		//Setup PositionChannel
 		QSharedPointer<Picto::PictoBoxXPAnalogInputPort> daqPort(new Picto::PictoBoxXPAnalogInputPort());
-		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,2,daqPort));
+		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,posSampPer_,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
-			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,4,daqPort));
+			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,diamSampPer_,daqPort));
 			engine_->addSignalChannel(aiChannel);
 		}
 #else

@@ -10,6 +10,7 @@
 #include "SpikeDataSource.h"
 #include "TimeDataSource.h"
 #include "FrameDataSource.h"
+#include "AlignDataSource.h"
 #include "ElementDataSource.h"
 #include "DefaultDataSource.h"
 
@@ -26,6 +27,8 @@ AnalysisTrigger::AnalysisTrigger()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PropertyDataSource::Create))));
 	dataSourceFactory->addAssetType("Frame",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FrameDataSource::Create))));	
+	dataSourceFactory->addAssetType("Align",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AlignDataSource::Create))));
 	dataSourceFactory->addAssetType("Signal",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalDataSource::Create))));	
 	dataSourceFactory->addAssetType("Spike",

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AnalysisDefinition>
+  <Name>EventAndEye</Name>
+  <Script>
+    readme.writeLine(&quot;Name:\t&quot; + name);
+    readme.writeLine(&quot;Started:\t&quot; +startTime);
+    readme.writeLine(&quot;Ended:\t&quot; +endTime);
+    readme.writeLine(&quot;Run Number:\t&quot; + runNumber);
+    readme.writeLine(&quot;-----Notes-----&quot;);
+    readme.writeLine(notes);
+  </Script>
+  <Tool type="File">
+    <Name>readme</Name>
+    <FileName>.readme.txt</FileName>
+  </Tool>
+  <Period>
+    <Name>TestPeriod</Name>
+    <Script>
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
+      onTime = -1;
+      timeOn = 0;
+      definedTimeOn = -1;
+      for(i=0;i&lt;eye.length;i++)
+      {
+      if((onTime &lt; 0) &amp;&amp; (eye[i].data.value[1]&gt;1000))
+      onTime = (eye[i].time.value-startTime)*1000;
+      if((timeOn == 0) &amp;&amp; (onTime &gt; 0) &amp;&amp; (eye[i].data.value[1]&lt;1000))
+      timeOn = ((eye[i].time.value-startTime)*1000)-onTime;
+      definedTimeOn = eye[i].rewardQuant.value;
+      }
+      eyeFile.writeLine(
+      &quot;&quot;+definedTimeOn+&quot;,&quot;+Math.abs(timeOn-definedTimeOn)+&quot;,&quot;+Math.round(10*onTime)/10
+      );
+    </Script>
+    <StartTrigger type="Element">
+      <Name>start</Name>
+      <When>Starts</When>
+      <ElementPath>RewardTimingTest::Top::GiveRewards::Reward</ElementPath>
+    </StartTrigger>
+    <EndTrigger type="Element">
+      <Name>end</Name>
+      <When>Ends</When>
+      <ElementPath>RewardTimingTest::Top::GiveRewards::WaitForReward</ElementPath>
+    </EndTrigger>
+    <Trigger type="Signal">
+      <Name>eye</Name>
+      <SignalName>Position</SignalName>
+      <DataSource type="Signal">
+        <Name>data</Name>
+        <SignalName>Position</SignalName>
+      </DataSource>
+      <DataSource type="Property">
+        <Name>info</Name>
+        <PropertyPath>RewardTimingTest::Top::text::Text</PropertyPath>
+      </DataSource>
+      <DataSource type="Property">
+        <Name>rewardQuant</Name>
+        <PropertyPath>RewardTimingTest::Top::GiveRewards::RewardQuant::Value</PropertyPath>
+      </DataSource>
+      <DataSource type="Frame">
+        <Name>frame</Name>
+      </DataSource>
+      <DataSource type="Time">
+        <Name>time</Name>
+      </DataSource>
+    </Trigger>
+    <Tool type="File">
+      <Name>eyeFile</Name>
+      <FileName>.eye.csv</FileName>
+    </Tool>
+  </Period>
+</AnalysisDefinition>

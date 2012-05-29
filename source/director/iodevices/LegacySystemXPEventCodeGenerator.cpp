@@ -12,6 +12,7 @@
 							Q_ASSERT_X(!rc, "LegacySystemXPEventCodeGenerator", "DAQ function failure");\
 						 } }
 #define PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS "Dev1/line0:15"
+#define EVENT_CODE_HOLD_TIME .000250  //250 microseconds
 
 namespace Picto
 {
@@ -36,7 +37,7 @@ LegacySystemXPEventCodeGenerator::~LegacySystemXPEventCodeGenerator()
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
 }
 
-void LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
+double LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 {
 	int32 sampsPerChanWritten;
 
@@ -65,7 +66,7 @@ void LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	LARGE_INTEGER ticksPerSec;
 	LARGE_INTEGER tick, tock;
 	double elapsedTime;
-	double delayTime = 0.000250; //250 microseconds
+	double delayTime = EVENT_CODE_HOLD_TIME;
 
 	QueryPerformanceFrequency(&ticksPerSec);
 	QueryPerformanceCounter(&tick);
@@ -81,7 +82,7 @@ void LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	//	data[i] = 0;
 	data[0] = 0;
 	DAQmxErrChk(DAQmxWriteDigitalU16(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-
+	return EVENT_CODE_HOLD_TIME;
 }
 
 } //namespace Picto

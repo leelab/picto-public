@@ -6,6 +6,8 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+#define SECS_PRE_ALIGN 5
+
 void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine)
 {
 	engine_ = engine;
@@ -79,13 +81,15 @@ void DirectorStatusManager::doServerUpdate()
 	QSharedPointer<CommandChannel> dataChannel = getEngine()->getDataCommandChannel();
 	if(dataChannel.isNull())
 		return;
-	if((getStatus() > stopped) && (lastAlignTime_.secsTo(QDateTime::currentDateTime()) > 5))
+	if((getStatus() > stopped) && (lastAlignTime_.secsTo(QDateTime::currentDateTime()) > SECS_PRE_ALIGN))
 	{
 		alignmentCode_ = (alignmentCode_ == 0x7F)? 0 : alignmentCode_+1;
 		alignmentID_++;
 		Timestamper timestamper;
-		getEngine()->generateEvent(alignmentCode_);
-		double timestamp = timestamper.stampSec();
+
+		double clockBack = getEngine()->generateEvent(alignmentCode_);	//It is crucial that we put this line before
+																		//In order to get the Event Timestamp right.
+		double timestamp = timestamper.stampSec()-clockBack;
 
 		//Create an alignment command
 		QSharedPointer<ProtocolCommand> command(new ProtocolCommand());

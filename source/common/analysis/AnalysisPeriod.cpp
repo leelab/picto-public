@@ -12,6 +12,7 @@
 #include "SpikeTrigger.h"
 #include "TimeTrigger.h"
 #include "FrameTrigger.h"
+#include "AlignTrigger.h"
 #include "TransitionTrigger.h"
 #include "AnalysisOutput.h"
 #include "NumericVariable.h"
@@ -38,7 +39,9 @@ AnalysisPeriod::AnalysisPeriod()
 	triggerFactory->addAssetType("Property",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PropertyTrigger::Create))));
 	triggerFactory->addAssetType("Frame",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FrameTrigger::Create))));	
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FrameTrigger::Create))));
+	triggerFactory->addAssetType("Align",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AlignTrigger::Create))));
 	triggerFactory->addAssetType("Signal",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalTrigger::Create))));	
 	triggerFactory->addAssetType("Spike",
@@ -151,12 +154,10 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		if(periodNumber_ == 0)
 		{
 			//If we just started this run, set the data window to all triggers.
-			//If there are non-zero buffer values, create new time only indeces, otherwise
-			//use the start and end indeces as they are.
 			if(toIndex.isValid())
 			{
-				trigger->setDataWindow(	startBufferMs?EventOrderIndex(fromIndex.time_-double(startBufferMs*.001)):fromIndex,
-									endBufferMs?EventOrderIndex(toIndex.time_+double(endBufferMs*.001)):toIndex);
+				trigger->setDataWindow(EventOrderIndex(fromIndex.time_-double(startBufferMs*.001)),
+										EventOrderIndex(toIndex.time_+double(endBufferMs*.001)));
 			}
 			else
 			{
@@ -169,7 +170,13 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		trigger->sessionDatabaseUpdated();
 	}
 		
-	while(startIndex_ < fromIndex)
+	//The first time that we search for a start index in a run, we look for a start index with a time
+	//greater than or equal to the fromIndex rather than checking only the index.  This is because the 
+	//input index may be the index from the first frame which would come after the various initial transitions
+	//and property changes for that frame.  We don't want to skip those values as possible triggers for this
+	//run, so we just look at their time and not their dataid.  After that we are always comparing triggers
+	//to previous trigger dataids so we don't look at times any more and do the standard dataid comparison.
+	while((startIndex_ < fromIndex) && ((startIndex_.time_ < fromIndex.time_)||(periodNumber_ > 0)))
 	{	//Either this is the first run call since startNewRun() or last call finished with
 		//no startTrigger.  
 		//Try to get a new startIndex_.

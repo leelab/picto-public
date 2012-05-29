@@ -45,6 +45,7 @@ public:
 	bool setupEventCodeGenerator(EventCodeGeneratorType generatorType);
 	bool setXYChannelNums(int xChan, int yChan){xChan_ = xChan;yChan_ = yChan;return true;};
 	bool setXYDiamChannelNums(int xDiamChan, int yDiamChan){xDiamChan_ = xDiamChan;yDiamChan_ = yDiamChan;return true;};
+	bool setSamplePeriods(int positionPeriodMs, int diamPeriodMs){posSampPer_ = positionPeriodMs;diamSampPer_ = diamPeriodMs;return true;};
 
 	bool isSetup();
 
@@ -59,6 +60,8 @@ private:
 	int yChan_;
 	int xDiamChan_;
 	int yDiamChan_;
+	int posSampPer_;
+	int diamSampPer_;
 };
 
 #endif

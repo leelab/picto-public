@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AnalysisDefinition>
+  <Name>AlignTiming</Name>
+  <Script>
+    readme.writeLine(&quot;Name:\t&quot; + name);
+    readme.writeLine(&quot;Started:\t&quot; +startTime);
+    readme.writeLine(&quot;Ended:\t&quot; +endTime);
+    readme.writeLine(&quot;Run Number:\t&quot; + runNumber);
+    readme.writeLine(&quot;-----Notes-----&quot;);
+    readme.writeLine(notes);
+  </Script>
+  <Tool type="File">
+    <Name>readme</Name>
+    <FileName>.readme.txt</FileName>
+  </Tool>
+  <Period>
+    <Name>AlignPeriod</Name>
+    <Script>
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
+      for(i=0;i&lt;eye.length;i++)
+      {
+      if(eye[i].data.value[1]&gt;1000)
+      {
+      eyeFile.writeLine(
+      &quot;&quot;+Math.round(1000000*(Number(eye[i].time.value)-Number(startTime)))/1000000
+      //+&quot;,&quot;+Math.round(1000000*(Number(endTime)-Number(eye[i].time.value)))/1000000
+      +&quot;,&quot;+align[0].data.number
+      //+&quot;,&quot;+Math.round(1000*visible[0].time.value)/1000
+      //+&quot;,&quot;+Math.round(eye[i].data.value[1])
+      );
+      break;
+      }
+      }
+    </Script>
+    <StartTrigger type="Align">
+      <Name>start</Name>
+    </StartTrigger>
+    <EndTrigger type="Align">
+      <Name>end</Name>
+    </EndTrigger>
+    <Trigger type="Align">
+      <Name>align</Name>
+      <DataSource type="Align">
+        <Name>data</Name>
+      </DataSource>
+    </Trigger>
+    <Trigger type="Signal">
+      <Name>eye</Name>
+      <SignalName>Position</SignalName>
+      <DataSource type="Signal">
+        <Name>data</Name>
+        <SignalName>Position</SignalName>
+      </DataSource>
+      <DataSource type="Time">
+        <Name>time</Name>
+      </DataSource>
+    </Trigger>
+    <Tool type="File">
+      <Name>eyeFile</Name>
+      <FileName>.eye.csv</FileName>
+    </Tool>
+  </Period>
+</AnalysisDefinition>

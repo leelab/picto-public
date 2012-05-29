@@ -60,6 +60,7 @@ QGraphicsPolygonItem(parent, scene)
 
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
 DiagramItem::~DiagramItem()

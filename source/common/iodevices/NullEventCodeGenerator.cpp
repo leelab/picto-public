@@ -18,9 +18,10 @@ int NullEventCodeGenerator::getBitsPerEvent()
 	return 7;
 }
 
-void NullEventCodeGenerator::sendEvent(unsigned int eventCode)
+double NullEventCodeGenerator::sendEvent(unsigned int eventCode)
 {
 	qDebug()<<"Event code generated: "<<eventCode;
+	return 0.0;
 }
 
 } //namespace Picto

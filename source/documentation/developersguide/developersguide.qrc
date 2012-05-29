@@ -3,6 +3,12 @@
  <qresource prefix="/documentation">
    <file alias="_a_c_q_get_command_handler_8cpp-source.html">../../../output/documentation/main/html/_a_c_q_get_command_handler_8cpp-source.html</file>
    <file alias="_a_c_q_get_command_handler_8h-source.html">../../../output/documentation/main/html/_a_c_q_get_command_handler_8h-source.html</file>
+   <file alias="_align_data_iterator_8cpp-source.html">../../../output/documentation/main/html/_align_data_iterator_8cpp-source.html</file>
+   <file alias="_align_data_iterator_8h-source.html">../../../output/documentation/main/html/_align_data_iterator_8h-source.html</file>
+   <file alias="_align_data_source_8cpp-source.html">../../../output/documentation/main/html/_align_data_source_8cpp-source.html</file>
+   <file alias="_align_data_source_8h-source.html">../../../output/documentation/main/html/_align_data_source_8h-source.html</file>
+   <file alias="_align_trigger_8cpp-source.html">../../../output/documentation/main/html/_align_trigger_8cpp-source.html</file>
+   <file alias="_align_trigger_8h-source.html">../../../output/documentation/main/html/_align_trigger_8h-source.html</file>
    <file alias="_alignment_data_unit_8cpp-source.html">../../../output/documentation/main/html/_alignment_data_unit_8cpp-source.html</file>
    <file alias="_alignment_data_unit_8h-source.html">../../../output/documentation/main/html/_alignment_data_unit_8h-source.html</file>
    <file alias="_alignment_info_8cpp-source.html">../../../output/documentation/main/html/_alignment_info_8cpp-source.html</file>

@@ -123,7 +123,15 @@ public:
 	void markTaskRunStop();
 
 	void setEventCodeGenerator(QSharedPointer<EventCodeGenerator> eventCodeGenerator) { eventCodeGenerator_ = eventCodeGenerator; };
-	void generateEvent(unsigned int eventCode);
+	//Sends the event code and returns the time in seconds
+	//that the event code was triggered before the function returned.  The idea here
+	//is that in general, most EventCodeGenerators are going to need to hold a signal
+	//high for some number of microseconds before returning.  In order to get an
+	//accurage timestamp, we will record the time when this function returns minus
+	//the value that it returns.  We can't simply use the time at which the function
+	//is called because setup times may vary and are typically going to be harder to
+	//estimate.
+	double generateEvent(unsigned int eventCode);
 
 	void setRewardController(QSharedPointer<RewardController> rewardController) { rewardController_ = rewardController; };
 	void giveReward(int channel, int quantity, int minRewardPeriod);

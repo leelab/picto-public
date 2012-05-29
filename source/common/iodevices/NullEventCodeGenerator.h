@@ -27,7 +27,7 @@ public:
 	int getBitsPerEvent();
 
 public slots:
-	void sendEvent(unsigned int eventCode);
+	double sendEvent(unsigned int eventCode);
 
 };
 

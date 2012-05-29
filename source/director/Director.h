@@ -21,7 +21,9 @@ public:
 		int xEyeChannel = 0,
 		int yEyeChannel = 1,
 		int xDiamChannel = -1,
-		int yDiamChannel = -1);
+		int yDiamChannel = -1,
+		int posSampPer = 2,
+		int diamSampPer = 4);
 	virtual ~Director();
 protected:
 	virtual QString name();
@@ -40,6 +42,8 @@ private:
 	int yChannel_;
 	int xDiamChannel_;
 	int yDiamChannel_;
+	int posSampPer_;
+	int diamSampPer_;
 
 };
 #endif

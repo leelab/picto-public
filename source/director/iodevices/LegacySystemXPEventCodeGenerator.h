@@ -37,7 +37,7 @@ public:
 	int getBitsPerEvent() { return 7; };
 
 public slots:
-	void sendEvent(unsigned int eventCode);
+	double sendEvent(unsigned int eventCode);
 
 private:
 	quint32  daqTaskHandle_; // For Nidaqmx 8.5

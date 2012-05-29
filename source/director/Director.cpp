@@ -23,7 +23,9 @@ Director::Director(QString name,
 		int xEyeChannel,
 		int yEyeChannel,
 		int xDiamChannel,
-		int yDiamChannel):
+		int yDiamChannel,
+		int posSampPer,
+		int diamSampPer):
 	ComponentInterface("DIRECTOR"),
 	sigChannel_(sigChannel),
 	visualTarget_(visualTarget),
@@ -32,7 +34,9 @@ Director::Director(QString name,
 	xChannel_(xEyeChannel),
 	yChannel_(yEyeChannel),
 	xDiamChannel_(xDiamChannel),
-	yDiamChannel_(yDiamChannel)
+	yDiamChannel_(yDiamChannel),
+	posSampPer_(posSampPer),
+	diamSampPer_(diamSampPer)
 {
 	//! \TODO Set up random number generator?
 
@@ -96,6 +100,8 @@ int Director::openDevice()
 	if(!hwSetup.setXYChannelNums(xChannel_,yChannel_))
 		return 1;
 	if(!hwSetup.setXYDiamChannelNums(xDiamChannel_,yDiamChannel_))
+		return 1;
+	if(!hwSetup.setSamplePeriods(posSampPer_,diamSampPer_))
 		return 1;
 	if(!hwSetup.setupSignalChannel(sigChannel_)) 
 		return 1;
