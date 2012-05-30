@@ -47,17 +47,17 @@ AnalysisViewer::AnalysisViewer(QWidget *parent) :
 	{
 		query.exec("CREATE TABLE workstationinfo (key TEXT, value TEXT)");
 	}
-	query.exec("SELECT value FROM workstationinfo WHERE key='LastQuery'");
+	query.exec("SELECT value FROM workstationinfo WHERE key='LastAnalysisDefinition'");
 	bool rc = query.next();
 	if(!rc)
 	{
 		//inputBox_->setText("Enter SQL command here...");
-		query.prepare("INSERT INTO workstationinfo (key,value) VALUES ('LastQuery',:lastQuery)");
-		query.bindValue(":lastQuery",QString("Enter SQL command here..."));
+		query.prepare("INSERT INTO workstationinfo (key,value) VALUES ('LastAnalysisDefinition',:LastAnalysisDefinition)");
+		query.bindValue(":LastAnalysisDefinition",QString(""));
 		query.exec();
 	}
-	//else
-	//	inputBox_->setText(query.value(0).toString());
+	else
+		analysisDef_->setText(query.value(0).toString());
 }
 
 AnalysisViewer::~AnalysisViewer()
@@ -234,6 +234,13 @@ void AnalysisViewer::executeCommand()
 		Serializable::clearErrors();
 		return;
 	}
+	//Set the latest analysis definition in the workstation config file
+	QSqlQuery query(configDb_);
+	query.prepare("UPDATE workstationinfo SET value=:value WHERE key='LastAnalysisDefinition'");
+	query.bindValue(":value",analysisDef_->toPlainText());
+	query.exec();
+
+	//Start Analysis
 	status_ = ANALYZING;
 	this->setFocus();
 	//mainTabWindow_->setTabEnabled(1,false);
