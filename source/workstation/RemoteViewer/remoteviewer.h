@@ -135,8 +135,8 @@ private:
 	enum EngineTrigger
 	{
 		NoEngineTrigger,
+		ContinueEngine,
 		StartEngine,
-		StopEngine
 	} engineTrigger_;
 
 	

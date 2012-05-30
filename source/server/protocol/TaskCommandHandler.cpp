@@ -363,7 +363,7 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::updateServerData(QSt
 		if(dataType == "TaskRunDataUnit")
 		{
 			QSharedPointer<Picto::TaskRunDataUnit> runUnit(new Picto::TaskRunDataUnit());
-			runUnit->fromXml(data);
+			runUnit->fromXml(xmlReader);
 			sessInfo->modifyTaskRunData(runUnit);
 			foundSomething = true;
 		}

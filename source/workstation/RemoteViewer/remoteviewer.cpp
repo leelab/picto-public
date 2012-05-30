@@ -104,14 +104,14 @@ RemoteViewer::~RemoteViewer()
  *	is called continuously until the next state change.
  *	Note: If we were to actually start an experiment running from inside this function, the function could not be
  *	entered again until the experiment ended.  For this reason we have an external engine state machine
- *	that runs separately from this one.  If the engine is waiting for a state change to occur, this 
- *	function exits without doing anything.  In this way, any actions to start or stop the engine from
- *	within this function are guaranteed to occur before the next time the function operates.
+ *	that runs separately from this one.  If the engine is waiting to start, this 
+ *	function exits without doing anything.  In this way, any actions to start the engine from
+ *	within this function are guaranteed to be processed before the next time the function operates.
 
  */
 void RemoteViewer::updateState()
 {
-	if(engineTrigger_ != NoEngineTrigger)
+	if(engineTrigger_ == StartEngine)
 	{	//If the engine has been triggered to start or stop, we must always wait for it
 		//to do that before updating our own state
 		return;
@@ -191,6 +191,9 @@ void RemoteViewer::updateState()
 		case EndSessionRequest:
 			nextState = EndingSession;
 			break;
+		case SessionPaused:
+			nextState = PausedSession;
+			break;
 		case SessionRunning:
 			nextState = RunningSession;
 			break;
@@ -260,15 +263,15 @@ void RemoteViewer::updateState()
  *	activity so that starting an experiment doesn't effectively stop the operation
  *	of the main state machine.  The function must never be called from within
  *	updateState() to prevent that same problem, which is why it returns right away
- *	if an updateState() call is in progress.  The function waits for a startEngine
- *	trigger, then starts the engine at the current state of the pictoDirector's 
- *	experiment.  When an experiment stops, the function checks for a StopEngine trigger
- *	which implies that the main state machine has triggered for this engine to stop.
- *	If the trigger is found then the engine will no longer run until the next StartEngine
- *	trigger.  If the StopTrigger isn't found, the engine will start up again the next
- *	time the updateEngine function is called by its timer.  With this system in place,
- *	even if something goes wrong and the engine exits before a task is done, it will just
- *	restart it.
+ *	if an updateState() call is in progress.  The function waits for a StartEngine
+ *	trigger, then changes the trigger to ContinueEngine and starts the engine at the current 
+ *  state of the pictoDirector's experiment.  When an experiment stops, the function checks 
+ *  to see if the trigger changed back to StartEngine which implies that the engine should
+ *  be restarted on the next updateEngine call.  If there is no such trigger, the trigger is
+ *  set to NoEngineTrigger.  
+ *  Since runState checks to see if the engineTrigger_ is noEngineTrigger, with this system in 
+ *  place, even if something goes wrong and the engine exits before a task is done, updateState
+ *  will just end up restarting it.
  */
 void RemoteViewer::updateEngine()
 {
@@ -278,11 +281,6 @@ void RemoteViewer::updateEngine()
 	//of time the way the engine does.
 	if(updatingState_)
 		return;
-	if(engineTrigger_ == StopEngine)
-	{
-		engineTrigger_ = NoEngineTrigger;
-		return;
-	}
 	if(engineTrigger_ == StartEngine)
 	{
 		engine_->resetLastTimeStateDataRequested();
@@ -296,7 +294,11 @@ void RemoteViewer::updateEngine()
 		QString machinePath = fullPath.left(lastSepIndex);
 		QString initState = fullPath.mid(lastSepIndex+2);
 		if(machinePath.isEmpty())
+		{
+			//There's no where to start the experiment. Abort.
+			engineTrigger_ = NoEngineTrigger;
 			return;
+		}
 		
 		QStringList initStateMachinePath = machinePath.split("::");
 		QString taskName = initStateMachinePath.first();
@@ -330,17 +332,12 @@ void RemoteViewer::updateEngine()
 			return;
 		}
 		taskName = initStateMachinePath.first();
-		engineTrigger_ = NoEngineTrigger;
+		engineTrigger_ = ContinueEngine;
 		//WARNING:  Nothing after this line will be processed until the task is finished running
 		activeExperiment_->runTask(taskName.simplified().remove(' '));
-		if(engineTrigger_ == StopEngine)
+		if(engineTrigger_ != StartEngine)
 		{
 			engineTrigger_ = NoEngineTrigger;
-		}
-		else
-		{	//If there's no stopEngine trigger, either the experiment failed, or the task changed.
-			//Either way we need to try to start again.
-			engineTrigger_ = StartEngine;
 		}
 	}
 }
@@ -404,6 +401,8 @@ void RemoteViewer::runState()
 			pixmapVisualTarget_->setZoom(zoomValue_);
 			renderingTarget_->showSplash();
 		}
+		if(remoteStatus == Paused)
+			stateTrigger_ = SessionPaused;
 		if(remoteStatus == Running)
 			stateTrigger_ = SessionRunning;
 		if(!connectAction_->isChecked())
@@ -416,7 +415,7 @@ void RemoteViewer::runState()
 				stateTrigger_ = DisjoinSessionRequest;
 			}
 		}
-		if(remoteStatus < Stopped)
+		if((remoteStatus < Stopped) && (remoteStatus > NotFound))
 		{
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
@@ -436,9 +435,12 @@ void RemoteViewer::runState()
 		}
 		if(remoteStatus == Running)
 			stateTrigger_ = SessionRunning;
-		if(remoteStatus == Stopped)
+		//If the engine isn't running for some reason, or the director stopped, go to the stopped
+		//state.  In the case where the director is still running but our engine stopped, the stop
+		//state will just restart the engine and send us back here.
+		if((engineTrigger_ == NoEngineTrigger) || (remoteStatus == Stopped))
 			stateTrigger_ = SessionStopped;
-		if(!connectAction_->isChecked() || (remoteStatus < Stopped))
+		if(!connectAction_->isChecked() || ((remoteStatus < Stopped) && (remoteStatus > NotFound)))
 		{
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
@@ -460,9 +462,12 @@ void RemoteViewer::runState()
 		}
 		if(remoteStatus == Paused)
 			stateTrigger_ = SessionPaused;
-		if(remoteStatus == Stopped)
+		//If the engine isn't running for some reason, or the director stopped, go to the stopped
+		//state.  In the case where the director is still running but our engine stopped, the stop
+		//state will just restart the engine and send us back here.
+		if((engineTrigger_ == NoEngineTrigger) || (remoteStatus == Stopped))
 			stateTrigger_ = SessionStopped;
-		if(!connectAction_->isChecked() || (remoteStatus < Stopped))
+		if(!connectAction_->isChecked() || ((remoteStatus < Stopped) && (remoteStatus > NotFound)))
 		{
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
@@ -1827,7 +1832,7 @@ void RemoteViewer::stopExperiment()
 {
 	Q_ASSERT(engine_);
 	engine_->stop();
-	engineTrigger_ = StopEngine;
+	//engineTrigger_ = StopEngine;
 }
 
 /*! \brief Disjoins a currently running session
