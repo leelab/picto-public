@@ -3,15 +3,17 @@
 
 #include <QTextStream>
 
-#include "FPSTOPFLUSHCommandHandler.h"
+#include "FPInterface.h"
+#include "FPSTARTFLUSHCommandHandler.h"
 #include "../../common/globals.h"
 
 
-FPSTOPFLUSHCommandHandler::FPSTOPFLUSHCommandHandler()
+
+FPSTARTFLUSHCommandHandler::FPSTARTFLUSHCommandHandler()
 {
 }
 
-QSharedPointer<Picto::ProtocolResponse> FPSTOPFLUSHCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
+QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QTextStream out(stdout);
 
@@ -26,7 +28,6 @@ QSharedPointer<Picto::ProtocolResponse> FPSTOPFLUSHCommandHandler::processComman
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
 
-
 	QStringList targetFields = command->getTarget().split('/',QString::SkipEmptyParts);
 	if(targetFields.size()>1)
 	{
@@ -34,11 +35,8 @@ QSharedPointer<Picto::ProtocolResponse> FPSTOPFLUSHCommandHandler::processComman
 		int controller = targetFields[1].toInt(&ok);
 		if(ok)
 		{
-			/*! \todo we should actually give a reward here when this is used with 
-			 *  the real engine...
-			 */
-			out<<"\nStopping Flush on controller: "<<controller<<"\n\n";
-			eng->stopFlush(controller);
+			out<<"\nStarting Flush on controller: "<<controller<<"\n\n";
+			emit startFlush(controller);
 			return okResponse;
 		}
 		else

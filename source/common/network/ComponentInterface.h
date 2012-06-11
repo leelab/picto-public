@@ -10,7 +10,7 @@
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ComponentInterface
 #else
-class ComponentInterface
+class ComponentInterface : public QObject
 #endif
 {
 public:

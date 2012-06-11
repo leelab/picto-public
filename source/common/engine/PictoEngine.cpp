@@ -52,10 +52,32 @@ QList<QSharedPointer<RenderingTarget> > PictoEngine::getRenderingTargets()
 	return renderingTargets_;
 }
 
+QList<QSharedPointer<ControlPanelInterface> > PictoEngine::getControlPanels()
+{
+	return controlPanelIfs_;
+}
+
 void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
 {	
 	renderingTargets_.append(target);
 	connect(target->getVisualTarget().data(), SIGNAL(presented(double)), this, SLOT(firstPhosphorOperations(double)));
+}
+
+void PictoEngine::addControlPanel(QSharedPointer<ControlPanelInterface> controlPanel)
+{	
+	controlPanelIfs_.append(controlPanel);
+	//Set first time information
+	controlPanel->ipAddressChanged(dataCommandChannel_?dataCommandChannel_->getIpAddress().toString():"0.0.0.0");
+	controlPanel->nameChanged(getName());
+
+	//Connect all signals! and set data in appropriate places
+	connect(controlPanel.data(),SIGNAL(nameChangeRequest(QString)),this,SLOT(setName(QString)));
+	connect(controlPanel.data(),SIGNAL(rewardDurationChangeRequest(int,int)),this,SLOT(setRewardDuration(int,int)));
+	connect(controlPanel.data(),SIGNAL(flushDurationChangeRequest(int,int)),this,SLOT(setFlushDuration(int,int)));
+	connect(controlPanel.data(),SIGNAL(giveRewardRequest(int)),this,SLOT(giveReward(int)));
+	connect(controlPanel.data(),SIGNAL(startFlushRequest(int)),this,SLOT(startFlush(int)));
+	connect(controlPanel.data(),SIGNAL(stopFlushRequest(int)),this,SLOT(stopFlush(int)));
+
 }
 
 bool PictoEngine::hasVisibleRenderingTargets()
@@ -159,26 +181,29 @@ void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 		while(rewardController_->hasPendingRewards())
 		{	
 			rewardController_->triggerRewards(true);
-			QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
-			QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+			if(dataCommandChannel_->getSessionId() != QUuid())
+			{	//Only send data to the server if we're in a session
+				QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
+				QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
-			QByteArray dataXml;
-			QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+				QByteArray dataXml;
+				QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
 
-			xmlWriter->writeStartElement("Data");
-			QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
-			foreach(QSharedPointer<RewardDataUnit> reward,rewards)
-			{
-				reward->toXml(xmlWriter);
+				xmlWriter->writeStartElement("Data");
+				QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
+				foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+				{
+					reward->toXml(xmlWriter);
+				}
+				xmlWriter->writeEndElement();
+
+				dataCommand->setContent(dataXml);
+				dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+				QUuid commandUuid = QUuid::createUuid();
+
+				dataCommandChannel_->sendRegisteredCommand(dataCommand);
+				dataCommandChannel_->processResponses(0);
 			}
-			xmlWriter->writeEndElement();
-
-			dataCommand->setContent(dataXml);
-			dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
-			QUuid commandUuid = QUuid::createUuid();
-
-			dataCommandChannel_->sendRegisteredCommand(dataCommand);
-			dataCommandChannel_->processResponses(0);
 			QCoreApplication::processEvents();
 		}
 	}
@@ -544,10 +569,41 @@ bool PictoEngine::setUpdateCommandChannel(QSharedPointer<CommandChannel> command
 	else
 		return true;
 }
-
 QSharedPointer<CommandChannel> PictoEngine::getUpdateCommandChannel()
 {
 	return updateCommandChannel_;
+}
+
+bool PictoEngine::setFrontPanelCommandChannel(QSharedPointer<CommandChannel> commandChannel)
+{
+	if(commandChannel.isNull())
+		return false;
+
+	fpCommandChannel_ = commandChannel;
+	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
+		return false;
+	else
+		return true;
+}
+QSharedPointer<CommandChannel> PictoEngine::getFrontPanelCommandChannel()
+{
+	return fpCommandChannel_;
+}
+
+bool PictoEngine::setFrontPanelEventChannel(QSharedPointer<CommandChannel> commandChannel)
+{
+	if(commandChannel.isNull())
+		return false;
+
+	fpEventChannel_ = commandChannel;
+	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
+		return false;
+	else
+		return true;
+}
+QSharedPointer<CommandChannel> PictoEngine::getFrontPanelEventChannel()
+{
+	return fpEventChannel_;
 }
 
 void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
@@ -575,6 +631,58 @@ void PictoEngine::setSessionId(QUuid sessionId)
 		updateCommandChannel_->setSessionId(sessionId_);
 }
 
+void PictoEngine::setName(QString name) 
+{
+	name_ = name;
+	foreach(QSharedPointer<ControlPanelInterface> cp,controlPanelIfs_)
+	{
+		cp->nameChanged(name);
+	}
+}
+
+void PictoEngine::setRewardDuration(int controller, int duration)
+{
+	while(rewardDurations_.size() <= controller)
+		rewardDurations_.append(-1);
+	rewardDurations_[controller] = duration;
+	foreach(QSharedPointer<ControlPanelInterface> cp,controlPanelIfs_)
+	{
+		cp->rewardDurationChanged(controller,duration);
+	}
+}
+
+void PictoEngine::setFlushDuration(int controller, int duration)
+{
+	while(flushDurations_.size() <= controller)
+		flushDurations_.append(-1);
+	flushDurations_[controller] = duration;
+	foreach(QSharedPointer<ControlPanelInterface> cp,controlPanelIfs_)
+	{
+		cp->flushDurationChanged(controller,duration);
+	}
+}
+
+void PictoEngine::giveReward(int channel)
+{
+	if(rewardDurations_.size() <= channel)
+		return;
+	giveReward(channel,rewardDurations_[channel],0);
+}
+
+void PictoEngine::startFlush(int channel)
+{
+	if(flushDurations_.size() <= channel)
+		return;
+	giveReward(channel,flushDurations_[channel],0);
+}
+
+void PictoEngine::stopFlush(int channel)
+{
+	if(rewardController_.isNull())
+		return;
+	rewardController_->stopRewards(channel);
+}
+
 int PictoEngine::getEngineCommand()
 {
 	return engineCommand_;
@@ -593,6 +701,11 @@ void PictoEngine::firstPhosphorOperations(double frameTime)
 	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
 	{
 		channel->updateData(frameTime);
+	}
+	
+	foreach(QSharedPointer<ControlPanelInterface> cp, controlPanelIfs_)
+	{
+		cp->doIncomingCommands();
 	}
 }
 

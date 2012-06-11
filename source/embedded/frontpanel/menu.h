@@ -7,6 +7,7 @@
 #include <QTimer>
 
 #include "FrontPanelInfo.h"
+#include "DirectorInterface.h"
 
 //The menu definition system deserves some disucssion here.
 //Every menu item has a name, a menu number, and an id.
@@ -90,6 +91,7 @@ private:
 	int prevMenuItem();
 
 	FrontPanelInfo *panelInfo;
+	DirectorInterface *directorIf_;
 
 	QTimer *connectionTimer;
 	QTimer *flushingTimer;

@@ -432,14 +432,14 @@ void ProxyMainWindow::runState()
 	{
 	case WaitForConnect:
 		if(statusManager_)
-			statusManager_->setName(name());
+			statusManager_.staticCast<ProxyStatusManager>()->setName(name());
 		if(!dataCommandChannel_.isNull() && dataCommandChannel_->assureConnection())
 			stateTrigger_ = Connected;
 		break;
 	case WaitForSession:
 		setNeuralDataAcquisitionDevice(pluginCombo_->currentIndex());
 		if(statusManager_)
-			statusManager_->setName(name());
+			statusManager_.staticCast<ProxyStatusManager>()->setName(name());
 		if(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection())
 			stateTrigger_ = Disconnected;
 		else if(isSessionActive())

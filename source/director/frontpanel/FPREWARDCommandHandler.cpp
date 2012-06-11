@@ -3,16 +3,16 @@
 
 #include <QTextStream>
 
-#include "FPSTARTFLUSHCommandHandler.h"
+#include "FPInterface.h"
+#include "FPREWARDCommandHandler.h"
 #include "../../common/globals.h"
 
 
-
-FPSTARTFLUSHCommandHandler::FPSTARTFLUSHCommandHandler()
+FPREWARDCommandHandler::FPREWARDCommandHandler()
 {
 }
 
-QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
+QSharedPointer<Picto::ProtocolResponse> FPREWARDCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QTextStream out(stdout);
 
@@ -27,6 +27,7 @@ QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processComma
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
 
+
 	QStringList targetFields = command->getTarget().split('/',QString::SkipEmptyParts);
 	if(targetFields.size()>1)
 	{
@@ -34,8 +35,8 @@ QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processComma
 		int controller = targetFields[1].toInt(&ok);
 		if(ok)
 		{
-			out<<"\nStarting Flush on controller: "<<controller<<"\n\n";
-			eng->startFlush(controller);
+			emit giveReward(controller);
+			out<<"\n!Reward! Controller "<<controller<<"\n\n";
 			return okResponse;
 		}
 		else

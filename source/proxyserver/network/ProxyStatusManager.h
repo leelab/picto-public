@@ -12,10 +12,13 @@ public:
 	ProxyStatusManager(QSharedPointer<Picto::CommandChannel> commandChannel);
 	void setPlugin(QObject* acqPlugin){acqPlugin_ = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);};
 	NeuralDataAcqInterface* getPlugin(){return acqPlugin_;};
+	void setName(QString name){name_ = name;};
+	virtual QString getName(){return name_;};
 protected:
 	virtual void newSession();
 	virtual void doServerUpdate();
 private:
+	QString name_;
 	QSharedPointer<Picto::CommandChannel> commandChannel_;
 	NeuralDataAcqInterface* acqPlugin_;
 };

@@ -36,7 +36,8 @@ Director::Director(QString name,
 	xDiamChannel_(xDiamChannel),
 	yDiamChannel_(yDiamChannel),
 	posSampPer_(posSampPer),
-	diamSampPer_(diamSampPer)
+	diamSampPer_(diamSampPer),
+	useFrontPanel_((rewardController != HardwareSetup::LegacySystemXpReward)&&(eventCodeGenerator != HardwareSetup::LegacyGen))
 {
 	//! \TODO Set up random number generator?
 
@@ -72,6 +73,30 @@ Director::Director(QString name,
 	Q_ASSERT(rc);
 	name_ = query.value(0).toString();
 
+	//Figure out reward durations
+	query.exec("SELECT value FROM directorinfo WHERE key='RewardDurations'");
+	if(!query.next())
+	{
+		query.exec("INSERT INTO directorinfo (key,value) VALUES ('RewardDurations','')");
+		for(int i=0;i<=4;i++)
+			changeRewardDuration(i,100);
+		query.exec("SELECT value FROM directorinfo WHERE key='RewardDurations'");
+		Q_ASSERT(query.next());
+	}
+	rewardDurs_ = query.value(0).toString().split(":",QString::SkipEmptyParts);
+
+	//Figure out flush durations
+	query.exec("SELECT value FROM directorinfo WHERE key='FlushDurations'");
+	if(!query.next())
+	{
+		query.exec("INSERT INTO directorinfo (key,value) VALUES ('FlushDurations','')");
+		for(int i=0;i<=4;i++)
+			changeFlushDuration(i,10000);
+		query.exec("SELECT value FROM directorinfo WHERE key='FlushDurations'");
+		Q_ASSERT(query.next());
+	}
+	flushDurs_ = query.value(0).toString().split(":",QString::SkipEmptyParts);
+
 }
 Director::~Director()
 {
@@ -91,7 +116,22 @@ int Director::openDevice()
 	engine_->setName(name_);
 	engine_->setExclusiveMode(true);
 
+	for(int i=0;i<rewardDurs_.size();i++)
+		engine_->setRewardDuration(i,rewardDurs_[i].toInt());
+	for(int i=0;i<flushDurs_.size();i++)
+		engine_->setFlushDuration(i,flushDurs_[i].toInt());
+
 	HardwareSetup hwSetup(engine_);
+
+	//If running on PictoBox create front panel
+	if(useFrontPanel_)
+	{
+		fpInterface_ = QSharedPointer<FPInterface>(new FPInterface());
+		QObject::connect(fpInterface_.data(),SIGNAL(nameChangeRequest(QString)),this,SLOT(changeName(QString)));
+		QObject::connect(fpInterface_.data(),SIGNAL(rewardDurationChangeRequest(int,int)),this,SLOT(changeRewardDuration(int,int)));
+		QObject::connect(fpInterface_.data(),SIGNAL(flushDurationChangeRequest(int,int)),this,SLOT(changeFlushDuration(int,int)));
+		engine_->addControlPanel(fpInterface_);
+	}
 	
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering
 	//otherwise use d3d.
@@ -114,7 +154,7 @@ int Director::openDevice()
 
 	statusManager_ = QSharedPointer<ComponentStatusManager>(new DirectorStatusManager());
 	statusManager_.staticCast<DirectorStatusManager>()->setEngine(engine_);
-	statusManager_->setName(name());
+
 
 	dataCommandChannel_->setStatusManager(statusManager_);
 	engine_->setDataCommandChannel(dataCommandChannel_);
@@ -134,6 +174,7 @@ int Director::openDevice()
 
 	//Put up our splash screen
 	statusManager_.staticCast<DirectorStatusManager>()->setUserInfo("PictoDirector started");
+
 	return 0;
 }
 
@@ -148,6 +189,35 @@ int Director::closeDevice()
 	return 0;
 }
 
+void Director::changeName(QString name)
+{
+	QSqlQuery query(configDb_);
+	query.prepare("UPDATE directorinfo SET value=:value WHERE key='Name'");
+	query.bindValue(":value",name);
+	query.exec();
+}
+
+void Director::changeRewardDuration(int controller, int duration)
+{
+	while(rewardDurs_.size() <= controller)
+		rewardDurs_.append("100");
+	rewardDurs_[controller] = QString::number(duration);
+	QSqlQuery query(configDb_);
+	query.prepare("UPDATE directorinfo SET value=:value WHERE key='RewardDurations'");
+	query.bindValue(":value",rewardDurs_.join(":"));
+	query.exec();
+}
+
+void Director::changeFlushDuration(int controller, int duration)
+{
+	while(flushDurs_.size() <= controller)
+		flushDurs_.append("10000");
+	flushDurs_[controller] = QString::number(duration);
+	QSqlQuery query(configDb_);
+	query.prepare("UPDATE directorinfo SET value=:value WHERE key='FlushDurations'");
+	query.bindValue(":value",flushDurs_.join(":"));
+	query.exec();
+}
 
 /*! \todo PictoEngine object which loads an experiment object and can execute its contained tasks rendering to one or
  *        more RenderingTarget derived objects.  The PictoEngine can be set to have precise timing control, or to ignore

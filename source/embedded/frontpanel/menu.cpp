@@ -26,12 +26,15 @@ Menu::Menu(FrontPanelInfo *panelInfo) :
 	flushingTimer->setInterval(100);
 	connect(flushingTimer,SIGNAL(timeout()), this, SLOT(drawFlush()));
 
+	directorIf_ = new DirectorInterface(panelInfo);
+
 }
 
 Menu::~Menu()
 {
 	delete connectionTimer;
 	delete flushingTimer;
+	delete directorIf_;
 
 	while(menuItems.size() > 0)
 		menuItems.erase(menuItems.begin());
@@ -161,23 +164,10 @@ void Menu::userInputSlot(int type)
 			drawMenu();
 
 			//inform the engine of the change
-			QTcpSocket *commSock = panelInfo->getCommandSocket();
-			Picto::ProtocolCommand command("FPPUT /IP PICTO/1.0");
-			QByteArray content = QString("%1").arg(addr).toUtf8();
-
-			command.setContent(content);
-			command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
-			command.write(commSock);
-
-			//wait for a response from the engine
-			Picto::ProtocolResponse response;
-			response.read(commSock,300);
-			if(response.getResponseCode() != 200)
+			if(!directorIf_->setIP(addr))
 			{
 				doMessage("IP not updated,","try again");
 			}
-
-
 		}
 		else
 		{
@@ -249,24 +239,11 @@ void Menu::userInputSlot(int type)
 			}
 
 			//inform the engine of the change
-			QTcpSocket *commSock = panelInfo->getCommandSocket();
-			Picto::ProtocolCommand command(QString("FPPUT /boxname PICTO/1.0"));
-			QByteArray content = QString("%1").arg(name).toUtf8();
-
-			command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
-			command.setContent(content);
-			command.write(commSock);
-
-			//wait for a response from the engine
-			Picto::ProtocolResponse response;
-			response.read(commSock,300);
-			if(response.getResponseCode() != 200)
+			if(!directorIf_->setName(name))
 			{
 				doMessage("Name not updated,","try again");
 			}
-
 		}
-
 		else
 		{
 			panelInfo->setSystemName(name);
@@ -305,22 +282,10 @@ void Menu::userInputSlot(int type)
 			drawMenu();
 
 			//inform the engine of the change
-			QTcpSocket *commSock = panelInfo->getCommandSocket();
-			Picto::ProtocolCommand command(QString("FPPUT /reward/%1/duration PICTO/1.0").arg(panelInfo->getRewardController()));
-			QByteArray content = QString("%1").arg(rewardDur).toUtf8();
-
-			command.setContent(content);
-			command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
-			command.write(commSock);
-
-			//wait for a response from the engine
-			Picto::ProtocolResponse response;
-			response.read(commSock,300);
-			if(response.getResponseCode() != 200)
+			if(!directorIf_->setRewardDuration(rewardDur,panelInfo->getRewardController()))
 			{
 				doMessage("Duration not updated,","try again");
 			}
-
 		}
 		else
 		{
@@ -400,22 +365,10 @@ void Menu::userInputSlot(int type)
 			drawMenu();
 
 			//inform the engine of the change
-			QTcpSocket *commSock = panelInfo->getCommandSocket();
-			Picto::ProtocolCommand command(QString("FPPUT /reward/%1/flushduration PICTO/1.0").arg(panelInfo->getRewardController()));
-			QByteArray content = QString("%1").arg(flushDur).toUtf8();
-
-			command.setContent(content);
-			command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
-			command.write(commSock);
-
-			//wait for a response from the engine
-			Picto::ProtocolResponse response;
-			response.read(commSock,300);
-			if(response.getResponseCode() != 200)
+			if(!directorIf_->setFlushDuration(flushDur,panelInfo->getRewardController()))
 			{
 				doMessage("Duration not updated,","try again");
 			}
-
 		}
 		else
 		{
@@ -445,12 +398,10 @@ void Menu::userInputSlot(int type)
 			//send out a stop flushing command
 			QTcpSocket *commSock = panelInfo->getCommandSocket();
 			int controller = panelInfo->getRewardController();
-			Picto::ProtocolCommand command(QString("FPSTOPFLUSH /reward/%1 PICTO/1.0").arg(controller));
-			command.write(commSock);
-
-			//wait for a response from the engine
-			Picto::ProtocolResponse response;
-			response.read(commSock,300);
+			if(!directorIf_->stopFlush(panelInfo->getRewardController()))
+			{
+				doMessage("Flush not stopped,","try again");
+			}
 
 			panelInfo->setDispMode(PanelInfo::MenuMode);
 			emit turnOnBacklight();
@@ -518,15 +469,7 @@ void Menu::menuAction()
 		if(menuItems[currItem].name == "Give Reward")
 		{
 			//tell the engine to give a reward
-			QTcpSocket *commSock = panelInfo->getCommandSocket();
-			Picto::ProtocolCommand command(QString("FPREWARD /reward/%1 PICTO/1.0").arg(panelInfo->getRewardController()));
-			command.write(commSock);
-
-			//wait for a response from the engine 
-			QApplication::processEvents();
-			Picto::ProtocolResponse response;
-			response.read(commSock,300);
-			if(response.getResponseCode() != 200)
+			if(!directorIf_->startReward(panelInfo->getRewardController()))
 			{
 				doMessage("Reward not given,","try again");
 			}
@@ -713,32 +656,15 @@ void Menu::drawRewardDuration(bool firstTime)
 //Sets everything up for the reward duration mode
 void Menu::initRewardDuration()
 {
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-
-	int controller = panelInfo->getRewardController();
-
-	//send a command
-	Picto::ProtocolCommand command(QString("FPGET /reward/%1/duration PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,300);
-	if(bytesRead<0)
+	int rewardDur = directorIf_->getRewardDuration(panelInfo->getRewardController());
+	if(rewardDur < 0)
 	{
 		doMessage("Duration not recv'd","from engine");
 		return;
 	}
-
-	QString duration = engineResponse.getDecodedContent();
-
-	panelInfo->setRewardDuration(duration.toInt());
-
+	panelInfo->setRewardDuration(rewardDur);
 	panelInfo->setDispMode(PanelInfo::RewardDurMode);
 	drawRewardDuration(true);
-
 	return;
 }
 
@@ -758,33 +684,15 @@ void Menu::drawChangeController()
 //Sets everything up for the flush duration mode
 void Menu::initFlushDuration()
 {
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-
-	int controller = panelInfo->getRewardController();
-
-	//send a command
-	Picto::ProtocolCommand command(QString("FPGET /reward/%1/flushduration PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,300);
-	if(bytesRead<0)
+	int flushDur = directorIf_->getFlushDuration(panelInfo->getRewardController());
+	if(flushDur<0)
 	{
 		doMessage("Flush dur not recv'd","from engine");
 		return;
 	}
-
-	QString duration = engineResponse.getDecodedContent();
-
-
-	panelInfo->setFlushDuration(duration.toInt());
-
+	panelInfo->setFlushDuration(flushDur);
 	panelInfo->setDispMode(PanelInfo::FlushDurMode);
 	drawFlushDuration(true);
-
 	return;
 }
 
@@ -806,20 +714,10 @@ void Menu::drawFlushDuration(bool firstTime)
 
 void Menu::initFlush()
 {
-	int controller = panelInfo->getRewardController();
-
 	//start the timer
 	flushingTimer->start();
 
-	//send out a start flushing command
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-	Picto::ProtocolCommand command(QString("FPSTARTFLUSH /reward/%1 PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//get a response from the engine
-	Picto::ProtocolResponse response;
-	response.read(commSock,300);
-	if(response.getResponseCode() != 200)
+	if(!directorIf_->startFlush(panelInfo->getRewardController()))
 	{
 		doMessage("Flushing failed,","Try again");
 	}	
@@ -830,36 +728,16 @@ void Menu::initFlush()
 	//so we have to draw the first line here.  (We can't use the "firstTime"
 	//bool like with the other draw methods, since this one is a slot, and it
 	//needs to be connected to a signal with no arguments).
-
 	QString line1 = "Flushing.";
 	emit updateLCD(1,line1);
 }
 
 void Menu::drawFlush()
 {
-	bool endFlush = false;
-	int timeRem;
-	int controller = panelInfo->getRewardController();
-
 	flushingTimer->stop();
-
 	//get the time remaining in the flush
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-	Picto::ProtocolCommand command(QString("FPGET /reward/%1/flushtimeremain PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	Picto::ProtocolResponse engineResponse;
-	engineResponse.read(commSock,300);
-
-	bool ok;
-	timeRem = engineResponse.getDecodedContent().toInt(&ok);
-	if(!ok)
-		endFlush = true;
-	else if(timeRem <= 0)
-		endFlush = true;
-
-
-	if(!endFlush)
+	int timeRem = directorIf_->getFlushTimeRemaining(panelInfo->getRewardController());
+	if(timeRem > 0)
 	{
 		emit toggleBacklight();
 		QString line2 = QString("  %1 s").arg(timeRem);
@@ -873,50 +751,24 @@ void Menu::drawFlush()
 		panelInfo->setDispMode(PanelInfo::MenuMode);
 		drawMenu();
 	}
-
-
-
 }
 
 void Menu::initChangeIP()
 {
-	//grab the system IP from the engine, and update panelInfo
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-
-	//send a command
-	Picto::ProtocolCommand command("FPGET /IP PICTO/1.0");
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,300);
-	if(bytesRead<0)
-	{
-		doMessage("IP not recv'd","from engine");
-		return;
-	}
-
-	QString ipString = engineResponse.getDecodedContent();
-
+	QString ipString = directorIf_->getIP();
 	QHostAddress addr;
-	if(addr.setAddress(ipString))
+	if(!ipString.isEmpty() && addr.setAddress(ipString))
 	{
 		panelInfo->setSystemIP(addr);
 	}
-
 	else
 	{
 		doMessage("IP not recv'd","from engine");
 		return;
 	}
-
 	currIpField=0;
-
 	panelInfo->setDispMode(PanelInfo::ChangeIPMode);
 	drawChangeIP(true);
-
 	return;
 }
 
@@ -950,37 +802,19 @@ void Menu::drawChangeIP(bool drawLine2)
 
 void Menu::initChangeName()
 {
-	//grab the system name from the engine, and update panelInfo
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-
-	//send a command
-	Picto::ProtocolCommand command("FPGET /boxname PICTO/1.0");
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,300);
-	if(bytesRead<0)
+	QString name = directorIf_->getName();
+	if(name.isEmpty())
 	{
 		doMessage("Name not recv'd","from engine");
 		return;
 	}
-
-	QString name = engineResponse.getDecodedContent();
-
 	//add spaces to the system name
 	//20 chars in an LCD line - sizeof("Name:") = 15 chars left to use
 	name.append(QString(15-name.size(),' '));  
-
 	panelInfo->setSystemName(name);
-
 	currNameChar=0;
-
 	panelInfo->setDispMode(PanelInfo::ChangeNameMode);
 	drawChangeName(true);
-
 	return;
 }
 
@@ -1041,16 +875,7 @@ void Menu::updateStatus()
 
 void Menu::checkConnections()
 {
-	//check to see if we've connected to the engine yet
-	QTcpSocket *commSock, *eventSock;
-	commSock = panelInfo->getCommandSocket();
-	eventSock = panelInfo->getEventSocket();
-
-	//The order in this "if" is important, since if we call isValid() on a 
-	//null pointer, bad things will happen. (Remember, || will return true
-	//when it encounters the first true expression.)
-	if(!commSock || !eventSock ||
-		!commSock->isValid()  || !eventSock->isValid())
+	if(!directorIf_->isConnected())
 	{
 		QString line1 = "No engine connection\n";
 		QString line2 = "";

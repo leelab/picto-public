@@ -4,6 +4,7 @@
 
 #include <QTextStream>
 
+#include "FPInterface.h"
 #include "FPPUTCommandHandler.h"
 #include "../../common/globals.h"
 
@@ -39,7 +40,8 @@ QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSha
 		QHostAddress newAddr;
 		if(newAddr.setAddress(commandContent))
 		{
-			eng->setIP(newAddr);
+			//fpInterface_.toStrongRef()->setIP(newAddr);
+			qDebug("IP ADDRESS CHANGE REQUESTED! THERE IS NO WAY I'M IMPLEMENTING THIS RIGHT NOW.");
 			okResponse->setContent(commandContent.toUtf8());
 			return okResponse;
 		}
@@ -55,7 +57,7 @@ QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSha
 	else if(command->getTarget() == "/boxname")
 	{
 		commandContent = command->getContent();
-		eng->setName(commandContent);
+		emit setName(commandContent);
 		okResponse->setContent(commandContent.toUtf8());
 		return okResponse;
 	}
@@ -72,7 +74,7 @@ QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSha
 				int newDur = commandContent.toInt(&ok);
 				if(!ok)
 					return badRequestResponse;
-				eng->setRewardDuration(controller, newDur);
+				emit setRewardDuration(controller, newDur);
 				okResponse->setContent(commandContent.toUtf8());
 				return okResponse;
 			}
@@ -89,7 +91,7 @@ QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSha
 				int newDur = commandContent.toInt(&ok);
 				if(!ok)
 					return badRequestResponse;
-				eng->setFlushDuration(controller, newDur);
+				emit setFlushDuration(controller, newDur);
 				okResponse->setContent(commandContent.toUtf8());
 				return okResponse;
 			}

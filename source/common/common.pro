@@ -180,6 +180,8 @@ HEADERS += $$(PICTO_TREE)/source/common/engine/xYSignalChannel.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/xYSignalChannel.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/PictoEngine.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/PictoEngine.cpp
+HEADERS += $$(PICTO_TREE)/source/common/engine/ControlPanelInterface.h
+SOURCES += $$(PICTO_TREE)/source/common/engine/ControlPanelInterface.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/experiment/Experiment.h
 SOURCES += $$(PICTO_TREE)/source/common/experiment/Experiment.cpp

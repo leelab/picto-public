@@ -61,7 +61,6 @@ int ComponentInterface::activate()
 	openDevice();
 	deviceOpened_ = true;
 	Q_ASSERT(!statusManager_.isNull());
-	statusManager_->setName(name());
 	dataCommandChannel_->setStatusManager(statusManager_);
 	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new NewSessionResponseHandler(statusManager_,dataCommandChannel_)),false);
 	dataCommandChannel_->addResponseHandler(QSharedPointer<ProtocolResponseHandler>(new EndSessionResponseHandler(statusManager_,dataCommandChannel_)),false);

@@ -59,8 +59,12 @@ public slots:
 	void addReward(unsigned int channel,int quantity, int minRewardPeriod);
 	// \brief Triggers any pending rewards to be given if possible.
 	void triggerRewards(bool appendToList);
+	// \brief Stops all currently active and pending rewards on the input channel
+	void stopRewards(unsigned int channel);
 	// \brief returns true if there are still rewards to send.
 	bool hasPendingRewards();
+	// \brief returns true if there are still rewards to send on the input channel.
+	bool hasPendingRewards(unsigned int channel);
 	virtual void flush(unsigned int channel,bool flush) = 0;
 
 protected:
@@ -68,6 +72,10 @@ protected:
 	// Reward time is marked just after this is called, so actual reward should be given as close as possible
 	// to the end of the function.
 	virtual void startReward(unsigned int channel,int quantity) = 0;
+	// \brief Stops a reward  that is currently being supplied.
+	// Note that when a reward is stopped early, this fact is not recorded
+	// in the session database.
+	virtual void stopReward(unsigned int channel) = 0;
 	// \brief Returns true if the latest reward is no longer being supplied.  
 	// startReward won't be called until this returns true.
 	virtual bool rewardWasSupplied(unsigned int channel) = 0;

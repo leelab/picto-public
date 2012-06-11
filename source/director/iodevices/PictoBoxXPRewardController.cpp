@@ -79,6 +79,16 @@ void PictoBoxXPRewardController::startReward(unsigned int channel,int quantity)
 	latestOnTime_[channel] = quantity;
 }
 
+void PictoBoxXPRewardController::stopReward(unsigned int channel)
+{
+	if(!taskExists_[channel])
+		return;
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
+	//We may need to manually set the pin back to TTL low... see if we do in testing.
+	taskExists_[channel] = false;
+}
+
 bool PictoBoxXPRewardController::rewardWasSupplied(unsigned int channel)
 {
 	if(!taskExists_[channel])

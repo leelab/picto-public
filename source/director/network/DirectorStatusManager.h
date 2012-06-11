@@ -9,6 +9,7 @@ class DirectorStatusManager : public ComponentStatusManager
 {
 	Q_OBJECT
 public:
+	virtual QString getName();
 	void setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine);
 	QSharedPointer<Picto::Engine::PictoEngine> getEngine();
 	void setExperiment(QSharedPointer<Picto::Experiment> experiment);
@@ -17,6 +18,7 @@ public:
 	virtual void setStatus(ComponentStatus status);
 protected:
 	virtual void newSession();
+	virtual void doFrequentUpdate();
 	virtual void doServerUpdate();
 private:
 	ComponentStatus status_;

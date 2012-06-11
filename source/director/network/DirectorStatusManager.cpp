@@ -4,9 +4,17 @@
 #include "../../common/timing/timestamper.h"
 #include "../../common/storage/AlignmentDataUnit.h"
 #include "../../common/memleakdetect.h"
+#include "../frontpanel/FPInterface.h"
 using namespace Picto;
 
 #define SECS_PRE_ALIGN 5
+
+QString DirectorStatusManager::getName()
+{
+	if(engine_.isNull())
+		return "";
+	return getEngine()->getName();
+}
 
 void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine)
 {
@@ -16,6 +24,7 @@ void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine>
 	lastAlignTime_ = QDateTime::currentDateTime();
 	connect(engine.data(),SIGNAL(pauseRequested()),this,SLOT(pauseRequested()));
 }
+
 QSharedPointer<Picto::Engine::PictoEngine> DirectorStatusManager::getEngine()
 {
 	Q_ASSERT(!engine_.isNull());
@@ -68,11 +77,21 @@ void DirectorStatusManager::newSession()
 	alignmentID_ = 0;
 	lastAlignTime_ = QDateTime::currentDateTime();
 }
+
+void DirectorStatusManager::doFrequentUpdate()
+{
+	if(engine_.isNull())
+		return;
+	foreach(QSharedPointer<ControlPanelInterface> cp,getEngine()->getControlPanels())
+	{
+		cp->doIncomingCommands();
+	}
+}
+
 void DirectorStatusManager::doServerUpdate()
 {
 	//We keep on setting status/user info here just in case the director got minimized.  These actions will cause the splash
-	//screen to re-present which will cause the director to remaximize and take focus.  I really shouldn't be talking about the
-	//director here in its parent, but this will be useful 
+	//screen to re-present which will cause the director to remaximize and take focus.
 	if(getStatus() <= idle)
 		setStatus(getStatus());
 	else if(getStatus() == stopped)

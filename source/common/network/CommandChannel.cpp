@@ -73,7 +73,11 @@ void CommandChannel::closeChannel()
 	consumerSocket_->close();
 }
 
-
+QHostAddress CommandChannel::getIpAddress()
+{
+	if(consumerSocket_)
+		return consumerSocket_->localAddress();
+}
 //! Checks the network for any new incoming responses, adds them to the queue, and returns
 //! the number of responses in the queue.  Used when the channel is in polled mode
 int CommandChannel::incomingResponsesWaiting()

@@ -69,6 +69,19 @@ SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputPort.cpp
 HEADERS += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputPort.h
 SOURCES += $$(PICTO_TREE)/source/director/engine/LegacySystemXPAnalogInputPort.cpp
 
+HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPInterface.h
+SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPInterface.cpp
+HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPGETCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPGETCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPPUTCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPPUTCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPREWARDCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPREWARDCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPSTARTFLUSHCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPSTARTFLUSHCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPSTOPFLUSHCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPSTOPFLUSHCommandHandler.cpp
+
 }
 
 

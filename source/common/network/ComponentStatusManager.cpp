@@ -5,7 +5,7 @@
 
 QMap<QString,ComponentStatus> ComponentStatusManager::statusTransitionDictionary_;
 QMap<ComponentStatus,QString> ComponentStatusManager::statusNameDictionary_;
-
+#define MSPERFREQUPDATE 16
 ComponentStatusManager::ComponentStatusManager()
 {
 	status_ = disconnected;
@@ -28,6 +28,7 @@ ComponentStatusManager::ComponentStatusManager()
 		statusNameDictionary_[paused] = "Paused";
 	}
 	lastUpdateTime_ = QDateTime::currentDateTime();
+	lastFreqUpdateTime_ = lastUpdateTime_;
 	forceExit_ = false;
 }
 void ComponentStatusManager::setStatus(ComponentStatus status)
@@ -47,10 +48,16 @@ void ComponentStatusManager::setStatus(QString status)
 void ComponentStatusManager::update(int timeoutMs)
 {
 	QDateTime startTime = QDateTime::currentDateTime();
+	int val = lastFreqUpdateTime_.msecsTo(startTime);
+	if((getStatus()<=stopped) && (lastFreqUpdateTime_.msecsTo(startTime)>=MSPERFREQUPDATE))
+	{
+		doFrequentUpdate();
+		lastFreqUpdateTime_ = startTime;
+	}
 	if(lastUpdateTime_.secsTo(startTime)>1)
 	{
 		doServerUpdate();
-		lastUpdateTime_ = QDateTime::currentDateTime();
+		lastUpdateTime_ = startTime;
 	}
 
 	if((timeoutMs < 0) || (timeoutMs - (startTime.time().msecsTo(QDateTime::currentDateTime().time())) >= 40))

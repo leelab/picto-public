@@ -19,11 +19,12 @@ namespace Picto {
  *	cause any necessary internal state changes.  
  */
 #if defined WIN32 || defined WINCE
-struct PICTOLIB_API ProtocolCommandHandler
+struct PICTOLIB_API ProtocolCommandHandler : public QObject
 #else
-struct ProtocolCommandHandler
+struct ProtocolCommandHandler : public QObject
 #endif
 {
+	Q_OBJECT
 public:
 	ProtocolCommandHandler();
 

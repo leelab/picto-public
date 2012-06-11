@@ -51,14 +51,14 @@ void EngineConnections::setupCommandConnection()
 	panelInfo->setCommandSocket(clientConnection);
 
 	QTextStream out(stdout);
-	out<<"Command channel connected...\n";
+	out<<"Command channel connected...";
 
 }
 
 void EngineConnections::setupEventConnection()
 {
 	QTextStream out(stdout);
-	out<<"setupEventConnection...\n";
+	out<<"Command channel connected...";
 	out.flush();
 
 	QTcpSocket *clientConnection = eventChannel->nextPendingConnection();

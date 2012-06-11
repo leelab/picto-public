@@ -53,6 +53,15 @@ void RewardController::triggerRewards(bool appendToList)
 	}
 }
 
+void RewardController::stopRewards(unsigned int channel)
+{
+	if(rewardChannels_.size() <= channel)
+		return;
+	stopReward(channel);
+	rewardChannels_[channel].pendingRewards.clear();
+	rewardChannels_[channel].lastRewardPeriod = rewardChannels_[channel].stopwatch.elapsedMs();
+}
+
 bool RewardController::hasPendingRewards()
 {
 	bool returnVal = false;
@@ -65,6 +74,15 @@ bool RewardController::hasPendingRewards()
 		}
 	}
 	return returnVal;
+}
+
+bool RewardController::hasPendingRewards(unsigned int channel)
+{
+	if(channel >= rewardChannels_.size())
+		return false;
+	if(rewardChannels_[channel].pendingRewards.size())
+		return true;
+	return false;
 }
 
 void RewardController::appendDeliveredRewards(QSharedPointer<RewardDataUnit> rewardUnit)

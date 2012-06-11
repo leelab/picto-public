@@ -3,15 +3,16 @@
 
 #include <QTextStream>
 
-#include "FPREWARDCommandHandler.h"
+#include "FPInterface.h"
+#include "FPSTOPFLUSHCommandHandler.h"
 #include "../../common/globals.h"
 
 
-FPREWARDCommandHandler::FPREWARDCommandHandler()
+FPSTOPFLUSHCommandHandler::FPSTOPFLUSHCommandHandler()
 {
 }
 
-QSharedPointer<Picto::ProtocolResponse> FPREWARDCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
+QSharedPointer<Picto::ProtocolResponse> FPSTOPFLUSHCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QTextStream out(stdout);
 
@@ -34,8 +35,11 @@ QSharedPointer<Picto::ProtocolResponse> FPREWARDCommandHandler::processCommand(Q
 		int controller = targetFields[1].toInt(&ok);
 		if(ok)
 		{
-			eng->giveReward(controller);
-			out<<"\n!Reward! Controller "<<controller<<"\n\n";
+			/*! \todo we should actually give a reward here when this is used with 
+			 *  the real engine...
+			 */
+			out<<"\nStopping Flush on controller: "<<controller<<"\n\n";
+			emit stopFlush(controller);
 			return okResponse;
 		}
 		else

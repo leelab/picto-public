@@ -120,6 +120,7 @@ public:
 	bool assureConnection(int acceptableTimeoutMs = 0);
 
 	void closeChannel();
+	QHostAddress getIpAddress();
 public slots:
 	void connectToServer();
 

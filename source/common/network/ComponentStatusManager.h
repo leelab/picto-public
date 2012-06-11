@@ -22,8 +22,7 @@ class ComponentStatusManager
 	Q_OBJECT
 public:
 	ComponentStatusManager();
-	void setName(QString name){name_ = name;};
-	QString getName(){return name_;};
+	virtual QString getName()=0;
 	virtual void setStatus(ComponentStatus status);
 	void setStatus(QString status);
 	virtual void setUserInfo(QString info){};
@@ -36,13 +35,19 @@ public:
 	bool exitTriggered(){return forceExit_;};
 protected:
 	virtual void newSession() = 0;
+	//May be updated by child to perform operations that must occur very frequently
+	//when the component is not running a session.  This will get called about once per
+	//16ms when the component is not in the running or paused states.
+	virtual void doFrequentUpdate(){};
+	//Should be updated by child to send a "keep alive" update to the server.
+	//This will get called about once per second.
 	virtual void doServerUpdate() = 0;
 private:
-	QString name_;
 	ComponentStatus status_;
 	static QMap<QString,ComponentStatus> statusTransitionDictionary_;
 	static QMap<ComponentStatus,QString> statusNameDictionary_;
 	QDateTime lastUpdateTime_;
+	QDateTime lastFreqUpdateTime_;
 	QUuid sessionID_;
 	bool forceExit_;
 };

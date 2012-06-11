@@ -9,9 +9,11 @@
 #include "../common/network/ComponentInterface.h"
 #include "../common/engine/PictoEngine.h"
 #include "HardwareSetup.h"
+#include "frontpanel/FPInterface.h"
 
-class Director : public ComponentInterface
+class Director : public QObject, public ComponentInterface
 {
+	Q_OBJECT
 public:
 	Director(QString name = "",
 		HardwareSetup::SignalChannelType sigChannel = HardwareSetup::Mouse,
@@ -33,17 +35,25 @@ protected:
 private:
 	QString name_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
+	QSharedPointer<FPInterface> fpInterface_;
 	QSqlDatabase configDb_;
 	HardwareSetup::SignalChannelType sigChannel_;
 	HardwareSetup::VisualTargetType visualTarget_;
 	HardwareSetup::RewardControllerType rewardController_;
 	HardwareSetup::EventCodeGeneratorType eventCodeGenerator_;
+	QStringList rewardDurs_;
+	QStringList flushDurs_;
 	int xChannel_;
 	int yChannel_;
 	int xDiamChannel_;
 	int yDiamChannel_;
 	int posSampPer_;
 	int diamSampPer_;
+	bool useFrontPanel_;
+private slots:
+	void changeName(QString name);
+	void changeRewardDuration(int controller, int duration);
+	void changeFlushDuration(int controller, int duration);
 
 };
 #endif

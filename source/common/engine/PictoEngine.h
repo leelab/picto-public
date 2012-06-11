@@ -29,6 +29,7 @@
 #include "../storage/TaskRunDataUnit.h"
 #include "../storage/experimentconfig.h"
 #include "propertytable.h"
+#include "ControlPanelInterface.h"
 
 namespace Picto {
 	namespace Engine {
@@ -115,6 +116,9 @@ public:
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
 	bool hasVisibleRenderingTargets();
 
+	QList<QSharedPointer<ControlPanelInterface>> getControlPanels();
+	void addControlPanel(QSharedPointer<ControlPanelInterface> controlPanel);
+
 	QSharedPointer<SignalChannel> getSignalChannel(QString name);
 	void addSignalChannel(QSharedPointer<SignalChannel> channel);
 	void startAllSignalChannels();
@@ -164,6 +168,12 @@ public:
 	bool setUpdateCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getUpdateCommandChannel();
 
+	bool setFrontPanelCommandChannel(QSharedPointer<CommandChannel> commandChannel);
+	QSharedPointer<CommandChannel> getFrontPanelCommandChannel();
+
+	bool setFrontPanelEventChannel(QSharedPointer<CommandChannel> commandChannel);
+	QSharedPointer<CommandChannel> getFrontPanelEventChannel();
+
 	void setPropertyTable(QSharedPointer<PropertyTable> propTable);
 	QSharedPointer<PropertyTable> getPropertyTable(){return propTable_;};
 	void sendAllPropertyValuesToServer();
@@ -171,7 +181,7 @@ public:
 	void setSessionId(QUuid sessionId);
 	QUuid getSessionId() { return sessionId_; };
 
-	void setName(QString name) { name_ = name; };
+
 	QString getName() { return name_; };
 
 	void setOperatorAsUser(bool operatorMode = true){userIsOperator_ = operatorMode;};
@@ -184,8 +194,17 @@ public:
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;currStateUnit_.clear();};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 
+public slots:
+	void setName(QString name);
+	void setRewardDuration(int controller, int duration);
+	void setFlushDuration(int controller, int duration);
+	void giveReward(int channel);
+	void startFlush(int channel);
+	void stopFlush(int channel);
+
 signals:
 	void pauseRequested();
+	void firstPhosphorOccured();
 private:
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
@@ -194,14 +213,19 @@ private:
 	QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
 	QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
 	QList<QSharedPointer<RenderingTarget> > renderingTargets_;
+	QList<QSharedPointer<ControlPanelInterface>> controlPanelIfs_;
 	QSharedPointer<RewardController> rewardController_;
 	QSharedPointer<PropertyDataUnitPackage> propPackage_;
 	QSharedPointer<StateDataUnitPackage> stateDataPackage_;
 	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server
 	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
+	QSharedPointer<CommandChannel> fpCommandChannel_;		//Used for receiving commands from the front panel
+	QSharedPointer<CommandChannel> fpEventChannel_;			//Used for sending event data to the front panel
 	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode
 	QSharedPointer<PropertyTable> propTable_;
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
+	QVector<int> rewardDurations_;
+	QVector<int> flushDurations_;
 	bool taskRunStarting_;
 	bool taskRunEnding_;
 	QString taskRunName_;

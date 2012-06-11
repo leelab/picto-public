@@ -1,6 +1,24 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+ 
+#if defined(__stdcall)  
+ #define CCONV __stdcall  	
+#else 
+ #if defined(__BORLANDC__) || defined(_MSC_VER) 
+  #define CCONV __stdcall  
+ #else 
+  #define CCONV 
+ #endif 
+#endif 
+ 
+#if !defined(__int64) 
+#if !defined(__BORLANDC__) && !defined(_MSC_VER) 
+typedef long long __int64; 
+#endif 
+#endif
+
+ 
 
  /*! \mainpage Phidget21 C API Documentation
   *
@@ -15,7 +33,7 @@ extern "C" {
 
   The library was written originally for Windows, but has been ported to MacOS and Linux.  
   Although the library is written in C, the functions can be called from a number of languages including C, C++, Objective-C, Matlab, etc.  
-  The source code is freely available for reference/debugging purposes.
+  The full library source is not available for all platforms - however, the Linux distribution contains all platform independent code.
 
   See the <a class="el" href="modules.html">Modules</a> section for the API documentation.
 
@@ -69,6 +87,15 @@ extern "C" {
  */
 typedef struct _CPhidget *CPhidgetHandle;
 
+/**
+ * Timestamp structure - usually initialized to 0.
+ */
+typedef struct _CPhidget_Timestamp
+{
+ int seconds;			/**< Number of seconds since timing began */
+ int microseconds;		/**< Number of microseconds since last second passed - range is 0 - 999999 */
+} CPhidget_Timestamp, *CPhidget_TimestampHandle;
+
 /** \addtogroup phidconst
  * @{
  */
@@ -78,23 +105,26 @@ typedef struct _CPhidget *CPhidgetHandle;
  */
 typedef enum
 {
- PHIDCLASS_NOTHING = 1,			/**< Nothing */
- PHIDCLASS_ACCELEROMETER,		/**< Phidget Accelerometer */
- PHIDCLASS_ADVANCEDSERVO,		/**< Phidget Advanced Servo */
- PHIDCLASS_ENCODER,				/**< Phidget Encoder */
- PHIDCLASS_GPS,					/**< Phidget GPS */
- PHIDCLASS_GYROSCOPE,			/**< Phidget Gyroscope */
- PHIDCLASS_INTERFACEKIT,		/**< Phidget Interface Kit */
- PHIDCLASS_LED,					/**< Phidget LED */
- PHIDCLASS_MOTORCONTROL,		/**< Phidget Motor Control */
- PHIDCLASS_PHSENSOR,				/**< Phidget PH Sensor */
- PHIDCLASS_RFID,				/**< Phidget RFID */
- PHIDCLASS_SERVO,				/**< Phidget Servo */
- PHIDCLASS_STEPPER,				/**< Phidget Stepper */
- PHIDCLASS_TEMPERATURESENSOR,	    /**< Phidget Temperature Sensor */
- PHIDCLASS_TEXTLCD,				/**< Phidget TextLCD */
- PHIDCLASS_TEXTLED,				/**< Phidget TextLED */
- PHIDCLASS_WEIGHTSENSOR,		/**< Phidget Weight Sensor */
+ PHIDCLASS_ACCELEROMETER = 2,			/**< Phidget Accelerometer */
+ PHIDCLASS_ADVANCEDSERVO = 3,			/**< Phidget Advanced Servo */
+ PHIDCLASS_ANALOG = 22,					/**< Phidget Analog */
+ PHIDCLASS_BRIDGE = 23,					/**< Phidget Bridge */
+ PHIDCLASS_ENCODER = 4,					/**< Phidget Encoder */
+ PHIDCLASS_FREQUENCYCOUNTER = 21,		/**< Phidget Frequency Counter */
+ PHIDCLASS_GPS = 5,						/**< Phidget GPS */
+ PHIDCLASS_INTERFACEKIT = 7,				/**< Phidget Interface Kit */
+ PHIDCLASS_IR = 19,						/**< Phidget IR */
+ PHIDCLASS_LED = 8,						/**< Phidget LED */
+ PHIDCLASS_MOTORCONTROL = 9,				/**< Phidget Motor Control */
+ PHIDCLASS_PHSENSOR = 10,				/**< Phidget PH Sensor */
+ PHIDCLASS_RFID = 11,					/**< Phidget RFID */
+ PHIDCLASS_SERVO = 12,					/**< Phidget Servo */
+ PHIDCLASS_SPATIAL = 20,				/**< Phidget Spatial */
+ PHIDCLASS_STEPPER = 13,				/**< Phidget Stepper */
+ PHIDCLASS_TEMPERATURESENSOR = 14,		/**< Phidget Temperature Sensor */
+ PHIDCLASS_TEXTLCD = 15,				/**< Phidget TextLCD */
+ PHIDCLASS_TEXTLED = 16,				/**< Phidget TextLED */
+ PHIDCLASS_WEIGHTSENSOR = 17,			/**< Phidget Weight Sensor */
 
 } CPhidget_DeviceClass;
 
@@ -105,33 +135,48 @@ typedef enum
 {
 
  /* These are all current devices */
- PHIDID_ACCELEROMETER_2AXIS = 0x071,						/**< Phidget 2-axis Accelerometer (1053, 1054) */
  PHIDID_ACCELEROMETER_3AXIS = 0x07E,						/**< Phidget 3-axis Accelerometer (1059) */
+ PHIDID_ADVANCEDSERVO_1MOTOR = 0x082,						/**< Phidget 1 Motor Advanced Servo (1066) */
  PHIDID_ADVANCEDSERVO_8MOTOR = 0x03A,						/**< Phidget 8 Motor Advanced Servo (1061) */
+ PHIDID_ANALOG_4OUTPUT = 0x037,							/**< Phidget Analog 4-output (1002) */
  PHIDID_BIPOLAR_STEPPER_1MOTOR = 0x07B,					/**< Phidget 1 Motor Bipolar Stepper Controller with 4 Digital Inputs (1063) */
+ PHIDID_BRIDGE_4INPUT = 0x03B,							/**< Phidget Bridge 4-input (1046) */
  PHIDID_ENCODER_1ENCODER_1INPUT = 0x04B,				/**< Phidget Encoder - Mechanical (1052) */
  PHIDID_ENCODER_HS_1ENCODER = 0x080,						/**< Phidget High Speed Encoder (1057) */
+ PHIDID_ENCODER_HS_4ENCODER_4INPUT = 0x04F,				/**< Phidget High Speed Encoder - 4 Encoder (1047) */
+ PHIDID_FREQUENCYCOUNTER_2INPUT = 0x035,				/**< Phidget Frequency Counter 2-input (1054) */
+ PHIDID_GPS = 0x079,										/**< Phidget GPS (1040) */
  PHIDID_INTERFACEKIT_0_0_4 = 0x040,						/**< Phidget Interface Kit 0/0/4 (1014) */
  PHIDID_INTERFACEKIT_0_0_8 = 0x081,						/**< Phidget Interface Kit 0/0/8 (1017) */
  PHIDID_INTERFACEKIT_0_16_16 = 0x044,						/**< Phidget Interface Kit 0/16/16 (1012) */
+ PHIDID_INTERFACEKIT_2_2_2 = 0x036,						/**< Phidget Interface Kit 2/2/2 (1011) */
  PHIDID_INTERFACEKIT_8_8_8 = 0x045,						/**< Phidget Interface Kit 8/8/8 (1013, 1018, 1019) */
  PHIDID_INTERFACEKIT_8_8_8_w_LCD = 0x07D,				/**< Phidget Interface Kit 8/8/8 with TextLCD (1201, 1202, 1203) */
- PHIDID_LED_64 = 0x04A,									/**< Phidget LED 64 (1030) */
+ PHIDID_IR = 0x04D,										/**< Phidget IR Receiver Transmitter (1055) */
+ PHIDID_LED_64_ADV = 0x04C,								/**< Phidget LED 64 Advanced (1031) */
  PHIDID_LINEAR_TOUCH = 0x076,								/**< Phidget Linear Touch (1015) */
+ PHIDID_MOTORCONTROL_1MOTOR = 0x03E,						/**< Phidget 1 Motor Motor Controller (1065) */
  PHIDID_MOTORCONTROL_HC_2MOTOR = 0x059,					/**< Phidget 2 Motor High Current Motor Controller (1064) */
- PHIDID_MOTORCONTROL_LV_2MOTOR_4INPUT = 0x058,			/**< Phidget 2 Motor Low Voltage Motor Controller with 4 Digital Inputs (1060) */
- PHIDID_PHSENSOR = 0x074,								/**< Phidget PH Sensor (1058) */
  PHIDID_RFID_2OUTPUT = 0x031,								/**< Phidget RFID with Digital Outputs and Onboard LED (1023) */
  PHIDID_ROTARY_TOUCH = 0x077,								/**< Phidget Rotary Touch (1016) */
- PHIDID_SERVO_1MOTOR = 0x039,								/**< Phidget 1 Motor Servo Controller (1000) */
+ PHIDID_SPATIAL_ACCEL_3AXIS = 0x07F,						/**< Phidget Spatial 3-axis accel (1049, 1041, 1043) */
+ PHIDID_SPATIAL_ACCEL_GYRO_COMPASS = 0x033,				/**< Phidget Spatial 3/3/3 (1056, 1042, 1044) */
  PHIDID_TEMPERATURESENSOR = 0x070,						/**< Phidget Temperature Sensor (1051) */
+ PHIDID_TEMPERATURESENSOR_4 = 0x032,						/**< Phidget Temperature Sensor 4-input (1048) */
+ PHIDID_TEMPERATURESENSOR_IR = 0x03C,						/**< Phidget Temperature Sensor IR (1045) */
  PHIDID_TEXTLCD_2x20_w_8_8_8 = 0x17D,						/**< Phidget TextLCD with Interface Kit 8/8/8 (1201, 1202, 1203) */
+ PHIDID_TEXTLCD_ADAPTER = 0x03D,						/**< Phidget TextLCD Adapter (1204) */
  PHIDID_UNIPOLAR_STEPPER_4MOTOR = 0x07A,				/**< Phidget 4 Motor Unipolar Stepper Controller (1062) */
 
  /* These are all past devices (no longer sold) */
+ PHIDID_ACCELEROMETER_2AXIS = 0x071,						/**< Phidget 2-axis Accelerometer (1053, 1054) */
  PHIDID_INTERFACEKIT_0_8_8_w_LCD = 0x053,				/**< Phidget Interface Kit 0/8/8 with TextLCD (1219, 1220, 1221) */
  PHIDID_INTERFACEKIT_4_8_8 = 4,							/**< Phidget Interface Kit 4/8/8 */
+ PHIDID_LED_64 = 0x04A,									/**< Phidget LED 64 (1030) */
+ PHIDID_MOTORCONTROL_LV_2MOTOR_4INPUT = 0x058,			/**< Phidget 2 Motor Low Voltage Motor Controller with 4 Digital Inputs (1060) */
+ PHIDID_PHSENSOR = 0x074,								/**< Phidget PH Sensor (1058) */
  PHIDID_RFID = 0x030,										/**< Phidget RFID without Digital Outputs */
+ PHIDID_SERVO_1MOTOR = 0x039,								/**< Phidget 1 Motor Servo Controller (1000) */
  PHIDID_SERVO_1MOTOR_OLD = 2,							/**< Phidget 1 Motor Servo Controller - Old Version */
  PHIDID_SERVO_4MOTOR = 0x038,								/**< Phidget 4 Motor Servo Controller (1001) */
  PHIDID_SERVO_4MOTOR_OLD = 3,							/**< Phidget 4 Motor Servo Controller - Old Version */
@@ -141,12 +186,122 @@ typedef enum
  PHIDID_TEXTLED_4x8 = 0x048,								/**< Phidget TextLED 4x8 (1040) */
  PHIDID_WEIGHTSENSOR = 0x072,								/**< Phidget Weight Sensor (1050) */
 
+ /* Device in firmware upgrade mode */
+ PHIDID_FIRMWARE_UPGRADE = 0x098,
+
 } CPhidget_DeviceID;
 /** @} */
+
+typedef enum
+{
+ PHIDUID_NOTHING = 1,
+
+ PHIDUID_ACCELEROMETER_2AXIS_2G,
+ PHIDUID_ACCELEROMETER_2AXIS_10G,
+ PHIDUID_ACCELEROMETER_2AXIS_5G,
+ PHIDUID_ACCELEROMETER_3AXIS_3G,
+
+ PHIDUID_ADVANCEDSERVO_1MOTOR,
+
+ PHIDUID_ADVANCEDSERVO_8MOTOR,
+ PHIDUID_ADVANCEDSERVO_8MOTOR_PGOOD_FLAG,
+ PHIDUID_ADVANCEDSERVO_8MOTOR_CURSENSE_FIX,
+
+ PHIDUID_ANALOG_4OUTPUT,
+
+ PHIDUID_BRIDGE_4INPUT,
+
+ PHIDUID_ENCODER_1ENCODER_1INPUT_OLD,
+ PHIDUID_ENCODER_1ENCODER_1INPUT_v1,
+ PHIDUID_ENCODER_1ENCODER_1INPUT_v2,
+ PHIDUID_ENCODER_HS_1ENCODER,
+ PHIDUID_ENCODER_HS_4ENCODER_4INPUT,
+
+ PHIDUID_FREQUENCYCOUNTER_2INPUT,
+
+ PHIDUID_GPS,
+
+ PHIDUID_INTERFACEKIT_0_0_4_NO_ECHO,
+ PHIDUID_INTERFACEKIT_0_0_4,
+ PHIDUID_INTERFACEKIT_0_0_8,
+ PHIDUID_INTERFACEKIT_0_5_7,
+ PHIDUID_INTERFACEKIT_0_8_8_w_LCD,
+ PHIDUID_INTERFACEKIT_0_16_16_NO_ECHO,
+ PHIDUID_INTERFACEKIT_0_16_16_BITBUG,
+ PHIDUID_INTERFACEKIT_0_16_16,
+ PHIDUID_INTERFACEKIT_2_2_2,
+ PHIDUID_INTERFACEKIT_2_8_8,
+ PHIDUID_INTERFACEKIT_4_8_8,
+ PHIDUID_INTERFACEKIT_8_8_8_NO_ECHO,
+ PHIDUID_INTERFACEKIT_8_8_8,
+ PHIDUID_INTERFACEKIT_8_8_8_FAST,
+ PHIDUID_INTERFACEKIT_8_8_8_w_LCD_NO_ECHO,
+ PHIDUID_INTERFACEKIT_8_8_8_w_LCD,
+ PHIDUID_INTERFACEKIT_8_8_8_w_LCD_FAST,
+ PHIDUID_INTERFACEKIT_TOUCH_SLIDER,
+ PHIDUID_INTERFACEKIT_TOUCH_ROTARY,
+
+ PHIDUID_IR,
+
+ PHIDUID_LED_64,
+ PHIDUID_LED_64_ADV,
+
+ PHIDUID_MOTORCONTROL_1MOTOR,
+ PHIDUID_MOTORCONTROL_HC_2MOTOR,
+ PHIDUID_MOTORCONTROL_LV_2MOTOR_4INPUT,
+
+ PHIDUID_PHSENSOR,
+
+ PHIDUID_RFID_OLD,
+ PHIDUID_RFID,
+ PHIDUID_RFID_2OUTPUT_NO_ECHO,
+ PHIDUID_RFID_2OUTPUT,
+ PHIDUID_RFID_2OUTPUT_ADVANCED,
+
+ PHIDUID_SERVO_1MOTOR_OLD,
+ PHIDUID_SERVO_4MOTOR_OLD,
+ PHIDUID_SERVO_1MOTOR_NO_ECHO,
+ PHIDUID_SERVO_1MOTOR,
+ PHIDUID_SERVO_4MOTOR_NO_ECHO,
+ PHIDUID_SERVO_4MOTOR,
+
+ PHIDUID_SPATIAL_ACCEL_3AXIS_1049,
+ PHIDUID_SPATIAL_ACCEL_3AXIS_1041,
+ PHIDUID_SPATIAL_ACCEL_3AXIS_1043,
+ PHIDUID_SPATIAL_ACCEL_GYRO_COMPASS_1056,
+ PHIDUID_SPATIAL_ACCEL_GYRO_COMPASS_1056_NEG_GAIN,
+ PHIDUID_SPATIAL_ACCEL_GYRO_COMPASS_1042,
+ PHIDUID_SPATIAL_ACCEL_GYRO_COMPASS_1044,
+
+ PHIDUID_STEPPER_BIPOLAR_1MOTOR,
+ PHIDUID_STEPPER_UNIPOLAR_4MOTOR,
+
+ PHIDUID_TEMPERATURESENSOR_OLD,
+ PHIDUID_TEMPERATURESENSOR,
+ PHIDUID_TEMPERATURESENSOR_AD22100,
+ PHIDUID_TEMPERATURESENSOR_TERMINAL_BLOCKS,
+ PHIDUID_TEMPERATURESENSOR_4,
+ PHIDUID_TEMPERATURESENSOR_IR,
+
+ PHIDUID_TEXTLCD_2x20,
+ PHIDUID_TEXTLCD_2x20_w_8_8_8,
+ PHIDUID_TEXTLCD_2x20_w_8_8_8_BRIGHTNESS,
+ PHIDUID_TEXTLCD_ADAPTER,
+
+ PHIDUID_TEXTLED_1x8,
+ PHIDUID_TEXTLED_4x8,
+
+ PHIDUID_WEIGHTSENSOR,
+
+ PHIDUID_GENERIC,
+ PHIDUID_FIRMWARE_UPGRADE
+} CPhidget_DeviceUID;
 
 //Regular Versions
 
 //Versions for Deprecation
+
+/* used in csocketevents.c */
 
 /**
  * Opens a Phidget.
@@ -155,6 +310,13 @@ typedef enum
  */
 __declspec (dllimport)
      int __stdcall CPhidget_open (CPhidgetHandle phid, int serialNumber);
+/**
+ * Opens a Phidget by label.
+ * @param phid A phidget handle.
+ * @param label Label string. Labels can be up to 10 characters (UTF-8 encoding). Specify NULL to open any.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidget_openLabel (CPhidgetHandle phid, const char *label);
 /**
  * Closes a Phidget.
  * @param phid An opened phidget handle.
@@ -312,6 +474,7 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidget_getDeviceClass (CPhidgetHandle phid, CPhidget_DeviceClass * deviceClass);
+
 /** @} */
 
 /** \defgroup phiddict Phidget Dictionary 
@@ -410,10 +573,14 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetDictionary_remove_OnKeyChange_Handler (CPhidgetDictionaryListenerHandle dictlistener);
 /**
- * Not Implemented.
+ * Gets a key value. If more then one key matches, only the first value is returned.
+ * @param dict A phidget dictionary handle.
+ * @param key A key value to look up.
+ * @param value A user array for the value to be stored in. Set to NULL if the key does not exist.
+ * @param valuelen Length of the value array.
  */
 __declspec (dllimport)
-     int __stdcall CPhidgetDictionary_getKey (CPhidgetDictionaryHandle dict, const char *key, const char *value, int valueSize);
+     int __stdcall CPhidgetDictionary_getKey (CPhidgetDictionaryHandle dict, const char *key, char *value, int valuelen);
 /**
  * Sets a server connect handler callback function. This is called when a connection to the sever has been made.
  * @param dict A phidget dictionary handle.
@@ -583,7 +750,16 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidget_openRemote (CPhidgetHandle phid, int serial, const char *serverID, const char *password);
 /**
- * Opens a Phidget remotely by address and port.
+ * Opens a Phidget remotely by ServerID. Note that this requires Bonjour (mDNS) to be running on both the host and the server.
+ * @param phid A phidget handle.
+ * @param label Label string. Labels can be up to 10 characters (UTF-8 encoding). Specify NULL to open any.
+ * @param serverID Server ID. Specify NULL to open any.
+ * @param password Password. Can be NULL if the server is running unsecured.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidget_openLabelRemote (CPhidgetHandle phid, const char *label, const char *serverID, const char *password);
+/**
+ * Opens a Phidget remotely by address and port, with optional serial number.
  * @param phid A phidget handle.
  * @param serial Serial number. Specify -1 to open any.
  * @param address Address. This can be a hostname or IP address.
@@ -592,6 +768,16 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidget_openRemoteIP (CPhidgetHandle phid, int serial, const char *address, int port, const char *password);
+/**
+ * Opens a Phidget remotely by address and port, with optional label.
+ * @param phid A phidget handle.
+ * @param label Label string. Labels can be up to 10 characters (UTF-8 encoding). Specify NULL to open any.
+ * @param address Address. This can be a hostname or IP address.
+ * @param port Port number. Default is 5001.
+ * @param password Password. Can be NULL if the server is running unsecured.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidget_openLabelRemoteIP (CPhidgetHandle phid, const char *label, const char *address, int port, const char *password);
 /** @} */
 
 /** \addtogroup phidmanager
@@ -647,12 +833,12 @@ __declspec (dllimport)
 
      typedef enum
      {
-      PHIDGET_LOG_CRITICAL = 1,		/**< Really important errors that can't be recovered. */
+      PHIDGET_LOG_CRITICAL = 1,		/**< Really important errors that can't be recovered. Usually followed by an abort() */
       PHIDGET_LOG_ERROR,			/**< Errors that are recovered from. */
       PHIDGET_LOG_WARNING,		/**< Warning's about weird things that aren't neccesarily wrong. */
       PHIDGET_LOG_DEBUG,			/**< Should only be used during development - only shows up in the debug library. */
       PHIDGET_LOG_INFO,				/**< Info about the going on's in the library. */
-      PHIDGET_LOG_VERBOSE			/**< Everything, including very common messages. */
+      PHIDGET_LOG_VERBOSE		/**< Everything, including very common messages. */
      } CPhidgetLog_level;
 
 /**
@@ -746,10 +932,6 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetAccelerometer_setAccelerationChangeTrigger (CPhidgetAccelerometerHandle phid, int index, double trigger);
 
-__declspec (deprecated ("Deprecated - use CPhidgetAccelerometer_getAxisCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetAccelerometer_getNumAxis (CPhidgetAccelerometerHandle, int *);
-
 /** @} */
 
 /** \defgroup phidadvservo Phidget Advanced Servo 
@@ -758,10 +940,41 @@ __declspec (deprecated ("Deprecated - use CPhidgetAccelerometer_getAxisCount")) 
  * @{
  */
 
-     typedef struct _CPhidgetAdvancedServo *
-      CPhidgetAdvancedServoHandle;
+     typedef struct _CPhidgetAdvancedServo *CPhidgetAdvancedServoHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetAdvancedServo_create (CPhidgetAdvancedServoHandle * phid);
+
+/**
+ * The Phidget Servo Type sets the relationship of degrees to PCM width
+ */
+     typedef enum
+     {
+      PHIDGET_SERVO_DEFAULT = 1,			/**< Default - This is what the servo API been historically used, originally based on the Futaba FP-S148 */
+      PHIDGET_SERVO_RAW_us_MODE,			/**< Raw us mode - all position, velocity, acceleration functions are specified in microseconds rather then degrees */
+      PHIDGET_SERVO_HITEC_HS322HD,		/**< HiTec HS-322HD Standard Servo */
+      PHIDGET_SERVO_HITEC_HS5245MG,		/**< HiTec HS-5245MG Digital Mini Servo */
+      PHIDGET_SERVO_HITEC_805BB,			/**< HiTec HS-805BB Mega Quarter Scale Servo */
+      PHIDGET_SERVO_HITEC_HS422,			/**< HiTec HS-422 Standard Servo */
+      PHIDGET_SERVO_TOWERPRO_MG90,		/**< Tower Pro MG90 Micro Servo */
+      PHIDGET_SERVO_HITEC_HSR1425CR,		/**< HiTec HSR-1425CR Continuous Rotation Servo */
+      PHIDGET_SERVO_HITEC_HS785HB,		/**< HiTec HS-785HB Sail Winch Servo */
+      PHIDGET_SERVO_HITEC_HS485HB,		/**< HiTec HS-485HB Deluxe Servo */
+      PHIDGET_SERVO_HITEC_HS645MG,		/**< HiTec HS-645MG Ultra Torque Servo */
+      PHIDGET_SERVO_HITEC_815BB,			/**< HiTec HS-815BB Mega Sail Servo */
+      PHIDGET_SERVO_FIRGELLI_L12_30_50_06_R,	/**< Firgelli L12 Linear Actuator 30mm 50:1*/
+      PHIDGET_SERVO_FIRGELLI_L12_50_100_06_R,	/**< Firgelli L12 Linear Actuator 50mm 100:1*/
+      PHIDGET_SERVO_FIRGELLI_L12_50_210_06_R,	/**< Firgelli L12 Linear Actuator 50mm 210:1*/
+      PHIDGET_SERVO_FIRGELLI_L12_100_50_06_R,	/**< Firgelli L12 Linear Actuator 100mm 50:1*/
+      PHIDGET_SERVO_FIRGELLI_L12_100_100_06_R,	/**< Firgelli L12 Linear Actuator 100mm 100:1*/
+      PHIDGET_SERVO_SPRINGRC_SM_S2313M,		/**< SpringRC SM-S2313M Micro Servo*/
+      PHIDGET_SERVO_SPRINGRC_SM_S3317M,		/**< SpringRC SM-S3317M Small Servo*/
+      PHIDGET_SERVO_SPRINGRC_SM_S3317SR,	/**< SpringRC SM-S3317SR Small Continuous Rotation Servo*/
+      PHIDGET_SERVO_SPRINGRC_SM_S4303R,		/**< SpringRC SM-S4303R Standard Continuous Rotation Servo*/
+      PHIDGET_SERVO_SPRINGRC_SM_S4315M,		/**< SpringRC SM-S4315M High Torque Servo*/
+      PHIDGET_SERVO_SPRINGRC_SM_S4315R,		/**< SpringRC SM-S4315R High Torque Continuous Rotation Servo*/
+      PHIDGET_SERVO_SPRINGRC_SM_S4505B,		/**< SpringRC SM-S4505B Standard Servo*/
+      PHIDGET_SERVO_USER_DEFINED
+     } CPhidget_ServoType;
 
 /**
  * Gets the number of motors supported by this controller
@@ -972,6 +1185,227 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidgetAdvancedServo_getStopped (CPhidgetAdvancedServoHandle phid, int index, int *stoppedState);
+/**
+ * Gets the servo type of a motor.
+ * @param phid An attached phidget advanced servo handle
+ * @param index The motor index.
+ * @param servoType The servo type.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAdvancedServo_getServoType (CPhidgetAdvancedServoHandle phid, int index, CPhidget_ServoType * servoType);
+/**
+ * Sets the servo type of a motor.
+ * @param phid An attached phidget advanced servo handle
+ * @param index The motor index.
+ * @param servoType The servo type.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAdvancedServo_setServoType (CPhidgetAdvancedServoHandle phid, int index, CPhidget_ServoType servoType);
+/**
+ * Sets the servo parameters of a motor.
+ * @param phid An attached phidget advanced servo handle
+ * @param index The motor index.
+ * @param min_us The minimum supported PCM in microseconds.
+ * @param max_us The maximum supported PCM in microseconds.
+ * @param degrees The degrees of rotation defined by the given PCM range.
+ * @param velocity_max The maximum velocity in degrees/second.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAdvancedServo_setServoParameters (CPhidgetAdvancedServoHandle phid, int index, double min_us, double max_us, double degrees, double velocity_max);
+
+/** @} */
+
+/** \defgroup phidanalog Phidget Analog 
+ * \ingroup phidgets
+ * Calls specific to the Phidget Analog. See the product manual for more specific API details, supported functionality, units, etc.
+ * @{
+ */
+
+     typedef struct _CPhidgetAnalog *CPhidgetAnalogHandle;
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_create (CPhidgetAnalogHandle * phid);
+
+/**
+ * Gets the number of outputs supported by this phidget analog.
+ * @param phid An attached phidget analog handle.
+ * @param count The axis count.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_getOutputCount (CPhidgetAnalogHandle phid, int *count);
+/**
+ * Gets the currently set voltage for an output, in V.
+ * @param phid An attached phidget analog handle.
+ * @param index The output index.
+ * @param voltage The voltage.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_getVoltage (CPhidgetAnalogHandle phid, int index, double *voltage);
+/**
+ * Sets the voltage of an output, in V.
+ * @param phid An attached phidget analog handle.
+ * @param index The otuput index.
+ * @param voltage The output voltage.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_setVoltage (CPhidgetAnalogHandle phid, int index, double voltage);
+/**
+ * Gets the maximum settable output voltage, in V.
+ * @param phid An attached phidget analog handle.
+ * @param index The output index.
+ * @param max The max voltage.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_getVoltageMax (CPhidgetAnalogHandle phid, int index, double *max);
+/**
+ * Gets the minimum settable output voltage, in V.
+ * @param phid An attached phidget analog handle.
+ * @param index The output index.
+ * @param min The min voltage.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_getVoltageMin (CPhidgetAnalogHandle phid, int index, double *min);
+/**
+ * Sets the enabled state for an output.
+ * @param phid An attached phidget analog handle.
+ * @param index The output index.
+ * @param enabledState The enabled state. Possible values are \ref PTRUE and \ref PFALSE.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_setEnabled (CPhidgetAnalogHandle phid, int index, int enabledState);
+/**
+ * Gets the enabled state for an output.
+ * @param phid An attached phidget analog handle.
+ * @param index The output index.
+ * @param enabledState The enabled state. Possible values are \ref PTRUE and \ref PFALSE.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetAnalog_getEnabled (CPhidgetAnalogHandle phid, int index, int *enabledState);
+
+/** @} */
+
+/** \defgroup phidbridge Phidget Bridge 
+ * \ingroup phidgets
+ * Calls specific to the Phidget Bridge. See the product manual for more specific API details, supported functionality, units, etc.
+ * @{
+ */
+
+/**
+ * List of gains supported by the PhidgetBridge.
+ */
+     typedef enum
+     {
+      PHIDGET_BRIDGE_GAIN_1 = 1,	/**< Gain of 1. */
+      PHIDGET_BRIDGE_GAIN_8,		/**< Gain of 8. */
+      PHIDGET_BRIDGE_GAIN_16,		/**< Gain of 16. */
+      PHIDGET_BRIDGE_GAIN_32,		/**< Gain of 32. */
+      PHIDGET_BRIDGE_GAIN_64,		/**< Gain of 64. */
+      PHIDGET_BRIDGE_GAIN_128,		/**< Gain of 128. */
+      PHIDGET_BRIDGE_GAIN_UNKNOWN	/**< Unknown Gain. */
+     } CPhidgetBridge_Gain;
+
+     typedef struct _CPhidgetBridge *CPhidgetBridgeHandle;
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_create (CPhidgetBridgeHandle * phid);
+
+/**
+ * Gets the number of inputs supported by this phidget bridge.
+ * @param phid An attached phidget bridge handle.
+ * @param count The input count.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getInputCount (CPhidgetBridgeHandle phid, int *count);
+/**
+ * Gets the current value of a bridge input, in mV/V.
+ * @param phid An attached phidget bridge handle.
+ * @param index The input index.
+ * @param value The value.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getBridgeValue (CPhidgetBridgeHandle phid, int index, double *value);
+/**
+ * Gets the maximum value supported by a bridge input, in mV/V. This is affected by Gain.
+ * @param phid An attached phidget bridge handle.
+ * @param index The input index.
+ * @param max The max value.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getBridgeMax (CPhidgetBridgeHandle phid, int index, double *max);
+/**
+ * Gets the minimum value supported by a bridge input, in mV/V. This is affected by Gain.
+ * @param phid An attached phidget bridge handle.
+ * @param index The input index.
+ * @param min The min value.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getBridgeMin (CPhidgetBridgeHandle phid, int index, double *min);
+/**
+ * Gets the enabled state for an input.
+ * @param phid An attached phidget bridge handle.
+ * @param index The input index.
+ * @param enabledState The enabled state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_setEnabled (CPhidgetBridgeHandle phid, int index, int enabledState);
+/**
+ * Sets the enabled state for an input.
+ * @param phid An attached phidget bridge handle.
+ * @param index The input index.
+ * @param enabledState The enabled state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getEnabled (CPhidgetBridgeHandle phid, int index, int *enabledState);
+/**
+ * Gets the the Gain for an input.
+ * @param phid An attached phidget bridge handle.
+ * @param index The input index.
+ * @param gain The gain.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getGain (CPhidgetBridgeHandle phid, int index, CPhidgetBridge_Gain * gain);
+/**
+ * Sets the the Gain for an input.
+ * @param phid An attached phidget bridge handle.
+ * @param index The input index.
+ * @param gain The gain.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_setGain (CPhidgetBridgeHandle phid, int index, CPhidgetBridge_Gain gain);
+/**
+ * Gets the the data rate for the Phidget Bridge, in milliseconds.
+ * @param phid An attached phidget bridge handle.
+ * @param milliseconds The data rate.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getDataRate (CPhidgetBridgeHandle phid, int *milliseconds);
+/**
+ * Sets the the data rate for the Phidget Bridge, in milliseconds.
+ * @param phid An attached phidget bridge handle.
+ * @param milliseconds The data rate.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_setDataRate (CPhidgetBridgeHandle phid, int milliseconds);
+/**
+ * Gets the the maximum data rate for the Phidget Bridge, in milliseconds.
+ * @param phid An attached phidget bridge handle.
+ * @param max The max data rate.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getDataRateMax (CPhidgetBridgeHandle phid, int *max);
+/**
+ * Gets the the minimum data rate for the Phidget Bridge, in milliseconds.
+ * @param phid An attached phidget bridge handle.
+ * @param min The min data rate.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_getDataRateMin (CPhidgetBridgeHandle phid, int *min);
+/**
+ * Sets a bridge data event handler. This is called at a set rate as defined by data rate.
+ * @param phid A phidget bridge handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetBridge_set_OnBridgeData_Handler (CPhidgetBridgeHandle phid, int (__stdcall * fptr) (CPhidgetBridgeHandle phid, void *userPtr, int index, double value), void *userPtr);
 
 /** @} */
 
@@ -1008,7 +1442,6 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidgetEncoder_set_OnInputChange_Handler (CPhidgetEncoderHandle phid, int (__stdcall * fptr) (CPhidgetEncoderHandle phid, void *userPtr, int index, int inputState), void *userPtr);
-
 /**
  * Gets the number of encoder inputs supported by this board.
  * @param phid An attached phidget encoder handle
@@ -1042,19 +1475,364 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetEncoder_set_OnPositionChange_Handler (CPhidgetEncoderHandle phid,
 								 int (__stdcall * fptr) (CPhidgetEncoderHandle phid, void *userPtr, int index, int time, int positionChange), void *userPtr);
+/**
+ * Gets the position of the last index pulse, as referenced to \ref CPhidgetEncoder_getPosition.
+ * This will return EPHIDGET_UNKNOWN if there hasn't been an index event, or if the encoder doesn't support index.
+ * @param phid An attached phidget encoder handle
+ * @param index The encoder index.
+ * @param position The index position.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetEncoder_getIndexPosition (CPhidgetEncoderHandle phid, int index, int *position);
+/**
+ * Gets the enabled state of an encoder. This is whether the encoder is powered or not.
+ * @param phid An attached phidget encoder handle
+ * @param index The encoder index.
+ * @param enabledState The enabled state. Possible values are \ref PTRUE and \ref PFALSE.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetEncoder_getEnabled (CPhidgetEncoderHandle phid, int index, int *enabledState);
+/**
+ * Sets the enabled state of an encoder. This is whether the encoder is powered or not.
+ * @param phid An attached phidget encoder handle
+ * @param index The encoder index.
+ * @param enabledState The enabled state. Possible values are \ref PTRUE and \ref PFALSE.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetEncoder_setEnabled (CPhidgetEncoderHandle phid, int index, int enabledState);
 
-__declspec (deprecated ("Deprecated - use CPhidgetEncoder_getPosition")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetEncoder_getEncoderPosition (CPhidgetEncoderHandle, int index, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetEncoder_setPosition")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetEncoder_setEncoderPosition (CPhidgetEncoderHandle, int index, int);
-__declspec (deprecated ("Deprecated - use CPhidgetEncoder_getInputCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetEncoder_getNumInputs (CPhidgetEncoderHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetEncoder_getEncoderCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetEncoder_getNumEncoders (CPhidgetEncoderHandle, int *);
+/** @} */
+
+/** \defgroup phidfreq Phidget Frequency Counter
+ * \ingroup phidgets
+ * Calls specific to the Phidget Frequency Counter. See the product manual for more specific API details, supported functionality, units, etc.
+ *
+ * @{
+ */
+
+/**
+ * Filter Types supported by the frequency counter.
+ */
+     typedef enum
+     {
+      PHIDGET_FREQUENCYCOUNTER_FILTERTYPE_ZERO_CROSSING = 1,	/**< Zero crossing signal filter. */
+      PHIDGET_FREQUENCYCOUNTER_FILTERTYPE_LOGIC_LEVEL,			/**< Logic level signal filter. */
+      PHIDGET_FREQUENCYCOUNTER_FILTERTYPE_UNKNOWN				/**< Filter type unknown. */
+     } CPhidgetFrequencyCounter_FilterType;
+
+     typedef struct _CPhidgetFrequencyCounter *CPhidgetFrequencyCounterHandle;
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_create (CPhidgetFrequencyCounterHandle * phid);
+
+/**
+ * Gets the number of inputs supported by this phidget frequency counter.
+ * @param phid An attached phidget frequency counter handle.
+ * @param count The input count.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_getFrequencyInputCount (CPhidgetFrequencyCounterHandle phid, int *count);
+/**
+ * Gets the measured frequency of an input, in Hz.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param frequency The frequency.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_getFrequency (CPhidgetFrequencyCounterHandle phid, int index, double *frequency);
+/**
+ * Gets the total time that has passed since the last reset on this input, in microseconds.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param time The time.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_getTotalTime (CPhidgetFrequencyCounterHandle phid, int index, __int64 * time);
+/**
+ * Gets the total number of ticks that have happened since the last reset on this input.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param count The tick count.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_getTotalCount (CPhidgetFrequencyCounterHandle phid, int index, __int64 * count);
+/**
+ * Gets the timeout value for an input, in microseconds. This controls the lowest measurable frequency.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param timeout The timeout.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_setTimeout (CPhidgetFrequencyCounterHandle phid, int index, int timeout);
+/**
+ * Sets the timeout value for an input, in microseconds.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param timeout The timeout.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_getTimeout (CPhidgetFrequencyCounterHandle phid, int index, int *timeout);
+/**
+ * Gets the enabled state for an input.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param enabledState The enabled state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_setEnabled (CPhidgetFrequencyCounterHandle phid, int index, int enabledState);
+/**
+ * Sets the enabled state for an input.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param enabledState The enabled state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_getEnabled (CPhidgetFrequencyCounterHandle phid, int index, int *enabledState);
+/**
+ * Gets the filter type for an input.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param filter The filter type.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_setFilter (CPhidgetFrequencyCounterHandle phid, int index, CPhidgetFrequencyCounter_FilterType filter);
+/**
+ * Sets the filter type for an input.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ * @param filter The filter type.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_getFilter (CPhidgetFrequencyCounterHandle phid, int index, CPhidgetFrequencyCounter_FilterType * filter);
+/**
+ * Resets total count and total time for an input.
+ * @param phid An attached phidget frequency counter handle.
+ * @param index The input index.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_reset (CPhidgetFrequencyCounterHandle phid, int index);
+/**
+ * Sets a count event handler. This is called when ticks have been counted on an input, or when the timeout has passed.
+ * @param phid A phidget frequency counter handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetFrequencyCounter_set_OnCount_Handler (CPhidgetFrequencyCounterHandle phid,
+								 int (__stdcall * fptr) (CPhidgetFrequencyCounterHandle phid, void *userPtr, int index, int time, int counts), void *userPtr);
+
+/** @} */
+
+/** \defgroup phidgps Phidget GPS 
+ * \ingroup phidgets
+ * Calls specific to the Phidget GPS. See the product manual for more specific API details, supported functionality, units, etc.
+ * @{
+ */
+
+/**
+ * GPS Time in UTC.
+ */
+     struct __GPSTime
+     {
+      short tm_ms;	/**< Milliseconds. */
+      short tm_sec;	/**< Seconds. */
+      short tm_min;	/**< Minutes. */
+      short tm_hour;	/**< Hours. */
+     } typedef GPSTime;
+/**
+ * GPS Date in UTC.
+ */
+     struct __GPSDate
+     {
+      short tm_mday;	/**< Day of the month (1-31). */
+      short tm_mon;	/**< Month (1-12). */
+      short tm_year;	/**< Year. */
+     } typedef GPSDate;
+
+/**
+ * Satellite info - used in GSV sentence.
+ */
+     struct __GPSSatInfo
+     {
+      short ID;
+      short elevation;
+      int azimuth;
+      short SNR;
+     } typedef GPSSatInfo;
+
+/**
+ * NMEA GGA Sentence
+ */
+     struct __GPGGA
+     {
+      GPSTime time;
+      double latitude;
+      double longitude;
+      short fixQuality;
+      short numSatellites;
+      double horizontalDilution;
+      double altitude;
+      double heightOfGeoid;
+     } typedef GPGGA;
+
+/**
+ * NMEA GSA Sentence
+ */
+     struct __GPGSA
+     {
+      char mode;
+      /* A = auto
+       * M = forced */
+      short fixType;
+      /* 1 = no fix
+       * 2 = 2D
+       * 3 = 3D */
+      short satUsed[12];
+      /* IDs of used sats in no real order, 0 means nothing */
+      double posnDilution;
+      double horizDilution;
+      double vertDilution;
+     } typedef GPGSA;
+
+/**
+ * NMEA GSV Sentence
+ */
+     struct __GPGSV
+     {
+      short satsInView;
+      GPSSatInfo satInfo[12];
+     } typedef GPGSV;
+
+/**
+ * NMEA RMC Sentence
+ */
+     struct __GPRMC
+     {
+      GPSTime time;
+      char status;
+      double latitude;
+      double longitude;
+      double speedKnots;
+      double heading;
+      GPSDate date;
+      double magneticVariation;
+      char mode;
+     } typedef GPRMC;
+
+/**
+ * NMEA VTG Sentence
+ */
+     struct __GPVTG
+     {
+      double trueHeading;
+      double magneticHeading;
+      double speedKnots;
+      double speed;		//km/hour
+      char mode;
+     } typedef GPVTG;
+
+/**
+ * NMEA Data Structure. Contains a set of supported NMEA sentences.
+ */
+     struct __NMEAData
+     {
+      GPGGA GGA;	/**< GPS Fix and position data. */
+      GPGSA GSA;	/**< GPS DOP and active satellites. */
+      GPGSV GSV;	/**< Detailed satellite information. */
+      GPRMC RMC;	/**< Recommended minimum data. */
+      GPVTG VTG;	/**< Heading and Speed over the Ground. */
+     } typedef NMEAData;
+
+     typedef struct _CPhidgetGPS *CPhidgetGPSHandle;
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_create (CPhidgetGPSHandle * phid);
+
+/**
+ * Gets the current latitude.
+ * @param phid An attached phidget gps handle.
+ * @param latitude The latitude.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getLatitude (CPhidgetGPSHandle phid, double *latitude);
+/**
+ * Gets the current longitude.
+ * @param phid An attached phidget gps handle.
+ * @param longitude The longitude.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getLongitude (CPhidgetGPSHandle phid, double *longitude);
+/**
+ * Gets the current altitude, in meters.
+ * @param phid An attached phidget gps handle.
+ * @param altitude The altitude.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getAltitude (CPhidgetGPSHandle phid, double *altitude);
+/**
+ * Gets the current heading, in degrees.
+ * @param phid An attached phidget gps handle.
+ * @param heading The heading.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getHeading (CPhidgetGPSHandle phid, double *heading);
+/**
+ * Gets the current velocity, in km/h.
+ * @param phid An attached phidget gps handle.
+ * @param velocity The velocity.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getVelocity (CPhidgetGPSHandle phid, double *velocity);
+/**
+ * Gets the current GPS time, in UTC.
+ * @param phid An attached phidget gps handle.
+ * @param time The GPS time.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getTime (CPhidgetGPSHandle phid, GPSTime * time);
+/**
+ * Gets the current GPS date, in UTC
+ * @param phid An attached phidget gps handle.
+ * @param date The GPS date.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getDate (CPhidgetGPSHandle phid, GPSDate * date);
+/**
+ * Gets the position fix status.
+ * @param phid An attached phidget gps handle.
+ * @param fixStatus The fix status.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getPositionFixStatus (CPhidgetGPSHandle phid, int *fixStatus);
+/**
+ * Gets Raw NMEA Data. This function is only available in the C API,
+ * and cannot be used over the webservice.
+ * The NMEA data reference points to a structure which is updated 
+ * dynamically as data comes in - if you wish to work with the data
+ * statically, you must make a local copy. This should be done from within
+ * a position change event handler to avoid the structure changing as
+ * you read it.
+ * @param phid An attached phidget gps handle.
+ * @param data The NMEA Data.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_getNMEAData (CPhidgetGPSHandle phid, NMEAData * data);
+
+/**
+ * Sets a position change event handler. This is called when any of latitude, longitude, or altitude change.
+ * @param phid A phidget gps handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_set_OnPositionChange_Handler (CPhidgetGPSHandle phid, int (__stdcall * fptr) (CPhidgetGPSHandle phid, void *userPtr, double latitude, double longitude, double altitude),
+							     void *userPtr);
+/**
+ * Sets a position fix status change event handler. This is called when a position fix is aquired or lost.
+ * @param phid A phidget gps handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetGPS_set_OnPositionFixStatusChange_Handler (CPhidgetGPSHandle phid, int (__stdcall * fptr) (CPhidgetGPSHandle phid, void *userPtr, int status), void *userPtr);
 
 /** @} */
 
@@ -1064,8 +1842,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetEncoder_getEncoderCount")) __d
  * @{
  */
 
-     typedef struct _CPhidgetInterfaceKit *
-      CPhidgetInterfaceKitHandle;
+     typedef struct _CPhidgetInterfaceKit *CPhidgetInterfaceKitHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetInterfaceKit_create (CPhidgetInterfaceKitHandle * phid);
 
@@ -1190,15 +1967,182 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetInterfaceKit_setRatiometric (CPhidgetInterfaceKitHandle phid, int ratiometric);
 
-__declspec (deprecated ("Deprecated - use CPhidgetInterfaceKit_getInputCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetInterfaceKit_getNumInputs (CPhidgetInterfaceKitHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetInterfaceKit_getOutputCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetInterfaceKit_getNumOutputs (CPhidgetInterfaceKitHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetInterfaceKit_getSensorCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetInterfaceKit_getNumSensors (CPhidgetInterfaceKitHandle, int *);
+//This is the event rate
+//since we're not going to run an extra thread, the accuracy of the data rate is limited by the interrupt endpoint data rate (>=8ms)
+/**
+ * Gets the Data Rate for an analog input.
+ * @param phid An attached phidget interface kit handle.
+ * @param index The sensor index.
+ * @param milliseconds Data rate in ms.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetInterfaceKit_getDataRate (CPhidgetInterfaceKitHandle phid, int index, int *milliseconds);
+/**
+ * Sets the Data Rate for an analog input.
+ * @param phid An attached phidget interface kit handle.
+ * @param index The sensor index.
+ * @param milliseconds Data rate in ms.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetInterfaceKit_setDataRate (CPhidgetInterfaceKitHandle phid, int index, int milliseconds);
+/**
+ * Gets the maximum supported data rate for an analog input
+ * @param phid An attached phidget interface kit handle.
+ * @param index The sensor index.
+ * @param max Data rate in ms.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetInterfaceKit_getDataRateMax (CPhidgetInterfaceKitHandle phid, int index, int *max);
+/**
+ * Gets the minimum supported data rate for an analog input
+ * @param phid An attached phidget interface kit handle.
+ * @param index The sensor index.
+ * @param min Data rate in ms.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetInterfaceKit_getDataRateMin (CPhidgetInterfaceKitHandle phid, int index, int *min);
+
+/** @} */
+
+/** \defgroup phidIR Phidget IR 
+ * \ingroup phidgets
+ * Calls specific to the Phidget IR. See the product manual for more specific API details, supported functionality, units, etc.
+ * @{
+ */
+
+     typedef struct _CPhidgetIR *CPhidgetIRHandle;
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_create (CPhidgetIRHandle * phid);
+
+//This needs to be evenly divisible by 8
+
+/**
+ * The PhidgetIR supports these data encodings.
+ */
+     typedef enum
+     {
+      PHIDGET_IR_ENCODING_UNKNOWN = 1,		/**< Unknown - the default value */
+      PHIDGET_IR_ENCODING_SPACE,			/**< Space encoding, or Pulse Distance Modulation */
+      PHIDGET_IR_ENCODING_PULSE,			/**< Pulse encoding, or Pulse Width Modulation */
+      PHIDGET_IR_ENCODING_BIPHASE,		/**< Bi-Phase, or Manchester encoding */
+      PHIDGET_IR_ENCODING_RC5,				/**< RC5 - a type of Bi-Phase encoding */
+      PHIDGET_IR_ENCODING_RC6				/**< RC6 - a type of Bi-Phase encoding */
+     } CPhidgetIR_Encoding;
+
+/**
+ * The PhidgetIR supports these encoding lengths
+ */
+     typedef enum
+     {
+      PHIDGET_IR_LENGTH_UNKNOWN = 1,	/**< Unknown - the default value */
+      PHIDGET_IR_LENGTH_CONSTANT,		/**< Constant - the bitstream + gap length is constant */
+      PHIDGET_IR_LENGTH_VARIABLE		/**< Variable - the bitstream has a variable length with a constant gap */
+     } CPhidgetIR_Length;
+
+//If you modify this, it's NEEDS to be modified in .NET and Flash!!!
+/**
+ * The PhidgetIR CodeInfo structure contains all information needed to transmit a code, apart from the actual code data.
+ * Some values can be set to null to select defaults. See the product manual for more information.
+ */
+     typedef struct _CPhidgetIR_CodeInfo
+     {
+      int bitCount;							/**< Number of bits in the code */
+      CPhidgetIR_Encoding encoding;			/**< Encoding used to encode the data */
+      CPhidgetIR_Length length;				/**< Constan or Variable length encoding */
+      int gap;					/**< Gap time in us */
+      int trail;				/**< Trail time in us - can be 0 for none */
+      int header[2];				/**< Header pulse and space - can be 0 for none */
+      int one[2];				/**< Pulse and Space times to represent a '1' bit, in us */
+      int zero[2];				/**< Pulse and Space times to represent a '0' bit, in us */
+      int repeat[26];				/**< A series or pulse and space times to represent the repeat code. Start and end with pulses and null terminate. Set to 0 for none. */
+      int min_repeat;							/**< Minium number of times to repeat a code on transmit */
+      unsigned char toggle_mask[(128 / 8)];				/**< Bit toggles, which are applied to the code after each transmit */
+      int carrierFrequency;							/**< Carrier frequency in Hz - defaults to 38kHz */
+      int dutyCycle;							/**< Duty Cycle in percent (10-50). Defaults to 33 */
+     } CPhidgetIR_CodeInfo, *CPhidgetIR_CodeInfoHandle;
+
+/**
+ * Transmits a code according to the settings in a CodeInto structure
+ * @param phid An attached phidget ir handle.
+ * @param data The code to send. Data is transmitted MSBit first. MSByte is in array index 0. LSBit is right justified, so MSBit may be in bit positions 0-7 in array index 0 depending on the bit count.
+ * @param codeInfo The CodeInfo structure specifying to to send the code. Anything left as null to select default is filled in for the user.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_Transmit (CPhidgetIRHandle phid, unsigned char *data, CPhidgetIR_CodeInfoHandle codeInfo);
+/**
+ * Transmits a repeat of the last transmited code. Depending of the CodeInfo structure, this may be a retransmission of the code itself,
+ * or there may be a special repeat code.
+ * @param phid An attached phidget ir handle.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_TransmitRepeat (CPhidgetIRHandle phid);
+/**
+ * Transmits RAW data as a series of pulses and spaces.
+ * @param phid An attached phidget ir handle.
+ * @param data The data to send. The array must start and end with a pulse and each element is a positive time in us.
+ * @param length The length of the data array. Maximum length is 1024, but streams should be kept much shorter, ie. < 100ms between gaps.
+ * @param carrierFrequency The Carrier Frequency in Hz. leave as 0 for default.
+ * @param dutyCycle The Duty Cycle (10-50). Leave as 0 for default.
+ * @param gap The gap time in us. This guarantees a gap time (no transmitting) after the data is sent, but can be set to 0.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_TransmitRaw (CPhidgetIRHandle phid, int *data, int length, int carrierFrequency, int dutyCycle, int gap);
+/**
+ * Read any available raw data. This should be polled continuously (every 20ms) to avoid missing data. Read data always starts with a space and ends with a pulse.
+ * @param phid An attached phidget ir handle.
+ * @param data A user array for raw data to be written into.
+ * @param dataLength The maximum ammount of data to read. This is set to the actual ammount of data read.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_getRawData (CPhidgetIRHandle phid, int *data, int *dataLength);
+/**
+ * Gets the last code that was received.
+ * @param phid An attached phidget ir handle.
+ * @param data A user array to store the code data in.
+ * @param dataLength Length of the user array - should be at least IR_MAX_CODE_DATA_LENGTH. This is set to the ammount of data actually written to the array.
+ * @param bitCount set to the bit count of the code.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_getLastCode (CPhidgetIRHandle phid, unsigned char *data, int *dataLength, int *bitCount);
+/**
+ * Gets the last code that was learned.
+ * @param phid An attached phidget ir handle.
+ * @param data A user array to store the code data in.
+ * @param dataLength Length of the user array - should be at least IR_MAX_CODE_DATA_LENGTH. This is set to the ammount of data actually written to the array.
+ * @param codeInfo The CodeInfo structure for the learned code.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_getLastLearnedCode (CPhidgetIRHandle phid, unsigned char *data, int *dataLength, CPhidgetIR_CodeInfo * codeInfo);
+/**
+ * Set a Code handler. This is called when a code has been received that could be automatically decoded.
+ * Data is return as an array with MSB in index 0. Bit count and a repeat flag are also returned.
+ * Repeats are detected as either the same code repeated in < 100ms or as a special repeat code.
+ * @param phid An attached phidget ir handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_set_OnCode_Handler (CPhidgetIRHandle phid, int (__stdcall * fptr) (CPhidgetIRHandle phid, void *userPtr, unsigned char *data, int dataLength, int bitCount, int repeat),
+						  void *userPtr);
+/**
+ * Set a Learn handler. This is called when a code has been received for long enough to be learned. 
+ * The returned CodeInfo structure can be used to retransmit the same code.
+ * @param phid An attached phidget ir handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_set_OnLearn_Handler (CPhidgetIRHandle phid,
+						   int (__stdcall * fptr) (CPhidgetIRHandle phid, void *userPtr, unsigned char *data, int dataLength, CPhidgetIR_CodeInfoHandle codeInfo),
+						   void *userPtr);
+/**
+ * Set a Raw Data handler. This is called when raw data has been read from the device. Raw data always starts with a space and ends with a pulse.
+ * @param phid An attached phidget ir handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetIR_set_OnRawData_Handler (CPhidgetIRHandle phid, int (__stdcall * fptr) (CPhidgetIRHandle phid, void *userPtr, int *data, int dataLength), void *userPtr);
 
 /** @} */
 
@@ -1208,10 +2152,30 @@ __declspec (deprecated ("Deprecated - use CPhidgetInterfaceKit_getSensorCount"))
  * @{
  */
 
-     typedef struct _CPhidgetLED *
-      CPhidgetLEDHandle;
+     typedef struct _CPhidgetLED *CPhidgetLEDHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetLED_create (CPhidgetLEDHandle * phid);
+
+/**
+ * The Phidget LED supports these current limits
+ */
+     typedef enum
+     {
+      PHIDGET_LED_CURRENT_LIMIT_20mA = 1,	/**< 20mA */
+      PHIDGET_LED_CURRENT_LIMIT_40mA,		/**< 40mA */
+      PHIDGET_LED_CURRENT_LIMIT_60mA,		/**< 60mA */
+      PHIDGET_LED_CURRENT_LIMIT_80mA		/**< 80mA */
+     } CPhidgetLED_CurrentLimit;
+/**
+ * The Phidget LED supports these voltages
+ */
+     typedef enum
+     {
+      PHIDGET_LED_VOLTAGE_1_7V = 1,	/**< 1.7V */
+      PHIDGET_LED_VOLTAGE_2_75V,		/**< 2.75V */
+      PHIDGET_LED_VOLTAGE_3_9V,			/**< 3.9V */
+      PHIDGET_LED_VOLTAGE_5_0V			/**< 5.0V */
+     } CPhidgetLED_Voltage;
 
 /**
  * Gets the number of LEDs supported by this board.
@@ -1236,10 +2200,34 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidgetLED_setDiscreteLED (CPhidgetLEDHandle phid, int index, int brightness);
-
-__declspec (deprecated ("Deprecated - use CPhidgetLED_getLEDCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetLED_getNumLEDs (CPhidgetLEDHandle, int *);
+/**
+ * Gets the current limit. This is for all ouputs.
+ * @param phid An attached phidget LED handle.
+ * @param currentLimit The Current Limit.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetLED_getCurrentLimit (CPhidgetLEDHandle phid, CPhidgetLED_CurrentLimit * currentLimit);
+/**
+ * Sets the current limit. This is for all ouputs.
+ * @param phid An attached phidget LED handle.
+ * @param currentLimit The Current Limit.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetLED_setCurrentLimit (CPhidgetLEDHandle phid, CPhidgetLED_CurrentLimit currentLimit);
+/**
+ * Gets the output voltate. This is for all ouputs.
+ * @param phid An attached phidget LED handle.
+ * @param voltage The Output Voltage.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetLED_getVoltage (CPhidgetLEDHandle phid, CPhidgetLED_Voltage * voltage);
+/**
+ * Sets the output voltage. This is for all ouputs.
+ * @param phid An attached phidget LED handle.
+ * @param voltage The Output Voltage.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetLED_setVoltage (CPhidgetLEDHandle phid, CPhidgetLED_Voltage voltage);
 
 /** @} */
 
@@ -1249,8 +2237,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetLED_getLEDCount")) __declspec 
  * @{
  */
 
-     typedef struct _CPhidgetMotorControl *
-      CPhidgetMotorControlHandle;
+     typedef struct _CPhidgetMotorControl *CPhidgetMotorControlHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetMotorControl_create (CPhidgetMotorControlHandle * phid);
 
@@ -1364,21 +2351,164 @@ __declspec (dllimport)
      int __stdcall CPhidgetMotorControl_set_OnInputChange_Handler (CPhidgetMotorControlHandle phid, int (__stdcall * fptr) (CPhidgetMotorControlHandle phid, void *userPtr, int index, int inputState),
 								   void *userPtr);
 
-__declspec (deprecated ("Deprecated - use CPhidgetMotorControl_getMotorCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetMotorControl_getNumMotors (CPhidgetMotorControlHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetMotorControl_getInputCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetMotorControl_getNumInputs (CPhidgetMotorControlHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetMotorControl_getVelocity")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetMotorControl_getMotorSpeed (CPhidgetMotorControlHandle, int index, double *);
-__declspec (deprecated ("Deprecated - use CPhidgetMotorControl_setVelocity")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetMotorControl_setMotorSpeed (CPhidgetMotorControlHandle, int index, double);
-__declspec (deprecated ("Deprecated - use CPhidgetMotorControl_set_OnVelocityChange_Handler")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetMotorControl_set_OnMotorChange_Handler (CPhidgetMotorControlHandle, int (__stdcall * fptr) (CPhidgetMotorControlHandle, void *userPtr, int index, double motorSpeed), void *userPtr);
+/**
+ * Gets the number of encoder inputs supported by this board.
+ * @param phid An attached phidget motor control handle.
+ * @param count The encoder input count.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getEncoderCount (CPhidgetMotorControlHandle phid, int *count);
+/**
+ * Gets the position of an encoder. This position starts at 0 every time the phidget is opened.
+ * @param phid An attached phidget motor control handle.
+ * @param index The encoder index.
+ * @param position The encoder position.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getEncoderPosition (CPhidgetMotorControlHandle phid, int index, int *position);
+/**
+ * Sets the encoder position. This can be used to set the position to a known value, and should only be called when the encoder is not moving.
+ * @param phid An attached phidget motor control handle.
+ * @param index The encoder index.
+ * @param position The encoder position.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_setEncoderPosition (CPhidgetMotorControlHandle phid, int index, int position);
+/**
+ * Set an encoder position change handler. This is called when the encoder position changes.
+ * @param phid An attached phidget motor control handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_set_OnEncoderPositionChange_Handler (CPhidgetMotorControlHandle phid,
+									     int (__stdcall * fptr) (CPhidgetMotorControlHandle phid, void *userPtr, int index, int time, int positionChange),
+									     void *userPtr);
+/**
+ * Set an encoder position update handler. This is called at a constant rate; every 8ms, whether the encoder position has changed or not.
+ * @param phid An attached phidget motor control handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_set_OnEncoderPositionUpdate_Handler (CPhidgetMotorControlHandle phid,
+									     int (__stdcall * fptr) (CPhidgetMotorControlHandle phid, void *userPtr, int index, int positionChange), void *userPtr);
+
+/**
+ * Gets the Back EMF sensing state for a motor.
+ * @param phid An attached phidget motor control handle.
+ * @param index The motor index.
+ * @param bEMFState The back EMF sensing state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getBackEMFSensingState (CPhidgetMotorControlHandle phid, int index, int *bEMFState);
+/**
+ * Sets the Back EMF sensing state for a motor.
+ * @param phid An attached phidget motor control handle.
+ * @param index The motor index.
+ * @param bEMFState The back EMF sensing state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_setBackEMFSensingState (CPhidgetMotorControlHandle phid, int index, int bEMFState);
+/**
+ * Gets the Back EMF voltage for a motor.
+ * @param phid An attached phidget motor control handle.
+ * @param index The motor index.
+ * @param voltage The back EMF voltage, in volts.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getBackEMF (CPhidgetMotorControlHandle phid, int index, double *voltage);
+/**
+ * Set a back EMF update handler. This is called at a constant rate; every 16ms, when back EMF sensing is enabled for that motor.
+ * @param phid An attached phidget motor control handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_set_OnBackEMFUpdate_Handler (CPhidgetMotorControlHandle phid,
+								     int (__stdcall * fptr) (CPhidgetMotorControlHandle phid, void *userPtr, int index, double voltage), void *userPtr);
+
+/**
+ * Gets the Supply voltage for the motors. This could be higher then the actual supply voltage.
+ * @param phid An attached phidget motor control handle.
+ * @param supplyVoltage The supply voltage, in volts.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getSupplyVoltage (CPhidgetMotorControlHandle phid, double *supplyVoltage);
+
+/**
+ * Gets the Braking value for a motor.
+ * @param phid An attached phidget motor control handle.
+ * @param index The motor index.
+ * @param braking The braking value, in percent.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getBraking (CPhidgetMotorControlHandle phid, int index, double *braking);
+/**
+ * Sets the Braking value for a motor. This is applied when velocity is 0. Default is 0%.
+ * @param phid An attached phidget motor control handle.
+ * @param index The motor index.
+ * @param braking The braking value, in percent.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_setBraking (CPhidgetMotorControlHandle phid, int index, double braking);
+
+/**
+ * Gets the number of sensor inputs supported by this board.
+ * @param phid An attached phidget motor control handle.
+ * @param count The sensor input count.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getSensorCount (CPhidgetMotorControlHandle phid, int *count);
+/**
+ * Gets the value of a sensor.
+ * @param phid An attached phidget motor control handle.
+ * @param index The sensor index.
+ * @param sensorValue The sensor value, range: 0-1000.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getSensorValue (CPhidgetMotorControlHandle phid, int index, int *sensorValue);
+/**
+ * Gets the raw value of a sensor (12-bit).
+ * @param phid An attached phidget motor control handle.
+ * @param index The sensor index.
+ * @param sensorRawValue The sensor value, range: 0-4096.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getSensorRawValue (CPhidgetMotorControlHandle phid, int index, int *sensorRawValue);
+/**
+ * Set a sensor update handler. This is called at a constant rate; every 8ms.
+ * @param phid An attached phidget motor control handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_set_OnSensorUpdate_Handler (CPhidgetMotorControlHandle phid,
+								    int (__stdcall * fptr) (CPhidgetMotorControlHandle phid, void *userPtr, int index, int sensorValue), void *userPtr);
+/**
+ * Gets the ratiometric state.
+ * @param phid An attached phidget motor control handle.
+ * @param ratiometric The ratiometric state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_getRatiometric (CPhidgetMotorControlHandle phid, int *ratiometric);
+/**
+ * Sets the ratiometric state. This control the voltage reference used for sampling the analog sensors.
+ * @param phid An attached phidget motor control handle.
+ * @param ratiometric The ratiometric state.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_setRatiometric (CPhidgetMotorControlHandle phid, int ratiometric);
+
+/**
+ * Set a current update handler. This is called at a constant rate; every 8ms.
+ * @param phid An attached phidget motor control handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetMotorControl_set_OnCurrentUpdate_Handler (CPhidgetMotorControlHandle phid,
+								     int (__stdcall * fptr) (CPhidgetMotorControlHandle phid, void *userPtr, int index, double current), void *userPtr);
 
 /** @} */
 
@@ -1388,8 +2518,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetMotorControl_set_OnVelocityCha
  * @{
  */
 
-     typedef struct _CPhidgetPHSensor *
-      CPhidgetPHSensorHandle;
+     typedef struct _CPhidgetPHSensor *CPhidgetPHSensorHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetPHSensor_create (CPhidgetPHSensorHandle * phid);
 
@@ -1543,7 +2672,7 @@ __declspec (dllimport)
 /**
  * Gets the last tag read by the reader. This tag may or may not still be on the reader.
  * @param phid An attached phidget rfid handle.
- * @param tag The tag.
+ * @param tag The tag. This must be an unsigned char array of size 5.
  */
 __declspec (dllimport)
      int __stdcall CPhidgetRFID_getLastTag (CPhidgetRFIDHandle phid, unsigned char *tag);
@@ -1571,9 +2700,7 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetRFID_set_OnTagLost_Handler (CPhidgetRFIDHandle phid, int (__stdcall * fptr) (CPhidgetRFIDHandle phid, void *userPtr, unsigned char *tag), void *userPtr);
 
-__declspec (deprecated ("Deprecated - use CPhidgetRFID_getOutputCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetRFID_getNumOutputs (CPhidgetRFIDHandle, int *);
+//These are for a prototype device - hide until it's released
 
 /** @} */
 
@@ -1583,8 +2710,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetRFID_getOutputCount")) __decls
  * @{
  */
 
-     typedef struct _CPhidgetServo *
-      CPhidgetServoHandle;
+     typedef struct _CPhidgetServo *CPhidgetServoHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetServo_create (CPhidgetServoHandle * phid);
 
@@ -1652,31 +2778,230 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidgetServo_setEngaged (CPhidgetServoHandle phid, int index, int engagedState);
+/**
+ * Gets the servo type of a motor.
+ * @param phid An attached phidget advanced servo handle
+ * @param index The motor index.
+ * @param servoType The servo type.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetServo_getServoType (CPhidgetServoHandle phid, int index, CPhidget_ServoType * servoType);
+/**
+ * Sets the servo type of a motor.
+ * @param phid An attached phidget advanced servo handle
+ * @param index The motor index.
+ * @param servoType The servo type.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetServo_setServoType (CPhidgetServoHandle phid, int index, CPhidget_ServoType servoType);
+/**
+ * Sets the servo parameters of a motor.
+ * @param phid An attached phidget advanced servo handle
+ * @param index The motor index.
+ * @param min_us The minimum supported PCM in microseconds.
+ * @param max_us The maximum supported PCM in microseconds.
+ * @param degrees The degrees of rotation defined by the given PCM range.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetServo_setServoParameters (CPhidgetServoHandle phid, int index, double min_us, double max_us, double degrees);
 
-__declspec (deprecated ("Deprecated - use CPhidgetServo_getMotorCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_getNumMotors (CPhidgetServoHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetServo_setPosition")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_setMotorPosition (CPhidgetServoHandle, int index, double);
-__declspec (deprecated ("Deprecated - use CPhidgetServo_getPosition")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_getMotorPosition (CPhidgetServoHandle, int index, double *);
-__declspec (deprecated ("Deprecated - use CPhidgetServo_getPositionMax")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_getMotorPositionMax (CPhidgetServoHandle, int index, double *);
-__declspec (deprecated ("Deprecated - use CPhidgetServo_getPositionMin")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_getMotorPositionMin (CPhidgetServoHandle, int index, double *);
-__declspec (deprecated ("Deprecated - use CPhidgetServo_set_OnPositionChange_Handler")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_set_OnMotorPositionChange_Handler (CPhidgetServoHandle, int (__stdcall * fptr) (CPhidgetServoHandle, void *userPtr, int index, double motorPosition), void *userPtr);
-__declspec (deprecated ("Deprecated - use CPhidgetServo_setEngaged")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_setMotorOn (CPhidgetServoHandle, int index, int);
-__declspec (deprecated ("Deprecated - use CPhidgetServo_getEngaged")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetServo_getMotorOn (CPhidgetServoHandle, int index, int *);
+/** @} */
+
+/** \defgroup phidspatial Phidget Spatial 
+ * \ingroup phidgets
+ * Calls specific to the Phidget Spatial. See the product manual for more specific API details, supported functionality, units, etc.
+ * @{
+ */
+
+     typedef struct _CPhidgetSpatial *CPhidgetSpatialHandle;
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_create (CPhidgetSpatialHandle * phid);
+
+/**
+ * Timestamped position data returned by the \ref CPhidgetSpatial_set_OnSpatialData_Handler event.
+ */
+     typedef struct _CPhidgetSpatial_SpatialEventData
+     {
+      double acceleration[3];	/**< Acceleration data for up to 3 axes. */
+      double angularRate[3];   /**< Angular rate data (Gyroscope) for up to 3 axes */
+      double magneticField[3];	 /**< Magnetic field data (Compass) for up to 3 axes */
+      CPhidget_Timestamp timestamp;   /**< Hardware timestamp */
+     } CPhidgetSpatial_SpatialEventData, *CPhidgetSpatial_SpatialEventDataHandle;
+
+/**
+ * Gets the number of acceleration axes supplied by this board.
+ * @param phid An attached phidget spatial handle.
+ * @param count The number of acceleration axes.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getAccelerationAxisCount (CPhidgetSpatialHandle phid, int *count);
+/**
+ * Gets the number of gyroscope axes supplied by this board.
+ * @param phid An attached phidget spatial handle.
+ * @param count The number of gyro axes.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getGyroAxisCount (CPhidgetSpatialHandle phid, int *count);
+/**
+ * Gets the number of compass axes supplied by this board.
+ * @param phid An attached phidget spatial handle.
+ * @param count The number of compass axes.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getCompassAxisCount (CPhidgetSpatialHandle phid, int *count);
+
+/**
+ * Gets the current acceleration of an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The acceleration index.
+ * @param acceleration The acceleration in gs.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getAcceleration (CPhidgetSpatialHandle phid, int index, double *acceleration);
+/**
+ * Gets the maximum accleration supported by an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The acceleration index
+ * @param max The maximum acceleration
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getAccelerationMax (CPhidgetSpatialHandle phid, int index, double *max);
+/**
+ * Gets the minimum acceleration supported by an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The acceleration index
+ * @param min The minimum acceleration
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getAccelerationMin (CPhidgetSpatialHandle phid, int index, double *min);
+
+/**
+ * Gets the current angular rate of an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The angular rate index.
+ * @param angularRate The angular rate in degrees/second.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getAngularRate (CPhidgetSpatialHandle phid, int index, double *angularRate);
+/**
+ * Gets the maximum angular rate supported by an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The angular rate index
+ * @param max The maximum angular rate
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getAngularRateMax (CPhidgetSpatialHandle phid, int index, double *max);
+/**
+ * Gets the minimum angular rate supported by an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The angular rate index
+ * @param min The minimum angular rate
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getAngularRateMin (CPhidgetSpatialHandle phid, int index, double *min);
+
+/**
+ * Gets the current magnetic field stregth of an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The magnetic field index.
+ * @param magneticField The magnetic field strength in Gauss.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getMagneticField (CPhidgetSpatialHandle phid, int index, double *magneticField);
+/**
+ * Gets the maximum magnetic field stregth supported by an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The magnetic field index
+ * @param max The maximum magnetic field stregth
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getMagneticFieldMax (CPhidgetSpatialHandle phid, int index, double *max);
+/**
+ * Gets the minimum magnetic field stregth supported by an axis.
+ * @param phid An attached phidget spatial handle.
+ * @param index The magnetic field index
+ * @param min The minimum magnetic field stregth
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getMagneticFieldMin (CPhidgetSpatialHandle phid, int index, double *min);
+
+/**
+ * Zeroes the gyroscope. This takes about two seconds and the gyro zxes will report 0 during the process.
+ * This should only be called when the board is not moving.
+ * @param phid An attached phidget spatial handle.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_zeroGyro (CPhidgetSpatialHandle phid);
+
+/**
+ * Get the data rate.
+ * @param phid An attached phidget spatial handle.
+ * @param milliseconds The data rate in milliseconds.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getDataRate (CPhidgetSpatialHandle phid, int *milliseconds);
+/**
+ * Sets the data rate. Note that data at rates faster then 8ms will be delivered to events as an array of data.
+ * @param phid An attached phidget spatial handle.
+ * @param milliseconds The data rate in milliseconds.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_setDataRate (CPhidgetSpatialHandle phid, int milliseconds);
+/**
+ * Gets the maximum supported data rate.
+ * @param phid An attached phidget spatial handle.
+ * @param max Data rate in ms.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getDataRateMax (CPhidgetSpatialHandle phid, int *max);
+/**
+ * Gets the minimum supported data rate.
+ * @param phid An attached phidget spatial handle.
+ * @param min Data rate in ms.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_getDataRateMin (CPhidgetSpatialHandle phid, int *min);
+
+/**
+ * Sets the compass correction factors. This can be used to correcting any sensor errors, including hard and soft iron offsets and sensor error factors.
+ * @param phid An attached phidget spatial handle.
+ * @param magField Local magnetic field strength.
+ * @param offset0 Axis 0 offset correction.
+ * @param offset1 Axis 1 offset correction.
+ * @param offset2 Axis 2 offset correction.
+ * @param gain0 Axis 0 gain correction.
+ * @param gain1 Axis 1 gain correction.
+ * @param gain2 Axis 2 gain correction.
+ * @param T0 Non-orthogonality correction factor 0.
+ * @param T1 Non-orthogonality correction factor 1.
+ * @param T2 Non-orthogonality correction factor 2.
+ * @param T3 Non-orthogonality correction factor 3.
+ * @param T4 Non-orthogonality correction factor 4.
+ * @param T5 Non-orthogonality correction factor 5.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_setCompassCorrectionParameters (CPhidgetSpatialHandle phid, double magField, double offset0, double offset1, double offset2, double gain0, double gain1,
+								   double gain2, double T0, double T1, double T2, double T3, double T4, double T5);
+/**
+ * Resets the compass correction factors. Magnetic field data will be presented directly as reported by the sensor.
+ * @param phid An attached phidget spatial handle.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_resetCompassCorrectionParameters (CPhidgetSpatialHandle phid);
+
+/**
+ * Set a Data event handler. This is called at /ref CPhidgetSpatial_getDataRate, up to 8ms, for faster then 8ms data, multiple
+ * sets of data are supplied in a single event.
+ * @param phid An attached phidget spatial handle.
+ * @param fptr Callback function pointer.
+ * @param userPtr A pointer for use by the user - this value is passed back into the callback function.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetSpatial_set_OnSpatialData_Handler (CPhidgetSpatialHandle phid,
+							      int (__stdcall * fptr) (CPhidgetSpatialHandle phid, void *userPtr, CPhidgetSpatial_SpatialEventDataHandle * data, int dataCount),
+							      void *userPtr);
+
+//These are for a prototype device - hide until it's released
 
 /** @} */
 
@@ -1686,8 +3011,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetServo_getEngaged")) __declspec
  * @{
  */
 
-     typedef struct _CPhidgetStepper *
-      CPhidgetStepperHandle;
+     typedef struct _CPhidgetStepper *CPhidgetStepperHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetStepper_create (CPhidgetStepperHandle * phid);
 
@@ -1980,7 +3304,7 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetTemperatureSensor_getTemperature (CPhidgetTemperatureSensorHandle phid, int index, double *temperature);
 /**
- * Gets the maximum temperature that can be measured by a thermocouple input. This depends on the type of thermocouple attached.
+ * Gets the maximum temperature that can be measured by a thermocouple input. This depends on the type of thermocouple attached, as well as the ambient temperature.
  * @param phid An attached phidget themperature sensor handle.
  * @param index The thermocouple index.
  * @param max The maximum temperature.
@@ -1988,7 +3312,7 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetTemperatureSensor_getTemperatureMax (CPhidgetTemperatureSensorHandle phid, int index, double *max);
 /**
- * Gets the minimum temperature that can be measured by a thermocouple input. This depends on the type of thermocouple attached.
+ * Gets the minimum temperature that can be measured by a thermocouple input. This depends on the type of thermocouple attached, as well as the ambient temperature.
  * @param phid An attached phidget themperature sensor handle.
  * @param index The thermocouple index.
  * @param min The minimum temperature.
@@ -2086,10 +3410,6 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetTemperatureSensor_setThermocoupleType (CPhidgetTemperatureSensorHandle phid, int index, CPhidgetTemperatureSensor_ThermocoupleType type);
 
-__declspec (deprecated ("Deprecated - use CPhidgetTemepratureSensor_getTemperatureInputCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetTemperatureSensor_getNumTemperatureInputs (CPhidgetTemperatureSensorHandle, int *);
-
 /** @} */
 
 /** \defgroup phidtextlcd Phidget TextLCD 
@@ -2098,8 +3418,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetTemepratureSensor_getTemperatu
  * @{
  */
 
-     typedef struct _CPhidgetTextLCD *
-      CPhidgetTextLCDHandle;
+     typedef struct _CPhidgetTextLCD *CPhidgetTextLCDHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetTextLCD_create (CPhidgetTextLCDHandle * phid);
 
@@ -2132,6 +3451,20 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidgetTextLCD_setBacklight (CPhidgetTextLCDHandle phid, int backlightState);
+/**
+ * Gets the brightness of the backlight. Not supported on all TextLCDs
+ * @param phid An attached phidget text lcd handle.
+ * @param brightness The backlight brightness (0-255).
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_getBrightness (CPhidgetTextLCDHandle phid, int *brightness);
+/**
+ * Sets the brightness of the backlight. Not supported on all TextLCDs
+ * @param phid An attached phidget text lcd handle.
+ * @param brightness The backlight brightness (0-255).
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_setBrightness (CPhidgetTextLCDHandle phid, int brightness);
 /**
  * Gets the last set contrast value.
  * @param phid An attached phidget text lcd handle.
@@ -2174,7 +3507,6 @@ __declspec (dllimport)
  */
 __declspec (dllimport)
      int __stdcall CPhidgetTextLCD_setCursorBlink (CPhidgetTextLCDHandle phid, int cursorBlinkState);
-
 /**
  * Sets a custom character. See the product manual for more information.
  * @param phid An attached phidget text lcd handle.
@@ -2202,12 +3534,69 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetTextLCD_setDisplayString (CPhidgetTextLCDHandle phid, int index, char *displayString);
 
-__declspec (deprecated ("Deprecated - use CPhidgetTextLCD_getRowCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetTextLCD_getNumRows (CPhidgetTextLCDHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetTextLCD_getColumnCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetTextLCD_getNumColumns (CPhidgetTextLCDHandle, int *);
+/**
+ * The Phidget TextLCD Adapter supports these screen sizes
+ */
+     typedef enum
+     {
+      PHIDGET_TEXTLCD_SCREEN_NONE = 1,	/**< no screen attached */
+      PHIDGET_TEXTLCD_SCREEN_1x8,		/**< 1 row, 8 column screen */
+      PHIDGET_TEXTLCD_SCREEN_2x8,		/**< 2 row, 8 column screen */
+      PHIDGET_TEXTLCD_SCREEN_1x16,	/**< 1 row, 16 column screen */
+      PHIDGET_TEXTLCD_SCREEN_2x16,	/**< 2 row, 16 column screen */
+      PHIDGET_TEXTLCD_SCREEN_4x16,	/**< 4 row, 16 column screen */
+      PHIDGET_TEXTLCD_SCREEN_2x20,	/**< 2 row, 20 column screen */
+      PHIDGET_TEXTLCD_SCREEN_4x20,	/**< 4 row, 20 column screen */
+      PHIDGET_TEXTLCD_SCREEN_2x24,	/**< 2 row, 24 column screen */
+      PHIDGET_TEXTLCD_SCREEN_1x40,	/**< 1 row, 40 column screen */
+      PHIDGET_TEXTLCD_SCREEN_2x40,	/**< 2 row, 40 column screen */
+      PHIDGET_TEXTLCD_SCREEN_4x40,	/**< 4 row, 40 column screen (special case, requires both screen connections) */
+      PHIDGET_TEXTLCD_SCREEN_UNKNOWN
+     } CPhidgetTextLCD_ScreenSize;
+
+/**
+ * Gets the number of Display supported by this TextLCD
+ * @param phid An attached phidget text lcd handle.
+ * @param count The Screen count.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_getScreenCount (CPhidgetTextLCDHandle phid, int *count);
+/**
+ * Gets the active screen.
+ * @param phid An attached phidget text lcd handle.
+ * @param screenIndex The active screen.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_getScreen (CPhidgetTextLCDHandle phid, int *screenIndex);
+/**
+ * Sets the active screen. This is the screen that all subsequent API calls will apply to.
+ * @param phid An attached phidget text lcd handle.
+ * @param screenIndex The active screen.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_setScreen (CPhidgetTextLCDHandle phid, int screenIndex);
+/**
+ * Gets the screen size.
+ * @param phid An attached phidget text lcd handle.
+ * @param screenSize The screen size.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_getScreenSize (CPhidgetTextLCDHandle phid, CPhidgetTextLCD_ScreenSize * screenSize);
+/**
+ * Sets the active screen size. Only supported on the TextLCD Adapter.
+ * @param phid An attached phidget text lcd handle.
+ * @param screenSize The screen size.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_setScreenSize (CPhidgetTextLCDHandle phid, CPhidgetTextLCD_ScreenSize screenSize);
+/**
+ * Initializes the active screen. Only supported on the TextLCD adapter.
+ * This should be called if a screen is attached after power up, or to clear the screen after
+ * setting the size.
+ * @param phid An attached phidget text lcd handle.
+ */
+__declspec (dllimport)
+     int __stdcall CPhidgetTextLCD_initialize (CPhidgetTextLCDHandle phid);
 
 /** @} */
 
@@ -2217,8 +3606,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetTextLCD_getColumnCount")) __de
  * @{
  */
 
-     typedef struct _CPhidgetTextLED *
-      CPhidgetTextLEDHandle;
+     typedef struct _CPhidgetTextLED *CPhidgetTextLEDHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetTextLED_create (CPhidgetTextLEDHandle * phid);
 
@@ -2261,13 +3649,6 @@ __declspec (dllimport)
 __declspec (dllimport)
      int __stdcall CPhidgetTextLED_setDisplayString (CPhidgetTextLEDHandle phid, int index, char *displayString);
 
-__declspec (deprecated ("Deprecated - use CPhidgetTextLED_getRowCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetTextLED_getNumRows (CPhidgetTextLEDHandle, int *);
-__declspec (deprecated ("Deprecated - use CPhidgetTextLED_getColumnCount")) __declspec (dllimport)
-     int __stdcall
-     CPhidgetTextLED_getNumColumns (CPhidgetTextLEDHandle, int *);
-
 /** @} */
 
 /** \defgroup phidweight Phidget Weight Sensor 
@@ -2276,8 +3657,7 @@ __declspec (deprecated ("Deprecated - use CPhidgetTextLED_getColumnCount")) __de
  * @{
  */
 
-     typedef struct _CPhidgetWeightSensor *
-      CPhidgetWeightSensorHandle;
+     typedef struct _CPhidgetWeightSensor *CPhidgetWeightSensorHandle;
 __declspec (dllimport)
      int __stdcall CPhidgetWeightSensor_create (CPhidgetWeightSensorHandle * phid);
 
@@ -2313,6 +3693,8 @@ __declspec (dllimport)
      int __stdcall CPhidgetWeightSensor_setWeightChangeTrigger (CPhidgetWeightSensorHandle phid, double trigger);
 
 /** @} */
+
+//Only include in the debug header
 #ifndef CPHIDGET_CONSTANTS
 #define CPHIDGET_CONSTANTS
 
@@ -2329,13 +3711,14 @@ __declspec (dllimport)
 #define PHIDGET_NOTATTACHED				0x0 /**< Phidget not attached */
 /** @} */
 
+//Adding error codes: Update .NET, COM, Python, Java
 /** \name Phidget Error Codes
  * Returned by all C API calls
  * @{
  */
 #define	PHIDGET_ERROR_CODE_COUNT		20
 #define EPHIDGET_OK						0	/**< Function completed successfully. */
-#define EPHIDGET_NOTFOUND				1	/**< Phidget not found. "A Phidget matching the type and or serial number could not be found." This code is not currently used. */
+#define EPHIDGET_NOTFOUND				1	/**< Phidget not found. "A Phidget matching the type and or serial number could not be found." */
 #define EPHIDGET_NOMEMORY				2	/**< No memory. "Memory could not be allocated." */
 #define EPHIDGET_UNEXPECTED				3	/**< Unexpected. "Unexpected Error. Contact Phidgets Inc. for support." */
 #define EPHIDGET_INVALIDARG				4	/**< Invalid argument. "Invalid argument passed to function." */
@@ -2344,7 +3727,7 @@ __declspec (dllimport)
 #define EPHIDGET_INVALID				7	/**< Invalid error code. "The Error Code is not defined." */
 #define EPHIDGET_NETWORK				8	/**< Network. "Network Error." */
 #define EPHIDGET_UNKNOWNVAL				9	/**< Value unknown. "Value is Unknown (State not yet received from device, or not yet set by user)." */
-#define EPHIDGET_BADPASSWORD			10	/**< Authorization exception. "Authorization Failed." */
+#define EPHIDGET_BADPASSWORD			10	/**< Authorization exception. "No longer used. Replaced by EEPHIDGET_BADPASSWORD" */
 #define EPHIDGET_UNSUPPORTED			11	/**< Unsupported. "Not Supported." */
 #define EPHIDGET_DUPLICATE				12	/**< Duplicate request. "Duplicated request." */
 #define EPHIDGET_TIMEOUT				13	/**< Timeout. "Given timeout has been exceeded." */
@@ -2353,7 +3736,32 @@ __declspec (dllimport)
 #define EPHIDGET_NETWORK_NOTCONNECTED	16	/**< Network not connected. "A connection to the server does not exist." */
 #define EPHIDGET_WRONGDEVICE			17	/**< Wrong device. "Function is not applicable for this device." */
 #define EPHIDGET_CLOSED					18	/**< Phidget Closed. "Phidget handle was closed." */
-#define EPHIDGET_BADVERSION				19	/**< Version Mismatch. "Webservice and Client protocol versions don't match. Update to newest release." */
+#define EPHIDGET_BADVERSION				19	/**< Version Mismatch. "No longer used. Replaced by EEPHIDGET_BADVERSION" */
+/** @} */
+
+//Adding error codes: Update .NET, COM, Python, Java
+/** \name Phidget Error Event Codes
+ * Returned in the Phidget error event
+ * @{
+ */
+#define EEPHIDGET_EVENT_ERROR(code) (0x8000 + code)
+
+
+//Library errors
+#define EEPHIDGET_NETWORK		EEPHIDGET_EVENT_ERROR(0x0001)	/**< Network Error (asynchronous). */
+#define EEPHIDGET_BADPASSWORD	EEPHIDGET_EVENT_ERROR(0x0002)	/**< Authorization Failed. */
+#define EEPHIDGET_BADVERSION	EEPHIDGET_EVENT_ERROR(0x0003)	/**< Webservice and Client protocol versions don't match. Update to newest release. */
+
+//Errors streamed back from firmware
+#define EEPHIDGET_OK			EEPHIDGET_EVENT_ERROR(0x1000)	/**< An error state has ended - see description for details. */
+#define EEPHIDGET_OVERRUN		EEPHIDGET_EVENT_ERROR(0x1002)	/**< A sampling overrun happend in firmware. */
+#define EEPHIDGET_PACKETLOST	EEPHIDGET_EVENT_ERROR(0x1003)	/**< One or more packets were lost. */
+#define EEPHIDGET_WRAP			EEPHIDGET_EVENT_ERROR(0x1004)	/**< A variable has wrapped around. */
+#define EEPHIDGET_OVERTEMP		EEPHIDGET_EVENT_ERROR(0x1005)	/**< Overtemperature condition detected. */
+#define EEPHIDGET_OVERCURRENT	EEPHIDGET_EVENT_ERROR(0x1006)	/**< Overcurrent condition detected. */
+#define EEPHIDGET_OUTOFRANGE	EEPHIDGET_EVENT_ERROR(0x1007)	/**< Out of range condition detected. */
+#define EEPHIDGET_BADPOWER		EEPHIDGET_EVENT_ERROR(0x1008)	/**< Power supply problem detected. */
+
 /** @} */
 
 /** \name Phidget Unknown Constants
@@ -2361,6 +3769,7 @@ __declspec (dllimport)
  * @{
  */
 #define PUNK_BOOL	0x02					/**< Unknown Boolean (unsigned char) */
+#define PUNK_SHRT	0x7FFF					/**< Unknown Short	 (16-bit) */
 #define PUNK_INT	0x7FFFFFFF				/**< Unknown Integer (32-bit) */
 #define PUNK_INT64	0x7FFFFFFFFFFFFFFFLL	/**< Unknown Integer (64-bit) */
 #define PUNK_DBL	1e300					/**< Unknown Double */

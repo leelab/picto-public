@@ -87,6 +87,16 @@ void LegacySystemXPRewardController::startReward(unsigned int,int quantity)
 	latestOnTime_ = quantity;
 }
 
+void LegacySystemXPRewardController::stopReward(unsigned int channel)
+{
+	if(!taskExists_)
+		return;
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	//We may need to manually set the pin back to TTL low... see if we do in testing.
+	taskExists_ = false;
+}
+
 bool LegacySystemXPRewardController::rewardWasSupplied(unsigned int)
 {
 	if(!taskExists_)

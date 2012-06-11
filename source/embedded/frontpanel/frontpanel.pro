@@ -19,6 +19,8 @@ HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/DirectorInterface.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/DirectorInterface.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/menu.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/menu.cpp
 

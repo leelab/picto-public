@@ -5,7 +5,6 @@
 
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
-#include "../engine.h"
 
 /*! \addtogroup pictoserver_protocol
  * @{
@@ -15,16 +14,16 @@
  */
 struct FPSTOPFLUSHCommandHandler : Picto::ProtocolCommandHandler
 {
+	Q_OBJECT
 public:
 	FPSTOPFLUSHCommandHandler();
 
 	QString method() { return QString("FPSTOPFLUSH"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 
-	void setEngine(Engine *engine) { eng = engine; }
+signals:
+	void stopFlush(int controller);
 
-private:
-	Engine *eng;
 };
 
 /*! @} */
