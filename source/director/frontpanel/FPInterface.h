@@ -35,6 +35,7 @@ protected:
 	virtual void ipWasChanged();
 	virtual void rewardDurationWasChanged(int controller);
 	virtual void flushDurationWasChanged(int controller);
+	virtual void statusWasChanged(QString status);
 
 private:
 	//private functions

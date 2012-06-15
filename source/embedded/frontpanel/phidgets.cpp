@@ -3,7 +3,11 @@
 
 #include <qDebug>
 
+#include <iostream>
 #include "phidgets.h"
+
+#define CUMULATIVETICKSTHRESH 5
+#define TICKSPERSECTHRESH 150
 
 Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	textLCDSerialNumber(0),
@@ -11,10 +15,14 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	hTextLCD(0),
 	hEncoder(0),
 	prevClickState(0),
-	panelInfo(panelInfo)
+	panelInfo(panelInfo),
+	cumRot(0),
+	cumTime(0),
+	turnWasTriggered_(false)
 {
 	QTextStream outstream(stdout);
 
+	connect(this,SIGNAL(userInputSignal(int)),this,SLOT(turnWasTriggered(int)));
 	int result;
 	const char *err;
 
@@ -40,9 +48,15 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 8, 476859, 461256); //milliseconds character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 9, 506248, 8590); //arrow character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 10, 31, 0); //horizontal line across top of matrix (used for underlining)
-	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 11, 330,558); //frown face
-	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 12, 330,31); //neutral face
-	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 13, 557386,14); //smile face
+	//CPhidgetTextLCD_setCustomCharacter(hTextLCD, 11, 330,558); //frown face
+	//CPhidgetTextLCD_setCustomCharacter(hTextLCD, 12, 330,31); //neutral face
+	//CPhidgetTextLCD_setCustomCharacter(hTextLCD, 13, 557386,14); //smile face
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 11, 338926,0); //disconnected
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 12, 338926,490496); //idle
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 13, 1030276,135647); //stopped
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 14, 766150,149828); //running
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 15, 1020102,338244); //paused
+
 
 	CPhidgetTextLCD_setContrast(hTextLCD, 128);
 
@@ -137,14 +151,54 @@ void Phidgets::buttonClicked()
 	emit userInputSignal(PanelInfo::buttonPush);
 }
 
-void Phidgets::dialTurnedLeft()
+void Phidgets::dialTurnedLeft(bool fast)
 {
-	emit userInputSignal(PanelInfo::rotateLeft);
+	//This function is called from the phidgets thread.  The qt system only 
+	//actually triggers the emitted signals below once control returns to the
+	//qt thread.  We want to avoid having multiple userInputSignals for 
+	//turn events queued up so we set a turnWasTriggered bool before emitting the userInputSignal
+	//and unset it in a slot connected to that signal.  Each time this function
+	//is called, we just check if the bool, and if it's true we 
+	//don't emit a new turn signal.
+	bool doit = true;
+	mutex_.lock();
+	if(turnWasTriggered_)
+		doit = false;
+	turnWasTriggered_ = true;
+	mutex_.unlock();
+	if(!doit)
+		return;
+	if(fast)
+		emit userInputSignal(PanelInfo::rotateLeftFast);
+	else
+		emit userInputSignal(PanelInfo::rotateLeft);
 }
 
-void Phidgets::dialTurnedRight()
+void Phidgets::dialTurnedRight(bool fast)
 {
-	emit userInputSignal(PanelInfo::rotateRight);
+	bool doit = true;
+	mutex_.lock();
+	if(turnWasTriggered_)
+		doit = false;
+	turnWasTriggered_ = true;
+	mutex_.unlock();
+	if(!doit)
+		return;
+	if(fast)
+		emit userInputSignal(PanelInfo::rotateRightFast);
+	else
+		emit userInputSignal(PanelInfo::rotateRight);
+}
+
+//This gets called whenever a userInputSignal is triggered by the qt event loop.
+//By using the turnWasTriggered_ bool, we can be sure that we don't 
+//put multiple turn signals into the qt event queue before earlier ones were 
+//triggered.
+void Phidgets::turnWasTriggered(int)
+{
+	mutex_.lock();
+	turnWasTriggered_ = false;
+	mutex_.unlock();
 }
 
 //---------------------------------------------------
@@ -200,6 +254,7 @@ int __stdcall EncoderAttachHandler(CPhidgetHandle hEncoder, void *phidgetsObject
 	phidgets->encoderSerialNumber = serialNo;
 	phidgets->lastRot = 0;
 	phidgets->cumRot = 0;
+	phidgets->cumTime = 0;
 
 	return 0;
 }
@@ -234,8 +289,9 @@ int __stdcall EncoderInputChangeHandler(CPhidgetEncoderHandle,
 
 	phidgets->prevClickState = state;
 
-	//kill the rotation counter on any button clicking
+	//kill the rotation counter and cumulative time on any button clicking
 	phidgets->cumRot = 0;
+	phidgets->cumTime = 0;
 
 	return 0;
 }
@@ -243,43 +299,51 @@ int __stdcall EncoderInputChangeHandler(CPhidgetEncoderHandle,
 int __stdcall EncoderPositionChangeHandler(CPhidgetEncoderHandle, //hEncoder
                                            void * phidgetsObject,
                                            int, //index
-                                           int, //time
+                                           int time,
                                            int relativePosition)
 {
 	Phidgets * phidgets = (Phidgets *) phidgetsObject;
 
-	//keep track of cumulative rotation, resetting in the event
-	//of a direction change
+	//Somtimes the rotary phidget sends faulty data, ie. The user will be 
+	//slowly turning to the right and suddenly a small left turn signal
+	//will come in.  To get rid of this type of error, we look at 
+	//cumulative rotation and don't trigger any events unless the
+	//cumulative rotation is above a CUMULATIVETICKSTHRESH value.
+
+	//keep track of cumulative rotation and the time it took to 
+	//achieve that rotation, resetting in the event of a direction change
 	if(phidgets->lastRot * relativePosition < 0)
 	{
 		phidgets->cumRot = relativePosition;
+		phidgets->cumTime = time;
 	}
 	else
 	{
 		phidgets->cumRot += relativePosition;
+		phidgets->cumTime += time;
 	}
-
-	//check for 10 ticks
-	if(phidgets->cumRot > 10)
-	{
-		//this for loop helps speed things up when the user is spinning
-		//the encoder quickly so that if they turn it 20 ticks, we
-		//generate 2 left turn events.
-		for(int i=0; i<phidgets->cumRot/10; i++)
-			phidgets->dialTurnedLeft();
-		phidgets->cumRot = 0;
-	}
-	if(phidgets->cumRot <-10)
-	{
-		for(int i=0; i<phidgets->cumRot/-10; i++)
-			phidgets->dialTurnedRight();
-		phidgets->cumRot = 0;
-		
-	}
-
 	phidgets->lastRot = relativePosition;
+	double ticksPerSec = phidgets->cumRot/(phidgets->cumTime*.001);
 
-
+	//check for CUMULATIVETICKSTHRESH ticks
+	if(abs(phidgets->cumRot) > CUMULATIVETICKSTHRESH)
+	{
+		//Now that we're here, we're going to send information.  If
+		//the cumulative ticks that were received occured over a short
+		//time, trigger a fast turn, otherwise, trigger a slow turn.
+		if(ticksPerSec > 0)
+		{
+			phidgets->dialTurnedLeft(ticksPerSec > TICKSPERSECTHRESH);
+		}
+		else
+		{
+			phidgets->dialTurnedRight(ticksPerSec <-TICKSPERSECTHRESH);
+		}
+		//Now that we've triggered a turn, reset the cumulative rotation
+		//and time information
+		phidgets->cumRot = 0;
+		phidgets->cumTime = 0;
+	}
 	return 0;
 }
 

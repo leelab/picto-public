@@ -2,12 +2,15 @@
 #define MENU_H
 
 #include <QList>
+#include <QMap>
 #include <QString>
 #include <QObject>
 #include <QTimer>
+#include <QSharedPointer>
 
 #include "FrontPanelInfo.h"
 #include "DirectorInterface.h"
+#include "DisplayMode.h"
 
 //The menu definition system deserves some disucssion here.
 //Every menu item has a name, a menu number, and an id.
@@ -26,14 +29,7 @@
 //This setup makes moving through the menu a bit painful, since 
 //we are always searching for the next item in our menu, but
 //it makes keeping track of the menu really easy.
-struct MenuItem
-{
-	MenuItem(QString name, int menu) : name(name), menu(menu) {};
-	bool operator==(const MenuItem& rhs) { return (rhs.name == this->name) && (rhs.menu == this->menu); };
 
-	QString name;
-	int menu;
-};
 
 /*!	\brief The front panel's menu interface
  *
@@ -51,11 +47,11 @@ public:
 
 public slots:
 	void userInputSlot(int type);
-	void updateStatus();
 
 private slots:
 	void checkConnections();
-	void drawFlush();  //Since this is display "animated" it needs to be a slot
+	void returnToStatus();
+	//void drawFlush();  //Since this is display "animated" it needs to be a slot
 
 signals:
 	void updateLCD(int line, QString text);
@@ -64,46 +60,18 @@ signals:
 
 private:
 	void loadMenus();
-	void drawMenu();
-	void menuAction();
 
-	void doMessage(QString line1, QString line2="");
-
-	void drawStatus();
-
-	void initRewardDuration();
-	void drawRewardDuration(bool firstTime);
-
-	void drawChangeController();
-
-	void initFlushDuration();
-	void drawFlushDuration(bool firstTime);
-
-	void initFlush();
-
-	void initChangeIP();
-	void drawChangeIP(bool drawLine2);
-
-	void initChangeName();
-	void drawChangeName(bool drawLine2);
-
-	int nextMenuItem();
-	int prevMenuItem();
-
+	//void initFlush();
 	FrontPanelInfo *panelInfo;
-	DirectorInterface *directorIf_;
+	QSharedPointer<DirectorInterface> directorIf_;
 
 	QTimer *connectionTimer;
-	QTimer *flushingTimer;
+	QTimer *activityTimer;
+	bool wasConnected_;
+	/*QTimer *flushingTimer;*/
 
-	int currItem;
-	int cursorPos;
-	QList<MenuItem> menuItems;
-
-	int currIpField;  //note: the ip field starts at 0 for the MSBs and ends at 3 for the LSBs.  
-					  //This value is used in text parsing, which is why it's so odd.
-	int currNameChar; //used to keep track of which character in the system name is being changed.
-	
+	QMap<PanelInfo::DisplayModeType,QSharedPointer<DisplayMode>> panelModes_;
+	QSharedPointer<DisplayMode> currMode_;	
 
 };
 

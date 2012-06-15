@@ -116,22 +116,7 @@ int Director::openDevice()
 	engine_->setName(name_);
 	engine_->setExclusiveMode(true);
 
-	for(int i=0;i<rewardDurs_.size();i++)
-		engine_->setRewardDuration(i,rewardDurs_[i].toInt());
-	for(int i=0;i<flushDurs_.size();i++)
-		engine_->setFlushDuration(i,flushDurs_[i].toInt());
-
 	HardwareSetup hwSetup(engine_);
-
-	//If running on PictoBox create front panel
-	if(useFrontPanel_)
-	{
-		fpInterface_ = QSharedPointer<FPInterface>(new FPInterface());
-		QObject::connect(fpInterface_.data(),SIGNAL(nameChangeRequest(QString)),this,SLOT(changeName(QString)));
-		QObject::connect(fpInterface_.data(),SIGNAL(rewardDurationChangeRequest(int,int)),this,SLOT(changeRewardDuration(int,int)));
-		QObject::connect(fpInterface_.data(),SIGNAL(flushDurationChangeRequest(int,int)),this,SLOT(changeFlushDuration(int,int)));
-		engine_->addControlPanel(fpInterface_);
-	}
 	
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering
 	//otherwise use d3d.
@@ -151,6 +136,22 @@ int Director::openDevice()
 		return 1;
 	if(!hwSetup.isSetup())
 		return 1;
+
+	//If running on PictoBox create front panel
+	if(useFrontPanel_)
+	{
+		fpInterface_ = QSharedPointer<FPInterface>(new FPInterface());
+		QObject::connect(fpInterface_.data(),SIGNAL(nameChangeRequest(QString)),this,SLOT(changeName(QString)));
+		QObject::connect(fpInterface_.data(),SIGNAL(rewardDurationChangeRequest(int,int)),this,SLOT(changeRewardDuration(int,int)));
+		QObject::connect(fpInterface_.data(),SIGNAL(flushDurationChangeRequest(int,int)),this,SLOT(changeFlushDuration(int,int)));
+		engine_->addControlPanel(fpInterface_);
+	}
+
+	for(int i=0;i<rewardDurs_.size();i++)
+		engine_->setRewardDuration(i,rewardDurs_[i].toInt());
+	for(int i=0;i<flushDurs_.size();i++)
+		engine_->setFlushDuration(i,flushDurs_[i].toInt());
+
 
 	statusManager_ = QSharedPointer<ComponentStatusManager>(new DirectorStatusManager());
 	statusManager_.staticCast<DirectorStatusManager>()->setEngine(engine_);

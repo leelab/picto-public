@@ -2,6 +2,7 @@
 #define PHIDGETS_H
 
 #include <QTimer>
+#include <QMutex>
 
 #include "phidget21.h"
 #include "FrontPanelInfo.h"
@@ -44,8 +45,8 @@ public:
 	virtual ~Phidgets();
 
 	void buttonClicked();
-	void dialTurnedLeft();
-	void dialTurnedRight();
+	void dialTurnedLeft(bool fast);
+	void dialTurnedRight(bool fast);
 
 	FrontPanelInfo *panelInfo;
 
@@ -62,7 +63,13 @@ public:
 	//rotaryencoder stuff
 	int lastRot;
 	int cumRot;
+	int cumTime;
 	int prevClickState;
+private:
+	QMutex mutex_;
+	bool turnWasTriggered_;
+private slots:
+	void turnWasTriggered(int);
 };
 
 #endif

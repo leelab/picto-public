@@ -24,6 +24,25 @@ SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/DirectorInterface.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/menu.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/menu.cpp
 
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/displaymode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/displaymode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/TextEditMode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/TextEditMode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/NumberEditMode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/NumberEditMode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/changenamemode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/changenamemode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/rewarddurmode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/rewarddurmode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/flushdurmode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/flushdurmode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/rewardcontrollermode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/rewardcontrollermode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/statusmode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/statusmode.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/menumode.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/menumode.cpp
+
 # Output
 build_pass:CONFIG(debug, debug|release) {
   DESTDIR = $$(PICTO_TREE)/output/bin/debug

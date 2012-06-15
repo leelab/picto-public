@@ -21,6 +21,7 @@ ComponentStatusManager::ComponentStatusManager()
 	}
 	if(statusNameDictionary_.isEmpty())
 	{
+		statusNameDictionary_[disconnected] = "Disconnected";
 		statusNameDictionary_[idle] = "Idle";
 		statusNameDictionary_[ending] = "Ending";
 		statusNameDictionary_[stopped] = "Stopped";

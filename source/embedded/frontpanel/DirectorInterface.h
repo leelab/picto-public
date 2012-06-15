@@ -7,7 +7,10 @@
 #include <QTimer>
 
 #include "FrontPanelInfo.h"
+#include "../../common/protocol/protocolcommand.h"
+#include "../../common/protocol/protocolresponse.h"
 
+enum DirectorStatus {DirUnknown,DirDisconnect,DirConnect,DirEnding,DirStop,DirRun,DirPause};
 /*!	\brief An interface object that encapsulates socket activity for the Front Panel Menu
  *
  *
@@ -23,6 +26,7 @@ public:
 	QString getIP();
 	bool setName(QString name);
 	QString getName();
+	DirectorStatus getStatus();
 	bool setRewardDuration(int rewardDur,int controller);
 	int getRewardDuration(int controller);
 	bool setFlushDuration(int flushDur,int controller);
@@ -33,9 +37,15 @@ public:
 	bool startReward(int controller);
 	bool isConnected();
 private:
+	bool sendCommandGetResponse(Picto::ProtocolCommand command,QString* reply);
 	FrontPanelInfo *panelInfo;
-	QTimer *connectionTimer;	
-
+	QTimer *connectionTimer;
+	QString lastName_;
+	QString lastIp_;
+	DirectorStatus lastStatus_;
+	int lastRewardDur_;
+	int lastFlushDur_;
+	int lastCommandId_;
 };
 
 

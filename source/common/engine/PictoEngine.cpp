@@ -67,8 +67,16 @@ void PictoEngine::addControlPanel(QSharedPointer<ControlPanelInterface> controlP
 {	
 	controlPanelIfs_.append(controlPanel);
 	//Set first time information
-	controlPanel->ipAddressChanged(dataCommandChannel_?dataCommandChannel_->getIpAddress().toString():"0.0.0.0");
+	controlPanel->ipAddressChanged(getIpAddress().toString());
 	controlPanel->nameChanged(getName());
+	for(int i=0;i<rewardDurations_.size();i++)
+	{
+		controlPanel->rewardDurationChanged(i,rewardDurations_[i]);
+	}
+	for(int i=0;i<flushDurations_.size();i++)
+	{
+		controlPanel->flushDurationChanged(i,flushDurations_[i]);
+	}
 
 	//Connect all signals! and set data in appropriate places
 	connect(controlPanel.data(),SIGNAL(nameChangeRequest(QString)),this,SLOT(setName(QString)));
@@ -546,6 +554,7 @@ bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandCh
 		return false;
 
 	dataCommandChannel_ = commandChannel;
+
 	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
 		return false;
 	else
@@ -681,6 +690,32 @@ void PictoEngine::stopFlush(int channel)
 	if(rewardController_.isNull())
 		return;
 	rewardController_->stopRewards(channel);
+}
+
+QHostAddress PictoEngine::getIpAddress()
+{
+	if(!ipAddress_.isNull())
+		return ipAddress_;
+	
+	//Use the first IPv4 address that isn't localhost and is on an interface that is up and running
+	//This will probably be a valid ip address, but there could still be issues...
+	QList<QNetworkInterface> networkInterfaces = QNetworkInterface::allInterfaces();
+	foreach(QNetworkInterface inter, networkInterfaces)
+	{
+		QList<QNetworkAddressEntry> hostAddresses = inter.addressEntries();
+		if( !(inter.flags() & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning)) )
+			continue;
+		foreach(QNetworkAddressEntry addrEntry, hostAddresses)
+		{
+			QHostAddress addr = addrEntry.ip();
+			if(addr.protocol() == QAbstractSocket::IPv4Protocol 
+				&& addr != QHostAddress::LocalHost)
+			{
+				ipAddress_ = addr;
+				return ipAddress_;
+			}
+		}
+	}
 }
 
 int PictoEngine::getEngineCommand()

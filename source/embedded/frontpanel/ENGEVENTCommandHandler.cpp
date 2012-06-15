@@ -28,84 +28,84 @@ ENGEVENTCommandHandler::ENGEVENTCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> ENGEVENTCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	QTextStream out(stdout);
+	//QTextStream out(stdout);
 
-	QByteArray xmlData = command->getContent();
-	QXmlStreamReader reader(xmlData);
+	//QByteArray xmlData = command->getContent();
+	//QXmlStreamReader reader(xmlData);
 
 
-	//We can't rely on atEnd here, because the reader will return 
-	//PrematureEndOfDocumentError (since this isn't a full document)
-	while(!reader.atEnd() && reader.error()==0)
-	{
-		reader.readNext();
-		if(reader.isStartElement() && reader.name() == "event")
-		{
-			QString eventType = reader.attributes().value("type").toString();
-			eventType = eventType.toLower();
+	////We can't rely on atEnd here, because the reader will return 
+	////PrematureEndOfDocumentError (since this isn't a full document)
+	//while(!reader.atEnd() && reader.error()==0)
+	//{
+	//	reader.readNext();
+	//	if(reader.isStartElement() && reader.name() == "event")
+	//	{
+	//		QString eventType = reader.attributes().value("type").toString();
+	//		eventType = eventType.toLower();
 
-			//NOTE: all event types are in lower case.
-			if(eventType=="experimentstart")
-			{
-				panelInfo->setLastEvent("Experiment start");
-			}
-			else if(eventType=="experimentend")
-			{
-				panelInfo->setLastEvent("Experiment end");
-			}
-			else if(eventType=="blockstart")
-			{
-				int block = reader.attributes().value("block").toString().toInt();
-				panelInfo->setBlock(block);
-			}
-			else if(eventType=="blockend")
-			{
-				int block = reader.attributes().value("block").toString().toInt();
-				panelInfo->setBlock(block);
-			}
-			else if(eventType=="trialstart")
-			{
-				int trial = reader.attributes().value("trial").toString().toInt();
-				panelInfo->setTrial(trial);
-				panelInfo->setLastEvent("Trial start");
-			}
-			else if(eventType=="trialend")
-			{
-				int trial = reader.attributes().value("trial").toString().toInt();
-				panelInfo->setTrial(trial);
+	//		//NOTE: all event types are in lower case.
+	//		if(eventType=="experimentstart")
+	//		{
+	//			panelInfo->setLastEvent("Experiment start");
+	//		}
+	//		else if(eventType=="experimentend")
+	//		{
+	//			panelInfo->setLastEvent("Experiment end");
+	//		}
+	//		else if(eventType=="blockstart")
+	//		{
+	//			int block = reader.attributes().value("block").toString().toInt();
+	//			panelInfo->setBlock(block);
+	//		}
+	//		else if(eventType=="blockend")
+	//		{
+	//			int block = reader.attributes().value("block").toString().toInt();
+	//			panelInfo->setBlock(block);
+	//		}
+	//		else if(eventType=="trialstart")
+	//		{
+	//			int trial = reader.attributes().value("trial").toString().toInt();
+	//			panelInfo->setTrial(trial);
+	//			panelInfo->setLastEvent("Trial start");
+	//		}
+	//		else if(eventType=="trialend")
+	//		{
+	//			int trial = reader.attributes().value("trial").toString().toInt();
+	//			panelInfo->setTrial(trial);
 
-				panelInfo->setLastEvent("Trial end");
-			}
-			else if(eventType=="statuschange")
-			{
-				QString status = reader.attributes().value("status").toString();
-				status = status.toLower();
-				if(status == "connected")
-					panelInfo->setSystemStatus(PanelInfo::connected);
-				else if(status == "disconnected")
-					panelInfo->setSystemStatus(PanelInfo::disconnected);
-				else if(status == "running")
-				{
-					panelInfo->setSystemStatus(PanelInfo::running);
+	//			panelInfo->setLastEvent("Trial end");
+	//		}
+	//		else if(eventType=="statuschange")
+	//		{
+	//			QString status = reader.attributes().value("status").toString();
+	//			status = status.toLower();
+	//			if(status == "connected")
+	//				panelInfo->setSystemStatus(PanelInfo::connected);
+	//			else if(status == "disconnected")
+	//				panelInfo->setSystemStatus(PanelInfo::disconnected);
+	//			else if(status == "running")
+	//			{
+	//				panelInfo->setSystemStatus(PanelInfo::running);
 
-					//go into status display mode
-					panelInfo->setDispMode(PanelInfo::StatusMode);
-				}
-			}
-			else if(eventType=="other")
-			{
-				panelInfo->setLastEvent(reader.readElementText());
-			}
-			else
-			{
-				//bad event type, do nothing
-			}
-		}
-		else
-		{
-			//do nothing
-		}
-	}
+	//				//go into status display mode
+	//				panelInfo->setDispMode(PanelInfo::StatusModeType);
+	//			}
+	//		}
+	//		else if(eventType=="other")
+	//		{
+	//			panelInfo->setLastEvent(reader.readElementText());
+	//		}
+	//		else
+	//		{
+	//			//bad event type, do nothing
+	//		}
+	//	}
+	//	else
+	//	{
+	//		//do nothing
+	//	}
+	//}
 
 	//return a null pointer (since ENGEVENTs are never responded to)
 	return QSharedPointer<Picto::ProtocolResponse>();

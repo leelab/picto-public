@@ -24,8 +24,6 @@ private:
 	ComponentStatus status_;
 	QWeakPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<Picto::Experiment> experiment_;
-	static QMap<QString,ComponentStatus> statusTransitionDictionary_;
-	static QMap<ComponentStatus,QString> statusNameDictionary_;
 	int alignmentCode_;
 	int alignmentID_;
 	QDateTime lastAlignTime_;

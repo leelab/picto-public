@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 	QObject::connect(&M, SIGNAL(toggleBacklight()), &phidgets, SLOT(toggleBacklight()));
 	QObject::connect(&M, SIGNAL(turnOnBacklight()), &phidgets, SLOT(turnOnBacklight()));
 	QObject::connect(&phidgets, SIGNAL(userInputSignal(int)), &M, SLOT(userInputSlot(int)));
-	QObject::connect(&E, SIGNAL(newEventRead()), &M, SLOT(updateStatus()));
+	//QObject::connect(&E, SIGNAL(newEventRead()), &M, SLOT(updateStatus()));
 
 	M.initMenu();
 

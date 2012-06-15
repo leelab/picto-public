@@ -11,6 +11,7 @@
 #include <QUuid>
 #include <QList>
 #include <QMutex>
+#include <QNetworkInterface>
 
 #include "../common.h"
 #include "../compositor/RenderingTarget.h"
@@ -206,6 +207,7 @@ signals:
 	void pauseRequested();
 	void firstPhosphorOccured();
 private:
+	QHostAddress getIpAddress();
 	//QSharedPointer<Experiment> experiment_;
 	PictoEngineTimingType::PictoEngineTimingType timingType_;
 	bool bExclusiveMode_;
@@ -248,6 +250,7 @@ private:
 	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	QSharedPointer<StateDataUnit> currStateUnit_;
 	qulonglong lastFrameId_;
+	QHostAddress ipAddress_;
 
 	QString runningPath_;
 private slots:

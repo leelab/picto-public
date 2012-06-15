@@ -22,11 +22,13 @@ QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processComma
 									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::OK));
+	okResponse->setFieldValue("Command-ID",command->getFieldValue("Command-ID"));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
 		new Picto::ProtocolResponse(Picto::Names->directorAppName,
 									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
+	notFoundResponse->setFieldValue("Command-ID",command->getFieldValue("Command-ID"));
 
 	QStringList targetFields = command->getTarget().split('/',QString::SkipEmptyParts);
 	if(targetFields.size()>1)

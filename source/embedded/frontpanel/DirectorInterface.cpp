@@ -5,14 +5,21 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QApplication>
+#include <QUuid>
 
 #include "DirectorInterface.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 
-#define RESPONSEDELAYMS 1000
+#define RESPONSEDELAYMS 200
 DirectorInterface::DirectorInterface(FrontPanelInfo *panelInfo) :
-	panelInfo(panelInfo)
+	panelInfo(panelInfo),
+	lastIp_(""),
+	lastStatus_(DirUnknown),
+	lastRewardDur_(-1),
+	lastFlushDur_(-1),
+	lastName_(""),
+	lastCommandId_(0)
 {
 }
 
@@ -23,208 +30,138 @@ DirectorInterface::~DirectorInterface()
 
 bool DirectorInterface::setIP(QString addr)
 {
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command("FPPUT /IP PICTO/1.0");
 	QByteArray content = QString("%1").arg(addr).toUtf8();
-
 	command.setContent(content);
-	command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
-	command.write(commSock);
-
-	//wait for a response from the engine
-	Picto::ProtocolResponse response;
-	response.read(commSock,RESPONSEDELAYMS);
-	if(response.getResponseCode() != 200)
-	{
+	if(!sendCommandGetResponse(command,&QString()))
 		return false;
-	}
 	return true;
 }
 
 QString DirectorInterface::getIP()
 {
-	//grab the system IP from the engine, and update panelInfo
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-
 	//send a command
 	Picto::ProtocolCommand command("FPGET /IP PICTO/1.0");
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,RESPONSEDELAYMS);
-	if(bytesRead<0)
+		QString reply;
+	if(!sendCommandGetResponse(command,&reply))
 	{
-		return "";
+		return lastIp_;
 	}
-	return engineResponse.getDecodedContent();
+	lastIp_ = reply;
+	return lastIp_;
 }
 
 bool DirectorInterface::setName(QString name)
 {
 	//inform the engine of the change
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command(QString("FPPUT /boxname PICTO/1.0"));
 	QByteArray content = QString("%1").arg(name).toUtf8();
-
-	command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
 	command.setContent(content);
-	command.write(commSock);
-
-	//wait for a response from the engine
-	Picto::ProtocolResponse response;
-	response.read(commSock,RESPONSEDELAYMS);
-	if(response.getResponseCode() != 200)
-	{
+	if(!sendCommandGetResponse(command,&QString()))
 		return false;
-	}
 	return true;
 }
 
 QString DirectorInterface::getName()
 {
-	//grab the system name from the engine, and update panelInfo
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-
 	//send a command
 	Picto::ProtocolCommand command("FPGET /boxname PICTO/1.0");
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,RESPONSEDELAYMS);
-	if(bytesRead<0)
+	QString reply;
+	if(!sendCommandGetResponse(command,&reply))
 	{
-		return "";
+		return lastName_;
+	}
+	lastName_ = reply;
+	return lastName_;
+}
+
+DirectorStatus DirectorInterface::getStatus()
+{
+	//send a command
+	Picto::ProtocolCommand command("FPGET /status PICTO/1.0");
+	QString reply;
+	if(!sendCommandGetResponse(command,&reply))
+	{
+		return DirDisconnect;
 	}
 
-	QString name = engineResponse.getDecodedContent();
-	return name;
+	if(reply == "Running")
+		lastStatus_ = DirRun;
+	else if(reply == "Paused")
+		lastStatus_ = DirPause;
+	else if(reply == "Idle")
+		lastStatus_ = DirConnect;
+	else if(reply == "Ending")
+		lastStatus_ = DirEnding;
+	else if(reply == "Stopped")
+		lastStatus_ = DirStop;
+	else if(reply == "Disconnected")
+		lastStatus_ = DirDisconnect;
+	return lastStatus_;
 }
 
 bool DirectorInterface::setRewardDuration(int rewardDur,int controller)
 {
 	//inform the engine of the change
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command(QString("FPPUT /reward/%1/duration PICTO/1.0").arg(controller));
 	QByteArray content = QString("%1").arg(rewardDur).toUtf8();
-
 	command.setContent(content);
-	command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
-	command.write(commSock);
-
-	//wait for a response from the engine
-	Picto::ProtocolResponse response;
-	response.read(commSock,RESPONSEDELAYMS);
-	if(response.getResponseCode() != 200)
-	{
+	if(!sendCommandGetResponse(command,&QString()))
 		return false;
-	}
 	return true;
 }
 
 
 int DirectorInterface::getRewardDuration(int controller)
 {
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	//send a command
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/duration PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,RESPONSEDELAYMS);
-	if(bytesRead<0)
+	QString reply;
+	if(!sendCommandGetResponse(command,&reply))
 	{
-		return -1;
+		return lastRewardDur_;
 	}
-
-	QString duration = engineResponse.getDecodedContent();
-	return duration.toInt();
+	lastRewardDur_ = reply.toInt();
+	return lastRewardDur_;
 }
 
 bool DirectorInterface::setFlushDuration(int flushDur,int controller)
 {
 	//inform the engine of the change
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command(QString("FPPUT /reward/%1/flushduration PICTO/1.0").arg(controller));
 	QByteArray content = QString("%1").arg(flushDur).toUtf8();
-
 	command.setContent(content);
-	command.setFieldValue("Content-Length", QString("%1").arg(content.size()));
-	command.write(commSock);
-
-	//wait for a response from the engine
-	Picto::ProtocolResponse response;
-	response.read(commSock,RESPONSEDELAYMS);
-	if(response.getResponseCode() != 200)
-	{
+	if(!sendCommandGetResponse(command,&QString()))
 		return false;
-	}
 	return true;
 }
 
 int DirectorInterface::getFlushDuration(int controller)
 {
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
-
 	//send a command
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/flushduration PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//get response - I should be doing some error checking here to confirm that we
-	//got the whole response, but that seems unneccessary given that we're communicating
-	//to localhost...
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,RESPONSEDELAYMS);
-	if(bytesRead<0)
-	{
-		return -1;
-	}
-
-	QString duration = engineResponse.getDecodedContent();
-	return duration.toInt();
+	QString reply;
+	if(!sendCommandGetResponse(command,&reply))
+		return lastFlushDur_;
+	lastFlushDur_ = reply.toInt();
+	return lastFlushDur_;
 }
 
 bool DirectorInterface::startFlush(int controller)
 {
 	//send out a start flushing command
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command(QString("FPSTARTFLUSH /reward/%1 PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//get a response from the engine
-	Picto::ProtocolResponse response;
-	response.read(commSock,RESPONSEDELAYMS);
-	if(response.getResponseCode() != 200)
-	{
+	if(!sendCommandGetResponse(command,&QString()))
 		return false;
-	}
 	return true;
 }
 int DirectorInterface::getFlushTimeRemaining(int controller)
 {
-	int timeRem;
-
-	//get the time remaining in the flush
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/flushtimeremain PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	Picto::ProtocolResponse engineResponse;
-	int bytesRead = engineResponse.read(commSock,RESPONSEDELAYMS);
-	if(bytesRead<0)
-	{
+	QString reply;
+	if(!sendCommandGetResponse(command,&reply))
 		return -1;
-	}
-
-	return engineResponse.getDecodedContent().toInt();
+	return reply.toInt();
 }
 
 
@@ -232,17 +169,9 @@ int DirectorInterface::getFlushTimeRemaining(int controller)
 bool DirectorInterface::stopFlush(int controller)
 {
 	//send out a stop flushing command
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command(QString("FPSTOPFLUSH /reward/%1 PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//wait for a response from the engine
-	Picto::ProtocolResponse response;
-	response.read(commSock,RESPONSEDELAYMS);
-	if(response.getResponseCode() != 200)
-	{
+	if(!sendCommandGetResponse(command,&QString()))
 		return false;
-	}
 	return true;
 }
 
@@ -254,18 +183,9 @@ bool DirectorInterface::startReward(int controller)
 	//This could be done using the "reward trigger" light on the front panel.
 
 	//tell the engine to give a reward
-	QTcpSocket *commSock = panelInfo->getCommandSocket();
 	Picto::ProtocolCommand command(QString("FPREWARD /reward/%1 PICTO/1.0").arg(controller));
-	command.write(commSock);
-
-	//wait for a response from the engine 
-	QApplication::processEvents();
-	Picto::ProtocolResponse response;
-	response.read(commSock,RESPONSEDELAYMS);
-	if(response.getResponseCode() != 200)
-	{
+	if(!sendCommandGetResponse(command,&QString()))
 		return false;
-	}
 	return true;
 }
 
@@ -286,5 +206,34 @@ bool DirectorInterface::isConnected()
 	{
 		return false;
 	}
+	return true;
+}
+
+bool DirectorInterface::sendCommandGetResponse(Picto::ProtocolCommand command,QString* reply)
+{
+	Q_ASSERT(reply);
+	QTcpSocket *commSock = panelInfo->getCommandSocket();
+	if(command.getContent().size())
+		command.setFieldValue("Content-Length", QString("%1").arg(command.getContent().size()));
+	QString commandId = QString::number(++lastCommandId_);
+	command.setFieldValue("Command-ID",commandId);
+	command.write(commSock);
+	qDebug("SentID: " + commandId.toAscii());
+	Picto::ProtocolResponse response;
+	int r = response.read(commSock,RESPONSEDELAYMS);
+	//If we got a reponse (r>=0) but it wasn't for our command, throw it out and read a new one.
+	while((r >= 0) && (response.getFieldValue("Command-ID") != commandId))
+	{
+		qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toAscii());
+		r = response.read(commSock,RESPONSEDELAYMS);
+	}
+	(*reply) = "";
+	if(r < 0)	//A response to our command didn't arrive in time.
+		return false;
+	qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toAscii());
+
+	(*reply) = QString(response.getDecodedContent());
+	if(response.getResponseCode() != 200)
+		return false;
 	return true;
 }

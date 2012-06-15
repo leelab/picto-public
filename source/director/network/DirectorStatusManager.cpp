@@ -56,6 +56,15 @@ void DirectorStatusManager::setStatus(ComponentStatus status)
 	ComponentStatus oldStatus = getStatus();
 	ComponentStatusManager::setStatus(status);
 	ComponentStatus newStatus = getStatus();
+
+	//Set new status to all control panels
+	QString statusStr = getStatusAsString();
+	QList<QSharedPointer<ControlPanelInterface>> cPans = engine_.toStrongRef()->getControlPanels();
+	foreach(QSharedPointer<ControlPanelInterface> cPan,cPans)
+	{
+		cPan->statusChanged(statusStr);
+	}
+	
 	if(newStatus <= idle)
 	{
 		switch(newStatus)

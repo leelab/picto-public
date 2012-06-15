@@ -20,18 +20,22 @@ QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSha
 									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::OK));
+	okResponse->setFieldValue("Command-ID",command->getFieldValue("Command-ID"));
 
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(
 		new Picto::ProtocolResponse(Picto::Names->directorAppName,
 									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::NotFound));
+	notFoundResponse->setFieldValue("Command-ID",command->getFieldValue("Command-ID"));
 
 	QSharedPointer<Picto::ProtocolResponse> badRequestResponse(
 		new Picto::ProtocolResponse(Picto::Names->directorAppName,
 									"PICTO",
 									"1.0",
 									Picto::ProtocolResponseType::BadRequest));
+	badRequestResponse->setFieldValue("Command-ID",command->getFieldValue("Command-ID"));
+
 	QString commandContent;
 	QByteArray responseContent;
 	if(command->getTarget() == "/IP")

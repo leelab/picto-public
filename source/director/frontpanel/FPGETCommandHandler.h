@@ -23,10 +23,18 @@ public:
 
 	void setIpAddress(QString val){ip_ = val;};
 	void setName(QString val){name_ = val;};
+	void setRewardDuration(int controller,int dur);
+	void setFlushDuration(int controller,int dur);
+	void setStatus(QString status){status_ = status;};
 
 private:
+	int getRewardDuration(int controller);
+	int getFlushDuration(int controller);
 	QString ip_;
 	QString name_;
+	QVector<int> rewardDurs_;
+	QVector<int> flushDurs_;
+	QString status_;
 };
 
 /*! @} */

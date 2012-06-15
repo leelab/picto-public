@@ -92,11 +92,17 @@ void FPInterface::ipWasChanged()
 
 void FPInterface::rewardDurationWasChanged(int controller)
 {
-
+	fpgetCommandHandler_->setRewardDuration(controller,getRewardDuration(controller));
 }
 
 void FPInterface::flushDurationWasChanged(int controller)
 {
+	fpgetCommandHandler_->setFlushDuration(controller,getFlushDuration(controller));
+}
+
+void FPInterface::statusWasChanged(QString status)
+{
+	fpgetCommandHandler_->setStatus(getStatus());
 }
 
 /*! \TODO: We need to figure out a way to make sure that we either
