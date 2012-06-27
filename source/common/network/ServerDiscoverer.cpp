@@ -12,9 +12,9 @@ ServerDiscoverer::ServerDiscoverer(QObject *parent) :
 {
 	QHostAddress serverAddress(QHostAddress::Any);
 	
-	port_ = DISCOVERSERVERPORT;
+	port_ = MINDISCOVERSERVERPORT;
 
-    while(!udpSocket_.bind(serverAddress, port_) && port_ < 42500)
+    while(!udpSocket_.bind(serverAddress, port_) && port_ < MAXDISCOVERSERVERPORT)
 	{
 		port_++;
 	}

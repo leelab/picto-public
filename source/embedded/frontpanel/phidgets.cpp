@@ -45,7 +45,7 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	}
 
 	//Custom character creator: http://www.phidgets.com/documentation/customchar.html
-	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 8, 476859, 461256); //milliseconds character
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 8, 214715, 395400); //milliseconds character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 9, 506248, 8590); //arrow character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 10, 31, 0); //horizontal line across top of matrix (used for underlining)
 	//CPhidgetTextLCD_setCustomCharacter(hTextLCD, 11, 330,558); //frown face
@@ -82,6 +82,14 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 		outstream.flush();
 		return;
 	}
+
+	//Input Signal Inteface Kit
+	CPhidgetInterfaceKit_create(&hIntKit);
+	CPhidget_set_OnAttach_Handler((CPhidgetHandle) hIntKit, InterfaceKitAttachHandler, this);
+	CPhidget_set_OnDetach_Handler((CPhidgetHandle) hIntKit, InterfaceKitDetachHandler, this);
+	CPhidget_set_OnError_Handler((CPhidgetHandle) hIntKit, InterfaceKitErrorHandler, this);
+	CPhidgetInterfaceKit_set_OnInputChange_Handler(hIntKit,InterfaceKitInputChangeHandler,this);
+	CPhidget_open((CPhidgetHandle) hIntKit, -1);
 }
 
 Phidgets::~Phidgets()
@@ -190,6 +198,19 @@ void Phidgets::dialTurnedRight(bool fast)
 		emit userInputSignal(PanelInfo::rotateRight);
 }
 
+void Phidgets::externalButtonClick(int index)
+{
+	switch(index)
+	{
+	case 0:
+		emit userInputSignal(PanelInfo::rewardButton);
+		break;
+	case 7:
+		emit userInputSignal(PanelInfo::flushButton);
+		break;
+	}
+}
+
 //This gets called whenever a userInputSignal is triggered by the qt event loop.
 //By using the turnWasTriggered_ bool, we can be sure that we don't 
 //put multiple turn signals into the qt event queue before earlier ones were 
@@ -235,6 +256,33 @@ int __stdcall TextLCDDetachHandler(CPhidgetHandle hTextLCD, void * phidgetsObjec
 
 int __stdcall TextLCDErrorHandler(CPhidgetHandle, void *, int, const char *)
 {
+	return 0;
+}
+
+//---------------------------------------------------
+// Interface Kit
+//---------------------------------------------------
+
+int __stdcall InterfaceKitAttachHandler(CPhidgetHandle hIntKit, void * phidgetsObj)
+{
+	return 0;
+}
+
+int __stdcall InterfaceKitDetachHandler(CPhidgetHandle hIntKit, void * phidgetsObj)
+{
+	return 0;
+}
+
+int __stdcall InterfaceKitErrorHandler(CPhidgetHandle hIntKit, void * phidgetsObj, int ErrorCode, const char * Description)
+{
+	return 0;
+}
+
+int __stdcall InterfaceKitInputChangeHandler(CPhidgetInterfaceKitHandle hIntKit, void * phidgetsObj, int index, int state)
+{
+	Phidgets * phidgets = (Phidgets *) phidgetsObj;
+	if(state)
+		phidgets->externalButtonClick(index);
 	return 0;
 }
 

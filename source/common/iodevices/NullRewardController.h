@@ -29,8 +29,9 @@ public slots:
 
 protected:
 	void startReward(unsigned int channel,int quantity);
-	void stopReward(unsigned int channel);
 	virtual bool rewardWasSupplied(unsigned int channel);
+	virtual void startFlush(unsigned int channel);
+	virtual void stopFlush(unsigned int channel);
 
 };
 

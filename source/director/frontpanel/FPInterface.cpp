@@ -32,13 +32,9 @@ FPInterface::FPInterface()
 	connect(fprewardCommandHandler_.data(),SIGNAL(giveReward(int)),this,SLOT(giveReward(int)));
 	commandHandlers[fprewardCommandHandler_->method()] = fprewardCommandHandler_;
 
-	fpstartflushCommandHandler_ = QSharedPointer<FPSTARTFLUSHCommandHandler>(new FPSTARTFLUSHCommandHandler);
-	connect(fpstartflushCommandHandler_.data(),SIGNAL(startFlush(int)),this,SLOT(startFlush(int)));
+	fpstartflushCommandHandler_ = QSharedPointer<FPFLUSHCommandHandler>(new FPFLUSHCommandHandler);
+	connect(fpstartflushCommandHandler_.data(),SIGNAL(flush(int)),this,SLOT(flush(int)));
 	commandHandlers[fpstartflushCommandHandler_->method()] = fpstartflushCommandHandler_;
-
-	fpstopflushCommandHandler_ = QSharedPointer<FPSTOPFLUSHCommandHandler>(new FPSTOPFLUSHCommandHandler);
-	connect(fpstopflushCommandHandler_.data(),SIGNAL(stopFlush(int)),this,SLOT(stopFlush(int)));
-	commandHandlers[fpstopflushCommandHandler_->method()] = fpstopflushCommandHandler_;
 }
 
 FPInterface::~FPInterface()

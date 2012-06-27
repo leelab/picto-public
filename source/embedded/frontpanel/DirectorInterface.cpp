@@ -6,6 +6,7 @@
 #include <QHostAddress>
 #include <QApplication>
 #include <QUuid>
+#include <QTime>
 
 #include "DirectorInterface.h"
 #include "../../common/protocol/protocolcommand.h"
@@ -102,6 +103,8 @@ DirectorStatus DirectorInterface::getStatus()
 
 bool DirectorInterface::setRewardDuration(int rewardDur,int controller)
 {
+	if(controller < 0)
+		return false;
 	//inform the engine of the change
 	Picto::ProtocolCommand command(QString("FPPUT /reward/%1/duration PICTO/1.0").arg(controller));
 	QByteArray content = QString("%1").arg(rewardDur).toUtf8();
@@ -114,6 +117,8 @@ bool DirectorInterface::setRewardDuration(int rewardDur,int controller)
 
 int DirectorInterface::getRewardDuration(int controller)
 {
+	if(controller < 0)
+		return -1;
 	//send a command
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/duration PICTO/1.0").arg(controller));
 	QString reply;
@@ -127,6 +132,8 @@ int DirectorInterface::getRewardDuration(int controller)
 
 bool DirectorInterface::setFlushDuration(int flushDur,int controller)
 {
+	if(controller < 0)
+		return false;
 	//inform the engine of the change
 	Picto::ProtocolCommand command(QString("FPPUT /reward/%1/flushduration PICTO/1.0").arg(controller));
 	QByteArray content = QString("%1").arg(flushDur).toUtf8();
@@ -138,6 +145,8 @@ bool DirectorInterface::setFlushDuration(int flushDur,int controller)
 
 int DirectorInterface::getFlushDuration(int controller)
 {
+	if(controller < 0)
+		return -1;
 	//send a command
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/flushduration PICTO/1.0").arg(controller));
 	QString reply;
@@ -147,16 +156,20 @@ int DirectorInterface::getFlushDuration(int controller)
 	return lastFlushDur_;
 }
 
-bool DirectorInterface::startFlush(int controller)
+bool DirectorInterface::flush(int controller)
 {
+	if(controller < 0)
+		return false;
 	//send out a start flushing command
-	Picto::ProtocolCommand command(QString("FPSTARTFLUSH /reward/%1 PICTO/1.0").arg(controller));
+	Picto::ProtocolCommand command(QString("FPFLUSH /reward/%1 PICTO/1.0").arg(controller));
 	if(!sendCommandGetResponse(command,&QString()))
 		return false;
 	return true;
 }
 int DirectorInterface::getFlushTimeRemaining(int controller)
 {
+	if(controller < 0)
+		return -1;
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/flushtimeremain PICTO/1.0").arg(controller));
 	QString reply;
 	if(!sendCommandGetResponse(command,&reply))
@@ -164,19 +177,11 @@ int DirectorInterface::getFlushTimeRemaining(int controller)
 	return reply.toInt();
 }
 
-
-
-bool DirectorInterface::stopFlush(int controller)
-{
-	//send out a stop flushing command
-	Picto::ProtocolCommand command(QString("FPSTOPFLUSH /reward/%1 PICTO/1.0").arg(controller));
-	if(!sendCommandGetResponse(command,&QString()))
-		return false;
-	return true;
-}
-
 bool DirectorInterface::startReward(int controller)
 {
+	if(controller < 0)
+		return false;
+	qDebug(QTime::currentTime().toString().toAscii() + ": Start Reward Sent");
 	//NOTE: No indication is given through the UI that a reward has been issued.
 	//In the Lee lab, this is not a problem, since the reward solenoids are loud.
 	//However, it might be desirable to give some sort of indication of a reward

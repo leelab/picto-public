@@ -14,16 +14,18 @@ void NullRewardController::startReward(unsigned int channel,int)
 	qDebug()<<"Reward given on channel "<<channel;
 }
 
-void NullRewardController::stopReward(unsigned int channel)
-{
-	qDebug()<<"Reward stoppped on channel "<<channel;
-}
-
 bool NullRewardController::rewardWasSupplied(unsigned int channel)
 {
 	return true;
 }
-
+void NullRewardController::startFlush(unsigned int channel)
+{
+	qDebug()<<"Flush started on channel "<<channel;
+}
+void NullRewardController::stopFlush(unsigned int channel)
+{
+	qDebug()<<"Stop Flush called on channel "<<channel;
+}
 void NullRewardController::flush(unsigned int channel,bool flush)
 {
 	if(flush)

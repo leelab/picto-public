@@ -4,7 +4,7 @@
 #include "../../common/protocol/protocolresponse.h"
 
 FlushDurMode::FlushDurMode(QSharedPointer<DirectorInterface> directorIf,FrontPanelInfo *panelInfo) :
-NumberEditMode(999,1,"Flush",10,1),
+NumberEditMode(999,1,"Flush","s",10,1),
 directorIf_(directorIf),
 panelInfo_(panelInfo)
 {

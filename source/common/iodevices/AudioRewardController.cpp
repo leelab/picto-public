@@ -20,14 +20,6 @@ void AudioRewardController::startReward(unsigned int,int quantity)
 	audioThreadFuture_ = QtConcurrent::run(this,&AudioRewardController::playSound,quantity);
 }
 
-void AudioRewardController::stopReward(unsigned int)
-{
-	latestQuantity_ = timer_.elapsed();
-	//I should really stop the audio thread from running as well, but there was no simple
-	//way to do this, the sound is very short, and we are only using this reward controller
-	//for test purposes anyway so I'm just going to leave it alone.
-}
-
 bool AudioRewardController::rewardWasSupplied(unsigned int channel)
 {
 	if(!audioThreadFuture_.isFinished())
@@ -36,10 +28,13 @@ bool AudioRewardController::rewardWasSupplied(unsigned int channel)
 		return false;
 	return true;
 }
-void AudioRewardController::flush(unsigned int channel,bool flush)
+void AudioRewardController::startFlush(unsigned int channel)
 {
-	Q_UNUSED(channel);
-	Q_UNUSED(flush);
+	startReward(0,50);	//Since the sound is so short and flushing is really meaningless, just play it quickly.
+}
+void AudioRewardController::stopFlush(unsigned int channel)
+{
+	latestQuantity_ = timer_.elapsed();
 }
 
 void AudioRewardController::playSound(int)

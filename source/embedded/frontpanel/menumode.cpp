@@ -46,6 +46,8 @@ PanelInfo::DisplayModeType MenuMode::handleUserInput(PanelInfo::InputType type)
 		if(currSelItem_ > currTopItem_+1)
 			currTopItem_ = currSelItem_-1;
 		break;
+	default:
+		return myModeType();
 	}
 	drawMenu();
 	return PanelInfo::MenuModeType;

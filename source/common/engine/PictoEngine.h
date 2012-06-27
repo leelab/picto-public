@@ -200,8 +200,7 @@ public slots:
 	void setRewardDuration(int controller, int duration);
 	void setFlushDuration(int controller, int duration);
 	void giveReward(int channel);
-	void startFlush(int channel);
-	void stopFlush(int channel);
+	void flushRequest(int channel);
 
 signals:
 	void pauseRequested();

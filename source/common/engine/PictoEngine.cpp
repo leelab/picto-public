@@ -83,8 +83,7 @@ void PictoEngine::addControlPanel(QSharedPointer<ControlPanelInterface> controlP
 	connect(controlPanel.data(),SIGNAL(rewardDurationChangeRequest(int,int)),this,SLOT(setRewardDuration(int,int)));
 	connect(controlPanel.data(),SIGNAL(flushDurationChangeRequest(int,int)),this,SLOT(setFlushDuration(int,int)));
 	connect(controlPanel.data(),SIGNAL(giveRewardRequest(int)),this,SLOT(giveReward(int)));
-	connect(controlPanel.data(),SIGNAL(startFlushRequest(int)),this,SLOT(startFlush(int)));
-	connect(controlPanel.data(),SIGNAL(stopFlushRequest(int)),this,SLOT(stopFlush(int)));
+	connect(controlPanel.data(),SIGNAL(flushRequest(int)),this,SLOT(flushRequest(int)));
 
 }
 
@@ -678,18 +677,71 @@ void PictoEngine::giveReward(int channel)
 	giveReward(channel,rewardDurations_[channel],0);
 }
 
-void PictoEngine::startFlush(int channel)
+void PictoEngine::flushRequest(int channel)
 {
 	if(flushDurations_.size() <= channel)
 		return;
-	giveReward(channel,flushDurations_[channel],0);
-}
-
-void PictoEngine::stopFlush(int channel)
-{
 	if(rewardController_.isNull())
 		return;
-	rewardController_->stopRewards(channel);
+	rewardController_->flush(channel,flushDurations_[channel]);
+	if(rewardController_->isFlushing(channel))
+	{
+		rewardController_->abortFlush(channel);
+	}
+	else
+	{
+		rewardController_->flush(channel,flushDurations_[channel]);
+
+		QString status;
+		int engCmd = getEngineCommand();
+		if(engCmd != PlayEngine)
+		{	//The experiment is not currently running.  
+			//We should trigger flush/rewards now rather than waiting for the system to trigger them.
+			//All rewards must be reported to the server
+			switch(engCmd)
+			{
+			case Engine::PictoEngine::PlayEngine:
+				return;
+			case Engine::PictoEngine::PauseEngine:
+				status = "paused";
+				break;
+			case Engine::PictoEngine::StopEngine:
+				status = "stopped";
+				break;
+			default:
+				return;
+			}
+			//If we got here, we're not running.  Wait for all rewards to be given, sending them to the server as they go out.
+			while(rewardController_->hasPendingRewards())
+			{	
+				rewardController_->triggerRewards(true);
+				if(dataCommandChannel_->getSessionId() != QUuid())
+				{	//Only send data to the server if we're in a session
+					QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
+					QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+					QByteArray dataXml;
+					QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+
+					xmlWriter->writeStartElement("Data");
+					QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
+					foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+					{
+						reward->toXml(xmlWriter);
+					}
+					xmlWriter->writeEndElement();
+
+					dataCommand->setContent(dataXml);
+					dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
+					QUuid commandUuid = QUuid::createUuid();
+
+					dataCommandChannel_->sendRegisteredCommand(dataCommand);
+					dataCommandChannel_->processResponses(0);
+				}
+				QCoreApplication::processEvents();
+			}
+		}		
+	}
 }
 
 QHostAddress PictoEngine::getIpAddress()
@@ -716,6 +768,7 @@ QHostAddress PictoEngine::getIpAddress()
 			}
 		}
 	}
+	return QHostAddress();
 }
 
 int PictoEngine::getEngineCommand()

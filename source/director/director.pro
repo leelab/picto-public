@@ -77,10 +77,8 @@ HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPPUTCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPPUTCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPREWARDCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPREWARDCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPSTARTFLUSHCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPSTARTFLUSHCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPSTOPFLUSHCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPSTOPFLUSHCommandHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/director/frontpanel/FPFLUSHCommandHandler.h
+SOURCES += $$(PICTO_TREE)/source/director/frontpanel/FPFLUSHCommandHandler.cpp
 
 }
 

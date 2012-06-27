@@ -31,24 +31,22 @@ namespace Picto
 class PictoBoxXPRewardController :  public RewardController
 {
 public:
-	PictoBoxXPRewardController(unsigned int channelCount);
+	PictoBoxXPRewardController();
 	virtual ~PictoBoxXPRewardController();
 
-public slots:
-	void flush(unsigned int channel,bool flush);
 protected:
 	void startReward(unsigned int channel, int quantity);
-	void stopReward(unsigned int channel);
 	virtual bool rewardWasSupplied(unsigned int channel);
-
+	virtual void startFlush(unsigned int channel);
+	virtual void stopFlush(unsigned int channel);
 private:
-	quint32 daqTaskHandle_[4]; // For Nidaqmx 8.5
+	bool hasDevice_;
+	double outputData[2];
+	quint32 daqTaskHandle_[5]; // For Nidaqmx 8.5
 	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
-	int rewardLines_[4];
-	bool taskExists_[4];
-	Stopwatch stopwatch_[4];
-	int latestOnTime_[4];
-	unsigned char outputData[2];
+	int rewardLines_[5];
+	Stopwatch stopwatch_[5];
+	int latestOnTime_[5];
 
 };
 

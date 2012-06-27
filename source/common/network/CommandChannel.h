@@ -143,6 +143,7 @@ private:
 
 	QSharedPointer<QTcpSocket> consumerSocket_;
 	QSharedPointer<QUdpSocket> discoverySocket_;
+	quint16 discoveryPort_;
 
 	ChannelStatus status_;
 

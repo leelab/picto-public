@@ -17,11 +17,15 @@ CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QObject *pare
 	earliestPendingCommand_(QDateTime::currentDateTime()),
 	resendEnabled_(true),
 	resendPendingInterval_(10),
-	lastReconnectTime_(QDateTime::currentDateTime())
+	lastReconnectTime_(QDateTime::currentDateTime()),
+	discoveryPort_(0)
 {
 	//set up the socket
 	consumerSocket_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
+	discoverySocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
+	discoveryPort_ = 0;
 	connect(consumerSocket_.data(), SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
+	discoverMsgSentTime_ = QDateTime::currentDateTime().addSecs(-20);
 }
 
 CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress serverAddress, quint16 serverPort_, QObject *parent)
@@ -37,11 +41,15 @@ CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress 
 	earliestPendingCommand_(QDateTime::currentDateTime()),
 	resendEnabled_(true),
 	resendPendingInterval_(10),
-	lastReconnectTime_(QDateTime::currentDateTime())
+	lastReconnectTime_(QDateTime::currentDateTime()),
+	discoveryPort_(0)
 {
 	//set up the socket
 	consumerSocket_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
+	discoverySocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
+	discoveryPort_ = 0;
 	connect(consumerSocket_.data(), SIGNAL(disconnected()), this, SLOT(disconnectHandler()));
+	discoverMsgSentTime_ = QDateTime::currentDateTime().addSecs(-20);
 	
 	//set multipart boundary to a null string
 	connectToServer();
@@ -57,8 +65,8 @@ CommandChannel::~CommandChannel()
 
 //! \brief Don't call from time sensitive zone
 void CommandChannel::connectToServer()
-{	
-	if(!assureConnection(100))
+{
+	if(!assureConnection(200))
 	{
 		QCoreApplication::processEvents();
 		emit connectAttemptFailed();
@@ -77,6 +85,7 @@ QHostAddress CommandChannel::getIpAddress()
 {
 	if(consumerSocket_)
 		return consumerSocket_->localAddress();
+	return QHostAddress();
 }
 //! Checks the network for any new incoming responses, adds them to the queue, and returns
 //! the number of responses in the queue.  Used when the channel is in polled mode
@@ -151,7 +160,7 @@ bool CommandChannel::processResponses(int timeoutMs)
 			}while(numIncomingResponses() > 0);
 
 			int remainingMs = timeoutMs - timeoutTimer.elapsed();
-			if(assureConnection((timeoutMs == 0)?0:(loopForever)?10000:(remainingMs<0)?0:remainingMs))	// This will verify connection and attempt to reconnect if there's time left
+			if(assureConnection((timeoutMs == 0)?0:(loopForever)?100:(remainingMs<0)?0:remainingMs))	// This will verify connection and attempt to reconnect if there's time left
 				if(timeoutTimer.elapsed() > timeoutMs)
 					nextPendingMessageTime = resendPendingCommands().addSecs(resendPendingInterval_);
 
@@ -335,11 +344,10 @@ bool CommandChannel::assureConnection(int acceptableTimeoutMs)
 }
 
 /*!	\brief Attempts to discover server's address and port for the TCPSocket connection.
- *	The function sends a UDP discover message to the server.  The function checks for 
- *	a response for up to 10 seconds or until the timeout.  If no response is received
- *	by the timeout, then the function will check once more for a response the next time
- *	it is called.  If it still has no response, the function will be set to send another
- *	request the next time its called.
+ *	The function sends a UDP discover message to the server once for each 10 seconds
+ *  during which it is called without completing server discovery.  Each time is is called
+ *  the function checks for a response to the UDP discover message indicating the servers
+ *  ip address and port.
  *	If this function is called with a timeout less than or equal to zero it will do nothing
  *	and return false.
  */
@@ -351,71 +359,81 @@ bool CommandChannel::discoverServer(int timeoutMs)
 		timeoutMs = 10000;
 	QTime timer;
 	timer.start();
-	if(discoverySocket_.isNull())
+	//For some reason, the discovery socket seems to periodically forget to be bound to 
+	//the port that we set.  If this happens, we close and rebind it.
+	if(discoverySocket_->state() != QAbstractSocket::BoundState)
 	{
-		discoverySocket_ = QSharedPointer<QUdpSocket>(new QUdpSocket());
+		discoverySocket_->close();
 		QHostAddress serverAddress(QHostAddress::Any);	
-		quint16 port = DISCOVERSERVERPORT;
-		while(!discoverySocket_->bind(serverAddress, port) && port < 42500)
+		discoveryPort_ = MINDISCOVERSERVERPORT;
+		while((!discoverySocket_->bind(serverAddress, discoveryPort_)) && (discoveryPort_ < MAXDISCOVERSERVERPORT))
 		{
 			if(timer.elapsed() >= timeoutMs)
 			{
-				discoverySocket_ = QSharedPointer<QUdpSocket>();
 				return false;
 			}
-			port++;
+			discoveryPort_++;
 		}
-		QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(port).toAscii();
-		discoverySocket_->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, SERVERPORT);
+	}
+	if(timer.elapsed() >= timeoutMs)
+		return false;
+
+	//If a long time has passed since we sent our last DISCOVER message, send a new one.
+	if(discoverMsgSentTime_.secsTo(QDateTime::currentDateTime()) >= 10)
+	{
+		QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(discoveryPort_).toAscii();
+		QUdpSocket sendSocket;
+		sendSocket.writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, SERVERPORT);
 		discoverMsgSentTime_ = QDateTime::currentDateTime();
 	}
-	int remainingMs = timeoutMs - timer.elapsed();
-	if(remainingMs <= 0)
+	int msLeft = timeoutMs-timer.elapsed();
+	if(msLeft <= 0)
 		return false;
-	do
+
+	//Check to see if we got any new discover messages back.
+	discoverySocket_->waitForReadyRead(msLeft);
+	while ((discoverySocket_->state() == QAbstractSocket::BoundState) && discoverySocket_->hasPendingDatagrams())
 	{
-		discoverySocket_->waitForReadyRead(remainingMs);
-		while (discoverySocket_->hasPendingDatagrams())
+		if(timer.elapsed() >= timeoutMs)
+			return false;
+		QByteArray datagram;
+		datagram.resize(discoverySocket_->pendingDatagramSize());
+		discoverySocket_->readDatagram(datagram.data(), datagram.size());
+		QString request = datagram.data();
+		QString method, targetAddress, targetPort, protocolName, protocolVersion;
+		QStringList tokens = request.split(QRegExp("[ ][ ]*"));
+		if(tokens.count() == 3)
 		{
-			QByteArray datagram;
-			datagram.resize(discoverySocket_->pendingDatagramSize());
-			discoverySocket_->readDatagram(datagram.data(), datagram.size());
-			QString request = datagram.data();
-			QString method, targetAddress, targetPort, protocolName, protocolVersion;
-			QStringList tokens = request.split(QRegExp("[ ][ ]*"));
-			if(tokens.count() == 3)
+			method = tokens[0];
+
+			int targetPortPosition = tokens[1].indexOf(':');
+			if(targetPortPosition != -1)
 			{
-				method = tokens[0];
+				targetAddress = tokens[1].left(targetPortPosition);
+				serverAddr_.setAddress(targetAddress);
+				targetPort = tokens[1].mid(targetPortPosition+1);
+				serverPort_ = targetPort.toInt();
+			}
 
-				int targetPortPosition = tokens[1].indexOf(':');
-				if(targetPortPosition != -1)
-				{
-					targetAddress = tokens[1].left(targetPortPosition);
-					serverAddr_.setAddress(targetAddress);
-					targetPort = tokens[1].mid(targetPortPosition+1);
-					serverPort_ = targetPort.toInt();
-				}
+			int protocolVersionPosition = tokens[2].indexOf('/');
+			if(protocolVersionPosition != -1)
+			{
+				protocolName = tokens[2].left(protocolVersionPosition);
+				protocolVersion = tokens[2].mid(protocolVersionPosition+1);
+			}
 
-				int protocolVersionPosition = tokens[2].indexOf('/');
-				if(protocolVersionPosition != -1)
-				{
-					protocolName = tokens[2].left(protocolVersionPosition);
-					protocolVersion = tokens[2].mid(protocolVersionPosition+1);
-				}
-
-				if(method == "ANNOUNCE" &&
-				   !serverAddr_.isNull() &&
-				   serverPort_ &&
-				   protocolName == "PICTO")
-				{
-					discoverySocket_ = QSharedPointer<QUdpSocket>();
-					return true;
-				}
+			if(method == "ANNOUNCE" &&
+			   !serverAddr_.isNull() &&
+			   serverPort_ &&
+			   protocolName == "PICTO")
+			{
+				qDebug("Time when discovered: " + QString::number(timer.elapsed()).toAscii());
+				discoverySocket_->close();
+				return true;
 			}
 		}
-	}while((timer.elapsed() < timeoutMs) && (discoverMsgSentTime_.secsTo(QDateTime::currentDateTime()) < 10));
-	if(discoverMsgSentTime_.secsTo(QDateTime::currentDateTime()) >= 10)
-		discoverySocket_ = QSharedPointer<QUdpSocket>();
+	}
+	//qDebug("Time for discover func: " + QString::number(timer.elapsed()).toAscii() + " of max: " + QString::number(timeoutMs).toAscii());
 	return false;
 }
 

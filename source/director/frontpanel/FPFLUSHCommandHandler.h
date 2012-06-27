@@ -1,5 +1,5 @@
-#ifndef _FPSTOPFLUSHCOMMANDHANDLER_H_
-#define _FPSTOPFLUSHCOMMANDHANDLER_H_
+#ifndef _FPFLUSHCOMMANDHANDLER_H_
+#define _FPFLUSHCOMMANDHANDLER_H_
 
 #include "../../common/common.h"
 
@@ -12,18 +12,17 @@
 
 /*! \brief Handles GET commands received specifying use of the HTTP protocol
  */
-struct FPSTOPFLUSHCommandHandler : Picto::ProtocolCommandHandler
+struct FPFLUSHCommandHandler : Picto::ProtocolCommandHandler
 {
 	Q_OBJECT
 public:
-	FPSTOPFLUSHCommandHandler();
+	FPFLUSHCommandHandler();
 
-	QString method() { return QString("FPSTOPFLUSH"); }
+	QString method() { return QString("FPFLUSH"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 
 signals:
-	void stopFlush(int controller);
-
+	void flush(int controller);
 };
 
 /*! @} */

@@ -29,12 +29,11 @@ public:
 	LegacySystemXPRewardController(unsigned int channelCount);
 	virtual ~LegacySystemXPRewardController();
 
-public slots:
-	void flush(unsigned int channel,bool flush);
 protected:
 	void startReward(unsigned int channel,int quantity);
-	void stopReward(unsigned int channel);
 	virtual bool rewardWasSupplied(unsigned int channel);
+	virtual void startFlush(unsigned int channel);
+	virtual void stopFlush(unsigned int channel);
 private:
 	quint32 daqTaskHandle_; // For Nidaqmx 8.5
 	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5

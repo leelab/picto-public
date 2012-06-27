@@ -52,6 +52,18 @@ void Menu::initMenu()
 //it might change the reward duration.)
 void Menu::userInputSlot(int type)
 {
+	if((type == PanelInfo::rewardButton) || (type == PanelInfo::flushButton))
+	{	//reward and flush should always be honored regardless of the current menu state
+		if(type == PanelInfo::rewardButton)
+		{
+			directorIf_->startReward(panelInfo->getRewardController());
+		}
+		else
+		{
+			directorIf_->flush(panelInfo->getRewardController());
+		}
+		return;
+	}
 	activityTimer->stop();
 	QSharedPointer<DisplayMode> newMode;
 	newMode = panelModes_[currMode_->userInputSlot(PanelInfo::InputType(type))];
@@ -103,7 +115,7 @@ void Menu::loadMenus()
 //	//start the timer
 //	flushingTimer->start();
 //
-//	if(!directorIf_->startFlush(panelInfo->getRewardController()))
+//	if(!directorIf_->flush(panelInfo->getRewardController()))
 //	{
 //		doMessage("Flushing failed,","Try again");
 //	}	

@@ -31,9 +31,8 @@ public:
 	int getRewardDuration(int controller);
 	bool setFlushDuration(int flushDur,int controller);
 	int getFlushDuration(int controller);
-	bool startFlush(int controller);
+	bool flush(int controller);
 	int getFlushTimeRemaining(int controller);
-	bool stopFlush(int controller);
 	bool startReward(int controller);
 	bool isConnected();
 private:

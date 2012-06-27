@@ -3,10 +3,11 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 
-NumberEditMode::NumberEditMode(int maxValue,int minValue,QString valName,int fastIncrement,int slowIncrement) :
+NumberEditMode::NumberEditMode(int maxValue,int minValue,QString valName,QString unitStr,int fastIncrement,int slowIncrement) :
 valName_(valName),
 maxValue_(maxValue),
 minValue_(minValue),
+unitStr_(unitStr),
 fastInc_(fastIncrement),
 slowInc_(slowIncrement),
 currNum_(minValue),
@@ -74,7 +75,7 @@ PanelInfo::DisplayModeType NumberEditMode::handleUserInput(PanelInfo::InputType 
 			return myModeType();
 			break;
 		default:
-			break;
+			return myModeType();
 		}
 	drawDisplay();
 	return myModeType();
@@ -82,7 +83,7 @@ PanelInfo::DisplayModeType NumberEditMode::handleUserInput(PanelInfo::InputType 
 
 void NumberEditMode::drawDisplay()
 {
-	QString valText = QString::number(currNum_);
+	QString valText = QString::number(currNum_)+unitStr_;
 	QString gap = QString(19-(valName_.size()+valText.size()),' ');
 	drawText(valName_+":"+gap+valText,"");
 }

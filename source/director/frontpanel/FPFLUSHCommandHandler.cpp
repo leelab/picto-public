@@ -4,16 +4,16 @@
 #include <QTextStream>
 
 #include "FPInterface.h"
-#include "FPSTARTFLUSHCommandHandler.h"
+#include "FPFLUSHCommandHandler.h"
 #include "../../common/globals.h"
 
 
 
-FPSTARTFLUSHCommandHandler::FPSTARTFLUSHCommandHandler()
+FPFLUSHCommandHandler::FPFLUSHCommandHandler()
 {
 }
 
-QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
+QSharedPointer<Picto::ProtocolResponse> FPFLUSHCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QTextStream out(stdout);
 
@@ -38,7 +38,7 @@ QSharedPointer<Picto::ProtocolResponse> FPSTARTFLUSHCommandHandler::processComma
 		if(ok)
 		{
 			out<<"\nStarting Flush on controller: "<<controller<<"\n\n";
-			emit startFlush(controller);
+			emit flush(controller);
 			return okResponse;
 		}
 		else

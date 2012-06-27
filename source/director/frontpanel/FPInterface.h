@@ -14,8 +14,7 @@
 #include "FPGETCommandHandler.h"
 #include "FPPUTCommandHandler.h"
 #include "FPREWARDCommandHandler.h"
-#include "FPSTARTFLUSHCommandHandler.h"
-#include "FPSTOPFLUSHCommandHandler.h"
+#include "FPFLUSHCommandHandler.h"
 
 
 class FPInterface : public ControlPanelInterface
@@ -48,8 +47,7 @@ private:
 	QSharedPointer<FPGETCommandHandler> fpgetCommandHandler_;
 	QSharedPointer<FPPUTCommandHandler> fpputCommandHandler_;
 	QSharedPointer<FPREWARDCommandHandler> fprewardCommandHandler_;
-	QSharedPointer<FPSTARTFLUSHCommandHandler> fpstartflushCommandHandler_;
-	QSharedPointer<FPSTOPFLUSHCommandHandler> fpstopflushCommandHandler_;
+	QSharedPointer<FPFLUSHCommandHandler> fpstartflushCommandHandler_;
 
 	//front panel connections
 	QTcpSocket *commSocket;

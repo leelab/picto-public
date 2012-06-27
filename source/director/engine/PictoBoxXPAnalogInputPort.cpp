@@ -38,18 +38,15 @@ bool PictoBoxXPAnalogInputPort::startSampling()
 {
 
 	//Clear the existing task
-	bool hasDevice = false;
 	if(daqTaskHandle_)
 	{
 		DAQmxErrChk (DAQmxClearTask(daqTaskHandle_));
+		daqTaskHandle_ = 0;
 	}
-	else
-	{
-		uInt32 tmp;
-		DAQmxErrChk(DAQmxGetDevSerialNum(DEVICE_NAME,&tmp))
-		Q_ASSERT(tmp);
-		hasDevice = tmp;
-	}
+
+	uInt32 hasDevice;
+	DAQmxErrChk(DAQmxGetDevSerialNum(DEVICE_NAME,&hasDevice))
+	Q_ASSERT(hasDevice);
 
 	if(!hasDevice)
 		return false;
@@ -59,6 +56,8 @@ bool PictoBoxXPAnalogInputPort::startSampling()
 	if(dataBuffer_)
 	{
 		delete[] dataBuffer_;
+		dataBuffer_ = NULL;
+		bufferSize_ = 0;
 	}
 	bufferSize_  = BUFFER_SIZE_PER_CHAN * channelNums_.size();
 	dataBuffer_ = new int16[bufferSize_];

@@ -45,6 +45,8 @@ PanelInfo::DisplayModeType StatusMode::handleUserInput(PanelInfo::InputType type
 			break;
 		currTopItem_++;
 		break;
+	default:
+		return myModeType();
 	}
 	drawStatus();
 	return PanelInfo::StatusModeType;
@@ -90,8 +92,8 @@ void StatusMode::updateStatus()
 
 	QString statusStr = QString(19-name.size(),' ') + statusChar;
 	statusItems_.append(name+statusStr);
-	QString RewDur = "R:"+QString::number((directorIf_->getRewardDuration(controller)));
-	QString flushDur = "F:"+QString::number((directorIf_->getFlushDuration(controller)));
+	QString RewDur = "R:"+QString::number((directorIf_->getRewardDuration(controller)))+"\x8";
+	QString flushDur = "F:"+QString::number((directorIf_->getFlushDuration(controller)))+"s";
 	QString contStr = "C:"+QString::number(controller);
 	int spacesLeft = 20-(RewDur.size()+flushDur.size()+contStr.size());
 	QString dataStr =	RewDur+QString(spacesLeft/2,' ')

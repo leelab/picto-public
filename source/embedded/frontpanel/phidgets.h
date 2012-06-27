@@ -11,6 +11,10 @@
 int __stdcall TextLCDAttachHandler(CPhidgetHandle hTextLCD, void * phidgetsObj);
 int __stdcall TextLCDDetachHandler(CPhidgetHandle hTextLCD, void * phidgetsObj);
 int __stdcall TextLCDErrorHandler(CPhidgetHandle hTextLCD, void * phidgetsObj, int ErrorCode, const char * Description);
+int __stdcall InterfaceKitAttachHandler(CPhidgetHandle hIntKit, void * phidgetsObj);
+int __stdcall InterfaceKitDetachHandler(CPhidgetHandle hIntKit, void * phidgetsObj);
+int __stdcall InterfaceKitErrorHandler(CPhidgetHandle hIntKit, void * phidgetsObj, int ErrorCode, const char * Description);
+int __stdcall InterfaceKitInputChangeHandler(CPhidgetInterfaceKitHandle hIntKit, void * phidgetsObj, int index, int state);
 int __stdcall EncoderAttachHandler(CPhidgetHandle hEncoder, void * phidgetsObj);
 int __stdcall EncoderDetachHandler(CPhidgetHandle hEncoder, void * phidgetsObj);
 int __stdcall EncoderErrorHandler(CPhidgetHandle hEncoder, void * phidgetsObj, int ErrorCode, const char * Description);
@@ -47,6 +51,7 @@ public:
 	void buttonClicked();
 	void dialTurnedLeft(bool fast);
 	void dialTurnedRight(bool fast);
+	void externalButtonClick(int index);
 
 	FrontPanelInfo *panelInfo;
 
@@ -57,6 +62,7 @@ public:
 	QString LCDRow2;
 
 	CPhidgetTextLCDHandle hTextLCD;
+	CPhidgetInterfaceKitHandle hIntKit;
 	//CPhidgetManagerHandle hManager;
 	CPhidgetEncoderHandle hEncoder;
 

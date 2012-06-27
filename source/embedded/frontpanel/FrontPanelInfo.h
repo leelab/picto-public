@@ -13,7 +13,7 @@ namespace PanelInfo
 	enum DisplayModeType{MenuModeType, StatusModeType, RewardDurModeType, RewardControllerModeType, 
 		FlushDurModeType, ChangeNameModeType};
 	enum SystemStatus{disconnected, connected, running};
-	enum InputType{buttonPush, rotateLeft, rotateLeftFast, rotateRight, rotateRightFast};
+	enum InputType{buttonPush, rotateLeft, rotateLeftFast, rotateRight, rotateRightFast,rewardButton,flushButton};
 }
 
 /*!	\brief Stores information about the front panel.

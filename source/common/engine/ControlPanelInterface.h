@@ -45,8 +45,7 @@ signals:
 	void nameChangeRequest(QString name);
 	void rewardDurationChangeRequest(int controller, int duration);
 	void flushDurationChangeRequest(int controller, int duration);
-	void startFlushRequest(int controller);
-	void stopFlushRequest(int controller);
+	void flushRequest(int controller);
 	void giveRewardRequest(int controller);
 
 protected:
@@ -70,8 +69,7 @@ protected slots:
 	void setName(QString name){emit nameChangeRequest(name);};
 	void setRewardDuration(int controller, int duration){emit rewardDurationChangeRequest(controller,duration);};
 	void setFlushDuration(int controller, int duration) {emit flushDurationChangeRequest(controller,duration);};
-	void startFlush(int controller){emit startFlushRequest(controller);};
-	void stopFlush(int controller){emit stopFlushRequest(controller);};
+	void flush(int controller){emit flushRequest(controller);};
 	void giveReward(int controller){emit giveRewardRequest(controller);};
 
 private:

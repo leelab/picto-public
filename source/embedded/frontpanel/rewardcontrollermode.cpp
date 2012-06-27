@@ -4,7 +4,7 @@
 #include "../../common/protocol/protocolresponse.h"
 
 RewardControllerMode::RewardControllerMode(FrontPanelInfo *panelInfo) :
-NumberEditMode(9,1,"Controller",1,1),
+NumberEditMode(1,1,"Controller","",1,1),
 panelInfo_(panelInfo)
 {
 }

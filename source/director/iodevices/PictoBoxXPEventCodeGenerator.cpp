@@ -14,17 +14,10 @@
 
 #define EVENT_CODE_HOLD_TIME .000250  //250 microseconds
 
-//JOEY - Adding define for using this on an old orion machine for debugging purposes.  Once this type
-//of debugging is no longer necessary, sections that depend on this definition can be safely removed.
-#define DEBUG_ON_ORION_MACHINE
-#ifdef DEBUG_ON_ORION_MACHINE
-	#define PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS "Dev1/line0:15"
-#else
-	// NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
-	//		 where we have full hardware control.  If this is meant to run elsewhere, a more
-	//		 generic RewardController will need to be written
-	#define PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS "Dev1/port1/line0:7"
-#endif
+// NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
+//		 where we have full hardware control.  If this is meant to run elsewhere, a more
+//		 generic RewardController will need to be written
+#define PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS "Dev1/port1/line0:7"
 
 namespace Picto
 {
@@ -37,13 +30,8 @@ PictoBoxXPEventCodeGenerator::PictoBoxXPEventCodeGenerator()
 
 	//Set all digital lines to 0
 	int32 sampsPerChanWritten;
-#ifdef DEBUG_ON_ORION_MACHINE
-	const uInt16 data[] = {0};
-	DAQmxErrChk(DAQmxWriteDigitalU16(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-#else
 	const uInt8 data[] = {0};
 	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-#endif
 
 
 }
@@ -74,15 +62,9 @@ double PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	//data[6] = (eventCode & 0x40) ? 1 : 0 ;
 	//data[7] = 1;
 
-#ifdef DEBUG_ON_ORION_MACHINE
-	uInt16 data[1] = {(eventCode & 0x7F) | 0x8000};
-	//set the event lines
-	DAQmxErrChk(DAQmxWriteDigitalU16(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-#else
 	uInt8 data[] = {eventCode | 0x80};
 	//set the event lines
 	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-#endif
 
 	//wait 250 us
 	LARGE_INTEGER ticksPerSec;
@@ -99,18 +81,9 @@ double PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	}
 	while(elapsedTime < delayTime);
 	
-#ifdef DEBUG_ON_ORION_MACHINE
 	//reset the event lines to 0 
-	//for(int i=0; i<16; i++)
-	//	data[i] = 0;	//WHAT'S UP HERE!!!!?!?!?!?!!?!?? THIS ISN'T BIG ENOUGH TO HANDLE 16 WRITES.
 	data[0] = 0;
-	DAQmxErrChk(DAQmxWriteDigitalU16(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-#else
-	//reset the event lines to 0 
-	for(int i=0; i<8; i++)
-		data[i] = 0;
 	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-#endif
 
 return EVENT_CODE_HOLD_TIME;
 

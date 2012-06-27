@@ -87,16 +87,6 @@ void LegacySystemXPRewardController::startReward(unsigned int,int quantity)
 	latestOnTime_ = quantity;
 }
 
-void LegacySystemXPRewardController::stopReward(unsigned int channel)
-{
-	if(!taskExists_)
-		return;
-	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
-	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
-	//We may need to manually set the pin back to TTL low... see if we do in testing.
-	taskExists_ = false;
-}
-
 bool LegacySystemXPRewardController::rewardWasSupplied(unsigned int)
 {
 	if(!taskExists_)
@@ -110,28 +100,40 @@ bool LegacySystemXPRewardController::rewardWasSupplied(unsigned int)
 	taskExists_ = false;
 	return true;
 }
-
-void LegacySystemXPRewardController::flush(unsigned int, bool flush)
+void LegacySystemXPRewardController::startFlush(unsigned int channel)
 {
 	if(!hasDevice_)
 		return;
 	//We don't really care about the channel here because there's currenlty 
 	//only one channel supported in picto for the legacy system.
-	//if(channel > 1 || channel < 1)
-	//	return;
-	if(taskExists_)
-	{
-		DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
-		taskExists_ = false;
-	}
+
+	////turn on the reward controller (remember, we're using active high logic)
 	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
+	taskExists_ = true;
 	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_,"Dev2/ao0","",0.0,5.0,DAQmx_Val_Volts,NULL));
 	int32 sampsPerChanWritten;
-	float64 data[] = {flush?1:0};
+	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_,1,true,1,DAQmx_Val_GroupByChannel,outputData,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
+	stopwatch_.startWatch();
+	latestOnTime_ = INT_MAX;
+}
+void LegacySystemXPRewardController::stopFlush(unsigned int channel)
+{
+	//Stop flush task
+	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
+	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	//Bring reward pin back to zero
+	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_));
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_,"Dev2/ao0","",0.0,5.0,DAQmx_Val_Volts,NULL));
+
+	//Leave the solenoid closed by setting lines to 0
+	int32 sampsPerChanWritten;
+	float64 data[] = {0};
 	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
 	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_,1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
+	taskExists_ = false;
 }
 
 

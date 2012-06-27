@@ -14,7 +14,7 @@ class NumberEditMode : public DisplayMode
 	Q_OBJECT
 
 public:
-	NumberEditMode(int maxValue,int minValue,QString valName,int fastIncrement,int slowIncrement);
+	NumberEditMode(int maxValue,int minValue,QString valName,QString unitStr,int fastIncrement,int slowIncrement);
 	virtual ~NumberEditMode();
 	virtual void initMode();
 
@@ -34,6 +34,7 @@ private:
 	int slowInc_;
 	int numAtInit_;
 	QString valName_;
+	QString unitStr_;
 };
 
 

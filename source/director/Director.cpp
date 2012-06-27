@@ -91,7 +91,7 @@ Director::Director(QString name,
 	{
 		query.exec("INSERT INTO directorinfo (key,value) VALUES ('FlushDurations','')");
 		for(int i=0;i<=4;i++)
-			changeFlushDuration(i,10000);
+			changeFlushDuration(i,300);
 		query.exec("SELECT value FROM directorinfo WHERE key='FlushDurations'");
 		Q_ASSERT(query.next());
 	}
@@ -212,7 +212,7 @@ void Director::changeRewardDuration(int controller, int duration)
 void Director::changeFlushDuration(int controller, int duration)
 {
 	while(flushDurs_.size() <= controller)
-		flushDurs_.append("10000");
+		flushDurs_.append("300");
 	flushDurs_[controller] = QString::number(duration);
 	QSqlQuery query(configDb_);
 	query.prepare("UPDATE directorinfo SET value=:value WHERE key='FlushDurations'");

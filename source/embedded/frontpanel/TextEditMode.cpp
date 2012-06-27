@@ -85,7 +85,7 @@ PanelInfo::DisplayModeType TextEditMode::handleUserInput(PanelInfo::InputType ty
 				setTheVal = true;
 			break;
 		default:
-			break;
+			return myModeType();
 		}
 	if(setTheVal)
 	{

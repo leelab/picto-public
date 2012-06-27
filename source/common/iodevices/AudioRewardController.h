@@ -32,12 +32,11 @@ public:
 	AudioRewardController();
 	virtual ~AudioRewardController() {};
 
-public slots:
-	void flush(unsigned int channel,bool flush);
 protected:
 	void startReward(unsigned int channel,int quantity);
-	void stopReward(unsigned int channel);
 	virtual bool rewardWasSupplied(unsigned int channel);
+	virtual void startFlush(unsigned int channel);
+	virtual void stopFlush(unsigned int channel);
 private:
 	void playSound(int lengthMs);
 	QSound tick_;

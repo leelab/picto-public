@@ -72,7 +72,7 @@ EngineTest::EngineTest()
 
 	//Create a rewardController
 #ifdef USING_PICTOBOX
-	QSharedPointer<Picto::RewardController> rewardController(new Picto::PictoBoxXPRewardController(1));
+	QSharedPointer<Picto::RewardController> rewardController(new Picto::PictoBoxXPRewardController());
 	QSharedPointer<Picto::EventCodeGenerator> eventGenerator(new Picto::PictoBoxXPEventCodeGenerator());
 #else
 	QSharedPointer<Picto::RewardController> rewardController(new Picto::NullRewardController());

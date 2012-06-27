@@ -208,7 +208,7 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 	if(controllerType == PictoBoxXpReward)
 	{
 #if defined WIN32 && defined NI_STUFF
-		rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController(1));
+		rewardController = QSharedPointer<Picto::RewardController>(new Picto::PictoBoxXPRewardController());
 #else
 		return false;
 #endif

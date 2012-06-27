@@ -59,40 +59,49 @@ public slots:
 	void addReward(unsigned int channel,int quantity, int minRewardPeriod);
 	// \brief Triggers any pending rewards to be given if possible.
 	void triggerRewards(bool appendToList);
-	// \brief Stops all currently active and pending rewards on the input channel
-	void stopRewards(unsigned int channel);
+	// \brief returns true if there is a reward currently being supplied.
+	bool rewardInProgress(unsigned int channel);
 	// \brief returns true if there are still rewards to send.
 	bool hasPendingRewards();
 	// \brief returns true if there are still rewards to send on the input channel.
 	bool hasPendingRewards(unsigned int channel);
-	virtual void flush(unsigned int channel,bool flush) = 0;
+	// \brief Flushes on the input channel for the input number of seconds.
+	void flush(unsigned int channel, int seconds);
+	// \brief Returns true if there is a flush in progress on the input channel
+	bool isFlushing(unsigned int channel);
+	// \brief Stops an active flush on the input channel
+	void abortFlush(unsigned int channel);
 
 protected:
 	// \brief Starts a reward without blocking during reward supply.
 	// Reward time is marked just after this is called, so actual reward should be given as close as possible
 	// to the end of the function.
 	virtual void startReward(unsigned int channel,int quantity) = 0;
-	// \brief Stops a reward  that is currently being supplied.
-	// Note that when a reward is stopped early, this fact is not recorded
-	// in the session database.
-	virtual void stopReward(unsigned int channel) = 0;
 	// \brief Returns true if the latest reward is no longer being supplied.  
 	// startReward won't be called until this returns true.
 	virtual bool rewardWasSupplied(unsigned int channel) = 0;
+	// \brief Starts a flush on the input channel.
+	// The flush should continue until stop flush is called.
+	virtual void startFlush(unsigned int channel) = 0;
+	// \brief Stops a flush on the input channel.
+	// Stops the flush that was started with startFlush.
+	virtual void stopFlush(unsigned int channel) = 0;
 	int channelCount_;
 	QList<float> rewardVolumes_;
 private:
 	struct RewardUnit
 	{
-		RewardUnit(int q, int m){quantity = q;minRewardPeriod = m;};
+		RewardUnit(int q, int m, bool f=false){quantity = q;minRewardPeriod = m;isFlush = f;};
 		int quantity;
 		int minRewardPeriod;
+		bool isFlush;
 	};
 	struct RewardChannel
 	{
-		RewardChannel():lastRewardPeriod(0){};
+		RewardChannel():lastRewardPeriod(0),inFlush(0){};
 		Stopwatch stopwatch;
 		int lastRewardPeriod;
+		bool inFlush;
 		QLinkedList<RewardUnit> pendingRewards;
 	};
 	QHash<int,RewardChannel> rewardChannels_;
