@@ -68,7 +68,7 @@ bool PictoBoxXPAnalogInputPort::startSampling()
 	foreach(int aiChannel,channelNums_)
 	{
 		physicalChannel = QString("%1/ai%2").arg(DEVICE_NAME).arg(aiChannel);
-		DAQmxErrChk (DAQmxCreateAIVoltageChan(daqTaskHandle_,physicalChannel.toLatin1(),"",DAQmx_Val_RSE,-10.0,10.0,DAQmx_Val_Volts,NULL));
+		DAQmxErrChk (DAQmxCreateAIVoltageChan(daqTaskHandle_,physicalChannel.toLatin1(),"",DAQmx_Val_NRSE,-10.0,10.0,DAQmx_Val_Volts,NULL));
 	}
 	int bufferSize = 5000;
 	DAQmxErrChk (DAQmxCfgSampClkTiming(daqTaskHandle_,"",deviceSampRate_,DAQmx_Val_Rising,DAQmx_Val_ContSamps,bufferSize));

@@ -88,7 +88,7 @@ void AnalysisPeriod::loadSession(QSqlDatabase session)
 	foreach(QSharedPointer<Asset> triggerAsset,periodDefTriggers)
 	{
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
-		trigger->loadSessionAndScriptTools(session_,QSharedPointer<QScriptEngine>());
+		trigger->loadSessionAndScriptTools(session_,qsEngine_);
 	}
 
 	//Make a Qt Script Function out of the script and its name

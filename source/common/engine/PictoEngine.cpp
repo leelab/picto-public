@@ -187,8 +187,8 @@ void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 		//If we got here, we're not running.  Wait for all rewards to be given, sending them to the server as they go out.
 		while(rewardController_->hasPendingRewards())
 		{	
-			rewardController_->triggerRewards(true);
-			if(dataCommandChannel_->getSessionId() != QUuid())
+			rewardController_->triggerRewards(!sessionId_.isNull());
+			if(!sessionId_.isNull())
 			{	//Only send data to the server if we're in a session
 				QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
 				QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
@@ -714,7 +714,7 @@ void PictoEngine::flushRequest(int channel)
 			//If we got here, we're not running.  Wait for all rewards to be given, sending them to the server as they go out.
 			while(rewardController_->hasPendingRewards())
 			{	
-				rewardController_->triggerRewards(true);
+				rewardController_->triggerRewards(false);
 				if(dataCommandChannel_->getSessionId() != QUuid())
 				{	//Only send data to the server if we're in a session
 					QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
@@ -784,7 +784,7 @@ void PictoEngine::stop()
 
 void PictoEngine::firstPhosphorOperations(double frameTime)
 {
-	rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || slave_));
+	rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || sessionId_.isNull() || slave_));
 
 	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
 	{
