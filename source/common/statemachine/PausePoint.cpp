@@ -131,21 +131,21 @@ bool PausePoint::hasScripts()
 	return (!propertyContainer_->getPropertyValue("PausingScript").toString().isEmpty()
 	|| !propertyContainer_->getPropertyValue("RestartingScript").toString().isEmpty());
 }
-QMap<QString,QString> PausePoint::getScripts()
+QMap<QString,QPair<QString,QString>>  PausePoint::getScripts()
 {
-	QMap<QString,QString> scripts;
+	QMap<QString,QPair<QString,QString>>  scripts;
 	if(!hasScripts())
 		return scripts;
 
 	if(!propertyContainer_->getPropertyValue("PausingScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Pausing";
-		scripts[scriptName] = propertyContainer_->getPropertyValue("PausingScript").toString();
+		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("PausingScript").toString());
 	}
 	if(!propertyContainer_->getPropertyValue("RestartingScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Restarting";
-		scripts[scriptName] = propertyContainer_->getPropertyValue("RestartingScript").toString();
+		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("RestartingScript").toString());
 	}
 	return scripts;
 }

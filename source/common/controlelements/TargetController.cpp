@@ -198,15 +198,15 @@ bool TargetController::hasScripts()
 		|| (propertyContainer_->getPropertyValue("TargetExitScript").toString() != "");
 }
 
-QMap<QString,QString> TargetController::getScripts()
+QMap<QString,QPair<QString,QString>>  TargetController::getScripts()
 {
-	QMap<QString,QString> scripts;
+	QMap<QString,QPair<QString,QString>>  scripts;
 	if(!hasScripts())
 		return scripts;
 	if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
-		scripts[getName().simplified().remove(' ').append("_TargetEntry")] = propertyContainer_->getPropertyValue("TargetEntryScript").toString();
+		scripts[getName().simplified().remove(' ').append("_TargetEntry")] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("TargetEntryScript").toString());
 	if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
-		scripts[getName().simplified().remove(' ').append("_TargetExit")] = propertyContainer_->getPropertyValue("TargetExitScript").toString();
+		scripts[getName().simplified().remove(' ').append("_TargetExit")] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("TargetExitScript").toString());
 	return scripts;
 }
 

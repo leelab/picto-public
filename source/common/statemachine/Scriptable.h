@@ -25,7 +25,7 @@ public:
 	Scriptable();
 	virtual ~Scriptable(){};
 
-	bool bindToScriptEngine(QScriptEngine &engine);
+	virtual bool bindToScriptEngine(QScriptEngine &engine);
 	/*! \brief Resets this scriptables data fields to their original values.
 	 */
 	virtual void reset();
@@ -36,10 +36,12 @@ public:
 	virtual bool isRuntimeEditable(){return isUIEnabled();};
 	virtual void setPropertyRuntimeEditable(QString propName, bool editable = true);
 	virtual QList<QSharedPointer<Property>> getDescendantsProperties();
-	QString getScriptingInfo();
+	virtual QString getScriptingInfo();
 	QString getInfo();
 
 protected:
+	//\brief Overidden to include script code that should be injected into the script engine
+	virtual QString scriptCode(){return "";};
 	virtual QString defaultTagName(){return "Scriptable";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

@@ -21,6 +21,7 @@ class PICTOLIB_CLASS CircleGraphic : public VisualElement
 {
 	Q_OBJECT
 	Q_PROPERTY(int radius READ getRadius WRITE setRadius)
+	Q_PROPERTY(bool outline READ getOutline WRITE setOutline)
 public:
 	CircleGraphic(QPoint position=QPoint(), int radius=0, QColor color=QColor());
 
@@ -31,6 +32,8 @@ public:
 	QPoint getPositionOffset();
 	int getRadius(){return propertyContainer_->getPropertyValue("Radius").toInt();};
 	void setRadius(int radius) { propertyContainer_->setPropertyValue("Radius", radius);};
+	bool getOutline(){return propertyContainer_->getPropertyValue("Outline").toBool();};
+	void setOutline(bool outline) { propertyContainer_->setPropertyValue("Outline", outline);};
 
 protected:
 	virtual void postDeserialize();

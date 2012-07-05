@@ -462,16 +462,16 @@ bool State::hasScripts()
 	return !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
 }
 
-QMap<QString,QString> State::getScripts()
+QMap<QString,QPair<QString,QString>> State::getScripts()
 {
-	QMap<QString,QString> scripts = MachineContainer::getScripts();
+	QMap<QString,QPair<QString,QString>> scripts = MachineContainer::getScripts();
 	if(!hasScripts())
 		return scripts;
 
 	if(!propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Frame";
-		scripts[scriptName] = propertyContainer_->getPropertyValue("FrameScript").toString();
+		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("FrameScript").toString());
 	}
 	return scripts;
 }

@@ -1,4 +1,5 @@
 #include <QMap>
+#include <QPair>
 #include <QDebug>
 #include <QScriptValueIterator>
 
@@ -30,6 +31,7 @@
 #include "../stimuli/AudioElement.h"
 #include "../controlelements/circletarget.h"
 #include "../controlelements/recttarget.h"
+#include "../statemachine/ScriptFunction.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -39,8 +41,13 @@ ScriptableContainer::ScriptableContainer()
 	visualElementFactory_(new AssetFactory(0,-1)),
 	controlTargetFactory_(new AssetFactory(0,-1)),
 	audioElementFactory_(new AssetFactory(0,-1)),
+	scriptFunctionFactory_(new AssetFactory(0,-1)),
 	scriptingInitialized_(false)
 {
+	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
+	scriptFunctionFactory_->addAssetType("ScriptFunction",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
+
 	AddDefinableObjectFactory("Parameter",parameterFactory_);
 	parameterFactory_->addAssetType("Boolean",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
@@ -130,6 +137,7 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 	if(scriptable.isNull())
 		return;
 	scriptables_.push_back(scriptable);
+	qDebug("Added " + scriptable.toStrongRef()->getName().toAscii() + " to " + getName().toAscii());
 	//If we added a new scriptable, scripting is no longer properly initialized.
 	scriptingInitialized_ = false;
 	//If the new scriptable's name edited, we'll need to reinitialize scripting again.
@@ -170,20 +178,21 @@ bool ScriptableContainer::initScripting()
 		qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
 
 		//Bind all scriptable to the script engine (parameters and ui elements)
-		if(!bindToScriptEngine(*qsEngine_))
+		if(!bindScriptablesToScriptEngine(*qsEngine_))
 			return false;
 
-		QMap<QString,QString> scriptMap = getScripts();
-		for(QMap<QString,QString>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
+		QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
+		for(QMap<QString,QPair<QString,QString>> ::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
 		{
 			if(qsEngine_->globalObject().property(it.key()).isValid())
 			{
 				// There is already a scriptable component with this name.
+				Q_ASSERT(false);
 				return false;
 			}
 
 			//Make a Qt Script Function out of the script and its name
-			QString function = "function " + it.key() + "() { " + it.value() + "}";
+			QString function = "function " + it.key() + "("+it.value().first+") { " + it.value().second + "}";
 
 			//add the function to the engine by calling evaluate on it
 			qsEngine_->evaluate(function);
@@ -252,11 +261,11 @@ QString ScriptableContainer::getInfo()
 
 void ScriptableContainer::runScript(QString scriptName)
 {
-	bool returnVal;
+	QScriptValue returnVal;
 	runScript(scriptName,returnVal);
 }
 
-void ScriptableContainer::runScript(QString scriptName, bool& scriptReturnVal)
+void ScriptableContainer::runScript(QString scriptName, QScriptValue& scriptReturnVal)
 {
 	scriptReturnVal = qsEngine_->globalObject().property(scriptName).call().toBool();
 	if(qsEngine_->hasUncaughtException())
@@ -281,6 +290,17 @@ void ScriptableContainer::postDeserialize()
 			if(tagChild->inherits("Picto::Scriptable"))
 			{
 				addScriptable(tagChild.staticCast<Scriptable>());
+			}
+		}
+	}
+	foreach(QString childTag,childTags)
+	{
+		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> tagChild,tagChildren)
+		{
+			if(tagChild->inherits("Picto::ScriptableContainer"))
+			{
+				addChildScriptableContainer(tagChild.staticCast<ScriptableContainer>());
 			}
 		}
 	}
@@ -312,7 +332,7 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	return true;
 }
 
-bool ScriptableContainer::bindToScriptEngine(QScriptEngine &engine)
+bool ScriptableContainer::bindScriptablesToScriptEngine(QScriptEngine &engine)
 {
 	foreach(QSharedPointer<Scriptable> scriptable, scriptables_)
 	{

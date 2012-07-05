@@ -48,26 +48,27 @@ public:
 
 protected:
 	void runScript(QString scriptName);
-	void runScript(QString scriptName, bool& scriptReturnVal);
+	void runScript(QString scriptName, QScriptValue& scriptReturnVal);
 	virtual QString defaultTagName(){return "Scriptables";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return false;};
 	virtual bool hasScripts(){return false;};
 	//This returns a map of QMap<script name,script code>
-	virtual QMap<QString,QString> getScripts(){return QMap<QString,QString>();};
+	virtual QMap<QString,QPair<QString,QString>>  getScripts(){return QMap<QString,QPair<QString,QString>> ();};
 	virtual void scriptableContainerWasReinitialized(){};
 	QSharedPointer<AssetFactory> visualElementFactory_;
 	QSharedPointer<AssetFactory> parameterFactory_;
 	QSharedPointer<AssetFactory> controlTargetFactory_;
 	QSharedPointer<AssetFactory> audioElementFactory_;
+	QSharedPointer<AssetFactory> scriptFunctionFactory_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 
 private:
-	bool bindToScriptEngine(QScriptEngine &engine);
+	bool bindScriptablesToScriptEngine(QScriptEngine &engine);
 	QList<QWeakPointer<Scriptable> > scriptables_;	//This has to be weak because it will contain pointers to its parents.
 	QList<QSharedPointer<ScriptableContainer> > scriptableContainers_;
-	QMap<QString,QString> scriptableListProperties_;
+	QMap<QString,QString>  scriptableListProperties_;
 	bool scriptingInitialized_;
 
 private slots:

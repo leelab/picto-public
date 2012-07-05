@@ -70,9 +70,9 @@ QSharedPointer<Asset> ScriptElement::Create()
 QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
-	bool returnVal = false;
+	QScriptValue returnVal = QScriptValue(false);
 	runScript(getName().simplified().remove(' '),returnVal);
-	if(returnVal)
+	if(returnVal.toBool())
 		return "true";
 	else
 		return "false";
@@ -112,12 +112,12 @@ bool ScriptElement::hasScripts()
 	return (propertyContainer_->getPropertyValue("Script").toString() != "");
 }
 
-QMap<QString,QString> ScriptElement::getScripts()
+QMap<QString,QPair<QString,QString>>  ScriptElement::getScripts()
 {
-	QMap<QString,QString> scripts;
+	QMap<QString,QPair<QString,QString>>  scripts;
 	if(!hasScripts())
 		return scripts;
-	scripts[getName().simplified().remove(' ')] = propertyContainer_->getPropertyValue("Script").toString();
+	scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("Script").toString());
 	return scripts;
 }
 

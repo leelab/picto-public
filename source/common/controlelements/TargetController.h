@@ -79,7 +79,7 @@ protected:
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
-	virtual QMap<QString,QString> getScripts();
+	virtual QMap<QString,QPair<QString,QString>>  getScripts();
 	virtual void scriptableContainerWasReinitialized();
 
 private:

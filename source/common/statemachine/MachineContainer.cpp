@@ -59,7 +59,7 @@ void MachineContainer::addElement(QSharedPointer<ResultContainer> element)
 {
 	//Add the element to our map
 	elements_.insert(element->getName(),element);
-	addChildScriptableContainer(element);
+	//addChildScriptableContainer(element);
 }
 
 void MachineContainer::postDeserialize()
@@ -206,21 +206,21 @@ bool MachineContainer::hasScripts()
 		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
 }
 
-QMap<QString,QString> MachineContainer::getScripts()
+QMap<QString,QPair<QString,QString>>  MachineContainer::getScripts()
 {
-	QMap<QString,QString> scripts;
+	QMap<QString,QPair<QString,QString>>  scripts;
 	if(!hasScripts())
 		return scripts;
 
 	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Entry";
-		scripts[scriptName] = propertyContainer_->getPropertyValue("EntryScript").toString();
+		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("EntryScript").toString());
 	}
 	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Exit";
-		scripts[scriptName] = propertyContainer_->getPropertyValue("ExitScript").toString();
+		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("ExitScript").toString());
 	}
 	return scripts;
 }
