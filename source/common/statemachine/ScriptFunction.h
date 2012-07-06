@@ -31,7 +31,7 @@ public:
 	static QSharedPointer<Asset> Create();
 	virtual ~ScriptFunction(){};
 	bool bindToScriptEngine(QScriptEngine &engine);
-	virtual QString getUITemplate(){return "Parameter";};
+	virtual QString getUITemplate(){return "ScriptFunction";};
 	virtual QString assetType(){return "ScriptFunction";};
 	virtual QString getScriptingInfo();
 

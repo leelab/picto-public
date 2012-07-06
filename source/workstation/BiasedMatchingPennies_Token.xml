@@ -1,6 +1,7 @@
 <PictoData id="0">
-	
-	<Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
+
+  <Experiment id="1">
+    <SyntaxVersion id="2">0.0.1</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
         <Parameter type="OperatorClick" id="5">
@@ -16,11 +17,11 @@
         <UIInfo id="14">
           <Pos id="15" x="2012" y="2000"/>
         </UIInfo>
-        
+
         <Name id="18">PresentStimuli</Name>
         <Type id="19">StateMachine</Type>
         <StateMachineElement type="StateMachine" id="20">
-          
+
           <Name id="22">PresentSingleStimulus</Name>
           <UIInfo id="23">
             <Pos id="24" x="184" y="178"/>
@@ -244,7 +245,7 @@
             <Units id="209"/>
           </Parameter>
           <StateMachineElement type="StateMachine" id="210">
-            
+
             <Name id="212">FixationFeedback</Name>
             <Result id="213">
               <Name id="214">Done</Name>
@@ -299,7 +300,8 @@
               <UIEnabled id="258">true</UIEnabled>
               <UIOrder id="259">0</UIOrder>
               <NumRewards id="499">1</NumRewards>
-            <MinRewardPeriod id="491">125</MinRewardPeriod></StateMachineElement>
+              <MinRewardPeriod id="491">125</MinRewardPeriod>
+            </StateMachineElement>
             <Transition id="260">
               <Destination id="261">Reward</Destination>
               <Source id="262">SetTargetRed</Source>
@@ -324,7 +326,12 @@
             <Type id="278">StateMachine</Type>
             <UIEnabled id="279">false</UIEnabled>
             <UIOrder id="280">0</UIOrder>
-          <Transition id="502"><Destination id="498">SetTargetRed</Destination><Source id="500"/><SourceResult id="501"/></Transition></StateMachineElement>
+            <Transition id="502">
+              <Destination id="498">SetTargetRed</Destination>
+              <Source id="500"/>
+              <SourceResult id="501"/>
+            </Transition>
+          </StateMachineElement>
           <Transition id="281">
             <Destination id="282">FixationFeedback</Destination>
             <Source id="283">PresentStimulus</Source>
@@ -354,7 +361,12 @@
           <Type id="304">StateMachine</Type>
           <UIEnabled id="305">false</UIEnabled>
           <UIOrder id="306">0</UIOrder>
-        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/></Transition></StateMachineElement>
+          <Transition id="520">
+            <Destination id="519">WaitForClick</Destination>
+            <Source id="521"/>
+            <SourceResult id="522"/>
+          </Transition>
+        </StateMachineElement>
         <VisualElement type="Box Graphic" id="307">
           <Color A="255" B="0" G="255" R="255" id="308">#ffff00</Color>
           <Dimensions height="10" id="309" width="10" x="0" y="0"/>
@@ -443,82 +455,1937 @@
         <Level id="383">Stage</Level>
         <UIEnabled id="384">false</UIEnabled>
         <UIOrder id="385">0</UIOrder>
-      <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/></Transition></StateMachine>
+        <Transition id="573">
+          <Destination id="575">PresentSingleStimulus</Destination>
+          <Source id="576"/>
+          <SourceResult id="577"/>
+        </Transition>
+      </StateMachine>
       <UIInfo id="386">
         <Pos id="387" x="1668" y="1744"/>
       </UIInfo>
       <Name id="389">Eye Calibration</Name>
     </Task>
-<UIInfo id="390">
-	<Pos id="392" x="0" y="0"/>
-</UIInfo>
-<Name id="393">BiasedMatchingPennies_Token</Name>
-<XGain id="394">1</XGain>
-<XOffset id="395">0</XOffset>
-<XYSignalShear id="396">0</XYSignalShear>
-<YGain id="397">1</YGain>
-<YOffset id="398">0</YOffset>
-<Task id="587"><Name id="588">Frame and Risky Choice</Name><StateMachine id="589"><EntryScript id="590">if(Math.random() &lt; .5)
-	lambda.value = 0;
-else
-	lambda.value = 1;
-tokensCollected.value = Math.floor(Math.random()*3)+2;</EntryScript><ExitScript id="591"/><Level id="592">Stage</Level><Name id="593">Top</Name><Type id="594">StateMachine</Type><UIEnabled id="595">false</UIEnabled><UIInfo id="596"><Pos id="597" x="2002" y="2000"/></UIInfo><UIOrder id="599">0</UIOrder><StateMachineElement type="StateMachine" id="610"><EntryScript id="611">blockNum.value++;
-lambda.value = !lambda.value;
-rightIsSafe.value = lambda.value;
+    <UIInfo id="390">
+      <Pos id="392" x="0" y="0"/>
+    </UIInfo>
+    <Name id="393">BiasedMatchingPennies_Token</Name>
+    <XGain id="394">1</XGain>
+    <XOffset id="395">0</XOffset>
+    <XYSignalShear id="396">0</XYSignalShear>
+    <YGain id="397">1</YGain>
+    <YOffset id="398">0</YOffset>
+    <Task id="587">
+      <Name id="588">Frame and Risky Choice</Name>
+      <StateMachine id="589">
+        <EntryScript id="590">
+          if(Math.random() &lt; .5)
+          lambda.value = 0;
+          else
+          lambda.value = 1;
+          tokensCollected.value = Math.floor(Math.random()*3)+2;
+        </EntryScript>
+        <ExitScript id="591"/>
+        <Level id="592">Stage</Level>
+        <Name id="593">Top</Name>
+        <Type id="594">StateMachine</Type>
+        <UIEnabled id="595">false</UIEnabled>
+        <UIInfo id="596">
+          <Pos id="597" x="2002" y="2000"/>
+        </UIInfo>
+        <UIOrder id="599">0</UIOrder>
+        <StateMachineElement type="StateMachine" id="610">
+          <EntryScript id="611">
+																																																            blockNum.value++;
+																																																            lambda.value = !lambda.value;
+																																																            rightIsSafe.value = lambda.value;
 
-</EntryScript><ExitScript id="612"/><Level id="613">Stage</Level><Name id="614">Block</Name><Type id="615">StateMachine</Type><UIEnabled id="616">false</UIEnabled><UIInfo id="617"><Pos id="618" x="217" y="188"/></UIInfo><UIOrder id="620">0</UIOrder><Result id="646"><Name id="647">Done</Name><UIEnabled id="648">false</UIEnabled><UIInfo id="649"><Pos id="650" x="833" y="634"/></UIInfo><UIOrder id="652">0</UIOrder></Result><StateMachineElement type="StateMachine" id="656"><EntryScript id="657">trialNum.value++;
-compChoosesRight.value = Math.random() &gt;= .5;</EntryScript><ExitScript id="658">fixGraphic.visible = false;</ExitScript><Level id="659">Stage</Level><Name id="660">Trial</Name><Type id="661">StateMachine</Type><UIEnabled id="662">false</UIEnabled><UIInfo id="663"><Pos id="664" x="373" y="71"/></UIInfo><UIOrder id="666">0</UIOrder><Result id="1088"><Name id="1089">Complete</Name><UIEnabled id="1090">false</UIEnabled><UIInfo id="1091"><Pos id="1092" x="992" y="381"/></UIInfo><UIOrder id="1094">0</UIOrder></Result><StateMachineElement type="State" id="1116"><BackgroundColor A="255" B="0" G="0" R="0" id="1117">#000000</BackgroundColor><EntryScript id="1118"/><ExitScript id="1119"/><FrameScript id="1120"/><Name id="1121">Fixation</Name><UIEnabled id="1122">false</UIEnabled><UIInfo id="1123"><Pos id="1124" x="186" y="155"/></UIInfo><UIOrder id="1126">0</UIOrder><ControlElement type="Target Controller" id="1262"><ControlTarget id="1263">fixTarget</ControlTarget><FixationTime id="1264">500</FixationTime><MaxInitialAcquisitionTime id="1265">3000</MaxInitialAcquisitionTime><MaxReacquisitionTime id="1266">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="1267">0</MinInitialAcquisitionTime><Name id="1268">FixController</Name><ReacquisitionAllowed id="1269">false</ReacquisitionAllowed><Result id="627"><Name id="628">Reaquistion Time Exceeded</Name><UIEnabled id="642">false</UIEnabled><UIInfo id="644"><Pos id="645" x="0" y="0"/></UIInfo><UIOrder id="668">0</UIOrder></Result><Result id="673"><Name id="681">Initial Aquistion Time Exceeded</Name><UIEnabled id="683">false</UIEnabled><UIInfo id="684"><Pos id="685" x="0" y="0"/></UIInfo><UIOrder id="691">0</UIOrder></Result><Result id="695"><Name id="696">Total Time Excceeded</Name><UIEnabled id="697">false</UIEnabled><UIInfo id="698"><Pos id="699" x="0" y="0"/></UIInfo><UIOrder id="701">0</UIOrder></Result><Result id="705"><Name id="706">Broke Fixation</Name><UIEnabled id="707">false</UIEnabled><UIInfo id="712"><Pos id="713" x="0" y="0"/></UIInfo><UIOrder id="715">0</UIOrder></Result><Result id="734"><Name id="735">Success</Name><UIEnabled id="736">false</UIEnabled><UIInfo id="737"><Pos id="738" x="0" y="0"/></UIInfo><UIOrder id="748">0</UIOrder></Result><SignalChannel id="1270">Position</SignalChannel><TargetEntryScript id="1271"/><TargetExitScript id="1272"/><TimeUnits id="1273">Ms</TimeUnits><TotalTime id="1274">3500</TotalTime><Type id="1275"/><UIEnabled id="1276">false</UIEnabled><UIInfo id="1277"><Pos id="1278" x="144" y="98"/></UIInfo><UIOrder id="1280">0</UIOrder></ControlElement><Result id="1346"><Name id="1347">Success</Name><UIEnabled id="1348">false</UIEnabled><UIInfo id="1349"><Pos id="1350" x="463" y="80"/></UIInfo><UIOrder id="1352">0</UIOrder></Result><Result id="1356"><Name id="1357">Fail</Name><UIEnabled id="1358">false</UIEnabled><UIInfo id="1359"><Pos id="1360" x="461" y="245"/></UIInfo><UIOrder id="1362">0</UIOrder></Result><Transition id="834"><Destination id="835">Fail</Destination><Source id="836">FixController</Source><SourceResult id="837">Reaquistion Time Exceeded</SourceResult></Transition><Transition id="838"><Destination id="850">Fail</Destination><Source id="852">FixController</Source><SourceResult id="853">Initial Aquistion Time Exceeded</SourceResult></Transition><Transition id="854"><Destination id="855">Fail</Destination><Source id="856">FixController</Source><SourceResult id="857">Total Time Excceeded</SourceResult></Transition><Transition id="858"><Destination id="859">Success</Destination><Source id="878">FixController</Source><SourceResult id="880">Success</SourceResult></Transition><Transition id="881"><Destination id="882">Fail</Destination><Source id="887">FixController</Source><SourceResult id="897">Broke Fixation</SourceResult></Transition></StateMachineElement><StateMachineElement type="State" id="1134"><BackgroundColor A="255" B="0" G="0" R="0" id="1135">#000000</BackgroundColor><EntryScript id="1136">lCircle.visible = true;
-rCircle.visible = true;</EntryScript><ExitScript id="1137">fixGraphic.visible = false;</ExitScript><FrameScript id="1138"/><Name id="1139">Sample</Name><UIEnabled id="1140">false</UIEnabled><UIInfo id="1141"><Pos id="1142" x="350" y="157"/></UIInfo><UIOrder id="1144">0</UIOrder><ControlElement type="Target Controller" id="1456"><ControlTarget id="1457">fixTarget</ControlTarget><FixationTime id="1458">500</FixationTime><MaxInitialAcquisitionTime id="1459">0</MaxInitialAcquisitionTime><MaxReacquisitionTime id="1460">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="1461">0</MinInitialAcquisitionTime><Name id="1462">OverlapFixControl</Name><ReacquisitionAllowed id="1463">false</ReacquisitionAllowed><Result id="903"><Name id="904">Reaquistion Time Exceeded</Name><UIEnabled id="905">false</UIEnabled><UIInfo id="915"><Pos id="921" x="0" y="0"/></UIInfo><UIOrder id="923">0</UIOrder></Result><Result id="927"><Name id="928">Initial Aquistion Time Exceeded</Name><UIEnabled id="934">false</UIEnabled><UIInfo id="936"><Pos id="937" x="0" y="0"/></UIInfo><UIOrder id="948">0</UIOrder></Result><Result id="952"><Name id="953">Total Time Excceeded</Name><UIEnabled id="959">false</UIEnabled><UIInfo id="961"><Pos id="962" x="0" y="0"/></UIInfo><UIOrder id="972">0</UIOrder></Result><Result id="987"><Name id="1003">Broke Fixation</Name><UIEnabled id="1005">false</UIEnabled><UIInfo id="1006"><Pos id="1007" x="0" y="0"/></UIInfo><UIOrder id="1017">0</UIOrder></Result><Result id="1021"><Name id="1022">Success</Name><UIEnabled id="1023">false</UIEnabled><UIInfo id="1024"><Pos id="1025" x="0" y="0"/></UIInfo><UIOrder id="1066">0</UIOrder></Result><SignalChannel id="1464">Position</SignalChannel><TargetEntryScript id="1465"/><TargetExitScript id="1466"/><TimeUnits id="1467">Ms</TimeUnits><TotalTime id="1468">1000</TotalTime><Type id="1469"/><UIEnabled id="1470">false</UIEnabled><UIInfo id="1471"><Pos id="1472" x="131" y="110"/></UIInfo><UIOrder id="1474">0</UIOrder></ControlElement><Result id="1490"><Name id="1491">Success</Name><UIEnabled id="1492">false</UIEnabled><UIInfo id="1493"><Pos id="1494" x="566" y="103"/></UIInfo><UIOrder id="1496">0</UIOrder></Result><Result id="1500"><Name id="1501">Fail</Name><UIEnabled id="1502">false</UIEnabled><UIInfo id="1503"><Pos id="1504" x="558" y="226"/></UIInfo><UIOrder id="1506">0</UIOrder></Result><Transition id="1114"><Destination id="1115">Fail</Destination><Source id="1125">OverlapFixControl</Source><SourceResult id="1127">Reaquistion Time Exceeded</SourceResult></Transition><Transition id="1128"><Destination id="1129">Fail</Destination><Source id="1130">OverlapFixControl</Source><SourceResult id="1131">Initial Aquistion Time Exceeded</SourceResult></Transition><Transition id="1132"><Destination id="1133">Fail</Destination><Source id="1143">OverlapFixControl</Source><SourceResult id="1145">Total Time Excceeded</SourceResult></Transition><Transition id="1146"><Destination id="1147">Fail</Destination><Source id="1148">OverlapFixControl</Source><SourceResult id="1149">Broke Fixation</SourceResult></Transition><Transition id="1150"><Destination id="1151">Success</Destination><Source id="1161">OverlapFixControl</Source><SourceResult id="1163">Success</SourceResult></Transition></StateMachineElement><StateMachineElement type="State" id="1152"><BackgroundColor A="255" B="0" G="0" R="0" id="1153">#000000</BackgroundColor><EntryScript id="1154"/><ExitScript id="1155"/><FrameScript id="1156"/><Name id="1157">SampleChoiceControl</Name><UIEnabled id="1158">false</UIEnabled><UIInfo id="1159"><Pos id="1160" x="496" y="153"/></UIInfo><UIOrder id="1162">0</UIOrder><ControlElement type="Choice Controller" id="1588"><AllowReentries id="1589">false</AllowReentries><FixationTime id="1590">1000</FixationTime><Name id="1591">SampleChoiceControl</Name><Result id="1182"><Name id="1183">Total Time Exceeded</Name><UIInfo id="1184"><Pos id="1185" x="2000" y="2000"/></UIInfo><UIEnabled id="1187">false</UIEnabled><UIOrder id="1197">0</UIOrder></Result><Result id="1202"><Name id="1203">Broke Fixation</Name><UIInfo id="1204"><Pos id="1205" x="2159" y="2000"/></UIInfo><UIEnabled id="1222">false</UIEnabled><UIOrder id="1223">0</UIOrder></Result><Result type="Target" id="1612"><ControlTarget id="1613">lTarget</ControlTarget><Name id="1614">LeftChoice</Name><UIEnabled id="1615">false</UIEnabled><UIInfo id="1616"><Pos id="1617" x="2001" y="2108"/></UIInfo><UIOrder id="1619">0</UIOrder></Result><Result type="Target" id="1624"><ControlTarget id="1625">rTarget</ControlTarget><Name id="1626">RightChoice</Name><UIEnabled id="1627">false</UIEnabled><UIInfo id="1628"><Pos id="1629" x="2147" y="2110"/></UIInfo><UIOrder id="1631">0</UIOrder></Result><SignalChannel id="1592">Position</SignalChannel><TargetEntryScript id="1593"/><TargetExitScript id="1594"/><TimeUnits id="1595">Ms</TimeUnits><TotalTime id="1596">1500</TotalTime><UIEnabled id="1597">false</UIEnabled><UIInfo id="1598"><Pos id="1599" x="103" y="94"/></UIInfo><UIOrder id="1601">0</UIOrder></ControlElement><Result id="1684"><Name id="1685">ChoseLeft</Name><UIEnabled id="1686">false</UIEnabled><UIInfo id="1687"><Pos id="1688" x="350" y="86"/></UIInfo><UIOrder id="1690">0</UIOrder></Result><Result id="1694"><Name id="1695">ChoseRight</Name><UIEnabled id="1696">false</UIEnabled><UIInfo id="1697"><Pos id="1698" x="358" y="212"/></UIInfo><UIOrder id="1700">0</UIOrder></Result><Result id="1704"><Name id="1705">Fail</Name><UIEnabled id="1706">false</UIEnabled><UIInfo id="1707"><Pos id="1708" x="375" y="354"/></UIInfo><UIOrder id="1710">0</UIOrder></Result><Transition id="1291"><Destination id="1292">ChoseLeft</Destination><Source id="1293">SampleChoiceControl</Source><SourceResult id="1294">LeftChoice</SourceResult></Transition><Transition id="1295"><Destination id="1296">ChoseRight</Destination><Source id="1297">SampleChoiceControl</Source><SourceResult id="1298">RightChoice</SourceResult></Transition><Transition id="1299"><Destination id="1300">Fail</Destination><Source id="1301">SampleChoiceControl</Source><SourceResult id="1302">Total Time Exceeded</SourceResult></Transition><Transition id="1303"><Destination id="1304">Fail</Destination><Source id="1305">SampleChoiceControl</Source><SourceResult id="1306">Broke Fixation</SourceResult></Transition></StateMachineElement><StateMachineElement type="State" id="1170"><BackgroundColor A="255" B="0" G="0" R="0" id="1171">#000000</BackgroundColor><EntryScript id="1172">if((compChoosesRight.value &amp;&amp; rCircle.visible)
-|| (!compChoosesRight.value &amp;&amp; lCircle.visible))
-{	//User Win
-	feedbackRing.red=255;
-}
-else if(rCircle.visible == rightIsSafe.value)
-{	//Neutral
-	feedbackRing.blue=255;
-}
-else 
-{	//User Lose
-	feedbackRing.setColor(192,192,192,255);
-}
+																																																            //Initialize Monkey and Computer Nash Probabilities
+																																																            monkNashPr.value = (2-lambda.value)/3;
+																																																            compNashPr.value = (1+lambda.value)/3;
 
-feedbackRing.visible = true;</EntryScript><ExitScript id="1173"/><FrameScript id="1174"/><Name id="1175">ShowRing</Name><UIEnabled id="1176">false</UIEnabled><UIInfo id="1177"><Pos id="1178" x="766" y="185"/></UIInfo><UIOrder id="1180">0</UIOrder><ControlElement type="Stopwatch Controller" id="1874"><Name id="1875">FeedbackTimer</Name><Result id="1315"><Name id="1316">Success</Name><UIEnabled id="1317">false</UIEnabled><UIInfo id="1318"><Pos id="1319" x="0" y="0"/></UIInfo><UIOrder id="1321">0</UIOrder></Result><Time id="1876">500</Time><TimeUnits id="1877">Ms</TimeUnits><Type id="1878"/><UIEnabled id="1879">false</UIEnabled><UIInfo id="1880"><Pos id="1881" x="97" y="77"/></UIInfo><UIOrder id="1883">0</UIOrder></ControlElement><Result id="1890"><Name id="1891">Done</Name><UIEnabled id="1892">false</UIEnabled><UIInfo id="1893"><Pos id="1894" x="526" y="157"/></UIInfo><UIOrder id="1896">0</UIOrder></Result><Transition id="1336"><Destination id="1337">Done</Destination><Source id="1338">FeedbackTimer</Source><SourceResult id="1339">Success</SourceResult></Transition></StateMachineElement><StateMachineElement type="State" id="1188"><BackgroundColor A="255" B="0" G="0" R="0" id="1189">#000000</BackgroundColor><EntryScript id="1190">tokens = [token0,token1,token2,token3,token4,token5];
-if(feedbackRing.red==255)
-{	//Win
-	tokens[tokensCollected.value].outline = false;
-	tokensCollected.value++;
-}
-else if(feedbackRing.blue!=255 &amp;&amp; tokensCollected.value&gt;0)
-{	//Lose
-	tokens[tokensCollected.value-1].outline = true;
-	tokensCollected.value--;
-}</EntryScript><ExitScript id="1191"/><FrameScript id="1192"/><Name id="1193">ShowDot</Name><UIEnabled id="1194">false</UIEnabled><UIInfo id="1195"><Pos id="1196" x="902" y="202"/></UIInfo><UIOrder id="1198">0</UIOrder><ControlElement type="Stopwatch Controller" id="1914"><Name id="1915">TokenOpTimer</Name><Result id="1374"><Name id="1375">Success</Name><UIEnabled id="1376">false</UIEnabled><UIInfo id="1377"><Pos id="1378" x="0" y="0"/></UIInfo><UIOrder id="1380">0</UIOrder></Result><Time id="1916">300</Time><TimeUnits id="1917">Ms</TimeUnits><Type id="1918"/><UIEnabled id="1919">false</UIEnabled><UIInfo id="1920"><Pos id="1921" x="80" y="66"/></UIInfo><UIOrder id="1923">0</UIOrder></ControlElement><Result id="1930"><Name id="1931">Done</Name><UIEnabled id="1932">false</UIEnabled><UIInfo id="1933"><Pos id="1934" x="365" y="125"/></UIInfo><UIOrder id="1936">0</UIOrder></Result><Transition id="1395"><Destination id="1396">Done</Destination><Source id="1397">TokenOpTimer</Source><SourceResult id="1398">Success</SourceResult></Transition></StateMachineElement><Transition id="718"><Destination id="719">Fixation</Destination><Source id="728"/><SourceResult id="732"/></Transition><ControlTarget type="CircleTarget" id="1238"><Color A="255" B="0" G="255" R="0" id="1239">#00ff00</Color><Layer id="1240">0</Layer><Name id="1241">fixTarget</Name><OperatorView id="1242">true</OperatorView><Position id="1243" x="400" y="300"/><Radius id="1244">50</Radius><SubjectView id="1245">false</SubjectView><UIEnabled id="1246">true</UIEnabled><UIInfo id="1247"><Pos id="1248" x="250" y="460"/></UIInfo><UIOrder id="1250">0</UIOrder><Visible id="1251">true</Visible></ControlTarget><Result id="1366"><Name id="1367">Incomplete</Name><UIEnabled id="1368">false</UIEnabled><UIInfo id="1369"><Pos id="1370" x="760" y="445"/></UIInfo><UIOrder id="1372">0</UIOrder></Result><Transition id="1031"><Destination id="1032">Incomplete</Destination><Source id="1033">Fixation</Source><SourceResult id="1055">Fail</SourceResult></Transition><Transition id="1061"><Destination id="1063">Sample</Destination><Source id="1064">Fixation</Source><SourceResult id="1065">Success</SourceResult></Transition><VisualElement type="Circle Graphic" id="1400"><Color A="255" B="0" G="255" R="0" id="1401">#00ff00</Color><Layer id="1402">0</Layer><Name id="1403">lCircle</Name><OperatorView id="1404">true</OperatorView><Outline id="1405">false</Outline><OutlineThickness id="1406">0</OutlineThickness><Position id="1407" x="250" y="300"/><Radius id="1408">15</Radius><SubjectView id="1409">true</SubjectView><UIEnabled id="1410">false</UIEnabled><UIInfo id="1411"><Pos id="1412" x="80" y="460"/></UIInfo><UIOrder id="1414">0</UIOrder><Visible id="1415">false</Visible></VisualElement><VisualElement type="Circle Graphic" id="1428"><Color A="255" B="0" G="255" R="0" id="1429">#00ff00</Color><Layer id="1430">0</Layer><Name id="1431">rCircle</Name><OperatorView id="1432">true</OperatorView><Outline id="1433">false</Outline><OutlineThickness id="1434">0</OutlineThickness><Position id="1435" x="550" y="300"/><Radius id="1436">15</Radius><SubjectView id="1437">true</SubjectView><UIEnabled id="1438">false</UIEnabled><UIInfo id="1439"><Pos id="1440" x="395" y="458"/></UIInfo><UIOrder id="1442">0</UIOrder><Visible id="1443">false</Visible></VisualElement><Transition id="1341"><Destination id="1342">SampleChoiceControl</Destination><Source id="1343">Sample</Source><SourceResult id="1344">Success</SourceResult></Transition><Transition id="1345"><Destination id="1351">Incomplete</Destination><Source id="1353">Sample</Source><SourceResult id="1354">Fail</SourceResult></Transition><ControlTarget type="CircleTarget" id="1636"><Color A="255" B="0" G="255" R="0" id="1637">#00ff00</Color><Layer id="1638">0</Layer><Name id="1639">lTarget</Name><OperatorView id="1640">true</OperatorView><Position id="1641" x="250" y="300"/><Radius id="1642">65</Radius><SubjectView id="1643">false</SubjectView><UIEnabled id="1644">false</UIEnabled><UIInfo id="1645"><Pos id="1646" x="85" y="556"/></UIInfo><UIOrder id="1648">0</UIOrder><Visible id="1649">true</Visible></ControlTarget><ControlTarget type="CircleTarget" id="1660"><Color A="255" B="0" G="255" R="0" id="1661">#00ff00</Color><Layer id="1662">0</Layer><Name id="1663">rTarget</Name><OperatorView id="1664">true</OperatorView><Position id="1665" x="550" y="300"/><Radius id="1666">65</Radius><SubjectView id="1667">false</SubjectView><UIEnabled id="1668">false</UIEnabled><UIInfo id="1669"><Pos id="1670" x="423" y="565"/></UIInfo><UIOrder id="1672">0</UIOrder><Visible id="1673">true</Visible></ControlTarget><Transition id="1449"><Destination id="1450">Incomplete</Destination><Source id="1451">SampleChoiceControl</Source><SourceResult id="1452">Fail</SourceResult></Transition><StateMachineElement type="ScriptElement" id="1754"><Name id="1755">ChoseLeftOps</Name><Result id="1453"><Name id="1454">false</Name><UIEnabled id="1455">false</UIEnabled><UIInfo id="1473"><Pos id="1475" x="0" y="0"/></UIInfo><UIOrder id="1477">0</UIOrder></Result><Result id="1481"><Name id="1482">true</Name><UIEnabled id="1483">false</UIEnabled><UIInfo id="1484"><Pos id="1485" x="0" y="0"/></UIInfo><UIOrder id="1487">0</UIOrder></Result><Script id="1756">rCircle.visible = false;
-feedbackRing.x=250;
-return true;</Script><Type id="1757">ScriptElement</Type><UIEnabled id="1758">false</UIEnabled><UIInfo id="1759"><Pos id="1760" x="616" y="82"/></UIInfo><UIOrder id="1762">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="1768"><Name id="1769">ChoseRightOps</Name><Result id="1509"><Name id="1510">false</Name><UIEnabled id="1511">false</UIEnabled><UIInfo id="1512"><Pos id="1513" x="0" y="0"/></UIInfo><UIOrder id="1515">0</UIOrder></Result><Result id="1519"><Name id="1520">true</Name><UIEnabled id="1521">false</UIEnabled><UIInfo id="1522"><Pos id="1523" x="0" y="0"/></UIInfo><UIOrder id="1525">0</UIOrder></Result><Script id="1770">lCircle.visible = false;
-feedbackRing.x=550;
-return true;</Script><Type id="1771">ScriptElement</Type><UIEnabled id="1772">false</UIEnabled><UIInfo id="1773"><Pos id="1774" x="616" y="216"/></UIInfo><UIOrder id="1776">0</UIOrder></StateMachineElement><Transition id="1535"><Destination id="1536">ShowRing</Destination><Source id="1537">ChoseLeftOps</Source><SourceResult id="1538">false</SourceResult></Transition><Transition id="1539"><Destination id="1540">ShowRing</Destination><Source id="1541">ChoseLeftOps</Source><SourceResult id="1542">true</SourceResult></Transition><Transition id="1543"><Destination id="1544">ShowRing</Destination><Source id="1545">ChoseRightOps</Source><SourceResult id="1546">false</SourceResult></Transition><Transition id="1547"><Destination id="1548">ShowRing</Destination><Source id="1549">ChoseRightOps</Source><SourceResult id="1550">true</SourceResult></Transition><Transition id="1551"><Destination id="1552">ChoseLeftOps</Destination><Source id="1553">SampleChoiceControl</Source><SourceResult id="1554">ChoseLeft</SourceResult></Transition><Transition id="1555"><Destination id="1556">ChoseRightOps</Destination><Source id="1557">SampleChoiceControl</Source><SourceResult id="1558">ChoseRight</SourceResult></Transition><VisualElement type="Circle Graphic" id="1782"><Color A="255" B="0" G="0" R="0" id="1783">#000000</Color><Layer id="1784">0</Layer><Name id="1785">feedbackRing</Name><OperatorView id="1786">true</OperatorView><Outline id="1787">true</Outline><OutlineThickness id="1788">4</OutlineThickness><Position id="1789" x="0" y="300"/><Radius id="1790">38</Radius><SubjectView id="1791">true</SubjectView><UIEnabled id="1792">false</UIEnabled><UIInfo id="1793"><Pos id="1794" x="241" y="674"/></UIInfo><UIOrder id="1796">0</UIOrder><Visible id="1797">false</Visible></VisualElement><Transition id="1675"><Destination id="1676">ShowDot</Destination><Source id="1677">ShowRing</Source><SourceResult id="1678">Done</SourceResult></Transition><Transition id="1679"><Destination id="1680">Complete</Destination><Source id="1681">ShowDot</Source><SourceResult id="1682">Done</SourceResult></Transition><Parameter type="Boolean" id="2156"><FalseLabel id="2157">False</FalseLabel><Name id="2158">compChoosesRight</Name><TrueLabel id="2159">True</TrueLabel><UIEnabled id="2160">false</UIEnabled><UIInfo id="2161"><Pos id="2162" x="537" y="462"/></UIInfo><UIOrder id="2164">0</UIOrder><Value id="2165">false</Value></Parameter></StateMachineElement><StateMachineElement type="ScriptElement" id="674"><Name id="675">IsDone</Name><Result id="629"><Name id="630">false</Name><UIEnabled id="631">false</UIEnabled><UIInfo id="637"><Pos id="641" x="0" y="0"/></UIInfo><UIOrder id="643">0</UIOrder></Result><Result id="653"><Name id="654">true</Name><UIEnabled id="655">false</UIEnabled><UIInfo id="665"><Pos id="667" x="0" y="0"/></UIInfo><UIOrder id="669">0</UIOrder></Result><Script id="676">if(trialNum.value &lt; minTrialsPerBlock.value)
-	return false;
-if(Math.random()*100 &gt;= switchProb.value)
-	return false;
-return true;</Script><Type id="677">ScriptElement</Type><UIEnabled id="678">false</UIEnabled><UIInfo id="679"><Pos id="680" x="711" y="453"/></UIInfo><UIOrder id="682">0</UIOrder></StateMachineElement><Transition id="687"><Destination id="688">Done</Destination><Source id="689">IsDone</Source><SourceResult id="690">true</SourceResult></Transition><Parameter type="Range" id="720"><Increment id="721">1</Increment><Max id="722">100</Max><Min id="723">0</Min><Name id="724">switchProb</Name><UIEnabled id="725">false</UIEnabled><UIInfo id="726"><Pos id="727" x="251" y="547"/></UIInfo><UIOrder id="729">0</UIOrder><Units id="730"/><Value id="731">10</Value></Parameter><Parameter type="Range" id="740"><Increment id="741">1</Increment><Max id="742">100</Max><Min id="743">1</Min><Name id="744">minTrialsPerBlock</Name><UIEnabled id="745">false</UIEnabled><UIInfo id="746"><Pos id="747" x="358" y="546"/></UIInfo><UIOrder id="749">0</UIOrder><Units id="750"/><Value id="751">40</Value></Parameter><Parameter type="Numeric" id="760"><Name id="761">trialNum</Name><UIEnabled id="762">false</UIEnabled><UIInfo id="763"><Pos id="764" x="139" y="549"/></UIInfo><UIOrder id="766">0</UIOrder><Units id="767"/><Value id="768">0</Value></Parameter><Parameter type="Boolean" id="792"><FalseLabel id="793">False</FalseLabel><Name id="794">rightIsSafe</Name><TrueLabel id="795">True</TrueLabel><UIEnabled id="796">false</UIEnabled><UIInfo id="797"><Pos id="798" x="480" y="549"/></UIInfo><UIOrder id="800">0</UIOrder><Value id="801">false</Value></Parameter><StateMachineElement type="ScriptElement" id="808"><Name id="809">isConsume</Name><Result id="752"><Name id="753">false</Name><UIEnabled id="754">false</UIEnabled><UIInfo id="755"><Pos id="756" x="2000" y="2000"/></UIInfo><UIOrder id="758">0</UIOrder></Result><Result id="770"><Name id="771">true</Name><UIEnabled id="772">false</UIEnabled><UIInfo id="773"><Pos id="774" x="2075" y="2000"/></UIInfo><UIOrder id="776">0</UIOrder></Result><Script id="810">if(tokensCollected.value &lt; 6)
-	return false;
-return true;</Script><Type id="811">ScriptElement</Type><UIEnabled id="812">false</UIEnabled><UIInfo id="813"><Pos id="814" x="223" y="100"/></UIInfo><UIOrder id="816">0</UIOrder></StateMachineElement><StateMachineElement type="StateMachine" id="822"><EntryScript id="823">Reward.unitQuantity = rewardQuantity.value;
-</EntryScript><ExitScript id="824">fixGraphic.visible = false;
-tokensCollected.value = Math.floor(Math.random()*3)+2;
-tokens = [token0,token1,token2,token3,token4,token5];
-for(i=0;i&lt;tokens.length;i++)
-{
-	tokens[i].visible = false;
-}</ExitScript><Level id="825">Stage</Level><Name id="826">ConsumeTrial</Name><Type id="827">StateMachine</Type><UIEnabled id="828">false</UIEnabled><UIInfo id="829"><Pos id="830" x="374" y="259"/></UIInfo><UIOrder id="832">0</UIOrder><Result id="1098"><Name id="1099">Done</Name><UIEnabled id="1100">false</UIEnabled><UIInfo id="1101"><Pos id="1102" x="257" y="107"/></UIInfo><UIOrder id="1104">0</UIOrder></Result><Parameter type="Range" id="2168"><Increment id="2169">1</Increment><Max id="2170">1000</Max><Min id="2171">1</Min><Name id="2172">rewardQuantity</Name><UIEnabled id="2173">false</UIEnabled><UIInfo id="2174"><Pos id="2175" x="200" y="453"/></UIInfo><UIOrder id="2177">0</UIOrder><Units id="2178"/><Value id="2179">80</Value></Parameter><StateMachineElement type="Reward" id="2188"><MinRewardPeriod id="2189">0</MinRewardPeriod><Name id="2190">Reward</Name><NumRewards id="2191">1</NumRewards><Result id="1823"><Name id="1824">done</Name><UIEnabled id="1825">false</UIEnabled><UIInfo id="1826"><Pos id="1827" x="0" y="0"/></UIInfo><UIOrder id="1829">0</UIOrder></Result><RewardChan id="2192">1</RewardChan><RewardQty id="2193">60</RewardQty><Type id="2194">Reward</Type><UIEnabled id="2195">false</UIEnabled><UIInfo id="2196"><Pos id="2197" x="271" y="221"/></UIInfo><UIOrder id="2199">0</UIOrder></StateMachineElement><StateMachineElement type="State" id="2208"><BackgroundColor A="255" B="0" G="0" R="0" id="2209">#000000</BackgroundColor><EntryScript id="2210">tokens = [token0,token1,token2,token3,token4,token5];
-tokens[tokensCollected.value-1].outline = true;
-tokensCollected.value--;
-</EntryScript><ExitScript id="2211"/><FrameScript id="2212"/><Name id="2213">RemoveToken</Name><UIEnabled id="2214">false</UIEnabled><UIInfo id="2215"><Pos id="2216" x="490" y="389"/></UIInfo><UIOrder id="2218">0</UIOrder><Result id="2262"><Name id="2263">Done</Name><UIEnabled id="2264">false</UIEnabled><UIInfo id="2265"><Pos id="2266" x="425" y="176"/></UIInfo><UIOrder id="2268">0</UIOrder></Result><ControlElement type="Stopwatch Controller" id="2340"><Name id="2341">RewardInterval</Name><Result id="1852"><Name id="1853">Success</Name><UIEnabled id="1854">false</UIEnabled><UIInfo id="1855"><Pos id="1856" x="0" y="0"/></UIInfo><UIOrder id="1858">0</UIOrder></Result><Time id="2342">500</Time><TimeUnits id="2343">Ms</TimeUnits><Type id="2344"/><UIEnabled id="2345">false</UIEnabled><UIInfo id="2346"><Pos id="2347" x="184" y="143"/></UIInfo><UIOrder id="2349">0</UIOrder></ControlElement><Transition id="1864"><Destination id="1865">Done</Destination><Source id="1866">RewardInterval</Source><SourceResult id="1867">Success</SourceResult></Transition></StateMachineElement><StateMachineElement type="ScriptElement" id="2272"><Name id="2273">NeedsReward</Name><Result id="1888"><Name id="1889">false</Name><UIEnabled id="1895">false</UIEnabled><UIInfo id="1897"><Pos id="1898" x="0" y="0"/></UIInfo><UIOrder id="1900">0</UIOrder></Result><Result id="1904"><Name id="1905">true</Name><UIEnabled id="1906">false</UIEnabled><UIInfo id="1907"><Pos id="1908" x="0" y="0"/></UIInfo><UIOrder id="1910">0</UIOrder></Result><Script id="2274">return tokensCollected.value &gt; 0;</Script><Type id="2275">ScriptElement</Type><UIEnabled id="2276">false</UIEnabled><UIInfo id="2277"><Pos id="2278" x="103" y="221"/></UIInfo><UIOrder id="2280">0</UIOrder></StateMachineElement><Transition id="1929"><Destination id="1935">Reward</Destination><Source id="1937">NeedsReward</Source><SourceResult id="1938">true</SourceResult></Transition><Transition id="1939"><Destination id="1940">RemoveToken</Destination><Source id="1941">Reward</Source><SourceResult id="1942">done</SourceResult></Transition><Transition id="1947"><Destination id="1948">NeedsReward</Destination><Source id="1949">RemoveToken</Source><SourceResult id="1950">Done</SourceResult></Transition><Transition id="1951"><Destination id="1952">Done</Destination><Source id="1953">NeedsReward</Source><SourceResult id="1954">false</SourceResult></Transition><Transition id="1955"><Destination id="1956">NeedsReward</Destination><Source id="1957"/><SourceResult id="1958"/></Transition></StateMachineElement><StateMachineElement type="PausePoint" id="868"><BackgroundColor A="255" B="0" G="0" R="0" id="869">#000000</BackgroundColor><ForcePause id="870">false</ForcePause><Name id="871">pause</Name><PausingScript id="872"/><RestartingScript id="873"/><Result id="841"><Name id="842">done</Name><UIEnabled id="843">false</UIEnabled><UIInfo id="844"><Pos id="845" x="0" y="0"/></UIInfo><UIOrder id="847">0</UIOrder></Result><Type id="874">PausePoint</Type><UIEnabled id="875">false</UIEnabled><UIInfo id="876"><Pos id="877" x="689" y="249"/></UIInfo><UIOrder id="879">0</UIOrder></StateMachineElement><StateMachineElement type="State" id="888"><BackgroundColor A="255" B="0" G="0" R="0" id="889">#000000</BackgroundColor><EntryScript id="890">tokens = [token0,token1,token2,token3,token4,token5];
-for(i=0;i&lt;tokens.length;i++)
-{
-	tokens[i].outline = i&gt;=tokensCollected.value;
-	tokens[i].visible = true;
-}</EntryScript><ExitScript id="891">fixGraphic.visible = true;</ExitScript><FrameScript id="892"/><Name id="893">PreWatch</Name><UIEnabled id="894">false</UIEnabled><UIInfo id="895"><Pos id="896" x="94" y="189"/></UIInfo><UIOrder id="898">0</UIOrder><ControlElement type="Stopwatch Controller" id="938"><Name id="939">PreWatchMs</Name><Result id="839"><Name id="840">Success</Name><UIEnabled id="846">false</UIEnabled><UIInfo id="848"><Pos id="849" x="0" y="0"/></UIInfo><UIOrder id="851">0</UIOrder></Result><Time id="940">300</Time><TimeUnits id="941">Ms</TimeUnits><Type id="942"/><UIEnabled id="943">true</UIEnabled><UIInfo id="944"><Pos id="945" x="120" y="81"/></UIInfo><UIOrder id="947">0</UIOrder></ControlElement><Result id="954"><Name id="955">Done</Name><UIEnabled id="956">false</UIEnabled><UIInfo id="957"><Pos id="958" x="320" y="90"/></UIInfo><UIOrder id="960">0</UIOrder></Result><Transition id="917"><Destination id="918">Done</Destination><Source id="919">PreWatchMs</Source><SourceResult id="920">Success</SourceResult></Transition></StateMachineElement><StateMachineElement type="State" id="906"><BackgroundColor A="255" B="0" G="0" R="0" id="907">#000000</BackgroundColor><EntryScript id="908"/><ExitScript id="909"/><FrameScript id="910"/><Name id="911">PostWatch</Name><UIEnabled id="912">false</UIEnabled><UIInfo id="913"><Pos id="914" x="570" y="109"/></UIInfo><UIOrder id="916">0</UIOrder><ControlElement type="Stopwatch Controller" id="964"><Name id="965">PostWatchMs</Name><Result id="929"><Name id="930">Success</Name><UIEnabled id="931">false</UIEnabled><UIInfo id="932"><Pos id="933" x="0" y="0"/></UIInfo><UIOrder id="935">0</UIOrder></Result><Time id="966">300</Time><TimeUnits id="967">Ms</TimeUnits><Type id="968"/><UIEnabled id="969">true</UIEnabled><UIInfo id="970"><Pos id="971" x="155" y="111"/></UIInfo><UIOrder id="973">0</UIOrder></ControlElement><Result id="980"><Name id="981">Done</Name><UIEnabled id="982">false</UIEnabled><UIInfo id="983"><Pos id="984" x="409" y="155"/></UIInfo><UIOrder id="986">0</UIOrder></Result><Transition id="974"><Destination id="975">Done</Destination><Source id="976">PostWatchMs</Source><SourceResult id="977">Success</SourceResult></Transition></StateMachineElement><Transition id="860"><Destination id="861">Trial</Destination><Source id="862">isConsume</Source><SourceResult id="863">false</SourceResult></Transition><Transition id="864"><Destination id="865">ConsumeTrial</Destination><Source id="866">isConsume</Source><SourceResult id="867">true</SourceResult></Transition><Transition id="883"><Destination id="884">PreWatch</Destination><Source id="885"/><SourceResult id="886"/></Transition><StateMachineElement type="State" id="990"><BackgroundColor A="255" B="0" G="0" R="0" id="991">#000000</BackgroundColor><EntryScript id="992"/><ExitScript id="993"/><FrameScript id="994"/><Name id="995">ITI</Name><UIEnabled id="996">false</UIEnabled><UIInfo id="997"><Pos id="998" x="834" y="312"/></UIInfo><UIOrder id="1000">0</UIOrder><ControlElement type="Stopwatch Controller" id="1040"><Name id="1041">ITIMs</Name><Result id="988"><Name id="989">Success</Name><UIEnabled id="999">false</UIEnabled><UIInfo id="1001"><Pos id="1002" x="0" y="0"/></UIInfo><UIOrder id="1004">0</UIOrder></Result><Time id="1042">400</Time><TimeUnits id="1043">Ms</TimeUnits><Type id="1044"/><UIEnabled id="1045">true</UIEnabled><UIInfo id="1046"><Pos id="1047" x="152" y="74"/></UIInfo><UIOrder id="1049">0</UIOrder></ControlElement><Result id="1056"><Name id="1057">Done</Name><UIEnabled id="1058">false</UIEnabled><UIInfo id="1059"><Pos id="1060" x="361" y="169"/></UIInfo><UIOrder id="1062">0</UIOrder></Result><Transition id="1027"><Destination id="1028">Done</Destination><Source id="1029">ITIMs</Source><SourceResult id="1030">Success</SourceResult></Transition></StateMachineElement><Transition id="1009"><Destination id="1010">isConsume</Destination><Source id="1011">PreWatch</Source><SourceResult id="1012">Done</SourceResult></Transition><Transition id="1013"><Destination id="1014">pause</Destination><Source id="1015">PostWatch</Source><SourceResult id="1016">Done</SourceResult></Transition><Transition id="1034"><Destination id="1035">ITI</Destination><Source id="1036">pause</Source><SourceResult id="1037">done</SourceResult></Transition><Transition id="1038"><Destination id="1039">IsDone</Destination><Source id="1048">ITI</Source><SourceResult id="1050">Done</SourceResult></Transition><Transition id="1051"><Destination id="1052">PreWatch</Destination><Source id="1053">IsDone</Source><SourceResult id="1054">false</SourceResult></Transition><Transition id="1069"><Destination id="1070">PostWatch</Destination><Source id="1071">Trial</Source><SourceResult id="1072">Complete</SourceResult></Transition><Transition id="1073"><Destination id="1074">PostWatch</Destination><Source id="1075">ConsumeTrial</Source><SourceResult id="1076">Done</SourceResult></Transition><VisualElement type="Box Graphic" id="1206"><Color A="255" B="255" G="255" R="255" id="1207">#ffffff</Color><Dimensions height="20" id="1208" width="20" x="0" y="0"/><Layer id="1209">0</Layer><Name id="1210">fixGraphic</Name><OperatorView id="1211">true</OperatorView><Outline id="1212">false</Outline><OutlineThickness id="1213">0</OutlineThickness><Position id="1214" x="400" y="300"/><SubjectView id="1215">true</SubjectView><UIEnabled id="1216">true</UIEnabled><UIInfo id="1217"><Pos id="1218" x="143" y="439"/></UIInfo><UIOrder id="1220">0</UIOrder><Visible id="1221">false</Visible></VisualElement><Transition id="1943"><Destination id="1944">PostWatch</Destination><Source id="1945">Trial</Source><SourceResult id="1946">Incomplete</SourceResult></Transition></StateMachineElement><Transition id="619"><Destination id="621">Block</Destination><Source id="622"/><SourceResult id="623"/></Transition><Parameter type="Numeric" id="632"><Name id="633">blockNum</Name><UIEnabled id="634">false</UIEnabled><UIInfo id="635"><Pos id="636" x="143" y="378"/></UIInfo><UIOrder id="638">0</UIOrder><Units id="639"/><Value id="640">0</Value></Parameter><Transition id="708"><Destination id="709">Block</Destination><Source id="710">Block</Source><SourceResult id="711">Done</SourceResult></Transition><Parameter type="Numeric" id="778"><Name id="779">lambda</Name><UIEnabled id="780">false</UIEnabled><UIInfo id="781"><Pos id="782" x="247" y="379"/></UIInfo><UIOrder id="784">0</UIOrder><Units id="785"/><Value id="786">0</Value></Parameter><VisualElement type="Circle Graphic" id="1974"><Color A="255" B="0" G="0" R="255" id="1975">#ff0000</Color><Layer id="1976">0</Layer><Name id="1977">token0</Name><OperatorView id="1978">true</OperatorView><Outline id="1979">true</Outline><OutlineThickness id="1980">1</OutlineThickness><Position id="1981" x="425" y="257"/><Radius id="1982">15</Radius><SubjectView id="1983">true</SubjectView><UIEnabled id="1984">false</UIEnabled><UIInfo id="1985"><Pos id="1986" x="612" y="77"/></UIInfo><UIOrder id="1988">0</UIOrder><Visible id="1989">true</Visible></VisualElement><VisualElement type="Circle Graphic" id="2002"><Color A="255" B="0" G="0" R="255" id="2003">#ff0000</Color><Layer id="2004">0</Layer><Name id="2005">token1</Name><OperatorView id="2006">true</OperatorView><Outline id="2007">true</Outline><OutlineThickness id="2008">1</OutlineThickness><Position id="2009" x="376" y="257"/><Radius id="2010">15</Radius><SubjectView id="2011">true</SubjectView><UIEnabled id="2012">false</UIEnabled><UIInfo id="2013"><Pos id="2014" x="456" y="85"/></UIInfo><UIOrder id="2016">0</UIOrder><Visible id="2017">true</Visible></VisualElement><VisualElement type="Circle Graphic" id="2030"><Color A="255" B="0" G="0" R="255" id="2031">#ff0000</Color><Layer id="2032">0</Layer><Name id="2033">token2</Name><OperatorView id="2034">true</OperatorView><Outline id="2035">true</Outline><OutlineThickness id="2036">1</OutlineThickness><Position id="2037" x="350" y="300"/><Radius id="2038">15</Radius><SubjectView id="2039">true</SubjectView><UIEnabled id="2040">false</UIEnabled><UIInfo id="2041"><Pos id="2042" x="386" y="216"/></UIInfo><UIOrder id="2044">0</UIOrder><Visible id="2045">true</Visible></VisualElement><VisualElement type="Circle Graphic" id="2058"><Color A="255" B="0" G="0" R="255" id="2059">#ff0000</Color><Layer id="2060">0</Layer><Name id="2061">token3</Name><OperatorView id="2062">true</OperatorView><Outline id="2063">true</Outline><OutlineThickness id="2064">1</OutlineThickness><Position id="2065" x="375" y="343"/><Radius id="2066">15</Radius><SubjectView id="2067">true</SubjectView><UIEnabled id="2068">false</UIEnabled><UIInfo id="2069"><Pos id="2070" x="475" y="347"/></UIInfo><UIOrder id="2072">0</UIOrder><Visible id="2073">true</Visible></VisualElement><VisualElement type="Circle Graphic" id="2086"><Color A="255" B="0" G="0" R="255" id="2087">#ff0000</Color><Layer id="2088">0</Layer><Name id="2089">token4</Name><OperatorView id="2090">true</OperatorView><Outline id="2091">true</Outline><OutlineThickness id="2092">1</OutlineThickness><Position id="2093" x="424" y="343"/><Radius id="2094">15</Radius><SubjectView id="2095">true</SubjectView><UIEnabled id="2096">false</UIEnabled><UIInfo id="2097"><Pos id="2098" x="608" y="346"/></UIInfo><UIOrder id="2100">0</UIOrder><Visible id="2101">true</Visible></VisualElement><VisualElement type="Circle Graphic" id="2114"><Color A="255" B="0" G="0" R="255" id="2115">#ff0000</Color><Layer id="2116">0</Layer><Name id="2117">token5</Name><OperatorView id="2118">true</OperatorView><Outline id="2119">true</Outline><OutlineThickness id="2120">1</OutlineThickness><Position id="2121" x="450" y="300"/><Radius id="2122">15</Radius><SubjectView id="2123">true</SubjectView><UIEnabled id="2124">false</UIEnabled><UIInfo id="2125"><Pos id="2126" x="720" y="227"/></UIInfo><UIOrder id="2128">0</UIOrder><Visible id="2129">true</Visible></VisualElement><Parameter type="Numeric" id="2142"><Name id="2143">tokensCollected</Name><UIEnabled id="2144">false</UIEnabled><UIInfo id="2145"><Pos id="2146" x="137" y="514"/></UIInfo><UIOrder id="2148">0</UIOrder><Units id="2149"/><Value id="2150">0</Value></Parameter></StateMachine><UIInfo id="607"><Pos id="608" x="1821" y="1746"/></UIInfo></Task></Experiment>
-<StateMachineEditorData id="0">
-<OpenedBlock id="">4</OpenedBlock>
-</StateMachineEditorData>
+          </EntryScript>
+          <ExitScript id="612"/>
+          <Level id="613">Stage</Level>
+          <Name id="614">Block</Name>
+          <Type id="615">StateMachine</Type>
+          <UIEnabled id="616">false</UIEnabled>
+          <UIInfo id="617">
+            <Pos id="618" x="217" y="188"/>
+          </UIInfo>
+          <UIOrder id="620">0</UIOrder>
+          <Result id="646">
+            <Name id="647">Done</Name>
+            <UIEnabled id="648">false</UIEnabled>
+            <UIInfo id="649">
+              <Pos id="650" x="833" y="634"/>
+            </UIInfo>
+            <UIOrder id="652">0</UIOrder>
+          </Result>
+          <StateMachineElement type="StateMachine" id="656">
+            <EntryScript id="657">																												              //Computer picks its token
+																												              drawCompPick();
+            </EntryScript>
+            <ExitScript id="658">fixGraphic.visible = false;</ExitScript>
+            <Level id="659">Stage</Level>
+            <Name id="660">Trial</Name>
+            <Type id="661">StateMachine</Type>
+            <UIEnabled id="662">false</UIEnabled>
+            <UIInfo id="663">
+              <Pos id="664" x="373" y="71"/>
+            </UIInfo>
+            <UIOrder id="666">0</UIOrder>
+            <Parameter type="Double" id="2578">
+              <Max id="2579">1000000</Max>
+              <Min id="2580">0</Min>
+              <Name id="2581">pDev</Name>
+              <UIEnabled id="2582">false</UIEnabled>
+              <UIInfo id="2583">
+                <Pos id="2584" x="464" y="734"/>
+              </UIInfo>
+              <UIOrder id="2586">0</UIOrder>
+              <Value id="2587">0</Value>
+            </Parameter>
+            <Parameter type="Boolean" id="2624">
+              <FalseLabel id="2625">False</FalseLabel>
+              <Name id="2626">biasYes</Name>
+              <TrueLabel id="2627">True</TrueLabel>
+              <UIEnabled id="2628">false</UIEnabled>
+              <UIInfo id="2629">
+                <Pos id="2630" x="471" y="929"/>
+              </UIInfo>
+              <UIOrder id="2632">0</UIOrder>
+              <Value id="2633">false</Value>
+            </Parameter>
+            <Parameter type="Boolean" id="2693">
+              <FalseLabel id="2694">False</FalseLabel>
+              <Name id="2695">compChoosesRight</Name>
+              <TrueLabel id="2708">True</TrueLabel>
+              <UIEnabled id="2712">false</UIEnabled>
+              <UIInfo id="2713">
+                <Pos id="2714" x="453" y="832"/>
+              </UIInfo>
+              <UIOrder id="2716">0</UIOrder>
+              <Value id="2717">false</Value>
+            </Parameter>
+            <Parameter type="Range" id="2376">
+              <Increment id="2377">0</Increment>
+              <Max id="2378">100</Max>
+              <Min id="2379">1</Min>
+              <Name id="2380">histDepth</Name>
+              <UIEnabled id="2381">false</UIEnabled>
+              <UIInfo id="2382">
+                <Pos id="2383" x="594" y="836"/>
+              </UIInfo>
+              <UIOrder id="2385">0</UIOrder>
+              <Units id="2386"/>
+              <Value id="2387">4</Value>
+            </Parameter>
+            <ScriptFunction type="ScriptFunction" id="2321">
+              <Inputs id="2322"/>
+              <Name id="2323">drawCompPick</Name>
+              <Script id="2324">
+																                var center = monkNashPr;
+																                //Pick computer's choice according to Nash equilibrium
+																                //Pick of 1 means right side.
+																                var cSelect = Math.floor(Math.random()*3);
+																                compChoosesRight.value = (cSelect &lt; compNashPr.value*3)?1:0;
+
+																                //Algorithm1
+																                for(var i=0;i&lt;histDepth.value;i++)
+																                {
+																                if(choice.getNumEntries() &lt;= i)
+																                break;
+																                calProb(i);
+																                }
+																                //Algorithm2
+																                for(var i=0;i&lt;histDepth.value;i++)
+																                {
+																                if(choice.getNumEntries() &lt;= i)
+																                break;
+																                calProb1(i);
+																                }
+
+																                //Update value field of info graphics to reflect finalized data
+																                alg1Pr.updateValue();
+																                alg1Bias.updateValue();
+																                alg2Pr.updateValue();
+																                alg2Bias.updateValue();
+              </Script>
+              <UIEnabled id="2325">false</UIEnabled>
+              <UIInfo id="2326">
+                <Pos id="2327" x="48" y="732"/>
+              </UIInfo>
+              <UIOrder id="2329">0</UIOrder>
+            </ScriptFunction>
+            <ScriptFunction type="ScriptFunction" id="2480">
+              <Inputs id="2481">depth</Inputs>
+              <Name id="2482">calProb</Name>
+              <Script id="2483">																																                var BINOALPHA = 0.025;
+																																                var biasFlag = 0;
+																																                var total   = choice.getNumEntries();
+																																                var ntarget = 0;
+																																                var nright  = 0;
+																																                var biasProbR = 0;
+
+																																                if (depth==0)       // p(R) for entire choice set (choice_)
+																																                {
+																																                ntarget = total;
+																																                for (var m=0; m &lt; total; m++)   nright = nright + choice.getDataAsInt(m);
+																																                }
+																																                else
+																																                {
+																																                // algorithm 1
+																																                // depth 1: target = 0 or 1
+																																                //       2:          0 to 3
+																																                //       3:          0 to 7
+																																                //       4:          0 to 15
+
+																																                var target = 0.0;
+																																                for (var m=0 ; m&lt;depth ; m++)
+																																                target = target+ Math.pow(2,m)*choice.getDataAsInt(total-m-1);
+
+																																                for (var i=total-2; i &gt;= depth-1 ; i--)
+																																                {
+																																                var sample = 0.0;
+																																                for (var m=0 ; m&lt;depth ; m++)
+																																                sample = sample+ Math.pow(2.0,m)*choice.getDataAsInt(i-m);
+
+																																                if (sample == target)
+																																                {
+																																                ntarget++;
+																																                nright = nright+choice.getDataAsInt(i+1);
+																																                }
+																																                }
+																																                }
+
+																																                // biasflag 0 : around the equilibrium
+																																                //          1 : rightward bias
+																																                //          2 : leftward bias
+
+																																                if (ntarget&gt;0)
+																																                {
+																																                // rightward bias
+																																                var upperp = binocdf(nright-1, ntarget, monkNashPr.value);
+																																                // leftward bias
+																																                var lowerp = binocdf(nright,   ntarget, monkNashPr.value);
+
+																																                if (1-upperp &lt;= BINOALPHA)		biasFlag = 1;
+																																                else if (lowerp &lt;= BINOALPHA)	biasFlag = 2;
+																																                biasProbR = nright / ntarget;
+																																                }
+																																                else biasProbR = -1.0;
+
+																																                //Write latest data out to OperatorInfo graphics
+																																                alg1Pr.setData(depth,biasProbR);
+																																                alg1Bias.setData(depth,biasFlag);
+
+																																                //Update the computer choice with latest data
+																																                updateCompChoice(biasFlag,biasProbR);
+              </Script>
+              <UIEnabled id="2484">false</UIEnabled>
+              <UIInfo id="2485">
+                <Pos id="2486" x="155" y="691"/>
+              </UIInfo>
+              <UIOrder id="2488">0</UIOrder>
+            </ScriptFunction>
+            <ScriptFunction type="ScriptFunction" id="2494">
+              <Inputs id="2495">depth</Inputs>
+              <Name id="2496">calProb1</Name>
+              <Script id="2497">
+                var BINOALPHA = 0.025;
+                var biasFlag = 0;
+                var total   = choice.getNumEntries();
+                var ntarget = 0;
+                var nright  = 0;
+                var biasProbR = 0;
+
+                var crcomb = new Array(total);
+                for (var m=0; m &lt; total; m++)
+                crcomb[m]=2*choice.getDataAsInt(m) + reward.getDataAsInt(m);
+
+                if (depth==0)       // p(R) for entire choice set (choice_)
+                {
+                ntarget = total;
+                for (var m=0; m &lt; total; m++)   nright = nright + choice.getDataAsInt(m);
+                }
+                else
+                {
+                // algorithm 2
+                // depth 1: target = 0 or 1
+                //       2:          0 to 3
+                //       3:          0 to 7
+                //       4:          0 to 15
+
+                var target = 0.0;
+                for (var m=0 ; m&lt;depth ; m++)
+                target = target+ Math.pow(4,m)*crcomb[total-m-1];
+
+                for (var i=total-2; i &gt;= depth-1 ; i--)
+                {
+                var sample = 0.0;
+                for (var m=0 ; m&lt;depth ; m++)
+                sample = sample+ Math.pow(4.0,m)*crcomb[i-m];
+
+                if (sample == target)
+                {
+                ntarget++;
+                nright = nright+choice.getDataAsInt(i+1);
+                }
+                }
+                }
+
+                // biasflag 0 : around the equilibrium
+                //          1 : rightward bias
+                //          2 : leftward bias
+
+                if (ntarget&gt;0)
+                {
+                // rightward bias
+                var upperp = binocdf(nright-1, ntarget, monkNashPr.value);
+                // leftward bias
+                var lowerp = binocdf(nright,   ntarget, monkNashPr.value);
+
+                if (1-upperp &lt;= BINOALPHA)		biasFlag = 1;
+                else if (lowerp &lt;= BINOALPHA)	biasFlag = 2;
+                biasProbR = nright / ntarget;
+                }
+                else biasProbR = -1.0;
+
+                //Write latest data out to OperatorInfo graphics
+                alg2Pr.setData(depth,biasProbR);
+                alg2Bias.setData(depth,biasFlag);
+
+                //Update the computer choice with latest data
+                updateCompChoice(biasFlag,biasProbR);
+              </Script>
+              <UIEnabled id="2498">false</UIEnabled>
+              <UIInfo id="2499">
+                <Pos id="2500" x="157" y="785"/>
+              </UIInfo>
+              <UIOrder id="2502">0</UIOrder>
+            </ScriptFunction>
+            <ScriptFunction type="ScriptFunction" id="2564">
+              <Inputs id="2565">biasFlag,biasProbR</Inputs>
+              <Name id="2566">updateCompChoice</Name>
+              <Script id="2567">
+																                var center = monkNashPr.value;
+																                if((biasFlag == 1) &amp;&amp; (biasProbR-center &gt;  pDev.value))
+																                {
+																                pDev.value     =  biasProbR-center;
+																                maxDevR.value =  biasProbR;
+																                compChoosesRight.value =  0;
+																                biasYes.value =  true;
+																                }
+																                else if((biasFlag == 2) &amp;&amp; (center-biasProbR &gt;  pDev.value))
+																                {
+																                pDev.value     =  center-biasProbR;
+																                maxDevR.value =  biasProbR;
+																                compChoosesRight.value =  1;
+																                biasYes.value =  true;
+																                }
+              </Script>
+              <UIEnabled id="2568">false</UIEnabled>
+              <UIInfo id="2569">
+                <Pos id="2570" x="261" y="733"/>
+              </UIInfo>
+              <UIOrder id="2572">0</UIOrder>
+            </ScriptFunction>
+            <ScriptFunction type="ScriptFunction" id="2640">
+              <Inputs id="2641">x,n,p</Inputs>
+              <Name id="2642">binocdf</Name>
+              <Script id="2643">
+                var newx = 0;
+                if(x+1.0&gt;=n) newx=n;
+                else newx=x+1.0;
+                return 1.0-betai(newx, n-newx+1.0, p);
+              </Script>
+              <UIEnabled id="2644">false</UIEnabled>
+              <UIInfo id="2645">
+                <Pos id="2646" x="107" y="896"/>
+              </UIInfo>
+              <UIOrder id="2648">0</UIOrder>
+            </ScriptFunction>
+            <ScriptFunction type="ScriptFunction" id="2654">
+              <Inputs id="2655">a,b,x</Inputs>
+              <Name id="2656">betai</Name>
+              <Script id="2657">
+                var bt = 0.0;
+
+                if (x &lt; 0.0 || x &gt; 1.0) return 0.5;
+                if (x == 0.0 || x == 1.0) bt=0.0;
+                else
+                bt=Math.exp(gammln(a+b)-gammln(a)-gammln(b)+a*Math.log(x)+b*Math.log(1.0-x));
+                if (x &lt; (a+1.0)/(a+b+2.0))
+                return bt*betacf(a,b,x)/a;
+                else
+                return 1.0-bt*betacf(b,a,1.0-x)/b;
+              </Script>
+              <UIEnabled id="2658">false</UIEnabled>
+              <UIInfo id="2659">
+                <Pos id="2660" x="207" y="898"/>
+              </UIInfo>
+              <UIOrder id="2662">0</UIOrder>
+            </ScriptFunction>
+            <ScriptFunction type="ScriptFunction" id="2668">
+              <Inputs id="2669">xx</Inputs>
+              <Name id="2670">gammln</Name>
+              <Script id="2671">
+																																                var cof=[76.18009172947146,-86.50532032941677,
+																																                24.01409824083091,-1.231739572450155,
+																																                0.1208650973866179e-2,-0.5395239384953e-5];
+
+																																                var y=xx;
+																																                var x=xx;
+																																                var tmp=x+5.5;
+																																                tmp -= (x+0.5)*Math.log(tmp);
+																																                var ser=1.000000000190015;
+																																                for (var j=0;j&lt;=5;j++) ser += cof[j]/++y;
+																																                return -tmp+Math.log(2.5066282746310005*ser/x);
+              </Script>
+              <UIEnabled id="2672">false</UIEnabled>
+              <UIInfo id="2673">
+                <Pos id="2674" x="203" y="976"/>
+              </UIInfo>
+              <UIOrder id="2676">0</UIOrder>
+            </ScriptFunction>
+            <ScriptFunction type="ScriptFunction" id="2682">
+              <Inputs id="2683">a,b,x</Inputs>
+              <Name id="2684">betacf</Name>
+              <Script id="2685">
+                var FPMIN = 1.0e-30
+                var EPS = 3.0e-7;
+                var MAXIT=100;
+                var qab=a+b;
+                var qap=a+1.0;
+                var qam=a-1.0;
+                var c=1.0;
+                var d=1.0-qab*x/qap;
+                var aa = 0;
+                var del = 0;
+                if (Math.abs(d) &lt; FPMIN) d=FPMIN;
+                d=1.0/d;
+                var h=d;
+                for (var m=1;m&lt;=MAXIT;m++) {
+                m2=2*m;
+                aa=m*(b-m)*x/((qam+m2)*(a+m2));
+                d=1.0+aa*d;
+                if (Math.abs(d) &lt; FPMIN) d=FPMIN;
+                c=1.0+aa/c;
+                if (Math.abs(c) &lt; FPMIN) c=FPMIN;
+                d=1.0/d;
+                h *= d*c;
+                aa = -(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+                d=1.0+aa*d;
+                if (Math.abs(d) &lt; FPMIN) d=FPMIN;
+                c=1.0+aa/c;
+                if (Math.abs(c) &lt; FPMIN) c=FPMIN;
+                d=1.0/d;
+                del=d*c;
+                h *= del;
+                if (Math.abs(del-1.0) &lt; EPS) break;
+                }
+                return h;
+              </Script>
+              <UIEnabled id="2686">false</UIEnabled>
+              <UIInfo id="2687">
+                <Pos id="2688" x="106" y="976"/>
+              </UIInfo>
+              <UIOrder id="2690">0</UIOrder>
+            </ScriptFunction>
+            <Result id="1088">
+              <Name id="1089">Complete</Name>
+              <UIEnabled id="1090">false</UIEnabled>
+              <UIInfo id="1091">
+                <Pos id="1092" x="992" y="381"/>
+              </UIInfo>
+              <UIOrder id="1094">0</UIOrder>
+            </Result>
+            <StateMachineElement type="State" id="1116">
+              <BackgroundColor A="255" B="0" G="0" R="0" id="1117">#000000</BackgroundColor>
+              <EntryScript id="1118"/>
+              <ExitScript id="1119"/>
+              <FrameScript id="1120"/>
+              <Name id="1121">Fixation</Name>
+              <UIEnabled id="1122">false</UIEnabled>
+              <UIInfo id="1123">
+                <Pos id="1124" x="186" y="155"/>
+              </UIInfo>
+              <UIOrder id="1126">0</UIOrder>
+              <ControlElement type="Target Controller" id="1262">
+                <ControlTarget id="1263">fixTarget</ControlTarget>
+                <FixationTime id="1264">500</FixationTime>
+                <MaxInitialAcquisitionTime id="1265">3000</MaxInitialAcquisitionTime>
+                <MaxReacquisitionTime id="1266">0</MaxReacquisitionTime>
+                <MinInitialAcquisitionTime id="1267">0</MinInitialAcquisitionTime>
+                <Name id="1268">FixController</Name>
+                <ReacquisitionAllowed id="1269">false</ReacquisitionAllowed>
+                <Result id="627">
+                  <Name id="628">Reaquistion Time Exceeded</Name>
+                  <UIEnabled id="642">false</UIEnabled>
+                  <UIInfo id="644">
+                    <Pos id="645" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="668">0</UIOrder>
+                </Result>
+                <Result id="673">
+                  <Name id="681">Initial Aquistion Time Exceeded</Name>
+                  <UIEnabled id="683">false</UIEnabled>
+                  <UIInfo id="684">
+                    <Pos id="685" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="691">0</UIOrder>
+                </Result>
+                <Result id="695">
+                  <Name id="696">Total Time Excceeded</Name>
+                  <UIEnabled id="697">false</UIEnabled>
+                  <UIInfo id="698">
+                    <Pos id="699" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="701">0</UIOrder>
+                </Result>
+                <Result id="705">
+                  <Name id="706">Broke Fixation</Name>
+                  <UIEnabled id="707">false</UIEnabled>
+                  <UIInfo id="712">
+                    <Pos id="713" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="715">0</UIOrder>
+                </Result>
+                <Result id="734">
+                  <Name id="735">Success</Name>
+                  <UIEnabled id="736">false</UIEnabled>
+                  <UIInfo id="737">
+                    <Pos id="738" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="748">0</UIOrder>
+                </Result>
+                <SignalChannel id="1270">Position</SignalChannel>
+                <TargetEntryScript id="1271"/>
+                <TargetExitScript id="1272"/>
+                <TimeUnits id="1273">Ms</TimeUnits>
+                <TotalTime id="1274">3500</TotalTime>
+                <Type id="1275"/>
+                <UIEnabled id="1276">false</UIEnabled>
+                <UIInfo id="1277">
+                  <Pos id="1278" x="144" y="98"/>
+                </UIInfo>
+                <UIOrder id="1280">0</UIOrder>
+              </ControlElement>
+              <Result id="1346">
+                <Name id="1347">Success</Name>
+                <UIEnabled id="1348">false</UIEnabled>
+                <UIInfo id="1349">
+                  <Pos id="1350" x="463" y="80"/>
+                </UIInfo>
+                <UIOrder id="1352">0</UIOrder>
+              </Result>
+              <Result id="1356">
+                <Name id="1357">Fail</Name>
+                <UIEnabled id="1358">false</UIEnabled>
+                <UIInfo id="1359">
+                  <Pos id="1360" x="461" y="245"/>
+                </UIInfo>
+                <UIOrder id="1362">0</UIOrder>
+              </Result>
+              <Transition id="834">
+                <Destination id="835">Fail</Destination>
+                <Source id="836">FixController</Source>
+                <SourceResult id="837">Reaquistion Time Exceeded</SourceResult>
+              </Transition>
+              <Transition id="838">
+                <Destination id="850">Fail</Destination>
+                <Source id="852">FixController</Source>
+                <SourceResult id="853">Initial Aquistion Time Exceeded</SourceResult>
+              </Transition>
+              <Transition id="854">
+                <Destination id="855">Fail</Destination>
+                <Source id="856">FixController</Source>
+                <SourceResult id="857">Total Time Excceeded</SourceResult>
+              </Transition>
+              <Transition id="858">
+                <Destination id="859">Success</Destination>
+                <Source id="878">FixController</Source>
+                <SourceResult id="880">Success</SourceResult>
+              </Transition>
+              <Transition id="881">
+                <Destination id="882">Fail</Destination>
+                <Source id="887">FixController</Source>
+                <SourceResult id="897">Broke Fixation</SourceResult>
+              </Transition>
+            </StateMachineElement>
+            <StateMachineElement type="State" id="1134">
+              <BackgroundColor A="255" B="0" G="0" R="0" id="1135">#000000</BackgroundColor>
+              <EntryScript id="1136">
+                lCircle.visible = true;
+                rCircle.visible = true;
+              </EntryScript>
+              <ExitScript id="1137">fixGraphic.visible = false;</ExitScript>
+              <FrameScript id="1138"/>
+              <Name id="1139">Sample</Name>
+              <UIEnabled id="1140">false</UIEnabled>
+              <UIInfo id="1141">
+                <Pos id="1142" x="350" y="157"/>
+              </UIInfo>
+              <UIOrder id="1144">0</UIOrder>
+              <ControlElement type="Target Controller" id="1456">
+                <ControlTarget id="1457">fixTarget</ControlTarget>
+                <FixationTime id="1458">500</FixationTime>
+                <MaxInitialAcquisitionTime id="1459">0</MaxInitialAcquisitionTime>
+                <MaxReacquisitionTime id="1460">0</MaxReacquisitionTime>
+                <MinInitialAcquisitionTime id="1461">0</MinInitialAcquisitionTime>
+                <Name id="1462">OverlapFixControl</Name>
+                <ReacquisitionAllowed id="1463">false</ReacquisitionAllowed>
+                <Result id="903">
+                  <Name id="904">Reaquistion Time Exceeded</Name>
+                  <UIEnabled id="905">false</UIEnabled>
+                  <UIInfo id="915">
+                    <Pos id="921" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="923">0</UIOrder>
+                </Result>
+                <Result id="927">
+                  <Name id="928">Initial Aquistion Time Exceeded</Name>
+                  <UIEnabled id="934">false</UIEnabled>
+                  <UIInfo id="936">
+                    <Pos id="937" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="948">0</UIOrder>
+                </Result>
+                <Result id="952">
+                  <Name id="953">Total Time Excceeded</Name>
+                  <UIEnabled id="959">false</UIEnabled>
+                  <UIInfo id="961">
+                    <Pos id="962" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="972">0</UIOrder>
+                </Result>
+                <Result id="987">
+                  <Name id="1003">Broke Fixation</Name>
+                  <UIEnabled id="1005">false</UIEnabled>
+                  <UIInfo id="1006">
+                    <Pos id="1007" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="1017">0</UIOrder>
+                </Result>
+                <Result id="1021">
+                  <Name id="1022">Success</Name>
+                  <UIEnabled id="1023">false</UIEnabled>
+                  <UIInfo id="1024">
+                    <Pos id="1025" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="1066">0</UIOrder>
+                </Result>
+                <SignalChannel id="1464">Position</SignalChannel>
+                <TargetEntryScript id="1465"/>
+                <TargetExitScript id="1466"/>
+                <TimeUnits id="1467">Ms</TimeUnits>
+                <TotalTime id="1468">1000</TotalTime>
+                <Type id="1469"/>
+                <UIEnabled id="1470">false</UIEnabled>
+                <UIInfo id="1471">
+                  <Pos id="1472" x="131" y="110"/>
+                </UIInfo>
+                <UIOrder id="1474">0</UIOrder>
+              </ControlElement>
+              <Result id="1490">
+                <Name id="1491">Success</Name>
+                <UIEnabled id="1492">false</UIEnabled>
+                <UIInfo id="1493">
+                  <Pos id="1494" x="566" y="103"/>
+                </UIInfo>
+                <UIOrder id="1496">0</UIOrder>
+              </Result>
+              <Result id="1500">
+                <Name id="1501">Fail</Name>
+                <UIEnabled id="1502">false</UIEnabled>
+                <UIInfo id="1503">
+                  <Pos id="1504" x="558" y="226"/>
+                </UIInfo>
+                <UIOrder id="1506">0</UIOrder>
+              </Result>
+              <Transition id="1114">
+                <Destination id="1115">Fail</Destination>
+                <Source id="1125">OverlapFixControl</Source>
+                <SourceResult id="1127">Reaquistion Time Exceeded</SourceResult>
+              </Transition>
+              <Transition id="1128">
+                <Destination id="1129">Fail</Destination>
+                <Source id="1130">OverlapFixControl</Source>
+                <SourceResult id="1131">Initial Aquistion Time Exceeded</SourceResult>
+              </Transition>
+              <Transition id="1132">
+                <Destination id="1133">Fail</Destination>
+                <Source id="1143">OverlapFixControl</Source>
+                <SourceResult id="1145">Total Time Excceeded</SourceResult>
+              </Transition>
+              <Transition id="1146">
+                <Destination id="1147">Fail</Destination>
+                <Source id="1148">OverlapFixControl</Source>
+                <SourceResult id="1149">Broke Fixation</SourceResult>
+              </Transition>
+              <Transition id="1150">
+                <Destination id="1151">Success</Destination>
+                <Source id="1161">OverlapFixControl</Source>
+                <SourceResult id="1163">Success</SourceResult>
+              </Transition>
+            </StateMachineElement>
+            <StateMachineElement type="State" id="1152">
+              <BackgroundColor A="255" B="0" G="0" R="0" id="1153">#000000</BackgroundColor>
+              <EntryScript id="1154"/>
+              <ExitScript id="1155"/>
+              <FrameScript id="1156"/>
+              <Name id="1157">SampleChoiceControl</Name>
+              <UIEnabled id="1158">false</UIEnabled>
+              <UIInfo id="1159">
+                <Pos id="1160" x="496" y="153"/>
+              </UIInfo>
+              <UIOrder id="1162">0</UIOrder>
+              <ControlElement type="Choice Controller" id="1588">
+                <AllowReentries id="1589">false</AllowReentries>
+                <FixationTime id="1590">1000</FixationTime>
+                <Name id="1591">SampleChoiceControl</Name>
+                <Result id="1182">
+                  <Name id="1183">Total Time Exceeded</Name>
+                  <UIInfo id="1184">
+                    <Pos id="1185" x="2000" y="2000"/>
+                  </UIInfo>
+                  <UIEnabled id="1187">false</UIEnabled>
+                  <UIOrder id="1197">0</UIOrder>
+                </Result>
+                <Result id="1202">
+                  <Name id="1203">Broke Fixation</Name>
+                  <UIInfo id="1204">
+                    <Pos id="1205" x="2159" y="2000"/>
+                  </UIInfo>
+                  <UIEnabled id="1222">false</UIEnabled>
+                  <UIOrder id="1223">0</UIOrder>
+                </Result>
+                <Result type="Target" id="1612">
+                  <ControlTarget id="1613">lTarget</ControlTarget>
+                  <Name id="1614">LeftChoice</Name>
+                  <UIEnabled id="1615">false</UIEnabled>
+                  <UIInfo id="1616">
+                    <Pos id="1617" x="2001" y="2108"/>
+                  </UIInfo>
+                  <UIOrder id="1619">0</UIOrder>
+                </Result>
+                <Result type="Target" id="1624">
+                  <ControlTarget id="1625">rTarget</ControlTarget>
+                  <Name id="1626">RightChoice</Name>
+                  <UIEnabled id="1627">false</UIEnabled>
+                  <UIInfo id="1628">
+                    <Pos id="1629" x="2147" y="2110"/>
+                  </UIInfo>
+                  <UIOrder id="1631">0</UIOrder>
+                </Result>
+                <SignalChannel id="1592">Position</SignalChannel>
+                <TargetEntryScript id="1593"/>
+                <TargetExitScript id="1594"/>
+                <TimeUnits id="1595">Ms</TimeUnits>
+                <TotalTime id="1596">1500</TotalTime>
+                <UIEnabled id="1597">false</UIEnabled>
+                <UIInfo id="1598">
+                  <Pos id="1599" x="103" y="94"/>
+                </UIInfo>
+                <UIOrder id="1601">0</UIOrder>
+              </ControlElement>
+              <Result id="1684">
+                <Name id="1685">ChoseLeft</Name>
+                <UIEnabled id="1686">false</UIEnabled>
+                <UIInfo id="1687">
+                  <Pos id="1688" x="350" y="86"/>
+                </UIInfo>
+                <UIOrder id="1690">0</UIOrder>
+              </Result>
+              <Result id="1694">
+                <Name id="1695">ChoseRight</Name>
+                <UIEnabled id="1696">false</UIEnabled>
+                <UIInfo id="1697">
+                  <Pos id="1698" x="358" y="212"/>
+                </UIInfo>
+                <UIOrder id="1700">0</UIOrder>
+              </Result>
+              <Result id="1704">
+                <Name id="1705">Fail</Name>
+                <UIEnabled id="1706">false</UIEnabled>
+                <UIInfo id="1707">
+                  <Pos id="1708" x="375" y="354"/>
+                </UIInfo>
+                <UIOrder id="1710">0</UIOrder>
+              </Result>
+              <Transition id="1291">
+                <Destination id="1292">ChoseLeft</Destination>
+                <Source id="1293">SampleChoiceControl</Source>
+                <SourceResult id="1294">LeftChoice</SourceResult>
+              </Transition>
+              <Transition id="1295">
+                <Destination id="1296">ChoseRight</Destination>
+                <Source id="1297">SampleChoiceControl</Source>
+                <SourceResult id="1298">RightChoice</SourceResult>
+              </Transition>
+              <Transition id="1299">
+                <Destination id="1300">Fail</Destination>
+                <Source id="1301">SampleChoiceControl</Source>
+                <SourceResult id="1302">Total Time Exceeded</SourceResult>
+              </Transition>
+              <Transition id="1303">
+                <Destination id="1304">Fail</Destination>
+                <Source id="1305">SampleChoiceControl</Source>
+                <SourceResult id="1306">Broke Fixation</SourceResult>
+              </Transition>
+            </StateMachineElement>
+            <StateMachineElement type="State" id="1170">
+              <BackgroundColor A="255" B="0" G="0" R="0" id="1171">#000000</BackgroundColor>
+              <EntryScript id="1172">
+                if((compChoosesRight.value &amp;&amp; rCircle.visible)
+                || (!compChoosesRight.value &amp;&amp; lCircle.visible))
+                {	//User Win
+                feedbackRing.red=255;
+                }
+                else if(rCircle.visible == rightIsSafe.value)
+                {	//Neutral
+                feedbackRing.blue=255;
+                }
+                else
+                {	//User Lose
+                feedbackRing.setColor(192,192,192,255);
+                }
+
+                feedbackRing.visible = true;
+              </EntryScript>
+              <ExitScript id="1173"/>
+              <FrameScript id="1174"/>
+              <Name id="1175">ShowRing</Name>
+              <UIEnabled id="1176">false</UIEnabled>
+              <UIInfo id="1177">
+                <Pos id="1178" x="766" y="185"/>
+              </UIInfo>
+              <UIOrder id="1180">0</UIOrder>
+              <ControlElement type="Stopwatch Controller" id="1874">
+                <Name id="1875">FeedbackTimer</Name>
+                <Result id="1315">
+                  <Name id="1316">Success</Name>
+                  <UIEnabled id="1317">false</UIEnabled>
+                  <UIInfo id="1318">
+                    <Pos id="1319" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="1321">0</UIOrder>
+                </Result>
+                <Time id="1876">500</Time>
+                <TimeUnits id="1877">Ms</TimeUnits>
+                <Type id="1878"/>
+                <UIEnabled id="1879">false</UIEnabled>
+                <UIInfo id="1880">
+                  <Pos id="1881" x="97" y="77"/>
+                </UIInfo>
+                <UIOrder id="1883">0</UIOrder>
+              </ControlElement>
+              <Result id="1890">
+                <Name id="1891">Done</Name>
+                <UIEnabled id="1892">false</UIEnabled>
+                <UIInfo id="1893">
+                  <Pos id="1894" x="526" y="157"/>
+                </UIInfo>
+                <UIOrder id="1896">0</UIOrder>
+              </Result>
+              <Transition id="1336">
+                <Destination id="1337">Done</Destination>
+                <Source id="1338">FeedbackTimer</Source>
+                <SourceResult id="1339">Success</SourceResult>
+              </Transition>
+            </StateMachineElement>
+            <StateMachineElement type="State" id="1188">
+              <BackgroundColor A="255" B="0" G="0" R="0" id="1189">#000000</BackgroundColor>
+              <EntryScript id="1190">
+                var tokens = [token0,token1,token2,token3,token4,token5];
+                if(feedbackRing.red==255)
+                {	//Win
+                tokens[tokensCollected.value].outline = false;
+                tokensCollected.value++;
+                reward.setData(reward.getNumEntries(),1);
+                }
+                else if(feedbackRing.blue!=255 &amp;&amp; tokensCollected.value&gt;0)
+                {	//Lose
+                tokens[tokensCollected.value-1].outline = true;
+                tokensCollected.value--;
+                reward.setData(reward.getNumEntries(),0);
+                }
+                else
+                reward.setData(reward.getNumEntries(),0);
+                reward.updateValue();
+              </EntryScript>
+              <ExitScript id="1191"/>
+              <FrameScript id="1192"/>
+              <Name id="1193">ShowDot</Name>
+              <UIEnabled id="1194">false</UIEnabled>
+              <UIInfo id="1195">
+                <Pos id="1196" x="902" y="202"/>
+              </UIInfo>
+              <UIOrder id="1198">0</UIOrder>
+              <ControlElement type="Stopwatch Controller" id="1914">
+                <Name id="1915">TokenOpTimer</Name>
+                <Result id="1374">
+                  <Name id="1375">Success</Name>
+                  <UIEnabled id="1376">false</UIEnabled>
+                  <UIInfo id="1377">
+                    <Pos id="1378" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="1380">0</UIOrder>
+                </Result>
+                <Time id="1916">300</Time>
+                <TimeUnits id="1917">Ms</TimeUnits>
+                <Type id="1918"/>
+                <UIEnabled id="1919">false</UIEnabled>
+                <UIInfo id="1920">
+                  <Pos id="1921" x="80" y="66"/>
+                </UIInfo>
+                <UIOrder id="1923">0</UIOrder>
+              </ControlElement>
+              <Result id="1930">
+                <Name id="1931">Done</Name>
+                <UIEnabled id="1932">false</UIEnabled>
+                <UIInfo id="1933">
+                  <Pos id="1934" x="365" y="125"/>
+                </UIInfo>
+                <UIOrder id="1936">0</UIOrder>
+              </Result>
+              <Transition id="1395">
+                <Destination id="1396">Done</Destination>
+                <Source id="1397">TokenOpTimer</Source>
+                <SourceResult id="1398">Success</SourceResult>
+              </Transition>
+            </StateMachineElement>
+            <Transition id="718">
+              <Destination id="719">Fixation</Destination>
+              <Source id="728"/>
+              <SourceResult id="732"/>
+            </Transition>
+            <ControlTarget type="CircleTarget" id="1238">
+              <Color A="255" B="0" G="255" R="0" id="1239">#00ff00</Color>
+              <Layer id="1240">0</Layer>
+              <Name id="1241">fixTarget</Name>
+              <OperatorView id="1242">true</OperatorView>
+              <Position id="1243" x="400" y="300"/>
+              <Radius id="1244">50</Radius>
+              <SubjectView id="1245">false</SubjectView>
+              <UIEnabled id="1246">true</UIEnabled>
+              <UIInfo id="1247">
+                <Pos id="1248" x="246" y="393"/>
+              </UIInfo>
+              <UIOrder id="1250">0</UIOrder>
+              <Visible id="1251">true</Visible>
+            </ControlTarget>
+            <Result id="1366">
+              <Name id="1367">Incomplete</Name>
+              <UIEnabled id="1368">false</UIEnabled>
+              <UIInfo id="1369">
+                <Pos id="1370" x="760" y="445"/>
+              </UIInfo>
+              <UIOrder id="1372">0</UIOrder>
+            </Result>
+            <Transition id="1031">
+              <Destination id="1032">Incomplete</Destination>
+              <Source id="1033">Fixation</Source>
+              <SourceResult id="1055">Fail</SourceResult>
+            </Transition>
+            <Transition id="1061">
+              <Destination id="1063">Sample</Destination>
+              <Source id="1064">Fixation</Source>
+              <SourceResult id="1065">Success</SourceResult>
+            </Transition>
+            <VisualElement type="Circle Graphic" id="1400">
+              <Color A="255" B="0" G="255" R="0" id="1401">#00ff00</Color>
+              <Layer id="1402">0</Layer>
+              <Name id="1403">lCircle</Name>
+              <OperatorView id="1404">true</OperatorView>
+              <Outline id="1405">false</Outline>
+              <OutlineThickness id="1406">0</OutlineThickness>
+              <Position id="1407" x="250" y="300"/>
+              <Radius id="1408">15</Radius>
+              <SubjectView id="1409">true</SubjectView>
+              <UIEnabled id="1410">false</UIEnabled>
+              <UIInfo id="1411">
+                <Pos id="1412" x="76" y="393"/>
+              </UIInfo>
+              <UIOrder id="1414">0</UIOrder>
+              <Visible id="1415">false</Visible>
+            </VisualElement>
+            <VisualElement type="Circle Graphic" id="1428">
+              <Color A="255" B="0" G="255" R="0" id="1429">#00ff00</Color>
+              <Layer id="1430">0</Layer>
+              <Name id="1431">rCircle</Name>
+              <OperatorView id="1432">true</OperatorView>
+              <Outline id="1433">false</Outline>
+              <OutlineThickness id="1434">0</OutlineThickness>
+              <Position id="1435" x="550" y="300"/>
+              <Radius id="1436">15</Radius>
+              <SubjectView id="1437">true</SubjectView>
+              <UIEnabled id="1438">false</UIEnabled>
+              <UIInfo id="1439">
+                <Pos id="1440" x="391" y="391"/>
+              </UIInfo>
+              <UIOrder id="1442">0</UIOrder>
+              <Visible id="1443">false</Visible>
+            </VisualElement>
+            <Transition id="1341">
+              <Destination id="1342">SampleChoiceControl</Destination>
+              <Source id="1343">Sample</Source>
+              <SourceResult id="1344">Success</SourceResult>
+            </Transition>
+            <Transition id="1345">
+              <Destination id="1351">Incomplete</Destination>
+              <Source id="1353">Sample</Source>
+              <SourceResult id="1354">Fail</SourceResult>
+            </Transition>
+            <ControlTarget type="CircleTarget" id="1636">
+              <Color A="255" B="0" G="255" R="0" id="1637">#00ff00</Color>
+              <Layer id="1638">0</Layer>
+              <Name id="1639">lTarget</Name>
+              <OperatorView id="1640">true</OperatorView>
+              <Position id="1641" x="250" y="300"/>
+              <Radius id="1642">65</Radius>
+              <SubjectView id="1643">false</SubjectView>
+              <UIEnabled id="1644">false</UIEnabled>
+              <UIInfo id="1645">
+                <Pos id="1646" x="81" y="489"/>
+              </UIInfo>
+              <UIOrder id="1648">0</UIOrder>
+              <Visible id="1649">true</Visible>
+            </ControlTarget>
+            <ControlTarget type="CircleTarget" id="1660">
+              <Color A="255" B="0" G="255" R="0" id="1661">#00ff00</Color>
+              <Layer id="1662">0</Layer>
+              <Name id="1663">rTarget</Name>
+              <OperatorView id="1664">true</OperatorView>
+              <Position id="1665" x="550" y="300"/>
+              <Radius id="1666">65</Radius>
+              <SubjectView id="1667">false</SubjectView>
+              <UIEnabled id="1668">false</UIEnabled>
+              <UIInfo id="1669">
+                <Pos id="1670" x="419" y="498"/>
+              </UIInfo>
+              <UIOrder id="1672">0</UIOrder>
+              <Visible id="1673">true</Visible>
+            </ControlTarget>
+            <Transition id="1449">
+              <Destination id="1450">Incomplete</Destination>
+              <Source id="1451">SampleChoiceControl</Source>
+              <SourceResult id="1452">Fail</SourceResult>
+            </Transition>
+            <StateMachineElement type="ScriptElement" id="1754">
+              <Name id="1755">ChoseLeftOps</Name>
+              <Result id="1453">
+                <Name id="1454">false</Name>
+                <UIEnabled id="1455">false</UIEnabled>
+                <UIInfo id="1473">
+                  <Pos id="1475" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1477">0</UIOrder>
+              </Result>
+              <Result id="1481">
+                <Name id="1482">true</Name>
+                <UIEnabled id="1483">false</UIEnabled>
+                <UIInfo id="1484">
+                  <Pos id="1485" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1487">0</UIOrder>
+              </Result>
+              <Script id="1756">
+                rCircle.visible = false;
+                feedbackRing.x=250;
+                choice.setData(choice.getNumEntries(),0);
+                choice.updateValue();
+                return true;
+              </Script>
+              <Type id="1757">ScriptElement</Type>
+              <UIEnabled id="1758">false</UIEnabled>
+              <UIInfo id="1759">
+                <Pos id="1760" x="616" y="82"/>
+              </UIInfo>
+              <UIOrder id="1762">0</UIOrder>
+            </StateMachineElement>
+            <StateMachineElement type="ScriptElement" id="1768">
+              <Name id="1769">ChoseRightOps</Name>
+              <Result id="1509">
+                <Name id="1510">false</Name>
+                <UIEnabled id="1511">false</UIEnabled>
+                <UIInfo id="1512">
+                  <Pos id="1513" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1515">0</UIOrder>
+              </Result>
+              <Result id="1519">
+                <Name id="1520">true</Name>
+                <UIEnabled id="1521">false</UIEnabled>
+                <UIInfo id="1522">
+                  <Pos id="1523" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1525">0</UIOrder>
+              </Result>
+              <Script id="1770">
+                lCircle.visible = false;
+                feedbackRing.x=550;
+                choice.setData(choice.getNumEntries(),1);
+                choice.updateValue();
+                return true;
+              </Script>
+              <Type id="1771">ScriptElement</Type>
+              <UIEnabled id="1772">false</UIEnabled>
+              <UIInfo id="1773">
+                <Pos id="1774" x="616" y="216"/>
+              </UIInfo>
+              <UIOrder id="1776">0</UIOrder>
+            </StateMachineElement>
+            <Transition id="1535">
+              <Destination id="1536">ShowRing</Destination>
+              <Source id="1537">ChoseLeftOps</Source>
+              <SourceResult id="1538">false</SourceResult>
+            </Transition>
+            <Transition id="1539">
+              <Destination id="1540">ShowRing</Destination>
+              <Source id="1541">ChoseLeftOps</Source>
+              <SourceResult id="1542">true</SourceResult>
+            </Transition>
+            <Transition id="1543">
+              <Destination id="1544">ShowRing</Destination>
+              <Source id="1545">ChoseRightOps</Source>
+              <SourceResult id="1546">false</SourceResult>
+            </Transition>
+            <Transition id="1547">
+              <Destination id="1548">ShowRing</Destination>
+              <Source id="1549">ChoseRightOps</Source>
+              <SourceResult id="1550">true</SourceResult>
+            </Transition>
+            <Transition id="1551">
+              <Destination id="1552">ChoseLeftOps</Destination>
+              <Source id="1553">SampleChoiceControl</Source>
+              <SourceResult id="1554">ChoseLeft</SourceResult>
+            </Transition>
+            <Transition id="1555">
+              <Destination id="1556">ChoseRightOps</Destination>
+              <Source id="1557">SampleChoiceControl</Source>
+              <SourceResult id="1558">ChoseRight</SourceResult>
+            </Transition>
+            <VisualElement type="Circle Graphic" id="1782">
+              <Color A="255" B="0" G="0" R="0" id="1783">#000000</Color>
+              <Layer id="1784">0</Layer>
+              <Name id="1785">feedbackRing</Name>
+              <OperatorView id="1786">true</OperatorView>
+              <Outline id="1787">true</Outline>
+              <OutlineThickness id="1788">4</OutlineThickness>
+              <Position id="1789" x="0" y="300"/>
+              <Radius id="1790">38</Radius>
+              <SubjectView id="1791">true</SubjectView>
+              <UIEnabled id="1792">false</UIEnabled>
+              <UIInfo id="1793">
+                <Pos id="1794" x="233" y="540"/>
+              </UIInfo>
+              <UIOrder id="1796">0</UIOrder>
+              <Visible id="1797">false</Visible>
+            </VisualElement>
+            <Transition id="1675">
+              <Destination id="1676">ShowDot</Destination>
+              <Source id="1677">ShowRing</Source>
+              <SourceResult id="1678">Done</SourceResult>
+            </Transition>
+            <Transition id="1679">
+              <Destination id="1680">Complete</Destination>
+              <Source id="1681">ShowDot</Source>
+              <SourceResult id="1682">Done</SourceResult>
+            </Transition>
+          </StateMachineElement>
+          <StateMachineElement type="ScriptElement" id="674">
+            <Name id="675">IsDone</Name>
+            <Result id="629">
+              <Name id="630">false</Name>
+              <UIEnabled id="631">false</UIEnabled>
+              <UIInfo id="637">
+                <Pos id="641" x="0" y="0"/>
+              </UIInfo>
+              <UIOrder id="643">0</UIOrder>
+            </Result>
+            <Result id="653">
+              <Name id="654">true</Name>
+              <UIEnabled id="655">false</UIEnabled>
+              <UIInfo id="665">
+                <Pos id="667" x="0" y="0"/>
+              </UIInfo>
+              <UIOrder id="669">0</UIOrder>
+            </Result>
+            <Script id="676">
+              if(trialNum.value &lt; minTrialsPerBlock.value)
+              return false;
+              if(Math.random()*100 &gt;= switchProb.value)
+              return false;
+              return true;
+            </Script>
+            <Type id="677">ScriptElement</Type>
+            <UIEnabled id="678">false</UIEnabled>
+            <UIInfo id="679">
+              <Pos id="680" x="711" y="453"/>
+            </UIInfo>
+            <UIOrder id="682">0</UIOrder>
+          </StateMachineElement>
+          <Transition id="687">
+            <Destination id="688">Done</Destination>
+            <Source id="689">IsDone</Source>
+            <SourceResult id="690">true</SourceResult>
+          </Transition>
+          <Parameter type="Range" id="720">
+            <Increment id="721">1</Increment>
+            <Max id="722">100</Max>
+            <Min id="723">0</Min>
+            <Name id="724">switchProb</Name>
+            <UIEnabled id="725">false</UIEnabled>
+            <UIInfo id="726">
+              <Pos id="727" x="251" y="547"/>
+            </UIInfo>
+            <UIOrder id="729">0</UIOrder>
+            <Units id="730"/>
+            <Value id="731">10</Value>
+          </Parameter>
+          <Parameter type="Range" id="740">
+            <Increment id="741">1</Increment>
+            <Max id="742">100</Max>
+            <Min id="743">1</Min>
+            <Name id="744">minTrialsPerBlock</Name>
+            <UIEnabled id="745">false</UIEnabled>
+            <UIInfo id="746">
+              <Pos id="747" x="358" y="546"/>
+            </UIInfo>
+            <UIOrder id="749">0</UIOrder>
+            <Units id="750"/>
+            <Value id="751">40</Value>
+          </Parameter>
+          <Parameter type="Numeric" id="760">
+            <Name id="761">trialNum</Name>
+            <UIEnabled id="762">false</UIEnabled>
+            <UIInfo id="763">
+              <Pos id="764" x="139" y="549"/>
+            </UIInfo>
+            <UIOrder id="766">0</UIOrder>
+            <Units id="767"/>
+            <Value id="768">0</Value>
+          </Parameter>
+          <Parameter type="Boolean" id="792">
+            <FalseLabel id="793">False</FalseLabel>
+            <Name id="794">rightIsSafe</Name>
+            <TrueLabel id="795">True</TrueLabel>
+            <UIEnabled id="796">false</UIEnabled>
+            <UIInfo id="797">
+              <Pos id="798" x="480" y="549"/>
+            </UIInfo>
+            <UIOrder id="800">0</UIOrder>
+            <Value id="801">false</Value>
+          </Parameter>
+          <StateMachineElement type="ScriptElement" id="808">
+            <Name id="809">isConsume</Name>
+            <Result id="752">
+              <Name id="753">false</Name>
+              <UIEnabled id="754">false</UIEnabled>
+              <UIInfo id="755">
+                <Pos id="756" x="2000" y="2000"/>
+              </UIInfo>
+              <UIOrder id="758">0</UIOrder>
+            </Result>
+            <Result id="770">
+              <Name id="771">true</Name>
+              <UIEnabled id="772">false</UIEnabled>
+              <UIInfo id="773">
+                <Pos id="774" x="2075" y="2000"/>
+              </UIInfo>
+              <UIOrder id="776">0</UIOrder>
+            </Result>
+            <Script id="810">
+              if(tokensCollected.value &lt; 6)
+              return false;
+              return true;
+            </Script>
+            <Type id="811">ScriptElement</Type>
+            <UIEnabled id="812">false</UIEnabled>
+            <UIInfo id="813">
+              <Pos id="814" x="223" y="100"/>
+            </UIInfo>
+            <UIOrder id="816">0</UIOrder>
+          </StateMachineElement>
+          <StateMachineElement type="StateMachine" id="822">
+            <EntryScript id="823">
+              Reward.unitQuantity = rewardQuantity.value;
+            </EntryScript>
+            <ExitScript id="824">
+              fixGraphic.visible = false;
+              tokensCollected.value = Math.floor(Math.random()*3)+2;
+              var tokens = [token0,token1,token2,token3,token4,token5];
+              for(i=0;i&lt;tokens.length;i++)
+              {
+              tokens[i].visible = false;
+              }
+            </ExitScript>
+            <Level id="825">Stage</Level>
+            <Name id="826">ConsumeTrial</Name>
+            <Type id="827">StateMachine</Type>
+            <UIEnabled id="828">false</UIEnabled>
+            <UIInfo id="829">
+              <Pos id="830" x="374" y="259"/>
+            </UIInfo>
+            <UIOrder id="832">0</UIOrder>
+            <Result id="1098">
+              <Name id="1099">Done</Name>
+              <UIEnabled id="1100">false</UIEnabled>
+              <UIInfo id="1101">
+                <Pos id="1102" x="257" y="107"/>
+              </UIInfo>
+              <UIOrder id="1104">0</UIOrder>
+            </Result>
+            <Parameter type="Range" id="2168">
+              <Increment id="2169">1</Increment>
+              <Max id="2170">1000</Max>
+              <Min id="2171">1</Min>
+              <Name id="2172">rewardQuantity</Name>
+              <UIEnabled id="2173">false</UIEnabled>
+              <UIInfo id="2174">
+                <Pos id="2175" x="200" y="453"/>
+              </UIInfo>
+              <UIOrder id="2177">0</UIOrder>
+              <Units id="2178"/>
+              <Value id="2179">80</Value>
+            </Parameter>
+            <StateMachineElement type="Reward" id="2188">
+              <MinRewardPeriod id="2189">0</MinRewardPeriod>
+              <Name id="2190">Reward</Name>
+              <NumRewards id="2191">1</NumRewards>
+              <Result id="1823">
+                <Name id="1824">done</Name>
+                <UIEnabled id="1825">false</UIEnabled>
+                <UIInfo id="1826">
+                  <Pos id="1827" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1829">0</UIOrder>
+              </Result>
+              <RewardChan id="2192">1</RewardChan>
+              <RewardQty id="2193">60</RewardQty>
+              <Type id="2194">Reward</Type>
+              <UIEnabled id="2195">false</UIEnabled>
+              <UIInfo id="2196">
+                <Pos id="2197" x="271" y="221"/>
+              </UIInfo>
+              <UIOrder id="2199">0</UIOrder>
+            </StateMachineElement>
+            <StateMachineElement type="State" id="2208">
+              <BackgroundColor A="255" B="0" G="0" R="0" id="2209">#000000</BackgroundColor>
+              <EntryScript id="2210">
+                tokens = [token0,token1,token2,token3,token4,token5];
+                tokens[tokensCollected.value-1].outline = true;
+                tokensCollected.value--;
+              </EntryScript>
+              <ExitScript id="2211"/>
+              <FrameScript id="2212"/>
+              <Name id="2213">RemoveToken</Name>
+              <UIEnabled id="2214">false</UIEnabled>
+              <UIInfo id="2215">
+                <Pos id="2216" x="490" y="389"/>
+              </UIInfo>
+              <UIOrder id="2218">0</UIOrder>
+              <Result id="2262">
+                <Name id="2263">Done</Name>
+                <UIEnabled id="2264">false</UIEnabled>
+                <UIInfo id="2265">
+                  <Pos id="2266" x="425" y="176"/>
+                </UIInfo>
+                <UIOrder id="2268">0</UIOrder>
+              </Result>
+              <ControlElement type="Stopwatch Controller" id="2340">
+                <Name id="2341">RewardInterval</Name>
+                <Result id="1852">
+                  <Name id="1853">Success</Name>
+                  <UIEnabled id="1854">false</UIEnabled>
+                  <UIInfo id="1855">
+                    <Pos id="1856" x="0" y="0"/>
+                  </UIInfo>
+                  <UIOrder id="1858">0</UIOrder>
+                </Result>
+                <Time id="2342">500</Time>
+                <TimeUnits id="2343">Ms</TimeUnits>
+                <Type id="2344"/>
+                <UIEnabled id="2345">false</UIEnabled>
+                <UIInfo id="2346">
+                  <Pos id="2347" x="184" y="143"/>
+                </UIInfo>
+                <UIOrder id="2349">0</UIOrder>
+              </ControlElement>
+              <Transition id="1864">
+                <Destination id="1865">Done</Destination>
+                <Source id="1866">RewardInterval</Source>
+                <SourceResult id="1867">Success</SourceResult>
+              </Transition>
+            </StateMachineElement>
+            <StateMachineElement type="ScriptElement" id="2272">
+              <Name id="2273">NeedsReward</Name>
+              <Result id="1888">
+                <Name id="1889">false</Name>
+                <UIEnabled id="1895">false</UIEnabled>
+                <UIInfo id="1897">
+                  <Pos id="1898" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1900">0</UIOrder>
+              </Result>
+              <Result id="1904">
+                <Name id="1905">true</Name>
+                <UIEnabled id="1906">false</UIEnabled>
+                <UIInfo id="1907">
+                  <Pos id="1908" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1910">0</UIOrder>
+              </Result>
+              <Script id="2274">return tokensCollected.value &gt; 0;</Script>
+              <Type id="2275">ScriptElement</Type>
+              <UIEnabled id="2276">false</UIEnabled>
+              <UIInfo id="2277">
+                <Pos id="2278" x="103" y="221"/>
+              </UIInfo>
+              <UIOrder id="2280">0</UIOrder>
+            </StateMachineElement>
+            <Transition id="1929">
+              <Destination id="1935">Reward</Destination>
+              <Source id="1937">NeedsReward</Source>
+              <SourceResult id="1938">true</SourceResult>
+            </Transition>
+            <Transition id="1939">
+              <Destination id="1940">RemoveToken</Destination>
+              <Source id="1941">Reward</Source>
+              <SourceResult id="1942">done</SourceResult>
+            </Transition>
+            <Transition id="1947">
+              <Destination id="1948">NeedsReward</Destination>
+              <Source id="1949">RemoveToken</Source>
+              <SourceResult id="1950">Done</SourceResult>
+            </Transition>
+            <Transition id="1951">
+              <Destination id="1952">Done</Destination>
+              <Source id="1953">NeedsReward</Source>
+              <SourceResult id="1954">false</SourceResult>
+            </Transition>
+            <Transition id="1955">
+              <Destination id="1956">NeedsReward</Destination>
+              <Source id="1957"/>
+              <SourceResult id="1958"/>
+            </Transition>
+          </StateMachineElement>
+          <StateMachineElement type="PausePoint" id="868">
+            <BackgroundColor A="255" B="0" G="0" R="0" id="869">#000000</BackgroundColor>
+            <ForcePause id="870">false</ForcePause>
+            <Name id="871">pause</Name>
+            <PausingScript id="872"/>
+            <RestartingScript id="873"/>
+            <Result id="841">
+              <Name id="842">done</Name>
+              <UIEnabled id="843">false</UIEnabled>
+              <UIInfo id="844">
+                <Pos id="845" x="0" y="0"/>
+              </UIInfo>
+              <UIOrder id="847">0</UIOrder>
+            </Result>
+            <Type id="874">PausePoint</Type>
+            <UIEnabled id="875">false</UIEnabled>
+            <UIInfo id="876">
+              <Pos id="877" x="736" y="302"/>
+            </UIInfo>
+            <UIOrder id="879">0</UIOrder>
+          </StateMachineElement>
+          <StateMachineElement type="State" id="888">
+            <BackgroundColor A="255" B="0" G="0" R="0" id="889">#000000</BackgroundColor>
+            <EntryScript id="890">
+              var tokens = [token0,token1,token2,token3,token4,token5];
+              for(var i=0;i&lt;tokens.length;i++)
+              {
+              tokens[i].outline = i&gt;=tokensCollected.value;
+              tokens[i].visible = true;
+              }
+            </EntryScript>
+            <ExitScript id="891">fixGraphic.visible = true;</ExitScript>
+            <FrameScript id="892"/>
+            <Name id="893">PreWatch</Name>
+            <UIEnabled id="894">false</UIEnabled>
+            <UIInfo id="895">
+              <Pos id="896" x="97" y="189"/>
+            </UIInfo>
+            <UIOrder id="898">0</UIOrder>
+            <ControlElement type="Stopwatch Controller" id="938">
+              <Name id="939">PreWatchMs</Name>
+              <Result id="839">
+                <Name id="840">Success</Name>
+                <UIEnabled id="846">false</UIEnabled>
+                <UIInfo id="848">
+                  <Pos id="849" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="851">0</UIOrder>
+              </Result>
+              <Time id="940">300</Time>
+              <TimeUnits id="941">Ms</TimeUnits>
+              <Type id="942"/>
+              <UIEnabled id="943">true</UIEnabled>
+              <UIInfo id="944">
+                <Pos id="945" x="120" y="81"/>
+              </UIInfo>
+              <UIOrder id="947">0</UIOrder>
+            </ControlElement>
+            <Result id="954">
+              <Name id="955">Done</Name>
+              <UIEnabled id="956">false</UIEnabled>
+              <UIInfo id="957">
+                <Pos id="958" x="320" y="90"/>
+              </UIInfo>
+              <UIOrder id="960">0</UIOrder>
+            </Result>
+            <Transition id="917">
+              <Destination id="918">Done</Destination>
+              <Source id="919">PreWatchMs</Source>
+              <SourceResult id="920">Success</SourceResult>
+            </Transition>
+          </StateMachineElement>
+          <StateMachineElement type="State" id="906">
+            <BackgroundColor A="255" B="0" G="0" R="0" id="907">#000000</BackgroundColor>
+            <EntryScript id="908"/>
+            <ExitScript id="909"/>
+            <FrameScript id="910"/>
+            <Name id="911">PostWatch</Name>
+            <UIEnabled id="912">false</UIEnabled>
+            <UIInfo id="913">
+              <Pos id="914" x="627" y="162"/>
+            </UIInfo>
+            <UIOrder id="916">0</UIOrder>
+            <ControlElement type="Stopwatch Controller" id="964">
+              <Name id="965">PostWatchMs</Name>
+              <Result id="929">
+                <Name id="930">Success</Name>
+                <UIEnabled id="931">false</UIEnabled>
+                <UIInfo id="932">
+                  <Pos id="933" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="935">0</UIOrder>
+              </Result>
+              <Time id="966">300</Time>
+              <TimeUnits id="967">Ms</TimeUnits>
+              <Type id="968"/>
+              <UIEnabled id="969">true</UIEnabled>
+              <UIInfo id="970">
+                <Pos id="971" x="155" y="111"/>
+              </UIInfo>
+              <UIOrder id="973">0</UIOrder>
+            </ControlElement>
+            <Result id="980">
+              <Name id="981">Done</Name>
+              <UIEnabled id="982">false</UIEnabled>
+              <UIInfo id="983">
+                <Pos id="984" x="409" y="155"/>
+              </UIInfo>
+              <UIOrder id="986">0</UIOrder>
+            </Result>
+            <Transition id="974">
+              <Destination id="975">Done</Destination>
+              <Source id="976">PostWatchMs</Source>
+              <SourceResult id="977">Success</SourceResult>
+            </Transition>
+          </StateMachineElement>
+          <Transition id="860">
+            <Destination id="861">Trial</Destination>
+            <Source id="862">isConsume</Source>
+            <SourceResult id="863">false</SourceResult>
+          </Transition>
+          <Transition id="864">
+            <Destination id="865">ConsumeTrial</Destination>
+            <Source id="866">isConsume</Source>
+            <SourceResult id="867">true</SourceResult>
+          </Transition>
+          <Transition id="883">
+            <Destination id="884">PreWatch</Destination>
+            <Source id="885"/>
+            <SourceResult id="886"/>
+          </Transition>
+          <StateMachineElement type="State" id="990">
+            <BackgroundColor A="255" B="0" G="0" R="0" id="991">#000000</BackgroundColor>
+            <EntryScript id="992"/>
+            <ExitScript id="993"/>
+            <FrameScript id="994"/>
+            <Name id="995">ITI</Name>
+            <UIEnabled id="996">false</UIEnabled>
+            <UIInfo id="997">
+              <Pos id="998" x="898" y="352"/>
+            </UIInfo>
+            <UIOrder id="1000">0</UIOrder>
+            <ControlElement type="Stopwatch Controller" id="1040">
+              <Name id="1041">ITIMs</Name>
+              <Result id="988">
+                <Name id="989">Success</Name>
+                <UIEnabled id="999">false</UIEnabled>
+                <UIInfo id="1001">
+                  <Pos id="1002" x="0" y="0"/>
+                </UIInfo>
+                <UIOrder id="1004">0</UIOrder>
+              </Result>
+              <Time id="1042">400</Time>
+              <TimeUnits id="1043">Ms</TimeUnits>
+              <Type id="1044"/>
+              <UIEnabled id="1045">true</UIEnabled>
+              <UIInfo id="1046">
+                <Pos id="1047" x="152" y="74"/>
+              </UIInfo>
+              <UIOrder id="1049">0</UIOrder>
+            </ControlElement>
+            <Result id="1056">
+              <Name id="1057">Done</Name>
+              <UIEnabled id="1058">false</UIEnabled>
+              <UIInfo id="1059">
+                <Pos id="1060" x="361" y="169"/>
+              </UIInfo>
+              <UIOrder id="1062">0</UIOrder>
+            </Result>
+            <Transition id="1027">
+              <Destination id="1028">Done</Destination>
+              <Source id="1029">ITIMs</Source>
+              <SourceResult id="1030">Success</SourceResult>
+            </Transition>
+          </StateMachineElement>
+          <Transition id="1009">
+            <Destination id="1010">isConsume</Destination>
+            <Source id="1011">PreWatch</Source>
+            <SourceResult id="1012">Done</SourceResult>
+          </Transition>
+          <Transition id="1013">
+            <Destination id="1014">pause</Destination>
+            <Source id="1015">PostWatch</Source>
+            <SourceResult id="1016">Done</SourceResult>
+          </Transition>
+          <Transition id="1034">
+            <Destination id="1035">ITI</Destination>
+            <Source id="1036">pause</Source>
+            <SourceResult id="1037">done</SourceResult>
+          </Transition>
+          <Transition id="1038">
+            <Destination id="1039">IsDone</Destination>
+            <Source id="1048">ITI</Source>
+            <SourceResult id="1050">Done</SourceResult>
+          </Transition>
+          <Transition id="1051">
+            <Destination id="1052">PreWatch</Destination>
+            <Source id="1053">IsDone</Source>
+            <SourceResult id="1054">false</SourceResult>
+          </Transition>
+          
+          <Transition id="1073">
+            <Destination id="1074">PostWatch</Destination>
+            <Source id="1075">ConsumeTrial</Source>
+            <SourceResult id="1076">Done</SourceResult>
+          </Transition>
+          <VisualElement type="Box Graphic" id="1206">
+            <Color A="255" B="255" G="255" R="255" id="1207">#ffffff</Color>
+            <Dimensions height="20" id="1208" width="20" x="0" y="0"/>
+            <Layer id="1209">0</Layer>
+            <Name id="1210">fixGraphic</Name>
+            <OperatorView id="1211">true</OperatorView>
+            <Outline id="1212">false</Outline>
+            <OutlineThickness id="1213">0</OutlineThickness>
+            <Position id="1214" x="400" y="300"/>
+            <SubjectView id="1215">true</SubjectView>
+            <UIEnabled id="1216">true</UIEnabled>
+            <UIInfo id="1217">
+              <Pos id="1218" x="143" y="439"/>
+            </UIInfo>
+            <UIOrder id="1220">0</UIOrder>
+            <Visible id="1221">false</Visible>
+          </VisualElement>
+          <Transition id="1943">
+            <Destination id="1944">PostWatch</Destination>
+            <Source id="1945">Trial</Source>
+            <SourceResult id="1946">Incomplete</SourceResult>
+          </Transition>
+
+          <Parameter type="Double" id="2335">
+            <Max id="2336">1</Max>
+            <Min id="2337">-3.46944695195361e-18</Min>
+            <Name id="2338">monkNashPr</Name>
+            <UIEnabled id="2339">false</UIEnabled>
+            <UIInfo id="2348">
+              <Pos id="2350" x="339" y="739"/>
+            </UIInfo>
+            <UIOrder id="2352">0</UIOrder>
+            <Value id="2353">0</Value>
+          </Parameter>
+          <Parameter type="Double" id="2360">
+            <Max id="2361">1</Max>
+            <Min id="2362">0</Min>
+            <Name id="2363">compNashPr</Name>
+            <UIEnabled id="2364">false</UIEnabled>
+            <UIInfo id="2365">
+              <Pos id="2366" x="339" y="833"/>
+            </UIInfo>
+            <UIOrder id="2368">0</UIOrder>
+            <Value id="2369">0</Value>
+          </Parameter>
+          <Parameter type="Double" id="2594">
+            <Max id="2595">10000000</Max>
+            <Min id="2596">0</Min>
+            <Name id="2597">maxDevR</Name>
+            <UIEnabled id="2598">false</UIEnabled>
+            <UIInfo id="2599">
+              <Pos id="2600" x="238" y="773"/>
+            </UIInfo>
+            <UIOrder id="2602">0</UIOrder>
+            <Value id="2603">0</Value>
+          </Parameter>
+          <VisualElement type="Operator Info Graphic" id="2452">
+            <Color A="255" B="0" G="255" R="0" id="2453">#00ff00</Color>
+            <Dimensions height="20" id="2454" width="800" x="0" y="0"/>
+            <Fields id="2455"/>
+            <Layer id="2456">0</Layer>
+            <Name id="2457">choice</Name>
+            <OperatorView id="2458">true</OperatorView>
+            <Position id="2459" x="0" y="20"/>
+            <SubjectView id="2460">false</SubjectView>
+            <UIEnabled id="2461">true</UIEnabled>
+            <UIInfo id="2462">
+              <Pos id="2463" x="438" y="740"/>
+            </UIInfo>
+            <UIOrder id="2465">0</UIOrder>
+            <Values id="2466"/>
+            <Visible id="2467">true</Visible>
+          </VisualElement>
+          <VisualElement type="Operator Info Graphic" id="2696">
+            <Color A="255" B="0" G="255" R="0" id="2697">#00ff00</Color>
+            <Dimensions height="20" id="2698" width="800" x="0" y="0"/>
+            <Fields id="2699"/>
+            <Layer id="2700">0</Layer>
+            <Name id="2701">reward</Name>
+            <OperatorView id="2702">true</OperatorView>
+            <Position id="2703" x="0" y="40"/>
+            <SubjectView id="2704">false</SubjectView>
+            <UIEnabled id="2705">true</UIEnabled>
+            <UIInfo id="2706">
+              <Pos id="2707" x="449" y="833"/>
+            </UIInfo>
+            <UIOrder id="2709">0</UIOrder>
+            <Values id="2710"/>
+            <Visible id="2711">true</Visible>
+          </VisualElement>
+          <VisualElement type="Operator Info Graphic" id="2396">
+            <Color A="255" B="0" G="255" R="0" id="2397">#00ff00</Color>
+            <Dimensions height="20" id="2398" width="800" x="0" y="0"/>
+            <Fields id="2399"/>
+            <Layer id="2400">0</Layer>
+            <Name id="2401">alg1Pr</Name>
+            <OperatorView id="2402">true</OperatorView>
+            <Position id="2403" x="0" y="60"/>
+            <SubjectView id="2404">false</SubjectView>
+            <UIEnabled id="2405">true</UIEnabled>
+            <UIInfo id="2406">
+              <Pos id="2407" x="553" y="730"/>
+            </UIInfo>
+            <UIOrder id="2409">0</UIOrder>
+            <Values id="2410"/>
+            <Visible id="2411">true</Visible>
+          </VisualElement>
+          <VisualElement type="Operator Info Graphic" id="2424">
+            <Color A="255" B="0" G="255" R="0" id="2425">#00ff00</Color>
+            <Dimensions height="20" id="2426" width="800" x="0" y="0"/>
+            <Fields id="2427"/>
+            <Layer id="2428">0</Layer>
+            <Name id="2429">alg1Bias</Name>
+            <OperatorView id="2430">true</OperatorView>
+            <Position id="2431" x="0" y="80"/>
+            <SubjectView id="2432">false</SubjectView>
+            <UIEnabled id="2433">true</UIEnabled>
+            <UIInfo id="2434">
+              <Pos id="2435" x="550" y="833"/>
+            </UIInfo>
+            <UIOrder id="2437">0</UIOrder>
+            <Values id="2438"/>
+            <Visible id="2439">true</Visible>
+          </VisualElement>
+          <VisualElement type="Operator Info Graphic" id="2508">
+            <Color A="255" B="0" G="255" R="0" id="2509">#00ff00</Color>
+            <Dimensions height="20" id="2510" width="800" x="0" y="0"/>
+            <Fields id="2511"/>
+            <Layer id="2512">0</Layer>
+            <Name id="2513">alg2Pr</Name>
+            <OperatorView id="2514">true</OperatorView>
+            <Position id="2515" x="0" y="100"/>
+            <SubjectView id="2516">false</SubjectView>
+            <UIEnabled id="2517">true</UIEnabled>
+            <UIInfo id="2518">
+              <Pos id="2519" x="660" y="727"/>
+            </UIInfo>
+            <UIOrder id="2521">0</UIOrder>
+            <Values id="2522"/>
+            <Visible id="2523">true</Visible>
+          </VisualElement>
+          <VisualElement type="Operator Info Graphic" id="2536">
+            <Color A="255" B="0" G="255" R="0" id="2537">#00ff00</Color>
+            <Dimensions height="20" id="2538" width="800" x="0" y="0"/>
+            <Fields id="2539"/>
+            <Layer id="2540">0</Layer>
+            <Name id="2541">alg2Bias</Name>
+            <OperatorView id="2542">true</OperatorView>
+            <Position id="2543" x="0" y="120"/>
+            <SubjectView id="2544">false</SubjectView>
+            <UIEnabled id="2545">true</UIEnabled>
+            <UIInfo id="2546">
+              <Pos id="2547" x="656" y="832"/>
+            </UIInfo>
+            <UIOrder id="2549">0</UIOrder>
+            <Values id="2550"/>
+            <Visible id="2551">true</Visible>
+          </VisualElement>
+        <StateMachineElement type="ScriptElement" id="2678"><Name id="2679">IncTrialNum</Name><Result id="2443"><Name id="2444">false</Name><UIEnabled id="2445">false</UIEnabled><UIInfo id="2446"><Pos id="2447" x="0" y="0"/></UIInfo><UIOrder id="2449">0</UIOrder></Result><Result id="2468"><Name id="2469">true</Name><UIEnabled id="2470">false</UIEnabled><UIInfo id="2471"><Pos id="2472" x="0" y="0"/></UIInfo><UIOrder id="2474">0</UIOrder></Result><Script id="2680">trialNum.value++;</Script><Type id="2681">ScriptElement</Type><UIEnabled id="2689">false</UIEnabled><UIInfo id="2691"><Pos id="2692" x="482" y="48"/></UIInfo><UIOrder id="2718">0</UIOrder></StateMachineElement><Transition id="2492"><Destination id="2493">IncTrialNum</Destination><Source id="2501">Trial</Source><SourceResult id="2503">Complete</SourceResult></Transition><Transition id="2504"><Destination id="2505">PostWatch</Destination><Source id="2506">IncTrialNum</Source><SourceResult id="2507">false</SourceResult></Transition><Transition id="2520"><Destination id="2524">PostWatch</Destination><Source id="2525">IncTrialNum</Source><SourceResult id="2526">true</SourceResult></Transition></StateMachineElement>
+        <Transition id="619">
+          <Destination id="621">Block</Destination>
+          <Source id="622"/>
+          <SourceResult id="623"/>
+        </Transition>
+        <Parameter type="Numeric" id="632">
+          <Name id="633">blockNum</Name>
+          <UIEnabled id="634">false</UIEnabled>
+          <UIInfo id="635">
+            <Pos id="636" x="143" y="378"/>
+          </UIInfo>
+          <UIOrder id="638">0</UIOrder>
+          <Units id="639"/>
+          <Value id="640">0</Value>
+        </Parameter>
+        <Transition id="708">
+          <Destination id="709">Block</Destination>
+          <Source id="710">Block</Source>
+          <SourceResult id="711">Done</SourceResult>
+        </Transition>
+        <Parameter type="Numeric" id="778">
+          <Name id="779">lambda</Name>
+          <UIEnabled id="780">false</UIEnabled>
+          <UIInfo id="781">
+            <Pos id="782" x="247" y="379"/>
+          </UIInfo>
+          <UIOrder id="784">0</UIOrder>
+          <Units id="785"/>
+          <Value id="786">0</Value>
+        </Parameter>
+        <VisualElement type="Circle Graphic" id="1974">
+          <Color A="255" B="0" G="0" R="255" id="1975">#ff0000</Color>
+          <Layer id="1976">0</Layer>
+          <Name id="1977">token0</Name>
+          <OperatorView id="1978">true</OperatorView>
+          <Outline id="1979">true</Outline>
+          <OutlineThickness id="1980">1</OutlineThickness>
+          <Position id="1981" x="425" y="257"/>
+          <Radius id="1982">15</Radius>
+          <SubjectView id="1983">true</SubjectView>
+          <UIEnabled id="1984">false</UIEnabled>
+          <UIInfo id="1985">
+            <Pos id="1986" x="612" y="77"/>
+          </UIInfo>
+          <UIOrder id="1988">0</UIOrder>
+          <Visible id="1989">true</Visible>
+        </VisualElement>
+        <VisualElement type="Circle Graphic" id="2002">
+          <Color A="255" B="0" G="0" R="255" id="2003">#ff0000</Color>
+          <Layer id="2004">0</Layer>
+          <Name id="2005">token1</Name>
+          <OperatorView id="2006">true</OperatorView>
+          <Outline id="2007">true</Outline>
+          <OutlineThickness id="2008">1</OutlineThickness>
+          <Position id="2009" x="376" y="257"/>
+          <Radius id="2010">15</Radius>
+          <SubjectView id="2011">true</SubjectView>
+          <UIEnabled id="2012">false</UIEnabled>
+          <UIInfo id="2013">
+            <Pos id="2014" x="456" y="85"/>
+          </UIInfo>
+          <UIOrder id="2016">0</UIOrder>
+          <Visible id="2017">true</Visible>
+        </VisualElement>
+        <VisualElement type="Circle Graphic" id="2030">
+          <Color A="255" B="0" G="0" R="255" id="2031">#ff0000</Color>
+          <Layer id="2032">0</Layer>
+          <Name id="2033">token2</Name>
+          <OperatorView id="2034">true</OperatorView>
+          <Outline id="2035">true</Outline>
+          <OutlineThickness id="2036">1</OutlineThickness>
+          <Position id="2037" x="350" y="300"/>
+          <Radius id="2038">15</Radius>
+          <SubjectView id="2039">true</SubjectView>
+          <UIEnabled id="2040">false</UIEnabled>
+          <UIInfo id="2041">
+            <Pos id="2042" x="386" y="216"/>
+          </UIInfo>
+          <UIOrder id="2044">0</UIOrder>
+          <Visible id="2045">true</Visible>
+        </VisualElement>
+        <VisualElement type="Circle Graphic" id="2058">
+          <Color A="255" B="0" G="0" R="255" id="2059">#ff0000</Color>
+          <Layer id="2060">0</Layer>
+          <Name id="2061">token3</Name>
+          <OperatorView id="2062">true</OperatorView>
+          <Outline id="2063">true</Outline>
+          <OutlineThickness id="2064">1</OutlineThickness>
+          <Position id="2065" x="375" y="343"/>
+          <Radius id="2066">15</Radius>
+          <SubjectView id="2067">true</SubjectView>
+          <UIEnabled id="2068">false</UIEnabled>
+          <UIInfo id="2069">
+            <Pos id="2070" x="475" y="347"/>
+          </UIInfo>
+          <UIOrder id="2072">0</UIOrder>
+          <Visible id="2073">true</Visible>
+        </VisualElement>
+        <VisualElement type="Circle Graphic" id="2086">
+          <Color A="255" B="0" G="0" R="255" id="2087">#ff0000</Color>
+          <Layer id="2088">0</Layer>
+          <Name id="2089">token4</Name>
+          <OperatorView id="2090">true</OperatorView>
+          <Outline id="2091">true</Outline>
+          <OutlineThickness id="2092">1</OutlineThickness>
+          <Position id="2093" x="424" y="343"/>
+          <Radius id="2094">15</Radius>
+          <SubjectView id="2095">true</SubjectView>
+          <UIEnabled id="2096">false</UIEnabled>
+          <UIInfo id="2097">
+            <Pos id="2098" x="608" y="346"/>
+          </UIInfo>
+          <UIOrder id="2100">0</UIOrder>
+          <Visible id="2101">true</Visible>
+        </VisualElement>
+        <VisualElement type="Circle Graphic" id="2114">
+          <Color A="255" B="0" G="0" R="255" id="2115">#ff0000</Color>
+          <Layer id="2116">0</Layer>
+          <Name id="2117">token5</Name>
+          <OperatorView id="2118">true</OperatorView>
+          <Outline id="2119">true</Outline>
+          <OutlineThickness id="2120">1</OutlineThickness>
+          <Position id="2121" x="450" y="300"/>
+          <Radius id="2122">15</Radius>
+          <SubjectView id="2123">true</SubjectView>
+          <UIEnabled id="2124">false</UIEnabled>
+          <UIInfo id="2125">
+            <Pos id="2126" x="720" y="227"/>
+          </UIInfo>
+          <UIOrder id="2128">0</UIOrder>
+          <Visible id="2129">true</Visible>
+        </VisualElement>
+        <Parameter type="Numeric" id="2142">
+          <Name id="2143">tokensCollected</Name>
+          <UIEnabled id="2144">false</UIEnabled>
+          <UIInfo id="2145">
+            <Pos id="2146" x="137" y="514"/>
+          </UIInfo>
+          <UIOrder id="2148">0</UIOrder>
+          <Units id="2149"/>
+          <Value id="2150">0</Value>
+        </Parameter>
+      </StateMachine>
+      <UIInfo id="607">
+        <Pos id="608" x="1821" y="1746"/>
+      </UIInfo>
+    </Task>
+  </Experiment>
+  <StateMachineEditorData id="0">
+    <OpenedBlock id="">656</OpenedBlock>
+  </StateMachineEditorData>
 </PictoData>

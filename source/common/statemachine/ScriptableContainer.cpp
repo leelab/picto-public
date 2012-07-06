@@ -12,6 +12,7 @@
 #include "../parameter/RangeParameter.h"
 #include "../parameter/RandomIntParameter.h"
 #include "../parameter/RandomDoubleParameter.h"
+#include "../parameter/DoubleParameter.h"
 #include "../parameter/PseudorandomIntParameter.h"
 #include "../parameter/TimerParameter.h"
 #include "../parameter/OperatorClickParameter.h"
@@ -42,7 +43,8 @@ ScriptableContainer::ScriptableContainer()
 	controlTargetFactory_(new AssetFactory(0,-1)),
 	audioElementFactory_(new AssetFactory(0,-1)),
 	scriptFunctionFactory_(new AssetFactory(0,-1)),
-	scriptingInitialized_(false)
+	scriptingInitialized_(false),
+	debuggingEnabled_(false)
 {
 	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
 	scriptFunctionFactory_->addAssetType("ScriptFunction",
@@ -61,6 +63,8 @@ ScriptableContainer::ScriptableContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomIntParameter::Create))));
 	parameterFactory_->addAssetType("RandomDouble",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomDoubleParameter::Create))));
+	parameterFactory_->addAssetType("Double",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DoubleParameter::Create))));
 	parameterFactory_->addAssetType("PseudorandomInt",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
 	parameterFactory_->addAssetType("Timer",
@@ -137,7 +141,7 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 	if(scriptable.isNull())
 		return;
 	scriptables_.push_back(scriptable);
-	qDebug("Added " + scriptable.toStrongRef()->getName().toAscii() + " to " + getName().toAscii());
+	//qDebug("Added " + scriptable.toStrongRef()->getName().toAscii() + " to " + getName().toAscii());
 	//If we added a new scriptable, scripting is no longer properly initialized.
 	scriptingInitialized_ = false;
 	//If the new scriptable's name edited, we'll need to reinitialize scripting again.
@@ -155,7 +159,7 @@ void ScriptableContainer::addChildScriptableContainer(QSharedPointer<ScriptableC
 	if(scriptingInitialized_)
 	{	//Our engine and all child ScriptableContainers engines are initialized, so 
 		//initialize this one too.
-		child->initScripting();
+		child->initScripting(debuggingEnabled_);
 	}
 }
 
@@ -165,7 +169,7 @@ QList<QWeakPointer<Scriptable>> ScriptableContainer::getScriptableList()
 	return scriptables_;
 }
 
-bool ScriptableContainer::initScripting()
+bool ScriptableContainer::initScripting(bool enableDebugging)
 {
 	if(	scriptingInitialized_ )
 		return true;
@@ -176,6 +180,13 @@ bool ScriptableContainer::initScripting()
 		//Looks like we're going to need a script engine
 		//create the engine
 		qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
+
+		debuggingEnabled_ = enableDebugging;
+		if(debuggingEnabled_)
+		{
+			qsEngineDebugger_ = QSharedPointer<QScriptEngineDebugger>(new QScriptEngineDebugger());
+			qsEngineDebugger_->attachTo(qsEngine_.data());
+		}
 
 		//Bind all scriptable to the script engine (parameters and ui elements)
 		if(!bindScriptablesToScriptEngine(*qsEngine_))
@@ -215,7 +226,7 @@ bool ScriptableContainer::initScripting()
 	//Intialize Scripting on all child ScriptableContainers
 	foreach(QSharedPointer<ScriptableContainer> child,scriptableContainers_)
 	{
-		child->initScripting();
+		child->initScripting(debuggingEnabled_);
 	}
 	scriptingInitialized_ = true;
 	return true;

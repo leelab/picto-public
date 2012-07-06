@@ -7,7 +7,8 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	QTextEdit(parent),
 	manager_(manager),
 	property_(property),
-	textEdited_(false)
+	textEdited_(false),
+	syntaxHighlighter_(new ScriptSyntaxHighlighter(document()))
 {
 	setLineWrapMode(NoWrap);
 	setMinimumWidth(100);

@@ -153,7 +153,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	path_.append(getName());
 	QString pathStr = path_.join("::");
 	//qDebug(QString("Entering: %1").arg(path_.join("::")).toAscii());
-	if(!initScripting())
+	if(!initScripting(!slave && engine->operatorIsUser()))	//only debug when in the test viewer
 	{
 		//! \TODO Make some sort of intelligent error reporting...
 		return "scriptingError";

@@ -62,6 +62,13 @@ QSharedPointer<Asset> OperatorInfoGraphic::Create()
 	return QSharedPointer<Asset>(new OperatorInfoGraphic());
 }
 
+void OperatorInfoGraphic::reset()
+{
+	VisualElement::reset();
+	orderedFields_.clear();
+	infoMap_.clear();
+}
+
 void OperatorInfoGraphic::setData(QString field, QString value)
 {
 	if(!infoMap_.contains(field))

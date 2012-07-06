@@ -63,6 +63,7 @@
         <file>icons/pausepoint.svg</file>
         <file>icons/scriptelement.svg</file>
         <file>icons/scriptable.svg</file>
+        <file>icons/scriptfunction.svg</file>
         <file>icons/parameter.svg</file>
         <file>icons/visualelement.svg</file>
         <file>icons/controltarget.svg</file>

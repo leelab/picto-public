@@ -210,6 +210,8 @@
    <file alias="_display_equipment_8h-source.html">../../../output/documentation/main/html/_display_equipment_8h-source.html</file>
    <file alias="_display_mode_8cpp-source.html">../../../output/documentation/main/html/_display_mode_8cpp-source.html</file>
    <file alias="_display_mode_8h-source.html">../../../output/documentation/main/html/_display_mode_8h-source.html</file>
+   <file alias="_double_parameter_8cpp-source.html">../../../output/documentation/main/html/_double_parameter_8cpp-source.html</file>
+   <file alias="_double_parameter_8h-source.html">../../../output/documentation/main/html/_double_parameter_8h-source.html</file>
    <file alias="_dynamic_controller_8cpp-source.html">../../../output/documentation/main/html/_dynamic_controller_8cpp-source.html</file>
    <file alias="_dynamic_controller_8h-source.html">../../../output/documentation/main/html/_dynamic_controller_8h-source.html</file>
    <file alias="_e_n_g_e_v_e_n_t_command_handler_8cpp-source.html">../../../output/documentation/main/html/_e_n_g_e_v_e_n_t_command_handler_8cpp-source.html</file>
@@ -548,6 +550,8 @@
    <file alias="_script_element_8h-source.html">../../../output/documentation/main/html/_script_element_8h-source.html</file>
    <file alias="_script_function_8cpp-source.html">../../../output/documentation/main/html/_script_function_8cpp-source.html</file>
    <file alias="_script_function_8h-source.html">../../../output/documentation/main/html/_script_function_8h-source.html</file>
+   <file alias="_script_syntax_highlighter_8cpp-source.html">../../../output/documentation/main/html/_script_syntax_highlighter_8cpp-source.html</file>
+   <file alias="_script_syntax_highlighter_8h-source.html">../../../output/documentation/main/html/_script_syntax_highlighter_8h-source.html</file>
    <file alias="_script_widget_8cpp-source.html">../../../output/documentation/main/html/_script_widget_8cpp-source.html</file>
    <file alias="_script_widget_8h-source.html">../../../output/documentation/main/html/_script_widget_8h-source.html</file>
    <file alias="_scriptable_8cpp-source.html">../../../output/documentation/main/html/_scriptable_8cpp-source.html</file>
@@ -921,6 +925,9 @@
    <file alias="class_picto_1_1_diamond_graphic.png">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic.png</file>
    <file alias="class_picto_1_1_display_equipment-members.html">../../../output/documentation/main/html/class_picto_1_1_display_equipment-members.html</file>
    <file alias="class_picto_1_1_display_equipment.html">../../../output/documentation/main/html/class_picto_1_1_display_equipment.html</file>
+   <file alias="class_picto_1_1_double_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_double_parameter-members.html</file>
+   <file alias="class_picto_1_1_double_parameter.html">../../../output/documentation/main/html/class_picto_1_1_double_parameter.html</file>
+   <file alias="class_picto_1_1_double_parameter.png">../../../output/documentation/main/html/class_picto_1_1_double_parameter.png</file>
    <file alias="class_picto_1_1_ellipse_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_ellipse_graphic-members.html</file>
    <file alias="class_picto_1_1_ellipse_graphic.html">../../../output/documentation/main/html/class_picto_1_1_ellipse_graphic.html</file>
    <file alias="class_picto_1_1_ellipse_graphic.png">../../../output/documentation/main/html/class_picto_1_1_ellipse_graphic.png</file>

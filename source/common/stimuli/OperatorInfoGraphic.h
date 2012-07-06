@@ -30,6 +30,9 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+
+	//Resets the OperatorInfoGraphic Object to its initial state.
+	virtual void reset();
 	static const QString type;
 
 public slots:
@@ -37,6 +40,7 @@ public slots:
 	int getDataAsInt(QString field){return getData(field).toInt();};
 	QString getDataAsString(QString field){return getData(field).toString();};
 	double getDataAsDouble(QString field){return getData(field).toDouble();};
+	int getNumEntries(){return orderedFields_.size();};
 	void updateValue();
 
 

@@ -4,6 +4,7 @@
 #include <QSharedPointer>
 #include <QList>
 #include <QScriptEngine>
+#include <QScriptEngineDebugger>
 
 #include "../common.h"
 #include "../statemachine/UIEnabled.h"
@@ -32,13 +33,11 @@ public:
 	QList<QWeakPointer<Scriptable>> getScriptableList();
 
 	/*! \brief Initializes scripting for this and all child ScriptableContainers
-	 * If for design is true, all child ScriptableContainers will
-	 * get initialized even if they don't have scripts (because we
-	 * want to be able to use the script engine to show what functions
-	 * are available for the script designer.
+	 * @param enableDebugging Enables debugging for this object.  Debugging will be
+	 * triggered if there is a script exception or a "debugger;" line is input into the script.
 	 * returns false if there was an initialization error.
 	 */
-	bool initScripting();
+	bool initScripting(bool enableDebugging);
 	/*! \brief Calls reset on the scriptables serialized into this container.
 	 */
 	void resetScriptableValues();
@@ -63,6 +62,7 @@ protected:
 	QSharedPointer<AssetFactory> audioElementFactory_;
 	QSharedPointer<AssetFactory> scriptFunctionFactory_;
 	QSharedPointer<QScriptEngine> qsEngine_;
+	QSharedPointer<QScriptEngineDebugger> qsEngineDebugger_;
 
 private:
 	bool bindScriptablesToScriptEngine(QScriptEngine &engine);
@@ -70,6 +70,7 @@ private:
 	QList<QSharedPointer<ScriptableContainer> > scriptableContainers_;
 	QMap<QString,QString>  scriptableListProperties_;
 	bool scriptingInitialized_;
+	bool debuggingEnabled_;
 
 private slots:
 	//This is called if something about a scriptable changed, so that the script

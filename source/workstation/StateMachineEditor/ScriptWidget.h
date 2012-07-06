@@ -2,6 +2,8 @@
 #define SCRIPTWIDGET_H
 #include <QTextEdit>
 #include <QtVariantPropertyManager>
+#include "ScriptSyntaxHighlighter.h"
+using namespace Picto;
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -25,6 +27,7 @@ private:
 	QtProperty *property_;
 	int lineStartTabs_;
 	bool textEdited_;
+	ScriptSyntaxHighlighter *syntaxHighlighter_;
 private slots:
 	void setScriptValue();
 };
