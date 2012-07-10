@@ -106,11 +106,6 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 
 
 	setLayout(mainLayout);
-    //QWidget *widget = new QWidget;
-    //widget->setLayout(layout);
-
-    //setCentralWidget(widget);
-    //setWindowTitle(tr("Diagramscene"));
 }
 
 StateEditViewer::~StateEditViewer()
@@ -138,8 +133,6 @@ void StateEditViewer::init()
 		}
 
 		pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
-		//pictoData_->clearErrors();
-		//pictoData_->clear();
 		Picto::Asset::clearErrors();
 		
 		if(!pictoData_->fromXml(xmlReader,false))
@@ -166,116 +159,42 @@ void StateEditViewer::aboutToSave()
 {
 	insertEditBlock();
 }
-//! [1]
-//void StateEditViewer::backgroundButtonGroupClicked(QAbstractButton *button)
-//{
-//    QList<QAbstractButton *> buttons = backgroundButtonGroup->buttons();
-//    foreach (QAbstractButton *myButton, buttons) {
-//    if (myButton != button)
-//        button->setChecked(false);
-//    }
-//    QString text = button->text();
-//    if (text == tr("Blue Grid"))
-//        scene->setBackgroundBrush(QPixmap(":/icons/background1.png"));
-//    else if (text == tr("White Grid"))
-//        scene->setBackgroundBrush(QPixmap(":/icons/background2.png"));
-//    else if (text == tr("Gray Grid"))
-//        scene->setBackgroundBrush(QPixmap(":/icons/background3.png"));
-//    else
-//        scene->setBackgroundBrush(QPixmap(":/icons/background4.png"));
-//
-//    scene->update();
-//    view->update();
-//}
 
-//! [4]
 void StateEditViewer::updateEditModeButtons(int id)
 {
 	pointerTypeGroup->button(id)->setChecked(true);
 }
 
-//! [6]
-
-//! [7]
 void StateEditViewer::itemInserted(DiagramItem *)
 {
     pointerTypeGroup->button(int(DiagramScene::Select))->setChecked(true);
     editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
     
 }
-//! [7]
 
-//! [8]
 void StateEditViewer::textInserted(QGraphicsTextItem *)
 {
     buttonGroup->button(InsertTextButton)->setChecked(false);
     editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
 }
-//! [8]
 
-//! [11]
 void StateEditViewer::sceneScaleChanged(const QString &scale)
 {
     double newScale = scale.left(scale.indexOf(tr("%"))).toDouble() / 100.0;
 	editorState_->setZoom(newScale);
 }
-//! [11]
-//void StateEditViewer::assetSelected(QSharedPointer<Asset> asset)
-//{
-//	loadAssetProperties(asset);
-//}
 
-////! [19]
-//void StateEditViewer::itemSelected(QGraphicsItem *item)
-//{
-//    DiagramTextItem *textItem =
-//    qgraphicsitem_cast<DiagramTextItem *>(item);
-//
-//	if(textItem)
-//	{
-//		QFont font = textItem->font();
-//		QColor color = textItem->defaultTextColor();
-//		fontCombo->setCurrentFont(font);
-//		fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
-//		boldAction->setChecked(font.weight() == QFont::Bold);
-//		italicAction->setChecked(font.italic());
-//		underlineAction->setChecked(font.underline());
-//		return;
-//	}
-//	//AssetItem *assetItem = qgraphicsitem_cast<AssetItem *>(item);
-//	//if(assetItem)
-//	//{
-//	//	loadAssetProperties(assetItem->getAsset());
-//	//}
-//}
-//! [19]
-
-//! [20]
 void StateEditViewer::about()
 {
     QMessageBox::about(this, tr("About State Machine Editor"),
                        tr("The <b>State Machine Editor</b> is used"
                           "to design Picto experiments."));
 }
-//! [20]
 
 void StateEditViewer::loadScene(DiagramScene* newScene)
 {
 	if(scene == newScene)
 		return;
-
-	//Unload old scene
-	//if(scene)
-	//{
-	//	disconnect(scene, SIGNAL(itemInserted(DiagramItem *)),
-	//		this, SLOT(itemInserted(DiagramItem *)));
-	//	disconnect(scene, SIGNAL(textInserted(QGraphicsTextItem *)),
-	//		this, SLOT(textInserted(QGraphicsTextItem *)));
-	//	disconnect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
-	//		this, SLOT(itemSelected(QGraphicsItem *)));
-	//	disconnect(scene, SIGNAL(sceneAssetChanged(DiagramScene *)),
-	//		this, SLOT(loadScene(DiagramScene *)));
-	//}
 
 	//Switch Scene
 	scene = newScene;
@@ -295,14 +214,8 @@ void StateEditViewer::loadScene(DiagramScene* newScene)
             this, SLOT(itemInserted(DiagramItem *)));
     connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),
         this, SLOT(textInserted(QGraphicsTextItem *)));
-    //connect(newScene, SIGNAL(itemSelected(QGraphicsItem *)),
-    //    this, SLOT(itemSelected(QGraphicsItem *)));
 	connect(editorState_.data(),SIGNAL(resetExperiment()),
 		this,SLOT(resetExperiment()));
-	//connect(editorState_.data(), SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),
- //       this, SLOT(assetSelected(QSharedPointer<Asset>)));
-	//connect(editorState_.data(), SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),
-	//	this, SLOT(loadAsset(QSharedPointer<Asset>)));
 }
 
 void StateEditViewer::resetExperiment()

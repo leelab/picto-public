@@ -478,12 +478,11 @@
     <Task id="587">
       <Name id="588">Frame and Risky Choice</Name>
       <StateMachine id="589">
-        <EntryScript id="590">
-          if(Math.random() &lt; .5)
-          lambda.value = 0;
-          else
-          lambda.value = 1;
-          tokensCollected.value = Math.floor(Math.random()*3)+2;
+        <EntryScript id="590">										if (Math.random() &lt; .5)
+										    lambda.value = 0;
+										else
+										    lambda.value = 1;
+										tokensCollected.value = Math.floor(Math.random() * 3) + 2;
         </EntryScript>
         <ExitScript id="591"/>
         <Level id="592">Stage</Level>
@@ -495,16 +494,14 @@
         </UIInfo>
         <UIOrder id="599">0</UIOrder>
         <StateMachineElement type="StateMachine" id="610">
-          <EntryScript id="611">
-																																																            blockNum.value++;
-																																																            lambda.value = !lambda.value;
-																																																            rightIsSafe.value = lambda.value;
+          <EntryScript id="611">																																																												blockNum.value++;
+																																																												blockInfo.setData(&quot;Block&quot;,blockNum.value);
+																																																												lambda.value = !lambda.value;
+																																																												rightIsSafe.value = lambda.value;
 
-																																																            //Initialize Monkey and Computer Nash Probabilities
-																																																            monkNashPr.value = (2-lambda.value)/3;
-																																																            compNashPr.value = (1+lambda.value)/3;
-
-          </EntryScript>
+																																																												//Initialize Monkey and Computer Nash Probabilities
+																																																												monkNashPr.value = (2 - lambda.value) / 3;
+																																																												compNashPr.value = (1 + lambda.value) / 3;</EntryScript>
           <ExitScript id="612"/>
           <Level id="613">Stage</Level>
           <Name id="614">Block</Name>
@@ -523,9 +520,12 @@
             <UIOrder id="652">0</UIOrder>
           </Result>
           <StateMachineElement type="StateMachine" id="656">
-            <EntryScript id="657">																												              //Computer picks its token
-																												              drawCompPick();
-            </EntryScript>
+            <EntryScript id="657">																																										//Computer picks its token
+																																										drawCompPick();
+
+																																										fixTarget.radius = fixationWindowRadius.value;
+																																										lTarget.radius = saccadeWindowRadius.value;
+																																										rTarget.radius = saccadeWindowRadius.value;</EntryScript>
             <ExitScript id="658">fixGraphic.visible = false;</ExitScript>
             <Level id="659">Stage</Level>
             <Name id="660">Trial</Name>
@@ -557,6 +557,38 @@
               <UIOrder id="2632">0</UIOrder>
               <Value id="2633">false</Value>
             </Parameter>
+            <VisualElement type="Text Graphic" id="2884">
+              <Color A="255" B="0" G="0" R="255" id="2885">#ff0000</Color>
+              <Dimensions height="50" id="2886" width="100" x="0" y="0"/>
+              <Layer id="2887">0</Layer>
+              <Name id="2888">monkeyBiasL</Name>
+              <OperatorView id="2889">true</OperatorView>
+              <Position id="2890" x="200" y="450"/>
+              <SubjectView id="2891">false</SubjectView>
+              <Text id="2892"/>
+              <UIEnabled id="2893">false</UIEnabled>
+              <UIInfo id="2894">
+                <Pos id="2895" x="66" y="584"/>
+              </UIInfo>
+              <UIOrder id="2897">0</UIOrder>
+              <Visible id="2898">true</Visible>
+            </VisualElement>
+            <VisualElement type="Text Graphic" id="2910">
+              <Color A="255" B="0" G="0" R="255" id="2911">#ff0000</Color>
+              <Dimensions height="50" id="2912" width="100" x="0" y="0"/>
+              <Layer id="2913">0</Layer>
+              <Name id="2914">monkeyBiasR</Name>
+              <OperatorView id="2915">true</OperatorView>
+              <Position id="2916" x="500" y="450"/>
+              <SubjectView id="2917">false</SubjectView>
+              <Text id="2918"/>
+              <UIEnabled id="2919">false</UIEnabled>
+              <UIInfo id="2920">
+                <Pos id="2921" x="396" y="589"/>
+              </UIInfo>
+              <UIOrder id="2923">0</UIOrder>
+              <Visible id="2924">true</Visible>
+            </VisualElement>
             <Parameter type="Boolean" id="2693">
               <FalseLabel id="2694">False</FalseLabel>
               <Name id="2695">compChoosesRight</Name>
@@ -584,34 +616,37 @@
             <ScriptFunction type="ScriptFunction" id="2321">
               <Inputs id="2322"/>
               <Name id="2323">drawCompPick</Name>
-              <Script id="2324">
-																                var center = monkNashPr;
-																                //Pick computer's choice according to Nash equilibrium
-																                //Pick of 1 means right side.
-																                var cSelect = Math.floor(Math.random()*3);
-																                compChoosesRight.value = (cSelect &lt; compNashPr.value*3)?1:0;
+              <Script id="2324">																																var center = monkNashPr;
+																																//Pick computer's choice according to Nash equilibrium
+																																//Pick of 1 means right side.
+																																var cSelect = Math.floor(Math.random() * 3);
+																																compChoosesRight.value = (cSelect &lt; compNashPr.value * 3) ? 1 : 0;
 
-																                //Algorithm1
-																                for(var i=0;i&lt;histDepth.value;i++)
-																                {
-																                if(choice.getNumEntries() &lt;= i)
-																                break;
-																                calProb(i);
-																                }
-																                //Algorithm2
-																                for(var i=0;i&lt;histDepth.value;i++)
-																                {
-																                if(choice.getNumEntries() &lt;= i)
-																                break;
-																                calProb1(i);
-																                }
+																																//Algorithm1
+																																for (var i = 0; i &lt; histDepth.value; i++) {
+																																    if (choice.getNumEntries() &lt;= i)
+																																        break;
+																																    calProb(i);
+																																}
+																																//Algorithm2
+																																for (var i = 0; i &lt; histDepth.value; i++) {
+																																    if (choice.getNumEntries() &lt;= i)
+																																        break;
+																																    calProb1(i);
+																																}
 
-																                //Update value field of info graphics to reflect finalized data
-																                alg1Pr.updateValue();
-																                alg1Bias.updateValue();
-																                alg2Pr.updateValue();
-																                alg2Bias.updateValue();
-              </Script>
+																																//Update value field of info graphics to reflect finalized data
+																																alg1Pr.updateValue();
+																																alg1Bias.updateValue();
+																																alg2Pr.updateValue();
+																																alg2Bias.updateValue();
+              
+																																//Update Operator Bias Information	
+																																if(biasYes.value)
+																																{
+																																	monkeyBiasL.text =  &quot;Bias: &quot; + (1-maxDevR.value);
+																																	monkeyBiasR.text = &quot;Bias: &quot; + maxDevR.value;
+																																}</Script>
               <UIEnabled id="2325">false</UIEnabled>
               <UIInfo id="2326">
                 <Pos id="2327" x="48" y="732"/>
@@ -621,67 +656,63 @@
             <ScriptFunction type="ScriptFunction" id="2480">
               <Inputs id="2481">depth</Inputs>
               <Name id="2482">calProb</Name>
-              <Script id="2483">																																                var BINOALPHA = 0.025;
-																																                var biasFlag = 0;
-																																                var total   = choice.getNumEntries();
-																																                var ntarget = 0;
-																																                var nright  = 0;
-																																                var biasProbR = 0;
+              <Script id="2483">																																																var BINOALPHA = binoAlpha.value;
+																																																var biasFlag = 0;
+																																																var total = choice.getNumEntries();
+																																																var ntarget = 0;
+																																																var nright = 0;
+																																																var biasProbR = 0;
 
-																																                if (depth==0)       // p(R) for entire choice set (choice_)
-																																                {
-																																                ntarget = total;
-																																                for (var m=0; m &lt; total; m++)   nright = nright + choice.getDataAsInt(m);
-																																                }
-																																                else
-																																                {
-																																                // algorithm 1
-																																                // depth 1: target = 0 or 1
-																																                //       2:          0 to 3
-																																                //       3:          0 to 7
-																																                //       4:          0 to 15
+																																																if (depth == 0)       // p(R) for entire choice set (choice_)
+																																																{
+																																																    ntarget = total;
+																																																    for (var m = 0; m &lt; total; m++) nright = nright + choice.getDataAsInt(m);
+																																																}
+																																																else {
+																																																    // algorithm 1
+																																																    // depth 1: target = 0 or 1
+																																																    //       2:          0 to 3
+																																																    //       3:          0 to 7
+																																																    //       4:          0 to 15
 
-																																                var target = 0.0;
-																																                for (var m=0 ; m&lt;depth ; m++)
-																																                target = target+ Math.pow(2,m)*choice.getDataAsInt(total-m-1);
+																																																    var target = 0.0;
+																																																    for (var m = 0; m &lt; depth; m++)
+																																																        target = target + Math.pow(2, m) * choice.getDataAsInt(total - m - 1);
 
-																																                for (var i=total-2; i &gt;= depth-1 ; i--)
-																																                {
-																																                var sample = 0.0;
-																																                for (var m=0 ; m&lt;depth ; m++)
-																																                sample = sample+ Math.pow(2.0,m)*choice.getDataAsInt(i-m);
+																																																    for (var i = total - 2; i &gt;= depth - 1; i--) {
+																																																        var sample = 0.0;
+																																																        for (var m = 0; m &lt; depth; m++)
+																																																            sample = sample + Math.pow(2.0, m) * choice.getDataAsInt(i - m);
 
-																																                if (sample == target)
-																																                {
-																																                ntarget++;
-																																                nright = nright+choice.getDataAsInt(i+1);
-																																                }
-																																                }
-																																                }
+																																																        if (sample == target) {
+																																																            ntarget++;
+																																																            nright = nright + choice.getDataAsInt(i + 1);
+																																																        }
+																																																    }
+																																																}
 
-																																                // biasflag 0 : around the equilibrium
-																																                //          1 : rightward bias
-																																                //          2 : leftward bias
+																																																// biasflag 0 : around the equilibrium
+																																																//          1 : rightward bias
+																																																//          2 : leftward bias
 
-																																                if (ntarget&gt;0)
-																																                {
-																																                // rightward bias
-																																                var upperp = binocdf(nright-1, ntarget, monkNashPr.value);
-																																                // leftward bias
-																																                var lowerp = binocdf(nright,   ntarget, monkNashPr.value);
+																																																if (ntarget &gt; 0) {
+																																																    // rightward bias
+																																																    var upperp = binocdf(nright - 1, ntarget, monkNashPr.value);
+																																																    // leftward bias
+																																																    var lowerp = binocdf(nright, ntarget, monkNashPr.value);
 
-																																                if (1-upperp &lt;= BINOALPHA)		biasFlag = 1;
-																																                else if (lowerp &lt;= BINOALPHA)	biasFlag = 2;
-																																                biasProbR = nright / ntarget;
-																																                }
-																																                else biasProbR = -1.0;
+																																																    if (1 - upperp &lt;= BINOALPHA) biasFlag = 1;
+																																																    else if (lowerp &lt;= BINOALPHA) biasFlag = 2;
+																																																    biasProbR = nright / ntarget;
+																																																}
+																																																else biasProbR = -1.0;
 
-																																                //Write latest data out to OperatorInfo graphics
-																																                alg1Pr.setData(depth,biasProbR);
-																																                alg1Bias.setData(depth,biasFlag);
+																																																//Write latest data out to OperatorInfo graphics
+																																																alg1Pr.setData(depth, biasProbR);
+																																																alg1Bias.setData(depth, biasFlag);
 
-																																                //Update the computer choice with latest data
-																																                updateCompChoice(biasFlag,biasProbR);
+																																																//Update the computer choice with latest data
+																																																updateCompChoice(biasFlag, biasProbR);
               </Script>
               <UIEnabled id="2484">false</UIEnabled>
               <UIInfo id="2485">
@@ -692,72 +723,67 @@
             <ScriptFunction type="ScriptFunction" id="2494">
               <Inputs id="2495">depth</Inputs>
               <Name id="2496">calProb1</Name>
-              <Script id="2497">
-                var BINOALPHA = 0.025;
-                var biasFlag = 0;
-                var total   = choice.getNumEntries();
-                var ntarget = 0;
-                var nright  = 0;
-                var biasProbR = 0;
+              <Script id="2497">																var BINOALPHA = binoAlpha.value;
+																var biasFlag = 0;
+																var total = choice.getNumEntries();
+																var ntarget = 0;
+																var nright = 0;
+																var biasProbR = 0;
 
-                var crcomb = new Array(total);
-                for (var m=0; m &lt; total; m++)
-                crcomb[m]=2*choice.getDataAsInt(m) + reward.getDataAsInt(m);
+																var crcomb = new Array(total);
+																for (var m = 0; m &lt; total; m++)
+																    crcomb[m] = 2 * choice.getDataAsInt(m) + reward.getDataAsInt(m);
 
-                if (depth==0)       // p(R) for entire choice set (choice_)
-                {
-                ntarget = total;
-                for (var m=0; m &lt; total; m++)   nright = nright + choice.getDataAsInt(m);
-                }
-                else
-                {
-                // algorithm 2
-                // depth 1: target = 0 or 1
-                //       2:          0 to 3
-                //       3:          0 to 7
-                //       4:          0 to 15
+																if (depth == 0)       // p(R) for entire choice set (choice_)
+																{
+																    ntarget = total;
+																    for (var m = 0; m &lt; total; m++) nright = nright + choice.getDataAsInt(m);
+																}
+																else {
+																    // algorithm 2
+																    // depth 1: target = 0 or 1
+																    //       2:          0 to 3
+																    //       3:          0 to 7
+																    //       4:          0 to 15
 
-                var target = 0.0;
-                for (var m=0 ; m&lt;depth ; m++)
-                target = target+ Math.pow(4,m)*crcomb[total-m-1];
+																    var target = 0.0;
+																    for (var m = 0; m &lt; depth; m++)
+																        target = target + Math.pow(4, m) * crcomb[total - m - 1];
 
-                for (var i=total-2; i &gt;= depth-1 ; i--)
-                {
-                var sample = 0.0;
-                for (var m=0 ; m&lt;depth ; m++)
-                sample = sample+ Math.pow(4.0,m)*crcomb[i-m];
+																    for (var i = total - 2; i &gt;= depth - 1; i--) {
+																        var sample = 0.0;
+																        for (var m = 0; m &lt; depth; m++)
+																            sample = sample + Math.pow(4.0, m) * crcomb[i - m];
 
-                if (sample == target)
-                {
-                ntarget++;
-                nright = nright+choice.getDataAsInt(i+1);
-                }
-                }
-                }
+																        if (sample == target) {
+																            ntarget++;
+																            nright = nright + choice.getDataAsInt(i + 1);
+																        }
+																    }
+																}
 
-                // biasflag 0 : around the equilibrium
-                //          1 : rightward bias
-                //          2 : leftward bias
+																// biasflag 0 : around the equilibrium
+																//          1 : rightward bias
+																//          2 : leftward bias
 
-                if (ntarget&gt;0)
-                {
-                // rightward bias
-                var upperp = binocdf(nright-1, ntarget, monkNashPr.value);
-                // leftward bias
-                var lowerp = binocdf(nright,   ntarget, monkNashPr.value);
+																if (ntarget &gt; 0) {
+																    // rightward bias
+																    var upperp = binocdf(nright - 1, ntarget, monkNashPr.value);
+																    // leftward bias
+																    var lowerp = binocdf(nright, ntarget, monkNashPr.value);
 
-                if (1-upperp &lt;= BINOALPHA)		biasFlag = 1;
-                else if (lowerp &lt;= BINOALPHA)	biasFlag = 2;
-                biasProbR = nright / ntarget;
-                }
-                else biasProbR = -1.0;
+																    if (1 - upperp &lt;= BINOALPHA) biasFlag = 1;
+																    else if (lowerp &lt;= BINOALPHA) biasFlag = 2;
+																    biasProbR = nright / ntarget;
+																}
+																else biasProbR = -1.0;
 
-                //Write latest data out to OperatorInfo graphics
-                alg2Pr.setData(depth,biasProbR);
-                alg2Bias.setData(depth,biasFlag);
+																//Write latest data out to OperatorInfo graphics
+																alg2Pr.setData(depth, biasProbR);
+																alg2Bias.setData(depth, biasFlag);
 
-                //Update the computer choice with latest data
-                updateCompChoice(biasFlag,biasProbR);
+																//Update the computer choice with latest data
+																updateCompChoice(biasFlag, biasProbR);
               </Script>
               <UIEnabled id="2498">false</UIEnabled>
               <UIInfo id="2499">
@@ -768,22 +794,19 @@
             <ScriptFunction type="ScriptFunction" id="2564">
               <Inputs id="2565">biasFlag,biasProbR</Inputs>
               <Name id="2566">updateCompChoice</Name>
-              <Script id="2567">
-																                var center = monkNashPr.value;
-																                if((biasFlag == 1) &amp;&amp; (biasProbR-center &gt;  pDev.value))
-																                {
-																                pDev.value     =  biasProbR-center;
-																                maxDevR.value =  biasProbR;
-																                compChoosesRight.value =  0;
-																                biasYes.value =  true;
-																                }
-																                else if((biasFlag == 2) &amp;&amp; (center-biasProbR &gt;  pDev.value))
-																                {
-																                pDev.value     =  center-biasProbR;
-																                maxDevR.value =  biasProbR;
-																                compChoosesRight.value =  1;
-																                biasYes.value =  true;
-																                }
+              <Script id="2567">																																var center = monkNashPr.value;
+																																if ((biasFlag == 1) &amp;&amp; (biasProbR - center &gt; pDev.value)) {
+																																    pDev.value = biasProbR - center;
+																																    maxDevR.value = biasProbR;
+																																    compChoosesRight.value = 0;
+																																    biasYes.value = true;
+																																}
+																																else if ((biasFlag == 2) &amp;&amp; (center - biasProbR &gt; pDev.value)) {
+																																    pDev.value = center - biasProbR;
+																																    maxDevR.value = biasProbR;
+																																    compChoosesRight.value = 1;
+																																    biasYes.value = true;
+																																}
               </Script>
               <UIEnabled id="2568">false</UIEnabled>
               <UIInfo id="2569">
@@ -794,12 +817,12 @@
             <ScriptFunction type="ScriptFunction" id="2640">
               <Inputs id="2641">x,n,p</Inputs>
               <Name id="2642">binocdf</Name>
-              <Script id="2643">
-                var newx = 0;
-                if(x+1.0&gt;=n) newx=n;
-                else newx=x+1.0;
-                return 1.0-betai(newx, n-newx+1.0, p);
-              </Script>
+              <Script id="2643">																var newx = 0;
+																if (x + 1.0 &gt;= n)
+																    newx = n;
+																else
+																    newx = x + 1.0;
+																return 1.0-betai(newx, n-newx+1.0, p);</Script>
               <UIEnabled id="2644">false</UIEnabled>
               <UIInfo id="2645">
                 <Pos id="2646" x="107" y="896"/>
@@ -809,18 +832,16 @@
             <ScriptFunction type="ScriptFunction" id="2654">
               <Inputs id="2655">a,b,x</Inputs>
               <Name id="2656">betai</Name>
-              <Script id="2657">
-                var bt = 0.0;
+              <Script id="2657">																var bt = 0.0;
 
-                if (x &lt; 0.0 || x &gt; 1.0) return 0.5;
-                if (x == 0.0 || x == 1.0) bt=0.0;
-                else
-                bt=Math.exp(gammln(a+b)-gammln(a)-gammln(b)+a*Math.log(x)+b*Math.log(1.0-x));
-                if (x &lt; (a+1.0)/(a+b+2.0))
-                return bt*betacf(a,b,x)/a;
-                else
-                return 1.0-bt*betacf(b,a,1.0-x)/b;
-              </Script>
+																if (x &lt; 0.0 || x &gt; 1.0) return 0.5;
+																if (x == 0.0 || x == 1.0) bt = 0.0;
+																else
+																    bt = Math.exp(gammln(a + b) - gammln(a) - gammln(b) + a * Math.log(x) + b * Math.log(1.0 - x));
+																if (x &lt; (a + 1.0) / (a + b + 2.0))
+																    return bt * betacf(a, b, x) / a;
+																else
+																    return 1.0 - bt * betacf(b, a, 1.0 - x) / b;</Script>
               <UIEnabled id="2658">false</UIEnabled>
               <UIInfo id="2659">
                 <Pos id="2660" x="207" y="898"/>
@@ -830,19 +851,17 @@
             <ScriptFunction type="ScriptFunction" id="2668">
               <Inputs id="2669">xx</Inputs>
               <Name id="2670">gammln</Name>
-              <Script id="2671">
-																																                var cof=[76.18009172947146,-86.50532032941677,
-																																                24.01409824083091,-1.231739572450155,
-																																                0.1208650973866179e-2,-0.5395239384953e-5];
+              <Script id="2671">																																																var cof = [76.18009172947146, -86.50532032941677,
+																																																            24.01409824083091, -1.231739572450155,
+																																																            0.1208650973866179e-2, -0.5395239384953e-5];
 
-																																                var y=xx;
-																																                var x=xx;
-																																                var tmp=x+5.5;
-																																                tmp -= (x+0.5)*Math.log(tmp);
-																																                var ser=1.000000000190015;
-																																                for (var j=0;j&lt;=5;j++) ser += cof[j]/++y;
-																																                return -tmp+Math.log(2.5066282746310005*ser/x);
-              </Script>
+																																																var y = xx;
+																																																var x = xx;
+																																																var tmp = x + 5.5;
+																																																tmp -= (x + 0.5) * Math.log(tmp);
+																																																var ser = 1.000000000190015;
+																																																for (var j = 0; j &lt;= 5; j++) ser += cof[j] / ++y;
+																																																return -tmp + Math.log(2.5066282746310005 * ser / x);</Script>
               <UIEnabled id="2672">false</UIEnabled>
               <UIInfo id="2673">
                 <Pos id="2674" x="203" y="976"/>
@@ -852,41 +871,39 @@
             <ScriptFunction type="ScriptFunction" id="2682">
               <Inputs id="2683">a,b,x</Inputs>
               <Name id="2684">betacf</Name>
-              <Script id="2685">
-                var FPMIN = 1.0e-30
-                var EPS = 3.0e-7;
-                var MAXIT=100;
-                var qab=a+b;
-                var qap=a+1.0;
-                var qam=a-1.0;
-                var c=1.0;
-                var d=1.0-qab*x/qap;
-                var aa = 0;
-                var del = 0;
-                if (Math.abs(d) &lt; FPMIN) d=FPMIN;
-                d=1.0/d;
-                var h=d;
-                for (var m=1;m&lt;=MAXIT;m++) {
-                m2=2*m;
-                aa=m*(b-m)*x/((qam+m2)*(a+m2));
-                d=1.0+aa*d;
-                if (Math.abs(d) &lt; FPMIN) d=FPMIN;
-                c=1.0+aa/c;
-                if (Math.abs(c) &lt; FPMIN) c=FPMIN;
-                d=1.0/d;
-                h *= d*c;
-                aa = -(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
-                d=1.0+aa*d;
-                if (Math.abs(d) &lt; FPMIN) d=FPMIN;
-                c=1.0+aa/c;
-                if (Math.abs(c) &lt; FPMIN) c=FPMIN;
-                d=1.0/d;
-                del=d*c;
-                h *= del;
-                if (Math.abs(del-1.0) &lt; EPS) break;
-                }
-                return h;
-              </Script>
+              <Script id="2685">																var FPMIN = 1.0e-30
+																var EPS = 3.0e-7;
+																var MAXIT = 100;
+																var qab = a + b;
+																var qap = a + 1.0;
+																var qam = a - 1.0;
+																var c = 1.0;
+																var d = 1.0 - qab * x / qap;
+																var aa = 0;
+																var del = 0;
+																if (Math.abs(d) &lt; FPMIN) d = FPMIN;
+																d = 1.0 / d;
+																var h = d;
+																for (var m = 1; m &lt;= MAXIT; m++) {
+																    m2 = 2 * m;
+																    aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+																    d = 1.0 + aa * d;
+																    if (Math.abs(d) &lt; FPMIN) d = FPMIN;
+																    c = 1.0 + aa / c;
+																    if (Math.abs(c) &lt; FPMIN) c = FPMIN;
+																    d = 1.0 / d;
+																    h *= d * c;
+																    aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+																    d = 1.0 + aa * d;
+																    if (Math.abs(d) &lt; FPMIN) d = FPMIN;
+																    c = 1.0 + aa / c;
+																    if (Math.abs(c) &lt; FPMIN) c = FPMIN;
+																    d = 1.0 / d;
+																    del = d * c;
+																    h *= del;
+																    if (Math.abs(del - 1.0) &lt; EPS) break;
+																}
+																return h;</Script>
               <UIEnabled id="2686">false</UIEnabled>
               <UIInfo id="2687">
                 <Pos id="2688" x="106" y="976"/>
@@ -903,7 +920,8 @@
             </Result>
             <StateMachineElement type="State" id="1116">
               <BackgroundColor A="255" B="0" G="0" R="0" id="1117">#000000</BackgroundColor>
-              <EntryScript id="1118"/>
+              <EntryScript id="1118">FixController.maxAcquisitionTime = fixationWaitTime.value;
+FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</EntryScript>
               <ExitScript id="1119"/>
               <FrameScript id="1120"/>
               <Name id="1121">Fixation</Name>
@@ -1013,12 +1031,11 @@
                 <Source id="887">FixController</Source>
                 <SourceResult id="897">Broke Fixation</SourceResult>
               </Transition>
-            </StateMachineElement>
+            <Parameter type="Range" id="2752"><Increment id="2753">1</Increment><Max id="2754">100000</Max><Min id="2755">1</Min><Name id="2756">fixationWaitTime</Name><UIEnabled id="2757">true</UIEnabled><UIInfo id="2758"><Pos id="2759" x="161" y="480"/></UIInfo><UIOrder id="2761">0</UIOrder><Units id="2762"/><Value id="2763">3000</Value></Parameter></StateMachineElement>
             <StateMachineElement type="State" id="1134">
               <BackgroundColor A="255" B="0" G="0" R="0" id="1135">#000000</BackgroundColor>
-              <EntryScript id="1136">
-                lCircle.visible = true;
-                rCircle.visible = true;
+              <EntryScript id="1136">																lCircle.visible = true;
+																rCircle.visible = true;
               </EntryScript>
               <ExitScript id="1137">fixGraphic.visible = false;</ExitScript>
               <FrameScript id="1138"/>
@@ -1132,7 +1149,7 @@
             </StateMachineElement>
             <StateMachineElement type="State" id="1152">
               <BackgroundColor A="255" B="0" G="0" R="0" id="1153">#000000</BackgroundColor>
-              <EntryScript id="1154"/>
+              <EntryScript id="1154">SampleChoiceControl.totalTime = saccadeWaitTime.value+SampleChoiceControl.fixationTime;</EntryScript>
               <ExitScript id="1155"/>
               <FrameScript id="1156"/>
               <Name id="1157">SampleChoiceControl</Name>
@@ -1180,7 +1197,7 @@
                   <UIOrder id="1631">0</UIOrder>
                 </Result>
                 <SignalChannel id="1592">Position</SignalChannel>
-                <TargetEntryScript id="1593"/>
+                <TargetEntryScript id="1593">choiceEntered.value = true;</TargetEntryScript>
                 <TargetExitScript id="1594"/>
                 <TimeUnits id="1595">Ms</TimeUnits>
                 <TotalTime id="1596">1500</TotalTime>
@@ -1234,26 +1251,21 @@
                 <Source id="1305">SampleChoiceControl</Source>
                 <SourceResult id="1306">Broke Fixation</SourceResult>
               </Transition>
-            </StateMachineElement>
+            <Parameter type="Range" id="2772"><Increment id="2773">0</Increment><Max id="2774">100000</Max><Min id="2775">1</Min><Name id="2776">saccadeWaitTime</Name><UIEnabled id="2777">true</UIEnabled><UIInfo id="2778"><Pos id="2779" x="122" y="513"/></UIInfo><UIOrder id="2781">0</UIOrder><Units id="2782"/><Value id="2783">1000</Value></Parameter><Parameter type="Boolean" id="2872"><FalseLabel id="2873">False</FalseLabel><Name id="2874">choiceEntered</Name><TrueLabel id="2875">True</TrueLabel><UIEnabled id="2876">false</UIEnabled><UIInfo id="2877"><Pos id="2878" x="277" y="515"/></UIInfo><UIOrder id="2880">0</UIOrder><Value id="2881">false</Value></Parameter></StateMachineElement>
             <StateMachineElement type="State" id="1170">
               <BackgroundColor A="255" B="0" G="0" R="0" id="1171">#000000</BackgroundColor>
-              <EntryScript id="1172">
-                if((compChoosesRight.value &amp;&amp; rCircle.visible)
-                || (!compChoosesRight.value &amp;&amp; lCircle.visible))
-                {	//User Win
-                feedbackRing.red=255;
-                }
-                else if(rCircle.visible == rightIsSafe.value)
-                {	//Neutral
-                feedbackRing.blue=255;
-                }
-                else
-                {	//User Lose
-                feedbackRing.setColor(192,192,192,255);
-                }
+              <EntryScript id="1172">																if ((compChoosesRight.value &amp;&amp; rCircle.visible)
+																                || (!compChoosesRight.value &amp;&amp; lCircle.visible)) {	//User Win
+																    feedbackRing.red = 255;
+																}
+																else if (rCircle.visible == rightIsSafe.value) {	//Neutral
+																    feedbackRing.blue = 255;
+																}
+																else {	//User Lose
+																    feedbackRing.setColor(192, 192, 192, 255);
+																}
 
-                feedbackRing.visible = true;
-              </EntryScript>
+																feedbackRing.visible = true;</EntryScript>
               <ExitScript id="1173"/>
               <FrameScript id="1174"/>
               <Name id="1175">ShowRing</Name>
@@ -1297,23 +1309,28 @@
             </StateMachineElement>
             <StateMachineElement type="State" id="1188">
               <BackgroundColor A="255" B="0" G="0" R="0" id="1189">#000000</BackgroundColor>
-              <EntryScript id="1190">
-                var tokens = [token0,token1,token2,token3,token4,token5];
-                if(feedbackRing.red==255)
-                {	//Win
-                tokens[tokensCollected.value].outline = false;
-                tokensCollected.value++;
-                reward.setData(reward.getNumEntries(),1);
-                }
-                else if(feedbackRing.blue!=255 &amp;&amp; tokensCollected.value&gt;0)
-                {	//Lose
-                tokens[tokensCollected.value-1].outline = true;
-                tokensCollected.value--;
-                reward.setData(reward.getNumEntries(),0);
-                }
-                else
-                reward.setData(reward.getNumEntries(),0);
-                reward.updateValue();
+              <EntryScript id="1190">																var tokens = [token0, token1, token2, token3, token4, token5];
+																if (feedbackRing.red == 255) {	//Win
+																    tokens[tokensCollected.value].outline = false;
+																    tokensCollected.value++;
+																    numGain.value++;
+																    reward.setData(reward.getNumEntries(), 1);
+																}
+																else if (feedbackRing.blue != 255 &amp;&amp; tokensCollected.value &gt; 0) {	//Lose
+																    tokens[tokensCollected.value - 1].outline = true;
+																    tokensCollected.value--;
+																    numLoss.value++;
+																    reward.setData(reward.getNumEntries(), 0);
+																}
+																else
+																{
+																    numNeutral.value++;
+																    reward.setData(reward.getNumEntries(), 0);
+																}
+																blockInfo.setData(&quot;Gain%&quot;,Math.round(100*(numGain.value)/(trialNum.value+1)));
+																blockInfo.setData(&quot;Loss%&quot;,Math.round(100*(numLoss.value)/(trialNum.value+1)));
+																blockInfo.setData(&quot;Neutral%&quot;,Math.round(100*(numNeutral.value)/(trialNum.value+1)));
+																reward.updateValue();
               </EntryScript>
               <ExitScript id="1191"/>
               <FrameScript id="1192"/>
@@ -1369,7 +1386,7 @@
               <Position id="1243" x="400" y="300"/>
               <Radius id="1244">50</Radius>
               <SubjectView id="1245">false</SubjectView>
-              <UIEnabled id="1246">true</UIEnabled>
+              <UIEnabled id="1246">false</UIEnabled>
               <UIInfo id="1247">
                 <Pos id="1248" x="246" y="393"/>
               </UIInfo>
@@ -1491,13 +1508,11 @@
                 </UIInfo>
                 <UIOrder id="1487">0</UIOrder>
               </Result>
-              <Script id="1756">
-                rCircle.visible = false;
-                feedbackRing.x=250;
-                choice.setData(choice.getNumEntries(),0);
-                choice.updateValue();
-                return true;
-              </Script>
+              <Script id="1756">																rCircle.visible = false;
+																feedbackRing.x=250;
+																choice.setData(choice.getNumEntries(),0);
+																choice.updateValue();
+																return true;</Script>
               <Type id="1757">ScriptElement</Type>
               <UIEnabled id="1758">false</UIEnabled>
               <UIInfo id="1759">
@@ -1511,7 +1526,7 @@
                 <Name id="1510">false</Name>
                 <UIEnabled id="1511">false</UIEnabled>
                 <UIInfo id="1512">
-                  <Pos id="1513" x="0" y="0"/>
+                  <Pos id="1513" x="2000" y="2000"/>
                 </UIInfo>
                 <UIOrder id="1515">0</UIOrder>
               </Result>
@@ -1519,16 +1534,15 @@
                 <Name id="1520">true</Name>
                 <UIEnabled id="1521">false</UIEnabled>
                 <UIInfo id="1522">
-                  <Pos id="1523" x="0" y="0"/>
+                  <Pos id="1523" x="2075" y="2000"/>
                 </UIInfo>
                 <UIOrder id="1525">0</UIOrder>
               </Result>
-              <Script id="1770">
-                lCircle.visible = false;
-                feedbackRing.x=550;
-                choice.setData(choice.getNumEntries(),1);
-                choice.updateValue();
-                return true;
+              <Script id="1770">																lCircle.visible = false;
+																feedbackRing.x=550;
+																choice.setData(choice.getNumEntries(),1);
+																choice.updateValue();
+																return true;
               </Script>
               <Type id="1771">ScriptElement</Type>
               <UIEnabled id="1772">false</UIEnabled>
@@ -1594,7 +1608,7 @@
               <Source id="1681">ShowDot</Source>
               <SourceResult id="1682">Done</SourceResult>
             </Transition>
-          </StateMachineElement>
+          <Parameter type="Range" id="2792"><Increment id="2793">0</Increment><Max id="2794">400</Max><Min id="2795">1</Min><Name id="2796">saccadeWindowRadius</Name><UIEnabled id="2797">true</UIEnabled><UIInfo id="2798"><Pos id="2799" x="594" y="561"/></UIInfo><UIOrder id="2801">0</UIOrder><Units id="2802"/><Value id="2803">65</Value></Parameter><Parameter type="Range" id="2812"><Increment id="2813">0</Increment><Max id="2814">400</Max><Min id="2815">1</Min><Name id="2816">fixationWindowRadius</Name><UIEnabled id="2817">true</UIEnabled><UIInfo id="2818"><Pos id="2819" x="731" y="560"/></UIInfo><UIOrder id="2821">0</UIOrder><Units id="2822"/><Value id="2823">50</Value></Parameter><Parameter type="Double" id="2856"><Max id="2857">1</Max><Min id="2858">0</Min><Name id="2859">binoAlpha</Name><UIEnabled id="2860">true</UIEnabled><UIInfo id="2861"><Pos id="2862" x="701" y="834"/></UIInfo><UIOrder id="2864">0</UIOrder><Value id="2865">0.025</Value></Parameter></StateMachineElement>
           <StateMachineElement type="ScriptElement" id="674">
             <Name id="675">IsDone</Name>
             <Result id="629">
@@ -1613,13 +1627,12 @@
               </UIInfo>
               <UIOrder id="669">0</UIOrder>
             </Result>
-            <Script id="676">
-              if(trialNum.value &lt; minTrialsPerBlock.value)
-              return false;
-              if(Math.random()*100 &gt;= switchProb.value)
-              return false;
-              return true;
-            </Script>
+            <Script id="676">														blockInfo.updateValue();
+														if(trialNum.value &lt; minTrialsPerBlock.value)
+														    return false;
+														if(Math.random()*100 &gt;= switchProb.value)
+														    return false;
+														return true;</Script>
             <Type id="677">ScriptElement</Type>
             <UIEnabled id="678">false</UIEnabled>
             <UIInfo id="679">
@@ -1697,11 +1710,9 @@
               </UIInfo>
               <UIOrder id="776">0</UIOrder>
             </Result>
-            <Script id="810">
-              if(tokensCollected.value &lt; 6)
-              return false;
-              return true;
-            </Script>
+            <Script id="810">														if(tokensCollected.value &lt; 6)
+														    return false;
+														return true;</Script>
             <Type id="811">ScriptElement</Type>
             <UIEnabled id="812">false</UIEnabled>
             <UIInfo id="813">
@@ -1710,18 +1721,13 @@
             <UIOrder id="816">0</UIOrder>
           </StateMachineElement>
           <StateMachineElement type="StateMachine" id="822">
-            <EntryScript id="823">
-              Reward.unitQuantity = rewardQuantity.value;
-            </EntryScript>
-            <ExitScript id="824">
-              fixGraphic.visible = false;
-              tokensCollected.value = Math.floor(Math.random()*3)+2;
-              var tokens = [token0,token1,token2,token3,token4,token5];
-              for(i=0;i&lt;tokens.length;i++)
-              {
-              tokens[i].visible = false;
-              }
-            </ExitScript>
+            <EntryScript id="823">														Reward.unitQuantity = rewardQuantity.value;           </EntryScript>
+            <ExitScript id="824">														fixGraphic.visible = false;
+														tokensCollected.value = Math.floor(Math.random() * 3) + 2;
+														var tokens = [token0, token1, token2, token3, token4, token5];
+														for (i = 0; i &lt; tokens.length; i++) {
+														    tokens[i].visible = false;
+														}</ExitScript>
             <Level id="825">Stage</Level>
             <Name id="826">ConsumeTrial</Name>
             <Type id="827">StateMachine</Type>
@@ -1743,9 +1749,9 @@
               <Max id="2170">1000</Max>
               <Min id="2171">1</Min>
               <Name id="2172">rewardQuantity</Name>
-              <UIEnabled id="2173">false</UIEnabled>
+              <UIEnabled id="2173">true</UIEnabled>
               <UIInfo id="2174">
-                <Pos id="2175" x="200" y="453"/>
+                <Pos id="2175" x="102" y="409"/>
               </UIInfo>
               <UIOrder id="2177">0</UIOrder>
               <Units id="2178"/>
@@ -1808,7 +1814,7 @@
                 <Time id="2342">500</Time>
                 <TimeUnits id="2343">Ms</TimeUnits>
                 <Type id="2344"/>
-                <UIEnabled id="2345">false</UIEnabled>
+                <UIEnabled id="2345">true</UIEnabled>
                 <UIInfo id="2346">
                   <Pos id="2347" x="184" y="143"/>
                 </UIInfo>
@@ -1895,13 +1901,11 @@
           </StateMachineElement>
           <StateMachineElement type="State" id="888">
             <BackgroundColor A="255" B="0" G="0" R="0" id="889">#000000</BackgroundColor>
-            <EntryScript id="890">
-              var tokens = [token0,token1,token2,token3,token4,token5];
-              for(var i=0;i&lt;tokens.length;i++)
-              {
-              tokens[i].outline = i&gt;=tokensCollected.value;
-              tokens[i].visible = true;
-              }
+            <EntryScript id="890">														var tokens = [token0, token1, token2, token3, token4, token5];
+														for (var i = 0; i &lt; tokens.length; i++) {
+														    tokens[i].outline = i &gt;= tokensCollected.value;
+														    tokens[i].visible = true;
+														}
             </EntryScript>
             <ExitScript id="891">fixGraphic.visible = true;</ExitScript>
             <FrameScript id="892"/>
@@ -2088,7 +2092,7 @@
             <OutlineThickness id="1213">0</OutlineThickness>
             <Position id="1214" x="400" y="300"/>
             <SubjectView id="1215">true</SubjectView>
-            <UIEnabled id="1216">true</UIEnabled>
+            <UIEnabled id="1216">false</UIEnabled>
             <UIInfo id="1217">
               <Pos id="1218" x="143" y="439"/>
             </UIInfo>
@@ -2143,7 +2147,7 @@
             <OperatorView id="2458">true</OperatorView>
             <Position id="2459" x="0" y="20"/>
             <SubjectView id="2460">false</SubjectView>
-            <UIEnabled id="2461">true</UIEnabled>
+            <UIEnabled id="2461">false</UIEnabled>
             <UIInfo id="2462">
               <Pos id="2463" x="438" y="740"/>
             </UIInfo>
@@ -2160,7 +2164,7 @@
             <OperatorView id="2702">true</OperatorView>
             <Position id="2703" x="0" y="40"/>
             <SubjectView id="2704">false</SubjectView>
-            <UIEnabled id="2705">true</UIEnabled>
+            <UIEnabled id="2705">false</UIEnabled>
             <UIInfo id="2706">
               <Pos id="2707" x="449" y="833"/>
             </UIInfo>
@@ -2177,7 +2181,7 @@
             <OperatorView id="2402">true</OperatorView>
             <Position id="2403" x="0" y="60"/>
             <SubjectView id="2404">false</SubjectView>
-            <UIEnabled id="2405">true</UIEnabled>
+            <UIEnabled id="2405">false</UIEnabled>
             <UIInfo id="2406">
               <Pos id="2407" x="553" y="730"/>
             </UIInfo>
@@ -2194,7 +2198,7 @@
             <OperatorView id="2430">true</OperatorView>
             <Position id="2431" x="0" y="80"/>
             <SubjectView id="2432">false</SubjectView>
-            <UIEnabled id="2433">true</UIEnabled>
+            <UIEnabled id="2433">false</UIEnabled>
             <UIInfo id="2434">
               <Pos id="2435" x="550" y="833"/>
             </UIInfo>
@@ -2211,7 +2215,7 @@
             <OperatorView id="2514">true</OperatorView>
             <Position id="2515" x="0" y="100"/>
             <SubjectView id="2516">false</SubjectView>
-            <UIEnabled id="2517">true</UIEnabled>
+            <UIEnabled id="2517">false</UIEnabled>
             <UIInfo id="2518">
               <Pos id="2519" x="660" y="727"/>
             </UIInfo>
@@ -2228,7 +2232,7 @@
             <OperatorView id="2542">true</OperatorView>
             <Position id="2543" x="0" y="120"/>
             <SubjectView id="2544">false</SubjectView>
-            <UIEnabled id="2545">true</UIEnabled>
+            <UIEnabled id="2545">false</UIEnabled>
             <UIInfo id="2546">
               <Pos id="2547" x="656" y="832"/>
             </UIInfo>
@@ -2236,7 +2240,8 @@
             <Values id="2550"/>
             <Visible id="2551">true</Visible>
           </VisualElement>
-        <StateMachineElement type="ScriptElement" id="2678"><Name id="2679">IncTrialNum</Name><Result id="2443"><Name id="2444">false</Name><UIEnabled id="2445">false</UIEnabled><UIInfo id="2446"><Pos id="2447" x="0" y="0"/></UIInfo><UIOrder id="2449">0</UIOrder></Result><Result id="2468"><Name id="2469">true</Name><UIEnabled id="2470">false</UIEnabled><UIInfo id="2471"><Pos id="2472" x="0" y="0"/></UIInfo><UIOrder id="2474">0</UIOrder></Result><Script id="2680">trialNum.value++;</Script><Type id="2681">ScriptElement</Type><UIEnabled id="2689">false</UIEnabled><UIInfo id="2691"><Pos id="2692" x="482" y="48"/></UIInfo><UIOrder id="2718">0</UIOrder></StateMachineElement><Transition id="2492"><Destination id="2493">IncTrialNum</Destination><Source id="2501">Trial</Source><SourceResult id="2503">Complete</SourceResult></Transition><Transition id="2504"><Destination id="2505">PostWatch</Destination><Source id="2506">IncTrialNum</Source><SourceResult id="2507">false</SourceResult></Transition><Transition id="2520"><Destination id="2524">PostWatch</Destination><Source id="2525">IncTrialNum</Source><SourceResult id="2526">true</SourceResult></Transition></StateMachineElement>
+        <StateMachineElement type="ScriptElement" id="2678"><Name id="2679">IncTrialNum</Name><Result id="2443"><Name id="2444">false</Name><UIEnabled id="2445">false</UIEnabled><UIInfo id="2446"><Pos id="2447" x="0" y="0"/></UIInfo><UIOrder id="2449">0</UIOrder></Result><Result id="2468"><Name id="2469">true</Name><UIEnabled id="2470">false</UIEnabled><UIInfo id="2471"><Pos id="2472" x="0" y="0"/></UIInfo><UIOrder id="2474">0</UIOrder></Result><Script id="2680">trialNum.value++;
+blockInfo.setData(&quot;Trial&quot;,trialNum.value);</Script><Type id="2681">ScriptElement</Type><UIEnabled id="2689">false</UIEnabled><UIInfo id="2691"><Pos id="2692" x="482" y="48"/></UIInfo><UIOrder id="2718">0</UIOrder></StateMachineElement><Transition id="2492"><Destination id="2493">IncTrialNum</Destination><Source id="2501">Trial</Source><SourceResult id="2503">Complete</SourceResult></Transition><Transition id="2504"><Destination id="2505">PostWatch</Destination><Source id="2506">IncTrialNum</Source><SourceResult id="2507">false</SourceResult></Transition><Transition id="2520"><Destination id="2524">PostWatch</Destination><Source id="2525">IncTrialNum</Source><SourceResult id="2526">true</SourceResult></Transition><Parameter type="Numeric" id="2944"><Name id="2945">numGain</Name><UIEnabled id="2946">false</UIEnabled><UIInfo id="2947"><Pos id="2948" x="134" y="922"/></UIInfo><UIOrder id="2950">0</UIOrder><Units id="2951"/><Value id="2952">0</Value></Parameter><Parameter type="Numeric" id="2958"><Name id="2959">numNeutral</Name><UIEnabled id="2960">false</UIEnabled><UIInfo id="2961"><Pos id="2962" x="220" y="923"/></UIInfo><UIOrder id="2964">0</UIOrder><Units id="2965"/><Value id="2966">0</Value></Parameter><Parameter type="Numeric" id="2972"><Name id="2973">numLoss</Name><UIEnabled id="2974">false</UIEnabled><UIInfo id="2975"><Pos id="2976" x="302" y="923"/></UIInfo><UIOrder id="2978">0</UIOrder><Units id="2979"/><Value id="2980">0</Value></Parameter></StateMachineElement>
         <Transition id="619">
           <Destination id="621">Block</Destination>
           <Source id="622"/>
@@ -2379,7 +2384,7 @@
           <Units id="2149"/>
           <Value id="2150">0</Value>
         </Parameter>
-      </StateMachine>
+      <VisualElement type="Operator Info Graphic" id="2902"><Color A="255" B="0" G="255" R="0" id="2903">#00ff00</Color><Dimensions height="20" id="2904" width="800" x="0" y="0"/><Fields id="2905">Block,Trial,Gain%,Neutral%,Loss%</Fields><Layer id="2906">0</Layer><Name id="2907">blockInfo</Name><OperatorView id="2908">true</OperatorView><Position id="2909" x="0" y="550"/><SubjectView id="2922">false</SubjectView><UIEnabled id="2925">false</UIEnabled><UIInfo id="2926"><Pos id="2927" x="544" y="466"/></UIInfo><UIOrder id="2929">0</UIOrder><Values id="2930">0,0,0,0,0</Values><Visible id="2931">true</Visible></VisualElement></StateMachine>
       <UIInfo id="607">
         <Pos id="608" x="1821" y="1746"/>
       </UIInfo>

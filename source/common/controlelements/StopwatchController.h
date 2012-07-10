@@ -22,6 +22,7 @@ class StopwatchController : public ControlElement
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(int timeout READ getTime() WRITE setTime());
 public:
 	StopwatchController();
 	virtual ~StopwatchController(){};
@@ -35,6 +36,8 @@ public:
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 
 	void setTime(int time, Controller::TimerUnits::TimerUnits units);
+	void setTime(int time){propertyContainer_->setPropertyValue("Time",time);};
+	int getTime(){return propertyContainer_->getPropertyValue("Time").toInt();};
 
 	////DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

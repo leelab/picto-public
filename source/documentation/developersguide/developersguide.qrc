@@ -168,6 +168,8 @@
    <file alias="_default_data_source_8h-source.html">../../../output/documentation/main/html/_default_data_source_8h-source.html</file>
    <file alias="_deletable_widget_8cpp-source.html">../../../output/documentation/main/html/_deletable_widget_8cpp-source.html</file>
    <file alias="_deletable_widget_8h-source.html">../../../output/documentation/main/html/_deletable_widget_8h-source.html</file>
+   <file alias="_designer_8cpp-source.html">../../../output/documentation/main/html/_designer_8cpp-source.html</file>
+   <file alias="_designer_8h-source.html">../../../output/documentation/main/html/_designer_8h-source.html</file>
    <file alias="_device_interface_8cpp-source.html">../../../output/documentation/main/html/_device_interface_8cpp-source.html</file>
    <file alias="_device_interface_8h-source.html">../../../output/documentation/main/html/_device_interface_8h-source.html</file>
    <file alias="_diagram_item_factory_8cpp-source.html">../../../output/documentation/main/html/_diagram_item_factory_8cpp-source.html</file>
@@ -692,6 +694,8 @@
    <file alias="_trial_data_8h-source.html">../../../output/documentation/main/html/_trial_data_8h-source.html</file>
    <file alias="_trial_result_8cpp-source.html">../../../output/documentation/main/html/_trial_result_8cpp-source.html</file>
    <file alias="_trial_result_8h-source.html">../../../output/documentation/main/html/_trial_result_8h-source.html</file>
+   <file alias="_u_i_designer_8cpp-source.html">../../../output/documentation/main/html/_u_i_designer_8cpp-source.html</file>
+   <file alias="_u_i_designer_8h-source.html">../../../output/documentation/main/html/_u_i_designer_8h-source.html</file>
    <file alias="_u_i_enabled_8cpp-source.html">../../../output/documentation/main/html/_u_i_enabled_8cpp-source.html</file>
    <file alias="_u_i_enabled_8h-source.html">../../../output/documentation/main/html/_u_i_enabled_8h-source.html</file>
    <file alias="_u_i_info_8cpp-source.html">../../../output/documentation/main/html/_u_i_info_8cpp-source.html</file>
@@ -767,6 +771,9 @@
    <file alias="class_daq_board.html">../../../output/documentation/main/html/class_daq_board.html</file>
    <file alias="class_deletable_widget-members.html">../../../output/documentation/main/html/class_deletable_widget-members.html</file>
    <file alias="class_deletable_widget.html">../../../output/documentation/main/html/class_deletable_widget.html</file>
+   <file alias="class_designer-members.html">../../../output/documentation/main/html/class_designer-members.html</file>
+   <file alias="class_designer.html">../../../output/documentation/main/html/class_designer.html</file>
+   <file alias="class_designer.png">../../../output/documentation/main/html/class_designer.png</file>
    <file alias="class_diagram_item-members.html">../../../output/documentation/main/html/class_diagram_item-members.html</file>
    <file alias="class_diagram_item.html">../../../output/documentation/main/html/class_diagram_item.html</file>
    <file alias="class_diagram_item.png">../../../output/documentation/main/html/class_diagram_item.png</file>

@@ -53,15 +53,16 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	if(!resultWidget)
 		return NULL;
 
-	//Add this widget to the edit tracker for the current property so that
-	//it will tell us when it is changed by the user.
-	if(editTrackers_.size())
-		editTrackers_.first()->addTrackedWidget(resultWidget);
 	//Change default widget behavior for doubles
 	if(resultWidget->inherits("QDoubleSpinBox"))
 	{
 		qobject_cast<QDoubleSpinBox*>(resultWidget)->setDecimals(4);
 		qobject_cast<QDoubleSpinBox*>(resultWidget)->setSingleStep(.01);
+		qobject_cast<QDoubleSpinBox*>(resultWidget)->setValue(manager->value(property).toDouble());
 	}
+	//Add this widget to the edit tracker for the current property so that
+	//it will tell us when it is changed by the user.
+	if(editTrackers_.size())
+		editTrackers_.first()->addTrackedWidget(resultWidget);
 	return resultWidget;
 }
