@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AnalysisDefinition>
+  <Name>EventAndEye</Name>
+  <Script>
+    readme.writeLine(&quot;Name:\t&quot; + name);
+    readme.writeLine(&quot;Started:\t&quot; +startTime);
+    readme.writeLine(&quot;Ended:\t&quot; +endTime);
+    readme.writeLine(&quot;Run Number:\t&quot; + runNumber);
+    readme.writeLine(&quot;-----Notes-----&quot;);
+    readme.writeLine(notes);
+  </Script>
+  <Tool type="File">
+    <Name>readme</Name>
+    <FileName>.readme.txt</FileName>
+  </Tool>
+  <Period>
+    <Name>Trial</Name>
+    <Script>
+      str1=&quot;&quot;;
+      str2=&quot;&quot;;
+      for(i=0;i&lt;eye.length;i++)
+      {
+      eyeFile.writeLine(
+      &quot;&quot;+Math.round(1000000*(Number(eye[i].time.value)-Number(startTime)))/1000000
+      +&quot;,&quot;+Math.round(eye[i].data.value[0])
+      );
+      }
+    </Script>
+    <StartTrigger type="Signal">
+      <Name>start</Name>
+      <SignalName>Diameter</SignalName>
+    </StartTrigger>
+    <EndTrigger type="Signal">
+      <Name>end</Name>
+      <SignalName>Diameter</SignalName>
+    </EndTrigger>
+    <Trigger type="Signal">
+      <Name>eye</Name>
+      <SignalName>Diameter</SignalName>
+      <DataSource type="Signal">
+        <Name>data</Name>
+        <SignalName>Diameter</SignalName>
+      </DataSource>
+      <DataSource type="Time">
+        <Name>time</Name>
+      </DataSource>
+    </Trigger>
+    <Tool type="File">
+      <Name>eyeFile</Name>
+      <FileName>.eye.csv</FileName>
+    </Tool>
+  </Period>
+</AnalysisDefinition>

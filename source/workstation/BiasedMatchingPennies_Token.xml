@@ -1,6 +1,4 @@
-<PictoData id="0">
-
-  <Experiment id="1">
+<PictoData><Experiment id="1">
     <SyntaxVersion id="2">0.0.1</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
@@ -9,8 +7,8 @@
           <UIInfo id="7">
             <Pos id="8" x="58" y="341"/>
           </UIInfo>
-          <NewClick id="10">false</NewClick>
-          <Pos id="11" x="0" y="0"/>
+          <NewClick id="10">true</NewClick>
+          <Pos id="11" x="396" y="318"/>
           <UIEnabled id="12">false</UIEnabled>
           <UIOrder id="13">0</UIOrder>
         </Parameter>
@@ -468,7 +466,7 @@
     </Task>
     <UIInfo id="390">
       <Pos id="392" x="0" y="0"/>
-    </UIInfo>
+    <OpenDescendant id="586">610</OpenDescendant></UIInfo>
     <Name id="393">BiasedMatchingPennies_Token</Name>
     <XGain id="394">1</XGain>
     <XOffset id="395">0</XOffset>
@@ -497,7 +495,7 @@
           <EntryScript id="611">																																																												blockNum.value++;
 																																																												blockInfo.setData(&quot;Block&quot;,blockNum.value);
 																																																												lambda.value = !lambda.value;
-																																																												rightIsSafe.value = lambda.value;
+																																																												rightIsSafe.value = !lambda.value;
 
 																																																												//Initialize Monkey and Computer Nash Probabilities
 																																																												monkNashPr.value = (2 - lambda.value) / 3;
@@ -1200,7 +1198,7 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
                 <TargetEntryScript id="1593">choiceEntered.value = true;</TargetEntryScript>
                 <TargetExitScript id="1594"/>
                 <TimeUnits id="1595">Ms</TimeUnits>
-                <TotalTime id="1596">1500</TotalTime>
+                <TotalTime id="1596">2000</TotalTime>
                 <UIEnabled id="1597">false</UIEnabled>
                 <UIInfo id="1598">
                   <Pos id="1599" x="103" y="94"/>
@@ -1770,7 +1768,7 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
                 <UIOrder id="1829">0</UIOrder>
               </Result>
               <RewardChan id="2192">1</RewardChan>
-              <RewardQty id="2193">60</RewardQty>
+              <RewardQty id="2193">80</RewardQty>
               <Type id="2194">Reward</Type>
               <UIEnabled id="2195">false</UIEnabled>
               <UIInfo id="2196">
@@ -2389,8 +2387,4 @@ blockInfo.setData(&quot;Trial&quot;,trialNum.value);</Script><Type id="2681">Scr
         <Pos id="608" x="1821" y="1746"/>
       </UIInfo>
     </Task>
-  </Experiment>
-  <StateMachineEditorData id="0">
-    <OpenedBlock id="">656</OpenedBlock>
-  </StateMachineEditorData>
-</PictoData>
+  </Experiment></PictoData>

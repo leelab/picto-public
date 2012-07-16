@@ -35,14 +35,14 @@ QSharedPointer<Asset> StateMachineEditorData::getOpenedAsset()
 		return rootAsset;
 	return savedAsset;
 }
-void StateMachineEditorData::setOpenedAssetId(QUuid openedAsset)
+void StateMachineEditorData::setOpenedAssetId(int openedAsset)
 {
-	propertyContainer_->setPropertyValue("OpenedBlock",openedAsset.toString());
+	propertyContainer_->setPropertyValue("OpenedBlock",QString::number(openedAsset));
 }
 
-QUuid StateMachineEditorData::getOpenedAssetId()
+int StateMachineEditorData::getOpenedAssetId()
 {
-	QUuid openID(propertyContainer_->getPropertyValue("OpenedBlock").toString());
+	int openID(propertyContainer_->getPropertyValue("OpenedBlock").toInt());
 	return openID;
 }
 

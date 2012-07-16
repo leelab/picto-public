@@ -55,6 +55,7 @@ public:
 	QStringList getTaskNames();
 	QSharedPointer<Task> getTaskByName(QString taskName);
 
+	virtual QString assetType(){return "Experiment";};
 	//QString getPropLookupXml();
 	//QString getTransLookupXml();
 

@@ -42,43 +42,9 @@
 #ifndef STATEEDITVIEWER_H
 #define STATEEDITVIEWER_H
 
-#include <QMainWindow>
-#include <QPointer>
-#include <QButtonGroup>
-
-
-
-#include "qtpropertymanager.h"
-#include "qtvariantproperty.h"
-
-
-
-#include "../common/storage/asset.h"
-using namespace Picto;
-
-#include "diagramitem.h"
 #include "../viewer.h"
-#include "EditorState.h"
-
-
-class DiagramScene;
-class Toolbox;
-
-QT_BEGIN_NAMESPACE
-class QAction;
-class QToolBox;
-class QSpinBox;
-class QComboBox;
-class QFontComboBox;
-class QButtonGroup;
-class QLineEdit;
-class QGraphicsTextItem;
-class QFont;
-class QToolButton;
-class QAbstractButton;
-class QGraphicsView;
-QT_END_NAMESPACE
-
+#include "Designer.h"
+using namespace Picto;
 //! [0]
 class StateEditViewer : public Viewer
 {
@@ -87,79 +53,15 @@ class StateEditViewer : public Viewer
 public:
    StateEditViewer(QWidget *parent=0);
    virtual ~StateEditViewer();
-
-
-
    virtual QString type(){return "State Edit Viewer";};
 public slots:
 	virtual void init();  //Called just before displaying the viewer
 	virtual void deinit();	//Called just after the user switches out of the viewer
 	virtual void aboutToSave();  //Called just before the pictoDataText_ is saved to file.
 
-
-private slots:
-    void updateEditModeButtons(int id);
-    void itemInserted(DiagramItem *item);
-    void textInserted(QGraphicsTextItem *item);
-    void sceneScaleChanged(const QString &scale);
-	//void assetSelected(QSharedPointer<Asset> asset);
-    //void itemSelected(QGraphicsItem *item);
-    void about();
-	void loadScene(DiagramScene* newScene);
-	void resetExperiment();
-	void insertEditBlock();
-	void performUndoAction();
-	void performRedoAction();
-	//void loadAsset(QSharedPointer<Asset> asset);
-	//void loadAssetProperties(QSharedPointer<Asset> asset);
-
 private:
-    void createActions();
-	void connectActions();
-    void createMenus();
-    void createToolbars();
-	void reloadPictoDataFromDoc();
 
-	QSharedPointer<EditorState> editorState_;
-    DiagramScene *scene;
-	DiagramScene *topmostScene;
-	Toolbox *toolbox_;
-    QGraphicsView *view;
-
-    QAction *exitAction;
-    QAction *addAction;
-    QAction *deleteAction;
-
-    QAction *toFrontAction;
-    QAction *sendBackAction;
-    QAction *aboutAction;
-
-	QAction *undoAction;
-	QAction *redoAction;
-
-    QMenu *fileMenu;
-    QMenu *itemMenu;
-    QMenu *aboutMenu;
-
-    QToolBar *editToolBar;
-    QToolBar *pointerToolbar;
-
-    QComboBox *sceneScaleCombo;
-
-    QSharedPointer<QButtonGroup> buttonGroup;
-    QSharedPointer<QButtonGroup> pointerTypeGroup;
-    QSharedPointer<QButtonGroup> backgroundButtonGroup;
-    QToolButton *fillColorToolButton;
-    QToolButton *lineColorToolButton;
-    QAction *boldAction;
-    QAction *underlineAction;
-    QAction *italicAction;
-    QAction *textAction;
-    QAction *fillAction;
-    QAction *lineAction;
-
-	QWidget *propertyEditor_;
-	QWidget *assetInfoBox_;
+	Designer* expDesigner_;
 };
 //! [0]
 

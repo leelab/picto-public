@@ -31,6 +31,7 @@ public:
 	QString getInsertionItemType(){return insertItemType_;};
 	QSharedPointer<Asset> getWindowAsset(){return windowAsset_;};
 	QSharedPointer<Asset> getSelectedAsset(){return selectedAsset_;};
+	QSharedPointer<Asset> getTopLevelAsset(){return topAsset_;};
 	QGraphicsItem *getSelectedItem(){return selectedItem_;};
 
 signals:
@@ -52,7 +53,7 @@ signals:
 
 public slots:
 	//Set Functions
-	void setPictoDataObject(QSharedPointer<PictoData> pictoData);
+	void setTopLevelAsset(QSharedPointer<Asset> topLevelAsset);
 	void setEditMode(int mode);
 	double setZoom(double zoom);
 	void setFont(const QFont font){font_ = font;emit fontChanged(font_);};
@@ -86,7 +87,7 @@ private:
 	QSharedPointer<Asset> selectedAsset_;
 	QString windowAssetPath_;
 	QGraphicsItem *selectedItem_;
-	QSharedPointer<PictoData> pictoData_;
+	QSharedPointer<Asset> topAsset_;
 
 };
 

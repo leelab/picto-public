@@ -12,14 +12,15 @@ namespace Picto {
 
 class StateMachineEditorData : public DataStore
 {
+	Q_OBJECT
 public:
 	StateMachineEditorData();
 	virtual ~StateMachineEditorData(){};
 	static QSharedPointer<Asset> Create();
 	void setOpenedAsset(QSharedPointer<Asset> openedAsset);
 	QSharedPointer<Asset> getOpenedAsset();
-	void setOpenedAssetId(QUuid openedAsset);
-	QUuid getOpenedAssetId();
+	void setOpenedAssetId(int openedAsset);
+	int getOpenedAssetId();
 
 protected:
 	virtual void postDeserialize();

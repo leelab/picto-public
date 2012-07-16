@@ -168,6 +168,10 @@
    <file alias="_default_data_source_8h-source.html">../../../output/documentation/main/html/_default_data_source_8h-source.html</file>
    <file alias="_deletable_widget_8cpp-source.html">../../../output/documentation/main/html/_deletable_widget_8cpp-source.html</file>
    <file alias="_deletable_widget_8h-source.html">../../../output/documentation/main/html/_deletable_widget_8h-source.html</file>
+   <file alias="_design_8cpp-source.html">../../../output/documentation/main/html/_design_8cpp-source.html</file>
+   <file alias="_design_8h-source.html">../../../output/documentation/main/html/_design_8h-source.html</file>
+   <file alias="_design_root_8cpp-source.html">../../../output/documentation/main/html/_design_root_8cpp-source.html</file>
+   <file alias="_design_root_8h-source.html">../../../output/documentation/main/html/_design_root_8h-source.html</file>
    <file alias="_designer_8cpp-source.html">../../../output/documentation/main/html/_designer_8cpp-source.html</file>
    <file alias="_designer_8h-source.html">../../../output/documentation/main/html/_designer_8h-source.html</file>
    <file alias="_device_interface_8cpp-source.html">../../../output/documentation/main/html/_device_interface_8cpp-source.html</file>
@@ -252,6 +256,8 @@
    <file alias="_experiment_8h-source.html">../../../output/documentation/main/html/_experiment_8h-source.html</file>
    <file alias="_experiment_config_8cpp-source.html">../../../output/documentation/main/html/_experiment_config_8cpp-source.html</file>
    <file alias="_experiment_config_8h-source.html">../../../output/documentation/main/html/_experiment_config_8h-source.html</file>
+   <file alias="_experiment_designer_8cpp-source.html">../../../output/documentation/main/html/_experiment_designer_8cpp-source.html</file>
+   <file alias="_experiment_designer_8h-source.html">../../../output/documentation/main/html/_experiment_designer_8h-source.html</file>
    <file alias="_experimental_system_8cpp-source.html">../../../output/documentation/main/html/_experimental_system_8cpp-source.html</file>
    <file alias="_experimental_system_8h-source.html">../../../output/documentation/main/html/_experimental_system_8h-source.html</file>
    <file alias="_eye_tracker_calibration_8cpp-source.html">../../../output/documentation/main/html/_eye_tracker_calibration_8cpp-source.html</file>
@@ -771,6 +777,8 @@
    <file alias="class_daq_board.html">../../../output/documentation/main/html/class_daq_board.html</file>
    <file alias="class_deletable_widget-members.html">../../../output/documentation/main/html/class_deletable_widget-members.html</file>
    <file alias="class_deletable_widget.html">../../../output/documentation/main/html/class_deletable_widget.html</file>
+   <file alias="class_design-members.html">../../../output/documentation/main/html/class_design-members.html</file>
+   <file alias="class_design.html">../../../output/documentation/main/html/class_design.html</file>
    <file alias="class_designer-members.html">../../../output/documentation/main/html/class_designer-members.html</file>
    <file alias="class_designer.html">../../../output/documentation/main/html/class_designer.html</file>
    <file alias="class_designer.png">../../../output/documentation/main/html/class_designer.png</file>
@@ -1874,6 +1882,7 @@
    <file alias="testviewer_8h-source.html">../../../output/documentation/main/html/testviewer_8h-source.html</file>
    <file alias="text_viewer_8cpp-source.html">../../../output/documentation/main/html/text_viewer_8cpp-source.html</file>
    <file alias="text_viewer_8h-source.html">../../../output/documentation/main/html/text_viewer_8h-source.html</file>
+   <file alias="textviewer_8cpp-source.html">../../../output/documentation/main/html/textviewer_8cpp-source.html</file>
    <file alias="time__ce_8cpp-source.html">../../../output/documentation/main/html/time__ce_8cpp-source.html</file>
    <file alias="time__ce_8h-source.html">../../../output/documentation/main/html/time__ce_8h-source.html</file>
    <file alias="timer_8cpp-source.html">../../../output/documentation/main/html/timer_8cpp-source.html</file>

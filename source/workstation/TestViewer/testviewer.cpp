@@ -37,31 +37,39 @@ TestViewer::TestViewer(QWidget *parent) :
 //! Called just before displaying the viewer
 void TestViewer::init()
 {
-	//If we're stopped, load the current experiment.  If we are paused,
-	//then we shouldn't load the experiment.
-	if(status_ == Stopped)
+	QSharedPointer<DesignRoot> myDesignRoot(new DesignRoot());
+	myDesignRoot->resetDesignRoot(designRoot_->getDesignRootText());
+	QSharedPointer<Design> design = myDesignRoot->getDesign("Experiment",0);
+	experiment_ = QSharedPointer<Experiment>();
+	if(!design)
 	{
-		experiment_ = pictoData_->getExperiment();
-		if(!experiment_)
-		{
-			QMessageBox msg;
-			msg.setText("Failed to load current experiment.");
-			msg.exec();
-		}
-		else
-		{
-			experiment_->setEngine(engine_);
-			static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(experiment_.staticCast<DataStore>());
-			loadPropsAction_->setEnabled(true);
-		}
+		QMessageBox msg;
+		msg.setText("Failed to load current experiment.");
+		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
+		msg.exec();
 	}
-
+	if(!design->compiles())
+	{
+		QMessageBox msg;
+		msg.setText("Experiment does not compile.");
+		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
+		msg.exec();
+	}
+	if(design)
+		experiment_ = design->getRootAsset().staticCast<Experiment>();
+	if(experiment_)
+	{
+		experiment_->setEngine(engine_);
+		static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(experiment_.staticCast<DataStore>());
+		loadPropsAction_->setEnabled(true);
+	}
 	generateComboBox();
 }
 
 //!Called just before hiding the viewer
 void TestViewer::deinit()
 {
+	stop();
 }
 
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources

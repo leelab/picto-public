@@ -6,7 +6,7 @@ namespace Picto
 UIInfo::UIInfo()
 {
 	AddDefinableProperty(QVariant::Point,"Pos",QPoint());
-	AddDefinableProperty(QVariant::Point,"UniqueID",QString());
+	AddDefinableProperty(QVariant::Int,"OpenDescendant",0);
 }
 
 QSharedPointer<Asset> UIInfo::Create()
@@ -23,11 +23,17 @@ QPoint UIInfo::getPos()
 {
 	return propertyContainer_->getPropertyValue("Pos").toPoint();
 }
-
+void UIInfo::setOpenDescendant(int assetId)
+{
+	propertyContainer_->setPropertyValue("OpenDescendant",assetId);
+}
+int UIInfo::getOpenDescendant()
+{
+	return propertyContainer_->getPropertyValue("OpenDescendant").toInt();
+}
 void UIInfo::postDeserialize()
 {
 	DataStore::postDeserialize();
-	propertyContainer_->getProperty("UniqueID")->setDeleted();
 }
 
 

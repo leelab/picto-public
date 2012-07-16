@@ -55,7 +55,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	activeExperiment_(0),
 	statusBar_(NULL),
 	isAuthorized_(false),
-	propertyFrame_(NULL)
+	propertyFrame_(NULL),
+	myDesignRoot_(new DesignRoot())
 {
 	setupServerChannel();
 	setupEngine();
@@ -786,13 +787,26 @@ void RemoteViewer::enterState()
 //! \brief Called just before displaying the viewer
 void RemoteViewer::init()
 {
-	experiment_ = pictoData_->getExperiment();
-	if(!experiment_)
+	myDesignRoot_->resetDesignRoot(designRoot_->getDesignRootText());
+	QSharedPointer<Design> design = myDesignRoot_->getDesign("Experiment",0);
+	experiment_ = QSharedPointer<Experiment>();
+	if(!design)
 	{
 		QMessageBox msg;
 		msg.setText("Failed to load current experiment.");
+		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
 		msg.exec();
 	}
+	if(!myDesignRoot_->compiles())
+	{
+		QMessageBox msg;
+		msg.setText("Local design does not compile. "
+			"You can join a running session, but you will not be able to start a new one.");
+		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
+		msg.exec();
+	}
+	if(design)
+		experiment_ = design->getRootAsset().staticCast<Experiment>();
 	if(currState_ == InitState)
 	{	//The remote viewer was just created.  Initialize it by running updateState once.
 		updateState();
@@ -1621,7 +1635,16 @@ bool RemoteViewer::startSession()
 
 	QSharedPointer<Picto::ProtocolCommand> startSessCommand(new Picto::ProtocolCommand(commandStr));
 
-	QByteArray dataXml = pictoDataText_->toPlainText().toUtf8();
+	if(!myDesignRoot_->compiles())
+	{
+		QMessageBox msg;
+		msg.setText("Local experiment has errors.  Cannot start session.");
+		msg.setIconPixmap(QPixmap(":/icons/x.png"));
+		msg.exec();
+		return false;
+	}
+
+	QByteArray dataXml = myDesignRoot_->getDesignRootText().toUtf8();
 
 	QSharedPointer<ExperimentConfig> expConfig = experiment_->getExperimentConfig();
 	if(!expConfig)

@@ -12,6 +12,7 @@ Asset()
 {
 	assetId_ = 0;
 	propertyContainer_ = PropertyContainer::create("DataStore");
+	connect(this,SIGNAL(deleted()),this,SIGNAL(edited()));
 }
 
 

@@ -27,6 +27,16 @@ QPoint UIEnabled::getPos()
 	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getPos();
 }
 
+void UIEnabled::setOpenDescendant(int assetId)
+{
+	getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->setOpenDescendant(assetId);
+}
+
+int UIEnabled::getOpenDescendant()
+{
+	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getOpenDescendant();
+}
+
 void UIEnabled::postDeserialize()
 {
 	DataStore::postDeserialize();

@@ -48,7 +48,20 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 	setMinimumWidth(childrenRect().width());
 }
 
-void PropertyBrowser::propertyEdited(QSharedPointer<Property>)
+void PropertyBrowser::propertyEdited(QSharedPointer<Property> prop)
 {
 	editorState_->setLastActionUndoable();
+
+	//Set the property value to its corresponding InitProperty if its scriptable
+	QSharedPointer<Asset> currAsset = editorState_->getSelectedAsset();
+	Q_ASSERT(currAsset);
+	if(!currAsset->inherits("Picto::Scriptable"))
+		return;
+	QSharedPointer<Scriptable> currScriptable = currAsset.staticCast<Scriptable>();
+	QSharedPointer<PropertyContainer> currInitPropContainer = currScriptable->getInitPropertyContainer();
+	QSharedPointer<Property> currInitProp = currInitPropContainer->getProperty(prop->identifier());
+	Q_ASSERT_X(currInitProp
+		,"PropertyBrowser::propertyEdited"
+		,"There is no InitProperty corresponding to the edited " + prop->identifier().toAscii() + " property");
+	currInitProp->setValue(prop->value());
 }

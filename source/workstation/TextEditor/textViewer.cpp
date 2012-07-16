@@ -44,7 +44,7 @@ TextViewer::TextViewer(QAction* checkSyntaxAction, QWidget *parent)
 void TextViewer::init()
 {
 	//Put the current experiment text into the text editor
-	if(pictoDataText_)
+	if(design_)
 	{
 		xmlEdit_->setDocument(pictoDataText_);
 		syntaxHighlight_->setDocument(pictoDataText_);

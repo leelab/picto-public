@@ -5,7 +5,7 @@
 
 #include "errorlist.h"
 #include "viewer.h"
-#include "texteditor/textviewer.h"
+//#include "texteditor/textviewer.h"
 #include "testviewer/testviewer.h"
 #include "remoteviewer/remoteviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
@@ -14,6 +14,8 @@
 
 MainWindow::MainWindow()
 {	
+	designRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
+	currViewer_ = NULL;
 	errorList_ = new ErrorList(this);
 	connect(this, SIGNAL(error(QString, QString)), errorList_,SLOT(addError(QString, QString)));
 
@@ -108,7 +110,7 @@ void MainWindow::createActions()
 	checkSyntaxAction_->setShortcut(Qt::Key_F7);
 	checkSyntaxAction_->setToolTip(tr("Check the current experiment's XML code for syntax errors."));
 	checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
-	connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
+	//connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
 }
 
 void MainWindow::createMenus()
@@ -176,17 +178,17 @@ void MainWindow::createViewers()
 	
 	Viewer* viewer;
 
-	//Text Viewer
-	viewer = new TextViewer(checkSyntaxAction_,this);
-	viewerNames_.append(viewer->type());
-	viewerStack_->addWidget(viewer);
-	viewerAction = new QAction(tr("Te&xt Editor"),this);
-	viewerAction->setShortcut(tr("Ctrl+1"));
-	viewerAction->setIcon(QIcon(":/icons/texteditmode.png"));
-	viewerAction->setData(0);
-	viewerToolbar_->addAction(viewerAction);
-	modeMenu_->addAction(viewerAction);
-	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	////Text Viewer
+	//viewer = new TextViewer(checkSyntaxAction_,this);
+	//viewerNames_.append(viewer->type());
+	//viewerStack_->addWidget(viewer);
+	//viewerAction = new QAction(tr("Te&xt Editor"),this);
+	//viewerAction->setShortcut(tr("Ctrl+1"));
+	//viewerAction->setIcon(QIcon(":/icons/texteditmode.png"));
+	//viewerAction->setData(0);
+	//viewerToolbar_->addAction(viewerAction);
+	//modeMenu_->addAction(viewerAction);
+	//connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 
 	//StateEditViewer
 	//NOTE: This hasn't yet been created, so we're using a test viewer
@@ -197,10 +199,11 @@ void MainWindow::createViewers()
 	viewerAction = new QAction(tr("&State Machine Editor"),this);
 	viewerAction->setShortcut(tr("Ctrl+2"));
 	viewerAction->setIcon(QIcon(":/icons/statemachineeditmode.png"));
-	viewerAction->setData(1);
+	viewerAction->setData(viewerNames_.size()-1);
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	initViewerAction_ = viewerAction;
 
 	//Test Viewer
 	viewer = new TestViewer(this);
@@ -209,7 +212,7 @@ void MainWindow::createViewers()
 	viewerAction = new QAction(tr("&Test experiment"),this);
 	viewerAction->setShortcut(tr("Ctrl+3"));
 	viewerAction->setIcon(QIcon(":/icons/testmode.png"));
-	viewerAction->setData(2);
+	viewerAction->setData(viewerNames_.size()-1);
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
@@ -221,7 +224,7 @@ void MainWindow::createViewers()
 	viewerAction = new QAction(tr("&Run remote experiment"),this);
 	viewerAction->setShortcut(tr("Ctrl+4"));
 	viewerAction->setIcon(QIcon(":/icons/remote.png"));
-	viewerAction->setData(3);
+	viewerAction->setData(viewerNames_.size()-1);
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
@@ -233,7 +236,7 @@ void MainWindow::createViewers()
 	viewerAction = new QAction(tr("&Analyze experiment"),this);
 	viewerAction->setShortcut(tr("Ctrl+4"));
 	viewerAction->setIcon(QIcon(":/icons/analyze.png"));
-	viewerAction->setData(4);
+	viewerAction->setData(viewerNames_.size()-1);
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
@@ -271,10 +274,10 @@ void MainWindow::createViewers()
 	viewerNames_.append(testViewer->type());
 	viewerStack_->addWidget(testViewer);*/
 
-	currViewer_ = qobject_cast<Viewer*>(viewerStack_->widget(0));
-	viewerStack_->setCurrentWidget(currViewer_);
-	currViewer_->init();
-	currViewer_->setVisible(true);
+	//currViewer_ = qobject_cast<Viewer*>(viewerStack_->widget(0));
+	//viewerStack_->setCurrentWidget(currViewer_);
+	//currViewer_->init();
+	//currViewer_->setVisible(true);
 }
 
 /*****************************************************
@@ -313,10 +316,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::newExperiment()
 {
-	if(!pictoData_)
-	{
-		pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
-	}
+	//if(!pictoData_)
+	//{
+	//	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
+	//}
 	if(okToContinue())
 	{
 		loadFile(":/BuiltInExperiments/EyeCalibration.xml");
@@ -396,18 +399,20 @@ void MainWindow::changeMode()
 
 	int viewerIndex = action->data().toInt();
 
-	currViewer_->deinit();
+	if(currViewer_)
+		currViewer_->deinit();
 
 	//attempt to convert the pictoDataText_ to an PictoData object
-	convertTextToPictoData();
+	//convertTextToPictoData();
 
 	//find and set the current widget
 	viewerStack_->setCurrentIndex(viewerIndex);
 	currViewer_ = qobject_cast<Viewer*>(viewerStack_->currentWidget());
 	
 	//Set the latest experiment, experiment text, uidata, uidatatext to the viewer
-	currViewer_->setPictoData(pictoData_);
-	currViewer_->setPictoDataText(&pictoDataText_);
+	currViewer_->setDesignRoot(designRoot_);
+	//currViewer_->setPictoData(pictoData_);
+	//currViewer_->setPictoDataText(&pictoDataText_);
 	
 	currViewer_->init();
 
@@ -417,7 +422,7 @@ void MainWindow::changeMode()
 void MainWindow::checkSyntax()
 {
 	errorList_->clear();
-	if(convertTextToPictoData())
+	if(designRoot_->compiles())
 	{
 		QMessageBox box;
 		box.setText("Syntax check passed");
@@ -448,7 +453,7 @@ void MainWindow::checkSyntax()
 //! Checks to see if we have unsaved changes
 bool MainWindow::okToContinue()
 {
-	if(pictoDataText_.isModified())
+	if(designRoot_->isModified())
 	{
 		int r = QMessageBox::warning(this,Picto::Names->workstationAppName,
 					tr("The experiment has been modified.\n"
@@ -471,7 +476,7 @@ bool MainWindow::saveFile(const QString filename)
 	if(file.open(QIODevice::WriteOnly))
 	{
 		currViewer_->aboutToSave();
-		if(!file.write(pictoDataText_.toPlainText().toAscii()))
+		if(!file.write(designRoot_->getDesignRootText().toAscii()))
 			success = false;
 		file.close();
 	}
@@ -488,7 +493,7 @@ bool MainWindow::saveFile(const QString filename)
 	{
 		setCurrentFile(filename);
 		currViewer_->init();
-		pictoDataText_.setModified(false);
+		designRoot_->setUnmodified();
 		return true;
 	}
 }
@@ -504,8 +509,14 @@ bool MainWindow::loadFile(const QString filename)
 		return false;
 	}
 
-	pictoDataText_.setPlainText(file.readAll());
-	pictoDataText_.setModified(false);
+	//pictoDataText_.setPlainText(file.readAll());
+	//pictoDataText_.setModified(false);
+	if(!designRoot_->resetDesignRoot(file.readAll()))
+	{
+		//QMessageBox::critical(this, Picto::Names->workstationAppName,
+		//	"Syntax Error in File: " + filename);
+		return false;
+	}
 
 	file.close();
 
@@ -530,60 +541,64 @@ void MainWindow::setCurrentFile(const QString &filename)
 
 	setWindowTitle(QString("%1[*] - %2").arg(shownName)
 								   .arg(Picto::Names->workstationAppName));
-	bool legalPictoDataXml = convertTextToPictoData();
+	//bool legalPictoDataXml = convertTextToPictoData();
 
 	for(int i=0; i<viewerStack_->count(); i++)
 	{
 		Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
 
-		if(legalPictoDataXml)
-			viewer->setPictoData(pictoData_);
-		else
-			viewer->setPictoData(QSharedPointer<Picto::PictoData>());
+		//if(legalPictoDataXml)
+		//	viewer->setPictoData(pictoData_);
+		//else
+		//	viewer->setPictoData(QSharedPointer<Picto::PictoData>());
+		viewer->setDesignRoot(designRoot_);
 		
-		viewer->setPictoDataText(&pictoDataText_);
+		//viewer->setPictoDataText(&pictoDataText_);
 	}
-	currViewer_->init();
+	if(currViewer_)
+		currViewer_->init();
+	else
+		initViewerAction_->trigger();
 }
 
-/*!	\brief attempts to convert the experiment text to an experiment object
- *
- *	If the experiment text can't be converted to an object (if the XML is
- *	incorrect, this function emits an error signal containing the text of 
- *	the XML parsing error, and returns false.
- */
-bool MainWindow::convertTextToPictoData()
-{
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(pictoDataText_.toPlainText()));
-
-	//read until we either see an experiment tag, or the end of the file
-	while(xmlReader->name() != "PictoData" && !xmlReader->atEnd()) 
-		xmlReader->readNext();
-
-	if(xmlReader->atEnd())
-	{
-		emit error("XML Parsing Error","Picto Data XML did not contain <PictoData> tag");
-		return false;
-	}
-
-	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
-	Picto::Asset::clearErrors();
-	bool result = pictoData_->fromXml(xmlReader);
-
-	////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
-	//QString serialTestString;
-	//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&serialTestString));
-	//pictoData_->toXml(xmlWriter);
-	//Q_ASSERT(serialTestString == pictoDataText_.toPlainText());
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-	if(!result)
-	{
-		emit error("XML Parsing Error",pictoData_->getErrors());
-		return false;
-	}
-	return true;
-}
+///*!	\brief attempts to convert the experiment text to an experiment object
+// *
+// *	If the experiment text can't be converted to an object (if the XML is
+// *	incorrect, this function emits an error signal containing the text of 
+// *	the XML parsing error, and returns false.
+// */
+//bool MainWindow::convertTextToPictoData()
+//{
+//	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(pictoDataText_.toPlainText()));
+//
+//	//read until we either see an experiment tag, or the end of the file
+//	while(xmlReader->name() != "PictoData" && !xmlReader->atEnd()) 
+//		xmlReader->readNext();
+//
+//	if(xmlReader->atEnd())
+//	{
+//		emit error("XML Parsing Error","Picto Data XML did not contain <PictoData> tag");
+//		return false;
+//	}
+//
+//	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
+//	Picto::Asset::clearErrors();
+//	bool result = pictoData_->fromXml(xmlReader);
+//
+//	////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
+//	//QString serialTestString;
+//	//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&serialTestString));
+//	//pictoData_->toXml(xmlWriter);
+//	//Q_ASSERT(serialTestString == pictoDataText_.toPlainText());
+//	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+//	if(!result)
+//	{
+//		emit error("XML Parsing Error",pictoData_->getErrors());
+//		return false;
+//	}
+//	return true;
+//}
 
 //! Modifies the recent files portion of the File menu
 void MainWindow::updateRecentFileActions()

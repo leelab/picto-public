@@ -8,6 +8,8 @@
 #include <QSharedPointer>
 #include <QTextDocument>
 
+#include "DesignRoot.h"
+
 /*!	\brief A Viewer is a main panel used to view an experiment.  This is a base class
  *
  *	Within PictoWorkstation, you change modes by selecting different viewers.  For
@@ -46,8 +48,9 @@ public:
 	Viewer(QWidget * parent=0);
 	virtual ~Viewer(){};
 
-	void setPictoData(QSharedPointer<Picto::PictoData> pictoData) { pictoData_ = pictoData; }
-	void setPictoDataText(QTextDocument *pictoDataText) {pictoDataText_ = pictoDataText; }
+	void setDesignRoot(QSharedPointer<DesignRoot> designRoot){designRoot_ = designRoot;};
+	//void setPictoData(QSharedPointer<Picto::PictoData> pictoData) { pictoData_ = pictoData; }
+	//void setPictoDataText(QTextDocument *pictoDataText) {pictoDataText_ = pictoDataText; }
 
 	//Returns the type of viewer (e.g "Text")
 	virtual QString type() = 0;
@@ -64,8 +67,9 @@ signals:
 	void enablePasteAction(bool enable);
 
 protected:
-	QSharedPointer<Picto::PictoData> pictoData_;
-	QTextDocument *pictoDataText_;
+	QSharedPointer<DesignRoot> designRoot_;
+	//QSharedPointer<Picto::PictoData> pictoData_;
+	//QTextDocument *pictoDataText_;
 };
 
 #endif

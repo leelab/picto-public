@@ -3,6 +3,7 @@
 
 #include "../common/experiment/experiment.h"
 #include "pictodata.h"
+#include "designRoot.h"
 
 class QAction;
 class Viewer;
@@ -67,8 +68,9 @@ private:
 	bool convertTextToPictoData();
 
 
-	QSharedPointer<Picto::PictoData> pictoData_;
-	QTextDocument pictoDataText_;
+	//QSharedPointer<Picto::PictoData> pictoData_;
+	//QTextDocument pictoDataText_;
+	QSharedPointer<DesignRoot> designRoot_;
 
 	ErrorList *errorList_;
 
@@ -89,6 +91,7 @@ private:
 
 	//Experiment Actions
 	QAction *checkSyntaxAction_;
+	QAction *initViewerAction_;
 
 
 	//Menus

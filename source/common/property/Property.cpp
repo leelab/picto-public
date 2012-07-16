@@ -220,7 +220,12 @@ int Property::getAssetId()
 void Property::setAssetId(int id)
 {
 	SetSerializationAttributeValue("id",QVariant(id));
-	emit edited();
+	//If the asset is new and was not edited, it doesn't need to
+	//be serialized out because its a default property value, so 
+	//we should not emit edited just because we are changing its
+	//asset id.
+	if(!isNew() || wasEdited())
+		emit edited();
 }
 
 void Property::setValueFromProp(QSharedPointer<Property> prop)

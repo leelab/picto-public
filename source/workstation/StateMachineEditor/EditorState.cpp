@@ -21,11 +21,11 @@ windowAssetPath_("")
     
 }
 
-void EditorState::setPictoDataObject(QSharedPointer<PictoData> pictoData)
+void EditorState::setTopLevelAsset(QSharedPointer<Picto::Asset> topLevelAsset)
 {
-	pictoData_ = pictoData;
-	Q_ASSERT(!pictoData_->getStateMachineEditorData().isNull());
-	setWindowAsset(pictoData_->getStateMachineEditorData()->getOpenedAsset());
+	topAsset_ = topLevelAsset;
+	Q_ASSERT(!topAsset_.isNull());
+	//setWindowAsset(topAsset_);
 }
 
 void EditorState::setEditMode(int mode)
@@ -54,9 +54,6 @@ void EditorState::setWindowAsset(QSharedPointer<Asset> asset)
 	
 	windowAsset_ = asset;
 	Q_ASSERT(!asset.dynamicCast<UIEnabled>().isNull());
-	
-	//We set the asset as open in the StateMachineEditorData object so that the xml will reflect this for serialization.
-	pictoData_->getStateMachineEditorData()->setOpenedAsset(windowAsset_);
 
 	setInsertionItem("","");
 	emit windowAssetChanged(windowAsset_);

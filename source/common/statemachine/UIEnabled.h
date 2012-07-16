@@ -28,6 +28,8 @@ public:
 	void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
 	void setPos(QPoint pos);
 	QPoint getPos();
+	void setOpenDescendant(int assetId);
+	int getOpenDescendant();
 	virtual QString getUITemplate(){return "UIEnabled";};
 	virtual QString assetType(){return "UIEnabled";};
 signals:
