@@ -21,7 +21,10 @@ void RectTarget::draw()
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(QColor(0,0,0,0));
-	p.setPen(color);
+	QPen pen(color);
+	if(getOutside())
+		pen.setStyle(Qt::DotLine);
+	p.setPen(pen);
 	p.drawRect(dimensions);
 	p.end();
 	image_ = image;
@@ -38,8 +41,8 @@ bool RectTarget::contains(int x, int y)
 	QPoint topLeft = getPosition()-getPositionOffset();
 	QRect myRect(topLeft.x(),topLeft.y(),dimensions.width(),dimensions.height());
 	if(myRect.contains(x,y))
-		return true;
-	return false;
+		return getOutside()?false:true;
+	return getOutside()?true:false;
 }
 
 QSharedPointer<Asset> RectTarget::Create()

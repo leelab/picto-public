@@ -12,6 +12,7 @@ VisualElement(position,color)
 	//These are redefined from Visual Element to fix the default values.
 	AddDefinableProperty(QVariant::Bool,"OperatorView",true);
 	AddDefinableProperty(QVariant::Bool,"SubjectView",false);
+	AddDefinableProperty(QVariant::Bool,"Outside",false);
 }
 
 void ControlTarget::setActive(bool active)

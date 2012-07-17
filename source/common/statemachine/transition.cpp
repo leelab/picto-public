@@ -80,6 +80,7 @@ void Transition::setSourceResult(QSharedPointer<Asset> sourceResult)
 }
 void Transition::setDestination(QSharedPointer<Asset> destination)
 {
+	Q_ASSERT(destination);
 	if(!destinationAsset_.isNull())
 		destinationAsset_->disconnect(this);
 	destinationAsset_ = destination;
@@ -113,6 +114,12 @@ bool Transition::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 {
 	if(!DataStore::validateObject(xmlStreamReader))
 		return false;
+	if(getDestination().isEmpty())
+	{			
+		QString errMsg = QString("Transition: %1 does not have a destination.").arg(getName());
+		addError("Transition", errMsg, xmlStreamReader);
+		return false;
+	}
 	return true;
 }
 

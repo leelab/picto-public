@@ -26,7 +26,10 @@ void CircleTarget::draw()
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setBrush(QColor(0,0,0,0));
-	p.setPen(color);
+	QPen pen(color);
+	if(getOutside())
+		pen.setStyle(Qt::DotLine);
+	p.setPen(pen);
 	QRect ellipseRect(1,1,radius*2,radius*2);
 	p.drawEllipse(ellipseRect);
 	p.end();
@@ -44,8 +47,8 @@ bool CircleTarget::contains(int x, int y)
 	QPoint center = (getPosition()-getPositionOffset())+QPoint(radius,radius);
 	QPoint offset = QPoint(x,y)-center;
 	if( ( ((offset.rx()*offset.rx())+(offset.ry()*offset.ry())) > (radius * radius) ) )
-		return false;
-	return true;
+		return getOutside()?true:false;
+	return getOutside()?false:true;
 }
 
 QPoint CircleTarget::getPositionOffset()

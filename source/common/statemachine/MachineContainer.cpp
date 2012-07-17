@@ -132,10 +132,11 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 			bool found = false;
 			foreach(QSharedPointer<Asset> transition, transitionList)
 			{
-				if(transition.staticCast<Transition>()->getSourceResult() == result->getName())
+				if((transition.staticCast<Transition>()->getSource() == element->getName())
+					&& (transition.staticCast<Transition>()->getSourceResult() == result->getName()))
 				{
 					found = true;
-					continue;
+					break;
 				}
 			}
 			if(!found)

@@ -136,6 +136,13 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			runScript(getName().simplified().remove(' ').append("_TargetEntry"));
 		targetAcquired_ = true;
 		acquisitionTimer_.start();
+		//If fixation time is zero, we're done
+		if(fixTime <= 0)
+		{
+			isDone_ = true;
+			result_ = currTarget;
+			return true;
+		}
 	}
 	//staying inside a target
 	else if(currTarget == lastTarget_ && targetAcquired_)

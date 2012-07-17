@@ -111,6 +111,13 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			initialAcquisitionOccurred_ = true;
 			if(!engine->slaveMode() && propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
 				runScript(getName().simplified().remove(' ').append("_TargetEntry"));
+			//If fixation time is zero, we're done
+			if(fixTime <= 0)
+			{
+				isDone_ = true;
+				result_ = "Success";
+				return true;
+			}
 		}
 
 	}
