@@ -5,7 +5,7 @@
 #include <QtGroupBoxPropertyBrowser>
 #include <qtbuttonPropertyBrowser>
 #include <qttreePropertyBrowser>
-#include "statemachineeditor/PropertyEditorFactory.h"
+#include "designer/PropertyEditorFactory.h"
 #include "../common/experiment/experiment.h"
 #include <QScrollArea>
 #include <QSqlDatabase>

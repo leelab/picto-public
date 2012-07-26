@@ -13,6 +13,8 @@
    <file alias="_alignment_data_unit_8h-source.html">../../../output/documentation/main/html/_alignment_data_unit_8h-source.html</file>
    <file alias="_alignment_info_8cpp-source.html">../../../output/documentation/main/html/_alignment_info_8cpp-source.html</file>
    <file alias="_alignment_info_8h-source.html">../../../output/documentation/main/html/_alignment_info_8h-source.html</file>
+   <file alias="_analysis_container_8cpp-source.html">../../../output/documentation/main/html/_analysis_container_8cpp-source.html</file>
+   <file alias="_analysis_container_8h-source.html">../../../output/documentation/main/html/_analysis_container_8h-source.html</file>
    <file alias="_analysis_data_iterator_8cpp-source.html">../../../output/documentation/main/html/_analysis_data_iterator_8cpp-source.html</file>
    <file alias="_analysis_data_iterator_8h-source.html">../../../output/documentation/main/html/_analysis_data_iterator_8h-source.html</file>
    <file alias="_analysis_data_source_8cpp-source.html">../../../output/documentation/main/html/_analysis_data_source_8cpp-source.html</file>
@@ -236,6 +238,8 @@
    <file alias="_ellipse_graphic_8h-source.html">../../../output/documentation/main/html/_ellipse_graphic_8h-source.html</file>
    <file alias="_end_session_response_handler_8cpp-source.html">../../../output/documentation/main/html/_end_session_response_handler_8cpp-source.html</file>
    <file alias="_end_session_response_handler_8h-source.html">../../../output/documentation/main/html/_end_session_response_handler_8h-source.html</file>
+   <file alias="_ender_container_8cpp-source.html">../../../output/documentation/main/html/_ender_container_8cpp-source.html</file>
+   <file alias="_ender_container_8h-source.html">../../../output/documentation/main/html/_ender_container_8h-source.html</file>
    <file alias="_endsession_command_handler_8cpp-source.html">../../../output/documentation/main/html/_endsession_command_handler_8cpp-source.html</file>
    <file alias="_endsession_command_handler_8h-source.html">../../../output/documentation/main/html/_endsession_command_handler_8h-source.html</file>
    <file alias="_engine_test_8cpp-source.html">../../../output/documentation/main/html/_engine_test_8cpp-source.html</file>
@@ -366,6 +370,8 @@
    <file alias="_numeric_variable_8h-source.html">../../../output/documentation/main/html/_numeric_variable_8h-source.html</file>
    <file alias="_o_k_response_handler_8cpp-source.html">../../../output/documentation/main/html/_o_k_response_handler_8cpp-source.html</file>
    <file alias="_o_k_response_handler_8h-source.html">../../../output/documentation/main/html/_o_k_response_handler_8h-source.html</file>
+   <file alias="_obsolete_asset_8cpp-source.html">../../../output/documentation/main/html/_obsolete_asset_8cpp-source.html</file>
+   <file alias="_obsolete_asset_8h-source.html">../../../output/documentation/main/html/_obsolete_asset_8h-source.html</file>
    <file alias="_old_01workstation_2mainwindow_8cpp-source.html">../../../output/documentation/main/html/_old_01workstation_2mainwindow_8cpp-source.html</file>
    <file alias="_old_01workstation_2mainwindow_8h-source.html">../../../output/documentation/main/html/_old_01workstation_2mainwindow_8h-source.html</file>
    <file alias="_operator_click_parameter_8cpp-source.html">../../../output/documentation/main/html/_operator_click_parameter_8cpp-source.html</file>
@@ -388,6 +394,10 @@
    <file alias="_pause_point_8h-source.html">../../../output/documentation/main/html/_pause_point_8h-source.html</file>
    <file alias="_pause_response_handler_8cpp-source.html">../../../output/documentation/main/html/_pause_response_handler_8cpp-source.html</file>
    <file alias="_pause_response_handler_8h-source.html">../../../output/documentation/main/html/_pause_response_handler_8h-source.html</file>
+   <file alias="_period_enders_8cpp-source.html">../../../output/documentation/main/html/_period_enders_8cpp-source.html</file>
+   <file alias="_period_enders_8h-source.html">../../../output/documentation/main/html/_period_enders_8h-source.html</file>
+   <file alias="_period_starters_8cpp-source.html">../../../output/documentation/main/html/_period_starters_8cpp-source.html</file>
+   <file alias="_period_starters_8h-source.html">../../../output/documentation/main/html/_period_starters_8h-source.html</file>
    <file alias="_physiological_data_store_8cpp-source.html">../../../output/documentation/main/html/_physiological_data_store_8cpp-source.html</file>
    <file alias="_physiological_data_store_8h-source.html">../../../output/documentation/main/html/_physiological_data_store_8h-source.html</file>
    <file alias="_picto_box_analog_input_signal_channel_8cpp-source.html">../../../output/documentation/main/html/_picto_box_analog_input_signal_channel_8cpp-source.html</file>
@@ -616,6 +626,8 @@
    <file alias="_start_response_handler_8h-source.html">../../../output/documentation/main/html/_start_response_handler_8h-source.html</file>
    <file alias="_start_session_dialog_8cpp-source.html">../../../output/documentation/main/html/_start_session_dialog_8cpp-source.html</file>
    <file alias="_start_session_dialog_8h-source.html">../../../output/documentation/main/html/_start_session_dialog_8h-source.html</file>
+   <file alias="_starter_container_8cpp-source.html">../../../output/documentation/main/html/_starter_container_8cpp-source.html</file>
+   <file alias="_starter_container_8h-source.html">../../../output/documentation/main/html/_starter_container_8h-source.html</file>
    <file alias="_startsession_command_handler_8cpp-source.html">../../../output/documentation/main/html/_startsession_command_handler_8cpp-source.html</file>
    <file alias="_startsession_command_handler_8h-source.html">../../../output/documentation/main/html/_startsession_command_handler_8h-source.html</file>
    <file alias="_state_8cpp-source.html">../../../output/documentation/main/html/_state_8cpp-source.html</file>
@@ -779,6 +791,8 @@
    <file alias="class_deletable_widget.html">../../../output/documentation/main/html/class_deletable_widget.html</file>
    <file alias="class_design-members.html">../../../output/documentation/main/html/class_design-members.html</file>
    <file alias="class_design.html">../../../output/documentation/main/html/class_design.html</file>
+   <file alias="class_design_root-members.html">../../../output/documentation/main/html/class_design_root-members.html</file>
+   <file alias="class_design_root.html">../../../output/documentation/main/html/class_design_root.html</file>
    <file alias="class_designer-members.html">../../../output/documentation/main/html/class_designer-members.html</file>
    <file alias="class_designer.html">../../../output/documentation/main/html/class_designer.html</file>
    <file alias="class_designer.png">../../../output/documentation/main/html/class_designer.png</file>
@@ -1423,6 +1437,7 @@
    <file alias="dir_70939da665ba326b2b2a9ecb719e086f.html">../../../output/documentation/main/html/dir_70939da665ba326b2b2a9ecb719e086f.html</file>
    <file alias="dir_7439bac3bdb98b2b773c7db6d59e616e.html">../../../output/documentation/main/html/dir_7439bac3bdb98b2b773c7db6d59e616e.html</file>
    <file alias="dir_77a7db2fcd8acec3da3f3e2e850523ee.html">../../../output/documentation/main/html/dir_77a7db2fcd8acec3da3f3e2e850523ee.html</file>
+   <file alias="dir_79f71d3d330f2d865d1c6579046e30da.html">../../../output/documentation/main/html/dir_79f71d3d330f2d865d1c6579046e30da.html</file>
    <file alias="dir_7b0a3e33e04a9a76d447074a52d81094.html">../../../output/documentation/main/html/dir_7b0a3e33e04a9a76d447074a52d81094.html</file>
    <file alias="dir_7b4698f2db493adf382819e4c0fa3d98.html">../../../output/documentation/main/html/dir_7b4698f2db493adf382819e4c0fa3d98.html</file>
    <file alias="dir_7cc7bee6b5dfd3bec5889b277a152d02.html">../../../output/documentation/main/html/dir_7cc7bee6b5dfd3bec5889b277a152d02.html</file>

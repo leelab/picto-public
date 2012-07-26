@@ -3,7 +3,6 @@
 
 #include "../common/experiment/experiment.h"
 #include "../common/storage/DataStore.h"
-#include "statemachineeditor/statemachineeditordata.h"
 #include <QUuid>
 
 namespace Picto {
@@ -19,7 +18,6 @@ public:
 	virtual ~PictoData(){};
 	virtual QString assetType(){return "PictoData";};
 	QSharedPointer<Experiment> getExperiment();
-	QSharedPointer<StateMachineEditorData> getStateMachineEditorData();
 
 protected:
 	virtual void postDeserialize();

@@ -1,6 +1,7 @@
 #include <QMessageBox>
 #include <QTextCursor>
 #include "DesignRoot.h"
+#include "../common/storage/ObsoleteAsset.h"
 #include "../common/memleakdetect.h"
 
 DesignRoot::DesignRoot()
@@ -39,6 +40,19 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 		box.setIconPixmap(QPixmap(":/icons/x.png"));
 		box.exec();
 		return false;
+	}
+	if(ObsoleteAsset::encounteredObsoleteAsset())
+	{
+		QMessageBox box;
+		box.setText("Obsolete Assets Removed                                     ");
+		box.setDetailedText("File contents have been automatically upgraded to "
+			"function with the latest version of Picto.  If you save this design, "
+			"it will be incompatible with older versions of Picto.");
+		box.setIconPixmap(QPixmap(":/icons/triangle.png"));
+		box.exec();
+		ObsoleteAsset::clearObsoleteAssetFlag();
+		//Move to the upgraded version
+		return resetDesignRoot(pictoData->toXml());
 	}
 	
 	//Create Design Map

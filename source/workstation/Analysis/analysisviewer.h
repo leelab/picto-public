@@ -1,6 +1,10 @@
 #ifndef _ANALYSIS_VIEWER_H_
 #define _ANALYSIS_VIEWER_H_
 
+#include <QUuid>
+#include <QSqlDatabase>
+#include <QTabWidget>
+
 #include "../viewer.h"
 #include "../../common/engine/pictoengine.h"
 #include "../../common/compositor/PixmapVisualTarget.h"
@@ -10,11 +14,9 @@
 #include "AnalysisOutputDisplay.h"
 #include "AnalysisParameterSelector.h"
 #include "TaskRunSelector.h"
-#include "../../common/analysis/AnalysisDefinition.h"
+#include "../../common/analysis/AnalysisContainer.h"
+#include "../Designer/Designer.h"
 
-#include <QUuid>
-#include <QSqlDatabase>
-#include <QTabWidget>
 using namespace Picto;
 
 class QAction;
@@ -59,7 +61,8 @@ private:
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 
 	QSharedPointer<Picto::Experiment> experiment_;
-	QSharedPointer<AnalysisDefinition> analysisDefinition_; 
+	QSharedPointer<AnalysisContainer> analysisContainer_; 
+	Designer* anaDesigner_;
 
 	QAction *executeAction_;
 	QAction *loadSessionAction_;
@@ -68,7 +71,6 @@ private:
 	AnalysisOutputDisplay *outputDisplay_;
 	
 	QTabWidget* mainTabWindow_;
-	QTextEdit* analysisDef_;
 	TaskRunSelector* runSelector_;
 	int runsRemaining_;
 	

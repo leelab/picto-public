@@ -8,6 +8,7 @@
 #include <QList>
 #include <QScriptProgram>
 #include <QUuid>
+#include <QScriptEngineDebugger>
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
 #include "AnalysisTrigger.h"
@@ -27,7 +28,7 @@ public:
 	virtual ~AnalysisPeriod();
 	static QSharedPointer<Asset> Create();
 
-	void loadSession(QSqlDatabase session);
+	void loadSession(QSqlDatabase session,bool enScriptDebugging);
 
 	//AnalysisPeriod specific functions
 	//Resets the AnalysisPeriod to its initial state
@@ -58,16 +59,14 @@ protected:
 	QSqlDatabase session_;
 
 private:
-	EventOrderIndex getNextTriggerInList(QString tagName, EventOrderIndex afterIndex);
 	QString scriptInfo();
-	QList<QSharedPointer<AnalysisTrigger>> startTriggers_;
-	QList<QSharedPointer<AnalysisTrigger>> endTriggers_;
 	EventOrderIndex startIndex_;
 	EventOrderIndex endIndex_;
 	unsigned int periodNumber_;
 	QUuid runUuid_;
 	QLinkedList<QPointer<QWidget>> outputWidgets_;
 	QSharedPointer<QScriptEngine> qsEngine_;
+	QSharedPointer<QScriptEngineDebugger> qsEngineDebugger_;
 	QScriptProgram periodScript_;
 };
 }; //namespace Picto

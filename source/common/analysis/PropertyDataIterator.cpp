@@ -24,7 +24,9 @@ QString PropertyDataIterator::propertyDescriptor()
 bool PropertyDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
 	if(propertyId_ <= 0)
+	{
 		return false;
+	}
 	query->prepare("SELECT p.value, p.dataid, f.time FROM properties p, frames f "
 		"WHERE p.assetid=:assetid AND f.dataid=p.frameid AND p.dataid > :lastdataid "
 		"AND f.time <= :stoptime ORDER BY p.dataid LIMIT :maxrows");
@@ -82,16 +84,28 @@ int PropertyDataIterator::getElementId(QString path)
 int PropertyDataIterator::getPropertyId(QString fullPath)
 {
 	if(fullPath.isEmpty())
+	{
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","No path was entered for the requested property");
 		return 0;
+	}
 	QString parentPath = getParentElementPath(fullPath);
 	if(parentPath.isEmpty())
+	{
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","Property path did not include a parent");
 		return 0;
+	}
 	int parentId = getElementId(parentPath);
 	if(parentId == 0)
+	{
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","Property parent at path " + parentPath.toAscii() + " could not be found");
 		return 0;
+	}
 	QString propName = getPropertyName(fullPath);
 	if(propName.isEmpty())
+	{
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","A property with parent path "+parentPath.toAscii()+" and no name was requested.");
 		return 0;
+	}
 
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
@@ -102,6 +116,7 @@ int PropertyDataIterator::getPropertyId(QString fullPath)
 
 	if(!success || !query.next())
 	{
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","Failed to find property at path "+fullPath.toAscii()+".");
 		return 0;
 	}
 	else

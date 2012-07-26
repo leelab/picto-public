@@ -11,7 +11,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AlignTrigger : public AnalysisTrigger
 #else
-class AlignTrigger : public UIEnabled
+class AlignTrigger : public AnalysisTrigger
 #endif
 {
 	Q_OBJECT

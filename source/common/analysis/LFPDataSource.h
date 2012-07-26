@@ -19,6 +19,7 @@ public:
 	virtual ~LFPDataSource();
 	static QSharedPointer<Asset> Create();
 
+	virtual QString getUITemplate(){return "LFPDataSource";};
 protected:
 
 	//Inherited

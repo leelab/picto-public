@@ -43,15 +43,7 @@
 #include <QLabel>
 #include <QMenuBar>
 
-#include "toolbox.h"
 #include "stateeditviewer.h"
-#include "diagramitem.h"
-#include "diagramscene.h"
-#include "diagramtextitem.h"
-#include "AssetItem.h"
-#include "PropertyBrowser.h"
-#include "AssetInfoBox.h"
-#include "ViewerWindow.h"
 #include "../../common/memleakdetect.h"
 
 //! [0]

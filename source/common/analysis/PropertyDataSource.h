@@ -20,6 +20,8 @@ public:
 	virtual ~PropertyDataSource();
 	static QSharedPointer<Asset> Create();
 
+	virtual QString getUITemplate(){return "PropertyDataSource";};
+
 protected:
 
 	//Inherited

@@ -25,7 +25,12 @@ AnalysisDefinition::~AnalysisDefinition()
 {
 }
 
-void AnalysisDefinition::loadSession(QSqlDatabase session)
+QSharedPointer<Asset> AnalysisDefinition::Create()
+{
+	return QSharedPointer<Asset>(new AnalysisDefinition());
+}
+
+void AnalysisDefinition::loadSession(QSqlDatabase session,bool enScriptDebugging)
 {
 	session_ = session;
 
@@ -44,7 +49,7 @@ void AnalysisDefinition::loadSession(QSqlDatabase session)
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
 		period = periodAsset.staticCast<AnalysisPeriod>();
-		period->loadSession(session_);
+		period->loadSession(session_,enScriptDebugging);
 	}
 
 	//Setup Scripting

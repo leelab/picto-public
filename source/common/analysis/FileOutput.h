@@ -2,7 +2,7 @@
 #define _FILE_OUTPUT_H_
 
 #include <QFile>
-#include <QTextStream>
+#include <QDataStream>
 #include <QSharedPointer>
 #include <QTextEdit>
 #include "AnalysisOutput.h"
@@ -35,6 +35,14 @@ public:
 public slots:
 	void writeLine(QString text);
 	void writeText(QString text);
+	/*! \brief Writes data out to file as binary values (ie. short, int, double)
+	 *  @param csvData a comma separated series of values.
+	 *  @param csvTypes a comma separated series of types to use for the csvData.
+	 *	Valid types are short,int,long,float,double.  If more values appear in the
+	 *	csvData than there are types in csvTypes, the last type will be used for
+	 *	all remaining values.
+	 */
+	void writeBinary(QString csvData,QString csvTypes);
 
 protected:
 
@@ -47,7 +55,7 @@ protected:
 private:
 	unsigned int charsWritten_;
 	QSharedPointer<QFile> file_;
-	QSharedPointer<QTextStream> outputFileStream_;
+	QSharedPointer<QDataStream> outputFileStream_;
 
 
 };

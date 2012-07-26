@@ -468,7 +468,7 @@ QSharedPointer<Asset> DiagramScene::createNewAsset()
 	//Due to the nature of scriptables and scriptable containers as elements whose functionality 
 	//involves spanning state machine levels, they need to be specifically added to their container 
 	//after being created.
-	if(newAsset.dynamicCast<Scriptable>())
+	if(newAsset.dynamicCast<Scriptable>() && dataStore.dynamicCast<ScriptableContainer>())
 		dataStore.staticCast<ScriptableContainer>()->addScriptable(newAsset.staticCast<Scriptable>());
 	if(newAsset.dynamicCast<ScriptableContainer>() && dataStore.dynamicCast<ScriptableContainer>())
 		dataStore.staticCast<ScriptableContainer>()->addChildScriptableContainer(newAsset.staticCast<ScriptableContainer>());

@@ -22,8 +22,9 @@ class AnalysisDefinition : public UIEnabled
 public:
 	AnalysisDefinition();
 	virtual ~AnalysisDefinition();
+	static QSharedPointer<Asset> Create();
 
-	void loadSession(QSqlDatabase session);
+	void loadSession(QSqlDatabase session,bool enScriptDebugging);
 
 	//AnalysisDefinition specific functions
 	//Resets the AnalysisDefinition to its initial state

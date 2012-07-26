@@ -78,5 +78,28 @@
         <file>icons/goto.png</file>
         <file>icons/unsavedrunning.png</file>
         <file>icons/savedrunning.png</file>
+        <file>icons/datasource.svg</file>
+        <file>icons/framedatasource.svg</file>
+        <file>icons/lfpdatasource.svg</file>
+        <file>icons/spikedatasource.svg</file>
+        <file>icons/timedatasource.svg</file>
+        <file>icons/propertydatasource.svg</file>
+        <file>icons/analysisperiod.svg</file>
+        <file>icons/analysistrigger.svg</file>
+        <file>icons/elementtrigger.svg</file>
+        <file>icons/frametrigger.svg</file>
+        <file>icons/lfptrigger.svg</file>
+        <file>icons/propertytrigger.svg</file>
+        <file>icons/signaltrigger.svg</file>
+        <file>icons/spiketrigger.svg</file>
+        <file>icons/timetrigger.svg</file>
+        <file>icons/transitiontrigger.svg</file>
+        <file>icons/analysistool.svg</file>
+        <file>icons/analysisoutput.svg</file>
+        <file>icons/numericvariable.svg</file>
+        <file>icons/startercontainer.svg</file>
+        <file>icons/endercontainer.svg</file>
+        <file>icons/fileoutput.svg</file>
+        <file>icons/analysisdefinition.svg</file>
     </qresource>
 </RCC>

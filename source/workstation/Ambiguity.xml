@@ -1,6 +1,400 @@
-<PictoData id="0">
+<PictoData><AnalysisContainer id="0"><AnalysisDefinition id="0">
+    <Name>EventAndEye</Name>
+    <Script>
+      readme.writeLine(&quot;Name:\t&quot; + name);
+      readme.writeLine(&quot;Started:\t&quot; +startTime);
+      readme.writeLine(&quot;Ended:\t&quot; +endTime);
+      readme.writeLine(&quot;Run Number:\t&quot; + runNumber);
+      readme.writeLine(&quot;-----Notes-----&quot;);
+      readme.writeLine(notes);
+    </Script>
+    <Tool type="File" id="0">
+      <Name>readme</Name>
+      <FileName>.readme.txt</FileName>
+    <UIInfo id="0"><Pos id="" x="2300" y="2000"/></UIInfo></Tool>
+    <Period id="0">
+      <Name id="">Trial</Name>
+      <Script>
+        str1=&quot;&quot;;
+        str2=&quot;&quot;;
+        for(i=0;i&lt;eye.length;i++)
+        {
+        str1+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+String( Math.round( 1000*(Number(eye[i].time.value)-Number(startTime)) ))
+        +&quot;,&quot;+Math.round(eye[i].data.value[0])
+        +&quot;,&quot;+Math.round(eye[i].data.value[1])+&quot;\n&quot;
+        );
+        if(correct.length)
+        str2+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+String( Math.round( 1000*(Number(eye[i].time.value)-Number(startTime)) ))
+        +&quot;,&quot;+Math.round(eye[i].data.value[0])
+        +&quot;,&quot;+Math.round(eye[i].data.value[1])+&quot;\n&quot;
+        );
+        }
+        eyeFile.writeText(str1);
+        eyeFileCorrect.writeText(str2);
+        str1=&quot;&quot;;
+        str2=&quot;&quot;;
+        for(i=0;i&lt;diam.length;i++)
+        {
+        str1+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+String( Math.round( 1000*(Number(diam[i].time.value)-Number(startTime)) ))
+        +&quot;,&quot;+Math.round(diam[i].data.value[0])
+        +&quot;,&quot;+Math.round(diam[i].data.value[1])+&quot;\n&quot;
+        );
+        if(correct.length)
+        str2+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+String( Math.round( 1000*(Number(diam[i].time.value)-Number(startTime)) ))
+        +&quot;,&quot;+Math.round(diam[i].data.value[0])
+        +&quot;,&quot;+Math.round(diam[i].data.value[1])+&quot;\n&quot;
+        );
+        }
+        diamFile.writeText(str1);
+        diamFileCorrect.writeText(str2);
+        str1=&quot;&quot;;
+        str2=&quot;&quot;;
+        for(i=0;i&lt;Event.length;i++)
+        {
+        str1+=(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime)))))+&quot;\n&quot;);
+        if(correct.length)
+        str2+=(Event[i].data.value+&quot;,&quot;+String(Math.round(1000*(Number(Event[i].time.value)-(Number(startTime)))))+&quot;\n&quot;);
+        }
+        eventFile.writeText(str1);
+        eventFileCorrect.writeText(str2);
+        str1=&quot;&quot;;
+        str2=&quot;&quot;;
+        for(i=0;i&lt;Blob.length;i++)
+        {
+        str1+=(Blob[i].data.value+&quot;\n&quot;);
+        if(correct.length)
+        str2+=(Blob[i].data.value+&quot;\n&quot;);
+        }
+        blobFile.writeText(str1);
+        blobFileCorrect.writeText(str2);
+        str1=&quot;&quot;;
+        str2=&quot;&quot;;
+        if(correct.length)
+        correctTrialNum.value++;
+      </Script>
+      <EnderContainer id="0">
+        <Name id="">EndTriggers</Name>
+        <UIInfo id="0">
+          <Pos id="" x="1776" y="1012"/>
+        </UIInfo>
+        <Trigger type="Element" id="0">
+          <Name>end</Name>
+          <When>Ends</When>
+          <ElementPath>ProbabilityTracking::Top::Superblock::Block::ReshuffleTrialType</ElementPath>
+          <UIInfo id="0">
+            <Pos id="" x="2462" y="1160"/>
+          </UIInfo>
+        </Trigger>
+        <Trigger type="Element" id="0">
+          <Name>end</Name>
+          <When>Ends</When>
+          <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
+          <UIInfo id="0">
+            <Pos id="" x="2612" y="1160"/>
+          </UIInfo>
+        </Trigger>
+      </EnderContainer>
+      <StarterContainer id="0">
+        <Name id="">StartTriggers</Name>
+        <UIInfo id="0">
+          <Pos id="" x="1634" y="1017"/>
+        </UIInfo>
+      <Trigger type="Element" id="0">
+        <Name>start</Name>
+        <When>Starts</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
+      <UIInfo id="0"><Pos id="" x="2762" y="1160"/></UIInfo></Trigger>
+      </StarterContainer>
+      <Trigger type="Element" id="0">
+        <Name>correct</Name>
+        <When>Starts</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
+      <UIInfo id="0"><Pos id="" x="1638" y="1161"/></UIInfo></Trigger>
+      <Trigger type="Property" id="0">
+        <Name>Event</Name>
+        <PropertyPath>ProbabilityTracking::Top::EventInfo::Values</PropertyPath>
+        <DataSource type="Property" id="0">
+          <Name>data</Name>
+          <PropertyPath>ProbabilityTracking::Top::EventInfo::Values</PropertyPath>
+        <UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></DataSource>
+        <DataSource type="Time" id="0">
+          <Name>time</Name>
+        <UIInfo id="0"><Pos id="" x="2150" y="2000"/></UIInfo></DataSource>
+      <UIInfo id="0"><Pos id="" x="1800" y="1161"/></UIInfo></Trigger>
+      <Trigger type="Element" id="0">
+        <Name>Blob</Name>
+        <When>Ends</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
+        <DataSource type="Property" id="0">
+          <Name>data</Name>
+          <PropertyPath>ProbabilityTracking::Top::TrialInfo::Values</PropertyPath>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="1326" y="1177"/></UIInfo></Trigger>
+      <Trigger type="Signal" id="0">
+        <Name>eye</Name>
+        <SignalName>Position</SignalName>
+        <DataSource type="Signal" id="0">
+          <Name>data</Name>
+          <SignalName>Position</SignalName>
+        </DataSource>
+        <DataSource type="Time" id="0">
+          <Name>time</Name>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="1483" y="1170"/></UIInfo></Trigger>
+      <Trigger type="Signal" id="0">
+        <Name>diam</Name>
+        <SignalName>Diameter</SignalName>
+        <DataSource type="Signal" id="0">
+          <Name>data</Name>
+          <SignalName>Diameter</SignalName>
+        </DataSource>
+        <DataSource type="Time" id="0">
+          <Name>time</Name>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="2072" y="1168"/></UIInfo></Trigger>
+      <Trigger type="Element" id="0">
+        <Name>beginTrial</Name>
+        <When>Starts</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
+        <DataSource type="Property" id="0">
+          <Name>trialInSeq</Name>
+          <PropertyPath>ProbabilityTracking::Top::Superblock::Block::TrialsSoFar::Value</PropertyPath>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="1934" y="1177"/></UIInfo></Trigger>
+      <Tool type="File" id="0">
+        <Name>blobFile</Name>
+        <FileName>.blob.all.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1525" y="1451"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>eventFile</Name>
+        <FileName>.event.all.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1662" y="1455"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>eyeFile</Name>
+        <FileName>.eye.all.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1809" y="1465"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>diamFile</Name>
+        <FileName>.joy.all.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1942" y="1455"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>blobFileCorrect</Name>
+        <FileName>.blob.correct.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1521" y="1595"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>eventFileCorrect</Name>
+        <FileName>.event.correct.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1675" y="1602"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>eyeFileCorrect</Name>
+        <FileName>.eye.correct.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1825" y="1604"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>diamFileCorrect</Name>
+        <FileName>.joy.correct.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="1971" y="1597"/></UIInfo></Tool>
+      <Tool type="NumericVariable" id="0">
+        <Name>correctTrialNum</Name>
+        <InitValue>0</InitValue>
+      <UIInfo id="0"><Pos id="" x="1739" y="1326"/></UIInfo></Tool>
+    <UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></Period>
+    <Period id="0">
+      <Name id="">BufferedTrial</Name>
+      <StartBufferMs>1000</StartBufferMs>
+      <EndBufferMs>1000</EndBufferMs>
+      <Script>
+        wasCorrect = false;
+        for(i=0;i&lt;correct.length;i++)
+        {
+        if(correct[i].time.value&gt;Number(startTime))
+        wasCorrect = true;
+        }
 
-  <Experiment id="1">
+        str1=&quot;&quot;;
+        str2=&quot;&quot;;
+        str3=&quot;&quot;;
+        str4=&quot;&quot;;
+        for(i=0;i&lt;spike.length;i++)
+        {
+        str1+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
+        +&quot;,&quot;+spike[i].data.channel
+        +&quot;,&quot;+spike[i].data.unit
+        +&quot;,&quot;+&quot;-1000&quot;
+        +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))+&quot;\n&quot;
+        );
+        wave = &quot;&quot;;
+        for(j=0;j&lt;spike[i].data.waveSize;j++)
+        {
+        wave += (1000*Number(spike[i].data.waveValue[j])).toFixed(6);
+        if(j&lt;spike[i].data.waveSize-1)
+        wave += &quot;,&quot;;
+        }
+        str2+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+spike[i].data.channel
+        +&quot;,&quot;+spike[i].data.unit
+        +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
+        +&quot;,&quot;+Math.round(1000000000*spike[i].data.samplePeriod)/1000000
+        +&quot;,&quot;+spike[i].data.waveSize
+        +&quot;,&quot;+wave+&quot;\n&quot;
+        );
+
+        if(wasCorrect)
+        {
+        str3+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
+        +&quot;,&quot;+spike[i].data.channel
+        +&quot;,&quot;+spike[i].data.unit
+        +&quot;,&quot;+&quot;-1000&quot;
+        +&quot;,&quot;+Math.round(1000*(Number(endTime)-Number(startTime)))+&quot;\n&quot;
+        );
+        str4+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+spike[i].data.channel
+        +&quot;,&quot;+spike[i].data.unit
+        +&quot;,&quot;+Math.round(1000*(spike[i].time.value-Number(startTime)))
+        +&quot;,&quot;+Math.round(1000000000*spike[i].data.samplePeriod)/1000000
+        +&quot;,&quot;+spike[i].data.waveSize
+        +&quot;,&quot;+wave+&quot;\n&quot;
+        );
+        }
+        }
+        spikeFile.writeText(str1);
+        waveFile.writeText(str2);
+        spikeFileCorrect.writeText(str3);
+        waveFileCorrect.writeText(str4);
+        str1=&quot;&quot;;
+        str2=&quot;&quot;;
+        for(i=0;i&lt;lfp.length;i++)
+        {
+        str1+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+lfp[i].data.channel
+        +&quot;,&quot;+Math.round(1000*(lfp[i].time.value-Number(startTime)))
+        +&quot;,&quot;+lfp[i].data.value+&quot;\n&quot;
+        );
+        if(wasCorrect)
+        {
+        str2+=(&quot;&quot;+(Number(periodNumber)+1)
+        +&quot;,&quot;+correctTrialNum.value
+        +&quot;,&quot;+lfp[i].data.channel
+        +&quot;,&quot;+Math.round(1000*(lfp[i].time.value-Number(startTime)))
+        +&quot;,&quot;+lfp[i].data.value+&quot;\n&quot;
+        );
+        }
+        }
+        lfpFile.writeText(str1);
+        lfpFileCorrect.writeText(str2);
+        if(wasCorrect)
+        correctTrialNum.value++;
+
+      </Script>
+      <StarterContainer id="0">
+        <Name id="">StartTriggers</Name>
+        <UIInfo id="0">
+          <Pos id="" x="2211" y="1446"/>
+        </UIInfo>
+      <Trigger type="Element" id="0">
+        <Name>start</Name>
+        <When>Starts</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
+      <UIInfo id="0"><Pos id="" x="2371" y="1391"/></UIInfo></Trigger>
+      </StarterContainer>
+      <EnderContainer id="0">
+        <Name id="">EndTriggers</Name>
+        <UIInfo id="0">
+          <Pos id="" x="2343" y="1442"/>
+        </UIInfo>
+      <Trigger type="Element" id="0">
+        <Name>end</Name>
+        <When>Ends</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::ReshuffleTrialType</ElementPath>
+      <UIInfo id="0"><Pos id="" x="2096" y="1396"/></UIInfo></Trigger>
+      <Trigger type="Element" id="0">
+        <Name>end</Name>
+        <When>Ends</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
+      <UIInfo id="0"><Pos id="" x="2221" y="1391"/></UIInfo></Trigger>
+      </EnderContainer>
+      <Trigger type="Spike" id="0">
+        <Name>spike</Name>
+        <DataSource type="Spike" id="0">
+          <Name>data</Name>
+          <ScaleFactor>1000</ScaleFactor>
+          <DecimalPlaces>6</DecimalPlaces>
+        </DataSource>
+        <DataSource type="Time" id="0">
+          <Name>time</Name>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="2048" y="1579"/></UIInfo></Trigger>
+      <Trigger type="Element" id="0">
+        <Name>correct</Name>
+        <When>Starts</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::NeedsMoreTrials</ElementPath>
+        <DataSource type="Time" id="0">
+          <Name>time</Name>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="2197" y="1576"/></UIInfo></Trigger>
+      <Trigger type="Element" id="0">
+        <Name>beginTrial</Name>
+        <When>Starts</When>
+        <ElementPath>ProbabilityTracking::Top::Superblock::Block::Trial</ElementPath>
+        <DataSource type="Property" id="0">
+          <Name>trialInSeq</Name>
+          <PropertyPath>ProbabilityTracking::Top::Superblock::Block::TrialsSoFar::Value</PropertyPath>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="2347" y="1576"/></UIInfo></Trigger>
+      <Trigger type="LFP" id="0">
+        <Name>lfp</Name>
+        <DataSource type="LFP" id="0">
+          <Name>data</Name>
+        </DataSource>
+        <DataSource type="Time" id="0">
+          <Name>time</Name>
+        </DataSource>
+      <UIInfo id="0"><Pos id="" x="2497" y="1576"/></UIInfo></Trigger>
+      <Tool type="File" id="0">
+        <Name>spikeFile</Name>
+        <FileName>.spikes.all.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="2144" y="1854"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>waveFile</Name>
+        <FileName>.wave.all.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="2294" y="1854"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>lfpFile</Name>
+        <FileName>.lfp.all.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="2444" y="1854"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>spikeFileCorrect</Name>
+        <FileName>.spikes.correct.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="2145" y="1986"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>waveFileCorrect</Name>
+        <FileName>.wave.correct.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="2295" y="1986"/></UIInfo></Tool>
+      <Tool type="File" id="0">
+        <Name>lfpFileCorrect</Name>
+        <FileName>.lfp.correct.txt</FileName>
+      <UIInfo id="0"><Pos id="" x="2445" y="1986"/></UIInfo></Tool>
+      <Tool type="NumericVariable" id="0">
+        <Name>correctTrialNum</Name>
+        <InitValue>0</InitValue>
+      <UIInfo id="0"><Pos id="" x="2277" y="1722"/></UIInfo></Tool>
+    <UIInfo id="0"><Pos id="" x="2150" y="2000"/></UIInfo></Period>
+  <UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></AnalysisDefinition>
+  </AnalysisContainer><Experiment id="1">
     <SyntaxVersion id="2">0.0.1</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
@@ -444,7 +838,7 @@
     </Task>
     <UIInfo id="390">
       
-    <Pos id="392" x="0" y="0"/></UIInfo>
+    <Pos id="392" x="0" y="0"/><OpenDescendant id="1805">4</OpenDescendant></UIInfo>
     <Name id="393">Ambiguity</Name>
     <Task id="394">
       <Name id="395">ProbabilityTracking</Name>
@@ -2481,8 +2875,4 @@ TrialInfo.setData(&quot;ChosenSide&quot;,-1);
 //(green/red or diamond/squaer/cyan/orange)
 SuperblockType.randomize();</EntryScript><VisualElement type="Operator Info Graphic" id="3338"><Name id="3339">TrialInfo</Name><UIInfo id="3340"><Pos id="3341" x="578" y="691"/></UIInfo><Dimensions height="50" id="3343" width="800" x="0" y="0"/><Position id="3344" x="0" y="0"/><UIEnabled id="3345">false</UIEnabled><Color A="255" B="0" G="0" R="255" id="3346">#ff0000</Color><Fields id="3347"/><Layer id="3348">0</Layer><OperatorView id="3349">true</OperatorView><SubjectView id="3350">false</SubjectView><UIOrder id="3351">0</UIOrder><Values id="3352"/><Visible id="3353">true</Visible></VisualElement><ExitScript id="3354"/><Parameter type="Range" id="3355"><Increment id="3356">1</Increment><Max id="3357">640</Max><Min id="3358">1</Min><Name id="3359">SuperBlockLength</Name><UIEnabled id="3360">false</UIEnabled><UIInfo id="3361"><Pos id="3362" x="721" y="686"/></UIInfo><Value id="3364">80</Value><UIOrder id="3365">0</UIOrder><Units id="3366"/></Parameter><Parameter type="Range" id="3367"><Increment id="3368">1</Increment><Max id="3369">16</Max><Min id="3370">0</Min><Name id="3371">SuperBlocksPerSession</Name><UIEnabled id="3372">true</UIEnabled><UIInfo id="3373"><Pos id="3374" x="869" y="685"/></UIInfo><Value id="3376">8</Value><UIOrder id="3377">0</UIOrder><Units id="3378"/></Parameter><Parameter type="Numeric" id="3379"><Name id="3380">NumberRestarts</Name><UIInfo id="3381"><Pos id="3382" x="252" y="728"/></UIInfo><UIEnabled id="3384">false</UIEnabled><UIOrder id="3385">0</UIOrder><Units id="3386"/><Value id="3387">0</Value></Parameter><StateMachineElement type="State" id="3388"><ControlElement type="Script Controller" id="3389"><Name id="3390">WaitForWindowClick</Name><Result id="3391"><Name id="3392">Done</Name><UIEnabled id="3393">false</UIEnabled><UIInfo id="3394"><Pos id="3395" x="2000" y="2000"/></UIInfo><UIOrder id="3397">0</UIOrder></Result><Script id="3398">return OperatorClick.newClick;</Script><UIInfo id="3399"><Pos id="3400" x="1683" y="1413"/></UIInfo><Type id="3402"/><UIEnabled id="3403">false</UIEnabled><UIOrder id="3404">0</UIOrder></ControlElement><Name id="3405">WaitForRestart</Name><Parameter type="OperatorClick" id="3406"><Name id="3407">OperatorClick</Name><UIInfo id="3408"><Pos id="3409" x="1665" y="1603"/></UIInfo><NewClick id="3411">false</NewClick><Pos id="3412" x="0" y="0"/><UIEnabled id="3413">false</UIEnabled><UIOrder id="3414">0</UIOrder></Parameter><Result id="3415"><Name id="3416">Restart</Name><UIInfo id="3417"><Pos id="3418" x="1953" y="1463"/></UIInfo><UIEnabled id="3420">false</UIEnabled><UIOrder id="3421">0</UIOrder></Result><Transition id="3422"><Destination id="3423">Restart</Destination><Source id="3424">WaitForWindowClick</Source><SourceResult id="3425">Done</SourceResult></Transition><UIInfo id="3426"><Pos id="3427" x="495" y="449"/></UIInfo><VisualElement type="Text Graphic" id="3429"><Color A="255" B="255" G="170" R="85" id="3430">#55aaff</Color><Dimensions height="50" id="3431" width="800" x="0" y="0"/><Name id="3432">Instructions1</Name><Position id="3433" x="325" y="250"/><SubjectView id="3434">false</SubjectView><Text id="3435">Session Complete!</Text><UIInfo id="3436"><Pos id="3437" x="1796" y="1578"/></UIInfo><Layer id="3439">0</Layer><OperatorView id="3440">true</OperatorView><UIEnabled id="3441">false</UIEnabled><UIOrder id="3442">0</UIOrder><Visible id="3443">true</Visible></VisualElement><ExitScript id="3444">NumberRestarts.value++;</ExitScript><VisualElement type="Text Graphic" id="3445"><Color A="255" B="255" G="170" R="85" id="3446">#55aaff</Color><Dimensions height="50" id="3447" width="800" x="0" y="0"/><Name id="3448">Instructions2</Name><Position id="3449" x="200" y="350"/><SubjectView id="3450">false</SubjectView><Text id="3451">Click in window to continue the session.  Press Stop button to end.</Text><UIInfo id="3452"><Pos id="3453" x="1793" y="1666"/></UIInfo><Layer id="3455">0</Layer><OperatorView id="3456">true</OperatorView><UIEnabled id="3457">false</UIEnabled><UIOrder id="3458">0</UIOrder><Visible id="3459">true</Visible></VisualElement><BackgroundColor A="255" B="0" G="0" R="0" id="3460">#000000</BackgroundColor><EntryScript id="3462"/><FrameScript id="3463"/><UIEnabled id="3465">false</UIEnabled><UIOrder id="3466">0</UIOrder></StateMachineElement><Transition id="3467"><Destination id="3468">WaitForRestart</Destination><Source id="3469">LessThanMaxSuperblocks</Source><SourceResult id="3470">false</SourceResult></Transition><Transition id="3471"><Destination id="3472">Superblock</Destination><Source id="3473">WaitForRestart</Source><SourceResult id="3474">Restart</SourceResult></Transition><Level id="3475">Stage</Level><Type id="3476">StateMachine</Type><UIEnabled id="3477">false</UIEnabled><UIOrder id="3478">0</UIOrder><Transition id="5076"><Destination id="5077">LessThanMaxSuperblocks</Destination><Source id="5078">Superblock</Source><SourceResult id="5079">SuperblockDone</SourceResult></Transition><Transition id="4908"><Destination id="4942">LessThanMaxSuperblocks</Destination><Source id="4943"/><SourceResult id="4944"/></Transition></StateMachine>
     </Task>
-  <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
-  <StateMachineEditorData id="0">
-    <OpenedBlock id="">1347</OpenedBlock>
-  </StateMachineEditorData>
-</PictoData>
+  <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment></PictoData>

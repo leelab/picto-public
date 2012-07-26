@@ -20,6 +20,8 @@ public:
 	virtual ~FrameDataSource();
 	static QSharedPointer<Asset> Create();
 
+	virtual QString getUITemplate(){return "FrameDataSource";};
+
 protected:
 
 	//Inherited

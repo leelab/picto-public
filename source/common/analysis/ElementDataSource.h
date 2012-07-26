@@ -19,6 +19,7 @@ public:
 	ElementDataSource();
 	virtual ~ElementDataSource();
 	static QSharedPointer<Asset> Create();
+	virtual QString getUITemplate(){return "ElementDataSource";};
 
 protected:
 

@@ -47,17 +47,6 @@ AnalysisViewer::AnalysisViewer(QWidget *parent) :
 	{
 		query.exec("CREATE TABLE workstationinfo (key TEXT, value TEXT)");
 	}
-	query.exec("SELECT value FROM workstationinfo WHERE key='LastAnalysisDefinition'");
-	bool rc = query.next();
-	if(!rc)
-	{
-		//inputBox_->setText("Enter SQL command here...");
-		query.prepare("INSERT INTO workstationinfo (key,value) VALUES ('LastAnalysisDefinition',:LastAnalysisDefinition)");
-		query.bindValue(":LastAnalysisDefinition",QString(""));
-		query.exec();
-	}
-	else
-		analysisDef_->setText(query.value(0).toString());
 }
 
 AnalysisViewer::~AnalysisViewer()
@@ -66,6 +55,7 @@ AnalysisViewer::~AnalysisViewer()
 //! Called just before displaying the viewer
 void AnalysisViewer::init()
 {
+	anaDesigner_->loadDesign("AnalysisContainer",0,designRoot_);
 }
 
 //!Called just before hiding the viewer
@@ -111,7 +101,7 @@ void AnalysisViewer::setupUi()
 	outputDisplay_ = new AnalysisOutputDisplay();
 
 
-	analysisDef_ = new QTextEdit();
+	anaDesigner_ = new Designer();
 
 	runSelector_ = new TaskRunSelector();
 
@@ -135,16 +125,12 @@ void AnalysisViewer::setupUi()
 	mainTabWindow_ = new QTabWidget();
 	QVBoxLayout *runDefinitionLayout = new QVBoxLayout;
 	runDefinitionLayout->addWidget(runSelector_);
-	runDefinitionLayout->setStretch(1,3);
-	runDefinitionLayout->addWidget(new QLabel("Enter Analysis Code:"));
-	runDefinitionLayout->setStretch(2,1);
-	runDefinitionLayout->addWidget(analysisDef_);
-	runDefinitionLayout->setStretch(3,7);
 	QWidget* runDefWidget = new QWidget();
 	runDefWidget->setLayout(runDefinitionLayout);
+	mainTabWindow_->addTab(anaDesigner_,"Analysis Designer");
 	mainTabWindow_->addTab(runDefWidget,"Analysis Parameters");
 	mainTabWindow_->addTab(outputDisplay_,"Analysis Output");
-	mainTabWindow_->setTabEnabled(1,false);
+	mainTabWindow_->setTabEnabled(2,false);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
@@ -188,7 +174,7 @@ void AnalysisViewer::loadSession()
 			msg.exec();
 			return;
 		}
-		mainTabWindow_->setTabEnabled(1,false);
+		mainTabWindow_->setTabEnabled(2,false);
 		outputDisplay_->clear();
 		sessions_.append(newSession);
 		Q_ASSERT(sessions_.last().isValid() && sessions_.last().isOpen());
@@ -223,32 +209,35 @@ void AnalysisViewer::executeCommand()
 {
 	QTime timer;
 	timer.start();
-	analysisDefinition_ = QSharedPointer<AnalysisDefinition>(new AnalysisDefinition());
-	if(!analysisDefinition_->fromXml(analysisDef_->toPlainText()))
+	QSharedPointer<Design> anaDesign = designRoot_->getDesign("AnalysisContainer",0);
+	if(!anaDesign)
+	{
+		QMessageBox box;
+		box.setText("File does not contain an Analysis Container");
+		box.setIconPixmap(QPixmap(":/icons/x.png"));
+		box.exec();
+		return;
+	}
+	QString errors;
+	if(!anaDesign->compiles(&errors))
 	{
 		QMessageBox box;
 		box.setText("Syntax check failed                                       ");
-		box.setDetailedText(Serializable::getErrors());
+		box.setDetailedText(errors);
 		box.setIconPixmap(QPixmap(":/icons/x.png"));
 		box.exec();
-		Serializable::clearErrors();
 		return;
 	}
-	//Set the latest analysis definition in the workstation config file
-	QSqlQuery query(configDb_);
-	query.prepare("UPDATE workstationinfo SET value=:value WHERE key='LastAnalysisDefinition'");
-	query.bindValue(":value",analysisDef_->toPlainText());
-	query.exec();
+	analysisContainer_ = anaDesign->getRootAsset().staticCast<AnalysisContainer>();
 
 	//Start Analysis
 	status_ = ANALYZING;
 	this->setFocus();
-	//mainTabWindow_->setTabEnabled(1,false);
 	executeAction_->setEnabled(false);
 	loadSessionAction_->setEnabled(false);
 	saveOutputAction_->setEnabled(false);
 	runSelector_->setEnabled(false);
-	analysisDef_->setEnabled(false);
+	anaDesigner_->setEnabled(false);
 	outputDisplay_->clear();
 	runsRemaining_ = 0;
 	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
@@ -256,16 +245,16 @@ void AnalysisViewer::executeCommand()
 	runsRemaining_ = runSelector_->selectedRunCount();
 	for(int i=0;i<runSelector_->selectedRunCount();i++)
 	{
-		analysisDefinition_->loadSession(runSelector_->getSessionForSelectedRun(i));
-		analysisDefinition_->startNewRun(runSelector_->getSelectedRun(i));
-		QString result = analysisDefinition_->run();
-		analysisDefinition_->finish();
+		analysisContainer_->loadSession(runSelector_->getSessionForSelectedRun(i),true);
+		analysisContainer_->startNewRun(runSelector_->getSelectedRun(i));
+		QString result = analysisContainer_->run();
+		analysisContainer_->finish();
 		int currTabId = outputDisplay_->addTopLevelTab(runSelector_->nameOfSelectedRun(i));
-		QLinkedList<QPointer<AnalysisOutputWidget>> outputWidgets = analysisDefinition_->getOutputWidgets();
+		QLinkedList<QPointer<AnalysisOutputWidget>> outputWidgets = analysisContainer_->getOutputWidgets();
 		foreach(QPointer<QWidget> widget, outputWidgets)
 		{
 			outputDisplay_->addSubTab(currTabId,widget->objectName(),widget);
-			mainTabWindow_->setTabEnabled(1,true);
+			mainTabWindow_->setTabEnabled(2,true);
 		}
 		runsRemaining_--;
 	}
@@ -276,7 +265,7 @@ void AnalysisViewer::executeCommand()
 	executeAction_->setEnabled(true);
 	loadSessionAction_->setEnabled(true);
 	runSelector_->setEnabled(true);
-	analysisDef_->setEnabled(true);
+	anaDesigner_->setEnabled(true);
 	if(outputDisplay_->supportsSaving())
 	{
 		saveOutputAction_->setEnabled(true);
@@ -304,10 +293,10 @@ void AnalysisViewer::updateProgressBar()
 	{
 	case ANALYZING:
 		{
-			if(!analysisDefinition_)
+			if(!analysisContainer_)
 				return;
-			int currRunPercentRemaining = analysisDefinition_->getPercentRemaining();
-			//The analysisDefinition_ gives us the percent remaining of the current run,
+			int currRunPercentRemaining = analysisContainer_->getPercentRemaining();
+			//The analysisContainer_ gives us the percent remaining of the current run,
 			//we need to update this value to reflect the portion of all runs completed.
 			double totalRuns = runSelector_->selectedRunCount();
 			double completed = totalRuns-runsRemaining_;

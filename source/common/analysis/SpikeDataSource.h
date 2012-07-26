@@ -19,6 +19,8 @@ public:
 	virtual ~SpikeDataSource();
 	static QSharedPointer<Asset> Create();
 
+	virtual QString getUITemplate(){return "SpikeDataSource";};
+
 protected:
 
 	//Inherited

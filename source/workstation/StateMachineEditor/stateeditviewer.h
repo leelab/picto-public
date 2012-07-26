@@ -43,7 +43,7 @@
 #define STATEEDITVIEWER_H
 
 #include "../viewer.h"
-#include "Designer.h"
+#include "../Designer/Designer.h"
 using namespace Picto;
 //! [0]
 class StateEditViewer : public Viewer

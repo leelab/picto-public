@@ -20,6 +20,8 @@ public:
 	virtual ~TimeDataSource();
 	static QSharedPointer<Asset> Create();
 
+	virtual QString getUITemplate(){return "TimeDataSource";};
+
 protected:
 
 	//Inherited

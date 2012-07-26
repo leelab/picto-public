@@ -11,7 +11,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SignalTrigger : public AnalysisTrigger
 #else
-class SignalTrigger : public UIEnabled
+class SignalTrigger : public AnalysisTrigger
 #endif
 {
 	Q_OBJECT
@@ -21,6 +21,7 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::BEHAVIORAL;};
+	virtual QString getUITemplate(){return "SignalTrigger";};
 
 protected:
 

@@ -37,7 +37,12 @@ Director::Director(QString name,
 	yDiamChannel_(yDiamChannel),
 	posSampPer_(posSampPer),
 	diamSampPer_(diamSampPer),
-	useFrontPanel_((rewardController != HardwareSetup::LegacySystemXpReward)&&(eventCodeGenerator != HardwareSetup::LegacyGen))
+	useFrontPanel_(
+					(rewardController != HardwareSetup::LegacySystemXpReward)
+					&&(eventCodeGenerator != HardwareSetup::LegacyGen)
+					&& (rewardController != HardwareSetup::NullReward)
+					&&(eventCodeGenerator != HardwareSetup::NullGen)
+					)
 {
 	//! \TODO Set up random number generator?
 

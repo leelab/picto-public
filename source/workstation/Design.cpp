@@ -1,7 +1,7 @@
 #include <QMessageBox>
 #include <QTextCursor>
 #include "Design.h"
-#include "../common/analysis/analysisdefinition.h"
+#include "../common/analysis/AnalysisContainer.h"
 #include "../common/memleakdetect.h"
 
 Design::Design()
@@ -161,8 +161,8 @@ QSharedPointer<DataStore> Design::createRoot(QString identifier)
 {
 	if(identifier == "Experiment")
 		return Experiment::Create().staticCast<DataStore>();
-	if(identifier == "AnalysisDefinition")
-		return AnalysisDefinition::Create().staticCast<DataStore>();
+	if(identifier == "AnalysisContainer")
+		return AnalysisContainer::Create().staticCast<DataStore>();
 	Q_ASSERT_X(false,"Design::createRoot","A Design type was created with an unsupported root node.");
 	return QSharedPointer<DataStore>();
 }

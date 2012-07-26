@@ -10,7 +10,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API TimeTrigger : public AnalysisTrigger
 #else
-class TimeTrigger : public UIEnabled
+class TimeTrigger : public AnalysisTrigger
 #endif
 {
 	Q_OBJECT
@@ -20,6 +20,7 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	virtual EventOrderIndex::IDSource getDataSource(){return EventOrderIndex::OTHER;};
+	virtual QString getUITemplate(){return "TimeTrigger";};
 
 protected:
 

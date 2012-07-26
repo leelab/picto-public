@@ -1,3 +1,5 @@
+#include <string>
+#include <QGraphicsScene>
 #include "DiagramItemFactory.h"
 #include "ResultItem.h"
 #include "StateMachineElementItem.h"
@@ -6,7 +8,6 @@
 #include "WireableItem.h"
 #include "../../common/property/property.h"
 #include "../../common/statemachine/uienabled.h"
-#include <string>
 #include "../../common/memleakdetect.h"
 using namespace std;
 
@@ -32,6 +33,32 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("Result",":/icons/result.svg",50,75);
 		addIconDefinition("Reward",":/icons/reward.svg",50,100);
 		addIconDefinition("Task",":/icons/task.svg",100,100);
+		//Analysis Icons
+		addIconDefinition("DataSource",":/icons/datasource.svg",100,100);
+		addIconDefinition("ElementDataSource",":/icons/statemachineelement.svg",100,100);
+		addIconDefinition("FrameDataSource",":/icons/framedatasource.svg",100,100);
+		addIconDefinition("LFPDataSource",":/icons/lfpdatasource.svg",100,100);
+		addIconDefinition("PropertyDataSource",":/icons/propertydatasource.svg",100,100);
+		addIconDefinition("SignalDataSource",":/icons/datasource.svg",100,100);
+		addIconDefinition("SpikeDataSource",":/icons/spikedatasource.svg",100,100);
+		addIconDefinition("TimeDataSource",":/icons/timedatasource.svg",100,100);
+		addIconDefinition("AnalysisOutput",":/icons/analysisoutput.svg",100,100);
+		addIconDefinition("AnalysisPeriod",":/icons/analysisperiod.svg",100,100);
+		addIconDefinition("AnalysisTool",":/icons/analysistool.svg",100,100);
+		addIconDefinition("AnalysisTrigger",":/icons/analysistrigger.svg",100,100);
+		addIconDefinition("ElementTrigger",":/icons/elementtrigger.svg",100,100);
+		addIconDefinition("FrameTrigger",":/icons/frametrigger.svg",100,100);
+		addIconDefinition("LFPTrigger",":/icons/lfptrigger.svg",100,100);
+		addIconDefinition("PropertyTrigger",":/icons/propertytrigger.svg",100,100);
+		addIconDefinition("SignalTrigger",":/icons/signaltrigger.svg",100,100);
+		addIconDefinition("SpikeTrigger",":/icons/spiketrigger.svg",100,100);
+		addIconDefinition("TimeTrigger",":/icons/timetrigger.svg",100,100);
+		addIconDefinition("TransitionTrigger",":/icons/transitiontrigger.svg",100,100);
+		addIconDefinition("FileOutput",":/icons/fileoutput.svg",100,100);
+		addIconDefinition("NumericVariable",":/icons/numericvariable.svg",100,100);
+		addIconDefinition("StarterContainer",":/icons/startercontainer.svg",100,100);
+		addIconDefinition("EnderContainer",":/icons/endercontainer.svg",100,100);
+		addIconDefinition("AnalysisDefinition",":/icons/analysisdefinition.svg",100,100);
 		mapInitialized_ = true;
 	}
 	editorState_ = editorState;
@@ -75,7 +102,12 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		returnVal->setSvgIcon(iconDef.fileName_);
 		QSharedPointer<UIInfo> uiInfo = getUIInfo(asset);
 		if(!uiInfo.isNull())
-			returnVal->setPos(uiInfo.staticCast<UIInfo>()->getPos());
+		{
+			QPointF pos = uiInfo.staticCast<UIInfo>()->getPos();
+			if(!scene_->sceneRect().contains(pos))
+				pos = scene_->sceneRect().center();
+			returnVal->setPos(pos);
+		}
 	}
 	return returnVal;
 }

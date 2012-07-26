@@ -5,6 +5,8 @@
 #include <QCoreApplication>
 #include "AnalysisPeriod.h"
 
+#include "StarterContainer.h"
+#include "EnderContainer.h"
 #include "ElementTrigger.h"
 #include "LFPTrigger.h"
 #include "PropertyTrigger.h"
@@ -28,8 +30,8 @@ AnalysisPeriod::AnalysisPeriod()
 	AddDefinableProperty("Script","");
 
 	QSharedPointer<AssetFactory> triggerFactory(new AssetFactory(0,-1));
-	AddDefinableObjectFactory("StartTrigger",triggerFactory);
-	AddDefinableObjectFactory("EndTrigger",triggerFactory);
+	AddDefinableObjectFactory("StarterContainer",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StarterContainer::Create))));
+	AddDefinableObjectFactory("EnderContainer",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(EnderContainer::Create))));
 
 	AddDefinableObjectFactory("Trigger",triggerFactory);
 	triggerFactory->addAssetType("Element",
@@ -68,11 +70,17 @@ QSharedPointer<Asset> AnalysisPeriod::Create()
 	return QSharedPointer<Asset>(new AnalysisPeriod());
 }
 
-void AnalysisPeriod::loadSession(QSqlDatabase session)
+void AnalysisPeriod::loadSession(QSqlDatabase session,bool enScriptDebugging)
 {
 	session_ = session;
 	//Setup scripting
 	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
+	if(enScriptDebugging)
+	{
+		qsEngineDebugger_ = QSharedPointer<QScriptEngineDebugger>(new QScriptEngineDebugger());
+		qsEngineDebugger_->attachTo(qsEngine_.data());
+	}
+
 
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 	QSharedPointer<AnalysisTrigger> trigger;
@@ -83,8 +91,8 @@ void AnalysisPeriod::loadSession(QSqlDatabase session)
 	}
 
 	QList<QSharedPointer<Asset>> periodDefTriggers;
-	periodDefTriggers << getGeneratedChildren("StartTrigger");
-	periodDefTriggers << getGeneratedChildren("EndTrigger");
+	periodDefTriggers << getGeneratedChildren("StarterContainer")[0].staticCast<StarterContainer>()->getTriggers();
+	periodDefTriggers << getGeneratedChildren("EnderContainer")[0].staticCast<StarterContainer>()->getTriggers();
 	foreach(QSharedPointer<Asset> triggerAsset,periodDefTriggers)
 	{
 		trigger = triggerAsset.staticCast<AnalysisTrigger>();
@@ -145,8 +153,9 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 	//Tell triggers that they need to recheck the session
 	//database for new data.
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
-	triggers << getGeneratedChildren("StartTrigger");
-	triggers << getGeneratedChildren("EndTrigger");
+	triggers << getGeneratedChildren("StarterContainer")[0].staticCast<StarterContainer>()->getTriggers();
+	triggers << getGeneratedChildren("EnderContainer")[0].staticCast<StarterContainer>()->getTriggers();
+
 	QSharedPointer<AnalysisTrigger> trigger;
 	foreach(QSharedPointer<Asset> triggerAsset,triggers)
 	{
@@ -180,11 +189,11 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 	{	//Either this is the first run call since startNewRun() or last call finished with
 		//no startTrigger.  
 		//Try to get a new startIndex_.
-		startIndex_ = getNextTriggerInList("StartTrigger",startIndex_);
+		startIndex_ = getGeneratedChildren("StarterContainer")[0].staticCast<StarterContainer>()->getNextTriggerInList(startIndex_);
 		if(!startIndex_.isValid())
 			return false;
 	}
-	endIndex_ = getNextTriggerInList("EndTrigger",startIndex_);
+	endIndex_ = getGeneratedChildren("EnderContainer")[0].staticCast<StarterContainer>()->getNextTriggerInList(startIndex_);
 	if(!endIndex_.isValid())
 		return false;
 	
@@ -254,42 +263,15 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		//Get the next period times
 		while(startIndex_ < endIndex_)
 		{
-			startIndex_ = getNextTriggerInList("StartTrigger",startIndex_);
+			startIndex_ = getGeneratedChildren("StarterContainer")[0].staticCast<StarterContainer>()->getNextTriggerInList(startIndex_);
 			if(!startIndex_.isValid())
 				return true;
 		}
-		endIndex_ = getNextTriggerInList("EndTrigger",startIndex_);
+		endIndex_ = getGeneratedChildren("EnderContainer")[0].staticCast<StarterContainer>()->getNextTriggerInList(startIndex_);
 		if(!endIndex_.isValid())
 			return true;
 	}
 	return true;
-}
-
-EventOrderIndex AnalysisPeriod::getNextTriggerInList(QString tagName, EventOrderIndex afterIndex)
-{
-	EventOrderIndex returnVal;
-	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren(tagName);
-	QSharedPointer<AnalysisTrigger> trigger;
-	EventOrderIndex currIndex;
-	foreach(QSharedPointer<Asset> triggerAsset,triggers)
-	{
-		trigger = triggerAsset.staticCast<AnalysisTrigger>();
-		currIndex = trigger->getCurrentTrigger();
-		while(currIndex <= afterIndex)
-		{
-			currIndex = trigger->getNextTrigger();
-			if(!currIndex.isValid())
-				break;
-		}
-		if(currIndex.isValid())
-		{
-			if(!returnVal.isValid() || currIndex < returnVal)
-			{
-				returnVal = currIndex;
-			}
-		}
-	}
-	return returnVal;
 }
 
 QString AnalysisPeriod::scriptInfo()
@@ -352,43 +334,11 @@ unsigned int AnalysisPeriod::getPercentRemaining()
 void AnalysisPeriod::postDeserialize()
 {
 	UIEnabled::postDeserialize();
-	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("StartTrigger");
-	QSharedPointer<AnalysisTrigger> trigger;
-	foreach(QSharedPointer<Asset> triggerAsset,triggers)
-	{
-		startTriggers_.append(triggerAsset.staticCast<AnalysisTrigger>());
-	}
-	triggers = getGeneratedChildren("EndTrigger");
-	foreach(QSharedPointer<Asset> triggerAsset,triggers)
-	{
-		endTriggers_.append(triggerAsset.staticCast<AnalysisTrigger>());
-	}
 }
 
 bool AnalysisPeriod::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
-	if(!startTriggers_.size())
-	{
-		addError("AnalysisPeriod", "At least one Start Trigger must be defined in an AnalysisPeriod.");
-		return false;
-	}
-	if(!endTriggers_.size())
-	{
-		addError("AnalysisPeriod", "At least one End Trigger must be defined in an AnalysisPeriod.");
-		return false;
-	}
-	if(startTriggers_.size() > 1)
-	{
-		foreach(QSharedPointer<AnalysisTrigger> trigger,startTriggers_)
-		{
-			if(trigger->getDataSource() != EventOrderIndex::BEHAVIORAL)
-			{
-				addError("AnalysisPeriod", "Multiple start triggers are only allowed for Behavioral Triggers.");
-				return false;
-			}
-		}
-	}
 	return true;
 }

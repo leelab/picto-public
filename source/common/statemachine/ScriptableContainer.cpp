@@ -203,7 +203,7 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 			}
 
 			//Make a Qt Script Function out of the script and its name
-			QString function = "function " + it.key() + "("+it.value().first+") { " + it.value().second + "}";
+			QString function = "function " + it.key() + "("+it.value().first+") { " + it.value().second + "\n}";
 
 			//add the function to the engine by calling evaluate on it
 			qsEngine_->evaluate(function);
