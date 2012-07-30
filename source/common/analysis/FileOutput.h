@@ -54,6 +54,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	unsigned int charsWritten_;
+	QStringList endianList_; 
 	QSharedPointer<QFile> file_;
 	QSharedPointer<QDataStream> outputFileStream_;
 

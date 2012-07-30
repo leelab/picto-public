@@ -1072,7 +1072,23 @@ void SessionInfo::SetupBaseSessionDatabase()
 	//			the database.  In practice, a catastrophic disk or hardware fault is more likely to
 	//			occur.
 	//OFF is fully protected from application crash.  System failures could corrupt data.
-	//executeWriteQuery(&sessionQ,"PRAGMA synchronous = OFF");
+	executeWriteQuery(&sessionQ,"PRAGMA synchronous = OFF");
+	//The DELETE (default) journaling mode is the normal behavior. In the DELETE mode, the rollback 
+	//journal is deleted at the conclusion of each transaction. Indeed, the delete operation is the 
+	//action that causes the transaction to commit. (See the documented titled Atomic Commit In SQLite 
+	//for additional detail.)
+	//The WAL journaling mode uses a write-ahead log instead of a rollback journal to implement 
+	//transactions. The WAL journaling mode is persistent; after being set it stays in effect across 
+	//multiple database connections and after closing and reopening the database. A database in WAL 
+	//journaling mode can only be accessed by SQLite version 3.7.0 or later. This mode can be significantly
+	//faster than DELETE in cases where there are significantly more reads than writes.
+	executeWriteQuery(&sessionQ,"PRAGMA journal_mode = WAL");
+	//Set the temp_store setting: 
+	//The temp_store values specifies the type of database back-end to use for temporary files. 
+	//The choices are DEFAULT (0), FILE (1), and MEMORY (2). The use of a memory database for 
+	//temporary tables can produce signifigant savings. DEFAULT specifies the compiled-in default, 
+	//which is FILE unless the source has been modified.
+	executeWriteQuery(&sessionQ,"PRAGMA temp_store = 2");
 
 	// If the database doesn't yet contain a session info table, we need to add the session info.
 	bool insertSessionInfo = !baseSessionDbConnection_.tables().contains("sessioninfo");

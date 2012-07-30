@@ -38,10 +38,8 @@ Director::Director(QString name,
 	posSampPer_(posSampPer),
 	diamSampPer_(diamSampPer),
 	useFrontPanel_(
-					(rewardController != HardwareSetup::LegacySystemXpReward)
-					&&(eventCodeGenerator != HardwareSetup::LegacyGen)
-					&& (rewardController != HardwareSetup::NullReward)
-					&&(eventCodeGenerator != HardwareSetup::NullGen)
+					(rewardController == HardwareSetup::PictoBoxXpReward)
+					||(rewardController == HardwareSetup::AudioReward)
 					)
 {
 	//! \TODO Set up random number generator?

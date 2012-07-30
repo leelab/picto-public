@@ -161,13 +161,12 @@ void Menu::checkConnections()
 		emit updateLCD(1, line1);
 		emit updateLCD(2, line2);
 
-		wasConnected_ = true;
+		wasConnected_ = false;
 	}
 	//coming out of wait for engine, we return to the status menu
 	else if(!wasConnected_)
 	{
-		currMode_ = panelModes_[StatusModeType];
-		currMode_->initMode();
+		returnToStatus();
 		wasConnected_ = true;
 	}
 }

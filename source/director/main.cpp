@@ -171,6 +171,7 @@ int main(int argc, char *argv[])
 	else if(app.arguments().contains("-pictobox"))
 	{
 		rewCont = HardwareSetup::PictoBoxXpReward;
+		eventGen = HardwareSetup::PictoBoxXpGen;
 	}
 	else if(app.arguments().contains("-test"))
 	{

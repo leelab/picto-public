@@ -8,6 +8,9 @@ using namespace Picto;
 FileOutput::FileOutput()
 {
 	AddDefinableProperty("FileName","");
+	endianList_ << "BigEndian" << "LittleEndian";
+	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"BinaryByteOrder",0,"enumNames",endianList_);
+
 	charsWritten_ = 0;
 }
 
@@ -60,8 +63,8 @@ void FileOutput::writeBinary(QString csvData,QString csvTypes)
 {
 	if(isValid())
 	{
-		QStringList data = csvData.split(",",QString::SkipEmptyParts);
-		QStringList types = csvTypes.split(",",QString::SkipEmptyParts);
+		QStringList data = csvData.split(",");
+		QStringList types = csvTypes.split(",");
 		QString currType = "short";
 		for(int i=0;i<data.size();i++)
 		{
@@ -118,6 +121,13 @@ void FileOutput::reset()
 	if(!file_->open(QIODevice::WriteOnly | QIODevice::Text))
 		return;
 	outputFileStream_ = QSharedPointer<QDataStream>(new QDataStream(file_.data()));
+	if(endianList_.value(propertyContainer_->getPropertyValue("BinaryByteOrder").toInt(),"") == "BigEndian")
+		outputFileStream_->setByteOrder(QDataStream::BigEndian);
+	else if(endianList_.value(propertyContainer_->getPropertyValue("BinaryByteOrder").toInt(),"") == "LittleEndian")
+		outputFileStream_->setByteOrder(QDataStream::LittleEndian);
+	else
+		Q_ASSERT(false);
+
 	setValid(true);
 }
 
