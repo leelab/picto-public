@@ -53,6 +53,7 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
+	void openFile(bool textMode);
 	unsigned int charsWritten_;
 	QStringList endianList_; 
 	QSharedPointer<QFile> file_;

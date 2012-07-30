@@ -102,7 +102,7 @@ if (spikes.length) {
             spikeStrs[chan][unit].text = &quot;&quot;;
             spikeStrs[chan][unit].num = 0;
         }
-        spikeStrs[chan][unit].text += &quot;,&quot;+spikeTime;
+        spikeStrs[chan][unit].text += &quot;,&quot; + spikeTime;
         spikeStrs[chan][unit].num++;
     }
     //Create strings here.
@@ -138,8 +138,7 @@ eyeStr += ernFields[0] + &quot;,&quot;//totalTrial
         + ernFields[15] + &quot;,&quot;;  //rewCount
 var neyes = 0;
 var xThenY = &quot;&quot;;
-for (var i = 0; i &lt; eye.length; i++) 
-{
+for (var i = 0; i &lt; eye.length; i++) {
     if (
 			(eye[i].data.time &lt; startTime)
 			|| (eye[i].data.time &gt; endTime)
@@ -149,8 +148,7 @@ for (var i = 0; i &lt; eye.length; i++)
     xThenY += &quot;,&quot; + eye[i].data.value[0];   //xs
 }
 
-for (var i = 0; i &lt; eye.length; i++) 
-{
+for (var i = 0; i &lt; eye.length; i++) {
     if (
 			(eye[i].data.time &lt; startTime)
 			|| (eye[i].data.time &gt; endTime)
@@ -158,20 +156,12 @@ for (var i = 0; i &lt; eye.length; i++)
         continue;
     xThenY += &quot;,&quot; + eye[i].data.value[1];   //ys
 }
-eyeStr += &quot;&quot;+neyes;
-if (neyes &gt; 0) 
-{
+eyeStr += &quot;&quot; + neyes;
+if (neyes &gt; 0) {
     eyeStr += xThenY;
 }
 
-////For Testing!!!
-//var realN = eyeStr.split(&quot;,&quot;).length;
-//if (realN != ((2 * neyes) + 11)) {
-//    var realNEyes = xThenY.split(&quot;,&quot;).length;
-//    debugger;
-//}
-
-eyeFile.writeBinary(eyeStr,&quot;int,int,int,int,int,int,int,int,int,int,int,short&quot;);
+eyeFile.writeBinary(eyeStr, &quot;int,int,int,int,int,int,int,int,int,int,int,short&quot;);
 
 //Build up .lfp output
 var lfpStr = &quot;&quot;;
@@ -193,8 +183,7 @@ var lfpStrs = [];
 for (var i = 0; i &lt; lfp.length; i++) {
     var chan = lfp[i].data.channel;
     var lfpTime = &quot;&quot; + Math.round(1000 * (lfp[i].data.time));
-    if (typeof lfpStrs[chan] == 'undefined') 
-    {
+    if (typeof lfpStrs[chan] == 'undefined') {
         totChans++;
         lfpStrs[chan] = [];
         lfpStrs[chan].text = &quot;&quot;;
@@ -202,11 +191,10 @@ for (var i = 0; i &lt; lfp.length; i++) {
         lfpStrs[chan].startTime = lfpTime;
         lfpStrs[chan].time_per_samp = 0;
     }
-    if (lfpStrs[chan].num == 1) 
-    {
-        lfpStrs[chan].time_per_samp = lfpTime - lfpStrs[chan].startTime;   
+    if (lfpStrs[chan].num == 1) {
+        lfpStrs[chan].time_per_samp = lfpTime - lfpStrs[chan].startTime;
     }
-    lfpStrs[chan].text +=  &quot;,&quot;+lfp[i].data.value;
+    lfpStrs[chan].text += &quot;,&quot; + lfp[i].data.value;
     lfpStrs[chan].num++;
 }
 //Create strings here.
@@ -216,14 +204,13 @@ for (var i = 0; i &lt; lfpStrs.length; i++) {
     if (typeof lfpStrs[i] == 'undefined')
         continue;
     //Chan,Unit,Num,All Times
-    lfpStr += i + &quot;,&quot; + lfpStrs[i].startTime + &quot;,&quot; + lfpStrs[i].time_per_samp+&quot;,&quot;;
+    lfpStr += i + &quot;,&quot; + lfpStrs[i].startTime + &quot;,&quot; + lfpStrs[i].time_per_samp + &quot;,&quot;;
     nLfp = lfpStrs[i].num;
 }
 lfpStr += nLfp;   //They should all have the same nLFP so we only print it once
 lfpFile.writeBinary(lfpStr, &quot;int&quot;); //Write all ints to file
 var lfpDatStr = &quot;&quot;;
-for (var i = 0; i &lt; lfpStrs.length; i++) 
-{
+for (var i = 0; i &lt; lfpStrs.length; i++) {
     if (typeof lfpStrs[i] == 'undefined')
         continue;
     //Data
@@ -239,7 +226,7 @@ for (var i = 0; i &lt; spikes.length; i++) {
     swfStr += spikes[i].data.channel + &quot;,&quot;; //channel
     swfStr += spikes[i].data.unit + &quot;,&quot;; //unit
     swfStr += Math.round(1000 * (spikes[i].time.value - startTime)) + &quot;,&quot;; //spiketime
-    swfStr += (1000*spikes[i].data.samplePeriod) + &quot;,&quot;; //time per sample
+    swfStr += (1000 * spikes[i].data.samplePeriod) + &quot;,&quot;; //time per sample
     swfStr += spikes[i].data.waveSize + &quot;,&quot;; //size
     swfStr += spikes[i].data.wave; //wave
     swfStr += &quot;\n&quot;;
