@@ -26,7 +26,7 @@ QSharedPointer<Asset> FileOutput::Create()
 
 QPointer<AnalysisOutputWidget> FileOutput::getOutputWidget()
 {
-	if(!file_)
+	if(!file_ || !isValid())
 		return QPointer<AnalysisOutputWidget>();
 	QPointer<FileOutputWidget> outputWidget(new FileOutputWidget(1000));
 	outputWidget->setFile(file_->fileName());
@@ -35,10 +35,7 @@ QPointer<AnalysisOutputWidget> FileOutput::getOutputWidget()
 
 void FileOutput::finishUp()
 {
-	if(isValid())
-	{
-		file_->close();
-	}
+	file_->close();
 }
 
 void FileOutput::writeLine(QString text)
@@ -79,26 +76,26 @@ void FileOutput::writeBinary(QString csvData,QString csvTypes)
 		if(currType == "short")
 		{
 			charsWritten_+=2;
-			(*outputFileStream_) << data[i].toShort();
+			(*outputFileStream_) << short(data[i].toDouble());
 		}
 		else if(currType == "int")
 		{
 			charsWritten_+=4;
-			(*outputFileStream_) << data[i].toInt();
+			(*outputFileStream_) << int(data[i].toDouble());
 		}
 		else if(currType == "long")
 		{
 			charsWritten_+=8;
-			(*outputFileStream_) << data[i].toLong();
+			(*outputFileStream_) << long(data[i].toDouble());
 		}else if(currType == "float")
 		{
 			charsWritten_+=4;
-			(*outputFileStream_) << data[i].toFloat();
+			(*outputFileStream_) << float(data[i].toDouble());
 		}
 		else if(currType == "double")
 		{
 			charsWritten_+=8;
-			(*outputFileStream_) << data[i].toDouble();
+			(*outputFileStream_) << double(data[i].toDouble());
 		}
 	}
 

@@ -218,6 +218,8 @@ bool DirectorInterface::sendCommandGetResponse(Picto::ProtocolCommand command,QS
 {
 	Q_ASSERT(reply);
 	QTcpSocket *commSock = panelInfo->getCommandSocket();
+	if(!commSock)
+		return false;
 	if(command.getContent().size())
 		command.setFieldValue("Content-Length", QString("%1").arg(command.getContent().size()));
 	QString commandId = QString::number(++lastCommandId_);

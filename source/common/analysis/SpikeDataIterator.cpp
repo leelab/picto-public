@@ -9,7 +9,9 @@
 using namespace Picto;
 
 SpikeDataIterator::SpikeDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
-: AnalysisDataIterator(qsEngine,session)
+: AnalysisDataIterator(qsEngine,session),
+	offsetTime_(0),
+	temporalFactor_(1.0)
 {
 	getSamplePeriod();
 }
@@ -21,8 +23,6 @@ SpikeDataIterator::~SpikeDataIterator()
 
 void SpikeDataIterator::updateVariableSessionConstants()
 {
-	offsetTime_ = 0;
-	temporalFactor_ = 0;
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
@@ -45,7 +45,8 @@ void SpikeDataIterator::updateVariableSessionConstants()
 
 bool SpikeDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
-	Q_ASSERT(temporalFactor_ > 0);
+	if(temporalFactor_ == 0)
+		temporalFactor_ = 1.0;
 	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
 		"FROM spikes WHERE dataid > :lastDataId AND timestamp <= :stoptime ORDER BY dataid LIMIT :maxrows");
 	query->prepare(queryString);

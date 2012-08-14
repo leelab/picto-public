@@ -46,7 +46,6 @@ private:
 	void updateTotalQueryCount();
 
 	qulonglong lastSessionDataId_;
-	int avgValsPerRow_;
 
 	QLinkedList<QSharedPointer<AnalysisValue>> analysisVals_;
 	QSqlDatabase session_;

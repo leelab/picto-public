@@ -1081,8 +1081,9 @@ void SessionInfo::SetupBaseSessionDatabase()
 	//transactions. The WAL journaling mode is persistent; after being set it stays in effect across 
 	//multiple database connections and after closing and reopening the database. A database in WAL 
 	//journaling mode can only be accessed by SQLite version 3.7.0 or later. This mode can be significantly
-	//faster than DELETE in cases where there are significantly more reads than writes.
-	executeWriteQuery(&sessionQ,"PRAGMA journal_mode = WAL");
+	//faster than DELETE in cases where there are significantly more writes than reads.  This mode uses
+	//three files, which makes it distastful for using sqlite as a file type.
+	executeWriteQuery(&sessionQ,"PRAGMA journal_mode = DELETE");
 	//Set the temp_store setting: 
 	//The temp_store values specifies the type of database back-end to use for temporary files. 
 	//The choices are DEFAULT (0), FILE (1), and MEMORY (2). The use of a memory database for 

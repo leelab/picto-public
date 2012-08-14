@@ -112,6 +112,19 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	QDateTime dateTime = QDateTime::currentDateTime();
 	QString taskRunName = getName()+"_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");	
 	engine->markTaskRunStart(taskRunName);
+	//At the beginning of a new TaskRun, all of the initial property values are sent to
+	//the server.  This means that the director gets a huge number of "received" responses
+	//at an unknown time near the beginning of the experiment that can cause frame skipping.
+	//To work around this, we report a virtual initial frame that will automatically include
+	//all of the initial property data.  We then wait until we get "received" responses for
+	//that data before continuing.
+	Timestamper stamper;
+	double frameTime = stamper.stampSec();
+	engine->reportNewFrame(frameTime,getAssetId());
+	while(dataChannel->pendingResponses())
+	{
+		dataChannel->processResponses(100);
+	}
 }
 
 

@@ -9,7 +9,9 @@
 using namespace Picto;
 
 LFPDataIterator::LFPDataIterator(QSharedPointer<QScriptEngine> qsEngine,QSqlDatabase session)
-: AnalysisDataIterator(qsEngine,session)
+: AnalysisDataIterator(qsEngine,session),
+	offsetTime_(0),
+	temporalFactor_(1.0)
 {
 	approxValsPerRow_ = 0;
 	getSamplePeriod();
@@ -22,8 +24,6 @@ LFPDataIterator::~LFPDataIterator()
 
 void LFPDataIterator::updateVariableSessionConstants()
 {
-	offsetTime_ = 0;
-	temporalFactor_ = 0;
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
@@ -46,7 +46,8 @@ void LFPDataIterator::updateVariableSessionConstants()
 
 bool LFPDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,double stopTime,unsigned int maxRows)
 {
-	Q_ASSERT(temporalFactor_ > 0);
+	if(temporalFactor_ == 0)
+		temporalFactor_ = 1.0;
 	QString queryString = QString("SELECT dataid,timestamp,data,channel "
 		"FROM lfp WHERE dataid > :lastDataId AND timestamp <= :stoptime ORDER BY dataid LIMIT :maxrows");
 	query->prepare(queryString);
@@ -59,7 +60,9 @@ bool LFPDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,dou
 bool LFPDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
 {
 	QString queryString = QString("SELECT dataid,timestamp,data,channel "
-		"FROM lfp WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT (SELECT COUNT(DISTINCT channel) FROM lfp)");
+		"FROM lfp WHERE timestamp = "
+			"(SELECT timestamp FROM lfp WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT 1)"
+			);
 	query->prepare(queryString);
 	query->bindValue(":beforetime",(beforeTime-offsetTime_)/temporalFactor_);
 	return true;
@@ -77,12 +80,13 @@ qulonglong LFPDataIterator::readOutRecordData(QSqlRecord* record)
 		QByteArray dataByteArray = record->value(2).toByteArray();
 		approxValsPerRow_ = dataByteArray.size()/sizeof(float);
 	}
-	double startTime = offsetTime_+temporalFactor_*record->value(1).toDouble();
+	double neuralStartTime = record->value(1).toDouble();
+	double startTime = offsetTime_+temporalFactor_*neuralStartTime;
 	unsigned int chan = record->value(3).toInt();
 	Q_ASSERT((temporalFactor_ > 0) && (samplePeriod_ > 0));
 	//Size latestRecords_ list so that this channel has a spot.
 	while(timesByChannel_.size() <= chan)
-		timesByChannel_.append(-1);
+		timesByChannel_.append(-1.0E100);
 	//Get the previous timestamp for this channel
 	double lastTimeForChan = timesByChannel_[chan];
 	timesByChannel_[chan] = startTime;

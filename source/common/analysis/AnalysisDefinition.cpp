@@ -190,7 +190,9 @@ QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets
 		if(toolAsset->inherits("Picto::AnalysisOutput"))
 		{
 			outputObj = toolAsset.staticCast<AnalysisOutput>();
-			returnVal.append(outputObj->getOutputWidget());
+			QPointer<AnalysisOutputWidget> outputWidget = outputObj->getOutputWidget();
+			if(outputWidget)
+				returnVal.append(outputWidget);
 		}
 	}
 

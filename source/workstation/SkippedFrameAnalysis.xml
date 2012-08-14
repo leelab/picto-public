@@ -1,6 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<PictoData>
-<AnalysisDefinition>
+<PictoData><AnalysisContainer id="0">
+<AnalysisDefinition id="0">
   <Name>EventAndEye</Name>
   <Script>
     readme.writeLine(&quot;Name:\t&quot; + name);
@@ -10,61 +9,65 @@
     readme.writeLine(&quot;-----Notes-----&quot;);
     readme.writeLine(notes);
   </Script>
-  <Tool type="File">
+  <Tool type="File" id="0">
     <Name>readme</Name>
     <FileName>.readme.txt</FileName>
-  </Tool>
-  <Period>
+  <UIInfo id="0"><Pos id="" x="2150" y="2000"/></UIInfo></Tool>
+  <Period id="0">
     <Name>TestPeriod</Name>
-    <Script>
-      for(i=0;i&lt;frame.length;i++)
-      {
-      framesSoFar.value++;
-      if(lastFrameTime.value &lt; 0)
-      {
-      lastFrameTime.value = frame[i].time.value;
-      continue;
-      }
-      frameLength = frame[i].time.value-lastFrameTime.value;
-      lastFrameTime.value = frame[i].time.value;
-      if(frameLength > .02)
-      {
-      outFile.writeLine(
-                        &quot;&quot;+framesSoFar.value
-                        +&quot;,&quot;+Math.round(1000*frameLength)/1000
-                        +&quot;,&quot;+frame[i].currElem.name
-                        +&quot;,&quot;+Math.round(1000*frame[i].time.value)/1000
-      );
-      }
-      }
+    <Script id="">
+						      for(i=0;i&lt;frame.length;i++)
+						      {
+						      framesSoFar.value++;
+						      if(lastFrameTime.value &lt; 0)
+						      {
+						      lastFrameTime.value = frame[i].time.value;
+						      continue;
+						      }
+						      frameLength = frame[i].time.value-lastFrameTime.value;
+						      lastFrameTime.value = frame[i].time.value;
+						      if(frameLength &gt; .02)
+						      {
+						      outFile.writeLine(
+						                        &quot;&quot;+framesSoFar.value
+						                        +&quot;,&quot;+Math.round(1000*frameLength)/1000
+						                        +&quot;,&quot;+frame[i].currElem.name
+						                        +&quot;,&quot;+Math.round(1000*frame[i].time.value)/1000
+						      );
+						      }
+						      }
     </Script>
-    <StartTrigger type="Frame">
+    <StarterContainer id="0">
+    <Trigger type="Frame" id="0">
       <Name>start</Name>
-    </StartTrigger>
-    <EndTrigger type="Frame">
+    </Trigger>
+    <UIInfo id="0"><Pos id="" x="2150" y="2000"/></UIInfo></StarterContainer>
+    <EnderContainer id="0">
+    <Trigger type="Frame" id="0">
       <Name>start</Name>
-    </EndTrigger>
-    <Trigger type="Frame">
+    </Trigger>
+    <UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></EnderContainer>
+    <Trigger type="Frame" id="0">
       <Name>frame</Name>
-      <DataSource type="Element">
+      <DataSource type="Element" id="0">
         <Name>currElem</Name>
       </DataSource>
-      <DataSource type="Time">
+      <DataSource type="Time" id="0">
         <Name>time</Name>
       </DataSource>
-    </Trigger>
-    <Tool type="NumericVariable">
+    <UIInfo id="0"><Pos id="" x="2750" y="2000"/></UIInfo></Trigger>
+    <Tool type="NumericVariable" id="0">
       <Name>lastFrameTime</Name>
       <InitValue>-1</InitValue>
-    </Tool>
-    <Tool type="NumericVariable">
+    <UIInfo id="0"><Pos id="" x="2300" y="2000"/></UIInfo></Tool>
+    <Tool type="NumericVariable" id="0">
       <Name>framesSoFar</Name>
-      <InitValue>0</InitValue>
-    </Tool>
-    <Tool type="File">
+      <InitValue id="">-1</InitValue>
+    <UIInfo id="0"><Pos id="" x="2450" y="2000"/></UIInfo></Tool>
+    <Tool type="File" id="0">
       <Name>outFile</Name>
       <FileName>.skips.csv</FileName>
-    </Tool>
-  </Period>
-</AnalysisDefinition>
-</PictoData>
+    <UIInfo id="0"><Pos id="" x="2600" y="2000"/></UIInfo></Tool>
+  <UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></Period>
+<UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></AnalysisDefinition>
+</AnalysisContainer><Experiment id="1"><SyntaxVersion id="3">0.0.1</SyntaxVersion><UIInfo id="27"><OpenDescendant id="28">1</OpenDescendant></UIInfo></Experiment></PictoData>

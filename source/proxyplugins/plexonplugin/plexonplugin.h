@@ -36,6 +36,10 @@ public:
 private:
 	QVector<QSharedPointer<Picto::LFPDataUnitPackage>> lfpData_;
 	NeuralDataAcqInterface::deviceStatus deviceStatus_; 
+	int freq;
+	int channels[128];
+	int lfpGains[128];
+	int spikeGains[128];
 };
 
 

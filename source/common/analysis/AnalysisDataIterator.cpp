@@ -16,7 +16,6 @@ AnalysisDataIterator::AnalysisDataIterator(QSharedPointer<QScriptEngine> qsEngin
 	lastSessionDataId_ = 0;
 	totalQueries_ = 0;
 	readQueries_ = 0;
-	avgValsPerRow_ = 0;
 	totalValsCreated_ = 0;
 	firstValTime_ = lastValTime_ = -1;
 
@@ -127,8 +126,9 @@ void AnalysisDataIterator::updateAnalysisValsList()
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
 	bool res;
-	Q_ASSERT(approxValsPerRow());
-	int maxRows = MAX_ANALYSIS_VALS_SIZE/(avgValsPerRow_?avgValsPerRow_:approxValsPerRow());
+	int maxRows = 0;
+	if(approxValsPerRow())
+		maxRows = MAX_ANALYSIS_VALS_SIZE/approxValsPerRow();
 	if(!prepareSqlQuery(&query,lastSessionDataId_,endBefore_.isValid()?endBefore_.time_:100000000000,maxRows))
 		return;
 	if(!query.exec())

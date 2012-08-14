@@ -83,39 +83,37 @@ for (var i = 0; i &lt; PauseStarts.length; i++) {
 	+ Math.round(1000 * (endTime - startTime)); //Trial end time
 }
 //Add spike data
-if (spikes.length) {
-    ernStr += &quot;,&quot; + &quot;-1000&quot; + &quot;,&quot;	//Spike window start
-	+ Math.round(1000 * (endTime + 1 - startTime)) + &quot;,&quot;; //Spike window end
+ernStr += &quot;,&quot; + &quot;-1000&quot; + &quot;,&quot;	//Spike window start
++ Math.round(1000 * (endTime + 1 - startTime)) + &quot;,&quot;; //Spike window end
 
-    //Loop through spikes building up data strings for each channel/unit and counting total numbers of spikes
-    var totNeurons = 0;
-    var spikeStrs = [];
-    for (var j = 0; j &lt; spikes.length; j++) {
-        var chan = spikes[j].data.channel;
-        var unit = spikes[j].data.unit;
-        var spikeTime = &quot;&quot; + Math.round(1000 * (spikes[j].time.value - startTime));
-        if (typeof spikeStrs[chan] == 'undefined')
-            spikeStrs[chan] = [];
-        if (typeof spikeStrs[chan][unit] == 'undefined') {
-            totNeurons++;
-            spikeStrs[chan][unit] = [];
-            spikeStrs[chan][unit].text = &quot;&quot;;
-            spikeStrs[chan][unit].num = 0;
-        }
-        spikeStrs[chan][unit].text += &quot;,&quot; + spikeTime;
-        spikeStrs[chan][unit].num++;
+//Loop through spikes building up data strings for each channel/unit and counting total numbers of spikes
+var totNeurons = 0;
+var spikeStrs = [];
+for (var j = 0; j &lt; spikes.length; j++) {
+    var chan = spikes[j].data.channel;
+    var unit = spikes[j].data.unit;
+    var spikeTime = &quot;&quot; + Math.round(1000 * (spikes[j].time.value - startTime));
+    if (typeof spikeStrs[chan] == 'undefined')
+        spikeStrs[chan] = [];
+    if (typeof spikeStrs[chan][unit] == 'undefined') {
+        totNeurons++;
+        spikeStrs[chan][unit] = [];
+        spikeStrs[chan][unit].text = &quot;&quot;;
+        spikeStrs[chan][unit].num = 0;
     }
-    //Create strings here.
-    ernStr += totNeurons;
-    for (var j = 0; j &lt; spikeStrs.length; j++) {
-        if (typeof spikeStrs[j] == 'undefined')
+    spikeStrs[chan][unit].text += &quot;,&quot; + spikeTime;
+    spikeStrs[chan][unit].num++;
+}
+//Create strings here.
+ernStr += totNeurons;
+for (var j = 0; j &lt; spikeStrs.length; j++) {
+    if (typeof spikeStrs[j] == 'undefined')
+        continue;
+    for (var k = 0; k &lt; spikeStrs[j].length; k++) {
+        if (typeof spikeStrs[j][k] == 'undefined')
             continue;
-        for (var k = 0; k &lt; spikeStrs[j].length; k++) {
-            if (typeof spikeStrs[j][k] == 'undefined')
-                continue;
-            //Chan,Unit,Num,All Times
-            ernStr += &quot;,&quot; + j + &quot;,&quot; + k + &quot;,&quot; + spikeStrs[j][k].num + spikeStrs[j][k].text;
-        }
+        //Chan,Unit,Num,All Times
+        ernStr += &quot;,&quot; + j + &quot;,&quot; + k + &quot;,&quot; + spikeStrs[j][k].num + spikeStrs[j][k].text;
     }
 }
 //finish off line
@@ -164,75 +162,79 @@ if (neyes &gt; 0) {
 eyeFile.writeBinary(eyeStr, &quot;int,int,int,int,int,int,int,int,int,int,int,short&quot;);
 
 //Build up .lfp output
-var lfpStr = &quot;&quot;;
-lfpStr += ernFields[0] + &quot;,&quot;//totalTrial
-        + ernFields[3] + &quot;,&quot;//blockNumber
-        + ernFields[5] + &quot;,&quot;//trial_type
-        + ernFields[4] + &quot;,&quot;//trial_success
-        + fixStartTime + &quot;,&quot;//fix_start_time
-        + sampleStartTime + &quot;,&quot;//sample_start_time
-        + sampleEndTime + &quot;,&quot;//sample_stop_time
-        + showRingTime + &quot;,&quot;//show_start_time
-        + ernFields[6] + &quot;,&quot;//monkey_pick
-        + ernFields[7] + &quot;,&quot;//compPick
-        + ernFields[15] + &quot;,&quot;;  //rewCount
+if (lfp.length) {
+    var lfpStr = &quot;&quot;;
+    lfpStr += ernFields[0] + &quot;,&quot;//totalTrial
+            + ernFields[3] + &quot;,&quot;//blockNumber
+            + ernFields[5] + &quot;,&quot;//trial_type
+            + ernFields[4] + &quot;,&quot;//trial_success
+            + fixStartTime + &quot;,&quot;//fix_start_time
+            + sampleStartTime + &quot;,&quot;//sample_start_time
+            + sampleEndTime + &quot;,&quot;//sample_stop_time
+            + showRingTime + &quot;,&quot;//show_start_time
+            + ernFields[6] + &quot;,&quot;//monkey_pick
+            + ernFields[7] + &quot;,&quot;//compPick
+            + ernFields[15] + &quot;,&quot;;  //rewCount
 
-//Loop through lfp building up data strings for each channel and counting total number of lfp vals
-var totChans = 0;
-var lfpStrs = [];
-for (var i = 0; i &lt; lfp.length; i++) {
-    var chan = lfp[i].data.channel;
-    var lfpTime = &quot;&quot; + Math.round(1000 * (lfp[i].data.time));
-    if (typeof lfpStrs[chan] == 'undefined') {
-        totChans++;
-        lfpStrs[chan] = [];
-        lfpStrs[chan].text = &quot;&quot;;
-        lfpStrs[chan].num = 0;
-        lfpStrs[chan].startTime = lfpTime;
-        lfpStrs[chan].time_per_samp = 0;
+    //Loop through lfp building up data strings for each channel and counting total number of lfp vals
+    var totChans = 0;
+    var lfpStrs = [];
+    for (var i = 0; i &lt; lfp.length; i++) {
+        var chan = lfp[i].data.channel;
+        var lfpTime = &quot;&quot; + Math.round(1000 * (lfp[i].data.time));
+        if (typeof lfpStrs[chan] == 'undefined') {
+            totChans++;
+            lfpStrs[chan] = [];
+            lfpStrs[chan].text = &quot;&quot;;
+            lfpStrs[chan].num = 0;
+            lfpStrs[chan].startTime = lfpTime;
+            lfpStrs[chan].time_per_samp = 0;
+        }
+        if (lfpStrs[chan].num == 1) {
+            lfpStrs[chan].time_per_samp = lfpTime - lfpStrs[chan].startTime;
+        }
+        lfpStrs[chan].text += &quot;,&quot; + lfp[i].data.value;
+        lfpStrs[chan].num++;
     }
-    if (lfpStrs[chan].num == 1) {
-        lfpStrs[chan].time_per_samp = lfpTime - lfpStrs[chan].startTime;
+    //Create strings here.
+    var nLfp = 0;
+    lfpStr += totChans + &quot;,&quot;;
+    for (var i = 0; i &lt; lfpStrs.length; i++) {
+        if (typeof lfpStrs[i] == 'undefined')
+            continue;
+        //Chan,Unit,Num,All Times
+        lfpStr += i + &quot;,&quot; + lfpStrs[i].startTime + &quot;,&quot; + lfpStrs[i].time_per_samp + &quot;,&quot;;
+        nLfp = lfpStrs[i].num;
     }
-    lfpStrs[chan].text += &quot;,&quot; + lfp[i].data.value;
-    lfpStrs[chan].num++;
+    lfpStr += nLfp;   //They should all have the same nLFP so we only print it once
+    lfpFile.writeBinary(lfpStr, &quot;int&quot;); //Write all ints to file
+    var lfpDatStr = &quot;&quot;;
+    for (var i = 0; i &lt; lfpStrs.length; i++) {
+        if (typeof lfpStrs[i] == 'undefined')
+            continue;
+        //Data
+        lfpDatStr += lfpStrs[i].text;
+    }
+    lfpFile.writeBinary(lfpDatStr.substring(1), &quot;float&quot;);    //Don't use first comma
 }
-//Create strings here.
-var nLfp = 0;
-lfpStr += totChans + &quot;,&quot;;
-for (var i = 0; i &lt; lfpStrs.length; i++) {
-    if (typeof lfpStrs[i] == 'undefined')
-        continue;
-    //Chan,Unit,Num,All Times
-    lfpStr += i + &quot;,&quot; + lfpStrs[i].startTime + &quot;,&quot; + lfpStrs[i].time_per_samp + &quot;,&quot;;
-    nLfp = lfpStrs[i].num;
-}
-lfpStr += nLfp;   //They should all have the same nLFP so we only print it once
-lfpFile.writeBinary(lfpStr, &quot;int&quot;); //Write all ints to file
-var lfpDatStr = &quot;&quot;;
-for (var i = 0; i &lt; lfpStrs.length; i++) {
-    if (typeof lfpStrs[i] == 'undefined')
-        continue;
-    //Data
-    lfpDatStr += lfpStrs[i].text;
-}
-lfpFile.writeBinary(lfpDatStr.substring(1), &quot;float&quot;);    //Don't use first comma
 
 //Build up .swf output
-var swfStr = &quot;&quot;;
-for (var i = 0; i &lt; spikes.length; i++) {
+if (spikes.length) {
+    var swfStr = &quot;&quot;;
+    for (var i = 0; i &lt; spikes.length; i++) {
 
-    swfStr += ernFields[0] + &quot;,&quot;; //totalTrial
-    swfStr += spikes[i].data.channel + &quot;,&quot;; //channel
-    swfStr += spikes[i].data.unit + &quot;,&quot;; //unit
-    swfStr += Math.round(1000 * (spikes[i].time.value - startTime)) + &quot;,&quot;; //spiketime
-    swfStr += (1000 * spikes[i].data.samplePeriod) + &quot;,&quot;; //time per sample
-    swfStr += spikes[i].data.waveSize + &quot;,&quot;; //size
-    swfStr += spikes[i].data.wave; //wave
-    swfStr += &quot;\n&quot;;
-}
-swfStr = swfStr.replace(/,/g, &quot; &quot;);
-swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern</FileName><Name id="">ernFile</Name><UIInfo id="0"><Pos id="" x="1932" y="1665"/></UIInfo></Tool><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1325" y="1658"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::Sample</ElementPath><Name id="">SampleStarts</Name><UIInfo id="0"><Pos id="" x="1620" y="2022"/></UIInfo></Trigger><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1494" y="1652"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::Sample</ElementPath><Name id="">SampleEnds</Name><UIInfo id="0"><Pos id="" x="1741" y="2020"/></UIInfo><When id="">Ends</When></Trigger><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1684" y="1699"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::ShowDot</ElementPath><Name id="">ShowDotStarts</Name><UIInfo id="0"><Pos id="" x="1874" y="2023"/></UIInfo></Trigger><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1505" y="1656"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::SampleChoiceControl::MakeChoice</ElementPath><Name id="">MakeChoiceStarts</Name><UIInfo id="0"><Pos id="" x="1992" y="2033"/></UIInfo></Trigger><Trigger type="Property" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1669" y="1521"/></UIInfo></DataSource><DataSource type="Property" id="0"><Name id="">value</Name><PropertyPath id="">Frame and Risky Choice::Top::Block::Trial::SampleChoiceControl::choiceEntered::Value</PropertyPath><UIInfo id="0"><Pos id="" x="1472" y="1514"/></UIInfo></DataSource><Name id="">ChoiceEntered</Name><PropertyPath id="">Frame and Risky Choice::Top::Block::Trial::SampleChoiceControl::choiceEntered::Value</PropertyPath><UIInfo id="0"><Pos id="" x="1991" y="1893"/></UIInfo></Trigger><Trigger type="Element" id="0"><ElementPath id="">Frame and Risky Choice::Top::Block::ConsumeTrial::Reward</ElementPath><Name id="">RewardStarts</Name><UIInfo id="0"><Pos id="" x="1978" y="1781"/></UIInfo><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1706" y="1633"/></UIInfo></DataSource></Trigger><Trigger type="Spike" id="0"><DataSource type="Spike" id="0"><Name id="">data</Name><UIInfo id="0"><Pos id="" x="1460" y="1550"/></UIInfo><DecimalPlaces id="">5</DecimalPlaces><ScaleFactor id="">1</ScaleFactor></DataSource><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1633" y="1551"/></UIInfo></DataSource><Name id="">spikes</Name><UIInfo id="0"><Pos id="" x="1734" y="1783"/></UIInfo></Trigger><Trigger type="Signal" id="0"><DataSource type="Signal" id="0"><Name id="">data</Name><UIInfo id="0"><Pos id="" x="1414" y="1523"/></UIInfo><SignalName id="">Position</SignalName></DataSource><Name id="">eye</Name><SignalName id="">Position</SignalName><UIInfo id="0"><Pos id="" x="1599" y="1789"/></UIInfo><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1545" y="1519"/></UIInfo></DataSource></Trigger><Tool type="File" id="0"><FileName id="">.eye</FileName><Name id="">eyeFile</Name><UIInfo id="0"><Pos id="" x="2049" y="1663"/></UIInfo><BinaryByteOrder id="">LittleEndian</BinaryByteOrder></Tool><Tool type="File" id="0"><FileName id="">.swf</FileName><Name id="">swfFile</Name><UIInfo id="0"><Pos id="" x="2176" y="1668"/></UIInfo></Tool><Tool type="File" id="0"><FileName id="">.lfp</FileName><Name id="">lfpFile</Name><UIInfo id="0"><Pos id="" x="2288" y="1667"/></UIInfo><BinaryByteOrder id="">LittleEndian</BinaryByteOrder></Tool><Trigger type="LFP" id="0"><DataSource type="LFP" id="0"><Name id="">data</Name><UIInfo id="0"><Pos id="" x="1520" y="1589"/></UIInfo></DataSource><Name id="">lfp</Name><UIInfo id="0"><Pos id="" x="2086" y="1776"/></UIInfo></Trigger></Period><UIInfo id="0"><Pos id="" x="1974" y="2000"/></UIInfo><Name id="">MatchingPenniesAnalysis</Name><Script id="">
+        swfStr += ernFields[0] + &quot;,&quot;; //totalTrial
+        swfStr += spikes[i].data.channel + &quot;,&quot;; //channel
+        swfStr += spikes[i].data.unit + &quot;,&quot;; //unit
+        swfStr += Math.round(1000 * (spikes[i].time.value - startTime)) + &quot;,&quot;; //spiketime
+        swfStr += (1000 * spikes[i].data.samplePeriod) + &quot;,&quot;; //time per sample
+        swfStr += spikes[i].data.waveSize + &quot;,&quot;; //size
+        swfStr += spikes[i].data.wave; //wave
+        swfStr += &quot;\n&quot;;
+    }
+    swfStr = swfStr.replace(/,/g, &quot; &quot;);
+    swfFile.writeText(swfStr);
+}</Script><Tool type="File" id="0"><FileName id="">.ern</FileName><Name id="">ernFile</Name><UIInfo id="0"><Pos id="" x="1932" y="1665"/></UIInfo></Tool><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1325" y="1658"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::Sample</ElementPath><Name id="">SampleStarts</Name><UIInfo id="0"><Pos id="" x="1620" y="2022"/></UIInfo></Trigger><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1494" y="1652"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::Sample</ElementPath><Name id="">SampleEnds</Name><UIInfo id="0"><Pos id="" x="1741" y="2020"/></UIInfo><When id="">Ends</When></Trigger><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1684" y="1699"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::ShowDot</ElementPath><Name id="">ShowDotStarts</Name><UIInfo id="0"><Pos id="" x="1874" y="2023"/></UIInfo></Trigger><Trigger type="Element" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1505" y="1656"/></UIInfo></DataSource><ElementPath id="">Frame and Risky Choice::Top::Block::Trial::SampleChoiceControl::MakeChoice</ElementPath><Name id="">MakeChoiceStarts</Name><UIInfo id="0"><Pos id="" x="1992" y="2033"/></UIInfo></Trigger><Trigger type="Property" id="0"><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1669" y="1521"/></UIInfo></DataSource><DataSource type="Property" id="0"><Name id="">value</Name><PropertyPath id="">Frame and Risky Choice::Top::Block::Trial::SampleChoiceControl::choiceEntered::Value</PropertyPath><UIInfo id="0"><Pos id="" x="1472" y="1514"/></UIInfo></DataSource><Name id="">ChoiceEntered</Name><PropertyPath id="">Frame and Risky Choice::Top::Block::Trial::SampleChoiceControl::choiceEntered::Value</PropertyPath><UIInfo id="0"><Pos id="" x="1991" y="1893"/></UIInfo></Trigger><Trigger type="Element" id="0"><ElementPath id="">Frame and Risky Choice::Top::Block::ConsumeTrial::Reward</ElementPath><Name id="">RewardStarts</Name><UIInfo id="0"><Pos id="" x="1978" y="1781"/></UIInfo><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1706" y="1633"/></UIInfo></DataSource></Trigger><Trigger type="Spike" id="0"><DataSource type="Spike" id="0"><Name id="">data</Name><UIInfo id="0"><Pos id="" x="1460" y="1550"/></UIInfo><DecimalPlaces id="">5</DecimalPlaces><ScaleFactor id="">1</ScaleFactor></DataSource><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1633" y="1551"/></UIInfo></DataSource><Name id="">spikes</Name><UIInfo id="0"><Pos id="" x="1734" y="1783"/></UIInfo></Trigger><Trigger type="Signal" id="0"><DataSource type="Signal" id="0"><Name id="">data</Name><UIInfo id="0"><Pos id="" x="1414" y="1523"/></UIInfo><SignalName id="">Position</SignalName></DataSource><Name id="">eye</Name><SignalName id="">Position</SignalName><UIInfo id="0"><Pos id="" x="1599" y="1789"/></UIInfo><DataSource type="Time" id="0"><Name id="">time</Name><UIInfo id="0"><Pos id="" x="1545" y="1519"/></UIInfo></DataSource></Trigger><Tool type="File" id="0"><FileName id="">.eye</FileName><Name id="">eyeFile</Name><UIInfo id="0"><Pos id="" x="2049" y="1663"/></UIInfo><BinaryByteOrder id="">LittleEndian</BinaryByteOrder></Tool><Tool type="File" id="0"><FileName id="">.swf</FileName><Name id="">swfFile</Name><UIInfo id="0"><Pos id="" x="2176" y="1668"/></UIInfo></Tool><Tool type="File" id="0"><FileName id="">.lfp</FileName><Name id="">lfpFile</Name><UIInfo id="0"><Pos id="" x="2288" y="1667"/></UIInfo><BinaryByteOrder id="">LittleEndian</BinaryByteOrder></Tool><Trigger type="LFP" id="0"><DataSource type="LFP" id="0"><Name id="">data</Name><UIInfo id="0"><Pos id="" x="1520" y="1589"/></UIInfo></DataSource><Name id="">lfp</Name><UIInfo id="0"><Pos id="" x="2086" y="1776"/></UIInfo></Trigger></Period><UIInfo id="0"><Pos id="" x="1974" y="2000"/></UIInfo><Name id="">MatchingPenniesAnalysis</Name><Script id="">
       readme.writeLine(&quot;Name:\t&quot; + name);
       readme.writeLine(&quot;Started:\t&quot; +startTime);
       readme.writeLine(&quot;Ended:\t&quot; +endTime);
@@ -242,6 +244,12 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
     </Script><Tool type="File" id="0"><FileName id="">_readme.txt</FileName><Name id="">readme</Name><UIInfo id="0"><Pos id="" x="1860" y="1722"/></UIInfo><BinaryByteOrder id="">BigEndian</BinaryByteOrder></Tool></AnalysisDefinition>
   </AnalysisContainer><Experiment id="1">
     <SyntaxVersion id="2">0.0.1</SyntaxVersion>
+<UIInfo id="390">
+	<Pos id="392" x="0" y="0"/>
+<OpenDescendant id="597">2738</OpenDescendant></UIInfo>
+<Task id="587"><Name id="588">RewardCalibration</Name><StateMachine id="589"><EntryScript id="590"/><ExitScript id="591"/><Level id="592">Stage</Level><Name id="593">Top</Name><Type id="594">StateMachine</Type><UIEnabled id="595">false</UIEnabled><UIOrder id="599">0</UIOrder><UIInfo id="715"><Pos id="716" x="2000" y="2000"/></UIInfo><StateMachineElement type="StateMachine" id="744"><EntryScript id="745">GiveRewards.unitQuantity = RewardQuantity.value;
+GiveRewards.minRewardPeriod = RewardQuantity.value+InterRewardTime.value;</EntryScript><ExitScript id="746"/><Level id="747">Stage</Level><Name id="748">Trial</Name><Result id="782"><Name id="783">RewardsSupplied</Name><UIEnabled id="784">false</UIEnabled><UIOrder id="788">0</UIOrder><UIInfo id="658"><Pos id="659" x="338" y="76"/></UIInfo></Result><StateMachineElement type="Reward" id="762"><MinRewardPeriod id="763">0</MinRewardPeriod><Name id="764">GiveRewards</Name><NumRewards id="765">1</NumRewards><Result id="676"><Name id="679">done</Name><UIEnabled id="680">false</UIEnabled><UIInfo id="681"><Pos id="687" x="2000" y="2000"/></UIInfo><UIOrder id="689">0</UIOrder></Result><RewardChan id="766">1</RewardChan><RewardQty id="767">60</RewardQty><Type id="768">Reward</Type><UIEnabled id="769">false</UIEnabled><UIOrder id="773">0</UIOrder><UIInfo id="694"><Pos id="697" x="554" y="184"/></UIInfo></StateMachineElement><Type id="749">StateMachine</Type><UIEnabled id="750">false</UIEnabled><UIOrder id="754">0</UIOrder><UIInfo id="729"><Pos id="730" x="97" y="177"/></UIInfo><Parameter type="Numeric" id="776"><Name id="777">InterRewardTime</Name><UIEnabled id="778">true</UIEnabled><UIOrder id="785">0</UIOrder><Units id="786"/><Value id="787">500</Value><UIInfo id="639"><Pos id="640" x="218" y="479"/></UIInfo></Parameter><Parameter type="Numeric" id="812"><Name id="813">RewardQuantity</Name><UIEnabled id="814">true</UIEnabled><UIOrder id="818">0</UIOrder><Units id="819"/><Value id="820">150</Value><UIInfo id="663"><Pos id="707" x="330" y="479"/></UIInfo></Parameter><Parameter type="Numeric" id="826"><Name id="827">NumRewards</Name><UIEnabled id="828">true</UIEnabled><UIOrder id="832">0</UIOrder><Units id="833"/><Value id="834">100</Value><UIInfo id="722"><Pos id="723" x="461" y="479"/></UIInfo></Parameter><StateMachineElement type="State" id="794"><BackgroundColor A="255" B="0" G="0" R="0" id="795">#000000</BackgroundColor><EntryScript id="796">RemainingRewards.text = &quot;RemainingRewards: &quot; + NumRewards.value;
+RewardTimer.restart();</EntryScript><ExitScript id="797"/><FrameScript id="798"/><Name id="799">RewardsLeft</Name><UIEnabled id="800">false</UIEnabled><UIOrder id="804">0</UIOrder><Result id="890"><Name id="891">done</Name><UIEnabled id="892">false</UIEnabled><UIOrder id="896">0</UIOrder><UIInfo id="830"><Pos id="831" x="2156" y="2033"/></UIInfo></Result><UIInfo id="759"><Pos id="760" x="355" y="355"/></UIInfo><ControlElement type="Script Controller" id="944"><Name id="945">WaitForReward</Name><Result id="825"><Name id="829">Done</Name><UIEnabled id="835">false</UIEnabled><UIInfo id="845"><Pos id="846" x="0" y="0"/></UIInfo><UIOrder id="849">0</UIOrder></Result><Script id="946">return RewardTimer.value &gt;= RewardQuantity.value+InterRewardTime.value;</Script><Type id="947"/><UIEnabled id="948">false</UIEnabled><UIOrder id="952">0</UIOrder><UIInfo id="853"><Pos id="856" x="2000" y="2000"/></UIInfo></ControlElement><Parameter type="Timer" id="932"><Name id="933">RewardTimer</Name><TimeUnits id="934">Ms</TimeUnits><UIEnabled id="935">false</UIEnabled><UIOrder id="939">0</UIOrder><UIInfo id="859"><Pos id="860" x="1908" y="2242"/></UIInfo></Parameter><Transition id="866"><Destination id="867">done</Destination><Source id="868">WaitForReward</Source><SourceResult id="869">Done</SourceResult></Transition></StateMachineElement><StateMachineElement type="ScriptElement" id="840"><Name id="841">MoreRewards</Name><Result id="781"><Name id="789">false</Name><UIEnabled id="790">false</UIEnabled><UIInfo id="791"><Pos id="792" x="0" y="0"/></UIInfo><UIOrder id="801">0</UIOrder></Result><Result id="806"><Name id="807">true</Name><UIEnabled id="808">false</UIEnabled><UIInfo id="809"><Pos id="810" x="0" y="0"/></UIInfo><UIOrder id="815">0</UIOrder></Result><Script id="842">return NumRewards.value-- &gt; 0;</Script><Type id="843">ScriptElement</Type><UIEnabled id="844">false</UIEnabled><UIOrder id="848">0</UIOrder><UIInfo id="822"><Pos id="823" x="190" y="155"/></UIInfo></StateMachineElement><Transition id="836"><Destination id="837">GiveRewards</Destination><Source id="838">MoreRewards</Source><SourceResult id="839">true</SourceResult></Transition><Transition id="910"><Destination id="911">RewardsLeft</Destination><Source id="912">GiveRewards</Source><SourceResult id="915">done</SourceResult></Transition><Transition id="894"><Destination id="895">MoreRewards</Destination><Source id="897">RewardsLeft</Source><SourceResult id="898">done</SourceResult></Transition><Transition id="899"><Destination id="916">MoreRewards</Destination><Source id="917"/><SourceResult id="918"/></Transition><Transition id="919"><Destination id="920">RewardsSupplied</Destination><Source id="921">MoreRewards</Source><SourceResult id="922">false</SourceResult></Transition></StateMachineElement><Transition id="755"><Destination id="756">Trial</Destination><Source id="757"/><SourceResult id="758"/></Transition><StateMachineElement type="PausePoint" id="664"><BackgroundColor A="255" B="0" G="0" R="0" id="688">#000000</BackgroundColor><ForcePause id="691">true</ForcePause><Name id="692">Pause</Name><PausingScript id="693"/><RestartingScript id="698"/><Result id="646"><Name id="647">done</Name><UIEnabled id="648">false</UIEnabled><UIInfo id="649"><Pos id="657" x="0" y="0"/></UIInfo><UIOrder id="662">0</UIOrder></Result><Type id="699">PausePoint</Type><UIEnabled id="700">false</UIEnabled><UIOrder id="710">0</UIOrder><UIInfo id="709"><Pos id="711" x="379" y="98"/></UIInfo></StateMachineElement><Transition id="739"><Destination id="740">Trial</Destination><Source id="741">Pause</Source><SourceResult id="742">done</SourceResult></Transition><VisualElement type="Text Graphic" id="925"><Color A="255" B="0" G="0" R="255" id="926">#ff0000</Color><Dimensions height="20" id="927" width="200" x="0" y="0"/><Layer id="928">0</Layer><Name id="929">RemainingRewards</Name><OperatorView id="930">true</OperatorView><Position id="931" x="0" y="0"/><SubjectView id="936">true</SubjectView><Text id="937"/><UIEnabled id="938">false</UIEnabled><UIOrder id="943">0</UIOrder><Visible id="949">true</Visible><UIInfo id="906"><Pos id="907" x="252" y="302"/></UIInfo></VisualElement><Transition id="772"><Destination id="774">Pause</Destination><Source id="775">Trial</Source><SourceResult id="779">RewardsSupplied</SourceResult></Transition></StateMachine><UIInfo id="725"><Pos id="726" x="1618" y="1743"/></UIInfo></Task>
     <Task id="3">
       <StateMachine id="4">
         <Parameter type="OperatorClick" id="5">
@@ -249,8 +257,8 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
           <UIInfo id="7">
             <Pos id="8" x="58" y="341"/>
           </UIInfo>
-          <NewClick id="10">true</NewClick>
-          <Pos id="11" x="396" y="318"/>
+          <NewClick id="10">false</NewClick>
+          <Pos id="11" x="294" y="302"/>
           <UIEnabled id="12">false</UIEnabled>
           <UIOrder id="13">0</UIOrder>
         </Parameter>
@@ -478,7 +486,7 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
             <UIInfo id="202">
               <Pos id="203" x="366" y="386"/>
             </UIInfo>
-            <Value id="205">50</Value>
+            <Value id="205">16</Value>
             <UIEnabled id="206">true</UIEnabled>
             <Min id="207">0</Min>
             <UIOrder id="208">0</UIOrder>
@@ -532,7 +540,7 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
                 <UIOrder id="251">0</UIOrder>
               </Result>
               <RewardChan id="252">1</RewardChan>
-              <RewardQty id="253">60</RewardQty>
+              <RewardQty id="253">150</RewardQty>
               <UIInfo id="254">
                 <Pos id="255" x="343" y="231"/>
               </UIInfo>
@@ -609,7 +617,7 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
         </StateMachineElement>
         <VisualElement type="Box Graphic" id="307">
           <Color A="255" B="0" G="255" R="255" id="308">#ffff00</Color>
-          <Dimensions height="10" id="309" width="10" x="0" y="0"/>
+          <Dimensions height="0" id="309" width="0" x="0" y="0"/>
           <Name id="310">Square</Name>
           <UIInfo id="311">
             <Pos id="312" x="171" y="343"/>
@@ -680,7 +688,7 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
           <UIInfo id="369">
             <Pos id="370" x="188" y="437"/>
           </UIInfo>
-          <Radius id="372">80</Radius>
+          <Radius id="372">0</Radius>
           <Color A="255" B="0" G="255" R="0" id="373">#00ff00</Color>
           <Layer id="374">0</Layer>
           <OperatorView id="375">true</OperatorView>
@@ -702,23 +710,20 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
         </Transition>
       </StateMachine>
       <UIInfo id="386">
-        <Pos id="387" x="1668" y="1744"/>
+        <Pos id="387" x="1784" y="1744"/>
       </UIInfo>
       <Name id="389">Eye Calibration</Name>
     </Task>
-    <UIInfo id="390">
-      <Pos id="392" x="0" y="0"/>
-    <OpenDescendant id="586">3162</OpenDescendant></UIInfo>
     <Name id="393">BiasedMatchingPennies_Token</Name>
     <XGain id="394">1</XGain>
     <XOffset id="395">0</XOffset>
     <XYSignalShear id="396">0</XYSignalShear>
     <YGain id="397">1</YGain>
     <YOffset id="398">0</YOffset>
-    <Task id="587">
-      <Name id="588">Frame and Risky Choice</Name>
-      <StateMachine id="589">
-        <EntryScript id="590">										if (Math.random() &lt; .5)
+    <Task id="1234">
+      <Name id="1235">Frame and Risky Choice</Name>
+      <StateMachine id="1236">
+        <EntryScript id="1237">										if (Math.random() &lt; .5)
 										    lambda.value = 0;
 										else
 										    lambda.value = 1;
@@ -749,15 +754,15 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
 										ernData.setData(&quot;outcomecolor&quot;,-1);
 										ernData.setData(&quot;pickedTargX&quot;,-1);
 										ernData.setData(&quot;pickedTargY&quot;,-1);</EntryScript>
-        <ExitScript id="591"/>
-        <Level id="592">Stage</Level>
-        <Name id="593">Top</Name>
-        <Type id="594">StateMachine</Type>
-        <UIEnabled id="595">false</UIEnabled>
+        <ExitScript id="1249"/>
+        <Level id="1252">Stage</Level>
+        <Name id="1253">Top</Name>
+        <Type id="1254">StateMachine</Type>
+        <UIEnabled id="1255">false</UIEnabled>
         <UIInfo id="596">
-          <Pos id="597" x="2002" y="2000"/>
+          <Pos id="1256" x="2002" y="2000"/>
         </UIInfo>
-        <UIOrder id="599">0</UIOrder>
+        <UIOrder id="1258">0</UIOrder>
         <StateMachineElement type="StateMachine" id="610">
           <EntryScript id="611">																																																												blockInfo.setData(&quot;Block&quot;,blockNum.value);
 																																																												lambda.value = !lambda.value;
@@ -790,16 +795,16 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
             <Pos id="618" x="217" y="188"/>
           </UIInfo>
           <UIOrder id="620">0</UIOrder>
-          <Result id="646">
-            <Name id="647">Done</Name>
-            <UIEnabled id="648">false</UIEnabled>
-            <UIInfo id="649">
+          <Result id="1260">
+            <Name id="1261">Done</Name>
+            <UIEnabled id="1279">false</UIEnabled>
+            <UIInfo id="1281">
               <Pos id="650" x="833" y="634"/>
             </UIInfo>
             <UIOrder id="652">0</UIOrder>
           </Result>
           <StateMachineElement type="StateMachine" id="656">
-            <EntryScript id="657">																																										//Computer picks its token
+            <EntryScript id="1286">																																										//Computer picks its token
 																																										drawCompPick();
 
 																																										fixTarget.radius = fixationWindowRadius.value;
@@ -816,13 +821,13 @@ swfFile.writeText(swfStr);</Script><Tool type="File" id="0"><FileName id="">.ern
 																																										ernData.setData(&quot;initdot&quot;,tokensCollected.value);
 																																										ernData.setData(&quot;nring&quot;,6);
 </EntryScript>
-            <ExitScript id="658">fixGraphic.visible = false;</ExitScript>
-            <Level id="659">Stage</Level>
+            <ExitScript id="1287">fixGraphic.visible = false;</ExitScript>
+            <Level id="1288">Stage</Level>
             <Name id="660">Trial</Name>
             <Type id="661">StateMachine</Type>
-            <UIEnabled id="662">false</UIEnabled>
-            <UIInfo id="663">
-              <Pos id="664" x="373" y="71"/>
+            <UIEnabled id="1289">false</UIEnabled>
+            <UIInfo id="1290">
+              <Pos id="1291" x="373" y="71"/>
             </UIInfo>
             <UIOrder id="666">0</UIOrder>
             <Parameter type="Double" id="2578">
@@ -1191,28 +1196,28 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
                   <UIOrder id="668">0</UIOrder>
                 </Result>
                 <Result id="673">
-                  <Name id="681">Initial Aquistion Time Exceeded</Name>
+                  <Name id="1441">Initial Aquistion Time Exceeded</Name>
                   <UIEnabled id="683">false</UIEnabled>
                   <UIInfo id="684">
                     <Pos id="685" x="0" y="0"/>
                   </UIInfo>
-                  <UIOrder id="691">0</UIOrder>
+                  <UIOrder id="1445">0</UIOrder>
                 </Result>
                 <Result id="695">
                   <Name id="696">Total Time Excceeded</Name>
-                  <UIEnabled id="697">false</UIEnabled>
-                  <UIInfo id="698">
-                    <Pos id="699" x="0" y="0"/>
+                  <UIEnabled id="1449">false</UIEnabled>
+                  <UIInfo id="1450">
+                    <Pos id="1451" x="0" y="0"/>
                   </UIInfo>
                   <UIOrder id="701">0</UIOrder>
                 </Result>
                 <Result id="705">
                   <Name id="706">Broke Fixation</Name>
-                  <UIEnabled id="707">false</UIEnabled>
+                  <UIEnabled id="1480">false</UIEnabled>
                   <UIInfo id="712">
                     <Pos id="713" x="0" y="0"/>
                   </UIInfo>
-                  <UIOrder id="715">0</UIOrder>
+                  <UIOrder id="1488">0</UIOrder>
                 </Result>
                 <Result id="734">
                   <Name id="735">Success</Name>
@@ -1220,7 +1225,7 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
                   <UIInfo id="737">
                     <Pos id="738" x="0" y="0"/>
                   </UIInfo>
-                  <UIOrder id="748">0</UIOrder>
+                  <UIOrder id="1499">0</UIOrder>
                 </Result>
                 <SignalChannel id="1270">Position</SignalChannel>
                 <TargetEntryScript id="1271"/>
@@ -1250,30 +1255,30 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
                 </UIInfo>
                 <UIOrder id="1362">0</UIOrder>
               </Result>
-              <Transition id="834">
-                <Destination id="835">Fail</Destination>
-                <Source id="836">FixController</Source>
-                <SourceResult id="837">Reaquistion Time Exceeded</SourceResult>
+              <Transition id="1561">
+                <Destination id="1562">Fail</Destination>
+                <Source id="1563">FixController</Source>
+                <SourceResult id="1564">Reaquistion Time Exceeded</SourceResult>
               </Transition>
-              <Transition id="838">
+              <Transition id="1565">
                 <Destination id="850">Fail</Destination>
                 <Source id="852">FixController</Source>
-                <SourceResult id="853">Initial Aquistion Time Exceeded</SourceResult>
+                <SourceResult id="1566">Initial Aquistion Time Exceeded</SourceResult>
               </Transition>
               <Transition id="854">
                 <Destination id="855">Fail</Destination>
-                <Source id="856">FixController</Source>
+                <Source id="1567">FixController</Source>
                 <SourceResult id="857">Total Time Excceeded</SourceResult>
               </Transition>
               <Transition id="858">
-                <Destination id="859">Success</Destination>
+                <Destination id="1568">Success</Destination>
                 <Source id="878">FixController</Source>
                 <SourceResult id="880">Success</SourceResult>
               </Transition>
               <Transition id="881">
                 <Destination id="882">Fail</Destination>
                 <Source id="887">FixController</Source>
-                <SourceResult id="897">Broke Fixation</SourceResult>
+                <SourceResult id="1569">Broke Fixation</SourceResult>
               </Transition>
             <Parameter type="Range" id="2752"><Increment id="2753">1</Increment><Max id="2754">100000</Max><Min id="2755">1</Min><Name id="2756">fixationWaitTime</Name><UIEnabled id="2757">true</UIEnabled><UIInfo id="2758"><Pos id="2759" x="161" y="480"/></UIInfo><UIOrder id="2761">0</UIOrder><Units id="2762"/><Value id="2763">3000</Value></Parameter></StateMachineElement>
             <StateMachineElement type="State" id="1134">
@@ -1300,20 +1305,20 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
                 <Result id="903">
                   <Name id="904">Reaquistion Time Exceeded</Name>
                   <UIEnabled id="905">false</UIEnabled>
-                  <UIInfo id="915">
-                    <Pos id="921" x="0" y="0"/>
+                  <UIInfo id="1587">
+                    <Pos id="1588" x="0" y="0"/>
                   </UIInfo>
                   <UIOrder id="923">0</UIOrder>
                 </Result>
-                <Result id="927">
-                  <Name id="928">Initial Aquistion Time Exceeded</Name>
-                  <UIEnabled id="934">false</UIEnabled>
-                  <UIInfo id="936">
-                    <Pos id="937" x="0" y="0"/>
+                <Result id="1593">
+                  <Name id="1594">Initial Aquistion Time Exceeded</Name>
+                  <UIEnabled id="1595">false</UIEnabled>
+                  <UIInfo id="1596">
+                    <Pos id="1597" x="0" y="0"/>
                   </UIInfo>
-                  <UIOrder id="948">0</UIOrder>
+                  <UIOrder id="1599">0</UIOrder>
                 </Result>
-                <Result id="952">
+                <Result id="1603">
                   <Name id="953">Total Time Excceeded</Name>
                   <UIEnabled id="959">false</UIEnabled>
                   <UIInfo id="961">
@@ -1764,7 +1769,7 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
               </UIInfo>
               <UIOrder id="669">0</UIOrder>
             </Result>
-            <Script id="676">														blockInfo.updateValue();
+            <Script id="2487">														blockInfo.updateValue();
 														if(trialNum.value &lt; minTrialsPerBlock.value)
 														    return false;
 														if(Math.random()*100 &gt;= switchProb.value)
@@ -1772,93 +1777,93 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
 														return true;</Script>
             <Type id="677">ScriptElement</Type>
             <UIEnabled id="678">false</UIEnabled>
-            <UIInfo id="679">
-              <Pos id="680" x="711" y="453"/>
+            <UIInfo id="2489">
+              <Pos id="2490" x="711" y="453"/>
             </UIInfo>
             <UIOrder id="682">0</UIOrder>
           </StateMachineElement>
-          <Transition id="687">
-            <Destination id="688">Done</Destination>
-            <Source id="689">IsDone</Source>
+          <Transition id="2532">
+            <Destination id="2533">Done</Destination>
+            <Source id="2534">IsDone</Source>
             <SourceResult id="690">true</SourceResult>
           </Transition>
           <Parameter type="Range" id="720">
             <Increment id="721">1</Increment>
-            <Max id="722">100</Max>
-            <Min id="723">0</Min>
+            <Max id="2535">100</Max>
+            <Min id="2548">0</Min>
             <Name id="724">switchProb</Name>
-            <UIEnabled id="725">false</UIEnabled>
-            <UIInfo id="726">
+            <UIEnabled id="2552">false</UIEnabled>
+            <UIInfo id="2553">
               <Pos id="727" x="251" y="547"/>
             </UIInfo>
-            <UIOrder id="729">0</UIOrder>
-            <Units id="730"/>
+            <UIOrder id="2555">0</UIOrder>
+            <Units id="2556"/>
             <Value id="731">10</Value>
           </Parameter>
-          <Parameter type="Range" id="740">
-            <Increment id="741">1</Increment>
-            <Max id="742">100</Max>
+          <Parameter type="Range" id="2573">
+            <Increment id="2574">1</Increment>
+            <Max id="2575">100</Max>
             <Min id="743">1</Min>
-            <Name id="744">minTrialsPerBlock</Name>
-            <UIEnabled id="745">false</UIEnabled>
-            <UIInfo id="746">
-              <Pos id="747" x="358" y="546"/>
+            <Name id="2576">minTrialsPerBlock</Name>
+            <UIEnabled id="2577">false</UIEnabled>
+            <UIInfo id="2585">
+              <Pos id="2588" x="358" y="546"/>
             </UIInfo>
-            <UIOrder id="749">0</UIOrder>
-            <Units id="750"/>
+            <UIOrder id="2590">0</UIOrder>
+            <Units id="2591"/>
             <Value id="751">40</Value>
           </Parameter>
-          <Parameter type="Numeric" id="760">
+          <Parameter type="Numeric" id="2609">
             <Name id="761">trialNum</Name>
-            <UIEnabled id="762">false</UIEnabled>
-            <UIInfo id="763">
-              <Pos id="764" x="139" y="549"/>
+            <UIEnabled id="2610">false</UIEnabled>
+            <UIInfo id="2611">
+              <Pos id="2612" x="139" y="549"/>
             </UIInfo>
-            <UIOrder id="766">0</UIOrder>
-            <Units id="767"/>
-            <Value id="768">0</Value>
+            <UIOrder id="2614">0</UIOrder>
+            <Units id="2615"/>
+            <Value id="2616">0</Value>
           </Parameter>
-          <Parameter type="Boolean" id="792">
+          <Parameter type="Boolean" id="2622">
             <FalseLabel id="793">False</FalseLabel>
-            <Name id="794">rightIsSafe</Name>
-            <TrueLabel id="795">True</TrueLabel>
-            <UIEnabled id="796">false</UIEnabled>
-            <UIInfo id="797">
-              <Pos id="798" x="480" y="549"/>
+            <Name id="2623">rightIsSafe</Name>
+            <TrueLabel id="2631">True</TrueLabel>
+            <UIEnabled id="2634">false</UIEnabled>
+            <UIInfo id="2635">
+              <Pos id="2636" x="480" y="549"/>
             </UIInfo>
-            <UIOrder id="800">0</UIOrder>
-            <Value id="801">false</Value>
+            <UIOrder id="2638">0</UIOrder>
+            <Value id="2639">false</Value>
           </Parameter>
-          <StateMachineElement type="ScriptElement" id="808">
-            <Name id="809">isConsume</Name>
+          <StateMachineElement type="ScriptElement" id="2661">
+            <Name id="2663">isConsume</Name>
             <Result id="752">
               <Name id="753">false</Name>
-              <UIEnabled id="754">false</UIEnabled>
-              <UIInfo id="755">
-                <Pos id="756" x="2000" y="2000"/>
+              <UIEnabled id="2664">false</UIEnabled>
+              <UIInfo id="2665">
+                <Pos id="2666" x="2000" y="2000"/>
               </UIInfo>
-              <UIOrder id="758">0</UIOrder>
+              <UIOrder id="2675">0</UIOrder>
             </Result>
             <Result id="770">
               <Name id="771">true</Name>
-              <UIEnabled id="772">false</UIEnabled>
-              <UIInfo id="773">
-                <Pos id="774" x="2075" y="2000"/>
+              <UIEnabled id="2720">false</UIEnabled>
+              <UIInfo id="2721">
+                <Pos id="2722" x="2075" y="2000"/>
               </UIInfo>
-              <UIOrder id="776">0</UIOrder>
+              <UIOrder id="2724">0</UIOrder>
             </Result>
-            <Script id="810">														if(tokensCollected.value &lt; 6)
+            <Script id="2728">														if(tokensCollected.value &lt; 6)
 														    return false;
 														return true;</Script>
             <Type id="811">ScriptElement</Type>
-            <UIEnabled id="812">false</UIEnabled>
-            <UIInfo id="813">
-              <Pos id="814" x="223" y="100"/>
+            <UIEnabled id="2729">false</UIEnabled>
+            <UIInfo id="2730">
+              <Pos id="2731" x="223" y="100"/>
             </UIInfo>
             <UIOrder id="816">0</UIOrder>
           </StateMachineElement>
-          <StateMachineElement type="StateMachine" id="822">
-            <EntryScript id="823">														Reward.unitQuantity = rewardQuantity.value;
+          <StateMachineElement type="StateMachine" id="2738">
+            <EntryScript id="2739">														Reward.unitQuantity = rewardQuantity.value;
 
 														ernData.setData(&quot;trialType&quot;,0);
 														ernData.setData(&quot;nconsume&quot;,6);</EntryScript>
@@ -1868,14 +1873,14 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
 														for (i = 0; i &lt; tokens.length; i++) {
 														    tokens[i].visible = false;
 														}</ExitScript>
-            <Level id="825">Stage</Level>
-            <Name id="826">ConsumeTrial</Name>
-            <Type id="827">StateMachine</Type>
-            <UIEnabled id="828">false</UIEnabled>
-            <UIInfo id="829">
-              <Pos id="830" x="374" y="259"/>
+            <Level id="2740">Stage</Level>
+            <Name id="2741">ConsumeTrial</Name>
+            <Type id="2742">StateMachine</Type>
+            <UIEnabled id="2743">false</UIEnabled>
+            <UIInfo id="2744">
+              <Pos id="2745" x="374" y="259"/>
             </UIInfo>
-            <UIOrder id="832">0</UIOrder>
+            <UIOrder id="2747">0</UIOrder>
             <Result id="1098">
               <Name id="1099">Done</Name>
               <UIEnabled id="1100">false</UIEnabled>
@@ -1895,7 +1900,7 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
               </UIInfo>
               <UIOrder id="2177">0</UIOrder>
               <Units id="2178"/>
-              <Value id="2179">80</Value>
+              <Value id="2179">200</Value>
             </Parameter>
             <StateMachineElement type="Reward" id="2188">
               <MinRewardPeriod id="2189">0</MinRewardPeriod>
@@ -1910,7 +1915,7 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
                 <UIOrder id="1829">0</UIOrder>
               </Result>
               <RewardChan id="2192">1</RewardChan>
-              <RewardQty id="2193">80</RewardQty>
+              <RewardQty id="2193">150</RewardQty>
               <Type id="2194">Reward</Type>
               <UIEnabled id="2195">false</UIEnabled>
               <UIInfo id="2196">
@@ -2018,17 +2023,17 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
               <SourceResult id="1958"/>
             </Transition>
           </StateMachineElement>
-          <StateMachineElement type="PausePoint" id="868">
-            <BackgroundColor A="255" B="0" G="0" R="0" id="869">#000000</BackgroundColor>
+          <StateMachineElement type="PausePoint" id="2851">
+            <BackgroundColor A="255" B="0" G="0" R="0" id="2852">#000000</BackgroundColor>
             <ForcePause id="870">false</ForcePause>
             <Name id="871">Pause</Name>
             <PausingScript id="872"/>
             <RestartingScript id="873"/>
-            <Result id="841">
-              <Name id="842">done</Name>
-              <UIEnabled id="843">false</UIEnabled>
-              <UIInfo id="844">
-                <Pos id="845" x="0" y="0"/>
+            <Result id="2853">
+              <Name id="2854">done</Name>
+              <UIEnabled id="2855">false</UIEnabled>
+              <UIInfo id="2863">
+                <Pos id="2866" x="0" y="0"/>
               </UIInfo>
               <UIOrder id="847">0</UIOrder>
             </Result>
@@ -2041,7 +2046,7 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
           </StateMachineElement>
           <StateMachineElement type="State" id="888">
             <BackgroundColor A="255" B="0" G="0" R="0" id="889">#000000</BackgroundColor>
-            <EntryScript id="890">														var tokens = [token0, token1, token2, token3, token4, token5];
+            <EntryScript id="2894">														var tokens = [token0, token1, token2, token3, token4, token5];
 														for (var i = 0; i &lt; tokens.length; i++) {
 														    tokens[i].outline = i &gt;= tokensCollected.value;
 														    tokens[i].visible = true;
@@ -2072,32 +2077,32 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
 														ernData.setData(&quot;outcomecolor&quot;,-1);
 														ernData.setData(&quot;pickedTargX&quot;,-1);
 														ernData.setData(&quot;pickedTargY&quot;,-1);</EntryScript>
-            <ExitScript id="891">fixGraphic.visible = true;</ExitScript>
-            <FrameScript id="892"/>
+            <ExitScript id="2895">fixGraphic.visible = true;</ExitScript>
+            <FrameScript id="2897"/>
             <Name id="893">PreWatch</Name>
-            <UIEnabled id="894">false</UIEnabled>
-            <UIInfo id="895">
-              <Pos id="896" x="97" y="189"/>
+            <UIEnabled id="2898">false</UIEnabled>
+            <UIInfo id="2910">
+              <Pos id="2911" x="97" y="189"/>
             </UIInfo>
-            <UIOrder id="898">0</UIOrder>
-            <ControlElement type="Stopwatch Controller" id="938">
-              <Name id="939">PreWatchMs</Name>
-              <Result id="839">
-                <Name id="840">Success</Name>
-                <UIEnabled id="846">false</UIEnabled>
-                <UIInfo id="848">
-                  <Pos id="849" x="0" y="0"/>
+            <UIOrder id="2913">0</UIOrder>
+            <ControlElement type="Stopwatch Controller" id="2914">
+              <Name id="2915">PreWatchMs</Name>
+              <Result id="2916">
+                <Name id="2917">Success</Name>
+                <UIEnabled id="2918">false</UIEnabled>
+                <UIInfo id="2919">
+                  <Pos id="2920" x="0" y="0"/>
                 </UIInfo>
                 <UIOrder id="851">0</UIOrder>
               </Result>
               <Time id="940">300</Time>
               <TimeUnits id="941">Ms</TimeUnits>
               <Type id="942"/>
-              <UIEnabled id="943">true</UIEnabled>
-              <UIInfo id="944">
-                <Pos id="945" x="120" y="81"/>
+              <UIEnabled id="2933">true</UIEnabled>
+              <UIInfo id="2934">
+                <Pos id="2935" x="120" y="81"/>
               </UIInfo>
-              <UIOrder id="947">0</UIOrder>
+              <UIOrder id="2937">0</UIOrder>
             </ControlElement>
             <Result id="954">
               <Name id="955">Done</Name>
@@ -2107,32 +2112,32 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
               </UIInfo>
               <UIOrder id="960">0</UIOrder>
             </Result>
-            <Transition id="917">
-              <Destination id="918">Done</Destination>
-              <Source id="919">PreWatchMs</Source>
-              <SourceResult id="920">Success</SourceResult>
+            <Transition id="2971">
+              <Destination id="2977">Done</Destination>
+              <Source id="2988">PreWatchMs</Source>
+              <SourceResult id="2989">Success</SourceResult>
             </Transition>
           </StateMachineElement>
-          <StateMachineElement type="State" id="906">
-            <BackgroundColor A="255" B="0" G="0" R="0" id="907">#000000</BackgroundColor>
+          <StateMachineElement type="State" id="3000">
+            <BackgroundColor A="255" B="0" G="0" R="0" id="3001">#000000</BackgroundColor>
             <EntryScript id="908"/>
             <ExitScript id="909">ernData.updateValue();</ExitScript>
-            <FrameScript id="910"/>
-            <Name id="911">PostWatch</Name>
-            <UIEnabled id="912">false</UIEnabled>
+            <FrameScript id="3002"/>
+            <Name id="3003">PostWatch</Name>
+            <UIEnabled id="3004">false</UIEnabled>
             <UIInfo id="913">
               <Pos id="914" x="627" y="162"/>
             </UIInfo>
-            <UIOrder id="916">0</UIOrder>
+            <UIOrder id="3013">0</UIOrder>
             <ControlElement type="Stopwatch Controller" id="964">
               <Name id="965">PostWatchMs</Name>
-              <Result id="929">
-                <Name id="930">Success</Name>
-                <UIEnabled id="931">false</UIEnabled>
-                <UIInfo id="932">
-                  <Pos id="933" x="0" y="0"/>
+              <Result id="3014">
+                <Name id="3015">Success</Name>
+                <UIEnabled id="3016">false</UIEnabled>
+                <UIInfo id="3017">
+                  <Pos id="3018" x="0" y="0"/>
                 </UIInfo>
-                <UIOrder id="935">0</UIOrder>
+                <UIOrder id="3020">0</UIOrder>
               </Result>
               <Time id="966">300</Time>
               <TimeUnits id="967">Ms</TimeUnits>
@@ -2157,15 +2162,15 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
               <SourceResult id="977">Success</SourceResult>
             </Transition>
           </StateMachineElement>
-          <Transition id="860">
+          <Transition id="3047">
             <Destination id="861">Trial</Destination>
             <Source id="862">isConsume</Source>
             <SourceResult id="863">false</SourceResult>
           </Transition>
           <Transition id="864">
             <Destination id="865">ConsumeTrial</Destination>
-            <Source id="866">isConsume</Source>
-            <SourceResult id="867">true</SourceResult>
+            <Source id="3077">isConsume</Source>
+            <SourceResult id="3078">true</SourceResult>
           </Transition>
           <Transition id="883">
             <Destination id="884">PreWatch</Destination>
@@ -2407,6 +2412,7 @@ SampleChoiceControl.totalTime = totTime;</EntryScript><ExitScript id="3183"/><Fr
           </VisualElement>
         <StateMachineElement type="ScriptElement" id="2678"><Name id="2679">IncTrialNum</Name><Result id="2443"><Name id="2444">false</Name><UIEnabled id="2445">false</UIEnabled><UIInfo id="2446"><Pos id="2447" x="0" y="0"/></UIInfo><UIOrder id="2449">0</UIOrder></Result><Result id="2468"><Name id="2469">true</Name><UIEnabled id="2470">false</UIEnabled><UIInfo id="2471"><Pos id="2472" x="0" y="0"/></UIInfo><UIOrder id="2474">0</UIOrder></Result><Script id="2680">trialNum.value++;
 blockInfo.setData(&quot;Trial&quot;,trialNum.value);
+blockInfo.setData(&quot;TotalTrial&quot;,blockInfo.getDataAsInt(&quot;TotalTrial&quot;)+1);
 
 ernData.setData(&quot;trial_success&quot;,1);
 ernData.setData(&quot;goodTrialInBlock&quot;,trialNum.value);
@@ -2423,23 +2429,23 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
             <Pos id="636" x="143" y="378"/>
           </UIInfo>
           <UIOrder id="638">0</UIOrder>
-          <Units id="639"/>
-          <Value id="640">0</Value>
+          <Units id="3397"/>
+          <Value id="3398">0</Value>
         </Parameter>
         <Transition id="708">
-          <Destination id="709">Block</Destination>
-          <Source id="710">Block</Source>
-          <SourceResult id="711">Done</SourceResult>
+          <Destination id="3404">Block</Destination>
+          <Source id="3405">Block</Source>
+          <SourceResult id="3406">Done</SourceResult>
         </Transition>
-        <Parameter type="Numeric" id="778">
-          <Name id="779">lambda</Name>
+        <Parameter type="Numeric" id="3407">
+          <Name id="3408">lambda</Name>
           <UIEnabled id="780">false</UIEnabled>
-          <UIInfo id="781">
-            <Pos id="782" x="247" y="379"/>
+          <UIInfo id="3409">
+            <Pos id="3410" x="247" y="379"/>
           </UIInfo>
-          <UIOrder id="784">0</UIOrder>
-          <Units id="785"/>
-          <Value id="786">0</Value>
+          <UIOrder id="3412">0</UIOrder>
+          <Units id="3413"/>
+          <Value id="3414">0</Value>
         </Parameter>
         <VisualElement type="Circle Graphic" id="1974">
           <Color A="255" B="0" G="0" R="255" id="1975">#ff0000</Color>
@@ -2447,7 +2453,7 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Name id="1977">token0</Name>
           <OperatorView id="1978">true</OperatorView>
           <Outline id="1979">true</Outline>
-          <OutlineThickness id="1980">1</OutlineThickness>
+          <OutlineThickness id="1980">4</OutlineThickness>
           <Position id="1981" x="425" y="257"/>
           <Radius id="1982">15</Radius>
           <SubjectView id="1983">true</SubjectView>
@@ -2464,7 +2470,7 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Name id="2005">token1</Name>
           <OperatorView id="2006">true</OperatorView>
           <Outline id="2007">true</Outline>
-          <OutlineThickness id="2008">1</OutlineThickness>
+          <OutlineThickness id="2008">4</OutlineThickness>
           <Position id="2009" x="376" y="257"/>
           <Radius id="2010">15</Radius>
           <SubjectView id="2011">true</SubjectView>
@@ -2481,7 +2487,7 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Name id="2033">token2</Name>
           <OperatorView id="2034">true</OperatorView>
           <Outline id="2035">true</Outline>
-          <OutlineThickness id="2036">1</OutlineThickness>
+          <OutlineThickness id="2036">4</OutlineThickness>
           <Position id="2037" x="350" y="300"/>
           <Radius id="2038">15</Radius>
           <SubjectView id="2039">true</SubjectView>
@@ -2498,7 +2504,7 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Name id="2061">token3</Name>
           <OperatorView id="2062">true</OperatorView>
           <Outline id="2063">true</Outline>
-          <OutlineThickness id="2064">1</OutlineThickness>
+          <OutlineThickness id="2064">4</OutlineThickness>
           <Position id="2065" x="375" y="343"/>
           <Radius id="2066">15</Radius>
           <SubjectView id="2067">true</SubjectView>
@@ -2515,7 +2521,7 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Name id="2089">token4</Name>
           <OperatorView id="2090">true</OperatorView>
           <Outline id="2091">true</Outline>
-          <OutlineThickness id="2092">1</OutlineThickness>
+          <OutlineThickness id="2092">4</OutlineThickness>
           <Position id="2093" x="424" y="343"/>
           <Radius id="2094">15</Radius>
           <SubjectView id="2095">true</SubjectView>
@@ -2532,7 +2538,7 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Name id="2117">token5</Name>
           <OperatorView id="2118">true</OperatorView>
           <Outline id="2119">true</Outline>
-          <OutlineThickness id="2120">1</OutlineThickness>
+          <OutlineThickness id="2120">4</OutlineThickness>
           <Position id="2121" x="450" y="300"/>
           <Radius id="2122">15</Radius>
           <SubjectView id="2123">true</SubjectView>
@@ -2553,9 +2559,9 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Units id="2149"/>
           <Value id="2150">0</Value>
         </Parameter>
-      <VisualElement type="Operator Info Graphic" id="2902"><Color A="255" B="0" G="255" R="0" id="2903">#00ff00</Color><Dimensions height="20" id="2904" width="800" x="0" y="0"/><Fields id="2905">Block,Trial,Gain%,Neutral%,Loss%</Fields><Layer id="2906">0</Layer><Name id="2907">blockInfo</Name><OperatorView id="2908">true</OperatorView><Position id="2909" x="0" y="550"/><SubjectView id="2922">false</SubjectView><UIEnabled id="2925">false</UIEnabled><UIInfo id="2926"><Pos id="2927" x="544" y="466"/></UIInfo><UIOrder id="2929">0</UIOrder><Values id="2930">0,0,0,0,0</Values><Visible id="2931">true</Visible></VisualElement><VisualElement type="Operator Info Graphic" id="3112"><Color A="255" B="0" G="255" R="0" id="3125">#00ff00</Color><Dimensions height="0" id="3126" width="0" x="0" y="0"/><Fields id="3127"/><Layer id="3128">0</Layer><Name id="3129">ernData</Name><OperatorView id="3130">true</OperatorView><Position id="3131" x="0" y="0"/><SubjectView id="3132">false</SubjectView><UIEnabled id="3143">false</UIEnabled><UIInfo id="3155"><OpenDescendant id="3156">0</OpenDescendant><Pos id="3157" x="268" y="512"/></UIInfo><UIOrder id="3158">0</UIOrder><Values id="3159"/><Visible id="3179">false</Visible></VisualElement></StateMachine>
+      <VisualElement type="Operator Info Graphic" id="2902"><Color A="255" B="0" G="255" R="0" id="2903">#00ff00</Color><Dimensions height="20" id="2904" width="800" x="0" y="0"/><Fields id="2905">Block,Trial,TotalTrial,Gain%,Neutral%,Loss%</Fields><Layer id="2906">0</Layer><Name id="2907">blockInfo</Name><OperatorView id="2908">true</OperatorView><Position id="2909" x="0" y="550"/><SubjectView id="2922">false</SubjectView><UIEnabled id="2925">false</UIEnabled><UIInfo id="2926"><Pos id="2927" x="544" y="466"/></UIInfo><UIOrder id="2929">0</UIOrder><Values id="2930">0,0,0,0,0,0</Values><Visible id="2931">true</Visible></VisualElement><VisualElement type="Operator Info Graphic" id="3112"><Color A="255" B="0" G="255" R="0" id="3125">#00ff00</Color><Dimensions height="0" id="3126" width="0" x="0" y="0"/><Fields id="3127"/><Layer id="3128">0</Layer><Name id="3129">ernData</Name><OperatorView id="3130">true</OperatorView><Position id="3131" x="0" y="0"/><SubjectView id="3132">false</SubjectView><UIEnabled id="3143">false</UIEnabled><UIInfo id="3155"><OpenDescendant id="3156">0</OpenDescendant><Pos id="3157" x="268" y="512"/></UIInfo><UIOrder id="3158">0</UIOrder><Values id="3159"/><Visible id="3179">false</Visible></VisualElement></StateMachine>
       <UIInfo id="607">
-        <Pos id="608" x="1821" y="1746"/>
+        <Pos id="608" x="1969" y="1742"/>
       </UIInfo>
     </Task>
   </Experiment></PictoData>
