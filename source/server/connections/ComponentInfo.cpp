@@ -28,6 +28,9 @@ void ComponentInfo::setSessionID(QUuid sessionID)
 //! \brief sets the status of the component to the input value
 void ComponentInfo::setStatus(ComponentStatus::ComponentStatus status)
 {QMutexLocker locker(&mutex_);status_ = status;}
+//! \brief sets the details of the component to the input value
+void ComponentInfo::setDetails(QString details)
+{QMutexLocker locker(&mutex_);details_ = details;}
 /*! \brief sets the activity of the component to true
  *	Used in conjunction with clear activity.  SetActivity should be called
  *	every time data is recieved from a component and clearActivity should
@@ -55,6 +58,9 @@ QUuid ComponentInfo::getSessionID()
 //! \brief returns the status of the component
 ComponentStatus::ComponentStatus ComponentInfo::getStatus()
 {QMutexLocker locker(&mutex_);return status_;}
+//! \brief returns the details of the component
+QString ComponentInfo::getDetails()
+{QMutexLocker locker(&mutex_);return details_;}
 //! \brief clears the state of activity and returns it.
 bool ComponentInfo::clearActivity() 
 {

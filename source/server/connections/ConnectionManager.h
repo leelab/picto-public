@@ -43,7 +43,7 @@ public:
 	~ConnectionManager();
 
 	//Director related functions
-	void updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status);
+	void updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status, QString details);
 	//void removeDirector(QUuid uuid);
 
 	ComponentStatus::ComponentStatus getComponentStatus(QUuid uuid);

@@ -58,10 +58,10 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 	{
 		status = ComponentStatus::running;
 	}
-
+	QString details = QString(command->getContent());
 
 	ConnectionManager *conMgr = ConnectionManager::Instance();
-	conMgr->updateComponent(sourceID, sourceAddr, sessionId, name, sourceType, status);
+	conMgr->updateComponent(sourceID, sourceAddr, sessionId, name, sourceType, status,details);
 
 	//If we're in a session, check for pending directives
 	QString test = sessionId.toString();

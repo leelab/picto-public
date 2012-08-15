@@ -71,7 +71,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	{
 		status = ComponentStatus::running;
 	}
-	conMgr->updateComponent(sourceID,sourceAddr,sessionId, name,sourceType,status);
+	conMgr->updateComponent(sourceID,sourceAddr,sessionId, name,sourceType,status,"");
 
 	QSharedPointer<SessionInfo> sessionInfo;
 	sessionInfo = conMgr->getSessionInfo(QUuid(command->getFieldValue("Session-ID")));

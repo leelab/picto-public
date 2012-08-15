@@ -11,8 +11,16 @@ bool DirectorRewardResponseHandler::processResponse(QString directive)
 	Q_ASSERT(!statusManager_.isNull());
 	int channelEndLoc = directive.indexOf("\n");
 	int channel = directive.left(channelEndLoc).toInt();
-	int quantity = directive.mid(channelEndLoc+1).toInt();
-	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
-	engine->giveReward(channel,quantity,50);
+	if(directive.length() == channelEndLoc+1)
+	{
+		QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
+		engine->giveReward(channel);
+	}
+	else
+	{
+		int quantity = directive.mid(channelEndLoc+1).toInt();
+		QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
+		engine->setRewardDuration(channel,quantity);
+	}
 	return true;
 }

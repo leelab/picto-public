@@ -646,6 +646,7 @@ void PictoEngine::setName(QString name)
 	{
 		cp->nameChanged(name);
 	}
+	emit nameChanged(name);
 }
 
 void PictoEngine::setRewardDuration(int controller, int duration)
@@ -657,6 +658,7 @@ void PictoEngine::setRewardDuration(int controller, int duration)
 	{
 		cp->rewardDurationChanged(controller,duration);
 	}
+	emit rewardDurationChanged(controller,duration);
 }
 
 void PictoEngine::setFlushDuration(int controller, int duration)
@@ -668,6 +670,7 @@ void PictoEngine::setFlushDuration(int controller, int duration)
 	{
 		cp->flushDurationChanged(controller,duration);
 	}
+	emit flushDurationChanged(controller,duration);
 }
 
 void PictoEngine::giveReward(int channel)

@@ -49,7 +49,7 @@ QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSha
 		return response;
 	}
 	//Update the component
-	ConnectionManager::Instance()->updateComponent(sourceID,sourceAddr,sessionID, sessionInfo->getComponentByType(sourceType)->getName(),sourceType,ComponentStatus::running);
+	ConnectionManager::Instance()->updateComponent(sourceID,sourceAddr,sessionID, sessionInfo->getComponentByType(sourceType)->getName(),sourceType,ComponentStatus::running,"");
 
 
 	//Start reading the content

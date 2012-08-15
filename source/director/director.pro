@@ -40,7 +40,6 @@ SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorParameterResponseHand
 HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorClickResponseHandler.h
 SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorClickResponseHandler.cpp
 
-
 win32 {
 SOURCES += $$(PICTO_TREE)/source/director/SignalChannelTest.cpp
 HEADERS += $$(PICTO_TREE)/source/director/SignalChannelTest.h

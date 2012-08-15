@@ -4,6 +4,7 @@
 #include "../../common/network/ComponentStatusManager.h"
 #include "../../common/engine/PictoEngine.h"
 #include "../../common/experiment/experiment.h"
+#include "../../common/storage/directordata.h"
 
 class DirectorStatusManager : public ComponentStatusManager
 {
@@ -11,6 +12,7 @@ class DirectorStatusManager : public ComponentStatusManager
 public:
 	virtual QString getName();
 	void setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine);
+	void setDirectorData(QSharedPointer<Picto::DirectorData> directorData);
 	QSharedPointer<Picto::Engine::PictoEngine> getEngine();
 	void setExperiment(QSharedPointer<Picto::Experiment> experiment);
 	QSharedPointer<Picto::Experiment> getExperiment();
@@ -23,6 +25,7 @@ protected:
 private:
 	ComponentStatus status_;
 	QWeakPointer<Picto::Engine::PictoEngine> engine_;
+	QSharedPointer<Picto::DirectorData> directorData_;
 	QSharedPointer<Picto::Experiment> experiment_;
 	int alignmentCode_;
 	int alignmentID_;

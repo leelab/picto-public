@@ -25,11 +25,17 @@ void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine>
 	connect(engine.data(),SIGNAL(pauseRequested()),this,SLOT(pauseRequested()));
 }
 
+void DirectorStatusManager::setDirectorData(QSharedPointer<DirectorData> directorData)
+{
+	directorData_ = directorData;
+}
+
 QSharedPointer<Picto::Engine::PictoEngine> DirectorStatusManager::getEngine()
 {
 	Q_ASSERT(!engine_.isNull());
 	return engine_.toStrongRef();
 }
+
 void DirectorStatusManager::setExperiment(QSharedPointer<Picto::Experiment> experiment)
 {
 	experiment_ = experiment;
@@ -150,6 +156,10 @@ void DirectorStatusManager::doServerUpdate()
 		updateCommand->setMethod("COMPONENTUPDATE");
 		updateCommand->setProtocolName("PICTO");
 		updateCommand->setProtocolVersion("1.0");
+		Q_ASSERT(directorData_);
+		QByteArray directorDataXml(directorData_->toXml().toAscii());
+		updateCommand->setContent(directorDataXml);
+		updateCommand->setFieldValue("Content-Length",QString::number(directorDataXml.length()));
 		dataChannel->sendCommand(updateCommand);
 	}
 }

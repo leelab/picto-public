@@ -37,6 +37,7 @@ public:
 	void setUuid(QUuid uuid);
 	void setSessionID(QUuid sessionID);
 	void setStatus(ComponentStatus::ComponentStatus status);
+	void setDetails(QString details);
 	void setActivity();
 
 	QString getAddress();
@@ -45,6 +46,7 @@ public:
 	QUuid getUuid();
 	QUuid getSessionID();
 	ComponentStatus::ComponentStatus getStatus();
+	QString getDetails();
 	bool clearActivity();
 
 private:
@@ -55,6 +57,7 @@ private:
 	QUuid	uuid_;
 	QUuid	sessionID_;
 	ComponentStatus::ComponentStatus status_;
+	QString details_;
 
 	bool activity_;
 };

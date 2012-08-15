@@ -186,6 +186,8 @@
    <file alias="_director_8h-source.html">../../../output/documentation/main/html/_director_8h-source.html</file>
    <file alias="_director_click_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_click_response_handler_8cpp-source.html</file>
    <file alias="_director_click_response_handler_8h-source.html">../../../output/documentation/main/html/_director_click_response_handler_8h-source.html</file>
+   <file alias="_director_data_8cpp-source.html">../../../output/documentation/main/html/_director_data_8cpp-source.html</file>
+   <file alias="_director_data_8h-source.html">../../../output/documentation/main/html/_director_data_8h-source.html</file>
    <file alias="_director_end_session_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_end_session_response_handler_8cpp-source.html</file>
    <file alias="_director_end_session_response_handler_8h-source.html">../../../output/documentation/main/html/_director_end_session_response_handler_8h-source.html</file>
    <file alias="_director_error_response_handler_8cpp-source.html">../../../output/documentation/main/html/_director_error_response_handler_8cpp-source.html</file>
@@ -558,6 +560,8 @@
    <file alias="_reward_equipment_8h-source.html">../../../output/documentation/main/html/_reward_equipment_8h-source.html</file>
    <file alias="_reward_response_handler_8cpp-source.html">../../../output/documentation/main/html/_reward_response_handler_8cpp-source.html</file>
    <file alias="_reward_response_handler_8h-source.html">../../../output/documentation/main/html/_reward_response_handler_8h-source.html</file>
+   <file alias="_reward_unit_8cpp-source.html">../../../output/documentation/main/html/_reward_unit_8cpp-source.html</file>
+   <file alias="_reward_unit_8h-source.html">../../../output/documentation/main/html/_reward_unit_8h-source.html</file>
    <file alias="_run_task_dialog_8cpp-source.html">../../../output/documentation/main/html/_run_task_dialog_8cpp-source.html</file>
    <file alias="_run_task_dialog_8h-source.html">../../../output/documentation/main/html/_run_task_dialog_8h-source.html</file>
    <file alias="_scene_8cpp-source.html">../../../output/documentation/main/html/_scene_8cpp-source.html</file>
@@ -952,6 +956,9 @@
    <file alias="class_picto_1_1_diamond_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic-members.html</file>
    <file alias="class_picto_1_1_diamond_graphic.html">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic.html</file>
    <file alias="class_picto_1_1_diamond_graphic.png">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic.png</file>
+   <file alias="class_picto_1_1_director_data-members.html">../../../output/documentation/main/html/class_picto_1_1_director_data-members.html</file>
+   <file alias="class_picto_1_1_director_data.html">../../../output/documentation/main/html/class_picto_1_1_director_data.html</file>
+   <file alias="class_picto_1_1_director_data.png">../../../output/documentation/main/html/class_picto_1_1_director_data.png</file>
    <file alias="class_picto_1_1_display_equipment-members.html">../../../output/documentation/main/html/class_picto_1_1_display_equipment-members.html</file>
    <file alias="class_picto_1_1_display_equipment.html">../../../output/documentation/main/html/class_picto_1_1_display_equipment.html</file>
    <file alias="class_picto_1_1_double_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_double_parameter-members.html</file>
@@ -1036,6 +1043,9 @@
    <file alias="class_picto_1_1_numeric_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_numeric_parameter-members.html</file>
    <file alias="class_picto_1_1_numeric_parameter.html">../../../output/documentation/main/html/class_picto_1_1_numeric_parameter.html</file>
    <file alias="class_picto_1_1_numeric_parameter.png">../../../output/documentation/main/html/class_picto_1_1_numeric_parameter.png</file>
+   <file alias="class_picto_1_1_obsolete_asset-members.html">../../../output/documentation/main/html/class_picto_1_1_obsolete_asset-members.html</file>
+   <file alias="class_picto_1_1_obsolete_asset.html">../../../output/documentation/main/html/class_picto_1_1_obsolete_asset.html</file>
+   <file alias="class_picto_1_1_obsolete_asset.png">../../../output/documentation/main/html/class_picto_1_1_obsolete_asset.png</file>
    <file alias="class_picto_1_1_operator_click_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter-members.html</file>
    <file alias="class_picto_1_1_operator_click_parameter.html">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter.html</file>
    <file alias="class_picto_1_1_operator_click_parameter.png">../../../output/documentation/main/html/class_picto_1_1_operator_click_parameter.png</file>
@@ -1165,6 +1175,9 @@
    <file alias="class_picto_1_1_reward_data_unit.png">../../../output/documentation/main/html/class_picto_1_1_reward_data_unit.png</file>
    <file alias="class_picto_1_1_reward_equipment-members.html">../../../output/documentation/main/html/class_picto_1_1_reward_equipment-members.html</file>
    <file alias="class_picto_1_1_reward_equipment.html">../../../output/documentation/main/html/class_picto_1_1_reward_equipment.html</file>
+   <file alias="class_picto_1_1_reward_unit-members.html">../../../output/documentation/main/html/class_picto_1_1_reward_unit-members.html</file>
+   <file alias="class_picto_1_1_reward_unit.html">../../../output/documentation/main/html/class_picto_1_1_reward_unit.html</file>
+   <file alias="class_picto_1_1_reward_unit.png">../../../output/documentation/main/html/class_picto_1_1_reward_unit.png</file>
    <file alias="class_picto_1_1_scene-members.html">../../../output/documentation/main/html/class_picto_1_1_scene-members.html</file>
    <file alias="class_picto_1_1_scene.html">../../../output/documentation/main/html/class_picto_1_1_scene.html</file>
    <file alias="class_picto_1_1_script_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_script_controller-members.html</file>
@@ -1445,6 +1458,7 @@
    <file alias="dir_7f6ffde13edb692672220f1806088bef.html">../../../output/documentation/main/html/dir_7f6ffde13edb692672220f1806088bef.html</file>
    <file alias="dir_81b59a9481bea75e0a9fa1bbd1a37f9c.html">../../../output/documentation/main/html/dir_81b59a9481bea75e0a9fa1bbd1a37f9c.html</file>
    <file alias="dir_824b2f197b7e1692e6f154c2462c19e7.html">../../../output/documentation/main/html/dir_824b2f197b7e1692e6f154c2462c19e7.html</file>
+   <file alias="dir_8798e7c34ce43090475267cb1cab9619.html">../../../output/documentation/main/html/dir_8798e7c34ce43090475267cb1cab9619.html</file>
    <file alias="dir_892338cf588fdc472662f81c604bd67f.html">../../../output/documentation/main/html/dir_892338cf588fdc472662f81c604bd67f.html</file>
    <file alias="dir_897e9d1bc2f6fbb5761a51b8334c72aa.html">../../../output/documentation/main/html/dir_897e9d1bc2f6fbb5761a51b8334c72aa.html</file>
    <file alias="dir_8ce368a8f84f64978acfa0b01bf083fa.html">../../../output/documentation/main/html/dir_8ce368a8f84f64978acfa0b01bf083fa.html</file>

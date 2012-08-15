@@ -205,6 +205,9 @@ public slots:
 signals:
 	void pauseRequested();
 	void firstPhosphorOccured();
+	void rewardDurationChanged(int controller, int duration);
+	void flushDurationChanged(int controller, int duration);
+	void nameChanged(QString name);
 private:
 	QHostAddress getIpAddress();
 	//QSharedPointer<Experiment> experiment_;

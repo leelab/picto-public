@@ -133,7 +133,7 @@ void ConnectionManager::checkForTimeouts()
  *	is in our list, and if not adds it.  If the instance already exists, the function makes
  *	any needed changes.  Note that the Uuid is being used as a primary key here.
  */
-void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status)
+void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status, QString details)
 {
 	QMutexLocker locker(mutex_);
 	QSharedPointer<ComponentInfo> info;
@@ -173,6 +173,8 @@ void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid ses
 	}
 	info->setName(name);	
 	info->setStatus(status);
+	if(!details.isEmpty())
+		info->setDetails(details);
 	info->setType(type);
 	info->setSessionID(sessionId);
 	info->setActivity();
@@ -278,6 +280,7 @@ QString ConnectionManager::getDirectorList()
 			xmlWriter.writeTextElement("Status","NotFound");
 
 		xmlWriter.writeTextElement("Session-ID",component->getSessionID().toString());
+		xmlWriter.writeTextElement("Details",component->getDetails());
 		xmlWriter.writeEndElement(); //Director
 	}
 	xmlWriter.writeEndElement();	//DirectorInstances

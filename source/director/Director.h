@@ -10,6 +10,7 @@
 #include "../common/engine/PictoEngine.h"
 #include "HardwareSetup.h"
 #include "frontpanel/FPInterface.h"
+#include "../common/storage/directordata.h"
 
 class Director : public QObject, public ComponentInterface
 {
@@ -36,6 +37,7 @@ private:
 	QString name_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<FPInterface> fpInterface_;
+	QSharedPointer<Picto::DirectorData> directorData_;
 	QSqlDatabase configDb_;
 	HardwareSetup::SignalChannelType sigChannel_;
 	HardwareSetup::VisualTargetType visualTarget_;

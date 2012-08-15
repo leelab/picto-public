@@ -472,6 +472,10 @@ HEADERS += $$(PICTO_TREE)/source/common/storage/TDTInterface.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/TDTInterface.cpp
 HEADERS += $$(PICTO_TREE)/source/common/storage/ObsoleteAsset.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/ObsoleteAsset.cpp
+HEADERS += $$(PICTO_TREE)/source/common/storage/RewardUnit.h
+SOURCES += $$(PICTO_TREE)/source/common/storage/RewardUnit.cpp
+HEADERS += $$(PICTO_TREE)/source/common/storage/DirectorData.h
+SOURCES += $$(PICTO_TREE)/source/common/storage/DirectorData.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/task/Signal.h
 SOURCES += $$(PICTO_TREE)/source/common/task/Signal.cpp

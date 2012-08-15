@@ -14,6 +14,7 @@
 #include "../../common/statemachine/scene.h"
 #include "../../common/storage/NeuralDataUnit.h"
 #include "../../common/storage/LFPDataUnitPackage.h"
+#include "../../common/storage/directordata.h"
 #include "../propertyframe.h"
 
 
@@ -49,6 +50,7 @@ using namespace Picto;
 #define SPECIAL_STATUS_PERIOD 1000
 #define MIN_ADAPTIVE_TIMEOUT 50
 #define MAX_ADAPTIVE_TIMEOUT 500
+#define REWARD_CHANGE_DELAY 5000
 RemoteViewer::RemoteViewer(QWidget *parent) :
 	Viewer(parent),
 	serverChannel_(0),
@@ -821,6 +823,8 @@ void RemoteViewer::init()
 	stateUpdateTimer_->start();
 	//This timer triggers each new run of updateEngine()
 	engineUpdateTimer_->start();
+	//This timer makes sure that we don't read in old reward duration data just after setting a new value.
+	rewardDurChangeTimer_.restart();
 }
 
 //! \brief Called just before hiding the viewer
@@ -921,6 +925,7 @@ void RemoteViewer::setupUi()
 	rewardQuantity_->setMaximum(999999);
 	rewardQuantity_->setSingleStep(10);
 	rewardQuantity_->setToolTip("Reward Quantity (Ms)");
+	connect(rewardQuantity_, SIGNAL(editingFinished()), this, SLOT(changeRewardDuration()));
 
 	loadPropsAction_ = new QAction(tr("&Load Task Properties from Session"),this);
 	loadPropsAction_->setIcon(QIcon(":/icons/loadvalues.png"));
@@ -1098,7 +1103,14 @@ void RemoteViewer::stop()
 //! \brief Requests that a new reward be given to the user.
 void RemoteViewer::reward()
 {
+	sendTaskCommand(QString("reward:%1").arg(rewardChannel_));
+}
+
+//! \brief Requests that reward duration be changed to the current value.
+void RemoteViewer::changeRewardDuration()
+{
 	sendTaskCommand(QString("reward:%1").arg(rewardChannel_),QString::number(rewardQuantity_->value()));
+	rewardDurChangeTimer_.restart();
 }
 
 //! \brief Requests that the session's data package be updated with our latest values.
@@ -1246,6 +1258,21 @@ void RemoteViewer::updateComponentLists(bool immediate)
 		}
 		if(remove)
 			directorListBox_->removeItem(i);
+	}
+
+	//Update reward duration box according to the current director
+	if(!rewardQuantity_->hasFocus() && (rewardDurChangeTimer_.elapsed() > REWARD_CHANGE_DELAY))
+	{
+		foreach(RemoteViewer::ComponentInstance director,directors)
+		{
+			if(director.id == directorListBox_->itemData(directorListBox_->currentIndex()).toString())
+			{
+				if(director.rewardMap_.contains(rewardChannel_))
+					rewardQuantity_->setValue(director.rewardMap_[rewardChannel_]);
+				break;
+			}
+		}
+		
 	}
 
 	//Update the proxy combo box
@@ -1444,41 +1471,48 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 	currDirectorList_.clear();
 
 	QByteArray xmlFragment = response->getContent();
-	QXmlStreamReader xmlReader(xmlFragment);
+	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
 
-	while(!xmlReader.atEnd())
+	while(!xmlReader->atEnd())
 	{
-		xmlReader.readNext();
+		xmlReader->readNext();
 
-		if(xmlReader.isStartElement() && xmlReader.name() == "Director")
+		if(xmlReader->isStartElement() && xmlReader->name() == "Director")
 		{
 			ComponentInstance director;
 
-			while(!xmlReader.atEnd())
+			while(!xmlReader->atEnd())
 			{
-				xmlReader.readNext();
+				xmlReader->readNext();
 
-				if(xmlReader.name() == "Name" && xmlReader.isStartElement())
+				if(xmlReader->name() == "Name" && xmlReader->isStartElement())
 				{
-					director.name = xmlReader.readElementText();
+					director.name = xmlReader->readElementText();
 				}
-				else if(xmlReader.name() == "Address" && xmlReader.isStartElement())
+				else if(xmlReader->name() == "Address" && xmlReader->isStartElement())
 				{
-					director.address = xmlReader.readElementText();
+					director.address = xmlReader->readElementText();
 				}
-				else if(xmlReader.name() == "Id" && xmlReader.isStartElement())
+				else if(xmlReader->name() == "Id" && xmlReader->isStartElement())
 				{
-					director.id = xmlReader.readElementText();
+					director.id = xmlReader->readElementText();
 				}
-				else if(xmlReader.name() == "Status" && xmlReader.isStartElement())
+				else if(xmlReader->name() == "Status" && xmlReader->isStartElement())
 				{
-					director.status = xmlReader.readElementText();
+					director.status = xmlReader->readElementText();
 				}
-				else if(xmlReader.name() == "Session-ID" && xmlReader.isStartElement())
+				else if(xmlReader->name() == "Session-ID" && xmlReader->isStartElement())
 				{
-					director.sessionID = xmlReader.readElementText();
+					director.sessionID = xmlReader->readElementText();
 				}
-				else if(xmlReader.name() == "Director" && xmlReader.isEndElement())
+				else if(xmlReader->name() == "Details" && xmlReader->isStartElement())
+				{
+					QString dataStr = xmlReader->readElementText();
+					DirectorData directorData;
+					directorData.fromXml(dataStr);
+					director.rewardMap_ = directorData.getRewardMap();
+				}
+				else if(xmlReader->name() == "Director" && xmlReader->isEndElement())
 				{
 					currDirectorList_.append(director);
 					break;

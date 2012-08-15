@@ -53,6 +53,7 @@ private slots:
 	void pause();
 	void stop();
 	void reward();
+	void changeRewardDuration();
 	void modifyRunDataUnit(qulonglong runId);
 	void LoadPropValsFromFile();
 	void parameterMessageReady(QSharedPointer<Property> changedProp);
@@ -101,6 +102,7 @@ private:
 	QTime componentListsTimer_;
 	QTime neuralDataTimer_;
 	QTime sessionDataTimer_;
+	QTime rewardDurChangeTimer_;
 
 	enum ViewerState
 	{
@@ -151,6 +153,7 @@ private:
 		QString address;
 		QString id;
 		QString sessionID;
+		QHash<int,int> rewardMap_;
 	}ComponentInstance;
 
 	enum ComponentStatus {NotFound, Idle, Ending, Stopped, Paused, Running};

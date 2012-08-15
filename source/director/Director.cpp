@@ -40,7 +40,8 @@ Director::Director(QString name,
 	useFrontPanel_(
 					(rewardController == HardwareSetup::PictoBoxXpReward)
 					||(rewardController == HardwareSetup::AudioReward)
-					)
+					),
+	directorData_(new DirectorData())
 {
 	//! \TODO Set up random number generator?
 
@@ -118,6 +119,9 @@ int Director::openDevice()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine());
 	engine_->setName(name_);
 	engine_->setExclusiveMode(true);
+	QObject::connect(engine_.data(),SIGNAL(nameChangeRequest(QString)),this,SLOT(changeName(QString)));
+	QObject::connect(engine_.data(),SIGNAL(rewardDurationChanged(int,int)),this,SLOT(changeRewardDuration(int,int)));
+	QObject::connect(engine_.data(),SIGNAL(flushDurationChangeRequest(int,int)),this,SLOT(changeFlushDuration(int,int)));
 
 	HardwareSetup hwSetup(engine_);
 	
@@ -144,9 +148,6 @@ int Director::openDevice()
 	if(useFrontPanel_)
 	{
 		fpInterface_ = QSharedPointer<FPInterface>(new FPInterface());
-		QObject::connect(fpInterface_.data(),SIGNAL(nameChangeRequest(QString)),this,SLOT(changeName(QString)));
-		QObject::connect(fpInterface_.data(),SIGNAL(rewardDurationChangeRequest(int,int)),this,SLOT(changeRewardDuration(int,int)));
-		QObject::connect(fpInterface_.data(),SIGNAL(flushDurationChangeRequest(int,int)),this,SLOT(changeFlushDuration(int,int)));
 		engine_->addControlPanel(fpInterface_);
 	}
 
@@ -158,6 +159,7 @@ int Director::openDevice()
 
 	statusManager_ = QSharedPointer<ComponentStatusManager>(new DirectorStatusManager());
 	statusManager_.staticCast<DirectorStatusManager>()->setEngine(engine_);
+	statusManager_.staticCast<DirectorStatusManager>()->setDirectorData(directorData_);
 
 
 	dataCommandChannel_->setStatusManager(statusManager_);
@@ -206,6 +208,7 @@ void Director::changeRewardDuration(int controller, int duration)
 	while(rewardDurs_.size() <= controller)
 		rewardDurs_.append("100");
 	rewardDurs_[controller] = QString::number(duration);
+	directorData_->setReward(controller,duration);
 	QSqlQuery query(configDb_);
 	query.prepare("UPDATE directorinfo SET value=:value WHERE key='RewardDurations'");
 	query.bindValue(":value",rewardDurs_.join(":"));
