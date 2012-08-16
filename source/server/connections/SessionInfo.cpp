@@ -102,6 +102,9 @@ SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, 
 	LoadBaseSessionDatabase(databaseName);
 	SetupBaseSessionDatabase();
 	CreateCacheDatabase(databaseName);
+
+	//file_.setFileName(databaseName + ".test");
+	//file_.open(QIODevice::WriteOnly);
 }
 
 SessionInfo::SessionInfo(QString databaseFilePath)
@@ -251,6 +254,7 @@ SessionInfo::~SessionInfo()
 		if(connection.isValid())
 			connection.close();
 	}
+	//file_.close();
 }
 
 //! \brief Adds a component to this session (ie. Director or proxy)
@@ -482,6 +486,22 @@ void SessionInfo::flushCache(QString sourceType)
 			{
 				QString queryString = "INSERT INTO diskdb.%1(%2) SELECT %2 FROM %1";
 				executeWriteQuery(&cacheQuery,QString("INSERT INTO diskdb.%1(%2) SELECT %2 FROM %1").arg(table).arg(tableColumns_[table]));
+				//The code below was used for a test where we write the SQL commands to a file then create the database afterwards
+				//for the purposes of speed.  In this test, speed was increase by a factor of ~8 (ie. 50ms to flush cache as opposed
+				//to 400ms). It does not yet work because binary data needs to be written to sql too which doesn't work cleanly in
+				//a text file.  
+				//executeReadQuery(&cacheQuery,QString("SELECT %2 FROM %1").arg(table).arg(tableColumns_[table]));
+				//while(cacheQuery.next())
+				//{
+				//	QStringList  vals;
+				//	for(int i=0;i<tableColumns_[table].split(",",QString::SkipEmptyParts).size();i++)
+				//	{
+				//		vals.append(cacheQuery.value(i).toString());
+				//	}
+				//	//Doesn't quite work because of Binary Data.  Think about this.
+				//	writeToFile(QString("INSERT INTO %1(%2) VALUES ('%3');").arg(table).arg(tableColumns_[table]).arg(vals.join("','")));;
+				//}
+
 				if(table != "currentstate")
 					executeWriteQuery(&cacheQuery,QString("DELETE FROM %1%2").arg(table).arg(table.contains("ralalignevents")?" WHERE matched<>0":""));
 			}
@@ -1286,6 +1306,14 @@ bool SessionInfo::executeWriteQuery(QSqlQuery* query, QString optionalString,boo
 	Q_ASSERT_X(!debug || success,"SessionInfo::executeWriteQuery","Error: "+query->lastError().text().toAscii());
 	return success;
 }
+
+//bool SessionInfo::writeToFile(QString line)
+//{
+//	databaseWriteMutex_->lock();
+//	file_.write((line+"\n").toAscii());
+//	databaseWriteMutex_->unlock();
+//	return true;
+//}
 
 void SessionInfo::alignTimeBases(bool realignAll)
 {
