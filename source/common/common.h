@@ -64,12 +64,18 @@
  *	This allows us to develop and debug picto on a network running picto experiments.  Otherwise, we could not have
  *	two separate PictoServers open at the same time.
  */
-//#define DEVELOPMENTBUILD
-#ifdef DEVELOPMENTBUILD
+#define DEVELOPMENTBUILD
+#define SYSTEM_0	//Currently we are using different servers for each picto system.  System 0 is Chris's system.  System 1 is Hyojungs.
+//#ifdef DEVELOPMENTBUILD
 #define PORTPREFIX 50000
 #else
+#ifdef SYSTEM_0
 #define PORTPREFIX 40000
+#else
+#define PORTPREFIX 60000
 #endif
+#endif
+#define APPUPDATEPORT PORTPREFIX+2423
 #define MINDISCOVERSERVERPORT PORTPREFIX+2425
 #define MAXDISCOVERSERVERPORT PORTPREFIX+2500
 #define SERVERPORT PORTPREFIX+2424
