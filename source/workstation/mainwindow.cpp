@@ -112,6 +112,9 @@ void MainWindow::createActions()
 	checkSyntaxAction_->setToolTip(tr("Check the current experiment's XML code for syntax errors."));
 	checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
 	//connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
+
+	aboutPictoAction_ = new QAction(tr("&About Picto"),this);
+	connect(aboutPictoAction_, SIGNAL(triggered()), this, SLOT(aboutPicto()));
 }
 
 void MainWindow::createMenus()
@@ -136,7 +139,10 @@ void MainWindow::createMenus()
 	modeMenu_ = menuBar()->addMenu(tr("&Mode"));
 
 	experimentMenu_ = menuBar()->addMenu(tr("E&xperiment"));
-	experimentMenu_->addAction(checkSyntaxAction_);
+	experimentMenu_->addAction(aboutPictoAction_);
+
+	aboutMenu_ = menuBar()->addMenu(tr("&About"));
+	aboutMenu_->addAction(aboutPictoAction_);
 }
 
 void MainWindow::createToolbars()
@@ -409,6 +415,11 @@ void MainWindow::checkSyntax()
 		box.setIconPixmap(QPixmap(":/icons/x.png"));
 		box.exec();
 	}
+}
+
+void MainWindow::aboutPicto()
+{
+	QMessageBox::about(this,"Picto Workstation","You are using version " PICTOVERSION " of the Picto Workstation.");
 }
 
 /*****************************************************

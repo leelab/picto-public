@@ -50,6 +50,7 @@ private slots:
 	bool saveAsExperiment();
 	void changeMode();
 	void checkSyntax();
+	void aboutPicto();
 
 private:
 	void createActions();
@@ -92,6 +93,7 @@ private:
 	//Experiment Actions
 	QAction *checkSyntaxAction_;
 	QAction *initViewerAction_;
+	QAction *aboutPictoAction_;
 
 
 	//Menus
@@ -99,6 +101,7 @@ private:
 	//QMenu* editMenu_;
 	QMenu* modeMenu_;
 	QMenu* experimentMenu_;
+	QMenu* aboutMenu_;
 
 	//Toolbars
 	QToolBar *fileToolbar_;
