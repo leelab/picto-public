@@ -1,7 +1,9 @@
 #include <QStringList>
 #include <QCoreApplication>
+#include <QUuid>
 
 #include "CommandChannel.h"
+#include "../update/UpdateDownloader.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -233,6 +235,12 @@ void CommandChannel::readIncomingResponse()
 	int bytesRead;
 	QSharedPointer<ProtocolCommand> pendingCommand;
 	QDateTime currCreatedTime;
+	QString sessionId = sessionId_.toString();
+	if(!statusManager_.isNull())
+	{
+		sessionId = statusManager_.toStrongRef()->getSessionID().toString();
+	}
+
 	while(consumerSocket_->bytesAvailable() > 0)
 	{
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse());
@@ -277,6 +285,23 @@ void CommandChannel::readIncomingResponse()
 				}
 			}
 			incomingResponseQueue_.push_back(response);
+			//If the PictoVersion doesn't match the current Picto version and we're not in a session,
+			//update the application
+			QString serverPictoVersion = response->getFieldValue("PictoVersion");
+			if(sessionId.isEmpty() || (sessionId == QUuid().toString()) && !serverPictoVersion.isEmpty())
+			{
+				if((serverPictoVersion != PICTOVERSION))
+				{
+					//Update Picto
+					QSharedPointer<UpdateDownloader> updateSystem = UpdateDownloader::getInstance();
+					if(!updateSystem->update(serverAddr_.toString(),APPUPDATEPORT))
+					{	//If update failed, clear incoming data, break the connection and leave the loop. Don't just keep trying again and again.
+						consumerSocket_->disconnectFromHost();
+						consumerSocket_->readAll();
+						break;	
+					}
+				}
+			}
 		}
 		else
 		{

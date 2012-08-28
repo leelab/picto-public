@@ -1,6 +1,4 @@
-<PictoData id="0">
-
-  <Experiment id="1">
+<PictoData><AnalysisContainer id="0"/><Experiment id="1">
     <SyntaxVersion id="2">0.0.1</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
@@ -329,7 +327,7 @@
             <Type id="278">StateMachine</Type>
             <UIEnabled id="279">false</UIEnabled>
             <UIOrder id="280">0</UIOrder>
-          <Transition id="483"><Destination id="">SetTargetRed</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+          <Transition id="483"><Destination id="480">SetTargetRed</Destination><Source id="481"/><SourceResult id="482"/></Transition></StateMachineElement>
           <Transition id="281">
             <Destination id="282">FixationFeedback</Destination>
             <Source id="283">PresentStimulus</Source>
@@ -359,7 +357,7 @@
           <Type id="304">StateMachine</Type>
           <UIEnabled id="305">false</UIEnabled>
           <UIOrder id="306">0</UIOrder>
-        <Transition id="503"><Destination id="">WaitForClick</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+        <Transition id="503"><Destination id="502">WaitForClick</Destination><Source id="504"/><SourceResult id="505"/></Transition></StateMachineElement>
         <VisualElement type="Box Graphic" id="307">
           <Color A="255" B="0" G="255" R="255" id="308">#ffff00</Color>
           <Dimensions height="10" id="309" width="10" x="0" y="0"/>
@@ -436,7 +434,7 @@
         <Level id="383">Stage</Level>
         <UIEnabled id="384">false</UIEnabled>
         <UIOrder id="385">0</UIOrder>
-      <StateMachineElement type="PausePoint" id="1800"><Name id="1806">Pause</Name><Result id="562"><Name id="563">done</Name><UIEnabled id="564">false</UIEnabled><UIInfo id="565"><Pos id="566" x="0" y="0"/></UIInfo><UIOrder id="568">0</UIOrder></Result><Type id="1816">PausePoint</Type><UIEnabled id="1835">false</UIEnabled><UIInfo id="1836"><Pos id="1837" x="1871" y="1568"/></UIInfo><UIOrder id="1839">0</UIOrder><BackgroundColor A="255" B="0" G="0" R="0" id="559">#000000</BackgroundColor><ForcePause id="560">false</ForcePause><PausingScript id="561"/><RestartingScript id="567"/></StateMachineElement><Transition id="577"><Destination id="578">IncrementStimulusCounter</Destination><Source id="579">PresentSingleStimulus</Source><SourceResult id="580">StimulusPresented</SourceResult></Transition><Transition id="581"><Destination id="582">Pause</Destination><Source id="583">IncrementStimulusCounter</Source><SourceResult id="584">false</SourceResult></Transition><Transition id="585"><Destination id="586">Pause</Destination><Source id="587">IncrementStimulusCounter</Source><SourceResult id="588">true</SourceResult></Transition><Transition id="589"><Destination id="590">PresentSingleStimulus</Destination><Source id="591">Pause</Source><SourceResult id="592">done</SourceResult></Transition><Transition id="595"><Destination id="">PresentSingleStimulus</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachine>
+      <StateMachineElement type="PausePoint" id="1800"><Name id="1806">Pause</Name><Result id="562"><Name id="563">done</Name><UIEnabled id="564">false</UIEnabled><UIInfo id="565"><Pos id="566" x="0" y="0"/></UIInfo><UIOrder id="568">0</UIOrder></Result><Type id="1816">PausePoint</Type><UIEnabled id="1835">false</UIEnabled><UIInfo id="1836"><Pos id="1837" x="1871" y="1568"/></UIInfo><UIOrder id="1839">0</UIOrder><BackgroundColor A="255" B="0" G="0" R="0" id="559">#000000</BackgroundColor><ForcePause id="560">false</ForcePause><PausingScript id="561"/><RestartingScript id="567"/></StateMachineElement><Transition id="577"><Destination id="578">IncrementStimulusCounter</Destination><Source id="579">PresentSingleStimulus</Source><SourceResult id="580">StimulusPresented</SourceResult></Transition><Transition id="581"><Destination id="582">Pause</Destination><Source id="583">IncrementStimulusCounter</Source><SourceResult id="584">false</SourceResult></Transition><Transition id="585"><Destination id="586">Pause</Destination><Source id="587">IncrementStimulusCounter</Source><SourceResult id="588">true</SourceResult></Transition><Transition id="589"><Destination id="590">PresentSingleStimulus</Destination><Source id="591">Pause</Source><SourceResult id="592">done</SourceResult></Transition><Transition id="595"><Destination id="599">PresentSingleStimulus</Destination><Source id="600"/><SourceResult id="601"/></Transition></StateMachine>
       <UIInfo id="386">
         <Pos id="387" x="1668" y="1744"/>
       </UIInfo>
@@ -444,7 +442,7 @@
     </Task>
     <UIInfo id="390">
       
-    <Pos id="392" x="0" y="0"/></UIInfo>
+    <Pos id="392" x="0" y="0"/><OpenDescendant id="610">1</OpenDescendant></UIInfo>
     <Name id="393">PTDelaySaccadeTraining</Name>
     <Task id="3486">
       <Name id="3487">DelaySaccadeTraining</Name>
@@ -1133,7 +1131,7 @@
                     <Units id="2269"/>
                     <Value id="2270">500</Value>
                   </Parameter>
-                <Transition id="1022"><Destination id="">WaitForTargetEntry</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+                <Transition id="1022"><Destination id="1027">WaitForTargetEntry</Destination><Source id="1028"/><SourceResult id="1029"/></Transition></StateMachineElement>
 
                 
                 <StateMachineElement type="StateMachine" id="1896">
@@ -1415,7 +1413,7 @@
                     <Units id="8016"/>
                     <Value id="8017">500</Value>
                   </Parameter>
-                <Parameter type="Range" id="1782"><Increment id="1783">1</Increment><Max id="1784">10000</Max><Min id="1785">0</Min><Name id="1786">MaxOverlapTime</Name><UIEnabled id="1787">true</UIEnabled><UIInfo id="1788"><Pos id="1789" x="757" y="767"/></UIInfo><UIOrder id="1791">0</UIOrder><Units id="1792"/><Value id="1793">1500</Value></Parameter><Parameter type="RandomDouble" id="1808"><Max id="1809">1</Max><Min id="1810">0</Min><Name id="1811">RandDouble</Name><Seed id="1812">0</Seed><UIEnabled id="1813">false</UIEnabled><UIInfo id="1814"><Pos id="1815" x="768" y="870"/></UIInfo><UIOrder id="1817">0</UIOrder><UseSeed id="1818">false</UseSeed><Value id="1831">0</Value></Parameter><Transition id="1164"><Destination id="">TargetsAppear</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+                <Parameter type="Range" id="1782"><Increment id="1783">1</Increment><Max id="1784">10000</Max><Min id="1785">0</Min><Name id="1786">MaxOverlapTime</Name><UIEnabled id="1787">true</UIEnabled><UIInfo id="1788"><Pos id="1789" x="757" y="767"/></UIInfo><UIOrder id="1791">0</UIOrder><Units id="1792"/><Value id="1793">1500</Value></Parameter><Parameter type="RandomDouble" id="1808"><Max id="1809">1</Max><Min id="1810">0</Min><Name id="1811">RandDouble</Name><Seed id="1812">0</Seed><UIEnabled id="1813">false</UIEnabled><UIInfo id="1814"><Pos id="1815" x="768" y="870"/></UIInfo><UIOrder id="1817">0</UIOrder><UseSeed id="1818">false</UseSeed><Value id="1831">0</Value></Parameter><Transition id="1164"><Destination id="1171">TargetsAppear</Destination><Source id="1172"/><SourceResult id="1173"/></Transition></StateMachineElement>
                 <Transition id="4079">
                   <Destination id="4080">Failed</Destination>
                   <Source id="4081">WaitForFixation</Source>
@@ -1768,7 +1766,7 @@
                   <Units id="2298"/>
                   <Value id="2306">60</Value>
                 </Parameter>
-              <Transition id="1366"><Destination id="">WaitForFixation</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+              <Transition id="1366"><Destination id="1379">WaitForFixation</Destination><Source id="1380"/><SourceResult id="1381"/></Transition></StateMachineElement>
               
 
 
@@ -2023,7 +2021,7 @@
                 <Units id="2345"/>
                 <Value id="2346">1</Value>
               </Parameter>
-            <Parameter type="Range" id="1851"><Increment id="1855">1</Increment><Max id="1856">50</Max><Min id="1857">1</Min><Name id="1858">NumFixationRewards</Name><UIEnabled id="1859">true</UIEnabled><UIInfo id="1860"><Pos id="1861" x="1201" y="567"/></UIInfo><UIOrder id="1871">0</UIOrder><Units id="1875"/><Value id="1876">1</Value></Parameter><Transition id="1475"><Destination id="">PreTrialInterval</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+            <Parameter type="Range" id="1851"><Increment id="1855">1</Increment><Max id="1856">50</Max><Min id="1857">1</Min><Name id="1858">NumFixationRewards</Name><UIEnabled id="1859">true</UIEnabled><UIInfo id="1860"><Pos id="1861" x="1201" y="567"/></UIInfo><UIOrder id="1871">0</UIOrder><Units id="1875"/><Value id="1876">1</Value></Parameter><Transition id="1475"><Destination id="1490">PreTrialInterval</Destination><Source id="1491"/><SourceResult id="1492"/></Transition></StateMachineElement>
             <StateMachineElement type="ScriptElement" id="4610">
               <Name id="4611">NeedsMoreTrials</Name>
               <Result id="4612">
@@ -2233,7 +2231,7 @@
               <Source id="4879">NeedsMoreTrials</Source>
               <SourceResult id="4880">true</SourceResult>
             </Transition>
-          <StateMachineElement type="PausePoint" id="1945"><Name id="1952">Pause</Name><Result id="1585"><Name id="1586">done</Name><UIEnabled id="1587">false</UIEnabled><UIInfo id="1588"><Pos id="1589" x="0" y="0"/></UIInfo><UIOrder id="1591">0</UIOrder></Result><Type id="2010">PausePoint</Type><UIEnabled id="2013">false</UIEnabled><UIInfo id="2051"><Pos id="2052" x="884" y="951"/></UIInfo><UIOrder id="2054">0</UIOrder><BackgroundColor A="255" B="0" G="0" R="0" id="1616">#000000</BackgroundColor><ForcePause id="1617">false</ForcePause><PausingScript id="1618"/><RestartingScript id="1619"/></StateMachineElement><Transition id="1600"><Destination id="1601">Trial</Destination><Source id="1602">Pause</Source><SourceResult id="1603">done</SourceResult></Transition><Transition id="1604"><Destination id="1605">Pause</Destination><Source id="1606">ChooseTrialType</Source><SourceResult id="1607">false</SourceResult></Transition><Transition id="1608"><Destination id="1609">Pause</Destination><Source id="1610">ChooseTrialType</Source><SourceResult id="1611">true</SourceResult></Transition><Transition id="1641"><Destination id="">ChooseTrialType</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+          <StateMachineElement type="PausePoint" id="1945"><Name id="1952">Pause</Name><Result id="1585"><Name id="1586">done</Name><UIEnabled id="1587">false</UIEnabled><UIInfo id="1588"><Pos id="1589" x="0" y="0"/></UIInfo><UIOrder id="1591">0</UIOrder></Result><Type id="2010">PausePoint</Type><UIEnabled id="2013">false</UIEnabled><UIInfo id="2051"><Pos id="2052" x="884" y="951"/></UIInfo><UIOrder id="2054">0</UIOrder><BackgroundColor A="255" B="0" G="0" R="0" id="1616">#000000</BackgroundColor><ForcePause id="1617">false</ForcePause><PausingScript id="1618"/><RestartingScript id="1619"/></StateMachineElement><Transition id="1600"><Destination id="1601">Trial</Destination><Source id="1602">Pause</Source><SourceResult id="1603">done</SourceResult></Transition><Transition id="1604"><Destination id="1605">Pause</Destination><Source id="1606">ChooseTrialType</Source><SourceResult id="1607">false</SourceResult></Transition><Transition id="1608"><Destination id="1609">Pause</Destination><Source id="1610">ChooseTrialType</Source><SourceResult id="1611">true</SourceResult></Transition><Transition id="1641"><Destination id="1676">ChooseTrialType</Destination><Source id="1677"/><SourceResult id="1678"/></Transition></StateMachineElement>
           <StateMachineElement type="ScriptElement" id="4767">
             <Name id="4768">NeedsMoreBlocks</Name>
             <Result id="4769">
@@ -2313,7 +2311,7 @@
             <Source id="4921">Block</Source>
             <SourceResult id="4922">BlockDone</SourceResult>
           </Transition>
-        <Transition id="1700"><Destination id="">NeedsMoreBlocks</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachineElement>
+        <Transition id="1700"><Destination id="1731">NeedsMoreBlocks</Destination><Source id="1732"/><SourceResult id="1733"/></Transition></StateMachineElement>
         <StateMachineElement type="ScriptElement" id="4896">
           <Name id="4897">LessThanMaxSuperblocks</Name>
           <Result id="4898">
@@ -2594,10 +2592,6 @@
         <Type id="5254">StateMachine</Type>
         <UIEnabled id="5255">false</UIEnabled>
         <UIOrder id="5256">0</UIOrder>
-      <Transition id="2162"><Destination id="">LessThanMaxSuperblocks</Destination><Source id=""/><SourceResult id=""/></Transition></StateMachine>
+      <Transition id="2162"><Destination id="2206">LessThanMaxSuperblocks</Destination><Source id="2207"/><SourceResult id="2208"/></Transition></StateMachine>
     </Task>
-  <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment>
-  <StateMachineEditorData id="0">
-    <OpenedBlock id="">3557</OpenedBlock>
-  </StateMachineEditorData>
-</PictoData>
+  <XGain id="3479">1</XGain><XOffset id="3480">0</XOffset><XYSignalShear id="3481">0</XYSignalShear><YGain id="3482">1</YGain><YOffset id="3483">0</YOffset></Experiment></PictoData>

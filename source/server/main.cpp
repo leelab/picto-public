@@ -30,6 +30,7 @@
 #include "protocol/ServerProtocols.h"
 #include "protocol/ServerPictoProtocol.h"
 #include "protocol/ServerHTTPProtocol.h"
+#include "protocol/ServerAppUpdateProtocol.h"
 #include "service/systemservice.h"
 #include "dialog.h"
 #include "InteractiveSTDIOHandler.h"
@@ -67,13 +68,16 @@ int serviceMain(SystemService *)
 
 	QSharedPointer<ServerProtocols> httpProtocols(new ServerProtocols());
 	QSharedPointer<ServerProtocols> pictoProtocols(new ServerProtocols());
+	QSharedPointer<ServerProtocols> PictoUpdateProtocols(new ServerProtocols());
+
 
 	QSharedPointer<ServerHTTPProtocol> httpProtocol(new ServerHTTPProtocol());
 	QSharedPointer<ServerPictoProtocol> pictoProtocol(new ServerPictoProtocol());
-	
+	QSharedPointer<ServerAppUpdateProtocol> pictoUpdateProtocol(new ServerAppUpdateProtocol());
 	httpProtocols->addProtocol(httpProtocol);
 	pictoProtocols->addProtocol(httpProtocol);
 	pictoProtocols->addProtocol(pictoProtocol);
+	PictoUpdateProtocols->addProtocol(pictoUpdateProtocol);
 
 	/*! \todo we need to check for the presence of a session database, and if present handle a crashed session
 	 *        recovery.  Initially, that recovery may be non-existent (i.e. we'll just delete the old session
@@ -88,6 +92,7 @@ int serviceMain(SystemService *)
 	 */
 	Server httpServer(80, httpProtocols);
 	Server pictoServer(SERVERPORT, pictoProtocols);
+	Server appUpdateServer(APPUPDATEPORT, PictoUpdateProtocols);
 
 
 	return eventLoop.exec();

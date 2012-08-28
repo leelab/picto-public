@@ -82,6 +82,7 @@ private:
 	QList<QSqlDatabase> sessions_;
 
 	QTimer* progressBarTimer_;
+	QByteArray savedOutputBoxState_;
 
 private slots:
 	void loadSession();

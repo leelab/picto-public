@@ -20,11 +20,11 @@ RESOURCES += $$(PICTO_TREE)/source/proxyplugins/plexonplugin/plexonplugin.qrc
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  DESTDIR = $$(PICTO_TREE)/output/bin/debug/plugins
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/plexonplugins/debug
 }
 build_pass:CONFIG(release, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  DESTDIR = $$(PICTO_TREE)/output/bin/release/plugins
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/plexonplugins/release
 }
 RCC_DIR = $$(PICTO_TREE)/intermediates/resources/plexonplugins

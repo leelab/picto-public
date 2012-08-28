@@ -54,7 +54,8 @@ PanelInfo::DisplayModeType StatusMode::handleUserInput(PanelInfo::InputType type
 
 void StatusMode::drawStatus()
 {
-	drawText(statusItems_[currTopItem_],statusItems_[currTopItem_+1]);
+	if(statusItems_.size() > (currTopItem_+1))
+		drawText(statusItems_[currTopItem_],statusItems_[currTopItem_+1]);
 }
 
 void StatusMode::updateStatus()

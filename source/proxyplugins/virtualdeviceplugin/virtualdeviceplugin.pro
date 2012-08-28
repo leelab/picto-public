@@ -30,11 +30,11 @@ RESOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualdevic
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  DESTDIR = $$(PICTO_TREE)/output/bin/debug/plugins
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/virtualdeviceplugins/debug
 }
 build_pass:CONFIG(release, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  DESTDIR = $$(PICTO_TREE)/output/bin/release/plugins
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/virtualdeviceplugins/release
 }
 RCC_DIR = $$(PICTO_TREE)/intermediates/resources/virtualdeviceplugins

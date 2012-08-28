@@ -1,4 +1,6 @@
 #include <QApplication>
+#include <QDir>
+
 #include "Director.h"
 #include "network/DirectorStatusManager.h"
 #include "protocol/DirectorNewSessionResponseHandler.h"
@@ -12,8 +14,15 @@
 #include "protocol/DirectorStopResponseHandler.h"
 #include "protocol/DirectorParameterResponseHandler.h"
 #include "protocol/DirectorClickResponseHandler.h"
+#include "../common/update/UpdateDownloader.h"
 #include "../common/memleakdetect.h"
 using namespace Picto;
+
+#if defined(QT_DEBUG)
+#define FRONTPANELEXECUTABLE "EmbeddedFrontPanel_debug"
+#else
+#define FRONTPANELEXECUTABLE "EmbeddedFrontPanel"
+#endif
 
 Director::Director(QString name,
 		HardwareSetup::SignalChannelType sigChannel,
@@ -49,7 +58,14 @@ Director::Director(QString name,
 	// Open Configuration database, and configure as needed
 	///////////////////////////////////////
     configDb_ = QSqlDatabase::addDatabase("QSQLITE","PictoDirectorConfigDatabase");
-	configDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/PictoDirector.config");
+	QString configPath = QCoreApplication::applicationDirPath()+"/../config";
+	QDir configDir(configPath);
+	if(!configDir.exists())
+	{
+		configDir.mkpath(configPath);
+		configDir = QDir(configPath);
+	}
+	configDb_.setDatabaseName(configDir.canonicalPath() + "/" + "PictoDirector.config");
     configDb_.open();
 
 	QSqlQuery query(configDb_);
@@ -147,6 +163,12 @@ int Director::openDevice()
 	//If running on PictoBox create front panel
 	if(useFrontPanel_)
 	{
+		frontPanelProcess_ = QSharedPointer<QProcess>(new QProcess());
+		frontPanelProcess_->start(QCoreApplication::applicationDirPath() + "/" + FRONTPANELEXECUTABLE);
+		if(!frontPanelProcess_->waitForStarted())
+			return 1;
+		//Assure that the update downloader will kill the front panel process if it needs to restart the application.
+		connect(UpdateDownloader::getInstance().data(),SIGNAL(closingProcess()),frontPanelProcess_.data(),SLOT(kill()));
 		fpInterface_ = QSharedPointer<FPInterface>(new FPInterface());
 		engine_->addControlPanel(fpInterface_);
 	}

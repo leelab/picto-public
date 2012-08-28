@@ -492,6 +492,11 @@ HEADERS += $$(PICTO_TREE)/source/common/timing/Timestamper.h
 SOURCES += $$(PICTO_TREE)/source/common/timing/Timestamper.cpp
 HEADERS += $$(PICTO_TREE)/source/common/timing/Stopwatch.h
 SOURCES += $$(PICTO_TREE)/source/common/timing/Stopwatch.cpp
+HEADERS += $$(PICTO_TREE)/source/common/timing/TimedMessageBox.h
+SOURCES += $$(PICTO_TREE)/source/common/timing/TimedMessageBox.cpp
+
+HEADERS += $$(PICTO_TREE)/source/common/update/UpdateDownloader.h
+SOURCES += $$(PICTO_TREE)/source/common/update/UpdateDownloader.cpp
 
 win32 {
 

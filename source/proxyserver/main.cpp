@@ -26,6 +26,7 @@
 #include "../common/globals.h"
 #include "../common/namedefs.h"
 #include "../common/archives/archives.h"
+#include "../common/update/updatedownloader.h"
 #include "network/proxyserver.h"
 #include "protocol/ProxyServerProtocols.h"
 #include "protocol/ProxyServerAcqProtocol.h"
@@ -46,6 +47,9 @@ int main(int argc, char *argv[])
 	#if defined (DETECTMEMLEAKS) && defined(_MSC_VER) && defined(_DEBUG)
 		_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 	#endif
+	
+	//Add plugins directory to the path
+	QApplication::addLibraryPath(QCoreApplication::applicationDirPath() + "/plugins");
 	QApplication app(argc,argv);
 
 	QLocale systemLocale = QLocale();
@@ -58,6 +62,10 @@ int main(int argc, char *argv[])
 	Picto::InitializeLib(&app,localeLanguageCode);
 
 	ProxyMainWindow window;
+
+	//Setup autoupdate system
+	UpdateDownloader::getInstance()->setRootWidget(&window);
+	UpdateDownloader::getInstance()->setRestartCommands(app.applicationFilePath(),app.arguments());
 
 	QIcon icon;
 

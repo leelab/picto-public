@@ -24,7 +24,7 @@ public:
 	int addTopLevelTab(QString name);
 	void addSubTab(int topLevelIndex,QString name,QWidget* widget);
 	bool supportsSaving();
-	bool saveOutputToDirectory(QDir directory);
+	bool saveOutputToDirectory(QDir directory, bool separateRunDirs);
 	float fractionOutputSaved(){return fractionOutputSaved_;};
 	void clear();
 

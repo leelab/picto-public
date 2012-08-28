@@ -1,4 +1,5 @@
 #include <QDir>
+#include <QCoreApplication>
 #include "AnalysisOutput.h"
 
 #include "../../common/memleakdetect.h"
@@ -53,9 +54,9 @@ void AnalysisOutput::initTempOutputDir()
 	//wont delete the temporary directory contents, otherwise, we will.
 	if(!outputDir_.isEmpty())
 		return;
-	QDir dir(QDir::current());
-	dir.mkdir("AnalysisOutput");
-	dir.cd("AnalysisOutput");
+	QDir dir(QCoreApplication::applicationDirPath()+"/../");
+	dir.mkdir("analysisoutput");
+	dir.cd("analysisoutput");
 	removeFilesThenDirectories(dir);
 
 	outputDir_ = dir.absolutePath();

@@ -6,8 +6,8 @@
           <UIInfo id="7">
             <Pos id="8" x="1628" y="2016"/>
           </UIInfo>
-          <NewClick id="10">false</NewClick>
-          <Pos id="11" x="0" y="0"/>
+          <NewClick id="10">true</NewClick>
+          <Pos id="11" x="293" y="224"/>
           <UIEnabled id="12">false</UIEnabled>
           <UIOrder id="13">0</UIOrder>
         </Parameter>
@@ -449,8 +449,8 @@
     </Task>
 <UIInfo id="390">
 	<Pos id="392" x="0" y="0"/>
-<OpenDescendant id="597">744</OpenDescendant></UIInfo>
-<Name id="393">Not Yet Named</Name>
+<OpenDescendant id="597">1</OpenDescendant></UIInfo>
+<Name id="393">RewardCalibration</Name>
 <XGain id="394">1</XGain>
 <XOffset id="395">0</XOffset>
 <XYSignalShear id="396">0</XYSignalShear>

@@ -137,6 +137,7 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 		pendingCommandIDs_.clear();
 	}
 	Q_ASSERT(response->getRegisteredType() != Picto::RegisteredResponseType::Delayed);
+	response->setFieldValue("PictoVersion",PICTOVERSION);
 
 	return response;
 }

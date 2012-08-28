@@ -72,7 +72,7 @@ bool AnalysisOutputDisplay::supportsSaving()
 	return false;
 }
 
-bool AnalysisOutputDisplay::saveOutputToDirectory(QDir directory)
+bool AnalysisOutputDisplay::saveOutputToDirectory(QDir directory, bool separateRunDirs)
 {
 	fractionOutputSaved_ = 0;
 	if(!directory.exists())
@@ -80,16 +80,19 @@ bool AnalysisOutputDisplay::saveOutputToDirectory(QDir directory)
 	for(int i=0;i<topLevelTabs_->count();i++)
 	{
 		QString subDirName = topLevelTabs_->tabText(i);
-		directory.mkdir(subDirName);
 		QDir subDir = directory;
-		if(!subDir.cd(subDirName))
+		if(separateRunDirs)
 		{
-			QMessageBox error;
-			error.setText("Could not create sub-directory");
-			error.setDetailedText("Could not create: " + directory.absolutePath() + "/" + subDirName);
-			error.setIcon(QMessageBox::Critical);
-			error.exec();
-			return false;
+			directory.mkdir(subDirName);
+			if(!subDir.cd(subDirName))
+			{
+				QMessageBox error;
+				error.setText("Could not create sub-directory");
+				error.setDetailedText("Could not create: " + directory.absolutePath() + "/" + subDirName);
+				error.setIcon(QMessageBox::Critical);
+				error.exec();
+				return false;
+			}
 		}
 		QTabWidget* subTabs = qobject_cast<QTabWidget*>(topLevelTabs_->widget(i));
 		for(int j=0;j<subTabs->count();j++)

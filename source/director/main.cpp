@@ -33,7 +33,7 @@
 #include <QSharedPointer>
 
 #include "../common/globals.h"
-
+#include "../common/update/updatedownloader.h"
 #include "HardwareSetup.h"
 
 #include "Director.h"
@@ -178,6 +178,8 @@ int main(int argc, char *argv[])
 		rewCont = HardwareSetup::AudioReward;
 	}
 
+	//Setup autoupdate system
+	UpdateDownloader::getInstance()->setRestartCommands(app.applicationFilePath(),app.arguments());
 
 	//For now, just use pixmap ------- Remove this/////////////////////
 	//visTarget = HardwareSetup::Pixmap;

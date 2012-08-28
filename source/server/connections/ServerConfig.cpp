@@ -6,6 +6,8 @@
 #include <QVariant>
 #include <QThread>
 #include <QMutexLocker>
+#include <QDir>
+
 #include "../../common/memleakdetect.h"
 
 QMutex ServerConfig::fileAccessMutex_;
@@ -24,7 +26,14 @@ ServerConfig::ServerConfig()
 	else
 	{
 		configDb_ = QSqlDatabase::addDatabase("QSQLITE",connectionName_);
-		configDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/PictoServer.config");
+		QString configPath = QCoreApplication::applicationDirPath()+"/../config";
+		QDir configDir(configPath);
+		if(!configDir.exists())
+		{
+			configDir.mkpath(configPath);
+			configDir = QDir(configPath);
+		}
+		configDb_.setDatabaseName(configDir.canonicalPath() + "/" + "PictoServer.config");
 		configDb_.open();
 		//Possibly create a new proxy table
 		if(!configDb_.tables().contains("opensessions"))

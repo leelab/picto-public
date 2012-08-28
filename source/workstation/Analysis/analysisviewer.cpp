@@ -25,7 +25,10 @@
 #include <QLinkedList>
 #include <QProgressBar>
 #include <QTabWidget>
+#include <QDir>
+
 #include "../../common/analysis/AnalysisOutputWidget.h"
+#include "SaveOutputDialog.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -39,7 +42,14 @@ AnalysisViewer::AnalysisViewer(QWidget *parent) :
 	QString dbName = "PictoWorkstation";
 	dbName = dbName.toLower();
 	configDb_ = QSqlDatabase::addDatabase("QSQLITE",dbName);
-	configDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + dbName + ".config");
+	QString configPath = QCoreApplication::applicationDirPath()+"/../config";
+	QDir configDir(configPath);
+	if(!configDir.exists())
+	{
+		configDir.mkpath(configPath);
+		configDir = QDir(configPath);
+	}
+	configDb_.setDatabaseName(configDir.canonicalPath() + "/" + dbName + ".config");
 	configDb_.open();
 
 	QSqlQuery query(configDb_);
@@ -186,17 +196,47 @@ void AnalysisViewer::loadSession()
 
 void AnalysisViewer::saveOutput()
 {
-	QString dirName = QFileDialog::getExistingDirectory(this,
-			tr("Output Data Directory"),".", QFileDialog::ShowDirsOnly);
+	//Restore dialog values
+	QString dirName = ".";
+	bool useSeperateSubDirs = true;
+	if(configDb_.isOpen())
+	{
+		QSqlQuery query(configDb_);
+		query.exec(QString("SELECT key,value FROM workstationinfo WHERE key IN ('OutputPath','SeperateDirs')"));
+		while(query.next())
+		{
+			if(query.value(0) == "OutputPath")
+				dirName = query.value(1).toString();
+			else if(query.value(0) == "SeperateDirs")
+				useSeperateSubDirs = query.value(1).toBool();
+		}
+	}
+	SaveOutputDialog saveDialog(this,dirName,useSeperateSubDirs);
+	saveDialog.showDialog();
+	savedOutputBoxState_ = saveDialog.getCurrentState();
+	dirName = saveDialog.getSelectedDir();
 	if(dirName.isEmpty())
 		return;
+	useSeperateSubDirs = saveDialog.useSeperateSubDirs();
+
+	//Save dialog values
+	if(configDb_.isOpen())
+	{
+		QSqlQuery query(configDb_);
+		query.prepare(QString("INSERT OR REPLACE INTO workstationinfo (key,value) VALUES ('OutputPath',:outputPath)"));
+		query.bindValue(":outputPath",dirName);
+		query.exec();
+		query.prepare(QString("INSERT OR REPLACE INTO workstationinfo (key,value) VALUES ('SeperateDirs',:seperateDirs)"));
+		query.bindValue(":seperateDirs",useSeperateSubDirs);
+		query.exec();
+	}
 	status_ = SAVING;
 	progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
 	progressBarTimer_->start();
 	executeAction_->setEnabled(false);
 	loadSessionAction_->setEnabled(false);
 	saveOutputAction_->setEnabled(false);
-	outputDisplay_->saveOutputToDirectory(dirName);
+	outputDisplay_->saveOutputToDirectory(dirName,useSeperateSubDirs);
 	progressBarTimer_->stop();
 	progressBar_->setRange(0,100);	//Returns progress bar to normal range if it wasn't done in updateProgressBar.
 	progressBar_->setValue(100);

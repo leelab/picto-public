@@ -104,5 +104,8 @@ private:
 	//QString startServerMsg, stopServerMsg_;
 
 	int port_;
+
+private slots:
+	void pluginIndexChanged(int index);
 };
 #endif

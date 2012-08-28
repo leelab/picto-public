@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QProcessEnvironment>
 
 #include "proxymainwindow.h"
 #include "NeuralDataAcqInterface.h"
@@ -32,11 +33,6 @@ ProxyMainWindow::ProxyMainWindow()
 	controlPanel->setLayout(layout_);
 	
 	setCentralWidget(controlPanel);
-
-
-
-
-
 
 	currState_ = InitState;
 	stateTrigger_ = NoProxyTrigger;
@@ -202,21 +198,15 @@ void ProxyMainWindow::createComboBox()
 		}
 	}
 	
-	QDir pluginsDir = QDir(qApp->applicationDirPath());
+	QDir pluginsDir = QDir(qApp->applicationDirPath() + "/plugins");
+	//Set the application path to the plugins folder so that any 3rd party dlls (ie. plexclient.dll)
+	//will get loaded from that path.
+	QString appPath = QDir::current().absolutePath();
+	QDir::setCurrent(pluginsDir.absolutePath());
 
-#if defined(Q_OS_WIN)
-	if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
-		pluginsDir.cdUp();
-#elif defined(Q_OS_MAC)
-	if (pluginsDir.dirName() == "MacOS") {
-		pluginsDir.cdUp();
-		pluginsDir.cdUp();
-		pluginsDir.cdUp();
-	}
-#endif
-	pluginsDir.cd("plugins");
-
-	foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
+	QStringList nameFilters;
+	nameFilters << "*.dll"; //WARNING, this is platform dependant!!
+	foreach (QString fileName, pluginsDir.entryList(nameFilters,QDir::Files)) 
 	{
 		qDebug(pluginsDir.absoluteFilePath(fileName).toAscii());
 		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
@@ -233,6 +223,8 @@ void ProxyMainWindow::createComboBox()
 		}
 
 	}
+	//Set application path back to original directory.
+	QDir::setCurrent(appPath);
 
 	if(acqPluginList_.length() == 0)
 	{
@@ -252,7 +244,7 @@ void ProxyMainWindow::createComboBox()
 	}
 
 	setNeuralDataAcquisitionDevice(0);
-	//connect(pluginCombo_,SIGNAL(currentIndexChanged(int)),this,SLOT(setNeuralDataAcquisitionDevice(int)));
+	connect(pluginCombo_,SIGNAL(currentIndexChanged(int)),this,SLOT(pluginIndexChanged(int)));
 
 	return;
 }
@@ -318,6 +310,7 @@ void ProxyMainWindow::writeSettings()
 	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
 
 	settings.setValue("proxyName",lineEditName_->text());
+	settings.setValue("plugin",pluginCombo_->itemText(pluginCombo_->currentIndex()));
 
 }
 
@@ -329,6 +322,13 @@ void ProxyMainWindow::readSettings()
 
 	if(!proxyName.isNull())
 		lineEditName_->setText(proxyName);
+
+	QString plugin = settings.value("plugin").toString();
+	
+	if(plugin.isEmpty())
+		pluginCombo_->setCurrentIndex(0);
+	else
+		pluginCombo_->setCurrentIndex(pluginCombo_->findText(plugin));
 }
 
 
@@ -528,4 +528,9 @@ void ProxyMainWindow::enterState()
 		qDebug("Entering Running");
 		break;
 	}
+}
+
+void ProxyMainWindow::pluginIndexChanged(int)
+{
+	writeSettings();
 }

@@ -107,6 +107,8 @@ HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/TaskRunSelector.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/TaskRunSelector.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/analysis/SaveOutputDialog.h
+SOURCES += $$(PICTO_TREE)/source/workstation/analysis/SaveOutputDialog.cpp
 
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp

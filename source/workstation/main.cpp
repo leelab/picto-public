@@ -25,6 +25,7 @@
 #include "../common/namedefs.h"
 #include "../common/archives/archives.h"
 #include "../common/random/mtrand.h"
+#include "../common/update/updatedownloader.h"
 
 #include "mainwindow.h"
 #include "../common/mainmemleakdetect.h"
@@ -52,10 +53,16 @@ int main(int argc, char *argv[])
 	Q_ASSERT_X(Picto::testMTRand(),"Director::main()","Random number generator failed test");
 
 	MainWindow mainWin;
+	UpdateDownloader::getInstance()->setRootWidget(&mainWin);
+	UpdateDownloader::getInstance()->enableUpdateWarning(true);
+	UpdateDownloader::getInstance()->setRestartCommands(app.applicationFilePath(),app.arguments());
+	UpdateDownloader::getInstance()->requireUserInteraction(true);
+	
 
 	//mainWin.resize(1450,1024);
 	mainWin.show();
-
+	//Start automatic update checks.
+	UpdateDownloader::getInstance()->autoCheckForUpdates(9000);	//Check every 15 minutes
 	int result = app.exec();
 
 	Picto::CloseLib();

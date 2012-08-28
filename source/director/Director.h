@@ -6,6 +6,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QProcess>
 #include "../common/network/ComponentInterface.h"
 #include "../common/engine/PictoEngine.h"
 #include "HardwareSetup.h"
@@ -45,6 +46,7 @@ private:
 	HardwareSetup::EventCodeGeneratorType eventCodeGenerator_;
 	QStringList rewardDurs_;
 	QStringList flushDurs_;
+	QSharedPointer<QProcess> frontPanelProcess_;
 	int xChannel_;
 	int yChannel_;
 	int xDiamChannel_;

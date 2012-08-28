@@ -10,6 +10,7 @@
 #include "remoteviewer/remoteviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
 #include "analysis/analysisviewer.h"
+#include "../common/update/updatedownloader.h"
 #include "../common/memleakdetect.h"
 
 MainWindow::MainWindow()
@@ -241,43 +242,8 @@ void MainWindow::createViewers()
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 
-	/*modeMenu_->addAction(stateMachineEditModeAction_);
-	modeMenu_->addAction(runModeAction_);
-	modeMenu_->addAction(testModeAction_);*/
-
-
-	//Mode actions
-	//--------------------------------------
-
-	/*stateMachineEditModeAction_ = new QAction(tr("&State machine editor"),this);
-	stateMachineEditModeAction_->setShortcut(tr("Ctrl+2"));
-	stateMachineEditModeAction_->setIcon(QIcon(":/icons/statemachineeditmode.png"));
-	stateMachineEditModeAction_->setData("StateMachineEdit");
-	connect(stateMachineEditModeAction_, SIGNAL(triggered()), this, SLOT(changeMode()));
-
-	testModeAction_ = new QAction(tr("&Test experiment"),this);
-	testModeAction_->setShortcut(tr("Ctrl+3"));
-	testModeAction_->setIcon(QIcon(":/icons/testmode.png"));
-	testModeAction_->setData("Test");
-	connect(testModeAction_, SIGNAL(triggered()), this, SLOT(changeMode()));
-
-	runModeAction_ = new QAction(tr("&Run experiment"),this);
-	runModeAction_->setShortcut(tr("Ctrl+4"));
-	runModeAction_->setIcon(QIcon(":/icons/runmode.png"));
-	runModeAction_->setData("Run");
-	connect(runModeAction_, SIGNAL(triggered()), this, SLOT(changeMode()));
-
-
-
-
-	TestViewer* testViewer = new TestViwer(this);
-	viewerNames_.append(testViewer->type());
-	viewerStack_->addWidget(testViewer);*/
-
-	//currViewer_ = qobject_cast<Viewer*>(viewerStack_->widget(0));
-	//viewerStack_->setCurrentWidget(currViewer_);
-	//currViewer_->init();
-	//currViewer_->setVisible(true);
+	//If an application update fails, we want to go back to the statemachineeditor.
+	connect(UpdateDownloader::getInstance().data(),SIGNAL(updateFailed()),initViewerAction_,SLOT(trigger()));
 }
 
 /*****************************************************

@@ -22,11 +22,11 @@ RESOURCES += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/tdtplugin.qrc
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  DESTDIR = $$(PICTO_TREE)/output/bin/debug/plugins
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/tdtplugins/debug
 }
 build_pass:CONFIG(release, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/plugins
+  DESTDIR = $$(PICTO_TREE)/output/bin/release/plugins
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/tdtplugins/release
 }
 RCC_DIR = $$(PICTO_TREE)/intermediates/resources/tdtplugins

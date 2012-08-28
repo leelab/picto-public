@@ -41,6 +41,8 @@
 #include <QLineEdit>
 #include <QtConcurrentRun>
 #include <QTabWidget>
+#include <QDir>
+
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -67,7 +69,14 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	QString dbName = "PictoWorkstation";
 	dbName = dbName.toLower();
 	QSqlDatabase configDb = QSqlDatabase::addDatabase("QSQLITE",dbName);
-	configDb.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + dbName + ".config");
+	QString configPath = QCoreApplication::applicationDirPath()+"/../config";
+	QDir configDir(configPath);
+	if(!configDir.exists())
+	{
+		configDir.mkpath(configPath);
+		configDir = QDir(configPath);
+	}
+	configDb.setDatabaseName(configDir.canonicalPath() + "/" + dbName + ".config");
 	configDb.open();
 
 	QSqlQuery query(configDb);
@@ -83,6 +92,7 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	bool rc = query.next();
 	Q_ASSERT(rc);
 	observerId_ = QUuid(query.value(0).toString());
+	configDb.close();
 
 	currState_ = InitState;
 	stateTrigger_ = Disconnected;
@@ -1688,6 +1698,7 @@ bool RemoteViewer::startSession()
 	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(dataXml.length()));
 	startSessCommand->setFieldValue("Observer-ID",observerId_.toString());
 	startSessCommand->setFieldValue("Password",passwordEdit_->text());
+	startSessCommand->setFieldValue("Experiment",experiment_->getName());
 
 	QSharedPointer<Picto::ProtocolResponse> loadExpResponse;
 

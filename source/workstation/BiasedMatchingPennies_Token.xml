@@ -246,7 +246,7 @@ if (spikes.length) {
     <SyntaxVersion id="2">0.0.1</SyntaxVersion>
 <UIInfo id="390">
 	<Pos id="392" x="0" y="0"/>
-<OpenDescendant id="597">2738</OpenDescendant></UIInfo>
+<OpenDescendant id="597">1236</OpenDescendant></UIInfo>
 <Task id="587"><Name id="588">RewardCalibration</Name><StateMachine id="589"><EntryScript id="590"/><ExitScript id="591"/><Level id="592">Stage</Level><Name id="593">Top</Name><Type id="594">StateMachine</Type><UIEnabled id="595">false</UIEnabled><UIOrder id="599">0</UIOrder><UIInfo id="715"><Pos id="716" x="2000" y="2000"/></UIInfo><StateMachineElement type="StateMachine" id="744"><EntryScript id="745">GiveRewards.unitQuantity = RewardQuantity.value;
 GiveRewards.minRewardPeriod = RewardQuantity.value+InterRewardTime.value;</EntryScript><ExitScript id="746"/><Level id="747">Stage</Level><Name id="748">Trial</Name><Result id="782"><Name id="783">RewardsSupplied</Name><UIEnabled id="784">false</UIEnabled><UIOrder id="788">0</UIOrder><UIInfo id="658"><Pos id="659" x="338" y="76"/></UIInfo></Result><StateMachineElement type="Reward" id="762"><MinRewardPeriod id="763">0</MinRewardPeriod><Name id="764">GiveRewards</Name><NumRewards id="765">1</NumRewards><Result id="676"><Name id="679">done</Name><UIEnabled id="680">false</UIEnabled><UIInfo id="681"><Pos id="687" x="2000" y="2000"/></UIInfo><UIOrder id="689">0</UIOrder></Result><RewardChan id="766">1</RewardChan><RewardQty id="767">60</RewardQty><Type id="768">Reward</Type><UIEnabled id="769">false</UIEnabled><UIOrder id="773">0</UIOrder><UIInfo id="694"><Pos id="697" x="554" y="184"/></UIInfo></StateMachineElement><Type id="749">StateMachine</Type><UIEnabled id="750">false</UIEnabled><UIOrder id="754">0</UIOrder><UIInfo id="729"><Pos id="730" x="97" y="177"/></UIInfo><Parameter type="Numeric" id="776"><Name id="777">InterRewardTime</Name><UIEnabled id="778">true</UIEnabled><UIOrder id="785">0</UIOrder><Units id="786"/><Value id="787">500</Value><UIInfo id="639"><Pos id="640" x="218" y="479"/></UIInfo></Parameter><Parameter type="Numeric" id="812"><Name id="813">RewardQuantity</Name><UIEnabled id="814">true</UIEnabled><UIOrder id="818">0</UIOrder><Units id="819"/><Value id="820">150</Value><UIInfo id="663"><Pos id="707" x="330" y="479"/></UIInfo></Parameter><Parameter type="Numeric" id="826"><Name id="827">NumRewards</Name><UIEnabled id="828">true</UIEnabled><UIOrder id="832">0</UIOrder><Units id="833"/><Value id="834">100</Value><UIInfo id="722"><Pos id="723" x="461" y="479"/></UIInfo></Parameter><StateMachineElement type="State" id="794"><BackgroundColor A="255" B="0" G="0" R="0" id="795">#000000</BackgroundColor><EntryScript id="796">RemainingRewards.text = &quot;RemainingRewards: &quot; + NumRewards.value;
 RewardTimer.restart();</EntryScript><ExitScript id="797"/><FrameScript id="798"/><Name id="799">RewardsLeft</Name><UIEnabled id="800">false</UIEnabled><UIOrder id="804">0</UIOrder><Result id="890"><Name id="891">done</Name><UIEnabled id="892">false</UIEnabled><UIOrder id="896">0</UIOrder><UIInfo id="830"><Pos id="831" x="2156" y="2033"/></UIInfo></Result><UIInfo id="759"><Pos id="760" x="355" y="355"/></UIInfo><ControlElement type="Script Controller" id="944"><Name id="945">WaitForReward</Name><Result id="825"><Name id="829">Done</Name><UIEnabled id="835">false</UIEnabled><UIInfo id="845"><Pos id="846" x="0" y="0"/></UIInfo><UIOrder id="849">0</UIOrder></Result><Script id="946">return RewardTimer.value &gt;= RewardQuantity.value+InterRewardTime.value;</Script><Type id="947"/><UIEnabled id="948">false</UIEnabled><UIOrder id="952">0</UIOrder><UIInfo id="853"><Pos id="856" x="2000" y="2000"/></UIInfo></ControlElement><Parameter type="Timer" id="932"><Name id="933">RewardTimer</Name><TimeUnits id="934">Ms</TimeUnits><UIEnabled id="935">false</UIEnabled><UIOrder id="939">0</UIOrder><UIInfo id="859"><Pos id="860" x="1908" y="2242"/></UIInfo></Parameter><Transition id="866"><Destination id="867">done</Destination><Source id="868">WaitForReward</Source><SourceResult id="869">Done</SourceResult></Transition></StateMachineElement><StateMachineElement type="ScriptElement" id="840"><Name id="841">MoreRewards</Name><Result id="781"><Name id="789">false</Name><UIEnabled id="790">false</UIEnabled><UIInfo id="791"><Pos id="792" x="0" y="0"/></UIInfo><UIOrder id="801">0</UIOrder></Result><Result id="806"><Name id="807">true</Name><UIEnabled id="808">false</UIEnabled><UIInfo id="809"><Pos id="810" x="0" y="0"/></UIInfo><UIOrder id="815">0</UIOrder></Result><Script id="842">return NumRewards.value-- &gt; 0;</Script><Type id="843">ScriptElement</Type><UIEnabled id="844">false</UIEnabled><UIOrder id="848">0</UIOrder><UIInfo id="822"><Pos id="823" x="190" y="155"/></UIInfo></StateMachineElement><Transition id="836"><Destination id="837">GiveRewards</Destination><Source id="838">MoreRewards</Source><SourceResult id="839">true</SourceResult></Transition><Transition id="910"><Destination id="911">RewardsLeft</Destination><Source id="912">GiveRewards</Source><SourceResult id="915">done</SourceResult></Transition><Transition id="894"><Destination id="895">MoreRewards</Destination><Source id="897">RewardsLeft</Source><SourceResult id="898">done</SourceResult></Transition><Transition id="899"><Destination id="916">MoreRewards</Destination><Source id="917"/><SourceResult id="918"/></Transition><Transition id="919"><Destination id="920">RewardsSupplied</Destination><Source id="921">MoreRewards</Source><SourceResult id="922">false</SourceResult></Transition></StateMachineElement><Transition id="755"><Destination id="756">Trial</Destination><Source id="757"/><SourceResult id="758"/></Transition><StateMachineElement type="PausePoint" id="664"><BackgroundColor A="255" B="0" G="0" R="0" id="688">#000000</BackgroundColor><ForcePause id="691">true</ForcePause><Name id="692">Pause</Name><PausingScript id="693"/><RestartingScript id="698"/><Result id="646"><Name id="647">done</Name><UIEnabled id="648">false</UIEnabled><UIInfo id="649"><Pos id="657" x="0" y="0"/></UIInfo><UIOrder id="662">0</UIOrder></Result><Type id="699">PausePoint</Type><UIEnabled id="700">false</UIEnabled><UIOrder id="710">0</UIOrder><UIInfo id="709"><Pos id="711" x="379" y="98"/></UIInfo></StateMachineElement><Transition id="739"><Destination id="740">Trial</Destination><Source id="741">Pause</Source><SourceResult id="742">done</SourceResult></Transition><VisualElement type="Text Graphic" id="925"><Color A="255" B="0" G="0" R="255" id="926">#ff0000</Color><Dimensions height="20" id="927" width="200" x="0" y="0"/><Layer id="928">0</Layer><Name id="929">RemainingRewards</Name><OperatorView id="930">true</OperatorView><Position id="931" x="0" y="0"/><SubjectView id="936">true</SubjectView><Text id="937"/><UIEnabled id="938">false</UIEnabled><UIOrder id="943">0</UIOrder><Visible id="949">true</Visible><UIInfo id="906"><Pos id="907" x="252" y="302"/></UIInfo></VisualElement><Transition id="772"><Destination id="774">Pause</Destination><Source id="775">Trial</Source><SourceResult id="779">RewardsSupplied</SourceResult></Transition></StateMachine><UIInfo id="725"><Pos id="726" x="1618" y="1743"/></UIInfo></Task>
@@ -753,7 +753,17 @@ RewardTimer.restart();</EntryScript><ExitScript id="797"/><FrameScript id="798"/
 										ernData.setData(&quot;fstage&quot;,-1);
 										ernData.setData(&quot;outcomecolor&quot;,-1);
 										ernData.setData(&quot;pickedTargX&quot;,-1);
-										ernData.setData(&quot;pickedTargY&quot;,-1);</EntryScript>
+										ernData.setData(&quot;pickedTargY&quot;,-1);
+
+
+										blockInfo.setData(&quot;Block&quot;,0);
+										blockInfo.setData(&quot;Trial&quot;,0);
+										blockInfo.setData(&quot;TotalTrial&quot;,0);
+										blockInfo.setData(&quot;TotalLLoss&quot;,0);
+										blockInfo.setData(&quot;TotalRLoss&quot;,0);
+										blockInfo.setData(&quot;Gain%&quot;,0);
+										blockInfo.setData(&quot;Neutral%&quot;,0);
+										blockInfo.setData(&quot;Loss%&quot;,0);</EntryScript>
         <ExitScript id="1249"/>
         <Level id="1252">Stage</Level>
         <Name id="1253">Top</Name>
@@ -1411,6 +1421,11 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
 																else {	//User Lose
 																    feedbackRing.setColor(192, 192, 192, 255);
 																	ernData.setData(&quot;outcomecolor&quot;,2);
+																	if(ernData.getDataAsInt(&quot;monkeyPick&quot;)&gt;0)
+																		blockInfo.setData(&quot;TotalRLoss&quot;,blockInfo.getDataAsInt(&quot;TotalRLoss&quot;)+1);
+																	else
+																		blockInfo.setData(&quot;TotalLLoss&quot;,blockInfo.getDataAsInt(&quot;TotalLLoss&quot;)+1);
+
 																}
 																feedbackRing.visible = true;
 																ernData.setData(&quot;pickedTargX&quot;,feedbackRing.x);
@@ -1466,12 +1481,15 @@ FixController.totalTime = fixationWaitTime.value+FixController.fixationTime;</En
 																    reward.setData(reward.getNumEntries(), 1);
 																	ernData.setData(&quot;rewcount&quot;,1);
 																}
-																else if (feedbackRing.blue != 255 &amp;&amp; tokensCollected.value &gt; 0) {	//Lose
-																    tokens[tokensCollected.value - 1].outline = true;
-																    tokensCollected.value--;
+																else if (feedbackRing.blue != 255) {	//Lose
+																    if(tokensCollected.value &gt; 0)
+																    {
+																        tokens[tokensCollected.value - 1].outline = true;
+																        tokensCollected.value--;
+																    }
 																    numLoss.value++;
 																    reward.setData(reward.getNumEntries(), 0);
-																	ernData.setData(&quot;rewcount&quot;,-1);
+																    ernData.setData(&quot;rewcount&quot;,-1);
 																}
 																else
 																{
@@ -2559,7 +2577,7 @@ ernData.setData(&quot;finaldot&quot;,tokensCollected.value);</Script><Type id="2
           <Units id="2149"/>
           <Value id="2150">0</Value>
         </Parameter>
-      <VisualElement type="Operator Info Graphic" id="2902"><Color A="255" B="0" G="255" R="0" id="2903">#00ff00</Color><Dimensions height="20" id="2904" width="800" x="0" y="0"/><Fields id="2905">Block,Trial,TotalTrial,Gain%,Neutral%,Loss%</Fields><Layer id="2906">0</Layer><Name id="2907">blockInfo</Name><OperatorView id="2908">true</OperatorView><Position id="2909" x="0" y="550"/><SubjectView id="2922">false</SubjectView><UIEnabled id="2925">false</UIEnabled><UIInfo id="2926"><Pos id="2927" x="544" y="466"/></UIInfo><UIOrder id="2929">0</UIOrder><Values id="2930">0,0,0,0,0,0</Values><Visible id="2931">true</Visible></VisualElement><VisualElement type="Operator Info Graphic" id="3112"><Color A="255" B="0" G="255" R="0" id="3125">#00ff00</Color><Dimensions height="0" id="3126" width="0" x="0" y="0"/><Fields id="3127"/><Layer id="3128">0</Layer><Name id="3129">ernData</Name><OperatorView id="3130">true</OperatorView><Position id="3131" x="0" y="0"/><SubjectView id="3132">false</SubjectView><UIEnabled id="3143">false</UIEnabled><UIInfo id="3155"><OpenDescendant id="3156">0</OpenDescendant><Pos id="3157" x="268" y="512"/></UIInfo><UIOrder id="3158">0</UIOrder><Values id="3159"/><Visible id="3179">false</Visible></VisualElement></StateMachine>
+      <VisualElement type="Operator Info Graphic" id="2902"><Color A="255" B="0" G="255" R="0" id="2903">#00ff00</Color><Dimensions height="20" id="2904" width="800" x="0" y="0"/><Fields id="2905">Block,Trial,TotalTrial,TotalLLoss,TotalRLoss,Gain%,Neutral%,Loss%</Fields><Layer id="2906">0</Layer><Name id="2907">blockInfo</Name><OperatorView id="2908">true</OperatorView><Position id="2909" x="0" y="550"/><SubjectView id="2922">false</SubjectView><UIEnabled id="2925">false</UIEnabled><UIInfo id="2926"><Pos id="2927" x="544" y="466"/></UIInfo><UIOrder id="2929">0</UIOrder><Values id="2930">0,0,0,0,0,0,0,0</Values><Visible id="2931">true</Visible></VisualElement><VisualElement type="Operator Info Graphic" id="3112"><Color A="255" B="0" G="255" R="0" id="3125">#00ff00</Color><Dimensions height="0" id="3126" width="0" x="0" y="0"/><Fields id="3127"/><Layer id="3128">0</Layer><Name id="3129">ernData</Name><OperatorView id="3130">true</OperatorView><Position id="3131" x="0" y="0"/><SubjectView id="3132">false</SubjectView><UIEnabled id="3143">false</UIEnabled><UIInfo id="3155"><OpenDescendant id="3156">0</OpenDescendant><Pos id="3157" x="268" y="512"/></UIInfo><UIOrder id="3158">0</UIOrder><Values id="3159"/><Visible id="3179">false</Visible></VisualElement></StateMachine>
       <UIInfo id="607">
         <Pos id="608" x="1969" y="1742"/>
       </UIInfo>

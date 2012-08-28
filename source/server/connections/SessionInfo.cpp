@@ -22,11 +22,11 @@
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
-QSharedPointer<SessionInfo> SessionInfo::CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password)
+QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password)
 {
 	//Creates a shared pointer for the object that will use the deleteSession function to actually delete
 	//the object
-	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentXml,experimentConfig,initialObserverId, password),&deleteSession);
+	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentName,directorName,experimentXml,experimentConfig,initialObserverId, password),&deleteSession);
 	loadedSessions_[returnVal->sessionId()] = QWeakPointer<SessionInfo>(returnVal);
 	return returnVal;
 }
@@ -76,7 +76,7 @@ void SessionInfo::deleteSession(SessionInfo* session)
 	qDebug("Session: " + sessionId.toAscii() + " has been unloaded!");
 }
 
-SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password):
+SessionInfo::SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password):
 	experimentXml_(experimentXml),
 	experimentConfig_(experimentConfig),
 	password_(password)
@@ -91,7 +91,13 @@ SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, 
 	QDateTime dateTime = QDateTime::currentDateTime();
 	QString databaseName = "Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");	
 	//If there's already a file with this name, append _x until we have a unique name
-	QDir dir(QCoreApplication::applicationDirPath());
+	QString sessionPath = QCoreApplication::applicationDirPath()+"/../sessions/"+directorName+"/"+experimentName;
+	QDir dir(sessionPath);
+	if(!dir.exists())
+	{
+		dir.mkpath(sessionPath);
+		dir = QDir(sessionPath);
+	}
 	while(dir.entryList().contains(databaseName))
 	{
 		databaseName.append("_x");
@@ -99,7 +105,7 @@ SessionInfo::SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, 
 	databaseName.append(".sqlite");
 
 	//Setup databases
-	LoadBaseSessionDatabase(databaseName);
+	LoadBaseSessionDatabase(sessionPath, databaseName);
 	SetupBaseSessionDatabase();
 	CreateCacheDatabase(databaseName);
 
@@ -113,8 +119,9 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 
 	//Setup databases
 	QStringList strList = databaseFilePath.split("/");
-	QString databaseName = strList[strList.size()-1];
-	LoadBaseSessionDatabase(databaseName);
+	QString databaseName = strList.takeLast();
+	QString sessionPath = strList.join("/");
+	LoadBaseSessionDatabase(sessionPath,databaseName);
 	Q_ASSERT(baseSessionDbConnection_.tables().contains("sessioninfo"));
 
 	SetupBaseSessionDatabase();
@@ -1073,11 +1080,11 @@ void SessionInfo::InitializeVariables()
 	alignToType_ = "";
 	alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool());
 }
-void SessionInfo::LoadBaseSessionDatabase(QString databaseName)
+void SessionInfo::LoadBaseSessionDatabase(QString path, QString databaseName)
 {
 	baseSessionDbConnection_ = QSqlDatabase::addDatabase("QSQLITE",databaseName);
 	openDatabaseConnections_.append(databaseName);
-	baseSessionDbFilepath_ = QCoreApplication::applicationDirPath() + "/" + databaseName;
+baseSessionDbFilepath_ = path + "/" + databaseName;
 	baseSessionDbConnection_.setDatabaseName(baseSessionDbFilepath_);
 	baseSessionDbConnection_.open();
 }

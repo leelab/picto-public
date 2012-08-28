@@ -57,7 +57,7 @@
 class SessionInfo
 {
 public:
-	static QSharedPointer<SessionInfo> CreateSession(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
+	static QSharedPointer<SessionInfo> CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
 	static QSharedPointer<SessionInfo> LoadSession(QString sessionID, QString databaseFilePath);
 	static void deleteSession(SessionInfo* session);
 	virtual ~SessionInfo();
@@ -114,10 +114,10 @@ public:
 	friend class ConnectionManager;
 
 private:
-	SessionInfo(QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
+	SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
 	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
-	void LoadBaseSessionDatabase(QString databaseName);
+	void LoadBaseSessionDatabase(QString path, QString databaseName);
 	void SetupBaseSessionDatabase();
 	void CreateCacheDatabase(QString databaseName);
 	void AddTablesToDatabase(QSqlQuery* query);

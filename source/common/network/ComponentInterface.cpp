@@ -2,6 +2,7 @@
 #include <QStringList>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QDir>
 
 #include "ComponentInterface.h"
 #include "../common/network/ServerDiscoverer.h"
@@ -25,7 +26,14 @@ ComponentInterface::ComponentInterface(QString type)
 	QString dbName = "Picto" + type + "Interface";
 	dbName = dbName.toLower();
 	configDb_ = QSqlDatabase::addDatabase("QSQLITE",dbName);
-	configDb_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + dbName + ".config");
+	QString configPath = QCoreApplication::applicationDirPath()+"/../config";
+	QDir configDir(configPath);
+	if(!configDir.exists())
+	{
+		configDir.mkpath(configPath);
+		configDir = QDir(configPath);
+	}
+	configDb_.setDatabaseName(configDir.canonicalPath() + "/" + dbName + ".config");
 	configDb_.open();
 
 	QSqlQuery query(configDb_);
