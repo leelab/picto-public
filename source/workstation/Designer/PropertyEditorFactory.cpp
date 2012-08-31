@@ -44,10 +44,13 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 		|| (propName == "RestartingScript"))
 	{
 		resultWidget = new ScriptWidget(manager,property);
+		resultWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	}
 	else
 	{
 		resultWidget = QtVariantEditorFactory::createEditor(manager,property,NULL);
+		if(resultWidget)
+			resultWidget->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
 	}
 
 	if(!resultWidget)

@@ -45,7 +45,8 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 			addProperty(prop->getVariantProperty());
 		}
 	}
-	setMinimumWidth(childrenRect().width());
+	setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+	//setMinimumHeight(childrenRect().height());
 }
 
 void PropertyBrowser::propertyEdited(QSharedPointer<Property> prop)

@@ -22,5 +22,4 @@ void AssetInfoBox::assetSelected(QSharedPointer<Asset> asset)
 		return;
 					
 	setText(asset->getInfo());
-	setMinimumWidth(childrenRect().width());
 }

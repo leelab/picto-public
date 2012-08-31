@@ -55,6 +55,14 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	//Set fixed text value to widget.
 	setText(finalStr);
 	connect(this, SIGNAL(textChanged()),this, SLOT(setScriptValue()));
+	setToolTip("");
+}
+
+bool ScriptWidget::event(QEvent* e)
+{
+	if(e->type() == QEvent::ToolTip)
+		return true;
+	return QTextEdit::event(e);
 }
 
 void ScriptWidget::focusOutEvent(QFocusEvent *e)

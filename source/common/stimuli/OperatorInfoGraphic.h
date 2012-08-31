@@ -36,7 +36,7 @@ public:
 	static const QString type;
 
 public slots:
-	void setData(QString field, QString value);
+	void setData(QString field, QVariant value);
 	int getDataAsInt(QString field){return getData(field).toInt();};
 	QString getDataAsString(QString field){return getData(field).toString();};
 	double getDataAsDouble(QString field){return getData(field).toDouble();};
@@ -53,7 +53,7 @@ private:
 	bool deserializePropertiesFromXML(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QVariant getData(QString field);
 	QStringList orderedFields_;
-	QHash<QString,QString> infoMap_;
+	QHash<QString,QVariant> infoMap_;
 private slots:
 	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 };

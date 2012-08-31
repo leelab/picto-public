@@ -69,7 +69,7 @@ void OperatorInfoGraphic::reset()
 	infoMap_.clear();
 }
 
-void OperatorInfoGraphic::setData(QString field, QString value)
+void OperatorInfoGraphic::setData(QString field, QVariant value)
 {
 	if(!infoMap_.contains(field))
 	{
@@ -83,7 +83,7 @@ void OperatorInfoGraphic::updateValue()
 	QStringList values;
 	foreach(QString field,orderedFields_)
 	{
-		values.append(infoMap_.value(field));
+		values.append(infoMap_.value(field).toString());
 	}
 	propertyContainer_->setPropertyValue("Fields",orderedFields_.join(","));
 	propertyContainer_->setPropertyValue("Values",values.join(","));
@@ -92,7 +92,7 @@ void OperatorInfoGraphic::updateValue()
 QVariant OperatorInfoGraphic::getData(QString field)
 {
 	if(infoMap_.contains(field))
-		return QVariant(infoMap_[field]);
+		return infoMap_[field];
 	return QVariant();
 }
 

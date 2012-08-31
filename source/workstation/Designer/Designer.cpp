@@ -1,6 +1,7 @@
 #include <QtGui>
 #include <QLabel>
 #include <QMenuBar>
+#include <QSizePolicy>
 
 #include "toolbox.h"
 #include "Designer.h"
@@ -36,7 +37,7 @@ Designer::Designer(QWidget *parent) :
     toolbarLayout->addWidget(pointerToolbar);
 	toolbarLayout->addStretch();
 
-    QHBoxLayout *layout = new QHBoxLayout;
+    QSplitter *splitter = new QSplitter;
 	QVBoxLayout *centralLayout = new QVBoxLayout;
 	QToolButton *upButton = new QToolButton;
     upButton->setIcon(QIcon(":/icons/levelup.png"));
@@ -45,23 +46,25 @@ Designer::Designer(QWidget *parent) :
 	connect(upButton,SIGNAL(pressed()),editorState_.data(),SLOT(setWindowAssetToParent()));
     centralLayout->addWidget(upButton);
 	centralLayout->addWidget(view);
+	QWidget* centralLayoutWidget = new QWidget();
+	centralLayoutWidget->setLayout(centralLayout);
 
 	toolbox_ = new Toolbox(editorState_);
-	layout->addWidget(toolbox_);
-    layout->addLayout(centralLayout);
+	splitter->addWidget(toolbox_);
+    splitter->addWidget(centralLayoutWidget);
 
-	QVBoxLayout * rLayout = new QVBoxLayout;
+	QSplitter* rightSideWidget = new QSplitter();
+	rightSideWidget->setOrientation(Qt::Vertical);
 	propertyEditor_ = new PropertyBrowser(editorState_);
 	assetInfoBox_ = new AssetInfoBox(editorState_);
-	rLayout->addWidget(propertyEditor_);
-	rLayout->addWidget(assetInfoBox_);
-	QWidget* rightSideWidget = new QWidget();
-	rightSideWidget->setLayout(rLayout);
-	layout->addWidget(rightSideWidget);
-	layout->setStretch(1,10);
+	rightSideWidget->addWidget(propertyEditor_);
+	rightSideWidget->addWidget(assetInfoBox_);
+	rightSideWidget->setStretchFactor(0,10);
+	splitter->addWidget(rightSideWidget);
+	splitter->setStretchFactor(1,10);
 
 	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addLayout(layout);
+	mainLayout->addWidget(splitter);
 
 
 	setLayout(mainLayout);

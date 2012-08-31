@@ -18,6 +18,7 @@ class ScriptWidget : public QTextEdit
 public:
    ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QWidget *parent=0);
    virtual ~ScriptWidget(){};
+   virtual bool event(QEvent* e);
 signals:
    void editingFinishedAndTextEdited();
 protected:
