@@ -21,6 +21,7 @@
 #include "../stimuli/BoxGraphic.h"
 #include "../stimuli/DiamondGraphic.h"
 #include "../stimuli/ShapeShifterGraphic.h"
+#include "../stimuli/TokenTrayGraphic.h"
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
 #include "../stimuli/LineGraphic.h"
@@ -88,6 +89,8 @@ ScriptableContainer::ScriptableContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
 	visualElementFactory_->addAssetType(ShapeShifterGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
+	visualElementFactory_->addAssetType(TokenTrayGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenTrayGraphic::Create))));
 	visualElementFactory_->addAssetType(LineGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
 	visualElementFactory_->addAssetType(GridGraphic::type,
@@ -173,7 +176,8 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 {
 	if(	scriptingInitialized_ )
 		return true;
-
+	
+	debuggingEnabled_ = enableDebugging;
 	//Initialize scripting on this ScriptableContainer
 	if(canHaveScripts() && hasScripts() )
 	{
@@ -181,7 +185,6 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 		//create the engine
 		qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
 
-		debuggingEnabled_ = enableDebugging;
 		if(debuggingEnabled_)
 		{
 			qsEngineDebugger_ = QSharedPointer<QScriptEngineDebugger>(new QScriptEngineDebugger());
@@ -234,7 +237,6 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 
 void ScriptableContainer::resetScriptableValues()
 {
-
 	QStringList childTags = getDefinedChildTags();
 	foreach(QString childTag,childTags)
 	{

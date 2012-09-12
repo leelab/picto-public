@@ -47,6 +47,7 @@ void TestViewer::init()
 		msg.setText("Failed to load current experiment.");
 		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
 		msg.exec();
+		return;
 	}
 	if(!design->compiles())
 	{

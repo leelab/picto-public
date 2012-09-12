@@ -83,7 +83,7 @@
 #define LCDEVENTPORT PORTPREFIX+2421
 
 //Version MAJOR.MINOR.BUILD
-#define PICTOVERSION "1.0.3"
+#define PICTOVERSION "1.0.4"
 //Directory name of automatic updater application and dependencies
 //It is a subdirectory of the main binary directory
 #define UPDATERDIR "updater"

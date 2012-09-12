@@ -24,6 +24,9 @@ class PseudorandomIntParameter : public Parameter
 {
 	Q_OBJECT
 	Q_PROPERTY(int value READ getValue WRITE setValue)
+	//Note: changing the values of min or max cause this object to reset its data.
+	Q_PROPERTY(int min READ getMin WRITE setMin)
+	Q_PROPERTY(int max READ getMax WRITE setMax)
 public slots:
 	void randomize();
 	void reshuffleLastValue();
@@ -47,6 +50,12 @@ protected:
 
 private:
 	void checkForPropertyChanges();
+	int getMin();
+	//Note: changing the values of min or max cause this object to reset its data.
+	void setMin(int min);
+	int getMax();
+	//Note: changing the values of min or max cause this object to reset its data.
+	void setMax(int max);
 	MTRand mtRand_;
 	QVector<int> randomArray_;
 	bool useSeed_;

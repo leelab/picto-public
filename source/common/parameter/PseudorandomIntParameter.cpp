@@ -168,5 +168,29 @@ void PseudorandomIntParameter::checkForPropertyChanges()
 		}
 	}
 }
+int PseudorandomIntParameter::getMin()
+{
+	return propertyContainer_->getPropertyValue("Min").toInt();
+}
+void PseudorandomIntParameter::setMin(int min)
+{
+	if(min != min_)
+	{
+		propertyContainer_->setPropertyValue("Min",min);
+		checkForPropertyChanges();
+	}
+}
+int PseudorandomIntParameter::getMax()
+{
+	return propertyContainer_->getPropertyValue("Max").toInt();
+}
+void PseudorandomIntParameter::setMax(int max)
+{
+	if(max != max_)
+	{
+		propertyContainer_->setPropertyValue("Max",max);
+		checkForPropertyChanges();
+	}
+}
 
 } //namespace Picto
