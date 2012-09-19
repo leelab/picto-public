@@ -93,7 +93,8 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 			}
 			else
 			{
-				qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
+				//The server crashed when too big of a string was sent into this qDebug call!!! Watch out for this!
+				//qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
 				response->setContent(directive.toUtf8());
 			}
 		}

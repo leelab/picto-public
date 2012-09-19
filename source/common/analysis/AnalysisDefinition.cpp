@@ -84,6 +84,7 @@ void AnalysisDefinition::startNewRun(QSharedPointer<TaskRunDataUnit> runInfo)
 	Q_ASSERT(runInfo);
 	currRun_ = runInfo;
 	currRunNum_++;
+	allPeriodsFailed_ = true;
 	QUuid runUuid(QUuid::createUuid());
 	QList<QSharedPointer<Asset>> periods = getGeneratedChildren("Period");
 	QSharedPointer<AnalysisPeriod> period;
@@ -126,7 +127,8 @@ bool AnalysisDefinition::run()
 	foreach(QSharedPointer<Asset> periodAsset,periods)
 	{
 		currPeriod_ = periodAsset.staticCast<AnalysisPeriod>();
-		currPeriod_->run(fromIndex,toIndex);
+		if(currPeriod_->run(fromIndex,toIndex))
+			allPeriodsFailed_ = false;
 		currPeriodNum_++;
 	}
 
@@ -182,6 +184,8 @@ void AnalysisDefinition::finish()
 QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets()
 {
 	QLinkedList<QPointer<AnalysisOutputWidget>> returnVal;
+	if(allPeriodsFailed_)
+		return returnVal;
 
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
 	QSharedPointer<AnalysisOutput> outputObj;

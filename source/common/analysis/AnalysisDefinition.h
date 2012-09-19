@@ -61,6 +61,7 @@ private:
 	unsigned int currPeriodNum_;
 	unsigned int numPeriods_;
 	unsigned int currRunNum_;
+	bool allPeriodsFailed_;
 
 };
 }; //namespace Picto
