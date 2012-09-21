@@ -168,7 +168,7 @@ QStringList ServerConfig::getRunningSessions()
 	QMutexLocker locker(&fileAccessMutex_);
 	query.exec("SELECT sessionID FROM opensessions WHERE (running=1)");
 	QStringList result;
-	if(query.next())
+	while(query.next())
 	{
 		result.append(query.value(0).toString());
 	}
@@ -184,10 +184,12 @@ QStringList ServerConfig::getSessionsIdledBefore(QDateTime time)
 	query.exec("SELECT lastactivity,sessionID FROM opensessions WHERE (running=0)");
 	QStringList result;
 	QDateTime lastActive;
-	if(query.next())
+	while(query.next())
 	{
-		lastActive.fromString(query.value(0).toString());
-		if(lastActive < time)
+		lastActive = QDateTime::fromString(query.value(0).toString());
+		QString lastActiveStr = lastActive.toString();
+		QString timeStr = time.toString();
+		if(lastActive.secsTo(time)>0)
 			result.append(query.value(1).toString());
 	}
 	return result;

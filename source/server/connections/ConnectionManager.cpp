@@ -477,7 +477,19 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 //! \brief Load's a session from the serverConfig database
 QSharedPointer<SessionInfo> ConnectionManager::loadSession(QString sessionId, QString filePath)
 {
-	QSharedPointer<SessionInfo> sessInfo(SessionInfo::LoadSession(sessionId,filePath));
+	QSharedPointer<SessionInfo> sessInfo;
+	//Check if the file exists in the file path.  If not it was deleted and we should not 
+	//attempt to load the session because weird things will happen.  In that case we simply
+	//remove it from the ServerConfig database
+	if(!QFile::exists(filePath))
+	{
+		ServerConfig serverConfig;
+		serverConfig.removeSession(sessionId);
+		return sessInfo;
+	}
+	sessInfo = SessionInfo::LoadSession(sessionId,filePath);
+	if(!sessInfo)
+		return sessInfo;
 	QMutexLocker locker(mutex_);
 	openSessions_[sessInfo->uuid_] = sessInfo;
 	return sessInfo;
