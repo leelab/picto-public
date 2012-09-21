@@ -164,7 +164,6 @@ void ProxyMainWindow::closeEvent(QCloseEvent *event)
 		statusManager_->forceExit();
 	}
 	writeSettings();
-	event->accept();
 }
 
 void ProxyMainWindow::createStatusLights()
@@ -424,6 +423,7 @@ void ProxyMainWindow::updateState()
 void ProxyMainWindow::startConnecting()
 {
 	activate();
+	QCoreApplication::exit();
 }
 
 void ProxyMainWindow::runState()
