@@ -5,6 +5,7 @@
 #include "../../common/engine/pictoengine.h"
 #include "../../common/compositor/PixmapVisualTarget.h"
 #include "../../common/compositor/VisualTargetHost.h"
+#include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "../../common/network/CommandChannel.h"
 #include "../../common/network/ServerDiscoverer.h"
 #include "../../common/storage/SessionDataPackage.h"
@@ -192,6 +193,7 @@ private:
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<DesignRoot> myDesignRoot_;
+	QSharedPointer<Picto::VirtualOutputSignalController> outSigController_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
 	QSharedPointer<Picto::Experiment> experiment_;
@@ -218,6 +220,7 @@ private:
 	QLabel *statusBar_;
 	NeuralDataViewer* neuralDataViewer_;
 	TaskRunViewer* currentRunViewer_;
+	QWidget *outputSignals_;
 
 	QTimer *updateTimer_;
 	QTimer *reconnectTimer_;

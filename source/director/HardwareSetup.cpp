@@ -41,12 +41,14 @@
 #endif
 
 #include "../common/iodevices/RewardController.h"
+#include "../common/iodevices/OutputSignalController.h"
 #include "../common/iodevices/EventCodeGenerator.h"
 #include "../common/iodevices/NullRewardController.h"
 #include "../common/iodevices/AudioRewardController.h"
 #include "../common/iodevices/NullEventCodeGenerator.h"
 #if defined WIN32 && defined NI_STUFF
 #include "iodevices/PictoBoxXPRewardController.h"
+#include "iodevices/PictoBoxXPOutputSignalController.h"
 #include "iodevices/LegacySystemXPRewardController.h"
 #include "iodevices/LegacySystemXPEventCodeGenerator.h"
 #include "iodevices/PictoBoxXPEventCodeGenerator.h"
@@ -61,6 +63,7 @@ HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 	signalChannelSetup_ = false;
 	rewardControllerSetup_ = false;
 	eventCodeGenSetup_ = false;
+	outSigControllerSetup_ = false;
 	xChan_ = 0;
 	yChan_ = 1;
 	posSampPer_ = 2;
@@ -72,7 +75,7 @@ bool HardwareSetup::isSetup()
 {
 	return renderingTargetsSetup_ & 
 		signalChannelSetup_ & rewardControllerSetup_ &
-		eventCodeGenSetup_;
+		eventCodeGenSetup_ & outSigControllerSetup_;
 }
 
 
@@ -229,6 +232,35 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 	engine_->setRewardController(rewardController);
 
 	rewardControllerSetup_ = true;
+
+	return true;
+}
+
+/*!	\brief Sets up the output signal controller
+ *
+ *	Initially there are only 2 possibile reward controllers: The PictoBoxXP
+ *	controller, and the null controller.
+ */
+bool HardwareSetup::setupOutputSignalController(OutputSignalControllerType controllerType)
+{
+	QSharedPointer<Picto::OutputSignalController> outSigController;
+
+	if(controllerType == PictoBoxXpOutSig)
+	{
+#if defined WIN32 && defined NI_STUFF
+		outSigController = QSharedPointer<Picto::PictoBoxXPOutputSignalController>(new Picto::PictoBoxXPOutputSignalController());
+#else
+		return false;
+#endif
+	}
+	else if(controllerType == NullOutSig)
+	{
+		outSigController = QSharedPointer<Picto::OutputSignalController>();
+	}
+
+	engine_->setOutputSignalController(outSigController);
+
+	outSigControllerSetup_ = true;
 
 	return true;
 }

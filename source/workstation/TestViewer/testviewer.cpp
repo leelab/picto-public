@@ -8,6 +8,7 @@
 #include "../../common/engine/XYSignalChannel.h"
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"
+#include "../../common/compositor/OutputSignalWidget.h"
 
 
 #include <QToolBar>
@@ -111,6 +112,10 @@ void TestViewer::setupEngine()
 	QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,8,mousePort));
 	engine_->addSignalChannel(mouseChannel);
 
+	//Set up output signal generator
+	outSigController_ = QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController());
+	engine_->setOutputSignalController(outSigController_);
+
 	//Set up event code generator
 	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
 	nullGenerator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::NullEventCodeGenerator());
@@ -177,17 +182,24 @@ void TestViewer::setupUi()
 	testToolbar_->addSeparator();
 	testToolbar_->addAction(loadPropsAction_);
 	//testToolbar_->addWidget(zoomSlider_);
+	outputSignals_ = new OutputSignalWidget(outSigController_);
+
+
 
 	
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(testToolbar_);
 	toolbarLayout->addStretch();
 
+	QVBoxLayout *stimulusLayout = new QVBoxLayout;
+	stimulusLayout->addWidget(visualTargetHost_);
+	stimulusLayout->addWidget(outputSignals_);
+
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	propertyFrame_ = new PropertyFrame();
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
 	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
-	operationLayout->addWidget(visualTargetHost_);
+	operationLayout->addLayout(stimulusLayout);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
 
@@ -206,6 +218,7 @@ void TestViewer::play()
 	pauseAction_->setEnabled(true);
 	stopAction_->setEnabled(true);
 	playAction_->setEnabled(false);
+	static_cast<OutputSignalWidget*>(outputSignals_)->enable(true);
 
 	if(status_ == Stopped)
 	{
@@ -245,6 +258,7 @@ void TestViewer::stop()
 	pauseAction_->setEnabled(false);
 	stopAction_->setEnabled(false);
 	playAction_->setEnabled(true);
+	static_cast<OutputSignalWidget*>(outputSignals_)->enable(false);
 
 	pixmapVisualTarget_->clear();
 

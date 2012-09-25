@@ -30,6 +30,7 @@
 #include "../stimuli/RandomlyFilledGridGraphic.h"
 #include "../stimuli/TextGraphic.h"
 #include "../stimuli/OperatorInfoGraphic.h"
+#include "../stimuli/DigitalOutput.h"
 #include "../stimuli/AudioElement.h"
 #include "../controlelements/circletarget.h"
 #include "../controlelements/recttarget.h"
@@ -43,6 +44,7 @@ ScriptableContainer::ScriptableContainer()
 	visualElementFactory_(new AssetFactory(0,-1)),
 	controlTargetFactory_(new AssetFactory(0,-1)),
 	audioElementFactory_(new AssetFactory(0,-1)),
+	outputSignalFactory_(new AssetFactory(0,-1)),
 	scriptFunctionFactory_(new AssetFactory(0,-1)),
 	scriptingInitialized_(false),
 	debuggingEnabled_(false)
@@ -104,7 +106,6 @@ ScriptableContainer::ScriptableContainer()
 	visualElementFactory_->addAssetType(OperatorInfoGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorInfoGraphic::Create))));
 
-
 	AddDefinableObjectFactory("ControlTarget",controlTargetFactory_);
 	controlTargetFactory_->addAssetType("CircleTarget",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleTarget::Create))));
@@ -114,6 +115,10 @@ ScriptableContainer::ScriptableContainer()
 	AddDefinableObjectFactory("AudioElement",audioElementFactory_);
 	audioElementFactory_->addAssetType("AudioElement",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
+
+	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
+	outputSignalFactory_->addAssetType("DigitalOutput",
+		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
 
 
 }

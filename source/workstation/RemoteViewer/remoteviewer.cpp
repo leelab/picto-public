@@ -1,22 +1,3 @@
-#include "remoteviewer.h"
-
-#include "../common/globals.h"
-#include "../../common/compositor/RenderingTarget.h"
-#include "../../common/compositor/PCMAuralTarget.h"
-#include "../../common/iodevices/AudioRewardController.h"
-#include "../../common/iodevices/NullEventCodeGenerator.h"
-#include "../../common/engine/XYSignalChannel.h"
-#include "../../common/protocol/protocolcommand.h"
-#include "../../common/protocol/protocolresponse.h"
-#include "../../common/storage/StateDataUnit.h"
-#include "../../common/statemachine/statemachine.h"
-#include "../../common/stimuli/cursorgraphic.h"
-#include "../../common/statemachine/scene.h"
-#include "../../common/storage/NeuralDataUnit.h"
-#include "../../common/storage/LFPDataUnitPackage.h"
-#include "../../common/storage/directordata.h"
-#include "../propertyframe.h"
-
 
 
 #include <QToolBar>
@@ -42,6 +23,26 @@
 #include <QtConcurrentRun>
 #include <QTabWidget>
 #include <QDir>
+
+#include "remoteviewer.h"
+
+#include "../common/globals.h"
+#include "../../common/compositor/RenderingTarget.h"
+#include "../../common/compositor/PCMAuralTarget.h"
+#include "../../common/iodevices/AudioRewardController.h"
+#include "../../common/iodevices/NullEventCodeGenerator.h"
+#include "../../common/engine/XYSignalChannel.h"
+#include "../../common/protocol/protocolcommand.h"
+#include "../../common/protocol/protocolresponse.h"
+#include "../../common/storage/StateDataUnit.h"
+#include "../../common/statemachine/statemachine.h"
+#include "../../common/stimuli/cursorgraphic.h"
+#include "../../common/statemachine/scene.h"
+#include "../../common/storage/NeuralDataUnit.h"
+#include "../../common/storage/LFPDataUnitPackage.h"
+#include "../../common/storage/directordata.h"
+#include "../../common/compositor/OutputSignalWidget.h"
+#include "../propertyframe.h"
 
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -345,6 +346,7 @@ void RemoteViewer::updateEngine()
 			return;
 		}
 		taskName = initStateMachinePath.first();
+		static_cast<OutputSignalWidget*>(outputSignals_)->enable(true);
 		engineTrigger_ = ContinueEngine;
 		//WARNING:  Nothing after this line will be processed until the task is finished running
 		activeExperiment_->runTask(taskName.simplified().remove(' '));
@@ -352,6 +354,7 @@ void RemoteViewer::updateEngine()
 		{
 			engineTrigger_ = NoEngineTrigger;
 		}
+		static_cast<OutputSignalWidget*>(outputSignals_)->enable(false);
 	}
 }
 
@@ -890,6 +893,10 @@ void RemoteViewer::setupEngine()
 	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::XYSignalChannel("Position"));
 	engine_->addSignalChannel(signalChannel);
 
+	//Set up output signal generator
+	outSigController_ = QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController());
+	engine_->setOutputSignalController(outSigController_);
+
 	//Set up event code generator
 	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
 	nullGenerator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::NullEventCodeGenerator());
@@ -1023,6 +1030,8 @@ void RemoteViewer::setupUi()
 				SLOT(modifyRunDataUnit(qulonglong))
 			);
 
+	outputSignals_ = new OutputSignalWidget(outSigController_);
+
 	statusBar_ = new QLabel();
 
 	propertyFrame_ = new PropertyFrame();
@@ -1043,8 +1052,14 @@ void RemoteViewer::setupUi()
 	leftPane->addLayout(zoomLayout);
 	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
 
+	QVBoxLayout *stimulusLayout = new QVBoxLayout;
+	stimulusLayout->addWidget(visualTargetHost_);
+	stimulusLayout->addWidget(outputSignals_);
+	QWidget *stimulusWidget = new QWidget();
+	stimulusWidget->setLayout(stimulusLayout);
+
 	mainTabbedFrame_ = new QTabWidget(this);
-	mainTabbedFrame_->addTab(visualTargetHost_,"Behavioral");
+	mainTabbedFrame_->addTab(stimulusWidget,"Behavioral");
 	mainTabbedFrame_->addTab(neuralDataViewer_,"Neural");
 	mainTabbedFrame_->addTab(currentRunViewer_,"Run Info");
 	mainTabbedFrame_->setTabEnabled(0,false);

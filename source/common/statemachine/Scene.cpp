@@ -49,6 +49,31 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 		//Sort visual elements
 		qSort(visualElements_.begin(), visualElements_.end(), &visualElementLessThan);
 
+		//Add any unadded output signals to the outputSignals_ list
+		if(!unaddedOutputSignals_.isEmpty())
+		{
+			//add the appropriate compositing surfaces to the element
+			for(int i=0; i<unaddedOutputSignals_.length(); i++)
+			{
+				//Do Output Signal setup here
+				outputSignals_.append(unaddedOutputSignals_[i]);
+			}
+			unaddedOutputSignals_.clear();
+		}
+
+		//Set Output Signals Values to engine
+		bool enabled;
+		double level;
+		int portId;
+		foreach(QSharedPointer<OutputSignal> outputSignal, outputSignals_)
+		{
+			portId = outputSignal->getPort();
+			enabled = outputSignal->getEnabled();
+			level = outputSignal->getVoltage();
+			engine->enableOutputSignal(portId,enabled);
+			engine->setOutputSignalLevel(portId,level);
+		}
+
 		//Render visual elements to each rendering target
 		float frameZoom = zoom_;
 		foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
@@ -99,6 +124,16 @@ void Scene::reset()
 		visualElement->reset();
 	}
 
+	foreach(QSharedPointer<OutputSignal> outputSignal, outputSignals_)
+	{
+		outputSignal->reset();
+	}
+
+	foreach(QSharedPointer<OutputSignal> outputSignal, unaddedOutputSignals_)
+	{
+		outputSignal->reset();
+	}
+
 }
 void Scene::setBackgroundColor(QColor color)
 {
@@ -113,4 +148,9 @@ void Scene::addVisualElement(QSharedPointer<VisualElement> element)
 void Scene::addAudioElement(QSharedPointer<AudioElement> element)
 {
 	unaddedAudioElements_.push_back(element);
+}
+
+void Scene::addOutputSignal(QSharedPointer<OutputSignal> element)
+{
+	unaddedOutputSignals_.push_back(element);
 }

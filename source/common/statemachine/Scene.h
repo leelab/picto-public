@@ -10,6 +10,7 @@
 #include "../compositor/RenderingTarget.h"
 #include "../engine/PictoEngine.h"
 #include "../stimuli/visualelement.h"
+#include "../stimuli/outputsignal.h"
 
 namespace Picto {
 
@@ -38,6 +39,7 @@ public:
 	void setBackgroundColor(QColor color);
 	void addVisualElement(QSharedPointer<VisualElement> element);
 	void addAudioElement(QSharedPointer<AudioElement> element);
+	void addOutputSignal(QSharedPointer<OutputSignal> element);
 	static void setZoom(float zoom){zoom_ = zoom;};
 	//virtual QString assetType(){return "Scene";};
 
@@ -57,6 +59,9 @@ private:
 
 	QList<QSharedPointer <AudioElement> > audioElements_;
 	QList<QSharedPointer <AudioElement> > unaddedAudioElements_;
+
+	QList<QSharedPointer <OutputSignal> > outputSignals_;
+	QList<QSharedPointer <OutputSignal> > unaddedOutputSignals_;
 	
 	int frame_;
 	QTime elapsedTime_;

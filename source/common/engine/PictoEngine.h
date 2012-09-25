@@ -21,6 +21,7 @@
 #include "../protocol/ProtocolCommand.h"
 #include "SignalChannel.h"
 #include "../iodevices/RewardController.h"
+#include "../iodevices/OutputSignalController.h"
 #include "../iodevices/EventCodeGenerator.h"
 #include "../storage/PropertyDataUnitPackage.h"
 #include "../storage/StateDataUnitPackage.h"
@@ -142,6 +143,10 @@ public:
 	void giveReward(int channel, int quantity, int minRewardPeriod);
 	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards();
 
+	void setOutputSignalController(QSharedPointer<OutputSignalController> outSigController) { outSigController_ = outSigController; };
+	void setOutputSignalLevel(int portId,double level);
+	void enableOutputSignal(int portId,bool enable);
+
 	//! \brief Retrieves the latest package of changed properties.
 	//! Note that a package can only be retrieved once after which a new package is created.
 	QSharedPointer<PropertyDataUnitPackage> getChangedPropertyPackage();
@@ -219,6 +224,7 @@ private:
 	QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	QList<QSharedPointer<ControlPanelInterface>> controlPanelIfs_;
 	QSharedPointer<RewardController> rewardController_;
+	QSharedPointer<OutputSignalController> outSigController_;
 	QSharedPointer<PropertyDataUnitPackage> propPackage_;
 	QSharedPointer<StateDataUnitPackage> stateDataPackage_;
 	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server

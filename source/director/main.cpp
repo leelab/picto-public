@@ -161,6 +161,7 @@ int main(int argc, char *argv[])
 	//legacy system's eye tracker.
 	HardwareSetup::RewardControllerType rewCont = HardwareSetup::NullReward;
 	HardwareSetup::EventCodeGeneratorType eventGen = HardwareSetup::NullGen;
+	HardwareSetup::OutputSignalControllerType outSigCont = HardwareSetup::NullOutSig;
 	if(app.arguments().contains("-legacy"))
 	{
 		rewCont = HardwareSetup::LegacySystemXpReward;
@@ -172,6 +173,7 @@ int main(int argc, char *argv[])
 	{
 		rewCont = HardwareSetup::PictoBoxXpReward;
 		eventGen = HardwareSetup::PictoBoxXpGen;
+		outSigCont = HardwareSetup::PictoBoxXpOutSig;
 	}
 	else if(app.arguments().contains("-test"))
 	{
@@ -185,7 +187,7 @@ int main(int argc, char *argv[])
 	//visTarget = HardwareSetup::Pixmap;
 	///////////////////////////////////////////////////////////////////	
 
-	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,eventGen,xChan,yChan,xDiamChan,yDiamChan,posPer,diamPer));
+	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,outSigCont,eventGen,xChan,yChan,xDiamChan,yDiamChan,posPer,diamPer));
 	director->activate();
 	Picto::CloseLib();
 	return EXIT_SUCCESS;

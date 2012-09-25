@@ -36,12 +36,18 @@ public:
 
 	typedef enum
 	{
+		PictoBoxXpOutSig, NullOutSig
+	} OutputSignalControllerType;
+
+	typedef enum
+	{
 		PictoBoxXpGen, LegacyGen, NullGen
 	} EventCodeGeneratorType;
 
 	bool setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical);
 	bool setupSignalChannel(SignalChannelType channelType);
 	bool setupRewardController(RewardControllerType controllerType);
+	bool setupOutputSignalController(OutputSignalControllerType controllerType);
 	bool setupEventCodeGenerator(EventCodeGeneratorType generatorType);
 	bool setXYChannelNums(int xChan, int yChan){xChan_ = xChan;yChan_ = yChan;return true;};
 	bool setXYDiamChannelNums(int xDiamChan, int yDiamChan){xDiamChan_ = xDiamChan;yDiamChan_ = yDiamChan;return true;};
@@ -55,6 +61,7 @@ private:
 	bool renderingTargetsSetup_;
 	bool signalChannelSetup_;
 	bool rewardControllerSetup_;
+	bool outSigControllerSetup_;
 	bool eventCodeGenSetup_;
 	int xChan_;
 	int yChan_;

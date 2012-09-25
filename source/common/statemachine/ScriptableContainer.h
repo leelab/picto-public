@@ -60,6 +60,7 @@ protected:
 	QSharedPointer<AssetFactory> parameterFactory_;
 	QSharedPointer<AssetFactory> controlTargetFactory_;
 	QSharedPointer<AssetFactory> audioElementFactory_;
+	QSharedPointer<AssetFactory> outputSignalFactory_;
 	QSharedPointer<AssetFactory> scriptFunctionFactory_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 	QSharedPointer<QScriptEngineDebugger> qsEngineDebugger_;

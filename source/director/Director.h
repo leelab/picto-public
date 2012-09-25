@@ -21,6 +21,7 @@ public:
 		HardwareSetup::SignalChannelType sigChannel = HardwareSetup::Mouse,
 		HardwareSetup::VisualTargetType visualTarget = HardwareSetup::Pixmap,
 		HardwareSetup::RewardControllerType rewardController = HardwareSetup::NullReward,
+		HardwareSetup::OutputSignalControllerType outSigController = HardwareSetup::NullOutSig,
 		HardwareSetup::EventCodeGeneratorType eventCodeGenerator = HardwareSetup::NullGen,
 		int xEyeChannel = 0,
 		int yEyeChannel = 1,
@@ -43,6 +44,7 @@ private:
 	HardwareSetup::SignalChannelType sigChannel_;
 	HardwareSetup::VisualTargetType visualTarget_;
 	HardwareSetup::RewardControllerType rewardController_;
+	HardwareSetup::OutputSignalControllerType outSigController_;
 	HardwareSetup::EventCodeGeneratorType eventCodeGenerator_;
 	QStringList rewardDurs_;
 	QStringList flushDurs_;

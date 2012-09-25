@@ -225,6 +225,19 @@ QList<QSharedPointer<RewardDataUnit>> PictoEngine::getDeliveredRewards()
 	return rewardController_->getDeliveredRewards();
 }
 
+void PictoEngine::setOutputSignalLevel(int portId,double level)
+{
+	if(outSigController_.isNull())
+		return;
+	outSigController_->setVoltage(portId,level);
+}
+void PictoEngine::enableOutputSignal(int portId,bool enable)
+{
+	if(outSigController_.isNull())
+		return;
+	outSigController_->enablePort(enable,portId);
+}
+
 
 void PictoEngine::addChangedProperty(QSharedPointer<Property> changedProp)
 {
@@ -787,7 +800,11 @@ void PictoEngine::stop()
 
 void PictoEngine::firstPhosphorOperations(double frameTime)
 {
-	rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || sessionId_.isNull() || slave_));
+	if(!outSigController_.isNull())
+		outSigController_->updateVoltages();
+
+	if(!rewardController_.isNull())
+		rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || sessionId_.isNull() || slave_));
 
 	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
 	{

@@ -8,7 +8,6 @@ namespace Picto
 {
 /*!	\brief A reward controller for the PictoBox used when running Windows XP
  *
- *	WARNING: SINCE UPDATING THIS CODE FOR HARDWARE TIMED REWARDING, IT IS UNTESTED!! - Joey
  *	PictoBox uses a National Instruments PCI-6221 data acquisition board
  *	to deliver rewards (the same board is used for a number of other 
  *	functions as well).  As long as PictoBox is running Windows XP, we can 

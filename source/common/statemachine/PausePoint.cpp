@@ -163,6 +163,10 @@ void PausePoint::scriptableContainerWasReinitialized()
 		{
 			scene_->addVisualElement(scriptable.toStrongRef().staticCast<VisualElement>());
 		}
+		else if (scriptable.toStrongRef().dynamicCast<OutputSignal>())
+		{
+			scene_->addOutputSignal(scriptable.toStrongRef().staticCast<OutputSignal>());
+		}
 	}
 	QColor backgroundColor;
 	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());

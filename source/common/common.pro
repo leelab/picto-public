@@ -140,6 +140,8 @@ HEADERS += $$(PICTO_TREE)/source/common/compositor/MixingSample.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/MixingSample.cpp
 HEADERS += $$(PICTO_TREE)/source/common/compositor/PCMMixingSample.h
 SOURCES += $$(PICTO_TREE)/source/common/compositor/PCMMixingSample.cpp
+HEADERS += $$(PICTO_TREE)/source/common/compositor/OutputSignalWidget.h
+SOURCES += $$(PICTO_TREE)/source/common/compositor/OutputSignalWidget.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/TestController.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/TestController.cpp
@@ -223,6 +225,10 @@ SOURCES += $$(PICTO_TREE)/source/common/experimentalsystem/Environmental.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/RewardController.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/RewardController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/OutputSignalController.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/OutputSignalController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/VirtualOutputSignalController.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/VirtualOutputSignalController.cpp
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/EventCodeGenerator.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/EventCodeGenerator.cpp
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/NullRewardController.h
@@ -370,6 +376,8 @@ HEADERS += $$(PICTO_TREE)/source/common/stimuli/StimulusElement.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/StimulusElement.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/VisualElement.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/VisualElement.cpp
+HEADERS += $$(PICTO_TREE)/source/common/stimuli/OutputSignal.h
+SOURCES += $$(PICTO_TREE)/source/common/stimuli/OutputSignal.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/AudioElement.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/AudioElement.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/ArrowGraphic.h
@@ -402,6 +410,8 @@ HEADERS += $$(PICTO_TREE)/source/common/stimuli/TokenTrayGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/TokenTrayGraphic.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/OperatorInfoGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/OperatorInfoGraphic.cpp
+HEADERS += $$(PICTO_TREE)/source/common/stimuli/DigitalOutput.h
+SOURCES += $$(PICTO_TREE)/source/common/stimuli/DigitalOutput.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/VisualElementFactory.cpp
 

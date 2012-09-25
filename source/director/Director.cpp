@@ -28,6 +28,7 @@ Director::Director(QString name,
 		HardwareSetup::SignalChannelType sigChannel,
 		HardwareSetup::VisualTargetType visualTarget,
 		HardwareSetup::RewardControllerType rewardController,
+		HardwareSetup::OutputSignalControllerType outSigController,
 		HardwareSetup::EventCodeGeneratorType eventCodeGenerator,
 		int xEyeChannel,
 		int yEyeChannel,
@@ -39,6 +40,7 @@ Director::Director(QString name,
 	sigChannel_(sigChannel),
 	visualTarget_(visualTarget),
 	rewardController_(rewardController),
+	outSigController_(outSigController),
 	eventCodeGenerator_(eventCodeGenerator),
 	xChannel_(xEyeChannel),
 	yChannel_(yEyeChannel),
@@ -154,6 +156,8 @@ int Director::openDevice()
 	if(!hwSetup.setupSignalChannel(sigChannel_)) 
 		return 1;
 	if(!hwSetup.setupRewardController(rewardController_)) 
+		return 1;
+	if(!hwSetup.setupOutputSignalController(outSigController_)) 
 		return 1;
 	if(!hwSetup.setupEventCodeGenerator(eventCodeGenerator_))
 		return 1;

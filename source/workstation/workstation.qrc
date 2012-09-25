@@ -101,5 +101,6 @@
         <file>icons/endercontainer.svg</file>
         <file>icons/fileoutput.svg</file>
         <file>icons/analysisdefinition.svg</file>
+        <file>icons/outputsignal.svg</file>
     </qresource>
 </RCC>
