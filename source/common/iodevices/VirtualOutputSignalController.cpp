@@ -6,9 +6,10 @@ namespace Picto
 {
 
 //! Sets up the reward controller
-VirtualOutputSignalController::VirtualOutputSignalController()
-: 	hasEnabledPorts_(false),
-	OutputSignalController(0,7)
+VirtualOutputSignalController::VirtualOutputSignalController(QString port)
+: 	hasEnabledPins_(false),
+	OutputSignalController(0,7),
+	port_(port)
 {
 }
 
@@ -16,41 +17,30 @@ VirtualOutputSignalController::~VirtualOutputSignalController()
 {
 }
 
-double VirtualOutputSignalController::getVoltage(int portId)
+bool VirtualOutputSignalController::hasEnabledPins()
 {
-	if(portId > 7 || portId < 0)
-		return -100000000;
-	if(ports_[portId].enabled)
-	{
-		return ports_[portId].level;
-	}
-	return 0.0;
+	return hasEnabledPins_;
 }
 
-bool VirtualOutputSignalController::hasEnabledPorts()
-{
-	return hasEnabledPorts_;
-}
-
-int VirtualOutputSignalController::numPorts()
+int VirtualOutputSignalController::numPins()
 {
 	return 8;
 }
 
 void VirtualOutputSignalController::applyVoltages()
 {
-	bool hasEnabledPorts = false;
-	foreach(PortData portData, ports_)
+	bool hasEnabledPins = false;
+	foreach(PinData pinData, pins_)
 	{
-		if(portData.enabled)
-			hasEnabledPorts = true;
+		if(pinData.enabled)
+			hasEnabledPins = true;
 	}
-	hasEnabledPorts_ = hasEnabledPorts;
-	foreach(PortData portData, ports_)
+	hasEnabledPins_ = hasEnabledPins;
+	foreach(PinData pinData, pins_)
 	{
-		if(!portData.changed)
+		if(!pinData.changed)
 			continue;
-		emit portChanged(portData.id,portData.enabled,portData.level);
+		emit pinChanged(pinData.id,pinData.enabled,pinData.value);
 	}
 }
 

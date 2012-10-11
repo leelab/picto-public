@@ -12,6 +12,7 @@
 #include <QList>
 #include <QMutex>
 #include <QNetworkInterface>
+#include <QMap>
 
 #include "../common.h"
 #include "../compositor/RenderingTarget.h"
@@ -143,9 +144,9 @@ public:
 	void giveReward(int channel, int quantity, int minRewardPeriod);
 	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards();
 
-	void setOutputSignalController(QSharedPointer<OutputSignalController> outSigController) { outSigController_ = outSigController; };
-	void setOutputSignalLevel(int portId,double level);
-	void enableOutputSignal(int portId,bool enable);
+	void setOutputSignalController(QString port, QSharedPointer<OutputSignalController> outSigController) { if(!outSigController)return; outSigControllers_[port] = outSigController; };
+	void setOutputSignalValue(QString port, int pinId, QVariant value);
+	void enableOutputSignal(QString port, int pinId, bool enable);
 
 	//! \brief Retrieves the latest package of changed properties.
 	//! Note that a package can only be retrieved once after which a new package is created.
@@ -224,7 +225,7 @@ private:
 	QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	QList<QSharedPointer<ControlPanelInterface>> controlPanelIfs_;
 	QSharedPointer<RewardController> rewardController_;
-	QSharedPointer<OutputSignalController> outSigController_;
+	QMap<QString,QSharedPointer<OutputSignalController>> outSigControllers_;
 	QSharedPointer<PropertyDataUnitPackage> propPackage_;
 	QSharedPointer<StateDataUnitPackage> stateDataPackage_;
 	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server

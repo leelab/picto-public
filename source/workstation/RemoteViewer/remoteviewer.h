@@ -193,7 +193,7 @@ private:
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<DesignRoot> myDesignRoot_;
-	QSharedPointer<Picto::VirtualOutputSignalController> outSigController_;
+	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
 	QSharedPointer<Picto::Experiment> experiment_;
@@ -220,7 +220,7 @@ private:
 	QLabel *statusBar_;
 	NeuralDataViewer* neuralDataViewer_;
 	TaskRunViewer* currentRunViewer_;
-	QWidget *outputSignals_;
+	QVector<QWidget *> outputSignalsWidgets_;
 
 	QTimer *updateTimer_;
 	QTimer *reconnectTimer_;

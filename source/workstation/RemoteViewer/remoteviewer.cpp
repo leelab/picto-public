@@ -346,7 +346,10 @@ void RemoteViewer::updateEngine()
 			return;
 		}
 		taskName = initStateMachinePath.first();
-		static_cast<OutputSignalWidget*>(outputSignals_)->enable(true);
+		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+		{
+			static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
+		}
 		engineTrigger_ = ContinueEngine;
 		//WARNING:  Nothing after this line will be processed until the task is finished running
 		activeExperiment_->runTask(taskName.simplified().remove(' '));
@@ -354,7 +357,10 @@ void RemoteViewer::updateEngine()
 		{
 			engineTrigger_ = NoEngineTrigger;
 		}
-		static_cast<OutputSignalWidget*>(outputSignals_)->enable(false);
+		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+		{
+			static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+		}
 	}
 }
 
@@ -894,8 +900,13 @@ void RemoteViewer::setupEngine()
 	engine_->addSignalChannel(signalChannel);
 
 	//Set up output signal generator
-	outSigController_ = QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController());
-	engine_->setOutputSignalController(outSigController_);
+	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("BNC0")));
+	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("PAR0")));
+	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
+	{
+		engine_->setOutputSignalController(cont->getPort(),cont);
+	}
+	
 
 	//Set up event code generator
 	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
@@ -1030,8 +1041,6 @@ void RemoteViewer::setupUi()
 				SLOT(modifyRunDataUnit(qulonglong))
 			);
 
-	outputSignals_ = new OutputSignalWidget(outSigController_);
-
 	statusBar_ = new QLabel();
 
 	propertyFrame_ = new PropertyFrame();
@@ -1054,7 +1063,11 @@ void RemoteViewer::setupUi()
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	stimulusLayout->addWidget(visualTargetHost_);
-	stimulusLayout->addWidget(outputSignals_);
+	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
+	{
+		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
+		stimulusLayout->addWidget(outputSignalsWidgets_.back());
+	}
 	QWidget *stimulusWidget = new QWidget();
 	stimulusWidget->setLayout(stimulusLayout);
 

@@ -63,15 +63,17 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 
 		//Set Output Signals Values to engine
 		bool enabled;
-		double level;
-		int portId;
+		int pinId;
+		QVariant value;
+		QString port;
 		foreach(QSharedPointer<OutputSignal> outputSignal, outputSignals_)
 		{
-			portId = outputSignal->getPort();
+			port = outputSignal->getPort();
+			pinId = outputSignal->getPin();
 			enabled = outputSignal->getEnabled();
-			level = outputSignal->getVoltage();
-			engine->enableOutputSignal(portId,enabled);
-			engine->setOutputSignalLevel(portId,level);
+			value = outputSignal->getValue();
+			engine->enableOutputSignal(port,pinId,enabled);
+			engine->setOutputSignalValue(port,pinId,value);
 		}
 
 		//Render visual elements to each rendering target

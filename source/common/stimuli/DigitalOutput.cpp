@@ -8,7 +8,8 @@ const QString DigitalOutput::type = "Digital Output";
 DigitalOutput::DigitalOutput()
 : OutputSignal()
 {
-	AddDefinableProperty(QVariant::Bool,"Output",false);
+	AddDefinableProperty(QVariant::Int,"Pin",0);
+	AddDefinableProperty(QVariant::Bool,"Value",false);
 }
 
 QSharedPointer<Asset> DigitalOutput::Create()
@@ -25,6 +26,11 @@ bool DigitalOutput::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 {
 	if(!OutputSignal::validateObject(xmlStreamReader))
 		return false;
+	if(getPin() < 0)
+	{
+		addError("OutputSignal","Pin number cannot be less than zero",xmlStreamReader);
+		return false;
+	}
 	return true;
 }
 

@@ -6,7 +6,7 @@
 
 namespace Picto
 {
-/*!	\brief An output signal controller for controlling output bnc ports on pictobox
+/*!	\brief An output signal controller for controlling output bnc pins on pictobox
  *
  */
 #if defined WIN32 || defined WINCE
@@ -17,20 +17,21 @@ class VirtualOutputSignalController :  public OutputSignalController
 {
 	Q_OBJECT
 public:
-	VirtualOutputSignalController();
+	VirtualOutputSignalController(QString port);
 	virtual ~VirtualOutputSignalController();
-	double getVoltage(int portId);
-	bool hasEnabledPorts();
-	int numPorts();
+	bool hasEnabledPins();
+	int numPins();
+	QString getPort(){return port_;};
 
 signals:
-	void portChanged(int portId,bool enabled,double voltage);
+	void pinChanged(int pinId,bool enabled,bool high);
 
 protected:
 	virtual void applyVoltages();
 
 private:
-	bool hasEnabledPorts_;
+	bool hasEnabledPins_;
+	QString port_;
 
 };
 

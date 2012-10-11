@@ -7,7 +7,7 @@ namespace Picto {
 
 OutputSignal::OutputSignal()
 {
-	AddDefinableProperty(QVariant::Int,"Port",0);
+	AddDefinableProperty(QVariant::String,"Port","BNC0");
 	AddDefinableProperty(QVariant::Bool,"Enabled",true);
 }
 

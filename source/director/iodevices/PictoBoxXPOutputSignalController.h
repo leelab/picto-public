@@ -13,12 +13,14 @@ namespace Picto
 class PictoBoxXPOutputSignalController :  public OutputSignalController
 {
 public:
-	PictoBoxXPOutputSignalController();
+	PictoBoxXPOutputSignalController(int port);
 	virtual ~PictoBoxXPOutputSignalController();
 
 protected:
 	virtual void applyVoltages();
 private:
+	QString outSigChans_;
+	QString taskName_;
 	quint32 daqTaskHandle_; // For Nidaqmx 8.5
 	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 

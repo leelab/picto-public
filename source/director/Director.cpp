@@ -157,7 +157,7 @@ int Director::openDevice()
 		return 1;
 	if(!hwSetup.setupRewardController(rewardController_)) 
 		return 1;
-	if(!hwSetup.setupOutputSignalController(outSigController_)) 
+	if(!hwSetup.setupOutputSignalController(outSigController_,eventCodeGenerator_)) 
 		return 1;
 	if(!hwSetup.setupEventCodeGenerator(eventCodeGenerator_))
 		return 1;

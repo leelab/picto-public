@@ -31,7 +31,7 @@ private:
 	bool enable_;
 
 private slots:
-	void outputSignalChanged(int portId,bool enabled,double voltage);
+	void outputSignalChanged(int pinId,bool enabled,bool high);
 };
 
 

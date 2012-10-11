@@ -180,6 +180,13 @@ int main(int argc, char *argv[])
 		rewCont = HardwareSetup::AudioReward;
 	}
 
+	if(app.arguments().contains("-onesided"))
+	{	//One Sided means that there will be no alignment or gathering of neural data.
+		//The port usually used to send alignment events to the neural system will be
+		//available as a secondary port to the experiment developer.
+		eventGen = HardwareSetup::NullGen;
+	}
+
 	//Setup autoupdate system
 	UpdateDownloader::getInstance()->setRestartCommands(app.applicationFilePath(),app.arguments());
 

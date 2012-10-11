@@ -3,15 +3,15 @@
 
 namespace Picto
 {
-OutputSignalController::OutputSignalController(int minPort, int maxPort)
-:	maxPort_(maxPort),
-	minPort_(minPort)
+OutputSignalController::OutputSignalController(int minPin, int maxPin)
+:	maxPin_(maxPin),
+	minPin_(minPin)
 {
-	Q_ASSERT(maxPort_ >= minPort_);
-	ports_.resize(1+maxPort_-minPort_);
-	for(int i=0;i<ports_.size();i++)
+	Q_ASSERT(maxPin_ >= minPin_);
+	pins_.resize(1+maxPin_-minPin_);
+	for(int i=0;i<pins_.size();i++)
 	{
-		ports_[i].id = minPort_+i;
+		pins_[i].id = minPin_+i;
 	}
 }
 
@@ -19,38 +19,74 @@ OutputSignalController::~OutputSignalController()
 {
 }
 
-bool OutputSignalController::enablePort(bool enable, int portId)
+bool OutputSignalController::enablePin(bool enable, int pinId)
 {
-	int index = portId - minPort_;
-	if(		index >= ports_.size()
+	if(pinId == -1)
+	{//ALL PINS AFFECTED
+		if(!pins_.size())
+			return false;
+		for(int i=0;i<pins_.size();i++)
+		{
+			pins_[i].enabled = enable;
+			pins_[i].changed = true;
+		}
+		return true;
+	}
+
+	//Individual pin affected
+	int index = pinId - minPin_;
+	if(		index >= pins_.size()
 		||	index < 0)
 		return false;
-	if(ports_[index].enabled == enable)
+	if(pins_[index].enabled == enable)
 		return true;
-	ports_[index].enabled = enable;
-	ports_[index].changed = true;
+	pins_[index].enabled = enable;
+	pins_[index].changed = true;
 	return true;
 }
 
-bool OutputSignalController::setVoltage(int portId, double level)
+bool OutputSignalController::setValue(int pinId, QVariant value)
 {
-	int index = portId - minPort_;
-	if(		index >= ports_.size()
+	if(pinId == -1)
+	{	//All pins affected
+		if(!pins_.size())
+			return false;
+		for(int i=0;i<pins_.size();i++)
+		{
+			pins_[i].value = 0x01 & (value.toInt() >> i);
+			pins_[i].changed = true;
+		}
+		return true;
+	}
+
+	//Individual pin affected
+	int index = pinId - minPin_;
+	if(		index >= pins_.size()
 		||	index < 0)
 		return false;
-	if(ports_[index].level == level)
+	if(pins_[index].value == value)
 		return true;
-	ports_[index].level = level;
-	ports_[index].changed = true;
+	pins_[index].value = value.toBool();
+	pins_[index].changed = true;
 	return true;
 }
 
-void OutputSignalController::updateVoltages()
+void OutputSignalController::updateValues()
 {
 	applyVoltages();
-	for(int i=0;i<ports_.size();i++)
+	for(int i=0;i<pins_.size();i++)
 	{
-		ports_[i].changed = false;
+		if(pins_[i].enabled || pins_[i].value)
+		{	//After each frame, set all pins_ values to disabled
+			//and voltages back to zero so that they will be 
+			//disabled and reset if they are not set in
+			//the coming frame
+			pins_[i].changed = true;
+			pins_[i].enabled = false;
+			pins_[i].value = false;
+		}
+		else
+			pins_[i].changed = false;
 	}
 }
 

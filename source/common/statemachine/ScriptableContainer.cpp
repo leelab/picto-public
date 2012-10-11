@@ -31,6 +31,7 @@
 #include "../stimuli/TextGraphic.h"
 #include "../stimuli/OperatorInfoGraphic.h"
 #include "../stimuli/DigitalOutput.h"
+#include "../stimuli/BinaryDataOutput.h"
 #include "../stimuli/AudioElement.h"
 #include "../controlelements/circletarget.h"
 #include "../controlelements/recttarget.h"
@@ -118,7 +119,11 @@ ScriptableContainer::ScriptableContainer()
 
 	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
 	outputSignalFactory_->addAssetType("DigitalOutput",
-		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
+
+	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
+	outputSignalFactory_->addAssetType("BinaryDataOutput",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BinaryDataOutput::Create))));
 
 
 }

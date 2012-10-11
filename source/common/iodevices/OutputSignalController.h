@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QVariant>
 
 #include "../common.h"
 
@@ -20,37 +21,38 @@ class OutputSignalController : public QObject
 {
 	Q_OBJECT
 public:
-	OutputSignalController(int minPort, int maxPort);
+	OutputSignalController(int minPin, int maxPin);
 	virtual ~OutputSignalController();
 
 	//Returns true if the command (enable/disable) was successfully applied.
-	//A disabled port retains its current set voltage in memory but does
-	//not apply that voltage at the port
-	//ie. Returns false if the port with that id doesn't exist
-	bool enablePort(bool enable, int portId);
-	//Sets the digital voltage high or low (+5V or 0V)
-	//Returns false if port doesn't exist.  If the port is disabled, the
-	//input value will be retained for when the port is enabled.
-	//Note: Voltage isn't actually applied to port until apply voltages is
+	//A disabled pin (if supported) has floating voltage.
+	//If pinId of -1 is passed in, all pins controlled by this port are effected
+	//ie. Returns false if the pin with that id doesn't exist
+	bool enablePin(bool enable, int pinId);
+	//Sets the value of the pin to the input quantity
+	//If the pin is -1, the input is interpreted as an int and the binary value is applied
+	//to the group of pins in this port.
+	//Returns false if pin doesn't exist.
+	//Note: Voltage isn't actually applied to pin until apply voltages is
 	//called.
-	bool setVoltage(int portId,double level);
-	//Applies the set voltages to all ports
-	void updateVoltages();
+	bool setValue(int pinId,QVariant value);
+	//Applies the set voltages to all pins
+	void updateValues();
 
 protected:
 	virtual void applyVoltages() = 0;
-	struct PortData
+	struct PinData
 	{
-		PortData(){level = 0.0;changed = enabled = false;id=0;};
-		double level;
+		PinData(){value = false;changed = enabled = false;id=0;};
+		bool value;
 		bool changed;
 		bool enabled;
 		int id;
 	};
-	QVector<PortData> ports_;
+	QVector<PinData> pins_;
 private:
-	int maxPort_;
-	int minPort_;
+	int maxPin_;
+	int minPin_;
 
 };
 

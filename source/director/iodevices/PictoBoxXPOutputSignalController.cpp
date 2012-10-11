@@ -17,17 +17,18 @@
 //		 where we have full hardware control.  If this is meant to run elsewhere, a more
 //		 generic RewardController will need to be written
 #define DEVICE_NAME "Dev1"
-#define PICTO_BOX_NIDAQ_OUT_SIG_CHANNELS "Dev1/port0/line0:7"
 
 namespace Picto
 {
 
 //! Sets up the reward controller
-PictoBoxXPOutputSignalController::PictoBoxXPOutputSignalController()
-: OutputSignalController(0,7)
+PictoBoxXPOutputSignalController::PictoBoxXPOutputSignalController(int port)
+:	OutputSignalController(0,7),
+	outSigChans_(QString("Dev1/port%1/line0:7").arg(port)),
+	taskName_(QString("OutSigTask%1").arg(port))
 {
-	DAQmxErrChk(DAQmxCreateTask("OutSigTask",(TaskHandle*)&daqTaskHandle_));
-	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,PICTO_BOX_NIDAQ_OUT_SIG_CHANNELS,"",DAQmx_Val_ChanForAllLines));
+	DAQmxErrChk(DAQmxCreateTask(taskName_.toAscii(),(TaskHandle*)&daqTaskHandle_));
+	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,outSigChans_.toAscii(),"",DAQmx_Val_ChanForAllLines));
 	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
 
 	//Set all digital lines to 0
@@ -49,9 +50,9 @@ void PictoBoxXPOutputSignalController::applyVoltages()
 	uInt8 data = 0x00;
 
 	//Build output data
-	for(int i=0;i<ports_.size();i++)
+	for(int i=0;i<pins_.size();i++)
 	{
-		if(ports_[i].enabled && ports_[i].level > 2.5)
+		if(pins_[i].enabled && pins_[i].value)
 		{
 			data = data | (0x01 << i);
 		}

@@ -47,7 +47,9 @@ public:
 	bool setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical);
 	bool setupSignalChannel(SignalChannelType channelType);
 	bool setupRewardController(RewardControllerType controllerType);
-	bool setupOutputSignalController(OutputSignalControllerType controllerType);
+	//This function needs to know the EventCodeGeneratorType so that it knows if the port used for Event codes is 
+	//free to be used as an OutputSignal port or not.
+	bool setupOutputSignalController(OutputSignalControllerType controllerType, EventCodeGeneratorType generatorType);
 	bool setupEventCodeGenerator(EventCodeGeneratorType generatorType);
 	bool setXYChannelNums(int xChan, int yChan){xChan_ = xChan;yChan_ = yChan;return true;};
 	bool setXYDiamChannelNums(int xDiamChan, int yDiamChan){xDiamChan_ = xDiamChan;yDiamChan_ = yDiamChan;return true;};

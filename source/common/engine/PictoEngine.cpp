@@ -225,17 +225,17 @@ QList<QSharedPointer<RewardDataUnit>> PictoEngine::getDeliveredRewards()
 	return rewardController_->getDeliveredRewards();
 }
 
-void PictoEngine::setOutputSignalLevel(int portId,double level)
+void PictoEngine::setOutputSignalValue(QString port, int pinId, QVariant value)
 {
-	if(outSigController_.isNull())
+	if(!outSigControllers_.contains(port))
 		return;
-	outSigController_->setVoltage(portId,level);
+	outSigControllers_[port]->setValue(pinId,value);
 }
-void PictoEngine::enableOutputSignal(int portId,bool enable)
+void PictoEngine::enableOutputSignal(QString port, int pinId,bool enable)
 {
-	if(outSigController_.isNull())
+	if(!outSigControllers_.contains(port))
 		return;
-	outSigController_->enablePort(enable,portId);
+	outSigControllers_[port]->enablePin(enable,pinId);
 }
 
 
@@ -800,8 +800,10 @@ void PictoEngine::stop()
 
 void PictoEngine::firstPhosphorOperations(double frameTime)
 {
-	if(!outSigController_.isNull())
-		outSigController_->updateVoltages();
+	foreach(QSharedPointer<OutputSignalController> sigCont,outSigControllers_)
+	{
+		sigCont->updateValues();
+	}
 
 	if(!rewardController_.isNull())
 		rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || sessionId_.isNull() || slave_));

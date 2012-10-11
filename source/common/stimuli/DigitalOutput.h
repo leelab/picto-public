@@ -10,25 +10,25 @@ namespace Picto {
 /*!	\brief A circle graphic.
  *
  *	A DigitalOutput has the following properties:
- *	- Position: The position of the top-left corner of the box containing the circle (in screen coordinates)
- *	- Radius: Duh.
- *	- Color: The color of the circle
+ *  Widget to control the output of a single digital pin from the director.
  */
 
 class PICTOLIB_CLASS DigitalOutput : public OutputSignal
 {
 	Q_OBJECT
-	Q_PROPERTY(bool output READ getOutput WRITE setOutput)
+	Q_PROPERTY(bool value READ getBinValue WRITE setBinValue)
+	Q_PROPERTY(int pin READ getPin WRITE setPin)
 public:
 	DigitalOutput();
 
 	static QSharedPointer<Asset> Create();
 	static const QString type;
 	
-	void setOutput(bool active){propertyContainer_->setPropertyValue("Output",active);};
-	bool getOutput(){return propertyContainer_->getPropertyValue("Output").toBool();};
-	virtual int getVoltage(){return int(getOutput())*5.0;};
-
+	void setBinValue(bool active){propertyContainer_->setPropertyValue("Value",active);};
+	bool getBinValue(){return propertyContainer_->getPropertyValue("Value").toBool();};
+	void setPin(int pin){propertyContainer_->setPropertyValue("Pin",pin);};
+	virtual int getPin(){return propertyContainer_->getPropertyValue("Pin").toInt();};
+	virtual QVariant getValue(){return QVariant(int(getBinValue()));};
 
 protected:
 	virtual void postDeserialize();

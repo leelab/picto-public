@@ -241,24 +241,31 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
  *	Initially there are only 2 possibile reward controllers: The PictoBoxXP
  *	controller, and the null controller.
  */
-bool HardwareSetup::setupOutputSignalController(OutputSignalControllerType controllerType)
+bool HardwareSetup::setupOutputSignalController(OutputSignalControllerType controllerType, EventCodeGeneratorType generatorType)
 {
-	QSharedPointer<Picto::OutputSignalController> outSigController;
+	QHash<QString,QSharedPointer<Picto::OutputSignalController>> outSigControllers;
 
 	if(controllerType == PictoBoxXpOutSig)
 	{
 #if defined WIN32 && defined NI_STUFF
-		outSigController = QSharedPointer<Picto::PictoBoxXPOutputSignalController>(new Picto::PictoBoxXPOutputSignalController());
+		outSigControllers["BNC0"] = QSharedPointer<Picto::PictoBoxXPOutputSignalController>(new Picto::PictoBoxXPOutputSignalController(0));
+		if(generatorType == NullGen)
+			outSigControllers["PAR0"] = QSharedPointer<Picto::PictoBoxXPOutputSignalController>(new Picto::PictoBoxXPOutputSignalController(1));
 #else
 		return false;
 #endif
 	}
 	else if(controllerType == NullOutSig)
 	{
-		outSigController = QSharedPointer<Picto::OutputSignalController>();
+		outSigControllers["NULL"] = QSharedPointer<Picto::OutputSignalController>();
 	}
 
-	engine_->setOutputSignalController(outSigController);
+	for(QHash<QString,QSharedPointer<Picto::OutputSignalController>>::iterator it = outSigControllers.begin();
+		it != outSigControllers.end();it++)
+	{
+		engine_->setOutputSignalController(it.key(),it.value());
+	}
+	
 
 	outSigControllerSetup_ = true;
 

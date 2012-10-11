@@ -113,8 +113,12 @@ void TestViewer::setupEngine()
 	engine_->addSignalChannel(mouseChannel);
 
 	//Set up output signal generator
-	outSigController_ = QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController());
-	engine_->setOutputSignalController(outSigController_);
+	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("BNC0")));
+	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("PAR0")));
+	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
+	{
+		engine_->setOutputSignalController(cont->getPort(),cont);
+	}
 
 	//Set up event code generator
 	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
@@ -182,10 +186,6 @@ void TestViewer::setupUi()
 	testToolbar_->addSeparator();
 	testToolbar_->addAction(loadPropsAction_);
 	//testToolbar_->addWidget(zoomSlider_);
-	outputSignals_ = new OutputSignalWidget(outSigController_);
-
-
-
 	
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(testToolbar_);
@@ -193,7 +193,11 @@ void TestViewer::setupUi()
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	stimulusLayout->addWidget(visualTargetHost_);
-	stimulusLayout->addWidget(outputSignals_);
+	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
+	{
+		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
+		stimulusLayout->addWidget(outputSignalsWidgets_.back());
+	}
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	propertyFrame_ = new PropertyFrame();
@@ -218,7 +222,10 @@ void TestViewer::play()
 	pauseAction_->setEnabled(true);
 	stopAction_->setEnabled(true);
 	playAction_->setEnabled(false);
-	static_cast<OutputSignalWidget*>(outputSignals_)->enable(true);
+	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+	{
+		static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
+	}
 
 	if(status_ == Stopped)
 	{
@@ -258,7 +265,10 @@ void TestViewer::stop()
 	pauseAction_->setEnabled(false);
 	stopAction_->setEnabled(false);
 	playAction_->setEnabled(true);
-	static_cast<OutputSignalWidget*>(outputSignals_)->enable(false);
+	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+	{
+		static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+	}
 
 	pixmapVisualTarget_->clear();
 

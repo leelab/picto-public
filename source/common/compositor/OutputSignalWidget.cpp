@@ -11,12 +11,13 @@ OutputSignalWidget::OutputSignalWidget(QSharedPointer<Picto::VirtualOutputSignal
 enable_(false)
 {
 	outSigController_ = outSigController;
-	if(!outSigController_->hasEnabledPorts())
+	if(!outSigController_->hasEnabledPins())
 		setVisible(false);
 	layout_ = new QHBoxLayout();
-	widgets_.resize(outSigController_->numPorts());
+	layout_->addWidget(new QLabel(QString("%1:").arg(outSigController_->getPort())));
+	widgets_.resize(outSigController_->numPins());
 	QVBoxLayout* subLayout;
-	QLabel* portName;
+	QLabel* pinName;
 	for(int i=0;i<widgets_.size();i++)
 	{
 		subLayout = new QVBoxLayout();
@@ -27,13 +28,13 @@ enable_(false)
 		widgets_[i]->setPalette(palette);
 		widgets_[i]->resize(widgets_[i]->size());	//Causes color changes to show up properly
 		subLayout->addWidget(widgets_[i]);
-		portName = new QLabel("Port "+QString::number(i));
-		portName->setAlignment(Qt::AlignHCenter);
-		subLayout->addWidget(portName);
+		pinName = new QLabel("Pin "+QString::number(i));
+		pinName->setAlignment(Qt::AlignHCenter);
+		subLayout->addWidget(pinName);
 		layout_->addLayout(subLayout);
 	}
 	setLayout(layout_);
-	connect(outSigController_.data(),SIGNAL(portChanged(int,bool,double)),this,SLOT(outputSignalChanged(int,bool,double)));
+	connect(outSigController_.data(),SIGNAL(pinChanged(int,bool,bool)),this,SLOT(outputSignalChanged(int,bool,bool)));
 }
 
 OutputSignalWidget::~OutputSignalWidget()
@@ -48,14 +49,14 @@ void OutputSignalWidget::enable(bool enable)
 		setVisible(false);
 }
 
-void OutputSignalWidget::outputSignalChanged(int portId,bool enabled,double voltage)
+void OutputSignalWidget::outputSignalChanged(int pinId,bool enabled,bool high)
 {
-	if(!enabled && !outSigController_->hasEnabledPorts())
+	if(!enabled && !outSigController_->hasEnabledPins())
 		setVisible(false);
 
-	if(portId >= widgets_.size() || portId < 0)
+	if(pinId >= widgets_.size() || pinId < 0)
 		return;
-	widgets_[portId]->display(enabled?voltage:0.0);
+	widgets_[pinId]->display(enabled?double(high)*5.0:0.0);
 
 
 	if(enable_ && !isVisible())

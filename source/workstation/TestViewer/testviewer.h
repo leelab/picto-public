@@ -57,11 +57,11 @@ private:
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<Picto::Experiment> experiment_;
-	QSharedPointer<Picto::VirtualOutputSignalController> outSigController_;
+	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
 	QWidget *propertyFrame_;
-	QWidget *outputSignals_;
+	QVector<QWidget *> outputSignalsWidgets_;
 
 	QAction *playAction_;
 	QAction *pauseAction_;

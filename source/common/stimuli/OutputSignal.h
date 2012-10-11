@@ -14,7 +14,7 @@ namespace Picto {
 struct PICTOLIB_CLASS OutputSignal : /*public StimulusElement,*/ public Scriptable
 {
 	Q_OBJECT
-	Q_PROPERTY(int port READ getPort WRITE setPort)
+	Q_PROPERTY(QString port READ getPort WRITE setPort)
 	Q_PROPERTY(bool enabled READ getEnabled WRITE setEnabled)
 public:
 	OutputSignal();
@@ -22,9 +22,12 @@ public:
 
 	virtual void setEnabled(bool active){propertyContainer_->setPropertyValue("Enabled",active);};
 	virtual bool getEnabled(){return propertyContainer_->getPropertyValue("Enabled").toBool();};
-	virtual void setPort(int port){propertyContainer_->setPropertyValue("Port",port);};
-	virtual int getPort(){return propertyContainer_->getPropertyValue("Port").toInt();};
-	virtual int getVoltage() = 0;
+	virtual void setPort(QString port){propertyContainer_->setPropertyValue("Port",port);};
+	virtual QString getPort(){return propertyContainer_->getPropertyValue("Port").toString();};
+	//Should return -1 if this OutputSignal handles the entire port.  The pin number that it handles
+	//otherwise.
+	virtual int getPin(){return -1;};
+	virtual QVariant getValue(){return QVariant(0);};
 	bool getVisibleByUser(bool subject);
 	virtual QString getUITemplate(){return "OutputSignal";};
 	virtual QString assetType(){return "OutputSignal";};
