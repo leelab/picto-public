@@ -1356,8 +1356,10 @@ void SessionInfo::alignTimeBases(bool realignAll)
 	executeWriteQuery(&query);
 
 	// Find all the places where the aligncodes match on the lists, order by behavioral, then neural timestamp.
+	//Note: We compare the behavioral align event to only the bottom 7 digits of the neural align event.  This way
+	//systems can bind the top hardware bit to high if need be (ie. For -onesided mode) and it won't affect alignment
 	executeReadQuery(&query,"SELECT behavioralalignevents.timestamp, neuralalignevents.timestamp, behavioralalignevents.id, neuralalignevents.id, behavioralalignevents.aligncode, behavioralalignevents.aligneventnumber "
-							"FROM behavioralalignevents JOIN neuralalignevents ON behavioralalignevents.aligncode=neuralalignevents.aligncode WHERE behavioralalignevents.matched=0 AND neuralalignevents.matched=0 "
+		"FROM behavioralalignevents JOIN neuralalignevents ON behavioralalignevents.aligncode=(neuralalignevents.aligncode & 127) WHERE behavioralalignevents.matched=0 AND neuralalignevents.matched=0 "
 							"ORDER BY behavioralalignevents.timestamp,neuralalignevents.timestamp ASC",true);
 	// Go through the list.  Use the first alignable value for each aligncode, throw out any subsequent values for the same aligncode.
 	double behavTime = latestBehavioralTimestamp_;
