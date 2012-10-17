@@ -1,6 +1,7 @@
 #include "Experiment.h"
 
 #include "../engine/PictoEngine.h"
+#include "../common/storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -18,6 +19,11 @@ engine_(NULL)
 	AddDefinableProperty(QVariant::Int,"XOffset",0);
 	AddDefinableProperty(QVariant::Int,"YOffset",0);
 	AddDefinableProperty(QVariant::Double,"XYSignalShear",0);
+
+	//Override UIEnabled's Name property.  Experiment objects names must now always be "experiment"
+	AddDefinableObjectFactory("Name",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	//Override UIEnabled for a default value of true
+	AddDefinableProperty(QVariant::Bool,"UIEnabled",true);
 }
 
 QSharedPointer<Experiment> Experiment::Create()
@@ -138,7 +144,10 @@ bool Experiment::jumpToState(QStringList path, QString state)
 void Experiment::postDeserialize()
 {
 	expConfig_->disallowIdDuplication();
-	UIEnabled::postDeserialize();
+	//Usually an object's parent adds itself to the objects scriptables list.
+	//Since an experiment is at the top level, we must do it manually.
+	addScriptable(selfPtr().staticCast<Scriptable>());
+	ScriptableContainer::postDeserialize();
 	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
 	if(experimentSyntaxVer == "")
 		propertyContainer_->setPropertyValue("SyntaxVersion",latestSyntaxVersion_);
@@ -150,11 +159,16 @@ void Experiment::postDeserialize()
 	connect(propertyContainer_->getProperty("YGain").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
 	connect(propertyContainer_->getProperty("XYSignalShear").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
 	//Set the signal properties runtime editable
-	setPropertyRuntimeEditable("XOffset");
-	setPropertyRuntimeEditable("XGain");
-	setPropertyRuntimeEditable("YOffset");
-	setPropertyRuntimeEditable("YGain");
-	setPropertyRuntimeEditable("XYSignalShear");
+	//We use the DataStore version of this function so that the actual properties,
+	//not the init properties, are the ones affected by changing the properties
+	//from the workstation.  If we didn't do this, the init properties would change
+	//which would have no effect the experiment is not part of the state machine's
+	//run system and the values are never copied.
+	DataStore::setPropertyRuntimeEditable("XOffset");
+	DataStore::setPropertyRuntimeEditable("XGain");
+	DataStore::setPropertyRuntimeEditable("YOffset");
+	DataStore::setPropertyRuntimeEditable("YGain");
+	DataStore::setPropertyRuntimeEditable("XYSignalShear");
 	
 	//clear out the existing experiment
 	tasks_.clear();
@@ -179,7 +193,7 @@ void Experiment::postDeserialize()
 
 bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!UIEnabled::validateObject(xmlStreamReader))
+	if(!ScriptableContainer::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }
@@ -201,7 +215,7 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 		{	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
 			propertyContainer_->setPropertyValue("XOffset",-400);
 			propertyContainer_->setPropertyValue("XGain",1.0);
-			propertyContainer_->setPropertyValue("YOffset",300);
+			propertyContainer_->setPropertyValue("YOffset",-300);
 			propertyContainer_->setPropertyValue("YGain",1.0);
 			propertyContainer_->setPropertyValue("XYSignalShear",0.0);
 		}
@@ -214,7 +228,7 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 	double xGain = xZoom;
 	double yGain = yZoom;
 	int xOffset = displayWidth/2 + propertyContainer_->getPropertyValue("XOffset").toDouble()*xZoom;
-	int yOffset = displayHeight/2 + -propertyContainer_->getPropertyValue("YOffset").toDouble()*yZoom;
+	int yOffset = displayHeight/2 + propertyContainer_->getPropertyValue("YOffset").toDouble()*yZoom;
 
 	posChannel->setCalibrationCoefficients("x",xGain,xOffset,400/*double(windowDims.width())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
 	posChannel->setCalibrationCoefficients("y",yGain,yOffset,300/*double(windowDims.height())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.

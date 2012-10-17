@@ -1,5 +1,4 @@
-<PictoData>
-  <AnalysisContainer id="0">
+<PictoData><Name>MemorySaccade</Name><AnalysisContainer id="0">
     <AnalysisDefinition id="0">
       <Name id="">MemSaccadeAnalysis</Name>
       <UIInfo id="0">
@@ -1018,7 +1017,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
 <UIInfo id="390">
 	<Pos id="392" x="0" y="0"/>
 <OpenDescendant id="588">854</OpenDescendant></UIInfo>
-<Name id="393">MemorySaccade</Name>
+
 <XGain id="394">1</XGain>
 <XOffset id="395">0</XOffset>
 <XYSignalShear id="396">0</XYSignalShear>
@@ -2157,20 +2156,20 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <SourceResult id="3429"/>
               </Transition>
             </StateMachineElement>
-            <Transition id="0">
-              <Destination id="">Test</Destination>
-              <Source id="">isCenterReward</Source>
-              <SourceResult id="">false</SourceResult>
+            <Transition id="1833">
+              <Destination id="1842">Test</Destination>
+              <Source id="1843">isCenterReward</Source>
+              <SourceResult id="1845">false</SourceResult>
             </Transition>
-            <Transition id="0">
-              <Destination id="">Reward</Destination>
-              <Source id="">Test</Source>
-              <SourceResult id="">Success</SourceResult>
+            <Transition id="1850">
+              <Destination id="1851">Reward</Destination>
+              <Source id="1852">Test</Source>
+              <SourceResult id="1853">Success</SourceResult>
             </Transition>
-            <Transition id="0">
-              <Destination id="">Failed</Destination>
-              <Source id="">Test</Source>
-              <SourceResult id="">Fail</SourceResult>
+            <Transition id="1854">
+              <Destination id="1855">Failed</Destination>
+              <Source id="1856">Test</Source>
+              <SourceResult id="1857">Fail</SourceResult>
             </Transition>
           </StateMachineElement>
           <StateMachineElement type="State" id="994">

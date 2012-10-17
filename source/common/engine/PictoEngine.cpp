@@ -15,6 +15,7 @@
 #include "../storage/PropertyDataUnit.h"
 #include "../storage/FrameDataUnit.h"
 #include "../storage/FrameDataUnitPackage.h"
+#include "../parameter/SignalValueParameter.h"
 #include "../memleakdetect.h"
 
 
@@ -816,6 +817,14 @@ void PictoEngine::firstPhosphorOperations(double frameTime)
 	foreach(QSharedPointer<ControlPanelInterface> cp, controlPanelIfs_)
 	{
 		cp->doIncomingCommands();
+	}
+
+	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
+	{
+		foreach(QString subChan,channel->getSubchannels())
+		{
+			SignalValueParameter::setLatestValue(channel->getName(),subChan,channel->peekValue(subChan));
+		}
 	}
 }
 

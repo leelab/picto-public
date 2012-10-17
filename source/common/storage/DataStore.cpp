@@ -395,7 +395,6 @@ void DataStore::AddDefinableProperty(
 														defaultValue,
 														attributeMap)
 													);
-
 	AddDefinableObjectFactory(tagName,propFactory);
 	orderedPropList_.append(tagName);
 }
@@ -408,6 +407,18 @@ void DataStore::AddDefinableProperty(
 
 void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory)
 {
+	bool factoryOverride = factories_.contains(tagName);
+	if(factoryOverride)
+	{	//A previously created factory is being overriden.  If that factory was a 
+		//property, we need to remove it from the orderedPropList_;
+		for(int i=orderedPropList_.size()-1;i>=0;i--)
+		{
+			if(orderedPropList_[i] == tagName)
+			{
+				orderedPropList_.removeAt(i);
+			}
+		}
+	}
 	factories_[tagName]=factory;
 }
 

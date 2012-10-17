@@ -639,6 +639,8 @@
    <file alias="_signal_data_source_8h-source.html">../../../output/documentation/main/html/_signal_data_source_8h-source.html</file>
    <file alias="_signal_trigger_8cpp-source.html">../../../output/documentation/main/html/_signal_trigger_8cpp-source.html</file>
    <file alias="_signal_trigger_8h-source.html">../../../output/documentation/main/html/_signal_trigger_8h-source.html</file>
+   <file alias="_signal_value_parameter_8cpp-source.html">../../../output/documentation/main/html/_signal_value_parameter_8cpp-source.html</file>
+   <file alias="_signal_value_parameter_8h-source.html">../../../output/documentation/main/html/_signal_value_parameter_8h-source.html</file>
    <file alias="_single_unit_data_store_8cpp-source.html">../../../output/documentation/main/html/_single_unit_data_store_8cpp-source.html</file>
    <file alias="_single_unit_data_store_8h-source.html">../../../output/documentation/main/html/_single_unit_data_store_8h-source.html</file>
    <file alias="_software_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_software_compositing_surface_8cpp-source.html</file>
@@ -909,6 +911,9 @@
    <file alias="class_picto_1_1_behavioral_data_unit_package.png">../../../output/documentation/main/html/class_picto_1_1_behavioral_data_unit_package.png</file>
    <file alias="class_picto_1_1_behavioral_input_equipment-members.html">../../../output/documentation/main/html/class_picto_1_1_behavioral_input_equipment-members.html</file>
    <file alias="class_picto_1_1_behavioral_input_equipment.html">../../../output/documentation/main/html/class_picto_1_1_behavioral_input_equipment.html</file>
+   <file alias="class_picto_1_1_binary_data_output-members.html">../../../output/documentation/main/html/class_picto_1_1_binary_data_output-members.html</file>
+   <file alias="class_picto_1_1_binary_data_output.html">../../../output/documentation/main/html/class_picto_1_1_binary_data_output.html</file>
+   <file alias="class_picto_1_1_binary_data_output.png">../../../output/documentation/main/html/class_picto_1_1_binary_data_output.png</file>
    <file alias="class_picto_1_1_block_generator-members.html">../../../output/documentation/main/html/class_picto_1_1_block_generator-members.html</file>
    <file alias="class_picto_1_1_block_generator.html">../../../output/documentation/main/html/class_picto_1_1_block_generator.html</file>
    <file alias="class_picto_1_1_boolean_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_boolean_parameter-members.html</file>

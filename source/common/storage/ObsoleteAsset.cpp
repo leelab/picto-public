@@ -9,7 +9,6 @@ ObsoleteAsset::ObsoleteAsset() :
 tagName_(""),
 assetId_(0)
 {
-	hadObsoleteAsset_ = true;
 }
 
 ObsoleteAsset::~ObsoleteAsset()
@@ -28,6 +27,7 @@ bool ObsoleteAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 }
 bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader,bool)
 {
+	hadObsoleteAsset_ = true;
 	//Get Start tag name (depending on who the parent is, they may have given us different names.
 	tagName_ = xmlStreamReader->name().toString();
 	foreach(QXmlStreamAttribute xmlStreamAttr,xmlStreamReader->attributes())

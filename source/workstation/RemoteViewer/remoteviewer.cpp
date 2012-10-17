@@ -58,6 +58,7 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	Viewer(parent),
 	serverChannel_(0),
 	activeExperiment_(0),
+	activeDesign_(0),
 	statusBar_(NULL),
 	isAuthorized_(false),
 	propertyFrame_(NULL),
@@ -377,12 +378,12 @@ void RemoteViewer::runState()
 	switch(currState_)
 	{
 	case WaitForConnect:
-		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
+		activeExpName_->setText(myDesignRoot_->getDesignName()); //In case operator loads new file
 		if(assureChannelConnections())
 			stateTrigger_ = Connected;
 		break;
 	case WaitForJoin:
-		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
+		activeExpName_->setText(myDesignRoot_->getDesignName()); //In case operator loads new file
 		if(connectAction_->isChecked())
 		{
 				
@@ -393,7 +394,7 @@ void RemoteViewer::runState()
 		}
 		break;
 	case JoiningSession:
-		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
+		activeExpName_->setText(myDesignRoot_->getDesignName()); //In case operator loads new file
 		if(joinSession())
 		{
 			if(remoteStatus == Running)
@@ -410,7 +411,7 @@ void RemoteViewer::runState()
 		}
 		break;
 	case CreatingSession:
-		activeExpName_->setText(experiment_->getName()); //In case operator loads new file
+		activeExpName_->setText(myDesignRoot_->getDesignName()); //In case operator loads new file
 		if(startSession())
 			stateTrigger_ = SessionStarted;
 		else
@@ -588,7 +589,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		currentRunViewer_->clear();
-		activeExpName_->setText(experiment_->getName());
+		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
@@ -620,7 +621,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		currentRunViewer_->clear();
-		activeExpName_->setText(experiment_->getName());
+		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
@@ -651,7 +652,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		currentRunViewer_->clear();
-		activeExpName_->setText(experiment_->getName());
+		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->deinitialize();
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
@@ -683,7 +684,7 @@ void RemoteViewer::enterState()
 		propertyFrame_->setEnabled(false);
 		loadPropsAction_->setEnabled(false);
 		currentRunViewer_->clear();
-		activeExpName_->setText(experiment_->getName());
+		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
@@ -716,7 +717,7 @@ void RemoteViewer::enterState()
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setTabEnabled(0,true);
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
-		activeExpName_->setText(activeExperiment_->getName());
+		activeExpName_->setText(activeDesign_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
 		break;
@@ -741,7 +742,7 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
-		activeExpName_->setText(activeExperiment_->getName());
+		activeExpName_->setText(activeDesign_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
 		syncExperiment();
@@ -767,7 +768,7 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
-		activeExpName_->setText(activeExperiment_->getName());
+		activeExpName_->setText(activeDesign_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
 		syncExperiment();
@@ -790,7 +791,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		currentRunViewer_->clear();
-		activeExpName_->setText(activeExperiment_->getName());
+		activeExpName_->setText(activeDesign_->getDesignName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
@@ -1726,7 +1727,7 @@ bool RemoteViewer::startSession()
 	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(dataXml.length()));
 	startSessCommand->setFieldValue("Observer-ID",observerId_.toString());
 	startSessCommand->setFieldValue("Password",passwordEdit_->text());
-	startSessCommand->setFieldValue("Experiment",experiment_->getName());
+	startSessCommand->setFieldValue("Experiment",myDesignRoot_->getDesignName());
 
 	QSharedPointer<Picto::ProtocolResponse> loadExpResponse;
 
@@ -1841,18 +1842,8 @@ bool RemoteViewer::joinSession()
 	}
 
 	content = joinSessResponse->getDecodedContent();
-	xmlReader = QSharedPointer<QXmlStreamReader>(new QXmlStreamReader(content));
-
-	//Extract the sessionID
-	while(!xmlReader->atEnd() && !(xmlReader->isStartElement() && xmlReader->name() == "SessionID"))
-		xmlReader->readNext();
-
-	QUuid remoteSessionId = QUuid();
-	if(!xmlReader->atEnd())
-	{
-		remoteSessionId = QUuid(xmlReader->readElementText());
-	}
-	else
+	QUuid remoteSessionId = QUuid(joinSessResponse->getFieldValue("SessionID"));
+	if(remoteSessionId == QUuid())	
 	{
 		setStatus(tr("SessionID not found in response from server."),true);
 		return false;
@@ -1862,25 +1853,14 @@ bool RemoteViewer::joinSession()
 	if(sessionId_.isNull() || (remoteSessionId != sessionId_))
 	{
 		sessionId_ = remoteSessionId;
-		//Extract the experiment xml
-		activeExperiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
-		while(!xmlReader->atEnd() && !(xmlReader->isStartElement() && xmlReader->name() == "Experiment"))
-			xmlReader->readNext();
-
-		if(!xmlReader->atEnd())
+		//Extract the design/experiment xml
+		activeDesign_ = QSharedPointer<DesignRoot>(new DesignRoot());
+		if(!activeDesign_->resetDesignRoot(QString(content)))
 		{
-			if(!activeExperiment_->fromXml(xmlReader))
-			{
-				setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"),true);
-				return false;
-			}
-		}
-		else
-		{
-			setStatus(tr("No Experiment returned by JOINSESSION"),true);
+			setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"),true);
 			return false;
 		}
-
+		activeExperiment_ = activeDesign_->getDesign("Experiment",0)->getRootAsset().staticCast<Experiment>();
 	}
 	activeExperiment_->setEngine(engine_);
 

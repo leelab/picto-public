@@ -16,6 +16,7 @@
 #include "../parameter/PseudorandomIntParameter.h"
 #include "../parameter/TimerParameter.h"
 #include "../parameter/OperatorClickParameter.h"
+#include "../parameter/SignalValueParameter.h"
 
 #include "../stimuli/ArrowGraphic.h"
 #include "../stimuli/BoxGraphic.h"
@@ -75,6 +76,8 @@ ScriptableContainer::ScriptableContainer()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimerParameter::Create))));
 	parameterFactory_->addAssetType("OperatorClick",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorClickParameter::Create))));
+	parameterFactory_->addAssetType("SignalValue",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalValueParameter::Create))));
 
 
 	AddDefinableObjectFactory("VisualElement",visualElementFactory_);

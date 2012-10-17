@@ -1,4 +1,4 @@
-<PictoData><AnalysisContainer id="0"/><Experiment id="1">
+<PictoData><Name>PTDelaySaccadeTraining</Name><AnalysisContainer id="0"/><Experiment id="1">
     <SyntaxVersion id="2">0.0.1</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
@@ -443,7 +443,7 @@
     <UIInfo id="390">
       
     <Pos id="392" x="0" y="0"/><OpenDescendant id="610">1</OpenDescendant></UIInfo>
-    <Name id="393">PTDelaySaccadeTraining</Name>
+    
     <Task id="3486">
       <Name id="3487">DelaySaccadeTraining</Name>
       <UIInfo id="3488">

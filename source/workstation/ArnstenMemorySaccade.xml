@@ -582,14 +582,14 @@
 <UIInfo id="390">
 	<Pos id="392" x="0" y="0"/>
 <OpenDescendant id="588">1</OpenDescendant></UIInfo>
-<Name id="393">MemorySaccade</Name>
+<Name id="393">ArnstenMemorySaccade</Name>
 <XGain id="394">1</XGain>
 <XOffset id="395">0</XOffset>
 <XYSignalShear id="396">0</XYSignalShear>
 <YGain id="397">1</YGain>
 <YOffset id="398">0</YOffset>
     <Task id="635">
-      <Name id="636">ArnstenMemorySaccade</Name>
+      <Name id="636">MemorySaccade</Name>
       <StateMachine id="637">
         <EntryScript id="638">
           expInfo.setData(&quot;Trial&quot;,-1);

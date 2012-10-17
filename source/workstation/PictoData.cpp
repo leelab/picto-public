@@ -7,6 +7,7 @@ namespace Picto
 
 PictoData::PictoData()
 {
+	AddDefinableProperty("Name","Untitled");
 	AddDefinableObjectFactory("Experiment",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(Experiment::Create))));
 	AddDefinableObjectFactory("AnalysisContainer",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AnalysisContainer::Create))));
 	

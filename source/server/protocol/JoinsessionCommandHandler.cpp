@@ -83,27 +83,11 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 		sessInfo->addAuthorizedObserver(observerId,password);
 	}
 
-	//Find the experiment's XML
-	QByteArray experimentXml;
-	experimentXml = sessInfo->experimentXml();
-
-	//Write out the content
-	//The XMLStreamWriter doesn't handle copying text well, so we'll use it first, and then
-	//fill in the experiment XML later
-	QByteArray joinSessionXml;
-	QXmlStreamWriter xmlWriter(&joinSessionXml);
-	xmlWriter.writeStartElement("JoinSession");
-	xmlWriter.writeTextElement("SessionID",sessionId.toString());
-	xmlWriter.writeEndElement();
-
-	int sessionIndex;
-	sessionIndex = joinSessionXml.lastIndexOf("</JoinSession>");
-	int expIndex;
-	expIndex = experimentXml.indexOf("<Experiment>");
-	joinSessionXml.insert(sessionIndex,experimentXml.mid(expIndex));
-
-
-	okResponse->setContent(joinSessionXml);
+	okResponse->setFieldValue("SessionID",sessionId.toString());
+	
+	//Write out the experiment's XML
+	QByteArray pictoDataXml = sessInfo->experimentXml();
+	okResponse->setContent(pictoDataXml);
 
 	return okResponse;
 }

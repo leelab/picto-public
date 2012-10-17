@@ -1,4 +1,4 @@
-<PictoData><AnalysisContainer id="0"/><Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
+<PictoData><Name>FirstPhophorTest</Name><AnalysisContainer id="0"/><Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
         <Parameter type="OperatorClick" id="5">
@@ -450,7 +450,7 @@
 <UIInfo id="390">
 	<Pos id="392" x="0" y="0"/>
 <OpenDescendant id="606">1</OpenDescendant></UIInfo>
-<Name id="393">FirstPhosphorTest</Name>
+
 <XGain id="394">1</XGain>
 <XOffset id="395">0</XOffset>
 <XYSignalShear id="396">0</XYSignalShear>

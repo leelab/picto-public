@@ -34,7 +34,7 @@ public:
 	void setX(int){};
 	int getY(){propertyContainer_->setPropertyValue("NewClick",false);return propertyContainer_->getPropertyValue("Pos").toPoint().y();};
 	void setY(int){};
-	bool getNewClick(){return propertyContainer_->getPropertyValue("NewClick").toBool();};
+	bool getNewClick(){bool r = propertyContainer_->getPropertyValue("NewClick").toBool();propertyContainer_->setPropertyValue("NewClick",false);return r;};
 	void setNewClick(bool){};
 	void setLastClick(QPoint point);
 	static void addClick(QPoint point);

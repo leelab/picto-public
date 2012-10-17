@@ -41,18 +41,14 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 		Q_ASSERT(experiment);
 	}
 	QList<QSharedPointer<DataStore>> runtimeDescendants = dataStore->getRuntimeEditableDescendants();
-	runtimeDescendants.push_front(experiment.staticCast<DataStore>());
+	if(experiment.staticCast<Picto::Experiment>()->isUIEnabled())
+		runtimeDescendants.push_front(experiment.staticCast<DataStore>());
 	foreach(QSharedPointer<DataStore> runtimeDesc,runtimeDescendants)
 	{
 		QString parentPath = runtimeDesc->getPath();
 		QHash<QString, QVector<QSharedPointer<Property>>> properties;
 		QList<QSharedPointer<Property>> runTimeProps;
-		//If its a scritable, we only want to change the initialization properties.  If its something else
-		//(currently only experiment uses this) we want to change the properties immediately.
-		if(runtimeDesc->inherits("Picto::Scriptable"))
-			properties = runtimeDesc.staticCast<Scriptable>()->getInitPropertyContainer()->getProperties();
-		else
-			properties = runtimeDesc->getPropertyContainer()->getProperties();
+		properties = runtimeDesc->getUIPropertyContainer()->getProperties();
 		QStringList orderedProps = runtimeDesc->getOrderedPropertyList();
 		foreach(QString propTag,orderedProps)
 		{
@@ -72,10 +68,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 		QGroupBox* assetBox = new QGroupBox(runtimeDesc->getName());
 		QVBoxLayout* assetLayout = new QVBoxLayout(assetBox);
 		QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
-		if(runtimeDesc->inherits("Picto::Scriptable"))
-			manager = runtimeDesc.staticCast<Scriptable>()->getInitPropertyContainer()->getPropertyManager();
-		else
-			manager = runtimeDesc->getPropertyContainer()->getPropertyManager();
+		manager = runtimeDesc->getUIPropertyContainer()->getPropertyManager();
 		browser->setFactoryForManager(manager.data(), propertyFactory_.data());
 		foreach(QSharedPointer<Property> runTimeProp, runTimeProps) 
 		{

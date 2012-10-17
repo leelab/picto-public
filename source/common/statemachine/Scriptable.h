@@ -29,6 +29,7 @@ public:
 	/*! \brief Resets this scriptables data fields to their original values.
 	 */
 	virtual void reset();
+		virtual QSharedPointer<PropertyContainer> getUIPropertyContainer(){return getInitPropertyContainer();};
 	QSharedPointer<PropertyContainer> getInitPropertyContainer(){return initPropertyContainer_;};
 	virtual QString getUITemplate(){return "Scriptable";};
 	bool isUIEnabled(){return propertyContainer_->getPropertyValue("UIEnabled").toBool();};

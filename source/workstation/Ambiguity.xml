@@ -1,4 +1,4 @@
-<PictoData><AnalysisContainer id="0"><AnalysisDefinition id="0">
+<PictoData><Name>Ambiguity</Name><AnalysisContainer id="0"><AnalysisDefinition id="0">
     <Name>EventAndEye</Name>
     <Script>
       readme.writeLine(&quot;Name:\t&quot; + name);
@@ -839,7 +839,7 @@
     <UIInfo id="390">
       
     <Pos id="392" x="0" y="0"/><OpenDescendant id="1805">4</OpenDescendant></UIInfo>
-    <Name id="393">Ambiguity</Name>
+    
     <Task id="394">
       <Name id="395">ProbabilityTracking</Name>
       <UIInfo id="396">

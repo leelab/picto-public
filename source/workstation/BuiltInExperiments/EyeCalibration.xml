@@ -1,6 +1,4 @@
-<PictoData id="0">
-	
-	<Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
+<PictoData><Name>EyeCalibration</Name><AnalysisContainer id="0"/><Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
         <Parameter type="OperatorClick" id="5">
@@ -38,7 +36,54 @@
               Target.x = Square.x;
               Target.y = Square.y;
             </EntryScript>
-            <FrameScript id="28"/>
+            <FrameScript id="28">if(operatorClick.newClick &amp;&amp; (assistedCalibration.value == true))
+{
+	var x = posSig.getValue(&quot;x&quot;); 
+	var y = posSig.getValue(&quot;y&quot;);
+	var colWidth = Grid.width/Grid.columns;
+	var rowHeight = Grid.height/Grid.rows;
+	var text = &quot;&quot;;
+	if((Experiment.xGain == 0) || (Experiment.yGain == 0))
+	{
+		text =		&quot;Assisted Calibration does\n&quot;+
+					&quot;not work when either gain\n&quot;+
+					&quot;value is zero&quot;
+	}
+	else if( (Math.abs(Square.x - 400) &lt; (colWidth/4.0))
+		&amp;&amp; (Math.abs(Square.y - 300) &lt; (rowHeight/4.0))
+			)
+	{
+		Experiment.xOffset = Experiment.xOffset + (Square.x-x)/Experiment.xGain;
+		Experiment.yOffset = Experiment.yOffset + (Square.y-y)/Experiment.yGain;
+		text = &quot;Offsets were calculated&quot;
+	}
+	else
+	{
+		var xGainC = 0;
+		var yGainC = 0;
+		if(Math.abs(Square.x - 400) &gt; (colWidth/4.0))
+		{
+			Experiment.xGain = Experiment.xGain*((Square.x-400)/(x-400));
+			xGainC = 1;
+		}
+		if(Math.abs(Square.y - 300) &gt; (rowHeight/4.0))
+		{
+			Experiment.yGain = Experiment.yGain*((Square.y-300)/(y-300));
+			yGainC = 1;
+		}
+		if(xGainC || yGainC)
+		{		
+			text = (xGainC &amp;&amp; yGainC)?&quot;XGain and YGain were\n&quot;:xGainC?&quot;XGain was &quot;:&quot;YGain was &quot;;
+			text = text + &quot;calculated&quot;;
+		}
+	}
+	assistFeedback.text = text;
+	var textX = Square.x+Square.width;
+	if(textX + assistFeedback.width &gt; 800)
+		textX = Square.x-assistFeedback.width;
+	assistFeedback.setPos(textX,Square.y-Square.height/2.0);
+	assistFeedback.visible = true;
+}</FrameScript>
             <Name id="29">PresentStimulus</Name>
             <Result id="30">
               <Name id="31">Failed</Name>
@@ -201,7 +246,8 @@
               <Source id="168">WaitForOperatorClick</Source>
               <SourceResult id="169">Done</SourceResult>
             </Transition>
-            <ExitScript id="170">Square.red = 255;</ExitScript>
+            <ExitScript id="170">Square.red = 255;
+assistFeedback.visible = false;</ExitScript>
             <BackgroundColor A="255" B="0" G="0" R="0" id="171">#000000</BackgroundColor>
             <EntryScript id="173"/>
             <FrameScript id="174"/>
@@ -255,7 +301,7 @@
               <UIOrder id="219">0</UIOrder>
             </Result>
             <StateMachineElement type="ScriptElement" id="220">
-              <Name id="221">SetTargetRed</Name>
+              <Name id="221">SetTargetGreen</Name>
               <Result id="222">
                 <Name id="223">false</Name>
                 <UIEnabled id="224">false</UIEnabled>
@@ -302,12 +348,12 @@
             <MinRewardPeriod id="491">125</MinRewardPeriod></StateMachineElement>
             <Transition id="260">
               <Destination id="261">Reward</Destination>
-              <Source id="262">SetTargetRed</Source>
+              <Source id="262">SetTargetGreen</Source>
               <SourceResult id="263">false</SourceResult>
             </Transition>
             <Transition id="264">
               <Destination id="265">Reward</Destination>
-              <Source id="266">SetTargetRed</Source>
+              <Source id="266">SetTargetGreen</Source>
               <SourceResult id="267">true</SourceResult>
             </Transition>
             <Transition id="268">
@@ -324,7 +370,7 @@
             <Type id="278">StateMachine</Type>
             <UIEnabled id="279">false</UIEnabled>
             <UIOrder id="280">0</UIOrder>
-          <Transition id="502"><Destination id="498">SetTargetRed</Destination><Source id="500"/><SourceResult id="501"/></Transition></StateMachineElement>
+          <Transition id="502"><Destination id="498">SetTargetGreen</Destination><Source id="500"/><SourceResult id="501"/></Transition></StateMachineElement>
           <Transition id="281">
             <Destination id="282">FixationFeedback</Destination>
             <Source id="283">PresentStimulus</Source>
@@ -335,7 +381,12 @@
             <Source id="287">FixationFeedback</Source>
             <SourceResult id="288">Done</SourceResult>
           </Transition>
-          <EntryScript id="289">Target.radius = TargetRadius.value;</EntryScript>
+          <EntryScript id="289">Target.radius = TargetRadius.value;
+if(assistedCalibration.value)
+{
+	assistLabel.visible = true;
+	Grid.setColor(0,255,0);
+}</EntryScript>
           <Parameter type="Range" id="290">
             <Increment id="291">1</Increment>
             <Max id="292">1000</Max>
@@ -354,7 +405,7 @@
           <Type id="304">StateMachine</Type>
           <UIEnabled id="305">false</UIEnabled>
           <UIOrder id="306">0</UIOrder>
-        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/></Transition></StateMachineElement>
+        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/></Transition><Parameter type="SignalValue" id="621"><Name id="622">posSig</Name><Signal id="623">Position</Signal><UIEnabled id="624">false</UIEnabled><UIInfo id="625"><OpenDescendant id="626">0</OpenDescendant><Pos id="627" x="193" y="471"/></UIInfo><UIOrder id="628">0</UIOrder></Parameter><Parameter type="Boolean" id="618"><FalseLabel id="619">False</FalseLabel><Name id="620">assistedCalibration</Name><TrueLabel id="629">True</TrueLabel><UIEnabled id="630">true</UIEnabled><UIInfo id="631"><OpenDescendant id="632">0</OpenDescendant><Pos id="648" x="71" y="473"/></UIInfo><UIOrder id="649">0</UIOrder><Value id="650">false</Value></Parameter><VisualElement type="Text Graphic" id="657"><Color A="255" B="0" G="170" R="255" id="658">#ffaa00</Color><Dimensions height="20" id="659" width="230" x="0" y="0"/><Layer id="660">0</Layer><Name id="661">assistLabel</Name><OperatorView id="662">true</OperatorView><Position id="663" x="290" y="0"/><SubjectView id="664">false</SubjectView><Text id="665">ASSISTED CALIBRATION MODE</Text><UIEnabled id="666">false</UIEnabled><UIInfo id="667"><OpenDescendant id="668">0</OpenDescendant><Pos id="669" x="300" y="469"/></UIInfo><UIOrder id="670">0</UIOrder><Visible id="671">false</Visible></VisualElement></StateMachineElement>
         <VisualElement type="Box Graphic" id="307">
           <Color A="255" B="0" G="255" R="255" id="308">#ffff00</Color>
           <Dimensions height="10" id="309" width="10" x="0" y="0"/>
@@ -443,7 +494,7 @@
         <Level id="383">Stage</Level>
         <UIEnabled id="384">false</UIEnabled>
         <UIOrder id="385">0</UIOrder>
-      <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/></Transition></StateMachine>
+      <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/></Transition><VisualElement type="Text Graphic" id="633"><Color A="255" B="0" G="170" R="255" id="634">#ffaa00</Color><Dimensions height="60" id="635" width="200" x="0" y="0"/><Layer id="636">0</Layer><Name id="637">assistFeedback</Name><OperatorView id="638">true</OperatorView><Position id="639" x="0" y="0"/><SubjectView id="640">false</SubjectView><Text id="641"/><UIEnabled id="642">false</UIEnabled><UIInfo id="643"><OpenDescendant id="644">0</OpenDescendant><Pos id="645" x="290" y="425"/></UIInfo><UIOrder id="646">0</UIOrder><Visible id="647">true</Visible></VisualElement></StateMachine>
       <UIInfo id="386">
         <Pos id="387" x="1668" y="1744"/>
       </UIInfo>
@@ -451,12 +502,11 @@
     </Task>
 <UIInfo id="390">
 	<Pos id="392" x="0" y="0"/>
-</UIInfo>
-<Name id="393">Not Yet Named</Name>
+<OpenDescendant id="593">1</OpenDescendant></UIInfo>
+
 <XGain id="394">1</XGain>
 <XOffset id="395">0</XOffset>
 <XYSignalShear id="396">0</XYSignalShear>
 <YGain id="397">1</YGain>
 <YOffset id="398">0</YOffset>
-</Experiment>
-</PictoData>
+</Experiment></PictoData>

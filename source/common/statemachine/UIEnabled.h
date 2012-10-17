@@ -25,7 +25,7 @@ public:
 
 	static QSharedPointer<Asset> Create();
 	virtual QString getName(){return propertyContainer_->getPropertyValue("Name").toString();};
-	void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
+	virtual void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
 	void setPos(QPoint pos);
 	QPoint getPos();
 	void setOpenDescendant(int assetId);

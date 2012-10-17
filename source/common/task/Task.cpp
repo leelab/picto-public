@@ -247,7 +247,7 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 
 void Task::postDeserialize()
 {
-	UIEnabled::postDeserialize();
+	ScriptableContainer::postDeserialize();
 	QList<QSharedPointer<Asset>> stateMachines = getGeneratedChildren("StateMachine");
 	if(!stateMachines.isEmpty())
 	{
@@ -257,7 +257,7 @@ void Task::postDeserialize()
 
 bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!UIEnabled::validateObject(xmlStreamReader))
+	if(!ScriptableContainer::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

@@ -452,6 +452,8 @@ bool MainWindow::saveFile(const QString filename)
 	QFile file(filename);
 	if(file.open(QIODevice::WriteOnly))
 	{
+		//Make sure design name is the same as the filename
+		designRoot_->setDesignName(QFileInfo(file).baseName());
 		currViewer_->aboutToSave();
 		if(!file.write(designRoot_->getDesignRootText().toAscii()))
 			success = false;

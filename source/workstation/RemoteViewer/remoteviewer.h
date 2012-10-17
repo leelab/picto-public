@@ -188,6 +188,7 @@ private:
 	//Since we don't want the experiemnt to be changed while it is being run
 	//we keep a local copy here.
 	QSharedPointer<Picto::Experiment> activeExperiment_;
+	QSharedPointer<DesignRoot> activeDesign_;
 
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;

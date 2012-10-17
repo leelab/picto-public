@@ -41,6 +41,7 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 		box.exec();
 		return false;
 	}
+	setDesignName(pictoData->getName());
 	if(ObsoleteAsset::encounteredObsoleteAsset())
 	{
 		QMessageBox box;
@@ -124,7 +125,7 @@ void DesignRoot::setUnmodified()
 }
 QString DesignRoot::getDesignRootText()
 {
-	QString designRootText = "<PictoData>";
+	QString designRootText = QString("<PictoData><Name>%1</Name>").arg(getDesignName());
 	foreach(QVector<QSharedPointer<Design>> designList,designMap_)
 	{
 		foreach(QSharedPointer<Design> design,designList)

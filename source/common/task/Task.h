@@ -2,6 +2,7 @@
 #define _TASK_H_
 
 #include "../common.h"
+#include "../statemachine/scriptablecontainer.h"
 #include "../statemachine/UIEnabled.h"
 //#include "../parameter/ParameterContainer.h"
 #include "../property/PropertyContainer.h"
@@ -30,7 +31,7 @@ namespace Picto {
 */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Task : public UIEnabled
+class PICTOLIB_API Task : public ScriptableContainer
 #else
 class Task : public UIEnabled
 #endif

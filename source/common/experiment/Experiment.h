@@ -5,6 +5,7 @@
 #include "../common.h"
 
 #include "../task/Task.h"
+#include "../statemachine/scriptablecontainer.h"
 #include "../statemachine/UIEnabled.h"
 #include "../property/PropertyContainer.h"
 
@@ -38,15 +39,22 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Experiment : public UIEnabled
+class PICTOLIB_API Experiment : public ScriptableContainer
 #else
-class Experiment : public UIEnabled
+class Experiment : public ScriptableContainer
 #endif
 {
 	Q_OBJECT
+	Q_PROPERTY(double xOffset READ getXOffset WRITE setXOffset);
+	Q_PROPERTY(double yOffset READ getYOffset WRITE setYOffset);
+	Q_PROPERTY(double xGain READ getXGain WRITE setXGain);
+	Q_PROPERTY(double yGain READ getYGain WRITE setYGain);
+	Q_PROPERTY(double xySignalShear READ getXYSignalShear WRITE setXYSignalShear);
 public:
 	static QSharedPointer<Experiment> Create();
 	virtual ~Experiment(){};
+	virtual QString getName(){return "Experiment";};
+	virtual void setName(QString newName){};
 	void setEngine(QSharedPointer<Engine::PictoEngine> engine);
 	void addTask(QSharedPointer<Task> task);
 	bool runTask(QString taskName);
@@ -56,6 +64,8 @@ public:
 	QSharedPointer<Task> getTaskByName(QString taskName);
 
 	virtual QString assetType(){return "Experiment";};
+	//An experiment doesn't use its InitPropertyContainer for its UI properties.
+	virtual QSharedPointer<PropertyContainer> getUIPropertyContainer(){return getPropertyContainer();};
 	//QString getPropLookupXml();
 	//QString getTransLookupXml();
 
@@ -70,6 +80,17 @@ protected:
 
 
 private:
+	void setXOffset(double value) { propertyContainer_->setPropertyValue("XOffset",value); };
+	double getXOffset(){return propertyContainer_->getPropertyValue("XOffset").toDouble(); };
+	void setYOffset(double value) { propertyContainer_->setPropertyValue("YOffset",value); };
+	double getYOffset(){return propertyContainer_->getPropertyValue("YOffset").toDouble(); };
+	void setXGain(double value) { propertyContainer_->setPropertyValue("XGain",value); };
+	double getXGain(){return propertyContainer_->getPropertyValue("XGain").toDouble(); };
+	void setYGain(double value) { propertyContainer_->setPropertyValue("YGain",value); };
+	double getYGain(){return propertyContainer_->getPropertyValue("YGain").toDouble(); };
+	void setXYSignalShear(double value) { propertyContainer_->setPropertyValue("XYSignalShear",value); };
+	double getXYSignalShear(){return propertyContainer_->getPropertyValue("XYSignalShear").toDouble(); };
+
 	Experiment();
 	//QUuid uuid_;
 	//QString formatID_;

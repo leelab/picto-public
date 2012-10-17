@@ -38,6 +38,9 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 				types = assetFactory->getTypes();
 				foreach(QString type,types)
 				{
+					QString uiTemplate = assetFactory->getUITemplate(type);
+					if(uiTemplate.isEmpty())	//This will be the case for objects that don't inherit from UIEnabled
+						continue;
 					QString buttonName = childTag;
 					if(type != "")
 						buttonName.append(QString("\n(%1)").arg(type));

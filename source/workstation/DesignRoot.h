@@ -27,8 +27,11 @@ public:
 	void setUnmodified();
 	QString getDesignRootText();
 	bool compiles();
+	QString getDesignName(){return designName;};
+	void setDesignName(QString name){designName = name;};
 
 private:
 	QMap<QString,QVector<QSharedPointer<Design>>> designMap_;
+	QString designName;
 };
 #endif
