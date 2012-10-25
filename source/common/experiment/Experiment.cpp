@@ -204,6 +204,8 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 		return;
 	QSharedPointer<SignalChannel> posChannel = engine_->getSignalChannel("Position");
 	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
+	int displayWidth = 800;
+	int displayHeight = 600;
 
 	if(!signalCoeffInitialized_)
 	{
@@ -213,16 +215,13 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 		bool isMouseChannel = posChannel->getPortType() == "mouse";
 		if(isMouseChannel)
 		{	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
-			propertyContainer_->setPropertyValue("XOffset",-400);
+			propertyContainer_->setPropertyValue("XOffset",-(displayWidth/2));
 			propertyContainer_->setPropertyValue("XGain",1.0);
-			propertyContainer_->setPropertyValue("YOffset",-300);
+			propertyContainer_->setPropertyValue("YOffset",-(displayHeight/2));
 			propertyContainer_->setPropertyValue("YGain",1.0);
 			propertyContainer_->setPropertyValue("XYSignalShear",0.0);
 		}
 	}
-
-	int displayWidth = 800;
-	int displayHeight = 600;
 	double xZoom = propertyContainer_->getPropertyValue("XGain").toDouble();
 	double yZoom = propertyContainer_->getPropertyValue("YGain").toDouble();
 	double xGain = xZoom;
@@ -230,8 +229,8 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 	int xOffset = displayWidth/2 + propertyContainer_->getPropertyValue("XOffset").toDouble()*xZoom;
 	int yOffset = displayHeight/2 + propertyContainer_->getPropertyValue("YOffset").toDouble()*yZoom;
 
-	posChannel->setCalibrationCoefficients("x",xGain,xOffset,400/*double(windowDims.width())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
-	posChannel->setCalibrationCoefficients("y",yGain,yOffset,300/*double(windowDims.height())/2.0*/);//The value here before is more correct, but currently everything assumes 800x600 so we'll do that here too.
+	posChannel->setCalibrationCoefficients("x",xGain,xOffset,displayWidth/2);
+	posChannel->setCalibrationCoefficients("y",yGain,yOffset,displayHeight/2);
 	posChannel->setShear("x","y",propertyContainer_->getPropertyValue("XYSignalShear").toDouble());
 
 }
