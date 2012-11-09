@@ -13,16 +13,6 @@ void PropertyTable::addProperty(QSharedPointer<Property> prop)
 	connect(prop.data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SIGNAL(propertyChanged(QSharedPointer<Property>)));
 }
 
-void PropertyTable::updatePropertyValue(int index,QString value)
-{
-	QSharedPointer<Asset> asset = expConfig_->getAsset(index);
-	Q_ASSERT(asset->inherits("Picto::Property"));
-	asset.staticCast<Property>()->fromUserString(value);
-	//Q_ASSERT(index < propTable_.size());
-	//QSharedPointer<Property> prop = propTable_[index];
-	//prop->fromUserString(value);
-}
-
 //This can be used in conjunction with the Picto Engine to send all current property values to server.
 //Note that this function is set to ignore UIInfo objects, Transitions and Control Links.  Transitions and
 //Control Links don't have any properties that can change during and experiment.  UIInfo objects have no 
@@ -46,16 +36,12 @@ void PropertyTable::reportChangeInAllProperties()
 	}
 }
 
-//QSharedPointer<PropertyLookup> PropertyTable::getPropLookup()
-//{
-//	if(!propLookup_)
-//	{
-//		propLookup_ = QSharedPointer<PropertyLookup>(new PropertyLookup());
-//	}
-//	propLookup_->clear();
-//	foreach(QSharedPointer<Property> prop,propTable_)
-//	{
-//		propLookup_->addProperty(prop);
-//	}
-//	return propLookup_;
-//}
+void PropertyTable::updatePropertyValue(int index,QString value)
+{
+	QSharedPointer<Asset> asset = expConfig_->getAsset(index);
+	Q_ASSERT(asset->inherits("Picto::Property"));
+	asset.staticCast<Property>()->fromUserString(value);
+	//Q_ASSERT(index < propTable_.size());
+	//QSharedPointer<Property> prop = propTable_[index];
+	//prop->fromUserString(value);
+}

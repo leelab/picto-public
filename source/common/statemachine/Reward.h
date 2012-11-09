@@ -37,8 +37,8 @@ public:
 	void setNumber(int num){propertyContainer_->setPropertyValue("NumRewards",num);};
 	int getUnitQuantity(){return propertyContainer_->getPropertyValue("RewardQty").toInt();};
 	void setUnitQuantity(int quant){propertyContainer_->setPropertyValue("RewardQty",quant);};
-	int getMinRewardPeriod(){return propertyContainer_->getPropertyValue("minRewardPeriod").toInt();};
-	void setMinRewardPeriod(int delay){propertyContainer_->setPropertyValue("minRewardPeriod",delay);};
+	int getMinRewardPeriod(){return propertyContainer_->getPropertyValue("MinRewardPeriod").toInt();};
+	void setMinRewardPeriod(int delay){propertyContainer_->setPropertyValue("MinRewardPeriod",delay);};
 	//! \TODO Add rewarding options here...
 
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

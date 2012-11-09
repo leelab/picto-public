@@ -99,6 +99,13 @@ SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/TaskRunViewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/TaskRunViewer.cpp
 
+HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/ReplayViewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/ReplayViewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/NeuralViewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/NeuralViewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/BehavViewer.h
+SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/BehavViewer.cpp
+
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisParameterSelector.h

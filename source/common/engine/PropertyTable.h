@@ -28,15 +28,14 @@ public:
 	PropertyTable(QSharedPointer<ExperimentConfig> expConfig);
 	void clear(){propTable_.clear();};
 	void addProperty(QSharedPointer<Property> prop);
-	void updatePropertyValue(int index,QString value);
 	void reportChangeInAllProperties();
 	QVector<QSharedPointer<Property>> propTable_;
-	//QSharedPointer<PropertyLookup> getPropLookup();
 signals:
 	void propertyChanged(QSharedPointer<Property> changedProp);
+public slots:
+	void updatePropertyValue(int index,QString value);
 private:
 	QSharedPointer<ExperimentConfig> expConfig_;
-	//QSharedPointer<PropertyLookup> propLookup_;
 };
 
 
