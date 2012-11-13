@@ -1,4 +1,5 @@
 #include "PropertyCollectionState.h"
+#include "PlaybackData.h"
 using namespace Picto;
 
 PropertyCollectionState::PropertyCollectionState() :
@@ -28,7 +29,7 @@ bool PropertyCollectionState::setPropertyValue(double time,qulonglong dataId,int
 		propLookup_[propId] = newPropState;
 		connect(newPropState.data(),SIGNAL(propertyChanged(int,QString)),this,SLOT(subPropertyChanged(int,QString)));
 	}
-	setValue(QSharedPointer<IndexedData<qulonglong>>(new PropertyCollectionData(0.0,dataId,propId)));
+	setValue(QSharedPointer<IndexedData>(new PlaybackData<int>(propId,time,dataId)));
 	propLookup_[propId]->setPropertyValue(time,dataId,value);
 	return true;
 }
@@ -39,30 +40,38 @@ void  PropertyCollectionState::triggerValueChange(bool reverse,bool last)
 	{	//When moving in reverse, we must check the last property (the one that is 
 		//next in time) and tell the PropertyState for that property to move back
 		//to its previous value.
-		QSharedPointer<PropertyCollectionData> nextVal = getNextValue().staticCast<PropertyCollectionData>();
+		QSharedPointer<PlaybackData<int>> nextVal = getNextValue(-1).staticCast<PlaybackData<int>>();
 		Q_ASSERT(nextVal);
-		Q_ASSERT(propLookup_.contains(nextVal->propId_));
+		Q_ASSERT(propLookup_.contains(nextVal->data_));
 		//Only transmit change signals from underlying properties to the outside
 		//if this is the last triggerValueChange (ie. This brings us to the index
 		//that was set in DataState::setCurrentIndex().
 		transmitChangeSig_ = last;
-		propLookup_.value(nextVal->propId_)->setCurrentIndex(nextVal->index_);
+		QSharedPointer<IndexedData> currVal = getCurrentValue();
+		if(currVal)
+			propLookup_.value(nextVal->data_)->setCurrentIndex(getCurrentValue()->index_);
+		else	//If this is the case, we've moved back before the first value
+			propLookup_.value(nextVal->data_)->setCurrentIndex(PlaybackIndex());
 		transmitChangeSig_ = true;
 	}
 	else
 	{	//Tell the PropertyState for the property that just changed to update
 		//its value.
-		QSharedPointer<PropertyCollectionData> currVal = getCurrentValue().staticCast<PropertyCollectionData>();
+		QSharedPointer<PlaybackData<int>> currVal = getCurrentValue().staticCast<PlaybackData<int>>();
 		Q_ASSERT(currVal);
-		Q_ASSERT(propLookup_.contains(currVal->propId_));
-		propLookup_.value(currVal->propId_)->setCurrentIndex(currVal->index_);
+		Q_ASSERT(propLookup_.contains(currVal->data_));
+		propLookup_.value(currVal->data_)->setCurrentIndex(currVal->index_);
 	}
 }
 
-void PropertyCollectionState::requestMoreData(qulonglong index)
-{}
-void PropertyCollectionState::requestMoreDataByTime(double time)
-{}
+void PropertyCollectionState::requestMoreData(PlaybackIndex currLast,PlaybackIndex to)
+{
+	emit needsData(currLast,to);
+}
+void PropertyCollectionState::requestNextData(PlaybackIndex currLast,bool backward)
+{
+	emit needsNextData(currLast,backward);
+}
 
 void PropertyCollectionState::subPropertyChanged(int propId, QString value)
 {

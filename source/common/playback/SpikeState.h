@@ -8,17 +8,20 @@ namespace Picto {
 struct PlaybackSpikeData;
 /*! \brief Stores Transition PlaybackData values for use in Playback system.
  */
-class SpikeState :public SpikeReader, public EventState<double>
+class SpikeState :public SpikeReader, public EventState
 {
 	Q_OBJECT
 public:
 	bool setSpike(qulonglong dataid,double spikeTime,int channel,int unit,QByteArray waveform);
-protected:
-	virtual void triggerValueChange(bool reverse,bool last);
-	virtual void requestMoreData(double index);
-	virtual void requestMoreDataByTime(double time);
 signals:
 	void spikeEvent(int channel, int unit, QVector<float> waveform);
+	void needsData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsNextData(PlaybackIndex currLast,bool backward);
+
+protected:
+	virtual void triggerValueChange(bool reverse,bool last);
+	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
+	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 };
 
 struct PlaybackSpikeData

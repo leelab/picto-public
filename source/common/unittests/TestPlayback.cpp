@@ -1,3 +1,4 @@
+#include <QTime>
 #include "TestPlayback.h"
 #include "../memleakdetect.h"
 
@@ -20,11 +21,25 @@ TestPlayback::TestPlayback()
 void TestPlayback::Test()
 {
 	loader_->setFile("filename");
-	loader_->loadRun(0);
-	while(player_->stepForward())
+	//loader_->loadRun(0);
+	currTime_ = 0;
+	QTime timer;
+	timer.start();
+	for(int i=0;i<1;i++)
 	{
-		QCoreApplication::processEvents();
+		qDebug("\n\nStart Forward\n\n");
+		while(player_->stepForward() && currTime_ < 0.08)
+		{
+			QCoreApplication::processEvents();
+		}
+		qDebug("\n\nStart Back\n\n");
+		while(player_->stepBack() && currTime_ > 0.02)
+		{
+			QCoreApplication::processEvents();
+		}
 	}
+	QString debugStr = QString("Elapsed Time: %1").arg(timer.elapsed());
+	qDebug(debugStr.toAscii());
 }
 
 void TestPlayback::propertyChanged(int propId, QString value)
@@ -39,6 +54,7 @@ void TestPlayback::transitionActivated(int transId)
 }
 void TestPlayback::framePresented(double time)
 {
+	currTime_ = time;
 	QString debugStr = QString("Frame Presented: Time: %1").arg(time);
 	qDebug(debugStr.toAscii());
 }

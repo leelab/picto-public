@@ -6,8 +6,7 @@ namespace Picto {
 /*! \brief Extends Data State for Data sources that have a persistant value.
  *	See also Event State
  */
-template <class I>// <type of data index>
-class ValueState : public DataState<I>
+class ValueState : public DataState
 {
 public:
 	ValueState():DataState(false){};

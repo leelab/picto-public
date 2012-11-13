@@ -6,19 +6,21 @@
 namespace Picto {
 /*! \brief Stores Property PlaybackData values for use in Playback system.
  */
-class PropertyState : public PropertyReader, public ValueState<qulonglong>
+class PropertyState : public PropertyReader, public ValueState
 {
 	Q_OBJECT
 public:
 	PropertyState(int propId);
 	bool setPropertyValue(double time,qulonglong dataId,QString value);
-protected:
-	virtual void triggerValueChange(bool reverse,bool last);
-	virtual void requestMoreData(qulonglong index);
-	virtual void requestMoreDataByTime(double time);
 
 signals:
 	void propertyChanged(int propId, QString value);
+
+protected:
+	virtual void triggerValueChange(bool reverse,bool last);
+	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
+	virtual void requestNextData(PlaybackIndex currLast,bool backward);
+
 private:
 	int propId_;
 };

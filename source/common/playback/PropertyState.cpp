@@ -8,19 +8,22 @@ propId_(propId)
 }
 bool PropertyState::setPropertyValue(double time,qulonglong dataId,QString value)
 {
-	setValue(QSharedPointer<IndexedData<qulonglong>>(new PlaybackData<qulonglong,QString>(time,dataId,value)));
+	setValue(QSharedPointer<IndexedData>(new PlaybackData<QString>(value,time,dataId)));
 	return true;
 }
 
 void PropertyState::triggerValueChange(bool reverse,bool last)
 {
-	emit propertyChanged(propId_,getCurrentValue().staticCast<PlaybackData<qulonglong,QString>>()->data_);
+	QSharedPointer<PlaybackData<QString>> currVal = getCurrentValue().staticCast<PlaybackData<QString>>();
+	if(currVal)
+		emit propertyChanged(propId_,currVal->data_);
+	else //If this is the case, we've moved back before the first value
+		emit propertyChanged(propId_,"");
 }
 
-void PropertyState::requestMoreData(qulonglong index)
+void PropertyState::requestMoreData(PlaybackIndex currLast,PlaybackIndex to)
 {
 }
-
-void PropertyState::requestMoreDataByTime(double time)
+void PropertyState::requestNextData(PlaybackIndex currLast,bool backward)
 {
 }

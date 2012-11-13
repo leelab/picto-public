@@ -15,8 +15,7 @@ namespace Picto {
  *	it can use the corresponding PropertyReader, but this object handles all 
  *	changes to the current index of the underlying property states.
  */
-struct PropertyCollectionData;
-class PropertyCollectionState : public QObject, public DataState<qulonglong>
+class PropertyCollectionState : public QObject, public DataState
 {
 	Q_OBJECT
 public:
@@ -29,14 +28,16 @@ public:
 
 signals:
 	void propertyChanged(int propId, QString value);
+	void needsData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsNextData(PlaybackIndex currLast,bool backward);
 
 protected:
 	//Each time this changes, this object updates the corresponding PropertyState in its propLookup table
 	//to avoid having to iterate through everything every time something changes.
 	//Value changed signal is only emitted on last iteration when moving in reverse.
 	virtual void  triggerValueChange(bool reverse,bool last);
-	virtual void requestMoreData(qulonglong index);
-	virtual void requestMoreDataByTime(double time);
+	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
+	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 
 private:
 	QHash<int,QSharedPointer<PropertyState>> propLookup_;
@@ -44,12 +45,6 @@ private:
 
 private slots:
 	void subPropertyChanged(int propId, QString value);
-};
-
-struct PropertyCollectionData : public IndexedData<qulonglong>
-{
-	PropertyCollectionData(double time,qulonglong index,int propId):IndexedData(time,index){propId_ = propId;};
-	int propId_;
 };
 
 }; //namespace Picto

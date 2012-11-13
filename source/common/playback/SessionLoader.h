@@ -30,7 +30,35 @@ public:
 private:
 
 	QSharedPointer<SessionState> sessionState_;
+	double bufferTime_;
+	qulonglong tempVal_;
+	qulonglong tempId_;
 
+
+	QVector<QPair<double,qulonglong>> props_;
+	QVector<QPair<double,qulonglong>> trans_;
+	QVector<QPair<double,qulonglong>> frames_;
+	int propPerFrame_;
+	int transPerFrame_;
+
+
+
+private slots:
+	void loadPropertyData(PlaybackIndex currLast,PlaybackIndex to);
+	void loadTransitionData(PlaybackIndex currLast,PlaybackIndex to);
+	void loadFrameData(PlaybackIndex currLast,PlaybackIndex to);
+	void loadRewardData(PlaybackIndex currLast,PlaybackIndex to);
+	void loadSignalData(PlaybackIndex currLast,PlaybackIndex to);
+	void loadLFPData(PlaybackIndex currLast,PlaybackIndex to);
+	void loadSpikeData(PlaybackIndex currLast,PlaybackIndex to);
+
+	void loadNextPropertyData(PlaybackIndex currLast,bool backward);
+	void loadNextTransitionData(PlaybackIndex currLast,bool backward);
+	void loadNextFrameData(PlaybackIndex currLast,bool backward);
+	void loadNextRewardData(PlaybackIndex currLast,bool backward);
+	void loadNextSignalData(PlaybackIndex currLast,bool backward);
+	void loadNextLFPData(PlaybackIndex currLast,bool backward);
+	void loadNextSpikeData(PlaybackIndex currLast,bool backward);
 };
 
 }; //namespace Picto

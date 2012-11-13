@@ -7,8 +7,7 @@ namespace Picto {
  *	having no persistant values.
  *	See also Value State
  */
-template <class I>// <type of data index>
-class EventState : public DataState<I>
+class EventState : public DataState
 {
 public:
 	EventState():DataState(false){};

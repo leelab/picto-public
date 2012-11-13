@@ -41,7 +41,7 @@ public:
 	bool setFrame(qulonglong dataId,double frameTime);
 	bool setReward(double time,qulonglong dataId,int duration,int channel);
 	bool setSignal(QString name,QStringList subChanNames,double time,qulonglong dataId,double sampPeriod,QByteArray data);
-	bool setLFP(qulonglong dataId,double startTime,int channel,QByteArray data);
+	bool setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
 	bool setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
 
 	//GET FUNCTIONS-----------------------------------------------------------------
@@ -52,7 +52,7 @@ public:
 	QSharedPointer<FrameReader> getFrameReader();
 	QSharedPointer<RewardReader> getRewardReader();
 	QSharedPointer<SignalReader> getSignalReader(QString name);
-	QSharedPointer<LfpReader> getLfpReader();
+	QSharedPointer<LfpReader> getLfpReader(int channel);
 	QSharedPointer<SpikeReader> getSpikeReader();
 
 	//The separate types of DataStates are used to step through the session.
@@ -61,11 +61,11 @@ public:
 	QSharedPointer<FrameState> getFrameState();
 	QSharedPointer<RewardState> getRewardState();
 	QSharedPointer<SignalState> getSignalState(QString name);
-	QSharedPointer<LfpState> getLfpState();
+	QSharedPointer<LfpState> getLfpState(int channel);
 	QSharedPointer<SpikeState> getSpikeState();
 
-	QList<QSharedPointer<DataState<qulonglong>>> getStatesIndexedById();
-	QList<QSharedPointer<DataState<double>>> getStatesIndexedByTime();
+	QList<QSharedPointer<DataState>> getStatesIndexedById();
+	QList<QSharedPointer<DataState>> getStatesIndexedByTime();
 signals:
 	
 	//Synchronous Data Signals, triggered when values change
@@ -78,15 +78,30 @@ signals:
 	void spikeEvent(int channel, int unit, QVector<float> waveform);
 
 	//Indicates that data is needed by the session state to fulfil playback requests
-	//from boundIndex up to and including toIndex.  More data may be supplied.  This
-	//will improve speed at the expense of memory space.
-	void needsPropertyData(qulonglong boundIndex,qulonglong toIndex);
-	void needsTransitionData(qulonglong boundIndex,qulonglong toIndex);
-	void needsFrameData(qulonglong boundIndex,qulonglong toIndex);
-	void needsRewardData(double boundTime,double toTime);
-	void needsSignalData(double boundTime,double toTime);
-	void needsLFPData(double boundTime,double toTime);
-	void needsSpikeData(double boundTime,double toTime);
+	//from (not including) currLast up to and including toIndex.  If data is not available, the 
+	//system should wait for it to arrive before returning from this function.
+	//More data than requested may be supplied. 
+	void needsPropertyData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsTransitionData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsFrameData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsRewardData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsSignalData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsLFPData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsSpikeData(PlaybackIndex currLast,PlaybackIndex to);
+
+	//Indicates that at least a single data unit is needed by the session state 
+	//to fulfil playback requests from (not including) currLast in the direction of
+	//the backward indicator.  If data is not available, the system should wait for 
+	//it to arrive before returning from this function.  
+	//More data than requested may be supplied. 
+	void needsNextPropertyData(PlaybackIndex currLast,bool backward);
+	void needsNextTransitionData(PlaybackIndex currLast,bool backward);
+	void needsNextFrameData(PlaybackIndex currLast,bool backward);
+	void needsNextRewardData(PlaybackIndex currLast,bool backward);
+	void needsNextSignalData(PlaybackIndex currLast,bool backward);
+	void needsNextLFPData(PlaybackIndex currLast,bool backward);
+	void needsNextSpikeData(PlaybackIndex currLast,bool backward);
+
 	//Indicates that this SessionState was reset (for a new Run for example)
 	void wasReset();
 
@@ -98,11 +113,11 @@ private:
 	QSharedPointer<FrameState> frameState_;
 	QSharedPointer<RewardState> rewardState_;
 	QHash<QString,QSharedPointer<SignalState>> signalLookup_;
-	QSharedPointer<LfpState> lfpState_;
+	QHash<int,QSharedPointer<LfpState>> lfpLookup_;
 	QSharedPointer<SpikeState> spikeState_;
 
-	QList<QSharedPointer<DataState<qulonglong>>> statesWithIds_;
-	QList<QSharedPointer<DataState<double>>> statesWithTimes_;
+	QList<QSharedPointer<DataState>> statesWithIds_;
+	QList<QSharedPointer<DataState>> statesWithTimes_;
 
 };
 

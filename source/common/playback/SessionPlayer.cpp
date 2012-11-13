@@ -3,11 +3,9 @@ using namespace Picto;
 
 SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState)
 :
-sessionState_(sessState),
-started_(false),
-lastTime_(-1),
-onFrame_(false)
+sessionState_(sessState)
 {
+	sessionStateReset();
 	connect(sessionState_.data(),SIGNAL(wasReset()),this,SLOT(sessionStateReset()));
 }
 
@@ -22,8 +20,8 @@ bool SessionPlayer::stepForward()
 
 bool SessionPlayer::stepToNextFrame()
 {
-	qulonglong nextFrameId = sessionState_->getFrameState()->getNextIndex();
-	if(!nextFrameId)
+	PlaybackIndex nextFrameId = sessionState_->getFrameState()->getNextIndex(-1);
+	if(!nextFrameId.isValid())
 		return false;
 	while(lastIndex_ < nextFrameId)
 		stepForward();
@@ -37,8 +35,8 @@ bool SessionPlayer::stepBack()
 
 bool SessionPlayer::stepToPrevFrame()
 {
-	qulonglong prevFrameId = sessionState_->getFrameState()->getPrevIndex();
-	if(!prevFrameId)
+	PlaybackIndex prevFrameId = sessionState_->getFrameState()->getPrevIndex(-1);
+	if(!prevFrameId.isValid())
 		return false;
 	while(lastIndex_ > prevFrameId)
 		stepBack();
@@ -47,112 +45,44 @@ bool SessionPlayer::stepToPrevFrame()
 
 bool SessionPlayer::step(bool backward)
 {
-	qulonglong nextIndex;
-	bool moveToFrame = false;
-	double nextTime = sessionState_->getFrameReader()->getLatestTime();
-	if(!lastIndex_)
-	{
-		if(backward)
-			return false;
-
-		//Moving forward, nextIndex is the first index available
-		nextIndex = sessionState_->getTransitionState()->getFirstIndex();
-		if(!nextIndex)
-			return false;
-	}
-	else
-	{
-		//Figure out next step
-		qulonglong nextIndex;
-		qulonglong nextFrameIndex;
-		if(backward)
-		{//Get last transition or frame, whatever came last
-			nextIndex = sessionState_->getTransitionState()->getPrevIndex();
-			nextFrameIndex = sessionState_->getFrameState()->getPrevIndex();
-			if(nextFrameIndex > nextIndex)
-			{
-				moveToFrame = true;
-				nextIndex = nextFrameIndex;
-			}
-			if(onFrame_)
-				nextTime = sessionState_->getFrameReader()->getPrevTime();
-		}
-		else
-		{//Get next transition or frame, whatever comes first
-			nextIndex = sessionState_->getTransitionState()->getNextIndex();
-			nextFrameIndex = sessionState_->getFrameState()->getNextIndex();
-			if(nextFrameIndex < nextIndex)
-			{
-				moveToFrame = true;
-				nextIndex = nextFrameIndex;
-				nextTime = sessionState_->getFrameReader()->getNextTime();
-			}
-		}
-		if(!nextIndex)	//We reached the end/beginning of run for forward/backward
-			return false;
-	}
-	if(backward)
-	{	//When moving backward, just jump to the desired index for all DataStates
-		//since order is irrelevant.  Just make sure to do the final state (frame or transition)
-		//last so that all other levels will be correct first.
-		QSharedPointer<DataState<qulonglong>> finalState;
-		foreach(QSharedPointer<DataState<qulonglong>> dataState,sessionState_->getStatesIndexedById())
+	PlaybackIndex prevFrameId = sessionState_->getFrameState()->getPrevIndex(-1);
+	PlaybackIndex currFrameId = sessionState_->getFrameState()->getCurrentIndex();
+	PlaybackIndex nextFrameId = sessionState_->getFrameState()->getNextIndex(-1);
+	QSharedPointer<DataState> stateToTrigger = getNextTriggerState(backward);
+	if(stateToTrigger.isNull())
+		return false;
+	if	(	(!backward && (stateToTrigger->getNextIndex(nextFrameId.time()) == nextFrameId))
+			|| (backward && (lastIndex_ == currFrameId))
+		)
+	{	//When moving forward, if the next stateToTrigger is a frame,  or
+		//when moving backward if the latest triggered state is a frame, step to
+		//all time based data states first (ie. reward, signals, spike, lfp).
+		PlaybackIndex frameIndexForTime = (backward)?prevFrameId:nextFrameId;
+		if(frameIndexForTime.isValid())
 		{
-			if(dataState->getPrevIndex() == nextIndex)
+			PlaybackIndex timeIndex = PlaybackIndex::maxForTime(frameIndexForTime.time());
+			QList<QSharedPointer<DataState>> timeIndexedStates = sessionState_->getStatesIndexedByTime();
+			foreach(QSharedPointer<DataState> dataState,timeIndexedStates)
 			{
-				finalState = dataState;	//Will be the frame or transition state used to calculte nextIndex.
-				continue;
-			}
-			dataState->setCurrentIndex(nextIndex);
-		}
-		if(onFrame_)
-		{
-			foreach(QSharedPointer<DataState<double>> dataState,sessionState_->getStatesIndexedByTime())
-			{
-				dataState->setCurrentIndex(nextTime);
+				dataState->setCurrentIndex(timeIndex);
 			}
 		}
-		if(finalState)
-			finalState->setCurrentIndex(nextIndex);
 	}
-	else
-	{
-		//Step through all id indexed data states in order of id index up to the nextIndex
-		//without actually stepping that far.
-		stepToIndex<qulonglong>(sessionState_->getStatesIndexedById(),nextIndex,false);
-
-		//If the time is changing, step through all time indexed data states in time order
-		//up to and including currTime (signal channel's allow values with time equal to
-		//the first phosphor time to a frame).  Then step to the frame.
-		if(moveToFrame)
-		{
-			stepToIndex<double>(sessionState_->getStatesIndexedByTime(),nextTime,true);
-			sessionState_->getFrameState()->setCurrentIndex(nextTime);
-		}
-		else
-		{	//Since time isn't changing, no need to update time indexed data states.
-			//just update the transition state.
-			sessionState_->getTransitionState()->setCurrentIndex(nextIndex);
-		}
-	}
-
-
-	lastIndex_ = nextIndex;
-	lastTime_ = nextTime;
-	onFrame_ = moveToFrame;
+	stateToTrigger->setCurrentIndex((backward)?stateToTrigger->getPrevIndex(prevFrameId.time()):stateToTrigger->getNextIndex(nextFrameId.time()));
+	lastIndex_ = stateToTrigger->getCurrentIndex();
 	return true;
 }
 
 bool SessionPlayer::stepToTime(double time)
 {
-	if(time == lastTime_)
+	if(time == lastIndex_.time())
 		return true;
-	while(time > lastTime_)
+	while(time > lastIndex_.time())
 	{
 		if(!stepToNextFrame())
 			return false;
 	}
-	while(time < lastTime_)
+	while(time < lastIndex_.time())
 	{
 		if(!stepToPrevFrame())
 			return false;
@@ -160,8 +90,60 @@ bool SessionPlayer::stepToTime(double time)
 	return true;
 }
 
+QSharedPointer<DataState> SessionPlayer::getNextTriggerState(bool backward)
+{
+	//When moving forward, look for the next property, transition or frame
+	//with lowest index.  When moving backward, look for the current property,
+	//transition or frame with highest index.
+	QList<QSharedPointer<DataState>> idIndexedStates = sessionState_->getStatesIndexedById();
+	int nBuffer;
+	PlaybackIndex indexBuffer;
+	PlaybackIndex iterationIndex;
+	double boundaryTime = backward?
+							sessionState_->getFrameState()->getPrevIndex(-1).time()
+							:sessionState_->getFrameState()->getNextIndex(-1).time();
+
+	//Intialize the nBuffer and indexBuffer with the first
+	//valid entries available
+	int i=0;
+	do
+	{
+		nBuffer = i;
+		if(backward)
+			indexBuffer = idIndexedStates[i++]->getCurrentIndex();
+		else
+			indexBuffer = idIndexedStates[i++]->getNextIndex(boundaryTime);
+	} while(!indexBuffer.isValid() && i < idIndexedStates.size());
+	
+	//Get the state with the highest/lowest index for backward/forward case
+	for(;i<idIndexedStates.size();i++)
+	{
+		if(backward)
+		{
+			iterationIndex = idIndexedStates[i]->getCurrentIndex();
+		}
+		else
+		{
+			iterationIndex = idIndexedStates[i]->getNextIndex(boundaryTime);
+		}
+		if	(	iterationIndex.isValid()
+				&&	(
+						(!backward && iterationIndex < indexBuffer)
+						|| (backward && iterationIndex > indexBuffer)
+					)
+			)
+		{
+			indexBuffer = iterationIndex;
+			nBuffer = i;
+		}
+		
+	}
+	if(!indexBuffer.isValid())
+		return QSharedPointer<DataState>();
+	return idIndexedStates[nBuffer];
+}
+
 void SessionPlayer::sessionStateReset()
 {
-	lastIndex_ = 0;
-	lastTime_ = 0;
+	lastIndex_ = PlaybackIndex();
 }

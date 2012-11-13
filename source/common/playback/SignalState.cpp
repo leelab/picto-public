@@ -24,7 +24,7 @@ bool SignalState::setSignal(double time,qulonglong dataId,double sampPeriod,QByt
 		if(subChanInd == numSubChans_-1)
 		{
 			currTime = time + sampPeriod*i/numSubChans_;
-			setValue(QSharedPointer<IndexedData<double>>(new PlaybackData<double,PlaybackSignalData>(currTime,currTime,PlaybackSignalData(vals))));
+			setValue(QSharedPointer<IndexedData>(new PlaybackData<PlaybackSignalData>(PlaybackSignalData(vals),currTime)));
 		}
 	}
 	return true;
@@ -34,15 +34,19 @@ void SignalState::triggerValueChange(bool reverse,bool last)
 {
 	if(!reverse || last)
 	{
-		PlaybackSignalData* data = &getCurrentValue().staticCast<PlaybackData<double,PlaybackSignalData>>()->data_;
-		emit signalChanged(name_,data->vals_);
+		QSharedPointer<PlaybackData<PlaybackSignalData>> currVal = getCurrentValue().staticCast<PlaybackData<PlaybackSignalData>>();
+		if(currVal)
+			emit signalChanged(name_,currVal->data_.vals_);
+		else	//If this is the case, we've moved back before the first value
+			emit signalChanged(name_,QVector<float>());
 	}
 }
 
-void SignalState::requestMoreData(double index)
+void SignalState::requestMoreData(PlaybackIndex currLast,PlaybackIndex to)
 {
+	emit needsData(currLast,to);
 }
-
-void SignalState::requestMoreDataByTime(double time)
+void SignalState::requestNextData(PlaybackIndex currLast,bool backward)
 {
+	emit needsNextData(currLast,backward);
 }

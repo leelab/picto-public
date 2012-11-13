@@ -5,10 +5,10 @@
 namespace Picto {
 /*! \brief Component of Picto Playback system that stores data values from a session.
  */
-template <class I, class T>	// <type of index,type of stored data>
-struct PlaybackData: public IndexedData<I>
+template <class T>	// <type of index,type of stored data>
+struct PlaybackData: public IndexedData
 {
-	PlaybackData(double time,I index,T data):IndexedData(time,index){data_ = data;};
+	PlaybackData(T data,double time,qulonglong pos = 0):IndexedData(PlaybackIndex(time,pos)){data_ = data;};
 	virtual ~PlaybackData(){};
 	T data_;
 };

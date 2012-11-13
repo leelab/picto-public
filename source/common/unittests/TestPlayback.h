@@ -30,6 +30,7 @@ private:
 	QSharedPointer<SessionLoader> loader_;
 	QSharedPointer<SessionPlayer> player_;
 	QSharedPointer<SessionState> state_;
+	double currTime_;
 private slots:
 	void propertyChanged(int propId, QString value);
 	void transitionActivated(int transId);

@@ -359,6 +359,8 @@
    <file alias="_legacy_system_x_p_event_code_generator_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8h-source.html</file>
    <file alias="_legacy_system_x_p_reward_controller_8cpp-source.html">../../../output/documentation/main/html/_legacy_system_x_p_reward_controller_8cpp-source.html</file>
    <file alias="_legacy_system_x_p_reward_controller_8h-source.html">../../../output/documentation/main/html/_legacy_system_x_p_reward_controller_8h-source.html</file>
+   <file alias="_lfp_collection_state_8cpp-source.html">../../../output/documentation/main/html/_lfp_collection_state_8cpp-source.html</file>
+   <file alias="_lfp_collection_state_8h-source.html">../../../output/documentation/main/html/_lfp_collection_state_8h-source.html</file>
    <file alias="_lfp_state_8cpp-source.html">../../../output/documentation/main/html/_lfp_state_8cpp-source.html</file>
    <file alias="_lfp_state_8h-source.html">../../../output/documentation/main/html/_lfp_state_8h-source.html</file>
    <file alias="_line_graphic_8cpp-source.html">../../../output/documentation/main/html/_line_graphic_8cpp-source.html</file>
@@ -1045,6 +1047,7 @@
    <file alias="class_picto_1_1_data_source_info.png">../../../output/documentation/main/html/class_picto_1_1_data_source_info.png</file>
    <file alias="class_picto_1_1_data_state-members.html">../../../output/documentation/main/html/class_picto_1_1_data_state-members.html</file>
    <file alias="class_picto_1_1_data_state.html">../../../output/documentation/main/html/class_picto_1_1_data_state.html</file>
+   <file alias="class_picto_1_1_data_state.png">../../../output/documentation/main/html/class_picto_1_1_data_state.png</file>
    <file alias="class_picto_1_1_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_data_store-members.html</file>
    <file alias="class_picto_1_1_data_store.html">../../../output/documentation/main/html/class_picto_1_1_data_store.html</file>
    <file alias="class_picto_1_1_data_store.png">../../../output/documentation/main/html/class_picto_1_1_data_store.png</file>
@@ -1129,6 +1132,9 @@
    <file alias="class_picto_1_1_legacy_system_x_p_reward_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_reward_controller-members.html</file>
    <file alias="class_picto_1_1_legacy_system_x_p_reward_controller.html">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_reward_controller.html</file>
    <file alias="class_picto_1_1_legacy_system_x_p_reward_controller.png">../../../output/documentation/main/html/class_picto_1_1_legacy_system_x_p_reward_controller.png</file>
+   <file alias="class_picto_1_1_lfp_collection_state-members.html">../../../output/documentation/main/html/class_picto_1_1_lfp_collection_state-members.html</file>
+   <file alias="class_picto_1_1_lfp_collection_state.html">../../../output/documentation/main/html/class_picto_1_1_lfp_collection_state.html</file>
+   <file alias="class_picto_1_1_lfp_collection_state.png">../../../output/documentation/main/html/class_picto_1_1_lfp_collection_state.png</file>
    <file alias="class_picto_1_1_lfp_state-members.html">../../../output/documentation/main/html/class_picto_1_1_lfp_state-members.html</file>
    <file alias="class_picto_1_1_lfp_state.html">../../../output/documentation/main/html/class_picto_1_1_lfp_state.html</file>
    <file alias="class_picto_1_1_lfp_state.png">../../../output/documentation/main/html/class_picto_1_1_lfp_state.png</file>

@@ -9,18 +9,22 @@ namespace Picto {
 struct PlaybackSignalData;
 /*! \brief Stores Transition PlaybackData values for use in Playback system.
  */
-class SignalState : public SignalReader, public ValueState<double>
+class SignalState : public SignalReader, public ValueState
 {
 	Q_OBJECT
 public:
 	SignalState(QString name,QStringList subChanNames);
 	bool setSignal(double time,qulonglong dataId,double sampPeriod,QByteArray dataArray);
-protected:
-	virtual void triggerValueChange(bool reverse,bool last);
-	virtual void requestMoreData(double index);
-	virtual void requestMoreDataByTime(double time);
+
 signals:
 	void signalChanged(QString name,QVector<float> vals);
+	void needsData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsNextData(PlaybackIndex currLast,bool backward);
+
+protected:
+	virtual void triggerValueChange(bool reverse,bool last);
+	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
+	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 private:
 	QString name_;
 	QStringList subChanNames_;

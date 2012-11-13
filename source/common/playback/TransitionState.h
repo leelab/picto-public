@@ -7,17 +7,21 @@ namespace Picto {
 struct PlaybackTransData;
 /*! \brief Stores Transition PlaybackData values for use in Playback system.
  */
-class TransitionState : public TransitionReader, public ValueState<qulonglong>
+class TransitionState : public TransitionReader, public ValueState
 {
 	Q_OBJECT
 public:
 	bool setTransition(double time,qulonglong dataId,int transId);
-protected:
-	virtual void triggerValueChange(bool reverse,bool last);
-	virtual void requestMoreData(qulonglong index);
-	virtual void requestMoreDataByTime(double time);
+
 signals:
 	void transitionActivated(int transId);
+	void needsData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsNextData(PlaybackIndex currLast,bool backward);
+
+protected:
+	virtual void triggerValueChange(bool reverse,bool last);
+	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
+	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 };
 
 struct PlaybackTransData
