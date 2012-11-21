@@ -92,6 +92,8 @@ SOURCES += $$(PICTO_TREE)/source/workstation/statemachineeditor/stateeditviewer.
 HEADERS += $$(PICTO_TREE)/source/workstation/testviewer/testviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/testviewer/testviewer.cpp
 
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateUpdater.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateUpdater.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.h
@@ -103,6 +105,10 @@ HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/ReplayViewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/ReplayViewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/NeuralViewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/NeuralViewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackStateUpdater.h
+SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackStateUpdater.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackController.h
+SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackController.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/BehavViewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/BehavViewer.cpp
 

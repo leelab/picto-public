@@ -5,14 +5,16 @@
 TestPlayback::TestPlayback()
 {
 	state_ = QSharedPointer<SessionState>(new SessionState());
-	loader_ = QSharedPointer<SessionLoader>(new SessionLoader(state_));
+	loader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(state_));
 	player_ = QSharedPointer<SessionPlayer>(new SessionPlayer(state_));
+
+	loader_->setFile("C:\\Projects\\PictoSVN\\Picto\\trunk\\output\\bin\\sessions\\releaseDirector\\BiasedMatchingPennies_Token\\Session_2012_10_31__15_50_57.sqlite");
 
 	connect(state_.data(),SIGNAL(propertyChanged(int,QString)),this,SLOT(propertyChanged(int,QString)));
 	connect(state_.data(),SIGNAL(transitionActivated(int)),this,SLOT(transitionActivated(int)));
 	connect(state_.data(),SIGNAL(framePresented(double)),this,SLOT(framePresented(double)));
-	connect(state_.data(),SIGNAL(rewardSupplied(int,int)),this,SLOT(rewardSupplied(int,int)));
-	connect(state_.data(),SIGNAL(signalChanged(QString,QVector<float>)),this,SLOT(signalChanged(QString,QVector<float>)));
+	connect(state_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(rewardSupplied(double,int,int)));
+	connect(state_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(signalChanged(QString,QStringList,QVector<float>)));
 	connect(state_.data(),SIGNAL(lfpChanged(int,double)),this,SLOT(lfpChanged(int,double)));
 	connect(state_.data(),SIGNAL(spikeEvent(int,int,QVector<float>)),this,SLOT(spikeEvent(int,int,QVector<float>)));
 
@@ -20,20 +22,20 @@ TestPlayback::TestPlayback()
 
 void TestPlayback::Test()
 {
-	loader_->setFile("filename");
+	//loader_->setFile("filename");
 	//loader_->loadRun(0);
 	currTime_ = 0;
 	QTime timer;
 	timer.start();
-	for(int i=0;i<1;i++)
+	for(int i=0;i<4;i++)
 	{
 		qDebug("\n\nStart Forward\n\n");
-		while(player_->stepForward() && currTime_ < 0.08)
+		while(player_->stepForward() && currTime_ < 29.9)
 		{
 			QCoreApplication::processEvents();
 		}
 		qDebug("\n\nStart Back\n\n");
-		while(player_->stepBack() && currTime_ > 0.02)
+		while(player_->stepBack() && currTime_ > 29.85)
 		{
 			QCoreApplication::processEvents();
 		}
@@ -44,7 +46,7 @@ void TestPlayback::Test()
 
 void TestPlayback::propertyChanged(int propId, QString value)
 {
-	QString debugStr = QString("Property Changed: ID: %1, Val: %2").arg(propId).arg(value);
+	QString debugStr = QString("Property Changed: ID: %1").arg(propId);
 	qDebug(debugStr.toAscii());
 }
 void TestPlayback::transitionActivated(int transId)
@@ -58,12 +60,12 @@ void TestPlayback::framePresented(double time)
 	QString debugStr = QString("Frame Presented: Time: %1").arg(time);
 	qDebug(debugStr.toAscii());
 }
-void TestPlayback::rewardSupplied(int duration,int channel)
+void TestPlayback::rewardSupplied(double time,int duration,int channel)
 {
 	QString debugStr = QString("Reward Supplied: Duration: %1, Chan: %2").arg(duration).arg(channel);
 	qDebug(debugStr.toAscii());
 }
-void TestPlayback::signalChanged(QString name,QVector<float> vals)
+void TestPlayback::signalChanged(QString name,QStringList subChanNames,QVector<float> vals)
 {
 	QStringList strVals;
 	foreach(double val,vals)

@@ -31,6 +31,7 @@
 #include "../storage/RewardDataUnit.h"
 #include "../storage/TaskRunDataUnit.h"
 #include "../storage/experimentconfig.h"
+#include "StateUpdater.h"
 #include "propertytable.h"
 #include "ControlPanelInterface.h"
 
@@ -165,7 +166,6 @@ public:
 	qulonglong getLastFrameId(){return lastFrameId_;};
 
 	bool updateCurrentStateFromServer();
-	void setRunningPath(QString path);
 	QString getRunningPath(){return runningPath_;};
 	QString getServerPathUpdate();
 
@@ -195,8 +195,11 @@ public:
 	bool operatorIsUser(){return userIsOperator_;};
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
+	void setStateUpdater(QSharedPointer<StateUpdater> stateUpdater);
+	//If disabled, Init properties of the slave experiment will not be synchronized with those of the master.
+	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
-	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";runningPath_="";currStateUnit_.clear();firstCurrStateUpdate_ = true;};
+	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";runningPath_="";currStateUnit_.clear();currTransId_ = 0;firstCurrStateUpdate_ = true;};
 	double getLastTimeStateDataRequested(){return lastTimeStateDataRequested_.toDouble();};
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;currStateUnit_.clear();};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
@@ -214,6 +217,7 @@ signals:
 	void rewardDurationChanged(int controller, int duration);
 	void flushDurationChanged(int controller, int duration);
 	void nameChanged(QString name);
+	void slaveTimeChanged(double time);
 private:
 	QHostAddress getIpAddress();
 	//QSharedPointer<Experiment> experiment_;
@@ -251,13 +255,16 @@ private:
 
 	int engineCommand_;
 
+	QSharedPointer<StateUpdater> stateUpdater_;
 	bool slave_;
 	bool userIsOperator_;
+	bool syncInitProperties_;
 	QString lastTimePropChangesRequested_;
 	QString lastTimeStateDataRequested_;
 	QSharedPointer<BehavioralDataUnitPackage> currBehavUnitPack_;
 	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	QSharedPointer<StateDataUnit> currStateUnit_;
+	int currTransId_;
 	qulonglong lastFrameId_;
 	QHostAddress ipAddress_;
 
@@ -265,6 +272,15 @@ private:
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);
 	void firstPhosphorOperations(double frameTime);
+
+	void masterPropertyChanged(int propId, QString value);
+	void masterTransitionActivated(int transId);
+	void masterFramePresented(double time);
+	void masterRewardSupplied(double time,int duration,int channel);
+	void masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals);
+
+	private:
+	QString getMasterPath();
 };
 
 /*! @} */

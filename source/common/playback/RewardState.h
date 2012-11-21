@@ -13,7 +13,7 @@ class RewardState : public RewardReader, public EventState
 public:
 	bool setReward(double time,qulonglong dataId,int duration,int channel);
 signals:
-	void rewardSupplied(int duration,int channel);
+	void rewardSupplied(double time,int duration,int channel);
 	void needsData(PlaybackIndex currLast,PlaybackIndex to);
 	void needsNextData(PlaybackIndex currLast,bool backward);
 

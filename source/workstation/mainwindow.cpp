@@ -8,6 +8,7 @@
 //#include "texteditor/textviewer.h"
 #include "testviewer/testviewer.h"
 #include "remoteviewer/remoteviewer.h"
+#include "replayviewer/replayviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
 #include "analysis/analysisviewer.h"
 #include "../common/update/updatedownloader.h"
@@ -236,12 +237,24 @@ void MainWindow::createViewers()
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 
+	//Replay viewer
+	viewer = new ReplayViewer(this);
+	viewerNames_.append(viewer->type());
+	viewerStack_->addWidget(viewer);
+	viewerAction = new QAction(tr("&Replay experiment"),this);
+	viewerAction->setShortcut(tr("Ctrl+5"));
+	viewerAction->setIcon(QIcon(":/icons/replay.png"));
+	viewerAction->setData(viewerNames_.size()-1);
+	viewerToolbar_->addAction(viewerAction);
+	modeMenu_->addAction(viewerAction);
+	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+
 	//Analysis Viewer
 	viewer = new AnalysisViewer(this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&Analyze experiment"),this);
-	viewerAction->setShortcut(tr("Ctrl+4"));
+	viewerAction->setShortcut(tr("Ctrl+6"));
 	viewerAction->setIcon(QIcon(":/icons/analyze.png"));
 	viewerAction->setData(viewerNames_.size()-1);
 	viewerToolbar_->addAction(viewerAction);

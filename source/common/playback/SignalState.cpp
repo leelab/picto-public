@@ -36,9 +36,9 @@ void SignalState::triggerValueChange(bool reverse,bool last)
 	{
 		QSharedPointer<PlaybackData<PlaybackSignalData>> currVal = getCurrentValue().staticCast<PlaybackData<PlaybackSignalData>>();
 		if(currVal)
-			emit signalChanged(name_,currVal->data_.vals_);
+			emit signalChanged(name_,subChanNames_,currVal->data_.vals_);
 		else	//If this is the case, we've moved back before the first value
-			emit signalChanged(name_,QVector<float>());
+			emit signalChanged(name_,subChanNames_,QVector<float>());
 	}
 }
 

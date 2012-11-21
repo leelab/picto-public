@@ -18,20 +18,20 @@ spikeState_(new SpikeState())
 	connect(propCollection_.data(),SIGNAL(propertyChanged(int,QString)),this,SIGNAL(propertyChanged(int,QString)));
 	connect(transState_.data(),SIGNAL(transitionActivated(int)),this,SIGNAL(transitionActivated(int)));
 	connect(frameState_.data(),SIGNAL(framePresented(double)),this,SIGNAL(framePresented(double)));
-	connect(rewardState_.data(),SIGNAL(rewardSupplied(int,int)),this,SIGNAL(rewardSupplied(int,int)));
+	connect(rewardState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
 	connect(spikeState_.data(),SIGNAL(spikeEvent(int,int,QVector<float>)),this,SIGNAL(spikeEvent(int,int,QVector<float>)));
 
-	connect(propCollection_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SIGNAL(needsPropertyData(PlaybackIndex,PlaybackIndex)));
-	connect(transState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SIGNAL(needsTransitionData(PlaybackIndex,PlaybackIndex)));
-	connect(frameState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SIGNAL(needsFrameData(PlaybackIndex,PlaybackIndex)));
-	connect(rewardState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SIGNAL(needsRewardData(PlaybackIndex,PlaybackIndex)));
-	connect(spikeState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SIGNAL(needsSpikeData(PlaybackIndex,PlaybackIndex)));
+	connect(propCollection_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsPropertyData(PlaybackIndex,PlaybackIndex)));
+	connect(transState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsTransitionData(PlaybackIndex,PlaybackIndex)));
+	connect(frameState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsFrameData(PlaybackIndex,PlaybackIndex)));
+	connect(rewardState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsRewardData(PlaybackIndex,PlaybackIndex)));
+	connect(spikeState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsSpikeData(PlaybackIndex,PlaybackIndex)));
 
-	connect(propCollection_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SIGNAL(needsNextPropertyData(PlaybackIndex,bool)));
-	connect(transState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SIGNAL(needsNextTransitionData(PlaybackIndex,bool)));
-	connect(frameState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SIGNAL(needsNextFrameData(PlaybackIndex,bool)));
-	connect(rewardState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SIGNAL(needsNextRewardData(PlaybackIndex,bool)));
-	connect(spikeState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SIGNAL(needsNextSpikeData(PlaybackIndex,bool)));
+	connect(propCollection_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextPropertyData(PlaybackIndex,bool)));
+	connect(transState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextTransitionData(PlaybackIndex,bool)));
+	connect(frameState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextFrameData(PlaybackIndex,bool)));
+	connect(rewardState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextRewardData(PlaybackIndex,bool)));
+	connect(spikeState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextSpikeData(PlaybackIndex,bool)));
 
 }
 
@@ -52,6 +52,32 @@ bool SessionState::reset()
 	}
 	emit wasReset();
 	return false;
+}
+
+void SessionState::addSignal(QString name,QStringList subChanNames)
+{
+	if(!signalLookup_.contains(name))
+	{
+		QSharedPointer<SignalState> newSigState = QSharedPointer<SignalState>(new SignalState(name,subChanNames));
+		signalLookup_[name] = newSigState;
+		statesWithTimes_.push_back(newSigState);
+		connect(newSigState.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SIGNAL(signalChanged(QString,QStringList,QVector<float>)));
+		connect(newSigState.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsSignalData(PlaybackIndex,PlaybackIndex)));
+		connect(newSigState.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextSignalData(PlaybackIndex,bool)));
+	}
+}
+
+void SessionState::addLfpChannel(int channel,double sampPeriod)
+{
+	if(!lfpLookup_.contains(channel))
+	{
+		QSharedPointer<LfpState> newLfpState = QSharedPointer<LfpState>(new LfpState(channel,sampPeriod));
+		lfpLookup_[channel] = newLfpState;
+		statesWithTimes_.push_back(newLfpState);
+		connect(newLfpState.data(),SIGNAL(lfpChanged(int,double)),this,SIGNAL(lfpChanged(int,double)));
+		connect(newLfpState.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsLfpData(PlaybackIndex,PlaybackIndex)));
+		connect(newLfpState.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextLfpData(PlaybackIndex,bool)));
+	}
 }
 
 bool SessionState::setPropertyValue(double time,qulonglong dataId,int propId,QString value)
@@ -76,29 +102,13 @@ bool SessionState::setReward(double time,qulonglong dataId,int duration,int chan
 
 bool SessionState::setSignal(QString name,QStringList subChanNames,double time,qulonglong dataId,double sampPeriod,QByteArray data)
 {
-	if(!signalLookup_.contains(name))
-	{
-		QSharedPointer<SignalState> newSigState = QSharedPointer<SignalState>(new SignalState(name,subChanNames));
-		signalLookup_[name] = newSigState;
-		statesWithTimes_.push_back(newSigState);
-		connect(newSigState.data(),SIGNAL(signalChanged(QString,QVector<float>)),this,SIGNAL(signalChanged(QString,QVector<float>)));
-		connect(newSigState.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SIGNAL(needsSignalData(PlaybackIndex,PlaybackIndex)));
-		connect(newSigState.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SIGNAL(needsNextSignalData(PlaybackIndex,bool)));
-	}
+	addSignal(name,subChanNames);	//Adds this signal to our hash if its not already there.
 	return signalLookup_[name]->setSignal(time,dataId,sampPeriod,data);
 }
 
 bool SessionState::setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data)
 {
-	if(!lfpLookup_.contains(channel))
-	{
-		QSharedPointer<LfpState> newLfpState = QSharedPointer<LfpState>(new LfpState(channel,sampPeriod));
-		lfpLookup_[channel] = newLfpState;
-		statesWithTimes_.push_back(newLfpState);
-		connect(newLfpState.data(),SIGNAL(lfpChanged(int,double)),this,SIGNAL(lfpChanged(int,double)));
-		connect(newLfpState.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SIGNAL(needsLfpData(PlaybackIndex,PlaybackIndex)));
-		connect(newLfpState.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SIGNAL(needsNextLfpData(PlaybackIndex,bool)));
-	}
+	addLfpChannel(channel,sampPeriod);	//Adds this channel to our hash if its not already there.
 	return lfpLookup_[channel]->setLFP(dataId,startTime,channel,data);
 }
 
@@ -194,3 +204,19 @@ QList<QSharedPointer<DataState>> SessionState::getStatesIndexedByTime()
 {
 	return statesWithTimes_;
 }
+
+void SessionState::needsPropertyData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eProperty,currLast,to);}
+void SessionState::needsTransitionData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eTransition,currLast,to);}
+void SessionState::needsFrameData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eFrame,currLast,to);}
+void SessionState::needsRewardData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eReward,currLast,to);}
+void SessionState::needsSignalData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eSignal,currLast,to);}
+void SessionState::needsLFPData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eLfp,currLast,to);}
+void SessionState::needsSpikeData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eSpike,currLast,to);}
+
+void SessionState::needsNextPropertyData(PlaybackIndex currLast,bool backward){emit needsNextData(eProperty,currLast,backward);}
+void SessionState::needsNextTransitionData(PlaybackIndex currLast,bool backward){emit needsNextData(eTransition,currLast,backward);}
+void SessionState::needsNextFrameData(PlaybackIndex currLast,bool backward){emit needsNextData(eFrame,currLast,backward);}
+void SessionState::needsNextRewardData(PlaybackIndex currLast,bool backward){emit needsNextData(eReward,currLast,backward);}
+void SessionState::needsNextSignalData(PlaybackIndex currLast,bool backward){emit needsNextData(eSignal,currLast,backward);}
+void SessionState::needsNextLFPData(PlaybackIndex currLast,bool backward){emit needsNextData(eLfp,currLast,backward);}
+void SessionState::needsNextSpikeData(PlaybackIndex currLast,bool backward){emit needsNextData(eSpike,currLast,backward);}

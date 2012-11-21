@@ -13,7 +13,7 @@ void RewardState::triggerValueChange(bool reverse,bool last)
 	if(!reverse)
 	{
 		PlaybackRewardData* data = &getCurrentValue().staticCast<PlaybackData<PlaybackRewardData>>()->data_;
-		emit rewardSupplied(data->duration_,data->channel_);
+		emit rewardSupplied(getCurrentValue()->index_.time(),data->duration_,data->channel_);
 	}
 }
 

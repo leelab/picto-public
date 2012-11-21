@@ -36,9 +36,11 @@ void PropertyTable::reportChangeInAllProperties()
 	}
 }
 
-void PropertyTable::updatePropertyValue(int index,QString value)
+void PropertyTable::updatePropertyValue(int index,QString value,bool updateInitProps)
 {
 	QSharedPointer<Asset> asset = expConfig_->getAsset(index);
+	if(!updateInitProps && !asset->getParentAsset())
+		return;
 	Q_ASSERT(asset->inherits("Picto::Property"));
 	asset.staticCast<Property>()->fromUserString(value);
 	//Q_ASSERT(index < propTable_.size());

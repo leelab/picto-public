@@ -94,6 +94,8 @@ bool Experiment::runTask(QString taskName)
 	//search through tasks_ for a matching task and run it!
 	//note that the taskname here may have had all of it's whitespace 
 	//removed, so we need to check that possibility
+	do
+	{
 	QSharedPointer<Task> task = getTaskByName(taskName);
 	if(!task)
 		return false;
@@ -105,8 +107,19 @@ bool Experiment::runTask(QString taskName)
 	engine_->startAllSignalChannels();
 	//Initialize signal channel coefficients
 	updateSignalCoefficients(QSharedPointer<Property>());
-	task->run(engine_);
+	QString result = task->run(engine_);
 	engine_->stopAllSignalChannels();
+
+	//If the task changed somehow (ie. We are running as slaves)
+	//The prior task would end with a result that is a path 
+	//within a different task, if that is the case, re-enter at that task.
+	QStringList pathElems = result.split("::",QString::SkipEmptyParts);
+	if(pathElems.size() == 1)
+		taskName.clear();
+	else
+		taskName = pathElems[0];
+
+	} while(!taskName.isEmpty());
 	return true;
 	//foreach(QSharedPointer<Task> task, tasks_)
 	//{

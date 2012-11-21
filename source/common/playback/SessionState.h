@@ -15,6 +15,7 @@
 #include "../common.h"
 
 namespace Picto {
+	typedef enum{eProperty,eTransition,eFrame,eReward,eSignal,eLfp,eSpike} PlaybackDataType;
 /*! \brief Component of Picto Playback system that stores property values and transition states.
  *	Whenever property or transition values are changed, a corresponding signal is triggered.
  *	On the first iteration, this object will simply store current values.  Later, it may store 
@@ -34,6 +35,12 @@ public:
 	//SET FUNCTIONS-----------------------------------------------------------------
 	//Used to load values
 	bool reset();
+	//Used to add a new signal to the SessionState since different sessions
+	//can contain different numbers of signals.
+	void addSignal(QString name,QStringList subChanNames);
+	//Used to add a new lfp channel to the SessionState since different sessions
+	//can contain different numbers of lfp channels and each is tracked seperately.
+	void addLfpChannel(int channel,double sampPeriod);
 	//The before boolean should be set true if data will be inserted in decreasing index order
 	//before the current data set.
 	bool setPropertyValue(double time,qulonglong dataId,int propId,QString value);
@@ -72,35 +79,27 @@ signals:
 	void propertyChanged(int propId, QString value);
 	void transitionActivated(int transId);
 	void framePresented(double time);
-	void rewardSupplied(int duration,int channel);
-	void signalChanged(QString name,QVector<float> vals);
+	void rewardSupplied(double time,int duration,int channel);
+	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void lfpChanged(int channel,double value);
 	void spikeEvent(int channel, int unit, QVector<float> waveform);
 
 	//Indicates that data is needed by the session state to fulfil playback requests
-	//from (not including) currLast up to and including toIndex.  If data is not available, the 
-	//system should wait for it to arrive before returning from this function.
-	//More data than requested may be supplied. 
-	void needsPropertyData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsTransitionData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsFrameData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsRewardData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsSignalData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsLFPData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsSpikeData(PlaybackIndex currLast,PlaybackIndex to);
+	//from (not including) currLast up to and including "to" of type "type".  
+	//If data is not available, the system should wait for it to arrive before 
+	//returning from this function.  More data than requested may be supplied, 
+	//but it must not be before or at the currLast index. All data for a given time 
+	//should be supplied at the same time (ie. if spikes from two channels came in 
+	//at the same time, they should both be supplied from the same needsData call).
+	void needsData(PlaybackDataType type,PlaybackIndex currLast,PlaybackIndex to);
 
 	//Indicates that at least a single data unit is needed by the session state 
 	//to fulfil playback requests from (not including) currLast in the direction of
-	//the backward indicator.  If data is not available, the system should wait for 
-	//it to arrive before returning from this function.  
-	//More data than requested may be supplied. 
-	void needsNextPropertyData(PlaybackIndex currLast,bool backward);
-	void needsNextTransitionData(PlaybackIndex currLast,bool backward);
-	void needsNextFrameData(PlaybackIndex currLast,bool backward);
-	void needsNextRewardData(PlaybackIndex currLast,bool backward);
-	void needsNextSignalData(PlaybackIndex currLast,bool backward);
-	void needsNextLFPData(PlaybackIndex currLast,bool backward);
-	void needsNextSpikeData(PlaybackIndex currLast,bool backward);
+	//the backward indicator of type "type".  If data is not available, the system 
+	//should wait for it to arrive before returning from this function.  
+	//More data than requested may be supplied, but it must not be before or at the
+	//currLast index. 
+	void needsNextData(PlaybackDataType type,PlaybackIndex currLast,bool backward);
 
 	//Indicates that this SessionState was reset (for a new Run for example)
 	void wasReset();
@@ -118,6 +117,23 @@ private:
 
 	QList<QSharedPointer<DataState>> statesWithIds_;
 	QList<QSharedPointer<DataState>> statesWithTimes_;
+
+private slots:
+	void needsPropertyData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsTransitionData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsFrameData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsRewardData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsSignalData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsLFPData(PlaybackIndex currLast,PlaybackIndex to);
+	void needsSpikeData(PlaybackIndex currLast,PlaybackIndex to);
+
+	void needsNextPropertyData(PlaybackIndex currLast,bool backward);
+	void needsNextTransitionData(PlaybackIndex currLast,bool backward);
+	void needsNextFrameData(PlaybackIndex currLast,bool backward);
+	void needsNextRewardData(PlaybackIndex currLast,bool backward);
+	void needsNextSignalData(PlaybackIndex currLast,bool backward);
+	void needsNextLFPData(PlaybackIndex currLast,bool backward);
+	void needsNextSpikeData(PlaybackIndex currLast,bool backward);
 
 };
 

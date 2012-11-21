@@ -3,7 +3,8 @@ using namespace Picto;
 
 SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState)
 :
-sessionState_(sessState)
+sessionState_(sessState),
+processing_(false)
 {
 	sessionStateReset();
 	connect(sessionState_.data(),SIGNAL(wasReset()),this,SLOT(sessionStateReset()));
@@ -15,11 +16,13 @@ SessionPlayer::~SessionPlayer()
 
 bool SessionPlayer::stepForward()
 {
+	if(processing_) return false;
 	return step(false);
 }
 
 bool SessionPlayer::stepToNextFrame()
 {
+	if(processing_) return false;
 	PlaybackIndex nextFrameId = sessionState_->getFrameState()->getNextIndex(-1);
 	if(!nextFrameId.isValid())
 		return false;
@@ -30,11 +33,13 @@ bool SessionPlayer::stepToNextFrame()
 
 bool SessionPlayer::stepBack()
 {
+	if(processing_) return false;
 	return step(true);
 }
 
 bool SessionPlayer::stepToPrevFrame()
 {
+	if(processing_) return false;
 	PlaybackIndex prevFrameId = sessionState_->getFrameState()->getPrevIndex(-1);
 	if(!prevFrameId.isValid())
 		return false;
@@ -45,12 +50,16 @@ bool SessionPlayer::stepToPrevFrame()
 
 bool SessionPlayer::step(bool backward)
 {
+	processing_ = true;
 	PlaybackIndex prevFrameId = sessionState_->getFrameState()->getPrevIndex(-1);
 	PlaybackIndex currFrameId = sessionState_->getFrameState()->getCurrentIndex();
 	PlaybackIndex nextFrameId = sessionState_->getFrameState()->getNextIndex(-1);
 	QSharedPointer<DataState> stateToTrigger = getNextTriggerState(backward);
 	if(stateToTrigger.isNull())
+	{
+		processing_ = false;
 		return false;
+	}
 	if	(	(!backward && (stateToTrigger->getNextIndex(nextFrameId.time()) == nextFrameId))
 			|| (backward && (lastIndex_ == currFrameId))
 		)
@@ -70,24 +79,42 @@ bool SessionPlayer::step(bool backward)
 	}
 	stateToTrigger->setCurrentIndex((backward)?stateToTrigger->getPrevIndex(prevFrameId.time()):stateToTrigger->getNextIndex(nextFrameId.time()));
 	lastIndex_ = stateToTrigger->getCurrentIndex();
+	processing_ = false;
 	return true;
 }
 
 bool SessionPlayer::stepToTime(double time)
 {
+	if(processing_) return false;
 	if(time == lastIndex_.time())
 		return true;
-	while(time > lastIndex_.time())
+	if(time > lastIndex_.time())
 	{
-		if(!stepToNextFrame())
-			return false;
+		while(time > lastIndex_.time())
+		{
+			if(!stepToNextFrame())
+				return false;
+		}
 	}
-	while(time < lastIndex_.time())
+	else
 	{
-		if(!stepToPrevFrame())
-			return false;
+		while(time < lastIndex_.time())
+		{
+			if(!stepToPrevFrame())
+				return false;
+		}
 	}
 	return true;
+}
+
+double SessionPlayer::getTime()
+{
+	return lastIndex_.time();
+}
+
+bool SessionPlayer::isProcessing()
+{
+	return processing_;
 }
 
 QSharedPointer<DataState> SessionPlayer::getNextTriggerState(bool backward)

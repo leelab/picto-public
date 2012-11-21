@@ -17,7 +17,7 @@ public:
 	bool setSignal(double time,qulonglong dataId,double sampPeriod,QByteArray dataArray);
 
 signals:
-	void signalChanged(QString name,QVector<float> vals);
+	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void needsData(PlaybackIndex currLast,PlaybackIndex to);
 	void needsNextData(PlaybackIndex currLast,bool backward);
 

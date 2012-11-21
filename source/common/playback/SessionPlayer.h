@@ -24,6 +24,12 @@ public:
 	bool stepBack();
 	bool stepToPrevFrame();
 	bool stepToTime(double time);
+	double getTime();
+	//If the object isProcessing, it is in the process of handling a previous command
+	//and will not respond to new commands.  This can be used in reentrant cases since
+	//the playback system may return processing to the event loop while it performs 
+	//long processes.
+	bool isProcessing();
 
 protected:
 
@@ -32,6 +38,7 @@ private:
 	QSharedPointer<SessionState> sessionState_;
 	bool started_;
 	PlaybackIndex lastIndex_;
+	bool processing_;
 
 	QSharedPointer<DataState> getNextTriggerState(bool backward);
 

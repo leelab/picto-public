@@ -13,7 +13,7 @@ SignalChannel::SignalChannel(QString name,QSharedPointer<InputPort> port)
 
 SignalChannel::SignalChannel(QString name, int msPerSample, QSharedPointer<InputPort> port)
 {
-	name_ = name;
+	name_ = name.toLower();
 	port_ = port;
 	setSampleResolution(msPerSample);
 	useScaleFactors_ = true;

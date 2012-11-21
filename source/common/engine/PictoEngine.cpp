@@ -28,6 +28,7 @@ PictoEngine::PictoEngine() :
 	propTable_(NULL),
 	slave_(false),
 	userIsOperator_(false),
+	syncInitProperties_(true),
 	lastTimePropChangesRequested_("0.0"),
 	lastTimeStateDataRequested_("0.0"),
 	firstCurrStateUpdate_(true),
@@ -35,6 +36,7 @@ PictoEngine::PictoEngine() :
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
 	runningPath_(""),
 	lastFrameId_(-1),
+	currTransId_(0),
 	engineCommand_(StopEngine),
 	taskRunStarting_(false),
 	taskRunEnding_(false)
@@ -100,12 +102,12 @@ bool PictoEngine::hasVisibleRenderingTargets()
 
 QSharedPointer<SignalChannel> PictoEngine::getSignalChannel(QString name)
 {
-	return signalChannels_.value(name, QSharedPointer<SignalChannel>());
+	return signalChannels_.value(name.toLower(), QSharedPointer<SignalChannel>());
 }
 
 void PictoEngine::addSignalChannel(QSharedPointer<SignalChannel> channel)
 {
-	signalChannels_.insert(channel->getName(), channel);
+	signalChannels_.insert(channel->getName().toLower(), channel);
 }
 
 //! \brief Starts every signal channel in the engine
@@ -416,148 +418,14 @@ void PictoEngine::setLastFrame(qulonglong frameId)
 
 bool PictoEngine::updateCurrentStateFromServer()
 {
-	//Clear any old responses out of the response queue
-	while(slaveCommandChannel_->incomingResponsesWaiting())
-		slaveCommandChannel_->getResponse();
-	if(!slaveCommandChannel_->assureConnection(100))
+	if(!stateUpdater_)
 		return false;
-
-	//Collect the data from the server
-	QString commandStr = QString("GETDATA CurrentState:%1 PICTO/1.0").arg(lastTimeStateDataRequested_);
-	QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
-	QSharedPointer<Picto::ProtocolResponse> response;
-
-	slaveCommandChannel_->sendRegisteredCommand(command);
-	QString commandID = command->getFieldValue("Command-ID");
-	//qDebug(QString("Sent command: %1 at Time:%2").arg(commandID).arg(command->getFieldValue("Time-Sent")).toAscii());
-
-	do
-	{
-		QCoreApplication::processEvents();
-		if(!slaveCommandChannel_->waitForResponse(1000))
-		{
-			return false;
-		}
-		response = slaveCommandChannel_->getResponse();
-		//if(response)
-		//	qDebug(QString("Received command: %1 sent by server at Time:%2").arg(response->getFieldValue("Command-ID")).arg(response->getFieldValue("Time-Sent")).toAscii());
-	}while(!response || response->getFieldValue("Command-ID") != commandID);
-
-	////No response
-	//if(!slaveCommandChannel_->waitForResponse(1000))
-	//	return false;
-
-	//response = slaveCommandChannel_->getResponse();
-
-	//Response not 200:OK
-	if(response->getResponseCode() != Picto::ProtocolResponseType::OK)
-		return false;
-	
-	QByteArray xmlFragment = response->getContent();
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
-
-	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
-
-	if(xmlReader->atEnd())
-		return false;
-
-	PropertyDataUnitPackage propData;
-
-	xmlReader->readNext();
-	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
-	{
-		QString currUnitTime = "-1.0";
-		if(xmlReader->name() == "PDU")
-		{
-			PropertyDataUnit unit;
-			unit.fromXml(xmlReader);
-			propData.addData(unit.index_,unit.value_);
-			//currUnitTime = unit.time_;
-		}
-		else if(xmlReader->name() == "BDUP")
-		{
-			currBehavUnitPack_->fromXml(xmlReader);
-			if(currBehavUnitPack_->getChannel() == "Position")
-			{
-				currBehavUnit_ = currBehavUnitPack_->takeFirstDataPoint();
-				getSignalChannel("Position")->insertValue("x",currBehavUnit_->x);
-				getSignalChannel("Position")->insertValue("y",currBehavUnit_->y);
-			}
-			//Currently we don't do anything with any signal channels besides "Position"	
-		}
-		else if(xmlReader->name() == "SDU")
-		{
-			if(!currStateUnit_)
-				currStateUnit_ = QSharedPointer<StateDataUnit>(new StateDataUnit());
-			currStateUnit_->fromXml(xmlReader);
-			//currUnitTime = currStateUnit_->getTime();
-		}
-		else if(xmlReader->name() == "FDU")
-		{
-			FrameDataUnit unit;
-			unit.fromXml(xmlReader);
-			currUnitTime = unit.time;		//Both frame and rewards (while pause or stopped) can cause state update
-		}
-		else if(xmlReader->name() == "RDU")
-		{
-			RewardDataUnit unit;
-			unit.fromXml(xmlReader);
-			currUnitTime = unit.getTime();	//Both frame and rewards (while pause or stopped) can cause state update
-			if(!firstCurrStateUpdate_)	
-				giveReward(unit.getChannel(),unit.getDuration(),0);
-		}
-		if(currUnitTime.toDouble() > lastTimeStateDataRequested_.toDouble())
-			lastTimeStateDataRequested_ = currUnitTime;
-		xmlReader->readNext();
-	}
-
-	while(propData.length() > 0)
-	{
-		// Push the data into our signal channel
-		QSharedPointer<Picto::PropertyDataUnit> dataPoint;
-		dataPoint = propData.takeFirstDataPoint();
-
-		propTable_->updatePropertyValue(dataPoint->index_,dataPoint->value_);
-		//qDebug(QString("Received Prop: %1\nval:\n%2\n\n").arg(dataPoint->path_,dataPoint->value_).toAscii());
-	}
-	firstCurrStateUpdate_ = false;
-	return true;
-}
-
-void PictoEngine::setRunningPath(QString path)
-{
-	runningPath_ = path;
+	return stateUpdater_->updateState();
 }
 
 QString PictoEngine::getServerPathUpdate()
 {
-	if(!currStateUnit_)
-		return "";
-	QSharedPointer<Asset> asset = expConfig_->getAsset(currStateUnit_->getTransitionID());
-	QSharedPointer<Transition> trans;
-	QString result;
-	if(asset)
-	{
-		Q_ASSERT(asset->inherits("Picto::Transition"));
-		trans = asset.staticCast<Transition>();
-		result = trans->getDestination();
-	}
-	else
-	{
-		//qDebug("PathUpdate: NO ASSET");
-		return "";
-	}
-	QString runningPath = runningPath_;
-	if(result != "EngineAbort")
-	{
-		if(trans)
-			result.prepend(trans->getPath());
-		setRunningPath(result);
-	}
-	if(result == runningPath)
-		result = "";
-	//qDebug("PathUpdate: " + result.toAscii());
-	return result;
+	return getMasterPath();
 }
 
 //! Sets the CommandChannel used for data.  Returns true if the channel's status is connected
@@ -651,6 +519,34 @@ void PictoEngine::setSessionId(QUuid sessionId)
 		dataCommandChannel_->setSessionId(sessionId_);
 	if(!updateCommandChannel_.isNull())
 		updateCommandChannel_->setSessionId(sessionId_);
+}
+
+void PictoEngine::setStateUpdater(QSharedPointer<StateUpdater> stateUpdater)
+{
+	if(!stateUpdater)
+		return;
+	//Disconnect old state updater
+	if(stateUpdater_)
+	{
+		disconnect(stateUpdater_.data(),SIGNAL(propertyChanged(int, QString)),this,SLOT(masterPropertyChanged(int, QString)));
+		disconnect(stateUpdater_.data(),SIGNAL(transitionActivated(int)),this,SLOT(masterTransitionActivated(int)));
+		disconnect(stateUpdater_.data(),SIGNAL(framePresented(double)),this,SLOT(masterFramePresented(double)));
+		disconnect(stateUpdater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
+		disconnect(stateUpdater_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(masterSignalChanged(QString,QStringList,QVector<float>)));
+
+	}
+	stateUpdater_ = stateUpdater;
+	if(stateUpdater_)
+	{
+		slave_ = true;
+		connect(stateUpdater_.data(),SIGNAL(propertyChanged(int, QString)),this,SLOT(masterPropertyChanged(int, QString)));
+		connect(stateUpdater_.data(),SIGNAL(transitionActivated(int)),this,SLOT(masterTransitionActivated(int)));
+		connect(stateUpdater_.data(),SIGNAL(framePresented(double)),this,SLOT(masterFramePresented(double)));
+		connect(stateUpdater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
+		connect(stateUpdater_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(masterSignalChanged(QString,QStringList,QVector<float>)));
+	}
+	else
+		slave_ = false;
 }
 
 void PictoEngine::setName(QString name) 
@@ -826,6 +722,54 @@ void PictoEngine::firstPhosphorOperations(double frameTime)
 			SignalValueParameter::setLatestValue(channel->getName(),subChan,channel->peekValue(subChan));
 		}
 	}
+}
+
+void PictoEngine::masterPropertyChanged(int propId, QString value)
+{
+	propTable_->updatePropertyValue(propId,value,syncInitProperties_);
+}
+void PictoEngine::masterTransitionActivated(int transId)
+{
+	currTransId_ = transId;
+}
+void PictoEngine::masterFramePresented(double time)
+{
+	emit slaveTimeChanged(time);
+}
+void PictoEngine::masterRewardSupplied(double time,int duration,int channel)
+{
+	giveReward(channel,duration,0);
+}
+void PictoEngine::masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals)
+{
+	int numSubChans = subChanNames.size();
+	QSharedPointer<SignalChannel> sigChan = getSignalChannel(name);
+	if(!sigChan)
+		return;
+	for(int i=0;i<vals.size();i++)
+	{
+		sigChan->insertValue(subChanNames[i%numSubChans],vals[i]);
+	}
+}
+
+QString PictoEngine::getMasterPath()
+{
+	if(!currTransId_)
+		return "";
+	QSharedPointer<Transition> trans = expConfig_->getAsset(currTransId_).staticCast<Transition>();
+	Q_ASSERT(trans);
+	if(!trans)
+		return "";
+	QString result = trans->getDestination();
+	QString runningPath = runningPath_;
+	if(result != "EngineAbort")
+	{
+		result.prepend(trans->getPath());
+		runningPath_ = result;
+	}
+	if(result == runningPath)
+		result = "";
+	return result;
 }
 
 }; //namespace Engine

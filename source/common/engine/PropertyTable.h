@@ -33,7 +33,8 @@ public:
 signals:
 	void propertyChanged(QSharedPointer<Property> changedProp);
 public slots:
-	void updatePropertyValue(int index,QString value);
+	//If updateInitProps is false, values won't be updated for InitProperties
+	void updatePropertyValue(int index,QString value,bool updateInitProps);
 private:
 	QSharedPointer<ExperimentConfig> expConfig_;
 };

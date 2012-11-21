@@ -3,7 +3,8 @@ using namespace Picto;
 
 //Template function definitions must be in header file-------------------------------------------
 DataState::DataState(bool moveByIterating) :
-iterateOnMove_(moveByIterating)
+iterateOnMove_(moveByIterating),
+bufferTime_(3600)
 {
 	reset();
 }
@@ -322,6 +323,8 @@ bool DataState::moveToCell(int cellId,bool last)
 {
 	if(cellId < -1 || cellId >= pbDataList_.size())
 		return false;
+	if(cellId == currentDataCell_)
+		return true;
 	bool reverse = cellId < currentDataCell_;
 	currentDataCell_ = cellId;
 	triggerValueChange(reverse,last);
@@ -356,15 +359,17 @@ int DataState::findIndexCell(PlaybackIndex index)
 		return -1;
 	if(index > getMaxIndex())
 	{
-		requestMoreData(getMaxIndex(),index);
-		if(index > getMaxIndex())
-			return -1;
+		//Assure that our lookup window is big enough
+		assureMinDataWindow(getMinIndex().time(),index.time());
+		//We now have enough data to make a decision, recurse
+		return findIndexCell(index);
 	}
 	else if(index < getMinIndex())
 	{
-		requestMoreData(getMinIndex(),index);
-		if(index < getMinIndex())
-			return -1;
+		//Assure that our lookup window is big enough
+		assureMinDataWindow(index.time(),getMaxIndex().time());
+		//We now have enough data to make a decision, recurse
+		return findIndexCell(index);
 	}else if(pbDataList_.isEmpty())
 		return -1;
 	return binaryIndexSearch(index,0,pbDataList_.size()-1);
@@ -395,11 +400,19 @@ void DataState::assureMinDataWindow(double lowTime,double highTime)
 	PlaybackIndex lowIndex = PlaybackIndex::minForTime(lowTime);
 	if((highTime >= 0) && (highIndex > getMaxIndex()))
 	{
+		double requestBound = getMaxIndex().time() + bufferTime_;
+		if(requestBound > highTime)
+			highIndex = PlaybackIndex::maxForTime(requestBound);
 		requestMoreData(getMaxIndex(),highIndex);
 		setBoundValues(highIndex);
 	}
 	if((lowTime >= 0) && (lowIndex < getMinIndex()))
 	{
+		double requestBound = getMinIndex().time() - bufferTime_;
+		if(requestBound < 0)
+			requestBound = 0;
+		if(requestBound < lowTime)
+			lowIndex = PlaybackIndex::minForTime(requestBound);
 		requestMoreData(getMinIndex(),lowIndex);
 		setBoundValues(lowIndex);
 	}

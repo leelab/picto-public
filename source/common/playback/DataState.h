@@ -143,6 +143,8 @@ private:
 	PlaybackIndex minIndex_;
 	int currentDataCell_;
 	bool iterateOnMove_;
+	//The minimum amount of time for additional data requests from this DataState
+	double bufferTime_;
 	//List of IndexedData items ordered by their index.
 	QList<QSharedPointer<IndexedData>> pbDataList_;
 };

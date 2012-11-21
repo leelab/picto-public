@@ -24,7 +24,7 @@ bool DirectorParameterResponseHandler::processResponse(QString directive)
 
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	QSharedPointer<PropertyTable> propTable = engine->getPropertyTable();
-	propTable->updatePropertyValue(paramId,valStr);
+	propTable->updatePropertyValue(paramId,valStr,true);
 	//Use ID to set parameter value.
 	return true;
 }

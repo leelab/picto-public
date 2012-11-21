@@ -42,6 +42,7 @@
 #include "../../common/storage/LFPDataUnitPackage.h"
 #include "../../common/storage/directordata.h"
 #include "../../common/compositor/OutputSignalWidget.h"
+#include "RemoteStateUpdater.h"
 #include "../propertyframe.h"
 
 #include "../../common/memleakdetect.h"
@@ -880,7 +881,8 @@ void RemoteViewer::setupEngine()
 	//set up the engine
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
-	engine_->setSlaveMode(true,engineSlaveChannel_);
+	QSharedPointer<RemoteStateUpdater> updater(new RemoteStateUpdater(engineSlaveChannel_));
+	engine_->setStateUpdater(updater);
 	engine_->setOperatorAsUser(true);
 
 	//Set up the rendering target

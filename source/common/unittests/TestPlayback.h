@@ -5,7 +5,7 @@
 #include <QtTest/QtTest>
 #include <QSharedPointer>
 #include "../playback/SessionPlayer.h"
-#include "../playback/SessionLoader.h"
+#include "../playback/FileSessionLoader.h"
 #include "../playback/SessionState.h"
 #include "../globals.h"
 
@@ -27,7 +27,7 @@ public:
 	void Test();
 
 private:
-	QSharedPointer<SessionLoader> loader_;
+	QSharedPointer<FileSessionLoader> loader_;
 	QSharedPointer<SessionPlayer> player_;
 	QSharedPointer<SessionState> state_;
 	double currTime_;
@@ -35,8 +35,8 @@ private slots:
 	void propertyChanged(int propId, QString value);
 	void transitionActivated(int transId);
 	void framePresented(double time);
-	void rewardSupplied(int duration,int channel);
-	void signalChanged(QString name,QVector<float> vals);
+	void rewardSupplied(double time,int duration,int channel);
+	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void lfpChanged(int channel,double value);
 	void spikeEvent(int channel, int unit, QVector<float> waveform);
 };

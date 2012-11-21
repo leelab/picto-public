@@ -303,6 +303,8 @@
    <file alias="_file_output_8h-source.html">../../../output/documentation/main/html/_file_output_8h-source.html</file>
    <file alias="_file_output_widget_8cpp-source.html">../../../output/documentation/main/html/_file_output_widget_8cpp-source.html</file>
    <file alias="_file_output_widget_8h-source.html">../../../output/documentation/main/html/_file_output_widget_8h-source.html</file>
+   <file alias="_file_session_loader_8cpp-source.html">../../../output/documentation/main/html/_file_session_loader_8cpp-source.html</file>
+   <file alias="_file_session_loader_8h-source.html">../../../output/documentation/main/html/_file_session_loader_8h-source.html</file>
    <file alias="_flow_element_8cpp-source.html">../../../output/documentation/main/html/_flow_element_8cpp-source.html</file>
    <file alias="_flow_element_8h-source.html">../../../output/documentation/main/html/_flow_element_8h-source.html</file>
    <file alias="_flush_dur_mode_8cpp-source.html">../../../output/documentation/main/html/_flush_dur_mode_8cpp-source.html</file>
@@ -471,10 +473,14 @@
    <file alias="_pixmap_compositing_surface_8h-source.html">../../../output/documentation/main/html/_pixmap_compositing_surface_8h-source.html</file>
    <file alias="_pixmap_visual_target_8cpp-source.html">../../../output/documentation/main/html/_pixmap_visual_target_8cpp-source.html</file>
    <file alias="_pixmap_visual_target_8h-source.html">../../../output/documentation/main/html/_pixmap_visual_target_8h-source.html</file>
+   <file alias="_playback_controller_8cpp-source.html">../../../output/documentation/main/html/_playback_controller_8cpp-source.html</file>
+   <file alias="_playback_controller_8h-source.html">../../../output/documentation/main/html/_playback_controller_8h-source.html</file>
    <file alias="_playback_data_8cpp-source.html">../../../output/documentation/main/html/_playback_data_8cpp-source.html</file>
    <file alias="_playback_data_8h-source.html">../../../output/documentation/main/html/_playback_data_8h-source.html</file>
    <file alias="_playback_interfaces_8cpp-source.html">../../../output/documentation/main/html/_playback_interfaces_8cpp-source.html</file>
    <file alias="_playback_interfaces_8h-source.html">../../../output/documentation/main/html/_playback_interfaces_8h-source.html</file>
+   <file alias="_playback_state_updater_8cpp-source.html">../../../output/documentation/main/html/_playback_state_updater_8cpp-source.html</file>
+   <file alias="_playback_state_updater_8h-source.html">../../../output/documentation/main/html/_playback_state_updater_8h-source.html</file>
    <file alias="_plexon_interface_8cpp-source.html">../../../output/documentation/main/html/_plexon_interface_8cpp-source.html</file>
    <file alias="_plexon_interface_8h-source.html">../../../output/documentation/main/html/_plexon_interface_8h-source.html</file>
    <file alias="_point_property_8cpp-source.html">../../../output/documentation/main/html/_point_property_8cpp-source.html</file>
@@ -581,6 +587,8 @@
    <file alias="_rect_property_8h-source.html">../../../output/documentation/main/html/_rect_property_8h-source.html</file>
    <file alias="_rect_target_8cpp-source.html">../../../output/documentation/main/html/_rect_target_8cpp-source.html</file>
    <file alias="_rect_target_8h-source.html">../../../output/documentation/main/html/_rect_target_8h-source.html</file>
+   <file alias="_remote_state_updater_8cpp-source.html">../../../output/documentation/main/html/_remote_state_updater_8cpp-source.html</file>
+   <file alias="_remote_state_updater_8h-source.html">../../../output/documentation/main/html/_remote_state_updater_8h-source.html</file>
    <file alias="_remote_viewer_2_task_run_viewer_8cpp-source.html">../../../output/documentation/main/html/_remote_viewer_2_task_run_viewer_8cpp-source.html</file>
    <file alias="_remote_viewer_2_task_run_viewer_8h-source.html">../../../output/documentation/main/html/_remote_viewer_2_task_run_viewer_8h-source.html</file>
    <file alias="_remote_viewer_2neural_data_viewer_8cpp-source.html">../../../output/documentation/main/html/_remote_viewer_2neural_data_viewer_8cpp-source.html</file>
@@ -727,6 +735,8 @@
    <file alias="_state_machine_element_8h-source.html">../../../output/documentation/main/html/_state_machine_element_8h-source.html</file>
    <file alias="_state_machine_element_item_8cpp-source.html">../../../output/documentation/main/html/_state_machine_element_item_8cpp-source.html</file>
    <file alias="_state_machine_element_item_8h-source.html">../../../output/documentation/main/html/_state_machine_element_item_8h-source.html</file>
+   <file alias="_state_updater_8cpp-source.html">../../../output/documentation/main/html/_state_updater_8cpp-source.html</file>
+   <file alias="_state_updater_8h-source.html">../../../output/documentation/main/html/_state_updater_8h-source.html</file>
    <file alias="_status_light_8cpp-source.html">../../../output/documentation/main/html/_status_light_8cpp-source.html</file>
    <file alias="_status_light_8h-source.html">../../../output/documentation/main/html/_status_light_8h-source.html</file>
    <file alias="_status_mode_8cpp-source.html">../../../output/documentation/main/html/_status_mode_8cpp-source.html</file>
@@ -1096,6 +1106,8 @@
    <file alias="class_picto_1_1_experimental_system.html">../../../output/documentation/main/html/class_picto_1_1_experimental_system.html</file>
    <file alias="class_picto_1_1_eye_tracker_calibration-members.html">../../../output/documentation/main/html/class_picto_1_1_eye_tracker_calibration-members.html</file>
    <file alias="class_picto_1_1_eye_tracker_calibration.html">../../../output/documentation/main/html/class_picto_1_1_eye_tracker_calibration.html</file>
+   <file alias="class_picto_1_1_file_session_loader-members.html">../../../output/documentation/main/html/class_picto_1_1_file_session_loader-members.html</file>
+   <file alias="class_picto_1_1_file_session_loader.html">../../../output/documentation/main/html/class_picto_1_1_file_session_loader.html</file>
    <file alias="class_picto_1_1_flow_element-members.html">../../../output/documentation/main/html/class_picto_1_1_flow_element-members.html</file>
    <file alias="class_picto_1_1_flow_element.html">../../../output/documentation/main/html/class_picto_1_1_flow_element.html</file>
    <file alias="class_picto_1_1_flow_element.png">../../../output/documentation/main/html/class_picto_1_1_flow_element.png</file>
@@ -1224,6 +1236,9 @@
    <file alias="class_picto_1_1_pixmap_compositing_surface-members.html">../../../output/documentation/main/html/class_picto_1_1_pixmap_compositing_surface-members.html</file>
    <file alias="class_picto_1_1_pixmap_compositing_surface.html">../../../output/documentation/main/html/class_picto_1_1_pixmap_compositing_surface.html</file>
    <file alias="class_picto_1_1_pixmap_compositing_surface.png">../../../output/documentation/main/html/class_picto_1_1_pixmap_compositing_surface.png</file>
+   <file alias="class_picto_1_1_playback_state_updater-members.html">../../../output/documentation/main/html/class_picto_1_1_playback_state_updater-members.html</file>
+   <file alias="class_picto_1_1_playback_state_updater.html">../../../output/documentation/main/html/class_picto_1_1_playback_state_updater.html</file>
+   <file alias="class_picto_1_1_playback_state_updater.png">../../../output/documentation/main/html/class_picto_1_1_playback_state_updater.png</file>
    <file alias="class_picto_1_1_plexon_interface-members.html">../../../output/documentation/main/html/class_picto_1_1_plexon_interface-members.html</file>
    <file alias="class_picto_1_1_plexon_interface.html">../../../output/documentation/main/html/class_picto_1_1_plexon_interface.html</file>
    <file alias="class_picto_1_1_point_property-members.html">../../../output/documentation/main/html/class_picto_1_1_point_property-members.html</file>
@@ -1299,6 +1314,9 @@
    <file alias="class_picto_1_1_rect_target-members.html">../../../output/documentation/main/html/class_picto_1_1_rect_target-members.html</file>
    <file alias="class_picto_1_1_rect_target.html">../../../output/documentation/main/html/class_picto_1_1_rect_target.html</file>
    <file alias="class_picto_1_1_rect_target.png">../../../output/documentation/main/html/class_picto_1_1_rect_target.png</file>
+   <file alias="class_picto_1_1_remote_state_updater-members.html">../../../output/documentation/main/html/class_picto_1_1_remote_state_updater-members.html</file>
+   <file alias="class_picto_1_1_remote_state_updater.html">../../../output/documentation/main/html/class_picto_1_1_remote_state_updater.html</file>
+   <file alias="class_picto_1_1_remote_state_updater.png">../../../output/documentation/main/html/class_picto_1_1_remote_state_updater.png</file>
    <file alias="class_picto_1_1_result-members.html">../../../output/documentation/main/html/class_picto_1_1_result-members.html</file>
    <file alias="class_picto_1_1_result.html">../../../output/documentation/main/html/class_picto_1_1_result.html</file>
    <file alias="class_picto_1_1_result.png">../../../output/documentation/main/html/class_picto_1_1_result.png</file>
@@ -1397,6 +1415,9 @@
    <file alias="class_picto_1_1_state_machine_element-members.html">../../../output/documentation/main/html/class_picto_1_1_state_machine_element-members.html</file>
    <file alias="class_picto_1_1_state_machine_element.html">../../../output/documentation/main/html/class_picto_1_1_state_machine_element.html</file>
    <file alias="class_picto_1_1_state_machine_element.png">../../../output/documentation/main/html/class_picto_1_1_state_machine_element.png</file>
+   <file alias="class_picto_1_1_state_updater-members.html">../../../output/documentation/main/html/class_picto_1_1_state_updater-members.html</file>
+   <file alias="class_picto_1_1_state_updater.html">../../../output/documentation/main/html/class_picto_1_1_state_updater.html</file>
+   <file alias="class_picto_1_1_state_updater.png">../../../output/documentation/main/html/class_picto_1_1_state_updater.png</file>
    <file alias="class_picto_1_1_stimulus_element-members.html">../../../output/documentation/main/html/class_picto_1_1_stimulus_element-members.html</file>
    <file alias="class_picto_1_1_stimulus_element.html">../../../output/documentation/main/html/class_picto_1_1_stimulus_element.html</file>
    <file alias="class_picto_1_1_stopwatch-members.html">../../../output/documentation/main/html/class_picto_1_1_stopwatch-members.html</file>
