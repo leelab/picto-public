@@ -57,19 +57,21 @@ private:
 	QAction *pauseAction_;
 	QAction *stopAction_;
 	QLabel *clock_;
-	QLabel *loading_;
+	QLabel *status_;
 	QDoubleSpinBox *speed_;
+	QComboBox *runs_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 
 	QToolBar* testToolbar_;
 
 	enum Status {Ending, Stopped, Running, Paused};
-	Status status_;
 private slots:
 
 	void loadSession();
 	void updateTime(double time);
 	void setRunSpeed();
+	void updateRunsList(QStringList runs);
+	void loading(bool load);
 	//void zoomChanged(int zoom);
 
 };

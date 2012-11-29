@@ -2,6 +2,8 @@
 #define _DATASTATE_H_
 #include <QSharedPointer>
 #include <QPair>
+#include <QMutex>
+#include <QMutexLocker>
 
 #include "IndexedData.h"
 
@@ -18,20 +20,28 @@ public:
 	//		triggering triggerValueChange() for each one.
 	DataState(bool moveByIterating);
 	virtual ~DataState();
-	//SET FUNCTIONS-----------------------------------------------------------------
-	//IndexedData values must be set either in increasing index order after latest
-	//or in decreaseing index order before the first
-	void setValue(QSharedPointer<IndexedData> pbData);
+	//CONFIGURE FUNCTIONS-----------------------------------------------------------
+	//Resets this Data State back to its initial condition
+	virtual void reset();
+
+	//SET STORED DATA FUNCTIONS-----------------------------------------------------------------
+	//Sets the minimum and maximum times for which data is valid in this DataState.
+	//If, for example, there is only one spike in a session, the DataState needs to
+	//know that the one spike consitutes all data from time n to time m.  That is what
+	//this is for.
+	virtual void setBoundTimes(double minTime,double maxTime);
+	virtual void setFinishedLoading();
+
+	//Functions below clear all IndexedData before/after the input time for memory savings.
+	virtual void clearDataBefore(double time);
+	void clearDataAfter(double time);
+
+	//SET ACTIVE DATA FUNCTIONS-----------------------------------------------------------------
 	//Sets the current index of this DataState to the largest value available lower than
 	//or equal to the input index.  If not enough data is available to reach that position, 
 	//requestMoreData will be called.  If this call fails to provide sufficient data.  False
 	//will be returned.
 	bool setCurrentIndex(PlaybackIndex index);
-	//Functions below clear all IndexedData before/after the input time for memory savings.
-	void clearDataBefore(double time);
-	void clearDataAfter(double time);
-	//Resets this Data State back to its initial condition
-	virtual void reset();
 
 	//GET FUNCTIONS-----------------------------------------------------------------
 	//Gets the current IndexedData item.
@@ -84,6 +94,17 @@ public:
 	PlaybackIndex getLastIndex();
 
 protected:
+	//IndexedData values must be set either in increasing index order after latest
+	//or in decreaseing index order before the first
+	void setValue(QSharedPointer<IndexedData> pbData);
+	//Configures the DataState such that when functions are called requesting data
+	//or changing the active data state it waits until enough data has been added
+	//to procede.  If this is not enabled, the DataState will function as if it has
+	//enough data to procede.  (ie. SetCurrentIndex(infinity) will set the current
+	//index to the highest available location in the data list.
+	//Default is enabled.
+	void shouldWaitForData(bool wait);
+
 	//@param reverse indicates if the value was reached by
 	//moving the current index backward (ie. back in time)
 	//@param last indicates that this is the last iteration
@@ -102,12 +123,13 @@ protected:
 	virtual void requestNextData(PlaybackIndex currLast,bool backward) = 0;
 
 private:
+
 	//Sets the maximum/minimum PlaybackIndeces for the window in which this DataState can
 	//provide valid data.  This is important because it lets the DataState know if a lack 
 	//of available data is a result data not having been loaded yet or to a simple lack of 
 	//data points.
 	//Note: The value is automatically detected as a max or min and set accordingly.
-	void setBoundValues(PlaybackIndex index);
+	void setBoundIndex(PlaybackIndex index);
 	//Data may not be available after getLastIndex() but there may just not have been 
 	//any physical data in that region.  getMaxIndex() gets index after which this
 	//DataState's data is no longer sufficient.
@@ -128,17 +150,35 @@ private:
 	//to move to the current index
 	bool moveToCell(int cellId,bool last);
 	//Returns the index of the cell two cells after the current one.
-	PlaybackIndex get2NextIndex(double lookForwardTime);
+	PlaybackIndex get2NextIndex();
 	//Returns the cell number of the cell with the highest index less than or equal to
 	//the input.
 	int findIndexCell(PlaybackIndex index);
 	//Recursively searches for the highest indexed cell with index <= input index
 	//within the input window
 	int binaryIndexSearch(PlaybackIndex index,int minCell, int maxCell);
-	//Assures that this object has all data available between the input Indeces
-	void assureMinDataWindow(double lowTime,double highTime);
+	//Returns true if the input index is within the data limits of this DataState
+	bool inDataWindow(PlaybackIndex index);
+	//Yields this thread until sufficient data is available to fulfil requests.
+	//Note: Assumes mutex is locked when called.
+	void waitForSufficientData(QMutexLocker* mutexLocker,PlaybackIndex dataIndex);
+
+	//Separating functions from the public interface into public and private versions
+	//allows us to enact mutex locking when the function is called from outside of the
+	//object
+	QSharedPointer<IndexedData> getCurrentValuePriv();
+	QSharedPointer<IndexedData> getPrevValuePriv();
+	QSharedPointer<IndexedData> getNextValuePriv();
+	QList<QSharedPointer<IndexedData>> getValuesSincePriv(double time);
+	QList<QSharedPointer<IndexedData>> getValuesUntilPriv(double time);
+	PlaybackIndex getCurrentIndexPriv();
+	PlaybackIndex getPrevIndexPriv();
+	PlaybackIndex getNextIndexPriv();
+	PlaybackIndex getFirstIndexPriv();
+	PlaybackIndex getLastIndexPriv();
 	
 	//Data Fields
+	bool finishedLoading_;
 	PlaybackIndex maxIndex_;
 	PlaybackIndex minIndex_;
 	int currentDataCell_;
@@ -147,6 +187,8 @@ private:
 	double bufferTime_;
 	//List of IndexedData items ordered by their index.
 	QList<QSharedPointer<IndexedData>> pbDataList_;
+	bool waitForData_;
+	QSharedPointer<QMutex> mutex_;	//Data writes and reads happen in different threads.  This sorts out threading issues.
 };
 
 

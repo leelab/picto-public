@@ -24,16 +24,26 @@ public:
 
 	QString loadSession(QString filename);
 
-	void play();
-	void pause();
-	void stop();
 	void setRunSpeed(double value);
 
 	QSharedPointer<Picto::VisualTarget> getVisualTarget();
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> getOutputSignalControllers();
+	
+public slots:	
+	void play();
+	void pause();
+	void stop();
+
+
 signals:
 	void timeChanged(double time);
 	void loading(bool isLoading);
+	void runsUpdated(QStringList runs);
+	void finishedPlayback();
+
+public slots:
+	void selectRun(int index);
+
 
 private:
 	QTimer stateUpdateTimer_;

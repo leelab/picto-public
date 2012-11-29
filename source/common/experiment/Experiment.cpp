@@ -114,7 +114,7 @@ bool Experiment::runTask(QString taskName)
 	//The prior task would end with a result that is a path 
 	//within a different task, if that is the case, re-enter at that task.
 	QStringList pathElems = result.split("::",QString::SkipEmptyParts);
-	if(pathElems.size() == 1)
+	if(pathElems.size() <= 1)
 		taskName.clear();
 	else
 		taskName = pathElems[0];

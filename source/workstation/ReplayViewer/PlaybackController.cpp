@@ -29,6 +29,8 @@ newStatus_(Stopped)
 	playbackUpdater_ = QSharedPointer<PlaybackStateUpdater>(new PlaybackStateUpdater());
 	engine_->setStateUpdater(playbackUpdater_);
 	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
+	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SLOT(stop()));
+	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SIGNAL(finishedPlayback()));
 
 
 	//Set up the rendering target
@@ -62,41 +64,13 @@ newStatus_(Stopped)
 	renderingTarget_->showSplash();
 }
 
-void PlaybackController::play()
-{
-	
-	if(status_ == Stopped)
-	{
-		if(experiment_ && experiment_->getTaskNames().size())
-		{
-			QTimer::singleShot(0,this,SLOT(runExperiment()));
-		}
-	}
-	else if(status_ == Paused)
-	{
-		playbackUpdater_->resume();
-		engine_->play();
-	}
-}
-
-void PlaybackController::pause()
-{
-	playbackUpdater_->pause();
-}
-
-void PlaybackController::stop()
-{
-	engine_->stop();
-	playbackUpdater_->rewindToStart();
-	pixmapVisualTarget_->clear();
-	renderingTarget_->showSplash();
-}
-
 QString PlaybackController::loadSession(QString filename)
 {
 	playbackUpdater_->setFile(filename);
 
 	QSharedPointer<DesignRoot> myDesignRoot(playbackUpdater_->getDesignRoot());
+	if(!myDesignRoot)
+		return "Failed to load session design.  This could happen if the design did not include any runs.";
 	QSharedPointer<Design> design = myDesignRoot->getDesign("Experiment",0);
 	experiment_ = QSharedPointer<Experiment>();
 	if(!design)
@@ -112,6 +86,7 @@ QString PlaybackController::loadSession(QString filename)
 	{
 		experiment_->setEngine(engine_);
 	}
+	emit runsUpdated(playbackUpdater_->getRuns());
 	return "";
 }
 
@@ -129,6 +104,41 @@ QSharedPointer<Picto::VisualTarget> PlaybackController::getVisualTarget()
 QVector<QSharedPointer<Picto::VirtualOutputSignalController>> PlaybackController::getOutputSignalControllers()
 {
 	return outSigControllers_;
+}
+
+void PlaybackController::play()
+{
+	playbackUpdater_->play();
+	if(status_ == Stopped)
+	{
+		if(experiment_ && experiment_->getTaskNames().size())
+		{
+			QTimer::singleShot(0,this,SLOT(runExperiment()));
+		}
+	}
+	else if(status_ == Paused)
+	{
+		engine_->play();
+	}
+}
+
+void PlaybackController::pause()
+{
+	playbackUpdater_->pause();
+}
+
+void PlaybackController::stop()
+{
+	engine_->stop();
+	playbackUpdater_->stop();
+	pixmapVisualTarget_->clear();
+	renderingTarget_->showSplash();
+	emit timeChanged(0.0);
+}
+
+void PlaybackController::selectRun(int index)
+{
+	playbackUpdater_->loadRun(index);
 }
 
 void PlaybackController::runExperiment()

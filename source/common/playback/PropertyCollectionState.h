@@ -21,6 +21,10 @@ class PropertyCollectionState : public QObject, public DataState
 public:
 	PropertyCollectionState();
 	virtual ~PropertyCollectionState();
+	virtual void reset();
+	virtual void setBoundTimes(double minTime,double maxTime);
+	virtual void setFinishedLoading();
+	virtual void clearDataBefore(double time);
 
 	QSharedPointer<PropertyReader> getPropertyReader(int propId);
 

@@ -29,8 +29,7 @@
 
 
 ReplayViewer::ReplayViewer(QWidget *parent) :
-	Viewer(parent),
-	status_(Stopped)
+	Viewer(parent)
 {
 	//Create the Playback Controller that handles all Experiment playback
 	playbackController_ = QSharedPointer<PlaybackController>(new PlaybackController(visualTargetHost_));
@@ -70,6 +69,12 @@ void ReplayViewer::setupUi()
 	connect(loadSessionAction_, SIGNAL(triggered()),this, SLOT(loadSession()));
 	loadSessionAction_->setEnabled(true);
 
+	runs_ = new QComboBox();
+	runs_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	runs_->setToolTip("Select a Run from the Session");
+	connect(runs_,SIGNAL(currentIndexChanged(int)),playbackController_.data(),SLOT(selectRun(int)));
+	connect(playbackController_.data(),SIGNAL(runsUpdated(QStringList)),this,SLOT(updateRunsList(QStringList)));
+
 	///play/pause/stop actions and toolbar
 	playAction_ = new QAction(tr("&Start task"),this);
 	playAction_->setIcon(QIcon(":/icons/play.png"));
@@ -97,14 +102,14 @@ void ReplayViewer::setupUi()
 	stopAction_->setIcon(QIcon(":/icons/stop.png"));
 	stopAction_->setToolTip("Stop");
 	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
+	connect(playbackController_.data(),SIGNAL(finishedPlayback()),stopAction_,SLOT(trigger()));
 	stopAction_->setEnabled(false);
 
 	clock_ = new QLabel("0.00");
 	connect(playbackController_.data(),SIGNAL(timeChanged(double)),this,SLOT(updateTime(double)));
 
-	loading_ = new QLabel("Loading");
-	loading_->setVisible(false);
-	connect(playbackController_.data(),SIGNAL(loading(bool)),loading_,SLOT(setVisible(bool)));
+	status_ = new QLabel("Ready");
+	connect(playbackController_.data(),SIGNAL(loading(bool)),this,SLOT(loading(bool)));
 
 	////Zoom slider
 	//zoomSlider_ = new QSlider;
@@ -116,13 +121,15 @@ void ReplayViewer::setupUi()
 
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(loadSessionAction_);
+	testToolbar_->addWidget(runs_);
 	testToolbar_->addAction(playAction_);
 	testToolbar_->addWidget(speed_);
 	testToolbar_->addAction(pauseAction_);
 	testToolbar_->addAction(stopAction_);
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(clock_);
-	testToolbar_->addWidget(loading_);
+	testToolbar_->addSeparator();
+	testToolbar_->addWidget(status_);
 	testToolbar_->addSeparator();
 	//testToolbar_->addWidget(zoomSlider_);
 	
@@ -162,6 +169,7 @@ void ReplayViewer::play()
 {
 	qDebug()<<"Play slot";
 
+	status_->setText("Playing");
 	pauseAction_->setEnabled(true);
 	stopAction_->setEnabled(true);
 	playAction_->setEnabled(false);
@@ -188,6 +196,7 @@ void ReplayViewer::stop()
 {
 	qDebug()<<"Stop slot";
 
+	status_->setText("Stopped");
 	pauseAction_->setEnabled(false);
 	stopAction_->setEnabled(false);
 	playAction_->setEnabled(true);
@@ -213,7 +222,10 @@ void ReplayViewer::loadSession()
 	filename = filename.replace("\\","/");
 	Q_ASSERT(filename.lastIndexOf("/") >=0);
 	Q_ASSERT(filename.lastIndexOf(".") >=0);
-	playbackController_->loadSession(filename);
+	QString result = playbackController_->loadSession(filename);
+	if(!result.isEmpty())
+		QMessageBox::warning(0,"Session could not be loaded",result);
+
 }
 
 void ReplayViewer::updateTime(double time)
@@ -224,5 +236,18 @@ void ReplayViewer::updateTime(double time)
 void ReplayViewer::setRunSpeed()
 {
 	playbackController_->setRunSpeed(speed_->value());
+}
 
+void ReplayViewer::updateRunsList(QStringList runs)
+{
+	runs_->setEnabled(false);
+	runs_->clear();
+	for(int i=0;i<runs.size();i++)
+		runs_->addItem(runs[i],i);
+	runs_->setEnabled(true);
+}
+
+void ReplayViewer::loading(bool load)
+{
+	status_->setText(load?"Loading":"Playing");
 }

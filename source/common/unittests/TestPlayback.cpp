@@ -6,7 +6,7 @@ TestPlayback::TestPlayback()
 {
 	state_ = QSharedPointer<SessionState>(new SessionState());
 	loader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(state_));
-	player_ = QSharedPointer<SessionPlayer>(new SessionPlayer(state_));
+	player_ = QSharedPointer<SessionPlayer>(new SessionPlayer(state_,loader_));
 
 	loader_->setFile("C:\\Projects\\PictoSVN\\Picto\\trunk\\output\\bin\\sessions\\releaseDirector\\BiasedMatchingPennies_Token\\Session_2012_10_31__15_50_57.sqlite");
 
@@ -30,15 +30,15 @@ void TestPlayback::Test()
 	for(int i=0;i<4;i++)
 	{
 		qDebug("\n\nStart Forward\n\n");
-		while(player_->stepForward() && currTime_ < 29.9)
-		{
-			QCoreApplication::processEvents();
-		}
-		qDebug("\n\nStart Back\n\n");
-		while(player_->stepBack() && currTime_ > 29.85)
-		{
-			QCoreApplication::processEvents();
-		}
+		//while(player_->stepForward() && currTime_ < 29.9)
+		//{
+		//	QCoreApplication::processEvents();
+		//}
+		//qDebug("\n\nStart Back\n\n");
+		//while(player_->stepBack() && currTime_ > 29.85)
+		//{
+		//	QCoreApplication::processEvents();
+		//}
 	}
 	QString debugStr = QString("Elapsed Time: %1").arg(timer.elapsed());
 	qDebug(debugStr.toAscii());

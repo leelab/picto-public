@@ -7,6 +7,9 @@ using namespace Picto;
 
 PlaybackStateUpdater::PlaybackStateUpdater()
 {
+	paused_ = true;
+	waiting_ = false;
+	firstResumeFrame_ = true;
 }
 
 bool PlaybackStateUpdater::updateState()
@@ -26,27 +29,37 @@ bool PlaybackStateUpdater::updateState()
 	}
 	double runToTime = timerOffset_+(playbackSpeed_*timer_.elapsed()/1000.0);
 	if(runToTime <= sessionPlayer_->getTime())
-		return true;
-	return sessionPlayer_->stepToTime(runToTime);
+		return true; 
+	if(!sessionPlayer_->stepToTime(runToTime))
+	{
+		if(!fileSessionLoader_->dataIsReady())
+		{
+			firstResumeFrame_ = true;
+			waiting_ = true;
+			emit loading(true);
+		}
+	}
+	else
+	{
+		if(waiting_)
+			emit loading(false);
+		waiting_ = false;
+	}
+	return true;
 }
 
 bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	sessionState_ = QSharedPointer<SessionState>(new SessionState());
 	fileSessionLoader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(sessionState_));
-	sessionPlayer_ = QSharedPointer<SessionPlayer>(new SessionPlayer(sessionState_));
+	sessionPlayer_ = QSharedPointer<SessionPlayer>(new SessionPlayer(sessionState_,fileSessionLoader_));
 
 	connect(sessionState_.data(),SIGNAL(propertyChanged(int,QString)),this,SIGNAL(propertyChanged(int,QString)));
 	connect(sessionState_.data(),SIGNAL(transitionActivated(int)),this,SIGNAL(transitionActivated(int)));
 	connect(sessionState_.data(),SIGNAL(framePresented(double)),this,SIGNAL(framePresented(double)));
 	connect(sessionState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
 	connect(sessionState_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SIGNAL(signalChanged(QString,QStringList,QVector<float>)));
-	connect(fileSessionLoader_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
-	
-	paused_ = false;
-	timerOffset_ = 0.0;
-	playbackSpeed_ = 1.0;
-	firstResumeFrame_ = true;
+	connect(sessionPlayer_.data(),SIGNAL(reachedEnd()),this,SLOT(reachedEnd()));
 
 	//Load session file to file loader
 	if(!fileSessionLoader_->setFile(filePath))
@@ -67,6 +80,25 @@ QSharedPointer<DesignRoot> PlaybackStateUpdater::getDesignRoot()
 	return designRoot_;
 }
 
+QStringList PlaybackStateUpdater::getRuns()
+{
+	if(!fileSessionLoader_)
+		return QStringList();
+	return fileSessionLoader_->getRunNames();
+}
+
+bool PlaybackStateUpdater::loadRun(int index)
+{
+	if(!fileSessionLoader_)
+		return false;
+	paused_ = false;
+	timerOffset_ = 0.0;
+	playbackSpeed_ = 1.0;
+	firstResumeFrame_ = true;
+	runLoaded_ = false;
+	return fileSessionLoader_->loadRun(index);
+}
+
 bool PlaybackStateUpdater::pause()
 {
 	paused_ = true;
@@ -74,17 +106,19 @@ bool PlaybackStateUpdater::pause()
 	return true;
 }
 
-bool PlaybackStateUpdater::resume()
+bool PlaybackStateUpdater::play()
 {
 	paused_ = false;
 	return true;
 }
 
-bool PlaybackStateUpdater::rewindToStart()
+bool PlaybackStateUpdater::stop()
 {
-	paused_ = false;
+	paused_ = true;
 	firstResumeFrame_ = true;
-	return sessionState_->reset();
+	if(sessionPlayer_)
+		sessionPlayer_->restart();
+	return true;
 }
 
 void PlaybackStateUpdater::setPlaybackSpeed(double speed)
@@ -93,4 +127,10 @@ void PlaybackStateUpdater::setPlaybackSpeed(double speed)
 		return;
 	firstResumeFrame_ = true;
 	playbackSpeed_ = speed;	
+}
+
+void PlaybackStateUpdater::reachedEnd()
+{
+	stop();
+	emit finishedPlayback();
 }

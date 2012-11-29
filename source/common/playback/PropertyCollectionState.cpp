@@ -14,6 +14,39 @@ PropertyCollectionState::~PropertyCollectionState()
 
 }
 
+void PropertyCollectionState::reset()
+{
+	DataState::reset();
+	propLookup_.clear();
+}
+
+void PropertyCollectionState::setBoundTimes(double minTime,double maxTime)
+{
+	DataState::setBoundTimes(minTime,maxTime);
+	foreach(QSharedPointer<PropertyState> propState,propLookup_)
+	{
+		propState->setBoundTimes(minTime,maxTime);
+	}
+}
+
+void PropertyCollectionState::setFinishedLoading()
+{
+	DataState::setFinishedLoading();
+	foreach(QSharedPointer<PropertyState> propState,propLookup_)
+	{
+		propState->setFinishedLoading();
+	}
+}
+
+void PropertyCollectionState::clearDataBefore(double time)
+{
+	DataState::clearDataBefore(time);
+	foreach(QSharedPointer<PropertyState> propState,propLookup_)
+	{
+		propState->clearDataBefore(time);
+	}
+}
+
 QSharedPointer<PropertyReader> PropertyCollectionState::getPropertyReader(int propId)
 {
 	if(propLookup_.contains(propId)) 

@@ -30,9 +30,11 @@ public:
 	bool setFile(QString filePath);
 	QSharedPointer<DesignRoot> getDesignRoot();
 
+	QStringList getRuns();
+	bool loadRun(int index);
 	bool pause();
-	bool resume();
-	bool rewindToStart();
+	bool play();
+	bool stop();
 	void setPlaybackSpeed(double speed);
 signals:
 	//triggered when values change
@@ -42,6 +44,7 @@ signals:
 	void rewardSupplied(double time,int duration,int channel);
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void loading(bool isLoading);
+	void finishedPlayback();
 
 private:
 	QSharedPointer<FileSessionLoader> fileSessionLoader_;
@@ -49,10 +52,14 @@ private:
 	QSharedPointer<SessionPlayer> sessionPlayer_;
 	QSharedPointer<DesignRoot> designRoot_;
 	bool paused_;
+	bool waiting_;
 	QTime timer_;
 	double timerOffset_;
 	double playbackSpeed_;
 	bool firstResumeFrame_;
+	bool runLoaded_;
+private slots:
+	void reachedEnd();
 };
 
 

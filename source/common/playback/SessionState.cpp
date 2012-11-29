@@ -117,6 +117,79 @@ bool SessionState::setSpike(qulonglong dataId,double spikeTime,int channel,int u
 	return spikeState_->setSpike(dataId,spikeTime,channel,unit,waveform);
 }
 
+void SessionState::setBehavioralBounds(double min,double max)
+{
+	propCollection_->setBoundTimes(min,max);
+	transState_->setBoundTimes(min,max);
+	frameState_->setBoundTimes(min,max);
+	rewardState_->setBoundTimes(min,max);
+	foreach(QSharedPointer<SignalState> sigState,signalLookup_)
+		sigState->setBoundTimes(min,max);
+}
+
+void SessionState::clearBehavioralData(double bound,bool before)
+{
+	if(before)
+	{
+		propCollection_->clearDataBefore(bound);
+		transState_->clearDataBefore(bound);
+		frameState_->clearDataBefore(bound);
+		rewardState_->clearDataBefore(bound);
+		foreach(QSharedPointer<SignalState> sigState,signalLookup_)
+			sigState->clearDataBefore(bound);
+	}
+	else
+	{
+		propCollection_->clearDataAfter(bound);
+		transState_->clearDataAfter(bound);
+		frameState_->clearDataAfter(bound);
+		rewardState_->clearDataAfter(bound);
+		foreach(QSharedPointer<SignalState> sigState,signalLookup_)
+			sigState->clearDataAfter(bound);
+	}
+
+}
+
+void SessionState::setBehavioralFinished()
+{
+	propCollection_->setFinishedLoading();
+	transState_->setFinishedLoading();
+	frameState_->setFinishedLoading();
+	rewardState_->setFinishedLoading();
+	foreach(QSharedPointer<SignalState> sigState,signalLookup_)
+		sigState->setFinishedLoading();
+}
+
+void SessionState::setNeuralBounds(double min,double max)
+{
+	spikeState_->setBoundTimes(min,max);
+	foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
+		lfpState->setBoundTimes(min,max);
+}
+
+void SessionState::clearNeuralData(double bound,bool before)
+{
+	if(before)
+	{
+		spikeState_->clearDataBefore(bound);
+		foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
+			lfpState->clearDataBefore(bound);
+	}
+	else
+	{
+		spikeState_->clearDataAfter(bound);
+		foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
+			lfpState->clearDataAfter(bound);
+	}
+}
+
+void SessionState::setNeuralFinished()
+{
+	spikeState_->setFinishedLoading();
+	foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
+		lfpState->setFinishedLoading();
+}
+
 QSharedPointer<PropertyReader> SessionState::getPropertyReader(int propId)
 {
 	return propCollection_->getPropertyReader(propId);

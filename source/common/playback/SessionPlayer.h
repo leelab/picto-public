@@ -4,6 +4,7 @@
 #include <QHash>
 
 #include "SessionState.h"
+#include "SessionLoader.h"
 
 namespace Picto {
 /*! \brief Component of Picto Playback system that plays back sessions.
@@ -16,13 +17,10 @@ class SessionPlayer : public  QObject
 {
 	Q_OBJECT
 public:
-	SessionPlayer(QSharedPointer<SessionState> sessState);
+	SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPointer<SessionLoader> sessLoader);
 	virtual ~SessionPlayer();
 
-	bool stepForward();
-	bool stepToNextFrame();
-	bool stepBack();
-	bool stepToPrevFrame();
+	void restart();
 	bool stepToTime(double time);
 	double getTime();
 	//If the object isProcessing, it is in the process of handling a previous command
@@ -30,20 +28,21 @@ public:
 	//the playback system may return processing to the event loop while it performs 
 	//long processes.
 	bool isProcessing();
-
+signals:
+	void reachedEnd();
 protected:
 
 private:
-	bool step(bool backward = false);
+	bool stepForward(double lookForward);
+	bool stepToNextFrame(double lookForward);
+	bool step(double lookForward);
 	QSharedPointer<SessionState> sessionState_;
-	bool started_;
+	QSharedPointer<SessionLoader> sessionLoader_;
 	PlaybackIndex lastIndex_;
 	bool processing_;
+	bool reachedEnd_;
 
-	QSharedPointer<DataState> getNextTriggerState(bool backward);
-
-private slots:
-	void sessionStateReset();
+	QSharedPointer<DataState> getNextTriggerState(double lookForward);
 
 };
 

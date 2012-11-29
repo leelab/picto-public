@@ -51,6 +51,14 @@ public:
 	bool setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
 	bool setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
 
+	void setBehavioralBounds(double min,double max);
+	void clearBehavioralData(double bound,bool before);
+	void setBehavioralFinished();
+	void setNeuralBounds(double min,double max);
+	void clearNeuralData(double bound,bool before);
+	void setNeuralFinished();
+
+
 	//GET FUNCTIONS-----------------------------------------------------------------
 	//The separate types of DataReaders are used to access asynchronous data
 	//such as spikes since 1 second ago, lfp data until 500ms from now, etc.

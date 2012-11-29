@@ -7,9 +7,7 @@
 using namespace Picto;
 
 FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState) :
-SessionLoader(sessState),
-currRun_(0),
-dataBuffer_(60.0)
+SessionLoader(sessState)
 {
 }
 
@@ -35,11 +33,8 @@ bool FileSessionLoader::setFile(QString path)
 		return false;
 	}
 	session_ = newSession;
-	currRun_ = 0;
 
 	//Intialize Object Data
-	if(!buildRunsList())
-		return false;
 	if(!getSignalInfo())
 		return false;
 	if(!loadDesignDefinition())
@@ -47,392 +42,14 @@ bool FileSessionLoader::setFile(QString path)
 	return true;
 }
 
-void FileSessionLoader::setDataBufferTime(double timeSpan)
-{
-	if(timeSpan < 0)
-		timeSpan = 0;
-	dataBuffer_ = timeSpan;
-}
-
 QString FileSessionLoader::getDesignDefinition()
 {
 	return designDef_;
 }
 
-QStringList FileSessionLoader::getRunNames()
+QVector<SessionLoader::RunData> FileSessionLoader::loadRunData()
 {
-	QStringList returnVal;
-	foreach(RunData run, runs_)
-		returnVal.append(run.name_);
-	return returnVal;
-}
-
-bool FileSessionLoader::loadRun(int runIndex)
-{
-	if(runIndex < 0 || runIndex >= runs_.size())
-		return false;
-	currRun_ = runIndex;
-	return true;
-}
-
-void FileSessionLoader::childLoadData(PlaybackDataType type,PlaybackIndex currLast,PlaybackIndex to)
-{
-	if((!session_.isOpen()) || (currRun_ < 0))
-		return;
-	double startTime = currLast.time();
-	double stopTime = to.time();
-	if(startTime == stopTime)
-		return;
-	
-	bool backward = stopTime < startTime;
-	if(int((stopTime-startTime)/dataBuffer_) == 0)
-		stopTime = backward?startTime-dataBuffer_:startTime+dataBuffer_;
-	QSqlQuery query(session_);
-	query.setForwardOnly(!backward);
-	bool success;
-	switch(type)
-	{
-	case eProperty:
-		query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, frames f "
-			"WHERE f.dataid=p.frameid AND f.time > :starttime "
-			"AND f.time <= :stoptime ORDER BY p.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		while(query.next()){
-			sessionState_->setPropertyValue(query.value(0).toDouble(),query.value(1).toLongLong(),query.value(2).toInt(),query.value(3).toString());
-		}
-		query.finish();
-		break;
-	case eTransition:
-		query.prepare("SELECT f.time,t.dataid,t.transid FROM transitions t, frames f "
-			"WHERE f.dataid=t.frameid AND f.time > :starttime "
-			"AND f.time <= :stoptime ORDER BY t.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		while(query.next()){
-			sessionState_->setTransition(query.value(0).toDouble(),query.value(1).toLongLong(),query.value(2).toInt());
-		}
-		query.finish();
-		break;
-	case eFrame:
-		query.prepare("SELECT f.dataid,f.time FROM frames f "
-			"WHERE f.time > :starttime "
-			"AND f.time <= :stoptime ORDER BY f.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		while(query.next()){
-			sessionState_->setFrame(query.value(0).toLongLong(),query.value(1).toDouble());
-		}
-		query.finish();
-		break;
-	case eReward:
-		query.prepare("SELECT r.dataid,r.duration,r.channel,r.time FROM rewards r "
-			"WHERE r.time > :starttime "
-			"AND r.time <= :stoptime ORDER BY r.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		while(query.next()){
-			sessionState_->setReward(query.value(3).toDouble(),query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toInt());
-		}
-		query.finish();
-		break;
-	case eSignal:
-		foreach(SigData sigData,sigs_)
-		{
-			query.prepare(QString("SELECT s.dataid,f.time,s.offsettime,s.data "
-							"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
-							"f.time > :starttime AND f.time <= :stoptime ORDER BY s.dataid").arg(sigData.tableName_));
-			query.bindValue(":starttime",startTime);
-			query.bindValue(":stoptime",stopTime);
-			success = query.exec();
-			if(!success)
-			{
-				Q_ASSERT(false);
-				qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-				
-				return;
-			}
-			while(query.next()){
-				//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
-				sessionState_->setSignal(	sigData.name_,
-											sigData.subChanNames_,
-											query.value(1).toDouble()+query.value(2).toDouble(),
-											query.value(0).toLongLong(),
-											sigData.samplePeriod_,
-											query.value(3).toByteArray()
-											);
-			}
-			query.finish();
-		}
-		break;
-	case eLfp:
-		//setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
-		break;
-	case eSpike:
-		//setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
-		break;
-	}
-	
-}
-
-void FileSessionLoader::childLoadNextData(PlaybackDataType type,PlaybackIndex currLast,bool backward)
-{
-	if((!session_.isOpen()) || (currRun_ < 0))
-		return;
-	
-	double startTime = currLast.time();
-	double stopTime = backward?startTime-dataBuffer_:startTime+dataBuffer_;
-	QSqlQuery query(session_);
-	query.setForwardOnly(!backward);
-	bool success;
-	switch(type)
-	{
-	case eProperty:
-		query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, frames f "
-			"WHERE f.dataid=p.frameid AND f.time > :starttime "
-			"AND f.time <= :stoptime ORDER BY p.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		if(!query.next())
-		{
-			query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, frames f "
-				"WHERE f.dataid=p.frameid AND f.time > :starttime "
-				"ORDER BY p.dataid LIMIT 1");
-			query.bindValue(":starttime",startTime);
-			success = query.exec();
-			if(!success)
-			{
-				Q_ASSERT(false);
-				qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-				
-				return;
-			}
-			if(!query.next())
-			{
-				
-				return;
-			}
-		}
-		do{
-			sessionState_->setPropertyValue(query.value(0).toDouble(),query.value(1).toLongLong(),query.value(2).toInt(),query.value(3).toString());
-		}while(query.next());
-		query.finish();
-		break;
-	case eTransition:
-		query.prepare("SELECT f.time,t.dataid,t.transid FROM transitions t, frames f "
-			"WHERE f.dataid=t.frameid AND f.time > :starttime "
-			"AND f.time <= :stoptime ORDER BY t.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		if(!query.next())
-		{
-			query.prepare("SELECT f.time,t.dataid,t.transid FROM transitions t, frames f "
-			"WHERE f.dataid=t.frameid AND f.time > :starttime "
-			"ORDER BY t.dataid LIMIT 1");
-			query.bindValue(":starttime",startTime);
-			success = query.exec();
-			if(!success)
-			{
-				Q_ASSERT(false);
-				qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-				
-				return;
-			}
-			if(!query.next())
-			{
-				
-				return;
-			}
-		}
-		do{
-			sessionState_->setTransition(query.value(0).toDouble(),query.value(1).toLongLong(),query.value(2).toInt());
-		}while(query.next());
-		query.finish();
-		break;
-	case eFrame:
-		query.prepare("SELECT f.dataid,f.time FROM frames f "
-			"WHERE f.time > :starttime "
-			"AND f.time <= :stoptime ORDER BY f.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		if(!query.next())
-		{
-			query.prepare("SELECT f.dataid,f.time FROM frames f "
-			"WHERE f.time > :starttime "
-			"ORDER BY f.dataid LIMIT 1");
-			query.bindValue(":starttime",startTime);
-			success = query.exec();
-			if(!success)
-			{
-				Q_ASSERT(false);
-				qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-				
-				return;
-			}
-			if(!query.next())
-			{
-				
-				return;
-			}
-		}
-		do{
-			sessionState_->setFrame(query.value(0).toLongLong(),query.value(1).toDouble());
-		}while(query.next());
-		query.finish();
-		break;
-	case eReward:
-		query.prepare("SELECT r.dataid,r.duration,r.channel,r.time FROM rewards r "
-			"WHERE r.time > :starttime "
-			"AND r.time <= :stoptime ORDER BY r.dataid");
-		query.bindValue(":starttime",startTime);
-		query.bindValue(":stoptime",stopTime);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return;
-		}
-		if(!query.next())
-		{
-			query.prepare("SELECT r.dataid,r.duration,r.channel,r.time FROM rewards r "
-			"WHERE r.time > :starttime "
-			"ORDER BY r.dataid LIMIT 1");
-			query.bindValue(":starttime",startTime);
-			success = query.exec();
-			if(!success)
-			{
-				Q_ASSERT(false);
-				qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-				
-				return;
-			}
-			if(!query.next())
-			{
-				
-				return;
-			}
-		}
-		do{
-			sessionState_->setReward(query.value(3).toDouble(),query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toInt());
-		}while(query.next());
-		query.finish();
-		break;
-	case eSignal:
-		foreach(SigData sigData,sigs_)
-		{
-			query.prepare(QString("SELECT s.dataid,f.time,s.offsettime,s.data "
-							"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
-							"f.time > :starttime AND f.time <= :stoptime ORDER BY s.dataid").arg(sigData.tableName_));
-			query.bindValue(":starttime",startTime);
-			query.bindValue(":stoptime",stopTime);
-			success = query.exec();
-			if(!success)
-			{
-				Q_ASSERT(false);
-				qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-				
-				return;
-			}
-
-			if(!query.next())
-			{
-				query.prepare(QString("SELECT s.dataid,f.time,s.offsettime,s.data "
-							"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
-							"f.time > :starttime ORDER BY s.dataid LIMIT 1").arg(sigData.tableName_));
-				query.bindValue(":starttime",startTime);
-				success = query.exec();
-				if(!success)
-				{
-					Q_ASSERT(false);
-					qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-					
-					return;
-				}
-					if(!query.next())
-						continue;
-			}
-			do{
-				//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
-				sessionState_->setSignal(	sigData.name_,
-											sigData.subChanNames_,
-											query.value(1).toDouble()+query.value(2).toDouble(),
-											query.value(0).toLongLong(),
-											sigData.samplePeriod_,
-											query.value(3).toByteArray()
-											);
-			}while(query.next());
-			query.finish();
-		}
-		break;
-	case eLfp:
-		//setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
-		break;
-	case eSpike:
-		//setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
-		break;
-	}
-}
-
-bool FileSessionLoader::buildRunsList()
-{
+	QVector<RunData> runs;
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
 
@@ -444,13 +61,14 @@ bool FileSessionLoader::buildRunsList()
 	if(!success)
 	{
 		qDebug("Failed to select data from runs table with error: " + query.lastError().text().toAscii());
-		return false;
+		return runs;
 	}
+
 	RunData run;
 	while(query.next()){
-		//continue if the run wasn't saved.
-		if(!query.value(3).toBool())
-			continue;
+		////continue if the run wasn't saved.
+		//if(!query.value(3).toBool())
+		//	continue;
 		//Build up the run object
 		run.dataId_ = query.value(0).toLongLong();
 		run.startFrame_ = query.value(4).toLongLong();
@@ -461,10 +79,182 @@ bool FileSessionLoader::buildRunsList()
 		run.startTime_ = query.value(6).toDouble();
 		run.endTime_ = query.value(7).toDouble();
 		//Add RunData to the runs_ list.
-		runs_.append(run);
+		runs.append(run);
+	}
+	query.finish();
+	return runs;
+}
+
+bool FileSessionLoader::loadInitData(double upTo)
+{
+	if(!session_.isOpen())
+		return false;
+	if(upTo <= 0)
+		return true;
+	
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+	bool success;
+	//Property:
+	query.prepare("SELECT p.dataid,p.assetid,p.value FROM properties p, frames f "
+		"WHERE f.dataid=p.frameid "
+		"AND f.time < :upto ORDER BY p.dataid");
+	query.bindValue(":upto",upTo);
+	success = query.exec();
+	if(!success)
+	{
+		Q_ASSERT(false);
+		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+		return false;
+	}
+	while(query.next()){
+		sessionState_->setPropertyValue(0,query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toString());
 	}
 	query.finish();
 	return true;
+}
+
+double FileSessionLoader::loadBehavData(double after,double to,double subtractTime)
+{
+	double returnVal = after;
+	if(!session_.isOpen())
+		return returnVal;
+	if(after == to)
+		return returnVal;
+	
+	double time = -1;
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+	bool success;
+	//Property:
+	query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, frames f "
+		"WHERE f.dataid=p.frameid AND f.time > :after "
+		"AND f.time <= :to ORDER BY p.dataid");
+	query.bindValue(":after",after);
+	query.bindValue(":to",to);
+	success = query.exec();
+	if(!success)
+	{
+		Q_ASSERT(false);
+		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+		return after;
+	}
+	while(query.next()){
+		time = query.value(0).toDouble();
+		sessionState_->setPropertyValue(time-subtractTime,query.value(1).toLongLong(),query.value(2).toInt(),query.value(3).toString());
+		if(time > returnVal)
+			returnVal = time;
+	}
+	query.finish();
+	//eTransition:
+	query.prepare("SELECT f.time,t.dataid,t.transid FROM transitions t, frames f "
+		"WHERE f.dataid=t.frameid AND f.time > :after "
+		"AND f.time <= :to ORDER BY t.dataid");
+	query.bindValue(":after",after);
+	query.bindValue(":to",to);
+	success = query.exec();
+	if(!success)
+	{
+		Q_ASSERT(false);
+		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+		return after;
+	}
+	while(query.next()){
+		time = query.value(0).toDouble();
+		sessionState_->setTransition(time-subtractTime,query.value(1).toLongLong(),query.value(2).toInt());
+		if(time > returnVal)
+			returnVal = time;
+	}
+	query.finish();
+	//eFrame:
+	query.prepare("SELECT f.dataid,f.time FROM frames f "
+		"WHERE f.time > :after "
+		"AND f.time <= :to ORDER BY f.dataid");
+	query.bindValue(":after",after);
+	query.bindValue(":to",to);
+	success = query.exec();
+	if(!success)
+	{
+		Q_ASSERT(false);
+		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+		return after;
+	}
+	while(query.next()){
+		time = query.value(1).toDouble();
+		sessionState_->setFrame(query.value(0).toLongLong(),time-subtractTime);
+		if(time > returnVal)
+			returnVal = time;
+	}
+	query.finish();
+	//eReward:
+	query.prepare("SELECT r.dataid,r.duration,r.channel,r.time FROM rewards r "
+		"WHERE r.time > :after "
+		"AND r.time <= :to ORDER BY r.dataid");
+	query.bindValue(":after",after);
+	query.bindValue(":to",to);
+	success = query.exec();
+	if(!success)
+	{
+		Q_ASSERT(false);
+		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+		return after;
+	}
+	while(query.next()){
+		time = query.value(3).toDouble();
+		sessionState_->setReward(time-subtractTime,query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toInt());
+		if(time > returnVal)
+			returnVal = time;
+	}
+	query.finish();
+	//eSignal:
+	foreach(SigData sigData,sigs_)
+	{
+		query.prepare(QString("SELECT s.dataid,f.time,s.offsettime,s.data "
+						"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
+						"f.time > :after AND f.time <= :to ORDER BY s.dataid").arg(sigData.tableName_));
+		query.bindValue(":after",after);
+		query.bindValue(":to",to);
+		success = query.exec();
+		if(!success)
+		{
+			Q_ASSERT(false);
+			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+			
+			return after;
+		}
+		while(query.next()){
+			time = query.value(1).toDouble();
+			//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
+			sessionState_->setSignal(	sigData.name_,
+										sigData.subChanNames_,
+										time+query.value(2).toDouble()-subtractTime,
+										query.value(0).toLongLong(),
+										sigData.samplePeriod_,
+										query.value(3).toByteArray()
+										);
+			if(time > returnVal)
+				returnVal = time;
+		}
+		query.finish();
+	}
+	return returnVal;
+}
+
+double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
+{
+	if(!session_.isOpen())
+		return after;
+	if(after == to)
+		return after;
+	
+	QSqlQuery query(session_);
+	query.setForwardOnly(true);
+	bool success;
+	// eLfp:
+	//setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
+	//eSpike:
+	//setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
+	return to;
 }
 
 bool FileSessionLoader::getSignalInfo()
