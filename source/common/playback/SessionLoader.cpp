@@ -16,7 +16,7 @@ sessionState_(sessState)
 	loadSpeed_ = 1;
 	loadPeriod_ = 10;
 	forwardBuffer_ = 6000;
-	backBuffer_ = 6000;
+	backBuffer_ = 600;
 	runReset_ = false;
 	runIndex_ = -1;
 	insufficientData_ = false;
@@ -171,9 +171,6 @@ void SessionLoader::loadData()
 	if(!runLoaded())
 		return;
 	double maxTime = currTime_+forwardBuffer_;
-	double minTime = currTime_-backBuffer_;
-	if(minTime < runStart_)
-		minTime = runStart_;
 	if(runEnd_ && maxTime > runEnd_)
 		maxTime = runEnd_;
 
@@ -183,10 +180,12 @@ void SessionLoader::loadData()
 	double newMaxNeural = maxNeural_;
 	double newMinNeural = minNeural_;
 	locker.unlock();
-	if(minTime > newMinBehav)
-		newMinBehav = minTime;
-	if(minTime > newMinNeural)
-		newMinNeural = minTime;
+	double currBehavLookback = currTime_ - minBehav_;
+	double currNeuralLookback = currTime_ - minNeural_;
+	if(currBehavLookback > backBuffer_)
+		newMinBehav = currTime_-backBuffer_;
+	if(currNeuralLookback > backBuffer_)
+		newMinNeural = currTime_-backBuffer_;
 	if(maxTime > maxBehav_)
 	{
 		qDebug(QString("Loader: Load Behav Data From: %1 Until Time:%2").arg(maxBehav_-runStart_).arg(maxTime-runStart_).toAscii());
@@ -197,12 +196,12 @@ void SessionLoader::loadData()
 		qDebug(QString("Loader: Load Neura Data From: %1 Until Time:%2").arg(maxNeural_-runStart_).arg(maxTime-runStart_).toAscii());
 		newMaxNeural = loadNeuralData(maxNeural_,maxTime,runStart_);
 	}
-	if(minTime != minBehav_)
+	if(newMinBehav != minBehav_)
 	{
 		qDebug(QString("Loader: Clear Behav Data Before: %1").arg(newMinBehav-runStart_).toAscii());
 		sessionState_->clearBehavioralData(newMinBehav-runStart_,true);
 	}
-	if(minTime != minNeural_)
+	if(newMinNeural != minNeural_)
 	{
 		qDebug(QString("Loader: Clear Neura Data Before: %1").arg(newMinNeural-runStart_).toAscii());
 		sessionState_->clearNeuralData(newMinNeural-runStart_,true);

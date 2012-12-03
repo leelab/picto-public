@@ -170,6 +170,8 @@
    <file alias="_data_source_info_8h-source.html">../../../output/documentation/main/html/_data_source_info_8h-source.html</file>
    <file alias="_data_state_8cpp-source.html">../../../output/documentation/main/html/_data_state_8cpp-source.html</file>
    <file alias="_data_state_8h-source.html">../../../output/documentation/main/html/_data_state_8h-source.html</file>
+   <file alias="_data_state_list_8cpp-source.html">../../../output/documentation/main/html/_data_state_list_8cpp-source.html</file>
+   <file alias="_data_state_list_8h-source.html">../../../output/documentation/main/html/_data_state_list_8h-source.html</file>
    <file alias="_data_store_8cpp-source.html">../../../output/documentation/main/html/_data_store_8cpp-source.html</file>
    <file alias="_data_store_8h-source.html">../../../output/documentation/main/html/_data_store_8h-source.html</file>
    <file alias="_data_unit_8cpp-source.html">../../../output/documentation/main/html/_data_unit_8cpp-source.html</file>
@@ -367,6 +369,8 @@
    <file alias="_lfp_state_8h-source.html">../../../output/documentation/main/html/_lfp_state_8h-source.html</file>
    <file alias="_line_graphic_8cpp-source.html">../../../output/documentation/main/html/_line_graphic_8cpp-source.html</file>
    <file alias="_line_graphic_8h-source.html">../../../output/documentation/main/html/_line_graphic_8h-source.html</file>
+   <file alias="_linked_data_state_list_8cpp-source.html">../../../output/documentation/main/html/_linked_data_state_list_8cpp-source.html</file>
+   <file alias="_linked_data_state_list_8h-source.html">../../../output/documentation/main/html/_linked_data_state_list_8h-source.html</file>
    <file alias="_load_exp_response_handler_8cpp-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8cpp-source.html</file>
    <file alias="_load_exp_response_handler_8h-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8h-source.html</file>
    <file alias="_logical_state_8cpp-source.html">../../../output/documentation/main/html/_logical_state_8cpp-source.html</file>
@@ -823,6 +827,8 @@
    <file alias="_update_downloader___f_i_r_s_t_m_e_t_h_o_d_8h-source.html">../../../output/documentation/main/html/_update_downloader___f_i_r_s_t_m_e_t_h_o_d_8h-source.html</file>
    <file alias="_value_state_8cpp-source.html">../../../output/documentation/main/html/_value_state_8cpp-source.html</file>
    <file alias="_value_state_8h-source.html">../../../output/documentation/main/html/_value_state_8h-source.html</file>
+   <file alias="_vector_data_state_list_8cpp-source.html">../../../output/documentation/main/html/_vector_data_state_list_8cpp-source.html</file>
+   <file alias="_vector_data_state_list_8h-source.html">../../../output/documentation/main/html/_vector_data_state_list_8h-source.html</file>
    <file alias="_viewer_window_8cpp-source.html">../../../output/documentation/main/html/_viewer_window_8cpp-source.html</file>
    <file alias="_viewer_window_8h-source.html">../../../output/documentation/main/html/_viewer_window_8h-source.html</file>
    <file alias="_virtual_output_signal_controller_8cpp-source.html">../../../output/documentation/main/html/_virtual_output_signal_controller_8cpp-source.html</file>
@@ -1058,6 +1064,8 @@
    <file alias="class_picto_1_1_data_state-members.html">../../../output/documentation/main/html/class_picto_1_1_data_state-members.html</file>
    <file alias="class_picto_1_1_data_state.html">../../../output/documentation/main/html/class_picto_1_1_data_state.html</file>
    <file alias="class_picto_1_1_data_state.png">../../../output/documentation/main/html/class_picto_1_1_data_state.png</file>
+   <file alias="class_picto_1_1_data_state_list-members.html">../../../output/documentation/main/html/class_picto_1_1_data_state_list-members.html</file>
+   <file alias="class_picto_1_1_data_state_list.html">../../../output/documentation/main/html/class_picto_1_1_data_state_list.html</file>
    <file alias="class_picto_1_1_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_data_store-members.html</file>
    <file alias="class_picto_1_1_data_store.html">../../../output/documentation/main/html/class_picto_1_1_data_store.html</file>
    <file alias="class_picto_1_1_data_store.png">../../../output/documentation/main/html/class_picto_1_1_data_store.png</file>
@@ -1493,6 +1501,8 @@
    <file alias="class_picto_1_1_x_y_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel-members.html</file>
    <file alias="class_picto_1_1_x_y_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel.html</file>
    <file alias="class_picto_1_1_x_y_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel.png</file>
+   <file alias="class_playback_controller-members.html">../../../output/documentation/main/html/class_playback_controller-members.html</file>
+   <file alias="class_playback_controller.html">../../../output/documentation/main/html/class_playback_controller.html</file>
    <file alias="class_plexon_plugin-members.html">../../../output/documentation/main/html/class_plexon_plugin-members.html</file>
    <file alias="class_plexon_plugin.html">../../../output/documentation/main/html/class_plexon_plugin.html</file>
    <file alias="class_plexon_plugin.png">../../../output/documentation/main/html/class_plexon_plugin.png</file>

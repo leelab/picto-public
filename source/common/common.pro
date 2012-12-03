@@ -280,6 +280,12 @@ SOURCES += $$(PICTO_TREE)/source/common/parameter/ParameterFactory.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/playback/DataState.h
 SOURCES += $$(PICTO_TREE)/source/common/playback/DataState.cpp
+HEADERS += $$(PICTO_TREE)/source/common/playback/DataStateList.h
+SOURCES += $$(PICTO_TREE)/source/common/playback/DataStateList.cpp
+HEADERS += $$(PICTO_TREE)/source/common/playback/VectorDataStateList.h
+SOURCES += $$(PICTO_TREE)/source/common/playback/VectorDataStateList.cpp
+HEADERS += $$(PICTO_TREE)/source/common/playback/LinkedDataStateList.h
+SOURCES += $$(PICTO_TREE)/source/common/playback/LinkedDataStateList.cpp
 HEADERS += $$(PICTO_TREE)/source/common/playback/EventState.h
 SOURCES += $$(PICTO_TREE)/source/common/playback/EventState.cpp
 HEADERS += $$(PICTO_TREE)/source/common/playback/FileSessionLoader.h

@@ -6,8 +6,11 @@
 #include <QMutexLocker>
 
 #include "IndexedData.h"
+#include "LinkedDataStateList.h"
+#include "VectorDataStateList.h"
 
 namespace Picto {
+
 /*! \brief Component of Picto Playback system that stores IndexedData values.
  *	This class stores indexed playback data and offers several functions for
  *  querying that data.
@@ -32,9 +35,8 @@ public:
 	virtual void setBoundTimes(double minTime,double maxTime);
 	virtual void setFinishedLoading();
 
-	//Functions below clear all IndexedData before/after the input time for memory savings.
+	//Functions below clear all IndexedData before the input time for memory savings.
 	virtual void clearDataBefore(double time);
-	void clearDataAfter(double time);
 
 	//SET ACTIVE DATA FUNCTIONS-----------------------------------------------------------------
 	//Sets the current index of this DataState to the largest value available lower than
@@ -46,12 +48,6 @@ public:
 	//GET FUNCTIONS-----------------------------------------------------------------
 	//Gets the current IndexedData item.
 	QSharedPointer<IndexedData> getCurrentValue();
-	//Gets the previous IndexedData item.
-	//@param lookBackTime The maximum amount of time to look back for the
-	//	previous value. Using an input value less than zero will cause the
-	//	system to request at least one prior value if it is not yet available
-	//	no matter how far back it appears.
-	QSharedPointer<IndexedData> getPrevValue(double lookBackTime);
 	//Gets the next IndexedData item
 	//@param lookForwardTime The time to look forward to for the
 	//	next value.  Note that this function will request data if the look forward
@@ -69,13 +65,6 @@ public:
 
 	//Gets the current index of this DataState
 	PlaybackIndex getCurrentIndex();
-
-	//Gets the previous index available in this DataState before the current one
-	//@param lookBackTime The maximum amount of time to look back for the
-	//	previous value.  Using an input value less than zero will cause the
-	//	system to request at least one prior value if it is not yet available
-	//	no matter how far back it appears.
-	PlaybackIndex getPrevIndex(double lookBackTime);
 
 	//Gets the next index available in this DataState after the current one
 	//@param lookForwardTime The time to look forward to for the
@@ -140,23 +129,10 @@ private:
 	//@param last Indicates that this is the last iteration
 	//to move to the current index
 	bool moveToNext(bool last);
-	//Moves current cell to the previous one.
-	//@param last Indicates that this is the last iteration
-	//to move to the current index
-	bool moveToPrev(bool last);
-	//Moves to cell at input cellId without iterating through intervening
-	//cells (regardless of iterateOnMove_).
-	//@param last Indicates that this is the last iteration
-	//to move to the current index
-	bool moveToCell(int cellId,bool last);
+	//Informs child class that value change occured.
+	bool triggerChange(bool last);
 	//Returns the index of the cell two cells after the current one.
 	PlaybackIndex get2NextIndex();
-	//Returns the cell number of the cell with the highest index less than or equal to
-	//the input.
-	int findIndexCell(PlaybackIndex index);
-	//Recursively searches for the highest indexed cell with index <= input index
-	//within the input window
-	int binaryIndexSearch(PlaybackIndex index,int minCell, int maxCell);
 	//Returns true if the input index is within the data limits of this DataState
 	bool inDataWindow(PlaybackIndex index);
 	//Yields this thread until sufficient data is available to fulfil requests.
@@ -181,12 +157,11 @@ private:
 	bool finishedLoading_;
 	PlaybackIndex maxIndex_;
 	PlaybackIndex minIndex_;
-	int currentDataCell_;
 	bool iterateOnMove_;
 	//The minimum amount of time for additional data requests from this DataState
 	double bufferTime_;
 	//List of IndexedData items ordered by their index.
-	QList<QSharedPointer<IndexedData>> pbDataList_;
+	LinkedDataStateList pbDataList_;
 	bool waitForData_;
 	QSharedPointer<QMutex> mutex_;	//Data writes and reads happen in different threads.  This sorts out threading issues.
 };

@@ -98,7 +98,6 @@ bool SessionPlayer::stepToNextFrame(double lookForward)
 bool SessionPlayer::step(double lookForward)
 {
 	processing_ = true;
-	PlaybackIndex prevFrameId = sessionState_->getFrameState()->getPrevIndex(lookForward);
 	PlaybackIndex currFrameId = sessionState_->getFrameState()->getCurrentIndex();
 	PlaybackIndex nextFrameId = sessionState_->getFrameState()->getNextIndex(lookForward);
 	QSharedPointer<DataState> stateToTrigger = getNextTriggerState(lookForward);

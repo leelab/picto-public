@@ -138,15 +138,6 @@ void SessionState::clearBehavioralData(double bound,bool before)
 		foreach(QSharedPointer<SignalState> sigState,signalLookup_)
 			sigState->clearDataBefore(bound);
 	}
-	else
-	{
-		propCollection_->clearDataAfter(bound);
-		transState_->clearDataAfter(bound);
-		frameState_->clearDataAfter(bound);
-		rewardState_->clearDataAfter(bound);
-		foreach(QSharedPointer<SignalState> sigState,signalLookup_)
-			sigState->clearDataAfter(bound);
-	}
 
 }
 
@@ -174,12 +165,6 @@ void SessionState::clearNeuralData(double bound,bool before)
 		spikeState_->clearDataBefore(bound);
 		foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
 			lfpState->clearDataBefore(bound);
-	}
-	else
-	{
-		spikeState_->clearDataAfter(bound);
-		foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
-			lfpState->clearDataAfter(bound);
 	}
 }
 
