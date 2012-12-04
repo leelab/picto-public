@@ -85,7 +85,7 @@ void ReplayViewer::setupUi()
 	speed_ = new QDoubleSpinBox();
 	speed_->setValue(1.0);
 	speed_->setMinimum(0.001);
-	speed_->setMaximum(100);
+	speed_->setMaximum(200);
 	speed_->setDecimals(3);
 	speed_->setSingleStep(.1);
 	connect(speed_,SIGNAL(editingFinished()),this,SLOT(setRunSpeed()));

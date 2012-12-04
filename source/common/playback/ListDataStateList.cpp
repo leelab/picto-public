@@ -1,14 +1,14 @@
 #include <QMutexLocker>
 #include <QThread>
-#include "VectorDataStateList.h"
+#include "ListDataStateList.h"
 using namespace Picto;			
 
 //Template function definitions must be in header file-------------------------------------------
-VectorDataStateList::VectorDataStateList()
+ListDataStateList::ListDataStateList()
 {
 }
 
-VectorDataStateList::~VectorDataStateList()
+ListDataStateList::~ListDataStateList()
 {
 
 }
@@ -16,18 +16,18 @@ VectorDataStateList::~VectorDataStateList()
 
 //Specialize parent class for QList type
 template <>
-QList<QSharedPointer<IndexedData>> DataStateList<QVector>::getList(DataStateList<QVector>::CellIter begin,DataStateList<QVector>::CellIter end)
+QList<QSharedPointer<IndexedData>> DataStateList<QList>::getList(DataStateList<QList>::CellIter begin,DataStateList<QList>::CellIter end)
 {
 	int pos = begin - pbDataList_.begin();
 	int length = end-begin;
 	if(end == pbDataList_.end())
-		return pbDataList_.mid(pos).toList();
-	return pbDataList_.mid(pos,length).toList();
+		return pbDataList_.mid(pos);
+	return pbDataList_.mid(pos,length);
 }
 
 
 
-QVector<QSharedPointer<IndexedData>>::iterator cellSearch(PlaybackIndex index,QVector<QSharedPointer<IndexedData>>::iterator minCell,QVector<QSharedPointer<IndexedData>>::iterator maxCell,QVector<QSharedPointer<IndexedData>>::iterator errorCell)
+QList<QSharedPointer<IndexedData>>::iterator cellSearch(PlaybackIndex index,QList<QSharedPointer<IndexedData>>::iterator minCell,QList<QSharedPointer<IndexedData>>::iterator maxCell,QList<QSharedPointer<IndexedData>>::iterator errorCell)
 {
 	//Stop condition
 	if(maxCell == minCell)
@@ -40,7 +40,7 @@ QVector<QSharedPointer<IndexedData>>::iterator cellSearch(PlaybackIndex index,QV
 		return errorCell;
 	}
 	//Reduce search space
-	QVector<QSharedPointer<IndexedData>>::iterator midCell = minCell+1+(maxCell-minCell)/2;
+	QList<QSharedPointer<IndexedData>>::iterator midCell = minCell+1+(maxCell-minCell)/2;
 	if((*midCell)->index_ <= index)
 		return cellSearch(index,midCell,maxCell,errorCell);
 	return cellSearch(index,minCell,midCell-1,errorCell);
@@ -51,7 +51,7 @@ QVector<QSharedPointer<IndexedData>>::iterator cellSearch(PlaybackIndex index,QV
 
 
 template <>
-typename DataStateList<QVector>::CellIter DataStateList<QVector>::findIndexCell(PlaybackIndex index)
+typename DataStateList<QList>::CellIter DataStateList<QList>::findIndexCell(PlaybackIndex index)
 {
 	if(!index.isValid())
 		return pbDataList_.end();

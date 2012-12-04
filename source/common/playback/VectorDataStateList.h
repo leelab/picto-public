@@ -7,54 +7,19 @@ namespace Picto {
 	
 /*! \brief Holds Data State's Data
  */
-	class VectorDataStateList : public DataStateList
+	class VectorDataStateList : public DataStateList<QVector>
 {
 public:
 	VectorDataStateList();
 	virtual ~VectorDataStateList();
-
-	void clear();
-	int size();
-	void append(QSharedPointer<IndexedData> data);
-	void clearBefore(double time);
-
-	QSharedPointer<IndexedData> currValue();
-	QSharedPointer<IndexedData> nextValue();
-	QSharedPointer<IndexedData> next2Value();
-	QSharedPointer<IndexedData> firstValue();
-	QSharedPointer<IndexedData> lastValue();
-
-	PlaybackIndex currIndex();
-	PlaybackIndex nextIndex();
-	PlaybackIndex next2Index();
-	PlaybackIndex firstIndex();
-	PlaybackIndex lastIndex();
-
-	PlaybackIndex moveToCell(PlaybackIndex index);
-	PlaybackIndex moveToNext();
-
-	QList<QSharedPointer<IndexedData>> getValuesSince(double time);
-	QList<QSharedPointer<IndexedData>> getValuesUntil(double time);
-
-
-protected:
-
-
-private:
-	int currCell();
-	int moveToCell(int cell);
-	//Returns the list index of the cell with the highest playback index less than or equal to
-	//the input.
-	int findIndexCell(PlaybackIndex index);
-
-	//Recursively searches for the highest indexed cell with index <= input index
-	//within the input window
-	int indexSearch(PlaybackIndex index,int minCell, int maxCell);
-	//Returns true if the input index is within the data limits of this VectorDataStateList
-
-	int currentDataCell_;
-	QList<QSharedPointer<IndexedData>> pbDataList_;
 };
+
+//Specialize parent class for QList type
+template <>
+QList<QSharedPointer<IndexedData>> DataStateList<QVector>::getList(DataStateList<QVector>::CellIter begin,DataStateList<QVector>::CellIter end);
+
+template <>
+typename DataStateList<QVector>::CellIter DataStateList<QVector>::findIndexCell(PlaybackIndex index);
 
 
 }; //namespace Picto

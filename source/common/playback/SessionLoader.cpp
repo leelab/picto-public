@@ -12,6 +12,7 @@ sessionState_(sessState)
 	runStart_ = 0;
 	runEnd_ = 0;
 	currTime_ = 0;
+	procTime_ = 0;
 	runSpeed_ = 1;
 	loadSpeed_ = 1;
 	loadPeriod_ = 10;
@@ -90,6 +91,19 @@ bool SessionLoader::setCurrentTime(double time)
 	return true;
 }
 
+void SessionLoader::setProcessedTime(double time)
+{
+	QMutexLocker locker(mutex_.data());
+	time += runStart_;
+	if(!runLoaded())
+		return;
+	if(time < runStart_)
+		return;
+	if(time > currTime_)
+		return;
+	procTime_ = time;
+}
+
 bool SessionLoader::runLoaded()
 {
 	QMutexLocker locker(mutex_.data());
@@ -156,6 +170,7 @@ void SessionLoader::loadData()
 		if(runEnd_ < 0)
 			runEnd_ = 0;
 		currTime_ = 0;
+		procTime_ = 0;
 		maxBehav_ = runStart_;
 		minBehav_ = runStart_;
 		maxNeural_ = runStart_;
@@ -180,12 +195,12 @@ void SessionLoader::loadData()
 	double newMaxNeural = maxNeural_;
 	double newMinNeural = minNeural_;
 	locker.unlock();
-	double currBehavLookback = currTime_ - minBehav_;
-	double currNeuralLookback = currTime_ - minNeural_;
+	double currBehavLookback = procTime_ - minBehav_;
+	double currNeuralLookback = procTime_ - minNeural_;
 	if(currBehavLookback > backBuffer_)
-		newMinBehav = currTime_-backBuffer_;
+		newMinBehav = procTime_-backBuffer_;
 	if(currNeuralLookback > backBuffer_)
-		newMinNeural = currTime_-backBuffer_;
+		newMinNeural = procTime_-backBuffer_;
 	if(maxTime > maxBehav_)
 	{
 		qDebug(QString("Loader: Load Behav Data From: %1 Until Time:%2").arg(maxBehav_-runStart_).arg(maxTime-runStart_).toAscii());

@@ -27,8 +27,12 @@ public:
 	QStringList getRunNames();
 	void restart();
 	bool loadRun(int runIndex);
+	//Used to set the time up to which the system is currently attempting to process
+	//data
 	//Returns false if time is invalid (Not in current run)
 	bool setCurrentTime(double time);
+	//Sets the time up to which the system has finished processing data.
+	void setProcessedTime(double time);
 	bool runLoaded();
 	double getMinBehavTime();
 	double getMaxBehavTime();
@@ -80,6 +84,7 @@ private:
 	double runStart_;
 	double runEnd_;
 	double currTime_;
+	double procTime_;
 	double runSpeed_;
 	double loadSpeed_;
 	double loadPeriod_;

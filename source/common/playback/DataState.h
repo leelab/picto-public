@@ -8,6 +8,7 @@
 #include "IndexedData.h"
 #include "LinkedDataStateList.h"
 #include "VectorDataStateList.h"
+#include "ListDataStateList.h"
 
 namespace Picto {
 

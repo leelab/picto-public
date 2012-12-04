@@ -63,6 +63,7 @@ bool SessionPlayer::stepToTime(double time)
 			break;
 		}
 	}
+	sessionLoader_->setProcessedTime(getTime());
 	qDebug(QString("Player: Step To Time reached time: %1").arg(getTime()).toAscii());
 	return true;
 }
