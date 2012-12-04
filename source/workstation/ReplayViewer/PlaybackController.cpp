@@ -16,7 +16,8 @@
 
 PlaybackController::PlaybackController(QWidget *parent) :
 status_(Stopped),
-newStatus_(Stopped)
+newStatus_(Stopped),
+expRunning_(false)
 {
 	//set up the engine
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
@@ -66,13 +67,12 @@ newStatus_(Stopped)
 
 QString PlaybackController::loadSession(QString filename)
 {
+	stop();
 	playbackUpdater_->setFile(filename);
-
-	QSharedPointer<DesignRoot> myDesignRoot(playbackUpdater_->getDesignRoot());
-	if(!myDesignRoot)
+	QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(playbackUpdater_->getDesignRoot());
+	if(!newDesignRoot)
 		return "Failed to load session design.  This could happen if the design did not include any runs.";
-	QSharedPointer<Design> design = myDesignRoot->getDesign("Experiment",0);
-	experiment_ = QSharedPointer<Experiment>();
+	QSharedPointer<Design> design = newDesignRoot->getDesign("Experiment",0);
 	if(!design)
 	{
 		return "Failed to load experiment from session.";
@@ -81,18 +81,13 @@ QString PlaybackController::loadSession(QString filename)
 	{
 		return "Session's experiment does not compile.";
 	}
-	experiment_ = design->getRootAsset().staticCast<Experiment>();
-	if(experiment_)
-	{
-		experiment_->setEngine(engine_);
-	}
+	designRoot_ = newDesignRoot;
 	emit runsUpdated(playbackUpdater_->getRuns());
 	return "";
 }
 
 void PlaybackController::setRunSpeed(double value)
 {
-	
 	playbackUpdater_->setPlaybackSpeed(value);
 }
 
@@ -111,10 +106,7 @@ void PlaybackController::play()
 	playbackUpdater_->play();
 	if(status_ == Stopped)
 	{
-		if(experiment_ && experiment_->getTaskNames().size())
-		{
-			QTimer::singleShot(0,this,SLOT(runExperiment()));
-		}
+		QTimer::singleShot(0,this,SLOT(runExperiment()));
 	}
 	else if(status_ == Paused)
 	{
@@ -143,5 +135,20 @@ void PlaybackController::selectRun(int index)
 
 void PlaybackController::runExperiment()
 {
+	if(expRunning_)
+	{
+		QTimer::singleShot(0,this,SLOT(runExperiment()));
+		return;
+	}
+	QSharedPointer<Design> design = designRoot_->getDesign("Experiment",0);
+	QSharedPointer<Picto::Experiment> currExp = design->getRootAsset().staticCast<Experiment>();
+	if(!currExp || !currExp->getTaskNames().size())
+	{
+		return;
+	}
+	experiment_ = currExp;
+	experiment_->setEngine(engine_);
+	expRunning_ = true;
 	experiment_->runTask(experiment_->getTaskNames()[0]);
+	expRunning_ = false;
 }

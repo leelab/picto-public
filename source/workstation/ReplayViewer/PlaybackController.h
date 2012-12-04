@@ -52,8 +52,10 @@ private:
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<Picto::Experiment> experiment_;
+	QSharedPointer<DesignRoot> designRoot_;
 	QSharedPointer<PlaybackStateUpdater> playbackUpdater_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
+	bool expRunning_;
 
 	enum Status {Ending, Stopped, Running, Paused};
 	Status status_;

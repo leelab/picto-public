@@ -50,6 +50,12 @@ bool PlaybackStateUpdater::updateState()
 
 bool PlaybackStateUpdater::setFile(QString filePath)
 {
+	stop();
+	if(fileSessionLoader_)
+	{	//If there was already a loader running, end its thread execution.
+		fileSessionLoader_->quit();
+		fileSessionLoader_->wait();
+	}
 	sessionState_ = QSharedPointer<SessionState>(new SessionState());
 	fileSessionLoader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(sessionState_));
 	sessionPlayer_ = QSharedPointer<SessionPlayer>(new SessionPlayer(sessionState_,fileSessionLoader_));
