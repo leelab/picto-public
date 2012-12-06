@@ -2,8 +2,7 @@
 #include "../common/storage/ObsoleteAsset.h"
 #include "../common/analysis/AnalysisContainer.h"
 #include "../common/memleakdetect.h"
-namespace Picto
-{
+using namespace Picto;
 
 PictoData::PictoData()
 {
@@ -47,5 +46,3 @@ bool PictoData::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		return false;
 	return true;
 }
-
-}//namespace Picto

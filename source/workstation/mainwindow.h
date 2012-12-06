@@ -2,8 +2,9 @@
 #include <QTextDocument>
 
 #include "../common/experiment/experiment.h"
-#include "pictodata.h"
-#include "designRoot.h"
+#include "../common/design/pictodata.h"
+#include "../common/design/designRoot.h"
+using namespace Picto;
 
 class QAction;
 class Viewer;

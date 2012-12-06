@@ -685,6 +685,8 @@
    <file alias="_session_player_8h-source.html">../../../output/documentation/main/html/_session_player_8h-source.html</file>
    <file alias="_session_state_8cpp-source.html">../../../output/documentation/main/html/_session_state_8cpp-source.html</file>
    <file alias="_session_state_8h-source.html">../../../output/documentation/main/html/_session_state_8h-source.html</file>
+   <file alias="_session_version_interfacer_8cpp-source.html">../../../output/documentation/main/html/_session_version_interfacer_8cpp-source.html</file>
+   <file alias="_session_version_interfacer_8h-source.html">../../../output/documentation/main/html/_session_version_interfacer_8h-source.html</file>
    <file alias="_shape_shifter_graphic_8cpp-source.html">../../../output/documentation/main/html/_shape_shifter_graphic_8cpp-source.html</file>
    <file alias="_shape_shifter_graphic_8h-source.html">../../../output/documentation/main/html/_shape_shifter_graphic_8h-source.html</file>
    <file alias="_signal_8cpp-source.html">../../../output/documentation/main/html/_signal_8cpp-source.html</file>
@@ -1166,6 +1168,9 @@
    <file alias="class_picto_1_1_linked_data_state_list-members.html">../../../output/documentation/main/html/class_picto_1_1_linked_data_state_list-members.html</file>
    <file alias="class_picto_1_1_linked_data_state_list.html">../../../output/documentation/main/html/class_picto_1_1_linked_data_state_list.html</file>
    <file alias="class_picto_1_1_linked_data_state_list.png">../../../output/documentation/main/html/class_picto_1_1_linked_data_state_list.png</file>
+   <file alias="class_picto_1_1_list_data_state_list-members.html">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list-members.html</file>
+   <file alias="class_picto_1_1_list_data_state_list.html">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list.html</file>
+   <file alias="class_picto_1_1_list_data_state_list.png">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list.png</file>
    <file alias="class_picto_1_1_logical_state-members.html">../../../output/documentation/main/html/class_picto_1_1_logical_state-members.html</file>
    <file alias="class_picto_1_1_logical_state.html">../../../output/documentation/main/html/class_picto_1_1_logical_state.html</file>
    <file alias="class_picto_1_1_m_t_rand-members.html">../../../output/documentation/main/html/class_picto_1_1_m_t_rand-members.html</file>
@@ -1386,6 +1391,8 @@
    <file alias="class_picto_1_1_session_player.html">../../../output/documentation/main/html/class_picto_1_1_session_player.html</file>
    <file alias="class_picto_1_1_session_state-members.html">../../../output/documentation/main/html/class_picto_1_1_session_state-members.html</file>
    <file alias="class_picto_1_1_session_state.html">../../../output/documentation/main/html/class_picto_1_1_session_state.html</file>
+   <file alias="class_picto_1_1_session_version_interfacer-members.html">../../../output/documentation/main/html/class_picto_1_1_session_version_interfacer-members.html</file>
+   <file alias="class_picto_1_1_session_version_interfacer.html">../../../output/documentation/main/html/class_picto_1_1_session_version_interfacer.html</file>
    <file alias="class_picto_1_1_shape_shifter_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_shape_shifter_graphic-members.html</file>
    <file alias="class_picto_1_1_shape_shifter_graphic.html">../../../output/documentation/main/html/class_picto_1_1_shape_shifter_graphic.html</file>
    <file alias="class_picto_1_1_shape_shifter_graphic.png">../../../output/documentation/main/html/class_picto_1_1_shape_shifter_graphic.png</file>
@@ -1653,6 +1660,7 @@
    <file alias="dir_1eee61ee1c11aa24bce57267e309e21b.html">../../../output/documentation/main/html/dir_1eee61ee1c11aa24bce57267e309e21b.html</file>
    <file alias="dir_25e543b25debf8cd25da72ac1a97998c.html">../../../output/documentation/main/html/dir_25e543b25debf8cd25da72ac1a97998c.html</file>
    <file alias="dir_28b1b50d4508bc6896cda5a6a9f2c333.html">../../../output/documentation/main/html/dir_28b1b50d4508bc6896cda5a6a9f2c333.html</file>
+   <file alias="dir_2b7faff6d32d1bd641e419dfe83ec1a6.html">../../../output/documentation/main/html/dir_2b7faff6d32d1bd641e419dfe83ec1a6.html</file>
    <file alias="dir_300a652ed9fa54b5ef8d55ffad16e1bb.html">../../../output/documentation/main/html/dir_300a652ed9fa54b5ef8d55ffad16e1bb.html</file>
    <file alias="dir_31a3c01339de363739e1559f823995d8.html">../../../output/documentation/main/html/dir_31a3c01339de363739e1559f823995d8.html</file>
    <file alias="dir_3302c2086dd7116f19bd1eff62ee5e49.html">../../../output/documentation/main/html/dir_3302c2086dd7116f19bd1eff62ee5e49.html</file>

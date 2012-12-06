@@ -11,6 +11,7 @@
 #include "../../common/compositor/VisualTargetHost.h"
 #include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "PlaybackStateUpdater.h"
+using namespace Picto;
 
 /*!	\brief	This controlls experimental playback
  *

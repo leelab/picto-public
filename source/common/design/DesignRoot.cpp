@@ -1,8 +1,9 @@
 #include <QMessageBox>
 #include <QTextCursor>
 #include "DesignRoot.h"
-#include "../common/storage/ObsoleteAsset.h"
-#include "../common/memleakdetect.h"
+#include "../storage/ObsoleteAsset.h"
+#include "../memleakdetect.h"
+using namespace Picto;
 
 DesignRoot::DesignRoot()
 {

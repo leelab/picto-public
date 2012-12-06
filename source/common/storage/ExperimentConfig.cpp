@@ -7,6 +7,20 @@ using namespace Picto;
 
 ExperimentConfig::ExperimentConfig()
 {
+	reset();
+}
+
+void ExperimentConfig::reset()
+{
+	assetsById_.clear();
+	managedElements_.clear();
+	managedProperties_.clear();
+	managedTransitions_.clear();
+	elemInfo_.clear();
+	propInfo_.clear();
+	transInfo_.clear();
+	assetHash_.clear();
+	unsortedIdAssets_.clear();
 	lastUsedId_ = 0;
 	allowIdDuplication_ = true;
 }
@@ -303,6 +317,17 @@ void ExperimentConfig::fixDuplicatedAssetIds()
 		if(!sAsset)
 			continue;	//This asset was already deleted
 		id = sAsset->getAssetId();
+		if(id > 4300)
+		{
+			int i=0;
+			i++;
+		}
+		if(id == 4623)
+		{
+			QString assetName = sAsset->getName();
+			int i=0;
+			i++;
+		}
 		if(id == 0 || assetsById_.contains(id))
 		{
 			fixList.append(sAsset);
@@ -327,6 +352,10 @@ QSharedPointer<Asset> ExperimentConfig::getAsset(int id)
 	return returnVal;
 }
 
+QList<QWeakPointer<Asset>> ExperimentConfig::getAssets()
+{
+	return assetsById_.values();
+}
 
 
 QList<AssetInfo> ExperimentConfig::getElementInfo()

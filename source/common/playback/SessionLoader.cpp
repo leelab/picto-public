@@ -171,10 +171,13 @@ void SessionLoader::loadData()
 			runEnd_ = 0;
 		currTime_ = 0;
 		procTime_ = 0;
-		maxBehav_ = runStart_;
-		minBehav_ = runStart_;
-		maxNeural_ = runStart_;
-		minNeural_ = runStart_;
+		
+		//Subtract tiny value from start times to be sure that property changes 
+		//in the first frame of the run are included
+		maxBehav_ = runStart_-.000001;
+		minBehav_ = runStart_-.000001;
+		maxNeural_ = runStart_-.000001;
+		minNeural_ = runStart_-.000001;
 		runSpeed_ = 1.0;
 		loadSpeed_ = 1.0;
 		runReset_ = false;

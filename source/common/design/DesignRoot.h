@@ -5,13 +5,18 @@
 #include <QTextDocument>
 #include "PictoData.h"
 #include "Design.h"
-using namespace Picto;
+
+namespace Picto{
 
 
 /*!	\brief The root of the Experiment/Analysis Design tree passed between different UI Viewers
  * 
  */
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API DesignRoot : public QObject
+#else
 class DesignRoot : public QObject
+#endif
 {
 	Q_OBJECT
 public:
@@ -33,5 +38,6 @@ public:
 private:
 	QMap<QString,QVector<QSharedPointer<Design>>> designMap_;
 	QString designName;
+};
 };
 #endif

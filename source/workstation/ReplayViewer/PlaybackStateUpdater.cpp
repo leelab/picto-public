@@ -72,8 +72,8 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 		return false;
 
 	//Load the session file's design root
-	designRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
-	if(!designRoot_->resetDesignRoot(QString(fileSessionLoader_->getDesignDefinition())))
+	designRoot_ = fileSessionLoader_->getDesignRoot();
+	if(!designRoot_)
 	{
 		Q_ASSERT(false);	//This would mean that somehow the session had a bad design in it.
 		return false;

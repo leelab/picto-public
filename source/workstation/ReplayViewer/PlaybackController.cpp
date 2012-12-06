@@ -1,4 +1,5 @@
 #include <QMutexLocker>
+#include <QSharedPointer>
 
 #include "PlaybackController.h"
 
@@ -12,7 +13,7 @@
 #include "../../common/compositor/OutputSignalWidget.h"
 
 #include "../../common/memleakdetect.h"
-
+using namespace Picto;
 
 PlaybackController::PlaybackController(QWidget *parent) :
 status_(Stopped),

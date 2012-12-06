@@ -54,13 +54,12 @@
 
 
 #include "../common/storage/asset.h"
-using namespace Picto;
 
 #include "diagramitem.h"
 #include "../viewer.h"
 #include "EditorState.h"
-#include "Design.h"
-
+#include "../common/design/Design.h"
+using namespace Picto;
 
 class DiagramScene;
 class Toolbox;

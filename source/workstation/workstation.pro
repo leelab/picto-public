@@ -20,12 +20,6 @@ HEADERS += $$(PICTO_TREE)/source/workstation/ErrorList.h
 SOURCES += $$(PICTO_TREE)/source/workstation/ErrorList.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/viewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/viewer.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/PictoData.h
-SOURCES += $$(PICTO_TREE)/source/workstation/PictoData.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/Design.h
-SOURCES += $$(PICTO_TREE)/source/workstation/Design.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/DesignRoot.h
-SOURCES += $$(PICTO_TREE)/source/workstation/DesignRoot.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/designer/EditorState.h
 SOURCES += $$(PICTO_TREE)/source/workstation/designer/EditorState.cpp

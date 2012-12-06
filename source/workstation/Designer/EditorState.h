@@ -7,7 +7,7 @@
 #include <QColor>
 #include <QString>
 #include <QGraphicsItem>
-#include "../PictoData.h"
+#include "../../common/design/PictoData.h"
 using namespace Picto;
 
 class EditorState : public QObject

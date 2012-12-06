@@ -1,8 +1,8 @@
 #ifndef _PICTODATA_H_
 #define _PICTODATA_H_
 
-#include "../common/experiment/experiment.h"
-#include "../common/storage/DataStore.h"
+#include "../experiment/experiment.h"
+#include "../storage/DataStore.h"
 #include <QUuid>
 
 namespace Picto {
@@ -10,8 +10,11 @@ namespace Picto {
 /*!	\brief Holds all Picto data that was serialized in including experiment and ui data
  *	
  */
-
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API PictoData : public DataStore
+#else
 class PictoData : public DataStore
+#endif
 {
 public:
 	static QSharedPointer<Asset> Create();

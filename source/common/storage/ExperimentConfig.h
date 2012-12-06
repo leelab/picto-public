@@ -26,6 +26,7 @@ public:
 
 	using Serializable::toXml;
 	using Serializable::fromXml;
+	void reset();
 	bool toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	void disallowIdDuplication();
@@ -33,6 +34,7 @@ public:
 	void fixDuplicatedAssetIds();
 	QSharedPointer<Asset> getAsset(int id);
 	QList<QWeakPointer<Asset>> getProperties(){return managedProperties_;};
+	QList<QWeakPointer<Asset>> getAssets();
 
 	QList<AssetInfo> getElementInfo();
 	QList<PropInfo> getPropertyInfo();

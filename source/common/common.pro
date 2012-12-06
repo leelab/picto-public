@@ -176,6 +176,14 @@ SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlLink.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlElementFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlElementFactory.cpp
 
+HEADERS += $$(PICTO_TREE)/source/common/design/Design.h
+SOURCES += $$(PICTO_TREE)/source/common/design/Design.cpp
+HEADERS += $$(PICTO_TREE)/source/common/design/DesignRoot.h
+SOURCES += $$(PICTO_TREE)/source/common/design/DesignRoot.cpp
+HEADERS += $$(PICTO_TREE)/source/common/design/PictoData.h
+SOURCES += $$(PICTO_TREE)/source/common/design/PictoData.cpp
+
+
 HEADERS += $$(PICTO_TREE)/source/common/engine/InputPort.h
 SOURCES += $$(PICTO_TREE)/source/common/engine/InputPort.cpp
 HEADERS += $$(PICTO_TREE)/source/common/engine/SignalChannel.h
@@ -314,6 +322,8 @@ HEADERS += $$(PICTO_TREE)/source/common/playback/SessionState.h
 SOURCES += $$(PICTO_TREE)/source/common/playback/SessionState.cpp
 HEADERS += $$(PICTO_TREE)/source/common/playback/SessionLoader.h
 SOURCES += $$(PICTO_TREE)/source/common/playback/SessionLoader.cpp
+HEADERS += $$(PICTO_TREE)/source/common/playback/SessionVersionInterfacer.h
+SOURCES += $$(PICTO_TREE)/source/common/playback/SessionVersionInterfacer.cpp
 HEADERS += $$(PICTO_TREE)/source/common/playback/SignalState.h
 SOURCES += $$(PICTO_TREE)/source/common/playback/SignalState.cpp
 HEADERS += $$(PICTO_TREE)/source/common/playback/SpikeState.h

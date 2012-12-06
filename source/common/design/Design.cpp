@@ -3,6 +3,7 @@
 #include "Design.h"
 #include "../common/analysis/AnalysisContainer.h"
 #include "../common/memleakdetect.h"
+using namespace Picto;
 
 Design::Design()
 {

@@ -9,7 +9,7 @@
 #include "../../common/playback/SessionState.h"
 #include "../../common/playback/SessionPlayer.h"
 #include "../../common/engine/stateupdater.h"
-#include "../DesignRoot.h"
+#include "../common/design/DesignRoot.h"
 
 namespace Picto {
 

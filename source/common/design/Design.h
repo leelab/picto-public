@@ -4,8 +4,9 @@
 #include <QObject>
 #include <QTextDocument>
 #include "PictoData.h"
-using namespace Picto;
 
+
+namespace Picto{
 
 /*!	\brief The error handling tool for Workstation
  *
@@ -13,7 +14,11 @@ using namespace Picto;
  *	errors.  However, since I'm still putting things together, it's going to 
  *	start off as a really simple list of errors, with basic access functions
  */
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API Design : public QObject
+#else
 class Design : public QObject
+#endif
 {
 	Q_OBJECT
 public:
@@ -50,5 +55,6 @@ private:
 
 private slots:
 	void designEdited();
+};
 };
 #endif

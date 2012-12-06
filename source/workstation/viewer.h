@@ -2,13 +2,14 @@
 #define _VIEWER_H_
 
 #include "../common/experiment/experiment.h"
-#include "PictoData.h"
+#include "../common/design/PictoData.h"
 
 #include <QWidget>
 #include <QSharedPointer>
 #include <QTextDocument>
 
-#include "DesignRoot.h"
+#include "../common/design/DesignRoot.h"
+using namespace Picto;
 
 /*!	\brief A Viewer is a main panel used to view an experiment.  This is a base class
  *

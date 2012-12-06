@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QVector>
 #include "SessionLoader.h"
+#include "../design/DesignRoot.h"
 
 namespace Picto {
 /*! \brief Component of Picto Playback system that loads data into SessionState.
@@ -20,7 +21,7 @@ public:
 	virtual ~FileSessionLoader();
 
 	bool setFile(QString path);
-	QString getDesignDefinition();
+	QSharedPointer<DesignRoot> getDesignRoot();
 
 protected:
 	virtual QVector<RunData> loadRunData();
@@ -40,7 +41,8 @@ private:
 	};
 	QVector<SigData> sigs_;
 	double dataBuffer_;
-	QString designDef_;
+	QSharedPointer<DesignRoot> designRoot_;
+	QHash<int,bool> obsoleteAssetIds_;
 };
 
 }; //namespace Picto

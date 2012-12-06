@@ -4,6 +4,8 @@
 #include <QStringList>
 #include "FileSessionLoader.h"
 #include "../storage/SignalChannelInfo.h"
+#include "../experiment/Experiment.h"
+#include "SessionVersionInterfacer.h"
 using namespace Picto;
 
 FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState) :
@@ -42,9 +44,9 @@ bool FileSessionLoader::setFile(QString path)
 	return true;
 }
 
-QString FileSessionLoader::getDesignDefinition()
+QSharedPointer<DesignRoot> FileSessionLoader::getDesignRoot()
 {
-	return designDef_;
+	return designRoot_;
 }
 
 QVector<SessionLoader::RunData> FileSessionLoader::loadRunData()
@@ -87,30 +89,35 @@ QVector<SessionLoader::RunData> FileSessionLoader::loadRunData()
 
 bool FileSessionLoader::loadInitData(double upTo)
 {
-	if(!session_.isOpen())
-		return false;
-	if(upTo <= 0)
-		return true;
-	
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-	bool success;
-	//Property:
-	query.prepare("SELECT p.dataid,p.assetid,p.value FROM properties p, frames f "
-		"WHERE f.dataid=p.frameid "
-		"AND f.time < :upto ORDER BY p.dataid");
-	query.bindValue(":upto",upTo);
-	success = query.exec();
-	if(!success)
-	{
-		Q_ASSERT(false);
-		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-		return false;
-	}
-	while(query.next()){
-		sessionState_->setPropertyValue(0,query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toString());
-	}
-	query.finish();
+	//if(!session_.isOpen())
+	//	return false;
+	//if(upTo <= 0)
+	//	return true;
+	//
+	//double from = loadRunData().first().startTime_;
+	//QSqlQuery query(session_);
+	//query.setForwardOnly(true);
+	//bool success;
+	//int assetId;
+	////Property:
+	//query.prepare("SELECT p.dataid,p.assetid,p.value FROM properties p, propertylookup pl, frames f "
+	//	"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid "
+	//	"AND f.time < :upto ORDER BY p.dataid");
+	//query.bindValue(":upto",upTo);
+	//success = query.exec();
+	//if(!success)
+	//{
+	//	Q_ASSERT(false);
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	return false;
+	//}
+	//while(query.next()){
+	//	assetId = query.value(1).toInt();
+	//	if(obsoleteAssetIds_.contains(assetId))
+	//		continue;
+	//	sessionState_->setPropertyValue(0,query.value(0).toLongLong(),assetId,query.value(2).toString());
+	//}
+	//query.finish();
 	return true;
 }
 
@@ -126,9 +133,11 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
 	bool success;
+	int assetId;
 	//Property:
-	query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, frames f "
-		"WHERE f.dataid=p.frameid AND f.time > :after "
+	//Currently, we don't select properties with no parent (ie. Runtime parameters).
+	query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, propertylookup pl,frames f "
+		"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid AND f.time > :after "
 		"AND f.time <= :to ORDER BY p.dataid");
 	query.bindValue(":after",after);
 	query.bindValue(":to",to);
@@ -140,8 +149,11 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 		return after;
 	}
 	while(query.next()){
+		assetId = query.value(2).toInt();
+		if(obsoleteAssetIds_.contains(assetId))
+			continue;
 		time = query.value(0).toDouble();
-		sessionState_->setPropertyValue(time-subtractTime,query.value(1).toLongLong(),query.value(2).toInt(),query.value(3).toString());
+		sessionState_->setPropertyValue(time-subtractTime,query.value(1).toLongLong(),assetId,query.value(3).toString());
 		if(time > returnVal)
 			returnVal = time;
 	}
@@ -160,8 +172,11 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 		return after;
 	}
 	while(query.next()){
+		assetId = query.value(2).toInt();
+		if(obsoleteAssetIds_.contains(assetId))
+			continue;
 		time = query.value(0).toDouble();
-		sessionState_->setTransition(time-subtractTime,query.value(1).toLongLong(),query.value(2).toInt());
+		sessionState_->setTransition(time-subtractTime,query.value(1).toLongLong(),assetId);
 		if(time > returnVal)
 			returnVal = time;
 	}
@@ -290,6 +305,9 @@ bool FileSessionLoader::getSignalInfo()
 
 bool FileSessionLoader::loadDesignDefinition()
 {
+	////////////////////////
+	//Load design definition
+	/////////////////////////
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
 	query.prepare("SELECT value FROM sessioninfo WHERE key='ExperimentXML'");
@@ -303,6 +321,83 @@ bool FileSessionLoader::loadDesignDefinition()
 	{
 		return false;
 	}
-	designDef_ = query.value(0).toString();
+	QString designDef = query.value(0).toString();
+	
+	/////////////////////////
+	//Create the design root
+	/////////////////////////
+	designRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
+	if(!designRoot_->resetDesignRoot(designDef) || !designRoot_->compiles())
+	{
+		Q_ASSERT(false);	//This would mean that somehow the session had a bad design in it.
+		return false;
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////
+	//Since asset ids can change for unsaved (default) asset values when the same experiment 
+	//is loaded in different versions of picto, us a SessionVersionInterfacer to correct the
+	//asset ids in the new version of the experiment.
+	/////////////////////////////////////////////////////////////////////////////////////////
+	QSharedPointer<Design> design = designRoot_->getDesign("Experiment",0);
+	if(!design)
+	{
+		Q_ASSERT(false);	//This would mean that somehow the session had no experiment in it.
+		return false;
+	}
+	QSharedPointer<Picto::Experiment> experiment = design->getRootAsset().staticCast<Experiment>();
+	if(!experiment)
+	{
+		Q_ASSERT(false);	//This would mean that somehow the design was empty.
+		return false;
+	}
+	SessionVersionInterfacer updater(experiment);
+	////////////////////////////////////////////////////////
+	//Add all Session asset data to SessionVersionInterfacer
+	////////////////////////////////////////////////////////
+	query.prepare("SELECT assetid,name,parent FROM propertylookup WHERE parent <> 0");
+	success = query.exec();
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return false;
+	}
+	while(query.next())
+	{
+		updater.addSessionProperty(query.value(1).toString(),query.value(0).toInt(),query.value(2).toInt());
+	}
+
+	query.prepare("SELECT source,sourceresult,assetid,parent FROM transitionlookup");
+	success = query.exec();
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return false;
+	}
+	while(query.next())
+	{
+		updater.addSessionTransition(query.value(0).toString(),query.value(1).toString(),query.value(2).toInt(),query.value(3).toInt());
+	}
+
+	query.prepare("SELECT assetid,path FROM elementlookup");
+	success = query.exec();
+	if(!success)
+	{
+		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		return false;
+	}
+	while(query.next())
+	{
+		updater.addSessionElement(query.value(0).toInt(),query.value(1).toString());
+	}
+
+	////////////////////////////////////////////////////////
+	//Update Experiment's ExperimentConfig
+	////////////////////////////////////////////////////////
+	updater.updateSessionConfigFromSessionAssets();
+
+	////////////////////////////////////////////////////////
+	//Get obsolete Asset Id table
+	////////////////////////////////////////////////////////
+	obsoleteAssetIds_ = updater.getObsoleteAssets();
 	return true;
 }
