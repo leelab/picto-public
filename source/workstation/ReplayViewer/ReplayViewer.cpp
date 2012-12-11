@@ -53,11 +53,7 @@ void ReplayViewer::deinit()
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources
 bool ReplayViewer::aboutToQuit()
 {
-	//Stop the engine running. Otherwise, the 
-	//experiment would keep on going even though the window was closed and this
-	//process would stick around in the task manager for eternity.
-	//
-	playbackController_->stop();
+	playbackController_->aboutToQuit();
 	return true;
 }
 
@@ -72,7 +68,7 @@ void ReplayViewer::setupUi()
 	runs_ = new QComboBox();
 	runs_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	runs_->setToolTip("Select a Run from the Session");
-	connect(runs_,SIGNAL(currentIndexChanged(int)),playbackController_.data(),SLOT(selectRun(int)));
+	connect(runs_,SIGNAL(currentIndexChanged(int)),this,SLOT(setCurrentRun(int)));
 	connect(playbackController_.data(),SIGNAL(runsUpdated(QStringList)),this,SLOT(updateRunsList(QStringList)));
 
 	///play/pause/stop actions and toolbar
@@ -82,14 +78,8 @@ void ReplayViewer::setupUi()
 	playAction_->setToolTip("Run (Ctrl+R)");
 	connect(playAction_,SIGNAL(triggered()),this, SLOT(play()));
 
-	speed_ = new QDoubleSpinBox();
-	speed_->setValue(1.0);
-	speed_->setMinimum(0.001);
-	speed_->setMaximum(100);
-	speed_->setDecimals(3);
-	speed_->setSingleStep(.1);
-	connect(speed_,SIGNAL(editingFinished()),this,SLOT(setRunSpeed()));
-
+	speed_ = new SpeedWidget(100,0.01,0.01,1.0);
+	connect(speed_,SIGNAL(speedChanged(double)),playbackController_.data(),SLOT(setRunSpeed(double)));
 
 	pauseAction_ = new QAction(tr("&Pause task"),this);
 	pauseAction_->setIcon(QIcon(":/icons/pause.png"));
@@ -97,6 +87,7 @@ void ReplayViewer::setupUi()
 	pauseAction_->setToolTip("Pause (Ctrl+P)");
 	connect(pauseAction_,SIGNAL(triggered()),this, SLOT(pause()));
 	pauseAction_->setEnabled(false);
+	pausedFromJump_ = false;
 
 	stopAction_ = new QAction(tr("S&top task"),this);
 	stopAction_->setIcon(QIcon(":/icons/stop.png"));
@@ -105,8 +96,11 @@ void ReplayViewer::setupUi()
 	connect(playbackController_.data(),SIGNAL(finishedPlayback()),stopAction_,SLOT(trigger()));
 	stopAction_->setEnabled(false);
 
-	clock_ = new QLabel("0.00");
+	progress_ = new ProgressWidget();
+	progress_->setMaximum(1);
 	connect(playbackController_.data(),SIGNAL(timeChanged(double)),this,SLOT(updateTime(double)));
+	connect(progress_,SIGNAL(jumpToProgress(double)),playbackController_.data(),SLOT(jumpToTime(double)));
+	connect(progress_,SIGNAL(userSliderOperation(bool)),this,SLOT(userChoosingJump(bool)));
 
 	status_ = new QLabel("Ready");
 	connect(playbackController_.data(),SIGNAL(loading(bool)),this,SLOT(loading(bool)));
@@ -123,11 +117,8 @@ void ReplayViewer::setupUi()
 	testToolbar_->addAction(loadSessionAction_);
 	testToolbar_->addWidget(runs_);
 	testToolbar_->addAction(playAction_);
-	testToolbar_->addWidget(speed_);
 	testToolbar_->addAction(pauseAction_);
 	testToolbar_->addAction(stopAction_);
-	testToolbar_->addSeparator();
-	testToolbar_->addWidget(clock_);
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(status_);
 	testToolbar_->addSeparator();
@@ -138,7 +129,6 @@ void ReplayViewer::setupUi()
 	toolbarLayout->addStretch();
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
-	
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
@@ -153,9 +143,11 @@ void ReplayViewer::setupUi()
 		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
 		stimulusLayout->addWidget(outputSignalsWidgets_.back());
 	}
+	stimulusLayout->addWidget(progress_);
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	operationLayout->addLayout(stimulusLayout);
+	operationLayout->addWidget(speed_);
 	operationLayout->addStretch();
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -230,12 +222,11 @@ void ReplayViewer::loadSession()
 
 void ReplayViewer::updateTime(double time)
 {
-	clock_->setText(QString::number(time));
-}
-
-void ReplayViewer::setRunSpeed()
-{
-	playbackController_->setRunSpeed(speed_->value());
+	double runLength = playbackController_->getRunLength();
+	if(runLength < 0)
+		runLength = 1;
+	progress_->setMaximum(runLength);
+	progress_->setProgress(time);
 }
 
 void ReplayViewer::updateRunsList(QStringList runs)
@@ -247,7 +238,34 @@ void ReplayViewer::updateRunsList(QStringList runs)
 	runs_->setEnabled(true);
 }
 
+void ReplayViewer::setCurrentRun(int index)
+{
+	playbackController_->selectRun(index);
+	progress_->setProgress(0);
+}
+
 void ReplayViewer::loading(bool load)
 {
 	status_->setText(load?"Loading":"Playing");
+}
+
+void ReplayViewer::userChoosingJump(bool starting)
+{
+	if(starting)
+	{
+		if(pauseAction_->isEnabled())
+		{
+			pausedFromJump_ = true;
+			pauseAction_->trigger();
+		}
+	}
+	else 
+	{
+		if(pausedFromJump_)
+		{
+			pausedFromJump_ = false;
+			if(playAction_->isEnabled())
+				playAction_->trigger();
+		}
+	}
 }

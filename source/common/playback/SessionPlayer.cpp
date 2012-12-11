@@ -6,9 +6,11 @@ SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPoint
 sessionState_(sessState),
 sessionLoader_(sessLoader),
 processing_(false),
-reachedEnd_(false)
+reachedEnd_(false),
+loading_(false)
 {
 	lastIndex_ = PlaybackIndex::minForTime(0);
+	nextFrame_ = PlaybackIndex();
 }
 
 SessionPlayer::~SessionPlayer()
@@ -17,9 +19,12 @@ SessionPlayer::~SessionPlayer()
 
 void SessionPlayer::restart()
 {
+	markLoading(true);
 	sessionLoader_->restart();
 	lastIndex_ = PlaybackIndex::minForTime(0);
+	nextFrame_ = PlaybackIndex();
 	reachedEnd_ = false;
+	markLoading(false);
 }
 
 bool SessionPlayer::stepToTime(double time)
@@ -32,24 +37,33 @@ bool SessionPlayer::stepToTime(double time)
 	{
 		//If time goes down, restart from the beginning of the run and step back to it.
 		restart();
+		markLoading(true);
+		return false;
 	}
 	if(time == lastIndex_.time())
+	{
+		markLoading(false);
 		return true;
+	}
 	if(reachedEnd_)
+	{
+		markLoading(false);
 		return true;
+	}
 	if(!sessionLoader_->setCurrentTime(time))
 	{
 		qDebug(QString("Player: Failed to set time to Loader").toAscii());
 		return false;
 	}
-	if(time > sessionLoader_->getMaxBehavTime() && time < sessionLoader_->runDuration())
+	if(!sessionLoader_->dataIsReady(time))
 	{
-		qDebug(QString("Player: Time was too high, loader hasn't caught up yet").toAscii());
+		markLoading(true);
+		qDebug(QString("Player: Loader not ready for time:%1").arg(time).toAscii());
 		return false;
 	}
 
 	//Step to the input time or the end of the run. Whichever comes first.
-	while(time > lastIndex_.time())
+	do
 	{
 		if(!stepToNextFrame(time))
 		{
@@ -62,9 +76,10 @@ bool SessionPlayer::stepToTime(double time)
 			emit reachedEnd();
 			break;
 		}
-	}
+	}while(time > nextFrame_.time());
 	sessionLoader_->setProcessedTime(getTime());
 	qDebug(QString("Player: Step To Time reached time: %1").arg(getTime()).toAscii());
+	markLoading(false);
 	return true;
 }
 
@@ -88,10 +103,12 @@ bool SessionPlayer::stepForward(double lookForward)
 bool SessionPlayer::stepToNextFrame(double lookForward)
 {
 	if(processing_) return false;
-	PlaybackIndex nextFrameId = sessionState_->getFrameState()->getNextIndex(lookForward);
-	if(!nextFrameId.isValid())
+	nextFrame_ = sessionState_->getFrameState()->getNextIndex(lookForward);
+	if(nextFrame_.time() > lookForward)
+		return true;
+	if(!nextFrame_.isValid())
 		return false;
-	while(lastIndex_ < nextFrameId)
+	while(lastIndex_ < nextFrame_)
 		stepForward(lookForward);
 	return true;
 }
@@ -124,6 +141,15 @@ bool SessionPlayer::step(double lookForward)
 	lastIndex_ = stateToTrigger->getCurrentIndex();
 	processing_ = false;
 	return true;
+}
+
+void SessionPlayer::markLoading(bool load)
+{
+	if(loading_ != load)
+	{
+		loading_ = load;
+		emit loading(loading_);
+	}
 }
 
 QSharedPointer<DataState> SessionPlayer::getNextTriggerState(double lookForward)

@@ -24,6 +24,8 @@ class PlaybackStateUpdater : public StateUpdater
 	Q_OBJECT
 public:
 	PlaybackStateUpdater();
+	virtual ~PlaybackStateUpdater();
+
 	//Updates the picto state to the latest values
 	virtual bool updateState();
 
@@ -31,11 +33,13 @@ public:
 	QSharedPointer<DesignRoot> getDesignRoot();
 
 	QStringList getRuns();
+	double getRunLength();
 	bool loadRun(int index);
 	bool pause();
 	bool play();
 	bool stop();
 	void setPlaybackSpeed(double speed);
+	void jumpToTime(double time);
 signals:
 	//triggered when values change
 	void propertyChanged(int propId, QString value);

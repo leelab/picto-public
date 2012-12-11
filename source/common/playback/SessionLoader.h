@@ -1,20 +1,19 @@
 #ifndef _SESSIONLOADER_H_
 #define _SESSIONLOADER_H_
-#include <QThread>
 #include <QObject>
 #include <QHash>
 #include <QMutex>
 #include <QTime>
-#include <QTimer>
 
 #include <QSharedPointer>
 #include "SessionState.h"
+#include "SessionLoaderThread.h"
 
 namespace Picto {
 /*! \brief Component of Picto Playback system that loads data into SessionState.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API SessionLoader : public QThread
+class PICTOLIB_API SessionLoader : public QObject
 #else
 class SessionLoader : public  QObject
 #endif
@@ -39,11 +38,9 @@ public:
 	double getMinNeuralTime();
 	double getMaxNeuralTime();
 	double runDuration();
-	bool dataIsReady();
+	bool dataIsReady(double time);
 
 protected:
-	void run();
-
 
 	struct RunData
 	{
@@ -75,7 +72,6 @@ private slots:
 	void loadData();
 
 private:
-	bool dataLoadedForTime(double time);
 	QVector<RunData> runs_;
 	double minBehav_;
 	double maxBehav_;
@@ -85,18 +81,14 @@ private:
 	double runEnd_;
 	double currTime_;
 	double procTime_;
-	double runSpeed_;
-	double loadSpeed_;
-	double loadPeriod_;
 	double forwardBuffer_;
 	double backBuffer_;
 	bool runReset_;
 	int runIndex_;
-	bool insufficientData_;
 	QSharedPointer<QMutex> mutex_;
 	QTime speedTimer_;
 	QTime loadTimer_;
-	QSharedPointer<QTimer> loadCaller_;
+	QSharedPointer<SessionLoaderThread> loaderThread_;
 };
 
 }; //namespace Picto

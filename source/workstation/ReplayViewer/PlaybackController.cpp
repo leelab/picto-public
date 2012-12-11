@@ -18,14 +18,15 @@ using namespace Picto;
 PlaybackController::PlaybackController(QWidget *parent) :
 status_(Stopped),
 newStatus_(Stopped),
-expRunning_(false)
+expRunning_(false),
+currTime_(0.0)
 {
 	//set up the engine
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(true);
 	engine_->syncInitPropertiesForSlave(false);
-	connect(engine_.data(),SIGNAL(slaveTimeChanged(double)),this,SIGNAL(timeChanged(double)));
+	connect(engine_.data(),SIGNAL(slaveTimeChanged(double)),this,SLOT(setCurrTime(double)));
 
 	//Setup playback update system
 	playbackUpdater_ = QSharedPointer<PlaybackStateUpdater>(new PlaybackStateUpdater());
@@ -66,6 +67,10 @@ expRunning_(false)
 	renderingTarget_->showSplash();
 }
 
+PlaybackController::~PlaybackController()
+{
+}
+
 QString PlaybackController::loadSession(QString filename)
 {
 	stop();
@@ -102,6 +107,19 @@ QVector<QSharedPointer<Picto::VirtualOutputSignalController>> PlaybackController
 	return outSigControllers_;
 }
 
+double PlaybackController::getRunLength()
+{
+	return playbackUpdater_->getRunLength();
+}
+
+void PlaybackController::aboutToQuit()
+{
+	if(expRunning_)
+	{
+		engine_->stop();
+	}
+}
+
 void PlaybackController::play()
 {
 	playbackUpdater_->play();
@@ -126,12 +144,30 @@ void PlaybackController::stop()
 	playbackUpdater_->stop();
 	pixmapVisualTarget_->clear();
 	renderingTarget_->showSplash();
-	emit timeChanged(0.0);
+	setCurrTime(0.0);
+}
+
+void PlaybackController::jumpToTime(double time)
+{
+	if(time > getRunLength() || time < 0)
+		return;
+	if(time < currTime_)
+	{
+		engine_->stop();
+		QTimer::singleShot(0,this,SLOT(runExperiment()));
+	}
+	playbackUpdater_->jumpToTime(time);
 }
 
 void PlaybackController::selectRun(int index)
 {
 	playbackUpdater_->loadRun(index);
+}
+
+void PlaybackController::setCurrTime(double time)
+{
+	currTime_ = time;
+	emit timeChanged(currTime_);
 }
 
 void PlaybackController::runExperiment()

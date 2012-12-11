@@ -3,7 +3,8 @@
 using namespace Picto;
 
 SessionLoader::SessionLoader(QSharedPointer<SessionState> sessState) :
-sessionState_(sessState)
+sessionState_(sessState),
+loaderThread_(new SessionLoaderThread())
 {
 	minBehav_ = 0;
 	maxBehav_ = 0;
@@ -13,21 +14,21 @@ sessionState_(sessState)
 	runEnd_ = 0;
 	currTime_ = 0;
 	procTime_ = 0;
-	runSpeed_ = 1;
-	loadSpeed_ = 1;
-	loadPeriod_ = 10;
 	forwardBuffer_ = 6000;
 	backBuffer_ = 600;
 	runReset_ = false;
 	runIndex_ = -1;
-	insufficientData_ = false;
 
 	mutex_ = QSharedPointer<QMutex>(new QMutex(QMutex::Recursive));
-	start();
+	connect(loaderThread_.data(),SIGNAL(doLoad()),this,SLOT(loadData()));
+	loaderThread_->start();
+	moveToThread(loaderThread_.data());
 }
 
 SessionLoader::~SessionLoader()
 {
+	loaderThread_->quit();
+	loaderThread_->wait();
 }
 
 QStringList SessionLoader::getRunNames()
@@ -74,20 +75,6 @@ bool SessionLoader::setCurrentTime(double time)
 	if(runEnd_ && time > runEnd_)
 		time = runEnd_;
 	currTime_ = time;
-	if(realTime != 0 && !insufficientData_)
-	{
-		double offsetTime = time - currTime_;
-		double newRunSpeed = offsetTime/realTime;
-		runSpeed_ = runSpeed_ + 0.1*(offsetTime/realTime-runSpeed_);
-		if(runSpeed_ < 1)
-			runSpeed_ = 1;
-		qDebug(QString("Loader: Run Speed:%1").arg(runSpeed_).toAscii());
-	}
-	if(!insufficientData_ && !dataLoadedForTime(currTime_))
-	{
-		insufficientData_ = true;
-		qDebug(QString("Loader: Needs Data").toAscii());
-	}
 	return true;
 }
 
@@ -142,22 +129,21 @@ double SessionLoader::runDuration()
 	return runEnd_-runStart_;
 }
 
-bool SessionLoader::dataIsReady()
+bool SessionLoader::dataIsReady(double time)
 {
 	QMutexLocker locker(mutex_.data());
-	return !insufficientData_;
-}
-
-void SessionLoader::run()
-{
-	//We establish the timer_ here so that we can start and stop it from this thread
-	//if it was created/deleted in the constructor/destructor it wouldn't be directly accessible
-	loadCaller_ = QSharedPointer<QTimer>(new QTimer());
-	loadCaller_->setInterval(1);
-	connect(loadCaller_.data(), SIGNAL(timeout()), this, SLOT(loadData()), Qt::DirectConnection);
-	loadCaller_->start();
-
-	QThread::exec();
+	time = time+runStart_;
+	if(
+		(	time > maxBehav_
+		||	time > maxNeural_)
+		&& time < runDuration())
+		return false;
+	if(
+		time < minBehav_
+		||	time < minNeural_
+		)
+		return false;
+	return true;
 }
 
 void SessionLoader::loadData()
@@ -178,8 +164,6 @@ void SessionLoader::loadData()
 		minBehav_ = runStart_-.000001;
 		maxNeural_ = runStart_-.000001;
 		minNeural_ = runStart_-.000001;
-		runSpeed_ = 1.0;
-		loadSpeed_ = 1.0;
 		runReset_ = false;
 		locker.unlock();
 		sessionState_->reset();
@@ -249,65 +233,4 @@ void SessionLoader::loadData()
 	minBehav_ = newMinBehav;
 	maxNeural_ = newMaxNeural;
 	minNeural_ = newMinNeural;
-	if(insufficientData_ && dataLoadedForTime(currTime_))
-	{
-		insufficientData_ = false;
-		qDebug(QString("Loader: Done loading").toAscii());
-	}
-
-	//double loadDelay = loadTimer_.restart()/1000.0;
-	//if(loadDelay > 0)
-	//{
-	//	loadPeriod_ += .1 * (loadDelay - loadPeriod_);
-	//	if(loadTimePeriod > 0)
-	//	{
-	//		double newLoadSpeed = loadTimePeriod/loadDelay;
-	//		loadSpeed_ += .1 * (loadTimePeriod/loadDelay - loadSpeed_);
-	//	}
-	//}
-	//if(loadSpeed_ > 0 && runSpeed_ > 0)
-	//{
-	//	double minMaxTime = maxBehav_>maxNeural_?maxNeural_:maxBehav_;
-	//	//
-	//	//r = run speed	 (experimental secs played per real sec)
-	//	//l = load speed (experimental secs loaded per real sec)
-	//	//n = experimental secs to load by next time here
-	//	//a = desired real secs that loading should be ahead at next time here
-	//	//b = current experimental secs that loading is ahead
-	//	//
-	//	//
-	//	//real time when we get back here = n/l
-	//	//exp play time when we get back here = r*n/l
-	//	//
-	//	//n should be "a" real secs ahead when we arrive back here
-	//	//n = (r*n/l)+(a*r)-b
-	//	//Solve for n:
-	//	//n = ((a*r)-b)/(1-(r/l))
-	//	double a = 30;
-	//	double r = runSpeed_;
-	//	double l = loadSpeed_;
-	//	double b = minMaxTime - currTime_;
-	//	if(l >= 0 && ((1-(r/l)) != 0))
-	//	{
-	//		double n = ((a*r)-b)/(1-(r/l));
-	//		forwardBuffer_ = n;
-	//		if(forwardBuffer_ < 0)
-	//			forwardBuffer_ = 0;
-	//		qDebug(QString("Loader: a: %1, r: %2, l: %3\n"
-	//			"b:%4, n:%5, forwardBuffer_:%6").arg(a).arg(r).arg(l).arg(b).arg(n).arg(forwardBuffer_).toAscii());
-	//	}
-	//}
 }
-
-bool SessionLoader::dataLoadedForTime(double time)
-{
-	QMutexLocker locker(mutex_.data());
-	if(
-			time > maxBehav_
-		||	time > maxNeural_
-		||	time < minBehav_
-		||	time < minNeural_
-		)
-		return false;
-	return true;
-}	

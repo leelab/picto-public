@@ -29,6 +29,7 @@ public:
 	//long processes.
 	bool isProcessing();
 signals:
+	void loading(bool startingLoad);	//Emits true when starting load and false when load is ending
 	void reachedEnd();
 protected:
 
@@ -36,11 +37,14 @@ private:
 	bool stepForward(double lookForward);
 	bool stepToNextFrame(double lookForward);
 	bool step(double lookForward);
+	void markLoading(bool load);
 	QSharedPointer<SessionState> sessionState_;
 	QSharedPointer<SessionLoader> sessionLoader_;
 	PlaybackIndex lastIndex_;
+	PlaybackIndex nextFrame_;
 	bool processing_;
 	bool reachedEnd_;
+	bool loading_;
 
 	QSharedPointer<DataState> getNextTriggerState(double lookForward);
 

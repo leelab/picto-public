@@ -8,6 +8,8 @@
 #include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "PlaybackStateUpdater.h"
 #include "PlaybackController.h"
+#include "SpeedWidget.h"
+#include "ProgressWidget.h"
 
 class QLabel;
 class QDoubleSpinBox;
@@ -56,22 +58,24 @@ private:
 	QAction *playAction_;
 	QAction *pauseAction_;
 	QAction *stopAction_;
-	QLabel *clock_;
 	QLabel *status_;
-	QDoubleSpinBox *speed_;
+	SpeedWidget *speed_;
+	ProgressWidget *progress_;
 	QComboBox *runs_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 
 	QToolBar* testToolbar_;
+	bool pausedFromJump_;	//If playback is not yet paused, system should pause playback while a jump location is being selected.
 
 	enum Status {Ending, Stopped, Running, Paused};
 private slots:
 
 	void loadSession();
 	void updateTime(double time);
-	void setRunSpeed();
 	void updateRunsList(QStringList runs);
+	void setCurrentRun(int index);
 	void loading(bool load);
+	void userChoosingJump(bool starting);
 	//void zoomChanged(int zoom);
 
 };

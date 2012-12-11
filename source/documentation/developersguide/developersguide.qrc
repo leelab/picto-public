@@ -375,6 +375,8 @@
    <file alias="_list_data_state_list_8h-source.html">../../../output/documentation/main/html/_list_data_state_list_8h-source.html</file>
    <file alias="_load_exp_response_handler_8cpp-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8cpp-source.html</file>
    <file alias="_load_exp_response_handler_8h-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8h-source.html</file>
+   <file alias="_loading_widget_8cpp-source.html">../../../output/documentation/main/html/_loading_widget_8cpp-source.html</file>
+   <file alias="_loading_widget_8h-source.html">../../../output/documentation/main/html/_loading_widget_8h-source.html</file>
    <file alias="_logical_state_8cpp-source.html">../../../output/documentation/main/html/_logical_state_8cpp-source.html</file>
    <file alias="_logical_state_8h-source.html">../../../output/documentation/main/html/_logical_state_8h-source.html</file>
    <file alias="_machine_container_8cpp-source.html">../../../output/documentation/main/html/_machine_container_8cpp-source.html</file>
@@ -487,6 +489,8 @@
    <file alias="_playback_interfaces_8h-source.html">../../../output/documentation/main/html/_playback_interfaces_8h-source.html</file>
    <file alias="_playback_state_updater_8cpp-source.html">../../../output/documentation/main/html/_playback_state_updater_8cpp-source.html</file>
    <file alias="_playback_state_updater_8h-source.html">../../../output/documentation/main/html/_playback_state_updater_8h-source.html</file>
+   <file alias="_playback_thread_8cpp-source.html">../../../output/documentation/main/html/_playback_thread_8cpp-source.html</file>
+   <file alias="_playback_thread_8h-source.html">../../../output/documentation/main/html/_playback_thread_8h-source.html</file>
    <file alias="_plexon_interface_8cpp-source.html">../../../output/documentation/main/html/_plexon_interface_8cpp-source.html</file>
    <file alias="_plexon_interface_8h-source.html">../../../output/documentation/main/html/_plexon_interface_8h-source.html</file>
    <file alias="_point_property_8cpp-source.html">../../../output/documentation/main/html/_point_property_8cpp-source.html</file>
@@ -511,6 +515,8 @@
    <file alias="_predicate_less_than_eq_8h-source.html">../../../output/documentation/main/html/_predicate_less_than_eq_8h-source.html</file>
    <file alias="_predicate_not_equal_8cpp-source.html">../../../output/documentation/main/html/_predicate_not_equal_8cpp-source.html</file>
    <file alias="_predicate_not_equal_8h-source.html">../../../output/documentation/main/html/_predicate_not_equal_8h-source.html</file>
+   <file alias="_progress_widget_8cpp-source.html">../../../output/documentation/main/html/_progress_widget_8cpp-source.html</file>
+   <file alias="_progress_widget_8h-source.html">../../../output/documentation/main/html/_progress_widget_8h-source.html</file>
    <file alias="_property_8cpp-source.html">../../../output/documentation/main/html/_property_8cpp-source.html</file>
    <file alias="_property_8h-source.html">../../../output/documentation/main/html/_property_8h-source.html</file>
    <file alias="_property_browser_8cpp-source.html">../../../output/documentation/main/html/_property_browser_8cpp-source.html</file>
@@ -681,6 +687,8 @@
    <file alias="_session_info_8h-source.html">../../../output/documentation/main/html/_session_info_8h-source.html</file>
    <file alias="_session_loader_8cpp-source.html">../../../output/documentation/main/html/_session_loader_8cpp-source.html</file>
    <file alias="_session_loader_8h-source.html">../../../output/documentation/main/html/_session_loader_8h-source.html</file>
+   <file alias="_session_loader_thread_8cpp-source.html">../../../output/documentation/main/html/_session_loader_thread_8cpp-source.html</file>
+   <file alias="_session_loader_thread_8h-source.html">../../../output/documentation/main/html/_session_loader_thread_8h-source.html</file>
    <file alias="_session_player_8cpp-source.html">../../../output/documentation/main/html/_session_player_8cpp-source.html</file>
    <file alias="_session_player_8h-source.html">../../../output/documentation/main/html/_session_player_8h-source.html</file>
    <file alias="_session_state_8cpp-source.html">../../../output/documentation/main/html/_session_state_8cpp-source.html</file>
@@ -711,6 +719,8 @@
    <file alias="_single_unit_data_store_8h-source.html">../../../output/documentation/main/html/_single_unit_data_store_8h-source.html</file>
    <file alias="_software_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_software_compositing_surface_8cpp-source.html</file>
    <file alias="_software_compositing_surface_8h-source.html">../../../output/documentation/main/html/_software_compositing_surface_8h-source.html</file>
+   <file alias="_speed_widget_8cpp-source.html">../../../output/documentation/main/html/_speed_widget_8cpp-source.html</file>
+   <file alias="_speed_widget_8h-source.html">../../../output/documentation/main/html/_speed_widget_8h-source.html</file>
    <file alias="_spike_data_iterator_8cpp-source.html">../../../output/documentation/main/html/_spike_data_iterator_8cpp-source.html</file>
    <file alias="_spike_data_iterator_8h-source.html">../../../output/documentation/main/html/_spike_data_iterator_8h-source.html</file>
    <file alias="_spike_data_source_8cpp-source.html">../../../output/documentation/main/html/_spike_data_source_8cpp-source.html</file>
@@ -949,6 +959,8 @@
    <file alias="class_hardware_setup.html">../../../output/documentation/main/html/class_hardware_setup.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler-members.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler-members.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler.html</file>
+   <file alias="class_loading_widget-members.html">../../../output/documentation/main/html/class_loading_widget-members.html</file>
+   <file alias="class_loading_widget.html">../../../output/documentation/main/html/class_loading_widget.html</file>
    <file alias="class_main_window-members.html">../../../output/documentation/main/html/class_main_window-members.html</file>
    <file alias="class_main_window.html">../../../output/documentation/main/html/class_main_window.html</file>
    <file alias="class_menu-members.html">../../../output/documentation/main/html/class_menu-members.html</file>
@@ -1076,6 +1088,10 @@
    <file alias="class_picto_1_1_default_data_source-members.html">../../../output/documentation/main/html/class_picto_1_1_default_data_source-members.html</file>
    <file alias="class_picto_1_1_default_data_source.html">../../../output/documentation/main/html/class_picto_1_1_default_data_source.html</file>
    <file alias="class_picto_1_1_default_data_source.png">../../../output/documentation/main/html/class_picto_1_1_default_data_source.png</file>
+   <file alias="class_picto_1_1_design-members.html">../../../output/documentation/main/html/class_picto_1_1_design-members.html</file>
+   <file alias="class_picto_1_1_design.html">../../../output/documentation/main/html/class_picto_1_1_design.html</file>
+   <file alias="class_picto_1_1_design_root-members.html">../../../output/documentation/main/html/class_picto_1_1_design_root-members.html</file>
+   <file alias="class_picto_1_1_design_root.html">../../../output/documentation/main/html/class_picto_1_1_design_root.html</file>
    <file alias="class_picto_1_1_device_interface-members.html">../../../output/documentation/main/html/class_picto_1_1_device_interface-members.html</file>
    <file alias="class_picto_1_1_device_interface.html">../../../output/documentation/main/html/class_picto_1_1_device_interface.html</file>
    <file alias="class_picto_1_1_diamond_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_diamond_graphic-members.html</file>
@@ -1387,6 +1403,8 @@
    <file alias="class_picto_1_1_session_data_package.png">../../../output/documentation/main/html/class_picto_1_1_session_data_package.png</file>
    <file alias="class_picto_1_1_session_loader-members.html">../../../output/documentation/main/html/class_picto_1_1_session_loader-members.html</file>
    <file alias="class_picto_1_1_session_loader.html">../../../output/documentation/main/html/class_picto_1_1_session_loader.html</file>
+   <file alias="class_picto_1_1_session_loader_thread-members.html">../../../output/documentation/main/html/class_picto_1_1_session_loader_thread-members.html</file>
+   <file alias="class_picto_1_1_session_loader_thread.html">../../../output/documentation/main/html/class_picto_1_1_session_loader_thread.html</file>
    <file alias="class_picto_1_1_session_player-members.html">../../../output/documentation/main/html/class_picto_1_1_session_player-members.html</file>
    <file alias="class_picto_1_1_session_player.html">../../../output/documentation/main/html/class_picto_1_1_session_player.html</file>
    <file alias="class_picto_1_1_session_state-members.html">../../../output/documentation/main/html/class_picto_1_1_session_state-members.html</file>
@@ -1521,6 +1539,8 @@
    <file alias="class_plexon_plugin-members.html">../../../output/documentation/main/html/class_plexon_plugin-members.html</file>
    <file alias="class_plexon_plugin.html">../../../output/documentation/main/html/class_plexon_plugin.html</file>
    <file alias="class_plexon_plugin.png">../../../output/documentation/main/html/class_plexon_plugin.png</file>
+   <file alias="class_progress_widget-members.html">../../../output/documentation/main/html/class_progress_widget-members.html</file>
+   <file alias="class_progress_widget.html">../../../output/documentation/main/html/class_progress_widget.html</file>
    <file alias="class_property_browser-members.html">../../../output/documentation/main/html/class_property_browser-members.html</file>
    <file alias="class_property_browser.html">../../../output/documentation/main/html/class_property_browser.html</file>
    <file alias="class_property_edit_tracker-members.html">../../../output/documentation/main/html/class_property_edit_tracker-members.html</file>
@@ -1579,6 +1599,8 @@
    <file alias="class_simple_spike_source-members.html">../../../output/documentation/main/html/class_simple_spike_source-members.html</file>
    <file alias="class_simple_spike_source.html">../../../output/documentation/main/html/class_simple_spike_source.html</file>
    <file alias="class_simple_spike_source.png">../../../output/documentation/main/html/class_simple_spike_source.png</file>
+   <file alias="class_speed_widget-members.html">../../../output/documentation/main/html/class_speed_widget-members.html</file>
+   <file alias="class_speed_widget.html">../../../output/documentation/main/html/class_speed_widget.html</file>
    <file alias="class_start_bar_item-members.html">../../../output/documentation/main/html/class_start_bar_item-members.html</file>
    <file alias="class_start_bar_item.html">../../../output/documentation/main/html/class_start_bar_item.html</file>
    <file alias="class_start_bar_item.png">../../../output/documentation/main/html/class_start_bar_item.png</file>
