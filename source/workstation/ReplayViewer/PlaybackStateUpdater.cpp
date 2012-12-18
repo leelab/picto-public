@@ -11,6 +11,7 @@ PlaybackStateUpdater::PlaybackStateUpdater()
 	waiting_ = false;
 	firstResumeFrame_ = true;
 	timerOffset_ = 0;
+	currRunLength_ = -1;
 }
 
 PlaybackStateUpdater::~PlaybackStateUpdater()
@@ -73,6 +74,7 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 		Q_ASSERT(false);	//This would mean that somehow the session had a bad design in it.
 		return false;
 	}
+	loadRun(0);
 	return true;
 }
 
@@ -92,7 +94,7 @@ double PlaybackStateUpdater::getRunLength()
 {
 	if(!fileSessionLoader_)
 		return -1;
-	return fileSessionLoader_->runDuration();
+	return currRunLength_;
 }
 
 bool PlaybackStateUpdater::loadRun(int index)
@@ -104,6 +106,7 @@ bool PlaybackStateUpdater::loadRun(int index)
 	playbackSpeed_ = 1.0;
 	firstResumeFrame_ = true;
 	runLoaded_ = false;
+	currRunLength_ = fileSessionLoader_->runDuration(index);
 	return fileSessionLoader_->loadRun(index);
 }
 
@@ -134,6 +137,8 @@ bool PlaybackStateUpdater::stop()
 void PlaybackStateUpdater::setPlaybackSpeed(double speed)
 {
 	if(speed <= 0)
+		return;
+	if(speed == playbackSpeed_)
 		return;
 	firstResumeFrame_ = true;
 	timerOffset_ = sessionPlayer_->getTime();

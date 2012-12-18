@@ -1,8 +1,10 @@
 #ifndef _SCENE_H_
 #define _SCENE_H_
 
+#include <QObject>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+#include <QMutex>
 
 #include "../common.h"
 #include "../stimuli/AudioElement.h"
@@ -25,34 +27,32 @@ namespace Picto {
  *	will probably require adding them to the scene.
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Scene 
+	class PICTOLIB_API Scene : public QObject
 #else
-class Scene
+class Scene : public QObject
 #endif
 {
+	Q_OBJECT
 public:
-	Scene();
+
+	static QSharedPointer<Scene> createScene();
 
 	void render(QSharedPointer<Engine::PictoEngine> engine,int callerId);
-
 	void reset();
 	void setBackgroundColor(QColor color);
 	void addVisualElement(QSharedPointer<VisualElement> element);
 	void addAudioElement(QSharedPointer<AudioElement> element);
 	void addOutputSignal(QSharedPointer<OutputSignal> element);
-	static void setZoom(float zoom){zoom_ = zoom;};
-	//virtual QString assetType(){return "Scene";};
+	static void setZoom(float zoom);
 
-	//DataStore functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-//protected:
-//	virtual QString defaultTagName(){return "Scene";};
-//	virtual void postDeserialize();
-//	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+signals:
+	void readyForRender(int callerId);
 
 
 private:
+	Scene();
+	QMutex mutex_;
+	QSharedPointer<Engine::PictoEngine> engine_;
 	QColor backgroundColor_;
 	QList<QSharedPointer <VisualElement> > visualElements_;
 	QList<QSharedPointer <VisualElement> > unaddedVisualElements_;
@@ -66,10 +66,12 @@ private:
 	int frame_;
 	QTime elapsedTime_;
 	double firstPhosphorTime_;
+	bool readyToRender_;
 	static float zoom_;
+	static QMutex staticMutex_;
 
-	//QSharedPointer<Canvas> canvas_;
-	//QMap<QString, QSharedPointer<ControlElement> > controlElements_;
+private slots:
+	void doRender(int callerId);
 };
 
 

@@ -7,7 +7,7 @@ namespace Picto
 {
 
 PausePoint::PausePoint()
-: scene_(QSharedPointer<Scene>(new Scene)),
+: scene_(Scene::createScene()),
 hasCursor_(false)
 {
 	setMaxOptionalResults(0);
@@ -152,7 +152,7 @@ QMap<QString,QPair<QString,QString>>  PausePoint::getScripts()
 
 void PausePoint::scriptableContainerWasReinitialized()
 {
-	scene_ = QSharedPointer<Scene>(new Scene);
+	scene_ = Scene::createScene();
 	hasCursor_ = false;
 	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
 	foreach(QWeakPointer<Scriptable> scriptable,scriptables)

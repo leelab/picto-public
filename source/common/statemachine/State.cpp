@@ -29,7 +29,7 @@ namespace Picto {
 
 State::State() :
 	MachineContainer("Transition","ControlElement"),
-	scene_(QSharedPointer<Scene>(new Scene)),
+	scene_(Scene::createScene()),
 	hasCursor_(false)
 {
 	//Define script properties
@@ -260,31 +260,6 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		return true;
 	}
-	//else if(!engine->slaveMode() && (command == Engine::PictoEngine::PauseEngine))
-	//{
-	//	QSharedPointer<Picto::CommandChannel> dataChannel = engine->getDataCommandChannel();
-	//	while(command == Engine::PictoEngine::PauseEngine)
-	//	{
-	//		////waste 30 ms
-	//		QTime timer;
-	//		timer.start();
-	//		//----------  Draw the scene in paused state.  This will automatically send behavioral data to server --------------
-	//		scene_->render(engine,getAssetId());
-	//		////------------- Send Behavioral data to server --------------
-	//		//sendBehavioralData(engine);
-
-	//		command = engine->getEngineCommand();
-	//		//while(timer.elapsed()<30){
-	//		QCoreApplication::processEvents();
-	//		//}
-
-	//	}
-	//	if(command == Engine::PictoEngine::StopEngine)
-	//	{
-	//		return true;
-	//	}
-	//}
-
 	return false;
 }
 
@@ -478,7 +453,7 @@ QMap<QString,QPair<QString,QString>> State::getScripts()
 
 void State::scriptableContainerWasReinitialized()
 {
-	scene_ = QSharedPointer<Scene>(new Scene);
+	scene_ = Scene::createScene();
 	hasCursor_ = false;
 	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
 	foreach(QWeakPointer<Scriptable> scriptable,scriptables)

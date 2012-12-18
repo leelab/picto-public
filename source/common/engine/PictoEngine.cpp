@@ -90,15 +90,15 @@ void PictoEngine::addControlPanel(QSharedPointer<ControlPanelInterface> controlP
 
 }
 
-bool PictoEngine::hasVisibleRenderingTargets()
-{
-	foreach(QSharedPointer<RenderingTarget> target, renderingTargets_)
-	{
-		if(target->getVisualTarget()->isVisible())
-			return true;
-	}
-	return false;
-}
+//bool PictoEngine::hasVisibleRenderingTargets()
+//{
+//	foreach(QSharedPointer<RenderingTarget> target, renderingTargets_)
+//	{
+//		if(target->getVisualTarget()->isVisible())
+//			return true;
+//	}
+//	return false;
+//}
 
 QSharedPointer<SignalChannel> PictoEngine::getSignalChannel(QString name)
 {

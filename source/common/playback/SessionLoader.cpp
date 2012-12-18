@@ -121,12 +121,23 @@ double SessionLoader::getMaxNeuralTime()
 	return maxNeural_-runStart_;
 }
 
-double SessionLoader::runDuration()
+double SessionLoader::currRunDuration()
 {
 	QMutexLocker locker(mutex_.data());
 	if(!runEnd_)
 		return 10000000000000;
 	return runEnd_-runStart_;
+}
+
+double SessionLoader::runDuration(int index)
+{
+	QMutexLocker locker(mutex_.data());
+	runs_ = loadRunData();
+	if(index < 0 || index >= runs_.size())
+		return -1;
+	if(runs_[index].endTime_ < 0)
+		return -1;
+	return 	runs_[index].endTime_-runs_[index].startTime_;
 }
 
 bool SessionLoader::dataIsReady(double time)
@@ -136,7 +147,7 @@ bool SessionLoader::dataIsReady(double time)
 	if(
 		(	time > maxBehav_
 		||	time > maxNeural_)
-		&& time < runDuration())
+		&& time < currRunDuration())
 		return false;
 	if(
 		time < minBehav_

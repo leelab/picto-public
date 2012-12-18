@@ -634,8 +634,8 @@ void TestDataStore::TestParameterContainer()
  */
 void TestDataStore::TestScene()
 {
-	QSharedPointer<Picto::Scene> scene(new Picto::Scene());
-	QSharedPointer<Picto::Scene> sceneCopy(new Picto::Scene());
+	QSharedPointer<Picto::Scene> scene(Picto::Scene::createScene());
+	QSharedPointer<Picto::Scene> sceneCopy(Picto::Scene::createScene());
 
 	//Arrow graphic
 	QPoint start(randGen_.randInt()%400, randGen_.randInt()%400);

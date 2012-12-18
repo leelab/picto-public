@@ -39,7 +39,17 @@ TestViewer::TestViewer(QWidget *parent) :
 void TestViewer::init()
 {
 	QSharedPointer<DesignRoot> myDesignRoot(new DesignRoot());
-	myDesignRoot->resetDesignRoot(designRoot_->getDesignRootText());
+	bool res = myDesignRoot->resetDesignRoot(designRoot_->getDesignRootText());
+	if(!res)
+	{
+		DesignMessage errorMsg = myDesignRoot->getLastError();
+		QMessageBox::critical(0,errorMsg.name,errorMsg.details);
+	}
+	if(myDesignRoot->hasWarning())
+	{
+		DesignMessage warnMsg = myDesignRoot->getLastWarning();
+		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
+	}
 	QSharedPointer<Design> design = myDesignRoot->getDesign("Experiment",0);
 	experiment_ = QSharedPointer<Experiment>();
 	if(!design)

@@ -118,7 +118,7 @@ public:
 
 	QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
-	bool hasVisibleRenderingTargets();
+	//bool hasVisibleRenderingTargets();
 
 	QList<QSharedPointer<ControlPanelInterface>> getControlPanels();
 	void addControlPanel(QSharedPointer<ControlPanelInterface> controlPanel);

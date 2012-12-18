@@ -8,7 +8,12 @@
 
 namespace Picto{
 
-
+struct DesignMessage
+{
+	DesignMessage(){name="";details="";};
+	QString name;
+	QString details;
+};
 /*!	\brief The root of the Experiment/Analysis Design tree passed between different UI Viewers
  * 
  */
@@ -34,10 +39,16 @@ public:
 	bool compiles();
 	QString getDesignName(){return designName;};
 	void setDesignName(QString name){designName = name;};
+	bool hasError(){return lastError_.name != "";};
+	DesignMessage getLastError(){DesignMessage returnVal = lastError_;lastError_.name="";return returnVal;};
+	bool hasWarning(){return lastWarning_.name != "";};
+	DesignMessage getLastWarning(){DesignMessage returnVal = lastWarning_;lastWarning_.name="";return returnVal;};
 
 private:
 	QMap<QString,QVector<QSharedPointer<Design>>> designMap_;
 	QString designName;
+	DesignMessage lastError_;
+	DesignMessage lastWarning_;
 };
 };
 #endif

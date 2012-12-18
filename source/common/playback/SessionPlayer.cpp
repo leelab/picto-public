@@ -67,7 +67,7 @@ bool SessionPlayer::stepToTime(double time)
 	{
 		if(!stepToNextFrame(time))
 		{
-			if(time < sessionLoader_->runDuration())
+			if(time < sessionLoader_->currRunDuration())
 			{
 				qDebug(QString("Player: Could not step to next frame").toAscii());
 				return false;

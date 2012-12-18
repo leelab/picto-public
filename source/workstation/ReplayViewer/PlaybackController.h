@@ -14,6 +14,47 @@
 #include "PlaybackThread.h"
 using namespace Picto;
 
+struct PlaybackCommand 
+{
+	enum Type {NoCommand, Load, ChangeRun, ChangeSpeed, Play, Pause, Stop, Jump};
+	PlaybackCommand(){commandType = NoCommand;};
+	PlaybackCommand(Type cmd,QVariant val=0){commandType = cmd;commandData=val;};
+	Type commandType;
+	QVariant commandData;
+};
+
+class PlaybackControllerData
+{
+public:
+	PlaybackControllerData();
+	enum Status {None,Idle,Stopped, Running, Paused};
+	void setAsSetup();
+	bool isSetup();
+	void setCurrTime(double val);
+	double getCurrTime();
+	void setRunSpeed(double val);
+	double getRunSpeed();
+	void setRunLength(double val);
+	double getRunLength();
+	void setStatus(Status val);
+	PlaybackControllerData::Status getStatus();
+	void setNextStatus(Status val);
+	PlaybackControllerData::Status getNextStatus();
+	void pushCommand(PlaybackCommand cmd, bool toBack=true);
+	PlaybackCommand getNextCommand();
+
+private:
+	QMutex mutex_;
+	bool isSetup_;
+	double currTime_;
+	double runSpeed_;
+	double runLength_;
+	Status status_;
+	Status nextStatus_;
+	QVector<PlaybackCommand> cmds_;
+
+};
+
 /*!	\brief	This controlls experimental playback
  *
  */
@@ -21,13 +62,14 @@ class PlaybackController : public QObject
 {
 	Q_OBJECT
 public:
-	PlaybackController(QWidget *parent=0);
+	PlaybackController();
 	virtual ~PlaybackController();
 
 	QString loadSession(QString filename);
 
 	QSharedPointer<Picto::VisualTarget> getVisualTarget();
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> getOutputSignalControllers();
+	QSharedPointer<Picto::RenderingTarget> getRenderingTarget();
 	double getRunLength();
 	void aboutToQuit();
 	
@@ -42,17 +84,18 @@ signals:
 	void timeChanged(double time);
 	void loading(bool isLoading);
 	void runsUpdated(QStringList runs);
+	void statusChanged(int status);
 	void finishedPlayback();
+	void error(QString msg);
 
 public slots:
 	void setRunSpeed(double value);
 	void selectRun(int index);
-	void setCurrTime(double time);
 
 
 private:
+	bool waitingForTransition();
 	QTimer stateUpdateTimer_;
-	QMutex updateStateMutex_;
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
@@ -61,14 +104,17 @@ private:
 	QSharedPointer<PlaybackThread> playbackThread_;
 	QSharedPointer<PlaybackStateUpdater> playbackUpdater_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
+	PlaybackControllerData data_;
 	bool expRunning_;
-	double currTime_;
-
-	enum Status {Ending, Stopped, Running, Paused};
-	Status status_;
-	Status newStatus_;
 private slots:
+	void newRunLength(double length);
+	void setCurrTime(double time);
+	void setup();
+	void update();
 	void runExperiment();
+	
+
 };
+
 
 #endif

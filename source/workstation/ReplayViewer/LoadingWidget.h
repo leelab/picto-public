@@ -1,18 +1,37 @@
 #ifndef _LOADINGWIDGET_H_
 #define _LOADINGWIDGET_H_
 
-#include <QWidget>
-
-class QLabel;
-/*!	\brief	Widget for use in Replay system
- * 
+#include <QVBoxLayout>
+ 
+#include <QLabel>
+#include <QMovie>
+ 
+/**
+ * LoadingWidget
+ *
+ * Uses animation from the path
+ * to display it in a QLabel.
  */
-class LoadingWidget : public QWidget
-{
+class LoadingWidget : public QWidget {
 	Q_OBJECT
 public:
-	LoadingWidget(QWidget *parent=0);
+	LoadingWidget(QString animationPath,
+	                QWidget* parent);
+	LoadingWidget(QString animationPath,
+	                QSize size,
+	                QWidget* parent);
 	virtual ~LoadingWidget();
+ 
+public slots:
+	void start();
+	void stop();
+ 
+private:
+	QPointer<QLabel> _container;
+	QPointer<QMovie> _animation;
+ 
+	void init(const QString& animationPath,
+	          const QSize& size);
 };
 
 #endif

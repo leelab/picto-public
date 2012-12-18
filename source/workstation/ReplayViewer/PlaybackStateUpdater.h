@@ -48,6 +48,7 @@ signals:
 	void rewardSupplied(double time,int duration,int channel);
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void loading(bool isLoading);
+	void newRun(double length);
 	void finishedPlayback();
 
 private:
@@ -62,6 +63,7 @@ private:
 	double playbackSpeed_;
 	bool firstResumeFrame_;
 	bool runLoaded_;
+	double currRunLength_;
 private slots:
 	void reachedEnd();
 };

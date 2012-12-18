@@ -810,7 +810,18 @@ void RemoteViewer::enterState()
 //! \brief Called just before displaying the viewer
 void RemoteViewer::init()
 {
-	myDesignRoot_->resetDesignRoot(designRoot_->getDesignRootText());
+	bool res = myDesignRoot_->resetDesignRoot(designRoot_->getDesignRootText());
+	if(!res)
+	{
+		DesignMessage errorMsg = myDesignRoot_->getLastError();
+		QMessageBox::critical(0,errorMsg.name,errorMsg.details);
+	}
+	if(myDesignRoot_->hasWarning())
+	{
+		DesignMessage warnMsg = myDesignRoot_->getLastWarning();
+		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
+	}
+
 	QSharedPointer<Design> design = myDesignRoot_->getDesign("Experiment",0);
 	experiment_ = QSharedPointer<Experiment>();
 	if(!design)

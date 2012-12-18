@@ -505,9 +505,15 @@ bool MainWindow::loadFile(const QString filename)
 	//pictoDataText_.setModified(false);
 	if(!designRoot_->resetDesignRoot(file.readAll()))
 	{
-		//QMessageBox::critical(this, Picto::Names->workstationAppName,
-		//	"Syntax Error in File: " + filename);
+	
+		DesignMessage errorMsg = designRoot_->getLastError();
+		QMessageBox::critical(0,errorMsg.name,errorMsg.details);
 		return false;
+	}
+	if(designRoot_->hasWarning())
+	{
+		DesignMessage warnMsg = designRoot_->getLastWarning();
+		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
 	}
 
 	file.close();

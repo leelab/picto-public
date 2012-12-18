@@ -66,15 +66,19 @@ private:
 
 	QToolBar* testToolbar_;
 	bool pausedFromJump_;	//If playback is not yet paused, system should pause playback while a jump location is being selected.
+	bool jumpDownRequested_;
+	QString lastStatus_;
 
 	enum Status {Ending, Stopped, Running, Paused};
 private slots:
 
+	void playbackStatusChanged(int status);
 	void loadSession();
 	void updateTime(double time);
 	void updateRunsList(QStringList runs);
 	void setCurrentRun(int index);
 	void loading(bool load);
+	void jumpRequested(double time);
 	void userChoosingJump(bool starting);
 	//void zoomChanged(int zoom);
 

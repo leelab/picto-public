@@ -24,6 +24,7 @@ struct PICTOLIB_API PixmapVisualTarget : public VisualTarget
 struct PixmapVisualTarget : public VisualTarget
 #endif
 {
+	Q_OBJECT
 public:
 	PixmapVisualTarget(bool _bWindowed = false, int _width = 800, int _height = 600);
 	virtual ~PixmapVisualTarget();

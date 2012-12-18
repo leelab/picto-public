@@ -37,7 +37,8 @@ public:
 	double getMaxBehavTime();
 	double getMinNeuralTime();
 	double getMaxNeuralTime();
-	double runDuration();
+	double currRunDuration();
+	double runDuration(int index);
 	bool dataIsReady(double time);
 
 protected:

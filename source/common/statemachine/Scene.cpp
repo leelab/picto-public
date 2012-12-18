@@ -1,3 +1,6 @@
+#include <QMutexLocker>
+#include <QApplication>
+#include <QThread>
 #include "Scene.h"
 #include "../memleakdetect.h"
 #include "../stimuli/boxgraphic.h"
@@ -9,6 +12,103 @@ bool visualElementLessThan(const QSharedPointer<VisualElement> &e1, const QShare
 }
 
 float Scene::zoom_ = 1.0;
+QMutex Scene::staticMutex_;
+
+QSharedPointer<Scene> Scene::createScene()
+{
+	QSharedPointer<Scene> result(new Scene());
+
+	//The scene handles rendering to the UI so it's rendering system must run in the UI thread.
+	//To make sure this happens, we use the qt signal->slot system which gaurantees that if
+	//we mark this object for running the main thread, any slots that are triggered on the 
+	//object will wait for the UI thread to run.  Since we only call the private doRender()
+	//function through a signal->slot connection, we are gauranteed that rendering is in the
+	//UI thread.
+	result.data()->moveToThread(QApplication::instance()->thread());	//Moves this object to the main ui thread
+	return result;
+}
+
+//The actual rendering code that displays to the screen must run in the main UI thread
+//but we don't want to require everything else to be in that thread.  Originally Picto
+//wasn't designed with seperation of the View and Control logic into different threads
+//so we needed to allow rendering code to occur in the UI thread and Control logic to
+//occur in a separate thread without rewriting the whole system.  The method that we
+//are using for now is to simply setup the render routine, then pause the Control logic
+//thread until the render routine is called by the UI.  This happens in the function
+//below.
+void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
+{
+	//Setup rendering routine.
+	QMutexLocker locker(&mutex_);
+	engine_ = engine;
+	readyToRender_ = true;
+	
+	//Tell the render routine to run the next time the main UI thread has the processor.
+	emit readyForRender(callerId);
+
+	//Wait for the render routine to finish.
+	do
+	{
+		locker.unlock();
+		locker.relock();
+	}while(readyToRender_);
+}
+
+//! Resets the scene
+void Scene::reset()
+{
+	QMutexLocker locker(&mutex_);
+	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
+	{
+		visualElement->reset();
+	}
+
+	foreach(QSharedPointer<VisualElement> visualElement, unaddedVisualElements_)
+	{
+		visualElement->reset();
+	}
+
+	foreach(QSharedPointer<OutputSignal> outputSignal, outputSignals_)
+	{
+		outputSignal->reset();
+	}
+
+	foreach(QSharedPointer<OutputSignal> outputSignal, unaddedOutputSignals_)
+	{
+		outputSignal->reset();
+	}
+
+}
+void Scene::setBackgroundColor(QColor color)
+{
+	QMutexLocker locker(&mutex_);
+	backgroundColor_ = color;
+}
+
+void Scene::addVisualElement(QSharedPointer<VisualElement> element)
+{
+	QMutexLocker locker(&mutex_);
+	unaddedVisualElements_.push_back(element);
+}
+
+void Scene::addAudioElement(QSharedPointer<AudioElement> element)
+{
+	QMutexLocker locker(&mutex_);
+	unaddedAudioElements_.push_back(element);
+}
+
+void Scene::addOutputSignal(QSharedPointer<OutputSignal> element)
+{
+	QMutexLocker locker(&mutex_);
+	unaddedOutputSignals_.push_back(element);
+}
+
+void Scene::setZoom(float zoom)
+{
+	staticMutex_.lock();
+	zoom_ = zoom;
+	staticMutex_.unlock();
+}
 
 Scene::Scene()
 : backgroundColor_(QColor(Qt::black)),
@@ -16,16 +116,25 @@ Scene::Scene()
 {
 	elapsedTime_.start();
 	firstPhosphorTime_ = -1;
+	readyToRender_ = false;
+	connect(this,SIGNAL(readyForRender(int)),this,SLOT(doRender(int)));
 }
 
-void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
+void Scene::doRender(int callerId)
 {
+	//Scene must be called from the main thread.
+	Q_ASSERT(QThread::currentThread() == QApplication::instance()->thread());
+	staticMutex_.lock();
+	float frameZoom = zoom_;
+	staticMutex_.unlock();
+
+	QMutexLocker locker(&mutex_);
 	bool sceneRendered = false;
 	do
 	{
 		//Grab the RenderingTargets from the engine
 		QList<QSharedPointer< RenderingTarget> > renderingTargets;
-		renderingTargets = engine->getRenderingTargets();
+		renderingTargets = engine_->getRenderingTargets();
 		
 		//! \TODO "render" the audio stuff
 		//! \todo deal with the background layer color
@@ -72,12 +181,11 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 			pinId = outputSignal->getPin();
 			enabled = outputSignal->getEnabled();
 			value = outputSignal->getValue();
-			engine->enableOutputSignal(port,pinId,enabled);
-			engine->setOutputSignalValue(port,pinId,value);
+			engine_->enableOutputSignal(port,pinId,enabled);
+			engine_->setOutputSignalValue(port,pinId,value);
 		}
 
 		//Render visual elements to each rendering target
-		float frameZoom = zoom_;
 		foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
 		{
 			QSharedPointer<VisualTarget> visualTarget = renderTarget->getVisualTarget();
@@ -88,7 +196,7 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 			foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 			{
 				visualElement->updateAnimation(frame_,elapsedTime_);
-				if(visualElement->getVisibleByUser(!engine->operatorIsUser()))
+				if(visualElement->getVisibleByUser(!engine_->operatorIsUser()))
 					visualTarget->draw(visualElement->getPosition(),visualElement->getPositionOffset(),visualElement->getCompositingSurface(visualTarget->getTypeName()));
 			}
 			
@@ -109,50 +217,6 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 	//! are not going to be synchronized.  In keeping with this deficiency, the recorded first phosphor
 	//! time is simply the time that the first phosphor appeared on the first screen.  Down the line
 	//! we should synchronize multiple displays.
-	engine->reportNewFrame(firstPhosphorTime_,callerId);
-}
-
-//! Resets the scene
-void Scene::reset()
-{
-	
-	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
-	{
-		visualElement->reset();
-	}
-
-	foreach(QSharedPointer<VisualElement> visualElement, unaddedVisualElements_)
-	{
-		visualElement->reset();
-	}
-
-	foreach(QSharedPointer<OutputSignal> outputSignal, outputSignals_)
-	{
-		outputSignal->reset();
-	}
-
-	foreach(QSharedPointer<OutputSignal> outputSignal, unaddedOutputSignals_)
-	{
-		outputSignal->reset();
-	}
-
-}
-void Scene::setBackgroundColor(QColor color)
-{
-	backgroundColor_ = color;
-}
-
-void Scene::addVisualElement(QSharedPointer<VisualElement> element)
-{
-	unaddedVisualElements_.push_back(element);
-}
-
-void Scene::addAudioElement(QSharedPointer<AudioElement> element)
-{
-	unaddedAudioElements_.push_back(element);
-}
-
-void Scene::addOutputSignal(QSharedPointer<OutputSignal> element)
-{
-	unaddedOutputSignals_.push_back(element);
+	engine_->reportNewFrame(firstPhosphorTime_,callerId);
+	readyToRender_ = false;
 }

@@ -11,6 +11,7 @@
 #include <QMenu>
 #include <QFileDialog>
 #include <QSlider>
+#include <QApplication>
 
 #include "ReplayViewer.h"
 
@@ -32,7 +33,8 @@ ReplayViewer::ReplayViewer(QWidget *parent) :
 	Viewer(parent)
 {
 	//Create the Playback Controller that handles all Experiment playback
-	playbackController_ = QSharedPointer<PlaybackController>(new PlaybackController(visualTargetHost_));
+	playbackController_ = QSharedPointer<PlaybackController>(new PlaybackController());
+	connect(playbackController_.data(),SIGNAL(statusChanged(int)),this,SLOT(playbackStatusChanged(int)));
 
 	//Setup the user interface
 	setupUi();
@@ -41,7 +43,7 @@ ReplayViewer::ReplayViewer(QWidget *parent) :
 //! Called just before displaying the viewer
 void ReplayViewer::init()
 {
-	
+	jumpDownRequested_ = false;
 }
 
 //!Called just before hiding the viewer
@@ -98,9 +100,11 @@ void ReplayViewer::setupUi()
 
 	progress_ = new ProgressWidget();
 	progress_->setMaximum(1);
+	progress_->setHighlightColor(0,QColor("#88f"));
+	progress_->setHighlightColor(1,QColor("#f88"));
 	connect(playbackController_.data(),SIGNAL(timeChanged(double)),this,SLOT(updateTime(double)));
-	connect(progress_,SIGNAL(jumpToProgress(double)),playbackController_.data(),SLOT(jumpToTime(double)));
-	connect(progress_,SIGNAL(userSliderOperation(bool)),this,SLOT(userChoosingJump(bool)));
+	connect(progress_,SIGNAL(valueRequested(double)),this,SLOT(jumpRequested(double)));
+	connect(progress_,SIGNAL(userAction(bool)),this,SLOT(userChoosingJump(bool)));
 
 	status_ = new QLabel("Ready");
 	connect(playbackController_.data(),SIGNAL(loading(bool)),this,SLOT(loading(bool)));
@@ -140,6 +144,7 @@ void ReplayViewer::setupUi()
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont
 		,playbackController_->getOutputSignalControllers())
 	{
+		cont->moveToThread(QApplication::instance()->thread());
 		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
 		stimulusLayout->addWidget(outputSignalsWidgets_.back());
 	}
@@ -160,44 +165,64 @@ void ReplayViewer::setupUi()
 void ReplayViewer::play()
 {
 	qDebug()<<"Play slot";
-
-	status_->setText("Playing");
-	pauseAction_->setEnabled(true);
-	stopAction_->setEnabled(true);
-	playAction_->setEnabled(false);
-	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
-	{
-		static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
-	}
-
 	playbackController_->play();
 }
 
 void ReplayViewer::pause()
 {
 	qDebug()<<"Pause slot";
-
-	pauseAction_->setEnabled(false);
-	stopAction_->setEnabled(true);
-	playAction_->setEnabled(true);
-
 	playbackController_->pause();
 }
 
 void ReplayViewer::stop()
 {
 	qDebug()<<"Stop slot";
-
-	status_->setText("Stopped");
-	pauseAction_->setEnabled(false);
-	stopAction_->setEnabled(false);
-	playAction_->setEnabled(true);
-	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
-	{
-		static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
-	}
-
 	playbackController_->stop();
+}
+
+void ReplayViewer::playbackStatusChanged(int status)
+{
+	switch(status)
+	{
+	case PlaybackControllerData::Idle:
+			progress_->setSliderProgress(0);
+			progress_->setHighlightRange(0,0,0);
+			progress_->setHighlightRange(1,0,0);
+			pauseAction_->setEnabled(false);
+			stopAction_->setEnabled(false);
+			playAction_->setEnabled(false);
+			playbackController_->getRenderingTarget()->showSplash();
+		break;
+		case PlaybackControllerData::Stopped:
+			progress_->setSliderProgress(0);
+			progress_->setHighlightRange(0,0,0);
+			status_->setText("Stopped");
+			pauseAction_->setEnabled(true);
+			stopAction_->setEnabled(false);
+			playAction_->setEnabled(true);
+			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+			{
+				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+			}
+			playbackController_->getVisualTarget()->clear();
+			playbackController_->getRenderingTarget()->showSplash();
+		break;
+		case PlaybackControllerData::Running:
+			status_->setText("Playing");
+			pauseAction_->setEnabled(true);
+			stopAction_->setEnabled(true);
+			playAction_->setEnabled(false);
+			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+			{
+				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
+			}
+		break;
+		case PlaybackControllerData::Paused:
+			pauseAction_->setEnabled(false);
+			stopAction_->setEnabled(true);
+			playAction_->setEnabled(true);
+		break;
+	}
 }
 
 void ReplayViewer::loadSession()
@@ -226,7 +251,17 @@ void ReplayViewer::updateTime(double time)
 	if(runLength < 0)
 		runLength = 1;
 	progress_->setMaximum(runLength);
-	progress_->setProgress(time);
+	if(jumpDownRequested_)
+	{
+		if(time >= progress_->getHighlightMax(0))
+			return;	//If a downward jump was requested, stop setting progress values
+					//until the request starts being fulfilled.
+		jumpDownRequested_ = false;
+	}
+	progress_->setHighlightMax(0,time);
+	progress_->setHighlightMax(1,time+10);
+	if(time > progress_->getSliderProgress())
+		progress_->setSliderProgress(time);
 }
 
 void ReplayViewer::updateRunsList(QStringList runs)
@@ -241,12 +276,30 @@ void ReplayViewer::updateRunsList(QStringList runs)
 void ReplayViewer::setCurrentRun(int index)
 {
 	playbackController_->selectRun(index);
-	progress_->setProgress(0);
+	progress_->setSliderProgress(0);
+	progress_->setHighlightRange(0,0,0);
+	progress_->setHighlightRange(1,0,0);
+	jumpDownRequested_ = false;
 }
 
 void ReplayViewer::loading(bool load)
 {
-	status_->setText(load?"Loading":"Playing");
+	if(load)
+	{
+		lastStatus_ = status_->text();
+		status_->setText("Loading");
+	}
+	else
+	{
+		status_->setText(lastStatus_);
+	}
+}
+
+void ReplayViewer::jumpRequested(double time)
+{
+	if(time < progress_->getHighlightMax(0))
+		jumpDownRequested_ = true;
+	playbackController_->jumpToTime(time);
 }
 
 void ReplayViewer::userChoosingJump(bool starting)
@@ -261,11 +314,10 @@ void ReplayViewer::userChoosingJump(bool starting)
 	}
 	else 
 	{
-		if(pausedFromJump_)
-		{
-			pausedFromJump_ = false;
-			if(playAction_->isEnabled())
-				playAction_->trigger();
-		}
+		if(!pausedFromJump_)
+			return;
+		if(playAction_->isEnabled())
+			playAction_->trigger();
+		pausedFromJump_ = false;
 	}
 }
