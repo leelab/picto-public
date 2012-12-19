@@ -47,11 +47,13 @@ signals:
 	void framePresented(double time);
 	void rewardSupplied(double time,int duration,int channel);
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
+	void loadedTo(double maxBehavioral,double maxNeural);
 	void loading(bool isLoading);
 	void newRun(double length);
 	void finishedPlayback();
 
 private:
+	void emitLoadTimeSignals();
 	QSharedPointer<FileSessionLoader> fileSessionLoader_;
 	QSharedPointer<SessionState> sessionState_;
 	QSharedPointer<SessionPlayer> sessionPlayer_;
@@ -64,6 +66,8 @@ private:
 	bool firstResumeFrame_;
 	bool runLoaded_;
 	double currRunLength_;
+	double lastMaxBehav_;
+	double lastMaxNeural_;
 private slots:
 	void reachedEnd();
 };

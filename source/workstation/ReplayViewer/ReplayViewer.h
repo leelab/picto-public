@@ -75,6 +75,7 @@ private slots:
 	void playbackStatusChanged(int status);
 	void loadSession();
 	void updateTime(double time);
+	void updateLoadTimes(double maxBehavioral,double maxNeural);
 	void updateRunsList(QStringList runs);
 	void setCurrentRun(int index);
 	void loading(bool load);

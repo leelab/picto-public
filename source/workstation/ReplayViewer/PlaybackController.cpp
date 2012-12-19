@@ -205,6 +205,7 @@ void PlaybackController::setup()
 	//Setup playback update system
 	playbackUpdater_ = QSharedPointer<PlaybackStateUpdater>(new PlaybackStateUpdater());
 	engine_->setStateUpdater(playbackUpdater_);
+	connect(playbackUpdater_.data(),SIGNAL(loadedTo(double,double)),this,SIGNAL(loadedTo(double,double)));
 	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(runLoading(bool)));
 	connect(playbackUpdater_.data(),SIGNAL(newRun(double)),this,SIGNAL(newRunLength(double)));
 	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SLOT(stop()));

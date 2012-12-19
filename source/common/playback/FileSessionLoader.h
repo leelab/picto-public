@@ -18,7 +18,6 @@ class FileSessionLoader : public  QObject
 	Q_OBJECT
 public:
 	FileSessionLoader(QSharedPointer<SessionState> sessState);
-	virtual ~FileSessionLoader();
 
 	bool setFile(QString path);
 	QSharedPointer<DesignRoot> getDesignRoot();

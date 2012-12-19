@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QColor>
 #include <QHash>
+#include <QTime>
 
 class QSlider;
 class QLCDNumber;
@@ -44,6 +45,7 @@ private:
 	double ticksPerUnitProg_;
 	double max_;
 	QHash<int,HighlightData> highlights_;
+	QTime frameTimer_;
 private slots:
 	void sliderPressed();
 	void sliderReleased();

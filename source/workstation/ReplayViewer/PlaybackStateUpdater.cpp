@@ -12,10 +12,14 @@ PlaybackStateUpdater::PlaybackStateUpdater()
 	firstResumeFrame_ = true;
 	timerOffset_ = 0;
 	currRunLength_ = -1;
+	lastMaxBehav_ = 0;
+	lastMaxNeural_ = 0;
 }
 
 PlaybackStateUpdater::~PlaybackStateUpdater()
 {
+	if(fileSessionLoader_)
+		fileSessionLoader_->unload();
 }
 
 bool PlaybackStateUpdater::updateState()
@@ -27,6 +31,7 @@ bool PlaybackStateUpdater::updateState()
 	{
 		runToTime += playbackSpeed_*timer_.elapsed()/1000.0;
 	}
+	emitLoadTimeSignals();
 	if(!waiting_ && !fileSessionLoader_->dataIsReady(runToTime))
 	{
 		timerOffset_ = runToTime;
@@ -52,6 +57,8 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	stop();
 	sessionState_ = QSharedPointer<SessionState>(new SessionState());
+	if(fileSessionLoader_)
+		fileSessionLoader_->unload();
 	fileSessionLoader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(sessionState_));
 	sessionPlayer_ = QSharedPointer<SessionPlayer>(new SessionPlayer(sessionState_,fileSessionLoader_));
 
@@ -153,6 +160,25 @@ void PlaybackStateUpdater::jumpToTime(double time)
 		return;
 	timerOffset_ = time;
 	firstResumeFrame_ = true;
+}
+
+void PlaybackStateUpdater::emitLoadTimeSignals()
+{
+	double newMaxB = fileSessionLoader_->getMaxBehavTime();
+	double newMaxN = fileSessionLoader_->getMaxNeuralTime();
+	bool emitUpdate = false;
+	if(lastMaxBehav_ != newMaxB)
+	{
+		lastMaxBehav_ = newMaxB;
+		emitUpdate = true;
+	}
+	if(lastMaxNeural_ != newMaxN)
+	{
+		lastMaxNeural_ = newMaxN;
+		emitUpdate = true;
+	}
+	if(emitUpdate)
+		emit loadedTo(lastMaxBehav_, lastMaxNeural_);
 }
 
 void PlaybackStateUpdater::reachedEnd()

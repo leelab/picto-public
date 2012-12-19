@@ -82,6 +82,7 @@ public slots:
 
 signals:
 	void timeChanged(double time);
+	void loadedTo(double maxBehavioral,double maxNeural);
 	void loading(bool isLoading);
 	void runsUpdated(QStringList runs);
 	void statusChanged(int status);

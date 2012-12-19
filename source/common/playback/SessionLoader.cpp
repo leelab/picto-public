@@ -18,17 +18,16 @@ loaderThread_(new SessionLoaderThread())
 	backBuffer_ = 600;
 	runReset_ = false;
 	runIndex_ = -1;
+	loaded_ = false;
 
 	mutex_ = QSharedPointer<QMutex>(new QMutex(QMutex::Recursive));
 	connect(loaderThread_.data(),SIGNAL(doLoad()),this,SLOT(loadData()));
-	loaderThread_->start();
-	moveToThread(loaderThread_.data());
 }
 
 SessionLoader::~SessionLoader()
 {
-	loaderThread_->quit();
-	loaderThread_->wait();
+	QMutexLocker locker(mutex_.data());
+	Q_ASSERT_X(!loaded_,"SessionLoader::~SessionLoader","Unload() must be called before deleting a SessionLoader");
 }
 
 QStringList SessionLoader::getRunNames()
@@ -52,11 +51,21 @@ void SessionLoader::restart()
 
 bool SessionLoader::loadRun(int runIndex)
 {
+	//End loaderThread if its already running.
+	loaderThread_->quit();
+	loaderThread_->wait();
+
+	//Restart loaderThread and move this object's event loop to that thread.
+	loaderThread_->start();
+	moveToThread(loaderThread_.data());
+
+	//Reset runIndex and call restart to reinitialize variables
 	QMutexLocker locker(mutex_.data());
 	runs_ = loadRunData();
 	if(runIndex < 0 || runIndex >= runs_.size())
 		return false;
 	runIndex_ = runIndex;
+	loaded_ = true;
 	restart();
 }
 
@@ -157,9 +166,19 @@ bool SessionLoader::dataIsReady(double time)
 	return true;
 }
 
+void SessionLoader::unload()
+{
+	loaderThread_->quit();
+	loaderThread_->wait();
+	QMutexLocker locker(mutex_.data());
+	loaded_ = false;
+	locker.unlock();
+}
+
 void SessionLoader::loadData()
 {
 	QMutexLocker locker(mutex_.data());
+	Q_ASSERT(loaded_);
 	if(runReset_)
 	{
 		runStart_ = runs_[runIndex_].startTime_;

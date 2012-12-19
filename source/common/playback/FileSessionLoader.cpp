@@ -13,10 +13,6 @@ SessionLoader(sessState)
 {
 }
 
-FileSessionLoader::~FileSessionLoader()
-{
-}
-
 bool FileSessionLoader::setFile(QString path)
 {
 	//Load Sqlite Database

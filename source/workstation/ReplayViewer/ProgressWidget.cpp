@@ -3,6 +3,8 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QtAlgorithms>
+#include <QStylePainter>
+#include <QStyleOptionSlider>
 #include "ProgressWidget.h"
 #include "../../common/memleakdetect.h"
 
@@ -11,6 +13,7 @@
 #define LCDPRECISION 3
 #define HIGHLIGHTSATURATIONRANGE 40
 #define HIGHLIGHTBORDERWIDTH 0.005
+#define REFRESHINTERVALMS 30
 ProgressWidget::ProgressWidget(QWidget *parent) :
 QFrame(parent)
 {
@@ -70,6 +73,7 @@ QFrame(parent)
 							border-radius: 4px; \
 							}"
 					);
+	frameTimer_.start();
 }
 
 ProgressWidget::~ProgressWidget()
@@ -167,6 +171,13 @@ void ProgressWidget::verifyHighlightIndex(int index)
 
 void ProgressWidget::updateHighlights()
 {
+	//To update the highlight values we just change the widget stylesheet.  This takes a lot of processor
+	//time but is by far the easiest way to do this.  In order to avoid causing UI lag when this function
+	//is called a lot, we just make sure that we only reset the stylesheet one per REFRESHINTERVALMS
+	//which should be on the order of 30ms.
+	if(frameTimer_.elapsed() < REFRESHINTERVALMS)
+		return;
+	frameTimer_.restart();
 	//Use styles to create highlight bar in widget
 	QString styleUpdate = QString(	"QSlider::groove:horizontal { \
 										background: #fff, stop: 1 #fff); \
@@ -218,32 +229,22 @@ void ProgressWidget::updateHighlights()
 		QString stopStr = "";
 		for(int i=0;i<pos.size();i++)
 		{
-			stopStr.append(QString("stop: %1 %2, ")
+			stopStr.append(QString("stop:%1 %2,")
 					.arg(pos[i])
 					.arg(colors[i]));
 		}
-		//Build Style string
-		styleUpdate = QString("	QSlider::groove:horizontal { \
-									background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, \
-									stop: 0 #66e, stop: 1 #bbf ); \
-									background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: .5, \
-									stop: 0 #fff, %1 stop: 1 #fff );\
-								}").arg(stopStr);
-
-		//double stopPoint1 = (double(highlightPos)/double(maxTicks))-HIGHLIGHTBORDERWIDTH;
-		//if(stopPoint1 > 1-HIGHLIGHTBORDERWIDTH)
-		//	stopPoint1 = 1-HIGHLIGHTBORDERWIDTH;
-		//double stopPoint2 = stopPoint1+HIGHLIGHTBORDERWIDTH;
-		//styleUpdate = QString(	"QSlider::groove:horizontal { \
-		//									background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, \
-		//									stop: 0 #66e, stop: 1 #bbf); \
-		//									background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: .5, \
-		//									stop: 0 #bbf, stop: %1 #55f, %2 stop: 1 #fff); \
-		//						}").arg(stopPoint1).arg(stopPoint2 >= 1.0?"":QString("stop: %1 #fff,").arg(stopPoint2));
+		styleUpdate = QString("QSlider::groove:horizontal{background:qlineargradient(x1:0,y1:0.5,x2:1,y2:.5,stop:0 #fff,%1stop:1 #fff);}").arg(stopStr);
 	}
 
 	//Apply style to widget
 	progSlider_->setStyleSheet(styleUpdate);
+	//QStylePainter painter(this);
+	//QStyleOptionSlider sliderOp;
+	//sliderOp.maximum_ = progressToSlider(max_);
+	//sliderOp.maximum_ = progressToSlider(max_);
+	//sliderOp.singleStep(1);
+	//sliderOp.subControls
+	//painter.drawComplexControl(QStyle::CC_Slider,
 }
 
 int ProgressWidget::progressToSlider(double progress)

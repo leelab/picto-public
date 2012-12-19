@@ -103,6 +103,7 @@ void ReplayViewer::setupUi()
 	progress_->setHighlightColor(0,QColor("#88f"));
 	progress_->setHighlightColor(1,QColor("#f88"));
 	connect(playbackController_.data(),SIGNAL(timeChanged(double)),this,SLOT(updateTime(double)));
+	connect(playbackController_.data(),SIGNAL(loadedTo(double,double)),this,SLOT(updateLoadTimes(double,double)));
 	connect(progress_,SIGNAL(valueRequested(double)),this,SLOT(jumpRequested(double)));
 	connect(progress_,SIGNAL(userAction(bool)),this,SLOT(userChoosingJump(bool)));
 
@@ -196,6 +197,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 		case PlaybackControllerData::Stopped:
 			progress_->setSliderProgress(0);
 			progress_->setHighlightRange(0,0,0);
+			progress_->setHighlightRange(1,0,0);
 			status_->setText("Stopped");
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(false);
@@ -259,9 +261,13 @@ void ReplayViewer::updateTime(double time)
 		jumpDownRequested_ = false;
 	}
 	progress_->setHighlightMax(0,time);
-	progress_->setHighlightMax(1,time+10);
 	if(time > progress_->getSliderProgress())
 		progress_->setSliderProgress(time);
+}
+
+void ReplayViewer::updateLoadTimes(double maxBehavioral,double)
+{
+	progress_->setHighlightMax(1,maxBehavioral);	//For now just deal with behavioral time
 }
 
 void ReplayViewer::updateRunsList(QStringList runs)

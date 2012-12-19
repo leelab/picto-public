@@ -21,7 +21,7 @@ class SessionLoader : public  QObject
 	Q_OBJECT
 public:
 	SessionLoader(QSharedPointer<SessionState> sessState);
-	virtual ~SessionLoader();
+	~SessionLoader();
 
 	QStringList getRunNames();
 	void restart();
@@ -40,6 +40,7 @@ public:
 	double currRunDuration();
 	double runDuration(int index);
 	bool dataIsReady(double time);
+	void unload();
 
 protected:
 
@@ -89,6 +90,7 @@ private:
 	QSharedPointer<QMutex> mutex_;
 	QTime speedTimer_;
 	QTime loadTimer_;
+	bool loaded_;
 	QSharedPointer<SessionLoaderThread> loaderThread_;
 };
 
