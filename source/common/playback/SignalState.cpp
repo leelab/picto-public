@@ -2,51 +2,153 @@
 #include "PlaybackData.h"
 using namespace Picto;
 
-SignalState::SignalState(QString name,QStringList subChanNames) :
+SignalState::SignalState(QString name,QString tableName,QStringList subChanNames,double sampPeriod) :
 name_(name),
+tableName_(tableName),
 subChanNames_(subChanNames),
-numSubChans_(subChanNames_.size())
+numSubChans_(subChanNames_.size()),
+sampPeriod_(sampPeriod)
 {
 	Q_ASSERT(numSubChans_);
 }
 
-bool SignalState::setSignal(double time,qulonglong dataId,double sampPeriod,QByteArray dataArray)
+void SignalState::setDatabase(QSqlDatabase session)
 {
-	int numEntries = dataArray.size()/sizeof(float);
-	float* floatArray = reinterpret_cast<float*>(dataArray.data());
-	QVector<float> vals(numSubChans_);
-	int subChanInd;
-	double currTime;
-	for(int i=0;i<numEntries;i++)
+	runStart_ = runEnd_ = curr_ = -1;
+	session_ = session;
+	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
+	query_->exec(QString("SELECT COUNT(*) FROM %1").arg(tableName_));
+	if(!query_->exec() || !query_->next())
 	{
-		subChanInd = i%numSubChans_;
-		vals[subChanInd] = floatArray[i];
-		if(subChanInd == numSubChans_-1)
+		Q_ASSERT(false);
+		return;
+	}
+	data_.resize(query_->value(0).toInt());
+
+	query_->exec(QString("SELECT f.time,s.offsettime,s.data "
+			"FROM %1 s,frames f WHERE f.dataid=s.frameid ORDER BY s.dataid").arg(tableName_));
+
+	if(!query_->exec())
+	{
+		Q_ASSERT(false);
+		return;
+	}
+	int assetId;
+	PlaybackIndex index;
+	QString val;
+	int arrayIndex = 0;
+	QByteArray byteArray;
+	int numEntries;
+	float* floatArray;
+	while(query_->next())
+	{
+		//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
+		data_[arrayIndex] = PlaybackSignalData(query_->value(0).toDouble()+query_->value(1).toDouble());
+		byteArray = query_->value(2).toByteArray();
+		numEntries = byteArray.size()/sizeof(float);
+		floatArray = reinterpret_cast<float*>(byteArray.data());
+		data_[arrayIndex].vals_.resize(numEntries);
+		for(int i=0;i<numEntries;i++)
 		{
-			currTime = time + sampPeriod*i/numSubChans_;
-			setValue(QSharedPointer<IndexedData>(new PlaybackData<PlaybackSignalData>(PlaybackSignalData(vals),currTime)));
+			data_[arrayIndex].vals_[i] = floatArray[i];
 		}
+		arrayIndex++;
 	}
-	return true;
+	Q_ASSERT(data_.size() == arrayIndex);
 }
 
-void SignalState::triggerValueChange(bool reverse,bool last)
+void SignalState::startRun(double runStartTime,double runEndTime)
 {
-	if(!reverse || last)
+	Q_ASSERT(session_.isOpen());
+	runStart_ = runStartTime;
+	runEnd_ = runEndTime;
+	//Move curr_ to first property in run
+	curr_ = -1;
+	currSub_ = -1;
+	PlaybackIndex nextIndex = getNextIndex();
+	while(nextIndex.isValid() && nextIndex.time() < 0)
 	{
-		QSharedPointer<PlaybackData<PlaybackSignalData>> currVal = getCurrentValue().staticCast<PlaybackData<PlaybackSignalData>>();
-		if(currVal)
-			emit signalChanged(name_,subChanNames_,currVal->data_.vals_);
-		else	//If this is the case, we've moved back before the first value
-			emit signalChanged(name_,subChanNames_,QVector<float>());
+		goToNext();
+		nextIndex = getNextIndex();
 	}
 }
 
-void SignalState::requestMoreData(PlaybackIndex currLast,PlaybackIndex to)
+PlaybackIndex SignalState::getCurrentIndex()
 {
-	emit needsData(currLast,to);
+	Q_ASSERT(runStart_ >= 0);
+	if(currSub_ < 0)
+		return PlaybackIndex();
+	Q_ASSERT(curr_ >= 0);
+	return globalToRunIndex(PlaybackIndex::minForTime(data_[curr_].time_+double(currSub_)*sampPeriod_));
 }
-void SignalState::requestNextData(PlaybackIndex currLast,bool backward)
+
+PlaybackIndex SignalState::getNextIndex(double lookForwardTime)
 {
-	emit needsNextData(currLast,backward);
+	PlaybackIndex returnVal = getNextIndex();
+	if(returnVal.time() > lookForwardTime)
+		return PlaybackIndex();
+	return returnVal;
+}
+
+void SignalState::moveToIndex(PlaybackIndex index)
+{
+	Q_ASSERT(runStart_ >= 0);
+	Q_ASSERT(index >= getCurrentIndex());
+	PlaybackIndex nextIndex = getNextIndex();
+	QVector<float> sigVec(numSubChans_);
+	while(nextIndex.isValid() && nextIndex <= index)
+	{
+		goToNext();
+		for(int i=0;i<numSubChans_;i++)
+		{
+			sigVec[i]=data_[curr_].vals_[currSub_*numSubChans_+i];
+		}
+		emit signalChanged(name_,subChanNames_,sigVec);
+		nextIndex = getNextIndex();
+	}
+}
+
+void SignalState::goToNext()
+{
+	if(curr_ < 0 && data_.size())
+	{
+		curr_ = 0;
+		currSub_ = -1;
+	}
+	if(currSub_ >= data_[curr_].vals_.size()/numSubChans_-1)
+	{
+		if(curr_ >= data_.size()-1)
+			return;
+		curr_++;
+		currSub_ = -1;
+	}
+	currSub_++;
+}
+
+PlaybackIndex SignalState::getNextIndex()
+{
+	Q_ASSERT(runStart_ >= 0);
+	int nextCurr = curr_;
+	int nextCurrSub = currSub_;
+	if(nextCurr < 0 && data_.size())
+	{
+		nextCurr = 0;
+		nextCurrSub = -1;
+	}
+	if(nextCurrSub >= data_[nextCurr].vals_.size()/numSubChans_-1)
+	{
+		if(nextCurr >= data_.size()-1)
+			return PlaybackIndex();
+		nextCurr++;
+		nextCurrSub = -1;
+	}
+	nextCurrSub++;
+	return globalToRunIndex(PlaybackIndex::minForTime(data_[nextCurr].time_+double(nextCurrSub)*sampPeriod_));
+}
+
+PlaybackIndex SignalState::globalToRunIndex(PlaybackIndex index)
+{
+	PlaybackIndex returnVal = index;
+	returnVal.time() -= runStart_;
+	return returnVal;
 }

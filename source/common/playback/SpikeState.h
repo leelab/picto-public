@@ -1,27 +1,26 @@
 #ifndef _SPIKESTATE_H_
 #define _SPIKESTATE_H_
 #include <QVector>
-#include "EventState.h"
+#include "DataState.h"
 #include "PlaybackInterfaces.h"
 
 namespace Picto {
 struct PlaybackSpikeData;
 /*! \brief Stores Transition PlaybackData values for use in Playback system.
  */
-class SpikeState :public SpikeReader, public EventState
+class SpikeState :public SpikeReader, public DataState
 {
 	Q_OBJECT
 public:
-	bool setSpike(qulonglong dataid,double spikeTime,int channel,int unit,QByteArray waveform);
+	virtual void setDatabase(QSqlDatabase session);
+	virtual void startRun(double runStartTime,double runEndTime = -1);
+	virtual PlaybackIndex getCurrentIndex();
+	virtual PlaybackIndex getNextIndex(double lookForwardTime);
+	virtual void moveToIndex(PlaybackIndex index);
+
 signals:
 	void spikeEvent(int channel, int unit, QVector<float> waveform);
-	void needsData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsNextData(PlaybackIndex currLast,bool backward);
-
 protected:
-	virtual void triggerValueChange(bool reverse,bool last);
-	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
-	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 };
 
 struct PlaybackSpikeData

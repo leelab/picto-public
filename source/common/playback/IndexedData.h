@@ -20,6 +20,7 @@ struct PlaybackIndex: public QPair<double,qulonglong>
  */
 struct IndexedData
 {
+	IndexedData(){};
 	IndexedData(PlaybackIndex index){index_ = index;};
 	virtual ~IndexedData(){};
 	PlaybackIndex index_;

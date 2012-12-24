@@ -4,7 +4,7 @@
 #include <QHash>
 
 #include "SessionState.h"
-#include "SessionLoader.h"
+#include "FileSessionLoader.h"
 
 namespace Picto {
 /*! \brief Component of Picto Playback system that plays back sessions.
@@ -17,7 +17,7 @@ class SessionPlayer : public  QObject
 {
 	Q_OBJECT
 public:
-	SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPointer<SessionLoader> sessLoader);
+	SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPointer<FileSessionLoader> sessLoader);
 	virtual ~SessionPlayer();
 
 	void restart();
@@ -39,7 +39,7 @@ private:
 	bool step(double lookForward);
 	void markLoading(bool load);
 	QSharedPointer<SessionState> sessionState_;
-	QSharedPointer<SessionLoader> sessionLoader_;
+	QSharedPointer<FileSessionLoader> sessionLoader_;
 	PlaybackIndex lastIndex_;
 	PlaybackIndex nextFrame_;
 	bool processing_;

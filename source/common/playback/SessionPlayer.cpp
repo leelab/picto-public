@@ -1,7 +1,7 @@
 #include "SessionPlayer.h"
 using namespace Picto;
 
-SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPointer<SessionLoader> sessLoader)
+SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPointer<FileSessionLoader> sessLoader)
 :
 sessionState_(sessState),
 sessionLoader_(sessLoader),
@@ -20,7 +20,7 @@ SessionPlayer::~SessionPlayer()
 void SessionPlayer::restart()
 {
 	markLoading(true);
-	sessionLoader_->restart();
+	//sessionLoader_->restart();
 	lastIndex_ = PlaybackIndex::minForTime(0);
 	nextFrame_ = PlaybackIndex();
 	reachedEnd_ = false;
@@ -50,17 +50,17 @@ bool SessionPlayer::stepToTime(double time)
 		markLoading(false);
 		return true;
 	}
-	if(!sessionLoader_->setCurrentTime(time))
-	{
-		qDebug(QString("Player: Failed to set time to Loader").toAscii());
-		return false;
-	}
-	if(!sessionLoader_->dataIsReady(time))
-	{
-		markLoading(true);
-		qDebug(QString("Player: Loader not ready for time:%1").arg(time).toAscii());
-		return false;
-	}
+	//if(!sessionLoader_->setCurrentTime(time))
+	//{
+	//	qDebug(QString("Player: Failed to set time to Loader").toAscii());
+	//	return false;
+	//}
+	//if(!sessionLoader_->dataIsReady(time))
+	//{
+	//	markLoading(true);
+	//	qDebug(QString("Player: Loader not ready for time:%1").arg(time).toAscii());
+	//	return false;
+	//}
 
 	//Step to the input time or the end of the run. Whichever comes first.
 	do
@@ -77,7 +77,7 @@ bool SessionPlayer::stepToTime(double time)
 			break;
 		}
 	}while(time > nextFrame_.time());
-	sessionLoader_->setProcessedTime(getTime());
+	//sessionLoader_->setProcessedTime(getTime());
 	qDebug(QString("Player: Step To Time reached time: %1").arg(getTime()).toAscii());
 	markLoading(false);
 	return true;
@@ -133,11 +133,11 @@ bool SessionPlayer::step(double lookForward)
 			QList<QSharedPointer<DataState>> timeIndexedStates = sessionState_->getStatesIndexedByTime();
 			foreach(QSharedPointer<DataState> dataState,timeIndexedStates)
 			{
-				dataState->setCurrentIndex(timeIndex);
+				dataState->moveToIndex(timeIndex);
 			}
 		}
 	}
-	stateToTrigger->setCurrentIndex(stateToTrigger->getNextIndex(nextFrameId.time()));
+	stateToTrigger->moveToIndex(stateToTrigger->getNextIndex(nextFrameId.time()));
 	lastIndex_ = stateToTrigger->getCurrentIndex();
 	processing_ = false;
 	return true;

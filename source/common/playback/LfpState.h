@@ -1,26 +1,29 @@
 #ifndef _LFPSTATE_H_
 #define _LFPSTATE_H_
-#include "ValueState.h"
+#include "DataState.h"
 #include "PlaybackInterfaces.h"
 
 namespace Picto {
 /*! \brief Stores Transition PlaybackData values for use in Playback system.
  */
-class LfpState : public LfpReader, public ValueState
+class LfpState : public LfpReader, public DataState
 {
 	Q_OBJECT
 public:
 	LfpState(int channel,double sampPeriod);
-	bool setLFP(qulonglong dataid,double startTime,int channel,QByteArray dataArray);
+	virtual void setDatabase(QSqlDatabase session);
+	virtual void startRun(double runStartTime,double runEndTime = -1);
+	virtual PlaybackIndex getCurrentIndex();
+	virtual PlaybackIndex getNextIndex(double lookForwardTime);
+	virtual void moveToIndex(PlaybackIndex index);
+
 signals:
 	void lfpChanged(int channel,double value);
-	void needsData(PlaybackIndex currLast,PlaybackIndex to);
-	void needsNextData(PlaybackIndex currLast,bool backward);
-
-protected:
-	virtual void triggerValueChange(bool reverse,bool last);
-	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
-	virtual void requestNextData(PlaybackIndex currLast,bool backward);
+//
+//protected:
+//	virtual void triggerValueChange(bool reverse,bool last);
+//	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
+//	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 private:
 	int channel_;
 	int sampPeriod_;

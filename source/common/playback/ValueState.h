@@ -6,10 +6,10 @@ namespace Picto {
 /*! \brief Extends Data State for Data sources that have a persistant value.
  *	See also Event State
  */
-class ValueState : public DataState
+class ValueState : public AutoDataState
 {
 public:
-	ValueState():DataState(false){};
+	ValueState():AutoDataState(){};
 	virtual ~ValueState(){};
 };
 

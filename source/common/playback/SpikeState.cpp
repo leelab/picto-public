@@ -2,33 +2,26 @@
 #include "PlaybackData.h"
 using namespace Picto;
 
-bool SpikeState::setSpike(qulonglong dataid,double spikeTime,int channel,int unit,QByteArray waveform)
+
+void SpikeState::setDatabase(QSqlDatabase session)
 {
-	int numEntries = waveform.size()/sizeof(float);
-	float* floatArray = reinterpret_cast<float*>(waveform.data());
-	QVector<float> waveVec(numEntries);
-	for(int i=0;i<numEntries;i++)
-	{
-		waveVec[i] = floatArray[i];
-	}
-	setValue(QSharedPointer<IndexedData>(new PlaybackData<PlaybackSpikeData>(PlaybackSpikeData(channel,unit,waveVec),spikeTime)));
-	return true;
+
 }
 
-void SpikeState::triggerValueChange(bool reverse,bool last)
+void SpikeState::startRun(double runStartTime,double runEndTime)
 {
-	if(!reverse)
-	{
-		PlaybackSpikeData* data = &getCurrentValue().staticCast<PlaybackData<PlaybackSpikeData>>()->data_;
-		emit spikeEvent(data->channel_,data->unit_,data->waveform_);
-	}
 }
 
-void SpikeState::requestMoreData(PlaybackIndex currLast,PlaybackIndex to)
+PlaybackIndex SpikeState::getCurrentIndex()
 {
-	emit needsData(currLast,to);
+	return PlaybackIndex();
 }
-void SpikeState::requestNextData(PlaybackIndex currLast,bool backward)
+
+PlaybackIndex SpikeState::getNextIndex(double lookForwardTime)
 {
-	emit needsNextData(currLast,backward);
+	return PlaybackIndex();
+}
+
+void SpikeState::moveToIndex(PlaybackIndex index)
+{
 }

@@ -7,10 +7,10 @@ namespace Picto {
  *	having no persistant values.
  *	See also Value State
  */
-class EventState : public DataState
+class EventState : public AutoDataState
 {
 public:
-	EventState():DataState(false){};
+	EventState():AutoDataState(){};
 	virtual ~EventState(){};
 };
 

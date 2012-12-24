@@ -18,8 +18,8 @@ PlaybackStateUpdater::PlaybackStateUpdater()
 
 PlaybackStateUpdater::~PlaybackStateUpdater()
 {
-	if(fileSessionLoader_)
-		fileSessionLoader_->unload();
+	//if(fileSessionLoader_)
+	//	fileSessionLoader_->unload();
 }
 
 bool PlaybackStateUpdater::updateState()
@@ -27,23 +27,23 @@ bool PlaybackStateUpdater::updateState()
 	if(!designRoot_)
 		return false;
 	double runToTime = timerOffset_;
-	if(!paused_ && !waiting_ && !firstResumeFrame_)
+	if(!paused_ /*&& !waiting_*/ && !firstResumeFrame_)
 	{
 		runToTime += playbackSpeed_*timer_.elapsed()/1000.0;
 	}
 	emitLoadTimeSignals();
-	if(!waiting_ && !fileSessionLoader_->dataIsReady(runToTime))
-	{
-		timerOffset_ = runToTime;
-		waiting_ = true;
-	}
+	//if(!waiting_ /*&& !fileSessionLoader_->dataIsReady(runToTime)*/)
+	//{
+	//	timerOffset_ = runToTime;
+	//	waiting_ = true;
+	//}
 	if(sessionPlayer_->stepToTime(runToTime))
 	{
-		if(waiting_)
+		/*if(waiting_)
 		{
 			firstResumeFrame_ = true;
 			waiting_ = false;
-		}
+		}*/
 		if(!paused_ && firstResumeFrame_)
 		{
 			timer_.restart();
@@ -57,8 +57,8 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	stop();
 	sessionState_ = QSharedPointer<SessionState>(new SessionState());
-	if(fileSessionLoader_)
-		fileSessionLoader_->unload();
+	//if(fileSessionLoader_)
+	//	fileSessionLoader_->unload();
 	fileSessionLoader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(sessionState_));
 	sessionPlayer_ = QSharedPointer<SessionPlayer>(new SessionPlayer(sessionState_,fileSessionLoader_));
 
@@ -164,21 +164,21 @@ void PlaybackStateUpdater::jumpToTime(double time)
 
 void PlaybackStateUpdater::emitLoadTimeSignals()
 {
-	double newMaxB = fileSessionLoader_->getMaxBehavTime();
-	double newMaxN = fileSessionLoader_->getMaxNeuralTime();
-	bool emitUpdate = false;
-	if(lastMaxBehav_ != newMaxB)
-	{
-		lastMaxBehav_ = newMaxB;
-		emitUpdate = true;
-	}
-	if(lastMaxNeural_ != newMaxN)
-	{
-		lastMaxNeural_ = newMaxN;
-		emitUpdate = true;
-	}
-	if(emitUpdate)
-		emit loadedTo(lastMaxBehav_, lastMaxNeural_);
+	//double newMaxB = fileSessionLoader_->getMaxBehavTime();
+	//double newMaxN = fileSessionLoader_->getMaxNeuralTime();
+	//bool emitUpdate = false;
+	//if(lastMaxBehav_ != newMaxB)
+	//{
+	//	lastMaxBehav_ = newMaxB;
+	//	emitUpdate = true;
+	//}
+	//if(lastMaxNeural_ != newMaxN)
+	//{
+	//	lastMaxNeural_ = newMaxN;
+	//	emitUpdate = true;
+	//}
+	//if(emitUpdate)
+	//	emit loadedTo(lastMaxBehav_, lastMaxNeural_);
 }
 
 void PlaybackStateUpdater::reachedEnd()

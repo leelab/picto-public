@@ -8,8 +8,9 @@
 #include "SessionVersionInterfacer.h"
 using namespace Picto;
 
-FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState) :
-SessionLoader(sessState)
+FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState)
+: sessionState_(sessState),
+runIndex_(-1)
 {
 }
 
@@ -31,74 +32,77 @@ bool FileSessionLoader::setFile(QString path)
 		return false;
 	}
 
-	//We succesfully opened the database.  Move it to cache.
-	QString cacheDatabaseName = connectionName+"_cache";
-	QSqlDatabase cacheDb = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
-	cacheDb.setDatabaseName(":memory:");
-	if(!cacheDb.open())
-	{
-		qDebug("Error: Could not open cache database.");
-		return false;
-	}
-	QSqlQuery Q(cacheDb);
-	//Set the temp_store setting: 
-	//The temp_store values specifies the type of database back-end to use for temporary files. 
-	//The choices are DEFAULT (0), FILE (1), and MEMORY (2). The use of a memory database for 
-	//temporary tables can produce signifigant savings. DEFAULT specifies the compiled-in default, 
-	//which is FILE unless the source has been modified.
-	if(!Q.exec("PRAGMA temp_store = 2"))
-	{
-		qDebug("Error: Could not set the Sqlite database to use RAM for temporary tables.");
-		return false;
-	}
+	////We succesfully opened the database.  Move it to cache.
+	//QString cacheDatabaseName = connectionName+"_cache";
+	//QSqlDatabase cacheDb = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
+	//cacheDb.setDatabaseName(":memory:");
+	//if(!cacheDb.open())
+	//{
+	//	qDebug("Error: Could not open cache database.");
+	//	return false;
+	//}
+	//QSqlQuery Q(cacheDb);
+	////Set the temp_store setting: 
+	////The temp_store values specifies the type of database back-end to use for temporary files. 
+	////The choices are DEFAULT (0), FILE (1), and MEMORY (2). The use of a memory database for 
+	////temporary tables produces signifigant savings. DEFAULT specifies the compiled-in default, 
+	////which is FILE unless the source has been modified.
+	//if(!Q.exec("PRAGMA temp_store = 2"))
+	//{
+	//	qDebug("Error: Could not set the Sqlite database to use RAM for temporary tables.");
+	//	return false;
+	//}
 
-	Q.prepare("ATTACH DATABASE :databaseName AS diskdb");
-	Q.bindValue(":databaseName", newSession.databaseName());
-	if(!Q.exec())
-	{
-		qDebug("Error: Could not attach cache database and file database.");
-		return false;
-	}
-	cacheDb.transaction();
-	foreach(QString table,newSession.tables())
-	{
-		Q.prepare(QString("CREATE TABLE %1 AS SELECT * FROM %2")
-			.arg(table)
-			.arg(QString("diskdb.")+table) );
-		if(!Q.exec())
-		{
-			qDebug("Error: Could not create table: " + table.toAscii() + " in cache database.");
-			return false;
-		}
-		//Q.prepare(QString("INSERT INTO %1 SELECT * FROM %2")
-		//	.arg(table)
-		//	.arg(QString("diskdb.")+table) );		
-		//if(!Q.exec())
-		//{
-		//	qDebug("Error: Could not load data into table: " + table .toAscii() + " in cache database.");
-		//	return false;
-		//}
-	}
-	if(!cacheDb.commit())
-	{
-		qDebug("Error: Could not load data into cache database.");
-		return false;
-	}
-	if(!Q.exec("DETACH DATABASE diskdb"))
-	{
-		qDebug("Error: Could not detach cache database and file database.");
-		return false;
-	}
-	newSession.close();
-	QSqlDatabase::removeDatabase(connectionName);
-
-	session_ = cacheDb;
+	//Q.prepare("ATTACH DATABASE :databaseName AS diskdb");
+	//Q.bindValue(":databaseName", newSession.databaseName());
+	//if(!Q.exec())
+	//{
+	//	qDebug("Error: Could not attach cache database and file database.");
+	//	return false;
+	//}
+	//cacheDb.transaction();
+	//foreach(QString table,newSession.tables())
+	//{
+	//	Q.prepare(QString("CREATE TABLE %1 AS SELECT * FROM %2")
+	//		.arg(table)
+	//		.arg(QString("diskdb.")+table) );
+	//	if(!Q.exec())
+	//	{
+	//		qDebug("Error: Could not create table: " + table.toAscii() + " in cache database.");
+	//		return false;
+	//	}
+	//	//Q.prepare(QString("INSERT INTO %1 SELECT * FROM %2")
+	//	//	.arg(table)
+	//	//	.arg(QString("diskdb.")+table) );		
+	//	//if(!Q.exec())
+	//	//{
+	//	//	qDebug("Error: Could not load data into table: " + table .toAscii() + " in cache database.");
+	//	//	return false;
+	//	//}
+	//}
+	//if(!cacheDb.commit())
+	//{
+	//	qDebug("Error: Could not load data into cache database.");
+	//	return false;
+	//}
+	//if(!Q.exec("DETACH DATABASE diskdb"))
+	//{
+	//	qDebug("Error: Could not detach cache database and file database.");
+	//	return false;
+	//}
+	//newSession.close();
+	//QSqlDatabase::removeDatabase(connectionName);
+	//
+	//session_ = cacheDb;
+	session_ = newSession;
 
 	//Intialize Object Data
 	if(!getSignalInfo())
 		return false;
 	if(!loadDesignDefinition())
 		return false;
+	sessionState_->setSessionData(session_,obsoleteAssetIds_);
+	runIndex_ = -1;
 	return true;
 }
 
@@ -107,7 +111,43 @@ QSharedPointer<DesignRoot> FileSessionLoader::getDesignRoot()
 	return designRoot_;
 }
 
-QVector<SessionLoader::RunData> FileSessionLoader::loadRunData()
+QStringList FileSessionLoader::getRunNames()
+{
+	QStringList returnVal;
+	QVector<FileSessionLoader::RunData> runs = loadRunData();
+	foreach(RunData runData,runs)
+	{
+		returnVal.append(runData.name_);
+	}
+	return returnVal;
+}
+
+bool FileSessionLoader::loadRun(int index)
+{
+	if(runIndex_ == index)
+		return true;
+	QVector<FileSessionLoader::RunData> runs = loadRunData();
+	if(index < 0 || index >= runs.size())
+		return false;
+	runIndex_ = index;
+	sessionState_->startNewRun(runs[index].startTime_,runs[index].endTime_);
+	return true;
+}
+
+double FileSessionLoader::runDuration(int index)
+{
+	QVector<FileSessionLoader::RunData> runs = loadRunData();
+	if(index < 0 || index >= runs.size())
+		return 0;
+	return runs[index].endTime_-runs[index].startTime_;
+}
+
+double FileSessionLoader::currRunDuration()
+{
+	return runDuration(runIndex_);
+}
+
+QVector<FileSessionLoader::RunData> FileSessionLoader::loadRunData()
 {
 	QVector<RunData> runs;
 	QSqlQuery query(session_);
@@ -181,136 +221,137 @@ bool FileSessionLoader::loadInitData(double upTo)
 
 double FileSessionLoader::loadBehavData(double after,double to,double subtractTime)
 {
-	double returnVal = after;
-	if(!session_.isOpen())
-		return returnVal;
-	if(after == to)
-		return returnVal;
-	
-	double time = -1;
-	QSqlQuery query(session_);
-	query.setForwardOnly(true);
-	bool success;
-	int assetId;
-	//Property:
-	//Currently, we don't select properties with no parent (ie. Runtime parameters).
-	query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, propertylookup pl,frames f "
-		"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid AND f.time > :after "
-		"AND f.time <= :to ORDER BY p.dataid");
-	query.bindValue(":after",after);
-	query.bindValue(":to",to);
-	success = query.exec();
-	if(!success)
-	{
-		Q_ASSERT(false);
-		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-		return after;
-	}
-	while(query.next()){
-		assetId = query.value(2).toInt();
-		if(obsoleteAssetIds_.contains(assetId))
-			continue;
-		time = query.value(0).toDouble();
-		sessionState_->setPropertyValue(time-subtractTime,query.value(1).toLongLong(),assetId,query.value(3).toString());
-		if(time > returnVal)
-			returnVal = time;
-	}
-	query.finish();
-	//eTransition:
-	query.prepare("SELECT f.time,t.dataid,t.transid FROM transitions t, frames f "
-		"WHERE f.dataid=t.frameid AND f.time > :after "
-		"AND f.time <= :to ORDER BY t.dataid");
-	query.bindValue(":after",after);
-	query.bindValue(":to",to);
-	success = query.exec();
-	if(!success)
-	{
-		Q_ASSERT(false);
-		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-		return after;
-	}
-	while(query.next()){
-		assetId = query.value(2).toInt();
-		if(obsoleteAssetIds_.contains(assetId))
-			continue;
-		time = query.value(0).toDouble();
-		sessionState_->setTransition(time-subtractTime,query.value(1).toLongLong(),assetId);
-		if(time > returnVal)
-			returnVal = time;
-	}
-	query.finish();
-	//eFrame:
-	query.prepare("SELECT f.dataid,f.time FROM frames f "
-		"WHERE f.time > :after "
-		"AND f.time <= :to ORDER BY f.dataid");
-	query.bindValue(":after",after);
-	query.bindValue(":to",to);
-	success = query.exec();
-	if(!success)
-	{
-		Q_ASSERT(false);
-		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-		return after;
-	}
-	while(query.next()){
-		time = query.value(1).toDouble();
-		sessionState_->setFrame(query.value(0).toLongLong(),time-subtractTime);
-		if(time > returnVal)
-			returnVal = time;
-	}
-	query.finish();
-	//eReward:
-	query.prepare("SELECT r.dataid,r.duration,r.channel,r.time FROM rewards r "
-		"WHERE r.time > :after "
-		"AND r.time <= :to ORDER BY r.dataid");
-	query.bindValue(":after",after);
-	query.bindValue(":to",to);
-	success = query.exec();
-	if(!success)
-	{
-		Q_ASSERT(false);
-		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-		return after;
-	}
-	while(query.next()){
-		time = query.value(3).toDouble();
-		sessionState_->setReward(time-subtractTime,query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toInt());
-		if(time > returnVal)
-			returnVal = time;
-	}
-	query.finish();
-	//eSignal:
-	foreach(SigData sigData,sigs_)
-	{
-		query.prepare(QString("SELECT s.dataid,f.time,s.offsettime,s.data "
-						"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
-						"f.time > :after AND f.time <= :to ORDER BY s.dataid").arg(sigData.tableName_));
-		query.bindValue(":after",after);
-		query.bindValue(":to",to);
-		success = query.exec();
-		if(!success)
-		{
-			Q_ASSERT(false);
-			qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
-			
-			return after;
-		}
-		while(query.next()){
-			time = query.value(1).toDouble();
-			//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
-			sessionState_->setSignal(	sigData.name_,
-										sigData.subChanNames_,
-										time+query.value(2).toDouble()-subtractTime,
-										query.value(0).toLongLong(),
-										sigData.samplePeriod_,
-										query.value(3).toByteArray()
-										);
-			if(time > returnVal)
-				returnVal = time;
-		}
-		query.finish();
-	}
-	return returnVal;
+	//double returnVal = after;
+	//if(!session_.isOpen())
+	//	return returnVal;
+	//if(after == to)
+	//	return returnVal;
+	//
+	//double time = -1;
+	//QSqlQuery query(session_);
+	//query.setForwardOnly(true);
+	//bool success;
+	//int assetId;
+	////Property:
+	////Currently, we don't select properties with no parent (ie. Runtime parameters).
+	//query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, propertylookup pl,frames f "
+	//	"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid AND f.time > :after "
+	//	"AND f.time <= :to ORDER BY p.dataid");
+	//query.bindValue(":after",after);
+	//query.bindValue(":to",to);
+	//success = query.exec();
+	//if(!success)
+	//{
+	//	Q_ASSERT(false);
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	return after;
+	//}
+	//while(query.next()){
+	//	assetId = query.value(2).toInt();
+	//	if(obsoleteAssetIds_.contains(assetId))
+	//		continue;
+	//	time = query.value(0).toDouble();
+	//	sessionState_->setPropertyValue(time-subtractTime,query.value(1).toLongLong(),assetId,query.value(3).toString());
+	//	if(time > returnVal)
+	//		returnVal = time;
+	//}
+	//query.finish();
+	////eTransition:
+	//query.prepare("SELECT f.time,t.dataid,t.transid FROM transitions t, frames f "
+	//	"WHERE f.dataid=t.frameid AND f.time > :after "
+	//	"AND f.time <= :to ORDER BY t.dataid");
+	//query.bindValue(":after",after);
+	//query.bindValue(":to",to);
+	//success = query.exec();
+	//if(!success)
+	//{
+	//	Q_ASSERT(false);
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	return after;
+	//}
+	//while(query.next()){
+	//	assetId = query.value(2).toInt();
+	//	if(obsoleteAssetIds_.contains(assetId))
+	//		continue;
+	//	time = query.value(0).toDouble();
+	//	sessionState_->setTransition(time-subtractTime,query.value(1).toLongLong(),assetId);
+	//	if(time > returnVal)
+	//		returnVal = time;
+	//}
+	//query.finish();
+	////eFrame:
+	//query.prepare("SELECT f.dataid,f.time FROM frames f "
+	//	"WHERE f.time > :after "
+	//	"AND f.time <= :to ORDER BY f.dataid");
+	//query.bindValue(":after",after);
+	//query.bindValue(":to",to);
+	//success = query.exec();
+	//if(!success)
+	//{
+	//	Q_ASSERT(false);
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	return after;
+	//}
+	//while(query.next()){
+	//	time = query.value(1).toDouble();
+	//	sessionState_->setFrame(query.value(0).toLongLong(),time-subtractTime);
+	//	if(time > returnVal)
+	//		returnVal = time;
+	//}
+	//query.finish();
+	////eReward:
+	//query.prepare("SELECT r.dataid,r.duration,r.channel,r.time FROM rewards r "
+	//	"WHERE r.time > :after "
+	//	"AND r.time <= :to ORDER BY r.dataid");
+	//query.bindValue(":after",after);
+	//query.bindValue(":to",to);
+	//success = query.exec();
+	//if(!success)
+	//{
+	//	Q_ASSERT(false);
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	return after;
+	//}
+	//while(query.next()){
+	//	time = query.value(3).toDouble();
+	//	sessionState_->setReward(time-subtractTime,query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toInt());
+	//	if(time > returnVal)
+	//		returnVal = time;
+	//}
+	//query.finish();
+	////eSignal:
+	//foreach(SigData sigData,sigs_)
+	//{
+	//	query.prepare(QString("SELECT s.dataid,f.time,s.offsettime,s.data "
+	//					"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
+	//					"f.time > :after AND f.time <= :to ORDER BY s.dataid").arg(sigData.tableName_));
+	//	query.bindValue(":after",after);
+	//	query.bindValue(":to",to);
+	//	success = query.exec();
+	//	if(!success)
+	//	{
+	//		Q_ASSERT(false);
+	//		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//		
+	//		return after;
+	//	}
+	//	while(query.next()){
+	//		time = query.value(1).toDouble();
+	//		//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
+	//		sessionState_->setSignal(	sigData.name_,
+	//									sigData.subChanNames_,
+	//									time+query.value(2).toDouble()-subtractTime,
+	//									query.value(0).toLongLong(),
+	//									sigData.samplePeriod_,
+	//									query.value(3).toByteArray()
+	//									);
+	//		if(time > returnVal)
+	//			returnVal = time;
+	//	}
+	//	query.finish();
+	//}
+	//return returnVal;
+	return 0;
 }
 
 double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
@@ -356,7 +397,7 @@ bool FileSessionLoader::getSignalInfo()
 		data.samplePeriod_ = double(sigInf.getResolution())/1000.0;
 		sigs_.append(data);
 		//Add the signal to the session state so that it knows it should track its data
-		sessionState_->addSignal(data.name_,data.subChanNames_);
+		sessionState_->addSignal(data.name_,data.tableName_,data.subChanNames_,data.samplePeriod_);
 	}while(query.next());
 	return true;
 }

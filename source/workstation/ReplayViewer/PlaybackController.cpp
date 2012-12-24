@@ -180,6 +180,7 @@ bool PlaybackController::waitingForTransition()
 	}
 	data_.setStatus(nextStatus);
 	emit statusChanged(nextStatus);
+	return false;
 }
 
 void PlaybackController::newRunLength(double length)

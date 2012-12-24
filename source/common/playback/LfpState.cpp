@@ -9,34 +9,26 @@ sampPeriod_(sampPeriod)
 
 }
 
-bool LfpState::setLFP(qulonglong dataid,double startTime,int channel,QByteArray dataArray)
+void LfpState::setDatabase(QSqlDatabase session)
 {
-	int numEntries = dataArray.size()/sizeof(float);
-	float* floatArray = reinterpret_cast<float*>(dataArray.data());
-	for(int i=0;i<numEntries;i++)
-	{
-		setValue(QSharedPointer<IndexedData>(new PlaybackData<float>(floatArray[i],startTime+i*sampPeriod_)));
-	}
-	return true;
+
 }
 
-void LfpState::triggerValueChange(bool reverse,bool last)
+void LfpState::startRun(double runStartTime,double runEndTime)
 {
-	if(!reverse || last)
-	{
-		QSharedPointer<PlaybackData<float>> currVal = getCurrentValue().staticCast<PlaybackData<float>>();
-		if(currVal)
-			emit lfpChanged(channel_,currVal->data_);
-		else
-			emit lfpChanged(channel_,0);
-	}
 }
 
-void LfpState::requestMoreData(PlaybackIndex currLast,PlaybackIndex to)
+PlaybackIndex LfpState::getCurrentIndex()
 {
-	emit needsData(currLast,to);
+	return PlaybackIndex();
 }
-void LfpState::requestNextData(PlaybackIndex currLast,bool backward)
+
+PlaybackIndex LfpState::getNextIndex(double lookForwardTime)
 {
-	emit needsNextData(currLast,backward);
+	return PlaybackIndex();
 }
+
+void LfpState::moveToIndex(PlaybackIndex index)
+{
+}
+
