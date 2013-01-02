@@ -39,6 +39,7 @@ public:
 	bool play();
 	bool stop();
 	void setPlaybackSpeed(double speed);
+	double getPlaybackSpeed();
 	void jumpToTime(double time);
 signals:
 	//triggered when values change
@@ -49,6 +50,7 @@ signals:
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void loadedTo(double maxBehavioral,double maxNeural);
 	void loading(bool isLoading);
+	void percentLoaded(double percent);
 	void newRun(double length);
 	void finishedPlayback();
 

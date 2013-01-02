@@ -17,6 +17,7 @@ class QAction;
 class QToolBar;
 class QComboBox;
 class QSlider;
+class QProgressBar;
 
 /*!	\brief	This plays an experiment back
  *
@@ -58,9 +59,9 @@ private:
 	QAction *playAction_;
 	QAction *pauseAction_;
 	QAction *stopAction_;
-	QLabel *status_;
 	SpeedWidget *speed_;
 	ProgressWidget *progress_;
+	QProgressBar *loadProgress_;
 	QComboBox *runs_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 
@@ -78,7 +79,7 @@ private slots:
 	void updateLoadTimes(double maxBehavioral,double maxNeural);
 	void updateRunsList(QStringList runs);
 	void setCurrentRun(int index);
-	void loading(bool load);
+	void percentLoaded(double percent);
 	void jumpRequested(double time);
 	void userChoosingJump(bool starting);
 	//void zoomChanged(int zoom);

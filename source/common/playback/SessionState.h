@@ -35,6 +35,7 @@ public:
 	//SET FUNCTIONS-----------------------------------------------------------------
 	void setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteAssetIds = QHash<int,bool>());
 	void startNewRun(double startTime,double endTime=-1);
+	void restartRun();
 	//Used to load values
 	//bool reset();
 	//Used to add a new signal to the SessionState since different sessions
@@ -93,6 +94,7 @@ signals:
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void lfpChanged(int channel,double value);
 	void spikeEvent(int channel, int unit, QVector<float> waveform);
+	void percentLoaded(double percent);
 
 	//Indicates that data is needed by the session state to fulfil playback requests
 	//from (not including) currLast up to and including "to" of type "type".  
@@ -127,6 +129,8 @@ private:
 
 	QList<QSharedPointer<DataState>> statesWithIds_;
 	QList<QSharedPointer<DataState>> statesWithTimes_;
+	double currRunStart_;
+	double currRunEnd_;
 
 //private slots:
 //	void needsPropertyData(PlaybackIndex currLast,PlaybackIndex to);

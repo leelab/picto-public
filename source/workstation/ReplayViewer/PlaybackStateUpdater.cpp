@@ -14,6 +14,7 @@ PlaybackStateUpdater::PlaybackStateUpdater()
 	currRunLength_ = -1;
 	lastMaxBehav_ = 0;
 	lastMaxNeural_ = 0;
+	playbackSpeed_ = 1.0;
 }
 
 PlaybackStateUpdater::~PlaybackStateUpdater()
@@ -69,6 +70,8 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 	connect(sessionState_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SIGNAL(signalChanged(QString,QStringList,QVector<float>)));
 	connect(sessionPlayer_.data(),SIGNAL(reachedEnd()),this,SLOT(reachedEnd()));
 	connect(sessionPlayer_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
+	connect(fileSessionLoader_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
+
 
 	//Load session file to file loader
 	if(!fileSessionLoader_->setFile(filePath))
@@ -110,7 +113,6 @@ bool PlaybackStateUpdater::loadRun(int index)
 		return false;
 	paused_ = false;
 	timerOffset_ = 0.0;
-	playbackSpeed_ = 1.0;
 	firstResumeFrame_ = true;
 	runLoaded_ = false;
 	currRunLength_ = fileSessionLoader_->runDuration(index);
@@ -148,8 +150,16 @@ void PlaybackStateUpdater::setPlaybackSpeed(double speed)
 	if(speed == playbackSpeed_)
 		return;
 	firstResumeFrame_ = true;
-	timerOffset_ = sessionPlayer_->getTime();
+	if(sessionPlayer_)
+		timerOffset_ = sessionPlayer_->getTime();
+	else
+		timerOffset_ = 0;
 	playbackSpeed_ = speed;	
+}
+
+double PlaybackStateUpdater::getPlaybackSpeed()
+{
+	return playbackSpeed_;
 }
 
 void PlaybackStateUpdater::jumpToTime(double time)

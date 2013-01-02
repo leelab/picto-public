@@ -12,6 +12,7 @@ FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState)
 : sessionState_(sessState),
 runIndex_(-1)
 {
+	connect(sessionState_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 }
 
 bool FileSessionLoader::setFile(QString path)

@@ -204,13 +204,18 @@ void PlaybackController::setup()
 	connect(engine_.data(),SIGNAL(slaveTimeChanged(double)),this,SLOT(setCurrTime(double)));
 
 	//Setup playback update system
+	double playbackSpeed = 1.0;
+	if(playbackUpdater_)
+		playbackSpeed = playbackUpdater_->getPlaybackSpeed();
 	playbackUpdater_ = QSharedPointer<PlaybackStateUpdater>(new PlaybackStateUpdater());
+	playbackUpdater_->setPlaybackSpeed(playbackSpeed);
 	engine_->setStateUpdater(playbackUpdater_);
 	connect(playbackUpdater_.data(),SIGNAL(loadedTo(double,double)),this,SIGNAL(loadedTo(double,double)));
 	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(runLoading(bool)));
 	connect(playbackUpdater_.data(),SIGNAL(newRun(double)),this,SIGNAL(newRunLength(double)));
 	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SLOT(stop()));
 	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SIGNAL(finishedPlayback()));
+	connect(playbackUpdater_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 
 
 	//Set up the rendering target
@@ -258,6 +263,7 @@ void PlaybackController::update()
 		{
 		case PlaybackCommand::Load:
 			{
+				setup();
 				playbackUpdater_->setFile(cmd.commandData.toString());
 				QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(playbackUpdater_->getDesignRoot());
 				if(!newDesignRoot)

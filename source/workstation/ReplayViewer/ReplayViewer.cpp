@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QSlider>
 #include <QApplication>
+#include <QProgressBar>
 
 #include "ReplayViewer.h"
 
@@ -106,9 +107,12 @@ void ReplayViewer::setupUi()
 	connect(playbackController_.data(),SIGNAL(loadedTo(double,double)),this,SLOT(updateLoadTimes(double,double)));
 	connect(progress_,SIGNAL(valueRequested(double)),this,SLOT(jumpRequested(double)));
 	connect(progress_,SIGNAL(userAction(bool)),this,SLOT(userChoosingJump(bool)));
-
-	status_ = new QLabel("Ready");
-	connect(playbackController_.data(),SIGNAL(loading(bool)),this,SLOT(loading(bool)));
+	
+	loadProgress_ = new QProgressBar();
+	loadProgress_->setMaximum(100);
+	loadProgress_->setMinimum(0);
+	loadProgress_->setValue(0);
+	connect(playbackController_.data(),SIGNAL(percentLoaded(double)),this,SLOT(percentLoaded(double)));
 
 	////Zoom slider
 	//zoomSlider_ = new QSlider;
@@ -125,7 +129,7 @@ void ReplayViewer::setupUi()
 	testToolbar_->addAction(pauseAction_);
 	testToolbar_->addAction(stopAction_);
 	testToolbar_->addSeparator();
-	testToolbar_->addWidget(status_);
+	testToolbar_->addWidget(loadProgress_);
 	testToolbar_->addSeparator();
 	//testToolbar_->addWidget(zoomSlider_);
 	
@@ -198,7 +202,6 @@ void ReplayViewer::playbackStatusChanged(int status)
 			progress_->setSliderProgress(0);
 			progress_->setHighlightRange(0,0,0);
 			progress_->setHighlightRange(1,0,0);
-			status_->setText("Stopped");
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(true);
@@ -210,7 +213,6 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playbackController_->getRenderingTarget()->showSplash();
 		break;
 		case PlaybackControllerData::Running:
-			status_->setText("Playing");
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(false);
@@ -241,6 +243,7 @@ void ReplayViewer::loadSession()
 	filename = filename.replace("\\","/");
 	Q_ASSERT(filename.lastIndexOf("/") >=0);
 	Q_ASSERT(filename.lastIndexOf(".") >=0);
+	loadProgress_->setMaximum(0);
 	QString result = playbackController_->loadSession(filename);
 	if(!result.isEmpty())
 		QMessageBox::warning(0,"Session could not be loaded",result);
@@ -288,17 +291,10 @@ void ReplayViewer::setCurrentRun(int index)
 	jumpDownRequested_ = false;
 }
 
-void ReplayViewer::loading(bool load)
+void ReplayViewer::percentLoaded(double percent)
 {
-	if(load)
-	{
-		lastStatus_ = status_->text();
-		status_->setText("Loading");
-	}
-	else
-	{
-		status_->setText(lastStatus_);
-	}
+	loadProgress_->setMaximum(100);
+	loadProgress_->setValue(percent);
 }
 
 void ReplayViewer::jumpRequested(double time)
@@ -322,8 +318,7 @@ void ReplayViewer::userChoosingJump(bool starting)
 	{
 		if(!pausedFromJump_)
 			return;
-		if(playAction_->isEnabled())
-			playAction_->trigger();
+		playAction_->trigger();
 		pausedFromJump_ = false;
 	}
 }

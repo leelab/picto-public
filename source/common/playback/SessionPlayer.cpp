@@ -20,7 +20,7 @@ SessionPlayer::~SessionPlayer()
 void SessionPlayer::restart()
 {
 	markLoading(true);
-	//sessionLoader_->restart();
+	sessionState_->restartRun();
 	lastIndex_ = PlaybackIndex::minForTime(0);
 	nextFrame_ = PlaybackIndex();
 	reachedEnd_ = false;
@@ -67,14 +67,13 @@ bool SessionPlayer::stepToTime(double time)
 	{
 		if(!stepToNextFrame(time))
 		{
-			if(time < sessionLoader_->currRunDuration())
+			if(time >= sessionLoader_->currRunDuration())
 			{
-				qDebug(QString("Player: Could not step to next frame").toAscii());
-				return false;
-			}
 			reachedEnd_ = true;
 			emit reachedEnd();
+			}
 			break;
+
 		}
 	}while(time > nextFrame_.time());
 	//sessionLoader_->setProcessedTime(getTime());
@@ -104,9 +103,7 @@ bool SessionPlayer::stepToNextFrame(double lookForward)
 {
 	if(processing_) return false;
 	nextFrame_ = sessionState_->getFrameState()->getNextIndex(lookForward);
-	if(nextFrame_.time() > lookForward)
-		return true;
-	if(!nextFrame_.isValid())
+	if(!nextFrame_.isValid() || nextFrame_.time() > lookForward)
 		return false;
 	while(lastIndex_ < nextFrame_)
 		stepForward(lookForward);

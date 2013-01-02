@@ -21,6 +21,7 @@ spikeState_(new SpikeState())
 	connect(rewardState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
 	connect(spikeState_.data(),SIGNAL(spikeEvent(int,int,QVector<float>)),this,SIGNAL(spikeEvent(int,int,QVector<float>)));
 
+	currRunStart_ = currRunEnd_ = -1;
 	//connect(propState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsPropertyData(PlaybackIndex,PlaybackIndex)));
 	//connect(transState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsTransitionData(PlaybackIndex,PlaybackIndex)));
 	//connect(frameState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsFrameData(PlaybackIndex,PlaybackIndex)));
@@ -42,20 +43,29 @@ SessionState::~SessionState()
 
 void SessionState::setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteAssetIds)
 {
+	double totalSubStates = statesWithIds_.size()+statesWithTimes_.size();
+	double loadedStates = 0;
+	currRunStart_ = currRunEnd_ = -1;
 	propState_->setObsoleteAssets(obsoleteAssetIds);
 	transState_->setObsoleteAssets(obsoleteAssetIds);
 	foreach(QSharedPointer<DataState> state,statesWithIds_)
 	{
 		state->setDatabase(session);
+		loadedStates++;
+		emit percentLoaded(100*loadedStates/totalSubStates);
 	}
 	foreach(QSharedPointer<DataState> state,statesWithTimes_)
 	{
 		state->setDatabase(session);
+		loadedStates++;
+		emit percentLoaded(100*loadedStates/totalSubStates);
 	}
 }
 
 void SessionState::startNewRun(double startTime,double endTime)
 {
+	if(startTime < 0 || endTime < 0)
+		return;
 	foreach(QSharedPointer<DataState> state,statesWithIds_)
 	{
 		state->startRun(startTime,endTime);
@@ -64,6 +74,13 @@ void SessionState::startNewRun(double startTime,double endTime)
 	{
 		state->startRun(startTime,endTime);
 	}
+	currRunStart_ = startTime;
+	currRunEnd_ = endTime;
+}
+
+void SessionState::restartRun()
+{
+	startNewRun(currRunStart_,currRunEnd_);
 }
 
 //bool SessionState::reset()

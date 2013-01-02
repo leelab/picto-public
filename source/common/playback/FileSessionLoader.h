@@ -27,6 +27,8 @@ public:
 	bool loadRun(int index);
 	double runDuration(int index);
 	double currRunDuration();
+signals:
+	void percentLoaded(double percent);
 
 protected:
 	struct RunData
