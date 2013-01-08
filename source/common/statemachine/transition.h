@@ -38,6 +38,10 @@ public:
 	QString getSource();
 	QString getSourceResult();
 	QString getDestination();
+	
+	QSharedPointer<Asset>  getSourceAsset();
+	QSharedPointer<Asset>  getSourceResultAsset();
+	QSharedPointer<Asset>  getDestinationAsset();
 	//void setSpecialTransitionID(int id){Q_ASSERT(id<0);id_ = id;};
 	
 	//DataStore functions

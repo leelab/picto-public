@@ -78,20 +78,9 @@ QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 		return "false";
 }
 
-QString ScriptElement::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+QString ScriptElement::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
-	//resetScriptableValues();
-	//This will execute the script
-	//run(engine);
-
 	QString result;
-	while(result.isEmpty())
-	{
-		engine->updateCurrentStateFromServer();
-		result = engine->getServerPathUpdate();
-		QCoreApplication::processEvents();
-	}
-
 	return result; 
 }
 

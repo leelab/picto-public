@@ -4,7 +4,8 @@
 namespace Picto
 {
 RewardController::RewardController(unsigned int channelCount)
-	:channelCount_(channelCount)
+	:channelCount_(channelCount),
+	discardOverlap_(false)
 {
 }
 
@@ -20,6 +21,11 @@ bool RewardController::setRewardVolume(unsigned int channel, float volume)
 	return true;
 }
 
+void RewardController::discardOverlapingRewards(bool doIt)
+{
+	discardOverlap_ = doIt;
+}
+
 void RewardController::addReward(unsigned int channel,int quantity, int minRewardPeriod)
 {
 	rewardChannels_[channel].pendingRewards.append(RewardUnit(quantity,minRewardPeriod));
@@ -32,7 +38,11 @@ void RewardController::triggerRewards(bool appendToList)
 	{
 		//Check if the inter reward/flush interval has been met
 		if( it.value().stopwatch.elapsedMs() < it.value().lastRewardPeriod)
+		{
+			if(discardOverlap_)
+				it.value().pendingRewards.takeFirst();
 			continue;
+		}
 		//If it was met once, set it to zero to avoid stopwatch wrapping issues.
 		it.value().lastRewardPeriod = 0;
 
@@ -49,7 +59,11 @@ void RewardController::triggerRewards(bool appendToList)
 		
 		//Check if the last reward is still being supplied
 		if(!rewardWasSupplied(it.key()))
+		{
+			if(discardOverlap_)
+				it.value().pendingRewards.takeFirst();
 			continue;
+		}
 
 		//Get the new reward for this channel
 		RewardUnit reward = it.value().pendingRewards.takeFirst();

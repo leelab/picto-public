@@ -53,9 +53,15 @@ signals:
 	void percentLoaded(double percent);
 	void newRun(double length);
 	void finishedPlayback();
+	void disableRendering(bool disable);
 
 private:
 	void emitLoadTimeSignals();
+	void enableRendering(bool en);
+	void suspendPlayback();
+	void resumePlayback();
+	bool playbackSuspended();
+	double getPlaybackOffsetTime();
 	QSharedPointer<FileSessionLoader> fileSessionLoader_;
 	QSharedPointer<SessionState> sessionState_;
 	QSharedPointer<SessionPlayer> sessionPlayer_;
@@ -66,6 +72,7 @@ private:
 	double timerOffset_;
 	double playbackSpeed_;
 	bool firstResumeFrame_;
+	bool renderingEnabled_;
 	bool runLoaded_;
 	double currRunLength_;
 	double lastMaxBehav_;

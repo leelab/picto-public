@@ -105,6 +105,21 @@ QString Transition::getDestination()
 	return propertyContainer_->getPropertyValue("Destination").toString();;
 }
 
+QSharedPointer<Asset>  Transition::getSourceAsset()
+{
+	return sourceAsset_;
+}
+
+QSharedPointer<Asset>  Transition::getSourceResultAsset()
+{
+	return sourceResultAsset_;
+}
+
+QSharedPointer<Asset>  Transition::getDestinationAsset()
+{
+	return destinationAsset_;
+}
+
 void Transition::postDeserialize()
 {
 	DataStore::postDeserialize();

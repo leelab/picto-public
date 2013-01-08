@@ -118,7 +118,6 @@ public:
 
 	QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
-	//bool hasVisibleRenderingTargets();
 
 	QList<QSharedPointer<ControlPanelInterface>> getControlPanels();
 	void addControlPanel(QSharedPointer<ControlPanelInterface> controlPanel);
@@ -166,8 +165,6 @@ public:
 	qulonglong getLastFrameId(){return lastFrameId_;};
 
 	bool updateCurrentStateFromServer();
-	QString getRunningPath(){return runningPath_;};
-	QString getServerPathUpdate();
 
 	bool setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getDataCommandChannel();
@@ -195,13 +192,12 @@ public:
 	bool operatorIsUser(){return userIsOperator_;};
 	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
 	bool slaveMode() { return slave_; }
-	void setStateUpdater(QSharedPointer<StateUpdater> stateUpdater);
 	//If disabled, Init properties of the slave experiment will not be synchronized with those of the master.
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
 	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
-	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";runningPath_="";currStateUnit_.clear();currTransId_ = 0;firstCurrStateUpdate_ = true;};
+	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";};
 	double getLastTimeStateDataRequested(){return lastTimeStateDataRequested_.toDouble();};
-	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;currStateUnit_.clear();};
+	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 
 public slots:
@@ -246,7 +242,6 @@ private:
 	QString taskRunName_;
 	QSharedPointer<TaskRunDataUnit> taskRunUnit_;
 	QSharedPointer<ExperimentConfig> expConfig_;
-	bool firstCurrStateUpdate_;
 	QMutex rewardListMutex_;
 	QMutex rewardMutex_;
 
@@ -263,24 +258,12 @@ private:
 	QString lastTimeStateDataRequested_;
 	QSharedPointer<BehavioralDataUnitPackage> currBehavUnitPack_;
 	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
-	QSharedPointer<StateDataUnit> currStateUnit_;
-	int currTransId_;
 	qulonglong lastFrameId_;
 	QHostAddress ipAddress_;
 
-	QString runningPath_;
 private slots:
 	void addChangedProperty(QSharedPointer<Property> changedProp);
 	void firstPhosphorOperations(double frameTime);
-
-	void masterPropertyChanged(int propId, QString value);
-	void masterTransitionActivated(int transId);
-	void masterFramePresented(double time);
-	void masterRewardSupplied(double time,int duration,int channel);
-	void masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals);
-
-	private:
-	QString getMasterPath();
 };
 
 /*! @} */

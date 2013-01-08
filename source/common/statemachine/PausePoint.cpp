@@ -67,7 +67,13 @@ QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 	return "done";
 }
 
-QString PausePoint::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+QString PausePoint::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
+{
+	QString result;
+	return result; 
+}
+
+QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//Add the cursor to the scene if it isn't there already
 	if(!hasCursor_)
@@ -79,30 +85,11 @@ QString PausePoint::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		hasCursor_ = true;
 	}
 
-	QString result;// = run(engine);
-	QString masterResult;
-	while(true)
-	{
-		//--------- Check for master state change ------------
-		engine->updateCurrentStateFromServer();
-		masterResult = engine->getServerPathUpdate();
-		if(!masterResult.isEmpty())
-			break;
-		//----------  Draw the scene --------------
-		scene_->render(engine,getAssetId());
-		
-		//---------   Erase the latest cursor values (This happens in master when data is sent to server)
-		sigChannel_->getValues();
-
-		//As long as we're paused, lets process events
-		QCoreApplication::processEvents();
-
-		//Check if the engine stopeed
-		if(engine->getEngineCommand() == Engine::PictoEngine::StopEngine)
-			return "EngineAbort";
-
-	}
-	result = masterResult;
+	QString result;
+	scene_->render(engine,getAssetId());
+	
+	//---------   Erase the latest cursor values (This happens in master when data is sent to server)
+	sigChannel_->getValues();
 	return result; 
 }
 

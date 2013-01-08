@@ -48,6 +48,11 @@ void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 	updateSignalCoefficients(QSharedPointer<Property>());
 };
 
+QSharedPointer<Engine::PictoEngine> Experiment::getEngine()
+{
+	return engine_;
+}
+
 void Experiment::addTask(QSharedPointer<Task> task)
 {
 	tasks_.append(task);

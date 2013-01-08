@@ -99,6 +99,13 @@ void ReplayViewer::setupUi()
 	connect(playbackController_.data(),SIGNAL(finishedPlayback()),stopAction_,SLOT(trigger()));
 	stopAction_->setEnabled(false);
 
+	userType_ = new QComboBox();
+	userType_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	userType_->setToolTip("Select a User View");
+	userType_->addItem("Operator",0);
+	userType_->addItem("Test Subject",1);
+	connect(userType_,SIGNAL(currentIndexChanged(int)),this,SLOT(setUserType(int)));
+
 	progress_ = new ProgressWidget();
 	progress_->setMaximum(1);
 	progress_->setHighlightColor(0,QColor("#88f"));
@@ -125,9 +132,12 @@ void ReplayViewer::setupUi()
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(loadSessionAction_);
 	testToolbar_->addWidget(runs_);
+	testToolbar_->addSeparator();
 	testToolbar_->addAction(playAction_);
 	testToolbar_->addAction(pauseAction_);
 	testToolbar_->addAction(stopAction_);
+	testToolbar_->addSeparator();
+	testToolbar_->addWidget(userType_);
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(loadProgress_);
 	testToolbar_->addSeparator();
@@ -289,6 +299,19 @@ void ReplayViewer::setCurrentRun(int index)
 	progress_->setHighlightRange(0,0,0);
 	progress_->setHighlightRange(1,0,0);
 	jumpDownRequested_ = false;
+}
+
+void ReplayViewer::setUserType(int index)
+{
+	switch(index)
+	{
+	case 0:
+		playbackController_->setUserToOperator();
+		break;
+	case 1:
+		playbackController_->setUserToSubject();
+		break;
+	};
 }
 
 void ReplayViewer::percentLoaded(double percent)

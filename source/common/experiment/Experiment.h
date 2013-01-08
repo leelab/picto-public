@@ -56,6 +56,7 @@ public:
 	virtual QString getName(){return "Experiment";};
 	virtual void setName(QString newName){};
 	void setEngine(QSharedPointer<Engine::PictoEngine> engine);
+	QSharedPointer<Engine::PictoEngine> getEngine();
 	void addTask(QSharedPointer<Task> task);
 	bool runTask(QString taskName);
 	bool jumpToState(QStringList path, QString state);
@@ -92,17 +93,11 @@ private:
 	double getXYSignalShear(){return propertyContainer_->getPropertyValue("XYSignalShear").toDouble(); };
 
 	Experiment();
-	//QUuid uuid_;
-	//QString formatID_;
-	//unsigned int revision_;
 	QList<QSharedPointer<Task> > tasks_;
 	const QString latestSyntaxVersion_;
 	QSharedPointer<PropertyTable> propTable_;
 	QSharedPointer<Engine::PictoEngine> engine_;
 	bool signalCoeffInitialized_;
-	//QList<QSharedPointer<SessionData> > sessionDataElements_;
-	//QList<QSharedPointer<Calibration> > calibrations_;
-	//QList<QSharedPointer<MediaItem> > mediaItems_;
 private slots:
 	void updateSignalCoefficients(QSharedPointer<Property> changedProp);
 };

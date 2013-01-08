@@ -31,12 +31,9 @@ PictoEngine::PictoEngine() :
 	syncInitProperties_(true),
 	lastTimePropChangesRequested_("0.0"),
 	lastTimeStateDataRequested_("0.0"),
-	firstCurrStateUpdate_(true),
 	currBehavUnitPack_(QSharedPointer<BehavioralDataUnitPackage>(new BehavioralDataUnitPackage())),
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
-	runningPath_(""),
 	lastFrameId_(-1),
-	currTransId_(0),
 	engineCommand_(StopEngine),
 	taskRunStarting_(false),
 	taskRunEnding_(false)
@@ -423,11 +420,6 @@ bool PictoEngine::updateCurrentStateFromServer()
 	return stateUpdater_->updateState();
 }
 
-QString PictoEngine::getServerPathUpdate()
-{
-	return getMasterPath();
-}
-
 //! Sets the CommandChannel used for data.  Returns true if the channel's status is connected
 bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel)
 {
@@ -519,34 +511,6 @@ void PictoEngine::setSessionId(QUuid sessionId)
 		dataCommandChannel_->setSessionId(sessionId_);
 	if(!updateCommandChannel_.isNull())
 		updateCommandChannel_->setSessionId(sessionId_);
-}
-
-void PictoEngine::setStateUpdater(QSharedPointer<StateUpdater> stateUpdater)
-{
-	if(!stateUpdater)
-		return;
-	//Disconnect old state updater
-	if(stateUpdater_)
-	{
-		disconnect(stateUpdater_.data(),SIGNAL(propertyChanged(int, QString)),this,SLOT(masterPropertyChanged(int, QString)));
-		disconnect(stateUpdater_.data(),SIGNAL(transitionActivated(int)),this,SLOT(masterTransitionActivated(int)));
-		disconnect(stateUpdater_.data(),SIGNAL(framePresented(double)),this,SLOT(masterFramePresented(double)));
-		disconnect(stateUpdater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
-		disconnect(stateUpdater_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(masterSignalChanged(QString,QStringList,QVector<float>)));
-
-	}
-	stateUpdater_ = stateUpdater;
-	if(stateUpdater_)
-	{
-		slave_ = true;
-		connect(stateUpdater_.data(),SIGNAL(propertyChanged(int, QString)),this,SLOT(masterPropertyChanged(int, QString)));
-		connect(stateUpdater_.data(),SIGNAL(transitionActivated(int)),this,SLOT(masterTransitionActivated(int)));
-		connect(stateUpdater_.data(),SIGNAL(framePresented(double)),this,SLOT(masterFramePresented(double)));
-		connect(stateUpdater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
-		connect(stateUpdater_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(masterSignalChanged(QString,QStringList,QVector<float>)));
-	}
-	else
-		slave_ = false;
 }
 
 void PictoEngine::setName(QString name) 
@@ -724,53 +688,6 @@ void PictoEngine::firstPhosphorOperations(double frameTime)
 	}
 }
 
-void PictoEngine::masterPropertyChanged(int propId, QString value)
-{
-	propTable_->updatePropertyValue(propId,value,syncInitProperties_);
-}
-void PictoEngine::masterTransitionActivated(int transId)
-{
-	currTransId_ = transId;
-}
-void PictoEngine::masterFramePresented(double time)
-{
-	emit slaveTimeChanged(time);
-}
-void PictoEngine::masterRewardSupplied(double time,int duration,int channel)
-{
-	giveReward(channel,duration,0);
-}
-void PictoEngine::masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals)
-{
-	int numSubChans = subChanNames.size();
-	QSharedPointer<SignalChannel> sigChan = getSignalChannel(name);
-	if(!sigChan)
-		return;
-	for(int i=0;i<vals.size();i++)
-	{
-		sigChan->insertValue(subChanNames[i%numSubChans],vals[i]);
-	}
-}
-
-QString PictoEngine::getMasterPath()
-{
-	if(!currTransId_)
-		return "";
-	QSharedPointer<Transition> trans = expConfig_->getAsset(currTransId_).staticCast<Transition>();
-	Q_ASSERT(trans);
-	if(!trans)
-		return "";
-	QString result = trans->getDestination();
-	QString runningPath = runningPath_;
-	if(result != "EngineAbort")
-	{
-		result.prepend(trans->getPath());
-		runningPath_ = result;
-	}
-	if(result == runningPath)
-		result = "";
-	return result;
-}
 
 }; //namespace Engine
 }; //namespace Picto

@@ -9,6 +9,8 @@
 #include "../../common/network/CommandChannel.h"
 #include "../../common/network/ServerDiscoverer.h"
 #include "../../common/storage/SessionDataPackage.h"
+#include "../../common/engine/SlaveExperimentDriver.h"
+#include "RemoteStateUpdater.h"
 #include "neuraldataviewer.h"
 #include "TaskRunViewer.h"
 
@@ -61,35 +63,8 @@ private slots:
 	void operatorClickDetected(QPoint pos);
 	void zoomChanged(int zoom);
 
-
-
-
-
-
-
-
-
-
-
 	void updateState();
-	void updateEngine();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//void changeConnectionState(bool checked);
 	void updateComponentLists(bool immediate = false);
 	void updateNeuralData();
 
@@ -144,7 +119,6 @@ private:
 
 	
 	QTimer *stateUpdateTimer_;
-	QTimer *engineUpdateTimer_;
 	QString initState_;
 
 	typedef struct
@@ -193,6 +167,8 @@ private:
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
+	QSharedPointer<RemoteStateUpdater> updater_;
+	QSharedPointer<SlaveExperimentDriver> slaveExpDriver_;
 	QSharedPointer<DesignRoot> myDesignRoot_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 

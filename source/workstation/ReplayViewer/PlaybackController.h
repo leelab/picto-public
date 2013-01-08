@@ -12,11 +12,13 @@
 #include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "PlaybackStateUpdater.h"
 #include "PlaybackThread.h"
+#include "../../common/engine/SlaveExperimentDriver.h"
 using namespace Picto;
 
 struct PlaybackCommand 
 {
-	enum Type {NoCommand, Load, ChangeRun, ChangeSpeed, Play, Pause, Stop, Jump};
+	enum Type {NoCommand, Load, ChangeRun, ChangeSpeed, ChangeUserType, Play, Pause, Stop, Jump};
+	enum UserType {Operator,TestSubject};
 	PlaybackCommand(){commandType = NoCommand;};
 	PlaybackCommand(Type cmd,QVariant val=0){commandType = cmd;commandData=val;};
 	Type commandType;
@@ -92,11 +94,12 @@ signals:
 
 public slots:
 	void setRunSpeed(double value);
+	void setUserToOperator();
+	void setUserToSubject();
 	void selectRun(int index);
 
 
 private:
-	bool waitingForTransition();
 	QTimer stateUpdateTimer_;
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
@@ -105,15 +108,15 @@ private:
 	QSharedPointer<DesignRoot> designRoot_;
 	QSharedPointer<PlaybackThread> playbackThread_;
 	QSharedPointer<PlaybackStateUpdater> playbackUpdater_;
+	QSharedPointer<SlaveExperimentDriver> slaveExpDriver_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 	PlaybackControllerData data_;
-	bool expRunning_;
 private slots:
 	void newRunLength(double length);
 	void setCurrTime(double time);
 	void setup();
 	void update();
-	void runExperiment();
+	//void runExperiment();
 	
 
 };

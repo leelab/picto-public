@@ -10,6 +10,7 @@ PlaybackStateUpdater::PlaybackStateUpdater()
 	paused_ = true;
 	waiting_ = false;
 	firstResumeFrame_ = true;
+	renderingEnabled_ = true;
 	timerOffset_ = 0;
 	currRunLength_ = -1;
 	lastMaxBehav_ = 0;
@@ -27,28 +28,22 @@ bool PlaybackStateUpdater::updateState()
 {
 	if(!designRoot_)
 		return false;
-	double runToTime = timerOffset_;
-	if(!paused_ /*&& !waiting_*/ && !firstResumeFrame_)
+	double runToTime = timerOffset_ + getPlaybackOffsetTime();
+	if(	playbackSuspended()  && (runToTime != sessionPlayer_->getTime()) )
 	{
-		runToTime += playbackSpeed_*timer_.elapsed()/1000.0;
+		//We are stepping the session player even though we're not playing back.
+		//Rendering should be disabled.
+		enableRendering(false);
 	}
 	emitLoadTimeSignals();
-	//if(!waiting_ /*&& !fileSessionLoader_->dataIsReady(runToTime)*/)
-	//{
-	//	timerOffset_ = runToTime;
-	//	waiting_ = true;
-	//}
 	if(sessionPlayer_->stepToTime(runToTime))
 	{
-		/*if(waiting_)
+		//Once we have caught up to runToTime rendering should always be enabled.
+		enableRendering(true);
+
+		if(!paused_ && playbackSuspended())
 		{
-			firstResumeFrame_ = true;
-			waiting_ = false;
-		}*/
-		if(!paused_ && firstResumeFrame_)
-		{
-			timer_.restart();
-			firstResumeFrame_ = false;
+			resumePlayback();
 		}
 	}
 	return true;
@@ -113,7 +108,7 @@ bool PlaybackStateUpdater::loadRun(int index)
 		return false;
 	paused_ = false;
 	timerOffset_ = 0.0;
-	firstResumeFrame_ = true;
+	suspendPlayback();
 	runLoaded_ = false;
 	currRunLength_ = fileSessionLoader_->runDuration(index);
 	return fileSessionLoader_->loadRun(index);
@@ -122,7 +117,7 @@ bool PlaybackStateUpdater::loadRun(int index)
 bool PlaybackStateUpdater::pause()
 {
 	paused_ = true;
-	firstResumeFrame_ = true;
+	suspendPlayback();
 	timerOffset_ = sessionPlayer_->getTime();
 	return true;
 }
@@ -136,7 +131,7 @@ bool PlaybackStateUpdater::play()
 bool PlaybackStateUpdater::stop()
 {
 	paused_ = true;
-	firstResumeFrame_ = true;
+	suspendPlayback();
 	timerOffset_ = 0.0;
 	if(sessionPlayer_)
 		sessionPlayer_->restart();
@@ -149,7 +144,7 @@ void PlaybackStateUpdater::setPlaybackSpeed(double speed)
 		return;
 	if(speed == playbackSpeed_)
 		return;
-	firstResumeFrame_ = true;
+	suspendPlayback();
 	if(sessionPlayer_)
 		timerOffset_ = sessionPlayer_->getTime();
 	else
@@ -169,7 +164,7 @@ void PlaybackStateUpdater::jumpToTime(double time)
 	if(time > getRunLength() || time < 0)
 		return;
 	timerOffset_ = time;
-	firstResumeFrame_ = true;
+	suspendPlayback();
 }
 
 void PlaybackStateUpdater::emitLoadTimeSignals()
@@ -189,6 +184,42 @@ void PlaybackStateUpdater::emitLoadTimeSignals()
 	//}
 	//if(emitUpdate)
 	//	emit loadedTo(lastMaxBehav_, lastMaxNeural_);
+}
+
+void PlaybackStateUpdater::enableRendering(bool en)
+{
+	if(renderingEnabled_ == en)
+		return;
+	emit disableRendering(!en);
+	renderingEnabled_ = en;
+}
+
+void PlaybackStateUpdater::suspendPlayback()
+{
+	firstResumeFrame_ = true;
+}
+
+void PlaybackStateUpdater::resumePlayback()
+{
+	if(firstResumeFrame_)
+	{
+		firstResumeFrame_ = false;
+		timer_.restart();
+	}
+}
+
+bool PlaybackStateUpdater::playbackSuspended()
+{
+	return firstResumeFrame_;
+}
+
+double PlaybackStateUpdater::getPlaybackOffsetTime()
+{
+	if(!paused_ && !playbackSuspended())
+	{
+		return playbackSpeed_*timer_.elapsed()/1000.0;
+	}
+	return 0;
 }
 
 void PlaybackStateUpdater::reachedEnd()

@@ -33,7 +33,7 @@ public:
 	static QSharedPointer<Asset> Create(){return QSharedPointer<Asset>(new FlowElement());};
 	
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
-	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
+	QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
 
 	bool addCondition(QSharedPointer<PredicateExpression> predExpr);
 	bool addCondition(QSharedPointer<CompoundExpression> compExpr);

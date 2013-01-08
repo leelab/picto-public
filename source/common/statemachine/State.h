@@ -36,7 +36,8 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
-	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
+	QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
+	QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);
 
 	void addControlElement(QSharedPointer<ControlElement> controlElement);
 

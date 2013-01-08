@@ -42,6 +42,8 @@ public:
 	int currChannel();
 	int currUnit();
 
+public slots:
+	void setBehavioralTime(double time);
 private:
 	void setupUi();
 	QTime neuralDataTimer_;
@@ -76,6 +78,7 @@ private:
 	QString latestRunningPath_;
 
 	int latestNeuralDataId_;
+	double behavTime_;
 
 private slots:
 	

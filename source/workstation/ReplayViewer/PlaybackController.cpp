@@ -17,7 +17,6 @@ using namespace Picto;
 
 PlaybackController::PlaybackController()
 {
-	expRunning_ = false;
 	pixmapVisualTarget_ = QSharedPointer<Picto::PixmapVisualTarget>(new Picto::PixmapVisualTarget(true,800,600));
 	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("BNC0")));
 	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("PAR0")));
@@ -38,29 +37,22 @@ PlaybackController::~PlaybackController()
 QString PlaybackController::loadSession(QString filename)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Load,filename));
-	//stop();
-	//playbackUpdater_->setFile(filename);
-	//QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(playbackUpdater_->getDesignRoot());
-	//if(!newDesignRoot)
-	//	return "Failed to load session design.  This could happen if the design did not include any runs.";
-	//QSharedPointer<Design> design = newDesignRoot->getDesign("Experiment",0);
-	//if(!design)
-	//{
-	//	return "Failed to load experiment from session.";
-	//}
-	//if(!design->compiles())
-	//{
-	//	return "Session's experiment does not compile.";
-	//}
-	//designRoot_ = newDesignRoot;
-	//emit runsUpdated(playbackUpdater_->getRuns());
 	return "";
 }
 
 void PlaybackController::setRunSpeed(double value)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeSpeed,value));
-	//playbackUpdater_->setPlaybackSpeed(runSpeed_);
+}
+
+void PlaybackController::setUserToOperator()
+{
+	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeUserType,PlaybackCommand::Operator));
+}
+
+void PlaybackController::setUserToSubject()
+{
+	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeUserType,PlaybackCommand::TestSubject));
 }
 
 QSharedPointer<Picto::VisualTarget> PlaybackController::getVisualTarget()
@@ -117,72 +109,6 @@ void PlaybackController::selectRun(int index)
 	//playbackUpdater_->loadRun(index);
 }
 
-bool PlaybackController::waitingForTransition()
-{
-	PlaybackControllerData::Status status = data_.getStatus();
-	PlaybackControllerData::Status nextStatus = data_.getNextStatus();
-	if(status == nextStatus)
-		return false;
-	switch(status)
-	{
-	case PlaybackControllerData::None:
-		switch(nextStatus)
-		{
-		case PlaybackControllerData::Idle:
-			break;
-		default:
-			Q_ASSERT_X(false,"PlaybackController",QString("Transition from: %1 to %2 not defined.").arg(status).arg(nextStatus).toAscii());
-		}
-		break;
-	case PlaybackControllerData::Idle:
-		switch(nextStatus)
-		{
-		case PlaybackControllerData::Stopped:
-			if(expRunning_)
-				return true;
-			break;
-		default:
-			Q_ASSERT_X(false,"PlaybackController",QString("Transition from: %1 to %2 not defined.").arg(status).arg(nextStatus).toAscii());
-		}
-		break;
-	case PlaybackControllerData::Stopped:
-		switch(nextStatus)
-		{
-		case PlaybackControllerData::Idle:
-			break;
-		case PlaybackControllerData::Running:
-		case PlaybackControllerData::Paused:
-			if(!expRunning_)
-				return true;
-			break;
-		default:
-			Q_ASSERT_X(false,"PlaybackController",QString("Transition from: %1 to %2 not defined.").arg(status).arg(nextStatus).toAscii());
-		}
-		break;
-	case PlaybackControllerData::Running:
-	case PlaybackControllerData::Paused:
-		switch(nextStatus)
-		{
-		case PlaybackControllerData::Idle:
-		case PlaybackControllerData::Stopped:
-			if(expRunning_)
-				return true;
-			break;
-		case PlaybackControllerData::Running:
-		case PlaybackControllerData::Paused:
-			if(!expRunning_)
-				return true;
-			break;
-		default:
-			Q_ASSERT_X(false,"PlaybackController",QString("Transition from: %1 to %2 not defined.").arg(status).arg(nextStatus).toAscii());
-		}
-		break;
-	}
-	data_.setStatus(nextStatus);
-	emit statusChanged(nextStatus);
-	return false;
-}
-
 void PlaybackController::newRunLength(double length)
 {
 	data_.setRunLength(length);
@@ -197,11 +123,13 @@ void PlaybackController::setCurrTime(double time)
 void PlaybackController::setup()
 {
 	//set up the engine
+	bool operatorWasUser = true;
+	if(engine_)
+		operatorWasUser = engine_->operatorIsUser();
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
-	engine_->setOperatorAsUser(true);
+	engine_->setOperatorAsUser(operatorWasUser);
 	engine_->syncInitPropertiesForSlave(false);
-	connect(engine_.data(),SIGNAL(slaveTimeChanged(double)),this,SLOT(setCurrTime(double)));
 
 	//Setup playback update system
 	double playbackSpeed = 1.0;
@@ -209,7 +137,7 @@ void PlaybackController::setup()
 		playbackSpeed = playbackUpdater_->getPlaybackSpeed();
 	playbackUpdater_ = QSharedPointer<PlaybackStateUpdater>(new PlaybackStateUpdater());
 	playbackUpdater_->setPlaybackSpeed(playbackSpeed);
-	engine_->setStateUpdater(playbackUpdater_);
+	connect(playbackUpdater_.data(),SIGNAL(framePresented(double)),this,SLOT(setCurrTime(double)));
 	connect(playbackUpdater_.data(),SIGNAL(loadedTo(double,double)),this,SIGNAL(loadedTo(double,double)));
 	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(runLoading(bool)));
 	connect(playbackUpdater_.data(),SIGNAL(newRun(double)),this,SIGNAL(newRunLength(double)));
@@ -241,16 +169,14 @@ void PlaybackController::setup()
 	//set up reward controller
 	QSharedPointer<Picto::RewardController> rewardController;
 	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
+	rewardController->discardOverlapingRewards(true);
 	engine_->setRewardController(rewardController);
 
-	//renderingTarget_->showSplash();
 	data_.setAsSetup();
 }
 
 void PlaybackController::update()
 {
-	if(waitingForTransition())
-		return;
 	PlaybackControllerData::Status status = data_.getStatus();
 	PlaybackCommand cmd = data_.getNextCommand();
 	switch(status)
@@ -264,11 +190,15 @@ void PlaybackController::update()
 		case PlaybackCommand::Load:
 			{
 				setup();
-				playbackUpdater_->setFile(cmd.commandData.toString());
+				if(!playbackUpdater_->setFile(cmd.commandData.toString()))
+				{
+					emit error("Failed to load session design.");
+					break;
+				}
 				QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(playbackUpdater_->getDesignRoot());
 				if(!newDesignRoot)
 				{
-					emit error("Failed to load session design.  This could happen if the design did not include any runs.");
+					emit error("Failed to load session design.");
 					break;
 				}
 				QSharedPointer<Design> design = newDesignRoot->getDesign("Experiment",0);
@@ -285,11 +215,25 @@ void PlaybackController::update()
 				designRoot_ = newDesignRoot;
 				data_.setRunLength(playbackUpdater_->getRunLength());
 				emit runsUpdated(playbackUpdater_->getRuns());
+
+				//Set up SlaveExperimentDriver to connect StateUpdater and Experiment
+				QSharedPointer<Picto::Experiment> currExp = design->getRootAsset().staticCast<Experiment>();
+				if(!currExp || !currExp->getTaskNames().size())
+				{
+					break;
+				}
+				experiment_ = currExp;
+				experiment_->setEngine(engine_);
+				slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(experiment_,playbackUpdater_));
+
 				data_.setNextStatus(PlaybackControllerData::Stopped);
 			}
 			break;
 		case PlaybackCommand::ChangeSpeed:
 			playbackUpdater_->setPlaybackSpeed(cmd.commandData.toDouble());
+			break;
+		case PlaybackCommand::ChangeUserType:
+			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
 			break;
 		}
 		break;
@@ -298,19 +242,12 @@ void PlaybackController::update()
 		{
 		case PlaybackCommand::Play:
 			playbackUpdater_->play();
-			QTimer::singleShot(0,this,SLOT(runExperiment()));
 			data_.setNextStatus(PlaybackControllerData::Running);
 			break;
 		case PlaybackCommand::Pause:
-			playbackUpdater_->pause();
-			QTimer::singleShot(0,this,SLOT(runExperiment()));
-			data_.setNextStatus(PlaybackControllerData::Paused);
-			break;
-		case PlaybackCommand::Jump:
-			playbackUpdater_->jumpToTime(cmd.commandData.toDouble());
-			playbackUpdater_->pause();
-			QTimer::singleShot(0,this,SLOT(runExperiment()));
-			data_.setNextStatus(PlaybackControllerData::Paused);
+			playbackUpdater_->play();
+			data_.setNextStatus(PlaybackControllerData::Running);
+			data_.pushCommand(cmd,false);
 			break;
 		case PlaybackCommand::Load:
 			data_.setNextStatus(PlaybackControllerData::Idle);
@@ -324,6 +261,9 @@ void PlaybackController::update()
 		case PlaybackCommand::ChangeSpeed:
 			playbackUpdater_->setPlaybackSpeed(cmd.commandData.toDouble());
 			break;
+		case PlaybackCommand::ChangeUserType:
+			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
+			break;
 		}
 		break;
 	case PlaybackControllerData::Running:
@@ -331,38 +271,35 @@ void PlaybackController::update()
 		switch(cmd.commandType)
 		{
 		case PlaybackCommand::Play:
-			playbackUpdater_->play();
-			engine_->play();
-			data_.setNextStatus(PlaybackControllerData::Running);
+			if(status == PlaybackControllerData::Paused)
+			{
+				playbackUpdater_->play();
+				data_.setNextStatus(PlaybackControllerData::Running);
+			}
 			break;
 		case PlaybackCommand::Pause:
-			playbackUpdater_->pause();
-			data_.setNextStatus(PlaybackControllerData::Paused);
+			if(status == PlaybackControllerData::Running)
+			{
+				playbackUpdater_->pause();
+				data_.setNextStatus(PlaybackControllerData::Paused);
+			}
 			break;
 		case PlaybackCommand::Stop:
-			engine_->stop();
 			playbackUpdater_->stop();
 			data_.setCurrTime(0.0);
 			data_.setNextStatus(PlaybackControllerData::Stopped);
 			break;
 		case PlaybackCommand::Jump:
-			if(cmd.commandData.toDouble() < data_.getCurrTime())
-			{
-				engine_->stop();
-				QTimer::singleShot(0,this,SLOT(runExperiment()));
-			}
 			playbackUpdater_->jumpToTime(cmd.commandData.toDouble());
 			data_.setNextStatus(status);
 			break;
 		case PlaybackCommand::Load:
-			engine_->stop();
 			playbackUpdater_->stop();
 			data_.setCurrTime(0.0);
 			data_.setNextStatus(PlaybackControllerData::Idle);
 			data_.pushCommand(cmd,false);
 			break;
 		case PlaybackCommand::ChangeRun:
-			engine_->stop();
 			playbackUpdater_->stop();
 			data_.setCurrTime(0.0);
 			data_.setNextStatus(PlaybackControllerData::Stopped);
@@ -371,29 +308,19 @@ void PlaybackController::update()
 		case PlaybackCommand::ChangeSpeed:
 			playbackUpdater_->setPlaybackSpeed(cmd.commandData.toDouble());
 			break;
+		case PlaybackCommand::ChangeUserType:
+			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
+			break;
 		}
+		playbackUpdater_->updateState();
 		break;
 	}
-}
-
-void PlaybackController::runExperiment()
-{
-	if(expRunning_)
+	PlaybackControllerData::Status nextStatus = data_.getNextStatus();
+	if(status != nextStatus)
 	{
-		QTimer::singleShot(0,this,SLOT(runExperiment()));
-		return;
+		data_.setStatus(data_.getNextStatus());
+		emit statusChanged(nextStatus);
 	}
-	QSharedPointer<Design> design = designRoot_->getDesign("Experiment",0);
-	QSharedPointer<Picto::Experiment> currExp = design->getRootAsset().staticCast<Experiment>();
-	if(!currExp || !currExp->getTaskNames().size())
-	{
-		return;
-	}
-	experiment_ = currExp;
-	experiment_->setEngine(engine_);
-	expRunning_ = true;
-	experiment_->runTask(experiment_->getTaskNames()[0]);
-	expRunning_ = false;
 }
 
 

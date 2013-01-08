@@ -24,7 +24,9 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
-	QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
+	QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
+	QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);
+
 	virtual QString getUITemplate(){return "PausePoint";};
 	virtual QString assetType(){return "PausePoint";};
 

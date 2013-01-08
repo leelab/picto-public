@@ -33,71 +33,11 @@ bool FileSessionLoader::setFile(QString path)
 		return false;
 	}
 
-	////We succesfully opened the database.  Move it to cache.
-	//QString cacheDatabaseName = connectionName+"_cache";
-	//QSqlDatabase cacheDb = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
-	//cacheDb.setDatabaseName(":memory:");
-	//if(!cacheDb.open())
-	//{
-	//	qDebug("Error: Could not open cache database.");
-	//	return false;
-	//}
-	//QSqlQuery Q(cacheDb);
-	////Set the temp_store setting: 
-	////The temp_store values specifies the type of database back-end to use for temporary files. 
-	////The choices are DEFAULT (0), FILE (1), and MEMORY (2). The use of a memory database for 
-	////temporary tables produces signifigant savings. DEFAULT specifies the compiled-in default, 
-	////which is FILE unless the source has been modified.
-	//if(!Q.exec("PRAGMA temp_store = 2"))
-	//{
-	//	qDebug("Error: Could not set the Sqlite database to use RAM for temporary tables.");
-	//	return false;
-	//}
-
-	//Q.prepare("ATTACH DATABASE :databaseName AS diskdb");
-	//Q.bindValue(":databaseName", newSession.databaseName());
-	//if(!Q.exec())
-	//{
-	//	qDebug("Error: Could not attach cache database and file database.");
-	//	return false;
-	//}
-	//cacheDb.transaction();
-	//foreach(QString table,newSession.tables())
-	//{
-	//	Q.prepare(QString("CREATE TABLE %1 AS SELECT * FROM %2")
-	//		.arg(table)
-	//		.arg(QString("diskdb.")+table) );
-	//	if(!Q.exec())
-	//	{
-	//		qDebug("Error: Could not create table: " + table.toAscii() + " in cache database.");
-	//		return false;
-	//	}
-	//	//Q.prepare(QString("INSERT INTO %1 SELECT * FROM %2")
-	//	//	.arg(table)
-	//	//	.arg(QString("diskdb.")+table) );		
-	//	//if(!Q.exec())
-	//	//{
-	//	//	qDebug("Error: Could not load data into table: " + table .toAscii() + " in cache database.");
-	//	//	return false;
-	//	//}
-	//}
-	//if(!cacheDb.commit())
-	//{
-	//	qDebug("Error: Could not load data into cache database.");
-	//	return false;
-	//}
-	//if(!Q.exec("DETACH DATABASE diskdb"))
-	//{
-	//	qDebug("Error: Could not detach cache database and file database.");
-	//	return false;
-	//}
-	//newSession.close();
-	//QSqlDatabase::removeDatabase(connectionName);
-	//
-	//session_ = cacheDb;
 	session_ = newSession;
 
 	//Intialize Object Data
+	if(!loadRunData())
+		return false;
 	if(!getSignalInfo())
 		return false;
 	if(!loadDesignDefinition())
@@ -115,8 +55,7 @@ QSharedPointer<DesignRoot> FileSessionLoader::getDesignRoot()
 QStringList FileSessionLoader::getRunNames()
 {
 	QStringList returnVal;
-	QVector<FileSessionLoader::RunData> runs = loadRunData();
-	foreach(RunData runData,runs)
+	foreach(RunData runData,runs_)
 	{
 		returnVal.append(runData.name_);
 	}
@@ -127,20 +66,18 @@ bool FileSessionLoader::loadRun(int index)
 {
 	if(runIndex_ == index)
 		return true;
-	QVector<FileSessionLoader::RunData> runs = loadRunData();
-	if(index < 0 || index >= runs.size())
+	if(index < 0 || index >= runs_.size())
 		return false;
 	runIndex_ = index;
-	sessionState_->startNewRun(runs[index].startTime_,runs[index].endTime_);
+	sessionState_->startNewRun(runs_[index].startTime_,runs_[index].endTime_);
 	return true;
 }
 
 double FileSessionLoader::runDuration(int index)
 {
-	QVector<FileSessionLoader::RunData> runs = loadRunData();
-	if(index < 0 || index >= runs.size())
+	if(index < 0 || index >= runs_.size())
 		return 0;
-	return runs[index].endTime_-runs[index].startTime_;
+	return runs_[index].endTime_-runs_[index].startTime_;
 }
 
 double FileSessionLoader::currRunDuration()
@@ -148,9 +85,9 @@ double FileSessionLoader::currRunDuration()
 	return runDuration(runIndex_);
 }
 
-QVector<FileSessionLoader::RunData> FileSessionLoader::loadRunData()
+bool FileSessionLoader::loadRunData()
 {
-	QVector<RunData> runs;
+	runs_.clear();
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
 
@@ -162,7 +99,7 @@ QVector<FileSessionLoader::RunData> FileSessionLoader::loadRunData()
 	if(!success)
 	{
 		qDebug("Failed to select data from runs table with error: " + query.lastError().text().toAscii());
-		return runs;
+		return false;
 	}
 
 	RunData run;
@@ -180,10 +117,12 @@ QVector<FileSessionLoader::RunData> FileSessionLoader::loadRunData()
 		run.startTime_ = query.value(6).toDouble();
 		run.endTime_ = query.value(7).toDouble();
 		//Add RunData to the runs_ list.
-		runs.append(run);
+		runs_.append(run);
 	}
 	query.finish();
-	return runs;
+	if(runs_.size() == 0)
+		return false;
+	return true;
 }
 
 bool FileSessionLoader::loadInitData(double upTo)

@@ -54,8 +54,8 @@ public:
 	//All StateMachineElements must implement a run function that returns a string
 	//The returned string should correspond to a result contained by the element
 	virtual QString run(QSharedPointer<Engine::PictoEngine> engine) = 0;
-	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine) = 0;
-	static void resetSlaveElements(QString time = "0.000000") { lastTransitionTime_ = time; };
+	virtual QString slaveRun(QSharedPointer<Engine::PictoEngine> engine) = 0;
+	virtual QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);
 	
 	//bool addResult(QSharedPointer<Result> result);
 	//QStringList getResultList();
@@ -79,8 +79,6 @@ protected:
 	//QMap<QString,QSharedPointer<Result>> results_;
 
 	QPoint layoutPosition_;
-
-	static QString lastTransitionTime_;
 };
 
 

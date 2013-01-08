@@ -69,6 +69,7 @@ void NeuralViewer::initialize()
 	axisMax_ = NEURAL_PLOT_WINDOW_SECS;
 	lfpPlotNeedsUpdate_ = true;
 	spikePlotNeedsUpdate_ = true;
+	behavTime_ = 0;
 }
 
 void NeuralViewer::deinitialize()
@@ -179,7 +180,7 @@ void NeuralViewer::replot()
 	bool marksAdded_ = false;
 	if(engine_)
 	{
-		double currTime = engine_->getLastTimeStateDataRequested();
+		double currTime = behavTime_;
 		//Fliping scale (keeps moving up by NEURAL_PLOT_WINDOW_SECS
 		if(currTime > axisMax_)
 		{
@@ -196,7 +197,7 @@ void NeuralViewer::replot()
 		spikeCurrTimeBar_->setXValue(currTime);
 
 		//Update state machine markers
-		QString runningPath = engine_->getRunningPath();
+		QString runningPath = "";//engine_->getRunningPath();
 		if(!runningPath.isEmpty() && runningPath != latestRunningPath_)
 		{
 			latestRunningPath_ = runningPath;
@@ -355,6 +356,11 @@ int NeuralViewer::currChannel()
 int NeuralViewer::currUnit()
 {
 	return unitBox_->itemData(unitBox_->currentIndex()).toInt();
+}
+
+void NeuralViewer::setBehavioralTime(double time)
+{
+	behavTime_ = time;
 }
 
 //! \brief Sets up the user interface portions of the GUI

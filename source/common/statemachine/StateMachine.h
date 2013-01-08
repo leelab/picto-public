@@ -76,7 +76,7 @@ public:
 	//bool validateStateMachine();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
-	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
+	virtual QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
 
 	//bool initScripting(QScriptEngine &qsEngine);
 

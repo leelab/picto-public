@@ -36,7 +36,7 @@ QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 
 		if(engine->slaveMode())
 		{
-			result = stateMachine_->runAsSlave(engine);
+			result = stateMachine_->slaveRun(engine);
 		}
 		else
 		{

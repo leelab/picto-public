@@ -51,7 +51,7 @@ signals:
 
 private:
 	Scene();
-	QMutex mutex_;
+	QSharedPointer<QMutex> mutex_;
 	QSharedPointer<Engine::PictoEngine> engine_;
 	QColor backgroundColor_;
 	QList<QSharedPointer <VisualElement> > visualElements_;

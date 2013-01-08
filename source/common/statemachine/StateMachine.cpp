@@ -96,7 +96,7 @@ QSharedPointer<Asset> StateMachine::Create()
 /*!	\brief Sets the machine in a specific state
  *	
  *	Calling this function will place the state machine into the passed in state.
- *	Then, when run() or runAsSlave() is called, the machine will start in that
+ *	Then, when run() or slaveRun() is called, the machine will start in that
  *	state, rather than in the initial state.  This is used when we are joining 
  *  state machines that are already running.
  */
@@ -143,25 +143,24 @@ bool StateMachine::jumpToState(QStringList path, QString state)
 
 /*	\brief The "run" function
  *
- *	Since runAsSlave(), and run() are so similar, they both just call into this private
+ *	Since slaveRun(), and run() are so similar, they both just call into this private
  *	run function.  This saves us some serious code repetition.
  */
 QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave)
 {
-	if(!slave)
-		resetScriptableValues();
+	resetScriptableValues();
 	path_.append(getName());
 	QString pathStr = path_.join("::");
 	//qDebug(QString("Entering: %1").arg(path_.join("::")).toAscii());
-	if(!initScripting(!slave && engine->operatorIsUser()))	//only debug when in the test viewer
+	if(!initScripting(engine->operatorIsUser()))	//only debug when in the test viewer
 	{
 		//! \TODO Make some sort of intelligent error reporting...
 		return "scriptingError";
 	}
 
 	//Figure out which scripts we will be running
-	bool runEntryScript = !slave && !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
-	bool runExitScript = !slave && !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
+	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+	bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
 
 	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
 	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
@@ -203,124 +202,35 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 			currElement_.dynamicCast<StateMachine>()->setPath(path_);
 		}
 
-		if((currElement_->type() == "Reward") && (getLevel() == StateMachineLevel::Trial) && !slave)
+		if((currElement_->type() == "Reward") && (getLevel() == StateMachineLevel::Trial))
 		{
-			//if((getLevel() == StateMachineLevel::Trial) && !slave)
-			//{
-				QSharedPointer<CommandChannel> dataChan = engine->getDataCommandChannel();
-				if(!dataChan.isNull())
-					dataChan->processResponses(2000);
-				//engine->generateEvent(trialEventCode_);
-				//sendTrialEventToServer(engine);
-
-
-				////Deal with all of the left-over commands
-				//if(!cleanupRegisteredCommands(engine))
-				//	handleLostServer(engine);
-			//}
-			//if(slave)
-			//{
-				//Since the result state takes a long time to run (due to issuing of rewards)
-				//we're going to assume that we are in synch, and run it first.  Then we'll check
-				//to make sure that the master engine is done (and that we didn't screw up)
-				//QString masterResult;
-				//QString slaveResult;
-				//slaveResult = currElement_->runAsSlave(engine);
-				//result = currElement_->runAsSlave(engine);
-
-				//while(masterResult.isEmpty())
-				//	masterResult = getMasterStateResult(engine);
-				//Q_ASSERT(masterResult == slaveResult);
-				//
-				//result = masterResult;
-				//break;
-			//}
-			//else
-			//{
-			//	result = currElement_->run(engine);
-			//	//break;
-			//}
+			QSharedPointer<CommandChannel> dataChan = engine->getDataCommandChannel();
+			if(!dataChan.isNull())
+				dataChan->processResponses(2000);
 		}
-		//else
-		//{
-			if(slave)
-			{
-				if(dontRunElement_)
-				{
-					Q_ASSERT(false);
-					while(result.isEmpty())
-					{
-						engine->updateCurrentStateFromServer();
-						result = engine->getServerPathUpdate();
-					}
+		
+		result = currElement_->run(engine);
 
-					dontRunElement_ = false;
-				}
-				else
-				{
-					result = currElement_->runAsSlave(engine);
-				}
-			}
-			else
-				result = currElement_->run(engine);
-
-			if(result == "EngineAbort")
-				break;
-		//}
+		if(result == "EngineAbort")
+			break;
+		
 
 		//Find the transition from our current source with a SourceResult string that matches the result
 		//Yeah, this is kind of ugly...
 		nextElementName = "";
-		if(!slave)
+		bool foundTransition = false;
+		foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
 		{
-			bool foundTransition = false;
-			foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
+			if(tran->getSourceResult() == result)
 			{
-				if(tran->getSourceResult() == result)
-				{
-					nextElementName = tran->getDestination();
-					engine->addStateTransitionForServer(tran);
-					//sendStateDataToServer(tran, engine);
-					foundTransition = true;
-					break;
-				}
-			}
-			Q_ASSERT(foundTransition);
-		}
-		else
-		{	//We're a Slave
-			//Get path to destination
-			int lastSepIndex = result.lastIndexOf("::");
-			QString destinationPath = result.left(lastSepIndex);
-			QString destination = result.mid(lastSepIndex+2);
-			qDebug(destination.toAscii());
-			if(destinationPath == pathStr)
-				nextElementName = destination;
-			else if(destinationPath.startsWith(pathStr))
-			{
-				//The destination is in an element somewhere below this statemachine.
-				//Call jumpToState to set this element and all elements in the path below 
-				//to have the correct next element. (skipping the initialelement), 
-				//then continue the loop.
-				QStringList descendantPath = destinationPath.mid(pathStr.length()+2).split("::");
-				nextElementName = descendantPath.first();
-				bool rc = jumpToState(descendantPath,destination);
-				//The jump to state function sets this elements "ignoreInitialElement"
-				//value to true, which we don't want in this case because we aren't
-				//leave this loop and nothing will set it back to false.  For that
-				//reason we do it here.
-				ignoreInitialElement_ = false;	
-				Q_ASSERT_X(rc,"StateMachine::runPrivate",QString("Could not jump to \"%1\" from StateMachine at \"%2\"").arg(descendantPath.join("::")).arg(pathStr).toAscii());
-				currElementName = nextElementName;
-				continue;
-			}
-			else	
-				//The path is not below this statemachine.  
-				//Return the result to the level above and it will check if the path is below it.
+				nextElementName = tran->getDestination();
+				engine->addStateTransitionForServer(tran);
+				//sendStateDataToServer(tran, engine);
+				foundTransition = true;
 				break;
-			
-
+			}
 		}
+		Q_ASSERT(foundTransition);
 		// If we transitioned to a result, then we're done and should return that result
 		if(results_.contains(nextElementName))
 		{
@@ -362,9 +272,16 @@ QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 	return runPrivate(engine, false);
 }
 
-QString StateMachine::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+QString StateMachine::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
-	return runPrivate(engine, true);
+	QString result;
+	if(!initScripting(false))
+	{
+		//! \TODO Make some sort of intelligent error reporting...
+		return "scriptingError";
+	}
+
+	return result;
 }
 
 ///*!	\brief Sets up the script engines for this state machine

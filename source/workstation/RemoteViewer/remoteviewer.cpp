@@ -42,7 +42,6 @@
 #include "../../common/storage/LFPDataUnitPackage.h"
 #include "../../common/storage/directordata.h"
 #include "../../common/compositor/OutputSignalWidget.h"
-#include "RemoteStateUpdater.h"
 #include "../propertyframe.h"
 
 #include "../../common/memleakdetect.h"
@@ -99,13 +98,9 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 
 	currState_ = InitState;
 	stateTrigger_ = Disconnected;
-	engineTrigger_ = NoEngineTrigger;
 	stateUpdateTimer_ = new QTimer(this);
 	stateUpdateTimer_->setInterval(0);
 	connect(stateUpdateTimer_,SIGNAL(timeout()),this,SLOT(updateState()));
-	engineUpdateTimer_ = new QTimer(this);
-	engineUpdateTimer_->setInterval(0);
-	connect(engineUpdateTimer_,SIGNAL(timeout()),this,SLOT(updateEngine()));
 	updatingState_ = false;
 	zoomChanged_ = false;
 	zoomValue_ = 1.0;
@@ -118,20 +113,9 @@ RemoteViewer::~RemoteViewer()
  *	Each time this function is called, it checks for state change triggers.  If they have occured, the
  *	state is changed, the new state's enter state function is called, and the new states runState function
  *	is called continuously until the next state change.
- *	Note: If we were to actually start an experiment running from inside this function, the function could not be
- *	entered again until the experiment ended.  For this reason we have an external engine state machine
- *	that runs separately from this one.  If the engine is waiting to start, this 
- *	function exits without doing anything.  In this way, any actions to start the engine from
- *	within this function are guaranteed to be processed before the next time the function operates.
-
  */
 void RemoteViewer::updateState()
 {
-	if(engineTrigger_ == StartEngine)
-	{	//If the engine has been triggered to start or stop, we must always wait for it
-		//to do that before updating our own state
-		return;
-	}
 	updatingState_ = true;
 	updateComponentLists();
 	ViewerState nextState = currState_;
@@ -271,99 +255,8 @@ void RemoteViewer::updateState()
 	if(stateTrigger_ != NoViewerTrigger)
 		endState();
 	updateStatus();
+	updater_->updateState();
 	updatingState_ = false;
-}
-
-/*! \brief This is the main function for the engine's simple state machine.
- *	As described in updateState, we need a separate state machine for engine
- *	activity so that starting an experiment doesn't effectively stop the operation
- *	of the main state machine.  The function must never be called from within
- *	updateState() to prevent that same problem, which is why it returns right away
- *	if an updateState() call is in progress.  The function waits for a StartEngine
- *	trigger, then changes the trigger to ContinueEngine and starts the engine at the current 
- *  state of the pictoDirector's experiment.  When an experiment stops, the function checks 
- *  to see if the trigger changed back to StartEngine which implies that the engine should
- *  be restarted on the next updateEngine call.  If there is no such trigger, the trigger is
- *  set to NoEngineTrigger.  
- *  Since runState checks to see if the engineTrigger_ is noEngineTrigger, with this system in 
- *  place, even if something goes wrong and the engine exits before a task is done, updateState
- *  will just end up restarting it.
- */
-void RemoteViewer::updateEngine()
-{
-	//We don't want to start running the engine from somewhere within the updateState() function
-	//or else we'll block that function from continuing to operate.  Calling updateState() from 
-	//within this function somewhere is okay because updateState calls don't block for long periods
-	//of time the way the engine does.
-	if(updatingState_)
-		return;
-	if(engineTrigger_ == StartEngine)
-	{
-		engine_->resetLastTimeStateDataRequested();
-		if(!engine_->updateCurrentStateFromServer())
-		{
-			setStatus("Server failed to respond to Current State request",true);
-			return;
-		}
-		QString fullPath = engine_->getServerPathUpdate();
-		int lastSepIndex = fullPath.lastIndexOf("::");
-		QString machinePath = fullPath.left(lastSepIndex);
-		QString initState = fullPath.mid(lastSepIndex+2);
-		if(machinePath.isEmpty())
-		{
-			//There's no where to start the experiment. Abort.
-			engineTrigger_ = NoEngineTrigger;
-			return;
-		}
-		
-		QStringList initStateMachinePath = machinePath.split("::");
-		QString taskName = initStateMachinePath.first();
-
-		//Update the task list box
-		int taskIdx = taskListBox_->findText(taskName);
-		Q_ASSERT_X(taskIdx >= 0,"RemoteViewer::joinSession", "Task name not found in out list of experiments.");
-		taskListBox_->setCurrentIndex(taskIdx);
-		
-		//Set ouselves up so we are synched with the remote director
-		Picto::StateMachine::resetSlaveElements();
-
-		////////////TESTING
-		qDebug()<<"JumpToState "<<initStateMachinePath<<initState;
-
-		if(!activeExperiment_->jumpToState(initStateMachinePath, initState))
-		{
-			////////TESTING
-			Q_ASSERT(false);
-
-			setStatus("Failed to jump into the state machine correctly",true);
-			return;
-		}
-
-		if(!activeExperiment_->jumpToState(initStateMachinePath, initState))
-		{
-			////////TESTING
-			Q_ASSERT(false);
-
-			setStatus("Failed to jump into the state machine correctly",true);
-			return;
-		}
-		taskName = initStateMachinePath.first();
-		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
-		{
-			static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
-		}
-		engineTrigger_ = ContinueEngine;
-		//WARNING:  Nothing after this line will be processed until the task is finished running
-		activeExperiment_->runTask(taskName.simplified().remove(' '));
-		if(engineTrigger_ != StartEngine)
-		{
-			engineTrigger_ = NoEngineTrigger;
-		}
-		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
-		{
-			static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
-		}
-	}
 }
 
 /*! \brief This function is called once per state machine loop.
@@ -664,6 +557,7 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabEnabled(2,false);
 		mainTabbedFrame_->setTabIcon(2,QIcon());
 		taskListBox_->clear();
+		engine_->resetLastTimeStateDataRequested();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
 	case CreatingSession:
@@ -720,6 +614,11 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		activeExpName_->setText(activeDesign_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
+		engine_->resetLastTimeStateDataRequested();
+		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+		{
+			static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+		}
 		generateTaskList();
 		break;
 	case PausedSession:
@@ -746,7 +645,10 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(activeDesign_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
-		syncExperiment();
+		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+		{
+			static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
+		}
 		break;
 	case RunningSession:
 		setStatus(tr("In Session: Running"));
@@ -772,7 +674,10 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(activeDesign_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
-		syncExperiment();
+		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+		{
+			static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
+		}
 		break;
 	case EndingSession:
 		setStatus(tr("Ending Session"));
@@ -802,6 +707,10 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabEnabled(2,false);
 		mainTabbedFrame_->setTabIcon(2,QIcon());
 		taskListBox_->clear();
+		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+		{
+			static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+		}
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
 	}
@@ -853,8 +762,6 @@ void RemoteViewer::init()
 	sessionDataTimer_.restart();
 	//This timer triggers each new run of updateState()
 	stateUpdateTimer_->start();
-	//This timer triggers each new run of updateEngine()
-	engineUpdateTimer_->start();
 	//This timer makes sure that we don't read in old reward duration data just after setting a new value.
 	rewardDurChangeTimer_.restart();
 }
@@ -867,7 +774,6 @@ void RemoteViewer::deinit()
 
 	//Stop the timers so that our state update functions won't get called anymore.
 	stateUpdateTimer_->stop();
-	engineUpdateTimer_->stop();
 }
 
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources
@@ -892,9 +798,10 @@ void RemoteViewer::setupEngine()
 	//set up the engine
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
-	QSharedPointer<RemoteStateUpdater> updater(new RemoteStateUpdater(engineSlaveChannel_));
-	engine_->setStateUpdater(updater);
 	engine_->setOperatorAsUser(true);
+
+	//Set up remote state updater
+	updater_ = QSharedPointer<RemoteStateUpdater>(new RemoteStateUpdater(engineSlaveChannel_));
 
 	//Set up the rendering target
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
@@ -1046,6 +953,7 @@ void RemoteViewer::setupUi()
 
 	//----------Plots---------------
 	neuralDataViewer_ = new NeuralDataViewer(engine_);
+	connect(updater_.data(),SIGNAL(framePresented(double)),neuralDataViewer_,SLOT(setBehavioralTime(double)));
 
 	//--------Run Info--------------
 	currentRunViewer_ = new TaskRunViewer();
@@ -1876,6 +1784,7 @@ bool RemoteViewer::joinSession()
 		activeExperiment_ = activeDesign_->getDesign("Experiment",0)->getRootAsset().staticCast<Experiment>();
 	}
 	activeExperiment_->setEngine(engine_);
+	slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(activeExperiment_,updater_));
 
 	serverChannel_->setSessionId(sessionId_);
 	engineSlaveChannel_->setSessionId(sessionId_);
@@ -1934,9 +1843,6 @@ bool RemoteViewer::disjoinSession()
 	serverChannel_->setSessionId(QUuid());
 	engineSlaveChannel_->setSessionId(QUuid());
 	neuralSlaveChannel_->setSessionId(QUuid());
-	engine_->resetLastTimeStateDataRequested();
-
-
 	return true;
 }
 

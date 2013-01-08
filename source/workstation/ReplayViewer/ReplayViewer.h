@@ -63,6 +63,7 @@ private:
 	ProgressWidget *progress_;
 	QProgressBar *loadProgress_;
 	QComboBox *runs_;
+	QComboBox *userType_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 
 	QToolBar* testToolbar_;
@@ -79,6 +80,7 @@ private slots:
 	void updateLoadTimes(double maxBehavioral,double maxNeural);
 	void updateRunsList(QStringList runs);
 	void setCurrentRun(int index);
+	void setUserType(int index);
 	void percentLoaded(double percent);
 	void jumpRequested(double time);
 	void userChoosingJump(bool starting);

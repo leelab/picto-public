@@ -717,6 +717,8 @@
    <file alias="_signal_value_parameter_8h-source.html">../../../output/documentation/main/html/_signal_value_parameter_8h-source.html</file>
    <file alias="_single_unit_data_store_8cpp-source.html">../../../output/documentation/main/html/_single_unit_data_store_8cpp-source.html</file>
    <file alias="_single_unit_data_store_8h-source.html">../../../output/documentation/main/html/_single_unit_data_store_8h-source.html</file>
+   <file alias="_slave_experiment_driver_8cpp-source.html">../../../output/documentation/main/html/_slave_experiment_driver_8cpp-source.html</file>
+   <file alias="_slave_experiment_driver_8h-source.html">../../../output/documentation/main/html/_slave_experiment_driver_8h-source.html</file>
    <file alias="_software_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_software_compositing_surface_8cpp-source.html</file>
    <file alias="_software_compositing_surface_8h-source.html">../../../output/documentation/main/html/_software_compositing_surface_8h-source.html</file>
    <file alias="_speed_widget_8cpp-source.html">../../../output/documentation/main/html/_speed_widget_8cpp-source.html</file>
@@ -993,6 +995,9 @@
    <file alias="class_picto_1_1_aural_target-members.html">../../../output/documentation/main/html/class_picto_1_1_aural_target-members.html</file>
    <file alias="class_picto_1_1_aural_target.html">../../../output/documentation/main/html/class_picto_1_1_aural_target.html</file>
    <file alias="class_picto_1_1_aural_target.png">../../../output/documentation/main/html/class_picto_1_1_aural_target.png</file>
+   <file alias="class_picto_1_1_auto_data_state-members.html">../../../output/documentation/main/html/class_picto_1_1_auto_data_state-members.html</file>
+   <file alias="class_picto_1_1_auto_data_state.html">../../../output/documentation/main/html/class_picto_1_1_auto_data_state.html</file>
+   <file alias="class_picto_1_1_auto_data_state.png">../../../output/documentation/main/html/class_picto_1_1_auto_data_state.png</file>
    <file alias="class_picto_1_1_behavioral_data_unit-members.html">../../../output/documentation/main/html/class_picto_1_1_behavioral_data_unit-members.html</file>
    <file alias="class_picto_1_1_behavioral_data_unit.html">../../../output/documentation/main/html/class_picto_1_1_behavioral_data_unit.html</file>
    <file alias="class_picto_1_1_behavioral_data_unit.png">../../../output/documentation/main/html/class_picto_1_1_behavioral_data_unit.png</file>

@@ -74,7 +74,7 @@ void RewardState::moveToIndex(PlaybackIndex index)
 	while(nextIndex.isValid() && nextIndex <= index)
 	{
 		curr_++;
-		emit rewardSupplied(data_[curr_].index_.time(),data_[curr_].duration_,data_[curr_].channel_);
+		emit rewardSupplied(globalToRunIndex(data_[curr_].index_).time(),data_[curr_].duration_,data_[curr_].channel_);
 		nextIndex = getNextIndex();
 	}
 }

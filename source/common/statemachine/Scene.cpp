@@ -39,7 +39,7 @@ QSharedPointer<Scene> Scene::createScene()
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 {
 	//Setup rendering routine.
-	QMutexLocker locker(&mutex_);
+	QMutexLocker locker(mutex_.data());
 	engine_ = engine;
 	readyToRender_ = true;
 	
@@ -57,7 +57,7 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 //! Resets the scene
 void Scene::reset()
 {
-	QMutexLocker locker(&mutex_);
+	QMutexLocker locker(mutex_.data());
 	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
 	{
 		visualElement->reset();
@@ -81,25 +81,25 @@ void Scene::reset()
 }
 void Scene::setBackgroundColor(QColor color)
 {
-	QMutexLocker locker(&mutex_);
+	QMutexLocker locker(mutex_.data());
 	backgroundColor_ = color;
 }
 
 void Scene::addVisualElement(QSharedPointer<VisualElement> element)
 {
-	QMutexLocker locker(&mutex_);
+	QMutexLocker locker(mutex_.data());
 	unaddedVisualElements_.push_back(element);
 }
 
 void Scene::addAudioElement(QSharedPointer<AudioElement> element)
 {
-	QMutexLocker locker(&mutex_);
+	QMutexLocker locker(mutex_.data());
 	unaddedAudioElements_.push_back(element);
 }
 
 void Scene::addOutputSignal(QSharedPointer<OutputSignal> element)
 {
-	QMutexLocker locker(&mutex_);
+	QMutexLocker locker(mutex_.data());
 	unaddedOutputSignals_.push_back(element);
 }
 
@@ -117,6 +117,7 @@ Scene::Scene()
 	elapsedTime_.start();
 	firstPhosphorTime_ = -1;
 	readyToRender_ = false;
+	mutex_ = QSharedPointer<QMutex>(new QMutex(QMutex::Recursive));
 	connect(this,SIGNAL(readyForRender(int)),this,SLOT(doRender(int)));
 }
 
@@ -128,7 +129,7 @@ void Scene::doRender(int callerId)
 	float frameZoom = zoom_;
 	staticMutex_.unlock();
 
-	QMutexLocker locker(&mutex_);
+	QMutexLocker locker(mutex_.data());
 	bool sceneRendered = false;
 	do
 	{

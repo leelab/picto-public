@@ -159,30 +159,19 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
  *		   behavioral data received, we advance one frame.  This keeps us from 
  *		   getting ahead of the master engine.
  */
-QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
+QString State::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
-	//resetScriptableValues();
-	sigChannel_ = engine->getSignalChannel("Position");
+	QString result = "";
+	return result;
+}
 
+QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
+{
+	sigChannel_ = engine->getSignalChannel("Position");
 	//Add a cursor for the user input
 	addCursor();
-	
-	//Figure out which scripts we will be running
-	//bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
-	//bool runFrameScript = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
-	//bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
-
-	//QString entryScriptName = getName().simplified().remove(' ')+"Entry";
-	//QString frameScriptName = getName().simplified().remove(' ')+"Frame";
-	//QString exitScriptName = getName().simplified().remove(' ')+"Exit";
-
-	////run the entry script
-	//if(runEntryScript)
-	//	runScript(entryScriptName);
 
 	QString result = "";
-	bool isDone = false;
-
 	//Start up all of the control elements.
 	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
 	//CONTROL TARGETS AS ACTIVE.  WE SHOULD PROBABLY BREAK OUT A FUNCTION TO JUST
@@ -192,42 +181,11 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 		control.staticCast<ControlElement>()->start(engine);
 	}
 
-	//This is the "rendering loop"  It gets run for every frame
-	while(!isDone)
-	{
-		//------ !!!! WARNING !!!! ------
-		//The ordering in this rendering loop is really, really sensitive.
-		//Think long and hard before rearranging code.  If you do rearrange, 
-		//you'll need to test pretty thoroughly.
+	//----------  Draw the scene --------------
+	scene_->render(engine,getAssetId());
 
-		//In slave mode, we always process events
-		QCoreApplication::processEvents();
-
-		//----------  Draw the scene --------------
-		scene_->render(engine,getAssetId());
-
-		//---------   Erase the latest cursor values (This happens in master when data is sent to server)
-		sigChannel_->getValues();
-
-		//--------- Check for master state change ------------
-
-		if(!engine->updateCurrentStateFromServer())
-		{	//The server connection has been lost
-			//engine->stop();
-		}
-		result = engine->getServerPathUpdate();
-		if(!result.isEmpty())
-			isDone = true;
-
-		////------ Check for engine stop commands ---------------
-		////This has to be done first, otherwise if we are caught up with the master, 
-		////we'll never check for a stop
-		if(checkForEngineStop(engine))
-		{
-			isDone = true;
-			result = "EngineAbort";
-		}
-	}
+	//---------   Erase the latest cursor values (This happens in master when data is sent to server)
+	sigChannel_->getValues();
 
 	//Stop all of the control elements
 	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
@@ -237,10 +195,6 @@ QString State::runAsSlave(QSharedPointer<Engine::PictoEngine> engine)
 	{
 		control.staticCast<ControlElement>()->stop(engine);
 	}
-	////run the exit script
-	//if(runExitScript)
-	//	runScript(exitScriptName);
-
 	return result;
 }
 

@@ -43,7 +43,7 @@ protected:
 		double endTime_;
 	};
 
-	virtual QVector<RunData> loadRunData();
+	virtual bool loadRunData();
 	virtual bool loadInitData(double upTo);
 	virtual double loadBehavData(double after,double to,double subtractTime);
 	virtual double loadNeuralData(double after,double to,double subtractTime);
@@ -60,6 +60,7 @@ private:
 		double samplePeriod_;
 	};
 	QVector<SigData> sigs_;
+	QVector<RunData> runs_;
 	double dataBuffer_;
 	QSharedPointer<DesignRoot> designRoot_;
 	QHash<int,bool> obsoleteAssetIds_;

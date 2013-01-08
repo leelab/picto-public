@@ -35,7 +35,7 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
-	virtual QString runAsSlave(QSharedPointer<Engine::PictoEngine> engine);
+	virtual QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
 
 	void setScript(QString script);
 

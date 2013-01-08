@@ -49,6 +49,7 @@ public:
 	virtual ~RewardController();
 
 	bool setRewardVolume(unsigned int channel, float volume);
+	void discardOverlapingRewards(bool doIt);
 
 	int getChannelCount() { return channelCount_; };
 	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards();
@@ -108,6 +109,7 @@ private:
 	void appendDeliveredRewards(QSharedPointer<RewardDataUnit> rewardUnit);
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
 	Timestamper stamper_;
+	bool discardOverlap_;
 
 
 };

@@ -10,12 +10,16 @@
 
 namespace Picto {
 
-	QString StateMachineElement::lastTransitionTime_;
 
 StateMachineElement::StateMachineElement()
 {
 	//DefinePlaceholderTag("Results");
 	//AddDefinableObjectFactory("Result",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Result::Create))) );
+}
+
+QString StateMachineElement::slaveRenderFrame(QSharedPointer<Engine::PictoEngine>)
+{
+	return "";
 }
 
 QPoint StateMachineElement::getDisplayLayoutPosition()
