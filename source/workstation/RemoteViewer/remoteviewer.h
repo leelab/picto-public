@@ -109,14 +109,6 @@ private:
 		EndSessionRequest,
 		SessionEnded
 	} stateTrigger_;
-
-	enum EngineTrigger
-	{
-		NoEngineTrigger,
-		ContinueEngine,
-		StartEngine,
-	} engineTrigger_;
-
 	
 	QTimer *stateUpdateTimer_;
 	QString initState_;

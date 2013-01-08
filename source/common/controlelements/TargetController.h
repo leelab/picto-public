@@ -56,6 +56,9 @@ public:
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 	void stop(QSharedPointer<Engine::PictoEngine> engine);
 
+	void activateTargets();
+	void deactivateTargets();
+
 	int getFixationTime(){return propertyContainer_->getPropertyValue("FixationTime").toInt();}; 
 	void setFixationTime(int time){propertyContainer_->setPropertyValue("FixationTime",time);};
 	int getTotalTime(){return propertyContainer_->getPropertyValue("TotalTime").toInt();};

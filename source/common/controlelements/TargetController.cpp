@@ -56,14 +56,24 @@ void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 	targetAcquired_ = false;
 	waitingForReacquisition_ = false;
 	initialAcquisitionOccurred_ = false;
-	Q_ASSERT(!controlTarget_.isNull());
-	controlTarget_.toStrongRef()->setActive(true);
+	activateTargets();
 
 	//We call isDone to initialize everything
 	isDone(engine);
 }
 
 void TargetController::stop(QSharedPointer<Engine::PictoEngine> engine)
+{
+	deactivateTargets();
+}
+
+void TargetController::activateTargets()
+{
+	Q_ASSERT(!controlTarget_.isNull());
+	controlTarget_.toStrongRef()->setActive(true);
+}
+
+void TargetController::deactivateTargets()
 {
 	Q_ASSERT(!controlTarget_.isNull());
 	controlTarget_.toStrongRef()->setActive(false);

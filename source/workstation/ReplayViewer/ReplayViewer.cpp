@@ -200,18 +200,18 @@ void ReplayViewer::playbackStatusChanged(int status)
 	switch(status)
 	{
 	case PlaybackControllerData::Idle:
-			progress_->setSliderProgress(0);
 			progress_->setHighlightRange(0,0,0);
-			progress_->setHighlightRange(1,0,0);
+			progress_->setHighlightRange(1,0,0,true);
+			progress_->setSliderProgress(0);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(false);
 			playbackController_->getRenderingTarget()->showSplash();
 		break;
 		case PlaybackControllerData::Stopped:
-			progress_->setSliderProgress(0);
 			progress_->setHighlightRange(0,0,0);
-			progress_->setHighlightRange(1,0,0);
+			progress_->setHighlightRange(1,0,0,true);
+			progress_->setSliderProgress(0);
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(true);

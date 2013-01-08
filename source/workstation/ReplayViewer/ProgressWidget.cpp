@@ -84,8 +84,10 @@ void ProgressWidget::setMaximum(double max)
 {
 	progSlider_->setMaximum(max*TICKSPERSEC);
 	maxProgress_->setText(QString::number(max,'f',LCDPRECISION));
+	bool needsHUpdate = max != max_;
 	max_ = max;
-	updateHighlights();
+	if(needsHUpdate)
+		updateHighlights(true);
 }
 
 double ProgressWidget::getHighlightMin(int index)
@@ -94,7 +96,7 @@ double ProgressWidget::getHighlightMin(int index)
 	return highlights_[index].getMin();
 }
 
-void ProgressWidget::setHighlightMin(int index,double progress)
+void ProgressWidget::setHighlightMin(int index,double progress,bool forceUpdate)
 {
 	verifyHighlightIndex(index);
 	if(progress < 0)
@@ -104,7 +106,7 @@ void ProgressWidget::setHighlightMin(int index,double progress)
 	if(progress > highlights_[index].getMax())
 		highlights_[index].setMax(progress);
 	highlights_[index].setMin(progress);
-	updateHighlights();
+	updateHighlights(forceUpdate);
 }
 
 double ProgressWidget::getHighlightMax(int index)
@@ -113,7 +115,7 @@ double ProgressWidget::getHighlightMax(int index)
 	return highlights_[index].getMax();
 }
 
-void ProgressWidget::setHighlightMax(int index,double progress)
+void ProgressWidget::setHighlightMax(int index,double progress,bool forceUpdate)
 {
 	verifyHighlightIndex(index);
 	if(progress < 0)
@@ -123,15 +125,15 @@ void ProgressWidget::setHighlightMax(int index,double progress)
 	if(progress < highlights_[index].getMin())
 		highlights_[index].setMin(progress);
 	highlights_[index].setMax(progress);
-	updateHighlights();
+	updateHighlights(forceUpdate);
 }
 
-void ProgressWidget::setHighlightRange(int index,double minProgress,double maxProgress)
+void ProgressWidget::setHighlightRange(int index,double minProgress,double maxProgress,bool forceUpdate)
 {
 	if(maxProgress < minProgress)
 		maxProgress = minProgress;
 	setHighlightMin(index,minProgress);
-	setHighlightMax(index,maxProgress);
+	setHighlightMax(index,maxProgress,forceUpdate);
 }
 
 QColor ProgressWidget::getHighlightColor(int index)
@@ -140,11 +142,11 @@ QColor ProgressWidget::getHighlightColor(int index)
 	return highlights_[index].getColor();
 }
 
-void ProgressWidget::setHighlightColor(int index, QColor color)
+void ProgressWidget::setHighlightColor(int index, QColor color,bool forceUpdate)
 {
 	verifyHighlightIndex(index);
 	highlights_[index].setColor(color);
-	updateHighlights();
+	updateHighlights(forceUpdate);
 }
 
 double ProgressWidget::getSliderProgress()
@@ -169,13 +171,14 @@ void ProgressWidget::verifyHighlightIndex(int index)
 	}
 }
 
-void ProgressWidget::updateHighlights()
+//If called with forceUpdate, we ignore the refresh interval
+void ProgressWidget::updateHighlights(bool forceUpdate)
 {
 	//To update the highlight values we just change the widget stylesheet.  This takes a lot of processor
 	//time but is by far the easiest way to do this.  In order to avoid causing UI lag when this function
 	//is called a lot, we just make sure that we only reset the stylesheet one per REFRESHINTERVALMS
 	//which should be on the order of 30ms.
-	if(frameTimer_.elapsed() < REFRESHINTERVALMS)
+	if(!forceUpdate && (frameTimer_.elapsed() < REFRESHINTERVALMS))
 		return;
 	frameTimer_.restart();
 	//Use styles to create highlight bar in widget

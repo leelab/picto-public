@@ -38,6 +38,12 @@ void SlaveExperimentDriver::masterPropertyChanged(int propId, QString value)
 {
 	QSharedPointer<Asset> asset = expConfig_->getAsset(propId);
 	Q_ASSERT(asset && asset->inherits("Picto::Property"));
+	if(propId == 3329)
+	{
+		QString name = asset->getName();
+		int i=0;
+		i++;
+	}
 	asset.staticCast<Property>()->fromUserString(value);
 }
 void SlaveExperimentDriver::masterTransitionActivated(int transId)

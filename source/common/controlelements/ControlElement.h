@@ -50,6 +50,10 @@ public:
 	virtual void start(QSharedPointer<Engine::PictoEngine> engine){};
 	virtual void stop(QSharedPointer<Engine::PictoEngine> engine){};
 
+	//Activates all Control Targets managed by this Control Element
+	virtual void activateTargets(){};
+	virtual void deactivateTargets(){};
+
 	//void setName(QString name) { propertyContainer_->setPropertyValue("Name", name); };
 
 	//QStringList getResultList() { return results_.keys(); };

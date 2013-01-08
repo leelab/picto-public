@@ -29,8 +29,6 @@ PictoEngine::PictoEngine() :
 	slave_(false),
 	userIsOperator_(false),
 	syncInitProperties_(true),
-	lastTimePropChangesRequested_("0.0"),
-	lastTimeStateDataRequested_("0.0"),
 	currBehavUnitPack_(QSharedPointer<BehavioralDataUnitPackage>(new BehavioralDataUnitPackage())),
 	currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
 	lastFrameId_(-1),

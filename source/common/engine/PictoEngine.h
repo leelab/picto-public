@@ -194,9 +194,6 @@ public:
 	bool slaveMode() { return slave_; }
 	//If disabled, Init properties of the slave experiment will not be synchronized with those of the master.
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
-	void setLastTimePropertiesRequested(QString time){lastTimePropChangesRequested_ = time;};
-	void resetLastTimeStateDataRequested(){lastTimeStateDataRequested_ = "0.0";};
-	double getLastTimeStateDataRequested(){return lastTimeStateDataRequested_.toDouble();};
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
 
@@ -254,8 +251,6 @@ private:
 	bool slave_;
 	bool userIsOperator_;
 	bool syncInitProperties_;
-	QString lastTimePropChangesRequested_;
-	QString lastTimeStateDataRequested_;
 	QSharedPointer<BehavioralDataUnitPackage> currBehavUnitPack_;
 	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	qulonglong lastFrameId_;

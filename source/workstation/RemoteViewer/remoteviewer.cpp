@@ -99,7 +99,7 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	currState_ = InitState;
 	stateTrigger_ = Disconnected;
 	stateUpdateTimer_ = new QTimer(this);
-	stateUpdateTimer_->setInterval(0);
+	stateUpdateTimer_->setInterval(16);
 	connect(stateUpdateTimer_,SIGNAL(timeout()),this,SLOT(updateState()));
 	updatingState_ = false;
 	zoomChanged_ = false;
@@ -215,6 +215,7 @@ void RemoteViewer::updateState()
 			nextState = StoppedSession;
 			break;
 		}
+		updater_->updateState();
 		break;
 	case RunningSession:
 		switch(stateTrigger_)
@@ -232,6 +233,7 @@ void RemoteViewer::updateState()
 			nextState = StoppedSession;
 			break;
 		}
+		updater_->updateState();
 		break;
 	case EndingSession:
 		switch(stateTrigger_)
@@ -255,7 +257,6 @@ void RemoteViewer::updateState()
 	if(stateTrigger_ != NoViewerTrigger)
 		endState();
 	updateStatus();
-	updater_->updateState();
 	updatingState_ = false;
 }
 
@@ -355,7 +356,7 @@ void RemoteViewer::runState()
 		//If the engine isn't running for some reason, or the director stopped, go to the stopped
 		//state.  In the case where the director is still running but our engine stopped, the stop
 		//state will just restart the engine and send us back here.
-		if((engineTrigger_ == NoEngineTrigger) || (remoteStatus == Stopped))
+		if(remoteStatus == Stopped)
 			stateTrigger_ = SessionStopped;
 		if(!connectAction_->isChecked() || ((remoteStatus < Stopped) && (remoteStatus > NotFound)))
 		{
@@ -382,7 +383,7 @@ void RemoteViewer::runState()
 		//If the engine isn't running for some reason, or the director stopped, go to the stopped
 		//state.  In the case where the director is still running but our engine stopped, the stop
 		//state will just restart the engine and send us back here.
-		if((engineTrigger_ == NoEngineTrigger) || (remoteStatus == Stopped))
+		if(remoteStatus == Stopped)
 			stateTrigger_ = SessionStopped;
 		if(!connectAction_->isChecked() || ((remoteStatus < Stopped) && (remoteStatus > NotFound)))
 		{
@@ -462,6 +463,7 @@ void RemoteViewer::endState()
  */
 void RemoteViewer::enterState()
 {
+	qDebug("Entering State: " + QString::number(currState_).toAscii());
 	switch(currState_)
 	{
 	case WaitForConnect:
@@ -557,7 +559,6 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabEnabled(2,false);
 		mainTabbedFrame_->setTabIcon(2,QIcon());
 		taskListBox_->clear();
-		engine_->resetLastTimeStateDataRequested();
 		qobject_cast<PropertyFrame*>(propertyFrame_)->clearProperties();
 		break;
 	case CreatingSession:
@@ -614,7 +615,6 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		activeExpName_->setText(activeDesign_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
-		engine_->resetLastTimeStateDataRequested();
 		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 		{
 			static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -769,9 +769,6 @@ void RemoteViewer::init()
 //! \brief Called just before hiding the viewer
 void RemoteViewer::deinit()
 {
-	//stop the engine running
-	stopExperiment();
-
 	//Stop the timers so that our state update functions won't get called anymore.
 	stateUpdateTimer_->stop();
 }
@@ -1784,6 +1781,7 @@ bool RemoteViewer::joinSession()
 		activeExperiment_ = activeDesign_->getDesign("Experiment",0)->getRootAsset().staticCast<Experiment>();
 	}
 	activeExperiment_->setEngine(engine_);
+	updater_->initForNewSession();
 	slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(activeExperiment_,updater_));
 
 	serverChannel_->setSessionId(sessionId_);
@@ -1819,7 +1817,6 @@ bool RemoteViewer::joinSession()
  */
 bool RemoteViewer::syncExperiment()
 {
-	engineTrigger_ = StartEngine;
 	return true;
 }
 
@@ -1830,7 +1827,6 @@ void RemoteViewer::stopExperiment()
 {
 	Q_ASSERT(engine_);
 	engine_->stop();
-	//engineTrigger_ = StopEngine;
 }
 
 /*! \brief Disjoins a currently running session

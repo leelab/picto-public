@@ -20,6 +20,7 @@ class RemoteStateUpdater : public StateUpdater
 	Q_OBJECT
 public:
 	RemoteStateUpdater(CommandChannel *serverChan);
+	void initForNewSession();
 	//Updates the picto state to the latest values
 	virtual bool updateState();
 signals:

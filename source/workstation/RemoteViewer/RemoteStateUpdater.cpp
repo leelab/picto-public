@@ -11,10 +11,15 @@
 using namespace Picto;
 
 RemoteStateUpdater::RemoteStateUpdater(CommandChannel *serverChan)
-: serverChan_(serverChan),
-lastTimeStateDataRequested_("0.0")
+: serverChan_(serverChan)
 {
 	Q_ASSERT(serverChan_);
+	initForNewSession();
+}
+
+void RemoteStateUpdater::initForNewSession()
+{
+	lastTimeStateDataRequested_ = "0.0";
 }
 
 bool RemoteStateUpdater::updateState()

@@ -172,13 +172,11 @@ QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 	addCursor();
 
 	QString result = "";
-	//Start up all of the control elements.
-	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
-	//CONTROL TARGETS AS ACTIVE.  WE SHOULD PROBABLY BREAK OUT A FUNCTION TO JUST
-	//DO THAT
+	//Activate any control targets used by this state's control elements so that they
+	//will be visible to the user.
 	foreach(QSharedPointer<ResultContainer> control, elements_)
 	{
-		control.staticCast<ControlElement>()->start(engine);
+		control.staticCast<ControlElement>()->activateTargets();
 	}
 
 	//----------  Draw the scene --------------
@@ -187,13 +185,10 @@ QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 	//---------   Erase the latest cursor values (This happens in master when data is sent to server)
 	sigChannel_->getValues();
 
-	//Stop all of the control elements
-	//THE ONLY REASON THAT WE DO THIS IS TO SET ALL OF THIS CONTROL ELEMENTS
-	//CONTROL TARGETS AS ACTIVE.  WE SHOULD PROBABLY BREAK OUT A FUNCTION TO JUST
-	//DO THAT
+	//Deactivate control targets used by this state's control elements
 	foreach(QSharedPointer<ResultContainer> control, elements_)
 	{
-		control.staticCast<ControlElement>()->stop(engine);
+		control.staticCast<ControlElement>()->deactivateTargets();
 	}
 	return result;
 }

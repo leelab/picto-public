@@ -21,12 +21,15 @@ public:
 	virtual ~ProgressWidget();
 	void setMaximum(double max);
 	double getHighlightMin(int index);
-	void setHighlightMin(int index,double progress);
+	//By default, to conserve processing resources, highlight is not always updated
+	//when this function is called (it is updated at most once per frame).
+	//To force the highlight graphic to be updated on this call, use forceUpdate.
+	void setHighlightMin(int index,double progress,bool forceUpdate = false);
 	double getHighlightMax(int index);
-	void setHighlightMax(int index,double progress);
-	void setHighlightRange(int index,double minProgress,double maxProgress);
+	void setHighlightMax(int index,double progress,bool forceUpdate = false);
+	void setHighlightRange(int index,double minProgress,double maxProgress,bool forceUpdate = false);
 	QColor getHighlightColor(int index);
-	void setHighlightColor(int index, QColor color);
+	void setHighlightColor(int index, QColor color,bool forceUpdate = false);
 	double getSliderProgress();
 	void setSliderProgress(double progress);
 
@@ -36,7 +39,7 @@ signals:
 
 private:
 	void verifyHighlightIndex(int index);
-	void updateHighlights();
+	void updateHighlights(bool forceUpdate = false);
 	int progressToSlider(double progress);
 	double sliderToProgress(int sliderVal);
 	QSlider* progSlider_;

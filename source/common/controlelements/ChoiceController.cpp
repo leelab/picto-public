@@ -60,14 +60,24 @@ void ChoiceController::start(QSharedPointer<Engine::PictoEngine> engine)
 	isDone_ = false;
 	result_ = "";
 	targetAcquired_ = false;
-	foreach(QSharedPointer<ControlResult> target, targets_)
-		target->setActive(true);
+	activateTargets();
 
 	//We call isDone to initialize everything
 	isDone(engine);
 
 }
 void ChoiceController::stop(QSharedPointer<Engine::PictoEngine> engine)
+{
+	deactivateTargets();
+}
+
+void ChoiceController::activateTargets()
+{
+	foreach(QSharedPointer<ControlResult> target, targets_)
+		target->setActive(true);
+}
+
+void ChoiceController::deactivateTargets()
 {
 	foreach(QSharedPointer<ControlResult> target, targets_)
 		target->setActive(false);
