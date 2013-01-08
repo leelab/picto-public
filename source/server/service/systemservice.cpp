@@ -11,6 +11,7 @@
 
 #include <QtCore/QProcess>
 #include <QCoreApplication>
+#include <QDir>
 
 #include "systemservice.h"
 
@@ -587,6 +588,11 @@ void WINAPI SystemService::main(DWORD,		//_argc
 		reportStatus( SERVICE_STOPPED, s_error, 0 );
 		return;
 	}
+
+	//Services run in c:\Windows\System32 by default.  Change the working directory
+	//to the application installation path.
+	bool result = QDir::setCurrent(QCoreApplication::applicationDirPath());
+	Q_ASSERT_X(result,"SystemService::main","Picto Server Service working directory was not succesfully reset to its application path.");
 
 	//serviceMainThread(0);
 	// now start the service for real
