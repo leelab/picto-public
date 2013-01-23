@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = PictoLibraryUnitTests
-QT = core gui network testlib script scripttools sql
+QT = core gui network testlib script scripttools sql widgets
 CONFIG += qt warn_on debug_and_release
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 

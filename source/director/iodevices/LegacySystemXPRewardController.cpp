@@ -10,7 +10,7 @@
 							DAQmxClearTask(daqTaskHandle_); \
 							QString msg = "DAQ function error:"; \
 							msg.append(error); \
-							Q_ASSERT_X(!rc, "LegacySystemXPEventCodeGenerator", msg.toAscii());\
+							Q_ASSERT_X(!rc, "LegacySystemXPEventCodeGenerator", msg.toLatin1());\
 						 } }
 
 // NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run our LegacySystem 

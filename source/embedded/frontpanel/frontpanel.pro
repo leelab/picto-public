@@ -1,8 +1,9 @@
 TEMPLATE = app
 TARGET = EmbeddedFrontPanel
-QT = core gui xml network
+QT = core gui xml network widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG += console
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include .
 

@@ -143,7 +143,7 @@ QString SessionVersionInterfacer::updateSessionConfigFromSessionAssets()
 		strongAsset = weakAsset.toStrongRef();
 		if(strongAsset)
 		{
-			qDebug(QString("A:AssetId:%1, Name:%2").arg(strongAsset->getAssetId()).arg(strongAsset->getName()).toAscii());
+			qDebug(QString("A:AssetId:%1, Name:%2").arg(strongAsset->getAssetId()).arg(strongAsset->getName()).toLatin1());
 			strongAsset->setAssetId(0);
 		}
 		else
@@ -160,7 +160,7 @@ QString SessionVersionInterfacer::updateSessionConfigFromSessionAssets()
 		strongAsset = weakAsset.toStrongRef();
 		if(strongAsset)
 		{
-			qDebug(QString("B:AssetId:%1, Name:%2").arg(strongAsset->getAssetId()).arg(strongAsset->getName()).toAscii());
+			qDebug(QString("B:AssetId:%1, Name:%2").arg(strongAsset->getAssetId()).arg(strongAsset->getName()).toLatin1());
 			expConfig->addManagedAsset(strongAsset);
 		}
 	}
@@ -173,7 +173,7 @@ foreach(QWeakPointer<Asset> weakAsset,assets)
 	strongAsset = weakAsset.toStrongRef();
 	if(strongAsset)
 	{
-		qDebug(QString("C:AssetId:%1, Name:%2").arg(strongAsset->getAssetId()).arg(strongAsset->getName()).toAscii());
+		qDebug(QString("C:AssetId:%1, Name:%2").arg(strongAsset->getAssetId()).arg(strongAsset->getName()).toLatin1());
 	}
 }
 
@@ -252,7 +252,7 @@ QString SessionVersionInterfacer::recurseResetAssetIds(QSharedPointer<Asset> ass
 void SessionVersionInterfacer::recurseAddObsoleteAssets(int assetId)
 {
 	obsoleteAssets_[assetId] = true;
-	qDebug(QString("No Matching Asset found for Node with AssetId:%1, Name:%2").arg(assetId).arg(nodesById_[assetId]->name).toAscii());
+	qDebug(QString("No Matching Asset found for Node with AssetId:%1, Name:%2").arg(assetId).arg(nodesById_[assetId]->name).toLatin1());
 	foreach(int childId,nodesById_[assetId]->children)
 	{
 		recurseAddObsoleteAssets(childId);

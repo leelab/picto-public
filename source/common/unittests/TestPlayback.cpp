@@ -41,29 +41,29 @@ void TestPlayback::Test()
 		//}
 	}
 	QString debugStr = QString("Elapsed Time: %1").arg(timer.elapsed());
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }
 
 void TestPlayback::propertyChanged(int propId, QString value)
 {
 	QString debugStr = QString("Property Changed: ID: %1").arg(propId);
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }
 void TestPlayback::transitionActivated(int transId)
 {
 	QString debugStr = QString("Transition Activated: ID: %1").arg(transId);
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }
 void TestPlayback::framePresented(double time)
 {
 	currTime_ = time;
 	QString debugStr = QString("Frame Presented: Time: %1").arg(time);
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }
 void TestPlayback::rewardSupplied(double time,int duration,int channel)
 {
 	QString debugStr = QString("Reward Supplied: Duration: %1, Chan: %2").arg(duration).arg(channel);
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }
 void TestPlayback::signalChanged(QString name,QStringList subChanNames,QVector<float> vals)
 {
@@ -73,12 +73,12 @@ void TestPlayback::signalChanged(QString name,QStringList subChanNames,QVector<f
 		strVals.append(QString::number(val));
 	}
 	QString debugStr = QString("Signal Changed: Name: %1, Vals: %2").arg(name).arg(strVals.join(", "));;
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }
 void TestPlayback::lfpChanged(int channel,double value)
 {
 	QString debugStr = QString("LFP Changed: Channel: %1, Val: %2").arg(channel).arg(value);
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }
 void TestPlayback::spikeEvent(int channel, int unit, QVector<float> waveform)
 {
@@ -86,5 +86,5 @@ void TestPlayback::spikeEvent(int channel, int unit, QVector<float> waveform)
 	foreach(float waveVal,waveform)
 		waveStr.append(QString::number(waveVal));
 	QString debugStr = QString("Spike Event: Channel: %1, Unit: %2, Waveform: %3").arg(channel).arg(unit).arg(waveStr.join(","));
-	qDebug(debugStr.toAscii());
+	qDebug(debugStr.toLatin1());
 }

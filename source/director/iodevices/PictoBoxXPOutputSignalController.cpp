@@ -10,7 +10,7 @@
 							DAQmxClearTask(daqTaskHandle_); \
 							QString msg = QString("DAQ function error %1:").arg(rc); \
 							msg.append(error); \
-							Q_ASSERT_X(!rc, "PictoBoxXPOutputSignalController", msg.toAscii());\
+							Q_ASSERT_X(!rc, "PictoBoxXPOutputSignalController", msg.toLatin1());\
 						 } }
 
 // NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
@@ -27,8 +27,8 @@ PictoBoxXPOutputSignalController::PictoBoxXPOutputSignalController(int port)
 	outSigChans_(QString("Dev1/port%1/line0:7").arg(port)),
 	taskName_(QString("OutSigTask%1").arg(port))
 {
-	DAQmxErrChk(DAQmxCreateTask(taskName_.toAscii(),(TaskHandle*)&daqTaskHandle_));
-	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,outSigChans_.toAscii(),"",DAQmx_Val_ChanForAllLines));
+	DAQmxErrChk(DAQmxCreateTask(taskName_.toLatin1(),(TaskHandle*)&daqTaskHandle_));
+	DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_,outSigChans_.toLatin1(),"",DAQmx_Val_ChanForAllLines));
 	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_));
 
 	//Set all digital lines to 0

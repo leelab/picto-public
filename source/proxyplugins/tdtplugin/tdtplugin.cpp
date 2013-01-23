@@ -591,4 +591,4 @@ bool TdtPlugin::eventTimestampLessThan(const EventDetails &ed1, const EventDetai
 	return ed1.timeStamp < ed2.timeStamp;
 }
 
-Q_EXPORT_PLUGIN2(ProxyPluginTDT, TdtPlugin)
+//Q_EXPORT_PLUGIN2(ProxyPluginTDT, TdtPlugin)

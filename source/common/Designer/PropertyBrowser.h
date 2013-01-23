@@ -1,10 +1,10 @@
 #ifndef PROPERTYBROWSER_H
 #define PROPERTYBROWSER_H
-#include <QtAbstractPropertyBrowser>
-#include <QtVariantPropertyManager>
-#include <QtGroupBoxPropertyBrowser>
-#include <qtbuttonpropertybrowser>
-#include <qttreepropertybrowser>
+#include <QtPropertyBrowser.h>
+#include <QtVariantProperty.h>
+#include <QtGroupBoxPropertyBrowser.h>
+#include <qtbuttonpropertybrowser.h>
+#include <qttreepropertybrowser.h>
 #include "PropertyEditorFactory.h"
 #include "EditorState.h"
 using namespace Picto;

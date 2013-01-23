@@ -120,7 +120,7 @@ void SignalDataIterator::getSubChanInfo(QString signalName)
 	bool success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return;
 	}
 	if(!query.next())

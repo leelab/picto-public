@@ -38,7 +38,7 @@ bool Asset::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool valid
 		bool myResult = validateObject(xmlStreamReader);
 		returnVal &= myResult;
 		if(!myResult)
-			addError(identifier().toAscii(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(identifier()).toAscii(),xmlStreamReader);
+			addError(identifier().toLatin1(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(identifier()).toLatin1(),xmlStreamReader);
 	}
 	return returnVal;
 }
@@ -48,7 +48,7 @@ bool Asset::validateTree()
 	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader());
 	bool returnVal = validateObject(xmlStreamReader);
 	if(!returnVal)
-		addError(identifier().toAscii(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(identifier()).toAscii(),xmlStreamReader);
+		addError(identifier().toLatin1(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(identifier()).toLatin1(),xmlStreamReader);
 	return returnVal;
 }
 
@@ -64,7 +64,7 @@ void Asset::initializeToDefault(QString tagName, QString type)
 	emptyTag.append("/>");
 	bool success = fromXml(emptyTag);
 	isNew_ = true;
-	//Q_ASSERT_X(success,"Asset::initializeToDefault","Failed to initialize Asset object to default values.\nError:\n"+Serializable::getErrors().toAscii());
+	//Q_ASSERT_X(success,"Asset::initializeToDefault","Failed to initialize Asset object to default values.\nError:\n"+Serializable::getErrors().toLatin1());
 }
 
 void Asset::setDeleted()

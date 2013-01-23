@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = PictoWorkstation
-QT = core gui xml network script scripttools sql svg
-CONFIG += qt warn_on debug_and_release
+QT = core gui xml network script scripttools sql svg multimedia concurrent
+CONFIG += qt warn_on debug_and_release 
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
@@ -10,8 +11,6 @@ INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 SOURCES += $$(PICTO_TREE)/source/workstation/main.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/mainwindow.h
 SOURCES += $$(PICTO_TREE)/source/workstation/mainwindow.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/PropertyFrame.h
-SOURCES += $$(PICTO_TREE)/source/workstation/PropertyFrame.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/StartSessionDialog.h
 SOURCES += $$(PICTO_TREE)/source/workstation/StartSessionDialog.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/RunTaskDialog.h
@@ -20,65 +19,6 @@ HEADERS += $$(PICTO_TREE)/source/workstation/ErrorList.h
 SOURCES += $$(PICTO_TREE)/source/workstation/ErrorList.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/viewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/viewer.cpp
-
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/EditorState.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/EditorState.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/arrow.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/arrow.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/diagramitem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/diagramitem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ArrowPortItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ArrowPortItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ArrowSourceItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ArrowSourceItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ArrowDestinationItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ArrowDestinationItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/StartBarItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/StartBarItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/DiagramItemFactory.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/DiagramItemFactory.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/WireableItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/WireableItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/AssetItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/AssetItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ResultItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ResultItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/StateMachineElementItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/StateMachineElementItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ControlElementItem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ControlElementItem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/diagramscene.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/diagramscene.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/diagramtextitem.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/diagramtextitem.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/Designer.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/Designer.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/Toolbox.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/Toolbox.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ToolGroup.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ToolGroup.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/AssetToolGroup.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/AssetToolGroup.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/PropertyToolGroup.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/PropertyToolGroup.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/BackgroundToolGroup.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/BackgroundToolGroup.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/PropertyEditorFactory.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/PropertyEditorFactory.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/PropertyBrowser.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/PropertyBrowser.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/AssetInfoBox.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/AssetInfoBox.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/PropertyEditTracker.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/PropertyEditTracker.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ScriptWidget.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ScriptWidget.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ScriptSyntaxHighlighter.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ScriptSyntaxHighlighter.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/DeletableWidget.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/DeletableWidget.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/designer/ViewerWindow.h
-SOURCES += $$(PICTO_TREE)/source/workstation/designer/ViewerWindow.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/statemachineeditor/stateeditviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/statemachineeditor/stateeditviewer.cpp
@@ -136,7 +76,7 @@ RESOURCES += $$(PICTO_TREE)/source/workstation/workstation.qrc
 
 include($$(PICTO_TREE)/source/common/common.pri)
 
-include($$(PICTO_THIRD_PARTY)/qtpropertybrowser-2.5-opensource/src/qtpropertybrowser.pri)
+#include($$(PROPBROWSDIR)/qtpropertybrowser.pri)
 macx:QTSOLUTIONS_PROPERTYBROWSER.files += $$QTPROPERTYBROWSER_LIBDIR/
 
 # Output

@@ -41,7 +41,7 @@ void PictoDirectorSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			serverDiscoverer.discover();
 			if(!serverDiscoverer.waitForDiscovered(10000))
 			{
-				QFAIL((GetDeviceTypeName() + " did not recieve a response to its DISCOVER call from the Server").toAscii() );
+				QFAIL((GetDeviceTypeName() + " did not recieve a response to its DISCOVER call from the Server").toLatin1() );
 				return;
 			}
 			ConnectToHost(tcpSocket_,serverDiscoverer.getAddress(),serverDiscoverer.getPort());

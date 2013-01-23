@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "PropertyEditorFactory.h"
 #include "../../common/storage/DataStore.h"
 #include "../../common/property/PropertyContainer.h"
@@ -32,7 +32,7 @@ void PropertyEditorFactory::clear()
 	editTrackers_.clear();
 }
 
-QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget*)
+QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent)
 {
 	QWidget* resultWidget = NULL;
 	QString propName = property->propertyName();
@@ -43,12 +43,12 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 		|| (propName == "PausingScript")
 		|| (propName == "RestartingScript"))
 	{
-		resultWidget = new ScriptWidget(manager,property);
+		resultWidget = new ScriptWidget(manager,property,parent);
 		resultWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	}
 	else
 	{
-		resultWidget = QtVariantEditorFactory::createEditor(manager,property,NULL);
+		resultWidget = QtVariantEditorFactory::createEditor(manager,property,parent);
 		if(resultWidget)
 			resultWidget->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
 	}

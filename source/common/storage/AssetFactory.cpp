@@ -60,7 +60,7 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 		}
 		else
 		{
-			error = "Factory does not contain type: " + type.toAscii();
+			error = "Factory does not contain type: " + type.toLatin1();
 			return returnVal;
 		}
 	}
@@ -168,7 +168,7 @@ QString AssetFactory::getUITemplate(QString type)
 {
 	if(isGroupFactory_)
 	{
-		Q_ASSERT_X(factoriesByType_.contains(type),"AssetFactory::getUITemplate","This factory does not contain type: " + type.toAscii());
+		Q_ASSERT_X(factoriesByType_.contains(type),"AssetFactory::getUITemplate","This factory does not contain type: " + type.toLatin1());
 		return factoriesByType_[type]->getUITemplate("");
 	}
 	//If uITemplate has not yet been initialized, create and throw out an asset so that it will be.

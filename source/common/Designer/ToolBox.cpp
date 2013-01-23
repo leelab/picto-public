@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "Toolbox.h"
 #include "AssetToolGroup.h"
 #include "PropertyToolGroup.h"

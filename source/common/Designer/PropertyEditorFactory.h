@@ -1,11 +1,11 @@
 #ifndef PROPERTYEDITORFACTORY_H
 #define PROPERTYEDITORFACTORY_H
-#include <QtVariantEditorFactory>
 #include <QSharedPointer>
-#include <QtVariantPropertyManager>
+#include <QtVariantProperty.h>
 #include "EditorState.h"
 #include <QMap>
 #include "PropertyEditTracker.h"
+#include "../common.h"
 using namespace Picto;
 
 QT_BEGIN_NAMESPACE
@@ -14,7 +14,11 @@ class QtProperty;
 QT_END_NAMESPACE
 
 //! [0]
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API PropertyEditorFactory : public QtVariantEditorFactory
+#else
 class PropertyEditorFactory : public QtVariantEditorFactory
+#endif
 {
     Q_OBJECT
 

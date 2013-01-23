@@ -43,16 +43,16 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	{
 		//Picto::Timestamper tStamper;
 		//double startVal = tStamper.stampMs();
-		xmlContent = QString("<Data>").append(sessionInfo->selectStateVariables(dataTypeIndex)).append("</Data>").toAscii();
-		//qDebug(QString("Select at %1ms took: %2ms").arg(tStamper.stampMs()).arg(tStamper.stampMs()-startVal).toAscii());
+		xmlContent = QString("<Data>").append(sessionInfo->selectStateVariables(dataTypeIndex)).append("</Data>").toLatin1();
+		//qDebug(QString("Select at %1ms took: %2ms").arg(tStamper.stampMs()).arg(tStamper.stampMs()-startVal).toLatin1());
 	}
 	else if(dataType.compare("LatestNeural",Qt::CaseInsensitive) == 0)
 	{
-		xmlContent = QString("<Data>").append(sessionInfo->selectLatestNeuralData(dataTypeIndex)).append("</Data>").toAscii();
+		xmlContent = QString("<Data>").append(sessionInfo->selectLatestNeuralData(dataTypeIndex)).append("</Data>").toLatin1();
 	} 
 	else if(dataType.compare("SessionData",Qt::CaseInsensitive) == 0)
 	{
-		xmlContent = QString("<Data>").append(sessionInfo->selectSessionDataPackage()).append("</Data>").toAscii();
+		xmlContent = QString("<Data>").append(sessionInfo->selectSessionDataPackage()).append("</Data>").toLatin1();
 	} 
 	else
 	{

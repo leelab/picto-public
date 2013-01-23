@@ -37,7 +37,7 @@ bool RemoteStateUpdater::updateState()
 
 	serverChan_->sendRegisteredCommand(command);
 	QString commandID = command->getFieldValue("Command-ID");
-	//qDebug(QString("Sent command: %1 at Time:%2").arg(commandID).arg(command->getFieldValue("Time-Sent")).toAscii());
+	//qDebug(QString("Sent command: %1 at Time:%2").arg(commandID).arg(command->getFieldValue("Time-Sent")).toLatin1());
 
 	do
 	{

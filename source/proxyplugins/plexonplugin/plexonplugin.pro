@@ -3,6 +3,7 @@ TARGET = ProxyPluginPlexon
 QT = core gui xml
 CONFIG += qt warn_on debug_and_release
 CONFIG += plugin
+CONFIG -= flat
 
 DEPENDPATH += .
 INCLUDEPATH += .

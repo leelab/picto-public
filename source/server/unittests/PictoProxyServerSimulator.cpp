@@ -44,7 +44,7 @@ void PictoProxyServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			serverDiscoverer.discover();
 			if(!serverDiscoverer.waitForDiscovered(10000))
 			{
-				QFAIL((GetDeviceTypeName() + " did not recieve a response to its DISCOVER call from the Server").toAscii() );
+				QFAIL((GetDeviceTypeName() + " did not recieve a response to its DISCOVER call from the Server").toLatin1() );
 				return;
 			}
 			ConnectToHost(tcpSocket_,serverDiscoverer.getAddress(),serverDiscoverer.getPort());
@@ -65,7 +65,7 @@ void PictoProxyServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			// I send out an ANNOUNCE message to the broadcast address so that anyone who cares knows that I started
 			// In practice, only the PictoServer is listening
 			QUdpSocket udpSendSocket;
-			QByteArray datagram = QString("ANNOUNCE %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42420).toAscii();
+			QByteArray datagram = QString("ANNOUNCE %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42420).toLatin1();
 			udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
 										QHostAddress::Broadcast, SERVERPORT);
 			// Wait for the PictoServer to connect to me.  Make sure to call InterruptableSleep() every so often
@@ -85,7 +85,7 @@ void PictoProxyServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				if(!message.startsWith("GET /data ACQ/1.0"))
 				{
 					QVERIFY2(message == expected, (GetDeviceTypeName() +" received an unexpected or badly formed message.\nActual: " 
-					+ message + "\nExpected: " + expected).toAscii());
+					+ message + "\nExpected: " + expected).toLatin1());
 				}
 				else
 				{
@@ -97,7 +97,7 @@ void PictoProxyServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 	case DEPART:
 		// Tell the network that I'm shutting down.
 		QUdpSocket udpSendSocket;
-		QByteArray datagram = QString("DEPART %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42420).toAscii();
+		QByteArray datagram = QString("DEPART %1:%2 ACQ/1.0\r\n\r\n").arg(GetDeviceName()).arg(42420).toLatin1();
 
 		udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
 										QHostAddress::Broadcast, SERVERPORT);

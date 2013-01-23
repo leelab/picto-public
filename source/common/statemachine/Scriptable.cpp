@@ -148,7 +148,7 @@ QString Scriptable::getScriptingInfo()
 			continue;
 		if(metaMeth.methodType() == QMetaMethod::Slot)
 		{
-			QString signature = metaMeth.signature();
+			QString signature = metaMeth.methodSignature();
 			QStringList commaSplitSig = signature.split(",");
 			QList<QByteArray> paramNames = metaMeth.parameterNames();
 			QStringList::iterator paramTypeIter = commaSplitSig.begin();

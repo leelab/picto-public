@@ -18,6 +18,8 @@
   @del *.sln /s /q
   @del *.vcproj /s /q 
   @del *.vcproj.* /s /q
+  @del *.vcxproj /s /q 
+  @del *.vcxproj.* /s /q
   @attrib *.suo -h
   @del *.suo /q
 

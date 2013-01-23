@@ -1,14 +1,15 @@
 TEMPLATE = app
 TARGET = BlankScreen
-QT = core gui xml network script scripttools sql svg
+QT = core gui xml network script scripttools sql svg multimedia concurrent
 CONFIG += qt warn_on debug_and_release
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/embedded/blankscreen/main.cpp
 
-include($$(PICTO_THIRD_PARTY)/qtpropertybrowser-2.5-opensource/src/qtpropertybrowser.pri)
+include($$(PICTO_TREE)/source/common/common.pri)
 
 
 # Output

@@ -1,7 +1,7 @@
 #ifndef _PROPERTYCONTAINER_H_
 #define _PROPERTYCONTAINER_H_
-#include <QtVariantPropertyManager>
-#include <QtProperty>
+#include <QtVariantProperty.h>
+#include <QtPropertyBrowser.h>
 #include <QString>
 #include <QSharedPointer>
 

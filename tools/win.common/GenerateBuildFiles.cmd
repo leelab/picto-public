@@ -21,9 +21,11 @@
   @echo Generating Visual Studio Solution
   @qmake -recursive -tp vc
 
-  @echo Organizing Source Code in Visual Studio Solution
-
-  FOR /R source %%T IN (*.vcproj) DO @%PICTO_TREE%\tools\win.common\vcprojFilters\bin\vcprojFilters %%T
+  REM We used the vcprojFilters application below in Visual Studio 2008 and before to setup the visual studio directory structure.  
+  REM This broke in VS2010, but we now use "CONFIG -= flat" in the Picto.pro file, which takes care of giving
+  REM us a fairly clean structure
+  REM @echo Organizing Source Code in Visual Studio Solution
+  REM FOR /R source %%T IN (*.vcxproj) DO @%PICTO_TREE%\tools\win.common\vcprojFilters\bin\vcprojFilters %%T
 
   @echo Setting Dependencies in Visual Studio Solution
     

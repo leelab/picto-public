@@ -155,7 +155,7 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 	}
 
 	response->setFieldValue("Server-Bytes",QString::number(tcpSocket_->bytesAvailable()));
-	//qDebug("Server-Bytes: " + response->getFieldValue("Server-Bytes").toAscii());
+	//qDebug("Server-Bytes: " + response->getFieldValue("Server-Bytes").toLatin1());
 	QDataStream os(tcpSocket_);
 
 	if(response->getMultiPart() <= Picto::MultiPartResponseType::MultiPartInitial)

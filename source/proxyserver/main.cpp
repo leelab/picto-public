@@ -18,7 +18,7 @@
 #include <QDialog>
 #include <QLabel>
 #include <QLibrary>
-#include <QtGui>
+#include <QtWidgets>
 #include <QLocale>
 #include <QCoreApplication>
 
@@ -35,7 +35,7 @@
 #include "NeuralDataAcqInterface.h"
 
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #include <sys/types.h>
 #include <unistd.h>
 #endif

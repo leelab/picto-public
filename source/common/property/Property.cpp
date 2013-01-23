@@ -148,7 +148,7 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 			{
 				allowedAttributes.append("\n").append(attrName);
 			}
-			addError(getName().toAscii(), QString("Invalid attribute: \n%1\nThe following attributes are defined for this property:\n%2\n-----").arg(attribute.name().toString()).arg(allowedAttributes).toAscii(), xmlStreamReader);
+			addError(getName().toLatin1(), QString("Invalid attribute: \n%1\nThe following attributes are defined for this property:\n%2\n-----").arg(attribute.name().toString()).arg(allowedAttributes).toLatin1(), xmlStreamReader);
 			return false;
 		}
 	}
@@ -165,13 +165,13 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 //Loop until we're done with the tag or we reach the end of the XMLStream
 if(xmlStreamReader->readNext() == QXmlStreamReader::Invalid)
 {
-	addError(getName().toAscii(),QString("XML syntax has been violated.").toAscii(),xmlStreamReader);
+	addError(getName().toLatin1(),QString("XML syntax has been violated.").toLatin1(),xmlStreamReader);
 	return false;
 }
 xmlWriter->writeCurrentToken(*xmlStreamReader);// Write everything left to tagText.
 if(!xmlStreamReader->isCharacters() && !xmlStreamReader->isEndElement())
 {
-	addError(getName().toAscii(),QString("Unexpected value read.").toAscii(),xmlStreamReader);
+	addError(getName().toLatin1(),QString("Unexpected value read.").toLatin1(),xmlStreamReader);
 	return false;
 }
 QString value = xmlStreamReader->text().toString();
@@ -196,7 +196,7 @@ QString value = xmlStreamReader->text().toString();
 	//Make sure we didn't finish the document.
 	if(xmlStreamReader->atEnd())
 	{
-		addError(getName().toAscii(), "Unexpected end of document", xmlStreamReader);
+		addError(getName().toLatin1(), "Unexpected end of document", xmlStreamReader);
 		return false;
 	}
 	return true;

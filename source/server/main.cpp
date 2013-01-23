@@ -15,7 +15,7 @@
 #include <QDialog>
 #include <QLabel>
 #include <QLibrary>
-#include <QtGui>
+#include <QtWidgets>
 #include <QLocale>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -37,14 +37,14 @@
 #include "../common/mainmemleakdetect.h"
 //#include "connections/ServerConfig.h"
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #include <sys/types.h>
 #include <unistd.h>
 
 #include "processinfo/GetPID.h"
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include "processinfo/WinGetPID.h"
 #endif
 
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 	bool bUseGUI = false;
 
 	//If we have no parameters, and a windowing system is available, we'll put up a GUI
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	//If we're on Mac OS X 10.2 or later and were launched from the finder, dock, or
 	//terminal via the open command, then we'll have an extra argument containing the
 	//process serial number in the form -psn_#_###.
@@ -125,12 +125,12 @@ int main(int argc, char *argv[])
 
 	if(argc==1)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_X11
 		//On Unix OSes using an X11 display manager, we'll simply look for the DISPLAY
 		//environment variable.  If it's there, we'll put up a GUI; otherwise, we'll use
 		//the terminal so as to allow remote usage via SSH.
 		bUseGUI = getenv("DISPLAY") != 0;
-#elif defined Q_WS_MAC
+#elif defined Q_OS_MAC
 		//On Mac OS X, if you explicitly invoke the BSD binary from within the app bundle
 		//via a terminal, then we will not use a GUI (allowing for remote usage via SSH).
 		//
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
 				bUseGUI = true;
 			}	
 		}
-#elif defined Q_WS_WIN
+#elif defined Q_OS_WIN
 		//We'll find our parent process and check if it was a GUI application
 		bUseGUI = winParentProcessIsGUI();
 

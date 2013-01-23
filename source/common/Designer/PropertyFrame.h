@@ -1,11 +1,11 @@
 #ifndef PROPERTYFRAME_H
 #define PROPERTYFRAME_H
-#include <QtAbstractPropertyBrowser>
-#include <QtVariantPropertyManager>
-#include <QtGroupBoxPropertyBrowser>
-#include <qtbuttonPropertyBrowser>
-#include <qttreePropertyBrowser>
-#include "designer/PropertyEditorFactory.h"
+#include <QtPropertyBrowser.h>
+#include <QtVariantProperty.h>
+#include <QtGroupBoxPropertyBrowser.h>
+#include <qtbuttonPropertyBrowser.h>
+#include <qttreePropertyBrowser.h>
+#include "../common/designer/PropertyEditorFactory.h"
 #include "../common/experiment/experiment.h"
 #include <QScrollArea>
 #include <QSqlDatabase>
@@ -17,7 +17,11 @@ class QtProperty;
 QT_END_NAMESPACE
 
 //! [0]
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API PropertyFrame : public QScrollArea
+#else
 class PropertyFrame : public QScrollArea
+#endif
 {
     Q_OBJECT
 

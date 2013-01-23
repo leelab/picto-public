@@ -3,7 +3,7 @@
 #include "EditorState.h"
 #include <QSharedPointer>
 #include <QWidget>
-#include <QtVariantPropertyManager>
+#include <QtVariantProperty.h>
 
 //! [0]
 class DeletableWidget : public QWidget

@@ -78,7 +78,7 @@ Director::Director(QString name,
 						"(id int, "
 						"key TEXT, "
 						"value TEXT)");
-		query.exec(QString("INSERT INTO directorinfo (key,value) VALUES ('Name','Director%1')").arg(componentId_.toString()).toAscii());
+		query.exec(QString("INSERT INTO directorinfo (key,value) VALUES ('Name','Director%1')").arg(componentId_.toString()).toLatin1());
 		QString test = query.lastError().text();
 	}
 

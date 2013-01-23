@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "AssetInfoBox.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/memleakdetect.h"

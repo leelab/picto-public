@@ -1,96 +1,127 @@
 TEMPLATE = subdirs
+CONFIG -= flat
+CONFIG += ordered 
 
-SUBDIRS = source/common				source/common/unittests
-SUBDIRS += source/director
-!wince* {
-  SUBDIRS += source/server          source/server/unittests
-  SUBDIRS += source/proxyserver
-  SUBDIRS += source/config
-  SUBDIRS += source/workstation
-  SUBDIRS += source/documentation/developersguide
+# addSubdirs(subdirs,deps): Adds directories to the project that depend on
+# other directories
+defineTest(addSubdirs) {
+    for(subdirs, 1) {
+        entries = $$files($$subdirs)
+        for(entry, entries) {
+            name = $$replace(entry, [/\\\\], _)
+            SUBDIRS += $$name
+            eval ($${name}.subdir = $$entry)
+            for(dep, 2):eval ($${name}.depends += $$replace(dep, [/\\\\], _))
+            export ($${name}.subdir)
+            export ($${name}.depends)
+        }
+    }
+    export (SUBDIRS)
 }
-win* {
-  SUBDIRS += source/embedded
-}
+
+addSubdirs(source/common, source/common/unittests)
+addSubdirs(source/director)
+addSubdirs(source/server, source/server/unittests)
+addSubdirs(source/proxyserver)
+addSubdirs(source/config)
+addSubdirs(source/workstation)
+addSubdirs(source/documentation/developersguide)
+addSubdirs(source/embedded)
+addSubdirs(source/proxyplugins/plexonplugin)
+addSubdirs(source/proxyplugins/virtualdeviceplugin)
+
+#SUBDIRS = source/common				source/common/unittests
+#SUBDIRS += source/director
+#!wince* {
+#  SUBDIRS += source/server          source/server/unittests
+#  SUBDIRS += source/proxyserver
+#  SUBDIRS += source/config
+#  SUBDIRS += source/workstation
+#  SUBDIRS += source/documentation/developersguide
+#}
+#win* {
+#  SUBDIRS += source/embedded
+#}
 
 #proxy server plugins
-win32:!wince*:  SUBDIRS += source/proxyplugins/plexonplugin
-win32:!wince*:  SUBDIRS += source/proxyplugins/virtualdeviceplugin
+#win32:!wince*:  SUBDIRS += source/proxyplugins/plexonplugin
+#win32:!wince*:  SUBDIRS += source/proxyplugins/virtualdeviceplugin
 
 #We can't build the TDT plugin unless we have the TDT SDK installed.
 #The TDT software has a hard time running under 64-bit Vista, so I always
 #used a 32-bit XP virtual machine to build this.
 exists(C:/TDT){
 
-	SUBDIRS += source/proxyplugins/tdtplugin
+	addSubdirs(source/proxyplugins/tdtplugin)
 	message("Building TDT proxy server plugin")
 }
 
+# Dependencies
+
+#unittests.depends = common
+#director.depends = common
+#server.depends = common
+#proxyserver.depends = common
+#config.depends = common
+#workstation.depends = common
+#developersguide.depends = common
+#embedded.depends = common
+#plexonplugin.depends = proxyserver
+#virtualdeviceplugin.depends = proxyserver
+#tdtplugin.depends = proxyserver
+
 # Deployment
 
-include($$(PICTO_THIRD_PARTY)/qtiocompressor-2.3-opensource/src/qtiocompressor.pri)
-include($$(PICTO_THIRD_PARTY)/qtpropertybrowser-2.5-opensource/src/qtpropertybrowser.pri)
+include($$(PROPBROWSDIR)/qtpropertybrowser.pri)
 
 win32 {
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qgif4.dll
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qico4.dll
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qjpeg4.dll
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qmng4.dll
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qsvg4.dll
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qtiff4.dll
+IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qgif.dll
+IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qico.dll
+IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qjpeg.dll
+IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qmng.dll
+IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qsvg.dll
+IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qtiff.dll
 IMAGEFORMATPLUGINS.path = $$(PICTO_TREE)/output/bin/release/imageformats
 INSTALLS += IMAGEFORMATPLUGINS
 
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qgifd4.dll
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qicod4.dll
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qjpegd4.dll
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qmngd4.dll
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qsvgd4.dll
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qtiffd4.dll
+IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qgifd.dll
+IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qicod.dll
+IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qjpegd.dll
+IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qmngd.dll
+IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qsvgd.dll
+IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qtiffd.dll
 IMAGEFORMATPLUGINS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/imageformats
 INSTALLS += IMAGEFORMATPLUGINS_DEBUG
 
-!wince*:QTSOLUTIONS_IOCOMPRESSOR.files += $$QTIOCOMPRESSOR_LIBDIR/../release/QtSolutions_IOCompressor-2.3.dll
-wince*:QTSOLUTIONS_IOCOMPRESSOR.files += $$QTIOCOMPRESSOR_LIBDIR/../release/IOCompressor-2.3.dll
-QTSOLUTIONS_IOCOMPRESSOR.path = $$(PICTO_TREE)/output/bin/release
-INSTALLS += QTSOLUTIONS_IOCOMPRESSOR
-
-!wince*:QTSOLUTIONS_IOCOMPRESSOR_DEBUG.files += $$QTIOCOMPRESSOR_LIBDIR/../debug/QtSolutions_IOCompressor-2.3d.dll
-wince*:QTSOLUTIONS_IOCOMPRESSOR_DEBUG.files += $$QTIOCOMPRESSOR_LIBDIR/../debug/IOCompressor-2.3d.dll
-QTSOLUTIONS_IOCOMPRESSOR_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
-INSTALLS += QTSOLUTIONS_IOCOMPRESSOR_DEBUG
-
-!wince*:QTSOLUTIONS_PROPERTYBROWSER.files += $$QTPROPERTYBROWSER_LIBDIR/../release/QtSolutions_PropertyBrowser-2.5.dll
-wince*:QTSOLUTIONS_PROPERTYBROWSER.files += $$QTPROPERTYBROWSER_LIBDIR/../release/PropertyBrowser-2.5.dll
+!wince*:QTSOLUTIONS_PROPERTYBROWSER.files += $$(PROPBROWSDIR)/bin/release/QtPropertyBrowser.dll
+wince*:QTSOLUTIONS_PROPERTYBROWSER.files += $$(PROPBROWSDIR)/bin/release/QtPropertyBrowser.dll
 QTSOLUTIONS_PROPERTYBROWSER.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += QTSOLUTIONS_PROPERTYBROWSER
 
-!wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$QTPROPERTYBROWSER_LIBDIR/../debug/QtSolutions_PropertyBrowser-2.5d.dll
-wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$QTPROPERTYBROWSER_LIBDIR/../debug/PropertyBrowser-2.5d.dll
+!wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$(PROPBROWSDIR)/bin/debug/QtPropertyBrowserd.dll
+wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$(PROPBROWSDIR)/bin/debug/QtPropertyBrowserd.dll
 QTSOLUTIONS_PROPERTYBROWSER_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += QTSOLUTIONS_PROPERTYBROWSER_DEBUG
 
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtCore4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtGui4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtNetwork4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/phonon4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtScript4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtScriptTools4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtSql4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtXml4.dll
-QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/QtWebKit4.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Core.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Gui.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Network.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Script.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Q5tScriptTools.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Sql.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Xml.dll
+QTLIBS.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Widgets.dll
 QTLIBS.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += QTLIBS
 
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtCored4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtGuid4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtNetworkd4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/phonond4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtScriptd4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtScriptToolsd4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtSqld4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtXmld4.dll
-QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/QtWebKitd4.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Cored.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Guid.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Networkd.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Scriptd.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5ScriptToolsd.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Sqld.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Xmld.dll
+QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Widgetsd.dll
 QTLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += QTLIBS_DEBUG
 
@@ -99,19 +130,19 @@ SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/out32dll_X86/ssleay32.dll
 SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/out32dll_X86/libeay32.dll
 }
 !wince* {
-SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/bin/ssleay32.dll
-SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/bin/libeay32.dll
+SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl/bin/ssleay32.dll
+SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl/bin/libeay32.dll
 }
 SSLLIBS.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += SSLLIBS
 
 wince* {
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/out32dll_X86/ssleay32.dll
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/out32dll_X86/libeay32.dll
+SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/out32dll_X86/ssleay32.dll
+SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/out32dll_X86/libeay32.dll
 }
 !wince* {
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/bin/ssleay32.dll
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/bin/libeay32.dll
+SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/bin/ssleay32.dll
+SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/bin/libeay32.dll
 }
 SSLLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += SSLLIBS_DEBUG
@@ -283,13 +314,13 @@ QTSOLUTIONS_IOCOMPRESSOR_DEBUG.extra = cp -dp $$QTIOCOMPRESSOR_LIBDIR/* $$(PICTO
 QTSOLUTIONS_IOCOMPRESSOR_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/shared
 INSTALLS += QTSOLUTIONS_IOCOMPRESSOR_DEBUG
 
-QTSOLUTIONS_PROPERTYBROWSER.extra = cp -dp $$QTPROPERTYBROWSER_LIBDIR/* $$(PICTO_TREE)/output/bin/release/shared
-QTSOLUTIONS_PROPERTYBROWSER.path = $$(PICTO_TREE)/output/bin/release/shared
-INSTALLS += QTSOLUTIONS_PROPERTYBROWSER
+#QTSOLUTIONS_PROPERTYBROWSER.extra = cp -dp $$QTPROPERTYBROWSER_LIBDIR/* $$(PICTO_TREE)/output/bin/release/shared
+#QTSOLUTIONS_PROPERTYBROWSER.path = $$(PICTO_TREE)/output/bin/release/shared
+#INSTALLS += QTSOLUTIONS_PROPERTYBROWSER
 
-QTSOLUTIONS_PROPERTYBROWSER_DEBUG.extra = cp -dp $$QTPROPERTYBROWSER_LIBDIR/* $$(PICTO_TREE)/output/bin/debug/shared
-QTSOLUTIONS_PROPERTYBROWSER_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/shared
-INSTALLS += QTSOLUTIONS_PROPERTYBROWSER_DEBUG
+#QTSOLUTIONS_PROPERTYBROWSER_DEBUG.extra = cp -dp $$QTPROPERTYBROWSER_LIBDIR/* $$(PICTO_TREE)/output/bin/debug/shared
+#QTSOLUTIONS_PROPERTYBROWSER_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/shared
+#INSTALLS += QTSOLUTIONS_PROPERTYBROWSER_DEBUG
 
 TESTS.extra  =   cp -dp $$(PICTO_TREE)/output/bin/release/shared/* $$(PICTO_TREE)/output/tests/bin/release/shared
 TESTS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtTest.so* $$(PICTO_TREE)/output/tests/bin/release/shared

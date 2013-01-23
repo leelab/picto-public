@@ -181,7 +181,7 @@ bool DirectorInterface::startReward(int controller)
 {
 	if(controller < 0)
 		return false;
-	qDebug(QTime::currentTime().toString().toAscii() + ": Start Reward Sent");
+	qDebug(QTime::currentTime().toString().toLatin1() + ": Start Reward Sent");
 	//NOTE: No indication is given through the UI that a reward has been issued.
 	//In the Lee lab, this is not a problem, since the reward solenoids are loud.
 	//However, it might be desirable to give some sort of indication of a reward
@@ -225,19 +225,19 @@ bool DirectorInterface::sendCommandGetResponse(Picto::ProtocolCommand command,QS
 	QString commandId = QString::number(++lastCommandId_);
 	command.setFieldValue("Command-ID",commandId);
 	command.write(commSock);
-	qDebug("SentID: " + commandId.toAscii());
+	qDebug("SentID: " + commandId.toLatin1());
 	Picto::ProtocolResponse response;
 	int r = response.read(commSock,RESPONSEDELAYMS);
 	//If we got a reponse (r>=0) but it wasn't for our command, throw it out and read a new one.
 	while((r >= 0) && (response.getFieldValue("Command-ID") != commandId))
 	{
-		qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toAscii());
+		qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toLatin1());
 		r = response.read(commSock,RESPONSEDELAYMS);
 	}
 	(*reply) = "";
 	if(r < 0)	//A response to our command didn't arrive in time.
 		return false;
-	qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toAscii());
+	qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toLatin1());
 
 	(*reply) = QString(response.getDecodedContent());
 	if(response.getResponseCode() != 200)

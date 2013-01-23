@@ -12,7 +12,7 @@
 							DAQmxClearTask(daqTaskHandle_); \
 							QString msg = "DAQ function error:"; \
 							msg.append(error); \
-							Q_ASSERT_X(!rc, "LegacySystemXPAnalogInputPort", msg.toAscii()); \
+							Q_ASSERT_X(!rc, "LegacySystemXPAnalogInputPort", msg.toLatin1()); \
 						} }
 						
 

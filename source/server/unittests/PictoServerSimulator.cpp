@@ -47,7 +47,7 @@ void PictoServerSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 				if(!message.startsWith("COMPONENTUPDATE") && !message.startsWith("TRIAL") && !message.startsWith("PUTDATA"))
 				{
 					QVERIFY2(message == expected, (GetDeviceTypeName() +" received an unexpected or badly formed message.\nActual: " 
-					+ message + "\nExpected: " + "COMPONENTUPDATE, TRIAL OR PUTDATA").toAscii());
+					+ message + "\nExpected: " + "COMPONENTUPDATE, TRIAL OR PUTDATA").toLatin1());
 				}
 				else
 				{
@@ -127,11 +127,11 @@ void PictoServerSimulator::CreateConnection(int timeout)
 		}
 	}
 	if(!gotDiscovered)
-		QFAIL((QString() + "Server failed to get discovered within " + QString::number(timeout) + "ms").toAscii());
+		QFAIL((QString() + "Server failed to get discovered within " + QString::number(timeout) + "ms").toLatin1());
 	// Respond with an ANNOUNCE message
 	QByteArray datagram = QString("ANNOUNCE %1:%2 PICTO/1.0").arg(serverAddress.toString())
 														  .arg(42424)
-														  .toAscii();
+														  .toLatin1();
 	udpSocket_->writeDatagram(datagram.data(), datagram.size(),
 									hostAddr, port);
 

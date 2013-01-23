@@ -45,7 +45,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			serverDiscoverer.discover();
 			if(!serverDiscoverer.waitForDiscovered(10000))
 			{
-				QFAIL((GetDeviceTypeName() + " did not recieve a response to its DISCOVER call from the Server").toAscii() );
+				QFAIL((GetDeviceTypeName() + " did not recieve a response to its DISCOVER call from the Server").toLatin1() );
 				return;
 			}
 			ConnectToHost(tcpSocket_,serverDiscoverer.getAddress(),serverDiscoverer.getPort());
@@ -79,12 +79,12 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			else
 				QFAIL( QString("TEST DEFINITION ERROR: Workstation simulator %1 could not find the IP address for %2. \n"\
 							   "Make sure that all Directors have sent COMPONENTUPDATE messages and that DIRECTORLIST "\
-							   "was called before using STARTSESSION." ).arg(GetDeviceName()).arg(directorName).toAscii());
+							   "was called before using STARTSESSION." ).arg(GetDeviceName()).arg(directorName).toLatin1());
 			if((proxyName != "") && !proxyMap_.contains(proxyName))
 			{
 				QFAIL( QString("TEST DEFINITION ERROR: Workstation simulator %1 could not find the proxy index for %2.\n"\
 							   "Make sure that all Proxy Servers have sent ANNOUNCE messages and that PROXYLIST "\
-							   "was called before using STARTSESSION." ).arg(GetDeviceName()).arg(directorName).toAscii());
+							   "was called before using STARTSESSION." ).arg(GetDeviceName()).arg(directorName).toLatin1());
 			}
 			else if (proxyMap_.contains(proxyName))
 			{
@@ -152,7 +152,7 @@ void PictoWorkstationSimulator::Act(QSharedPointer<SimActionDesc> actionDesc)
 			else
 				QFAIL( QString("TEST DEFINITION ERROR: Workstation simulator could not find the IP address for %1. \n"\
 							   "Make sure that all Directors have sent COMPONENTUPDATE messages and that DIRECTORLIST "\
-							   "was called before using STARTSESSION." ).arg(directorName).toAscii());
+							   "was called before using STARTSESSION." ).arg(directorName).toLatin1());
 			QString proxy = "-1";
 			SendMessage(QString("JOINSESSION %1/%2 PICTO/1.0\r\nContent-Length:0\r\nObserver-ID:%3\r\nSession-ID:{00000000-0000-0000-0000-000000000000}\r\n\r\n").arg(directorIP).arg(proxy).arg(observerID_), tcpSocket_);
 			// Check reply and get my new session ID
@@ -250,7 +250,7 @@ void PictoWorkstationSimulator::BuildProxyMap(QString message)
 					// This is the last element name, if we got here we can insert the name, id mapping.
 					// First lets make sure there only one of each proxy.
 					if(proxyMap_.contains(name))
-						QFAIL( QString("ProxyMap received at %1 from server contains multiple ids for the same proxy name").arg(GetDeviceName()).toAscii() );
+						QFAIL( QString("ProxyMap received at %1 from server contains multiple ids for the same proxy name").arg(GetDeviceName()).toLatin1() );
 					proxyMap_.insert(name,id);
 					break;
 				}

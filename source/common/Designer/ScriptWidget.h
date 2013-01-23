@@ -1,7 +1,7 @@
 #ifndef SCRIPTWIDGET_H
 #define SCRIPTWIDGET_H
 #include <QTextEdit>
-#include <QtVariantPropertyManager>
+#include <QtVariantProperty.h>
 #include "ScriptSyntaxHighlighter.h"
 using namespace Picto;
 

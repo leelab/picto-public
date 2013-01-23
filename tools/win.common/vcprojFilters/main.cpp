@@ -10,6 +10,11 @@
 #include <vector>
 #include <map>
 
+/* This code was used with Visual Studio 2008 and before in order to set up our Picto solution with a nice directory 
+ * structure.  Now we use "CONFIG -= flat" in the Picto.pro file which takes care of this fairly well on its own.
+ * This code does not work correctly with the Visual Studio 2010 file structure, so if you want to start using it again
+ * you'll have fix it.
+ */
 int main(int argc, char *argv[])
 {
 	if(argc<2) return -1;

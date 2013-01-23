@@ -2,6 +2,7 @@ TEMPLATE = app
 TARGET = PictoServerUnitTests
 QT = core gui network testlib
 CONFIG += qt warn_on debug_and_release
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 

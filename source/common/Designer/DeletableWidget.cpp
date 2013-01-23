@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "DeletableWidget.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/property/Property.h"

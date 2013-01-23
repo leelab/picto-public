@@ -42,7 +42,7 @@
 #include "../../common/storage/LFPDataUnitPackage.h"
 #include "../../common/storage/directordata.h"
 #include "../../common/compositor/OutputSignalWidget.h"
-#include "../propertyframe.h"
+#include "../../common/designer/propertyframe.h"
 
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -87,7 +87,7 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 		query.exec("CREATE TABLE workstationinfo (key TEXT, value TEXT)");
 		observerId_ = QUuid::createUuid();
 		query.prepare("INSERT INTO workstationinfo (key,value) VALUES ('id',:id)");
-		query.bindValue(":id",QString(observerId_));
+		query.bindValue(":id",observerId_.toString());
 		query.exec();
 	}
 	query.exec("SELECT value FROM workstationinfo WHERE key='id'");
@@ -463,7 +463,7 @@ void RemoteViewer::endState()
  */
 void RemoteViewer::enterState()
 {
-	qDebug("Entering State: " + QString::number(currState_).toAscii());
+	qDebug("Entering State: " + QString::number(currState_).toLatin1());
 	switch(currState_)
 	{
 	case WaitForConnect:
@@ -1298,7 +1298,7 @@ void RemoteViewer::updateNeuralData()
 
 	neuralSlaveChannel_->sendRegisteredCommand(command);
 	QString commandID = command->getFieldValue("Command-ID");
-	//qDebug(QString("Sent command: %1 at Time:%2").arg(commandID).arg(command->getFieldValue("Time-Sent")).toAscii());
+	//qDebug(QString("Sent command: %1 at Time:%2").arg(commandID).arg(command->getFieldValue("Time-Sent")).toLatin1());
 
 	do
 	{
@@ -1691,7 +1691,7 @@ bool RemoteViewer::endSession()
 		return false;
 	}
 
-	QSharedPointer<Picto::ProtocolCommand> endSessCommand(new Picto::ProtocolCommand("ENDSESSION "+sessionId_+" PICTO/1.0"));
+	QSharedPointer<Picto::ProtocolCommand> endSessCommand(new Picto::ProtocolCommand("ENDSESSION "+sessionId_.toString()+" PICTO/1.0"));
 	endSessCommand->setFieldValue("Observer-ID",observerId_.toString());
 
 	QSharedPointer<Picto::ProtocolResponse> endSessResponse;
@@ -1870,7 +1870,7 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 	QTime timer;
 	timer.start();
 	serverChannel_->sendRegisteredCommand(cmd);
-	//qDebug("Sent " + cmd->getMethod().toAscii() + " Command.");
+	//qDebug("Sent " + cmd->getMethod().toLatin1() + " Command.");
 	bool useAdaptiveTimeout = (nonDefaultTimeoutMs == -1);
 	QString method = cmd->getMethod();
 	int* responseDelay = &nonDefaultTimeoutMs;
@@ -1927,7 +1927,7 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 				(*responseDelay)  = MAX_ADAPTIVE_TIMEOUT;
 			if(lastAdaptDelay != (*responseDelay))
 				statusMessage += " Compensating... Timeout: " + QString::number((*responseDelay)) + " ms.";
-			//qDebug(cmd->getMethod().toAscii() + " command timed out.");
+			//qDebug(cmd->getMethod().toLatin1() + " command timed out.");
 		}
 		if(currState_ != WaitForConnect)
 		{	//If we're not even connected, there will obviously be timeouts here.  No need to keep on whining about them.
@@ -1939,7 +1939,7 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 
 	//If we're here, we got a response.  Update the adaptive timeout for this command type according to the time it took to 
 	//receive the reply.
-	//qDebug(cmd->getMethod().toAscii() + " command reply received.");
+	//qDebug(cmd->getMethod().toLatin1() + " command reply received.");
 	if(useAdaptiveTimeout)
 	{
 		(*responseDelay) = 2*timer.elapsed();
@@ -1960,7 +1960,7 @@ bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 	cmd->setFieldValue("Observer-ID",observerId_.toString());
 	if(!msgContent.isEmpty())
 	{
-		QByteArray byteContent = msgContent.toAscii();
+		QByteArray byteContent = msgContent.toLatin1();
 		cmd->setContent(byteContent);
 		cmd->setFieldValue("Content-Length",QString::number(byteContent.length()));
 	}

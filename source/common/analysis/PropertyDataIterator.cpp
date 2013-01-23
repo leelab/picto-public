@@ -97,13 +97,13 @@ int PropertyDataIterator::getPropertyId(QString fullPath)
 	int parentId = getElementId(parentPath);
 	if(parentId == 0)
 	{
-		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","Property parent at path " + parentPath.toAscii() + " could not be found");
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","Property parent at path " + parentPath.toLatin1() + " could not be found");
 		return 0;
 	}
 	QString propName = getPropertyName(fullPath);
 	if(propName.isEmpty())
 	{
-		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","A property with parent path "+parentPath.toAscii()+" and no name was requested.");
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","A property with parent path "+parentPath.toLatin1()+" and no name was requested.");
 		return 0;
 	}
 
@@ -116,7 +116,7 @@ int PropertyDataIterator::getPropertyId(QString fullPath)
 
 	if(!success || !query.next())
 	{
-		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","Failed to find property at path "+fullPath.toAscii()+".");
+		Q_ASSERT_X(false,"PropertyDataIterator::getPropertyId","Failed to find property at path "+fullPath.toLatin1()+".");
 		return 0;
 	}
 	else

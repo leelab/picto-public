@@ -110,6 +110,6 @@ bool Serializable::fromXml(QString xmlText)
 	// Move read pointer to tag.
 	while(!xmlStreamReader->isStartElement() && !xmlStreamReader->atEnd()) 
 		xmlStreamReader->readNext();
-	Q_ASSERT_X(!xmlStreamReader->atEnd(),"Serializable::fromXml","Couldn't deserialize xmlText: " + xmlText.toAscii());
+	Q_ASSERT_X(!xmlStreamReader->atEnd(),"Serializable::fromXml","Couldn't deserialize xmlText: " + xmlText.toLatin1());
 	return fromXml(xmlStreamReader);
 }

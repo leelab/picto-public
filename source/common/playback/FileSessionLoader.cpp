@@ -98,7 +98,7 @@ bool FileSessionLoader::loadRunData()
 	bool success = query.exec();
 	if(!success)
 	{
-		qDebug("Failed to select data from runs table with error: " + query.lastError().text().toAscii());
+		qDebug("Failed to select data from runs table with error: " + query.lastError().text().toLatin1());
 		return false;
 	}
 
@@ -146,7 +146,7 @@ bool FileSessionLoader::loadInitData(double upTo)
 	//if(!success)
 	//{
 	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
 	//	return false;
 	//}
 	//while(query.next()){
@@ -183,7 +183,7 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 	//if(!success)
 	//{
 	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
 	//	return after;
 	//}
 	//while(query.next()){
@@ -206,7 +206,7 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 	//if(!success)
 	//{
 	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
 	//	return after;
 	//}
 	//while(query.next()){
@@ -229,7 +229,7 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 	//if(!success)
 	//{
 	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
 	//	return after;
 	//}
 	//while(query.next()){
@@ -249,7 +249,7 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 	//if(!success)
 	//{
 	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
 	//	return after;
 	//}
 	//while(query.next()){
@@ -271,7 +271,7 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 	//	if(!success)
 	//	{
 	//		Q_ASSERT(false);
-	//		qDebug("Failed to select data from table with error: " + query.lastError().text().toAscii());
+	//		qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
 	//		
 	//		return after;
 	//	}
@@ -319,7 +319,7 @@ bool FileSessionLoader::getSignalInfo()
 	bool success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return false;
 	}
 	if(!query.next())
@@ -353,7 +353,7 @@ bool FileSessionLoader::loadDesignDefinition()
 	bool success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return false;
 	}
 	if(!query.next())
@@ -397,7 +397,7 @@ bool FileSessionLoader::loadDesignDefinition()
 	success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return false;
 	}
 	while(query.next())
@@ -409,7 +409,7 @@ bool FileSessionLoader::loadDesignDefinition()
 	success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return false;
 	}
 	while(query.next())
@@ -421,7 +421,7 @@ bool FileSessionLoader::loadDesignDefinition()
 	success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return false;
 	}
 	while(query.next())

@@ -151,7 +151,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	resetScriptableValues();
 	path_.append(getName());
 	QString pathStr = path_.join("::");
-	//qDebug(QString("Entering: %1").arg(path_.join("::")).toAscii());
+	//qDebug(QString("Entering: %1").arg(path_.join("::")).toLatin1());
 	if(!initScripting(engine->operatorIsUser()))	//only debug when in the test viewer
 	{
 		//! \TODO Make some sort of intelligent error reporting...
@@ -252,7 +252,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		}
 		//! \TODO come up with a more elegant error handling scheme...
 		//QString errorMsg = "Unable to find element with name: "+nextElementName
-		Q_ASSERT_X(elements_.contains(nextElementName), "StateMachine::Run",QString("Unable to find element with name: %1").arg(nextElementName).toAscii());
+		Q_ASSERT_X(elements_.contains(nextElementName), "StateMachine::Run",QString("Unable to find element with name: %1").arg(nextElementName).toLatin1());
 
 		currElement_ = elements_[nextElementName].staticCast<StateMachineElement>();
 		currElementName = nextElementName;
@@ -263,7 +263,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		runScript(exitScriptName);
 	
 	//Since we're backing out of this state machine we need to remove it from the path
-	//qDebug(QString("Exiting: %1").arg(path_.join("::")).toAscii());
+	//qDebug(QString("Exiting: %1").arg(path_.join("::")).toLatin1());
 	path_.takeLast();
 	return result;
 }
@@ -307,7 +307,7 @@ QString StateMachine::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 //	//initialize scripting on all of the contained elements
 //	foreach(QSharedPointer<ResultContainer> element, elements_)
 //	{
-//		qDebug("Scripting Intialized for: " + element->getName().toAscii());
+//		qDebug("Scripting Intialized for: " + element->getName().toLatin1());
 //		if(!element.staticCast<StateMachineElement>()->initScripting(qsEngine_))
 //			return false;
 //	}

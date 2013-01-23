@@ -1,7 +1,7 @@
 #ifndef PropertyEditTracker_H
 #define PropertyEditTracker_H
 #include <QComboBox>
-#include <QtVariantPropertyManager>
+#include <QtVariantProperty.h>
 #include "../../common/property/property.h"
 using namespace Picto;
 

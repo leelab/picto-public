@@ -125,7 +125,7 @@ double SignalChannel::peekValue(QString subchannel)
 			scaleFactorsMap_.value(shearAsFuncOf).scaleB * otherRawValue;
 		scaledValue = scaledValue + scaleFactorsMap_.value(subchannel).shearFactor * (otherScaledValue - scaleFactorsMap_.value(shearAsFuncOf).centerVal);
 	}
-	//qDebug(QString("%1: Last: %2 Scaled: %3").arg(rawDataLastValue_[subchannel]).arg(subchannel).arg(scaledValue).toAscii());
+	//qDebug(QString("%1: Last: %2 Scaled: %3").arg(rawDataLastValue_[subchannel]).arg(subchannel).arg(scaledValue).toLatin1());
 	return scaledValue;
 }
 

@@ -32,7 +32,7 @@ void LFPDataIterator::updateVariableSessionConstants()
 	bool success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return;
 	}
 	if(query.next())
@@ -179,7 +179,7 @@ void LFPDataIterator::getSamplePeriod()
 	bool success = query.exec();
 	if(!success)
 	{
-		qDebug("Query Failed: " + query.lastError().text().toAscii());
+		qDebug("Query Failed: " + query.lastError().text().toLatin1());
 		return;
 	}
 	while(query.next())

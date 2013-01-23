@@ -103,7 +103,7 @@ void Server::processPendingDatagrams()
 
 				datagram = QString("ANNOUNCE %1:%2 PICTO/1.0").arg(serverAddress.toString())
 															  .arg(serverPort)
-															  .toAscii();
+															  .toLatin1();
 
 				udpResponseSocket.writeDatagram(datagram.data(), datagram.size(),
 												senderAddress, target.toInt());

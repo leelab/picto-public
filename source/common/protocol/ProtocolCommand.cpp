@@ -149,7 +149,7 @@ int ProtocolCommand::write(QAbstractSocket *socket)
 
 	commandHeader += "\r\n";
 
-	command = commandHeader.toAscii();
+	command = commandHeader.toLatin1();
 
 	if(!content_.isEmpty())
 		command.append(content_);

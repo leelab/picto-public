@@ -12,7 +12,7 @@
 							DAQmxClearTask(daqTaskHandle_); \
 							QString msg = "DAQ function error:"; \
 							msg.append(error); \
-							Q_ASSERT_X(!rc, "PictoBoxXPAnalogInputPort", msg.toAscii()); \
+							Q_ASSERT_X(!rc, "PictoBoxXPAnalogInputPort", msg.toLatin1()); \
 						} }
 						
 

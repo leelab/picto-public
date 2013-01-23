@@ -93,7 +93,7 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	else if(asset->inherits("Picto::Asset"))
 		returnVal = new AssetItem(editorState_, contextMenu_,asset);
 	else
-		Q_ASSERT_X(false,"DiagramItemFactory::create","Unknown Item Type: " + type.toAscii());
+		Q_ASSERT_X(false,"DiagramItemFactory::create","Unknown Item Type: " + type.toLatin1());
 
 	if(returnVal)
 	{

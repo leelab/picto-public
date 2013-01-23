@@ -44,7 +44,7 @@ void ResultContainer::addRequiredResult(QString resultName)
 //{
 //	Q_ASSERT_X(resultFactoryByType_.contains(type),"ResultContainer",
 //		QString("You must add an asset factory for type: \"%1\" before calling addRequiredResult"
-//		" for that type.").arg(type).toAscii());
+//		" for that type.").arg(type).toLatin1());
 //	requiredResults_.insert(type,requiredResult);
 //	if(maxOptionalResults_[type] != -1)
 //	{
@@ -57,7 +57,7 @@ void ResultContainer::setMaxOptionalResults(int max, QString type)
 {
 	Q_ASSERT_X(resultFactoryByType_.contains(type),"ResultContainer",
 		QString("You must add an asset factory for type: \"%1\" before calling setMaxOptionalResults"
-		" for that type.").arg(type).toAscii());
+		" for that type.").arg(type).toLatin1());
 	maxOptionalResults_[type] = max;
 	resultFactoryByType_[type]->setMaxAssets(max+requiredResults_.count(type));
 }
@@ -65,7 +65,7 @@ void ResultContainer::setMaxOptionalResults(int max, QString type)
 void ResultContainer::addResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory)
 {
 	Q_ASSERT_X(!resultFactoryByType_.contains(type),"ResultContainer",
-		QString("The factory type \"%1\" was added to this ResultContainer twice").arg(type).toAscii());
+		QString("The factory type \"%1\" was added to this ResultContainer twice").arg(type).toLatin1());
 	resultFactoryByType_[type] = resultFactory;
 	resultFactory_->addAssetType(type,resultFactory);
 	maxOptionalResults_[type] = -1;

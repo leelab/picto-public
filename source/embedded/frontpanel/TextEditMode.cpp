@@ -54,7 +54,7 @@ PanelInfo::DisplayModeType TextEditMode::handleUserInput(PanelInfo::InputType ty
 				else if(currText_[currTextChar_] == 'z')
 					currText_[currTextChar_] = ' ';
 				else
-					currText_[currTextChar_]=currText_[currTextChar_].toAscii()+1;
+					currText_[currTextChar_]=currText_[currTextChar_].toLatin1()+1;
 			}
 			break;
 		case PanelInfo::rotateRightFast:
@@ -71,7 +71,7 @@ PanelInfo::DisplayModeType TextEditMode::handleUserInput(PanelInfo::InputType ty
 				else if(currText_[currTextChar_] == ' ')
 					currText_[currTextChar_] = 'z';
 				else
-					currText_[currTextChar_]=currText_[currTextChar_].toAscii()-1;
+					currText_[currTextChar_]=currText_[currTextChar_].toLatin1()-1;
 			}
 			break;
 		case PanelInfo::buttonPush:

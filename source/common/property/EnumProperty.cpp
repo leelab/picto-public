@@ -32,7 +32,7 @@ bool EnumProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStream
 				errorString.append(QString("\n%1").arg(option));
 			}
 			if(xmlStreamReader)
-				addError(getName().toAscii(), errorString.toAscii(), xmlStreamReader);
+				addError(getName().toLatin1(), errorString.toLatin1(), xmlStreamReader);
 			return false;
 		}
 		Property::setValue(_value);
@@ -52,7 +52,7 @@ bool EnumProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStream
 			errorString.append(QString("\n%1").arg(option));
 		}
 		if(xmlStreamReader)
-			addError(getName().toAscii(), errorString.toAscii(), xmlStreamReader);
+			addError(getName().toLatin1(), errorString.toLatin1(), xmlStreamReader);
 		return false;
 	}
 	Property::setValue(QVariant(index));

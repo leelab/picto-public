@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "diagramitem.h"
 #include "arrow.h"
@@ -48,7 +48,7 @@
 //! [0]
 DiagramItem::DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name,
              QGraphicsItem *parent, QGraphicsScene *scene) : 
-QGraphicsPolygonItem(parent, scene)
+QGraphicsPolygonItem(parent/*, scene*/)
 {
 	editorState_ = editorState;
     myContextMenu = contextMenu;

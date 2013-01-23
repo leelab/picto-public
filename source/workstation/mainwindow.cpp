@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "../common/globals.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "errorlist.h"
 #include "viewer.h"
@@ -468,7 +468,7 @@ bool MainWindow::saveFile(const QString filename)
 		//Make sure design name is the same as the filename
 		designRoot_->setDesignName(QFileInfo(file).baseName());
 		currViewer_->aboutToSave();
-		if(!file.write(designRoot_->getDesignRootText().toAscii()))
+		if(!file.write(designRoot_->getDesignRootText().toLatin1()))
 			success = false;
 		file.close();
 	}

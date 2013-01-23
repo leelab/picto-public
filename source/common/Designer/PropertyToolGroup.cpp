@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "PropertyToolGroup.h"
 #include "../../common/storage/DataStore.h"
 #include "../../common/storage/propertyfactory.h"

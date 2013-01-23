@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 //#include "../common/common.h"
 #include "../common/globals.h"

@@ -23,7 +23,7 @@ QString AnalysisOutput::getTempOutputDir()
 	//int tempDirNum = 1;
 	//while(QFile::exists(outputDir_+QString("/%1").arg(tempDirNum)))
 	//	tempDirNum++;
-	return outputDir_+QString("/%1").arg(runUuid_);
+	return outputDir_+QString("/%1").arg(runUuid_.toString());
 }
 
 void AnalysisOutput::postDeserialize()

@@ -1,5 +1,4 @@
 #include <QXmlStreamWriter>
-#include <windows.h>
 #include "virtualdeviceplugin.h"
 #include "simplespikesource.h"
 #include "simplemarksource.h"
@@ -181,4 +180,4 @@ bool VirtualDevicePlugin::acqDataAfterNow()
 	return true;
 }
 
-Q_EXPORT_PLUGIN2(ProxyPluginVirtualDevice, VirtualDevicePlugin)
+//Q_EXPORT_PLUGIN2(ProxyPluginVirtualDevice, VirtualDevicePlugin)

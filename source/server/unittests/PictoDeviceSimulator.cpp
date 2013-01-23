@@ -112,7 +112,7 @@ void PictoDeviceSimulator::ConnectToHost(QSharedPointer<QTcpSocket> tcpSocket, Q
 	tcpSocket->connectToHost(hostAddr,hostPort);
 	if(!tcpSocket->waitForConnected(10000))
 	{
-		QFAIL((GetDeviceTypeName() + " failed to connect to port: " + hostPort + ", address: " + hostAddr.toString()).toAscii());
+		QFAIL((GetDeviceTypeName() + " failed to connect to port: " + hostPort + ", address: " + hostAddr.toString()).toLatin1());
 	}
 }
 
@@ -122,11 +122,11 @@ void PictoDeviceSimulator::SendMessage(QString message, QSharedPointer<QTcpSocke
 {
 	if(!tcpSocket->waitForConnected(0))
 	{
-		QFAIL((GetDeviceTypeName() + " Can't send its message.  Tcp socket is not connected").toAscii() );
+		QFAIL((GetDeviceTypeName() + " Can't send its message.  Tcp socket is not connected").toLatin1() );
 	}
-	if(tcpSocket->write(message.toAscii()) == -1)
+	if(tcpSocket->write(message.toLatin1()) == -1)
 	{
-		QFAIL((GetDeviceTypeName() + " Can't send its message.  Tcp socket failed to send message.").toAscii() );
+		QFAIL((GetDeviceTypeName() + " Can't send its message.  Tcp socket failed to send message.").toLatin1() );
 	}
 }
 
@@ -141,7 +141,7 @@ void PictoDeviceSimulator::ReadIncomingMessage(QString expected, QString& messag
 	{
 		tcpSocket->close();
 		if(requireMessage)
-			QFAIL((GetDeviceTypeName() +" Can't read incoming messages.  Tcp socket is not connected").toAscii());
+			QFAIL((GetDeviceTypeName() +" Can't read incoming messages.  Tcp socket is not connected").toLatin1());
 	}
 
 	if(tcpSocket->waitForReadyRead(timeout))
@@ -151,13 +151,13 @@ void PictoDeviceSimulator::ReadIncomingMessage(QString expected, QString& messag
 	else
 	{
 		if(requireMessage)
-			QFAIL((GetDeviceTypeName() +" timed out while waiting for the following message: " + expected).toAscii());
+			QFAIL((GetDeviceTypeName() +" timed out while waiting for the following message: " + expected).toLatin1());
 	}
 
 	if(requireMessage && !message.startsWith(expected))
 	{
 		QVERIFY2(message == expected, (GetDeviceTypeName() +" received an unexpected or badly formed message.\nActual: " 
-			+ message + "\nExpected: " + expected).toAscii());
+			+ message + "\nExpected: " + expected).toLatin1());
 	}
 }
 

@@ -1,15 +1,3 @@
-#include "testviewer.h"
-
-#include "../../common/compositor/RenderingTarget.h"
-#include "../../common/compositor/PCMAuralTarget.h"
-#include "../../common/iodevices/AudioRewardController.h"
-#include "../../common/iodevices/NullEventCodeGenerator.h"
-#include "../propertyframe.h"
-#include "../../common/engine/XYSignalChannel.h"
-#include "../../common/engine/MouseInputPort.h"
-#include "../../common/parameter/OperatorClickParameter.h"
-#include "../../common/compositor/OutputSignalWidget.h"
-
 
 #include <QToolBar>
 #include <QAction>
@@ -23,6 +11,18 @@
 #include <QMenu>
 #include <QFileDialog>
 #include <QSlider>
+
+#include "testviewer.h"
+
+#include "../../common/compositor/RenderingTarget.h"
+#include "../../common/compositor/PCMAuralTarget.h"
+#include "../../common/iodevices/AudioRewardController.h"
+#include "../../common/iodevices/NullEventCodeGenerator.h"
+#include "../../common/designer/propertyframe.h"
+#include "../../common/engine/XYSignalChannel.h"
+#include "../../common/engine/MouseInputPort.h"
+#include "../../common/parameter/OperatorClickParameter.h"
+#include "../../common/compositor/OutputSignalWidget.h"
 #include "../../common/memleakdetect.h"
 
 

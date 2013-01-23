@@ -19,7 +19,7 @@ TransitionDataIterator::~TransitionDataIterator()
 void TransitionDataIterator::registerTransitions(QString parentPath,QString sourceName,QString resultName, QString destinationName)
 {
 	int parentId = getElementId(parentPath);
-	Q_ASSERT_X(parentId != 0,"TransitionDataIterator::registerTransitions","Parent element at path: " + parentPath.toAscii() + " was not found.");
+	Q_ASSERT_X(parentId != 0,"TransitionDataIterator::registerTransitions","Parent element at path: " + parentPath.toLatin1() + " was not found.");
 	if(!parentId)
 	{
 		valid_ = false;

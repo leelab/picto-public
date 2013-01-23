@@ -53,12 +53,13 @@
 
 
 
-#include "../common/storage/asset.h"
+#include "../storage/asset.h"
 
 #include "diagramitem.h"
-#include "../viewer.h"
 #include "EditorState.h"
-#include "../common/design/Design.h"
+#include "../design/Design.h"
+#include "../design/DesignRoot.h"
+#include "../common.h"
 using namespace Picto;
 
 class DiagramScene;
@@ -80,7 +81,11 @@ class QGraphicsView;
 QT_END_NAMESPACE
 
 //! [0]
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API Designer : public QWidget
+#else
 class Designer : public QWidget
+#endif
 {
     Q_OBJECT
 

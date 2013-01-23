@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <QSqlQuery>
 #include <QSqlError>
 #include "PropertyFrame.h"
@@ -118,7 +118,7 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 		query.bindValue(":path",path);
 		query.bindValue(":name",name);
 		bool success = query.exec();
-		Q_ASSERT_X(success,"PropertyFrame::updatePropertiesFromFile","Error: "+query.lastError().text().toAscii());
+		Q_ASSERT_X(success,"PropertyFrame::updatePropertiesFromFile","Error: "+query.lastError().text().toLatin1());
 		if(query.next())
 		{
 			propFound = true;

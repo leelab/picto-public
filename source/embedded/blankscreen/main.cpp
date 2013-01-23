@@ -15,7 +15,11 @@
 #include <QSharedPointer>
 #include <QFile>
 #include <QHBoxLayout>
-//#include <QtVariantPropertyManager>
+#include <QtPropertyBrowser.h>
+#include <QtVariantProperty.h>
+#include <QtGroupBoxPropertyBrowser.h>
+#include <qtbuttonPropertyBrowser.h>
+//#include <QtVariantProperty.h>
 
 #ifdef WINCE
 #include <winbase.h>
@@ -45,138 +49,179 @@
 
 using namespace Picto;
 
+
 class BlankWindow : public QWidget
 {
 	QSharedPointer<Asset> test;
 public:
     BlankWindow(QWidget *parent = 0) : QWidget(parent)
     {
-        QWidget::setWindowFlags(Qt::Window);
-        
-        QRect screenRect = QApplication::desktop()->screenGeometry(-1);
-        resize(screenRect.width(),screenRect.height());
-        move(0,0);
-        
-        QPalette pal = palette();
-        pal.setColor(QPalette::Window, Qt::black);
-        setPalette(pal);
-        
-        setFocusPolicy(Qt::ClickFocus);
-
-		//QSharedPointer<Asset> test(StopwatchController::Create());
-
-		QFile file("TestXml.xml");
-		file.open(QIODevice::ReadOnly);
-		QString fileText = file.readAll();
+        propManager1_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+		propManager2_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
 		
-		test = Experiment::Create();
-		test->fromXml(fileText);
+		QtVariantProperty *item1 = propManager1_->addProperty(QVariant::Int,"Number1");
+		QtVariantProperty *item2 = propManager1_->addProperty(QVariant::String,"Test String1");
 
+		QtVariantProperty *item3 = propManager2_->addProperty(QVariant::Int,"Number2");
+		QtVariantProperty *item4 = propManager2_->addProperty(QVariant::String,"Test String2");
+		propManager2_->clear();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//set up the engine
-	QSharedPointer<Engine::PictoEngine> engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
-	engine_->setExclusiveMode(false);
-	engine_->setOperatorAsUser(true);
-
-	//Set up the rendering target
-	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
-	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_ = QSharedPointer<Picto::PixmapVisualTarget>(new Picto::PixmapVisualTarget(true,800,600));
-	QSharedPointer<Picto::RenderingTarget> renderingTarget_ = QSharedPointer<Picto::RenderingTarget>(new Picto::RenderingTarget(pixmapVisualTarget_, pcmAuralTarget));
-	engine_->addRenderingTarget(renderingTarget_);
-
-	//Set up the visual target host
-	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
-	//gives us memory exceptions.
-	Picto::VisualTargetHost* visualTargetHost_ = new Picto::VisualTargetHost();
-	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
-	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addWidget(visualTargetHost_);
-	setLayout(operationLayout);
-
-	//set up mouse signal channel
-	QSharedPointer<Picto::MouseInputPort> mousePort(new Picto::MouseInputPort(visualTargetHost_));
-	QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,8,mousePort));
-	engine_->addSignalChannel(mouseChannel);
-
-	//Set up event code generator
-	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
-	nullGenerator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::NullEventCodeGenerator());
-	engine_->setEventCodeGenerator(nullGenerator);
-
-	//set up reward controller
-	QSharedPointer<Picto::RewardController> rewardController;
-	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
-	engine_->setRewardController(rewardController);
-	test.staticCast<Experiment>()->setEngine(engine_);
-
-
-
-
-
-
-
-
-
-
-
-
-
-		//QSharedPointer<PropertyContainer> propContainer_ = PropertyContainer::create("TestName");
-		//QSharedPointer<AssetFactory> propFactory(new PropertyFactory(
-		//												0,
-		//												10,
-		//												propContainer_,
-		//												QVariant::Int,
-		//												"TestTagName",
-		//												0)
-		//											);
-		//propFactory->startSourcing();
-		//QString type = "";
-		//QString error = "";
-		//QSharedPointer<Asset> newChild = propFactory->getAsset(error,type);
-		//newChild = propFactory->getAsset(error,type);
-		//newChild = propFactory->getAsset(error,type);
-		//newChild = propFactory->getAsset(error,type);
-
-		//propContainer_->addProperty(QVariant::Color,"TestPropertyName",0,false );
-		//propContainer_->addProperty(QVariant::Int,"TestPropertyName1",0,false );
-		//propContainer_->addProperty(QVariant::Bool,"TestPropertyName2",0,false );
-		//propContainer_->addProperty(QVariant::Rect,"TestPropertyName3",0,false );
-		//propContainer_->addProperty(QVariant::String,"TestPropertyName4",0,false );
-		//propContainer_->addProperty(QVariant::Double,"TestPropertyName5",0,false );
-		//QSharedPointer<Property> prop = propContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"TestPropertyName6",0,false );
-		//prop->setAttribute("0",0);
-		//prop->setAttribute("1",1);
-		//prop->setAttribute("2",2);
-
-
-
-		int i=0;
-		i++;
+		propertyFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory(this));
+		
+		QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
+		browser->setFactoryForManager(propManager1_.data(), propertyFactory_.data());
+		browser->setFactoryForManager(propManager2_.data(), propertyFactory_.data());
+		foreach(QtProperty* prop,propManager1_->properties())
+		{
+			browser->addProperty(prop);
+		}
+		foreach(QtProperty* prop,propManager2_->properties())
+		{
+			browser->addProperty(prop);
+		}
+		
+		QVBoxLayout* layout = new QVBoxLayout(this);
+		layout->addWidget(browser);
+		setLayout(layout);
     }
 
-	void play()
-	{
-		test.staticCast<Experiment>()->runTask("ProbabilityTracking");
-	}
-    void focusInEvent(QFocusEvent *)
-    {
-        lower();
-    }
+	QSharedPointer<QtVariantPropertyManager> propManager1_;
+	QSharedPointer<QtVariantPropertyManager> propManager2_;
+	QSharedPointer<QtVariantEditorFactory> propertyFactory_;
 };
+
+//class BlankWindow : public QWidget
+//{
+//	QSharedPointer<Asset> test;
+//public:
+//    BlankWindow(QWidget *parent = 0) : QWidget(parent)
+//    {
+//        QWidget::setWindowFlags(Qt::Window);
+//        
+//        QRect screenRect = QApplication::desktop()->screenGeometry(-1);
+//        resize(screenRect.width(),screenRect.height());
+//        move(0,0);
+//        
+//        QPalette pal = palette();
+//        pal.setColor(QPalette::Window, Qt::black);
+//        setPalette(pal);
+//        
+//        setFocusPolicy(Qt::ClickFocus);
+//
+//		//QSharedPointer<Asset> test(StopwatchController::Create());
+//
+//		QFile file("TestXml.xml");
+//		file.open(QIODevice::ReadOnly);
+//		QString fileText = file.readAll();
+//		
+//		test = Experiment::Create();
+//		test->fromXml(fileText);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//	//set up the engine
+//	QSharedPointer<Engine::PictoEngine> engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
+//	engine_->setExclusiveMode(false);
+//	engine_->setOperatorAsUser(true);
+//
+//	//Set up the rendering target
+//	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
+//	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_ = QSharedPointer<Picto::PixmapVisualTarget>(new Picto::PixmapVisualTarget(true,800,600));
+//	QSharedPointer<Picto::RenderingTarget> renderingTarget_ = QSharedPointer<Picto::RenderingTarget>(new Picto::RenderingTarget(pixmapVisualTarget_, pcmAuralTarget));
+//	engine_->addRenderingTarget(renderingTarget_);
+//
+//	//Set up the visual target host
+//	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
+//	//gives us memory exceptions.
+//	Picto::VisualTargetHost* visualTargetHost_ = new Picto::VisualTargetHost();
+//	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
+//	QHBoxLayout *operationLayout = new QHBoxLayout;
+//	operationLayout->addWidget(visualTargetHost_);
+//	setLayout(operationLayout);
+//
+//	//set up mouse signal channel
+//	QSharedPointer<Picto::MouseInputPort> mousePort(new Picto::MouseInputPort(visualTargetHost_));
+//	QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,8,mousePort));
+//	engine_->addSignalChannel(mouseChannel);
+//
+//	//Set up event code generator
+//	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
+//	nullGenerator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::NullEventCodeGenerator());
+//	engine_->setEventCodeGenerator(nullGenerator);
+//
+//	//set up reward controller
+//	QSharedPointer<Picto::RewardController> rewardController;
+//	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
+//	engine_->setRewardController(rewardController);
+//	test.staticCast<Experiment>()->setEngine(engine_);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//		//QSharedPointer<PropertyContainer> propContainer_ = PropertyContainer::create("TestName");
+//		//QSharedPointer<AssetFactory> propFactory(new PropertyFactory(
+//		//												0,
+//		//												10,
+//		//												propContainer_,
+//		//												QVariant::Int,
+//		//												"TestTagName",
+//		//												0)
+//		//											);
+//		//propFactory->startSourcing();
+//		//QString type = "";
+//		//QString error = "";
+//		//QSharedPointer<Asset> newChild = propFactory->getAsset(error,type);
+//		//newChild = propFactory->getAsset(error,type);
+//		//newChild = propFactory->getAsset(error,type);
+//		//newChild = propFactory->getAsset(error,type);
+//
+//		//propContainer_->addProperty(QVariant::Color,"TestPropertyName",0,false );
+//		//propContainer_->addProperty(QVariant::Int,"TestPropertyName1",0,false );
+//		//propContainer_->addProperty(QVariant::Bool,"TestPropertyName2",0,false );
+//		//propContainer_->addProperty(QVariant::Rect,"TestPropertyName3",0,false );
+//		//propContainer_->addProperty(QVariant::String,"TestPropertyName4",0,false );
+//		//propContainer_->addProperty(QVariant::Double,"TestPropertyName5",0,false );
+//		//QSharedPointer<Property> prop = propContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"TestPropertyName6",0,false );
+//		//prop->setAttribute("0",0);
+//		//prop->setAttribute("1",1);
+//		//prop->setAttribute("2",2);
+//
+//
+//
+//		int i=0;
+//		i++;
+//    }
+//
+//	void play()
+//	{
+//		test.staticCast<Experiment>()->runTask("ProbabilityTracking");
+//	}
+//    void focusInEvent(QFocusEvent *)
+//    {
+//        lower();
+//    }
+//};
 
 int main(int argc, char *argv[])
 {
@@ -190,7 +235,7 @@ int main(int argc, char *argv[])
 	//QString* memLeakStr = new QString();
   BlankWindow blankWindow;
   blankWindow.show();
-  blankWindow.play();
+  //blankWindow.play();
 
   if(argc>1)
   {

@@ -21,6 +21,7 @@ class TdtPlugin : public QObject, public NeuralDataAcqInterface
 {
     Q_OBJECT
     Q_INTERFACES(NeuralDataAcqInterface)
+	Q_PLUGIN_METADATA(IID "org.blockdesign.Picto.ProxyServer.NeuralDataAcqInterface/1.0")
 
 public:
 	TdtPlugin();

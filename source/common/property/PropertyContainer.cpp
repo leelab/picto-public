@@ -1,5 +1,5 @@
-#include <QtVariantProperty>
-#include <QtProperty>
+#include <QtVariantProperty.h>
+#include <QtPropertyBrowser.h>
 #include "PropertyContainer.h"
 #include "EnumProperty.h"
 #include "ColorProperty.h"
@@ -13,25 +13,19 @@ PropertyContainer::PropertyContainer(QString _containerName)
 :
 containerName_(_containerName)
 {
-	clear();
+	propManager_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
+														  containerName_);
+	Q_ASSERT(item);
+	containerGroupItem_ = QSharedPointer<Property>( new Property(item,propManager_.data()) );
+
+	connect(propManager_.data(),
+		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
+		    this,
+			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
+			);
 }
 
-//We need to do some pointer gymnastics to get around the fact that
-//the QtAbstractProperyManager deletes all of its properties when it
-//is deleted but we would like to have shared pointers for the
-//properties such that they aren't deleted until we're totally done 
-//with them.  To do this, we only allow the PropertyContainer (inherits
-//the QtPropertyManager) to be created with a shared pointer.  Whenever
-//a property is added to it, this shared pointer is added to the property.
-//This means that the ProperyContainer will never be deleted until all of
-//its properties have already been deleted.  Whenever the properties are 
-//deleted, they remove themselves from their parent PropertyManager's list.  
-//This way, when the PropertyManager is deleted, all of its children will 
-//have already been removed from its list and there will be no problem.
-//Also note that in order for this to work we need to make sure that the
-//property container only contains weak pointers to its properties, otherwise
-//neither one will ever be deleted.
-//Tada!
 QSharedPointer<PropertyContainer> PropertyContainer::create(QString _containerName)
 {
 	QSharedPointer<PropertyContainer> returnVal(new PropertyContainer(_containerName));
@@ -71,7 +65,7 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 {
 	Q_ASSERT_X(allowMultiple || !properties_.contains(_identifier),
 		"PropertyContainer::addProperty",
-		QString("Attempted to add multiple properties to a tag (%1) for which this operation is forbidden").arg(_identifier).toAscii());
+		QString("Attempted to add multiple properties to a tag (%1) for which this operation is forbidden").arg(_identifier).toLatin1());
 
 	QtVariantProperty *item = propManager_->addProperty(_type,
 														  _identifier);
@@ -148,10 +142,10 @@ void PropertyContainer::clear()
 
 	properties_.clear();
 	containerGroupItem_.clear();
-	//We can't just clear the propManager_ because we need its properties to clear themselves out of it
-	//before its deleted (see comment in Property destructor).  Instead, we just replace the propManager_
-	//with a new one, and let the old one get deleted when its pointers go out of scope.
-	propManager_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+	containerGroupItem_.clear();
+	propManager_->clear();
+
+	//We just cleared out the group item.  Restore it.
 	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
 														  containerName_);
 	Q_ASSERT(item);

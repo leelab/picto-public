@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "PropertyBrowser.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/memleakdetect.h"
@@ -63,6 +63,6 @@ void PropertyBrowser::propertyEdited(QSharedPointer<Property> prop)
 	QSharedPointer<Property> currInitProp = currInitPropContainer->getProperty(prop->identifier());
 	Q_ASSERT_X(currInitProp
 		,"PropertyBrowser::propertyEdited"
-		,"There is no InitProperty corresponding to the edited " + prop->identifier().toAscii() + " property");
+		,"There is no InitProperty corresponding to the edited " + prop->identifier().toLatin1() + " property");
 	currInitProp->setValue(prop->value());
 }

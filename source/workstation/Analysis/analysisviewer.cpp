@@ -310,7 +310,7 @@ void AnalysisViewer::executeCommand()
 	{
 		saveOutputAction_->setEnabled(true);
 	}
-	qDebug("Total Analysis Time: " + QString::number(timer.elapsed()).toAscii());
+	qDebug("Total Analysis Time: " + QString::number(timer.elapsed()).toLatin1());
 }
 
 void AnalysisViewer::updateUI()

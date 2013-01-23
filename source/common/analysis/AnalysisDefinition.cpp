@@ -56,14 +56,14 @@ void AnalysisDefinition::loadSession(QSqlDatabase session,bool enScriptDebugging
 	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
 
 	//Make a Qt Script Function out of the script and its name
-	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toAscii() + "}";
+	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toLatin1() + "}";
 
 	//add the function to the engine by calling evaluate on it
 	qsEngine_->evaluate(function);
 	//Check for errors
 	if(qsEngine_->hasUncaughtException())
 	{
-		QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
+		QString errorMsg = "Uncaught exception in " + getName().toLatin1() + " script \n";
 		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
 										  .arg(qsEngine_->uncaughtException().toString());
 		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
@@ -145,7 +145,7 @@ bool AnalysisDefinition::run()
 	qsEngine_->globalObject().property("TestScriptName").call().toString();
 	if(qsEngine_->hasUncaughtException())
 	{
-		QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
+		QString errorMsg = "Uncaught exception in " + getName().toLatin1() + " script \n";
 		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
 										  .arg(qsEngine_->uncaughtException().toString());
 		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));

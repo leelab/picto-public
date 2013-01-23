@@ -157,7 +157,7 @@ void DirectorStatusManager::doServerUpdate()
 		updateCommand->setProtocolName("PICTO");
 		updateCommand->setProtocolVersion("1.0");
 		Q_ASSERT(directorData_);
-		QByteArray directorDataXml(directorData_->toXml().toAscii());
+		QByteArray directorDataXml(directorData_->toXml().toLatin1());
 		updateCommand->setContent(directorDataXml);
 		updateCommand->setFieldValue("Content-Length",QString::number(directorDataXml.length()));
 		dataChannel->sendCommand(updateCommand);

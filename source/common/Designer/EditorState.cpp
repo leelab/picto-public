@@ -1,5 +1,5 @@
 #include "EditorState.h"
-#include <QtGui>
+#include <QtWidgets>
 #include <QSharedPointer>
 #include "../../common/storage/DataStore.h"
 #include "../../common/statemachine/uienabled.h"

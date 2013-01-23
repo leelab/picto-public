@@ -229,4 +229,4 @@ bool PlexonPlugin::acqDataAfterNow()
 	return true;
 }
 
-Q_EXPORT_PLUGIN2(ProxyPluginPlexon, PlexonPlugin)
+//Q_EXPORT_PLUGIN2(ProxyPluginPlexon, PlexonPlugin)

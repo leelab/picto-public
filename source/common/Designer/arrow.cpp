@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "arrow.h"
 #include <math.h>
@@ -56,7 +56,7 @@ const qreal Pi = 3.14;
 //! [0]
 Arrow::Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
          QGraphicsItem *parent, QGraphicsScene *scene)
-    : QGraphicsLineItem(parent, scene)
+    : QGraphicsLineItem(parent/*, scene*/)
 {
 	transition_ = transition;
     myStartItem = static_cast<ArrowPortItem*>(startItem);

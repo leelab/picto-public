@@ -2,6 +2,7 @@ TEMPLATE = app
 TARGET = DDrawTest
 QT = core gui xml network script
 CONFIG += qt warn_on release
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 

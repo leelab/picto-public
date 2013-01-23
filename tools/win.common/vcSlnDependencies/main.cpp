@@ -60,10 +60,10 @@ int main(int argc, char *argv[])
 
 		for(unsigned int i = 0; i < dependencies.size(); i++)
 		{
-			if(currentLine.contains(dependencies[i]) && currentLine.contains(".vcproj") && currentLine.contains("Project(\"{"))
+			if(currentLine.contains(dependencies[i]) && currentLine.contains(".vcxproj") && currentLine.contains("Project(\"{"))
 			{
 				dependencyGuids[dependencies[i]] = currentLine.right(39).left(38);
-				std::cout << "Setting dependency GUID for " << dependencies[i].toAscii().data() << " to " << currentLine.right(39).left(38).toAscii().data() << "\n";
+				std::cout << "Setting dependency GUID for " << dependencies[i].toLatin1().data() << " to " << currentLine.right(39).left(38).toLatin1().data() << "\n";
 			}
 		}				
 	}
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 		
 		writer << currentLine << "\n";
 
-		if(currentLine.contains(".vcproj") && currentLine.contains("Project(\"{"))
+		if(currentLine.contains(".vcxproj") && currentLine.contains("Project(\"{"))
 		{
 			QString currentGuid = currentLine.mid(9,38);
 

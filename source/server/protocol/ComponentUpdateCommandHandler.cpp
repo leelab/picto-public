@@ -17,7 +17,7 @@ ComponentUpdateCommandHandler::ComponentUpdateCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	//qDebug((QString("COMPONENTUPDATE handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
+	//qDebug((QString("COMPONENTUPDATE handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toLatin1());
 
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::NotFound));
@@ -73,8 +73,8 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 		if(sessionInfo.isNull())
 		{
 			response->setContent("ERROR\nSessionInfo not found.");
-			QString errorMsg = QString("Couldn't find session: %1\n").arg(sessionId);
-			printf(errorMsg.toAscii());
+			QString errorMsg = QString("Couldn't find session: %1\n").arg(sessionId.toString());
+			printf(errorMsg.toLatin1());
 		}
 		else
 		{
@@ -94,7 +94,7 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 			else
 			{
 				//The server crashed when too big of a string was sent into this qDebug call!!! Watch out for this!
-				//qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
+				//qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toLatin1());
 				response->setContent(directive.toUtf8());
 			}
 		}

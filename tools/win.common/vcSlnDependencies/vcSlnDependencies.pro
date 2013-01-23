@@ -2,6 +2,7 @@ TEMPLATE = app
 TARGET = vcSlnDependencies
 QT = core xml
 CONFIG += qt warn_on release
+CONFIG -= flat
 win32:CONFIG += console
 DEPENDPATH += .
 INCLUDEPATH += .

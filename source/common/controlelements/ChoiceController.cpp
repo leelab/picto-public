@@ -185,7 +185,7 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 	{
 		//grab the signal channel
 		signal_ = engine->getSignalChannel(propertyContainer_->getPropertyValue("SignalChannel").toString());
-		Q_ASSERT_X(!signal_.isNull(),"ChoiceController::insideTarget","There is no signal channel called: " + propertyContainer_->getPropertyValue("SignalChannel").toString().toAscii());
+		Q_ASSERT_X(!signal_.isNull(),"ChoiceController::insideTarget","There is no signal channel called: " + propertyContainer_->getPropertyValue("SignalChannel").toString().toLatin1());
 
 		//confirm that the signal channel contains "x" and "y" subchannels
 		Q_ASSERT(signal_->getSubchannels().contains("x"));
@@ -317,7 +317,7 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	}
 	if(timeUnits_<0)
 	{
-		addError("ChoiceController", "Unrecognized units for " + getName().toAscii(),xmlStreamReader);
+		addError("ChoiceController", "Unrecognized units for " + getName().toLatin1(),xmlStreamReader);
 		return false;
 	}
 

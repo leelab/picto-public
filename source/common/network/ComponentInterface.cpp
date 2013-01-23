@@ -42,7 +42,7 @@ ComponentInterface::ComponentInterface(QString type)
 		query.exec("CREATE TABLE componentinfo (key TEXT, value TEXT)");
 		componentId_ = QUuid::createUuid();
 		query.prepare("INSERT INTO componentinfo (key,value) VALUES ('id',:id)");
-		query.bindValue(":id",QString(componentId_));
+		query.bindValue(":id",componentId_.toString());
 		query.exec();
 	}
 	query.exec("SELECT value FROM componentinfo WHERE key='id'");

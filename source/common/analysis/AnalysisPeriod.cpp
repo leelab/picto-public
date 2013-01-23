@@ -100,8 +100,8 @@ void AnalysisPeriod::loadSession(QSqlDatabase session,bool enScriptDebugging)
 	}
 
 	//Make a Qt Script Function out of the script and its name
-	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toAscii() + "}";
-	//periodScript_ = QScriptProgram(propertyContainer_->getPropertyValue("Script").toString().toAscii());
+	QString function = "function TestScriptName() { " + propertyContainer_->getPropertyValue("Script").toString().toLatin1() + "}";
+	//periodScript_ = QScriptProgram(propertyContainer_->getPropertyValue("Script").toString().toLatin1());
 
 	//add the function to the engine by calling evaluate on it
 	qsEngine_->evaluate(function);
@@ -109,7 +109,7 @@ void AnalysisPeriod::loadSession(QSqlDatabase session,bool enScriptDebugging)
 	//Check for errors
 	if(qsEngine_->hasUncaughtException())
 	{
-		QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
+		QString errorMsg = "Uncaught exception in " + getName().toLatin1() + " script \n";
 		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
 										  .arg(qsEngine_->uncaughtException().toString());
 		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
@@ -240,7 +240,7 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		//qsEngine_->evaluate(periodScript_);
 		if(qsEngine_->hasUncaughtException())
 		{
-			QString errorMsg = "Uncaught exception in " + getName().toAscii() + " script \n";
+			QString errorMsg = "Uncaught exception in " + getName().toLatin1() + " script \n";
 			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
 											  .arg(qsEngine_->uncaughtException().toString());
 			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
@@ -258,7 +258,7 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 
 		//Increment period number
 		periodNumber_++;
-		qDebug(QString("ScriptTime/OtherTime Ratio: %1").arg(scriptTime/otherTime).toAscii());
+		qDebug(QString("ScriptTime/OtherTime Ratio: %1").arg(scriptTime/otherTime).toLatin1());
 
 		//Get the next period times
 		while(startIndex_ < endIndex_)

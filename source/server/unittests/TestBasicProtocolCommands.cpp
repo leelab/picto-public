@@ -22,7 +22,7 @@ void TestBasicProtocolCommands::testQueryResponse(QString query, QString respons
 		QFAIL("Unable to establish a connection");
 	}
 
-	tcpSocket.write(query.toAscii());
+	tcpSocket.write(query.toLatin1());
 	if(tcpSocket.waitForReadyRead(10000))
 	{
 		QString result = tcpSocket.readAll();

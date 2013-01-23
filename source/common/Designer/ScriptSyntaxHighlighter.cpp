@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "ScriptSyntaxHighlighter.h"
-#include "private/qfunctions_p.h"
+//#include "private/qfunctions_p.h"
 
 using namespace Picto;
 
@@ -127,12 +127,12 @@ struct KeywordHelper
     const QString needle;
 };
 
-Q_STATIC_GLOBAL_OPERATOR bool operator<(const KeywordHelper &helper, const char *kw)
+static bool operator<(const KeywordHelper &helper, const char *kw)
 {
     return helper.needle < QLatin1String(kw);
 }
 
-Q_STATIC_GLOBAL_OPERATOR bool operator<(const char *kw, const KeywordHelper &helper)
+static bool operator<(const char *kw, const KeywordHelper &helper)
 {
     return QLatin1String(kw) < helper.needle;
 }
@@ -241,7 +241,7 @@ void ScriptSyntaxHighlighter::highlightBlock(const QString &text)
         if (lastWasBackSlash) {
             input = InputSep;
         } else {
-            switch (c.toAscii()) {
+            switch (c.toLatin1()) {
                 case '*':
                     input = InputAsterix;
                     break;

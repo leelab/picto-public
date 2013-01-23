@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = PictoDevelopersGuide
-QT = core gui webkit
+QT = core gui widgets webkitwidgets
 CONFIG += qt warn_on debug_and_release
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 

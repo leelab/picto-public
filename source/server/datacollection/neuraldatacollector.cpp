@@ -155,7 +155,7 @@
 //				query.bindValue(":channel", channel);
 //				query.bindValue(":unit", unit);
 //				query.bindValue(":waveform", waveform);
-//				Q_ASSERT_X(query.exec(),"",query.lastError().text().toAscii());
+//				Q_ASSERT_X(query.exec(),"",query.lastError().text().toLatin1());
 //			}
 //			else if(reader.attributes().value("type").toString() == "externalEvent")
 //			{

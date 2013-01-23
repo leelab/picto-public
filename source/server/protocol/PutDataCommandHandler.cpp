@@ -28,7 +28,7 @@ PutDataCommandHandler::PutDataCommandHandler()
 QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	int messageIndex=0;
-	//qDebug((QString("PUTDATA  handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toAscii());
+	//qDebug((QString("PUTDATA  handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toLatin1());
 	//QTime commandProcessingTimer;
 	//commandProcessingTimer.start();
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -144,9 +144,9 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 			/*commandProcessingTimer.start();*/
 			QSharedPointer<Picto::NeuralDataUnit> neuralData(new Picto::NeuralDataUnit());
 			neuralData->fromXml(xmlReader);
-			//qDebug((QString("Time to deserialize neural data: ")+QString::number(timer.elapsed())).toAscii()); 
+			//qDebug((QString("Time to deserialize neural data: ")+QString::number(timer.elapsed())).toLatin1()); 
 			sessionInfo->insertNeuralData(neuralData);
-			//qDebug("NEURAL " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
+			//qDebug("NEURAL " + QString::number(messageIndex++).toLatin1() + " " + QString::number(commandProcessingTimer.elapsed()).toLatin1());
 		}
 		else if(dataType == "ADU")
 		{
@@ -156,17 +156,17 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 
 			sessionInfo->insertAlignmentData(alignmentData);
 			//if(sourceType == "PROXY")
-			//	qDebug("ALIGN  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
+			//	qDebug("ALIGN  " + QString::number(messageIndex++).toLatin1() + " " + QString::number(commandProcessingTimer.elapsed()).toLatin1());
 		}
 		else if(dataType == "LFPDataUnitPackage")
 		{
 			/*commandProcessingTimer.start();*/
 			QSharedPointer<Picto::LFPDataUnitPackage> lfpData(new Picto::LFPDataUnitPackage());
 			lfpData->fromXml(xmlReader);
-			//qDebug("LFPDeserialize  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
+			//qDebug("LFPDeserialize  " + QString::number(messageIndex++).toLatin1() + " " + QString::number(commandProcessingTimer.elapsed()).toLatin1());
 
 			sessionInfo->insertLFPData(lfpData);
-			//qDebug("LFPTotal  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
+			//qDebug("LFPTotal  " + QString::number(messageIndex++).toLatin1() + " " + QString::number(commandProcessingTimer.elapsed()).toLatin1());
 		}
 		else if(dataType == "TaskRunDataUnit")
 		{
@@ -177,14 +177,14 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 		}
 		else
 		{
-			Q_ASSERT_X(false,"a",QString("DataType: "+dataType+" not found").toAscii());
+			Q_ASSERT_X(false,"a",QString("DataType: "+dataType+" not found").toLatin1());
 			return notFoundResponse;
 		}
 
 		xmlReader->readNext();
 	}
 	//if(sourceType == "PROXY")
-	//	qDebug("Proxy Total  " + QString::number(messageIndex++).toAscii() + " " + QString::number(commandProcessingTimer.elapsed()).toAscii());
+	//	qDebug("Proxy Total  " + QString::number(messageIndex++).toLatin1() + " " + QString::number(commandProcessingTimer.elapsed()).toLatin1());
 	QString directive = sessionInfo->pendingDirective(sourceID);
 	if(directive.isEmpty())
 	{
@@ -197,7 +197,7 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	}
 	else
 	{
-		qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toAscii());
+		qDebug(QString("Sent %1 Directive to %2").arg(directive).arg(sourceType).toLatin1());
 		response->setContent(directive.toUtf8());
 	}
 	return response;

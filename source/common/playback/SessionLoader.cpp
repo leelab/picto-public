@@ -71,7 +71,7 @@
 //
 //bool SessionLoader::setCurrentTime(double time)
 //{
-//	qDebug(QString("Loader: Current Time Set:%1").arg(time).toAscii());
+//	qDebug(QString("Loader: Current Time Set:%1").arg(time).toLatin1());
 //	double realTime = speedTimer_.restart()/1000.0;
 //	QMutexLocker locker(mutex_.data());
 //	time += runStart_;
@@ -220,33 +220,33 @@
 //		newMinNeural = procTime_-backBuffer_;
 //	if(maxTime > maxBehav_)
 //	{
-//		qDebug(QString("Loader: Load Behav Data From: %1 Until Time:%2").arg(maxBehav_-runStart_).arg(maxTime-runStart_).toAscii());
+//		qDebug(QString("Loader: Load Behav Data From: %1 Until Time:%2").arg(maxBehav_-runStart_).arg(maxTime-runStart_).toLatin1());
 //		newMaxBehav = loadBehavData(maxBehav_,maxTime,runStart_);
 //	}
 //	if(maxTime > maxNeural_)
 //	{
-//		qDebug(QString("Loader: Load Neura Data From: %1 Until Time:%2").arg(maxNeural_-runStart_).arg(maxTime-runStart_).toAscii());
+//		qDebug(QString("Loader: Load Neura Data From: %1 Until Time:%2").arg(maxNeural_-runStart_).arg(maxTime-runStart_).toLatin1());
 //		newMaxNeural = loadNeuralData(maxNeural_,maxTime,runStart_);
 //	}
 //	if(newMinBehav != minBehav_)
 //	{
-//		qDebug(QString("Loader: Clear Behav Data Before: %1").arg(newMinBehav-runStart_).toAscii());
+//		qDebug(QString("Loader: Clear Behav Data Before: %1").arg(newMinBehav-runStart_).toLatin1());
 //		sessionState_->clearBehavioralData(newMinBehav-runStart_,true);
 //	}
 //	if(newMinNeural != minNeural_)
 //	{
-//		qDebug(QString("Loader: Clear Neura Data Before: %1").arg(newMinNeural-runStart_).toAscii());
+//		qDebug(QString("Loader: Clear Neura Data Before: %1").arg(newMinNeural-runStart_).toLatin1());
 //		sessionState_->clearNeuralData(newMinNeural-runStart_,true);
 //	}
 //
 //	if(maxBehav_ != newMaxBehav || minBehav_ != newMinBehav)
 //	{
-//		qDebug(QString("Loader: Set Behav Bounds From: %1 to: %2").arg(newMinBehav-runStart_).arg(newMaxBehav-runStart_).toAscii());
+//		qDebug(QString("Loader: Set Behav Bounds From: %1 to: %2").arg(newMinBehav-runStart_).arg(newMaxBehav-runStart_).toLatin1());
 //		sessionState_->setBehavioralBounds(newMinBehav-runStart_,newMaxBehav-runStart_);
 //	}
 //	if(maxNeural_ != newMaxNeural || minNeural_ != newMinNeural)
 //	{
-//		qDebug(QString("Loader: Set Neura Bounds From: %1 to: %2").arg(newMinNeural-runStart_).arg(newMaxNeural-runStart_).toAscii());
+//		qDebug(QString("Loader: Set Neura Bounds From: %1 to: %2").arg(newMinNeural-runStart_).arg(newMaxNeural-runStart_).toLatin1());
 //		sessionState_->setNeuralBounds(newMinNeural-runStart_,newMaxNeural-runStart_);
 //	}
 //	if(runEnd_ && maxTime >= runEnd_)

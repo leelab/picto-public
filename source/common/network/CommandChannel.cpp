@@ -148,7 +148,7 @@ bool CommandChannel::processResponses(int timeoutMs)
 					int altDirectiveEnd = directive.indexOf('\n');
 					if((altDirectiveEnd > 0) && (altDirectiveEnd < directiveEnd))directiveEnd = altDirectiveEnd;
 					QString statusDirective = directive.left(directiveEnd);
-					//qDebug("Directive Received: " + statusDirective.toAscii());
+					//qDebug("Directive Received: " + statusDirective.toLatin1());
 					responseHandler = responseHandlerMap_.value(statusDirective,QSharedPointer<ProtocolResponseHandler>());
 					if(!responseHandler.isNull())
 					{
@@ -278,7 +278,7 @@ void CommandChannel::readIncomingResponse()
 								resendEnabled_ = true;
 							else
 								resendEnabled_ = false;
-							//qDebug("serverBytesStr: " + serverBytesStr.toAscii());
+							//qDebug("serverBytesStr: " + serverBytesStr.toLatin1());
 						}
 						
 					}
@@ -305,7 +305,7 @@ void CommandChannel::readIncomingResponse()
 		}
 		else
 		{
-			qDebug("Error reading data into ProtocolResponse. ERROR ID:" + QString::number(bytesRead).toAscii());//Q_ASSERT(false); //This is for debugging purposes only
+			qDebug("Error reading data into ProtocolResponse. ERROR ID:" + QString::number(bytesRead).toLatin1());//Q_ASSERT(false); //This is for debugging purposes only
 		}
 	}
 
@@ -406,7 +406,7 @@ bool CommandChannel::discoverServer(int timeoutMs)
 	//If a long time has passed since we sent our last DISCOVER message, send a new one.
 	if(discoverMsgSentTime_.secsTo(QDateTime::currentDateTime()) >= 10)
 	{
-		QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(discoveryPort_).toAscii();
+		QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(discoveryPort_).toLatin1();
 		QUdpSocket sendSocket;
 		sendSocket.writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, SERVERPORT);
 		discoverMsgSentTime_ = QDateTime::currentDateTime();
@@ -452,13 +452,13 @@ bool CommandChannel::discoverServer(int timeoutMs)
 			   serverPort_ &&
 			   protocolName == "PICTO")
 			{
-				qDebug("Time when discovered: " + QString::number(timer.elapsed()).toAscii());
+				qDebug("Time when discovered: " + QString::number(timer.elapsed()).toLatin1());
 				discoverySocket_->close();
 				return true;
 			}
 		}
 	}
-	//qDebug("Time for discover func: " + QString::number(timer.elapsed()).toAscii() + " of max: " + QString::number(timeoutMs).toAscii());
+	//qDebug("Time for discover func: " + QString::number(timer.elapsed()).toLatin1() + " of max: " + QString::number(timeoutMs).toLatin1());
 	return false;
 }
 
@@ -604,7 +604,7 @@ QDateTime CommandChannel::resendPendingCommands()
 	{
 		command->setFieldValue("Time-Sent",QDateTime::currentDateTime().toString());
 		sendCommand(command);
-		//qDebug((QString("Sent message with ID: ") + command->getFieldValue("Command-ID")).toAscii());
+		//qDebug((QString("Sent message with ID: ") + command->getFieldValue("Command-ID")).toLatin1());
 	}
 	earliestPendingCommand_ = nextEarliestCommand;
 	return earliestPendingCommand_;

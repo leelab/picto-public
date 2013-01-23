@@ -3,6 +3,7 @@ TARGET = docQrcGen
 QT = core xml
 CONFIG += qt warn_on release
 win32:CONFIG += console
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 

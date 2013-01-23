@@ -50,9 +50,9 @@ void SaveOutputDialog::setup()
 //! Adds "use seperate subdirs" checkbox to the dialog
 void SaveOutputDialog::addCheckBox()
 {
-	QDialogButtonBox *box = qFindChild<QDialogButtonBox*>(this);
+	QDialogButtonBox *box = findChild<QDialogButtonBox*>();
 	Q_ASSERT(box);
-	QBoxLayout *l = qFindChild<QBoxLayout*>(box);
+	QBoxLayout *l = box->findChild<QBoxLayout*>();
 	Q_ASSERT(l);
 	subDirOpCheck_ = new QCheckBox("Save each run in a separate sub-directory.", box);
 	subDirOpCheck_->setChecked(defaultSubDirSetting_);

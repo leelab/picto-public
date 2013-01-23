@@ -73,7 +73,7 @@ void SessionInfo::deleteSession(SessionInfo* session)
 	{
 		QSqlDatabase::removeDatabase(connectionName);
 	}
-	qDebug("Session: " + sessionId.toAscii() + " has been unloaded!");
+	qDebug("Session: " + sessionId.toLatin1() + " has been unloaded!");
 }
 
 SessionInfo::SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password):
@@ -403,7 +403,7 @@ bool SessionInfo::endSession()
 
 	//Flush the database cache
 	flushCache();
-	qDebug("Session: " + sessionId().toString().toAscii() + " Ended!");
+	qDebug("Session: " + sessionId().toString().toLatin1() + " Ended!");
 	return true;
 }
 
@@ -481,7 +481,7 @@ void SessionInfo::flushCache(QString sourceType)
 		success = cacheDb.transaction();
 		if(!success)
 		{
-			qDebug("Failed to initiate transaction when flushing cache. Error was: " + cacheDb.lastError().text().toAscii() + "...Reattempting.");
+			qDebug("Failed to initiate transaction when flushing cache. Error was: " + cacheDb.lastError().text().toLatin1() + "...Reattempting.");
 			continue;
 		}
 
@@ -527,14 +527,14 @@ void SessionInfo::flushCache(QString sourceType)
 		//If Transaction failed, rollback and try again.
 		if(!success)
 		{
-			qDebug("Flush Cache failed for session: " + sessionId().toString().toAscii() + " on attempt: " 
-				+ QString::number(attempt++).toAscii() + " rolling back transaction and reattempting.");
+			qDebug("Flush Cache failed for session: " + sessionId().toString().toLatin1() + " on attempt: " 
+				+ QString::number(attempt++).toLatin1() + " rolling back transaction and reattempting.");
 			cacheDb.rollback();
 		}
 	}while(!success);
 
 	locker.unlock();	// The transaction is over so we can release this mutex
-	qDebug("Time to flush cache: " + QString::number(timer.elapsed()).toAscii() + "ms");
+	qDebug("Time to flush cache: " + QString::number(timer.elapsed()).toLatin1() + "ms");
 	return;
 }
 
@@ -583,7 +583,7 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	//IGNORED.  WHEN REMOVING THIS LINE, YOU ALSO HAVE TO WRITE
 	//CODE TO RECORD EACH CHANNEL IN A SEPERATE TABLE AND ONLY
 	//WRITE THE "Position" AS A STATE VARIABLE!!!!!!!!!!
-	//qDebug("Received data from chan: " + data->getChannel().toAscii());
+	//qDebug("Received data from chan: " + data->getChannel().toLatin1());
 	//if(data->getChannel() != "Position")
 	//	return;
 
@@ -1188,7 +1188,7 @@ void SessionInfo::SetupBaseSessionDatabase()
 			success = baseSessionDbConnection_.transaction();
 			if(!success)
 			{
-				qDebug("Failed to initiate transaction when writing lookup tables. Error was: " + sessionQ.lastError().text().toAscii() + "...Reattempting.");
+				qDebug("Failed to initiate transaction when writing lookup tables. Error was: " + sessionQ.lastError().text().toLatin1() + "...Reattempting.");
 				continue;
 			}
 			foreach(Picto::TransInfo infounit, transInfo)
@@ -1222,7 +1222,7 @@ void SessionInfo::SetupBaseSessionDatabase()
 			//If Transaction failed, rollback and try again.
 			if(!success)
 			{
-				qDebug("writing lookup tables failed for session: " + sessionId().toString().toAscii() + " rolling back transaction and reattempting.");
+				qDebug("writing lookup tables failed for session: " + sessionId().toString().toLatin1() + " rolling back transaction and reattempting.");
 				baseSessionDbConnection_.rollback();
 			}
 		}while(!success);
@@ -1288,7 +1288,7 @@ bool SessionInfo::executeReadQuery(QSqlQuery* query, QString optionalString, boo
 		success = query->exec(optionalString);
 	else
 		success = query->exec();
-	Q_ASSERT_X(!debug || success,"SessionInfo::executeWriteQuery","Error: "+query->lastError().text().toAscii());
+	Q_ASSERT_X(!debug || success,"SessionInfo::executeWriteQuery","Error: "+query->lastError().text().toLatin1());
 	return success;
 }
 
@@ -1310,14 +1310,14 @@ bool SessionInfo::executeWriteQuery(QSqlQuery* query, QString optionalString,boo
 		int debugInt = 0;
 		debugInt++;
 	}
-	Q_ASSERT_X(!debug || success,"SessionInfo::executeWriteQuery","Error: "+query->lastError().text().toAscii());
+	Q_ASSERT_X(!debug || success,"SessionInfo::executeWriteQuery","Error: "+query->lastError().text().toLatin1());
 	return success;
 }
 
 //bool SessionInfo::writeToFile(QString line)
 //{
 //	databaseWriteMutex_->lock();
-//	file_.write((line+"\n").toAscii());
+//	file_.write((line+"\n").toLatin1());
 //	databaseWriteMutex_->unlock();
 //	return true;
 //}
@@ -1397,7 +1397,7 @@ void SessionInfo::alignTimeBases(bool realignAll)
 	}
 	query.finish();
 	// Update all jitter and correlation values with the latest calculated alignment coefficients.
-	executeWriteQuery(&query,(QString("UPDATE alignevents SET ")+alignmentTool_->getSQLJitterEquation("jitter","neuraltime","behavioraltime","correlation")).toAscii());
+	executeWriteQuery(&query,(QString("UPDATE alignevents SET ")+alignmentTool_->getSQLJitterEquation("jitter","neuraltime","behavioraltime","correlation")).toLatin1());
 	
 	//Update stored alignment coefficients
 	double nOffset = alignmentTool_->getNeuralOffsetTime();
@@ -1497,7 +1497,7 @@ void SessionInfo::updateCurrentStateTable(QString updateTime)
 		success = cacheDb.transaction();
 		if(!success)
 		{
-			qDebug("Failed to initiate transaction when writing current state. Error was: " + cacheDb.lastError().text().toAscii() + "...Reattempting.");
+			qDebug("Failed to initiate transaction when writing current state. Error was: " + cacheDb.lastError().text().toLatin1() + "...Reattempting.");
 			continue;
 		}
 
@@ -1529,7 +1529,7 @@ void SessionInfo::updateCurrentStateTable(QString updateTime)
 		//If Transaction failed, rollback and try again.
 		if(!success)
 		{
-			qDebug("writing current state failed for session: " + sessionId().toString().toAscii() + " rolling back transaction and reattempting.");
+			qDebug("writing current state failed for session: " + sessionId().toString().toLatin1() + " rolling back transaction and reattempting.");
 			cacheDb.rollback();
 		}
 	}while(!success);
@@ -1567,7 +1567,7 @@ QSqlDatabase SessionInfo::getSessionDb()
 {
 	QSqlDatabase sessionDb;
 	QString connectionName = QString("SessionDatabase_%1_%2")
-					.arg(sessionId())
+					.arg(sessionId().toString())
 					.arg((int)QThread::currentThreadId());
 
 	

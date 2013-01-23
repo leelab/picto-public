@@ -92,6 +92,6 @@ void PictoServerTest::runExperiment()
 	PictoSystemActivityReport activityReport;
 	while(testBench_.PopActivityReport(activityReport))
 	{
-		QVERIFY2(activityReport.actualVal_ == activityReport.expectedVal_,activityReport.failMessage_.toAscii());
+		QVERIFY2(activityReport.actualVal_ == activityReport.expectedVal_,activityReport.failMessage_.toLatin1());
 	}
 }

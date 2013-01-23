@@ -258,7 +258,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		}
 		else
 		{
-			addError("ExperimentConfig","Invalid Tag: " + name.toAscii(),xmlStreamReader);
+			addError("ExperimentConfig","Invalid Tag: " + name.toLatin1(),xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();

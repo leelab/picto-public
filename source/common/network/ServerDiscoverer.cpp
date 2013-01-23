@@ -57,7 +57,7 @@ void ServerDiscoverer::discover(int timeout)
 
 	QUdpSocket udpSendSocket;
 
-	QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(port_).toAscii();
+	QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(port_).toLatin1();
 
 	timeoutTimer_.setInterval(timeout);
 	timeoutTimer_.setSingleShot(true);

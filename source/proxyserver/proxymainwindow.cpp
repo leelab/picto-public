@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <QProcessEnvironment>
 
 #include "proxymainwindow.h"
@@ -207,7 +207,7 @@ void ProxyMainWindow::createComboBox()
 	nameFilters << "*.dll"; //WARNING, this is platform dependant!!
 	foreach (QString fileName, pluginsDir.entryList(nameFilters,QDir::Files)) 
 	{
-		qDebug(pluginsDir.absoluteFilePath(fileName).toAscii());
+		qDebug(pluginsDir.absoluteFilePath(fileName).toLatin1());
 		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
 		QObject *plugin = loader.instance();
 		//QString error = loader.errorString();

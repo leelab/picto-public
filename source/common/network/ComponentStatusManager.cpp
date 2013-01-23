@@ -35,7 +35,7 @@ ComponentStatusManager::ComponentStatusManager()
 void ComponentStatusManager::setStatus(ComponentStatus status)
 {
 	status_ = status;
-	qDebug("Status was set to: " + getStatusAsString().toAscii());
+	qDebug("Status was set to: " + getStatusAsString().toLatin1());
 }
 
 void ComponentStatusManager::setStatus(QString status)

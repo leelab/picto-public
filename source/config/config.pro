@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = PictoConfig
-QT = core gui xml network
+QT = core gui xml network widgets
 CONFIG += qt warn_on debug_and_release
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 

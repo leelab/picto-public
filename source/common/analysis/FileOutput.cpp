@@ -50,7 +50,7 @@ void FileOutput::writeText(QString text)
 		openFile(true);
 	}
 	charsWritten_ += text.size();
-	(*outputFileStream_).writeRawData(text.toAscii().constData(),text.size());
+	(*outputFileStream_).writeRawData(text.toLatin1().constData(),text.size());
 	if(charsWritten_ > CHARS_BEFORE_FLUSH)
 	{
 		file_->flush();

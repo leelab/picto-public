@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = PictoDirector
-QT = core gui xml network script sql scripttools
+QT = core gui xml network script sql scripttools multimedia concurrent widgets
 CONFIG += qt warn_on debug_and_release
+CONFIG -= flat
 DEPENDPATH += .
 INCLUDEPATH += .
 

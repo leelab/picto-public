@@ -29,7 +29,7 @@ void SessionPlayer::restart()
 
 bool SessionPlayer::stepToTime(double time)
 {
-	qDebug(QString("Player: Step To Time called with input: %1").arg(time).toAscii());
+	qDebug(QString("Player: Step To Time called with input: %1").arg(time).toLatin1());
 	if(time < 0)
 		return false;
 	if(processing_) return false;
@@ -52,13 +52,13 @@ bool SessionPlayer::stepToTime(double time)
 	}
 	//if(!sessionLoader_->setCurrentTime(time))
 	//{
-	//	qDebug(QString("Player: Failed to set time to Loader").toAscii());
+	//	qDebug(QString("Player: Failed to set time to Loader").toLatin1());
 	//	return false;
 	//}
 	//if(!sessionLoader_->dataIsReady(time))
 	//{
 	//	markLoading(true);
-	//	qDebug(QString("Player: Loader not ready for time:%1").arg(time).toAscii());
+	//	qDebug(QString("Player: Loader not ready for time:%1").arg(time).toLatin1());
 	//	return false;
 	//}
 
@@ -77,7 +77,7 @@ bool SessionPlayer::stepToTime(double time)
 		}
 	}while(time > nextFrame_.time());
 	//sessionLoader_->setProcessedTime(getTime());
-	qDebug(QString("Player: Step To Time reached time: %1").arg(getTime()).toAscii());
+	qDebug(QString("Player: Step To Time reached time: %1").arg(getTime()).toLatin1());
 	markLoading(false);
 	return true;
 }

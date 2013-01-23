@@ -157,7 +157,7 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 	if(scriptable.isNull())
 		return;
 	scriptables_.push_back(scriptable);
-	//qDebug("Added " + scriptable.toStrongRef()->getName().toAscii() + " to " + getName().toAscii());
+	//qDebug("Added " + scriptable.toStrongRef()->getName().toLatin1() + " to " + getName().toLatin1());
 	//If we added a new scriptable, scripting is no longer properly initialized.
 	scriptingInitialized_ = false;
 	//If the new scriptable's name edited, we'll need to reinitialize scripting again.
@@ -350,7 +350,7 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	//	{
 	//		if((*itb)->getName() == (*ita)->getName())
 	//		{
-	//			addError("ScriptableContainer", QString("Muliple scriptables have the same name: \"%1\"").arg((*ita)->getName()).toAscii(), xmlStreamReader);
+	//			addError("ScriptableContainer", QString("Muliple scriptables have the same name: \"%1\"").arg((*ita)->getName()).toLatin1(), xmlStreamReader);
 	//			return false;
 	//		}
 	//	}

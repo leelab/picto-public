@@ -1,5 +1,5 @@
-#include <QtGui>
-#include <QLayoutIterator>
+#include <QtWidgets>
+//#include <QLayoutIterator>
 #include "ToolGroup.h"
 #include "../../common/memleakdetect.h"
 

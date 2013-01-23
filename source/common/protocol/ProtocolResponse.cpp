@@ -1,6 +1,6 @@
 #include <QDateTime>
 #include <QBuffer>
-#include <QtIOCompressor>
+//#include <QtIOCompressor>
 #include <QRegExp>
 #include <QStringList>
 
@@ -156,62 +156,62 @@ QByteArray ProtocolResponse::getDecodedContent()
 
 void ProtocolResponse::encodeContent()
 {
-	if(fields.value("Content-Encoding") == "gzip")
-	{
-		QBuffer contentCompressedBuffer;
+	//if(fields.value("Content-Encoding") == "gzip")
+	//{
+	//	QBuffer contentCompressedBuffer;
 
-		QtIOCompressor compressor(&contentCompressedBuffer);
-		compressor.setStreamFormat(QtIOCompressor::GzipFormat);
-		compressor.open(QIODevice::WriteOnly);
-		compressor.write(content);
-		compressor.close();
+	//	QtIOCompressor compressor(&contentCompressedBuffer);
+	//	compressor.setStreamFormat(QtIOCompressor::GzipFormat);
+	//	compressor.open(QIODevice::WriteOnly);
+	//	compressor.write(content);
+	//	compressor.close();
 
-		encodedContent = contentCompressedBuffer.buffer();	
-	}
-	else if(fields.value("Content-Encoding") == "deflate")
-	{
-		QBuffer contentCompressedBuffer;
+	//	encodedContent = contentCompressedBuffer.buffer();	
+	//}
+	//else if(fields.value("Content-Encoding") == "deflate")
+	//{
+	//	QBuffer contentCompressedBuffer;
 
-		QtIOCompressor compressor(&contentCompressedBuffer);
-		compressor.setStreamFormat(QtIOCompressor::ZlibFormat);
-		compressor.open(QIODevice::WriteOnly);
-		compressor.write(content);
-		compressor.close();
+	//	QtIOCompressor compressor(&contentCompressedBuffer);
+	//	compressor.setStreamFormat(QtIOCompressor::ZlibFormat);
+	//	compressor.open(QIODevice::WriteOnly);
+	//	compressor.write(content);
+	//	compressor.close();
 
-		encodedContent = contentCompressedBuffer.buffer();
-	}
-	else
-	{
+	//	encodedContent = contentCompressedBuffer.buffer();
+	//}
+	//else
+	//{
 		encodedContent = content;
-	}
+	//}
 }
 
 void ProtocolResponse::decodeContent()
 {
-	if(fields.value("Content-Encoding") == "gzip")
-	{
-		QBuffer compressedContent(&encodedContent);
+	//if(fields.value("Content-Encoding") == "gzip")
+	//{
+	//	QBuffer compressedContent(&encodedContent);
 
-		QtIOCompressor compressor(&compressedContent);
-		compressor.setStreamFormat(QtIOCompressor::GzipFormat);
-		compressor.open(QIODevice::ReadOnly);
-		content = compressor.readAll();
-		compressor.close();
-	}
-	else if(fields.value("Content-Encoding") == "deflate")
-	{
-		QBuffer compressedContent(&encodedContent);
+	//	QtIOCompressor compressor(&compressedContent);
+	//	compressor.setStreamFormat(QtIOCompressor::GzipFormat);
+	//	compressor.open(QIODevice::ReadOnly);
+	//	content = compressor.readAll();
+	//	compressor.close();
+	//}
+	//else if(fields.value("Content-Encoding") == "deflate")
+	//{
+	//	QBuffer compressedContent(&encodedContent);
 
-		QtIOCompressor compressor(&compressedContent);
-		compressor.setStreamFormat(QtIOCompressor::ZlibFormat);
-		compressor.open(QIODevice::ReadOnly);
-		content = compressor.readAll();
-		compressor.close();
-	}
-	else
-	{
+	//	QtIOCompressor compressor(&compressedContent);
+	//	compressor.setStreamFormat(QtIOCompressor::ZlibFormat);
+	//	compressor.open(QIODevice::ReadOnly);
+	//	content = compressor.readAll();
+	//	compressor.close();
+	//}
+	//else
+	//{
 		content = encodedContent;
-	}
+	//}
 
 }
 

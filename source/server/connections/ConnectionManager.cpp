@@ -121,7 +121,7 @@ void ConnectionManager::checkForTimeouts()
 		{
 			componentInfo->setStatus(ComponentStatus::notFound);
 			components_.remove(componentInfo->getUuid());
-			printf(componentInfo->getType().append("timed out!!!!!!!\n").toAscii());
+			printf(componentInfo->getType().append("timed out!!!!!!!\n").toLatin1());
 		}
 	}
 }
@@ -264,7 +264,7 @@ QString ConnectionManager::getDirectorList()
 			continue;
 		xmlWriter.writeStartElement("Director");
 		xmlWriter.writeTextElement("Address",component->getAddress());
-		xmlWriter.writeTextElement("Id",component->getUuid());
+		xmlWriter.writeTextElement("Id",component->getUuid().toString());
 		xmlWriter.writeTextElement("Name", component->getName());
 		if(component->getStatus() == ComponentStatus::idle)
 			xmlWriter.writeTextElement("Status","Idle");
@@ -384,7 +384,7 @@ QSharedPointer<SessionInfo> ConnectionManager::getSessionInfoByComponent(QUuid c
 
 	//Maybe this component was in a dropped session.
 	ServerConfig serverConfig;
-	QString sessionID = serverConfig.getSessionPathByComponent(componentID);
+	QString sessionID = serverConfig.getSessionPathByComponent(componentID.toString());
 	if(sessionIsValid(sessionID))//This will load the session for us
 		return getSessionInfo(sessionID);
 	return QSharedPointer<SessionInfo>(); // If we got here then it doesn't exist
@@ -546,12 +546,12 @@ bool ConnectionManager::sessionIsValid(QString sessionId)
 //!Ends a currently running session
 bool ConnectionManager::endSession(QUuid sessionId)
 {
-	if(sessionIsValid(sessionId) && openSessions_[sessionId]->endSession())
+	if(sessionIsValid(sessionId.toString()) && openSessions_[sessionId]->endSession())
 	{
 		QMutexLocker locker(mutex_);
 		openSessions_.remove(sessionId);
 		ServerConfig serverConfig;
-		serverConfig.removeSession(sessionId);
+		serverConfig.removeSession(sessionId.toString());
 		return true;
 	}
 	return false;

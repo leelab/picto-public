@@ -48,7 +48,7 @@ int TimerParameter::getValue()
 	else
 		Q_ASSERT(false);
 	return time_ + timer_.elapsedTime(units);
-	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toAscii());
+	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toLatin1());
 }
 
 void TimerParameter::postDeserialize()

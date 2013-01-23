@@ -10,7 +10,7 @@
 							DAQmxClearTask(daqTaskHandle_[channel]); \
 							QString msg = QString("DAQ function error %1:").arg(rc); \
 							msg.append(error); \
-							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", msg.toAscii());\
+							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", msg.toLatin1());\
 						 } }
 
 // NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
@@ -51,7 +51,7 @@ PictoBoxXPRewardController::PictoBoxXPRewardController()
 	for(int channel=1;channel<NUMREWARDLINES+1;channel++)
 	{
 		DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_[channel]));
-		DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toAscii(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
+		DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
 		DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
 		DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 		DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
@@ -65,7 +65,7 @@ PictoBoxXPRewardController::PictoBoxXPRewardController()
 	quint32 rewardEnTask;
 	DAQmxErrChk(DAQmxCreateTask("RewardEnableTask",(TaskHandle*)&rewardEnTask));
 	//DAQmxErrChk(DAQmxCreateDOChan(rewardEnTask,PICTO_BOX_NIDAQ_5V_CHANNEL,"",DAQmx_Val_ChanForAllLines));
-	DAQmxErrChk(DAQmxCreateAOVoltageChan(rewardEnTask,QString("Dev1/ao1").toAscii(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(rewardEnTask,QString("Dev1/ao1").toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
 	DAQmxErrChk(DAQmxStartTask(rewardEnTask));
 	//Set digital lines to +5
 	//const uInt8 rewardEnData[] = {0xFF};
@@ -93,15 +93,15 @@ void PictoBoxXPRewardController::startReward(unsigned int channel,int quantity)
 	if(channel > NUMREWARDLINES+1 || channel < 1)
 		return;
 
-	DAQmxErrChk(DAQmxCreateTask(QString("RewardTask%1").arg(channel).toAscii(),(TaskHandle*)&daqTaskHandle_[channel]));
-	//DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_[channel],QString("Dev1/port0/line%1").arg(channel).toAscii(),"",DAQmx_Val_ChanForAllLines));
+	DAQmxErrChk(DAQmxCreateTask(QString("RewardTask%1").arg(channel).toLatin1(),(TaskHandle*)&daqTaskHandle_[channel]));
+	//DAQmxErrChk(DAQmxCreateDOChan(daqTaskHandle_[channel],QString("Dev1/port0/line%1").arg(channel).toLatin1(),"",DAQmx_Val_ChanForAllLines));
 	//DAQmxErrChk (DAQmxCfgSampClkTiming(daqTaskHandle_[channel],"",1000.0/float64(quantity),DAQmx_Val_Rising,DAQmx_Val_FiniteSamps,2));
 	//(remember, we're using active low logic)
 	//int32 sampsPerChanWritten;
 	//DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_[channel],2,0,-1,DAQmx_Val_GroupByChannel,outputData,&sampsPerChanWritten,NULL));
 	//DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
 	
-	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toAscii(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
 	DAQmxErrChk (DAQmxCfgSampClkTiming(daqTaskHandle_[channel],"",1000.0/float64(quantity),DAQmx_Val_Rising,DAQmx_Val_FiniteSamps,2));
 	int32 sampsPerChanWritten;
 	//(remember, we're using active low logic)
@@ -139,8 +139,8 @@ void PictoBoxXPRewardController::startFlush(unsigned int channel)
 	//We don't really care about the channel here because there's currently 
 	//only one channel supported in picto for the legacy system.
 
-	DAQmxErrChk(DAQmxCreateTask(QString("RewardTask%1").arg(channel).toAscii(),(TaskHandle*)&daqTaskHandle_[channel]));	
-	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toAscii(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
+	DAQmxErrChk(DAQmxCreateTask(QString("RewardTask%1").arg(channel).toLatin1(),(TaskHandle*)&daqTaskHandle_[channel]));	
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
 	int32 sampsPerChanWritten;
 	//(remember, we're using active low logic)
 	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,outputData,&sampsPerChanWritten,NULL));
@@ -164,7 +164,7 @@ void PictoBoxXPRewardController::stopFlush(unsigned int channel)
 	float64 data[] = {5.0};
 	int32 sampsPerChanWritten;
 	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_[channel]));
-	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toAscii(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
 	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
 	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));

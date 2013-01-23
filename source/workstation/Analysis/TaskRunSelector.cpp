@@ -51,7 +51,7 @@ void TaskRunSelector::loadSessions(QList<QSqlDatabase> sessions)
 		bool success = query.exec();
 		if(!success)
 		{
-			qDebug("Failed to select data from runs table with error: " + query.lastError().text().toAscii());
+			qDebug("Failed to select data from runs table with error: " + query.lastError().text().toLatin1());
 			return;
 		}
 		while(query.next()){

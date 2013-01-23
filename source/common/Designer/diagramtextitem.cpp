@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "diagramtextitem.h"
 #include "diagramscene.h"
@@ -47,7 +47,7 @@
 
 //! [0]
 DiagramTextItem::DiagramTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
-    : QGraphicsTextItem(parent, scene)
+    : QGraphicsTextItem(parent/*, scene*/)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);

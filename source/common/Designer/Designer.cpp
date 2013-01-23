@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <QLabel>
 #include <QMenuBar>
 #include <QSizePolicy>
@@ -371,7 +371,7 @@ bool Designer::resetRootAndWindowAssets()
 	//if(!topAsset->fromXml(xmlReader,false))
 	//{
 	//	return false;
-	//	Q_ASSERT_X(false,"Designer::resetRootAndWindowAssets",Serializable::getErrors().toAscii());
+	//	Q_ASSERT_X(false,"Designer::resetRootAndWindowAssets",Serializable::getErrors().toLatin1());
 	//}
 
 	//QSharedPointer<Asset> windowAsset = findAssetWithID(topAsset,openedAssetText_.toPlainText().toInt());

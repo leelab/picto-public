@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = PictoServer
-QT = core gui xml network sql
+QT = core gui xml network sql concurrent widgets
 CONFIG += qt warn_on debug_and_release
+CONFIG -= flat
 # We elect to be a console application on Windows so that we will have our
 # standard output attached to the invoking terminal, if one is present; if
 # none is present, then we can still create a GUI
