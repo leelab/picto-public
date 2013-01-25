@@ -14,7 +14,7 @@
 #include "../../common/statemachine/scene.h"
 #include "../../common/storage/NeuralDataUnit.h"
 #include "../../common/storage/LFPDataUnitPackage.h"
-#include "../propertyframe.h"
+#include "../../common/designer/propertyframe.h"
 
 
 

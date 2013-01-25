@@ -20,7 +20,7 @@
 #include "../../common/compositor/PCMAuralTarget.h"
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
-#include "../propertyframe.h"
+#include "../../common/designer/propertyframe.h"
 #include "../../common/engine/XYSignalChannel.h"
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"

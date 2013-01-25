@@ -15,7 +15,7 @@
 #include "AnalysisParameterSelector.h"
 #include "TaskRunSelector.h"
 #include "../../common/analysis/AnalysisContainer.h"
-#include "../Designer/Designer.h"
+#include "../../common/Designer/Designer.h"
 
 using namespace Picto;
 
