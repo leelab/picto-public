@@ -125,24 +125,16 @@ QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Widgetsd.dll
 QTLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += QTLIBS_DEBUG
 
-wince* {
-SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/out32dll_X86/ssleay32.dll
-SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl-0.9.8k/out32dll_X86/libeay32.dll
-}
 !wince* {
-SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl/bin/ssleay32.dll
-SSLLIBS.files += $$(PICTO_THIRD_PARTY)/openssl/bin/libeay32.dll
+SSLLIBS.files += $$(OPENSSLDIR)/out32dll/ssleay32.dll
+SSLLIBS.files += $$(OPENSSLDIR)/out32dll/libeay32.dll
 }
 SSLLIBS.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += SSLLIBS
 
-wince* {
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/out32dll_X86/ssleay32.dll
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/out32dll_X86/libeay32.dll
-}
 !wince* {
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/bin/ssleay32.dll
-SSLLIBS_DEBUG.files += $$(PICTO_THIRD_PARTY)/openssl/bin/libeay32.dll
+SSLLIBS_DEBUG.files += $$(OPENSSLDIR)/out32dll/ssleay32.dll
+SSLLIBS_DEBUG.files += $$(OPENSSLDIR)/out32dll/libeay32.dll
 }
 SSLLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += SSLLIBS_DEBUG
