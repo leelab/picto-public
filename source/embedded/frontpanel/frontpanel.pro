@@ -15,7 +15,7 @@ HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/eventchannelthread.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/eventchannelthread.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/ENGEVENTCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/ENGEVENTCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/3rdparty/include/phidget21.h
+HEADERS += $$(PHIDGETSDIR)/phidget21.h
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.h
@@ -58,8 +58,8 @@ UI_DIR = $$(PICTO_TREE)/intermediates/ui/embedded/frontpanel
 MOC_DIR = $$(PICTO_TREE)/intermediates/moc/embedded/frontpanel
 
 # Libraries
-win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
-wince*:LIBS += phidget21_x86.lib
+win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/x86
+wince*:LIBS += phidget21.lib
 win32:!wince*:LIBS += phidget21.lib
 
 build_pass:CONFIG(debug, debug|release) {
