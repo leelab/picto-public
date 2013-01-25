@@ -5,7 +5,7 @@ CONFIG += qt warn_on debug_and_release
 CONFIG += console
 CONFIG -= flat
 DEPENDPATH += .
-INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include .
+INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include . $$(PHIDGETSDIR)
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/main.cpp
