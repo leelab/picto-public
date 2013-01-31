@@ -132,7 +132,7 @@ QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramIt
 	if(!arrow)
 		return NULL;
     arrow->setColor(editorState_->getLineColor());
-    //addItem(arrow); Don't need to add it cause its already parented by this
+    addItem(arrow); //Don't need to add it cause its already parented by this
     arrow->updatePosition();
 	if(transition.isNull())
 		editorState_->setLastActionUndoable();

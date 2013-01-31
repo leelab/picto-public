@@ -44,6 +44,7 @@ class VisualTargetHost : public QWidget
 	Q_OBJECT
 public:
 	VisualTargetHost();
+	virtual ~VisualTargetHost(){};
 
 	void setVisualTarget(QSharedPointer<VisualTarget> target);
 	QSharedPointer<VisualTarget> getVisualTarget() { return target_; };
@@ -51,7 +52,7 @@ signals:
 	void clickDetected(QPoint pos);
 	 
 protected:
-	void paintEvent(QPaintEvent *);
+	virtual void paintEvent(QPaintEvent *);
 	virtual void mousePressEvent(QMouseEvent *event);
 	
 private:

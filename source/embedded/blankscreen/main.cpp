@@ -19,32 +19,34 @@
 #include <QtVariantProperty.h>
 #include <QtGroupBoxPropertyBrowser.h>
 #include <qtbuttonPropertyBrowser.h>
+#include <QPainter>
 //#include <QtVariantProperty.h>
 
 #ifdef WINCE
 #include <winbase.h>
 #endif
+#include "QVideoEncoder.h"
 #include "../../common/common.h"
 #include "../../common/globals.h"
 #include "../../common/namedefs.h"
-#include "../../common/archives/archives.h"
-#include "../../common/random/mtrand.h"
-#include "../../common/Storage/Asset.h"
-#include "../../common/Experiment/Experiment.h"
-#include "../../common/parameter/OperatorClickParameter.h"
-#include "../../common/storage/propertyfactory.h"
-#include "../../common/property/PropertyContainer.h"
-#include "../../common/controlelements/stopwatchController.h"
-#include "../../common/statemachine/State.h"
-#include "../../common/statemachine/StateMachine.h"
-#include "../../common/compositor/PixmapVisualTarget.h"
-#include "../../common/compositor/VisualTargetHost.h"
-#include "../../common/compositor/RenderingTarget.h"
-#include "../../common/compositor/PCMAuralTarget.h"
-#include "../../common/iodevices/AudioRewardController.h"
-#include "../../common/iodevices/NullEventCodeGenerator.h"
-#include "../../common/engine/MouseInputPort.h"
-#include "../../common/engine/XYSignalChannel.h"
+//#include "../../common/archives/archives.h"
+//#include "../../common/random/mtrand.h"
+//#include "../../common/Storage/Asset.h"
+//#include "../../common/Experiment/Experiment.h"
+//#include "../../common/parameter/OperatorClickParameter.h"
+//#include "../../common/storage/propertyfactory.h"
+//#include "../../common/property/PropertyContainer.h"
+//#include "../../common/controlelements/stopwatchController.h"
+//#include "../../common/statemachine/State.h"
+//#include "../../common/statemachine/StateMachine.h"
+//#include "../../common/compositor/PixmapVisualTarget.h"
+//#include "../../common/compositor/VisualTargetHost.h"
+//#include "../../common/compositor/RenderingTarget.h"
+//#include "../../common/compositor/PCMAuralTarget.h"
+//#include "../../common/iodevices/AudioRewardController.h"
+//#include "../../common/iodevices/NullEventCodeGenerator.h"
+//#include "../../common/engine/MouseInputPort.h"
+//#include "../../common/engine/XYSignalChannel.h"
 #include "../../common/mainmemleakdetect.h"
 
 using namespace Picto;
@@ -52,176 +54,119 @@ using namespace Picto;
 
 class BlankWindow : public QWidget
 {
-	QSharedPointer<Asset> test;
+	//QSharedPointer<Asset> test;
 public:
+	void BlankWindow::image2Pixmap(QImage &img,QPixmap &pixmap)
+	{
+	   // Convert the QImage to a QPixmap for display
+	   pixmap = QPixmap(img.size());
+	   QPainter painter;
+	   painter.begin(&pixmap);
+	   painter.drawImage(0,0,img);
+	   painter.end();
+	}
+
     BlankWindow(QWidget *parent = 0) : QWidget(parent)
     {
-        propManager1_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
-		propManager2_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
-		
-		QtVariantProperty *item1 = propManager1_->addProperty(QVariant::Int,"Number1");
-		QtVariantProperty *item2 = propManager1_->addProperty(QVariant::String,"Test String1");
+  //      propManager1_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+		//propManager2_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+		//
+		//QtVariantProperty *item1 = propManager1_->addProperty(QVariant::Int,"Number1");
+		//QtVariantProperty *item2 = propManager1_->addProperty(QVariant::String,"Test String1");
 
-		QtVariantProperty *item3 = propManager2_->addProperty(QVariant::Int,"Number2");
-		QtVariantProperty *item4 = propManager2_->addProperty(QVariant::String,"Test String2");
-		propManager2_->clear();
+		//QtVariantProperty *item3 = propManager2_->addProperty(QVariant::Int,"Number2");
+		//QtVariantProperty *item4 = propManager2_->addProperty(QVariant::String,"Test String2");
+		//propManager2_->clear();
 
-		propertyFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory(this));
-		
-		QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
-		browser->setFactoryForManager(propManager1_.data(), propertyFactory_.data());
-		browser->setFactoryForManager(propManager2_.data(), propertyFactory_.data());
-		foreach(QtProperty* prop,propManager1_->properties())
-		{
-			browser->addProperty(prop);
-		}
-		foreach(QtProperty* prop,propManager2_->properties())
-		{
-			browser->addProperty(prop);
-		}
-		
-		QVBoxLayout* layout = new QVBoxLayout(this);
-		layout->addWidget(browser);
-		setLayout(layout);
+		//propertyFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory(this));
+		//
+		//QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
+		//browser->setFactoryForManager(propManager1_.data(), propertyFactory_.data());
+		//browser->setFactoryForManager(propManager2_.data(), propertyFactory_.data());
+		//foreach(QtProperty* prop,propManager1_->properties())
+		//{
+		//	browser->addProperty(prop);
+		//}
+		//foreach(QtProperty* prop,propManager2_->properties())
+		//{
+		//	browser->addProperty(prop);
+		//}
+		//
+		//QVBoxLayout* layout = new QVBoxLayout(this);
+		//layout->addWidget(browser);
+		//setLayout(layout);
+	QString filename = "C:\\Users\\joeys\\Desktop\\Temp\\TestVid.avi";
+	bool vfr = false;
+	int width=640;
+   int height=480;
+   int bitrate=10000000;
+   int gop = 20;
+   int fps = 25;
+
+   // The image on which we draw the frames
+   QImage frame(width,height,QImage::Format_RGB32);     // Only RGB32 is supported
+
+   // A painter to help us draw
+   QPainter painter(&frame);
+   painter.setBrush(Qt::red);
+   painter.setPen(Qt::white);
+
+   // Create the encoder
+   QVideoEncoder encoder;
+   if(!vfr)
+      encoder.createFile(filename,width,height,bitrate,gop,fps);        // Fixed frame rate
+   else
+      encoder.createFile(filename,width,height,bitrate*1000/fps,gop,1000);  // For variable frame rates: set the time base to e.g. 1ms (1000fps),
+                                                                           // and correct the bitrate according to the expected average frame rate (fps)
+
+   QEventLoop evt;      // we use an event loop to allow for paint events to show on-screen the generated video
+
+   // Generate a few hundred frames
+   int size=0;
+   int maxframe=500;
+   unsigned pts=0;
+   for(unsigned i=0;i<maxframe;i++)
+   {
+      // Clear the frame
+      painter.fillRect(frame.rect(),Qt::red);   
+
+      // Draw a moving square
+      painter.fillRect(width*i/maxframe,height*i/maxframe,30,30,Qt::blue);
+
+      // Frame number
+      painter.drawText(frame.rect(),Qt::AlignCenter,QString("Frame %1\nLast frame was %2 bytes").arg(i).arg(size));
+
+      // Display the frame, and processes events to allow for screen redraw
+      QPixmap p;
+      image2Pixmap(frame,p);      
+      //ui->labelVideoFrame->setPixmap(p);
+      evt.processEvents();
+
+      if(!vfr)
+         size=encoder.encodeImage(frame);                      // Fixed frame rate
+      else
+      {
+         // Variable frame rate: the pts of the first frame is 0,
+         // subsequent frames slow down
+         pts += sqrt(float(i));
+         if(i==0)
+            size=encoder.encodeImagePts(frame,0);
+         else
+            size=encoder.encodeImagePts(frame,pts);
+      }
+
+      printf("Encoded: %d\n",size);
+   }
+
+   encoder.close();
+
     }
 
-	QSharedPointer<QtVariantPropertyManager> propManager1_;
-	QSharedPointer<QtVariantPropertyManager> propManager2_;
-	QSharedPointer<QtVariantEditorFactory> propertyFactory_;
-};
 
-//class BlankWindow : public QWidget
-//{
-//	QSharedPointer<Asset> test;
-//public:
-//    BlankWindow(QWidget *parent = 0) : QWidget(parent)
-//    {
-//        QWidget::setWindowFlags(Qt::Window);
-//        
-//        QRect screenRect = QApplication::desktop()->screenGeometry(-1);
-//        resize(screenRect.width(),screenRect.height());
-//        move(0,0);
-//        
-//        QPalette pal = palette();
-//        pal.setColor(QPalette::Window, Qt::black);
-//        setPalette(pal);
-//        
-//        setFocusPolicy(Qt::ClickFocus);
-//
-//		//QSharedPointer<Asset> test(StopwatchController::Create());
-//
-//		QFile file("TestXml.xml");
-//		file.open(QIODevice::ReadOnly);
-//		QString fileText = file.readAll();
-//		
-//		test = Experiment::Create();
-//		test->fromXml(fileText);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//	//set up the engine
-//	QSharedPointer<Engine::PictoEngine> engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
-//	engine_->setExclusiveMode(false);
-//	engine_->setOperatorAsUser(true);
-//
-//	//Set up the rendering target
-//	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
-//	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_ = QSharedPointer<Picto::PixmapVisualTarget>(new Picto::PixmapVisualTarget(true,800,600));
-//	QSharedPointer<Picto::RenderingTarget> renderingTarget_ = QSharedPointer<Picto::RenderingTarget>(new Picto::RenderingTarget(pixmapVisualTarget_, pcmAuralTarget));
-//	engine_->addRenderingTarget(renderingTarget_);
-//
-//	//Set up the visual target host
-//	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
-//	//gives us memory exceptions.
-//	Picto::VisualTargetHost* visualTargetHost_ = new Picto::VisualTargetHost();
-//	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
-//	QHBoxLayout *operationLayout = new QHBoxLayout;
-//	operationLayout->addWidget(visualTargetHost_);
-//	setLayout(operationLayout);
-//
-//	//set up mouse signal channel
-//	QSharedPointer<Picto::MouseInputPort> mousePort(new Picto::MouseInputPort(visualTargetHost_));
-//	QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position",0,1,8,mousePort));
-//	engine_->addSignalChannel(mouseChannel);
-//
-//	//Set up event code generator
-//	QSharedPointer<Picto::EventCodeGenerator> nullGenerator;
-//	nullGenerator = QSharedPointer<Picto::EventCodeGenerator>(new Picto::NullEventCodeGenerator());
-//	engine_->setEventCodeGenerator(nullGenerator);
-//
-//	//set up reward controller
-//	QSharedPointer<Picto::RewardController> rewardController;
-//	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
-//	engine_->setRewardController(rewardController);
-//	test.staticCast<Experiment>()->setEngine(engine_);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//		//QSharedPointer<PropertyContainer> propContainer_ = PropertyContainer::create("TestName");
-//		//QSharedPointer<AssetFactory> propFactory(new PropertyFactory(
-//		//												0,
-//		//												10,
-//		//												propContainer_,
-//		//												QVariant::Int,
-//		//												"TestTagName",
-//		//												0)
-//		//											);
-//		//propFactory->startSourcing();
-//		//QString type = "";
-//		//QString error = "";
-//		//QSharedPointer<Asset> newChild = propFactory->getAsset(error,type);
-//		//newChild = propFactory->getAsset(error,type);
-//		//newChild = propFactory->getAsset(error,type);
-//		//newChild = propFactory->getAsset(error,type);
-//
-//		//propContainer_->addProperty(QVariant::Color,"TestPropertyName",0,false );
-//		//propContainer_->addProperty(QVariant::Int,"TestPropertyName1",0,false );
-//		//propContainer_->addProperty(QVariant::Bool,"TestPropertyName2",0,false );
-//		//propContainer_->addProperty(QVariant::Rect,"TestPropertyName3",0,false );
-//		//propContainer_->addProperty(QVariant::String,"TestPropertyName4",0,false );
-//		//propContainer_->addProperty(QVariant::Double,"TestPropertyName5",0,false );
-//		//QSharedPointer<Property> prop = propContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"TestPropertyName6",0,false );
-//		//prop->setAttribute("0",0);
-//		//prop->setAttribute("1",1);
-//		//prop->setAttribute("2",2);
-//
-//
-//
-//		int i=0;
-//		i++;
-//    }
-//
-//	void play()
-//	{
-//		test.staticCast<Experiment>()->runTask("ProbabilityTracking");
-//	}
-//    void focusInEvent(QFocusEvent *)
-//    {
-//        lower();
-//    }
-//};
+	//QSharedPointer<QtVariantPropertyManager> propManager1_;
+	//QSharedPointer<QtVariantPropertyManager> propManager2_;
+	//QSharedPointer<QtVariantEditorFactory> propertyFactory_;
+};
 
 int main(int argc, char *argv[])
 {
@@ -235,7 +180,6 @@ int main(int argc, char *argv[])
 	//QString* memLeakStr = new QString();
   BlankWindow blankWindow;
   blankWindow.show();
-  //blankWindow.play();
 
   if(argc>1)
   {

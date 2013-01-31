@@ -297,6 +297,8 @@ SOURCES += $$(PICTO_TREE)/source/common/experimentalsystem/SubjectPosition.cpp
 HEADERS += $$(PICTO_TREE)/source/common/experimentalsystem/Environmental.h
 SOURCES += $$(PICTO_TREE)/source/common/experimentalsystem/Environmental.cpp
 
+HEADERS += $$(PICTO_TREE)/source/common/iodevices/BufferFileGenerator.h
+SOURCES += $$(PICTO_TREE)/source/common/iodevices/BufferFileGenerator.cpp
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/RewardController.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/RewardController.cpp
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/OutputSignalController.h

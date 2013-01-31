@@ -25,6 +25,7 @@
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"
 #include "../../common/compositor/OutputSignalWidget.h"
+#include "../../common/iodevices/BufferFileGenerator.h"
 
 
 #include "../../common/memleakdetect.h"
@@ -80,6 +81,7 @@ void ReplayViewer::setupUi()
 	playAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_R));
 	playAction_->setToolTip("Run (Ctrl+R)");
 	connect(playAction_,SIGNAL(triggered()),this, SLOT(play()));
+	playing_ = false;	//True when an experiment is playing
 
 	speed_ = new SpeedWidget(100,0.01,0.01,1.0);
 	connect(speed_,SIGNAL(speedChanged(double)),playbackController_.data(),SLOT(setRunSpeed(double)));
@@ -120,14 +122,26 @@ void ReplayViewer::setupUi()
 	loadProgress_->setMinimum(0);
 	loadProgress_->setValue(0);
 	connect(playbackController_.data(),SIGNAL(percentLoaded(double)),this,SLOT(percentLoaded(double)));
+	
+	toggleRecord_ = new QAction(tr("&Toggle Record"),this);
+	toggleRecord_->setIcon(QIcon(":/icons/red_led_off.svg"));
+	connect(toggleRecord_, SIGNAL(triggered()),this, SLOT(toggleRecording()));
+	toggleRecord_->setEnabled(false);
+	recordModeOn_ = false;	//Indicates if the toggleRecord button is set for record mode or not
 
-	////Zoom slider
-	//zoomSlider_ = new QSlider;
-	//zoomSlider_->setRange(1,59);
-	//zoomSlider_->setSingleStep(1);
-	//zoomSlider_->setValue(30);
-	//zoomSlider_->setOrientation(Qt::Horizontal);
-	//connect(zoomSlider_, SIGNAL(sliderMoved(int)), this, SLOT(zoomChanged(int)));
+	recordTime_ = new QLCDNumber(6);
+	recordTime_->setSegmentStyle(QLCDNumber::Flat);
+	setRecordTime(0);
+
+	restartRecord_ = new QAction(tr("&Restart Record"),this);
+	restartRecord_->setIcon(QIcon(":/icons/restart.svg"));
+	connect(restartRecord_, SIGNAL(triggered()),this, SLOT(restartRecording()));
+	restartRecord_->setEnabled(false);
+
+	saveRecording_ = new QAction(tr("&Save Recording"),this);
+	saveRecording_->setIcon(QIcon(":/icons/savevideo.svg"));
+	connect(saveRecording_, SIGNAL(triggered()),this, SLOT(saveRecording()));
+	saveRecording_->setEnabled(false);
 
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(loadSessionAction_);
@@ -141,19 +155,31 @@ void ReplayViewer::setupUi()
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(loadProgress_);
 	testToolbar_->addSeparator();
+
+	recordToolbar_ = new QToolBar(this);
+	recordToolbar_->addAction(toggleRecord_);
+	recordToolbar_->addWidget(recordTime_);
+	recordToolbar_->addAction(restartRecord_);
+	recordToolbar_->addAction(saveRecording_);
 	//testToolbar_->addWidget(zoomSlider_);
-	
+
+
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(testToolbar_);
 	toolbarLayout->addStretch();
+
+	QHBoxLayout *recordToolbarLayout = new QHBoxLayout;
+	recordToolbarLayout->addWidget(recordToolbar_);
+	recordToolbarLayout->addStretch();
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
-	visualTargetHost_ = new Picto::VisualTargetHost();
+	visualTargetHost_ = new RecordingVisualTargetHost();
 	visualTargetHost_->setVisualTarget(playbackController_->getVisualTarget());
 	stimulusLayout->addWidget(visualTargetHost_);
+	connect(visualTargetHost_,SIGNAL(updateRecordingTime(double)),this,SLOT(setRecordTime(double)));
 
 	//Setup Output Signal Widgets
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont
@@ -172,9 +198,26 @@ void ReplayViewer::setupUi()
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
+	mainLayout->addLayout(recordToolbarLayout);
 	mainLayout->addLayout(operationLayout);
 	mainLayout->addStretch(1);
 	setLayout(mainLayout);
+}
+
+//Updates the Recording Visual Target Host to record or not depending
+//on the current run and record mode states.
+void ReplayViewer::updateRecordingTarget()
+{
+	if(recordModeOn_ && playing_)
+	{
+		if(!visualTargetHost_->isRecording())
+			visualTargetHost_->toggleRecording();
+	}
+	else
+	{
+		if(visualTargetHost_->isRecording())
+			visualTargetHost_->toggleRecording();
+	}
 }
 
 void ReplayViewer::play()
@@ -206,7 +249,9 @@ void ReplayViewer::playbackStatusChanged(int status)
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(false);
+			toggleRecord_->setEnabled(false);
 			playbackController_->getRenderingTarget()->showSplash();
+			playing_ = false;
 		break;
 		case PlaybackControllerData::Stopped:
 			progress_->setHighlightRange(0,0,0);
@@ -215,28 +260,35 @@ void ReplayViewer::playbackStatusChanged(int status)
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(true);
+			toggleRecord_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
 			}
 			playbackController_->getVisualTarget()->clear();
 			playbackController_->getRenderingTarget()->showSplash();
+			playing_ = false;
 		break;
 		case PlaybackControllerData::Running:
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(false);
+			toggleRecord_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
 			}
+			playing_ = true;
 		break;
 		case PlaybackControllerData::Paused:
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(true);
+			playing_ = false;
 		break;
 	}
+	//Each time the playback status changes, update the Visual Target Host's record mode
+	updateRecordingTarget();
 }
 
 void ReplayViewer::loadSession()
@@ -344,4 +396,58 @@ void ReplayViewer::userChoosingJump(bool starting)
 		playAction_->trigger();
 		pausedFromJump_ = false;
 	}
+}
+
+void ReplayViewer::toggleRecording()
+{
+	if(!visualTargetHost_)
+		return;
+	//Toggle record mode
+	recordModeOn_ = !recordModeOn_;
+
+	//Update the recording LED according to the new recording state.
+	if(recordModeOn_)
+		toggleRecord_->setIcon(QIcon(":/icons/red_led_on.svg"));
+	else	
+		toggleRecord_->setIcon(QIcon(":/icons/red_led_off.svg"));
+
+	updateRecordingTarget();
+}
+
+void ReplayViewer::restartRecording()
+{
+	if(!visualTargetHost_)
+		return;
+	visualTargetHost_->restartRecording();
+}
+
+void ReplayViewer::saveRecording()
+{
+	QString filename = QFileDialog::getSaveFileName(this,
+		tr("Save Video File"),".",QString("Video (*.%1)").arg(visualTargetHost_->getVideoFileType()));
+	if(filename.isNull())
+		return;
+	if(!visualTargetHost_->saveRecordingAs(filename))
+	{
+		QMessageBox::warning(0,"Failed to Save Video","The recorded video could not be saved at "+filename.toLatin1()+".");
+	}
+}
+
+//Updates the time recorded in the toolbar label
+void ReplayViewer::setRecordTime(double time)
+{
+	if(recordTime_->value() == time)
+		return;
+	//If record time is positive, enable restart and saving, otherwise turn them off
+	if(recordTime_ > 0)
+	{
+		restartRecord_->setEnabled(true);
+		saveRecording_->setEnabled(true);
+	}
+	else
+	{
+		restartRecord_->setEnabled(false);
+		saveRecording_->setEnabled(false);
+	}
+	recordTime_->display(QString::number(time,'f',3));
 }

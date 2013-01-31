@@ -84,6 +84,8 @@
    <file alias="_boolean_parameter_8h-source.html">../../../output/documentation/main/html/_boolean_parameter_8h-source.html</file>
    <file alias="_box_graphic_8cpp-source.html">../../../output/documentation/main/html/_box_graphic_8cpp-source.html</file>
    <file alias="_box_graphic_8h-source.html">../../../output/documentation/main/html/_box_graphic_8h-source.html</file>
+   <file alias="_buffer_file_generator_8cpp-source.html">../../../output/documentation/main/html/_buffer_file_generator_8cpp-source.html</file>
+   <file alias="_buffer_file_generator_8h-source.html">../../../output/documentation/main/html/_buffer_file_generator_8h-source.html</file>
    <file alias="_calibration_8cpp-source.html">../../../output/documentation/main/html/_calibration_8cpp-source.html</file>
    <file alias="_calibration_8h-source.html">../../../output/documentation/main/html/_calibration_8h-source.html</file>
    <file alias="_camera_equipment_8cpp-source.html">../../../output/documentation/main/html/_camera_equipment_8cpp-source.html</file>
@@ -564,6 +566,8 @@
    <file alias="_randomly_filled_grid_graphic_8h-source.html">../../../output/documentation/main/html/_randomly_filled_grid_graphic_8h-source.html</file>
    <file alias="_range_parameter_8cpp-source.html">../../../output/documentation/main/html/_range_parameter_8cpp-source.html</file>
    <file alias="_range_parameter_8h-source.html">../../../output/documentation/main/html/_range_parameter_8h-source.html</file>
+   <file alias="_recording_visual_target_host_8cpp-source.html">../../../output/documentation/main/html/_recording_visual_target_host_8cpp-source.html</file>
+   <file alias="_recording_visual_target_host_8h-source.html">../../../output/documentation/main/html/_recording_visual_target_host_8h-source.html</file>
    <file alias="_rect_property_8cpp-source.html">../../../output/documentation/main/html/_rect_property_8cpp-source.html</file>
    <file alias="_rect_property_8h-source.html">../../../output/documentation/main/html/_rect_property_8h-source.html</file>
    <file alias="_rect_target_8cpp-source.html">../../../output/documentation/main/html/_rect_target_8cpp-source.html</file>

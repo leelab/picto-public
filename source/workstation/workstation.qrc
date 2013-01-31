@@ -1,7 +1,6 @@
 <RCC>
-    <qresource prefix="/" >
+    <qresource prefix="/">
         <file>BuiltInExperiments/EyeCalibration.xml</file>
-      
         <file>icons/background1.png</file>
         <file>icons/background2.png</file>
         <file>icons/background3.png</file>
@@ -19,12 +18,11 @@
         <file>icons/sendtoback.png</file>
         <file>icons/textpointer.png</file>
         <file>icons/underline.png</file>
-
         <file>icons/analyze.png</file>
         <file>icons/background.png</file>
         <file>icons/blue.png</file>
         <file>icons/circle.png</file>
-		    <file>icons/check.png</file>
+        <file>icons/check.png</file>
         <file>icons/checksyntax.png</file>
         <file>icons/connected.png</file>
         <file>icons/copy.png</file>
@@ -73,7 +71,7 @@
         <file>icons/result.svg</file>
         <file>icons/task.svg</file>
         <file>icons/reward.svg</file>
-		    <file>icons/x.png</file>
+        <file>icons/x.png</file>
         <file>icons/prev.png</file>
         <file>icons/next.png</file>
         <file>icons/goto.png</file>
@@ -103,5 +101,9 @@
         <file>icons/fileoutput.svg</file>
         <file>icons/analysisdefinition.svg</file>
         <file>icons/outputsignal.svg</file>
+        <file>icons/red_led_off.svg</file>
+        <file>icons/red_led_on.svg</file>
+        <file>icons/restart.svg</file>
+        <file>icons/savevideo.svg</file>
     </qresource>
 </RCC>

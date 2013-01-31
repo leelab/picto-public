@@ -1,0 +1,54 @@
+<svg width="260" height="150" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient2852">
+   <stop stop-color="#000000" id="stop2854" offset="0"/>
+   <stop stop-color="#333333" id="stop2856" offset="1"/>
+  </linearGradient>
+  <linearGradient gradientUnits="userSpaceOnUse" y2="80.698128" x2="72.683609" y1="147.83713" x1="80.189835" id="linearGradient2858" xlink:href="#linearGradient2852"/>
+  <linearGradient y2="-0.244813" x2="0.406639" y1="1.091286" x1="0.556017" id="linearGradient2870" xlink:href="#linearGradient2852"/>
+  <linearGradient y2="-0.56213" x2="0.366864" y1="1.343195" x1="0.579882" id="linearGradient2878" xlink:href="#linearGradient2852"/>
+  <clipPath id="clipPath2880" clipPathUnits="userSpaceOnUse">
+   <path fill="#0000ff" fill-rule="evenodd" stroke="#000000" stroke-width="1px" d="m12.625,81.125c-9.73402,0 -17.625,14.354858 -17.625,32.0625c0,17.478943 7.68969,31.698303 17.25,32.0625l0,0.25l37,0l0,-64.25l-35.03125,0c-0.52277,-0.0849 -1.058849,-0.125 -1.59375,-0.125z" id="path2882"/>
+  </clipPath>
+  <clipPath id="clipPath2886" clipPathUnits="userSpaceOnUse">
+   <path fill="#0000ff" fill-rule="evenodd" stroke="#000000" stroke-width="1px" id="path2888" d="m49.125,81.125c9.734016,0 17.625,14.354858 17.625,32.0625c0,17.478943 -7.68969,31.698303 -17.25,32.0625l0,0.25l-37,0l0,-64.25l35.03125,0c0.522774,-0.0849 1.058853,-0.125 1.59375,-0.125z"/>
+  </clipPath>
+ </defs>
+ <metadata id="metadata7">image/svg+xml</metadata>
+ <g>
+  <title>Layer 1</title>
+  <g id="layer1">
+   <rect fill="#000000" fill-rule="evenodd" stroke="#666666" stroke-width="1px" y="0.000002" height="150" width="260" id="rect2818"/>
+   <rect fill="#000000" fill-rule="evenodd" stroke="#666666" stroke-width="1px" id="rect2820" width="260" height="25" y="-0.000001"/>
+   <path fill="#aaaaaa" stroke="#888888" stroke-width="1px" id="path2822" d="m0,20.000002l260,0"/>
+   <path fill="#aaaaaa" stroke="#888888" stroke-width="1px" d="m0,16.000002l260,0" id="path2824"/>
+   <path fill="#aaaaaa" stroke="#888888" stroke-width="1px" id="path2826" d="m0,12.000002l260,0"/>
+   <path fill="#666666" d="m121.969254,6.933657l5.030746,-2.933655l5,3l-10.030746,-0.066284l0,-0.000061z" id="path2834"/>
+   <path fill="#888888" id="path2828" d="m127,4.000002l-5.03125,2.9375l0.625,0l4.40625,-2.5625l4.375,2.625l0.625,0l-5,-3z"/>
+   <rect fill="#eeeeee" fill-rule="evenodd" stroke="#000000" stroke-width="1px" y="49.249999" x="74.75" height="64.25" width="114" id="rect2837"/>
+   <path fill="#eeeeee" fill-rule="evenodd" stroke="#000000" stroke-width="1px" id="rect2841" d="m31.625,49.125c-9.73402,0 -17.625,14.354858 -17.625,32.0625c0,17.478943 7.68969,31.698303 17.25,32.0625l0,0.25l37,0l0,-64.25l-35.03125,0c-0.52277,-0.0849 -1.058849,-0.125 -1.59375,-0.125z"/>
+   <path fill="#eeeeee" fill-rule="evenodd" stroke="#000000" stroke-width="1px" d="m232.125,49.125c9.734009,0 17.625,14.354858 17.625,32.0625c0,17.478943 -7.689697,31.698303 -17.25,32.0625l0,0.25l-37,0l0,-64.25l35.03125,0c0.522766,-0.0849 1.058853,-0.125 1.59375,-0.125z" id="path2848"/>
+   <g clip-path="url(#clipPath2880)" id="g2866">
+    <path fill="url(#linearGradient2870)" fill-rule="evenodd" id="path2850" d="m80,81.124969c0,16.637581 -13.487427,30.125 -30.125,30.125c-16.637585,0 -30.125,-13.487419 -30.125,-30.125c0,-16.637512 13.487415,-30.125 30.125,-30.125c16.637573,0 30.125,13.487488 30.125,30.125z"/>
+    <path fill="#eeeeee" fill-rule="evenodd" d="m62.5,81.125008c0,6.972565 -5.652405,12.625 -12.625,12.625c-6.972595,0 -12.624996,-5.652435 -12.624996,-12.625c0,-6.972626 5.652401,-12.625 12.624996,-12.625c6.972595,0 12.625,5.652374 12.625,12.625z" id="path2860"/>
+   </g>
+   <g clip-path="url(#clipPath2886)" id="g2872">
+    <path fill="url(#linearGradient2878)" fill-rule="evenodd" d="m235,81.124969c0,11.667023 -9.457977,21.125 -21.125,21.125c-11.667007,0 -21.125,-9.457977 -21.125,-21.125c0,-11.666954 9.457993,-21.125 21.125,-21.125c11.667023,0 21.125,9.458046 21.125,21.125z" id="path2874"/>
+    <path fill="#eeeeee" fill-rule="evenodd" id="path2876" d="m226.5,81.125008c0,6.972565 -5.652405,12.625 -12.625,12.625c-6.972595,0 -12.625,-5.652435 -12.625,-12.625c0,-6.972626 5.652405,-12.625 12.625,-12.625c6.972595,0 12.625,5.652374 12.625,12.625z"/>
+   </g>
+   <path fill="#eeeeee" fill-rule="evenodd" stroke="#000000" stroke-width="1px" opacity="0.3" d="m31.625,49.125c-9.73402,0 -17.625,14.354858 -17.625,32.0625c0,17.478943 7.68969,31.698303 17.25,32.0625l0,0.25l37,0l0,-64.25l-35.03125,0c-0.52277,-0.0849 -1.058849,-0.125 -1.59375,-0.125z" id="path2890"/>
+   <path fill="#eeeeee" fill-rule="evenodd" stroke="#000000" stroke-width="1px" opacity="0.3" id="path2892" d="m232.125,49.125c9.734009,0 17.625,14.354858 17.625,32.0625c0,17.478943 -7.689697,31.698303 -17.25,32.0625l0,0.25l-37,0l0,-64.25l35.03125,0c0.522766,-0.0849 1.058853,-0.125 1.59375,-0.125z"/>
+   <rect fill="#333333" fill-rule="evenodd" stroke="#000000" stroke-width="0.99999994000000003px" id="rect2894" width="114" height="14.5" x="74.75" y="49.249999"/>
+   <rect fill="#333333" fill-rule="evenodd" stroke="#000000" stroke-width="0.99999994px" y="97.999999" x="74.75" height="14.5" width="114" id="rect2896"/>
+   <path fill="none" stroke="#000000" stroke-width="1px" id="path2898" d="m80.25,71.5l103.75,0"/>
+   <path fill="none" stroke="#000000" stroke-width="1px" d="m80.25,75.5l103.75,0" id="path2900"/>
+   <path fill="none" stroke="#000000" stroke-width="1px" id="path2902" d="m80.25,79.5l103.75,0"/>
+   <path fill="none" stroke="#000000" stroke-width="1px" d="m80.25,83.5l103.75,0" id="path2904"/>
+   <path fill="none" stroke="#000000" stroke-width="1px" id="path2906" d="m80.25,87.5l103.75,0"/>
+   <path fill="none" stroke="#000000" stroke-width="1px" d="m80.25,91.5l103.75,0" id="path2908"/>
+   <text font-size="7.30519104px" font-style="normal" font-weight="normal" fill="#eeeeee" font-family="Bitstream Vera Sans" id="text2912" y="8.061279" x="10.958817" xml:space="preserve">
+    <tspan y="890.42346" x="30.958817" id="tspan2914">Insert this side into recorder</tspan>
+   </text>
+  </g>
+ </g>
+</svg>

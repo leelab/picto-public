@@ -67,14 +67,15 @@ public:
 	virtual QPoint viewportPointToTargetPoint(QPoint viewportPoint);
 	virtual QPoint targetPointToViewportPoint(QPoint targetPoint);
 
+	//The seperate paint and paintEven functions allow us to paint this widget's
+	//contents onto a different widget.  This is needed for the VisualTargetHost.
+	virtual void paint(QPaintDevice *widget) = 0;
+
 	//! \todo Add a function that returns time to VSynch
 signals:
 	void presented(double frameTime);
 
 protected:
-	//The seperate paint and paintEven functions allow us to paint this widget's
-	//contents onto a different widget.  This is needed for the VisualTargetHost.
-	virtual void paint(QPaintDevice *widget) = 0;
 	void paintEvent(QPaintEvent *) { paint(this); };
 	void setFirstPhosphorTime();
 

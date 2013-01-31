@@ -4,7 +4,7 @@
 #include "../viewer.h"
 #include "../../common/engine/pictoengine.h"
 #include "../../common/compositor/PixmapVisualTarget.h"
-#include "../../common/compositor/VisualTargetHost.h"
+#include "RecordingVisualTargetHost.h"
 #include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "PlaybackStateUpdater.h"
 #include "PlaybackController.h"
@@ -18,6 +18,7 @@ class QToolBar;
 class QComboBox;
 class QSlider;
 class QProgressBar;
+class QLCDNumber;
 
 /*!	\brief	This plays an experiment back
  *
@@ -42,7 +43,7 @@ public slots:
 
 private:
 	void setupUi();
-	void generateComboBox();
+	void updateRecordingTarget();
 
 	QSharedPointer<PlaybackController> playbackController_;
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
@@ -52,7 +53,7 @@ private:
 	QSharedPointer<PlaybackStateUpdater> playbackUpdater_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
-	Picto::VisualTargetHost *visualTargetHost_;
+	RecordingVisualTargetHost *visualTargetHost_;
 	QVector<QWidget *> outputSignalsWidgets_;
 
 	QAction *loadSessionAction_;
@@ -65,10 +66,19 @@ private:
 	QComboBox *runs_;
 	QComboBox *userType_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
+	
+	QAction *toggleRecord_;
+	QLCDNumber *recordTime_;
+	QAction *restartRecord_;
+	QAction *saveRecording_;
 
 	QToolBar* testToolbar_;
+	QToolBar* recordToolbar_;
+
 	bool pausedFromJump_;	//If playback is not yet paused, system should pause playback while a jump location is being selected.
 	bool jumpDownRequested_;
+	bool recordModeOn_;
+	bool playing_;
 	QString lastStatus_;
 
 	enum Status {Ending, Stopped, Running, Paused};
@@ -84,6 +94,10 @@ private slots:
 	void percentLoaded(double percent);
 	void jumpRequested(double time);
 	void userChoosingJump(bool starting);
+	void toggleRecording();
+	void restartRecording();
+	void saveRecording();
+	void setRecordTime(double time);
 	//void zoomChanged(int zoom);
 
 };
