@@ -317,17 +317,6 @@ void ExperimentConfig::fixDuplicatedAssetIds()
 		if(!sAsset)
 			continue;	//This asset was already deleted
 		id = sAsset->getAssetId();
-		if(id > 4300)
-		{
-			int i=0;
-			i++;
-		}
-		if(id == 4623)
-		{
-			QString assetName = sAsset->getName();
-			int i=0;
-			i++;
-		}
 		if(id == 0 || assetsById_.contains(id))
 		{
 			fixList.append(sAsset);

@@ -10,6 +10,14 @@
 
   ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug Qt5Cored.dll Qt5Guid.dll Qt5Scriptd.dll Qt5Xmld.dll Qt5Networkd.dll Qt5Sqld.dll Qt5Svgd.dll Qt5ScriptToolsd.dll Qt5Widgetsd.dll Qt5Multimediad.dll Qt5OpenGld.dll Qt5PrintSupportd.dll Qt5Testd.dll libGLESv2d.dll libEGLd.dll icuin49.dll icuuc49.dll icudt49.dll /NFL /NDL /NJH /NJS
 
+  ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\release\platforms qwindows.dll /NFL /NDL /NJH /NJS
+
+  ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\debug\platforms qwindowsd.dll /NFL /NDL /NJH /NJS
+
+  ROBOCOPY %QTDIR%\plugins\sqldrivers %PICTO_TREE%\output\bin\release\sqldrivers qsqlite.dll /NFL /NDL /NJH /NJS
+
+  ROBOCOPY %QTDIR%\plugins\sqldrivers %PICTO_TREE%\output\bin\debug\sqldrivers qsqlited.dll /NFL /NDL /NJH /NJS
+
   ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\tests\bin\release Qt5Core.dll Qt5Gui.dll Qt5Script.dll Qt5Xml.dll   Qt5Network.dll Qt5Sql.dll Qt5Svg.dll Qt5ScriptTools.dll Qt5Widgets.dll Qt5Multimedia.dll Qt5OpenGl.dll Qt5PrintSupport.dll Qt5Test.dll libGLESv2.dll libEGL.dll icuin49.dll icuuc49.dll icudt49.dll /NFL /NDL /NJH /NJS
 
   ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\tests\bin\debug Qt5Cored.dll Qt5Guid.dll Qt5Scriptd.dll Qt5Xmld.dll Qt5Networkd.dll Qt5Sqld.dll Qt5Svgd.dll Qt5ScriptToolsd.dll Qt5Widgetsd.dll Qt5Multimediad.dll Qt5OpenGld.dll Qt5PrintSupportd.dll Qt5Testd.dll libGLESv2d.dll libEGLd.dll icuin49.dll icuuc49.dll icudt49.dll /NFL /NDL /NJH /NJS
