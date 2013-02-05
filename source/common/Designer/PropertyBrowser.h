@@ -28,8 +28,9 @@ public slots:
 private:
 	QSharedPointer<EditorState> editorState_;
 	QSharedPointer<PropertyEditorFactory> propertyFactory_;
+	QSharedPointer<QtVariantPropertyManager> propManager_;
 private slots:
-	void propertyEdited(QSharedPointer<Property> prop);
+	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 };
 //! [0]
 #endif

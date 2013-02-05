@@ -28,7 +28,7 @@ public:
    void setNextProperty(QSharedPointer<Property> nextProp);
    void clear();
 signals:
-	void propertyEdited(QSharedPointer<Property> prop);
+	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 
 protected:
 	virtual QWidget* createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent);

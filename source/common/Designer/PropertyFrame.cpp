@@ -13,8 +13,8 @@ PropertyFrame::PropertyFrame(QWidget *parent) :
 	propertyFactory_(new PropertyEditorFactory()),
 	mainWidget_(NULL)
 {
-	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>)),
-        this, SLOT(propertyEdited(QSharedPointer<Property>)));
+	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
+        this, SLOT(propertyEdited(QSharedPointer<Property>,QVariant)));
 }
 
 void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
@@ -31,7 +31,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	propertyFactory_->clear();
 	if(dataStore.isNull())
 		return;
-	QSharedPointer<QtVariantPropertyManager> manager;
+
 	//Find experiment
 	QSharedPointer<Asset> experiment;
 	experiment = dataStore;
@@ -43,6 +43,19 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	QList<QSharedPointer<DataStore>> runtimeDescendants = dataStore->getRuntimeEditableDescendants();
 	if(experiment.staticCast<Picto::Experiment>()->isUIEnabled())
 		runtimeDescendants.push_front(experiment.staticCast<DataStore>());
+	
+	
+	
+	
+	//------------------DECOUPLE CODE----------------------------------------------------------------------
+	//Build an internal property manager and use it instead of the one in the propertycontainer itself
+	//as step one for property manager<->property decoupling
+	propManagers_.clear();
+	//------------------DECOUPLE CODE----------------------------------------------------------------------
+
+
+
+
 	foreach(QSharedPointer<DataStore> runtimeDesc,runtimeDescendants)
 	{
 		QString parentPath = runtimeDesc->getPath();
@@ -68,15 +81,64 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 		QGroupBox* assetBox = new QGroupBox(runtimeDesc->getName());
 		QVBoxLayout* assetLayout = new QVBoxLayout(assetBox);
 		QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
-		manager = runtimeDesc->getUIPropertyContainer()->getPropertyManager();
+
+
+
+
+
+
+
+
+
+
+
+
+		//------------------DECOUPLE CODE----------------------------------------------------------------------
+		//Build an internal property manager and use it instead of the one in the propertycontainer itself
+		//as step one for property manager<->property decoupling
+		QSharedPointer<QtVariantPropertyManager> manager = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+		propManagers_.append(manager);
+		QtVariantProperty *groupItem = manager->addProperty(QtVariantPropertyManager::groupTypeId(),
+																runtimeDesc->getName());
 		browser->setFactoryForManager(manager.data(), propertyFactory_.data());
 		foreach(QSharedPointer<Property> runTimeProp, runTimeProps) 
 		{
+			QtVariantProperty *item = manager->addProperty(runTimeProp->type(),
+															  runTimeProp->getName());
+			item->setValue(runTimeProp->value());
 			propertyFactory_->setNextProperty(runTimeProp);
-			browser->addProperty(runTimeProp->getVariantProperty());
+			browser->addProperty(item);
 		}
 		assetLayout->addWidget(browser);
 		layout->addWidget(assetBox);
+		//------------------DECOUPLE CODE----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//manager = runtimeDesc->getUIPropertyContainer()->getPropertyManager();
+		//browser->setFactoryForManager(manager.data(), propertyFactory_.data());
+		//foreach(QSharedPointer<Property> runTimeProp, runTimeProps) 
+		//{
+		//	propertyFactory_->setNextProperty(runTimeProp);
+		//	browser->addProperty(runTimeProp->getVariantProperty());
+		//}
+		//assetLayout->addWidget(browser);
+		//layout->addWidget(assetBox);
 	}
 	layout->setAlignment(Qt::AlignTop);
 	setWidget(mainWidget_);
@@ -128,7 +190,7 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 			QString newValue = unit.value_;
 			it.value()->fromUserString(newValue);
 			if(newValue != currValue)
-				propertyEdited(it.value());
+				emit parameterMessageReady(it.value());
 		}
 		else
 		{
@@ -168,8 +230,9 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 	}
 }
 
-void PropertyFrame::propertyEdited(QSharedPointer<Property> prop)
+void PropertyFrame::propertyEdited(QSharedPointer<Property> prop,QVariant val)
 {
+	prop->setValue(val);
 	setWidget(mainWidget_);
 	//Send it to director
 	emit parameterMessageReady(prop);

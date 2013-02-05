@@ -69,8 +69,7 @@ void ScriptWidget::focusOutEvent(QFocusEvent *e)
 {
 	QTextEdit::focusOutEvent(e);
 	if(textEdited_)
-		emit editingFinishedAndTextEdited();
-	textEdited_ = false;
+		emit editingFinished();
 }
 
 void ScriptWidget::setScriptValue()
@@ -91,5 +90,5 @@ void ScriptWidget::setScriptValue()
 
 	//Set fixed text value to property.
 	manager_->setValue(property_,finalText);
-	textEdited_ = true;
+	emit textEdited(finalText);
 }

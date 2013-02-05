@@ -35,11 +35,12 @@ signals:
    void parameterMessageReady(QSharedPointer<Property> changedProp);
 private:
 	QSharedPointer<PropertyEditorFactory> propertyFactory_;
+	QVector<QSharedPointer<QtVariantPropertyManager>> propManagers_;
 	QWidget* mainWidget_;
 	QSqlDatabase propValsSession_;
 	QHash<QString,QSharedPointer<Property>> pathMap_;
 private slots:
-	void propertyEdited(QSharedPointer<Property> prop);
+	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 };
 //! [0]
 #endif

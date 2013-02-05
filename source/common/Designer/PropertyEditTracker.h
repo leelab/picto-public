@@ -20,23 +20,24 @@ public:
 	virtual ~PropertyEditTracker(){};
 	void addTrackedWidget(QWidget* widget);
 signals:
-	void propertyEdited(QSharedPointer<Property> prop);
+	void propertyEdited(QSharedPointer<Property> prop, QVariant newValue);
 protected:
 	QSharedPointer<Picto::Property> prop_;
 private:
 	bool textEdited_;
+	QVariant latestEditedText_;
 	int lastHighlightedNewValue_;	//This will be -2 if the last highlighted value isn't new
 	QComboBox* comboBoxWidget_;	//We need to maintain a pointer to the combobox widget as part of its change tracking system.
+	QWidget* trackedWidget_;
 private slots:
 	//We need to know when the value in a property changed AS A RESULT OF ACTIONS THROUGH THE
 	//PROPERTY BROWSER.  For this purpose, we look at all the varying types of events from 
 	//the various EditBoxes and translate them into one unified propertyEdited()
 	//signal
-	void valueEdited(int){emit propertyEdited(prop_);};
-	void valueEdited(double){emit propertyEdited(prop_);};
-	void valueEdited(const QString &);
-	void valueEdited(){emit propertyEdited(prop_);};
-	void valueEdited(QColor){emit propertyEdited(prop_);};
+	void valueEdited(int val);
+	void valueEdited(double val);
+	void valueEdited(const QString &val);
+	void valueEdited(QColor val);
 	void lineEditFinished();
 	void comboBoxEntryHighlighted(int index);
 	void comboBoxEntrySelected(int index);

@@ -8,41 +8,42 @@ PropertyEditTracker::PropertyEditTracker(QSharedPointer<Picto::Property> prop) :
 	prop_(prop),
 	textEdited_(false),
 	lastHighlightedNewValue_(-2),
-	comboBoxWidget_(NULL)
+	trackedWidget_(NULL)
 {
 }
 
 void PropertyEditTracker::addTrackedWidget(QWidget* widget)
 {
-	QList<QSpinBox*> spinKids = widget->findChildren<QSpinBox*>();
-	QList<QDoubleSpinBox*> doubleSpinKids = widget->findChildren<QDoubleSpinBox*>();
-	QList<QCheckBox*> checkKids = widget->findChildren<QCheckBox*>();
-	QList<QLineEdit*> lineKids = widget->findChildren<QLineEdit*>();
-	QList<ScriptWidget*> scriptKids = widget->findChildren<ScriptWidget*>();
-	if(widget->inherits("QSpinBox"))
+	trackedWidget_ = widget;
+	QList<QSpinBox*> spinKids = trackedWidget_->findChildren<QSpinBox*>();
+	QList<QDoubleSpinBox*> doubleSpinKids = trackedWidget_->findChildren<QDoubleSpinBox*>();
+	QList<QCheckBox*> checkKids = trackedWidget_->findChildren<QCheckBox*>();
+	QList<QLineEdit*> lineKids = trackedWidget_->findChildren<QLineEdit*>();
+	QList<ScriptWidget*> scriptKids = trackedWidget_->findChildren<ScriptWidget*>();
+	if(trackedWidget_->inherits("QSpinBox"))
 	{
 		lineKids.clear();//Spinboxes include lineedits and we don't want the signal twice
-		spinKids.append(static_cast<QSpinBox*>(widget));
+		spinKids.append(static_cast<QSpinBox*>(trackedWidget_));
 	}
-	else if(widget->inherits("QDoubleSpinBox"))
+	else if(trackedWidget_->inherits("QDoubleSpinBox"))
 	{
 		lineKids.clear();//DoubleSpinboxes include lineedits and we don't want the signal twice
-		doubleSpinKids.append(static_cast<QDoubleSpinBox*>(widget));
+		doubleSpinKids.append(static_cast<QDoubleSpinBox*>(trackedWidget_));
 	}
-	else if(widget->inherits("QCheckBox"))
-		checkKids.append(static_cast<QCheckBox*>(widget));
-	else if(widget->inherits("QLineEdit"))
-		lineKids.append(static_cast<QLineEdit*>(widget));
-	else if(widget->inherits("ScriptWidget"))
-		scriptKids.append(static_cast<ScriptWidget*>(widget));
-	else if(widget->inherits("QtColorEditWidget"))
+	else if(trackedWidget_->inherits("QCheckBox"))
+		checkKids.append(static_cast<QCheckBox*>(trackedWidget_));
+	else if(trackedWidget_->inherits("QLineEdit"))
+		lineKids.append(static_cast<QLineEdit*>(trackedWidget_));
+	else if(trackedWidget_->inherits("ScriptWidget"))
+		scriptKids.append(static_cast<ScriptWidget*>(trackedWidget_));
+	else if(trackedWidget_->inherits("QtColorEditWidget"))
 	{	//Since we can't actually include QtColorEditWidget (its in a cpp file
 		//c:\qtpropertybrowser-2.5-opensource\src\qteditorfactory.cpp)
 		//we use this convoluded way of connecting to its valueChanged signal
 		//since it is never the child of another widget, so we can.
-		connect(widget,SIGNAL(valueChanged(QColor)),this,SLOT(valueEdited(QColor)));
+		connect(trackedWidget_,SIGNAL(valueChanged(QColor)),this,SLOT(valueEdited(QColor)));
 	}
-	else if(widget->inherits("QComboBox"))
+	else if(trackedWidget_->inherits("QComboBox"))
 	{	//Combo boxes also have a funny interface.  They have a signal that says 
 		//that a user selection occured that gets triggered even if nothing changed.
 		//They also have a signal that says what a user highlights.  We use these
@@ -50,10 +51,8 @@ void PropertyEditTracker::addTrackedWidget(QWidget* widget)
 		//value was different from the current property value and the same as the
 		//final selection.  This doesn't work if there is more than one ComboBox for
 		//a property, but luckily, there isn't.
-		connect(widget,SIGNAL(highlighted(int)),this,SLOT(comboBoxEntryHighlighted(int)));
-		connect(widget,SIGNAL(activated(int)),this,SLOT(comboBoxEntrySelected(int)));
-		comboBoxWidget_ = qobject_cast<QComboBox*>(widget);
-		
+		connect(trackedWidget_,SIGNAL(highlighted(int)),this,SLOT(comboBoxEntryHighlighted(int)));
+		connect(trackedWidget_,SIGNAL(activated(int)),this,SLOT(comboBoxEntrySelected(int)));
 	}
 
 	foreach(QSpinBox* kid, spinKids)
@@ -75,29 +74,49 @@ void PropertyEditTracker::addTrackedWidget(QWidget* widget)
 	}
 	foreach(ScriptWidget* kid, scriptKids)
 	{
-		connect(kid,SIGNAL(editingFinishedAndTextEdited()),this,SLOT(valueEdited()));
+		connect(kid,SIGNAL(textEdited(const QString &)),this,SLOT(valueEdited(const QString &)));
+		connect(kid,SIGNAL(editingFinished()),this,SLOT(lineEditFinished()));
 	}
+}
+
+void PropertyEditTracker::valueEdited(int val)
+{
+	emit propertyEdited(prop_,val);
+}
+
+void PropertyEditTracker::valueEdited(double val)
+{
+	emit propertyEdited(prop_,val);
 }
 
 //Since textChanged is textEdited is called whenever any text changes (ie. a single letter)
 //we don't want to register that level of detail.  We use this function to track whether
 //text changed in a lineedit before editingFinished() is called (signifying that the user 
 //pressed enter or changed focus
-void PropertyEditTracker::valueEdited(const QString &)
+void PropertyEditTracker::valueEdited(const QString &val)
 {
 	textEdited_ = true;
+	latestEditedText_ = val;
+}
+
+void PropertyEditTracker::valueEdited(QColor val)
+{
+	emit propertyEdited(prop_,val);
 }
 
 void PropertyEditTracker::lineEditFinished()
 {
 	if(textEdited_)
-		emit propertyEdited(prop_);
+	{
+		emit propertyEdited(prop_,latestEditedText_);
+	}
 	textEdited_ = false;
+	latestEditedText_ = "";
 }
 
 void PropertyEditTracker::comboBoxEntryHighlighted(int index)
 {
-	if(index == comboBoxWidget_->currentIndex())
+	if(index == qobject_cast<QComboBox*>(trackedWidget_)->currentIndex())
 		lastHighlightedNewValue_ = -2;	//-2 indicates that the last highlighted value was not new.
 	else
 		lastHighlightedNewValue_ = index;
@@ -107,45 +126,6 @@ void PropertyEditTracker::comboBoxEntrySelected(int index)
 	//If the input index==lastHighlightedNewValue_ then a new value was selected
 	//(since index will never be -2)
 	if(index == lastHighlightedNewValue_)
-		emit propertyEdited(prop_);
+		emit propertyEdited(prop_,index);
 	lastHighlightedNewValue_ = -2;	//If we're here, the combobox isn't being used anymore, so reset the lastHighlightedNewValue_.
 }
-
-
-
-//
-//
-//
-//
-//StringPropertyEditTracker::StringPropertyEditTracker(QtVariantPropertyManager* manager, QtProperty* qtProp, QSharedPointer<Picto::Property> prop, QWidget *parent) :
-//PropertyEditTracker(manager,qtProp,prop,parent)
-//{
-//	QLineEdit* edit = new QLineEdit(this);
-//	edit->setText(getPropValue().toString());
-//}
-//IntPropertyEditTracker::IntPropertyEditTracker(QtVariantPropertyManager* manager, QtProperty* qtProp, QSharedPointer<Picto::Property> prop, QWidget *parent) :
-//PropertyEditTracker(manager,qtProp,prop,parent)
-//{
-//	QSpinBox* edit = new QSpinBox(this);
-//	edit->setValue(getPropValue().toInt());
-//}
-//BoolPropertyEditTracker::BoolPropertyEditTracker(QtVariantPropertyManager* manager, QtProperty* qtProp, QSharedPointer<Picto::Property> prop, QWidget *parent) :
-//PropertyEditTracker(manager,qtProp,prop,parent)
-//{
-//	QCheckBox* edit = new QCheckBox(this);
-//	edit->setChecked(getPropValue().toBool());
-//}
-//EnumPropertyEditTracker::EnumPropertyEditTracker(QtVariantPropertyManager* manager, QtProperty* qtProp, QSharedPointer<Picto::Property> prop, QWidget *parent) :
-//PropertyEditTracker(manager,qtProp,prop,parent)
-//{
-//	QComboBox* edit = new QComboBox(this);
-//	QStringList enumNames = manager_->attributeValue(qtProp_,"enumNames").toStringList();
-//	edit->addItems(enumNames);
-//	edit->setCurrentIndex(getPropValue().toInt());
-//}
-//ColorPropertyEditTracker::ColorPropertyEditTracker(QtVariantPropertyManager* manager, QtProperty* qtProp, QSharedPointer<Picto::Property> prop, QWidget *parent) :
-//PropertyEditTracker(manager,qtProp,prop,parent)
-//{
-//	QTextEdit* edit = new QTextEdit(this);
-//	edit->setText(getPropValue().toString());
-//}

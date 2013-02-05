@@ -14,8 +14,8 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
         this, SLOT(assetSelected(QSharedPointer<Asset>)));
 	//connect(propertyFactory_.data(), SIGNAL(propertyChanged(QtProperty*,bool)),
  //       this, SLOT(propertyFocusChanged(QtProperty*,bool)));
-	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>)),
-        this, SLOT(propertyEdited(QSharedPointer<Property>)));
+	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
+        this, SLOT(propertyEdited(QSharedPointer<Property>,QVariant)));
 }
 
 void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
@@ -32,8 +32,19 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 	//{
 	//	unsetFactoryForManager(manager_.data());
 	//}
-	QSharedPointer<QtVariantPropertyManager> manager = dataStore->getPropertyContainer()->getPropertyManager();
-	setFactoryForManager(manager.data(), propertyFactory_.data());
+
+
+
+
+
+	//------------------DECOUPLE CODE----------------------------------------------------------------------
+	//Build an internal property manager and use it instead of the one in the propertycontainer itself
+	//as step one for property manager<->property decoupling
+	propManager_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
+	QtVariantProperty *groupItem = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
+														  asset->getName());
+	setFactoryForManager(propManager_.data(), propertyFactory_.data());
+
 	QHash<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
 	QStringList orderedProps = dataStore->getOrderedPropertyList();
 	foreach(QString propTag,orderedProps)
@@ -41,16 +52,54 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 		QVector<QSharedPointer<Property>> propVec = properties.value(propTag);
 		foreach(QSharedPointer<Property> prop,propVec)
 		{
+			QtVariantProperty *item = propManager_->addProperty(prop->type(),
+														  prop->getName());
+			item->setValue(prop->value());
 			propertyFactory_->setNextProperty(prop);
-			addProperty(prop->getVariantProperty());
+			addProperty(item);
 		}
 	}
+	//------------------DECOUPLE CODE----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//QSharedPointer<QtVariantPropertyManager> manager = dataStore->getPropertyContainer()->getPropertyManager();
+	//setFactoryForManager(manager.data(), propertyFactory_.data());
+	//QHash<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
+	//QStringList orderedProps = dataStore->getOrderedPropertyList();
+	//foreach(QString propTag,orderedProps)
+	//{
+	//	QVector<QSharedPointer<Property>> propVec = properties.value(propTag);
+	//	foreach(QSharedPointer<Property> prop,propVec)
+	//	{
+	//		propertyFactory_->setNextProperty(prop);
+	//		addProperty(prop->getVariantProperty());
+	//	}
+	//}
 	setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 	//setMinimumHeight(childrenRect().height());
 }
 
-void PropertyBrowser::propertyEdited(QSharedPointer<Property> prop)
+void PropertyBrowser::propertyEdited(QSharedPointer<Property> prop,QVariant val)
 {
+	prop->setValue(val);
 	editorState_->setLastActionUndoable();
 
 	//Set the property value to its corresponding InitProperty if its scriptable

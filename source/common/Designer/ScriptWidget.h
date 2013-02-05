@@ -20,7 +20,8 @@ public:
    virtual ~ScriptWidget(){};
    virtual bool event(QEvent* e);
 signals:
-   void editingFinishedAndTextEdited();
+   void textEdited(const QString &);
+   void editingFinished();
 protected:
 	virtual void focusOutEvent(QFocusEvent *e);
 private:
