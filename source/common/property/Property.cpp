@@ -6,8 +6,10 @@
 
 namespace Picto {
 
-Property::Property(QtVariantProperty* variantProp, QtVariantPropertyManager* manager) :
-variantProp_(variantProp),
+Property::Property(int type, QString name, QVariant value) :
+value_(value),
+type_(type),
+name_(name),
 tagName_(""),
 typeVal_(""),
 scriptEditable_(true),
@@ -18,8 +20,8 @@ assetId_(0)
 	//Add the ID serialization attribute so that we can read in this property's ID.
 	AddSerializationAttribute("id");
 
-	connect(manager,SIGNAL(valueChanged(QtProperty *, const QVariant &)),this,SLOT(valueChanged(QtProperty *, const QVariant &)));
-	connect(manager,SIGNAL(attributeChanged(QtProperty*,const QString&, const QVariant&)),this,SLOT(attributeChanged(QtProperty*,const QString&, const QVariant&)));
+	//connect(manager,SIGNAL(valueChanged(QtProperty *, const QVariant &)),this,SLOT(valueChanged(QtProperty *, const QVariant &)));
+	//connect(manager,SIGNAL(attributeChanged(QtProperty*,const QString&, const QVariant&)),this,SLOT(attributeChanged(QtProperty*,const QString&, const QVariant&)));
 }
 
 Property::~Property()
@@ -28,49 +30,55 @@ Property::~Property()
 
 int Property::type()
 {
-	return variantProp_->valueType();
+	return type_;
 }
 
 QString Property::getName()
 {
-	return variantProp_->propertyName();
+	return name_;
 }
 
 void Property::setName(QString name)
 {
-	variantProp_->setPropertyName(name);
+	name_ = name;
 }
 
 QVariant Property::value()
 {
-	return variantProp_->value();
+	return value_;
 }
 
 QString Property::valueString()
 {
-	return variantProp_->value().toString();
+	return value().toString();
 }
 
 void Property::setValue(QVariant _value)
 {
-	variantProp_->setValue(_value);
-	//! \TODO:  Verify that edited is emited when setValue is called.
+	if(value_ != _value)
+	{
+		value_ = _value;
+		emit edited();
+		emit valueChanged(selfPtr().staticCast<Property>());
+	}
 }
 
 void Property::setAttribute(QString _attributeName, QVariant _attributeValue)
 {
-	variantProp_->setAttribute(_attributeName,_attributeValue);
+	attributes_[_attributeName] = _attributeValue;
 }
 
 QVariant Property::attributeValue(QString _attributeName)
 {
-	return variantProp_->attributeValue(_attributeName);
+	if(attributes_.contains(_attributeName))
+		return attributes_.value(_attributeName);
+	return QVariant();
 }
 
-void Property::addSubProperty(QSharedPointer<Property> prop)
-{
-	variantProp_->addSubProperty(prop->variantProp_);
-}
+//void Property::addSubProperty(QSharedPointer<Property> prop)
+//{
+//	variantProp_->addSubProperty(prop->variantProp_);
+//}
 
 bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -260,22 +268,22 @@ bool Property::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamRead
 	return true;
 }
 
-void Property::valueChanged(QtProperty *property, const QVariant &)
-{
-	if(property == variantProp_)
-	{
-		emit edited();
-		emit valueChanged(selfPtr().staticCast<Property>());
-	}
-}
-void Property::attributeChanged(QtProperty *property,
-            const QString &, const QVariant &)
-{
-	if(property == variantProp_)
-	{
-		emit edited();
-		emit valueChanged(selfPtr().staticCast<Property>());
-	}
-}
+//void Property::valueChanged(QtProperty *property, const QVariant &)
+//{
+//	if(property == variantProp_)
+//	{
+//		emit edited();
+//		emit valueChanged(selfPtr().staticCast<Property>());
+//	}
+//}
+//void Property::attributeChanged(QtProperty *property,
+//            const QString &, const QVariant &)
+//{
+//	if(property == variantProp_)
+//	{
+//		emit edited();
+//		emit valueChanged(selfPtr().staticCast<Property>());
+//	}
+//}
 
 }; //namespace Picto

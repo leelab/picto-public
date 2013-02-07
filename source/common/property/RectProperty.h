@@ -19,7 +19,7 @@ public:
 public slots:
 	void set(int x, int y, int width, int height){Property::setValue(QRect(x,y,width,height));};
 protected:
-	RectProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
+	RectProperty(QString name, QVariant value);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual QString toUserString();

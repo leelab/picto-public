@@ -10,7 +10,7 @@ FileOutput::FileOutput()
 {
 	AddDefinableProperty("FileName","");
 	endianList_ << "BigEndian" << "LittleEndian";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"BinaryByteOrder",0,"enumNames",endianList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"BinaryByteOrder",0,"enumNames",endianList_);
 
 	charsWritten_ = 0;
 }

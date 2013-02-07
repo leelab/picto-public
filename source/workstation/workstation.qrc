@@ -105,5 +105,6 @@
         <file>icons/red_led_on.svg</file>
         <file>icons/restart.svg</file>
         <file>icons/savevideo.svg</file>
+        <file>sounds/tick.wav</file>
     </qresource>
 </RCC>

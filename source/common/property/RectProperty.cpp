@@ -6,8 +6,8 @@
 
 namespace Picto {
 
-RectProperty::RectProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager):
-Property(variantProp,manager)
+RectProperty::RectProperty(QString name, QVariant value):
+Property(QVariant::Rect,name,value)
 {
 	AddSerializationAttribute("x");
 	AddSerializationAttribute("y");

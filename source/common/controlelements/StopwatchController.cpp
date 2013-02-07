@@ -7,12 +7,12 @@ StopwatchController::StopwatchController()
 	
 	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	unitList_ << "Sec" << "Ms" << "Us";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 	AddDefinableProperty(QVariant::Int,"Time",5);
 	
 	//propertyContainer_->setPropertyValue("Type",ControllerType());
 
-	//QSharedPointer<Property> unitsEnumProperty = propertyContainer_->addProperty(QtVariantPropertyManager::enumTypeId(),"Units",0);
+	//QSharedPointer<Property> unitsEnumProperty = propertyContainer_->addProperty(PropertyContainer::enumTypeId(),"Units",0);
  //   unitList_ << "Sec" << "Ms" << "Us";
 	//unitsEnumProperty->setAttribute("enumNames", unitList_);
 

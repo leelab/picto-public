@@ -19,7 +19,7 @@ public:
 public slots:
 	void set(int x, int y){Property::setValue(QPoint(x,y));};
 protected:
-	PointProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
+	PointProperty(QString name, QVariant value);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual QString toUserString();

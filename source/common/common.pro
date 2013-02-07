@@ -230,6 +230,8 @@ HEADERS += $$(PICTO_TREE)/source/common/designer/PropertyEditorFactory.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/PropertyEditorFactory.cpp
 HEADERS += $$(PICTO_TREE)/source/common/designer/PropertyFrame.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/PropertyFrame.cpp
+HEADERS += $$(PICTO_TREE)/source/common/designer/PropertyGroupWidget.h
+SOURCES += $$(PICTO_TREE)/source/common/designer/PropertyGroupWidget.cpp
 HEADERS += $$(PICTO_TREE)/source/common/designer/PropertyBrowser.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/PropertyBrowser.cpp
 HEADERS += $$(PICTO_TREE)/source/common/designer/AssetInfoBox.h
@@ -740,13 +742,4 @@ build_pass:CONFIG(debug, debug|release) {
 
 build_pass:CONFIG(release, debug|release) {
   QMAKE_POST_LINK = copy "$(TargetPath)" $$(PICTO_TREE)\\output\\tests\\bin\\release
-}
-
-# Copy sounds directory to output directory
-build_pass:CONFIG(debug, debug|release) {
-  QMAKE_PRE_LINK = xcopy $$(PICTO_TREE)\\source\\common\\sounds\\*.*  $$(PICTO_TREE)\\output\\bin\\debug\\sounds\\ /Y
-}
-
-build_pass:CONFIG(release, debug|release) {
-  QMAKE_PRE_LINK = xcopy $$(PICTO_TREE)\\source\\common\\sounds\\*.*  $$(PICTO_TREE)\\output\\bin\\release\\sounds\\ /Y
 }

@@ -13,10 +13,10 @@ VisualElement(position,color)
 {
 	//updatingParameterLists_ = false;
 	shapeList_ << "Ellipse" << "Rectangle" << "Diamond";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
 
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TokenShape",0,"enumNames",shapeList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"TokenShape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Rect,"TokenDimensions",dimensions);
 
 	AddDefinableProperty(QVariant::Int,"NumTokens",1);

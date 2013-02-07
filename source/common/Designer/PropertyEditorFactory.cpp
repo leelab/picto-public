@@ -3,7 +3,7 @@
 #include "../../common/storage/DataStore.h"
 #include "../../common/property/PropertyContainer.h"
 #include "ScriptWidget.h"
-#include "DeletableWidget.h"
+//#include "DeletableWidget.h"
 #include "PropertyEditTracker.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;

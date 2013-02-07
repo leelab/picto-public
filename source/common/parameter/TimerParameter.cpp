@@ -9,7 +9,7 @@ TimerParameter::TimerParameter()
   Parameter()
 {
 	unitList_ << "Sec" << "Ms" << "Us";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 	restart();
 	//AddDefinableProperty(QVariant::Int,"Value",-1);
 }

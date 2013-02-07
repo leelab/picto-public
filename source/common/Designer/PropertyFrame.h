@@ -1,11 +1,6 @@
 #ifndef PROPERTYFRAME_H
 #define PROPERTYFRAME_H
-#include <QtPropertyBrowser.h>
-#include <QtVariantProperty.h>
-#include <QtGroupBoxPropertyBrowser.h>
-#include <qtbuttonPropertyBrowser.h>
-#include <qttreePropertyBrowser.h>
-#include "../common/designer/PropertyEditorFactory.h"
+#include "PropertyGroupWidget.h"
 #include "../common/experiment/experiment.h"
 #include <QScrollArea>
 #include <QSqlDatabase>
@@ -34,8 +29,6 @@ public:
 signals:
    void parameterMessageReady(QSharedPointer<Property> changedProp);
 private:
-	QSharedPointer<PropertyEditorFactory> propertyFactory_;
-	QVector<QSharedPointer<QtVariantPropertyManager>> propManagers_;
 	QWidget* mainWidget_;
 	QSqlDatabase propValsSession_;
 	QHash<QString,QSharedPointer<Property>> pathMap_;

@@ -1,7 +1,6 @@
 #include <QtVariantProperty.h>
 #include <QtPropertyBrowser.h>
 #include "PropertyContainer.h"
-#include "EnumProperty.h"
 #include "ColorProperty.h"
 #include "PointProperty.h"
 #include "RectProperty.h"
@@ -13,17 +12,6 @@ PropertyContainer::PropertyContainer(QString _containerName)
 :
 containerName_(_containerName)
 {
-	propManager_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
-	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
-														  containerName_);
-	Q_ASSERT(item);
-	containerGroupItem_ = QSharedPointer<Property>( new Property(item,propManager_.data()) );
-
-	connect(propManager_.data(),
-		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
-		    this,
-			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
-			);
 }
 
 QSharedPointer<PropertyContainer> PropertyContainer::create(QString _containerName)
@@ -41,7 +29,7 @@ void PropertyContainer::copyProperties(QSharedPointer<PropertyContainer> contain
 		foreach(QSharedPointer<Property> prop,propVec)
 		{
 			newProp = addProperty(prop->type(),prop->getName(),prop->value());
-			QStringList attributes = container2->getPropertyManager()->attributes(prop->type());
+			QStringList attributes = prop->getAttributes();
 			foreach(QString attribute,attributes)
 			{
 				newProp->setAttribute(attribute,prop->attributeValue(attribute));
@@ -53,12 +41,17 @@ void PropertyContainer::copyProperties(QSharedPointer<PropertyContainer> contain
 
 void PropertyContainer::setContainerName(QString _containerName)
 {
-	containerGroupItem_->setName(_containerName);
+	containerName_ = _containerName;
 }
 
 QString PropertyContainer::getContainerName()
 {
-	return containerGroupItem_->getName();
+	return containerName_;
+}
+
+int PropertyContainer::enumTypeId()
+{
+	return EnumProperty::typeId();
 }
 
 QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple)
@@ -67,35 +60,29 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 		"PropertyContainer::addProperty",
 		QString("Attempted to add multiple properties to a tag (%1) for which this operation is forbidden").arg(_identifier).toLatin1());
 
-	QtVariantProperty *item = propManager_->addProperty(_type,
-														  _identifier);
-	//This will fail if you use an unsupported type
-	Q_ASSERT(item);
-
-	item->setValue(_value);
-
 	QSharedPointer<Property> newProperty;
-	if(_type == QtVariantPropertyManager::enumTypeId())
-		newProperty = QSharedPointer<Property>( new EnumProperty(item,propManager_.data()) );
+	if(_type == enumTypeId())
+		newProperty = QSharedPointer<Property>( new EnumProperty(_identifier,_value) );
 	else
 	{
 		switch(_type)
 		{
 		case QVariant::Rect:
-			newProperty = QSharedPointer<Property>( new RectProperty(item,propManager_.data()) );
+			newProperty = QSharedPointer<Property>( new RectProperty(_identifier,_value) );
 			break;
 		case QVariant::Point:
-			newProperty = QSharedPointer<Property>( new PointProperty(item,propManager_.data()) );
+			newProperty = QSharedPointer<Property>( new PointProperty(_identifier,_value) );
 			break;
 		case QVariant::Color:
-			newProperty = QSharedPointer<Property>( new ColorProperty(item,propManager_.data()) );
+			newProperty = QSharedPointer<Property>( new ColorProperty(_identifier,_value) );
 			break;
 		default:
-			newProperty = QSharedPointer<Property>( new Property(item,propManager_.data()) );
+			newProperty = QSharedPointer<Property>( new Property(_type,_identifier,_value) );
 			break;
 		}
 	}
-	containerGroupItem_->addSubProperty(newProperty);
+	connect(newProperty.data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SIGNAL(propertyValueChanged(QSharedPointer<Property>)));
+	//containerGroupItem_->addSubProperty(newProperty);
 	properties_[_identifier].push_back(newProperty);
 	return newProperty;
 }
@@ -141,21 +128,21 @@ void PropertyContainer::clear()
 {
 
 	properties_.clear();
-	containerGroupItem_.clear();
-	containerGroupItem_.clear();
-	propManager_->clear();
+	//containerGroupItem_.clear();
+	//containerGroupItem_.clear();
+	//propManager_->clear();
 
-	//We just cleared out the group item.  Restore it.
-	QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
-														  containerName_);
-	Q_ASSERT(item);
-	containerGroupItem_ = QSharedPointer<Property>( new Property(item,propManager_.data()) );
+	////We just cleared out the group item.  Restore it.
+	//QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
+	//													  containerName_);
+	//Q_ASSERT(item);
+	//containerGroupItem_ = QSharedPointer<Property>( new Property(item,propManager_.data()) );
 
-	connect(propManager_.data(),
-		    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
-		    this,
-			SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
-			);
+	//connect(propManager_.data(),
+	//	    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
+	//	    this,
+	//		SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
+	//		);
 
 }
 
@@ -197,42 +184,42 @@ QSharedPointer<Property> PropertyContainer::setPropertyValue(QString _propertyNa
 	return properties_[_propertyName][index];
 }
 
-QSharedPointer<Property> PropertyContainer::getPropertyFromQtProperty(QtProperty *property)
-{
-	QHashIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
-	while(propIterator.hasNext())
-	{
-		propIterator.next();
-		int index = 0;
-		foreach(QSharedPointer<Property> prop,propIterator.value())
-		{
-			if(static_cast<QtProperty*>(prop->variantProp_) == property)
-			{
-				return prop;
-			}
-			index++;
-		}
-	}
-	return QSharedPointer<Property>();
-}
+//QSharedPointer<Property> PropertyContainer::getPropertyFromQtProperty(QtProperty *property)
+//{
+//	QHashIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+//	while(propIterator.hasNext())
+//	{
+//		propIterator.next();
+//		int index = 0;
+//		foreach(QSharedPointer<Property> prop,propIterator.value())
+//		{
+//			if(static_cast<QtProperty*>(prop->variantProp_) == property)
+//			{
+//				return prop;
+//			}
+//			index++;
+//		}
+//	}
+//	return QSharedPointer<Property>();
+//}
 
-void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
-														 const QVariant & value)
-{
-	QHashIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
-	while(propIterator.hasNext())
-	{
-		propIterator.next();
-		int index = 0;
-		foreach(QSharedPointer<Property> prop,propIterator.value())
-		{
-			if(prop->variantProp_ == property)
-			{
-				emit signalPropertyValueChanged(propIterator.key(), index, value);
-				break;
-			}
-			index++;
-		}
-	}
-}
+//void PropertyContainer::slotPropertyManagerValueChanged(QtProperty * property,
+//														 const QVariant & value)
+//{
+//	QHashIterator<QString, QVector<QSharedPointer<Property>>> propIterator(properties_);
+//	while(propIterator.hasNext())
+//	{
+//		propIterator.next();
+//		int index = 0;
+//		foreach(QSharedPointer<Property> prop,propIterator.value())
+//		{
+//			if(prop->variantProp_ == property)
+//			{
+//				emit signalPropertyValueChanged(propIterator.key(), index, value);
+//				break;
+//			}
+//			index++;
+//		}
+//	}
+//}
 

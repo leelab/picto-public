@@ -512,6 +512,8 @@
    <file alias="_property_factory_8h-source.html">../../../output/documentation/main/html/_property_factory_8h-source.html</file>
    <file alias="_property_frame_8cpp-source.html">../../../output/documentation/main/html/_property_frame_8cpp-source.html</file>
    <file alias="_property_frame_8h-source.html">../../../output/documentation/main/html/_property_frame_8h-source.html</file>
+   <file alias="_property_group_widget_8cpp-source.html">../../../output/documentation/main/html/_property_group_widget_8cpp-source.html</file>
+   <file alias="_property_group_widget_8h-source.html">../../../output/documentation/main/html/_property_group_widget_8h-source.html</file>
    <file alias="_property_lookup_8cpp-source.html">../../../output/documentation/main/html/_property_lookup_8cpp-source.html</file>
    <file alias="_property_lookup_8h-source.html">../../../output/documentation/main/html/_property_lookup_8h-source.html</file>
    <file alias="_property_state_8cpp-source.html">../../../output/documentation/main/html/_property_state_8cpp-source.html</file>
@@ -1479,6 +1481,8 @@
    <file alias="class_property_editor_factory.html">../../../output/documentation/main/html/class_property_editor_factory.html</file>
    <file alias="class_property_frame-members.html">../../../output/documentation/main/html/class_property_frame-members.html</file>
    <file alias="class_property_frame.html">../../../output/documentation/main/html/class_property_frame.html</file>
+   <file alias="class_property_group_widget-members.html">../../../output/documentation/main/html/class_property_group_widget-members.html</file>
+   <file alias="class_property_group_widget.html">../../../output/documentation/main/html/class_property_group_widget.html</file>
    <file alias="class_proxy_main_window-members.html">../../../output/documentation/main/html/class_proxy_main_window-members.html</file>
    <file alias="class_proxy_main_window.html">../../../output/documentation/main/html/class_proxy_main_window.html</file>
    <file alias="class_proxy_main_window.png">../../../output/documentation/main/html/class_proxy_main_window.png</file>

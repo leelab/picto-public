@@ -21,7 +21,7 @@ public:
 public slots:
 	void set(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
 protected:
-	ColorProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
+	ColorProperty(QString name, QVariant value);
 	virtual void UpdateSerializationAttributesFromValue();
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:

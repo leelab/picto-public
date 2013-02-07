@@ -6,8 +6,8 @@
 
 namespace Picto {
 
-ColorProperty::ColorProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager):
-Property(variantProp,manager)
+ColorProperty::ColorProperty(QString name, QVariant value):
+Property(QVariant::Color,name,value)
 {
 	AddSerializationAttribute("R");
 	AddSerializationAttribute("G");

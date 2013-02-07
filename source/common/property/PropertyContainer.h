@@ -5,6 +5,7 @@
 #include <QString>
 #include <QSharedPointer>
 
+#include "EnumProperty.h"
 #include "../common.h"
 
 #include "Property.h"
@@ -31,32 +32,34 @@ public:
 	static QSharedPointer<PropertyContainer> create(QString _containerName);
 	virtual ~PropertyContainer(){};
 	void copyProperties(QSharedPointer<PropertyContainer> container2);
+	static int enumTypeId();
 	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple = false);
 	QVariant getPropertyValue(QString _identifier, int index=0);
 	QString getPropertyName(QString _identifier, int index=0);
 	QSharedPointer<Property> setPropertyValue(QString _identifier, QVariant _value, int index=0);
-	QSharedPointer<Property> getPropertyFromQtProperty(QtProperty *property);
+	//QSharedPointer<Property> getPropertyFromQtProperty(QtProperty *property);
 	void setContainerName(QString _containerName);
 	QString getContainerName();
 	QStringList getPropertyList();
-	QSharedPointer<QtVariantPropertyManager> getPropertyManager(){return propManager_;};
+	//QSharedPointer<QtVariantPropertyManager> getPropertyManager(){return propManager_;};
 	QHash<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
 	QList<QSharedPointer<Property>> getRuntimeProperties();
 	QSharedPointer<Property> getProperty(QString _identifier,int index=0);
-	QSharedPointer<Property> getContainerGroupProperty(){return containerGroupItem_;};
+	//QSharedPointer<Property> getContainerGroupProperty(){return containerGroupItem_;};
 	void clear();
 signals:
-	void signalPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
+	void propertyValueChanged(QSharedPointer<Property> prop);
+//	void signalPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 
 private:
-	QSharedPointer<QtVariantPropertyManager> propManager_;
+	//QSharedPointer<QtVariantPropertyManager> propManager_;
 	PropertyContainer(QString _containerName);
-	QSharedPointer<Property> containerGroupItem_;
+	//QSharedPointer<Property> containerGroupItem_;
 	QHash<QString, QVector<QSharedPointer<Property>>> properties_;
 	QString containerName_;
-
-private slots:
-	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
+//
+//private slots:
+//	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
 };
 
 

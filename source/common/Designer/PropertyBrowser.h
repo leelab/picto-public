@@ -1,11 +1,7 @@
 #ifndef PROPERTYBROWSER_H
 #define PROPERTYBROWSER_H
-#include <QtPropertyBrowser.h>
-#include <QtVariantProperty.h>
-#include <QtGroupBoxPropertyBrowser.h>
-#include <qtbuttonpropertybrowser.h>
-#include <qttreepropertybrowser.h>
-#include "PropertyEditorFactory.h"
+#include <QWidget>
+#include "PropertyGroupWidget.h"
 #include "EditorState.h"
 using namespace Picto;
 
@@ -15,7 +11,7 @@ class QtProperty;
 QT_END_NAMESPACE
 
 //! [0]
-class PropertyBrowser : public QtButtonPropertyBrowser
+class PropertyBrowser : public QWidget
 {
     Q_OBJECT
 
@@ -27,8 +23,7 @@ public slots:
 
 private:
 	QSharedPointer<EditorState> editorState_;
-	QSharedPointer<PropertyEditorFactory> propertyFactory_;
-	QSharedPointer<QtVariantPropertyManager> propManager_;
+	PropertyGroupWidget* propGroupWidget_;
 private slots:
 	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 };

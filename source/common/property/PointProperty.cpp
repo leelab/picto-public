@@ -6,8 +6,8 @@
 
 namespace Picto {
 
-PointProperty::PointProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager):
-Property(variantProp,manager)
+PointProperty::PointProperty(QString name, QVariant value):
+Property(QVariant::Point,name,value)
 {
 	AddSerializationAttribute("x");
 	AddSerializationAttribute("y");

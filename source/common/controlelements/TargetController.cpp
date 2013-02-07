@@ -9,11 +9,11 @@ TargetController::TargetController()
 	
 	AddDefinableProperty("SignalChannel","");
 	//shapeList_ << "Rectangle" << "Oval";
-	//AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
+	//AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 	//AddDefinableProperty(QVariant::Rect,"Target",QRect());
 	AddDefinableProperty("ControlTarget","");
 	unitList_ << "Sec" << "Ms" << "Us";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 	AddDefinableProperty(QVariant::Int,"FixationTime",1);
 	AddDefinableProperty(QVariant::Int,"TotalTime",5);
 	AddDefinableProperty(QVariant::Int,"MinInitialAcquisitionTime",0);

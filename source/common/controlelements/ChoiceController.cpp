@@ -13,10 +13,10 @@ ChoiceController::ChoiceController()
 	//AddDefinableProperty(QVariant::String,"Shape","");
 
 	//shapeList_ << "Rectangle" << "Ellipse";
-	//AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
+	//AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 
 	unitList_ << "Sec" << "Ms" << "Us";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 
 	AddDefinableProperty(QVariant::Int,"FixationTime",1);
 	timeUnits_ = 0;

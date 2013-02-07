@@ -9,22 +9,25 @@ namespace Picto
 
 AudioRewardController::AudioRewardController() : 
 RewardController(1) ,
-tick_("sounds/tick.wav"),
-latestQuantity_(0)
-{}
+tick_(":/sounds/tick.wav"),
+latestQuantity_(0),
+firstRewardSupplied_(false)
+{
+}
 
 void AudioRewardController::startReward(unsigned int,int quantity)
 {
 	latestQuantity_ = quantity;
 	timer_.start();
 	audioThreadFuture_ = QtConcurrent::run(this,&AudioRewardController::playSound,quantity);
+	firstRewardSupplied_ = true;
 }
 
 bool AudioRewardController::rewardWasSupplied(unsigned int channel)
 {
 	if(!audioThreadFuture_.isFinished())
 		return false;
-	if(timer_.elapsed() <= latestQuantity_)
+	if((timer_.elapsed() <= latestQuantity_) && firstRewardSupplied_)
 		return false;
 	return true;
 }

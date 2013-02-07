@@ -34,7 +34,7 @@ StateMachine::StateMachine() :
 	//Note that this is the same order as the enum to allow the enum to be
 	//used as an index
 	levelEnumStrs_<<"Stage"<<"Trial"<<"Task"<<"Experiment";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Level",0,"enumNames",levelEnumStrs_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"Level",0,"enumNames",levelEnumStrs_);
 
 	//DefinePlaceholderTag("StateMachineElements");
 

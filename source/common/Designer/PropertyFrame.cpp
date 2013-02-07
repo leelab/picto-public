@@ -10,11 +10,9 @@ using namespace Picto;
 //! [0]
 PropertyFrame::PropertyFrame(QWidget *parent) :
 	QScrollArea(parent),
-	propertyFactory_(new PropertyEditorFactory()),
 	mainWidget_(NULL)
 {
-	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
-        this, SLOT(propertyEdited(QSharedPointer<Property>,QVariant)));
+	setWidgetResizable(true);
 }
 
 void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
@@ -25,10 +23,8 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	}
 	mainWidget_ = new QWidget();
 	QVBoxLayout* layout = new QVBoxLayout();
-	mainWidget_->setLayout(layout);
 
 	pathMap_.clear();
-	propertyFactory_->clear();
 	if(dataStore.isNull())
 		return;
 
@@ -43,24 +39,16 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	QList<QSharedPointer<DataStore>> runtimeDescendants = dataStore->getRuntimeEditableDescendants();
 	if(experiment.staticCast<Picto::Experiment>()->isUIEnabled())
 		runtimeDescendants.push_front(experiment.staticCast<DataStore>());
-	
-	
-	
-	
-	//------------------DECOUPLE CODE----------------------------------------------------------------------
-	//Build an internal property manager and use it instead of the one in the propertycontainer itself
-	//as step one for property manager<->property decoupling
-	propManagers_.clear();
-	//------------------DECOUPLE CODE----------------------------------------------------------------------
 
-
-
+	PropertyGroupWidget* propGroupWidget = new PropertyGroupWidget();
+	connect(propGroupWidget, SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
+		 this, SLOT(propertyEdited(QSharedPointer<Property>,QVariant)));
 
 	foreach(QSharedPointer<DataStore> runtimeDesc,runtimeDescendants)
 	{
 		QString parentPath = runtimeDesc->getPath();
 		QHash<QString, QVector<QSharedPointer<Property>>> properties;
-		QList<QSharedPointer<Property>> runTimeProps;
+		QVector<QSharedPointer<Property>> runTimeProps;
 		properties = runtimeDesc->getUIPropertyContainer()->getProperties();
 		QStringList orderedProps = runtimeDesc->getOrderedPropertyList();
 		foreach(QString propTag,orderedProps)
@@ -78,69 +66,13 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 		}
 		if(!runTimeProps.size())
 			continue;
-		QGroupBox* assetBox = new QGroupBox(runtimeDesc->getName());
-		QVBoxLayout* assetLayout = new QVBoxLayout(assetBox);
-		QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
 
-
-
-
-
-
-
-
-
-
-
-
-		//------------------DECOUPLE CODE----------------------------------------------------------------------
-		//Build an internal property manager and use it instead of the one in the propertycontainer itself
-		//as step one for property manager<->property decoupling
-		QSharedPointer<QtVariantPropertyManager> manager = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
-		propManagers_.append(manager);
-		QtVariantProperty *groupItem = manager->addProperty(QtVariantPropertyManager::groupTypeId(),
-																runtimeDesc->getName());
-		browser->setFactoryForManager(manager.data(), propertyFactory_.data());
-		foreach(QSharedPointer<Property> runTimeProp, runTimeProps) 
-		{
-			QtVariantProperty *item = manager->addProperty(runTimeProp->type(),
-															  runTimeProp->getName());
-			item->setValue(runTimeProp->value());
-			propertyFactory_->setNextProperty(runTimeProp);
-			browser->addProperty(item);
-		}
-		assetLayout->addWidget(browser);
-		layout->addWidget(assetBox);
-		//------------------DECOUPLE CODE----------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		//manager = runtimeDesc->getUIPropertyContainer()->getPropertyManager();
-		//browser->setFactoryForManager(manager.data(), propertyFactory_.data());
-		//foreach(QSharedPointer<Property> runTimeProp, runTimeProps) 
-		//{
-		//	propertyFactory_->setNextProperty(runTimeProp);
-		//	browser->addProperty(runTimeProp->getVariantProperty());
-		//}
-		//assetLayout->addWidget(browser);
-		//layout->addWidget(assetBox);
+		propGroupWidget->addProperties(runtimeDesc->getName(),runTimeProps);
 	}
+	layout->addWidget(propGroupWidget);
 	layout->setAlignment(Qt::AlignTop);
+	layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+	mainWidget_->setLayout(layout);
 	setWidget(mainWidget_);
 	int reqWidth = mainWidget_->sizeHint().width()+25;
 	setFixedWidth((reqWidth<350)?reqWidth:350);
@@ -232,7 +164,6 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 
 void PropertyFrame::propertyEdited(QSharedPointer<Property> prop,QVariant val)
 {
-	prop->setValue(val);
 	setWidget(mainWidget_);
 	//Send it to director
 	emit parameterMessageReady(prop);

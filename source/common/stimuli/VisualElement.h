@@ -111,7 +111,7 @@ protected:
 private:
 	bool scalable_;
 private slots:
-	virtual void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
+	virtual void slotPropertyValueChanged(QSharedPointer<Property> prop);
 };
 
 }; //namespace Picto

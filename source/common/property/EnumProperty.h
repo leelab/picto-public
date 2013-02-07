@@ -15,8 +15,9 @@ class EnumProperty : public Property
 {
 	Q_OBJECT
 public:
-	EnumProperty(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
+	EnumProperty(QString name, QVariant value);
 	virtual ~EnumProperty(){};
+	static int typeId(){return QVariant::UserType+1;};
 	
 	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual QString valueString();

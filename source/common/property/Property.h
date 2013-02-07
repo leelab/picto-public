@@ -35,7 +35,9 @@ public:
 	//virtual void setValue(QVariant _value);
 	void setAttribute(QString _attributeName, QVariant _attributeValue);
 	QVariant attributeValue(QString _attributeName);
-	QtVariantProperty* getVariantProperty(){return variantProp_;};
+	QStringList getAttributes(){return attributes_.keys();};
+
+	//QtVariantProperty* getVariantProperty(){return variantProp_;};
 	QVariant value();
 	virtual void setValue(QVariant _value);
 	//Set this property as changeable during runtime.
@@ -62,8 +64,7 @@ public slots:
 	void setValueFromProp(QSharedPointer<Property> prop);
 
 protected:
-	Property(QtVariantProperty* variantProp, QtVariantPropertyManager* manager);
-	QtVariantProperty* variantProp_;
+	Property(int type, QString name, QVariant value);
 
 	//Fields used by subclases that need serialization attributes
 	void AddSerializationAttribute(QString name);
@@ -84,11 +85,15 @@ private:
 	bool scriptEditable_;
 	bool runtimeEnabled_;
 	int assetId_;
+	QVariant value_;
+	int type_;
+	QString name_;
+	QMap<QString,QVariant> attributes_;
 
-private slots:
-	void valueChanged(QtProperty *property, const QVariant &val);
-    void attributeChanged(QtProperty *property,
-                const QString &attribute, const QVariant &val);
+//private slots:
+//	void valueChanged(QtProperty *property, const QVariant &val);
+//    void attributeChanged(QtProperty *property,
+//                const QString &attribute, const QVariant &val);
 };
 
 

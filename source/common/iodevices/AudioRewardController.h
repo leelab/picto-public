@@ -42,6 +42,7 @@ private:
 	QSound tick_;
 	QFuture<void> audioThreadFuture_;
 	QTime timer_;
+	bool firstRewardSupplied_;
 	int latestQuantity_;
 
 };

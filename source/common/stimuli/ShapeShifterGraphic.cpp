@@ -10,7 +10,7 @@ ShapeShifterGraphic::ShapeShifterGraphic(QPoint position, QRect dimensions, QCol
 : VisualElement(position,color)
 {
 	shapeList_ << "Ellipse" << "Rectangle" << "Diamond";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"Shape",0,"enumNames",shapeList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Bool,"Outline",false);
 	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
 	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);

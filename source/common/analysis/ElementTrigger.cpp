@@ -6,7 +6,7 @@ ElementTrigger::ElementTrigger()
 {
 	AddDefinableProperty("ElementPath","");
 	boundaryList_ << "Starts" << "Ends";
-	AddDefinableProperty(QtVariantPropertyManager::enumTypeId(),"When",0,"enumNames",boundaryList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(),"When",0,"enumNames",boundaryList_);
 
 }
 
