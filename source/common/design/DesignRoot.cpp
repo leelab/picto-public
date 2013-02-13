@@ -36,13 +36,14 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 		return false;
 	}
 	setDesignName(pictoData->getName());
-	if(ObsoleteAsset::encounteredObsoleteAsset())
+	if(ObsoleteAsset::encounteredObsoleteAsset() || Property::encounteredObsoleteSerialSyntax())
 	{
-		lastWarning_.name="Obsolete Assets Removed                                     ";
+		lastWarning_.name="Obsolete Syntax Encountered                                  ";
 		lastWarning_.details="File contents have been automatically upgraded to "
 			"function with the latest version of Picto.  If you save this design, "
 			"it will be incompatible with older versions of Picto.";
 		ObsoleteAsset::clearObsoleteAssetFlag();
+		Property::clearObsoleteSerialSyntax();
 		//Move to the upgraded version
 		return resetDesignRoot(pictoData->toXml());
 	}

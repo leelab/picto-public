@@ -9,34 +9,33 @@ namespace Picto {
 PointProperty::PointProperty(QString name, QVariant value):
 Property(QVariant::Point,name,value)
 {
-	AddSerializationAttribute("x");
-	AddSerializationAttribute("y");
-}
-void PointProperty::UpdateSerializationAttributesFromValue()
-{
-	QPoint point = value().toPoint();
-	SetSerializationAttributeValue("x",point.x());
-	SetSerializationAttributeValue("y",point.y());
-}
-bool PointProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	QPoint point;
-	point.setX(GetSerializationAttributeValue("x").toInt());
-	point.setY(GetSerializationAttributeValue("y").toInt());
-	Property::setValue(point);
-	return true;
 }
 
-QString PointProperty::toUserString()
+QString PointProperty::variantToString(QVariant value) const
 {
-	QPoint point = value().toPoint();
+	QPoint point = value.toPoint();
 	return QString("%1,%2").arg(point.x()).arg(point.y());
 }
-void PointProperty::fromUserString(QString userString)
+QVariant PointProperty::stringToVariant(QString string, QString& error) const
 {
-	QStringList xy = userString.split(",");
-	Q_ASSERT(xy.size() == 2);
+	error = "";
+	QStringList xy = string.split(",");
+	if(xy.size() != 2)
+	{
+		error = "Invalid data entered for point property";
+		return QPoint(0,0);
+	}
 	QPoint newVal(xy[0].toInt(),xy[1].toInt());
-	setValue(newVal);
+	return QVariant(newVal);
+}
+
+QVariant PointProperty::attributeMapToVariantValue(QMap<QString,QVariant> attrMap, QString& error) const
+{
+	QPoint point;
+	if(!attrMap.contains("x") || !attrMap.contains("y"))
+		error = "Point property defined with attribute values must contain both 'x' and 'y' attributes";
+	point.setX(attrMap.value("x").toInt());
+	point.setY(attrMap.value("y").toInt());
+	return QVariant(point);
 }
 }; //namespace Picto

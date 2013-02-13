@@ -20,19 +20,9 @@ public slots:
 	void set(int x, int y, int width, int height){Property::setValue(QRect(x,y,width,height));};
 protected:
 	RectProperty(QString name, QVariant value);
-	virtual void UpdateSerializationAttributesFromValue();
-	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual QString toUserString();
-	virtual void fromUserString(QString userString);
-private:
-	void setX(QVariant x) {set(x.toInt(),value().toRect().y(),value().toRect().width(),value().toRect().height());};
-	void setY(QVariant y) {set(value().toRect().x(),y.toInt(),value().toRect().width(),value().toRect().height());};
-	void setWidth(QVariant w) {set(value().toRect().x(),value().toRect().y(),w.toInt(),value().toRect().height());};
-	void setHeight(QVariant h) {set(value().toRect().x(),value().toRect().y(),value().toRect().width(),h.toInt());};
-	QVariant getX() {return (QVariant)value().toRect().x();};
-	QVariant getY() {return (QVariant)value().toRect().y();};
-	QVariant getWidth() {return (QVariant)value().toRect().width();};
-	QVariant getHeight() {return (QVariant)value().toRect().height();};
+	virtual QString variantToString(QVariant value) const;
+	virtual QVariant stringToVariant(QString string, QString& error) const;
+	virtual QVariant attributeMapToVariantValue(QMap<QString,QVariant> attrMap, QString& error) const;
 	friend class PropertyContainer;
 };
 

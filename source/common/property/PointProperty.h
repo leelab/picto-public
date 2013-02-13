@@ -20,16 +20,9 @@ public slots:
 	void set(int x, int y){Property::setValue(QPoint(x,y));};
 protected:
 	PointProperty(QString name, QVariant value);
-	virtual void UpdateSerializationAttributesFromValue();
-	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual QString toUserString();
-	virtual void fromUserString(QString userString);
-
-private:
-	void setX(QVariant x) {set(x.toInt(),value().toPoint().y());};
-	void setY(QVariant y) {set(value().toPoint().x(),y.toInt());};
-	QVariant getX() {return (QVariant)value().toPoint().x();};
-	QVariant getY() {return (QVariant)value().toPoint().y();};
+	virtual QString variantToString(QVariant value) const;
+	virtual QVariant stringToVariant(QString string, QString& error) const;
+	virtual QVariant attributeMapToVariantValue(QMap<QString,QVariant> attrMap, QString& error) const;
 	friend class PropertyContainer;
 };
 

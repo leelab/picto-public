@@ -9,39 +9,34 @@ namespace Picto {
 RectProperty::RectProperty(QString name, QVariant value):
 Property(QVariant::Rect,name,value)
 {
-	AddSerializationAttribute("x");
-	AddSerializationAttribute("y");
-	AddSerializationAttribute("width");
-	AddSerializationAttribute("height");
 }
-void RectProperty::UpdateSerializationAttributesFromValue()
+QString RectProperty::variantToString(QVariant value) const
 {
-	QRect rect = value().toRect();
-	SetSerializationAttributeValue("x",rect.x());
-	SetSerializationAttributeValue("y",rect.y());
-	SetSerializationAttributeValue("width",rect.width());
-	SetSerializationAttributeValue("height",rect.height());
-}
-bool RectProperty::SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	QRect rect;
-	rect.setX(GetSerializationAttributeValue("x").toInt());
-	rect.setY(GetSerializationAttributeValue("y").toInt());
-	rect.setWidth(GetSerializationAttributeValue("width").toInt());
-	rect.setHeight(GetSerializationAttributeValue("height").toInt());
-	Property::setValue(rect);
-	return true;
-}
-QString RectProperty::toUserString()
-{
-	QRect rect = value().toRect();
+	QRect rect = value.toRect();
 	return QString("%1,%2,%3,%4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
 }
-void RectProperty::fromUserString(QString userString)
+QVariant RectProperty::stringToVariant(QString string, QString& error) const
 {
-	QStringList xy = userString.split(",");
-	Q_ASSERT(xy.size() == 4);
+	error = "";
+	QStringList xy = string.split(",");
+	if(xy.size() != 4)
+	{
+		error = "Invalid data entered for Rectangle property";
+		return QRect(0,0,0,0);
+	}
 	QRect newVal(xy[0].toInt(),xy[1].toInt(),xy[2].toInt(),xy[3].toInt());
-	setValue(newVal);
+	return QVariant(newVal);
+}
+
+QVariant RectProperty::attributeMapToVariantValue(QMap<QString,QVariant> attrMap, QString& error) const
+{
+	QRect rect;
+	if(!attrMap.contains("x") || !attrMap.contains("y") || !attrMap.contains("width") || !attrMap.contains("height"))
+		error = "Rectangle property defined with attribute values must contain'x','y','width' and 'height' attributes";
+	rect.setX(attrMap.value("x").toInt());
+	rect.setY(attrMap.value("y").toInt());
+	rect.setWidth(attrMap.value("width").toInt());
+	rect.setHeight(attrMap.value("height").toInt());
+	return QVariant(rect);
 }
 }; //namespace Picto

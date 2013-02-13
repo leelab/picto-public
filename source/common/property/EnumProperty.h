@@ -19,14 +19,9 @@ public:
 	virtual ~EnumProperty(){};
 	static int typeId(){return QVariant::UserType+1;};
 	
-	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual QString valueString();
-	QString toUserString();
-	void fromUserString(QString userString);
-private:
-	void set(QVariant _value) { SetValueFromString(_value,QSharedPointer<QXmlStreamReader>()); };
-	QVariant get(){return (QVariant)valueString();};
-	QVariant getIndex(){return (QVariant)value().toInt();};
+protected:
+	virtual QString variantToString(QVariant value) const;
+	virtual QVariant stringToVariant(QString string, QString& error) const;
 	friend class PropertyContainer;
 };
 

@@ -29,17 +29,22 @@ class Property : public Asset
 public:
 	virtual ~Property();
 	int type();
-	//QVariant value();
-	virtual QString valueString();
 	QString getName();
 	//virtual void setValue(QVariant _value);
 	void setAttribute(QString _attributeName, QVariant _attributeValue);
-	QVariant attributeValue(QString _attributeName);
+	QVariant attributeValue(QString _attributeName) const;
 	QStringList getAttributes(){return attributes_.keys();};
 
 	//QtVariantProperty* getVariantProperty(){return variantProp_;};
+	QVariant saveValue();
+	virtual void setSaveValue(QVariant _value);
+
+	QVariant initValue();
+	virtual void setInitValue(QVariant _value);
+
 	QVariant value();
 	virtual void setValue(QVariant _value);
+
 	//Set this property as changeable during runtime.
 	void setRuntimeEditable(bool enabled = true){runtimeEnabled_ = enabled;};
 	bool isRuntimeEnabled(){return runtimeEnabled_;};
@@ -58,7 +63,12 @@ public:
 	virtual	int getAssetId();
 	virtual void setAssetId(int id);
 
+	static bool encounteredObsoleteSerialSyntax(){return hadObsoleteSerialSyntax_;};
+	static void clearObsoleteSerialSyntax(){hadObsoleteSerialSyntax_ = false;};
+
 signals:
+	void saveValueChanged(QSharedPointer<Property> changedProp);
+	void initValueChanged(QSharedPointer<Property> changedProp);
 	void valueChanged(QSharedPointer<Property> changedProp);
 public slots:
 	void setValueFromProp(QSharedPointer<Property> prop);
@@ -66,16 +76,22 @@ public slots:
 protected:
 	Property(int type, QString name, QVariant value);
 
-	//Fields used by subclases that need serialization attributes
-	void AddSerializationAttribute(QString name);
-	void SetSerializationAttributeValue(QString name, QVariant _value);
-	QVariant GetSerializationAttributeValue(QString name);
-	virtual void UpdateSerializationAttributesFromValue();
-	virtual bool SetValueFromString(QVariant _value, QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	QMap<QString,QVariant> serializationAttributes_;
+	//Converts the input variant value to a string
+	virtual QString variantToString(QVariant value) const;
+	//Converts the input string to a variant
+	virtual QVariant stringToVariant(QString string, QString& error) const;
+	//In some cases, older versions of Picto data files included tags with
+	//properties and no string data.  This function builds a variant value
+	//based on attributes that were serialized in.
+	virtual QVariant attributeMapToVariantValue(QMap<QString,QVariant> attrMap, QString& error) const;
 
 private:
 	friend class PropertyContainer;
+	//Handle XML attributes that need to be serialized in and out
+	void AddSerializationAttribute(QString name);
+	void SetSerializationAttributeValue(QString name, QVariant _value);
+	QVariant GetSerializationAttributeValue(QString name);
+	QMap<QString,QVariant> serializationAttributes_;
 	void addSubProperty(QSharedPointer<Property> prop);
 	void setName(QString name);
 	int index_;
@@ -85,10 +101,14 @@ private:
 	bool scriptEditable_;
 	bool runtimeEnabled_;
 	int assetId_;
+	QVariant saveValue_;
+	QVariant initValue_;
 	QVariant value_;
 	int type_;
 	QString name_;
 	QMap<QString,QVariant> attributes_;
+	bool serialSyntaxUpgraded_;
+	static bool hadObsoleteSerialSyntax_;
 
 //private slots:
 //	void valueChanged(QtProperty *property, const QVariant &val);
