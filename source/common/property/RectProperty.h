@@ -16,8 +16,6 @@ class RectProperty : public Property
 	Q_OBJECT
 public:
 	virtual ~RectProperty(){};
-public slots:
-	void set(int x, int y, int width, int height){Property::setValue(QRect(x,y,width,height));};
 protected:
 	RectProperty(QString name, QVariant value);
 	virtual QString variantToString(QVariant value) const;

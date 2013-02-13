@@ -2,7 +2,7 @@
  * \ingroup picto_engine
  * \brief
  */
-
+#pragma once
 #ifndef _PICTOENGINE_H_
 #define _PICTOENGINE_H_
 

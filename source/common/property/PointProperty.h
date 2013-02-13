@@ -16,8 +16,6 @@ class PointProperty : public Property
 	Q_OBJECT
 public:
 	virtual ~PointProperty(){};
-public slots:
-	void set(int x, int y){Property::setValue(QPoint(x,y));};
 protected:
 	PointProperty(QString name, QVariant value);
 	virtual QString variantToString(QVariant value) const;
