@@ -41,7 +41,6 @@ private slots:
 	void lineEditFinished();
 	void comboBoxEntryHighlighted(int index);
 	void comboBoxEntrySelected(int index);
-
 };
 
 //class StringPropertyEditTracker : public PropertyEditTracker

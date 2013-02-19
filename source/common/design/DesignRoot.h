@@ -37,6 +37,9 @@ public:
 	void setUnmodified();
 	QString getDesignRootText();
 	bool compiles();
+	//The design starts in design mode.  Running the design is not possible until it
+	//switches to run mode.  Use this function to switch to and from run mode.
+	void enableRunMode(bool runMode);
 	QString getDesignName(){return designName;};
 	void setDesignName(QString name){designName = name;};
 	bool hasError(){return lastError_.name != "";};

@@ -1,14 +1,16 @@
 #include <QtWidgets>
+#include <QMetaObject>
 #include "PropertyGroupWidget.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
-
+;
 //! [0]
-PropertyGroupWidget::PropertyGroupWidget(QWidget *parent) :
+PropertyGroupWidget::PropertyGroupWidget(bool trackInitVals,QWidget *parent) :
 	QWidget(parent),
 	mainWidget_(NULL),
-	propertyFactory_(new PropertyEditorFactory())
+	propertyFactory_(new PropertyEditorFactory()),
+	trackInitVals_(trackInitVals)
 {
 	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
         this, SLOT(propertyWasEdited(QSharedPointer<Property>,QVariant)));
@@ -46,9 +48,14 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 		{
 			item->setAttribute(attr,prop->attributeValue(attr));
 		}
-		item->setValue(prop->value());
+		item->setValue(trackInitVals_?prop->initValue():prop->value());
 		propertyFactory_->setNextProperty(prop);
 		browser->addProperty(item);
+		if(trackInitVals_)
+			connect(prop.data(),SIGNAL(initValueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
+		else
+			connect(prop.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
+		propToQtPropHash_[prop.data()] = item;
 	}
 
 	//Add the newly created browser to a layout
@@ -69,6 +76,12 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 
 void PropertyGroupWidget::clear()
 {
+	//Disconnect all tracked properties' signals from this object
+	foreach(Property* prop,propToQtPropHash_.keys())
+	{
+		prop->disconnect(this);
+	}
+	propToQtPropHash_.clear();
 	propertyFactory_->clear();
 	if(mainWidget_)
 	{
@@ -81,6 +94,23 @@ void PropertyGroupWidget::clear()
 
 void PropertyGroupWidget::propertyWasEdited(QSharedPointer<Property> prop,QVariant val)
 {
-	prop->setValue(val);
+	//We use QMetaObject::invokeMethod() below instead of calling the methods directly
+	//so that we won't encounter any multithreaded write issues.  By using this method,
+	//if the properties are in another thread, the function call will be scheduled to
+	//run in that thread's event loop automatically.  If the property is in the current
+	//thread, the function will be called immediately.  This is one of the few places
+	//where the UI thread and an experiment that might possibly in a separate thread need
+	//to communicate.
+	if(trackInitVals_)
+		QMetaObject::invokeMethod(prop.data(),"setInitValue",Q_ARG(QVariant,val));
+	else
+		QMetaObject::invokeMethod(prop.data(),"setValue",Q_ARG(QVariant,val));
 	emit propertyEdited(prop,val);
+}
+
+void PropertyGroupWidget::propertyWasEditedExternally(Property* prop,QVariant val)
+{
+	Q_ASSERT(propToQtPropHash_.contains(prop));
+	QtVariantProperty *qtProp = propToQtPropHash_.value(prop);
+	qtProp->setValue(val);
 }

@@ -10,7 +10,8 @@ PropertyTable::PropertyTable(QSharedPointer<ExperimentConfig> expConfig)
 }
 void PropertyTable::addProperty(QSharedPointer<Property> prop)
 {
-	connect(prop.data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SIGNAL(propertyChanged(QSharedPointer<Property>)));
+	connect(prop.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propValueChange(Property*,QVariant)));
+	connect(prop.data(),SIGNAL(initValueChanged(Property*,QVariant)),this,SLOT(propInitValueChange(Property*,QVariant)));
 }
 
 //This can be used in conjunction with the Picto Engine to send all current property values to server.
@@ -32,18 +33,27 @@ void PropertyTable::reportChangeInAllProperties()
 			)
 		)
 		continue;
-		emit propertyChanged(sAsset.staticCast<Property>());
+		emit propertyValueChanged(sAsset.staticCast<Property>().data());
+		emit propertyInitValueChanged(sAsset.staticCast<Property>().data());
 	}
 }
 
-void PropertyTable::updatePropertyValue(int index,QString value,bool updateInitProps)
+void PropertyTable::updateInitPropertyValue(int index,QString value)
 {
 	QSharedPointer<Asset> asset = expConfig_->getAsset(index);
-	if(!updateInitProps && !asset->getParentAsset())
-		return;
 	Q_ASSERT(asset->inherits("Picto::Property"));
-	asset.staticCast<Property>()->fromUserString(value);
+	asset.staticCast<Property>()->initValFromUserString(value);
 	//Q_ASSERT(index < propTable_.size());
 	//QSharedPointer<Property> prop = propTable_[index];
 	//prop->fromUserString(value);
+}
+
+void PropertyTable::propValueChange(Property* changedProp,QVariant)
+{
+	emit propertyValueChanged(changedProp);
+}
+
+void PropertyTable::propInitValueChange(Property* changedProp,QVariant)
+{
+	emit propertyInitValueChanged(changedProp);
 }

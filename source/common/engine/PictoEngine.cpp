@@ -237,15 +237,27 @@ void PictoEngine::enableOutputSignal(QString port, int pinId,bool enable)
 }
 
 
-void PictoEngine::addChangedProperty(QSharedPointer<Property> changedProp)
+void PictoEngine::addChangedPropertyValue(Property* changedProp)
 {
 	if(slave_)
 		return;
 	if(!propPackage_)
+	{
 		propPackage_ = QSharedPointer<PropertyDataUnitPackage>(new PropertyDataUnitPackage());
-	Timestamper stamper;
+	}
 	//If the changedProp has no parent, its a UI parameter.  Set the path as such.
-	propPackage_->addData(changedProp->getAssetId(),changedProp->toUserString());
+	propPackage_->addData(changedProp->getAssetId(),false,changedProp->valToUserString());
+}
+void PictoEngine::addChangedPropertyInitValue(Property* changedProp)
+{
+	if(slave_)
+		return;
+	if(!propPackage_)
+	{
+		propPackage_ = QSharedPointer<PropertyDataUnitPackage>(new PropertyDataUnitPackage());
+	}
+	//If the changedProp has no parent, its a UI parameter.  Set the path as such.
+	propPackage_->addData(changedProp->getAssetId(),true,changedProp->initValToUserString());
 }
 //! \brief Retrieves the latest package of changed properties.
 //! Note that a package can only be retrieved once after which a new package is created.
@@ -491,9 +503,13 @@ void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
 	if(propTable_ == propTable)
 		return;
 	if(propTable_)
-		disconnect(propTable_.data(),SIGNAL(propertyChanged(QSharedPointer<Property>)),this,SLOT(addChangedProperty(QSharedPointer<Property>)));
+	{
+		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+	}
 	propTable_ = propTable;	
-	connect(propTable_.data(),SIGNAL(propertyChanged(QSharedPointer<Property>)),this,SLOT(addChangedProperty(QSharedPointer<Property>)));
+	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
 }
 
 void PictoEngine::sendAllPropertyValuesToServer()
@@ -509,6 +525,12 @@ void PictoEngine::setSessionId(QUuid sessionId)
 		dataCommandChannel_->setSessionId(sessionId_);
 	if(!updateCommandChannel_.isNull())
 		updateCommandChannel_->setSessionId(sessionId_);
+}
+
+void PictoEngine::stop()
+{ 
+	engineCommand_ = StopEngine; 
+	stopAllSignalChannels();
 }
 
 void PictoEngine::setName(QString name) 
@@ -649,12 +671,6 @@ QHostAddress PictoEngine::getIpAddress()
 int PictoEngine::getEngineCommand()
 {
 	return engineCommand_;
-}
- 
-void PictoEngine::stop()
-{ 
-	engineCommand_ = StopEngine; 
-	stopAllSignalChannels();
 }
 
 void PictoEngine::firstPhosphorOperations(double frameTime)

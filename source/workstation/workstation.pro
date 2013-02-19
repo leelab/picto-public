@@ -25,6 +25,8 @@ SOURCES += $$(PICTO_TREE)/source/workstation/statemachineeditor/stateeditviewer.
 
 HEADERS += $$(PICTO_TREE)/source/workstation/testviewer/testviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/testviewer/testviewer.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/testviewer/TestPlaybackController.h
+SOURCES += $$(PICTO_TREE)/source/workstation/testviewer/TestPlaybackController.cpp
 
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateUpdater.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateUpdater.cpp

@@ -20,7 +20,7 @@ class PropertyGroupWidget : public QWidget
     Q_OBJECT
 
 public:
-	PropertyGroupWidget(QWidget *parent=0);
+	PropertyGroupWidget(bool trackInitVals,QWidget *parent=0);
 	virtual ~PropertyGroupWidget();
 	void addProperties(QString title, QVector<QSharedPointer<Property>> props);
 	void clear();
@@ -31,9 +31,11 @@ private:
 	QSharedPointer<PropertyEditorFactory> propertyFactory_;
 	QVBoxLayout* layout_;
 	QWidget* mainWidget_;
-	QList<QSharedPointer<QtVariantPropertyManager>> propManagers_;
+	bool trackInitVals_;
+	QHash<Property*,QtVariantProperty*> propToQtPropHash_;
 private slots:
 	void propertyWasEdited(QSharedPointer<Property> prop,QVariant val);
+	void propertyWasEditedExternally(Property* prop,QVariant val);
 };
 //! [0]
 #endif

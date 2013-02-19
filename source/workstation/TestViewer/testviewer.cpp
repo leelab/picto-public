@@ -38,18 +38,20 @@ TestViewer::TestViewer(QWidget *parent) :
 //! Called just before displaying the viewer
 void TestViewer::init()
 {
-	QSharedPointer<DesignRoot> myDesignRoot(new DesignRoot());
-	bool res = myDesignRoot->resetDesignRoot(designRoot_->getDesignRootText());
-	if(!res)
-	{
-		DesignMessage errorMsg = myDesignRoot->getLastError();
-		QMessageBox::critical(0,errorMsg.name,errorMsg.details);
-	}
-	if(myDesignRoot->hasWarning())
-	{
-		DesignMessage warnMsg = myDesignRoot->getLastWarning();
-		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
-	}
+	deiniting_ = false;
+	designRoot_->enableRunMode(true);
+	QSharedPointer<DesignRoot> myDesignRoot = designRoot_;//(new DesignRoot());
+	//bool res = myDesignRoot->resetDesignRoot(designRoot_->getDesignRootText());
+	//if(!res)
+	//{
+	//	DesignMessage errorMsg = myDesignRoot->getLastError();
+	//	QMessageBox::critical(0,errorMsg.name,errorMsg.details);
+	//}
+	//if(myDesignRoot->hasWarning())
+	//{
+	//	DesignMessage warnMsg = myDesignRoot->getLastWarning();
+	//	QMessageBox::warning(0,warnMsg.name,warnMsg.details);
+	//}
 	QSharedPointer<Design> design = myDesignRoot->getDesign("Experiment",0);
 	experiment_ = QSharedPointer<Experiment>();
 	if(!design)
@@ -74,6 +76,14 @@ void TestViewer::init()
 		experiment_->setEngine(engine_);
 		static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(experiment_.staticCast<DataStore>());
 		loadPropsAction_->setEnabled(true);
+		testController_ = QSharedPointer<TestPlaybackController>(new TestPlaybackController(experiment_));
+		connect(playAction_,SIGNAL(triggered()),testController_.data(), SLOT(play()));
+		connect(pauseAction_,SIGNAL(triggered()),testController_.data(), SLOT(pause()));
+		connect(engine_.data(),SIGNAL(pauseRequested()),testController_.data(),SLOT(pause()));
+		connect(stopAction_,SIGNAL(triggered()),testController_.data(), SLOT(stop()));
+		connect(testController_.data(),SIGNAL(running()),this,SLOT(running()));
+		connect(testController_.data(),SIGNAL(paused()),this,SLOT(paused()));
+		connect(testController_.data(),SIGNAL(stopped()),this,SLOT(stopped()));
 	}
 	generateComboBox();
 }
@@ -81,17 +91,28 @@ void TestViewer::init()
 //!Called just before hiding the viewer
 void TestViewer::deinit()
 {
-	stop();
+	deiniting_ = true;
+	if(testController_ && testController_->isRunning())
+	{
+		//If the experiment is still running, tell it to stop.
+		//After it stops, the testController will trigger its stopped() signal which will
+		//will trigger our stopped() slot.  This will handle emitting the deinitCompleted()
+		//signal.  It is important that we do it this way in case the event loop is
+		//currently running from within the experimental run.  In that case, we need to actually leave
+		//this deinit() function after telling the experiment to stop in order to give it a
+		//chance to actually follow the stop command.  Only once testController emits stopped()
+		//can we be sure that we're really finished with the current experiment.  Only then
+		//is it safe to give control to another viewer.
+		testController_->stop();
+	}
+	else
+		stopped(); 
 }
 
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources
 bool TestViewer::aboutToQuit()
 {
-	//Stop the engine running. Otherwise, the 
-	//experiment would keep on going even though the window was closed and this
-	//process would stick around in the task manager for eternity.
-	//
-	stop();
+	deinit();
 	return true;
 }
 
@@ -102,7 +123,6 @@ void TestViewer::setupEngine()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(true);
-	connect(engine_.data(),SIGNAL(pauseRequested()),this,SLOT(pause()));
 
 	//Set up the rendering target
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
@@ -152,19 +172,16 @@ void TestViewer::setupUi()
 	playAction_->setIcon(QIcon(":/icons/play.png"));
 	playAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_R));
 	playAction_->setToolTip("Run (Ctrl+R)");
-	connect(playAction_,SIGNAL(triggered()),this, SLOT(play()));
 
 	pauseAction_ = new QAction(tr("&Pause task"),this);
 	pauseAction_->setIcon(QIcon(":/icons/pause.png"));
 	pauseAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_P));
 	pauseAction_->setToolTip("Pause (Ctrl+P)");
-	connect(pauseAction_,SIGNAL(triggered()),this, SLOT(pause()));
 	pauseAction_->setEnabled(false);
 
 	stopAction_ = new QAction(tr("S&top task"),this);
 	stopAction_->setIcon(QIcon(":/icons/stop.png"));
 	stopAction_->setToolTip("Stop");
-	connect(stopAction_,SIGNAL(triggered()),this, SLOT(stop()));
 	stopAction_->setEnabled(false);
 
 	loadPropsAction_ = new QAction(tr("&Load Task Properties from Session"),this);
@@ -186,7 +203,6 @@ void TestViewer::setupUi()
 	taskListBox_ = new QComboBox(this);
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	taskListBox_->setToolTip("Select Task");
-	generateComboBox();
 
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(playAction_);
@@ -225,67 +241,6 @@ void TestViewer::setupUi()
 
 }
 
-void TestViewer::play()
-{
-	qDebug()<<"Play slot";
-
-	pauseAction_->setEnabled(true);
-	stopAction_->setEnabled(true);
-	playAction_->setEnabled(false);
-	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
-	{
-		static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
-	}
-
-	if(status_ == Stopped)
-	{
-		status_ = Running;
-		if(experiment_)
-		{
-			experiment_->runTask(taskListBox_->currentText());
-		}
-		stop();
-	}
-	else if(status_ == Paused)
-	{
-		status_ = Running;
-		engine_->play();
-	}
-}
-
-void TestViewer::pause()
-{
-	qDebug()<<"Pause slot";
-	
-	status_ = Paused;
-	engine_->pause();
-
-	pauseAction_->setEnabled(false);
-	stopAction_->setEnabled(true);
-	playAction_->setEnabled(true);
-
-}
-
-void TestViewer::stop()
-{
-	qDebug()<<"Stop slot";
-	engine_->stop();
-	status_ = Stopped;
-
-	pauseAction_->setEnabled(false);
-	stopAction_->setEnabled(false);
-	playAction_->setEnabled(true);
-	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
-	{
-		static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
-	}
-
-	pixmapVisualTarget_->clear();
-
-	//display the splash screen
-	renderingTarget_->showSplash();
-}
-
 void TestViewer::LoadPropValsFromFile()
 {
 	QString filename = QFileDialog::getOpenFileName(this,
@@ -305,41 +260,45 @@ void TestViewer::generateComboBox()
 	taskListBox_->addItems(experiment_->getTaskNames());
 }
 
-/*! \brief Resets the current experiment
- *
- *	Rather than writing some extra code to reset all of the scripting environments, 
- *	and return all of the objects to their initial states, we're simply going to 
- *	generate a new experiement from the experiemnt text.  Note that this function
- *	has no error checking (all of that would have been handled when we entered
- *	the trial viewer), so if there are errors in the XML, we simply end up with a
- *	null experiment.
- */
-void TestViewer::resetExperiment()
+void TestViewer::running()
 {
-	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(experiment_->toXml()));
-	experiment_ = QSharedPointer<Picto::Experiment>();
-
-	//read until we either see an experiment tag, or the end of the file
-	while(xmlReader->name() != "Experiment" && !xmlReader->atEnd()) 
-		xmlReader->readNext();
-
-	if(xmlReader->atEnd())
-		return;
-
-	experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
-
-	if(!experiment_->fromXml(xmlReader))
+	taskListBox_->setEnabled(false);
+	pauseAction_->setEnabled(true);
+	stopAction_->setEnabled(true);
+	playAction_->setEnabled(false);
+	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 	{
-		experiment_ = QSharedPointer<Picto::Experiment>();
+		static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
 	}
-	else
-	{
-		experiment_->setEngine(engine_);
-	}
-	return;
-
 }
+void TestViewer::paused()
+{
+	taskListBox_->setEnabled(false);
+	pauseAction_->setEnabled(false);
+	stopAction_->setEnabled(true);
+	playAction_->setEnabled(true);
+}
+void TestViewer::stopped()
+{
+	taskListBox_->setEnabled(true);
+	pauseAction_->setEnabled(false);
+	stopAction_->setEnabled(false);
+	playAction_->setEnabled(true);
+	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+	{
+		static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+	}
 
+	pixmapVisualTarget_->clear();
+
+	//display the splash screen
+	renderingTarget_->showSplash();
+	if(deiniting_)
+	{
+		emit deinitComplete();
+		return;
+	}
+}
 
 void TestViewer::taskListIndexChanged(int)
 {
@@ -350,6 +309,8 @@ void TestViewer::taskListIndexChanged(int)
 		return;
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 	loadPropsAction_->setEnabled(true);
+	Q_ASSERT(testController_);
+	testController_->setTask(taskListBox_->currentText());
 }
 
 void TestViewer::operatorClickDetected(QPoint pos)

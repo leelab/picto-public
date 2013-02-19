@@ -730,6 +730,7 @@ void RemoteViewer::init()
 		DesignMessage warnMsg = myDesignRoot_->getLastWarning();
 		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
 	}
+	myDesignRoot_->enableRunMode(true);
 
 	QSharedPointer<Design> design = myDesignRoot_->getDesign("Experiment",0);
 	experiment_ = QSharedPointer<Experiment>();
@@ -771,6 +772,7 @@ void RemoteViewer::deinit()
 {
 	//Stop the timers so that our state update functions won't get called anymore.
 	stateUpdateTimer_->stop();
+	emit deinitComplete();
 }
 
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources
@@ -1101,7 +1103,7 @@ void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 	QString name = changedProp->getName();
 	if(changedProp->getAssetId()<0)
 		return;
-	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getAssetId())),changedProp->toUserString());
+	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getAssetId())),changedProp->initValToUserString());
 }
 
 //! \brief Tells the server that the operator just clicked on the main window, and where the click occured.
@@ -1778,6 +1780,7 @@ bool RemoteViewer::joinSession()
 			setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"),true);
 			return false;
 		}
+		activeDesign_->enableRunMode(true);
 		activeExperiment_ = activeDesign_->getDesign("Experiment",0)->getRootAsset().staticCast<Experiment>();
 	}
 	activeExperiment_->setEngine(engine_);

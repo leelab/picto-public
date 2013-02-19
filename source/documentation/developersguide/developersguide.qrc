@@ -754,6 +754,10 @@
    <file alias="_test_controller_8h-source.html">../../../output/documentation/main/html/_test_controller_8h-source.html</file>
    <file alias="_test_label_8cpp-source.html">../../../output/documentation/main/html/_test_label_8cpp-source.html</file>
    <file alias="_test_label_8h-source.html">../../../output/documentation/main/html/_test_label_8h-source.html</file>
+   <file alias="_test_playback_controller_01-_01_copy_8cpp-source.html">../../../output/documentation/main/html/_test_playback_controller_01-_01_copy_8cpp-source.html</file>
+   <file alias="_test_playback_controller_01-_01_copy_8h-source.html">../../../output/documentation/main/html/_test_playback_controller_01-_01_copy_8h-source.html</file>
+   <file alias="_test_playback_controller_8cpp-source.html">../../../output/documentation/main/html/_test_playback_controller_8cpp-source.html</file>
+   <file alias="_test_playback_controller_8h-source.html">../../../output/documentation/main/html/_test_playback_controller_8h-source.html</file>
    <file alias="_text_edit_mode_8cpp-source.html">../../../output/documentation/main/html/_text_edit_mode_8cpp-source.html</file>
    <file alias="_text_edit_mode_8h-source.html">../../../output/documentation/main/html/_text_edit_mode_8h-source.html</file>
    <file alias="_text_graphic_8cpp-source.html">../../../output/documentation/main/html/_text_graphic_8cpp-source.html</file>
@@ -2098,6 +2102,8 @@
    <file alias="tabs.css">../../../output/documentation/main/html/tabs.css</file>
    <file alias="tdtplugin_8cpp-source.html">../../../output/documentation/main/html/tdtplugin_8cpp-source.html</file>
    <file alias="tdtplugin_8h-source.html">../../../output/documentation/main/html/tdtplugin_8h-source.html</file>
+   <file alias="testviewer_01-_01_copy_8cpp-source.html">../../../output/documentation/main/html/testviewer_01-_01_copy_8cpp-source.html</file>
+   <file alias="testviewer_01-_01_copy_8h-source.html">../../../output/documentation/main/html/testviewer_01-_01_copy_8h-source.html</file>
    <file alias="testviewer_8cpp-source.html">../../../output/documentation/main/html/testviewer_8cpp-source.html</file>
    <file alias="testviewer_8h-source.html">../../../output/documentation/main/html/testviewer_8h-source.html</file>
    <file alias="text_viewer_8cpp-source.html">../../../output/documentation/main/html/text_viewer_8cpp-source.html</file>

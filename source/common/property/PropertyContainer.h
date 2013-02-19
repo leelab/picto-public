@@ -37,6 +37,7 @@ public:
 	QVariant getPropertyValue(QString _identifier, int index=0);
 	QString getPropertyName(QString _identifier, int index=0);
 	QSharedPointer<Property> setPropertyValue(QString _identifier, QVariant _value, int index=0);
+	void setPropertiesToInitValues();
 	//QSharedPointer<Property> getPropertyFromQtProperty(QtProperty *property);
 	void setContainerName(QString _containerName);
 	QString getContainerName();
@@ -48,7 +49,7 @@ public:
 	//QSharedPointer<Property> getContainerGroupProperty(){return containerGroupItem_;};
 	void clear();
 signals:
-	void propertyValueChanged(QSharedPointer<Property> prop);
+	void propertyValueChanged(Property* prop,QVariant);
 //	void signalPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 
 private:

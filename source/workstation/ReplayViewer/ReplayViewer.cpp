@@ -52,6 +52,7 @@ void ReplayViewer::init()
 void ReplayViewer::deinit()
 {
 	playbackController_->stop();
+	emit deinitComplete();
 }
 
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources

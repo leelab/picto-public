@@ -8,9 +8,9 @@ PropertyDataUnitPackage::PropertyDataUnitPackage()
 }
 
 //! Adds a simple (path,value,time) data point
-void PropertyDataUnitPackage::addData(int index, QString value)
+void PropertyDataUnitPackage::addData(int index, bool initValue, QString value)
 {
-	QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit(index, value));
+	QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit(index, initValue, value));
 	data_.append(newPoint);
 }
 
@@ -22,6 +22,7 @@ void PropertyDataUnitPackage::setActionFrame(qulonglong frameId)
 		(*it)->setActionFrame(frameId);
 	}
 }
+
 /*! \brief Turns the PropertyDataUnitPackage into an XML fragment
  *
  *	The XML will look like this:
@@ -34,7 +35,6 @@ void PropertyDataUnitPackage::setActionFrame(qulonglong frameId)
 bool PropertyDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	xmlStreamWriter->writeStartElement("PropertyDataUnitPackage");
-
 	foreach(QSharedPointer<PropertyDataUnit> dataPoint, data_)
 	{
 		dataPoint->toXml(xmlStreamWriter);

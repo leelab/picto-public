@@ -26,7 +26,9 @@ class PropertyDataUnitPackage : public DataUnit
 public:
 
 	PropertyDataUnitPackage();
-	void addData(int index, QString value);
+	//Adds property data to the package.  If initValue is set,
+	//the property value will be marked as an init value.
+	void addData(int index, bool initValue, QString value);
 
 	void setActionFrame(qulonglong frameId);
 
@@ -44,7 +46,6 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-
 	QList<QSharedPointer<PropertyDataUnit>> data_;
 };
 

@@ -18,6 +18,7 @@ MainWindow::MainWindow()
 {	
 	designRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
 	currViewer_ = NULL;
+	nextViewer_ = NULL;
 	errorList_ = new ErrorList(this);
 	connect(this, SIGNAL(error(QString, QString)), errorList_,SLOT(addError(QString, QString)));
 
@@ -35,7 +36,6 @@ MainWindow::MainWindow()
 	//newExperiment();
 	recentExperimentsActions_[0]->trigger();
 }
-
 
 /*****************************************************
  *
@@ -211,6 +211,7 @@ void MainWindow::createViewers()
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 	initViewerAction_ = viewerAction;
 
 	//Test Viewer
@@ -224,6 +225,7 @@ void MainWindow::createViewers()
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//remote viewer
 	viewer = new RemoteViewer(this);
@@ -236,6 +238,7 @@ void MainWindow::createViewers()
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//Replay viewer
 	viewer = new ReplayViewer(this);
@@ -248,6 +251,7 @@ void MainWindow::createViewers()
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//Analysis Viewer
 	viewer = new AnalysisViewer(this);
@@ -260,6 +264,7 @@ void MainWindow::createViewers()
 	viewerToolbar_->addAction(viewerAction);
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//If an application update fails, we want to go back to the statemachineeditor.
 	connect(UpdateDownloader::getInstance().data(),SIGNAL(updateFailed()),initViewerAction_,SLOT(trigger()));
@@ -384,23 +389,34 @@ void MainWindow::changeMode()
 
 	int viewerIndex = action->data().toInt();
 
-	if(currViewer_)
-		currViewer_->deinit();
-
-	//attempt to convert the pictoDataText_ to an PictoData object
-	//convertTextToPictoData();
-
-	//find and set the current widget
+	//find and set the next viewer
 	viewerStack_->setCurrentIndex(viewerIndex);
-	currViewer_ = qobject_cast<Viewer*>(viewerStack_->currentWidget());
-	
+	changeMode(qobject_cast<Viewer*>(viewerStack_->currentWidget()));
+}
+
+void MainWindow::changeMode(Viewer* nextViewer)
+{
+	nextViewer_ = nextViewer;
+	//Deinitialize the current viewer
+	if(currViewer_)
+	{
+		Viewer* prevViewer = currViewer_;
+		currViewer_ = NULL;
+		prevViewer->deinit();	//The last viewer will tell us to start the next one when its ready
+	}
+	else
+		startMode();	//Start the next viewer
+}
+
+void MainWindow::startMode()
+{
+	if(currViewer_ || !nextViewer_)
+		return;
+	currViewer_ = nextViewer_;
 	//Set the latest experiment, experiment text, uidata, uidatatext to the viewer
 	currViewer_->setDesignRoot(designRoot_);
-	//currViewer_->setPictoData(pictoData_);
-	//currViewer_->setPictoDataText(&pictoDataText_);
-	
 	currViewer_->init();
-
+	nextViewer_ = NULL;
 }
 
 //! Checks the syntax of the current XML to see if it is a legal experiment
@@ -484,7 +500,7 @@ bool MainWindow::saveFile(const QString filename)
 	else
 	{
 		setCurrentFile(filename);
-		currViewer_->init();
+		changeMode(currViewer_);
 		designRoot_->setUnmodified();
 		return true;
 	}
@@ -541,20 +557,20 @@ void MainWindow::setCurrentFile(const QString &filename)
 								   .arg(Picto::Names->workstationAppName));
 	//bool legalPictoDataXml = convertTextToPictoData();
 
-	for(int i=0; i<viewerStack_->count(); i++)
-	{
-		Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
+	//for(int i=0; i<viewerStack_->count(); i++)
+	//{
+	//	Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
 
-		//if(legalPictoDataXml)
-		//	viewer->setPictoData(pictoData_);
-		//else
-		//	viewer->setPictoData(QSharedPointer<Picto::PictoData>());
-		viewer->setDesignRoot(designRoot_);
-		
-		//viewer->setPictoDataText(&pictoDataText_);
-	}
+	//	//if(legalPictoDataXml)
+	//	//	viewer->setPictoData(pictoData_);
+	//	//else
+	//	//	viewer->setPictoData(QSharedPointer<Picto::PictoData>());
+	//	viewer->setDesignRoot(designRoot_);
+	//	
+	//	//viewer->setPictoDataText(&pictoDataText_);
+	//}
 	if(currViewer_)
-		currViewer_->init();
+		changeMode(currViewer_);
 	else
 		initViewerAction_->trigger();
 }

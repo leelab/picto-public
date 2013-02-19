@@ -31,12 +31,16 @@ public:
 	void reportChangeInAllProperties();
 	QVector<QSharedPointer<Property>> propTable_;
 signals:
-	void propertyChanged(QSharedPointer<Property> changedProp);
+	void propertyValueChanged(Property* changedProp);
+	void propertyInitValueChanged(Property* changedProp);
 public slots:
 	//If updateInitProps is false, values won't be updated for InitProperties
-	void updatePropertyValue(int index,QString value,bool updateInitProps);
+	void updateInitPropertyValue(int index,QString value);
 private:
 	QSharedPointer<ExperimentConfig> expConfig_;
+private slots:
+	void propValueChange(Property* changedProp,QVariant);
+	void propInitValueChange(Property* changedProp,QVariant);
 };
 
 

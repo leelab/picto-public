@@ -7,7 +7,6 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	QTextEdit(parent),
 	manager_(manager),
 	property_(property),
-	textEdited_(false),
 	syntaxHighlighter_(new ScriptSyntaxHighlighter(document()))
 {
 	setLineWrapMode(NoWrap);
@@ -68,8 +67,7 @@ bool ScriptWidget::event(QEvent* e)
 void ScriptWidget::focusOutEvent(QFocusEvent *e)
 {
 	QTextEdit::focusOutEvent(e);
-	if(textEdited_)
-		emit editingFinished();
+	emit editingFinished();
 }
 
 void ScriptWidget::setScriptValue()

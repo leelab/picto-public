@@ -2,6 +2,7 @@
 #define _TEST_VIEWER_H_
 
 #include "../viewer.h"
+#include "TestPlaybackController.h"
 #include "../../common/engine/pictoengine.h"
 #include "../../common/compositor/PixmapVisualTarget.h"
 #include "../../common/compositor/VisualTargetHost.h"
@@ -41,9 +42,6 @@ public slots:
 	void deinit();	//Called just after the user switches out of the viewer
 	bool aboutToQuit();
 
-	void play();
-	void pause();
-	void stop();
 	void LoadPropValsFromFile();
 
 
@@ -51,12 +49,12 @@ private:
 	void setupEngine();
 	void setupUi();
 	void generateComboBox();
-	void resetExperiment();
 
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
 	QSharedPointer<Picto::Experiment> experiment_;
+	QSharedPointer<TestPlaybackController> testController_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
@@ -73,9 +71,13 @@ private:
 
 	QComboBox *taskListBox_;
 
+	bool deiniting_;
 	enum Status {Ending, Stopped, Running, Paused};
 	Status status_;
 private slots:
+	void running();
+	void paused();
+	void stopped();
 	void taskListIndexChanged(int index);
 	void operatorClickDetected(QPoint pos);
 	//void zoomChanged(int zoom);

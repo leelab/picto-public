@@ -47,11 +47,17 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 	emit readyForRender(callerId);
 
 	//Wait for the render routine to finish.
-	do
-	{
-		locker.unlock();
-		locker.relock();
-	}while(readyToRender_);
+	if(readyToRender_)
+	{	//If we're in here, we're running with more the experiment in a non-ui thread.
+		do
+		{
+			//Allow UI thread to do the render.  Unlock, yield this thread and relock.
+			locker.unlock();
+			QThread::currentThread()->yieldCurrentThread();
+			locker.relock();
+			//Check if the render occured, if not, loop back to "Allow UI thread to do the render"
+		}while(readyToRender_);
+	}
 }
 
 //! Resets the scene

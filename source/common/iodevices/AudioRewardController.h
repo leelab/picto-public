@@ -28,6 +28,7 @@ class PICTOLIB_API AudioRewardController : public RewardController
 class AudioRewardController :  public RewardController
 #endif
 {
+	Q_OBJECT
 public:
 	AudioRewardController();
 	virtual ~AudioRewardController() {};
@@ -38,9 +39,8 @@ protected:
 	virtual void startFlush(unsigned int channel);
 	virtual void stopFlush(unsigned int channel);
 private:
-	void playSound(int lengthMs);
+
 	QSound tick_;
-	QFuture<void> audioThreadFuture_;
 	QTime timer_;
 	bool firstRewardSupplied_;
 	int latestQuantity_;

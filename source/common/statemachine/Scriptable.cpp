@@ -6,7 +6,6 @@ namespace Picto {
 
 Scriptable::Scriptable()
 {
-	initPropertyContainer_ = PropertyContainer::create("InitProperties");
 	AddDefinableProperty(QVariant::Bool,"UIEnabled",false);
 	AddDefinableProperty(QVariant::Int,"UIOrder",0);
 }
@@ -95,23 +94,9 @@ void Scriptable::reset()
 
 void Scriptable::setPropertyRuntimeEditable(QString propName, bool editable)
 {
-	initPropertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
+	propertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
 }
 
-QList<QSharedPointer<Property>> Scriptable::getDescendantsProperties()
-{
-	QList<QSharedPointer<Property>> descendantProps;
-	QHash<QString, QVector<QSharedPointer<Property>>> propMap = initPropertyContainer_->getProperties();
-	foreach(QVector<QSharedPointer<Property>> propVec, propMap)
-	{
-		foreach(QSharedPointer<Property> prop, propVec)
-		{
-			descendantProps.append(prop);
-		}
-	}
-	descendantProps.append(UIEnabled::getDescendantsProperties());
-	return descendantProps;
-}
 QString Scriptable::getScriptingInfo()
 {
 	QString returnVal;
@@ -204,20 +189,21 @@ void Scriptable::postDeserialize()
 	// All property values are stored in an init property container.  This container
 	// is used to reset properties to their initial values whenever an state machine 
 	// element is entered.
-	initPropertyContainer_->clear();
-	initPropertyContainer_->copyProperties(propertyContainer_);
-	foreach(QVector<QSharedPointer<Property>> propVec,initPropertyContainer_->getProperties())
-	{
-		foreach(QSharedPointer<Property> prop,propVec)
-		{	//We need to add these properties to the experimentConfig so that they'll appear
-			//in the database file.  Since they're not serialized though, we always want to add them
-			//at the end of the list of ids so that nothing else's id is pushed back by them. 
-			//addManagedAsset() takes care of this for us.  Unserialized assets are always
-			//added to experimentConfig's lists last.
-			if(getExperimentConfig())
-				getExperimentConfig()->addManagedAsset(prop);
-		}
-	}
+	//initPropertyContainer_->clear();
+	//initPropertyContainer_->copyProperties(propertyContainer_);
+
+	//foreach(QVector<QSharedPointer<Property>> propVec,initPropertyContainer_->getProperties())
+	//{
+	//	foreach(QSharedPointer<Property> prop,propVec)
+	//	{	//We need to add these properties to the experimentConfig so that they'll appear
+	//		//in the database file.  Since they're not serialized though, we always want to add them
+	//		//at the end of the list of ids so that nothing else's id is pushed back by them. 
+	//		//addManagedAsset() takes care of this for us.  Unserialized assets are always
+	//		//added to experimentConfig's lists last.
+	//		if(getExperimentConfig())
+	//			getExperimentConfig()->addManagedAsset(prop);
+	//	}
+	//}
 	UIEnabled::postDeserialize();
 }
 
@@ -242,12 +228,13 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
  */
 void Scriptable::restoreProperties()
 {
-	QStringList properties = initPropertyContainer_->getPropertyList();
+	propertyContainer_->setPropertiesToInitValues();
+	//QStringList properties = initPropertyContainer_->getPropertyList();
 
-	foreach(QString propName,properties)
-	{
-		propertyContainer_->setPropertyValue(propName,initPropertyContainer_->getPropertyValue(propName));
-	}
+	//foreach(QString propName,properties)
+	//{
+	//	propertyContainer_->setPropertyValue(propName,initPropertyContainer_->getPropertyValue(propName));
+	//}
 	//QMap<QString, QVariant>::iterator propItr = initialProperties_.begin();
 	//while(propItr != initialProperties_.end())
 	//{

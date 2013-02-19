@@ -7,9 +7,10 @@ PropertyDataUnit::PropertyDataUnit()
 {
 }
 
-PropertyDataUnit::PropertyDataUnit(int index, QString value)
+PropertyDataUnit::PropertyDataUnit(int index, bool initValue, QString value)
 {
 	index_ = index; 
+	initValue_ = initValue;
 	value_ = value; 
 }
 /*! \brief Turns the PropertyDataUnit into an XML fragment
@@ -22,6 +23,7 @@ bool PropertyDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStream
 	xmlStreamWriter->writeStartElement("PDU");
 	xmlStreamWriter->writeAttribute("f",QString::number(actionFrame_));
 	xmlStreamWriter->writeAttribute("i",QString("%1").arg(index_));
+	xmlStreamWriter->writeAttribute("r",QString(initValue_?"t":"f"));
 	xmlStreamWriter->writeAttribute("v",QString("%1").arg(value_));
 	DataUnit::serializeDataID(xmlStreamWriter);
 	xmlStreamWriter->writeEndElement();
@@ -66,6 +68,16 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 			else
 			{
 				addError("PropertyDataUnit","Data missing i (index) attribute",xmlStreamReader);
+				return false;
+			}
+
+			if(xmlStreamReader->attributes().hasAttribute("r"))
+			{
+				initValue_ = xmlStreamReader->attributes().value("r").toString() == "t";
+			}
+			else
+			{
+				addError("PropertyDataUnit","Data missing r (is init value) attribute",xmlStreamReader);
 				return false;
 			}
 

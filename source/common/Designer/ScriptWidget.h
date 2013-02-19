@@ -28,7 +28,6 @@ private:
 	QtVariantPropertyManager *manager_;
 	QtProperty *property_;
 	int lineStartTabs_;
-	bool textEdited_;
 	ScriptSyntaxHighlighter *syntaxHighlighter_;
 private slots:
 	void setScriptValue();

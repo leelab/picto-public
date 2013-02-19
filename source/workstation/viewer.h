@@ -63,6 +63,7 @@ public slots:
 	virtual void aboutToSave() {};  //Called just before the pictoDataText_ is saved to file.
 
 signals:
+	void deinitComplete();
 	void enableCutAction(bool enable);
 	void enableCopyAction(bool enable);
 	void enablePasteAction(bool enable);

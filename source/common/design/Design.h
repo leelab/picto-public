@@ -39,6 +39,7 @@ public:
 	void setUnmodified();
 	QString getDesignText();
 	bool compiles(QString* errors = &QString());
+	void enableRunMode(bool runMode);
 
 signals:
 	void undoAvailable(bool available);

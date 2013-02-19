@@ -65,8 +65,6 @@ public:
 	QSharedPointer<Task> getTaskByName(QString taskName);
 
 	virtual QString assetType(){return "Experiment";};
-	//An experiment doesn't use its InitPropertyContainer for its UI properties.
-	virtual QSharedPointer<PropertyContainer> getUIPropertyContainer(){return getPropertyContainer();};
 	//QString getPropLookupXml();
 	//QString getTransLookupXml();
 
@@ -99,7 +97,7 @@ private:
 	QSharedPointer<Engine::PictoEngine> engine_;
 	bool signalCoeffInitialized_;
 private slots:
-	void updateSignalCoefficients(QSharedPointer<Property> changedProp);
+	void updateSignalCoefficients(Property* changedProp,QVariant var);
 };
 
 

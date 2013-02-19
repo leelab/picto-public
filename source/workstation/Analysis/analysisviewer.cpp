@@ -65,6 +65,7 @@ AnalysisViewer::~AnalysisViewer()
 //! Called just before displaying the viewer
 void AnalysisViewer::init()
 {
+	designRoot_->enableRunMode(false);
 	anaDesigner_->loadDesign("AnalysisContainer",0,designRoot_);
 }
 
@@ -72,6 +73,7 @@ void AnalysisViewer::init()
 
 void AnalysisViewer::deinit()
 {
+	emit deinitComplete();
 }
 
 

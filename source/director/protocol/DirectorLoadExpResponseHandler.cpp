@@ -23,6 +23,7 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: %1").arg(errorInfo));
 		return false;
 	}
+	design.enableRunMode(true);
 	QSharedPointer<Picto::Experiment> experiment = design.getDesign("Experiment",0)->getRootAsset().staticCast<Experiment>();
 	if(!experiment)
 	{

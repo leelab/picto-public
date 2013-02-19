@@ -75,7 +75,12 @@ bool RemoteStateUpdater::updateState()
 		if(xmlReader->name() == "PDU")
 		{
 			propUnit.fromXml(xmlReader);
-			emit propertyChanged(propUnit.index_,propUnit.value_);
+			if(propUnit.initValue_)
+			{
+				emit propertyInitValueChanged(propUnit.index_,propUnit.value_);
+			}
+			else
+				emit propertyValueChanged(propUnit.index_,propUnit.value_);
 		}
 		else if(xmlReader->name() == "BDUP")
 		{

@@ -49,7 +49,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private slots:
-	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
+	
 
 private:
 	QSharedPointer<SignalChannel> positionChannel_;

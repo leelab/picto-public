@@ -140,3 +140,14 @@ bool DesignRoot::compiles()
 	}
 	return true;
 }
+
+void DesignRoot::enableRunMode(bool runMode)
+{
+	foreach(QVector<QSharedPointer<Design>> designList,designMap_)
+	{
+		foreach(QSharedPointer<Design> design,designList)
+		{
+			design->enableRunMode(runMode);
+		}
+	}
+}

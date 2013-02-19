@@ -40,7 +40,7 @@ void RewardController::triggerRewards(bool appendToList)
 		if( it.value().stopwatch.elapsedMs() < it.value().lastRewardPeriod)
 		{
 			if(discardOverlap_)
-				it.value().pendingRewards.takeFirst();
+				it.value().pendingRewards.clear();
 			continue;
 		}
 		//If it was met once, set it to zero to avoid stopwatch wrapping issues.

@@ -122,9 +122,9 @@ void VisualElement::postDeserialize()
 	Scriptable::postDeserialize();
 	draw();
 	connect(propertyContainer_.data(),
-	    SIGNAL(propertyValueChanged(QSharedPointer<Property>)),
+	    SIGNAL(propertyValueChanged(Property*,QVariant)),
 	    this,
-		SLOT(slotPropertyValueChanged(QSharedPointer<Property>))
+		SLOT(slotPropertyValueChanged(Property*,QVariant))
 		);
 
 	setPropertyRuntimeEditable("Position");
@@ -142,7 +142,7 @@ bool VisualElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	return true;
 }
 
-void VisualElement::slotPropertyValueChanged(QSharedPointer<Property> prop)
+void VisualElement::slotPropertyValueChanged(Property* prop,QVariant)
 {
 	if(prop->getName() != "Position" && prop->getName() != "Name")
 	{

@@ -114,7 +114,6 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 			//Extract the PropertyDataUnitPackage
 			QSharedPointer<Picto::PropertyDataUnitPackage> propData(new Picto::PropertyDataUnitPackage());
 			propData->fromXml(xmlReader);
-
 			sessionInfo->insertPropertyData(propData);
 		}
 		else if(dataType == "StateDataUnitPackage")

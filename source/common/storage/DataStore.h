@@ -62,7 +62,6 @@ public:
 	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
 	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
 	virtual QString assetType(){return "DataStore";};
-	virtual QSharedPointer<PropertyContainer> getUIPropertyContainer(){return getPropertyContainer();};
 	QSharedPointer<PropertyContainer> getPropertyContainer(){return propertyContainer_;};
 	QStringList getValidChildTags();
 	QSharedPointer<AssetFactory> getAssetFactory(QString tagName);
@@ -70,7 +69,8 @@ public:
 	void clear();
 	virtual void setPropertyRuntimeEditable(QString propName, bool editable = true);
 	QList<QSharedPointer<DataStore>> getRuntimeEditableDescendants();
-	virtual QList<QSharedPointer<Property>> getDescendantsProperties();
+	void enableRunModeForDescendants(bool en);
+	QList<QSharedPointer<Property>> getDescendantsProperties();
 	virtual bool isRuntimeEditable(){return false;};
 
 	virtual	int getAssetId();

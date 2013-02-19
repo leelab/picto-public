@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QTime>
+#include <QTimer>
 
 #include "AudioRewardController.h"
 #include "../memleakdetect.h"
@@ -19,30 +20,23 @@ void AudioRewardController::startReward(unsigned int,int quantity)
 {
 	latestQuantity_ = quantity;
 	timer_.start();
-	audioThreadFuture_ = QtConcurrent::run(this,&AudioRewardController::playSound,quantity);
+	tick_.play();
 	firstRewardSupplied_ = true;
 }
 
-bool AudioRewardController::rewardWasSupplied(unsigned int channel)
+bool AudioRewardController::rewardWasSupplied(unsigned int)
 {
-	if(!audioThreadFuture_.isFinished())
-		return false;
 	if((timer_.elapsed() <= latestQuantity_) && firstRewardSupplied_)
 		return false;
 	return true;
 }
-void AudioRewardController::startFlush(unsigned int channel)
+void AudioRewardController::startFlush(unsigned int)
 {
 	startReward(0,50);	//Since the sound is so short and flushing is really meaningless, just play it quickly.
 }
 void AudioRewardController::stopFlush(unsigned int channel)
 {
 	latestQuantity_ = timer_.elapsed();
-}
-
-void AudioRewardController::playSound(int)
-{
-	tick_.play();
 }
 
 } //namespace Picto

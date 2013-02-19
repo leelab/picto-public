@@ -48,7 +48,7 @@ protected:
 private:
 	QPoint posOffset_;
 private slots:
-	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
+	
 };
 
 

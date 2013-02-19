@@ -52,7 +52,7 @@ private:
 	QPoint posOffset_;
 	QStringList shapeList_;
 private slots:
-	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
+	
 };
 
 

@@ -25,7 +25,8 @@ public:
 	virtual bool updateState();
 signals:
 	//triggered when values change
-	void propertyChanged(int propId, QString value);
+	void propertyValueChanged(int propId, QString value);
+	void propertyInitValueChanged(int propId, QString value);
 	void transitionActivated(int transId);
 	void framePresented(double time);
 	void rewardSupplied(double time,int duration,int channel);

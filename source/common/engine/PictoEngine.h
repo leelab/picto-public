@@ -103,19 +103,6 @@ public:
 
 	//bool runTask(QString taskName);
 
-	//The engine commands are only used when the engine is being run locally
-	//They should also only be used by the master of the engine (ie. The ComponentStatusManager,
-	//or the remoteviewer/testviewer).  If an experiment itself wants to pause, it should use
-	//the requestPause() command, which will Signal to the engine master that it should make
-	//a pause happen.  This way everything is in sync, and the engine never things one thing 
-	//while the engine master thinks something else.
-	enum {NoCommand, PlayEngine, StopEngine, PauseEngine};
-	void play() { engineCommand_ = PlayEngine;};
-	void pause(){ engineCommand_ = PauseEngine;};
-	void requestPause(){emit pauseRequested();};
-	void stop();
-	int getEngineCommand();
-
 	QList<QSharedPointer<RenderingTarget> > getRenderingTargets();
 	void addRenderingTarget(QSharedPointer<RenderingTarget> target);
 
@@ -151,12 +138,14 @@ public:
 	//! \brief Retrieves the latest package of changed properties.
 	//! Note that a package can only be retrieved once after which a new package is created.
 	QSharedPointer<PropertyDataUnitPackage> getChangedPropertyPackage();
+	//! \brief Retrieves the latest package of changed properties where the change value is an init value.
+	//! Note that a package can only be retrieved once after which a new package is created.
+	QSharedPointer<PropertyDataUnitPackage> getChangedInitPropertyPackage();
 	//void updatePropertiesFromServer();
-	void clearChangedPropertyPackage(){propPackage_.clear();};
+	void clearChangedPropertyPackages(){propPackage_.clear();};
 
 	void addStateTransitionForServer(QSharedPointer<Transition> stateTrans);
 	QSharedPointer<StateDataUnitPackage> getStateDataPackage();
-	void clearStateDataPackage(){propPackage_.clear();};
 
 	QList<QSharedPointer<BehavioralDataUnitPackage>> getBehavioralDataPackages();
 
@@ -196,8 +185,21 @@ public:
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
-
+		
+	
+	//The engine commands are only used when the engine is being run locally
+	//They should also only be used by the master of the engine (ie. The ComponentStatusManager,
+	//or the remoteviewer/testviewer).  If an experiment itself wants to pause, it should use
+	//the requestPause() command, which will Signal to the engine master that it should make
+	//a pause happen.  This way everything is in sync, and the engine never things one thing 
+	//while the engine master thinks something else.
+	enum {NoCommand, PlayEngine, StopEngine, PauseEngine};
+	void requestPause(){emit pauseRequested();};
+	int getEngineCommand();
 public slots:
+	void stop();
+	void play() { engineCommand_ = PlayEngine;};
+	void pause(){ engineCommand_ = PauseEngine;};
 	void setName(QString name);
 	void setRewardDuration(int controller, int duration);
 	void setFlushDuration(int controller, int duration);
@@ -257,7 +259,8 @@ private:
 	QHostAddress ipAddress_;
 
 private slots:
-	void addChangedProperty(QSharedPointer<Property> changedProp);
+	void addChangedPropertyValue(Property* changedProp);
+	void addChangedPropertyInitValue(Property* changedProp);
 	void firstPhosphorOperations(double frameTime);
 };
 

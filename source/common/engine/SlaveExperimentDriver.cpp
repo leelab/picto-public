@@ -13,7 +13,8 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	//Initialize scripting for this experiment in case this hasn't been done yet
 	experiment_->initScripting(false);
 	renderingEnabled_ = true;
-	connect(updater_.data(),SIGNAL(propertyChanged(int, QString)),this,SLOT(masterPropertyChanged(int, QString)));
+	connect(updater_.data(),SIGNAL(propertyValueChanged(int, QString)),this,SLOT(masterPropertyValueChanged(int, QString)));
+	connect(updater_.data(),SIGNAL(propertyInitValueChanged(int, QString)),this,SLOT(masterPropertyInitValueChanged(int, QString)));
 	connect(updater_.data(),SIGNAL(transitionActivated(int)),this,SLOT(masterTransitionActivated(int)));
 	connect(updater_.data(),SIGNAL(framePresented(double)),this,SLOT(masterFramePresented(double)));
 	connect(updater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
@@ -34,7 +35,7 @@ void SlaveExperimentDriver::renderFrame()
 	frameTimer_.restart();
 }
 
-void SlaveExperimentDriver::masterPropertyChanged(int propId, QString value)
+void SlaveExperimentDriver::masterPropertyValueChanged(int propId, QString value)
 {
 	QSharedPointer<Asset> asset = expConfig_->getAsset(propId);
 	Q_ASSERT(asset && asset->inherits("Picto::Property"));
@@ -44,7 +45,19 @@ void SlaveExperimentDriver::masterPropertyChanged(int propId, QString value)
 		int i=0;
 		i++;
 	}
-	asset.staticCast<Property>()->fromUserString(value);
+	asset.staticCast<Property>()->valFromUserString(value);
+}
+void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString value)
+{
+	QSharedPointer<Asset> asset = expConfig_->getAsset(propId);
+	Q_ASSERT(asset && asset->inherits("Picto::Property"));
+	if(propId == 3329)
+	{
+		QString name = asset->getName();
+		int i=0;
+		i++;
+	}
+	asset.staticCast<Property>()->initValFromUserString(value);
 }
 void SlaveExperimentDriver::masterTransitionActivated(int transId)
 {
@@ -81,7 +94,7 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 }
 void SlaveExperimentDriver::masterRewardSupplied(double time,int duration,int channel)
 {
-	experiment_->getEngine()->giveReward(channel,duration,0);
+	experiment_->getEngine()->giveReward(channel,duration,duration);
 }
 void SlaveExperimentDriver::masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals)
 {

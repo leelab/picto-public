@@ -29,14 +29,11 @@ public:
 	/*! \brief Resets this scriptables data fields to their original values.
 	 */
 	virtual void reset();
-		virtual QSharedPointer<PropertyContainer> getUIPropertyContainer(){return getInitPropertyContainer();};
-	QSharedPointer<PropertyContainer> getInitPropertyContainer(){return initPropertyContainer_;};
 	virtual QString getUITemplate(){return "Scriptable";};
 	bool isUIEnabled(){return propertyContainer_->getPropertyValue("UIEnabled").toBool();};
 	int getUIOrder(){return propertyContainer_->getPropertyValue("UIOrder").toInt();};
 	virtual bool isRuntimeEditable(){return isUIEnabled();};
 	virtual void setPropertyRuntimeEditable(QString propName, bool editable = true);
-	virtual QList<QSharedPointer<Property>> getDescendantsProperties();
 	virtual QString getScriptingInfo();
 	QString getInfo();
 
@@ -46,7 +43,6 @@ protected:
 	virtual QString defaultTagName(){return "Scriptable";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	QSharedPointer<PropertyContainer> initPropertyContainer_;
 
 private:
 	void restoreProperties();

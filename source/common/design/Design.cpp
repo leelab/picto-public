@@ -108,6 +108,12 @@ bool Design::compiles(QString* errors)
 	return false;
 }
 
+void Design::enableRunMode(bool runMode)
+{
+	if(root_)
+		root_->enableRunModeForDescendants(runMode);
+}
+
 QString Design::updateAssetsFromText(QString designText)
 {
 	Q_ASSERT(root_);

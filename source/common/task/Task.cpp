@@ -41,7 +41,7 @@ QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 		else
 		{
 			sendInitialStateDataToServer(engine);
-
+			resetScriptableValues();
 			result = stateMachine_->run(engine);
 
 			//After the task has finished running, we need to report the final result.

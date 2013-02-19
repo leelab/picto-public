@@ -34,7 +34,8 @@ private:
 	QTime frameTimer_;
 	bool renderingEnabled_;
 private slots:
-	void masterPropertyChanged(int propId, QString value);
+	void masterPropertyValueChanged(int propId, QString value);
+	void masterPropertyInitValueChanged(int propId, QString value);
 	void masterTransitionActivated(int transId);
 	void masterFramePresented(double time);
 	void masterRewardSupplied(double time,int duration,int channel);

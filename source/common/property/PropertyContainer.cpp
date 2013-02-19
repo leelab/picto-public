@@ -81,7 +81,7 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 			break;
 		}
 	}
-	connect(newProperty.data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SIGNAL(propertyValueChanged(QSharedPointer<Property>)));
+	connect(newProperty.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SIGNAL(propertyValueChanged(Property*,QVariant)));
 	//containerGroupItem_->addSubProperty(newProperty);
 	properties_[_identifier].push_back(newProperty);
 	return newProperty;
@@ -180,8 +180,21 @@ QSharedPointer<Property> PropertyContainer::setPropertyValue(QString _propertyNa
 	{
 		addProperty(_value.type(), _propertyName, _value);
 		index = properties_[_propertyName].size()-1;
+		properties_[_propertyName][index]->setValue(_value);
 	}
 	return properties_[_propertyName][index];
+}
+
+//Sets all run values back to init values for all properties in this container
+void PropertyContainer::setPropertiesToInitValues()
+{
+	foreach(QVector<QSharedPointer<Property>> propVec,properties_)
+	{
+		foreach(QSharedPointer<Property> prop,propVec)
+		{
+			prop->setValue(prop->initValue());
+		}
+	}
 }
 
 //QSharedPointer<Property> PropertyContainer::getPropertyFromQtProperty(QtProperty *property)

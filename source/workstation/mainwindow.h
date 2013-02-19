@@ -50,10 +50,12 @@ private slots:
 	bool saveExperiment();
 	bool saveAsExperiment();
 	void changeMode();
+	void startMode();
 	void checkSyntax();
 	void aboutPicto();
 
 private:
+	void changeMode(Viewer* nextViewer);
 	void createActions();
 	void createMenus();
 	void createToolbars();
@@ -111,6 +113,7 @@ private:
 
 	//Viewers
 	Viewer* currViewer_;
+	Viewer* nextViewer_;
 	QStackedWidget *viewerStack_;
 	QList<QString> viewerNames_;
 

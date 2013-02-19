@@ -20,17 +20,18 @@ QSharedPointer<Asset> SignalValueParameter::Create()
 //Used to add the latest signal values
 void SignalValueParameter::setLatestValue(QString signal, QString subChannel, double value)
 {
-	signalData_[signal][subChannel] = value;
+	signalData_[signal.toLower()][subChannel.toLower()] = value;
 }
 
 //Returns the latest value on the input subChannel for this parameters signal
 double SignalValueParameter::getValue(QString subChannel)
 {
-	QString sigName = propertyContainer_->getPropertyValue("Signal").toString();
+	QString sigName = propertyContainer_->getPropertyValue("Signal").toString().toLower();
+	QString subChanLower = subChannel.toLower();
 	if(!signalData_.contains(sigName))
 		return 0.0;
 	QHash<QString,double>* signalHash = &signalData_[sigName];
-	if(!(*signalHash).contains(subChannel))
+	if(!(*signalHash).contains(subChanLower))
 	{
 		if((*signalHash).size() == 1)
 		{
@@ -38,7 +39,7 @@ double SignalValueParameter::getValue(QString subChannel)
 		}
 		return 0.0;
 	}
-	return (*signalHash)[subChannel];
+	return (*signalHash)[subChanLower];
 }
 
 void SignalValueParameter::postDeserialize()

@@ -37,15 +37,12 @@ QSharedPointer<Experiment> Experiment::Create()
 
 void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 {
-	Q_ASSERT(propTable_);
 	engine_ = engine;
-	engine_->setPropertyTable(propTable_);
-	engine_->setExperimentConfig(expConfig_);
 	//We call the function below here so that the Gain/Offset values will be
 	//set to their initial states (for mouse signal) as early as possible and 
 	//values set by the user before running the experiment won't need to be 
 	//reset.
-	updateSignalCoefficients(QSharedPointer<Property>());
+	updateSignalCoefficients(NULL,QVariant());
 };
 
 QSharedPointer<Engine::PictoEngine> Experiment::getEngine()
@@ -96,6 +93,10 @@ bool Experiment::runTask(QString taskName)
 	if(tasks_.isEmpty())
 		return false;
 
+	Q_ASSERT(propTable_);
+	engine_->setPropertyTable(propTable_);
+	engine_->setExperimentConfig(expConfig_);
+
 	//search through tasks_ for a matching task and run it!
 	//note that the taskname here may have had all of it's whitespace 
 	//removed, so we need to check that possibility
@@ -103,15 +104,18 @@ bool Experiment::runTask(QString taskName)
 	{
 	QSharedPointer<Task> task = getTaskByName(taskName);
 	if(!task)
+	{
 		return false;
-	engine_->clearChangedPropertyPackage();
+	}
+	engine_->clearChangedPropertyPackages();
 	engine_->play();
 	//Start out by sending all starting property values to the server
 	engine_->sendAllPropertyValuesToServer();
 
 	engine_->startAllSignalChannels();
 	//Initialize signal channel coefficients
-	updateSignalCoefficients(QSharedPointer<Property>());
+	updateSignalCoefficients(NULL,QVariant());
+	resetScriptableValues();
 	QString result = task->run(engine_);
 	engine_->stopAllSignalChannels();
 
@@ -125,6 +129,10 @@ bool Experiment::runTask(QString taskName)
 		taskName = pathElems[0];
 
 	} while(!taskName.isEmpty());
+
+	engine_->setPropertyTable(QSharedPointer<PropertyTable>());
+	engine_->setExperimentConfig(QSharedPointer<ExperimentConfig>());
+
 	return true;
 	//foreach(QSharedPointer<Task> task, tasks_)
 	//{
@@ -161,6 +169,7 @@ bool Experiment::jumpToState(QStringList path, QString state)
 
 void Experiment::postDeserialize()
 {
+	signalCoeffInitialized_ = false;
 	expConfig_->disallowIdDuplication();
 	//Usually an object's parent adds itself to the objects scriptables list.
 	//Since an experiment is at the top level, we must do it manually.
@@ -170,12 +179,6 @@ void Experiment::postDeserialize()
 	if(experimentSyntaxVer != latestSyntaxVersion_)
 		propertyContainer_->setPropertyValue("SyntaxVersion",latestSyntaxVersion_);
 
-	//connect the signal properties to the updateSignalCoefficients function
-	connect(propertyContainer_->getProperty("XOffset").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
-	connect(propertyContainer_->getProperty("XGain").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
-	connect(propertyContainer_->getProperty("YOffset").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
-	connect(propertyContainer_->getProperty("YGain").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
-	connect(propertyContainer_->getProperty("XYSignalShear").data(),SIGNAL(valueChanged(QSharedPointer<Property>)),this,SLOT(updateSignalCoefficients(QSharedPointer<Property>)));
 	//Set the signal properties runtime editable
 	//We use the DataStore version of this function so that the actual properties,
 	//not the init properties, are the ones affected by changing the properties
@@ -207,6 +210,17 @@ void Experiment::postDeserialize()
 		propTable_->addProperty(prop);	// This adds the property to the property table and gives it an index for use in transmission
 	}
 
+	//Experiment objects are not part of the state machine. Init values should be bypassed and set immediately as run values in all
+	//properties
+	QHash<QString, QVector<QSharedPointer<Property>>> propMap = propertyContainer_->getProperties();
+	foreach(QVector<QSharedPointer<Property>> propVec, propMap)
+	{
+		foreach(QSharedPointer<Property> prop, propVec)
+		{
+			prop->enableInitRunValueSync(true);
+		}
+	}
+
 }
 
 bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -216,7 +230,7 @@ bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
-void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
+void Experiment::updateSignalCoefficients(Property*,QVariant)
 {
 	if(engine_.isNull())
 		return;
@@ -239,6 +253,12 @@ void Experiment::updateSignalCoefficients(QSharedPointer<Property>)
 			propertyContainer_->setPropertyValue("YGain",1.0);
 			propertyContainer_->setPropertyValue("XYSignalShear",0.0);
 		}
+		//connect the signal properties to the updateSignalCoefficients function
+		connect(propertyContainer_->getProperty("XOffset").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(updateSignalCoefficients(Property*,QVariant)));
+		connect(propertyContainer_->getProperty("XGain").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(updateSignalCoefficients(Property*,QVariant)));
+		connect(propertyContainer_->getProperty("YOffset").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(updateSignalCoefficients(Property*,QVariant)));
+		connect(propertyContainer_->getProperty("YGain").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(updateSignalCoefficients(Property*,QVariant)));
+		connect(propertyContainer_->getProperty("XYSignalShear").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(updateSignalCoefficients(Property*,QVariant)));
 	}
 	double xZoom = propertyContainer_->getPropertyValue("XGain").toDouble();
 	double yZoom = propertyContainer_->getPropertyValue("YGain").toDouble();

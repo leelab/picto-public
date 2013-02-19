@@ -213,6 +213,7 @@ void PlaybackController::update()
 					break;
 				}
 				designRoot_ = newDesignRoot;
+				designRoot_->enableRunMode(true);
 				data_.setRunLength(playbackUpdater_->getRunLength());
 				emit runsUpdated(playbackUpdater_->getRuns());
 

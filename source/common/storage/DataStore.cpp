@@ -487,6 +487,14 @@ void DataStore::setPropertyRuntimeEditable(QString propName, bool editable)
 	propertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
 }
 
+void DataStore::enableRunModeForDescendants(bool en)
+{
+	foreach(QSharedPointer<Property> prop,getDescendantsProperties())
+	{
+		prop->enableRunMode(en);
+	}
+}
+
 QList<QSharedPointer<DataStore>> DataStore::getRuntimeEditableDescendants()
 {
 	QList<QSharedPointer<DataStore>> runtimeDesc;

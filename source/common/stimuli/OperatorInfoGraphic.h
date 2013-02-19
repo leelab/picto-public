@@ -55,7 +55,7 @@ private:
 	QStringList orderedFields_;
 	QHash<QString,QVariant> infoMap_;
 private slots:
-	//void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
+	
 };
 
 

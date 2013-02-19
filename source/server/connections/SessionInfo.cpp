@@ -18,6 +18,7 @@
 #define TRANSITION_STATE_VAR_ID -2
 #define REWARD_STATE_VAR_ID -3
 #define MAX_SIG_CHAN_VAR_ID -4
+#define PROP_INIT_START_VAR_ID (INT_MAX/2)
 #define NEURAL_DATA_BUFFER_SECS 60
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
@@ -660,14 +661,23 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 	while(data->length() > 0)
 	{
 		dataPoint = data->takeFirstDataPoint();
-		setStateVariable(dataPoint->getDataID(),dataPoint->index_,dataPoint->toXml());
-		cacheQ.prepare("INSERT INTO properties (dataid, assetid, value, frameid)"
-			"VALUES(:dataid, :assetid, :value, :frameid)");
+		if(dataPoint->initValue_)
+		{
+			setStateVariable(dataPoint->getDataID(),PROP_INIT_START_VAR_ID+dataPoint->index_,dataPoint->toXml());
+			cacheQ.prepare("INSERT INTO initproperties (dataid, assetid, value, frameid)"
+				"VALUES(:dataid, :assetid, :value, :frameid)");
+		}
+		else
+		{
+			setStateVariable(dataPoint->getDataID(),dataPoint->index_,dataPoint->toXml());
+			cacheQ.prepare("INSERT INTO properties (dataid, assetid, value, frameid)"
+				"VALUES(:dataid, :assetid, :value, :frameid)");
+		}
 		cacheQ.bindValue(":dataid", dataPoint->getDataID());
 		cacheQ.bindValue(":assetid", dataPoint->index_);
 		cacheQ.bindValue(":value",dataPoint->value_);
-		cacheQ.bindValue(":frameid",dataPoint->getActionFrame());
-		executeWriteQuery(&cacheQ,"",false);	
+		cacheQ.bindValue(":frameid",dataPoint->getActionFrame());	
+		executeWriteQuery(&cacheQ,"",false);
 	}
 }
 
@@ -1046,6 +1056,12 @@ void SessionInfo::InitializeVariables()
 	tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,INTEGER ";
 	tableDataProviders_["properties"] = "DIRECTOR";
 	tableIndexedColumns_["properties"] = " assetid,frameid ";
+
+	tables_.push_back("initproperties");
+	tableColumns_["initproperties"] = " dataid,assetid,value,frameid ";
+	tableColumnTypes_["initproperties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,INTEGER ";
+	tableDataProviders_["initproperties"] = "DIRECTOR";
+	tableIndexedColumns_["initproperties"] = " assetid,frameid ";
 
 	tables_.push_back("propertylookup");
 	tableColumns_["propertylookup"] = " assetid,name,parent ";

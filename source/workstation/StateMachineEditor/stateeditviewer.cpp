@@ -91,11 +91,13 @@ void StateEditViewer::init()
 	//	}
 
 	//}
+	designRoot_->enableRunMode(false);
 	expDesigner_->loadDesign("Experiment",0,designRoot_);
 }
 
 void StateEditViewer::deinit()
 {
+	emit deinitComplete();
 }
 
 void StateEditViewer::aboutToSave()

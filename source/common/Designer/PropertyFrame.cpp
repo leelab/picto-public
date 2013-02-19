@@ -40,7 +40,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	if(experiment.staticCast<Picto::Experiment>()->isUIEnabled())
 		runtimeDescendants.push_front(experiment.staticCast<DataStore>());
 
-	PropertyGroupWidget* propGroupWidget = new PropertyGroupWidget();
+	PropertyGroupWidget* propGroupWidget = new PropertyGroupWidget(true);
 	connect(propGroupWidget, SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
 		 this, SLOT(propertyEdited(QSharedPointer<Property>,QVariant)));
 
@@ -49,7 +49,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 		QString parentPath = runtimeDesc->getPath();
 		QHash<QString, QVector<QSharedPointer<Property>>> properties;
 		QVector<QSharedPointer<Property>> runTimeProps;
-		properties = runtimeDesc->getUIPropertyContainer()->getProperties();
+		properties = runtimeDesc->getPropertyContainer()->getProperties();
 		QStringList orderedProps = runtimeDesc->getOrderedPropertyList();
 		foreach(QString propTag,orderedProps)
 		{
@@ -118,9 +118,9 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 			propFound = true;
 			PropertyDataUnit unit;
 			unit.fromXml(query.value(0).toString());
-			QString currValue = it.value()->toUserString();
+			QString currValue = it.value()->initValToUserString();
 			QString newValue = unit.value_;
-			it.value()->fromUserString(newValue);
+			it.value()->initValFromUserString(newValue);
 			if(newValue != currValue)
 				emit parameterMessageReady(it.value());
 		}
