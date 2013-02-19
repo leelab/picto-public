@@ -1,4 +1,4 @@
-<PictoData><AnalysisContainer id="0">
+<PictoData><Name>SkippedFrameAnalysis</Name><AnalysisContainer id="0">
 <AnalysisDefinition id="0">
   <Name>EventAndEye</Name>
   <Script>
@@ -12,7 +12,7 @@
   <Tool type="File" id="0">
     <Name>readme</Name>
     <FileName>.readme.txt</FileName>
-  <UIInfo id="0"><Pos id="" x="2150" y="2000"/></UIInfo></Tool>
+  <UIInfo id="0"><Pos id="">2150,2000</Pos></UIInfo></Tool>
   <Period id="0">
     <Name>TestPeriod</Name>
     <Script id="">
@@ -41,12 +41,12 @@
     <Trigger type="Frame" id="0">
       <Name>start</Name>
     </Trigger>
-    <UIInfo id="0"><Pos id="" x="2150" y="2000"/></UIInfo></StarterContainer>
+    <UIInfo id="0"><Pos id="">2150,2000</Pos></UIInfo></StarterContainer>
     <EnderContainer id="0">
     <Trigger type="Frame" id="0">
       <Name>start</Name>
     </Trigger>
-    <UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></EnderContainer>
+    <UIInfo id="0"><Pos id="">2000,2000</Pos></UIInfo></EnderContainer>
     <Trigger type="Frame" id="0">
       <Name>frame</Name>
       <DataSource type="Element" id="0">
@@ -55,19 +55,19 @@
       <DataSource type="Time" id="0">
         <Name>time</Name>
       </DataSource>
-    <UIInfo id="0"><Pos id="" x="2750" y="2000"/></UIInfo></Trigger>
+    <UIInfo id="0"><Pos id="">2750,2000</Pos></UIInfo></Trigger>
     <Tool type="NumericVariable" id="0">
       <Name>lastFrameTime</Name>
       <InitValue>-1</InitValue>
-    <UIInfo id="0"><Pos id="" x="2300" y="2000"/></UIInfo></Tool>
+    <UIInfo id="0"><Pos id="">2300,2000</Pos></UIInfo></Tool>
     <Tool type="NumericVariable" id="0">
       <Name>framesSoFar</Name>
       <InitValue id="">-1</InitValue>
-    <UIInfo id="0"><Pos id="" x="2450" y="2000"/></UIInfo></Tool>
+    <UIInfo id="0"><Pos id="">2450,2000</Pos></UIInfo></Tool>
     <Tool type="File" id="0">
       <Name>outFile</Name>
       <FileName>.skips.csv</FileName>
-    <UIInfo id="0"><Pos id="" x="2600" y="2000"/></UIInfo></Tool>
-  <UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></Period>
-<UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></AnalysisDefinition>
-</AnalysisContainer><Experiment id="1"><SyntaxVersion id="3">0.0.1</SyntaxVersion><UIInfo id="27"><OpenDescendant id="28">1</OpenDescendant></UIInfo></Experiment></PictoData>
+    <UIInfo id="0"><Pos id="">2600,2000</Pos></UIInfo></Tool>
+  <UIInfo id="0"><Pos id="">2000,2000</Pos></UIInfo></Period>
+<UIInfo id="0"><Pos id="">2000,2000</Pos></UIInfo></AnalysisDefinition>
+</AnalysisContainer><Experiment id="1"><SyntaxVersion id="3">0.0.2</SyntaxVersion><UIInfo id="27"><OpenDescendant id="28">1</OpenDescendant></UIInfo><Task id="4"><UIInfo id="18"><Pos id="20">2000,2000</Pos></UIInfo></Task></Experiment></PictoData>

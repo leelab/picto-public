@@ -2,7 +2,7 @@
     <AnalysisDefinition id="0">
       <Name id="">MemSaccadeAnalysis</Name>
       <UIInfo id="0">
-        <Pos id="" x="1763" y="2002"/>
+        <Pos id="">1763,2002</Pos>
       </UIInfo>
       <Script id="">
         readme.writeLine(&quot;Name:\t&quot; + name);
@@ -19,18 +19,18 @@
             <ElementPath id="">MemorySaccade::Top::Block::Done</ElementPath>
             <Name id="">BlockEnds</Name>
             <UIInfo id="0">
-              <Pos id="" x="1831" y="1753"/>
+              <Pos id="">1831,1753</Pos>
             </UIInfo>
           </Trigger>
           <Trigger type="Element" id="0">
             <ElementPath id="">MemorySaccade::Top::Block::Pause</ElementPath>
             <Name id="">PauseReached</Name>
             <UIInfo id="0">
-              <Pos id="" x="1827" y="1863"/>
+              <Pos id="">1827,1863</Pos>
             </UIInfo>
           </Trigger>
           <UIInfo id="0">
-            <Pos id="" x="2000" y="2000"/>
+            <Pos id="">2000,2000</Pos>
           </UIInfo>
         </EnderContainer>
         <Name id="">Signals</Name>
@@ -150,15 +150,15 @@
             <ElementPath id="">MemorySaccade::Top::Block::Trial</ElementPath>
             <Name id="">TrialStart</Name>
             <UIInfo id="0">
-              <Pos id="" x="1966" y="1719"/>
+              <Pos id="">1966,1719</Pos>
             </UIInfo>
           </Trigger>
           <UIInfo id="0">
-            <Pos id="" x="1844" y="2002"/>
+            <Pos id="">1844,2002</Pos>
           </UIInfo>
         </StarterContainer>
         <UIInfo id="0">
-          <Pos id="" x="1565" y="1995"/>
+          <Pos id="">1565,1995</Pos>
         </UIInfo>
         <EndBufferMs id="">300</EndBufferMs>
         <StartBufferMs id="">300</StartBufferMs>
@@ -166,7 +166,7 @@
           <FileName id="">.eye</FileName>
           <Name id="">eyeFile</Name>
           <UIInfo id="0">
-            <Pos id="" x="2177" y="1998"/>
+            <Pos id="">2177,1998</Pos>
           </UIInfo>
           <BinaryByteOrder id="">LittleEndian</BinaryByteOrder>
         </Tool>
@@ -174,14 +174,14 @@
           <FileName id="">.lfp</FileName>
           <Name id="">lfpFile</Name>
           <UIInfo id="0">
-            <Pos id="" x="2280" y="1989"/>
+            <Pos id="">2280,1989</Pos>
           </UIInfo>
         </Tool>
         <Tool type="File" id="0">
           <FileName id="">.swf</FileName>
           <Name id="">swfFile</Name>
           <UIInfo id="0">
-            <Pos id="" x="2291" y="2109"/>
+            <Pos id="">2291,2109</Pos>
           </UIInfo>
         </Tool>
         <Trigger type="Spike" id="0">
@@ -189,30 +189,30 @@
             <DecimalPlaces id="">5</DecimalPlaces>
             <Name id="">data</Name>
             <UIInfo id="0">
-              <Pos id="" x="1724" y="1812"/>
+              <Pos id="">1724,1812</Pos>
             </UIInfo>
           </DataSource>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1896" y="1818"/>
+              <Pos id="">1896,1818</Pos>
             </UIInfo>
           </DataSource>
           <Name id="">spikes</Name>
           <UIInfo id="0">
-            <Pos id="" x="1832" y="2130"/>
+            <Pos id="">1832,2130</Pos>
           </UIInfo>
         </Trigger>
         <Trigger type="LFP" id="0">
           <DataSource type="LFP" id="0">
             <Name id="">data</Name>
             <UIInfo id="0">
-              <Pos id="" x="1783" y="1784"/>
+              <Pos id="">1783,1784</Pos>
             </UIInfo>
           </DataSource>
           <Name id="">lfp</Name>
           <UIInfo id="0">
-            <Pos id="" x="1963" y="2127"/>
+            <Pos id="">1963,2127</Pos>
           </UIInfo>
         </Trigger>
         <Trigger type="Signal" id="0">
@@ -220,26 +220,26 @@
             <Name id="">data</Name>
             <SignalName id="">Position</SignalName>
             <UIInfo id="0">
-              <Pos id="" x="1746" y="1795"/>
+              <Pos id="">1746,1795</Pos>
             </UIInfo>
           </DataSource>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1877" y="1795"/>
+              <Pos id="">1877,1795</Pos>
             </UIInfo>
           </DataSource>
           <Name id="">eye</Name>
           <SignalName id="">Position</SignalName>
           <UIInfo id="0">
-            <Pos id="" x="2089" y="2121"/>
+            <Pos id="">2089,2121</Pos>
           </UIInfo>
         </Trigger>
         <Trigger type="Element" id="0">
           <ElementPath id="">MemorySaccade::Top::Block::NeedsTrials</ElementPath>
           <Name id="">NeedsTrialsEnds</Name>
           <UIInfo id="0">
-            <Pos id="" x="1883" y="2247"/>
+            <Pos id="">1883,2247</Pos>
           </UIInfo>
           <When id="">Ends</When>
         </Trigger>
@@ -247,7 +247,7 @@
           <ElementPath id="">MemorySaccade::Top::Block::ReshuffleTrial</ElementPath>
           <Name id="">ReshuffleTrialEnds</Name>
           <UIInfo id="0">
-            <Pos id="" x="2004" y="2246"/>
+            <Pos id="">2004,2246</Pos>
           </UIInfo>
           <When id="">Ends</When>
         </Trigger>
@@ -259,18 +259,18 @@
             <ElementPath id="">MemorySaccade::Top::Block::Done</ElementPath>
             <Name id="">BlockEnds</Name>
             <UIInfo id="0">
-              <Pos id="" x="1636" y="1667"/>
+              <Pos id="">1636,1667</Pos>
             </UIInfo>
           </Trigger>
           <Trigger type="Element" id="0">
             <ElementPath id="">MemorySaccade::Top::Block::Pause</ElementPath>
             <Name id="">PauseReached</Name>
             <UIInfo id="0">
-              <Pos id="" x="1631" y="1810"/>
+              <Pos id="">1631,1810</Pos>
             </UIInfo>
           </Trigger>
           <UIInfo id="0">
-            <Pos id="" x="1977" y="1997"/>
+            <Pos id="">1977,1997</Pos>
           </UIInfo>
         </EnderContainer>
         <Name id="">Behavioral</Name>
@@ -280,50 +280,50 @@
             <ElementPath id="">MemorySaccade::Top::Block::Trial</ElementPath>
             <Name id="">TrialStart</Name>
             <UIInfo id="0">
-              <Pos id="" x="1788" y="1754"/>
+              <Pos id="">1788,1754</Pos>
             </UIInfo>
           </Trigger>
           <UIInfo id="0">
-            <Pos id="" x="1860" y="1997"/>
+            <Pos id="">1860,1997</Pos>
           </UIInfo>
         </StarterContainer>
         <Trigger type="Element" id="0">
           <Name id="">FixationStarts</Name>
           <UIInfo id="0">
-            <Pos id="" x="1634" y="2122"/>
+            <Pos id="">1634,2122</Pos>
           </UIInfo>
           <DataSource type="Property" id="0">
             <Name id="">trayRadius</Name>
             <UIInfo id="0">
-              <Pos id="" x="1372" y="1702"/>
+              <Pos id="">1372,1702</Pos>
             </UIInfo>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::trayRadius::Value</PropertyPath>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">tokenRadius</Name>
             <UIInfo id="0">
-              <Pos id="" x="1497" y="1702"/>
+              <Pos id="">1497,1702</Pos>
             </UIInfo>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::tokenRadius::Value</PropertyPath>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">memIntensity</Name>
             <UIInfo id="0">
-              <Pos id="" x="1607" y="1704"/>
+              <Pos id="">1607,1704</Pos>
             </UIInfo>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::memIntensity::Value</PropertyPath>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">nonMemIntensity</Name>
             <UIInfo id="0">
-              <Pos id="" x="1721" y="1697"/>
+              <Pos id="">1721,1697</Pos>
             </UIInfo>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::nonMemIntensity::Value</PropertyPath>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">endIntensity</Name>
             <UIInfo id="0">
-              <Pos id="" x="1845" y="1718"/>
+              <Pos id="">1845,1718</Pos>
             </UIInfo>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::endIntensity::Value</PropertyPath>
           </DataSource>
@@ -331,34 +331,34 @@
             <Name id="">fixWinRad</Name>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::fixWindowRadius::Value</PropertyPath>
             <UIInfo id="0">
-              <Pos id="" x="1529" y="1833"/>
+              <Pos id="">1529,1833</Pos>
             </UIInfo>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">sacWinRad</Name>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::sacWindowRadius::Value</PropertyPath>
             <UIInfo id="0">
-              <Pos id="" x="1630" y="1832"/>
+              <Pos id="">1630,1832</Pos>
             </UIInfo>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">targetId</Name>
             <PropertyPath id="">MemorySaccade::Top::Block::targetSelector::Value</PropertyPath>
             <UIInfo id="0">
-              <Pos id="" x="1749" y="1834"/>
+              <Pos id="">1749,1834</Pos>
             </UIInfo>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">targetPos</Name>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::sacTarget::Position</PropertyPath>
             <UIInfo id="0">
-              <Pos id="" x="1865" y="1832"/>
+              <Pos id="">1865,1832</Pos>
             </UIInfo>
           </DataSource>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1967" y="1709"/>
+              <Pos id="">1967,1709</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::Trial::Fixation</ElementPath>
@@ -366,12 +366,12 @@
         <Trigger type="Element" id="0">
           <Name id="">SampleStarts</Name>
           <UIInfo id="0">
-            <Pos id="" x="1757" y="2122"/>
+            <Pos id="">1757,2122</Pos>
           </UIInfo>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1713" y="1922"/>
+              <Pos id="">1713,1922</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::Trial::Sample</ElementPath>
@@ -379,12 +379,12 @@
         <Trigger type="Element" id="0">
           <Name id="">MemoryStarts</Name>
           <UIInfo id="0">
-            <Pos id="" x="1873" y="2118"/>
+            <Pos id="">1873,2118</Pos>
           </UIInfo>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1819" y="1928"/>
+              <Pos id="">1819,1928</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::Trial::Memory</ElementPath>
@@ -392,12 +392,12 @@
         <Trigger type="Element" id="0">
           <Name id="">TestStarts</Name>
           <UIInfo id="0">
-            <Pos id="" x="1992" y="2118"/>
+            <Pos id="">1992,2118</Pos>
           </UIInfo>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1795" y="1939"/>
+              <Pos id="">1795,1939</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::Trial::Test</ElementPath>
@@ -405,29 +405,29 @@
         <Trigger type="Element" id="0">
           <Name id="">LeavesCenter</Name>
           <UIInfo id="0">
-            <Pos id="" x="1642" y="2242"/>
+            <Pos id="">1642,2242</Pos>
           </UIInfo>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1788" y="1985"/>
+              <Pos id="">1788,1985</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::Trial::Test::LeaveCenter</ElementPath>
           <When id="">Ends</When>
         </Trigger>
         <UIInfo id="0">
-          <Pos id="" x="1563" y="1857"/>
+          <Pos id="">1563,1857</Pos>
         </UIInfo>
         <Trigger type="Element" id="0">
           <Name id="">RewardStarts</Name>
           <UIInfo id="0">
-            <Pos id="" x="1863" y="2238"/>
+            <Pos id="">1863,2238</Pos>
           </UIInfo>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1849" y="2033"/>
+              <Pos id="">1849,2033</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::Trial::Reward</ElementPath>
@@ -435,19 +435,19 @@
         <Trigger type="Property" id="0">
           <Name id="">EntersTarget</Name>
           <UIInfo id="0">
-            <Pos id="" x="1747" y="2239"/>
+            <Pos id="">1747,2239</Pos>
           </UIInfo>
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1739" y="1964"/>
+              <Pos id="">1739,1964</Pos>
             </UIInfo>
           </DataSource>
           <DataSource type="Property" id="0">
             <Name id="">value</Name>
             <PropertyPath id="">MemorySaccade::Top::Block::Trial::Test::EnterTarget::targetAcquired::Value</PropertyPath>
             <UIInfo id="0">
-              <Pos id="" x="1572" y="1948"/>
+              <Pos id="">1572,1948</Pos>
             </UIInfo>
           </DataSource>
           <PropertyPath id="">MemorySaccade::Top::Block::Trial::Test::EnterTarget::targetAcquired::Value</PropertyPath>
@@ -455,13 +455,13 @@
         <Trigger type="Element" id="0">
           <Name id="">NeedsTrialsEnds</Name>
           <UIInfo id="0">
-            <Pos id="" x="1763" y="2361"/>
+            <Pos id="">1763,2361</Pos>
           </UIInfo>
           <DataSource type="Property" id="0">
             <Name id="">expInfo</Name>
             <PropertyPath id="">MemorySaccade::Top::expInfo::Values</PropertyPath>
             <UIInfo id="0">
-              <Pos id="" x="1550" y="1886"/>
+              <Pos id="">1550,1886</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::NeedsTrials</ElementPath>
@@ -470,13 +470,13 @@
         <Trigger type="Element" id="0">
           <Name id="">ReshuffleTrialEnds</Name>
           <UIInfo id="0">
-            <Pos id="" x="1890" y="2363"/>
+            <Pos id="">1890,2363</Pos>
           </UIInfo>
           <DataSource type="Property" id="0">
             <Name id="">expInfo</Name>
             <PropertyPath id="">MemorySaccade::Top::expInfo::Values</PropertyPath>
             <UIInfo id="0">
-              <Pos id="" x="1763" y="1960"/>
+              <Pos id="">1763,1960</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::ReshuffleTrial</ElementPath>
@@ -486,20 +486,20 @@
           <FileName id="">.behav</FileName>
           <Name id="">behavFile</Name>
           <UIInfo id="0">
-            <Pos id="" x="2105" y="1995"/>
+            <Pos id="">2105,1995</Pos>
           </UIInfo>
         </Tool>
         <Trigger type="Element" id="0">
           <DataSource type="Time" id="0">
             <Name id="">time</Name>
             <UIInfo id="0">
-              <Pos id="" x="1723" y="2140"/>
+              <Pos id="">1723,2140</Pos>
             </UIInfo>
           </DataSource>
           <ElementPath id="">MemorySaccade::Top::Block::Trial</ElementPath>
           <Name id="">TrialEnds</Name>
           <UIInfo id="0">
-            <Pos id="" x="1999" y="2241"/>
+            <Pos id="">1999,2241</Pos>
           </UIInfo>
           <When id="">Ends</When>
         </Trigger>
@@ -573,25 +573,25 @@
         <FileName id="">_readme.txt</FileName>
         <Name id="">readme</Name>
         <UIInfo id="0">
-          <Pos id="" x="1779" y="1876"/>
+          <Pos id="">1779,1876</Pos>
         </UIInfo>
       </Tool>
     </AnalysisDefinition>
-  </AnalysisContainer><Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
+  </AnalysisContainer><Experiment id="1"><SyntaxVersion id="2">0.0.2</SyntaxVersion>
     <Task id="3">
       <StateMachine id="4">
         <Parameter type="OperatorClick" id="5">
           <Name id="6">operatorClick</Name>
           <UIInfo id="7">
-            <Pos id="8" x="49" y="330"/>
+            <Pos id="8">49,330</Pos>
           </UIInfo>
           <NewClick id="10">true</NewClick>
-          <Pos id="11" x="374" y="330"/>
+          <Pos id="11">374,330</Pos>
           <UIEnabled id="12">false</UIEnabled>
           <UIOrder id="13">0</UIOrder>
         </Parameter>
         <UIInfo id="14">
-          <Pos id="15" x="645" y="521"/>
+          <Pos id="15">645,521</Pos>
         </UIInfo>
         
         <Name id="18">PresentStimuli</Name>
@@ -600,7 +600,7 @@
           
           <Name id="22">PresentSingleStimulus</Name>
           <UIInfo id="23">
-            <Pos id="24" x="175" y="167"/>
+            <Pos id="24">175,167</Pos>
           </UIInfo>
           <StateMachineElement type="State" id="26">
             <EntryScript id="27">
@@ -618,13 +618,13 @@
             <Result id="30">
               <Name id="31">Failed</Name>
               <UIInfo id="32">
-                <Pos id="33" x="695" y="220"/>
+                <Pos id="33">695,220</Pos>
               </UIInfo>
               <UIEnabled id="35">false</UIEnabled>
               <UIOrder id="36">0</UIOrder>
             </Result>
             <UIInfo id="37">
-              <Pos id="38" x="335" y="147"/>
+              <Pos id="38">335,147</Pos>
             </UIInfo>
             <ExitScript id="40">
 														              square.subjectView = false;
@@ -636,7 +636,7 @@
                 <Name id="45">Reaquistion Time Exceeded</Name>
                 <UIEnabled id="46">false</UIEnabled>
                 <UIInfo id="47">
-                  <Pos id="48" x="114" y="137"/>
+                  <Pos id="48">114,137</Pos>
                 </UIInfo>
                 <UIOrder id="50">0</UIOrder>
               </Result>
@@ -644,7 +644,7 @@
                 <Name id="52">Initial Aquistion Time Exceeded</Name>
                 <UIEnabled id="53">false</UIEnabled>
                 <UIInfo id="54">
-                  <Pos id="55" x="323" y="137"/>
+                  <Pos id="55">323,137</Pos>
                 </UIInfo>
                 <UIOrder id="57">0</UIOrder>
               </Result>
@@ -652,7 +652,7 @@
                 <Name id="59">Total Time Excceeded</Name>
                 <UIEnabled id="60">false</UIEnabled>
                 <UIInfo id="61">
-                  <Pos id="62" x="557" y="137"/>
+                  <Pos id="62">557,137</Pos>
                 </UIInfo>
                 <UIOrder id="64">0</UIOrder>
               </Result>
@@ -660,7 +660,7 @@
                 <Name id="66">Broke Fixation</Name>
                 <UIEnabled id="67">false</UIEnabled>
                 <UIInfo id="68">
-                  <Pos id="69" x="723" y="137"/>
+                  <Pos id="69">723,137</Pos>
                 </UIInfo>
                 <UIOrder id="71">0</UIOrder>
               </Result>
@@ -668,12 +668,12 @@
                 <Name id="73">Success</Name>
                 <UIEnabled id="74">false</UIEnabled>
                 <UIInfo id="75">
-                  <Pos id="76" x="837" y="137"/>
+                  <Pos id="76">837,137</Pos>
                 </UIInfo>
                 <UIOrder id="78">0</UIOrder>
               </Result>
               <UIInfo id="79">
-                <Pos id="80" x="168" y="171"/>
+                <Pos id="80">168,171</Pos>
               </UIInfo>
               <ControlTarget id="82">target</ControlTarget>
               <FixationTime id="83">400</FixationTime>
@@ -693,7 +693,7 @@
             <Result id="96">
               <Name id="97">Fixated</Name>
               <UIInfo id="98">
-                <Pos id="99" x="689" y="338"/>
+                <Pos id="99">689,338</Pos>
               </UIInfo>
               <UIEnabled id="101">false</UIEnabled>
               <UIOrder id="102">0</UIOrder>
@@ -723,14 +723,14 @@
               <Source id="121">FixationTracker</Source>
               <SourceResult id="122">Success</SourceResult>
             </Transition>
-            <BackgroundColor A="255" B="0" G="0" R="0" id="123">#000000</BackgroundColor>
+            <BackgroundColor id="123">0,0,0,255</BackgroundColor>
             <UIEnabled id="125">false</UIEnabled>
             <UIOrder id="126">0</UIOrder>
           </StateMachineElement>
           <Result id="127">
             <Name id="128">StimulusPresented</Name>
             <UIInfo id="129">
-              <Pos id="130" x="546" y="104"/>
+              <Pos id="130">546,104</Pos>
             </UIInfo>
             <UIEnabled id="132">false</UIEnabled>
             <UIOrder id="133">0</UIOrder>
@@ -747,7 +747,7 @@
                 <Name id="142">Done</Name>
                 <UIEnabled id="143">false</UIEnabled>
                 <UIInfo id="144">
-                  <Pos id="145" x="100" y="90"/>
+                  <Pos id="145">100,90</Pos>
                 </UIInfo>
                 <UIOrder id="147">0</UIOrder>
               </Result>
@@ -770,7 +770,7 @@ for(var i=0;i&lt;targetLocs.numTokens;i++)
 }
 return false;</Script>
               <UIInfo id="149">
-                <Pos id="150" x="204" y="197"/>
+                <Pos id="150">204,197</Pos>
               </UIInfo>
               <Type id="152"/>
               <UIEnabled id="153">false</UIEnabled>
@@ -780,13 +780,13 @@ return false;</Script>
             <Result id="156">
               <Name id="157">OperatorClicked</Name>
               <UIInfo id="158">
-                <Pos id="159" x="616" y="217"/>
+                <Pos id="159">616,217</Pos>
               </UIInfo>
               <UIEnabled id="161">false</UIEnabled>
               <UIOrder id="162">0</UIOrder>
             </Result>
             <UIInfo id="163">
-              <Pos id="164" x="157" y="156"/>
+              <Pos id="164">157,156</Pos>
             </UIInfo>
             <Transition id="166">
               <Destination id="167">OperatorClicked</Destination>
@@ -794,7 +794,7 @@ return false;</Script>
               <SourceResult id="169">Done</SourceResult>
             </Transition>
             <ExitScript id="170">square.red = 255;</ExitScript>
-            <BackgroundColor A="255" B="0" G="0" R="0" id="171">#000000</BackgroundColor>
+            <BackgroundColor id="171">0,0,0,255</BackgroundColor>
             <EntryScript id="173"/>
             <FrameScript id="174"/>
             <UIEnabled id="176">false</UIEnabled>
@@ -809,7 +809,7 @@ return false;</Script>
             <Result id="213">
               <Name id="214">Done</Name>
               <UIInfo id="215">
-                <Pos id="216" x="540" y="65"/>
+                <Pos id="216">540,65</Pos>
               </UIInfo>
               <UIEnabled id="218">false</UIEnabled>
               <UIOrder id="219">0</UIOrder>
@@ -820,7 +820,7 @@ return false;</Script>
                 <Name id="223">false</Name>
                 <UIEnabled id="224">false</UIEnabled>
                 <UIInfo id="225">
-                  <Pos id="226" x="124" y="133"/>
+                  <Pos id="226">124,133</Pos>
                 </UIInfo>
                 <UIOrder id="228">0</UIOrder>
               </Result>
@@ -828,13 +828,13 @@ return false;</Script>
                 <Name id="230">true</Name>
                 <UIEnabled id="231">false</UIEnabled>
                 <UIInfo id="232">
-                  <Pos id="233" x="199" y="133"/>
+                  <Pos id="233">199,133</Pos>
                 </UIInfo>
                 <UIOrder id="235">0</UIOrder>
               </Result>
               <Script id="236">square.red = 0;</Script>
               <UIInfo id="237">
-                <Pos id="238" x="81" y="175"/>
+                <Pos id="238">81,175</Pos>
               </UIInfo>
               <Type id="240">ScriptElement</Type>
               <UIEnabled id="241">false</UIEnabled>
@@ -846,14 +846,14 @@ return false;</Script>
                 <Name id="246">done</Name>
                 <UIEnabled id="247">false</UIEnabled>
                 <UIInfo id="248">
-                  <Pos id="249" x="133" y="157"/>
+                  <Pos id="249">133,157</Pos>
                 </UIInfo>
                 <UIOrder id="251">0</UIOrder>
               </Result>
               <RewardChan id="252">1</RewardChan>
               <RewardQty id="253">60</RewardQty>
               <UIInfo id="254">
-                <Pos id="255" x="334" y="187"/>
+                <Pos id="255">334,187</Pos>
               </UIInfo>
               <Type id="257">Reward</Type>
               <UIEnabled id="258">true</UIEnabled>
@@ -876,7 +876,7 @@ return false;</Script>
               <SourceResult id="271">done</SourceResult>
             </Transition>
             <UIInfo id="272">
-              <Pos id="273" x="457" y="309"/>
+              <Pos id="273">457,309</Pos>
             </UIInfo>
             <EntryScript id="275"/>
             <ExitScript id="276"/>
@@ -908,7 +908,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <Name id="294">targetSize</Name>
             <UIEnabled id="295">true</UIEnabled>
             <UIInfo id="296">
-              <Pos id="297" x="58" y="356"/>
+              <Pos id="297">58,356</Pos>
             </UIInfo>
             <Value id="299">16</Value>
             <UIOrder id="300">0</UIOrder>
@@ -919,13 +919,13 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
           <Type id="304">StateMachine</Type>
           <UIEnabled id="305">false</UIEnabled>
           <UIOrder id="306">0</UIOrder>
-        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/></Transition><VisualElement type="Token Tray Graphic" id="578"><Color A="255" B="0" G="255" R="255" id="579">#ffff00</Color><Dimensions height="128" id="580" width="128" x="0" y="0"/><Layer id="581">0</Layer><Name id="582">targetLocs</Name><NumTokens id="583">8</NumTokens><OperatorView id="584">true</OperatorView><Outline id="585">true</Outline><OutlineWidth id="586">1</OutlineWidth><Phase id="587">0</Phase><Position id="591" x="400" y="300"/><Shape id="592">Ellipse</Shape><SubjectView id="593">false</SubjectView><TokenColors id="594">#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00</TokenColors><TokenDimensions height="16" id="595" width="16" x="0" y="0"/><TokenOutlineWidths id="596">1,1,1,1,1,1,1,1</TokenOutlineWidths><TokenOutlines id="597">1,1,1,1,1,1,1,1</TokenOutlines><TokenShape id="598">Rectangle</TokenShape><TokenShapes id="599">Rectangle,Rectangle,Rectangle,Rectangle,Rectangle,Rectangle,Rectangle,Rectangle</TokenShapes><TokenSizes id="600">1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0</TokenSizes><UIEnabled id="601">false</UIEnabled><UIInfo id="602"><OpenDescendant id="603">0</OpenDescendant><Pos id="604" x="176" y="359"/></UIInfo><UIOrder id="605">0</UIOrder><Visible id="606">true</Visible></VisualElement><Parameter type="Numeric" id="612"><Name id="613">selectedTarget</Name><UIEnabled id="614">false</UIEnabled><UIInfo id="615"><OpenDescendant id="616">0</OpenDescendant><Pos id="617" x="299" y="360"/></UIInfo><UIOrder id="618">0</UIOrder><Units id="619"/><Value id="620">0</Value></Parameter><Parameter type="Range" id="645"><Increment id="646">1</Increment><Max id="647">16</Max><Min id="648">1</Min><Name id="649">numTargets</Name><UIEnabled id="650">true</UIEnabled><UIInfo id="651"><OpenDescendant id="652">0</OpenDescendant><Pos id="653" x="64" y="476"/></UIInfo><UIOrder id="654">0</UIOrder><Units id="655"/><Value id="656">8</Value></Parameter><Parameter type="Range" id="665"><Increment id="666">0</Increment><Max id="667">500</Max><Min id="668">1</Min><Name id="669">trayRadius</Name><UIEnabled id="670">true</UIEnabled><UIInfo id="671"><OpenDescendant id="672">0</OpenDescendant><Pos id="673" x="61" y="600"/></UIInfo><UIOrder id="674">0</UIOrder><Units id="675"/><Value id="676">128</Value></Parameter><Parameter type="Range" id="590"><Increment id="607">0</Increment><Max id="608">400</Max><Min id="609">1</Min><Name id="610">fixationRadius</Name><UIEnabled id="611">true</UIEnabled><UIInfo id="621"><OpenDescendant id="622">0</OpenDescendant><Pos id="623" x="64" y="692"/></UIInfo><UIOrder id="624">0</UIOrder><Units id="625"/><Value id="626">40</Value></Parameter><Transition id="518"><Destination id="523">PresentStimulus</Destination><Source id="524">WaitForClick</Source><SourceResult id="525">OperatorClicked</SourceResult></Transition></StateMachineElement>
+        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/></Transition><VisualElement type="Token Tray Graphic" id="578"><Color id="579">255,255,0,255</Color><Dimensions id="580">0,0,128,128</Dimensions><Layer id="581">0</Layer><Name id="582">targetLocs</Name><NumTokens id="583">8</NumTokens><OperatorView id="584">true</OperatorView><Outline id="585">true</Outline><OutlineWidth id="586">1</OutlineWidth><Phase id="587">0</Phase><Position id="591">400,300</Position><Shape id="592">Ellipse</Shape><SubjectView id="593">false</SubjectView><TokenColors id="594">#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00</TokenColors><TokenDimensions id="595">0,0,16,16</TokenDimensions><TokenOutlineWidths id="596">1,1,1,1,1,1,1,1</TokenOutlineWidths><TokenOutlines id="597">1,1,1,1,1,1,1,1</TokenOutlines><TokenShape id="598">Rectangle</TokenShape><TokenShapes id="599">Rectangle,Rectangle,Rectangle,Rectangle,Rectangle,Rectangle,Rectangle,Rectangle</TokenShapes><TokenSizes id="600">1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0</TokenSizes><UIEnabled id="601">false</UIEnabled><UIInfo id="602"><OpenDescendant id="603">0</OpenDescendant><Pos id="604">176,359</Pos></UIInfo><UIOrder id="605">0</UIOrder><Visible id="606">true</Visible></VisualElement><Parameter type="Numeric" id="612"><Name id="613">selectedTarget</Name><UIEnabled id="614">false</UIEnabled><UIInfo id="615"><OpenDescendant id="616">0</OpenDescendant><Pos id="617">299,360</Pos></UIInfo><UIOrder id="618">0</UIOrder><Units id="619"/><Value id="620">0</Value></Parameter><Parameter type="Range" id="645"><Increment id="646">1</Increment><Max id="647">16</Max><Min id="648">1</Min><Name id="649">numTargets</Name><UIEnabled id="650">true</UIEnabled><UIInfo id="651"><OpenDescendant id="652">0</OpenDescendant><Pos id="653">64,476</Pos></UIInfo><UIOrder id="654">0</UIOrder><Units id="655"/><Value id="656">8</Value></Parameter><Parameter type="Range" id="665"><Increment id="666">0</Increment><Max id="667">500</Max><Min id="668">1</Min><Name id="669">trayRadius</Name><UIEnabled id="670">true</UIEnabled><UIInfo id="671"><OpenDescendant id="672">0</OpenDescendant><Pos id="673">61,600</Pos></UIInfo><UIOrder id="674">0</UIOrder><Units id="675"/><Value id="676">128</Value></Parameter><Parameter type="Range" id="590"><Increment id="607">0</Increment><Max id="608">400</Max><Min id="609">1</Min><Name id="610">fixationRadius</Name><UIEnabled id="611">true</UIEnabled><UIInfo id="621"><OpenDescendant id="622">0</OpenDescendant><Pos id="623">64,692</Pos></UIInfo><UIOrder id="624">0</UIOrder><Units id="625"/><Value id="626">40</Value></Parameter><Transition id="518"><Destination id="523">PresentStimulus</Destination><Source id="524">WaitForClick</Source><SourceResult id="525">OperatorClicked</SourceResult></Transition></StateMachineElement>
         <VisualElement type="Box Graphic" id="307">
-          <Color A="255" B="0" G="255" R="255" id="308">#ffff00</Color>
-          <Dimensions height="10" id="309" width="10" x="0" y="0"/>
+          <Color id="308">255,255,0,255</Color>
+          <Dimensions id="309">0,0,10,10</Dimensions>
           <Name id="310">square</Name>
           <UIInfo id="311">
-            <Pos id="312" x="162" y="332"/>
+            <Pos id="312">162,332</Pos>
           </UIInfo>
           <Visible id="314">true</Visible>
           <SubjectView id="315">false</SubjectView>
@@ -933,14 +933,14 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
           <OperatorView id="317">true</OperatorView>
           <Outline id="318">false</Outline>
           <OutlineThickness id="319">0</OutlineThickness>
-          <Position id="320" x="0" y="0"/>
+          <Position id="320">0,0</Position>
           <UIEnabled id="321">false</UIEnabled>
           <UIOrder id="322">0</UIOrder>
         </VisualElement>
         <Parameter type="Numeric" id="323">
           <Name id="324">stimuliPresented</Name>
           <UIInfo id="325">
-            <Pos id="326" x="285" y="330"/>
+            <Pos id="326">285,330</Pos>
           </UIInfo>
           <UIEnabled id="328">false</UIEnabled>
           <UIOrder id="329">0</UIOrder>
@@ -953,7 +953,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <Name id="335">false</Name>
             <UIEnabled id="336">false</UIEnabled>
             <UIInfo id="337">
-              <Pos id="338" x="71" y="75"/>
+              <Pos id="338">71,75</Pos>
             </UIInfo>
             <UIOrder id="340">0</UIOrder>
           </Result>
@@ -961,13 +961,13 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <Name id="342">true</Name>
             <UIEnabled id="343">false</UIEnabled>
             <UIInfo id="344">
-              <Pos id="345" x="146" y="75"/>
+              <Pos id="345">146,75</Pos>
             </UIInfo>
             <UIOrder id="347">0</UIOrder>
           </Result>
           <Script id="348">stimuliPresented.value++; return true;</Script>
           <UIInfo id="349">
-            <Pos id="350" x="481" y="86"/>
+            <Pos id="350">481,86</Pos>
           </UIInfo>
           <Type id="352">ScriptElement</Type>
           <UIEnabled id="353">false</UIEnabled>
@@ -991,13 +991,13 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
         <ControlTarget type="CircleTarget" id="367">
           <Name id="368">target</Name>
           <UIInfo id="369">
-            <Pos id="370" x="179" y="426"/>
+            <Pos id="370">179,426</Pos>
           </UIInfo>
           <Radius id="372">40</Radius>
-          <Color A="255" B="0" G="255" R="0" id="373">#00ff00</Color>
+          <Color id="373">0,255,0,255</Color>
           <Layer id="374">0</Layer>
           <OperatorView id="375">true</OperatorView>
-          <Position id="376" x="0" y="0"/>
+          <Position id="376">0,0</Position>
           <SubjectView id="377">false</SubjectView>
           <UIEnabled id="378">false</UIEnabled>
           <UIOrder id="379">0</UIOrder>
@@ -1010,12 +1010,12 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
         <UIOrder id="385">0</UIOrder>
       <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/></Transition></StateMachine>
       <UIInfo id="386">
-        <Pos id="387" x="1608" y="1747"/>
+        <Pos id="387">1608,1747</Pos>
       </UIInfo>
       <Name id="389">MemorySaccadeCalibration</Name>
     </Task>
 <UIInfo id="390">
-	<Pos id="392" x="0" y="0"/>
+	<Pos id="392">0,0</Pos>
 <OpenDescendant id="588">854</OpenDescendant></UIInfo>
 
 <XGain id="394">1</XGain>
@@ -1045,7 +1045,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
           <UIEnabled id="1699">true</UIEnabled>
           <UIInfo id="1700">
             <OpenDescendant id="1701">0</OpenDescendant>
-            <Pos id="690" x="241" y="472"/>
+            <Pos id="690">241,472</Pos>
           </UIInfo>
           <UIOrder id="1702">0</UIOrder>
           <Units id="1703"/>
@@ -1056,7 +1056,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
           <UIEnabled id="736">false</UIEnabled>
           <UIInfo id="737">
             <OpenDescendant id="738">0</OpenDescendant>
-            <Pos id="1717" x="137" y="472"/>
+            <Pos id="1717">137,472</Pos>
           </UIInfo>
           <UIOrder id="1718">0</UIOrder>
           <Units id="1719"/>
@@ -1084,7 +1084,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1729">false</UIEnabled>
             <UIInfo id="1730">
               <OpenDescendant id="1731">0</OpenDescendant>
-              <Pos id="1732" x="850" y="276"/>
+              <Pos id="1732">850,276</Pos>
             </UIInfo>
             <UIOrder id="1733">0</UIOrder>
           </Result>
@@ -1120,7 +1120,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1780">false</UIEnabled>
             <UIInfo id="1798">
               <OpenDescendant id="1799">0</OpenDescendant>
-              <Pos id="1800" x="509" y="116"/>
+              <Pos id="1800">509,116</Pos>
             </UIInfo>
             <UIOrder id="1801">0</UIOrder>
           </StateMachineElement>
@@ -1133,7 +1133,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
           <UIEnabled id="1815">false</UIEnabled>
           <UIInfo id="1818">
             <OpenDescendant id="724">0</OpenDescendant>
-            <Pos id="1819" x="132" y="246"/>
+            <Pos id="1819">132,246</Pos>
           </UIInfo>
           <UIOrder id="1820">0</UIOrder>
           <Parameter type="Numeric" id="1828">
@@ -1141,7 +1141,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1830">false</UIEnabled>
             <UIInfo id="1834">
               <OpenDescendant id="1839">0</OpenDescendant>
-              <Pos id="1840" x="85" y="439"/>
+              <Pos id="1840">85,439</Pos>
             </UIInfo>
             <UIOrder id="1841">0</UIOrder>
             <Units id="1844"/>
@@ -1170,7 +1170,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1971">false</UIEnabled>
             <UIInfo id="861">
               <OpenDescendant id="862">0</OpenDescendant>
-              <Pos id="863" x="360" y="210"/>
+              <Pos id="863">360,210</Pos>
             </UIInfo>
             <UIOrder id="864">0</UIOrder>
             <Result id="902">
@@ -1178,7 +1178,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="904">false</UIEnabled>
               <UIInfo id="905">
                 <OpenDescendant id="1972">0</OpenDescendant>
-                <Pos id="1973" x="460" y="469"/>
+                <Pos id="1973">460,469</Pos>
               </UIInfo>
               <UIOrder id="908">0</UIOrder>
             </Result>
@@ -1187,12 +1187,12 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="914">false</UIEnabled>
               <UIInfo id="2047">
                 <OpenDescendant id="2048">0</OpenDescendant>
-                <Pos id="2049" x="949" y="238"/>
+                <Pos id="2049">949,238</Pos>
               </UIInfo>
               <UIOrder id="2076">0</UIOrder>
             </Result>
             <StateMachineElement type="State" id="2080">
-              <BackgroundColor A="255" B="0" G="0" R="0" id="923">#000000</BackgroundColor>
+              <BackgroundColor id="923">0,0,0,255</BackgroundColor>
               <EntryScript id="924"/>
               <ExitScript id="2081"/>
               <FrameScript id="2082"/>
@@ -1200,7 +1200,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2099">false</UIEnabled>
               <UIInfo id="2102">
                 <OpenDescendant id="2103">0</OpenDescendant>
-                <Pos id="2104" x="164" y="236"/>
+                <Pos id="2104">164,236</Pos>
               </UIInfo>
               <UIOrder id="2105">0</UIOrder>
               <ControlElement type="Target Controller" id="1282">
@@ -1235,7 +1235,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1296">false</UIEnabled>
                 <UIInfo id="1297">
                   <OpenDescendant id="1298">0</OpenDescendant>
-                  <Pos id="1299" x="155" y="79"/>
+                  <Pos id="1299">155,79</Pos>
                 </UIInfo>
                 <UIOrder id="1300">0</UIOrder>
               </ControlElement>
@@ -1246,7 +1246,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1320">false</UIEnabled>
                 <UIInfo id="1321">
                   <OpenDescendant id="1322">0</OpenDescendant>
-                  <Pos id="1323" x="132" y="468"/>
+                  <Pos id="1323">132,468</Pos>
                 </UIInfo>
                 <UIOrder id="1324">0</UIOrder>
                 <Value id="1325">false</Value>
@@ -1256,7 +1256,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1334">false</UIEnabled>
                 <UIInfo id="1335">
                   <OpenDescendant id="1336">0</OpenDescendant>
-                  <Pos id="1337" x="487" y="271"/>
+                  <Pos id="1337">487,271</Pos>
                 </UIInfo>
                 <UIOrder id="1338">0</UIOrder>
               </Result>
@@ -1265,7 +1265,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1344">false</UIEnabled>
                 <UIInfo id="1345">
                   <OpenDescendant id="1346">0</OpenDescendant>
-                  <Pos id="1347" x="477" y="367"/>
+                  <Pos id="1347">477,367</Pos>
                 </UIInfo>
                 <UIOrder id="1348">0</UIOrder>
               </Result>
@@ -1296,7 +1296,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               </Transition>
             </StateMachineElement>
             <StateMachineElement type="State" id="940">
-              <BackgroundColor A="255" B="0" G="0" R="0" id="941">#000000</BackgroundColor>
+              <BackgroundColor id="941">0,0,0,255</BackgroundColor>
               <EntryScript id="942">
                 tokenTray.visible= true;
                 tokenTray.setTokenColor(targetSelector.value,0,memIntensity.value,0,255);
@@ -1307,7 +1307,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2387">false</UIEnabled>
               <UIInfo id="2388">
                 <OpenDescendant id="2389">0</OpenDescendant>
-                <Pos id="2390" x="313" y="245"/>
+                <Pos id="2390">313,245</Pos>
               </UIInfo>
               <UIOrder id="950">0</UIOrder>
               <ControlElement type="Target Controller" id="1392">
@@ -1342,7 +1342,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1406">false</UIEnabled>
                 <UIInfo id="1407">
                   <OpenDescendant id="1408">0</OpenDescendant>
-                  <Pos id="1409" x="119" y="98"/>
+                  <Pos id="1409">119,98</Pos>
                 </UIInfo>
                 <UIOrder id="1410">0</UIOrder>
               </ControlElement>
@@ -1351,7 +1351,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1428">false</UIEnabled>
                 <UIInfo id="1429">
                   <OpenDescendant id="1430">0</OpenDescendant>
-                  <Pos id="1431" x="443" y="109"/>
+                  <Pos id="1431">443,109</Pos>
                 </UIInfo>
                 <UIOrder id="1432">0</UIOrder>
               </Result>
@@ -1360,7 +1360,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1438">false</UIEnabled>
                 <UIInfo id="1439">
                   <OpenDescendant id="1440">0</OpenDescendant>
-                  <Pos id="1441" x="456" y="230"/>
+                  <Pos id="1441">456,230</Pos>
                 </UIInfo>
                 <UIOrder id="1442">0</UIOrder>
               </Result>
@@ -1391,7 +1391,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               </Transition>
             </StateMachineElement>
             <StateMachineElement type="State" id="958">
-              <BackgroundColor A="255" B="0" G="0" R="0" id="959">#000000</BackgroundColor>
+              <BackgroundColor id="959">0,0,0,255</BackgroundColor>
               <EntryScript id="960">
                 tokenTray.setTokenColor(targetSelector.value,0,nonMemIntensity.value,0,255);
                 MemoryController.fixationTime = memoryPeriod.value;
@@ -1403,7 +1403,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="964">false</UIEnabled>
               <UIInfo id="965">
                 <OpenDescendant id="966">0</OpenDescendant>
-                <Pos id="967" x="460" y="245"/>
+                <Pos id="967">460,245</Pos>
               </UIInfo>
               <UIOrder id="968">0</UIOrder>
               <ControlElement type="Target Controller" id="1446">
@@ -1438,7 +1438,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1460">false</UIEnabled>
                 <UIInfo id="1461">
                   <OpenDescendant id="1462">0</OpenDescendant>
-                  <Pos id="1463" x="123" y="105"/>
+                  <Pos id="1463">123,105</Pos>
                 </UIInfo>
                 <UIOrder id="1464">0</UIOrder>
               </ControlElement>
@@ -1447,7 +1447,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1482">false</UIEnabled>
                 <UIInfo id="1483">
                   <OpenDescendant id="1484">0</OpenDescendant>
-                  <Pos id="1485" x="374" y="99"/>
+                  <Pos id="1485">374,99</Pos>
                 </UIInfo>
                 <UIOrder id="1486">0</UIOrder>
               </Result>
@@ -1456,7 +1456,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1492">false</UIEnabled>
                 <UIInfo id="1493">
                   <OpenDescendant id="1494">0</OpenDescendant>
-                  <Pos id="1495" x="381" y="245"/>
+                  <Pos id="1495">381,245</Pos>
                 </UIInfo>
                 <UIOrder id="1496">0</UIOrder>
               </Result>
@@ -1488,35 +1488,35 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             </StateMachineElement>
 
             <ControlTarget type="CircleTarget" id="1182">
-              <Color A="255" B="0" G="255" R="0" id="1183">#00ff00</Color>
+              <Color id="1183">0,255,0,255</Color>
               <Layer id="1184">0</Layer>
               <Name id="1185">fixTarget</Name>
               <OperatorView id="1186">true</OperatorView>
               <Outside id="1187">false</Outside>
-              <Position id="1188" x="400" y="300"/>
+              <Position id="1188">400,300</Position>
               <Radius id="1189">40</Radius>
               <SubjectView id="1190">false</SubjectView>
               <UIEnabled id="1191">false</UIEnabled>
               <UIInfo id="1192">
                 <OpenDescendant id="1193">0</OpenDescendant>
-                <Pos id="1194" x="174" y="599"/>
+                <Pos id="1194">174,599</Pos>
               </UIInfo>
               <UIOrder id="1195">0</UIOrder>
               <Visible id="1196">true</Visible>
             </ControlTarget>
             <ControlTarget type="CircleTarget" id="1256">
-              <Color A="255" B="0" G="255" R="0" id="1257">#00ff00</Color>
+              <Color id="1257">0,255,0,255</Color>
               <Layer id="1258">0</Layer>
               <Name id="1259">sacTarget</Name>
               <OperatorView id="1260">true</OperatorView>
               <Outside id="1261">false</Outside>
-              <Position id="1262" x="0" y="0"/>
+              <Position id="1262">0,0</Position>
               <Radius id="1263">100</Radius>
               <SubjectView id="1264">false</SubjectView>
               <UIEnabled id="1265">false</UIEnabled>
               <UIInfo id="1266">
                 <OpenDescendant id="1267">0</OpenDescendant>
-                <Pos id="1268" x="303" y="598"/>
+                <Pos id="1268">303,598</Pos>
               </UIInfo>
               <UIOrder id="1269">0</UIOrder>
               <Visible id="1270">true</Visible>
@@ -1529,7 +1529,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1357">true</UIEnabled>
               <UIInfo id="1358">
                 <OpenDescendant id="1359">0</OpenDescendant>
-                <Pos id="1360" x="172" y="712"/>
+                <Pos id="1360">172,712</Pos>
               </UIInfo>
               <UIOrder id="1361">0</UIOrder>
               <Units id="1362"/>
@@ -1543,7 +1543,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1377">true</UIEnabled>
               <UIInfo id="1378">
                 <OpenDescendant id="1379">0</OpenDescendant>
-                <Pos id="1380" x="281" y="710"/>
+                <Pos id="1380">281,710</Pos>
               </UIInfo>
               <UIOrder id="1381">0</UIOrder>
               <Units id="1382"/>
@@ -1576,26 +1576,26 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             </Transition>
 
             <VisualElement type="Box Graphic" id="1130">
-              <Color A="255" B="0" G="255" R="255" id="1131">#ffff00</Color>
-              <Dimensions height="20" id="1132" width="20" x="0" y="0"/>
+              <Color id="1131">255,255,0,255</Color>
+              <Dimensions id="1132">0,0,20,20</Dimensions>
               <Layer id="1133">0</Layer>
               <Name id="1146">fixGraphic</Name>
               <OperatorView id="1147">true</OperatorView>
               <Outline id="1148">false</Outline>
               <OutlineThickness id="1149">0</OutlineThickness>
-              <Position id="1150" x="400" y="300"/>
+              <Position id="1150">400,300</Position>
               <SubjectView id="1151">true</SubjectView>
               <UIEnabled id="1152">false</UIEnabled>
               <UIInfo id="1153">
                 <OpenDescendant id="1166">0</OpenDescendant>
-                <Pos id="1167" x="160" y="481"/>
+                <Pos id="1167">160,481</Pos>
               </UIInfo>
               <UIOrder id="1168">0</UIOrder>
               <Visible id="1169">true</Visible>
             </VisualElement>
             <VisualElement type="Token Tray Graphic" id="1208">
-              <Color A="255" B="0" G="0" R="0" id="1209">#000000</Color>
-              <Dimensions height="200" id="1210" width="200" x="0" y="0"/>
+              <Color id="1209">0,0,0,255</Color>
+              <Dimensions id="1210">0,0,200,200</Dimensions>
               <Layer id="1211">0</Layer>
               <Name id="1212">tokenTray</Name>
               <NumTokens id="1213">8</NumTokens>
@@ -1603,11 +1603,11 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <Outline id="1215">false</Outline>
               <OutlineWidth id="1216">0</OutlineWidth>
               <Phase id="1217">0</Phase>
-              <Position id="1218" x="400" y="300"/>
+              <Position id="1218">400,300</Position>
               <Shape id="1219">Ellipse</Shape>
               <SubjectView id="1220">true</SubjectView>
               <TokenColors id="1221">#000000,#000000,#000000,#000000,#000000,#000000,#000000,#000000</TokenColors>
-              <TokenDimensions height="30" id="1222" width="30" x="0" y="0"/>
+              <TokenDimensions id="1222">0,0,30,30</TokenDimensions>
               <TokenOutlineWidths id="1223">0,0,0,0,0,0,0,0</TokenOutlineWidths>
               <TokenOutlines id="1224">0,0,0,0,0,0,0,0</TokenOutlines>
               <TokenShape id="1225">Ellipse</TokenShape>
@@ -1616,7 +1616,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1228">false</UIEnabled>
               <UIInfo id="1229">
                 <OpenDescendant id="1230">0</OpenDescendant>
-                <Pos id="1231" x="292" y="482"/>
+                <Pos id="1231">292,482</Pos>
               </UIInfo>
               <UIOrder id="1232">0</UIOrder>
               <Visible id="1233">false</Visible>
@@ -1634,7 +1634,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1885">true</UIEnabled>
               <UIInfo id="1886">
                 <OpenDescendant id="1887">0</OpenDescendant>
-                <Pos id="1888" x="404" y="710"/>
+                <Pos id="1888">404,710</Pos>
               </UIInfo>
               <UIOrder id="1889">0</UIOrder>
               <Units id="1890"/>
@@ -1653,7 +1653,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="2055">true</UIEnabled>
                 <UIInfo id="2056">
                   <OpenDescendant id="2057">0</OpenDescendant>
-                  <Pos id="2058" x="261" y="521"/>
+                  <Pos id="2058">261,521</Pos>
                 </UIInfo>
                 <UIOrder id="2059">0</UIOrder>
                 <Units id="2060"/>
@@ -1664,7 +1664,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="2042">false</UIEnabled>
                 <UIInfo id="2043">
                   <OpenDescendant id="2044">0</OpenDescendant>
-                  <Pos id="2045" x="599" y="317"/>
+                  <Pos id="2045">599,317</Pos>
                 </UIInfo>
                 <UIOrder id="2046">0</UIOrder>
               </Result>
@@ -1681,12 +1681,12 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="1983">false</UIEnabled>
                 <UIInfo id="1984">
                   <OpenDescendant id="1985">0</OpenDescendant>
-                  <Pos id="1986" x="319" y="301"/>
+                  <Pos id="1986">319,301</Pos>
                 </UIInfo>
                 <UIOrder id="1987">0</UIOrder>
               </StateMachineElement>
               <StateMachineElement type="State" id="1996">
-                <BackgroundColor A="255" B="0" G="0" R="0" id="1997">#000000</BackgroundColor>
+                <BackgroundColor id="1997">0,0,0,255</BackgroundColor>
                 <ControlElement type="Stopwatch Controller" id="2014">
                   <Name id="2015">feedbackTimer</Name>
                   <Result id="1812">
@@ -1698,7 +1698,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="2019">false</UIEnabled>
                   <UIInfo id="2020">
                     <OpenDescendant id="2021">0</OpenDescendant>
-                    <Pos id="2022" x="78" y="84"/>
+                    <Pos id="2022">78,84</Pos>
                   </UIInfo>
                   <UIOrder id="2023">0</UIOrder>
                 </ControlElement>
@@ -1711,7 +1711,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="2032">false</UIEnabled>
                   <UIInfo id="2033">
                     <OpenDescendant id="2034">0</OpenDescendant>
-                    <Pos id="2035" x="275" y="67"/>
+                    <Pos id="2035">275,67</Pos>
                   </UIInfo>
                   <UIOrder id="2036">0</UIOrder>
                 </Result>
@@ -1723,7 +1723,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="2002">false</UIEnabled>
                 <UIInfo id="2003">
                   <OpenDescendant id="2004">0</OpenDescendant>
-                  <Pos id="2005" x="456" y="306"/>
+                  <Pos id="2005">456,306</Pos>
                 </UIInfo>
                 <UIOrder id="2006">0</UIOrder>
               </StateMachineElement>
@@ -1746,7 +1746,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1964">false</UIEnabled>
               <UIInfo id="1965">
                 <OpenDescendant id="1966">0</OpenDescendant>
-                <Pos id="1967" x="822" y="254"/>
+                <Pos id="1967">822,254</Pos>
               </UIInfo>
               <UIOrder id="1968">0</UIOrder>
             </StateMachineElement>
@@ -1758,7 +1758,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2013">true</UIEnabled>
               <UIInfo id="2024">
                 <OpenDescendant id="2025">0</OpenDescendant>
-                <Pos id="2026" x="165" y="822"/>
+                <Pos id="2026">165,822</Pos>
               </UIInfo>
               <UIOrder id="2027">0</UIOrder>
               <Units id="2028"/>
@@ -1772,7 +1772,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2069">true</UIEnabled>
               <UIInfo id="2070">
                 <OpenDescendant id="2071">0</OpenDescendant>
-                <Pos id="2072" x="290" y="819"/>
+                <Pos id="2072">290,819</Pos>
               </UIInfo>
               <UIOrder id="2073">0</UIOrder>
               <Units id="2074"/>
@@ -1786,7 +1786,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2089">true</UIEnabled>
               <UIInfo id="2090">
                 <OpenDescendant id="2091">0</OpenDescendant>
-                <Pos id="2092" x="401" y="818"/>
+                <Pos id="2092">401,818</Pos>
               </UIInfo>
               <UIOrder id="2093">0</UIOrder>
               <Units id="2094"/>
@@ -1806,7 +1806,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2117">true</UIEnabled>
               <UIInfo id="2118">
                 <OpenDescendant id="2119">0</OpenDescendant>
-                <Pos id="2120" x="504" y="709"/>
+                <Pos id="2120">504,709</Pos>
               </UIInfo>
               <UIOrder id="2121">0</UIOrder>
               <Units id="2122"/>
@@ -1819,7 +1819,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2150">false</UIEnabled>
               <UIInfo id="2151">
                 <OpenDescendant id="2152">0</OpenDescendant>
-                <Pos id="2153" x="524" y="816"/>
+                <Pos id="2153">524,816</Pos>
               </UIInfo>
               <UIOrder id="2154">0</UIOrder>
               <Value id="2155">false</Value>
@@ -1844,7 +1844,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2136">false</UIEnabled>
               <UIInfo id="2137">
                 <OpenDescendant id="2138">0</OpenDescendant>
-                <Pos id="2139" x="568" y="254"/>
+                <Pos id="2139">568,254</Pos>
               </UIInfo>
               <UIOrder id="2140">0</UIOrder>
             </StateMachineElement>
@@ -1867,7 +1867,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2223">true</UIEnabled>
               <UIInfo id="2224">
                 <OpenDescendant id="2225">0</OpenDescendant>
-                <Pos id="2226" x="620" y="710"/>
+                <Pos id="2226">620,710</Pos>
               </UIInfo>
               <UIOrder id="2227">0</UIOrder>
               <Units id="2228"/>
@@ -1881,7 +1881,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="2243">true</UIEnabled>
               <UIInfo id="2244">
                 <OpenDescendant id="2245">0</OpenDescendant>
-                <Pos id="2246" x="721" y="704"/>
+                <Pos id="2246">721,704</Pos>
               </UIInfo>
               <UIOrder id="2247">0</UIOrder>
               <Units id="2248"/>
@@ -1900,12 +1900,12 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="5390">false</UIEnabled>
                 <UIInfo id="5391">
                   <OpenDescendant id="5392">0</OpenDescendant>
-                  <Pos id="5393" x="539" y="189"/>
+                  <Pos id="5393">539,189</Pos>
                 </UIInfo>
                 <UIOrder id="5394">0</UIOrder>
               </Result>
               <StateMachineElement type="State" id="5282">
-                <BackgroundColor A="255" B="0" G="0" R="0" id="5283">#000000</BackgroundColor>
+                <BackgroundColor id="5283">0,0,0,255</BackgroundColor>
                 <EntryScript id="5284">testTimer.restart();</EntryScript>
                 <ExitScript id="5285"/>
                 <FrameScript id="5286"/>
@@ -1913,7 +1913,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="5288">false</UIEnabled>
                 <UIInfo id="5289">
                   <OpenDescendant id="5290">0</OpenDescendant>
-                  <Pos id="5291" x="171" y="225"/>
+                  <Pos id="5291">171,225</Pos>
                 </UIInfo>
                 <UIOrder id="5292">0</UIOrder>
                 <ControlElement type="Target Controller" id="5482">
@@ -1948,7 +1948,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="5496">false</UIEnabled>
                   <UIInfo id="5497">
                     <OpenDescendant id="5498">0</OpenDescendant>
-                    <Pos id="5499" x="135" y="88"/>
+                    <Pos id="5499">135,88</Pos>
                   </UIInfo>
                   <UIOrder id="5500">0</UIOrder>
                 </ControlElement>
@@ -1957,7 +1957,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="5518">false</UIEnabled>
                   <UIInfo id="5519">
                     <OpenDescendant id="5520">0</OpenDescendant>
-                    <Pos id="5521" x="461" y="114"/>
+                    <Pos id="5521">461,114</Pos>
                   </UIInfo>
                   <UIOrder id="5522">0</UIOrder>
                 </Result>
@@ -1966,7 +1966,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="5528">false</UIEnabled>
                   <UIInfo id="5529">
                     <OpenDescendant id="5530">0</OpenDescendant>
-                    <Pos id="5531" x="469" y="240"/>
+                    <Pos id="5531">469,240</Pos>
                   </UIInfo>
                   <UIOrder id="5532">0</UIOrder>
                 </Result>
@@ -1997,7 +1997,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 </Transition>
               </StateMachineElement>
               <StateMachineElement type="State" id="5300">
-                <BackgroundColor A="255" B="0" G="0" R="0" id="5301">#000000</BackgroundColor>
+                <BackgroundColor id="5301">0,0,0,255</BackgroundColor>
                 <ControlElement type="Target Controller" id="5318">
                   <ControlTarget id="5319">sacTarget</ControlTarget>
                   <FixationTime id="5320">100</FixationTime>
@@ -2030,7 +2030,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="5332">false</UIEnabled>
                   <UIInfo id="5333">
                     <OpenDescendant id="5334">0</OpenDescendant>
-                    <Pos id="5335" x="121" y="113"/>
+                    <Pos id="5335">121,113</Pos>
                   </UIInfo>
                   <UIOrder id="5336">0</UIOrder>
                 </ControlElement>
@@ -2049,7 +2049,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="5356">false</UIEnabled>
                   <UIInfo id="5357">
                     <OpenDescendant id="5358">0</OpenDescendant>
-                    <Pos id="5359" x="156" y="491"/>
+                    <Pos id="5359">156,491</Pos>
                   </UIInfo>
                   <UIOrder id="5360">0</UIOrder>
                   <Value id="5361">false</Value>
@@ -2059,7 +2059,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="5370">false</UIEnabled>
                   <UIInfo id="5371">
                     <OpenDescendant id="5372">0</OpenDescendant>
-                    <Pos id="5373" x="404" y="120"/>
+                    <Pos id="5373">404,120</Pos>
                   </UIInfo>
                   <UIOrder id="5374">0</UIOrder>
                 </Result>
@@ -2068,7 +2068,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                   <UIEnabled id="5380">false</UIEnabled>
                   <UIInfo id="5381">
                     <OpenDescendant id="5382">0</OpenDescendant>
-                    <Pos id="5383" x="404" y="275"/>
+                    <Pos id="5383">404,275</Pos>
                   </UIInfo>
                   <UIOrder id="5384">0</UIOrder>
                 </Result>
@@ -2100,7 +2100,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="5306">false</UIEnabled>
                 <UIInfo id="5307">
                   <OpenDescendant id="5308">0</OpenDescendant>
-                  <Pos id="5309" x="341" y="224"/>
+                  <Pos id="5309">341,224</Pos>
                 </UIInfo>
                 <UIOrder id="5310">0</UIOrder>
               </StateMachineElement>
@@ -2108,7 +2108,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="5270">false</UIEnabled>
               <UIInfo id="5271">
                 <OpenDescendant id="5272">0</OpenDescendant>
-                <Pos id="5273" x="697" y="251"/>
+                <Pos id="5273">697,251</Pos>
               </UIInfo>
               <UIOrder id="5274">0</UIOrder>
               <Parameter type="Timer" id="5536">
@@ -2117,7 +2117,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="5539">false</UIEnabled>
                 <UIInfo id="5540">
                   <OpenDescendant id="5541">0</OpenDescendant>
-                  <Pos id="5542" x="136" y="400"/>
+                  <Pos id="5542">136,400</Pos>
                 </UIInfo>
                 <UIOrder id="5543">0</UIOrder>
               </Parameter>
@@ -2126,7 +2126,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
                 <UIEnabled id="5474">false</UIEnabled>
                 <UIInfo id="5475">
                   <OpenDescendant id="5476">0</OpenDescendant>
-                  <Pos id="5477" x="526" y="332"/>
+                  <Pos id="5477">526,332</Pos>
                 </UIInfo>
                 <UIOrder id="5478">0</UIOrder>
               </Result>
@@ -2173,7 +2173,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             </Transition>
           </StateMachineElement>
           <StateMachineElement type="State" id="994">
-            <BackgroundColor A="255" B="0" G="0" R="0" id="995">#000000</BackgroundColor>
+            <BackgroundColor id="995">0,0,0,255</BackgroundColor>
             <ControlElement type="Stopwatch Controller" id="1012">
               <Name id="1013">Timer</Name>
               <Result id="969">
@@ -2185,7 +2185,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1017">false</UIEnabled>
               <UIInfo id="1018">
                 <OpenDescendant id="1019">0</OpenDescendant>
-                <Pos id="1020" x="81" y="123"/>
+                <Pos id="1020">81,123</Pos>
               </UIInfo>
               <UIOrder id="1021">0</UIOrder>
             </ControlElement>
@@ -2203,14 +2203,14 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1030">false</UIEnabled>
               <UIInfo id="1031">
                 <OpenDescendant id="1032">0</OpenDescendant>
-                <Pos id="1033" x="294" y="164"/>
+                <Pos id="1033">294,164</Pos>
               </UIInfo>
               <UIOrder id="1034">0</UIOrder>
             </Result>
             <UIEnabled id="1000">false</UIEnabled>
             <UIInfo id="1001">
               <OpenDescendant id="1002">0</OpenDescendant>
-              <Pos id="1003" x="232" y="210"/>
+              <Pos id="1003">232,210</Pos>
             </UIInfo>
             <UIOrder id="1004">0</UIOrder>
             <Parameter type="Range" id="1060">
@@ -2221,7 +2221,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
               <UIEnabled id="1065">true</UIEnabled>
               <UIInfo id="1066">
                 <OpenDescendant id="1067">0</OpenDescendant>
-                <Pos id="1068" x="63" y="396"/>
+                <Pos id="1068">63,396</Pos>
               </UIInfo>
               <UIOrder id="1069">0</UIOrder>
               <Units id="1070"/>
@@ -2252,7 +2252,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1082">false</UIEnabled>
             <UIInfo id="1083">
               <OpenDescendant id="1084">0</OpenDescendant>
-              <Pos id="1085" x="96" y="529"/>
+              <Pos id="1085">96,529</Pos>
             </UIInfo>
             <UIOrder id="1086">0</UIOrder>
             <UseSeed id="1087">false</UseSeed>
@@ -2272,7 +2272,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1139">true</UIEnabled>
             <UIInfo id="1140">
               <OpenDescendant id="1141">0</OpenDescendant>
-              <Pos id="1142" x="95" y="638"/>
+              <Pos id="1142">95,638</Pos>
             </UIInfo>
             <UIOrder id="1143">0</UIOrder>
             <Units id="1144"/>
@@ -2286,25 +2286,25 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1159">true</UIEnabled>
             <UIInfo id="1160">
               <OpenDescendant id="1161">0</OpenDescendant>
-              <Pos id="1162" x="94" y="726"/>
+              <Pos id="1162">94,726</Pos>
             </UIInfo>
             <UIOrder id="1163">0</UIOrder>
             <Units id="1164"/>
             <Value id="1165">2</Value>
           </Parameter>
           <VisualElement type="Operator Info Graphic" id="1106">
-            <Color A="255" B="0" G="255" R="0" id="1107">#00ff00</Color>
-            <Dimensions height="0" id="1108" width="0" x="0" y="0"/>
+            <Color id="1107">0,255,0,255</Color>
+            <Dimensions id="1108">0,0,0,0</Dimensions>
             <Fields id="1109"/>
             <Layer id="1110">0</Layer>
             <Name id="1111">targetCounter</Name>
             <OperatorView id="1112">false</OperatorView>
-            <Position id="1113" x="0" y="0"/>
+            <Position id="1113">0,0</Position>
             <SubjectView id="1114">false</SubjectView>
             <UIEnabled id="1115">false</UIEnabled>
             <UIInfo id="1116">
               <OpenDescendant id="1117">0</OpenDescendant>
-              <Pos id="1118" x="258" y="531"/>
+              <Pos id="1118">258,531</Pos>
             </UIInfo>
             <UIOrder id="1119">0</UIOrder>
             <Values id="1120"/>
@@ -2329,7 +2329,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <UIEnabled id="1574">false</UIEnabled>
             <UIInfo id="1575">
               <OpenDescendant id="1576">0</OpenDescendant>
-              <Pos id="1577" x="514" y="290"/>
+              <Pos id="1577">514,290</Pos>
             </UIInfo>
             <UIOrder id="1578">0</UIOrder>
           </StateMachineElement>
@@ -2341,7 +2341,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
 
 
           <StateMachineElement type="PausePoint" id="5132">
-            <BackgroundColor A="255" B="0" G="0" R="0" id="5133">#000000</BackgroundColor>
+            <BackgroundColor id="5133">0,0,0,255</BackgroundColor>
             <ForcePause id="5134">false</ForcePause>
             <Name id="5135">Pause</Name>
             <PausingScript id="5136"/>
@@ -2349,14 +2349,14 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
             <Result id="3501">
               <Name id="3502">done</Name>
               <UIInfo id="3494">
-                <Pos id="3496" x="2000" y="2000"/>
+                <Pos id="3496">2000,2000</Pos>
               </UIInfo>
             </Result>
             <Type id="5138">PausePoint</Type>
             <UIEnabled id="5139">false</UIEnabled>
             <UIInfo id="5140">
               <OpenDescendant id="5141">0</OpenDescendant>
-              <Pos id="5142" x="88" y="210"/>
+              <Pos id="5142">88,210</Pos>
             </UIInfo>
             <UIOrder id="5143">0</UIOrder>
           </StateMachineElement>
@@ -2390,30 +2390,30 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
         <UIEnabled id="643">false</UIEnabled>
         <UIInfo id="644">
           <OpenDescendant id="3516">0</OpenDescendant>
-          <Pos id="3517" x="2000" y="2000"/>
+          <Pos id="3517">2000,2000</Pos>
         </UIInfo>
         <UIOrder id="3518">0</UIOrder>
 
         <VisualElement type="Operator Info Graphic" id="2190">
-          <Color A="255" B="0" G="255" R="0" id="2191">#00ff00</Color>
-          <Dimensions height="20" id="2192" width="800" x="0" y="0"/>
+          <Color id="2191">0,255,0,255</Color>
+          <Dimensions id="2192">0,0,800,20</Dimensions>
           <Fields id="2193"/>
           <Layer id="2194">0</Layer>
           <Name id="2195">expInfo</Name>
           <OperatorView id="2196">true</OperatorView>
-          <Position id="2197" x="0" y="580"/>
+          <Position id="2197">0,580</Position>
           <SubjectView id="2198">false</SubjectView>
           <UIEnabled id="2199">false</UIEnabled>
           <UIInfo id="2200">
             <OpenDescendant id="2201">0</OpenDescendant>
-            <Pos id="2202" x="343" y="475"/>
+            <Pos id="2202">343,475</Pos>
           </UIInfo>
           <UIOrder id="2203">0</UIOrder>
           <Values id="2204"/>
           <Visible id="2205">true</Visible>
         </VisualElement>
         <StateMachineElement type="PausePoint" id="5166">
-          <BackgroundColor A="255" B="0" G="0" R="0" id="5167">#000000</BackgroundColor>
+          <BackgroundColor id="5167">0,0,0,255</BackgroundColor>
           <ForcePause id="5168">true</ForcePause>
           <Name id="5169">WaitForOperator</Name>
           <PausingScript id="5170">
@@ -2424,29 +2424,29 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
           <Result id="3595">
             <Name id="3596">done</Name>
             <UIInfo id="3598">
-              <Pos id="3600" x="1790" y="1991"/>
+              <Pos id="3600">1790,1991</Pos>
             </UIInfo>
           </Result>
           <Type id="5172">PausePoint</Type>
           <UIEnabled id="5173">false</UIEnabled>
           <UIInfo id="5174">
             <OpenDescendant id="5175">0</OpenDescendant>
-            <Pos id="5176" x="485" y="183"/>
+            <Pos id="5176">485,183</Pos>
           </UIInfo>
           <UIOrder id="5177">0</UIOrder>
           <VisualElement type="Text Graphic" id="5238">
-            <Color A="255" B="0" G="255" R="255" id="5239">#ffff00</Color>
-            <Dimensions height="40" id="5240" width="400" x="0" y="0"/>
+            <Color id="5239">255,255,0,255</Color>
+            <Dimensions id="5240">0,0,400,40</Dimensions>
             <Layer id="5241">0</Layer>
             <Name id="5242">info</Name>
             <OperatorView id="5243">true</OperatorView>
-            <Position id="5244" x="260" y="280"/>
+            <Position id="5244">260,280</Position>
             <SubjectView id="5245">false</SubjectView>
             <Text id="5246"/>
             <UIEnabled id="5247">false</UIEnabled>
             <UIInfo id="5248">
               <OpenDescendant id="5249">0</OpenDescendant>
-              <Pos id="5250" x="1679" y="2085"/>
+              <Pos id="5250">1679,2085</Pos>
             </UIInfo>
             <UIOrder id="5251">0</UIOrder>
             <Visible id="5252">true</Visible>
@@ -2469,7 +2469,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
           <UIEnabled id="5190">false</UIEnabled>
           <UIInfo id="5191">
             <OpenDescendant id="5192">0</OpenDescendant>
-            <Pos id="5193" x="273" y="67"/>
+            <Pos id="5193">273,67</Pos>
           </UIInfo>
           <UIOrder id="5194">0</UIOrder>
         </StateMachineElement>
@@ -2496,7 +2496,7 @@ targetLocs.tokenHeight = targetSize.value;</EntryScript>
       </StateMachine>
       <UIInfo id="3554">
         <OpenDescendant id="3555">0</OpenDescendant>
-        <Pos id="3556" x="1626" y="1875"/>
+        <Pos id="3556">1626,1875</Pos>
       </UIInfo>
     </Task>
 </Experiment></PictoData>

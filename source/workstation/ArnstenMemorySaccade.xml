@@ -1,9 +1,9 @@
 <PictoData><Name>ArnstenMemorySaccade</Name><AnalysisContainer id="0">
     
-  <AnalysisDefinition id="0"><UIInfo id="0"><Pos id="" x="2000" y="2000"/></UIInfo></AnalysisDefinition></AnalysisContainer><Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
+  <AnalysisDefinition id="0"><UIInfo id="0"><Pos id="">2000,2000</Pos></UIInfo></AnalysisDefinition></AnalysisContainer><Experiment id="1"><SyntaxVersion id="2">0.0.2</SyntaxVersion>
     
 <UIInfo id="390">
-	<Pos id="392" x="0" y="0"/>
+	<Pos id="392">0,0</Pos>
 <OpenDescendant id="588">1</OpenDescendant></UIInfo>
 
 <XGain id="394">1</XGain>
@@ -33,7 +33,7 @@
           <UIEnabled id="1699">true</UIEnabled>
           <UIInfo id="1700">
             <OpenDescendant id="1701">0</OpenDescendant>
-            <Pos id="690" x="241" y="472"/>
+            <Pos id="690">241,472</Pos>
           </UIInfo>
           <UIOrder id="1702">0</UIOrder>
           <Units id="1703"/>
@@ -44,7 +44,7 @@
           <UIEnabled id="736">false</UIEnabled>
           <UIInfo id="737">
             <OpenDescendant id="738">0</OpenDescendant>
-            <Pos id="1717" x="137" y="472"/>
+            <Pos id="1717">137,472</Pos>
           </UIInfo>
           <UIOrder id="1718">0</UIOrder>
           <Units id="1719"/>
@@ -72,7 +72,7 @@
             <UIEnabled id="1729">false</UIEnabled>
             <UIInfo id="1730">
               <OpenDescendant id="1731">0</OpenDescendant>
-              <Pos id="1732" x="850" y="276"/>
+              <Pos id="1732">850,276</Pos>
             </UIInfo>
             <UIOrder id="1733">0</UIOrder>
           </Result>
@@ -108,7 +108,7 @@
             <UIEnabled id="1780">false</UIEnabled>
             <UIInfo id="1798">
               <OpenDescendant id="1799">0</OpenDescendant>
-              <Pos id="1800" x="509" y="116"/>
+              <Pos id="1800">509,116</Pos>
             </UIInfo>
             <UIOrder id="1801">0</UIOrder>
           </StateMachineElement>
@@ -121,7 +121,7 @@
           <UIEnabled id="1815">false</UIEnabled>
           <UIInfo id="1818">
             <OpenDescendant id="724">0</OpenDescendant>
-            <Pos id="1819" x="132" y="246"/>
+            <Pos id="1819">132,246</Pos>
           </UIInfo>
           <UIOrder id="1820">0</UIOrder>
           <Parameter type="Numeric" id="1828">
@@ -129,7 +129,7 @@
             <UIEnabled id="1830">false</UIEnabled>
             <UIInfo id="1834">
               <OpenDescendant id="1839">0</OpenDescendant>
-              <Pos id="1840" x="85" y="439"/>
+              <Pos id="1840">85,439</Pos>
             </UIInfo>
             <UIOrder id="1841">0</UIOrder>
             <Units id="1844"/>
@@ -158,7 +158,7 @@
             <UIEnabled id="1971">false</UIEnabled>
             <UIInfo id="861">
               <OpenDescendant id="862">0</OpenDescendant>
-              <Pos id="863" x="360" y="210"/>
+              <Pos id="863">360,210</Pos>
             </UIInfo>
             <UIOrder id="864">0</UIOrder>
             <Result id="902">
@@ -166,7 +166,7 @@
               <UIEnabled id="904">false</UIEnabled>
               <UIInfo id="905">
                 <OpenDescendant id="1972">0</OpenDescendant>
-                <Pos id="1973" x="1139" y="362"/>
+                <Pos id="1973">1139,362</Pos>
               </UIInfo>
               <UIOrder id="908">0</UIOrder>
             </Result>
@@ -175,12 +175,12 @@
               <UIEnabled id="914">false</UIEnabled>
               <UIInfo id="2047">
                 <OpenDescendant id="2048">0</OpenDescendant>
-                <Pos id="2049" x="1135" y="271"/>
+                <Pos id="2049">1135,271</Pos>
               </UIInfo>
               <UIOrder id="2076">0</UIOrder>
             </Result>
             <StateMachineElement type="State" id="2080">
-              <BackgroundColor A="255" B="0" G="0" R="0" id="923">#000000</BackgroundColor>
+              <BackgroundColor id="923">0,0,0,255</BackgroundColor>
               <EntryScript id="924">fixationController.fixationTime = fixationHoldMs.value;
 fixationController.maxAcquisitionTime = fixationAcqMs.value;
 fixationController.totalTime = fixationController.fixationTime+fixationController.maxAcquisitionTime;
@@ -201,7 +201,7 @@ if(usePhotodetectors.value)
               <UIEnabled id="2099">false</UIEnabled>
               <UIInfo id="2102">
                 <OpenDescendant id="2103">0</OpenDescendant>
-                <Pos id="2104" x="101" y="218"/>
+                <Pos id="2104">101,218</Pos>
               </UIInfo>
               <UIOrder id="2105">0</UIOrder>
               <ControlElement type="Target Controller" id="1282">
@@ -236,7 +236,7 @@ if(usePhotodetectors.value)
                 <UIEnabled id="1296">false</UIEnabled>
                 <UIInfo id="1297">
                   <OpenDescendant id="1298">0</OpenDescendant>
-                  <Pos id="1299" x="155" y="79"/>
+                  <Pos id="1299">155,79</Pos>
                 </UIInfo>
                 <UIOrder id="1300">0</UIOrder>
               </ControlElement>
@@ -247,7 +247,7 @@ if(usePhotodetectors.value)
                 <UIEnabled id="1320">false</UIEnabled>
                 <UIInfo id="1321">
                   <OpenDescendant id="1322">0</OpenDescendant>
-                  <Pos id="1323" x="132" y="468"/>
+                  <Pos id="1323">132,468</Pos>
                 </UIInfo>
                 <UIOrder id="1324">0</UIOrder>
                 <Value id="1325">false</Value>
@@ -257,7 +257,7 @@ if(usePhotodetectors.value)
                 <UIEnabled id="1334">false</UIEnabled>
                 <UIInfo id="1335">
                   <OpenDescendant id="1336">0</OpenDescendant>
-                  <Pos id="1337" x="487" y="271"/>
+                  <Pos id="1337">487,271</Pos>
                 </UIInfo>
                 <UIOrder id="1338">0</UIOrder>
               </Result>
@@ -266,7 +266,7 @@ if(usePhotodetectors.value)
                 <UIEnabled id="1344">false</UIEnabled>
                 <UIInfo id="1345">
                   <OpenDescendant id="1346">0</OpenDescendant>
-                  <Pos id="1347" x="477" y="367"/>
+                  <Pos id="1347">477,367</Pos>
                 </UIInfo>
                 <UIOrder id="1348">0</UIOrder>
               </Result>
@@ -295,9 +295,9 @@ if(usePhotodetectors.value)
                 <Source id="909">fixationController</Source>
                 <SourceResult id="2376">Broke Fixation</SourceResult>
               </Transition>
-            <Parameter type="Numeric" id="1588"><Name id="1589">fixationAcqMs</Name><UIEnabled id="1590">true</UIEnabled><UIInfo id="1591"><OpenDescendant id="1592">0</OpenDescendant><Pos id="1593" x="126" y="643"/></UIInfo><UIOrder id="1594">0</UIOrder><Units id="1595"/><Value id="1596">500</Value></Parameter><Parameter type="Numeric" id="1662"><Name id="1663">fixationHoldMs</Name><UIEnabled id="1664">true</UIEnabled><UIInfo id="1665"><OpenDescendant id="1666">0</OpenDescendant><Pos id="1667" x="130" y="746"/></UIInfo><UIOrder id="1668">0</UIOrder><Units id="1669"/><Value id="1670">500</Value></Parameter></StateMachineElement>
+            <Parameter type="Numeric" id="1588"><Name id="1589">fixationAcqMs</Name><UIEnabled id="1590">true</UIEnabled><UIInfo id="1591"><OpenDescendant id="1592">0</OpenDescendant><Pos id="1593">126,643</Pos></UIInfo><UIOrder id="1594">0</UIOrder><Units id="1595"/><Value id="1596">500</Value></Parameter><Parameter type="Numeric" id="1662"><Name id="1663">fixationHoldMs</Name><UIEnabled id="1664">true</UIEnabled><UIInfo id="1665"><OpenDescendant id="1666">0</OpenDescendant><Pos id="1667">130,746</Pos></UIInfo><UIOrder id="1668">0</UIOrder><Units id="1669"/><Value id="1670">500</Value></Parameter></StateMachineElement>
             <StateMachineElement type="State" id="940">
-              <BackgroundColor A="255" B="0" G="0" R="0" id="941">#000000</BackgroundColor>
+              <BackgroundColor id="941">0,0,0,255</BackgroundColor>
               <EntryScript id="942">																																																tokenTray.visible= true;
 																																																tokenTray.setTokenColor(targetSelector.value,cueR.value,cueG.value,cueB.value,255);
 																																																cueController.fixationTime = cueMs.value;
@@ -319,7 +319,7 @@ calibratePos();
               <UIEnabled id="2387">false</UIEnabled>
               <UIInfo id="2388">
                 <OpenDescendant id="2389">0</OpenDescendant>
-                <Pos id="2390" x="387" y="197"/>
+                <Pos id="2390">387,197</Pos>
               </UIInfo>
               <UIOrder id="950">0</UIOrder>
               <ControlElement type="Target Controller" id="1392">
@@ -354,7 +354,7 @@ calibratePos();
                 <UIEnabled id="1406">false</UIEnabled>
                 <UIInfo id="1407">
                   <OpenDescendant id="1408">0</OpenDescendant>
-                  <Pos id="1409" x="119" y="98"/>
+                  <Pos id="1409">119,98</Pos>
                 </UIInfo>
                 <UIOrder id="1410">0</UIOrder>
               </ControlElement>
@@ -363,7 +363,7 @@ calibratePos();
                 <UIEnabled id="1428">false</UIEnabled>
                 <UIInfo id="1429">
                   <OpenDescendant id="1430">0</OpenDescendant>
-                  <Pos id="1431" x="443" y="109"/>
+                  <Pos id="1431">443,109</Pos>
                 </UIInfo>
                 <UIOrder id="1432">0</UIOrder>
               </Result>
@@ -372,7 +372,7 @@ calibratePos();
                 <UIEnabled id="1438">false</UIEnabled>
                 <UIInfo id="1439">
                   <OpenDescendant id="1440">0</OpenDescendant>
-                  <Pos id="1441" x="456" y="230"/>
+                  <Pos id="1441">456,230</Pos>
                 </UIInfo>
                 <UIOrder id="1442">0</UIOrder>
               </Result>
@@ -401,9 +401,9 @@ calibratePos();
                 <Source id="1204">cueController</Source>
                 <SourceResult id="1205">Broke Fixation</SourceResult>
               </Transition>
-            <Parameter type="Numeric" id="1538"><Name id="1539">frameCtr</Name><UIEnabled id="1540">false</UIEnabled><UIInfo id="1541"><OpenDescendant id="1542">0</OpenDescendant><Pos id="1555" x="134" y="370"/></UIInfo><UIOrder id="1556">0</UIOrder><Units id="1557"/><Value id="1558">0</Value></Parameter><Parameter type="Numeric" id="1602"><Name id="1603">cueMs</Name><UIEnabled id="1604">true</UIEnabled><UIInfo id="1605"><OpenDescendant id="1606">0</OpenDescendant><Pos id="1611" x="106" y="502"/></UIInfo><UIOrder id="1612">0</UIOrder><Units id="1613"/><Value id="1614">500</Value></Parameter></StateMachineElement>
+            <Parameter type="Numeric" id="1538"><Name id="1539">frameCtr</Name><UIEnabled id="1540">false</UIEnabled><UIInfo id="1541"><OpenDescendant id="1542">0</OpenDescendant><Pos id="1555">134,370</Pos></UIInfo><UIOrder id="1556">0</UIOrder><Units id="1557"/><Value id="1558">0</Value></Parameter><Parameter type="Numeric" id="1602"><Name id="1603">cueMs</Name><UIEnabled id="1604">true</UIEnabled><UIInfo id="1605"><OpenDescendant id="1606">0</OpenDescendant><Pos id="1611">106,502</Pos></UIInfo><UIOrder id="1612">0</UIOrder><Units id="1613"/><Value id="1614">500</Value></Parameter></StateMachineElement>
             <StateMachineElement type="State" id="958">
-              <BackgroundColor A="255" B="0" G="0" R="0" id="959">#000000</BackgroundColor>
+              <BackgroundColor id="959">0,0,0,255</BackgroundColor>
               <EntryScript id="960">																																																																DelayController.fixationTime = delayMs.value;
 																																																																DelayController.totalTime = DelayController.fixationTime+100;</EntryScript>
               <ExitScript id="961">fixGraphic.visible = false;
@@ -414,7 +414,7 @@ fixSigImg.visible = false;</ExitScript>
               <UIEnabled id="964">false</UIEnabled>
               <UIInfo id="965">
                 <OpenDescendant id="966">0</OpenDescendant>
-                <Pos id="967" x="534" y="197"/>
+                <Pos id="967">534,197</Pos>
               </UIInfo>
               <UIOrder id="968">0</UIOrder>
               <ControlElement type="Target Controller" id="1446">
@@ -449,7 +449,7 @@ fixSigImg.visible = false;</ExitScript>
                 <UIEnabled id="1460">false</UIEnabled>
                 <UIInfo id="1461">
                   <OpenDescendant id="1462">0</OpenDescendant>
-                  <Pos id="1463" x="123" y="105"/>
+                  <Pos id="1463">123,105</Pos>
                 </UIInfo>
                 <UIOrder id="1464">0</UIOrder>
               </ControlElement>
@@ -458,7 +458,7 @@ fixSigImg.visible = false;</ExitScript>
                 <UIEnabled id="1482">false</UIEnabled>
                 <UIInfo id="1483">
                   <OpenDescendant id="1484">0</OpenDescendant>
-                  <Pos id="1485" x="374" y="99"/>
+                  <Pos id="1485">374,99</Pos>
                 </UIInfo>
                 <UIOrder id="1486">0</UIOrder>
               </Result>
@@ -467,7 +467,7 @@ fixSigImg.visible = false;</ExitScript>
                 <UIEnabled id="1492">false</UIEnabled>
                 <UIInfo id="1493">
                   <OpenDescendant id="1494">0</OpenDescendant>
-                  <Pos id="1495" x="381" y="245"/>
+                  <Pos id="1495">381,245</Pos>
                 </UIInfo>
                 <UIOrder id="1496">0</UIOrder>
               </Result>
@@ -496,38 +496,38 @@ fixSigImg.visible = false;</ExitScript>
                 <Source id="1443">DelayController</Source>
                 <SourceResult id="1444">Broke Fixation</SourceResult>
               </Transition>
-            <Parameter type="Numeric" id="1620"><Name id="1621">delayMs</Name><UIEnabled id="1622">true</UIEnabled><UIInfo id="1623"><OpenDescendant id="1624">0</OpenDescendant><Pos id="1625" x="141" y="474"/></UIInfo><UIOrder id="1626">0</UIOrder><Units id="1627"/><Value id="1628">2500</Value></Parameter></StateMachineElement>
+            <Parameter type="Numeric" id="1620"><Name id="1621">delayMs</Name><UIEnabled id="1622">true</UIEnabled><UIInfo id="1623"><OpenDescendant id="1624">0</OpenDescendant><Pos id="1625">141,474</Pos></UIInfo><UIOrder id="1626">0</UIOrder><Units id="1627"/><Value id="1628">2500</Value></Parameter></StateMachineElement>
 
             <ControlTarget type="CircleTarget" id="1182">
-              <Color A="255" B="0" G="255" R="0" id="1183">#00ff00</Color>
+              <Color id="1183">0,255,0,255</Color>
               <Layer id="1184">0</Layer>
               <Name id="1185">fixTarget</Name>
               <OperatorView id="1186">true</OperatorView>
               <Outside id="1187">false</Outside>
-              <Position id="1188" x="400" y="300"/>
+              <Position id="1188">400,300</Position>
               <Radius id="1189">40</Radius>
               <SubjectView id="1190">false</SubjectView>
               <UIEnabled id="1191">false</UIEnabled>
               <UIInfo id="1192">
                 <OpenDescendant id="1193">0</OpenDescendant>
-                <Pos id="1194" x="162" y="775"/>
+                <Pos id="1194">162,775</Pos>
               </UIInfo>
               <UIOrder id="1195">0</UIOrder>
               <Visible id="1196">true</Visible>
             </ControlTarget>
             <ControlTarget type="CircleTarget" id="1256">
-              <Color A="255" B="0" G="255" R="0" id="1257">#00ff00</Color>
+              <Color id="1257">0,255,0,255</Color>
               <Layer id="1258">0</Layer>
               <Name id="1259">sacTarget</Name>
               <OperatorView id="1260">true</OperatorView>
               <Outside id="1261">false</Outside>
-              <Position id="1262" x="0" y="0"/>
+              <Position id="1262">0,0</Position>
               <Radius id="1263">100</Radius>
               <SubjectView id="1264">false</SubjectView>
               <UIEnabled id="1265">false</UIEnabled>
               <UIInfo id="1266">
                 <OpenDescendant id="1267">0</OpenDescendant>
-                <Pos id="1268" x="291" y="774"/>
+                <Pos id="1268">291,774</Pos>
               </UIInfo>
               <UIOrder id="1269">0</UIOrder>
               <Visible id="1270">true</Visible>
@@ -546,8 +546,8 @@ fixSigImg.visible = false;</ExitScript>
 
             
             <VisualElement type="Token Tray Graphic" id="1208">
-              <Color A="255" B="0" G="0" R="0" id="1209">#000000</Color>
-              <Dimensions height="200" id="1210" width="200" x="0" y="0"/>
+              <Color id="1209">0,0,0,255</Color>
+              <Dimensions id="1210">0,0,200,200</Dimensions>
               <Layer id="1211">0</Layer>
               <Name id="1212">tokenTray</Name>
               <NumTokens id="1213">8</NumTokens>
@@ -555,11 +555,11 @@ fixSigImg.visible = false;</ExitScript>
               <Outline id="1215">false</Outline>
               <OutlineWidth id="1216">0</OutlineWidth>
               <Phase id="1217">0</Phase>
-              <Position id="1218" x="400" y="300"/>
+              <Position id="1218">400,300</Position>
               <Shape id="1219">Ellipse</Shape>
               <SubjectView id="1220">true</SubjectView>
               <TokenColors id="1221">#000000,#000000,#000000,#000000,#000000,#000000,#000000,#000000</TokenColors>
-              <TokenDimensions height="30" id="1222" width="30" x="0" y="0"/>
+              <TokenDimensions id="1222">0,0,30,30</TokenDimensions>
               <TokenOutlineWidths id="1223">0,0,0,0,0,0,0,0</TokenOutlineWidths>
               <TokenOutlines id="1224">0,0,0,0,0,0,0,0</TokenOutlines>
               <TokenShape id="1225">Ellipse</TokenShape>
@@ -568,7 +568,7 @@ fixSigImg.visible = false;</ExitScript>
               <UIEnabled id="1228">false</UIEnabled>
               <UIInfo id="1229">
                 <OpenDescendant id="1230">0</OpenDescendant>
-                <Pos id="1231" x="213" y="566"/>
+                <Pos id="1231">213,566</Pos>
               </UIInfo>
               <UIOrder id="1232">0</UIOrder>
               <Visible id="1233">false</Visible>
@@ -603,13 +603,13 @@ fixSigImg.visible = false;</ExitScript>
                 <UIEnabled id="5390">false</UIEnabled>
                 <UIInfo id="5391">
                   <OpenDescendant id="5392">0</OpenDescendant>
-                  <Pos id="5393" x="397" y="127"/>
+                  <Pos id="5393">397,127</Pos>
                 </UIInfo>
                 <UIOrder id="5394">0</UIOrder>
               </Result>
               
               <StateMachineElement type="State" id="5300">
-                <BackgroundColor A="255" B="0" G="0" R="0" id="5301">#000000</BackgroundColor>
+                <BackgroundColor id="5301">0,0,0,255</BackgroundColor>
                 <ControlElement type="Target Controller" id="5318">
                   <ControlTarget id="5319">sacTarget</ControlTarget>
                   <FixationTime id="5320">100</FixationTime>
@@ -642,7 +642,7 @@ fixSigImg.visible = false;</ExitScript>
                   <UIEnabled id="5332">false</UIEnabled>
                   <UIInfo id="5333">
                     <OpenDescendant id="5334">0</OpenDescendant>
-                    <Pos id="5335" x="121" y="113"/>
+                    <Pos id="5335">121,113</Pos>
                   </UIInfo>
                   <UIOrder id="5336">0</UIOrder>
                 </ControlElement>
@@ -665,7 +665,7 @@ MemoryController.totalTime = MemoryController.fixationTime+MemoryController.maxA
                   <UIEnabled id="5356">false</UIEnabled>
                   <UIInfo id="5357">
                     <OpenDescendant id="5358">0</OpenDescendant>
-                    <Pos id="5359" x="113" y="491"/>
+                    <Pos id="5359">113,491</Pos>
                   </UIInfo>
                   <UIOrder id="5360">0</UIOrder>
                   <Value id="5361">false</Value>
@@ -675,7 +675,7 @@ MemoryController.totalTime = MemoryController.fixationTime+MemoryController.maxA
                   <UIEnabled id="5370">false</UIEnabled>
                   <UIInfo id="5371">
                     <OpenDescendant id="5372">0</OpenDescendant>
-                    <Pos id="5373" x="404" y="120"/>
+                    <Pos id="5373">404,120</Pos>
                   </UIInfo>
                   <UIOrder id="5374">0</UIOrder>
                 </Result>
@@ -684,7 +684,7 @@ MemoryController.totalTime = MemoryController.fixationTime+MemoryController.maxA
                   <UIEnabled id="5380">false</UIEnabled>
                   <UIInfo id="5381">
                     <OpenDescendant id="5382">0</OpenDescendant>
-                    <Pos id="5383" x="404" y="275"/>
+                    <Pos id="5383">404,275</Pos>
                   </UIInfo>
                   <UIOrder id="5384">0</UIOrder>
                 </Result>
@@ -712,15 +712,15 @@ MemoryController.totalTime = MemoryController.fixationTime+MemoryController.maxA
                 <UIEnabled id="5306">false</UIEnabled>
                 <UIInfo id="5307">
                   <OpenDescendant id="5308">0</OpenDescendant>
-                  <Pos id="5309" x="199" y="162"/>
+                  <Pos id="5309">199,162</Pos>
                 </UIInfo>
                 <UIOrder id="5310">0</UIOrder>
-              <Result id="1094"><Name id="1095">FailHold</Name><UIEnabled id="1096">false</UIEnabled><UIInfo id="1097"><OpenDescendant id="1098">0</OpenDescendant><Pos id="1099" x="404" y="368"/></UIInfo><UIOrder id="1100">0</UIOrder></Result><Transition id="437"><Destination id="438">FailHold</Destination><Source id="439">MemoryController</Source><SourceResult id="440">Broke Fixation</SourceResult></Transition><Parameter type="Numeric" id="1686"><Name id="1691">memAcqMs</Name><UIEnabled id="1692">true</UIEnabled><UIInfo id="1693"><OpenDescendant id="1694">0</OpenDescendant><Pos id="1695" x="120" y="579"/></UIInfo><UIOrder id="1696">0</UIOrder><Units id="1697"/><Value id="1698">1000</Value></Parameter><Parameter type="Numeric" id="1710"><Name id="1711">memHoldMs</Name><UIEnabled id="1712">true</UIEnabled><UIInfo id="1713"><OpenDescendant id="1714">0</OpenDescendant><Pos id="1715" x="118" y="669"/></UIInfo><UIOrder id="1716">0</UIOrder><Units id="1721"/><Value id="1722">100</Value></Parameter><Parameter type="Boolean" id="1852"><FalseLabel id="1853">False</FalseLabel><Name id="1876">useReminderCue</Name><TrueLabel id="1877">True</TrueLabel><UIEnabled id="1878">true</UIEnabled><UIInfo id="1879"><OpenDescendant id="1880">0</OpenDescendant><Pos id="1881" x="118" y="768"/></UIInfo><UIOrder id="1882">0</UIOrder><Value id="1883">false</Value></Parameter></StateMachineElement>
+              <Result id="1094"><Name id="1095">FailHold</Name><UIEnabled id="1096">false</UIEnabled><UIInfo id="1097"><OpenDescendant id="1098">0</OpenDescendant><Pos id="1099">404,368</Pos></UIInfo><UIOrder id="1100">0</UIOrder></Result><Transition id="437"><Destination id="438">FailHold</Destination><Source id="439">MemoryController</Source><SourceResult id="440">Broke Fixation</SourceResult></Transition><Parameter type="Numeric" id="1686"><Name id="1691">memAcqMs</Name><UIEnabled id="1692">true</UIEnabled><UIInfo id="1693"><OpenDescendant id="1694">0</OpenDescendant><Pos id="1695">120,579</Pos></UIInfo><UIOrder id="1696">0</UIOrder><Units id="1697"/><Value id="1698">1000</Value></Parameter><Parameter type="Numeric" id="1710"><Name id="1711">memHoldMs</Name><UIEnabled id="1712">true</UIEnabled><UIInfo id="1713"><OpenDescendant id="1714">0</OpenDescendant><Pos id="1715">118,669</Pos></UIInfo><UIOrder id="1716">0</UIOrder><Units id="1721"/><Value id="1722">100</Value></Parameter><Parameter type="Boolean" id="1852"><FalseLabel id="1853">False</FalseLabel><Name id="1876">useReminderCue</Name><TrueLabel id="1877">True</TrueLabel><UIEnabled id="1878">true</UIEnabled><UIInfo id="1879"><OpenDescendant id="1880">0</OpenDescendant><Pos id="1881">118,768</Pos></UIInfo><UIOrder id="1882">0</UIOrder><Value id="1883">false</Value></Parameter></StateMachineElement>
               <Type id="5269">StateMachine</Type>
               <UIEnabled id="5270">false</UIEnabled>
               <UIInfo id="5271">
                 <OpenDescendant id="5272">0</OpenDescendant>
-                <Pos id="5273" x="663" y="201"/>
+                <Pos id="5273">663,201</Pos>
               </UIInfo>
               <UIOrder id="5274">0</UIOrder>
               
@@ -729,7 +729,7 @@ MemoryController.totalTime = MemoryController.fixationTime+MemoryController.maxA
                 <UIEnabled id="5474">false</UIEnabled>
                 <UIInfo id="5475">
                   <OpenDescendant id="5476">0</OpenDescendant>
-                  <Pos id="5477" x="384" y="270"/>
+                  <Pos id="5477">384,270</Pos>
                 </UIInfo>
                 <UIOrder id="5478">0</UIOrder>
               </Result>
@@ -746,11 +746,11 @@ MemoryController.totalTime = MemoryController.fixationTime+MemoryController.maxA
               
               
               
-            <Transition id="1607"><Destination id="1608">EnterTarget</Destination><Source id="1609"/><SourceResult id="1610"/></Transition><Result id="1253"><Name id="1254">FailHold</Name><UIEnabled id="1255">false</UIEnabled><UIInfo id="1271"><OpenDescendant id="1272">0</OpenDescendant><Pos id="1273" x="389" y="389"/></UIInfo><UIOrder id="1276">0</UIOrder></Result><Transition id="454"><Destination id="455">FailHold</Destination><Source id="456">EnterTarget</Source><SourceResult id="457">FailHold</SourceResult></Transition></StateMachineElement>
+            <Transition id="1607"><Destination id="1608">EnterTarget</Destination><Source id="1609"/><SourceResult id="1610"/></Transition><Result id="1253"><Name id="1254">FailHold</Name><UIEnabled id="1255">false</UIEnabled><UIInfo id="1271"><OpenDescendant id="1272">0</OpenDescendant><Pos id="1273">389,389</Pos></UIInfo><UIOrder id="1276">0</UIOrder></Result><Transition id="454"><Destination id="455">FailHold</Destination><Source id="456">EnterTarget</Source><SourceResult id="457">FailHold</SourceResult></Transition></StateMachineElement>
             
             
             
-          <VisualElement type="Circle Graphic" id="2278"><Color A="255" B="255" G="255" R="255" id="2279">#ffffff</Color><Layer id="2280">0</Layer><Name id="2283">fixGraphic</Name><OperatorView id="2284">true</OperatorView><Outline id="2285">false</Outline><OutlineThickness id="2286">0</OutlineThickness><Position id="2287" x="400" y="300"/><Radius id="2288">15</Radius><SubjectView id="2289">true</SubjectView><UIEnabled id="2290">false</UIEnabled><UIInfo id="2291"><OpenDescendant id="2292">0</OpenDescendant><Pos id="2293" x="79" y="570"/></UIInfo><UIOrder id="2294">0</UIOrder><Visible id="2295">true</Visible></VisualElement><Parameter type="Numeric" id="2178"><Name id="2179">cueR</Name><UIEnabled id="2181">true</UIEnabled><UIInfo id="2183"><OpenDescendant id="2184">0</OpenDescendant><Pos id="2185" x="123" y="663"/></UIInfo><UIOrder id="2186">0</UIOrder><Units id="2187"/><Value id="2188">255</Value></Parameter><Parameter type="Numeric" id="2210"><Name id="2211">cueG</Name><UIEnabled id="2212">true</UIEnabled><UIInfo id="2213"><OpenDescendant id="2214">0</OpenDescendant><Pos id="2215" x="208" y="664"/></UIInfo><UIOrder id="2216">0</UIOrder><Units id="2217"/><Value id="2232">255</Value></Parameter><Parameter type="Numeric" id="2250"><Name id="2251">cueB</Name><UIEnabled id="2252">true</UIEnabled><UIInfo id="2253"><OpenDescendant id="2254">0</OpenDescendant><Pos id="2255" x="296" y="663"/></UIInfo><UIOrder id="2256">0</UIOrder><Units id="2257"/><Value id="2258">255</Value></Parameter><StateMachineElement type="Reward" id="1857"><MinRewardPeriod id="1858">60</MinRewardPeriod><Name id="1859">Reward</Name><NumRewards id="1860">1</NumRewards><Result id="1553"><Name id="1554">done</Name></Result><RewardChan id="1861">1</RewardChan><RewardQty id="1862">60</RewardQty><Type id="1863">Reward</Type><UIEnabled id="1864">false</UIEnabled><UIInfo id="1865"><OpenDescendant id="1866">0</OpenDescendant><Pos id="1867" x="797" y="200"/></UIInfo><UIOrder id="1868">0</UIOrder></StateMachineElement><Transition id="1580"><Destination id="1581">Reward</Destination><Source id="1582">Memory</Source><SourceResult id="1583">Success</SourceResult></Transition><Transition id="1563"><Destination id="1564">Memory</Destination><Source id="1565">Delay</Source><SourceResult id="1566">Success</SourceResult></Transition><OutputSignal type="BinaryDataOutput" id="785"><Enabled id="786">true</Enabled><Name id="787">eventCode</Name><Port id="788">PAR0</Port><UIEnabled id="789">false</UIEnabled><UIInfo id="790"><OpenDescendant id="791">0</OpenDescendant><Pos id="792" x="471" y="1044"/></UIInfo><UIOrder id="793">0</UIOrder><Value id="794">0</Value></OutputSignal><Parameter type="OperatorClick" id="727"><Name id="728">operatorClick</Name><NewClick id="729">false</NewClick><Pos id="730" x="397" y="289"/><UIEnabled id="731">false</UIEnabled><UIInfo id="732"><OpenDescendant id="733">0</OpenDescendant><Pos id="739" x="823" y="1078"/></UIInfo><UIOrder id="740">0</UIOrder></Parameter><Parameter type="SignalValue" id="746"><Name id="747">posSig</Name><Signal id="748">Position</Signal><UIEnabled id="749">false</UIEnabled><UIInfo id="750"><OpenDescendant id="751">0</OpenDescendant><Pos id="752" x="734" y="1077"/></UIInfo><UIOrder id="753">0</UIOrder></Parameter><ScriptFunction type="ScriptFunction" id="707"><Inputs id="708"/><Name id="709">calibratePos</Name><Script id="710">if(!operatorClick.newClick)
+          <VisualElement type="Circle Graphic" id="2278"><Color id="2279">255,255,255,255</Color><Layer id="2280">0</Layer><Name id="2283">fixGraphic</Name><OperatorView id="2284">true</OperatorView><Outline id="2285">false</Outline><OutlineThickness id="2286">0</OutlineThickness><Position id="2287">400,300</Position><Radius id="2288">15</Radius><SubjectView id="2289">true</SubjectView><UIEnabled id="2290">false</UIEnabled><UIInfo id="2291"><OpenDescendant id="2292">0</OpenDescendant><Pos id="2293">79,570</Pos></UIInfo><UIOrder id="2294">0</UIOrder><Visible id="2295">true</Visible></VisualElement><Parameter type="Numeric" id="2178"><Name id="2179">cueR</Name><UIEnabled id="2181">true</UIEnabled><UIInfo id="2183"><OpenDescendant id="2184">0</OpenDescendant><Pos id="2185">123,663</Pos></UIInfo><UIOrder id="2186">0</UIOrder><Units id="2187"/><Value id="2188">255</Value></Parameter><Parameter type="Numeric" id="2210"><Name id="2211">cueG</Name><UIEnabled id="2212">true</UIEnabled><UIInfo id="2213"><OpenDescendant id="2214">0</OpenDescendant><Pos id="2215">208,664</Pos></UIInfo><UIOrder id="2216">0</UIOrder><Units id="2217"/><Value id="2232">255</Value></Parameter><Parameter type="Numeric" id="2250"><Name id="2251">cueB</Name><UIEnabled id="2252">true</UIEnabled><UIInfo id="2253"><OpenDescendant id="2254">0</OpenDescendant><Pos id="2255">296,663</Pos></UIInfo><UIOrder id="2256">0</UIOrder><Units id="2257"/><Value id="2258">255</Value></Parameter><StateMachineElement type="Reward" id="1857"><MinRewardPeriod id="1858">60</MinRewardPeriod><Name id="1859">Reward</Name><NumRewards id="1860">1</NumRewards><Result id="1553"><Name id="1554">done</Name></Result><RewardChan id="1861">1</RewardChan><RewardQty id="1862">60</RewardQty><Type id="1863">Reward</Type><UIEnabled id="1864">false</UIEnabled><UIInfo id="1865"><OpenDescendant id="1866">0</OpenDescendant><Pos id="1867">797,200</Pos></UIInfo><UIOrder id="1868">0</UIOrder></StateMachineElement><Transition id="1580"><Destination id="1581">Reward</Destination><Source id="1582">Memory</Source><SourceResult id="1583">Success</SourceResult></Transition><Transition id="1563"><Destination id="1564">Memory</Destination><Source id="1565">Delay</Source><SourceResult id="1566">Success</SourceResult></Transition><OutputSignal type="BinaryDataOutput" id="785"><Enabled id="786">true</Enabled><Name id="787">eventCode</Name><Port id="788">PAR0</Port><UIEnabled id="789">false</UIEnabled><UIInfo id="790"><OpenDescendant id="791">0</OpenDescendant><Pos id="792">471,1044</Pos></UIInfo><UIOrder id="793">0</UIOrder><Value id="794">0</Value></OutputSignal><Parameter type="OperatorClick" id="727"><Name id="728">operatorClick</Name><NewClick id="729">false</NewClick><Pos id="730">397,289</Pos><UIEnabled id="731">false</UIEnabled><UIInfo id="732"><OpenDescendant id="733">0</OpenDescendant><Pos id="739">823,1078</Pos></UIInfo><UIOrder id="740">0</UIOrder></Parameter><Parameter type="SignalValue" id="746"><Name id="747">posSig</Name><Signal id="748">Position</Signal><UIEnabled id="749">false</UIEnabled><UIInfo id="750"><OpenDescendant id="751">0</OpenDescendant><Pos id="752">734,1077</Pos></UIInfo><UIOrder id="753">0</UIOrder></Parameter><ScriptFunction type="ScriptFunction" id="707"><Inputs id="708"/><Name id="709">calibratePos</Name><Script id="710">if(!operatorClick.newClick)
 	return;
 var x = posSig.getValue(&quot;x&quot;); 
 var y = posSig.getValue(&quot;y&quot;);
@@ -769,26 +769,26 @@ else
 }
 calibFeedback.text = text;
 calibFeedback.setPos(fixGraphic.x+2*fixGraphic.radius,fixGraphic.y-fixGraphic.radius);
-calibFeedback.visible = true;</Script><UIEnabled id="711">false</UIEnabled><UIInfo id="712"><OpenDescendant id="713">0</OpenDescendant><Pos id="714" x="912" y="1077"/></UIInfo><UIOrder id="715">0</UIOrder></ScriptFunction><StateMachineElement type="ScriptElement" id="801"><Name id="802">FailFixHold</Name><Result id="514"><Name id="515">false</Name></Result><Result id="524"><Name id="525">true</Name></Result><Script id="803">eventCode.value = 0xFF;
-return true;</Script><Type id="804">ScriptElement</Type><UIEnabled id="805">false</UIEnabled><UIInfo id="806"><OpenDescendant id="807">0</OpenDescendant><Pos id="808" x="812" y="770"/></UIInfo><UIOrder id="809">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="815"><Name id="816">CueIDEvt</Name><Result id="539"><Name id="540">false</Name><UIInfo id="558"><Pos id="560" x="2000" y="2000"/></UIInfo></Result><Result id="549"><Name id="550">true</Name><UIInfo id="566"><Pos id="568" x="2075" y="2000"/></UIInfo></Result><Script id="817">eventCode.value = 0x80 | targetSelector.value;
-return true;</Script><Type id="818">ScriptElement</Type><UIEnabled id="819">false</UIEnabled><UIInfo id="820"><OpenDescendant id="821">0</OpenDescendant><Pos id="822" x="223" y="204"/></UIInfo><UIOrder id="823">0</UIOrder></StateMachineElement><VisualElement type="Text Graphic" id="758"><Color A="255" B="0" G="170" R="255" id="759">#ffaa00</Color><Dimensions height="20" id="760" width="300" x="0" y="0"/><Layer id="762">4</Layer><Name id="763">calibFeedback</Name><OperatorView id="764">true</OperatorView><Position id="765" x="0" y="0"/><SubjectView id="766">false</SubjectView><Text id="767">Calibration offsets were set</Text><UIEnabled id="768">false</UIEnabled><UIInfo id="769"><OpenDescendant id="770">0</OpenDescendant><Pos id="771" x="335" y="568"/></UIInfo><UIOrder id="772">0</UIOrder><Visible id="773">false</Visible></VisualElement><Transition id="583"><Destination id="584">FailFixHold</Destination><Source id="585">Fixation</Source><SourceResult id="586">Fail</SourceResult></Transition><StateMachineElement type="ScriptElement" id="916"><Name id="917">FailDelHold</Name><Result id="587"><Name id="589">false</Name></Result><Result id="598"><Name id="599">true</Name></Result><Script id="918">eventCode.value = 0xFE;
-return true;</Script><Type id="919">ScriptElement</Type><UIEnabled id="920">false</UIEnabled><UIInfo id="921"><OpenDescendant id="922">0</OpenDescendant><Pos id="925" x="806" y="637"/></UIInfo><UIOrder id="926">0</UIOrder></StateMachineElement><Transition id="613"><Destination id="614">CueIDEvt</Destination><Source id="615">Fixation</Source><SourceResult id="616">Success</SourceResult></Transition><Transition id="617"><Destination id="618">Cue</Destination><Source id="619">CueIDEvt</Source><SourceResult id="620">false</SourceResult></Transition><Transition id="621"><Destination id="622">Cue</Destination><Source id="623">CueIDEvt</Source><SourceResult id="624">true</SourceResult></Transition><StateMachineElement type="ScriptElement" id="993"><Name id="1005">FailSac</Name><Result id="640"><Name id="645">false</Name></Result><Result id="654"><Name id="655">true</Name></Result><Script id="1006">eventCode.value = 0xFD;
-return true;</Script><Type id="1007">ScriptElement</Type><UIEnabled id="1008">false</UIEnabled><UIInfo id="1009"><OpenDescendant id="1010">0</OpenDescendant><Pos id="1011" x="805" y="510"/></UIInfo><UIOrder id="1024">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="1037"><Name id="1050">FailSacHold</Name><Result id="669"><Name id="670">false</Name></Result><Result id="679"><Name id="680">true</Name></Result><Script id="1053">eventCode.value = 0xFC;
-return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">false</UIEnabled><UIInfo id="1056"><OpenDescendant id="1057">0</OpenDescendant><Pos id="1058" x="817" y="363"/></UIInfo><UIOrder id="1059">0</UIOrder></StateMachineElement><Transition id="744"><Destination id="745">FailSacHold</Destination><Source id="754">Memory</Source><SourceResult id="755">FailHold</SourceResult></Transition><Transition id="726"><Destination id="741">FailSac</Destination><Source id="742">Memory</Source><SourceResult id="743">FailEnter</SourceResult></Transition><OutputSignal type="DigitalOutput" id="1355"><Enabled id="1356">true</Enabled><Name id="1357">goodT</Name><Pin id="1358">1</Pin><Port id="1359">BNC0</Port><UIEnabled id="1360">false</UIEnabled><UIInfo id="1361"><OpenDescendant id="1362">0</OpenDescendant><Pos id="1363" x="217" y="1051"/></UIInfo><UIOrder id="1364">0</UIOrder><Value id="1365">false</Value></OutputSignal><StateMachineElement type="State" id="1373"><BackgroundColor A="255" B="0" G="0" R="0" id="1374">#000000</BackgroundColor><ControlElement type="Stopwatch Controller" id="1391"><Name id="1445">TrialCorrectTimer</Name><Result id="814"><Name id="825">Success</Name></Result><Time id="1465">10</Time><TimeUnits id="1466">Ms</TimeUnits><Type id="1467"/><UIEnabled id="1468">false</UIEnabled><UIInfo id="1469"><OpenDescendant id="1470">0</OpenDescendant><Pos id="1471" x="197" y="149"/></UIInfo><UIOrder id="1472">0</UIOrder></ControlElement><EntryScript id="1375">goodT.value = true;</EntryScript><ExitScript id="1376">goodT.value = false;</ExitScript><FrameScript id="1377"/><Name id="1378">MarkCorrectTrial</Name><Result id="1479"><Name id="1487">Done</Name><UIEnabled id="1488">false</UIEnabled><UIInfo id="1489"><OpenDescendant id="1497">0</OpenDescendant><Pos id="1498" x="479" y="142"/></UIInfo><UIOrder id="1499">0</UIOrder></Result><Transition id="843"><Destination id="844">Done</Destination><Source id="845">TrialCorrectTimer</Source><SourceResult id="846">Success</SourceResult></Transition><UIEnabled id="1379">false</UIEnabled><UIInfo id="1380"><OpenDescendant id="1381">0</OpenDescendant><Pos id="1382" x="911" y="198"/></UIInfo><UIOrder id="1383">0</UIOrder></StateMachineElement><Transition id="856"><Destination id="859">FailDelHold</Destination><Source id="860">Delay</Source><SourceResult id="865">Fail</SourceResult></Transition><Transition id="866"><Destination id="867">Success</Destination><Source id="868">MarkCorrectTrial</Source><SourceResult id="869">Done</SourceResult></Transition><StateMachineElement type="State" id="1525"><BackgroundColor A="255" B="0" G="0" R="0" id="1526">#000000</BackgroundColor><ControlElement type="Stopwatch Controller" id="1543"><Name id="1544">FailCodeTimer</Name><Result id="797"><Name id="798">Success</Name></Result><Time id="1545">10</Time><TimeUnits id="1546">Ms</TimeUnits><Type id="1547"/><UIEnabled id="1548">false</UIEnabled><UIInfo id="1549"><OpenDescendant id="1550">0</OpenDescendant><Pos id="1551" x="96" y="110"/></UIInfo><UIOrder id="1552">0</UIOrder></ControlElement><EntryScript id="1527"/><ExitScript id="1528"/><FrameScript id="1529"/><Name id="1530">MarkFailCode</Name><Result id="1561"><Name id="1562">Done</Name><UIEnabled id="1567">false</UIEnabled><UIInfo id="1568"><OpenDescendant id="1569">0</OpenDescendant><Pos id="1579" x="264" y="110"/></UIInfo><UIOrder id="1584">0</UIOrder></Result><Transition id="837"><Destination id="838">Done</Destination><Source id="839">FailCodeTimer</Source><SourceResult id="840">Success</SourceResult></Transition><UIEnabled id="1531">false</UIEnabled><UIInfo id="1532"><OpenDescendant id="1533">0</OpenDescendant><Pos id="1534" x="1018" y="524"/></UIInfo><UIOrder id="1535">0</UIOrder></StateMachineElement><Transition id="852"><Destination id="853">MarkCorrectTrial</Destination><Source id="870">Reward</Source><SourceResult id="871">done</SourceResult></Transition><Transition id="934"><Destination id="935">MarkFailCode</Destination><Source id="936">FailFixHold</Source><SourceResult id="937">false</SourceResult></Transition><Transition id="938"><Destination id="939">MarkFailCode</Destination><Source id="943">FailFixHold</Source><SourceResult id="944">true</SourceResult></Transition><Transition id="945"><Destination id="946">MarkFailCode</Destination><Source id="947">FailDelHold</Source><SourceResult id="948">false</SourceResult></Transition><Transition id="949"><Destination id="951">MarkFailCode</Destination><Source id="952">FailDelHold</Source><SourceResult id="953">true</SourceResult></Transition><Transition id="954"><Destination id="955">MarkFailCode</Destination><Source id="956">FailSac</Source><SourceResult id="972">false</SourceResult></Transition><Transition id="973"><Destination id="974">MarkFailCode</Destination><Source id="975">FailSac</Source><SourceResult id="976">true</SourceResult></Transition><Transition id="977"><Destination id="978">MarkFailCode</Destination><Source id="979">FailSacHold</Source><SourceResult id="980">false</SourceResult></Transition><Transition id="981"><Destination id="982">MarkFailCode</Destination><Source id="983">FailSacHold</Source><SourceResult id="984">true</SourceResult></Transition><Transition id="985"><Destination id="986">Failed</Destination><Source id="987">MarkFailCode</Source><SourceResult id="988">Done</SourceResult></Transition><Transition id="1092"><Destination id="1093">FailDelHold</Destination><Source id="1101">Cue</Source><SourceResult id="1102">Failure</SourceResult></Transition><Parameter type="Double" id="1744"><Max id="1749">10000</Max><Min id="1750">0</Min><Name id="1751">mmDisplayWidth</Name><UIEnabled id="1752">true</UIEnabled><UIInfo id="1754"><OpenDescendant id="1755">0</OpenDescendant><Pos id="1756" x="49" y="882"/></UIInfo><UIOrder id="1757">0</UIOrder><Value id="1758">400.05</Value></Parameter><Parameter type="Double" id="1766"><Max id="1767">10000</Max><Min id="1768">0</Min><Name id="1769">mmCueRad</Name><UIEnabled id="1770">true</UIEnabled><UIInfo id="1771"><OpenDescendant id="1772">0</OpenDescendant><Pos id="1773" x="145" y="882"/></UIInfo><UIOrder id="1774">0</UIOrder><Value id="1775">5</Value></Parameter><Parameter type="Double" id="1764"><Max id="1765">10000</Max><Min id="1776">0</Min><Name id="1777">mmFixWinRad</Name><UIEnabled id="1778">true</UIEnabled><UIInfo id="1781"><OpenDescendant id="1782">0</OpenDescendant><Pos id="1783" x="232" y="884"/></UIInfo><UIOrder id="1784">0</UIOrder><Value id="1785">60</Value></Parameter><Parameter type="Double" id="1792"><Max id="1793">10000</Max><Min id="1794">0</Min><Name id="1795">mmSacWinRad</Name><UIEnabled id="1796">true</UIEnabled><UIInfo id="1797"><OpenDescendant id="1802">0</OpenDescendant><Pos id="1803" x="332" y="884"/></UIInfo><UIOrder id="1804">0</UIOrder><Value id="1805">70</Value></Parameter><Parameter type="Double" id="1817"><Max id="1823">10000</Max><Min id="1824">0</Min><Name id="1825">mmTrayRad</Name><UIEnabled id="1826">true</UIEnabled><UIInfo id="1827"><OpenDescendant id="1829">0</OpenDescendant><Pos id="1833" x="415" y="886"/></UIInfo><UIOrder id="1835">0</UIOrder><Value id="1836">105</Value></Parameter><ScriptFunction type="ScriptFunction" id="1742"><Inputs id="1743">mm</Inputs><Name id="1759">mmToPixel</Name><Script id="1760">return Math.round(800.0*(mm/mmDisplayWidth.value));</Script><UIEnabled id="1762">false</UIEnabled><UIInfo id="1763"><OpenDescendant id="1786">0</OpenDescendant><Pos id="1787" x="506" y="888"/></UIInfo><UIOrder id="1788">0</UIOrder></ScriptFunction><OutputSignal type="DigitalOutput" id="1808"><Enabled id="1812">true</Enabled><Name id="1813">fixOn</Name><Pin id="1816">0</Pin><Port id="1837">BNC0</Port><UIEnabled id="1838">false</UIEnabled><UIInfo id="1842"><OpenDescendant id="1843">0</OpenDescendant><Pos id="1845" x="88" y="1046"/></UIInfo><UIOrder id="1850">0</UIOrder><Value id="1851">false</Value></OutputSignal><OutputSignal type="DigitalOutput" id="1893"><Enabled id="1894">true</Enabled><Name id="1895">cueOn</Name><Pin id="1896">2</Pin><Port id="1897">BNC0</Port><UIEnabled id="1898">false</UIEnabled><UIInfo id="1899"><OpenDescendant id="1900">0</OpenDescendant><Pos id="1901" x="346" y="1052"/></UIInfo><UIOrder id="1902">0</UIOrder><Value id="1903">false</Value></OutputSignal><Parameter type="Boolean" id="1854"><FalseLabel id="1855">False</FalseLabel><Name id="1856">usePhotodetectors</Name><TrueLabel id="1869">True</TrueLabel><UIEnabled id="1870">true</UIEnabled><UIInfo id="1871"><OpenDescendant id="1872">0</OpenDescendant><Pos id="1873" x="810" y="955"/></UIInfo><UIOrder id="1874">0</UIOrder><Value id="1875">false</Value></Parameter><VisualElement type="Circle Graphic" id="1890"><Color A="255" B="255" G="255" R="255" id="1891">#ffffff</Color><Layer id="1892">0</Layer><Name id="1904">fixSigImg</Name><OperatorView id="1905">true</OperatorView><Outline id="1906">false</Outline><OutlineThickness id="1907">0</OutlineThickness><Position id="1908" x="750" y="5"/><Radius id="1909">3</Radius><SubjectView id="1910">true</SubjectView><UIEnabled id="1911">false</UIEnabled><UIInfo id="1912"><OpenDescendant id="1913">0</OpenDescendant><Pos id="1914" x="705" y="957"/></UIInfo><UIOrder id="1915">0</UIOrder><Visible id="1916">false</Visible></VisualElement><VisualElement type="Circle Graphic" id="1929"><Color A="255" B="255" G="255" R="255" id="1930">#ffffff</Color><Layer id="1931">0</Layer><Name id="1932">cueSigImg</Name><OperatorView id="1933">true</OperatorView><Outline id="1934">false</Outline><OutlineThickness id="1935">0</OutlineThickness><Position id="1936" x="775" y="5"/><Radius id="1937">3</Radius><SubjectView id="1938">true</SubjectView><UIEnabled id="1939">false</UIEnabled><UIInfo id="1940"><OpenDescendant id="1941">0</OpenDescendant><Pos id="1942" x="939" y="956"/></UIInfo><UIOrder id="1943">0</UIOrder><Visible id="1944">false</Visible></VisualElement></StateMachineElement>
+calibFeedback.visible = true;</Script><UIEnabled id="711">false</UIEnabled><UIInfo id="712"><OpenDescendant id="713">0</OpenDescendant><Pos id="714">912,1077</Pos></UIInfo><UIOrder id="715">0</UIOrder></ScriptFunction><StateMachineElement type="ScriptElement" id="801"><Name id="802">FailFixHold</Name><Result id="514"><Name id="515">false</Name></Result><Result id="524"><Name id="525">true</Name></Result><Script id="803">eventCode.value = 0xFF;
+return true;</Script><Type id="804">ScriptElement</Type><UIEnabled id="805">false</UIEnabled><UIInfo id="806"><OpenDescendant id="807">0</OpenDescendant><Pos id="808">812,770</Pos></UIInfo><UIOrder id="809">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="815"><Name id="816">CueIDEvt</Name><Result id="539"><Name id="540">false</Name><UIInfo id="558"><Pos id="560">2000,2000</Pos></UIInfo></Result><Result id="549"><Name id="550">true</Name><UIInfo id="566"><Pos id="568">2075,2000</Pos></UIInfo></Result><Script id="817">eventCode.value = 0x80 | targetSelector.value;
+return true;</Script><Type id="818">ScriptElement</Type><UIEnabled id="819">false</UIEnabled><UIInfo id="820"><OpenDescendant id="821">0</OpenDescendant><Pos id="822">223,204</Pos></UIInfo><UIOrder id="823">0</UIOrder></StateMachineElement><VisualElement type="Text Graphic" id="758"><Color id="759">255,170,0,255</Color><Dimensions id="760">0,0,300,20</Dimensions><Layer id="762">4</Layer><Name id="763">calibFeedback</Name><OperatorView id="764">true</OperatorView><Position id="765">0,0</Position><SubjectView id="766">false</SubjectView><Text id="767">Calibration offsets were set</Text><UIEnabled id="768">false</UIEnabled><UIInfo id="769"><OpenDescendant id="770">0</OpenDescendant><Pos id="771">335,568</Pos></UIInfo><UIOrder id="772">0</UIOrder><Visible id="773">false</Visible></VisualElement><Transition id="583"><Destination id="584">FailFixHold</Destination><Source id="585">Fixation</Source><SourceResult id="586">Fail</SourceResult></Transition><StateMachineElement type="ScriptElement" id="916"><Name id="917">FailDelHold</Name><Result id="587"><Name id="589">false</Name></Result><Result id="598"><Name id="599">true</Name></Result><Script id="918">eventCode.value = 0xFE;
+return true;</Script><Type id="919">ScriptElement</Type><UIEnabled id="920">false</UIEnabled><UIInfo id="921"><OpenDescendant id="922">0</OpenDescendant><Pos id="925">806,637</Pos></UIInfo><UIOrder id="926">0</UIOrder></StateMachineElement><Transition id="613"><Destination id="614">CueIDEvt</Destination><Source id="615">Fixation</Source><SourceResult id="616">Success</SourceResult></Transition><Transition id="617"><Destination id="618">Cue</Destination><Source id="619">CueIDEvt</Source><SourceResult id="620">false</SourceResult></Transition><Transition id="621"><Destination id="622">Cue</Destination><Source id="623">CueIDEvt</Source><SourceResult id="624">true</SourceResult></Transition><StateMachineElement type="ScriptElement" id="993"><Name id="1005">FailSac</Name><Result id="640"><Name id="645">false</Name></Result><Result id="654"><Name id="655">true</Name></Result><Script id="1006">eventCode.value = 0xFD;
+return true;</Script><Type id="1007">ScriptElement</Type><UIEnabled id="1008">false</UIEnabled><UIInfo id="1009"><OpenDescendant id="1010">0</OpenDescendant><Pos id="1011">805,510</Pos></UIInfo><UIOrder id="1024">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="1037"><Name id="1050">FailSacHold</Name><Result id="669"><Name id="670">false</Name></Result><Result id="679"><Name id="680">true</Name></Result><Script id="1053">eventCode.value = 0xFC;
+return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">false</UIEnabled><UIInfo id="1056"><OpenDescendant id="1057">0</OpenDescendant><Pos id="1058">817,363</Pos></UIInfo><UIOrder id="1059">0</UIOrder></StateMachineElement><Transition id="744"><Destination id="745">FailSacHold</Destination><Source id="754">Memory</Source><SourceResult id="755">FailHold</SourceResult></Transition><Transition id="726"><Destination id="741">FailSac</Destination><Source id="742">Memory</Source><SourceResult id="743">FailEnter</SourceResult></Transition><OutputSignal type="DigitalOutput" id="1355"><Enabled id="1356">true</Enabled><Name id="1357">goodT</Name><Pin id="1358">1</Pin><Port id="1359">BNC0</Port><UIEnabled id="1360">false</UIEnabled><UIInfo id="1361"><OpenDescendant id="1362">0</OpenDescendant><Pos id="1363">217,1051</Pos></UIInfo><UIOrder id="1364">0</UIOrder><Value id="1365">false</Value></OutputSignal><StateMachineElement type="State" id="1373"><BackgroundColor id="1374">0,0,0,255</BackgroundColor><ControlElement type="Stopwatch Controller" id="1391"><Name id="1445">TrialCorrectTimer</Name><Result id="814"><Name id="825">Success</Name></Result><Time id="1465">10</Time><TimeUnits id="1466">Ms</TimeUnits><Type id="1467"/><UIEnabled id="1468">false</UIEnabled><UIInfo id="1469"><OpenDescendant id="1470">0</OpenDescendant><Pos id="1471">197,149</Pos></UIInfo><UIOrder id="1472">0</UIOrder></ControlElement><EntryScript id="1375">goodT.value = true;</EntryScript><ExitScript id="1376">goodT.value = false;</ExitScript><FrameScript id="1377"/><Name id="1378">MarkCorrectTrial</Name><Result id="1479"><Name id="1487">Done</Name><UIEnabled id="1488">false</UIEnabled><UIInfo id="1489"><OpenDescendant id="1497">0</OpenDescendant><Pos id="1498">479,142</Pos></UIInfo><UIOrder id="1499">0</UIOrder></Result><Transition id="843"><Destination id="844">Done</Destination><Source id="845">TrialCorrectTimer</Source><SourceResult id="846">Success</SourceResult></Transition><UIEnabled id="1379">false</UIEnabled><UIInfo id="1380"><OpenDescendant id="1381">0</OpenDescendant><Pos id="1382">911,198</Pos></UIInfo><UIOrder id="1383">0</UIOrder></StateMachineElement><Transition id="856"><Destination id="859">FailDelHold</Destination><Source id="860">Delay</Source><SourceResult id="865">Fail</SourceResult></Transition><Transition id="866"><Destination id="867">Success</Destination><Source id="868">MarkCorrectTrial</Source><SourceResult id="869">Done</SourceResult></Transition><StateMachineElement type="State" id="1525"><BackgroundColor id="1526">0,0,0,255</BackgroundColor><ControlElement type="Stopwatch Controller" id="1543"><Name id="1544">FailCodeTimer</Name><Result id="797"><Name id="798">Success</Name></Result><Time id="1545">10</Time><TimeUnits id="1546">Ms</TimeUnits><Type id="1547"/><UIEnabled id="1548">false</UIEnabled><UIInfo id="1549"><OpenDescendant id="1550">0</OpenDescendant><Pos id="1551">96,110</Pos></UIInfo><UIOrder id="1552">0</UIOrder></ControlElement><EntryScript id="1527"/><ExitScript id="1528"/><FrameScript id="1529"/><Name id="1530">MarkFailCode</Name><Result id="1561"><Name id="1562">Done</Name><UIEnabled id="1567">false</UIEnabled><UIInfo id="1568"><OpenDescendant id="1569">0</OpenDescendant><Pos id="1579">264,110</Pos></UIInfo><UIOrder id="1584">0</UIOrder></Result><Transition id="837"><Destination id="838">Done</Destination><Source id="839">FailCodeTimer</Source><SourceResult id="840">Success</SourceResult></Transition><UIEnabled id="1531">false</UIEnabled><UIInfo id="1532"><OpenDescendant id="1533">0</OpenDescendant><Pos id="1534">1018,524</Pos></UIInfo><UIOrder id="1535">0</UIOrder></StateMachineElement><Transition id="852"><Destination id="853">MarkCorrectTrial</Destination><Source id="870">Reward</Source><SourceResult id="871">done</SourceResult></Transition><Transition id="934"><Destination id="935">MarkFailCode</Destination><Source id="936">FailFixHold</Source><SourceResult id="937">false</SourceResult></Transition><Transition id="938"><Destination id="939">MarkFailCode</Destination><Source id="943">FailFixHold</Source><SourceResult id="944">true</SourceResult></Transition><Transition id="945"><Destination id="946">MarkFailCode</Destination><Source id="947">FailDelHold</Source><SourceResult id="948">false</SourceResult></Transition><Transition id="949"><Destination id="951">MarkFailCode</Destination><Source id="952">FailDelHold</Source><SourceResult id="953">true</SourceResult></Transition><Transition id="954"><Destination id="955">MarkFailCode</Destination><Source id="956">FailSac</Source><SourceResult id="972">false</SourceResult></Transition><Transition id="973"><Destination id="974">MarkFailCode</Destination><Source id="975">FailSac</Source><SourceResult id="976">true</SourceResult></Transition><Transition id="977"><Destination id="978">MarkFailCode</Destination><Source id="979">FailSacHold</Source><SourceResult id="980">false</SourceResult></Transition><Transition id="981"><Destination id="982">MarkFailCode</Destination><Source id="983">FailSacHold</Source><SourceResult id="984">true</SourceResult></Transition><Transition id="985"><Destination id="986">Failed</Destination><Source id="987">MarkFailCode</Source><SourceResult id="988">Done</SourceResult></Transition><Transition id="1092"><Destination id="1093">FailDelHold</Destination><Source id="1101">Cue</Source><SourceResult id="1102">Failure</SourceResult></Transition><Parameter type="Double" id="1744"><Max id="1749">10000</Max><Min id="1750">0</Min><Name id="1751">mmDisplayWidth</Name><UIEnabled id="1752">true</UIEnabled><UIInfo id="1754"><OpenDescendant id="1755">0</OpenDescendant><Pos id="1756">49,882</Pos></UIInfo><UIOrder id="1757">0</UIOrder><Value id="1758">400.05</Value></Parameter><Parameter type="Double" id="1766"><Max id="1767">10000</Max><Min id="1768">0</Min><Name id="1769">mmCueRad</Name><UIEnabled id="1770">true</UIEnabled><UIInfo id="1771"><OpenDescendant id="1772">0</OpenDescendant><Pos id="1773">145,882</Pos></UIInfo><UIOrder id="1774">0</UIOrder><Value id="1775">5</Value></Parameter><Parameter type="Double" id="1764"><Max id="1765">10000</Max><Min id="1776">0</Min><Name id="1777">mmFixWinRad</Name><UIEnabled id="1778">true</UIEnabled><UIInfo id="1781"><OpenDescendant id="1782">0</OpenDescendant><Pos id="1783">232,884</Pos></UIInfo><UIOrder id="1784">0</UIOrder><Value id="1785">60</Value></Parameter><Parameter type="Double" id="1792"><Max id="1793">10000</Max><Min id="1794">0</Min><Name id="1795">mmSacWinRad</Name><UIEnabled id="1796">true</UIEnabled><UIInfo id="1797"><OpenDescendant id="1802">0</OpenDescendant><Pos id="1803">332,884</Pos></UIInfo><UIOrder id="1804">0</UIOrder><Value id="1805">70</Value></Parameter><Parameter type="Double" id="1817"><Max id="1823">10000</Max><Min id="1824">0</Min><Name id="1825">mmTrayRad</Name><UIEnabled id="1826">true</UIEnabled><UIInfo id="1827"><OpenDescendant id="1829">0</OpenDescendant><Pos id="1833">415,886</Pos></UIInfo><UIOrder id="1835">0</UIOrder><Value id="1836">105</Value></Parameter><ScriptFunction type="ScriptFunction" id="1742"><Inputs id="1743">mm</Inputs><Name id="1759">mmToPixel</Name><Script id="1760">return Math.round(800.0*(mm/mmDisplayWidth.value));</Script><UIEnabled id="1762">false</UIEnabled><UIInfo id="1763"><OpenDescendant id="1786">0</OpenDescendant><Pos id="1787">506,888</Pos></UIInfo><UIOrder id="1788">0</UIOrder></ScriptFunction><OutputSignal type="DigitalOutput" id="1808"><Enabled id="1812">true</Enabled><Name id="1813">fixOn</Name><Pin id="1816">0</Pin><Port id="1837">BNC0</Port><UIEnabled id="1838">false</UIEnabled><UIInfo id="1842"><OpenDescendant id="1843">0</OpenDescendant><Pos id="1845">88,1046</Pos></UIInfo><UIOrder id="1850">0</UIOrder><Value id="1851">false</Value></OutputSignal><OutputSignal type="DigitalOutput" id="1893"><Enabled id="1894">true</Enabled><Name id="1895">cueOn</Name><Pin id="1896">2</Pin><Port id="1897">BNC0</Port><UIEnabled id="1898">false</UIEnabled><UIInfo id="1899"><OpenDescendant id="1900">0</OpenDescendant><Pos id="1901">346,1052</Pos></UIInfo><UIOrder id="1902">0</UIOrder><Value id="1903">false</Value></OutputSignal><Parameter type="Boolean" id="1854"><FalseLabel id="1855">False</FalseLabel><Name id="1856">usePhotodetectors</Name><TrueLabel id="1869">True</TrueLabel><UIEnabled id="1870">true</UIEnabled><UIInfo id="1871"><OpenDescendant id="1872">0</OpenDescendant><Pos id="1873">810,955</Pos></UIInfo><UIOrder id="1874">0</UIOrder><Value id="1875">false</Value></Parameter><VisualElement type="Circle Graphic" id="1890"><Color id="1891">255,255,255,255</Color><Layer id="1892">0</Layer><Name id="1904">fixSigImg</Name><OperatorView id="1905">true</OperatorView><Outline id="1906">false</Outline><OutlineThickness id="1907">0</OutlineThickness><Position id="1908">750,5</Position><Radius id="1909">3</Radius><SubjectView id="1910">true</SubjectView><UIEnabled id="1911">false</UIEnabled><UIInfo id="1912"><OpenDescendant id="1913">0</OpenDescendant><Pos id="1914">705,957</Pos></UIInfo><UIOrder id="1915">0</UIOrder><Visible id="1916">false</Visible></VisualElement><VisualElement type="Circle Graphic" id="1929"><Color id="1930">255,255,255,255</Color><Layer id="1931">0</Layer><Name id="1932">cueSigImg</Name><OperatorView id="1933">true</OperatorView><Outline id="1934">false</Outline><OutlineThickness id="1935">0</OutlineThickness><Position id="1936">775,5</Position><Radius id="1937">3</Radius><SubjectView id="1938">true</SubjectView><UIEnabled id="1939">false</UIEnabled><UIInfo id="1940"><OpenDescendant id="1941">0</OpenDescendant><Pos id="1942">939,956</Pos></UIInfo><UIOrder id="1943">0</UIOrder><Visible id="1944">false</Visible></VisualElement></StateMachineElement>
           <StateMachineElement type="State" id="994">
-            <BackgroundColor A="255" B="0" G="0" R="0" id="995">#000000</BackgroundColor>
+            <BackgroundColor id="995">0,0,0,255</BackgroundColor>
             <ControlElement type="Stopwatch Controller" id="1012">
               <Name id="1013">ITITimeout</Name>
               <Result id="969">
                 <Name id="970">Success</Name>
-              <UIInfo id="1130"><Pos id="1132" x="2000" y="2000"/></UIInfo></Result>
+              <UIInfo id="1130"><Pos id="1132">2000,2000</Pos></UIInfo></Result>
               <Time id="1014">2000</Time>
               <TimeUnits id="1015">Ms</TimeUnits>
               <Type id="1016"/>
               <UIEnabled id="1017">false</UIEnabled>
               <UIInfo id="1018">
                 <OpenDescendant id="1019">0</OpenDescendant>
-                <Pos id="1020" x="81" y="123"/>
+                <Pos id="1020">81,123</Pos>
               </UIInfo>
               <UIOrder id="1021">0</UIOrder>
             </ControlElement>
@@ -806,14 +806,14 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
               <UIEnabled id="1030">false</UIEnabled>
               <UIInfo id="1031">
                 <OpenDescendant id="1032">0</OpenDescendant>
-                <Pos id="1033" x="294" y="164"/>
+                <Pos id="1033">294,164</Pos>
               </UIInfo>
               <UIOrder id="1034">0</UIOrder>
             </Result>
             <UIEnabled id="1000">false</UIEnabled>
             <UIInfo id="1001">
               <OpenDescendant id="1002">0</OpenDescendant>
-              <Pos id="1003" x="232" y="210"/>
+              <Pos id="1003">232,210</Pos>
             </UIInfo>
             <UIOrder id="1004">0</UIOrder>
             <Parameter type="Range" id="1060">
@@ -824,7 +824,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
               <UIEnabled id="1065">true</UIEnabled>
               <UIInfo id="1066">
                 <OpenDescendant id="1067">0</OpenDescendant>
-                <Pos id="1068" x="63" y="396"/>
+                <Pos id="1068">63,396</Pos>
               </UIInfo>
               <UIOrder id="1069">0</UIOrder>
               <Units id="1070"/>
@@ -855,7 +855,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <UIEnabled id="1082">false</UIEnabled>
             <UIInfo id="1083">
               <OpenDescendant id="1084">0</OpenDescendant>
-              <Pos id="1085" x="96" y="529"/>
+              <Pos id="1085">96,529</Pos>
             </UIInfo>
             <UIOrder id="1086">0</UIOrder>
             <UseSeed id="1087">false</UseSeed>
@@ -875,7 +875,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <UIEnabled id="1139">true</UIEnabled>
             <UIInfo id="1140">
               <OpenDescendant id="1141">0</OpenDescendant>
-              <Pos id="1142" x="95" y="638"/>
+              <Pos id="1142">95,638</Pos>
             </UIInfo>
             <UIOrder id="1143">0</UIOrder>
             <Units id="1144"/>
@@ -889,25 +889,25 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <UIEnabled id="1159">true</UIEnabled>
             <UIInfo id="1160">
               <OpenDescendant id="1161">0</OpenDescendant>
-              <Pos id="1162" x="94" y="726"/>
+              <Pos id="1162">94,726</Pos>
             </UIInfo>
             <UIOrder id="1163">0</UIOrder>
             <Units id="1164"/>
             <Value id="1165">2</Value>
           </Parameter>
           <VisualElement type="Operator Info Graphic" id="1106">
-            <Color A="255" B="0" G="255" R="0" id="1107">#00ff00</Color>
-            <Dimensions height="0" id="1108" width="0" x="0" y="0"/>
+            <Color id="1107">0,255,0,255</Color>
+            <Dimensions id="1108">0,0,0,0</Dimensions>
             <Fields id="1109"/>
             <Layer id="1110">0</Layer>
             <Name id="1111">targetCounter</Name>
             <OperatorView id="1112">false</OperatorView>
-            <Position id="1113" x="0" y="0"/>
+            <Position id="1113">0,0</Position>
             <SubjectView id="1114">false</SubjectView>
             <UIEnabled id="1115">false</UIEnabled>
             <UIInfo id="1116">
               <OpenDescendant id="1117">0</OpenDescendant>
-              <Pos id="1118" x="258" y="531"/>
+              <Pos id="1118">258,531</Pos>
             </UIInfo>
             <UIOrder id="1119">0</UIOrder>
             <Values id="1120"/>
@@ -932,7 +932,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <UIEnabled id="1574">false</UIEnabled>
             <UIInfo id="1575">
               <OpenDescendant id="1576">0</OpenDescendant>
-              <Pos id="1577" x="514" y="290"/>
+              <Pos id="1577">514,290</Pos>
             </UIInfo>
             <UIOrder id="1578">0</UIOrder>
           </StateMachineElement>
@@ -944,7 +944,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
 
 
           <StateMachineElement type="PausePoint" id="5132">
-            <BackgroundColor A="255" B="0" G="0" R="0" id="5133">#000000</BackgroundColor>
+            <BackgroundColor id="5133">0,0,0,255</BackgroundColor>
             <ForcePause id="5134">false</ForcePause>
             <Name id="5135">Pause</Name>
             <PausingScript id="5136"/>
@@ -952,14 +952,14 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <Result id="3501">
               <Name id="3502">done</Name>
               <UIInfo id="3494">
-                <Pos id="3496" x="2000" y="2000"/>
+                <Pos id="3496">2000,2000</Pos>
               </UIInfo>
             </Result>
             <Type id="5138">PausePoint</Type>
             <UIEnabled id="5139">false</UIEnabled>
             <UIInfo id="5140">
               <OpenDescendant id="5141">0</OpenDescendant>
-              <Pos id="5142" x="88" y="210"/>
+              <Pos id="5142">88,210</Pos>
             </UIInfo>
             <UIOrder id="5143">0</UIOrder>
           </StateMachineElement>
@@ -993,30 +993,30 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
         <UIEnabled id="643">false</UIEnabled>
         <UIInfo id="644">
           <OpenDescendant id="3516">0</OpenDescendant>
-          <Pos id="3517" x="2000" y="2000"/>
+          <Pos id="3517">2000,2000</Pos>
         </UIInfo>
         <UIOrder id="3518">0</UIOrder>
 
         <VisualElement type="Operator Info Graphic" id="2190">
-          <Color A="255" B="0" G="255" R="0" id="2191">#00ff00</Color>
-          <Dimensions height="20" id="2192" width="800" x="0" y="0"/>
+          <Color id="2191">0,255,0,255</Color>
+          <Dimensions id="2192">0,0,800,20</Dimensions>
           <Fields id="2193"/>
           <Layer id="2194">0</Layer>
           <Name id="2195">expInfo</Name>
           <OperatorView id="2196">true</OperatorView>
-          <Position id="2197" x="0" y="580"/>
+          <Position id="2197">0,580</Position>
           <SubjectView id="2198">false</SubjectView>
           <UIEnabled id="2199">false</UIEnabled>
           <UIInfo id="2200">
             <OpenDescendant id="2201">0</OpenDescendant>
-            <Pos id="2202" x="343" y="475"/>
+            <Pos id="2202">343,475</Pos>
           </UIInfo>
           <UIOrder id="2203">0</UIOrder>
           <Values id="2204"/>
           <Visible id="2205">true</Visible>
         </VisualElement>
         <StateMachineElement type="PausePoint" id="5166">
-          <BackgroundColor A="255" B="0" G="0" R="0" id="5167">#000000</BackgroundColor>
+          <BackgroundColor id="5167">0,0,0,255</BackgroundColor>
           <ForcePause id="5168">true</ForcePause>
           <Name id="5169">WaitForOperator</Name>
           <PausingScript id="5170">
@@ -1027,29 +1027,29 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
           <Result id="3595">
             <Name id="3596">done</Name>
             <UIInfo id="3598">
-              <Pos id="3600" x="1790" y="1991"/>
+              <Pos id="3600">1790,1991</Pos>
             </UIInfo>
           </Result>
           <Type id="5172">PausePoint</Type>
           <UIEnabled id="5173">false</UIEnabled>
           <UIInfo id="5174">
             <OpenDescendant id="5175">0</OpenDescendant>
-            <Pos id="5176" x="485" y="183"/>
+            <Pos id="5176">485,183</Pos>
           </UIInfo>
           <UIOrder id="5177">0</UIOrder>
           <VisualElement type="Text Graphic" id="5238">
-            <Color A="255" B="0" G="255" R="255" id="5239">#ffff00</Color>
-            <Dimensions height="40" id="5240" width="400" x="0" y="0"/>
+            <Color id="5239">255,255,0,255</Color>
+            <Dimensions id="5240">0,0,400,40</Dimensions>
             <Layer id="5241">0</Layer>
             <Name id="5242">info</Name>
             <OperatorView id="5243">true</OperatorView>
-            <Position id="5244" x="260" y="280"/>
+            <Position id="5244">260,280</Position>
             <SubjectView id="5245">false</SubjectView>
             <Text id="5246"/>
             <UIEnabled id="5247">false</UIEnabled>
             <UIInfo id="5248">
               <OpenDescendant id="5249">0</OpenDescendant>
-              <Pos id="5250" x="1679" y="2085"/>
+              <Pos id="5250">1679,2085</Pos>
             </UIInfo>
             <UIOrder id="5251">0</UIOrder>
             <Visible id="5252">true</Visible>
@@ -1072,7 +1072,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
           <UIEnabled id="5190">false</UIEnabled>
           <UIInfo id="5191">
             <OpenDescendant id="5192">0</OpenDescendant>
-            <Pos id="5193" x="273" y="67"/>
+            <Pos id="5193">273,67</Pos>
           </UIInfo>
           <UIOrder id="5194">0</UIOrder>
         </StateMachineElement>
@@ -1099,7 +1099,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
       </StateMachine>
       <UIInfo id="3554">
         <OpenDescendant id="3555">0</OpenDescendant>
-        <Pos id="3556" x="1626" y="1875"/>
+        <Pos id="3556">1626,1875</Pos>
       </UIInfo>
     </Task>
 </Experiment></PictoData>
