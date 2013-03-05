@@ -34,6 +34,12 @@ protected:
 	virtual QWidget* createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent);
 private:
 	QList<QSharedPointer<PropertyEditTracker>> editTrackers_;
+	QSharedPointer<Property> nextProp_;
+	QHash<QtProperty*,QSharedPointer<Property>> qtpropToPropMap_;
+	QHash<QtVariantPropertyManager*,bool> trackedPropManagers_;
+
+private slots:
+	void qtPropValueChanged(QtProperty* property,const QVariant& value);
 
 
 };

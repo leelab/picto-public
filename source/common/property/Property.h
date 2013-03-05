@@ -63,6 +63,11 @@ public:
 	void setRuntimeEditable(bool enabled = true){runtimeEnabled_ = enabled;};
 	bool isRuntimeEnabled(){return runtimeEnabled_;};
 
+	//Sets whether this property will be visible in GUI property editors.  Default is true.
+	void setVisible(bool visible){visible_ = visible;};
+	//Gets whether this property should be visible in GUI property editors.  Default is true.
+	bool isVisible(){return visible_;};
+
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
 
@@ -138,6 +143,7 @@ private:
 	int type_;
 	QString name_;
 	QMap<QString,QVariant> attributes_;
+	bool visible_;
 	bool serialSyntaxUpgraded_;
 	static bool hadObsoleteSerialSyntax_;
 

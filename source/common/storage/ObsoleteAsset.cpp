@@ -7,6 +7,7 @@ bool ObsoleteAsset::hadObsoleteAsset_ = false;
 
 ObsoleteAsset::ObsoleteAsset() :
 tagName_(""),
+value_(""),
 assetId_(0)
 {
 }
@@ -35,6 +36,7 @@ bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		attrMap_[xmlStreamAttr.name().toString()] = xmlStreamAttr.value().toString();
 	}
 	xmlStreamReader->readNext();
+	value_ = xmlStreamReader->text().toString();
 	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == tagName_) && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())

@@ -35,6 +35,8 @@ public:
 	QSharedPointer<Asset> getAsset(int id);
 	QList<QWeakPointer<Asset>> getProperties(){return managedProperties_;};
 	QList<QWeakPointer<Asset>> getAssets();
+	void setDeserializedVersion(QString version){deserializedVersion_ = version;};
+	QString getDeserializedVersion(){return deserializedVersion_;};
 
 	QList<AssetInfo> getElementInfo();
 	QList<PropInfo> getPropertyInfo();
@@ -56,6 +58,7 @@ private:
 	QList<QWeakPointer<Asset>> unsortedIdAssets_;
 	int lastUsedId_;
 	bool allowIdDuplication_;
+	QString deserializedVersion_;
 
 
 };

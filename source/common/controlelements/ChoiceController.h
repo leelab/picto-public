@@ -52,12 +52,17 @@ public:
 
 	void activateTargets();
 	void deactivateTargets();
+	virtual void upgradeVersion(QString deserializedVersion);
 
 	int getFixationTime(){return propertyContainer_->getPropertyValue("FixationTime").toInt();}; 
 	void setFixationTime(int time){propertyContainer_->setPropertyValue("FixationTime",time);};
 	int getTotalTime(){return propertyContainer_->getPropertyValue("TotalTime").toInt();};
 	void setTotalTime(int time){propertyContainer_->setPropertyValue("TotalTime",time);};
 
+public slots:
+	bool userOnTarget();
+	bool userEnteredTarget();
+	bool userExitedTarget();
 	//DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -65,12 +70,10 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	virtual bool canHaveScripts(){return true;};
-	virtual bool hasScripts();
-	//This returns a map of QMap<script name,script code>
-	virtual QMap<QString,QPair<QString,QString>>  getScripts();
 private:
+	bool isDonePrivate(QSharedPointer<Engine::PictoEngine> engine);
 	QString insideTarget(QSharedPointer<Engine::PictoEngine> engine);
+	bool canUseUserTargetSlots();
 	//bool checkSingleTarget(QRect targetRect);
 
 	Controller::Timer cumulativeTimer_;
@@ -91,6 +94,7 @@ private:
 
 	QSharedPointer<SignalChannel> signal_;
 	QList<QSharedPointer<ControlResult>> targets_;
+	int frameCtr_;
 
 };
 

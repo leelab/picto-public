@@ -55,6 +55,7 @@ public:
 	QString getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 	void stop(QSharedPointer<Engine::PictoEngine> engine);
+	virtual void upgradeVersion(QString deserializedVersion);
 
 	void activateTargets();
 	void deactivateTargets();
@@ -72,6 +73,10 @@ public:
 	bool getReacqAllowed(){return propertyContainer_->getPropertyValue("ReacquisitionAllowed").toInt();};
 	void setReacqAllowed(bool allowed){propertyContainer_->setPropertyValue("ReacquisitionAllowed",allowed);};
 
+public slots:
+	bool userOnTarget();
+	bool userEnteredTarget();
+	bool userExitedTarget();
 	////DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -79,19 +84,18 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	virtual bool canHaveScripts(){return true;};
-	virtual bool hasScripts();
-	//This returns a map of QMap<script name,script code>
-	virtual QMap<QString,QPair<QString,QString>>  getScripts();
 	virtual void scriptableContainerWasReinitialized();
 
 private:
+	bool isDonePrivate(QSharedPointer<Engine::PictoEngine> engine);
 	bool insideTarget(QSharedPointer<Engine::PictoEngine> engine);
+	bool canUseUserTargetSlots();
 
 	bool targetAcquired_;
 	bool initialAcquisitionOccurred_;
 	bool waitingForReacquisition_;
 	QWeakPointer<ControlTarget> controlTarget_;
+	int frameCtr_;
 
 	Controller::Timer cumulativeTimer_;
 	Controller::Timer acquisitionTimer_;	

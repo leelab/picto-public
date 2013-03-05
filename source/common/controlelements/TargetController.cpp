@@ -1,5 +1,6 @@
 #include "TargetController.h"
 #include "../engine/PictoEngine.h"
+#include "../common/storage/ObsoleteAsset.h"
 
 namespace Picto
 {
@@ -20,8 +21,16 @@ TargetController::TargetController()
 	AddDefinableProperty(QVariant::Int,"MaxInitialAcquisitionTime",1);
 	AddDefinableProperty(QVariant::Int,"MaxReacquisitionTime",0);
 	AddDefinableProperty(QVariant::Bool,"ReacquisitionAllowed",false);
-	AddDefinableProperty(QVariant::String,"TargetEntryScript","");
-	AddDefinableProperty(QVariant::String,"TargetExitScript","");
+	AddDefinableProperty(QVariant::Bool,"OnTarget",false);
+	AddDefinableProperty(QVariant::Bool,"OnTargetChanged",false);
+
+	//Target Entry and Exit Scripts are obsolete as of design syntax version "0.0.3".
+	//This functionality should be handled in Frame Scripts by calling the 
+	//newly exposed userOnTarget, userEnteredTarget, userExitedTarget functions.
+	//AddDefinableProperty(QVariant::String,"TargetEntryScript","");
+	//AddDefinableProperty(QVariant::String,"TargetExitScript","");
+	AddDefinableObjectFactory("TargetEntryScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	AddDefinableObjectFactory("TargetExitScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 
 	//Make sure to update the list of results...
 	addRequiredResult("Success");
@@ -57,14 +66,53 @@ void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 	waitingForReacquisition_ = false;
 	initialAcquisitionOccurred_ = false;
 	activateTargets();
+	frameCtr_ = 0;
 
-	//We call isDone to initialize everything
-	isDone(engine);
+	//We call isDonePrivate to initialize everything
+	isDonePrivate(engine);
 }
 
 void TargetController::stop(QSharedPointer<Engine::PictoEngine> engine)
 {
 	deactivateTargets();
+}
+
+void TargetController::upgradeVersion(QString deserializedVersion)
+{
+	ControlElement::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.3")
+	{	// In design syntax version "0.0.3", we added userOnTarget, userEnteredTarget, userExitedTarget functions.
+		// In an effort to keep the allowed script locations uniform, we are making TargetEntry
+		// and TargetExit scripts obsolete.
+		// We upgrade these older experiments by automatically adding their entry and exit scripts
+		// to the frame script in if(userEnteredTarget()) and if(userExitedTarget) blocks.
+
+		//WARNING!!! userOnTarget(), userEnteredTarget() and userExitedTarget() 
+		//functions cannot be used in AnalysisScripts of experiments that were saved with version below 0.0.3.  
+		//This is because experiments with those versions used TargetEntry and TargetExit scripts and did not 
+		//save OnTarget or OffTarget data in their session files.  Attempting to use these functions in Analysis 
+		//Scripts would cause return of invalid data.
+		QSharedPointer<Property> parentFrameScriptProp = getParentAsset().staticCast<DataStore>()->getGeneratedChildren("FrameScript").first().staticCast<Property>();
+		Q_ASSERT(parentFrameScriptProp);
+		QString parentFrameScript = parentFrameScriptProp->value().toString();
+		QSharedPointer<ObsoleteAsset> obsScript;
+		if(getGeneratedChildren("TargetExitScript").size())
+			obsScript = getGeneratedChildren("TargetExitScript").first().staticCast<ObsoleteAsset>();
+		if(obsScript && obsScript->getValue().size())
+		{
+			//Put exit script into parent's frame script.
+			parentFrameScript.prepend(QString("if(%1.userExitedTarget()){\n%2\n}\n").arg(getName()).arg(obsScript->getValue()));
+		}
+		obsScript.clear();
+		if(getGeneratedChildren("TargetEntryScript").size())
+			obsScript = getGeneratedChildren("TargetEntryScript").first().staticCast<ObsoleteAsset>();
+		if(obsScript && obsScript->getValue().size())
+		{
+			//Put entry script into parent's frame script.
+			parentFrameScript.prepend(QString("if(%1.userEnteredTarget()){\n%2\n}\n").arg(getName()).arg(obsScript->getValue()));
+		}
+		parentFrameScriptProp->setValue(parentFrameScript);
+	}
 }
 
 void TargetController::activateTargets()
@@ -80,6 +128,55 @@ void TargetController::deactivateTargets()
 }
 
 bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
+{
+	//This property tells us if the user entered or exited the target this frame.
+	//It may have been set during start(), so don't change it on the first frame
+	//since no one has had a chance to read it yet.  Afterwards, set it back to false
+	//every frame.
+	if(frameCtr_ > 0)
+		propertyContainer_->getProperty("OnTargetChanged")->setValue(false);
+	frameCtr_++;
+	return isDonePrivate(engine);
+}
+
+QString TargetController::getResult()
+{
+	return result_;
+}
+
+bool TargetController::userOnTarget()
+{
+	return propertyContainer_->getPropertyValue("OnTarget").toBool();
+}
+
+bool TargetController::userEnteredTarget()
+{
+	return userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
+}
+
+bool TargetController::userExitedTarget()
+{
+	return !userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
+}
+
+void TargetController::scriptableContainerWasReinitialized()
+{
+	ControlElement::scriptableContainerWasReinitialized();
+	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
+	QString targetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
+	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
+	{
+		if(scriptable.isNull())
+			continue;
+		if(scriptable.toStrongRef()->getName() == targetName && scriptable.toStrongRef()->inherits("Picto::ControlTarget"))
+		{
+			controlTarget_ = scriptable.toStrongRef().staticCast<ControlTarget>();
+			break;
+		}
+	}
+}
+
+bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 {
 	Controller::TimerUnits::TimerUnits timeUnits;
 	if(unitList_.value(propertyContainer_->getPropertyValue("TimeUnits").toInt(),"") == "Sec")
@@ -119,8 +216,13 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 			acquisitionTimer_.start();
 			targetAcquired_ = true;
 			initialAcquisitionOccurred_ = true;
-			if(!engine->slaveMode() && propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
-				runScript(getName().simplified().remove(' ').append("_TargetEntry"));
+			if(!engine->slaveMode())
+			{
+				propertyContainer_->getProperty("OnTarget")->setValue(true);
+				propertyContainer_->getProperty("OnTargetChanged")->setValue(true);
+				//if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
+				//	runScript(getName().simplified().remove(' ').append("_TargetEntry"));
+			}
 			//If fixation time is zero, we're done
 			if(fixTime <= 0)
 			{
@@ -135,8 +237,13 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	else if(targetAcquired_ && !isInsideTarget)
 	{
 		targetAcquired_ = false;
-		if(!engine->slaveMode() && propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
-			runScript(getName().simplified().remove(' ').append("_TargetExit"));
+		if(!engine->slaveMode())
+		{
+			propertyContainer_->getProperty("OnTarget")->setValue(false);
+			propertyContainer_->getProperty("OnTargetChanged")->setValue(true);
+			//if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
+			//	runScript(getName().simplified().remove(' ').append("_TargetExit"));
+		}
 
 		//If reacquisition isn't allowed, then we're done with a failure value.
 		if(!propertyContainer_->getPropertyValue("ReacquisitionAllowed").toBool())
@@ -203,47 +310,6 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	return false;
 }
 
-QString TargetController::getResult()
-{
-	return result_;
-}
-
-
-bool TargetController::hasScripts()
-{
-	return (propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
-		|| (propertyContainer_->getPropertyValue("TargetExitScript").toString() != "");
-}
-
-QMap<QString,QPair<QString,QString>>  TargetController::getScripts()
-{
-	QMap<QString,QPair<QString,QString>>  scripts;
-	if(!hasScripts())
-		return scripts;
-	if(propertyContainer_->getPropertyValue("TargetEntryScript").toString() != "")
-		scripts[getName().simplified().remove(' ').append("_TargetEntry")] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("TargetEntryScript").toString());
-	if(propertyContainer_->getPropertyValue("TargetExitScript").toString() != "")
-		scripts[getName().simplified().remove(' ').append("_TargetExit")] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("TargetExitScript").toString());
-	return scripts;
-}
-
-void TargetController::scriptableContainerWasReinitialized()
-{
-	ControlElement::scriptableContainerWasReinitialized();
-	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
-	QString targetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
-	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
-	{
-		if(scriptable.isNull())
-			continue;
-		if(scriptable.toStrongRef()->getName() == targetName && scriptable.toStrongRef()->inherits("Picto::ControlTarget"))
-		{
-			controlTarget_ = scriptable.toStrongRef().staticCast<ControlTarget>();
-			break;
-		}
-	}
-}
-
 /*!	\brief Returns true if the signalChannel coordinates are within the target area
  */
 bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
@@ -304,6 +370,10 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 void TargetController::postDeserialize()
 {
 	ControlElement::postDeserialize();
+	//Don't let user see OnTarget/OnTargetChanged, they are for internal use only
+	propertyContainer_->getProperty("OnTarget")->setVisible(false);
+	propertyContainer_->getProperty("OnTargetChanged")->setVisible(false);
+
 	setPropertyRuntimeEditable("FixationTime");
 	setPropertyRuntimeEditable("TotalTime");
 	setPropertyRuntimeEditable("MinInitialAcquisitionTime");

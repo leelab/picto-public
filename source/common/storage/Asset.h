@@ -50,6 +50,8 @@ public:
 
 	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig);
 	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
+
+	virtual void upgradeVersion(QString deserializedVersion);
 signals:
 	void edited();
 	void deleted();

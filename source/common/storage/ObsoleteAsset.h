@@ -39,12 +39,13 @@ public:
 	int numAttributes(){return attrMap_.size();};
 	QString getAttributeName(int index);
 	QString getAttributeValue(QString name);
-
+	
+	QString getValue(){return value_;};
 private:
 	QString tagName_;
 	QMap<QString,QString> attrMap_;
 	QVector<QSharedPointer<ObsoleteAsset>> children_;
-	QString value;
+	QString value_;
 	int assetId_;
 	static bool hadObsoleteAsset_;
 };

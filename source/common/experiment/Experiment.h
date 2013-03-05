@@ -92,7 +92,6 @@ private:
 
 	Experiment();
 	QList<QSharedPointer<Task> > tasks_;
-	const QString latestSyntaxVersion_;
 	QSharedPointer<PropertyTable> propTable_;
 	QSharedPointer<Engine::PictoEngine> engine_;
 	bool signalCoeffInitialized_;

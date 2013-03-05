@@ -558,6 +558,18 @@ bool DataStore::hasChildrenOfType(QString tagName)
 	return children_.contains(tagName);
 }
 
+void DataStore::upgradeVersion(QString deserializedVersion)
+{
+	Asset::upgradeVersion(deserializedVersion);
+	foreach(QList<QSharedPointer<Asset>> AssetList,children_)
+	{
+		foreach(QSharedPointer<Asset> child,AssetList)
+		{
+			child->upgradeVersion(deserializedVersion);
+		}
+	}
+}
+
 void DataStore::childEdited()
 {
 	emit edited();

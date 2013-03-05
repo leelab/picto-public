@@ -18,11 +18,12 @@ class PropertyEditTracker : public QObject
 public:
 	PropertyEditTracker(QSharedPointer<Picto::Property> prop);
 	virtual ~PropertyEditTracker(){};
-	void addTrackedWidget(QWidget* widget);
+	void addTrackedWidget(QWidget* widget, QtVariantProperty* qtProp);
 signals:
 	void propertyEdited(QSharedPointer<Property> prop, QVariant newValue);
 protected:
 	QSharedPointer<Picto::Property> prop_;
+	QtVariantProperty* qtProp_;
 private:
 	bool textEdited_;
 	QVariant latestEditedText_;

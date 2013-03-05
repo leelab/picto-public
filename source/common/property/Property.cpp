@@ -21,6 +21,7 @@ scriptEditable_(true),
 runtimeEnabled_(false),
 index_(-1),
 assetId_(0),
+visible_(true),
 serialSyntaxUpgraded_(false),
 syncInitAndRunVals_(false),
 runMode_(false)

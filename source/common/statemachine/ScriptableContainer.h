@@ -5,6 +5,7 @@
 #include <QList>
 #include <QScriptEngine>
 #include <QScriptEngineDebugger>
+#include <QScriptable>
 
 #include "../common.h"
 #include "../statemachine/UIEnabled.h"
@@ -16,7 +17,7 @@ namespace Picto {
 /*! \brief A container for storing items that can be used in scripts
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ScriptableContainer : public Scriptable
+class PICTOLIB_API ScriptableContainer : public Scriptable, protected QScriptable
 #else
 class ScriptableContainer : public Scriptable
 #endif

@@ -35,7 +35,11 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 	QVector<QSharedPointer<Property>> propVec;
 	foreach(QString propTag,orderedProps)
 	{
-		propVec << properties.value(propTag);
+		foreach(QSharedPointer<Property> prop,properties.value(propTag))
+		{
+			if(prop->isVisible())
+				propVec << prop;
+		}
 	}
 	propGroupWidget_->clear();
 	propGroupWidget_->addProperties(dataStore->getName(),propVec);

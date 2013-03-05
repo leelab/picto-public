@@ -76,6 +76,8 @@ public:
 	virtual	int getAssetId();
 	virtual void setAssetId(int id);
 
+	virtual void upgradeVersion(QString deserializedVersion);
+
 public slots:
 	void childEdited();
 

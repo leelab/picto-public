@@ -56,7 +56,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 			QVector<QSharedPointer<Property>> propVec = properties.value(propTag);
 			foreach(QSharedPointer<Property> prop,propVec)
 			{
-				if(prop->isRuntimeEnabled())
+				if(prop->isRuntimeEnabled() && prop->isVisible())
 				{
 					runTimeProps.append(prop);
 					//Add prop to the pathMap so that it can be updated with saved values

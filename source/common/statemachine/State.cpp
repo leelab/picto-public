@@ -118,7 +118,8 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 			isDone = true;
 
 		//-------------- Run the frame script ----------------
-		if(runFrameScript && !isDone)
+		//Runs after control logic after every frame.
+		if(runFrameScript)
 			runScript(frameScriptName);
 
 		//------ Check for engine stop commands ---------------

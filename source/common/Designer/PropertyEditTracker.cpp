@@ -12,9 +12,10 @@ PropertyEditTracker::PropertyEditTracker(QSharedPointer<Picto::Property> prop) :
 {
 }
 
-void PropertyEditTracker::addTrackedWidget(QWidget* widget)
+void PropertyEditTracker::addTrackedWidget(QWidget* widget, QtVariantProperty* qtProp)
 {
 	trackedWidget_ = widget;
+	qtProp_ = qtProp;
 	QList<QSpinBox*> spinKids = trackedWidget_->findChildren<QSpinBox*>();
 	QList<QDoubleSpinBox*> doubleSpinKids = trackedWidget_->findChildren<QDoubleSpinBox*>();
 	QList<QCheckBox*> checkKids = trackedWidget_->findChildren<QCheckBox*>();
@@ -81,12 +82,12 @@ void PropertyEditTracker::addTrackedWidget(QWidget* widget)
 
 void PropertyEditTracker::valueEdited(int val)
 {
-	emit propertyEdited(prop_,val);
+	//emit propertyEdited(prop_,qtProp_->value());
 }
 
 void PropertyEditTracker::valueEdited(double val)
 {
-	emit propertyEdited(prop_,val);
+	//emit propertyEdited(prop_,qtProp_->value());
 }
 
 //Since textChanged is textEdited is called whenever any text changes (ie. a single letter)
@@ -101,14 +102,14 @@ void PropertyEditTracker::valueEdited(const QString &val)
 
 void PropertyEditTracker::valueEdited(QColor val)
 {
-	emit propertyEdited(prop_,val);
+	//emit propertyEdited(prop_,qtProp_->value());
 }
 
 void PropertyEditTracker::lineEditFinished()
 {
 	if(textEdited_)
 	{
-		emit propertyEdited(prop_,latestEditedText_);
+		//emit propertyEdited(prop_,qtProp_->value());
 	}
 	textEdited_ = false;
 	latestEditedText_ = "";
@@ -126,6 +127,6 @@ void PropertyEditTracker::comboBoxEntrySelected(int index)
 	//If the input index==lastHighlightedNewValue_ then a new value was selected
 	//(since index will never be -2)
 	if(index == lastHighlightedNewValue_)
-		emit propertyEdited(prop_,index);
+		//emit propertyEdited(prop_,qtProp_->value());
 	lastHighlightedNewValue_ = -2;	//If we're here, the combobox isn't being used anymore, so reset the lastHighlightedNewValue_.
 }

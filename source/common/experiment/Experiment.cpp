@@ -8,7 +8,6 @@ namespace Picto {
 
 Experiment::Experiment()
 :
-latestSyntaxVersion_("0.0.2"),
 engine_(NULL)
 {
 	signalCoeffInitialized_ = false;
@@ -176,8 +175,12 @@ void Experiment::postDeserialize()
 	addScriptable(selfPtr().staticCast<Scriptable>());
 	ScriptableContainer::postDeserialize();
 	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
-	if(experimentSyntaxVer != latestSyntaxVersion_)
-		propertyContainer_->setPropertyValue("SyntaxVersion",latestSyntaxVersion_);
+	if(experimentSyntaxVer != DESIGNSYNTAXVERSION)
+	{
+		expConfig_->setDeserializedVersion(experimentSyntaxVer);
+		upgradeVersion(experimentSyntaxVer);
+		propertyContainer_->setPropertyValue("SyntaxVersion",DESIGNSYNTAXVERSION);
+	}
 
 	//Set the signal properties runtime editable
 	//We use the DataStore version of this function so that the actual properties,

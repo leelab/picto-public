@@ -109,6 +109,13 @@ QString Asset::getPath()
 	return returnVal;
 }
 
+//Should be overloaded to upgrade the version of this asset from the input version to the current version.
+//Make sure to always start the function by calling the parent version of upgradeVersion()
+void Asset::upgradeVersion(QString)
+{
+	
+}
+
 void Asset::setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig)
 {
 	expConfig_ = expConfig;
@@ -137,4 +144,5 @@ void Asset::postDeserialize()
 	if(expConfig_)
 		expConfig_->fixDuplicatedAssetIds();
 }
+
 }; //namespace Picto

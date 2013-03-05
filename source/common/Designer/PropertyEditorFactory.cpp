@@ -21,8 +21,9 @@ PropertyEditorFactory::PropertyEditorFactory(QWidget *parent) :
 //is associated with, allowing that property to be included in propertyEdited signals.
 void PropertyEditorFactory::setNextProperty(QSharedPointer<Picto::Property> nextProp)
 {
-	editTrackers_.prepend(QSharedPointer<PropertyEditTracker>(new PropertyEditTracker(nextProp)));
-	connect(editTrackers_.first().data(),SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),this,SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)));
+	nextProp_ = nextProp;
+	//editTrackers_.prepend(QSharedPointer<PropertyEditTracker>(new PropertyEditTracker(nextProp)));
+	//connect(editTrackers_.first().data(),SIGNAL(widgetValueEdited(QSharedPointer<Property>,QVariant)),this,SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)));
 }
 
 //Clear should be called whenever creating more propertyWidgets if the previously created propertyWidgets
@@ -30,10 +31,24 @@ void PropertyEditorFactory::setNextProperty(QSharedPointer<Picto::Property> next
 void PropertyEditorFactory::clear()
 {
 	editTrackers_.clear();
+	trackedPropManagers_.clear();
+	qtpropToPropMap_.clear();
 }
 
 QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent)
 {
+	//If this is the first qtProp for the latest Picto prop, it is the top level prop.
+	//Add this property to our map of qtProps to Picto Props.
+	if(nextProp_)
+		qtpropToPropMap_[property] = nextProp_;
+	nextProp_.clear();
+	//If we haven't connected this managers "property changed signal" to our slot yet, do it.
+	if(!trackedPropManagers_.contains(manager))
+	{
+		trackedPropManagers_[manager] = true;
+		connect(manager,SIGNAL(valueChanged (QtProperty*, const QVariant&)),this,SLOT(qtPropValueChanged(QtProperty*,const QVariant&)));
+	}
+
 	QWidget* resultWidget = NULL;
 	QString propName = property->propertyName();
 	if((propName == "EntryScript")
@@ -63,9 +78,20 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 		qobject_cast<QDoubleSpinBox*>(resultWidget)->setSingleStep(.01);
 		qobject_cast<QDoubleSpinBox*>(resultWidget)->setValue(manager->value(property).toDouble());
 	}
-	//Add this widget to the edit tracker for the current property so that
-	//it will tell us when it is changed by the user.
-	if(editTrackers_.size())
-		editTrackers_.first()->addTrackedWidget(resultWidget);
+
+
+	////Add this widget to the edit tracker for the current property so that
+	////it will tell us when it is changed by the user.
+	//if(editTrackers_.size())
+	//	editTrackers_.first()->addTrackedWidget(resultWidget,static_cast<QtVariantProperty*>(property));
 	return resultWidget;
+}
+
+//This is called whenever a QtProperty value changes.  It translates the message and emits
+//a signal indicating which property's value is supposed to be changed, and to what value.
+void PropertyEditorFactory::qtPropValueChanged(QtProperty* property,const QVariant& value)
+{
+	if(!qtpropToPropMap_.contains(property))
+		return;
+	emit propertyEdited(qtpropToPropMap_.value(property),value);
 }
