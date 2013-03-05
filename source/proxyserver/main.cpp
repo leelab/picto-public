@@ -49,8 +49,8 @@ int main(int argc, char *argv[])
 	#endif
 	
 	//Add plugins directory to the path
-	QApplication::addLibraryPath(QCoreApplication::applicationDirPath() + "/plugins");
 	QApplication app(argc,argv);
+	QApplication::addLibraryPath(QCoreApplication::applicationDirPath() + "/plugins");
 
 	QLocale systemLocale = QLocale();
 	QString localeLanguageCode = systemLocale.name().left(2);

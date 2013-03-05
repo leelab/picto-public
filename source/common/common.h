@@ -65,8 +65,8 @@
  *	two separate PictoServers open at the same time.
  */
 #define DEVELOPMENTBUILD
-//#define SYSTEM_0	//Currently we are using different servers for each picto system.  System 0 is Chris's system.  System 1 is Hyojung's. System 2 is Min's.
-#define SYSTEM_1
+#define SYSTEM_0	//Currently we are using different servers for each picto system.  System 0 is Chris's system.  System 1 is Hyojung's. System 2 is Min's.
+//#define SYSTEM_1
 //#define SYSTEM_2
 #ifdef DEVELOPMENTBUILD
 	#define PORTPREFIX 50000
@@ -93,7 +93,7 @@
 #define LCDEVENTPORT PORTPREFIX+2421
 
 //Version MAJOR.MINOR.BUILD
-#define PICTOVERSION "1.0.10"
+#define PICTOVERSION "1.0.12"
 //Directory name of automatic updater application and dependencies
 //It is a subdirectory of the main binary directory
 #define UPDATERDIR "updater"

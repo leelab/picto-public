@@ -25,7 +25,8 @@
 #ifdef WINCE
 #include <winbase.h>
 #endif
-#include "QVideoEncoder.h"
+#include <qsqldatabase>
+#include <qsqlquery>
 #include "../../common/common.h"
 #include "../../common/globals.h"
 #include "../../common/namedefs.h"
@@ -68,104 +69,19 @@ public:
 
     BlankWindow(QWidget *parent = 0) : QWidget(parent)
     {
-  //      propManager1_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
-		//propManager2_ = QSharedPointer<QtVariantPropertyManager>(new QtVariantPropertyManager());
-		//
-		//QtVariantProperty *item1 = propManager1_->addProperty(QVariant::Int,"Number1");
-		//QtVariantProperty *item2 = propManager1_->addProperty(QVariant::String,"Test String1");
-
-		//QtVariantProperty *item3 = propManager2_->addProperty(QVariant::Int,"Number2");
-		//QtVariantProperty *item4 = propManager2_->addProperty(QVariant::String,"Test String2");
-		//propManager2_->clear();
-
-		//propertyFactory_ = QSharedPointer<QtVariantEditorFactory>(new QtVariantEditorFactory(this));
-		//
-		//QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
-		//browser->setFactoryForManager(propManager1_.data(), propertyFactory_.data());
-		//browser->setFactoryForManager(propManager2_.data(), propertyFactory_.data());
-		//foreach(QtProperty* prop,propManager1_->properties())
-		//{
-		//	browser->addProperty(prop);
-		//}
-		//foreach(QtProperty* prop,propManager2_->properties())
-		//{
-		//	browser->addProperty(prop);
-		//}
-		//
-		//QVBoxLayout* layout = new QVBoxLayout(this);
-		//layout->addWidget(browser);
-		//setLayout(layout);
-	QString filename = "C:\\Users\\joeys\\Desktop\\Temp\\TestVid.avi";
-	bool vfr = false;
-	int width=640;
-   int height=480;
-   int bitrate=10000000;
-   int gop = 20;
-   int fps = 25;
-
-   // The image on which we draw the frames
-   QImage frame(width,height,QImage::Format_RGB32);     // Only RGB32 is supported
-
-   // A painter to help us draw
-   QPainter painter(&frame);
-   painter.setBrush(Qt::red);
-   painter.setPen(Qt::white);
-
-   // Create the encoder
-   QVideoEncoder encoder;
-   if(!vfr)
-      encoder.createFile(filename,width,height,bitrate,gop,fps);        // Fixed frame rate
-   else
-      encoder.createFile(filename,width,height,bitrate*1000/fps,gop,1000);  // For variable frame rates: set the time base to e.g. 1ms (1000fps),
-                                                                           // and correct the bitrate according to the expected average frame rate (fps)
-
-   QEventLoop evt;      // we use an event loop to allow for paint events to show on-screen the generated video
-
-   // Generate a few hundred frames
-   int size=0;
-   int maxframe=500;
-   unsigned pts=0;
-   for(unsigned i=0;i<maxframe;i++)
-   {
-      // Clear the frame
-      painter.fillRect(frame.rect(),Qt::red);   
-
-      // Draw a moving square
-      painter.fillRect(width*i/maxframe,height*i/maxframe,30,30,Qt::blue);
-
-      // Frame number
-      painter.drawText(frame.rect(),Qt::AlignCenter,QString("Frame %1\nLast frame was %2 bytes").arg(i).arg(size));
-
-      // Display the frame, and processes events to allow for screen redraw
-      QPixmap p;
-      image2Pixmap(frame,p);      
-      //ui->labelVideoFrame->setPixmap(p);
-      evt.processEvents();
-
-      if(!vfr)
-         size=encoder.encodeImage(frame);                      // Fixed frame rate
-      else
-      {
-         // Variable frame rate: the pts of the first frame is 0,
-         // subsequent frames slow down
-         pts += sqrt(float(i));
-         if(i==0)
-            size=encoder.encodeImagePts(frame,0);
-         else
-            size=encoder.encodeImagePts(frame,pts);
-      }
-
-      printf("Encoded: %d\n",size);
-   }
-
-   encoder.close();
-
-    }
-
-
-	//QSharedPointer<QtVariantPropertyManager> propManager1_;
-	//QSharedPointer<QtVariantPropertyManager> propManager2_;
-	//QSharedPointer<QtVariantEditorFactory> propertyFactory_;
+		QSqlDatabase newSession = QSqlDatabase::addDatabase("QSQLITE","TestConnection");
+		newSession.setDatabaseName("C:\\Users\\joeys\\Desktop\\Temp\\Session_2013_02_20__10_27_19.sqlite");
+		newSession.open();
+		QSqlQuery query(newSession);
+		query.prepare("SELECT dataid,timestamp,channel,unit,waveform FROM spikes WHERE dataid > 607 AND timestamp <= 325 ORDER BY dataid LIMIT 10000");
+		query.exec();
+		QString result;
+		while(query.next())
+		{
+			result.append(QString("%1 %2 %3 %4 %5\n").arg(query.value(0).toString()).arg(query.value(1).toString()).arg(query.value(2).toString()).arg(query.value(4).toString()).arg(query.value(5).toString()));
+		}
+		qDebug(result.toLatin1());
+	}
 };
 
 int main(int argc, char *argv[])

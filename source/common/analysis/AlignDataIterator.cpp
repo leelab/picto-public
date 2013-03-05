@@ -33,7 +33,7 @@ bool AlignDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,do
 
 void AlignDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	query->prepare("SELECT COUNT(dataid) FROM behavioralalignevents");
+	query->prepare("SELECT COUNT(b.dataid) FROM behavioralalignevents b");
 }
 
 qulonglong AlignDataIterator::readOutRecordData(QSqlRecord* record)

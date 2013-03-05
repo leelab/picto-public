@@ -37,7 +37,7 @@ bool ElementDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,
 
 void ElementDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	query->prepare("SELECT COUNT(dataid) FROM transitions");
+	query->prepare("SELECT COUNT(t.dataid) FROM transitions t");
 }
 
 qulonglong ElementDataIterator::readOutRecordData(QSqlRecord* record)

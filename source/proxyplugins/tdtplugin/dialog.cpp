@@ -1,4 +1,7 @@
-#include <QtWidgets>
+#include <QWidget>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFormLayout>
 
 #include "dialog.h"
 #include "../../common/memleakdetect.h"

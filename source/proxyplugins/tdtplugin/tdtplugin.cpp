@@ -568,7 +568,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 			returnList.push_back(alignData);
 			//remove the just processed event
 			eventList.erase(eventList.begin());
-			qDebug(QString("Timestamp: %1, Code: %2").arg(alignData->getTimestamp()).arg(alignData->getAlignCode()).toAscii());
+			qDebug(QString("Timestamp: %1, Code: %2").arg(alignData->getTimestamp()).arg(alignData->getAlignCode()).toLatin1());
 		}
 	}
 	return returnList;

@@ -48,8 +48,8 @@ bool LFPDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,dou
 {
 	if(temporalFactor_ == 0)
 		temporalFactor_ = 1.0;
-	QString queryString = QString("SELECT dataid,timestamp,data,channel "
-		"FROM lfp WHERE dataid > :lastDataId AND timestamp <= :stoptime ORDER BY dataid LIMIT :maxrows");
+	QString queryString = QString("SELECT l.dataid,l.timestamp,l.data,l.channel "
+		"FROM lfp l WHERE l.dataid > :lastdataid AND l.timestamp <= :stoptime ORDER BY l.dataid LIMIT :maxrows");
 	query->prepare(queryString);
 	query->bindValue(":lastdataid",lastDataId);
 	query->bindValue(":stoptime",(stopTime-offsetTime_)/temporalFactor_);
@@ -59,9 +59,9 @@ bool LFPDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,dou
 
 bool LFPDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
 {
-	QString queryString = QString("SELECT dataid,timestamp,data,channel "
-		"FROM lfp WHERE timestamp = "
-			"(SELECT timestamp FROM lfp WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT 1)"
+	QString queryString = QString("SELECT l.dataid,l.timestamp,l.data,l.channel "
+		"FROM lfp l WHERE l.timestamp = "
+			"(SELECT l2.timestamp FROM lfp l2 WHERE l2.timestamp < :beforetime ORDER BY l2.dataid DESC LIMIT 1)"
 			);
 	query->prepare(queryString);
 	query->bindValue(":beforetime",(beforeTime-offsetTime_)/temporalFactor_);
@@ -70,7 +70,7 @@ bool LFPDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,doub
 
 void LFPDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	query->prepare("SELECT COUNT(dataid) FROM lfp");
+	query->prepare("SELECT COUNT(l.dataid) FROM lfp l");
 }
 
 qulonglong LFPDataIterator::readOutRecordData(QSqlRecord* record)
@@ -174,7 +174,7 @@ void LFPDataIterator::getSamplePeriod()
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
-	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"DataSource\"");
+	QString queryString = QString("SELECT s.value FROM sessioninfo s WHERE s.key=\"DataSource\"");
 	query.prepare(queryString);
 	bool success = query.exec();
 	if(!success)

@@ -33,7 +33,7 @@ bool FrameDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,do
 
 void FrameDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	query->prepare("SELECT COUNT(dataid) FROM frames");
+	query->prepare("SELECT COUNT(f.dataid) FROM frames f");
 }
 
 qulonglong FrameDataIterator::readOutRecordData(QSqlRecord* record)

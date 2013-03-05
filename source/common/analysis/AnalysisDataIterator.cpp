@@ -135,6 +135,10 @@ void AnalysisDataIterator::updateAnalysisValsList()
 	{
 		Q_ASSERT(false);
 	}
+	QString execdQuery = query.executedQuery();
+	QString lastQuery = query.lastQuery();
+	QSqlError lastError = query.lastError();
+	QString errorText = lastError.text();
 	if(!query.next())
 	{
 		//There is no more data available.  Check if session has ended and if so

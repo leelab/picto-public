@@ -51,7 +51,7 @@ bool PropertyDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query
 
 void PropertyDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	query->prepare("SELECT COUNT(dataid) FROM properties WHERE assetid=:assetid");
+	query->prepare("SELECT COUNT(p.dataid) FROM properties p WHERE p.assetid=:assetid");
 	query->bindValue(":assetid",propertyId_);
 }
 
@@ -67,7 +67,7 @@ int PropertyDataIterator::getElementId(QString path)
 {
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
-	query.prepare("SELECT assetid FROM elementlookup WHERE path=:path");
+	query.prepare("SELECT el.assetid FROM elementlookup el WHERE el.path=:path");
 	query.bindValue(":path",path);
 	bool success = query.exec();
 
@@ -109,7 +109,7 @@ int PropertyDataIterator::getPropertyId(QString fullPath)
 
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
-	query.prepare("SELECT assetid FROM propertylookup WHERE parent=:parentId AND name=:name");
+	query.prepare("SELECT pl.assetid FROM propertylookup pl WHERE pl.parent=:parentId AND pl.name=:name");
 	query.bindValue(":parentId",parentId);
 	query.bindValue(":name",propName);
 	bool success = query.exec();

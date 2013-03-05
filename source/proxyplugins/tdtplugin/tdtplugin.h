@@ -9,7 +9,7 @@
 
 //#include "../../proxyserver/interfaces.h"	// Joey - 12/27/10 This file no longer exists, replaced with the following
 #include "../../proxyserver/NeuralDataAcqInterface.h"
-#import "C:\\TDT\\OpenEx\\OCX\\TTankX.ocx"
+#import "TTankX.ocx"
 
 /*! \brief A plugin allowing the proxy server to interface with a TDT system
  *

@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = ProxyPluginTDT
-QT = core gui xml
+QT = core gui xml widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG += plugin
 CONFIG -= flat

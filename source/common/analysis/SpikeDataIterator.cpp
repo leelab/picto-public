@@ -47,8 +47,9 @@ bool SpikeDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,d
 {
 	if(temporalFactor_ == 0)
 		temporalFactor_ = 1.0;
-	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
-		"FROM spikes WHERE dataid > :lastDataId AND timestamp <= :stoptime ORDER BY dataid LIMIT :maxrows");
+	
+	QString queryString = QString("SELECT s.dataid,s.timestamp,s.channel,s.unit,s.waveform "
+		"FROM spikes s WHERE s.dataid > :lastdataid AND s.timestamp <= :stoptime ORDER BY s.dataid LIMIT :maxrows");
 	query->prepare(queryString);
 	query->bindValue(":lastdataid",lastDataId);
 	query->bindValue(":stoptime",(stopTime-offsetTime_)/temporalFactor_);
@@ -58,8 +59,8 @@ bool SpikeDataIterator::prepareSqlQuery(QSqlQuery* query,qulonglong lastDataId,d
 
 bool SpikeDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,double beforeTime)
 {
-	QString queryString = QString("SELECT dataid,timestamp,channel,unit,waveform "
-		"FROM spikes WHERE timestamp < :beforetime ORDER BY dataid DESC LIMIT 1");
+	QString queryString = QString("SELECT s.dataid,s.timestamp,s.channel,s.unit,s.waveform "
+		"FROM spikes s WHERE s.timestamp < :beforetime ORDER BY s.dataid DESC LIMIT 1");
 	query->prepare(queryString);
 	query->bindValue(":beforetime",(beforeTime-offsetTime_)/temporalFactor_);
 	return true;
@@ -67,7 +68,7 @@ bool SpikeDataIterator::prepareSqlQueryForLastRowBeforeStart(QSqlQuery* query,do
 
 void SpikeDataIterator::prepareSqlQueryForTotalRowCount(QSqlQuery* query)
 {
-	query->prepare("SELECT COUNT(dataid) FROM spikes");
+	query->prepare("SELECT COUNT(s.dataid) FROM spikes s");
 }
 
 qulonglong SpikeDataIterator::readOutRecordData(QSqlRecord* record)
@@ -103,7 +104,7 @@ void SpikeDataIterator::getSamplePeriod()
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
 
-	QString queryString = QString("SELECT value FROM sessioninfo WHERE key=\"DataSource\"");
+	QString queryString = QString("SELECT s.value FROM sessioninfo s WHERE s.key=\"DataSource\"");
 	query.prepare(queryString);
 	bool success = query.exec();
 	if(!success)

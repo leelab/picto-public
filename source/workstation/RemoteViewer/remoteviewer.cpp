@@ -998,7 +998,7 @@ void RemoteViewer::setupUi()
 	mainTabbedFrame_->addTab(currentRunViewer_,"Run Info");
 	mainTabbedFrame_->setTabEnabled(0,false);
 	mainTabbedFrame_->setTabEnabled(1,false);
-
+	
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	operationLayout->addLayout(leftPane);
 	operationLayout->addWidget(mainTabbedFrame_);

@@ -28,6 +28,7 @@ addSubdirs(source/workstation)
 addSubdirs(source/documentation/developersguide)
 addSubdirs(source/embedded)
 addSubdirs(source/proxyplugins/plexonplugin)
+addSubdirs(source/proxyplugins/tdtplugin)
 addSubdirs(source/proxyplugins/virtualdeviceplugin)
 
 #SUBDIRS = source/common				source/common/unittests

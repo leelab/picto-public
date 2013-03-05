@@ -17,6 +17,7 @@
 #include <qwt_plot_curve.h>
 #include <qwt_plot_marker.h>
 #include <qwt_plot_histogram.h>
+#include <QScrollArea>
 using namespace Picto;
 
 class QAction;
@@ -27,7 +28,7 @@ class QSlider;
 class QSpinBox;
 class QLineEdit;
 
-class NeuralDataViewer : public QWidget
+class NeuralDataViewer : public QScrollArea
 {
 	Q_OBJECT
 public:

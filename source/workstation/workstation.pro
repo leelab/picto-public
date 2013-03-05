@@ -106,7 +106,6 @@ unix:LIBS += -lPicto_debug
 win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/debug/
 win32:LIBS += qwtd.lib
-# win32:LIBS += qwtmathmld.lib
 }
 
 build_pass:CONFIG(release, debug|release) {
@@ -118,7 +117,6 @@ unix:LIBS += -lPicto
 win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/
 win32:LIBS += qwt.lib
-win32:LIBS += qwtmathml.lib
 }
 
 # Platform Specific Configuration

@@ -116,7 +116,7 @@ void SignalDataIterator::getSubChanInfo(QString signalName)
 	numSubChans_ = -1;
 	QSqlQuery query = getSessionQuery();
 	query.setForwardOnly(true);
-	query.prepare("SELECT value FROM sessioninfo WHERE key='Signal'");
+	query.prepare("SELECT s.value FROM sessioninfo s WHERE s.key='Signal'");
 	bool success = query.exec();
 	if(!success)
 	{

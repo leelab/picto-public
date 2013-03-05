@@ -45,7 +45,7 @@ using namespace Picto;
 
 #define NEURAL_PLOT_WINDOW_SECS 20
 NeuralDataViewer::NeuralDataViewer(QSharedPointer<Picto::Engine::PictoEngine> engine,QWidget *parent) :
-	QWidget(parent),
+	QScrollArea(parent),
 	engine_(engine)
 {
 	setupUi();
@@ -406,10 +406,10 @@ void NeuralDataViewer::setupUi()
 	plotOpsLayout->addStretch(1);
 	plotWinLayout->addWidget(lfpPlot_);
 	plotWinLayout->addWidget(spikePlot_);
-	plotLayout->addLayout(plotOpsLayout);
-	plotLayout->addLayout(plotWinLayout);
-	plotLayout->setStretch(0,0);
-	plotLayout->setStretch(1,1);
+	plotLayout->addLayout(plotOpsLayout,0);
+	plotLayout->addLayout(plotWinLayout,1);
+	//plotLayout->setStretch(0,0);
+	//plotLayout->setStretch(1,1);
 	
 	setLayout(plotLayout);
 }
