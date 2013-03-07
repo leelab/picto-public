@@ -4,7 +4,6 @@
 #include "../../common/property/PropertyContainer.h"
 #include "ScriptWidget.h"
 //#include "DeletableWidget.h"
-#include "PropertyEditTracker.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -22,15 +21,12 @@ PropertyEditorFactory::PropertyEditorFactory(QWidget *parent) :
 void PropertyEditorFactory::setNextProperty(QSharedPointer<Picto::Property> nextProp)
 {
 	nextProp_ = nextProp;
-	//editTrackers_.prepend(QSharedPointer<PropertyEditTracker>(new PropertyEditTracker(nextProp)));
-	//connect(editTrackers_.first().data(),SIGNAL(widgetValueEdited(QSharedPointer<Property>,QVariant)),this,SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)));
 }
 
 //Clear should be called whenever creating more propertyWidgets if the previously created propertyWidgets
 //are no longer visible.
 void PropertyEditorFactory::clear()
 {
-	editTrackers_.clear();
 	trackedPropManagers_.clear();
 	qtpropToPropMap_.clear();
 }
@@ -80,10 +76,6 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	}
 
 
-	////Add this widget to the edit tracker for the current property so that
-	////it will tell us when it is changed by the user.
-	//if(editTrackers_.size())
-	//	editTrackers_.first()->addTrackedWidget(resultWidget,static_cast<QtVariantProperty*>(property));
 	return resultWidget;
 }
 

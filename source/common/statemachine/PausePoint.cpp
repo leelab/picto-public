@@ -127,12 +127,12 @@ QMap<QString,QPair<QString,QString>>  PausePoint::getScripts()
 	if(!propertyContainer_->getPropertyValue("PausingScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Pausing";
-		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("PausingScript").toString());
+		scripts[scriptName] = QPair<QString,QString>(QString(),"PausingScript");
 	}
 	if(!propertyContainer_->getPropertyValue("RestartingScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Restarting";
-		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("RestartingScript").toString());
+		scripts[scriptName] = QPair<QString,QString>(QString(),"RestartingScript");
 	}
 	return scripts;
 }

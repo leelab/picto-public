@@ -82,6 +82,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 
 	QString result = "";
+	QSharedPointer<Transition> resultTrans;
 	bool isDone = false;
 
 	//This is the "rendering loop"  It gets run for every frame
@@ -108,6 +109,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 					if(link->getSourceResult() == result)
 					{
 						result = link->getDestination();
+						resultTrans = link;
 						break;
 					}
 				}
@@ -128,7 +130,13 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 			isDone = true;
 			result = "EngineAbort";
 		}
-
+		else if(isDone)
+		{
+			engine->addStateTransitionForServer(resultTrans);	//Added in Picto Version 1.0.12.  Before this transitions within a state weren't being recorded in the session file.		
+			Q_ASSERT(results_.contains(result));		//Added in Picto Version 1.0.12.
+			//Run result script if there is one.
+			results_.value(result)->runResultScript();
+		}
 		//If we're not in exclusive mode, we should allocate time to process events
 		//This would occur if we were running a state machine somewhere other than
 		//Director (e.g. debugging it in Workstation)
@@ -396,7 +404,7 @@ QMap<QString,QPair<QString,QString>> State::getScripts()
 	if(!propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Frame";
-		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("FrameScript").toString());
+		scripts[scriptName] = QPair<QString,QString>(QString(),"FrameScript");
 	}
 	return scripts;
 }

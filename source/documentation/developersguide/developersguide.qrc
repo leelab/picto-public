@@ -582,6 +582,8 @@
    <file alias="_rendering_target_8h.html">../../../output/documentation/main/html/_rendering_target_8h.html</file>
    <file alias="_replay_viewer_8cpp-source.html">../../../output/documentation/main/html/_replay_viewer_8cpp-source.html</file>
    <file alias="_replay_viewer_8h-source.html">../../../output/documentation/main/html/_replay_viewer_8h-source.html</file>
+   <file alias="_required_result_8cpp-source.html">../../../output/documentation/main/html/_required_result_8cpp-source.html</file>
+   <file alias="_required_result_8h-source.html">../../../output/documentation/main/html/_required_result_8h-source.html</file>
    <file alias="_result_8cpp-source.html">../../../output/documentation/main/html/_result_8cpp-source.html</file>
    <file alias="_result_8h-source.html">../../../output/documentation/main/html/_result_8h-source.html</file>
    <file alias="_result_container_8cpp-source.html">../../../output/documentation/main/html/_result_container_8cpp-source.html</file>
@@ -821,6 +823,8 @@
    <file alias="_win_get_p_i_d_8h.html">../../../output/documentation/main/html/_win_get_p_i_d_8h.html</file>
    <file alias="_wireable_item_8cpp-source.html">../../../output/documentation/main/html/_wireable_item_8cpp-source.html</file>
    <file alias="_wireable_item_8h-source.html">../../../output/documentation/main/html/_wireable_item_8h-source.html</file>
+   <file alias="_wireable_result_item_8cpp-source.html">../../../output/documentation/main/html/_wireable_result_item_8cpp-source.html</file>
+   <file alias="_wireable_result_item_8h-source.html">../../../output/documentation/main/html/_wireable_result_item_8h-source.html</file>
    <file alias="alignmenttool_8cpp-source.html">../../../output/documentation/main/html/alignmenttool_8cpp-source.html</file>
    <file alias="alignmenttool_8h-source.html">../../../output/documentation/main/html/alignmenttool_8h-source.html</file>
    <file alias="analysisviewer_8cpp-source.html">../../../output/documentation/main/html/analysisviewer_8cpp-source.html</file>
@@ -1590,6 +1594,9 @@
    <file alias="class_virtual_event_source-members.html">../../../output/documentation/main/html/class_virtual_event_source-members.html</file>
    <file alias="class_virtual_event_source.html">../../../output/documentation/main/html/class_virtual_event_source.html</file>
    <file alias="class_virtual_event_source.png">../../../output/documentation/main/html/class_virtual_event_source.png</file>
+   <file alias="class_wireable_result_item-members.html">../../../output/documentation/main/html/class_wireable_result_item-members.html</file>
+   <file alias="class_wireable_result_item.html">../../../output/documentation/main/html/class_wireable_result_item.html</file>
+   <file alias="class_wireable_result_item.png">../../../output/documentation/main/html/class_wireable_result_item.png</file>
    <file alias="class_xml_editor-members.html">../../../output/documentation/main/html/class_xml_editor-members.html</file>
    <file alias="class_xml_editor.html">../../../output/documentation/main/html/class_xml_editor.html</file>
    <file alias="classes.html">../../../output/documentation/main/html/classes.html</file>

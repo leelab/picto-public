@@ -81,7 +81,7 @@ QMap<QString,QPair<QString,QString>>  ScriptController::getScripts()
 	QMap<QString,QPair<QString,QString>>  scripts;
 	if(!hasScripts())
 		return scripts;
-	scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("Script").toString());
+	scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),"Script");
 	return scripts;
 }
 

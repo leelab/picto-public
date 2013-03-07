@@ -4,7 +4,6 @@
 #include <QtVariantProperty.h>
 #include "EditorState.h"
 #include <QMap>
-#include "PropertyEditTracker.h"
 #include "../common.h"
 using namespace Picto;
 
@@ -33,7 +32,6 @@ signals:
 protected:
 	virtual QWidget* createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent);
 private:
-	QList<QSharedPointer<PropertyEditTracker>> editTrackers_;
 	QSharedPointer<Property> nextProp_;
 	QHash<QtProperty*,QSharedPointer<Property>> qtpropToPropMap_;
 	QHash<QtVariantPropertyManager*,bool> trackedPropManagers_;

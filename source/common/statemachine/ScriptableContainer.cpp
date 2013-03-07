@@ -160,7 +160,7 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 	//qDebug("Added " + scriptable.toStrongRef()->getName().toLatin1() + " to " + getName().toLatin1());
 	//If we added a new scriptable, scripting is no longer properly initialized.
 	scriptingInitialized_ = false;
-	//If the new scriptable's name edited, we'll need to reinitialize scripting again.
+	//If the new scriptable's name was edited, we'll need to reinitialize scripting again.
 	connect(scriptable.toStrongRef().data(),SIGNAL(nameEdited()),this,SLOT(deinitScripting()));
 	foreach(QSharedPointer<ScriptableContainer> child,scriptableContainers_)
 	{
@@ -209,7 +209,7 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 			return false;
 
 		QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
-		for(QMap<QString,QPair<QString,QString>> ::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
+		for(QMap<QString,QPair<QString,QString>>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
 		{
 			if(qsEngine_->globalObject().property(it.key()).isValid())
 			{
@@ -219,7 +219,10 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 			}
 
 			//Make a Qt Script Function out of the script and its name
-			QString function = "function " + it.key() + "("+it.value().first+") { " + it.value().second + "\n}";
+			QString scriptTag = it.value().second;
+			QString script = propertyContainer_->getPropertyValue(scriptTag).toString();
+			Q_ASSERT(script.length());
+			QString function = "function " + it.key() + "("+it.value().first+") { " + script + "\n}";
 
 			//add the function to the engine by calling evaluate on it
 			qsEngine_->evaluate(function);
@@ -233,6 +236,11 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 				qDebug()<<errorMsg;
 				return false;
 			}
+
+			//Connect this property's edited slot to deinitScripting, because if the script changes, we'll need to reinsert
+			//it into the scripting environment
+			disconnect(propertyContainer_->getProperty(scriptTag).data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(deinitScripting(Property*,QVariant)));
+			connect(propertyContainer_->getProperty(scriptTag).data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(deinitScripting(Property*,QVariant)));
 		}
 	}
 	
@@ -293,6 +301,7 @@ void ScriptableContainer::runScript(QString scriptName)
 
 void ScriptableContainer::runScript(QString scriptName, QScriptValue& scriptReturnVal)
 {
+	initScripting(debuggingEnabled_);	//Make sure this scriptable container has scripting initialized before attempting to run one of its scripts
 	scriptReturnVal = qsEngine_->globalObject().property(scriptName).call().toBool();
 	if(qsEngine_->hasUncaughtException())
 	{
@@ -372,3 +381,9 @@ void ScriptableContainer::deinitScripting()
 {
 	scriptingInitialized_ = false;
 }
+
+void ScriptableContainer::deinitScripting(Property*,QVariant)
+{
+	deinitScripting();
+}
+

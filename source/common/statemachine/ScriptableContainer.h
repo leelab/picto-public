@@ -9,6 +9,7 @@
 
 #include "../common.h"
 #include "../statemachine/UIEnabled.h"
+#include "../property/Property.h"
 
 #include "Scriptable.h"
 
@@ -54,7 +55,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return false;};
 	virtual bool hasScripts(){return false;};
-	//This returns a map of QMap<script name,script code>
+	//This returns a map of QMap<script name,QPair<script inputs,tag of string parameter holding script>
 	virtual QMap<QString,QPair<QString,QString>>  getScripts(){return QMap<QString,QPair<QString,QString>> ();};
 	virtual void scriptableContainerWasReinitialized(){};
 	QSharedPointer<AssetFactory> visualElementFactory_;
@@ -78,6 +79,7 @@ private slots:
 	//This is called if something about a scriptable changed, so that the script
 	//engines will need to be reinitialized before use.
 	void deinitScripting();
+	void deinitScripting(Property* prop,QVariant value);
 };
 
 

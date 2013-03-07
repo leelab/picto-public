@@ -216,12 +216,12 @@ QMap<QString,QPair<QString,QString>>  MachineContainer::getScripts()
 	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Entry";
-		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("EntryScript").toString());
+		scripts[scriptName] = QPair<QString,QString>(QString(),"EntryScript");
 	}
 	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Exit";
-		scripts[scriptName] = QPair<QString,QString>(QString(),propertyContainer_->getPropertyValue("ExitScript").toString());
+		scripts[scriptName] = QPair<QString,QString>(QString(),"ExitScript");
 	}
 	return scripts;
 }

@@ -46,7 +46,7 @@ protected:
 	 * this function would be used to add a "target" type such that <Result type="Target">
 	 * tags would get their results from the input factory.
 	 */
-	void addResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory);
+	void defineResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QMap<QString, QSharedPointer<Result> > results_;

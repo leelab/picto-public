@@ -1,4 +1,5 @@
 #include "ResultContainer.h"
+#include "RequiredResult.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -6,7 +7,7 @@ using namespace Picto;
 ResultContainer::ResultContainer()
 : resultFactory_(new AssetFactory(0,-1))
 {
-	addResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Result::Create))));
+	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Result::Create))));
 	AddDefinableObjectFactory("Result",resultFactory_);
 }
 
@@ -34,7 +35,7 @@ void ResultContainer::addRequiredResult(QString resultName)
 		//would make the factories max Assets inconsistant with requireResults_.
 		resultFactoryByType_[""]->setMaxAssets(resultFactoryByType_[""]->getMaxAssets()+1);
 	}
-	QSharedPointer<Result> requiredResult = createChildAsset("Result","",QString()).staticCast<Result>();
+	QSharedPointer<Result> requiredResult = createChildAsset("Result","",QString()).staticCast<RequiredResult>();
 	Q_ASSERT(requiredResult);
 	requiredResult->setName(resultName);
 	requiredResults_.insert("",requiredResult);
@@ -62,10 +63,8 @@ void ResultContainer::setMaxOptionalResults(int max, QString type)
 	resultFactoryByType_[type]->setMaxAssets(max+requiredResults_.count(type));
 }
 
-void ResultContainer::addResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory)
+void ResultContainer::defineResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory)
 {
-	Q_ASSERT_X(!resultFactoryByType_.contains(type),"ResultContainer",
-		QString("The factory type \"%1\" was added to this ResultContainer twice").arg(type).toLatin1());
 	resultFactoryByType_[type] = resultFactory;
 	resultFactory_->addAssetType(type,resultFactory);
 	maxOptionalResults_[type] = -1;

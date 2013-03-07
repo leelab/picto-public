@@ -2,12 +2,14 @@
 #include <QGraphicsScene>
 #include "DiagramItemFactory.h"
 #include "ResultItem.h"
+#include "WireableResultItem.h"
 #include "StateMachineElementItem.h"
 #include "ControlElementItem.h"
 #include "AssetItem.h"
 #include "WireableItem.h"
 #include "../../common/property/property.h"
 #include "../../common/statemachine/uienabled.h"
+#include "../../common/statemachine/result.h"
 #include "../../common/memleakdetect.h"
 using namespace std;
 
@@ -82,8 +84,10 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		returnVal = NULL;
 	else if(asset->inherits("Picto::UIInfo"))
 		returnVal = NULL;
-	else if(asset->inherits("Picto::Result"))
+	else if(asset->inherits("Picto::RequiredResult"))
 		returnVal = new ResultItem(editorState_, contextMenu_,asset);
+	else if(asset->inherits("Picto::Result"))
+		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::StateMachineElement"))
 		returnVal = new StateMachineElementItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::ControlElement"))

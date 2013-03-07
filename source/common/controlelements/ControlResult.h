@@ -3,7 +3,7 @@
 
 #include "../common.h"
 #include "../storage/DataStore.h"
-#include "../statemachine/result.h"
+#include "../statemachine/requiredresult.h"
 #include "controltarget.h"
 #include <QRect>
 
@@ -14,9 +14,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ControlResult : public Result
+class PICTOLIB_API ControlResult : public RequiredResult
 #else
-class ControlResult : public Result
+class ControlResult : public RequiredResult
 #endif
 {
 	Q_OBJECT

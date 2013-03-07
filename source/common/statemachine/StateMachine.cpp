@@ -235,6 +235,10 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		if(results_.contains(nextElementName))
 		{
 			result = nextElementName;
+
+			//Run result script if there is one.
+			results_.value(result)->runResultScript();	//Added in Picto Version 1.0.12.
+
 			////If this asset's parent is a task then a result here means that we've already reached the last transition and the 
 			////task is over.  Otherwise, we need to get the Master state result here because it will be the transition 
 			////that tells us where we're going to go next in this StateMachine's parent.

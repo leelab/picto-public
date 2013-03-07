@@ -30,11 +30,20 @@ public:
 
 	virtual QString getUITemplate(){return "Result";};
 	virtual QString assetType(){return "Result";};
+	void runResultScript();
 
 protected:
 	virtual QString defaultTagName(){return "Result";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool hasScripts();
+	virtual QMap<QString,QPair<QString,QString>> getScripts();
+	virtual bool canHaveScripts(){return true;};
+
+	QSharedPointer<AssetFactory> resultScriptFactory_;
+
+private:
+	void turnOffUnusedAssetFactories();
 };
 
 
