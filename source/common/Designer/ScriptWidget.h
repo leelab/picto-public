@@ -1,68 +1,38 @@
 #ifndef SCRIPTWIDGET_H
 #define SCRIPTWIDGET_H
-#include <QTextEdit>
-#include <QtVariantProperty.h>
-#include "ScriptSyntaxHighlighter.h"
-using namespace Picto;
 
-QT_BEGIN_NAMESPACE
-class QWidget;
-class QtProperty;
-QT_END_NAMESPACE
+#include <QWidget>
+#include <QToolButton>
+#include <QtVariantProperty.h>
+#include "ScriptTextEdit.h"
 
 //! [0]
-class ScriptWidget : public QTextEdit
+//Widget for managing and presenting ScriptTextEdit's as well as its interface with an underlying QtProperty
+//collapsible indicates that the script widget will be collapsed to its name only unless it has contents.
+//If it does have contents, it will be maximized and won't be minimizable until those contents are deleted
+//or whitespace only remains
+class ScriptWidget : public QWidget
 {
     Q_OBJECT
 
 public:
    ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QWidget *parent=0);
    virtual ~ScriptWidget(){};
-   virtual bool event(QEvent* e);
 signals:
    void textEdited(const QString &);
    void editingFinished();
-protected:
-	virtual void focusOutEvent(QFocusEvent *e);
 private:
+	QToolButton* createButton();
+	QLayout* layout_;
+	ScriptTextEdit* textEdit_;
 	QtVariantPropertyManager *manager_;
 	QtProperty *property_;
 	int lineStartTabs_;
-	ScriptSyntaxHighlighter *syntaxHighlighter_;
+	bool collapsible_;
+	QToolButton* collapseButton_;
 private slots:
 	void setScriptValue();
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //! [0]
 #endif

@@ -26,7 +26,7 @@ Designer::Designer(QWidget *parent) :
 	createActions();
 	createMenus();
     createToolbars();
-	topmostScene = new DiagramScene(editorState_,itemMenu);
+	topmostScene = new DiagramScene(editorState_,itemMenu,scriptMenu);
 	loadScene(topmostScene);
 	connectActions();
 	
@@ -268,6 +268,20 @@ void Designer::createActions()
 	checkSyntaxAction_->setToolTip(tr("Check the current experiment's XML code for syntax errors."));
 	checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
 	connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
+
+	addAnalysisEntryScriptAction = new QAction(tr("AnalysisEntryScript"),this);
+	addEntryScriptAction = new QAction(tr("EntryScript"),this);
+	addAnalysisFrameScriptAction = new QAction(tr("AnalysisFrameScript"),this);
+	addFrameScriptAction = new QAction(tr("FrameScript"),this);
+	addExitScriptAction = new QAction(tr("ExitScript"),this);
+	addAnalysisExitScriptAction = new QAction(tr("AnalysisExitScript"),this);
+
+	deleteAnalysisEntryScriptAction = new QAction(tr("AnalysisEntryScript"),this);
+	deleteEntryScriptAction = new QAction(tr("EntryScript"),this);
+	deleteAnalysisFrameScriptAction = new QAction(tr("AnalysisFrameScript"),this);
+	deleteFrameScriptAction = new QAction(tr("FrameScript"),this);
+	deleteExitScriptAction = new QAction(tr("ExitScript"),this);
+	deleteAnalysisExitScriptAction = new QAction(tr("AnalysisExitScript"),this);
 }
 
 void Designer::connectActions()
@@ -299,6 +313,30 @@ void Designer::createMenus()
     itemMenu->addSeparator();
     itemMenu->addAction(toFrontAction);
     itemMenu->addAction(sendBackAction);
+
+	scriptMenu = new QMenu(tr("S&cript"),this);
+	addScriptMenu = new QMenu(tr("&AddScript"),this);
+	addScriptMenu->addAction(addAnalysisEntryScriptAction);
+	addScriptMenu->addAction(addEntryScriptAction);
+	addScriptMenu->addSeparator();
+	addScriptMenu->addAction(addAnalysisFrameScriptAction);
+	addScriptMenu->addAction(addFrameScriptAction);
+	addScriptMenu->addSeparator();
+	addScriptMenu->addAction(addExitScriptAction);
+	addScriptMenu->addAction(addAnalysisExitScriptAction);
+	deleteScriptMenu = new QMenu(tr("&DeleteScript"),this);
+	deleteScriptMenu->addAction(deleteAnalysisEntryScriptAction);
+	deleteScriptMenu->addAction(deleteEntryScriptAction);
+	deleteScriptMenu->addSeparator();
+	deleteScriptMenu->addAction(deleteAnalysisFrameScriptAction);
+	deleteScriptMenu->addAction(deleteFrameScriptAction);
+	deleteScriptMenu->addSeparator();
+	deleteScriptMenu->addAction(deleteExitScriptAction);
+	deleteScriptMenu->addAction(deleteAnalysisExitScriptAction);
+
+	scriptMenu->addMenu(addScriptMenu);
+
+	scriptMenu->addMenu(deleteScriptMenu);
 
     //aboutMenu = menuBar()->addMenu(tr("&Help"));
     //aboutMenu->addAction(aboutAction);

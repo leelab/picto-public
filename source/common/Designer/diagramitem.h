@@ -71,7 +71,7 @@ public:
     enum DiagramType { Step, Conditional, StartEnd, Io, ArrowSource, ArrowDestination};
 
     DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name = "",
-        QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+        QGraphicsItem *parent = 0);
 	virtual ~DiagramItem();
 
 	void setName(QString name,QPointF pos = QPointF());

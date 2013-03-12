@@ -12,7 +12,7 @@ struct IconDef;
 class DiagramItemFactory
 {
 public:
-	DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QGraphicsScene *scene);
+	DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QGraphicsScene *scene);
 	virtual ~DiagramItemFactory(){};
 	DiagramItem* create(QSharedPointer<Asset> asset);
 	static QIcon getIcon(QString uITemplate);
@@ -23,6 +23,7 @@ private:
 	static QMap<QString,IconDef> iconDefs_;
 	QSharedPointer<EditorState> editorState_;
 	QMenu* contextMenu_;
+	QMenu* scriptContextMenu_;
 	QGraphicsScene* scene_;
 	static bool mapInitialized_;
 

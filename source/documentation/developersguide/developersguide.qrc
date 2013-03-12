@@ -620,8 +620,14 @@
    <file alias="_script_element_8h-source.html">../../../output/documentation/main/html/_script_element_8h-source.html</file>
    <file alias="_script_function_8cpp-source.html">../../../output/documentation/main/html/_script_function_8cpp-source.html</file>
    <file alias="_script_function_8h-source.html">../../../output/documentation/main/html/_script_function_8h-source.html</file>
+   <file alias="_script_item_8cpp-source.html">../../../output/documentation/main/html/_script_item_8cpp-source.html</file>
+   <file alias="_script_item_8h-source.html">../../../output/documentation/main/html/_script_item_8h-source.html</file>
+   <file alias="_script_manager_8cpp-source.html">../../../output/documentation/main/html/_script_manager_8cpp-source.html</file>
+   <file alias="_script_manager_8h-source.html">../../../output/documentation/main/html/_script_manager_8h-source.html</file>
    <file alias="_script_syntax_highlighter_8cpp-source.html">../../../output/documentation/main/html/_script_syntax_highlighter_8cpp-source.html</file>
    <file alias="_script_syntax_highlighter_8h-source.html">../../../output/documentation/main/html/_script_syntax_highlighter_8h-source.html</file>
+   <file alias="_script_text_edit_8cpp-source.html">../../../output/documentation/main/html/_script_text_edit_8cpp-source.html</file>
+   <file alias="_script_text_edit_8h-source.html">../../../output/documentation/main/html/_script_text_edit_8h-source.html</file>
    <file alias="_script_widget_8cpp-source.html">../../../output/documentation/main/html/_script_widget_8cpp-source.html</file>
    <file alias="_script_widget_8h-source.html">../../../output/documentation/main/html/_script_widget_8h-source.html</file>
    <file alias="_scriptable_8cpp-source.html">../../../output/documentation/main/html/_scriptable_8cpp-source.html</file>
@@ -1289,6 +1295,9 @@
    <file alias="class_picto_1_1_remote_state_updater-members.html">../../../output/documentation/main/html/class_picto_1_1_remote_state_updater-members.html</file>
    <file alias="class_picto_1_1_remote_state_updater.html">../../../output/documentation/main/html/class_picto_1_1_remote_state_updater.html</file>
    <file alias="class_picto_1_1_remote_state_updater.png">../../../output/documentation/main/html/class_picto_1_1_remote_state_updater.png</file>
+   <file alias="class_picto_1_1_required_result-members.html">../../../output/documentation/main/html/class_picto_1_1_required_result-members.html</file>
+   <file alias="class_picto_1_1_required_result.html">../../../output/documentation/main/html/class_picto_1_1_required_result.html</file>
+   <file alias="class_picto_1_1_required_result.png">../../../output/documentation/main/html/class_picto_1_1_required_result.png</file>
    <file alias="class_picto_1_1_result-members.html">../../../output/documentation/main/html/class_picto_1_1_result-members.html</file>
    <file alias="class_picto_1_1_result.html">../../../output/documentation/main/html/class_picto_1_1_result.html</file>
    <file alias="class_picto_1_1_result.png">../../../output/documentation/main/html/class_picto_1_1_result.png</file>
@@ -1517,6 +1526,9 @@
    <file alias="class_run_task_dialog.html">../../../output/documentation/main/html/class_run_task_dialog.html</file>
    <file alias="class_save_output_dialog-members.html">../../../output/documentation/main/html/class_save_output_dialog-members.html</file>
    <file alias="class_save_output_dialog.html">../../../output/documentation/main/html/class_save_output_dialog.html</file>
+   <file alias="class_script_item-members.html">../../../output/documentation/main/html/class_script_item-members.html</file>
+   <file alias="class_script_item.html">../../../output/documentation/main/html/class_script_item.html</file>
+   <file alias="class_script_item.png">../../../output/documentation/main/html/class_script_item.png</file>
    <file alias="class_script_widget-members.html">../../../output/documentation/main/html/class_script_widget-members.html</file>
    <file alias="class_script_widget.html">../../../output/documentation/main/html/class_script_widget.html</file>
    <file alias="class_server-members.html">../../../output/documentation/main/html/class_server-members.html</file>

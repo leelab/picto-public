@@ -24,8 +24,11 @@ public slots:
 private:
 	QSharedPointer<EditorState> editorState_;
 	PropertyGroupWidget* propGroupWidget_;
+	QStringList orderedScriptNames_;
+	QMap<QString,bool> scriptNamesLookup_;
 private slots:
 	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
+	void startBarSelected(QSharedPointer<Asset> asset);
 };
 //! [0]
 #endif

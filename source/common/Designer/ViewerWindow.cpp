@@ -1,4 +1,5 @@
 #include "ViewerWindow.h"
+#include "diagramscene.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -62,7 +63,8 @@ void ViewerWindow::editModeChanged(int mode)
 void ViewerWindow::zoomToFitContents()
 {
 	Q_ASSERT(this->scene());
-	fitInView(this->scene()->itemsBoundingRect(),Qt::KeepAspectRatio);
+	DiagramScene* scene = qobject_cast<DiagramScene*>(this->scene());
+	fitInView(scene->getDefaultZoomRect(),Qt::KeepAspectRatio);
 	double currZoom = currentZoom();
 	if(currZoom > 1) currZoom = 1;
 	editorState_->setZoom(currZoom);

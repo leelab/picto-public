@@ -70,11 +70,13 @@ class DiagramScene : public QGraphicsScene
 public:
     enum Mode { Select, Navigate, InsertLine};
 
-    DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent = 0);
+    DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QObject *parent = 0);
 	virtual ~DiagramScene(){};
 
 	QGraphicsLineItem* insertTransition(DiagramItem* source, DiagramItem* dest, QSharedPointer<Asset> transition = QSharedPointer<Asset>());
 	DiagramItem* insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos);
+	QRectF getDefaultZoomRect();
+
 
 public slots:
 	void setSceneAsset(QSharedPointer<Asset> asset);
@@ -110,9 +112,11 @@ private:
 	QSharedPointer<EditorState> editorState_;
 	QSharedPointer<DiagramItemFactory> diagItemFactory_;
     DiagramItem::DiagramType myItemType;
+	DiagramItem* startBar_;
 	QString insertionItem_;
 	int newItemIndex_;
     QMenu *myItemMenu;
+	QMenu *scriptMenu;
     bool leftButtonDown;
     QPointF startPoint;
     QGraphicsLineItem *line;

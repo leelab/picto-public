@@ -47,7 +47,7 @@
 
 //! [0]
 DiagramItem::DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name,
-             QGraphicsItem *parent, QGraphicsScene *scene) : 
+             QGraphicsItem *parent) : 
 QGraphicsPolygonItem(parent/*, scene*/)
 {
 	editorState_ = editorState;
@@ -177,7 +177,8 @@ void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();
     setSelected(true);
-    myContextMenu->exec(event->screenPos());
+	if(myContextMenu)
+	   myContextMenu->exec(event->screenPos());
 }
 //! [5]
 //! [6]

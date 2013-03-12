@@ -28,6 +28,8 @@ signals:
 	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 
 private:
+	void addProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtButtonPropertyBrowser* browser);
+	void addScriptProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtButtonPropertyBrowser* browser);
 	QSharedPointer<PropertyEditorFactory> propertyFactory_;
 	QVBoxLayout* layout_;
 	QWidget* mainWidget_;

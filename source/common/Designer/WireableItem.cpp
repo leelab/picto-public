@@ -6,20 +6,22 @@
 #include "arrow.h"
 #include <QGraphicsScene>
 #include "../../common/memleakdetect.h"
-WireableItem::WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+WireableItem::WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QSharedPointer<Asset> asset) :
 AssetItem(editorState,contextMenu,asset)
 {
 	arrowDest_ = NULL;
 	maxArrowSourceWidth_ = 0;
+	scriptContextMenu_ = scriptContextMenu;
 }
 
 WireableItem::~WireableItem()
 {
 }
 
-void WireableItem::addArrowSource(QString name)
+void WireableItem::addArrowSource(QSharedPointer<Asset> sourceAsset)
 {
-	DiagramItem* newArrowSource = new ArrowSourceItem(name,getEditorState(),this,scene());
+	Q_ASSERT(sourceAsset);
+	DiagramItem* newArrowSource = new ArrowSourceItem(sourceAsset->getName(),getEditorState(),scriptContextMenu_,this,sourceAsset);
 	newArrowSource->setZValue(zValue()+1);
 	if(newArrowSource->getWidth() > maxArrowSourceWidth_)
 		maxArrowSourceWidth_ = newArrowSource->getWidth();
@@ -33,7 +35,7 @@ void WireableItem::enableArrowDest()
 {
 	if(arrowDest_)
 		return;
-	arrowDest_ = new ArrowDestinationItem(getEditorState(),this,scene());
+	arrowDest_ = new ArrowDestinationItem(getEditorState(),scriptContextMenu_,this,getAsset());
 	arrowDest_->setZValue(zValue()+1);
 	arrowDest_->setWidth(10);
 	updateArrowPortDimensions();	

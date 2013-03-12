@@ -10,7 +10,7 @@ class ControlElementItem : public WireableItem
 {
 	Q_OBJECT
 public:
-	 ControlElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
+	 ControlElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu* scriptContextMenu, QSharedPointer<Asset> asset);
 	 virtual ~ControlElementItem(){};
 private:
 

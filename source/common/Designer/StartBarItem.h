@@ -8,7 +8,7 @@ class StartBarItem : public ArrowSourceItem
 {
 	Q_OBJECT
 public:
-	StartBarItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene);
+	StartBarItem(QString name,QSharedPointer<EditorState> editorState, QMenu* contextMenu, QGraphicsItem *parent, QSharedPointer<Asset> windowAsset);
 	virtual ~StartBarItem(){};
 	virtual QPointF getContactPoint();
 protected:

@@ -34,10 +34,14 @@ void PropertyEditorFactory::clear()
 QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent)
 {
 	//If this is the first qtProp for the latest Picto prop, it is the top level prop.
-	//Add this property to our map of qtProps to Picto Props.
-	if(nextProp_)
-		qtpropToPropMap_[property] = nextProp_;
-	nextProp_.clear();
+	//If this is for a Script property, don't associate this top level QtProperty with the latest Picto Property.
+	//If this is any other type, this top level QtProperty should be associated with the latest Picto Property
+	if(static_cast<QtVariantProperty*>(property)->propertyType() != QtVariantPropertyManager::groupTypeId())
+	{
+		if(nextProp_)
+			qtpropToPropMap_[property] = nextProp_;
+		nextProp_.clear();
+	}
 	//If we haven't connected this managers "property changed signal" to our slot yet, do it.
 	if(!trackedPropManagers_.contains(manager))
 	{
@@ -47,9 +51,7 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 
 	QWidget* resultWidget = NULL;
 	QString propName = property->propertyName();
-	if((propName == "EntryScript")
-		|| (propName == "FrameScript")
-		|| (propName == "ExitScript")
+	if((propName == "")
 		|| (propName == "Script")
 		|| (propName == "PausingScript")
 		|| (propName == "RestartingScript"))

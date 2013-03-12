@@ -3,14 +3,15 @@
 #include "Arrow.h"
 #include <QGraphicsScene>
 #include "../../common/memleakdetect.h"
-ArrowPortItem::ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent, QGraphicsScene *scene) :
-DiagramItem(editorState,NULL,name,parent,scene)
+ArrowPortItem::ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QMenu* contextMenu, QGraphicsItem *parent,QSharedPointer<Asset> asset) :
+DiagramItem(editorState,contextMenu,name,parent)
 {
+	asset_ = asset;
 	QPen invisiblePen;
 	invisiblePen.setWidth(0);
 	invisiblePen.setColor(QColor(0,0,0,0));
 	setPen(invisiblePen);
-	setFlag(QGraphicsItem::ItemIsSelectable,false);
+	//setFlag(QGraphicsItem::ItemIsSelectable,false);
 	setFlag(QGraphicsItem::ItemIsMovable,false);
 }
 

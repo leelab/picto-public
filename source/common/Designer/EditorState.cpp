@@ -5,6 +5,8 @@
 #include "../../common/statemachine/uienabled.h"
 #include "../../common/statemachine/uiinfo.h"
 #include "AssetItem.h"
+#include "ArrowDestinationItem.h"
+#include "StartBarItem.h"
 #include "../../common/memleakdetect.h"
 EditorState::EditorState()
 :
@@ -79,13 +81,26 @@ void EditorState::setSelectedAsset(QSharedPointer<Asset> asset)
 void EditorState::setSelectedItem(QGraphicsItem *item)
 {
 	AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
+	ArrowDestinationItem* destItem = dynamic_cast<ArrowDestinationItem*>(item);
+	StartBarItem* startItem = dynamic_cast<StartBarItem*>(item);
+
 	selectedItem_ = item;
 	if(item && item->isSelected())
 	{
 		if(assetItem)
+		{
 			setSelectedAsset(assetItem->getAsset());
+		}
+		else if(destItem)
+		{
+			setSelectedAsset(destItem->getAsset());
+		}
 		else
+		{
 			setSelectedAsset(getWindowAsset());
+		}
+		if(destItem || startItem)
+			emit startBarSelected(selectedAsset_);
 		emit itemSelected(item);
 	}
 	else

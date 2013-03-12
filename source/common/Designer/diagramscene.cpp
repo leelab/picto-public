@@ -56,7 +56,7 @@
 using namespace Picto;
 
 //! [0]
-DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent)
+DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QObject *parent)
     : QGraphicsScene(parent)
 {
 	editorState_ = editorState;
@@ -67,12 +67,14 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *conte
 	connect(editorState_.data(), SIGNAL(fontChanged(QFont)), this, SLOT(setFont(QFont)));
 	connect(editorState_.data(), SIGNAL(backgroundPatternChanged(QPixmap)), this, SLOT(setBackgroundPattern(QPixmap)));
     myItemMenu = contextMenu;
-	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,this));
+	scriptMenu = scriptContextMenu;
+	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,scriptMenu,this));
     myItemType = DiagramItem::Step;
     line = 0;
     textItem = 0;
 	insertionItem_ = "";
 	newItemIndex_ = 1;
+	startBar_ = NULL;
 }
 //! [0]
 
@@ -126,9 +128,9 @@ QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramIt
 {
 	Arrow *arrow;
 	if(transition.isNull())
-		arrow = Arrow::Create(editorState_->getWindowAsset(),source,dest,myItemMenu,NULL,this);
+		arrow = Arrow::Create(editorState_->getWindowAsset(),source,dest,myItemMenu,NULL);
 	else
-		arrow = Arrow::Create(transition.staticCast<Transition>(),source,dest,myItemMenu,NULL,this);
+		arrow = Arrow::Create(transition.staticCast<Transition>(),source,dest,myItemMenu,NULL);
 	if(!arrow)
 		return NULL;
     arrow->setColor(editorState_->getLineColor());
@@ -152,13 +154,33 @@ DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF
 	return item;
 }
 
+// Returns a QRectF that contains all items in this
+//scene except the start bar.  If we didn't have the start bar,
+//we could just used itemsBoundingRect()
+QRectF DiagramScene::getDefaultZoomRect()
+{
+	if(!startBar_)
+		return itemsBoundingRect();
+	QRectF returnVal;
+	//Iterate through all items in scene
+	foreach(QGraphicsItem* item,items())
+	{
+		//If item isn't start bar, add it to the returnVal rectangle
+		if(item == startBar_)
+			continue;
+		returnVal = returnVal.united(item->boundingRect());
+	}
+	//Return the rectangle
+	return returnVal;
+}
+
 void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 {					
 	QSharedPointer<DataStore> dataStore(asset.staticCast<DataStore>());
 
 	clear();
 	//Add a start bar
-	DiagramItem* startBar = NULL;
+	startBar_ = NULL;
 	newItemIndex_ = 1;
 	QStringList childTypes = dataStore->getDefinedChildTags();
 	QPointF childAssetLoc(sceneRect().center().x(),sceneRect().center().y());
@@ -166,8 +188,9 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	QList<DiagramItem*> diagItems;
 	if(dataStore->inherits("Picto::StateMachine"))
 	{
-		startBar = new StartBarItem("",editorState_,NULL,this);
-		diagItems.push_back(startBar);
+		startBar_ = new StartBarItem("",editorState_,scriptMenu,NULL,dataStore);
+		diagItems.push_back(startBar_);
+		addItem(startBar_);
 	}
 	foreach(QString childType, childTypes)
 	{
@@ -203,8 +226,8 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 		QString source = transition->getSource();
 		QString sourceResult = transition->getSourceResult();
 		QString dest = transition->getDestination();
-		if(source.isEmpty() && sourceResult.isEmpty() && startBar)
-			start = startBar;
+		if(source.isEmpty() && sourceResult.isEmpty() && startBar_)
+			start = startBar_;
 		WireableItem* wireItem;
 		QSharedPointer<Asset> asset;
 		foreach(DiagramItem* diagItem,diagItems)

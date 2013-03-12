@@ -8,8 +8,8 @@ Result::Result()
 	turnOffUnusedAssetFactories();
 	
 	//Add Optional Script property
-	AddDefinableProperty("Script","");
-	resultScriptFactory_ = getAssetFactory("Script");
+	AddDefinableProperty("EntryScript","");
+	resultScriptFactory_ = getAssetFactory("EntryScript");
 	//By default, AddDefinableProperty sets minAssets to 1 and max to 1, reset min to 0 cause script
 	//isn't required.
 	//resultScriptFactory_->setMinAssets(0);
@@ -21,8 +21,8 @@ Result::Result(QString name)
 	turnOffUnusedAssetFactories();
 
 	//Add Optional Script property
-	AddDefinableProperty("Script","");
-	resultScriptFactory_ = getAssetFactory("Script");
+	AddDefinableProperty("EntryScript","");
+	resultScriptFactory_ = getAssetFactory("EntryScript");
 	//By default, AddDefinableProperty sets minAssets to 1 and max to 1, reset min to 0 cause script
 	//isn't required.
 	//resultScriptFactory_->setMinAssets(0);
@@ -41,9 +41,9 @@ QSharedPointer<Asset> Result::Create()
 
 void Result::runResultScript()
 {
-	if(propertyContainer_->getPropertyValue("Script").toString().isEmpty() || propertyContainer_->getProperty("Script")->isDeleted())
+	if(propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty() || propertyContainer_->getProperty("EntryScript")->isDeleted())
 		return;
-	QString scriptName = getName().simplified().remove(' ')+"Script";
+	QString scriptName = getName().simplified().remove(' ')+"EntryScript";
 	runScript(scriptName);
 }
 
@@ -62,7 +62,7 @@ bool Result::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 
 bool Result::hasScripts()
 {
-	return !propertyContainer_->getPropertyValue("Script").toString().isEmpty() && !propertyContainer_->getProperty("Script")->isDeleted();
+	return !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty() && !propertyContainer_->getProperty("EntryScript")->isDeleted();
 }
 
 QMap<QString,QPair<QString,QString>>  Result::getScripts()
@@ -71,10 +71,10 @@ QMap<QString,QPair<QString,QString>>  Result::getScripts()
 	if(!hasScripts())
 		return scripts;
 
-	if(!propertyContainer_->getPropertyValue("Script").toString().isEmpty())
+	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
 	{
-		QString scriptName = getName().simplified().remove(' ')+"Script";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"Script");
+		QString scriptName = getName().simplified().remove(' ')+"EntryScript";
+		scripts[scriptName] = QPair<QString,QString>(QString(),"EntryScript");
 	}
 	return scripts;
 }

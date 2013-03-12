@@ -55,8 +55,8 @@ const qreal Pi = 3.14;
 
 //! [0]
 Arrow::Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
-         QGraphicsItem *parent, QGraphicsScene *scene)
-    : QGraphicsLineItem(parent/*, scene*/)
+         QGraphicsItem *parent)
+    : QGraphicsLineItem(parent)
 {
 	transition_ = transition;
     myStartItem = static_cast<ArrowPortItem*>(startItem);
@@ -81,17 +81,17 @@ Arrow::~Arrow()
 }
 
 Arrow* Arrow::Create(QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
-		QMenu *contextMenu, QGraphicsItem *parent, QGraphicsScene *scene)
+		QMenu *contextMenu, QGraphicsItem *parent)
 {
 	if(!dynamic_cast<ArrowSourceItem*>(startItem) || !dynamic_cast<ArrowDestinationItem*>(endItem))
 		return NULL;
 	if(transition.isNull())
 		return NULL;
-	return new Arrow(transition,startItem,endItem,contextMenu,parent,scene);
+	return new Arrow(transition,startItem,endItem,contextMenu,parent);
 }
 
 Arrow* Arrow::Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
-		QMenu *contextMenu, QGraphicsItem *parent, QGraphicsScene *scene)
+		QMenu *contextMenu, QGraphicsItem *parent)
 {
 	if(!dynamic_cast<ArrowSourceItem*>(startItem) || !dynamic_cast<ArrowDestinationItem*>(endItem))
 		return NULL;
@@ -113,7 +113,7 @@ Arrow* Arrow::Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, 
 		newTrans = QSharedPointer<Transition>(new Transition(source->getName(),result,dest->getName()));
 	if(!windowAsset.staticCast<MachineContainer>()->addTransition(newTrans))
 		return NULL;
-	return new Arrow(newTrans,startItem,endItem,contextMenu,parent,scene);
+	return new Arrow(newTrans,startItem,endItem,contextMenu,parent);
 }
 //! [0]
 
@@ -153,6 +153,9 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
     //if (myStartItem->collidesWithItem(myEndItem))
     //    return;
 	QPointF startPos = mapFromItem(myStartItem,0,0)+QPointF(myStartItem->getWidth(),myStartItem->getHeight()/2.0);
+	bool startItemIsStartBar = myStartItem->getHeight() > 1000;
+	if(startItemIsStartBar)	//Its a start bar
+		startPos.setY(0);  //Do calculations as if we're starting from top corner.  Later we'll update startPos for a horizontal line
 	//Find the end point with the nearest Y value.
 	QPointF endTop = mapFromItem(myEndItem,0,0);
 	QPointF endBottom = mapFromItem(myEndItem,0,myEndItem->boundingRect().height());
@@ -176,6 +179,9 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 		updatePosition();
 		return;
 	}
+
+	if(startItemIsStartBar)	//If start item is a start bar, make the arrow start at the same height as it stops
+		startPos.setY(endPos.y());
 
     QPen myPen = pen();
     myPen.setColor(myColor);

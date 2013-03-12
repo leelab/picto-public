@@ -16,7 +16,7 @@ using namespace std;
 QMap<QString,IconDef> DiagramItemFactory::iconDefs_;
 bool DiagramItemFactory::mapInitialized_ = false;
 
-DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QGraphicsScene *scene)
+DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QGraphicsScene *scene)
 {
 	if(!mapInitialized_)
 	{
@@ -66,6 +66,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 	}
 	editorState_ = editorState;
 	contextMenu_ = contextMenu;
+	scriptContextMenu_ = scriptContextMenu;
 	scene_ = scene;
 }
 
@@ -87,13 +88,13 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	else if(asset->inherits("Picto::RequiredResult"))
 		returnVal = new ResultItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::Result"))
-		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);
+		returnVal = new WireableResultItem(editorState_, contextMenu_,scriptContextMenu_,asset);
 	else if(asset->inherits("Picto::StateMachineElement"))
-		returnVal = new StateMachineElementItem(editorState_, contextMenu_,asset);
+		returnVal = new StateMachineElementItem(editorState_, contextMenu_,scriptContextMenu_,asset);
 	else if(asset->inherits("Picto::ControlElement"))
-		returnVal = new ControlElementItem(editorState_, contextMenu_,asset);
+		returnVal = new ControlElementItem(editorState_, contextMenu_,scriptContextMenu_,asset);
 	else if(asset->inherits("Picto::UIEnabled"))
-		returnVal = new WireableItem(editorState_, contextMenu_,asset);
+		returnVal = new WireableItem(editorState_, contextMenu_,scriptContextMenu_,asset);
 	else if(asset->inherits("Picto::Asset"))
 		returnVal = new AssetItem(editorState_, contextMenu_,asset);
 	else
