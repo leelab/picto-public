@@ -77,7 +77,8 @@ public:
 	virtual void setAssetId(int id);
 
 	virtual void upgradeVersion(QString deserializedVersion);
-
+signals:
+	void childAdded();
 public slots:
 	void childEdited();
 

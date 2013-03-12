@@ -68,6 +68,7 @@ void TestViewer::init()
 		msg.setText("Experiment does not compile.");
 		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
 		msg.exec();
+		return;
 	}
 	if(design)
 		experiment_ = design->getRootAsset().staticCast<Experiment>();

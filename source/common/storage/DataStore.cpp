@@ -428,6 +428,7 @@ void DataStore::AddChild(QString tagName, QSharedPointer<Asset> child)
 	child->setParentAsset(selfPtr());
 	children_[tagName].push_back(child);
 	connect(child.data(),SIGNAL(edited()),this,SLOT(childEdited()));
+	emit childAdded();
 }
 
 QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)

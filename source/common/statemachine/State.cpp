@@ -113,6 +113,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 						break;
 					}
 				}
+				Q_ASSERT(resultTrans);
 				isDone = true;
 			}
 		}
@@ -378,6 +379,7 @@ bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		return false;
 	
 	//Start up all of the control elements
+	//Check this.  It causes problems if you add a control element and validate before saving.
 	if(!elements_.size())
 	{
 		addError("State", "At least one Control Element must be defined inside a State.");

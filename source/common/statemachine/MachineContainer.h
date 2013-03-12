@@ -41,6 +41,7 @@ private:
 	bool getTransitionAssets(QSharedPointer<Transition> transition, QSharedPointer<ResultContainer>& source,QSharedPointer<ResultContainer>& sourceResult, QSharedPointer<ResultContainer>& destination);
 	QString transitionTag_;
 	QString elementTag_;
+	bool addingTransition_;
 
 private slots:
 	void updateListsFromChildren();

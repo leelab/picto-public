@@ -6,7 +6,8 @@ using namespace Picto;
 MachineContainer::MachineContainer(QString transitionTag, QString elementTag)
 :
 transitionTag_(transitionTag),
-elementTag_(elementTag)
+elementTag_(elementTag),
+addingTransition_(false)
 {
 	transitionFactory_ = QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Transition::Create)));
 	AddDefinableObjectFactory(transitionTag_,transitionFactory_);
@@ -23,6 +24,7 @@ bool MachineContainer::addTransition(QSharedPointer<Transition> transition)
 	if(!getTransitionAssets(transition,source,sourceResult,destination))
 		return false;
 
+	addingTransition_ = true;
 	//It looks like this is a new, valid transition.
 	//Set the pointers to source, sourceResult, and Destination into the 
 	//transition so that it will be updated if their names change.
@@ -52,6 +54,7 @@ bool MachineContainer::addTransition(QSharedPointer<Transition> transition)
 	if(transition->getSource().isEmpty() && transition->getSourceResult().isEmpty())
 		initTransition_ = transition;
 		
+	addingTransition_ = false;
 	return true;
 }
 
@@ -66,6 +69,11 @@ void MachineContainer::postDeserialize()
 {
 	StateMachineElement::postDeserialize();
 	updateListsFromChildren();
+
+	//If we add a new child after deserialization (ie. In the State Machine Editor), we'll need to update the element and transition lists.
+	//To do this, we connect childAdded() and updateListsFromChildren().  We do it here (and not earlier) because making this connection
+	//during deserialization will create an exponential algorithm that will slow everything down.
+	connect(this,SIGNAL(childAdded()),this,SLOT(updateListsFromChildren()));
 }
 
 bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -299,7 +307,6 @@ bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition
 void MachineContainer::updateListsFromChildren()
 {
 	elements_.clear();
-	transitions_.clear();
 	//Add ResultContainers
 	QList<QSharedPointer<Asset>> elements = getGeneratedChildren(elementTag_);
 	foreach(QSharedPointer<Asset> element,elements)
@@ -307,11 +314,17 @@ void MachineContainer::updateListsFromChildren()
 		addElement(element.staticCast<ResultContainer>());
 	}
 	
-	//Add ResultContainers
-	QList<QSharedPointer<Asset>> transitions = getGeneratedChildren(transitionTag_);
-	foreach(QSharedPointer<Asset> trans,transitions)
+	//Since this function gets called whenever addChild is called (after postDeserialize())
+	//and addTransition calls addChild in some cases, we prevent rentrant cases here.
+	if(!addingTransition_)
 	{
-		addTransition(trans.staticCast<Transition>());
+		transitions_.clear();
+		//Add ResultContainers
+		QList<QSharedPointer<Asset>> transitions = getGeneratedChildren(transitionTag_);
+		foreach(QSharedPointer<Asset> trans,transitions)
+		{
+			addTransition(trans.staticCast<Transition>());
+		}
 	}
 
 }
