@@ -129,9 +129,9 @@ void DiagramItem::updateLabel()
 	if(!searchString_.isEmpty())
 	{
 		int foundPos = 0;
-		QString colorStartTag = QString("<FONT COLOR=\"%1\">")
+		QString colorStartTag = QString("<span style=\"background-color: %1\">")
 			.arg(highlightColors_[searchHighlightIndex_].name());
-		QString colorEndTag("</FONT>");
+		QString colorEndTag("</span>");
 		while((foundPos = text.indexOf(searchString_,foundPos,searchCaseSensitive_?Qt::CaseSensitive:Qt::CaseInsensitive)) >= 0)
 		{
 			text = text.insert(foundPos+searchString_.length(),colorEndTag);
