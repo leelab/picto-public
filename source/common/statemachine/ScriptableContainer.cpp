@@ -293,6 +293,57 @@ QString ScriptableContainer::getInfo()
 	return returnVal;
 }
 
+bool ScriptableContainer::searchForQuery(SearchRequest searchRequest)
+{
+	if(Scriptable::searchForQuery(searchRequest))
+		return true;
+	switch(searchRequest.type)
+	{
+	case SearchRequest::SCRIPT:
+		{
+			//Check to see if this object contains any non-empty scripts
+			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
+			QSharedPointer<Property> currScriptProp;
+			QString currScript;
+			foreach(QString key,scriptMap.keys())
+			{
+				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
+				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
+				if(currScriptProp.isNull())
+					continue;
+				if(!currScriptProp->value().toString().isEmpty())
+					return true;
+			}
+		}
+		break;
+	case SearchRequest::STRING:
+		{
+			//Search through my scripts to see if any contain the query string
+			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
+			QSharedPointer<Property> currScriptProp;
+			QString currScript;
+			foreach(QString key,scriptMap.keys())
+			{
+				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
+				//Search script inputs
+				if(inputsNamePair.first.contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+					return true;
+
+				//Search script contents
+				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
+				if(currScriptProp.isNull())
+					continue;
+				if(currScriptProp->value().toString().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+					return true;
+			}
+		}
+		break;
+	default:
+		return false;
+	};
+	return false;
+}
+
 void ScriptableContainer::runScript(QString scriptName)
 {
 	QScriptValue returnVal;

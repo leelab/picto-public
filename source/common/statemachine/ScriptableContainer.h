@@ -47,6 +47,8 @@ public:
 	virtual QString assetType(){return "ScriptableContainer";};
 	virtual QString getInfo();
 
+	virtual bool searchForQuery(SearchRequest searchRequest);
+
 protected:
 	void runScript(QString scriptName);
 	void runScript(QString scriptName, QScriptValue& scriptReturnVal);

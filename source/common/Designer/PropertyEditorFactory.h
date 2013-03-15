@@ -23,6 +23,7 @@ class PropertyEditorFactory : public QtVariantEditorFactory
 
 public:
    PropertyEditorFactory(QWidget *parent=0);
+   PropertyEditorFactory(QSharedPointer<EditorState> editorState, QWidget *parent=0);
    virtual ~PropertyEditorFactory(){};
    void setNextProperty(QSharedPointer<Property> nextProp);
    void clear();
@@ -33,6 +34,7 @@ protected:
 	virtual QWidget* createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent);
 private:
 	QSharedPointer<Property> nextProp_;
+	QSharedPointer<EditorState> editorState_;
 	QHash<QtProperty*,QSharedPointer<Property>> qtpropToPropMap_;
 	QHash<QtVariantPropertyManager*,bool> trackedPropManagers_;
 

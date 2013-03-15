@@ -78,6 +78,8 @@ class QFont;
 class QToolButton;
 class QAbstractButton;
 class QGraphicsView;
+class QCheckBox;
+class QFrame;
 QT_END_NAMESPACE
 
 //! [0]
@@ -136,30 +138,16 @@ private:
     QAction *toFrontAction;
     QAction *sendBackAction;
     QAction *aboutAction;
+	QLineEdit *searchBox;
+	QCheckBox *matchCase;
+	QFrame* searchWidget;
 	QAction *checkSyntaxAction_;
 
 	QAction *undoAction;
 	QAction *redoAction;
 
-	QAction *addAnalysisEntryScriptAction;
-	QAction *addEntryScriptAction;
-	QAction *addAnalysisFrameScriptAction;
-	QAction *addFrameScriptAction;
-	QAction *addExitScriptAction;
-	QAction *addAnalysisExitScriptAction;
-
-	QAction *deleteAnalysisEntryScriptAction;
-	QAction *deleteEntryScriptAction;
-	QAction *deleteAnalysisFrameScriptAction;
-	QAction *deleteFrameScriptAction;
-	QAction *deleteExitScriptAction;
-	QAction *deleteAnalysisExitScriptAction;
-
     QMenu *fileMenu;
     QMenu *itemMenu;
-	QMenu *scriptMenu;
-	QMenu *addScriptMenu;
-	QMenu *deleteScriptMenu;
     QMenu *aboutMenu;
 
     QToolBar *editToolBar;
@@ -185,6 +173,8 @@ private:
 private slots:
 	void  undoAvailable(bool available);
 	void  redoAvailable(bool available);
+	void searchTextChanged(const QString& text);
+	void matchCaseChanged(int state);
 };
 //! [0]
 

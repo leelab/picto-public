@@ -85,7 +85,7 @@ qulonglong LFPDataIterator::readOutRecordData(QSqlRecord* record)
 	unsigned int chan = record->value(3).toInt();
 	Q_ASSERT((temporalFactor_ > 0) && (samplePeriod_ > 0));
 	//Size latestRecords_ list so that this channel has a spot.
-	while(timesByChannel_.size() <= chan)
+	while(unsigned int(timesByChannel_.size()) <= chan)
 		timesByChannel_.append(-1.0E100);
 	//Get the previous timestamp for this channel
 	double lastTimeForChan = timesByChannel_[chan];

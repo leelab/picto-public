@@ -1,8 +1,8 @@
 #include "StateMachineElementItem.h"
 #include "../../common/StateMachine/StateMachineElement.h"
 #include "../../common/memleakdetect.h"
-StateMachineElementItem::StateMachineElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QSharedPointer<Asset> asset) :
-WireableItem(editorState,contextMenu,scriptContextMenu,asset)
+StateMachineElementItem::StateMachineElementItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+WireableItem(editorState,contextMenu,asset)
 {
 	QSharedPointer<StateMachineElement> stateMachElem = asset.staticCast<StateMachineElement>();
 	QList<QSharedPointer<Asset>> results = stateMachElem->getGeneratedChildren("Result");

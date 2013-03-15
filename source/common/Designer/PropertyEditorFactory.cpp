@@ -9,7 +9,14 @@ using namespace Picto;
 
 //! [0]
 PropertyEditorFactory::PropertyEditorFactory(QWidget *parent) :
-	QtVariantEditorFactory(parent)
+	QtVariantEditorFactory(parent) 
+{
+
+}
+
+PropertyEditorFactory::PropertyEditorFactory(QSharedPointer<EditorState> editorState, QWidget *parent) :
+	QtVariantEditorFactory(parent),
+	editorState_(editorState) 
 {
 
 }
@@ -56,7 +63,8 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 		|| (propName == "PausingScript")
 		|| (propName == "RestartingScript"))
 	{
-		resultWidget = new ScriptWidget(manager,property,parent);
+		Q_ASSERT(editorState_);
+		resultWidget = new ScriptWidget(manager,property,editorState_,parent);
 		resultWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	}
 	else

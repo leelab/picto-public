@@ -10,7 +10,8 @@ asset_(asset),
 posChanged_(false),
 posInitialized_(false),
 keepAspectRatio_(true),
-svgItem_(NULL)
+svgFileName_(""),
+lastSvgIcon_(NULL)
 {
 	QPen invisiblePen;
 	invisiblePen.setWidth(0);
@@ -29,6 +30,19 @@ svgItem_(NULL)
 	//setBrush(brush);
 	//setRect(QRectF(QPointF(-19,-19),QPointF(19,19)));
 	//setSvgIcon(QPixmap(":/icons/filenew.png"));
+
+
+	//Set up search functionality
+	//Set highlight colors for different groups of search
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ANALYSIS,SearchRequest::SCRIPT),QColor(255,255,0,180));
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT),QColor(0,0,255,220));
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ANALYSIS,SearchRequest::STRING),QColor(255,0,0,180));
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::STRING),QColor(255,0,0,180));
+
+	//Connect search signal to this object
+	connect(editorState.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
+
+	//Initialize data by triggering asset edited
 	assetEdited();
 	connect(asset_.data(),SIGNAL(edited()),this,SLOT(assetEdited()));
 }
@@ -47,6 +61,12 @@ void AssetItem::assetEdited()
 	if(type == "")
 		type = "UNDEFINED TYPE";
 	setType(type);
+
+	//If a search is already going on, trigger searchRequested now in case the edit affects the search
+	foreach(SearchRequest searchRequest,editorState_->getSearchRequests())
+	{
+		searchRequested(searchRequest);
+	}
 }
 
 void AssetItem::positionChanged(QPoint pos)
@@ -74,30 +94,31 @@ void AssetItem::setSvgIcon(QGraphicsSvgItem* svgIcon)
 {
 	if(!svgIcon)
 		return;
-	if(svgItem_ && (svgItem_ != svgIcon))
+	if(lastSvgIcon_ && (lastSvgIcon_ != svgIcon))
 	{
-		svgItem_->setParent(NULL);
-		delete svgItem_;
+		lastSvgIcon_->setParent(NULL);
+		delete lastSvgIcon_;
 	}
-	svgItem_ = svgIcon;
-	svgItem_->setParentItem(this);
-	QRectF boundRect = svgItem_->boundingRect();
+	lastSvgIcon_ = svgIcon;
+	svgIcon->setParentItem(this);
+	QRectF boundRect = svgIcon->boundingRect();
 	//Find the scale factor (always scale according to the smaller of width or height scale factors.
 	float widthScale = getIconRect().width()/boundRect.width();
 	float heightScale = getIconRect().height()/boundRect.height();
 	float smallerScale = (widthScale > heightScale)?heightScale:widthScale;
-	svgItem_->setTransform(svgItem_->transform().scale(smallerScale,smallerScale));
+	svgIcon->setTransform(svgIcon->transform().scale(smallerScale,smallerScale));
 	//svgItem_->setSvgIcon(pixmap.scaled(getIconRect().width(),getIconRect().height(),keepAspectRatio_?Qt::KeepAspectRatio:Qt::IgnoreAspectRatio));
-	svgItem_->setPos(getIconRect().center()-QPointF(smallerScale*boundRect.width()/2.0,smallerScale*boundRect.height()/2.0));
-	svgItem_->setZValue(0);
+	svgIcon->setPos(getIconRect().center()-QPointF(smallerScale*boundRect.width()/2.0,smallerScale*boundRect.height()/2.0));
+	svgIcon->setZValue(0);
 }
 
 void AssetItem::setSvgIcon(QString svgFile)
 {
 	if(svgFile.isEmpty())
 		return;
-	QGraphicsSvgItem* newItem = new QGraphicsSvgItem(svgFile,this);
-	setSvgIcon(newItem);
+	svgFileName_ = svgFile;
+	//Update everything now that we have a new file
+	setRect(getRect());
 }
 
 void AssetItem::keepPixmapAspectRatio(bool keep)
@@ -115,5 +136,56 @@ void AssetItem::setRect(QRectF rect)
 	//grad.setColorAt(1,QColor("red"));
 	QBrush brush(grad);
 	setBrush(brush);
-	setSvgIcon(svgItem_);
+	setSvgIcon(getSvgItem());
+}
+
+QGraphicsSvgItem* AssetItem::getSvgItem()
+{
+	if(svgFileName_.isEmpty())
+		return NULL;
+	return new QGraphicsSvgItem(svgFileName_,this);
+}
+
+void AssetItem::searchRequested(SearchRequest searchRequest)
+{
+	if(searchRequest.group == SearchRequest::ANALYSIS)
+		return;
+	QSharedPointer<ScriptableContainer> scriptableContainer;
+	if(asset_->inherits("Picto::ScriptableContainer"))
+		scriptableContainer = asset_.staticCast<ScriptableContainer>();
+	
+	//Determine if search outline should be turned on or off and do it
+	bool needsOutline = false;
+	if(scriptableContainer)
+	{
+			//If the search is enabled
+		if	( searchRequest.enabled)
+		{
+			//If this is a MachineContainer
+			if(scriptableContainer->inherits("Picto::MachineContainer"))
+			{
+				//Search the MachineContainer's kids for the request
+				if(scriptableContainer->searchChildrenRecursivelyForQuery(searchRequest))
+				{
+					needsOutline = true;
+				}
+			}
+			else if(!scriptableContainer->inherits("Picto::Result"))	
+			{	//This is not a MachineContainer or a result
+				//Search the ScriptableContainer itself for the query
+				if(scriptableContainer->searchRecursivelyForQuery(searchRequest))
+				{
+					needsOutline = true;
+				}
+			}
+		}
+		//Create the outline
+		if(needsOutline)
+			enableOutline(searchRequest.getGroupTypeIndex(),true);
+		else
+			enableOutline(searchRequest.getGroupTypeIndex(),false);
+	}
+
+	//Handle name highlighting
+	highlightNameChars(searchRequest.getGroupTypeIndex(),searchRequest.query,searchRequest.caseSensitive);
 }

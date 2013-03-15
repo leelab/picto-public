@@ -14,7 +14,7 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
 	connect(editorState_.data(), SIGNAL(startBarSelected(QSharedPointer<Asset>)),
         this, SLOT(startBarSelected(QSharedPointer<Asset>)));
 
-	propGroupWidget_ = new PropertyGroupWidget(false);
+	propGroupWidget_ = new PropertyGroupWidget(false,editorState);
 	QVBoxLayout* myLayout = new QVBoxLayout();
 	myLayout->addWidget(propGroupWidget_,Qt::AlignTop | Qt::AlignLeft);
 	setLayout(myLayout);

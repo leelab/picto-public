@@ -206,7 +206,6 @@ bool AnalysisPeriod::run(EventOrderIndex fromIndex,EventOrderIndex toIndex)
 		//GET DATA AND ADD IT TO SCRIPT ENGINE////////////////////////////////////////
 		QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 		QSharedPointer<AnalysisTrigger> trigger;
-		int numTriggers = triggers.size();
 		foreach(QSharedPointer<Asset> triggerAsset,triggers)
 		{
 			trigger = triggerAsset.staticCast<AnalysisTrigger>();

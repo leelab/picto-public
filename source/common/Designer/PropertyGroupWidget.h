@@ -7,6 +7,7 @@
 #include <qtbuttonpropertybrowser.h>
 #include <qttreepropertybrowser.h>
 #include "PropertyEditorFactory.h"
+#include "EditorState.h"
 using namespace Picto;
 
 QT_BEGIN_NAMESPACE
@@ -20,7 +21,7 @@ class PropertyGroupWidget : public QWidget
     Q_OBJECT
 
 public:
-	PropertyGroupWidget(bool trackInitVals,QWidget *parent=0);
+	PropertyGroupWidget(bool trackInitVals, QSharedPointer<EditorState> editorState = QSharedPointer<EditorState>(), QWidget *parent=0);
 	virtual ~PropertyGroupWidget();
 	void addProperties(QString title, QVector<QSharedPointer<Property>> props);
 	void clear();

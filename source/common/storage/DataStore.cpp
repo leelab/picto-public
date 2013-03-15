@@ -571,6 +571,63 @@ void DataStore::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+bool DataStore::searchForQuery(SearchRequest searchRequest)
+{
+	if(!searchRequest.enabled)
+		return false;
+	return false;
+}
+bool DataStore::searchRecursivelyForQuery(SearchRequest searchRequest)
+{
+	if(!searchRequest.enabled)
+		return false;
+	if(searchForQuery(searchRequest))
+		return true;
+	if(searchChildrenForQuery(searchRequest))
+		return true;
+	return false;
+}
+bool DataStore::searchChildrenForQuery(SearchRequest searchRequest)
+{
+	if(!searchRequest.enabled)
+		return false;
+	//Call searchForQuery on all descendants 
+	QStringList childTags = getDefinedChildTags();
+	foreach(QString childTag,childTags)
+	{
+		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> tagChild,tagChildren)
+		{
+			if(tagChild->inherits("Picto::DataStore"))
+			{
+				if(tagChild.staticCast<DataStore>()->searchForQuery(searchRequest))
+					return true;
+			}
+		}
+	}
+	return false;
+}
+bool DataStore::searchChildrenRecursivelyForQuery(SearchRequest searchRequest)
+{
+	if(!searchRequest.enabled)
+		return false;
+	//Call searchRecursivelyForQuery on all descendants 
+	QStringList childTags = getDefinedChildTags();
+	foreach(QString childTag,childTags)
+	{
+		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> tagChild,tagChildren)
+		{
+			if(tagChild->inherits("Picto::DataStore"))
+			{
+				if(tagChild.staticCast<DataStore>()->searchRecursivelyForQuery(searchRequest))
+					return true;
+			}
+		}
+	}
+	return false;
+}
+
 void DataStore::childEdited()
 {
 	emit edited();

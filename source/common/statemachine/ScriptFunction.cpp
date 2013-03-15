@@ -79,6 +79,21 @@ QString ScriptFunction::getScriptingInfo()
 	return returnVal;
 }
 
+bool ScriptFunction::searchForQuery(SearchRequest searchRequest)
+{	
+	if(ScriptableContainer::searchForQuery(searchRequest))
+		return true;
+	switch(searchRequest.type)
+	{
+	case SearchRequest::STRING:
+		if(propertyContainer_->getPropertyValue("Script").toString().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+			return true;
+	default:
+		return false;
+	};
+	return false;
+}
+
 void ScriptFunction::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();

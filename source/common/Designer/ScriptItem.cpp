@@ -22,6 +22,13 @@ DiagramItem(editorState,NULL,"",parent)
 	scriptTextEdit_.setVisible(false);
 	scriptSyntaxHighlighter_ = new ScriptSyntaxHighlighter(scriptTextEdit_.document());
 
+	//Set up search functionality
+	//Set "search text found" highlight color
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::STRING),QColor(255,0,0));
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ANALYSIS,SearchRequest::STRING),QColor(255,0,0));
+	//Connect search signal to this object
+	connect(editorState.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
+
 	//Call scriptEdited to initialize this object with values from the underlying property
 	scriptPropEdited(0,scriptProperty_->value());
 	connect(scriptProperty_.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(scriptPropEdited(Property*,QVariant)));
@@ -45,7 +52,8 @@ void ScriptItem::setRect(QRectF rect)
 
 void ScriptItem::scriptPropEdited(Property*,QVariant newValue)
 {
-	QString newStringValue = newValue.toString();
+	latestText_ = newValue.toString();
+	QString newStringValue = latestText_;
 	if(!newStringValue.isEmpty())
 	{
 		scriptTextEdit_.setText(newStringValue);
@@ -53,4 +61,20 @@ void ScriptItem::scriptPropEdited(Property*,QVariant newValue)
 	}
 	
 	setToolTip(newStringValue);
+
+	//If any searches are already going on, trigger searchRequested now in case the edit affects the search
+	foreach(SearchRequest searchRequest,editorState_->getSearchRequests())
+	{
+		searchRequested(searchRequest);
+	}
+}
+
+void ScriptItem::searchRequested(SearchRequest searchRequest)
+{
+	if(searchRequest.type != SearchRequest::STRING)
+		return;
+	if(searchRequest.enabled && latestText_.contains(searchRequest.query))
+		enableOutline(searchRequest.getGroupTypeIndex(),true);
+	else
+		enableOutline(searchRequest.getGroupTypeIndex(),false);
 }

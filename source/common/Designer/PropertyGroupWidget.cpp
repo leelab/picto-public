@@ -6,10 +6,10 @@
 using namespace Picto;
 ;
 //! [0]
-PropertyGroupWidget::PropertyGroupWidget(bool trackInitVals,QWidget *parent) :
+PropertyGroupWidget::PropertyGroupWidget(bool trackInitVals, QSharedPointer<EditorState> editorState, QWidget *parent) :
 	QWidget(parent),
 	mainWidget_(NULL),
-	propertyFactory_(new PropertyEditorFactory()),
+	propertyFactory_(new PropertyEditorFactory(editorState)),
 	trackInitVals_(trackInitVals)
 {
 	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),

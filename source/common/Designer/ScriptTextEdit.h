@@ -1,7 +1,7 @@
 #ifndef SCRIPTTEXTEDIT_H
 #define SCRIPTTEXTEDIT_H
-#include <QTextEdit>
 #include <QEvent>
+#include "SearchableTextEdit.h"
 #include "ScriptSyntaxHighlighter.h"
 using namespace Picto;
 
@@ -12,7 +12,7 @@ QT_END_NAMESPACE
 
 //! [0]
 // A Text editor widget for Picto Scripts
-class ScriptTextEdit : public QTextEdit
+class ScriptTextEdit : public SearchableTextEdit
 {
 	Q_OBJECT
 public: 

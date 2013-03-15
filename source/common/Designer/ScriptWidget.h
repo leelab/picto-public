@@ -5,6 +5,7 @@
 #include <QToolButton>
 #include <QtVariantProperty.h>
 #include "ScriptTextEdit.h"
+#include "EditorState.h"
 
 //! [0]
 //Widget for managing and presenting ScriptTextEdit's as well as its interface with an underlying QtProperty
@@ -16,7 +17,7 @@ class ScriptWidget : public QWidget
     Q_OBJECT
 
 public:
-   ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QWidget *parent=0);
+   ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QSharedPointer<EditorState> editorState, QWidget *parent=0);
    virtual ~ScriptWidget(){};
 signals:
    void textEdited(const QString &);
@@ -27,11 +28,14 @@ private:
 	ScriptTextEdit* textEdit_;
 	QtVariantPropertyManager *manager_;
 	QtProperty *property_;
+	QSharedPointer<EditorState> editorState_;
 	int lineStartTabs_;
 	bool collapsible_;
 	QToolButton* collapseButton_;
+	bool inTextChangeDetected_;
 private slots:
-	void setScriptValue();
+	void textChangeDetected();
+	void searchRequested(SearchRequest searchRequest);
 };
 
 //! [0]

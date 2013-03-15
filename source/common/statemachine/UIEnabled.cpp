@@ -37,6 +37,25 @@ int UIEnabled::getOpenDescendant()
 	return getGeneratedChildren("UIInfo").first().staticCast<UIInfo>()->getOpenDescendant();
 }
 
+bool UIEnabled::searchForQuery(SearchRequest searchRequest)
+{
+	if(DataStore::searchForQuery(searchRequest))
+		return true;
+	switch(searchRequest.type)
+	{
+	case SearchRequest::STRING:
+		{
+			//Check if my name includes the search string
+			if(getName().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+				return true;
+		}
+		break;
+	default:
+		return false;
+	};
+	return false;
+}
+
 void UIEnabled::postDeserialize()
 {
 	DataStore::postDeserialize();

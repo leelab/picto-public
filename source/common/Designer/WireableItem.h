@@ -14,7 +14,7 @@ class WireableItem : public AssetItem
 {
 	Q_OBJECT
 public:
-	WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QSharedPointer<Asset> asset);
+	WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 	virtual ~WireableItem();
 	void addArrowSource(QSharedPointer<Asset> sourceAsset);
 	void enableArrowDest();
@@ -28,7 +28,6 @@ private:
 	QList<DiagramItem*> arrowSources_;
 	DiagramItem* arrowDest_;
 	float maxArrowSourceWidth_;
-	QMenu* scriptContextMenu_;
 
 };
 //! [0]

@@ -1,14 +1,14 @@
 #ifndef ASSETINFOBOX_H
 #define ASSETINFOBOX_H
 #include "EditorState.h"
-#include <QTextEdit>
+#include "SearchableTextEdit.h"
 
 QT_BEGIN_NAMESPACE
 class QWidget;
 QT_END_NAMESPACE
 
 //! [0]
-class AssetInfoBox : public QTextEdit
+class AssetInfoBox : public SearchableTextEdit
 {
     Q_OBJECT
 
@@ -20,6 +20,9 @@ public slots:
 
 private:
 	QSharedPointer<EditorState> editorState_;
+
+private slots:
+	void searchRequested(SearchRequest searchRequest);
 };
 //! [0]
 #endif

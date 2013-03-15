@@ -622,6 +622,8 @@
    <file alias="_script_function_8h-source.html">../../../output/documentation/main/html/_script_function_8h-source.html</file>
    <file alias="_script_item_8cpp-source.html">../../../output/documentation/main/html/_script_item_8cpp-source.html</file>
    <file alias="_script_item_8h-source.html">../../../output/documentation/main/html/_script_item_8h-source.html</file>
+   <file alias="_script_item_manager_8cpp-source.html">../../../output/documentation/main/html/_script_item_manager_8cpp-source.html</file>
+   <file alias="_script_item_manager_8h-source.html">../../../output/documentation/main/html/_script_item_manager_8h-source.html</file>
    <file alias="_script_manager_8cpp-source.html">../../../output/documentation/main/html/_script_manager_8cpp-source.html</file>
    <file alias="_script_manager_8h-source.html">../../../output/documentation/main/html/_script_manager_8h-source.html</file>
    <file alias="_script_syntax_highlighter_8cpp-source.html">../../../output/documentation/main/html/_script_syntax_highlighter_8cpp-source.html</file>
@@ -634,6 +636,10 @@
    <file alias="_scriptable_8h-source.html">../../../output/documentation/main/html/_scriptable_8h-source.html</file>
    <file alias="_scriptable_container_8cpp-source.html">../../../output/documentation/main/html/_scriptable_container_8cpp-source.html</file>
    <file alias="_scriptable_container_8h-source.html">../../../output/documentation/main/html/_scriptable_container_8h-source.html</file>
+   <file alias="_search_request_8cpp-source.html">../../../output/documentation/main/html/_search_request_8cpp-source.html</file>
+   <file alias="_search_request_8h-source.html">../../../output/documentation/main/html/_search_request_8h-source.html</file>
+   <file alias="_searchable_text_edit_8cpp-source.html">../../../output/documentation/main/html/_searchable_text_edit_8cpp-source.html</file>
+   <file alias="_searchable_text_edit_8h-source.html">../../../output/documentation/main/html/_searchable_text_edit_8h-source.html</file>
    <file alias="_serializable_8cpp-source.html">../../../output/documentation/main/html/_serializable_8cpp-source.html</file>
    <file alias="_serializable_8h-source.html">../../../output/documentation/main/html/_serializable_8h-source.html</file>
    <file alias="_server_app_update_protocol_8cpp-source.html">../../../output/documentation/main/html/_server_app_update_protocol_8cpp-source.html</file>
@@ -868,6 +874,7 @@
    <file alias="class_arrow_source_item.png">../../../output/documentation/main/html/class_arrow_source_item.png</file>
    <file alias="class_asset_info_box-members.html">../../../output/documentation/main/html/class_asset_info_box-members.html</file>
    <file alias="class_asset_info_box.html">../../../output/documentation/main/html/class_asset_info_box.html</file>
+   <file alias="class_asset_info_box.png">../../../output/documentation/main/html/class_asset_info_box.png</file>
    <file alias="class_asset_item-members.html">../../../output/documentation/main/html/class_asset_item-members.html</file>
    <file alias="class_asset_item.html">../../../output/documentation/main/html/class_asset_item.html</file>
    <file alias="class_asset_item.png">../../../output/documentation/main/html/class_asset_item.png</file>
@@ -1529,8 +1536,16 @@
    <file alias="class_script_item-members.html">../../../output/documentation/main/html/class_script_item-members.html</file>
    <file alias="class_script_item.html">../../../output/documentation/main/html/class_script_item.html</file>
    <file alias="class_script_item.png">../../../output/documentation/main/html/class_script_item.png</file>
+   <file alias="class_script_item_manager-members.html">../../../output/documentation/main/html/class_script_item_manager-members.html</file>
+   <file alias="class_script_item_manager.html">../../../output/documentation/main/html/class_script_item_manager.html</file>
+   <file alias="class_script_text_edit-members.html">../../../output/documentation/main/html/class_script_text_edit-members.html</file>
+   <file alias="class_script_text_edit.html">../../../output/documentation/main/html/class_script_text_edit.html</file>
+   <file alias="class_script_text_edit.png">../../../output/documentation/main/html/class_script_text_edit.png</file>
    <file alias="class_script_widget-members.html">../../../output/documentation/main/html/class_script_widget-members.html</file>
    <file alias="class_script_widget.html">../../../output/documentation/main/html/class_script_widget.html</file>
+   <file alias="class_searchable_text_edit-members.html">../../../output/documentation/main/html/class_searchable_text_edit-members.html</file>
+   <file alias="class_searchable_text_edit.html">../../../output/documentation/main/html/class_searchable_text_edit.html</file>
+   <file alias="class_searchable_text_edit.png">../../../output/documentation/main/html/class_searchable_text_edit.png</file>
    <file alias="class_server-members.html">../../../output/documentation/main/html/class_server-members.html</file>
    <file alias="class_server.html">../../../output/documentation/main/html/class_server.html</file>
    <file alias="class_server_config-members.html">../../../output/documentation/main/html/class_server_config-members.html</file>
@@ -2088,6 +2103,8 @@
    <file alias="struct_put_data_command_handler-members.html">../../../output/documentation/main/html/struct_put_data_command_handler-members.html</file>
    <file alias="struct_put_data_command_handler.html">../../../output/documentation/main/html/struct_put_data_command_handler.html</file>
    <file alias="struct_put_data_command_handler.png">../../../output/documentation/main/html/struct_put_data_command_handler.png</file>
+   <file alias="struct_search_request-members.html">../../../output/documentation/main/html/struct_search_request-members.html</file>
+   <file alias="struct_search_request.html">../../../output/documentation/main/html/struct_search_request.html</file>
    <file alias="struct_server_app_update_protocol-members.html">../../../output/documentation/main/html/struct_server_app_update_protocol-members.html</file>
    <file alias="struct_server_app_update_protocol.html">../../../output/documentation/main/html/struct_server_app_update_protocol.html</file>
    <file alias="struct_server_app_update_protocol.png">../../../output/documentation/main/html/struct_server_app_update_protocol.png</file>

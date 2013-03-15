@@ -3,8 +3,8 @@
 #include "Arrow.h"
 #include <QGraphicsScene>
 #include "../../common/memleakdetect.h"
-ArrowPortItem::ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QMenu* contextMenu, QGraphicsItem *parent,QSharedPointer<Asset> asset) :
-DiagramItem(editorState,contextMenu,name,parent)
+ArrowPortItem::ArrowPortItem(QString name,QSharedPointer<EditorState> editorState, QGraphicsItem *parent,QSharedPointer<Asset> asset) :
+DiagramItem(editorState,NULL,name,parent)
 {
 	asset_ = asset;
 	QPen invisiblePen;

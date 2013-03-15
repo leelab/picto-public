@@ -23,8 +23,10 @@ private:
 	ScriptSyntaxHighlighter* scriptSyntaxHighlighter_;		//These are used for syntax highlighting
 	QTextEdit scriptTextEdit_;								//of scripts
 	QColor baseColor_;
+	QString latestText_;
 private slots:
 	void scriptPropEdited(Property* changedProp,QVariant newValue);
+	void searchRequested(SearchRequest searchRequest);
 };
 //! [0]
 

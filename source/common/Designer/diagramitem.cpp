@@ -55,6 +55,9 @@ QGraphicsPolygonItem(parent/*, scene*/)
 	nameText_ = NULL;
 	stickInPlace_ = true;
 	catchUpFrames_ = 0;
+	searchHighlightIndex_ = 0;
+	searchString_ = "";
+	searchCaseSensitive_ = false;
 	setName(name);
 	connect(editorState_.data(),SIGNAL(editModeChanged(int)),this,SLOT(editModeChanged(int)));
 
@@ -90,6 +93,7 @@ QString DiagramItem::getType()
 void DiagramItem::setWidth(float width)
 {
 	QRectF newRect = getRect();
+
 	newRect.setWidth(width);
 	setRect(newRect);
 }
@@ -120,15 +124,36 @@ void DiagramItem::updateLabel()
 		nameText_->setZValue(1000.0);
 	}
 	QString text = getName();
+
+	//If there is currently a search string, highlight the appropriate characters in the name.
+	if(!searchString_.isEmpty())
+	{
+		int foundPos = 0;
+		QString colorStartTag = QString("<FONT COLOR=\"%1\">")
+			.arg(highlightColors_[searchHighlightIndex_].name());
+		QString colorEndTag("</FONT>");
+		while((foundPos = text.indexOf(searchString_,foundPos,searchCaseSensitive_?Qt::CaseSensitive:Qt::CaseInsensitive)) >= 0)
+		{
+			text = text.insert(foundPos+searchString_.length(),colorEndTag);
+			text = text.insert(foundPos,colorStartTag);
+			foundPos += searchString_.length()+colorStartTag.length()+colorEndTag.length();
+		}
+	}
+
+	//Add the type info
 	if((text != "") && (getType() != ""))
 	{
-		text.append("\n");
+		text.append("<br>");
 	}
 	if(getType() != "")
 	{
 		text.append("(").append(getType()).append(")");
 	}		
-	nameText_->setPlainText(text);
+	//Write the text string to the label
+	nameText_->setHtml(text);
+
+	//Find out how much room the label takes up
+	//If the graphic needs to make room for this label, change its size accordingly
 	QRectF textbound = nameText_->boundingRect();
 	QRectF polybound = polygon().boundingRect();
 	bool needsToStretch = false;
@@ -169,6 +194,27 @@ QPixmap DiagramItem::image() const
     painter.drawPolyline(polygon());
 
     return pixmap;
+}
+
+void DiagramItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
+{
+	QGraphicsPolygonItem::paint(painter,option,widget);
+	QRectF rect = getRect();
+	QPainter::CompositionMode currCompMode = painter->compositionMode();
+	painter->translate(-1,-1);
+	rect.setWidth(rect.width()+2);
+	rect.setHeight(rect.height()+2);
+	foreach(int highlightIndex,outlines_.keys())
+	{
+		Q_ASSERT(highlightColors_.contains(highlightIndex));
+		painter->translate(2,2);
+		rect.setWidth(rect.width()-4);
+		rect.setHeight(rect.height()-4);
+		painter->setPen(QPen(highlightColors_[highlightIndex],2));
+		painter->setBrush(Qt::NoBrush);
+		painter->drawRect(rect);
+	}
+	painter->setCompositionMode(currCompMode);
 }
 //! [4]
 
@@ -281,6 +327,36 @@ void DiagramItem::setRect(QRectF rect)
 	iconRect_ = QRectF(rect_.left(),rect_.top()+textbound.height(),rect_.width(),rect_.height()-textbound.height());
 	setPolygon(QPolygonF(rect_));
 	updateLabel();
+}
+
+void DiagramItem::setHighlightColor(int highlightIndex,QColor color)
+{
+	highlightColors_[highlightIndex] = color;
+}
+
+void DiagramItem::enableOutline(int highlightIndex,bool enabled)
+{
+	if(!enabled)
+	{
+		if(outlines_.contains(highlightIndex))
+		{
+			outlines_.remove(highlightIndex);
+			setRect(getRect());
+			update();
+		}
+		return;
+	}
+	outlines_[highlightIndex] = true;
+	update(getRect());
+}
+
+void DiagramItem::highlightNameChars(int highlightIndex, QString searchString, bool caseSensitive)
+{
+	searchString_ = searchString;
+	searchHighlightIndex_ = highlightIndex;
+	searchCaseSensitive_ = caseSensitive;
+	updateLabel();
+	update(getRect());
 }
 
 QRectF DiagramItem::getRect()

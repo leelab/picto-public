@@ -8,6 +8,7 @@
 #include <QString>
 #include <QGraphicsItem>
 #include "../../common/design/PictoData.h"
+#include "../storage/SearchRequest.h"
 using namespace Picto;
 
 class EditorState : public QObject
@@ -33,6 +34,7 @@ public:
 	QSharedPointer<Asset> getSelectedAsset(){return selectedAsset_;};
 	QSharedPointer<Asset> getTopLevelAsset(){return topAsset_;};
 	QGraphicsItem *getSelectedItem(){return selectedItem_;};
+	QList<SearchRequest> getSearchRequests();
 
 signals:
 	void editModeChanged(int mode);
@@ -51,6 +53,7 @@ signals:
 	void itemInserted();
 	void undoableActionPerformed();
 	void resetExperiment();
+	void searchRequested(SearchRequest searchRequest);
 
 public slots:
 	//Set Functions
@@ -72,6 +75,7 @@ public slots:
 	void reloadWindow();
 	void triggerExperimentReset(){emit resetExperiment();};
 	void triggerItemInserted(){emit itemInserted();};
+	void requestSearch(SearchRequest searchRequest);
 
 private:
 	void setWindowAssetAncestryOpen(bool open);
@@ -89,6 +93,7 @@ private:
 	QString windowAssetPath_;
 	QGraphicsItem *selectedItem_;
 	QSharedPointer<Asset> topAsset_;
+	QHash<int,SearchRequest> searchRequests_;
 
 };
 

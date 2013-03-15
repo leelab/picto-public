@@ -32,6 +32,8 @@ public:
 	int getOpenDescendant();
 	virtual QString getUITemplate(){return "UIEnabled";};
 	virtual QString assetType(){return "UIEnabled";};
+		
+	virtual bool searchForQuery(SearchRequest searchRequest);
 signals:
 	void nameEdited();
 

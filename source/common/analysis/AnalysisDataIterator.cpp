@@ -125,7 +125,6 @@ void AnalysisDataIterator::updateAnalysisValsList()
 	Q_ASSERT(startFrom_.isValid() && (!endBefore_.isValid() || (endBefore_>=startFrom_)));
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
-	bool res;
 	int maxRows = 0;
 	if(approxValsPerRow())
 		maxRows = MAX_ANALYSIS_VALS_SIZE/approxValsPerRow();

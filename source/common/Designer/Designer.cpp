@@ -12,6 +12,7 @@
 #include "PropertyBrowser.h"
 #include "AssetInfoBox.h"
 #include "ViewerWindow.h"
+#include "../storage/SearchRequest.h"
 #include "../../common/memleakdetect.h"
 
 const int InsertTextButton = 10;
@@ -26,7 +27,7 @@ Designer::Designer(QWidget *parent) :
 	createActions();
 	createMenus();
     createToolbars();
-	topmostScene = new DiagramScene(editorState_,itemMenu,scriptMenu);
+	topmostScene = new DiagramScene(editorState_,itemMenu);
 	loadScene(topmostScene);
 	connectActions();
 	
@@ -263,25 +264,28 @@ void Designer::createActions()
     aboutAction = new QAction(tr("A&bout"), this);
     aboutAction->setShortcut(tr("Ctrl+B"));
 
+	searchBox = new QLineEdit("");
+	searchBox->setPlaceholderText(tr("Enter Search String"));
+	connect(searchBox,SIGNAL(textChanged(QString)),this,SLOT(searchTextChanged(QString)));
+	matchCase = new QCheckBox("Match case");
+	connect(matchCase,SIGNAL(stateChanged(int)),this,SLOT(matchCaseChanged(int)));
+	QVBoxLayout* searchLayout = new QVBoxLayout();
+	searchLayout->addWidget(searchBox);
+	searchLayout->addWidget(matchCase);
+	searchWidget = new QFrame();
+	searchWidget->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken); 
+	searchWidget->setLayout(searchLayout);
+
+	//Turn on highlighting for elements with children that have scripts and analysis scripts.  To do this, just search 
+	//for any non-empty string.  Searching for an empty string turns it off.
+	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT));
+	editorState_->requestSearch(SearchRequest(SearchRequest::ANALYSIS,SearchRequest::SCRIPT));
+
 	checkSyntaxAction_ = new QAction(tr("&Check XML syntax"),this);
 	checkSyntaxAction_->setShortcut(Qt::Key_F7);
 	checkSyntaxAction_->setToolTip(tr("Check the current experiment's XML code for syntax errors."));
 	checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
 	connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
-
-	addAnalysisEntryScriptAction = new QAction(tr("AnalysisEntryScript"),this);
-	addEntryScriptAction = new QAction(tr("EntryScript"),this);
-	addAnalysisFrameScriptAction = new QAction(tr("AnalysisFrameScript"),this);
-	addFrameScriptAction = new QAction(tr("FrameScript"),this);
-	addExitScriptAction = new QAction(tr("ExitScript"),this);
-	addAnalysisExitScriptAction = new QAction(tr("AnalysisExitScript"),this);
-
-	deleteAnalysisEntryScriptAction = new QAction(tr("AnalysisEntryScript"),this);
-	deleteEntryScriptAction = new QAction(tr("EntryScript"),this);
-	deleteAnalysisFrameScriptAction = new QAction(tr("AnalysisFrameScript"),this);
-	deleteFrameScriptAction = new QAction(tr("FrameScript"),this);
-	deleteExitScriptAction = new QAction(tr("ExitScript"),this);
-	deleteAnalysisExitScriptAction = new QAction(tr("AnalysisExitScript"),this);
 }
 
 void Designer::connectActions()
@@ -313,30 +317,6 @@ void Designer::createMenus()
     itemMenu->addSeparator();
     itemMenu->addAction(toFrontAction);
     itemMenu->addAction(sendBackAction);
-
-	scriptMenu = new QMenu(tr("S&cript"),this);
-	addScriptMenu = new QMenu(tr("&AddScript"),this);
-	addScriptMenu->addAction(addAnalysisEntryScriptAction);
-	addScriptMenu->addAction(addEntryScriptAction);
-	addScriptMenu->addSeparator();
-	addScriptMenu->addAction(addAnalysisFrameScriptAction);
-	addScriptMenu->addAction(addFrameScriptAction);
-	addScriptMenu->addSeparator();
-	addScriptMenu->addAction(addExitScriptAction);
-	addScriptMenu->addAction(addAnalysisExitScriptAction);
-	deleteScriptMenu = new QMenu(tr("&DeleteScript"),this);
-	deleteScriptMenu->addAction(deleteAnalysisEntryScriptAction);
-	deleteScriptMenu->addAction(deleteEntryScriptAction);
-	deleteScriptMenu->addSeparator();
-	deleteScriptMenu->addAction(deleteAnalysisFrameScriptAction);
-	deleteScriptMenu->addAction(deleteFrameScriptAction);
-	deleteScriptMenu->addSeparator();
-	deleteScriptMenu->addAction(deleteExitScriptAction);
-	deleteScriptMenu->addAction(deleteAnalysisExitScriptAction);
-
-	scriptMenu->addMenu(addScriptMenu);
-
-	scriptMenu->addMenu(deleteScriptMenu);
 
     //aboutMenu = menuBar()->addMenu(tr("&Help"));
     //aboutMenu->addAction(aboutAction);
@@ -390,6 +370,9 @@ void Designer::createToolbars()
 	pointerToolbar->addWidget(navigateButton);
     pointerToolbar->addWidget(linePointerButton);
     pointerToolbar->addWidget(sceneScaleCombo);
+	pointerToolbar->addSeparator();
+	pointerToolbar->addWidget(searchWidget);
+	pointerToolbar->addSeparator();
 	pointerToolbar->addAction(checkSyntaxAction_);
 //! [27]
 }
@@ -426,4 +409,15 @@ void  Designer::undoAvailable(bool available)
 void  Designer::redoAvailable(bool available)
 {
 	redoAction->setEnabled(available);
+}
+
+void Designer::searchTextChanged(const QString& text)
+{
+	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::STRING,true,text,matchCase->isChecked()));
+}
+
+void Designer::matchCaseChanged(int)
+{
+	if(!searchBox->text().isEmpty())
+		searchTextChanged(searchBox->text());
 }

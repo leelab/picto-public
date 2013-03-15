@@ -2,10 +2,6 @@
 #define _DATASTORE_H_
 
 #include "../common.h"
-#include "Asset.h"
-#include "AssetFactory.h"
-#include "../property/PropertyContainer.h"
-
 #include <QSharedPointer>
 #include <QXmlStreamWriter>
 
@@ -15,6 +11,11 @@
 #include <QString>
 #include <QMap>
 #include <QList>
+
+#include "Asset.h"
+#include "AssetFactory.h"
+#include "../property/PropertyContainer.h"
+#include "../storage/SearchRequest.h"
 
 namespace Picto {
 class AssetFactory;
@@ -77,6 +78,12 @@ public:
 	virtual void setAssetId(int id);
 
 	virtual void upgradeVersion(QString deserializedVersion);
+
+	virtual bool searchForQuery(SearchRequest searchRequest);
+	bool searchRecursivelyForQuery(SearchRequest searchRequest);
+	bool searchChildrenForQuery(SearchRequest searchRequest);
+	bool searchChildrenRecursivelyForQuery(SearchRequest searchRequest);
+
 signals:
 	void childAdded();
 public slots:

@@ -56,7 +56,7 @@
 using namespace Picto;
 
 //! [0]
-DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QMenu *scriptContextMenu, QObject *parent)
+DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent)
     : QGraphicsScene(parent)
 {
 	editorState_ = editorState;
@@ -67,8 +67,7 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *conte
 	connect(editorState_.data(), SIGNAL(fontChanged(QFont)), this, SLOT(setFont(QFont)));
 	connect(editorState_.data(), SIGNAL(backgroundPatternChanged(QPixmap)), this, SLOT(setBackgroundPattern(QPixmap)));
     myItemMenu = contextMenu;
-	scriptMenu = scriptContextMenu;
-	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,scriptMenu,this));
+	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,this));
     myItemType = DiagramItem::Step;
     line = 0;
     textItem = 0;
@@ -188,7 +187,7 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	QList<DiagramItem*> diagItems;
 	if(dataStore->inherits("Picto::StateMachine"))
 	{
-		startBar_ = new StartBarItem("",editorState_,scriptMenu,NULL,dataStore);
+		startBar_ = new StartBarItem("",editorState_,NULL,dataStore);
 		diagItems.push_back(startBar_);
 		addItem(startBar_);
 	}

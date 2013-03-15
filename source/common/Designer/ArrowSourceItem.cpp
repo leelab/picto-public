@@ -3,8 +3,8 @@
 #include "Arrow.h"
 #include <QGraphicsScene>
 #include "../../common/memleakdetect.h"
-ArrowSourceItem::ArrowSourceItem(QString name,QSharedPointer<EditorState> editorState, QMenu* contextMenu, QGraphicsItem *parent, QSharedPointer<Asset> asset) :
-ArrowPortItem(name,editorState,contextMenu, parent,asset)
+ArrowSourceItem::ArrowSourceItem(QString name,QSharedPointer<EditorState> editorState, QGraphicsItem *parent, QSharedPointer<Asset> asset) :
+ArrowPortItem(name,editorState, parent,asset)
 {
 	QLinearGradient grad(QPointF(0,-20),QPointF(0,20));
 	grad.setColorAt(0,QColor(Qt::red));

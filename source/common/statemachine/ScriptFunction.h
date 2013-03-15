@@ -35,6 +35,8 @@ public:
 	virtual QString assetType(){return "ScriptFunction";};
 	virtual QString getScriptingInfo();
 
+	virtual bool searchForQuery(SearchRequest searchRequest);
+
 public slots:
 	//setters and getters are slots so we can bind them to scripts
 

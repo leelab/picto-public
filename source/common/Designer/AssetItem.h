@@ -29,11 +29,16 @@ protected:
 	void keepPixmapAspectRatio(bool keep);
 	virtual void setRect(QRectF rect);
 private:
+	QGraphicsSvgItem* getSvgItem();
 	QSharedPointer<Asset> asset_;
-	QGraphicsSvgItem* svgItem_;
+	QGraphicsSvgItem* lastSvgIcon_;
+	QString svgFileName_;
 	bool posChanged_;
 	bool posInitialized_;
 	bool keepAspectRatio_;
+
+private slots:
+	void searchRequested(SearchRequest searchRequest);
 
 };
 //! [0]

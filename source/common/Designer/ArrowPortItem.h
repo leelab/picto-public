@@ -10,7 +10,7 @@ class ArrowPortItem : public DiagramItem
 {
 	Q_OBJECT
 public:
-	ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QMenu* contextMenu,QGraphicsItem *parent,QSharedPointer<Asset> asset);
+	ArrowPortItem(QString name,QSharedPointer<EditorState> editorState,QGraphicsItem *parent,QSharedPointer<Asset> asset);
 	virtual ~ArrowPortItem();
  	void addArrow(Arrow *arrow);
 	void removeArrow(Arrow *arrow);

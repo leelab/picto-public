@@ -23,6 +23,11 @@ windowAssetPath_("")
     
 }
 
+QList<SearchRequest> EditorState::getSearchRequests()
+{
+	return searchRequests_.values();
+}
+
 void EditorState::setTopLevelAsset(QSharedPointer<Picto::Asset> topLevelAsset)
 {
 	topAsset_ = topLevelAsset;
@@ -118,4 +123,15 @@ void EditorState::reloadWindow()
 	setInsertionItem("","");
 	emit windowAssetChanged(getWindowAsset());
 	emit selectedAssetChanged(getSelectedAsset());
+}
+
+void EditorState::requestSearch(SearchRequest searchRequest)
+{
+	if(searchRequest.type == SearchRequest::INVALID_TYPE || searchRequest.group==SearchRequest::INVALID_GROUP)
+		return;
+	if(searchRequest.type == SearchRequest::STRING && searchRequest.query == "")
+		searchRequest.enabled = false;
+
+	searchRequests_[searchRequest.getGroupTypeIndex()] = searchRequest;
+	emit searchRequested(searchRequest);
 }

@@ -45,6 +45,7 @@
 #include <QGraphicsPixmapItem>
 #include <QList>
 #include "EditorState.h"
+#include "../storage/SearchRequest.h"
 
 QT_BEGIN_NAMESPACE
 class QPixmap;
@@ -84,6 +85,8 @@ public:
 	float getHeight();
 	void updateLabel();
     QPixmap image() const;
+	virtual void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
+
     int type() const
         { return Type;}
 
@@ -94,6 +97,10 @@ protected:
 	virtual void updateDependantGraphics(){};
 	virtual void positionChanged(QPoint){};
 	virtual void setRect(QRectF rect);
+	void setHighlightColor(int highlightIndex,QColor color);
+	void enableOutline(int highlightIndex,bool enabled);
+	void highlightNameChars(int highlightIndex, QString searchString,bool caseSensitive);
+	QSharedPointer<EditorState> editorState_;
 	QRectF getRect();
 	QRectF getIconRect(){return iconRect_;};
 	QSharedPointer<EditorState> getEditorState(){return editorState_;};
@@ -103,11 +110,15 @@ private:
 	QString name_;
 	QString type_;
 	QGraphicsTextItem* nameText_;
-	QSharedPointer<EditorState> editorState_;
+	QString searchString_;
+	bool searchCaseSensitive_;
+	int searchHighlightIndex_;
 	bool stickInPlace_;
 	int catchUpFrames_;
 	QRectF rect_;
 	QRectF iconRect_;
+	QMap<int,QColor> highlightColors_;
+	QMap<int,bool> outlines_;
 private slots:
 	void editModeChanged(int mode);
 };
