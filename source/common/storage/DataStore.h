@@ -83,6 +83,8 @@ public:
 	bool searchRecursivelyForQuery(SearchRequest searchRequest);
 	bool searchChildrenForQuery(SearchRequest searchRequest);
 	bool searchChildrenRecursivelyForQuery(SearchRequest searchRequest);
+	bool searchParentForQuery(SearchRequest searchRequest);
+	bool searchAncestorsForQuery(SearchRequest searchRequest);
 
 signals:
 	void childAdded();

@@ -185,7 +185,7 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	QPointF childAssetLoc(sceneRect().center().x(),sceneRect().center().y());
 	QList<QSharedPointer<Transition>> transitions;
 	QList<DiagramItem*> diagItems;
-	if(dataStore->inherits("Picto::StateMachine"))
+	if(dataStore->inherits("Picto::StateMachine") || dataStore->inherits("Picto::State"))
 	{
 		startBar_ = new StartBarItem("",editorState_,NULL,dataStore);
 		diagItems.push_back(startBar_);

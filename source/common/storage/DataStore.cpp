@@ -573,8 +573,6 @@ void DataStore::upgradeVersion(QString deserializedVersion)
 
 bool DataStore::searchForQuery(SearchRequest searchRequest)
 {
-	if(!searchRequest.enabled)
-		return false;
 	return false;
 }
 bool DataStore::searchRecursivelyForQuery(SearchRequest searchRequest)
@@ -625,6 +623,44 @@ bool DataStore::searchChildrenRecursivelyForQuery(SearchRequest searchRequest)
 			}
 		}
 	}
+	return false;
+}
+
+bool DataStore::searchParentForQuery(SearchRequest searchRequest)
+{
+	if(!searchRequest.enabled)
+		return false;
+	QSharedPointer<Asset> parentAsset = getParentAsset();
+	if(parentAsset.isNull())
+		return false;
+	QSharedPointer<DataStore> parentDataStore = parentAsset.dynamicCast<DataStore>();
+	if(parentDataStore.isNull())
+		return false;
+	//Check the parent asset for the query
+	if(parentDataStore->searchForQuery(searchRequest))
+		return true;
+	//Check the parent asset's children for the query
+	if(parentDataStore->searchChildrenForQuery(searchRequest))
+		return true;
+	return false;
+}
+bool DataStore::searchAncestorsForQuery(SearchRequest searchRequest)
+{
+	if(!searchRequest.enabled)
+		return false;
+	//Check my parent for the query
+	if(searchParentForQuery(searchRequest))
+		return true;
+
+	//Check more distant ancestors for the query
+	QSharedPointer<Asset> parentAsset = getParentAsset();
+	if(parentAsset.isNull())
+		return false;
+	QSharedPointer<DataStore> parentDataStore = parentAsset.dynamicCast<DataStore>();
+	if(parentDataStore.isNull())
+		return false;
+	if(parentDataStore->searchAncestorsForQuery(searchRequest))
+		return true;
 	return false;
 }
 

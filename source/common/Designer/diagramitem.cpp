@@ -201,16 +201,18 @@ void DiagramItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * op
 	QGraphicsPolygonItem::paint(painter,option,widget);
 	QRectF rect = getRect();
 	QPainter::CompositionMode currCompMode = painter->compositionMode();
-	painter->translate(-1,-1);
-	rect.setWidth(rect.width()+2);
-	rect.setHeight(rect.height()+2);
+	int paintWidth = 2;
+	Q_ASSERT(paintWidth > 0 && paintWidth%2 == 0);
+	painter->translate(-paintWidth/2,-paintWidth/2);
+	rect.setWidth(rect.width()+paintWidth);
+	rect.setHeight(rect.height()+paintWidth);
 	foreach(int highlightIndex,outlines_.keys())
 	{
 		Q_ASSERT(highlightColors_.contains(highlightIndex));
-		painter->translate(2,2);
-		rect.setWidth(rect.width()-4);
-		rect.setHeight(rect.height()-4);
-		painter->setPen(QPen(highlightColors_[highlightIndex],2));
+		painter->translate(paintWidth,paintWidth);
+		rect.setWidth(rect.width()-(2*paintWidth));
+		rect.setHeight(rect.height()-(2*paintWidth));
+		painter->setPen(QPen(QBrush(highlightColors_[highlightIndex]),paintWidth));
 		painter->setBrush(Qt::NoBrush);
 		painter->drawRect(rect);
 	}

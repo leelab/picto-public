@@ -59,6 +59,7 @@
 #include "EditorState.h"
 #include "../design/Design.h"
 #include "../design/DesignRoot.h"
+#include "LevelUpButton.h"
 #include "../common.h"
 using namespace Picto;
 
@@ -167,6 +168,7 @@ private:
     QAction *fillAction;
     QAction *lineAction;
 
+	LevelUpButton* upButton;
 	QWidget *propertyEditor_;
 	QWidget *assetInfoBox_;
 

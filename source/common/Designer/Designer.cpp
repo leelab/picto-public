@@ -40,10 +40,7 @@ Designer::Designer(QWidget *parent) :
 
     QSplitter *splitter = new QSplitter;
 	QVBoxLayout *centralLayout = new QVBoxLayout;
-	QToolButton *upButton = new QToolButton;
-    upButton->setIcon(QIcon(":/icons/levelup.png"));
-	//upButton->setIconSize(QSize(50, 50));
-	upButton->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+	upButton = new LevelUpButton(editorState_);
 	connect(upButton,SIGNAL(pressed()),editorState_.data(),SLOT(setWindowAssetToParent()));
     centralLayout->addWidget(upButton);
 	centralLayout->addWidget(view);
