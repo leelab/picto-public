@@ -187,5 +187,6 @@ void AssetItem::searchRequested(SearchRequest searchRequest)
 	}
 
 	//Handle name highlighting
-	highlightNameChars(searchRequest.getGroupTypeIndex(),searchRequest.query,searchRequest.caseSensitive);
+	if(searchRequest.type == SearchRequest::STRING)
+		highlightNameChars(searchRequest.getGroupTypeIndex(),searchRequest.query,searchRequest.caseSensitive);
 }

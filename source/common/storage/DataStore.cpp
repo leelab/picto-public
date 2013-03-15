@@ -583,7 +583,7 @@ bool DataStore::searchRecursivelyForQuery(SearchRequest searchRequest)
 		return false;
 	if(searchForQuery(searchRequest))
 		return true;
-	if(searchChildrenForQuery(searchRequest))
+	if(searchChildrenRecursivelyForQuery(searchRequest))
 		return true;
 	return false;
 }

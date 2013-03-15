@@ -73,7 +73,7 @@ void ScriptItem::searchRequested(SearchRequest searchRequest)
 {
 	if(searchRequest.type != SearchRequest::STRING)
 		return;
-	if(searchRequest.enabled && latestText_.contains(searchRequest.query))
+	if(searchRequest.enabled && latestText_.contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
 		enableOutline(searchRequest.getGroupTypeIndex(),true);
 	else
 		enableOutline(searchRequest.getGroupTypeIndex(),false);
