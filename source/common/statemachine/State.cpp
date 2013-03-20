@@ -62,18 +62,12 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	//Add a cursor for the user input
 	//addCursor();
 
-	//Figure out which scripts we will be running
-	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
+	//Set up frame script.
 	bool runFrameScript = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
-	bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
-
-	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
 	QString frameScriptName = getName().simplified().remove(' ')+"Frame";
-	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
 
 	//run the entry script
-	if(runEntryScript)
-		runScript(entryScriptName);
+	runEntryScript();
 
 	//Start up all of the control elements
 	foreach(QSharedPointer<ResultContainer> control, elements_)
@@ -154,8 +148,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 
 	//run the exit script
-	if(runExitScript)
-		runScript(exitScriptName);
+	runExitScript();
 
 	return result;
 }
@@ -400,9 +393,6 @@ bool State::hasScripts()
 QMap<QString,QPair<QString,QString>> State::getScripts()
 {
 	QMap<QString,QPair<QString,QString>> scripts = MachineContainer::getScripts();
-	if(!hasScripts())
-		return scripts;
-
 	if(!propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Frame";

@@ -33,18 +33,19 @@ public:
 	virtual	int getAssetId(){return assetId_;};
 	virtual void setAssetId(int id){assetId_ = id;};
 
-	int numChildAssets(){return children_.size();};
-	QSharedPointer<ObsoleteAsset> getChildAsset(int index);
+	QStringList childTags(){return children_.keys();};
+	QList<QSharedPointer<ObsoleteAsset>> getChildAsset(QString tagName);
 
 	int numAttributes(){return attrMap_.size();};
 	QString getAttributeName(int index);
 	QString getAttributeValue(QString name);
 	
+	//The value contained in the ObsoleteAsset (for cases where it has no children)
 	QString getValue(){return value_;};
 private:
 	QString tagName_;
 	QMap<QString,QString> attrMap_;
-	QVector<QSharedPointer<ObsoleteAsset>> children_;
+	QMultiMap<QString,QSharedPointer<ObsoleteAsset>> children_;	//Maps children by tag name
 	QString value_;
 	int assetId_;
 	static bool hadObsoleteAsset_;

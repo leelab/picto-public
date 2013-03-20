@@ -88,6 +88,17 @@ public:
 
 	static bool encounteredObsoleteSerialSyntax(){return hadObsoleteSerialSyntax_;};
 	static void clearObsoleteSerialSyntax(){hadObsoleteSerialSyntax_ = false;};
+	
+	//These functions allow picto classes to monitor whether property values were
+	//changed when scripts should have been functioning in a "read only" mode.
+	//To do this, a Picto element would call startMonitoringForValueChange() 
+	//just before running the operator's script.  Afterward, the element can
+	//check valueWasChanged() and if it was, throw a scripting error.
+	//The first value to have been changed since startMonitoringForValueChange()
+	//was called is available from changedValueName().
+	static void startMonitoringForValueChange(){valueWasChanged_ = false;};
+	static bool valueWasChanged(){return valueWasChanged_;};
+	static QString changedValueName(){return changedValueName_;};
 
 public slots:
 	void setInitValue(QVariant _value);
@@ -146,6 +157,8 @@ private:
 	bool visible_;
 	bool serialSyntaxUpgraded_;
 	static bool hadObsoleteSerialSyntax_;
+	static bool valueWasChanged_;
+	static QString changedValueName_;
 
 //private slots:
 //	void valueChanged(QtProperty *property, const QVariant &val);

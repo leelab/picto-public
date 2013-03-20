@@ -30,6 +30,8 @@ public:
 	virtual QString getUITemplate(){return "PausePoint";};
 	virtual QString assetType(){return "PausePoint";};
 
+	virtual void upgradeVersion(QString deserializedVersion);
+
 	QColor getColor(){return propertyContainer_->getPropertyValue("BackgroundColor").value<QColor>();};
 	void setColor(QColor color){propertyContainer_->setPropertyValue("BackgroundColor",color);};
 	int getRed() { return getColor().red(); };
@@ -44,9 +46,6 @@ public:
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool canHaveScripts(){return true;};
-	virtual bool hasScripts();
-	virtual QMap<QString,QPair<QString,QString>>  getScripts();
 	virtual void scriptableContainerWasReinitialized();
 
 private:

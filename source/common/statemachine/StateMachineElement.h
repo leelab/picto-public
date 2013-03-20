@@ -74,6 +74,11 @@ protected:
 	//QString getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool canHaveScripts(){return true;};
+	virtual bool hasScripts();
+	void runEntryScript();
+	void runExitScript();
+	virtual QMap<QString,QPair<QString,QString>> getScripts();
 
 	//ParameterContainer parameterContainer_;
 	//QMap<QString,QSharedPointer<Result>> results_;

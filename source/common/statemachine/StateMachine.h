@@ -86,9 +86,7 @@ public:
 	virtual QString getUITemplate(){return "StateMachine";};
 	virtual QString assetType(){return "StateMachine";};
 
-	//DataStore functions
-	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual void upgradeVersion(QString deserializedVersion);
 
 protected:
 	virtual QString defaultTagName(){return "StateMachine";};

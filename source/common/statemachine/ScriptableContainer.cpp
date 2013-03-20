@@ -1,7 +1,11 @@
 #include <QMap>
 #include <QPair>
 #include <QDebug>
+#include <QScriptValue>
 #include <QScriptValueIterator>
+#include <QAction>
+#include <QTextEdit>
+#include <QCoreApplication>
 
 #include "ScriptableContainer.h"
 #include "../property/EnumProperty.h"
@@ -40,6 +44,9 @@
 #include "../memleakdetect.h"
 
 using namespace Picto;
+
+ScriptableContainer* ScriptableContainer::objectForResultCheck_ = NULL;
+QScriptValue ScriptableContainer::checkScriptResultScript_;
 
 ScriptableContainer::ScriptableContainer()
 :	parameterFactory_(new AssetFactory(0,-1)),
@@ -200,8 +207,12 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 
 		if(debuggingEnabled_)
 		{
+			//Attach the debugger to the script engine
 			qsEngineDebugger_ = QSharedPointer<QScriptEngineDebugger>(new QScriptEngineDebugger());
 			qsEngineDebugger_->attachTo(qsEngine_.data());
+
+			//Add result check function to qsEngine
+			qsEngine_->globalObject().setProperty("checkScriptResults",qsEngine_->newFunction(checkScriptResults));
 		}
 
 		//Bind all scriptable to the script engine (parameters and ui elements)
@@ -353,15 +364,22 @@ void ScriptableContainer::runScript(QString scriptName)
 void ScriptableContainer::runScript(QString scriptName, QScriptValue& scriptReturnVal)
 {
 	initScripting(debuggingEnabled_);	//Make sure this scriptable container has scripting initialized before attempting to run one of its scripts
-	scriptReturnVal = qsEngine_->globalObject().property(scriptName).call().toBool();
-	if(qsEngine_->hasUncaughtException())
+	Q_ASSERT(qsEngine_);
+	objectForResultCheck_ = this;
+	QString scriptToCall;
+	if(debuggingEnabled_)
 	{
-		QString errorMsg = "Uncaught exception in State" + getName() +", script "+scriptName+"\n";
-		errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-										  .arg(qsEngine_->uncaughtException().toString());
-		errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-		qDebug()<<errorMsg;
+		scriptToCall = QString("var returnVal = %1();\n%2(\"%3\",returnVal);\nreturnVal;").arg(scriptName).arg("checkScriptResults").arg(scriptName);
 	}
+	else
+		scriptToCall = QString("%1();").arg(scriptName);
+	scriptReturnVal = qsEngine_->evaluate(scriptToCall);
+	objectForResultCheck_ = NULL;
+}
+
+QString ScriptableContainer::getReturnValueError(QString,const QScriptValue&)
+{
+	return QString();
 }
 
 void ScriptableContainer::postDeserialize()
@@ -438,3 +456,16 @@ void ScriptableContainer::deinitScripting(Property*,QVariant)
 	deinitScripting();
 }
 
+QScriptValue ScriptableContainer::checkScriptResults(QScriptContext *context, QScriptEngine*)
+{
+	QScriptValue returnVal;
+	if(!objectForResultCheck_)
+		return returnVal;
+	if(context->argumentCount() != 2)
+		return returnVal;
+	QString resultError = objectForResultCheck_->getReturnValueError(context->argument(0).toString(),context->argument(1));
+	if(resultError.isEmpty())
+		return returnVal;
+	context->throwError(resultError);
+	return returnVal;
+}

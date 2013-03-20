@@ -62,15 +62,14 @@ bool Result::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 
 bool Result::hasScripts()
 {
+	if(ScriptableContainer::hasScripts())
+		return true;
 	return !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty() && !propertyContainer_->getProperty("EntryScript")->isDeleted();
 }
 
 QMap<QString,QPair<QString,QString>>  Result::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts;
-	if(!hasScripts())
-		return scripts;
-
+	QMap<QString,QPair<QString,QString>>  scripts = ScriptableContainer::getScripts();
 	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"EntryScript";

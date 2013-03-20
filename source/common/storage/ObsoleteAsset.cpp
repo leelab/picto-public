@@ -29,6 +29,7 @@ bool ObsoleteAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader,bool)
 {
 	hadObsoleteAsset_ = true;
+
 	//Get Start tag name (depending on who the parent is, they may have given us different names.
 	tagName_ = xmlStreamReader->name().toString();
 	foreach(QXmlStreamAttribute xmlStreamAttr,xmlStreamReader->attributes())
@@ -47,7 +48,7 @@ bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 		}
 		QSharedPointer<ObsoleteAsset> child(new ObsoleteAsset());
 		child->deserializeFromXml(xmlStreamReader,false);
-		children_.push_back(child);
+		children_.insert(xmlStreamReader->name().toString(),child);
 		xmlStreamReader->readNext();
 	}
 	return true;
@@ -58,11 +59,11 @@ void ObsoleteAsset::postDeserialize()
 	emit edited();
 }
 
-QSharedPointer<ObsoleteAsset> ObsoleteAsset::getChildAsset(int index)
+QList<QSharedPointer<ObsoleteAsset>> ObsoleteAsset::getChildAsset(QString tagName)
 {
-	if(index >= numChildAssets())
-		return QSharedPointer<ObsoleteAsset>();
-	return children_[index];
+	if(!children_.contains(tagName))
+		return QList<QSharedPointer<ObsoleteAsset>>();
+	return children_.values(tagName);
 }
 
 QString ObsoleteAsset::getAttributeName(int index)

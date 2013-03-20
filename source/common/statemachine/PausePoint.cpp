@@ -2,6 +2,7 @@
 #include "PausePoint.h"
 #include "../engine/PictoEngine.h"
 #include "../stimuli/CursorGraphic.h"
+#include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 namespace Picto
 {
@@ -15,8 +16,8 @@ hasCursor_(false)
 	controlTargetFactory_->setMaxAssets(0);
 	AddDefinableProperty("Type","PausePoint");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
-	AddDefinableProperty("PausingScript","");
-	AddDefinableProperty("RestartingScript","");
+	AddDefinableObjectFactory("PausingScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	AddDefinableObjectFactory("RestartingScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	AddDefinableProperty(QVariant::Bool,"ForcePause",false);
 	addRequiredResult("done");
 }
@@ -42,28 +43,18 @@ QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 		command = engine->getEngineCommand();
 	}
 	//If engine is paused, suspend execution until play is pressed
-	bool ranPausingScript = false;
+	runEntryScript();
 	while(command == Engine::PictoEngine::PauseEngine)
 	{
-		if(!ranPausingScript 
-			&& !propertyContainer_->getPropertyValue("PausingScript").toString().isEmpty())
-		{
-			runScript(getName().simplified().remove(' ')+"Pausing");
-			ranPausingScript = true;
-		}
 		//Show frame
 		scene_->render(engine,getAssetId());
 		QCoreApplication::processEvents();
 		command = engine->getEngineCommand();
 	}
+	runExitScript();
 	//If it was a stop that got us out of the pause, return an EngineAbort.
 	if(command == Engine::PictoEngine::StopEngine)
 		return "EngineAbort";
-	if(ranPausingScript
-		&& !propertyContainer_->getPropertyValue("RestartingScript").toString().isEmpty())
-	{	//We must be restarting and there's a restarting script.  Run it.
-		runScript(getName().simplified().remove(' ')+"Restarting");
-	}
 	return "done";
 }
 
@@ -93,6 +84,29 @@ QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 	return result; 
 }
 
+void PausePoint::upgradeVersion(QString deserializedVersion)
+{
+	StateMachineElement::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.3")
+	{	//Before 0.0.3, Scripts for pause elements were called PausingScript and RestartingScript.  These
+		//have been changed to EntryScript and ExitScript respectively for consistency with the rest of the system.
+		//Here we copy contents of the old script properties into the new script properties.
+		QList<QSharedPointer<Asset>> childList = getGeneratedChildren("PausingScript");
+		Q_ASSERT(childList.size() <= 1);
+		if(childList.size())
+		{
+			getPropertyContainer()->setPropertyValue("EntryScript",childList.first().staticCast<ObsoleteAsset>()->getValue());
+		}
+
+		childList = getGeneratedChildren("RestartingScript");
+		Q_ASSERT(childList.size() <= 1);
+		if(childList.size())
+		{
+			getPropertyContainer()->setPropertyValue("ExitScript",childList.first().staticCast<ObsoleteAsset>()->getValue());
+		}
+	}
+}
+
 void PausePoint::postDeserialize()
 {
 	StateMachineElement::postDeserialize();
@@ -111,30 +125,6 @@ bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	}
 
 	return true;
-}
-
-bool PausePoint::hasScripts()
-{
-	return (!propertyContainer_->getPropertyValue("PausingScript").toString().isEmpty()
-	|| !propertyContainer_->getPropertyValue("RestartingScript").toString().isEmpty());
-}
-QMap<QString,QPair<QString,QString>>  PausePoint::getScripts()
-{
-	QMap<QString,QPair<QString,QString>>  scripts;
-	if(!hasScripts())
-		return scripts;
-
-	if(!propertyContainer_->getPropertyValue("PausingScript").toString().isEmpty())
-	{
-		QString scriptName = getName().simplified().remove(' ')+"Pausing";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"PausingScript");
-	}
-	if(!propertyContainer_->getPropertyValue("RestartingScript").toString().isEmpty())
-	{
-		QString scriptName = getName().simplified().remove(' ')+"Restarting";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"RestartingScript");
-	}
-	return scripts;
 }
 
 void PausePoint::scriptableContainerWasReinitialized()

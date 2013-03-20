@@ -8,6 +8,8 @@
 namespace Picto {
 
 bool Property::hadObsoleteSerialSyntax_ = false;
+bool Property::valueWasChanged_ = true;
+QString Property::changedValueName_ = "";
 
 Property::Property(int type, QString name, QVariant value) :
 saveValue_(value),
@@ -382,6 +384,11 @@ void Property::setRunValuePrivate(QVariant _value)
 	if(runValue_ != _value)
 	{
 		runValue_ = _value;
+		if(!valueWasChanged_)
+		{
+			valueWasChanged_ = true;
+			changedValueName_ = getName();
+		}
 		emit valueChanged(this,runValue_);
 	}
 }

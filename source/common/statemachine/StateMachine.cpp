@@ -4,7 +4,10 @@
 #include "Reward.h"
 //#include "FlowElement.h"
 #include "ScriptElement.h"
+#include "SwitchElement.h"
 #include "PausePoint.h"
+#include "RequiredResult.h"
+#include "../storage/ObsoleteAsset.h"
 
 #include "../engine/PictoEngine.h"
 #include "../timing/Timestamper.h"
@@ -44,7 +47,9 @@ StateMachine::StateMachine() :
 	//elementFactory_->addAssetType("FlowElement",
 	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FlowElement::Create))));
 	elementFactory_->addAssetType("ScriptElement",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptElement::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	elementFactory_->addAssetType("Switch",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SwitchElement::Create))));
 	elementFactory_->addAssetType("State",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(State::Create))));
 	elementFactory_->addAssetType("StateMachine",
@@ -140,6 +145,59 @@ bool StateMachine::jumpToState(QStringList path, QString state)
 	return true;
 }
 
+void StateMachine::upgradeVersion(QString deserializedVersion)
+{
+	MachineContainer::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.3")
+	{	// In design syntax version "0.0.3", we removed "ScriptElements" and replaced them with "SwitchElements"
+		// "ScriptElement" were essentially "SwitchElements" that contained only two results, "true" and "false"
+		// that were triggered with a boolean value.
+		// To upgrade, we serialize "ScriptElements" into ObsoleteAssets and create new equivalent "SwitchElements".
+		QList<QSharedPointer<Asset>> stateMachineElements = getGeneratedChildren("StateMachineElement");
+		QList<QSharedPointer<ObsoleteAsset>> scriptElements;
+		foreach(QSharedPointer<Asset> element, stateMachineElements)
+		{
+			if(element->inherits("Picto::ObsoleteAsset") 
+				&& element.staticCast<ObsoleteAsset>()->getAttributeValue("type") == "ScriptElement")
+			{
+				scriptElements.append(element.staticCast<ObsoleteAsset>());
+			}
+		}
+
+		//For each script element, create a switch element and script data into it.
+		foreach(QSharedPointer<ObsoleteAsset> scriptElement,scriptElements)
+		{
+			QString error;
+			QSharedPointer<Asset> switchElementAsset = createChildAsset("StateMachineElement","Switch",error);
+			QSharedPointer<SwitchElement> switchElement = switchElementAsset.staticCast<SwitchElement>();
+			QList<QSharedPointer<ObsoleteAsset>> obsAssetList;
+			//Copy name to Switch Element
+			obsAssetList = scriptElement->getChildAsset("Name");
+			switchElement->setName(obsAssetList.size()?obsAssetList.first()->getValue():"");
+			//Copy Script to Switch Element
+			obsAssetList = scriptElement->getChildAsset("Script");
+			switchElement->getPropertyContainer()->setPropertyValue("Script",obsAssetList.size()?obsAssetList.first()->getValue():"");
+			//Get UI position info and set it to the switch element
+			obsAssetList = scriptElement->getChildAsset("UIInfo");	//Get UIINfo sub asset
+			if(!obsAssetList.isEmpty())
+			{
+				obsAssetList = obsAssetList.first()->getChildAsset("Pos");	//Get Pos sub tag
+				if(!obsAssetList.isEmpty())
+				{
+					QStringList xy = obsAssetList.first()->getValue().split(",");	//Convery ?,? of tag value to string list
+					if(xy.size() == 2)	//If string list has correct size, set it to the switch element position
+						switchElement->setPos(QPoint(xy.first().toFloat(),xy.last().toFloat()));
+				}
+			}
+
+			//Create true, false results in Switch Element
+			QSharedPointer<Asset> result = switchElement->createChildAsset("Result","",error);
+			result.staticCast<UIEnabled>()->setName("true");
+			result = switchElement->createChildAsset("Result","",error);
+			result.staticCast<UIEnabled>()->setName("false");\
+		}
+	}
+}
 
 /*	\brief The "run" function
  *
@@ -157,13 +215,6 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		//! \TODO Make some sort of intelligent error reporting...
 		return "scriptingError";
 	}
-
-	//Figure out which scripts we will be running
-	bool runEntryScript = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
-	bool runExitScript = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
-
-	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
-	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
 
 	//Reset trialNum_ if we just entered a new Task
 	if(getLevel() == StateMachineLevel::Task)
@@ -189,9 +240,8 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	}
 
 	QString result;
-		//run the entry script
-	if(runEntryScript)
-		runScript(entryScriptName);
+	//run the entry script
+	runEntryScript();
 	while(true)
 	{
 		
@@ -263,8 +313,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 
 	}
 	//run the exit script
-	if(runExitScript)
-		runScript(exitScriptName);
+	runExitScript();
 	
 	//Since we're backing out of this state machine we need to remove it from the path
 	//qDebug(QString("Exiting: %1").arg(path_.join("::")).toLatin1());

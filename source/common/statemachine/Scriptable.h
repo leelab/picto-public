@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <QScriptEngine>
 #include <QScriptValue>
+#include <QScriptable>
 
 #include "../common.h"
 #include "../statemachine/UIEnabled.h"
@@ -13,7 +14,7 @@ namespace Picto {
 /*!	\brief A base class for classes that can be used in scripts
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API Scriptable : public UIEnabled
+	class PICTOLIB_API Scriptable : public UIEnabled, protected QScriptable
 #else
 	class Scriptable : public UIEnabled
 #endif

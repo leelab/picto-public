@@ -29,8 +29,6 @@ public:
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool hasScripts();
-	virtual QMap<QString,QPair<QString,QString>> getScripts();
 	QSharedPointer<AssetFactory> elementFactory_;
 	QSharedPointer<AssetFactory> transitionFactory_;
 	QMap<QString, QSharedPointer<ResultContainer> > elements_;

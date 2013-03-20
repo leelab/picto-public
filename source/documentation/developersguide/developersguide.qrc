@@ -620,6 +620,8 @@
    <file alias="_script_controller_8h-source.html">../../../output/documentation/main/html/_script_controller_8h-source.html</file>
    <file alias="_script_element_8cpp-source.html">../../../output/documentation/main/html/_script_element_8cpp-source.html</file>
    <file alias="_script_element_8h-source.html">../../../output/documentation/main/html/_script_element_8h-source.html</file>
+   <file alias="_script_engine_agent_8cpp-source.html">../../../output/documentation/main/html/_script_engine_agent_8cpp-source.html</file>
+   <file alias="_script_engine_agent_8h-source.html">../../../output/documentation/main/html/_script_engine_agent_8h-source.html</file>
    <file alias="_script_function_8cpp-source.html">../../../output/documentation/main/html/_script_function_8cpp-source.html</file>
    <file alias="_script_function_8h-source.html">../../../output/documentation/main/html/_script_function_8h-source.html</file>
    <file alias="_script_item_8cpp-source.html">../../../output/documentation/main/html/_script_item_8cpp-source.html</file>
@@ -750,6 +752,8 @@
    <file alias="_string_parameter_8h-source.html">../../../output/documentation/main/html/_string_parameter_8h-source.html</file>
    <file alias="_subject_position_8cpp-source.html">../../../output/documentation/main/html/_subject_position_8cpp-source.html</file>
    <file alias="_subject_position_8h-source.html">../../../output/documentation/main/html/_subject_position_8h-source.html</file>
+   <file alias="_switch_element_8cpp-source.html">../../../output/documentation/main/html/_switch_element_8cpp-source.html</file>
+   <file alias="_switch_element_8h-source.html">../../../output/documentation/main/html/_switch_element_8h-source.html</file>
    <file alias="_t_d_t_interface_8cpp-source.html">../../../output/documentation/main/html/_t_d_t_interface_8cpp-source.html</file>
    <file alias="_t_d_t_interface_8h-source.html">../../../output/documentation/main/html/_t_d_t_interface_8h-source.html</file>
    <file alias="_target_controller_8cpp-source.html">../../../output/documentation/main/html/_target_controller_8cpp-source.html</file>
@@ -927,6 +931,8 @@
    <file alias="class_hardware_setup.html">../../../output/documentation/main/html/class_hardware_setup.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler-members.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler-members.html</file>
    <file alias="class_interactive_s_t_d_i_o_handler.html">../../../output/documentation/main/html/class_interactive_s_t_d_i_o_handler.html</file>
+   <file alias="class_level_up_button-members.html">../../../output/documentation/main/html/class_level_up_button-members.html</file>
+   <file alias="class_level_up_button.html">../../../output/documentation/main/html/class_level_up_button.html</file>
    <file alias="class_loading_widget-members.html">../../../output/documentation/main/html/class_loading_widget-members.html</file>
    <file alias="class_loading_widget.html">../../../output/documentation/main/html/class_loading_widget.html</file>
    <file alias="class_main_window-members.html">../../../output/documentation/main/html/class_main_window-members.html</file>
@@ -1424,6 +1430,9 @@
    <file alias="class_picto_1_1_string_parameter.png">../../../output/documentation/main/html/class_picto_1_1_string_parameter.png</file>
    <file alias="class_picto_1_1_subject_position-members.html">../../../output/documentation/main/html/class_picto_1_1_subject_position-members.html</file>
    <file alias="class_picto_1_1_subject_position.html">../../../output/documentation/main/html/class_picto_1_1_subject_position.html</file>
+   <file alias="class_picto_1_1_switch_element-members.html">../../../output/documentation/main/html/class_picto_1_1_switch_element-members.html</file>
+   <file alias="class_picto_1_1_switch_element.html">../../../output/documentation/main/html/class_picto_1_1_switch_element.html</file>
+   <file alias="class_picto_1_1_switch_element.png">../../../output/documentation/main/html/class_picto_1_1_switch_element.png</file>
    <file alias="class_picto_1_1_t_d_t_interface-members.html">../../../output/documentation/main/html/class_picto_1_1_t_d_t_interface-members.html</file>
    <file alias="class_picto_1_1_t_d_t_interface.html">../../../output/documentation/main/html/class_picto_1_1_t_d_t_interface.html</file>
    <file alias="class_picto_1_1_target_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_target_controller-members.html</file>

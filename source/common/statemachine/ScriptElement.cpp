@@ -98,15 +98,16 @@ bool ScriptElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 
 bool ScriptElement::hasScripts()
 {
+	if(StateMachineElement::hasScripts())
+		return true;
 	return (propertyContainer_->getPropertyValue("Script").toString() != "");
 }
 
 QMap<QString,QPair<QString,QString>>  ScriptElement::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts;
-	if(!hasScripts())
-		return scripts;
-	scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),"Script");
+	QMap<QString,QPair<QString,QString>>  scripts = StateMachineElement::getScripts();
+	if(!propertyContainer_->getPropertyValue("Script").toString().isEmpty())
+		scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),"Script");
 	return scripts;
 }
 

@@ -13,8 +13,6 @@ addingTransition_(false)
 	AddDefinableObjectFactory(transitionTag_,transitionFactory_);
 	elementFactory_ = QSharedPointer<AssetFactory>(new AssetFactory(0,-1));
 	AddDefinableObjectFactory(elementTag_,elementFactory_);
-	AddDefinableProperty("EntryScript","");
-	AddDefinableProperty("ExitScript","");
 }
 
 //! \brief Adds a transition to this machineContainer
@@ -208,32 +206,6 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	//If we made it this far, all the transitions are "legal"
 	return true;
 }
-
-bool MachineContainer::hasScripts()
-{
-	return (!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty()
-		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
-}
-
-QMap<QString,QPair<QString,QString>>  MachineContainer::getScripts()
-{
-	QMap<QString,QPair<QString,QString>>  scripts;
-	if(!hasScripts())
-		return scripts;
-
-	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
-	{
-		QString scriptName = getName().simplified().remove(' ')+"Entry";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"EntryScript");
-	}
-	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
-	{
-		QString scriptName = getName().simplified().remove(' ')+"Exit";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"ExitScript");
-	}
-	return scripts;
-}
-
 
 bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition, QSharedPointer<ResultContainer>& source, QSharedPointer<ResultContainer>& sourceResult, QSharedPointer<ResultContainer>& destination)
 {

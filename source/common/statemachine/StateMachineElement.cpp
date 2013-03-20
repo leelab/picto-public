@@ -13,8 +13,8 @@ namespace Picto {
 
 StateMachineElement::StateMachineElement()
 {
-	//DefinePlaceholderTag("Results");
-	//AddDefinableObjectFactory("Result",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Result::Create))) );
+	AddDefinableProperty("EntryScript","");
+	AddDefinableProperty("ExitScript","");
 }
 
 QString StateMachineElement::slaveRenderFrame(QSharedPointer<Engine::PictoEngine>)
@@ -53,6 +53,47 @@ bool StateMachineElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 		}
 	}
 	return true;
+}
+
+bool StateMachineElement::hasScripts()
+{
+	if(ResultContainer::hasScripts())
+		return true;
+	return (!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty()
+		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
+}
+
+void StateMachineElement::runEntryScript()
+{
+	if(propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
+		return;
+	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
+	runScript(entryScriptName);
+}
+
+void StateMachineElement::runExitScript()
+{
+	if(propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
+		return;
+	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
+	runScript(exitScriptName);
+}
+
+QMap<QString,QPair<QString,QString>>  StateMachineElement::getScripts()
+{
+	QMap<QString,QPair<QString,QString>>  scripts = ResultContainer::getScripts();
+
+	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
+	{
+		QString scriptName = getName().simplified().remove(' ')+"Entry";
+		scripts[scriptName] = QPair<QString,QString>(QString(),"EntryScript");
+	}
+	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
+	{
+		QString scriptName = getName().simplified().remove(' ')+"Exit";
+		scripts[scriptName] = QPair<QString,QString>(QString(),"ExitScript");
+	}
+	return scripts;
 }
 
 }; //namespace Picto

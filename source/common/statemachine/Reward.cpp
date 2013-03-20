@@ -32,6 +32,7 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 	int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
 	int minRewardPeriod = propertyContainer_->getPropertyValue("MinRewardPeriod").toInt();
 
+	runEntryScript();
 	//Give the rewards
 	if(numRewards > 0)
 	{
@@ -40,6 +41,7 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 			engine->giveReward(rewardChan,rewardQty,minRewardPeriod);
 		}
 	}
+	runExitScript();
 
 	return "done";
 }

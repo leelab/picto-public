@@ -5,7 +5,6 @@
 #include <QList>
 #include <QScriptEngine>
 #include <QScriptEngineDebugger>
-#include <QScriptable>
 
 #include "../common.h"
 #include "../statemachine/UIEnabled.h"
@@ -18,9 +17,9 @@ namespace Picto {
 /*! \brief A container for storing items that can be used in scripts
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ScriptableContainer : public Scriptable, protected QScriptable
+class PICTOLIB_API ScriptableContainer : public Scriptable
 #else
-class ScriptableContainer : public Scriptable
+class ScriptableContainer : public Scriptable, protected QScriptable
 #endif
 {
 	Q_OBJECT
@@ -52,6 +51,7 @@ public:
 protected:
 	void runScript(QString scriptName);
 	void runScript(QString scriptName, QScriptValue& scriptReturnVal);
+	virtual QString getReturnValueError(QString scriptName,const QScriptValue& returnValue);
 	virtual QString defaultTagName(){return "Scriptables";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -82,8 +82,12 @@ private slots:
 	//engines will need to be reinitialized before use.
 	void deinitScripting();
 	void deinitScripting(Property* prop,QVariant value);
-};
 
+private:
+	static QScriptValue checkScriptResults(QScriptContext *context, QScriptEngine *engine);
+	static ScriptableContainer* objectForResultCheck_;
+	static QScriptValue checkScriptResultScript_;
+};
 
 }; //namespace Picto
 

@@ -31,12 +31,13 @@ public:
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
 	QString getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
-
+	virtual void upgradeVersion(QString deserializedVersion);
 
 	////DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
+	virtual QString getReturnValueError(QString scriptName,const QScriptValue& returnValue);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
@@ -46,6 +47,7 @@ protected:
 	virtual QMap<QString,QPair<QString,QString>>  getScripts();
 
 private:
+	QString currResult_;
 };
 
 
