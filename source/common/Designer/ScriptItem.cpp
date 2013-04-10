@@ -50,6 +50,20 @@ void ScriptItem::setRect(QRectF rect)
 	setBrush(brush);
 }
 
+QVariant ScriptItem::itemChange(GraphicsItemChange change, const QVariant & value)
+{
+	//QVariant returnVal = value;
+	////Intercept the tooltip before it's created and change its properties
+	//if(change == QGraphicsItem::ItemToolTipChange)
+	//{
+	//	QToolTip* theTip = (QToolTip *) value.value<void *>();
+	//	theTip->
+	//	return qVariantFromValue((void *) theTip);
+	//}
+	return QGraphicsItem::itemChange(change, value);
+
+}
+
 void ScriptItem::scriptPropEdited(Property*,QVariant newValue)
 {
 	latestText_ = newValue.toString();
@@ -57,7 +71,7 @@ void ScriptItem::scriptPropEdited(Property*,QVariant newValue)
 	if(!newStringValue.isEmpty())
 	{
 		scriptTextEdit_.setText(newStringValue);
-		newStringValue = scriptTextEdit_.document()->toHtml("utf-8");
+		newStringValue = scriptSyntaxHighlighter_->asHtml();
 	}
 	
 	setToolTip(newStringValue);

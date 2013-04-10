@@ -82,15 +82,6 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	//This is the "rendering loop"  It gets run for every frame
 	while(!isDone)
 	{
-		//----------  Draw the scene.  This will automatically send behavioral data to server --------------
-		scene_->render(engine,getAssetId());
-
-		////------------- Send Behavioral data to server --------------
-		//sendBehavioralData(engine);
-
-		//---------- Check for directives from the server -----------
-		//updateServer(engine);
-
 		//--------- Check control elements------------
 		foreach(QSharedPointer<ResultContainer> control, elements_)
 		{
@@ -114,17 +105,23 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		if(elements_.isEmpty())
 			isDone = true;
 
-		//-------------- Run the frame script ----------------
-		//Runs after control logic after every frame.
-		if(runFrameScript)
-			runScript(frameScriptName);
+		if(!isDone)
+		{
+			//-------------- If the state is not over, run the frame script ----------------
+			//
+			if(runFrameScript)
+				runScript(frameScriptName);
+
+			//----------  Draw the scene.  This will automatically send behavioral data to server --------------
+			scene_->render(engine,getAssetId());
+		}
 
 		//------ Check for engine stop commands ---------------
 		if(checkForEngineStop(engine))
 		{
 			isDone = true;
 			result = "EngineAbort";
-		}
+		} 
 		else if(isDone)
 		{
 			engine->addStateTransitionForServer(resultTrans);	//Added in Picto Version 1.0.12.  Before this transitions within a state weren't being recorded in the session file.		

@@ -28,7 +28,7 @@ private:
 	QMap<QString,bool> scriptNamesLookup_;
 private slots:
 	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
-	void startBarSelected(QSharedPointer<Asset> asset);
+	void arrowPortSelected(QSharedPointer<Asset> asset);
 };
 //! [0]
 #endif

@@ -9,7 +9,7 @@
 StartBarItem::StartBarItem(QString name,QSharedPointer<EditorState> editorState, QGraphicsItem *parent, QSharedPointer<Asset> windowAsset) :
 ArrowSourceItem(name,editorState,parent,windowAsset)
 {
-	scriptItemManager_ = QSharedPointer<ScriptItemManager>(new ScriptItemManager(editorState,this,windowAsset));
+	scriptItemManager_ = QSharedPointer<ScriptItemManager>(new ScriptItemManager(editorState,this,windowAsset,false));
 	setPos(QPointF(0,0));
 	setWidth(20);
 	setHeight(4000);

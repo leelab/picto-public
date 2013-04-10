@@ -7,7 +7,7 @@
 ArrowDestinationItem::ArrowDestinationItem(QSharedPointer<EditorState> editorState, QGraphicsItem *parent, QSharedPointer<Asset> asset) :
 ArrowPortItem("",editorState,parent,asset)
 {
-	scriptItemManager_ = QSharedPointer<ScriptItemManager>(new ScriptItemManager(editorState,this,asset));
+	scriptItemManager_ = QSharedPointer<ScriptItemManager>(new ScriptItemManager(editorState,this,asset,false));
 }
 
 QPointF ArrowDestinationItem::getContactPoint()

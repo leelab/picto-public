@@ -18,6 +18,7 @@ public:
 protected:
 	virtual void setRect(QRectF rect);
 	virtual void updateDependantGraphics(){};
+	virtual QVariant itemChange(GraphicsItemChange change, const QVariant & value);
 private:
 	QSharedPointer<Property> scriptProperty_;
 	ScriptSyntaxHighlighter* scriptSyntaxHighlighter_;		//These are used for syntax highlighting

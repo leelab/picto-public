@@ -16,7 +16,7 @@ class WireableItem : public AssetItem
 public:
 	WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 	virtual ~WireableItem();
-	void addArrowSource(QSharedPointer<Asset> sourceAsset);
+	void addResultArrowSource(QSharedPointer<Asset> sourceAsset);
 	void enableArrowDest();
 	QList<DiagramItem*> getArrowSources();
 	DiagramItem* getArrowDest();

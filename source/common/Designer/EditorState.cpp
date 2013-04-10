@@ -86,8 +86,7 @@ void EditorState::setSelectedAsset(QSharedPointer<Asset> asset)
 void EditorState::setSelectedItem(QGraphicsItem *item)
 {
 	AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
-	ArrowDestinationItem* destItem = dynamic_cast<ArrowDestinationItem*>(item);
-	StartBarItem* startItem = dynamic_cast<StartBarItem*>(item);
+	ArrowPortItem* arrowPortItem = dynamic_cast<ArrowPortItem*>(item);
 
 	selectedItem_ = item;
 	if(item && item->isSelected())
@@ -96,16 +95,16 @@ void EditorState::setSelectedItem(QGraphicsItem *item)
 		{
 			setSelectedAsset(assetItem->getAsset());
 		}
-		else if(destItem)
+		else if(arrowPortItem)
 		{
-			setSelectedAsset(destItem->getAsset());
+			setSelectedAsset(arrowPortItem->getAsset());
 		}
 		else
 		{
 			setSelectedAsset(getWindowAsset());
 		}
-		if(destItem || startItem)
-			emit startBarSelected(selectedAsset_);
+		if(arrowPortItem)
+			emit arrowPortSelected(arrowPortItem->getAsset());
 		emit itemSelected(item);
 	}
 	else

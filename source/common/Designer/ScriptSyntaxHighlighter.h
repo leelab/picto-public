@@ -69,6 +69,7 @@ class ScriptSyntaxHighlighter : public QSyntaxHighlighter
 public:
     ScriptSyntaxHighlighter(QTextDocument *document = 0);
     ~ScriptSyntaxHighlighter();
+	QString asHtml();
 
 protected:
     void highlightBlock(const QString &text);

@@ -49,7 +49,7 @@ signals:
 	void windowAssetChanged(QSharedPointer<Asset> asset);
 	void selectedAssetChanged(QSharedPointer<Asset> asset);
 	void itemSelected(QGraphicsItem *item);
-	void startBarSelected(QSharedPointer<Asset> asset);
+	void arrowPortSelected(QSharedPointer<Asset> asset);
 	void itemInserted();
 	void undoableActionPerformed();
 	void resetExperiment();

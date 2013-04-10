@@ -1,7 +1,7 @@
 #include "WireableItem.h"
 
 #include "../../common/controlelements/controlelement.h"
-#include "ArrowSourceItem.h"
+#include "ResultArrowSourceItem.h"
 #include "ArrowDestinationItem.h"
 #include "arrow.h"
 #include <QGraphicsScene>
@@ -17,10 +17,10 @@ WireableItem::~WireableItem()
 {
 }
 
-void WireableItem::addArrowSource(QSharedPointer<Asset> sourceAsset)
+void WireableItem::addResultArrowSource(QSharedPointer<Asset> sourceAsset)
 {
 	Q_ASSERT(sourceAsset);
-	DiagramItem* newArrowSource = new ArrowSourceItem(sourceAsset->getName(),getEditorState(),this,sourceAsset);
+	DiagramItem* newArrowSource = new ResultArrowSourceItem(sourceAsset->getName(),getEditorState(),this,sourceAsset);
 	newArrowSource->setZValue(zValue()+1);
 	if(newArrowSource->getWidth() > maxArrowSourceWidth_)
 		maxArrowSourceWidth_ = newArrowSource->getWidth();

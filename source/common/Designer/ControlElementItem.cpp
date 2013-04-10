@@ -8,6 +8,6 @@ WireableItem(editorState,contextMenu,asset)
 	QList<QSharedPointer<Asset>> results = ctrlElem->getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> result,results)
 	{
-		addArrowSource(result);
+		addResultArrowSource(result);
 	}
 }

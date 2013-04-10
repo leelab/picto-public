@@ -11,8 +11,8 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
 {
 	connect(editorState_.data(), SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),
         this, SLOT(assetSelected(QSharedPointer<Asset>)));
-	connect(editorState_.data(), SIGNAL(startBarSelected(QSharedPointer<Asset>)),
-        this, SLOT(startBarSelected(QSharedPointer<Asset>)));
+	connect(editorState_.data(), SIGNAL(arrowPortSelected(QSharedPointer<Asset>)),
+        this, SLOT(arrowPortSelected(QSharedPointer<Asset>)));
 
 	propGroupWidget_ = new PropertyGroupWidget(false,editorState);
 	QVBoxLayout* myLayout = new QVBoxLayout();
@@ -64,7 +64,7 @@ void PropertyBrowser::propertyEdited(QSharedPointer<Property> prop,QVariant val)
 	editorState_->setLastActionUndoable();
 }
 
-void PropertyBrowser::startBarSelected(QSharedPointer<Asset> asset)
+void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 {
 	//Only show scripts
 	if(asset.isNull())

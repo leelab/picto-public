@@ -55,6 +55,7 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+#define DEFAULT_ITEM_BORDER_BUFFER 50
 //! [0]
 DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent)
     : QGraphicsScene(parent)
@@ -145,9 +146,9 @@ DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF
 	DiagramItem *item = diagItemFactory_->create(asset);
 	if(!item)
 		return NULL;
-	if(item->pos() == QPointF())
-		item->setPos(pos);
 	addItem(item);
+	if(item->pos() == QPointF())
+		item->setPos(pos+QPointF(0.5*item->boundingRect().width(),0));//Put it at the input position plus a small left buffer
 
 	emit itemInserted(static_cast<DiagramItem*>(item));
 	return item;
@@ -182,7 +183,8 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	startBar_ = NULL;
 	newItemIndex_ = 1;
 	QStringList childTypes = dataStore->getDefinedChildTags();
-	QPointF childAssetLoc(sceneRect().center().x(),sceneRect().center().y());
+	//Set the default item placement location to the top left of the scene
+	QPointF childAssetLoc(sceneRect().topLeft().x()+DEFAULT_ITEM_BORDER_BUFFER,sceneRect().topLeft().y()+DEFAULT_ITEM_BORDER_BUFFER);
 	QList<QSharedPointer<Transition>> transitions;
 	QList<DiagramItem*> diagItems;
 	if(dataStore->inherits("Picto::StateMachine") || dataStore->inherits("Picto::State"))
@@ -190,6 +192,8 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 		startBar_ = new StartBarItem("",editorState_,NULL,dataStore);
 		diagItems.push_back(startBar_);
 		addItem(startBar_);
+		//Put the default placement location at the top right of the start bar
+		childAssetLoc = startBar_->boundingRect().topRight()+QPointF(DEFAULT_ITEM_BORDER_BUFFER,DEFAULT_ITEM_BORDER_BUFFER);
 	}
 	foreach(QString childType, childTypes)
 	{
@@ -212,9 +216,10 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 						newItemIndex_ = itemIndex+1;
 				}
 				
-				//Now add it to the list and update the default placement location
+				//Now add it to the list and update the default placement location to the top
+				//right of the currently added items
 				diagItems.push_back(diagItem);
-				childAssetLoc = childAssetLoc+QPointF(1.5*diagItem->boundingRect().width(),0);
+				childAssetLoc = QPointF(getDefaultZoomRect().right(),diagItem->pos().y());
 			}
 		}
 	}

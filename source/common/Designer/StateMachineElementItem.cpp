@@ -8,7 +8,7 @@ WireableItem(editorState,contextMenu,asset)
 	QList<QSharedPointer<Asset>> results = stateMachElem->getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> result,results)
 	{
-		addArrowSource(result);
+		addResultArrowSource(result);
 	}
 	enableArrowDest();
 

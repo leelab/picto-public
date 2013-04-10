@@ -345,6 +345,17 @@ void MainWindow::openExperiment()
 	if(okToContinue())
 	{
 		QString filename = QFileDialog::getOpenFileName(this,
+				tr("Open Experiment"),".","Design or Session files (*.xml *.sqlite)");
+		if(!filename.isEmpty())
+			loadFile(filename);
+	}
+}
+
+void MainWindow::openSession()
+{
+	if(okToContinue())
+	{
+		QString filename = QFileDialog::getOpenFileName(this,
 				tr("Open Experiment"),".","XML files (*.xml)");
 		if(!filename.isEmpty())
 			loadFile(filename);
@@ -365,7 +376,7 @@ void MainWindow::openRecentExperiment()
 //! Called to save a file
 bool MainWindow::saveExperiment()
 {
-	if(currFile_.isEmpty())
+	if(currFile_.isEmpty() || currFile_.right(4) != ".xml")
 		return saveAsExperiment();
 	else
 		return saveFile(currFile_);
@@ -510,31 +521,73 @@ bool MainWindow::saveFile(const QString filename)
 bool MainWindow::loadFile(const QString filename)
 {
 	QFile file(filename);
-	if(!file.open(QIODevice::ReadOnly))
+	QSqlDatabase newSession;
+	QString experimentXML = "";
+	bool isDesignFile = filename.right(4).toLower() == ".xml";
+	if(isDesignFile)
+	{	//Its an xml design file
+		if(!file.open(QIODevice::ReadOnly))
+		{
+			QMessageBox::critical(this, Picto::Names->workstationAppName,
+				"Failed to open file: " + filename);
+			return false;
+		}
+
+		experimentXML = file.readAll();
+		file.close();
+	}
+	else
+	{	//Its a sqlite session file
+		QString path = filename;
+		path = path.replace("\\","/");
+		Q_ASSERT(path.lastIndexOf("/") >=0);
+		Q_ASSERT(path.lastIndexOf(".") >=0);
+		QString connectionName = path.mid(path.lastIndexOf("/")+1);
+		connectionName = connectionName.left(connectionName.lastIndexOf("."));
+		newSession = QSqlDatabase::addDatabase("QSQLITE",connectionName);
+		newSession.setDatabaseName(path);
+		newSession.open();
+		if(!newSession.isOpen())
+		{
+			QSqlError error = newSession.lastError();
+			QMessageBox::critical(0,"Could not open session",error.text());
+			return false;
+		}
+		QSqlQuery query(newSession);
+
+		//Get runs list.
+		query.prepare("SELECT value FROM sessioninfo WHERE key='ExperimentXML' LIMIT 1");
+		bool success = query.exec();
+		if(!success || !query.next())
+		{
+			QMessageBox::critical(0,"Failed to select Experiment XML from Session",success?"":query.lastError().text().toLatin1());
+			return false;
+		}
+		experimentXML = query.value(0).toString();
+		newSession.close();
+	}
+	if(experimentXML.isEmpty())
 	{
-		QMessageBox::critical(this, Picto::Names->workstationAppName,
-			"Failed to open file: " + filename);
+		QMessageBox::critical(0,"Experiment design was empty.","Please try a different file");
 		return false;
 	}
-
-	//pictoDataText_.setPlainText(file.readAll());
-	//pictoDataText_.setModified(false);
-	if(!designRoot_->resetDesignRoot(file.readAll()))
+	QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(new DesignRoot());
+	if(!newDesignRoot->resetDesignRoot(experimentXML))
 	{
 	
-		DesignMessage errorMsg = designRoot_->getLastError();
+		DesignMessage errorMsg = newDesignRoot->getLastError();
 		QMessageBox::critical(0,errorMsg.name,errorMsg.details);
 		return false;
 	}
-	if(designRoot_->hasWarning())
+	if(newDesignRoot->hasWarning())
 	{
-		DesignMessage warnMsg = designRoot_->getLastWarning();
+		DesignMessage warnMsg = newDesignRoot->getLastWarning();
 		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
 	}
-
-	file.close();
+	designRoot_ = newDesignRoot;
 
 	setCurrentFile(filename);
+
 	return true;
 }
 

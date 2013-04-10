@@ -46,6 +46,7 @@ signals:
 private slots:
 	void newExperiment();
 	void openExperiment();
+	void openSession();
 	void openRecentExperiment();
 	bool saveExperiment();
 	bool saveAsExperiment();

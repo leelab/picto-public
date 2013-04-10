@@ -85,7 +85,7 @@ void TargetController::upgradeVersion(QString deserializedVersion)
 		// In an effort to keep the allowed script locations uniform, we are making TargetEntry
 		// and TargetExit scripts obsolete.
 		// We upgrade these older experiments by automatically adding their entry and exit scripts
-		// to the frame script in if(userEnteredTarget()) and if(userExitedTarget) blocks.
+		// to the frame script and exit scripts in if(userEnteredTarget()) and if(userExitedTarget) blocks.
 
 		//WARNING!!! userOnTarget(), userEnteredTarget() and userExitedTarget() 
 		//functions cannot be used in AnalysisScripts of experiments that were saved with version below 0.0.3.  
@@ -93,8 +93,10 @@ void TargetController::upgradeVersion(QString deserializedVersion)
 		//save OnTarget or OffTarget data in their session files.  Attempting to use these functions in Analysis 
 		//Scripts would cause return of invalid data.
 		QSharedPointer<Property> parentFrameScriptProp = getParentAsset().staticCast<DataStore>()->getGeneratedChildren("FrameScript").first().staticCast<Property>();
+		QSharedPointer<Property> parentExitScriptProp = getParentAsset().staticCast<DataStore>()->getGeneratedChildren("ExitScript").first().staticCast<Property>();
 		Q_ASSERT(parentFrameScriptProp);
 		QString parentFrameScript = parentFrameScriptProp->value().toString();
+		QString parentExitScript = parentExitScriptProp->value().toString();
 		QSharedPointer<ObsoleteAsset> obsScript;
 		if(getGeneratedChildren("TargetExitScript").size())
 			obsScript = getGeneratedChildren("TargetExitScript").first().staticCast<ObsoleteAsset>();
@@ -102,6 +104,8 @@ void TargetController::upgradeVersion(QString deserializedVersion)
 		{
 			//Put exit script into parent's frame script.
 			parentFrameScript.prepend(QString("if(%1.userExitedTarget()){\n%2\n}\n").arg(getName()).arg(obsScript->getValue()));
+			//Put exit script into parent's exit script.
+			parentExitScript.prepend(QString("if(%1.userExitedTarget()){\n%2\n}\n").arg(getName()).arg(obsScript->getValue()));
 		}
 		obsScript.clear();
 		if(getGeneratedChildren("TargetEntryScript").size())
@@ -110,8 +114,11 @@ void TargetController::upgradeVersion(QString deserializedVersion)
 		{
 			//Put entry script into parent's frame script.
 			parentFrameScript.prepend(QString("if(%1.userEnteredTarget()){\n%2\n}\n").arg(getName()).arg(obsScript->getValue()));
+			//Put entry script into parent's exit script.
+			parentExitScript.prepend(QString("if(%1.userEnteredTarget()){\n%2\n}\n").arg(getName()).arg(obsScript->getValue()));
 		}
 		parentFrameScriptProp->setValue(parentFrameScript);
+		parentExitScriptProp->setValue(parentExitScript);
 	}
 }
 
