@@ -10,6 +10,8 @@
 #include "ScriptableContainer.h"
 #include "../property/EnumProperty.h"
 
+#include "../parameter/AnalysisElement.h"
+
 #include "../parameter/BooleanParameter.h"
 #include "../parameter/ChoiceParameter.h"
 #include "../parameter/NumericParameter.h"
@@ -58,6 +60,7 @@ ScriptableContainer::ScriptableContainer()
 	scriptingInitialized_(false),
 	debuggingEnabled_(false)
 {
+	isAnalysisElement_ = dynamic_cast<AnalysisElement*>(this);
 	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
 	scriptFunctionFactory_->addAssetType("ScriptFunction",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
@@ -161,10 +164,27 @@ void ScriptableContainer::addScriptables(ScriptableContainer *scriptableContaine
 
 void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 {
+	//If the scriptable is empty (ie. Whatever the weak pointer was pointing to has been deleted) return
 	if(scriptable.isNull())
 		return;
-	scriptables_.push_back(scriptable);
-	//qDebug("Added " + scriptable.toStrongRef()->getName().toLatin1() + " to " + getName().toLatin1());
+	QSharedPointer<Scriptable> strScriptable = scriptable.toStrongRef();
+	QSharedPointer<AnalysisElement> anaElement = strScriptable.dynamicCast<AnalysisElement>();
+	if(anaElement)
+	{
+		//The input scriptable is part of an Analysis.  Only add it if its part of the same analysis
+		//as me
+		if(isAnalysisElement_)
+		{
+			QUuid scriptableAnaId = anaElement->getAnalysisId();
+			AnalysisElement* thisAsAnaElem = dynamic_cast<AnalysisElement*>(this);
+			if(thisAsAnaElem->getAnalysisId() != scriptableAnaId)
+				return;
+			scriptables_.push_back(scriptable);
+		}
+	}
+	else
+		scriptables_.push_back(scriptable);
+
 	//If we added a new scriptable, scripting is no longer properly initialized.
 	scriptingInitialized_ = false;
 	//If the new scriptable's name was edited, we'll need to reinitialize scripting again.
@@ -304,6 +324,37 @@ QString ScriptableContainer::getInfo()
 	return returnVal;
 }
 
+void ScriptableContainer::ClearAnalysisChildren(QUuid analysisId)
+{
+	Scriptable::ClearAnalysisChildren(analysisId);
+
+	//Go through the scriptables_ list and remove all analysis children with the input analysis id.
+	bool somethingWasRemoved = false;
+	AnalysisElement* analysisElem;
+	for(QList<QWeakPointer<Scriptable>>::iterator iter = scriptables_.begin();iter!=scriptables_.end();)
+	{
+		if(iter->isNull())
+			continue;
+		analysisElem = dynamic_cast<AnalysisElement*>(iter->data());
+		if(!analysisElem)
+			continue;
+		if(analysisElem->getAnalysisId() == analysisId)
+		{
+			iter = scriptables_.erase(iter);
+			somethingWasRemoved = true;
+			continue;
+		}
+		iter++;
+	}
+
+	if(somethingWasRemoved)
+	{
+		//If we removed a scriptable, scripting is no longer properly initialized.
+		scriptingInitialized_ = false;
+	}
+}
+
+
 bool ScriptableContainer::searchForQuery(SearchRequest searchRequest)
 {
 	if(Scriptable::searchForQuery(searchRequest))
@@ -391,23 +442,10 @@ void ScriptableContainer::postDeserialize()
 		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
 		foreach(QSharedPointer<Asset> tagChild,tagChildren)
 		{
-			if(tagChild->inherits("Picto::Scriptable"))
-			{
-				addScriptable(tagChild.staticCast<Scriptable>());
-			}
+			addChildToScriptLists(tagChild);
 		}
 	}
-	foreach(QString childTag,childTags)
-	{
-		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
-		foreach(QSharedPointer<Asset> tagChild,tagChildren)
-		{
-			if(tagChild->inherits("Picto::ScriptableContainer"))
-			{
-				addChildScriptableContainer(tagChild.staticCast<ScriptableContainer>());
-			}
-		}
-	}
+	connect(this,SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(addChildToScriptLists(QSharedPointer<Asset>)));
 }
 
 bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -454,6 +492,16 @@ void ScriptableContainer::deinitScripting()
 void ScriptableContainer::deinitScripting(Property*,QVariant)
 {
 	deinitScripting();
+}
+
+//If a child is added to this element after postDeserialize then we may need to add it
+//using addScriptable() or addChildScriptableContainer().  We handle that here.
+void ScriptableContainer::addChildToScriptLists(QSharedPointer<Asset> newChild)
+{
+	if(newChild.dynamicCast<Scriptable>())
+		addScriptable(newChild.staticCast<Scriptable>());
+	if(newChild.dynamicCast<ScriptableContainer>())
+		addChildScriptableContainer(newChild.staticCast<ScriptableContainer>());
 }
 
 QScriptValue ScriptableContainer::checkScriptResults(QScriptContext *context, QScriptEngine*)

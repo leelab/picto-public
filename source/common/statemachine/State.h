@@ -35,6 +35,7 @@ public:
 	virtual ~State(){};
 	static QSharedPointer<Asset> Create();
 
+	virtual void enableRunMode(bool enable);
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
 	QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);
@@ -62,7 +63,6 @@ protected:
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
 	virtual QMap<QString,QPair<QString,QString>> getScripts();
-	virtual void scriptableContainerWasReinitialized();
 
 
 private:

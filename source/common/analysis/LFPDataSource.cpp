@@ -25,12 +25,12 @@ QSharedPointer<AnalysisDataIterator> LFPDataSource::createDataIterator()
 
 void LFPDataSource::postDeserialize()
 {
-	AnalysisDataSource::postDeserialize();
+	AnalysisDataSourceDep::postDeserialize();
 }
 
 bool LFPDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!AnalysisDataSource::validateObject(xmlStreamReader))
+	if(!AnalysisDataSourceDep::validateObject(xmlStreamReader))
 		return false;
 	if(!getParentAsset()->inherits("Picto::LFPTrigger"))
 	{

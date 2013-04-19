@@ -84,7 +84,7 @@ QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
 	}
 	return returnVal;
 }
-	
+
 bool Experiment::runTask(QString taskName)
 {
 	if(engine_.isNull())
@@ -174,6 +174,7 @@ void Experiment::postDeserialize()
 	//Since an experiment is at the top level, we must do it manually.
 	addScriptable(selfPtr().staticCast<Scriptable>());
 	ScriptableContainer::postDeserialize();
+
 	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
 	if(experimentSyntaxVer != DESIGNSYNTAXVERSION)
 	{
@@ -181,6 +182,8 @@ void Experiment::postDeserialize()
 		upgradeVersion(experimentSyntaxVer);
 		propertyContainer_->setPropertyValue("SyntaxVersion",DESIGNSYNTAXVERSION);
 	}
+	propertyContainer_->getProperty("SyntaxVersion")->setVisible(false);
+
 
 	//Set the signal properties runtime editable
 	//We use the DataStore version of this function so that the actual properties,
@@ -199,8 +202,11 @@ void Experiment::postDeserialize()
 	QList<QSharedPointer<Asset>> newTasks = getGeneratedChildren("Task");
 	foreach(QSharedPointer<Asset> newTask,newTasks)
 	{
-		addTask(newTask.staticCast<Task>());
+		sortTasksIntoList(newTask);
 	}
+	//In case tasks are added after deserialization (ie. in the state machine editor).  Attach the childAdded
+	//signal to the sortTasksIntoList slot.
+	connect(this,SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(sortTasksIntoList(QSharedPointer<Asset>)));
 
 	//Add all descendant properties to the property table for reporting of property changes to server.
 	//engine->setLastTimePropertiesRequested(0);	//If this is slave mode, this will assure that
@@ -223,7 +229,6 @@ void Experiment::postDeserialize()
 			prop->enableInitRunValueSync(true);
 		}
 	}
-
 }
 
 bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -274,6 +279,12 @@ void Experiment::updateSignalCoefficients(Property*,QVariant)
 	posChannel->setCalibrationCoefficients("y",yGain,yOffset,displayHeight/2);
 	posChannel->setShear("x","y",propertyContainer_->getPropertyValue("XYSignalShear").toDouble());
 
+}
+
+void Experiment::sortTasksIntoList(QSharedPointer<Asset> newChild)
+{
+	if(newChild->inherits("Picto::Task"))
+		addTask(newChild.staticCast<Task>());
 }
 
 }; //namespace Picto

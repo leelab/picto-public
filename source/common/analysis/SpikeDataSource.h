@@ -3,14 +3,14 @@
 
 #include <QSharedPointer>
 #include <QScriptValue>
-#include "AnalysisDataSource.h"
+#include "AnalysisDataSourceDep.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API SpikeDataSource : public AnalysisDataSource
+class PICTOLIB_API SpikeDataSource : public AnalysisDataSourceDep
 #else
-class SpikeDataSource : public AnalysisDataSource
+class SpikeDataSource : public AnalysisDataSourceDep
 #endif
 {
 	Q_OBJECT

@@ -3,7 +3,7 @@
 #include <QSharedPointer>
 
 #include "../common.h"
-
+#include "OutputElement.h"
 #include "../statemachine/scriptable.h"
 
 namespace Picto {
@@ -11,7 +11,7 @@ namespace Picto {
 /*!	\brief A Base class for all Digital Elements
  *
  */
-struct PICTOLIB_CLASS OutputSignal : /*public StimulusElement,*/ public Scriptable
+struct PICTOLIB_CLASS OutputSignal : public OutputElement
 {
 	Q_OBJECT
 	Q_PROPERTY(QString port READ getPort WRITE setPort)

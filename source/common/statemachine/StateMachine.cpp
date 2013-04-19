@@ -172,16 +172,16 @@ void StateMachine::upgradeVersion(QString deserializedVersion)
 			QSharedPointer<SwitchElement> switchElement = switchElementAsset.staticCast<SwitchElement>();
 			QList<QSharedPointer<ObsoleteAsset>> obsAssetList;
 			//Copy name to Switch Element
-			obsAssetList = scriptElement->getChildAsset("Name");
+			obsAssetList = scriptElement->getObsoleteChildAsset("Name");
 			switchElement->setName(obsAssetList.size()?obsAssetList.first()->getValue():"");
 			//Copy Script to Switch Element
-			obsAssetList = scriptElement->getChildAsset("Script");
+			obsAssetList = scriptElement->getObsoleteChildAsset("Script");
 			switchElement->getPropertyContainer()->setPropertyValue("Script",obsAssetList.size()?obsAssetList.first()->getValue():"");
 			//Get UI position info and set it to the switch element
-			obsAssetList = scriptElement->getChildAsset("UIInfo");	//Get UIINfo sub asset
+			obsAssetList = scriptElement->getObsoleteChildAsset("UIInfo");	//Get UIINfo sub asset
 			if(!obsAssetList.isEmpty())
 			{
-				obsAssetList = obsAssetList.first()->getChildAsset("Pos");	//Get Pos sub tag
+				obsAssetList = obsAssetList.first()->getObsoleteChildAsset("Pos");	//Get Pos sub tag
 				if(!obsAssetList.isEmpty())
 				{
 					QStringList xy = obsAssetList.first()->getValue().split(",");	//Convery ?,? of tag value to string list
@@ -239,6 +239,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		ignoreInitialElement_ = false;
 	}
 
+	Q_ASSERT(currElement_);
 	QString result;
 	//run the entry script
 	runEntryScript();
@@ -523,60 +524,8 @@ bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRead
 {
 	if(!MachineContainer::validateObject(xmlStreamReader))
 		return false;
-
-	//	Validate State Machine
-	//	The validation process consists of:
-	//		- check that the contained state machines are of a legal level
-	//		- check each transition to confirm that the source, 
-	//		  sourceResult, and destination all exist.
-	//		- check that every element has all its results connected to
-	//		  a transition
-	//		- check that the initial element is a real element
-	//		- validate all contained state machines		
+	
 	QString myName = getName();
-
-	//Confirm that any contained StateMachines are of the correct level
-	QList<QSharedPointer<Asset>> newStateMachs = getGeneratedChildren("StateMachineElement");
-	foreach(QSharedPointer<Asset> element, newStateMachs)
-	{
-		if(element.dynamicCast<StateMachine>().isNull())
-			continue;
-		StateMachineLevel::StateMachineLevel containedLevel;
-		containedLevel = element.staticCast<StateMachine>()->getLevel();
-
-		StateMachineLevel::StateMachineLevel thisLevel;
-		thisLevel = getLevel();
-
-		QString errMsg = QString("StateMachine: %1 contains a statemachine of incorrect level.  "
-			"E.g. A statemachine of level \"Trial\" may not contain a statemachine of level \"Task\"")
-			.arg(myName);
-		if(thisLevel == StateMachineLevel::Stage)
-		{
-			if(containedLevel > thisLevel)
-			{
-				addError("StateMachine", errMsg,xmlStreamReader);
-				return false;
-			}
-		}
-		else
-		{
-			if(containedLevel >= thisLevel)
-			{
-				addError("StateMachine", errMsg,xmlStreamReader);
-				return false;
-			}
-		}
-	}
-
-	////Confirm that the initial element is a real element
-	//QString initialElement = propertyContainer_->getPropertyValue("InitialElement").toString();
-	//if(!elements_.contains(initialElement))
-	//{
-	//	QString errMsg = QString("InitialElement: %1 is not an element of state machine: %2")
-	//		.arg(initialElement).arg(myName);
-	//	addError("StateMachine", errMsg,xmlStreamReader);
-	//	return false;
-	//}
 
 	//Confirm that there is an initial state transition
 	if(initTransition_.isNull())
@@ -586,8 +535,6 @@ bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRead
 		addError("MachineContainer", errMsg, xmlStreamReader);
 		return false;
 	}
-
-	//If we made it this far, all the transitions are "legal"
 	return true;
 }
 

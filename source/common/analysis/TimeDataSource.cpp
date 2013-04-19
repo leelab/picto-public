@@ -22,12 +22,12 @@ void TimeDataSource::fillOutScriptValue(QSharedPointer<AnalysisValue> val)
 
 void TimeDataSource::postDeserialize()
 {
-	AnalysisDataSource::postDeserialize();
+	AnalysisDataSourceDep::postDeserialize();
 }
 
 bool TimeDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!AnalysisDataSource::validateObject(xmlStreamReader))
+	if(!AnalysisDataSourceDep::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

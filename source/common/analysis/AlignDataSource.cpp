@@ -24,12 +24,12 @@ QSharedPointer<AnalysisDataIterator> AlignDataSource::createDataIterator()
 
 void AlignDataSource::postDeserialize()
 {
-	AnalysisDataSource::postDeserialize();
+	AnalysisDataSourceDep::postDeserialize();
 }
 
 bool AlignDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!AnalysisDataSource::validateObject(xmlStreamReader))
+	if(!AnalysisDataSourceDep::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

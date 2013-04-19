@@ -12,9 +12,10 @@ namespace Picto {
 Task::Task() 
 {
 		taskNumber_ = 0;
+		taskIdBeingEdited_ = false;
 		AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
-
+		AddDefinableProperty(QVariant::Uuid,"TaskId",QVariant());
 }
 
 QSharedPointer<Task> Task::Create()
@@ -253,6 +254,14 @@ void Task::postDeserialize()
 	{
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
 	}
+
+	//If the task has no task id, give it one.
+	if(getTaskId() == QUuid())
+		changeTaskId();
+	propertyContainer_->getProperty("TaskId")->setVisible(false);
+	//Whenever this task is edited, change its TaskID to signify that Analyses that aren't currently
+	//attached to it may no longer be valid
+	connect(this,SIGNAL(edited()),this,SLOT(changeTaskId()));;
 }
 
 bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -262,4 +271,13 @@ bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	return true;
 }
 
+void Task::changeTaskId()
+{
+	//Make this re-entrant (so setting the TaskId doesn't start an endless loop
+	if(taskIdBeingEdited_)
+		return;
+	taskIdBeingEdited_ = true;
+	propertyContainer_->setPropertyValue("TaskId",QUuid::createUuid());
+	taskIdBeingEdited_ = false;
+}
 }; //namespace Picto

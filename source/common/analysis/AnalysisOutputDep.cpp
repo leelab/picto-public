@@ -1,24 +1,24 @@
 #include <QDir>
 #include <QCoreApplication>
-#include "AnalysisOutput.h"
+#include "AnalysisOutputDep.h"
 
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-QString AnalysisOutput::outputDir_("");
-int AnalysisOutput::loadedObjects_(0);
-QSharedPointer<QFile> AnalysisOutput::lockFile_;
-AnalysisOutput::AnalysisOutput()
+QString AnalysisOutputDep::outputDir_("");
+int AnalysisOutputDep::loadedObjects_(0);
+QSharedPointer<QFile> AnalysisOutputDep::lockFile_;
+AnalysisOutputDep::AnalysisOutputDep()
 {
 	loadedObjects_++;
 	initTempOutputDir();
 }
 
-AnalysisOutput::~AnalysisOutput()
+AnalysisOutputDep::~AnalysisOutputDep()
 {
 }
 
-QString AnalysisOutput::getTempOutputDir()
+QString AnalysisOutputDep::getTempOutputDir()
 {
 	//int tempDirNum = 1;
 	//while(QFile::exists(outputDir_+QString("/%1").arg(tempDirNum)))
@@ -26,22 +26,22 @@ QString AnalysisOutput::getTempOutputDir()
 	return outputDir_+QString("/%1").arg(runUuid_.toString());
 }
 
-void AnalysisOutput::postDeserialize()
+void AnalysisOutputDep::postDeserialize()
 {
 	AnalysisTool::postDeserialize();
 }
 
-bool AnalysisOutput::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool AnalysisOutputDep::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!AnalysisTool::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }
 
-//Will create an empty AnalysisOutput directory in the runpath once
+//Will create an empty AnalysisOutputDep directory in the runpath once
 //per executable run, clearing out any previous contents if there 
 //were any.
-void AnalysisOutput::initTempOutputDir()
+void AnalysisOutputDep::initTempOutputDir()
 {
 	//We want to make sure that even if multiple Picto Workstations are open at the
 	//same time, no one will remove the data that we are currently using.  We also 
@@ -68,7 +68,7 @@ void AnalysisOutput::initTempOutputDir()
 
 }
 
-void AnalysisOutput::removeFilesThenDirectories(QDir container)
+void AnalysisOutputDep::removeFilesThenDirectories(QDir container)
 {
 	QStringList files = container.entryList(QDir::Files);
 	foreach(QString fileName,files)

@@ -11,6 +11,7 @@
 #include <QString>
 #include <QMap>
 #include <QList>
+#include <QUuid>
 
 #include "Asset.h"
 #include "AssetFactory.h"
@@ -61,6 +62,8 @@ public:
 	QStringList getDefinedChildTags(){return factories_.keys();};
 	QStringList getOrderedPropertyList(){return orderedPropList_;};
 	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
+	QList<QSharedPointer<Asset>> getAnalysisChildren(QUuid analysisId, QString tagName);
+	virtual QList<QUuid> getAttachedAnalysisIds();
 	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
 	virtual QString assetType(){return "DataStore";};
 	QSharedPointer<PropertyContainer> getPropertyContainer(){return propertyContainer_;};
@@ -86,13 +89,22 @@ public:
 	bool searchParentForQuery(SearchRequest searchRequest);
 	bool searchAncestorsForQuery(SearchRequest searchRequest);
 
+	bool AddAnalysisChild(QUuid analysisId, int parentId, QString tagName, QSharedPointer<Asset> child);
+	bool AddAnalysisChild(QUuid analysisId, QString parentPath, QString tagName, QSharedPointer<Asset> child);
+	virtual void AddAnalysisChild(QUuid analysisId, QString tagName, QSharedPointer<Asset> child);
+	void ClearAnalysisDescendants(QUuid analysisId);
+	void ClearAllAnalysisDescendants();
+	virtual void ClearAnalysisChildren(QUuid analysisId);
+	void ClearAllAnalysisChildren();
+
 signals:
-	void childAdded();
+	void childAddedAfterDeserialize(QSharedPointer<Asset> newChild);
 public slots:
 	void childEdited();
 
 protected:
 	virtual void postDeserialize();
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	//AutoSerialization Stuff---------------------------------
 	virtual QString defaultTagName(){return "Default";};
 	void initializePropertiesToDefaults();
@@ -126,7 +138,6 @@ protected:
 	void AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory);
 	void AddChild(QString tagName, QSharedPointer<Asset> child);
 
-	bool hasChildrenOfType(QString tagName);
 	QSharedPointer<PropertyContainer> propertyContainer_;
 	//--------------------------------------------------------
 
@@ -136,6 +147,7 @@ private:
 	
 	//AutoSerialization Stuff---------------------------------
 	QMap<QString,QList<QSharedPointer<Asset>>> children_;
+	QMap<QUuid,QMap<QString,QList<QSharedPointer<Asset>>>> analysisChildrenByGuid_;
 	QMap<QString,QSharedPointer<AssetFactory>> factories_;
 	QStringList orderedPropList_;
 	QString tagText_;

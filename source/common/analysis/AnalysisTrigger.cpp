@@ -2,7 +2,7 @@
 #include <QTime>
 #include <QCoreApplication>
 #include "AnalysisTrigger.h"
-#include "AnalysisDataSource.h"
+#include "AnalysisDataSourceDep.h"
 
 #include "LFPDataSource.h"
 #include "PropertyDataSource.h"
@@ -58,10 +58,10 @@ void AnalysisTrigger::loadSessionAndScriptTools(QSqlDatabase session,QSharedPoin
 	dataIterator_.clear();
 	dataIterator_ = createDataIterator();
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
+	QSharedPointer<AnalysisDataSourceDep> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
+		dataSource = dataSourceAsset.staticCast<AnalysisDataSourceDep>();
 		dataSource->loadSessionAndScriptTools(session_,qsEngine,triggerArray_);
 	}
 
@@ -73,10 +73,10 @@ void AnalysisTrigger::setDataWindow(EventOrderIndex startFrom,EventOrderIndex en
 {
 	dataIterator_->setDataWindow(startFrom,endBefore);
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
+	QSharedPointer<AnalysisDataSourceDep> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
+		dataSource = dataSourceAsset.staticCast<AnalysisDataSourceDep>();
 		dataSource->setDataWindow(startFrom,endBefore);
 	}
 }
@@ -120,10 +120,10 @@ void AnalysisTrigger::fillArraysTo(EventOrderIndex beforeIndex)
 			QScriptValue currScript = qsEngine_->newObject();
 			//This trigger falls beyond periodStart_.  Tell the data sources to store it.  
 			QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-			QSharedPointer<AnalysisDataSource> dataSource;
+			QSharedPointer<AnalysisDataSourceDep> dataSource;
 			foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 			{
-				dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
+				dataSource = dataSourceAsset.staticCast<AnalysisDataSourceDep>();
 				dataSource->storeValue(currScript,triggerIndex);
 			}
 			
@@ -153,10 +153,10 @@ QString AnalysisTrigger::scriptInfo()
 {
 	QString returnVal = QString("\t%1 - Values:").arg(getName());
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
+	QSharedPointer<AnalysisDataSourceDep> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
+		dataSource = dataSourceAsset.staticCast<AnalysisDataSourceDep>();
 		returnVal.append(QString("\n\t\t%1").arg(dataSource->getName()));
 	}
 	return returnVal;
@@ -177,10 +177,10 @@ EventOrderIndex AnalysisTrigger::getCurrentTrigger()
 void AnalysisTrigger::sessionDatabaseUpdated()
 {
 	QList<QSharedPointer<Asset>> dataSources = getGeneratedChildren("DataSource");
-	QSharedPointer<AnalysisDataSource> dataSource;
+	QSharedPointer<AnalysisDataSourceDep> dataSource;
 	foreach(QSharedPointer<Asset> dataSourceAsset,dataSources)
 	{
-		dataSource = dataSourceAsset.staticCast<AnalysisDataSource>();
+		dataSource = dataSourceAsset.staticCast<AnalysisDataSourceDep>();
 		dataSource->sessionDatabaseUpdated();
 	}
 	if(!dataIterator_)

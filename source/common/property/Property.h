@@ -56,7 +56,7 @@ public:
 	QVariant initValue();
 	QVariant value();
 
-	void enableRunMode(bool enable);
+	virtual void enableRunMode(bool enable);
 	void enableInitRunValueSync(bool enable);
 
 	//Set this property as changeable during runtime.

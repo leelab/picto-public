@@ -5,15 +5,15 @@
 #include <QDataStream>
 #include <QSharedPointer>
 #include <QTextEdit>
-#include "AnalysisOutput.h"
+#include "AnalysisOutputDep.h"
 #include "FileOutputWidget.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API FileOutput : public AnalysisOutput
+class PICTOLIB_API FileOutput : public AnalysisOutputDep
 #else
-class FileOutput : public AnalysisOutput
+class FileOutput : public AnalysisOutputDep
 #endif
 {
 	Q_OBJECT

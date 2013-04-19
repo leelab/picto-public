@@ -376,33 +376,16 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
         return;
-    //DiagramItem *item;
-    switch (editorState_->getEditMode()) {
-        case Select:
-			{
-				QSharedPointer<Asset> newAsset = createNewAsset();
-				if(newAsset.isNull())
-					break;
-				if(insertDiagramItem(newAsset,mouseEvent->scenePos()))
-				{
-					if(newAsset.dynamicCast<UIEnabled>())
-						newAsset.staticCast<UIEnabled>()->setName(QString("NewItem%1").arg(newItemIndex_++));
-					editorState_->setLastActionUndoable();
-					editorState_->triggerItemInserted();
-				}
-				break;
-			}
-//! [6] //! [7]
-        case InsertLine:
-			line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(),
-											mouseEvent->scenePos()));
-			line->setPen(QPen(editorState_->getLineColor(), 2));
-			addItem(line);
-			editorState_->triggerItemInserted();
-			break;
-    default:
-        ;
-    }
+    DiagramItem *newItem = NULL;
+    if(editorState_->getEditMode() == InsertLine)
+	{
+		line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(),
+										mouseEvent->scenePos()));
+		line->setPen(QPen(editorState_->getLineColor(), 2));
+		addItem(line);
+		editorState_->triggerItemInserted();
+	}
+
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 //! [9]
@@ -422,6 +405,35 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 //! [11]
 void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	//Only respond to left buttons
+	if (mouseEvent->button() != Qt::LeftButton)
+	{
+		QGraphicsScene::mouseReleaseEvent(mouseEvent);
+		return;
+	}
+
+	//If we're in Select mode, check if a new asset needs to be generated.
+	//If it does, generate it.
+    if(editorState_->getEditMode() == Select)
+	{
+		QSharedPointer<Asset> newAsset = createNewAsset();
+		if(newAsset)
+		{
+			DiagramItem *newItem = insertDiagramItem(newAsset,mouseEvent->scenePos());
+			if(newItem)
+			{
+				if(newAsset.dynamicCast<UIEnabled>())
+					newAsset.staticCast<UIEnabled>()->setName(QString("NewItem%1").arg(newItemIndex_++));
+				editorState_->setLastActionUndoable();
+				editorState_->triggerItemInserted();
+				clearSelection();
+				newItem->setSelected(true);
+			}
+		}
+	}
+	else
+	//If a line is being drawn, check if we should add it or delete it.
+	//If we should add it, create the transition and add it.
     if (line != 0 && editorState_->getEditMode() == InsertLine) {
         QList<QGraphicsItem *> startItems = items(line->line().p1());
         if (startItems.count() && startItems.first() == line)
@@ -495,10 +507,10 @@ QSharedPointer<Asset> DiagramScene::createNewAsset()
 	//Due to the nature of scriptables and scriptable containers as elements whose functionality 
 	//involves spanning state machine levels, they need to be specifically added to their container 
 	//after being created.
-	if(newAsset.dynamicCast<Scriptable>() && dataStore.dynamicCast<ScriptableContainer>())
-		dataStore.staticCast<ScriptableContainer>()->addScriptable(newAsset.staticCast<Scriptable>());
-	if(newAsset.dynamicCast<ScriptableContainer>() && dataStore.dynamicCast<ScriptableContainer>())
-		dataStore.staticCast<ScriptableContainer>()->addChildScriptableContainer(newAsset.staticCast<ScriptableContainer>());
+	//if(newAsset.dynamicCast<Scriptable>() && dataStore.dynamicCast<ScriptableContainer>())
+	//	dataStore.staticCast<ScriptableContainer>()->addScriptable(newAsset.staticCast<Scriptable>());
+	//if(newAsset.dynamicCast<ScriptableContainer>() && dataStore.dynamicCast<ScriptableContainer>())
+	//	dataStore.staticCast<ScriptableContainer>()->addChildScriptableContainer(newAsset.staticCast<ScriptableContainer>());
 	////////////////////////////////////////////////////////////////////////////////////////////
 
 

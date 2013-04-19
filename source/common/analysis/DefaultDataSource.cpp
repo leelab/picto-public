@@ -21,12 +21,12 @@ void DefaultDataSource::fillOutScriptValue(QSharedPointer<AnalysisValue> val)
 
 void DefaultDataSource::postDeserialize()
 {
-	AnalysisDataSource::postDeserialize();
+	AnalysisDataSourceDep::postDeserialize();
 }
 
 bool DefaultDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!AnalysisDataSource::validateObject(xmlStreamReader))
+	if(!AnalysisDataSourceDep::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

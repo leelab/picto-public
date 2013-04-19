@@ -1,23 +1,23 @@
-#include "AnalysisDataSource.h"
+#include "AnalysisDataSourceDep.h"
 #include "AnalysisTrigger.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-AnalysisDataSource::AnalysisDataSource()
+AnalysisDataSourceDep::AnalysisDataSourceDep()
 {
 	parentUsesSameIterator_ = false;
 }
 
-AnalysisDataSource::~AnalysisDataSource()
+AnalysisDataSourceDep::~AnalysisDataSourceDep()
 {
 }
 
-void AnalysisDataSource::storeValue(QScriptValue triggerScript,const EventOrderIndex& index)
+void AnalysisDataSourceDep::storeValue(QScriptValue triggerScript,const EventOrderIndex& index)
 {
 	triggerScript.setProperty(getName(),getValue(index)->scriptVal);
 }
 
-QSharedPointer<AnalysisValue> AnalysisDataSource::getValue(const EventOrderIndex& index)
+QSharedPointer<AnalysisValue> AnalysisDataSourceDep::getValue(const EventOrderIndex& index)
 {
 	if(parentUsesSameIterator_)
 		return getParentAsset().staticCast<AnalysisTrigger>()->getLatestValue();
@@ -52,26 +52,26 @@ QSharedPointer<AnalysisValue> AnalysisDataSource::getValue(const EventOrderIndex
 	return latestValue_;
 }
 
-QString AnalysisDataSource::getIteratorDescriptor()
+QString AnalysisDataSourceDep::getIteratorDescriptor()
 {
 	if(!dataIterator_)
 		return "";
 	return QString(dataIterator_->metaObject()->className())+"-Desc-"+dataIterator_->propertyDescriptor();
 }
 
-void AnalysisDataSource::fillOutScriptValue(QSharedPointer<AnalysisValue> val)
+void AnalysisDataSourceDep::fillOutScriptValue(QSharedPointer<AnalysisValue> val)
 {
 	Q_ASSERT_X(dataIterator_.isNull(),
-	"AnalysisDataSource::fillOutScriptValue",
+	"AnalysisDataSourceDep::fillOutScriptValue",
 	"Child classes must implement either createDataIterator() or fillOutScriptValue()");
 };
 
-QScriptValue AnalysisDataSource::createScriptArray(unsigned int length)
+QScriptValue AnalysisDataSourceDep::createScriptArray(unsigned int length)
 {
 	return qsEngine_->newArray(length);
 }
 
-void AnalysisDataSource::loadSessionAndScriptTools(QSqlDatabase session,QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent)
+void AnalysisDataSourceDep::loadSessionAndScriptTools(QSqlDatabase session,QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent)
 {
 	session_ = session;
 	qsEngine_ = qsEngine;
@@ -90,31 +90,31 @@ void AnalysisDataSource::loadSessionAndScriptTools(QSqlDatabase session,QSharedP
 		parentUsesSameIterator_ = true;
 }
 
-void AnalysisDataSource::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
+void AnalysisDataSourceDep::setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore)
 {
 	if(!dataIterator_ || parentUsesSameIterator_)
 		return;
 	dataIterator_->setDataWindow(startFrom,endBefore);
 }
 
-void AnalysisDataSource::sessionDatabaseUpdated()
+void AnalysisDataSourceDep::sessionDatabaseUpdated()
 {
 	if(!dataIterator_)
 		return;
 	dataIterator_->sessionDatabaseUpdated();
 }
 
-void AnalysisDataSource::setScriptInfo(QString name,QScriptValue value)
+void AnalysisDataSourceDep::setScriptInfo(QString name,QScriptValue value)
 {
 	parentScript_.setProperty(name,value);
 }
 
-void AnalysisDataSource::postDeserialize()
+void AnalysisDataSourceDep::postDeserialize()
 {
 	UIEnabled::postDeserialize();
 }
 
-bool AnalysisDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool AnalysisDataSourceDep::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;

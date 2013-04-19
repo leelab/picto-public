@@ -10,6 +10,7 @@ UIEnabled::UIEnabled()
 	AddDefinableProperty("Name","Not Yet Named");
 	AddDefinableObjectFactory("UIInfo",
 			QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(UIInfo::Create))));
+	requireUniqueName();
 }
 
 QSharedPointer<Asset> UIEnabled::Create()

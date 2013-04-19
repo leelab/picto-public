@@ -121,9 +121,10 @@ private:
 	void connectActions();
     void createMenus();
     void createToolbars();
-	bool resetRootAndWindowAssets();
+	bool resetEditor();
 
 	QSharedPointer<Design> design_;
+	QSharedPointer<DesignRoot> designRoot_;
 	QSharedPointer<EditorState> editorState_;
 	//QTextDocument designText_;
 	//QTextDocument openedAssetText_;
@@ -146,6 +147,10 @@ private:
 
 	QAction *undoAction;
 	QAction *redoAction;
+
+	QComboBox *analysisSelector_;
+	QAction *deleteAnalysisAction_;
+	int selectedIndex_;
 
     QMenu *fileMenu;
     QMenu *itemMenu;
@@ -177,6 +182,9 @@ private slots:
 	void  redoAvailable(bool available);
 	void searchTextChanged(const QString& text);
 	void matchCaseChanged(int state);
+	void analysisSelectedChanged(int index);
+	void analysisSelectedTextChanged(const QString& text);
+	void deleteCurrentAnalysis();
 };
 //! [0]
 

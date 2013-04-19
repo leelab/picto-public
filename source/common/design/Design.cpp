@@ -108,6 +108,7 @@ bool Design::compiles(QString* errors)
 	return false;
 }
 
+//Note: enableRunMode must be called AFTER resetDesignRoot (ie. After the design was built from text)
 void Design::enableRunMode(bool runMode)
 {
 	if(root_)

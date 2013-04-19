@@ -34,7 +34,7 @@ public:
 	virtual void setAssetId(int id){assetId_ = id;};
 
 	QStringList childTags(){return children_.keys();};
-	QList<QSharedPointer<ObsoleteAsset>> getChildAsset(QString tagName);
+	QList<QSharedPointer<ObsoleteAsset>> getObsoleteChildAsset(QString tagName);
 
 	int numAttributes(){return attrMap_.size();};
 	QString getAttributeName(int index);

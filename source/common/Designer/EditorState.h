@@ -9,6 +9,7 @@
 #include <QGraphicsItem>
 #include "../../common/design/PictoData.h"
 #include "../storage/SearchRequest.h"
+#include "../parameter/Analysis.h"
 using namespace Picto;
 
 class EditorState : public QObject
@@ -33,6 +34,8 @@ public:
 	QSharedPointer<Asset> getWindowAsset(){return windowAsset_;};
 	QSharedPointer<Asset> getSelectedAsset(){return selectedAsset_;};
 	QSharedPointer<Asset> getTopLevelAsset(){return topAsset_;};
+	QSharedPointer<Analysis> getCurrentAnalysis(){return currAnalysis_;};
+	bool inAnalysisTask();
 	QGraphicsItem *getSelectedItem(){return selectedItem_;};
 	QList<SearchRequest> getSearchRequests();
 
@@ -49,6 +52,7 @@ signals:
 	void windowAssetChanged(QSharedPointer<Asset> asset);
 	void selectedAssetChanged(QSharedPointer<Asset> asset);
 	void itemSelected(QGraphicsItem *item);
+	void currentAnalysisChanged(QSharedPointer<Analysis> currAnalysis);
 	void arrowPortSelected(QSharedPointer<Asset> asset);
 	void itemInserted();
 	void undoableActionPerformed();
@@ -58,6 +62,7 @@ signals:
 public slots:
 	//Set Functions
 	void setTopLevelAsset(QSharedPointer<Asset> topLevelAsset);
+	void setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis);
 	void setEditMode(int mode);
 	double setZoom(double zoom);
 	void setFont(const QFont font){font_ = font;emit fontChanged(font_);};
@@ -93,6 +98,8 @@ private:
 	QString windowAssetPath_;
 	QGraphicsItem *selectedItem_;
 	QSharedPointer<Asset> topAsset_;
+	QSharedPointer<Asset> currentTask_;
+	QSharedPointer<Analysis> currAnalysis_;
 	QHash<int,SearchRequest> searchRequests_;
 
 };

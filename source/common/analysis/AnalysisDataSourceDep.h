@@ -13,21 +13,21 @@
 
 namespace Picto {
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API AnalysisDataSource : public UIEnabled
+class PICTOLIB_API AnalysisDataSourceDep : public UIEnabled
 #else
-class AnalysisDataSource : public UIEnabled
+class AnalysisDataSourceDep : public UIEnabled
 #endif
 {
 	Q_OBJECT
 public:
-	AnalysisDataSource();
-	virtual ~AnalysisDataSource();
+	AnalysisDataSourceDep();
+	virtual ~AnalysisDataSourceDep();
 
 	void loadSessionAndScriptTools(QSqlDatabase session,QSharedPointer<QScriptEngine> qsEngine,QScriptValue parent);
 	void setDataWindow(EventOrderIndex startFrom,EventOrderIndex endBefore);
 
 
-	//AnalysisDataSource specific functions
+	//AnalysisDataSourceDep specific functions
 	//Resets to an initial state.
 	//In particular, getValue(time) will always have an increasing input
 	//time until reset is called.

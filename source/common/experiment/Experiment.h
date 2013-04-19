@@ -65,12 +65,7 @@ public:
 	QSharedPointer<Task> getTaskByName(QString taskName);
 
 	virtual QString assetType(){return "Experiment";};
-	//QString getPropLookupXml();
-	//QString getTransLookupXml();
 
-	//DataStore Functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
 	virtual QString defaultTagName(){return "Experiment";};
 
@@ -97,6 +92,7 @@ private:
 	bool signalCoeffInitialized_;
 private slots:
 	void updateSignalCoefficients(Property* changedProp,QVariant var);
+	void sortTasksIntoList(QSharedPointer<Asset> newChild);
 };
 
 

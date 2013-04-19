@@ -155,6 +155,12 @@ void DiagramItem::updateLabel()
 	//Find out how much room the label takes up
 	//If the graphic needs to make room for this label, change its size accordingly
 	QRectF textbound = nameText_->boundingRect();
+	//I found that an empty name nameText_ still has a finite boundingRect for some reason.  This corrects that.
+	if(text.isEmpty())
+	{
+		textbound.setWidth(0);
+		textbound.setHeight(0);
+	}
 	QRectF polybound = polygon().boundingRect();
 	bool needsToStretch = false;
 	if(polybound.width() < textbound.width())
@@ -169,6 +175,7 @@ void DiagramItem::updateLabel()
 	}
 	if(needsToStretch)
 	{
+		//Set the new size to the diagramItem so that the text fits.
 		setRect(polybound);
 	}
 	nameText_->setPos(rect_.topLeft());

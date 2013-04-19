@@ -3,6 +3,7 @@
 #include "../engine/PictoEngine.h"
 #include "../stimuli/CursorGraphic.h"
 #include "../storage/ObsoleteAsset.h"
+#include "../stimuli/OutputElement.h"
 #include "../memleakdetect.h"
 namespace Picto
 {
@@ -25,6 +26,34 @@ hasCursor_(false)
 QSharedPointer<Asset> PausePoint::Create()
 {
 	return QSharedPointer<Asset>(new PausePoint());
+}
+
+void PausePoint::enableRunMode(bool enable)
+{
+	OutputElementContainer::enableRunMode(enable);
+	if(!enable)
+		return;
+	scene_ = Scene::createScene();
+	hasCursor_ = false;
+	//Since the scene needs access to visual elements stored above it in the tree, we get
+	//our output elements from the output element list.
+	QList<QSharedPointer<OutputElement>> outputs = getOutputElementList();
+	foreach(QSharedPointer<OutputElement> output,outputs)
+	{
+		if(output.isNull())
+			continue;
+		if(output.dynamicCast<VisualElement>())
+		{
+			scene_->addVisualElement(output.staticCast<VisualElement>());
+		}
+		else if (output.dynamicCast<OutputSignal>())
+		{
+			scene_->addOutputSignal(output.staticCast<OutputSignal>());
+		}
+	}
+	QColor backgroundColor;
+	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
+	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
 }
 
 QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -86,7 +115,7 @@ QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 
 void PausePoint::upgradeVersion(QString deserializedVersion)
 {
-	StateMachineElement::upgradeVersion(deserializedVersion);
+	OutputElementContainer::upgradeVersion(deserializedVersion);
 	if(deserializedVersion < "0.0.3")
 	{	//Before 0.0.3, Scripts for pause elements were called PausingScript and RestartingScript.  These
 		//have been changed to EntryScript and ExitScript respectively for consistency with the rest of the system.
@@ -109,13 +138,13 @@ void PausePoint::upgradeVersion(QString deserializedVersion)
 
 void PausePoint::postDeserialize()
 {
-	StateMachineElement::postDeserialize();
+	OutputElementContainer::postDeserialize();
 	setPropertyRuntimeEditable("ForcePause");
 }
 
 bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!StateMachineElement::validateObject(xmlStreamReader))
+	if(!OutputElementContainer::validateObject(xmlStreamReader))
 		return false;
 
 	if(propertyContainer_->getPropertyValue("Name").toString() == "EngineAbort")
@@ -127,27 +156,5 @@ bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
-void PausePoint::scriptableContainerWasReinitialized()
-{
-	scene_ = Scene::createScene();
-	hasCursor_ = false;
-	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
-	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
-	{
-		if(scriptable.isNull())
-			continue;
-		if(scriptable.toStrongRef().dynamicCast<VisualElement>())
-		{
-			scene_->addVisualElement(scriptable.toStrongRef().staticCast<VisualElement>());
-		}
-		else if (scriptable.toStrongRef().dynamicCast<OutputSignal>())
-		{
-			scene_->addOutputSignal(scriptable.toStrongRef().staticCast<OutputSignal>());
-		}
-	}
-	QColor backgroundColor;
-	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
-	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
-}
 
 }//namespace Picto

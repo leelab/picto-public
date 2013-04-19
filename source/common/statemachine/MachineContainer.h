@@ -3,7 +3,7 @@
 
 #include "../common.h"
 #include "Transition.h"
-#include "StateMachineElement.h"
+#include "OutputElementContainer.h"
 
 namespace Picto {
 
@@ -13,9 +13,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API MachineContainer : public StateMachineElement
+class PICTOLIB_API MachineContainer : public OutputElementContainer
 #else
-class MachineContainer : public StateMachineElement
+class MachineContainer : public OutputElementContainer
 #endif
 {
 	Q_OBJECT
@@ -42,6 +42,7 @@ private:
 	bool addingTransition_;
 
 private slots:
+	void childWasAdded(QSharedPointer<Asset> newChild);
 	void updateListsFromChildren();
 };
 

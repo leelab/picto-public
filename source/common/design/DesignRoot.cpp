@@ -14,17 +14,17 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 	//Deserialize Design from DesignRootText
 	QString errors = "";
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(DesignRootText));
-	QSharedPointer<PictoData> pictoData = QSharedPointer<PictoData>(PictoData::Create().staticCast<PictoData>());
-	while(!xmlReader->isStartElement() && (xmlReader->name() != pictoData->assetType()) && !xmlReader->atEnd()) 
+	pictoData_ = QSharedPointer<PictoData>(PictoData::Create().staticCast<PictoData>());
+	while(!xmlReader->isStartElement() && (xmlReader->name() != pictoData_->assetType()) && !xmlReader->atEnd()) 
 		xmlReader->readNext();
 	if(xmlReader->atEnd())
 	{
-		lastError_.details = "Could not find " + pictoData->assetType() + " in DesignRoot Text.";
+		lastError_.details = "Could not find " + pictoData_->assetType() + " in DesignRoot Text.";
 		lastError_.name = "XML Parsing Error                                      ";
 		return false;
 	}
 
-	bool res = pictoData->fromXml(xmlReader,false);
+	bool res = pictoData_->fromXml(xmlReader,false);
 	if(!res)
 	{
 		errors = "DesignRoot Text Error\n"+Serializable::getErrors();
@@ -35,7 +35,7 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 		lastError_.name = "XML Parsing Error                                      ";
 		return false;
 	}
-	setDesignName(pictoData->getName());
+	setDesignName(pictoData_->getName());
 	if(ObsoleteAsset::encounteredObsoleteAsset() || Property::encounteredObsoleteSerialSyntax())
 	{
 		lastWarning_.name="Obsolete Syntax Encountered                                  ";
@@ -45,14 +45,14 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 		ObsoleteAsset::clearObsoleteAssetFlag();
 		Property::clearObsoleteSerialSyntax();
 		//Move to the upgraded version
-		return resetDesignRoot(pictoData->toXml());
+		return resetDesignRoot(pictoData_->toXml());
 	}
 	
 	//Create Design Map
-	QStringList pictoDataChildTags = pictoData->getDefinedChildTags();
+	QStringList pictoDataChildTags = pictoData_->getDefinedChildTags();
 	foreach(QString childTag,pictoDataChildTags)
 	{
-		QList<QSharedPointer<Asset>> children = pictoData->getGeneratedChildren(childTag);
+		QList<QSharedPointer<Asset>> children = pictoData_->getGeneratedChildren(childTag);
 		foreach(QSharedPointer<Asset> child,children)
 		{
 			if(!child->inherits("Picto::UIEnabled"))
@@ -83,6 +83,30 @@ QSharedPointer<Design> DesignRoot::getDesign(QString identifier,int index)
 		return QSharedPointer<Design>();
 	return designList[index];
 }
+
+QSharedPointer<Design> DesignRoot::importDesign(QString identifier, QString designText)
+{
+	QSharedPointer<Design> newDesign;
+	if(!pictoData_)
+		return newDesign;
+	QSharedPointer<Asset> newAsset = pictoData_->createChildAsset(identifier,QString(),QString());
+	if(!newAsset)
+		return newDesign;
+	newAsset->fromXml(designText);
+	QSharedPointer<Design> design(new Design());
+	design->resetRoot(newAsset.staticCast<UIEnabled>());
+	designMap_[identifier].push_back(design);
+	return design;
+}
+
+bool DesignRoot::removeDesign(QString identifier,int index)
+{
+	if(!designMap_.contains(identifier) || index < 0 || designMap_[identifier].size() <= index)
+		return false;
+	designMap_[identifier].remove(index,1);
+	return true;
+}
+
 void DesignRoot::refreshFromXml()
 {
 	foreach(QVector<QSharedPointer<Design>> designList,designMap_)

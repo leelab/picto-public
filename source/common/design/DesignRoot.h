@@ -32,6 +32,10 @@ public:
 	QStringList getDesignIdentifiers();
 	int getDesignCount(QString identifier);
 	QSharedPointer<Design> getDesign(QString identifier,int index);
+	//Creates a new design of the identifier type (top level tag name) using the input designText and adds it to the design root.  Returns the new design.
+	QSharedPointer<Design> importDesign(QString identifier,QString designText);
+	//Removes the design with the input identifier and index
+	bool removeDesign(QString identifier,int index);
 	void refreshFromXml();//Rebuilds experiment from XML.  Hopefully we'll be able to get rid of this sometime, currently, we need it for deleting assets which requires serializing then deserializing.
 	bool isModified();
 	void setUnmodified();
@@ -49,6 +53,7 @@ public:
 
 private:
 	QMap<QString,QVector<QSharedPointer<Design>>> designMap_;
+	QSharedPointer<PictoData> pictoData_;
 	QString designName;
 	DesignMessage lastError_;
 	DesignMessage lastWarning_;

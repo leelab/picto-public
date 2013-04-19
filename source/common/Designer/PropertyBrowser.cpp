@@ -1,6 +1,7 @@
 #include <QtWidgets>
 #include "PropertyBrowser.h"
 #include "../../common/storage/datastore.h"
+#include "../parameter/AnalysisScriptContainer.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -23,8 +24,8 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
 	//Set up script name order
 	orderedScriptNames_.append("AnalysisEntryScript");
 	orderedScriptNames_.append("EntryScript");
-	orderedScriptNames_.append("AnalysisFrameScript");
 	orderedScriptNames_.append("FrameScript");
+	orderedScriptNames_.append("AnalysisFrameScript");
 	orderedScriptNames_.append("ExitScript");
 	orderedScriptNames_.append("AnalysisExitScript");
 	//Generate lookup table of script names
@@ -74,13 +75,55 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 	if(dataStore.isNull())
 		return;
 
-	QHash<QString, QVector<QSharedPointer<Property>>> properties = dataStore->getPropertyContainer()->getProperties();
+	//If this object doesn't have an AnalysisScriptContainer and their is an active analysis, add one now
+	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
+	if(editorState_->inAnalysisTask() && asset.staticCast<DataStore>()->getAnalysisChildren(activeAnalysis->getAnalysisId(),"AnalysisScriptContainer").isEmpty())
+	{
+		//create the AnalysisScriptContainer, put it in the analysis 
+		//and link it to the object
+		QSharedPointer<AnalysisScriptContainer> newScriptContainer = editorState_->getCurrentAnalysis()->createChildAsset("AnalysisScriptContainer",QString(),QString()).staticCast<AnalysisScriptContainer>();
+		if(!asset->inherits("Picto::Result"))
+		{	//Its not a result, add an exit script
+			newScriptContainer->createChildAsset("AnalysisExitScript",QString(),QString());
+		}
+		if(asset->inherits("Picto::State"))
+		{//Its a state, add a frame script
+			newScriptContainer->createChildAsset("AnalysisFrameScript",QString(),QString());
+		}
+		//Link this asset to the newScriptContainer
+		newScriptContainer.staticCast<AnalysisElement>()->linkToAsset(asset);
+		//Add this newScriptContainer to the asset
+		asset.staticCast<DataStore>()->AddAnalysisChild(newScriptContainer->getAnalysisId(),"AnalysisScriptContainer",newScriptContainer);
+	}
+	QSharedPointer<AnalysisScriptContainer> scriptContainer;
+	if(editorState_->inAnalysisTask())
+		scriptContainer = asset.staticCast<DataStore>()->getAnalysisChildren(activeAnalysis->getAnalysisId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
+	QSharedPointer<PropertyContainer> propContainer;
 	QVector<QSharedPointer<Property>> propVec;
 	foreach(QString propTag,orderedScriptNames_)
 	{
-		foreach(QSharedPointer<Property> prop,properties.value(propTag))
+		//Find out if this propTag is for an analysis script
+		bool isAnalysisScript = propTag.left(1).toLower() == "a";
+		//If this propTag is not for an analysis script, get the property container from the asset.
+		if(!isAnalysisScript)
 		{
-			if(prop->isVisible())
+			propContainer = asset.staticCast<DataStore>()->getPropertyContainer();
+		}
+		else
+		{
+			//If there's an active analysis, get the propContainer from the AnalysisScriptContainer, otherwise leave it empty
+			if(editorState_->inAnalysisTask())
+			{
+				//The propTag is for an analysis script, set the property container from the AnalysisScriptContainer
+				propContainer = scriptContainer.staticCast<DataStore>()->getPropertyContainer();
+			}
+		}
+
+		//Get the property and add it to the PropVec if its visible.
+		if(propContainer)
+		{
+			QSharedPointer<Property> prop = propContainer->getProperty(propTag);
+			if(prop && prop->isVisible())
 				propVec << prop;
 		}
 	}

@@ -29,7 +29,8 @@ private:
 	QGraphicsItem* scriptsParent_;
 
 private slots:
-	void assetEdited();
+	void updateScriptItems();
+	void performAnalysisScriptContainerOps(QSharedPointer<Asset> assetChild);
 };
 //! [0]
 

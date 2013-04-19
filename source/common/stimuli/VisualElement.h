@@ -9,6 +9,7 @@
 #include "../common.h"
 
 #include "StimulusElement.h"
+#include "OutputElement.h"
 #include "../statemachine/scriptable.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
@@ -24,7 +25,7 @@ namespace Picto {
  *	them by generating a list of their properties.  This class also handles
  *	the compositing surfaces.
  */
-struct PICTOLIB_CLASS VisualElement : /*public StimulusElement,*/ public Scriptable
+struct PICTOLIB_CLASS VisualElement : public OutputElement
 {
 	Q_OBJECT
 	Q_PROPERTY(int layer READ getLayer WRITE setLayer)

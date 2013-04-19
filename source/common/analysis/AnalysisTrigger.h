@@ -9,7 +9,7 @@
 #include "../statemachine/UIEnabled.h"
 #include "EventOrderIndex.h"
 #include "AnalysisDataIterator.h"
-#include "AnalysisDataSource.h"
+#include "AnalysisDataSourceDep.h"
 
 namespace Picto {
 

@@ -65,18 +65,18 @@ void MachineContainer::addElement(QSharedPointer<ResultContainer> element)
 
 void MachineContainer::postDeserialize()
 {
-	StateMachineElement::postDeserialize();
+	OutputElementContainer::postDeserialize();
 	updateListsFromChildren();
 
 	//If we add a new child after deserialization (ie. In the State Machine Editor), we'll need to update the element and transition lists.
-	//To do this, we connect childAdded() and updateListsFromChildren().  We do it here (and not earlier) because making this connection
-	//during deserialization will create an exponential algorithm that will slow everything down.
-	connect(this,SIGNAL(childAdded()),this,SLOT(updateListsFromChildren()));
+	//To do this, we connect childAddedAfterDeserialize() and childWasAdded() which calls updateListsFromChildren().  We do 
+	//it here (and not earlier) because making this connection during deserialization will create an exponential algorithm that will slow everything down.
+	connect(this,SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(childWasAdded(QSharedPointer<Asset>)));
 }
 
 bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!StateMachineElement::validateObject(xmlStreamReader))
+	if(!OutputElementContainer::validateObject(xmlStreamReader))
 		return false;
 
 	//Confirm that all transitions are legal
@@ -178,7 +178,7 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 		}
 	}
 
-	//Confirm that all element and result names are unique (otherwise transition destinations can be ambiguous)
+	//Confirm that all element, and result names are unique (otherwise transition destinations can be ambiguous)
 	QStringList names;
 	foreach(QSharedPointer<Asset> asset,elementList)
 	{
@@ -201,7 +201,6 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 			}
 		}
 	}
-
 
 	//If we made it this far, all the transitions are "legal"
 	return true;
@@ -274,6 +273,11 @@ bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition
 			return false;
 	}
 	return true;
+}
+
+void MachineContainer::childWasAdded(QSharedPointer<Asset>)
+{
+	updateListsFromChildren();
 }
 
 void MachineContainer::updateListsFromChildren()

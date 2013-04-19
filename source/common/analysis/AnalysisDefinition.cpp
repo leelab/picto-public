@@ -1,7 +1,7 @@
 #include <QMessageBox>
 #include <QSqlQuery>
 #include "AnalysisDefinition.h"
-#include "AnalysisOutput.h"
+#include "AnalysisOutputDep.h"
 #include "NumericVariable.h"
 #include "FileOutput.h"
 #include "../../common/memleakdetect.h"
@@ -170,12 +170,12 @@ void AnalysisDefinition::finish()
 	}
 
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisOutput> analysisOutput;
+	QSharedPointer<AnalysisOutputDep> analysisOutput;
 	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		if(toolAsset->inherits("Picto::AnalysisOutputDep"))
 		{
-			analysisOutput = toolAsset.staticCast<AnalysisOutput>();
+			analysisOutput = toolAsset.staticCast<AnalysisOutputDep>();
 			analysisOutput->finishUp();
 		}
 	}
@@ -188,12 +188,12 @@ QLinkedList<QPointer<AnalysisOutputWidget>> AnalysisDefinition::getOutputWidgets
 		return returnVal;
 
 	QList<QSharedPointer<Asset>> analysisTools = getGeneratedChildren("Tool");
-	QSharedPointer<AnalysisOutput> outputObj;
+	QSharedPointer<AnalysisOutputDep> outputObj;
 	foreach(QSharedPointer<Asset> toolAsset,analysisTools)
 	{
-		if(toolAsset->inherits("Picto::AnalysisOutput"))
+		if(toolAsset->inherits("Picto::AnalysisOutputDep"))
 		{
-			outputObj = toolAsset.staticCast<AnalysisOutput>();
+			outputObj = toolAsset.staticCast<AnalysisOutputDep>();
 			QPointer<AnalysisOutputWidget> outputWidget = outputObj->getOutputWidget();
 			if(outputWidget)
 				returnVal.append(outputWidget);

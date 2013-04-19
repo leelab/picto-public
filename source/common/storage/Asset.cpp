@@ -9,7 +9,8 @@ isNew_(true),
 edited_(false),
 deleted_(false),
 assetId_(0),
-hasAssetId_(false)
+hasAssetId_(false),
+needsUniqueName_(false)
 {
 	connect(this, SIGNAL(edited()), this, SLOT(receivedEditedSignal()));
 	connect(this, SIGNAL(deleted()), this, SLOT(receivedDeletedSignal()));
@@ -67,6 +68,11 @@ void Asset::initializeToDefault(QString tagName, QString type)
 	//Q_ASSERT_X(success,"Asset::initializeToDefault","Failed to initialize Asset object to default values.\nError:\n"+Serializable::getErrors().toLatin1());
 }
 
+void Asset::enableRunMode(bool)
+{
+	
+}
+
 void Asset::setDeleted()
 {
 	emit deleted();
@@ -95,13 +101,13 @@ void Asset::reinitialize()
 
 QString Asset::getPath()
 {
-	if(inherits("Picto::Experiment"))
+	if(inherits("Picto::Experiment") || inherits("Picto::Analysis"))
 		return "";
 	QString returnVal = getName();
 	QSharedPointer<Asset> curr = getParentAsset();
 	while(curr)
 	{
-		if(curr->inherits("Picto::Experiment"))
+		if(curr->inherits("Picto::Experiment") || inherits("Picto::Analysis"))
 			break;
 		returnVal.prepend(QString("%1::").arg(curr->getName()));
 		curr = curr->getParentAsset();

@@ -47,11 +47,11 @@ public:
 	bool jumpToState(QStringList path, QString state);
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString assetType(){return "Task";};
+	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
 
-	//DataStore Functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+signals:
+	void taskIdChanged(QUuid newId);
 
 protected:
 	virtual QString defaultTagName(){return "Task";};
@@ -65,11 +65,10 @@ private:
 	QSharedPointer<StateMachine> stateMachine_;
 	int taskNumber_;
 	QSharedPointer<Transition> initTransition_;
-	//QList<StageResult> stageResults_;
-	//QList<TrialResult> trialResults_;
-	//QList<Constraint> constraints_;
-	//ExperimentalSystem experimentalSystemRequirements_;
-	//BlockGenerator blockGenerator_;
+	bool taskIdBeingEdited_;
+
+private slots:
+	void changeTaskId();
 };
 
 

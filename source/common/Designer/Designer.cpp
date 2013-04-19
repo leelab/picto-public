@@ -75,6 +75,7 @@ Designer::~Designer()
 void Designer::loadDesign(QString identifier, int index, QSharedPointer<DesignRoot> designRoot)
 {
 	Q_ASSERT(designRoot);
+	designRoot_ = designRoot;
 	if(design_)
 	{
 		disconnect(design_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
@@ -84,7 +85,17 @@ void Designer::loadDesign(QString identifier, int index, QSharedPointer<DesignRo
 	Q_ASSERT(design_);
 	connect(design_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
 	connect(design_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
-	resetRootAndWindowAssets();
+
+	//Populate the AnalysisSelector
+	editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
+	analysisSelector_->clear();
+	analysisSelector_->addItem("None");
+	for(int i=0;i<designRoot_->getDesignCount("Analysis");i++)
+	{
+		analysisSelector_->addItem(designRoot_->getDesign("Analysis",i)->getRootAsset()->getName());
+	}
+	analysisSelector_->addItem("New...");
+	resetEditor();
 }
 
 //void Designer::deinit()
@@ -161,7 +172,7 @@ void Designer::resetExperiment()
 {
 	insertEditBlock();
 	design_->refreshFromXml();
-	resetRootAndWindowAssets();
+	resetEditor();
 }
 
 void Designer::insertEditBlock()
@@ -172,12 +183,12 @@ void Designer::insertEditBlock()
 void Designer::performUndoAction()
 {
 	design_->undo();
-	resetRootAndWindowAssets();
+	resetEditor();
 }
 void Designer::performRedoAction()
 {
 	design_->redo();
-	resetRootAndWindowAssets();
+	resetEditor();
 }
 
 void Designer::setOpenAsset(QSharedPointer<Asset> asset)
@@ -272,6 +283,21 @@ void Designer::createActions()
 	searchWidget = new QFrame();
 	searchWidget->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken); 
 	searchWidget->setLayout(searchLayout);
+
+	analysisSelector_ = new QComboBox();
+	selectedIndex_ = -1;
+	analysisSelector_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	analysisSelector_->setInsertPolicy(QComboBox::NoInsert);
+	analysisSelector_->setEditable(false);
+	analysisSelector_->addItem("None");
+	analysisSelector_->addItem("New...");
+	connect(analysisSelector_,SIGNAL(currentIndexChanged(int)),this,SLOT(analysisSelectedChanged(int)));
+	connect(analysisSelector_,SIGNAL(editTextChanged(const QString&)),this,SLOT(analysisSelectedTextChanged(const QString&)));
+	deleteAnalysisAction_ = new QAction(QIcon(":/icons/delete.png"),
+                               tr("De&lete"), this);
+    deleteAnalysisAction_->setStatusTip(tr("Delete Analysis"));
+	deleteAnalysisAction_->setEnabled(false);
+	connect(deleteAnalysisAction_,SIGNAL(triggered()),this,SLOT(deleteCurrentAnalysis()));
 
 	//Turn on highlighting for elements with children that have scripts and analysis scripts.  To do this, just search 
 	//for any non-empty string.  Searching for an empty string turns it off.
@@ -371,30 +397,28 @@ void Designer::createToolbars()
 	pointerToolbar->addWidget(searchWidget);
 	pointerToolbar->addSeparator();
 	pointerToolbar->addAction(checkSyntaxAction_);
+	pointerToolbar->addWidget(new QLabel(tr("Select Analysis")));
+	pointerToolbar->addWidget(analysisSelector_);
+	pointerToolbar->addAction(deleteAnalysisAction_);
 //! [27]
 }
 
-bool Designer::resetRootAndWindowAssets()
+bool Designer::resetEditor()
 {
-	//scene->clear();
-	//QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(designText_.toPlainText()));
-
-	//QSharedPointer<DataStore> topAsset = createTopLevelAsset();
-	////read until we either see an PictoData tag, or the end of the file
-	//while(!xmlReader->isStartElement() && (xmlReader->name() != topAsset->assetType())) 
-	//	xmlReader->readNext();
-
-	//Q_ASSERT(!xmlReader->atEnd());
-
-	//if(!topAsset->fromXml(xmlReader,false))
-	//{
-	//	return false;
-	//	Q_ASSERT_X(false,"Designer::resetRootAndWindowAssets",Serializable::getErrors().toLatin1());
-	//}
-
-	//QSharedPointer<Asset> windowAsset = findAssetWithID(topAsset,openedAssetText_.toPlainText().toInt());
-
+	//Reset the root of the experiment
 	editorState_->setTopLevelAsset(design_->getRootAsset());
+
+	//Get the selected Analysis and use it in the editor
+	int analysisComboboxIndex = analysisSelector_->currentIndex();
+	if(analysisComboboxIndex > 0)
+	{
+		QSharedPointer<Design> anaDesign = designRoot_->getDesign("Analysis",analysisComboboxIndex-1);
+		Q_ASSERT(anaDesign);
+		QSharedPointer<Asset> analysis = anaDesign->getRootAsset();
+		editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>());
+	}
+
+	//Reset the window asset
 	editorState_->setWindowAsset(design_->getOpenAsset());
 	return true;
 }
@@ -417,4 +441,96 @@ void Designer::matchCaseChanged(int)
 {
 	if(!searchBox->text().isEmpty())
 		searchTextChanged(searchBox->text());
+}
+
+void Designer::analysisSelectedChanged(int index)
+{
+	if(index < 0)
+		return;
+	analysisSelector_->setEditable(false);
+	bool newAnalysisCreated = false;
+	switch(index)
+	{
+	case 0:
+		if(editorState_)
+		{
+			editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
+		}
+		deleteAnalysisAction_->setEnabled(false);
+		break;
+	default:
+		deleteAnalysisAction_->setEnabled(true);
+		//Allow user to edit the current analysis name in the combobox.
+		analysisSelector_->setEditable(true);
+		if(editorState_)
+		{
+			//If we need to create a new analysis, do it
+			newAnalysisCreated = (index == analysisSelector_->count()-1);
+			if(newAnalysisCreated)
+			{
+				//Add a new Analysis Design to the designRoot
+				QSharedPointer<Design> newDesign = designRoot_->importDesign("Analysis","<Analysis/>");
+				Q_ASSERT(newDesign);
+				//Add a new "New Analysis" item to the end of the analysisSelector
+				analysisSelector_->addItem("New...");
+
+				//Set the combo boxes value to a default "untitled" string.  This will have the affect
+				//of updating the analysis name as well.
+				analysisSelector_->setItemText(index, "Untitled");
+
+				//Highlight the "untitled" name
+				analysisSelector_->lineEdit()->selectAll();
+			}
+		}
+		break;
+	};
+	selectedIndex_ = index;
+	//Reset the scene so that analysis stuff will come up.
+	resetEditor();
+
+	if(newAnalysisCreated)
+	{
+		//Highlight the "untitled" name
+		analysisSelector_->lineEdit()->selectAll();
+	}
+}
+
+void Designer::analysisSelectedTextChanged(const QString& text)
+{
+	if(analysisSelector_->currentIndex() > 0 && editorState_ && editorState_->getCurrentAnalysis())
+	{
+		QString newName = analysisSelector_->currentText();
+		analysisSelector_->setItemText(analysisSelector_->currentIndex(),newName);
+		//This function can get called due to a change in selected index before analysisSelectedChange() is called.
+		//This would mean that the editorState's currentAnalysis would not correspond to the analysisSelector_->currentIndex()
+		//We avoid this issue by only resetting the analysis's name if it's index corresponds to the current
+		//combobox index
+		if(selectedIndex_ == analysisSelector_->currentIndex())
+			editorState_->getCurrentAnalysis()->setName(newName);
+	}
+}
+
+void Designer::deleteCurrentAnalysis()
+{
+	if(!editorState_ || !editorState_->getCurrentAnalysis())
+		return;
+
+	int ret = QMessageBox::warning(this, tr("Picto"),
+                                QString("Are you sure you want to delete the %1 Analysis?").arg(editorState_->getCurrentAnalysis()->getName()),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel);
+	if(ret != QMessageBox::Yes)
+		return;
+	//Detach analysis from experiment
+	QUuid currAnalsisId = editorState_->getCurrentAnalysis()->getAnalysisId();
+	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAnalysisDescendants(currAnalsisId);
+	
+	//Remove analysis from design
+	int anaIndexInComboBox = analysisSelector_->currentIndex();
+	if(!designRoot_->removeDesign("Analysis",anaIndexInComboBox-1))
+		Q_ASSERT(false);
+
+	//Remove analysis name from combobox and set current analysis to none.
+	analysisSelector_->setCurrentIndex(0);
+	analysisSelector_->removeItem(anaIndexInComboBox);
 }

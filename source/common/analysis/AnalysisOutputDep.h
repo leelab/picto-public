@@ -12,18 +12,18 @@
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API AnalysisOutput : public AnalysisTool
+class PICTOLIB_API AnalysisOutputDep : public AnalysisTool
 #else
-class AnalysisOutput : public AnalysisTool
+class AnalysisOutputDep : public AnalysisTool
 #endif
 {
 	Q_OBJECT
 public:
-	AnalysisOutput();
-	virtual ~AnalysisOutput();
+	AnalysisOutputDep();
+	virtual ~AnalysisOutputDep();
 
 	//Should be overloaded to return a pointer to an output widget that
-	//presents the information written into this AnalysisOutput object.
+	//presents the information written into this AnalysisOutputDep object.
 	virtual QPointer<AnalysisOutputWidget> getOutputWidget(){return QPointer<AnalysisOutputWidget>();};
 	//If saving is supported, should be overloaded to save data with input filename
 	//to input directory.  Return true on success.  Input filename should not include

@@ -119,7 +119,7 @@ void VisualElement::updateAnimation(int frame, QTime elapsedTime)
 
 void VisualElement::postDeserialize()
 {
-	Scriptable::postDeserialize();
+	OutputElement::postDeserialize();
 	draw();
 	connect(propertyContainer_.data(),
 	    SIGNAL(propertyValueChanged(Property*,QVariant)),
@@ -137,7 +137,7 @@ void VisualElement::postDeserialize()
 
 bool VisualElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!Scriptable::validateObject(xmlStreamReader))
+	if(!OutputElement::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

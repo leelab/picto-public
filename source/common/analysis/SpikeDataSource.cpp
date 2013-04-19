@@ -27,12 +27,12 @@ QSharedPointer<AnalysisDataIterator> SpikeDataSource::createDataIterator()
 
 void SpikeDataSource::postDeserialize()
 {
-	AnalysisDataSource::postDeserialize();
+	AnalysisDataSourceDep::postDeserialize();
 }
 
 bool SpikeDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!AnalysisDataSource::validateObject(xmlStreamReader))
+	if(!AnalysisDataSourceDep::validateObject(xmlStreamReader))
 		return false;
 	if(!getParentAsset()->inherits("Picto::SpikeTrigger"))
 	{

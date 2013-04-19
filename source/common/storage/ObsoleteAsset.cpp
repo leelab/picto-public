@@ -59,7 +59,7 @@ void ObsoleteAsset::postDeserialize()
 	emit edited();
 }
 
-QList<QSharedPointer<ObsoleteAsset>> ObsoleteAsset::getChildAsset(QString tagName)
+QList<QSharedPointer<ObsoleteAsset>> ObsoleteAsset::getObsoleteChildAsset(QString tagName)
 {
 	if(!children_.contains(tagName))
 		return QList<QSharedPointer<ObsoleteAsset>>();

@@ -2,14 +2,14 @@
 #define _TIME_DATA_SOURCE_H_
 #include <QSharedPointer>
 #include <QScriptValue>
-#include "AnalysisDataSource.h"
+#include "AnalysisDataSourceDep.h"
 #include "PropertyDataIterator.h"
 
 namespace Picto {
 
 struct TimeData;
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API TimeDataSource : public AnalysisDataSource
+class PICTOLIB_API TimeDataSource : public AnalysisDataSourceDep
 #else
 class TimeDataSource : public UIEnabled
 #endif

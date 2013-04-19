@@ -30,6 +30,7 @@ runMode_(false)
 {
 	//Add the ID serialization attribute so that we can read in this property's ID.
 	AddSerializationAttribute("id");
+	requireUniqueName();
 }
 
 Property::~Property()
@@ -69,6 +70,7 @@ QVariant Property::value()
 
 void Property::enableRunMode(bool enable)
 {
+	Asset::enableRunMode(enable);
 	runMode_ = enable;
 }
 
@@ -302,7 +304,10 @@ void Property::setAssetId(int id)
 	//we should not emit edited just because we are changing its
 	//asset id.
 	if(!isNew() || wasEdited())
+	{
 		emit edited();
+	}
+	emit assetIdEdited();
 }
 
 void Property::setInitValue(QVariant _value)

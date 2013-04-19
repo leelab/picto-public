@@ -2,7 +2,7 @@
 #define _PAUSEPOINT_H_
 
 #include "../common.h"
-#include "StateMachineElement.h"
+#include "OutputElementContainer.h"
 #include "../engine/PictoEngine.h"
 #include "scene.h"
 
@@ -12,9 +12,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API PausePoint : public StateMachineElement
+class PICTOLIB_API PausePoint : public OutputElementContainer
 #else
-class PausePoint : public StateMachineElement
+class PausePoint : public OutputElementContainer
 #endif
 {
 	Q_OBJECT
@@ -23,6 +23,7 @@ public:
 	virtual ~PausePoint(){};
 	static QSharedPointer<Asset> Create();
 
+	virtual void enableRunMode(bool enable);
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
 	QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);
@@ -46,7 +47,6 @@ public:
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual void scriptableContainerWasReinitialized();
 
 private:
 	QSharedPointer<Scene> scene_;

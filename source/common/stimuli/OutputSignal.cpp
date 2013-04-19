@@ -17,12 +17,12 @@ OutputSignal::~OutputSignal()
 
 void OutputSignal::postDeserialize()
 {
-	Scriptable::postDeserialize();
+	OutputElement::postDeserialize();
 }
 
 bool OutputSignal::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!Scriptable::validateObject(xmlStreamReader))
+	if(!OutputElement::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

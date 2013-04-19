@@ -25,6 +25,7 @@ public:
 	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader){return fromXml(xmlStreamReader,true);};
 	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
 	void initializeToDefault(QString tagName = "", QString type = "");
+	virtual void enableRunMode(bool enable);
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate) = 0;
@@ -44,6 +45,8 @@ public:
 	void reinitialize();
 	virtual QString getInfo(){return QString("<h3 style=\"color:red\">%1</h3>").arg(assetType());};
 	QString getPath();
+	bool needsUniqueName(){return needsUniqueName_;};	//Indicates that this objects name must be
+														//unique within its parent
 
 	virtual	int getAssetId(){return 0;};
 	virtual void setAssetId(int){};
@@ -55,6 +58,7 @@ public:
 signals:
 	void edited();
 	void deleted();
+	void assetIdEdited();
 
 protected:
 	QSharedPointer<Asset> selfPtr(){return QSharedPointer<Asset>(self_);};
@@ -65,6 +69,10 @@ protected:
 	// In some cases, an asset may not want to be considered edited, even if it already has been, 
 	// unless it gets changed after a certain point.
 	void setUnedited(){edited_ = false;};
+
+	//Call this function from a child class if no other element on this classes level may have the same name.
+	void requireUniqueName(){needsUniqueName_ = true;};
+	
 	QSharedPointer<ExperimentConfig> expConfig_;
 private:
 
@@ -75,6 +83,7 @@ private:
 	QWeakPointer<Asset> self_;
 	int assetId_;
 	bool hasAssetId_;
+	bool needsUniqueName_;
 
 private slots:
 	void receivedEditedSignal();

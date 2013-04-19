@@ -8,6 +8,7 @@
 #include "../engine/PictoEngine.h"
 #include "../storage/FrameDataUnitPackage.h"
 #include "../engine/SignalChannel.h"
+#include "../stimuli/OutputElement.h"
 #include "../timing/Timestamper.h"
 #include "../stimuli/CursorGraphic.h"
 #include "../controlelements/TestController.h"
@@ -52,6 +53,34 @@ State::State() :
 QSharedPointer<Asset> State::Create()
 {
 	return QSharedPointer<Asset>(new State());
+}
+
+void State::enableRunMode(bool enable)
+{
+	MachineContainer::enableRunMode(enable);
+	if(!enable)
+		return;
+	//Since the scene needs access to visual elements stored above it in the tree, we get
+	//our output elements from the output element list.
+	scene_ = Scene::createScene();
+	hasCursor_ = false;
+	QList<QSharedPointer<OutputElement>> outputs = getOutputElementList();
+	foreach(QSharedPointer<OutputElement> output,outputs)
+	{
+		if(output.isNull())
+			continue;
+		if(output.dynamicCast<VisualElement>())
+		{
+			scene_->addVisualElement(output.staticCast<VisualElement>());
+		}
+		else if (output.dynamicCast<OutputSignal>())
+		{
+			scene_->addOutputSignal(output.staticCast<OutputSignal>());
+		}
+	}
+	QColor backgroundColor;
+	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
+	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
 }
 
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -396,29 +425,6 @@ QMap<QString,QPair<QString,QString>> State::getScripts()
 		scripts[scriptName] = QPair<QString,QString>(QString(),"FrameScript");
 	}
 	return scripts;
-}
-
-void State::scriptableContainerWasReinitialized()
-{
-	scene_ = Scene::createScene();
-	hasCursor_ = false;
-	QList<QWeakPointer<Scriptable>> scriptables = getScriptableList();
-	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
-	{
-		if(scriptable.isNull())
-			continue;
-		if(scriptable.toStrongRef().dynamicCast<VisualElement>())
-		{
-			scene_->addVisualElement(scriptable.toStrongRef().staticCast<VisualElement>());
-		}
-		else if (scriptable.toStrongRef().dynamicCast<OutputSignal>())
-		{
-			scene_->addOutputSignal(scriptable.toStrongRef().staticCast<OutputSignal>());
-		}
-	}
-	QColor backgroundColor;
-	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
-	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
 }
 
 }; //namespace Picto

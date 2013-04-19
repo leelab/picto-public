@@ -42,7 +42,7 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 	{
 		QString propName = prop->getName();
 		bool scriptProp = (propName == "EntryScript" || propName == "FrameScript" || propName == "ExitScript"
-			|| propName == "AnalysisEntryScript" || propName == "AnalysisEntryScript" || propName == "AnalysisEntryScript");
+			|| propName == "AnalysisEntryScript" || propName == "AnalysisFrameScript" || propName == "AnalysisExitScript");
 		if(scriptProp)
 			addScriptProperty(prop,propManager,browser);
 		else

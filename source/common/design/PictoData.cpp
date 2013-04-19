@@ -1,4 +1,5 @@
 #include "PictoData.h"
+#include "../parameter/Analysis.h"
 #include "../common/storage/ObsoleteAsset.h"
 #include "../common/analysis/AnalysisContainer.h"
 #include "../common/memleakdetect.h"
@@ -8,6 +9,7 @@ PictoData::PictoData()
 {
 	AddDefinableProperty("Name","Untitled");
 	AddDefinableObjectFactory("Experiment",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(Experiment::Create))));
+	AddDefinableObjectFactory("Analysis",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Analysis::Create))));
 	AddDefinableObjectFactory("AnalysisContainer",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AnalysisContainer::Create))));
 	
 	//Add Obsolete Asset Factories

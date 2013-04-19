@@ -124,13 +124,13 @@ void FileOutput::reset()
 
 void FileOutput::postDeserialize()
 {
-	AnalysisOutput::postDeserialize();
+	AnalysisOutputDep::postDeserialize();
 	reset();
 }
 
 bool FileOutput::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!AnalysisOutput::validateObject(xmlStreamReader))
+	if(!AnalysisOutputDep::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

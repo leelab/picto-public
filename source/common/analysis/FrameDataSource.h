@@ -3,15 +3,15 @@
 
 #include <QSharedPointer>
 #include <QScriptValue>
-#include "AnalysisDataSource.h"
+#include "AnalysisDataSourceDep.h"
 #include "FrameDataIterator.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API FrameDataSource : public AnalysisDataSource
+class PICTOLIB_API FrameDataSource : public AnalysisDataSourceDep
 #else
-class FrameDataSource : public AnalysisDataSource
+class FrameDataSource : public AnalysisDataSourceDep
 #endif
 {
 	Q_OBJECT

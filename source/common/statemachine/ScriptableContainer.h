@@ -45,6 +45,7 @@ public:
 
 	virtual QString assetType(){return "ScriptableContainer";};
 	virtual QString getInfo();
+	virtual void ClearAnalysisChildren(QUuid analysisId);
 
 	virtual bool searchForQuery(SearchRequest searchRequest);
 
@@ -76,17 +77,21 @@ private:
 	QMap<QString,QString>  scriptableListProperties_;
 	bool scriptingInitialized_;
 	bool debuggingEnabled_;
+	bool isAnalysisElement_;
 
 private slots:
 	//This is called if something about a scriptable changed, so that the script
 	//engines will need to be reinitialized before use.
 	void deinitScripting();
 	void deinitScripting(Property* prop,QVariant value);
+	void addChildToScriptLists(QSharedPointer<Asset> newChild);
 
 private:
 	static QScriptValue checkScriptResults(QScriptContext *context, QScriptEngine *engine);
 	static ScriptableContainer* objectForResultCheck_;
 	static QScriptValue checkScriptResultScript_;
+
+	friend class ScriptableContainer;
 };
 
 }; //namespace Picto
