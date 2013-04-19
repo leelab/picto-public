@@ -471,6 +471,18 @@ void Designer::analysisSelectedChanged(int index)
 				//Add a new Analysis Design to the designRoot
 				QSharedPointer<Design> newDesign = designRoot_->importDesign("Analysis","<Analysis/>");
 				Q_ASSERT(newDesign);
+
+				//Attempt to add the new analysis to the EditorState as current
+				QSharedPointer<Asset> analysis = newDesign->getRootAsset();
+				if(!editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>()))
+				{
+					//If the analysis couldn't be added as current, remove the design and go back to the last selected
+					//analysis.
+					designRoot_->removeDesign("Analysis",designRoot_->getDesignCount("Analysis")-1);
+					analysisSelector_->setCurrentIndex(selectedIndex_);
+					return;
+				}
+
 				//Add a new "New Analysis" item to the end of the analysisSelector
 				analysisSelector_->addItem("New...");
 
@@ -484,6 +496,20 @@ void Designer::analysisSelectedChanged(int index)
 		}
 		break;
 	};
+
+	//Attempt to set the selected analysis as the current one, if it doesn't work, go back to the previous analysis.
+	if(index > 0)
+	{
+		QSharedPointer<Design> anaDesign = designRoot_->getDesign("Analysis",index-1);
+		Q_ASSERT(anaDesign);
+		QSharedPointer<Asset> analysis = anaDesign->getRootAsset();
+		if(!editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>()))
+		{
+			analysisSelector_->setCurrentIndex(selectedIndex_);
+			return;
+		}
+	}
+
 	selectedIndex_ = index;
 	//Reset the scene so that analysis stuff will come up.
 	resetEditor();

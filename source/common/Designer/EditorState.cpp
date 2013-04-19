@@ -48,12 +48,13 @@ void EditorState::setTopLevelAsset(QSharedPointer<Picto::Asset> topLevelAsset)
 	//setWindowAsset(topAsset_);
 }
 
-void EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
+//Returns false if the analysis could not be added to any tasks.
+bool EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 {
 	if(!topAsset_)
-		return;
+		return false;
 	if(currAnalysis_ == currAnalysis)
-		return;
+		return true;
 	if(currAnalysis)
 	{
 		QSharedPointer<Experiment> exp = topAsset_.staticCast<Experiment>();
@@ -66,7 +67,7 @@ void EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 			bool ok;
 			QString taskName = QInputDialog::getItem(NULL,"Task Selection","Select Task to Analyze",exp->getTaskNames(),0,false,&ok);
 			if(!ok)
-				return;
+				return false;
 			linkableTask = exp->getTaskByName(taskName);
 			Q_ASSERT(linkableTask);
 		}
@@ -85,6 +86,7 @@ void EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 	}
 	currAnalysis_ = currAnalysis;
 	emit currentAnalysisChanged(currAnalysis_);
+	return true;
 }
 
 void EditorState::setEditMode(int mode)

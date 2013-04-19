@@ -34,7 +34,6 @@ public:
 	QList<QSharedPointer<OutputElement>> getOutputElementList();
 	virtual QString assetType(){return "OutputElementContainer";};
 	virtual void ClearAnalysisChildren(QUuid analysisId);
-	virtual void enableRunMode(bool enable);
 
 protected:
 	virtual void postDeserialize();

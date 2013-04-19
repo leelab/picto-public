@@ -62,7 +62,7 @@ signals:
 public slots:
 	//Set Functions
 	void setTopLevelAsset(QSharedPointer<Asset> topLevelAsset);
-	void setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis);
+	bool setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis);
 	void setEditMode(int mode);
 	double setZoom(double zoom);
 	void setFont(const QFont font){font_ = font;emit fontChanged(font_);};

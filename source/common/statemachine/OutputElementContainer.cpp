@@ -61,7 +61,10 @@ void OutputElementContainer::ClearAnalysisChildren(QUuid analysisId)
 	{
 		analysisElem = dynamic_cast<AnalysisElement*>(iter->data());
 		if(!analysisElem)
+		{
+			iter++;
 			continue;
+		}
 		if(analysisElem->getAnalysisId() == analysisId)
 		{
 			iter = outputElements_.erase(iter);
@@ -70,11 +73,6 @@ void OutputElementContainer::ClearAnalysisChildren(QUuid analysisId)
 		}
 		iter++;
 	}
-}
-
-void OutputElementContainer::enableRunMode(bool enable)
-{
-
 }
 
 void OutputElementContainer::postDeserialize()

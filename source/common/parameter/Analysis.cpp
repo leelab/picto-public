@@ -86,7 +86,7 @@ bool Analysis::LinkToTask(QSharedPointer<Task> task, QString& feedback)
 		foreach(QSharedPointer<Asset> child,getGeneratedChildren(childTag))
 		{
 			analysisElement = dynamic_cast<AnalysisElement*>(child.data());
-			if(!analysisElement)
+			if(!analysisElement || child->isDeleted())
 				continue;
 			
 			int result = analysisElement->attachToLinkedAsset(linkedTaskMatches);	//Linked Task needs to be stored before we call this

@@ -333,11 +333,13 @@ void ScriptableContainer::ClearAnalysisChildren(QUuid analysisId)
 	AnalysisElement* analysisElem;
 	for(QList<QWeakPointer<Scriptable>>::iterator iter = scriptables_.begin();iter!=scriptables_.end();)
 	{
-		if(iter->isNull())
-			continue;
+		Q_ASSERT(!iter->isNull());
 		analysisElem = dynamic_cast<AnalysisElement*>(iter->data());
 		if(!analysisElem)
+		{
+			iter++;
 			continue;
+		}
 		if(analysisElem->getAnalysisId() == analysisId)
 		{
 			iter = scriptables_.erase(iter);
