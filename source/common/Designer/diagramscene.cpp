@@ -292,11 +292,40 @@ void DiagramScene::editorLostFocus(DiagramTextItem *item)
 
 void DiagramScene::deleteSelectedItems()
 {
-	QList<QGraphicsItem*> items;
-	foreach (QGraphicsItem *item, selectedItems()) 
+
+	QList<QGraphicsItem*> items = selectedItems();
+	//Check to see if any of the selected items contain hidden analysis elements.  If so, warn user and verify action.
+	SearchRequest searchRequest(SearchRequest::INACTIVE_ANALYSES,SearchRequest::EXISTS);
+	foreach (QGraphicsItem *item, items) 
+	{
+		AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
+		if(!assetItem || !assetItem->getAsset())
+			continue;
+		QSharedPointer<DataStore> dataStore = assetItem->getAsset().dynamicCast<DataStore>();
+		if(dataStore)
+		{
+			if(dataStore->searchRecursivelyForQuery(searchRequest))
+			{
+				//There are hidden analyses, verify delete
+				int result = QMessageBox::question(NULL,"Delete Hidden Analysis Elements?","This delete operation will cause elements from inactive Analyses to be deleted.  Continue?",QMessageBox::Yes | QMessageBox::No,QMessageBox::No);
+				switch(result)
+				{
+				case QMessageBox::No:
+					return;
+				case QMessageBox::Yes:
+					break;
+				default:
+					return;
+				};
+				break;
+			}
+		}
+    }
+
+	//Remove all the graphic items
+	foreach (QGraphicsItem *item, items) 
 	{
 		removeItem(item);
-		items.push_back(item);
     }
 
 	AssetItem* assetItem;
@@ -376,7 +405,6 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
         return;
-    DiagramItem *newItem = NULL;
     if(editorState_->getEditMode() == InsertLine)
 	{
 		line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(),

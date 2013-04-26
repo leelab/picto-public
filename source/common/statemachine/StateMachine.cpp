@@ -148,8 +148,8 @@ bool StateMachine::jumpToState(QStringList path, QString state)
 void StateMachine::upgradeVersion(QString deserializedVersion)
 {
 	MachineContainer::upgradeVersion(deserializedVersion);
-	if(deserializedVersion < "0.0.3")
-	{	// In design syntax version "0.0.3", we removed "ScriptElements" and replaced them with "SwitchElements"
+	if(deserializedVersion < "0.0.1")
+	{	// In design syntax version "0.0.1", we removed "ScriptElements" and replaced them with "SwitchElements"
 		// "ScriptElement" were essentially "SwitchElements" that contained only two results, "true" and "false"
 		// that were triggered with a boolean value.
 		// To upgrade, we serialize "ScriptElements" into ObsoleteAssets and create new equivalent "SwitchElements".
@@ -177,6 +177,7 @@ void StateMachine::upgradeVersion(QString deserializedVersion)
 			//Copy Script to Switch Element
 			obsAssetList = scriptElement->getObsoleteChildAsset("Script");
 			switchElement->getPropertyContainer()->setPropertyValue("Script",obsAssetList.size()?obsAssetList.first()->getValue():"");
+
 			//Get UI position info and set it to the switch element
 			obsAssetList = scriptElement->getObsoleteChildAsset("UIInfo");	//Get UIINfo sub asset
 			if(!obsAssetList.isEmpty())
@@ -187,6 +188,8 @@ void StateMachine::upgradeVersion(QString deserializedVersion)
 					QStringList xy = obsAssetList.first()->getValue().split(",");	//Convery ?,? of tag value to string list
 					if(xy.size() == 2)	//If string list has correct size, set it to the switch element position
 						switchElement->setPos(QPoint(xy.first().toFloat(),xy.last().toFloat()));
+					else	//It must be stored in attributes (we did that at one point)
+						switchElement->setPos(QPoint(obsAssetList.first()->getAttributeValue("x").toInt(),obsAssetList.first()->getAttributeValue("y").toInt()));
 				}
 			}
 
@@ -512,7 +515,7 @@ void StateMachine::postDeserialize()
 	//QSharedPointer<Transition> newTrans(new Transition("","",propertyContainer_->getPropertyValue("InitialElement").toString()));
 	//if(addTransition(newTrans))
 	//{
-	//	newTrans->setExperimentConfig(getExperimentConfig());
+	//	newTrans->setDesignConfig(getDesignConfig());
 	//	propertyContainer_->getProperty("InitialElement")->setDeleted();
 	//}
 	/////////////////////////////////////////////////////////////////////////////////////////////7

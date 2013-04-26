@@ -1,6 +1,7 @@
 #ifndef _STATE_H_
 #define _STATE_H_
 
+#include <QMutex>
 #include "../common.h"
 #include "MachineContainer.h"
 #include "../controlelements/ControlElement.h"
@@ -66,17 +67,24 @@ protected:
 
 
 private:
+	void runAnalysisFrameScripts();
 	//void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);
 	//void runScript(QString scriptName);
 	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);
 	//void updateServer(QSharedPointer<Engine::PictoEngine> engine, bool paused=false);
 	void addCursor();
 
+	void rebuildScene();
+
 	QSharedPointer<Scene> scene_;
 
 	bool hasCursor_;
 
 	QSharedPointer<SignalChannel> sigChannel_;
+	QMutex rebuildSceneMutex_;
+
+private slots:
+	void activeAnalysisIdsChanged();
 };
 
 

@@ -52,17 +52,7 @@ void TestViewer::init()
 	//	DesignMessage warnMsg = myDesignRoot->getLastWarning();
 	//	QMessageBox::warning(0,warnMsg.name,warnMsg.details);
 	//}
-	QSharedPointer<Design> design = myDesignRoot->getDesign("Experiment",0);
-	experiment_ = QSharedPointer<Experiment>();
-	if(!design)
-	{
-		QMessageBox msg;
-		msg.setText("Failed to load current experiment.");
-		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
-		msg.exec();
-		return;
-	}
-	if(!design->compiles())
+	if(!myDesignRoot->compiles())
 	{
 		QMessageBox msg;
 		msg.setText("Experiment does not compile.");
@@ -70,8 +60,15 @@ void TestViewer::init()
 		msg.exec();
 		return;
 	}
-	if(design)
-		experiment_ = design->getRootAsset().staticCast<Experiment>();
+	experiment_ = myDesignRoot->getExperiment().staticCast<Experiment>();
+	if(!experiment_)
+	{
+		QMessageBox msg;
+		msg.setText("Failed to load current experiment.");
+		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
+		msg.exec();
+		return;
+	}
 	if(experiment_)
 	{
 		experiment_->setEngine(engine_);
@@ -87,6 +84,17 @@ void TestViewer::init()
 		connect(testController_.data(),SIGNAL(stopped()),this,SLOT(stopped()));
 	}
 	generateComboBox();
+
+
+	//FOR TESTING, WE ARE JUST AUTOMATICALLY ACTIVATING THE FIRST ANALYSIS IN THE FILE.
+	QSharedPointer<Analysis> firstAnalysis = designRoot_->getAnalysis(0).staticCast<Analysis>();
+	if(firstAnalysis)
+	{
+		QList<QUuid> analysisIds;
+		analysisIds.append(firstAnalysis->getAssociateId());
+		QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
+		designConfig->setActiveAnalysisIds(analysisIds);
+	}
 }
 
 //!Called just before hiding the viewer

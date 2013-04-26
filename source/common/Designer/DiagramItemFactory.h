@@ -19,7 +19,6 @@ public:
 	static void addIconDefinition(QString assetType, QString fileName,float width, float height);
 private:
 	static IconDef getIconDef(QSharedPointer<Asset> asset);
-	static QSharedPointer<UIInfo> getUIInfo(QSharedPointer<Asset> asset);
 	static QMap<QString,IconDef> iconDefs_;
 	QSharedPointer<EditorState> editorState_;
 	QMenu* contextMenu_;

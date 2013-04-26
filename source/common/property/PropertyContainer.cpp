@@ -124,6 +124,17 @@ QSharedPointer<Property> PropertyContainer::getProperty(QString _identifier,int 
 	return properties_[_identifier][index];
 }
 
+void PropertyContainer::setPropertiesAsAssociates(bool toAssociate)
+{
+	foreach(QVector<QSharedPointer<Property>> propVec,properties_)
+	{
+		foreach(QSharedPointer<Property> prop,propVec)
+		{
+			prop->setAssociateProperty(toAssociate);
+		}
+	}
+}
+
 void PropertyContainer::clear()
 {
 

@@ -9,13 +9,14 @@
 #include "AnalysisPeriod.h"
 #include "AnalysisOutputWidget.h"
 #include "../storage/TaskRunDataUnit.h"
+#include "../parameter/AssociateRootHost.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API AnalysisContainer : public UIEnabled
+class PICTOLIB_API AnalysisContainer : public UIEnabled, public AssociateRootHost
 #else
-class AnalysisContainer : public UIEnabled
+class AnalysisContainer : public UIEnabled, public AssociateRootHost
 #endif
 {
 	Q_OBJECT
@@ -48,7 +49,11 @@ public:
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisContainer";};
 	virtual QString assetType(){return "AnalysisContainer";};
+	//We're getting rid of this and don't want it to interfere with validation of the Design
+	//as a whole, so this just always returns true.
+	virtual bool validateTree(){return true;};
 
+	ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION
 protected:
 
 	//Inherited
@@ -58,6 +63,10 @@ protected:
 	QSqlDatabase session_;
 private:
 	QVector<bool> activatedAnalyses_;
+
+	bool hostIdBeingEdited_;
+private slots:
+	void changeHostId(){if(hostIdBeingEdited_) return;hostIdBeingEdited_ = true;propertyContainer_->setPropertyValue("HostId",QUuid::createUuid());hostIdBeingEdited_ = false;};
 
 };
 }; //namespace Picto

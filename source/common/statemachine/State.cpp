@@ -10,6 +10,7 @@
 #include "../engine/SignalChannel.h"
 #include "../stimuli/OutputElement.h"
 #include "../timing/Timestamper.h"
+#include "../parameter/AnalysisScriptContainer.h"
 #include "../stimuli/CursorGraphic.h"
 #include "../controlelements/TestController.h"
 #include "../controlelements/StopwatchController.h"
@@ -60,27 +61,7 @@ void State::enableRunMode(bool enable)
 	MachineContainer::enableRunMode(enable);
 	if(!enable)
 		return;
-	//Since the scene needs access to visual elements stored above it in the tree, we get
-	//our output elements from the output element list.
-	scene_ = Scene::createScene();
-	hasCursor_ = false;
-	QList<QSharedPointer<OutputElement>> outputs = getOutputElementList();
-	foreach(QSharedPointer<OutputElement> output,outputs)
-	{
-		if(output.isNull())
-			continue;
-		if(output.dynamicCast<VisualElement>())
-		{
-			scene_->addVisualElement(output.staticCast<VisualElement>());
-		}
-		else if (output.dynamicCast<OutputSignal>())
-		{
-			scene_->addOutputSignal(output.staticCast<OutputSignal>());
-		}
-	}
-	QColor backgroundColor;
-	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
-	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
+	rebuildScene();
 }
 
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -143,6 +124,9 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 
 			//----------  Draw the scene.  This will automatically send behavioral data to server --------------
 			scene_->render(engine,getAssetId());
+
+			//----------  Run the analysis frame scripts ---------------------------------------
+			runAnalysisFrameScripts();
 		}
 
 		//------ Check for engine stop commands ---------------
@@ -255,131 +239,6 @@ void State::addCursor()
 	hasCursor_ = true;
 }
 
-
-///* \Brief Sets up the state for scripting
-// *
-// *	This gets called before we actually start running a state machine.
-// *	Because of scoping issues, each State gets its own scriptengine
-// *	To initialize a state, we need to do the following:
-// *		1. Bind the parameters to the engine
-// *		2. Bind the contained visual elements to the engine
-// *		3. Create functions in the engine for the 3 (potential) scripts.
-// *	To minimize wasted resources, the state doesn't use a concrete QScriptEngine
-// *	but insteads instantiates one if the state needs to run scripts.  The
-// *	assumption is that many states (at least 50%) won't need the scripting
-// *	functionality.
-// */
-//bool State::initScripting(QScriptEngine &qsEngine)
-//{
-//	//Since we have our own engine, we aren't using the passed in one
-//	Q_UNUSED(qsEngine);
-//
-//	return initScriptEngine(false);
-//}
-
-//bool State::initScriptEngine(bool forScriptDefinitions)
-//{
-//	QStringList scriptTypes;
-//	scriptTypes<<"Entry"<<"Frame"<<"Exit";
-//
-//	//Figure out which scripts we will be running
-//	//(The odd array structure is useful later...)
-//	bool scriptsToRun[3];
-//	scriptsToRun[0] = !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty();
-//	scriptsToRun[1] = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
-//	scriptsToRun[2] = !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty();
-//
-//	//If we aren't running any scripts, and we're not looking for script definitions, we're done
-//	if(!forScriptDefinitions)
-//	{
-//		bool noScripts = true;
-//		for(int i=0; i<sizeof(scriptsToRun); i++)
-//		{
-//			if(scriptsToRun[i])
-//			{
-//				noScripts = false;
-//				break;
-//			}
-//		}
-//		if(noScripts)
-//			return true;
-//	}
-//
-//	//create the engine
-//	qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
-//
-//	//Bind our parameters and visual elements
-//	bindToScriptEngine(*qsEngine_);
-//
-//	//Bind the visualElements
-//	//scene_->bindToScriptEngine(*qsEngine_);
-//
-//	//create functions for our scripts
-//	for(int i=0; i<3; i++)
-//	{
-//		if(!scriptsToRun[i])
-//			continue;
-//
-//		//We allow ScriptElement names to have whitespace, so we need 
-//		//to get rid of it for a script function name
-//		QString functionName = getName().simplified().remove(' ')+scriptTypes[i];
-//
-//		//confirm that this function doesn't already exist in the engine
-//		//If you hit this assert, it means that there are two ScriptElements
-//		//with the asme name.  The GUI shouldn't allow this...
-//		if(qsEngine_->globalObject().property(functionName).isValid())
-//		{
-//			return false;
-//		}
-//
-//		QString script = propertyContainer_->getPropertyValue(scriptTypes[i]+"Script").toString();
-//		QString function = "function " + functionName + "() { " + script + "}";
-//
-//		//add the function to the engine by calling evaluate on it
-//		qsEngine_->evaluate(function);
-//		if(qsEngine_->hasUncaughtException())
-//		{
-//			QString errorMsg = "Uncaught exception in State" + getName() + scriptTypes[i] + " script.\n";
-//			errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-//											  .arg(qsEngine_->uncaughtException().toString());
-//			errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-//			qDebug(errorMsg.toLatin1());
-//			return false;
-//		}
-//	}
-//
-//	return true;
-//}
-
-//QString State::getInfo()
-//{
-//	initScripting(true);
-//	if(!qsEngine_)
-//		return "No Parameters Available";
-//	QString returnVal;
-//	QScriptValueIterator it(qsEngine_->globalObject());
-//	while (it.hasNext())
-//	{
-//		it.next();
-//		if(!(it.flags() & (QScriptValue::SkipInEnumeration | QScriptValue::Undeletable)))
-//		{
-//			returnVal.append(QString("Name:%1\n").arg(it.getName()));
-//			QScriptValueIterator it1(it.value());
-//			while(it1.hasNext())
-//			{
-//				it1.next();
-//				if(!(it1.flags() & (QScriptValue::SkipInEnumeration | QScriptValue::Undeletable)))
-//				{
-//					returnVal.append(QString("\tName:%1\n").arg(it1.getName()));
-//				}
-//			}
-//		}
-//	}
-//	if(returnVal.length())
-//		returnVal.prepend("Available Parameters:\n");
-//	return returnVal;
-//}
-
 void State::postDeserialize()
 {
 	//QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
@@ -389,6 +248,9 @@ void State::postDeserialize()
 	//	addScriptable(newVisElem.staticCast<Scriptable>());
 	//}
 	MachineContainer::postDeserialize();
+
+	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
+	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 }
 
 bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -425,6 +287,55 @@ QMap<QString,QPair<QString,QString>> State::getScripts()
 		scripts[scriptName] = QPair<QString,QString>(QString(),"FrameScript");
 	}
 	return scripts;
+}
+
+void State::runAnalysisFrameScripts()
+{
+	runAnalysisScripts(StateMachineElement::FRAME);
+}
+
+void State::rebuildScene()
+{
+	//Since the scene needs access to visual elements stored above it in the tree, we get
+	//our output elements from the output element list.
+	scene_ = Scene::createScene();
+	hasCursor_ = false;
+	QList<QSharedPointer<OutputElement>> outputs = getOutputElementList();
+	QList<QUuid> activeAnalyses = getDesignConfig()->getActiveAnalysisIds();
+	QHash<QUuid,bool> activeAnalysisHash;
+	foreach(QUuid analysisId,activeAnalyses)
+	{
+		activeAnalysisHash[analysisId] = true;
+	}
+	foreach(QSharedPointer<OutputElement> output,outputs)
+	{
+		if(output.isNull())
+			continue;
+		if(output.dynamicCast<VisualElement>())
+		{
+			//If this is an analysis element and its analysis id isn't active, don't add it to the scene.
+			AssociateElement* analysisVisElem = dynamic_cast<AssociateElement*>(output.data());
+			if(analysisVisElem && !activeAnalysisHash.contains(analysisVisElem->getAssociateId()))
+				continue;
+			scene_->addVisualElement(output.staticCast<VisualElement>());
+		}
+		else if (output.dynamicCast<OutputSignal>())
+		{
+			scene_->addOutputSignal(output.staticCast<OutputSignal>());
+		}
+	}
+	QColor backgroundColor;
+	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
+	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
+}
+
+void State::activeAnalysisIdsChanged()
+{
+	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the function
+	//should run in the Experiment thread.  Since the experiment thread never runs during the course of scene rendering (if 
+	//they are in two different threads, the experiment thread pauses and waits), there should be no issue of accidentally
+	//changing scene values while they are being used in the UI thread.
+	rebuildScene();
 }
 
 }; //namespace Picto

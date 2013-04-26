@@ -31,7 +31,7 @@ bool EditorState::inAnalysisTask()
 		return false;
 	if(!currentTask_)
 		return false;
-	if(currAnalysis_->getLinkedTask().staticCast<Asset>() == currentTask_)
+	if(currAnalysis_->getLinkedAsset().staticCast<Asset>() == currentTask_)
 		return true;
 	return false;
 }
@@ -44,7 +44,7 @@ QList<SearchRequest> EditorState::getSearchRequests()
 void EditorState::setTopLevelAsset(QSharedPointer<Picto::Asset> topLevelAsset)
 {
 	topAsset_ = topLevelAsset;
-	Q_ASSERT(!topAsset_.isNull() && topAsset_->inherits("Picto::Experiment"));
+	Q_ASSERT(!topAsset_.isNull());
 	//setWindowAsset(topAsset_);
 }
 
@@ -57,14 +57,14 @@ bool EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 		return true;
 	if(currAnalysis)
 	{
-		QSharedPointer<Experiment> exp = topAsset_.staticCast<Experiment>();
 		//GET THE TASK AND USE THAT TO LINK THE ANALYSIS TO IT.  THEN DEAL WITH THE FACT THAT THE
 		//ANALYSIS CAN ONLY BE ATTACHED TO A SINGLE TASK IN THE UI, NOT THE WHOLE EXPERIMENT.  ALSO,
 		//MAKE SURE THAT THE PATHS STORED IN THE TASK DO NOT INCLUDE THE EXPERIMENT NAME!!!
-		QSharedPointer<Task> linkableTask = currAnalysis->getLinkableTask(exp);
+		QSharedPointer<Asset> linkableTask = currAnalysis->getLinkableAsset();
 		if(linkableTask.isNull())
 		{	//Allow the user to choose which task to attach the Analysis too.
 			bool ok;
+			QSharedPointer<Experiment> exp = topAsset_.staticCast<Experiment>();
 			QString taskName = QInputDialog::getItem(NULL,"Task Selection","Select Task to Analyze",exp->getTaskNames(),0,false,&ok);
 			if(!ok)
 				return false;
@@ -74,7 +74,7 @@ bool EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 		
 		//Link the analysis to the task
 		QString feedback;
-		bool linkResult = currAnalysis->LinkToTask(linkableTask,feedback);
+		bool linkResult = currAnalysis->LinkToAsset(linkableTask,feedback);
 		if(!linkResult)
 		{	//If anything didn't go perfectly in the link (had to link by paths or failed) tell the user.
 			QMessageBox msg;
@@ -85,6 +85,10 @@ bool EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 		}
 	}
 	currAnalysis_ = currAnalysis;
+	QList<QUuid> activeAnalysisList;
+	if(currAnalysis_)
+		activeAnalysisList.append(currAnalysis_->getAssociateId());
+	topAsset_->getDesignConfig()->setActiveAnalysisIds(activeAnalysisList);
 	emit currentAnalysisChanged(currAnalysis_);
 	return true;
 }
@@ -106,7 +110,13 @@ double EditorState::setZoom(double zoom)
 	return zoom;
 }
 
-void EditorState::setWindowAsset(QSharedPointer<Asset> asset)
+
+//Sets the current asset opened in the editor window to the input asset object
+//If undoable is true, an undo point will be set after changing the window
+//asset (so that undo after a window change will bring you back to the previous
+//window and undo after a window change and other action will keep you in the 
+//same window).
+void EditorState::setWindowAsset(QSharedPointer<Asset> asset,bool undoable)
 {
 	if(asset.isNull())
 		return;
@@ -137,6 +147,14 @@ void EditorState::setWindowAsset(QSharedPointer<Asset> asset)
 
 	//Set the window asset as the currently selected asset.
 	setSelectedAsset(asset);
+
+	if(undoable)
+	{
+		//Set this action as undoable so that when people undo the next change they make, they
+		//will still be on the window where they made that change, rather than moving back to 
+		//the last place where they made an undoable change.
+		setLastActionUndoable();
+	}
 }
 
 void EditorState::setWindowAssetToParent()

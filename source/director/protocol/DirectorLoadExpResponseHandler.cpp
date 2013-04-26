@@ -12,19 +12,19 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());
 	//Load the experiment
-	DesignRoot design;
-	if(!design.resetDesignRoot(directive.toUtf8()))
+	DesignRoot designRoot;
+	if(!designRoot.resetDesignRoot(directive.toUtf8()))
 	{
 		QString errorInfo;
-		if(design.hasError())
+		if(designRoot.hasError())
 		{
-			errorInfo = design.getLastError().name + " - " + design.getLastError().details; 
+			errorInfo = designRoot.getLastError().name + " - " + designRoot.getLastError().details; 
 		}
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: %1").arg(errorInfo));
 		return false;
 	}
-	design.enableRunMode(true);
-	QSharedPointer<Picto::Experiment> experiment = design.getDesign("Experiment",0)->getRootAsset().staticCast<Experiment>();
+	designRoot.enableRunMode(true);
+	QSharedPointer<Picto::Experiment> experiment = designRoot.getExperiment().staticCast<Experiment>();
 	if(!experiment)
 	{
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: Design did not contain experiment"));

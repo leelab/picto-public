@@ -1,5 +1,5 @@
-#ifndef _EXPERIMENTCONFIG_H_
-#define _EXPERIMENTCONFIG_H_
+#ifndef _DesignConfig_H_
+#define _DesignConfig_H_
 
 #include "../common.h"
 #include "serializable.h"
@@ -7,6 +7,7 @@
 #include <QMap>
 #include <QSet>
 #include <QWeakPointer>
+#include <QUuid>
 namespace Picto {
 class Asset;
 struct AssetInfo{int id;QString path;};
@@ -14,15 +15,15 @@ struct PropInfo{int id; QString name; int parent;};
 struct TransInfo{int id; QString name; int parent; QString source;QString result;QString dest;};
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ExperimentConfig : public QObject, public Serializable
+class PICTOLIB_API DesignConfig : public QObject, public Serializable
 #else
-class ExperimentConfig : public QObject, public Serializable
+class DesignConfig : public QObject, public Serializable
 #endif
 {
 	Q_OBJECT
 public:
-	ExperimentConfig();
-	virtual ~ExperimentConfig(){};
+	DesignConfig();
+	virtual ~DesignConfig(){};
 
 	using Serializable::toXml;
 	using Serializable::fromXml;
@@ -37,10 +38,14 @@ public:
 	QList<QWeakPointer<Asset>> getAssets();
 	void setDeserializedVersion(QString version){deserializedVersion_ = version;};
 	QString getDeserializedVersion(){return deserializedVersion_;};
+	void setActiveAnalysisIds(QList<QUuid> analysisList){analysisList_ = analysisList;emit activeAnalysisIdsChanged();};
+	QList<QUuid> getActiveAnalysisIds(){return analysisList_;};
 
 	QList<AssetInfo> getElementInfo();
 	QList<PropInfo> getPropertyInfo();
 	QList<TransInfo> getTransitionInfo();
+signals:
+	void activeAnalysisIdsChanged();
 protected:
 	
 private:
@@ -56,6 +61,8 @@ private:
 	QList<TransInfo> transInfo_;
 	QHash<Asset*,QWeakPointer<Asset>> assetHash_;
 	QList<QWeakPointer<Asset>> unsortedIdAssets_;
+
+	QList<QUuid> analysisList_;
 	int lastUsedId_;
 	bool allowIdDuplication_;
 	QString deserializedVersion_;

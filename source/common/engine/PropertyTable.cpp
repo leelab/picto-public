@@ -3,10 +3,10 @@
 
 using namespace Picto;
 
-PropertyTable::PropertyTable(QSharedPointer<ExperimentConfig> expConfig)
-: expConfig_(expConfig)
+PropertyTable::PropertyTable(QSharedPointer<DesignConfig> designConfig)
+: designConfig_(designConfig)
 {
-	Q_ASSERT(expConfig_);
+	Q_ASSERT(designConfig_);
 }
 void PropertyTable::addProperty(QSharedPointer<Property> prop)
 {
@@ -20,7 +20,7 @@ void PropertyTable::addProperty(QSharedPointer<Property> prop)
 //bearing on the experiment and are used only for UI information for the State Machine Editor.
 void PropertyTable::reportChangeInAllProperties()
 {
-	foreach(QWeakPointer<Asset> prop,expConfig_->getProperties())
+	foreach(QWeakPointer<Asset> prop,designConfig_->getProperties())
 	{
 		QSharedPointer<Asset> sAsset(prop);
 		Q_ASSERT(sAsset);
@@ -40,12 +40,9 @@ void PropertyTable::reportChangeInAllProperties()
 
 void PropertyTable::updateInitPropertyValue(int index,QString value)
 {
-	QSharedPointer<Asset> asset = expConfig_->getAsset(index);
+	QSharedPointer<Asset> asset = designConfig_->getAsset(index);
 	Q_ASSERT(asset->inherits("Picto::Property"));
 	asset.staticCast<Property>()->initValFromUserString(value);
-	//Q_ASSERT(index < propTable_.size());
-	//QSharedPointer<Property> prop = propTable_[index];
-	//prop->fromUserString(value);
 }
 
 void PropertyTable::propValueChange(Property* changedProp,QVariant)

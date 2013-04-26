@@ -26,8 +26,8 @@ public:
 	//Returns an empty string on success and an error message on failure.
 	QString addSessionElement(int assetId, QString path);
 	//Use this function once all assets have been added from the session file
-	//to update the ExperimentConfig file such that asset ids in the session
-	//file will be mapped to the correct assets in the ExperimentConfig object.
+	//to update the DesignConfig file such that asset ids in the session
+	//file will be mapped to the correct assets in the DesignConfig object.
 	//Returns an empty string on success and an error message on failure.
 	QString updateSessionConfigFromSessionAssets();
 	//Returns a lookup table that contains entries at all assetId indeces where

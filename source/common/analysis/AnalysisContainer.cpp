@@ -2,12 +2,16 @@
 #include <QSqlQuery>
 #include "AnalysisContainer.h"
 #include "AnalysisDefinition.h"
+#include "../storage/ObsoleteAsset.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
 AnalysisContainer::AnalysisContainer()
 {
 	AddDefinableObjectFactory("AnalysisDefinition",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(AnalysisDefinition::Create))));	
+
+	requireUniqueName(false);
+	ASSOCIATE_ROOT_HOST_INITIALIZATION
 }
 
 AnalysisContainer::~AnalysisContainer()
@@ -128,6 +132,7 @@ unsigned int AnalysisContainer::getPercentRemaining()
 void AnalysisContainer::postDeserialize()
 {
 	UIEnabled::postDeserialize();
+	ASSOCIATE_ROOT_HOST_POST_DESERIALIZE
 }
 
 bool AnalysisContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

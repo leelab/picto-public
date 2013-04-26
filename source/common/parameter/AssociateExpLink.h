@@ -1,11 +1,10 @@
-#ifndef _AnalysisExpLink_H_
-#define _AnalysisExpLink_H_
+#ifndef _AssociateExpLink_H_
+#define _AssociateExpLink_H_
 
 #include <QSharedPointer>
 #include "../common.h"
 #include "../storage/asset.h"
 #include "Parameter.h"
-#include "../task/task.h"
 
 namespace Picto {
 
@@ -13,20 +12,21 @@ namespace Picto {
  *
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AnalysisExpLink : public Parameter
+	class PICTOLIB_API AssociateExpLink : public Parameter
 #else
-class AnalysisExpLink : public Parameter
+class AssociateExpLink : public Parameter
 #endif
 {
 	Q_OBJECT
 
 public:
-	AnalysisExpLink();
-	virtual ~AnalysisExpLink(){};
+	AssociateExpLink();
+	virtual ~AssociateExpLink(){};
 	static QSharedPointer<Asset> Create();
 
 	QString getParentPath(){return propertyContainer_->getPropertyValue("ParentPath").toString();};
 	int getParentId(){return propertyContainer_->getPropertyValue("ParentId").toInt();};
+	QSharedPointer<Asset> getLinkedAsset(){return linkedAsset_.toStrongRef();};
 	void linkToAsset(QSharedPointer<Asset> asset);
 
 protected:
@@ -34,7 +34,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	QSharedPointer<Asset> linkedAsset_;
+	QWeakPointer<Asset> linkedAsset_;
 private slots:
 	void updateLinkedAssetProperties();
 };

@@ -21,18 +21,31 @@ QSharedPointer<Asset> AnalysisScriptContainer::Create()
 
 void AnalysisScriptContainer::runScript(ScriptType type)
 {
+	//Monitor for changes in any Experimental properties during the running of the scripts below.
+	//If any experimental properties change, Analysis changed them and a runtime error should be issued.
+	Property::startMonitoringForExperimentalValueChange();
 	switch(type)
 	{
 	case ENTRY:
-		ScriptableContainer::runScript("AnalysisEntryScript");
+		if(!propertyContainer_->getPropertyValue("AnalysisEntryScript").toString().isEmpty())
+		{
+			QString scriptNamePrefix = getScriptNamePrefix();
+			ScriptableContainer::runScript(scriptNamePrefix+"Entry");
+		}
 		break;
 	case FRAME:
-		if(propertyContainer_->getProperty("AnalysisFrameScript"))
-			ScriptableContainer::runScript("AnalysisFrameScript");
+		if(propertyContainer_->getProperty("AnalysisFrameScript") && (!propertyContainer_->getPropertyValue("AnalysisFrameScript").toString().isEmpty()))
+		{
+			QString scriptNamePrefix = getScriptNamePrefix();
+			ScriptableContainer::runScript(scriptNamePrefix+"Frame");
+		}
 		break;
 	case EXIT:
-		if(propertyContainer_->getProperty("AnalysisExitScript"))
-			ScriptableContainer::runScript("AnalysisExitScript");
+		if(propertyContainer_->getProperty("AnalysisExitScript") && (!propertyContainer_->getPropertyValue("AnalysisExitScript").toString().isEmpty()))
+		{
+			QString scriptNamePrefix = getScriptNamePrefix();
+			ScriptableContainer::runScript(scriptNamePrefix+"Exit");
+		}
 		break;
 	}
 }
@@ -53,6 +66,38 @@ bool AnalysisScriptContainer::hasScriptPropertyType(ScriptType type)
 		break;
 	}
 	return false;
+}
+
+bool AnalysisScriptContainer::isPartOfSearch(SearchRequest searchRequest)
+{
+	//If the search is for all analyses
+	//OR If the search is for active analyses and this is an active analysis,
+	//OR If the search is for inactive analyses and this is an inactive analysis,
+	if	(	(searchRequest.group == SearchRequest::ALL_ANALYSES)	
+			||	((searchRequest.group & SearchRequest::ACTIVE_ANALYSES) && getDesignConfig()->isAnalysisActive(getAssociateId()))
+			||	((searchRequest.group & SearchRequest::INACTIVE_ANALYSES) && !getDesignConfig()->isAnalysisActive(getAssociateId()))
+		)
+		return true;
+	return false;
+}
+
+QString AnalysisScriptContainer::getReturnValueError(QString scriptName,const QScriptValue& returnValue)
+{
+	QString resultError = "";
+	if(Property::experimentalValueWasChanged())
+	{
+		QString parentPath = getParentPath();
+		resultError = QString("The %1 script in element: \"%2\" caused the property value: \"%3\" to change.\n"
+			"Analysis scripts may only be used to read from, not write to values in experimental elements.  ")
+			.arg(scriptName)
+			.arg(getParentPath())
+			.arg(Property::changedExperimentalValueName());
+	}
+	if(resultError.isEmpty())
+	{
+		resultError = ScriptableContainer::getReturnValueError(scriptName,returnValue);
+	}
+	return resultError;
 }
 
 void AnalysisScriptContainer::postDeserialize()
@@ -80,18 +125,17 @@ QMap<QString,QPair<QString,QString>> AnalysisScriptContainer::getScripts()
 {
 	QMap<QString,QPair<QString,QString>>  scripts = ScriptableContainer::getScripts();
 	QString script = propertyContainer_->getPropertyValue("AnalysisEntryScript").toString();
+	QString scriptNamePrefix = getScriptNamePrefix();
 	if(!script.isEmpty())
 	{
-		QString scriptName = getName();
-		scripts[scriptName] = QPair<QString,QString>(QString(),"AnalysisEntryScript");
+		scripts[scriptNamePrefix+"Entry"] = QPair<QString,QString>(QString(),"AnalysisEntryScript");
 	}
 	if(hasScriptPropertyType(FRAME))
 	{
 		QString script = propertyContainer_->getPropertyValue("AnalysisFrameScript").toString();
 		if(!script.isEmpty())
 		{
-			QString scriptName = getName();
-			scripts[scriptName] = QPair<QString,QString>(QString(),"AnalysisFrameScript");
+			scripts[scriptNamePrefix+"Frame"] = QPair<QString,QString>(QString(),"AnalysisFrameScript");
 		}
 	}
 	if(hasScriptPropertyType(EXIT))
@@ -99,10 +143,28 @@ QMap<QString,QPair<QString,QString>> AnalysisScriptContainer::getScripts()
 		QString script = propertyContainer_->getPropertyValue("AnalysisExitScript").toString();
 		if(!script.isEmpty())
 		{
-			QString scriptName = getName();
-			scripts[scriptName] = QPair<QString,QString>(QString(),"AnalysisExitScript");
+			scripts[scriptNamePrefix+"Exit"] = QPair<QString,QString>(QString(),"AnalysisExitScript");
 		}
 	}
 	return scripts;
+}
+
+//Since this object gets created as soon as a script is written and sticks around even if that script
+//is deleted:
+//In the case where its scripts are all empty and a search for its simple existance comes through, 
+//it overloads the default behavior and returns false, since it might as well not exist and will
+//not be visible in the UI.
+bool AnalysisScriptContainer::executeSearchAlgorithm(SearchRequest searchRequest)
+{
+	if(!hasScripts())
+		return false;
+	return ScriptableContainer::executeSearchAlgorithm(searchRequest);
+}
+
+QString AnalysisScriptContainer::getScriptNamePrefix()
+{
+	QSharedPointer<Asset> linkedAsset = getLinkedAsset();
+	Q_ASSERT(linkedAsset);
+	return linkedAsset->getName().simplified().remove(' ')+"Analysis";
 }
 }; //namespace Picto

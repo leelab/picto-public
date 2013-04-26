@@ -10,7 +10,7 @@
 #include "remoteviewer/remoteviewer.h"
 #include "replayviewer/replayviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
-#include "analysis/analysisviewer.h"
+//#include "analysis/analysisviewer.h"
 #include "../common/update/updatedownloader.h"
 #include "../common/memleakdetect.h"
 
@@ -253,18 +253,18 @@ void MainWindow::createViewers()
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
-	//Analysis Viewer
-	viewer = new AnalysisViewer(this);
-	viewerNames_.append(viewer->type());
-	viewerStack_->addWidget(viewer);
-	viewerAction = new QAction(tr("&Analyze experiment"),this);
-	viewerAction->setShortcut(tr("Ctrl+6"));
-	viewerAction->setIcon(QIcon(":/icons/analyze.png"));
-	viewerAction->setData(viewerNames_.size()-1);
-	viewerToolbar_->addAction(viewerAction);
-	modeMenu_->addAction(viewerAction);
-	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
-	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
+	////Analysis Viewer
+	//viewer = new AnalysisViewer(this);
+	//viewerNames_.append(viewer->type());
+	//viewerStack_->addWidget(viewer);
+	//viewerAction = new QAction(tr("&Analyze experiment"),this);
+	//viewerAction->setShortcut(tr("Ctrl+6"));
+	//viewerAction->setIcon(QIcon(":/icons/analyze.png"));
+	//viewerAction->setData(viewerNames_.size()-1);
+	//viewerToolbar_->addAction(viewerAction);
+	//modeMenu_->addAction(viewerAction);
+	//connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
+	//connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//If an application update fails, we want to go back to the statemachineeditor.
 	connect(UpdateDownloader::getInstance().data(),SIGNAL(updateFailed()),initViewerAction_,SLOT(trigger()));

@@ -25,25 +25,24 @@ public:
 	Design();
 	virtual ~Design(){};
 
-	bool resetRoot(QSharedPointer<UIEnabled> root);
-	QSharedPointer<Asset> getRootAsset();
-	QSharedPointer<Asset> getOpenAsset();
-	void setOpenAsset(QSharedPointer<Asset> asset);
-	void setUndoPoint();
-	bool hasUndo();
-	bool hasRedo();
-	void undo();
-	void redo();
-	void refreshFromXml();//Rebuilds experiment from XML.  Hopefully we'll be able to get rid of this sometime, currently, we need it for deleting assets which requires serializing then deserializing.
-	bool isModified();
-	void setUnmodified();
-	QString getDesignText();
-	bool compiles(QString* errors = &QString());
-	void enableRunMode(bool runMode);
-
-signals:
-	void undoAvailable(bool available);
-	void redoAvailable(bool available);
+//	bool resetRoot(QSharedPointer<UIEnabled> root);
+	//QSharedPointer<Asset> getRootAsset();
+	//QSharedPointer<Asset> getOpenAsset();
+	//void setOpenAsset(QSharedPointer<Asset> asset);
+	//void setUndoPoint();
+	//bool hasUndo();
+	//bool hasRedo();
+	//void undo();
+	//void redo();
+//	void refreshFromXml();//Rebuilds experiment from XML.  Hopefully we'll be able to get rid of this sometime, currently, we need it for deleting assets which requires serializing then deserializing.
+//	bool isModified();
+//	void setUnmodified();
+//	QString getDesignText();
+//	bool compiles(QString* errors = &QString());
+//
+//signals:
+//	void undoAvailable(bool available);
+//	void redoAvailable(bool available);
 
 private:
 	QString updateAssetsFromText(QString designText);
@@ -51,11 +50,11 @@ private:
 	static QSharedPointer<DataStore> createRoot(QString identifier);
 	QSharedPointer<UIEnabled> root_;
 	QSharedPointer<Asset> openAsset_;
-	bool compiled_;
-	QTextDocument designText_;
-
-private slots:
-	void designEdited();
+	//bool compiled_;
+	//QTextDocument designText_;
+//
+//private slots:
+//	void designEdited();
 };
 };
 #endif

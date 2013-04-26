@@ -8,6 +8,7 @@
 #include "../statemachine/scriptablecontainer.h"
 #include "../statemachine/UIEnabled.h"
 #include "../property/PropertyContainer.h"
+#include "../parameter/AssociateRootHost.h"
 
 //#include "SessionData.h"
 //#include "MediaItem.h"
@@ -39,9 +40,9 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Experiment : public ScriptableContainer
+class PICTOLIB_API Experiment : public ScriptableContainer, public AssociateRootHost
 #else
-class Experiment : public ScriptableContainer
+class Experiment : public ScriptableContainer, public AssociateRootHost
 #endif
 {
 	Q_OBJECT
@@ -65,6 +66,8 @@ public:
 	QSharedPointer<Task> getTaskByName(QString taskName);
 
 	virtual QString assetType(){return "Experiment";};
+
+	ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION
 
 protected:
 	virtual QString defaultTagName(){return "Experiment";};
@@ -90,7 +93,11 @@ private:
 	QSharedPointer<PropertyTable> propTable_;
 	QSharedPointer<Engine::PictoEngine> engine_;
 	bool signalCoeffInitialized_;
+
+	bool hostIdBeingEdited_;
 private slots:
+	void changeHostId(){if(hostIdBeingEdited_) return;hostIdBeingEdited_ = true;propertyContainer_->setPropertyValue("HostId",QUuid::createUuid());hostIdBeingEdited_ = false;};
+
 	void updateSignalCoefficients(Property* changedProp,QVariant var);
 	void sortTasksIntoList(QSharedPointer<Asset> newChild);
 };

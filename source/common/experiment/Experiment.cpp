@@ -11,7 +11,6 @@ Experiment::Experiment()
 engine_(NULL)
 {
 	signalCoeffInitialized_ = false;
-	AddDefinableProperty("SyntaxVersion","");
 	AddDefinableObjectFactory("Task",QSharedPointer<AssetFactory>(new AssetFactory(1,-1,AssetFactory::NewAssetFnPtr(Picto::Task::Create))));
 	AddDefinableProperty(QVariant::Double,"XGain",1.0);
 	AddDefinableProperty(QVariant::Double,"YGain",1.0);
@@ -23,14 +22,18 @@ engine_(NULL)
 	AddDefinableObjectFactory("Name",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	//Override UIEnabled for a default value of true
 	AddDefinableProperty(QVariant::Bool,"UIEnabled",true);
+	//Syntax Version is now exclusively on the PictoData object
+	AddDefinableObjectFactory("SyntaxVersion",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+
+	ASSOCIATE_ROOT_HOST_INITIALIZATION
 }
 
 QSharedPointer<Experiment> Experiment::Create()
 {
 	QSharedPointer<Experiment> newExperiment(new Experiment());
 	newExperiment->setSelfPtr(newExperiment);
-	newExperiment->setExperimentConfig(QSharedPointer<ExperimentConfig>(new ExperimentConfig()));
-	newExperiment->propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(newExperiment->getExperimentConfig()));
+	//newExperiment->setDesignConfig(QSharedPointer<DesignConfig>(new DesignConfig()));
+	//newExperiment->propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(newExperiment->getDesignConfig()));
 	return newExperiment;
 }
 
@@ -93,8 +96,8 @@ bool Experiment::runTask(QString taskName)
 		return false;
 
 	Q_ASSERT(propTable_);
-	engine_->setPropertyTable(propTable_);
-	engine_->setExperimentConfig(expConfig_);
+	//engine_->setPropertyTable(propTable_);
+	engine_->setDesignConfig(designConfig_);
 
 	//search through tasks_ for a matching task and run it!
 	//note that the taskname here may have had all of it's whitespace 
@@ -129,8 +132,8 @@ bool Experiment::runTask(QString taskName)
 
 	} while(!taskName.isEmpty());
 
-	engine_->setPropertyTable(QSharedPointer<PropertyTable>());
-	engine_->setExperimentConfig(QSharedPointer<ExperimentConfig>());
+	//engine_->setPropertyTable(QSharedPointer<PropertyTable>());
+	engine_->setDesignConfig(QSharedPointer<DesignConfig>());
 
 	return true;
 	//foreach(QSharedPointer<Task> task, tasks_)
@@ -169,21 +172,20 @@ bool Experiment::jumpToState(QStringList path, QString state)
 void Experiment::postDeserialize()
 {
 	signalCoeffInitialized_ = false;
-	expConfig_->disallowIdDuplication();
+	//designConfig_->disallowIdDuplication();
 	//Usually an object's parent adds itself to the objects scriptables list.
-	//Since an experiment is at the top level, we must do it manually.
+	//Since an experiment is the highest level ScriptableContainer, we must do it manually.
 	addScriptable(selfPtr().staticCast<Scriptable>());
 	ScriptableContainer::postDeserialize();
 
-	QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
-	if(experimentSyntaxVer != DESIGNSYNTAXVERSION)
-	{
-		expConfig_->setDeserializedVersion(experimentSyntaxVer);
-		upgradeVersion(experimentSyntaxVer);
-		propertyContainer_->setPropertyValue("SyntaxVersion",DESIGNSYNTAXVERSION);
-	}
-	propertyContainer_->getProperty("SyntaxVersion")->setVisible(false);
-
+	//QString experimentSyntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
+	//if(experimentSyntaxVer != DESIGNSYNTAXVERSION)
+	//{
+	//	designConfig_->setDeserializedVersion(experimentSyntaxVer);
+	//	upgradeVersion(experimentSyntaxVer);
+	//	propertyContainer_->setPropertyValue("SyntaxVersion",DESIGNSYNTAXVERSION);
+	//}
+	//propertyContainer_->getProperty("SyntaxVersion")->setVisible(false);
 
 	//Set the signal properties runtime editable
 	//We use the DataStore version of this function so that the actual properties,
@@ -208,16 +210,17 @@ void Experiment::postDeserialize()
 	//signal to the sortTasksIntoList slot.
 	connect(this,SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(sortTasksIntoList(QSharedPointer<Asset>)));
 
-	//Add all descendant properties to the property table for reporting of property changes to server.
+	//Add all properties to a property table for reporting of property changes to server.
 	//engine->setLastTimePropertiesRequested(0);	//If this is slave mode, this will assure that
 	//											//we get all properties that have been changed
 	//											//since director started.
-	propTable_->clear();//Empties property table so director/viewer props will match up
-	QList<QSharedPointer<Property>> descendantProps = getDescendantsProperties();
-	foreach(QSharedPointer<Property> prop,descendantProps)
-	{
-		propTable_->addProperty(prop);	// This adds the property to the property table and gives it an index for use in transmission
-	}
+	//propTable_->clear();//Empties property table so director/viewer props will match up
+	propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(getDesignConfig()));
+	//QList<QSharedPointer<Property>> descendantProps = getDescendantsProperties();
+	//foreach(QSharedPointer<Property> prop,descendantProps)
+	//{
+	//	propTable_->addProperty(prop);	// This adds the property to the property table and gives it an index for use in transmission
+	//}
 
 	//Experiment objects are not part of the state machine. Init values should be bypassed and set immediately as run values in all
 	//properties
@@ -229,6 +232,8 @@ void Experiment::postDeserialize()
 			prop->enableInitRunValueSync(true);
 		}
 	}
+
+	ASSOCIATE_ROOT_HOST_POST_DESERIALIZE
 }
 
 bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

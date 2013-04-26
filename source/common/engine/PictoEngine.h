@@ -30,7 +30,7 @@
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
 #include "../storage/TaskRunDataUnit.h"
-#include "../storage/experimentconfig.h"
+#include "../storage/DesignConfig.h"
 #include "StateUpdater.h"
 #include "propertytable.h"
 #include "ControlPanelInterface.h"
@@ -167,7 +167,7 @@ public:
 	bool setFrontPanelEventChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getFrontPanelEventChannel();
 
-	void setPropertyTable(QSharedPointer<PropertyTable> propTable);
+	//void setPropertyTable(QSharedPointer<PropertyTable> propTable);
 	QSharedPointer<PropertyTable> getPropertyTable(){return propTable_;};
 	void sendAllPropertyValuesToServer();
 
@@ -183,8 +183,8 @@ public:
 	bool slaveMode() { return slave_; }
 	//If disabled, Init properties of the slave experiment will not be synchronized with those of the master.
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
-	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig){expConfig_ = expConfig;};
-	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
+	void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
+	QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
 		
 	
 	//The engine commands are only used when the engine is being run locally
@@ -240,7 +240,7 @@ private:
 	bool taskRunEnding_;
 	QString taskRunName_;
 	QSharedPointer<TaskRunDataUnit> taskRunUnit_;
-	QSharedPointer<ExperimentConfig> expConfig_;
+	QSharedPointer<DesignConfig> designConfig_;
 	QMutex rewardListMutex_;
 	QMutex rewardMutex_;
 

@@ -1,6 +1,7 @@
 #ifndef PROPERTYGROUPWIDGET_H
 #define PROPERTYGROUPWIDGET_H
 #include <QVBoxLayout>
+#include <QPair>
 #include <QtPropertyBrowser.h>
 #include <QtVariantProperty.h>
 #include <QtGroupBoxPropertyBrowser.h>
@@ -35,7 +36,7 @@ private:
 	QVBoxLayout* layout_;
 	QWidget* mainWidget_;
 	bool trackInitVals_;
-	QHash<Property*,QtVariantProperty*> propToQtPropHash_;
+	QHash<Property*,QPair<QtVariantProperty*,QSharedPointer<Property>>> propToQtPropHash_;
 private slots:
 	void propertyWasEdited(QSharedPointer<Property> prop,QVariant val);
 	void propertyWasEditedExternally(Property* prop,QVariant val);

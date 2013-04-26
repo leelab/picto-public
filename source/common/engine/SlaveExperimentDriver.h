@@ -29,7 +29,7 @@ private:
 	void renderFrame();
 	QSharedPointer<Experiment> experiment_;
 	QSharedPointer<StateUpdater> updater_;
-	QSharedPointer<ExperimentConfig> expConfig_;
+	QSharedPointer<DesignConfig> designConfig_;
 	QSharedPointer<StateMachineElement> currElement_;
 	QTime frameTimer_;
 	bool renderingEnabled_;

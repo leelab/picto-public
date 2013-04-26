@@ -33,7 +33,7 @@ public:
 	void addChildOutputElementContainer(QSharedPointer<OutputElementContainer> child);
 	QList<QSharedPointer<OutputElement>> getOutputElementList();
 	virtual QString assetType(){return "OutputElementContainer";};
-	virtual void ClearAnalysisChildren(QUuid analysisId);
+	virtual void ClearAssociateChildren(QUuid associateId);
 
 protected:
 	virtual void postDeserialize();
@@ -42,7 +42,6 @@ protected:
 private:
 	void addOutputElement(QSharedPointer<OutputElement> outputElement);
 	QList<QSharedPointer<OutputElement> > outputElements_;
-	QMap<QString,QList<QSharedPointer<OutputElement>>> analysisOutputElementsByGuid_;
 	QList<QSharedPointer<OutputElementContainer> > outputElementContainers_;
 
 private slots:

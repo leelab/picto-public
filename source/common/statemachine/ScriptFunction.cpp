@@ -79,21 +79,6 @@ QString ScriptFunction::getScriptingInfo()
 	return returnVal;
 }
 
-bool ScriptFunction::searchForQuery(SearchRequest searchRequest)
-{	
-	if(ScriptableContainer::searchForQuery(searchRequest))
-		return true;
-	switch(searchRequest.type)
-	{
-	case SearchRequest::STRING:
-		if(propertyContainer_->getPropertyValue("Script").toString().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
-			return true;
-	default:
-		return false;
-	};
-	return false;
-}
-
 void ScriptFunction::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();
@@ -104,4 +89,19 @@ bool ScriptFunction::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	if(!ScriptableContainer::validateObject(xmlStreamReader))
 		return false;
 	return true;
+}
+
+bool ScriptFunction::executeSearchAlgorithm(SearchRequest searchRequest)
+{	
+	if(ScriptableContainer::executeSearchAlgorithm(searchRequest))
+		return true;
+	switch(searchRequest.type)
+	{
+	case SearchRequest::STRING:
+		if(propertyContainer_->getPropertyValue("Script").toString().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+			return true;
+	default:
+		return false;
+	};
+	return false;
 }

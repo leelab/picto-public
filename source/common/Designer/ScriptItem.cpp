@@ -25,7 +25,7 @@ DiagramItem(editorState,NULL,"",parent)
 	//Set up search functionality
 	//Set "search text found" highlight color
 	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::STRING),QColor(255,0,0));
-	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ANALYSIS,SearchRequest::STRING),QColor(255,0,0));
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ACTIVE_ANALYSES,SearchRequest::STRING),QColor(255,0,0));
 	//Connect search signal to this object
 	connect(editorState.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
 

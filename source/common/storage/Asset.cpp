@@ -63,9 +63,28 @@ void Asset::initializeToDefault(QString tagName, QString type)
 	if(type != "")
 		emptyTag.append(QString(" type=\"%1\"").arg(type));
 	emptyTag.append("/>");
-	bool success = fromXml(emptyTag);
-	isNew_ = true;
+	initializeFromXml(emptyTag);
 	//Q_ASSERT_X(success,"Asset::initializeToDefault","Failed to initialize Asset object to default values.\nError:\n"+Serializable::getErrors().toLatin1());
+}
+
+//This function initializes the asset from XML without marking it as (not new) as generally
+//occurs as soon as something is deserialized from XML.  This way the serialization system
+//will recognize that this asset needs to be serialized out, because generally if an asset
+//is not new and edited, if its tag is not found in the original serial text, the implecation
+//is that it was actually there but just had its name changed automatically so it shouldn't be
+//serialized out again... yeah... we need to rework the serialization system at some point.
+bool Asset::initializeFromXml(QString xml)
+{
+	QSharedPointer<QXmlStreamReader> xmlStreamReader = QSharedPointer<QXmlStreamReader>(new QXmlStreamReader(xml));
+	while(!xmlStreamReader->isStartElement() && !xmlStreamReader->atEnd())
+	{
+		xmlStreamReader->readNext();
+	}
+	if(xmlStreamReader->atEnd())
+		return false;
+	bool success = fromXml(xmlStreamReader,false);
+	isNew_ = true;
+	return success;
 }
 
 void Asset::enableRunMode(bool)
@@ -101,13 +120,13 @@ void Asset::reinitialize()
 
 QString Asset::getPath()
 {
-	if(inherits("Picto::Experiment") || inherits("Picto::Analysis"))
+	if(inherits("Picto::Experiment") || inherits("Picto::AssociateRoot"))
 		return "";
 	QString returnVal = getName();
 	QSharedPointer<Asset> curr = getParentAsset();
 	while(curr)
 	{
-		if(curr->inherits("Picto::Experiment") || inherits("Picto::Analysis"))
+		if(curr->inherits("Picto::Experiment") || inherits("Picto::AssociateRoot"))
 			break;
 		returnVal.prepend(QString("%1::").arg(curr->getName()));
 		curr = curr->getParentAsset();
@@ -122,10 +141,10 @@ void Asset::upgradeVersion(QString)
 	
 }
 
-void Asset::setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig)
+void Asset::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 {
-	expConfig_ = expConfig;
-	expConfig_->addManagedAsset(selfPtr());
+	designConfig_ = designConfig;
+	designConfig_->addManagedAsset(selfPtr());
 }
 
 void Asset::preDeserialize()
@@ -133,10 +152,10 @@ void Asset::preDeserialize()
 	QSharedPointer<Asset> parent = getParentAsset();
 	if(!parent)
 		return;
-	QSharedPointer<ExperimentConfig> expConfig = parent->getExperimentConfig();
-	if(!expConfig)
+	QSharedPointer<DesignConfig> designConfig = parent->getDesignConfig();
+	if(!designConfig)
 		return;
-	setExperimentConfig(expConfig);
+	setDesignConfig(designConfig);
 }
 
 void Asset::postDeserialize()
@@ -147,8 +166,8 @@ void Asset::postDeserialize()
 	//we're not crazily rewriting asset ids every time we deserialize.  This
 	//does, however, assure us that assets that are created after experiments
 	//are deserialized will be setup with nonduplicated ids.
-	if(expConfig_)
-		expConfig_->fixDuplicatedAssetIds();
+	if(designConfig_)
+		designConfig_->fixDuplicatedAssetIds();
 }
 
 }; //namespace Picto

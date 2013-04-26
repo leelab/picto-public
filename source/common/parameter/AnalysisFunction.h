@@ -4,7 +4,7 @@
 #include "../common.h"
 
 #include "../statemachine/ScriptFunction.h"
-#include "AnalysisElement.h"
+#include "AssociateElement.h"
 
 namespace Picto {
 
@@ -12,9 +12,9 @@ namespace Picto {
  *
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AnalysisFunction : public ScriptFunction, public AnalysisElement
+	class PICTOLIB_API AnalysisFunction : public ScriptFunction, public AssociateElement
 #else
-class AnalysisFunction : public ScriptFunction, public AnalysisElement
+class AnalysisFunction : public ScriptFunction, public AssociateElement
 #endif
 {
 	Q_OBJECT
@@ -24,8 +24,8 @@ public:
 	virtual ~AnalysisFunction(){};
 
 	static QSharedPointer<Asset> Create();
-
-	ANALYSIS_ELEMENT_IMPLEMENTATION
+	virtual bool isPartOfSearch(SearchRequest searchRequest);
+	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
 	virtual void postDeserialize();

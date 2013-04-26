@@ -75,26 +75,30 @@ Designer::~Designer()
 void Designer::loadDesign(QString identifier, int index, QSharedPointer<DesignRoot> designRoot)
 {
 	Q_ASSERT(designRoot);
-	designRoot_ = designRoot;
-	if(design_)
+	
+	if(designRoot_)
 	{
-		disconnect(design_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
-		disconnect(design_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
+		disconnect(designRoot_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
+		disconnect(designRoot_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
 	}
-	design_ = designRoot->getDesign(identifier,index);
-	Q_ASSERT(design_);
-	connect(design_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
-	connect(design_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
+	designRoot_ = designRoot;
+	//design_ = designRoot->getDesign(identifier,index);
+	Q_ASSERT(designRoot_);
+	connect(designRoot_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
+	connect(designRoot_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
 
 	//Populate the AnalysisSelector
 	editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
 	analysisSelector_->clear();
 	analysisSelector_->addItem("None");
-	for(int i=0;i<designRoot_->getDesignCount("Analysis");i++)
+	for(int i=0;i<designRoot_->getNumAnalyses();i++)
 	{
-		analysisSelector_->addItem(designRoot_->getDesign("Analysis",i)->getRootAsset()->getName());
+		analysisSelector_->addItem(designRoot_->getAnalysis(i)->getName());
 	}
 	analysisSelector_->addItem("New...");
+	//Since we just loaded a new design, there are no undos or redos available
+	undoAvailable(false);
+	redoAvailable(false);
 	resetEditor();
 }
 
@@ -171,37 +175,41 @@ void Designer::loadScene(DiagramScene* newScene)
 void Designer::resetExperiment()
 {
 	insertEditBlock();
-	design_->refreshFromXml();
+	designRoot_->refreshFromXml();
 	resetEditor();
 }
 
 void Designer::insertEditBlock()
 {
-	design_->setUndoPoint();
+	designRoot_->setUndoPoint();
 }
 
 void Designer::performUndoAction()
 {
-	design_->undo();
+	if(!designRoot_->hasUndo())
+		return;
+	designRoot_->undo();
 	resetEditor();
 }
 void Designer::performRedoAction()
 {
-	design_->redo();
+	if(!designRoot_->hasRedo())
+		return;
+	designRoot_->redo();
 	resetEditor();
 }
 
 void Designer::setOpenAsset(QSharedPointer<Asset> asset)
 {
 	Q_ASSERT(asset);
-	design_->setOpenAsset(asset);
+	designRoot_->setOpenAsset(asset);
 }
 
 //! Checks the syntax of the current XML to see if it is a legal experiment
 void Designer::checkSyntax()
 {
 	QString errors;
-	if(design_->compiles(&errors))
+	if(designRoot_->compiles(&errors))
 	{
 		QMessageBox box;
 		box.setText("Syntax check passed");
@@ -253,22 +261,6 @@ void Designer::createActions()
     exitAction->setShortcut(tr("Ctrl+X"));
     exitAction->setStatusTip(tr("Quit Scenediagram example"));
 
-    boldAction = new QAction(tr("Bold"), this);
-    boldAction->setCheckable(true);
-    QPixmap pixmap(":/icons/bold.png");
-    boldAction->setIcon(QIcon(pixmap));
-    boldAction->setShortcut(tr("Ctrl+B"));
-
-    italicAction = new QAction(QIcon(":/icons/italic.png"),
-                               tr("Italic"), this);
-    italicAction->setCheckable(true);
-    italicAction->setShortcut(tr("Ctrl+I"));
-
-    underlineAction = new QAction(QIcon(":/icons/underline.png"),
-                                  tr("Underline"), this);
-    underlineAction->setCheckable(true);
-    underlineAction->setShortcut(tr("Ctrl+U"));
-
     aboutAction = new QAction(tr("A&bout"), this);
     aboutAction->setShortcut(tr("Ctrl+B"));
 
@@ -299,10 +291,9 @@ void Designer::createActions()
 	deleteAnalysisAction_->setEnabled(false);
 	connect(deleteAnalysisAction_,SIGNAL(triggered()),this,SLOT(deleteCurrentAnalysis()));
 
-	//Turn on highlighting for elements with children that have scripts and analysis scripts.  To do this, just search 
-	//for any non-empty string.  Searching for an empty string turns it off.
+	//Turn on highlighting for elements with children that have scripts and analysis scripts.
 	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT));
-	editorState_->requestSearch(SearchRequest(SearchRequest::ANALYSIS,SearchRequest::SCRIPT));
+	editorState_->requestSearch(SearchRequest(SearchRequest::ACTIVE_ANALYSES,SearchRequest::SCRIPT));
 
 	checkSyntaxAction_ = new QAction(tr("&Check XML syntax"),this);
 	checkSyntaxAction_->setShortcut(Qt::Key_F7);
@@ -320,9 +311,6 @@ void Designer::connectActions()
     connect(sendBackAction, SIGNAL(triggered()),scene, SLOT(sendToBack()));
     connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(boldAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
-    connect(italicAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
-    connect(underlineAction, SIGNAL(triggered()),this, SLOT(handleFontChange()));
     connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
 	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
 	connect(editorState_.data(),SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),this,SLOT(setOpenAsset(QSharedPointer<Asset>)));
@@ -406,20 +394,22 @@ void Designer::createToolbars()
 bool Designer::resetEditor()
 {
 	//Reset the root of the experiment
-	editorState_->setTopLevelAsset(design_->getRootAsset());
+	editorState_->setTopLevelAsset(designRoot_->getExperiment());
 
 	//Get the selected Analysis and use it in the editor
 	int analysisComboboxIndex = analysisSelector_->currentIndex();
 	if(analysisComboboxIndex > 0)
 	{
-		QSharedPointer<Design> anaDesign = designRoot_->getDesign("Analysis",analysisComboboxIndex-1);
-		Q_ASSERT(anaDesign);
-		QSharedPointer<Asset> analysis = anaDesign->getRootAsset();
+		QSharedPointer<Asset> analysis = designRoot_->getAnalysis(analysisComboboxIndex-1);
+		Q_ASSERT(analysis);
 		editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>());
 	}
 
 	//Reset the window asset
-	editorState_->setWindowAsset(design_->getOpenAsset());
+	QSharedPointer<Asset> openAsset = designRoot_->getOpenAsset();
+	if(!openAsset)
+		openAsset = editorState_->getTopLevelAsset();
+	editorState_->setWindowAsset(openAsset,false);
 	return true;
 }
 
@@ -468,17 +458,41 @@ void Designer::analysisSelectedChanged(int index)
 			newAnalysisCreated = (index == analysisSelector_->count()-1);
 			if(newAnalysisCreated)
 			{
-				//Add a new Analysis Design to the designRoot
-				QSharedPointer<Design> newDesign = designRoot_->importDesign("Analysis","<Analysis/>");
-				Q_ASSERT(newDesign);
+				QSharedPointer<Asset> newAnalysis;
+				int result = QMessageBox::question(NULL,"Import from file?","Would you like to import the analysis from another design file?",QMessageBox::Yes | QMessageBox::No,QMessageBox::No);
+				switch(result)
+				{
+				case QMessageBox::No:
+					//Add a new Analysis Design to the designRoot
+					newAnalysis = designRoot_->importAnalysis("<Analysis/>");
+					break;
+				case QMessageBox::Yes:
+					//Import an Analysis... not yet implemented
+					QMessageBox::information(NULL,"Analysis Import Not Yet Implemented","Importing of an Analysis from a separate file has not yet been implemented");
+					analysisSelector_->setCurrentIndex(selectedIndex_);
+					return;
+					//Load the Analysis and Attached UIData into a new DesignRoot
+					//to force version upgrade.
+
+					//Get the Analysis and Attached UIData text from new DesignRoot
+					
+					//Use copy function to put the analysis and UIData into our design root while keeping them attached
+
+					//Put the new analysis into the newAnalysis variable...
+					break;
+				default:
+					//Canceled, return to previous selection
+					analysisSelector_->setCurrentIndex(selectedIndex_);
+					return;
+				};
+				Q_ASSERT(newAnalysis);
 
 				//Attempt to add the new analysis to the EditorState as current
-				QSharedPointer<Asset> analysis = newDesign->getRootAsset();
-				if(!editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>()))
+				if(!editorState_->setCurrentAnalysis(newAnalysis.staticCast<Analysis>()))
 				{
-					//If the analysis couldn't be added as current, remove the design and go back to the last selected
+					//If the analysis couldn't be added as current, remove the Analysis and go back to the last selected
 					//analysis.
-					designRoot_->removeDesign("Analysis",designRoot_->getDesignCount("Analysis")-1);
+					designRoot_->removeAnalysis(designRoot_->getNumAnalyses()-1);
 					analysisSelector_->setCurrentIndex(selectedIndex_);
 					return;
 				}
@@ -500,9 +514,8 @@ void Designer::analysisSelectedChanged(int index)
 	//Attempt to set the selected analysis as the current one, if it doesn't work, go back to the previous analysis.
 	if(index > 0)
 	{
-		QSharedPointer<Design> anaDesign = designRoot_->getDesign("Analysis",index-1);
-		Q_ASSERT(anaDesign);
-		QSharedPointer<Asset> analysis = anaDesign->getRootAsset();
+		QSharedPointer<Asset> analysis = designRoot_->getAnalysis(index-1);
+		Q_ASSERT(analysis);
 		if(!editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>()))
 		{
 			analysisSelector_->setCurrentIndex(selectedIndex_);
@@ -521,7 +534,7 @@ void Designer::analysisSelectedChanged(int index)
 	}
 }
 
-void Designer::analysisSelectedTextChanged(const QString& text)
+void Designer::analysisSelectedTextChanged(const QString&)
 {
 	if(analysisSelector_->currentIndex() > 0 && editorState_ && editorState_->getCurrentAnalysis())
 	{
@@ -548,12 +561,12 @@ void Designer::deleteCurrentAnalysis()
 	if(ret != QMessageBox::Yes)
 		return;
 	//Detach analysis from experiment
-	QUuid currAnalsisId = editorState_->getCurrentAnalysis()->getAnalysisId();
-	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAnalysisDescendants(currAnalsisId);
+	QUuid currAnalsisId = editorState_->getCurrentAnalysis()->getAssociateId();
+	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAssociateDescendants(currAnalsisId);
 	
 	//Remove analysis from design
 	int anaIndexInComboBox = analysisSelector_->currentIndex();
-	if(!designRoot_->removeDesign("Analysis",anaIndexInComboBox-1))
+	if(!designRoot_->removeAnalysis(anaIndexInComboBox-1))
 		Q_ASSERT(false);
 
 	//Remove analysis name from combobox and set current analysis to none.

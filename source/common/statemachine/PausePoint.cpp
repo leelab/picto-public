@@ -4,6 +4,7 @@
 #include "../stimuli/CursorGraphic.h"
 #include "../storage/ObsoleteAsset.h"
 #include "../stimuli/OutputElement.h"
+#include "../parameter/AssociateElement.h"
 #include "../memleakdetect.h"
 namespace Picto
 {
@@ -33,27 +34,7 @@ void PausePoint::enableRunMode(bool enable)
 	OutputElementContainer::enableRunMode(enable);
 	if(!enable)
 		return;
-	scene_ = Scene::createScene();
-	hasCursor_ = false;
-	//Since the scene needs access to visual elements stored above it in the tree, we get
-	//our output elements from the output element list.
-	QList<QSharedPointer<OutputElement>> outputs = getOutputElementList();
-	foreach(QSharedPointer<OutputElement> output,outputs)
-	{
-		if(output.isNull())
-			continue;
-		if(output.dynamicCast<VisualElement>())
-		{
-			scene_->addVisualElement(output.staticCast<VisualElement>());
-		}
-		else if (output.dynamicCast<OutputSignal>())
-		{
-			scene_->addOutputSignal(output.staticCast<OutputSignal>());
-		}
-	}
-	QColor backgroundColor;
-	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
-	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
+	rebuildScene();
 }
 
 QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
@@ -116,8 +97,8 @@ QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 void PausePoint::upgradeVersion(QString deserializedVersion)
 {
 	OutputElementContainer::upgradeVersion(deserializedVersion);
-	if(deserializedVersion < "0.0.3")
-	{	//Before 0.0.3, Scripts for pause elements were called PausingScript and RestartingScript.  These
+	if(deserializedVersion < "0.0.1")
+	{	//Before 0.0.1, Scripts for pause elements were called PausingScript and RestartingScript.  These
 		//have been changed to EntryScript and ExitScript respectively for consistency with the rest of the system.
 		//Here we copy contents of the old script properties into the new script properties.
 		QList<QSharedPointer<Asset>> childList = getGeneratedChildren("PausingScript");
@@ -140,6 +121,9 @@ void PausePoint::postDeserialize()
 {
 	OutputElementContainer::postDeserialize();
 	setPropertyRuntimeEditable("ForcePause");
+
+	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
+	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 }
 
 bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -154,6 +138,50 @@ bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	}
 
 	return true;
+}
+
+void PausePoint::rebuildScene()
+{
+	//Since the scene needs access to visual elements stored above it in the tree, we get
+	//our output elements from the output element list.
+	scene_ = Scene::createScene();
+	hasCursor_ = false;
+	QList<QSharedPointer<OutputElement>> outputs = getOutputElementList();
+	QList<QUuid> activeAnalyses = getDesignConfig()->getActiveAnalysisIds();
+	QHash<QUuid,bool> activeAnalysisHash;
+	foreach(QUuid analysisId,activeAnalyses)
+	{
+		activeAnalysisHash[analysisId] = true;
+	}
+	foreach(QSharedPointer<OutputElement> output,outputs)
+	{
+		if(output.isNull())
+			continue;
+		if(output.dynamicCast<VisualElement>())
+		{
+			//If this is an analysis element and its analysis id isn't active, don't add it to the scene.
+			AssociateElement* analysisVisElem = dynamic_cast<AssociateElement*>(output.data());
+			if(analysisVisElem && !activeAnalysisHash.contains(analysisVisElem->getAssociateId()))
+				continue;
+			scene_->addVisualElement(output.staticCast<VisualElement>());
+		}
+		else if (output.dynamicCast<OutputSignal>())
+		{
+			scene_->addOutputSignal(output.staticCast<OutputSignal>());
+		}
+	}
+	QColor backgroundColor;
+	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
+	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
+}
+
+void PausePoint::activeAnalysisIdsChanged()
+{
+	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the function
+	//should run in the Experiment thread.  Since the experiment thread never runs during the course of scene rendering (if 
+	//they are in two different threads, the experiment thread pauses and waits), there should be no issue of accidentally
+	//changing scene values while they are being used in the UI thread.
+	rebuildScene();
 }
 
 

@@ -5,7 +5,7 @@
 #include <QUuid>
 #include "../storage/Asset.h"
 #include "Analysis.h"
-#include "AnalysisExpLink.h"
+#include "AssociateExpLink.h"
 #include "../common.h"
 
 namespace Picto {
@@ -15,18 +15,18 @@ namespace Picto {
 //to all AnalysisElements to inherit from design elements but still have common properties.
 #define ANALYSIS_ELEMENT_IMPLEMENTATION 	virtual QString getParentPath()	\
 											{								\
-												QSharedPointer<AnalysisExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AnalysisExpLink>();	\
+												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
 												return lnk->getParentPath();\
 											};	\
 											\
 											virtual int getParentId()	\
 											{								\
-												QSharedPointer<AnalysisExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AnalysisExpLink>();	\
+												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
 												return lnk->getParentId();\
 											};	\
 											virtual void linkToAsset(QSharedPointer<Asset> asset)	\
 											{								\
-												QSharedPointer<AnalysisExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AnalysisExpLink>();	\
+												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
 												lnk->linkToAsset(asset);	\
 											};	\
 											virtual AttachmentResult attachToLinkedAsset(bool tryLinkingById)	\
@@ -38,11 +38,11 @@ namespace Picto {
 												\
 												if(tryLinkingById)	\
 												{	\
-													if(linkedTask->AddAnalysisChild(getAnalysisId(),getParentId(),identifier(),selfPtr()))	\
+													if(linkedTask->AddAssociateChild(getAnalysisId(),getParentId(),identifier(),selfPtr()))	\
 														return SUCCESS_BY_LINK;	\
 												}	\
 												QString pathWithTaskName = linkedTask->getName() + "::" + getParentPath();	\
-												if(linkedTask->AddAnalysisChild(getAnalysisId(),pathWithTaskName,identifier(),selfPtr()))	\
+												if(linkedTask->AddAssociateChild(getAnalysisId(),pathWithTaskName,identifier(),selfPtr()))	\
 													return SUCCESS_BY_PATH;	\
 												return FAIL;	\
 											};	\
@@ -55,9 +55,16 @@ namespace Picto {
 											virtual QString getInfoString()	\
 											{	\
 												return "Name: " + getName() + "\nType: " + identifier() + "\nLinked to: " + getParentPath();	\
+											};	\
+											virtual QSharedPointer<Asset> getLinkedAsset()	\
+											{	\
+												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
+												return lnk->getLinkedAsset();	\
 											};
 
-#define EXP_LINK_FACTORY_CREATION AddDefinableObjectFactory("ExpLink",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AnalysisExpLink::Create))));
+#define EXP_LINK_FACTORY_CREATION AddDefinableObjectFactory("ExpLink",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateExpLink::Create))));
+
+#define ANALYSIS_PROPERTY_INITIALIZATION
 
 /*! \brief Interface to Analysis Elements
  *
@@ -80,6 +87,7 @@ public:
 	virtual AttachmentResult attachToLinkedAsset(bool tryLinkingById) = 0;
 	virtual QUuid getAnalysisId() = 0;
 	virtual QString getInfoString() = 0;
+	virtual QSharedPointer<Asset> getLinkedAsset() = 0;
 
 private:
 	QUuid analysisId_;

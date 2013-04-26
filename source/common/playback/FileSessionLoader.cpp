@@ -377,16 +377,10 @@ bool FileSessionLoader::loadDesignDefinition()
 	//is loaded in different versions of picto, us a SessionVersionInterfacer to correct the
 	//asset ids in the new version of the experiment.
 	/////////////////////////////////////////////////////////////////////////////////////////
-	QSharedPointer<Design> design = designRoot_->getDesign("Experiment",0);
-	if(!design)
-	{
-		Q_ASSERT(false);	//This would mean that somehow the session had no experiment in it.
-		return false;
-	}
-	QSharedPointer<Picto::Experiment> experiment = design->getRootAsset().staticCast<Experiment>();
+	QSharedPointer<Picto::Experiment> experiment = designRoot_->getExperiment().staticCast<Experiment>();
 	if(!experiment)
 	{
-		Q_ASSERT(false);	//This would mean that somehow the design was empty.
+		Q_ASSERT(false);	//This would mean that somehow the session had no experiment in it.
 		return false;
 	}
 	SessionVersionInterfacer updater(experiment);
@@ -430,7 +424,7 @@ bool FileSessionLoader::loadDesignDefinition()
 	}
 
 	////////////////////////////////////////////////////////
-	//Update Experiment's ExperimentConfig
+	//Update Experiment's DesignConfig
 	////////////////////////////////////////////////////////
 	updater.updateSessionConfigFromSessionAssets();
 

@@ -195,13 +195,13 @@ void Scriptable::postDeserialize()
 	//foreach(QVector<QSharedPointer<Property>> propVec,initPropertyContainer_->getProperties())
 	//{
 	//	foreach(QSharedPointer<Property> prop,propVec)
-	//	{	//We need to add these properties to the experimentConfig so that they'll appear
+	//	{	//We need to add these properties to the DesignConfig so that they'll appear
 	//		//in the database file.  Since they're not serialized though, we always want to add them
 	//		//at the end of the list of ids so that nothing else's id is pushed back by them. 
 	//		//addManagedAsset() takes care of this for us.  Unserialized assets are always
-	//		//added to experimentConfig's lists last.
-	//		if(getExperimentConfig())
-	//			getExperimentConfig()->addManagedAsset(prop);
+	//		//added to DesignConfig's lists last.
+	//		if(getDesignConfig())
+	//			getDesignConfig()->addManagedAsset(prop);
 	//	}
 	//}
 	UIEnabled::postDeserialize();

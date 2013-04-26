@@ -1,16 +1,16 @@
-#include "ExperimentConfig.h"
+#include "DesignConfig.h"
 #include "Asset.h"
 #include "../statemachine/Transition.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
 
-ExperimentConfig::ExperimentConfig()
+DesignConfig::DesignConfig()
 {
 	reset();
 }
 
-void ExperimentConfig::reset()
+void DesignConfig::reset()
 {
 	assetsById_.clear();
 	managedElements_.clear();
@@ -25,12 +25,12 @@ void ExperimentConfig::reset()
 	allowIdDuplication_ = true;
 }
 
-bool ExperimentConfig::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
+bool DesignConfig::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	QSharedPointer<Asset> sAsset;
 	QSharedPointer<Transition> sTAsset;
 	
-	xmlStreamWriter->writeStartElement("ExperimentConfig");
+	xmlStreamWriter->writeStartElement("DesignConfig");
 
 	xmlStreamWriter->writeStartElement("Properties");
 	foreach(QWeakPointer<Asset> wAsset,managedProperties_)
@@ -79,16 +79,16 @@ bool ExperimentConfig::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	return true;
 }
 
-bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
-	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "ExperimentConfig")
+	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "DesignConfig")
 	{
-		addError("ExperimentConfig","Incorrect tag, expected <ExperimentConfig>",xmlStreamReader);
+		addError("DesignConfig","Incorrect tag, expected <DesignConfig>",xmlStreamReader);
 		return false;
 	}
-	xmlStreamReader->readNext();	//Move past the ExperimentConfig starting tag
-	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "ExperimentConfig") && !xmlStreamReader->atEnd())
+	xmlStreamReader->readNext();	//Move past the DesignConfig starting tag
+	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "DesignConfig") && !xmlStreamReader->atEnd())
 	{
 		if(!xmlStreamReader->isStartElement())
 		{
@@ -100,7 +100,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		QString name = xmlStreamReader->name().toString();
 		if(name == "Properties")
 		{
-			xmlStreamReader->readNext();	//Move past the ExperimentConfig starting tag
+			xmlStreamReader->readNext();	//Move past the DesignConfig starting tag
 			while(!(xmlStreamReader->isEndElement() && xmlStreamReader->name().toString() == "Properties") && !xmlStreamReader->atEnd())
 			{
 				if(!xmlStreamReader->isStartElement())
@@ -117,7 +117,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Property missing i (index) attribute",xmlStreamReader);
+					addError("DesignConfig","Property missing i (index) attribute",xmlStreamReader);
 					return false;
 				}
 
@@ -127,7 +127,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Property missing n (name) attribute",xmlStreamReader);
+					addError("DesignConfig","Property missing n (name) attribute",xmlStreamReader);
 					return false;
 				}
 
@@ -137,7 +137,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Property missing p (parent) attribute",xmlStreamReader);
+					addError("DesignConfig","Property missing p (parent) attribute",xmlStreamReader);
 					return false;
 				}
 				propInfo_.append(propInf);
@@ -163,7 +163,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Transition missing i (index) attribute",xmlStreamReader);
+					addError("DesignConfig","Transition missing i (index) attribute",xmlStreamReader);
 					return false;
 				}
 
@@ -173,7 +173,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Transition missing n (name) attribute",xmlStreamReader);
+					addError("DesignConfig","Transition missing n (name) attribute",xmlStreamReader);
 					return false;
 				}
 				
@@ -183,7 +183,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Transition missing p (parent) attribute",xmlStreamReader);
+					addError("DesignConfig","Transition missing p (parent) attribute",xmlStreamReader);
 					return false;
 				}
 
@@ -193,7 +193,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Transition missing s (source) attribute",xmlStreamReader);
+					addError("DesignConfig","Transition missing s (source) attribute",xmlStreamReader);
 					return false;
 				}
 
@@ -203,7 +203,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Transition missing r (source result) attribute",xmlStreamReader);
+					addError("DesignConfig","Transition missing r (source result) attribute",xmlStreamReader);
 					return false;
 				}
 
@@ -213,7 +213,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Transition missing d (destination) attribute",xmlStreamReader);
+					addError("DesignConfig","Transition missing d (destination) attribute",xmlStreamReader);
 					return false;
 				}
 				transInfo_.append(transInf);
@@ -239,7 +239,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Element missing i (index) attribute",xmlStreamReader);
+					addError("DesignConfig","Element missing i (index) attribute",xmlStreamReader);
 					return false;
 				}
 
@@ -249,7 +249,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("ExperimentConfig","Element missing p (path) attribute",xmlStreamReader);
+					addError("DesignConfig","Element missing p (path) attribute",xmlStreamReader);
 					return false;
 				}
 				elemInfo_.append(elemInf);
@@ -258,7 +258,7 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		}
 		else
 		{
-			addError("ExperimentConfig","Invalid Tag: " + name.toLatin1(),xmlStreamReader);
+			addError("DesignConfig","Invalid Tag: " + name.toLatin1(),xmlStreamReader);
 			return false;
 		}
 		xmlStreamReader->readNext();
@@ -266,12 +266,12 @@ bool ExperimentConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	return true;
 }
 
-void ExperimentConfig::disallowIdDuplication()
+void DesignConfig::disallowIdDuplication()
 {
 	allowIdDuplication_ = false;
 }
 
-int ExperimentConfig::getNewDataId()
+int DesignConfig::getNewDataId()
 {
 	++lastUsedId_;
 	//Increment the id until you find an unused one
@@ -282,7 +282,7 @@ int ExperimentConfig::getNewDataId()
 	return lastUsedId_;
 }
 
-void ExperimentConfig::addManagedAsset(QSharedPointer<Asset> asset)
+void DesignConfig::addManagedAsset(QSharedPointer<Asset> asset)
 {
 	QWeakPointer<Asset> wAsset(asset);
 	Q_ASSERT(!assetHash_.contains(asset.data()));
@@ -302,7 +302,7 @@ void ExperimentConfig::addManagedAsset(QSharedPointer<Asset> asset)
 	unsortedIdAssets_.append(wAsset);
 }
 
-void ExperimentConfig::fixDuplicatedAssetIds()
+void DesignConfig::fixDuplicatedAssetIds()
 {
 	if(allowIdDuplication_)
 		return;
@@ -333,7 +333,7 @@ void ExperimentConfig::fixDuplicatedAssetIds()
 	}
 }
 
-QSharedPointer<Asset> ExperimentConfig::getAsset(int id)
+QSharedPointer<Asset> DesignConfig::getAsset(int id)
 {
 	QSharedPointer<Asset> returnVal;
 	if(assetsById_.contains(id))
@@ -341,25 +341,25 @@ QSharedPointer<Asset> ExperimentConfig::getAsset(int id)
 	return returnVal;
 }
 
-QList<QWeakPointer<Asset>> ExperimentConfig::getAssets()
+QList<QWeakPointer<Asset>> DesignConfig::getAssets()
 {
 	return assetsById_.values();
 }
 
 
-QList<AssetInfo> ExperimentConfig::getElementInfo()
+QList<AssetInfo> DesignConfig::getElementInfo()
 {
 	if(!elemInfo_.size())
 		fromXml(toXml());
 	return elemInfo_;
 }
-QList<PropInfo> ExperimentConfig::getPropertyInfo()
+QList<PropInfo> DesignConfig::getPropertyInfo()
 {
 	if(!propInfo_.size())
 		fromXml(toXml());
 	return propInfo_;
 }
-QList<TransInfo> ExperimentConfig::getTransitionInfo()
+QList<TransInfo> DesignConfig::getTransitionInfo()
 {
 	if(!transInfo_.size())
 		fromXml(toXml());

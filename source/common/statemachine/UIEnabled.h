@@ -28,18 +28,21 @@ public:
 	virtual void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
 	void setPos(QPoint pos);
 	QPoint getPos();
-	void setOpenDescendant(int assetId);
-	int getOpenDescendant();
 	virtual QString getUITemplate(){return "UIEnabled";};
 	virtual QString assetType(){return "UIEnabled";};
-		
-	virtual bool searchForQuery(SearchRequest searchRequest);
+
+	virtual void upgradeVersion(QString deserializedVersion);
 signals:
 	void nameEdited();
 
 protected:
+	virtual void preSerialize();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
+private:
+	QUuid uiAssociateId_;
+	QSharedPointer<Asset> getUIElement();
 };
 
 

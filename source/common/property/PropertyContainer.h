@@ -46,6 +46,10 @@ public:
 	QHash<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
 	QList<QSharedPointer<Property>> getRuntimeProperties();
 	QSharedPointer<Property> getProperty(QString _identifier,int index=0);
+
+	//Sets the all the properties in this container as associate properties (or not if false is entered).
+	//This is used in run time checking for non-experimental scripts editing experimental properties.
+	void setPropertiesAsAssociates(bool toAssociate);
 	//QSharedPointer<Property> getContainerGroupProperty(){return containerGroupItem_;};
 	void clear();
 signals:

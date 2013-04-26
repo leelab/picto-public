@@ -5,7 +5,7 @@
 #include <QMap>
 
 #include "../common.h"
-#include "experimentconfig.h"
+#include "DesignConfig.h"
 #include "Serializable.h"
 namespace Picto {
 #if defined WIN32 || defined WINCE
@@ -25,6 +25,7 @@ public:
 	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader){return fromXml(xmlStreamReader,true);};
 	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
 	void initializeToDefault(QString tagName = "", QString type = "");
+	bool initializeFromXml(QString xml);
 	virtual void enableRunMode(bool enable);
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
@@ -51,8 +52,8 @@ public:
 	virtual	int getAssetId(){return 0;};
 	virtual void setAssetId(int){};
 
-	void setExperimentConfig(QSharedPointer<ExperimentConfig> expConfig);
-	QSharedPointer<ExperimentConfig> getExperimentConfig(){return expConfig_;};
+	void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
+	QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
 
 	virtual void upgradeVersion(QString deserializedVersion);
 signals:
@@ -71,9 +72,9 @@ protected:
 	void setUnedited(){edited_ = false;};
 
 	//Call this function from a child class if no other element on this classes level may have the same name.
-	void requireUniqueName(){needsUniqueName_ = true;};
+	void requireUniqueName(bool require = true){needsUniqueName_ = require;};
 	
-	QSharedPointer<ExperimentConfig> expConfig_;
+	QSharedPointer<DesignConfig> designConfig_;
 private:
 
 	bool edited_;

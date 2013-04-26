@@ -12,10 +12,10 @@ namespace Picto {
 Task::Task() 
 {
 		taskNumber_ = 0;
-		taskIdBeingEdited_ = false;
 		AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
-		AddDefinableProperty(QVariant::Uuid,"TaskId",QVariant());
+
+		ASSOCIATE_ROOT_HOST_INITIALIZATION
 }
 
 QSharedPointer<Task> Task::Create()
@@ -78,10 +78,10 @@ void Task::setTaskNumber(int num)
 	initTransition_->setAssetId(-taskNumber_);
 	initTransition_->setSelfPtr(initTransition_);
 	initTransition_->setParentAsset(selfPtr());
-	expConfig_->addManagedAsset(initTransition_);	//This adds the transition to the expConfig list so that it will be recognized
+	designConfig_->addManagedAsset(initTransition_);	//This adds the transition to the designConfig list so that it will be recognized
 													//By the server and remote workstations.  In the future we will add transitions
 													//into initial states which will make all of this unnecessary.
-	expConfig_->fixDuplicatedAssetIds();
+	designConfig_->fixDuplicatedAssetIds();
 }
 
 /*! \brief Sends the initial state transition to the server
@@ -255,13 +255,7 @@ void Task::postDeserialize()
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
 	}
 
-	//If the task has no task id, give it one.
-	if(getTaskId() == QUuid())
-		changeTaskId();
-	propertyContainer_->getProperty("TaskId")->setVisible(false);
-	//Whenever this task is edited, change its TaskID to signify that Analyses that aren't currently
-	//attached to it may no longer be valid
-	connect(this,SIGNAL(edited()),this,SLOT(changeTaskId()));;
+	ASSOCIATE_ROOT_HOST_POST_DESERIALIZE
 }
 
 bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -271,13 +265,4 @@ bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	return true;
 }
 
-void Task::changeTaskId()
-{
-	//Make this re-entrant (so setting the TaskId doesn't start an endless loop
-	if(taskIdBeingEdited_)
-		return;
-	taskIdBeingEdited_ = true;
-	propertyContainer_->setPropertyValue("TaskId",QUuid::createUuid());
-	taskIdBeingEdited_ = false;
-}
 }; //namespace Picto

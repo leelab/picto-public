@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTextDocument>
 #include "PictoData.h"
-#include "Design.h"
+//#include "Design.h"
 
 namespace Picto{
 
@@ -29,18 +29,30 @@ public:
 	virtual ~DesignRoot(){};
 
 	bool resetDesignRoot(QString DesignRootText);
-	QStringList getDesignIdentifiers();
-	int getDesignCount(QString identifier);
-	QSharedPointer<Design> getDesign(QString identifier,int index);
-	//Creates a new design of the identifier type (top level tag name) using the input designText and adds it to the design root.  Returns the new design.
-	QSharedPointer<Design> importDesign(QString identifier,QString designText);
-	//Removes the design with the input identifier and index
-	bool removeDesign(QString identifier,int index);
+	//QStringList getDesignIdentifiers();
+	//int getDesignCount(QString identifier);
+	//QSharedPointer<Design> getDesign(QString identifier,int index);
+	//Creates a new Analysis using the input analysisText and adds it to the PictoData root.  Returns the new Analysis.
+	QSharedPointer<Asset> importAnalysis(QString analysisText);
+	//Removes the Analysis with the input index
+	bool removeAnalysis(int index);
+
+	QSharedPointer<Asset> getExperiment();
+	int getNumAnalyses();
+	QSharedPointer<Asset> getAnalysis(int index);
+	QSharedPointer<Asset> getOpenAsset();
+	void setOpenAsset(QSharedPointer<Asset> asset);
+
+	void setUndoPoint();
+	bool hasUndo();
+	bool hasRedo();
+	void undo();
+	void redo();
 	void refreshFromXml();//Rebuilds experiment from XML.  Hopefully we'll be able to get rid of this sometime, currently, we need it for deleting assets which requires serializing then deserializing.
 	bool isModified();
 	void setUnmodified();
 	QString getDesignRootText();
-	bool compiles();
+	bool compiles(QString* errors = &QString());
 	//The design starts in design mode.  Running the design is not possible until it
 	//switches to run mode.  Use this function to switch to and from run mode.
 	void enableRunMode(bool runMode);
@@ -51,12 +63,20 @@ public:
 	bool hasWarning(){return lastWarning_.name != "";};
 	DesignMessage getLastWarning(){DesignMessage returnVal = lastWarning_;lastWarning_.name="";return returnVal;};
 
+signals:
+	void undoAvailable(bool available);
+	void redoAvailable(bool available);
+
 private:
-	QMap<QString,QVector<QSharedPointer<Design>>> designMap_;
 	QSharedPointer<PictoData> pictoData_;
+	QTextDocument designRootText_;
 	QString designName;
+	bool compiled_;
 	DesignMessage lastError_;
 	DesignMessage lastWarning_;
+
+private slots:
+	void designEdited();
 };
 };
 #endif

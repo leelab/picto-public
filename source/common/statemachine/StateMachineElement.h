@@ -78,12 +78,17 @@ protected:
 	virtual bool hasScripts();
 	void runEntryScript();
 	void runExitScript();
+	void runAnalysisEntryScripts();
+	void runAnalysisExitScripts();
+	enum ScriptType {ENTRY,FRAME,EXIT};
+	void runAnalysisScripts(ScriptType type);
 	virtual QMap<QString,QPair<QString,QString>> getScripts();
 
 	//ParameterContainer parameterContainer_;
 	//QMap<QString,QSharedPointer<Result>> results_;
 
 	QPoint layoutPosition_;
+
 };
 
 

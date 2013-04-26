@@ -201,13 +201,7 @@ void PlaybackController::update()
 					emit error("Failed to load session design.");
 					break;
 				}
-				QSharedPointer<Design> design = newDesignRoot->getDesign("Experiment",0);
-				if(!design)
-				{
-					emit error("Failed to load experiment from session.");
-					break;
-				}
-				if(!design->compiles())
+				if(!newDesignRoot->compiles())
 				{
 					emit error("Session's experiment does not compile.");
 					break;
@@ -218,9 +212,10 @@ void PlaybackController::update()
 				emit runsUpdated(playbackUpdater_->getRuns());
 
 				//Set up SlaveExperimentDriver to connect StateUpdater and Experiment
-				QSharedPointer<Picto::Experiment> currExp = design->getRootAsset().staticCast<Experiment>();
+				QSharedPointer<Picto::Experiment> currExp = designRoot_->getExperiment().staticCast<Experiment>();
 				if(!currExp || !currExp->getTaskNames().size())
 				{
+					emit error("Failed to load experiment from session.");
 					break;
 				}
 				experiment_ = currExp;

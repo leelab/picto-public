@@ -3,15 +3,15 @@
 
 #include "../common.h"
 
-#include "AnalysisElement.h"
+#include "AssociateElement.h"
 #include "../parameter/Parameter.h"
 
 namespace Picto {
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AnalysisVariable : public Parameter, public AnalysisElement
+	class PICTOLIB_API AnalysisVariable : public Parameter, public AssociateElement
 #else
-class AnalysisVariable : public Parameter, public AnalysisElement
+class AnalysisVariable : public Parameter, public AssociateElement
 #endif
 {
 	Q_OBJECT
@@ -21,8 +21,8 @@ public:
 	virtual ~AnalysisVariable(){};
 
 	virtual void reset();
-
-	ANALYSIS_ELEMENT_IMPLEMENTATION
+	virtual bool isPartOfSearch(SearchRequest searchRequest);
+	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
 	virtual void postDeserialize();

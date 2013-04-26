@@ -45,9 +45,7 @@ public:
 
 	virtual QString assetType(){return "ScriptableContainer";};
 	virtual QString getInfo();
-	virtual void ClearAnalysisChildren(QUuid analysisId);
-
-	virtual bool searchForQuery(SearchRequest searchRequest);
+	virtual void ClearAssociateChildren(QUuid associateId);
 
 protected:
 	void runScript(QString scriptName);
@@ -61,6 +59,7 @@ protected:
 	//This returns a map of QMap<script name,QPair<script inputs,tag of string parameter holding script>
 	virtual QMap<QString,QPair<QString,QString>>  getScripts(){return QMap<QString,QPair<QString,QString>> ();};
 	virtual void scriptableContainerWasReinitialized(){};
+	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 	QSharedPointer<AssetFactory> visualElementFactory_;
 	QSharedPointer<AssetFactory> parameterFactory_;
 	QSharedPointer<AssetFactory> controlTargetFactory_;
@@ -77,7 +76,7 @@ private:
 	QMap<QString,QString>  scriptableListProperties_;
 	bool scriptingInitialized_;
 	bool debuggingEnabled_;
-	bool isAnalysisElement_;
+	bool isAssociateElement_;
 
 private slots:
 	//This is called if something about a scriptable changed, so that the script

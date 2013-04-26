@@ -2,6 +2,7 @@
 #define _PICTODATA_H_
 
 #include "../experiment/experiment.h"
+#include "../parameter/Analysis.h"
 #include "../storage/DataStore.h"
 #include <QUuid>
 
@@ -22,6 +23,7 @@ public:
 	virtual QString assetType(){return "PictoData";};
 	virtual QString getName(){return propertyContainer_->getPropertyValue("Name").toString();};
 	QSharedPointer<Experiment> getExperiment();
+	QList<QSharedPointer<Analysis>> getAnalyses();
 
 protected:
 	virtual void postDeserialize();

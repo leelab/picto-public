@@ -7,10 +7,12 @@
 struct SearchRequest
 {
 	//The group of elements to search, ie. Experimental elements, Analysis elements, Both.
-	enum SearchGroup {INVALID_GROUP = 0x01,EXPERIMENT = 0x02,ANALYSIS = 0x04,ALL = 0x06,};
+	enum SearchGroup {INVALID_GROUP = 0x01,EXPERIMENT = 0x02,ACTIVE_ANALYSES = 0x04,INACTIVE_ANALYSES = 0x08,ALL_ANALYSES = 0x0C,EVERYTHING = 0x0E};
 	//SCRIPT - Search for existance of scripts
 	//STRING - Search for text string
-	enum SearchType {INVALID_TYPE = 0x10,SCRIPT=0x20,STRING=0x40};
+	enum SearchType {INVALID_TYPE = 0x10,SCRIPT=0x20,STRING=0x40,EXISTS=0x80};
+
+	
 
 	SearchRequest(){query = "";group = INVALID_GROUP; type = INVALID_TYPE;caseSensitive = false;enabled = false;};
 	SearchRequest(SearchGroup sGroup,SearchType sType,bool en = true,QString searchQuery = QString(),bool cSensitive = false){type = sType;group=sGroup;enabled=en;query = searchQuery;caseSensitive = cSensitive;};

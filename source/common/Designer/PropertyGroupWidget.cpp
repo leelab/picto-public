@@ -68,9 +68,12 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 void PropertyGroupWidget::clear()
 {
 	//Disconnect all tracked properties' signals from this object
+	QSharedPointer<Property> sharedPointerProp;
 	foreach(Property* prop,propToQtPropHash_.keys())
 	{
-		prop->disconnect(this);
+		sharedPointerProp = propToQtPropHash_[prop].second;
+		if(sharedPointerProp)
+			sharedPointerProp->disconnect(this);
 	}
 	propToQtPropHash_.clear();
 	propertyFactory_->clear();
@@ -102,7 +105,7 @@ void PropertyGroupWidget::addProperty(QSharedPointer<Property> prop,QtVariantPro
 		connect(prop.data(),SIGNAL(initValueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
 	else
 		connect(prop.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
-	propToQtPropHash_[prop.data()] = item;
+	propToQtPropHash_[prop.data()] = QPair<QtVariantProperty*,QSharedPointer<Property>>(item,prop);
 }
 
 void PropertyGroupWidget::addScriptProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtButtonPropertyBrowser* browser)
@@ -123,7 +126,7 @@ void PropertyGroupWidget::addScriptProperty(QSharedPointer<Property> prop,QtVari
 		connect(prop.data(),SIGNAL(initValueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
 	else
 		connect(prop.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
-	propToQtPropHash_[prop.data()] = item;
+	propToQtPropHash_[prop.data()] = QPair<QtVariantProperty*,QSharedPointer<Property>>(item,prop);
 
 }
 
@@ -146,6 +149,6 @@ void PropertyGroupWidget::propertyWasEdited(QSharedPointer<Property> prop,QVaria
 void PropertyGroupWidget::propertyWasEditedExternally(Property* prop,QVariant val)
 {
 	Q_ASSERT(propToQtPropHash_.contains(prop));
-	QtVariantProperty *qtProp = propToQtPropHash_.value(prop);
+	QtVariantProperty *qtProp = propToQtPropHash_.value(prop).first;
 	qtProp->setValue(val);
 }

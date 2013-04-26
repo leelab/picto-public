@@ -58,7 +58,7 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	Viewer(parent),
 	serverChannel_(0),
 	activeExperiment_(0),
-	activeDesign_(0),
+	activeDesignRoot_(0),
 	statusBar_(NULL),
 	isAuthorized_(false),
 	propertyFrame_(NULL),
@@ -613,7 +613,7 @@ void RemoteViewer::enterState()
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setTabEnabled(0,true);
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
-		activeExpName_->setText(activeDesign_->getDesignName());
+		activeExpName_->setText(activeDesignRoot_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 		{
@@ -642,7 +642,7 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
-		activeExpName_->setText(activeDesign_->getDesignName());
+		activeExpName_->setText(activeDesignRoot_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
 		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
@@ -671,7 +671,7 @@ void RemoteViewer::enterState()
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
-		activeExpName_->setText(activeDesign_->getDesignName());
+		activeExpName_->setText(activeDesignRoot_->getDesignName());
 		propertyFrame_->setEnabled(isAuthorized_);
 		generateTaskList();
 		foreach(QWidget * outSigWidg, outputSignalsWidgets_)
@@ -697,7 +697,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		propertyFrame_->setEnabled(false);
 		currentRunViewer_->clear();
-		activeExpName_->setText(activeDesign_->getDesignName());
+		activeExpName_->setText(activeDesignRoot_->getDesignName());
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
@@ -731,16 +731,6 @@ void RemoteViewer::init()
 		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
 	}
 	myDesignRoot_->enableRunMode(true);
-
-	QSharedPointer<Design> design = myDesignRoot_->getDesign("Experiment",0);
-	experiment_ = QSharedPointer<Experiment>();
-	if(!design)
-	{
-		QMessageBox msg;
-		msg.setText("Failed to load current experiment.");
-		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
-		msg.exec();
-	}
 	if(!myDesignRoot_->compiles())
 	{
 		QMessageBox msg;
@@ -749,8 +739,16 @@ void RemoteViewer::init()
 		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
 		msg.exec();
 	}
-	if(design)
-		experiment_ = design->getRootAsset().staticCast<Experiment>();
+	
+	experiment_ = myDesignRoot_->getExperiment().staticCast<Experiment>();
+	if(!experiment_)
+	{
+		QMessageBox msg;
+		msg.setText("Failed to load current experiment.");
+		msg.setIconPixmap(QPixmap(":/icons/triangle.png"));
+		msg.exec();
+	}
+
 	if(currState_ == InitState)
 	{	//The remote viewer was just created.  Initialize it by running updateState once.
 		updateState();
@@ -1639,10 +1637,10 @@ bool RemoteViewer::startSession()
 
 	QByteArray dataXml = myDesignRoot_->getDesignRootText().toUtf8();
 
-	QSharedPointer<ExperimentConfig> expConfig = experiment_->getExperimentConfig();
-	if(!expConfig)
+	QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
+	if(!designConfig)
 		return false;
-	dataXml.append(expConfig->toXml().toUtf8());
+	dataXml.append(designConfig->toXml().toUtf8());
 	startSessCommand->setContent(dataXml);
 	startSessCommand->setFieldValue("Content-Length",QString("%1").arg(dataXml.length()));
 	startSessCommand->setFieldValue("Observer-ID",observerId_.toString());
@@ -1774,14 +1772,14 @@ bool RemoteViewer::joinSession()
 	{
 		sessionId_ = remoteSessionId;
 		//Extract the design/experiment xml
-		activeDesign_ = QSharedPointer<DesignRoot>(new DesignRoot());
-		if(!activeDesign_->resetDesignRoot(QString(content)))
+		activeDesignRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
+		if(!activeDesignRoot_->resetDesignRoot(QString(content)))
 		{
 			setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"),true);
 			return false;
 		}
-		activeDesign_->enableRunMode(true);
-		activeExperiment_ = activeDesign_->getDesign("Experiment",0)->getRootAsset().staticCast<Experiment>();
+		activeDesignRoot_->enableRunMode(true);
+		activeExperiment_ = activeDesignRoot_->getExperiment().staticCast<Experiment>();
 	}
 	activeExperiment_->setEngine(engine_);
 	updater_->initForNewSession();

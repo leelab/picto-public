@@ -498,19 +498,19 @@ QSharedPointer<CommandChannel> PictoEngine::getFrontPanelEventChannel()
 	return fpEventChannel_;
 }
 
-void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
-{
-	if(propTable_ == propTable)
-		return;
-	if(propTable_)
-	{
-		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-	}
-	propTable_ = propTable;	
-	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-}
+//void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
+//{
+//	if(propTable_ == propTable)
+//		return;
+//	if(propTable_)
+//	{
+//		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+//		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+//	}
+//	propTable_ = propTable;	
+//	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+//	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+//}
 
 void PictoEngine::sendAllPropertyValuesToServer()
 {
@@ -525,6 +525,24 @@ void PictoEngine::setSessionId(QUuid sessionId)
 		dataCommandChannel_->setSessionId(sessionId_);
 	if(!updateCommandChannel_.isNull())
 		updateCommandChannel_->setSessionId(sessionId_);
+}
+
+void PictoEngine::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
+{
+	if(designConfig_ == designConfig)
+		return;
+	designConfig_ = designConfig;
+	if(propTable_)
+	{
+		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+	}
+	propTable_.clear();
+	if(designConfig_.isNull())
+		return;
+	propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(getDesignConfig()));
+	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
 }
 
 void PictoEngine::stop()

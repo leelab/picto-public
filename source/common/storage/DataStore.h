@@ -62,14 +62,15 @@ public:
 	QStringList getDefinedChildTags(){return factories_.keys();};
 	QStringList getOrderedPropertyList(){return orderedPropList_;};
 	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
-	QList<QSharedPointer<Asset>> getAnalysisChildren(QUuid analysisId, QString tagName);
-	virtual QList<QUuid> getAttachedAnalysisIds();
+	QList<QSharedPointer<Asset>> getAssociateChildren(QUuid associateId, QString tagName);
+	virtual QList<QUuid> getAttachedAssociateIds();
 	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
 	virtual QString assetType(){return "DataStore";};
 	QSharedPointer<PropertyContainer> getPropertyContainer(){return propertyContainer_;};
 	QStringList getValidChildTags();
 	QSharedPointer<AssetFactory> getAssetFactory(QString tagName);
 	QSharedPointer<Asset> createChildAsset(QString tagName,QString type,QString& error);
+	QSharedPointer<Asset> importChildAsset(QString childXml,QString& error);
 	void clear();
 	virtual void setPropertyRuntimeEditable(QString propName, bool editable = true);
 	QList<QSharedPointer<DataStore>> getRuntimeEditableDescendants();
@@ -82,6 +83,7 @@ public:
 
 	virtual void upgradeVersion(QString deserializedVersion);
 
+	virtual bool isPartOfSearch(SearchRequest searchRequest);
 	virtual bool searchForQuery(SearchRequest searchRequest);
 	bool searchRecursivelyForQuery(SearchRequest searchRequest);
 	bool searchChildrenForQuery(SearchRequest searchRequest);
@@ -89,16 +91,23 @@ public:
 	bool searchParentForQuery(SearchRequest searchRequest);
 	bool searchAncestorsForQuery(SearchRequest searchRequest);
 
-	bool AddAnalysisChild(QUuid analysisId, int parentId, QString tagName, QSharedPointer<Asset> child);
-	bool AddAnalysisChild(QUuid analysisId, QString parentPath, QString tagName, QSharedPointer<Asset> child);
-	virtual void AddAnalysisChild(QUuid analysisId, QString tagName, QSharedPointer<Asset> child);
-	void ClearAnalysisDescendants(QUuid analysisId);
-	void ClearAllAnalysisDescendants();
-	virtual void ClearAnalysisChildren(QUuid analysisId);
-	void ClearAllAnalysisChildren();
+	bool AddAssociateChild(QUuid associateId, int parentId, QString tagName, QSharedPointer<Asset> child);
+	bool AddAssociateChild(QUuid associateId, QString parentPath, QString tagName, QSharedPointer<Asset> child);
+	virtual void AddAssociateChild(QUuid associateId, QString tagName, QSharedPointer<Asset> child);
+	void ClearAssociateDescendants(QUuid associateId);
+	void ClearAllAssociateDescendants();
+	virtual void ClearAssociateChildren(QUuid associateId);
+	void ClearAllAssociateChildren();
+	
+	//Used as part of runtime checking for non-experiment scripts changing experimental properties
+	//This can be called by any AssociateElement to set an "Associate" flag on its descendant
+	//properties.  Properties without this flag will then report if they have been changed
+	//when they shouldn't have been.
+	void setDescendantPropertiesAsAssociates();
 
 signals:
 	void childAddedAfterDeserialize(QSharedPointer<Asset> newChild);
+	void associateChildEdited();
 public slots:
 	void childEdited();
 
@@ -138,16 +147,17 @@ protected:
 	void AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory);
 	void AddChild(QString tagName, QSharedPointer<Asset> child);
 
+	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
+
 	QSharedPointer<PropertyContainer> propertyContainer_;
 	//--------------------------------------------------------
-
 
 
 private:
 	
 	//AutoSerialization Stuff---------------------------------
 	QMap<QString,QList<QSharedPointer<Asset>>> children_;
-	QMap<QUuid,QMap<QString,QList<QSharedPointer<Asset>>>> analysisChildrenByGuid_;
+	QMap<QUuid,QMap<QString,QList<QSharedPointer<Asset>>>> associateChildrenByGuid_;
 	QMap<QString,QSharedPointer<AssetFactory>> factories_;
 	QStringList orderedPropList_;
 	QString tagText_;

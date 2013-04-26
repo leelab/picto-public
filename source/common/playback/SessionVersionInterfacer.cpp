@@ -132,11 +132,11 @@ QString SessionVersionInterfacer::updateSessionConfigFromSessionAssets()
 	//Set new asset ids to all assets
 	////////////////////////////////////////////////
 	//Start by setting all asset ids back to zero, any that are not reset with
-	//values from the session will be fixed by the experimentConfig later on.
-	QSharedPointer<ExperimentConfig> expConfig = experiment_->getExperimentConfig();
-	if(!expConfig)
-		return "Experiment had no associated Experiment Config object";
-	QList<QWeakPointer<Asset>> assets = expConfig->getAssets();
+	//values from the session will be fixed by the DesignConfig later on.
+	QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
+	if(!designConfig)
+		return "Experiment had no associated Design Config object";
+	QList<QWeakPointer<Asset>> assets = designConfig->getAssets();
 	QSharedPointer<Asset> strongAsset;
 	foreach(QWeakPointer<Asset> weakAsset,assets)
 	{
@@ -152,22 +152,22 @@ QString SessionVersionInterfacer::updateSessionConfigFromSessionAssets()
 	QString r = recurseResetAssetIds(experiment_,nodesById_[experimentIndex]);
 
 	////////////////////////////////////////////////
-	//Reset experiment config, and add all assets again
+	//Reset Design Config, and add all assets again
 	////////////////////////////////////////////////
-	expConfig->reset();
+	designConfig->reset();
 	foreach(QWeakPointer<Asset> weakAsset,assets)
 	{
 		strongAsset = weakAsset.toStrongRef();
 		if(strongAsset)
 		{
 			qDebug(QString("B:AssetId:%1, Name:%2").arg(strongAsset->getAssetId()).arg(strongAsset->getName()).toLatin1());
-			expConfig->addManagedAsset(strongAsset);
+			designConfig->addManagedAsset(strongAsset);
 		}
 	}
-	expConfig->disallowIdDuplication();
-	expConfig->fixDuplicatedAssetIds();
+	designConfig->disallowIdDuplication();
+	designConfig->fixDuplicatedAssetIds();
 	
-assets = expConfig->getAssets();
+assets = designConfig->getAssets();
 foreach(QWeakPointer<Asset> weakAsset,assets)
 {
 	strongAsset = weakAsset.toStrongRef();

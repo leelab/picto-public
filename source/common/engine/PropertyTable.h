@@ -7,7 +7,7 @@
 #include "../common.h"
 #include "../property/property.h"
 #include "../storage/propertylookup.h"
-#include "../storage/ExperimentConfig.h"
+#include "../storage/DesignConfig.h"
 
 namespace Picto {
 
@@ -25,11 +25,9 @@ class PropertyTable : public QObject
 {
 	Q_OBJECT
 public:
-	PropertyTable(QSharedPointer<ExperimentConfig> expConfig);
-	void clear(){propTable_.clear();};
+	PropertyTable(QSharedPointer<DesignConfig> designConfig);
 	void addProperty(QSharedPointer<Property> prop);
 	void reportChangeInAllProperties();
-	QVector<QSharedPointer<Property>> propTable_;
 signals:
 	void propertyValueChanged(Property* changedProp);
 	void propertyInitValueChanged(Property* changedProp);
@@ -37,7 +35,7 @@ public slots:
 	//If updateInitProps is false, values won't be updated for InitProperties
 	void updateInitPropertyValue(int index,QString value);
 private:
-	QSharedPointer<ExperimentConfig> expConfig_;
+	QSharedPointer<DesignConfig> designConfig_;
 private slots:
 	void propValueChange(Property* changedProp,QVariant);
 	void propInitValueChange(Property* changedProp,QVariant);

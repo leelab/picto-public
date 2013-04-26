@@ -106,10 +106,10 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		QRectF iconRect(-iconDef.width_/2.0,-iconDef.height_/2.0,iconDef.width_,iconDef.height_);
 		returnVal->setRect(iconRect);
 		returnVal->setSvgIcon(iconDef.fileName_);
-		QSharedPointer<UIInfo> uiInfo = getUIInfo(asset);
-		if(!uiInfo.isNull())
+		QSharedPointer<UIEnabled> uiEnabled = asset.dynamicCast<UIEnabled>();
+		if(uiEnabled)
 		{
-			QPointF pos = uiInfo.staticCast<UIInfo>()->getPos();
+			QPointF pos = uiEnabled->getPos();
 			if(!scene_->sceneRect().contains(pos))
 				pos = scene_->sceneRect().center();
 			returnVal->setPos(pos);
@@ -135,13 +135,4 @@ IconDef DiagramItemFactory::getIconDef(QSharedPointer<Asset> asset)
 	QSharedPointer<UIEnabled> uiEnabled = asset.staticCast<UIEnabled>();
 	Q_ASSERT_X(iconDefs_.contains(uiEnabled->getUITemplate()),"DiagramItemFactory::getIconDef","Unknown UI Template for this Asset.");
 	return iconDefs_[uiEnabled->getUITemplate()];
-}
-
-QSharedPointer<UIInfo> DiagramItemFactory::getUIInfo(QSharedPointer<Asset> asset)
-{
-	Q_ASSERT_X(!asset.dynamicCast<UIEnabled>().isNull(),"DiagramItemFactory::getIconDef","Only assets that are UIEnabled can used in the DiagramItemFactory.");
-	QSharedPointer<UIEnabled> uiEnabled = asset.staticCast<UIEnabled>();
-	QList<QSharedPointer<Asset>> UIInfoList = uiEnabled->getGeneratedChildren("UIInfo");
-	Q_ASSERT(UIInfoList.size());
-	return UIInfoList.first().staticCast<UIInfo>();
 }

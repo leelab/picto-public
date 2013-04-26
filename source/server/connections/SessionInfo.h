@@ -57,7 +57,7 @@
 class SessionInfo
 {
 public:
-	static QSharedPointer<SessionInfo> CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
+	static QSharedPointer<SessionInfo> CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
 	static QSharedPointer<SessionInfo> LoadSession(QString sessionID, QString databaseFilePath);
 	static void deleteSession(SessionInfo* session);
 	virtual ~SessionInfo();
@@ -114,7 +114,7 @@ public:
 	friend class ConnectionManager;
 
 private:
-	SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password);
+	SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
 	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
 	void LoadBaseSessionDatabase(QString path, QString databaseName);
@@ -151,7 +151,7 @@ private:
 	bool ignoreComponents_;
 	QMap<QString,bool> flushEnabled_;
 	QByteArray experimentXml_;
-	QByteArray experimentConfig_;
+	QByteArray DesignConfig_;
 	QString baseSessionDbFilepath_;
 	QString timeCreated_;
 	double latestNeuralTimestamp_;

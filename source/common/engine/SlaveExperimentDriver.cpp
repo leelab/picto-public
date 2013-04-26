@@ -7,7 +7,7 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 {
 	experiment_ = exp;
 	updater_ = updater;
-	expConfig_ = experiment_->getExperimentConfig();
+	designConfig_ = experiment_->getDesignConfig();
 	frameTimer_.restart();
 
 	//Initialize scripting for this experiment in case this hasn't been done yet
@@ -37,7 +37,7 @@ void SlaveExperimentDriver::renderFrame()
 
 void SlaveExperimentDriver::masterPropertyValueChanged(int propId, QString value)
 {
-	QSharedPointer<Asset> asset = expConfig_->getAsset(propId);
+	QSharedPointer<Asset> asset = designConfig_->getAsset(propId);
 	Q_ASSERT(asset && asset->inherits("Picto::Property"));
 	if(propId == 3329)
 	{
@@ -49,7 +49,7 @@ void SlaveExperimentDriver::masterPropertyValueChanged(int propId, QString value
 }
 void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString value)
 {
-	QSharedPointer<Asset> asset = expConfig_->getAsset(propId);
+	QSharedPointer<Asset> asset = designConfig_->getAsset(propId);
 	Q_ASSERT(asset && asset->inherits("Picto::Property"));
 	if(propId == 3329)
 	{
@@ -61,7 +61,7 @@ void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString v
 }
 void SlaveExperimentDriver::masterTransitionActivated(int transId)
 {
-	QSharedPointer<Asset> asset = expConfig_->getAsset(transId);
+	QSharedPointer<Asset> asset = designConfig_->getAsset(transId);
 	if(!asset || !asset->inherits("Picto::Transition"))
 	{
 		Q_ASSERT(!asset);

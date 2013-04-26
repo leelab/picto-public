@@ -61,9 +61,9 @@ QString ScriptController::getResult()
 void ScriptController::upgradeVersion(QString deserializedVersion)
 {
 	ControlElement::upgradeVersion(deserializedVersion);
-	if(deserializedVersion < "0.0.3")
-	{	//Before 0.0.3, Script controllers had a single required result, "Done" that was
-		//triggered if the script returned a boolean true value.  As of Syntax version 0.0.3,
+	if(deserializedVersion < "0.0.1")
+	{	//Before 0.0.1, Script controllers had a single required result, "Done" that was
+		//triggered if the script returned a boolean true value.  As of Syntax version 0.0.1,
 		//the user can set as many results as they want with the result chosen by matching the
 		//script's return string to the result name.  To upgrade, we add a "Done" result.  This
 		//will cause this object's parent to hook up any saved "Done" result transitions to that

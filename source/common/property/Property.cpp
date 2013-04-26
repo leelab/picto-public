@@ -9,7 +9,9 @@ namespace Picto {
 
 bool Property::hadObsoleteSerialSyntax_ = false;
 bool Property::valueWasChanged_ = true;
+bool Property::expValueWasChanged_ = true;
 QString Property::changedValueName_ = "";
+QString Property::changedExpValueName_ = "";
 
 Property::Property(int type, QString name, QVariant value) :
 saveValue_(value),
@@ -26,7 +28,8 @@ assetId_(0),
 visible_(true),
 serialSyntaxUpgraded_(false),
 syncInitAndRunVals_(false),
-runMode_(false)
+runMode_(false),
+associateProperty_(false)
 {
 	//Add the ID serialization attribute so that we can read in this property's ID.
 	AddSerializationAttribute("id");
@@ -393,6 +396,11 @@ void Property::setRunValuePrivate(QVariant _value)
 		{
 			valueWasChanged_ = true;
 			changedValueName_ = getName();
+		}
+		if(!expValueWasChanged_ && !associateProperty_)
+		{
+			expValueWasChanged_ = true;
+			changedExpValueName_ = getName();
 		}
 		emit valueChanged(this,runValue_);
 	}

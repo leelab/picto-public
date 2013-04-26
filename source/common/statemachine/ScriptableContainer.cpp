@@ -10,7 +10,7 @@
 #include "ScriptableContainer.h"
 #include "../property/EnumProperty.h"
 
-#include "../parameter/AnalysisElement.h"
+#include "../parameter/AssociateElement.h"
 
 #include "../parameter/BooleanParameter.h"
 #include "../parameter/ChoiceParameter.h"
@@ -60,7 +60,7 @@ ScriptableContainer::ScriptableContainer()
 	scriptingInitialized_(false),
 	debuggingEnabled_(false)
 {
-	isAnalysisElement_ = dynamic_cast<AnalysisElement*>(this);
+	isAssociateElement_ = dynamic_cast<AssociateElement*>(this);
 	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
 	scriptFunctionFactory_->addAssetType("ScriptFunction",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
@@ -168,16 +168,16 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 	if(scriptable.isNull())
 		return;
 	QSharedPointer<Scriptable> strScriptable = scriptable.toStrongRef();
-	QSharedPointer<AnalysisElement> anaElement = strScriptable.dynamicCast<AnalysisElement>();
-	if(anaElement)
+	QSharedPointer<AssociateElement> assocElement = strScriptable.dynamicCast<AssociateElement>();
+	if(assocElement)
 	{
-		//The input scriptable is part of an Analysis.  Only add it if its part of the same analysis
+		//The input scriptable is part of an Associate.  Only add it if its part of the same Associate
 		//as me
-		if(isAnalysisElement_)
+		if(isAssociateElement_)
 		{
-			QUuid scriptableAnaId = anaElement->getAnalysisId();
-			AnalysisElement* thisAsAnaElem = dynamic_cast<AnalysisElement*>(this);
-			if(thisAsAnaElem->getAnalysisId() != scriptableAnaId)
+			QUuid scriptableAssocId = assocElement->getAssociateId();
+			AssociateElement* thisAsAssocElem = dynamic_cast<AssociateElement*>(this);
+			if(thisAsAssocElem->getAssociateId() != scriptableAssocId)
 				return;
 			scriptables_.push_back(scriptable);
 		}
@@ -324,23 +324,23 @@ QString ScriptableContainer::getInfo()
 	return returnVal;
 }
 
-void ScriptableContainer::ClearAnalysisChildren(QUuid analysisId)
+void ScriptableContainer::ClearAssociateChildren(QUuid associateId)
 {
-	Scriptable::ClearAnalysisChildren(analysisId);
+	Scriptable::ClearAssociateChildren(associateId);
 
-	//Go through the scriptables_ list and remove all analysis children with the input analysis id.
+	//Go through the scriptables_ list and remove all associate children with the input associate id.
 	bool somethingWasRemoved = false;
-	AnalysisElement* analysisElem;
+	AssociateElement* associateElem;
 	for(QList<QWeakPointer<Scriptable>>::iterator iter = scriptables_.begin();iter!=scriptables_.end();)
 	{
 		Q_ASSERT(!iter->isNull());
-		analysisElem = dynamic_cast<AnalysisElement*>(iter->data());
-		if(!analysisElem)
+		associateElem = dynamic_cast<AssociateElement*>(iter->data());
+		if(!associateElem)
 		{
 			iter++;
 			continue;
 		}
-		if(analysisElem->getAnalysisId() == analysisId)
+		if(associateElem->getAssociateId() == associateId)
 		{
 			iter = scriptables_.erase(iter);
 			somethingWasRemoved = true;
@@ -354,58 +354,6 @@ void ScriptableContainer::ClearAnalysisChildren(QUuid analysisId)
 		//If we removed a scriptable, scripting is no longer properly initialized.
 		scriptingInitialized_ = false;
 	}
-}
-
-
-bool ScriptableContainer::searchForQuery(SearchRequest searchRequest)
-{
-	if(Scriptable::searchForQuery(searchRequest))
-		return true;
-	switch(searchRequest.type)
-	{
-	case SearchRequest::SCRIPT:
-		{
-			//Check to see if this object contains any non-empty scripts
-			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
-			QSharedPointer<Property> currScriptProp;
-			QString currScript;
-			foreach(QString key,scriptMap.keys())
-			{
-				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
-				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
-				if(currScriptProp.isNull())
-					continue;
-				if(!currScriptProp->value().toString().isEmpty())
-					return true;
-			}
-		}
-		break;
-	case SearchRequest::STRING:
-		{
-			//Search through my scripts to see if any contain the query string
-			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
-			QSharedPointer<Property> currScriptProp;
-			QString currScript;
-			foreach(QString key,scriptMap.keys())
-			{
-				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
-				//Search script inputs
-				if(inputsNamePair.first.contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
-					return true;
-
-				//Search script contents
-				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
-				if(currScriptProp.isNull())
-					continue;
-				if(currScriptProp->value().toString().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
-					return true;
-			}
-		}
-		break;
-	default:
-		return false;
-	};
-	return false;
 }
 
 void ScriptableContainer::runScript(QString scriptName)
@@ -474,6 +422,57 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	//	}
 	//}
 	return true;
+}
+
+bool ScriptableContainer::executeSearchAlgorithm(SearchRequest searchRequest)
+{
+	if(Scriptable::executeSearchAlgorithm(searchRequest))
+		return true;
+	switch(searchRequest.type)
+	{
+	case SearchRequest::SCRIPT:
+		{
+			//Check to see if this object contains any non-empty scripts
+			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
+			QSharedPointer<Property> currScriptProp;
+			QString currScript;
+			foreach(QString key,scriptMap.keys())
+			{
+				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
+				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
+				if(currScriptProp.isNull())
+					continue;
+				if(!currScriptProp->value().toString().isEmpty())
+					return true;
+			}
+		}
+		break;
+	case SearchRequest::STRING:
+		{
+			//Search through my scripts to see if any contain the query string
+			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
+			QSharedPointer<Property> currScriptProp;
+			QString currScript;
+			foreach(QString key,scriptMap.keys())
+			{
+				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
+				//Search script inputs
+				if(inputsNamePair.first.contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+					return true;
+
+				//Search script contents
+				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
+				if(currScriptProp.isNull())
+					continue;
+				if(currScriptProp->value().toString().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+					return true;
+			}
+		}
+		break;
+	default:
+		return false;
+	};
+	return false;
 }
 
 bool ScriptableContainer::bindScriptablesToScriptEngine(QScriptEngine &engine)

@@ -1,6 +1,6 @@
 #include "SessionInfo.h"
 #include "ConnectionManager.h"
-#include "../../common/storage/experimentconfig.h"
+#include "../../common/storage/DesignConfig.h"
 #include "../../common/storage/SignalChannelInfo.h"
 
 #include <QDateTime>
@@ -23,11 +23,11 @@
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
-QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password)
+QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password)
 {
 	//Creates a shared pointer for the object that will use the deleteSession function to actually delete
 	//the object
-	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentName,directorName,experimentXml,experimentConfig,initialObserverId, password),&deleteSession);
+	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentName,directorName,experimentXml,DesignConfig,initialObserverId, password),&deleteSession);
 	loadedSessions_[returnVal->sessionId()] = QWeakPointer<SessionInfo>(returnVal);
 	return returnVal;
 }
@@ -77,9 +77,9 @@ void SessionInfo::deleteSession(SessionInfo* session)
 	qDebug("Session: " + sessionId.toLatin1() + " has been unloaded!");
 }
 
-SessionInfo::SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray experimentConfig, QUuid initialObserverId, QString password):
+SessionInfo::SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password):
 	experimentXml_(experimentXml),
-	experimentConfig_(experimentConfig),
+	DesignConfig_(DesignConfig),
 	password_(password)
 {
 	InitializeVariables();
@@ -1139,7 +1139,7 @@ void SessionInfo::SetupBaseSessionDatabase()
 	bool insertTransLookup = !baseSessionDbConnection_.tables().contains("transitionlookup");
 	bool insertPropLookup = !baseSessionDbConnection_.tables().contains("propertylookup");
 	bool insertElemLookup = !baseSessionDbConnection_.tables().contains("elementlookup");
-	QSharedPointer<Picto::ExperimentConfig> expConfig;
+	QSharedPointer<Picto::DesignConfig> designConfig;
 
 	AddTablesToDatabase(&sessionQ);
 
@@ -1178,24 +1178,24 @@ void SessionInfo::SetupBaseSessionDatabase()
 
 	//Create Experiment Lookup tables
 	if(insertTransLookup || insertPropLookup || insertElemLookup)
-	{	//Only build the experimentConfig object if you need it.
-		expConfig = QSharedPointer<Picto::ExperimentConfig>(new Picto::ExperimentConfig());
-		expConfig->fromXml(experimentConfig_);
+	{	//Only build the DesignConfig object if you need it.
+		designConfig = QSharedPointer<Picto::DesignConfig>(new Picto::DesignConfig());
+		designConfig->fromXml(DesignConfig_);
 	}
-	if(expConfig)
+	if(designConfig)
 	{
 		// If the database doesn't yet contain a transition lookup table, we need to add it.
 		QList<Picto::TransInfo> transInfo;
 		QList<Picto::PropInfo> propInfo;
 		QList<Picto::AssetInfo> elemInfo;
 		if(insertTransLookup)
-			transInfo = expConfig->getTransitionInfo();
+			transInfo = designConfig->getTransitionInfo();
 		// If the database doesn't yet contain a property lookup table, we need to add it.
 		if(insertPropLookup)
-			propInfo = expConfig->getPropertyInfo();
+			propInfo = designConfig->getPropertyInfo();
 		// If the database doesn't yet contain an element lookup table, we need to add it.
 		if(insertElemLookup)
-			elemInfo = expConfig->getElementInfo();
+			elemInfo = designConfig->getElementInfo();
 
 		bool success;
 		do

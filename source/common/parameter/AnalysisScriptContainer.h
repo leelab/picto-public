@@ -3,8 +3,8 @@
 
 #include "../common.h"
 
-#include "AnalysisExpLink.h"
-#include "AnalysisElement.h"
+#include "AssociateExpLink.h"
+#include "AssociateElement.h"
 #include "../statemachine/ScriptableContainer.h"
 
 namespace Picto {
@@ -13,9 +13,9 @@ namespace Picto {
  *
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AnalysisScriptContainer : public ScriptableContainer, public AnalysisElement
+	class PICTOLIB_API AnalysisScriptContainer : public ScriptableContainer, public AssociateElement
 #else
-class AnalysisScriptContainer : public ScriptableContainer, public AnalysisElement
+class AnalysisScriptContainer : public ScriptableContainer, public AssociateElement
 #endif
 {
 	Q_OBJECT
@@ -29,15 +29,20 @@ public:
 	void runScript(ScriptType type);
 	//Returns true if this object contains a property of the input type, whether or not it is empty.
 	bool hasScriptPropertyType(ScriptType type);
+	virtual bool isPartOfSearch(SearchRequest searchRequest);
 
-	ANALYSIS_ELEMENT_IMPLEMENTATION
+	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
+	virtual QString getReturnValueError(QString scriptName,const QScriptValue& returnValue);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
 	virtual QMap<QString,QPair<QString,QString>> getScripts();
+	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
+private:
+	QString getScriptNamePrefix();
 };
 
 

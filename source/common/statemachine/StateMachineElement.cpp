@@ -6,6 +6,7 @@
 #include "../protocol/ProtocolResponse.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/AssetFactory.h"
+#include "../parameter/AnalysisScriptContainer.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -65,6 +66,7 @@ bool StateMachineElement::hasScripts()
 
 void StateMachineElement::runEntryScript()
 {
+	runAnalysisEntryScripts();
 	if(propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
 		return;
 	QString entryScriptName = getName().simplified().remove(' ')+"Entry";
@@ -73,10 +75,39 @@ void StateMachineElement::runEntryScript()
 
 void StateMachineElement::runExitScript()
 {
-	if(propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
+	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
+	{
+		QString exitScriptName = getName().simplified().remove(' ')+"Exit";
+		runScript(exitScriptName);
+	}
+	runAnalysisExitScripts();
+}
+
+void StateMachineElement::runAnalysisEntryScripts()
+{
+	runAnalysisScripts(StateMachineElement::ENTRY);
+}
+
+void StateMachineElement::runAnalysisExitScripts()
+{
+	runAnalysisScripts(StateMachineElement::EXIT);
+}
+
+void StateMachineElement::runAnalysisScripts(ScriptType type)
+{
+	QList<QUuid> activeAnalysisIds = getDesignConfig()->getActiveAnalysisIds();
+	if(activeAnalysisIds.isEmpty())
 		return;
-	QString exitScriptName = getName().simplified().remove(' ')+"Exit";
-	runScript(exitScriptName);
+	QList<QSharedPointer<Asset>> analysisScriptChildren;
+	QSharedPointer<AnalysisScriptContainer> scriptContainer;
+	foreach(QUuid analysisId,activeAnalysisIds)
+	{
+		analysisScriptChildren = getAssociateChildren(analysisId,"AnalysisScriptContainer");
+		if(analysisScriptChildren.isEmpty())
+			continue;
+		scriptContainer = analysisScriptChildren.first().staticCast<AnalysisScriptContainer>();
+		scriptContainer->runScript(AnalysisScriptContainer::ScriptType(type));
+	}
 }
 
 QMap<QString,QPair<QString,QString>>  StateMachineElement::getScripts()

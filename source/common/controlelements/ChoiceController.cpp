@@ -28,7 +28,7 @@ ChoiceController::ChoiceController()
 	AddDefinableProperty(QVariant::Bool,"OnTarget",false);
 	AddDefinableProperty(QVariant::Bool,"OnTargetChanged",false);
 
-	//Target Entry and Exit Scripts are obsolete as of design syntax version "0.0.3".
+	//Target Entry and Exit Scripts are obsolete as of design syntax version "0.0.1".
 	//This functionality should be handled in Frame Scripts by calling the 
 	//newly exposed userOnTarget, userEnteredTarget, userExitedTarget functions.
 	//AddDefinableProperty(QVariant::String,"TargetEntryScript","");
@@ -96,15 +96,15 @@ void ChoiceController::deactivateTargets()
 void ChoiceController::upgradeVersion(QString deserializedVersion)
 {
 	ControlElement::upgradeVersion(deserializedVersion);
-	if(deserializedVersion < "0.0.3")
-	{	// In design syntax version "0.0.3", we added userOnTarget, userEnteredTarget, userExitedTarget functions.
+	if(deserializedVersion < "0.0.1")
+	{	// In design syntax version "0.0.1", we added userOnTarget, userEnteredTarget, userExitedTarget functions.
 		// In an effort to keep the allowed script locations uniform, we are making TargetEntry
 		// and TargetExit scripts obsolete.
 		// We upgrade these older experiments by automatically adding their entry and exit scripts
 		// to the frame script and exit scripts in if(userEnteredTarget()) and if(userExitedTarget) blocks.
 
 		//WARNING!!! userOnTarget(), userEnteredTarget() and userExitedTarget() 
-		//functions cannot be used in AnalysisScripts of experiments that were saved with version below 0.0.3.  
+		//functions cannot be used in AnalysisScripts of experiments that were saved with version below 0.0.1.  
 		//This is because experiments with those versions used TargetEntry and TargetExit scripts and did not 
 		//save OnTarget or OffTarget data in their session files.  Attempting to use these functions in Analysis 
 		//Scripts would cause return of invalid data.

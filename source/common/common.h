@@ -94,7 +94,7 @@
 
 //Version MAJOR.MINOR.BUILD
 #define PICTOVERSION "1.0.12"
-#define DESIGNSYNTAXVERSION "0.0.3"
+#define DESIGNSYNTAXVERSION "0.0.1"
 //Directory name of automatic updater application and dependencies
 //It is a subdirectory of the main binary directory
 #define UPDATERDIR "updater"

@@ -35,8 +35,6 @@ public:
 	virtual QString assetType(){return "ScriptFunction";};
 	virtual QString getScriptingInfo();
 
-	virtual bool searchForQuery(SearchRequest searchRequest);
-
 public slots:
 	//setters and getters are slots so we can bind them to scripts
 
@@ -46,6 +44,7 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};
+	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 };
 
 

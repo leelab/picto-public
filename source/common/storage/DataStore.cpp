@@ -3,6 +3,7 @@
 #include "DataStore.h"
 #include "../property/Property.h"
 #include "PropertyFactory.h"
+#include "../parameter/AssociateElement.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -318,10 +319,10 @@ bool DataStore::validateTree()
 			returnVal &= child->validateTree();
 		}
 	}
-	foreach(QUuid key,analysisChildrenByGuid_.keys())
+	foreach(QUuid key,associateChildrenByGuid_.keys())
 	{
-		QMap<QString,QList<QSharedPointer<Asset>>> analysisChildren = analysisChildrenByGuid_.value(key);
-		foreach(QList<QSharedPointer<Asset>> childList,analysisChildren)
+		QMap<QString,QList<QSharedPointer<Asset>>> associateChildren = associateChildrenByGuid_.value(key);
+		foreach(QList<QSharedPointer<Asset>> childList,associateChildren)
 		{
 			foreach(QSharedPointer<Asset> child,childList)
 			{
@@ -344,10 +345,10 @@ void DataStore::setDeleted()
 			child->setDeleted();
 		}
 	}
-	foreach(QUuid key,analysisChildrenByGuid_.keys())
+	foreach(QUuid key,associateChildrenByGuid_.keys())
 	{
-		QMap<QString,QList<QSharedPointer<Asset>>> analysisChildren = analysisChildrenByGuid_.value(key);
-		foreach(QList<QSharedPointer<Asset>> AssetList,analysisChildren)
+		QMap<QString,QList<QSharedPointer<Asset>>> associateChildren = associateChildrenByGuid_.value(key);
+		foreach(QList<QSharedPointer<Asset>> AssetList,associateChildren)
 		{
 			foreach(QSharedPointer<Asset> child,AssetList)
 			{
@@ -384,12 +385,12 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 			}
 		}
 	}
-	//Now check that each individual Analysis has different names
-	foreach(QUuid key,analysisChildrenByGuid_.keys())
+	//Now check that each individual Associate child has a different name
+	foreach(QUuid key,associateChildrenByGuid_.keys())
 	{
-		QMap<QString,QList<QSharedPointer<Asset>>> analysisChildren = analysisChildrenByGuid_.value(key);
-		QMap<QString,bool> analysisNameMap;
-		foreach(QList<QSharedPointer<Asset>> assetList,analysisChildren.values())
+		QMap<QString,QList<QSharedPointer<Asset>>> associateChildren = associateChildrenByGuid_.value(key);
+		QMap<QString,bool> associateNameMap;
+		foreach(QList<QSharedPointer<Asset>> assetList,associateChildren.values())
 		{
 			foreach(QSharedPointer<Asset> child,assetList)
 			{
@@ -402,13 +403,13 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 						addError("DataStore", errMsg, xmlStreamReader);
 						return false;
 					}
-					if(analysisNameMap.contains(name))
+					if(associateNameMap.contains(name))
 					{
 						QString errMsg = QString("%1 more than one analysis element child with the same name: %2").arg(getName()).arg(name);
 						addError("DataStore", errMsg, xmlStreamReader);
 						return false;
 					}
-					analysisNameMap[name] = true;
+					associateNameMap[name] = true;
 				}
 			}
 		}
@@ -506,12 +507,19 @@ void DataStore::AddChild(QString tagName, QSharedPointer<Asset> child)
 	connect(child.data(),SIGNAL(edited()),this,SLOT(childEdited()));
 }
 
-bool DataStore::AddAnalysisChild(QUuid analysisId, int parentId, QString tagName, QSharedPointer<Asset> child)\
+bool DataStore::executeSearchAlgorithm(SearchRequest searchRequest)
 {
-	//If the parent id matches mine, add the analysis child
+	if(searchRequest.type == SearchRequest::EXISTS)
+		return true;
+	return false;
+}
+
+bool DataStore::AddAssociateChild(QUuid associateId, int parentId, QString tagName, QSharedPointer<Asset> child)\
+{
+	//If the parent id matches mine, add the associate child
 	if(parentId == getAssetId())
 	{
-		AddAnalysisChild(analysisId,tagName,child);
+		AddAssociateChild(associateId,tagName,child);
 		return true;	//The child has been added, return true.
 	}
 	//Recursively attempt to add the asset to descendants.
@@ -521,7 +529,7 @@ bool DataStore::AddAnalysisChild(QUuid analysisId, int parentId, QString tagName
 		{
 			if(asset->inherits("Picto::DataStore"))
 			{
-				if(asset.staticCast<DataStore>()->AddAnalysisChild(analysisId,parentId,tagName,child))
+				if(asset.staticCast<DataStore>()->AddAssociateChild(associateId,parentId,tagName,child))
 					return true;	//A descendant added the child
 			}
 		}
@@ -530,12 +538,12 @@ bool DataStore::AddAnalysisChild(QUuid analysisId, int parentId, QString tagName
 	return false;
 }
 
-bool DataStore::AddAnalysisChild(QUuid analysisId, QString parentPath, QString tagName, QSharedPointer<Asset> child)
+bool DataStore::AddAssociateChild(QUuid associateId, QString parentPath, QString tagName, QSharedPointer<Asset> child)
 {
-	//If the parent id matches mine, add the analysis child
+	//If the parent id matches mine, add the associate child
 	if(parentPath == getPath())
 	{
-		AddAnalysisChild(analysisId,tagName,child);
+		AddAssociateChild(associateId,tagName,child);
 		return true;	//The child has been added, return true.
 	}
 	//Recursively attempt to add the asset to descendants.
@@ -545,7 +553,7 @@ bool DataStore::AddAnalysisChild(QUuid analysisId, QString parentPath, QString t
 		{
 			if(asset->inherits("Picto::DataStore"))
 			{
-				if(asset.staticCast<DataStore>()->AddAnalysisChild(analysisId,parentPath,tagName,child))
+				if(asset.staticCast<DataStore>()->AddAssociateChild(associateId,parentPath,tagName,child))
 					return true;	//A descendant added the child
 			}
 		}
@@ -554,45 +562,75 @@ bool DataStore::AddAnalysisChild(QUuid analysisId, QString parentPath, QString t
 	return false;
 }
 
-void DataStore::AddAnalysisChild(QUuid analysisId, QString tagName, QSharedPointer<Asset> child)
+void DataStore::AddAssociateChild(QUuid associateId, QString tagName, QSharedPointer<Asset> child)
 {
-	analysisChildrenByGuid_[analysisId][tagName].push_back(child);
+	associateChildrenByGuid_[associateId][tagName].push_back(child);
+	AssociateElement* assocElement = dynamic_cast<AssociateElement*>(child.data());
+	Q_ASSERT(assocElement);
+	assocElement->linkToAsset(selfPtr());
 	emit childAddedAfterDeserialize(child);
+	connect(child.data(),SIGNAL(edited()),this,SIGNAL(associateChildEdited()));
 }
-void DataStore::ClearAnalysisDescendants(QUuid analysisId)
+void DataStore::ClearAssociateDescendants(QUuid associateId)
 {
-	ClearAnalysisChildren(analysisId);
-	//Recursively tell each child to clear its analysis descendants.
+	ClearAssociateChildren(associateId);
+	//Recursively tell each child to clear its associate descendants.
 	foreach(QList<QSharedPointer<Asset>> assetList,children_)
 	{
 		foreach(QSharedPointer<Asset> asset,assetList)
 		{
 			if(asset->inherits("Picto::DataStore"))
 			{
-				asset.staticCast<DataStore>()->ClearAnalysisDescendants(analysisId);
+				asset.staticCast<DataStore>()->ClearAssociateDescendants(associateId);
 			}
 		}
 	}
 }
 
-void DataStore::ClearAllAnalysisDescendants()
+void DataStore::ClearAllAssociateDescendants()
 {
-	foreach(QUuid analysisId,analysisChildrenByGuid_.keys())
+	foreach(QUuid associateId,associateChildrenByGuid_.keys())
 	{
-		ClearAnalysisDescendants(analysisId);
+		ClearAssociateDescendants(associateId);
 	}
 }
 
-void DataStore::ClearAnalysisChildren(QUuid analysisId)
+void DataStore::ClearAssociateChildren(QUuid associateId)
 {
-	analysisChildrenByGuid_.remove(analysisId);
+	if(!associateChildrenByGuid_.contains(associateId))
+		return;
+	//Disconnect all edited() signals
+	foreach(QList<QSharedPointer<Asset>> associateList,associateChildrenByGuid_[associateId].values())
+	{
+		foreach(QSharedPointer<Asset> associate,associateList)
+		{
+			disconnect(associate.data(),SIGNAL(edited()),this,SIGNAL(associateChildEdited()));
+		}
+	}
+	//Clear the associateId submap from the associateMap
+	associateChildrenByGuid_.remove(associateId);
 }
 
-void DataStore::ClearAllAnalysisChildren()
+void DataStore::ClearAllAssociateChildren()
 {
-	foreach(QUuid analysisId,analysisChildrenByGuid_.keys())
+	foreach(QUuid associateId,associateChildrenByGuid_.keys())
 	{
-		ClearAnalysisChildren(analysisId);
+		ClearAssociateChildren(associateId);
+	}
+}
+
+void DataStore::setDescendantPropertiesAsAssociates()
+{
+	propertyContainer_->setPropertiesAsAssociates(true);
+	foreach(QList<QSharedPointer<Asset>> assetList,children_)
+	{
+		foreach(QSharedPointer<Asset> asset,assetList)
+		{
+			if(asset->inherits("Picto::DataStore"))
+			{
+				asset.staticCast<DataStore>()->setDescendantPropertiesAsAssociates();
+			}
+		}
 	}
 }
 
@@ -603,16 +641,16 @@ QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 	return children_[tagName];
 }
 
-QList<QSharedPointer<Asset>> DataStore::getAnalysisChildren(QUuid analysisId, QString tagName)
+QList<QSharedPointer<Asset>> DataStore::getAssociateChildren(QUuid associateId, QString tagName)
 {
-	if(!analysisChildrenByGuid_.contains(analysisId) || !analysisChildrenByGuid_.value(analysisId).contains(tagName))
+	if(!associateChildrenByGuid_.contains(associateId) || !associateChildrenByGuid_.value(associateId).contains(tagName))
 		return QList<QSharedPointer<Asset>>();
-	return analysisChildrenByGuid_[analysisId][tagName];
+	return associateChildrenByGuid_[associateId][tagName];
 }
 
-QList<QUuid> DataStore::getAttachedAnalysisIds()
+QList<QUuid> DataStore::getAttachedAssociateIds()
 {
-	return analysisChildrenByGuid_.keys();
+	return associateChildrenByGuid_.keys();
 }
 
 QStringList DataStore::getValidChildTags()
@@ -648,7 +686,51 @@ QSharedPointer<Asset> DataStore::createChildAsset(QString tagName,QString type,Q
 	emit childAddedAfterDeserialize(newAsset);
 
 	//Set this asset as edited (since the child was added)
-	newAsset->setEdited();
+	setEdited();
+	return newAsset;
+}
+
+QSharedPointer<Asset> DataStore::importChildAsset(QString childXml,QString& error)
+{
+	//Get tag name and type from childXML
+	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader(childXml));
+	while(!xmlStreamReader->isStartElement() && !xmlStreamReader->atEnd())
+	{
+		xmlStreamReader->readNext();
+	}
+	if(xmlStreamReader->atEnd())
+		return QSharedPointer<Asset>();
+	QString tagName = xmlStreamReader->name().toString();
+	if(tagName.isEmpty())
+		return QSharedPointer<Asset>();
+	QString type = "";
+	if(xmlStreamReader->attributes().hasAttribute("type"))
+		type = xmlStreamReader->attributes().value("type").toString();
+
+	//Create the new asset from one of this object's factories
+	QSharedPointer<AssetFactory> factory = getAssetFactory(tagName);
+	if(factory.isNull())
+		return QSharedPointer<Asset>();
+	QSharedPointer<Asset> newAsset = factory->getAsset(error,type);
+	if(newAsset.isNull())
+		return QSharedPointer<Asset>();
+
+	//Add the child to this asset
+	AddChild(tagName,newAsset);
+
+	//Initialize the child from xml
+	bool success = newAsset->initializeFromXml(childXml);
+	if(!success)
+	{
+		newAsset->setDeleted();
+		return QSharedPointer<Asset>();
+	}
+
+	//Tell everyone that this was added now that its been deserialized and is ready.
+	emit childAddedAfterDeserialize(newAsset);
+
+	//Set this asset as edited (since the child was added)
+	setEdited();
 	return newAsset;
 }
 
@@ -665,7 +747,7 @@ void DataStore::clear()
 			asset->setDeleted();
 		}
 	}
-	ClearAllAnalysisChildren();
+	ClearAllAssociateChildren();
 }
 
 void DataStore::setPropertyRuntimeEditable(QString propName, bool editable)
@@ -752,8 +834,9 @@ void DataStore::setAssetId(int id)
 
 void DataStore::upgradeVersion(QString deserializedVersion)
 {
+	QMap<QString,QList<QSharedPointer<Asset>>> deserializedChildren = children_;
 	Asset::upgradeVersion(deserializedVersion);
-	foreach(QList<QSharedPointer<Asset>> AssetList,children_)
+	foreach(QList<QSharedPointer<Asset>> AssetList,deserializedChildren)
 	{
 		foreach(QSharedPointer<Asset> child,AssetList)
 		{
@@ -762,9 +845,19 @@ void DataStore::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+//Returns true if this object is part of the requested search (ie. It falls into the searchRequest's group
+bool DataStore::isPartOfSearch(SearchRequest searchRequest)
+{
+	if(searchRequest.group & SearchRequest::EXPERIMENT)
+		return true;
+	return false;
+}
+
 bool DataStore::searchForQuery(SearchRequest searchRequest)
 {
-	return false;
+	if(!isPartOfSearch(searchRequest))
+		return false;
+	return executeSearchAlgorithm(searchRequest);
 }
 bool DataStore::searchRecursivelyForQuery(SearchRequest searchRequest)
 {
@@ -780,6 +873,7 @@ bool DataStore::searchChildrenForQuery(SearchRequest searchRequest)
 {
 	if(!searchRequest.enabled)
 		return false;
+
 	//Call searchForQuery on all descendants 
 	QStringList childTags = getDefinedChildTags();
 	foreach(QString childTag,childTags)
@@ -790,6 +884,18 @@ bool DataStore::searchChildrenForQuery(SearchRequest searchRequest)
 			if(tagChild->inherits("Picto::DataStore"))
 			{
 				if(tagChild.staticCast<DataStore>()->searchForQuery(searchRequest))
+					return true;
+			}
+		}
+	}
+	//Call searchForQuery on all attached associates
+	foreach(QUuid associateId,associateChildrenByGuid_.keys())
+	{
+		foreach(QList<QSharedPointer<Asset>> associateList,associateChildrenByGuid_[associateId].values())
+		{
+			foreach(QSharedPointer<Asset> associate,associateList)
+			{
+				if(associate.staticCast<DataStore>()->searchForQuery(searchRequest))
 					return true;
 			}
 		}
@@ -810,6 +916,18 @@ bool DataStore::searchChildrenRecursivelyForQuery(SearchRequest searchRequest)
 			if(tagChild->inherits("Picto::DataStore"))
 			{
 				if(tagChild.staticCast<DataStore>()->searchRecursivelyForQuery(searchRequest))
+					return true;
+			}
+		}
+	}
+	//Call searchRecursivelyForQuery on all attached associates
+	foreach(QUuid associateId,associateChildrenByGuid_.keys())
+	{
+		foreach(QList<QSharedPointer<Asset>> associateList,associateChildrenByGuid_[associateId].values())
+		{
+			foreach(QSharedPointer<Asset> associate,associateList)
+			{
+				if(associate.staticCast<DataStore>()->searchForQuery(searchRequest))
 					return true;
 			}
 		}

@@ -71,7 +71,7 @@ public slots:
 	void setBackgroundPattern(QPixmap pattern){backgroundPattern_ = pattern;emit backgroundPatternChanged(backgroundPattern_);};
 	void setLineColor(const QColor color){lineColor_ = color;emit lineColorChanged(lineColor_);};
 	void setInsertionItem(QString category, QString type){insertItemCategory_ = category;insertItemType_ = type;emit insertionItemChanged(category,type);};
-	void setWindowAsset(QSharedPointer<Asset> asset);
+	void setWindowAsset(QSharedPointer<Asset> asset,bool undoable = true);
 	void setWindowAssetToParent();
 	void setWindowItemsLoaded(){emit windowItemsLoaded();};
 	void setSelectedAsset(QSharedPointer<Asset> asset);

@@ -49,9 +49,12 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
+	void rebuildScene();
 	QSharedPointer<Scene> scene_;
 	QSharedPointer<SignalChannel> sigChannel_;
 	bool hasCursor_;
+private slots:
+	void activeAnalysisIdsChanged();
 };
 
 

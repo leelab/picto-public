@@ -33,17 +33,17 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	QString password = command->getFieldValue("Password");
 	QByteArray sessionDefs;
 	QByteArray experimentXml;
-	QByteArray experimentConfig;
+	QByteArray DesignConfig;
 	QUuid observerId;
 
 	directorID = target.left(target.indexOf('/'));
 	proxyID = target.right(target.indexOf('/'));
 	sessionDefs = command->getContent();
 
-	int configStart = sessionDefs.indexOf("<ExperimentConfig>");
+	int configStart = sessionDefs.indexOf("<DesignConfig>");
 	Q_ASSERT(configStart>-1);
 	experimentXml = sessionDefs.left(configStart);
-	experimentConfig = sessionDefs.mid(configStart);
+	DesignConfig = sessionDefs.mid(configStart);
 	QString experimentName = command->getFieldValue("Experiment");
 	if(experimentName.isEmpty())
 		experimentName = "UntitledExperiment";
@@ -99,7 +99,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	}
 
 	//create the session
-	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentName, experimentXml, experimentConfig, observerId, password);
+	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentName, experimentXml, DesignConfig, observerId, password);
 	
 	if(sessionInfo.isNull())
 	{

@@ -57,7 +57,7 @@
 
 #include "diagramitem.h"
 #include "EditorState.h"
-#include "../design/Design.h"
+//#include "../design/Design.h"
 #include "../design/DesignRoot.h"
 #include "LevelUpButton.h"
 #include "../common.h"
@@ -123,7 +123,7 @@ private:
     void createToolbars();
 	bool resetEditor();
 
-	QSharedPointer<Design> design_;
+	//QSharedPointer<Design> design_;
 	QSharedPointer<DesignRoot> designRoot_;
 	QSharedPointer<EditorState> editorState_;
 	//QTextDocument designText_;
@@ -166,9 +166,6 @@ private:
     QSharedPointer<QButtonGroup> backgroundButtonGroup;
     QToolButton *fillColorToolButton;
     QToolButton *lineColorToolButton;
-    QAction *boldAction;
-    QAction *underlineAction;
-    QAction *italicAction;
     QAction *textAction;
     QAction *fillAction;
     QAction *lineAction;

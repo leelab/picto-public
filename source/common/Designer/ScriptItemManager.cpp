@@ -39,9 +39,9 @@ ScriptItemManager::ScriptItemManager(QSharedPointer<EditorState> editorState, QG
 	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
 	if(editorState_->inAnalysisTask())
 	{
-		if(!asset_.staticCast<DataStore>()->getAnalysisChildren(activeAnalysis->getAnalysisId(),"AnalysisScriptContainer").isEmpty())
+		if(!asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
 		{
-			QSharedPointer<Asset> anaScriptContainer = asset_.staticCast<DataStore>()->getAnalysisChildren(editorState_->getCurrentAnalysis()->getAnalysisId(),"AnalysisScriptContainer").first();
+			QSharedPointer<Asset> anaScriptContainer = asset_.staticCast<DataStore>()->getAssociateChildren(editorState_->getCurrentAnalysis()->getAssociateId(),"AnalysisScriptContainer").first();
 			performAnalysisScriptContainerOps(anaScriptContainer);
 		}
 		else
@@ -116,11 +116,11 @@ void ScriptItemManager::updateScriptItems()
 		{	//if its an analysis script
 			//If the object does not have an AnalysisScriptContainer, skip this script
 			QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-			if(!editorState_->inAnalysisTask() || asset_.staticCast<DataStore>()->getAnalysisChildren(activeAnalysis->getAnalysisId(),"AnalysisScriptContainer").isEmpty())
+			if(!editorState_->inAnalysisTask() || asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
 				continue;
 
 			//Set the property container from the scriptContainer
-			QSharedPointer<AnalysisScriptContainer> scriptContainer = asset_.staticCast<DataStore>()->getAnalysisChildren(activeAnalysis->getAnalysisId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
+			QSharedPointer<AnalysisScriptContainer> scriptContainer = asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
 			propContainer = scriptContainer.staticCast<DataStore>()->getPropertyContainer();
 		}
 		//Check the property container for the prop

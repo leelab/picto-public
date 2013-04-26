@@ -35,7 +35,8 @@ QSharedPointer<Scene> Scene::createScene()
 //occur in a separate thread without rewriting the whole system.  The method that we
 //are using for now is to simply setup the render routine, then pause the Control logic
 //thread until the render routine is called by the UI.  This happens in the function
-//below.
+//below. Note that, when running on the PictoDirector there is only one thread and
+//so there is no pause.
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 {
 	//Setup rendering routine.

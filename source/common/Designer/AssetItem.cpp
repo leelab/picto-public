@@ -34,9 +34,9 @@ lastSvgIcon_(NULL)
 
 	//Set up search functionality
 	//Set highlight colors for different groups of search
-	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ANALYSIS,SearchRequest::SCRIPT),QColor(255,255,0,180));
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ACTIVE_ANALYSES,SearchRequest::SCRIPT),QColor(255,255,0,180));
 	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT),QColor(0,0,255,220));
-	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ANALYSIS,SearchRequest::STRING),QColor(255,0,0,180));
+	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::ACTIVE_ANALYSES,SearchRequest::STRING),QColor(255,0,0,180));
 	setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::STRING),QColor(255,0,0,180));
 
 	//Connect search signal to this object
@@ -45,6 +45,8 @@ lastSvgIcon_(NULL)
 	//Initialize data by triggering asset edited
 	assetEdited();
 	connect(asset_.data(),SIGNAL(edited()),this,SLOT(assetEdited()));
+	if(asset_->inherits("Picto::DataStore"))
+		connect(asset_.staticCast<DataStore>().data(),SIGNAL(associateChildEdited()),this,SLOT(assetEdited()));
 }
 
 AssetItem::~AssetItem()
@@ -148,8 +150,8 @@ QGraphicsSvgItem* AssetItem::getSvgItem()
 
 void AssetItem::searchRequested(SearchRequest searchRequest)
 {
-	if(searchRequest.group == SearchRequest::ANALYSIS)
-		return;
+	//if(searchRequest.group == SearchRequest::ACTIVE_ANALYSES)
+	//	return;
 	QSharedPointer<ScriptableContainer> scriptableContainer;
 	if(asset_->inherits("Picto::ScriptableContainer"))
 		scriptableContainer = asset_.staticCast<ScriptableContainer>();

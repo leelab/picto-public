@@ -67,6 +67,9 @@ public:
 	void setVisible(bool visible){visible_ = visible;};
 	//Gets whether this property should be visible in GUI property editors.  Default is true.
 	bool isVisible(){return visible_;};
+	//Sets this property as an associate property.  This is used with read-only monitoring
+	//to allow for runtime checks of whether non-experimental scripts attempt to write to experimental properties.
+	void setAssociateProperty(bool isAssociate){associateProperty_ = isAssociate;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
@@ -97,8 +100,11 @@ public:
 	//The first value to have been changed since startMonitoringForValueChange()
 	//was called is available from changedValueName().
 	static void startMonitoringForValueChange(){valueWasChanged_ = false;};
+	static void startMonitoringForExperimentalValueChange(){expValueWasChanged_ = false;};
 	static bool valueWasChanged(){return valueWasChanged_;};
+	static bool experimentalValueWasChanged(){return expValueWasChanged_;};
 	static QString changedValueName(){return changedValueName_;};
+	static QString changedExperimentalValueName(){return changedExpValueName_;};
 
 public slots:
 	void setInitValue(QVariant _value);
@@ -156,9 +162,12 @@ private:
 	QMap<QString,QVariant> attributes_;
 	bool visible_;
 	bool serialSyntaxUpgraded_;
+	bool associateProperty_;
 	static bool hadObsoleteSerialSyntax_;
 	static bool valueWasChanged_;
+	static bool expValueWasChanged_;
 	static QString changedValueName_;
+	static QString changedExpValueName_;
 
 //private slots:
 //	void valueChanged(QtProperty *property, const QVariant &val);

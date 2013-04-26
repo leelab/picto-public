@@ -77,7 +77,7 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 
 	//If this object doesn't have an AnalysisScriptContainer and their is an active analysis, add one now
 	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-	if(editorState_->inAnalysisTask() && asset.staticCast<DataStore>()->getAnalysisChildren(activeAnalysis->getAnalysisId(),"AnalysisScriptContainer").isEmpty())
+	if(editorState_->inAnalysisTask() && asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
 	{
 		//create the AnalysisScriptContainer, put it in the analysis 
 		//and link it to the object
@@ -90,14 +90,12 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 		{//Its a state, add a frame script
 			newScriptContainer->createChildAsset("AnalysisFrameScript",QString(),QString());
 		}
-		//Link this asset to the newScriptContainer
-		newScriptContainer.staticCast<AnalysisElement>()->linkToAsset(asset);
 		//Add this newScriptContainer to the asset
-		asset.staticCast<DataStore>()->AddAnalysisChild(newScriptContainer->getAnalysisId(),"AnalysisScriptContainer",newScriptContainer);
+		asset.staticCast<DataStore>()->AddAssociateChild(newScriptContainer->getAssociateId(),"AnalysisScriptContainer",newScriptContainer);
 	}
 	QSharedPointer<AnalysisScriptContainer> scriptContainer;
 	if(editorState_->inAnalysisTask())
-		scriptContainer = asset.staticCast<DataStore>()->getAnalysisChildren(activeAnalysis->getAnalysisId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
+		scriptContainer = asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
 	QSharedPointer<PropertyContainer> propContainer;
 	QVector<QSharedPointer<Property>> propVec;
 	foreach(QString propTag,orderedScriptNames_)

@@ -8,7 +8,7 @@
 #include <QCoreApplication>
 
 #include "OutputElementContainer.h"
-#include "../parameter/AnalysisElement.h"
+#include "../parameter/AssociateElement.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -50,22 +50,22 @@ QList<QSharedPointer<OutputElement>> OutputElementContainer::getOutputElementLis
 	return outputElements_;
 }
 
-void OutputElementContainer::ClearAnalysisChildren(QUuid analysisId)
+void OutputElementContainer::ClearAssociateChildren(QUuid associateId)
 {
-	StateMachineElement::ClearAnalysisChildren(analysisId);
+	StateMachineElement::ClearAssociateChildren(associateId);
 
-	//Go through the outputelements list and remove all analysis children with the input analysis id.
+	//Go through the outputelements list and remove all associate children with the input associate id.
 	bool somethingWasRemoved = false;
-	AnalysisElement* analysisElem;
+	AssociateElement* associateElem;
 	for(QList<QSharedPointer<OutputElement>>::iterator iter = outputElements_.begin();iter!=outputElements_.end();)
 	{
-		analysisElem = dynamic_cast<AnalysisElement*>(iter->data());
-		if(!analysisElem)
+		associateElem = dynamic_cast<AssociateElement*>(iter->data());
+		if(!associateElem)
 		{
 			iter++;
 			continue;
 		}
-		if(analysisElem->getAnalysisId() == analysisId)
+		if(associateElem->getAssociateId() == associateId)
 		{
 			iter = outputElements_.erase(iter);
 			somethingWasRemoved = true;
