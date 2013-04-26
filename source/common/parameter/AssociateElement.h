@@ -5,7 +5,7 @@
 #include <QUuid>
 #include "../storage/Asset.h"
 #include "AssociateRoot.h"
-#include "AssociateExpLink.h"
+#include "AssociateHostLink.h"
 #include "../storage/DataStore.h"
 #include "../common.h"
 
@@ -16,18 +16,18 @@ namespace Picto {
 //to all AssociateElements to inherit from design elements but still have common properties.
 #define ASSOCIATE_ELEMENT_IMPLEMENTATION 	virtual QString getParentPath()	\
 											{								\
-												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
+												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
 												return lnk->getParentPath();\
 											};	\
 											\
 											virtual int getParentId()	\
 											{								\
-												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
+												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
 												return lnk->getParentId();\
 											};	\
 											virtual void linkToAsset(QSharedPointer<Asset> asset)	\
 											{								\
-												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
+												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
 												lnk->linkToAsset(asset);	\
 											};	\
 											virtual AttachmentResult attachToLinkedAsset(bool tryLinkingById)	\
@@ -59,11 +59,11 @@ namespace Picto {
 											};	\
 											virtual QSharedPointer<Asset> getLinkedAsset()	\
 											{	\
-												QSharedPointer<AssociateExpLink> lnk = getGeneratedChildren("ExpLink").first().staticCast<AssociateExpLink>();	\
+												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
 												return lnk->getLinkedAsset();	\
 											};
 
-#define EXP_LINK_FACTORY_CREATION AddDefinableObjectFactory("ExpLink",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateExpLink::Create))));
+#define EXP_LINK_FACTORY_CREATION AddDefinableObjectFactory("HostLink",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateHostLink::Create))));
 
 /*! \brief Interface to AssociateRoot Elements
  *

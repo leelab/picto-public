@@ -1,10 +1,10 @@
-#ifndef _AssociateExpLink_H_
-#define _AssociateExpLink_H_
+#ifndef _AssociateHostLink_H_
+#define _AssociateHostLink_H_
 
 #include <QSharedPointer>
 #include "../common.h"
 #include "../storage/asset.h"
-#include "Parameter.h"
+#include "../storage/DataStore.h"
 
 namespace Picto {
 
@@ -12,16 +12,16 @@ namespace Picto {
  *
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AssociateExpLink : public Parameter
+	class PICTOLIB_API AssociateHostLink : public DataStore
 #else
-class AssociateExpLink : public Parameter
+class AssociateHostLink : public DataStore
 #endif
 {
 	Q_OBJECT
 
 public:
-	AssociateExpLink();
-	virtual ~AssociateExpLink(){};
+	AssociateHostLink();
+	virtual ~AssociateHostLink(){};
 	static QSharedPointer<Asset> Create();
 
 	QString getParentPath(){return propertyContainer_->getPropertyValue("ParentPath").toString();};

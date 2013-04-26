@@ -136,9 +136,10 @@ private:
     QAction *exitAction;
     QAction *addAction;
     QAction *deleteAction;
-
     QAction *toFrontAction;
     QAction *sendBackAction;
+	QAction *experimentalCopyAction;
+	QAction *analysisCopyAction;
     QAction *aboutAction;
 	QLineEdit *searchBox;
 	QCheckBox *matchCase;

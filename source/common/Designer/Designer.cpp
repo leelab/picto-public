@@ -257,6 +257,15 @@ void Designer::createActions()
     deleteAction->setShortcut(tr("Delete"));
     deleteAction->setStatusTip(tr("Delete item from diagram"));
 
+	experimentalCopyAction = new QAction(QIcon(":/icons/copy_experiment.png"),
+                               tr("Copy Experiment Elements"), this);
+    experimentalCopyAction->setShortcut(tr("Ctrl+C"));
+    experimentalCopyAction->setStatusTip(tr("Copy experimental elements from your design"));
+
+	analysisCopyAction = new QAction(QIcon(":/icons/copy_analysis.png"),
+                               tr("Copy Analysis Elements"), this);
+    analysisCopyAction->setStatusTip(tr("Copy analysis elements from your design"));
+
     exitAction = new QAction(tr("E&xit"), this);
     exitAction->setShortcut(tr("Ctrl+X"));
     exitAction->setStatusTip(tr("Quit Scenediagram example"));
@@ -310,6 +319,8 @@ void Designer::connectActions()
 	connect(toFrontAction, SIGNAL(triggered()),scene, SLOT(bringToFront()));
     connect(sendBackAction, SIGNAL(triggered()),scene, SLOT(sendToBack()));
     connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));
+	connect(experimentalCopyAction, SIGNAL(triggered()),scene, SLOT(experimentalCopySelectedItems()));
+	connect(analysisCopyAction, SIGNAL(triggered()),scene, SLOT(analysisCopySelectedItems()));
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
 	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
@@ -325,6 +336,8 @@ void Designer::createMenus()
     //itemMenu = menuBar()->addMenu(tr("&Item"));
 	itemMenu = new QMenu(tr("&Item"),this);
     itemMenu->addAction(deleteAction);
+	itemMenu->addAction(experimentalCopyAction);
+	itemMenu->addAction(analysisCopyAction);
     itemMenu->addSeparator();
     itemMenu->addAction(toFrontAction);
     itemMenu->addAction(sendBackAction);
@@ -340,6 +353,8 @@ void Designer::createToolbars()
 //! [25]
     editToolBar = new QToolBar(tr("Edit"));
     editToolBar->addAction(deleteAction);
+	editToolBar->addAction(experimentalCopyAction);
+	editToolBar->addAction(analysisCopyAction);
     editToolBar->addAction(toFrontAction);
     editToolBar->addAction(sendBackAction);
 	editToolBar->addAction(undoAction);

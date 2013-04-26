@@ -40,6 +40,8 @@
 ****************************************************************************/
 
 #include <QtWidgets>
+#include <QApplication>
+#include <QClipboard>
 
 #include "diagramscene.h"
 #include "StateMachineElementItem.h"
@@ -361,6 +363,138 @@ void DiagramScene::deleteSelectedItems()
     }
 	if(needsReset)
 		editorState_->triggerExperimentReset();
+}
+
+void DiagramScene::experimentalCopySelectedItems()
+{
+	QList<QGraphicsItem*> items = selectedItems();
+	//Check to see if any of the selected items contain Experimental elements.  If not, tell the user none were selected.
+	SearchRequest searchRequest(SearchRequest::EXPERIMENT,SearchRequest::EXISTS);
+	bool hasExperimentalElement = false;
+	foreach (QGraphicsItem *item, items) 
+	{
+		AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
+		if(!assetItem || !assetItem->getAsset())
+			continue;
+		QSharedPointer<DataStore> dataStore = assetItem->getAsset().dynamicCast<DataStore>();
+		if(dataStore)
+		{
+			if(dataStore->searchRecursivelyForQuery(searchRequest))
+			{
+				hasExperimentalElement = true;
+				break;
+			}
+		}
+    }
+	if(!hasExperimentalElement)
+	{
+		QMessageBox::warning(NULL,"No experimental elements found","The selected elements did not contain any experimental elements.");
+		return;
+	}
+
+	QString elementText;
+	QString uiText;
+	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(editorState_->getTopLevelAsset().data());
+	if(!assocRootHost)
+		return;
+	QSharedPointer<AssociateRoot> assocRoot = assocRootHost->getAssociateRoot();
+	if(!assocRoot)
+		return;
+	AssetItem* assetItem;
+	QSharedPointer<Asset> asset;
+	QUuid uiDataId = assocRoot->getAssociateId();
+	QList<QSharedPointer<Asset>> associateDescendants;
+	foreach (QGraphicsItem *item, items) 
+	{
+		assetItem = dynamic_cast<AssetItem*>(item);
+		if(assetItem)
+		{
+			asset = assetItem->getAsset();
+			if(asset)
+			{
+				elementText.append(asset->toXml());
+				if(asset->inherits("Picto::DataStore"))
+				{
+					associateDescendants = assetItem->getAsset().staticCast<DataStore>()->getAssociateDescendants(uiDataId);
+					foreach(QSharedPointer<Asset> associate,associateDescendants)
+					{
+						uiText.append(associate->toXml());
+					}
+				}
+			}
+		}
+	} 
+	QClipboard *clipboard = QApplication::clipboard();
+	clipboard->setText(elementText+uiText);
+}
+
+void DiagramScene::analysisCopySelectedItems()
+{
+	QList<QGraphicsItem*> items = selectedItems();
+	//Check to see if any of the selected items contain Analysis elements.  If not, tell the user none were selected.
+	SearchRequest searchRequest(SearchRequest::ACTIVE_ANALYSES,SearchRequest::EXISTS);
+	bool hasAnalysisElement = false;
+	foreach (QGraphicsItem *item, items) 
+	{
+		AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
+		if(!assetItem || !assetItem->getAsset())
+			continue;
+		QSharedPointer<DataStore> dataStore = assetItem->getAsset().dynamicCast<DataStore>();
+		if(dataStore)
+		{
+			if(dataStore->searchRecursivelyForQuery(searchRequest))
+			{
+				hasAnalysisElement = true;
+				break;
+			}
+		}
+    }
+	if(!hasAnalysisElement)
+	{
+		QMessageBox::warning(NULL,"No analysis elements found","The selected elements did not contain any analysis elements.");
+		return;
+	}
+
+	QString elementText;
+	QString uiText;
+	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(editorState_->getCurrentAnalysis().data());
+	if(!assocRootHost)
+		return;
+	QSharedPointer<AssociateRoot> assocRoot = assocRootHost->getAssociateRoot();
+	AssetItem* assetItem;
+	QSharedPointer<Asset> asset;
+	QUuid analysisId = dynamic_cast<AssociateRoot*>(assocRootHost)->getAssociateId();
+	QUuid uiDataId;
+	if(assocRoot)
+		uiDataId = assocRoot->getAssociateId();
+	QList<QSharedPointer<Asset>> analysisDescendants;
+	QList<QSharedPointer<Asset>> uiDescendants;
+	foreach (QGraphicsItem *item, items) 
+	{
+		assetItem = dynamic_cast<AssetItem*>(item);
+		if(assetItem)
+		{
+			asset = assetItem->getAsset();
+			if(asset)
+			{
+				analysisDescendants = assetItem->getAsset().staticCast<DataStore>()->getAssociateDescendants(analysisId);
+				foreach(QSharedPointer<Asset> analysisElement,analysisDescendants)
+				{
+					elementText.append(analysisElement->toXml());
+					if(assocRoot && analysisElement->inherits("Picto::DataStore"))
+					{
+						uiDescendants = analysisElement.staticCast<DataStore>()->getAssociateDescendants(uiDataId);
+						foreach(QSharedPointer<Asset> uiElement,uiDescendants)
+						{
+							uiText.append(uiElement->toXml());
+						}
+					}
+				}
+			}
+		}
+	} 
+	QClipboard *clipboard = QApplication::clipboard();
+	clipboard->setText(elementText+uiText);
 }
 
 void DiagramScene::bringToFront()

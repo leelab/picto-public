@@ -641,11 +641,40 @@ QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 	return children_[tagName];
 }
 
+QStringList DataStore::getAssociateChildTags(QUuid associateId)
+{
+	if(!associateChildrenByGuid_.contains(associateId))
+		return QStringList();
+	return associateChildrenByGuid_.value(associateId).keys();
+}
+
 QList<QSharedPointer<Asset>> DataStore::getAssociateChildren(QUuid associateId, QString tagName)
 {
 	if(!associateChildrenByGuid_.contains(associateId) || !associateChildrenByGuid_.value(associateId).contains(tagName))
 		return QList<QSharedPointer<Asset>>();
 	return associateChildrenByGuid_[associateId][tagName];
+}
+
+QList<QSharedPointer<Asset>> DataStore::getAssociateDescendants(QUuid associateId)
+{
+	QList<QSharedPointer<Asset>> returnVal;
+	foreach(QString associateTag,getAssociateChildTags(associateId))
+	{
+		returnVal.append(getAssociateChildren(associateId,associateTag));
+	}
+	QStringList childTags = getDefinedChildTags();
+	foreach(QString childTag,childTags)
+	{
+		QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren(childTag);
+		foreach(QSharedPointer<Asset> tagChild,tagChildren)
+		{
+			if(tagChild->inherits("Picto::DataStore"))
+			{
+				returnVal.append(tagChild.staticCast<DataStore>()->getAssociateDescendants(associateId));
+			}
+		}
+	}
+	return returnVal;
 }
 
 QList<QUuid> DataStore::getAttachedAssociateIds()

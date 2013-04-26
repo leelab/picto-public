@@ -1,24 +1,24 @@
-#include "AssociateExpLink.h"
+#include "AssociateHostLink.h"
 #include "AssociateRoot.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
 
-AssociateExpLink::AssociateExpLink()
-: Parameter()
+AssociateHostLink::AssociateHostLink()
+: DataStore()
 {
 	AddDefinableProperty(QVariant::String,"ParentPath",QVariant());
 	AddDefinableProperty(QVariant::Int,"ParentId",0);
 }
 
-QSharedPointer<Asset> AssociateExpLink::Create()
+QSharedPointer<Asset> AssociateHostLink::Create()
 {
-	QSharedPointer<AssociateExpLink> newAssociateExpLink(new AssociateExpLink());
-	newAssociateExpLink->setSelfPtr(newAssociateExpLink);
-	return newAssociateExpLink;
+	QSharedPointer<AssociateHostLink> newAssociateHostLink(new AssociateHostLink());
+	newAssociateHostLink->setSelfPtr(newAssociateHostLink);
+	return newAssociateHostLink;
 }
 
-void AssociateExpLink::linkToAsset(QSharedPointer<Asset> asset)
+void AssociateHostLink::linkToAsset(QSharedPointer<Asset> asset)
 {
 	Q_ASSERT(asset);
 	if(linkedAsset_.toStrongRef() == asset)
@@ -36,19 +36,19 @@ void AssociateExpLink::linkToAsset(QSharedPointer<Asset> asset)
 	updateLinkedAssetProperties();
 }
 
-void AssociateExpLink::postDeserialize()
+void AssociateHostLink::postDeserialize()
 {
-	Parameter::postDeserialize();
+	DataStore::postDeserialize();
 }
 
-bool AssociateExpLink::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool AssociateHostLink::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!Parameter::validateObject(xmlStreamReader))
+	if(!DataStore::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }
 
-void AssociateExpLink::updateLinkedAssetProperties()
+void AssociateHostLink::updateLinkedAssetProperties()
 {
 	Q_ASSERT(!linkedAsset_.isNull());
 	//When writing the parent path, we remove the components of the path up to the asset linked to 

@@ -61,8 +61,10 @@ public:
 	virtual void setDeleted();
 	QStringList getDefinedChildTags(){return factories_.keys();};
 	QStringList getOrderedPropertyList(){return orderedPropList_;};
-	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName); 
+	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName);
+	QStringList getAssociateChildTags(QUuid associateId);
 	QList<QSharedPointer<Asset>> getAssociateChildren(QUuid associateId, QString tagName);
+	QList<QSharedPointer<Asset>> getAssociateDescendants(QUuid associateId);
 	virtual QList<QUuid> getAttachedAssociateIds();
 	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
 	virtual QString assetType(){return "DataStore";};
