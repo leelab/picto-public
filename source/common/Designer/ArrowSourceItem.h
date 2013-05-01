@@ -13,6 +13,7 @@ public:
 	virtual QPointF getContactPoint();
 protected:
 	virtual void setRect(QRectF rect);
+	virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 };
 //! [0]
 

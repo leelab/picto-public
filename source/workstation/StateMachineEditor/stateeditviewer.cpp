@@ -92,7 +92,7 @@ void StateEditViewer::init()
 
 	//}
 	designRoot_->enableRunMode(false);
-	expDesigner_->loadDesign("Experiment",0,designRoot_);
+	expDesigner_->loadDesign(designRoot_);
 }
 
 void StateEditViewer::deinit()

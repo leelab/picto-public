@@ -11,7 +11,7 @@ ArrowPortItem(name,editorState, parent,asset)
 	grad.setColorAt(1,QColor(Qt::darkRed));
 	QBrush brush(grad);
 	setBrush(brush);
-	//setSvgIcon(QPixmap(":/icons/result.png"));
+	//setCursor(Qt::CrossCursor);
 }
 
 QPointF ArrowSourceItem::getContactPoint()
@@ -27,4 +27,10 @@ void ArrowSourceItem::setRect(QRectF rect)
 	grad.setColorAt(1,QColor(130,0,0));
 	QBrush brush(grad);
 	setBrush(brush);
+}
+
+void ArrowSourceItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
+{
+	if(editorState_->getEditMode() != EditorState::PlaceItem)
+		editorState_->setEditMode(EditorState::InsertLine);
 }

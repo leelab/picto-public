@@ -16,7 +16,7 @@ class EditorState : public QObject
 {
 	Q_OBJECT
 public:
-	enum EditMode { Select = 0, Navigate, InsertLine };
+	enum EditMode { Select = 0, PlaceItem, MoveItem, InsertLine, DrawLine, Navigate};
 
 	EditorState();
 	virtual ~EditorState(){};
@@ -31,6 +31,7 @@ public:
 	QPixmap getBackgroundPattern(){return backgroundPattern_;};
 	QString getInsertionItemCategory(){return insertItemCategory_;};
 	QString getInsertionItemType(){return insertItemType_;};
+	QPixmap getInsertionItemPixmap(){return insertItemPixmap_;};
 	QSharedPointer<Asset> getWindowAsset(){return windowAsset_;};
 	QSharedPointer<Asset> getSelectedAsset(){return selectedAsset_;};
 	QSharedPointer<Asset> getTopLevelAsset(){return topAsset_;};
@@ -56,6 +57,7 @@ signals:
 	void arrowPortSelected(QSharedPointer<Asset> asset);
 	void itemInserted();
 	void undoableActionPerformed();
+	void undoRequested();
 	void resetExperiment();
 	void searchRequested(SearchRequest searchRequest);
 
@@ -70,7 +72,7 @@ public slots:
 	void setItemColor(const QColor color){itemColor_ = color;emit itemColorChanged(itemColor_);};
 	void setBackgroundPattern(QPixmap pattern){backgroundPattern_ = pattern;emit backgroundPatternChanged(backgroundPattern_);};
 	void setLineColor(const QColor color){lineColor_ = color;emit lineColorChanged(lineColor_);};
-	void setInsertionItem(QString category, QString type){insertItemCategory_ = category;insertItemType_ = type;emit insertionItemChanged(category,type);};
+	void setInsertionItem(QString category = "", QString type = "", QPixmap pixmap = QPixmap());
 	void setWindowAsset(QSharedPointer<Asset> asset,bool undoable = true);
 	void setWindowAssetToParent();
 	void setWindowItemsLoaded(){emit windowItemsLoaded();};
@@ -80,6 +82,7 @@ public slots:
 	void reloadWindow();
 	void triggerExperimentReset(){emit resetExperiment();};
 	void triggerItemInserted(){emit itemInserted();};
+	void requestUndo(){emit undoRequested();};
 	void requestSearch(SearchRequest searchRequest);
 
 private:
@@ -93,6 +96,7 @@ private:
 	QPixmap backgroundPattern_;
 	QString insertItemCategory_;
 	QString insertItemType_;
+	QPixmap insertItemPixmap_;
 	QSharedPointer<Asset> windowAsset_;
 	QSharedPointer<Asset> selectedAsset_;
 	QString windowAssetPath_;

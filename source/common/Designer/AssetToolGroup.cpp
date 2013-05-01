@@ -59,11 +59,14 @@ void AssetToolGroup::doButtonAction(int buttonId)
 {
 	if(buttonId >= elemInfo_.size())
 		return;
-	getEditorState()->setInsertionItem(elemInfo_[buttonId].tag,elemInfo_[buttonId].type);
+	if(getEditorState()->getEditMode() != EditorState::DrawLine)
+		getEditorState()->setInsertionItem(elemInfo_[buttonId].tag,elemInfo_[buttonId].type,getButtonPixmap(buttonId));
+	else
+		disableButtonActions();
 }
 
 void AssetToolGroup::disableButtonActions()
 {
-	getEditorState()->setInsertionItem("","");
+	getEditorState()->setInsertionItem();
 }
 

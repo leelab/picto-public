@@ -232,7 +232,7 @@ void Experiment::postDeserialize()
 			prop->enableInitRunValueSync(true);
 		}
 	}
-
+	QString hostIdStr = getHostId().toString();
 	ASSOCIATE_ROOT_HOST_POST_DESERIALIZE
 }
 

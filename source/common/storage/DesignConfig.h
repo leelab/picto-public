@@ -36,6 +36,7 @@ public:
 	QSharedPointer<Asset> getAsset(int id);
 	QList<QWeakPointer<Asset>> getProperties(){return managedProperties_;};
 	QList<QWeakPointer<Asset>> getAssets();
+	QList<QWeakPointer<Asset>> getTransitions(){return managedTransitions_;};
 	void setDeserializedVersion(QString version){deserializedVersion_ = version;};
 	QString getDeserializedVersion(){return deserializedVersion_;};
 	void setActiveAnalysisIds(QList<QUuid> analysisList);

@@ -38,20 +38,15 @@ TestViewer::TestViewer(QWidget *parent) :
 //! Called just before displaying the viewer
 void TestViewer::init()
 {
+	
+	//Sometimes while working on an experiment, if we change something and don't reopen the experiment
+	//the experimental run doesn't work right.  To prevent this, we are simply reseting the the experiment
+	//from xml whenever we open this viewer
+	designRoot_->refreshFromXml();
+
 	deiniting_ = false;
 	designRoot_->enableRunMode(true);
-	QSharedPointer<DesignRoot> myDesignRoot = designRoot_;//(new DesignRoot());
-	//bool res = myDesignRoot->resetDesignRoot(designRoot_->getDesignRootText());
-	//if(!res)
-	//{
-	//	DesignMessage errorMsg = myDesignRoot->getLastError();
-	//	QMessageBox::critical(0,errorMsg.name,errorMsg.details);
-	//}
-	//if(myDesignRoot->hasWarning())
-	//{
-	//	DesignMessage warnMsg = myDesignRoot->getLastWarning();
-	//	QMessageBox::warning(0,warnMsg.name,warnMsg.details);
-	//}
+	QSharedPointer<DesignRoot> myDesignRoot = designRoot_;
 	if(!myDesignRoot->compiles())
 	{
 		QMessageBox msg;

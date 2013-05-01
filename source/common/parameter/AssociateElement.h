@@ -61,7 +61,12 @@ namespace Picto {
 											{	\
 												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
 												return lnk->getLinkedAsset();	\
-											};
+											};	\
+											virtual void updateLinkPath(QString oldPrefix,QString newPrefix)	\
+											{	\
+												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
+												return lnk->updateLinkPath(oldPrefix,newPrefix);	\
+											};											
 
 #define EXP_LINK_FACTORY_CREATION AddDefinableObjectFactory("HostLink",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateHostLink::Create))));
 
@@ -87,6 +92,7 @@ public:
 	virtual QUuid getAssociateId() = 0;
 	virtual QString getInfoString() = 0;
 	virtual QSharedPointer<Asset> getLinkedAsset() = 0;
+	virtual void updateLinkPath(QString oldPrefix,QString newPrefix) = 0;
 
 private:
 	QUuid AssociateRootId_;

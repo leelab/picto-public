@@ -36,6 +36,24 @@ void AssociateHostLink::linkToAsset(QSharedPointer<Asset> asset)
 	updateLinkedAssetProperties();
 }
 
+void AssociateHostLink::updateLinkPath(QString oldPrefix,QString newPrefix)
+{
+	//No one should be trying to update this objects link path if it's already linked to an asset
+	Q_ASSERT(linkedAsset_.isNull());
+
+	//Replace the input oldPrefix in the link path with the input newPrefix.
+	QString currentLinkPath = propertyContainer_->getPropertyValue("ParentPath").toString();
+	int replacementRegionLength = oldPrefix.length();
+	Q_ASSERT(currentLinkPath.left(replacementRegionLength) == oldPrefix);
+	if(replacementRegionLength == 0 && newPrefix.length())
+		newPrefix += "::";
+	QString newLinkPath = currentLinkPath.replace(0,replacementRegionLength,newPrefix);
+	propertyContainer_->setPropertyValue("ParentPath",newLinkPath);
+
+	//Invalidate the linked Id.
+	propertyContainer_->setPropertyValue("ParentId",-1);
+}
+
 void AssociateHostLink::postDeserialize()
 {
 	DataStore::postDeserialize();

@@ -63,6 +63,14 @@ void ToolGroup::clearButtons()
 	col_ = 0;
 }
 
+QPixmap ToolGroup::getButtonPixmap(int buttonId)
+{
+	QAbstractButton* button = buttonGroup_->button(buttonId);
+	if(!button)
+		return QPixmap();
+	return button->icon().pixmap(button->iconSize());
+}
+
 void ToolGroup::buttonGroupClicked(int)
 {
 	int id = buttonGroup_->checkedId();

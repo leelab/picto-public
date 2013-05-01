@@ -28,6 +28,7 @@ protected:
 	void AddButton(const QString &label, QIcon icon, bool enabled = true);
 	void clearButtons();
 	QSharedPointer<EditorState> getEditorState(){return editorState_;};
+	QPixmap getButtonPixmap(int buttonId);
 
 	virtual void doButtonAction(int buttonId) = 0;
 	virtual void disableButtonActions(){};

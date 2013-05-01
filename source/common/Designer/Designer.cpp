@@ -27,7 +27,7 @@ Designer::Designer(QWidget *parent) :
 	createActions();
 	createMenus();
     createToolbars();
-	topmostScene = new DiagramScene(editorState_,itemMenu);
+	topmostScene = new DiagramScene(editorState_,itemMenu,sceneMenu);
 	loadScene(topmostScene);
 	connectActions();
 	
@@ -72,9 +72,11 @@ Designer::~Designer()
 {
 }
 //! [0]
-void Designer::loadDesign(QString identifier, int index, QSharedPointer<DesignRoot> designRoot)
+void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 {
 	Q_ASSERT(designRoot);
+	if(designRoot_ == designRoot)
+		return;
 	
 	if(designRoot_)
 	{
@@ -114,23 +116,23 @@ void Designer::loadDesign(QString identifier, int index, QSharedPointer<DesignRo
 //	insertEditBlock();
 //}
 
-void Designer::updateEditModeButtons(int id)
-{
-	pointerTypeGroup->button(id)->setChecked(true);
-}
+//void Designer::updateEditModeButtons(int id)
+//{
+//	pointerTypeGroup->button(id)->setChecked(true);
+//}
 
-void Designer::itemInserted(DiagramItem *)
-{
-    pointerTypeGroup->button(int(DiagramScene::Select))->setChecked(true);
-    editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
-    
-}
-
-void Designer::textInserted(QGraphicsTextItem *)
-{
-    buttonGroup->button(InsertTextButton)->setChecked(false);
-    editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
-}
+//void Designer::itemInserted(DiagramItem *)
+//{
+//    //pointerTypeGroup->button(int(DiagramScene::Select))->setChecked(true);
+//    //editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
+//    
+//}
+//
+//void Designer::textInserted(QGraphicsTextItem *)
+//{
+//    //buttonGroup->button(InsertTextButton)->setChecked(false);
+//    //editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
+//}
 
 void Designer::sceneScaleChanged(const QString &scale)
 {
@@ -164,10 +166,10 @@ void Designer::loadScene(DiagramScene* newScene)
 	//versions support a Qt::UniqueConnection parameter.  We would just disconnect
 	//old connections before connecting the new ones but this isn't working for 
 	//some reason.
-	connect(newScene, SIGNAL(itemInserted(DiagramItem *)),
-            this, SLOT(itemInserted(DiagramItem *)));
-    connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),
-        this, SLOT(textInserted(QGraphicsTextItem *)));
+	//connect(newScene, SIGNAL(itemInserted(DiagramItem *)),
+ //           this, SLOT(itemInserted(DiagramItem *)));
+    //connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),
+    //    this, SLOT(textInserted(QGraphicsTextItem *)));
 	connect(editorState_.data(),SIGNAL(resetExperiment()),
 		this,SLOT(resetExperiment()));
 }
@@ -266,6 +268,11 @@ void Designer::createActions()
                                tr("Copy Analysis Elements"), this);
     analysisCopyAction->setStatusTip(tr("Copy analysis elements from your design"));
 
+	pasteAction = new QAction(QIcon(":/icons/paste.png"),
+								tr("Paste"), this);
+	pasteAction->setShortcut(tr("Ctrl+V"));
+	pasteAction->setStatusTip(tr("Paste copied experimental or analysis elements"));
+
     exitAction = new QAction(tr("E&xit"), this);
     exitAction->setShortcut(tr("Ctrl+X"));
     exitAction->setStatusTip(tr("Quit Scenediagram example"));
@@ -315,12 +322,14 @@ void Designer::connectActions()
 {
 	connect(undoAction, SIGNAL(triggered()),this, SLOT(performUndoAction()));
 	connect(redoAction, SIGNAL(triggered()),this, SLOT(performRedoAction()));
+	connect(editorState_.data(),SIGNAL(undoRequested()),this,SLOT(performUndoAction()));
 
 	connect(toFrontAction, SIGNAL(triggered()),scene, SLOT(bringToFront()));
     connect(sendBackAction, SIGNAL(triggered()),scene, SLOT(sendToBack()));
     connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));
 	connect(experimentalCopyAction, SIGNAL(triggered()),scene, SLOT(experimentalCopySelectedItems()));
 	connect(analysisCopyAction, SIGNAL(triggered()),scene, SLOT(analysisCopySelectedItems()));
+	connect(pasteAction, SIGNAL(triggered()),scene, SLOT(pasteItems()));
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
 	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
@@ -338,9 +347,13 @@ void Designer::createMenus()
     itemMenu->addAction(deleteAction);
 	itemMenu->addAction(experimentalCopyAction);
 	itemMenu->addAction(analysisCopyAction);
+	itemMenu->addAction(pasteAction);
     itemMenu->addSeparator();
     itemMenu->addAction(toFrontAction);
     itemMenu->addAction(sendBackAction);
+
+	sceneMenu = new QMenu(tr("Scene"),this);
+	sceneMenu->addAction(pasteAction);
 
     //aboutMenu = menuBar()->addMenu(tr("&Help"));
     //aboutMenu->addAction(aboutAction);
@@ -355,6 +368,7 @@ void Designer::createToolbars()
     editToolBar->addAction(deleteAction);
 	editToolBar->addAction(experimentalCopyAction);
 	editToolBar->addAction(analysisCopyAction);
+	editToolBar->addAction(pasteAction);
     editToolBar->addAction(toFrontAction);
     editToolBar->addAction(sendBackAction);
 	editToolBar->addAction(undoAction);
@@ -371,17 +385,17 @@ void Designer::createToolbars()
     linePointerButton->setCheckable(true);
     linePointerButton->setIcon(QIcon(":/icons/linepointer.png"));
 
-    pointerTypeGroup = QSharedPointer<QButtonGroup>(new QButtonGroup);
-    pointerTypeGroup->addButton(pointerButton, int(DiagramScene::Select));
-	pointerTypeGroup->addButton(navigateButton,
-                                int(DiagramScene::Navigate));
-    pointerTypeGroup->addButton(linePointerButton,
-                                int(DiagramScene::InsertLine));
-	pointerTypeGroup->setExclusive(true);
-    connect(pointerTypeGroup.data(), SIGNAL(buttonClicked(int)),
-            editorState_.data(), SLOT(setEditMode(int)));
-	connect(editorState_.data(), SIGNAL(editModeChanged(int)),
-            this, SLOT(updateEditModeButtons(int)));
+ //   pointerTypeGroup = QSharedPointer<QButtonGroup>(new QButtonGroup);
+ //   pointerTypeGroup->addButton(pointerButton, int(DiagramScene::Select));
+	//pointerTypeGroup->addButton(navigateButton,
+ //                               int(DiagramScene::Navigate));
+ //   pointerTypeGroup->addButton(linePointerButton,
+ //                               int(DiagramScene::InsertLine));
+	//pointerTypeGroup->setExclusive(true);
+ //   connect(pointerTypeGroup.data(), SIGNAL(buttonClicked(int)),
+ //           editorState_.data(), SLOT(setEditMode(int)));
+	//connect(editorState_.data(), SIGNAL(editModeChanged(int)),
+ //           this, SLOT(updateEditModeButtons(int)));
 
     sceneScaleCombo = new QComboBox;
     QStringList scales;
@@ -478,8 +492,17 @@ void Designer::analysisSelectedChanged(int index)
 				switch(result)
 				{
 				case QMessageBox::No:
-					//Add a new Analysis Design to the designRoot
-					newAnalysis = designRoot_->importAnalysis("<Analysis/>");
+					{
+						//Add a new Analysis Design to the designRoot
+						newAnalysis = designRoot_->importAnalysis("<Analysis/>");
+						//Create UI Data for the new Analysis and attach it
+						AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
+						Q_ASSERT(assocRootHost);
+						QUuid hostId = assocRootHost->getHostId();
+						QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
+						QString feedback;
+						newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
+					}
 					break;
 				case QMessageBox::Yes:
 					//Import an Analysis... not yet implemented

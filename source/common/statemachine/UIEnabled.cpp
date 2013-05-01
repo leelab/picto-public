@@ -27,6 +27,7 @@ void UIEnabled::setPos(QPoint pos)
 	QSharedPointer<Asset> uiElement = getUIElement();
 	//Set my position in the UIElement.
 	uiElement.staticCast<UIElement>()->setPos(pos);
+	qDebug(QString("Setting Pos: %1,%2").arg(pos.x()).arg(pos.y()).toLatin1());
 }
 
 QPoint UIEnabled::getPos()

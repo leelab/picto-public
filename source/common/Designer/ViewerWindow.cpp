@@ -50,12 +50,26 @@ void ViewerWindow::editModeChanged(int mode)
 	{
 	case EditorState::Select:
 		setDragMode(QGraphicsView::RubberBandDrag);
+		setCursor(Qt::ArrowCursor);
+		break;
+	case EditorState::MoveItem:
+		setDragMode(QGraphicsView::NoDrag);
+		setCursor(Qt::SizeAllCursor);
+		break;
+	case EditorState::PlaceItem:
+		setDragMode(QGraphicsView::NoDrag);
+		setCursor(QCursor(editorState_->getInsertionItemPixmap()));
 		break;
 	case EditorState::Navigate:
 		setDragMode(QGraphicsView::ScrollHandDrag);
 		break;
 	case EditorState::InsertLine:
 		setDragMode(QGraphicsView::NoDrag);
+		setCursor(Qt::CrossCursor);
+		break;
+	case EditorState::DrawLine:
+		setDragMode(QGraphicsView::NoDrag);
+		setCursor(Qt::CrossCursor);
 		break;
 	}
 }

@@ -31,13 +31,6 @@ void PictoData::postDeserialize()
 	if(tagChildren.size())
 		emit edited();
 
-	//Now that the entire tree is set up, make sure that all assets have unique IDs and the DesignConfig object
-	//is tracking them.  This must occur before adding Associates to the AssociateHosts so that they can use the DesignConfig object to lookup asset ids.
-	designConfig_->disallowIdDuplication();
-
-	//Now call inherited postDeserialize which will actually call fixDuplicatedAssetIds on the designConfig
-	DataStore::postDeserialize();
-
 	//Add all associate roots to their hosts (this has the affect of adding all analyses to their tasks and all
 	//UIData to their experiments and analyses.
 	QList<QSharedPointer<Asset>> allAssociateRoots = getGeneratedChildren("Analysis");
@@ -55,6 +48,17 @@ void PictoData::postDeserialize()
 		}
 		associateRoot.staticCast<AssociateRoot>()->LinkToAsset(linkAsset,feedback);
 	}
+
+	//Now that the entire tree is set up, and the saved associate roots are attached to their linked elements based on saved asset ids, 
+	//make sure that all assets have unique IDs and the DesignConfig object is tracking them.  This way, if an assetId needs to be changed
+	//for some reason, the changed id will propegate to any linked associates, and resulting hostId changes will propogate to linked AssociateRoots
+	//as well.
+	//Since Associates to AssociateHost linking does not use the design config, it is okay that we disallowIdDuplication after connecting
+	//Associates.
+	designConfig_->disallowIdDuplication();
+
+	//Now call inherited postDeserialize which will actually call fixDuplicatedAssetIds on the designConfig
+	DataStore::postDeserialize();
 
 	//Make sure all AssociateRootHost children have UIData attached
 	QList<QSharedPointer<Asset>> assocRootHosts = getGeneratedChildren("Experiment");

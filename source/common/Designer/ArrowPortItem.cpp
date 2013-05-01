@@ -13,6 +13,7 @@ DiagramItem(editorState,NULL,name,parent)
 	setPen(invisiblePen);
 	//setFlag(QGraphicsItem::ItemIsSelectable,false);
 	setFlag(QGraphicsItem::ItemIsMovable,false);
+	//setCursor(Qt::ArrowCursor);
 }
 
 ArrowPortItem::~ArrowPortItem()
@@ -48,4 +49,22 @@ void ArrowPortItem::updateDependantGraphics()
 	{
         arrow->updatePosition();
     }
+}
+
+void ArrowPortItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event)
+{
+	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))
+	{
+		editorState_->setEditMode(EditorState::Select);
+		//setCursor(Qt::ArrowCursor);
+	}
+}
+
+void ArrowPortItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * )
+{
+	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))
+	{
+		editorState_->setEditMode(EditorState::MoveItem);
+		//setCursor(Qt::ArrowCursor);
+	}
 }

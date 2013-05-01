@@ -47,6 +47,7 @@ lastSvgIcon_(NULL)
 	connect(asset_.data(),SIGNAL(edited()),this,SLOT(assetEdited()));
 	if(asset_->inherits("Picto::DataStore"))
 		connect(asset_.staticCast<DataStore>().data(),SIGNAL(associateChildEdited()),this,SLOT(assetEdited()));
+	//setCursor(Qt::SizeAllCursor);
 }
 
 AssetItem::~AssetItem()
@@ -90,6 +91,15 @@ void AssetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 		posChanged_ = false;
 	}
 	QGraphicsItem::mouseReleaseEvent(event);
+}
+
+void AssetItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
+{
+	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))
+	{
+		editorState_->setEditMode(EditorState::MoveItem);
+		//setCursor(Qt::SizeAllCursor);
+	}
 }
 
 void AssetItem::setSvgIcon(QGraphicsSvgItem* svgIcon)

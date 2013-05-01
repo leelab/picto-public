@@ -96,14 +96,14 @@ public:
 	Designer(QWidget *parent=0);
 	virtual ~Designer();
 
-	void loadDesign(QString identifier, int index, QSharedPointer<DesignRoot> designRoot);  //Called just before displaying the viewer
+	void loadDesign(QSharedPointer<DesignRoot> designRoot);  //Called just before displaying the viewer
 	//virtual void deinit();	//Called just after the user switches out of the viewer
 	//virtual void aboutToSave();  //Called just before the pictoDataText_ is saved to file.
 
 private slots:
-    void updateEditModeButtons(int id);
-    void itemInserted(DiagramItem *item);
-    void textInserted(QGraphicsTextItem *item);
+    //void updateEditModeButtons(int id);
+    //void itemInserted(DiagramItem *item);
+    //void textInserted(QGraphicsTextItem *item);
     void sceneScaleChanged(const QString &scale);
 	//void assetSelected(QSharedPointer<Asset> asset);
     //void itemSelected(QGraphicsItem *item);
@@ -140,6 +140,7 @@ private:
     QAction *sendBackAction;
 	QAction *experimentalCopyAction;
 	QAction *analysisCopyAction;
+	QAction *pasteAction;
     QAction *aboutAction;
 	QLineEdit *searchBox;
 	QCheckBox *matchCase;
@@ -155,6 +156,7 @@ private:
 
     QMenu *fileMenu;
     QMenu *itemMenu;
+	QMenu *sceneMenu;
     QMenu *aboutMenu;
 
     QToolBar *editToolBar;
@@ -163,7 +165,7 @@ private:
     QComboBox *sceneScaleCombo;
 
     QSharedPointer<QButtonGroup> buttonGroup;
-    QSharedPointer<QButtonGroup> pointerTypeGroup;
+    //QSharedPointer<QButtonGroup> pointerTypeGroup;
     QSharedPointer<QButtonGroup> backgroundButtonGroup;
     QToolButton *fillColorToolButton;
     QToolButton *lineColorToolButton;

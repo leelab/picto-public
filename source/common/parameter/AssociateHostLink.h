@@ -28,6 +28,7 @@ public:
 	int getParentId(){return propertyContainer_->getPropertyValue("ParentId").toInt();};
 	QSharedPointer<Asset> getLinkedAsset(){return linkedAsset_.toStrongRef();};
 	void linkToAsset(QSharedPointer<Asset> asset);
+	void updateLinkPath(QString oldPrefix,QString newPrefix);
 
 protected:
 	virtual void postDeserialize();

@@ -47,6 +47,7 @@
 #include "diagramtextitem.h"
 #include "DiagramItemFactory.h"
 #include "EditorState.h"
+#include "Copier.h"
 #include "../../common/storage/asset.h"
 #include <QSharedPointer>
 #include <QPointer>
@@ -68,9 +69,8 @@ class DiagramScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    enum Mode { Select, Navigate, InsertLine};
 
-    DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent = 0);
+    DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemContextMenu, QMenu *sceneContextMenu, QObject *parent = 0);
 	virtual ~DiagramScene(){};
 
 	QGraphicsLineItem* insertTransition(DiagramItem* source, DiagramItem* dest, QSharedPointer<Asset> transition = QSharedPointer<Asset>());
@@ -89,6 +89,7 @@ public slots:
 	void deleteSelectedItems();
 	void experimentalCopySelectedItems();
 	void analysisCopySelectedItems();
+	void pasteItems();
 	void bringToFront();
 	void sendToBack();
 
@@ -105,23 +106,30 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 	virtual void keyPressEvent(QKeyEvent * event);
 	virtual void keyReleaseEvent(QKeyEvent * event);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 private:
 	QSharedPointer<Asset> createNewAsset();
 	void insertTextItem(QString text,QPointF pos);
     bool isItemChange(int type);
+	QList<QSharedPointer<Asset>> getSelectedAssets();
 
 	QSharedPointer<EditorState> editorState_;
 	QSharedPointer<DiagramItemFactory> diagItemFactory_;
+	QSharedPointer<Copier> copier_;
     DiagramItem::DiagramType myItemType;
 	DiagramItem* startBar_;
 	QString insertionItem_;
 	int newItemIndex_;
     QMenu *myItemMenu;
+	QMenu *sceneMenu_;
     bool leftButtonDown;
     QPointF startPoint;
     QGraphicsLineItem *line;
     DiagramTextItem *textItem;
+	QPoint latestPastePos_;
+	bool useNavigateMode_;
+	bool mouseOverScene_;
 };
 //! [0]
 

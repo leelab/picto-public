@@ -286,7 +286,8 @@ int DesignConfig::getNewDataId()
 void DesignConfig::addManagedAsset(QSharedPointer<Asset> asset)
 {
 	QWeakPointer<Asset> wAsset(asset);
-	Q_ASSERT(!assetHash_.contains(asset.data()));
+	if(assetHash_.contains(asset.data()))
+		return;
 	assetHash_[asset.data()] = wAsset;
 	if(asset->inherits("Picto::Transition"))
 	{

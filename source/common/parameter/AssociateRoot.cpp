@@ -177,6 +177,8 @@ bool AssociateRoot::isLinkableAsset(QSharedPointer<Asset> asset)
 		return false;
 	QUuid hostId = assocRootHost->getHostId();
 	QUuid linkedId = getLinkedHostId();
+	QString hostIdStr = assocRootHost->getHostId().toString();
+	QString linkedIdStr = getLinkedHostId().toString();
 	if(assocRootHost->getHostId() == getLinkedHostId())
 		return true;
 	return false;

@@ -494,7 +494,8 @@ bool MainWindow::saveFile(const QString filename)
 	{
 		//Make sure design name is the same as the filename
 		designRoot_->setDesignName(QFileInfo(file).baseName());
-		currViewer_->aboutToSave();
+		if(currViewer_)
+			currViewer_->aboutToSave();
 		if(!file.write(designRoot_->getDesignRootText().toLatin1()))
 			success = false;
 		file.close();

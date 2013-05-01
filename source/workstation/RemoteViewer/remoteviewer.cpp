@@ -719,6 +719,9 @@ void RemoteViewer::enterState()
 //! \brief Called just before displaying the viewer
 void RemoteViewer::init()
 {
+	//Sometimes while working on an experiment, if we change something and don't reopen the experiment
+	//the experimental run doesn't work right.  To prevent this, we are simply reseting the the experiment
+	//from xml whenever we open this viewer
 	bool res = myDesignRoot_->resetDesignRoot(designRoot_->getDesignRootText());
 	if(!res)
 	{

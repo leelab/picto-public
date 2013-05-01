@@ -29,9 +29,17 @@ bool MachineContainer::addTransition(QSharedPointer<Transition> transition)
 	//(Note that a name change would mess up our transitions_ list since it is
 	//indexed by name, but that only matters in an experiment.  In a real experiment
 	//the name won't ever change, so it is irrelevant.
-	transition->setSource(source.staticCast<Asset>());
-	transition->setSourceResult(sourceResult.staticCast<Asset>());
-	transition->setDestination(destination.staticCast<Asset>());
+	//We should never need to reset the asset pointers in a transition.  If the transition 
+	//already has these pointers, we're probably just resetting the same pointers
+	// to it, and if we must be in a copy, paste situation where two assets temporarily have the
+	//same name and asset id.  In this case, we don't want the transition to move
+	//from one asset source/result/dest to another so we should skip the setting as well.
+	if(transition->getDestinationAsset().isNull())
+	{
+		transition->setSource(source.staticCast<Asset>());
+		transition->setSourceResult(sourceResult.staticCast<Asset>());
+		transition->setDestination(destination.staticCast<Asset>());
+	}
 	
 	//Check if the transition is already in our child map and if not add it.
 	QList<QSharedPointer<Asset>> transChildren = getGeneratedChildren("Transition");
@@ -138,8 +146,8 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 			bool found = false;
 			foreach(QSharedPointer<Asset> transition, transitionList)
 			{
-				if((transition.staticCast<Transition>()->getSource() == element->getName())
-					&& (transition.staticCast<Transition>()->getSourceResult() == result->getName()))
+				if((transition.staticCast<Transition>()->getSourceAsset() == element)
+					&& (transition.staticCast<Transition>()->getSourceResultAsset() == result))
 				{
 					found = true;
 					break;
@@ -164,7 +172,7 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 		bool found = false;
 		foreach(QSharedPointer<Asset> transition, transitionList)
 		{
-			if(transition.staticCast<Transition>()->getDestination() == result->getName())
+			if(transition.staticCast<Transition>()->getDestinationAsset() == result)
 			{
 				found = true;
 				continue;
@@ -214,47 +222,116 @@ bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition
 	//lists weren't updated (there is no need to update them except just before running an experiment, in which case we 
 	//regenerate the experiment from xml).
 	//Search for source and destination elements.
+	//First try to find the asset based on asset id.
 	QList<QSharedPointer<Asset>> elementsList = getGeneratedChildren(elementTag_);
 	foreach(QSharedPointer<Asset> element, elementsList)
 	{
-		if(element->getName() == transition->getSource())
+		if(transition->getSourceId())
 		{
-			source = element.staticCast<ResultContainer>();
-			if(!destination.isNull())
-				break;
+			if(element->getAssetId() == transition->getSourceId())
+			{
+				if(element->getName() == transition->getSource())
+				{
+					source = element.staticCast<ResultContainer>();
+					if(!destination.isNull())
+						break;
+				}
+			}
 		}
-		if(element->getName() == transition->getDestination())
+
+		if(transition->getDestinationId())
 		{
-			destination = element.staticCast<ResultContainer>();
-			if(!source.isNull())
-				break;
+			if(element->getAssetId() == transition->getDestinationId())
+			{
+				if(element->getName() == transition->getDestination())
+				{
+					destination = element.staticCast<ResultContainer>();
+					if(!source.isNull())
+						break;
+				}
+			}
 		}
 	}
-	
-	if(destination.isNull())
-	{	//Destination must be a result.  Search there.
+
+	if(destination.isNull() && transition->getDestinationId())
+	{	//Check for result destination by assetid
 		QList<QSharedPointer<Asset>> resultList = getGeneratedChildren("Result");
 		foreach(QSharedPointer<Asset> res, resultList)
 		{
-			if(res->getName() == transition->getDestination())
+			if(res->getAssetId() == transition->getDestinationId())
 			{
 				destination = res.staticCast<ResultContainer>();
 				break;
 			}
 		}
 	}
+
+	//If we don't have both source and destination, try to get them by name
+	if(source.isNull() || destination.isNull())
+	{
+		foreach(QSharedPointer<Asset> element, elementsList)
+		{
+			if(source.isNull() && (element->getName() == transition->getSource()))
+			{
+				source = element.staticCast<ResultContainer>();
+				if(!destination.isNull())
+					break;
+			}
+			if(destination.isNull() && (element->getName() == transition->getDestination()))
+			{
+				destination = element.staticCast<ResultContainer>();
+				if(!source.isNull())
+					break;
+			}
+		}
+
+		//Destination must be a result
+		if(destination.isNull())
+		{
+			QList<QSharedPointer<Asset>> resultList = getGeneratedChildren("Result");
+			foreach(QSharedPointer<Asset> res, resultList)
+			{
+				if(res->getName() == transition->getDestination())
+				{
+					destination = res.staticCast<ResultContainer>();
+					break;
+				}
+			}
+		}
+	}
+	
+	//If there's no source but there is a source result, something is wrong.  If both are empty
+	//its a transition to the initial state.
 	if(source.isNull() && !transition->getSourceResult().isEmpty())
-		return false;	//If both source and sourceResult are empty, its a transition to the initial state.
+		return false;
 	if(!transition->getSourceResult().isEmpty())
 	{
 		//Search for sourceResult in source.
-		QList<QSharedPointer<Asset>> resultList = source->getGeneratedChildren("Result");
-		foreach(QSharedPointer<Asset> res, resultList)
+		//First search by Id
+		if(transition->getSourceResultId())
 		{
-			if(res->getName() == transition->getSourceResult())
+			QList<QSharedPointer<Asset>> resultList = source->getGeneratedChildren("Result");
+			foreach(QSharedPointer<Asset> res, resultList)
 			{
-				sourceResult = res.staticCast<ResultContainer>();
-				break;
+				if(res->getAssetId() == transition->getSourceResultId())
+				{
+					sourceResult = res.staticCast<ResultContainer>();
+					break;
+				}
+			}
+		}
+
+		//Now try searching by name
+		if(sourceResult.isNull())
+		{
+			QList<QSharedPointer<Asset>> resultList = source->getGeneratedChildren("Result");
+			foreach(QSharedPointer<Asset> res, resultList)
+			{
+				if(res->getName() == transition->getSourceResult())
+				{
+					sourceResult = res.staticCast<ResultContainer>();
+					break;
+				}
 			}
 		}
 		if(sourceResult.isNull())
@@ -267,8 +344,17 @@ bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition
 	//Make sure nothing else is transitioning from this transitions sourceResult
 	foreach(QSharedPointer<Transition> trans, transitions_)
 	{
-		if( (trans != transition) && (trans->getSource() == transition->getSource())
-			&& (trans->getSourceResult() == transition->getSourceResult())
+		QString transitionSrcRealName;
+		QString transSrcRealName;
+		if(transition->getSourceAsset())
+			transitionSrcRealName = transition->getSourceAsset()->getName();
+		if(trans->getSourceAsset())
+			transSrcRealName = trans->getSourceAsset()->getName();
+		QString src = transition->getSource();
+		QString dest = transition->getDestination();
+		QString result = transition->getSourceResult();
+		if( (trans != transition) && (trans->getSourceAsset() == source)
+			&& (trans->getSourceResultAsset() == sourceResult)
 			)
 			return false;
 	}

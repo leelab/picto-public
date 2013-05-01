@@ -24,12 +24,15 @@ class Transition  : public DataStore
 public:
 	Transition();
 	virtual ~Transition(){};
-	Transition(QString source, QString sourceResult, QString destination);
+	Transition(QSharedPointer<Asset> source, QSharedPointer<Asset> sourceResult, QSharedPointer<Asset> destination);
+	Transition(QString result);
+	Transition(QSharedPointer<Asset> source,QString sourceResult);
+	//Transition(QString source, QString sourceResult, QString destination);
 	static QSharedPointer<Asset> Create();
 
-	void setSource(QString source);
-	void setSourceResult(QString sourceResult);
-	void setDestination(QString destination);
+	//void setSource(QString source);
+	//void setSourceResult(QString sourceResult);
+	//void setDestination(QString destination);
 
 	void setSource(QSharedPointer<Asset> source);
 	void setSourceResult(QSharedPointer<Asset> sourceResult);
@@ -38,6 +41,10 @@ public:
 	QString getSource();
 	QString getSourceResult();
 	QString getDestination();
+
+	int getSourceId();
+	int getSourceResultId();
+	int getDestinationId();
 	
 	QSharedPointer<Asset>  getSourceAsset();
 	QSharedPointer<Asset>  getSourceResultAsset();

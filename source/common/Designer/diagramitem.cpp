@@ -64,6 +64,7 @@ QGraphicsPolygonItem(parent/*, scene*/)
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+	this->setAcceptHoverEvents(true);
 }
 
 DiagramItem::~DiagramItem()
@@ -242,7 +243,8 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
 {
 	QVariant inputVal = value;
 	//See if the change is a position change.
-	if	(	(editorState_->getEditMode() == EditorState::Select)
+	if	(	((editorState_->getEditMode() == EditorState::MoveItem)
+		|| (editorState_->getEditMode() == EditorState::Select))
 		&&	(change == QGraphicsItem::ItemPositionChange)
 		)
 	{
@@ -284,9 +286,10 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
 		}
     }
 	else if (change == QGraphicsItem::ItemSelectedChange)
-	{	//Don't allow selection changes except in Select mode.
-		if(editorState_->getEditMode() != EditorState::Select)
-			return !inputVal.toBool();
+	{	
+		////Don't allow selection changes except in Select mode.
+		//if(editorState_->getEditMode() != EditorState::Select)
+		//	return !inputVal.toBool();
 	}
 	else if (change == QGraphicsItem::ItemSelectedHasChanged)
 	{
@@ -313,8 +316,7 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
 
 void DiagramItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent *mouseEvent )
 {
-	if(editorState_->getEditMode() == EditorState::Select 
-		&& mouseEvent->button() == Qt::LeftButton)
+	if(/*editorState_->getEditMode() == EditorState::Select && */mouseEvent->button() == Qt::LeftButton)
 	{
 		if(!editorState_->getSelectedAsset().isNull())
 		{
@@ -375,13 +377,13 @@ QRectF DiagramItem::getRect()
 
 void DiagramItem::editModeChanged(int mode)
 {
-	if(mode == EditorState::Select)
-	{
-		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
-	}
-	else
-	{
-		setAcceptedMouseButtons(Qt::RightButton);
-	}
+	//if(mode == EditorState::Select || mode == EditorState::MoveItem)
+	//{
+	//	setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+	//}
+	//else
+	//{
+	//	setAcceptedMouseButtons(Qt::RightButton);
+	//}
 }
 //! [6]

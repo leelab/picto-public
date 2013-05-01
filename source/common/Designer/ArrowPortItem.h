@@ -19,6 +19,8 @@ public:
 	QSharedPointer<Asset> getAsset(){return asset_;};
 protected:
 	virtual void updateDependantGraphics();
+	virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+	virtual void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 	QSharedPointer<Asset> asset_;
 private:
 	QList<Arrow *> arrows;

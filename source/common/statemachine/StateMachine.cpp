@@ -511,15 +511,6 @@ void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
 
 void StateMachine::postDeserialize()
 {
-	////Remove me when all experiments are updated to have init transitions!!!!!!!!!!!!!!!!!!!!!!
-	//QSharedPointer<Transition> newTrans(new Transition("","",propertyContainer_->getPropertyValue("InitialElement").toString()));
-	//if(addTransition(newTrans))
-	//{
-	//	newTrans->setDesignConfig(getDesignConfig());
-	//	propertyContainer_->getProperty("InitialElement")->setDeleted();
-	//}
-	/////////////////////////////////////////////////////////////////////////////////////////////7
-
 	MachineContainer::postDeserialize();
 }
 

@@ -8,7 +8,7 @@ ControlLink::ControlLink()
 {
 }
 
-ControlLink::ControlLink(QString source, QString sourceResult, QString destination)
+ControlLink::ControlLink(QSharedPointer<Asset> source, QSharedPointer<Asset> sourceResult, QSharedPointer<Asset> destination)
 : Transition(source,sourceResult,destination)
 {
 }

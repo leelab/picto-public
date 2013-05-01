@@ -109,7 +109,17 @@ double EditorState::setZoom(double zoom)
 	emit zoomChanged(zoom);
 	return zoom;
 }
-
+void EditorState::setInsertionItem(QString category, QString type, QPixmap pixmap)
+{
+	insertItemCategory_ = category;
+	insertItemType_ = type;
+	insertItemPixmap_ = pixmap;
+	if(!category.isEmpty() || !type.isEmpty())
+		setEditMode(EditorState::PlaceItem);
+	else if(getEditMode() == EditorState::PlaceItem)
+		setEditMode(EditorState::Select);
+	emit insertionItemChanged(category,type);
+}
 
 //Sets the current asset opened in the editor window to the input asset object
 //If undoable is true, an undo point will be set after changing the window
@@ -140,7 +150,7 @@ void EditorState::setWindowAsset(QSharedPointer<Asset> asset,bool undoable)
 	}while(bufferAsset);
 
 	//Clear any selected items to insert into the scene
-	setInsertionItem("","");
+	setInsertionItem();
 	
 	//Tell everyone that the window asset changed.
 	emit windowAssetChanged(windowAsset_);
@@ -209,7 +219,7 @@ void EditorState::reloadWindow()
 {
 	Q_ASSERT(getWindowAsset());
 	Q_ASSERT(getSelectedAsset());
-	setInsertionItem("","");
+	setInsertionItem();
 	emit windowAssetChanged(getWindowAsset());
 	emit selectedAssetChanged(getSelectedAsset());
 }

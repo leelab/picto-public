@@ -24,6 +24,7 @@ protected:
 	virtual void updateDependantGraphics(){};
 	virtual void positionChanged(QPoint pos);
 	virtual void mouseReleaseEvent (QGraphicsSceneMouseEvent *event);
+	virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 	void setSvgIcon(QGraphicsSvgItem* svgIcon);
 	void setSvgIcon(QString svgFile);
 	void keepPixmapAspectRatio(bool keep);

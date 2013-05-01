@@ -100,17 +100,17 @@ Arrow* Arrow::Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, 
 
 	//Find Asset Item ancestors
 	QSharedPointer<Asset> source = getAssetAncestor(startItem);
+	QSharedPointer<Asset> result = static_cast<ArrowSourceItem*>(startItem)->getAsset();
 	QSharedPointer<Asset> dest = getAssetAncestor(endItem);
 	if(dynamic_cast<StartBarItem*>(startItem))
 		source = windowAsset;
 	if(source.isNull() || dest.isNull())
 		return NULL;
-	QString result = static_cast<ArrowSourceItem*>(startItem)->getName();
 	QSharedPointer<Transition> newTrans;
 	if(source == windowAsset)
-		newTrans = QSharedPointer<Transition>(new Transition("","",dest->getName()));
+		newTrans = QSharedPointer<Transition>(new Transition(QSharedPointer<Asset>(),QSharedPointer<Asset>(),dest));
 	else
-		newTrans = QSharedPointer<Transition>(new Transition(source->getName(),result,dest->getName()));
+		newTrans = QSharedPointer<Transition>(new Transition(source,result,dest));
 	if(!windowAsset.staticCast<MachineContainer>()->addTransition(newTrans))
 		return NULL;
 	return new Arrow(newTrans,startItem,endItem,contextMenu,parent);

@@ -187,15 +187,6 @@ QHash<int,bool> SessionVersionInterfacer::getObsoleteAssets()
 
 QString SessionVersionInterfacer::recurseResetAssetIds(QSharedPointer<Asset> asset,QSharedPointer<SVIAssetNode> node)
 {
-	if(node->assetId == 4623)
-	{
-		QSharedPointer<Transition> trans = asset.staticCast<Transition>();
-		QString src = trans->getSource();
-		QString srcRes = trans->getSourceResult();
-		QString dest = trans->getDestination();
-		int i=0;
-		i++;
-	}
 	asset->setAssetId(node->assetId);
 	if(!asset->inherits("Picto::DataStore"))
 		return "";

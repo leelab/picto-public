@@ -59,7 +59,7 @@ using namespace Picto;
 
 #define DEFAULT_ITEM_BORDER_BUFFER 50
 //! [0]
-DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QObject *parent)
+DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemContextMenu, QMenu *sceneContextMenu,  QObject *parent)
     : QGraphicsScene(parent)
 {
 	editorState_ = editorState;
@@ -69,7 +69,8 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *conte
 	connect(editorState_.data(), SIGNAL(itemColorChanged(QColor)), this, SLOT(setItemColor(QColor)));
 	connect(editorState_.data(), SIGNAL(fontChanged(QFont)), this, SLOT(setFont(QFont)));
 	connect(editorState_.data(), SIGNAL(backgroundPatternChanged(QPixmap)), this, SLOT(setBackgroundPattern(QPixmap)));
-    myItemMenu = contextMenu;
+    myItemMenu = itemContextMenu;
+	sceneMenu_ = sceneContextMenu;
 	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,this));
     myItemType = DiagramItem::Step;
     line = 0;
@@ -77,6 +78,9 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *conte
 	insertionItem_ = "";
 	newItemIndex_ = 1;
 	startBar_ = NULL;
+	copier_ = QSharedPointer<Copier>(new Copier(editorState));
+	useNavigateMode_ = false;
+	mouseOverScene_ = false;
 }
 //! [0]
 
@@ -150,7 +154,12 @@ DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF
 		return NULL;
 	addItem(item);
 	if(item->pos() == QPointF())
-		item->setPos(pos+QPointF(0.5*item->boundingRect().width(),0));//Put it at the input position plus a small left buffer
+	{
+		QPointF newPos = pos+QPointF(0.5*item->boundingRect().width(),0);//Put it at the input position plus a small left buffer
+		item->setPos(newPos);
+		if(asset->inherits("Picto::UIEnabled"))
+			asset.staticCast<UIEnabled>()->setPos(newPos.toPoint());
+	}
 
 	emit itemInserted(static_cast<DiagramItem*>(item));
 	return item;
@@ -165,13 +174,43 @@ QRectF DiagramScene::getDefaultZoomRect()
 		return itemsBoundingRect();
 	QRectF returnVal;
 	//Iterate through all items in scene
+	QGraphicsItem* itemBuffer;
 	foreach(QGraphicsItem* item,items())
 	{
-		//If item isn't start bar, add it to the returnVal rectangle
-		if(item == startBar_)
+		//If item isn't the start bar or in the startbar or a transition, add it to the returnVal rectangle
+		itemBuffer = item;
+		bool inStartBar = false;
+		while(itemBuffer)
+		{
+			if(itemBuffer == startBar_)
+			{
+				inStartBar = true;
+				break;
+			}
+			itemBuffer = itemBuffer->parentItem();
+		}
+		if(inStartBar)
 			continue;
-		returnVal = returnVal.united(item->boundingRect());
+		if(dynamic_cast<Arrow*>(item))
+			continue;
+		
+		QRectF itemBoundRect = item->boundingRect();
+		QPoint itemPos = item->pos().toPoint();
+		if((itemPos.x() < 0) || itemPos.y() < 0)
+			continue;
+		//ItemBoundRect and pos were doing something screwy here.  We should probably look into this at some
+		//point, but removing items with pos less than zero and seting top left of bounding rect to pos
+		//seemed to fix the problem.
+		itemBoundRect = QRectF(itemPos.x(),itemPos.y(),itemBoundRect.width(),itemBoundRect.height());;
+		if(returnVal.isNull())
+			returnVal = itemBoundRect;
+		else
+			returnVal = returnVal.united(itemBoundRect);
 	}
+	if(returnVal.x() < 0)
+		returnVal.setX(0);
+	if(returnVal.y() < 0)
+		returnVal.setY(0);
 	//Return the rectangle
 	return returnVal;
 }
@@ -229,13 +268,14 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	{
 		DiagramItem* start = NULL;
 		DiagramItem* end = NULL;
-		QString source = transition->getSource();
-		QString sourceResult = transition->getSourceResult();
-		QString dest = transition->getDestination();
-		if(source.isEmpty() && sourceResult.isEmpty() && startBar_)
+		int sourceId = transition->getSourceId();
+		int sourceResultId = transition->getSourceResultId();
+		int destId = transition->getDestinationId();
+		if(!sourceId && !sourceResultId && startBar_)
 			start = startBar_;
 		WireableItem* wireItem;
 		QSharedPointer<Asset> asset;
+		QSharedPointer<Asset> resultAsset;
 		foreach(DiagramItem* diagItem,diagItems)
 		{
 			wireItem = dynamic_cast<WireableItem*>(diagItem);
@@ -244,19 +284,20 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 			asset = wireItem->getAsset();
 			if(asset.isNull())
 				continue;
-			if(!start && (source == asset->getName()))
+			if(!start && (sourceId == asset->getAssetId()))
 			{
 				QList<DiagramItem*> results = wireItem->getArrowSources();
 				foreach(DiagramItem* result,results)
 				{
-					if(result->getName() == sourceResult)
+					resultAsset = static_cast<ArrowSourceItem*>(result)->getAsset();
+					if(resultAsset && resultAsset->getAssetId() == sourceResultId)
 					{
 						start = result;
 						break;
 					}
 				}
 			}
-			if(!end && (dest == asset->getName()))
+			if(!end && (destId == asset->getAssetId()))
 			{
 				end = wireItem->getArrowDest();
 			}
@@ -367,134 +408,26 @@ void DiagramScene::deleteSelectedItems()
 
 void DiagramScene::experimentalCopySelectedItems()
 {
-	QList<QGraphicsItem*> items = selectedItems();
-	//Check to see if any of the selected items contain Experimental elements.  If not, tell the user none were selected.
-	SearchRequest searchRequest(SearchRequest::EXPERIMENT,SearchRequest::EXISTS);
-	bool hasExperimentalElement = false;
-	foreach (QGraphicsItem *item, items) 
-	{
-		AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
-		if(!assetItem || !assetItem->getAsset())
-			continue;
-		QSharedPointer<DataStore> dataStore = assetItem->getAsset().dynamicCast<DataStore>();
-		if(dataStore)
-		{
-			if(dataStore->searchRecursivelyForQuery(searchRequest))
-			{
-				hasExperimentalElement = true;
-				break;
-			}
-		}
-    }
-	if(!hasExperimentalElement)
-	{
-		QMessageBox::warning(NULL,"No experimental elements found","The selected elements did not contain any experimental elements.");
-		return;
-	}
-
-	QString elementText;
-	QString uiText;
-	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(editorState_->getTopLevelAsset().data());
-	if(!assocRootHost)
-		return;
-	QSharedPointer<AssociateRoot> assocRoot = assocRootHost->getAssociateRoot();
-	if(!assocRoot)
-		return;
-	AssetItem* assetItem;
-	QSharedPointer<Asset> asset;
-	QUuid uiDataId = assocRoot->getAssociateId();
-	QList<QSharedPointer<Asset>> associateDescendants;
-	foreach (QGraphicsItem *item, items) 
-	{
-		assetItem = dynamic_cast<AssetItem*>(item);
-		if(assetItem)
-		{
-			asset = assetItem->getAsset();
-			if(asset)
-			{
-				elementText.append(asset->toXml());
-				if(asset->inherits("Picto::DataStore"))
-				{
-					associateDescendants = assetItem->getAsset().staticCast<DataStore>()->getAssociateDescendants(uiDataId);
-					foreach(QSharedPointer<Asset> associate,associateDescendants)
-					{
-						uiText.append(associate->toXml());
-					}
-				}
-			}
-		}
-	} 
-	QClipboard *clipboard = QApplication::clipboard();
-	clipboard->setText(elementText+uiText);
+	copier_->copy(getSelectedAssets(),false);
 }
 
 void DiagramScene::analysisCopySelectedItems()
 {
-	QList<QGraphicsItem*> items = selectedItems();
-	//Check to see if any of the selected items contain Analysis elements.  If not, tell the user none were selected.
-	SearchRequest searchRequest(SearchRequest::ACTIVE_ANALYSES,SearchRequest::EXISTS);
-	bool hasAnalysisElement = false;
-	foreach (QGraphicsItem *item, items) 
-	{
-		AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
-		if(!assetItem || !assetItem->getAsset())
-			continue;
-		QSharedPointer<DataStore> dataStore = assetItem->getAsset().dynamicCast<DataStore>();
-		if(dataStore)
-		{
-			if(dataStore->searchRecursivelyForQuery(searchRequest))
-			{
-				hasAnalysisElement = true;
-				break;
-			}
-		}
-    }
-	if(!hasAnalysisElement)
-	{
-		QMessageBox::warning(NULL,"No analysis elements found","The selected elements did not contain any analysis elements.");
-		return;
-	}
+	copier_->copy(getSelectedAssets(),true);
+}
 
-	QString elementText;
-	QString uiText;
-	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(editorState_->getCurrentAnalysis().data());
-	if(!assocRootHost)
-		return;
-	QSharedPointer<AssociateRoot> assocRoot = assocRootHost->getAssociateRoot();
-	AssetItem* assetItem;
-	QSharedPointer<Asset> asset;
-	QUuid analysisId = dynamic_cast<AssociateRoot*>(assocRootHost)->getAssociateId();
-	QUuid uiDataId;
-	if(assocRoot)
-		uiDataId = assocRoot->getAssociateId();
-	QList<QSharedPointer<Asset>> analysisDescendants;
-	QList<QSharedPointer<Asset>> uiDescendants;
-	foreach (QGraphicsItem *item, items) 
+void DiagramScene::pasteItems()
+{
+	QPoint pasteLoc;
+	if(latestPastePos_.isNull())
 	{
-		assetItem = dynamic_cast<AssetItem*>(item);
-		if(assetItem)
-		{
-			asset = assetItem->getAsset();
-			if(asset)
-			{
-				analysisDescendants = assetItem->getAsset().staticCast<DataStore>()->getAssociateDescendants(analysisId);
-				foreach(QSharedPointer<Asset> analysisElement,analysisDescendants)
-				{
-					elementText.append(analysisElement->toXml());
-					if(assocRoot && analysisElement->inherits("Picto::DataStore"))
-					{
-						uiDescendants = analysisElement.staticCast<DataStore>()->getAssociateDescendants(uiDataId);
-						foreach(QSharedPointer<Asset> uiElement,uiDescendants)
-						{
-							uiText.append(uiElement->toXml());
-						}
-					}
-				}
-			}
-		}
-	} 
-	QClipboard *clipboard = QApplication::clipboard();
-	clipboard->setText(elementText+uiText);
+		QRectF zoomRect = getDefaultZoomRect();
+		QPoint pasteLoc = zoomRect.topRight().toPoint();
+		pasteLoc.setY(zoomRect.center().y());
+	}
+	else
+		pasteLoc = latestPastePos_;
+	copier_->paste(editorState_->getWindowAsset(),pasteLoc);
 }
 
 void DiagramScene::bringToFront()
@@ -539,8 +472,9 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
         return;
-    if(editorState_->getEditMode() == InsertLine)
+    if(editorState_->getEditMode() == EditorState::InsertLine)
 	{
+		editorState_->setEditMode(EditorState::DrawLine);
 		line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(),
 										mouseEvent->scenePos()));
 		line->setPen(QPen(editorState_->getLineColor(), 2));
@@ -555,12 +489,31 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 //! [10]
 void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (editorState_->getEditMode() == InsertLine && line != 0) {
-        QLineF newLine(line->line().p1(), mouseEvent->scenePos());
-        line->setLine(newLine);
-    } else if (editorState_->getEditMode() == Select) {
-        QGraphicsScene::mouseMoveEvent(mouseEvent);
-    }
+	QGraphicsScene::mouseMoveEvent(mouseEvent);
+	mouseOverScene_ = false;
+    if (editorState_->getEditMode() == EditorState::DrawLine) {
+		if(line != 0)
+		{
+			QLineF newLine(line->line().p1(), mouseEvent->scenePos());
+			line->setLine(newLine);
+		}
+    } 
+	//else if (editorState_->getEditMode() == EditorState::Select) {
+ //       QGraphicsScene::mouseMoveEvent(mouseEvent);
+ //   }
+	else if(editorState_->getEditMode() == EditorState::PlaceItem)
+	{
+		//Don't do anything in this case
+	}
+	else if(!itemAt(mouseEvent->scenePos(),QTransform()))
+	{
+		if(mouseEvent->isAccepted())
+			return;
+		EditorState::EditMode newEditMode = useNavigateMode_?EditorState::Navigate:EditorState::Select;
+		if(editorState_->getEditMode() != newEditMode)
+			editorState_->setEditMode(newEditMode);
+		mouseOverScene_ = true;
+	}
 }
 //! [10]
 
@@ -576,7 +529,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 	//If we're in Select mode, check if a new asset needs to be generated.
 	//If it does, generate it.
-    if(editorState_->getEditMode() == Select)
+    if(editorState_->getEditMode() == EditorState::PlaceItem)
 	{
 		QSharedPointer<Asset> newAsset = createNewAsset();
 		if(newAsset)
@@ -596,7 +549,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	else
 	//If a line is being drawn, check if we should add it or delete it.
 	//If we should add it, create the transition and add it.
-    if (line != 0 && editorState_->getEditMode() == InsertLine) {
+    if (line != 0 && editorState_->getEditMode() == EditorState::DrawLine) {
         QList<QGraphicsItem *> startItems = items(line->line().p1());
         if (startItems.count() && startItems.first() == line)
             startItems.removeFirst();
@@ -628,6 +581,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 qgraphicsitem_cast<DiagramItem *>(endItems.first());
 			insertTransition(startItem,endItem);
         }
+		editorState_->setEditMode(EditorState::Select);
     }
 //! [12] //! [13]
     line = 0;
@@ -638,7 +592,9 @@ void DiagramScene::keyPressEvent(QKeyEvent * event)
 {
 	if(event->key() == Qt::Key_Shift)
 	{
-		editorState_->setEditMode(EditorState::Navigate);
+		useNavigateMode_ = true;
+		if(mouseOverScene_ && (editorState_->getEditMode() == EditorState::Select))
+			editorState_->setEditMode(EditorState::Navigate);
 		event->accept();
 		return;
 	}
@@ -649,11 +605,26 @@ void DiagramScene::keyReleaseEvent(QKeyEvent * event)
 {
 	if(event->key() == Qt::Key_Shift)
 	{
-		editorState_->setEditMode(editorState_->getLastEditMode());
+		useNavigateMode_ = false;
+		if(mouseOverScene_ && (editorState_->getEditMode() == EditorState::Navigate))
+			editorState_->setEditMode(EditorState::Select);
 		event->accept();
 		return;
 	}
 	QGraphicsScene::keyReleaseEvent(event);
+}
+
+void DiagramScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	QGraphicsScene::contextMenuEvent(event);
+	if(event->isAccepted())
+		return;
+	if(myItemMenu)
+	{
+		latestPastePos_ = event->scenePos().toPoint();
+		sceneMenu_->exec(event->screenPos());
+		latestPastePos_ = QPoint();
+	}
 }
 
 QSharedPointer<Asset> DiagramScene::createNewAsset()
@@ -702,5 +673,21 @@ bool DiagramScene::isItemChange(int type)
             return true;
     }
     return false;
+}
+
+QList<QSharedPointer<Asset>> DiagramScene::getSelectedAssets()
+{
+	QList<QSharedPointer<Asset>> assets;
+	QSharedPointer<Asset> asset;
+	foreach (QGraphicsItem *item, selectedItems()) 
+	{
+		AssetItem* assetItem = dynamic_cast<AssetItem*>(item);
+		if(!assetItem)
+			continue;
+		asset = assetItem->getAsset();
+		if(asset)
+			assets.append(asset);
+    }
+	return assets;
 }
 //! [14]

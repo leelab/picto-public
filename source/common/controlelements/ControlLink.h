@@ -23,7 +23,7 @@ class ControlLink  : public Transition
 public:
 	ControlLink();
 	virtual ~ControlLink(){};
-	ControlLink(QString source, QString sourceResult, QString destination);
+	ControlLink(QSharedPointer<Asset> source, QSharedPointer<Asset> sourceResult, QSharedPointer<Asset> destination);
 	static QSharedPointer<Asset> Create();
 
 	virtual QString assetType(){return "ControlLink";};

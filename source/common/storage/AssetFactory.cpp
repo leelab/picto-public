@@ -49,7 +49,7 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 	QSharedPointer<Asset> returnVal;
 	if((maxAssets_ > -1) && (numSourcedAssets_ >= maxAssets_))
 	{
-		error = "Num  created Assets has exceeded the maximum: " + QString::number(maxAssets_);
+		error = "Number of created Assets has exceeded the maximum: " + QString::number(maxAssets_);
 		return returnVal;
 	}
 	if(isGroupFactory_)
