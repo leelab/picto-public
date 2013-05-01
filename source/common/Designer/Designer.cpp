@@ -374,7 +374,7 @@ void Designer::createToolbars()
 	editToolBar->addAction(undoAction);
 	editToolBar->addAction(redoAction);
 
-    QToolButton *pointerButton = new QToolButton;
+    /*QToolButton *pointerButton = new QToolButton;
     pointerButton->setCheckable(true);
     pointerButton->setChecked(true);
     pointerButton->setIcon(QIcon(":/icons/pointer.png"));
@@ -383,7 +383,7 @@ void Designer::createToolbars()
     navigateButton->setIcon(QIcon(":/icons/cursor-openhand.png"));
     QToolButton *linePointerButton = new QToolButton;
     linePointerButton->setCheckable(true);
-    linePointerButton->setIcon(QIcon(":/icons/linepointer.png"));
+    linePointerButton->setIcon(QIcon(":/icons/linepointer.png"));*/
 
  //   pointerTypeGroup = QSharedPointer<QButtonGroup>(new QButtonGroup);
  //   pointerTypeGroup->addButton(pointerButton, int(DiagramScene::Select));
@@ -406,9 +406,9 @@ void Designer::createToolbars()
             this, SLOT(sceneScaleChanged(const QString &)));
 
     pointerToolbar = new QToolBar(tr("Pointer type"));
-    pointerToolbar->addWidget(pointerButton);
-	pointerToolbar->addWidget(navigateButton);
-    pointerToolbar->addWidget(linePointerButton);
+ //   pointerToolbar->addWidget(pointerButton);
+	//pointerToolbar->addWidget(navigateButton);
+ //   pointerToolbar->addWidget(linePointerButton);
     pointerToolbar->addWidget(sceneScaleCombo);
 	pointerToolbar->addSeparator();
 	pointerToolbar->addWidget(searchWidget);
