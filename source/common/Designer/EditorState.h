@@ -36,7 +36,6 @@ public:
 	QSharedPointer<Asset> getSelectedAsset(){return selectedAsset_;};
 	QSharedPointer<Asset> getTopLevelAsset(){return topAsset_;};
 	QSharedPointer<Analysis> getCurrentAnalysis(){return currAnalysis_;};
-	bool inAnalysisTask();
 	QGraphicsItem *getSelectedItem(){return selectedItem_;};
 	QList<SearchRequest> getSearchRequests();
 
@@ -102,7 +101,6 @@ private:
 	QString windowAssetPath_;
 	QGraphicsItem *selectedItem_;
 	QSharedPointer<Asset> topAsset_;
-	QSharedPointer<Asset> currentTask_;
 	QSharedPointer<Analysis> currAnalysis_;
 	QHash<int,SearchRequest> searchRequests_;
 

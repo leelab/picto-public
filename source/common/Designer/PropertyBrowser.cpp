@@ -77,7 +77,7 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 
 	//If this object doesn't have an AnalysisScriptContainer and their is an active analysis, add one now
 	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-	if(editorState_->inAnalysisTask() && asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
+	if(activeAnalysis && asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
 	{
 		//create the AnalysisScriptContainer, put it in the analysis 
 		//and link it to the object
@@ -94,7 +94,7 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 		asset.staticCast<DataStore>()->AddAssociateChild(newScriptContainer->getAssociateId(),"AnalysisScriptContainer",newScriptContainer);
 	}
 	QSharedPointer<AnalysisScriptContainer> scriptContainer;
-	if(editorState_->inAnalysisTask())
+	if(activeAnalysis)
 		scriptContainer = asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
 	QSharedPointer<PropertyContainer> propContainer;
 	QVector<QSharedPointer<Property>> propVec;
@@ -110,7 +110,7 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 		else
 		{
 			//If there's an active analysis, get the propContainer from the AnalysisScriptContainer, otherwise leave it empty
-			if(editorState_->inAnalysisTask())
+			if(activeAnalysis)
 			{
 				//The propTag is for an analysis script, set the property container from the AnalysisScriptContainer
 				propContainer = scriptContainer.staticCast<DataStore>()->getPropertyContainer();

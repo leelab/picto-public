@@ -2,8 +2,9 @@
 #define _AssociateRootHost_H_
 
 #include <QSharedPointer>
-#include "../common.h"
+#include <QHash>
 #include "AssociateRoot.h"
+#include "../common.h"
 
 //Copy this into the public area of your AssociateRootHost (this is to avoid diamond multiple inheritance issues)
 #define ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION		virtual QUuid getHostId(){return propertyContainer_->getPropertyValue("HostId").toUuid();};	\
@@ -40,14 +41,14 @@ class AssociateRootHost
 public:
 	AssociateRootHost();
 	virtual ~AssociateRootHost(){};
-	QSharedPointer<AssociateRoot> getAssociateRoot(){return associateRoot_;};
+	QSharedPointer<AssociateRoot> getAssociateRoot(QString type){if(!associateRootHash_.contains(type))return QSharedPointer<AssociateRoot>();return associateRootHash_.value(type);};
 	virtual QUuid getHostId() = 0;
 	virtual QSharedPointer<Property> getHostIdProperty() = 0;
 	virtual QSharedPointer<Property> getNameProperty() = 0;
 
 private:
-	QSharedPointer<AssociateRoot> associateRoot_;
-	void setAssociateRoot(QSharedPointer<AssociateRoot> assocRoot){associateRoot_ = assocRoot;};
+	QHash<QString,QSharedPointer<AssociateRoot>> associateRootHash_;
+	void setAssociateRoot(QString type, QSharedPointer<AssociateRoot> assocRoot){associateRootHash_[type] = assocRoot;};
 	friend class AssociateRoot;
 
 };

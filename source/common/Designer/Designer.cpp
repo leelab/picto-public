@@ -469,41 +469,16 @@ void Designer::analysisSelectedChanged(int index)
 			if(newAnalysisCreated)
 			{
 				QSharedPointer<Asset> newAnalysis;
-				int result = QMessageBox::question(NULL,"Import from file?","Would you like to import the analysis from another design file?",QMessageBox::Yes | QMessageBox::No,QMessageBox::No);
-				switch(result)
-				{
-				case QMessageBox::No:
-					{
-						//Add a new Analysis Design to the designRoot
-						newAnalysis = designRoot_->importAnalysis("<Analysis/>");
-						//Create UI Data for the new Analysis and attach it
-						AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
-						Q_ASSERT(assocRootHost);
-						QUuid hostId = assocRootHost->getHostId();
-						QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
-						QString feedback;
-						newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
-					}
-					break;
-				case QMessageBox::Yes:
-					//Import an Analysis... not yet implemented
-					QMessageBox::information(NULL,"Analysis Import Not Yet Implemented","Importing of an Analysis from a separate file has not yet been implemented");
-					analysisSelector_->setCurrentIndex(selectedIndex_);
-					return;
-					//Load the Analysis and Attached UIData into a new DesignRoot
-					//to force version upgrade.
 
-					//Get the Analysis and Attached UIData text from new DesignRoot
-					
-					//Use copy function to put the analysis and UIData into our design root while keeping them attached
-
-					//Put the new analysis into the newAnalysis variable...
-					break;
-				default:
-					//Canceled, return to previous selection
-					analysisSelector_->setCurrentIndex(selectedIndex_);
-					return;
-				};
+				//Add a new Analysis Design to the designRoot
+				newAnalysis = designRoot_->importAnalysis("<Analysis/>");
+				//Create UI Data for the new Analysis and attach it
+				AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
+				Q_ASSERT(assocRootHost);
+				QUuid hostId = assocRootHost->getHostId();
+				QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
+				QString feedback;
+				newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
 				Q_ASSERT(newAnalysis);
 
 				//Attempt to add the new analysis to the EditorState as current

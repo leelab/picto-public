@@ -151,7 +151,7 @@ QSharedPointer<Asset> UIEnabled::getUIElement()
 	//Get the AssociateRoot attached to it.  This will be a UIData object.
 	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(ancestor.data());
 	Q_ASSERT(assocRootHost);
-	QSharedPointer<AssociateRoot> uiData = assocRootHost->getAssociateRoot();
+	QSharedPointer<AssociateRoot> uiData = assocRootHost->getAssociateRoot("UIData");
 	//Store the uiAssociateId of the UIData object
 	uiAssociateId_ = uiData->getAssociateId();
 	//Add a new UIElement to the data object and link it to me.

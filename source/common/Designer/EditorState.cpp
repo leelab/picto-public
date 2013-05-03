@@ -24,18 +24,6 @@ windowAssetPath_("")
     //currAnalysis_ = Analysis::Create().staticCast<Analysis>();	//TEMPORARY UNTIL THIS GETS SET FROM SOMEWHERE ELSE!!!!!!!!!!
 }
 
-//Returns whether the current window asset is within the task attached to the current analysis
-bool EditorState::inAnalysisTask()
-{
-	if(!currAnalysis_)
-		return false;
-	if(!currentTask_)
-		return false;
-	if(currAnalysis_->getLinkedAsset().staticCast<Asset>() == currentTask_)
-		return true;
-	return false;
-}
-
 QList<SearchRequest> EditorState::getSearchRequests()
 {
 	return searchRequests_.values();
@@ -57,24 +45,11 @@ bool EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 		return true;
 	if(currAnalysis)
 	{
-		//GET THE TASK AND USE THAT TO LINK THE ANALYSIS TO IT.  THEN DEAL WITH THE FACT THAT THE
-		//ANALYSIS CAN ONLY BE ATTACHED TO A SINGLE TASK IN THE UI, NOT THE WHOLE EXPERIMENT.  ALSO,
-		//MAKE SURE THAT THE PATHS STORED IN THE TASK DO NOT INCLUDE THE EXPERIMENT NAME!!!
-		QSharedPointer<Asset> linkableTask = currAnalysis->getLinkableAsset();
-		if(linkableTask.isNull())
-		{	//Allow the user to choose which task to attach the Analysis too.
-			bool ok;
-			QSharedPointer<Experiment> exp = topAsset_.staticCast<Experiment>();
-			QString taskName = QInputDialog::getItem(NULL,"Task Selection","Select Task to Analyze",exp->getTaskNames(),0,false,&ok);
-			if(!ok)
-				return false;
-			linkableTask = exp->getTaskByName(taskName);
-			Q_ASSERT(linkableTask);
-		}
-		
-		//Link the analysis to the task
+		QSharedPointer<Experiment> exp = topAsset_.staticCast<Experiment>();
+		Q_ASSERT(exp);		
+		//Link the analysis to the experiment
 		QString feedback;
-		bool linkResult = currAnalysis->LinkToAsset(linkableTask,feedback);
+		bool linkResult = currAnalysis->LinkToAsset(exp,feedback);
 		if(!linkResult)
 		{	//If anything didn't go perfectly in the link (had to link by paths or failed) tell the user.
 			QMessageBox msg;
@@ -141,18 +116,6 @@ void EditorState::setWindowAsset(QSharedPointer<Asset> asset,bool undoable)
 
 	//Store the current window asset
 	windowAsset_ = asset;
-
-	//Check which task we're in and store it.
-	QSharedPointer<Asset> bufferAsset = windowAsset_;
-	currentTask_.clear();
-	do{
-		if(bufferAsset->inherits("Picto::Task"))
-		{
-			currentTask_ = bufferAsset;
-			break;
-		}
-		bufferAsset = bufferAsset->getParentAsset();
-	}while(bufferAsset);
 
 	//Clear any selected items to insert into the scene
 	setInsertionItem();

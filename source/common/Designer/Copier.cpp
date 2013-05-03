@@ -85,7 +85,7 @@ void Copier::copy(QList<QSharedPointer<Asset>> assets,bool copyAnalysis)
 	}
 	
 	//Get the associateId of the User Interface elements attached to the current AssociateRootHost (Experiment or Analysis).
-	QSharedPointer<AssociateRoot> assocRoot = assocRootHost->getAssociateRoot();
+	QSharedPointer<AssociateRoot> assocRoot = assocRootHost->getAssociateRoot("UIData");
 	if(!copyAnalysis && !assocRoot)
 		return;
 
@@ -163,10 +163,20 @@ void Copier::paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition)
 		else if(tagName == "CopiedFrom")
 		{
 			hadCopiedFrom = true;
+			if(xmlStreamReader->readNext() == QXmlStreamReader::Invalid)
+			{
+				error = true;
+				break;
+			}
 			copiedFrom = xmlStreamReader->text().toString();
 		}
 		else if(tagName == "AnalysisCopy")
 		{
+			//ANALYSIS PASTE IS NOT YET SUPPORTED!!!!!
+			QMessageBox::warning(NULL,"Paste Failed","Analysis pasting is not yet supported.");
+			return;
+
+
 			hadAnalysis = true;
 			if(hadExperiment)
 			{
@@ -293,7 +303,7 @@ void Copier::paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition)
 	else
 		assocRootHost = dynamic_cast<AssociateRootHost*>(editorState_->getCurrentAnalysis().data());
 	Q_ASSERT(assocRootHost);
-	QSharedPointer<AssociateRoot> uiRoot = assocRootHost->getAssociateRoot();
+	QSharedPointer<AssociateRoot> uiRoot = assocRootHost->getAssociateRoot("UIData");
 	Q_ASSERT(uiRoot);
 	DataStore* uiRootDataStore = dynamic_cast<DataStore*>(uiRoot.data());
 	Q_ASSERT(uiRootDataStore);
@@ -342,10 +352,6 @@ void Copier::paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition)
 
 	//Update Analysis Elements paths
 	QString pasteParentPath = pasteParent->getPath();
-	//Remove task from pasteParentPath
-	QStringList pasteParentPathComponents = pasteParentPath.split("::",QString::KeepEmptyParts);
-	pasteParentPathComponents.pop_front();
-	pasteParentPath = pasteParentPathComponents.join("::");
 	foreach(QSharedPointer<Asset> asset,newAnalysisElems)
 	{
 		assocElem = dynamic_cast<AssociateElement*>(asset.data());

@@ -58,17 +58,6 @@ SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/LoadingWidget.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/RecordingVisualTargetHost.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/RecordingVisualTargetHost.cpp
 
-HEADERS += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.h
-SOURCES += $$(PICTO_TREE)/source/workstation/analysis/analysisviewer.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisParameterSelector.h
-SOURCES += $$(PICTO_TREE)/source/workstation/analysis/AnalysisParameterSelector.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.h
-SOURCES += $$(PICTO_TREE)/source/workstation/analysis/AnalysisOutputDisplay.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/analysis/TaskRunSelector.h
-SOURCES += $$(PICTO_TREE)/source/workstation/analysis/TaskRunSelector.cpp
-HEADERS += $$(PICTO_TREE)/source/workstation/analysis/SaveOutputDialog.h
-SOURCES += $$(PICTO_TREE)/source/workstation/analysis/SaveOutputDialog.cpp
-
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp
 #HEADERS += $$(PICTO_TREE)/source/workstation/document.h

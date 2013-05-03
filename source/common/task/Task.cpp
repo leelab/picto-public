@@ -14,8 +14,6 @@ Task::Task()
 		taskNumber_ = 0;
 		AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
-
-		ASSOCIATE_ROOT_HOST_INITIALIZATION
 }
 
 QSharedPointer<Task> Task::Create()
@@ -254,8 +252,6 @@ void Task::postDeserialize()
 	{
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
 	}
-
-	ASSOCIATE_ROOT_HOST_POST_DESERIALIZE
 }
 
 bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

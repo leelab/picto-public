@@ -69,10 +69,10 @@ void PictoData::postDeserialize()
 	AssociateRootHost* assocRootHost;
 	foreach(QSharedPointer<Asset> associateRootHostAsset,assocRootHosts)
 	{
-		//If the host has no AssociateRoot attached
+		//If the host has no UIData AssociateRoot attached
 		assocRootHost = dynamic_cast<AssociateRootHost*>(associateRootHostAsset.data());
 		Q_ASSERT(assocRootHost);
-		if(!assocRootHost->getAssociateRoot())
+		if(!assocRootHost->getAssociateRoot("UIData"))
 		{
 			//Create a new UIData object and attach it to this host.
 			QUuid hostId = assocRootHost->getHostId();

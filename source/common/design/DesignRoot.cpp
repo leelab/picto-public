@@ -155,14 +155,14 @@ QSharedPointer<Asset> DesignRoot::getOpenAsset()
 	if(!experiment)
 		return QSharedPointer<Asset>();
 	AssociateRootHost* expRootHost = dynamic_cast<AssociateRootHost*>(pictoData_->getExperiment().data());
-	QSharedPointer<UIData> uiData = expRootHost->getAssociateRoot().staticCast<UIData>();
+	QSharedPointer<UIData> uiData = expRootHost->getAssociateRoot("UIData").staticCast<UIData>();
 	return experiment->getDesignConfig()->getAsset(uiData->getOpenAsset());
 }
 
 void DesignRoot::setOpenAsset(QSharedPointer<Asset> asset)
 {
 	AssociateRootHost* expRootHost = dynamic_cast<AssociateRootHost*>(pictoData_->getExperiment().data());
-	QSharedPointer<UIData> uiData = expRootHost->getAssociateRoot().staticCast<UIData>();
+	QSharedPointer<UIData> uiData = expRootHost->getAssociateRoot("UIData").staticCast<UIData>();
 	uiData->setOpenAsset(asset->getAssetId());
 }
 

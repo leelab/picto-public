@@ -2,7 +2,6 @@
 #define _Analysis_H_
 
 #include "../common.h"
-#include "AssociateRoot.h"
 #include "AssociateRootHost.h"
 
 namespace Picto {

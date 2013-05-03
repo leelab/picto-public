@@ -16,7 +16,7 @@ public:
 	virtual ~Copier();
 
 	void copy(QList<QSharedPointer<Asset>> assets,bool copyAnalysis = false);
-	void paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition);
+	void paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition = QPoint(0,0));
 private:
 	static bool getContentsUntilEndTag(QSharedPointer<QXmlStreamReader> xmlReader, QString endTag, QString& output);
 	QSharedPointer<EditorState> editorState_;

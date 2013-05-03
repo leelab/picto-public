@@ -13,7 +13,6 @@
 //#include "TrialResult.h"
 //#include "BlockGenerator.h"
 #include "../engine/PictoEngine.h"
-#include "../parameter/AssociateRootHost.h"
 
 //#include <QUuid>
 #include <QList>
@@ -32,9 +31,9 @@ namespace Picto {
 */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Task : public ScriptableContainer, public AssociateRootHost
+class PICTOLIB_API Task : public ScriptableContainer
 #else
-class Task : public ScriptableContainer, public AssociateRootHost
+class Task : public ScriptableContainer
 #endif
 {
 	Q_OBJECT
@@ -52,8 +51,6 @@ public:
 	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
 
-	ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION
-
 protected:
 	virtual QString defaultTagName(){return "Task";};
 	virtual void postDeserialize();
@@ -66,10 +63,6 @@ private:
 	QSharedPointer<StateMachine> stateMachine_;
 	int taskNumber_;
 	QSharedPointer<Transition> initTransition_;
-
-	bool hostIdBeingEdited_;
-private slots:
-	void changeHostId(){if(hostIdBeingEdited_) return;hostIdBeingEdited_ = true;propertyContainer_->setPropertyValue("HostId",QUuid::createUuid());hostIdBeingEdited_ = false;};
 };
 
 

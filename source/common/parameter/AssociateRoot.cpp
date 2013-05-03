@@ -1,7 +1,7 @@
+#include "AssociateRootHost.h"
 #include "AssociateRoot.h"
 #include "../design/PictoData.h"
 #include "AssociateElement.h"
-#include "AssociateRootHost.h"
 #include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
@@ -103,15 +103,6 @@ QSharedPointer<Asset> AssociateRoot::getLinkableAsset()
 				return child;
 		}
 	}
-	QSharedPointer<DataStore> experiment = parent->getExperiment();
-	foreach(QString childTag,experiment->getValidChildTags())
-	{
-		foreach(QSharedPointer<Asset> child,experiment->getGeneratedChildren(childTag))
-		{
-			if(isLinkableAsset(child))
-				return child;
-		}
-	}
 	return QSharedPointer<Asset>();
 }
 
@@ -149,7 +140,7 @@ void AssociateRoot::setLinkedAsset(QSharedPointer<Asset> asset)
 	linkedAsset_ = asset;
 	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(linkedAsset_.data());
 	Q_ASSERT(assocRootHost);
-	assocRootHost->setAssociateRoot(selfPtr().staticCast<AssociateRoot>());
+	assocRootHost->setAssociateRoot(identifier(),selfPtr().staticCast<AssociateRoot>());
 	updateLinkedAssetProperties();
 
 	//Connect to change signals from linked assets's Id and Name properties, so that we can update when

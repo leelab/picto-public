@@ -37,7 +37,7 @@ ScriptItemManager::ScriptItemManager(QSharedPointer<EditorState> editorState, QG
 	//If the asset has an analysisScriptContainer, we need to connect its edited signal too since it doesn't propegate
 	//to its connected experimental asset.  This happens in performAnalysisScriptContainerOps();
 	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-	if(editorState_->inAnalysisTask())
+	if(activeAnalysis)
 	{
 		if(!asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
 		{
@@ -116,7 +116,7 @@ void ScriptItemManager::updateScriptItems()
 		{	//if its an analysis script
 			//If the object does not have an AnalysisScriptContainer, skip this script
 			QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-			if(!editorState_->inAnalysisTask() || asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
+			if(!activeAnalysis || asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
 				continue;
 
 			//Set the property container from the scriptContainer

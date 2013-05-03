@@ -42,8 +42,7 @@ namespace Picto {
 													if(linkedAsset.staticCast<DataStore>()->AddAssociateChild(getAssociateId(),getParentId(),identifier(),selfPtr()))	\
 														return SUCCESS_BY_LINK;	\
 												}	\
-												QString fullPath = linkedAsset->getPath() + "::" + getParentPath();	\
-												if(linkedAsset.staticCast<DataStore>()->AddAssociateChild(getAssociateId(),fullPath,identifier(),selfPtr()))	\
+												if(linkedAsset.staticCast<DataStore>()->AddAssociateChild(getAssociateId(),getParentPath(),identifier(),selfPtr()))	\
 													return SUCCESS_BY_PATH;	\
 												return FAIL;	\
 											};	\

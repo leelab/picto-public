@@ -418,6 +418,14 @@ void DiagramScene::analysisCopySelectedItems()
 
 void DiagramScene::pasteItems()
 {
+	//Make sure no assets are selected
+	QList<QSharedPointer<Asset>> selectedAssets = getSelectedAssets();
+	if(selectedAssets.size() > 0)
+	{
+		QMessageBox::warning(NULL,"Paste Failed","Paste can only occur within the current viewable window.  Please make sure that only the window asset is selected.");
+		return;
+	}
+
 	QPoint pasteLoc;
 	if(latestPastePos_.isNull())
 	{
@@ -428,6 +436,7 @@ void DiagramScene::pasteItems()
 	else
 		pasteLoc = latestPastePos_;
 	copier_->paste(editorState_->getWindowAsset(),pasteLoc);
+	
 }
 
 void DiagramScene::bringToFront()
