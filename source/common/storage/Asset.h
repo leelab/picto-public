@@ -22,14 +22,13 @@ public:
 	using Serializable::toXml;
 	using Serializable::fromXml;
 	bool toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader){return fromXml(xmlStreamReader,true);};
-	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
+	bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	void initializeToDefault(QString tagName = "", QString type = "");
 	bool initializeFromXml(QString xml);
 	virtual void enableRunMode(bool enable);
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate) = 0;
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 	virtual bool validateTree();
 	
 	virtual void setDeleted();
@@ -40,11 +39,12 @@ public:
 	void setParentAsset(QSharedPointer<Asset> parent){parent_ = parent;};
 	virtual QString getName(){return "";};
 	virtual QString identifier(){return "";};
-	virtual QString assetType(){return "";};
+	virtual QString friendlyTypeName(){return "";};
 	QSharedPointer<Asset> getParentAsset(){return QSharedPointer<Asset>(parent_);};
 	void setSelfPtr(QSharedPointer<Asset> selfPtr){self_ = selfPtr;};
 	void reinitialize();
-	virtual QString getInfo(){return QString("<h3 style=\"color:red\">%1</h3>").arg(assetType());};
+	virtual QString getInfo(){return QString("<h3 style=\"color:red\">%1</h3>").arg(friendlyTypeName());};
+	virtual QString getDescription(){return QString("<h3 style=\"color:red\">%1</h3>").arg(friendlyTypeName());};
 	QString getPath();
 	bool needsUniqueName(){return needsUniqueName_;};	//Indicates that this objects name must be
 														//unique within its parent
@@ -67,6 +67,7 @@ protected:
 	virtual void preDeserialize();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader){return true;};
+	void addError(QString errorMessage);
 	// In some cases, an asset may not want to be considered edited, even if it already has been, 
 	// unless it gets changed after a certain point.
 	void setUnedited(){edited_ = false;};

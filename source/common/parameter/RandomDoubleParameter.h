@@ -36,6 +36,8 @@ public:
 
 	double getValue(){return propertyContainer_->getPropertyValue("Value").toDouble();};
 	void setValue(double val){propertyContainer_->setPropertyValue("Value",val);};
+
+	virtual QString friendlyTypeName(){return "Random Double";};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

@@ -38,7 +38,7 @@ bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	//Do some basic error checking
  	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "NDU")
 	{
-		addError("NeuralDataUnit","Incorrect tag, expected <NDU>",xmlStreamReader);
+		addError("Incorrect tag, expected <NDU>");
 		return false;
 	}
 
@@ -77,7 +77,7 @@ bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	
 		if(xmlStreamReader->hasError())
 		{
-			addError("NeuralDataUnit", "xmlStreamReader.errorString()", xmlStreamReader);
+			addError(xmlStreamReader->errorString());
 			return false;
 		}
 	}

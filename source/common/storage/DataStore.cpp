@@ -144,7 +144,7 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeCurrentToken(*xmlReader);	
 	return returnVal;
 }
-bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate)
+bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Create XMLStreamWriter to store this DataStore's tag text in a string
 	tagText_ = "";
@@ -167,7 +167,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	//Make sure its a start tag
  	if(!xmlStreamReader->isStartElement())
 	{
-		addError(myTagName_.toLatin1(),QString("Incorrect tag, expected <%1>").arg(myTagName_).toLatin1(),xmlStreamReader);
+		addError(QString("Incorrect tag, expected <%1>").arg(myTagName_).toLatin1());
 		returnVal = false;
 		return returnVal;
 	}
@@ -185,7 +185,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		else
 		{
 			//Make sure that there are no attributes besides "type" and "id"
-			addError(myTagName_.toLatin1(),QString("Incorrect attribute:\"%1\", only \"type\" and \"id\" attributes are allowed").arg(attribute.name().toString()),xmlStreamReader);
+			addError(QString("Incorrect attribute:\"%1\", only \"type\" and \"id\" attributes are allowed").arg(attribute.name().toString()));
 			returnVal = false;
 			return returnVal;
 		}
@@ -208,7 +208,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		//Move forward in XMLStream
 		if(xmlStreamReader->readNext() == QXmlStreamReader::Invalid)
 		{
-			addError(myTagName_.toLatin1(),QString("XML syntax has been violated.").toLatin1(),xmlStreamReader);
+			addError(QString("XML syntax has been violated.").toLatin1());
 			return false;
 		}
 		xmlWriter->writeCurrentToken(*xmlStreamReader);// Lets add the current tag to our tagText.
@@ -223,7 +223,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 			//There's no entry in our factory list for this tag.  Syntax Error.
 			//Report error and attempt to move XMLStream pointer to the end of this tag
 			returnVal = false;
-			addError(myTagName_.toLatin1(),QString("The tag: <%1> is invalid in the %2 object definition").arg(name).arg(myTagName_).toLatin1(),xmlStreamReader);
+			addError(QString("The tag: <%1> is invalid in the %2 object definition").arg(name).arg(myTagName_).toLatin1());
 			while(!(xmlStreamReader->isEndElement() && (xmlStreamReader->name().toString() == name)) && !xmlStreamReader->atEnd())
 			{
 				xmlStreamReader->readNext();
@@ -255,7 +255,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		if(newChild.isNull())
 		{
 			returnVal = false;
-			addError(myTagName_.toLatin1(),QString(error),xmlStreamReader);
+			addError(QString(error));
 			//Attempt to loop until the end tag of the bad tag.
 			while(!(xmlStreamReader->isEndElement() && (xmlStreamReader->name().toString() == name)) && !xmlStreamReader->atEnd())
 			{
@@ -268,7 +268,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		//Lets add it to our list of children
 		AddChild(name,newChild);
 		//Lets deserialize it.
-		if(!newChild->fromXml(xmlStreamReader,validate))
+		if(!newChild->fromXml(xmlStreamReader))
 		{
 			//Child deserialization failed.  For now, just exit.
 			//We may want to attempt to continue deserialization in the futures in order
@@ -283,7 +283,7 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	if(xmlStreamReader->atEnd())
 	{
 		returnVal = false;
-		addError(myTagName_.toLatin1(), "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 	}
 	//Generate any default Assets that were not in the XML
 	for(QMap<QString,QSharedPointer<AssetFactory>>::iterator iter = factories_.begin();iter!=factories_.end();iter++)
@@ -378,7 +378,7 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				if(nameMap.contains(name))
 				{
 					QString errMsg = QString("%1 contains more than one child with the name: %2").arg(getName()).arg(name);
-					addError("DataStore", errMsg, xmlStreamReader);
+					addError(errMsg);
 					return false;
 				}
 				nameMap[name] = true;
@@ -400,13 +400,13 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 					if(nameMap.contains(name))
 					{
 						QString errMsg = QString("%1 contains experimental and analysis elements with the same name: %2").arg(getName()).arg(name);
-						addError("DataStore", errMsg, xmlStreamReader);
+						addError(errMsg);
 						return false;
 					}
 					if(associateNameMap.contains(name))
 					{
 						QString errMsg = QString("%1 more than one analysis element child with the same name: %2").arg(getName()).arg(name);
-						addError("DataStore", errMsg, xmlStreamReader);
+						addError( errMsg);
 						return false;
 					}
 					associateNameMap[name] = true;

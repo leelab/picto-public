@@ -43,7 +43,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisDefinition";};
-	virtual QString assetType(){return "AnalysisDefinition";};
+	virtual QString friendlyTypeName(){return "AnalysisDefinition";};
 
 protected:
 

@@ -52,7 +52,7 @@ bool FrameDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "FrameDataUnitPackage")
 	{
-		addError("FrameDataUnitPackage","Incorrect tag, expected <FrameDataUnitPackage>",xmlStreamReader);
+		addError("Incorrect tag, expected <FrameDataUnitPackage>");
 		return false;
 	}
 
@@ -75,7 +75,7 @@ bool FrameDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 		}
 		else
 		{
-			addError("FrameDataUnitPackage", "Unexpected tag", xmlStreamReader);
+			addError("Unexpected tag");
 			return false;
 		}
 		xmlStreamReader->readNext();
@@ -83,7 +83,7 @@ bool FrameDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("FrameDataUnitPackage", "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 		return false;
 	}
 	return true;

@@ -58,6 +58,7 @@ public:
 	void increment() { currentValue_ += increment_; };
 	void decrement() { currentValue_ -= increment_; };
 
+	virtual QString friendlyTypeName(){return "Range";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

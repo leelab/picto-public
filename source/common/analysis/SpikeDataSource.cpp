@@ -36,7 +36,7 @@ bool SpikeDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 		return false;
 	if(!getParentAsset()->inherits("Picto::SpikeTrigger"))
 	{
-		addError("SpikeDataSource", "Spike data sources must be defined within a SpikeTrigger.");
+		addError("Spike data sources must be defined within a SpikeTrigger.");
 		return false;
 	}
 	return true;

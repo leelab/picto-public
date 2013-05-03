@@ -36,7 +36,7 @@ public:
 
 	virtual QString getUITemplate(){return "Parameter";};
 	//QString type();
-	virtual QString assetType(){return "Parameter";};
+	virtual QString friendlyTypeName(){return "Parameter";};
 
 public slots:
 	//setters and getters are slots so we can bind them to scripts

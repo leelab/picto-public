@@ -68,21 +68,21 @@ bool AssociateRoot::LinkToAsset(QSharedPointer<Asset> asset, QString& feedback)
 	{
 		QString linkedAssetType = asset->identifier();
 		if(linkedAssetMatches)
-			feedback = QString("The %1 or %2 design appears to have been altered outside of the Picto Development Environment.  ").arg(linkedAssetType).arg(assetType());
+			feedback = QString("The %1 or %2 design appears to have been altered outside of the Picto Development Environment.  ").arg(linkedAssetType).arg(friendlyTypeName());
 		else
-			feedback = QString("This %1 was built for a %2 design that does not appear in this experiment.  ").arg(assetType()).arg(linkedAssetType);
+			feedback = QString("This %1 was built for a %2 design that does not appear in this experiment.  ").arg(friendlyTypeName()).arg(linkedAssetType);
 		if(unmatchedAssociateRootAssets.isEmpty())
 		{
-			feedback += QString("All elements of the %1 were succesfully attached to this experiment's %2 %3.").arg(assetType()).arg(asset->getName()).arg(linkedAssetType);
+			feedback += QString("All elements of the %1 were succesfully attached to this experiment's %2 %3.").arg(friendlyTypeName()).arg(asset->getName()).arg(linkedAssetType);
 		}
 		else
 		{
-			feedback += QString("Experimental element links could not be found for the following %1 elements which have been removed:\n").arg(assetType()) 
+			feedback += QString("Experimental element links could not be found for the following %1 elements which have been removed:\n").arg(friendlyTypeName()) 
 				+ unmatchedAssociateRootAssets.join("\n") + "\n";
 		}
 		if(linkedAssetMatches && pathMatchedAssociateRootAssets.size())
 		{
-			feedback += QString("Imperfect matches were detected for the following %1 elements:\n").arg(assetType()) + unmatchedAssociateRootAssets.join("\n") + "\n";
+			feedback += QString("Imperfect matches were detected for the following %1 elements:\n").arg(friendlyTypeName()) + unmatchedAssociateRootAssets.join("\n") + "\n";
 		}
 
 	}

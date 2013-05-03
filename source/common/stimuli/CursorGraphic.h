@@ -44,6 +44,8 @@ public:
 
 	static const QString type;
 
+	virtual QString friendlyTypeName(){return "Cursor Graphic";};
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

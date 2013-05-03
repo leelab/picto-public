@@ -17,6 +17,8 @@ class StimulusElement
 {
 public:
 	StimulusElement();
+
+	virtual QString friendlyTypeName(){return "Stimulus Element";};
 };
 
 

@@ -10,13 +10,13 @@ namespace Picto {
 
 namespace StateMachineLevel
 {
-	typedef enum
-	{
-		Stage,
-		Trial,
-		Task,
-		Experiment
-	} StateMachineLevel;
+	//typedef enum
+	//{
+	//	Stage,
+	//	Trial,
+	//	Task,
+	//	Experiment
+	//} StateMachineLevel;
 }
 
 /*!	\brief A container for StateMachineElements that acts as a statemachine
@@ -70,8 +70,8 @@ public:
 	//void addElement(QSharedPointer<StateMachineElement> element);
 	//bool setInitialElement(QString elementName);
 
-	void setLevel(StateMachineLevel::StateMachineLevel level);
-	StateMachineLevel::StateMachineLevel getLevel();
+	//void setLevel(StateMachineLevel::StateMachineLevel level);
+	//StateMachineLevel::StateMachineLevel getLevel();
 
 	//bool validateStateMachine();
 
@@ -84,7 +84,7 @@ public:
 
 	bool jumpToState(QStringList path, QString state);
 	virtual QString getUITemplate(){return "StateMachine";};
-	virtual QString assetType(){return "StateMachine";};
+	virtual QString friendlyTypeName(){return "State Machine";};
 
 	virtual void upgradeVersion(QString deserializedVersion);
 
@@ -94,7 +94,6 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
-
 
 private:
 	QString runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave);
@@ -115,7 +114,7 @@ private:
 	//QScriptEngine qsEngine_;
 	//bool scriptingInit_;
 
-	QStringList levelEnumStrs_;
+	//QStringList levelEnumStrs_;
 
 	static short trialEventCode_;
 	static int trialNum_;

@@ -43,6 +43,7 @@ public:
 	bool getValue(){return propertyContainer_->getPropertyValue("Value").toBool();};
 	void setValue(bool val){propertyContainer_->setPropertyValue("Value",val);};
 
+	virtual QString friendlyTypeName(){return "Boolean";};
 	//note that the lessThan & greaterThan functions aren't redefined, 
 	//so they will always return false
 	//bool equalTo(Parameter& RHS) { return RHS.getValue().toBool() == value_ && RHS.type() == "Boolean"; };

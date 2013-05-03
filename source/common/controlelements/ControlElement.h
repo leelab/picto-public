@@ -59,14 +59,14 @@ public:
 	//QStringList getResultList() { return results_.keys(); };
 	//QSharedPointer<Result> getResult(QString name);
 	virtual QString getUITemplate(){return "ControlElement";};
-	virtual QString assetType(){return "ControlElement";};
+	virtual QString friendlyTypeName(){return "Control Element";};
 
 	//DataStore Functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 protected:
-	virtual QString defaultTagName(){return "ControlElement";};
+	virtual QString defaultTagName(){return "Control Element";};
 	//bool addResult(QSharedPointer<Result> result);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

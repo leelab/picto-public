@@ -28,6 +28,7 @@ public:
 
 	QStringList getResultList();
 	QSharedPointer<Result> getResult(QString name);
+	virtual bool hasEditableDescendants();
 
 protected:
 	/*! \brief Defines a result that is required to be in this resultContainer.
@@ -42,7 +43,7 @@ protected:
 	//void addRequiredResult(QSharedPointer<Result> requiredResult, QString type = "");
 	void setMaxOptionalResults(int max, QString type = "");
 	/*! \brief This is used to add a result factory type.
-	 * If, for example, an object can have regular results and ControlResults,
+	 * If, for example, an object can have regular results and ControlTargetResults,
 	 * this function would be used to add a "target" type such that <Result type="Target">
 	 * tags would get their results from the input factory.
 	 */
@@ -50,6 +51,7 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QMap<QString, QSharedPointer<Result> > results_;
+
 private:
 	QSharedPointer<AssetFactory> resultFactory_;
 	QMap<QString,QSharedPointer<AssetFactory>> resultFactoryByType_;

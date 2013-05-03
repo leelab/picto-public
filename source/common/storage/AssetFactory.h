@@ -34,13 +34,14 @@ public:
 	//The type of the returned asset is in the returnedType field.
 	QSharedPointer<Asset> getRequiredAsset(QString& returnedType);
 	bool reachedProductionLimit(QString type = "");
-	int getMaxAssets(){return maxAssets_;};
+	int getMaxAssets(QString type = "");
 	void setMaxAssets(int maxAssets){maxAssets_ = maxAssets;};
-	int getMinAssets(){return minAssets_;};
+	int getMinAssets(QString type = "");
 	void setMinAssets(int minAssets){minAssets_ = minAssets;};
 	int getGeneratedAssets(){return numSourcedAssets_;};
 	void setGeneratedAssets(int numGeneratedAssets){numSourcedAssets_ = numGeneratedAssets;};
 	QString getUITemplate(QString type);
+	QString getGeneratedAssetTypeName(QString type);
 protected:
 	virtual QSharedPointer<Asset> generateNewAsset();
 private:
@@ -50,6 +51,7 @@ private:
 	int numSourcedAssets_;
 	const bool isGroupFactory_;
 	QString uITemplate_;
+	QString generatedAssetTypeName_;
 	bool uITemplateInitialized_;
 
 	NewAssetFnPtr newAssetFn_;

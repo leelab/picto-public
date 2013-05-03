@@ -60,7 +60,7 @@ bool StringParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 {
 	if(!Parameter::validateObject(xmlStreamReader))
 		return false;
-	addError("StringParameter", "StringParameter is not yet implemented", xmlStreamReader);
+	addError("StringParameter is not yet implemented");
 	return true;
 }
 

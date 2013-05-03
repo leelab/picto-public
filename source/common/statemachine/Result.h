@@ -29,7 +29,7 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	virtual QString getUITemplate(){return "Result";};
-	virtual QString assetType(){return "Result";};
+	virtual QString friendlyTypeName(){return "Result";};
 	void runResultScript();
 
 protected:
@@ -42,8 +42,6 @@ protected:
 
 	QSharedPointer<AssetFactory> resultScriptFactory_;
 
-private:
-	void turnOffUnusedAssetFactories();
 };
 
 

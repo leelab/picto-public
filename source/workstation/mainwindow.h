@@ -52,7 +52,7 @@ private slots:
 	bool saveAsExperiment();
 	void changeMode();
 	void startMode();
-	void checkSyntax();
+	//void checkSyntax();
 	void aboutPicto();
 
 private:

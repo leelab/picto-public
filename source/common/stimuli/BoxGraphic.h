@@ -39,6 +39,8 @@ public:
 	QPoint getPositionOffset();
 
 	static const QString type;
+
+	virtual QString friendlyTypeName(){return "Box";};
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 

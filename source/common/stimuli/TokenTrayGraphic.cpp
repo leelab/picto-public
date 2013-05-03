@@ -1,5 +1,6 @@
 #include <QPainter>
 #include "TokenTrayGraphic.h"
+#include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -14,10 +15,10 @@ VisualElement(position,color)
 	//updatingParameterLists_ = false;
 	shapeList_ << "Ellipse" << "Rectangle" << "Diamond";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
-	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TokenShape",0,"enumNames",shapeList_);
-	AddDefinableProperty(QVariant::Rect,"TokenDimensions",dimensions);
+	AddDefinableProperty(QVariant::Size,"TokenSize",dimensions.size());
 
 	AddDefinableProperty(QVariant::Int,"NumTokens",1);
 	AddDefinableProperty(QVariant::Int,"Phase",0);
@@ -35,6 +36,11 @@ VisualElement(position,color)
 	{
 		AddDefinableProperty(QVariant::String,listName,"");
 	}
+
+	//As of version 0.0.1, we have removed the TokenDimensions property
+	//and replaced it with a TokenSize property.  See upgradeVersion() for details.
+	AddDefinableObjectFactory("TokenDimensions",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+
 	deltaHashs_.push_back(&sizeDelta_);
 	deltaHashs_.push_back(&colorDelta_);
 	deltaHashs_.push_back(&shapeDelta_);
@@ -43,12 +49,12 @@ VisualElement(position,color)
 }
 QRect TokenTrayGraphic::getTokenDimensions()
 {
-	return propertyContainer_->getPropertyValue("TokenDimensions").toRect();
+	return QRect(QPoint(),propertyContainer_->getPropertyValue("TokenSize").toSize());
 }
 
 void TokenTrayGraphic::setTokenDimensions(QRect dimensions)
 {
-	propertyContainer_->setPropertyValue("TokenDimensions",dimensions);
+	propertyContainer_->setPropertyValue("TokenSize",dimensions.size());
 }
 
 QString TokenTrayGraphic::getTokenShape()
@@ -76,12 +82,12 @@ int TokenTrayGraphic::getNumTokens()
 
 QRect TokenTrayGraphic::getTrayDimensions()
 {
-	return propertyContainer_->getPropertyValue("Dimensions").toRect();
+	return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 }
 
 void TokenTrayGraphic::setTrayDimensions(QRect dimensions)
 {
-	propertyContainer_->setPropertyValue("Dimensions",dimensions);
+	propertyContainer_->setPropertyValue("Size",dimensions.size());
 }
 
 QString TokenTrayGraphic::getTrayShape()
@@ -129,6 +135,47 @@ void TokenTrayGraphic::setOutlineWidth(int pixels)
 QPoint TokenTrayGraphic::getPositionOffset()
 {
 	return posOffset_;
+}
+
+void TokenTrayGraphic::upgradeVersion(QString deserializedVersion)
+{
+	VisualElement::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.1")
+	{
+		//As of version 0.0.1, we have removed the TokenDimensions properties 
+		//and replaced it with a TokenSize property.  We take advantage of the fact that the x,y
+		//properties of the TokenDimensions rectangle were never used so we can just throw them out.
+
+		//Get the old obsolete Dimensions Rect property
+		QList<QSharedPointer<Asset>> oldRectProps = getGeneratedChildren("TokenDimensions");
+		//Get the new Size property
+		QList<QSharedPointer<Asset>> newSizeProps = getGeneratedChildren("TokenSize");
+		if(oldRectProps.size() && newSizeProps.size())
+		{
+			Q_ASSERT((oldRectProps.size() == 1) && (newSizeProps.size() == 1));
+			QSharedPointer<ObsoleteAsset> oldRectProp = oldRectProps.first().staticCast<ObsoleteAsset>();
+			QSharedPointer<Property> newSizeProp = newSizeProps.first().staticCast<Property>();
+			//Try getting the old rect from the two methods of serializing it that were used, attributes and string
+			QStringList rectStringVals;
+			if(oldRectProp->getAttributeValue("x").isEmpty())
+			{
+				rectStringVals = oldRectProp->getValue().split(",");
+			}
+			else
+			{
+				rectStringVals << oldRectProp->getAttributeValue("x") 
+					<< oldRectProp->getAttributeValue("y") 
+					<< oldRectProp->getAttributeValue("width") 
+					<< oldRectProp->getAttributeValue("height");
+			}
+			Q_ASSERT(rectStringVals.size() == 4);
+			QRect oldRect(	rectStringVals[0].toInt(),
+							rectStringVals[1].toInt(),
+							rectStringVals[2].toInt(),
+							rectStringVals[3].toInt());
+			newSizeProp->setValue(QSize(oldRect.width(),oldRect.height()));
+		}
+	}
 }
 
 void TokenTrayGraphic::setTokenSize(int index,double size)
@@ -266,7 +313,7 @@ QString TokenTrayGraphic::getTokenShape(int index)
 //
 //
 //		int numTokens = getNumTokens();
-//	QRect trayDimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+//	QRect trayDimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 //	QRect tokenDimensions = propertyContainer_->getPropertyValue("TokenDimensions").toRect();
 //	//Make sure size of sizes,colors,shapes lists matches numTokens before drawing
 //	QStringList sizes = propertyContainer_->getPropertyValue("TokenSizes").toString().split(",",QString::SkipEmptyParts);
@@ -337,8 +384,8 @@ void TokenTrayGraphic::draw()
 	//if(updatingParameterLists_)
 	//	return;	//This is being called recursively.  Leave.
 	int numTokens = getNumTokens();
-	QRect trayDimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
-	QRect tokenDimensions = propertyContainer_->getPropertyValue("TokenDimensions").toRect();
+	QRect trayDimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
+	QRect tokenDimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("TokenSize").toSize());
 	//Make sure size of sizes,colors,shapes lists matches numTokens before drawing
 	QStringList sizes = propertyContainer_->getPropertyValue("TokenSizes").toString().split(",",QString::SkipEmptyParts);
 	QStringList colors = propertyContainer_->getPropertyValue("TokenColors").toString().split(",",QString::SkipEmptyParts);
@@ -452,6 +499,12 @@ void TokenTrayGraphic::postDeserialize()
 	//Initialize values that are needed for drawing since VisualElement::postDeserialize() calls draw()
 	updateListSizes();
 	VisualElement::postDeserialize();
+
+	//List properties are for information transfer only, hide them from the UI.
+	foreach(QString listName,listNames_)
+	{
+		propertyContainer_->getProperty(listName)->setVisible(false);
+	}
 }
 
 bool TokenTrayGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -460,13 +513,13 @@ bool TokenTrayGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 		return false;
 	if(propertyContainer_->getPropertyValue("NumTokens").toInt() < 0)
 	{
-		addError("TokenTrayGraphic", "NumTokens must be greater than or equal to zero.",xmlStreamReader);
+		addError("NumTokens must be greater than or equal to zero.");
 		return false;
 	}
 
 	if(shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt(),"") != "Ellipse")
 	{
-		addError("TokenTrayGraphic", "Non-Ellipse token trays are not yet supported.",xmlStreamReader);
+		addError("Non-Ellipse token trays are not yet supported.");
 		return false;
 	}
 	return true;

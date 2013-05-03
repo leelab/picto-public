@@ -65,7 +65,8 @@ public:
 	QStringList getTaskNames();
 	QSharedPointer<Task> getTaskByName(QString taskName);
 
-	virtual QString assetType(){return "Experiment";};
+	virtual bool hasEditableDescendants(){return true;};
+	virtual QString friendlyTypeName(){return "Experiment";};
 
 	ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION
 

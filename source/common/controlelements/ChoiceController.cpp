@@ -36,15 +36,15 @@ ChoiceController::ChoiceController()
 	AddDefinableObjectFactory("TargetEntryScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	AddDefinableObjectFactory("TargetExitScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 
-	defineResultFactoryType("Target",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlResult::Create))));
+	defineResultFactoryType("Target",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlTargetResult::Create))));
 
 	//resultFactory_->addAssetType("Target",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlResult::Create))));
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ControlTargetResult::Create))));
 	//setMaxUntypedResults(2);
 	//Make sure to update the list of results...
+	setMaxOptionalResults(0,"");
 	addRequiredResult("Broke Fixation");
 	addRequiredResult("Total Time Exceeded");
-	setMaxOptionalResults(0,"");
 }
 
 
@@ -83,13 +83,13 @@ void ChoiceController::stop(QSharedPointer<Engine::PictoEngine> engine)
 
 void ChoiceController::activateTargets()
 {
-	foreach(QSharedPointer<ControlResult> target, targets_)
+	foreach(QSharedPointer<ControlTargetResult> target, targets_)
 		target->setActive(true);
 }
 
 void ChoiceController::deactivateTargets()
 {
-	foreach(QSharedPointer<ControlResult> target, targets_)
+	foreach(QSharedPointer<ControlTargetResult> target, targets_)
 		target->setActive(false);
 }
 
@@ -273,7 +273,7 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 	}
 
 	//Run through the targets checking them
-	foreach(QSharedPointer<ControlResult> target, targets_)
+	foreach(QSharedPointer<ControlTargetResult> target, targets_)
 	{
 		//QRect targetRect = target->getBounds();
 		if(target->contains(signal_->peekValue("x"),signal_->peekValue("y"))/*checkSingleTarget(targetRect)*/)
@@ -371,9 +371,9 @@ void ChoiceController::postDeserialize()
 	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
-		if(target->assetType() == "ControlResult")
+		if(target->inherits("Picto::ControlTargetResult"))
 		{
-			targets_.push_back(target.staticCast<ControlResult>());
+			targets_.push_back(target.staticCast<ControlTargetResult>());
 			//addChildScriptableContainer(target.staticCast<ScriptableContainer>());
 		}
 	}
@@ -406,19 +406,19 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	QList<QSharedPointer<Asset>> targetChildren = getGeneratedChildren("Result");
 	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
-		if(target->assetType() == "ControlResult")
+		if(target->inherits("Picto::ControlTargetResult"))
 		{
 			hasValidChild = true;
 		}
 	}
 	if(!hasValidChild)
 	{
-		addError("ChoiceController", "At least one Control Result must be defined inside this ChoiceController.");
+		addError("At least one Control Result must be defined inside this ChoiceController.");
 		return false;
 	}
 	if(timeUnits_<0)
 	{
-		addError("ChoiceController", "Unrecognized units for " + getName().toLatin1(),xmlStreamReader);
+		addError("Unrecognized units for " + getName().toLatin1());
 		return false;
 	}
 
@@ -426,25 +426,25 @@ bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	QMap<QString,bool> targetNameMap;
 	foreach(QSharedPointer<Asset> target, targetChildren)
 	{
-		if(target->assetType() != "ControlResult")
+		if(!target->inherits("Picto::ControlTargetResult"))
 		{
 			if((target->getName() != "Broke Fixation")
 				&& (target->getName() != "Total Time Exceeded"))
 			{
-				addError("ChoiceController", "Only Target Results can be used in a ChoiceController.", xmlStreamReader);
+				addError("Only Target Results can be used in a ChoiceController.");
 				return false;
 			}
 		}
 		targetName = target->getName();
 		if(targetName == "NotATarget")
 		{
-			addError("ChoiceController", "Target name cannot be 'NotATarget'", xmlStreamReader);
+			addError("Target name cannot be 'NotATarget'");
 			return false;
 		}
 		//confirm that the new target name doesn't conflict
 		if(targetNameMap.contains(targetName))
 		{
-			addError("ChoiceController", "No two Targets can have the same name.", xmlStreamReader);
+			addError("No two Targets can have the same name.");
 			return false;
 		}
 		targetNameMap[targetName] = true;

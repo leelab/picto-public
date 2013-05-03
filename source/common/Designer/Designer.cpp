@@ -39,26 +39,44 @@ Designer::Designer(QWidget *parent) :
 	toolbarLayout->addStretch();
 
     QSplitter *splitter = new QSplitter;
-	QVBoxLayout *centralLayout = new QVBoxLayout;
+	QSplitter *centralLayout = new QSplitter;
+	centralLayout->setOrientation(Qt::Vertical);
 	upButton = new LevelUpButton(editorState_);
 	connect(upButton,SIGNAL(pressed()),editorState_.data(),SLOT(setWindowAssetToParent()));
+
+	//Setup info pane
+	infoPane_ = new QTabWidget();
+	assetInfoBox_ = new AssetInfoBox(editorState_);
+	infoPane_->addTab(assetInfoBox_,"Scripting Info");
+	syntaxErrorBox_ = new SyntaxErrorBox(editorState_);
+	infoPane_->addTab(syntaxErrorBox_,"Error List");
+	aboutElementBox_ = new AboutElementBox(editorState_);
+	infoPane_->addTab(aboutElementBox_,"About Element");
+
+	infoPane_->setTabEnabled(SCRIPTINFO,true);
+	infoPane_->setTabEnabled(SYNTAXCHECK,false);
+	infoPane_->setTabEnabled(ABOUTELEMENT,true);
+
     centralLayout->addWidget(upButton);
+	centralLayout->setStretchFactor(0,0);
 	centralLayout->addWidget(view);
-	QWidget* centralLayoutWidget = new QWidget();
-	centralLayoutWidget->setLayout(centralLayout);
+	centralLayout->setStretchFactor(1,10);
+	centralLayout->addWidget(infoPane_);
+	centralLayout->setStretchFactor(2,5);
+	//QWidget* centralLayoutWidget = new QWidget();
+	//centralLayoutWidget->setLayout(centralLayout);
 
 	toolbox_ = new Toolbox(editorState_);
 	splitter->addWidget(toolbox_);
-    splitter->addWidget(centralLayoutWidget);
+    splitter->addWidget(centralLayout);
 
-	QSplitter* rightSideWidget = new QSplitter();
-	rightSideWidget->setOrientation(Qt::Vertical);
+	//QSplitter* rightSideWidget = new QSplitter();
+	//rightSideWidget->setOrientation(Qt::Vertical);
 	propertyEditor_ = new PropertyBrowser(editorState_);
-	assetInfoBox_ = new AssetInfoBox(editorState_);
-	rightSideWidget->addWidget(propertyEditor_);
-	rightSideWidget->addWidget(assetInfoBox_);
-	rightSideWidget->setStretchFactor(0,10);
-	splitter->addWidget(rightSideWidget);
+	//rightSideWidget->addWidget(propertyEditor_);
+	//rightSideWidget->addWidget(assetInfoBox_);
+	//rightSideWidget->setStretchFactor(0,10);
+	splitter->addWidget(propertyEditor_);
 	splitter->setStretchFactor(1,10);
 
 	mainLayout->addLayout(toolbarLayout);
@@ -75,32 +93,35 @@ Designer::~Designer()
 void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 {
 	Q_ASSERT(designRoot);
-	if(designRoot_ == designRoot)
-		return;
-	
-	if(designRoot_)
+	if(designRoot_ != designRoot)
 	{
-		disconnect(designRoot_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
-		disconnect(designRoot_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
-	}
-	designRoot_ = designRoot;
-	//design_ = designRoot->getDesign(identifier,index);
-	Q_ASSERT(designRoot_);
-	connect(designRoot_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
-	connect(designRoot_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
+		if(designRoot_)
+		{
+			disconnect(designRoot_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
+			disconnect(designRoot_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
+		}
+		designRoot_ = designRoot;
+		//design_ = designRoot->getDesign(identifier,index);
+		Q_ASSERT(designRoot_);
+		connect(designRoot_.data(),SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
+		connect(designRoot_.data(),SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
 
-	//Populate the AnalysisSelector
-	editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
-	analysisSelector_->clear();
-	analysisSelector_->addItem("None");
-	for(int i=0;i<designRoot_->getNumAnalyses();i++)
-	{
-		analysisSelector_->addItem(designRoot_->getAnalysis(i)->getName());
+		//Tell the syntaxErrorBox about the designRoot
+		syntaxErrorBox_->setDesignRoot(designRoot_);
+
+		//Populate the AnalysisSelector
+		editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
+		analysisSelector_->clear();
+		analysisSelector_->addItem("None");
+		for(int i=0;i<designRoot_->getNumAnalyses();i++)
+		{
+			analysisSelector_->addItem(designRoot_->getAnalysis(i)->getName());
+		}
+		analysisSelector_->addItem("New...");
+		//Since we just loaded a new design, there are no undos or redos available
+		undoAvailable(false);
+		redoAvailable(false);
 	}
-	analysisSelector_->addItem("New...");
-	//Since we just loaded a new design, there are no undos or redos available
-	undoAvailable(false);
-	redoAvailable(false);
 	resetEditor();
 }
 
@@ -211,24 +232,9 @@ void Designer::setOpenAsset(QSharedPointer<Asset> asset)
 void Designer::checkSyntax()
 {
 	QString errors;
-	if(designRoot_->compiles(&errors))
-	{
-		QMessageBox box;
-		box.setText("Syntax check passed");
-		box.setIconPixmap(QPixmap(":/icons/check.png"));
-		box.exec();
-	}
-	else
-	{
-		QMessageBox box;
-		box.setText("Syntax check failed                                              "
-			"                                                                         "
-			"                                                                         "
-			"                                                                         ");
-		box.setDetailedText(errors);
-		box.setIconPixmap(QPixmap(":/icons/x.png"));
-		box.exec();
-	}
+	infoPane_->setTabEnabled(SYNTAXCHECK,true);
+	infoPane_->setCurrentIndex(SYNTAXCHECK);
+	syntaxErrorBox_->checkSyntax();
 }
 
 //! [23]
@@ -374,29 +380,6 @@ void Designer::createToolbars()
 	editToolBar->addAction(undoAction);
 	editToolBar->addAction(redoAction);
 
-    /*QToolButton *pointerButton = new QToolButton;
-    pointerButton->setCheckable(true);
-    pointerButton->setChecked(true);
-    pointerButton->setIcon(QIcon(":/icons/pointer.png"));
-	QToolButton *navigateButton = new QToolButton;
-    navigateButton->setCheckable(true);
-    navigateButton->setIcon(QIcon(":/icons/cursor-openhand.png"));
-    QToolButton *linePointerButton = new QToolButton;
-    linePointerButton->setCheckable(true);
-    linePointerButton->setIcon(QIcon(":/icons/linepointer.png"));*/
-
- //   pointerTypeGroup = QSharedPointer<QButtonGroup>(new QButtonGroup);
- //   pointerTypeGroup->addButton(pointerButton, int(DiagramScene::Select));
-	//pointerTypeGroup->addButton(navigateButton,
- //                               int(DiagramScene::Navigate));
- //   pointerTypeGroup->addButton(linePointerButton,
- //                               int(DiagramScene::InsertLine));
-	//pointerTypeGroup->setExclusive(true);
- //   connect(pointerTypeGroup.data(), SIGNAL(buttonClicked(int)),
- //           editorState_.data(), SLOT(setEditMode(int)));
-	//connect(editorState_.data(), SIGNAL(editModeChanged(int)),
- //           this, SLOT(updateEditModeButtons(int)));
-
     sceneScaleCombo = new QComboBox;
     QStringList scales;
     scales << tr("50%") << tr("75%") << tr("100%") << tr("125%") << tr("150%");
@@ -406,9 +389,7 @@ void Designer::createToolbars()
             this, SLOT(sceneScaleChanged(const QString &)));
 
     pointerToolbar = new QToolBar(tr("Pointer type"));
- //   pointerToolbar->addWidget(pointerButton);
-	//pointerToolbar->addWidget(navigateButton);
- //   pointerToolbar->addWidget(linePointerButton);
+
     pointerToolbar->addWidget(sceneScaleCombo);
 	pointerToolbar->addSeparator();
 	pointerToolbar->addWidget(searchWidget);

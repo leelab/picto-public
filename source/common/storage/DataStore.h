@@ -56,7 +56,7 @@ public:
 
 	//AutoSerialization Stuff---------------------------------
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool validateTree();
 	virtual void setDeleted();
 	QStringList getDefinedChildTags(){return factories_.keys();};
@@ -67,7 +67,7 @@ public:
 	QList<QSharedPointer<Asset>> getAssociateDescendants(QUuid associateId);
 	virtual QList<QUuid> getAttachedAssociateIds();
 	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
-	virtual QString assetType(){return "DataStore";};
+	virtual QString friendlyTypeName(){return "DataStore";};
 	QSharedPointer<PropertyContainer> getPropertyContainer(){return propertyContainer_;};
 	QStringList getValidChildTags();
 	QSharedPointer<AssetFactory> getAssetFactory(QString tagName);

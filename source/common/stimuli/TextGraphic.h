@@ -38,8 +38,8 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
-	QRect getDimensions(){ return propertyContainer_->getPropertyValue("Dimensions").toRect(); };
-	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Dimensions",dimensions);};
+	QRect getDimensions(){ return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize()); };
+	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Size",dimensions.size());};
 
 	int getWidth(){return getDimensions().width();};
 	int getHeight(){return getDimensions().height();};
@@ -49,6 +49,8 @@ public:
 	void setText(QString text) { propertyContainer_->setPropertyValue("Text",text); };
 
 	static const QString type;
+
+	virtual QString friendlyTypeName(){return "Text";};
 
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};

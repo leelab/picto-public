@@ -6,12 +6,11 @@ namespace Picto
 {
 TargetController::TargetController()
 {
-	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
-	
+	setMaxOptionalResults(0);
+	//AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty("SignalChannel","");
 	//shapeList_ << "Rectangle" << "Oval";
 	//AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
-	//AddDefinableProperty(QVariant::Rect,"Target",QRect());
 	AddDefinableProperty("ControlTarget","");
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);

@@ -45,11 +45,14 @@
 #include <QMainWindow>
 #include <QPointer>
 #include <QButtonGroup>
+#include <QTabWidget>
 
 
 
 #include "qtpropertymanager.h"
 #include "qtvariantproperty.h"
+#include "SyntaxErrorBox.h"
+#include "AboutElementBox.h"
 
 
 
@@ -175,7 +178,12 @@ private:
 
 	LevelUpButton* upButton;
 	QWidget *propertyEditor_;
+
+	enum INFOTABS{SCRIPTINFO,SYNTAXCHECK,ABOUTELEMENT};
 	QWidget *assetInfoBox_;
+	SyntaxErrorBox *syntaxErrorBox_;
+	AboutElementBox *aboutElementBox_;
+	QTabWidget *infoPane_;
 
 private slots:
 	void  undoAvailable(bool available);

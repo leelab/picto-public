@@ -6,7 +6,7 @@
 #include "ScriptElement.h"
 #include "SwitchElement.h"
 #include "PausePoint.h"
-#include "RequiredResult.h"
+#include "LogicResult.h"
 #include "../storage/ObsoleteAsset.h"
 
 #include "../engine/PictoEngine.h"
@@ -30,14 +30,15 @@ StateMachine::StateMachine() :
 	dontRunElement_(false)
 {
 	
-	AddDefinableProperty("Type","StateMachine");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	//AddDefinableProperty("Type","StateMachine");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 
 	//AddDefinableProperty("InitialElement","");
 	
 	//Note that this is the same order as the enum to allow the enum to be
 	//used as an index
-	levelEnumStrs_<<"Stage"<<"Trial"<<"Task"<<"Experiment";
-	AddDefinableProperty(PropertyContainer::enumTypeId(),"Level",0,"enumNames",levelEnumStrs_);
+	//levelEnumStrs_<<"Stage"<<"Trial"<<"Task"<<"Experiment";
+	//AddDefinableProperty(PropertyContainer::enumTypeId(),"Level",0,"enumNames",levelEnumStrs_);
+	AddDefinableObjectFactory("Level",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 
 	//DefinePlaceholderTag("StateMachineElements");
 
@@ -69,15 +70,15 @@ StateMachine::StateMachine() :
 	trialEventCode_ = 0;
 }
 
-void StateMachine::setLevel(StateMachineLevel::StateMachineLevel level)
-{
-	propertyContainer_->setPropertyValue("Level", QVariant(level));
-}
+//void StateMachine::setLevel(StateMachineLevel::StateMachineLevel level)
+//{
+//	propertyContainer_->setPropertyValue("Level", QVariant(level));
+//}
 
-StateMachineLevel::StateMachineLevel StateMachine::getLevel()
-{
-	return (StateMachineLevel::StateMachineLevel) propertyContainer_->getPropertyValue("Level").toInt();
-}
+//StateMachineLevel::StateMachineLevel StateMachine::getLevel()
+//{
+//	return (StateMachineLevel::StateMachineLevel) propertyContainer_->getPropertyValue("Level").toInt();
+//}
 
 QSharedPointer<Asset> StateMachine::Create()
 {
@@ -219,11 +220,11 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		return "scriptingError";
 	}
 
-	//Reset trialNum_ if we just entered a new Task
-	if(getLevel() == StateMachineLevel::Task)
-	{
-		trialNum_ = 0;
-	}
+	////Reset trialNum_ if we just entered a new Task
+	//if(getLevel() == StateMachineLevel::Task)
+	//{
+	//	trialNum_ = 0;
+	//}
 
 
 	QString currElementName;
@@ -251,17 +252,17 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		
 		
 		//If we're about to dive into another state machine we need to set it's path
-		if(currElement_->type() == "StateMachine")
+		if(currElement_->inherits("Picto::StateMachine"))
 		{
-			currElement_.dynamicCast<StateMachine>()->setPath(path_);
+			currElement_.staticCast<StateMachine>()->setPath(path_);
 		}
 
-		if((currElement_->type() == "Reward") && (getLevel() == StateMachineLevel::Trial))
-		{
-			QSharedPointer<CommandChannel> dataChan = engine->getDataCommandChannel();
-			if(!dataChan.isNull())
-				dataChan->processResponses(2000);
-		}
+		//if((currElement_->inherits("Picto::Reward")) && (getLevel() == StateMachineLevel::Trial))
+		//{
+		//	QSharedPointer<CommandChannel> dataChan = engine->getDataCommandChannel();
+		//	if(!dataChan.isNull())
+		//		dataChan->processResponses(2000);
+		//}
 		
 		result = currElement_->run(engine);
 
@@ -526,7 +527,7 @@ bool StateMachine::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	{
 		QString errMsg = QString(
 								"MachineContainer: %1 does not have an initial state transition").arg(getName());
-		addError("MachineContainer", errMsg, xmlStreamReader);
+		addError(errMsg);
 		return false;
 	}
 	return true;

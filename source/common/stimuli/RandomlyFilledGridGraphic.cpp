@@ -8,55 +8,25 @@ namespace Picto {
 const QString RandomlyFilledGridGraphic::type = "Randomly Filled Grid Graphic";
 
 RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dimensions, 
-													 QColor color1, QColor color2, 
+													 QColor color, QColor color2, 
 													 int numHorizSquares, int numVertSquares,
-													 int numColor1, bool animated, int updateFrameRate)
-: VisualElement(position,color1)
+													 int numColor2, int updateFrameRate)
+: VisualElement(position,color),
+	prevColor2Squares_(-1),
+	prevHorizSquares_(-1),
+	prevVertSquares_(-1)
 {
 	AddDefinableProperty(QVariant::Color,"Color2",color2);
-	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 	//NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
 	//will not render properly.  It's the responsibility of the user to ensure this doesn't happen.
 	//This should be easlly fixed by putting a check into validateObject()
 	AddDefinableProperty(QVariant::Int,"HorizontalSquares",numHorizSquares);
 	AddDefinableProperty(QVariant::Int,"VerticalSquares",numVertSquares);
 
-	AddDefinableProperty(QVariant::Int,"Color1Squares",numColor1);
+	AddDefinableProperty(QVariant::Int,"Color2Squares",numColor2);
 
-	AddDefinableProperty(QVariant::Bool,"Animated",animated);
 	AddDefinableProperty(QVariant::Int,"FramesPerUpdate",updateFrameRate);
-
-	
-
-
-	//propertyContainer_->setContainerName(type);
-
-	//propertyContainer_->setPropertyValue("Position",position);
-
-	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
-
-	//propertyContainer_->setPropertyValue("Color",color1);
-	//propertyContainer_->addProperty(QVariant::Color,"Color2",color2);
-
-	////NOTE: if the number of squares requested doesn't evenly divide the total size, the graphic
-	////will not render properly.  It's the responsibility of the user to ensure this doesn't happen
-	//propertyContainer_->addProperty(QVariant::Int,"HorizontalSquares",numHorizSquares);
-	//propertyContainer_->addProperty(QVariant::Int,"VerticalSquares",numVertSquares);
-
-	//propertyContainer_->addProperty(QVariant::Int,"Color1Squares",numColor1);
-
-	//propertyContainer_->addProperty(QVariant::Bool,"Animated",animated);
-	//propertyContainer_->addProperty(QVariant::Int,"FramesPerUpdate",updateFrameRate);
-
-	//buildColorList();
-
-	//draw();
-
-	//connect(propertyContainer_.data(),
-	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-	//	    this,
-	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
-	//		);
 }
 
 VisualElement* RandomlyFilledGridGraphic::NewVisualElement()
@@ -72,46 +42,45 @@ QSharedPointer<Asset> RandomlyFilledGridGraphic::Create()
 
 void RandomlyFilledGridGraphic::buildColorList()
 {
-	int numColor1 = propertyContainer_->getPropertyValue("Color1Squares").toInt();
+	int numColor2 = propertyContainer_->getPropertyValue("Color2Squares").toInt();
 	int numHorizSquares = propertyContainer_->getPropertyValue("HorizontalSquares").toInt();
 	int numVertSquares = propertyContainer_->getPropertyValue("VerticalSquares").toInt();
 
-	colorList_.clear();
-	for(int i=0; i<numColor1; i++)
-		colorList_.push_back(0);
+	//If none of the relevant parameters changed, we're done
+	if((numColor2 == prevColor2Squares_) 
+		&& (numHorizSquares == prevHorizSquares_)
+		&&	(numVertSquares) == prevVertSquares_)
+		return;
+	prevColor2Squares_ = numColor2;
+	prevHorizSquares_ = numHorizSquares;
+	prevVertSquares_ = numVertSquares;
 
-	for(int i=0; i<numHorizSquares*numVertSquares-numColor1; i++)
-		colorList_.push_back(1);
+	colorList_.clear();
+	colorList_.resize(numHorizSquares*numVertSquares);
+	for(int i=0; i<numColor2; i++)
+		colorList_[i] = 0;
+
+	for(int i=numColor2; i<numHorizSquares*numVertSquares; i++)
+		colorList_[i] = 1;
 }
 
 void RandomlyFilledGridGraphic::draw()
 {
-	QColor backgroundColor;
-	QColor foregroundColor;
 	int foregroundIndex;
 
-	int numColor1 = propertyContainer_->getPropertyValue("Color1Squares").toInt();
+	buildColorList();
+	int numColor2 = propertyContainer_->getPropertyValue("Color2Squares").toInt();
 	int numHorizSquares = propertyContainer_->getPropertyValue("HorizontalSquares").toInt();
 	int numVertSquares = propertyContainer_->getPropertyValue("VerticalSquares").toInt();
 
-
-	if(numColor1 > numHorizSquares*numVertSquares/2)
-	{
-		backgroundColor = propertyContainer_->getPropertyValue("Color1").value<QColor>();
-		foregroundColor = propertyContainer_->getPropertyValue("Color2").value<QColor>();
-		foregroundIndex = 1;
-	}
-	else
-	{
-		backgroundColor = propertyContainer_->getPropertyValue("Color2").value<QColor>();
-		foregroundColor = propertyContainer_->getPropertyValue("Color1").value<QColor>();
-		foregroundIndex = 0;
-	}
+	QColor backgroundColor = propertyContainer_->getPropertyValue("Color").value<QColor>();
+	QColor foregroundColor = propertyContainer_->getPropertyValue("Color2").value<QColor>();
+	foregroundIndex = 1;
 
 	//! \todo use mersenne twister random number generator
 	std::random_shuffle(colorList_.begin(), colorList_.end());
 
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
 	image.fill(backgroundColor.rgba());
@@ -120,12 +89,12 @@ void RandomlyFilledGridGraphic::draw()
 	p.setBrush(foregroundColor);
 	p.setPen(foregroundColor);
 
-	int gridWidth = 0;
-	int gridHeight = 0;
+	float gridWidth = 0;
+	float gridHeight = 0;
 	if(numHorizSquares && numVertSquares)
 	{
-		gridWidth = image.width()/numHorizSquares;
-		gridHeight = image.height()/numVertSquares;
+		gridWidth = float(image.width())/float(numHorizSquares);
+		gridHeight = float(image.height())/float(numVertSquares);
 	}
 
 
@@ -149,7 +118,7 @@ void RandomlyFilledGridGraphic::slotPropertyValueChanged(QString propertyName, i
 {
 	if(propertyName == "HorizontalSquares" ||
 		propertyName == "VerticalSquares" ||
-		propertyName == "Color1Squares")
+		propertyName == "Color2Squares")
 	{
 		buildColorList();
 	}
@@ -164,21 +133,18 @@ void RandomlyFilledGridGraphic::updateAnimation(int frame, QTime elapsedTime)
 {
 	Q_UNUSED(elapsedTime);
 
-	bool animated = propertyContainer_->getPropertyValue("Animated").toBool();
-	if(!animated)
-		return;
-
 	int updateRate = propertyContainer_->getPropertyValue("FramesPerUpdate").toInt();
-	if(updateRate && frame%updateRate == 0)
+	if(updateRate <= 0)
+		return;
+	if(frame%updateRate == 0)
 		draw();
 	return;
 }
 
 void RandomlyFilledGridGraphic::postDeserialize()
 {
-	VisualElement::postDeserialize();
 	buildColorList();
-	draw();
+	VisualElement::postDeserialize();
 }
 
 bool RandomlyFilledGridGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

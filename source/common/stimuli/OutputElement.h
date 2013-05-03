@@ -30,6 +30,8 @@ class ScriptableContainer : public Scriptable, protected QScriptable
 public:
 	OutputElement(){};
 	virtual ~OutputElement(){};
+
+	virtual QString friendlyTypeName(){return "Output Element";};
 };
 
 }; //namespace Picto

@@ -15,6 +15,7 @@ public:
 protected:
 	virtual void doButtonAction(int buttonId);
 	virtual void disableButtonActions();
+	virtual bool isEnabled(int){return true;};
 private:
 	QSharedPointer<Asset> asset_;
 	struct ElemInfo{QString tag;QString type;};

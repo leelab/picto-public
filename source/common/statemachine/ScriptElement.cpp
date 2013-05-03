@@ -10,7 +10,7 @@ namespace Picto
 ScriptElement::ScriptElement()
 {
 	setMaxOptionalResults(0,"");
-	AddDefinableProperty("Type","ScriptElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	//AddDefinableProperty("Type","ScriptElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::String,"Script","");
 	
 	addRequiredResult("true");

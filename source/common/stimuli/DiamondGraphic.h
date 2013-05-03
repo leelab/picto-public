@@ -38,6 +38,7 @@ public:
 	void setHeight(int h){QRect dims = getDimensions(); dims.setHeight(h);setDimensions(dims);};
 	QPoint getPositionOffset();
 
+	virtual QString friendlyTypeName(){return "Diamond";};
 	static const QString type;
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};

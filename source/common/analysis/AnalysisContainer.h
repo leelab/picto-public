@@ -48,7 +48,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisContainer";};
-	virtual QString assetType(){return "AnalysisContainer";};
+	virtual QString friendlyTypeName(){return "AnalysisContainer";};
 	//We're getting rid of this and don't want it to interfere with validation of the Design
 	//as a whole, so this just always returns true.
 	virtual bool validateTree(){return true;};

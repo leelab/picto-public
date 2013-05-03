@@ -44,7 +44,7 @@ bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	//Do some basic error checking
  	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "SDU")
 	{
-		addError("StateDataUnit","Incorrect tag, expected <SDU>",xmlStreamReader);
+		addError("Incorrect tag, expected <SDU>");
 		return false;
 	}
 
@@ -66,7 +66,7 @@ bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("StateDataUnit", "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 		return false;
 	}
 	return true;

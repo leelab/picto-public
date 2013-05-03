@@ -74,7 +74,7 @@ public:
 	int getY(){return getPosition().y();};
 	void setY(int y){return setPosition(QPoint(getPosition().x(),y));};
 	virtual QString getUITemplate(){return "VisualElement";};
-	virtual QString assetType(){return "VisualElement";};
+	virtual QString friendlyTypeName(){return "Visual Element";};
 	int getRed() { return getColor().red(); };
 	int getGreen() { return getColor().green(); };
 	int getBlue() { return getColor().blue(); };
@@ -86,6 +86,8 @@ public:
 
 	void setScalable(bool scalable);
 	bool scalable(){return scalable_;};
+
+	virtual void upgradeVersion(QString deserializedVersion);
 
 public slots:
 	void setColor(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};

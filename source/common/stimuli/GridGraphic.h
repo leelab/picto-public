@@ -46,10 +46,10 @@ public:
 	void setRows(int val){propertyContainer_->setPropertyValue("Rows",val);};
 	int getColumns(){return propertyContainer_->getPropertyValue("Columns").toInt();};
 	void setColumns(int val){propertyContainer_->setPropertyValue("Columns",val);};
-	QRect getDimensions(){ return propertyContainer_->getPropertyValue("Dimensions").toRect(); };
-	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Dimensions",dimensions);};
+	QRect getDimensions(){ return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize()); };
+	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Size",dimensions.size());};
 
-
+	virtual QString friendlyTypeName(){return "Grid";};
 	//! \TODO At some point, we might want to expose some getter and setter slots for script binding
 
 protected:

@@ -31,7 +31,7 @@ public:
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	QString slaveRun(QSharedPointer<Engine::PictoEngine> engine);
 	virtual QString getUITemplate(){return "Reward";};
-	virtual QString assetType(){return "Reward";};
+	virtual QString friendlyTypeName(){return "Reward";};
 
 	int getNumber(){return propertyContainer_->getPropertyValue("NumRewards").toInt();};
 	void setNumber(int num){propertyContainer_->setPropertyValue("NumRewards",num);};

@@ -24,7 +24,7 @@ public:
 	RectTarget();
 	static QSharedPointer<Asset> Create();
 	QRect getBounds();
-	virtual QString assetType(){return "RectTarget";};
+	virtual QString friendlyTypeName(){return "Rectangle Target";};
 	void draw();
 	virtual bool contains(int x, int y);
 

@@ -7,7 +7,7 @@
 #include "Timer.h"
 #include "ControlElement.h"
 #include "../engine/SignalChannel.h"
-#include "ControlResult.h"
+#include "ControlTargetResult.h"
 
 namespace Picto {
 
@@ -59,6 +59,7 @@ public:
 	int getTotalTime(){return propertyContainer_->getPropertyValue("TotalTime").toInt();};
 	void setTotalTime(int time){propertyContainer_->setPropertyValue("TotalTime",time);};
 
+	virtual QString friendlyTypeName(){return "Choice Controller";};
 public slots:
 	bool userOnTarget();
 	bool userEnteredTarget();
@@ -93,7 +94,7 @@ private:
 	QString lastTarget_;
 
 	QSharedPointer<SignalChannel> signal_;
-	QList<QSharedPointer<ControlResult>> targets_;
+	QList<QSharedPointer<ControlTargetResult>> targets_;
 	int frameCtr_;
 
 };

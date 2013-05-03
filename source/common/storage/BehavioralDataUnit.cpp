@@ -33,7 +33,7 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BDU")
 	{
-		addError("BehavioralDataUnit","Incorrect tag, expected <BDU>",xmlStreamReader);
+		addError("Incorrect tag, expected <BDU>");
 		return false;
 	}
 
@@ -55,7 +55,7 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("BehavioralDataUnit","Data missing x attribute",xmlStreamReader);
+				addError("Data missing x attribute");
 				return false;
 			}
 
@@ -65,7 +65,7 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("BehavioralDataUnit","Data missing y attribute",xmlStreamReader);
+				addError("Data missing y attribute");
 				return false;
 			}
 		}

@@ -92,7 +92,7 @@ bool StarterContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 	if(!triggers.size())
 	{
-		addError("StarterContainer", "At least one Trigger must be defined in an StarterContainer.");
+		addError("At least one Trigger must be defined in an StarterContainer.");
 		return false;
 	}
 	if(triggers.size() > 1)
@@ -101,7 +101,7 @@ bool StarterContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 		{
 			if(trigger.staticCast<AnalysisTrigger>()->getDataSource() != EventOrderIndex::BEHAVIORAL)
 			{
-				addError("StarterContainer", "Multiple start triggers are only allowed for Behavioral Triggers.");
+				addError("Multiple start triggers are only allowed for Behavioral Triggers.");
 				return false;
 			}
 		}

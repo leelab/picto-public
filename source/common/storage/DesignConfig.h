@@ -49,7 +49,7 @@ public:
 signals:
 	void activeAnalysisIdsChanged();
 protected:
-	
+	void addError(QString errorMessage);
 private:
 	int getNewDataId();
 	void addAsset(QSharedPointer<Asset> asset);

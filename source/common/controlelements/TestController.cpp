@@ -7,7 +7,7 @@ namespace Picto
 TestController::TestController()
 {
 	
-	AddDefinableProperty("Type",ControllerType());	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	//AddDefinableProperty("Type",ControllerType());	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Int,"NumberOfFrames",120);
 
 	//Make sure to update the list of results...
@@ -103,12 +103,12 @@ void TestController::start(QSharedPointer<Engine::PictoEngine> engine)
 //	//Do some basic error checking
 //	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "ControlElement")
 //	{
-//		addError("TestController","Incorrect tag, expected <ControlElement>",xmlStreamReader);
+//		addError("TestController","Incorrect tag, expected <ControlElement>");
 //		return false;
 //	}
 //	if(xmlStreamReader->attributes().value("type").toString() != ControllerType())
 //	{
-//		addError("TestController","Incorrect type of controller",xmlStreamReader);
+//		addError("TestController","Incorrect type of controller");
 //		return false;
 //	}
 //

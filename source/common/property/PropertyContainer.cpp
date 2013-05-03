@@ -3,7 +3,7 @@
 #include "PropertyContainer.h"
 #include "ColorProperty.h"
 #include "PointProperty.h"
-#include "RectProperty.h"
+#include "SizeProperty.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -67,8 +67,8 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 	{
 		switch(_type)
 		{
-		case QVariant::Rect:
-			newProperty = QSharedPointer<Property>( new RectProperty(_identifier,_value) );
+		case QVariant::Size:
+			newProperty = QSharedPointer<Property>( new SizeProperty(_identifier,_value) );
 			break;
 		case QVariant::Point:
 			newProperty = QSharedPointer<Property>( new PointProperty(_identifier,_value) );

@@ -11,7 +11,7 @@ DiamondGraphic::DiamondGraphic(QPoint position, QRect dimensions, QColor color)
 {
 	AddDefinableProperty(QVariant::Bool,"Outline",false);
 	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
-	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 
 
 
@@ -19,7 +19,7 @@ DiamondGraphic::DiamondGraphic(QPoint position, QRect dimensions, QColor color)
 
 	//propertyContainer_->setPropertyValue("Position",position);
 
-	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
+	//propertyContainer_->addProperty(QVariant::Size,"Size",dimensions.size());
 
 	//propertyContainer_->setPropertyValue("Color",color);
 
@@ -33,12 +33,12 @@ DiamondGraphic::DiamondGraphic(QPoint position, QRect dimensions, QColor color)
 }
 QRect DiamondGraphic::getDimensions()
 {
-	return propertyContainer_->getPropertyValue("Dimensions").toRect();
+	return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 }
 
 void DiamondGraphic::setDimensions(QRect dimensions)
 {
-	propertyContainer_->setPropertyValue("Dimensions",dimensions);
+	propertyContainer_->setPropertyValue("Size",dimensions.size());
 }
 
 QPoint DiamondGraphic::getPositionOffset()
@@ -48,7 +48,7 @@ QPoint DiamondGraphic::getPositionOffset()
 
 void DiamondGraphic::draw()
 {
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);

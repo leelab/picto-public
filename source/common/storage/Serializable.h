@@ -32,12 +32,10 @@ public:
 	virtual bool fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 protected:
-	void addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	void addError(QString objectType, QString errorMsg);
+	void addErrorToList(QString errorMsg);
 
 private:
 	
-	void AddError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader, QSharedPointer<QStringList> errors);
 	static QStringList errors_;
 
 };

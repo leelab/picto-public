@@ -30,7 +30,7 @@ public:
 	virtual QVariant getValue(){return QVariant(0);};
 	bool getVisibleByUser(bool subject);
 	virtual QString getUITemplate(){return "OutputSignal";};
-	virtual QString assetType(){return "OutputSignal";};
+	virtual QString friendlyTypeName(){return "Output Signal";};
 
 protected:
 

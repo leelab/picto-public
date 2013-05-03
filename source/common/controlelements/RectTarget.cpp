@@ -8,12 +8,12 @@ RectTarget::RectTarget()
 ControlTarget(),
 active_(false)
 {
-	AddDefinableProperty(QVariant::Rect,"Dimensions",QRect());
+	AddDefinableProperty(QVariant::Size,"Size",QSize());
 }
 
 void RectTarget::draw()
 {
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
@@ -37,7 +37,7 @@ void RectTarget::draw()
 
 bool RectTarget::contains(int x, int y)
 {
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QPoint topLeft = getPosition()-getPositionOffset();
 	QRect myRect(topLeft.x(),topLeft.y(),dimensions.width(),dimensions.height());
 	if(myRect.contains(x,y))
@@ -52,7 +52,7 @@ QSharedPointer<Asset> RectTarget::Create()
 
 QRect RectTarget::getBounds()
 {
-	return propertyContainer_->getPropertyValue("Dimensions").toRect();
+	return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 }
 
 void RectTarget::setWidth(int width)
@@ -75,13 +75,13 @@ QPoint RectTarget::getPositionOffset()
 
 void RectTarget::setBounds(QRect bounds)
 {
-	propertyContainer_->setPropertyValue("Dimensions",bounds);
+	propertyContainer_->setPropertyValue("Size",bounds.size());
 }
 
 void RectTarget::postDeserialize()
 {
 	ControlTarget::postDeserialize();
-	setPropertyRuntimeEditable("Dimensions");
+	setPropertyRuntimeEditable("Size");
 }
 
 

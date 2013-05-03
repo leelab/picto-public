@@ -241,7 +241,7 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 		QList<QSharedPointer<Asset>> assets = dataStore->getGeneratedChildren(childType);
 		foreach(QSharedPointer<Asset> childAsset,assets)
 		{
-			if( childAsset->assetType() == "Transition" )
+			if( childAsset->inherits("Picto::Transition") )
 			{
 				transitions.push_back(childAsset.staticCast<Transition>());
 				continue;

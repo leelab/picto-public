@@ -17,6 +17,11 @@ ToolGroup::ToolGroup(QSharedPointer<EditorState> editorState, QWidget *parent) :
 	clearButtons();
 }
 
+int ToolGroup::numButtons()
+{
+	return buttonGroup_->buttons().size();
+}
+
 void ToolGroup::AddButton(const QString &label, QIcon icon, bool enabled)
 {
     QToolButton *button = new QToolButton;
@@ -89,9 +94,10 @@ void ToolGroup::buttonGroupClicked(int)
 void ToolGroup::disableAllButtons()
 {
 	QList<QAbstractButton *> buttons = buttonGroup_->buttons();
-	foreach (QAbstractButton *button, buttons) 
+	for(int i=0;i<buttons.size();i++)
 	{
-		button->setChecked(false);
+		buttons[i]->setChecked(false);
+		buttons[i]->setEnabled(isEnabled(i));
     }
 	disableButtonActions();
 }

@@ -27,11 +27,12 @@ public:
 
 	void setPos(QPoint pos);
 	QPoint getPos();
-	virtual QString assetType(){return "UIElement";};
+	virtual QString friendlyTypeName(){return "UI Element";};
 
 	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
+	virtual QString defaultTagName(){return "UIElement";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };

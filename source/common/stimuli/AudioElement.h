@@ -16,7 +16,7 @@ public:
 	AudioElement();
 	virtual ~AudioElement(){};
 	static QSharedPointer<Asset> Create();
-	virtual QString assetType(){return "AudioElement";};
+	virtual QString friendlyTypeName(){return "Audio Element";};
 };
 
 

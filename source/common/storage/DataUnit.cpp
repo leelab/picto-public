@@ -24,6 +24,10 @@ bool DataUnit::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	return returnVal;
 }
 
+void DataUnit::addError(QString errorMessage)
+{
+	addErrorToList(errorMessage + "\n");
+}
 
 /*! \brief Used to serialize a unique Data ID into this DataUnit's XML record
  *	This may or may not be called by the child classes serializeAsXml function
@@ -41,7 +45,7 @@ bool DataUnit::deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReade
 {
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "D")
 	{
-		addError("DataUnit", "Unexpected tag", xmlStreamReader);
+		addError("Unexpected tag");
 		return false;
 	}
 	dataID_ = xmlStreamReader->readElementText().toLongLong();

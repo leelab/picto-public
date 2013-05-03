@@ -39,16 +39,16 @@ State::State() :
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
 	
 	//Define generatable control elements.
-	elementFactory_->addAssetType(TestController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(TestController::Create))));
+	//elementFactory_->addAssetType(TestController::ControllerType(),
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TestController::Create))));
 	elementFactory_->addAssetType(StopwatchController::ControllerType(),
 		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(StopwatchController::Create))));
 	elementFactory_->addAssetType(ScriptController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ScriptController::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptController::Create))));
 	elementFactory_->addAssetType(TargetController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
 	elementFactory_->addAssetType(ChoiceController::ControllerType(),
-		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
 }
 
 QSharedPointer<Asset> State::Create()
@@ -248,7 +248,9 @@ void State::postDeserialize()
 	//	addScriptable(newVisElem.staticCast<Scriptable>());
 	//}
 	MachineContainer::postDeserialize();
-
+	//We're not using this right now, but maybe someday we will, so we're not getting rid of it, just hiding it from
+	//the UI.
+	propertyContainer_->getProperty("BackgroundColor")->setVisible(false);
 	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
 	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 }
@@ -263,7 +265,7 @@ bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	//Check this.  It causes problems if you add a control element and validate before saving.
 	if(!elements_.size())
 	{
-		addError("State", "At least one Control Element must be defined inside a State.");
+		addError("At least one Control Element must be defined inside a State.");
 		return false;
 	}
 	//! \todo Validate Scripts

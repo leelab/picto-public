@@ -34,6 +34,7 @@ public:
 	//Resets the OperatorInfoGraphic Object to its initial state.
 	virtual void reset();
 	static const QString type;
+	virtual QString friendlyTypeName(){return "Operator Info";};
 
 public slots:
 	void setData(QString field, QVariant value);

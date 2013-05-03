@@ -13,16 +13,16 @@ ShapeShifterGraphic::ShapeShifterGraphic(QPoint position, QRect dimensions, QCol
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Bool,"Outline",false);
 	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
-	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 }
 QRect ShapeShifterGraphic::getDimensions()
 {
-	return propertyContainer_->getPropertyValue("Dimensions").toRect();
+	return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 }
 
 void ShapeShifterGraphic::setDimensions(QRect dimensions)
 {
-	propertyContainer_->setPropertyValue("Dimensions",dimensions);
+	propertyContainer_->setPropertyValue("Size",dimensions.size());
 }
 
 QPoint ShapeShifterGraphic::getPositionOffset()
@@ -43,7 +43,7 @@ void ShapeShifterGraphic::setShape(QString shape)
 
 void ShapeShifterGraphic::draw()
 {
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);

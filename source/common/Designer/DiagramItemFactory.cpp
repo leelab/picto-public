@@ -75,7 +75,6 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	AssetItem* returnVal = NULL;
 	if(asset.isNull())
 		returnVal =  NULL;
-	QString type = asset->assetType();
 	//Note that the order here is very important since, for example, StateMachineElements inherit Asset.
 	if(asset->inherits("Picto::Property"))
 		returnVal = NULL;
@@ -85,7 +84,7 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		returnVal = NULL;
 	else if(asset->inherits("Picto::UIInfo"))
 		returnVal = NULL;
-	else if(asset->inherits("Picto::RequiredResult"))
+	else if(asset->inherits("Picto::LogicResult"))
 		returnVal = new ResultItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::Result"))
 		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);
@@ -98,7 +97,7 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	else if(asset->inherits("Picto::Asset"))
 		returnVal = new AssetItem(editorState_, contextMenu_,asset);
 	else
-		Q_ASSERT_X(false,"DiagramItemFactory::create","Unknown Item Type: " + type.toLatin1());
+		Q_ASSERT_X(false,"DiagramItemFactory::create",QString("Unknown Item Type: %1").arg(asset->metaObject()->className()).toLatin1());
 
 	if(returnVal)
 	{

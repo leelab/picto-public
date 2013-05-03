@@ -10,7 +10,7 @@ const QString TextGraphic::type = "Text Graphic";
 TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QString text)
 : VisualElement(position,color)
 {
-	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 	AddDefinableProperty(QVariant::String,"Text",text);
 	if((position != QPoint()) || (dimensions != QRect()) || (color != QColor()) || (text != QString()))
 	{
@@ -18,7 +18,7 @@ TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QStrin
 		//We set the properties as edited because we want this to serialize out and not be mistaken for a default value.
 		propertyContainer_->getProperty("Position")->setEdited();
 		propertyContainer_->getProperty("Color")->setEdited();
-		propertyContainer_->getProperty("Dimensions")->setEdited();
+		propertyContainer_->getProperty("Size")->setEdited();
 		propertyContainer_->getProperty("Text")->setEdited();
 	}
 
@@ -26,7 +26,7 @@ TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QStrin
 
 	//propertyContainer_->setPropertyValue("Position",position);
 
-	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
+	//propertyContainer_->addProperty(QVariant::Size,"Size",dimensions.size());
 
 	//propertyContainer_->setPropertyValue("Color",color);
 
@@ -43,7 +43,7 @@ TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QStrin
 
 void TextGraphic::draw()
 {
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);

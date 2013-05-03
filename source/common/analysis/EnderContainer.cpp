@@ -91,7 +91,7 @@ bool EnderContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	QList<QSharedPointer<Asset>> triggers = getGeneratedChildren("Trigger");
 	if(!triggers.size())
 	{
-		addError("EnderContainer", "At least one Trigger must be defined in an EnderContainer.");
+		addError("At least one Trigger must be defined in an EnderContainer.");
 		return false;
 	}
 	return true;

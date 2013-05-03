@@ -63,8 +63,7 @@ public:
 	//void addParameters(QSharedPointer<ParameterContainer> parameters);
 	//void addParameters(ParameterContainer &parameters);
 
-	QString type();
-	virtual QString assetType(){return "StateMachineElement";};
+	virtual QString friendlyTypeName(){return "State Machine Element";};
 
 	virtual QPoint getDisplayLayoutPosition();
 	virtual QString getUITemplate(){return "StateMachineElement";};

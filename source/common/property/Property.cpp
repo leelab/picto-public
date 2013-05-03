@@ -26,6 +26,7 @@ runtimeEnabled_(false),
 index_(-1),
 assetId_(0),
 visible_(true),
+guiEditable_(true),
 serialSyntaxUpgraded_(false),
 syncInitAndRunVals_(false),
 runMode_(false),
@@ -134,7 +135,7 @@ bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader,bool)
+bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	Q_ASSERT_X(!runMode_,"Property::deserializeFromXml","deserializeFromXml should not be called when property is in run mode.");
 	serialSyntaxUpgraded_ = false;
@@ -206,13 +207,13 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	//Loop until we're done with the tag or we reach the end of the XMLStream
 	if(xmlStreamReader->readNext() == QXmlStreamReader::Invalid)
 	{
-		addError(getName().toLatin1(),QString("XML syntax has been violated.").toLatin1(),xmlStreamReader);
+		addError("XML syntax has been violated.");
 		return false;
 	}
 	xmlWriter->writeCurrentToken(*xmlStreamReader);// Write everything left to tagText.
 	if(!xmlStreamReader->isCharacters() && !xmlStreamReader->isEndElement())
 	{
-		addError(getName().toLatin1(),QString("Unexpected value read.").toLatin1(),xmlStreamReader);
+		addError(QString("Unexpected value read.").toLatin1());
 		return false;
 	}
 	QString value = xmlStreamReader->text().toString();
@@ -241,7 +242,7 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 		}
 		if(error.size())
 		{
-			addError(getName().toLatin1(),error.toLatin1(),xmlStreamReader);
+			addError(error.toLatin1());
 			return false;
 		}
 		
@@ -266,7 +267,7 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	//Make sure we didn't finish the document.
 	if(xmlStreamReader->atEnd())
 	{
-		addError(getName().toLatin1(), "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 		return false;
 	}
 	return true;

@@ -66,7 +66,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisTrigger";};
-	virtual QString assetType(){return "AnalysisTrigger";};
+	virtual QString friendlyTypeName(){return "AnalysisTrigger";};
 
 protected:
 

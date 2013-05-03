@@ -328,7 +328,7 @@ void Copier::paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition)
 			editorState_->requestUndo();
 			return;
 		}
-		linkAsset.staticCast<DataStore>()->AddAssociateChild(assocElem->getAssociateId(),uiElem->assetType(),uiElem);
+		linkAsset.staticCast<DataStore>()->AddAssociateChild(assocElem->getAssociateId(),uiElem->identifier(),uiElem);
 	}
 
 	//Set DesignConfig back to original in all elements including those parent assets that we had to change.

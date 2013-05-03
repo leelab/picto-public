@@ -21,7 +21,7 @@ public:
 	UIData();
 	virtual ~UIData(){};
 	static QSharedPointer<Asset> Create();
-	virtual QString assetType(){return "UIData";};
+	virtual QString friendlyTypeName(){return "UI Data";};
 
 	void setOpenAsset(int assetId);
 	int getOpenAsset();

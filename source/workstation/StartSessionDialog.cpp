@@ -210,7 +210,7 @@ void StartSessionDialog::loadExperiment()
 			xmlReader->readNext();
 
 		experiment_ = QSharedPointer<Picto::Experiment>(Picto::Experiment::Create());
-		if(!experiment_->fromXml(xmlReader))
+		if(!experiment_->fromXml(xmlReader) || !experiment_->validateTree())
 		{
 			QMessageBox xmlError;
 			xmlError.setText(tr("Error in Experiment XML"));

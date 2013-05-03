@@ -24,11 +24,11 @@ public:
 	static bool encounteredObsoleteAsset(){return hadObsoleteAsset_;};
 	static void clearObsoleteAssetFlag(){hadObsoleteAsset_ = false;};
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual void postDeserialize();
 
 	virtual QString identifier(){return tagName_;};
-	virtual QString assetType(){return "ObsoleteAsset";};
+	virtual QString friendlyTypeName(){return "Obsolete Asset";};
 
 	virtual	int getAssetId(){return assetId_;};
 	virtual void setAssetId(int id){assetId_ = id;};

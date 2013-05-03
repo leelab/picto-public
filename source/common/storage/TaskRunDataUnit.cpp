@@ -48,7 +48,7 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "TaskRunDataUnit")
 	{
-		addError("TaskRunDataUnit","Incorrect tag, expected <TaskRunDataUnit>",xmlStreamReader);
+		addError("Incorrect tag, expected <TaskRunDataUnit>");
 		return false;
 	}
 
@@ -70,7 +70,7 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 			}
 			else
 			{
-				addError("TaskRunDataUnit","Frame missing startframe attribute",xmlStreamReader);
+				addError("Frame missing startframe attribute");
 				return false;
 			}
 
@@ -80,7 +80,7 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 			}
 			else
 			{
-				addError("TaskRunDataUnit","Frame missing endframe attribute",xmlStreamReader);
+				addError("Frame missing endframe attribute");
 				return false;
 			}
 
@@ -90,7 +90,7 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 			}
 			else
 			{
-				addError("TaskRunDataUnit","Frame missing name (name) attribute",xmlStreamReader);
+				addError("Frame missing name (name) attribute");
 				return false;
 			}
 
@@ -100,7 +100,7 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 			}
 			else
 			{
-				addError("TaskRunDataUnit","Frame missing notes attribute",xmlStreamReader);
+				addError("Frame missing notes attribute");
 				return false;
 			}
 
@@ -110,7 +110,7 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 			}
 			else
 			{
-				addError("TaskRunDataUnit","Frame missing saved attribute",xmlStreamReader);
+				addError("Frame missing saved attribute");
 				return false;
 			}
 		}

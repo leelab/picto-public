@@ -192,7 +192,7 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 //	//Do some basic error checking
 //	if(!xmlStreamReader->isStartElement() || xmlStreamReader->getName() != "Task")
 //	{
-//		addError("Task","Incorrect tag, expected <Task>",xmlStreamReader);
+//		addError("Task","Incorrect tag, expected <Task>");
 //		return false;
 //	}
 //	
@@ -241,7 +241,7 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 //	}
 //	else
 //	{
-//		addError("StateMachine","StateMachine failed validation",xmlStreamReader);
+//		addError("StateMachine","StateMachine failed validation");
 //		return false;
 //	}
 //}

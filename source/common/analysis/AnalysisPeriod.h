@@ -48,7 +48,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisPeriod";};
-	virtual QString assetType(){return "AnalysisPeriod";};
+	virtual QString friendlyTypeName(){return "AnalysisPeriod";};
 
 protected:
 

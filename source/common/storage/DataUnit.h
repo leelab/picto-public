@@ -33,6 +33,8 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
+	void addError(QString errorMessage);
+
 private:
 	static qulonglong generateDataID();
 	static qulonglong lastDataID_;

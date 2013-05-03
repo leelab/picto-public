@@ -126,7 +126,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "BDUP")
 	{
-		addError("BehavioralDataUnitPackage","Incorrect tag, expected <BDUP>",xmlStreamReader);
+		addError("Incorrect tag, expected <BDUP>");
 		return false;
 	}
 	if(xmlStreamReader->attributes().hasAttribute("chan"))
@@ -135,7 +135,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	}
 	else
 	{
-		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing chan (Signal Channel) attribute",xmlStreamReader);
+		addError("BehavioralDataUnitPackage missing chan (Signal Channel) attribute");
 		return false;
 	}
 	
@@ -145,7 +145,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	}
 	else
 	{
-		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing res (Resolution) attribute",xmlStreamReader);
+		addError("BehavioralDataUnitPackage missing res (Resolution) attribute");
 		return false;
 	}
 	
@@ -155,7 +155,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	}
 	else
 	{
-		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing offtime (offset time) attribute",xmlStreamReader);
+		addError("BehavioralDataUnitPackage missing offtime (offset time) attribute");
 		return false;
 	}
 
@@ -165,7 +165,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	}
 	else
 	{
-		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing fr (action frame) attribute",xmlStreamReader);
+		addError("BehavioralDataUnitPackage missing fr (action frame) attribute");
 		return false;
 	}
 
@@ -175,7 +175,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 	}
 	else
 	{
-		addError("BehavioralDataUnitPackage","BehavioralDataUnitPackage missing desc (Descriptor) attribute",xmlStreamReader);
+		addError("BehavioralDataUnitPackage missing desc (Descriptor) attribute");
 		return false;
 	}
 
@@ -198,7 +198,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 		}
 		else
 		{
-			addError("BehavioralDataUnitPackage", "Unexpected tag", xmlStreamReader);
+			addError("Unexpected tag");
 			return false;
 		}
 		xmlStreamReader->readNext();
@@ -206,7 +206,7 @@ bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamRead
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("BehavioralDataUnitPackage", "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 		return false;
 	}
 	return true;

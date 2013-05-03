@@ -60,7 +60,7 @@ void AssetItem::assetEdited()
 	if(name == "")
 		name = "NO NAME";
 	setName(name,QPointF(-100,-100));
-	QString type = asset_->assetType();
+	QString type = asset_->friendlyTypeName();
 	if(type == "")
 		type = "UNDEFINED TYPE";
 	setType(type);

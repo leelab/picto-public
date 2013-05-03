@@ -39,7 +39,7 @@
 //	//Do some basic error checking
 //	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "PropertyLookup")
 //	{
-//		addError("PropertyLookup","Incorrect tag, expected <PropertyLookup>",xmlStreamReader);
+//		addError("PropertyLookup","Incorrect tag, expected <PropertyLookup>");
 //		return false;
 //	}
 //
@@ -63,7 +63,7 @@
 //			}
 //			else
 //			{
-//				addError("PropertyLookup","Data missing id attribute",xmlStreamReader);
+//				addError("PropertyLookup","Data missing id attribute");
 //				return false;
 //			}
 //
@@ -73,7 +73,7 @@
 //			}
 //			else
 //			{
-//				addError("PropertyLookup","Data missing path attribute",xmlStreamReader);
+//				addError("PropertyLookup","Data missing path attribute");
 //				return false;
 //			}
 //

@@ -43,7 +43,7 @@ bool DataSourceInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "DataSourceInfo")
 	{
-		addError("DataSourceInfo","Incorrect tag, expected <DataSourceInfo>",xmlStreamReader);
+		addError("Incorrect tag, expected <DataSourceInfo>");
 		return false;
 	}
 
@@ -53,7 +53,7 @@ bool DataSourceInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	}
 	else
 	{
-		addError("DataSourceInfo","Data missing name attribute",xmlStreamReader);
+		addError("Data missing name attribute");
 		return false;
 	}
 
@@ -63,7 +63,7 @@ bool DataSourceInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	}
 	else
 	{
-		addError("DataSourceInfo","Data missing tableName attribute",xmlStreamReader);
+		addError("Data missing tableName attribute");
 		return false;
 	}
 
@@ -73,7 +73,7 @@ bool DataSourceInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	}
 	else
 	{
-		addError("DataSourceInfo","Data missing resolution attribute",xmlStreamReader);
+		addError("Data missing resolution attribute");
 		return false;
 	}
 

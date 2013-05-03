@@ -3,6 +3,8 @@
  <qresource prefix="/documentation">
    <file alias="_a_c_q_get_command_handler_8cpp-source.html">../../../output/documentation/main/html/_a_c_q_get_command_handler_8cpp-source.html</file>
    <file alias="_a_c_q_get_command_handler_8h-source.html">../../../output/documentation/main/html/_a_c_q_get_command_handler_8h-source.html</file>
+   <file alias="_about_element_box_8cpp-source.html">../../../output/documentation/main/html/_about_element_box_8cpp-source.html</file>
+   <file alias="_about_element_box_8h-source.html">../../../output/documentation/main/html/_about_element_box_8h-source.html</file>
    <file alias="_align_data_iterator_8cpp-source.html">../../../output/documentation/main/html/_align_data_iterator_8cpp-source.html</file>
    <file alias="_align_data_iterator_8h-source.html">../../../output/documentation/main/html/_align_data_iterator_8h-source.html</file>
    <file alias="_align_data_source_8cpp-source.html">../../../output/documentation/main/html/_align_data_source_8cpp-source.html</file>
@@ -172,6 +174,8 @@
    <file alias="_control_result_8h-source.html">../../../output/documentation/main/html/_control_result_8h-source.html</file>
    <file alias="_control_target_8cpp-source.html">../../../output/documentation/main/html/_control_target_8cpp-source.html</file>
    <file alias="_control_target_8h-source.html">../../../output/documentation/main/html/_control_target_8h-source.html</file>
+   <file alias="_control_target_result_8cpp-source.html">../../../output/documentation/main/html/_control_target_result_8cpp-source.html</file>
+   <file alias="_control_target_result_8h-source.html">../../../output/documentation/main/html/_control_target_result_8h-source.html</file>
    <file alias="_copier_8cpp-source.html">../../../output/documentation/main/html/_copier_8cpp-source.html</file>
    <file alias="_copier_8h-source.html">../../../output/documentation/main/html/_copier_8h-source.html</file>
    <file alias="_cursor_graphic_8cpp-source.html">../../../output/documentation/main/html/_cursor_graphic_8cpp-source.html</file>
@@ -398,6 +402,8 @@
    <file alias="_load_exp_response_handler_8h-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8h-source.html</file>
    <file alias="_loading_widget_8cpp-source.html">../../../output/documentation/main/html/_loading_widget_8cpp-source.html</file>
    <file alias="_loading_widget_8h-source.html">../../../output/documentation/main/html/_loading_widget_8h-source.html</file>
+   <file alias="_logic_result_8cpp-source.html">../../../output/documentation/main/html/_logic_result_8cpp-source.html</file>
+   <file alias="_logic_result_8h-source.html">../../../output/documentation/main/html/_logic_result_8h-source.html</file>
    <file alias="_machine_container_8cpp-source.html">../../../output/documentation/main/html/_machine_container_8cpp-source.html</file>
    <file alias="_machine_container_8h-source.html">../../../output/documentation/main/html/_machine_container_8h-source.html</file>
    <file alias="_magnetic_resonance_imaging_data_store_8cpp-source.html">../../../output/documentation/main/html/_magnetic_resonance_imaging_data_store_8cpp-source.html</file>
@@ -740,6 +746,8 @@
    <file alias="_signal_value_parameter_8h-source.html">../../../output/documentation/main/html/_signal_value_parameter_8h-source.html</file>
    <file alias="_single_unit_data_store_8cpp-source.html">../../../output/documentation/main/html/_single_unit_data_store_8cpp-source.html</file>
    <file alias="_single_unit_data_store_8h-source.html">../../../output/documentation/main/html/_single_unit_data_store_8h-source.html</file>
+   <file alias="_size_property_8cpp-source.html">../../../output/documentation/main/html/_size_property_8cpp-source.html</file>
+   <file alias="_size_property_8h-source.html">../../../output/documentation/main/html/_size_property_8h-source.html</file>
    <file alias="_slave_experiment_driver_8cpp-source.html">../../../output/documentation/main/html/_slave_experiment_driver_8cpp-source.html</file>
    <file alias="_slave_experiment_driver_8h-source.html">../../../output/documentation/main/html/_slave_experiment_driver_8h-source.html</file>
    <file alias="_software_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_software_compositing_surface_8cpp-source.html</file>
@@ -798,6 +806,8 @@
    <file alias="_subject_position_8h-source.html">../../../output/documentation/main/html/_subject_position_8h-source.html</file>
    <file alias="_switch_element_8cpp-source.html">../../../output/documentation/main/html/_switch_element_8cpp-source.html</file>
    <file alias="_switch_element_8h-source.html">../../../output/documentation/main/html/_switch_element_8h-source.html</file>
+   <file alias="_syntax_error_box_8cpp-source.html">../../../output/documentation/main/html/_syntax_error_box_8cpp-source.html</file>
+   <file alias="_syntax_error_box_8h-source.html">../../../output/documentation/main/html/_syntax_error_box_8h-source.html</file>
    <file alias="_t_d_t_interface_8cpp-source.html">../../../output/documentation/main/html/_t_d_t_interface_8cpp-source.html</file>
    <file alias="_t_d_t_interface_8h-source.html">../../../output/documentation/main/html/_t_d_t_interface_8h-source.html</file>
    <file alias="_target_controller_8cpp-source.html">../../../output/documentation/main/html/_target_controller_8cpp-source.html</file>
@@ -910,6 +920,9 @@
    <file alias="build_environment_preparation.html">../../../output/documentation/main/html/build_environment_preparation.html</file>
    <file alias="changenamemode_8cpp-source.html">../../../output/documentation/main/html/changenamemode_8cpp-source.html</file>
    <file alias="changenamemode_8h-source.html">../../../output/documentation/main/html/changenamemode_8h-source.html</file>
+   <file alias="class_about_element_box-members.html">../../../output/documentation/main/html/class_about_element_box-members.html</file>
+   <file alias="class_about_element_box.html">../../../output/documentation/main/html/class_about_element_box.html</file>
+   <file alias="class_about_element_box.png">../../../output/documentation/main/html/class_about_element_box.png</file>
    <file alias="class_alignment_tool-members.html">../../../output/documentation/main/html/class_alignment_tool-members.html</file>
    <file alias="class_alignment_tool.html">../../../output/documentation/main/html/class_alignment_tool.html</file>
    <file alias="class_analysis_output_dep_display-members.html">../../../output/documentation/main/html/class_analysis_output_dep_display-members.html</file>
@@ -950,6 +963,8 @@
    <file alias="class_control_element_item-members.html">../../../output/documentation/main/html/class_control_element_item-members.html</file>
    <file alias="class_control_element_item.html">../../../output/documentation/main/html/class_control_element_item.html</file>
    <file alias="class_control_element_item.png">../../../output/documentation/main/html/class_control_element_item.png</file>
+   <file alias="class_copier-members.html">../../../output/documentation/main/html/class_copier-members.html</file>
+   <file alias="class_copier.html">../../../output/documentation/main/html/class_copier.html</file>
    <file alias="class_daq_board-members.html">../../../output/documentation/main/html/class_daq_board-members.html</file>
    <file alias="class_daq_board.html">../../../output/documentation/main/html/class_daq_board.html</file>
    <file alias="class_deletable_widget-members.html">../../../output/documentation/main/html/class_deletable_widget-members.html</file>
@@ -1140,6 +1155,9 @@
    <file alias="class_picto_1_1_control_target-members.html">../../../output/documentation/main/html/class_picto_1_1_control_target-members.html</file>
    <file alias="class_picto_1_1_control_target.html">../../../output/documentation/main/html/class_picto_1_1_control_target.html</file>
    <file alias="class_picto_1_1_control_target.png">../../../output/documentation/main/html/class_picto_1_1_control_target.png</file>
+   <file alias="class_picto_1_1_control_target_result-members.html">../../../output/documentation/main/html/class_picto_1_1_control_target_result-members.html</file>
+   <file alias="class_picto_1_1_control_target_result.html">../../../output/documentation/main/html/class_picto_1_1_control_target_result.html</file>
+   <file alias="class_picto_1_1_control_target_result.png">../../../output/documentation/main/html/class_picto_1_1_control_target_result.png</file>
    <file alias="class_picto_1_1_controller_1_1_timer-members.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_timer-members.html</file>
    <file alias="class_picto_1_1_controller_1_1_timer.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_timer.html</file>
    <file alias="class_picto_1_1_cursor_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_cursor_graphic-members.html</file>
@@ -1256,6 +1274,9 @@
    <file alias="class_picto_1_1_list_data_state_list-members.html">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list-members.html</file>
    <file alias="class_picto_1_1_list_data_state_list.html">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list.html</file>
    <file alias="class_picto_1_1_list_data_state_list.png">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list.png</file>
+   <file alias="class_picto_1_1_logic_result-members.html">../../../output/documentation/main/html/class_picto_1_1_logic_result-members.html</file>
+   <file alias="class_picto_1_1_logic_result.html">../../../output/documentation/main/html/class_picto_1_1_logic_result.html</file>
+   <file alias="class_picto_1_1_logic_result.png">../../../output/documentation/main/html/class_picto_1_1_logic_result.png</file>
    <file alias="class_picto_1_1_m_t_rand-members.html">../../../output/documentation/main/html/class_picto_1_1_m_t_rand-members.html</file>
    <file alias="class_picto_1_1_m_t_rand.html">../../../output/documentation/main/html/class_picto_1_1_m_t_rand.html</file>
    <file alias="class_picto_1_1_machine_container-members.html">../../../output/documentation/main/html/class_picto_1_1_machine_container-members.html</file>
@@ -1495,6 +1516,9 @@
    <file alias="class_picto_1_1_signal_value_parameter.png">../../../output/documentation/main/html/class_picto_1_1_signal_value_parameter.png</file>
    <file alias="class_picto_1_1_single_unit_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_single_unit_data_store-members.html</file>
    <file alias="class_picto_1_1_single_unit_data_store.html">../../../output/documentation/main/html/class_picto_1_1_single_unit_data_store.html</file>
+   <file alias="class_picto_1_1_size_property-members.html">../../../output/documentation/main/html/class_picto_1_1_size_property-members.html</file>
+   <file alias="class_picto_1_1_size_property.html">../../../output/documentation/main/html/class_picto_1_1_size_property.html</file>
+   <file alias="class_picto_1_1_size_property.png">../../../output/documentation/main/html/class_picto_1_1_size_property.png</file>
    <file alias="class_picto_1_1_slave_experiment_driver-members.html">../../../output/documentation/main/html/class_picto_1_1_slave_experiment_driver-members.html</file>
    <file alias="class_picto_1_1_slave_experiment_driver.html">../../../output/documentation/main/html/class_picto_1_1_slave_experiment_driver.html</file>
    <file alias="class_picto_1_1_software_compositing_surface-members.html">../../../output/documentation/main/html/class_picto_1_1_software_compositing_surface-members.html</file>
@@ -1714,6 +1738,9 @@
    <file alias="class_status_mode-members.html">../../../output/documentation/main/html/class_status_mode-members.html</file>
    <file alias="class_status_mode.html">../../../output/documentation/main/html/class_status_mode.html</file>
    <file alias="class_status_mode.png">../../../output/documentation/main/html/class_status_mode.png</file>
+   <file alias="class_syntax_error_box-members.html">../../../output/documentation/main/html/class_syntax_error_box-members.html</file>
+   <file alias="class_syntax_error_box.html">../../../output/documentation/main/html/class_syntax_error_box.html</file>
+   <file alias="class_syntax_error_box.png">../../../output/documentation/main/html/class_syntax_error_box.png</file>
    <file alias="class_syntax_highlighter-members.html">../../../output/documentation/main/html/class_syntax_highlighter-members.html</file>
    <file alias="class_syntax_highlighter.html">../../../output/documentation/main/html/class_syntax_highlighter.html</file>
    <file alias="class_system_service-members.html">../../../output/documentation/main/html/class_system_service-members.html</file>

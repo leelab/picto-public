@@ -91,7 +91,7 @@ bool UIEnabled::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	if(nameProp && nameProp->value().toString().isEmpty())
 	{
 		QString errMsg = QString("Asset can not have an empty name.");
-		addError("UIEnabled", errMsg,xmlStreamReader);
+		addError(errMsg);
 	}
 	return true;
 }

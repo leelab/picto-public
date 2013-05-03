@@ -28,7 +28,7 @@ public:
 	QPoint getPos();
 	void setOpenDescendant(int assetId);
 	int getOpenDescendant();
-	virtual QString assetType(){return "UIInfo";};
+	virtual QString friendlyTypeName(){return "UI Info";};
 
 protected:
 	virtual void postDeserialize();

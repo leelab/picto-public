@@ -53,7 +53,7 @@ bool RandomIntParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 		return false;
 	if(propertyContainer_->getPropertyValue("Min").toInt() > propertyContainer_->getPropertyValue("Max").toInt())
 	{
-		addError("RandomIntParameter", "Min value cannot be greater than Max value.", xmlStreamReader);
+		addError("Min value cannot be greater than Max value.");
 		return false;
 	}
 	return true;

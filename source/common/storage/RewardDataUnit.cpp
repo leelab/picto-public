@@ -52,7 +52,7 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "RDU")
 	{
-		addError("RewardDataUnit","Incorrect tag, expected <RDU>",xmlStreamReader);
+		addError("Incorrect tag, expected <RDU>");
 		return false;
 	}
 
@@ -74,7 +74,7 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 				time_ = xmlStreamReader->attributes().value("t").toString();
 				if(time_.toDouble() < 0)
 				{
-					addError("RewardDataUnit","<RewardDataUnit> tag missing t (timestamp) attribute",xmlStreamReader);
+					addError("<RewardDataUnit> tag missing t (timestamp) attribute");
 					return false;
 				}
 			}
@@ -85,7 +85,7 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 				channel_ = xmlStreamReader->attributes().value("c").toString().toInt(&ok);
 				if(!ok)
 				{
-					addError("RewardDataUnit","<c> (Channel) value not an integer.",xmlStreamReader);
+					addError("<c> (Channel) value not an integer.");
 					return false;
 				}
 			}
@@ -95,7 +95,7 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 				durationMs_ = xmlStreamReader->attributes().value("d").toString().toInt(&ok);
 				if(!ok)
 				{
-					addError("RewardDataUnit","<d> (duration) value not an integer.",xmlStreamReader);
+					addError("<d> (duration) value not an integer.");
 					return false;
 				}
 				
@@ -110,19 +110,19 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 
 	if( channel_ < 0)
 	{
-		addError("RewardDataUnit", "<c> (Channel) value not found or invalid", xmlStreamReader);
+		addError("<c> (Channel) value not found or invalid");
 		return false;
 	}
 
 	if( durationMs_ < 0)
 	{
-		addError("RewardDataUnit", "<d> (duration) value not found or invalid", xmlStreamReader);
+		addError("<d> (duration) value not found or invalid");
 		return false;
 	}
 
 	if( time_.toDouble() < 0)
 	{
-		addError("RewardDataUnit", "t (timestamp) attribute not found or invalid", xmlStreamReader);
+		addError( "t (timestamp) attribute not found or invalid");
 		return false;
 	}
 

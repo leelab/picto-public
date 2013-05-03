@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include "PausePoint.h"
+#include "LogicResult.h"
 #include "../engine/PictoEngine.h"
 #include "../stimuli/CursorGraphic.h"
 #include "../storage/ObsoleteAsset.h"
@@ -13,10 +14,12 @@ PausePoint::PausePoint()
 : scene_(Scene::createScene()),
 hasCursor_(false)
 {
+	//PausePoints don't contain transitions.  All of their results are logic results which differ
+	//from regular results in that they don't have scripts.  Replace the default result factory with
+	//a factory that creates LogicResults that are required.
+	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
 	setMaxOptionalResults(0);
-	parameterFactory_->setMaxAssets(0);
-	controlTargetFactory_->setMaxAssets(0);
-	AddDefinableProperty("Type","PausePoint");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	//AddDefinableProperty("Type","PausePoint");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
 	AddDefinableObjectFactory("PausingScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	AddDefinableObjectFactory("RestartingScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
@@ -122,6 +125,10 @@ void PausePoint::postDeserialize()
 	OutputElementContainer::postDeserialize();
 	setPropertyRuntimeEditable("ForcePause");
 
+	//We're not using this right now, but maybe someday we will, so we're not getting rid of it, just hiding it from
+	//the UI.
+	propertyContainer_->getProperty("BackgroundColor")->setVisible(false);
+
 	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
 	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 }
@@ -133,7 +140,7 @@ bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 
 	if(propertyContainer_->getPropertyValue("Name").toString() == "EngineAbort")
 	{
-		addError("PausePoint", "EngineAbort is a resticted keyword, and may not be used as the name of a PausePoint", xmlStreamReader);
+		addError("EngineAbort is a resticted keyword, and may not be used as the name of a PausePoint");
 		return false;
 	}
 

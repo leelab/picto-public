@@ -70,9 +70,15 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 		if(returnVal && !uITemplateInitialized_)
 		{
 			if(returnVal->inherits("Picto::UIEnabled"))
+			{
 				uITemplate_ = returnVal.staticCast<UIEnabled>()->getUITemplate();
+				generatedAssetTypeName_ = returnVal.staticCast<UIEnabled>()->friendlyTypeName();
+			}
 			else
+			{
+				generatedAssetTypeName_ = "";
 				uITemplate_ = "";
+			}
 			uITemplateInitialized_ = true;
 		}
 	}
@@ -164,6 +170,32 @@ bool AssetFactory::reachedProductionLimit(QString type)
 	return false;
 }
 
+int AssetFactory::getMaxAssets(QString type)
+{
+	if(isGroupFactory_)
+	{
+		if(!factoriesByType_.contains(type))
+			return 0;
+		return factoriesByType_[type]->getMaxAssets();
+	}
+	else if(type != "")
+		return 0;
+	return maxAssets_;
+}
+
+int AssetFactory::getMinAssets(QString type)
+{
+	if(isGroupFactory_)
+	{
+		if(!factoriesByType_.contains(type))
+			return 0;
+		return factoriesByType_[type]->getMinAssets();
+	}
+	else if(type != "")
+		return 0;
+	return minAssets_;
+}
+
 QString AssetFactory::getUITemplate(QString type)
 {
 	if(isGroupFactory_)
@@ -175,6 +207,18 @@ QString AssetFactory::getUITemplate(QString type)
 	if(!uITemplateInitialized_)
 		getAsset(QString(""),"");
 	return uITemplate_;
+}
+
+QString AssetFactory::getGeneratedAssetTypeName(QString type)
+{
+	//Call getUITemplate to initialize generatedAssetTypeName_ and return it.
+	getUITemplate(type);
+	if(isGroupFactory_)
+	{
+		Q_ASSERT_X(factoriesByType_.contains(type),"AssetFactory::getUITemplate","This factory does not contain type: " + type.toLatin1());
+		return factoriesByType_[type]->getGeneratedAssetTypeName("");
+	}
+	return generatedAssetTypeName_;
 }
 
 /*! \brief Decreases the numSourcedAssets counter whenever an asset created by this factory is deleted.

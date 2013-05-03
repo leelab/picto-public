@@ -53,7 +53,7 @@ bool RandomDoubleParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlS
 		return false;
 	if(propertyContainer_->getPropertyValue("Min").toDouble() > propertyContainer_->getPropertyValue("Max").toDouble())
 	{
-		addError("RandomDoubleParameter", "Min value cannot be greater than Max value.", xmlStreamReader);
+		addError("Min value cannot be greater than Max value.");
 		return false;
 	}
 	return true;

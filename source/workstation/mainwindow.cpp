@@ -108,10 +108,10 @@ void MainWindow::createActions()
 
 	//Experiment actions
 	//--------------------------------------
-	checkSyntaxAction_ = new QAction(tr("&Check XML syntax"),this);
-	checkSyntaxAction_->setShortcut(Qt::Key_F7);
-	checkSyntaxAction_->setToolTip(tr("Check the current experiment's XML code for syntax errors."));
-	checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
+	//checkSyntaxAction_ = new QAction(tr("&Check XML syntax"),this);
+	//checkSyntaxAction_->setShortcut(Qt::Key_F7);
+	//checkSyntaxAction_->setToolTip(tr("Check the current experiment's XML code for syntax errors."));
+	//checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
 	//connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
 
 	aboutPictoAction_ = new QAction(tr("&About Picto"),this);
@@ -138,9 +138,6 @@ void MainWindow::createMenus()
 	editMenu_->addAction(pasteAction_);*/
 
 	modeMenu_ = menuBar()->addMenu(tr("&Mode"));
-
-	experimentMenu_ = menuBar()->addMenu(tr("E&xperiment"));
-	experimentMenu_->addAction(aboutPictoAction_);
 
 	aboutMenu_ = menuBar()->addMenu(tr("&About"));
 	aboutMenu_->addAction(aboutPictoAction_);
@@ -431,31 +428,31 @@ void MainWindow::startMode()
 }
 
 //! Checks the syntax of the current XML to see if it is a legal experiment
-void MainWindow::checkSyntax()
-{
-	errorList_->clear();
-	if(designRoot_->compiles())
-	{
-		QMessageBox box;
-		box.setText("Syntax check passed");
-		box.setIconPixmap(QPixmap(":/icons/check.png"));
-		box.exec();
-	}
-	else
-	{
-		QString allErrors;
-		foreach(QString str, errorList_->getAllErrors())
-		{
-			allErrors.append(str);
-		}
-
-		QMessageBox box;
-		box.setText("Syntax check failed                                       ");
-		box.setDetailedText(errorList_->getAllErrors().join("\n"));
-		box.setIconPixmap(QPixmap(":/icons/x.png"));
-		box.exec();
-	}
-}
+//void MainWindow::checkSyntax()
+//{
+//	errorList_->clear();
+//	if(designRoot_->compiles())
+//	{
+//		QMessageBox box;
+//		box.setText("Syntax check passed");
+//		box.setIconPixmap(QPixmap(":/icons/check.png"));
+//		box.exec();
+//	}
+//	else
+//	{
+//		QString allErrors;
+//		foreach(QString str, errorList_->getAllErrors())
+//		{
+//			allErrors.append(str);
+//		}
+//
+//		QMessageBox box;
+//		box.setText("Syntax check failed                                       ");
+//		box.setDetailedText(errorList_->getAllErrors().join("\n"));
+//		box.setIconPixmap(QPixmap(":/icons/x.png"));
+//		box.exec();
+//	}
+//}
 
 void MainWindow::aboutPicto()
 {
@@ -577,7 +574,12 @@ bool MainWindow::loadFile(const QString filename)
 	{
 	
 		DesignMessage errorMsg = newDesignRoot->getLastError();
-		QMessageBox::critical(0,errorMsg.name,errorMsg.details);
+		QMessageBox box;
+		box.setTextFormat(Qt::RichText);
+		box.setText(errorMsg.name);
+		box.setDetailedText(errorMsg.details);
+		box.setIconPixmap(QPixmap(":/icons/x.png"));
+		box.exec();
 		return false;
 	}
 	if(newDesignRoot->hasWarning())

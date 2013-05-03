@@ -30,6 +30,7 @@ public:
 	virtual int getPin(){return propertyContainer_->getPropertyValue("Pin").toInt();};
 	virtual QVariant getValue(){return QVariant(int(getBinValue()));};
 
+	virtual QString friendlyTypeName(){return "Digital Output";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

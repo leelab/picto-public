@@ -33,7 +33,7 @@ bool AlignmentDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	//Do some basic error checking
  	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "ADU")
 	{
-		addError("AlignmentDataUnit","Incorrect tag, expected <ADU>",xmlStreamReader);
+		addError("Incorrect tag, expected <ADU>");
 		return false;
 	}
 
@@ -60,7 +60,7 @@ bool AlignmentDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	
 		if(xmlStreamReader->hasError())
 		{
-			addError("AlignmentDataUnit", "xmlStreamReader.errorString()", xmlStreamReader);
+			addError(xmlStreamReader->errorString());
 			return false;
 		}
 	}

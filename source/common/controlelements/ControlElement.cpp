@@ -1,14 +1,16 @@
 #include "ControlElement.h"
-#include "../statemachine/RequiredResult.h"
+#include "../statemachine/LogicResult.h"
+#include "../storage/ObsoleteAsset.h"
 
 namespace Picto {
 
 ControlElement::ControlElement()
 {
-	//Control elements don't contain transitions.  All of their results are required results which differ
+	//Control elements don't contain transitions.  All of their results are logic results which differ
 	//from regular results in that they don't have scripts.  Replace the default result factory with
-	//a factory that creates RequiredResults.
-	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RequiredResult::Create))));
+	//a factory that creates LogicResults that are required.
+	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
+	AddDefinableObjectFactory("Type",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
 
 //bool ControlElement::addResult(QSharedPointer<Result> result)

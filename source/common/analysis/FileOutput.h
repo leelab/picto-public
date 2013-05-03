@@ -30,7 +30,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "FileOutput";};
-	virtual QString assetType(){return "FileOutput";};
+	virtual QString friendlyTypeName(){return "FileOutput";};
 
 public slots:
 	void writeLine(QString text);

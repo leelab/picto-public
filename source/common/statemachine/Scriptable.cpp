@@ -186,6 +186,7 @@ QString Scriptable::getInfo()
 }
 void Scriptable::postDeserialize()
 {
+	propertyContainer_->getProperty("UIOrder")->setVisible(false);
 	// All property values are stored in an init property container.  This container
 	// is used to reset properties to their initial values whenever an state machine 
 	// element is entered.
@@ -215,7 +216,7 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	//and just not adding anything with no name or whitespace in its name to the scripting system.
 	//if(getName().contains(" "))
 	//{
-	//	addError("Scriptable", "The name of a scriptable element cannot contain whitespace",xmlStreamReader);
+	//	addError("Scriptable", "The name of a scriptable element cannot contain whitespace");
 	//	return false;
 	//}
 	return true;

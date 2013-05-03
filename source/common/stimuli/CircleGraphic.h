@@ -35,6 +35,8 @@ public:
 	bool getOutline(){return propertyContainer_->getPropertyValue("Outline").toBool();};
 	void setOutline(bool outline) { propertyContainer_->setPropertyValue("Outline", outline);};
 
+	virtual QString friendlyTypeName(){return "Circle";};
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

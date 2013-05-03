@@ -43,7 +43,7 @@ public:
 	 */
 	void resetScriptableValues();
 
-	virtual QString assetType(){return "ScriptableContainer";};
+	virtual QString friendlyTypeName(){return "Scriptable Container";};
 	virtual QString getInfo();
 	virtual void ClearAssociateChildren(QUuid associateId);
 
@@ -60,12 +60,12 @@ protected:
 	virtual QMap<QString,QPair<QString,QString>>  getScripts(){return QMap<QString,QPair<QString,QString>> ();};
 	virtual void scriptableContainerWasReinitialized(){};
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
-	QSharedPointer<AssetFactory> visualElementFactory_;
-	QSharedPointer<AssetFactory> parameterFactory_;
-	QSharedPointer<AssetFactory> controlTargetFactory_;
-	QSharedPointer<AssetFactory> audioElementFactory_;
-	QSharedPointer<AssetFactory> outputSignalFactory_;
-	QSharedPointer<AssetFactory> scriptFunctionFactory_;
+	//QSharedPointer<AssetFactory> visualElementFactory_;
+	//QSharedPointer<AssetFactory> parameterFactory_;
+	//QSharedPointer<AssetFactory> controlTargetFactory_;
+	//QSharedPointer<AssetFactory> audioElementFactory_;
+	//QSharedPointer<AssetFactory> outputSignalFactory_;
+	//QSharedPointer<AssetFactory> scriptFunctionFactory_;
 	QSharedPointer<QScriptEngine> qsEngine_;
 	QSharedPointer<QScriptEngineDebugger> qsEngineDebugger_;
 

@@ -11,12 +11,12 @@ GridGraphic::GridGraphic()
 {
 	AddDefinableProperty(QVariant::Int,"Rows",5);
 	AddDefinableProperty(QVariant::Int,"Columns",5);
-	AddDefinableProperty(QVariant::Rect,"Dimensions",QRect());
+	AddDefinableProperty(QVariant::Size,"Size",QSize());
 }
 
 void GridGraphic::draw()
 {
-	QRect dims = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dims = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	int rows = propertyContainer_->getPropertyValue("Rows").toInt();
 	int cols = propertyContainer_->getPropertyValue("Columns").toInt();
 
@@ -77,13 +77,13 @@ bool GridGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReade
 	int cols = propertyContainer_->getPropertyValue("Columns").toInt();
 	if(rows <= 0)
 	{
-		addError("GridGraphic","Rows value must be greater than zero.",xmlStreamReader);
+		addError("Rows value must be greater than zero.");
 		return false;
 	}
 
 	if(cols <= 0)
 	{
-		addError("GridGraphic","Columns value must be greater than zero.",xmlStreamReader);
+		addError("Columns value must be greater than zero.");
 		return false;
 	}
 	return true;

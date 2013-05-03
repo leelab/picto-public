@@ -32,6 +32,7 @@ public:
 
 	static const QString type;
 
+	virtual QString friendlyTypeName(){return "Picture";};
 protected:
 	virtual QString defaultTagName(){return "Picture";};
 	virtual void postDeserialize();

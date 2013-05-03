@@ -1,16 +1,17 @@
 #include "ScriptController.h"
 #include "../StateMachine/MachineContainer.h"
-#include "../statemachine/RequiredResult.h"
+#include "../statemachine/LogicResult.h"
+#include "../storage/ObsoleteAsset.h"
 
 namespace Picto
 {
 ScriptController::ScriptController()
 {
 	currResult_ = "";
-	AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	AddDefinableObjectFactory("Type",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	AddDefinableProperty(QVariant::String,"Script","");
 
-	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RequiredResult::Create))));
+	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
 }
 
 

@@ -1,7 +1,7 @@
 #ifndef TOOLBOX_H
 #define TOOLBOX_H
 #include <QToolBox>
-#include "ToolGroup.h"
+#include "AssetToolGroup.h"
 #include "../../common/storage/asset.h"
 #include <QSharedPointer>
 #include <QString>
@@ -30,7 +30,8 @@ public slots:
    void setAsset(QSharedPointer<Asset> asset);
 
 private:
-	QList<ToolGroup*> toolGroups_;
+	void addToolGroup(QStringList tagFilters,QString groupName,QSharedPointer<Asset> windowAsset);
+	QList<AssetToolGroup*> toolGroups_;
 	QSharedPointer<EditorState> editorState_;
 };
 //! [0]

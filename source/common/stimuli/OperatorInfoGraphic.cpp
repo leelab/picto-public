@@ -10,7 +10,7 @@ const QString OperatorInfoGraphic::type = "Operator Info Graphic";
 OperatorInfoGraphic::OperatorInfoGraphic()
 : VisualElement(QPoint(),QColor(Qt::green))
 {
-	AddDefinableProperty(QVariant::Rect,"Dimensions",QRect());
+	AddDefinableProperty(QVariant::Size,"Size",QSize());
 	AddDefinableProperty(QVariant::String,"Fields","");
 	AddDefinableProperty(QVariant::String,"Values","");
 	//These are redefined from Visual Element to fix the default values.
@@ -20,7 +20,7 @@ OperatorInfoGraphic::OperatorInfoGraphic()
 
 void OperatorInfoGraphic::draw()
 {
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
@@ -99,6 +99,9 @@ QVariant OperatorInfoGraphic::getData(QString field)
 void OperatorInfoGraphic::postDeserialize()
 {
 	VisualElement::postDeserialize();
+	//Fields and Values properties are for information transfer only, don't show them in the UI
+	propertyContainer_->getProperty("Fields")->setVisible(false);
+	propertyContainer_->getProperty("Values")->setVisible(false);
 }
 
 bool OperatorInfoGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

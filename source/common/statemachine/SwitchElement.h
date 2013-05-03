@@ -35,7 +35,7 @@ public:
 	void setScript(QString script);
 
 	virtual QString getUITemplate(){return "SwitchElement";};
-	virtual QString assetType(){return "SwitchElement";};
+	virtual QString friendlyTypeName(){return "Switch";};
 
 protected:
 	virtual QString getReturnValueError(QString scriptName,const QScriptValue& returnValue);

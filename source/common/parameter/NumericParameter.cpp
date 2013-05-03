@@ -1,4 +1,5 @@
 #include "NumericParameter.h"
+#include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
 namespace Picto
@@ -11,7 +12,8 @@ NumericParameter::NumericParameter()
   Parameter()
 {
 	AddDefinableProperty(QVariant::Int,"Value",QVariant());
-	AddDefinableProperty("Units","");
+	AddDefinableObjectFactory("Units",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+
 
 }
 
@@ -98,7 +100,6 @@ QSharedPointer<Asset> NumericParameter::Create()
 void NumericParameter::postDeserialize()
 {
 	Parameter::postDeserialize();
-	units_ = propertyContainer_->getPropertyValue("Units").toString();
 	setPropertyRuntimeEditable("Value");
 }
 

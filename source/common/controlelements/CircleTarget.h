@@ -21,7 +21,7 @@ class CircleTarget : public ControlTarget
 public:
 	CircleTarget();
 	static QSharedPointer<Asset> Create();
-	virtual QString assetType(){return "CircleTarget";};
+	virtual QString friendlyTypeName(){return "Circle Target";};
 	void draw();
 	virtual bool contains(int x, int y);
 	QPoint getPositionOffset();

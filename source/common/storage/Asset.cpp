@@ -24,23 +24,15 @@ bool Asset::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	return serializeAsXml(xmlStreamWriter);
 }
 
-bool Asset::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate)
+bool Asset::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	preDeserialize();
-	bool returnVal = deserializeFromXml(xmlStreamReader,validate);
+	bool returnVal = deserializeFromXml(xmlStreamReader);
 	edited_ = false;
 	isNew_ = false;
 	deleted_ = false;
 	if(returnVal)
 		postDeserialize();
-	if(validate)
-	{	
-		//The XML syntax was fine.  Lets make sure that the object is initialized and valid.
-		bool myResult = validateObject(xmlStreamReader);
-		returnVal &= myResult;
-		if(!myResult)
-			addError(identifier().toLatin1(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(identifier()).toLatin1(),xmlStreamReader);
-	}
 	return returnVal;
 }
 
@@ -48,8 +40,6 @@ bool Asset::validateTree()
 {
 	QSharedPointer<QXmlStreamReader> xmlStreamReader(new QXmlStreamReader());
 	bool returnVal = validateObject(xmlStreamReader);
-	if(!returnVal)
-		addError(identifier().toLatin1(),QString("The %1 Object's Structural XML syntax was correct but there were errors in tag contents.").arg(identifier()).toLatin1(),xmlStreamReader);
 	return returnVal;
 }
 
@@ -82,7 +72,7 @@ bool Asset::initializeFromXml(QString xml)
 	}
 	if(xmlStreamReader->atEnd())
 		return false;
-	bool success = fromXml(xmlStreamReader,false);
+	bool success = fromXml(xmlStreamReader);
 	isNew_ = true;
 	return success;
 }
@@ -168,6 +158,12 @@ void Asset::postDeserialize()
 	//are deserialized will be setup with nonduplicated ids.
 	if(designConfig_)
 		designConfig_->fixDuplicatedAssetIds();
+}
+
+void Asset::addError(QString errorMessage)
+{
+	QString newErr = "<b>Error:</b> <i>" + getPath() + "</i> - " + errorMessage;
+	addErrorToList(newErr);
 }
 
 }; //namespace Picto

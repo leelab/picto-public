@@ -41,7 +41,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "LFPDataUnitPackage")
 	{
-		addError("LFPDataUnitPackage","Incorrect tag, expected <LFPDataUnitPackage>",xmlStreamReader);
+		addError("Incorrect tag, expected <LFPDataUnitPackage>");
 		return false;
 	}
 
@@ -63,7 +63,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("LFPDataUnitPackage","LFPDataUnitPackage missing ch (channel) attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage missing ch (channel) attribute");
 				return false;
 			}
 
@@ -73,7 +73,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("LFPDataUnitPackage","LFPDataUnitPackage missing correlation attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage missing correlation attribute");
 				return false;
 			}
 
@@ -83,7 +83,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("LFPDataUnitPackage","LFPDataUnitPackage missing ftimestamp (fitted timestamp) attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage missing ftimestamp (fitted timestamp) attribute");
 				return false;
 			}
 
@@ -93,7 +93,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("LFPDataUnitPackage","LFPDataUnitPackage missing correlation attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage missing correlation attribute");
 				return false;
 			}
 
@@ -103,7 +103,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("LFPDataUnitPackage","LFPDataUnitPackage missing resolution attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage missing resolution attribute");
 				return false;
 			}
 
@@ -113,7 +113,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("LFPDataUnitPackage","LFPDataUnitPackage missing fresolution (fitted resolution) attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage missing fresolution (fitted resolution) attribute");
 				return false;
 			}
 
@@ -125,7 +125,7 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 			}
 			else
 			{
-				addError("LFPDataUnitPackage","LFPDataUnitPackage missing pots(potentials) attribute",xmlStreamReader);
+				addError("LFPDataUnitPackage missing pots(potentials) attribute");
 				return false;
 			}
 		}

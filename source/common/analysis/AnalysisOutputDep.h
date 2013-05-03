@@ -35,7 +35,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisOutput";};
-	virtual QString assetType(){return "AnalysisOutput";};
+	virtual QString friendlyTypeName(){return "AnalysisOutput";};
 
 	QString getTempOutputDir();
 

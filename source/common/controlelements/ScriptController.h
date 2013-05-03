@@ -33,6 +33,7 @@ public:
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 	virtual void upgradeVersion(QString deserializedVersion);
 
+	virtual QString friendlyTypeName(){return "Script Controller";};
 	////DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

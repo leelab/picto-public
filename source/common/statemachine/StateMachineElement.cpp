@@ -7,6 +7,7 @@
 #include "../storage/StateDataUnit.h"
 #include "../storage/AssetFactory.h"
 #include "../parameter/AnalysisScriptContainer.h"
+#include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -16,6 +17,7 @@ StateMachineElement::StateMachineElement()
 {
 	AddDefinableProperty("EntryScript","");
 	AddDefinableProperty("ExitScript","");
+	AddDefinableObjectFactory("Type",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
 
 QString StateMachineElement::slaveRenderFrame(QSharedPointer<Engine::PictoEngine>)
@@ -26,12 +28,6 @@ QString StateMachineElement::slaveRenderFrame(QSharedPointer<Engine::PictoEngine
 QPoint StateMachineElement::getDisplayLayoutPosition()
 {
 	return layoutPosition_;
-}
-
-QString StateMachineElement::type()
-{
-	QString typeStr = propertyContainer_->getPropertyValue("Type").toString();
-	return typeStr;
 }
 
 void StateMachineElement::postDeserialize()
@@ -49,7 +45,7 @@ bool StateMachineElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	{
 		if(result == "EngineAbort")
 		{
-			addError("StateMachineElement", "EngineAbort is a resticted keyword, and may not be used as the name of a result", xmlStreamReader);
+			addError("EngineAbort is a resticted keyword, and may not be used as the name of a result");
 			return false;
 		}
 	}

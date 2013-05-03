@@ -52,7 +52,7 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "SignalChannelInfo")
 	{
-		addError("SignalChannelInfo","Incorrect tag, expected <SignalChannelInfo>",xmlStreamReader);
+		addError("Incorrect tag, expected <SignalChannelInfo>");
 		return false;
 	}
 
@@ -62,7 +62,7 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	}
 	else
 	{
-		addError("SignalChannelInfo","Data missing name attribute",xmlStreamReader);
+		addError("Data missing name attribute");
 		return false;
 	}
 
@@ -72,7 +72,7 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	}
 	else
 	{
-		addError("SignalChannelInfo","Data missing tableName attribute",xmlStreamReader);
+		addError("Data missing tableName attribute");
 		return false;
 	}
 
@@ -82,7 +82,7 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	}
 	else
 	{
-		addError("SignalChannelInfo","Data missing stateVariableId attribute",xmlStreamReader);
+		addError("Data missing stateVariableId attribute");
 		return false;
 	}
 
@@ -92,7 +92,7 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	}
 	else
 	{
-		addError("SignalChannelInfo","Data missing resolution attribute",xmlStreamReader);
+		addError("Data missing resolution attribute");
 		return false;
 	}
 
@@ -102,7 +102,7 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	}
 	else
 	{
-		addError("SignalChannelInfo","Data missing numSubchannels attribute",xmlStreamReader);
+		addError("Data missing numSubchannels attribute");
 		return false;
 	}
 
@@ -112,7 +112,7 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	}
 	else
 	{
-		addError("SignalChannelInfo","Data missing subChannelNames attribute",xmlStreamReader);
+		addError("Data missing subChannelNames attribute");
 		return false;
 	}
 

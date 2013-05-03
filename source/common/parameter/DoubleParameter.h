@@ -30,6 +30,7 @@ public:
 	double getValue();
 	void setValue(double val);
 
+	virtual QString friendlyTypeName(){return "Double";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

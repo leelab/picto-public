@@ -47,6 +47,8 @@ public:
 	void setEndY(int y){setEndPoint(QPoint(getEndPoint().x(),y));};
 
 	static const QString type;
+
+	virtual QString friendlyTypeName(){return "Arrow";};
 public slots:
 	void setEndPoint(int x, int y) { setEndPoint(QPoint(x,y));};
 

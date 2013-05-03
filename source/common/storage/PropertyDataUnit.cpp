@@ -35,7 +35,7 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "PDU")
 	{
-		addError("PropertyDataUnit","Incorrect tag, expected <PDU>",xmlStreamReader);
+		addError("Incorrect tag, expected <PDU>");
 		return false;
 	}
 
@@ -57,7 +57,7 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 			}
 			else
 			{
-				addError("PropertyDataUnit","Data missing f (frame) attribute",xmlStreamReader);
+				addError("Data missing f (frame) attribute");
 				return false;
 			}
 
@@ -67,7 +67,7 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 			}
 			else
 			{
-				addError("PropertyDataUnit","Data missing i (index) attribute",xmlStreamReader);
+				addError("Data missing i (index) attribute");
 				return false;
 			}
 
@@ -77,7 +77,7 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 			}
 			else
 			{
-				addError("PropertyDataUnit","Data missing r (is init value) attribute",xmlStreamReader);
+				addError("Data missing r (is init value) attribute");
 				return false;
 			}
 
@@ -87,7 +87,7 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 			}
 			else
 			{
-				addError("PropertyDataUnit","Data missing v (value) attribute",xmlStreamReader);
+				addError("Data missing v (value) attribute");
 				return false;
 			}
 		}

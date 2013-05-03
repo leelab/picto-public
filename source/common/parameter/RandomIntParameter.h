@@ -36,6 +36,8 @@ public:
 
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
+
+	virtual QString friendlyTypeName(){return "Random Int";};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

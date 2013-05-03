@@ -40,6 +40,10 @@ void PropertyEditorFactory::clear()
 
 QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent)
 {
+	//Check if this property needs to be read only
+	bool isReadOnly = false;
+	if(nextProp_ && !nextProp_->isGuiEditable())
+		isReadOnly = true;
 	//If this is the first qtProp for the latest Picto prop, it is the top level prop.
 	//If this is for a Script property, don't associate this top level QtProperty with the latest Picto Property.
 	//If this is any other type, this top level QtProperty should be associated with the latest Picto Property
@@ -85,6 +89,15 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 		qobject_cast<QDoubleSpinBox*>(resultWidget)->setValue(manager->value(property).toDouble());
 	}
 
+	if(isReadOnly)
+	{
+		if(resultWidget->inherits("QLineEdit"))
+			qobject_cast<QLineEdit*>(resultWidget)->setReadOnly(true);	
+		if(resultWidget->inherits("QDoubleSpinBox"))
+			qobject_cast<QDoubleSpinBox*>(resultWidget)->setReadOnly(true);
+		if(resultWidget->inherits("QSpinBox"))
+			qobject_cast<QSpinBox*>(resultWidget)->setReadOnly(true);
+	}
 
 	return resultWidget;
 }

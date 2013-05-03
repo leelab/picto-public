@@ -24,7 +24,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "NumericVariable";};
-	virtual QString assetType(){return "NumericVariable";};
+	virtual QString friendlyTypeName(){return "NumericVariable";};
 
 protected:
 

@@ -29,7 +29,7 @@ public:
 	QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);
 
 	virtual QString getUITemplate(){return "PausePoint";};
-	virtual QString assetType(){return "PausePoint";};
+	virtual QString friendlyTypeName(){return "Pause Point";};
 
 	virtual void upgradeVersion(QString deserializedVersion);
 

@@ -29,7 +29,7 @@ bool DirectorData::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "DD")
 	{
-		addError("DirectorData","Incorrect tag, expected <DD>",xmlStreamReader);
+		addError("Incorrect tag, expected <DD>");
 		return false;
 	}
 

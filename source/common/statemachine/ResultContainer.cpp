@@ -1,5 +1,4 @@
 #include "ResultContainer.h"
-#include "RequiredResult.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -24,6 +23,34 @@ QSharedPointer<Result> ResultContainer::getResult(QString name)
 	return QSharedPointer<Result>();
 }
 
+bool ResultContainer::hasEditableDescendants()
+{
+	int maxResults = 0;
+	int currMax;
+	//Add up maxAssets of all types of all resultFactories and put it in maxResults.
+	//If any of them have a -1 max, it means that there is no limit and therefore
+	//There are user addable results and we should return true.
+	foreach(QSharedPointer<AssetFactory> assetFactory,resultFactoryByType_)
+	{
+		foreach(QString type,assetFactory->getTypes())
+		{
+			currMax = assetFactory->getMaxAssets(type);
+			if(currMax < 0)
+				return true;
+			maxResults += currMax;
+		}
+	}
+
+	//Required assets are not editable, all others are.  If the number of required results equals
+	//maxResults, there are no editable descendants; otherwise, there are.
+	int numRequiredResults = requiredResults_.size();
+	Q_ASSERT(numRequiredResults <= maxResults);
+	if(numRequiredResults == maxResults)
+		return false;
+	return true;
+}
+
+//Tf you intend to limit the number of optional results, you must call setMaxOptionalResults before calling this function
 void ResultContainer::addRequiredResult(QString resultName)
 {
 	if(maxOptionalResults_[""] != -1)
@@ -34,10 +61,12 @@ void ResultContainer::addRequiredResult(QString resultName)
 		//Note: if we didn't add the new result to requiredResults_ below, this
 		//would make the factories max Assets inconsistant with requireResults_.
 		resultFactoryByType_[""]->setMaxAssets(resultFactoryByType_[""]->getMaxAssets()+1);
+		resultFactoryByType_[""]->setMinAssets(resultFactoryByType_[""]->getMinAssets()+1);
 	}
-	QSharedPointer<Result> requiredResult = createChildAsset("Result","",QString()).staticCast<RequiredResult>();
+	QSharedPointer<Result> requiredResult = createChildAsset("Result","",QString()).staticCast<Result>();
 	Q_ASSERT(requiredResult);
 	requiredResult->setName(resultName);
+	requiredResult->getPropertyContainer()->getProperty("Name")->setGuiEditable(false);
 	requiredResults_.insert("",requiredResult);
 }
 
@@ -121,17 +150,6 @@ bool ResultContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	//! \todo verify that no two results have the same name
 	if(!ScriptableContainer::validateObject(xmlStreamReader))
 		return false;
-	if( (resultFactory_->getMaxAssets() != -1)
-		&& getGeneratedChildren("Result").size() > resultFactory_->getMaxAssets())
-	{
-		QString errorStr = QString("This ResultContainer may only contain a maximum of %1 results including the followind required assets:\n").arg(resultFactory_->getMaxAssets());
-		foreach(QSharedPointer<Result> result,requiredResults_)
-		{
-			errorStr.append(QString("%1\n").arg(result->getName()));
-		}
-		addError("ResultContainer",errorStr, xmlStreamReader);
-		return false;
-	}
 	return true;
 }
 

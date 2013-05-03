@@ -37,7 +37,7 @@ bool TimeTrigger::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReade
 	if(propertyContainer_->getPropertyValue("TriggerPeriod").toDouble() <= 0)
 	{
 		QString errMsg = QString("TimeTrigger: Trigger Period must be greater than zero.");
-		addError("TimeTrigger", errMsg,xmlStreamReader);
+		addError(errMsg);
 		return false;
 	}
 	return true;

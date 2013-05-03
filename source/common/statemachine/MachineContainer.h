@@ -31,6 +31,8 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QSharedPointer<AssetFactory> elementFactory_;
 	QSharedPointer<AssetFactory> transitionFactory_;
+	QSharedPointer<AssetFactory> controlTargetFactory_;
+	QSharedPointer<AssetFactory> parameterFactory_;
 	QMap<QString, QSharedPointer<ResultContainer> > elements_;
 	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
 	QSharedPointer<Transition> initTransition_;

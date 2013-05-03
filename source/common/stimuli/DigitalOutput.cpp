@@ -28,7 +28,7 @@ bool DigitalOutput::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		return false;
 	if(getPin() < 0)
 	{
-		addError("OutputSignal","Pin number cannot be less than zero",xmlStreamReader);
+		addError("Pin number cannot be less than zero");
 		return false;
 	}
 	return true;

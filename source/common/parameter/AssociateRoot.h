@@ -20,7 +20,7 @@ class AssociateRoot : public ScriptableContainer
 public:
 	AssociateRoot();
 	virtual ~AssociateRoot(){};
-	virtual QString assetType(){return "AssociateRoot";};
+	virtual QString friendlyTypeName(){return "Associate Root";};
 	QUuid getAssociateId(){return propertyContainer_->getPropertyValue("AssociateId").toUuid();};
 	QUuid getLinkedHostId(){return propertyContainer_->getPropertyValue("LinkedHostId").toUuid();};
 	QString getLinkedHostName(){return propertyContainer_->getPropertyValue("LinkedHostName").toString();};

@@ -8,10 +8,7 @@ namespace Picto
 Reward::Reward()
 {
 	setMaxOptionalResults(0);
-	parameterFactory_->setMaxAssets(0);
-	visualElementFactory_->setMaxAssets(0);
-	controlTargetFactory_->setMaxAssets(0);
-	AddDefinableProperty("Type","Reward");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	//AddDefinableProperty("Type","Reward");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Int,"NumRewards",1);
 	AddDefinableProperty(QVariant::Int,"RewardQty",60);
 	AddDefinableProperty(QVariant::Int,"MinRewardPeriod",125);
@@ -57,6 +54,10 @@ void Reward::postDeserialize()
 	StateMachineElement::postDeserialize();
 	setPropertyRuntimeEditable("NumRewards");
 	setPropertyRuntimeEditable("RewardQty");
+
+	//Pictoboxes only have one reward channel right now, but maybe someday we will use this, so we're not getting rid of it, just hiding it from
+	//the UI.
+	propertyContainer_->getProperty("RewardChan")->setVisible(false);
 }
 
 bool Reward::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -66,25 +67,25 @@ bool Reward::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 
 	if(propertyContainer_->getPropertyValue("Name").toString() == "EngineAbort")
 	{
-		addError("Reward", "EngineAbort is a resticted keyword, and may not be used as the name of a reward", xmlStreamReader);
+		addError("EngineAbort is a resticted keyword, and may not be used as the name of a reward");
 		return false;
 	}
 
 	if(propertyContainer_->getPropertyValue("NumRewards").toInt() < 0)
 	{
-		addError("Reward", "NumRewards must have a value greater than or equal to zero", xmlStreamReader);
+		addError("NumRewards must have a value greater than or equal to zero");
 		return false;
 	}
 
 	if(propertyContainer_->getPropertyValue("RewardQty").toInt() < 0)
 	{
-		addError("Reward", "RewardQty must have a value greater than or equal to zero", xmlStreamReader);
+		addError("RewardQty must have a value greater than or equal to zero");
 		return false;
 	}
 
 	if(propertyContainer_->getPropertyValue("RewardChan").toInt() < 0)
 	{
-		addError("Reward", "RewardChan must have a value greater than or equal to zero", xmlStreamReader);
+		addError("RewardChan must have a value greater than or equal to zero");
 		return false;
 	}
 	return true;

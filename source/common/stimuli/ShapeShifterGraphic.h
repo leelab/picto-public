@@ -42,6 +42,8 @@ public:
 	void setShape(QString shape);
 
 	static const QString type;
+
+	virtual QString friendlyTypeName(){return "Shape Shift";};
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 

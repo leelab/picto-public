@@ -34,7 +34,7 @@ bool LFPDataSource::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		return false;
 	if(!getParentAsset()->inherits("Picto::LFPTrigger"))
 	{
-		addError("LFPDataSource", "LFP data sources must be defined within LFPTriggers.");
+		addError("LFP data sources must be defined within LFPTriggers.");
 		return false;
 	}
 	return true;

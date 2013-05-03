@@ -60,7 +60,7 @@ bool StateDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "StateDataUnitPackage")
 	{
-		addError("StateDataUnitPackage","Incorrect tag, expected <StateDataUnitPackage>",xmlStreamReader);
+		addError("Incorrect tag, expected <StateDataUnitPackage>");
 		return false;
 	}
 
@@ -83,7 +83,7 @@ bool StateDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 		}
 		else
 		{
-			addError("StateDataUnitPackage", "Unexpected tag", xmlStreamReader);
+			addError("Unexpected tag");
 			return false;
 		}
 		xmlStreamReader->readNext();
@@ -91,7 +91,7 @@ bool StateDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("StateDataUnitPackage", "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 		return false;
 	}
 	return true;

@@ -44,53 +44,16 @@ Serializable::Serializable()
 //	deleted_ = true;
 //}
 
-void Serializable::AddError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader, QSharedPointer<QStringList> errors)
-{
-	QString newErr = "ERROR\n";
-	newErr += "Object: " + objectType + "\n";
-	newErr += QString("Line: %1\n").arg(xmlStreamReader->lineNumber());
-	newErr += "Name: " + xmlStreamReader->name().toString() + "\n";
-	newErr += "Element: " + xmlStreamReader->tokenString() + "\n";
-	newErr += "Message: " + errorMsg + "\n";
-	errors->push_back(newErr);
-}
-
-/*! \brief Adds an error message to the list of errors
- *
- *	We maintain a list of errors so that errors can be tracked through the deserialization
- *	process.
- */
-void Serializable::addError(QString objectType, QString errorMsg, QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	QString newErr = "ERROR\n";
-	newErr += "Object: " + objectType + "\n";
-	newErr += QString("Line: %1\n").arg(xmlStreamReader->lineNumber());
-	newErr += "Name: " + xmlStreamReader->name().toString() + "\n";
-	newErr += "Element: " + xmlStreamReader->tokenString() + "\n";
-	newErr += "Message: " + errorMsg + "\n";
-
-	errors_.append(newErr);
-}
-
-void Serializable::addError(QString objectType, QString errorMsg)
-{
-	QString newErr = "ERROR\n";
-	newErr += "Object: " + objectType + "\n";
-	newErr += "Message: " + errorMsg + "\n";
-
-	errors_.append(newErr);
-}
-
 
 /*!	\brief Returns a string listing all errors that have occured
  */
 QString Serializable::getErrors()
 {
-	QString errorString = "DESERIALIZATION ERRORS\n\n";
+	QString errorString;
 
 	for(int i=0; i<errors_.length(); i++)
 	{
-		errorString += errors_[i] + "\n";
+		errorString += errors_[i] + "<br/>";
 	}
 	return errorString;
 
@@ -112,4 +75,14 @@ bool Serializable::fromXml(QString xmlText)
 		xmlStreamReader->readNext();
 	Q_ASSERT_X(!xmlStreamReader->atEnd(),"Serializable::fromXml","Couldn't deserialize xmlText: " + xmlText.toLatin1());
 	return fromXml(xmlStreamReader);
+}
+
+/*! \brief Adds an error message to the list of errors
+ *
+ *	We maintain a list of errors so that errors can be tracked through the deserialization
+ *	process.
+ */
+void Serializable::addErrorToList(QString errorMsg)
+{
+	errors_.append(errorMsg);
 }

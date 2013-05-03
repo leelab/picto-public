@@ -20,12 +20,13 @@ class PictoData : public DataStore
 public:
 	static QSharedPointer<Asset> Create();
 	virtual ~PictoData(){};
-	virtual QString assetType(){return "PictoData";};
+	virtual QString friendlyTypeName(){return "Picto Data";};
 	virtual QString getName(){return propertyContainer_->getPropertyValue("Name").toString();};
 	QSharedPointer<Experiment> getExperiment();
 	QList<QSharedPointer<Analysis>> getAnalyses();
 
 protected:
+	virtual QString defaultTagName(){return "PictoData";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:

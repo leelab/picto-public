@@ -46,6 +46,7 @@ public:
 	QString getValue(){return propertyContainer_->getPropertyValue("Value").toString();};
 	void setValue(QString val){propertyContainer_->setPropertyValue("Value",val);};
 
+	virtual QString friendlyTypeName(){return "String Parameter";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

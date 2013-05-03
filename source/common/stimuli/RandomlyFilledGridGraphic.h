@@ -22,9 +22,8 @@ namespace Picto {
  *	- Color2: The second color
  *	- Number of horizontal squares: As advertised
  *	- Number of vertical squares: As advertised
- *	- Number of squares with color1: This lets you set the ratio of colored grid spaces
- *	- Animated: Does the grid arrangement change?  Or is it static? (boolean)
- *	- Update frame rate: If the grid is animated, this is the frequency at which it updates.  Otherwise meaningless.
+ *	- Number of squares with color2: This lets you set the ratio of colored grid spaces
+ *	- Update frame rate: If > 0 the grid is animated and this is the frequency at which it updates.
  */
 
 
@@ -34,9 +33,9 @@ class PICTOLIB_CLASS RandomlyFilledGridGraphic : public VisualElement
 
 public:
 	RandomlyFilledGridGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), 
-								QColor color1=QColor(), QColor color2=QColor(), 
-								int numHorizSquares=1, int numVertSquares=1,int numColor1=1, 
-								bool animated=false, int updateFrameRate=0);
+								QColor color=QColor(), QColor color2=QColor(), 
+								int numHorizSquares=1, int numVertSquares=1,int numColor2=1,
+								int updateFrameRate=0);
 
 	void draw();
 	void updateAnimation(int frame, QTime elapsedTime);
@@ -46,10 +45,10 @@ public:
 
 	void setColor2(QColor color) { propertyContainer_->setPropertyValue("Color2",color); draw(); };
 	QColor getColor2() { return propertyContainer_->getPropertyValue("Color2").value<QColor>(); };
-	QRect getDimensions() { return propertyContainer_->getPropertyValue("Dimensions").toRect(); };
-	void setDimensions(QRect dimensions) { propertyContainer_->setPropertyValue("Dimensions", dimensions); };
+	QRect getDimensions() { return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize()); };
+	void setDimensions(QRect dimensions) { propertyContainer_->setPropertyValue("Dimensions",dimensions.size()); };
 	
-
+	virtual QString friendlyTypeName(){return "Random Fill Grid";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -57,7 +56,10 @@ protected:
 private:
 	void buildColorList();
 
-	QList<unsigned char> colorList_;
+	QVector<unsigned char> colorList_;
+	int prevColor2Squares_;
+	int prevHorizSquares_;
+	int prevVertSquares_;
 
 private slots:
 	void slotPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);

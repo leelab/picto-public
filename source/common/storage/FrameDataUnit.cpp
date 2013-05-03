@@ -41,7 +41,7 @@ bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "FDU")
 	{
-		addError("FrameDataUnit","Incorrect tag, expected <FDU>",xmlStreamReader);
+		addError("Incorrect tag, expected <FDU>");
 		return false;
 	}
 
@@ -63,7 +63,7 @@ bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 			}
 			else
 			{
-				addError("FrameDataUnit","Frame missing t (time) attribute",xmlStreamReader);
+				addError("Frame missing t (time) attribute");
 				return false;
 			}
 
@@ -73,7 +73,7 @@ bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 			}
 			else
 			{
-				addError("FrameDataUnit","Frame missing s (state) attribute",xmlStreamReader);
+				addError("Frame missing s (state) attribute");
 				return false;
 			}
 		}

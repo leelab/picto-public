@@ -67,6 +67,9 @@ public:
 	QPoint getPositionOffset();
 
 	static const QString type;
+	virtual void upgradeVersion(QString deserializedVersion);
+
+	virtual QString friendlyTypeName(){return "Token Tray";};
 public slots:
 	void setDimensions(int w, int h){setTrayWidth(w);setTrayHeight(h);};
 	void setTokenDimensions(int w, int h){setTokenWidth(w);setTokenHeight(h);};

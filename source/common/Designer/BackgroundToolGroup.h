@@ -11,6 +11,7 @@ public:
    virtual ~BackgroundToolGroup(){};
 protected:
    virtual void doButtonAction(int buttonId);
+   virtual bool isEnabled(int){return true;};
 };
 
 #endif

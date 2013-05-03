@@ -39,6 +39,7 @@ public:
 	void setLastClick(QPoint point);
 	static void addClick(QPoint point);
 
+	virtual QString friendlyTypeName(){return "Operator Click";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

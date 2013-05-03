@@ -28,16 +28,23 @@ public:
 	OutputElementContainer();
 	virtual ~OutputElementContainer(){};
 
+	virtual bool hasEditableDescendants(){return true;};
+
 	void addOutputElements(QSharedPointer<OutputElementContainer> outputElementContainer);
 	void addOutputElements(OutputElementContainer* outputElementContainer);
 	void addChildOutputElementContainer(QSharedPointer<OutputElementContainer> child);
 	QList<QSharedPointer<OutputElement>> getOutputElementList();
-	virtual QString assetType(){return "OutputElementContainer";};
+	virtual QString friendlyTypeName(){return "Output Element Container";};
 	virtual void ClearAssociateChildren(QUuid associateId);
 
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+	QSharedPointer<AssetFactory> visualElementFactory_;
+	QSharedPointer<AssetFactory> audioElementFactory_;
+	QSharedPointer<AssetFactory> outputSignalFactory_;
+	QSharedPointer<AssetFactory> scriptFunctionFactory_;
 
 private:
 	void addOutputElement(QSharedPointer<OutputElement> outputElement);

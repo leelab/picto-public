@@ -2,7 +2,7 @@
 
 #include "SwitchElement.h"
 #include "../storage/AssetFactory.h"
-#include "RequiredResult.h"
+#include "LogicResult.h"
 #include "../memleakdetect.h"
 
 namespace Picto
@@ -10,10 +10,10 @@ namespace Picto
 
 SwitchElement::SwitchElement()
 {
-	AddDefinableProperty("Type","SwitchElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	//AddDefinableProperty("Type","SwitchElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::String,"Script","");
 	
-	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RequiredResult::Create))));
+	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
 }
 
 void SwitchElement::setScript(QString script)

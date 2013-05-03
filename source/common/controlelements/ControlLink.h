@@ -26,7 +26,7 @@ public:
 	ControlLink(QSharedPointer<Asset> source, QSharedPointer<Asset> sourceResult, QSharedPointer<Asset> destination);
 	static QSharedPointer<Asset> Create();
 
-	virtual QString assetType(){return "ControlLink";};
+	virtual QString friendlyTypeName(){return "Control Link";};
 
 protected:
 	virtual QString defaultTagName(){return "Link";};

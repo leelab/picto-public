@@ -132,8 +132,13 @@ void EditorState::setWindowAsset(QSharedPointer<Asset> asset,bool undoable)
 		return;
 	Q_ASSERT(!asset.dynamicCast<DataStore>().isNull());
 	Q_ASSERT(!asset.dynamicCast<UIEnabled>().isNull());
-	QSharedPointer<DataStore> dataStore = asset.staticCast<DataStore>();
-	
+	QSharedPointer<UIEnabled> uiEnabled = asset.staticCast<UIEnabled>();
+	//If this asset has no editable descendants, it should not be openable.
+	if(!uiEnabled->hasEditableDescendants())
+	{
+		return;
+	}
+
 	//Store the current window asset
 	windowAsset_ = asset;
 

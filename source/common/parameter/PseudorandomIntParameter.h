@@ -38,7 +38,7 @@ public:
 
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
-	virtual QString assetType(){return "PseudorandomInt";};
+	virtual QString friendlyTypeName(){return "Pseudorandom Int";};
 
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};

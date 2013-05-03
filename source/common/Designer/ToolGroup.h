@@ -22,6 +22,7 @@ class ToolGroup : public QWidget
 public:
 	ToolGroup(QSharedPointer<EditorState> editorState, QWidget *parent=0);
 	virtual ~ToolGroup(){};
+	int numButtons();
 	QString getSelectedButton(){return selectedButton_;};
 
 protected:
@@ -32,6 +33,9 @@ protected:
 
 	virtual void doButtonAction(int buttonId) = 0;
 	virtual void disableButtonActions(){};
+	//Should be overriden by child class to return true if the button should
+	//be enabled and false otherwise
+	virtual bool isEnabled(int buttonId) = 0;
 private slots:
     void buttonGroupClicked(int id);
 	void disableAllButtons();

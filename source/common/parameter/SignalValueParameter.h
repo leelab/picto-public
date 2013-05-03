@@ -26,6 +26,8 @@ public:
 	static QSharedPointer<Asset> Create();
 	virtual ~SignalValueParameter(){};
 	static void setLatestValue(QString signal, QString subChannel, double value);
+
+	virtual QString friendlyTypeName(){return "Signal Value";};
 public slots:
 	double getValue(QString subChannel = "");
 

@@ -36,7 +36,7 @@ bool AlignmentInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "AlignmentInfo")
 	{
-		addError("AlignmentInfo","Incorrect tag, expected <AlignmentInfo>",xmlStreamReader);
+		addError("Incorrect tag, expected <AlignmentInfo>");
 		return false;
 	}
 
@@ -46,7 +46,7 @@ bool AlignmentInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	}
 	else
 	{
-		addError("AlignmentInfo","Data missing OffsetTime attribute",xmlStreamReader);
+		addError("Data missing OffsetTime attribute");
 		return false;
 	}
 
@@ -56,7 +56,7 @@ bool AlignmentInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	}
 	else
 	{
-		addError("AlignmentInfo","Data missing TemporalFactor attribute",xmlStreamReader);
+		addError("Data missing TemporalFactor attribute");
 		return false;
 	}
 

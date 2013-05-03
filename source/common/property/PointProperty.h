@@ -4,7 +4,7 @@
 #include "Property.h"
 
 namespace Picto {
-/*!	\brief Describes a RectProperty of an object
+/*!	\brief Describes a SizeProperty of an object
  *
  */
 #if defined WIN32 || defined WINCE

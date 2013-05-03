@@ -37,6 +37,8 @@ public:
 	virtual void reset();
 	int getValue();
 	void setValue(int val){restart();time_ = val;};
+
+	virtual QString friendlyTypeName(){return "Timer";};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

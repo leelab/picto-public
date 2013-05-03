@@ -43,7 +43,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "DataSource";};
-	virtual QString assetType(){return "DataSource";};
+	virtual QString friendlyTypeName(){return "DataSource";};
 
 protected:
 

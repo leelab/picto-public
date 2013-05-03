@@ -183,7 +183,7 @@ bool Transition::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	if(getDestination().isEmpty())
 	{			
 		QString errMsg = QString("Transition: %1 does not have a destination.").arg(getName());
-		addError("Transition", errMsg, xmlStreamReader);
+		addError(errMsg);
 		return false;
 	}
 	return true;

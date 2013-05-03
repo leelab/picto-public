@@ -29,6 +29,7 @@ public:
 	virtual int getPin(){return -1;};
 	virtual QVariant getValue(){return QVariant(getBinValue());};
 
+	virtual QString friendlyTypeName(){return "Binary Data Output";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

@@ -23,7 +23,7 @@ public:
 
 	//Inherited
 	virtual QString getUITemplate(){return "AnalysisTool";};
-	virtual QString assetType(){return "AnalysisTool";};
+	virtual QString friendlyTypeName(){return "AnalysisTool";};
 
 protected:
 

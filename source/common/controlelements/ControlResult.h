@@ -1,31 +1,31 @@
-#ifndef _CONTROLRESULT_H_
-#define _CONTROLRESULT_H_
+#ifndef _ControlTargetResult_H_
+#define _ControlTargetResult_H_
 
 #include "../common.h"
 #include "../storage/DataStore.h"
-#include "../statemachine/requiredresult.h"
+#include "../statemachine/LogicResult.h"
 #include "controltarget.h"
 #include <QRect>
 
 namespace Picto {
 
-/*!	\brief A ControlResult is used by ChoiceController
+/*!	\brief A ControlTargetResult is used by ChoiceController
  *	
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API ControlResult : public RequiredResult
+class PICTOLIB_API ControlTargetResult : public LogicResult
 #else
-class ControlResult : public RequiredResult
+class ControlTargetResult : public LogicResult
 #endif
 {
 	Q_OBJECT
 public:
-	ControlResult();
-	virtual ~ControlResult(){};
+	ControlTargetResult();
+	virtual ~ControlTargetResult(){};
 	static QSharedPointer<Asset> Create();
 
-	virtual QString assetType(){return "ControlResult";};
+	virtual QString assetType(){return "ControlTargetResult";};
 	bool contains(int x, int y);
 	void setActive(bool active);
 

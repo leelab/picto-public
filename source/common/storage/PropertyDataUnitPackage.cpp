@@ -52,7 +52,7 @@ bool PropertyDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "PropertyDataUnitPackage")
 	{
-		addError("PropertyDataUnitPackage","Incorrect tag, expected <PropertyDataUnitPackage>",xmlStreamReader);
+		addError("Incorrect tag, expected <PropertyDataUnitPackage>");
 		return false;
 	}
 
@@ -75,7 +75,7 @@ bool PropertyDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader
 		}
 		else
 		{
-			addError("PropertyDataUnitPackage", "Unexpected tag", xmlStreamReader);
+			addError("Unexpected tag");
 			return false;
 		}
 		xmlStreamReader->readNext();
@@ -83,7 +83,7 @@ bool PropertyDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("PropertyDataUnitPackage", "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 		return false;
 	}
 	return true;

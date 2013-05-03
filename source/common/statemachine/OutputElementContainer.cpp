@@ -9,12 +9,79 @@
 
 #include "OutputElementContainer.h"
 #include "../parameter/AssociateElement.h"
+
+#include "../stimuli/ArrowGraphic.h"
+#include "../stimuli/BoxGraphic.h"
+#include "../stimuli/DiamondGraphic.h"
+#include "../stimuli/ShapeShifterGraphic.h"
+#include "../stimuli/TokenTrayGraphic.h"
+#include "../stimuli/CircleGraphic.h"
+#include "../stimuli/EllipseGraphic.h"
+#include "../stimuli/LineGraphic.h"
+#include "../stimuli/GridGraphic.h"
+#include "../stimuli/PictureGraphic.h"
+#include "../stimuli/RandomlyFilledGridGraphic.h"
+#include "../stimuli/TextGraphic.h"
+#include "../stimuli/OperatorInfoGraphic.h"
+#include "../stimuli/DigitalOutput.h"
+#include "../stimuli/BinaryDataOutput.h"
+#include "../stimuli/AudioElement.h"
+#include "../statemachine/ScriptFunction.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
 
-OutputElementContainer::OutputElementContainer()
+OutputElementContainer::OutputElementContainer() :
+	visualElementFactory_(new AssetFactory(0,-1)),
+	audioElementFactory_(new AssetFactory(0,-1)),
+	outputSignalFactory_(new AssetFactory(0,-1)),
+	scriptFunctionFactory_(new AssetFactory(0,-1))
 {
+	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
+	scriptFunctionFactory_->addAssetType("ScriptFunction",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
+
+	AddDefinableObjectFactory("VisualElement",visualElementFactory_);
+	//For the sake of cleanliness, we should probably have a StimulusContainer class that adds all of the following.
+	//functionally, there is no problem with just adding them here.
+	visualElementFactory_->addAssetType(ArrowGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
+	visualElementFactory_->addAssetType(BoxGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
+	visualElementFactory_->addAssetType(DiamondGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DiamondGraphic::Create))));
+	visualElementFactory_->addAssetType(CircleGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
+	visualElementFactory_->addAssetType(EllipseGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	visualElementFactory_->addAssetType(ShapeShifterGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
+	visualElementFactory_->addAssetType(TokenTrayGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenTrayGraphic::Create))));
+	visualElementFactory_->addAssetType(LineGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	visualElementFactory_->addAssetType(GridGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(GridGraphic::Create))));
+	visualElementFactory_->addAssetType(PictureGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
+	visualElementFactory_->addAssetType(RandomlyFilledGridGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
+	visualElementFactory_->addAssetType(TextGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
+	visualElementFactory_->addAssetType(OperatorInfoGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorInfoGraphic::Create))));
+
+	AddDefinableObjectFactory("AudioElement",audioElementFactory_);
+	audioElementFactory_->addAssetType("AudioElement",
+		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
+
+	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
+	outputSignalFactory_->addAssetType("DigitalOutput",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
+
+	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
+	outputSignalFactory_->addAssetType("BinaryDataOutput",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BinaryDataOutput::Create))));
 }
 
 /*! \brief Copies the OutputElements from the passed in container

@@ -726,7 +726,12 @@ void RemoteViewer::init()
 	if(!res)
 	{
 		DesignMessage errorMsg = myDesignRoot_->getLastError();
-		QMessageBox::critical(0,errorMsg.name,errorMsg.details);
+		QMessageBox box;
+		box.setTextFormat(Qt::RichText);
+		box.setText(errorMsg.name);
+		box.setDetailedText(errorMsg.details);
+		box.setIconPixmap(QPixmap(":/icons/x.png"));		
+		box.exec();
 	}
 	if(myDesignRoot_->hasWarning())
 	{

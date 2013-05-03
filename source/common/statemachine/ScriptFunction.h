@@ -32,7 +32,7 @@ public:
 	virtual ~ScriptFunction(){};
 	bool bindToScriptEngine(QScriptEngine &engine);
 	virtual QString getUITemplate(){return "ScriptFunction";};
-	virtual QString assetType(){return "ScriptFunction";};
+	virtual QString friendlyTypeName(){return "Script Function";};
 	virtual QString getScriptingInfo();
 
 public slots:

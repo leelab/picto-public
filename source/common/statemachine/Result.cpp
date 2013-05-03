@@ -5,8 +5,6 @@ namespace Picto
 
 Result::Result()
 {
-	turnOffUnusedAssetFactories();
-	
 	//Add Optional Script property
 	AddDefinableProperty("EntryScript","");
 	resultScriptFactory_ = getAssetFactory("EntryScript");
@@ -18,7 +16,6 @@ Result::Result()
 Result::Result(QString name)
 {
 	Q_ASSERT(false);	//Just put this here because I don't think we're using this constructor anymore and I want to get rid of it.
-	turnOffUnusedAssetFactories();
 
 	//Add Optional Script property
 	AddDefinableProperty("EntryScript","");
@@ -76,16 +73,6 @@ QMap<QString,QPair<QString,QString>>  Result::getScripts()
 		scripts[scriptName] = QPair<QString,QString>(QString(),"EntryScript");
 	}
 	return scripts;
-}
-
-void Result::turnOffUnusedAssetFactories()
-{
-	scriptFunctionFactory_->setMaxAssets(0);
-	parameterFactory_->setMaxAssets(0);
-	visualElementFactory_->setMaxAssets(0);
-	controlTargetFactory_->setMaxAssets(0);
-	audioElementFactory_->setMaxAssets(0);
-	outputSignalFactory_->setMaxAssets(0);
 }
 
 }//namespace Picto

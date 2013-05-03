@@ -34,7 +34,7 @@ bool RewardUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "RU")
 	{
-		addError("RewardUnit","Incorrect tag, expected <RU>",xmlStreamReader);
+		addError("Incorrect tag, expected <RU>");
 		return false;
 	}
 
@@ -56,7 +56,7 @@ bool RewardUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRe
 			}
 			else
 			{
-				addError("RewardUnit","Frame missing c (channel) attribute",xmlStreamReader);
+				addError("Frame missing c (channel) attribute");
 				return false;
 			}
 
@@ -66,7 +66,7 @@ bool RewardUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRe
 			}
 			else
 			{
-				addError("RewardUnit","Frame missing d (duration) attribute",xmlStreamReader);
+				addError("Frame missing d (duration) attribute");
 				return false;
 			}
 		}

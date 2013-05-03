@@ -85,7 +85,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "DesignConfig")
 	{
-		addError("DesignConfig","Incorrect tag, expected <DesignConfig>",xmlStreamReader);
+		addError("Incorrect tag, expected <DesignConfig>");
 		return false;
 	}
 	xmlStreamReader->readNext();	//Move past the DesignConfig starting tag
@@ -118,7 +118,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Property missing i (index) attribute",xmlStreamReader);
+					addError("Property missing i (index) attribute");
 					return false;
 				}
 
@@ -128,7 +128,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Property missing n (name) attribute",xmlStreamReader);
+					addError("Property missing n (name) attribute");
 					return false;
 				}
 
@@ -138,7 +138,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Property missing p (parent) attribute",xmlStreamReader);
+					addError("Property missing p (parent) attribute");
 					return false;
 				}
 				propInfo_.append(propInf);
@@ -164,7 +164,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Transition missing i (index) attribute",xmlStreamReader);
+					addError("Transition missing i (index) attribute");
 					return false;
 				}
 
@@ -174,7 +174,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Transition missing n (name) attribute",xmlStreamReader);
+					addError("Transition missing n (name) attribute");
 					return false;
 				}
 				
@@ -184,7 +184,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Transition missing p (parent) attribute",xmlStreamReader);
+					addError("Transition missing p (parent) attribute");
 					return false;
 				}
 
@@ -194,7 +194,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Transition missing s (source) attribute",xmlStreamReader);
+					addError("Transition missing s (source) attribute");
 					return false;
 				}
 
@@ -204,7 +204,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Transition missing r (source result) attribute",xmlStreamReader);
+					addError("Transition missing r (source result) attribute");
 					return false;
 				}
 
@@ -214,7 +214,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Transition missing d (destination) attribute",xmlStreamReader);
+					addError("Transition missing d (destination) attribute");
 					return false;
 				}
 				transInfo_.append(transInf);
@@ -240,7 +240,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Element missing i (index) attribute",xmlStreamReader);
+					addError("Element missing i (index) attribute");
 					return false;
 				}
 
@@ -250,7 +250,7 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 				}
 				else
 				{
-					addError("DesignConfig","Element missing p (path) attribute",xmlStreamReader);
+					addError("Element missing p (path) attribute");
 					return false;
 				}
 				elemInfo_.append(elemInf);
@@ -259,12 +259,17 @@ bool DesignConfig::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		}
 		else
 		{
-			addError("DesignConfig","Invalid Tag: " + name.toLatin1(),xmlStreamReader);
+			addError("Invalid Tag: " + name.toLatin1());
 			return false;
 		}
 		xmlStreamReader->readNext();
 	}
 	return true;
+}
+
+void DesignConfig::addError(QString errorMessage)
+{
+	addErrorToList(errorMessage + "\n");
 }
 
 void DesignConfig::disallowIdDuplication()

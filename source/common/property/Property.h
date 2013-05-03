@@ -67,12 +67,18 @@ public:
 	void setVisible(bool visible){visible_ = visible;};
 	//Gets whether this property should be visible in GUI property editors.  Default is true.
 	bool isVisible(){return visible_;};
+
+	//Sets whether this property will be editable in GUI property editors.  Default is true.
+	void setGuiEditable(bool guiEditable){guiEditable_ = guiEditable;};
+	//Gets whether this property should be editable in GUI property editors.  Default is true.
+	bool isGuiEditable(){return guiEditable_;};
+	
 	//Sets this property as an associate property.  This is used with read-only monitoring
 	//to allow for runtime checks of whether non-experimental scripts attempt to write to experimental properties.
 	void setAssociateProperty(bool isAssociate){associateProperty_ = isAssociate;};
 
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader, bool validate);
+	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	//This is the string that is sent over the network and written into the session database.
 	QString initValToUserString();
@@ -84,7 +90,7 @@ public:
 	void valFromUserString(QString userString);
 
 	virtual QString identifier(){return tagName_;};
-	virtual QString assetType(){return "Property";};
+	virtual QString friendlyTypeName(){return "Property";};
 
 	virtual	int getAssetId();
 	virtual void setAssetId(int id);
@@ -161,6 +167,7 @@ private:
 	QString name_;
 	QMap<QString,QVariant> attributes_;
 	bool visible_;
+	bool guiEditable_;
 	bool serialSyntaxUpgraded_;
 	bool associateProperty_;
 	static bool hadObsoleteSerialSyntax_;

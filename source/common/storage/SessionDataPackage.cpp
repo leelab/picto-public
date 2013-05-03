@@ -60,7 +60,7 @@ bool SessionDataPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	//Do some basic error checking
 	if(!xmlStreamReader->isStartElement() || xmlStreamReader->name() != "SessionDataPackage")
 	{
-		addError("SessionDataPackage","Incorrect tag, expected <SessionDataPackage>",xmlStreamReader);
+		addError("Incorrect tag, expected <SessionDataPackage>");
 		return false;
 	}
 
@@ -83,7 +83,7 @@ bool SessionDataPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 		}
 		else
 		{
-			addError("SessionDataPackage", "Unexpected tag", xmlStreamReader);
+			addError("Unexpected tag");
 			return false;
 		}
 		xmlStreamReader->readNext();
@@ -91,7 +91,7 @@ bool SessionDataPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 
 	if(xmlStreamReader->atEnd())
 	{
-		addError("SessionDataPackage", "Unexpected end of document", xmlStreamReader);
+		addError("Unexpected end of document");
 		return false;
 	}
 	return true;

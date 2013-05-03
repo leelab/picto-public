@@ -26,7 +26,7 @@ bool ObsoleteAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 	Q_ASSERT_X(false,"ObsoleteAsset::serializeAsXml","An ObsoleteAsset's serializeAsXml() function should never be used.");
 	return true;
 }
-bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader,bool)
+bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	hadObsoleteAsset_ = true;
 
@@ -47,7 +47,7 @@ bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 			continue;
 		}
 		QSharedPointer<ObsoleteAsset> child(new ObsoleteAsset());
-		child->deserializeFromXml(xmlStreamReader,false);
+		child->deserializeFromXml(xmlStreamReader);
 		children_.insert(xmlStreamReader->name().toString(),child);
 		xmlStreamReader->readNext();
 	}

@@ -6,43 +6,44 @@
 #include <QAction>
 #include <QTextEdit>
 #include <QCoreApplication>
+#include <QScriptSyntaxCheckResult>
 
 #include "ScriptableContainer.h"
 #include "../property/EnumProperty.h"
 
 #include "../parameter/AssociateElement.h"
-
-#include "../parameter/BooleanParameter.h"
-#include "../parameter/ChoiceParameter.h"
-#include "../parameter/NumericParameter.h"
-#include "../parameter/RangeParameter.h"
-#include "../parameter/RandomIntParameter.h"
-#include "../parameter/RandomDoubleParameter.h"
-#include "../parameter/DoubleParameter.h"
-#include "../parameter/PseudorandomIntParameter.h"
-#include "../parameter/TimerParameter.h"
-#include "../parameter/OperatorClickParameter.h"
-#include "../parameter/SignalValueParameter.h"
-
-#include "../stimuli/ArrowGraphic.h"
-#include "../stimuli/BoxGraphic.h"
-#include "../stimuli/DiamondGraphic.h"
-#include "../stimuli/ShapeShifterGraphic.h"
-#include "../stimuli/TokenTrayGraphic.h"
-#include "../stimuli/CircleGraphic.h"
-#include "../stimuli/EllipseGraphic.h"
-#include "../stimuli/LineGraphic.h"
-#include "../stimuli/GridGraphic.h"
-#include "../stimuli/PictureGraphic.h"
-#include "../stimuli/RandomlyFilledGridGraphic.h"
-#include "../stimuli/TextGraphic.h"
-#include "../stimuli/OperatorInfoGraphic.h"
-#include "../stimuli/DigitalOutput.h"
-#include "../stimuli/BinaryDataOutput.h"
-#include "../stimuli/AudioElement.h"
-#include "../controlelements/circletarget.h"
-#include "../controlelements/recttarget.h"
-#include "../statemachine/ScriptFunction.h"
+//
+//#include "../parameter/BooleanParameter.h"
+//#include "../parameter/ChoiceParameter.h"
+//#include "../parameter/NumericParameter.h"
+//#include "../parameter/RangeParameter.h"
+//#include "../parameter/RandomIntParameter.h"
+//#include "../parameter/RandomDoubleParameter.h"
+//#include "../parameter/DoubleParameter.h"
+//#include "../parameter/PseudorandomIntParameter.h"
+//#include "../parameter/TimerParameter.h"
+//#include "../parameter/OperatorClickParameter.h"
+//#include "../parameter/SignalValueParameter.h"
+//
+//#include "../stimuli/ArrowGraphic.h"
+//#include "../stimuli/BoxGraphic.h"
+//#include "../stimuli/DiamondGraphic.h"
+//#include "../stimuli/ShapeShifterGraphic.h"
+//#include "../stimuli/TokenTrayGraphic.h"
+//#include "../stimuli/CircleGraphic.h"
+//#include "../stimuli/EllipseGraphic.h"
+//#include "../stimuli/LineGraphic.h"
+//#include "../stimuli/GridGraphic.h"
+//#include "../stimuli/PictureGraphic.h"
+//#include "../stimuli/RandomlyFilledGridGraphic.h"
+//#include "../stimuli/TextGraphic.h"
+//#include "../stimuli/OperatorInfoGraphic.h"
+//#include "../stimuli/DigitalOutput.h"
+//#include "../stimuli/BinaryDataOutput.h"
+//#include "../stimuli/AudioElement.h"
+//#include "../controlelements/circletarget.h"
+//#include "../controlelements/recttarget.h"
+//#include "../statemachine/ScriptFunction.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -51,92 +52,92 @@ ScriptableContainer* ScriptableContainer::objectForResultCheck_ = NULL;
 QScriptValue ScriptableContainer::checkScriptResultScript_;
 
 ScriptableContainer::ScriptableContainer()
-:	parameterFactory_(new AssetFactory(0,-1)),
+:	/*parameterFactory_(new AssetFactory(0,-1)),
 	visualElementFactory_(new AssetFactory(0,-1)),
 	controlTargetFactory_(new AssetFactory(0,-1)),
 	audioElementFactory_(new AssetFactory(0,-1)),
 	outputSignalFactory_(new AssetFactory(0,-1)),
-	scriptFunctionFactory_(new AssetFactory(0,-1)),
+	scriptFunctionFactory_(new AssetFactory(0,-1)),*/
 	scriptingInitialized_(false),
 	debuggingEnabled_(false)
 {
 	isAssociateElement_ = dynamic_cast<AssociateElement*>(this);
-	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
-	scriptFunctionFactory_->addAssetType("ScriptFunction",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
+	//AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
+	//scriptFunctionFactory_->addAssetType("ScriptFunction",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
 
-	AddDefinableObjectFactory("Parameter",parameterFactory_);
-	parameterFactory_->addAssetType("Boolean",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
-	//parameterFactory_->addAssetType("Choice",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
-	parameterFactory_->addAssetType("Numeric",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
-	parameterFactory_->addAssetType("Range",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RangeParameter::Create))));
-	parameterFactory_->addAssetType("RandomInt",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomIntParameter::Create))));
-	parameterFactory_->addAssetType("RandomDouble",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomDoubleParameter::Create))));
-	parameterFactory_->addAssetType("Double",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DoubleParameter::Create))));
-	parameterFactory_->addAssetType("PseudorandomInt",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
-	parameterFactory_->addAssetType("Timer",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimerParameter::Create))));
-	parameterFactory_->addAssetType("OperatorClick",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorClickParameter::Create))));
-	parameterFactory_->addAssetType("SignalValue",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalValueParameter::Create))));
+	//AddDefinableObjectFactory("Parameter",parameterFactory_);
+	//parameterFactory_->addAssetType("Boolean",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
+	////parameterFactory_->addAssetType("Choice",
+	////	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
+	//parameterFactory_->addAssetType("Numeric",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
+	//parameterFactory_->addAssetType("Range",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RangeParameter::Create))));
+	//parameterFactory_->addAssetType("RandomInt",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomIntParameter::Create))));
+	//parameterFactory_->addAssetType("RandomDouble",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomDoubleParameter::Create))));
+	//parameterFactory_->addAssetType("Double",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DoubleParameter::Create))));
+	//parameterFactory_->addAssetType("PseudorandomInt",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
+	//parameterFactory_->addAssetType("Timer",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimerParameter::Create))));
+	//parameterFactory_->addAssetType("OperatorClick",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorClickParameter::Create))));
+	//parameterFactory_->addAssetType("SignalValue",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalValueParameter::Create))));
 
 
-	AddDefinableObjectFactory("VisualElement",visualElementFactory_);
-	//For the sake of cleanliness, we should probably have a StimulusContainer class that adds all of the following.
-	//functionally, there is no problem with just adding them here.
-	visualElementFactory_->addAssetType(ArrowGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
-	visualElementFactory_->addAssetType(BoxGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
-	visualElementFactory_->addAssetType(DiamondGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DiamondGraphic::Create))));
-	visualElementFactory_->addAssetType(CircleGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
-	visualElementFactory_->addAssetType(EllipseGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
-	visualElementFactory_->addAssetType(ShapeShifterGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
-	visualElementFactory_->addAssetType(TokenTrayGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenTrayGraphic::Create))));
-	visualElementFactory_->addAssetType(LineGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
-	visualElementFactory_->addAssetType(GridGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(GridGraphic::Create))));
-	visualElementFactory_->addAssetType(PictureGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
-	visualElementFactory_->addAssetType(RandomlyFilledGridGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
-	visualElementFactory_->addAssetType(TextGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
-	visualElementFactory_->addAssetType(OperatorInfoGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorInfoGraphic::Create))));
+	//AddDefinableObjectFactory("VisualElement",visualElementFactory_);
+	////For the sake of cleanliness, we should probably have a StimulusContainer class that adds all of the following.
+	////functionally, there is no problem with just adding them here.
+	//visualElementFactory_->addAssetType(ArrowGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
+	//visualElementFactory_->addAssetType(BoxGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
+	//visualElementFactory_->addAssetType(DiamondGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DiamondGraphic::Create))));
+	//visualElementFactory_->addAssetType(CircleGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
+	//visualElementFactory_->addAssetType(EllipseGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	//visualElementFactory_->addAssetType(ShapeShifterGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
+	//visualElementFactory_->addAssetType(TokenTrayGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenTrayGraphic::Create))));
+	//visualElementFactory_->addAssetType(LineGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	//visualElementFactory_->addAssetType(GridGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(GridGraphic::Create))));
+	//visualElementFactory_->addAssetType(PictureGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
+	//visualElementFactory_->addAssetType(RandomlyFilledGridGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
+	//visualElementFactory_->addAssetType(TextGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
+	//visualElementFactory_->addAssetType(OperatorInfoGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorInfoGraphic::Create))));
 
-	AddDefinableObjectFactory("ControlTarget",controlTargetFactory_);
-	controlTargetFactory_->addAssetType("CircleTarget",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleTarget::Create))));
-	controlTargetFactory_->addAssetType("RectTarget",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RectTarget::Create))));
+	//AddDefinableObjectFactory("ControlTarget",controlTargetFactory_);
+	//controlTargetFactory_->addAssetType("CircleTarget",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleTarget::Create))));
+	//controlTargetFactory_->addAssetType("RectTarget",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RectTarget::Create))));
 
-	AddDefinableObjectFactory("AudioElement",audioElementFactory_);
-	audioElementFactory_->addAssetType("AudioElement",
-		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
+	//AddDefinableObjectFactory("AudioElement",audioElementFactory_);
+	//audioElementFactory_->addAssetType("AudioElement",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
 
-	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
-	outputSignalFactory_->addAssetType("DigitalOutput",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
+	//AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
+	//outputSignalFactory_->addAssetType("DigitalOutput",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
 
-	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
-	outputSignalFactory_->addAssetType("BinaryDataOutput",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BinaryDataOutput::Create))));
+	//AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
+	//outputSignalFactory_->addAssetType("BinaryDataOutput",
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BinaryDataOutput::Create))));
 
 
 }
@@ -403,6 +404,31 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	if(!Scriptable::validateObject(xmlStreamReader))
 		return false;
 	
+	//Check Script Syntax
+	//First try to initialize scripting.  Since we'll need useful feedback from this, DO IT LATER
+
+	QMap<QString,QPair<QString,QString>> scriptMap = getScripts();
+	bool scriptsAreOkay = true;
+	for(QMap<QString,QPair<QString,QString>>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
+	{
+		QString scriptTag = it.value().second;
+		QString script = propertyContainer_->getPropertyValue(scriptTag).toString();
+		QString function = "function " + it.key() + "("+it.value().first+") { " + script + "\n}";
+		QScriptSyntaxCheckResult res = QScriptEngine::checkSyntax(function);
+		if(res.state() != QScriptSyntaxCheckResult::Valid)
+		{
+			QString errorMessage = QString("Syntax Error in \"%1\"(Line:%2)")
+				.arg(scriptTag)
+				.arg(res.errorLineNumber())
+				.arg(res.errorMessage());
+			if(res.errorMessage().size())
+				errorMessage.append(" : " + res.errorMessage());
+			addError(errorMessage);
+			scriptsAreOkay = false;
+		}
+		if(!scriptsAreOkay)
+			return false;
+	}
 	//We were checking whether multiple scriptables had the same name below.  This wasn't a complete
 	//check though because we didn't check scriptable names from our children against scriptable names
 	//that are also in scope from above us.  In any event, when we implement script validation, we should

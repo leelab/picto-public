@@ -19,17 +19,17 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 	QString errors = "";
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(DesignRootText));
 	pictoData_ = QSharedPointer<PictoData>(PictoData::Create().staticCast<PictoData>());
-	while(!xmlReader->isStartElement() && (xmlReader->name() != pictoData_->assetType()) && !xmlReader->atEnd()) 
+	while(!xmlReader->isStartElement() && (xmlReader->name() != pictoData_->identifier()) && !xmlReader->atEnd()) 
 		xmlReader->readNext();
 	if(xmlReader->atEnd())
 	{
-		lastError_.details = "Could not find " + pictoData_->assetType() + " in DesignRoot Text.";
+		lastError_.details = "Could not find " + pictoData_->identifier() + " in DesignRoot Text.";
 		lastError_.name = "XML Parsing Error                                      ";
 		return false;
 	}
 
 	compiled_ = false;
-	bool res = pictoData_->fromXml(xmlReader,false);
+	bool res = pictoData_->fromXml(xmlReader);
 	if(!res)
 	{
 		errors = "DesignRoot Text Error\n"+Serializable::getErrors();
@@ -196,13 +196,13 @@ void DesignRoot::refreshFromXml()
 	QString errors = "";
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(text));
 	pictoData_ = QSharedPointer<PictoData>(PictoData::Create().staticCast<PictoData>());
-	while(!xmlReader->isStartElement() && (xmlReader->name() != pictoData_->assetType()) && !xmlReader->atEnd()) 
+	while(!xmlReader->isStartElement() && (xmlReader->name() != pictoData_->identifier()) && !xmlReader->atEnd()) 
 		xmlReader->readNext();
 	if(xmlReader->atEnd())
 	{
-		Q_ASSERT_X(false,"DesignRoot::refreshFromXml","Could not find " + pictoData_->assetType().toLatin1() + " in DesignRoot Text.");
+		Q_ASSERT_X(false,"DesignRoot::refreshFromXml","Could not find " + pictoData_->identifier().toLatin1() + " in DesignRoot Text.");
 	}
-	bool res = pictoData_->fromXml(xmlReader,false);
+	bool res = pictoData_->fromXml(xmlReader);
 	if(!res)
 	{
 		pictoData_.clear();

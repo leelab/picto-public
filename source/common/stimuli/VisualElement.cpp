@@ -1,6 +1,7 @@
 #include <QScriptValue>
 
 #include "VisualElement.h"
+#include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -15,6 +16,10 @@ VisualElement::VisualElement(QPoint position, QColor color) :
 	AddDefinableProperty(QVariant::Bool,"Visible",true);
 	AddDefinableProperty(QVariant::Bool,"OperatorView",true);
 	AddDefinableProperty(QVariant::Bool,"SubjectView",true);
+
+	//As of version 0.0.1, we have removed the Dimensions properties from all VisualElements
+	//and replaced them with Size properties.  See upgradeVersion() for details.
+	AddDefinableObjectFactory("Dimensions",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
 
 VisualElement::~VisualElement()
@@ -77,6 +82,48 @@ void VisualElement::setScalable(bool scalable)
 {
 	scalable_ = scalable;
 }
+
+void VisualElement::upgradeVersion(QString deserializedVersion)
+{
+	OutputElement::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.1")
+	{
+		//As of version 0.0.1, we have removed the Dimensions properties from all VisualElements
+		//and replaced them with Size properties.  We take advantage of the fact that the x,y
+		//properties of the Dimensions rectangle were never used so we can just throw them out.
+
+		//Get the old obsolete Dimensions Rect property
+		QList<QSharedPointer<Asset>> oldRectProps = getGeneratedChildren("Dimensions");
+		//Get the new Size property
+		QList<QSharedPointer<Asset>> newSizeProps = getGeneratedChildren("Size");
+		if(oldRectProps.size() && newSizeProps.size())
+		{
+			Q_ASSERT((oldRectProps.size() == 1) && (newSizeProps.size() == 1));
+			QSharedPointer<ObsoleteAsset> oldRectProp = oldRectProps.first().staticCast<ObsoleteAsset>();
+			QSharedPointer<Property> newSizeProp = newSizeProps.first().staticCast<Property>();
+			//Try getting the old rect from the two methods of serializing it that were used, attributes and string
+			QStringList rectStringVals;
+			if(oldRectProp->getAttributeValue("x").isEmpty())
+			{
+				rectStringVals = oldRectProp->getValue().split(",");
+			}
+			else
+			{
+				rectStringVals << oldRectProp->getAttributeValue("x") 
+					<< oldRectProp->getAttributeValue("y") 
+					<< oldRectProp->getAttributeValue("width") 
+					<< oldRectProp->getAttributeValue("height");
+			}
+			Q_ASSERT(rectStringVals.size() == 4);
+			QRect oldRect(	rectStringVals[0].toInt(),
+							rectStringVals[1].toInt(),
+							rectStringVals[2].toInt(),
+							rectStringVals[3].toInt());
+			newSizeProp->setValue(QSize(oldRect.width(),oldRect.height()));
+		}
+	}
+}
+
 void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface)
 {
 	compositingSurface->convertImage(image_);

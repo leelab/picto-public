@@ -73,6 +73,7 @@ public:
 	bool getReacqAllowed(){return propertyContainer_->getPropertyValue("ReacquisitionAllowed").toInt();};
 	void setReacqAllowed(bool allowed){propertyContainer_->setPropertyValue("ReacquisitionAllowed",allowed);};
 
+	virtual QString friendlyTypeName(){return "Target Controller";};
 public slots:
 	bool userOnTarget();
 	bool userEnteredTarget();

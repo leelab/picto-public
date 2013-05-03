@@ -40,7 +40,7 @@ public:
 	void setScript(QString script);
 
 	virtual QString getUITemplate(){return "ScriptElement";};
-	virtual QString assetType(){return "ScriptElement";};
+	virtual QString friendlyTypeName(){return "Script Element";};
 
 	//DataStore functions
 //	bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

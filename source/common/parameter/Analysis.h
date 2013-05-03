@@ -21,7 +21,7 @@ public:
 	Analysis();
 	virtual ~Analysis(){};
 	static QSharedPointer<Asset> Create();
-	virtual QString assetType(){return "Analysis";};
+	virtual QString friendlyTypeName(){return "Analysis";};
 
 	ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION
 

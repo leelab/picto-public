@@ -11,12 +11,12 @@ EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 {
 	AddDefinableProperty(QVariant::Bool,"Outline",false);
 	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
-	AddDefinableProperty(QVariant::Rect,"Dimensions",dimensions);
+	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 	//propertyContainer_->setContainerName(type);
 
 	//propertyContainer_->setPropertyValue("Position",position);
 
-	//propertyContainer_->addProperty(QVariant::Rect,"Dimensions",dimensions);
+	//propertyContainer_->addProperty(QVariant::Size,"Size",dimensions.size());
 
 	//propertyContainer_->setPropertyValue("Color",color);
 
@@ -31,7 +31,7 @@ EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 
 void EllipseGraphic::draw()
 {
-	QRect dimensions = propertyContainer_->getPropertyValue("Dimensions").toRect();
+	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);

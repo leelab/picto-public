@@ -46,8 +46,9 @@ public:
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
 	bool jumpToState(QStringList path, QString state);
+	virtual bool hasEditableDescendants(){return true;};
 	virtual QString getUITemplate(){return "Task";};
-	virtual QString assetType(){return "Task";};
+	virtual QString friendlyTypeName(){return "Task";};
 	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
 

@@ -146,7 +146,7 @@ bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	if(!getGeneratedChildren("Option").size())
 	{
 		QString errMsg = QString("A Choice Parameter must contain at least one option");
-		addError("ChoiceParameter", errMsg,xmlStreamReader);
+		addError(errMsg);
 		return false;
 	}
 	return true;
