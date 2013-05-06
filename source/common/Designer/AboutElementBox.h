@@ -2,6 +2,7 @@
 #define AboutElementBox_H
 #include "EditorState.h"
 #include "SearchableTextEdit.h"
+#include "AssetDescriber.h"
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -17,9 +18,11 @@ public:
    virtual ~AboutElementBox(){};
 public slots:
 	void assetSelected(QSharedPointer<Asset> asset);
+	void elementOfInterestChanged(QString className, QString friendlyName);
 
 private:
 	QSharedPointer<EditorState> editorState_;
+	QSharedPointer<AssetDescriber> assetDescriber_;
 
 private slots:
 	void searchRequested(SearchRequest searchRequest);

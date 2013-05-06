@@ -230,12 +230,22 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	QString currElementName;
 	QString nextElementName;
 
+	QString result;
 	if(!ignoreInitialElement_)
 	{
 		//currElementName = propertyContainer_->getPropertyValue("InitialElement").toString();
-		currElementName = initTransition_->getDestination();
-		currElement_ = elements_.value(currElementName).staticCast<StateMachineElement>();
-		engine->addStateTransitionForServer(initTransition_);
+		currElement_.clear();
+		QString initDestination = initTransition_->getDestination();
+		if(elements_.contains(initDestination))
+		{
+			currElementName = initDestination;
+			currElement_ = elements_.value(initDestination).staticCast<StateMachineElement>();
+		}
+		else
+		{
+			Q_ASSERT(results_.contains(initDestination));
+			nextElementName = initDestination;
+		}
 	}
 	else
 	{
@@ -243,16 +253,22 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		ignoreInitialElement_ = false;
 	}
 
-	Q_ASSERT(currElement_);
-	QString result;
 	//run the entry script
 	runEntryScript();
+	//Add the transition to the server
+	//Note: Up until DesignSyntax 0.0.1, Picto version 1.0.12, the addStateTransitionForServer was called
+	//before runEntryScript().  This is a problem because whenever we see a transition in the session
+	//file we will follow it with AnalysisScript before continuing to the results of the EntryScript
+	//of the transition destination.  Since this would actually occur in old version BEFORE the transition
+	//parent's entry script was called, things will be out of order.  We will need to keep this in
+	//mind when analyzing old experiments.
+	engine->addStateTransitionForServer(initTransition_);
 	while(true)
 	{
 		
 		
 		//If we're about to dive into another state machine we need to set it's path
-		if(currElement_->inherits("Picto::StateMachine"))
+		if(currElement_ && currElement_->inherits("Picto::StateMachine"))
 		{
 			currElement_.staticCast<StateMachine>()->setPath(path_);
 		}
@@ -264,28 +280,32 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		//		dataChan->processResponses(2000);
 		//}
 		
-		result = currElement_->run(engine);
+		if(currElement_)
+		{
+			result = currElement_->run(engine);
 
-		if(result == "EngineAbort")
-			break;
+			if(result == "EngineAbort")
+				break;
 		
 
-		//Find the transition from our current source with a SourceResult string that matches the result
-		//Yeah, this is kind of ugly...
-		nextElementName = "";
-		bool foundTransition = false;
-		foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
-		{
-			if(tran->getSourceResult() == result)
+			//Find the transition from our current source with a SourceResult string that matches the result
+			//Yeah, this is kind of ugly...
+			nextElementName = "";
+			bool foundTransition = false;
+			foreach(QSharedPointer<Transition> tran, transitions_.values(currElementName))
 			{
-				nextElementName = tran->getDestination();
-				engine->addStateTransitionForServer(tran);
-				//sendStateDataToServer(tran, engine);
-				foundTransition = true;
-				break;
+				if(tran->getSourceResult() == result)
+				{
+					nextElementName = tran->getDestination();
+					engine->addStateTransitionForServer(tran);
+					//sendStateDataToServer(tran, engine);
+					foundTransition = true;
+					break;
+				}
 			}
+			Q_ASSERT(foundTransition);
 		}
-		Q_ASSERT(foundTransition);
+
 		// If we transitioned to a result, then we're done and should return that result
 		if(results_.contains(nextElementName))
 		{

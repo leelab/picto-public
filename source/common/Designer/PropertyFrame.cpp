@@ -4,6 +4,7 @@
 #include "PropertyFrame.h"
 #include "../common/storage/PropertyDataUnit.h"
 #include "../common/storage/datastore.h"
+#include "../parameter/Parameter.h"
 #include "../common/memleakdetect.h"
 using namespace Picto;
 
@@ -165,6 +166,17 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 void PropertyFrame::propertyEdited(QSharedPointer<Property> prop,QVariant val)
 {
 	setWidget(mainWidget_);
+	QSharedPointer<Asset> propParent = prop->getParentAsset();
+	QSharedPointer<Parameter> paramParent = propParent.dynamicCast<Parameter>();
+	if(paramParent)
+	{
+		if(!paramParent->valuesAreValid())
+		{
+			paramParent->fixValues();
+			return;
+		}
+	}
+	
 	//Send it to director
 	emit parameterMessageReady(prop);
 }

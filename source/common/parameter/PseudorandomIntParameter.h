@@ -43,10 +43,12 @@ public:
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
+	virtual bool valuesAreValid(QString& warning = QString());
+	virtual void fixValues();
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool fixValues(QString& warning);
 
 private:
 	void checkForPropertyChanges();

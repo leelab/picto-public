@@ -43,35 +43,18 @@ public:
 
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
-	//DataStore functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-
-	void setMin(int min);
-	void setMax(int max);
-	void setIncrement(int increment) {increment_ = increment; }
-	void setUnits(QString units) { units_ = units; };
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
-	void increment() { currentValue_ += increment_; };
-	void decrement() { currentValue_ -= increment_; };
+	virtual QString friendlyTypeName(){return "Integer Range";};
 
-	virtual QString friendlyTypeName(){return "Range";};
+	virtual bool valuesAreValid(QString& warning = QString());
+	virtual void fixValues();
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool fixValues(QString& warning);
-
-private:
-	void updateFromProperties();
-	int maxValue_;
-	int minValue_;
-	int currentValue_;
-	int increment_;
-	int value_;
-	QString units_;
 
 };
 

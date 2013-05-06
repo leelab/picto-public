@@ -82,18 +82,31 @@ void ScriptController::upgradeVersion(QString deserializedVersion)
 		Q_ASSERT(resultKids.size() ==  1);
 		//Change the name of the "Done" result to "true"
 		resultKids.first().staticCast<UIEnabled>()->setName("true");
+
+
+		//Before 0.0.1, newClick on operatorClick info had the effect of reading out the current
+		//"clicked" value, and also resetting it.  In 0.0.1, we changed it such that the user
+		//must reset it manually.  Since there aren't too many experiments yet, we know how and
+		//where this script was used and we are changing operatorClick.newClick to 
+		//(operatorClick.newClick && !(operatorClick.newClick = false)) in all places that it was
+		//used.
+		QString frameScript = propertyContainer_->getPropertyValue("Script").toString();
+		frameScript.replace("operatorClick.newClick","(operatorClick.newClick && !(operatorClick.newClick = false))");
+		propertyContainer_->setPropertyValue("Script",frameScript);
+
+
 	}
 }
 
 QString ScriptController::getReturnValueError(QString scriptName,const QScriptValue& returnValue)
 {
 	QString resultError = "";
-	//if(Property::valueWasChanged())
-	//	resultError = QString("The Script in Switch Element: \"%1\" caused the property value: \"%2\" to change.\n"
-	//		"The Switch element Script should be used to select the result where contol flow needs to continue.\n"
-	//		"Scripts that affect the experimental state should only be in Entry, Exit, or Frame Scripts.")
-	//		.arg(getName())
-	//		.arg(Property::changedValueName());
+	if(Property::valueWasChanged())
+		resultError = QString("The Script in Switch Element: \"%1\" caused the property value: \"%2\" to change.\n"
+			"The Switch element Script should be used to select the result where contol flow needs to continue.\n"
+			"Scripts that affect the experimental state should only be in Entry, Exit, or Frame Scripts.")
+			.arg(getName())
+			.arg(Property::changedValueName());
 	if(resultError.isEmpty())
 	{
 		resultError = ControlElement::getReturnValueError(scriptName,returnValue);
@@ -104,6 +117,7 @@ QString ScriptController::getReturnValueError(QString scriptName,const QScriptVa
 void ScriptController::postDeserialize()
 {
 	ControlElement::postDeserialize();
+	propertyContainer_->getProperty("UIEnabled")->setVisible(false);
 }
 
 bool ScriptController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

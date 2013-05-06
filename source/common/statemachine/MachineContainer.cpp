@@ -1,5 +1,9 @@
 #include "MachineContainer.h"
+#include "../variable/Var.h"
+#include "../variable/VarList.h"
+#include "../variable/VarMap.h"
 #include "../parameter/BooleanParameter.h"
+#include "../parameter/ColorParameter.h"
 #include "../parameter/ChoiceParameter.h"
 #include "../parameter/NumericParameter.h"
 #include "../parameter/RangeParameter.h"
@@ -19,6 +23,7 @@ using namespace Picto;
 MachineContainer::MachineContainer(QString transitionTag, QString elementTag)
 :
 parameterFactory_(new AssetFactory(0,-1)),
+variableFactory_(new AssetFactory(0,-1)),
 controlTargetFactory_(new AssetFactory(0,-1)),
 transitionTag_(transitionTag),
 elementTag_(elementTag),
@@ -29,9 +34,19 @@ addingTransition_(false)
 	elementFactory_ = QSharedPointer<AssetFactory>(new AssetFactory(0,-1));
 	AddDefinableObjectFactory(elementTag_,elementFactory_);
 
+	AddDefinableObjectFactory("Variable",variableFactory_);
+	variableFactory_->addAssetType("Var",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Var::Create))));
+	variableFactory_->addAssetType("VarList",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(VarList::Create))));
+	variableFactory_->addAssetType("VarMap",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(VarMap::Create))));
+
 	AddDefinableObjectFactory("Parameter",parameterFactory_);
 	parameterFactory_->addAssetType("Boolean",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
+	parameterFactory_->addAssetType("Color",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ColorParameter::Create))));
 	//parameterFactory_->addAssetType("Choice",
 	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
 	parameterFactory_->addAssetType("Numeric",
@@ -120,6 +135,7 @@ void MachineContainer::addElement(QSharedPointer<ResultContainer> element)
 void MachineContainer::postDeserialize()
 {
 	OutputElementContainer::postDeserialize();
+	propertyContainer_->getProperty("UIEnabled")->setVisible(false);
 	updateListsFromChildren();
 
 	//If we add a new child after deserialization (ie. In the State Machine Editor), we'll need to update the element and transition lists.

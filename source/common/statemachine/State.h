@@ -57,6 +57,8 @@ public:
 	void setBlue(int b){QColor val = getColor(); val.setBlue(b);setColor(val);};
 	void setAlpha(int a){QColor val = getColor(); val.setAlpha(a);setColor(val);};
 
+	virtual void upgradeVersion(QString deserializedVersion);
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

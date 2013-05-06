@@ -252,6 +252,7 @@ void Task::postDeserialize()
 	{
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
 	}
+	propertyContainer_->getProperty("UIEnabled")->setVisible(false);
 }
 
 bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

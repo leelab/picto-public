@@ -53,13 +53,13 @@ public:
 	void setValue(QString val){propertyContainer_->setPropertyValue("Value",val);};
 
 	virtual QString friendlyTypeName(){return "Choice";};
-	//virtual bool equalTo(Parameter& RHS);
-	//virtual bool equalTo(QVariant& RHS);
+	
+	virtual bool valuesAreValid(QString& warning = QString());
+	virtual void fixValues();
 
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool fixValues(QString& warning);
 
 private:
 	QMap<QString,ChoiceParameterOption> options_;

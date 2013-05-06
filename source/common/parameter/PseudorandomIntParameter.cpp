@@ -113,32 +113,51 @@ bool PseudorandomIntParameter::validateObject(QSharedPointer<QXmlStreamReader> x
 	return true;
 }
 
-bool PseudorandomIntParameter::fixValues(QString&)
+bool PseudorandomIntParameter::valuesAreValid(QString& warning)
 {
-	bool returnVal = true;
-	int min = propertyContainer_->getPropertyValue("Min").toInt();
-	int max = propertyContainer_->getPropertyValue("Max").toInt();
-	int value = propertyContainer_->getPropertyValue("Value").toInt();
+	int min = propertyContainer_->getProperty("Min")->initValue().toInt();
+	int max = propertyContainer_->getProperty("Max")->initValue().toInt();
+	int value = propertyContainer_->getProperty("Value")->initValue().toInt();
 	if(min > max)
 	{
-		min = max;
-		propertyContainer_->setPropertyValue("Min",min);
-		returnVal = false;
+		warning = "'Min' value must be less than or equal to 'Max' value.";
+		return false;
 	}
 
 	if(value < min)
 	{
+		warning = "'Value' is less than 'Min'.";
+		return false;
+	}
+	if(value > max)
+	{
+		warning = "'Value' is greater than than 'Max'.";
+		return false;
+	}
+	return true;
+}
+
+void PseudorandomIntParameter::fixValues()
+{
+	int min = propertyContainer_->getProperty("Min")->initValue().toInt();
+	int max = propertyContainer_->getProperty("Max")->initValue().toInt();
+	int value = propertyContainer_->getProperty("Value")->initValue().toInt();
+	if(min > max)
+	{
+		min = max;
+		propertyContainer_->getProperty("Min")->setInitValue(min);
+		propertyContainer_->getProperty("Value")->setInitValue(min);
+	}
+	if(value < min)
+	{
 		value = min;
-		propertyContainer_->setPropertyValue("Value",value);
-		returnVal = false;
+		propertyContainer_->getProperty("Value")->setInitValue(value);
 	}
 	if(value > max)
 	{
 		value = max;
-		propertyContainer_->setPropertyValue("Value",value);
-		returnVal = false;
+		propertyContainer_->getProperty("Value")->setInitValue(value);
 	}
-	return returnVal;
 }
 
 void PseudorandomIntParameter::checkForPropertyChanges()

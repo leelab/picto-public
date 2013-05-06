@@ -102,6 +102,8 @@ HEADERS += $$(PICTO_TREE)/source/common/designer/AboutElementBox.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/AboutElementBox.cpp
 HEADERS += $$(PICTO_TREE)/source/common/designer/arrow.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/arrow.cpp
+HEADERS += $$(PICTO_TREE)/source/common/designer/AssetDescriber.h
+SOURCES += $$(PICTO_TREE)/source/common/designer/AssetDescriber.cpp
 HEADERS += $$(PICTO_TREE)/source/common/designer/Copier.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/Copier.cpp
 HEADERS += $$(PICTO_TREE)/source/common/designer/diagramitem.h
@@ -285,6 +287,8 @@ HEADERS += $$(PICTO_TREE)/source/common/parameter/Parameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/Parameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/BooleanParameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/BooleanParameter.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/ColorParameter.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/ColorParameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/OperatorClickParameter.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/OperatorClickParameter.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/SignalValueParameter.h
@@ -609,6 +613,15 @@ SOURCES += $$(PICTO_TREE)/source/common/timing/TimedMessageBox.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/update/UpdateDownloader.h
 SOURCES += $$(PICTO_TREE)/source/common/update/UpdateDownloader.cpp
+
+HEADERS += $$(PICTO_TREE)/source/common/variable/Variable.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/Variable.cpp
+HEADERS += $$(PICTO_TREE)/source/common/variable/Var.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/Var.cpp
+HEADERS += $$(PICTO_TREE)/source/common/variable/VarList.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/VarList.cpp
+HEADERS += $$(PICTO_TREE)/source/common/variable/VarMap.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/VarMap.cpp
 
 win32 {
 

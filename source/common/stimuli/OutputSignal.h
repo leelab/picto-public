@@ -14,7 +14,6 @@ namespace Picto {
 struct PICTOLIB_CLASS OutputSignal : public OutputElement
 {
 	Q_OBJECT
-	Q_PROPERTY(QString port READ getPort WRITE setPort)
 	Q_PROPERTY(bool enabled READ getEnabled WRITE setEnabled)
 public:
 	OutputSignal();

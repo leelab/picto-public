@@ -30,6 +30,7 @@ QString SwitchElement::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
 	runEntryScript();
+	Property::startMonitoringForValueChange();
 	QScriptValue returnVal = QScriptValue(false);
 	runScript(getName().simplified().remove(' '),returnVal);
 	QString resultString = returnVal.toString();
@@ -54,6 +55,13 @@ QString SwitchElement::getReturnValueError(QString scriptName,const QScriptValue
 		return "";
 
 	QString resultError = "";
+	if(Property::valueWasChanged())
+		resultError = QString("The Script in Switch Element: \"%1\" caused the property value: \"%2\" to change.\n"
+			"The Switch element Script should be used to select the result where contol flow needs to continue.\n"
+			"Scripts that affect the experimental state should only be in Entry, Exit, or Frame Scripts.")
+			.arg(getName())
+			.arg(Property::changedValueName());
+
 	if(getResult(returnValue.toString()).isNull())
 		resultError = QString("The Script in Switch Element: \"%1\" returned a value: \"%2\" that was not in its results list.\n")
 		.arg(getName())
@@ -68,6 +76,7 @@ QString SwitchElement::getReturnValueError(QString scriptName,const QScriptValue
 void SwitchElement::postDeserialize()
 {
 	StateMachineElement::postDeserialize();
+	propertyContainer_->getProperty("UIEnabled")->setVisible(false);
 }
 
 bool SwitchElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

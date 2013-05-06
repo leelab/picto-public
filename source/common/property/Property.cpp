@@ -58,7 +58,6 @@ void Property::setName(QString name)
 
 QVariant Property::initValue()
 {
-	Q_ASSERT_X(runMode_,"Property::initValue","Init values should only be read in run mode");
 	return initValuePrivate();
 }
 

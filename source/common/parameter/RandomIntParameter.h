@@ -38,14 +38,13 @@ public:
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
 	virtual QString friendlyTypeName(){return "Random Int";};
-	//DataStore functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	
+	virtual bool valuesAreValid(QString& warning = QString());
+	virtual void fixValues();
 
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool fixValues(QString& warning);
 
 private:
 	void checkForPropertyChanges();

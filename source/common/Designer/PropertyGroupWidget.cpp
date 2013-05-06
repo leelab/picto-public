@@ -10,7 +10,8 @@ PropertyGroupWidget::PropertyGroupWidget(bool trackInitVals, QSharedPointer<Edit
 	QWidget(parent),
 	mainWidget_(NULL),
 	propertyFactory_(new PropertyEditorFactory(editorState)),
-	trackInitVals_(trackInitVals)
+	trackInitVals_(trackInitVals),
+	browser_(NULL)
 {
 	connect(propertyFactory_.data(), SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
         this, SLOT(propertyWasEdited(QSharedPointer<Property>,QVariant)));
@@ -34,9 +35,9 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 		layout()->addWidget(mainWidget_);
 	}
 	//Create a PropertyBrowser for these properties and set it up
-	QtButtonPropertyBrowser* browser = new QtButtonPropertyBrowser();
+	browser_ = new QtButtonPropertyBrowser();
 	QtVariantPropertyManager* propManager(new QtVariantPropertyManager(mainWidget_));
-	browser->setFactoryForManager(propManager, propertyFactory_.data());
+	browser_->setFactoryForManager(propManager, propertyFactory_.data());
 	//Add each Property to the property browser one by one
 	foreach(QSharedPointer<Property> prop,props)
 	{
@@ -44,14 +45,14 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 		bool scriptProp = (propName == "EntryScript" || propName == "FrameScript" || propName == "ExitScript"
 			|| propName == "AnalysisEntryScript" || propName == "AnalysisFrameScript" || propName == "AnalysisExitScript");
 		if(scriptProp)
-			addScriptProperty(prop,propManager,browser);
+			addScriptProperty(prop,propManager,browser_);
 		else
-			addProperty(prop,propManager,browser);
+			addProperty(prop,propManager,browser_);
 	}
 
 	//Add the newly created browser to a layout
 	QVBoxLayout* browserLayout = new QVBoxLayout();
-	browserLayout->addWidget(browser);
+	browserLayout->addWidget(browser_);
 	browserLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);//This makes sure resizing of internal widgets is handled correctly
 	
 	//Create a box to contain the browser, titled with the input title
@@ -86,7 +87,7 @@ void PropertyGroupWidget::clear()
 
 }
 
-void PropertyGroupWidget::addProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtButtonPropertyBrowser* browser)
+void PropertyGroupWidget::addProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtAbstractPropertyBrowser* browser)
 {
 	int propertyType = prop->type();
 	if(propertyType == PropertyContainer::enumTypeId())
@@ -108,7 +109,7 @@ void PropertyGroupWidget::addProperty(QSharedPointer<Property> prop,QtVariantPro
 	propToQtPropHash_[prop.data()] = QPair<QtVariantProperty*,QSharedPointer<Property>>(item,prop);
 }
 
-void PropertyGroupWidget::addScriptProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtButtonPropertyBrowser* browser)
+void PropertyGroupWidget::addScriptProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtAbstractPropertyBrowser* browser)
 {
 	QtVariantProperty *groupItem = NULL;
 	QtVariantProperty *item = NULL;
@@ -120,7 +121,8 @@ void PropertyGroupWidget::addScriptProperty(QSharedPointer<Property> prop,QtVari
 	QtBrowserItem* browserItem = browser->addProperty(groupItem);
 	if(!item->value().toString().trimmed().isEmpty())
 	{	//When first opening scripts in a property bar, if they have contents, expand them.
-		browser->setExpanded(browserItem,true);
+		Q_ASSERT(dynamic_cast<QtButtonPropertyBrowser*>(browser));
+		dynamic_cast<QtButtonPropertyBrowser*>(browser)->setExpanded(browserItem,true);
 	}
 	if(trackInitVals_)
 		connect(prop.data(),SIGNAL(initValueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
@@ -150,5 +152,7 @@ void PropertyGroupWidget::propertyWasEditedExternally(Property* prop,QVariant va
 {
 	Q_ASSERT(propToQtPropHash_.contains(prop));
 	QtVariantProperty *qtProp = propToQtPropHash_.value(prop).first;
+	Q_ASSERT(browser_);
+	browser_->setCurrentItem(NULL);
 	qtProp->setValue(val);
 }

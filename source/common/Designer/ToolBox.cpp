@@ -38,6 +38,7 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 	//insertItem(0,toolGroups_.front(),tr("Properties"));
 	QStringList filters;
 	addToolGroup(QStringList() <<"Result"<<"StateMachineElement"<<"ControlElement"<<"Task","State Machine Elements",asset); 
+	addToolGroup(QStringList() <<"Variable","Variables",asset);
 	addToolGroup(QStringList() <<"Parameter","Parameters",asset);
 	addToolGroup(QStringList() <<"ControlTarget"<<"ScriptFunction","Logic Elements",asset);
 	addToolGroup(QStringList() <<"VisualElement"<<"OutputSignal","Stimulus Elements",asset);

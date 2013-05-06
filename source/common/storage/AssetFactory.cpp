@@ -73,11 +73,14 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 			{
 				uITemplate_ = returnVal.staticCast<UIEnabled>()->getUITemplate();
 				generatedAssetTypeName_ = returnVal.staticCast<UIEnabled>()->friendlyTypeName();
+				assetClassName_ = returnVal->metaObject()->className();
+				assetClassName_.replace("Picto::","");
 			}
 			else
 			{
 				generatedAssetTypeName_ = "";
 				uITemplate_ = "";
+				assetClassName_ = "";
 			}
 			uITemplateInitialized_ = true;
 		}
@@ -219,6 +222,18 @@ QString AssetFactory::getGeneratedAssetTypeName(QString type)
 		return factoriesByType_[type]->getGeneratedAssetTypeName("");
 	}
 	return generatedAssetTypeName_;
+}
+
+QString AssetFactory::getGeneratedAssetClassName(QString type)
+{
+	//Call getUITemplate to initialize assetClassName_ and return it.
+	getUITemplate(type);
+	if(isGroupFactory_)
+	{
+		Q_ASSERT_X(factoriesByType_.contains(type),"AssetFactory::getUITemplate","This factory does not contain type: " + type.toLatin1());
+		return factoriesByType_[type]->getGeneratedAssetClassName("");
+	}
+	return assetClassName_;
 }
 
 /*! \brief Decreases the numSourcedAssets counter whenever an asset created by this factory is deleted.

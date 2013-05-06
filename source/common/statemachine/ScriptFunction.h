@@ -34,6 +34,7 @@ public:
 	virtual QString getUITemplate(){return "ScriptFunction";};
 	virtual QString friendlyTypeName(){return "Script Function";};
 	virtual QString getScriptingInfo();
+	virtual void upgradeVersion(QString deserializedVersion);
 
 public slots:
 	//setters and getters are slots so we can bind them to scripts

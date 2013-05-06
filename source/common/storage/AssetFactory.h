@@ -42,6 +42,7 @@ public:
 	void setGeneratedAssets(int numGeneratedAssets){numSourcedAssets_ = numGeneratedAssets;};
 	QString getUITemplate(QString type);
 	QString getGeneratedAssetTypeName(QString type);
+	QString getGeneratedAssetClassName(QString type);
 protected:
 	virtual QSharedPointer<Asset> generateNewAsset();
 private:
@@ -52,6 +53,7 @@ private:
 	const bool isGroupFactory_;
 	QString uITemplate_;
 	QString generatedAssetTypeName_;
+	QString assetClassName_;
 	bool uITemplateInitialized_;
 
 	NewAssetFnPtr newAssetFn_;

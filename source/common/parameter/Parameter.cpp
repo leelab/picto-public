@@ -28,29 +28,34 @@ Parameter::Parameter() :
 //{
 //	return propertyContainer_->getPropertyValue("Value");
 //}
+bool Parameter::valuesAreValid(QString& warning)
+{
+	return true;
+}
+
+void Parameter::fixValues()
+{
+}
+
 
 void Parameter::postDeserialize()
 {
 	Scriptable::postDeserialize();
-	connect(this,SIGNAL(edited()),this,SLOT(valueEdited()));
-	//setInitialValue(propertyContainer_->getPropertyValue("Value"));
-	//reset();
 }
 
-void Parameter::valueEdited()
+bool Parameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(fixingValues_)
-		return;
-	fixingValues_ = true;
+	if(!Scriptable::validateObject(xmlStreamReader))
+		return false;
 	QString warning;
-	if(!fixValues(warning))
+	if(!valuesAreValid(warning))
 	{
-		if(!warning.isEmpty())
-		{
-			//DO SOMETHING!
-		}
+		if(warning.isEmpty())
+			warning = "Invalid property value detected.";
+		addError(warning);
+		return false;
 	}
-	fixingValues_ = false;
+	return true;
 }
 
 }; //namespace Picto

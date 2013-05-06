@@ -38,6 +38,7 @@ struct PICTOLIB_CLASS VisualElement : public OutputElement
 	Q_PROPERTY(int green READ getGreen WRITE setGreen)
 	Q_PROPERTY(int blue READ getBlue WRITE setBlue)
 	Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
+	Q_PROPERTY(QVariant color READ getColor WRITE setColor)
 public:
 	VisualElement(QPoint position=QPoint(), QColor color=QColor());
 	virtual ~VisualElement();
@@ -59,6 +60,7 @@ public:
 
 	QColor getColor();
 	void setColor(QColor color);
+	void setColor(QVariant color);
 
 	void setLayer(int layer) { propertyContainer_->setPropertyValue("Layer",layer); };
 	int getLayer() { return propertyContainer_->getPropertyValue("Layer").toInt(); }

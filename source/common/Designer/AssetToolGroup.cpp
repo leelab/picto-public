@@ -81,7 +81,16 @@ void AssetToolGroup::doButtonAction(int buttonId)
 	if(buttonId >= elemInfo_.size())
 		return;
 	if(getEditorState()->getEditMode() != EditorState::DrawLine)
-		getEditorState()->setInsertionItem(elemInfo_[buttonId].tag,elemInfo_[buttonId].type,getButtonPixmap(buttonId));
+	{
+		QString className = "";
+		QString friendlyName = "";
+		if(elemInfo_[buttonId].assetFactory)
+		{
+			className = elemInfo_[buttonId].assetFactory->getGeneratedAssetClassName(elemInfo_[buttonId].type);
+			friendlyName  = elemInfo_[buttonId].assetFactory->getGeneratedAssetTypeName(elemInfo_[buttonId].type);
+		}
+		getEditorState()->setInsertionItem(className,friendlyName,elemInfo_[buttonId].tag,elemInfo_[buttonId].type,getButtonPixmap(buttonId));
+	}
 	else
 		disableButtonActions();
 }

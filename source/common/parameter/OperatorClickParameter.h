@@ -34,8 +34,11 @@ public:
 	void setX(int){};
 	int getY(){propertyContainer_->setPropertyValue("NewClick",false);return propertyContainer_->getPropertyValue("Pos").toPoint().y();};
 	void setY(int){};
-	bool getNewClick(){bool r = propertyContainer_->getPropertyValue("NewClick").toBool();propertyContainer_->setPropertyValue("NewClick",false);return r;};
-	void setNewClick(bool){};
+	//As of syntax version 0.0.1 we are changing getNewClick such that it doesn't update the value of NewClick.  This means that older
+	//experiments will need to use OperatorClickParameter.newClick and then reset it with OperatorClickParameter.newClick = false, in
+	//order to continue to function properly.
+	bool getNewClick(){return propertyContainer_->getPropertyValue("NewClick").toBool();};
+	void setNewClick(bool value){propertyContainer_->setPropertyValue("NewClick",value);};
 	void setLastClick(QPoint point);
 	static void addClick(QPoint point);
 

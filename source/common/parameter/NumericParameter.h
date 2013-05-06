@@ -45,7 +45,7 @@ public:
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
-	virtual QString friendlyTypeName(){return "Numeric";};
+	virtual QString friendlyTypeName(){return "Integer";};
 	//note that the lessThan & greaterThan functions aren't redefined, 
 	//so they will always return false
 	//bool greaterThan(Parameter& RHS);

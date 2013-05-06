@@ -152,16 +152,26 @@ bool ChoiceParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	return true;
 }
 
-bool ChoiceParameter::fixValues(QString& warning)
+bool ChoiceParameter::valuesAreValid(QString& warning)
 {
 	Q_ASSERT(options_.size());
-	QString value = propertyContainer_->getPropertyValue("Value").toString();
+	QString value = propertyContainer_->getProperty("Value")->initValue().toString();
 	if(!options_.contains(value))
 	{
-		propertyContainer_->setPropertyValue("Value",options_.begin().key());
+		warning = "Text in 'Value' parameter is not a valid option.";
 		return false;
 	}
 	return true;
+}
+
+void ChoiceParameter::fixValues()
+{
+	Q_ASSERT(options_.size());
+	QString value = propertyContainer_->getProperty("Value")->initValue().toString();
+	if(!options_.contains(value))
+	{
+		propertyContainer_->getProperty("Value")->setInitValue(options_.begin().key());
+	}
 }
 
 }; //namespace Picto

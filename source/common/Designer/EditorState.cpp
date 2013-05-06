@@ -84,7 +84,7 @@ double EditorState::setZoom(double zoom)
 	emit zoomChanged(zoom);
 	return zoom;
 }
-void EditorState::setInsertionItem(QString category, QString type, QPixmap pixmap)
+void EditorState::setInsertionItem(QString className, QString friendlyName, QString category, QString type, QPixmap pixmap)
 {
 	insertItemCategory_ = category;
 	insertItemType_ = type;
@@ -93,7 +93,7 @@ void EditorState::setInsertionItem(QString category, QString type, QPixmap pixma
 		setEditMode(EditorState::PlaceItem);
 	else if(getEditMode() == EditorState::PlaceItem)
 		setEditMode(EditorState::Select);
-	emit insertionItemChanged(category,type);
+	emit insertionItemChanged(className,friendlyName);
 }
 
 //Sets the current asset opened in the editor window to the input asset object

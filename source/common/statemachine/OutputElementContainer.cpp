@@ -19,7 +19,7 @@
 #include "../stimuli/EllipseGraphic.h"
 #include "../stimuli/LineGraphic.h"
 #include "../stimuli/GridGraphic.h"
-#include "../stimuli/PictureGraphic.h"
+//#include "../stimuli/PictureGraphic.h"
 #include "../stimuli/RandomlyFilledGridGraphic.h"
 #include "../stimuli/TextGraphic.h"
 #include "../stimuli/OperatorInfoGraphic.h"
@@ -62,8 +62,8 @@ OutputElementContainer::OutputElementContainer() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
 	visualElementFactory_->addAssetType(GridGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(GridGraphic::Create))));
-	visualElementFactory_->addAssetType(PictureGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
+	//visualElementFactory_->addAssetType(PictureGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
 	visualElementFactory_->addAssetType(RandomlyFilledGridGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
 	visualElementFactory_->addAssetType(TextGraphic::type,

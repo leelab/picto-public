@@ -47,6 +47,7 @@ void Result::runResultScript()
 void Result::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();
+	propertyContainer_->getProperty("UIEnabled")->setVisible(false);
 }
 
 

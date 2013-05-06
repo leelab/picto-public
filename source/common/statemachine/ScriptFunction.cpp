@@ -79,9 +79,27 @@ QString ScriptFunction::getScriptingInfo()
 	return returnVal;
 }
 
+void ScriptFunction::upgradeVersion(QString deserializedVersion)
+{
+	ScriptableContainer::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.1")
+	{
+		//Before 0.0.1, newClick on operatorClick info had the effect of reading out the current
+		//"clicked" value, and also resetting it.  In 0.0.1, we changed it such that the user
+		//must reset it manually.  Since there aren't too many experiments yet, we know how and
+		//where this script was used and we are changing operatorClick.newClick to 
+		//(operatorClick.newClick && !(operatorClick.newClick = false)) in all places that it was
+		//used.
+		QString frameScript = propertyContainer_->getPropertyValue("Script").toString();
+		frameScript.replace("operatorClick.newClick","(operatorClick.newClick && !(operatorClick.newClick = false))");
+		propertyContainer_->setPropertyValue("Script",frameScript);
+	}
+}
+
 void ScriptFunction::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();
+	propertyContainer_->getProperty("UIEnabled")->setVisible(false);
 }
 
 bool ScriptFunction::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

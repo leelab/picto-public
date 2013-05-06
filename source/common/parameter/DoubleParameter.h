@@ -31,10 +31,13 @@ public:
 	void setValue(double val);
 
 	virtual QString friendlyTypeName(){return "Double";};
+
+	virtual bool valuesAreValid(QString& warning = QString());
+	virtual void fixValues();
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	virtual bool fixValues(QString& warning);
 
 private:
 	void checkForPropertyChanges();

@@ -47,7 +47,7 @@ signals:
 	void itemColorChanged(QColor color);
 	void lineColorChanged(QColor color);
 	void backgroundPatternChanged(QPixmap pattern);
-	void insertionItemChanged(QString category, QString type);
+	void insertionItemChanged(QString className,QString friendlyName);
 	void windowItemsLoaded();
 	void windowAssetChanged(QSharedPointer<Asset> asset);
 	void selectedAssetChanged(QSharedPointer<Asset> asset);
@@ -71,7 +71,7 @@ public slots:
 	void setItemColor(const QColor color){itemColor_ = color;emit itemColorChanged(itemColor_);};
 	void setBackgroundPattern(QPixmap pattern){backgroundPattern_ = pattern;emit backgroundPatternChanged(backgroundPattern_);};
 	void setLineColor(const QColor color){lineColor_ = color;emit lineColorChanged(lineColor_);};
-	void setInsertionItem(QString category = "", QString type = "", QPixmap pixmap = QPixmap());
+	void setInsertionItem(QString className = "", QString friendlyName = "", QString category = "", QString type = "", QPixmap pixmap = QPixmap());
 	void setWindowAsset(QSharedPointer<Asset> asset,bool undoable = true);
 	void setWindowAssetToParent();
 	void setWindowItemsLoaded(){emit windowItemsLoaded();};

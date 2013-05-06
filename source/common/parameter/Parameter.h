@@ -38,21 +38,23 @@ public:
 	//QString type();
 	virtual QString friendlyTypeName(){return "Parameter";};
 
+	//Returns true if the parameter values are valid, false otherwise.
+	//If false is returned, a warning message is placed in the warning input.
+	virtual bool valuesAreValid(QString& warning = QString());
+	//Fixes input values to make them valid again.
+	virtual void fixValues();
+
 public slots:
 	//setters and getters are slots so we can bind them to scripts
 
 
 protected:
-	//Returns false if something got changed.  If a warning should be issued, it goes in QString& warning.
-	//If true is returned warning will not be checked.
-	virtual bool fixValues(QString&){return true;};
 	virtual QString defaultTagName(){return "Parameter";};
 	virtual void postDeserialize();
+	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	QVariant currValue_;
 private:
 	bool fixingValues_;
-private slots:
-	void valueEdited();
 };
 
 

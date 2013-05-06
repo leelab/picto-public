@@ -61,6 +61,11 @@ void VisualElement::setColor(QColor color)
 	propertyContainer_->setPropertyValue("Color",color);
 }
 
+void VisualElement::setColor(QVariant color)
+{
+	setColor(color.value<QColor>());
+}
+
 /*! \brief Returns whether the object is visible to the input user.
  *	The input is true for subject, false for operator
  */

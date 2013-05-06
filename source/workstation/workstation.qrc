@@ -107,5 +107,6 @@
         <file>sounds/tick.wav</file>
         <file>icons/copy_analysis.png</file>
         <file>icons/copy_experiment.png</file>
+        <file>icons/variable.svg</file>
     </qresource>
 </RCC>
