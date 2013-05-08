@@ -40,30 +40,51 @@ void AboutElementBox::elementOfInterestChanged(QString className,QString friendl
 	QSharedPointer<AssetDescription> desc = assetDescriber_->getAssetDescription(className);
 	Q_ASSERT(desc);
 	description.append(QString("<h3 style=\"color:red\">%1</h3>").arg(friendlyName));
-	description.append("<h4 style=\"color:black\">Overview</h4>");
-	description.append(desc->getOverview());
-	description.append("<h4 style=\"color:black\">Properties</h4>");
+	QString sectionDescrip;
 	QString currDescrip;
+	sectionDescrip.append(QString("<dd><span style=\"color:black;\">%2</span></dd>").arg(desc->getOverview()));
+	if(!sectionDescrip.isEmpty())
+	{
+		description.append("<h4 style=\"color:black\">Overview</h4>");
+		description.append(sectionDescrip);
+	}
+	sectionDescrip.clear();
 	foreach(QString propName,desc->getProperties())
 	{
 		currDescrip = desc->getPropertyDescription(propName);
 		if(!currDescrip.isEmpty())
-			description.append(QString("<dd><span style=\"color:blue;\">%1</span> - <span style=\"color:black;\">%2</span></dd>").arg(propName).arg(currDescrip));
+			sectionDescrip.append(QString("<dd><span style=\"color:blue;\">%1</span> - <span style=\"color:black;\">%2</span></dd>").arg(propName).arg(currDescrip));
 	}
-	description.append("<h4 style=\"color:black\">Script Properties</h4>");
+	if(!sectionDescrip.isEmpty())
+	{
+		description.append("<h4 style=\"color:black\">Properties</h4>");
+		description.append(sectionDescrip);
+	}
+	sectionDescrip.clear();
 	foreach(QString scripPropName,desc->getScriptProperties())
 	{
 		currDescrip = desc->getScriptPropertyDescription(scripPropName);
 		if(!currDescrip.isEmpty())
-			description.append(QString("<dd><span style=\"color:blue;\">%1</span> - <span style=\"color:black;\">%2</span></dd>").arg(scripPropName).arg(currDescrip));
+			sectionDescrip.append(QString("<dd><span style=\"color:blue;\">%1</span> - <span style=\"color:black;\">%2</span></dd>").arg(scripPropName).arg(currDescrip));
 	}
-	description.append("<h4 style=\"color:black\">Script Functions</h4>");
+	if(!sectionDescrip.isEmpty())
+	{
+		description.append("<h4 style=\"color:black\">Script Properties</h4>");
+		description.append(sectionDescrip);
+	}
+	sectionDescrip.clear();
 	foreach(QString scriptFuncName,desc->getScriptFunctions())
 	{
 		currDescrip = desc->getScriptFunctionDescription(scriptFuncName);
 		if(!currDescrip.isEmpty())
-			description.append(QString("<dd><span style=\"color:blue;\">%1</span> - <span style=\"color:black;\">%2</span></dd>").arg(scriptFuncName).arg(currDescrip));
+			sectionDescrip.append(QString("<dd><span style=\"color:blue;\">%1</span> - <span style=\"color:black;\">%2</span></dd>").arg(scriptFuncName).arg(currDescrip));
 	}
+	if(!sectionDescrip.isEmpty())
+	{
+		description.append("<h4 style=\"color:black\">Script Functions</h4>");
+		description.append(sectionDescrip);
+	}
+	sectionDescrip.clear();
 	setText(description);
 	
 	//Search for whatever search is currently active when the AboutElementBox contents change

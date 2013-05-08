@@ -46,23 +46,23 @@ Designer::Designer(QWidget *parent) :
 
 	//Setup info pane
 	infoPane_ = new QTabWidget();
+	aboutElementBox_ = new AboutElementBox(editorState_);
+	infoPane_->addTab(aboutElementBox_,"About Element");
 	assetInfoBox_ = new AssetInfoBox(editorState_);
 	infoPane_->addTab(assetInfoBox_,"Scripting Info");
 	syntaxErrorBox_ = new SyntaxErrorBox(editorState_);
 	infoPane_->addTab(syntaxErrorBox_,"Error List");
-	aboutElementBox_ = new AboutElementBox(editorState_);
-	infoPane_->addTab(aboutElementBox_,"About Element");
 
+	infoPane_->setTabEnabled(ABOUTELEMENT,true);
 	infoPane_->setTabEnabled(SCRIPTINFO,true);
 	infoPane_->setTabEnabled(SYNTAXCHECK,false);
-	infoPane_->setTabEnabled(ABOUTELEMENT,true);
 
     centralLayout->addWidget(upButton);
 	centralLayout->setStretchFactor(0,0);
 	centralLayout->addWidget(view);
 	centralLayout->setStretchFactor(1,10);
 	centralLayout->addWidget(infoPane_);
-	centralLayout->setStretchFactor(2,5);
+	centralLayout->setStretchFactor(2,7);
 	//QWidget* centralLayoutWidget = new QWidget();
 	//centralLayoutWidget->setLayout(centralLayout);
 

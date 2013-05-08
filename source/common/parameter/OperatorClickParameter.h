@@ -43,6 +43,8 @@ public:
 	static void addClick(QPoint point);
 
 	virtual QString friendlyTypeName(){return "Operator Click";};
+	virtual QString getUITemplate(){return "OperatorClick";};
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

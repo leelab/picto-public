@@ -102,8 +102,8 @@ QString ScriptController::getReturnValueError(QString scriptName,const QScriptVa
 {
 	QString resultError = "";
 	if(Property::valueWasChanged())
-		resultError = QString("The Script in Switch Element: \"%1\" caused the property value: \"%2\" to change.\n"
-			"The Switch element Script should be used to select the result where contol flow needs to continue.\n"
+		resultError = QString("The Script in Script Controller: \"%1\" caused the property value: \"%2\" to change.\n"
+			"The Script Controller Script should be used to select the result where contol flow needs to continue.\n"
 			"Scripts that affect the experimental state should only be in Entry, Exit, or Frame Scripts.")
 			.arg(getName())
 			.arg(Property::changedValueName());

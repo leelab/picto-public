@@ -13,10 +13,11 @@ TokenTrayGraphic::TokenTrayGraphic(QPoint position, QRect dimensions, QColor col
 VisualElement(position,color)
 {
 	//updatingParameterLists_ = false;
-	shapeList_ << "Ellipse" << "Rectangle" << "Diamond";
+	shapeList_ << "Ellipse";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 
+	shapeList_ << "Rectangle" << "Diamond";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TokenShape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Size,"TokenSize",dimensions.size());
 
@@ -200,6 +201,12 @@ void TokenTrayGraphic::setTokenColor(int index, int r, int g, int b, int a)
 	propertyContainer_->setPropertyValue("TokenColors",colors.join(","));
 }
 
+void TokenTrayGraphic::setTokenColor(int index,QVariant color)
+{
+	QColor col = color.value<QColor>();
+	setTokenColor(index,col.red(),col.green(),col.blue());
+}
+
 void TokenTrayGraphic::setTokenShape(int index, QString shape)
 {
 	if(index >= getNumTokens())
@@ -263,6 +270,19 @@ int TokenTrayGraphic::getTokenBlue(int index)
 int TokenTrayGraphic::getTokenAlpha(int index)
 {
 	return getTokenColor(index).alpha();
+}
+QColor TokenTrayGraphic::getTokenColor(int index)
+{
+	if(index > getNumTokens() || index < 0)
+		return QColor();
+	QStringList colors = propertyContainer_->getPropertyValue("TokenColors").toString().split(",",QString::SkipEmptyParts);
+	
+	QString result = "-1";
+	if(colors.size()>=index)
+		result = colors[index];
+	if(result == "-1")
+		return getColor();;
+	return QColor(result);
 }
 bool TokenTrayGraphic::getTokenOutline(int index)
 {
@@ -583,20 +603,6 @@ QPoint TokenTrayGraphic::getTokenOffset(int index)
 	
 	}
 	return QPoint(x,y);
-}
-
-QColor TokenTrayGraphic::getTokenColor(int index)
-{
-	if(index > getNumTokens() || index < 0)
-		return QColor();
-	QStringList colors = propertyContainer_->getPropertyValue("TokenColors").toString().split(",",QString::SkipEmptyParts);
-	
-	QString result = "-1";
-	if(colors.size()>=index)
-		result = colors[index];
-	if(result == "-1")
-		return getColor();;
-	return QColor(result);
 }
 
 

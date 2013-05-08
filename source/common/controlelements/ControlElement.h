@@ -60,6 +60,7 @@ public:
 	//QSharedPointer<Result> getResult(QString name);
 	virtual QString getUITemplate(){return "ControlElement";};
 	virtual QString friendlyTypeName(){return "Control Element";};
+	virtual QString getUIGroup(){return "State Machine Elements";};
 
 	//DataStore Functions
 	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;

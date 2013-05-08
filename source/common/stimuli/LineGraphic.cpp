@@ -117,14 +117,14 @@ bool LineGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReade
 		QStringList xAndY = pointStr.split(",");
 		if(xAndY.size() != 2)
 		{
-			addError("Points string is incorrectly formed:\n" + pointsStr.toLatin1());
+			addError("Points string is incorrectly formed: " + pointsStr.toLatin1() + ".  Should be: (1,1)(2,2)...(n,n).");
 			return false;
 		}
 		xAndY.first().toInt(&xOk);
 		xAndY.last().toInt(&yOk);
 		if(!(xOk && yOk))
 		{
-			addError("Points string is incorrectly formed:\n" + pointsStr.toLatin1());
+			addError("Points string is incorrectly formed: " + pointsStr.toLatin1() + ".  Should be: (1,1)(2,2)...(n,n).");
 			return false;
 		}
 	}

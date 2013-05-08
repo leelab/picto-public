@@ -72,6 +72,7 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 			if(returnVal->inherits("Picto::UIEnabled"))
 			{
 				uITemplate_ = returnVal.staticCast<UIEnabled>()->getUITemplate();
+				uIGroup_ = returnVal.staticCast<UIEnabled>()->getUIGroup();
 				generatedAssetTypeName_ = returnVal.staticCast<UIEnabled>()->friendlyTypeName();
 				assetClassName_ = returnVal->metaObject()->className();
 				assetClassName_.replace("Picto::","");
@@ -81,6 +82,7 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 				generatedAssetTypeName_ = "";
 				uITemplate_ = "";
 				assetClassName_ = "";
+				uIGroup_ = "";
 			}
 			uITemplateInitialized_ = true;
 		}
@@ -210,6 +212,19 @@ QString AssetFactory::getUITemplate(QString type)
 	if(!uITemplateInitialized_)
 		getAsset(QString(""),"");
 	return uITemplate_;
+}
+
+QString AssetFactory::getUIGroup(QString type)
+{
+	if(isGroupFactory_)
+	{
+		Q_ASSERT_X(factoriesByType_.contains(type),"AssetFactory::getUITemplate","This factory does not contain type: " + type.toLatin1());
+		return factoriesByType_[type]->getUIGroup("");
+	}
+	//If uITemplate has not yet been initialized, create and throw out an asset so that it will be.
+	if(!uITemplateInitialized_)
+		getAsset(QString(""),"");
+	return uIGroup_;
 }
 
 QString AssetFactory::getGeneratedAssetTypeName(QString type)

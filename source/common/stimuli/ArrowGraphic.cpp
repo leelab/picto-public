@@ -11,7 +11,7 @@ ArrowGraphic::ArrowGraphic(QPoint start, QPoint end, int size, QColor color)
 : VisualElement(start,color)
 {
 	AddDefinableProperty(QVariant::Point,"End",end);
-	AddDefinableProperty(QVariant::Int,"HeadSize", size);
+	AddDefinableProperty(QVariant::Int,"Thickness", size);
 
 
 
@@ -37,7 +37,9 @@ void ArrowGraphic::draw()
 {
 	QPoint start = getPosition();
 	QPoint end = propertyContainer_->getPropertyValue("End").toPoint();
-	int size = propertyContainer_->getPropertyValue("HeadSize").toInt();
+	end = end-start;
+	start = QPoint(0,0);
+	int size = propertyContainer_->getPropertyValue("Thickness").toInt();
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	//generate the point pairs that will draw the line and arrow
@@ -118,6 +120,8 @@ QSharedPointer<Asset> ArrowGraphic::Create()
 void ArrowGraphic::postDeserialize()
 {
 	VisualElement::postDeserialize();
+	propertyContainer_->getProperty("End")->setRuntimeEditable(true);
+	propertyContainer_->getProperty("Thickness")->setRuntimeEditable(true);
 }
 
 bool ArrowGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

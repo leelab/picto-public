@@ -29,6 +29,7 @@ public:
 
 	virtual QString getUITemplate(){return "Variable";};
 	virtual QString friendlyTypeName(){return "Variable";};
+	virtual QString getUIGroup(){return "Variables";};
 
 protected:
 	virtual QString defaultTagName(){return "Variable";};

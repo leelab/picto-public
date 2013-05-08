@@ -7,10 +7,15 @@
 using namespace Picto;
 
 
-AssetToolGroup::AssetToolGroup(QSharedPointer<EditorState> editorState,QStringList assetTagFilters,QSharedPointer<Asset> asset, QWidget *parent) :
-	ToolGroup(editorState,parent),
-	assetTagFilters_(assetTagFilters)
+AssetToolGroup::AssetToolGroup(QSharedPointer<EditorState> editorState,QStringList displayedUIGroups,QSharedPointer<Asset> asset, QWidget *parent) :
+	ToolGroup(editorState,parent)
 {
+	//Initialize UI Group hash
+	foreach(QString group,displayedUIGroups)
+	{
+		uIGroupMap_[group]  = true;
+	}
+
 	setAsset(asset);
 }
 
@@ -27,17 +32,6 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 		QStringList types;
 		foreach(QString childTag,childTags)
 		{
-			bool tagIsOkay = false;
-			foreach(QString filterTag,assetTagFilters_)
-			{
-				if(filterTag == childTag)
-				{
-					tagIsOkay = true;
-					break;
-				}
-			}
-			if(!tagIsOkay)
-				continue;
 			////Don't show tranitions or UIInfo.  Transitions are added
 			////using wires.  UIInfo is added automatically.
 			//if(childTag == "Transition")
@@ -55,6 +49,9 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 						continue;
 					QString uiTemplate = assetFactory->getUITemplate(type);
 					if(uiTemplate.isEmpty())	//This will be the case for objects that don't inherit from UIEnabled
+						continue;
+					QString uIGroup = assetFactory->getUIGroup(type);
+					if(!isDisplayedGroup(uIGroup))
 						continue;
 					QString buttonName = assetFactory->getGeneratedAssetTypeName(type);
 					//if(type != "")
@@ -106,4 +103,9 @@ bool AssetToolGroup::isEnabled(int buttonId)
 	if(elemInfo_[buttonId].assetFactory->reachedProductionLimit(elemInfo_[buttonId].type))
 		return false;
 	return true;
+}
+
+bool AssetToolGroup::isDisplayedGroup(QString UIGroup)
+{
+	return uIGroupMap_.contains(UIGroup);
 }

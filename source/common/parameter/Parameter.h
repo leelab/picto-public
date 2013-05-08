@@ -37,6 +37,7 @@ public:
 	virtual QString getUITemplate(){return "Parameter";};
 	//QString type();
 	virtual QString friendlyTypeName(){return "Parameter";};
+	virtual QString getUIGroup(){return "Parameters";};
 
 	//Returns true if the parameter values are valid, false otherwise.
 	//If false is returned, a warning message is placed in the warning input.

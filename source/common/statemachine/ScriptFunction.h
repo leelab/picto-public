@@ -33,6 +33,7 @@ public:
 	bool bindToScriptEngine(QScriptEngine &engine);
 	virtual QString getUITemplate(){return "ScriptFunction";};
 	virtual QString friendlyTypeName(){return "Script Function";};
+	virtual QString getUIGroup(){return "Logic Elements";};
 	virtual QString getScriptingInfo();
 	virtual void upgradeVersion(QString deserializedVersion);
 

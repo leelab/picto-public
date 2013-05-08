@@ -108,5 +108,8 @@
         <file>icons/copy_analysis.png</file>
         <file>icons/copy_experiment.png</file>
         <file>icons/variable.svg</file>
+        <file>icons/sensor.svg</file>
+        <file>icons/random.svg</file>
+        <file>icons/mouseclick.svg</file>
     </qresource>
 </RCC>

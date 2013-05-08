@@ -23,6 +23,7 @@ void GridGraphic::draw()
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dims.width(),dims.height(),QImage::Format_ARGB32);
+	posOffset_ = QPoint(dims.width()/2.0,dims.height()/2.0);
 	image.fill(0);
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);
@@ -58,6 +59,25 @@ VisualElement* GridGraphic::NewVisualElement()
 QSharedPointer<Asset> GridGraphic::Create()
 {
 	return QSharedPointer<Asset>(new GridGraphic());
+}
+
+void GridGraphic::upgradeVersion(QString deserializedVersion)
+{
+	VisualElement::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.1")
+	{
+		//As of version 0.0.1, Grid graphics are positioned according to their center point, not their top
+		//left corner.  This fixes the positions for older experiments.
+		QRect dims = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
+		QPoint newPos = getPosition();
+		newPos = QPoint(newPos.x() + dims.width()/2.0,newPos.y() + dims.height()/2.0);
+		setPosition(newPos);
+	}
+}
+
+QPoint GridGraphic::getPositionOffset()
+{
+	return posOffset_;
 }
 
 void GridGraphic::postDeserialize()

@@ -86,6 +86,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	virtual void scriptableContainerWasReinitialized();
+	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 
 private:
 	bool isDonePrivate(QSharedPointer<Engine::PictoEngine> engine);
@@ -108,6 +109,9 @@ private:
 	QString result_;
 
 	QSharedPointer<SignalChannel> signal_;
+
+private slots:
+	void controlTargetNameEdited();
 };
 
 

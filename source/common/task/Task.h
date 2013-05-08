@@ -48,6 +48,7 @@ public:
 	virtual bool hasEditableDescendants(){return true;};
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString friendlyTypeName(){return "Task";};
+	virtual QString getUIGroup(){return "State Machine Elements";};
 	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
 

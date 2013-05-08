@@ -67,6 +67,7 @@ public:
 
 	virtual QPoint getDisplayLayoutPosition();
 	virtual QString getUITemplate(){return "StateMachineElement";};
+	virtual QString getUIGroup(){return "State Machine Elements";};
 
 protected:
 	virtual QString defaultTagName(){return "StateMachineElement";};

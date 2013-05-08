@@ -23,7 +23,7 @@ class PICTOLIB_CLASS ArrowGraphic : public VisualElement
 	Q_OBJECT
 	Q_PROPERTY(int endX READ getEndX WRITE setEndX)
 	Q_PROPERTY(int endY READ getEndY WRITE setEndY)
-	Q_PROPERTY(int headSize READ getHeadSize WRITE setHeadSize)
+	Q_PROPERTY(int thickness READ getThickness WRITE setThickness)
 
 public:
 	ArrowGraphic(QPoint start=QPoint(), QPoint end=QPoint(),
@@ -39,8 +39,8 @@ public:
 	void setStartPoint(QPoint point) { propertyContainer_->setPropertyValue("Start", point);};
 	void setEndPoint(QPoint point) { propertyContainer_->setPropertyValue("End", point);};
 
-	int getHeadSize(){return propertyContainer_->getPropertyValue("HeadSize").toInt();};
-	void setHeadSize(int size) { propertyContainer_->setPropertyValue("HeadSize", size);};
+	int getThickness(){return propertyContainer_->getPropertyValue("Thickness").toInt();};
+	void setThickness(int size) { propertyContainer_->setPropertyValue("Thickness", size);};
 	int getEndX(){return getEndPoint().x();};
 	void setEndX(int x){setEndPoint(QPoint(x,getEndPoint().y()));};
 	int getEndY(){return getEndPoint().y();};

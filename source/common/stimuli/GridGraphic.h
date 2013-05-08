@@ -37,6 +37,7 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	virtual void upgradeVersion(QString deserializedVersion);
 	static const QString type;
 	int getWidth(){return getDimensions().width();};
 	int getHeight(){return getDimensions().height();};
@@ -48,6 +49,7 @@ public:
 	void setColumns(int val){propertyContainer_->setPropertyValue("Columns",val);};
 	QRect getDimensions(){ return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize()); };
 	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Size",dimensions.size());};
+	QPoint getPositionOffset();
 
 	virtual QString friendlyTypeName(){return "Grid";};
 	//! \TODO At some point, we might want to expose some getter and setter slots for script binding
@@ -57,7 +59,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
 	QVector<QPoint> points_;
-
+	QPoint posOffset_;
 private slots:
 	
 };

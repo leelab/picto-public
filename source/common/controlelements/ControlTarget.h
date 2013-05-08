@@ -23,6 +23,7 @@ public:
 	ControlTarget(QPoint position=QPoint(), QColor color=Qt::green);
 	virtual QString getUITemplate(){return "ControlTarget";};
 	virtual QString friendlyTypeName(){return "Control Target";};
+	virtual QString getUIGroup(){return "Logic Elements";};
 	void draw() = 0;
 	void setActive(bool active);
 	bool isActive(){return active_;};

@@ -36,6 +36,9 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("Scriptable",":/icons/scriptable.svg",50,75);
 		addIconDefinition("Result",":/icons/result.svg",50,75);
 		addIconDefinition("Reward",":/icons/reward.svg",50,100);
+		addIconDefinition("Sensor",":/icons/sensor.svg",50,75);
+		addIconDefinition("RandomGenerator",":/icons/random.svg",50,75);
+		addIconDefinition("OperatorClick",":/icons/mouseclick.svg",50,75);
 		addIconDefinition("Task",":/icons/task.svg",100,100);
 		//Analysis Icons
 		addIconDefinition("DataSource",":/icons/datasource.svg",100,100);

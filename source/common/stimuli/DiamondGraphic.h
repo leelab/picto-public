@@ -22,6 +22,7 @@ class PICTOLIB_CLASS DiamondGraphic : public VisualElement
 	Q_OBJECT
 	Q_PROPERTY(int width READ getWidth WRITE setWidth)
 	Q_PROPERTY(int height READ getHeight WRITE setHeight)
+	Q_PROPERTY(bool outline READ getOutline WRITE setOutline)
 
 public:
 	DiamondGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
@@ -36,6 +37,8 @@ public:
 	int getHeight(){return getDimensions().height();};
 	void setWidth(int w){QRect dims = getDimensions(); dims.setWidth(w);setDimensions(dims);};
 	void setHeight(int h){QRect dims = getDimensions(); dims.setHeight(h);setDimensions(dims);};
+	bool getOutline(){return propertyContainer_->getPropertyValue("Outline").toBool();};
+	void setOutline(bool outline) { propertyContainer_->setPropertyValue("Outline", outline);};
 	QPoint getPositionOffset();
 
 	virtual QString friendlyTypeName(){return "Diamond";};

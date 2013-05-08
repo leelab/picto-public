@@ -10,14 +10,14 @@
 #include "OutputElementContainer.h"
 #include "../parameter/AssociateElement.h"
 
-#include "../stimuli/ArrowGraphic.h"
+//#include "../stimuli/ArrowGraphic.h"
 #include "../stimuli/BoxGraphic.h"
 #include "../stimuli/DiamondGraphic.h"
 #include "../stimuli/ShapeShifterGraphic.h"
 #include "../stimuli/TokenTrayGraphic.h"
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
-#include "../stimuli/LineGraphic.h"
+//#include "../stimuli/LineGraphic.h"
 #include "../stimuli/GridGraphic.h"
 //#include "../stimuli/PictureGraphic.h"
 #include "../stimuli/RandomlyFilledGridGraphic.h"
@@ -44,8 +44,8 @@ OutputElementContainer::OutputElementContainer() :
 	AddDefinableObjectFactory("VisualElement",visualElementFactory_);
 	//For the sake of cleanliness, we should probably have a StimulusContainer class that adds all of the following.
 	//functionally, there is no problem with just adding them here.
-	visualElementFactory_->addAssetType(ArrowGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
+	//visualElementFactory_->addAssetType(ArrowGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
 	visualElementFactory_->addAssetType(BoxGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
 	visualElementFactory_->addAssetType(DiamondGraphic::type,
@@ -58,8 +58,8 @@ OutputElementContainer::OutputElementContainer() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
 	visualElementFactory_->addAssetType(TokenTrayGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenTrayGraphic::Create))));
-	visualElementFactory_->addAssetType(LineGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
+	//visualElementFactory_->addAssetType(LineGraphic::type,
+	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
 	visualElementFactory_->addAssetType(GridGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(GridGraphic::Create))));
 	//visualElementFactory_->addAssetType(PictureGraphic::type,

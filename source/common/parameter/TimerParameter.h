@@ -39,6 +39,8 @@ public:
 	void setValue(int val){restart();time_ = val;};
 
 	virtual QString friendlyTypeName(){return "Timer";};
+	virtual QString getUITemplate(){return "Sensor";};
+	virtual QString getUIGroup(){return "Sensors";};
 	//DataStore functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);

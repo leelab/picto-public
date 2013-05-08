@@ -10,7 +10,7 @@ class AssetToolGroup : public ToolGroup
     Q_OBJECT
 
 public:
-   AssetToolGroup(QSharedPointer<EditorState> editorState,QStringList assetTagFilters,QSharedPointer<Asset> asset = QSharedPointer<Asset>(),QWidget *parent=0);
+   AssetToolGroup(QSharedPointer<EditorState> editorState,QStringList displayedUIGroups,QSharedPointer<Asset> asset = QSharedPointer<Asset>(),QWidget *parent=0);
    virtual ~AssetToolGroup(){};
    void setAsset(QSharedPointer<Asset> asset);
    bool isEmpty();
@@ -19,8 +19,9 @@ protected:
 	virtual void disableButtonActions();
 	virtual bool isEnabled(int buttonId);
 private:
+	bool isDisplayedGroup(QString UIGroup);
 	QSharedPointer<Asset> asset_;
-	QStringList assetTagFilters_;
+	QHash<QString,bool> uIGroupMap_;
 	struct ElemInfo{QString tag;QString type;QSharedPointer<AssetFactory> assetFactory;};
 	QVector<ElemInfo> elemInfo_;
 };

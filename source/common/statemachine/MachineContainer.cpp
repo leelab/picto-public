@@ -1,7 +1,8 @@
 #include "MachineContainer.h"
-#include "../variable/Var.h"
-#include "../variable/VarList.h"
-#include "../variable/VarMap.h"
+#include "../variable/StringVariable.h"
+#include "../variable/NumberVariable.h"
+#include "../variable/VariableList.h"
+#include "../variable/VariableMap.h"
 #include "../parameter/BooleanParameter.h"
 #include "../parameter/ColorParameter.h"
 #include "../parameter/ChoiceParameter.h"
@@ -35,12 +36,14 @@ addingTransition_(false)
 	AddDefinableObjectFactory(elementTag_,elementFactory_);
 
 	AddDefinableObjectFactory("Variable",variableFactory_);
-	variableFactory_->addAssetType("Var",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Var::Create))));
-	variableFactory_->addAssetType("VarList",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(VarList::Create))));
-	variableFactory_->addAssetType("VarMap",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(VarMap::Create))));
+	variableFactory_->addAssetType("NumberVariable",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumberVariable::Create))));
+	variableFactory_->addAssetType("StringVariable",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(StringVariable::Create))));
+	variableFactory_->addAssetType("VariableList",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(VariableList::Create))));
+	variableFactory_->addAssetType("VariableMap",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(VariableMap::Create))));
 
 	AddDefinableObjectFactory("Parameter",parameterFactory_);
 	parameterFactory_->addAssetType("Boolean",

@@ -10,7 +10,7 @@ ChoiceController::ChoiceController()
 	//Properties
 	//propertyContainer_->setPropertyValue("Type",ControllerType());
 	
-	AddDefinableProperty(QVariant::String,"SignalChannel","");
+	AddDefinableProperty(QVariant::String,"SignalChannel","Position");
 	//AddDefinableProperty(QVariant::String,"Shape","");
 
 	//shapeList_ << "Rectangle" << "Ellipse";

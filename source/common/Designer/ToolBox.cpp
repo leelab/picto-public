@@ -37,11 +37,12 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 	//toolGroups_.push_front(new PropertyToolGroup(editorState_,asset));
 	//insertItem(0,toolGroups_.front(),tr("Properties"));
 	QStringList filters;
-	addToolGroup(QStringList() <<"Result"<<"StateMachineElement"<<"ControlElement"<<"Task","State Machine Elements",asset); 
-	addToolGroup(QStringList() <<"Variable","Variables",asset);
-	addToolGroup(QStringList() <<"Parameter","Parameters",asset);
-	addToolGroup(QStringList() <<"ControlTarget"<<"ScriptFunction","Logic Elements",asset);
-	addToolGroup(QStringList() <<"VisualElement"<<"OutputSignal","Stimulus Elements",asset);
+	addToolGroup(QStringList() <<"State Machine Elements","State Machine Elements",asset); 
+	addToolGroup(QStringList() <<"Variables","Variables",asset);
+	addToolGroup(QStringList() <<"Parameters","Parameters",asset);
+	addToolGroup(QStringList() <<"Logic Elements","Logic Elements",asset);
+	addToolGroup(QStringList() <<"Stimulus Elements","Stimulus Elements",asset);
+	addToolGroup(QStringList() <<"Sensors","Sensors",asset);
 	if(currIndex > count())
 		currIndex = 0;
 	setCurrentIndex(currIndex);

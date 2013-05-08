@@ -20,7 +20,7 @@ struct AssetDescription
 	void addSProp(QString name,QString description){scriptProps[name] = description;};
 	void addSFunc(QString name,QString description){scriptFunctions[name] = description;};
 
-	QString getOverview(){return overview;};
+	QString getOverview();
 	QStringList getProperties();
 	QStringList getScriptProperties();
 	QStringList getScriptFunctions();

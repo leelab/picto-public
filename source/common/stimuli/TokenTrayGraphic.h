@@ -75,6 +75,7 @@ public slots:
 	void setTokenDimensions(int w, int h){setTokenWidth(w);setTokenHeight(h);};
 	void setTokenSize(int index,double size);
 	void setTokenColor(int index, int r, int g, int b, int a=255);
+	void setTokenColor(int index,QVariant color);
 	void setTokenShape(int index, QString shape);
 	void setTokenOutline(int index, bool on);
 	void setTokenOutlineWidth(int index, int pixels);
@@ -85,6 +86,7 @@ public slots:
 	int getTokenGreen(int index);
 	int getTokenBlue(int index);
 	int getTokenAlpha(int index);
+	QColor getTokenColor(int index);
 	bool getTokenOutline(int index);
 	int getTokenOutlineWidth(int index);
 	QString getTokenShape(int index);
@@ -97,7 +99,6 @@ private:
 	void updateListSizes();
 	QPoint getTokenPosition(int index);
 	QPoint getTokenOffset(int index);
-	QColor getTokenColor(int index);
 	//void updateParameterLists();
 	//bool updatingParameterLists_;
 	int getMaxTokenDiam();

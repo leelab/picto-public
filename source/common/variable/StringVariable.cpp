@@ -1,26 +1,26 @@
-#include "Var.h"
+#include "StringVariable.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
 
-Var::Var()
+StringVariable::StringVariable()
 : Variable()
 {
 	AddDefinableProperty(QVariant::String,"Value",QVariant());
 }
 
-QSharedPointer<Asset> Var::Create()
+QSharedPointer<Asset> StringVariable::Create()
 {
-	return QSharedPointer<Asset>(new Var());
+	return QSharedPointer<Asset>(new StringVariable());
 }
 
 
-void Var::postDeserialize()
+void StringVariable::postDeserialize()
 {
 	Variable::postDeserialize();
 }
 
-bool Var::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool StringVariable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!Variable::validateObject(xmlStreamReader))
 		return false;

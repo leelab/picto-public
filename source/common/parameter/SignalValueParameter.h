@@ -28,6 +28,9 @@ public:
 	static void setLatestValue(QString signal, QString subChannel, double value);
 
 	virtual QString friendlyTypeName(){return "Signal Value";};
+	virtual QString getUITemplate(){return "Sensor";};
+	virtual QString getUIGroup(){return "Sensors";};
+
 public slots:
 	double getValue(QString subChannel = "");
 

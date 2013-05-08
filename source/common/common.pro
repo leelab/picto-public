@@ -616,12 +616,14 @@ SOURCES += $$(PICTO_TREE)/source/common/update/UpdateDownloader.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/variable/Variable.h
 SOURCES += $$(PICTO_TREE)/source/common/variable/Variable.cpp
-HEADERS += $$(PICTO_TREE)/source/common/variable/Var.h
-SOURCES += $$(PICTO_TREE)/source/common/variable/Var.cpp
-HEADERS += $$(PICTO_TREE)/source/common/variable/VarList.h
-SOURCES += $$(PICTO_TREE)/source/common/variable/VarList.cpp
-HEADERS += $$(PICTO_TREE)/source/common/variable/VarMap.h
-SOURCES += $$(PICTO_TREE)/source/common/variable/VarMap.cpp
+HEADERS += $$(PICTO_TREE)/source/common/variable/NumberVariable.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/NumberVariable.cpp
+HEADERS += $$(PICTO_TREE)/source/common/variable/StringVariable.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/StringVariable.cpp
+HEADERS += $$(PICTO_TREE)/source/common/variable/VariableList.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/VariableList.cpp
+HEADERS += $$(PICTO_TREE)/source/common/variable/VariableMap.h
+SOURCES += $$(PICTO_TREE)/source/common/variable/VariableMap.cpp
 
 win32 {
 

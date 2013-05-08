@@ -48,6 +48,8 @@ void OperatorClickParameter::setLastClick(QPoint point)
 void OperatorClickParameter::postDeserialize()
 {
 	Parameter::postDeserialize();
+	propertyContainer_->getProperty("Pos")->setVisible(false);
+	propertyContainer_->getProperty("NewClick")->setVisible(false);
 }
 
 bool OperatorClickParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

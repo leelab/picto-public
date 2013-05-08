@@ -47,7 +47,8 @@ public:
 	QColor getColor2() { return propertyContainer_->getPropertyValue("Color2").value<QColor>(); };
 	QRect getDimensions() { return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize()); };
 	void setDimensions(QRect dimensions) { propertyContainer_->setPropertyValue("Dimensions",dimensions.size()); };
-	
+	QPoint getPositionOffset();
+
 	virtual QString friendlyTypeName(){return "Random Fill Grid";};
 protected:
 	virtual void postDeserialize();
@@ -57,6 +58,7 @@ private:
 	void buildColorList();
 
 	QVector<unsigned char> colorList_;
+	QPoint posOffset_;
 	int prevColor2Squares_;
 	int prevHorizSquares_;
 	int prevVertSquares_;

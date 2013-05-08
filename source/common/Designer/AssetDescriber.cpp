@@ -15,6 +15,11 @@ void removeCopies(QStringList& stringList)
 	}
 }
 
+QString AssetDescription::getOverview()
+{
+	return overview;
+}
+
 QStringList AssetDescription::getProperties()
 {
 	QStringList returnVal;
@@ -58,7 +63,7 @@ QString AssetDescription::getPropertyDescription(QString name)
 }
 QString AssetDescription::getScriptPropertyDescription(QString name)
 {
-	if(props.contains(name))
+	if(scriptProps.contains(name))
 		return scriptProps.value(name);
 	if(inherits)
 		return inherits->getScriptPropertyDescription(name);
@@ -66,7 +71,7 @@ QString AssetDescription::getScriptPropertyDescription(QString name)
 }
 QString AssetDescription::getScriptFunctionDescription(QString name)
 {
-	if(props.contains(name))
+	if(scriptFunctions.contains(name))
 		return scriptFunctions.value(name);
 	if(inherits)
 		return inherits->getScriptFunctionDescription(name);
@@ -98,11 +103,11 @@ void AssetDescriber::setupDescriptions()
 	
 	//Inherited Elements
 	curr = addDescription("UIEnabled");
-	curr->addProp("Name","Defines the name of this element.");
+	curr->addProp("Name","The name of this element.");
 
 	curr = addDescription("Scriptable");
 	curr->setInherits(getAssetDescription("UIEnabled"));
-	curr->addProp("Name","Defines the name of this element.  When this element is accessed in scripts, this is the name used.");
+	curr->addProp("Name","The name of this element.  When this element is accessed in scripts, this is the name used.");
 	curr->addProp("UIEnabled","Defines whether run-time editable properties from this element will appear during task runs.");
 	//curr->addProp("UIOrder","Not Yet Implemented.  Used to define the order of run-time editable properties");
 	curr = addDescription("ScriptableContainer");
@@ -116,18 +121,18 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("OutputSignal");
 	curr->setInherits(getAssetDescription("OutputElement"));
-	curr->addProp("Port","Defines the initial name of the physical output port where the voltage signal will be produced.  Currently on a standard Pictobox BNC0 (BNC lines 1-8) and PAR0 (8 Parallel lines in 20 pin rear output) are supported.");
-	curr->addProp("Enabled","Defines whether pins controlled by this element are initially active.  When set false, regardless of other settings, they will have voltage of zero.");
+	curr->addProp("Port","The name of the physical output port where the voltage signal will be produced.  Currently on a standard Pictobox BNC0 (BNC lines 1-8) and PAR0 (8 Parallel lines in 20 pin rear output) are supported.");
+	curr->addProp("Enabled","Defines whether pins controlled by this element are active.  When set false, regardless of other settings, they will have voltage of zero.");
 	curr->addSProp("enabled","Sets or gets whether pins controlled by this element are currently active.  When set false, regardless of other settings, they will have voltage of zero.");
 
 	curr = addDescription("VisualElement");
 	curr->setInherits(getAssetDescription("OutputElement"));
-	curr->addProp("Position","Defines the initial x,y position of this graphic.  x goes from 0 to 800 and y goes from 0 to 600 where (0,0) is the top left corner of the screen.");
-	curr->addProp("Color","Defines the initial color of this graphic.  Color is made up of red, green, blue and alpha components where alpha defines the color opacity (0=transparent,255=opaque).");
-	curr->addProp("Layer","Defines the inital z-layer of this graphic in the scene.  Graphics with higher layer will appear on top of graphics with lower layer.");
-	curr->addProp("Visible","Defines whether this graphic is initially visible to the operator and user as a group.");
-	curr->addProp("OperatorView","When Visible is true, defines whether this graphic is initially visible to the operator.");
-	curr->addProp("SubjectView","When Visible is true, defines whether this graphic is initially visible to the user.");
+	curr->addProp("Position","The x,y position of this graphic.  x goes from 0 to 800 and y goes from 0 to 600 where (0,0) is the top left corner of the screen.");
+	curr->addProp("Color","The  color of this graphic.  Color is made up of red, green, blue and alpha components where alpha defines the color opacity (0=transparent,255=opaque).");
+	curr->addProp("Layer","The z-layer of this graphic in the scene.  Graphics with higher layer will appear on top of graphics with lower layer.");
+	curr->addProp("Visible","Defines whether this graphic is visible to the operator and user as a group.");
+	curr->addProp("OperatorView","When 'Visible' is true, defines whether this graphic is visible to the operator.");
+	curr->addProp("SubjectView","When 'Visible' is true, defines whether this graphic is visible to the user.");
 	curr->addSProp("layer","Used to set or get the current layer of this graphic.  Graphics with higher layer will appear on top of graphics with lower layer.");
 	curr->addSProp("visible","Used to set or get the current visibility of this graphic to the operator and user as a group.");
 	curr->addSProp("operatorView","Used to set or get the current visibility of this graphic to the operator.");
@@ -138,8 +143,9 @@ void AssetDescriber::setupDescriptions()
 	curr->addSProp("green","Used to set or get the green component of this graphics color.  Ranges from 0-255.");
 	curr->addSProp("blue","Used to set or get the blue component of this graphics color.  Ranges from 0-255.");
 	curr->addSProp("alpha","Used to set or get the alpha component of this graphics color where alpha defines the color opacity (0=transparent,255=opaque).");
-	curr->addSFunc("setColor","A convenience function to set the rgb or rgba color components at once.  Inputs are (r,g,b) or (r,g,b,a) with each input ranging from 0-255.");
-	curr->addSFunc("setPos","A convenience function to set both the x and y components of position at once.  Inputs are (x,y) and range from 0-800 and 0-600 respectively.");
+	curr->addSProp("color","Sets/Gets the current color value as a string containing hexadecimal r,g,b values (#rrggbb).");
+	curr->addSFunc("setColor(r,g,b) or setColor(r,g,b,a)","A convenience function to set the rgb or rgba color components at once.  Inputs are (r,g,b) or (r,g,b,a) with each input ranging from 0-255.");
+	curr->addSFunc("setPos(x,y)","A convenience function to set both the x and y components of position at once.  Inputs are (x,y) and range from 0-800 and 0-600 respectively.");
 
 	curr = addDescription("ResultContainer");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
@@ -164,107 +170,439 @@ void AssetDescriber::setupDescriptions()
 	//Elements of State Machine Logic
 	curr = addDescription("Experiment");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
+	curr->setOverview("This is the top level element of the design.  Experiments act as containers for the different the individual tasks that can be run by the user.  They also contain a few properties whose definitions span multiple tasks, namely the eye position calibration properties.  Unlike all other properties in Picto whose initial values are only applied when their containers enter execution scope, due to the necessity for high speed reaction in eye position calibration, these properties take effect immediately when set by the operator during a session run.  Also, unlike other elements in Picto, the Experiment element does not have a user defined name.  This allows descendants in the tree to access its scriptable components without needing to know the name of the experiment that the task is in.  Experimental script properties and functions are therefore accessed by using the 'Experiment.scriptProperty' notation.");
+	curr->addProp("Name","");
+	curr->addProp("UIEnabled","");
+	curr->addProp("XGain","A factor by which horizontal eye input is multiplied in calculating the final eye's x coordinate in pixel space.");
+	curr->addProp("YGain","A factor by which veritcal eye input is multiplied in calculating the final eye's y coordinate in pixel space.");
+	curr->addProp("XOffset","An offset value that is added to the horizontal eye input before it is multiplied by xGain to calculate the eye's x coordinate in pixel space.");
+	curr->addProp("YOffset","An offset value that is added to the vertical eye input before it is multiplied by yGain to calculate the eye's y coordinate in pixel space.");
+	curr->addProp("XYSignalShear","A shear value used to shear the horizontal eye input as a function of vertical y input.  Hopefully, you won't need to use this often.");
+	curr->addSProp("xGain","Sets/Gets the value of XGain.  See that property.");
+	curr->addSProp("yGain","Sets/Gets the value of YGain.  See that property.");
+	curr->addSProp("xOffset","Sets/Gets the value of XOffset.  See that property.");
+	curr->addSProp("yOffset","Sets/Gets the value of YOffset.  See that property.");
+	curr->addSProp("xySignalShear","Sets the value of XYSignalShear.  See that property.");
+
 	curr = addDescription("Task");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
+	curr->setOverview("This is the top level runnable element of a session.  When a session is started, the operator must choose a task to run.  Each task run is considered a separate entity by Picto.  When analyzing, for example, the operator Analyzes individual task runs.  Tasks may only contain one element, the top level 'StateMachine' element."); 
 	curr->addProp("UIEnabled","");
+
 	curr = addDescription("Result");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
+	curr->setOverview("A result is the tunnel between one level of the state machine and the level above it.  It is transitioned to within its parent element, and transitioned from in its parent's parent.  In terms of execution order, once execution hits a result, the results 'EntryScript' is called, then the result's parent's container's 'ExitScript' is called followed by the transition to the next element in the result's parent's parent.");
 	curr->addProp("UIEnabled","");
+	curr->addProp("AnalysisEntryScript","When an analysis is active, this script is used to analyze experimental data.  Conceptually, this script runs just before the the experimental EntryScript.  In practice, it does not run on the PictoDirector but only on session 'viewers' and actually runs just before the effects of the experimental EntryScript are implemented.");
+	curr->addProp("EntryScript","A script that can be used to transfer data between elements.  When execution transitions to this result, this script runs.  Note: The EntryScript of a result runs before the result's parent's ExitScript.");
+	
 	curr = addDescription("LogicResult");
 	curr->setInherits(getAssetDescription("Result"));
+	curr->setOverview("Logic Results differ from regular results in that they are not transitioned to by triggered by program logic.  In the case of a TargetController, for example, a 'Success' logic result would be triggered by the Picto system when the user fixated long enough on the set target.  In the case of a SwitchElement, the operator designs scripts to trigger particular logic results on certain conditions.  Unlike regular results, logic result do not have scripts attached to them.");
+	curr->addProp("EntryScript","");
+
 	curr = addDescription("PausePoint");
 	curr->setInherits(getAssetDescription("OutputElementContainer"));
+	curr->setOverview("Pause Points are used to define points in task execution where it will be logical for a pauses to occur.  When an operator presses the pause button during a session run, execution continues until it reaches the first pause point, where it waits for the operator to press the play button.  In some respects, pause points are like states that use a sort of 'play button controller.'  They are the only elements apart from States in which experimental time can pass and display any visual elements that are in scope or inside the pause element during the course of the pause.  Entry and exit scripts on a Pause Point are run regardless of whether the operator pressed pause.    State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
+	curr->addProp("ForcePause","When this property is set true, execution will pause whenever it reaches this Pause Point regardless of whether the operator pressed pause.");
+	
 	curr = addDescription("Reward");
 	curr->setInherits(getAssetDescription("StateMachineElement"));
+	curr->setOverview("Reward elements are used to supply reward to the user during the course of execution.  Reward elements do not consume any experimental time.  When execution reaches these elements they schedule rewards to be provided according to their property settings, with the first reward being supplied at the time that the first phosphor of the next displayed frame appears.");
+	curr->addProp("NumRewards","The number of rewards to initiate when execution reaches this reward element.");
+	curr->addProp("RewardQty","The number of milliseconds for which each reward will be supplied.");
+	curr->addProp("MinRewardPeriod","The minimum time that Picto will wait between supplying one reward from this element and the next.");
+	curr->addSProp("number","Sets/Gets the current value of NumRewards.");
+	curr->addSProp("unitQuantity","Sets/Gets the current value of RewardQty.");
+	curr->addSProp("minRewardPeriod","Sets/Gets the current value of MinRewardPeriod.");
+
 	curr = addDescription("State");
 	curr->setInherits(getAssetDescription("MachineContainer"));
+	curr->setOverview("Apart from Pause Points, States are the only elements in the state machine in which actual experimental time is consumed.  When a state is entered, its EntryScript is run, then a loop is entered in which its FrameScript is run, a frame is presented, and all contained Control Elements are checked for their result conditions over and over.  The loop ends when one of the Control Elements triggers a result at which point execution transitions to one of the State's results, that result 'EntryScript' is run, the State's 'ExitScript' is run and execution continues in the level above.  During the course of state execution, all visual and other stimuli that are in scope and visible/enabled will be presented every frame.  Since the actual frame itself is the only time that the user experiences the operations of the program, Picto records all internal property and transition changes as occuring at the time that the frame following them occured.  It should be noted that the design inside a State looks slightly different from the regular State Machine design.  In a state there is no initial transition as execution occurs on one or many control elements 'simultaneously.'  Currently, there is no way of setting the order of checking multiple Control Elements in a state.  Each one is checked each frame.  Execution will continue from the result of the first one that triggers on a given frame.  State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
+	curr->addProp("FrameScript","A script that can be used to transfer data between elements.  This script runs just before each frame is presented.  This means that when entering a state, the order of execution is EntryScript, FrameScript, PresentFrame.");
+	curr->addProp("AnalysisFrameScript","When an analysis is active, this script is used to analyze experimental data.  Conceptually, this script runs just after the a frame is presented by the state, which occurs just after the 'FrameScript' is run.  In practice, it does not run on the PictoDirector but only on session 'viewers' and actually runs just after the frame is marked as having been presented.");
+
 	curr = addDescription("StateMachine");
 	curr->setInherits(getAssetDescription("MachineContainer"));
+	curr->setOverview("State Machines are the containers for all execution logic in Picto.  They can contain any State Machine Elements, Variables, Parameters, Logic Elements or Stimulus Elements.  When execution hits a State Machine, the first thing that happens is that all of its contained elements reset their properties back to the initial states defined in the State Machine Editor.  Next the State Machine's Entry State is run, execution then follows from the initial state connected to the State Machine's Start Bar and continues internally until one of the State Machine's results are hit, or the operator presses stop.  After the result's scripts are run or the stop button is pressed, the State Machine's exit script is called and execution continues at the level above and transitions away from the result that was hit.  The two tunnels into and out of a State Machine level are there for the Start Bar and the Results.    State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
+
 	curr = addDescription("SwitchElement");
 	curr->setInherits(getAssetDescription("StateMachineElement"));
+	curr->setOverview("Switch Elements are used to branch execution as a function of some logical condition.  They can be opened up and multiple Logic Results added to them.  The Switch Element script then chooses which Logic Result will be used to continue execution with its 'Script'.  The 'Script' chooses the result by returning a string that is equal to that result's name.  String results that don't match will result in runtime errors.  Please also note that in the interest of code clarity, the Switch Element script should only read the current Experimental state and not write to it.  Any actions in the Switch Element script that cause a write to occur in the Experimental state will trigger a runtime error.");
 	curr->addProp("UIEnabled","");
+	curr->addProp("Script","A script that is run to select a result.  This script should return a string that is equal to the name of one of the results.  Execution flow will then continue from that result.  This script should be considered 'read only' and operations that will result in a 'write' should go into Entry or Exit Scripts.  Write operations in this script will result in a runtime error.");
 	
 	//Control Logic State Machine Elements
 	curr = addDescription("ChoiceController");
 	curr->setInherits(getAssetDescription("ControlElement"));
+	curr->setOverview("The Choice Controller, like the Target Controller is used to check if the user has fixated on a Control Target.  In the case of the Choice Controller however, multiple targets can be defined using internal Control Target Results and each one of these results creates a different possible result outcome from the Choice Controller.  Like in the case of a Target Controller, any Control Target that is being actively considered will be visible to the operator while this Choice Controller is active.  The possible results from a Choice Controller are hopefully self explanetory.  Please also note that the Choice Controller is essentially a convenience element.  Its operation can be fairly precisely simulated by simply using multipole Target Controllers.");
+	curr->addProp("SignalChannel","The signal channel used to check for entry/exit into the targets defined in this controller's Control Target Results.  Currently only 'Position' (default) and 'Diameter' are acceptable, and 'Diameter' would me somewhat cumbersome considering that it is not mapped into any x,y screen position.");
+	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the values in 'FixationTime' and 'TotalTime'.");
+	curr->addProp("FixationTime","The amount of time that the user must continuously fixate on a contained target before 'TotalTime' is reached in order for that target's Control Target Result to be triggered.");
+	curr->addProp("TotalTime","The amount of time that the user has to succesfully fixate on one of the contained targets for a continuous 'FixationTime'.  Note: If the user is not fixating on a target at a time beyond 'TotalTime'-'FixationTime', 'Total Time Exceeded' will be triggered.");
+	curr->addProp("AllowReentries","If true, the user's eye position may enter and exit the contained targets without triggering a 'Broke Fixation' result until they either fixate for 'FixationTime' or 'TotalTime' passes.");
+	curr->addSProp("fixationTime","Sets/Gets the current value of the necessary 'FixationTime' considered succesful fixation.");
+	curr->addSProp("totalTime","Sets/Gets the current value of the 'TotalTime' that the user has in order to correctly fixate before 'Total Time Exceeded' is triggered.");
+	curr->addSFunc("bool userOnTarget()","Returns true if the user's eye position is on a target.");
+	curr->addSFunc("bool userEnteredTarget()","Returns true if the user's eye position entered a target between the last frame presented and the one before it.");
+	curr->addSFunc("bool userExitedTarget()","Returns true if the user's eye position exited a target between the last frame presented and the one before it.");
+
 	curr = addDescription("ScriptController");
 	curr->setInherits(getAssetDescription("ControlElement"));
+	curr->setOverview("A Script Controller is a broad use controller in which the designer can create their own logical checks for whether to continue in a state or exit from it.  Like in a SwitchElement, you can add multiple Logic Results to a Script Controller and trigger them by returning a string that is equal to one of the results's names.  In order to continue in the State without exiting, simply return any value that is not equal to a result name or nothing at all.");
 	curr->addProp("UIEnabled","");
+	curr->addProp("Script","A script that can be used to create operator designed control scenarios.  The script can either trigger a result by returning a string that is equal to the name of one of its contained results or wait for next frame by returning any other defined value.  This script runs during the standard Control Logic Element period, just before the FrameScript execution.");
+
 	curr = addDescription("StopwatchController");
 	curr->setInherits(getAssetDescription("ControlElement"));
+	curr->setOverview("A Stopwatch Controller is a simple timer controller that triggers its Success result as soon as its set timeout runs out. Please note that since time is checked only once per frame the time that the next frame from a state following this one will appear will be anywhere from one to two frames beyond the set 'Time'.  This is true of all time based conditions in Control Elements.");
+	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the value in 'Time'.");
+	curr->addProp("Time","The time in 'TimeUnits' at which the 'Success' result will be triggered.  ");
+
 	curr = addDescription("TargetController");
 	curr->setInherits(getAssetDescription("ControlElement"));
+	curr->setOverview("The Target Controller is used to check if the user has fixated on a Control Target.  The target is defined in the 'ControlTarget' property.  While the Control Target is active, the target being considered will be visible to the operator.  The possible results from a Target Controller are hopefully self explanetory.");
+	curr->addProp("SignalChannel","The signal channel used to check for entry/exit into the target defined in 'ControlTarget'.  Currently only 'Position' (default) and 'Diameter' are acceptable, and 'Diameter' would me somewhat cumbersome considering that it is not mapped into any x,y screen position.");
+	curr->addProp("ControlTarget","The name of the target that the user must fixate on for 'FixationTime' in order for 'Success' to be triggered.");
+	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the values in 'FixationTime', 'TotalTime', 'MinInitialAcquisitionTime', 'MaxInitialAcquisitionTime' and 'MaxReacquisitionTime'.");
+	curr->addProp("MinInitialAcquisitionTime","The time before which any fixation on the target is not counted toward the 'FixationTime'.");
+	curr->addProp("MaxInitialAcquisitionTime","The time before which the user must begin their initial fixation.  If the user does not fixate on the target for at least a single frame before this time, 'Initial Aquistion Time Exceeded' will be triggered.");
+	curr->addProp("MaxReacquisitionTime","When 'ReaquisitionAllowed' is true, this is the amount of time that the user has to look outside the target after having left it before 'Reacquisition Time Exceeded' is triggered.");
+	curr->addProp("FixationTime","The amount of time that the user must continuously fixate on the target defined in 'ControlTarget' before 'TotalTime' is reached in order for 'Success' to be triggered.");
+	curr->addProp("TotalTime","The amount of time that the user has to succesfully fixate on the target defined in 'ControlTarget' for a continuous 'FixationTime'.  Note: If the user is not fixating on the target at a time beyond 'TotalTime'-'FixationTime', 'Total Time Exceeded' will be triggered.");
+	curr->addProp("ReacquisitionAllowed","If true, the user's eye position may enter and exit the target defined in 'ControlTarget' without triggering a 'Broke Fixation' result until they either fixate for 'FixationTime' or 'TotalTime' passes.");
+	curr->addSProp("fixationTime","Sets/Gets the current value of the necessary 'FixationTime' considered succesful fixation.");
+	curr->addSProp("totalTime","Sets/Gets the current value of the 'TotalTime' that the user has in order to correctly fixate before 'Total Time Exceeded' is triggered.");
+	curr->addSProp("minAcquisitionTime","Sets/Gets the current value of 'MinInitialAcquisitionTime'.");
+	curr->addSProp("maxAcquisitionTime","Sets/Gets the current value of 'MaxInitialAcquisitionTime'.");
+	curr->addSProp("maxReacquisitionTime","Sets/Gets the current value of 'MaxReacquisitionTime'.");
+	curr->addSProp("reacquisitionAllowed","Sets/Gets the current value of 'ReacquisitionAllowed'.");
+	curr->addSFunc("bool userOnTarget()","Returns true if the user's eye position is on a target.");
+	curr->addSFunc("bool userEnteredTarget()","Returns true if the user's eye position entered a target between the last frame presented and the one before it.");
+	curr->addSFunc("bool userExitedTarget()","Returns true if the user's eye position exited a target between the last frame presented and the one before it.");
 
 	//Variables
-	curr = addDescription("Var");
+	curr = addDescription("NumberVariable");
 	curr->setInherits(getAssetDescription("Variable"));
-	curr = addDescription("VarList");
+	curr->setOverview("A Number Variable is used to hold experimentally significant numeric data.  For simple operations in a script, a local javascript var is sufficient, but this value does not maintain its state from frame to frame, and global javascript variables may not be used in Picto.  To store data outside of the local script scope, use a Picto Variable, parameter or other Picto element.");
+	curr->addProp("Value","The value of the variable");
+	curr->addSProp("value","Sets/Gets the current value of the variable.");
+
+	curr = addDescription("StringVariable");
 	curr->setInherits(getAssetDescription("Variable"));
-	curr = addDescription("VarMap");
+	curr->setOverview("A String Variable is used to hold experimentally significant string data.  For simple operations in a script, a local javascript var is sufficient, but this value does not maintain its state from frame to frame, and global javascript variables may not be used in Picto.  To store data outside of the local script scope, use a Picto Variable, parameter or other Picto element.");
+	curr->addProp("Value","The value of the variable");
+	curr->addSProp("value","Sets/Gets the current value of the variable.");
+
+	curr = addDescription("VariableList");
 	curr->setInherits(getAssetDescription("Variable"));
-	
+	curr->setOverview("A Variable List is used to hold experimentally significant data in a list.  Data is entered in javascript var format and retreived as a number or string by using the appropriate functions.");
+	curr->addSFunc("number length()","Returns the number of values in the array.");
+	curr->addSFunc("append(value)","Appends the input value to the end of the array, increasing the array length by one.");
+	curr->addSFunc("prepend(value)","Prepends the input value to the beginning of the array, increasing the array length by one.");
+	curr->addSFunc("setValue(index,value)","Changes the current value of the array at index to value.  If index is less than zero or greater than length()-1, nothing happens.");
+	curr->addSFunc("fromArray(array)","Resets the array from the input javascript array object.");
+	curr->addSFunc("number getValueAsNum(index)","Returns the value at the input index as a number.  If an invalid index is supplied, an undefined value will be returned.");
+	curr->addSFunc("number firstAsNum()","Returns the first value in the array as a number.  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("number lastAsNum()","Returns the last value in the array as a number.  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("number takeFirstAsNum()","Returns the first value in the array as a number and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("number takeLastAsNum()","Returns the last value in the array as a number and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("number takeAtAsNum(index)","Returns the value in the array at the input index as a number and deletes that value from the array, decreasing the array length by one.  If the index is invalid an undefined value is returned.");
+	curr->addSFunc("string getValueAsString(index)","Returns the value at the input index as a string .  If an invalid index is supplied, an undefined value will be returned.");
+	curr->addSFunc("string firstAsString()","Returns the first value in the array as a string .  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("string lastAsString()","Returns the last value in the array as a string .  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("string takeFirstAsString()","Returns the first value in the array as a string and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("string takeLastAsString()","Returns the last value in the array as a string and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("string takeAtAsString(index)","Returns the value in the array at the input index as a string and deletes that value from the array, decreasing the array length by one.  If the index is invalid an undefined value is returned.");
+	curr->addSFunc("removeFirst()","Removes the first value from the array.  If the array is empty, nothing happens.");
+	curr->addSFunc("removeLast()","Removes the last value from the array.  If the array is empty nothing happens.");
+	curr->addSFunc("removeAt(index)","Removes the value at the input index from the array.  If the input index is invalid, nothing happens.");
+
+
+	curr = addDescription("VariableMap");
+	curr->setInherits(getAssetDescription("Variable"));
+	curr->setOverview("A Variable Map is used to hold experimentally significant data in a lookup table format.  Data is as a javascript var along with its lookup key.  Data is retrieved with that lookup key as either a number or string by using the appropriate functions.");
+	curr->addSFunc("number length()","Returns the number of values in the map.");
+	curr->addSFunc("setValue(key,value)","Sets/Changes the current value of the map at the input key to value.");
+	curr->addSFunc("fromAssocArray(assocArray)","Resets the map from the input javascript Associative Array object.  Advanced Note: This cannot be used with toAssocArray as a way of storing Javascript objects as function components of the object are not usable after the transfer.");
+	curr->addSFunc("number getValueAsNum(key)","Returns the value at the input key as a number.  If a key that is not in the map is supplied, an undefined value will be returned.");
+	curr->addSFunc("string getValueAsString(key)","Returns the value at the input key as a string.  If a key that is not in the map is supplied, an undefined value will be returned.");
+	curr->addSFunc("Array getKeys()","Returns a javascript array containing all of the keys currently in this map as strings.");
+	curr->addSFunc("number takeAtAsNum(key)","Returns the value in the map at the input key as a number and deletes that value from the map.  If the key is invalid an undefined value is returned.");
+	curr->addSFunc("string takeAtAsString(key)","Returns the value in the map at the input key as a string and deletes that value from the map.  If the key is invalid an undefined value is returned.");
+	curr->addSFunc("removeAt(key)","Removes the value at the input key from the map.  If the input key is invalid, nothing happens.");
+
 	//Parameters
 	curr = addDescription("BooleanParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retreive a boolean parameter value from the operator during run time.");
+	curr->addProp("Value","The boolean value.");
+	curr->addSProp("value","Sets/Gets the current boolean value.");
+
 	curr = addDescription("ColorParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retreive a color parameter value from the operator during run time.");
+	curr->addProp("Value","The color value.");
+	curr->addSProp("red","Sets/Gets the current red component of the color.");
+	curr->addSProp("green","Sets/Gets the current green component of the color.");
+	curr->addSProp("blue","Sets/Gets the current blue component of the color.");
+	curr->addSProp("alpha","Sets/Gets the current alpha component of the color.");
+	curr->addSProp("value","Sets/Gets the current color value as a string containing hexadecimal r,g,b values (#rrggbb).");
+	curr->addSFunc("setColor(r,g,b) or setColor(r,g,b,a)","A convenience function to set the rgb or rgba color components at once.  Inputs are (r,g,b) or (r,g,b,a) with each input ranging from 0-255.");
+
 	curr = addDescription("DoubleParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retreive a floating point parameter value from the operator during run time.  The parameter value is confined to lie in a preset range.");
+	curr->addProp("Value","The double value.");
+	curr->addProp("Min","The minimum allowable double value. Operator will not be able to select a 'Value' below this.");
+	curr->addProp("Max","The maximum allowable double value. Operator will not be able to select a 'Value' above this.");
+	curr->addSProp("value","Sets/Gets the current double value.");
+
 	curr = addDescription("NumericParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retreive an integer parameter value from the operator during run time.  The parameter value is confined to lie in a preset range.");
+	curr->addProp("Value","The integer value.");
+	curr->addSProp("value","Sets/Gets the current integer value.");
+
 	curr = addDescription("OperatorClickParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retreive information about whether the operator clicked on their viewer screen and position of the click.  When the operator clicks on their viewer screen, requests for the newClick value will return true and requests for the x,y values will supply the operator click position in screen coordinates.  If newClick will be checked for an additional click before execution leaves its container, script code must set newClick back to false in order to prevent false positive detections by later scripting code.");
+	curr->addSProp("x","Sets/Gets the x component of the last operator click position in screen units (0-800 from left to right).");
+	curr->addSProp("y","Sets/Gets the y component of the last operator click position in screen units (0-600 from top to bottom).");
+	curr->addSProp("newClick","This is set to true with the stored x,y positions updated whenever a new operator click occurs.  Note that once an operator click comes in, newClick will remain true until either its value is reset during a state transition or the design code sets it back to false.");
+
 	curr = addDescription("PseudorandomIntParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retrieve a random sequence of numbers from a set range such that those numbers are never repeated until all numbers have been used.  For example, the range 1-4 could return 2,4,1,3 or 1,4,3,2 but never 3,2,2,1,4 unless the design specifically reshuffled the 2 back into the sequence.  New numbers are retrieved by calling 'randomize()' then checking the value script property.");
+	curr->addProp("Value","The value stored in this object before any randomization occurs.");
+	curr->addProp("UseSeed","Set this to true if you would like the order of randomized integers to be identical for every experimental run.");
+	curr->addProp("DontRepeatAnyValue","When set to true, values returned from this randomizer will never be the same as those that immediately preceded them unless there are no other values in the list to choose from.");
+	curr->addProp("Seed","When 'UseSeed' is true, this is the seed that is used in the randomizer.  For each seed a different reproducable random sequence will be produced.");
+	curr->addProp("Min","The minimum value in the range of values that will be randomized.");
+	curr->addProp("Max","The maximum value in the range of values that will be randomized.");
+	curr->addSProp("value","Sets/Gets the current value stored in this element.");
+	curr->addSProp("min","Sets/Gets the current minimum value in the range of values that are randomized.  Note that setting this value will cause randomization to be reinitialized to the list defined by the new 'Min' and 'Max'.");
+	curr->addSProp("max","Sets/Gets the current maximum value in the range of values that are randomized.  Note that setting this value will cause randomization to be reinitialized to the list defined by the new 'Min' and 'Max'.");
+	curr->addSFunc("randomize()","Generates the next pseudorandomly selected value and makes it accesible from the 'value' script property.");
+	curr->addSFunc("reshuffleLastValue()","Moves the last generated value back into the list of values to be randomized so that it will be generated again before the current list runs out of values.");
+	curr->addSFunc("reset()","Recreates the list of values to randomized according to the current'Min' and 'Max'.  After calling this, it is effectively as if randomize() has never been called.");
+
 	curr = addDescription("RandomDoubleParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to generate a random double in a set range.  New random doubles are created by calling 'randomize()' and their values retrieved by using the 'value' script property.");
+	curr->addProp("Value","The value stored in this object before any randomization occurs.");
+	curr->addProp("UseSeed","Set this to true if you would like the order of randomized values to be identical for every experimental run.");
+	curr->addProp("Seed","When 'UseSeed' is true, this is the seed that is used in the randomizer.  For each seed a different reproducable random sequence will be produced.");
+	curr->addProp("Min","The minimum value in the range of values that will be randomized.");
+	curr->addProp("Max","The maximum value in the range of values that will be randomized.");
+	curr->addSProp("value","Sets/Gets the current value stored in this element.");
+	curr->addSFunc("randomize()","Generates the next randomly selected value and makes it accesible from the 'value' script property.");
+
 	curr = addDescription("RandomIntParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to generate a random integer in a set range.  New random integers are created by calling 'randomize()' and their values retrieved by using the 'value' script property.");
+	curr->addProp("Value","The value stored in this object before any randomization occurs.");
+	curr->addProp("UseSeed","Set this to true if you would like the order of randomized values to be identical for every experimental run.");
+	curr->addProp("Seed","When 'UseSeed' is true, this is the seed that is used in the randomizer.  For each seed a different reproducable random sequence will be produced.");
+	curr->addProp("Min","The minimum value in the range of values that will be randomized.");
+	curr->addProp("Max","The maximum value in the range of values that will be randomized.");
+	curr->addSProp("value","Sets/Gets the current value stored in this element.");
+	curr->addSFunc("randomize()","Generates the next randomly selected value and makes it accesible from the 'value' script property.");
+
 	curr = addDescription("RangeParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retreive an integer parameter value from the operator during run time.  The parameter value is confined to lie in a preset range and to be an integer number of set increment values from the bottom of this range.");
+	curr->addProp("Value","The integer value.");
+	curr->addProp("Min","The minimum allowable integer value. Operator will not be able to select a 'Value' below this.");
+	curr->addProp("Max","The maximum allowable integer value. Operator will not be able to select a 'Value' above this.");
+	curr->addProp("Increment","The acceptable increment at which integer values will be allowed.  For example, with Min=0,Max = 10 and Increment=2, 0,2,4,6,8,10 will be allowed and the operator will not be able to set any other values to this parameter.  If set to zero, this property is ignored and all integers in the Min->Max range are allowed.");
+	curr->addSProp("value","Sets/Gets the current integer value.");
+
 	curr = addDescription("SignalValueParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to retrieve that latest value of an experimental input signal (currently eye position or diameter).");
+	curr->addProp("Signal","The signal channel who's values will be returned by this object.  Currently 'Position' (default) and 'Diameter' are acceptable.");
+	curr->addSFunc("getValue(subChannel)","Returns the latest value from the input subChannel of the signal defined in 'Signal'.  Currently, 'x' and 'y' are acceptable.  For 'Position', values are in screen coordinates (x:0-800 from left to right, y:0-600 from top to bottom).  For 'Diameter' values are raw data.");
+
 	curr = addDescription("TimerParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to track time.  The timer can be reset using restart() or set to restart() from a given time by simply setting that time to the timer using the 'value' script property.");
+	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the time values returned from this element.");
+	curr->addSProp("value","Gets the current time value in units defined by 'TimeUnits'.  When used to set the value, this restarts the timer starting at the set time.");
+	curr->addSFunc("restart()","Restarts the timer from 0");
 
 	//Logic Elements
 	curr = addDescription("CircleTarget");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("Defines a circular target area for monitoring fixation in Control Elements.  When this target is in scope and used with a Target Controller or Choice Controller, it will be used to define the region of acceptable fixation and be set visible while it is being tracked.");
+	curr->addProp("Radius","The radius of the circle target.");
+	curr->addSProp("radius","Sets/Gets the circle target's current radius.");
+
 	curr = addDescription("RectTarget");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("Defines a rectangular target area for monitoring fixation in Control Elements.  When this target is in scope and used with a Target Controller or Choice Controller, it will be used to define the region of acceptable fixation and be set visible while it is being tracked.");
+	curr->addProp("Size","The size of the rectangle target.");
+	curr->addSProp("width","Sets/Gets the target's current width.");
+	curr->addSProp("height","Sets/Gets the target's current height.");
+
 	curr = addDescription("ScriptFunction");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
+	curr->setOverview("This is a function that may be called by any script for which it is in scope.  Input variables can be defined and the function can return a value as well.  This is useful for situations when the same code would otherwise need to get copied multiple times in different scripts.  It can also serve to clean up scripts that would have otherwise been longer and less clear.");
 	curr->addProp("UIEnabled","");
+	curr->addProp("Inputs","A comma separated list of names for inputs that will be used by this script function.");
+	curr->addProp("Script","A script that can be used to transfer data between elements.  This script may use any of the inputs from 'Inputs' and return values using the standard javascript return statement.");
 
 	//Stimulus Elements
 	curr = addDescription("BinaryDataOutput");
 	curr->setInherits(getAssetDescription("OutputSignal"));
+	curr->setOverview("This element is used to create an 8 bit binary output signal on data lines on a set port.  The data is set using the 'value' script property and making sure that the element is 'enabled'.");
+	curr->addProp("Value","The integer value to be converted to binary and output on the 8 pins of the 'Port'.");
+	curr->addSProp("value","Sets/Gets the current integer value to be output on the 8 pins of the 'Port'.");
+
 	curr = addDescription("DigitalOutput");
 	curr->setInherits(getAssetDescription("OutputSignal"));
-	curr = addDescription("ArrowGraphic");
-	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to generate a digital voltage value on a particular single line of a set port.  The data is set using the 'value' script property and making sure that the element is 'enabled'.");
+	curr->addProp("Pin","The index of the pin (0-7) of the 'Port' that this element will use for voltage output.");
+	curr->addProp("Value","The boolean value to be output on the 'Pin' of the 'Port'.");
+	curr->addSProp("value","Sets/Gets the current boolean value to be output on the 'Pin' of the 'Port'.");
+	curr->addSProp("pin","Sets/Gets the current index of the 'Pin' in the 'Port' to be used for output.");
+
 	curr = addDescription("BoxGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to create a rectangular graphic on screen.  The center of the graphic will lie at the set 'Position'.");
+	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
+	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
+	curr->addProp("Size","Sets the size of this graphic.");
+	curr->addSProp("width","Sets/Gets the width of this graphic.");
+	curr->addSProp("height","Sets/Gets the height of this graphic.");
+	curr->addSProp("outline","Sets/Gets whether currently only the graphic's outline is being drawn.");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
+
 	curr = addDescription("CircleGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+curr->setOverview("This element is used to create a circular graphic on screen.  The center of the graphic will lie at the set 'Position'.");
+	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
+	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
+	curr->addProp("Radius","The radius of the circle.");
+	curr->addSProp("radius","Sets/Gets the circle's current radius.");
+	curr->addSProp("outline","Sets/Gets whether currently only the circle outline is being drawn.");
+
 	curr = addDescription("DiamondGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to create a diamond graphic on screen.  The center of the graphic will lie at the set 'Position'.");
+	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
+	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
+	curr->addProp("Size","Sets the size of this graphic.");
+	curr->addSProp("width","Sets/Gets the width of this graphic.");
+	curr->addSProp("height","Sets/Gets the height of this graphic.");
+	curr->addSProp("outline","Sets/Gets whether currently only the graphic's outline is being drawn.");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
+
 	curr = addDescription("EllipseGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to create an elliptical graphic on screen.  The center of the graphic will lie at the set 'Position'.");
+	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
+	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
+	curr->addProp("Size","Sets the size of this graphic.");
+	curr->addSProp("width","Sets/Gets the width of this graphic.");
+	curr->addSProp("height","Sets/Gets the height of this graphic.");
+	curr->addSProp("outline","Sets/Gets whether currently only the graphic's outline is being drawn.");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
+
 	curr = addDescription("GridGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
-	curr = addDescription("LineGraphic");
-	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to create an grid graphic on screen.  The center of the graphic will lie at the set 'Position' and the number of rows and columns can be set.");
+	curr->addProp("Rows","The number of rows in this grid.");
+	curr->addProp("Columns","The number of columns in this grid.");
+	curr->addProp("Size","The size of the grid.");
+	curr->addSProp("width","Sets/Gets the width of this grid.");
+	curr->addSProp("height","Sets/Gets the height of this grid.");
+	curr->addSProp("rows","Sets/Gets the number of rows in this grid.");
+	curr->addSProp("columns","Sets/Gets the number of columns in this grid.");
+
 	curr = addDescription("OperatorInfoGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
-	curr = addDescription("PictureGraphic");
-	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to output useful information for the experiment operator.  When the Analysis system is ready, it should more or less take the place of this graphic by allowing the operator to activate a particular analysis during a task run to overlay important information.  In any event, the graphic is used by setting field,value pairs using setData(field,value).  These pairs show up in the order that they were set on screen in the set location in a 'field1: value1, field2: value2' format.  Please note that on-screen values will not be updated even after calling setData(field,value) until updateValue() is called.");
+	curr->addProp("Size","The size of the text area.");
+	curr->addSFunc("setData(field,value)","Creates a new field,value pair, or updates the value in field if it already exists.  Note: The effects of this call are not implemented until 'updateValue()' is called.");
+	curr->addSFunc("getDataAsInt(field)","Returns the data from the input field rounded down to an integer number.  This is equivalent to parseInt(getDataAsNum(field)), and ideally it could just go away along with getDataAsDouble(field), but old experiments are using them.");
+	curr->addSFunc("getDataAsString(field)","Returns the data from the input field as a string.");
+	curr->addSFunc("getDataAsDouble(field)","This is the same as getDataAsNum(field).  It is here for backwards compatibility.  Ideally, both this and getDataAsInt(field) could go away, but old experiments are still using them.");
+	curr->addSFunc("getDataAsNum(field)","Returns the data from the input field as a floating point number.  This is equivalent to parseFloat(getDataAsString(field)).");
+	curr->addSFunc("getNumEntries()","Returns the number of fields in this element.");
+	curr->addSFunc("updateValue()","Causes the changes from calling 'setData(field,value)' to be implemented.  Only after this is called will the display on the screen change according to the contents of that function call.");
+
 	curr = addDescription("RandomlyFilledGridGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This graphic is used to create a grid with two colors of boxes.  The position of the colored boxes is randomized but their proportion is precisely set.  The randomization can occur only once or at set frame intevals.");
+	curr->addProp("Color2","The second color to be displayed in the graphic (Color is the first color).");
+	curr->addProp("Size","The size of the graphic.");
+	curr->addProp("HorizontalSquares","The number of horizontal squares to be displayed in the grid.");
+	curr->addProp("VerticalSquares","The number of vertical squares to be displayed in the grid.");
+	curr->addProp("Color2Squares","The number of sqaures with color 'Color2' to display in the grid.");
+	curr->addProp("FramesPerUpdate","The number of frames that should pass before rerandomizing the square colors in the grid.  If set to zero, the grid square colors will be static.");
+
 	curr = addDescription("ShapeShifterGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This graphic can be used when it is convenient for the same named graphic to be able to take on multiple shapes.  It is essentially a combination of the box, diamond, and elliptical shapes (where elliptical is a superset of the circle shape).");
+	curr->addProp("Shape","The shape (Ellipse,Rectangle,Diamond) of this graphic.");
+	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
+	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
+	curr->addProp("Size","Sets the size of this graphic.");
+	curr->addSProp("width","Sets/Gets the width of this graphic.");
+	curr->addSProp("height","Sets/Gets the height of this graphic.");
+	curr->addSProp("shape","Sets/Gets the shape of this graphic.  Allowable values are 'Ellipse', 'Rectangle' and 'Diamond'.");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
+
 	curr = addDescription("TextGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This graphic is used to display text on screen.  Since monkeys can't read, it is mostly useful for operator feedback and debugging during experimental design.  Don't forget to set the size of the text graphic or you won't see anything when you use this.");
+	curr->addProp("Size","Sets the size of the text field in pixel units.");
+	curr->addProp("Text","The text to be displayed.");
+	curr->addSProp("width","Sets/Gets the width of the text field in pixel units.");
+	curr->addSProp("height","Sets/Gets the height of the text field in pixel units.");
+	curr->addSProp("text","Sets/Gets the displayed text.");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of the text field in pixel units as a single function call.");
+
 	curr = addDescription("TokenTrayGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("The Token Tray Graphic fills an often used role by presenting a tray of tokens on screen where the tokens have set shapes, they are arranged in a set shape, they each have set colors and sizes and appear in set positions within the tray.  This tray is quite robust and allows for a whole lot of different types of configurations.  In general, the design properties are used to set default values for the tokens and the various values of individual tokens can then be set and changed by scripts during the session run.  See the properties and functions for further details.");
+	curr->addProp("Shape","The shape of the token tray (Ellipse only. Rectangle, Diamond are not yet implemented).  ie. The imaginary shape on which the tokens are placed.");
+	curr->addProp("Size","Sets the size of the token tray.  ie. The size of the imaginary shape on which the tokens are placed.");
+	curr->addProp("TokenShape","The shape (Ellipse,Rectangle,Diamond) of the tokens in the tray.");
+	curr->addProp("TokenSize","The size of the tokens in the tray.");
+	curr->addProp("NumTokens","The number of tokens in the tray.");
+	curr->addProp("Phase","Phase in degrees at which the first token (Token0) sits in the tray.  The token will sit at the point where a line drawn outward from the tray center at the input phase intersects the tray shape.");
+	curr->addProp("Outline","If true, only the outline of the tokens will be drawn.");
+	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the token outlines.");
+	curr->addSProp("tokenWidth","Sets/Gets default width of the tokens.");
+	curr->addSProp("tokenHeight","Sets/Gets default height of the tokens.");
+	curr->addSProp("tokenShape","Sets/Gets default shape of the tokens ('Ellipse','Rectangle','Diamond').");
+	curr->addSProp("outline","Sets/Gets whether the tokens are being drawn with outline only by default.");
+	curr->addSProp("outlineWIdth","Sets/Gets the default outline width in pixels of the tokens if outline is being used.");
+	curr->addSProp("numTokens","Sets/Gets the number of tokens in the tray.");
+	curr->addSProp("width","Sets/Gets the width of the token tray.");
+	curr->addSProp("height","Sets/Gets the height of the token tray.");
+	curr->addSProp("shape","Sets/Gets the shape of the token tray (Ellipse only. Rectangle, Diamond are not yet implemented).");
+	curr->addSProp("phase","Sets/Gets the phase in degrees at which the first token (Token0) sits in the tray.  The token will sit at the point where a line drawn outward from the tray center at the set phase intersects the tray shape.");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of the tray in a single function call.");
+	curr->addSFunc("setTokenDimensions(w,h)","Sets the default width and height of this tray's tokens in a single function call.");
+	curr->addSFunc("setTokenSize(index,size)","Scales the size of the token at the input index by a factor of the input size, where size is a number between 0 and 1.");
+	curr->addSFunc("setTokenColor(index,r,g,b,a) or setTokenColor(index,r,g,b)","Sets the color of the token at the input index according to the red, green, blue and optional alpha inputs.");
+	curr->addSFunc("setTokenColor(index,color)","Sets the color of the token at the input index by using a string containing hexadecimal r,g,b values (#rrggbb).");
+	curr->addSFunc("setTokenShape(index,shape)","Sets the shape of the token at the input index according to the input shape ('Ellipse','Rectangle','Diamond').");
+	curr->addSFunc("setTokenOutline(index,on)","Sets whether the token at the input index will be drawn as outline only (on=true).");
+	curr->addSFunc("setTokenOutlineWidth(index,pixels)","Sets the width of the outline in pixels of the token at the input index if that token is being drawn outline only.");
+	curr->addSFunc("getTokenX(index)","Gets the x component of the position of the token at the input index.");
+	curr->addSFunc("getTokenY(index)","Gets the y component of the position of the token at the input index.");
+	curr->addSFunc("getTokenSize(index)","Gets the scale factor from 0 to 1.0 of the token at the input index.");
+	curr->addSFunc("getTokenRed(index)","Gets the red component of the color of the token at the input index.");
+	curr->addSFunc("getTokenGreen(index)","Gets the green component of the color of the token at the input index.");
+	curr->addSFunc("getTokenBlue(index)","Gets the blue component of the color of the token at the input index.");
+	curr->addSFunc("getTokenAlpha(index)","Gets the alpha component of the color of the token at the input index.");
+	curr->addSFunc("getTokenColor(index)","Gets the color value of the token at the input index as a string containing hexadecimal r,g,b values (#rrggbb).");
+	curr->addSFunc("getTokenOutline(index)","Returns whether the token at the input index is being drawn as outline only");
+	curr->addSFunc("getTokenOutlineWidth(index)","Gets the width in pixels of the outline that is used on the token at the input index if it is set to be drawn outline only.");
+	curr->addSFunc("getTokenShape(index)","Gets the shape of the token at the input index ('Ellipse','Rectangle','Diamond').");
+
 }

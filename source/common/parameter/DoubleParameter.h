@@ -30,7 +30,7 @@ public:
 	double getValue();
 	void setValue(double val);
 
-	virtual QString friendlyTypeName(){return "Double";};
+	virtual QString friendlyTypeName(){return "Float Range";};
 
 	virtual bool valuesAreValid(QString& warning = QString());
 	virtual void fixValues();

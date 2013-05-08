@@ -32,6 +32,7 @@ public:
 	virtual ~OutputElement(){};
 
 	virtual QString friendlyTypeName(){return "Output Element";};
+	virtual QString getUIGroup(){return "Stimulus Elements";};
 };
 
 }; //namespace Picto

@@ -41,6 +41,7 @@ public:
 	int getGeneratedAssets(){return numSourcedAssets_;};
 	void setGeneratedAssets(int numGeneratedAssets){numSourcedAssets_ = numGeneratedAssets;};
 	QString getUITemplate(QString type);
+	QString getUIGroup(QString type);
 	QString getGeneratedAssetTypeName(QString type);
 	QString getGeneratedAssetClassName(QString type);
 protected:
@@ -52,6 +53,7 @@ private:
 	int numSourcedAssets_;
 	const bool isGroupFactory_;
 	QString uITemplate_;
+	QString uIGroup_;
 	QString generatedAssetTypeName_;
 	QString assetClassName_;
 	bool uITemplateInitialized_;

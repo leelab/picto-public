@@ -24,6 +24,7 @@ class PICTOLIB_API SwitchElement : public StateMachineElement
 class SwitchElement : public StateMachineElement
 #endif
 {
+	Q_OBJECT
 public:
 	SwitchElement();
 	virtual ~SwitchElement(){};

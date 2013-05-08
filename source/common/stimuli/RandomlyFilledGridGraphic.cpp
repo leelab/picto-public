@@ -39,6 +39,10 @@ QSharedPointer<Asset> RandomlyFilledGridGraphic::Create()
 	return QSharedPointer<Asset>(new RandomlyFilledGridGraphic());
 }
 
+QPoint RandomlyFilledGridGraphic::getPositionOffset()
+{
+	return posOffset_;
+}
 
 void RandomlyFilledGridGraphic::buildColorList()
 {
@@ -83,6 +87,7 @@ void RandomlyFilledGridGraphic::draw()
 	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
+	posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 	image.fill(backgroundColor.rgba());
 	QPainter p(&image);
 	p.setRenderHint(QPainter::Antialiasing, true);

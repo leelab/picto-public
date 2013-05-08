@@ -12,9 +12,9 @@ CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 	AddDefinableProperty(QVariant::Bool,"Outline",false);
 	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
 	QMap<QString,QVariant> attributeMap;
-	attributeMap["minimum"] = 1;
-	attributeMap["maximum"] = 1000;
-	attributeMap["singleStep"] = 1;
+	//attributeMap["minimum"] = 1;
+	//attributeMap["maximum"] = 1000;
+	//attributeMap["singleStep"] = 1;
 	AddDefinableProperty(QVariant::Int,"Radius",radius,attributeMap);
 
 	//propertyContainer_->setContainerName(type);

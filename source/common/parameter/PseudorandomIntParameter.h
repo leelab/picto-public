@@ -39,6 +39,7 @@ public:
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
 	virtual QString friendlyTypeName(){return "Pseudorandom Int";};
+	virtual QString getUITemplate(){return "RandomGenerator";};
 
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};

@@ -8,7 +8,7 @@ TargetController::TargetController()
 {
 	setMaxOptionalResults(0);
 	//AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
-	AddDefinableProperty("SignalChannel","");
+	AddDefinableProperty("SignalChannel","Position");
 	//shapeList_ << "Rectangle" << "Oval";
 	//AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 	AddDefinableProperty("ControlTarget","");
@@ -123,14 +123,14 @@ void TargetController::upgradeVersion(QString deserializedVersion)
 
 void TargetController::activateTargets()
 {
-	Q_ASSERT(!controlTarget_.isNull());
-	controlTarget_.toStrongRef()->setActive(true);
+	if(controlTarget_)
+		controlTarget_.toStrongRef()->setActive(true);
 }
 
 void TargetController::deactivateTargets()
 {
-	Q_ASSERT(!controlTarget_.isNull());
-	controlTarget_.toStrongRef()->setActive(false);
+	if(controlTarget_)
+		controlTarget_.toStrongRef()->setActive(false);
 }
 
 bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
@@ -180,6 +180,24 @@ void TargetController::scriptableContainerWasReinitialized()
 			break;
 		}
 	}
+}
+
+bool TargetController::executeSearchAlgorithm(SearchRequest searchRequest)
+{
+	if(ControlElement::executeSearchAlgorithm(searchRequest))
+		return true;
+	switch(searchRequest.type)
+	{
+	case SearchRequest::STRING:
+		{
+			//Search my control target for the string
+			QString controlTargetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
+			if(!controlTargetName.isNull() && controlTargetName.contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+				return true;
+		}
+		break;
+	};
+	return false;
 }
 
 bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
@@ -336,41 +354,9 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 
 	int x = signal_->peekValue("x");
 	int y = signal_->peekValue("y");
-	Q_ASSERT(!controlTarget_.isNull());
-	if(controlTarget_.toStrongRef()->contains(x,y))
+	if(controlTarget_ && controlTarget_.toStrongRef()->contains(x,y))
 		return true;
 	return false;
-	//if("Rectangle" == shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt()))
-	//{
-	//	QRect targetRect = QRect(controlTarget_->getX(),controlTarget_->getY(),controlTarget_->getBoundingRect().width(),controlTarget_->getBoundingRect().height());//propertyContainer_->getPropertyValue("Target").toRect();
-	//	if(targetRect.contains(x,y))
-	//		return true;
-	//	else
-	//		return false;
-	//}
-	//else if("Ellipse" == shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt()))
-	//{
-	//	/*We're going to test this equation:
-	//		(x-x0)^2     (y-0)^2
-	//		--------  +  --------  <= 1
-	//		 width^2     height^2
-	//	*/
-	//	QRect targetRect = QRect(controlTarget_->getX(),controlTarget_->getY(),controlTarget_->getBoundingRect().width(),controlTarget_->getBoundingRect().height());//propertyContainer_->getPropertyValue("Target").toRect();
-	//	double x0 = targetRect.x() + targetRect.width()/2;
-	//	double y0 = targetRect.y() + targetRect.height()/2;
-	//	double width = targetRect.width();
-	//	double height = targetRect.height();
-	//	double term1 = (x-x0)*(x-x0)/(width*width);
-	//	double term2 = (y-y0)*(y-y0)/(height*height);
-	//	if(term1 + term2 <= 1.0)
-	//		return true;
-	//	else
-	//		return false;
-	//}
-	//else
-	//{
-	//	return false;
-	//}
 }
 
 void TargetController::postDeserialize()
@@ -379,6 +365,9 @@ void TargetController::postDeserialize()
 	//Don't let user see OnTarget/OnTargetChanged, they are for internal use only
 	propertyContainer_->getProperty("OnTarget")->setVisible(false);
 	propertyContainer_->getProperty("OnTargetChanged")->setVisible(false);
+
+	//Whenever the ControlTarget name changes, we need to reset the ControlTarget pointer.  To accomplish this, we connect its edited() signal to our controlTargetNameEdited() slot
+	connect(propertyContainer_->getProperty("ControlTarget").data(),SIGNAL(edited()),this,SLOT(controlTargetNameEdited()));
 
 	setPropertyRuntimeEditable("FixationTime");
 	setPropertyRuntimeEditable("TotalTime");
@@ -414,6 +403,11 @@ bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 		return false;
 	//! \todo Add script verification once validate runs after full deserialization
 	return true;
+}
+
+void TargetController::controlTargetNameEdited()
+{
+	scriptableContainerWasReinitialized();
 }
 
 } //namespace Picto

@@ -31,6 +31,7 @@ public:
 	virtual bool hasEditableDescendants(){return false;};
 	virtual QString getUITemplate(){return "UIEnabled";};
 	virtual QString friendlyTypeName(){return "UI Enabled";};
+	virtual QString getUIGroup(){return "";};
 
 	virtual void upgradeVersion(QString deserializedVersion);
 signals:

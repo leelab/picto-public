@@ -30,6 +30,7 @@ public:
 
 	virtual QString getUITemplate(){return "Result";};
 	virtual QString friendlyTypeName(){return "Result";};
+	virtual QString getUIGroup(){return "State Machine Elements";};
 	void runResultScript();
 
 protected:
