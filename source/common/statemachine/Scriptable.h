@@ -26,6 +26,7 @@ public:
 	Scriptable();
 	virtual ~Scriptable(){};
 
+	virtual bool hasContentsForScriptEngine();
 	virtual bool bindToScriptEngine(QScriptEngine &engine);
 	/*! \brief Resets this scriptables data fields to their original values.
 	 */

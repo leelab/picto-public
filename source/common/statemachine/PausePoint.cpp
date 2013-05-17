@@ -64,10 +64,15 @@ QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 		QCoreApplication::processEvents();
 		command = engine->getEngineCommand();
 	}
-	runExitScript();
 	//If it was a stop that got us out of the pause, return an EngineAbort.
 	if(command == Engine::PictoEngine::StopEngine)
+	{
+		setLatestResult("EngineAbort");
 		return "EngineAbort";
+	}
+	setLatestResult("done");
+	getResult("done")->runResultScript();
+	runExitScript();
 	return "done";
 }
 
@@ -111,12 +116,13 @@ void PausePoint::upgradeVersion(QString deserializedVersion)
 			getPropertyContainer()->setPropertyValue("EntryScript",childList.first().staticCast<ObsoleteAsset>()->getValue());
 		}
 
-		childList = getGeneratedChildren("RestartingScript");
-		Q_ASSERT(childList.size() <= 1);
-		if(childList.size())
-		{
-			getPropertyContainer()->setPropertyValue("ExitScript",childList.first().staticCast<ObsoleteAsset>()->getValue());
-		}
+		//No one used this so we don't need to do it, and we're getting rid of PausePoint exit scripts.
+		//childList = getGeneratedChildren("RestartingScript");
+		//Q_ASSERT(childList.size() <= 1);
+		//if(childList.size())
+		//{
+		//	getPropertyContainer()->setPropertyValue("ExitScript",childList.first().staticCast<ObsoleteAsset>()->getValue());
+		//}
 	}
 }
 

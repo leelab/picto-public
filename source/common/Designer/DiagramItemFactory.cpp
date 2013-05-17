@@ -89,7 +89,7 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	else if(asset->inherits("Picto::UIInfo"))
 		returnVal = NULL;
 	else if(asset->inherits("Picto::LogicResult"))
-		returnVal = new ResultItem(editorState_, contextMenu_,asset);
+		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::Result"))
 		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::StateMachineElement"))

@@ -10,6 +10,12 @@ ResultContainer::ResultContainer()
 	AddDefinableObjectFactory("Result",resultFactory_);
 }
 
+void ResultContainer::reset()
+{
+	ScriptableContainer::reset();
+	latestResult_ = "";
+}
+
 //! \brief Returns a list of all possible results.
 QStringList ResultContainer::getResultList()
 {
@@ -49,6 +55,12 @@ bool ResultContainer::hasEditableDescendants()
 		return false;
 	return true;
 }
+
+QString ResultContainer::getLatestResult()
+{
+	return latestResult_;
+}
+
 
 //Tf you intend to limit the number of optional results, you must call setMaxOptionalResults before calling this function
 void ResultContainer::addRequiredResult(QString resultName)
@@ -153,6 +165,10 @@ bool ResultContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	return true;
 }
 
+void ResultContainer::setLatestResult(QString latestResult)
+{
+	latestResult_ = latestResult;
+}
 ////Put all child results that were serialized in into the results list.
 //void ResultContainer::updateResultsFromChildren()
 //{

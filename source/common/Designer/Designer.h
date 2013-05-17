@@ -178,6 +178,7 @@ private:
 
 	LevelUpButton* upButton;
 	QWidget *propertyEditor_;
+	QWidget *notesWidget_;
 
 	enum INFOTABS{ABOUTELEMENT,SCRIPTINFO,SYNTAXCHECK};
 	QWidget *assetInfoBox_;

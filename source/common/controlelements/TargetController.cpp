@@ -145,9 +145,9 @@ bool TargetController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	return isDonePrivate(engine);
 }
 
-QString TargetController::getResult()
+QSharedPointer<Result> TargetController::getResult()
 {
-	return result_;
+	return ResultContainer::getResult(result_);
 }
 
 bool TargetController::userOnTarget()
@@ -401,7 +401,11 @@ bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 {
 	if(!ControlElement::validateObject(xmlStreamReader))
 		return false;
-	//! \todo Add script verification once validate runs after full deserialization
+	if(propertyContainer_->getPropertyValue("ControlTarget").toString().isEmpty())
+	{
+		addError("Target Controller cannot have an empty 'ControlTarget' property.");
+		return false;
+	}
 	return true;
 }
 

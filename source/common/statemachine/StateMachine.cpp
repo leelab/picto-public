@@ -285,7 +285,10 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 			result = currElement_->run(engine);
 
 			if(result == "EngineAbort")
+			{
+				setLatestResult("EngineAbort");
 				break;
+			}
 		
 
 			//Find the transition from our current source with a SourceResult string that matches the result
@@ -311,6 +314,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 		{
 			result = nextElementName;
 
+			setLatestResult(result);
 			//Run result script if there is one.
 			results_.value(result)->runResultScript();	//Added in Picto Version 1.0.12.
 

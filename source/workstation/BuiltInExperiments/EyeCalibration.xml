@@ -1,47 +1,41 @@
-<PictoData><Name>EyeCalibration</Name><AnalysisContainer id="0"/><Experiment id="1"><SyntaxVersion id="2">0.0.1</SyntaxVersion>
+<PictoData id="2"><Name id="7">EyeCalibration</Name><Experiment id="1">
     <Task id="3">
       <StateMachine id="4">
-        <Parameter type="OperatorClick" id="5">
-          <Name id="6">operatorClick</Name>
-          <UIInfo id="7">
-            <Pos id="8" x="49" y="330"/>
-          </UIInfo>
-          <NewClick id="10">false</NewClick>
-          <Pos id="11" x="0" y="0"/>
-          <UIEnabled id="12">false</UIEnabled>
-          <UIOrder id="13">0</UIOrder>
-        </Parameter>
-        <UIInfo id="14">
-          <Pos id="15" x="645" y="521"/>
-        </UIInfo>
+        
+        
         
         <Name id="18">PresentStimuli</Name>
-        <Type id="19">StateMachine</Type>
+        
         <StateMachineElement type="StateMachine" id="20">
           
           <Name id="22">PresentSingleStimulus</Name>
-          <UIInfo id="23">
-            <Pos id="24" x="175" y="167"/>
-          </UIInfo>
+          
           <StateMachineElement type="State" id="26">
-            <EntryScript id="27">
-              Square.alpha = 255;
-              colWidth = Grid.width/Grid.columns;
-              rowHeight = Grid.height/Grid.rows;
-              Square.x = operatorClick.x-(operatorClick.x%colWidth)+colWidth/2;
-              Square.y = operatorClick.y-(operatorClick.y%rowHeight)+rowHeight/2;
-              Square.width = SquareDimension.value;
-              Square.height = SquareDimension.value;
-              Square.subjectView = true;
-              Target.x = Square.x;
-              Target.y = Square.y;
-            </EntryScript>
-            <FrameScript id="28">if(operatorClick.newClick &amp;&amp; (assistedCalibration.value == true))
+            <EntryScript id="27">//Get square position and size based on operator click and grid dimensions
+var colWidth = grid.width/grid.columns;
+var rowHeight = grid.height/grid.rows;
+square.x = operatorClick.x-(operatorClick.x%colWidth)+colWidth/2;
+square.y = operatorClick.y-(operatorClick.y%rowHeight)+rowHeight/2;
+square.width = squareDimension.value;
+square.height = squareDimension.value;
+//Put the fixation target where the square is
+target.x = square.x;
+target.y = square.y;            
+//Make square visible to user and indicate this to operator by 
+//bringing its alpha back to 255.
+square.subjectView = true;
+square.alpha = 255;</EntryScript>
+            <FrameScript id="28">//If we're in assisted calibration mode and the opeartor clicked, update 
+//eye calibration values
+if(operatorClick.newClick &amp;&amp; assistedCalibration.value)
 {
+	//Set the newClick value back to false, in case the operator clicks again right away
+	operatorClick.newClick = false;
+	//Get latest x,y eye positions
 	var x = posSig.getValue(&quot;x&quot;); 
 	var y = posSig.getValue(&quot;y&quot;);
-	var colWidth = Grid.width/Grid.columns;
-	var rowHeight = Grid.height/Grid.rows;
+	var colWidth = grid.width/grid.columns;
+	var rowHeight = grid.height/grid.rows;
 	var text = &quot;&quot;;
 	if((Experiment.xGain == 0) || (Experiment.yGain == 0))
 	{
@@ -49,26 +43,28 @@
 					&quot;not work when either gain\n&quot;+
 					&quot;value is zero&quot;
 	}
-	else if( (Math.abs(Square.x - 400) &lt; (colWidth/4.0))
-		&amp;&amp; (Math.abs(Square.y - 300) &lt; (rowHeight/4.0))
+	//If square is in the center, calculate offsets
+	else if( (Math.abs(square.x - 400) &lt; (colWidth/4.0))
+		&amp;&amp; (Math.abs(square.y - 300) &lt; (rowHeight/4.0))
 			)
 	{
-		Experiment.xOffset = Experiment.xOffset + (Square.x-x)/Experiment.xGain;
-		Experiment.yOffset = Experiment.yOffset + (Square.y-y)/Experiment.yGain;
+		Experiment.xOffset = Experiment.xOffset + (square.x-x)/Experiment.xGain;
+		Experiment.yOffset = Experiment.yOffset + (square.y-y)/Experiment.yGain;
 		text = &quot;Offsets were calculated&quot;
 	}
+	//If square is not in the center, calculate gains
 	else
 	{
 		var xGainC = 0;
 		var yGainC = 0;
-		if(Math.abs(Square.x - 400) &gt; (colWidth/4.0))
+		if(Math.abs(square.x - 400) &gt; (colWidth/4.0))
 		{
-			Experiment.xGain = Experiment.xGain*((Square.x-400)/(x-400));
+			Experiment.xGain = Experiment.xGain*((square.x-400)/(x-400));
 			xGainC = 1;
 		}
-		if(Math.abs(Square.y - 300) &gt; (rowHeight/4.0))
+		if(Math.abs(square.y - 300) &gt; (rowHeight/4.0))
 		{
-			Experiment.yGain = Experiment.yGain*((Square.y-300)/(y-300));
+			Experiment.yGain = Experiment.yGain*((square.y-300)/(y-300));
 			yGainC = 1;
 		}
 		if(xGainC || yGainC)
@@ -77,75 +73,63 @@
 			text = text + &quot;calculated&quot;;
 		}
 	}
+	//Tell operator what we did and put the text where the box was
 	assistFeedback.text = text;
-	var textX = Square.x+Square.width;
+	var textX = square.x+square.width;
 	if(textX + assistFeedback.width &gt; 800)
-		textX = Square.x-assistFeedback.width;
-	assistFeedback.setPos(textX,Square.y-Square.height/2.0);
+		textX = square.x-assistFeedback.width;
+	assistFeedback.setPos(textX,square.y-square.height/2.0);
 	assistFeedback.visible = true;
 }</FrameScript>
             <Name id="29">PresentStimulus</Name>
             <Result id="30">
               <Name id="31">Failed</Name>
-              <UIInfo id="32">
-                <Pos id="33" x="695" y="220"/>
-              </UIInfo>
+              
               <UIEnabled id="35">false</UIEnabled>
               <UIOrder id="36">0</UIOrder>
             </Result>
-            <UIInfo id="37">
-              <Pos id="38" x="364" y="155"/>
-            </UIInfo>
-            <ExitScript id="40">
-              Square.subjectView = false;
-              Square.alpha = 122;
+            
+            <ExitScript id="40">//The user either looked at this point or didn't.  Lets turn off 
+//the square so that it will be interesting when it comes back on
+//and indicate to the operator that we did this by bringing the 
+//square opacity down to half.
+square.subjectView = false;
+square.alpha = 122;
             </ExitScript>
             <ControlElement type="Target Controller" id="42">
               <Name id="43">FixationTracker</Name>
               <Result id="44">
                 <Name id="45">Reaquistion Time Exceeded</Name>
                 <UIEnabled id="46">false</UIEnabled>
-                <UIInfo id="47">
-                  <Pos id="48" x="114" y="137"/>
-                </UIInfo>
+                
                 <UIOrder id="50">0</UIOrder>
               </Result>
               <Result id="51">
                 <Name id="52">Initial Aquistion Time Exceeded</Name>
                 <UIEnabled id="53">false</UIEnabled>
-                <UIInfo id="54">
-                  <Pos id="55" x="323" y="137"/>
-                </UIInfo>
+                
                 <UIOrder id="57">0</UIOrder>
               </Result>
               <Result id="58">
                 <Name id="59">Total Time Excceeded</Name>
                 <UIEnabled id="60">false</UIEnabled>
-                <UIInfo id="61">
-                  <Pos id="62" x="557" y="137"/>
-                </UIInfo>
+                
                 <UIOrder id="64">0</UIOrder>
               </Result>
               <Result id="65">
                 <Name id="66">Broke Fixation</Name>
                 <UIEnabled id="67">false</UIEnabled>
-                <UIInfo id="68">
-                  <Pos id="69" x="723" y="137"/>
-                </UIInfo>
+                
                 <UIOrder id="71">0</UIOrder>
               </Result>
               <Result id="72">
                 <Name id="73">Success</Name>
                 <UIEnabled id="74">false</UIEnabled>
-                <UIInfo id="75">
-                  <Pos id="76" x="837" y="137"/>
-                </UIInfo>
+                
                 <UIOrder id="78">0</UIOrder>
               </Result>
-              <UIInfo id="79">
-                <Pos id="80" x="168" y="171"/>
-              </UIInfo>
-              <ControlTarget id="82">Target</ControlTarget>
+              
+              <ControlTarget id="82">target</ControlTarget>
               <FixationTime id="83">400</FixationTime>
               <MaxInitialAcquisitionTime id="84">1100</MaxInitialAcquisitionTime>
               <SignalChannel id="85">Position</SignalChannel>
@@ -154,54 +138,52 @@
               <MaxReacquisitionTime id="88">1100</MaxReacquisitionTime>
               <MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime>
               <ReacquisitionAllowed id="90">true</ReacquisitionAllowed>
-              <TargetEntryScript id="91"/>
-              <TargetExitScript id="92"/>
-              <Type id="93"/>
+              
+              
+              
               <UIEnabled id="94">true</UIEnabled>
               <UIOrder id="95">0</UIOrder>
             </ControlElement>
             <Result id="96">
               <Name id="97">Fixated</Name>
-              <UIInfo id="98">
-                <Pos id="99" x="689" y="338"/>
-              </UIInfo>
+              
               <UIEnabled id="101">false</UIEnabled>
               <UIOrder id="102">0</UIOrder>
-            </Result>
+            <EntryScript id="9">//User fixated on square.  Set it green to indicate this
+//to the operator
+square.red = 0;</EntryScript></Result>
             <Transition id="103">
               <Destination id="104">Failed</Destination>
               <Source id="105">FixationTracker</Source>
               <SourceResult id="106">Reaquistion Time Exceeded</SourceResult>
-            </Transition>
+            <DId id="55">30</DId><SId id="56">42</SId><SRId id="61">44</SRId></Transition>
             <Transition id="107">
               <Destination id="108">Failed</Destination>
               <Source id="109">FixationTracker</Source>
               <SourceResult id="110">Initial Aquistion Time Exceeded</SourceResult>
-            </Transition>
+            <DId id="62">30</DId><SId id="63">42</SId><SRId id="68">51</SRId></Transition>
             <Transition id="111">
               <Destination id="112">Failed</Destination>
               <Source id="113">FixationTracker</Source>
               <SourceResult id="114">Total Time Excceeded</SourceResult>
-            </Transition>
+            <DId id="69">30</DId><SId id="70">42</SId><SRId id="75">58</SRId></Transition>
             <Transition id="115">
               <Destination id="116">Failed</Destination>
               <Source id="117">FixationTracker</Source>
               <SourceResult id="118">Broke Fixation</SourceResult>
-            </Transition>
+            <DId id="76">30</DId><SId id="77">42</SId><SRId id="79">65</SRId></Transition>
             <Transition id="119">
               <Destination id="120">Fixated</Destination>
               <Source id="121">FixationTracker</Source>
               <SourceResult id="122">Success</SourceResult>
-            </Transition>
-            <BackgroundColor A="255" B="0" G="0" R="0" id="123">#000000</BackgroundColor>
+            <DId id="80">96</DId><SId id="81">42</SId><SRId id="91">72</SRId></Transition>
+            <BackgroundColor id="123">0,0,0,255</BackgroundColor>
             <UIEnabled id="125">false</UIEnabled>
             <UIOrder id="126">0</UIOrder>
           </StateMachineElement>
           <Result id="127">
             <Name id="128">StimulusPresented</Name>
-            <UIInfo id="129">
-              <Pos id="130" x="591" y="79"/>
-            </UIInfo>
+            
             <UIEnabled id="132">false</UIEnabled>
             <UIOrder id="133">0</UIOrder>
           </Result>
@@ -209,46 +191,48 @@
             <Destination id="135">StimulusPresented</Destination>
             <Source id="136">PresentStimulus</Source>
             <SourceResult id="137">Failed</SourceResult>
-          </Transition>
+          <DId id="98">127</DId><SId id="99">26</SId><SRId id="100">30</SRId></Transition>
           <StateMachineElement type="State" id="138">
             <ControlElement type="Script Controller" id="139">
               <Name id="140">WaitForOperatorClick</Name>
               <Result id="141">
-                <Name id="142">Done</Name>
+                <Name id="142">true</Name>
                 <UIEnabled id="143">false</UIEnabled>
-                <UIInfo id="144">
-                  <Pos id="145" x="100" y="90"/>
-                </UIInfo>
+                
                 <UIOrder id="147">0</UIOrder>
               </Result>
               <Script id="148">return operatorClick.newClick;</Script>
-              <UIInfo id="149">
-                <Pos id="150" x="204" y="197"/>
-              </UIInfo>
-              <Type id="152"/>
+              
+              
               <UIEnabled id="153">false</UIEnabled>
               <UIOrder id="154">0</UIOrder>
             </ControlElement>
             <Name id="155">WaitForClick</Name>
             <Result id="156">
               <Name id="157">OperatorClicked</Name>
-              <UIInfo id="158">
-                <Pos id="159" x="616" y="217"/>
-              </UIInfo>
+              
               <UIEnabled id="161">false</UIEnabled>
               <UIOrder id="162">0</UIOrder>
             </Result>
-            <UIInfo id="163">
-              <Pos id="164" x="157" y="156"/>
-            </UIInfo>
+            
             <Transition id="166">
               <Destination id="167">OperatorClicked</Destination>
               <Source id="168">WaitForOperatorClick</Source>
-              <SourceResult id="169">Done</SourceResult>
-            </Transition>
-            <ExitScript id="170">Square.red = 255;
-assistFeedback.visible = false;</ExitScript>
-            <BackgroundColor A="255" B="0" G="0" R="0" id="171">#000000</BackgroundColor>
+              <SourceResult id="169">true</SourceResult>
+            <DId id="146">156</DId><SId id="149">139</SId><SRId id="150">141</SRId></Transition>
+            <ExitScript id="170">//Square will still be green if the user fixated last time.  
+//Turn it back to yellow now.
+square.red = 255;
+
+//If there was a feedback message from the Assisisted Calibration system,
+//we can stop showing it now.
+assistFeedback.visible = false;
+
+//Later logic will look to see if there is a new click available for the 
+//purposes of assisted calibration.  Set newClick back to false
+//so that the new click can be detected.
+operatorClick.newClick = false;</ExitScript>
+            <BackgroundColor id="171">0,0,0,255</BackgroundColor>
             <EntryScript id="173"/>
             <FrameScript id="174"/>
             <UIEnabled id="176">false</UIEnabled>
@@ -258,232 +242,113 @@ assistFeedback.visible = false;</ExitScript>
             <Destination id="179">PresentStimulus</Destination>
             <Source id="180">WaitForClick</Source>
             <SourceResult id="181">OperatorClicked</SourceResult>
-          </Transition>
+          <DId id="151">26</DId><SId id="152">138</SId><SRId id="158">156</SRId></Transition>
           <VisualElement type="Grid Graphic" id="182">
-            <Color A="255" B="255" G="255" R="255" id="183">#ffffff</Color>
-            <Dimensions height="600" id="184" width="800" x="0" y="0"/>
-            <Name id="185">Grid</Name>
-            <UIInfo id="186">
-              <Pos id="187" x="189" y="362"/>
-            </UIInfo>
+            <Color id="183">255,255,255,255</Color>
+            
+            <Name id="185">grid</Name>
+            
             <UIEnabled id="189">true</UIEnabled>
             <Columns id="190">7</Columns>
             <Rows id="191">7</Rows>
             <SubjectView id="192">false</SubjectView>
             <Layer id="193">0</Layer>
             <OperatorView id="194">true</OperatorView>
-            <Position id="195" x="0" y="0"/>
+            <Position id="195">400,300</Position>
             <UIOrder id="196">0</UIOrder>
             <Visible id="197">true</Visible>
-          </VisualElement>
+          <Size id="163">800,600</Size></VisualElement>
           <Parameter type="Range" id="198">
             <Increment id="199">1</Increment>
             <Max id="200">200</Max>
-            <Name id="201">SquareDimension</Name>
-            <UIInfo id="202">
-              <Pos id="203" x="326" y="362"/>
-            </UIInfo>
+            <Name id="201">squareDimension</Name>
+            
             <Value id="205">50</Value>
             <UIEnabled id="206">true</UIEnabled>
             <Min id="207">0</Min>
             <UIOrder id="208">0</UIOrder>
-            <Units id="209"/>
-          </Parameter>
-          <StateMachineElement type="StateMachine" id="210">
             
-            <Name id="212">FixationFeedback</Name>
-            <Result id="213">
-              <Name id="214">Done</Name>
-              <UIInfo id="215">
-                <Pos id="216" x="540" y="65"/>
-              </UIInfo>
-              <UIEnabled id="218">false</UIEnabled>
-              <UIOrder id="219">0</UIOrder>
-            </Result>
-            <StateMachineElement type="ScriptElement" id="220">
-              <Name id="221">SetTargetGreen</Name>
-              <Result id="222">
-                <Name id="223">false</Name>
-                <UIEnabled id="224">false</UIEnabled>
-                <UIInfo id="225">
-                  <Pos id="226" x="124" y="133"/>
-                </UIInfo>
-                <UIOrder id="228">0</UIOrder>
-              </Result>
-              <Result id="229">
-                <Name id="230">true</Name>
-                <UIEnabled id="231">false</UIEnabled>
-                <UIInfo id="232">
-                  <Pos id="233" x="199" y="133"/>
-                </UIInfo>
-                <UIOrder id="235">0</UIOrder>
-              </Result>
-              <Script id="236">Square.red = 0;</Script>
-              <UIInfo id="237">
-                <Pos id="238" x="81" y="175"/>
-              </UIInfo>
-              <Type id="240">ScriptElement</Type>
-              <UIEnabled id="241">false</UIEnabled>
-              <UIOrder id="242">0</UIOrder>
-            </StateMachineElement>
-            <StateMachineElement type="Reward" id="243">
-              <Name id="244">Reward</Name>
-              <Result id="245">
-                <Name id="246">done</Name>
-                <UIEnabled id="247">false</UIEnabled>
-                <UIInfo id="248">
-                  <Pos id="249" x="133" y="157"/>
-                </UIInfo>
-                <UIOrder id="251">0</UIOrder>
-              </Result>
-              <RewardChan id="252">1</RewardChan>
-              <RewardQty id="253">60</RewardQty>
-              <UIInfo id="254">
-                <Pos id="255" x="334" y="187"/>
-              </UIInfo>
-              <Type id="257">Reward</Type>
-              <UIEnabled id="258">true</UIEnabled>
-              <UIOrder id="259">0</UIOrder>
-              <NumRewards id="499">1</NumRewards>
-            <MinRewardPeriod id="491">125</MinRewardPeriod></StateMachineElement>
-            <Transition id="260">
-              <Destination id="261">Reward</Destination>
-              <Source id="262">SetTargetGreen</Source>
-              <SourceResult id="263">false</SourceResult>
-            </Transition>
-            <Transition id="264">
-              <Destination id="265">Reward</Destination>
-              <Source id="266">SetTargetGreen</Source>
-              <SourceResult id="267">true</SourceResult>
-            </Transition>
-            <Transition id="268">
-              <Destination id="269">Done</Destination>
-              <Source id="270">Reward</Source>
-              <SourceResult id="271">done</SourceResult>
-            </Transition>
-            <UIInfo id="272">
-              <Pos id="273" x="502" y="284"/>
-            </UIInfo>
-            <EntryScript id="275"/>
-            <ExitScript id="276"/>
-            <Level id="277">Stage</Level>
-            <Type id="278">StateMachine</Type>
-            <UIEnabled id="279">false</UIEnabled>
-            <UIOrder id="280">0</UIOrder>
-          <Transition id="502"><Destination id="498">SetTargetGreen</Destination><Source id="500"/><SourceResult id="501"/></Transition></StateMachineElement>
-          <Transition id="281">
-            <Destination id="282">FixationFeedback</Destination>
-            <Source id="283">PresentStimulus</Source>
-            <SourceResult id="284">Fixated</SourceResult>
-          </Transition>
-          <Transition id="285">
-            <Destination id="286">StimulusPresented</Destination>
-            <Source id="287">FixationFeedback</Source>
-            <SourceResult id="288">Done</SourceResult>
-          </Transition>
-          <EntryScript id="289">Target.radius = TargetRadius.value;
+          </Parameter>
+          
+          
+          
+          <EntryScript id="289">//Update target radius from the parameter
+target.radius = targetRadius.value;
+
+//If assisted calibration is being used, change grid color 
+//and show the assistance label
 if(assistedCalibration.value)
 {
 	assistLabel.visible = true;
-	Grid.setColor(0,255,0);
+	grid.setColor(0,255,0);
 }</EntryScript>
           <Parameter type="Range" id="290">
             <Increment id="291">1</Increment>
             <Max id="292">1000</Max>
             <Min id="293">0</Min>
-            <Name id="294">TargetRadius</Name>
+            <Name id="294">targetRadius</Name>
             <UIEnabled id="295">true</UIEnabled>
-            <UIInfo id="296">
-              <Pos id="297" x="58" y="356"/>
-            </UIInfo>
+            
             <Value id="299">80</Value>
             <UIOrder id="300">0</UIOrder>
-            <Units id="301"/>
+            
           </Parameter>
           <ExitScript id="302"/>
-          <Level id="303">Stage</Level>
-          <Type id="304">StateMachine</Type>
+          
+          
           <UIEnabled id="305">false</UIEnabled>
           <UIOrder id="306">0</UIOrder>
-        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/></Transition><Parameter type="SignalValue" id="621"><Name id="622">posSig</Name><Signal id="623">Position</Signal><UIEnabled id="624">false</UIEnabled><UIInfo id="625"><OpenDescendant id="626">0</OpenDescendant><Pos id="627" x="193" y="471"/></UIInfo><UIOrder id="628">0</UIOrder></Parameter><Parameter type="Boolean" id="618"><FalseLabel id="619">False</FalseLabel><Name id="620">assistedCalibration</Name><TrueLabel id="629">True</TrueLabel><UIEnabled id="630">true</UIEnabled><UIInfo id="631"><OpenDescendant id="632">0</OpenDescendant><Pos id="648" x="71" y="473"/></UIInfo><UIOrder id="649">0</UIOrder><Value id="650">false</Value></Parameter><VisualElement type="Text Graphic" id="657"><Color A="255" B="0" G="170" R="255" id="658">#ffaa00</Color><Dimensions height="20" id="659" width="230" x="0" y="0"/><Layer id="660">0</Layer><Name id="661">assistLabel</Name><OperatorView id="662">true</OperatorView><Position id="663" x="290" y="0"/><SubjectView id="664">false</SubjectView><Text id="665">ASSISTED CALIBRATION MODE</Text><UIEnabled id="666">false</UIEnabled><UIInfo id="667"><OpenDescendant id="668">0</OpenDescendant><Pos id="669" x="300" y="469"/></UIInfo><UIOrder id="670">0</UIOrder><Visible id="671">false</Visible></VisualElement></StateMachineElement>
+        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/><DId id="240">138</DId></Transition><Parameter type="SignalValue" id="621"><Name id="622">posSig</Name><Signal id="623">Position</Signal><UIEnabled id="624">false</UIEnabled><UIOrder id="628">0</UIOrder></Parameter><Parameter type="Boolean" id="618"><FalseLabel id="619">False</FalseLabel><Name id="620">assistedCalibration</Name><TrueLabel id="629">True</TrueLabel><UIEnabled id="630">true</UIEnabled><UIOrder id="649">0</UIOrder><Value id="650">false</Value></Parameter><VisualElement type="Text Graphic" id="657"><Color id="658">255,170,0,255</Color><Layer id="660">0</Layer><Name id="661">assistLabel</Name><OperatorView id="662">true</OperatorView><Position id="663">230,0</Position><SubjectView id="664">false</SubjectView><Text id="665">ASSISTED CALIBRATION MODE</Text><UIEnabled id="666">true</UIEnabled><UIOrder id="670">0</UIOrder><Visible id="671">false</Visible><Size id="255">290,20</Size></VisualElement><Parameter type="OperatorClick" id="215">
+          <Name id="216">operatorClick</Name>
+          
+          <NewClick id="217">false</NewClick>
+          <Pos id="220">0,0</Pos>
+          <UIEnabled id="224">false</UIEnabled>
+          <UIOrder id="225">0</UIOrder>
+        </Parameter><StateMachineElement type="Reward" id="145">
+              <Name id="159">Reward</Name>
+              <Result id="160">
+                <Name id="164">done</Name>
+                <UIEnabled id="165">false</UIEnabled>
+                
+                <UIOrder id="172">0</UIOrder>
+              </Result>
+              <RewardChan id="175">1</RewardChan>
+              <RewardQty id="184">60</RewardQty>
+              
+              
+              <UIEnabled id="186">true</UIEnabled>
+              <UIOrder id="187">0</UIOrder>
+              <NumRewards id="209">1</NumRewards>
+            <MinRewardPeriod id="188">125</MinRewardPeriod><EntryScript id="144"/></StateMachineElement><Transition id="16"><DId id="17">145</DId><Destination id="19">Reward</Destination><SId id="21">26</SId><SRId id="23">96</SRId><Source id="24">PresentStimulus</Source><SourceResult id="222">Fixated</SourceResult></Transition><Transition id="223"><DId id="230">127</DId><Destination id="231">StimulusPresented</Destination><SId id="232">145</SId><SRId id="233">160</SRId><Source id="234">Reward</Source><SourceResult id="235">done</SourceResult></Transition></StateMachineElement>
         <VisualElement type="Box Graphic" id="307">
-          <Color A="255" B="0" G="255" R="255" id="308">#ffff00</Color>
-          <Dimensions height="10" id="309" width="10" x="0" y="0"/>
-          <Name id="310">Square</Name>
-          <UIInfo id="311">
-            <Pos id="312" x="162" y="332"/>
-          </UIInfo>
+          <Color id="308">255,255,0,255</Color>
+          
+          <Name id="310">square</Name>
+          
           <Visible id="314">true</Visible>
           <SubjectView id="315">false</SubjectView>
           <Layer id="316">0</Layer>
           <OperatorView id="317">true</OperatorView>
           <Outline id="318">false</Outline>
           <OutlineThickness id="319">0</OutlineThickness>
-          <Position id="320" x="0" y="0"/>
+          <Position id="320">0,0</Position>
           <UIEnabled id="321">false</UIEnabled>
           <UIOrder id="322">0</UIOrder>
-        </VisualElement>
-        <Parameter type="Numeric" id="323">
-          <Name id="324">StimuliPresented</Name>
-          <UIInfo id="325">
-            <Pos id="326" x="285" y="330"/>
-          </UIInfo>
-          <UIEnabled id="328">false</UIEnabled>
-          <UIOrder id="329">0</UIOrder>
-          <Units id="330"/>
-          <Value id="331">0</Value>
-        </Parameter>
-        <StateMachineElement type="ScriptElement" id="332">
-          <Name id="333">IncrementStimulusCounter</Name>
-          <Result id="334">
-            <Name id="335">false</Name>
-            <UIEnabled id="336">false</UIEnabled>
-            <UIInfo id="337">
-              <Pos id="338" x="71" y="75"/>
-            </UIInfo>
-            <UIOrder id="340">0</UIOrder>
-          </Result>
-          <Result id="341">
-            <Name id="342">true</Name>
-            <UIEnabled id="343">false</UIEnabled>
-            <UIInfo id="344">
-              <Pos id="345" x="146" y="75"/>
-            </UIInfo>
-            <UIOrder id="347">0</UIOrder>
-          </Result>
-          <Script id="348">StimuliPresented.value++; return true;</Script>
-          <UIInfo id="349">
-            <Pos id="350" x="481" y="86"/>
-          </UIInfo>
-          <Type id="352">ScriptElement</Type>
-          <UIEnabled id="353">false</UIEnabled>
-          <UIOrder id="354">0</UIOrder>
-        </StateMachineElement>
-        <Transition id="355">
-          <Destination id="356">IncrementStimulusCounter</Destination>
-          <Source id="357">PresentSingleStimulus</Source>
-          <SourceResult id="358">StimulusPresented</SourceResult>
-        </Transition>
-        <Transition id="359">
-          <Destination id="360">PresentSingleStimulus</Destination>
-          <Source id="361">IncrementStimulusCounter</Source>
-          <SourceResult id="362">false</SourceResult>
-        </Transition>
-        <Transition id="363">
-          <Destination id="364">PresentSingleStimulus</Destination>
-          <Source id="365">IncrementStimulusCounter</Source>
-          <SourceResult id="366">true</SourceResult>
-        </Transition>
+        <Size id="272">10,10</Size></VisualElement>
+        
+        
+        
+        
+        
         <ControlTarget type="CircleTarget" id="367">
-          <Name id="368">Target</Name>
-          <UIInfo id="369">
-            <Pos id="370" x="179" y="426"/>
-          </UIInfo>
+          <Name id="368">target</Name>
+          
           <Radius id="372">80</Radius>
-          <Color A="255" B="0" G="255" R="0" id="373">#00ff00</Color>
+          <Color id="373">0,255,0,255</Color>
           <Layer id="374">0</Layer>
           <OperatorView id="375">true</OperatorView>
-          <Position id="376" x="0" y="0"/>
+          <Position id="376">0,0</Position>
           <SubjectView id="377">false</SubjectView>
           <UIEnabled id="378">false</UIEnabled>
           <UIOrder id="379">0</UIOrder>
@@ -491,22 +356,18 @@ if(assistedCalibration.value)
         </ControlTarget>
         <EntryScript id="381"/>
         <ExitScript id="382"/>
-        <Level id="383">Stage</Level>
+        
         <UIEnabled id="384">false</UIEnabled>
         <UIOrder id="385">0</UIOrder>
-      <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/></Transition><VisualElement type="Text Graphic" id="633"><Color A="255" B="0" G="170" R="255" id="634">#ffaa00</Color><Dimensions height="60" id="635" width="200" x="0" y="0"/><Layer id="636">0</Layer><Name id="637">assistFeedback</Name><OperatorView id="638">true</OperatorView><Position id="639" x="0" y="0"/><SubjectView id="640">false</SubjectView><Text id="641"/><UIEnabled id="642">false</UIEnabled><UIInfo id="643"><OpenDescendant id="644">0</OpenDescendant><Pos id="645" x="290" y="425"/></UIInfo><UIOrder id="646">0</UIOrder><Visible id="647">true</Visible></VisualElement></StateMachine>
-      <UIInfo id="386">
-        <Pos id="387" x="1668" y="1744"/>
-      </UIInfo>
-      <Name id="389">Eye Calibration</Name>
+      <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/><DId id="326">20</DId><SId id="327">0</SId></Transition><VisualElement type="Text Graphic" id="633"><Color id="634">255,170,0,255</Color><Layer id="636">0</Layer><Name id="637">assistFeedback</Name><OperatorView id="638">true</OperatorView><Position id="639">0,0</Position><SubjectView id="640">false</SubjectView><Text id="641"/><UIEnabled id="642">false</UIEnabled><UIOrder id="646">0</UIOrder><Visible id="647">true</Visible><Size id="334">200,60</Size></VisualElement><Transition id="33"><DId id="34">20</DId><Destination id="37">PresentSingleStimulus</Destination><SId id="38">20</SId><SRId id="39">127</SRId><Source id="41">PresentSingleStimulus</Source><SourceResult id="47">StimulusPresented</SourceResult></Transition></StateMachine>
+      
+      <Name id="389">EyeCalibration</Name>
     </Task>
-<UIInfo id="390">
-	<Pos id="392" x="0" y="0"/>
-<OpenDescendant id="593">1</OpenDescendant></UIInfo>
+
 
 <XGain id="394">1</XGain>
 <XOffset id="395">0</XOffset>
 <XYSignalShear id="396">0</XYSignalShear>
 <YGain id="397">1</YGain>
 <YOffset id="398">0</YOffset>
-</Experiment></PictoData>
+<HostId id="339">{656fa5c1-d1c3-431f-bddb-e053a927178c}</HostId></Experiment><SyntaxVersion id="342">0.0.1</SyntaxVersion><UIData id="343"><AssociateId id="344">{962098af-381b-4e81-adb7-4f3365d1c042}</AssociateId><LinkedHostId id="345">{656fa5c1-d1c3-431f-bddb-e053a927178c}</LinkedHostId><LinkedHostName id="346">Experiment</LinkedHostName><Name id="347">Not Yet Named</Name><OpenAsset id="348">1</OpenAsset><UIElement id="351"><HostLink id="352"><ParentId id="353">367</ParentId><ParentPath id="354">EyeCalibration::PresentStimuli::target</ParentPath></HostLink><Pos id="369">208,429</Pos></UIElement><UIElement id="399"><HostLink id="400"><ParentId id="401">198</ParentId><ParentPath id="402">EyeCalibration::PresentStimuli::PresentSingleStimulus::squareDimension</ParentPath></HostLink><Pos id="403">326,362</Pos></UIElement><UIElement id="404"><HostLink id="405"><ParentId id="406">290</ParentId><ParentPath id="407">EyeCalibration::PresentStimuli::PresentSingleStimulus::targetRadius</ParentPath></HostLink><Pos id="408">58,356</Pos></UIElement><UIElement id="409"><HostLink id="410"><ParentId id="411">621</ParentId><ParentPath id="412">EyeCalibration::PresentStimuli::PresentSingleStimulus::posSig</ParentPath></HostLink><Pos id="413">193,471</Pos></UIElement><UIElement id="414"><HostLink id="415"><ParentId id="416">618</ParentId><ParentPath id="417">EyeCalibration::PresentStimuli::PresentSingleStimulus::assistedCalibration</ParentPath></HostLink><Pos id="418">71,473</Pos></UIElement><UIElement id="419"><HostLink id="420"><ParentId id="421">127</ParentId><ParentPath id="422">EyeCalibration::PresentStimuli::PresentSingleStimulus::StimulusPresented</ParentPath></HostLink><Pos id="423">591,79</Pos></UIElement><UIElement id="424"><HostLink id="425"><ParentId id="426">44</ParentId><ParentPath id="427">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Reaquistion Time Exceeded</ParentPath></HostLink><Pos id="428">114,137</Pos></UIElement><UIElement id="429"><HostLink id="430"><ParentId id="431">51</ParentId><ParentPath id="432">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Initial Aquistion Time Exceeded</ParentPath></HostLink><Pos id="433">323,137</Pos></UIElement><UIElement id="434"><HostLink id="435"><ParentId id="436">58</ParentId><ParentPath id="437">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Total Time Excceeded</ParentPath></HostLink><Pos id="438">557,137</Pos></UIElement><UIElement id="439"><HostLink id="440"><ParentId id="441">65</ParentId><ParentPath id="442">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Broke Fixation</ParentPath></HostLink><Pos id="443">723,137</Pos></UIElement><UIElement id="444"><HostLink id="445"><ParentId id="446">72</ParentId><ParentPath id="447">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Success</ParentPath></HostLink><Pos id="448">837,137</Pos></UIElement><UIElement id="449"><HostLink id="450"><ParentId id="451">42</ParentId><ParentPath id="452">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker</ParentPath></HostLink><Pos id="453">168,171</Pos></UIElement><UIElement id="454"><HostLink id="455"><ParentId id="456">30</ParentId><ParentPath id="457">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::Failed</ParentPath></HostLink><Pos id="458">695,220</Pos></UIElement><UIElement id="459"><HostLink id="460"><ParentId id="461">96</ParentId><ParentPath id="462">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::Fixated</ParentPath></HostLink><Pos id="463">689,338</Pos></UIElement><UIElement id="464"><HostLink id="465"><ParentId id="466">26</ParentId><ParentPath id="467">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus</ParentPath></HostLink><Pos id="468">364,155</Pos></UIElement><UIElement id="469"><HostLink id="470"><ParentId id="471">141</ParentId><ParentPath id="472">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick::WaitForOperatorClick::true</ParentPath></HostLink><Pos id="473">100,90</Pos></UIElement><UIElement id="474"><HostLink id="475"><ParentId id="476">139</ParentId><ParentPath id="477">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick::WaitForOperatorClick</ParentPath></HostLink><Pos id="478">204,197</Pos></UIElement><UIElement id="479"><HostLink id="480"><ParentId id="481">156</ParentId><ParentPath id="482">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick::OperatorClicked</ParentPath></HostLink><Pos id="483">616,217</Pos></UIElement><UIElement id="484"><HostLink id="485"><ParentId id="486">138</ParentId><ParentPath id="487">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick</ParentPath></HostLink><Pos id="488">157,156</Pos></UIElement><UIElement id="539"><HostLink id="540"><ParentId id="541">182</ParentId><ParentPath id="542">EyeCalibration::PresentStimuli::PresentSingleStimulus::grid</ParentPath></HostLink><Pos id="543">190,362</Pos></UIElement><UIElement id="544"><HostLink id="545"><ParentId id="546">657</ParentId><ParentPath id="547">EyeCalibration::PresentStimuli::PresentSingleStimulus::assistLabel</ParentPath></HostLink><Pos id="548">300,469</Pos></UIElement><UIElement id="549"><HostLink id="550"><ParentId id="551">20</ParentId><ParentPath id="552">EyeCalibration::PresentStimuli::PresentSingleStimulus</ParentPath></HostLink><Pos id="553">226,166</Pos></UIElement><UIElement id="554"><HostLink id="555"><ParentId id="556">307</ParentId><ParentPath id="557">EyeCalibration::PresentStimuli::square</ParentPath></HostLink><Pos id="558">191,336</Pos></UIElement><UIElement id="559"><HostLink id="560"><ParentId id="561">633</ParentId><ParentPath id="562">EyeCalibration::PresentStimuli::assistFeedback</ParentPath></HostLink><Pos id="563">280,339</Pos></UIElement><UIElement id="564"><HostLink id="565"><ParentId id="566">4</ParentId><ParentPath id="567">EyeCalibration::PresentStimuli</ParentPath></HostLink><Pos id="568">645,521</Pos></UIElement><UIElement id="593"><HostLink id="594"><ParentId id="595">3</ParentId><ParentPath id="596">EyeCalibration</ParentPath></HostLink><Pos id="597">1668,1744</Pos></UIElement><UIElement id="598"><HostLink id="599"><ParentId id="600">1</ParentId><ParentPath id="601"/></HostLink><Pos id="602">0,0</Pos></UIElement><UIEnabled id="349">false</UIEnabled><UIOrder id="350">0</UIOrder><UIElement id="226"><HostLink id="227"><ParentId id="228">215</ParentId><ParentPath id="229">EyeCalibration::PresentStimuli::PresentSingleStimulus::operatorClick</ParentPath></HostLink><Pos id="236">390,472</Pos></UIElement><UIElement id="238"><HostLink id="239"><ParentId id="241">145</ParentId><ParentPath id="242">EyeCalibration::PresentStimuli::PresentSingleStimulus::Reward</ParentPath></HostLink><Pos id="248">518,263</Pos></UIElement><UIElement id="202"><HostLink id="203"><ParentId id="204">160</ParentId><ParentPath id="211">EyeCalibration::PresentStimuli::PresentSingleStimulus::Reward::done</ParentPath></HostLink><Pos id="237">133,157</Pos></UIElement></UIData></PictoData>

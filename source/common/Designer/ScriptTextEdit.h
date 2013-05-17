@@ -16,11 +16,8 @@ class ScriptTextEdit : public SearchableTextEdit
 {
 	Q_OBJECT
 public: 
-	ScriptTextEdit();
-signals:
-	void focusOut();
+	ScriptTextEdit(bool singleLine = false);
 protected:
-	virtual bool event(QEvent* e);
 	virtual void focusOutEvent(QFocusEvent *e);
 private:
 	ScriptSyntaxHighlighter *syntaxHighlighter_;

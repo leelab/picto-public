@@ -111,5 +111,7 @@
         <file>icons/sensor.svg</file>
         <file>icons/random.svg</file>
         <file>icons/mouseclick.svg</file>
+        <file>icons/scope.icns</file>
+        <file>icons/scope.ico</file>
     </qresource>
 </RCC>

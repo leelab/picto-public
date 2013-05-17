@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QMetaProperty>
+#include <QRegularExpression>
 #include "Scriptable.h"
 #include "../memleakdetect.h"
 namespace Picto {
@@ -10,15 +11,8 @@ Scriptable::Scriptable()
 	AddDefinableProperty(QVariant::Int,"UIOrder",0);
 }
 
-bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
+bool Scriptable::hasContentsForScriptEngine()
 {
-	//Add object to scripting environment unless its name is empty or contains whitespace.
-	if(getName().isEmpty())
-		return true;
-
-	if(getName().contains(" "))
-		return true;
-
 	//If the object has no Q_PROPERTIES OR local public slots, don't add it.
 	int numScriptableClassProps = Scriptable::staticMetaObject.propertyCount();
 	int numScriptableClassFuncs = Scriptable::staticMetaObject.methodCount();
@@ -39,45 +33,36 @@ bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
 			}
 		}
 		if(!hasPubSlots)
-			return true;
+			return false;
 	}
+	return true;
+}
 
-	//If we got here, there's something to add to the script engine.  Add it.
-	QScriptValue qsValue = engine.newQObject(this,QScriptEngine::QtOwnership);
-	engine.globalObject().setProperty(getName(),qsValue);
-	//Check for errors
-	if(engine.hasUncaughtException())
-	{
-		QString errorMsg = "Uncaught exception in Script Element " + getName() +"\n";
-		errorMsg += QString("Line %1: %2\n").arg(engine.uncaughtExceptionLineNumber())
-										  .arg(engine.uncaughtException().toString());
-		errorMsg += QString("Backtrace: %1\n").arg(engine.uncaughtExceptionBacktrace().join(", "));
-		qDebug()<<errorMsg;
-		return false;
+bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
+{
+	if(!hasContentsForScriptEngine())
+		return true;
+	Q_ASSERT(!getName().isEmpty());
+	Q_ASSERT(!getName().contains(" "));
+
+	QString myScriptValueName = getName().simplified().remove(' ');
+	QScriptValue myScriptValue = engine.globalObject().property(myScriptValueName);
+	
+	if(!myScriptValue.isValid())
+	{	//This ScriptValue hasn't been created yet.  Create it.
+		myScriptValue = engine.newQObject(this,QScriptEngine::QtOwnership);
+		engine.globalObject().setProperty(myScriptValueName,myScriptValue);
+		//Check for errors
+		if(engine.hasUncaughtException())
+		{
+			QString errorMsg = "Uncaught exception in Script Element " + getName() +"\n";
+			errorMsg += QString("Line %1: %2\n").arg(engine.uncaughtExceptionLineNumber())
+												.arg(engine.uncaughtException().toString());
+			errorMsg += QString("Backtrace: %1\n").arg(engine.uncaughtExceptionBacktrace().join(", "));
+			Q_ASSERT_X(!engine.hasUncaughtException(),"Scriptable::getScriptValue",errorMsg.toLatin1());
+		}
+		Q_ASSERT(myScriptValue.isValid());
 	}
-
-	////Add its Properties as scriptable as well.
-	//QStringList props = propertyContainer_->getPropertyList();
-	//foreach(QString propStr,props)
-	//{
-	//	QSharedPointer<Property> prop = propertyContainer_->getProperty(propStr);
-	//	Q_ASSERT(prop);
-	//	if(!prop->isScriptEditable())
-	//		continue;
-	//	QScriptValue childValue = engine.newQObject(prop.data(),QScriptEngine::QtOwnership,QScriptEngine::ExcludeSuperClassContents);
-	//	qsValue.setProperty(propStr,childValue);
-	//	//Check for errors
-	//	if(engine.hasUncaughtException())
-	//	{
-	//		QString errorMsg = "Uncaught exception in Script Element " + getName() +"\n";
-	//		errorMsg += QString("Line %1: %2\n").arg(engine.uncaughtExceptionLineNumber())
-	//										  .arg(engine.uncaughtException().toString());
-	//		errorMsg += QString("Backtrace: %1\n").arg(engine.uncaughtExceptionBacktrace().join(", "));
-	//		qDebug()<<errorMsg;
-	//		return false;
-	//	}
-	//}
-
 	return true;
 }
 
@@ -219,6 +204,24 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	//	addError("Scriptable", "The name of a scriptable element cannot contain whitespace");
 	//	return false;
 	//}
+	if(hasContentsForScriptEngine())
+	{
+		if(getName().contains(" "))
+		{
+			addError("The name of an element that has script properties or functions cannot contain whitespace.");
+			return false;
+		}
+		if(getName().isEmpty())
+		{
+			addError("The name of an element that has script properties or functions cannot be empty.");
+			return false;
+		}
+		if(!getName().contains(QRegularExpression("^[$A-Z_a-z][0-9A-Z_$a-z]*$")))
+		{
+			addError("The name of an element that has script properties or functions cannot start with a number and may only contain letters, numbers, '_' and '$'.");
+			return false;
+		}
+	}
 	return true;
 }
 

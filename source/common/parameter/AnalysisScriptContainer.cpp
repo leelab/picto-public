@@ -7,9 +7,9 @@ AnalysisScriptContainer::AnalysisScriptContainer()
 : ScriptableContainer()
 {
 	EXP_LINK_FACTORY_CREATION
-	AddDefinableProperty(QVariant::String,"AnalysisEntryScript","");
-	//Depending whether this is attached to a state or result, there may not be any
-	//need for AnalysisFrameScript or AnalysisExitScript
+	//Depending whether this is attached to a state, a MachineContainer, a StateMachineElement, a result, or a logic result, there may not be any
+	//need for AnalysisEntryScript, AnalysisFrameScript or AnalysisExitScript
+	AddDefinableProperty(QVariant::String,"AnalysisEntryScript","",QMap<QString,QVariant>(),0,1);
 	AddDefinableProperty(QVariant::String,"AnalysisFrameScript","",QMap<QString,QVariant>(),0,1);
 	AddDefinableProperty(QVariant::String,"AnalysisExitScript","",QMap<QString,QVariant>(),0,1);
 }
@@ -121,21 +121,21 @@ bool AnalysisScriptContainer::hasScripts()
 				&& !propertyContainer_->getPropertyValue("AnalysisExitScript").toString().isEmpty());
 }
 
-QMap<QString,QPair<QString,QString>> AnalysisScriptContainer::getScripts()
+QMap<QString,QString> AnalysisScriptContainer::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts = ScriptableContainer::getScripts();
+	QMap<QString,QString>  scripts = ScriptableContainer::getScripts();
 	QString script = propertyContainer_->getPropertyValue("AnalysisEntryScript").toString();
 	QString scriptNamePrefix = getScriptNamePrefix();
 	if(!script.isEmpty())
 	{
-		scripts[scriptNamePrefix+"Entry"] = QPair<QString,QString>(QString(),"AnalysisEntryScript");
+		scripts[scriptNamePrefix+"Entry"] = QString("AnalysisEntryScript");
 	}
 	if(hasScriptPropertyType(FRAME))
 	{
 		QString script = propertyContainer_->getPropertyValue("AnalysisFrameScript").toString();
 		if(!script.isEmpty())
 		{
-			scripts[scriptNamePrefix+"Frame"] = QPair<QString,QString>(QString(),"AnalysisFrameScript");
+			scripts[scriptNamePrefix+"Frame"] = QString("AnalysisFrameScript");
 		}
 	}
 	if(hasScriptPropertyType(EXIT))
@@ -143,7 +143,7 @@ QMap<QString,QPair<QString,QString>> AnalysisScriptContainer::getScripts()
 		QString script = propertyContainer_->getPropertyValue("AnalysisExitScript").toString();
 		if(!script.isEmpty())
 		{
-			scripts[scriptNamePrefix+"Exit"] = QPair<QString,QString>(QString(),"AnalysisExitScript");
+			scripts[scriptNamePrefix+"Exit"] = QString("AnalysisExitScript");
 		}
 	}
 	return scripts;

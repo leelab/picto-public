@@ -26,9 +26,13 @@ public:
 	ResultContainer();
 	virtual ~ResultContainer(){};
 
+	virtual void reset();
 	QStringList getResultList();
 	QSharedPointer<Result> getResult(QString name);
-	virtual bool hasEditableDescendants();
+	virtual bool hasEditableDescendants();	
+	
+public slots:
+	QString getLatestResult();
 
 protected:
 	/*! \brief Defines a result that is required to be in this resultContainer.
@@ -50,13 +54,21 @@ protected:
 	void defineResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+	/*! \brief Sets the latest result encountered in this result container for retrieval in the getLatestResult() slot.
+	 *	This should be called just before triggering the result script in all ResultContainers such that any result
+	 *  script that calls getLatestResult() on its container will get its own name in return.
+	 */
+	void setLatestResult(QString latestResult);
 	QMap<QString, QSharedPointer<Result> > results_;
+
+	friend class SlaveExperimentDriver;
 
 private:
 	QSharedPointer<AssetFactory> resultFactory_;
 	QMap<QString,QSharedPointer<AssetFactory>> resultFactoryByType_;
 	QMap<QString,int> maxOptionalResults_;
 	QMultiMap<QString,QSharedPointer<Result> > requiredResults_;
+	QString latestResult_;
 //private slots:
 //	void updateResultsFromChildren();
 

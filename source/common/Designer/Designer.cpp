@@ -12,6 +12,7 @@
 #include "PropertyBrowser.h"
 #include "AssetInfoBox.h"
 #include "ViewerWindow.h"
+#include "ElementNotesWidget.h"
 #include "../storage/SearchRequest.h"
 #include "../../common/memleakdetect.h"
 
@@ -70,13 +71,15 @@ Designer::Designer(QWidget *parent) :
 	splitter->addWidget(toolbox_);
     splitter->addWidget(centralLayout);
 
-	//QSplitter* rightSideWidget = new QSplitter();
-	//rightSideWidget->setOrientation(Qt::Vertical);
+	QSplitter* rightSideWidget = new QSplitter();
+	rightSideWidget->setOrientation(Qt::Vertical);
 	propertyEditor_ = new PropertyBrowser(editorState_);
-	//rightSideWidget->addWidget(propertyEditor_);
-	//rightSideWidget->addWidget(assetInfoBox_);
-	//rightSideWidget->setStretchFactor(0,10);
-	splitter->addWidget(propertyEditor_);
+	notesWidget_ = new ElementNotesWidget(editorState_);
+	rightSideWidget->addWidget(propertyEditor_);
+	rightSideWidget->addWidget(notesWidget_);
+	rightSideWidget->setStretchFactor(0,7);
+	rightSideWidget->setStretchFactor(1,3);
+	splitter->addWidget(rightSideWidget);
 	splitter->setStretchFactor(1,10);
 
 	mainLayout->addLayout(toolbarLayout);

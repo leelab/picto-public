@@ -73,9 +73,15 @@ QString ScriptElement::run(QSharedPointer<Engine::PictoEngine> engine)
 	QScriptValue returnVal = QScriptValue(false);
 	runScript(getName().simplified().remove(' '),returnVal);
 	if(returnVal.toBool())
+	{
+		setLatestResult("true");
 		return "true";
+	}
 	else
+	{
+		setLatestResult("false");
 		return "false";
+	}
 }
 
 QString ScriptElement::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
@@ -103,11 +109,11 @@ bool ScriptElement::hasScripts()
 	return (propertyContainer_->getPropertyValue("Script").toString() != "");
 }
 
-QMap<QString,QPair<QString,QString>>  ScriptElement::getScripts()
+QMap<QString,QString>  ScriptElement::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts = StateMachineElement::getScripts();
+	QMap<QString,QString>  scripts = StateMachineElement::getScripts();
 	if(!propertyContainer_->getPropertyValue("Script").toString().isEmpty())
-		scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),"Script");
+		scripts[getName().simplified().remove(' ')] = QString("Script");
 	return scripts;
 }
 

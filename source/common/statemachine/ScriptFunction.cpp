@@ -15,16 +15,29 @@ QSharedPointer<Asset> ScriptFunction::Create()
 	return QSharedPointer<Asset>(new ScriptFunction());
 }
 
+bool ScriptFunction::hasContentsForScriptEngine()
+{
+	if(ScriptableContainer::hasContentsForScriptEngine())
+		return true;
+	if(propertyContainer_->getPropertyValue("Script").toString().isEmpty())
+		return false;
+	return true;
+}
 
 bool ScriptFunction::bindToScriptEngine(QScriptEngine &engine)
 {
 	bool returnVal = ScriptableContainer::bindToScriptEngine(engine);
-	if(propertyContainer_->getPropertyValue("Script").toString().isEmpty())
+	if(!hasContentsForScriptEngine())
 		return returnVal;
+	
+	QString myScriptValueName = getName().simplified().remove(' ');
+	QScriptValue myScriptValue = engine.globalObject().property(myScriptValueName);
+	Q_ASSERT(!myScriptValue.isValid());	//There shouldn't be anything with this function's name int
+										//the global object yet.
 
 	//Make a Qt Script Function in the global frame
 	QString function = 
-		"function " + getName() + "("+propertyContainer_->getPropertyValue("Inputs").toString()+") "
+		"function " + myScriptValueName + "("+propertyContainer_->getPropertyValue("Inputs").toString()+") "
 		+"{ " 
 			+ propertyContainer_->getPropertyValue("Script").toString() 
 		+ " }";

@@ -568,6 +568,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         removeItem(line);
         delete line;
+		line = NULL;
 //! [11] //! [12]
 
 		//Ignore text graphics.

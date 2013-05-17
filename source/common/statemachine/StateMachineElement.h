@@ -82,12 +82,13 @@ protected:
 	void runAnalysisExitScripts();
 	enum ScriptType {ENTRY,FRAME,EXIT};
 	void runAnalysisScripts(ScriptType type);
-	virtual QMap<QString,QPair<QString,QString>> getScripts();
+	virtual QMap<QString,QString> getScripts();
 
 	//ParameterContainer parameterContainer_;
 	//QMap<QString,QSharedPointer<Result>> results_;
 
 	QPoint layoutPosition_;
+	friend class SlaveExperimentDriver;
 
 };
 

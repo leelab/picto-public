@@ -6,6 +6,7 @@ namespace Picto
 UIElement::UIElement()
 {
 	AddDefinableProperty(QVariant::Point,"Pos",QPoint());
+	AddDefinableProperty(QVariant::String,"Notes","");
 	EXP_LINK_FACTORY_CREATION
 }
 
@@ -23,11 +24,21 @@ QPoint UIElement::getPos()
 {
 	return propertyContainer_->getPropertyValue("Pos").toPoint();
 }
+
+void UIElement::setNotes(QString notes)
+{
+	propertyContainer_->setPropertyValue("Notes",notes);
+}
+
+QString UIElement::getNotes()
+{
+	return propertyContainer_->getPropertyValue("Notes").toString();
+}
+
 void UIElement::postDeserialize()
 {
 	DataStore::postDeserialize();
 }
-
 
 bool UIElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {

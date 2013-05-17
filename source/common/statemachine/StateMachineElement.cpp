@@ -106,20 +106,22 @@ void StateMachineElement::runAnalysisScripts(ScriptType type)
 	}
 }
 
-QMap<QString,QPair<QString,QString>>  StateMachineElement::getScripts()
+QMap<QString,QString>  StateMachineElement::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts = ResultContainer::getScripts();
+	QMap<QString,QString>  scripts = ResultContainer::getScripts();
 
 	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Entry";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"EntryScript");
+		scripts[scriptName] = QString("EntryScript");
 	}
+
 	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Exit";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"ExitScript");
+		scripts[scriptName] = QString("ExitScript");
 	}
+
 	return scripts;
 }
 

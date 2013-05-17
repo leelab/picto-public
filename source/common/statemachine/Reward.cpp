@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include "Reward.h"
+#include "LogicResult.h"
 #include "../engine/PictoEngine.h"
 #include "../memleakdetect.h"
 namespace Picto
@@ -13,6 +14,7 @@ Reward::Reward()
 	AddDefinableProperty(QVariant::Int,"RewardQty",60);
 	AddDefinableProperty(QVariant::Int,"MinRewardPeriod",125);
 	AddDefinableProperty(QVariant::Int,"RewardChan",1);
+	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
 	addRequiredResult("done");
 }
 
@@ -38,8 +40,9 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 			engine->giveReward(rewardChan,rewardQty,minRewardPeriod);
 		}
 	}
+	setLatestResult("done");
+	getResult("done")->runResultScript();
 	runExitScript();
-
 	return "done";
 }
 

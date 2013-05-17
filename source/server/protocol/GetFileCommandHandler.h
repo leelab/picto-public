@@ -1,6 +1,8 @@
 #ifndef _GETFILE_COMMAND_HANDLER_H_
 #define _GETFILE_COMMAND_HANDLER_H_
 #include <QStringList>
+#include <QByteArray>
+#include <QMutex>
 #include "../../common/common.h"
 
 #include "../../common/protocol/ProtocolCommandHandler.h"
@@ -30,7 +32,9 @@ public:
 	QString method() { return QString("GETFILE"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 private:
-	QStringList files_;
+	static QMutex workingWithFiles_;
+	static QStringList fileNames_;
+	static QList<QByteArray> files_;
 };
 
 

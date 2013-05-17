@@ -1,3 +1,4 @@
+#include <QRegularExpression>
 #include "MachineContainer.h"
 #include "../variable/StringVariable.h"
 #include "../variable/NumberVariable.h"

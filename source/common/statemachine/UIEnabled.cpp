@@ -10,7 +10,7 @@ namespace Picto
 UIEnabled::UIEnabled()
 : DataStore()
 {
-	AddDefinableProperty("Name","Not Yet Named");
+	AddDefinableProperty("Name","NotYetNamed");
 	AddDefinableObjectFactory("UIInfo",
 			QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	requireUniqueName();
@@ -35,6 +35,22 @@ QPoint UIEnabled::getPos()
 	QSharedPointer<Asset> uiElement = getUIElement();
 	return uiElement.staticCast<UIElement>()->getPos();
 
+}
+
+void UIEnabled::setNotes(QString notes)
+{
+	//Get the UI Element
+	QSharedPointer<Asset> uiElement = getUIElement();
+	//Set the notes in the UIElement
+	uiElement.staticCast<UIElement>()->setNotes(notes);
+}
+
+QString UIEnabled::getNotes()
+{
+	//Get the UI Element
+	QSharedPointer<Asset> uiElement = getUIElement();
+	//Get the notes from the UIElement
+	return uiElement.staticCast<UIElement>()->getNotes();
 }
 
 void UIEnabled::upgradeVersion(QString deserializedVersion)
@@ -91,6 +107,12 @@ bool UIEnabled::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	{
 		QString errMsg = QString("Asset can not have an empty name.");
 		addError(errMsg);
+		return false;
+	}
+	if(nameProp && nameProp->value().toString().contains("::"))
+	{
+		addError("Element names cannot contain '::'.");
+		return false;
 	}
 	return true;
 }

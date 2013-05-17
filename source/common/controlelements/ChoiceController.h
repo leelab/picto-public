@@ -46,7 +46,7 @@ public:
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
-	QString getResult();
+	QSharedPointer<Result> getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 	void stop(QSharedPointer<Engine::PictoEngine> engine);
 

@@ -4,11 +4,11 @@
 #include "../../common/memleakdetect.h"
 
 //! [0]
-ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QSharedPointer<EditorState> editorState, QWidget *parent) :
+ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QSharedPointer<EditorState> editorState, bool singleLine, QWidget *parent) :
 	QWidget(parent),
 	manager_(manager),
 	property_(property),
-	textEdit_(new ScriptTextEdit()),
+	textEdit_(new ScriptTextEdit(singleLine)),
 	layout_(new QVBoxLayout()),
 	editorState_(editorState),
 	inTextChangeDetected_(false)

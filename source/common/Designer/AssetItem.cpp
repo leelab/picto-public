@@ -64,6 +64,9 @@ void AssetItem::assetEdited()
 	if(type == "")
 		type = "UNDEFINED TYPE";
 	setType(type);
+	//Set the tooltip to the operator's notes
+	Q_ASSERT(asset_->inherits("Picto::UIEnabled"));
+	setToolTip(asset_.staticCast<UIEnabled>()->getNotes());
 
 	//If a search is already going on, trigger searchRequested now in case the edit affects the search
 	foreach(SearchRequest searchRequest,editorState_->getSearchRequests())

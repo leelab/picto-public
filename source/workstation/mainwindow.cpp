@@ -14,6 +14,8 @@
 #include "../common/update/updatedownloader.h"
 #include "../common/memleakdetect.h"
 
+#define DEFAULT_FILE ":/BuiltInExperiments/EyeCalibration.xml"
+
 MainWindow::MainWindow()
 {	
 	designRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
@@ -30,11 +32,14 @@ MainWindow::MainWindow()
 	createViewers();
 
 	setCentralWidget(viewerStack_);
-
+	setWindowIcon(QIcon(":/icons/scope.ico"));
 
 	isModified_ = false;
 	//newExperiment();
-	recentExperimentsActions_[0]->trigger();
+	if(recentExperimentsActions_[0]->isVisible())
+		recentExperimentsActions_[0]->trigger();
+	else
+		newExperiment();
 }
 
 /*****************************************************
@@ -309,7 +314,7 @@ void MainWindow::newExperiment()
 	//}
 	if(okToContinue())
 	{
-		loadFile(":/BuiltInExperiments/EyeCalibration.xml");
+		loadFile(DEFAULT_FILE);
 		//pictoData_->clear();
 		//pictoDataText_.clear();
 
@@ -456,7 +461,30 @@ void MainWindow::startMode()
 
 void MainWindow::aboutPicto()
 {
-	QMessageBox::about(this,"Picto Workstation","You are using version " PICTOVERSION " of the Picto Workstation.");
+	QStringList releaseNoteList;
+	//List release notes
+	releaseNoteList.append("Added Exit Scripts to Logic Results.");
+	releaseNoteList.append("Implemented searching in ControlTarget fields of Target Controller and in the Control Target Results of Choice Controllers.  All operator code involved in scripting is now part of search system.");
+	releaseNoteList.append("Added 'Notes' property to all elements.  Use these to add comments to your code.  Whatever you put in the notes box will show up as a tooltip when the user hovers over the element.  If you are VERY EXCITED about 'Notes,' you can even make things fancy by putting HTML in your note.  The styled note will appear in the tooltip.");
+	releaseNoteList.append("Fixed Auto-Update.  Files are now precompressed for faster download times.");
+	releaseNoteList.append("Added scripts to logic results.  Now you can put a script on any kind of result, and it will get called when that result is triggered.");
+	releaseNoteList.append("Added a getLatestResult() function to all elements that can contain results.  The function returns a string with the name of the last result that was triggered since the element was initialized.");
+	releaseNoteList.append("Fixed bug in variable scope behavior for elements with the same name on different levels.");
+	releaseNoteList.append("Put ExitScripts back onto Switch Elements, Rewards and Pause Points.  They may be somewhat redundant, but we decided that the advantages of consistancy trump the disadvantages of redundancy.");
+
+	//Format release notes:
+	QString releaseNotes;
+	if(releaseNoteList.size())
+	{
+		releaseNotes.append(QString("<h4 style=\"color:black\">Release Notes:</h4><ul>"));
+		foreach(QString note,releaseNoteList)
+		{
+			releaseNotes.append(QString("<li><span style=\"color:black;\">%2</span></li>").arg(note));
+		}
+		releaseNotes.append("</ul>");
+	}
+
+	QMessageBox::about(this,"Picto Workstation",QString("<h4 style=\"color:black\">You are using version %1 of the Picto Workstation.</h4>%2").arg(PICTOVERSION).arg(releaseNotes));
 }
 
 /*****************************************************
@@ -589,7 +617,10 @@ bool MainWindow::loadFile(const QString filename)
 	}
 	designRoot_ = newDesignRoot;
 
-	setCurrentFile(filename);
+	if(filename == DEFAULT_FILE)
+		setCurrentFile("");
+	else
+		setCurrentFile(filename);
 
 	return true;
 }

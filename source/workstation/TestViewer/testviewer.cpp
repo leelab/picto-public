@@ -38,11 +38,12 @@ TestViewer::TestViewer(QWidget *parent) :
 //! Called just before displaying the viewer
 void TestViewer::init()
 {
-	
-	////Sometimes while working on an experiment, if we change something and don't reopen the experiment
-	////the experimental run doesn't work right.  To prevent this, we are simply reseting the the experiment
-	////from xml whenever we open this viewer
-	//designRoot_->refreshFromXml();
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Sometimes while working on an experiment, if we change something and don't reopen the experiment
+	//the experimental run doesn't work right.  To prevent this, we are simply reseting the the experiment
+	//from xml whenever we open this viewer
+	designRoot_->refreshFromXml();
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	deiniting_ = false;
 	designRoot_->enableRunMode(true);

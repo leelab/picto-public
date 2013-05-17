@@ -51,12 +51,12 @@ bool TestController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	}
 }
 
-QString TestController::getResult()
+QSharedPointer<Result> TestController::getResult()
 {
 	if(isDone_)
-		return "Success";
+		return ResultContainer::getResult("Success");
 	else
-		return "";
+		return QSharedPointer<Result>();
 }
 
 void TestController::start(QSharedPointer<Engine::PictoEngine> engine)

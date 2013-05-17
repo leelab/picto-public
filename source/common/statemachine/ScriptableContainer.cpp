@@ -220,60 +220,61 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 	
 	debuggingEnabled_ = enableDebugging;
 	//Initialize scripting on this ScriptableContainer
-	if(canHaveScripts() && hasScripts() )
+	if(canHaveScripts())
 	{
-		//Looks like we're going to need a script engine
-		//create the engine
-		qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
-
-		if(debuggingEnabled_)
+		if(hasScripts())
 		{
-			//Attach the debugger to the script engine
-			qsEngineDebugger_ = QSharedPointer<QScriptEngineDebugger>(new QScriptEngineDebugger());
-			qsEngineDebugger_->attachTo(qsEngine_.data());
+			//Looks like we're going to need a script engine
+			//create the engine
+			qsEngine_ = QSharedPointer<QScriptEngine>(new QScriptEngine());
 
-			//Add result check function to qsEngine
-			qsEngine_->globalObject().setProperty("checkScriptResults",qsEngine_->newFunction(checkScriptResults));
-		}
-
-		//Bind all scriptable to the script engine (parameters and ui elements)
-		if(!bindScriptablesToScriptEngine(*qsEngine_))
-			return false;
-
-		QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
-		for(QMap<QString,QPair<QString,QString>>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
-		{
-			if(qsEngine_->globalObject().property(it.key()).isValid())
+			if(debuggingEnabled_)
 			{
-				// There is already a scriptable component with this name.
-				Q_ASSERT(false);
-				return false;
+				//Attach the debugger to the script engine
+				qsEngineDebugger_ = QSharedPointer<QScriptEngineDebugger>(new QScriptEngineDebugger());
+				qsEngineDebugger_->attachTo(qsEngine_.data());
+
+				//Add result check function to qsEngine
+				qsEngine_->globalObject().setProperty("checkScriptResults",qsEngine_->newFunction(checkScriptResults));
 			}
 
-			//Make a Qt Script Function out of the script and its name
-			QString scriptTag = it.value().second;
-			QString script = propertyContainer_->getPropertyValue(scriptTag).toString();
-			Q_ASSERT(script.length());
-			QString function = "function " + it.key() + "("+it.value().first+") { " + script + "\n}";
 
-			//add the function to the engine by calling evaluate on it
-			qsEngine_->evaluate(function);
-			//Check for errors
-			if(qsEngine_->hasUncaughtException())
-			{
-				QString errorMsg = "Uncaught exception in Script Element " + getName() +"\n";
-				errorMsg += QString("Line %1: %2\n").arg(qsEngine_->uncaughtExceptionLineNumber())
-												  .arg(qsEngine_->uncaughtException().toString());
-				errorMsg += QString("Backtrace: %1\n").arg(qsEngine_->uncaughtExceptionBacktrace().join(", "));
-				qDebug()<<errorMsg;
+			//Bind all scriptable to the script engine (parameters and ui elements)
+			if(!bindScriptablesToScriptEngine(*qsEngine_))
 				return false;
-			}
 
-			//Connect this property's edited slot to deinitScripting, because if the script changes, we'll need to reinsert
-			//it into the scripting environment
-			disconnect(propertyContainer_->getProperty(scriptTag).data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(deinitScripting(Property*,QVariant)));
-			connect(propertyContainer_->getProperty(scriptTag).data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(deinitScripting(Property*,QVariant)));
+			QMap<QString,QString>  scriptMap = getScripts();
+			for(QMap<QString,QString>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
+			{
+				//if(qsEngine_->globalObject().property(it.key()).isValid())
+				//{
+				//	// There is already a scriptable component with this name.
+				//	Q_ASSERT(false);
+				//	return false;
+				//}
+
+				//Make a Qt Script Function out of the script and its name
+				QString scriptTag = it.value();
+				QString script = propertyContainer_->getPropertyValue(scriptTag).toString();
+				Q_ASSERT(script.length());
+				Q_ASSERT(!scriptPrograms_.contains(it.key()));
+				QString programText;
+				if(!debuggingEnabled_)
+				{
+					//Add a version of the script with return value checking.
+					programText = QString("function script(){\n\n//YOUR CODE STARTS HERE-------\n%1\n//YOUR CODE ENDS HERE----------\n\n}\nscript()").arg(script);
+				}
+				else
+				{
+					programText = QString("function script(){\n\n//YOUR CODE STARTS HERE-------\n%1\n//YOUR CODE ENDS HERE----------\n\n}\nvar returnVal = script();\ncheckScriptResults(\"%2\",returnVal);\nreturnVal;").arg(script).arg(it.key());
+				}
+				scriptPrograms_[it.key()] = QSharedPointer<QScriptProgram>(new QScriptProgram(programText));
+			}
 		}
+		//Connect this object's edited slot to deinitScripting, because if one of its scripts changes, we'll need to reinsert
+		//it into the scripting environment
+		disconnect(this,SIGNAL(edited()),this,SLOT(deinitScripting()));
+		connect(this,SIGNAL(edited()),this,SLOT(deinitScripting()));
 	}
 	
 	//Inform child classes that the scriptable container has been reinitialized.
@@ -368,14 +369,8 @@ void ScriptableContainer::runScript(QString scriptName, QScriptValue& scriptRetu
 	initScripting(debuggingEnabled_);	//Make sure this scriptable container has scripting initialized before attempting to run one of its scripts
 	Q_ASSERT(qsEngine_);
 	objectForResultCheck_ = this;
-	QString scriptToCall;
-	if(debuggingEnabled_)
-	{
-		scriptToCall = QString("var returnVal = %1();\n%2(\"%3\",returnVal);\nreturnVal;").arg(scriptName).arg("checkScriptResults").arg(scriptName);
-	}
-	else
-		scriptToCall = QString("%1();").arg(scriptName);
-	scriptReturnVal = qsEngine_->evaluate(scriptToCall);
+	Q_ASSERT(scriptPrograms_.contains(scriptName));
+	scriptReturnVal = qsEngine_->evaluate(*scriptPrograms_.value(scriptName));
 	objectForResultCheck_ = NULL;
 }
 
@@ -387,6 +382,7 @@ QString ScriptableContainer::getReturnValueError(QString,const QScriptValue&)
 void ScriptableContainer::postDeserialize()
 {
 	Scriptable::postDeserialize();
+	scriptPrograms_.clear();
 	QStringList childTags = getDefinedChildTags();
 	foreach(QString childTag,childTags)
 	{
@@ -407,13 +403,13 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	//Check Script Syntax
 	//First try to initialize scripting.  Since we'll need useful feedback from this, DO IT LATER
 
-	QMap<QString,QPair<QString,QString>> scriptMap = getScripts();
+	QMap<QString,QString> scriptMap = getScripts();
 	bool scriptsAreOkay = true;
-	for(QMap<QString,QPair<QString,QString>>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
+	for(QMap<QString,QString>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
 	{
-		QString scriptTag = it.value().second;
+		QString scriptTag = it.value();
 		QString script = propertyContainer_->getPropertyValue(scriptTag).toString();
-		QString function = "function " + it.key() + "("+it.value().first+") { " + script + "\n}";
+		QString function = "function " + it.key() + "() { " + script + "}";
 		QScriptSyntaxCheckResult res = QScriptEngine::checkSyntax(function);
 		if(res.state() != QScriptSyntaxCheckResult::Valid)
 		{
@@ -429,24 +425,8 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 		if(!scriptsAreOkay)
 			return false;
 	}
-	//We were checking whether multiple scriptables had the same name below.  This wasn't a complete
-	//check though because we didn't check scriptable names from our children against scriptable names
-	//that are also in scope from above us.  In any event, when we implement script validation, we should
-	//get an error when the second scriptable attempts to add itself to the script engine.
-
-	//QList<QSharedPointer<Asset>> newScriptables = getGeneratedChildren("Scriptable");
-	//QList<QSharedPointer<Asset>>::iterator ita,itb;
-	//for(ita = newScriptables.begin();ita != newScriptables.end();ita++)
-	//{
-	//	for(itb = ita+1;itb != newScriptables.end();itb++)
-	//	{
-	//		if((*itb)->getName() == (*ita)->getName())
-	//		{
-	//			addError("ScriptableContainer", QString("Muliple scriptables have the same name: \"%1\"").arg((*ita)->getName()).toLatin1(), xmlStreamReader);
-	//			return false;
-	//		}
-	//	}
-	//}
+	//We don't check if multiple scriptables have the same name, because or bindScriptablesToScriptEngine()
+	//function makes sure that only the one with the longest path is added to the scriptEngine
 	return true;
 }
 
@@ -459,13 +439,13 @@ bool ScriptableContainer::executeSearchAlgorithm(SearchRequest searchRequest)
 	case SearchRequest::SCRIPT:
 		{
 			//Check to see if this object contains any non-empty scripts
-			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
+			QMap<QString,QString>  scriptMap = getScripts();
 			QSharedPointer<Property> currScriptProp;
 			QString currScript;
 			foreach(QString key,scriptMap.keys())
 			{
-				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
-				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
+				QString propName = scriptMap.value(key);
+				currScriptProp = propertyContainer_->getProperty(propName);
 				if(currScriptProp.isNull())
 					continue;
 				if(!currScriptProp->value().toString().isEmpty())
@@ -476,18 +456,14 @@ bool ScriptableContainer::executeSearchAlgorithm(SearchRequest searchRequest)
 	case SearchRequest::STRING:
 		{
 			//Search through my scripts to see if any contain the query string
-			QMap<QString,QPair<QString,QString>>  scriptMap = getScripts();
+			QMap<QString,QString>  scriptMap = getScripts();
 			QSharedPointer<Property> currScriptProp;
 			QString currScript;
 			foreach(QString key,scriptMap.keys())
 			{
-				QPair<QString,QString> inputsNamePair = scriptMap.value(key);
-				//Search script inputs
-				if(inputsNamePair.first.contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
-					return true;
-
+				QString propName = scriptMap.value(key);
 				//Search script contents
-				currScriptProp = propertyContainer_->getProperty(inputsNamePair.second);
+				currScriptProp = propertyContainer_->getProperty(propName);
 				if(currScriptProp.isNull())
 					continue;
 				if(currScriptProp->value().toString().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
@@ -503,7 +479,25 @@ bool ScriptableContainer::executeSearchAlgorithm(SearchRequest searchRequest)
 
 bool ScriptableContainer::bindScriptablesToScriptEngine(QScriptEngine &engine)
 {
+	//If any scriptables have the same name, the one with the shorter path
+	//should not be bound.  Create a list with all bindable scriptables.
+	QHash<QString,QSharedPointer<Scriptable>> scriptableHash;
+	QString currName;
 	foreach(QSharedPointer<Scriptable> scriptable, scriptables_)
+	{
+		currName = scriptable->getName();
+		if(!scriptableHash.contains(currName))
+		{
+			scriptableHash[currName] = scriptable;
+		}
+		else
+		{
+			if(scriptableHash.value(currName)->getPath().size() < scriptable->getPath().size())
+				scriptableHash[currName] = scriptable;
+		}
+	}
+	QList<QSharedPointer<Scriptable>> bindableScriptables = scriptableHash.values();
+	foreach(QSharedPointer<Scriptable> scriptable, bindableScriptables)
 	{
 		if(!scriptable->bindToScriptEngine(engine))
 			return false;

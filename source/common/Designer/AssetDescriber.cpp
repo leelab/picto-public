@@ -130,7 +130,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("Position","The x,y position of this graphic.  x goes from 0 to 800 and y goes from 0 to 600 where (0,0) is the top left corner of the screen.");
 	curr->addProp("Color","The  color of this graphic.  Color is made up of red, green, blue and alpha components where alpha defines the color opacity (0=transparent,255=opaque).");
 	curr->addProp("Layer","The z-layer of this graphic in the scene.  Graphics with higher layer will appear on top of graphics with lower layer.");
-	curr->addProp("Visible","Defines whether this graphic is visible to the operator and user as a group.");
+	curr->addProp("Visible","Defines whether this graphic is visible to either the operator, user or both depending on whether 'OperatorView' and/or 'SubjectView' are true.");
 	curr->addProp("OperatorView","When 'Visible' is true, defines whether this graphic is visible to the operator.");
 	curr->addProp("SubjectView","When 'Visible' is true, defines whether this graphic is visible to the user.");
 	curr->addSProp("layer","Used to set or get the current layer of this graphic.  Graphics with higher layer will appear on top of graphics with lower layer.");
@@ -149,6 +149,7 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("ResultContainer");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
+	curr->addSFunc("getLatestResult())","Returns the name of the latest result that was triggered by this element.  If no result has been triggered since this element's parent's execution started, an empty string is returned.");
 
 	curr = addDescription("StateMachineElement");
 	curr->setInherits(getAssetDescription("ResultContainer"));
@@ -193,13 +194,17 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
 	curr->setOverview("A result is the tunnel between one level of the state machine and the level above it.  It is transitioned to within its parent element, and transitioned from in its parent's parent.  In terms of execution order, once execution hits a result, the results 'EntryScript' is called, then the result's parent's container's 'ExitScript' is called followed by the transition to the next element in the result's parent's parent.");
 	curr->addProp("UIEnabled","");
-	curr->addProp("AnalysisEntryScript","When an analysis is active, this script is used to analyze experimental data.  Conceptually, this script runs just before the the experimental EntryScript.  In practice, it does not run on the PictoDirector but only on session 'viewers' and actually runs just before the effects of the experimental EntryScript are implemented.");
 	curr->addProp("EntryScript","A script that can be used to transfer data between elements.  When execution transitions to this result, this script runs.  Note: The EntryScript of a result runs before the result's parent's ExitScript.");
 	
 	curr = addDescription("LogicResult");
 	curr->setInherits(getAssetDescription("Result"));
-	curr->setOverview("Logic Results differ from regular results in that they are not transitioned to by triggered by program logic.  In the case of a TargetController, for example, a 'Success' logic result would be triggered by the Picto system when the user fixated long enough on the set target.  In the case of a SwitchElement, the operator designs scripts to trigger particular logic results on certain conditions.  Unlike regular results, logic result do not have scripts attached to them.");
+	curr->setOverview("Logic Results differ from regular results in that they are not transitioned to by triggered by program logic.  In the case of a TargetController, for example, a 'Success' logic result would be triggered by the Picto system when the user fixated long enough on the set target.  In the case of a SwitchElement, the operator designs scripts to trigger particular logic results on certain conditions.");
+
+	curr = addDescription("ControlTargetResult");
+	curr->setInherits(getAssetDescription("Result"));
+	curr->setOverview("Control Target Results differ from regular results in that they are not transitioned to by triggered by program logic.  They are used in a ChoiceController and triggered if the ControlTarget in their 'ControTarget' property is fixated on.  Unlike regular results, logic result do not have scripts attached to them.");
 	curr->addProp("EntryScript","");
+	curr->addProp("ControlTarget","The name of the control target which, if fixated on, will cause this result to be triggered.");
 
 	curr = addDescription("PausePoint");
 	curr->setInherits(getAssetDescription("OutputElementContainer"));
@@ -218,7 +223,7 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("State");
 	curr->setInherits(getAssetDescription("MachineContainer"));
-	curr->setOverview("Apart from Pause Points, States are the only elements in the state machine in which actual experimental time is consumed.  When a state is entered, its EntryScript is run, then a loop is entered in which its FrameScript is run, a frame is presented, and all contained Control Elements are checked for their result conditions over and over.  The loop ends when one of the Control Elements triggers a result at which point execution transitions to one of the State's results, that result 'EntryScript' is run, the State's 'ExitScript' is run and execution continues in the level above.  During the course of state execution, all visual and other stimuli that are in scope and visible/enabled will be presented every frame.  Since the actual frame itself is the only time that the user experiences the operations of the program, Picto records all internal property and transition changes as occuring at the time that the frame following them occured.  It should be noted that the design inside a State looks slightly different from the regular State Machine design.  In a state there is no initial transition as execution occurs on one or many control elements 'simultaneously.'  Currently, there is no way of setting the order of checking multiple Control Elements in a state.  Each one is checked each frame.  Execution will continue from the result of the first one that triggers on a given frame.  State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
+	curr->setOverview("Apart from Pause Points, States are the only elements in the state machine in which actual experimental time is consumed.  When a state is entered, its EntryScript is run, then a loop is entered in which all contained Control Elements are checked for their result conditions, if no result has occured the FrameScript is run, a frame is presented and Control Elements are checked again, etc.  The loop ends when one of the Control Elements triggers a result at which point execution transitions to one of the State's results, that result 'EntryScript' is run, the State's 'ExitScript' is run and execution continues in the level above.  During the course of state execution, all visual and other stimuli that are in scope and visible/enabled will be presented every frame.  Since the actual frame itself is the only time that the user experiences the operations of the program, Picto records all internal property and transition changes as occuring at the time that the frame following them occured.  It should be noted that the design inside a State looks slightly different from the regular State Machine design.  In a state there is no initial transition as execution occurs on one or many control elements 'simultaneously.'  Currently, there is no way of setting the order of checking multiple Control Elements in a state.  Each one is checked each frame.  Execution will continue from the result of the first one that triggers on a given frame.  State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
 	curr->addProp("FrameScript","A script that can be used to transfer data between elements.  This script runs just before each frame is presented.  This means that when entering a state, the order of execution is EntryScript, FrameScript, PresentFrame.");
 	curr->addProp("AnalysisFrameScript","When an analysis is active, this script is used to analyze experimental data.  Conceptually, this script runs just after the a frame is presented by the state, which occurs just after the 'FrameScript' is run.  In practice, it does not run on the PictoDirector but only on session 'viewers' and actually runs just after the frame is marked as having been presented.");
 
@@ -251,7 +256,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("ControlElement"));
 	curr->setOverview("A Script Controller is a broad use controller in which the designer can create their own logical checks for whether to continue in a state or exit from it.  Like in a SwitchElement, you can add multiple Logic Results to a Script Controller and trigger them by returning a string that is equal to one of the results's names.  In order to continue in the State without exiting, simply return any value that is not equal to a result name or nothing at all.");
 	curr->addProp("UIEnabled","");
-	curr->addProp("Script","A script that can be used to create operator designed control scenarios.  The script can either trigger a result by returning a string that is equal to the name of one of its contained results or wait for next frame by returning any other defined value.  This script runs during the standard Control Logic Element period, just before the FrameScript execution.");
+	curr->addProp("Script","A script that can be used to create operator designed control scenarios.  The script can either trigger a result by returning a string that is equal to the name of one of its contained results or wait for next frame by returning any other defined value.  This script runs during the standard Control Logic Element period, just after the 'EntryScript' and before each FrameScript execution.");
 
 	curr = addDescription("StopwatchController");
 	curr->setInherits(getAssetDescription("ControlElement"));

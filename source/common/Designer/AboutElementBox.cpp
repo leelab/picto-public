@@ -39,6 +39,8 @@ void AboutElementBox::elementOfInterestChanged(QString className,QString friendl
 	QString description;
 	QSharedPointer<AssetDescription> desc = assetDescriber_->getAssetDescription(className);
 	Q_ASSERT(desc);
+	if(!desc)
+		return;
 	description.append(QString("<h3 style=\"color:red\">%1</h3>").arg(friendlyName));
 	QString sectionDescrip;
 	QString currDescrip;

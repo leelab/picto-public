@@ -286,6 +286,8 @@
    <file alias="_element_data_iterator_8h-source.html">../../../output/documentation/main/html/_element_data_iterator_8h-source.html</file>
    <file alias="_element_data_source_8cpp-source.html">../../../output/documentation/main/html/_element_data_source_8cpp-source.html</file>
    <file alias="_element_data_source_8h-source.html">../../../output/documentation/main/html/_element_data_source_8h-source.html</file>
+   <file alias="_element_notes_widget_8cpp-source.html">../../../output/documentation/main/html/_element_notes_widget_8cpp-source.html</file>
+   <file alias="_element_notes_widget_8h-source.html">../../../output/documentation/main/html/_element_notes_widget_8h-source.html</file>
    <file alias="_element_trigger_8cpp-source.html">../../../output/documentation/main/html/_element_trigger_8cpp-source.html</file>
    <file alias="_element_trigger_8h-source.html">../../../output/documentation/main/html/_element_trigger_8h-source.html</file>
    <file alias="_ellipse_graphic_8cpp-source.html">../../../output/documentation/main/html/_ellipse_graphic_8cpp-source.html</file>
@@ -1005,6 +1007,8 @@
    <file alias="class_display_mode-members.html">../../../output/documentation/main/html/class_display_mode-members.html</file>
    <file alias="class_display_mode.html">../../../output/documentation/main/html/class_display_mode.html</file>
    <file alias="class_display_mode.png">../../../output/documentation/main/html/class_display_mode.png</file>
+   <file alias="class_element_notes_widget-members.html">../../../output/documentation/main/html/class_element_notes_widget-members.html</file>
+   <file alias="class_element_notes_widget.html">../../../output/documentation/main/html/class_element_notes_widget.html</file>
    <file alias="class_engine_connections-members.html">../../../output/documentation/main/html/class_engine_connections-members.html</file>
    <file alias="class_engine_connections.html">../../../output/documentation/main/html/class_engine_connections.html</file>
    <file alias="class_error_list-members.html">../../../output/documentation/main/html/class_error_list-members.html</file>

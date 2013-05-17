@@ -336,9 +336,9 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 //
 //}
 
-QString ChoiceController::getResult()
+QSharedPointer<Result> ChoiceController::getResult()
 {
-	return result_;
+	return ResultContainer::getResult(result_);
 }
 
 bool ChoiceController::userOnTarget()

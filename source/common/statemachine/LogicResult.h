@@ -22,10 +22,6 @@ public:
 	virtual ~LogicResult(){};
 	static QSharedPointer<Asset> Create();
 	virtual QString friendlyTypeName(){return "Logic Result";};
-
-protected:
-	virtual bool hasScripts(){return false;};
-	virtual bool canHaveScripts(){return false;};
 };
 
 

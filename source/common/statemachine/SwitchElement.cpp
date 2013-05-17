@@ -34,13 +34,20 @@ QString SwitchElement::run(QSharedPointer<Engine::PictoEngine> engine)
 	QScriptValue returnVal = QScriptValue(false);
 	runScript(getName().simplified().remove(' '),returnVal);
 	QString resultString = returnVal.toString();
+	//Switch Elements no longer have exit scripts
+	//runExitScript();
+	QSharedPointer<Result> result = getResult(resultString);
+	if(result.isNull())
+	{
+		//If the string didn't match a result, the getReturnValueError function will return an error which
+		//will come up in the debugger.  As far as this function goes, just go to the first result in the result list.
+		Q_ASSERT(getResultList().length());
+		result = getResult(getResultList().first());
+	}
+	setLatestResult(result->getName());
+	result->runResultScript();
 	runExitScript();
-	if(getResult(resultString))
-		return resultString;
-	//If the string didn't match a result, the getReturnValueError function will return an error which
-	//will come up in the debugger.  As far as this function goes, just go to the first result in the result list.
-	Q_ASSERT(getResultList().length());
-	return getResultList().first();
+	return result->getName();
 }
 
 QString SwitchElement::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
@@ -51,7 +58,7 @@ QString SwitchElement::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 
 QString SwitchElement::getReturnValueError(QString scriptName,const QScriptValue& returnValue)
 {
-	if(scriptName != "Script")
+	if(scriptName != getName().simplified().remove(' '))
 		return "";
 
 	QString resultError = "";
@@ -83,6 +90,11 @@ bool SwitchElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 {
 	if(!StateMachineElement::validateObject(xmlStreamReader))
 		return false;
+	if(propertyContainer_->getPropertyValue("Script").toString().isEmpty())
+	{
+		addError("A Switch Element's switching script cannot be empty.");
+		return false;
+	}
 	return true;
 }
 
@@ -93,11 +105,11 @@ bool SwitchElement::hasScripts()
 	return (propertyContainer_->getPropertyValue("Script").toString() != "");
 }
 
-QMap<QString,QPair<QString,QString>>  SwitchElement::getScripts()
+QMap<QString,QString>  SwitchElement::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts = StateMachineElement::getScripts();
+	QMap<QString,QString>  scripts = StateMachineElement::getScripts();
 	if(!propertyContainer_->getPropertyValue("Script").toString().isEmpty())
-		scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),"Script");
+		scripts[getName().simplified().remove(' ')] = QString("Script");
 	return scripts;
 }
 

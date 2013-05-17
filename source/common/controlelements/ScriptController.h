@@ -29,7 +29,7 @@ public:
 	static QString ControllerType();
 
 	bool isDone(QSharedPointer<Engine::PictoEngine> engine);
-	QString getResult();
+	QSharedPointer<Result> getResult();
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 	virtual void upgradeVersion(QString deserializedVersion);
 
@@ -45,7 +45,7 @@ protected:
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
-	virtual QMap<QString,QPair<QString,QString>>  getScripts();
+	virtual QMap<QString,QString>  getScripts();
 
 private:
 	QString currResult_;

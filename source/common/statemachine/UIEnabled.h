@@ -28,6 +28,8 @@ public:
 	virtual void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
 	void setPos(QPoint pos);
 	QPoint getPos();
+	void setNotes(QString notes);
+	QString getNotes();
 	virtual bool hasEditableDescendants(){return false;};
 	virtual QString getUITemplate(){return "UIEnabled";};
 	virtual QString friendlyTypeName(){return "UI Enabled";};

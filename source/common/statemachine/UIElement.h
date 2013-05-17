@@ -27,6 +27,8 @@ public:
 
 	void setPos(QPoint pos);
 	QPoint getPos();
+	void setNotes(QString notes);
+	QString getNotes();
 	virtual QString friendlyTypeName(){return "UI Element";};
 
 	ASSOCIATE_ELEMENT_IMPLEMENTATION

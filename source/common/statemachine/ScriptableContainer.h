@@ -4,6 +4,7 @@
 #include <QSharedPointer>
 #include <QList>
 #include <QScriptEngine>
+#include <QScriptProgram>
 #include <QScriptEngineDebugger>
 
 #include "../common.h"
@@ -57,7 +58,7 @@ protected:
 	virtual bool canHaveScripts(){return false;};
 	virtual bool hasScripts(){return false;};
 	//This returns a map of QMap<script name,QPair<script inputs,tag of string parameter holding script>
-	virtual QMap<QString,QPair<QString,QString>>  getScripts(){return QMap<QString,QPair<QString,QString>> ();};
+	virtual QMap<QString,QString>  getScripts(){return QMap<QString,QString> ();};
 	virtual void scriptableContainerWasReinitialized(){};
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 	//QSharedPointer<AssetFactory> visualElementFactory_;
@@ -74,6 +75,7 @@ private:
 	QList<QWeakPointer<Scriptable> > scriptables_;	//This has to be weak because it will contain pointers to its parents.
 	QList<QSharedPointer<ScriptableContainer> > scriptableContainers_;
 	QMap<QString,QString>  scriptableListProperties_;
+	QHash<QString,QSharedPointer<QScriptProgram>> scriptPrograms_;
 	bool scriptingInitialized_;
 	bool debuggingEnabled_;
 	bool isAssociateElement_;

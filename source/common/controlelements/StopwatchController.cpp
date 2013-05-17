@@ -89,12 +89,12 @@ bool StopwatchController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	}
 }
 
-QString StopwatchController::getResult()
+QSharedPointer<Result> StopwatchController::getResult()
 {
 	if(isDone_)
-		return "Success";
+		return ResultContainer::getResult("Success");
 	else
-		return "";
+		return QSharedPointer<Result>();
 }
 
 void StopwatchController::postDeserialize()

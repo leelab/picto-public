@@ -55,9 +55,9 @@ bool ScriptController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	}
 }
 
-QString ScriptController::getResult()
+QSharedPointer<Result> ScriptController::getResult()
 {
-	return currResult_;
+	return ResultContainer::getResult(currResult_);
 }
 void ScriptController::upgradeVersion(QString deserializedVersion)
 {
@@ -135,11 +135,11 @@ bool ScriptController::hasScripts()
 	return (propertyContainer_->getPropertyValue("Script").toString() != "");
 }
 
-QMap<QString,QPair<QString,QString>>  ScriptController::getScripts()
+QMap<QString,QString>  ScriptController::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts = ControlElement::getScripts();
+	QMap<QString,QString>  scripts = ControlElement::getScripts();
 	if(!propertyContainer_->getPropertyValue("Script").toString().isEmpty())
-		scripts[getName().simplified().remove(' ')] = QPair<QString,QString>(QString(),"Script");
+		scripts[getName().simplified().remove(' ')] = QString("Script");
 	return scripts;
 }
 

@@ -37,6 +37,11 @@ bool ControlTargetResult::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	//! \todo Add script verification once validate runs after full deserialization
 	if(!Result::validateObject(xmlStreamReader))
 		return false;
+	if(propertyContainer_->getPropertyValue("ControlTarget").toString().isEmpty())
+	{
+		addError("Control Target Results cannot have an empty 'ControlTarget' property.");
+		return false;
+	}
 	return true;
 }
 
@@ -57,4 +62,21 @@ void ControlTargetResult::scriptableContainerWasReinitialized()
 	}
 }
 
+bool ControlTargetResult::executeSearchAlgorithm(SearchRequest searchRequest)
+{
+	if(LogicResult::executeSearchAlgorithm(searchRequest))
+		return true;
+	switch(searchRequest.type)
+	{
+	case SearchRequest::STRING:
+		{
+			//Search my control target for the string
+			QString controlTargetName = propertyContainer_->getPropertyValue("ControlTarget").toString();
+			if(!controlTargetName.isNull() && controlTargetName.contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
+				return true;
+		}
+		break;
+	};
+	return false;
+}
 }//namespace Picto

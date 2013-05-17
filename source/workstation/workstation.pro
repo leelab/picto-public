@@ -72,6 +72,14 @@ include($$(PICTO_TREE)/source/common/common.pri)
 #include($$(PROPBROWSDIR)/qtpropertybrowser.pri)
 macx:QTSOLUTIONS_PROPERTYBROWSER.files += $$QTPROPERTYBROWSER_LIBDIR/
 
+# Application Icon
+win32 {
+RC_FILE = $$(PICTO_TREE)/source/workstation/workstation.rc
+}
+macx {
+ICON = $$(PICTO_TREE)/source/workstation/icons/workstation.icns
+}
+
 # Output
 build_pass:CONFIG(debug, debug|release) {
   DESTDIR = $$(PICTO_TREE)/output/bin/debug

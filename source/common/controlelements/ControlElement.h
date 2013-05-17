@@ -43,8 +43,8 @@ public:
 
 	using ResultContainer::getResult;
 	//getResult returns the result from a completed ControlElement
-	//if the ControlElement hasn't completed, this returns an empty string
-	virtual QString getResult() {return "";};
+	//if the ControlElement hasn't completed, this returns an empty result pointer
+	virtual QSharedPointer<Result> getResult() {return QSharedPointer<Result>();};
 
 	//called to start the controller running
 	virtual void start(QSharedPointer<Engine::PictoEngine> engine){};

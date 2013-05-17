@@ -69,10 +69,21 @@ void SlaveExperimentDriver::masterTransitionActivated(int transId)
 	}
 	QSharedPointer<Transition> trans = asset.staticCast<Transition>();
 	
-	//In future, operations that occur in the transition will occur here//
-	//
-	//////////////////
-	
+	//As soon as a transition comes in and it has a source result, 
+	//we set that transition's source's latest result to the transition's 
+	//source result.  Then, if the source is a state machine element, we 
+	//call it's AnalysisExitScripts
+	QSharedPointer<Asset> sourceResult = trans->getSourceResultAsset();
+	QSharedPointer<Asset> sourceAsset = trans->getSourceAsset();
+	if(sourceResult)
+	{
+		sourceAsset.staticCast<ResultContainer>()->setLatestResult(sourceResult->getName());
+	}
+	if(sourceAsset && sourceAsset->inherits("Picto::StateMachineElement"))
+	{
+		sourceAsset.staticCast<StateMachineElement>()->runAnalysisExitScripts();
+	}
+
 	QString newResult = trans->getDestination();
 	if(newResult == "EngineAbort")
 	{
@@ -80,12 +91,15 @@ void SlaveExperimentDriver::masterTransitionActivated(int transId)
 	}
 	
 	QSharedPointer<Asset> destAsset = trans->getDestinationAsset();
+	
 	if(!destAsset || !destAsset->inherits("Picto::StateMachineElement"))
 	{
 		Q_ASSERT(!destAsset || destAsset->inherits("Picto::Result"));
 		return;
 	}
+	//If we got here, we transitioned to a StateMachineElement.  Set is as the current element, run its AnalysisEntryScripts, and start it up
 	currElement_ = destAsset.staticCast<StateMachineElement>();
+	currElement_->runAnalysisEntryScripts();
 	currElement_->slaveRun(experiment_->getEngine());
 }
 void SlaveExperimentDriver::masterFramePresented(double time)

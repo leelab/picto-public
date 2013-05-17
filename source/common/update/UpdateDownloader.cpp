@@ -73,6 +73,18 @@ bool deleteOldFiles(QString dirPath)
 		if(!deleteOldFiles(dirKid.absoluteFilePath()))
 			return false;
 	}
+
+	//remove directories with the .old or .new suffix
+	dir.setNameFilters(filters);
+	dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+	dirKids = dir.entryInfoList();
+	foreach(QFileInfo dirKid,dirKids)
+	{
+		if(!dir.rmdir(dirKid.fileName()))
+		{
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -145,7 +157,7 @@ bool UpdateDownloader::getFiles()
 	updateSocket_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
 	//Connect to server
 	updateSocket_->connectToHost(serverAddress_, appUpdatePort_, QIODevice::ReadWrite);
-	if(!updateSocket_->waitForConnected(20000))
+	if(!updateSocket_->waitForConnected(RESPONSEDELAYMS))
 		return false;
 	
 	//Get the path of the executable directory
@@ -193,16 +205,23 @@ bool UpdateDownloader::getFiles()
 		}
 		
 		QString dir = response.getFieldValue("Directory");
-		QByteArray fileData = response.getDecodedContent();
+		QByteArray fileData = qUncompress(response.getDecodedContent());
+		if(fileData.isEmpty())
+			break;
 		
-		//If the directory for this file doesn't exist, create it in bin
-		if(!dir.isEmpty() && !binDir.exists(dir))
-		{	//If the directory doesn't exist, make it
-			if(!binDir.mkdir(dir))
-				break;
+		//If the file is in a sub directory, put it in that directory with .new appended to the directory name and file names
+		if(!dir.isEmpty())
+		{
+			dir += ".new";
+			//If the directory doesn't exist, create it in bin
+			if(!binDir.exists(dir))
+			{	//If the directory doesn't exist, make it
+				if(!binDir.mkdir(dir))
+					break;
+			}
 		}
 		
-		//Create the file in bin.new or its appropriate subdirectory
+		//Create the file in its appropriate subdirectory
 		QFile* downloadedFile = new QFile(binDir.absolutePath() + "/"+dir+"/" + fileName + ".new");
 		if(downloadedFile->open(QIODevice::Append)) 
 		{
@@ -239,6 +258,8 @@ bool renameNonNewFiles(QString dirPath)
 	{
 		if(!renameNonNewFiles(dirKid.absoluteFilePath()))
 			return false;
+		if(!QDir::match("*.new",dirKid.fileName()) && !dir.rename(dirKid.fileName(),dirKid.fileName()+".old"))
+			return false;
 	}
 	return true;
 }
@@ -270,15 +291,29 @@ bool remove4LetterSuffixOnFiles(QString dirPath,QString suffix)
 		if(!remove4LetterSuffixOnFiles(dirKid.absoluteFilePath(),suffix))
 			return false;
 	}
+	
+	//Rename directories with the name suffix
+	dir.setNameFilters(QStringList() << "*"+suffix);
+	dirKids = dir.entryInfoList();
+	foreach(QFileInfo dirKid,dirKids)
+	{
+		QString newName = dirKid.fileName();
+		newName.chop(4);
+		if(dir.exists(newName) && !dir.remove(newName))
+			return false;
+		if(!dir.rename(dirKid.fileName(),newName))
+			return false;
+	}
+
 	return true;
 }
 
 bool UpdateDownloader::updateApps()
 {
-	//Append ".old" to old files
+	//Append ".old" to old files and folders
 	if(!renameNonNewFiles(QCoreApplication::applicationDirPath()))
 		return false;
-	//Remove ".new" suffix from new files
+	//Remove ".new" suffix from new files and folders
 	if(!remove4LetterSuffixOnFiles(QCoreApplication::applicationDirPath(),".new"))
 	{
 		if(!remove4LetterSuffixOnFiles(QCoreApplication::applicationDirPath(),".old"))

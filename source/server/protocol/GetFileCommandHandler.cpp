@@ -12,10 +12,20 @@
 #include <QVariant>
 #include <QUuid>
 #include <QDir>
+#include <QMutexLocker>
 #include "../../common/memleakdetect.h"
+
+QMutex GetFileCommandHandler::workingWithFiles_;
+QStringList GetFileCommandHandler::fileNames_;
+QList<QByteArray> GetFileCommandHandler::files_;
 
 GetFileCommandHandler::GetFileCommandHandler()
 {
+	QMutexLocker locker(&workingWithFiles_);
+	//If the files lists have not yet been initiated, do that now.
+	if(files_.size())
+		return;
+
 	//Create files list
 	QDir currentDir;
 	QStringList filters;
@@ -23,7 +33,7 @@ GetFileCommandHandler::GetFileCommandHandler()
 	currentDir.setNameFilters(filters);
 	currentDir.setSorting(QDir::Name);
 	currentDir.setFilter(QDir::Files | QDir::Dirs);
-	files_ = currentDir.entryList();
+	fileNames_ = currentDir.entryList();
 
 	currentDir.setNameFilters(QStringList());
 	currentDir.setSorting(QDir::Name);
@@ -42,9 +52,23 @@ GetFileCommandHandler::GetFileCommandHandler()
 			QStringList subFiles = subDir.entryList();
 			foreach(QString subFile,subFiles)
 			{
-				files_.append(fileInfoList[i].fileName()+"/"+subFile);
+				//Add filename to list
+				fileNames_.append(fileInfoList[i].fileName()+"/"+subFile);
 			}
 		}
+	}
+
+	//Create cached list of compressed files in memory for quick updating of connected machines
+	//Go through all filenames
+	foreach(QString fileName,fileNames_)
+	{
+		//Get file with that name and open it
+		QFile* requestedFile = new QFile(fileName);
+		requestedFile->open(QIODevice::ReadOnly);
+		//Compress the file and add data to the list
+		files_.append(qCompress(requestedFile->readAll(),9));
+		//Close file handle
+		delete requestedFile;
 	}
 }
 
@@ -60,26 +84,27 @@ QSharedPointer<Picto::ProtocolResponse> GetFileCommandHandler::processCommand(QS
 	QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTOUPDATE","1.0",Picto::ProtocolResponseType::OK));
 	QSharedPointer<Picto::ProtocolResponse> notFoundResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTOUPDATE","1.0",Picto::ProtocolResponseType::NotFound));
 
+	QMutexLocker locker(&workingWithFiles_);
 	int fileIndex = command->getTarget().toInt();
-	if(fileIndex >= files_.size())
+	if(fileIndex >= fileNames_.size())
 	{
 		response->setFieldValue("FileName","");
 		response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 		return response;
 	}
 
-	QFile* requestedFile = new QFile(files_[fileIndex]);
-	requestedFile->open(QIODevice::ReadOnly);
-	QByteArray fileData(requestedFile->readAll());
-	delete requestedFile;
+	//QFile* requestedFile = new QFile(fileNames_[fileIndex]);
+	//requestedFile->open(QIODevice::ReadOnly);
+	//QByteArray fileData(requestedFile->readAll());
+	//delete requestedFile;
 	
-	QStringList fileNameParts = files_[fileIndex].split("/");
+	QStringList fileNameParts = fileNames_[fileIndex].split("/");
 	QString directory = (fileNameParts.size()>1)?fileNameParts[0]:"";
-	QString fileName = (fileNameParts.size()>1)?fileNameParts[1]:files_[fileIndex];
+	QString fileName = (fileNameParts.size()>1)?fileNameParts[1]:fileNames_[fileIndex];
 	response->setFieldValue("Directory",directory);
 	response->setFieldValue("FileName",fileName);
-	response->setFieldValue("TotalFiles",QString::number(files_.size()));
-	response->setContent(fileData);
+	response->setFieldValue("TotalFiles",QString::number(fileNames_.size()));
+	response->setContent(files_[fileIndex]);
 	response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 
 	return response;

@@ -62,14 +62,16 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 
 	QWidget* resultWidget = NULL;
 	QString propName = property->propertyName();
-	if((propName == "")
-		|| (propName == "Script")
-		|| (propName == "PausingScript")
-		|| (propName == "RestartingScript"))
+	if((propName == "") || (propName == "Script"))
 	{
 		Q_ASSERT(editorState_);
-		resultWidget = new ScriptWidget(manager,property,editorState_,parent);
+		resultWidget = new ScriptWidget(manager,property,editorState_,false,parent);
 		resultWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	}
+	else if(propName == "ControlTarget")
+	{
+		Q_ASSERT(editorState_);
+		resultWidget = new ScriptWidget(manager,property,editorState_,true,parent);
 	}
 	else
 	{

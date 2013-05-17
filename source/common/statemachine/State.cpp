@@ -97,11 +97,14 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		{
 			if(control.staticCast<ControlElement>()->isDone(engine))
 			{
-				result = control.staticCast<ControlElement>()->getResult();
+				//Get the result and call its entry script
+				QSharedPointer<Result> controlResult = control.staticCast<ControlElement>()->getResult();
+				setLatestResult(controlResult->getName());
+				controlResult->runResultScript();
 				QList<QSharedPointer<Transition>> elemLinks = transitions_.values(control->getName());
 				foreach(QSharedPointer<Transition> link,elemLinks)
 				{
-					if(link->getSourceResult() == result)
+					if(link->getSourceResultAsset() == controlResult)
 					{
 						result = link->getDestination();
 						resultTrans = link;
@@ -133,12 +136,14 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		if(checkForEngineStop(engine))
 		{
 			isDone = true;
+			setLatestResult("EngineAbort");
 			result = "EngineAbort";
 		} 
 		else if(isDone)
 		{
 			engine->addStateTransitionForServer(resultTrans);	//Added in Picto Version 1.0.12.  Before this transitions within a state weren't being recorded in the session file.		
 			Q_ASSERT(results_.contains(result));		//Added in Picto Version 1.0.12.
+			setLatestResult(result);
 			//Run result script if there is one.
 			results_.value(result)->runResultScript();
 		}
@@ -298,13 +303,13 @@ bool State::hasScripts()
 	return !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
 }
 
-QMap<QString,QPair<QString,QString>> State::getScripts()
+QMap<QString,QString> State::getScripts()
 {
-	QMap<QString,QPair<QString,QString>> scripts = MachineContainer::getScripts();
+	QMap<QString,QString> scripts = MachineContainer::getScripts();
 	if(!propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Frame";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"FrameScript");
+		scripts[scriptName] = QString("FrameScript");
 	}
 	return scripts;
 }

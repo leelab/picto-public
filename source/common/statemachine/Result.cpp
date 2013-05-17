@@ -7,10 +7,7 @@ Result::Result()
 {
 	//Add Optional Script property
 	AddDefinableProperty("EntryScript","");
-	resultScriptFactory_ = getAssetFactory("EntryScript");
-	//By default, AddDefinableProperty sets minAssets to 1 and max to 1, reset min to 0 cause script
-	//isn't required.
-	//resultScriptFactory_->setMinAssets(0);
+	resultEntryScriptFactory_ = getAssetFactory("EntryScript");
 }
 
 Result::Result(QString name)
@@ -19,10 +16,7 @@ Result::Result(QString name)
 
 	//Add Optional Script property
 	AddDefinableProperty("EntryScript","");
-	resultScriptFactory_ = getAssetFactory("EntryScript");
-	//By default, AddDefinableProperty sets minAssets to 1 and max to 1, reset min to 0 cause script
-	//isn't required.
-	//resultScriptFactory_->setMinAssets(0);
+	resultEntryScriptFactory_ = getAssetFactory("EntryScript");
 
 	initializePropertiesToDefaults();
 	//Even though the name is edited, we set the result as unedited because we want 
@@ -65,13 +59,13 @@ bool Result::hasScripts()
 	return !propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty() && !propertyContainer_->getProperty("EntryScript")->isDeleted();
 }
 
-QMap<QString,QPair<QString,QString>>  Result::getScripts()
+QMap<QString,QString>  Result::getScripts()
 {
-	QMap<QString,QPair<QString,QString>>  scripts = ScriptableContainer::getScripts();
+	QMap<QString,QString>  scripts = ScriptableContainer::getScripts();
 	if(!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty())
 	{
 		QString scriptName = getName().simplified().remove(' ')+"EntryScript";
-		scripts[scriptName] = QPair<QString,QString>(QString(),"EntryScript");
+		scripts[scriptName] = QString("EntryScript");
 	}
 	return scripts;
 }

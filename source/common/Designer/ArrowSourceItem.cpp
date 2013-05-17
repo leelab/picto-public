@@ -31,6 +31,22 @@ void ArrowSourceItem::setRect(QRectF rect)
 
 void ArrowSourceItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
 {
+	//The cursor is hovering over me
+	//If we're not in the process of placing a new item
 	if(editorState_->getEditMode() != EditorState::PlaceItem)
-		editorState_->setEditMode(EditorState::InsertLine);
+	{
+		if(getAsset())
+		{
+			//If this is not the Start Bar of a State (there should be no start transition inside a state).
+			if(!getAsset()->inherits("Picto::State"))
+			{
+				//Put us into insert line mode
+				editorState_->setEditMode(EditorState::InsertLine);
+			}
+			else
+			{	//This is the start bar of a state.  Put the system into select mode
+				editorState_->setEditMode(EditorState::Select);
+			}
+		}
+	}
 }

@@ -31,17 +31,17 @@ public:
 	virtual QString getUITemplate(){return "Result";};
 	virtual QString friendlyTypeName(){return "Result";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
-	void runResultScript();
+	virtual void runResultScript();
 
 protected:
 	virtual QString defaultTagName(){return "Result";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool hasScripts();
-	virtual QMap<QString,QPair<QString,QString>> getScripts();
+	virtual QMap<QString,QString> getScripts();
 	virtual bool canHaveScripts(){return true;};
 
-	QSharedPointer<AssetFactory> resultScriptFactory_;
+	QSharedPointer<AssetFactory> resultEntryScriptFactory_;
 
 };
 

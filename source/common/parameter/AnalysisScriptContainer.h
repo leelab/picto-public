@@ -39,7 +39,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
-	virtual QMap<QString,QPair<QString,QString>> getScripts();
+	virtual QMap<QString,QString> getScripts();
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 private:
 	QString getScriptNamePrefix();

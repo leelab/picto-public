@@ -77,15 +77,14 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 
 	//If this object doesn't have an AnalysisScriptContainer and their is an active analysis, add one now
 	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-	if(activeAnalysis && asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
+	if(activeAnalysis && asset->inherits("Picto::StateMachineElement") && asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
 	{
 		//create the AnalysisScriptContainer, put it in the analysis 
 		//and link it to the object
 		QSharedPointer<AnalysisScriptContainer> newScriptContainer = editorState_->getCurrentAnalysis()->createChildAsset("AnalysisScriptContainer",QString(),QString()).staticCast<AnalysisScriptContainer>();
-		if(!asset->inherits("Picto::Result"))
-		{	//Its not a result, add an exit script
-			newScriptContainer->createChildAsset("AnalysisExitScript",QString(),QString());
-		}
+		//Add entry and exit scripts
+		newScriptContainer->createChildAsset("AnalysisEntryScript",QString(),QString());
+		newScriptContainer->createChildAsset("AnalysisExitScript",QString(),QString());
 		if(asset->inherits("Picto::State"))
 		{//Its a state, add a frame script
 			newScriptContainer->createChildAsset("AnalysisFrameScript",QString(),QString());
@@ -94,8 +93,10 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 		asset.staticCast<DataStore>()->AddAssociateChild(newScriptContainer->getAssociateId(),"AnalysisScriptContainer",newScriptContainer);
 	}
 	QSharedPointer<AnalysisScriptContainer> scriptContainer;
-	if(activeAnalysis)
+	if(activeAnalysis && asset->inherits("Picto::StateMachineElement"))
+	{
 		scriptContainer = asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
+	}
 	QSharedPointer<PropertyContainer> propContainer;
 	QVector<QSharedPointer<Property>> propVec;
 	foreach(QString propTag,orderedScriptNames_)
@@ -110,7 +111,7 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 		else
 		{
 			//If there's an active analysis, get the propContainer from the AnalysisScriptContainer, otherwise leave it empty
-			if(activeAnalysis)
+			if(activeAnalysis && scriptContainer)
 			{
 				//The propTag is for an analysis script, set the property container from the AnalysisScriptContainer
 				propContainer = scriptContainer.staticCast<DataStore>()->getPropertyContainer();

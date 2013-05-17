@@ -33,6 +33,7 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual void scriptableContainerWasReinitialized();
+	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 private:
 	QWeakPointer<ControlTarget> controlTarget_;
 };
