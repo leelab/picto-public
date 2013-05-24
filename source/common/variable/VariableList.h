@@ -25,7 +25,6 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	//Resets the VariableList Object to its initial state.
-	virtual void reset();
 	virtual QString friendlyTypeName(){return "Variable List";};
 	
 public slots:
@@ -69,7 +68,14 @@ private:
 	QVariant takeLast();
 	QVariant takeAt(int index);
 
+	void copyListToValueProp();
+	void copyValuePropToList();
+
 	QVariantList list_;
+	bool settingValueProp_;
+
+private slots:
+	void propValueChanged(Property*,QVariant);
 };
 
 

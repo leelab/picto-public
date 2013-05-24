@@ -24,9 +24,6 @@ public:
 
 	static QSharedPointer<Asset> Create();
 
-	//Resets the VarList Object to its initial state.
-	virtual void reset();
-
 	virtual QString friendlyTypeName(){return "Variable Map";};
 	
 public slots:
@@ -49,7 +46,15 @@ protected:
 private:
 	QVariant getValue(QVariant key);
 	QVariant takeAt(QVariant key);
+
+	void copyMapToValueProp();
+	void copyValuePropToMap();
+
 	QVariantMap map_;
+	bool settingValueProp_;
+
+private slots:
+	void propValueChanged(Property*,QVariant);
 };
 
 

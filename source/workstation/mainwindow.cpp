@@ -463,14 +463,14 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
+	releaseNoteList.append("Restored Workstation<->Server<->Director connectivity that had been broken by recent code changes.");
+	releaseNoteList.append("Changed Timer Parameter such that its elapsedTime() function returns values according to the time at which the first phosphor appeared in the previous frame.");
+	releaseNoteList.append("Fixed bug that sometimes made it impossible to succesfully fixate when a TargetController had equal FixationTime and TotalTime settings.");
+	
 	releaseNoteList.append("Added Token Factory graphic for programmatically creating sets of individual graphics whose position and other properties can be separately controlled.");
 	releaseNoteList.append("Implemented searching in the Control Target Results of Choice Controllers.  All operator code involved in scripting is now part of search system.");
 	releaseNoteList.append("Added 'Notes' property to all elements.  Use these to add comments to your code.  Whatever you put in the notes box will show up as a tooltip when the user hovers over the element.  If you are VERY EXCITED about 'Notes,' you can even make things fancy by putting HTML in your note.  The styled note will appear in the tooltip.");
-	releaseNoteList.append("Fixed Auto-Update.  Files are now precompressed for faster download times.");
-	releaseNoteList.append("Added scripts to logic results.  Now you can put a script on any kind of result, and it will get called when that result is triggered.");
-	releaseNoteList.append("Added a getLatestResult() function to all elements that can contain results.  The function returns a string with the name of the last result that was triggered since the element was initialized.");
-	releaseNoteList.append("Fixed bug in variable scope behavior for elements with the same name on different levels.");
-	releaseNoteList.append("Put ExitScripts back onto Switch Elements, Rewards and Pause Points.  They may be somewhat redundant, but we decided that the advantages of consistancy trump the disadvantages of redundancy.");
+	
 
 	//Format release notes:
 	QString releaseNotes;
