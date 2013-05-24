@@ -1607,39 +1607,7 @@ QSqlDatabase SessionInfo::getSessionDb()
 
 /*! \brief Returns a connection to the Cache database
  */
-
 QSqlDatabase SessionInfo::getCacheDb()
 {
 	return cacheDb_;
 }
-
-//QSqlDatabase SessionInfo::getCacheDb()
-//{
-//	QSqlDatabase cacheDb;
-//	QString connectionName = QString("CacheDatabase_%1_%2")
-//					.arg(sessionId().toString())
-//					.arg((int)QThread::currentThreadId());
-//
-//	
-//	//If we already have a connection open in this thread, use it, 
-//	//otherwise, clone a new connection
-//	if(QSqlDatabase::contains(connectionName))
-//	{
-//		cacheDb = QSqlDatabase::database(connectionName);
-//	}
-//	else
-//	{
-//		openDatabaseConnections_.append(connectionName);
-//		cacheDb = QSqlDatabase::cloneDatabase(cacheDb_,connectionName);
-//		cacheDb.open();
-//		// Attach the disk backed database to the database connection so that we can easily access both from the same query.
-//		QSqlQuery cacheQ(cacheDb);
-//		cacheQ.prepare("ATTACH DATABASE :databaseName AS diskdb");
-//		cacheQ.bindValue(":databaseName", getSessionDb().databaseName());
-//		executeWriteQuery(&cacheQ);
-//	}
-//	
-//	Q_ASSERT(cacheDb.isOpen());
-//
-//	return cacheDb;
-//}
