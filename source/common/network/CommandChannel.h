@@ -14,7 +14,7 @@
 #include "../common.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
-#include "../controlelements/timer.h"
+#include "../controlelements/FrameResolutionTimer.h"
 #include "../protocol/ProtocolResponseHandler.h"
 #include "ComponentStatusManager.h"
 

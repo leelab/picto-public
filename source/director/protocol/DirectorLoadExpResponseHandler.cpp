@@ -30,6 +30,9 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: Design did not contain experiment"));
 		return false;
 	}
+	//We don't need any attached UI or Analysis elements in our experiment.
+	experiment->ClearAllAssociateDescendants();
+
 	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setExperiment(experiment);
 
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();

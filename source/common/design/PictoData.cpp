@@ -60,7 +60,6 @@ void PictoData::postDeserialize()
 	//Now call inherited postDeserialize which will actually call fixDuplicatedAssetIds on the designConfig
 	DataStore::postDeserialize();
 
-	//Make sure all AssociateRootHost children have UIData attached
 	QList<QSharedPointer<Asset>> assocRootHosts = getGeneratedChildren("Experiment");
 	assocRootHosts.append(getGeneratedChildren("Analysis"));
 	////Since we haven't totally gotten rid of AnalysisContainers quite yet, we need to make sure

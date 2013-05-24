@@ -430,29 +430,3 @@ QString AlignmentTool::getSQLJitterEquation(QString jitterColumn,
 		"," + correlationColumn + "=" + QString::number(getCorrelationCoefficient(),'f',14);
 
 }
-
-////! \brief Executes a Sql write query, making it threadsafe and including debug assertion
-//bool AlignmentTool::executeWriteQuery(QSqlQuery* query, QString optionalString)
-//{
-//	QMutexLocker locker(databaseWriteMutex_);
-//	bool success;
-//	if(optionalString != "")
-//		success = query->exec(optionalString);
-//	else
-//		success = query->exec();
-//	query->finish();
-//	locker.unlock();
-//	return success;
-//}
-//
-//bool AlignmentTool::executeReadQuery(QSqlQuery* query, QString optionalString)
-//{
-//	QMutexLocker locker(databaseWriteMutex_);
-//	bool success;
-//	if(optionalString != "")
-//		success = query->exec(optionalString);
-//	else
-//		success = query->exec();
-//	locker.unlock();
-//	return success;
-//}

@@ -57,7 +57,7 @@
 class SessionInfo
 {
 public:
-	static QSharedPointer<SessionInfo> CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
+	static QSharedPointer<SessionInfo> CreateSession(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
 	static QSharedPointer<SessionInfo> LoadSession(QString sessionID, QString databaseFilePath);
 	static void deleteSession(SessionInfo* session);
 	virtual ~SessionInfo();
@@ -94,7 +94,7 @@ public:
 	QString dataBaseFilePath() { return baseSessionDbFilepath_; };
 	QString timeCreated() { return timeCreated_; };
 	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
-	QByteArray experimentXml() { return experimentXml_; };
+	QByteArray experimentXml() { return designXml_; };
 
 	QString pendingDirective(QUuid componentID);
 	void addPendingDirective(QString directive, QString componentType);
@@ -114,7 +114,7 @@ public:
 	friend class ConnectionManager;
 
 private:
-	SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
+	SessionInfo(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
 	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
 	void LoadBaseSessionDatabase(QString path, QString databaseName);
@@ -150,7 +150,7 @@ private:
 	bool activity_;
 	bool ignoreComponents_;
 	QMap<QString,bool> flushEnabled_;
-	QByteArray experimentXml_;
+	QByteArray designXml_;
 	QByteArray DesignConfig_;
 	QString baseSessionDbFilepath_;
 	QString timeCreated_;

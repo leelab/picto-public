@@ -96,8 +96,8 @@ bool Experiment::runTask(QString taskName)
 		return false;
 
 	Q_ASSERT(propTable_);
-	//engine_->setPropertyTable(propTable_);
-	engine_->setDesignConfig(designConfig_);
+	engine_->setPropertyTable(propTable_);
+	//engine_->setDesignConfig(designConfig_);
 
 	//search through tasks_ for a matching task and run it!
 	//note that the taskname here may have had all of it's whitespace 
@@ -132,8 +132,8 @@ bool Experiment::runTask(QString taskName)
 
 	} while(!taskName.isEmpty());
 
-	//engine_->setPropertyTable(QSharedPointer<PropertyTable>());
-	engine_->setDesignConfig(QSharedPointer<DesignConfig>());
+	engine_->setPropertyTable(QSharedPointer<PropertyTable>());
+	//engine_->setDesignConfig(QSharedPointer<DesignConfig>());
 
 	return true;
 	//foreach(QSharedPointer<Task> task, tasks_)
@@ -216,11 +216,11 @@ void Experiment::postDeserialize()
 	//											//since director started.
 	//propTable_->clear();//Empties property table so director/viewer props will match up
 	propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(getDesignConfig()));
-	//QList<QSharedPointer<Property>> descendantProps = getDescendantsProperties();
-	//foreach(QSharedPointer<Property> prop,descendantProps)
-	//{
-	//	propTable_->addProperty(prop);	// This adds the property to the property table and gives it an index for use in transmission
-	//}
+	QList<QSharedPointer<Property>> descendantProps = getDescendantsProperties();
+	foreach(QSharedPointer<Property> prop,descendantProps)
+	{
+		propTable_->addProperty(prop);	// This adds the property to the property table and gives it an index for use in transmission
+	}
 
 	//Experiment objects are not part of the state machine. Init values should be bypassed and set immediately as run values in all
 	//properties

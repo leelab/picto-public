@@ -349,7 +349,9 @@ bool FileSessionLoader::loadDesignDefinition()
 	/////////////////////////
 	QSqlQuery query(session_);
 	query.setForwardOnly(true);
-	query.prepare("SELECT value FROM sessioninfo WHERE key='ExperimentXML'");
+	//ExperimentXML name changed to DesignXML when we started putting UI Data and Analysis Data together
+	//with it on server.  They never appeared at the same time so we can just look for either one.
+	query.prepare("SELECT value FROM sessioninfo WHERE key='ExperimentXML' OR key='DesignXML'");
 	bool success = query.exec();
 	if(!success)
 	{

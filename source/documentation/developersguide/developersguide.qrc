@@ -350,6 +350,8 @@
    <file alias="_frame_data_unit_8h-source.html">../../../output/documentation/main/html/_frame_data_unit_8h-source.html</file>
    <file alias="_frame_data_unit_package_8cpp-source.html">../../../output/documentation/main/html/_frame_data_unit_package_8cpp-source.html</file>
    <file alias="_frame_data_unit_package_8h-source.html">../../../output/documentation/main/html/_frame_data_unit_package_8h-source.html</file>
+   <file alias="_frame_resolution_timer_8cpp-source.html">../../../output/documentation/main/html/_frame_resolution_timer_8cpp-source.html</file>
+   <file alias="_frame_resolution_timer_8h-source.html">../../../output/documentation/main/html/_frame_resolution_timer_8h-source.html</file>
    <file alias="_frame_state_8cpp-source.html">../../../output/documentation/main/html/_frame_state_8cpp-source.html</file>
    <file alias="_frame_state_8h-source.html">../../../output/documentation/main/html/_frame_state_8h-source.html</file>
    <file alias="_frame_trigger_8cpp-source.html">../../../output/documentation/main/html/_frame_trigger_8cpp-source.html</file>
@@ -858,6 +860,8 @@
    <file alias="_timer_parameter_8h-source.html">../../../output/documentation/main/html/_timer_parameter_8h-source.html</file>
    <file alias="_timestamper_8cpp-source.html">../../../output/documentation/main/html/_timestamper_8cpp-source.html</file>
    <file alias="_timestamper_8h-source.html">../../../output/documentation/main/html/_timestamper_8h-source.html</file>
+   <file alias="_token_factory_graphic_8cpp-source.html">../../../output/documentation/main/html/_token_factory_graphic_8cpp-source.html</file>
+   <file alias="_token_factory_graphic_8h-source.html">../../../output/documentation/main/html/_token_factory_graphic_8h-source.html</file>
    <file alias="_token_tray_graphic_8cpp-source.html">../../../output/documentation/main/html/_token_tray_graphic_8cpp-source.html</file>
    <file alias="_token_tray_graphic_8h-source.html">../../../output/documentation/main/html/_token_tray_graphic_8h-source.html</file>
    <file alias="_tool_box_8cpp-source.html">../../../output/documentation/main/html/_tool_box_8cpp-source.html</file>
@@ -1185,6 +1189,8 @@
    <file alias="class_picto_1_1_control_target_result-members.html">../../../output/documentation/main/html/class_picto_1_1_control_target_result-members.html</file>
    <file alias="class_picto_1_1_control_target_result.html">../../../output/documentation/main/html/class_picto_1_1_control_target_result.html</file>
    <file alias="class_picto_1_1_control_target_result.png">../../../output/documentation/main/html/class_picto_1_1_control_target_result.png</file>
+   <file alias="class_picto_1_1_controller_1_1_frame_resolution_timer-members.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_frame_resolution_timer-members.html</file>
+   <file alias="class_picto_1_1_controller_1_1_frame_resolution_timer.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_frame_resolution_timer.html</file>
    <file alias="class_picto_1_1_controller_1_1_timer-members.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_timer-members.html</file>
    <file alias="class_picto_1_1_controller_1_1_timer.html">../../../output/documentation/main/html/class_picto_1_1_controller_1_1_timer.html</file>
    <file alias="class_picto_1_1_cursor_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_cursor_graphic-members.html</file>
@@ -1619,6 +1625,9 @@
    <file alias="class_picto_1_1_timer_parameter.png">../../../output/documentation/main/html/class_picto_1_1_timer_parameter.png</file>
    <file alias="class_picto_1_1_timestamper-members.html">../../../output/documentation/main/html/class_picto_1_1_timestamper-members.html</file>
    <file alias="class_picto_1_1_timestamper.html">../../../output/documentation/main/html/class_picto_1_1_timestamper.html</file>
+   <file alias="class_picto_1_1_token_factory_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_token_factory_graphic-members.html</file>
+   <file alias="class_picto_1_1_token_factory_graphic.html">../../../output/documentation/main/html/class_picto_1_1_token_factory_graphic.html</file>
+   <file alias="class_picto_1_1_token_factory_graphic.png">../../../output/documentation/main/html/class_picto_1_1_token_factory_graphic.png</file>
    <file alias="class_picto_1_1_token_tray_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_token_tray_graphic-members.html</file>
    <file alias="class_picto_1_1_token_tray_graphic.html">../../../output/documentation/main/html/class_picto_1_1_token_tray_graphic.html</file>
    <file alias="class_picto_1_1_token_tray_graphic.png">../../../output/documentation/main/html/class_picto_1_1_token_tray_graphic.png</file>

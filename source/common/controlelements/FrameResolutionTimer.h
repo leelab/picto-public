@@ -1,5 +1,5 @@
-#ifndef _TIMER_H_
-#define _TIMER_H_
+#ifndef _FRAMERESOLUTIONTIMER_H_
+#define _FRAMERESOLUTIONTIMER_H_
 #include <QDateTime>
 
 #include "../common.h"
@@ -30,46 +30,38 @@ namespace TimerUnits
 
 /*! \brief A timer object used by ControlElements
  *
- *	The controlElements frequently require precise timing.  This object serves that
- *	purpose.  Since the Qt library doesn't provide a good timer, this object will 
- *	have to be platform dependent.  For unsupported platfroms, we'll use the Qt timer,
- *	but for everything else, we'll use a platform dependent timer.  
- *
- *	Since controlElements are used in the rendering loop, the timers are not going to
- *	use the Qt signal/slot architecture, but instead are going to be updated as they
- *	are called.
+ *	The controlElements require precise timing aligned with frame intervals.  This object serves that
+ *	purpose.  The values that the timer returns are according to the time at which the latest first
+ *	phosphor occured.
  *
  *	NOTE: At the moment, this timer is part of the ControlElement namespace, to
- *	indicate that it is designed for use with ControlElements only.  It is possible that in
- *	the future we will want to let it out for more general usage, or we may build a 
- *	second Timer object that uses signals and slots.
+ *	indicate that it is designed for use with ControlElements only.
  */
 
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API Timer
+class PICTOLIB_API FrameResolutionTimer
 #else
-class Timer
+class FrameResolutionTimer
 #endif
 {
 
 public:
-	Timer();
+	FrameResolutionTimer();
 
 	void start();
 	void restart() { start(); };
 
 	int elapsedTime(TimerUnits::TimerUnits units);
 
-private:
-#if defined WIN32 || defined WINCE
-	LARGE_INTEGER ticksPerSec_;
-	LARGE_INTEGER ticksPerMs_;
-	LARGE_INTEGER ticksPerUs_;
+	//Called by the rendering engine to mark the time at which the latest frame occured.
+	//This is used by all timers in calculating elapsedTime
+	static void setLastFrameTime(double frameTime);
 
-	LARGE_INTEGER startTicks_;
-#else
-	QDateTime time_;
-#endif
+private:
+	double startTime_;
+	static double lastFrameTime_;
+	static double firstFrameTime_;
+
 };
 
 }; //namespace ControlElement

@@ -2,7 +2,7 @@
 #define _STOPWATCH_CONTROLLER_H_
 
 #include "../common.h"
-#include "Timer.h"
+#include "FrameResolutionTimer.h"
 
 #include "ControlElement.h"
 
@@ -49,7 +49,7 @@ protected:
 
 private:
 	QStringList unitList_;
-	Controller::Timer timer_;
+	Controller::FrameResolutionTimer  timer_;
 };
 
 

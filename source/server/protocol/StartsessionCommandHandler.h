@@ -38,6 +38,8 @@ public:
 
 	QString method() { return QString("STARTSESSION"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
+private:
+	QString extractExperimentFromDesign(QString designXML);
 };
 
 

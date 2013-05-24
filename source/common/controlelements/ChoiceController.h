@@ -4,7 +4,7 @@
 #include <QList>
 
 #include "../common.h"
-#include "Timer.h"
+#include "FrameResolutionTimer.h"
 #include "ControlElement.h"
 #include "../engine/SignalChannel.h"
 #include "ControlTargetResult.h"
@@ -77,9 +77,9 @@ private:
 	bool canUseUserTargetSlots();
 	//bool checkSingleTarget(QRect targetRect);
 
-	Controller::Timer cumulativeTimer_;
-	Controller::Timer acquisitionTimer_;	
-	Controller::Timer reacquisitionTimer_;
+	Controller::FrameResolutionTimer  cumulativeTimer_;
+	Controller::FrameResolutionTimer  acquisitionTimer_;	
+	Controller::FrameResolutionTimer  reacquisitionTimer_;
 
 	QStringList unitList_;
 	//QStringList shapeList_;

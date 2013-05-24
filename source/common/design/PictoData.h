@@ -21,6 +21,7 @@ public:
 	static QSharedPointer<Asset> Create();
 	virtual ~PictoData(){};
 	virtual QString friendlyTypeName(){return "Picto Data";};
+	virtual void setName(QString newName){propertyContainer_->setPropertyValue("Name",newName);};
 	virtual QString getName(){return propertyContainer_->getPropertyValue("Name").toString();};
 	QSharedPointer<Experiment> getExperiment();
 	QList<QSharedPointer<Analysis>> getAnalyses();

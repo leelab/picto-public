@@ -23,7 +23,8 @@ void PropertyTable::reportChangeInAllProperties()
 	foreach(QWeakPointer<Asset> prop,designConfig_->getProperties())
 	{
 		QSharedPointer<Asset> sAsset(prop);
-		Q_ASSERT(sAsset);
+		if(!sAsset)
+			continue;
 		QSharedPointer<Asset> propParent = sAsset->getParentAsset();
 		if(	propParent 
 			&& (	

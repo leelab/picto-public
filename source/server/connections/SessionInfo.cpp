@@ -23,11 +23,11 @@
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
-QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password)
+QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password)
 {
 	//Creates a shared pointer for the object that will use the deleteSession function to actually delete
 	//the object
-	QSharedPointer<SessionInfo> returnVal(new SessionInfo(experimentName,directorName,experimentXml,DesignConfig,initialObserverId, password),&deleteSession);
+	QSharedPointer<SessionInfo> returnVal(new SessionInfo(designName,directorName,designXml,DesignConfig,initialObserverId, password),&deleteSession);
 	loadedSessions_[returnVal->sessionId()] = QWeakPointer<SessionInfo>(returnVal);
 	return returnVal;
 }
@@ -77,8 +77,8 @@ void SessionInfo::deleteSession(SessionInfo* session)
 	qDebug("Session: " + sessionId.toLatin1() + " has been unloaded!");
 }
 
-SessionInfo::SessionInfo(QString experimentName, QString directorName, QByteArray experimentXml, QByteArray DesignConfig, QUuid initialObserverId, QString password):
-	experimentXml_(experimentXml),
+SessionInfo::SessionInfo(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password):
+	designXml_(designXml),
 	DesignConfig_(DesignConfig),
 	password_(password)
 {
@@ -92,7 +92,7 @@ SessionInfo::SessionInfo(QString experimentName, QString directorName, QByteArra
 	QDateTime dateTime = QDateTime::currentDateTime();
 	QString databaseName = "Session_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");	
 	//If there's already a file with this name, append _x until we have a unique name
-	QString sessionPath = QCoreApplication::applicationDirPath()+"/../sessions/"+directorName+"/"+experimentName;
+	QString sessionPath = QCoreApplication::applicationDirPath()+"/../sessions/"+directorName+"/"+designName;
 	QDir dir(sessionPath);
 	if(!dir.exists())
 	{
@@ -148,10 +148,10 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 		password_ = sessionQ.value(0).toString();
 	sessionQ.finish();
 	
-	// Load ExperimentXML
-	executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"ExperimentXML\"");
+	// Load DesignXML
+	executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"DesignXML\"");
 	if(sessionQ.next())
-		experimentXml_ = sessionQ.value(0).toByteArray();
+		designXml_ = sessionQ.value(0).toByteArray();
 	sessionQ.finish();
 
 	// Load TimeCreated
@@ -924,12 +924,12 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 QString SessionInfo::selectStateVariables(QString fromTime)
 {
 	QString result;
+	if(!databaseWriteMutex_->tryLock())
+		return result;
 	QSqlDatabase cacheDb = getCacheDb();
 	QSqlQuery query(cacheDb);
 	query.prepare("SELECT data FROM currentstate WHERE time > :time");
 	query.bindValue(":time",fromTime);
-	if(!databaseWriteMutex_->tryLock())
-		return result;
 	executeReadQuery(&query,"",true);
 	while(query.next())
 	{
@@ -1170,9 +1170,9 @@ void SessionInfo::SetupBaseSessionDatabase()
 			sessionQ.bindValue(":id", observer.toString());
 			executeWriteQuery(&sessionQ);
 		}
-		//Add the experimentXML
-		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"ExperimentXML\", :xml)");
-		sessionQ.bindValue(":xml", QString(experimentXml_));
+		//Add the DesignXML
+		sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"DesignXML\", :xml)");
+		sessionQ.bindValue(":xml", QString(designXml_));
 		executeWriteQuery(&sessionQ);
 	}
 
@@ -1612,3 +1612,34 @@ QSqlDatabase SessionInfo::getCacheDb()
 {
 	return cacheDb_;
 }
+
+//QSqlDatabase SessionInfo::getCacheDb()
+//{
+//	QSqlDatabase cacheDb;
+//	QString connectionName = QString("CacheDatabase_%1_%2")
+//					.arg(sessionId().toString())
+//					.arg((int)QThread::currentThreadId());
+//
+//	
+//	//If we already have a connection open in this thread, use it, 
+//	//otherwise, clone a new connection
+//	if(QSqlDatabase::contains(connectionName))
+//	{
+//		cacheDb = QSqlDatabase::database(connectionName);
+//	}
+//	else
+//	{
+//		openDatabaseConnections_.append(connectionName);
+//		cacheDb = QSqlDatabase::cloneDatabase(cacheDb_,connectionName);
+//		cacheDb.open();
+//		// Attach the disk backed database to the database connection so that we can easily access both from the same query.
+//		QSqlQuery cacheQ(cacheDb);
+//		cacheQ.prepare("ATTACH DATABASE :databaseName AS diskdb");
+//		cacheQ.bindValue(":databaseName", getSessionDb().databaseName());
+//		executeWriteQuery(&cacheQ);
+//	}
+//	
+//	Q_ASSERT(cacheDb.isOpen());
+//
+//	return cacheDb;
+//}

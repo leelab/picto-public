@@ -56,8 +56,8 @@ public:
 	//The design starts in design mode.  Running the design is not possible until it
 	//switches to run mode.  Use this function to switch to and from run mode.
 	void enableRunMode(bool runMode);
-	QString getDesignName(){return designName;};
-	void setDesignName(QString name){designName = name;};
+	QString getDesignName(){Q_ASSERT(pictoData_);return pictoData_->getName();};
+	void setDesignName(QString name){Q_ASSERT(pictoData_);pictoData_->setName(name);};
 	bool hasError(){return lastError_.name != "";};
 	DesignMessage getLastError(){DesignMessage returnVal = lastError_;lastError_.name="";return returnVal;};
 	bool hasWarning(){return lastWarning_.name != "";};

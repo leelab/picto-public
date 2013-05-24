@@ -5,6 +5,7 @@
 #include "../connections/ConnectionManager.h"
 
 #include <QXmlStreamWriter>
+#include <QXmlStreamReader>
 #include <QUuid>
 #include "../../common/memleakdetect.h"
 
@@ -32,7 +33,7 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	QString proxyID;
 	QString password = command->getFieldValue("Password");
 	QByteArray sessionDefs;
-	QByteArray experimentXml;
+	QByteArray designXml;
 	QByteArray DesignConfig;
 	QUuid observerId;
 
@@ -42,11 +43,11 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 
 	int configStart = sessionDefs.indexOf("<DesignConfig>");
 	Q_ASSERT(configStart>-1);
-	experimentXml = sessionDefs.left(configStart);
+	designXml = sessionDefs.left(configStart);
 	DesignConfig = sessionDefs.mid(configStart);
-	QString experimentName = command->getFieldValue("Experiment");
-	if(experimentName.isEmpty())
-		experimentName = "UntitledExperiment";
+	QString designName = command->getFieldValue("Experiment");
+	if(designName.isEmpty())
+		designName = "UntitledExperiment";
 
 	observerId = QUuid(command->getFieldValue("Observer-ID"));
 	
@@ -98,8 +99,13 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 		return unauthorizedResponse;
 	}
 
+	//Get the experiment part of the design and make sure it isn't empty
+	QString experimentXml = extractExperimentFromDesign(designXml);
+	if(experimentXml.isEmpty())
+		return notFoundResponse;
+
 	//create the session
-	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), experimentName, experimentXml, DesignConfig, observerId, password);
+	sessionInfo = ConnectionManager::Instance()->createSession(QUuid(directorID), QUuid(proxyID), designName, designXml, DesignConfig, observerId, password);
 	
 	if(sessionInfo.isNull())
 	{
@@ -107,7 +113,8 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 		return notFoundResponse;
 	}
 
-	QString pendingDirective = "LOADEXP\n" + experimentXml;
+	//The director only needs the experiment part of the design.  Create a PictoData design containing only the experiment
+	QString pendingDirective = "LOADEXP\n"+designXml;//"<PictoData>"+experimentXml+"</PictoData>";
 	sessionInfo->addPendingDirective(pendingDirective,"DIRECTOR");
 
 	//wait for the director to change to stopped status
@@ -137,4 +144,34 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 	return okResponse;
 	
 
+}
+
+QString StartsessionCommandHandler::extractExperimentFromDesign(QString designXML)
+{
+	QXmlStreamReader reader(designXML);
+	while(!reader.isEndDocument() && !(reader.isStartElement() && reader.name().toString() == "Experiment"))
+	{
+		if(reader.readNext() == QXmlStreamReader::Invalid)
+		{
+			return QString();
+		}
+	}
+	if(reader.isEndDocument())
+		return QString();
+	
+	QString returnVal;
+	QXmlStreamWriter xmlWriter(&returnVal);
+	while(true)
+	{
+		if(reader.isEndDocument())
+			return QString();
+		xmlWriter.writeCurrentToken(reader);
+		if(reader.isEndElement() && reader.name().toString() == "Experiment")
+			break;
+		if(reader.readNext() == QXmlStreamReader::Invalid)
+		{
+			return QString();
+		}
+	}
+	return returnVal;
 }

@@ -463,8 +463,8 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Added Exit Scripts to Logic Results.");
-	releaseNoteList.append("Implemented searching in ControlTarget fields of Target Controller and in the Control Target Results of Choice Controllers.  All operator code involved in scripting is now part of search system.");
+	releaseNoteList.append("Added Token Factory graphic for programmatically creating sets of individual graphics whose position and other properties can be separately controlled.");
+	releaseNoteList.append("Implemented searching in the Control Target Results of Choice Controllers.  All operator code involved in scripting is now part of search system.");
 	releaseNoteList.append("Added 'Notes' property to all elements.  Use these to add comments to your code.  Whatever you put in the notes box will show up as a tooltip when the user hovers over the element.  If you are VERY EXCITED about 'Notes,' you can even make things fancy by putting HTML in your note.  The styled note will appear in the tooltip.");
 	releaseNoteList.append("Fixed Auto-Update.  Files are now precompressed for faster download times.");
 	releaseNoteList.append("Added scripts to logic results.  Now you can put a script on any kind of result, and it will get called when that result is triggered.");
@@ -548,7 +548,7 @@ bool MainWindow::loadFile(const QString filename)
 {
 	QFile file(filename);
 	QSqlDatabase newSession;
-	QString experimentXML = "";
+	QString designXML = "";
 	bool isDesignFile = filename.right(4).toLower() == ".xml";
 	if(isDesignFile)
 	{	//Its an xml design file
@@ -559,7 +559,7 @@ bool MainWindow::loadFile(const QString filename)
 			return false;
 		}
 
-		experimentXML = file.readAll();
+		designXML = file.readAll();
 		file.close();
 	}
 	else
@@ -582,23 +582,25 @@ bool MainWindow::loadFile(const QString filename)
 		QSqlQuery query(newSession);
 
 		//Get runs list.
-		query.prepare("SELECT value FROM sessioninfo WHERE key='ExperimentXML' LIMIT 1");
+		//ExperimentXML name changed to DesignXML when we started putting UI Data and Analysis Data together
+		//with it on server.  They never appeared at the same time so we can just look for either one.
+		query.prepare("SELECT value FROM sessioninfo WHERE key='ExperimentXML' OR key='DesignXML' LIMIT 1");
 		bool success = query.exec();
 		if(!success || !query.next())
 		{
-			QMessageBox::critical(0,"Failed to select Experiment XML from Session",success?"":query.lastError().text().toLatin1());
+			QMessageBox::critical(0,"Failed to select Design XML from Session",success?"":query.lastError().text().toLatin1());
 			return false;
 		}
-		experimentXML = query.value(0).toString();
+		designXML = query.value(0).toString();
 		newSession.close();
 	}
-	if(experimentXML.isEmpty())
+	if(designXML.isEmpty())
 	{
 		QMessageBox::critical(0,"Experiment design was empty.","Please try a different file");
 		return false;
 	}
 	QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(new DesignRoot());
-	if(!newDesignRoot->resetDesignRoot(experimentXML))
+	if(!newDesignRoot->resetDesignRoot(designXML))
 	{
 	
 		DesignMessage errorMsg = newDesignRoot->getLastError();

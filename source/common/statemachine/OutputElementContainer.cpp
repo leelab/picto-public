@@ -15,6 +15,7 @@
 #include "../stimuli/DiamondGraphic.h"
 #include "../stimuli/ShapeShifterGraphic.h"
 #include "../stimuli/TokenTrayGraphic.h"
+#include "../stimuli/TokenFactoryGraphic.h"
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
 //#include "../stimuli/LineGraphic.h"
@@ -58,6 +59,8 @@ OutputElementContainer::OutputElementContainer() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
 	visualElementFactory_->addAssetType(TokenTrayGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenTrayGraphic::Create))));
+	visualElementFactory_->addAssetType(TokenFactoryGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenFactoryGraphic::Create))));
 	//visualElementFactory_->addAssetType(LineGraphic::type,
 	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
 	visualElementFactory_->addAssetType(GridGraphic::type,

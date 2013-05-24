@@ -10,6 +10,7 @@
 #include "PictoEngine.h"
 
 #include "../timing/Timestamper.h"
+#include "../controlelements/FrameResolutionTimer.h"
 #include "../storage/BehavioralDataUnitPackage.h"
 #include "../storage/RewardDataUnit.h"
 #include "../storage/PropertyDataUnit.h"
@@ -339,6 +340,9 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	frameData.addFrame(frameTime,runningStateId);
 	setLastFrame(frameData.getLatestFrameId());
 
+	//Tell all timers that work on single frame resolution what the latest frame time is
+	Controller::FrameResolutionTimer::setLastFrameTime(frameTime);
+
 	QSharedPointer<CommandChannel> dataChannel = getDataCommandChannel();
 
 	if(dataChannel.isNull())
@@ -498,19 +502,21 @@ QSharedPointer<CommandChannel> PictoEngine::getFrontPanelEventChannel()
 	return fpEventChannel_;
 }
 
-//void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
-//{
-//	if(propTable_ == propTable)
-//		return;
-//	if(propTable_)
-//	{
-//		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-//		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-//	}
-//	propTable_ = propTable;	
-//	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-//	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-//}
+void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
+{
+	if(propTable_ == propTable)
+		return;
+	if(propTable_)
+	{
+		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+	}
+	propTable_ = propTable;	
+	if(propTable_.isNull())
+		return;
+	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+}
 
 void PictoEngine::sendAllPropertyValuesToServer()
 {
@@ -527,23 +533,23 @@ void PictoEngine::setSessionId(QUuid sessionId)
 		updateCommandChannel_->setSessionId(sessionId_);
 }
 
-void PictoEngine::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
-{
-	if(designConfig_ == designConfig)
-		return;
-	designConfig_ = designConfig;
-	if(propTable_)
-	{
-		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-	}
-	propTable_.clear();
-	if(designConfig_.isNull())
-		return;
-	propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(getDesignConfig()));
-	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-}
+//void PictoEngine::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
+//{
+//	if(designConfig_ == designConfig)
+//		return;
+//	designConfig_ = designConfig;
+//	if(propTable_)
+//	{
+//		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+//		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+//	}
+//	propTable_.clear();
+//	if(designConfig_.isNull())
+//		return;
+//	propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(getDesignConfig()));
+//	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
+//	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
+//}
 
 void PictoEngine::stop()
 { 

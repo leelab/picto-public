@@ -167,7 +167,7 @@ public:
 	bool setFrontPanelEventChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getFrontPanelEventChannel();
 
-	//void setPropertyTable(QSharedPointer<PropertyTable> propTable);
+	void setPropertyTable(QSharedPointer<PropertyTable> propTable);
 	QSharedPointer<PropertyTable> getPropertyTable(){return propTable_;};
 	void sendAllPropertyValuesToServer();
 
@@ -183,8 +183,8 @@ public:
 	bool slaveMode() { return slave_; }
 	//If disabled, Init properties of the slave experiment will not be synchronized with those of the master.
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
-	void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
-	QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
+	//void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
+	//QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
 		
 	
 	//The engine commands are only used when the engine is being run locally

@@ -266,7 +266,7 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 				}
 				else
 				{
-					programText = QString("function script(){\n\n//YOUR CODE STARTS HERE-------\n%1\n//YOUR CODE ENDS HERE----------\n\n}\nvar returnVal = script();\ncheckScriptResults(\"%2\",returnVal);\nreturnVal;").arg(script).arg(it.key());
+					programText = QString("function script(){\n\n//YOUR CODE STARTS HERE-------\n%1\n//YOUR CODE ENDS HERE----------\n\n}\nvar returnVal = script();\n").arg(script) + QString("checkScriptResults(\"%1\",returnVal);\nreturnVal;").arg(it.key());
 				}
 				scriptPrograms_[it.key()] = QSharedPointer<QScriptProgram>(new QScriptProgram(programText));
 			}

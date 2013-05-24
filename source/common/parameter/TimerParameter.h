@@ -4,7 +4,7 @@
 #include "../common.h"
 
 #include "parameter.h"
-#include "../controlelements/Timer.h"
+#include "../controlelements/FrameResolutionTimer.h"
 
 namespace Picto {
 
@@ -50,7 +50,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	Controller::Timer timer_;
+	Controller::FrameResolutionTimer timer_;
 	QStringList unitList_;
 	int time_;
 

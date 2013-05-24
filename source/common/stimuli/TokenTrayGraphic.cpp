@@ -243,6 +243,17 @@ int TokenTrayGraphic::getTokenY(int index)
 {
 	return getTokenPosition(index).y();
 }
+
+int TokenTrayGraphic::getTokenLocalX(int index)
+{
+	return getTokenOffset(index).x();
+}
+
+int TokenTrayGraphic::getTokenLocalY(int index)
+{
+	return getTokenOffset(index).y();
+}
+
 double TokenTrayGraphic::getTokenSize(int index)
 {
 	if(index >= getNumTokens() || index < 0)
