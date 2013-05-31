@@ -53,6 +53,7 @@
 #include "qtvariantproperty.h"
 #include "SyntaxErrorBox.h"
 #include "AboutElementBox.h"
+#include "AnalysisOptionWidget.h"
 
 
 
@@ -117,6 +118,7 @@ private slots:
 	void performUndoAction();
 	void performRedoAction();
 	void setOpenAsset(QSharedPointer<Asset> asset);
+	void selectedAssetChanged(QSharedPointer<Asset> asset);
 	void checkSyntax();
 
 private:
@@ -139,8 +141,6 @@ private:
     QAction *exitAction;
     QAction *addAction;
     QAction *deleteAction;
-    QAction *toFrontAction;
-    QAction *sendBackAction;
 	QAction *experimentalCopyAction;
 	QAction *analysisCopyAction;
 	QAction *pasteAction;
@@ -153,8 +153,7 @@ private:
 	QAction *undoAction;
 	QAction *redoAction;
 
-	QComboBox *analysisSelector_;
-	QAction *deleteAnalysisAction_;
+	AnalysisOptionWidget *analysisOption_;
 	int selectedIndex_;
 
     QMenu *fileMenu;
@@ -191,9 +190,9 @@ private slots:
 	void  redoAvailable(bool available);
 	void searchTextChanged(const QString& text);
 	void matchCaseChanged(int state);
-	void analysisSelectedChanged(int index);
-	void analysisSelectedTextChanged(const QString& text);
-	void deleteCurrentAnalysis();
+	//void analysisSelectedChanged(int index);
+	//void analysisSelectedTextChanged(const QString& text);
+	//void deleteCurrentAnalysis();
 };
 //! [0]
 

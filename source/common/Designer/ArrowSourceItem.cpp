@@ -23,8 +23,9 @@ void ArrowSourceItem::setRect(QRectF rect)
 {
 	ArrowPortItem::setRect(rect);
 	QLinearGradient grad(getRect().topLeft(),getRect().bottomLeft());
-	grad.setColorAt(0,QColor(210,0,0));
-	grad.setColorAt(1,QColor(130,0,0));
+	int alpha = editorState_->getCurrentAnalysis().isNull()?255:100;
+	grad.setColorAt(0,QColor(210,0,0,alpha));
+	grad.setColorAt(1,QColor(130,0,0,alpha));
 	QBrush brush(grad);
 	setBrush(brush);
 }
@@ -40,8 +41,12 @@ void ArrowSourceItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
 			//If this is not the Start Bar of a State (there should be no start transition inside a state).
 			if(!getAsset()->inherits("Picto::State"))
 			{
-				//Put us into insert line mode
-				editorState_->setEditMode(EditorState::InsertLine);
+				//If the designer isn't working on an analysis
+				if(editorState_->getCurrentAnalysis().isNull())
+				{
+					//Put us into insert line mode
+					editorState_->setEditMode(EditorState::InsertLine);
+				}
 			}
 			else
 			{	//This is the start bar of a state.  Put the system into select mode

@@ -378,7 +378,7 @@ void MainWindow::openRecentExperiment()
 //! Called to save a file
 bool MainWindow::saveExperiment()
 {
-	if(currFile_.isEmpty() || currFile_.right(4) != ".xml")
+	if(currFile_.isEmpty() || currFile_.right(4).toLower() != ".xml")
 		return saveAsExperiment();
 	else
 		return saveFile(currFile_);
@@ -386,10 +386,30 @@ bool MainWindow::saveExperiment()
 
 bool MainWindow::saveAsExperiment()
 {
+	//QFileDialog fileDialog(this,
+	//	tr("Save Experiment"),currFile_.isEmpty()?".":currFile_,"XML files (*.xml)");
+	//fileDialog.setFileMode(QFileDialog::AnyFile);
+	//fileDialog.setDefaultSuffix(".xml");
+	//fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+	//fileDialog.exec();
+	//if(fileDialog.selectedFiles().isEmpty())
+	//	return false;
+	//QString filename = fileDialog.selectedFiles().first();
+	//if(filename.isEmpty())
+	//	return false;
 	QString filename = QFileDialog::getSaveFileName(this,
 		tr("Save Experiment"),currFile_.isEmpty()?".":currFile_,"XML files (*.xml)");
 	if(filename.isEmpty())
 		return false;
+	if(filename.right(4).toLower() != ".xml")
+	{
+		if(filename.contains("."))
+		{
+			QMessageBox::warning(NULL,"Invalid Extension","Design files must be saved with a .xml extension.  Please try again.");
+			return false;
+		}
+		filename = filename.append(".xml");
+	}
 
 	return saveFile(filename);
 }
@@ -463,13 +483,12 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
+	releaseNoteList.append("Fixed new bug in Picto Director that caused it to crash when changing a parameter while the experiment was stopped.");
+	releaseNoteList.append("Fixed .xml suffix naming bug that appeared on some machines.");
+
 	releaseNoteList.append("Restored Workstation<->Server<->Director connectivity that had been broken by recent code changes.");
 	releaseNoteList.append("Changed Timer Parameter such that its elapsedTime() function returns values according to the time at which the first phosphor appeared in the previous frame.");
 	releaseNoteList.append("Fixed bug that sometimes made it impossible to succesfully fixate when a TargetController had equal FixationTime and TotalTime settings.");
-	
-	releaseNoteList.append("Added Token Factory graphic for programmatically creating sets of individual graphics whose position and other properties can be separately controlled.");
-	releaseNoteList.append("Implemented searching in the Control Target Results of Choice Controllers.  All operator code involved in scripting is now part of search system.");
-	releaseNoteList.append("Added 'Notes' property to all elements.  Use these to add comments to your code.  Whatever you put in the notes box will show up as a tooltip when the user hovers over the element.  If you are VERY EXCITED about 'Notes,' you can even make things fancy by putting HTML in your note.  The styled note will appear in the tooltip.");
 	
 
 	//Format release notes:

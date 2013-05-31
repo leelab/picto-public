@@ -2,6 +2,7 @@
 #include "PropertyEditorFactory.h"
 #include "../../common/storage/DataStore.h"
 #include "../../common/property/PropertyContainer.h"
+#include "../parameter/AssociateElement.h"
 #include "ScriptWidget.h"
 //#include "DeletableWidget.h"
 #include "../../common/memleakdetect.h"
@@ -44,13 +45,29 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	bool isReadOnly = false;
 	if(nextProp_ && !nextProp_->isGuiEditable())
 		isReadOnly = true;
+
+	//If there is an active analysis, and the currently selected asset is not an analysis asset, set all properties as read only (we will take care of AnalysisScripts later).
+	if(editorState_ && editorState_->getSelectedAsset())
+	{
+		AssociateElement* assocElem = dynamic_cast<AssociateElement*>(editorState_->getSelectedAsset().data());
+		if(!editorState_->getCurrentAnalysis().isNull() && !assocElem)
+		{	
+			isReadOnly = true;
+		}
+	}
 	//If this is the first qtProp for the latest Picto prop, it is the top level prop.
 	//If this is for a Script property, don't associate this top level QtProperty with the latest Picto Property.
 	//If this is any other type, this top level QtProperty should be associated with the latest Picto Property
+	QString propName = property->propertyName();
 	if(static_cast<QtVariantProperty*>(property)->propertyType() != QtVariantPropertyManager::groupTypeId())
 	{
 		if(nextProp_)
+		{
+			//If this is for an analysis script, it should never be read only
+			if((propName.isEmpty()) && nextProp_->getName().left(8) == "Analysis")
+				isReadOnly = false;
 			qtpropToPropMap_[property] = nextProp_;
+		}
 		nextProp_.clear();
 	}
 	//If we haven't connected this managers "property changed signal" to our slot yet, do it.
@@ -61,7 +78,6 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	}
 
 	QWidget* resultWidget = NULL;
-	QString propName = property->propertyName();
 	if((propName == "") || (propName == "Script"))
 	{
 		Q_ASSERT(editorState_);
@@ -99,6 +115,8 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 			qobject_cast<QDoubleSpinBox*>(resultWidget)->setReadOnly(true);
 		if(resultWidget->inherits("QSpinBox"))
 			qobject_cast<QSpinBox*>(resultWidget)->setReadOnly(true);
+		if(resultWidget->inherits("ScriptWidget"))
+			qobject_cast<ScriptWidget*>(resultWidget)->setReadOnly(true);
 	}
 
 	return resultWidget;

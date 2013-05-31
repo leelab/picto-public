@@ -3,14 +3,14 @@
 
 #include <QSharedPointer>
 #include <QMenu>
-#include "AssetItem.h"
+#include "ExperimentItem.h"
 #include "../../common/storage/asset.h"
 
 using namespace Picto;
 
 class Arrow;
 
-class WireableItem : public AssetItem
+class WireableItem : public ExperimentItem
 {
 	Q_OBJECT
 public:

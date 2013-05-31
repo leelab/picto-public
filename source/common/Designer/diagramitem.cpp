@@ -243,10 +243,7 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
 {
 	QVariant inputVal = value;
 	//See if the change is a position change.
-	if	(	((editorState_->getEditMode() == EditorState::MoveItem)
-		|| (editorState_->getEditMode() == EditorState::Select))
-		&&	(change == QGraphicsItem::ItemPositionChange)
-		)
+	if	(change == QGraphicsItem::ItemPositionChange)
 	{
 		//See how big the change is.  We don't accept small changes 
 		//because they can get triggered by double clicking.
@@ -261,6 +258,10 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
 			)
 			//This is a large change, stop sticking the item in place
 			stickInPlace_ = false;
+
+		//We only allow movement in MoveItem mode 
+		if(editorState_->getEditMode() != EditorState::MoveItem)
+			stickInPlace_ = true;
 
 		if(!stickInPlace_)
 		{

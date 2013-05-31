@@ -19,6 +19,7 @@ class ScriptWidget : public QWidget
 public:
    ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QSharedPointer<EditorState> editorState, bool singleLine = false, QWidget *parent=0);
    virtual ~ScriptWidget(){};
+   void setReadOnly(bool readOnly);
 signals:
    void textEdited(const QString &);
    void editingFinished();

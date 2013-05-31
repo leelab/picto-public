@@ -31,8 +31,9 @@ void StartBarItem::setRect(QRectF rect)
 {
 	ArrowSourceItem::setRect(rect);
 	QLinearGradient grad(getRect().topLeft(),getRect().bottomLeft());
-	grad.setColorAt(0,QColor(0,210,0));
-	grad.setColorAt(1,QColor(0,130,0));
+	int alpha = editorState_->getCurrentAnalysis().isNull()?255:100;
+	grad.setColorAt(0,QColor(0,210,0,alpha));
+	grad.setColorAt(1,QColor(0,130,0,alpha));
 	QBrush brush(grad);
 	setBrush(brush);
 	

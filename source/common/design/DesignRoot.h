@@ -66,6 +66,7 @@ public:
 signals:
 	void undoAvailable(bool available);
 	void redoAvailable(bool available);
+	void refreshedFromXml();
 
 private:
 	QSharedPointer<PictoData> pictoData_;

@@ -20,7 +20,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ScriptableContainer : public Scriptable
 #else
-class ScriptableContainer : public Scriptable, protected QScriptable
+class ScriptableContainer : public Scriptable
 #endif
 {
 	Q_OBJECT
@@ -28,8 +28,6 @@ public:
 	ScriptableContainer();
 	virtual ~ScriptableContainer(){};
 
-	void addScriptables(QSharedPointer<ScriptableContainer> scriptableContainer);
-	void addScriptables(ScriptableContainer* scriptableContainer);
 	void addScriptable(QWeakPointer<Scriptable> scriptable);
 	void addChildScriptableContainer(QSharedPointer<ScriptableContainer> child);
 	QList<QWeakPointer<Scriptable>> getScriptableList();
@@ -73,6 +71,7 @@ protected:
 private:
 	bool bindScriptablesToScriptEngine(QScriptEngine &engine);
 	QList<QWeakPointer<Scriptable> > scriptables_;	//This has to be weak because it will contain pointers to its parents.
+	QList<QWeakPointer<Scriptable> > unboundScriptables_;	//This holds scritables that are in scope but can't be bound (ie. Analysis Scriptables for an Experimental Script Container).  It has to be weak because it will contain pointers to its parents.
 	QList<QSharedPointer<ScriptableContainer> > scriptableContainers_;
 	QMap<QString,QString>  scriptableListProperties_;
 	QHash<QString,QSharedPointer<QScriptProgram>> scriptPrograms_;

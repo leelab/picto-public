@@ -7,7 +7,7 @@
 #include <QGraphicsScene>
 #include "../../common/memleakdetect.h"
 WireableItem::WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
-AssetItem(editorState,contextMenu,asset)
+ExperimentItem(editorState,contextMenu,asset)
 {
 	arrowDest_ = NULL;
 	maxArrowSourceWidth_ = 0;
@@ -54,7 +54,7 @@ void WireableItem::setRect(QRectF rect)
 {
 	if(rect.width() < maxArrowSourceWidth_)
 		rect.setWidth(maxArrowSourceWidth_);
-	AssetItem::setRect(rect);
+	ExperimentItem::setRect(rect);
 	updateArrowPortDimensions();
 }
 

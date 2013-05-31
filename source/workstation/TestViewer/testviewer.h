@@ -3,6 +3,7 @@
 
 #include "../viewer.h"
 #include "TestPlaybackController.h"
+#include "../../common/Designer/AnalysisSelectorWidget.h"
 #include "../../common/engine/pictoengine.h"
 #include "../../common/compositor/PixmapVisualTarget.h"
 #include "../../common/compositor/VisualTargetHost.h"
@@ -59,6 +60,7 @@ private:
 
 	Picto::VisualTargetHost *visualTargetHost_;
 	QWidget *propertyFrame_;
+	Picto::AnalysisSelectorWidget* analysisSelector_;
 	QVector<QWidget *> outputSignalsWidgets_;
 
 	QAction *playAction_;

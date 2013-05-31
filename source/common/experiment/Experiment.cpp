@@ -45,6 +45,8 @@ void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 	//values set by the user before running the experiment won't need to be 
 	//reset.
 	updateSignalCoefficients(NULL,QVariant());
+
+	engine_->setPropertyTable(propTable_);
 };
 
 QSharedPointer<Engine::PictoEngine> Experiment::getEngine()
@@ -96,7 +98,7 @@ bool Experiment::runTask(QString taskName)
 		return false;
 
 	Q_ASSERT(propTable_);
-	engine_->setPropertyTable(propTable_);
+	//engine_->setPropertyTable(propTable_);
 	//engine_->setDesignConfig(designConfig_);
 
 	//search through tasks_ for a matching task and run it!
@@ -132,7 +134,7 @@ bool Experiment::runTask(QString taskName)
 
 	} while(!taskName.isEmpty());
 
-	engine_->setPropertyTable(QSharedPointer<PropertyTable>());
+	//engine_->setPropertyTable(QSharedPointer<PropertyTable>());
 	//engine_->setDesignConfig(QSharedPointer<DesignConfig>());
 
 	return true;

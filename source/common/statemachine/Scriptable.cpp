@@ -7,8 +7,6 @@ namespace Picto {
 
 Scriptable::Scriptable()
 {
-	AddDefinableProperty(QVariant::Bool,"UIEnabled",false);
-	AddDefinableProperty(QVariant::Int,"UIOrder",0);
 }
 
 bool Scriptable::hasContentsForScriptEngine()

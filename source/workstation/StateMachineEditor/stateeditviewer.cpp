@@ -97,6 +97,10 @@ void StateEditViewer::init()
 
 void StateEditViewer::deinit()
 {
+	//Whenever we're leaving the StateEditViewer, set an undo point.  This way we will
+	//be sure that the text stored in the design root matches the current state of the
+	//software design
+	designRoot_->setUndoPoint();
 	emit deinitComplete();
 }
 

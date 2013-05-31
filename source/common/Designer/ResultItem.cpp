@@ -1,7 +1,7 @@
-#include "ResultItem.h"
+#include "AnalysisItem.h"
 #include "../../common/statemachine/Result.h"
 #include "../../common/memleakdetect.h"
-ResultItem::ResultItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
+AnalysisItem::AnalysisItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 AssetItem(editorState,contextMenu,asset)
 {
 	QSharedPointer<Result> result = asset.dynamicCast<Result>();

@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include <QtWidgets>
+#include <QGraphicsOpacityEffect>
 
 #include "arrow.h"
 #include <math.h>
@@ -54,10 +55,11 @@
 const qreal Pi = 3.14;
 
 //! [0]
-Arrow::Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
+Arrow::Arrow(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
          QGraphicsItem *parent)
     : QGraphicsLineItem(parent)
 {
+	editorState_ = editorState;
 	transition_ = transition;
     myStartItem = static_cast<ArrowPortItem*>(startItem);
     myEndItem = static_cast<ArrowPortItem*>(endItem);
@@ -71,6 +73,8 @@ Arrow::Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramIt
 	QPen pen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	pen.setCosmetic(true);
     setPen(pen);
+	setGraphicsEffect(new QGraphicsOpacityEffect());
+	qobject_cast<QGraphicsOpacityEffect*>(graphicsEffect())->setOpacity(1.0);
 }
 
 Arrow::~Arrow()
@@ -80,17 +84,17 @@ Arrow::~Arrow()
 		scenePtr->removeItem(this);
 }
 
-Arrow* Arrow::Create(QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
+Arrow* Arrow::Create(QSharedPointer<EditorState> editorState, QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent)
 {
 	if(!dynamic_cast<ArrowSourceItem*>(startItem) || !dynamic_cast<ArrowDestinationItem*>(endItem))
 		return NULL;
 	if(transition.isNull())
 		return NULL;
-	return new Arrow(transition,startItem,endItem,contextMenu,parent);
+	return new Arrow(editorState, transition,startItem,endItem,contextMenu,parent);
 }
 
-Arrow* Arrow::Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
+Arrow* Arrow::Create(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent)
 {
 	if(!dynamic_cast<ArrowSourceItem*>(startItem) || !dynamic_cast<ArrowDestinationItem*>(endItem))
@@ -113,7 +117,7 @@ Arrow* Arrow::Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, 
 		newTrans = QSharedPointer<Transition>(new Transition(source,result,dest));
 	if(!windowAsset.staticCast<MachineContainer>()->addTransition(newTrans))
 		return NULL;
-	return new Arrow(newTrans,startItem,endItem,contextMenu,parent);
+	return new Arrow(editorState, newTrans,startItem,endItem,contextMenu,parent);
 }
 //! [0]
 
@@ -184,10 +188,15 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 		startPos.setY(endPos.y());
 
     QPen myPen = pen();
-    myPen.setColor(myColor);
+	QColor finalColor(myColor);
+	//If there's an active analysis, grey out the arrow
+	qobject_cast<QGraphicsOpacityEffect*>(graphicsEffect())->setOpacity(1.0);
+	if(!editorState_->getCurrentAnalysis().isNull())
+		qobject_cast<QGraphicsOpacityEffect*>(graphicsEffect())->setOpacity(100.0/255.0);
+    myPen.setColor(finalColor);
     qreal arrowSize = 20;
     painter->setPen(myPen);
-    painter->setBrush(myColor);
+    painter->setBrush(finalColor);
 //! [4] //! [5]
 
     QLineF centerLine(startPos, endPos);
@@ -229,7 +238,7 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
         painter->drawLine(line());
         painter->drawPolygon(arrowHead);
         if (isSelected()) {
-            painter->setPen(QPen(myColor, 1, Qt::DashLine));
+            painter->setPen(QPen(finalColor, 1, Qt::DashLine));
         QLineF myLine = line();
         myLine.translate(0, 4.0);
         painter->drawLine(myLine);

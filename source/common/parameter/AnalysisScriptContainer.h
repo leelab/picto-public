@@ -34,6 +34,7 @@ public:
 	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
+	virtual QString defaultTagName(){return "AnalysisScriptContainer";};
 	virtual QString getReturnValueError(QString scriptName,const QScriptValue& returnValue);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

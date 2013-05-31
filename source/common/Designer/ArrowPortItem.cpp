@@ -64,7 +64,11 @@ void ArrowPortItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * )
 {
 	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))
 	{
-		editorState_->setEditMode(EditorState::MoveItem);
-		//setCursor(Qt::ArrowCursor);
+		//Since the mouse is actually already on top of the parent of this arrow port, we need to set the edit mode back
+		//to something logical for our parent.  MoveItem if there is no analysis, and select if there is.
+		if(editorState_->getCurrentAnalysis().isNull())
+			editorState_->setEditMode(EditorState::MoveItem);
+		else
+			editorState_->setEditMode(EditorState::Select);
 	}
 }

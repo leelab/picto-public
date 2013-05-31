@@ -8,8 +8,7 @@
 namespace Picto {
 
 AssociateRoot::AssociateRoot()
-:	ScriptableContainer(),
-	variableFactory_(new AssetFactory(0,-1)),
+:	variableFactory_(new AssetFactory(0,-1)),
 	outputFactory_(new AssetFactory(0,-1)),
 	dataSourceFactory_(new AssetFactory(0,-1)),
 	functionFactory_(new AssetFactory(0,-1)),
@@ -108,7 +107,7 @@ QSharedPointer<Asset> AssociateRoot::getLinkableAsset()
 
 void AssociateRoot::postDeserialize()
 {
-	ScriptableContainer::postDeserialize();
+	UIEnabled::postDeserialize();
 	if(getAssociateId() == QUuid())
 		propertyContainer_->setPropertyValue("AssociateId",QUuid::createUuid());
 	setDescendantPropertiesAsAssociates();
@@ -117,7 +116,7 @@ void AssociateRoot::postDeserialize()
 
 bool AssociateRoot::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!ScriptableContainer::validateObject(xmlStreamReader))
+	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }

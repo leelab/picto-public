@@ -90,8 +90,6 @@ public slots:
 	void experimentalCopySelectedItems();
 	void analysisCopySelectedItems();
 	void pasteItems();
-	void bringToFront();
-	void sendToBack();
 
 signals:
     void itemInserted(DiagramItem *item);

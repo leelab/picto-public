@@ -80,7 +80,7 @@ void TestViewer::init()
 		connect(testController_.data(),SIGNAL(stopped()),this,SLOT(stopped()));
 	}
 	generateComboBox();
-
+	//analysisSelector_->setDesignRoot(designRoot_);
 
 	//FOR TESTING, WE ARE JUST AUTOMATICALLY ACTIVATING THE FIRST ANALYSIS IN THE FILE.
 	QSharedPointer<Analysis> firstAnalysis = designRoot_->getAnalysis(0).staticCast<Analysis>();
@@ -229,11 +229,16 @@ void TestViewer::setupUi()
 		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
 		stimulusLayout->addWidget(outputSignalsWidgets_.back());
 	}
-
-	QHBoxLayout *operationLayout = new QHBoxLayout;
+	
+	QVBoxLayout *leftPane = new QVBoxLayout();
+	//analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	propertyFrame_ = new PropertyFrame();
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
-	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
+	//leftPane->addWidget(analysisSelector_);
+	leftPane->addWidget(propertyFrame_);
+
+	QHBoxLayout *operationLayout = new QHBoxLayout;
+	operationLayout->addLayout(leftPane,Qt::AlignTop);
 	operationLayout->addLayout(stimulusLayout);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();

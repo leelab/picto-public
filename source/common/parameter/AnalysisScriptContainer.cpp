@@ -12,6 +12,7 @@ AnalysisScriptContainer::AnalysisScriptContainer()
 	AddDefinableProperty(QVariant::String,"AnalysisEntryScript","",QMap<QString,QVariant>(),0,1);
 	AddDefinableProperty(QVariant::String,"AnalysisFrameScript","",QMap<QString,QVariant>(),0,1);
 	AddDefinableProperty(QVariant::String,"AnalysisExitScript","",QMap<QString,QVariant>(),0,1);
+	requireUniqueName(false);
 }
 
 QSharedPointer<Asset> AnalysisScriptContainer::Create()

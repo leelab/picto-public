@@ -12,38 +12,6 @@
 #include "../property/EnumProperty.h"
 
 #include "../parameter/AssociateElement.h"
-//
-//#include "../parameter/BooleanParameter.h"
-//#include "../parameter/ChoiceParameter.h"
-//#include "../parameter/NumericParameter.h"
-//#include "../parameter/RangeParameter.h"
-//#include "../parameter/RandomIntParameter.h"
-//#include "../parameter/RandomDoubleParameter.h"
-//#include "../parameter/DoubleParameter.h"
-//#include "../parameter/PseudorandomIntParameter.h"
-//#include "../parameter/TimerParameter.h"
-//#include "../parameter/OperatorClickParameter.h"
-//#include "../parameter/SignalValueParameter.h"
-//
-//#include "../stimuli/ArrowGraphic.h"
-//#include "../stimuli/BoxGraphic.h"
-//#include "../stimuli/DiamondGraphic.h"
-//#include "../stimuli/ShapeShifterGraphic.h"
-//#include "../stimuli/TokenTrayGraphic.h"
-//#include "../stimuli/CircleGraphic.h"
-//#include "../stimuli/EllipseGraphic.h"
-//#include "../stimuli/LineGraphic.h"
-//#include "../stimuli/GridGraphic.h"
-//#include "../stimuli/PictureGraphic.h"
-//#include "../stimuli/RandomlyFilledGridGraphic.h"
-//#include "../stimuli/TextGraphic.h"
-//#include "../stimuli/OperatorInfoGraphic.h"
-//#include "../stimuli/DigitalOutput.h"
-//#include "../stimuli/BinaryDataOutput.h"
-//#include "../stimuli/AudioElement.h"
-//#include "../controlelements/circletarget.h"
-//#include "../controlelements/recttarget.h"
-//#include "../statemachine/ScriptFunction.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -52,116 +20,32 @@ ScriptableContainer* ScriptableContainer::objectForResultCheck_ = NULL;
 QScriptValue ScriptableContainer::checkScriptResultScript_;
 
 ScriptableContainer::ScriptableContainer()
-:	/*parameterFactory_(new AssetFactory(0,-1)),
-	visualElementFactory_(new AssetFactory(0,-1)),
-	controlTargetFactory_(new AssetFactory(0,-1)),
-	audioElementFactory_(new AssetFactory(0,-1)),
-	outputSignalFactory_(new AssetFactory(0,-1)),
-	scriptFunctionFactory_(new AssetFactory(0,-1)),*/
+:
 	scriptingInitialized_(false),
 	debuggingEnabled_(false)
 {
-	isAssociateElement_ = dynamic_cast<AssociateElement*>(this);
-	//AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
-	//scriptFunctionFactory_->addAssetType("ScriptFunction",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
-
-	//AddDefinableObjectFactory("Parameter",parameterFactory_);
-	//parameterFactory_->addAssetType("Boolean",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
-	////parameterFactory_->addAssetType("Choice",
-	////	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
-	//parameterFactory_->addAssetType("Numeric",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
-	//parameterFactory_->addAssetType("Range",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RangeParameter::Create))));
-	//parameterFactory_->addAssetType("RandomInt",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomIntParameter::Create))));
-	//parameterFactory_->addAssetType("RandomDouble",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomDoubleParameter::Create))));
-	//parameterFactory_->addAssetType("Double",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DoubleParameter::Create))));
-	//parameterFactory_->addAssetType("PseudorandomInt",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
-	//parameterFactory_->addAssetType("Timer",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimerParameter::Create))));
-	//parameterFactory_->addAssetType("OperatorClick",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorClickParameter::Create))));
-	//parameterFactory_->addAssetType("SignalValue",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalValueParameter::Create))));
-
-
-	//AddDefinableObjectFactory("VisualElement",visualElementFactory_);
-	////For the sake of cleanliness, we should probably have a StimulusContainer class that adds all of the following.
-	////functionally, there is no problem with just adding them here.
-	//visualElementFactory_->addAssetType(ArrowGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ArrowGraphic::Create))));
-	//visualElementFactory_->addAssetType(BoxGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BoxGraphic::Create))));
-	//visualElementFactory_->addAssetType(DiamondGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DiamondGraphic::Create))));
-	//visualElementFactory_->addAssetType(CircleGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
-	//visualElementFactory_->addAssetType(EllipseGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
-	//visualElementFactory_->addAssetType(ShapeShifterGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
-	//visualElementFactory_->addAssetType(TokenTrayGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TokenTrayGraphic::Create))));
-	//visualElementFactory_->addAssetType(LineGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LineGraphic::Create))));
-	//visualElementFactory_->addAssetType(GridGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(GridGraphic::Create))));
-	//visualElementFactory_->addAssetType(PictureGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PictureGraphic::Create))));
-	//visualElementFactory_->addAssetType(RandomlyFilledGridGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RandomlyFilledGridGraphic::Create))));
-	//visualElementFactory_->addAssetType(TextGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
-	//visualElementFactory_->addAssetType(OperatorInfoGraphic::type,
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorInfoGraphic::Create))));
-
-	//AddDefinableObjectFactory("ControlTarget",controlTargetFactory_);
-	//controlTargetFactory_->addAssetType("CircleTarget",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleTarget::Create))));
-	//controlTargetFactory_->addAssetType("RectTarget",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RectTarget::Create))));
-
-	//AddDefinableObjectFactory("AudioElement",audioElementFactory_);
-	//audioElementFactory_->addAssetType("AudioElement",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
-
-	//AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
-	//outputSignalFactory_->addAssetType("DigitalOutput",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
-
-	//AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
-	//outputSignalFactory_->addAssetType("BinaryDataOutput",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BinaryDataOutput::Create))));
-
-
 }
 
-/*! \brief Copies the scriptables from the passed in container
- *	
- *	This is used when adding an child element to a parent scriptableContainer.  By passing
- *	in the parent scriptable container, we now have access to all 
- *	of the parent's scriptables.  Effectively this allows us to
- *	have scriptables with global scope.
- */
-void ScriptableContainer::addScriptables(QSharedPointer<ScriptableContainer> scriptableContainer)
-{
-	addScriptables(scriptableContainer.data());
-}
-
-void ScriptableContainer::addScriptables(ScriptableContainer *scriptableContainer)
-{
-	QList<QWeakPointer<Scriptable>> scriptables = scriptableContainer->getScriptableList();
-	foreach(QWeakPointer<Scriptable> scriptable,scriptables)
-	{
-		addScriptable(scriptable);
-	}
-}
+///*! \brief Copies the scriptables from the passed in container
+// *	
+// *	This is used when adding an child element to a parent scriptableContainer.  By passing
+// *	in the parent scriptable container, we now have access to all 
+// *	of the parent's scriptables.  Effectively this allows us to
+// *	have scriptables with global scope.
+// */
+//void ScriptableContainer::addScriptables(QSharedPointer<ScriptableContainer> scriptableContainer)
+//{
+//	addScriptables(scriptableContainer.data());
+//}
+//
+//void ScriptableContainer::addScriptables(ScriptableContainer *scriptableContainer)
+//{
+//	QList<QWeakPointer<Scriptable>> scriptables = scriptableContainer->getScriptableList();
+//	foreach(QWeakPointer<Scriptable> scriptable,scriptables_)
+//	{
+//		addScriptable(scriptable);
+//	}
+//}
 
 void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 {
@@ -174,13 +58,18 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 	{
 		//The input scriptable is part of an Associate.  Only add it if its part of the same Associate
 		//as me
-		if(isAssociateElement_)
+		if(!isAssociateElement_)
+			unboundScriptables_.push_back(scriptable);
+		else
 		{
 			QUuid scriptableAssocId = assocElement->getAssociateId();
 			AssociateElement* thisAsAssocElem = dynamic_cast<AssociateElement*>(this);
 			if(thisAsAssocElem->getAssociateId() != scriptableAssocId)
-				return;
-			scriptables_.push_back(scriptable);
+			{
+				unboundScriptables_.push_back(scriptable);
+			}
+			else
+				scriptables_.push_back(scriptable);
 		}
 	}
 	else
@@ -199,7 +88,17 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 void ScriptableContainer::addChildScriptableContainer(QSharedPointer<ScriptableContainer> child)
 {
 	scriptableContainers_.push_back(child);
-	child->addScriptables(this);
+	//Add all of my scriptables to the child
+	foreach(QWeakPointer<Scriptable> scriptable,scriptables_)
+	{
+		child->addScriptable(scriptable);
+	}
+	//Try to add unbound scriptables to the child too
+	foreach(QWeakPointer<Scriptable> scriptable,unboundScriptables_)
+	{
+		child->addScriptable(scriptable);
+	}
+
 	if(scriptingInitialized_)
 	{	//Our engine and all child ScriptableContainers engines are initialized, so 
 		//initialize this one too.
@@ -330,7 +229,7 @@ void ScriptableContainer::ClearAssociateChildren(QUuid associateId)
 {
 	Scriptable::ClearAssociateChildren(associateId);
 
-	//Go through the scriptables_ list and remove all associate children with the input associate id.
+	//Go through the scriptables_ and unboundScriptables_ lists and remove all associate children with the input associate id.
 	bool somethingWasRemoved = false;
 	AssociateElement* associateElem;
 	for(QList<QWeakPointer<Scriptable>>::iterator iter = scriptables_.begin();iter!=scriptables_.end();)
@@ -345,6 +244,24 @@ void ScriptableContainer::ClearAssociateChildren(QUuid associateId)
 		if(associateElem->getAssociateId() == associateId)
 		{
 			iter = scriptables_.erase(iter);
+			somethingWasRemoved = true;
+			continue;
+		}
+		iter++;
+	}
+
+	for(QList<QWeakPointer<Scriptable>>::iterator iter = unboundScriptables_.begin();iter!=unboundScriptables_.end();)
+	{
+		Q_ASSERT(!iter->isNull());
+		associateElem = dynamic_cast<AssociateElement*>(iter->data());
+		if(!associateElem)
+		{
+			iter++;
+			continue;
+		}
+		if(associateElem->getAssociateId() == associateId)
+		{
+			iter = unboundScriptables_.erase(iter);
 			somethingWasRemoved = true;
 			continue;
 		}
@@ -382,6 +299,7 @@ QString ScriptableContainer::getReturnValueError(QString,const QScriptValue&)
 void ScriptableContainer::postDeserialize()
 {
 	Scriptable::postDeserialize();
+	isAssociateElement_ = dynamic_cast<AssociateElement*>(this);
 	scriptPrograms_.clear();
 	QStringList childTags = getDefinedChildTags();
 	foreach(QString childTag,childTags)
@@ -409,7 +327,7 @@ bool ScriptableContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	{
 		QString scriptTag = it.value();
 		QString script = propertyContainer_->getPropertyValue(scriptTag).toString();
-		QString function = "function " + it.key() + "() { " + script + "}";
+		QString function = "function " + it.key() + "() { " + script + "\n}";
 		QScriptSyntaxCheckResult res = QScriptEngine::checkSyntax(function);
 		if(res.state() != QScriptSyntaxCheckResult::Valid)
 		{

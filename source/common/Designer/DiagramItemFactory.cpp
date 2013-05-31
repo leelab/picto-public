@@ -7,6 +7,7 @@
 #include "ControlElementItem.h"
 #include "AssetItem.h"
 #include "WireableItem.h"
+#include "AnalysisItem.h"
 #include "../../common/property/property.h"
 #include "../../common/statemachine/uienabled.h"
 #include "../../common/statemachine/result.h"
@@ -88,6 +89,8 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		returnVal = NULL;
 	else if(asset->inherits("Picto::UIInfo"))
 		returnVal = NULL;
+	else if(asset->inherits("Picto::AnalysisScriptContainer"))
+		returnVal = NULL;
 	else if(asset->inherits("Picto::LogicResult"))
 		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::Result"))
@@ -96,6 +99,10 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		returnVal = new StateMachineElementItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::ControlElement"))
 		returnVal = new ControlElementItem(editorState_, contextMenu_,asset);
+	else if(asset->inherits("Picto::AnalysisVariable"))
+		returnVal = new AnalysisItem(editorState_, contextMenu_,asset);
+	else if(asset->inherits("Picto::AnalysisFunction"))
+		returnVal = new AnalysisItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::UIEnabled"))
 		returnVal = new WireableItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::Asset"))

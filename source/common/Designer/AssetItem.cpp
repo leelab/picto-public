@@ -144,13 +144,13 @@ void AssetItem::keepPixmapAspectRatio(bool keep)
 void AssetItem::setRect(QRectF rect)
 {
 	DiagramItem::setRect(rect);
-	QLinearGradient grad(QPointF(0,-20),QPointF(0,20));
-	float stopPoint = (getIconRect().top()-getRect().top())/getRect().height();
-	grad.setColorAt(0,QColor("darkslategrey"));
-	grad.setColorAt(stopPoint,stopPoint<1?"lightslategray":"darkslategrey");
-	//grad.setColorAt(1,QColor("red"));
-	QBrush brush(grad);
-	setBrush(brush);
+	//QLinearGradient grad(QPointF(0,-20),QPointF(0,20));
+	//float stopPoint = (getIconRect().top()-getRect().top())/getRect().height();
+	//grad.setColorAt(0,QColor("darkslategrey"));
+	//grad.setColorAt(stopPoint,stopPoint<1?"lightslategray":"darkslategrey");
+	////grad.setColorAt(1,QColor("red"));
+	//QBrush brush(grad);
+	//setBrush(brush);
 	setSvgIcon(getSvgItem());
 }
 

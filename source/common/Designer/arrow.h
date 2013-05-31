@@ -60,9 +60,9 @@ class Arrow : public QGraphicsLineItem
 {
 public:
     enum { Type = UserType + 4 };
-	static Arrow* Create(QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
+	static Arrow* Create(QSharedPointer<EditorState> editorState, QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent);
-	static Arrow* Create(QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
+	static Arrow* Create(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent);
 	virtual ~Arrow();
     int type() const
@@ -87,10 +87,11 @@ protected:
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 private:
-	Arrow(QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
+	Arrow(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
       QGraphicsItem *parent = 0);
 	static QSharedPointer<Asset> getAssetAncestor(DiagramItem* item);
 	QSharedPointer<Asset> transition_;
+	QSharedPointer<EditorState> editorState_;
     ArrowPortItem *myStartItem;
     ArrowPortItem *myEndItem;
     QColor myColor;

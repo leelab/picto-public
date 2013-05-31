@@ -27,6 +27,11 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	connect(editorState_.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
 }
 
+void ScriptWidget::setReadOnly(bool readOnly)
+{
+	textEdit_->setReadOnly(readOnly);
+}
+
 void ScriptWidget::textChangeDetected()
 {
 	//Just in case the search is considered a text change for some reason, we make this function reentrant

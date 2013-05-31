@@ -73,6 +73,7 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 	//		designMap_[childTag].push_back(design);
 	//	}
 	//}
+	emit refreshedFromXml();
 	return true;
 }
 //QStringList DesignRoot::getDesignIdentifiers()
@@ -210,6 +211,7 @@ void DesignRoot::refreshFromXml()
 	}
 	connect(pictoData_.data(),SIGNAL(edited()),this,SLOT(designEdited()));
 	setDesignName(pictoData_->getName());
+	emit refreshedFromXml();
 }
 
 bool DesignRoot::isModified()

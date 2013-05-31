@@ -29,8 +29,8 @@ protected:
 	void setSvgIcon(QString svgFile);
 	void keepPixmapAspectRatio(bool keep);
 	virtual void setRect(QRectF rect);
-private:
 	QGraphicsSvgItem* getSvgItem();
+private:
 	QSharedPointer<Asset> asset_;
 	QGraphicsSvgItem* lastSvgIcon_;
 	QString svgFileName_;

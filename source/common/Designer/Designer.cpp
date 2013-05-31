@@ -13,6 +13,7 @@
 #include "AssetInfoBox.h"
 #include "ViewerWindow.h"
 #include "ElementNotesWidget.h"
+#include "../parameter/AssociateElement.h"
 #include "../storage/SearchRequest.h"
 #include "../../common/memleakdetect.h"
 
@@ -114,13 +115,7 @@ void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 
 		//Populate the AnalysisSelector
 		editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
-		analysisSelector_->clear();
-		analysisSelector_->addItem("None");
-		for(int i=0;i<designRoot_->getNumAnalyses();i++)
-		{
-			analysisSelector_->addItem(designRoot_->getAnalysis(i)->getName());
-		}
-		analysisSelector_->addItem("New...");
+		//analysisOption_->setDesignRoot(designRoot_);
 		//Since we just loaded a new design, there are no undos or redos available
 		undoAvailable(false);
 		redoAvailable(false);
@@ -231,6 +226,41 @@ void Designer::setOpenAsset(QSharedPointer<Asset> asset)
 	designRoot_->setOpenAsset(asset);
 }
 
+void Designer::selectedAssetChanged(QSharedPointer<Asset> asset)
+{
+	if(editorState_->getCurrentAnalysis())
+	{	//An Analysis is active
+		if(dynamic_cast<AssociateElement*>(asset.data()))
+		{	//The asset is an analysis element
+			deleteAction->setEnabled(true);
+			experimentalCopyAction->setEnabled(false);
+			analysisCopyAction->setEnabled(true);
+			pasteAction->setEnabled(true);
+		}
+		else	//The asset is an experiment element
+		{
+			deleteAction->setEnabled(false);
+			experimentalCopyAction->setEnabled(false);
+			analysisCopyAction->setEnabled(false);
+			pasteAction->setEnabled(false);		
+		}
+	}
+	else	//No Analysis is active
+	{
+		deleteAction->setEnabled(true);
+		experimentalCopyAction->setEnabled(true);
+		analysisCopyAction->setEnabled(false);
+		pasteAction->setEnabled(true);		
+	}
+	//If the window is the selected asset, copy and delete should be disabled
+	if(editorState_->getSelectedAsset() == editorState_->getWindowAsset())
+	{
+		deleteAction->setEnabled(false);
+		experimentalCopyAction->setEnabled(false);
+		analysisCopyAction->setEnabled(false);
+	}
+}
+
 //! Checks the syntax of the current XML to see if it is a legal experiment
 void Designer::checkSyntax()
 {
@@ -252,16 +282,6 @@ void Designer::createActions()
                                 tr("&Redo"), this);
     redoAction->setShortcut(tr("Ctrl+Y"));
     redoAction->setStatusTip(tr("Redo action"));
-
-    toFrontAction = new QAction(QIcon(":/icons/bringtofront.png"),
-                                tr("Bring to &Front"), this);
-    toFrontAction->setShortcut(tr("Ctrl+F"));
-    toFrontAction->setStatusTip(tr("Bring item to front"));
-
-    sendBackAction = new QAction(QIcon(":/icons/sendtoback.png"),
-                                 tr("Send to &Back"), this);
-    sendBackAction->setShortcut(tr("Ctrl+B"));
-    sendBackAction->setStatusTip(tr("Send item to back"));
 
     deleteAction = new QAction(QIcon(":/icons/delete.png"),
                                tr("&Delete"), this);
@@ -301,20 +321,7 @@ void Designer::createActions()
 	searchWidget->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken); 
 	searchWidget->setLayout(searchLayout);
 
-	analysisSelector_ = new QComboBox();
-	selectedIndex_ = -1;
-	analysisSelector_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	analysisSelector_->setInsertPolicy(QComboBox::NoInsert);
-	analysisSelector_->setEditable(false);
-	analysisSelector_->addItem("None");
-	analysisSelector_->addItem("New...");
-	connect(analysisSelector_,SIGNAL(currentIndexChanged(int)),this,SLOT(analysisSelectedChanged(int)));
-	connect(analysisSelector_,SIGNAL(editTextChanged(const QString&)),this,SLOT(analysisSelectedTextChanged(const QString&)));
-	deleteAnalysisAction_ = new QAction(QIcon(":/icons/delete.png"),
-                               tr("De&lete"), this);
-    deleteAnalysisAction_->setStatusTip(tr("Delete Analysis"));
-	deleteAnalysisAction_->setEnabled(false);
-	connect(deleteAnalysisAction_,SIGNAL(triggered()),this,SLOT(deleteCurrentAnalysis()));
+	//analysisOption_ = new AnalysisOptionWidget(editorState_);
 
 	//Turn on highlighting for elements with children that have scripts and analysis scripts.
 	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT));
@@ -333,8 +340,6 @@ void Designer::connectActions()
 	connect(redoAction, SIGNAL(triggered()),this, SLOT(performRedoAction()));
 	connect(editorState_.data(),SIGNAL(undoRequested()),this,SLOT(performUndoAction()));
 
-	connect(toFrontAction, SIGNAL(triggered()),scene, SLOT(bringToFront()));
-    connect(sendBackAction, SIGNAL(triggered()),scene, SLOT(sendToBack()));
     connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));
 	connect(experimentalCopyAction, SIGNAL(triggered()),scene, SLOT(experimentalCopySelectedItems()));
 	connect(analysisCopyAction, SIGNAL(triggered()),scene, SLOT(analysisCopySelectedItems()));
@@ -343,6 +348,7 @@ void Designer::connectActions()
     connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
 	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
 	connect(editorState_.data(),SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),this,SLOT(setOpenAsset(QSharedPointer<Asset>)));
+	connect(editorState_.data(),SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),this,SLOT(selectedAssetChanged(QSharedPointer<Asset>)));
 }
 
 //! [24]
@@ -357,9 +363,6 @@ void Designer::createMenus()
 	itemMenu->addAction(experimentalCopyAction);
 	itemMenu->addAction(analysisCopyAction);
 	itemMenu->addAction(pasteAction);
-    itemMenu->addSeparator();
-    itemMenu->addAction(toFrontAction);
-    itemMenu->addAction(sendBackAction);
 
 	sceneMenu = new QMenu(tr("Scene"),this);
 	sceneMenu->addAction(pasteAction);
@@ -378,8 +381,6 @@ void Designer::createToolbars()
 	editToolBar->addAction(experimentalCopyAction);
 	editToolBar->addAction(analysisCopyAction);
 	editToolBar->addAction(pasteAction);
-    editToolBar->addAction(toFrontAction);
-    editToolBar->addAction(sendBackAction);
 	editToolBar->addAction(undoAction);
 	editToolBar->addAction(redoAction);
 
@@ -398,9 +399,8 @@ void Designer::createToolbars()
 	pointerToolbar->addWidget(searchWidget);
 	pointerToolbar->addSeparator();
 	pointerToolbar->addAction(checkSyntaxAction_);
-	pointerToolbar->addWidget(new QLabel(tr("Select Analysis")));
-	pointerToolbar->addWidget(analysisSelector_);
-	pointerToolbar->addAction(deleteAnalysisAction_);
+	//pointerToolbar->addWidget(new QLabel(tr("Select Analysis")));
+	//pointerToolbar->addWidget(analysisOption_);
 //! [27]
 }
 
@@ -410,13 +410,7 @@ bool Designer::resetEditor()
 	editorState_->setTopLevelAsset(designRoot_->getExperiment());
 
 	//Get the selected Analysis and use it in the editor
-	int analysisComboboxIndex = analysisSelector_->currentIndex();
-	if(analysisComboboxIndex > 0)
-	{
-		QSharedPointer<Asset> analysis = designRoot_->getAnalysis(analysisComboboxIndex-1);
-		Q_ASSERT(analysis);
-		editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>());
-	}
+	//analysisOption_->updateAnalysisList();
 
 	//Reset the window asset
 	QSharedPointer<Asset> openAsset = designRoot_->getOpenAsset();
@@ -445,128 +439,128 @@ void Designer::matchCaseChanged(int)
 	if(!searchBox->text().isEmpty())
 		searchTextChanged(searchBox->text());
 }
-
-void Designer::analysisSelectedChanged(int index)
-{
-	if(index < 0)
-		return;
-	analysisSelector_->setEditable(false);
-	bool newAnalysisCreated = false;
-	switch(index)
-	{
-	case 0:
-		if(editorState_)
-		{
-			editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
-		}
-		deleteAnalysisAction_->setEnabled(false);
-		break;
-	default:
-		deleteAnalysisAction_->setEnabled(true);
-		//Allow user to edit the current analysis name in the combobox.
-		analysisSelector_->setEditable(true);
-		if(editorState_)
-		{
-			//If we need to create a new analysis, do it
-			newAnalysisCreated = (index == analysisSelector_->count()-1);
-			if(newAnalysisCreated)
-			{
-				QSharedPointer<Asset> newAnalysis;
-
-				//Add a new Analysis Design to the designRoot
-				newAnalysis = designRoot_->importAnalysis("<Analysis/>");
-				//Create UI Data for the new Analysis and attach it
-				AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
-				Q_ASSERT(assocRootHost);
-				QUuid hostId = assocRootHost->getHostId();
-				QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
-				QString feedback;
-				newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
-				Q_ASSERT(newAnalysis);
-
-				//Attempt to add the new analysis to the EditorState as current
-				if(!editorState_->setCurrentAnalysis(newAnalysis.staticCast<Analysis>()))
-				{
-					//If the analysis couldn't be added as current, remove the Analysis and go back to the last selected
-					//analysis.
-					designRoot_->removeAnalysis(designRoot_->getNumAnalyses()-1);
-					analysisSelector_->setCurrentIndex(selectedIndex_);
-					return;
-				}
-
-				//Add a new "New Analysis" item to the end of the analysisSelector
-				analysisSelector_->addItem("New...");
-
-				//Set the combo boxes value to a default "untitled" string.  This will have the affect
-				//of updating the analysis name as well.
-				analysisSelector_->setItemText(index, "Untitled");
-
-				//Highlight the "untitled" name
-				analysisSelector_->lineEdit()->selectAll();
-			}
-		}
-		break;
-	};
-
-	//Attempt to set the selected analysis as the current one, if it doesn't work, go back to the previous analysis.
-	if(index > 0)
-	{
-		QSharedPointer<Asset> analysis = designRoot_->getAnalysis(index-1);
-		Q_ASSERT(analysis);
-		if(!editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>()))
-		{
-			analysisSelector_->setCurrentIndex(selectedIndex_);
-			return;
-		}
-	}
-
-	selectedIndex_ = index;
-	//Reset the scene so that analysis stuff will come up.
-	resetEditor();
-
-	if(newAnalysisCreated)
-	{
-		//Highlight the "untitled" name
-		analysisSelector_->lineEdit()->selectAll();
-	}
-}
-
-void Designer::analysisSelectedTextChanged(const QString&)
-{
-	if(analysisSelector_->currentIndex() > 0 && editorState_ && editorState_->getCurrentAnalysis())
-	{
-		QString newName = analysisSelector_->currentText();
-		analysisSelector_->setItemText(analysisSelector_->currentIndex(),newName);
-		//This function can get called due to a change in selected index before analysisSelectedChange() is called.
-		//This would mean that the editorState's currentAnalysis would not correspond to the analysisSelector_->currentIndex()
-		//We avoid this issue by only resetting the analysis's name if it's index corresponds to the current
-		//combobox index
-		if(selectedIndex_ == analysisSelector_->currentIndex())
-			editorState_->getCurrentAnalysis()->setName(newName);
-	}
-}
-
-void Designer::deleteCurrentAnalysis()
-{
-	if(!editorState_ || !editorState_->getCurrentAnalysis())
-		return;
-
-	int ret = QMessageBox::warning(this, tr("Picto"),
-                                QString("Are you sure you want to delete the %1 Analysis?").arg(editorState_->getCurrentAnalysis()->getName()),
-                                QMessageBox::Yes | QMessageBox::Cancel,
-                                QMessageBox::Cancel);
-	if(ret != QMessageBox::Yes)
-		return;
-	//Detach analysis from experiment
-	QUuid currAnalsisId = editorState_->getCurrentAnalysis()->getAssociateId();
-	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAssociateDescendants(currAnalsisId);
-	
-	//Remove analysis from design
-	int anaIndexInComboBox = analysisSelector_->currentIndex();
-	if(!designRoot_->removeAnalysis(anaIndexInComboBox-1))
-		Q_ASSERT(false);
-
-	//Remove analysis name from combobox and set current analysis to none.
-	analysisSelector_->setCurrentIndex(0);
-	analysisSelector_->removeItem(anaIndexInComboBox);
-}
+//
+//void Designer::analysisSelectedChanged(int index)
+//{
+//	if(index < 0)
+//		return;
+//	analysisSelector_->setEditable(false);
+//	bool newAnalysisCreated = false;
+//	switch(index)
+//	{
+//	case 0:
+//		if(editorState_)
+//		{
+//			editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
+//		}
+//		deleteAnalysisAction_->setEnabled(false);
+//		break;
+//	default:
+//		deleteAnalysisAction_->setEnabled(true);
+//		//Allow user to edit the current analysis name in the combobox.
+//		analysisSelector_->setEditable(true);
+//		if(editorState_)
+//		{
+//			//If we need to create a new analysis, do it
+//			newAnalysisCreated = (index == analysisSelector_->count()-1);
+//			if(newAnalysisCreated)
+//			{
+//				QSharedPointer<Asset> newAnalysis;
+//
+//				//Add a new Analysis Design to the designRoot
+//				newAnalysis = designRoot_->importAnalysis("<Analysis/>");
+//				//Create UI Data for the new Analysis and attach it
+//				AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
+//				Q_ASSERT(assocRootHost);
+//				QUuid hostId = assocRootHost->getHostId();
+//				QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
+//				QString feedback;
+//				newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
+//				Q_ASSERT(newAnalysis);
+//
+//				//Attempt to add the new analysis to the EditorState as current
+//				if(!editorState_->setCurrentAnalysis(newAnalysis.staticCast<Analysis>()))
+//				{
+//					//If the analysis couldn't be added as current, remove the Analysis and go back to the last selected
+//					//analysis.
+//					designRoot_->removeAnalysis(designRoot_->getNumAnalyses()-1);
+//					analysisSelector_->setCurrentIndex(selectedIndex_);
+//					return;
+//				}
+//
+//				//Add a new "New Analysis" item to the end of the analysisSelector
+//				analysisSelector_->addItem("New...");
+//
+//				//Set the combo boxes value to a default "untitled" string.  This will have the affect
+//				//of updating the analysis name as well.
+//				analysisSelector_->setItemText(index, "Untitled");
+//
+//				//Highlight the "untitled" name
+//				analysisSelector_->lineEdit()->selectAll();
+//			}
+//		}
+//		break;
+//	};
+//
+//	//Attempt to set the selected analysis as the current one, if it doesn't work, go back to the previous analysis.
+//	if(index > 0)
+//	{
+//		QSharedPointer<Asset> analysis = designRoot_->getAnalysis(index-1);
+//		Q_ASSERT(analysis);
+//		if(!editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>()))
+//		{
+//			analysisSelector_->setCurrentIndex(selectedIndex_);
+//			return;
+//		}
+//	}
+//
+//	selectedIndex_ = index;
+//	//Reset the scene so that analysis stuff will come up.
+//	resetEditor();
+//
+//	if(newAnalysisCreated)
+//	{
+//		//Highlight the "untitled" name
+//		analysisSelector_->lineEdit()->selectAll();
+//	}
+//}
+//
+//void Designer::analysisSelectedTextChanged(const QString&)
+//{
+//	if(analysisSelector_->currentIndex() > 0 && editorState_ && editorState_->getCurrentAnalysis())
+//	{
+//		QString newName = analysisSelector_->currentText();
+//		analysisSelector_->setItemText(analysisSelector_->currentIndex(),newName);
+//		//This function can get called due to a change in selected index before analysisSelectedChange() is called.
+//		//This would mean that the editorState's currentAnalysis would not correspond to the analysisSelector_->currentIndex()
+//		//We avoid this issue by only resetting the analysis's name if it's index corresponds to the current
+//		//combobox index
+//		if(selectedIndex_ == analysisSelector_->currentIndex())
+//			editorState_->getCurrentAnalysis()->setName(newName);
+//	}
+//}
+//
+//void Designer::deleteCurrentAnalysis()
+//{
+//	if(!editorState_ || !editorState_->getCurrentAnalysis())
+//		return;
+//
+//	int ret = QMessageBox::warning(this, tr("Picto"),
+//                                QString("Are you sure you want to delete the %1 Analysis?").arg(editorState_->getCurrentAnalysis()->getName()),
+//                                QMessageBox::Yes | QMessageBox::Cancel,
+//                                QMessageBox::Cancel);
+//	if(ret != QMessageBox::Yes)
+//		return;
+//	//Detach analysis from experiment
+//	QUuid currAnalsisId = editorState_->getCurrentAnalysis()->getAssociateId();
+//	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAssociateDescendants(currAnalsisId);
+//	
+//	//Remove analysis from design
+//	int anaIndexInComboBox = analysisSelector_->currentIndex();
+//	if(!designRoot_->removeAnalysis(anaIndexInComboBox-1))
+//		Q_ASSERT(false);
+//
+//	//Remove analysis name from combobox and set current analysis to none.
+//	analysisSelector_->setCurrentIndex(0);
+//	analysisSelector_->removeItem(anaIndexInComboBox);
+//}

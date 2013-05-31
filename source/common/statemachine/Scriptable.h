@@ -16,7 +16,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Scriptable : public UIEnabled, protected QScriptable
 #else
-	class Scriptable : public UIEnabled
+	class Scriptable : public UIEnabled, protected QScriptable
 #endif
 {
 	Q_OBJECT

@@ -25,9 +25,13 @@ public:
 
 	static QSharedPointer<Asset> Create();
 	virtual bool isPartOfSearch(SearchRequest searchRequest);
+	virtual QString getUITemplate(){return "ScriptFunction";};
+	virtual QString friendlyTypeName(){return "Script Function";};
+	virtual QString getUIGroup(){return "Logic Elements";};
 	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
+	virtual QString defaultTagName(){return "AnalysisFunction";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

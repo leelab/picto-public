@@ -11,6 +11,8 @@ UIEnabled::UIEnabled()
 : DataStore()
 {
 	AddDefinableProperty("Name","NotYetNamed");
+	AddDefinableProperty(QVariant::Bool,"UIEnabled",false);
+	AddDefinableProperty(QVariant::Int,"UIOrder",0);
 	AddDefinableObjectFactory("UIInfo",
 			QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	requireUniqueName();

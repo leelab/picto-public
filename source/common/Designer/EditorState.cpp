@@ -41,10 +41,14 @@ bool EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 {
 	if(!topAsset_)
 		return false;
-	if(currAnalysis_ == currAnalysis)
-		return true;
+	//Run through this function even if the current analysis hasn't changed, because
+	//the current analysis in the designConfig may have been changed and this will 
+	//reset it.
+
+	//If there is a current analysis
 	if(currAnalysis)
 	{
+		//Verify that its linked into the experiment.  
 		QSharedPointer<Experiment> exp = topAsset_.staticCast<Experiment>();
 		Q_ASSERT(exp);		
 		//Link the analysis to the experiment

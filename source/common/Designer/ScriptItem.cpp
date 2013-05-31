@@ -44,8 +44,19 @@ void ScriptItem::setRect(QRectF rect)
 		return;
 	DiagramItem::setRect(rect);
 	QLinearGradient grad(getRect().topLeft(),getRect().bottomLeft());
-	grad.setColorAt(0,baseColor_.lighter());
-	grad.setColorAt(1,baseColor_.darker());
+	//If this is an Experimental script and there's an active analysis, decrease its alpha.
+	//I know... this object shouldn't know anything about whether its an experimental or analysis script...
+	//We're on a tight schedule.  :(
+	bool isExperimental = (baseColor_ == Qt::blue);
+	QColor startColor(baseColor_.lighter());
+	QColor stopColor(baseColor_.darker());
+	if(isExperimental && !editorState_->getCurrentAnalysis().isNull())
+	{
+		startColor.setAlpha(100);
+		stopColor.setAlpha(100);
+	}
+	grad.setColorAt(0,startColor);
+	grad.setColorAt(1,stopColor);
 	QBrush brush(grad);
 	setBrush(brush);
 }

@@ -22,9 +22,12 @@ public:
 
 	virtual void reset();
 	virtual bool isPartOfSearch(SearchRequest searchRequest);
+	virtual QString getUITemplate(){return "Variable";};
+	virtual QString getUIGroup(){return "Variables";};
 	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
+	virtual QString defaultTagName(){return "AnalysisVariable";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };

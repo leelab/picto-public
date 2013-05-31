@@ -2,7 +2,7 @@
 #define _AssociateRoot_H_
 
 #include "../common.h"
-#include "../StateMachine/ScriptableContainer.h"
+#include "../StateMachine/UIEnabled.h"
 
 namespace Picto {
 
@@ -10,9 +10,9 @@ namespace Picto {
  *
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AssociateRoot : public ScriptableContainer
+	class PICTOLIB_API AssociateRoot : public UIEnabled
 #else
-class AssociateRoot : public ScriptableContainer
+class AssociateRoot : public UIEnabled
 #endif
 {
 	Q_OBJECT

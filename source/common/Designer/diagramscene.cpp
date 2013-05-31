@@ -52,6 +52,7 @@
 #include "../../common/statemachine/pausepoint.h"
 #include "../../common/statemachine/ResultContainer.h"
 #include "../../common/statemachine/Result.h"
+#include "AnalysisItem.h"
 #include "StartBarItem.h"
 #include "arrow.h"
 #include "../../common/memleakdetect.h"
@@ -134,9 +135,9 @@ QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramIt
 {
 	Arrow *arrow;
 	if(transition.isNull())
-		arrow = Arrow::Create(editorState_->getWindowAsset(),source,dest,myItemMenu,NULL);
+		arrow = Arrow::Create(editorState_, editorState_->getWindowAsset(),source,dest,myItemMenu,NULL);
 	else
-		arrow = Arrow::Create(transition.staticCast<Transition>(),source,dest,myItemMenu,NULL);
+		arrow = Arrow::Create(editorState_, transition.staticCast<Transition>(),source,dest,myItemMenu,NULL);
 	if(!arrow)
 		return NULL;
     arrow->setColor(editorState_->getLineColor());
@@ -236,6 +237,7 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 		//Put the default placement location at the top right of the start bar
 		childAssetLoc = startBar_->boundingRect().topRight()+QPointF(DEFAULT_ITEM_BORDER_BUFFER,DEFAULT_ITEM_BORDER_BUFFER);
 	}
+	//Add all experiment assets
 	foreach(QString childType, childTypes)
 	{
 		QList<QSharedPointer<Asset>> assets = dataStore->getGeneratedChildren(childType);
@@ -264,6 +266,8 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 			}
 		}
 	}
+
+	//Add all transitions
 	foreach(QSharedPointer<Transition> transition,transitions)
 	{
 		DiagramItem* start = NULL;
@@ -309,6 +313,36 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 		if(start && end)
 		{
 			insertTransition(start,end,transition);
+		}
+	}
+
+	//Add Analysis assets for the current analysis
+	QSharedPointer<Analysis> currAnalysis = editorState_->getCurrentAnalysis();
+	if(!currAnalysis.isNull())
+	{
+		childTypes = dataStore->getAssociateChildTags(currAnalysis->getAssociateId());
+		foreach(QString childType, childTypes)
+		{
+			QList<QSharedPointer<Asset>> assets = dataStore->getAssociateChildren(currAnalysis->getAssociateId(),childType);
+			foreach(QSharedPointer<Asset> childAsset,assets)
+			{
+				DiagramItem* diagItem = insertDiagramItem(childAsset,childAssetLoc);
+				if(diagItem)
+				{
+					//If something here has a default name, we should start after its index.
+					if(diagItem->getName().contains(QRegExp("NewItem[1-9]")))
+					{
+						int itemIndex = diagItem->getName().remove("NewItem").toInt();
+						if(itemIndex >= newItemIndex_)
+							newItemIndex_ = itemIndex+1;
+					}
+				
+					//Now add it to the list and update the default placement location to the top
+					//right of the currently added items
+					diagItems.push_back(diagItem);
+					childAssetLoc = QPointF(getDefaultZoomRect().right(),diagItem->pos().y());
+				}
+			}
 		}
 	}
 	editorState_->setWindowItemsLoaded();
@@ -365,10 +399,14 @@ void DiagramScene::deleteSelectedItems()
 		}
     }
 
-	//Remove all the graphic items
+	bool removeExperimentalAssets = true;
+	if(!editorState_->getCurrentAnalysis().isNull())
+		removeExperimentalAssets = false;
+	//Remove all the graphic items except experimental items when an analysis is active
 	foreach (QGraphicsItem *item, items) 
 	{
-		removeItem(item);
+		if(removeExperimentalAssets || qgraphicsitem_cast<AnalysisItem*>(item))
+			removeItem(item);
     }
 
 	AssetItem* assetItem;
@@ -402,6 +440,7 @@ void DiagramScene::deleteSelectedItems()
 		//else
 			//delete item;
     }
+
 	if(needsReset)
 		editorState_->triggerExperimentReset();
 }
@@ -437,42 +476,6 @@ void DiagramScene::pasteItems()
 		pasteLoc = latestPastePos_;
 	copier_->paste(editorState_->getWindowAsset(),pasteLoc);
 	
-}
-
-void DiagramScene::bringToFront()
-{
-    if (selectedItems().isEmpty())
-        return;
-
-    QGraphicsItem *selectedItem = selectedItems().first();
-    QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
-
-    qreal zValue = 0;
-    foreach (QGraphicsItem *item, overlapItems) {
-        if (item->zValue() >= zValue &&
-            item->type() == DiagramItem::Type)
-            zValue = item->zValue() + 0.1;
-    }
-    selectedItem->setZValue(zValue);
-}
-//! [5]
-
-//! [6]
-void DiagramScene::sendToBack()
-{
-    if (selectedItems().isEmpty())
-        return;
-
-    QGraphicsItem *selectedItem = selectedItems().first();
-    QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
-
-    qreal zValue = 0;
-    foreach (QGraphicsItem *item, overlapItems) {
-        if (item->zValue() <= zValue &&
-            item->type() == DiagramItem::Type)
-            zValue = item->zValue() - 0.1;
-    }
-    selectedItem->setZValue(zValue);
 }
 //! [5]
 
@@ -644,8 +647,29 @@ QSharedPointer<Asset> DiagramScene::createNewAsset()
 		return QSharedPointer<Asset>();
 	QString type = editorState_->getInsertionItemType();
 	QString errorStr;
-	QSharedPointer<DataStore> dataStore = editorState_->getWindowAsset().staticCast<DataStore>();
-	QSharedPointer<Asset> newAsset = dataStore->createChildAsset(category,type,errorStr);
+
+
+	QSharedPointer<Asset> newAsset;
+	//If we're working on experimental design
+	if(editorState_->getCurrentAnalysis().isNull())
+	{
+		//The children are created from the window asset
+		QSharedPointer<DataStore> parentDataStore = editorState_->getWindowAsset().staticCast<DataStore>();
+		newAsset = parentDataStore->createChildAsset(category,type,errorStr);
+	}
+	else //If we're working on analysis design
+	{
+		//The children are created from the current analysis and added to the window asset
+		QSharedPointer<DataStore> parentDataStore = editorState_->getCurrentAnalysis().staticCast<DataStore>();
+		newAsset = parentDataStore->createChildAsset(category,type,errorStr);
+		if(!newAsset.isNull())
+		{
+			QSharedPointer<DataStore> windowDataStore = editorState_->getWindowAsset().staticCast<DataStore>();
+			windowDataStore->AddAssociateChild(editorState_->getCurrentAnalysis()->getAssociateId(),category,newAsset);
+		}
+		
+	}
+
 	
 	//Due to the nature of scriptables and scriptable containers as elements whose functionality 
 	//involves spanning state machine levels, they need to be specifically added to their container 
