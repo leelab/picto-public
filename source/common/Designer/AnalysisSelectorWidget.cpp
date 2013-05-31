@@ -8,6 +8,7 @@ using namespace Picto;
 AnalysisSelectorWidget::AnalysisSelectorWidget(QWidget *parent) :
 	QWidget(parent)
 {
+	selectGroup_.setExclusive(false);
 	selectBox_ = new QGroupBox("Select Analysis");
 	QVBoxLayout* layout(new QVBoxLayout());
 	layout->addWidget(selectBox_);
@@ -23,15 +24,24 @@ void AnalysisSelectorWidget::setDesignRoot(QSharedPointer<DesignRoot> designRoot
 QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIds()
 {
 	QList<QUuid> returnVal;
-	foreach(QSharedPointer<Analysis> analysis,selectedAnalyses_)
+	for(int i=0;i<selectGroup_.buttons().size();i++)
 	{
-		returnVal.append(analysis->getAssociateId());
+		if(selectGroup_.button(i)->isChecked())
+		{
+			Q_ASSERT(i<designRoot_->getNumAnalyses());
+			returnVal.append(designRoot_->getAnalysis(i).staticCast<Analysis>()->getAssociateId());
+		}
 	}
 	return returnVal;
 }
 
 void AnalysisSelectorWidget::updateAnalysisList()
 {
+	selectedAnalyses_.clear();
+	foreach(QAbstractButton* button,selectGroup_.buttons())
+	{
+		selectGroup_.removeButton(button);
+	}
 	delete selectBox_->layout();
 	if(!designRoot_)
 	{
@@ -42,6 +52,7 @@ void AnalysisSelectorWidget::updateAnalysisList()
 	for(int i=0;i<designRoot_->getNumAnalyses();i++)
 	{
 		QCheckBox* analysisCheckbox(new QCheckBox(designRoot_->getAnalysis(i)->getName()));
+		selectGroup_.addButton(analysisCheckbox,i);
 		layout->addWidget(analysisCheckbox);
 	}
 	selectBox_->setLayout(layout);

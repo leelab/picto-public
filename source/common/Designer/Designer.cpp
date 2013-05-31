@@ -115,7 +115,7 @@ void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 
 		//Populate the AnalysisSelector
 		editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
-		//analysisOption_->setDesignRoot(designRoot_);
+		analysisOption_->setDesignRoot(designRoot_);
 		//Since we just loaded a new design, there are no undos or redos available
 		undoAvailable(false);
 		redoAvailable(false);
@@ -261,6 +261,11 @@ void Designer::selectedAssetChanged(QSharedPointer<Asset> asset)
 	}
 }
 
+void Designer::currentAnalysisChanged(QSharedPointer<Analysis>)
+{
+	resetEditor();
+}
+
 //! Checks the syntax of the current XML to see if it is a legal experiment
 void Designer::checkSyntax()
 {
@@ -321,7 +326,7 @@ void Designer::createActions()
 	searchWidget->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken); 
 	searchWidget->setLayout(searchLayout);
 
-	//analysisOption_ = new AnalysisOptionWidget(editorState_);
+	analysisOption_ = new AnalysisOptionWidget(editorState_);
 
 	//Turn on highlighting for elements with children that have scripts and analysis scripts.
 	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT));
@@ -349,6 +354,7 @@ void Designer::connectActions()
 	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
 	connect(editorState_.data(),SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),this,SLOT(setOpenAsset(QSharedPointer<Asset>)));
 	connect(editorState_.data(),SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),this,SLOT(selectedAssetChanged(QSharedPointer<Asset>)));
+	connect(editorState_.data(),SIGNAL(currentAnalysisChanged(QSharedPointer<Analysis>)),this,SLOT(currentAnalysisChanged(QSharedPointer<Analysis>)));
 }
 
 //! [24]
@@ -399,8 +405,8 @@ void Designer::createToolbars()
 	pointerToolbar->addWidget(searchWidget);
 	pointerToolbar->addSeparator();
 	pointerToolbar->addAction(checkSyntaxAction_);
-	//pointerToolbar->addWidget(new QLabel(tr("Select Analysis")));
-	//pointerToolbar->addWidget(analysisOption_);
+	pointerToolbar->addWidget(new QLabel(tr("Select Analysis")));
+	pointerToolbar->addWidget(analysisOption_);
 //! [27]
 }
 
@@ -409,8 +415,8 @@ bool Designer::resetEditor()
 	//Reset the root of the experiment
 	editorState_->setTopLevelAsset(designRoot_->getExperiment());
 
-	//Get the selected Analysis and use it in the editor
-	//analysisOption_->updateAnalysisList();
+	//Update the analysis list
+	analysisOption_->updateAnalysisList();
 
 	//Reset the window asset
 	QSharedPointer<Asset> openAsset = designRoot_->getOpenAsset();

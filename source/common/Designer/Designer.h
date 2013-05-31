@@ -101,8 +101,6 @@ public:
 	virtual ~Designer();
 
 	void loadDesign(QSharedPointer<DesignRoot> designRoot);  //Called just before displaying the viewer
-	//virtual void deinit();	//Called just after the user switches out of the viewer
-	//virtual void aboutToSave();  //Called just before the pictoDataText_ is saved to file.
 
 private slots:
     //void updateEditModeButtons(int id);
@@ -119,6 +117,7 @@ private slots:
 	void performRedoAction();
 	void setOpenAsset(QSharedPointer<Asset> asset);
 	void selectedAssetChanged(QSharedPointer<Asset> asset);
+	void currentAnalysisChanged(QSharedPointer<Analysis> analysis);
 	void checkSyntax();
 
 private:

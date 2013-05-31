@@ -29,9 +29,7 @@ signals:
 	void stopped();
 
 private:
-	QMutex mutex_;
 	QSharedPointer<Picto::Experiment> experiment_;
-	QSharedPointer<QThread> controllerThread_;
 	QString taskName_;
 	bool running_;
 	bool paused_;

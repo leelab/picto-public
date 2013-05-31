@@ -71,7 +71,7 @@ void TestViewer::init()
 		static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(experiment_.staticCast<DataStore>());
 		loadPropsAction_->setEnabled(true);
 		testController_ = QSharedPointer<TestPlaybackController>(new TestPlaybackController(experiment_));
-		connect(playAction_,SIGNAL(triggered()),testController_.data(), SLOT(play()));
+		connect(playAction_,SIGNAL(triggered()),this, SLOT(playTriggered()));
 		connect(pauseAction_,SIGNAL(triggered()),testController_.data(), SLOT(pause()));
 		connect(engine_.data(),SIGNAL(pauseRequested()),testController_.data(),SLOT(pause()));
 		connect(stopAction_,SIGNAL(triggered()),testController_.data(), SLOT(stop()));
@@ -80,17 +80,7 @@ void TestViewer::init()
 		connect(testController_.data(),SIGNAL(stopped()),this,SLOT(stopped()));
 	}
 	generateComboBox();
-	//analysisSelector_->setDesignRoot(designRoot_);
-
-	//FOR TESTING, WE ARE JUST AUTOMATICALLY ACTIVATING THE FIRST ANALYSIS IN THE FILE.
-	QSharedPointer<Analysis> firstAnalysis = designRoot_->getAnalysis(0).staticCast<Analysis>();
-	if(firstAnalysis)
-	{
-		QList<QUuid> analysisIds;
-		analysisIds.append(firstAnalysis->getAssociateId());
-		QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
-		designConfig->setActiveAnalysisIds(analysisIds);
-	}
+	analysisSelector_->setDesignRoot(designRoot_);
 }
 
 //!Called just before hiding the viewer
@@ -231,10 +221,10 @@ void TestViewer::setupUi()
 	}
 	
 	QVBoxLayout *leftPane = new QVBoxLayout();
-	//analysisSelector_ = new Picto::AnalysisSelectorWidget();
+	analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	propertyFrame_ = new PropertyFrame();
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
-	//leftPane->addWidget(analysisSelector_);
+	leftPane->addWidget(analysisSelector_);
 	leftPane->addWidget(propertyFrame_);
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
@@ -270,6 +260,20 @@ void TestViewer::generateComboBox()
 	taskListBox_->addItems(experiment_->getTaskNames());
 }
 
+void TestViewer::playTriggered()
+{
+	if(!testController_->isRunning())
+	{
+		//Find out which analyses should be enabled and enable them
+		QList<QUuid> analysisIds = analysisSelector_->getSelectedAnalysisIds();
+		QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
+		designConfig->setActiveAnalysisIds(analysisIds);
+	}
+
+	analysisSelector_->setEnabled(false);
+	QMetaObject::invokeMethod(testController_.data(),"play");
+}
+
 void TestViewer::running()
 {
 	taskListBox_->setEnabled(false);
@@ -301,6 +305,11 @@ void TestViewer::stopped()
 
 	pixmapVisualTarget_->clear();
 
+	//Disable any active analyses
+	QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
+	designConfig->setActiveAnalysisIds(QList<QUuid>());
+	//Enable the Analysis Selector
+	analysisSelector_->setEnabled(true);
 	//display the splash screen
 	renderingTarget_->showSplash();
 	if(deiniting_)

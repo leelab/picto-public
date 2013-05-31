@@ -77,6 +77,7 @@ private:
 	enum Status {Ending, Stopped, Running, Paused};
 	Status status_;
 private slots:
+	void playTriggered();
 	void running();
 	void paused();
 	void stopped();

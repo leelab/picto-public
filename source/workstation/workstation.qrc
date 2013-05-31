@@ -113,5 +113,6 @@
         <file>icons/mouseclick.svg</file>
         <file>icons/scope.icns</file>
         <file>icons/scope.ico</file>
+        <file>icons/newanalysis.svg</file>
     </qresource>
 </RCC>

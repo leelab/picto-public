@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include <QGroupBox>
 #include <QButtonGroup>
+#include <QMap>
 #include "../design/DesignRoot.h"
 #include "../parameter/Analysis.h"
 
@@ -28,7 +29,7 @@ signals:
    void selectedAnalysesChanged();
 private:
 	QSharedPointer<DesignRoot> designRoot_;
-	QList<QSharedPointer<Analysis>> selectedAnalyses_;
+	QMap<int,QSharedPointer<Analysis>> selectedAnalyses_;
 	QGroupBox* selectBox_;
 	QButtonGroup selectGroup_;
 private slots:

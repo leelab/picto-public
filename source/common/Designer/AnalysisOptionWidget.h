@@ -37,15 +37,18 @@ signals:
    void deleteAnalysisRequested();
 private:
 	void changeSelectedAnalysisName(QString newName);
-	void createNewAnalysis();
 
 	QSharedPointer<EditorState> editorState_;
 	QSharedPointer<DesignRoot> designRoot_;
 	QSharedPointer<Analysis> selectedAnalysis_;
+	QAction* addAnalysisAction_;
 	QAction* deleteAnalysisAction_;
 	QComboBox* selectBox_;
 	bool updatingList_;
+	bool ignoreSelectBoxEvents_;
+	bool enabled_;
 private slots:
+	void addAnalysis();
 	void selectedIndexChanged(int selectedIndex);
 	void selectedItemTextChanged(const QString& selectedItemText);
 	void deleteSelectedAnalysis();

@@ -62,36 +62,8 @@ StateEditViewer::~StateEditViewer()
 //! [0]
 void StateEditViewer::init()
 {
-	//if(!pictoData_ || !pictoData_->validateTree())
-	//{
-	//	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(pictoDataText_->toPlainText()));
-
-	//	//read until we either see an experiment tag, or the end of the file
-	//	while(xmlReader->name() != "PictoData" && !xmlReader->atEnd()) 
-	//		xmlReader->readNext();
-
-	//	if(xmlReader->atEnd())
-	//	{
-	//		QMessageBox msg;
-	//		msg.setText("PictoData XML did not contain <PictoData> tag");
-	//		msg.exec();
-	//		return;
-	//	}
-
-	//	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
-	//	Picto::Asset::clearErrors();
-	//	
-	//	if(!pictoData_->fromXml(xmlReader,false))
-	//	{
-	//		pictoData_ = QSharedPointer<Picto::PictoData>();
-	//		QMessageBox msg;
-	//		msg.setText("Failed to load current definition.  Please attempt to correct PictoData XML in Text Editor");
-	//		msg.exec();
-	//		return;
-	//	}
-
-	//}
 	designRoot_->enableRunMode(false);
+	expDesigner_->setEnabled(true);
 	expDesigner_->loadDesign(designRoot_);
 }
 
@@ -101,6 +73,7 @@ void StateEditViewer::deinit()
 	//be sure that the text stored in the design root matches the current state of the
 	//software design
 	designRoot_->setUndoPoint();
+	expDesigner_->setEnabled(false);
 	emit deinitComplete();
 }
 
