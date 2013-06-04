@@ -255,6 +255,28 @@ void Arrow::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 }
 //! [7]
 
+QVariant Arrow::itemChange(GraphicsItemChange change,
+                     const QVariant &value)
+{
+	QVariant inputVal = value;
+	if (change == QGraphicsItem::ItemSelectedHasChanged)
+	{
+		if(inputVal.toBool())
+		{
+			editorState_->setSelectedItem(this);
+		}
+		else
+		{
+			//If this was the last selected item, set the selected item to NULL.  This
+			//has the effect of switching the selected asset to the window asset.
+			if(editorState_->getSelectedItem() == this)
+				editorState_->setSelectedItem(NULL);
+		}
+	}
+    return inputVal;
+}
+
+
 QSharedPointer<Asset> Arrow::getAssetAncestor(DiagramItem* item)
 {
 	QGraphicsItem* parent = item;

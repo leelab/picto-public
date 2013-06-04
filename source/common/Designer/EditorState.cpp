@@ -19,7 +19,8 @@ itemColor_(Qt::white),
 lineColor_(Qt::black),
 insertItemCategory_(Select),
 insertItemType_(""),
-windowAssetPath_("")
+windowAssetPath_(""),
+selectedItem_(NULL)
 {
     //currAnalysis_ = Analysis::Create().staticCast<Analysis>();	//TEMPORARY UNTIL THIS GETS SET FROM SOMEWHERE ELSE!!!!!!!!!!
 }
@@ -123,6 +124,9 @@ void EditorState::setWindowAsset(QSharedPointer<Asset> asset,bool undoable)
 
 	//Clear any selected items to insert into the scene
 	setInsertionItem();
+
+	//Set the currently selected item to null
+	setSelectedItem(NULL);
 	
 	//Tell everyone that the window asset changed.
 	emit windowAssetChanged(windowAsset_);
@@ -177,7 +181,6 @@ void EditorState::setSelectedItem(QGraphicsItem *item)
 		}
 		if(arrowPortItem)
 			emit arrowPortSelected(arrowPortItem->getAsset());
-		emit itemSelected(item);
 	}
 	else
 	{
@@ -185,6 +188,7 @@ void EditorState::setSelectedItem(QGraphicsItem *item)
 			|| (assetItem && (assetItem->getAsset() == selectedAsset_)) )
 			setSelectedAsset(getWindowAsset());
 	}
+	emit itemSelected(selectedItem_);
 }
 
 void EditorState::reloadWindow()

@@ -9,6 +9,7 @@
 #include "diagramscene.h"
 #include "diagramtextitem.h"
 #include "AssetItem.h"
+#include "arrow.h"
 #include "PropertyBrowser.h"
 #include "AssetInfoBox.h"
 #include "ViewerWindow.h"
@@ -226,39 +227,14 @@ void Designer::setOpenAsset(QSharedPointer<Asset> asset)
 	designRoot_->setOpenAsset(asset);
 }
 
-void Designer::selectedAssetChanged(QSharedPointer<Asset> asset)
+void Designer::selectedAssetChanged(QSharedPointer<Asset>)
 {
-	if(editorState_->getCurrentAnalysis())
-	{	//An Analysis is active
-		if(dynamic_cast<AssociateElement*>(asset.data()))
-		{	//The asset is an analysis element
-			deleteAction->setEnabled(true);
-			experimentalCopyAction->setEnabled(false);
-			analysisCopyAction->setEnabled(true);
-			pasteAction->setEnabled(true);
-		}
-		else	//The asset is an experiment element
-		{
-			deleteAction->setEnabled(false);
-			experimentalCopyAction->setEnabled(false);
-			analysisCopyAction->setEnabled(false);
-			pasteAction->setEnabled(false);		
-		}
-	}
-	else	//No Analysis is active
-	{
-		deleteAction->setEnabled(true);
-		experimentalCopyAction->setEnabled(true);
-		analysisCopyAction->setEnabled(false);
-		pasteAction->setEnabled(true);		
-	}
-	//If the window is the selected asset, copy and delete should be disabled
-	if(editorState_->getSelectedAsset() == editorState_->getWindowAsset())
-	{
-		deleteAction->setEnabled(false);
-		experimentalCopyAction->setEnabled(false);
-		analysisCopyAction->setEnabled(false);
-	}
+	updateEnabledActions();
+}
+
+void Designer::selectedItemChanged(QGraphicsItem*)
+{
+	updateEnabledActions();
 }
 
 void Designer::currentAnalysisChanged(QSharedPointer<Analysis>)
@@ -354,6 +330,7 @@ void Designer::connectActions()
 	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
 	connect(editorState_.data(),SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),this,SLOT(setOpenAsset(QSharedPointer<Asset>)));
 	connect(editorState_.data(),SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),this,SLOT(selectedAssetChanged(QSharedPointer<Asset>)));
+	connect(editorState_.data(),SIGNAL(itemSelected(QGraphicsItem*)),this,SLOT(selectedItemChanged(QGraphicsItem*)));
 	connect(editorState_.data(),SIGNAL(currentAnalysisChanged(QSharedPointer<Analysis>)),this,SLOT(currentAnalysisChanged(QSharedPointer<Analysis>)));
 }
 
@@ -424,6 +401,48 @@ bool Designer::resetEditor()
 		openAsset = editorState_->getTopLevelAsset();
 	editorState_->setWindowAsset(openAsset,false);
 	return true;
+}
+
+void Designer::updateEnabledActions()
+{
+	QSharedPointer<Asset> asset = editorState_->getSelectedAsset();
+	if(editorState_->getCurrentAnalysis())
+	{	//An Analysis is active
+		if(dynamic_cast<AssociateElement*>(asset.data()))
+		{	//The asset is an analysis element
+			deleteAction->setEnabled(true);
+			experimentalCopyAction->setEnabled(false);
+			analysisCopyAction->setEnabled(true);
+			pasteAction->setEnabled(true);
+		}
+		else	//The asset is an experiment element
+		{
+			deleteAction->setEnabled(false);
+			experimentalCopyAction->setEnabled(false);
+			analysisCopyAction->setEnabled(false);
+			pasteAction->setEnabled(false);		
+		}
+	}
+	else	//No Analysis is active
+	{
+		deleteAction->setEnabled(true);
+		experimentalCopyAction->setEnabled(true);
+		analysisCopyAction->setEnabled(false);
+		pasteAction->setEnabled(true);		
+	}
+	//If the window is the selected asset, copy should be disabled
+	if(editorState_->getSelectedAsset() == editorState_->getWindowAsset())
+	{
+		experimentalCopyAction->setEnabled(false);
+		analysisCopyAction->setEnabled(false);
+	}
+	//If the window is the selected asset, and the selected item isn't a transition delete should be disabled
+	if	(	editorState_->getSelectedAsset() == editorState_->getWindowAsset() 
+		&& (dynamic_cast<Arrow*>(editorState_->getSelectedItem()) == NULL)
+		)
+	{
+		deleteAction->setEnabled(false);
+	}
 }
 
 void  Designer::undoAvailable(bool available)

@@ -117,6 +117,7 @@ private slots:
 	void performRedoAction();
 	void setOpenAsset(QSharedPointer<Asset> asset);
 	void selectedAssetChanged(QSharedPointer<Asset> asset);
+	void selectedItemChanged(QGraphicsItem *item);
 	void currentAnalysisChanged(QSharedPointer<Analysis> analysis);
 	void checkSyntax();
 
@@ -126,6 +127,7 @@ private:
     void createMenus();
     void createToolbars();
 	bool resetEditor();
+	void updateEnabledActions();
 
 	//QSharedPointer<Design> design_;
 	QSharedPointer<DesignRoot> designRoot_;

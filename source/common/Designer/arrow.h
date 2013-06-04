@@ -85,6 +85,7 @@ protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = 0);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
 	Arrow(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,

@@ -306,8 +306,12 @@ void TestViewer::stopped()
 	pixmapVisualTarget_->clear();
 
 	//Disable any active analyses
-	QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
-	designConfig->setActiveAnalysisIds(QList<QUuid>());
+	if(experiment_)
+	{
+		QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
+		designConfig->setActiveAnalysisIds(QList<QUuid>());
+	}
+
 	//Enable the Analysis Selector
 	analysisSelector_->setEnabled(true);
 	//display the splash screen
