@@ -49,6 +49,7 @@ public:
 	void clearAllButLastDataPoints();
 
 	QByteArray getDataAsByteArray();
+	qulonglong getDataIDOfLastUnit();
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

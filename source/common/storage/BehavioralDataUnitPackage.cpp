@@ -91,6 +91,13 @@ QByteArray BehavioralDataUnitPackage::getDataAsByteArray()
 	return returnVal;
 }
 
+qulonglong BehavioralDataUnitPackage::getDataIDOfLastUnit()
+{
+	if(!data_.size())
+		return -1;
+	return data_.last()->getDataID();
+}
+
 /*! \brief Turns the BehavioralDataUnitPackage into an XML fragment
  *
  *	The XML will look like this:

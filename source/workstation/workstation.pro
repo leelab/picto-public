@@ -47,6 +47,8 @@ HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackController.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackController.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackThread.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/PlaybackThread.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/SaveOutputDialog.h
+SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/SaveOutputDialog.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/BehavViewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/BehavViewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/SpeedWidget.h
@@ -55,6 +57,8 @@ HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/ProgressWidget.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/ProgressWidget.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/LoadingWidget.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/LoadingWidget.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/OutputWidgetHolder.h
+SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/OutputWidgetHolder.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/RecordingVisualTargetHost.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/RecordingVisualTargetHost.cpp
 

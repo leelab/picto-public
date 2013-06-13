@@ -42,6 +42,9 @@ public:
 	double getPlaybackSpeed();
 	void jumpToTime(double time);
 signals:
+	void startingRun(QString taskName,QString runName);
+	void endingRun();
+
 	//triggered when values change
 	void propertyValueChanged(int propId, QString value);
 	void propertyInitValueChanged(int propId, QString value);

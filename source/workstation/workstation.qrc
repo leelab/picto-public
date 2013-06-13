@@ -98,15 +98,12 @@
         <file>icons/startercontainer.svg</file>
         <file>icons/endercontainer.svg</file>
         <file>icons/fileoutput.svg</file>
-        <file>icons/analysisdefinition.svg</file>
         <file>icons/outputsignal.svg</file>
         <file>icons/red_led_off.svg</file>
         <file>icons/red_led_on.svg</file>
         <file>icons/restart.svg</file>
         <file>icons/savevideo.svg</file>
         <file>sounds/tick.wav</file>
-        <file>icons/copy_analysis.png</file>
-        <file>icons/copy_experiment.png</file>
         <file>icons/variable.svg</file>
         <file>icons/sensor.svg</file>
         <file>icons/random.svg</file>
@@ -114,5 +111,8 @@
         <file>icons/scope.icns</file>
         <file>icons/scope.ico</file>
         <file>icons/newanalysis.svg</file>
+        <file>icons/import_analysis.png</file>
+        <file>icons/export_analysis.png</file>
+        <file>icons/copy.png</file>
     </qresource>
 </RCC>

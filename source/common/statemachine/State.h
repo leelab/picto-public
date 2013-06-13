@@ -59,6 +59,8 @@ public:
 
 	virtual void upgradeVersion(QString deserializedVersion);
 
+	virtual void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -66,10 +68,11 @@ protected:
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
 	virtual QMap<QString,QString> getScripts();
+	void runAnalysisFrameScripts();
 
+	friend class SlaveExperimentDriver;
 
 private:
-	void runAnalysisFrameScripts();
 	//void sendBehavioralData(QSharedPointer<Engine::PictoEngine> engine);
 	//void runScript(QString scriptName);
 	bool checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine);

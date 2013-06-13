@@ -65,6 +65,7 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 	connect(sessionState_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SIGNAL(signalChanged(QString,QStringList,QVector<float>)));
 	connect(sessionPlayer_.data(),SIGNAL(reachedEnd()),this,SLOT(reachedEnd()));
 	connect(sessionPlayer_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
+	connect(sessionPlayer_.data(),SIGNAL(startingRun(QString,QString)),this,SIGNAL(startingRun(QString,QString)));
 	connect(fileSessionLoader_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 
 
@@ -111,6 +112,7 @@ bool PlaybackStateUpdater::loadRun(int index)
 	suspendPlayback();
 	runLoaded_ = false;
 	currRunLength_ = fileSessionLoader_->runDuration(index);
+	//Load the run
 	return fileSessionLoader_->loadRun(index);
 }
 
@@ -132,6 +134,8 @@ bool PlaybackStateUpdater::stop()
 {
 	paused_ = true;
 	suspendPlayback();
+	emit endingRun();
+
 	timerOffset_ = 0.0;
 	if(sessionPlayer_)
 		sessionPlayer_->restart();

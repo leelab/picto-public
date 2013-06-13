@@ -262,6 +262,15 @@ void State::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+void State::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
+{
+	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
+	if(getDesignConfig())
+		disconnect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
+	MachineContainer::setDesignConfig(designConfig);
+	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
+}
+
 void State::postDeserialize()
 {
 	//QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
@@ -274,8 +283,6 @@ void State::postDeserialize()
 	//We're not using this right now, but maybe someday we will, so we're not getting rid of it, just hiding it from
 	//the UI.
 	propertyContainer_->getProperty("BackgroundColor")->setVisible(false);
-	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
-	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 }
 
 bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

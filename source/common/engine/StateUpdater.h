@@ -28,6 +28,8 @@ public:
 	//Updates the picto state to the latest values
 	virtual bool updateState() = 0;
 signals:
+	void startingRun(QString taskName,QString runName);
+	void endingRun();
 	//triggered when values change
 	void propertyValueChanged(int propId, QString value);
 	void propertyInitValueChanged(int propId, QString value);

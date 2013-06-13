@@ -87,8 +87,9 @@ public slots:
 	void setBackgroundPattern(QPixmap pattern);
     void editorLostFocus(DiagramTextItem *item);
 	void deleteSelectedItems();
-	void experimentalCopySelectedItems();
-	void analysisCopySelectedItems();
+	void copySelectedItems();
+	void analysisImportSelectedItem();
+	void analysisExportSelectedItem();
 	void pasteItems();
 
 signals:

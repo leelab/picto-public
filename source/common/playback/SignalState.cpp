@@ -26,7 +26,7 @@ void SignalState::setDatabase(QSqlDatabase session)
 	data_.resize(query_->value(0).toInt());
 
 	query_->exec(QString("SELECT f.time,s.offsettime,s.data "
-			"FROM %1 s,frames f WHERE f.dataid=s.frameid ORDER BY s.dataid").arg(tableName_));
+			"FROM %1 s,frames f WHERE f.dataid=s.frameid ORDER BY f.dataid").arg(tableName_));
 
 	if(!query_->exec())
 	{

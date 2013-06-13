@@ -3,8 +3,9 @@
 
 #include <QWidget>
 #include <QSharedPointer>
+#include <QTabWidget>
 #include <QGroupBox>
-#include <QButtonGroup>
+#include <QAbstractButton>
 #include <QMap>
 #include "../design/DesignRoot.h"
 #include "../parameter/Analysis.h"
@@ -21,17 +22,20 @@ class AnalysisSelectorWidget : public QWidget
     Q_OBJECT
 
 public:
-   AnalysisSelectorWidget(QWidget *parent = NULL);
-   virtual ~AnalysisSelectorWidget(){};
-   void setDesignRoot(QSharedPointer<DesignRoot> designRoot);
-   QList<QUuid> getSelectedAnalysisIds();
-signals:
-   void selectedAnalysesChanged();
+	AnalysisSelectorWidget(QWidget *parent = NULL);
+	virtual ~AnalysisSelectorWidget(){};
+	void setDesignRoot(QSharedPointer<DesignRoot> designRoot);
+	void setDesignRootForImport(QSharedPointer<DesignRoot> designRoot);
+	QList<QUuid> getSelectedAnalysisIds();
+	QList<QUuid> getSelectedAnalysisIdsForImport();
 private:
-	QSharedPointer<DesignRoot> designRoot_;
-	QMap<int,QSharedPointer<Analysis>> selectedAnalyses_;
-	QGroupBox* selectBox_;
-	QButtonGroup selectGroup_;
+	QTabWidget* tabWidget_;
+	QWidget* analysesBox_;
+	QWidget* analysesForImportBox_;
+	QStringList	analysisNames_;	
+	QStringList	analysisNamesForImport_;	
+	QList<QUuid> analysisIds_;
+	QList<QUuid> analysisIdsForImport_;
 private slots:
 	void updateAnalysisList();
 };

@@ -630,7 +630,8 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	{
 		cacheQ.prepare(QString("INSERT INTO %1 (dataid, offsettime, sampleperiod, data, frameid)"
 			"VALUES(:dataid, :offsettime, :sampleperiod, :data, :frameid)").arg(tableName));
-		cacheQ.bindValue(":dataid", data->getDataID());
+		//Use the data id of the last unit for the package
+		cacheQ.bindValue(":dataid", data->getDataIDOfLastUnit());
 		cacheQ.bindValue(":offsettime",data->getOffsetTime());
 		cacheQ.bindValue(":sampleperiod",data->getResolution());
 		cacheQ.bindValue(":data",data->getDataAsByteArray());
@@ -646,7 +647,7 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 		data->clearAllButLastDataPoints();
 		if(data->length() == 1)
 		{
-			setStateVariable(data->getDataID(),stateVarId,data->toXml());
+			setStateVariable(data->getDataIDOfLastUnit(),stateVarId,data->toXml());
 		}
 	}
 }

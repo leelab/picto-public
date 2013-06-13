@@ -24,6 +24,13 @@ public:
 	//Updates the picto state to the latest values
 	virtual bool updateState();
 signals:
+	//NOTE: The startingRun and endingRun signals are not yet being called by the RemoteStateUpdater
+	//this is because its current design doesn't allow it to differentiate between a run that is starting
+	//and a run that it is joining in the middle.  Similarly for an ending run, the current design doesn't
+	//know if the run ended or if the connection was lost or some data was missed due to a slow connection.
+	void startingRun(QString taskName,QString runName);
+	void endingRun();
+
 	//triggered when values change
 	void propertyValueChanged(int propId, QString value);
 	void propertyInitValueChanged(int propId, QString value);

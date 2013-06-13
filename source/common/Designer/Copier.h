@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include <QList>
 #include "EditorState.h"
+#include "../storage/AssetExportImport.h"
 using namespace Picto;
 
 //! [0]
@@ -17,9 +18,12 @@ public:
 
 	void copy(QList<QSharedPointer<Asset>> assets,bool copyAnalysis = false);
 	void paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition = QPoint(0,0));
+
+	enum PASTE_TYPE{NONE,EXPERIMENT_PASTE,ANALYSIS_PASTE,ANALYSIS_IMPORT};
+	static int availablePasteType();
 private:
-	static bool getContentsUntilEndTag(QSharedPointer<QXmlStreamReader> xmlReader, QString endTag, QString& output);
 	QSharedPointer<EditorState> editorState_;
+	AssetExportImport exportImporter_;
 };
 //! [0]
 

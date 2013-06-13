@@ -46,6 +46,7 @@ void InitializeMetaTypes()
 {
 	qRegisterMetaType<QHostAddress>();
 	qRegisterMetaType<QMap<QString, QVariant> >();
+	qRegisterMetaType<QSharedPointer<Asset>>("QSharedPointer<Asset>");
 }
 
 void InitializeLib(QCoreApplication * coreApp, QString localeLanguageCode)

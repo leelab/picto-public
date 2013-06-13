@@ -5,6 +5,7 @@ namespace Picto {
 namespace Controller {
 
 double FrameResolutionTimer::lastFrameTime_ = -1;
+double FrameResolutionTimer::nextFrameTime_ = -1;
 double FrameResolutionTimer::firstFrameTime_ = -1;
 
 FrameResolutionTimer::FrameResolutionTimer()
@@ -39,9 +40,13 @@ int FrameResolutionTimer::elapsedTime(TimerUnits::TimerUnits units)
 
 void FrameResolutionTimer::setLastFrameTime(double frameTime)
 {
-	if(lastFrameTime_ < 0)
+	if(firstFrameTime_ < 0)
 		firstFrameTime_ = frameTime;
 	lastFrameTime_ = frameTime;
+}
+void FrameResolutionTimer::setNextFrameTime(double frameTime)
+{
+	nextFrameTime_ = frameTime;
 }
 
 }	//namespace Picto

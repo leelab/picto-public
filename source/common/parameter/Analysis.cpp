@@ -6,7 +6,7 @@
 #include "AnalysisStringVariable.h"
 #include "AnalysisVariableMap.h"
 #include "AnalysisVariableList.h"
-#include "AnalysisOutput.h"
+#include "AnalysisFileOutput.h"
 #include "../design/PictoData.h"
 #include "../memleakdetect.h"
 
@@ -31,12 +31,13 @@ Analysis::Analysis()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisVariableMap::Create))));
 	
 	AddDefinableObjectFactory("AnalysisDataSource",outputFactory_);
-	//dataSourceFactory_->addAssetType("Spike",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisSpikeSource::Create))));
+	//THIS IS TEMPORARY DURING DEBUGGING FOR SOMETHING ELSE!!!
+	outputFactory_->addAssetType("File",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFileOutput::Create))));
 
 	AddDefinableObjectFactory("AnalysisOutput",dataSourceFactory_);
-	//outputFactory_->addAssetType("File",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFileOutput::Create))));
+	dataSourceFactory_->addAssetType("File",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFileOutput::Create))));
 
 	AddDefinableObjectFactory("AnalysisFunction",functionFactory_);
 	functionFactory_->addAssetType("",

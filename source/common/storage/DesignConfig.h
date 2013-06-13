@@ -42,12 +42,18 @@ public:
 	void setActiveAnalysisIds(QList<QUuid> analysisList);
 	QList<QUuid> getActiveAnalysisIds();
 	bool isAnalysisActive(QUuid analysisId);
+	void markRunStart(QString runName);
+	void markRunEnd();
+	QUuid getLatestRunId();
+	QString getLatestRunName();
 
 	QList<AssetInfo> getElementInfo();
 	QList<PropInfo> getPropertyInfo();
 	QList<TransInfo> getTransitionInfo();
 signals:
 	void activeAnalysisIdsChanged();
+	void runStarted(QUuid runId);
+	void runEnded();
 protected:
 	void addError(QString errorMessage);
 private:
@@ -68,6 +74,8 @@ private:
 	int lastUsedId_;
 	bool allowIdDuplication_;
 	QString deserializedVersion_;
+	QUuid latestRunId_;
+	QString latestRunName_;
 
 
 };

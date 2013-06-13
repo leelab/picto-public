@@ -4,7 +4,7 @@ using namespace Picto;
 
 void TransitionState::setDatabase(QSqlDatabase session)
 {
-	runStart_ = runEnd_ = curr_ = -1;
+	runStart_ = runEnd_ = curr_ = firstLocationInRun_ = -1;
 	session_ = session;
 	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
 	query_->exec("SELECT COUNT(*) FROM transitions");
@@ -51,6 +51,7 @@ void TransitionState::startRun(double runStartTime,double runEndTime)
 		curr_++;
 		nextIndex = getNextIndex();
 	}
+	firstLocationInRun_ = curr_+1;
 }
 
 PlaybackIndex TransitionState::getCurrentIndex()
@@ -80,6 +81,13 @@ void TransitionState::moveToIndex(PlaybackIndex index)
 		emit transitionActivated(data_[curr_].transId_);
 		nextIndex = getNextIndex();
 	}
+}
+
+int TransitionState::getFirstTransIdInRun()
+{
+	if(firstLocationInRun_ < 0 || firstLocationInRun_ >= data_.size())
+		return 0;
+	return data_[firstLocationInRun_].transId_;
 }
 
 PlaybackIndex TransitionState::getNextIndex()

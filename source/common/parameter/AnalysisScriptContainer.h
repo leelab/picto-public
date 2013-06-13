@@ -44,6 +44,9 @@ protected:
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 private:
 	QString getScriptNamePrefix();
+private slots:
+	void linkedToAsset(QSharedPointer<Asset> asset);
+
 };
 
 

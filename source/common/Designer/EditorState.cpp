@@ -34,6 +34,7 @@ void EditorState::setTopLevelAsset(QSharedPointer<Picto::Asset> topLevelAsset)
 {
 	topAsset_ = topLevelAsset;
 	Q_ASSERT(!topAsset_.isNull());
+	setCurrentAnalysis(QSharedPointer<Analysis>());
 	//setWindowAsset(topAsset_);
 }
 

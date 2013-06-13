@@ -10,6 +10,8 @@
 #include "PlaybackController.h"
 #include "SpeedWidget.h"
 #include "ProgressWidget.h"
+#include "OutputWidgetHolder.h"
+#include "../../common/Designer/AnalysisSelectorWidget.h"
 
 class QLabel;
 class QDoubleSpinBox;
@@ -44,6 +46,7 @@ public slots:
 private:
 	void setupUi();
 	void updateRecordingTarget();
+	bool activateSelectedAnalyses();
 
 	QSharedPointer<PlaybackController> playbackController_;
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
@@ -75,10 +78,14 @@ private:
 	QToolBar* testToolbar_;
 	QToolBar* recordToolbar_;
 
+	Picto::AnalysisSelectorWidget* analysisSelector_;
+	OutputWidgetHolder* outputWidgetHolder_;
+
 	bool pausedFromJump_;	//If playback is not yet paused, system should pause playback while a jump location is being selected.
 	bool jumpDownRequested_;
 	bool recordModeOn_;
 	bool playing_;
+	bool paused_;
 	QString lastStatus_;
 
 	enum Status {Ending, Stopped, Running, Paused};
@@ -98,6 +105,9 @@ private slots:
 	void restartRecording();
 	void saveRecording();
 	void setRecordTime(double time);
+	void designRootChanged();
+	void loadError(QString errorStr);
+	void runStarted(QUuid runId);
 	//void zoomChanged(int zoom);
 
 };

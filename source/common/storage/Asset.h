@@ -52,7 +52,7 @@ public:
 	virtual	int getAssetId(){return 0;};
 	virtual void setAssetId(int){};
 
-	void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
+	virtual void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
 	QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
 
 	virtual void upgradeVersion(QString deserializedVersion);

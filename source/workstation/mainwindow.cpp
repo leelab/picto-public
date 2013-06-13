@@ -483,13 +483,12 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed new bug in Picto Director that caused it to crash when changing a parameter while the experiment was stopped.");
-	releaseNoteList.append("Fixed .xml suffix naming bug that appeared on some machines.");
+	releaseNoteList.append("Fixed bug that made the eye position appear to freeze in remove viewer and playback.");
+	releaseNoteList.append("Correct parameters will now appear in all remote viewers for actively running tasks.");
+	releaseNoteList.append("Capability to delete transitions in State Edit Viewer restored.");
 
-	releaseNoteList.append("Restored Workstation<->Server<->Director connectivity that had been broken by recent code changes.");
-	releaseNoteList.append("Changed Timer Parameter such that its elapsedTime() function returns values according to the time at which the first phosphor appeared in the previous frame.");
-	releaseNoteList.append("Fixed bug that sometimes made it impossible to succesfully fixate when a TargetController had equal FixationTime and TotalTime settings.");
-	
+	releaseNoteList.append("Fixed new bug in Picto Director that caused it to crash when changing a parameter while the experiment was stopped.");
+	releaseNoteList.append("Fixed .xml suffix naming bug that appeared on some machines.");	
 
 	//Format release notes:
 	QString releaseNotes;

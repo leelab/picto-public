@@ -72,6 +72,7 @@ void TestViewer::init()
 		loadPropsAction_->setEnabled(true);
 		testController_ = QSharedPointer<TestPlaybackController>(new TestPlaybackController(experiment_));
 		connect(playAction_,SIGNAL(triggered()),this, SLOT(playTriggered()));
+		connect(playAction_,SIGNAL(triggered()),testController_.data(), SLOT(play()));
 		connect(pauseAction_,SIGNAL(triggered()),testController_.data(), SLOT(pause()));
 		connect(engine_.data(),SIGNAL(pauseRequested()),testController_.data(),SLOT(pause()));
 		connect(stopAction_,SIGNAL(triggered()),testController_.data(), SLOT(stop()));
@@ -222,6 +223,8 @@ void TestViewer::setupUi()
 	
 	QVBoxLayout *leftPane = new QVBoxLayout();
 	analysisSelector_ = new Picto::AnalysisSelectorWidget();
+	//analysisSelector_->setVisible(false);//REMOVE THIS LINE TO USE ANALYSIS
+
 	propertyFrame_ = new PropertyFrame();
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
 	leftPane->addWidget(analysisSelector_);
@@ -271,7 +274,7 @@ void TestViewer::playTriggered()
 	}
 
 	analysisSelector_->setEnabled(false);
-	QMetaObject::invokeMethod(testController_.data(),"play");
+	//QMetaObject::invokeMethod(testController_.data(),"play");
 }
 
 void TestViewer::running()

@@ -35,7 +35,9 @@ void AnalysisScriptContainer::runScript(ScriptType type)
 		}
 		break;
 	case FRAME:
-		if(propertyContainer_->getProperty("AnalysisFrameScript") && (!propertyContainer_->getPropertyValue("AnalysisFrameScript").toString().isEmpty()))
+		if(propertyContainer_->getProperty("AnalysisFrameScript") 
+			&& !propertyContainer_->getProperty("AnalysisFrameScript")->isDeleted()
+			&& (!propertyContainer_->getPropertyValue("AnalysisFrameScript").toString().isEmpty()))
 		{
 			QString scriptNamePrefix = getScriptNamePrefix();
 			ScriptableContainer::runScript(scriptNamePrefix+"Frame");
@@ -60,7 +62,8 @@ bool AnalysisScriptContainer::hasScriptPropertyType(ScriptType type)
 		return true;
 		break;
 	case FRAME:
-		return propertyContainer_->getProperty("AnalysisFrameScript");
+		return propertyContainer_->getProperty("AnalysisFrameScript") 
+			&& !propertyContainer_->getProperty("AnalysisFrameScript")->isDeleted();
 		break;
 	case EXIT:
 		return propertyContainer_->getProperty("AnalysisExitScript");
@@ -104,6 +107,8 @@ QString AnalysisScriptContainer::getReturnValueError(QString scriptName,const QS
 void AnalysisScriptContainer::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();
+	QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();
+	connect(lnk.data(),SIGNAL(linkedToAsset(QSharedPointer<Asset>)),this,SLOT(linkedToAsset(QSharedPointer<Asset>)));
 }
 
 bool AnalysisScriptContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -117,7 +122,8 @@ bool AnalysisScriptContainer::hasScripts()
 {
 	return	!propertyContainer_->getPropertyValue("AnalysisEntryScript").toString().isEmpty() 
 			||	(hasScriptPropertyType(FRAME)
-				&& !propertyContainer_->getPropertyValue("AnalysisFrameScript").toString().isEmpty())
+				&& !propertyContainer_->getPropertyValue("AnalysisFrameScript").toString().isEmpty()
+				&& !propertyContainer_->getProperty("AnalysisFrameScript")->isDeleted())
 			|| (hasScriptPropertyType(EXIT) 
 				&& !propertyContainer_->getPropertyValue("AnalysisExitScript").toString().isEmpty());
 }
@@ -167,5 +173,19 @@ QString AnalysisScriptContainer::getScriptNamePrefix()
 	QSharedPointer<Asset> linkedAsset = getLinkedAsset();
 	Q_ASSERT(linkedAsset);
 	return linkedAsset->getName().simplified().remove(' ')+"Analysis";
+}
+
+void AnalysisScriptContainer::linkedToAsset(QSharedPointer<Asset> asset)
+{
+	//If this script container contains a frame script and is not linked to a state, erase
+	//the frame script
+	if(asset->inherits("Picto::State"))
+		return;
+	if(asset->inherits("Picto::StateMachineElement") && hasScriptPropertyType(FRAME))
+	{
+		propertyContainer_->getProperty("AnalysisFrameScript")->setVisible(false);
+		propertyContainer_->getProperty("AnalysisFrameScript")->setDeleted();
+	}
+
 }
 }; //namespace Picto

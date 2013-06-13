@@ -41,6 +41,7 @@ public:
 	/*! \brief Calls reset on the scriptables serialized into this container.
 	 */
 	void resetScriptableValues();
+	void resetScriptableAnalysisValues();
 
 	virtual QString friendlyTypeName(){return "Scriptable Container";};
 	virtual QString getInfo();

@@ -8,6 +8,8 @@
 #include "SessionVersionInterfacer.h"
 using namespace Picto;
 
+QHash<QString,int> FileSessionLoader::connectionUsers_;
+
 FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState)
 : sessionState_(sessState),
 runIndex_(-1)
@@ -15,25 +17,48 @@ runIndex_(-1)
 	connect(sessionState_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 }
 
+FileSessionLoader::~FileSessionLoader()
+{
+	sessionState_.clear();
+	if(connectionName_.isEmpty())
+		return;
+	Q_ASSERT(connectionUsers_.contains(connectionName_));
+	connectionUsers_[connectionName_]--;
+	if(connectionUsers_[connectionName_] <= 0)
+	{
+		QSqlDatabase::database(connectionName_).close();
+		QSqlDatabase::removeDatabase(connectionName_);
+		connectionUsers_.remove(connectionName_);
+	}
+}
+
 bool FileSessionLoader::setFile(QString path)
 {
+	Q_ASSERT(connectionName_.isEmpty());	//Currently, we just create a new file session loader whenever we need to load a new file
+											//
 	//Load Sqlite Database
 	path = path.replace("\\","/");
 	Q_ASSERT(path.lastIndexOf("/") >=0);
 	Q_ASSERT(path.lastIndexOf(".") >=0);
 	QString connectionName = path.mid(path.lastIndexOf("/")+1);
 	connectionName = connectionName.left(connectionName.lastIndexOf("."));
-
-	QSqlDatabase newSession = QSqlDatabase::addDatabase("QSQLITE",connectionName);
-	newSession.setDatabaseName(path);
-	newSession.open();
-	if(!newSession.isOpen())
+	Q_ASSERT(QSqlDatabase::contains(connectionName) == connectionUsers_.contains(connectionName));
+	if(!QSqlDatabase::contains(connectionName))
 	{
-		qDebug("Error: Could not open session file.");
-		return false;
+		QSqlDatabase newSession = QSqlDatabase::addDatabase("QSQLITE",connectionName);
+		newSession.setDatabaseName(path);
+		newSession.open();
+		if(!newSession.isOpen())
+		{
+			newSession.close();
+			QSqlDatabase::removeDatabase(connectionName);
+			qDebug("Error: Could not open session file.");
+			return false;
+		}
+		connectionUsers_[connectionName] = 0;
 	}
-
-	session_ = newSession;
+	connectionUsers_[connectionName]++;
+	connectionName_ = connectionName;
 
 	//Intialize Object Data
 	if(!loadRunData())
@@ -42,7 +67,7 @@ bool FileSessionLoader::setFile(QString path)
 		return false;
 	if(!loadDesignDefinition())
 		return false;
-	sessionState_->setSessionData(session_,obsoleteAssetIds_);
+	sessionState_->setSessionData(getDatabase(),obsoleteAssetIds_);
 	runIndex_ = -1;
 	return true;
 }
@@ -85,10 +110,16 @@ double FileSessionLoader::currRunDuration()
 	return runDuration(runIndex_);
 }
 
+QString FileSessionLoader::currRunName()
+{
+	Q_ASSERT(runIndex_ >= 0 && runIndex_ < runs_.size());
+	return runs_[runIndex_].name_;
+}
+
 bool FileSessionLoader::loadRunData()
 {
 	runs_.clear();
-	QSqlQuery query(session_);
+	QSqlQuery query(getDatabase());
 	query.setForwardOnly(true);
 
 	//Get runs list.
@@ -127,13 +158,13 @@ bool FileSessionLoader::loadRunData()
 
 bool FileSessionLoader::loadInitData(double upTo)
 {
-	//if(!session_.isOpen())
+	//if(!getDatabase().isOpen())
 	//	return false;
 	//if(upTo <= 0)
 	//	return true;
 	//
 	//double from = loadRunData().first().startTime_;
-	//QSqlQuery query(session_);
+	//QSqlQuery query(getDatabase());
 	//query.setForwardOnly(true);
 	//bool success;
 	//int assetId;
@@ -162,13 +193,13 @@ bool FileSessionLoader::loadInitData(double upTo)
 double FileSessionLoader::loadBehavData(double after,double to,double subtractTime)
 {
 	//double returnVal = after;
-	//if(!session_.isOpen())
+	//if(!getDatabase().isOpen())
 	//	return returnVal;
 	//if(after == to)
 	//	return returnVal;
 	//
 	//double time = -1;
-	//QSqlQuery query(session_);
+	//QSqlQuery query(getDatabase());
 	//query.setForwardOnly(true);
 	//bool success;
 	//int assetId;
@@ -296,12 +327,12 @@ double FileSessionLoader::loadBehavData(double after,double to,double subtractTi
 
 double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
 {
-	if(!session_.isOpen())
+	if(!getDatabase().isOpen())
 		return after;
 	if(after == to)
 		return after;
 	
-	QSqlQuery query(session_);
+	QSqlQuery query(getDatabase());
 	query.setForwardOnly(true);
 	bool success;
 	// eLfp:
@@ -313,7 +344,7 @@ double FileSessionLoader::loadNeuralData(double after,double to,double subtractT
 
 bool FileSessionLoader::getSignalInfo()
 {
-	QSqlQuery query(session_);
+	QSqlQuery query(getDatabase());
 	query.setForwardOnly(true);
 	query.prepare("SELECT value FROM sessioninfo WHERE key='Signal'");
 	bool success = query.exec();
@@ -347,7 +378,7 @@ bool FileSessionLoader::loadDesignDefinition()
 	////////////////////////
 	//Load design definition
 	/////////////////////////
-	QSqlQuery query(session_);
+	QSqlQuery query(getDatabase());
 	query.setForwardOnly(true);
 	//ExperimentXML name changed to DesignXML when we started putting UI Data and Analysis Data together
 	//with it on server.  They never appeared at the same time so we can just look for either one.
@@ -435,4 +466,9 @@ bool FileSessionLoader::loadDesignDefinition()
 	////////////////////////////////////////////////////////
 	obsoleteAssetIds_ = updater.getObsoleteAssets();
 	return true;
+}
+
+QSqlDatabase FileSessionLoader::getDatabase()
+{
+	return QSqlDatabase::database(connectionName_);
 }

@@ -23,6 +23,14 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: %1").arg(errorInfo));
 		return false;
 	}
+	//We don't want any Analysis elements in our experiment, remove them.
+	for(int i=0;i<designRoot.getNumAnalyses();i++)
+	{
+		designRoot.removeAnalysis(i);
+	}
+	designRoot.setUndoPoint();
+	designRoot.refreshFromXml();
+
 	designRoot.enableRunMode(true);
 	QSharedPointer<Picto::Experiment> experiment = designRoot.getExperiment().staticCast<Experiment>();
 	if(!experiment)
@@ -30,8 +38,6 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: Design did not contain experiment"));
 		return false;
 	}
-	//We don't need any attached UI or Analysis elements in our experiment.
-	experiment->ClearAllAssociateDescendants();
 
 	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setExperiment(experiment);
 

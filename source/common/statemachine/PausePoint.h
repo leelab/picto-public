@@ -33,6 +33,8 @@ public:
 
 	virtual void upgradeVersion(QString deserializedVersion);
 
+	virtual void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
+
 	QColor getColor(){return propertyContainer_->getPropertyValue("BackgroundColor").value<QColor>();};
 	void setColor(QColor color){propertyContainer_->setPropertyValue("BackgroundColor",color);};
 	int getRed() { return getColor().red(); };

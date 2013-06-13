@@ -5,6 +5,7 @@
 #include "../experiment/experiment.h"
 #include "StateUpdater.h"
 #include "propertytable.h"
+#include "SlaveEventQueue.h"
 
 #include "../common.h"
 
@@ -25,15 +26,23 @@ class SlaveExperimentDriver : public QObject
 public:
 	SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSharedPointer<StateUpdater> updater);
 	virtual ~SlaveExperimentDriver(){};
+signals:
+	void taskChanged(QString currTask);
 private:
 	void renderFrame();
+	void handleEvent(SlaveEvent& event);
 	QSharedPointer<Experiment> experiment_;
 	QSharedPointer<StateUpdater> updater_;
 	QSharedPointer<DesignConfig> designConfig_;
 	QSharedPointer<StateMachineElement> currElement_;
+	SlaveEventQueue eventQueue_;
 	QTime frameTimer_;
 	bool renderingEnabled_;
+	QString currTask_;
 private slots:
+	void masterRunStarting(QString taskName,QString runName);
+	void masterRunEnding();
+
 	void masterPropertyValueChanged(int propId, QString value);
 	void masterPropertyInitValueChanged(int propId, QString value);
 	void masterTransitionActivated(int transId);

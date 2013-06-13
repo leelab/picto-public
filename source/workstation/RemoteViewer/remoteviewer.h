@@ -223,6 +223,7 @@ private:
 private slots:
 	void taskListIndexChanged(int index);
 	bool assureChannelConnections();
+	void currTaskChanged(QString task);
 
 };
 

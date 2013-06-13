@@ -30,6 +30,8 @@ public:
 	void linkToAsset(QSharedPointer<Asset> asset);
 	void updateLinkPath(QString oldPrefix,QString newPrefix);
 
+signals:
+	void linkedToAsset(QSharedPointer<Asset> asset);
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

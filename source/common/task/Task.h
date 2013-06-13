@@ -51,6 +51,7 @@ public:
 	virtual QString getUIGroup(){return "State Machine Elements";};
 	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
+	QSharedPointer<StateMachine> getStateMachine(){return stateMachine_;};
 
 protected:
 	virtual QString defaultTagName(){return "Task";};

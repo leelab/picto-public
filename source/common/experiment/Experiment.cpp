@@ -1,3 +1,4 @@
+#include <QDateTime>
 #include "Experiment.h"
 
 #include "../engine/PictoEngine.h"
@@ -120,8 +121,14 @@ bool Experiment::runTask(QString taskName)
 	//Initialize signal channel coefficients
 	updateSignalCoefficients(NULL,QVariant());
 	resetScriptableValues();
+	//Tell the design config that we are starting a new run
+	getDesignConfig()->markRunStart(taskName+"_"+QDateTime::currentDateTime().toString("yyyy_MM_dd__hh_mm_ss"));
+
 	QString result = task->run(engine_);
 	engine_->stopAllSignalChannels();
+
+	//Tell the design config that the run is over
+	getDesignConfig()->markRunEnd();
 
 	//If the task changed somehow (ie. We are running as slaves)
 	//The prior task would end with a result that is a path 

@@ -11,6 +11,7 @@
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"
 #include "../../common/compositor/OutputSignalWidget.h"
+#include "../../common/statemachine/Scene.h"
 
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -38,6 +39,11 @@ QString PlaybackController::loadSession(QString filename)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Load,filename));
 	return "";
+}
+
+void PlaybackController::setEnabledAnalyses(QList<QUuid> analysisList)
+{
+	data_.setEnabledAnalyses(analysisList);
 }
 
 void PlaybackController::setRunSpeed(double value)
@@ -70,6 +76,11 @@ QSharedPointer<Picto::RenderingTarget> PlaybackController::getRenderingTarget()
 	return renderingTarget_;
 }
 
+QSharedPointer<Picto::DesignRoot> PlaybackController::getDesignRoot()
+{
+	return designRoot_;
+}
+
 double PlaybackController::getRunLength()
 {
 	return data_.getRunLength();
@@ -79,6 +90,12 @@ void PlaybackController::aboutToQuit()
 {
 	stop();
 	playbackThread_->quit();
+	//If the Scene render function is waiting in the playback thread for the GUI thread to render a scene, but the GUI
+	//thread is here trying to quit, the playback thread will never end if we call wait on this thread.  To get
+	//around this, we tell all scenes to closeRenderLoops(), ie.  Stop waiting.  Then they will end and we will
+	//be able to finish this function.
+	Picto::Scene::closeRenderLoops();
+	playbackThread_->wait();
 }
 
 void PlaybackController::play()
@@ -139,8 +156,8 @@ void PlaybackController::setup()
 	playbackUpdater_->setPlaybackSpeed(playbackSpeed);
 	connect(playbackUpdater_.data(),SIGNAL(framePresented(double)),this,SLOT(setCurrTime(double)));
 	connect(playbackUpdater_.data(),SIGNAL(loadedTo(double,double)),this,SIGNAL(loadedTo(double,double)));
-	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(runLoading(bool)));
-	connect(playbackUpdater_.data(),SIGNAL(newRun(double)),this,SIGNAL(newRunLength(double)));
+	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
+	connect(playbackUpdater_.data(),SIGNAL(newRun(double)),this,SLOT(newRunLength(double)));
 	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SLOT(stop()));
 	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SIGNAL(finishedPlayback()));
 	connect(playbackUpdater_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
@@ -192,18 +209,18 @@ void PlaybackController::update()
 				setup();
 				if(!playbackUpdater_->setFile(cmd.commandData.toString()))
 				{
-					emit error("Failed to load session design.");
+					emit loadError("Failed to load session design.  This often means that the session contains no experimental data.");
 					break;
 				}
 				QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(playbackUpdater_->getDesignRoot());
 				if(!newDesignRoot)
 				{
-					emit error("Failed to load session design.");
+					emit loadError("Failed to load session design.");
 					break;
 				}
 				if(!newDesignRoot->compiles())
 				{
-					emit error("Session's experiment does not compile.");
+					emit loadError("Session's experiment does not compile.");
 					break;
 				}
 				designRoot_ = newDesignRoot;
@@ -215,13 +232,13 @@ void PlaybackController::update()
 				QSharedPointer<Picto::Experiment> currExp = designRoot_->getExperiment().staticCast<Experiment>();
 				if(!currExp || !currExp->getTaskNames().size())
 				{
-					emit error("Failed to load experiment from session.");
+					emit loadError("Failed to load experiment from session.");
 					break;
 				}
 				experiment_ = currExp;
 				experiment_->setEngine(engine_);
 				slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(experiment_,playbackUpdater_));
-
+				emit designRootChanged();
 				data_.setNextStatus(PlaybackControllerData::Stopped);
 			}
 			break;
@@ -237,10 +254,12 @@ void PlaybackController::update()
 		switch(cmd.commandType)
 		{
 		case PlaybackCommand::Play:
+			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
 			playbackUpdater_->play();
 			data_.setNextStatus(PlaybackControllerData::Running);
 			break;
 		case PlaybackCommand::Pause:
+			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
 			playbackUpdater_->play();
 			data_.setNextStatus(PlaybackControllerData::Running);
 			data_.pushCommand(cmd,false);
@@ -334,6 +353,8 @@ void PlaybackControllerData::setRunSpeed(double val){QMutexLocker locker(&mutex_
 double PlaybackControllerData::getRunSpeed(){QMutexLocker locker(&mutex_);return runSpeed_;}
 void PlaybackControllerData::setRunLength(double val){QMutexLocker locker(&mutex_);runLength_ = val;}
 double PlaybackControllerData::getRunLength(){QMutexLocker locker(&mutex_);return runLength_;}
+void PlaybackControllerData::setEnabledAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledAnalyses_=analysisList;}
+QList<QUuid> PlaybackControllerData::getEnabledAnalyses(){QMutexLocker locker(&mutex_);return enabledAnalyses_;}
 void PlaybackControllerData::setStatus(Status val){QMutexLocker locker(&mutex_);status_ = val;}
 PlaybackControllerData::Status PlaybackControllerData::getStatus(){QMutexLocker locker(&mutex_);return status_;}
 void PlaybackControllerData::setNextStatus(Status val){QMutexLocker locker(&mutex_);nextStatus_ = val;}

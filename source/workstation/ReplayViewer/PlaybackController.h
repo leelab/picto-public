@@ -38,6 +38,8 @@ public:
 	double getRunSpeed();
 	void setRunLength(double val);
 	double getRunLength();
+	void setEnabledAnalyses(QList<QUuid> analysisList);
+	QList<QUuid> getEnabledAnalyses();
 	void setStatus(Status val);
 	PlaybackControllerData::Status getStatus();
 	void setNextStatus(Status val);
@@ -51,6 +53,7 @@ private:
 	double currTime_;
 	double runSpeed_;
 	double runLength_;
+	QList<QUuid> enabledAnalyses_;
 	Status status_;
 	Status nextStatus_;
 	QVector<PlaybackCommand> cmds_;
@@ -68,10 +71,12 @@ public:
 	virtual ~PlaybackController();
 
 	QString loadSession(QString filename);
+	void setEnabledAnalyses(QList<QUuid> analysisList);
 
 	QSharedPointer<Picto::VisualTarget> getVisualTarget();
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> getOutputSignalControllers();
 	QSharedPointer<Picto::RenderingTarget> getRenderingTarget();
+	QSharedPointer<DesignRoot> getDesignRoot();
 	double getRunLength();
 	void aboutToQuit();
 	
@@ -88,9 +93,10 @@ signals:
 	void loading(bool isLoading);
 	void percentLoaded(double percent);
 	void runsUpdated(QStringList runs);
+	void designRootChanged();
 	void statusChanged(int status);
 	void finishedPlayback();
-	void error(QString msg);
+	void loadError(QString msg);
 
 public slots:
 	void setRunSpeed(double value);

@@ -44,6 +44,7 @@ public:
 	void addAudioElement(QSharedPointer<AudioElement> element);
 	void addOutputSignal(QSharedPointer<OutputSignal> element);
 	static void setZoom(float zoom);
+	static void closeRenderLoops();
 
 signals:
 	void readyForRender(int callerId);
@@ -68,6 +69,7 @@ private:
 	double firstPhosphorTime_;
 	bool readyToRender_;
 	static float zoom_;
+	static bool closeRenderLoops_;
 	static QMutex staticMutex_;
 
 private slots:

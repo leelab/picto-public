@@ -18,6 +18,7 @@ public:
 	virtual PlaybackIndex getNextIndex(double lookForwardTime);
 	virtual void moveToIndex(PlaybackIndex index);
 	void setObsoleteAssets(QHash<int,bool> obsoleteAssetIds){obsoleteAssetIds_ = obsoleteAssetIds;};
+	int getFirstTransIdInRun();
 signals:
 	void transitionActivated(int transId);
 private:
@@ -28,6 +29,7 @@ private:
 	double runStart_;
 	double runEnd_;
 	int curr_;
+	int firstLocationInRun_;
 	QVector<PlaybackTransData> data_;
 	QHash<int,bool> obsoleteAssetIds_;
 //public:

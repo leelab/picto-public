@@ -34,6 +34,7 @@ void AssociateHostLink::linkToAsset(QSharedPointer<Asset> asset)
 	connect(linkedAsset_.data(),SIGNAL(assetIdEdited()),this,SLOT(updateLinkedAssetProperties()));
 	connect(linkedAsset_.toStrongRef().staticCast<UIEnabled>().data(),SIGNAL(nameEdited()),this,SLOT(updateLinkedAssetProperties()));		
 	updateLinkedAssetProperties();
+	emit linkedToAsset(asset);
 }
 
 void AssociateHostLink::updateLinkPath(QString oldPrefix,QString newPrefix)

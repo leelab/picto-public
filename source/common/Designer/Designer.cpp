@@ -239,7 +239,11 @@ void Designer::selectedItemChanged(QGraphicsItem*)
 
 void Designer::currentAnalysisChanged(QSharedPointer<Analysis>)
 {
-	resetEditor();
+	//When current analysis changes, reload the window
+	QSharedPointer<Asset> openAsset = designRoot_->getOpenAsset();
+	if(!openAsset)
+		openAsset = editorState_->getTopLevelAsset();
+	editorState_->setWindowAsset(openAsset,false);
 }
 
 //! Checks the syntax of the current XML to see if it is a legal experiment
@@ -269,19 +273,23 @@ void Designer::createActions()
     deleteAction->setShortcut(tr("Delete"));
     deleteAction->setStatusTip(tr("Delete item from diagram"));
 
-	experimentalCopyAction = new QAction(QIcon(":/icons/copy_experiment.png"),
-                               tr("Copy Experiment Elements"), this);
-    experimentalCopyAction->setShortcut(tr("Ctrl+C"));
-    experimentalCopyAction->setStatusTip(tr("Copy experimental elements from your design"));
+	copyAction = new QAction(QIcon(":/icons/copy.png"),
+                               tr("Copy"), this);
+    copyAction->setShortcut(tr("Ctrl+C"));
+    copyAction->setStatusTip(tr("Copy elements from your design"));
 
-	analysisCopyAction = new QAction(QIcon(":/icons/copy_analysis.png"),
-                               tr("Copy Analysis Elements"), this);
-    analysisCopyAction->setStatusTip(tr("Copy analysis elements from your design"));
+	analysisExportAction = new QAction(QIcon(":/icons/export_analysis.png"),
+                               tr("Export Analysis Elements"), this);
+    analysisExportAction->setStatusTip(tr("Export analysis elements from an experimental asset"));
+
+	analysisImportAction = new QAction(QIcon(":/icons/import_analysis.png"),
+                               tr("Import Analysis Elements"), this);
+    analysisImportAction->setStatusTip(tr("Import analysis elements to an experimental asset"));
 
 	pasteAction = new QAction(QIcon(":/icons/paste.png"),
 								tr("Paste"), this);
 	pasteAction->setShortcut(tr("Ctrl+V"));
-	pasteAction->setStatusTip(tr("Paste copied experimental or analysis elements"));
+	pasteAction->setStatusTip(tr("Paste copied elements"));
 
     exitAction = new QAction(tr("E&xit"), this);
     exitAction->setShortcut(tr("Ctrl+X"));
@@ -303,6 +311,7 @@ void Designer::createActions()
 	searchWidget->setLayout(searchLayout);
 
 	analysisOption_ = new AnalysisOptionWidget(editorState_);
+	//analysisOption_->setVisible(false);//REMOVE THIS LINE TO USE ANALYSIS
 
 	//Turn on highlighting for elements with children that have scripts and analysis scripts.
 	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT));
@@ -322,8 +331,9 @@ void Designer::connectActions()
 	connect(editorState_.data(),SIGNAL(undoRequested()),this,SLOT(performUndoAction()));
 
     connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));
-	connect(experimentalCopyAction, SIGNAL(triggered()),scene, SLOT(experimentalCopySelectedItems()));
-	connect(analysisCopyAction, SIGNAL(triggered()),scene, SLOT(analysisCopySelectedItems()));
+	connect(copyAction, SIGNAL(triggered()),scene, SLOT(copySelectedItems()));
+	connect(analysisExportAction, SIGNAL(triggered()),scene, SLOT(analysisExportSelectedItem()));
+	connect(analysisImportAction, SIGNAL(triggered()),scene, SLOT(analysisImportSelectedItem()));
 	connect(pasteAction, SIGNAL(triggered()),scene, SLOT(pasteItems()));
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
@@ -343,9 +353,10 @@ void Designer::createMenus()
     //itemMenu = menuBar()->addMenu(tr("&Item"));
 	itemMenu = new QMenu(tr("&Item"),this);
     itemMenu->addAction(deleteAction);
-	itemMenu->addAction(experimentalCopyAction);
-	itemMenu->addAction(analysisCopyAction);
+	itemMenu->addAction(copyAction);
 	itemMenu->addAction(pasteAction);
+	itemMenu->addAction(analysisExportAction);
+	itemMenu->addAction(analysisImportAction);
 
 	sceneMenu = new QMenu(tr("Scene"),this);
 	sceneMenu->addAction(pasteAction);
@@ -361,9 +372,10 @@ void Designer::createToolbars()
 //! [25]
     editToolBar = new QToolBar(tr("Edit"));
     editToolBar->addAction(deleteAction);
-	editToolBar->addAction(experimentalCopyAction);
-	editToolBar->addAction(analysisCopyAction);
+	editToolBar->addAction(copyAction);
 	editToolBar->addAction(pasteAction);
+	editToolBar->addAction(analysisExportAction);
+	editToolBar->addAction(analysisImportAction);
 	editToolBar->addAction(undoAction);
 	editToolBar->addAction(redoAction);
 
@@ -382,7 +394,6 @@ void Designer::createToolbars()
 	pointerToolbar->addWidget(searchWidget);
 	pointerToolbar->addSeparator();
 	pointerToolbar->addAction(checkSyntaxAction_);
-	pointerToolbar->addWidget(new QLabel(tr("Select Analysis")));
 	pointerToolbar->addWidget(analysisOption_);
 //! [27]
 }
@@ -408,33 +419,46 @@ void Designer::updateEnabledActions()
 	QSharedPointer<Asset> asset = editorState_->getSelectedAsset();
 	if(editorState_->getCurrentAnalysis())
 	{	//An Analysis is active
+		analysisExportAction->setVisible(true);
+		analysisImportAction->setVisible(true);
 		if(dynamic_cast<AssociateElement*>(asset.data()))
 		{	//The asset is an analysis element
 			deleteAction->setEnabled(true);
-			experimentalCopyAction->setEnabled(false);
-			analysisCopyAction->setEnabled(true);
-			pasteAction->setEnabled(true);
+			copyAction->setEnabled(true);
+			analysisExportAction->setEnabled(false);
+			analysisImportAction->setEnabled(false);
+			pasteAction->setEnabled(false);
 		}
 		else	//The asset is an experiment element
 		{
 			deleteAction->setEnabled(false);
-			experimentalCopyAction->setEnabled(false);
-			analysisCopyAction->setEnabled(false);
+			copyAction->setEnabled(false);
+			analysisExportAction->setEnabled(asset->inherits("Picto::StateMachineElement"));
+			analysisImportAction->setEnabled(asset->inherits("Picto::StateMachineElement") && (Copier::availablePasteType() == Copier::ANALYSIS_IMPORT));
 			pasteAction->setEnabled(false);		
 		}
 	}
 	else	//No Analysis is active
 	{
+		analysisExportAction->setVisible(false);
+		analysisImportAction->setVisible(false);
+
 		deleteAction->setEnabled(true);
-		experimentalCopyAction->setEnabled(true);
-		analysisCopyAction->setEnabled(false);
-		pasteAction->setEnabled(true);		
+		copyAction->setEnabled(true);
+		analysisExportAction->setEnabled(false);
+		analysisImportAction->setEnabled(false);
+		pasteAction->setEnabled((Copier::availablePasteType() == Copier::EXPERIMENT_PASTE));		
 	}
-	//If the window is the selected asset, copy should be disabled
+	//If the window is the selected asset, copy should be disabled, 
+	//paste depends on whether we're in analysis mode
 	if(editorState_->getSelectedAsset() == editorState_->getWindowAsset())
 	{
-		experimentalCopyAction->setEnabled(false);
-		analysisCopyAction->setEnabled(false);
+		copyAction->setEnabled(false);
+		analysisExportAction->setEnabled(false);
+		analysisImportAction->setEnabled(false);
+		bool pasteEnabled = (editorState_->getCurrentAnalysis().isNull() && (Copier::availablePasteType() == Copier::EXPERIMENT_PASTE))
+			|| (!editorState_->getCurrentAnalysis().isNull() && (Copier::availablePasteType() == Copier::ANALYSIS_PASTE));
+		pasteAction->setEnabled(pasteEnabled);
 	}
 	//If the window is the selected asset, and the selected item isn't a transition delete should be disabled
 	if	(	editorState_->getSelectedAsset() == editorState_->getWindowAsset() 

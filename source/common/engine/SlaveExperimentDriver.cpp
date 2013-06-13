@@ -1,4 +1,5 @@
 #include "SlaveExperimentDriver.h"
+#include "../statemachine/State.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -13,6 +14,10 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	//Initialize scripting for this experiment in case this hasn't been done yet
 	experiment_->initScripting(false);
 	renderingEnabled_ = true;
+
+	connect(updater_.data(),SIGNAL(startingRun(QString,QString)),this,SLOT(masterRunStarting(QString,QString)));
+	connect(updater_.data(),SIGNAL(endingRun()),this,SLOT(masterRunEnding()));
+
 	connect(updater_.data(),SIGNAL(propertyValueChanged(int, QString)),this,SLOT(masterPropertyValueChanged(int, QString)));
 	connect(updater_.data(),SIGNAL(propertyInitValueChanged(int, QString)),this,SLOT(masterPropertyInitValueChanged(int, QString)));
 	connect(updater_.data(),SIGNAL(transitionActivated(int)),this,SLOT(masterTransitionActivated(int)));
@@ -35,76 +40,148 @@ void SlaveExperimentDriver::renderFrame()
 	frameTimer_.restart();
 }
 
+void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
+{
+	switch(event.type)
+	{
+	case SlaveEvent::PROP_VAL_CHANGE:
+		{
+			QSharedPointer<Asset> asset = designConfig_->getAsset(event.id);
+			Q_ASSERT(asset && asset->inherits("Picto::Property"));
+			asset.staticCast<Property>()->valFromUserString(event.value);
+		}
+		break;
+	case SlaveEvent::INIT_PROP_VAL_CHANGE:
+		{
+			QSharedPointer<Asset> asset = designConfig_->getAsset(event.id);
+			Q_ASSERT(asset && asset->inherits("Picto::Property"));
+			asset.staticCast<Property>()->initValFromUserString(event.value);
+		}
+		break;
+	case SlaveEvent::TRANS_ACTIVATED:
+		{
+			QSharedPointer<Asset> asset = designConfig_->getAsset(event.id);
+			if(!asset || !asset->inherits("Picto::Transition"))
+			{
+				Q_ASSERT(!asset);
+				return;
+			}
+			QSharedPointer<Transition> trans = asset.staticCast<Transition>();
+	
+			//As soon as a transition comes in and it has a source result, 
+			//we set that transition's source's latest result to the transition's 
+			//source result.  Then, if the source is a state machine element, we 
+			//call it's AnalysisExitScripts
+			QSharedPointer<Asset> sourceResult = trans->getSourceResultAsset();
+			QSharedPointer<Asset> sourceAsset = trans->getSourceAsset();
+			if(sourceResult)
+			{
+				sourceAsset.staticCast<ResultContainer>()->setLatestResult(sourceResult->getName());
+			}
+			if(sourceAsset && sourceAsset->inherits("Picto::StateMachineElement"))
+			{
+				sourceAsset.staticCast<StateMachineElement>()->runAnalysisExitScripts();
+			}
+
+			QString newResult = trans->getDestination();
+			if(newResult == "EngineAbort")
+			{
+				return;
+			}
+	
+			QSharedPointer<Asset> destAsset = trans->getDestinationAsset();
+			QString destName = destAsset?destAsset->getName():"";
+			if(!destAsset || !destAsset->inherits("Picto::StateMachineElement"))
+			{
+				Q_ASSERT(!destAsset || destAsset->inherits("Picto::Result"));
+				return;
+			}
+			//If we got here, we transitioned to a StateMachineElement.  
+			//Tell the world if the task has changed
+			QString currTask = destAsset->getPath().split("::").first();
+			if(currTask != currTask_)
+			{
+				currTask_ = currTask;
+				emit taskChanged(currTask_);
+			}
+			//Set is as the current element
+			//Reset its values to initial conditions
+			//run its AnalysisEntryScripts
+			//start it up
+			currElement_ = destAsset.staticCast<StateMachineElement>();
+			currElement_->resetScriptableAnalysisValues();
+			currElement_->runAnalysisEntryScripts();
+			currElement_->slaveRun(experiment_->getEngine());
+		}
+		break;
+	}
+}
+
+void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
+{
+	eventQueue_.reset();
+	if(taskName != currTask_)
+	{
+		currTask_ = taskName;
+		emit taskChanged(currTask_);
+	}
+	//Tell the design config about the new run
+	designConfig_->markRunStart(runName);
+
+	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
+	//Reset Analysis elements to initial states on Top
+	top->resetScriptableAnalysisValues();
+	//Run AnalysisEntryScript on Top
+	top->runAnalysisEntryScripts();
+}
+void SlaveExperimentDriver::masterRunEnding()
+{
+	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
+	//Run AnalysisExitScripts on Top
+	top->runAnalysisExitScripts();
+	designConfig_->markRunEnd();
+	eventQueue_.reset();
+}
 void SlaveExperimentDriver::masterPropertyValueChanged(int propId, QString value)
 {
-	QSharedPointer<Asset> asset = designConfig_->getAsset(propId);
-	Q_ASSERT(asset && asset->inherits("Picto::Property"));
-	if(propId == 3329)
-	{
-		QString name = asset->getName();
-		int i=0;
-		i++;
-	}
-	asset.staticCast<Property>()->valFromUserString(value);
+	eventQueue_.addPropChange(propId,value);
 }
 void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString value)
 {
-	QSharedPointer<Asset> asset = designConfig_->getAsset(propId);
-	Q_ASSERT(asset && asset->inherits("Picto::Property"));
-	if(propId == 3329)
-	{
-		QString name = asset->getName();
-		int i=0;
-		i++;
-	}
-	asset.staticCast<Property>()->initValFromUserString(value);
+	eventQueue_.addInitPropChange(propId,value);
 }
 void SlaveExperimentDriver::masterTransitionActivated(int transId)
 {
-	QSharedPointer<Asset> asset = designConfig_->getAsset(transId);
-	if(!asset || !asset->inherits("Picto::Transition"))
-	{
-		Q_ASSERT(!asset);
-		return;
-	}
-	QSharedPointer<Transition> trans = asset.staticCast<Transition>();
-	
-	//As soon as a transition comes in and it has a source result, 
-	//we set that transition's source's latest result to the transition's 
-	//source result.  Then, if the source is a state machine element, we 
-	//call it's AnalysisExitScripts
-	QSharedPointer<Asset> sourceResult = trans->getSourceResultAsset();
-	QSharedPointer<Asset> sourceAsset = trans->getSourceAsset();
-	if(sourceResult)
-	{
-		sourceAsset.staticCast<ResultContainer>()->setLatestResult(sourceResult->getName());
-	}
-	if(sourceAsset && sourceAsset->inherits("Picto::StateMachineElement"))
-	{
-		sourceAsset.staticCast<StateMachineElement>()->runAnalysisExitScripts();
-	}
-
-	QString newResult = trans->getDestination();
-	if(newResult == "EngineAbort")
-	{
-		return;
-	}
-	
-	QSharedPointer<Asset> destAsset = trans->getDestinationAsset();
-	
-	if(!destAsset || !destAsset->inherits("Picto::StateMachineElement"))
-	{
-		Q_ASSERT(!destAsset || destAsset->inherits("Picto::Result"));
-		return;
-	}
-	//If we got here, we transitioned to a StateMachineElement.  Set is as the current element, run its AnalysisEntryScripts, and start it up
-	currElement_ = destAsset.staticCast<StateMachineElement>();
-	currElement_->runAnalysisEntryScripts();
-	currElement_->slaveRun(experiment_->getEngine());
+	eventQueue_.addTransActivation(transId);
 }
 void SlaveExperimentDriver::masterFramePresented(double time)
 {
+	//Report the time of the frame following all the property and transition updates that are
+	//about to occur.
+	Controller::FrameResolutionTimer::setNextFrameTime(time);
+	//Perform all queued events that occured up to this frame since the last one
+	//(We do this after setting next frame time so that when reading absolute time values during the course
+	//of state machine execution, we will read the absolute time value of the frame that follows
+	//the current position in the state machine.  This is necessary since the timing 
+	//paradigm in Picto is that all property changes and transitions take effect at the time
+	//of the frame that follows them.  Note that this matters in analysis because times
+	//of behavioral events can be compared to times of separately timed signals (eye position,
+	//neural data, etc).  See FrameResolutionTimer for more info.
+	SlaveEvent event;
+	while((event = eventQueue_.takeFirstEvent()).type != SlaveEvent::INVALID)
+	{
+		handleEvent(event);
+	}
+	//Render frame
 	renderFrame();
+	
+	//Tell all timers that work on single frame resolution what the latest frame time is
+	Controller::FrameResolutionTimer::setLastFrameTime(time);
+
+	//----------  Run the analysis frame scripts ---------------------------------------
+	QSharedPointer<State> currState = currElement_.dynamicCast<State>();	
+	if(currState)
+		currState->runAnalysisFrameScripts();
 }
 void SlaveExperimentDriver::masterRewardSupplied(double time,int duration,int channel)
 {

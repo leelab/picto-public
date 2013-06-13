@@ -65,16 +65,16 @@ void AnalysisOptionWidget::setDesignRoot(QSharedPointer<DesignRoot> designRoot)
 {
 	if(!isEnabled())
 		return;
-	if(designRoot_)
-	{
-		disconnect(designRoot_.data(),SIGNAL(refreshedFromXml()),this,SLOT(updateAnalysisList()));
-	}
+	//if(designRoot_)
+	//{
+	//	disconnect(designRoot_.data(),SIGNAL(refreshedFromXml()),this,SLOT(updateAnalysisList()));
+	//}
 	designRoot_ = designRoot;
-	if(designRoot_)
-	{
-		connect(designRoot_.data(),SIGNAL(refreshedFromXml()),this,SLOT(updateAnalysisList()));
-	}
-	updateAnalysisList();
+	//if(designRoot_)
+	//{
+	//	connect(designRoot_.data(),SIGNAL(refreshedFromXml()),this,SLOT(updateAnalysisList()));
+	//}
+	//updateAnalysisList();
 }
 
 void AnalysisOptionWidget::setSelectedAnalysis(QUuid analysisId)

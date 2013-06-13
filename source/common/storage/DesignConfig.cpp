@@ -373,6 +373,25 @@ bool DesignConfig::isAnalysisActive(QUuid analysisId)
 	return analysisHash_.contains(analysisId);
 }
 
+void DesignConfig::markRunStart(QString runName)
+{
+	latestRunId_ = QUuid::createUuid();
+	latestRunName_ = runName;
+	emit runStarted(latestRunId_);
+}
+void DesignConfig::markRunEnd()
+{
+	emit runEnded();
+}
+QUuid DesignConfig::getLatestRunId()
+{
+	return latestRunId_;
+}
+QString DesignConfig::getLatestRunName()
+{
+	return latestRunName_;
+}
+
 QList<AssetInfo> DesignConfig::getElementInfo()
 {
 	if(!elemInfo_.size())

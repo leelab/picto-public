@@ -20,6 +20,7 @@ class FileSessionLoader : public  QObject
 	Q_OBJECT
 public:
 	FileSessionLoader(QSharedPointer<SessionState> sessState);
+	~FileSessionLoader();
 
 	bool setFile(QString path);
 	QSharedPointer<DesignRoot> getDesignRoot();
@@ -27,6 +28,7 @@ public:
 	bool loadRun(int index);
 	double runDuration(int index);
 	double currRunDuration();
+	QString currRunName();
 signals:
 	void percentLoaded(double percent);
 
@@ -50,7 +52,8 @@ protected:
 private:
 	bool getSignalInfo();
 	bool loadDesignDefinition();
-	QSqlDatabase session_;
+	QSqlDatabase getDatabase(); 
+	QString connectionName_;
 	QSharedPointer<SessionState> sessionState_;
 	struct SigData
 	{
@@ -65,6 +68,7 @@ private:
 	QSharedPointer<DesignRoot> designRoot_;
 	QHash<int,bool> obsoleteAssetIds_;
 	int runIndex_;
+	static QHash<QString,int> connectionUsers_;
 };
 
 }; //namespace Picto

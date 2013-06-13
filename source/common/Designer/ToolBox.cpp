@@ -55,6 +55,7 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 	{ 
 		QSharedPointer<Asset> currAnalysis = editorState_->getCurrentAnalysis();
 		addToolGroup(QStringList() <<"Variables","Variables",currAnalysis);
+		addToolGroup(QStringList() <<"Outputs","Outputs",currAnalysis);
 		addToolGroup(QStringList() <<"Logic Elements","Logic Elements",currAnalysis);
 	}
 

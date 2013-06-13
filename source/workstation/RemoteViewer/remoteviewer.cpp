@@ -1163,7 +1163,6 @@ void RemoteViewer::generateTaskList()
 	if(taskListBox_->count() == 0)
 	{
 		taskListBox_->addItems(activeExperiment_->getTaskNames());
-		taskListBox_->setCurrentIndex(0);
 	}
 }
 
@@ -1792,6 +1791,7 @@ bool RemoteViewer::joinSession()
 	activeExperiment_->setEngine(engine_);
 	updater_->initForNewSession();
 	slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(activeExperiment_,updater_));
+	connect(slaveExpDriver_.data(),SIGNAL(taskChanged(QString)),this,SLOT(currTaskChanged(QString)));
 
 	serverChannel_->setSessionId(sessionId_);
 	engineSlaveChannel_->setSessionId(sessionId_);
@@ -2053,4 +2053,18 @@ bool RemoteViewer::assureChannelConnections()
 		neuralSlaveChannel_->connectToServer();
 	}
 	return !hadDisconnect;
+}
+
+void RemoteViewer::currTaskChanged(QString task)
+{
+	if(task == taskListBox_->currentText())
+		return;
+	for(int i=0;i<taskListBox_->count();i++)
+	{
+		if(taskListBox_->itemText(i) == task)
+		{	
+			taskListBox_->setCurrentIndex(i);
+			return;
+		}
+	}
 }

@@ -445,12 +445,29 @@ void DiagramScene::deleteSelectedItems()
 		editorState_->triggerExperimentReset();
 }
 
-void DiagramScene::experimentalCopySelectedItems()
+void DiagramScene::copySelectedItems()
 {
-	copier_->copy(getSelectedAssets(),false);
+	copier_->copy(getSelectedAssets(),(!editorState_->getCurrentAnalysis().isNull()));
 }
 
-void DiagramScene::analysisCopySelectedItems()
+void DiagramScene::analysisImportSelectedItem()
+{
+	//Make sure only one asset is selected
+	QList<QSharedPointer<Asset>> selectedAssets = getSelectedAssets();
+	if(selectedAssets.isEmpty())
+	{
+		QMessageBox::warning(NULL,"Import Failed","Please select the container to which elements should be imported.");
+		return;
+	}
+	if(selectedAssets.size() > 1)
+	{
+		QMessageBox::warning(NULL,"Import Failed","Please select a single container to which elements should be imported.");
+		return;
+	}
+	copier_->paste(selectedAssets.first());
+}
+
+void DiagramScene::analysisExportSelectedItem()
 {
 	copier_->copy(getSelectedAssets(),true);
 }
@@ -469,7 +486,7 @@ void DiagramScene::pasteItems()
 	if(latestPastePos_.isNull())
 	{
 		QRectF zoomRect = getDefaultZoomRect();
-		QPoint pasteLoc = zoomRect.topRight().toPoint();
+		pasteLoc = zoomRect.topRight().toPoint();
 		pasteLoc.setY(zoomRect.center().y());
 	}
 	else

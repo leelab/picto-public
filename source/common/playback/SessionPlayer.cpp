@@ -29,7 +29,7 @@ void SessionPlayer::restart()
 
 bool SessionPlayer::stepToTime(double time)
 {
-	qDebug(QString("Player: Step To Time called with input: %1").arg(time).toLatin1());
+	//qDebug(QString("Player: Step To Time called with input: %1").arg(time).toLatin1());
 	if(time < 0)
 		return false;
 	if(processing_) return false;
@@ -49,6 +49,22 @@ bool SessionPlayer::stepToTime(double time)
 	{
 		markLoading(false);
 		return true;
+	}
+	//Check if this is the beginning of a new run playback
+	if(lastIndex_ == PlaybackIndex::minForTime(0))
+	{
+		//Get the first transition in this run
+		int firstTransId = sessionState_->getTransitionState()->getFirstTransIdInRun();
+		if(firstTransId == 0)
+			return true;
+		Q_ASSERT(sessionLoader_->getDesignRoot() && sessionLoader_->getDesignRoot()->getExperiment());
+		QSharedPointer<Asset> trans = sessionLoader_->getDesignRoot()->getExperiment()->getDesignConfig()->getAsset(firstTransId);
+		if(trans.isNull())
+			return true;
+		QString taskName = trans->getPath().split("::").first();
+		QString runName = sessionLoader_->currRunName();
+		//Tell the world that we're staring a new run
+		emit startingRun(taskName,runName);
 	}
 	//if(!sessionLoader_->setCurrentTime(time))
 	//{
@@ -77,7 +93,7 @@ bool SessionPlayer::stepToTime(double time)
 		}
 	}while(time > nextFrame_.time());
 	//sessionLoader_->setProcessedTime(getTime());
-	qDebug(QString("Player: Step To Time reached time: %1").arg(getTime()).toLatin1());
+	//qDebug(QString("Player: Step To Time reached time: %1").arg(getTime()).toLatin1());
 	markLoading(false);
 	return true;
 }

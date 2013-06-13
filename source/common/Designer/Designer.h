@@ -142,8 +142,9 @@ private:
     QAction *exitAction;
     QAction *addAction;
     QAction *deleteAction;
-	QAction *experimentalCopyAction;
-	QAction *analysisCopyAction;
+	QAction *copyAction;
+	QAction *analysisExportAction;
+	QAction *analysisImportAction;
 	QAction *pasteAction;
     QAction *aboutAction;
 	QLineEdit *searchBox;

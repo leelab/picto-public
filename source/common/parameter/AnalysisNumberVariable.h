@@ -13,7 +13,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisNumberVariable : public AnalysisVariable
 #else
-class AnalysisNumberVariable : public Variable
+class AnalysisNumberVariable : public AnalysisVariable
 #endif
 {
 	Q_OBJECT

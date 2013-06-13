@@ -126,6 +126,15 @@ void PausePoint::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+void PausePoint::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
+{
+	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
+	if(getDesignConfig())
+		disconnect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
+	OutputElementContainer::setDesignConfig(designConfig);
+	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
+}
+
 void PausePoint::postDeserialize()
 {
 	OutputElementContainer::postDeserialize();
@@ -134,9 +143,6 @@ void PausePoint::postDeserialize()
 	//We're not using this right now, but maybe someday we will, so we're not getting rid of it, just hiding it from
 	//the UI.
 	propertyContainer_->getProperty("BackgroundColor")->setVisible(false);
-
-	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
-	connect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 }
 
 bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

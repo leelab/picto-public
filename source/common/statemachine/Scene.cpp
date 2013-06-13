@@ -12,6 +12,7 @@ bool visualElementLessThan(const QSharedPointer<VisualElement> &e1, const QShare
 }
 
 float Scene::zoom_ = 1.0;
+bool Scene::closeRenderLoops_ = false;
 QMutex Scene::staticMutex_;
 
 QSharedPointer<Scene> Scene::createScene()
@@ -48,6 +49,7 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 	emit readyForRender(callerId);
 
 	//Wait for the render routine to finish.
+	bool endLoop = false;
 	if(readyToRender_)
 	{	//If we're in here, we're running with more the experiment in a non-ui thread.
 		do
@@ -55,9 +57,13 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 			//Allow UI thread to do the render.  Unlock, yield this thread and relock.
 			locker.unlock();
 			QThread::currentThread()->yieldCurrentThread();
+		
+			staticMutex_.lock();
+			endLoop = closeRenderLoops_;
+			staticMutex_.unlock();
 			locker.relock();
 			//Check if the render occured, if not, loop back to "Allow UI thread to do the render"
-		}while(readyToRender_);
+		}while(readyToRender_ && !endLoop);
 	}
 }
 
@@ -114,6 +120,13 @@ void Scene::setZoom(float zoom)
 {
 	staticMutex_.lock();
 	zoom_ = zoom;
+	staticMutex_.unlock();
+}
+
+void Scene::closeRenderLoops()
+{
+	staticMutex_.lock();
+	closeRenderLoops_ = true;
 	staticMutex_.unlock();
 }
 

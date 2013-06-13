@@ -29,6 +29,7 @@ public:
 	//long processes.
 	bool isProcessing();
 signals:
+	void startingRun(QString taskName,QString runName);
 	void loading(bool startingLoad);	//Emits true when starting load and false when load is ending
 	void reachedEnd();
 protected:

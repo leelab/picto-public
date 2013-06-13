@@ -143,6 +143,7 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 				return false;
 
 			QMap<QString,QString>  scriptMap = getScripts();
+			scriptPrograms_.clear();
 			for(QMap<QString,QString>::iterator it = scriptMap.begin();it!=scriptMap.end();it++)
 			{
 				//if(qsEngine_->globalObject().property(it.key()).isValid())
@@ -199,6 +200,31 @@ void ScriptableContainer::resetScriptableValues()
 			if(tagChild->inherits("Picto::Scriptable"))
 			{
 				tagChild.staticCast<Scriptable>()->reset();
+			}
+		}
+	}
+
+	//Reset values on active analysis elements
+	resetScriptableAnalysisValues();
+}
+
+void ScriptableContainer::resetScriptableAnalysisValues()
+{
+	QStringList childTags;
+	//Reset values on active analysis elements
+	QList<QUuid> activeAnalysisIds = getDesignConfig()->getActiveAnalysisIds();
+	foreach(QUuid analysisId,activeAnalysisIds)
+	{
+		childTags = getAssociateChildTags(analysisId);
+		foreach(QString childTag,childTags)
+		{
+			QList<QSharedPointer<Asset>> tagChildren = getAssociateChildren(analysisId,childTag);
+			foreach(QSharedPointer<Asset> tagChild,tagChildren)
+			{
+				if(tagChild->inherits("Picto::Scriptable"))
+				{
+					tagChild.staticCast<Scriptable>()->reset();
+				}
 			}
 		}
 	}
@@ -262,6 +288,24 @@ void ScriptableContainer::ClearAssociateChildren(QUuid associateId)
 		if(associateElem->getAssociateId() == associateId)
 		{
 			iter = unboundScriptables_.erase(iter);
+			somethingWasRemoved = true;
+			continue;
+		}
+		iter++;
+	}
+
+	for(QList<QSharedPointer<ScriptableContainer>>::iterator iter = scriptableContainers_.begin();iter!=scriptableContainers_.end();)
+	{
+		Q_ASSERT(!iter->isNull());
+		associateElem = dynamic_cast<AssociateElement*>(iter->data());
+		if(!associateElem)
+		{
+			iter++;
+			continue;
+		}
+		if(associateElem->getAssociateId() == associateId)
+		{
+			iter = scriptableContainers_.erase(iter);
 			somethingWasRemoved = true;
 			continue;
 		}
