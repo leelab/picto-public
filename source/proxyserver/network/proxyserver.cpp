@@ -30,7 +30,7 @@ ProxyServer::ProxyServer(quint16 port, QSharedPointer<ProxyServerProtocols> _pro
     connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 }
 
-void ProxyServer::incomingConnection(int socketDescriptor)
+void ProxyServer::incomingConnection(qintptr socketDescriptor)
 {
     ProxyServerThread *thread = new ProxyServerThread(socketDescriptor, protocols, this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));

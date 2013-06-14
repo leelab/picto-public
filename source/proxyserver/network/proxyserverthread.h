@@ -24,7 +24,7 @@ class ProxyServerThread : public QThread
     Q_OBJECT
 
 public:
-	ProxyServerThread(int socketDescriptor, QSharedPointer<ProxyServerProtocols> _protocol, QObject *parent);
+	ProxyServerThread(qintptr socketDescriptor, QSharedPointer<ProxyServerProtocols> _protocol, QObject *parent);
 
     void run();
 
@@ -37,7 +37,7 @@ private:
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand> _command);
 	void deliverResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
-	int socketDescriptor;
+	qintptr socketDescriptor;
 	QString pendingCommand;
 	QTcpSocket * tcpSocket;
 	QSharedPointer<ProxyServerProtocols> protocols;

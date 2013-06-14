@@ -56,7 +56,7 @@ Server::~Server()
 	delete udpSocket;
 }
 
-void Server::incomingConnection(int socketDescriptor)
+void Server::incomingConnection(qintptr socketDescriptor)
 {
     ServerThread *thread = new ServerThread(socketDescriptor, protocols, this);
     connect(thread, SIGNAL(finished()), this, SLOT(endThread()));

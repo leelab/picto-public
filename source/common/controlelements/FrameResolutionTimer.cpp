@@ -49,5 +49,27 @@ void FrameResolutionTimer::setNextFrameTime(double frameTime)
 	nextFrameTime_ = frameTime;
 }
 
+int FrameResolutionTimer::effectiveAbsoluteTime(TimerUnits::TimerUnits units)
+{
+	double returnTime = nextFrameTime_;
+	if(nextFrameTime_ <= lastFrameTime_)
+	{	//Looks like we need to estimate the return value.
+		returnTime = lastFrameTime_+16.666;
+	}
+
+	if(units == TimerUnits::sec)
+		return returnTime;
+	else if(units == TimerUnits::ms)
+		return returnTime * 1000.0;
+	else if(units == TimerUnits::us)
+		return returnTime * 1000000.0;
+	else
+	{
+		Q_ASSERT(false);
+		return 0;
+	}
+		
+}
+
 }	//namespace Picto
 }	//namespace ControlElement

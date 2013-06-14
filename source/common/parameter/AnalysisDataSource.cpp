@@ -8,12 +8,6 @@ AnalysisDataSource::AnalysisDataSource()
 {
 }
 
-QSharedPointer<Asset> AnalysisDataSource::Create()
-{
-	return QSharedPointer<Asset>(new AnalysisDataSource());
-}
-
-
 void AnalysisDataSource::postDeserialize()
 {
 	AnalysisVariable::postDeserialize();

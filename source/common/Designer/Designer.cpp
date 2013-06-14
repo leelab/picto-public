@@ -433,8 +433,8 @@ void Designer::updateEnabledActions()
 		{
 			deleteAction->setEnabled(false);
 			copyAction->setEnabled(false);
-			analysisExportAction->setEnabled(asset->inherits("Picto::StateMachineElement"));
-			analysisImportAction->setEnabled(asset->inherits("Picto::StateMachineElement") && (Copier::availablePasteType() == Copier::ANALYSIS_IMPORT));
+			analysisExportAction->setEnabled(asset->inherits("Picto::StateMachineElement") || asset->inherits("Picto::Task"));
+			analysisImportAction->setEnabled((asset->inherits("Picto::StateMachineElement") || asset->inherits("Picto::Task")) && (Copier::availablePasteType() == Copier::ANALYSIS_IMPORT));
 			pasteAction->setEnabled(false);		
 		}
 	}
@@ -481,6 +481,7 @@ void  Designer::redoAvailable(bool available)
 void Designer::searchTextChanged(const QString& text)
 {
 	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::STRING,true,text,matchCase->isChecked()));
+	editorState_->requestSearch(SearchRequest(SearchRequest::ACTIVE_ANALYSES,SearchRequest::STRING,true,text,matchCase->isChecked()));
 }
 
 void Designer::matchCaseChanged(int)

@@ -5,7 +5,7 @@
 #include <QDateTime>
 #include "../../common/memleakdetect.h"
 
-ProxyServerThread::ProxyServerThread(int socketDescriptor, QSharedPointer<ProxyServerProtocols> _protocols, QObject *parent)
+ProxyServerThread::ProxyServerThread(qintptr socketDescriptor, QSharedPointer<ProxyServerProtocols> _protocols, QObject *parent)
     : QThread(parent),
       socketDescriptor(socketDescriptor),
 	  pendingCommand(""),

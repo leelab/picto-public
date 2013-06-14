@@ -17,16 +17,10 @@ class AnalysisDataSource : public AnalysisVariable
 #endif
 {
 	Q_OBJECT
-	Q_PROPERTY(QVariant value READ getValue WRITE setValue)
 
 public:
 	AnalysisDataSource();
 	virtual ~AnalysisDataSource(){};
-
-	static QSharedPointer<Asset> Create();
-
-	QVariant getValue(){return QVariant();};
-	void setValue(QVariant val){};
 
 protected:
 	virtual void postDeserialize();

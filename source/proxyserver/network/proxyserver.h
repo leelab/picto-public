@@ -37,7 +37,7 @@ private:
 	QHostAddress serverAddress;
 	quint16 serverPort;
 
-	void incomingConnection(int socketDescriptor);
+	void incomingConnection(qintptr socketDescriptor);
 
 	//ServerSettings * serverSettings;
 

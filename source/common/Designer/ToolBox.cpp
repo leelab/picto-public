@@ -52,11 +52,16 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 		addToolGroup(QStringList() <<"Sensors","Sensors",asset);
 	}
 	else //If we're working on analysis design
-	{ 
-		QSharedPointer<Asset> currAnalysis = editorState_->getCurrentAnalysis();
-		addToolGroup(QStringList() <<"Variables","Variables",currAnalysis);
-		addToolGroup(QStringList() <<"Outputs","Outputs",currAnalysis);
-		addToolGroup(QStringList() <<"Logic Elements","Logic Elements",currAnalysis);
+	{
+		//Analysis Elements are only allowed in Machine Containers
+		if(asset->inherits("Picto::MachineContainer"))
+		{
+			QSharedPointer<Asset> currAnalysis = editorState_->getCurrentAnalysis();
+			addToolGroup(QStringList() <<"Variables","Variables",currAnalysis);
+			addToolGroup(QStringList() <<"Outputs","Outputs",currAnalysis);
+			addToolGroup(QStringList() <<"Logic Elements","Logic Elements",currAnalysis);
+			addToolGroup(QStringList() <<"Sensors","Sensors",currAnalysis);
+		}
 	}
 
 	//Restore the previous index

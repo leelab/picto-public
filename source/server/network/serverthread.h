@@ -31,7 +31,7 @@ class ServerThread : public QThread
     Q_OBJECT
 
 public:
-	ServerThread(int socketDescriptor, QSharedPointer<ServerProtocols> _protocol, QObject *parent);
+	ServerThread(qintptr socketDescriptor, QSharedPointer<ServerProtocols> _protocol, QObject *parent);
 
 	QString getPeerAddress() { return peerAddress_; };
 	//void setSessionId(QUuid sessionId) { sessionId_ = sessionId; };
@@ -46,7 +46,7 @@ private:
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand> _command);
 	void deliverResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
-	int socketDescriptor_;
+	qintptr socketDescriptor_;
 	QString pendingCommand_;
 	QTcpSocket * tcpSocket_;
 	QSharedPointer<ServerProtocols> protocols_;

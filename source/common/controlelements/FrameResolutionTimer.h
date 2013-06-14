@@ -79,6 +79,12 @@ public:
 	//take effect.
 	static void setNextFrameTime(double frameTime);
 
+	//See notes above.  Also note that in the case of the TestViewer, effectiveAbsoluteTime will
+	//be estimated as 16.666ms past the previous frame.  This will
+	//also occur if this function is called in an actual experiment, BUT DON'T LET ANYONE CALL IT IN AN
+	//ACTUAL EXPERIMENT.
+	static int effectiveAbsoluteTime(TimerUnits::TimerUnits units);
+
 private:
 	double startTime_;
 	static double lastFrameTime_;

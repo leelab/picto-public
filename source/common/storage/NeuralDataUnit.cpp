@@ -6,6 +6,8 @@ namespace Picto {
 NeuralDataUnit::NeuralDataUnit()
 {
 	setTimestamp(0.0);
+	setFittedtime(0.0);
+	setCorrelation(0.0);
 	setChannel(0);
 	setUnit(0);
 	setResolution(0);

@@ -185,6 +185,9 @@ void PseudorandomIntParameter::checkForPropertyChanges()
 		{
 			randomArray_[i-min_] = i;
 		}
+		//Set the current index to the last index in the array, so that we
+		//will start over next time.
+		currIndex_ = randomArray_.size()-1;
 	}
 }
 int PseudorandomIntParameter::getMin()
