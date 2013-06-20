@@ -56,7 +56,7 @@ bool AnalysisFileOutputWidget::setFile(QString filename)
 	//Set up a timer to periodically check file contents and re-read them
 	QTimer* readTimer(new QTimer(this));
 	connect(readTimer,SIGNAL(timeout()),this,SLOT(loadCurrPage()));
-	readTimer->setInterval(10000);
+	readTimer->setInterval(3000);
 	readTimer->start();
 
 	outputFileStream_ = QSharedPointer<QTextStream>(new QTextStream(file_.data()));

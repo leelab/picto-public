@@ -6,7 +6,7 @@ namespace Picto {
 AnalysisNumberVariable::AnalysisNumberVariable()
 : AnalysisVariable()
 {
-	AddDefinableProperty(QVariant::Double,"Value",QVariant());
+	AddDefinableProperty(QVariant::Double,"Value",QVariant(0));
 }
 
 QSharedPointer<Asset> AnalysisNumberVariable::Create()

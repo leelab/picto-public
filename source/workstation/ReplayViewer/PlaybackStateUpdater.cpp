@@ -96,6 +96,13 @@ QStringList PlaybackStateUpdater::getRuns()
 	return fileSessionLoader_->getRunNames();
 }
 
+QStringList PlaybackStateUpdater::getSavedRuns()
+{
+	if(!fileSessionLoader_)
+		return QStringList();
+	return fileSessionLoader_->getSavedRunNames();
+}
+
 double PlaybackStateUpdater::getRunLength()
 {
 	if(!fileSessionLoader_)

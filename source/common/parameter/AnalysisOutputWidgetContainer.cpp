@@ -11,6 +11,7 @@ AnalysisOutputWidgetContainer::AnalysisOutputWidgetContainer(QString runName, QW
 	fractionOutputSaved_ = 0;
 	QVBoxLayout* mainLayout = new QVBoxLayout();
 	tabWidget_ = new QToolBox();
+	tabWidget_->setVisible(false);
 	mainLayout->addWidget(tabWidget_);
 	setLayout(mainLayout);
 }
@@ -74,6 +75,7 @@ void AnalysisOutputWidgetContainer::addWidget(QUuid identifier, AnalysisOutputWi
 	QString widgetName = widget->getName();
 	tabWidget_->addItem(widget,widgetName);
 	tabWidget_->setItemToolTip(tabWidget_->count()-1,widgetName);
+	tabWidget_->setItemEnabled(tabWidget_->count()-1,false);
 	widget->setVisible(false);
 }
 
@@ -83,6 +85,10 @@ void AnalysisOutputWidgetContainer::widgetIsValid(QUuid widgetIdentifier)
 		return;
 	widgetLookup_.value(widgetIdentifier)->setVisible(true);
 	enabledLookup_[widgetIdentifier] = true;
+	int widgetIndex = tabWidget_->indexOf(widgetLookup_.value(widgetIdentifier));
+	Q_ASSERT(widgetIndex >= 0 && widgetIndex < tabWidget_->count());
+	tabWidget_->setItemEnabled(widgetIndex,true);
+	tabWidget_->setVisible(true);
 	if(isSaveable())
 		emit detectedSaveable();
 }

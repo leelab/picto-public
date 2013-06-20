@@ -6,7 +6,7 @@ namespace Picto {
 NumberVariable::NumberVariable()
 : Variable()
 {
-	AddDefinableProperty(QVariant::Double,"Value",QVariant());
+	AddDefinableProperty(QVariant::Double,"Value",QVariant(0));
 }
 
 QSharedPointer<Asset> NumberVariable::Create()

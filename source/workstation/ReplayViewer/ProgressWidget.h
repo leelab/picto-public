@@ -32,6 +32,7 @@ public:
 	void setHighlightColor(int index, QColor color,bool forceUpdate = false);
 	double getSliderProgress();
 	void setSliderProgress(double progress);
+	void jumpToEnd();
 
 signals:
 	void userAction(bool mouseDown);

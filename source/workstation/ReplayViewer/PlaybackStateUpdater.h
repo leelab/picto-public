@@ -33,6 +33,7 @@ public:
 	QSharedPointer<DesignRoot> getDesignRoot();
 
 	QStringList getRuns();
+	QStringList getSavedRuns();
 	double getRunLength();
 	bool loadRun(int index);
 	bool pause();

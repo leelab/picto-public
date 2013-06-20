@@ -226,7 +226,7 @@ void PlaybackController::update()
 				designRoot_ = newDesignRoot;
 				designRoot_->enableRunMode(true);
 				data_.setRunLength(playbackUpdater_->getRunLength());
-				emit runsUpdated(playbackUpdater_->getRuns());
+				emit runsUpdated(playbackUpdater_->getRuns(),playbackUpdater_->getSavedRuns());
 
 				//Set up SlaveExperimentDriver to connect StateUpdater and Experiment
 				QSharedPointer<Picto::Experiment> currExp = designRoot_->getExperiment().staticCast<Experiment>();

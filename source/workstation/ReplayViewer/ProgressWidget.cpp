@@ -163,6 +163,13 @@ void ProgressWidget::setSliderProgress(double progress)
 	progSlider_->setSliderPosition(progressToSlider(progress));
 }
 
+void ProgressWidget::jumpToEnd()
+{
+	sliderPressed();
+	setSliderProgress(max_);
+	sliderReleased();
+}
+
 void ProgressWidget::verifyHighlightIndex(int index)
 {
 	if(!highlights_.contains(index))

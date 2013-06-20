@@ -114,5 +114,6 @@
         <file>icons/import_analysis.png</file>
         <file>icons/export_analysis.png</file>
         <file>icons/copy.png</file>
+        <file>icons/playall.png</file>
     </qresource>
 </RCC>

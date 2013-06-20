@@ -578,13 +578,26 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	else
 	//If a line is being drawn, check if we should add it or delete it.
 	//If we should add it, create the transition and add it.
-    if (line != 0 && editorState_->getEditMode() == EditorState::DrawLine) {
+    if (line != 0 && editorState_->getEditMode() == EditorState::DrawLine)
+	{
+
         QList<QGraphicsItem *> startItems = items(line->line().p1());
-        if (startItems.count() && startItems.first() == line)
-            startItems.removeFirst();
-        QList<QGraphicsItem *> endItems = items(line->line().p2());
-        if (endItems.count() && endItems.first() == line)
-            endItems.removeFirst();
+		for(QList<QGraphicsItem *>::iterator iter = startItems.begin();iter != startItems.end();)
+		{
+			if((*iter) == line)
+				iter = startItems.erase(iter);
+			else
+				iter++;
+		}
+
+		QList<QGraphicsItem *> endItems = items(line->line().p2());
+		for(QList<QGraphicsItem *>::iterator iter = endItems.begin();iter != endItems.end();)
+		{
+			if((*iter) == line)
+				iter = endItems.erase(iter);
+			else
+				iter++;
+		}
 
         removeItem(line);
         delete line;

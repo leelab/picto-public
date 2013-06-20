@@ -92,7 +92,7 @@ signals:
 	void loadedTo(double maxBehavioral,double maxNeural);
 	void loading(bool isLoading);
 	void percentLoaded(double percent);
-	void runsUpdated(QStringList runs);
+	void runsUpdated(QStringList runs,QStringList savedRuns);
 	void designRootChanged();
 	void statusChanged(int status);
 	void finishedPlayback();

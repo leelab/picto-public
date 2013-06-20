@@ -8,6 +8,7 @@
 #include "../../common/compositor/PixmapVisualTarget.h"
 #include "../../common/compositor/VisualTargetHost.h"
 #include "../../common/iodevices/VirtualOutputSignalController.h"
+#include "../ReplayViewer/OutputWidgetHolder.h"
 
 class QAction;
 class QToolBar;
@@ -72,6 +73,8 @@ private:
 	QToolBar* testToolbar_;
 
 	QComboBox *taskListBox_;
+	QComboBox *userType_;
+	OutputWidgetHolder* outputWidgetHolder_;
 
 	bool deiniting_;
 	enum Status {Ending, Stopped, Running, Paused};
@@ -83,6 +86,8 @@ private slots:
 	void stopped();
 	void taskListIndexChanged(int index);
 	void operatorClickDetected(QPoint pos);
+	void setUserType(int index);
+	void runStarted(QUuid runId);
 	//void zoomChanged(int zoom);
 
 };

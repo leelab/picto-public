@@ -483,12 +483,13 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed bug that made the eye position appear to freeze in remove viewer and playback.");
-	releaseNoteList.append("Correct parameters will now appear in all remote viewers for actively running tasks.");
-	releaseNoteList.append("Capability to delete transitions in State Edit Viewer restored.");
+	releaseNoteList.append("Fixed bug that caused analysis crash when using AnalysisListVariables.");
+	releaseNoteList.append("Fixed intermittent bug causing crash when attempting to create a new state transition while an old one was selected.");
+	releaseNoteList.append("Fixed bug in searching experimental elements in levels above the current window.");
 
-	releaseNoteList.append("Fixed new bug in Picto Director that caused it to crash when changing a parameter while the experiment was stopped.");
-	releaseNoteList.append("Fixed .xml suffix naming bug that appeared on some machines.");	
+	releaseNoteList.append("Added Analysis Design Framework to State Edit Viewer.");
+	releaseNoteList.append("Add Analysis execution and Analysis Widget display to Test Viewer.");	
+	releaseNoteList.append("Add Analysis execution and Analysis Widget display to Replay Viewer.");	
 
 	//Format release notes:
 	QString releaseNotes;

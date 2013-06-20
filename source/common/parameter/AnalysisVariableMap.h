@@ -47,14 +47,7 @@ private:
 	QVariant getValue(QVariant key);
 	QVariant takeAt(QVariant key);
 
-	void copyMapToValueProp();
-	void copyValuePropToMap();
-
 	QVariantMap map_;
-	bool settingValueProp_;
-
-private slots:
-	void propValueChanged(Property*,QVariant);
 };
 
 

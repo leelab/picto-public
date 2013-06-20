@@ -4,6 +4,8 @@
 #include "ColorProperty.h"
 #include "PointProperty.h"
 #include "SizeProperty.h"
+#include "ListProperty.h"
+#include "MapProperty.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -75,6 +77,12 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 			break;
 		case QVariant::Color:
 			newProperty = QSharedPointer<Property>( new ColorProperty(_identifier,_value) );
+			break;
+		case QVariant::List:
+			newProperty = QSharedPointer<Property>( new ListProperty(_identifier,_value) );
+			break;
+		case QVariant::Map:
+			newProperty = QSharedPointer<Property>( new MapProperty(_identifier,_value) );
 			break;
 		default:
 			newProperty = QSharedPointer<Property>( new Property(_type,_identifier,_value) );

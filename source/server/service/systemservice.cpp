@@ -278,7 +278,7 @@ bool SystemService::install(QString *) //errorDescription
 	}
 
 	SC_ACTION service_actions;
-	service_actions.Delay = 10000;
+	service_actions.Delay = 100;
 	service_actions.Type = SC_ACTION_RESTART;
 
 	SERVICE_FAILURE_ACTIONS service_failure_actions;

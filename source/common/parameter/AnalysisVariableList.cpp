@@ -1,19 +1,25 @@
 #include "AnalysisVariableList.h"
+#include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
 
 AnalysisVariableList::AnalysisVariableList()
-: AnalysisVariable(),
-settingValueProp_(false)
+: AnalysisVariable()
 {
 	list_.clear();
-	AddDefinableProperty(QVariant::List,"Value",QVariant());
+	AddDefinableObjectFactory("Value",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
 
 QSharedPointer<Asset> AnalysisVariableList::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisVariableList());
+}
+
+void AnalysisVariableList::reset()
+{
+	AnalysisVariable::reset();
+	list_.clear();
 }
 
 int AnalysisVariableList::length()
@@ -24,14 +30,11 @@ int AnalysisVariableList::length()
 void AnalysisVariableList::append(QVariant value)
 {
 	list_.append(value);
-	copyListToValueProp();
-
 }
 
 void AnalysisVariableList::prepend(QVariant value)
 {
 	list_.prepend(value);
-	copyListToValueProp();
 }
 
 void AnalysisVariableList::setValue(int index,QVariant value)
@@ -39,13 +42,11 @@ void AnalysisVariableList::setValue(int index,QVariant value)
 	if(index < 0 || index >= list_.size())
 		return;
 	list_[index] = value;
-	copyListToValueProp();
 }
 
 void AnalysisVariableList::fromArray(QVariantList array)
 {
 	list_ = array;
-	copyListToValueProp();
 }
 
 void AnalysisVariableList::removeFirst()
@@ -63,14 +64,11 @@ void AnalysisVariableList::removeAt(int index)
 	if(index < 0 || index >= list_.size())
 		return;
 	list_.removeAt(index);
-	copyListToValueProp();
 }
 
 void AnalysisVariableList::postDeserialize()
 {
 	AnalysisVariable::postDeserialize();
-	propertyContainer_->getProperty("Value")->setVisible(false);
-	connect(propertyContainer_->getProperty("Value").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propValueChanged(Property*,QVariant)));
 }
 
 bool AnalysisVariableList::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -120,31 +118,7 @@ QVariant AnalysisVariableList::takeAt(int index)
 	if(index < 0 || index >= list_.size())
 		return QVariant();
 	QVariant returnVal = list_.takeAt(index);
-	copyListToValueProp();
 	return returnVal;
-}
-
-void AnalysisVariableList::copyListToValueProp()
-{
-	settingValueProp_ = true;
-	propertyContainer_->setPropertyValue("Value",list_);
-	settingValueProp_ = false;
-}
-
-void AnalysisVariableList::copyValuePropToList()
-{
-	list_ = propertyContainer_->getPropertyValue("Value").toList();
-}
-
-void AnalysisVariableList::propValueChanged(Property*,QVariant)
-{
-	//If the change happened because of one of this object's functions, return.
-	if(settingValueProp_)
-		return;
-	//The change must have happened from an outside source (ie. The value was reset to the initValue
-	//or this is a slave and something changed on the master)
-	//Set our list from the Value property
-	copyValuePropToList();
 }
 
 }; //namespace Picto

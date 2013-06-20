@@ -77,7 +77,7 @@ void ReplayViewer::setupUi()
 	runs_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	runs_->setToolTip("Select a Run from the Session");
 	connect(runs_,SIGNAL(currentIndexChanged(int)),this,SLOT(setCurrentRun(int)));
-	connect(playbackController_.data(),SIGNAL(runsUpdated(QStringList)),this,SLOT(updateRunsList(QStringList)));
+	connect(playbackController_.data(),SIGNAL(runsUpdated(QStringList,QStringList)),this,SLOT(updateRunsList(QStringList,QStringList)));
 
 	///play/pause/stop actions and toolbar
 	playAction_ = new QAction(tr("&Start task"),this);
@@ -87,6 +87,13 @@ void ReplayViewer::setupUi()
 	connect(playAction_,SIGNAL(triggered()),this, SLOT(play()));
 	playing_ = false;	//True when an experiment is playing
 	paused_ = false;	//True when experiment is paused
+
+	///playall
+	playAllAction_ = new QAction(tr("&Run to end"),this);
+	playAllAction_->setIcon(QIcon(":/icons/playall.png"));
+	//playAllAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_R));
+	playAllAction_->setToolTip("Run to end");
+	connect(playAllAction_,SIGNAL(triggered()),this, SLOT(playAll()));
 
 	speed_ = new SpeedWidget(100,0.01,0.01,1.0);
 	connect(speed_,SIGNAL(speedChanged(double)),playbackController_.data(),SLOT(setRunSpeed(double)));
@@ -154,6 +161,7 @@ void ReplayViewer::setupUi()
 	testToolbar_->addWidget(runs_);
 	testToolbar_->addSeparator();
 	testToolbar_->addAction(playAction_);
+	testToolbar_->addAction(playAllAction_);
 	testToolbar_->addAction(pauseAction_);
 	testToolbar_->addAction(stopAction_);
 	testToolbar_->addSeparator();
@@ -316,6 +324,12 @@ void ReplayViewer::play()
 	playbackController_->play();
 }
 
+void ReplayViewer::playAll()
+{
+	play();
+	progress_->jumpToEnd();
+}
+
 void ReplayViewer::pause()
 {
 	qDebug()<<"Pause slot";
@@ -346,6 +360,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(false);
+			playAllAction_->setEnabled(false);
 			toggleRecord_->setEnabled(false);
 			playbackController_->getRenderingTarget()->showSplash();
 			playing_ = false;
@@ -358,6 +373,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(true);
+			playAllAction_->setEnabled(true);
 			toggleRecord_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
@@ -372,6 +388,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(false);
+			playAllAction_->setEnabled(false);
 			toggleRecord_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
@@ -384,6 +401,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(true);
+			playAllAction_->setEnabled(true);
 			playing_ = false;
 			paused_ = true;
 		break;
@@ -439,12 +457,17 @@ void ReplayViewer::updateLoadTimes(double maxBehavioral,double)
 	progress_->setHighlightMax(1,maxBehavioral);	//For now just deal with behavioral time
 }
 
-void ReplayViewer::updateRunsList(QStringList runs)
+void ReplayViewer::updateRunsList(QStringList runs,QStringList savedRuns)
 {
 	runs_->setEnabled(false);
 	runs_->clear();
 	for(int i=0;i<runs.size();i++)
-		runs_->addItem(runs[i],i);
+	{
+		if(savedRuns.contains(runs[i]))
+			runs_->addItem(QIcon(":/icons/filesave.png"),runs[i],i);
+		else
+			runs_->addItem(QIcon(QIcon("://icons/delete.png")),runs[i],i);
+	}
 	runs_->setEnabled(true);
 }
 

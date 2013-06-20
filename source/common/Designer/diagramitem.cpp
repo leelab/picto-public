@@ -348,17 +348,26 @@ void DiagramItem::setHighlightColor(int highlightIndex,QColor color)
 
 void DiagramItem::enableOutline(int highlightIndex,bool enabled)
 {
-	if(!enabled)
+	//Loop through all enabled groups, and enable/disable outlines for each one according to the input
+	unsigned int outlineIndex;
+	unsigned short upperNybble = 0xF0 & highlightIndex; 
+	for(unsigned short lowerNybble=0x01;lowerNybble<0x10;lowerNybble = lowerNybble<<1)
 	{
-		if(outlines_.contains(highlightIndex))
+		if(!(highlightIndex & lowerNybble))
+			continue;
+		outlineIndex = upperNybble | lowerNybble;
+		if(!enabled)
 		{
-			outlines_.remove(highlightIndex);
-			setRect(getRect());
-			update();
+			if(outlines_.contains(outlineIndex))
+			{
+				outlines_.remove(outlineIndex);
+				setRect(getRect());
+				update();
+			}
+			return;
 		}
-		return;
+		outlines_[outlineIndex] = true;
 	}
-	outlines_[highlightIndex] = true;
 	update(getRect());
 }
 

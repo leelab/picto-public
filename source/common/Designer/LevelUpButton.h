@@ -3,6 +3,7 @@
 
 #include <QToolButton>
 #include <QSharedPointer>
+#include <QHash>
 #include "EditorState.h"
 
 //! [0]
@@ -16,6 +17,7 @@ public:
 private:
 	QSharedPointer<EditorState> editorState_;
 	QString origStyleSheet_;
+	QHash<int,bool> highlightByGroup_;
 private slots:
 	void searchRequested(SearchRequest searchRequest);
 	void windowAssetChanged(QSharedPointer<Asset> windowAsset);

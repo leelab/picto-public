@@ -28,11 +28,26 @@ void LevelUpButton::searchRequested(SearchRequest searchRequest)
 	{
 		setStyleSheet("background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 Red stop: 0.99 darkRed);");
 		show();
+		highlightByGroup_[searchRequest.group] = true;
 	}
 	else
 	{
-		setStyleSheet(origStyleSheet_);
-		show();
+		highlightByGroup_[searchRequest.group] = false;
+		bool disableHighlight = true;
+		foreach(bool highlightVal,highlightByGroup_.values())
+		{
+			if(highlightVal)
+			{
+				disableHighlight = false;
+				break;
+			}
+		}
+		if(disableHighlight)
+		{
+			setStyleSheet(origStyleSheet_);
+			show();
+		}
+
 	}
 		
 }

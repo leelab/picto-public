@@ -38,11 +38,11 @@ void AnalysisOutput::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 	//finalize any output activities (ie. flush file contents, etc).
 	if(getDesignConfig())
 	{
-		disconnect(getDesignConfig().data(),SIGNAL(runEnded()),this,SLOT(finishUp()));
+		disconnect(getDesignConfig().data(),SIGNAL(runEnded()),this,SLOT(runEnded()));
 		disconnect(getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 	}
 	AnalysisVariable::setDesignConfig(designConfig);
-	connect(getDesignConfig().data(),SIGNAL(runEnded()),this,SLOT(finishUp()));
+	connect(getDesignConfig().data(),SIGNAL(runEnded()),this,SLOT(runEnded()));
 	connect(getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 }
 
@@ -111,6 +111,12 @@ void AnalysisOutput::runStarted(QUuid runId)
 	latestRunId_ = runId;
 	if(getDesignConfig()->getActiveAnalysisIds().contains(getAssociateId()))
 		outputsByRunId_[latestRunId_].append(selfPtr().staticCast<AnalysisOutput>());
+}
+
+void AnalysisOutput::runEnded()
+{
+	finishUp();
+	wasReset_ = false;
 }
 
 AnalysisOutputWidget* AnalysisOutput::loadWidget()

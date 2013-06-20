@@ -82,6 +82,7 @@ void TestViewer::init()
 	}
 	generateComboBox();
 	analysisSelector_->setDesignRoot(designRoot_);
+	connect(designRoot_->getExperiment()->getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 }
 
 //!Called just before hiding the viewer
@@ -186,6 +187,15 @@ void TestViewer::setupUi()
 	connect(loadPropsAction_, SIGNAL(triggered()),this, SLOT(LoadPropValsFromFile()));
 	loadPropsAction_->setEnabled(false);
 
+	userType_ = new QComboBox();
+	userType_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	userType_->setToolTip("Select a User View");
+	userType_->addItem("Operator",0);
+	userType_->addItem("Test Subject",1);
+	connect(userType_,SIGNAL(currentIndexChanged(int)),this,SLOT(setUserType(int)));
+	Q_ASSERT(!engine_.isNull());
+	engine_->setOperatorAsUser(true);
+
 	////Zoom slider
 	//zoomSlider_ = new QSlider;
 	//zoomSlider_->setRange(1,59);
@@ -207,6 +217,8 @@ void TestViewer::setupUi()
 	testToolbar_->addAction(stopAction_);
 	testToolbar_->addSeparator();
 	testToolbar_->addAction(loadPropsAction_);
+	testToolbar_->addSeparator();
+	testToolbar_->addWidget(userType_);
 	//testToolbar_->addWidget(zoomSlider_);
 	
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
@@ -225,6 +237,8 @@ void TestViewer::setupUi()
 	analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	//analysisSelector_->setVisible(false);//REMOVE THIS LINE TO USE ANALYSIS
 
+	outputWidgetHolder_ = new OutputWidgetHolder();
+
 	propertyFrame_ = new PropertyFrame();
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
 	leftPane->addWidget(analysisSelector_);
@@ -233,6 +247,7 @@ void TestViewer::setupUi()
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	operationLayout->addLayout(leftPane,Qt::AlignTop);
 	operationLayout->addLayout(stimulusLayout);
+	operationLayout->addWidget(outputWidgetHolder_);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
 
@@ -344,11 +359,21 @@ void TestViewer::operatorClickDetected(QPoint pos)
 	OperatorClickParameter::addClick(pos);
 }
 
-//void TestViewer::zoomChanged(int zoom)
-//{
-//	if(!pixmapVisualTarget_)
-//		return;
-//	//Fix zoom so that each tick is worth 3.333%
-//	float fixedZoom = float(zoom)/30.0;
-//	pixmapVisualTarget_->setZoom(fixedZoom);
-//}
+void TestViewer::setUserType(int index)
+{
+	Q_ASSERT(!engine_.isNull());
+	switch(index)
+	{
+	case 0:
+		engine_->setOperatorAsUser(true);
+		break;
+	case 1:
+		engine_->setOperatorAsUser(false);
+		break;
+	}
+}
+
+void TestViewer::runStarted(QUuid runId)
+{
+	outputWidgetHolder_->newRunStarted(runId);
+}

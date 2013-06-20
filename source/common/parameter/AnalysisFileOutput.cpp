@@ -11,7 +11,7 @@ namespace Picto {
 AnalysisFileOutput::AnalysisFileOutput()
 : AnalysisOutput()
 {
-	AddDefinableProperty("FileName","");
+	AddDefinableProperty("FileSuffix","");
 	typeList_<< "Text" << "BigEndian" << "LittleEndian";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"FileType",0,"enumNames",typeList_);
 
@@ -133,7 +133,11 @@ AnalysisOutputWidget* AnalysisFileOutput::createWidget()
 void AnalysisFileOutput::finishUp()
 {
 	if(!file_.isNull() && file_->isOpen())
+	{
 		file_->close();
+	}
+	charsWritten_ = 0;
+	setValid(false);
 }
 
 //If the file is opened in text mode, it will convert all binary 0x0A to 0x0D0A
@@ -148,7 +152,7 @@ void AnalysisFileOutput::openFile()
 		dir.mkpath(outputDir+"/"+getRunName());
 	}
 	outputFileStream_.clear();
-	QString fileName = outputDir+"/"+getRunName()+"/"+getRunName()+propertyContainer_->getPropertyValue("FileName").toString();
+	QString fileName = outputDir+"/"+getRunName()+"/"+getRunName()+propertyContainer_->getPropertyValue("FileSuffix").toString();
 	file_ = QSharedPointer<QFile>(new QFile(fileName));
 
 	//Open file
@@ -174,6 +178,7 @@ void AnalysisFileOutput::openFile()
 		else
 			Q_ASSERT(false);
 	}
+	charsWritten_ = 0;
 	setValid(true);
 }
 

@@ -431,10 +431,10 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("TimerParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
-	curr->setOverview("Used to track time.  The timer can be reset using restart() or set to restart() from a given time by simply setting that time to the timer using the 'value' script property.");
+	curr->setOverview("Used to track time.  The timer can be reset using restart() or set to restart from a given time by simply setting that time to the timer using the 'value' script property.");
 	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the time values returned from this element.");
-	curr->addSProp("value","Gets the current time value in units defined by 'TimeUnits'.  When used to set the value, this restarts the timer starting at the set time.");
-	curr->addSFunc("restart()","Restarts the timer from 0");
+	curr->addSProp("value","Gets the time of the first phosphor of the last frame that was displayed in units defined by 'TimeUnits'.  When used to set the value, this restarts the timer starting at the set time (Calls to value before the next frame will return the value that was set.  Calls after the next frame will return the value set plus a single frame period.)");
+	curr->addSFunc("restart()","Restarts the timer from 0.  Equivalent to '(TimerParameter).value = 0;'");
 
 	//Logic Elements
 	curr = addDescription("CircleTarget");
@@ -655,4 +655,93 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("getTokenOutline(index)","Returns whether the token at the input index is being drawn as outline only");
 	curr->addSFunc("getTokenOutlineWidth(index)","Gets the width in pixels of the outline that is used on the token at the input index if it is set to be drawn outline only.");
 	curr->addSFunc("getTokenShape(index)","Gets the shape of the token at the input index ('Ellipse','Rectangle','Diamond').");
+
+	//Analysis
+	curr = addDescription("AnalysisVariable");
+	curr->setInherits(getAssetDescription("Parameter"));
+
+	curr = addDescription("AnalysisFunction");
+	curr->setInherits(getAssetDescription("ScriptFunction"));
+	curr->setOverview("This is a function that may be called by any analysis script for which it is in scope and has access to any variables in its analysis or in the experimental design to which it is attached.  Input variables can be defined and the function can return a value as well.  This is useful for situations when the same code would otherwise need to get copied multiple times in different scripts.  It can also serve to clean up scripts that would have otherwise been longer and less clear.");
+	curr->addProp("UIEnabled","");
+	curr->addProp("Inputs","A comma separated list of names for inputs that will be used by this script function.");
+	curr->addProp("Script","A script that can be used to transfer data between elements.  This script may use any of the inputs from 'Inputs' and return values using the standard javascript return statement.");
+
+	curr = addDescription("AnalysisDataSource");
+	curr->setInherits(getAssetDescription("AnalysisVariable"));
+
+	curr = addDescription("AnalysisOutput");
+	curr->setInherits(getAssetDescription("AnalysisVariable"));
+
+	//Variables
+	curr = addDescription("AnalysisNumberVariable");
+	curr->setInherits(getAssetDescription("Variable"));
+	curr->setOverview("An Analysis Number Variable is used to hold numeric data used in an Analysis.  For simple operations in a script, a local javascript var is sufficient, but this value does not maintain its state from frame to frame, and global javascript variables may not be used in Picto.  To store data outside of the local script scope, use one of the Picto Analysis Variables.");
+	curr->addProp("Value","The value of the variable");
+	curr->addSProp("value","Sets/Gets the current value of the variable.");
+
+	curr = addDescription("AnalysisStringVariable");
+	curr->setInherits(getAssetDescription("Variable"));
+	curr->setOverview("An Analysis String Variable is used to hold experimentally significant string data.  For simple operations in a script, a local javascript var is sufficient, but this value does not maintain its state from frame to frame, and global javascript variables may not be used in Picto.  To store data outside of the local script scope, use one of the Picto Analysis Variables.");
+	curr->addProp("Value","The value of the variable");
+	curr->addSProp("value","Sets/Gets the current value of the variable.");
+
+	curr = addDescription("AnalysisVariableList");
+	curr->setInherits(getAssetDescription("Variable"));
+	curr->setOverview("An Analysis Variable List is used to hold analysis data in a list.  Data is entered in javascript var format and retreived as a number or string by using the appropriate functions.");
+	curr->addSFunc("number length()","Returns the number of values in the array.");
+	curr->addSFunc("append(value)","Appends the input value to the end of the array, increasing the array length by one.");
+	curr->addSFunc("prepend(value)","Prepends the input value to the beginning of the array, increasing the array length by one.");
+	curr->addSFunc("setValue(index,value)","Changes the current value of the array at index to value.  If index is less than zero or greater than length()-1, nothing happens.");
+	curr->addSFunc("fromArray(array)","Resets the array from the input javascript array object.");
+	curr->addSFunc("number getValueAsNum(index)","Returns the value at the input index as a number.  If an invalid index is supplied, an undefined value will be returned.");
+	curr->addSFunc("number firstAsNum()","Returns the first value in the array as a number.  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("number lastAsNum()","Returns the last value in the array as a number.  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("number takeFirstAsNum()","Returns the first value in the array as a number and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("number takeLastAsNum()","Returns the last value in the array as a number and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("number takeAtAsNum(index)","Returns the value in the array at the input index as a number and deletes that value from the array, decreasing the array length by one.  If the index is invalid an undefined value is returned.");
+	curr->addSFunc("string getValueAsString(index)","Returns the value at the input index as a string .  If an invalid index is supplied, an undefined value will be returned.");
+	curr->addSFunc("string firstAsString()","Returns the first value in the array as a string .  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("string lastAsString()","Returns the last value in the array as a string .  If the array is empty, and undefined value is returned.");
+	curr->addSFunc("string takeFirstAsString()","Returns the first value in the array as a string and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("string takeLastAsString()","Returns the last value in the array as a string and deletes that value from the array, decreasing the array length by one.  If the array is empty an undefined value is returned.");
+	curr->addSFunc("string takeAtAsString(index)","Returns the value in the array at the input index as a string and deletes that value from the array, decreasing the array length by one.  If the index is invalid an undefined value is returned.");
+	curr->addSFunc("removeFirst()","Removes the first value from the array.  If the array is empty, nothing happens.");
+	curr->addSFunc("removeLast()","Removes the last value from the array.  If the array is empty nothing happens.");
+	curr->addSFunc("removeAt(index)","Removes the value at the input index from the array.  If the input index is invalid, nothing happens.");
+
+	curr = addDescription("AnalysisVariableMap");
+	curr->setInherits(getAssetDescription("Variable"));
+	curr->setOverview("An Analysis Variable Map is used to hold analysis data in a lookup table format.  Data is as a javascript var along with its lookup key.  Data is retrieved with that lookup key as either a number or string by using the appropriate functions.");
+	curr->addSFunc("number length()","Returns the number of values in the map.");
+	curr->addSFunc("setValue(key,value)","Sets/Changes the current value of the map at the input key to value.");
+	curr->addSFunc("fromAssocArray(assocArray)","Resets the map from the input javascript Associative Array object.  Advanced Note: This cannot be used with toAssocArray as a way of storing Javascript objects as function components of the object are not usable after the transfer.");
+	curr->addSFunc("number getValueAsNum(key)","Returns the value at the input key as a number.  If a key that is not in the map is supplied, an undefined value will be returned.");
+	curr->addSFunc("string getValueAsString(key)","Returns the value at the input key as a string.  If a key that is not in the map is supplied, an undefined value will be returned.");
+	curr->addSFunc("Array getKeys()","Returns a javascript array containing all of the keys currently in this map as strings.");
+	curr->addSFunc("number takeAtAsNum(key)","Returns the value in the map at the input key as a number and deletes that value from the map.  If the key is invalid an undefined value is returned.");
+	curr->addSFunc("string takeAtAsString(key)","Returns the value in the map at the input key as a string and deletes that value from the map.  If the key is invalid an undefined value is returned.");
+	curr->addSFunc("removeAt(key)","Removes the value at the input key from the map.  If the input key is invalid, nothing happens.");
+
+	//DataSources
+	curr = addDescription("AnalysisTimer");
+	curr->setInherits(getAssetDescription("AnalysisDataSource"));
+	curr->setOverview("Used to track time.  The Analysis Timer can be reset using restart() or set to restart from a given time by simply setting that time to the timer using the 'value' script property.");
+	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the time values returned from this element.");
+	curr->addSProp("value","Gets the time of the first phosphor of the last frame that was displayed in units defined by 'TimeUnits'.  When used to set the value, this restarts the timer starting at the set time (Calls to value before the next frame will return the value that was set.  Calls after the next frame will return the value set plus a single frame period.)");
+	curr->addSFunc("restart()","Restarts the timer from 0.  Equivalent to '[AnalysisTimerName].value = 0;'");
+
+	//Output
+	curr = addDescription("AnalysisFileOutput");
+	curr->setInherits(getAssetDescription("AnalysisOutput"));
+	curr->setOverview("Used to write analysis output to a file.  The file can either be a text file or a binary file.  This object comes with a widget that appears in the Test Viewer and Replay Viewer to display the latest contents of the output file.  The output file will be saved to the location chosen by the operator after pressing save in the Test Viewer/Replay Viewer Analysis Output widget.");
+	curr->addProp("FileSuffix","The suffix to be appended after the run name in creating the output filename ('.lfp.txt' would cause the output file to be named something like 'Session_2013_12_31__23_59_59.lfp.txt').");
+	curr->addProp("FileType","The type of file to be created.  Text: A text file. BigEndian: A binary file with most significant bit on the first byte. LittleEndian: A binary file with most significant bit on the last byte.");
+	curr->addSFunc("writeLine(text)","Writes the input text string to the end of the file appending a new line character afterwards.");
+	curr->addSFunc("writeText(text)","Writes the input text string to the end of the file.");
+	curr->addSFunc("writeBinary(csvData,csvTypes)","Writes data out to file as binary values (ie. short, int, double). csvData is a string with values separated by commas.  csvTypes is a string with value types separated by commas.  Valid types are short, int, long, float, double.  If more values appear in csvData than there are types in csvTypes, the last type will be used for all remaining values.  (ex. [AnalysisFileOutputName].writeBinary('1.23,726374,2,0','float,int,short,short');");
+
+
+
+
 }

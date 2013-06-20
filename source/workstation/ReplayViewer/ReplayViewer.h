@@ -39,6 +39,7 @@ public slots:
 	bool aboutToQuit();
 
 	void play();
+	void playAll();
 	void pause();
 	void stop();
 
@@ -61,6 +62,7 @@ private:
 
 	QAction *loadSessionAction_;
 	QAction *playAction_;
+	QAction *playAllAction_;
 	QAction *pauseAction_;
 	QAction *stopAction_;
 	SpeedWidget *speed_;
@@ -95,7 +97,7 @@ private slots:
 	void loadSession();
 	void updateTime(double time);
 	void updateLoadTimes(double maxBehavioral,double maxNeural);
-	void updateRunsList(QStringList runs);
+	void updateRunsList(QStringList runs,QStringList savedRuns);
 	void setCurrentRun(int index);
 	void setUserType(int index);
 	void percentLoaded(double percent);

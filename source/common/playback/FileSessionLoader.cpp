@@ -87,6 +87,17 @@ QStringList FileSessionLoader::getRunNames()
 	return returnVal;
 }
 
+QStringList FileSessionLoader::getSavedRunNames()
+{
+	QStringList returnVal;
+	foreach(RunData runData,runs_)
+	{
+		if(runData.saved_)
+			returnVal.append(runData.name_);
+	}
+	return returnVal;
+}
+
 bool FileSessionLoader::loadRun(int index)
 {
 	if(runIndex_ == index)

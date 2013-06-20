@@ -203,5 +203,5 @@ void AssetItem::searchRequested(SearchRequest searchRequest)
 
 	//Handle name highlighting
 	if(searchRequest.type == SearchRequest::STRING)
-		highlightNameChars(searchRequest.getGroupTypeIndex(),searchRequest.query,searchRequest.caseSensitive);
+		highlightNameChars(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::STRING),searchRequest.query,searchRequest.caseSensitive);
 }

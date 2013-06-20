@@ -59,11 +59,13 @@ protected:
 	QString getRunName();
 	QUuid getCurrRunId();
 
-protected slots:
 	//Called to end the analysis.  Should be overloaded to finish any operations that
 	//need to be finished before analysis ends.
 	virtual void finishUp(){};
+
+protected slots:
 	void runStarted(QUuid runId);
+	void runEnded();
 
 private:
 	AnalysisOutputWidget* loadWidget();

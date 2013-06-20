@@ -25,6 +25,7 @@ public:
 	bool setFile(QString path);
 	QSharedPointer<DesignRoot> getDesignRoot();
 	QStringList getRunNames();
+	QStringList getSavedRunNames();
 	bool loadRun(int index);
 	double runDuration(int index);
 	double currRunDuration();
