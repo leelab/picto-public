@@ -483,13 +483,9 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed bug that caused analysis crash when using AnalysisListVariables.");
-	releaseNoteList.append("Fixed intermittent bug causing crash when attempting to create a new state transition while an old one was selected.");
-	releaseNoteList.append("Fixed bug in searching experimental elements in levels above the current window.");
+	releaseNoteList.append("Fixed bug that caused analysis variables to not be reset when their parent state was entered.  This bug occured only on playback when using imported analyses.");
 
-	releaseNoteList.append("Added Analysis Design Framework to State Edit Viewer.");
-	releaseNoteList.append("Add Analysis execution and Analysis Widget display to Test Viewer.");	
-	releaseNoteList.append("Add Analysis execution and Analysis Widget display to Replay Viewer.");	
+	releaseNoteList.append("Fixed bug in Lists and Maps that caused initialization problems.");
 
 	//Format release notes:
 	QString releaseNotes;

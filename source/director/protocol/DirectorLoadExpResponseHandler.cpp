@@ -23,13 +23,14 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 		statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo(QString("Error loading experiment: %1").arg(errorInfo));
 		return false;
 	}
-	//We don't want any Analysis elements in our experiment, remove them.
-	for(int i=0;i<designRoot.getNumAnalyses();i++)
-	{
-		designRoot.removeAnalysis(i);
-	}
-	designRoot.setUndoPoint();
-	designRoot.refreshFromXml();
+	//Actually, we need to keep analyses in so that all the assetids don't misalign between the director and the server
+	////We don't want any Analysis elements in our experiment, remove them.
+	//for(int i=0;i<designRoot.getNumAnalyses();i++)
+	//{
+	//	designRoot.removeAnalysis(i);
+	//}
+	//designRoot.setUndoPoint();
+	//designRoot.refreshFromXml();
 
 	designRoot.enableRunMode(true);
 	QSharedPointer<Picto::Experiment> experiment = designRoot.getExperiment().staticCast<Experiment>();

@@ -224,7 +224,6 @@ void PlaybackController::update()
 					break;
 				}
 				designRoot_ = newDesignRoot;
-				designRoot_->enableRunMode(true);
 				data_.setRunLength(playbackUpdater_->getRunLength());
 				emit runsUpdated(playbackUpdater_->getRuns(),playbackUpdater_->getSavedRuns());
 
@@ -255,11 +254,13 @@ void PlaybackController::update()
 		{
 		case PlaybackCommand::Play:
 			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
+			designRoot_->enableRunMode(true);	//We do this here so that we're sure all the analyses are attached first.  Otherwise, they might not be operating in run mode.
 			playbackUpdater_->play();
 			data_.setNextStatus(PlaybackControllerData::Running);
 			break;
 		case PlaybackCommand::Pause:
 			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
+			designRoot_->enableRunMode(true);//We do this here so that we're sure all the analyses are attached first
 			playbackUpdater_->play();
 			data_.setNextStatus(PlaybackControllerData::Running);
 			data_.pushCommand(cmd,false);

@@ -18,13 +18,18 @@ QString MapProperty::variantToString(QVariant value) const
 	{
 		returnVal.append(iter.key()+"::"+iter.value().toString()+"::");
 	}
-	returnVal.chop(2);
+	if(!returnVal.isEmpty())
+		returnVal.chop(2);
 	return returnVal;
 }
 QVariant MapProperty::stringToVariant(QString string, QString& error) const
 {
 	QVariantMap returnVal;
 	QStringList list = string.split("::");
+	//Check if its an empty map
+	if(list.size() == 1)
+		return QVariant();
+
 	Q_ASSERT(list.size()%2 == 0);	//List must have an even number of elements
 	if(list.size()%2 != 0)
 		error = "Invalid data entered for map property.  Map string have even number of elements.";

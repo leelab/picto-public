@@ -8,7 +8,7 @@ VariableMap::VariableMap()
 settingValueProp_(false)
 {
 	map_.clear();
-	AddDefinableProperty(QVariant::Map,"Value",QVariant());
+	AddDefinableProperty(QVariant::Map,"Value",QVariant(map_));
 }
 
 QSharedPointer<Asset> VariableMap::Create()

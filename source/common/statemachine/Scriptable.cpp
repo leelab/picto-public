@@ -58,6 +58,7 @@ bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
 												.arg(engine.uncaughtException().toString());
 			errorMsg += QString("Backtrace: %1\n").arg(engine.uncaughtExceptionBacktrace().join(", "));
 			Q_ASSERT_X(!engine.hasUncaughtException(),"Scriptable::getScriptValue",errorMsg.toLatin1());
+			return false;
 		}
 		Q_ASSERT(myScriptValue.isValid());
 	}

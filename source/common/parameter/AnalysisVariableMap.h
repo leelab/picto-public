@@ -24,6 +24,8 @@ public:
 
 	static QSharedPointer<Asset> Create();
 
+	virtual void reset();
+
 	virtual QString friendlyTypeName(){return "Variable Map";};
 	
 public slots:

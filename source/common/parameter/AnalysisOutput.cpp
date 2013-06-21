@@ -109,7 +109,8 @@ void AnalysisOutput::runStarted(QUuid runId)
 	if(outputsByRunId_.contains(latestRunId_))
 		outputsByRunId_.remove(latestRunId_);
 	latestRunId_ = runId;
-	if(getDesignConfig()->getActiveAnalysisIds().contains(getAssociateId()))
+	QList<QUuid> activeAnalysisIds = getDesignConfig()->getActiveAnalysisIds();
+	if(activeAnalysisIds.size() && activeAnalysisIds.contains(getAssociateId()))
 		outputsByRunId_[latestRunId_].append(selfPtr().staticCast<AnalysisOutput>());
 }
 

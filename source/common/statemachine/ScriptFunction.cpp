@@ -26,9 +26,8 @@ bool ScriptFunction::hasContentsForScriptEngine()
 
 bool ScriptFunction::bindToScriptEngine(QScriptEngine &engine)
 {
-	bool returnVal = ScriptableContainer::bindToScriptEngine(engine);
 	if(!hasContentsForScriptEngine())
-		return returnVal;
+		return true;
 	
 	QString myScriptValueName = getName().simplified().remove(' ');
 	QScriptValue myScriptValue = engine.globalObject().property(myScriptValueName);

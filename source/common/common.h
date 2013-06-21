@@ -64,7 +64,7 @@
  *	This allows us to develop and debug picto on a network running picto experiments.  Otherwise, we could not have
  *	two separate PictoServers open at the same time.
  */
-#define DEVELOPMENTBUILD
+//#define DEVELOPMENTBUILD
 #define SYSTEM_0	//Currently we are using different servers for each picto system.  System 0 is Chris's system.  System 1 is Hyojung's. System 2 is Min's.
 //#define SYSTEM_1
 //#define SYSTEM_2
@@ -93,7 +93,7 @@
 #define LCDEVENTPORT PORTPREFIX+2421
 
 //Version MAJOR.MINOR.BUILD
-#define PICTOVERSION "1.0.20"
+#define PICTOVERSION "1.0.22"
 #define DESIGNSYNTAXVERSION "0.0.1"
 //Directory name of automatic updater application and dependencies
 //It is a subdirectory of the main binary directory

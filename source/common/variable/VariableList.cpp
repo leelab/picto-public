@@ -8,7 +8,7 @@ VariableList::VariableList()
 settingValueProp_(false)
 {
 	list_.clear();
-	AddDefinableProperty(QVariant::List,"Value",QVariant());
+	AddDefinableProperty(QVariant::List,"Value",QVariant(list_));
 }
 
 QSharedPointer<Asset> VariableList::Create()
@@ -133,7 +133,11 @@ void VariableList::copyListToValueProp()
 
 void VariableList::copyValuePropToList()
 {
-	list_ = propertyContainer_->getPropertyValue("Value").toList();
+	QVariant currVal = propertyContainer_->getPropertyValue("Value");
+	list_ = currVal.toList();
+	//If the variant was empty, the list gets set with a single value of zero.  Fix that.
+//	if(list_.size() == 1)
+
 }
 
 void VariableList::propValueChanged(Property*,QVariant)
