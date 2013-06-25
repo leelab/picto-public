@@ -11,6 +11,7 @@
 #include <QMenu>
 #include <QFileDialog>
 #include <QSlider>
+#include <QTabWidget>
 
 #include "testviewer.h"
 
@@ -233,21 +234,19 @@ void TestViewer::setupUi()
 		stimulusLayout->addWidget(outputSignalsWidgets_.back());
 	}
 	
-	QVBoxLayout *leftPane = new QVBoxLayout();
-	analysisSelector_ = new Picto::AnalysisSelectorWidget();
-	//analysisSelector_->setVisible(false);//REMOVE THIS LINE TO USE ANALYSIS
-
-	outputWidgetHolder_ = new OutputWidgetHolder();
-
 	propertyFrame_ = new PropertyFrame();
 	connect(taskListBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(taskListIndexChanged(int)));
-	leftPane->addWidget(analysisSelector_);
-	leftPane->addWidget(propertyFrame_);
+
+	QTabWidget* rightTabs = new QTabWidget();
+	analysisSelector_ = new Picto::AnalysisSelectorWidget();
+	outputWidgetHolder_ = new OutputWidgetHolder();
+	rightTabs->addTab(analysisSelector_,"Select Analyses");
+	rightTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addLayout(leftPane,Qt::AlignTop);
+	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
 	operationLayout->addLayout(stimulusLayout);
-	operationLayout->addWidget(outputWidgetHolder_);
+	operationLayout->addWidget(rightTabs);
 	operationLayout->setStretch(0,0);
 	operationLayout->addStretch();
 

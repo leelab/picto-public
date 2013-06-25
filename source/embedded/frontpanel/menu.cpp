@@ -45,6 +45,7 @@ Menu::~Menu()
 void Menu::initMenu()
 {
 	loadMenus();
+	emit turnOnBacklight();
 }
 
 //User input will be handled differently depeding on the current mode (eg

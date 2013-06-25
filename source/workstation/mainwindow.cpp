@@ -483,9 +483,9 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed bug that caused analysis variables to not be reset when their parent state was entered.  This bug occured only on playback when using imported analyses.");
-
 	releaseNoteList.append("Fixed bug in Lists and Maps that caused initialization problems.");
+
+	releaseNoteList.append("Fixed bug that caused analysis variables to not be reset when their parent state was entered.  This bug occured only on playback when using imported analyses.");
 
 	//Format release notes:
 	QString releaseNotes;

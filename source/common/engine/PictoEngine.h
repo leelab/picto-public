@@ -213,6 +213,7 @@ signals:
 	void flushDurationChanged(int controller, int duration);
 	void nameChanged(QString name);
 	void slaveTimeChanged(double time);
+	void escapePressed();
 private:
 	QHostAddress getIpAddress();
 	//QSharedPointer<Experiment> experiment_;

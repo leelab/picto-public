@@ -185,7 +185,7 @@ void TokenTrayGraphic::setTokenSize(int index,double size)
 		size = 1.0;
 	if(size < 0)
 		size = 0.0;
-	if(index >= getNumTokens())
+	if(index >= getNumTokens() || index < 0)
 		return;
 	QStringList sizes = propertyContainer_->getPropertyValue("TokenSizes").toString().split(",",QString::SkipEmptyParts);
 	sizes[index] = QString::number(size);
@@ -194,7 +194,7 @@ void TokenTrayGraphic::setTokenSize(int index,double size)
 
 void TokenTrayGraphic::setTokenColor(int index, int r, int g, int b, int a)
 {
-	if(index >= getNumTokens())
+	if(index >= getNumTokens() || index < 0)
 		return;
 	QStringList colors = propertyContainer_->getPropertyValue("TokenColors").toString().split(",",QString::SkipEmptyParts);
 	colors[index] = QColor(r,g,b,a).name();
@@ -209,7 +209,7 @@ void TokenTrayGraphic::setTokenColor(int index,QVariant color)
 
 void TokenTrayGraphic::setTokenShape(int index, QString shape)
 {
-	if(index >= getNumTokens())
+	if(index >= getNumTokens() || index < 0)
 		return;
 	if(!shapeList_.contains(shape))
 		return;
@@ -219,7 +219,7 @@ void TokenTrayGraphic::setTokenShape(int index, QString shape)
 }
 void TokenTrayGraphic::setTokenOutline(int index, bool on)
 {
-	if(index >= getNumTokens())
+	if(index >= getNumTokens() || index < 0)
 		return;
 	QStringList outlines = propertyContainer_->getPropertyValue("TokenOutlines").toString().split(",",QString::SkipEmptyParts);
 	outlines[index] = QString::number(int(on));
@@ -227,7 +227,7 @@ void TokenTrayGraphic::setTokenOutline(int index, bool on)
 }
 void TokenTrayGraphic::setTokenOutlineWidth(int index, int pixels)
 {
-	if(index >= getNumTokens())
+	if(index >= getNumTokens() || index < 0)
 		return;
 	QStringList outlineWidths = propertyContainer_->getPropertyValue("TokenOutlineWidths").toString().split(",",QString::SkipEmptyParts);
 	outlineWidths[index] = QString::number(pixels);

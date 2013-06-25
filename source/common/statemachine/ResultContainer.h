@@ -62,6 +62,7 @@ protected:
 	QMap<QString, QSharedPointer<Result> > results_;
 
 	friend class SlaveExperimentDriver;
+	friend class State;
 
 private:
 	QSharedPointer<AssetFactory> resultFactory_;

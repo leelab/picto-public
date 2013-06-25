@@ -40,6 +40,13 @@ QPoint VisualTarget::targetPointToViewportPoint(QPoint targetPoint)
 	return targetPoint;
 }
 
+void VisualTarget::keyPressEvent(QKeyEvent* event)
+{
+	QWidget::keyPressEvent(event);
+	if(event->key() == Qt::Key_Escape)
+		emit escapePressed();
+}
+
 void VisualTarget::setFirstPhosphorTime()
 {
 	lastFrameTime_ = stamper_.stampSec();

@@ -60,6 +60,7 @@ void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
 {	
 	renderingTargets_.append(target);
 	connect(target->getVisualTarget().data(), SIGNAL(presented(double)), this, SLOT(firstPhosphorOperations(double)));
+	connect(target->getVisualTarget().data(), SIGNAL(escapePressed()), this, SIGNAL(escapePressed()));
 }
 
 void PictoEngine::addControlPanel(QSharedPointer<ControlPanelInterface> controlPanel)

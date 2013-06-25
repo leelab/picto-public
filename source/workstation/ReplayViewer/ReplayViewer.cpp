@@ -205,21 +205,18 @@ void ReplayViewer::setupUi()
 	}
 	stimulusLayout->addWidget(progress_);
 
-	//Setup analysis selector widget
+	//Setup analysis widgets
+	QTabWidget* analysisTabs = new QTabWidget();
+
 	analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	analysisSelector_->setEnabled(false);
 	connect(playbackController_.data(),SIGNAL(designRootChanged()),this,SLOT(designRootChanged()));
-
 	outputWidgetHolder_ = new OutputWidgetHolder();
-
-	QVBoxLayout *leftPanelLayout = new QVBoxLayout();
-	leftPanelLayout->addWidget(analysisSelector_);
-	leftPanelLayout->addWidget(outputWidgetHolder_);
-	leftPanelLayout->setStretch(0,3);
-	leftPanelLayout->setStretch(1,7);
+	analysisTabs->addTab(analysisSelector_,"Select Analyses");
+	analysisTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addLayout(leftPanelLayout);
+	operationLayout->addWidget(analysisTabs);
 	operationLayout->addLayout(stimulusLayout);
 	operationLayout->addWidget(speed_);
 	operationLayout->addStretch();

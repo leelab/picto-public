@@ -85,3 +85,7 @@ QString ComponentStatusManager::getStatusAsString()
 {
 	return statusNameDictionary_.value(status_,QString("Undefined Status"));
 }
+void ComponentStatusManager::forceExit()
+{
+	forceExit_ = true;
+}

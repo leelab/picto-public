@@ -173,6 +173,7 @@ int Director::openDevice()
 			return 1;
 		//Assure that the update downloader will kill the front panel process if it needs to restart the application.
 		connect(UpdateDownloader::getInstance().data(),SIGNAL(closingProcess()),frontPanelProcess_.data(),SLOT(kill()));
+		connect(engine_.data(),SIGNAL(escapePressed()),frontPanelProcess_.data(),SLOT(kill()));
 		fpInterface_ = QSharedPointer<FPInterface>(new FPInterface());
 		engine_->addControlPanel(fpInterface_);
 	}
@@ -186,7 +187,9 @@ int Director::openDevice()
 	statusManager_ = QSharedPointer<ComponentStatusManager>(new DirectorStatusManager());
 	statusManager_.staticCast<DirectorStatusManager>()->setEngine(engine_);
 	statusManager_.staticCast<DirectorStatusManager>()->setDirectorData(directorData_);
-
+	//We connect the escape pressed signal to ComponentStatusManager::forceExit() after connecting the front panel kill() signal so that
+	//the front panel application has time to close before the director closes.
+	connect(engine_.data(),SIGNAL(escapePressed()),statusManager_.data(),SLOT(forceExit()));
 
 	dataCommandChannel_->setStatusManager(statusManager_);
 	engine_->setDataCommandChannel(dataCommandChannel_);

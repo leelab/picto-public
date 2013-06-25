@@ -31,8 +31,9 @@ public:
 	void update(int timeoutMs);
 	ComponentStatus getStatus();
 	QString getStatusAsString();
-	void forceExit(){forceExit_ = true;};
 	bool exitTriggered(){return forceExit_;};
+public slots:
+	void forceExit();
 protected:
 	virtual void newSession() = 0;
 	//May be updated by child to perform operations that must occur very frequently

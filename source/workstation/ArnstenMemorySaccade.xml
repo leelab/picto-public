@@ -1,16 +1,12 @@
-<PictoData><Name>ArnstenMemorySaccade</Name><AnalysisContainer id="0">
+<PictoData id="2"><Name id="3">ArvanaArnstenMemorySaccadeUpdated</Name><Experiment id="1">
     
-  <AnalysisDefinition id="0"><UIInfo id="0"><Pos id="">2000,2000</Pos></UIInfo></AnalysisDefinition></AnalysisContainer><Experiment id="1"><SyntaxVersion id="2">0.0.2</SyntaxVersion>
-    
-<UIInfo id="390">
-	<Pos id="392">0,0</Pos>
-<OpenDescendant id="588">1</OpenDescendant></UIInfo>
 
-<XGain id="394">1</XGain>
-<XOffset id="395">0</XOffset>
+
+<XGain id="394">0.04</XGain>
+<XOffset id="395">-1182</XOffset>
 <XYSignalShear id="396">0</XYSignalShear>
-<YGain id="397">1</YGain>
-<YOffset id="398">0</YOffset>
+<YGain id="397">-0.08</YGain>
+<YOffset id="398">1605</YOffset>
     <Task id="635">
       <Name id="636">MemorySaccade</Name>
       <StateMachine id="637">
@@ -23,7 +19,7 @@
           expInfo.updateValue();
         </EntryScript>
         <ExitScript id="1671"/>
-        <Level id="1674">Stage</Level>
+        
         <Name id="641">Top</Name>
         <Parameter type="Range" id="682">
           <Increment id="683">0</Increment>
@@ -31,23 +27,17 @@
           <Min id="685">1</Min>
           <Name id="686">numBlocks</Name>
           <UIEnabled id="1699">true</UIEnabled>
-          <UIInfo id="1700">
-            <OpenDescendant id="1701">0</OpenDescendant>
-            <Pos id="690">241,472</Pos>
-          </UIInfo>
+          
           <UIOrder id="1702">0</UIOrder>
-          <Units id="1703"/>
+          
           <Value id="1704">100</Value>
         </Parameter>
         <Parameter type="Numeric" id="734">
           <Name id="735">blockNum</Name>
           <UIEnabled id="736">false</UIEnabled>
-          <UIInfo id="737">
-            <OpenDescendant id="738">0</OpenDescendant>
-            <Pos id="1717">137,472</Pos>
-          </UIInfo>
+          
           <UIOrder id="1718">0</UIOrder>
-          <Units id="1719"/>
+          
           <Value id="1720">0</Value>
         </Parameter>
         <StateMachineElement type="StateMachine" id="1726">
@@ -65,144 +55,93 @@
             }
           </EntryScript>
           <ExitScript id="718">blockNum.value++;</ExitScript>
-          <Level id="719">Stage</Level>
+          
           <Name id="720">Block</Name>
           <Result id="1727">
             <Name id="1728">Done</Name>
             <UIEnabled id="1729">false</UIEnabled>
-            <UIInfo id="1730">
-              <OpenDescendant id="1731">0</OpenDescendant>
-              <Pos id="1732">850,276</Pos>
-            </UIInfo>
+            
             <UIOrder id="1733">0</UIOrder>
           </Result>
-          <StateMachineElement type="ScriptElement" id="1737">
-            <Name id="1738">NeedsTrials</Name>
-            <Result id="1739">
-              <Name id="1740">false</Name>
-            </Result>
-            <Result id="1753">
-              <Name id="1761">true</Name>
-            </Result>
-            <Script id="1779">
-              //If we haven't yet used the current value numMemSacBlocks times, reshuffle it.
-              var currValue = targetSelector.value;
-              var currUses = targetCounter.getDataAsInt(currValue);
-              currUses++;
-              targetCounter.setData(currValue,currUses);
-              if(currUses &lt; numMemSacBlocks.value)
-              {
-              targetSelector.reshuffleLastValue();
-              }
-
-              trialNum.value++;
-              expInfo.setData(&quot;GoodTrials&quot;,expInfo.getDataAsInt(&quot;GoodTrials&quot;)+1);
-              expInfo.setData(&quot;GoodTrials(%)&quot;,Math.round(100*expInfo.getDataAsDouble(&quot;GoodTrials&quot;)/(expInfo.getDataAsDouble(&quot;Trial&quot;)+1)));
-              expInfo.updateValue();
-              //Check if we're done with this block
-              if(trialNum.value &lt; (numMemSacBlocks.value*numTargets.value))
-              return true;
-              return false;
-            </Script>
-            <Type id="761">ScriptElement</Type>
-            <UIEnabled id="1780">false</UIEnabled>
-            <UIInfo id="1798">
-              <OpenDescendant id="1799">0</OpenDescendant>
-              <Pos id="1800">509,116</Pos>
-            </UIInfo>
-            <UIOrder id="1801">0</UIOrder>
-          </StateMachineElement>
+          
           <Transition id="1809">
             <Destination id="1810">Done</Destination>
             <Source id="1811">NeedsTrials</Source>
             <SourceResult id="1814">false</SourceResult>
-          </Transition>
-          <Type id="721">StateMachine</Type>
+          <DId id="16">1727</DId><SId id="17">1505</SId><SRId id="18">1523</SRId></Transition>
+          
           <UIEnabled id="1815">false</UIEnabled>
-          <UIInfo id="1818">
-            <OpenDescendant id="724">0</OpenDescendant>
-            <Pos id="1819">132,246</Pos>
-          </UIInfo>
+          
           <UIOrder id="1820">0</UIOrder>
           <Parameter type="Numeric" id="1828">
             <Name id="893">trialNum</Name>
             <UIEnabled id="1830">false</UIEnabled>
-            <UIInfo id="1834">
-              <OpenDescendant id="1839">0</OpenDescendant>
-              <Pos id="1840">85,439</Pos>
-            </UIInfo>
+            
             <UIOrder id="1841">0</UIOrder>
-            <Units id="1844"/>
+            
             <Value id="900">0</Value>
           </Parameter>
           <StateMachineElement type="StateMachine" id="854">
-            <EntryScript id="855">																												expInfo.setData(&quot;Trial&quot;,expInfo.getDataAsInt(&quot;Trial&quot;)+1);
-																												expInfo.setData(&quot;TrialInBlock&quot;,expInfo.getDataAsInt(&quot;TrialInBlock&quot;)+1);
-																												expInfo.updateValue();
-																												tokenTray.width = 2*mmToPixel(mmTrayRad.value);
-																												tokenTray.height = tokenTray.width;
-																												tokenTray.numTokens = numTargets.value;
-																												tokenTray.tokenWidth = 2*mmToPixel(mmCueRad.value);
-																												tokenTray.tokenHeight =tokenTray.tokenWidth;
-																												fixGraphic.radius = mmToPixel(mmCueRad.value);
-																												fixGraphic.setColor(cueR.value,cueG.value,cueB.value,255);
-																												fixTarget.radius = mmToPixel(mmFixWinRad.value);
-																												sacTarget.radius = mmToPixel(mmSacWinRad.value);
-																												sacTarget.x = tokenTray.getTokenX(targetSelector.value);
-																												sacTarget.y = tokenTray.getTokenY(targetSelector.value);
-            </EntryScript>
-            <ExitScript id="1969"/>
-            <Level id="857">Stage</Level>
+            <EntryScript id="855">expInfo.setData(&quot;Trial&quot;,expInfo.getDataAsInt(&quot;Trial&quot;)+1);
+expInfo.setData(&quot;TrialInBlock&quot;,expInfo.getDataAsInt(&quot;TrialInBlock&quot;)+1);
+expInfo.updateValue();
+tokenTray.width = 2*mmToPixel(mmTrayRad.value);
+tokenTray.height = tokenTray.width;
+tokenTray.numTokens = numTargets.value;
+tokenTray.tokenWidth = 2*mmToPixel(mmCueRad.value);
+tokenTray.tokenHeight =tokenTray.tokenWidth;
+tokenTray.phase = targetStartPos.value*45.0;
+fixGraphic.radius = mmToPixel(mmCueRad.value);
+fixGraphic.setColor(cueR.value,cueG.value,cueB.value,255);
+fixTarget.radius = mmToPixel(mmFixWinRad.value);
+sacTarget.radius = mmToPixel(mmSacWinRad.value);
+sacTarget.x = tokenTray.getTokenX(targetSelector.value);
+sacTarget.y = tokenTray.getTokenY(targetSelector.value);
+Reward.number = numRewards.value;</EntryScript>
+            <ExitScript id="1969">eventCode.value = 0x80;</ExitScript>
+            
             <Name id="858">Trial</Name>
-            <Type id="1970">StateMachine</Type>
+            
             <UIEnabled id="1971">false</UIEnabled>
-            <UIInfo id="861">
-              <OpenDescendant id="862">0</OpenDescendant>
-              <Pos id="863">360,210</Pos>
-            </UIInfo>
+            
             <UIOrder id="864">0</UIOrder>
             <Result id="902">
               <Name id="903">Failed</Name>
               <UIEnabled id="904">false</UIEnabled>
-              <UIInfo id="905">
-                <OpenDescendant id="1972">0</OpenDescendant>
-                <Pos id="1973">1139,362</Pos>
-              </UIInfo>
+              
               <UIOrder id="908">0</UIOrder>
-            </Result>
+            <EntryScript id="5">//Trial was not completed succefully, reshuffle this target value.
+targetSelector.reshuffleLastValue();
+expInfo.setData(&quot;GoodTrials(%)&quot;,Math.round(100*expInfo.getDataAsDouble(&quot;GoodTrials&quot;)/(expInfo.getDataAsDouble(&quot;Trial&quot;)+1)));
+expInfo.updateValue();</EntryScript></Result>
             <Result id="1995">
               <Name id="913">Success</Name>
               <UIEnabled id="914">false</UIEnabled>
-              <UIInfo id="2047">
-                <OpenDescendant id="2048">0</OpenDescendant>
-                <Pos id="2049">1135,271</Pos>
-              </UIInfo>
+              
               <UIOrder id="2076">0</UIOrder>
             </Result>
             <StateMachineElement type="State" id="2080">
               <BackgroundColor id="923">0,0,0,255</BackgroundColor>
               <EntryScript id="924">fixationController.fixationTime = fixationHoldMs.value;
 fixationController.maxAcquisitionTime = fixationAcqMs.value;
-fixationController.totalTime = fixationController.fixationTime+fixationController.maxAcquisitionTime;
-fixOn.value = true;
-if(usePhotodetectors.value)
-{
-	fixSigImg.radius = mmToPixel(2);
-	cueSigImg.radius = fixSigImg.radius;
-	fixSigImg.x = 800-mmToPixel(15.875);
-	fixSigImg.y = mmToPixel(4);
-	cueSigImg.x = 800-mmToPixel(9.525);
-	cueSigImg.y = fixSigImg.y;
-	fixSigImg.visible = true;
-}</EntryScript>
-              <ExitScript id="2081"/>
-              <FrameScript id="2082">calibratePos();</FrameScript>
+fixationController.totalTime = fixationController.fixationTime+fixationController.maxAcquisitionTime;</EntryScript>
+              <ExitScript id="2081">if(fixationController.userEnteredTarget()){
+fixationAcquired.value = true;
+}
+</ExitScript>
+              <FrameScript id="2082">if(fixationController.userEnteredTarget()){
+fixationAcquired.value = true;
+}
+calibratePos();
+//We turn this on after the first frame
+//because Min's display has a known 20ms
+//input lag.  This puts the signal within 
+//about 3ms of when the monkey actually 
+//sees the fixation point.
+fixOn.value = true;</FrameScript>
               <Name id="2083">Fixation</Name>
               <UIEnabled id="2099">false</UIEnabled>
-              <UIInfo id="2102">
-                <OpenDescendant id="2103">0</OpenDescendant>
-                <Pos id="2104">101,218</Pos>
-              </UIInfo>
+              
               <UIOrder id="2105">0</UIOrder>
               <ControlElement type="Target Controller" id="1282">
                 <ControlTarget id="1283">fixTarget</ControlTarget>
@@ -228,16 +167,13 @@ if(usePhotodetectors.value)
                   <Name id="824">Success</Name>
                 </Result>
                 <SignalChannel id="1290">Position</SignalChannel>
-                <TargetEntryScript id="1291">fixationAcquired.value = true;</TargetEntryScript>
-                <TargetExitScript id="1292"/>
+                
+                
                 <TimeUnits id="1293">Ms</TimeUnits>
                 <TotalTime id="1294">1000</TotalTime>
-                <Type id="1295"/>
+                
                 <UIEnabled id="1296">false</UIEnabled>
-                <UIInfo id="1297">
-                  <OpenDescendant id="1298">0</OpenDescendant>
-                  <Pos id="1299">155,79</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1300">0</UIOrder>
               </ControlElement>
               <Parameter type="Boolean" id="1316">
@@ -245,82 +181,69 @@ if(usePhotodetectors.value)
                 <Name id="1318">fixationAcquired</Name>
                 <TrueLabel id="1319">True</TrueLabel>
                 <UIEnabled id="1320">false</UIEnabled>
-                <UIInfo id="1321">
-                  <OpenDescendant id="1322">0</OpenDescendant>
-                  <Pos id="1323">132,468</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1324">0</UIOrder>
                 <Value id="1325">false</Value>
               </Parameter>
               <Result id="1332">
                 <Name id="1333">Success</Name>
                 <UIEnabled id="1334">false</UIEnabled>
-                <UIInfo id="1335">
-                  <OpenDescendant id="1336">0</OpenDescendant>
-                  <Pos id="1337">487,271</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1338">0</UIOrder>
               </Result>
               <Result id="1342">
                 <Name id="1343">Fail</Name>
                 <UIEnabled id="1344">false</UIEnabled>
-                <UIInfo id="1345">
-                  <OpenDescendant id="1346">0</OpenDescendant>
-                  <Pos id="1347">477,367</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1348">0</UIOrder>
-              </Result>
+              <EntryScript id="28">setErrorPins(0xF);</EntryScript></Result>
               <Transition id="875">
                 <Destination id="876">Success</Destination>
                 <Source id="877">fixationController</Source>
                 <SourceResult id="878">Success</SourceResult>
-              </Transition>
+              <DId id="57">1332</DId><SId id="58">1282</SId><SRId id="59">2299</SRId></Transition>
               <Transition id="879">
                 <Destination id="880">Fail</Destination>
                 <Source id="881">fixationController</Source>
                 <SourceResult id="882">Reaquistion Time Exceeded</SourceResult>
-              </Transition>
+              <DId id="60">1342</DId><SId id="61">1282</SId><SRId id="62">2106</SRId></Transition>
               <Transition id="883">
                 <Destination id="884">Fail</Destination>
                 <Source id="885">fixationController</Source>
                 <SourceResult id="886">Initial Aquistion Time Exceeded</SourceResult>
-              </Transition>
+              <DId id="63">1342</DId><SId id="64">1282</SId><SRId id="65">2180</SRId></Transition>
               <Transition id="887">
                 <Destination id="888">Fail</Destination>
                 <Source id="889">fixationController</Source>
                 <SourceResult id="2374">Total Time Excceeded</SourceResult>
-              </Transition>
+              <DId id="66">1342</DId><SId id="67">1282</SId><SRId id="68">2230</SRId></Transition>
               <Transition id="2375">
                 <Destination id="901">Fail</Destination>
                 <Source id="909">fixationController</Source>
                 <SourceResult id="2376">Broke Fixation</SourceResult>
-              </Transition>
-            <Parameter type="Numeric" id="1588"><Name id="1589">fixationAcqMs</Name><UIEnabled id="1590">true</UIEnabled><UIInfo id="1591"><OpenDescendant id="1592">0</OpenDescendant><Pos id="1593">126,643</Pos></UIInfo><UIOrder id="1594">0</UIOrder><Units id="1595"/><Value id="1596">500</Value></Parameter><Parameter type="Numeric" id="1662"><Name id="1663">fixationHoldMs</Name><UIEnabled id="1664">true</UIEnabled><UIInfo id="1665"><OpenDescendant id="1666">0</OpenDescendant><Pos id="1667">130,746</Pos></UIInfo><UIOrder id="1668">0</UIOrder><Units id="1669"/><Value id="1670">500</Value></Parameter></StateMachineElement>
+              <DId id="69">1342</DId><SId id="70">1282</SId><SRId id="71">2281</SRId></Transition>
+            <Parameter type="Numeric" id="1588"><Name id="1589">fixationAcqMs</Name><UIEnabled id="1590">true</UIEnabled><UIOrder id="1594">0</UIOrder><Value id="1596">500</Value></Parameter><Parameter type="Numeric" id="1662"><Name id="1663">fixationHoldMs</Name><UIEnabled id="1664">true</UIEnabled><UIOrder id="1668">0</UIOrder><Value id="1670">500</Value></Parameter></StateMachineElement>
             <StateMachineElement type="State" id="940">
               <BackgroundColor id="941">0,0,0,255</BackgroundColor>
               <EntryScript id="942">																																																tokenTray.visible= true;
 																																																tokenTray.setTokenColor(targetSelector.value,cueR.value,cueG.value,cueB.value,255);
 																																																cueController.fixationTime = cueMs.value;
-																																																cueController.totalTime = cueController.fixationTime+100;
-																																																cueOn.value = true;
-																																																if(usePhotodetectors.value)
-																																																	cueSigImg.visible = true;</EntryScript>
+																																																cueController.totalTime = cueController.fixationTime+100;</EntryScript>
               <ExitScript id="2384">tokenTray.setTokenColor(targetSelector.value,0,0,0,255);
-cueOn.value = false;
-cueSigImg.visible = false;</ExitScript>
+cueOn.value = false;</ExitScript>
               <FrameScript id="2385">//Turn off CueIDEvent after one frame.
 frameCtr.value++;
 if(frameCtr.value &gt; 1)
-	eventCode.value = 0x00;
+	eventCode.value = 0x80;
+else
+	eventCode.value = 0x7F &amp; targetSelector.value;
 
 calibratePos();
+cueOn.value = true;
 </FrameScript>
               <Name id="2386">Cue</Name>
               <UIEnabled id="2387">false</UIEnabled>
-              <UIInfo id="2388">
-                <OpenDescendant id="2389">0</OpenDescendant>
-                <Pos id="2390">387,197</Pos>
-              </UIInfo>
+              
               <UIOrder id="950">0</UIOrder>
               <ControlElement type="Target Controller" id="1392">
                 <ControlTarget id="1393">fixTarget</ControlTarget>
@@ -346,76 +269,120 @@ calibratePos();
                   <Name id="1052">Success</Name>
                 </Result>
                 <SignalChannel id="1400">Position</SignalChannel>
-                <TargetEntryScript id="1401"/>
-                <TargetExitScript id="1402"/>
+                
+                
                 <TimeUnits id="1403">Ms</TimeUnits>
                 <TotalTime id="1404">600</TotalTime>
-                <Type id="1405"/>
+                
                 <UIEnabled id="1406">false</UIEnabled>
-                <UIInfo id="1407">
-                  <OpenDescendant id="1408">0</OpenDescendant>
-                  <Pos id="1409">119,98</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1410">0</UIOrder>
               </ControlElement>
               <Result id="1426">
                 <Name id="1427">Success</Name>
                 <UIEnabled id="1428">false</UIEnabled>
-                <UIInfo id="1429">
-                  <OpenDescendant id="1430">0</OpenDescendant>
-                  <Pos id="1431">443,109</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1432">0</UIOrder>
               </Result>
               <Result id="1436">
                 <Name id="1437">Failure</Name>
                 <UIEnabled id="1438">false</UIEnabled>
-                <UIInfo id="1439">
-                  <OpenDescendant id="1440">0</OpenDescendant>
-                  <Pos id="1441">456,230</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1442">0</UIOrder>
-              </Result>
+              <EntryScript id="47">setErrorPins(0xE);</EntryScript></Result>
               <Transition id="1171">
                 <Destination id="1172">Success</Destination>
                 <Source id="1173">cueController</Source>
                 <SourceResult id="1174">Success</SourceResult>
-              </Transition>
+              <DId id="102">1426</DId><SId id="103">1392</SId><SRId id="104">1051</SRId></Transition>
               <Transition id="1175">
                 <Destination id="1176">Failure</Destination>
                 <Source id="1177">cueController</Source>
                 <SourceResult id="1178">Reaquistion Time Exceeded</SourceResult>
-              </Transition>
+              <DId id="105">1436</DId><SId id="106">1392</SId><SRId id="107">2391</SRId></Transition>
               <Transition id="1179">
                 <Destination id="1180">Failure</Destination>
                 <Source id="1181">cueController</Source>
                 <SourceResult id="1197">Initial Aquistion Time Exceeded</SourceResult>
-              </Transition>
+              <DId id="108">1436</DId><SId id="109">1392</SId><SRId id="110">957</SRId></Transition>
               <Transition id="1198">
                 <Destination id="1199">Failure</Destination>
                 <Source id="1200">cueController</Source>
                 <SourceResult id="1201">Total Time Excceeded</SourceResult>
-              </Transition>
+              <DId id="111">1436</DId><SId id="112">1392</SId><SRId id="113">991</SRId></Transition>
               <Transition id="1202">
                 <Destination id="1203">Failure</Destination>
                 <Source id="1204">cueController</Source>
                 <SourceResult id="1205">Broke Fixation</SourceResult>
-              </Transition>
-            <Parameter type="Numeric" id="1538"><Name id="1539">frameCtr</Name><UIEnabled id="1540">false</UIEnabled><UIInfo id="1541"><OpenDescendant id="1542">0</OpenDescendant><Pos id="1555">134,370</Pos></UIInfo><UIOrder id="1556">0</UIOrder><Units id="1557"/><Value id="1558">0</Value></Parameter><Parameter type="Numeric" id="1602"><Name id="1603">cueMs</Name><UIEnabled id="1604">true</UIEnabled><UIInfo id="1605"><OpenDescendant id="1606">0</OpenDescendant><Pos id="1611">106,502</Pos></UIInfo><UIOrder id="1612">0</UIOrder><Units id="1613"/><Value id="1614">500</Value></Parameter></StateMachineElement>
+              <DId id="114">1436</DId><SId id="115">1392</SId><SRId id="116">1022</SRId></Transition>
+            <Parameter type="Numeric" id="1538"><Name id="1539">frameCtr</Name><UIEnabled id="1540">false</UIEnabled><UIOrder id="1556">0</UIOrder><Value id="1558">0</Value></Parameter><Parameter type="Numeric" id="1602"><Name id="1603">cueMs</Name><UIEnabled id="1604">true</UIEnabled><UIOrder id="1612">0</UIOrder><Value id="1614">500</Value></Parameter></StateMachineElement>
             <StateMachineElement type="State" id="958">
               <BackgroundColor id="959">0,0,0,255</BackgroundColor>
-              <EntryScript id="960">																																																																DelayController.fixationTime = delayMs.value;
-																																																																DelayController.totalTime = DelayController.fixationTime+100;</EntryScript>
+              <EntryScript id="960">DelayController.fixationTime = delayMs.value;
+DelayController.totalTime = DelayController.fixationTime+100;
+
+//Choose distractor
+if(useDistractor.value)
+{
+	var numTargs = tokenTray.numTokens;
+	var distOps = new Array();
+	var targInd = targetSelector.value;
+	//Append adjacent values to list
+	if(enAdjacentDistractor.value)
+	{
+		distOps.push((targInd+numTargs+1)%numTargs);
+		distOps.push((targInd+numTargs-1)%numTargs);
+	}
+	//Append double adjacent values to list
+	if(enDoubleAdjDistractor.value)
+	{
+		distOps.push((targInd+numTargs+2)%numTargs);
+		distOps.push((targInd+numTargs-2)%numTargs);
+	}
+	//Append remaining values to list
+	if(numTargs &gt; 5)
+	{
+		var boundInd1 = (targInd+numTargs+3)%numTargs;
+		var boundInd2 = (targInd+numTargs-2)%numTargs;
+		for(var i=boundInd1;i!=boundInd2;i=(i+1)%numTargs)
+		{
+			distOps.push(i);
+		}
+	}
+	//Select value
+	var selectedArrayInd = Math.floor(Math.random()*distOps.length);
+	//Set distractor index to variable
+	distractorIndex.value = distOps[selectedArrayInd];
+}</EntryScript>
               <ExitScript id="961">fixGraphic.visible = false;
 fixOn.value = false;
-fixSigImg.visible = false;</ExitScript>
-              <FrameScript id="962">calibratePos();</FrameScript>
+
+//In case the distractor didn't get turned off, turn it off. 
+tokenTray.setTokenColor(distractorIndex.value,0,0,0,255);</ExitScript>
+              <FrameScript id="962">calibratePos();
+
+
+if(useDistractor.value)
+{
+	if(!distractorShown.value)
+	{
+		if(distractorTimer.value &gt;= distractorOnset.value)
+		{
+			tokenTray.setTokenColor(distractorIndex.value,distractorColor.value);
+			distractorShown.value = true;
+		}
+	}
+	else
+	{
+		if(distractorTimer.value &gt;= (distractorOnset.value + distractorInterval.value))
+		{
+			tokenTray.setTokenColor(distractorIndex.value,0,0,0,255);
+		}
+	}
+}</FrameScript>
               <Name id="963">Delay</Name>
               <UIEnabled id="964">false</UIEnabled>
-              <UIInfo id="965">
-                <OpenDescendant id="966">0</OpenDescendant>
-                <Pos id="967">534,197</Pos>
-              </UIInfo>
+              
               <UIOrder id="968">0</UIOrder>
               <ControlElement type="Target Controller" id="1446">
                 <ControlTarget id="1447">fixTarget</ControlTarget>
@@ -441,62 +408,53 @@ fixSigImg.visible = false;</ExitScript>
                   <Name id="1314">Success</Name>
                 </Result>
                 <SignalChannel id="1454">Position</SignalChannel>
-                <TargetEntryScript id="1455"/>
-                <TargetExitScript id="1456"/>
+                
+                
                 <TimeUnits id="1457">Ms</TimeUnits>
                 <TotalTime id="1458">2600</TotalTime>
-                <Type id="1459"/>
+                
                 <UIEnabled id="1460">false</UIEnabled>
-                <UIInfo id="1461">
-                  <OpenDescendant id="1462">0</OpenDescendant>
-                  <Pos id="1463">123,105</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1464">0</UIOrder>
               </ControlElement>
               <Result id="1480">
                 <Name id="1481">Success</Name>
                 <UIEnabled id="1482">false</UIEnabled>
-                <UIInfo id="1483">
-                  <OpenDescendant id="1484">0</OpenDescendant>
-                  <Pos id="1485">374,99</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1486">0</UIOrder>
               </Result>
               <Result id="1490">
                 <Name id="1491">Fail</Name>
                 <UIEnabled id="1492">false</UIEnabled>
-                <UIInfo id="1493">
-                  <OpenDescendant id="1494">0</OpenDescendant>
-                  <Pos id="1495">381,245</Pos>
-                </UIInfo>
+                
                 <UIOrder id="1496">0</UIOrder>
-              </Result>
+              <EntryScript id="81">setErrorPins(0xE);</EntryScript></Result>
               <Transition id="1411">
                 <Destination id="1412">Success</Destination>
                 <Source id="1413">DelayController</Source>
                 <SourceResult id="1414">Success</SourceResult>
-              </Transition>
+              <DId id="147">1480</DId><SId id="148">1446</SId><SRId id="149">1313</SRId></Transition>
               <Transition id="1415">
                 <Destination id="1416">Fail</Destination>
                 <Source id="1417">DelayController</Source>
                 <SourceResult id="1418">Reaquistion Time Exceeded</SourceResult>
-              </Transition>
+              <DId id="150">1490</DId><SId id="151">1446</SId><SRId id="152">1239</SRId></Transition>
               <Transition id="1419">
                 <Destination id="1420">Fail</Destination>
                 <Source id="1421">DelayController</Source>
                 <SourceResult id="1422">Initial Aquistion Time Exceeded</SourceResult>
-              </Transition>
+              <DId id="153">1490</DId><SId id="154">1446</SId><SRId id="155">1249</SRId></Transition>
               <Transition id="1423">
                 <Destination id="1424">Fail</Destination>
                 <Source id="1425">DelayController</Source>
                 <SourceResult id="1433">Total Time Excceeded</SourceResult>
-              </Transition>
+              <DId id="156">1490</DId><SId id="157">1446</SId><SRId id="158">1274</SRId></Transition>
               <Transition id="1434">
                 <Destination id="1435">Fail</Destination>
                 <Source id="1443">DelayController</Source>
                 <SourceResult id="1444">Broke Fixation</SourceResult>
-              </Transition>
-            <Parameter type="Numeric" id="1620"><Name id="1621">delayMs</Name><UIEnabled id="1622">true</UIEnabled><UIInfo id="1623"><OpenDescendant id="1624">0</OpenDescendant><Pos id="1625">141,474</Pos></UIInfo><UIOrder id="1626">0</UIOrder><Units id="1627"/><Value id="1628">2500</Value></Parameter></StateMachineElement>
+              <DId id="159">1490</DId><SId id="160">1446</SId><SRId id="161">1303</SRId></Transition>
+            <Parameter type="Numeric" id="1620"><Name id="1621">delayMs</Name><UIEnabled id="1622">true</UIEnabled><UIOrder id="1626">0</UIOrder><Value id="1628">2500</Value></Parameter><Parameter type="Double" id="366"><Max id="367">2500</Max><Min id="368">0</Min><Name id="369">distractorOnset</Name><UIEnabled id="370">true</UIEnabled><UIOrder id="371">0</UIOrder><Value id="260">1000</Value></Parameter><Parameter type="Boolean" id="290"><FalseLabel id="291">False</FalseLabel><Name id="292">useDistractor</Name><TrueLabel id="219">True</TrueLabel><UIEnabled id="220">true</UIEnabled><UIOrder id="224">0</UIOrder><Value id="296"/></Parameter><Parameter type="Timer" id="423"><Name id="424">distractorTimer</Name><TimeUnits id="307">Ms</TimeUnits><UIEnabled id="313">false</UIEnabled><UIOrder id="427">0</UIOrder></Parameter><Parameter type="Boolean" id="303"><FalseLabel id="304">False</FalseLabel><Name id="308">enAdjacentDistractor</Name><TrueLabel id="309">True</TrueLabel><UIEnabled id="231">true</UIEnabled><UIOrder id="232">0</UIOrder><Value id="240"/></Parameter><Parameter type="Double" id="272"><Max id="277">2500</Max><Min id="347">0</Min><Name id="348">distractorInterval</Name><UIEnabled id="349">true</UIEnabled><UIOrder id="350">0</UIOrder><Value id="351">500</Value></Parameter><Parameter type="Boolean" id="250"><FalseLabel id="251">False</FalseLabel><Name id="252">enDoubleAdjDistractor</Name><TrueLabel id="253">True</TrueLabel><UIEnabled id="254">true</UIEnabled><UIOrder id="255">0</UIOrder><Value id="256"/></Parameter><Parameter type="Color" id="352"><Name id="257">distractorColor</Name><UIEnabled id="258">true</UIEnabled><UIOrder id="259">0</UIOrder><Value id="359">255,0,0,255</Value></Parameter><Variable type="NumberVariable" id="279"><Name id="280">distractorIndex</Name><UIEnabled id="281">false</UIEnabled><UIOrder id="282">0</UIOrder><Value id="204">0</Value></Variable><Variable type="NumberVariable" id="205"><Name id="218">distractorShown</Name><UIEnabled id="286">false</UIEnabled><UIOrder id="287">0</UIOrder><Value id="288">0</Value></Variable></StateMachineElement>
 
             <ControlTarget type="CircleTarget" id="1182">
               <Color id="1183">0,255,0,255</Color>
@@ -508,10 +466,7 @@ fixSigImg.visible = false;</ExitScript>
               <Radius id="1189">40</Radius>
               <SubjectView id="1190">false</SubjectView>
               <UIEnabled id="1191">false</UIEnabled>
-              <UIInfo id="1192">
-                <OpenDescendant id="1193">0</OpenDescendant>
-                <Pos id="1194">162,775</Pos>
-              </UIInfo>
+              
               <UIOrder id="1195">0</UIOrder>
               <Visible id="1196">true</Visible>
             </ControlTarget>
@@ -525,10 +480,7 @@ fixSigImg.visible = false;</ExitScript>
               <Radius id="1263">100</Radius>
               <SubjectView id="1264">false</SubjectView>
               <UIEnabled id="1265">false</UIEnabled>
-              <UIInfo id="1266">
-                <OpenDescendant id="1267">0</OpenDescendant>
-                <Pos id="1268">291,774</Pos>
-              </UIInfo>
+              
               <UIOrder id="1269">0</UIOrder>
               <Visible id="1270">true</Visible>
             </ControlTarget>
@@ -540,14 +492,14 @@ fixSigImg.visible = false;</ExitScript>
               <Destination id="1688">Delay</Destination>
               <Source id="1689">Cue</Source>
               <SourceResult id="1690">Success</SourceResult>
-            </Transition>
+            <DId id="166">958</DId><SId id="167">940</SId><SRId id="168">1426</SRId></Transition>
             
             
 
             
             <VisualElement type="Token Tray Graphic" id="1208">
               <Color id="1209">0,0,0,255</Color>
-              <Dimensions id="1210">0,0,200,200</Dimensions>
+              
               <Layer id="1211">0</Layer>
               <Name id="1212">tokenTray</Name>
               <NumTokens id="1213">8</NumTokens>
@@ -559,25 +511,22 @@ fixSigImg.visible = false;</ExitScript>
               <Shape id="1219">Ellipse</Shape>
               <SubjectView id="1220">true</SubjectView>
               <TokenColors id="1221">#000000,#000000,#000000,#000000,#000000,#000000,#000000,#000000</TokenColors>
-              <TokenDimensions id="1222">0,0,30,30</TokenDimensions>
+              
               <TokenOutlineWidths id="1223">0,0,0,0,0,0,0,0</TokenOutlineWidths>
               <TokenOutlines id="1224">0,0,0,0,0,0,0,0</TokenOutlines>
               <TokenShape id="1225">Ellipse</TokenShape>
               <TokenShapes id="1226">Ellipse,Ellipse,Ellipse,Ellipse,Ellipse,Ellipse,Ellipse,Ellipse</TokenShapes>
               <TokenSizes id="1227">1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0</TokenSizes>
               <UIEnabled id="1228">false</UIEnabled>
-              <UIInfo id="1229">
-                <OpenDescendant id="1230">0</OpenDescendant>
-                <Pos id="1231">213,566</Pos>
-              </UIInfo>
+              
               <UIOrder id="1232">0</UIOrder>
               <Visible id="1233">false</Visible>
-            </VisualElement>
+            <Size id="172">200,200</Size><TokenSize id="173">30,30</TokenSize></VisualElement>
             <Transition id="1745">
               <Destination id="1746">Fixation</Destination>
               <Source id="1747"/>
               <SourceResult id="1748"/>
-            </Transition>
+            <DId id="174">2080</DId><SId id="175">0</SId></Transition>
             
             
             
@@ -596,15 +545,12 @@ fixSigImg.visible = false;</ExitScript>
             <StateMachineElement type="StateMachine" id="5264">
               <EntryScript id="5265"/>
               <ExitScript id="5266"/>
-              <Level id="5267">Stage</Level>
+              
               <Name id="5268">Memory</Name>
               <Result id="5388">
                 <Name id="5389">Success</Name>
                 <UIEnabled id="5390">false</UIEnabled>
-                <UIInfo id="5391">
-                  <OpenDescendant id="5392">0</OpenDescendant>
-                  <Pos id="5393">397,127</Pos>
-                </UIInfo>
+                
                 <UIOrder id="5394">0</UIOrder>
               </Result>
               
@@ -634,16 +580,13 @@ fixSigImg.visible = false;</ExitScript>
                     <Name id="3443">Success</Name>
                   </Result>
                   <SignalChannel id="5326">Position</SignalChannel>
-                  <TargetEntryScript id="5327">targetAcquired.value = true;</TargetEntryScript>
-                  <TargetExitScript id="5328"/>
+                  
+                  
                   <TimeUnits id="5329">Ms</TimeUnits>
                   <TotalTime id="5330">1100</TotalTime>
-                  <Type id="5331"/>
+                  
                   <UIEnabled id="5332">false</UIEnabled>
-                  <UIInfo id="5333">
-                    <OpenDescendant id="5334">0</OpenDescendant>
-                    <Pos id="5335">121,113</Pos>
-                  </UIInfo>
+                  
                   <UIOrder id="5336">0</UIOrder>
                 </ControlElement>
                 <EntryScript id="5302">if(useReminderCue.value)
@@ -655,102 +598,90 @@ fixSigImg.visible = false;</ExitScript>
 MemoryController.fixationTime = memHoldMs.value;
 MemoryController.maxAcquisitionTime = memAcqMs.value;
 MemoryController.totalTime = MemoryController.fixationTime+MemoryController.maxAcquisitionTime;</EntryScript>
-                <ExitScript id="5303"/>
-                <FrameScript id="5304"/>
+                <ExitScript id="5303">if(MemoryController.userEnteredTarget()){
+targetAcquired.value = true;
+}
+</ExitScript>
+                <FrameScript id="5304">if(MemoryController.userEnteredTarget()){
+targetAcquired.value = true;
+}
+</FrameScript>
                 <Name id="5305">EnterTarget</Name>
                 <Parameter type="Boolean" id="5352">
                   <FalseLabel id="5353">False</FalseLabel>
                   <Name id="5354">targetAcquired</Name>
                   <TrueLabel id="5355">True</TrueLabel>
                   <UIEnabled id="5356">false</UIEnabled>
-                  <UIInfo id="5357">
-                    <OpenDescendant id="5358">0</OpenDescendant>
-                    <Pos id="5359">113,491</Pos>
-                  </UIInfo>
+                  
                   <UIOrder id="5360">0</UIOrder>
                   <Value id="5361">false</Value>
                 </Parameter>
                 <Result id="5368">
                   <Name id="5369">Success</Name>
                   <UIEnabled id="5370">false</UIEnabled>
-                  <UIInfo id="5371">
-                    <OpenDescendant id="5372">0</OpenDescendant>
-                    <Pos id="5373">404,120</Pos>
-                  </UIInfo>
+                  
                   <UIOrder id="5374">0</UIOrder>
                 </Result>
                 <Result id="5378">
                   <Name id="5379">FailEnter</Name>
                   <UIEnabled id="5380">false</UIEnabled>
-                  <UIInfo id="5381">
-                    <OpenDescendant id="5382">0</OpenDescendant>
-                    <Pos id="5383">404,275</Pos>
-                  </UIInfo>
+                  
                   <UIOrder id="5384">0</UIOrder>
                 </Result>
                 <Transition id="3479">
                   <Destination id="3480">Success</Destination>
                   <Source id="3481">MemoryController</Source>
                   <SourceResult id="3482">Success</SourceResult>
-                </Transition>
+                <DId id="206">5368</DId><SId id="207">5318</SId><SRId id="208">3442</SRId></Transition>
                 <Transition id="3483">
                   <Destination id="3484">FailEnter</Destination>
                   <Source id="3485">MemoryController</Source>
                   <SourceResult id="3486">Reaquistion Time Exceeded</SourceResult>
-                </Transition>
+                <DId id="209">5378</DId><SId id="210">5318</SId><SRId id="211">3390</SRId></Transition>
                 <Transition id="3487">
                   <Destination id="3488">FailEnter</Destination>
                   <Source id="3489">MemoryController</Source>
                   <SourceResult id="3490">Initial Aquistion Time Exceeded</SourceResult>
-                </Transition>
+                <DId id="212">5378</DId><SId id="213">5318</SId><SRId id="214">3402</SRId></Transition>
                 <Transition id="3491">
                   <Destination id="3492">FailEnter</Destination>
                   <Source id="3493">MemoryController</Source>
                   <SourceResult id="3495">Total Time Excceeded</SourceResult>
-                </Transition>
+                <DId id="215">5378</DId><SId id="216">5318</SId><SRId id="217">3422</SRId></Transition>
                 
                 <UIEnabled id="5306">false</UIEnabled>
-                <UIInfo id="5307">
-                  <OpenDescendant id="5308">0</OpenDescendant>
-                  <Pos id="5309">199,162</Pos>
-                </UIInfo>
+                
                 <UIOrder id="5310">0</UIOrder>
-              <Result id="1094"><Name id="1095">FailHold</Name><UIEnabled id="1096">false</UIEnabled><UIInfo id="1097"><OpenDescendant id="1098">0</OpenDescendant><Pos id="1099">404,368</Pos></UIInfo><UIOrder id="1100">0</UIOrder></Result><Transition id="437"><Destination id="438">FailHold</Destination><Source id="439">MemoryController</Source><SourceResult id="440">Broke Fixation</SourceResult></Transition><Parameter type="Numeric" id="1686"><Name id="1691">memAcqMs</Name><UIEnabled id="1692">true</UIEnabled><UIInfo id="1693"><OpenDescendant id="1694">0</OpenDescendant><Pos id="1695">120,579</Pos></UIInfo><UIOrder id="1696">0</UIOrder><Units id="1697"/><Value id="1698">1000</Value></Parameter><Parameter type="Numeric" id="1710"><Name id="1711">memHoldMs</Name><UIEnabled id="1712">true</UIEnabled><UIInfo id="1713"><OpenDescendant id="1714">0</OpenDescendant><Pos id="1715">118,669</Pos></UIInfo><UIOrder id="1716">0</UIOrder><Units id="1721"/><Value id="1722">100</Value></Parameter><Parameter type="Boolean" id="1852"><FalseLabel id="1853">False</FalseLabel><Name id="1876">useReminderCue</Name><TrueLabel id="1877">True</TrueLabel><UIEnabled id="1878">true</UIEnabled><UIInfo id="1879"><OpenDescendant id="1880">0</OpenDescendant><Pos id="1881">118,768</Pos></UIInfo><UIOrder id="1882">0</UIOrder><Value id="1883">false</Value></Parameter></StateMachineElement>
-              <Type id="5269">StateMachine</Type>
+              <Result id="1094"><Name id="1095">FailHold</Name><UIEnabled id="1096">false</UIEnabled><UIOrder id="1100">0</UIOrder></Result><Transition id="437"><Destination id="438">FailHold</Destination><Source id="439">MemoryController</Source><SourceResult id="440">Broke Fixation</SourceResult><DId id="221">1094</DId><SId id="222">5318</SId><SRId id="223">3432</SRId></Transition><Parameter type="Numeric" id="1686"><Name id="1691">memAcqMs</Name><UIEnabled id="1692">true</UIEnabled><UIOrder id="1696">0</UIOrder><Value id="1698">1000</Value></Parameter><Parameter type="Numeric" id="1710"><Name id="1711">memHoldMs</Name><UIEnabled id="1712">true</UIEnabled><UIOrder id="1716">0</UIOrder><Value id="1722">100</Value></Parameter><Parameter type="Boolean" id="1852"><FalseLabel id="1853">False</FalseLabel><Name id="1876">useReminderCue</Name><TrueLabel id="1877">True</TrueLabel><UIEnabled id="1878">true</UIEnabled><UIOrder id="1882">0</UIOrder><Value id="1883">false</Value></Parameter></StateMachineElement>
+              
               <UIEnabled id="5270">false</UIEnabled>
-              <UIInfo id="5271">
-                <OpenDescendant id="5272">0</OpenDescendant>
-                <Pos id="5273">663,201</Pos>
-              </UIInfo>
+              
               <UIOrder id="5274">0</UIOrder>
               
               <Result id="5472">
                 <Name id="5473">FailEnter</Name>
                 <UIEnabled id="5474">false</UIEnabled>
-                <UIInfo id="5475">
-                  <OpenDescendant id="5476">0</OpenDescendant>
-                  <Pos id="5477">384,270</Pos>
-                </UIInfo>
+                
                 <UIOrder id="5478">0</UIOrder>
-              </Result>
+              <EntryScript id="119">setErrorPins(0xD);</EntryScript></Result>
               <Transition id="3394">
                 <Destination id="3395">Success</Destination>
                 <Source id="3396">EnterTarget</Source>
                 <SourceResult id="3399">Success</SourceResult>
-              </Transition>
+              <DId id="233">5388</DId><SId id="234">5300</SId><SRId id="235">5368</SRId></Transition>
               <Transition id="3400">
                 <Destination id="3401">FailEnter</Destination>
                 <Source id="3411">EnterTarget</Source>
                 <SourceResult id="3415">FailEnter</SourceResult>
-              </Transition>
+              <DId id="236">5472</DId><SId id="237">5300</SId><SRId id="238">5378</SRId></Transition>
               
               
               
-            <Transition id="1607"><Destination id="1608">EnterTarget</Destination><Source id="1609"/><SourceResult id="1610"/></Transition><Result id="1253"><Name id="1254">FailHold</Name><UIEnabled id="1255">false</UIEnabled><UIInfo id="1271"><OpenDescendant id="1272">0</OpenDescendant><Pos id="1273">389,389</Pos></UIInfo><UIOrder id="1276">0</UIOrder></Result><Transition id="454"><Destination id="455">FailHold</Destination><Source id="456">EnterTarget</Source><SourceResult id="457">FailHold</SourceResult></Transition></StateMachineElement>
+            <Transition id="1607"><Destination id="1608">EnterTarget</Destination><Source id="1609"/><SourceResult id="1610"/><DId id="239">5300</DId></Transition><Result id="1253"><Name id="1254">FailHold</Name><UIEnabled id="1255">false</UIEnabled><UIOrder id="1276">0</UIOrder><EntryScript id="122">setErrorPins(0xC);</EntryScript></Result><Transition id="454"><Destination id="455">FailHold</Destination><Source id="456">EnterTarget</Source><SourceResult id="457">FailHold</SourceResult><DId id="244">1253</DId><SId id="245">5300</SId><SRId id="246">1094</SRId></Transition></StateMachineElement>
             
             
             
-          <VisualElement type="Circle Graphic" id="2278"><Color id="2279">255,255,255,255</Color><Layer id="2280">0</Layer><Name id="2283">fixGraphic</Name><OperatorView id="2284">true</OperatorView><Outline id="2285">false</Outline><OutlineThickness id="2286">0</OutlineThickness><Position id="2287">400,300</Position><Radius id="2288">15</Radius><SubjectView id="2289">true</SubjectView><UIEnabled id="2290">false</UIEnabled><UIInfo id="2291"><OpenDescendant id="2292">0</OpenDescendant><Pos id="2293">79,570</Pos></UIInfo><UIOrder id="2294">0</UIOrder><Visible id="2295">true</Visible></VisualElement><Parameter type="Numeric" id="2178"><Name id="2179">cueR</Name><UIEnabled id="2181">true</UIEnabled><UIInfo id="2183"><OpenDescendant id="2184">0</OpenDescendant><Pos id="2185">123,663</Pos></UIInfo><UIOrder id="2186">0</UIOrder><Units id="2187"/><Value id="2188">255</Value></Parameter><Parameter type="Numeric" id="2210"><Name id="2211">cueG</Name><UIEnabled id="2212">true</UIEnabled><UIInfo id="2213"><OpenDescendant id="2214">0</OpenDescendant><Pos id="2215">208,664</Pos></UIInfo><UIOrder id="2216">0</UIOrder><Units id="2217"/><Value id="2232">255</Value></Parameter><Parameter type="Numeric" id="2250"><Name id="2251">cueB</Name><UIEnabled id="2252">true</UIEnabled><UIInfo id="2253"><OpenDescendant id="2254">0</OpenDescendant><Pos id="2255">296,663</Pos></UIInfo><UIOrder id="2256">0</UIOrder><Units id="2257"/><Value id="2258">255</Value></Parameter><StateMachineElement type="Reward" id="1857"><MinRewardPeriod id="1858">60</MinRewardPeriod><Name id="1859">Reward</Name><NumRewards id="1860">1</NumRewards><Result id="1553"><Name id="1554">done</Name></Result><RewardChan id="1861">1</RewardChan><RewardQty id="1862">60</RewardQty><Type id="1863">Reward</Type><UIEnabled id="1864">false</UIEnabled><UIInfo id="1865"><OpenDescendant id="1866">0</OpenDescendant><Pos id="1867">797,200</Pos></UIInfo><UIOrder id="1868">0</UIOrder></StateMachineElement><Transition id="1580"><Destination id="1581">Reward</Destination><Source id="1582">Memory</Source><SourceResult id="1583">Success</SourceResult></Transition><Transition id="1563"><Destination id="1564">Memory</Destination><Source id="1565">Delay</Source><SourceResult id="1566">Success</SourceResult></Transition><OutputSignal type="BinaryDataOutput" id="785"><Enabled id="786">true</Enabled><Name id="787">eventCode</Name><Port id="788">PAR0</Port><UIEnabled id="789">false</UIEnabled><UIInfo id="790"><OpenDescendant id="791">0</OpenDescendant><Pos id="792">471,1044</Pos></UIInfo><UIOrder id="793">0</UIOrder><Value id="794">0</Value></OutputSignal><Parameter type="OperatorClick" id="727"><Name id="728">operatorClick</Name><NewClick id="729">false</NewClick><Pos id="730">397,289</Pos><UIEnabled id="731">false</UIEnabled><UIInfo id="732"><OpenDescendant id="733">0</OpenDescendant><Pos id="739">823,1078</Pos></UIInfo><UIOrder id="740">0</UIOrder></Parameter><Parameter type="SignalValue" id="746"><Name id="747">posSig</Name><Signal id="748">Position</Signal><UIEnabled id="749">false</UIEnabled><UIInfo id="750"><OpenDescendant id="751">0</OpenDescendant><Pos id="752">734,1077</Pos></UIInfo><UIOrder id="753">0</UIOrder></Parameter><ScriptFunction type="ScriptFunction" id="707"><Inputs id="708"/><Name id="709">calibratePos</Name><Script id="710">if(!operatorClick.newClick)
+          <VisualElement type="Circle Graphic" id="2278"><Color id="2279">255,255,255,255</Color><Layer id="2280">0</Layer><Name id="2283">fixGraphic</Name><OperatorView id="2284">true</OperatorView><Outline id="2285">false</Outline><OutlineThickness id="2286">0</OutlineThickness><Position id="2287">400,300</Position><Radius id="2288">15</Radius><SubjectView id="2289">true</SubjectView><UIEnabled id="2290">false</UIEnabled><UIOrder id="2294">0</UIOrder><Visible id="2295">true</Visible></VisualElement><Parameter type="Numeric" id="2178"><Name id="2179">cueR</Name><UIEnabled id="2181">true</UIEnabled><UIOrder id="2186">0</UIOrder><Value id="2188">255</Value></Parameter><Parameter type="Numeric" id="2210"><Name id="2211">cueG</Name><UIEnabled id="2212">true</UIEnabled><UIOrder id="2216">0</UIOrder><Value id="2232">255</Value></Parameter><Parameter type="Numeric" id="2250"><Name id="2251">cueB</Name><UIEnabled id="2252">true</UIEnabled><UIOrder id="2256">0</UIOrder><Value id="2258">255</Value></Parameter><StateMachineElement type="Reward" id="1857"><MinRewardPeriod id="1858">500</MinRewardPeriod><Name id="1859">Reward</Name><NumRewards id="1860">1</NumRewards><Result id="1553"><Name id="1554">done</Name></Result><RewardChan id="1861">1</RewardChan><RewardQty id="1862">60</RewardQty><UIEnabled id="1864">true</UIEnabled><UIOrder id="1868">0</UIOrder></StateMachineElement><Transition id="1580"><Destination id="1581">Reward</Destination><Source id="1582">Memory</Source><SourceResult id="1583">Success</SourceResult><DId id="261">1857</DId><SId id="262">5264</SId><SRId id="263">5388</SRId></Transition><Transition id="1563"><Destination id="1564">Memory</Destination><Source id="1565">Delay</Source><SourceResult id="1566">Success</SourceResult><DId id="264">5264</DId><SId id="265">958</SId><SRId id="266">1480</SRId></Transition><Parameter type="OperatorClick" id="727"><Name id="728">operatorClick</Name><NewClick id="729">false</NewClick><Pos id="730">397,289</Pos><UIEnabled id="731">false</UIEnabled><UIOrder id="740">0</UIOrder></Parameter><Parameter type="SignalValue" id="746"><Name id="747">posSig</Name><Signal id="748">Position</Signal><UIEnabled id="749">false</UIEnabled><UIOrder id="753">0</UIOrder></Parameter><ScriptFunction type="ScriptFunction" id="707"><Inputs id="708"/><Name id="709">calibratePos</Name><Script id="710">if(!(operatorClick.newClick &amp;&amp; !(operatorClick.newClick = false)))
 	return;
 var x = posSig.getValue(&quot;x&quot;); 
 var y = posSig.getValue(&quot;y&quot;);
@@ -769,27 +700,35 @@ else
 }
 calibFeedback.text = text;
 calibFeedback.setPos(fixGraphic.x+2*fixGraphic.radius,fixGraphic.y-fixGraphic.radius);
-calibFeedback.visible = true;</Script><UIEnabled id="711">false</UIEnabled><UIInfo id="712"><OpenDescendant id="713">0</OpenDescendant><Pos id="714">912,1077</Pos></UIInfo><UIOrder id="715">0</UIOrder></ScriptFunction><StateMachineElement type="ScriptElement" id="801"><Name id="802">FailFixHold</Name><Result id="514"><Name id="515">false</Name></Result><Result id="524"><Name id="525">true</Name></Result><Script id="803">eventCode.value = 0xFF;
-return true;</Script><Type id="804">ScriptElement</Type><UIEnabled id="805">false</UIEnabled><UIInfo id="806"><OpenDescendant id="807">0</OpenDescendant><Pos id="808">812,770</Pos></UIInfo><UIOrder id="809">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="815"><Name id="816">CueIDEvt</Name><Result id="539"><Name id="540">false</Name><UIInfo id="558"><Pos id="560">2000,2000</Pos></UIInfo></Result><Result id="549"><Name id="550">true</Name><UIInfo id="566"><Pos id="568">2075,2000</Pos></UIInfo></Result><Script id="817">eventCode.value = 0x80 | targetSelector.value;
-return true;</Script><Type id="818">ScriptElement</Type><UIEnabled id="819">false</UIEnabled><UIInfo id="820"><OpenDescendant id="821">0</OpenDescendant><Pos id="822">223,204</Pos></UIInfo><UIOrder id="823">0</UIOrder></StateMachineElement><VisualElement type="Text Graphic" id="758"><Color id="759">255,170,0,255</Color><Dimensions id="760">0,0,300,20</Dimensions><Layer id="762">4</Layer><Name id="763">calibFeedback</Name><OperatorView id="764">true</OperatorView><Position id="765">0,0</Position><SubjectView id="766">false</SubjectView><Text id="767">Calibration offsets were set</Text><UIEnabled id="768">false</UIEnabled><UIInfo id="769"><OpenDescendant id="770">0</OpenDescendant><Pos id="771">335,568</Pos></UIInfo><UIOrder id="772">0</UIOrder><Visible id="773">false</Visible></VisualElement><Transition id="583"><Destination id="584">FailFixHold</Destination><Source id="585">Fixation</Source><SourceResult id="586">Fail</SourceResult></Transition><StateMachineElement type="ScriptElement" id="916"><Name id="917">FailDelHold</Name><Result id="587"><Name id="589">false</Name></Result><Result id="598"><Name id="599">true</Name></Result><Script id="918">eventCode.value = 0xFE;
-return true;</Script><Type id="919">ScriptElement</Type><UIEnabled id="920">false</UIEnabled><UIInfo id="921"><OpenDescendant id="922">0</OpenDescendant><Pos id="925">806,637</Pos></UIInfo><UIOrder id="926">0</UIOrder></StateMachineElement><Transition id="613"><Destination id="614">CueIDEvt</Destination><Source id="615">Fixation</Source><SourceResult id="616">Success</SourceResult></Transition><Transition id="617"><Destination id="618">Cue</Destination><Source id="619">CueIDEvt</Source><SourceResult id="620">false</SourceResult></Transition><Transition id="621"><Destination id="622">Cue</Destination><Source id="623">CueIDEvt</Source><SourceResult id="624">true</SourceResult></Transition><StateMachineElement type="ScriptElement" id="993"><Name id="1005">FailSac</Name><Result id="640"><Name id="645">false</Name></Result><Result id="654"><Name id="655">true</Name></Result><Script id="1006">eventCode.value = 0xFD;
-return true;</Script><Type id="1007">ScriptElement</Type><UIEnabled id="1008">false</UIEnabled><UIInfo id="1009"><OpenDescendant id="1010">0</OpenDescendant><Pos id="1011">805,510</Pos></UIInfo><UIOrder id="1024">0</UIOrder></StateMachineElement><StateMachineElement type="ScriptElement" id="1037"><Name id="1050">FailSacHold</Name><Result id="669"><Name id="670">false</Name></Result><Result id="679"><Name id="680">true</Name></Result><Script id="1053">eventCode.value = 0xFC;
-return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">false</UIEnabled><UIInfo id="1056"><OpenDescendant id="1057">0</OpenDescendant><Pos id="1058">817,363</Pos></UIInfo><UIOrder id="1059">0</UIOrder></StateMachineElement><Transition id="744"><Destination id="745">FailSacHold</Destination><Source id="754">Memory</Source><SourceResult id="755">FailHold</SourceResult></Transition><Transition id="726"><Destination id="741">FailSac</Destination><Source id="742">Memory</Source><SourceResult id="743">FailEnter</SourceResult></Transition><OutputSignal type="DigitalOutput" id="1355"><Enabled id="1356">true</Enabled><Name id="1357">goodT</Name><Pin id="1358">1</Pin><Port id="1359">BNC0</Port><UIEnabled id="1360">false</UIEnabled><UIInfo id="1361"><OpenDescendant id="1362">0</OpenDescendant><Pos id="1363">217,1051</Pos></UIInfo><UIOrder id="1364">0</UIOrder><Value id="1365">false</Value></OutputSignal><StateMachineElement type="State" id="1373"><BackgroundColor id="1374">0,0,0,255</BackgroundColor><ControlElement type="Stopwatch Controller" id="1391"><Name id="1445">TrialCorrectTimer</Name><Result id="814"><Name id="825">Success</Name></Result><Time id="1465">10</Time><TimeUnits id="1466">Ms</TimeUnits><Type id="1467"/><UIEnabled id="1468">false</UIEnabled><UIInfo id="1469"><OpenDescendant id="1470">0</OpenDescendant><Pos id="1471">197,149</Pos></UIInfo><UIOrder id="1472">0</UIOrder></ControlElement><EntryScript id="1375">goodT.value = true;</EntryScript><ExitScript id="1376">goodT.value = false;</ExitScript><FrameScript id="1377"/><Name id="1378">MarkCorrectTrial</Name><Result id="1479"><Name id="1487">Done</Name><UIEnabled id="1488">false</UIEnabled><UIInfo id="1489"><OpenDescendant id="1497">0</OpenDescendant><Pos id="1498">479,142</Pos></UIInfo><UIOrder id="1499">0</UIOrder></Result><Transition id="843"><Destination id="844">Done</Destination><Source id="845">TrialCorrectTimer</Source><SourceResult id="846">Success</SourceResult></Transition><UIEnabled id="1379">false</UIEnabled><UIInfo id="1380"><OpenDescendant id="1381">0</OpenDescendant><Pos id="1382">911,198</Pos></UIInfo><UIOrder id="1383">0</UIOrder></StateMachineElement><Transition id="856"><Destination id="859">FailDelHold</Destination><Source id="860">Delay</Source><SourceResult id="865">Fail</SourceResult></Transition><Transition id="866"><Destination id="867">Success</Destination><Source id="868">MarkCorrectTrial</Source><SourceResult id="869">Done</SourceResult></Transition><StateMachineElement type="State" id="1525"><BackgroundColor id="1526">0,0,0,255</BackgroundColor><ControlElement type="Stopwatch Controller" id="1543"><Name id="1544">FailCodeTimer</Name><Result id="797"><Name id="798">Success</Name></Result><Time id="1545">10</Time><TimeUnits id="1546">Ms</TimeUnits><Type id="1547"/><UIEnabled id="1548">false</UIEnabled><UIInfo id="1549"><OpenDescendant id="1550">0</OpenDescendant><Pos id="1551">96,110</Pos></UIInfo><UIOrder id="1552">0</UIOrder></ControlElement><EntryScript id="1527"/><ExitScript id="1528"/><FrameScript id="1529"/><Name id="1530">MarkFailCode</Name><Result id="1561"><Name id="1562">Done</Name><UIEnabled id="1567">false</UIEnabled><UIInfo id="1568"><OpenDescendant id="1569">0</OpenDescendant><Pos id="1579">264,110</Pos></UIInfo><UIOrder id="1584">0</UIOrder></Result><Transition id="837"><Destination id="838">Done</Destination><Source id="839">FailCodeTimer</Source><SourceResult id="840">Success</SourceResult></Transition><UIEnabled id="1531">false</UIEnabled><UIInfo id="1532"><OpenDescendant id="1533">0</OpenDescendant><Pos id="1534">1018,524</Pos></UIInfo><UIOrder id="1535">0</UIOrder></StateMachineElement><Transition id="852"><Destination id="853">MarkCorrectTrial</Destination><Source id="870">Reward</Source><SourceResult id="871">done</SourceResult></Transition><Transition id="934"><Destination id="935">MarkFailCode</Destination><Source id="936">FailFixHold</Source><SourceResult id="937">false</SourceResult></Transition><Transition id="938"><Destination id="939">MarkFailCode</Destination><Source id="943">FailFixHold</Source><SourceResult id="944">true</SourceResult></Transition><Transition id="945"><Destination id="946">MarkFailCode</Destination><Source id="947">FailDelHold</Source><SourceResult id="948">false</SourceResult></Transition><Transition id="949"><Destination id="951">MarkFailCode</Destination><Source id="952">FailDelHold</Source><SourceResult id="953">true</SourceResult></Transition><Transition id="954"><Destination id="955">MarkFailCode</Destination><Source id="956">FailSac</Source><SourceResult id="972">false</SourceResult></Transition><Transition id="973"><Destination id="974">MarkFailCode</Destination><Source id="975">FailSac</Source><SourceResult id="976">true</SourceResult></Transition><Transition id="977"><Destination id="978">MarkFailCode</Destination><Source id="979">FailSacHold</Source><SourceResult id="980">false</SourceResult></Transition><Transition id="981"><Destination id="982">MarkFailCode</Destination><Source id="983">FailSacHold</Source><SourceResult id="984">true</SourceResult></Transition><Transition id="985"><Destination id="986">Failed</Destination><Source id="987">MarkFailCode</Source><SourceResult id="988">Done</SourceResult></Transition><Transition id="1092"><Destination id="1093">FailDelHold</Destination><Source id="1101">Cue</Source><SourceResult id="1102">Failure</SourceResult></Transition><Parameter type="Double" id="1744"><Max id="1749">10000</Max><Min id="1750">0</Min><Name id="1751">mmDisplayWidth</Name><UIEnabled id="1752">true</UIEnabled><UIInfo id="1754"><OpenDescendant id="1755">0</OpenDescendant><Pos id="1756">49,882</Pos></UIInfo><UIOrder id="1757">0</UIOrder><Value id="1758">400.05</Value></Parameter><Parameter type="Double" id="1766"><Max id="1767">10000</Max><Min id="1768">0</Min><Name id="1769">mmCueRad</Name><UIEnabled id="1770">true</UIEnabled><UIInfo id="1771"><OpenDescendant id="1772">0</OpenDescendant><Pos id="1773">145,882</Pos></UIInfo><UIOrder id="1774">0</UIOrder><Value id="1775">5</Value></Parameter><Parameter type="Double" id="1764"><Max id="1765">10000</Max><Min id="1776">0</Min><Name id="1777">mmFixWinRad</Name><UIEnabled id="1778">true</UIEnabled><UIInfo id="1781"><OpenDescendant id="1782">0</OpenDescendant><Pos id="1783">232,884</Pos></UIInfo><UIOrder id="1784">0</UIOrder><Value id="1785">60</Value></Parameter><Parameter type="Double" id="1792"><Max id="1793">10000</Max><Min id="1794">0</Min><Name id="1795">mmSacWinRad</Name><UIEnabled id="1796">true</UIEnabled><UIInfo id="1797"><OpenDescendant id="1802">0</OpenDescendant><Pos id="1803">332,884</Pos></UIInfo><UIOrder id="1804">0</UIOrder><Value id="1805">70</Value></Parameter><Parameter type="Double" id="1817"><Max id="1823">10000</Max><Min id="1824">0</Min><Name id="1825">mmTrayRad</Name><UIEnabled id="1826">true</UIEnabled><UIInfo id="1827"><OpenDescendant id="1829">0</OpenDescendant><Pos id="1833">415,886</Pos></UIInfo><UIOrder id="1835">0</UIOrder><Value id="1836">105</Value></Parameter><ScriptFunction type="ScriptFunction" id="1742"><Inputs id="1743">mm</Inputs><Name id="1759">mmToPixel</Name><Script id="1760">return Math.round(800.0*(mm/mmDisplayWidth.value));</Script><UIEnabled id="1762">false</UIEnabled><UIInfo id="1763"><OpenDescendant id="1786">0</OpenDescendant><Pos id="1787">506,888</Pos></UIInfo><UIOrder id="1788">0</UIOrder></ScriptFunction><OutputSignal type="DigitalOutput" id="1808"><Enabled id="1812">true</Enabled><Name id="1813">fixOn</Name><Pin id="1816">0</Pin><Port id="1837">BNC0</Port><UIEnabled id="1838">false</UIEnabled><UIInfo id="1842"><OpenDescendant id="1843">0</OpenDescendant><Pos id="1845">88,1046</Pos></UIInfo><UIOrder id="1850">0</UIOrder><Value id="1851">false</Value></OutputSignal><OutputSignal type="DigitalOutput" id="1893"><Enabled id="1894">true</Enabled><Name id="1895">cueOn</Name><Pin id="1896">2</Pin><Port id="1897">BNC0</Port><UIEnabled id="1898">false</UIEnabled><UIInfo id="1899"><OpenDescendant id="1900">0</OpenDescendant><Pos id="1901">346,1052</Pos></UIInfo><UIOrder id="1902">0</UIOrder><Value id="1903">false</Value></OutputSignal><Parameter type="Boolean" id="1854"><FalseLabel id="1855">False</FalseLabel><Name id="1856">usePhotodetectors</Name><TrueLabel id="1869">True</TrueLabel><UIEnabled id="1870">true</UIEnabled><UIInfo id="1871"><OpenDescendant id="1872">0</OpenDescendant><Pos id="1873">810,955</Pos></UIInfo><UIOrder id="1874">0</UIOrder><Value id="1875">false</Value></Parameter><VisualElement type="Circle Graphic" id="1890"><Color id="1891">255,255,255,255</Color><Layer id="1892">0</Layer><Name id="1904">fixSigImg</Name><OperatorView id="1905">true</OperatorView><Outline id="1906">false</Outline><OutlineThickness id="1907">0</OutlineThickness><Position id="1908">750,5</Position><Radius id="1909">3</Radius><SubjectView id="1910">true</SubjectView><UIEnabled id="1911">false</UIEnabled><UIInfo id="1912"><OpenDescendant id="1913">0</OpenDescendant><Pos id="1914">705,957</Pos></UIInfo><UIOrder id="1915">0</UIOrder><Visible id="1916">false</Visible></VisualElement><VisualElement type="Circle Graphic" id="1929"><Color id="1930">255,255,255,255</Color><Layer id="1931">0</Layer><Name id="1932">cueSigImg</Name><OperatorView id="1933">true</OperatorView><Outline id="1934">false</Outline><OutlineThickness id="1935">0</OutlineThickness><Position id="1936">775,5</Position><Radius id="1937">3</Radius><SubjectView id="1938">true</SubjectView><UIEnabled id="1939">false</UIEnabled><UIInfo id="1940"><OpenDescendant id="1941">0</OpenDescendant><Pos id="1942">939,956</Pos></UIInfo><UIOrder id="1943">0</UIOrder><Visible id="1944">false</Visible></VisualElement></StateMachineElement>
+calibFeedback.visible = true;</Script><UIEnabled id="711">false</UIEnabled><UIOrder id="715">0</UIOrder></ScriptFunction><VisualElement type="Text Graphic" id="758"><Color id="759">255,170,0,255</Color><Layer id="762">4</Layer><Name id="763">calibFeedback</Name><OperatorView id="764">true</OperatorView><Position id="765">0,0</Position><SubjectView id="766">false</SubjectView><Text id="767">Calibration offsets were set</Text><UIEnabled id="768">false</UIEnabled><UIOrder id="772">0</UIOrder><Visible id="773">false</Visible><Size id="273">300,20</Size></VisualElement><StateMachineElement type="State" id="1373"><BackgroundColor id="1374">0,0,0,255</BackgroundColor><ControlElement type="Stopwatch Controller" id="1391"><Name id="1445">TrialCorrectTimer</Name><Result id="814"><Name id="825">Success</Name></Result><Time id="1465">10</Time><TimeUnits id="1466">Ms</TimeUnits><UIEnabled id="1468">false</UIEnabled><UIOrder id="1472">0</UIOrder></ControlElement><EntryScript id="1375">//In Arnsten Pictobox, the 8th bit
+//is active low used to trigger 
+//the read of an event code and
+//the 7th pin is used to signal a 
+//good trial (on rising edge)
+eventCode.value = 0x40;</EntryScript><ExitScript id="1376"/><FrameScript id="1377"/><Name id="1378">MarkCorrectTrial</Name><Result id="1479"><Name id="1487">Done</Name><UIEnabled id="1488">false</UIEnabled><UIOrder id="1499">0</UIOrder></Result><Transition id="843"><Destination id="844">Done</Destination><Source id="845">TrialCorrectTimer</Source><SourceResult id="846">Success</SourceResult><DId id="293">1479</DId><SId id="294">1391</SId><SRId id="295">814</SRId></Transition><UIEnabled id="1379">false</UIEnabled><UIOrder id="1383">0</UIOrder></StateMachineElement><Transition id="866"><Destination id="867">Success</Destination><Source id="868">MarkCorrectTrial</Source><SourceResult id="869">Done</SourceResult><DId id="300">1995</DId><SId id="301">1373</SId><SRId id="302">1479</SRId></Transition><StateMachineElement type="State" id="1525"><BackgroundColor id="1526">0,0,0,255</BackgroundColor><ControlElement type="Stopwatch Controller" id="1543"><Name id="1544">FailCodeTimer</Name><Result id="797"><Name id="798">Success</Name></Result><Time id="1545">500</Time><TimeUnits id="1546">Ms</TimeUnits><UIEnabled id="1548">false</UIEnabled><UIOrder id="1552">0</UIOrder></ControlElement><EntryScript id="1527"/><ExitScript id="1528"/><FrameScript id="1529"/><Name id="1530">MarkFailCode</Name><Result id="1561"><Name id="1562">Done</Name><UIEnabled id="1567">false</UIEnabled><UIOrder id="1584">0</UIOrder></Result><Transition id="837"><Destination id="838">Done</Destination><Source id="839">FailCodeTimer</Source><SourceResult id="840">Success</SourceResult><DId id="310">1561</DId><SId id="311">1543</SId><SRId id="312">797</SRId></Transition><UIEnabled id="1531">false</UIEnabled><UIOrder id="1535">0</UIOrder></StateMachineElement><Transition id="852"><Destination id="853">MarkCorrectTrial</Destination><Source id="870">Reward</Source><SourceResult id="871">done</SourceResult><DId id="314">1373</DId><SId id="315">1857</SId><SRId id="316">1553</SRId></Transition><Transition id="985"><Destination id="986">Failed</Destination><Source id="987">MarkFailCode</Source><SourceResult id="988">Done</SourceResult><DId id="341">902</DId><SId id="342">1525</SId><SRId id="343">1561</SRId></Transition><Parameter type="Double" id="1744"><Max id="1749">10000</Max><Min id="1750">0</Min><Name id="1751">mmDisplayWidth</Name><UIEnabled id="1752">true</UIEnabled><UIOrder id="1757">0</UIOrder><Value id="1758">447</Value></Parameter><Parameter type="Double" id="1766"><Max id="1767">10000</Max><Min id="1768">0</Min><Name id="1769">mmCueRad</Name><UIEnabled id="1770">true</UIEnabled><UIOrder id="1774">0</UIOrder><Value id="1775">5</Value></Parameter><Parameter type="Double" id="1764"><Max id="1765">10000</Max><Min id="1776">0</Min><Name id="1777">mmFixWinRad</Name><UIEnabled id="1778">true</UIEnabled><UIOrder id="1784">0</UIOrder><Value id="1785">60</Value></Parameter><Parameter type="Double" id="1792"><Max id="1793">10000</Max><Min id="1794">0</Min><Name id="1795">mmSacWinRad</Name><UIEnabled id="1796">true</UIEnabled><UIOrder id="1804">0</UIOrder><Value id="1805">70</Value></Parameter><Parameter type="Double" id="1817"><Max id="1823">10000</Max><Min id="1824">0</Min><Name id="1825">mmTrayRad</Name><UIEnabled id="1826">true</UIEnabled><UIOrder id="1835">0</UIOrder><Value id="1836">105</Value></Parameter><ScriptFunction type="ScriptFunction" id="1742"><Inputs id="1743">mm</Inputs><Name id="1759">mmToPixel</Name><Script id="1760">return Math.round(800.0*(mm/mmDisplayWidth.value));</Script><UIEnabled id="1762">false</UIEnabled><UIOrder id="1788">0</UIOrder></ScriptFunction><OutputSignal type="DigitalOutput" id="1808"><Enabled id="1812">true</Enabled><Name id="1813">fixOn</Name><Pin id="1816">0</Pin><Port id="1837">BNC0</Port><UIEnabled id="1838">false</UIEnabled><UIOrder id="1850">0</UIOrder><Value id="1851">false</Value></OutputSignal><OutputSignal type="DigitalOutput" id="1893"><Enabled id="1894">true</Enabled><Name id="1895">cueOn</Name><Pin id="1896">1</Pin><Port id="1897">BNC0</Port><UIEnabled id="1898">false</UIEnabled><UIOrder id="1902">0</UIOrder><Value id="1903">false</Value></OutputSignal><ScriptFunction type="ScriptFunction" id="1957"><Inputs id="1958">code</Inputs><Name id="1959">setErrorPins</Name><Script id="1960">//In Arnsten Pictobox, the 8th pin
+//is active low used to trigger 
+//the read of an event code and
+//the 7th pin is used to signal a 
+//good trial (on rising edge)
+//the 7th and 8th bits in the event
+//code received by spike 2 are
+//attached to the 6th pin in the picto
+//box meaning that a top nybble of
+//3 signifies a top nybble of F to 
+//spike2.
+eventCode.value = 0x30 | code;</Script><UIEnabled id="1961">false</UIEnabled><UIOrder id="1965">0</UIOrder></ScriptFunction><Transition id="891"><Destination id="892">Cue</Destination><Source id="894">Fixation</Source><SourceResult id="895">Success</SourceResult><DId id="356">940</DId><SId id="357">2080</SId><SRId id="358">1332</SRId></Transition><Parameter type="Numeric" id="1641"><Name id="1642">numRewards</Name><UIEnabled id="1643">true</UIEnabled><UIOrder id="1647">0</UIOrder><Value id="1649">1</Value></Parameter><Transition id="136"><DId id="137">1525</DId><Destination id="138">MarkFailCode</Destination><SId id="139">5264</SId><SRId id="140">1253</SRId><Source id="141">Memory</Source><SourceResult id="142">FailHold</SourceResult></Transition><Transition id="143"><DId id="144">1525</DId><Destination id="145">MarkFailCode</Destination><SId id="171">5264</SId><SRId id="176">5472</SRId><Source id="177">Memory</Source><SourceResult id="178">FailEnter</SourceResult></Transition><Transition id="179"><DId id="180">1525</DId><Destination id="181">MarkFailCode</Destination><SId id="182">958</SId><SRId id="183">1490</SRId><Source id="184">Delay</Source><SourceResult id="185">Fail</SourceResult></Transition><Transition id="186"><DId id="187">1525</DId><Destination id="188">MarkFailCode</Destination><SId id="189">940</SId><SRId id="190">1436</SRId><Source id="200">Cue</Source><SourceResult id="201">Failure</SourceResult></Transition><Transition id="202"><DId id="203">1525</DId><Destination id="274">MarkFailCode</Destination><SId id="275">2080</SId><SRId id="276">1342</SRId><Source id="283">Fixation</Source><SourceResult id="284">Fail</SourceResult></Transition></StateMachineElement>
           <StateMachineElement type="State" id="994">
             <BackgroundColor id="995">0,0,0,255</BackgroundColor>
             <ControlElement type="Stopwatch Controller" id="1012">
               <Name id="1013">ITITimeout</Name>
               <Result id="969">
                 <Name id="970">Success</Name>
-              <UIInfo id="1130"><Pos id="1132">2000,2000</Pos></UIInfo></Result>
+              </Result>
               <Time id="1014">2000</Time>
               <TimeUnits id="1015">Ms</TimeUnits>
-              <Type id="1016"/>
+              
               <UIEnabled id="1017">false</UIEnabled>
-              <UIInfo id="1018">
-                <OpenDescendant id="1019">0</OpenDescendant>
-                <Pos id="1020">81,123</Pos>
-              </UIInfo>
+              
               <UIOrder id="1021">0</UIOrder>
             </ControlElement>
             <EntryScript id="996">
@@ -804,17 +743,11 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <Result id="1028">
               <Name id="1029">Done</Name>
               <UIEnabled id="1030">false</UIEnabled>
-              <UIInfo id="1031">
-                <OpenDescendant id="1032">0</OpenDescendant>
-                <Pos id="1033">294,164</Pos>
-              </UIInfo>
+              
               <UIOrder id="1034">0</UIOrder>
             </Result>
             <UIEnabled id="1000">false</UIEnabled>
-            <UIInfo id="1001">
-              <OpenDescendant id="1002">0</OpenDescendant>
-              <Pos id="1003">232,210</Pos>
-            </UIInfo>
+            
             <UIOrder id="1004">0</UIOrder>
             <Parameter type="Range" id="1060">
               <Increment id="1061">0</Increment>
@@ -822,30 +755,27 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
               <Min id="1063">1</Min>
               <Name id="1064">ITIPeriod</Name>
               <UIEnabled id="1065">true</UIEnabled>
-              <UIInfo id="1066">
-                <OpenDescendant id="1067">0</OpenDescendant>
-                <Pos id="1068">63,396</Pos>
-              </UIInfo>
+              
               <UIOrder id="1069">0</UIOrder>
-              <Units id="1070"/>
+              
               <Value id="1071">2000</Value>
             </Parameter>
             <Transition id="1039">
               <Destination id="1040">Done</Destination>
               <Source id="1041">ITITimeout</Source>
               <SourceResult id="1042">Success</SourceResult>
-            </Transition>
+            <DId id="372">1028</DId><SId id="373">1012</SId><SRId id="374">969</SRId></Transition>
           </StateMachineElement>
           <Transition id="1038">
             <Destination id="1043">ITI</Destination>
             <Source id="1044"/>
             <SourceResult id="1045"/>
-          </Transition>
+          <DId id="375">994</DId><SId id="376">0</SId></Transition>
           <Transition id="1046">
             <Destination id="1047">Trial</Destination>
             <Source id="1048">ITI</Source>
             <SourceResult id="1049">Done</SourceResult>
-          </Transition>
+          <DId id="378">854</DId><SId id="379">994</SId><SRId id="380">1028</SRId></Transition>
           <Parameter type="PseudorandomInt" id="1076">
             <DontRepeatAnyValue id="1077">false</DontRepeatAnyValue>
             <Max id="1078">7</Max>
@@ -853,10 +783,7 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <Name id="1080">targetSelector</Name>
             <Seed id="1081">0</Seed>
             <UIEnabled id="1082">false</UIEnabled>
-            <UIInfo id="1083">
-              <OpenDescendant id="1084">0</OpenDescendant>
-              <Pos id="1085">96,529</Pos>
-            </UIInfo>
+            
             <UIOrder id="1086">0</UIOrder>
             <UseSeed id="1087">false</UseSeed>
             <Value id="1088">1</Value>
@@ -866,19 +793,16 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <Destination id="1089">NeedsTrials</Destination>
             <Source id="1090">Trial</Source>
             <SourceResult id="1091">Success</SourceResult>
-          </Transition>
+          <DId id="382">1505</DId><SId id="383">854</SId><SRId id="384">1995</SRId></Transition>
           <Parameter type="Range" id="1134">
             <Increment id="1135">1</Increment>
             <Max id="1136">16</Max>
             <Min id="1137">1</Min>
             <Name id="1138">numTargets</Name>
             <UIEnabled id="1139">true</UIEnabled>
-            <UIInfo id="1140">
-              <OpenDescendant id="1141">0</OpenDescendant>
-              <Pos id="1142">95,638</Pos>
-            </UIInfo>
+            
             <UIOrder id="1143">0</UIOrder>
-            <Units id="1144"/>
+            
             <Value id="1145">8</Value>
           </Parameter>
           <Parameter type="Range" id="1154">
@@ -887,17 +811,14 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <Min id="1157">1</Min>
             <Name id="1158">numMemSacBlocks</Name>
             <UIEnabled id="1159">true</UIEnabled>
-            <UIInfo id="1160">
-              <OpenDescendant id="1161">0</OpenDescendant>
-              <Pos id="1162">94,726</Pos>
-            </UIInfo>
+            
             <UIOrder id="1163">0</UIOrder>
-            <Units id="1164"/>
+            
             <Value id="1165">2</Value>
           </Parameter>
           <VisualElement type="Operator Info Graphic" id="1106">
             <Color id="1107">0,255,0,255</Color>
-            <Dimensions id="1108">0,0,0,0</Dimensions>
+            
             <Fields id="1109"/>
             <Layer id="1110">0</Layer>
             <Name id="1111">targetCounter</Name>
@@ -905,101 +826,73 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <Position id="1113">0,0</Position>
             <SubjectView id="1114">false</SubjectView>
             <UIEnabled id="1115">false</UIEnabled>
-            <UIInfo id="1116">
-              <OpenDescendant id="1117">0</OpenDescendant>
-              <Pos id="1118">258,531</Pos>
-            </UIInfo>
+            
             <UIOrder id="1119">0</UIOrder>
             <Values id="1120"/>
             <Visible id="1121">false</Visible>
-          </VisualElement>
-          <StateMachineElement type="ScriptElement" id="1570">
-            <Name id="1571">ReshuffleTrial</Name>
-            <Result id="1821">
-              <Name id="1822">false</Name>
-            </Result>
-            <Result id="1831">
-              <Name id="1832">true</Name>
-            </Result>
-            <Script id="1572">
-              //Trial was not completed succefully, reshuffle this target value.
-              targetSelector.reshuffleLastValue();
-              expInfo.setData(&quot;GoodTrials(%)&quot;,Math.round(100*expInfo.getDataAsDouble(&quot;GoodTrials&quot;)/(expInfo.getDataAsDouble(&quot;Trial&quot;)+1)));
-              expInfo.updateValue();
-              return true;
-            </Script>
-            <Type id="1573">ScriptElement</Type>
-            <UIEnabled id="1574">false</UIEnabled>
-            <UIInfo id="1575">
-              <OpenDescendant id="1576">0</OpenDescendant>
-              <Pos id="1577">514,290</Pos>
-            </UIInfo>
-            <UIOrder id="1578">0</UIOrder>
-          </StateMachineElement>
-          <Transition id="1846">
-            <Destination id="1847">ReshuffleTrial</Destination>
-            <Source id="1848">Trial</Source>
-            <SourceResult id="1849">Failed</SourceResult>
-          </Transition>
+          <Size id="391">0,0</Size></VisualElement>
+          
+          
 
 
           <StateMachineElement type="PausePoint" id="5132">
             <BackgroundColor id="5133">0,0,0,255</BackgroundColor>
             <ForcePause id="5134">false</ForcePause>
             <Name id="5135">Pause</Name>
-            <PausingScript id="5136"/>
-            <RestartingScript id="5137"/>
+            
+            
             <Result id="3501">
               <Name id="3502">done</Name>
-              <UIInfo id="3494">
-                <Pos id="3496">2000,2000</Pos>
-              </UIInfo>
+              
             </Result>
-            <Type id="5138">PausePoint</Type>
+            
             <UIEnabled id="5139">false</UIEnabled>
-            <UIInfo id="5140">
-              <OpenDescendant id="5141">0</OpenDescendant>
-              <Pos id="5142">88,210</Pos>
-            </UIInfo>
+            
             <UIOrder id="5143">0</UIOrder>
           </StateMachineElement>
           <Transition id="3511">
             <Destination id="3519">Pause</Destination>
             <Source id="3520">NeedsTrials</Source>
             <SourceResult id="3521">true</SourceResult>
-          </Transition>
-          <Transition id="3522">
-            <Destination id="3523">Pause</Destination>
-            <Source id="3524">ReshuffleTrial</Source>
-            <SourceResult id="3525">true</SourceResult>
-          </Transition>
-          <Transition id="3526">
-            <Destination id="3527">Pause</Destination>
-            <Source id="3528">ReshuffleTrial</Source>
-            <SourceResult id="3529">false</SourceResult>
-          </Transition>
+          <DId id="411">5132</DId><SId id="412">1505</SId><SRId id="413">1518</SRId></Transition>
+          
+          
           <Transition id="3530">
             <Destination id="3531">ITI</Destination>
             <Source id="3532">Pause</Source>
             <SourceResult id="3533">done</SourceResult>
-          </Transition>
-        </StateMachineElement>
+          <DId id="420">994</DId><SId id="421">5132</SId><SRId id="422">3501</SRId></Transition>
+        <Parameter type="Numeric" id="1618"><Name id="1619">targetStartPos</Name><UIEnabled id="1629">true</UIEnabled><UIOrder id="1633">0</UIOrder><Value id="1635">0</Value></Parameter><StateMachineElement type="Switch" id="1505"><EntryScript id="1506">//If we haven't yet used the current value numMemSacBlocks times, reshuffle it.
+var currValue = targetSelector.value;
+var currUses = targetCounter.getDataAsInt(currValue);
+currUses++;
+targetCounter.setData(currValue,currUses);
+if(currUses &lt; numMemSacBlocks.value)
+{
+	targetSelector.reshuffleLastValue();
+}
+
+trialNum.value++;
+expInfo.setData(&quot;GoodTrials&quot;,expInfo.getDataAsInt(&quot;GoodTrials&quot;)+1);
+expInfo.setData(&quot;GoodTrials(%)&quot;,Math.round(100*expInfo.getDataAsDouble(&quot;GoodTrials&quot;)/(expInfo.getDataAsDouble(&quot;Trial&quot;)+1)));
+expInfo.updateValue();</EntryScript><ExitScript id="1507"/><Name id="1508">NeedsTrials</Name><Result id="1518"><EntryScript id="1519"/><Name id="1520">true</Name><UIEnabled id="1521">false</UIEnabled><UIOrder id="1522">0</UIOrder></Result><Result id="1523"><EntryScript id="1524"/><Name id="1532">false</Name><UIEnabled id="1533">false</UIEnabled><UIOrder id="1534">0</UIOrder></Result><Script id="1509">//Check if we're done with this block
+if(trialNum.value &lt; (numMemSacBlocks.value*numTargets.value))
+	return true;
+return false;
+            </Script><UIEnabled id="1510">false</UIEnabled><UIOrder id="1511">0</UIOrder></StateMachineElement><Transition id="146"><DId id="162">5132</DId><Destination id="163">Pause</Destination><SId id="164">854</SId><SRId id="165">902</SRId><Source id="169">Trial</Source><SourceResult id="170">Failed</SourceResult></Transition></StateMachineElement>
         <Transition id="3512">
           <Destination id="3513">Block</Destination>
           <Source id="3514"/>
           <SourceResult id="3515"/>
-        </Transition>
-        <Type id="642">StateMachine</Type>
+        <DId id="425">1726</DId><SId id="426">0</SId></Transition>
+        
         <UIEnabled id="643">false</UIEnabled>
-        <UIInfo id="644">
-          <OpenDescendant id="3516">0</OpenDescendant>
-          <Pos id="3517">2000,2000</Pos>
-        </UIInfo>
+        
         <UIOrder id="3518">0</UIOrder>
 
         <VisualElement type="Operator Info Graphic" id="2190">
           <Color id="2191">0,255,0,255</Color>
-          <Dimensions id="2192">0,0,800,20</Dimensions>
+          
           <Fields id="2193"/>
           <Layer id="2194">0</Layer>
           <Name id="2195">expInfo</Name>
@@ -1007,39 +900,28 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
           <Position id="2197">0,580</Position>
           <SubjectView id="2198">false</SubjectView>
           <UIEnabled id="2199">false</UIEnabled>
-          <UIInfo id="2200">
-            <OpenDescendant id="2201">0</OpenDescendant>
-            <Pos id="2202">343,475</Pos>
-          </UIInfo>
+          
           <UIOrder id="2203">0</UIOrder>
           <Values id="2204"/>
           <Visible id="2205">true</Visible>
-        </VisualElement>
+        <Size id="432">800,20</Size></VisualElement>
         <StateMachineElement type="PausePoint" id="5166">
           <BackgroundColor id="5167">0,0,0,255</BackgroundColor>
           <ForcePause id="5168">true</ForcePause>
           <Name id="5169">WaitForOperator</Name>
-          <PausingScript id="5170">
-            info.text = &quot;                    Completed &quot; + blockNum.value + (blockNum.value &gt; 1?&quot; blocks &quot;:&quot; block &quot;)
-            info.text += &quot;\nPress \&quot;run\&quot; to continue or \&quot;stop\&quot; to end this run&quot;
-          </PausingScript>
-          <RestartingScript id="5171"/>
+          
+          
           <Result id="3595">
             <Name id="3596">done</Name>
-            <UIInfo id="3598">
-              <Pos id="3600">1790,1991</Pos>
-            </UIInfo>
+            
           </Result>
-          <Type id="5172">PausePoint</Type>
+          
           <UIEnabled id="5173">false</UIEnabled>
-          <UIInfo id="5174">
-            <OpenDescendant id="5175">0</OpenDescendant>
-            <Pos id="5176">485,183</Pos>
-          </UIInfo>
+          
           <UIOrder id="5177">0</UIOrder>
           <VisualElement type="Text Graphic" id="5238">
             <Color id="5239">255,255,0,255</Color>
-            <Dimensions id="5240">0,0,400,40</Dimensions>
+            
             <Layer id="5241">0</Layer>
             <Name id="5242">info</Name>
             <OperatorView id="5243">true</OperatorView>
@@ -1047,59 +929,39 @@ return true;</Script><Type id="1054">ScriptElement</Type><UIEnabled id="1055">fa
             <SubjectView id="5245">false</SubjectView>
             <Text id="5246"/>
             <UIEnabled id="5247">false</UIEnabled>
-            <UIInfo id="5248">
-              <OpenDescendant id="5249">0</OpenDescendant>
-              <Pos id="5250">1679,2085</Pos>
-            </UIInfo>
+            
             <UIOrder id="5251">0</UIOrder>
             <Visible id="5252">true</Visible>
-          </VisualElement>
-        </StateMachineElement>
-        <StateMachineElement type="ScriptElement" id="5186">
-          <Name id="5187">NeedsBlocks</Name>
-          <Result id="3613">
-            <Name id="3614">false</Name>
-          </Result>
-          <Result id="3623">
-            <Name id="3624">true</Name>
-          </Result>
-          <Script id="5188">
-            if(blockNum.value &amp;&amp; (blockNum.value % numBlocks.value))
-            return true;
-            return false;
-          </Script>
-          <Type id="5189">ScriptElement</Type>
-          <UIEnabled id="5190">false</UIEnabled>
-          <UIInfo id="5191">
-            <OpenDescendant id="5192">0</OpenDescendant>
-            <Pos id="5193">273,67</Pos>
-          </UIInfo>
-          <UIOrder id="5194">0</UIOrder>
-        </StateMachineElement>
+          <Size id="447">400,40</Size></VisualElement>
+        <EntryScript id="448">
+            info.text = &quot;                    Completed &quot; + blockNum.value + (blockNum.value &gt; 1?&quot; blocks &quot;:&quot; block &quot;)
+            info.text += &quot;\nPress \&quot;run\&quot; to continue or \&quot;stop\&quot; to end this run&quot;
+          </EntryScript></StateMachineElement>
+        
         <Transition id="3638">
           <Destination id="3639">Block</Destination>
           <Source id="3640">NeedsBlocks</Source>
           <SourceResult id="3641">true</SourceResult>
-        </Transition>
+        <DId id="191">1726</DId><SId id="192">1638</SId><SRId id="193">1656</SRId></Transition>
         <Transition id="3642">
           <Destination id="3643">WaitForOperator</Destination>
           <Source id="3644">NeedsBlocks</Source>
           <SourceResult id="3645">false</SourceResult>
-        </Transition>
+        <DId id="194">5166</DId><SId id="195">1638</SId><SRId id="196">1661</SRId></Transition>
         <Transition id="3646">
           <Destination id="3647">Block</Destination>
           <Source id="3648">WaitForOperator</Source>
           <SourceResult id="3649">done</SourceResult>
-        </Transition>
+        <DId id="461">1726</DId><SId id="462">5166</SId><SRId id="463">3595</SRId></Transition>
         <Transition id="3929">
           <Destination id="3931">NeedsBlocks</Destination>
           <Source id="3932">Block</Source>
           <SourceResult id="3933">Done</SourceResult>
-        </Transition>
-      </StateMachine>
-      <UIInfo id="3554">
-        <OpenDescendant id="3555">0</OpenDescendant>
-        <Pos id="3556">1626,1875</Pos>
-      </UIInfo>
+        <DId id="197">1638</DId><SId id="198">1726</SId><SRId id="199">1727</SRId></Transition>
+      <OutputSignal type="BinaryDataOutput" id="1946"><Enabled id="1947">true</Enabled><Name id="1948">eventCode</Name><Port id="1949">PAR0</Port><UIEnabled id="1950">false</UIEnabled><UIOrder id="1954">0</UIOrder><Value id="1955">128</Value></OutputSignal><StateMachineElement type="Switch" id="1638"><EntryScript id="1639"/><ExitScript id="1640"/><Name id="1644">NeedsBlocks</Name><Result id="1656"><EntryScript id="1657"/><Name id="1658">true</Name><UIEnabled id="1659">false</UIEnabled><UIOrder id="1660">0</UIOrder></Result><Result id="1661"><EntryScript id="1665"/><Name id="1666">false</Name><UIEnabled id="1667">false</UIEnabled><UIOrder id="1669">0</UIOrder></Result><Script id="1645">if(blockNum.value &amp;&amp; (blockNum.value % numBlocks.value))
+	return true;
+return false;
+          </Script><UIEnabled id="1646">false</UIEnabled><UIOrder id="1648">0</UIOrder></StateMachineElement></StateMachine>
+      
     </Task>
-</Experiment></PictoData>
+<HostId id="471">{495c4379-a93a-4cd3-a11b-a66ad394d9d8}</HostId></Experiment><SyntaxVersion id="474">0.0.1</SyntaxVersion><UIData id="475"><AssociateId id="476">{d18c8bc8-fd53-4e5f-a349-dc8a87ea192e}</AssociateId><LinkedHostId id="477">{495c4379-a93a-4cd3-a11b-a66ad394d9d8}</LinkedHostId><LinkedHostName id="478">Experiment</LinkedHostName><Name id="479">NotYetNamed</Name><OpenAsset id="480">1</OpenAsset><UIElement id="483"><HostLink id="484"><ParentId id="485">1946</ParentId><ParentPath id="486">MemorySaccade::Top::eventCode</ParentPath></HostLink><Notes id="487"/><Pos id="488">481,472</Pos></UIElement><UIElement id="489"><HostLink id="490"><ParentId id="491">682</ParentId><ParentPath id="492">MemorySaccade::Top::numBlocks</ParentPath></HostLink><Notes id="493"/><Pos id="494">241,472</Pos></UIElement><UIElement id="495"><HostLink id="496"><ParentId id="497">734</ParentId><ParentPath id="498">MemorySaccade::Top::blockNum</ParentPath></HostLink><Notes id="499"/><Pos id="500">137,472</Pos></UIElement><UIElement id="501"><HostLink id="502"><ParentId id="503">1828</ParentId><ParentPath id="504">MemorySaccade::Top::Block::trialNum</ParentPath></HostLink><Notes id="505"/><Pos id="506">85,439</Pos></UIElement><UIElement id="507"><HostLink id="508"><ParentId id="509">1076</ParentId><ParentPath id="510">MemorySaccade::Top::Block::targetSelector</ParentPath></HostLink><Notes id="511"/><Pos id="512">96,529</Pos></UIElement><UIElement id="513"><HostLink id="514"><ParentId id="515">1134</ParentId><ParentPath id="516">MemorySaccade::Top::Block::numTargets</ParentPath></HostLink><Notes id="517"/><Pos id="518">95,638</Pos></UIElement><UIElement id="519"><HostLink id="520"><ParentId id="521">1154</ParentId><ParentPath id="522">MemorySaccade::Top::Block::numMemSacBlocks</ParentPath></HostLink><Notes id="523"/><Pos id="524">94,726</Pos></UIElement><UIElement id="525"><HostLink id="526"><ParentId id="527">1618</ParentId><ParentPath id="528">MemorySaccade::Top::Block::targetStartPos</ParentPath></HostLink><Notes id="529"/><Pos id="530">203,638</Pos></UIElement><UIElement id="531"><HostLink id="532"><ParentId id="533">1727</ParentId><ParentPath id="534">MemorySaccade::Top::Block::Done</ParentPath></HostLink><Notes id="535"/><Pos id="536">647,410</Pos></UIElement><UIElement id="537"><HostLink id="538"><ParentId id="539">1182</ParentId><ParentPath id="540">MemorySaccade::Top::Block::Trial::fixTarget</ParentPath></HostLink><Notes id="541"/><Pos id="542">162,775</Pos></UIElement><UIElement id="543"><HostLink id="544"><ParentId id="545">1256</ParentId><ParentPath id="546">MemorySaccade::Top::Block::Trial::sacTarget</ParentPath></HostLink><Notes id="547"/><Pos id="548">291,774</Pos></UIElement><UIElement id="549"><HostLink id="550"><ParentId id="551">1808</ParentId><ParentPath id="552">MemorySaccade::Top::Block::Trial::fixOn</ParentPath></HostLink><Notes id="553"/><Pos id="554">88,1046</Pos></UIElement><UIElement id="555"><HostLink id="556"><ParentId id="557">1893</ParentId><ParentPath id="558">MemorySaccade::Top::Block::Trial::cueOn</ParentPath></HostLink><Notes id="559"/><Pos id="560">218,1045</Pos></UIElement><UIElement id="561"><HostLink id="562"><ParentId id="563">2178</ParentId><ParentPath id="564">MemorySaccade::Top::Block::Trial::cueR</ParentPath></HostLink><Notes id="565"/><Pos id="566">123,663</Pos></UIElement><UIElement id="567"><HostLink id="568"><ParentId id="569">2210</ParentId><ParentPath id="570">MemorySaccade::Top::Block::Trial::cueG</ParentPath></HostLink><Notes id="571"/><Pos id="572">208,664</Pos></UIElement><UIElement id="573"><HostLink id="574"><ParentId id="575">2250</ParentId><ParentPath id="576">MemorySaccade::Top::Block::Trial::cueB</ParentPath></HostLink><Notes id="577"/><Pos id="578">296,663</Pos></UIElement><UIElement id="579"><HostLink id="580"><ParentId id="581">727</ParentId><ParentPath id="582">MemorySaccade::Top::Block::Trial::operatorClick</ParentPath></HostLink><Notes id="587"/><Pos id="588">807,964</Pos></UIElement><UIElement id="589"><HostLink id="590"><ParentId id="591">746</ParentId><ParentPath id="592">MemorySaccade::Top::Block::Trial::posSig</ParentPath></HostLink><Notes id="593"/><Pos id="594">718,963</Pos></UIElement><UIElement id="595"><HostLink id="596"><ParentId id="597">1744</ParentId><ParentPath id="598">MemorySaccade::Top::Block::Trial::mmDisplayWidth</ParentPath></HostLink><Notes id="599"/><Pos id="600">49,882</Pos></UIElement><UIElement id="601"><HostLink id="602"><ParentId id="603">1766</ParentId><ParentPath id="604">MemorySaccade::Top::Block::Trial::mmCueRad</ParentPath></HostLink><Notes id="605"/><Pos id="606">145,882</Pos></UIElement><UIElement id="607"><HostLink id="608"><ParentId id="609">1764</ParentId><ParentPath id="610">MemorySaccade::Top::Block::Trial::mmFixWinRad</ParentPath></HostLink><Notes id="611"/><Pos id="612">232,884</Pos></UIElement><UIElement id="613"><HostLink id="614"><ParentId id="615">1792</ParentId><ParentPath id="616">MemorySaccade::Top::Block::Trial::mmSacWinRad</ParentPath></HostLink><Notes id="617"/><Pos id="618">332,884</Pos></UIElement><UIElement id="619"><HostLink id="620"><ParentId id="621">1817</ParentId><ParentPath id="622">MemorySaccade::Top::Block::Trial::mmTrayRad</ParentPath></HostLink><Notes id="623"/><Pos id="624">415,886</Pos></UIElement><UIElement id="625"><HostLink id="626"><ParentId id="627">1641</ParentId><ParentPath id="628">MemorySaccade::Top::Block::Trial::numRewards</ParentPath></HostLink><Notes id="629"/><Pos id="630">611,888</Pos></UIElement><UIElement id="631"><HostLink id="632"><ParentId id="633">902</ParentId><ParentPath id="634">MemorySaccade::Top::Block::Trial::Failed</ParentPath></HostLink><Notes id="639"/><Pos id="640">908,545</Pos></UIElement><UIElement id="642"><HostLink id="644"><ParentId id="645">1995</ParentId><ParentPath id="646">MemorySaccade::Top::Block::Trial::Success</ParentPath></HostLink><Notes id="647"/><Pos id="648">979,271</Pos></UIElement><UIElement id="649"><HostLink id="650"><ParentId id="651">707</ParentId><ParentPath id="652">MemorySaccade::Top::Block::Trial::calibratePos</ParentPath></HostLink><Notes id="653"/><Pos id="654">896,963</Pos></UIElement><UIElement id="655"><HostLink id="656"><ParentId id="657">1742</ParentId><ParentPath id="658">MemorySaccade::Top::Block::Trial::mmToPixel</ParentPath></HostLink><Notes id="659"/><Pos id="660">506,888</Pos></UIElement><UIElement id="661"><HostLink id="662"><ParentId id="663">1957</ParentId><ParentPath id="664">MemorySaccade::Top::Block::Trial::setErrorPins</ParentPath></HostLink><Notes id="665"/><Pos id="666">333,1033</Pos></UIElement><UIElement id="667"><HostLink id="668"><ParentId id="669">1282</ParentId><ParentPath id="670">MemorySaccade::Top::Block::Trial::Fixation::fixationController</ParentPath></HostLink><Notes id="671"/><Pos id="672">155,79</Pos></UIElement><UIElement id="673"><HostLink id="674"><ParentId id="675">1316</ParentId><ParentPath id="676">MemorySaccade::Top::Block::Trial::Fixation::fixationAcquired</ParentPath></HostLink><Notes id="677"/><Pos id="678">132,468</Pos></UIElement><UIElement id="679"><HostLink id="680"><ParentId id="681">1588</ParentId><ParentPath id="687">MemorySaccade::Top::Block::Trial::Fixation::fixationAcqMs</ParentPath></HostLink><Notes id="688"/><Pos id="689">126,643</Pos></UIElement><UIElement id="690"><HostLink id="691"><ParentId id="692">1662</ParentId><ParentPath id="693">MemorySaccade::Top::Block::Trial::Fixation::fixationHoldMs</ParentPath></HostLink><Notes id="694"/><Pos id="695">130,746</Pos></UIElement><UIElement id="696"><HostLink id="697"><ParentId id="698">1332</ParentId><ParentPath id="699">MemorySaccade::Top::Block::Trial::Fixation::Success</ParentPath></HostLink><Notes id="700"/><Pos id="701">487,271</Pos></UIElement><UIElement id="702"><HostLink id="703"><ParentId id="704">1342</ParentId><ParentPath id="705">MemorySaccade::Top::Block::Trial::Fixation::Fail</ParentPath></HostLink><Notes id="706"/><Pos id="712">477,367</Pos></UIElement><UIElement id="713"><HostLink id="714"><ParentId id="716">2080</ParentId><ParentPath id="719">MemorySaccade::Top::Block::Trial::Fixation</ParentPath></HostLink><Notes id="721"/><Pos id="722">102,218</Pos></UIElement><UIElement id="723"><HostLink id="724"><ParentId id="725">1392</ParentId><ParentPath id="732">MemorySaccade::Top::Block::Trial::Cue::cueController</ParentPath></HostLink><Notes id="733"/><Pos id="737">119,98</Pos></UIElement><UIElement id="738"><HostLink id="739"><ParentId id="750">1538</ParentId><ParentPath id="751">MemorySaccade::Top::Block::Trial::Cue::frameCtr</ParentPath></HostLink><Notes id="752"/><Pos id="756">134,370</Pos></UIElement><UIElement id="757"><HostLink id="760"><ParentId id="761">1602</ParentId><ParentPath id="769">MemorySaccade::Top::Block::Trial::Cue::cueMs</ParentPath></HostLink><Notes id="770"/><Pos id="771">106,502</Pos></UIElement><UIElement id="774"><HostLink id="775"><ParentId id="776">1426</ParentId><ParentPath id="777">MemorySaccade::Top::Block::Trial::Cue::Success</ParentPath></HostLink><Notes id="778"/><Pos id="779">443,109</Pos></UIElement><UIElement id="780"><HostLink id="781"><ParentId id="782">1436</ParentId><ParentPath id="783">MemorySaccade::Top::Block::Trial::Cue::Failure</ParentPath></HostLink><Notes id="784"/><Pos id="785">456,230</Pos></UIElement><UIElement id="786"><HostLink id="787"><ParentId id="788">940</ParentId><ParentPath id="789">MemorySaccade::Top::Block::Trial::Cue</ParentPath></HostLink><Notes id="790"/><Pos id="791">273,214</Pos></UIElement><UIElement id="792"><HostLink id="793"><ParentId id="794">1446</ParentId><ParentPath id="795">MemorySaccade::Top::Block::Trial::Delay::DelayController</ParentPath></HostLink><Notes id="796"/><Pos id="799">123,105</Pos></UIElement><UIElement id="800"><HostLink id="801"><ParentId id="802">1620</ParentId><ParentPath id="803">MemorySaccade::Top::Block::Trial::Delay::delayMs</ParentPath></HostLink><Notes id="804"/><Pos id="805">141,474</Pos></UIElement><UIElement id="806"><HostLink id="807"><ParentId id="808">1480</ParentId><ParentPath id="809">MemorySaccade::Top::Block::Trial::Delay::Success</ParentPath></HostLink><Notes id="810"/><Pos id="811">374,99</Pos></UIElement><UIElement id="812"><HostLink id="813"><ParentId id="815">1490</ParentId><ParentPath id="816">MemorySaccade::Top::Block::Trial::Delay::Fail</ParentPath></HostLink><Notes id="817"/><Pos id="818">381,245</Pos></UIElement><UIElement id="819"><HostLink id="820"><ParentId id="821">958</ParentId><ParentPath id="822">MemorySaccade::Top::Block::Trial::Delay</ParentPath></HostLink><Notes id="823"/><Pos id="826">420,214</Pos></UIElement><UIElement id="827"><HostLink id="828"><ParentId id="829">5388</ParentId><ParentPath id="830">MemorySaccade::Top::Block::Trial::Memory::Success</ParentPath></HostLink><Notes id="831"/><Pos id="832">397,127</Pos></UIElement><UIElement id="833"><HostLink id="834"><ParentId id="835">5472</ParentId><ParentPath id="836">MemorySaccade::Top::Block::Trial::Memory::FailEnter</ParentPath></HostLink><Notes id="841"/><Pos id="842">384,270</Pos></UIElement><UIElement id="847"><HostLink id="848"><ParentId id="849">1253</ParentId><ParentPath id="850">MemorySaccade::Top::Block::Trial::Memory::FailHold</ParentPath></HostLink><Notes id="851"/><Pos id="857">389,389</Pos></UIElement><UIElement id="861"><HostLink id="862"><ParentId id="863">5318</ParentId><ParentPath id="872">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::MemoryController</ParentPath></HostLink><Notes id="873"/><Pos id="874">121,113</Pos></UIElement><UIElement id="890"><HostLink id="896"><ParentId id="897">5352</ParentId><ParentPath id="898">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::targetAcquired</ParentPath></HostLink><Notes id="899"/><Pos id="905">113,491</Pos></UIElement><UIElement id="906"><HostLink id="907"><ParentId id="910">1686</ParentId><ParentPath id="911">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::memAcqMs</ParentPath></HostLink><Notes id="912"/><Pos id="915">120,579</Pos></UIElement><UIElement id="916"><HostLink id="917"><ParentId id="918">1710</ParentId><ParentPath id="919">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::memHoldMs</ParentPath></HostLink><Notes id="920"/><Pos id="921">118,669</Pos></UIElement><UIElement id="922"><HostLink id="925"><ParentId id="926">1852</ParentId><ParentPath id="927">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::useReminderCue</ParentPath></HostLink><Notes id="928"/><Pos id="929">118,768</Pos></UIElement><UIElement id="930"><HostLink id="931"><ParentId id="932">5368</ParentId><ParentPath id="933">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::Success</ParentPath></HostLink><Notes id="965"/><Pos id="966">404,120</Pos></UIElement><UIElement id="967"><HostLink id="989"><ParentId id="990">5378</ParentId><ParentPath id="993">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::FailEnter</ParentPath></HostLink><Notes id="1001"/><Pos id="1002">404,275</Pos></UIElement><UIElement id="1003"><HostLink id="1005"><ParentId id="1006">1094</ParentId><ParentPath id="1007">MemorySaccade::Top::Block::Trial::Memory::EnterTarget::FailHold</ParentPath></HostLink><Notes id="1008"/><Pos id="1009">404,368</Pos></UIElement><UIElement id="1010"><HostLink id="1011"><ParentId id="1016">5300</ParentId><ParentPath id="1018">MemorySaccade::Top::Block::Trial::Memory::EnterTarget</ParentPath></HostLink><Notes id="1019"/><Pos id="1020">199,162</Pos></UIElement><UIElement id="1024"><HostLink id="1025"><ParentId id="1026">5264</ParentId><ParentPath id="1027">MemorySaccade::Top::Block::Trial::Memory</ParentPath></HostLink><Notes id="1031"/><Pos id="1032">549,218</Pos></UIElement><UIElement id="1033"><HostLink id="1035"><ParentId id="1036">1857</ParentId><ParentPath id="1037">MemorySaccade::Top::Block::Trial::Reward</ParentPath></HostLink><Notes id="1050"/><Pos id="1053">683,217</Pos></UIElement><UIElement id="1054"><HostLink id="1055"><ParentId id="1056">1391</ParentId><ParentPath id="1057">MemorySaccade::Top::Block::Trial::MarkCorrectTrial::TrialCorrectTimer</ParentPath></HostLink><Notes id="1058"/><Pos id="1059">197,149</Pos></UIElement><UIElement id="1066"><HostLink id="1067"><ParentId id="1068">1479</ParentId><ParentPath id="1070">MemorySaccade::Top::Block::Trial::MarkCorrectTrial::Done</ParentPath></HostLink><Notes id="1072"/><Pos id="1073">479,142</Pos></UIElement><UIElement id="1074"><HostLink id="1083"><ParentId id="1084">1373</ParentId><ParentPath id="1085">MemorySaccade::Top::Block::Trial::MarkCorrectTrial</ParentPath></HostLink><Notes id="1097"/><Pos id="1098">797,215</Pos></UIElement><UIElement id="1099"><HostLink id="1103"><ParentId id="1104">1543</ParentId><ParentPath id="1105">MemorySaccade::Top::Block::Trial::MarkFailCode::FailCodeTimer</ParentPath></HostLink><Notes id="1108"/><Pos id="1116">96,110</Pos></UIElement><UIElement id="1117"><HostLink id="1118"><ParentId id="1122">1561</ParentId><ParentPath id="1123">MemorySaccade::Top::Block::Trial::MarkFailCode::Done</ParentPath></HostLink><Notes id="1124"/><Pos id="1125">264,110</Pos></UIElement><UIElement id="1126"><HostLink id="1127"><ParentId id="1128">1525</ParentId><ParentPath id="1129">MemorySaccade::Top::Block::Trial::MarkFailCode</ParentPath></HostLink><Notes id="1130"/><Pos id="1131">740,527</Pos></UIElement><UIElement id="1132"><HostLink id="1133"><ParentId id="1140">1208</ParentId><ParentPath id="1141">MemorySaccade::Top::Block::Trial::tokenTray</ParentPath></HostLink><Notes id="1142"/><Pos id="1144">213,566</Pos></UIElement><UIElement id="1146"><HostLink id="1147"><ParentId id="1148">2278</ParentId><ParentPath id="1149">MemorySaccade::Top::Block::Trial::fixGraphic</ParentPath></HostLink><Notes id="1150"/><Pos id="1151">79,570</Pos></UIElement><UIElement id="1152"><HostLink id="1153"><ParentId id="1160">758</ParentId><ParentPath id="1161">MemorySaccade::Top::Block::Trial::calibFeedback</ParentPath></HostLink><Notes id="1162"/><Pos id="1164">335,568</Pos></UIElement><UIElement id="1166"><HostLink id="1167"><ParentId id="1168">854</ParentId><ParentPath id="1169">MemorySaccade::Top::Block::Trial</ParentPath></HostLink><Notes id="1170"/><Pos id="1192">360,210</Pos></UIElement><UIElement id="1371"><HostLink id="1372"><ParentId id="1380">969</ParentId><ParentPath id="1381">MemorySaccade::Top::Block::ITI::ITITimeout::Success</ParentPath></HostLink><Notes id="1382"/><Pos id="1384">2000,2000</Pos></UIElement><UIElement id="1385"><HostLink id="1386"><ParentId id="1387">1012</ParentId><ParentPath id="1388">MemorySaccade::Top::Block::ITI::ITITimeout</ParentPath></HostLink><Notes id="1389"/><Pos id="1390">81,123</Pos></UIElement><UIElement id="1401"><HostLink id="1402"><ParentId id="1405">1060</ParentId><ParentPath id="1407">MemorySaccade::Top::Block::ITI::ITIPeriod</ParentPath></HostLink><Notes id="1408"/><Pos id="1409">63,396</Pos></UIElement><UIElement id="1429"><HostLink id="1430"><ParentId id="1431">1028</ParentId><ParentPath id="1439">MemorySaccade::Top::Block::ITI::Done</ParentPath></HostLink><Notes id="1440"/><Pos id="1441">294,164</Pos></UIElement><UIElement id="1455"><HostLink id="1456"><ParentId id="1459">994</ParentId><ParentPath id="1461">MemorySaccade::Top::Block::ITI</ParentPath></HostLink><Notes id="1462"/><Pos id="1463">238,169</Pos></UIElement><UIElement id="1467"><HostLink id="1469"><ParentId id="1470">3501</ParentId><ParentPath id="1471">MemorySaccade::Top::Block::Pause::done</ParentPath></HostLink><Notes id="1473"/><Pos id="1474">2000,2000</Pos></UIElement><UIElement id="1475"><HostLink id="1476"><ParentId id="1477">5132</ParentId><ParentPath id="1478">MemorySaccade::Top::Block::Pause</ParentPath></HostLink><Notes id="1483"/><Pos id="1484">94,269</Pos></UIElement><UIElement id="1485"><HostLink id="1489"><ParentId id="1493">1106</ParentId><ParentPath id="1494">MemorySaccade::Top::Block::targetCounter</ParentPath></HostLink><Notes id="1495"/><Pos id="1497">258,531</Pos></UIElement><UIElement id="1498"><HostLink id="1500"><ParentId id="1501">1726</ParentId><ParentPath id="1502">MemorySaccade::Top::Block</ParentPath></HostLink><Notes id="1503"/><Pos id="1504">132,246</Pos></UIElement><UIElement id="1512"><HostLink id="1513"><ParentId id="1514">1505</ParentId><ParentPath id="1515">MemorySaccade::Top::Block::NeedsTrials</ParentPath></HostLink><Notes id="1516"/><Pos id="1517">518,314</Pos></UIElement><UIElement id="1579"><HostLink id="1585"><ParentId id="1586">3595</ParentId><ParentPath id="1587">MemorySaccade::Top::WaitForOperator::done</ParentPath></HostLink><Notes id="1591"/><Pos id="1592">1790,1991</Pos></UIElement><UIElement id="1593"><HostLink id="1595"><ParentId id="1597">5238</ParentId><ParentPath id="1598">MemorySaccade::Top::WaitForOperator::info</ParentPath></HostLink><Notes id="1599"/><Pos id="1600">1679,2085</Pos></UIElement><UIElement id="1601"><HostLink id="1605"><ParentId id="1606">5166</ParentId><ParentPath id="1611">MemorySaccade::Top::WaitForOperator</ParentPath></HostLink><Notes id="1613"/><Pos id="1615">485,183</Pos></UIElement><UIElement id="1616"><HostLink id="1617"><ParentId id="1623">2190</ParentId><ParentPath id="1624">MemorySaccade::Top::expInfo</ParentPath></HostLink><Notes id="1625"/><Pos id="1627">343,475</Pos></UIElement><UIElement id="1630"><HostLink id="1631"><ParentId id="1632">637</ParentId><ParentPath id="1634">MemorySaccade::Top</ParentPath></HostLink><Notes id="1636"/><Pos id="1637">2000,2000</Pos></UIElement><UIElement id="1650"><HostLink id="1651"><ParentId id="1652">1638</ParentId><ParentPath id="1653">MemorySaccade::Top::NeedsBlocks</ParentPath></HostLink><Notes id="1654"/><Pos id="1655">273,67</Pos></UIElement><UIElement id="1672"><HostLink id="1673"><ParentId id="1674">635</ParentId><ParentPath id="1675">MemorySaccade</ParentPath></HostLink><Notes id="1676"/><Pos id="1677">1626,1875</Pos></UIElement><UIElement id="1678"><HostLink id="1679"><ParentId id="1680">1</ParentId><ParentPath id="1681"/></HostLink><Notes id="1682"/><Pos id="1683">0,0</Pos></UIElement><UIEnabled id="481">false</UIEnabled><UIOrder id="482">0</UIOrder><UIElement id="409"><HostLink id="410"><ParentId id="278">279</ParentId><ParentPath id="305">MemorySaccade::Top::Block::Trial::Delay::distractorIndex</ParentPath></HostLink><Notes id="306"/><Pos id="414">481,431</Pos></UIElement><UIElement id="267"><HostLink id="268"><ParentId id="269">366</ParentId><ParentPath id="270">MemorySaccade::Top::Block::Trial::Delay::distractorOnset</ParentPath></HostLink><Notes id="377"/><Pos id="271">276,520</Pos></UIElement><UIElement id="225"><HostLink id="226"><ParentId id="227">290</ParentId><ParentPath id="228">MemorySaccade::Top::Block::Trial::Delay::useDistractor</ParentPath></HostLink><Notes id="229"/><Pos id="230">383,519</Pos></UIElement><UIElement id="289"><HostLink id="415"><ParentId id="416">205</ParentId><ParentPath id="417">MemorySaccade::Top::Block::Trial::Delay::distractorShown</ParentPath></HostLink><Notes id="418"/><Pos id="419">368,435</Pos></UIElement><UIElement id="428"><HostLink id="434"><ParentId id="435">423</ParentId><ParentPath id="436">MemorySaccade::Top::Block::Trial::Delay::distractorTimer</ParentPath></HostLink><Notes id="441"/><Pos id="442">277,439</Pos></UIElement><UIElement id="241"><HostLink id="242"><ParentId id="243">303</ParentId><ParentPath id="247">MemorySaccade::Top::Block::Trial::Delay::enAdjacentDistractor</ParentPath></HostLink><Notes id="248"/><Pos id="249">379,605</Pos></UIElement><UIElement id="353"><HostLink id="354"><ParentId id="355">272</ParentId><ParentPath id="381">MemorySaccade::Top::Block::Trial::Delay::distractorInterval</ParentPath></HostLink><Notes id="385"/><Pos id="386">273,620</Pos></UIElement><UIElement id="335"><HostLink id="336"><ParentId id="337">250</ParentId><ParentPath id="338">MemorySaccade::Top::Block::Trial::Delay::enDoubleAdjDistractor</ParentPath></HostLink><Notes id="339"/><Pos id="340">378,696</Pos></UIElement><UIElement id="360"><HostLink id="361"><ParentId id="362">352</ParentId><ParentPath id="363">MemorySaccade::Top::Block::Trial::Delay::distractorColor</ParentPath></HostLink><Notes id="364"/><Pos id="365">274,706</Pos></UIElement></UIData></PictoData>

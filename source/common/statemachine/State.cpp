@@ -99,7 +99,7 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 			{
 				//Get the result and call its entry script
 				QSharedPointer<Result> controlResult = control.staticCast<ControlElement>()->getResult();
-				setLatestResult(controlResult->getName());
+				control->setLatestResult(controlResult->getName());
 				controlResult->runResultScript();
 				QList<QSharedPointer<Transition>> elemLinks = transitions_.values(control->getName());
 				foreach(QSharedPointer<Transition> link,elemLinks)

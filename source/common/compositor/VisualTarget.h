@@ -4,6 +4,7 @@
 #include <QColor>
 #include <QSharedPointer>
 #include <QWidget>
+#include <QKeyEvent>
 
 #include "../common.h"
 
@@ -74,9 +75,11 @@ public:
 	//! \todo Add a function that returns time to VSynch
 signals:
 	void presented(double frameTime);
+	void escapePressed();
 
 protected:
 	void paintEvent(QPaintEvent *) { paint(this); };
+	void keyPressEvent(QKeyEvent* event);
 	void setFirstPhosphorTime();
 
 	bool bWindowed_;
