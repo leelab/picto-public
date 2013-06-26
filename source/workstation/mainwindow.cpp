@@ -483,7 +483,9 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed bug in Lists and Maps that caused initialization problems.");
+	releaseNoteList.append("It is now possible to close the Picto director application by pressing escape.");
+	releaseNoteList.append("Moved analysis selection and analysis output into a single tabbed widget to conserve screen real estate.");
+	releaseNoteList.append("Fixed bug that caused getLatestResult() from ControlElements to return an empty string.");
 
 	releaseNoteList.append("Fixed bug that caused analysis variables to not be reset when their parent state was entered.  This bug occured only on playback when using imported analyses.");
 
