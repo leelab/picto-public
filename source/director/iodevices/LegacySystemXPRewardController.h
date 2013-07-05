@@ -35,8 +35,8 @@ protected:
 	virtual void startFlush(unsigned int channel);
 	virtual void stopFlush(unsigned int channel);
 private:
-	quint32 daqTaskHandle_; // For Nidaqmx 8.5
-	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
+	//quint32 daqTaskHandle_; // For Nidaqmx 8.5
+	void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 	int rewardLines_[4];
 	bool hasDevice_;
 	double outputData[2];

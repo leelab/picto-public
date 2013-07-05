@@ -26,6 +26,7 @@ public:
 	QString proxyServerAppName;
 	QString configAppName;
 	QString directorAppName;
+	QString frontPanelAppName;
 	QString directorHWName;
 	QString workstationAppName;
 };

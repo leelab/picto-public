@@ -47,6 +47,7 @@ public:
 
 public slots:
 	void userInputSlot(int type);
+	void aboutToQuit();
 
 private slots:
 	void checkConnections();
@@ -57,6 +58,7 @@ signals:
 	void updateLCD(int line, QString text);
 	void toggleBacklight();
 	void turnOnBacklight();
+	void turnOffBacklight();
 
 private:
 	void loadMenus();

@@ -8,12 +8,16 @@
 
 #include "common.h"
 #include "namedefs.h"
+#include "portdefs.h"
 
 namespace Picto {
 
 /*! \addtogroup picto
  * @{
  */
+
+/*! \brief Registers application names*/
+PICTOLIB_API inline void InitializeNames();
 
 /*! \brief Registers types needed for signals and slots */
 inline void InitializeMetaTypes();
@@ -28,6 +32,15 @@ inline void initializeFactories();
  */
 PICTOLIB_API void InitializeLib(QCoreApplication * coreApp, QString localeLanguageCode);
 
+/*! \brief Initializes the ports used by this %Picto application according to the system number
+ *
+ * InitializePorts must be called by code using the %Picto library prior to usage and after calling
+ * initialize lib.  This function sets up the port numbers used by Picto to communicate with other
+ * %picto applications.  The input name should come from the Names object that is set up in
+ * InializeLib.
+ */
+PICTOLIB_API void InitializePorts(QString appName,bool usedInSystemService = false);
+
 /*! \brief Shuts down the %Picto library
  *
  * CloseLib must be called by code using the %Picto library prior to shutdown.  This
@@ -37,6 +50,9 @@ PICTOLIB_API void CloseLib();
 
 /*! This global variable contains all of the names utilized by components of the %Picto suite */
 PICTOLIB_GLOBAL const TranslatedNames * Names;
+
+/*! This global variable contains all of the port numbers utilized by components of the %Picto suite */
+PICTOLIB_GLOBAL PortNums * portNums;
 
 /* @} */
 }; //namespace Picto

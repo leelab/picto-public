@@ -1,4 +1,4 @@
-#include "PictoBoxXPRewardController.h"
+#include "FrontPanelRewardController.h"
 #include <windows.h>
 #include <NIDAQmx.h>
 #include "../../common/memleakdetect.h"
@@ -32,7 +32,7 @@ namespace Picto
 {
 
 //! Sets up the reward controller
-PictoBoxXPRewardController::PictoBoxXPRewardController()
+FrontPanelRewardController::FrontPanelRewardController()
 : RewardController(NUMREWARDLINES)
 {
 	outputData[0] = 0.0;
@@ -80,7 +80,7 @@ PictoBoxXPRewardController::PictoBoxXPRewardController()
 	DAQmxErrChk(DAQmxClearTask(rewardEnTask));
 }
 
-PictoBoxXPRewardController::~PictoBoxXPRewardController()
+FrontPanelRewardController::~FrontPanelRewardController()
 {
 	if(!hasDevice_)
 		return;
@@ -90,7 +90,7 @@ PictoBoxXPRewardController::~PictoBoxXPRewardController()
 }
 
 
-void PictoBoxXPRewardController::startReward(unsigned int channel,int quantity)
+void FrontPanelRewardController::startReward(unsigned int channel,int quantity)
 {
 	if(!hasDevice_)
 		return;
@@ -126,7 +126,7 @@ void PictoBoxXPRewardController::startReward(unsigned int channel,int quantity)
 	}
 }
 
-bool PictoBoxXPRewardController::rewardWasSupplied(unsigned int channel)
+bool FrontPanelRewardController::rewardWasSupplied(unsigned int channel)
 {
 	if(channel > NUMREWARDLINES+1 || channel < 1)
 		return true;
@@ -141,7 +141,7 @@ bool PictoBoxXPRewardController::rewardWasSupplied(unsigned int channel)
 	daqTaskHandle_[channel] = 0;
 	return true;
 }
-void PictoBoxXPRewardController::startFlush(unsigned int channel)
+void FrontPanelRewardController::startFlush(unsigned int channel)
 {
 	if(!hasDevice_)
 		return;
@@ -168,7 +168,7 @@ void PictoBoxXPRewardController::startFlush(unsigned int channel)
 	}
 
 }
-void PictoBoxXPRewardController::stopFlush(unsigned int channel)
+void FrontPanelRewardController::stopFlush(unsigned int channel)
 {
 	if(!hasDevice_)
 		return;

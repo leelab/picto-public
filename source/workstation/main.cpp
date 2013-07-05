@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 	app.installTranslator(&appTranslator);
 
 	Picto::InitializeLib(&app,localeLanguageCode);
+	Picto::InitializePorts(Picto::Names->workstationAppName);
 
 	Q_ASSERT_X(Picto::testMTRand(),"Director::main()","Random number generator failed test");
 

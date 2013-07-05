@@ -134,7 +134,10 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 				alignData = QSharedPointer<Picto::AlignmentDataUnit>(new Picto::AlignmentDataUnit());
 				timestampSec = pServerEventBuffer[MAPEvent].TimeStamp*samplePeriodSec;
 				alignData->setTimestamp(timestampSec);
-				alignData->setAlignCode(pServerEventBuffer[MAPEvent].Unit);
+				//We maske the align code with 0x007F because we only care about the 
+				//bottom 7 lines since Picto's event codes are always 0x7f and lower.
+				//Anything that accidentally came in on another line should be ignored.
+				alignData->setAlignCode((pServerEventBuffer[MAPEvent].Unit & 0x007F));
 				returnList.push_back(alignData);
 			}
 			

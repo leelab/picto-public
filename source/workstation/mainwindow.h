@@ -53,6 +53,7 @@ private slots:
 	void changeMode();
 	void startMode();
 	//void checkSyntax();
+	void changeSystemNumber();
 	void aboutPicto();
 
 private:
@@ -97,6 +98,7 @@ private:
 	//Experiment Actions
 	QAction *checkSyntaxAction_;
 	QAction *initViewerAction_;
+	QAction *setSystemNumberAction_;
 	QAction *aboutPictoAction_;
 
 
@@ -104,6 +106,7 @@ private:
 	QMenu* fileMenu_;
 	//QMenu* editMenu_;
 	QMenu* modeMenu_;
+	QMenu* systemMenu_;
 	QMenu* experimentMenu_;
 	QMenu* aboutMenu_;
 

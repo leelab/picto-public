@@ -416,7 +416,7 @@ bool UpdateDownloader::acceptUpdate()
 void UpdateDownloader::serverDiscovered(QHostAddress pictoServerAddress, quint16)
 {
 	serverAddress_ = pictoServerAddress;
-	appUpdatePort_ = APPUPDATEPORT;
+	appUpdatePort_ = Picto::portNums->getUpdatePort();
 	if(!updateCheckSocket_)
 	{
 		updateCheckSocket_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
@@ -463,7 +463,7 @@ void UpdateDownloader::serverVersionResponseReceived()
 	else if(response.getFieldValue("PictoVersion").isEmpty())
 	{
 	}
-	else if(response.getFieldValue("PictoVersion") == PICTOVERSION)
+	else if(response.getFieldValue("PictoVersion") <= PICTOVERSION)
 	{
 	}
 	else

@@ -24,6 +24,8 @@ Dialog::Dialog(SystemService * systemService, QWidget *parent) :
 	removeButton = new QPushButton(tr("&Remove %1 Service/Daemon").arg(Picto::Names->serverAppName));
 	startButton = new QPushButton(tr("&Start %1 Service/Daemon").arg(Picto::Names->serverAppName));
 	stopButton = new QPushButton(tr("S&top %1 Service/Daemon").arg(Picto::Names->serverAppName));
+	systemNumberBox = new QSpinBox();
+	systemNumberBox->setValue(Picto::portNums->getSystemNumber());
 
 	if(systemService->isInstalled())
 	{
@@ -43,6 +45,7 @@ Dialog::Dialog(SystemService * systemService, QWidget *parent) :
 		removeButton->setEnabled(false);
 		startButton->setEnabled(false);
 		stopButton->setEnabled(false);
+		systemNumberBox->setEnabled(true);
 	}
 
 
@@ -50,6 +53,7 @@ Dialog::Dialog(SystemService * systemService, QWidget *parent) :
 	connect(removeButton, SIGNAL(clicked()), this, SLOT(doRemove()));
 	connect(startButton, SIGNAL(clicked()), this, SLOT(doStart()));
 	connect(stopButton, SIGNAL(clicked()), this, SLOT(doStop()));
+	connect(systemNumberBox, SIGNAL(valueChanged(int)),this,SLOT(systemNumberChanged(int)));
 
 	QHBoxLayout *textLayout = new QHBoxLayout;
 	textLayout->addStretch(1);
@@ -73,6 +77,10 @@ Dialog::Dialog(SystemService * systemService, QWidget *parent) :
 	buttonLayout->addWidget(installButton);
 	buttonLayout->addWidget(removeButton);
 	buttonLayout->addStretch(1);
+	QHBoxLayout *systemNumberLayout = new QHBoxLayout;
+	systemNumberLayout->addWidget(new QLabel("System Number"));
+	systemNumberLayout->addWidget(systemNumberBox);
+	systemNumberLayout->addStretch(1);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addStretch(1);
@@ -80,6 +88,7 @@ Dialog::Dialog(SystemService * systemService, QWidget *parent) :
 	mainLayout->addSpacing(15);
 	mainLayout->addLayout(installRemoveButtonLayout);
 	mainLayout->addLayout(startStopButtonLayout);
+	mainLayout->addLayout(systemNumberLayout);
 	mainLayout->addStretch(1);
 	mainLayout->setSizeConstraint(QLayout::SetFixedSize);
 
@@ -97,6 +106,7 @@ void Dialog::doInstall()
 		removeButton->setEnabled(true);
 		startButton->setEnabled(true);
 		stopButton->setEnabled(false);
+		systemNumberBox->setEnabled(false);
 	}
 	else
 	{
@@ -116,6 +126,7 @@ void Dialog::doRemove()
 		removeButton->setEnabled(false);
 		startButton->setEnabled(false);
 		stopButton->setEnabled(false);
+		systemNumberBox->setEnabled(true);
 	}
 	else
 	{
@@ -133,6 +144,7 @@ void Dialog::doStart()
 	{
 		startButton->setEnabled(false);
 		stopButton->setEnabled(true);
+		systemNumberBox->setEnabled(false);
 	}
 	else
 	{
@@ -150,6 +162,7 @@ void Dialog::doStop()
 	{
 		startButton->setEnabled(true);
 		stopButton->setEnabled(false);
+		systemNumberBox->setEnabled(false);
 	}
 	else
 	{
@@ -159,4 +172,12 @@ void Dialog::doStop()
 					QMessageBox::Ok,
 					this).exec();
 	}
+}
+
+void Dialog::systemNumberChanged(int num)
+{
+	int currSysNum = Picto::portNums->getSystemNumber();
+	if(num == currSysNum)
+		return;
+	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),num,false);
 }

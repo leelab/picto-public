@@ -40,8 +40,8 @@ public slots:
 	double sendEvent(unsigned int eventCode);
 
 private:
-	quint32  daqTaskHandle_; // For Nidaqmx 8.5
-	//void*  daqTaskHandle_;	// For Nidaqmx after 8.5
+	//quint32  daqTaskHandle_; // For Nidaqmx 8.5
+	void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 
 };
 

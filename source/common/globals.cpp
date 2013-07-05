@@ -39,8 +39,15 @@ Q_DECLARE_METATYPE(QHostAddress);
 namespace Picto {
 
 const TranslatedNames * Names = NULL;
+PortNums * portNums = NULL;
 QTranslator * qtTranslator = NULL;
 QTranslator * commonTranslator = NULL;
+
+void InitializeNames()
+{
+	if(!Names)
+		Names = new TranslatedNames();
+}
 
 void InitializeMetaTypes()
 {
@@ -61,19 +68,28 @@ void InitializeLib(QCoreApplication * coreApp, QString localeLanguageCode)
 		commonTranslator->load(":/common/translations/common_" + localeLanguageCode + ".qm" );
 		coreApp->installTranslator(commonTranslator);
 	}
-
-	Names = new TranslatedNames();
-
+	InitializeNames();
 	InitializeMetaTypes();
 	initializeFactories();
+}
+
+//When the Picto Server runs as a picto service, it does not have access to the regular Picto settings
+//so they need to be saved in the System Scope.  All other Picto applications should save their values
+//in the user scope (because setting system settings requires administrator previleges).
+void InitializePorts(QString appName,bool usedInSystemService)
+{
+	if(!portNums)
+		portNums = new PortNums(appName,usedInSystemService);
 }
 
 void CloseLib()
 {
 	delete Names;
+	delete portNums;
 	delete commonTranslator;
 	delete qtTranslator;
 	Names = NULL;
+	portNums = NULL;
 	commonTranslator = NULL;
 	qtTranslator = NULL;
 }

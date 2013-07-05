@@ -32,8 +32,8 @@ protected:
 	virtual double updateDataBuffer();
 private:
 
-	unsigned long  daqTaskHandle_; // For Nidaqmx 8.5
-	//static void*  daqTaskHandle_;	// For Nidaqmx after 8.5
+	//unsigned long  daqTaskHandle_; // For Nidaqmx 8.5
+	void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 	unsigned int bufferSize_;
 	short *dataBuffer_;
 

@@ -388,6 +388,8 @@
    <file alias="_frame_trigger_8h-source.html">../../../output/documentation/main/html/_frame_trigger_8h-source.html</file>
    <file alias="_front_panel_info_8cpp-source.html">../../../output/documentation/main/html/_front_panel_info_8cpp-source.html</file>
    <file alias="_front_panel_info_8h-source.html">../../../output/documentation/main/html/_front_panel_info_8h-source.html</file>
+   <file alias="_front_panel_reward_controller_8cpp-source.html">../../../output/documentation/main/html/_front_panel_reward_controller_8cpp-source.html</file>
+   <file alias="_front_panel_reward_controller_8h-source.html">../../../output/documentation/main/html/_front_panel_reward_controller_8h-source.html</file>
    <file alias="_get_command_handler_8cpp-source.html">../../../output/documentation/main/html/_get_command_handler_8cpp-source.html</file>
    <file alias="_get_command_handler_8h-source.html">../../../output/documentation/main/html/_get_command_handler_8h-source.html</file>
    <file alias="_get_data_command_handler_8cpp-source.html">../../../output/documentation/main/html/_get_data_command_handler_8cpp-source.html</file>
@@ -1353,6 +1355,9 @@
    <file alias="class_picto_1_1_frame_state-members.html">../../../output/documentation/main/html/class_picto_1_1_frame_state-members.html</file>
    <file alias="class_picto_1_1_frame_state.html">../../../output/documentation/main/html/class_picto_1_1_frame_state.html</file>
    <file alias="class_picto_1_1_frame_state.png">../../../output/documentation/main/html/class_picto_1_1_frame_state.png</file>
+   <file alias="class_picto_1_1_front_panel_reward_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_front_panel_reward_controller-members.html</file>
+   <file alias="class_picto_1_1_front_panel_reward_controller.html">../../../output/documentation/main/html/class_picto_1_1_front_panel_reward_controller.html</file>
+   <file alias="class_picto_1_1_front_panel_reward_controller.png">../../../output/documentation/main/html/class_picto_1_1_front_panel_reward_controller.png</file>
    <file alias="class_picto_1_1_grid_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_grid_graphic-members.html</file>
    <file alias="class_picto_1_1_grid_graphic.html">../../../output/documentation/main/html/class_picto_1_1_grid_graphic.html</file>
    <file alias="class_picto_1_1_grid_graphic.png">../../../output/documentation/main/html/class_picto_1_1_grid_graphic.png</file>
@@ -1386,6 +1391,9 @@
    <file alias="class_picto_1_1_list_data_state_list-members.html">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list-members.html</file>
    <file alias="class_picto_1_1_list_data_state_list.html">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list.html</file>
    <file alias="class_picto_1_1_list_data_state_list.png">../../../output/documentation/main/html/class_picto_1_1_list_data_state_list.png</file>
+   <file alias="class_picto_1_1_list_property-members.html">../../../output/documentation/main/html/class_picto_1_1_list_property-members.html</file>
+   <file alias="class_picto_1_1_list_property.html">../../../output/documentation/main/html/class_picto_1_1_list_property.html</file>
+   <file alias="class_picto_1_1_list_property.png">../../../output/documentation/main/html/class_picto_1_1_list_property.png</file>
    <file alias="class_picto_1_1_logic_result-members.html">../../../output/documentation/main/html/class_picto_1_1_logic_result-members.html</file>
    <file alias="class_picto_1_1_logic_result.html">../../../output/documentation/main/html/class_picto_1_1_logic_result.html</file>
    <file alias="class_picto_1_1_logic_result.png">../../../output/documentation/main/html/class_picto_1_1_logic_result.png</file>
@@ -1396,6 +1404,9 @@
    <file alias="class_picto_1_1_machine_container.png">../../../output/documentation/main/html/class_picto_1_1_machine_container.png</file>
    <file alias="class_picto_1_1_magnetic_resonance_imaging_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_magnetic_resonance_imaging_data_store-members.html</file>
    <file alias="class_picto_1_1_magnetic_resonance_imaging_data_store.html">../../../output/documentation/main/html/class_picto_1_1_magnetic_resonance_imaging_data_store.html</file>
+   <file alias="class_picto_1_1_map_property-members.html">../../../output/documentation/main/html/class_picto_1_1_map_property-members.html</file>
+   <file alias="class_picto_1_1_map_property.html">../../../output/documentation/main/html/class_picto_1_1_map_property.html</file>
+   <file alias="class_picto_1_1_map_property.png">../../../output/documentation/main/html/class_picto_1_1_map_property.png</file>
    <file alias="class_picto_1_1_media_item-members.html">../../../output/documentation/main/html/class_picto_1_1_media_item-members.html</file>
    <file alias="class_picto_1_1_media_item.html">../../../output/documentation/main/html/class_picto_1_1_media_item.html</file>
    <file alias="class_picto_1_1_mouse_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_mouse_input_port-members.html</file>
@@ -1481,6 +1492,8 @@
    <file alias="class_picto_1_1_point_property-members.html">../../../output/documentation/main/html/class_picto_1_1_point_property-members.html</file>
    <file alias="class_picto_1_1_point_property.html">../../../output/documentation/main/html/class_picto_1_1_point_property.html</file>
    <file alias="class_picto_1_1_point_property.png">../../../output/documentation/main/html/class_picto_1_1_point_property.png</file>
+   <file alias="class_picto_1_1_port_nums-members.html">../../../output/documentation/main/html/class_picto_1_1_port_nums-members.html</file>
+   <file alias="class_picto_1_1_port_nums.html">../../../output/documentation/main/html/class_picto_1_1_port_nums.html</file>
    <file alias="class_picto_1_1_positional_data_store-members.html">../../../output/documentation/main/html/class_picto_1_1_positional_data_store-members.html</file>
    <file alias="class_picto_1_1_positional_data_store.html">../../../output/documentation/main/html/class_picto_1_1_positional_data_store.html</file>
    <file alias="class_picto_1_1_predicate-members.html">../../../output/documentation/main/html/class_picto_1_1_predicate-members.html</file>
@@ -2161,6 +2174,9 @@
    <file alias="pictodoc.css">../../../output/documentation/main/html/pictodoc.css</file>
    <file alias="plexonplugin_8cpp-source.html">../../../output/documentation/main/html/plexonplugin_8cpp-source.html</file>
    <file alias="plexonplugin_8h-source.html">../../../output/documentation/main/html/plexonplugin_8h-source.html</file>
+   <file alias="portdefs_8cpp-source.html">../../../output/documentation/main/html/portdefs_8cpp-source.html</file>
+   <file alias="portdefs_8h-source.html">../../../output/documentation/main/html/portdefs_8h-source.html</file>
+   <file alias="portdefs_8h.html">../../../output/documentation/main/html/portdefs_8h.html</file>
    <file alias="proxymainwindow_8cpp-source.html">../../../output/documentation/main/html/proxymainwindow_8cpp-source.html</file>
    <file alias="proxymainwindow_8h-source.html">../../../output/documentation/main/html/proxymainwindow_8h-source.html</file>
    <file alias="proxyplugins_2tdtplugin_2dialog_8cpp-source.html">../../../output/documentation/main/html/proxyplugins_2tdtplugin_2dialog_8cpp-source.html</file>

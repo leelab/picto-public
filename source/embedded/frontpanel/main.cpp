@@ -42,9 +42,19 @@ int main(int argc, char *argv[])
 	QString localeLanguageCode = systemLocale.name().left(2);
 
 	Picto::InitializeLib(&app,localeLanguageCode);
+	Picto::InitializePorts(Picto::Names->frontPanelAppName);
+
+	//possibly reset our system number...
+	int sysNumArgIdx = app.arguments().indexOf("-systemNumber");
+	if(sysNumArgIdx > 0)
+	{
+		QString systemNumber = app.arguments()[sysNumArgIdx+1];
+		//Change System number if necessary
+		Picto::portNums->setSystemNumber(app.applicationFilePath(),app.arguments(),systemNumber.toInt(),false);
+	}
 
 	QTextStream outstream(stdout);
-	outstream<<"Hello world\n";
+	outstream<<"PictoBox Front Panel Display Activated\n";
 	outstream.flush();
 
 	FrontPanelInfo *panelInfo = new FrontPanelInfo();
@@ -56,6 +66,8 @@ int main(int argc, char *argv[])
 	QObject::connect(&M, SIGNAL(updateLCD(int, QString)), &phidgets, SLOT(updateLCD(int, QString)));
 	QObject::connect(&M, SIGNAL(toggleBacklight()), &phidgets, SLOT(toggleBacklight()));
 	QObject::connect(&M, SIGNAL(turnOnBacklight()), &phidgets, SLOT(turnOnBacklight()));
+	QObject::connect(&M, SIGNAL(turnOffBacklight()), &phidgets, SLOT(turnOffBacklight()));
+	QObject::connect(&app, SIGNAL(aboutToQuit()), &M, SLOT(aboutToQuit()));
 	QObject::connect(&phidgets, SIGNAL(userInputSignal(int)), &M, SLOT(userInputSlot(int)));
 	//QObject::connect(&E, SIGNAL(newEventRead()), &M, SLOT(updateStatus()));
 
@@ -70,6 +82,9 @@ int main(int argc, char *argv[])
 	
 
 	int retVal = app.exec();
+	phidgets.turnOffBacklight();
+	phidgets.updateLCD(1,"");
+	phidgets.updateLCD(2,"");
 	Picto::CloseLib();
 	return retVal;
 }

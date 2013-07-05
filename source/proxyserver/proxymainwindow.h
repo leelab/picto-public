@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QUuid>
+#include <QSpinBox>
 #include "StatusLight.h"
 #include "../common/network/ComponentInterface.h"
 
@@ -76,7 +77,6 @@ private:
 	void createLayout();
 
 	void readSettings();
-	void writeSettings();
 
 	//Inherited functions from ComponentInterface
 	virtual QString name();
@@ -91,6 +91,8 @@ private:
 	QVBoxLayout *layout_;
 	QLabel *lineEditNameLabel_;
 	QLineEdit *lineEditName_;
+	QSpinBox *systemNumber_;
+	QLabel *systemNumLabel_;
 
 	//QTimer *activityTimer_;
 
@@ -107,5 +109,7 @@ private:
 
 private slots:
 	void pluginIndexChanged(int index);
+	void systemNumberChanged(int index);
+	void writeSettings();
 };
 #endif

@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
 	app.installTranslator(&appTranslator);
 
 	Picto::InitializeLib(&app,localeLanguageCode);
+	Picto::InitializePorts(Picto::Names->proxyServerAppName);
 
 	ProxyMainWindow window;
 

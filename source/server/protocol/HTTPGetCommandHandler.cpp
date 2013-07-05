@@ -36,6 +36,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 								"<title>Picto Server Status</title>\r\n"
 								"</head><body>\r\n"
 								"<h1>Picto Server</h1>\r\n"
+								+ QString("<h2>System Number: %1</h2>").arg(Picto::portNums->getSystemNumber())
 								+ QString("Status as of: %1 GMT\r\n").arg(QDateTime::currentDateTime().toUTC().toString("ddd, dd MMM yyyy hh:mm:ss")) +
 								"<br>\r\n"
 								"Listening on address: ";

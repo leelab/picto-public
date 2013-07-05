@@ -1,5 +1,6 @@
 #include <QStringList>
 #include "ServerDiscoverer.h"
+#include "../globals.h"
 #include "../common.h"
 #include "../memleakdetect.h"
 
@@ -12,9 +13,9 @@ ServerDiscoverer::ServerDiscoverer(QObject *parent) :
 {
 	QHostAddress serverAddress(QHostAddress::Any);
 	
-	port_ = MINDISCOVERSERVERPORT;
+	port_ = Picto::portNums->getMinDiscoverPort();
 
-    while(!udpSocket_.bind(serverAddress, port_) && port_ < MAXDISCOVERSERVERPORT)
+    while(!udpSocket_.bind(serverAddress, port_) && port_ < Picto::portNums->getMaxDiscoverPort())
 	{
 		port_++;
 	}
@@ -63,7 +64,7 @@ void ServerDiscoverer::discover(int timeout)
 	timeoutTimer_.setSingleShot(true);
 
 	udpSendSocket.writeDatagram(datagram.data(), datagram.size(),
-								QHostAddress::Broadcast, SERVERPORT);
+								QHostAddress::Broadcast, Picto::portNums->getServerPort());
 		
 	timeoutTimer_.start();
 }

@@ -20,6 +20,8 @@ HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.cpp
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelRewardController.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelRewardController.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/DirectorInterface.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/DirectorInterface.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/menu.h
@@ -43,6 +45,9 @@ HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/statusmode.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/statusmode.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/menumode.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/menumode.cpp
+
+INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
+LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
 
 # Output
 build_pass:CONFIG(debug, debug|release) {

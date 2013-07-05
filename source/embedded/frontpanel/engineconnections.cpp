@@ -5,6 +5,7 @@
 
 #include "engineconnections.h"
 #include "eventchannelthread.h"
+#include "../../common/globals.h"
 
 EngineConnections::EngineConnections(FrontPanelInfo *panelInfo, QObject* parent) :
 	QObject(parent),
@@ -13,13 +14,13 @@ EngineConnections::EngineConnections(FrontPanelInfo *panelInfo, QObject* parent)
 	//Set up the command channel.  This is the connection used to send commands
 	//to the engine, and read the responses from the engine
 	commandChannel = new QTcpServer(this);
-	commandChannel->listen(QHostAddress::LocalHost, LCDCOMMANDPORT);
+	commandChannel->listen(QHostAddress::LocalHost, Picto::portNums->getLCDCommandPort());
 	connect(commandChannel, SIGNAL(newConnection()), this, SLOT(setupCommandConnection()));
 
 	//Set up the event channel.  This is the connection used to send events from the 
 	//engine to the front panel (e.g. trial start, new block, etc)
 	eventChannel = new QTcpServer(this);
-	eventChannel->listen(QHostAddress::LocalHost, LCDEVENTPORT);
+	eventChannel->listen(QHostAddress::LocalHost, Picto::portNums->getLCDEventPort());
 	connect(eventChannel, SIGNAL(newConnection()), this, SLOT(setupEventConnection()));
 
 

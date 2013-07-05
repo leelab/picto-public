@@ -52,10 +52,8 @@ PictoBoxXPRewardController::PictoBoxXPRewardController()
 	{
 		DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_[channel]));
 		DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
-		//If the function fails on StartTask, don't trigger assertions because it might just be that another process
-		//is using the pin we want to control.  If there's an error here, just skip the task.
-		if(!DAQmxStartTask(daqTaskHandle_[channel]))
-			DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+		DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
+		DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 		DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
 		DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
 		daqTaskHandle_[channel] = 0;
@@ -68,13 +66,11 @@ PictoBoxXPRewardController::PictoBoxXPRewardController()
 	DAQmxErrChk(DAQmxCreateTask("RewardEnableTask",(TaskHandle*)&rewardEnTask));
 	//DAQmxErrChk(DAQmxCreateDOChan(rewardEnTask,PICTO_BOX_NIDAQ_5V_CHANNEL,"",DAQmx_Val_ChanForAllLines));
 	DAQmxErrChk(DAQmxCreateAOVoltageChan(rewardEnTask,QString("Dev1/ao1").toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
-	if(!DAQmxStartTask(rewardEnTask))
-	{
-		//Set digital lines to +5
-		//const uInt8 rewardEnData[] = {0xFF};
-		//DAQmxErrChk(DAQmxWriteDigitalU8(rewardEnTask,1,1,1.0,DAQmx_Val_GroupByChannel,rewardEnData,&sampsPerChanWritten,NULL));
-		DAQmxErrChk(DAQmxWriteAnalogF64(rewardEnTask,1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-	}
+	DAQmxErrChk(DAQmxStartTask(rewardEnTask));
+	//Set digital lines to +5
+	//const uInt8 rewardEnData[] = {0xFF};
+	//DAQmxErrChk(DAQmxWriteDigitalU8(rewardEnTask,1,1,1.0,DAQmx_Val_GroupByChannel,rewardEnData,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxWriteAnalogF64(rewardEnTask,1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 	//Clear this setup task
 	DAQmxErrChk(DAQmxStopTask(rewardEnTask));
 	DAQmxErrChk(DAQmxClearTask(rewardEnTask));
@@ -110,20 +106,13 @@ void PictoBoxXPRewardController::startReward(unsigned int channel,int quantity)
 	int32 sampsPerChanWritten;
 	//(remember, we're using active low logic)
 	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],2,0,-1,DAQmx_Val_GroupByChannel,outputData,&sampsPerChanWritten,NULL));
-	if(!DAQmxStartTask(daqTaskHandle_[channel]))
-	{
-		//Since this code creates a task that raises the voltage for quantity ms and then lowers it for quantity ms, as it is it 
-		//doesn't support inter reward intervals of less than quantity.  Since we couldn't find a better way to do this, we just
-		//set our own timer and stop/clear the task anytime that it still exists and more than quantity ms have passed.
-		stopwatch_[channel].startWatch();
-		latestOnTime_[channel] = quantity;
-	}
-	else
-	{
-		DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
-		DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
-		daqTaskHandle_[channel] = 0;
-	}
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
+
+	//Since this code creates a task that raises the voltage for quantity ms and then lowers it for quantity ms, as it is it 
+	//doesn't support inter reward intervals of less than quantity.  Since we couldn't find a better way to do this, we just
+	//set our own timer and stop/clear the task anytime that it still exists and more than quantity ms have passed.
+	stopwatch_[channel].startWatch();
+	latestOnTime_[channel] = quantity;
 }
 
 bool PictoBoxXPRewardController::rewardWasSupplied(unsigned int channel)
@@ -155,17 +144,9 @@ void PictoBoxXPRewardController::startFlush(unsigned int channel)
 	int32 sampsPerChanWritten;
 	//(remember, we're using active low logic)
 	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,outputData,&sampsPerChanWritten,NULL));
-	if(!DAQmxStartTask(daqTaskHandle_[channel]))
-	{
-		stopwatch_[channel].startWatch();
-		latestOnTime_[channel] = INT_MAX;
-	}
-	else
-	{
-		DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
-		DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
-		daqTaskHandle_[channel] = 0;
-	}
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
+	stopwatch_[channel].startWatch();
+	latestOnTime_[channel] = INT_MAX;
 
 }
 void PictoBoxXPRewardController::stopFlush(unsigned int channel)
@@ -184,10 +165,8 @@ void PictoBoxXPRewardController::stopFlush(unsigned int channel)
 	int32 sampsPerChanWritten;
 	DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_[channel]));
 	DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
-	if(!DAQmxStartTask(daqTaskHandle_[channel]))
-	{
-		DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
-	}
+	DAQmxErrChk(DAQmxStartTask(daqTaskHandle_[channel]));
+	DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
 	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_[channel]));
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_[channel]));
 	daqTaskHandle_[channel] = 0;

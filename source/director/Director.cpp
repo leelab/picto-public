@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QDir>
+#include <QSettings>
 
 #include "Director.h"
 #include "network/DirectorStatusManager.h"
@@ -96,28 +97,47 @@ Director::Director(QString name,
 	name_ = query.value(0).toString();
 
 	//Figure out reward durations
-	query.exec("SELECT value FROM directorinfo WHERE key='RewardDurations'");
-	if(!query.next())
+	QSettings settings("Block Designs", Picto::Names->frontPanelAppName);
+	if(settings.contains("RewardDurations"))
 	{
-		query.exec("INSERT INTO directorinfo (key,value) VALUES ('RewardDurations','')");
-		for(int i=0;i<=4;i++)
-			changeRewardDuration(i,100);
-		query.exec("SELECT value FROM directorinfo WHERE key='RewardDurations'");
-		Q_ASSERT(query.next());
+		rewardDurs_ = settings.value("RewardDurations").toString().split(":",QString::SkipEmptyParts);
 	}
-	rewardDurs_ = query.value(0).toString().split(":",QString::SkipEmptyParts);
+	else
+	{
+		rewardDurs_ << "100" << "100" << "100" << "100" << "100";
+		settings.setValue("RewardDurations",rewardDurs_.join(":"));
+	}
+	//rewardDurs_ = query.exec("SELECT value FROM directorinfo WHERE key='RewardDurations'");
+	//if(!query.next())
+	//{
+	//	query.exec("INSERT INTO directorinfo (key,value) VALUES ('RewardDurations','')");
+	//	for(int i=0;i<=4;i++)
+	//		changeRewardDuration(i,100);
+	//	query.exec("SELECT value FROM directorinfo WHERE key='RewardDurations'");
+	//	Q_ASSERT(query.next());
+	//}
+	//rewardDurs_ = query.value(0).toString().split(":",QString::SkipEmptyParts);
 
 	//Figure out flush durations
-	query.exec("SELECT value FROM directorinfo WHERE key='FlushDurations'");
-	if(!query.next())
+	if(settings.contains("FlushDurations"))
 	{
-		query.exec("INSERT INTO directorinfo (key,value) VALUES ('FlushDurations','')");
-		for(int i=0;i<=4;i++)
-			changeFlushDuration(i,300);
-		query.exec("SELECT value FROM directorinfo WHERE key='FlushDurations'");
-		Q_ASSERT(query.next());
+		flushDurs_ = settings.value("FlushDurations").toString().split(":",QString::SkipEmptyParts);
 	}
-	flushDurs_ = query.value(0).toString().split(":",QString::SkipEmptyParts);
+	else
+	{
+		flushDurs_ << "300" << "300" << "300" << "300" << "300";
+		settings.setValue("FlushDurations",flushDurs_.join(":"));
+	}
+	//query.exec("SELECT value FROM directorinfo WHERE key='FlushDurations'");
+	//if(!query.next())
+	//{
+	//	query.exec("INSERT INTO directorinfo (key,value) VALUES ('FlushDurations','')");
+	//	for(int i=0;i<=4;i++)
+	//		changeFlushDuration(i,300);
+	//	query.exec("SELECT value FROM directorinfo WHERE key='FlushDurations'");
+	//	Q_ASSERT(query.next());
+	//}
+	//flushDurs_ = query.value(0).toString().split(":",QString::SkipEmptyParts);
 
 }
 Director::~Director()
@@ -168,7 +188,7 @@ int Director::openDevice()
 	if(useFrontPanel_)
 	{
 		frontPanelProcess_ = QSharedPointer<QProcess>(new QProcess());
-		frontPanelProcess_->start(QCoreApplication::applicationDirPath() + "/" + FRONTPANELEXECUTABLE);
+		frontPanelProcess_->start(QCoreApplication::applicationDirPath() + "/" + FRONTPANELEXECUTABLE,QStringList() << "-systemNumber" << QString::number(Picto::portNums->getSystemNumber()));
 		if(!frontPanelProcess_->waitForStarted())
 			return 1;
 		//Assure that the update downloader will kill the front panel process if it needs to restart the application.
@@ -238,10 +258,10 @@ void Director::changeRewardDuration(int controller, int duration)
 		rewardDurs_.append("100");
 	rewardDurs_[controller] = QString::number(duration);
 	directorData_->setReward(controller,duration);
-	QSqlQuery query(configDb_);
-	query.prepare("UPDATE directorinfo SET value=:value WHERE key='RewardDurations'");
-	query.bindValue(":value",rewardDurs_.join(":"));
-	query.exec();
+	//QSqlQuery query(configDb_);
+	//query.prepare("UPDATE directorinfo SET value=:value WHERE key='RewardDurations'");
+	//query.bindValue(":value",rewardDurs_.join(":"));
+	//query.exec();
 }
 
 void Director::changeFlushDuration(int controller, int duration)
@@ -249,10 +269,10 @@ void Director::changeFlushDuration(int controller, int duration)
 	while(flushDurs_.size() <= controller)
 		flushDurs_.append("300");
 	flushDurs_[controller] = QString::number(duration);
-	QSqlQuery query(configDb_);
-	query.prepare("UPDATE directorinfo SET value=:value WHERE key='FlushDurations'");
-	query.bindValue(":value",flushDurs_.join(":"));
-	query.exec();
+	//QSqlQuery query(configDb_);
+	//query.prepare("UPDATE directorinfo SET value=:value WHERE key='FlushDurations'");
+	//query.bindValue(":value",flushDurs_.join(":"));
+	//query.exec();
 }
 
 /*! \todo PictoEngine object which loads an experiment object and can execute its contained tasks rendering to one or

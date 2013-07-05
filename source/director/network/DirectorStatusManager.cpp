@@ -5,6 +5,7 @@
 #include "../../common/storage/AlignmentDataUnit.h"
 #include "../../common/memleakdetect.h"
 #include "../frontpanel/FPInterface.h"
+#include "../../common/globals.h"
 using namespace Picto;
 
 #define SECS_PRE_ALIGN 5
@@ -50,6 +51,8 @@ void DirectorStatusManager::setUserInfo(QString info)
 	if(engine_.isNull())
 		return;
 	QList<QSharedPointer<Picto::RenderingTarget> > renderingTargets = getEngine()->getRenderingTargets();
+	//Add system number to user info
+	info.prepend(QString("System Num: %1 - ").arg(Picto::portNums->getSystemNumber()));
 	foreach(QSharedPointer<Picto::RenderingTarget> target, renderingTargets)
 	{
 		target->updateStatus(info);

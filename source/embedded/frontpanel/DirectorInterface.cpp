@@ -7,7 +7,9 @@
 #include <QApplication>
 #include <QUuid>
 #include <QTime>
+#include <QSettings>
 
+#include "../../common/globals.h"
 #include "DirectorInterface.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
@@ -17,11 +19,36 @@ DirectorInterface::DirectorInterface(FrontPanelInfo *panelInfo) :
 	panelInfo(panelInfo),
 	lastIp_(""),
 	lastStatus_(DirUnknown),
-	lastRewardDur_(-1),
-	lastFlushDur_(-1),
-	lastName_(""),
 	lastCommandId_(0)
 {
+	//Setup local reward supply incase director isn't attached
+	rewardController_ = QSharedPointer<FrontPanelRewardController>(new FrontPanelRewardController());
+	rewardTimer_ = QSharedPointer<QTimer>(new QTimer);
+	rewardTimer_->setInterval(16);
+	connect(rewardTimer_.data(), SIGNAL(timeout()), this, SLOT(updateLocalRewards()));
+
+	//Figure out reward durations
+	QSettings settings("Block Designs", Picto::Names->frontPanelAppName);
+	if(settings.contains("RewardDurations"))
+	{
+		rewardDurs_ = settings.value("RewardDurations").toString().split(":",QString::SkipEmptyParts);
+	}
+	else
+	{
+		rewardDurs_ << "100" << "100" << "100" << "100" << "100";
+		settings.setValue("RewardDurations",rewardDurs_.join(":"));
+	}
+
+	//Figure out flush durations
+	if(settings.contains("FlushDurations"))
+	{
+		flushDurs_ = settings.value("FlushDurations").toString().split(":",QString::SkipEmptyParts);
+	}
+	else
+	{
+		flushDurs_ << "300" << "300" << "300" << "300" << "300";
+		settings.setValue("FlushDurations",flushDurs_.join(":"));
+	}
 }
 
 DirectorInterface::~DirectorInterface()
@@ -70,10 +97,9 @@ QString DirectorInterface::getName()
 	QString reply;
 	if(!sendCommandGetResponse(command,&reply))
 	{
-		return lastName_;
+		return "Picto Not Found";
 	}
-	lastName_ = reply;
-	return lastName_;
+	return reply;
 }
 
 DirectorStatus DirectorInterface::getStatus()
@@ -83,7 +109,7 @@ DirectorStatus DirectorInterface::getStatus()
 	QString reply;
 	if(!sendCommandGetResponse(command,&reply))
 	{
-		return DirDisconnect;
+		return DirUnknown;
 	}
 
 	if(reply == "Running")
@@ -105,41 +131,62 @@ bool DirectorInterface::setRewardDuration(int rewardDur,int controller)
 {
 	if(controller < 0)
 		return false;
+	//Update locally stored reward duration
+	if(rewardDur != rewardDurs_[controller].toInt())
+	{
+		rewardDurs_[controller] = QString::number(rewardDur);
+		QSettings settings("Block Designs", Picto::Names->frontPanelAppName);
+		settings.setValue("RewardDurations",rewardDurs_.join(":"));
+	}
 	//inform the engine of the change
 	Picto::ProtocolCommand command(QString("FPPUT /reward/%1/duration PICTO/1.0").arg(controller));
 	QByteArray content = QString("%1").arg(rewardDur).toUtf8();
 	command.setContent(content);
 	if(!sendCommandGetResponse(command,&QString()))
-		return false;
+		return true;
 	return true;
 }
 
 
 int DirectorInterface::getRewardDuration(int controller)
 {
-	if(controller < 0)
+	if(controller < 0 || controller > 4)
 		return -1;
 	//send a command
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/duration PICTO/1.0").arg(controller));
 	QString reply;
 	if(!sendCommandGetResponse(command,&reply))
 	{
-		return lastRewardDur_;
+		return rewardDurs_[controller].toInt();
 	}
-	lastRewardDur_ = reply.toInt();
-	return lastRewardDur_;
+	int newDur = reply.toInt();
+	if(newDur != rewardDurs_[controller].toInt())
+	{
+		rewardDurs_[controller] = QString::number(newDur);
+		QSettings settings("Block Designs", Picto::Names->frontPanelAppName);
+		settings.setValue("RewardDurations",rewardDurs_.join(":"));
+	}
+	return rewardDurs_[controller].toInt();
 }
 
 bool DirectorInterface::setFlushDuration(int flushDur,int controller)
 {
-	if(controller < 0)
+	if(controller < 0 || controller > 4)
 		return false;
+	//Update locally stored flush duration
+	if(flushDur != rewardDurs_[controller].toInt())
+	{
+		flushDurs_[controller] = QString::number(flushDur);
+		QSettings settings("Block Designs", Picto::Names->frontPanelAppName);
+		settings.setValue("FlushDurations",flushDurs_.join(":"));
+	}
+
 	//inform the engine of the change
 	Picto::ProtocolCommand command(QString("FPPUT /reward/%1/flushduration PICTO/1.0").arg(controller));
 	QByteArray content = QString("%1").arg(flushDur).toUtf8();
 	command.setContent(content);
 	if(!sendCommandGetResponse(command,&QString()))
-		return false;
+		return true;
 	return true;
 }
 
@@ -151,19 +198,43 @@ int DirectorInterface::getFlushDuration(int controller)
 	Picto::ProtocolCommand command(QString("FPGET /reward/%1/flushduration PICTO/1.0").arg(controller));
 	QString reply;
 	if(!sendCommandGetResponse(command,&reply))
-		return lastFlushDur_;
-	lastFlushDur_ = reply.toInt();
-	return lastFlushDur_;
+	{
+		return flushDurs_[controller].toInt();
+	}
+	int newDur = reply.toInt();
+	if(newDur != flushDurs_[controller].toInt())
+	{
+		flushDurs_[controller] = QString::number(newDur);;
+		QSettings settings("Block Designs", Picto::Names->frontPanelAppName);
+		settings.setValue("FlushDurations",flushDurs_.join(":"));
+	}
+	return flushDurs_[controller].toInt();
 }
 
 bool DirectorInterface::flush(int controller)
 {
+	//If we started a flush locally, abort it.
+	if(rewardController_->isFlushing(controller))
+	{
+		//qDebug("Aborting flush");
+		rewardController_->abortFlush(controller);
+		return true;
+	}
 	if(controller < 0)
 		return false;
 	//send out a start flushing command
 	Picto::ProtocolCommand command(QString("FPFLUSH /reward/%1 PICTO/1.0").arg(controller));
 	if(!sendCommandGetResponse(command,&QString()))
-		return false;
+	{
+		//Couldn't reach director.  Do reward locally.
+		int flushDur = getFlushDuration(controller);
+		if(flushDur < 0)
+			return false;
+		rewardController_->flush(controller,flushDur);
+		if(!rewardTimer_->isActive())
+			rewardTimer_->start();
+		return true;
+	}
 	return true;
 }
 int DirectorInterface::getFlushTimeRemaining(int controller)
@@ -181,16 +252,21 @@ bool DirectorInterface::startReward(int controller)
 {
 	if(controller < 0)
 		return false;
-	qDebug(QTime::currentTime().toString().toLatin1() + ": Start Reward Sent");
-	//NOTE: No indication is given through the UI that a reward has been issued.
-	//In the Lee lab, this is not a problem, since the reward solenoids are loud.
-	//However, it might be desirable to give some sort of indication of a reward
-	//This could be done using the "reward trigger" light on the front panel.
+	//qDebug(QTime::currentTime().toString().toLatin1() + ": Start Reward Sent");
 
 	//tell the engine to give a reward
 	Picto::ProtocolCommand command(QString("FPREWARD /reward/%1 PICTO/1.0").arg(controller));
 	if(!sendCommandGetResponse(command,&QString()))
-		return false;
+	{
+		//Couldn't reach director.  Do reward locally.
+		int rewDur = getRewardDuration(controller);
+		if(rewDur < 0)
+			return false;
+		rewardController_->addReward(controller,rewDur,rewDur);
+		if(!rewardTimer_->isActive())
+			rewardTimer_->start();
+		return true;
+	}
 	return true;
 }
 
@@ -225,22 +301,37 @@ bool DirectorInterface::sendCommandGetResponse(Picto::ProtocolCommand command,QS
 	QString commandId = QString::number(++lastCommandId_);
 	command.setFieldValue("Command-ID",commandId);
 	command.write(commSock);
-	qDebug("SentID: " + commandId.toLatin1());
+	//qDebug("SentID: " + commandId.toLatin1());
 	Picto::ProtocolResponse response;
 	int r = response.read(commSock,RESPONSEDELAYMS);
 	//If we got a reponse (r>=0) but it wasn't for our command, throw it out and read a new one.
 	while((r >= 0) && (response.getFieldValue("Command-ID") != commandId))
 	{
-		qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toLatin1());
+		//qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toLatin1());
 		r = response.read(commSock,RESPONSEDELAYMS);
 	}
 	(*reply) = "";
 	if(r < 0)	//A response to our command didn't arrive in time.
 		return false;
-	qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toLatin1());
+	//qDebug("ReceivedID: " + response.getFieldValue("Command-ID").toLatin1());
 
 	(*reply) = QString(response.getDecodedContent());
 	if(response.getResponseCode() != 200)
 		return false;
 	return true;
+}
+
+void DirectorInterface::updateLocalRewards()
+{
+	rewardController_->triggerRewards(false);
+	if(rewardController_->hasPendingRewards())
+		return;
+	for(int i=0;i<5;i++)
+	{
+		if(rewardController_->rewardInProgress(i) 
+			|| rewardController_->isFlushing(i))
+			return;
+	}
+	//qDebug("Stopping reward timer");
+	rewardTimer_->stop();
 }

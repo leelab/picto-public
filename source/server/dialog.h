@@ -6,6 +6,7 @@
 
 #include <QEvent>
 #include <QKeyEvent>
+#include <QSpinBox>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -29,6 +30,7 @@ private slots:
 	void doRemove();
 	void doStart();
 	void doStop();
+	void systemNumberChanged(int num);
 
 private:
 	QLabel * infoLabel;
@@ -36,6 +38,7 @@ private:
 	QPushButton * removeButton;
 	QPushButton * startButton;
 	QPushButton * stopButton;
+	QSpinBox * systemNumberBox;
 	SystemService * targetService;
 };
 

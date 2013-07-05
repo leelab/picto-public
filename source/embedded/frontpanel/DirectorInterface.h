@@ -3,12 +3,16 @@
 
 #include <QList>
 #include <QString>
+#include <QStringList>
 #include <QObject>
 #include <QTimer>
+#include <qsharedpointer.h>
 
 #include "FrontPanelInfo.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
+#include "FrontPanelRewardController.h"
+using namespace Picto;
 
 enum DirectorStatus {DirUnknown,DirDisconnect,DirConnect,DirEnding,DirStop,DirRun,DirPause};
 /*!	\brief An interface object that encapsulates socket activity for the Front Panel Menu
@@ -37,14 +41,17 @@ public:
 	bool isConnected();
 private:
 	bool sendCommandGetResponse(Picto::ProtocolCommand command,QString* reply);
+	QSharedPointer<FrontPanelRewardController> rewardController_;
 	FrontPanelInfo *panelInfo;
 	QTimer *connectionTimer;
-	QString lastName_;
 	QString lastIp_;
 	DirectorStatus lastStatus_;
-	int lastRewardDur_;
-	int lastFlushDur_;
+	QStringList rewardDurs_;
+	QStringList flushDurs_;
 	int lastCommandId_;
+	QSharedPointer<QTimer> rewardTimer_;
+private slots:
+	void updateLocalRewards();
 };
 
 

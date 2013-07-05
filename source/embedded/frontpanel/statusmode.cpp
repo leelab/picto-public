@@ -3,7 +3,7 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 
-#define UPDATEINTERVALMS 3000
+#define UPDATEINTERVALMS 5000
 
 StatusMode::StatusMode(QSharedPointer<DirectorInterface> directorIf,FrontPanelInfo *panelInfo) :
 currTopItem_(0),
@@ -65,11 +65,11 @@ void StatusMode::updateStatus()
 	QString name = directorIf_->getName();
 	if(name.size() > 18)
 		name.resize(18);
-	QString statusChar = '\x1';
+	QString statusChar = '\xF';
 	switch(directorIf_->getStatus())
 	{
 	case DirUnknown:
-		statusChar = '\x10';
+		statusChar = '\xF';
 		break;
 	case DirDisconnect:
 		statusChar = '\xB';
@@ -87,7 +87,7 @@ void StatusMode::updateStatus()
 		statusChar = '\xE';
 		break;
 	case DirPause:
-		statusChar = '\xF';
+		statusChar = '\xE';
 		break;
 	}
 

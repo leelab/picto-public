@@ -63,15 +63,24 @@ int main(int argc, char *argv[])
 	app.installTranslator(&appTranslator);
 
 	Picto::InitializeLib(&app,localeLanguageCode);
+	Picto::InitializePorts(Picto::Names->directorAppName);
 
 
-
-//possibly reset our name...
+	//possibly reset our name...
 	QStringList args = app.arguments();
 	int nameArgIdx = args.indexOf("-name");
 	QString newName = "";
 	if(nameArgIdx > 0)
 		newName = args[nameArgIdx+1];
+
+	//possibly reset our system number...
+	int sysNumArgIdx = args.indexOf("-systemNumber");
+	if(sysNumArgIdx > 0)
+	{
+		QString systemNumber = args[sysNumArgIdx+1];
+		//Change System number if necessary
+		Picto::portNums->setSystemNumber(app.applicationFilePath(),app.arguments(),systemNumber.toInt(),false);
+	}
 
 	
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering

@@ -8,15 +8,15 @@ FPInterface::FPInterface()
 {
 	//Set up network connections
 	commSocket = new QTcpSocket();
-	commSocket->connectToHost(QHostAddress::LocalHost, quint16(LCDCOMMANDPORT), QIODevice::ReadWrite);
+	commSocket->connectToHost(QHostAddress::LocalHost, quint16(Picto::portNums->getLCDCommandPort()), QIODevice::ReadWrite);
 	while(!commSocket->waitForConnected(20000))
-		commSocket->connectToHost(QHostAddress::LocalHost, quint16(LCDCOMMANDPORT), QIODevice::ReadWrite);
+		commSocket->connectToHost(QHostAddress::LocalHost, quint16(Picto::portNums->getLCDCommandPort()), QIODevice::ReadWrite);
 
 
 	eventSocket = new QTcpSocket();
-	eventSocket->connectToHost(QHostAddress::LocalHost, quint16(LCDEVENTPORT), QIODevice::ReadWrite);
+	eventSocket->connectToHost(QHostAddress::LocalHost, quint16(Picto::portNums->getLCDEventPort()), QIODevice::ReadWrite);
 	while(!eventSocket->waitForConnected(20000))
-		eventSocket->connectToHost(QHostAddress::LocalHost, quint16(LCDEVENTPORT), QIODevice::ReadWrite);
+		eventSocket->connectToHost(QHostAddress::LocalHost, quint16(Picto::portNums->getLCDEventPort()), QIODevice::ReadWrite);
 
 	//set up the command handlers
 	fpgetCommandHandler_ = QSharedPointer<FPGETCommandHandler>(new FPGETCommandHandler);

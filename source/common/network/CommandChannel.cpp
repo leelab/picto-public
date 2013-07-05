@@ -2,6 +2,7 @@
 #include <QCoreApplication>
 #include <QUuid>
 
+#include "../globals.h"
 #include "CommandChannel.h"
 #include "../update/UpdateDownloader.h"
 #include "../memleakdetect.h"
@@ -290,16 +291,23 @@ void CommandChannel::readIncomingResponse()
 			QString serverPictoVersion = response->getFieldValue("PictoVersion");
 			if(sessionId.isEmpty() || (sessionId == QUuid().toString()) && !serverPictoVersion.isEmpty())
 			{
-				if((serverPictoVersion != PICTOVERSION))
+				if(serverPictoVersion > PICTOVERSION)
 				{
 					//Update Picto
 					QSharedPointer<UpdateDownloader> updateSystem = UpdateDownloader::getInstance();
-					if(!updateSystem->update(serverAddr_.toString(),APPUPDATEPORT))
+					if(!updateSystem->update(serverAddr_.toString(),Picto::portNums->getUpdatePort()))
 					{	//If update failed, clear incoming data, break the connection and leave the loop. Don't just keep trying again and again.
 						consumerSocket_->disconnectFromHost();
 						consumerSocket_->readAll();
 						break;	
 					}
+				}
+				else if(serverPictoVersion < PICTOVERSION)
+				{
+					//If the server's version is lower than mine, clear incoming data, break the connection and leave the loop. Don't just keep trying again and again.
+					consumerSocket_->disconnectFromHost();
+					consumerSocket_->readAll();
+					break;
 				}
 			}
 		}
@@ -390,8 +398,8 @@ bool CommandChannel::discoverServer(int timeoutMs)
 	{
 		discoverySocket_->close();
 		QHostAddress serverAddress(QHostAddress::Any);	
-		discoveryPort_ = MINDISCOVERSERVERPORT;
-		while((!discoverySocket_->bind(serverAddress, discoveryPort_)) && (discoveryPort_ < MAXDISCOVERSERVERPORT))
+		discoveryPort_ = Picto::portNums->getMinDiscoverPort();
+		while((!discoverySocket_->bind(serverAddress, discoveryPort_)) && (discoveryPort_ < Picto::portNums->getMaxDiscoverPort()))
 		{
 			if(timer.elapsed() >= timeoutMs)
 			{
@@ -408,7 +416,7 @@ bool CommandChannel::discoverServer(int timeoutMs)
 	{
 		QByteArray datagram = QString("DISCOVER %1 PICTO/1.0").arg(discoveryPort_).toLatin1();
 		QUdpSocket sendSocket;
-		sendSocket.writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, SERVERPORT);
+		sendSocket.writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, Picto::portNums->getServerPort());
 		discoverMsgSentTime_ = QDateTime::currentDateTime();
 	}
 	int msLeft = timeoutMs-timer.elapsed();

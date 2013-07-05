@@ -1,5 +1,5 @@
-#ifndef _PICTOBOXXPREWARDCONTROLLER_H_
-#define _PICTOBOXXPREWARDCONTROLLER_H_
+#ifndef _FrontPanelRewardController_H_
+#define _FrontPanelRewardController_H_
 
 #include "../../common/iodevices/RewardController.h"
 
@@ -27,11 +27,11 @@ namespace Picto
  * \note The Crouzet PB-4 Digital I/O board uses active low logic.
  */
 
-class PictoBoxXPRewardController :  public RewardController
+class FrontPanelRewardController :  public RewardController
 {
 public:
-	PictoBoxXPRewardController();
-	virtual ~PictoBoxXPRewardController();
+	FrontPanelRewardController();
+	virtual ~FrontPanelRewardController();
 
 protected:
 	void startReward(unsigned int channel, int quantity);
@@ -42,7 +42,7 @@ private:
 	bool hasDevice_;
 	double outputData[2];
 	//quint32 daqTaskHandle_[5]; // For Nidaqmx 8.5
-	void*  daqTaskHandle_[5];	// For Nidaqmx after 8.5
+	void* daqTaskHandle_[5];	// For Nidaqmx after 8.5
 	int rewardLines_[5];
 	Stopwatch stopwatch_[5];
 	int latestOnTime_[5];

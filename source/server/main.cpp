@@ -64,6 +64,9 @@
 
 int serviceMain(SystemService *)
 {
+	Picto::InitializeNames();
+	Picto::InitializePorts(Picto::Names->serverAppName,true);
+
 	QEventLoop eventLoop;
 
 	QSharedPointer<ServerProtocols> httpProtocols(new ServerProtocols());
@@ -91,8 +94,8 @@ int serviceMain(SystemService *)
 	 *        configuration database.
 	 */
 	Server httpServer(80, httpProtocols);
-	Server pictoServer(SERVERPORT, pictoProtocols);
-	Server appUpdateServer(APPUPDATEPORT, PictoUpdateProtocols);
+	Server pictoServer(Picto::portNums->getServerPort(), pictoProtocols);
+	Server appUpdateServer(Picto::portNums->getUpdatePort(), PictoUpdateProtocols);
 
 
 	return eventLoop.exec();
@@ -202,9 +205,9 @@ int main(int argc, char *argv[])
 	app.installTranslator(&appTranslator);
 
 	Picto::InitializeLib(&app,localeLanguageCode);
+	Picto::InitializePorts(Picto::Names->serverAppName,true);
 
 	QTextStream outputStream(stdout);
-
 	const QString usageDescription =
 		app.translate("ServerMain",
 					  "Usage:\n"
@@ -276,8 +279,8 @@ int main(int argc, char *argv[])
 				else if(argument.mid(1)=="interactive")
 				{
 					outputStream << app.translate("ServerMain",
-												 "Starting %1 in interactive mode.\n").
-													arg(Picto::Names->serverAppName);
+												 "Starting %1 in interactive mode on System Number: %2.\n").
+													arg(Picto::Names->serverAppName).arg(Picto::portNums->getSystemNumber());
 					outputStream << "Type \"quit\" on a single line to exit\n";
 					outputStream.flush();
 

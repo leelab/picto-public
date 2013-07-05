@@ -119,8 +119,12 @@ void MainWindow::createActions()
 	//checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
 	//connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
 
+	setSystemNumberAction_ = new QAction(tr("&Change System Number"),this);
+	connect(setSystemNumberAction_,SIGNAL(triggered()),this,SLOT(changeSystemNumber()));
+
 	aboutPictoAction_ = new QAction(tr("&About Picto"),this);
 	connect(aboutPictoAction_, SIGNAL(triggered()), this, SLOT(aboutPicto()));
+
 }
 
 void MainWindow::createMenus()
@@ -143,7 +147,8 @@ void MainWindow::createMenus()
 	editMenu_->addAction(pasteAction_);*/
 
 	modeMenu_ = menuBar()->addMenu(tr("&Mode"));
-
+	systemMenu_ = menuBar()->addMenu(tr("S&ystem"));
+	systemMenu_->addAction(setSystemNumberAction_);
 	aboutMenu_ = menuBar()->addMenu(tr("&About"));
 	aboutMenu_->addAction(aboutPictoAction_);
 }
@@ -154,6 +159,8 @@ void MainWindow::createToolbars()
 	fileToolbar_->addAction(newExperimentAction_);
 	fileToolbar_->addAction(openExperimentAction_);
 	fileToolbar_->addAction(saveExperimentAction_);
+	fileToolbar_->addSeparator();
+	fileToolbar_->addWidget(new QLabel(QString("<h3>System Number: <span style=\"color:darkgreen\">%1</span></h3>").arg(Picto::portNums->getSystemNumber())));
 
 	/*editToolbar_ = addToolBar(tr("&Edit"));
 	editToolbar_->addAction(cutAction_);
@@ -479,15 +486,29 @@ void MainWindow::startMode()
 //	}
 //}
 
+void MainWindow::changeSystemNumber()
+{
+	int continueWithChange = QMessageBox::Cancel;
+	continueWithChange = QMessageBox::warning(this,"Change System Number","You are about to change your workstation's system number.  This action will cause your workstation to restart.  If your workstation connects to a server with a newer version of Picto and you update, you will not be able to connect to your current system until its version is updated as well.\n\nContinue?",QMessageBox::Ok | QMessageBox::Cancel,QMessageBox::Cancel);
+	if(continueWithChange != QMessageBox::Ok)
+		return;
+	if(!okToContinue())
+		return;
+	bool result = false;
+	int newSystemNum = QInputDialog::getInt(this,"Change System Number","Select a new system number",Picto::portNums->getSystemNumber(),1,10,1,&result);
+	if(!result)
+		return;
+	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),newSystemNum,true);
+}
+
 void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("It is now possible to close the Picto director application by pressing escape.");
-	releaseNoteList.append("Moved analysis selection and analysis output into a single tabbed widget to conserve screen real estate.");
-	releaseNoteList.append("Fixed bug that caused getLatestResult() from ControlElements to return an empty string.");
+	releaseNoteList.append("Fixed bug in System numbers infrastructure that prevented Picto servers from running as a service on system numbers above 1.");
 
-	releaseNoteList.append("Fixed bug that caused analysis variables to not be reset when their parent state was entered.  This bug occured only on playback when using imported analyses.");
+	releaseNoteList.append("Added support for Orion on Pictobox.  Orion will be runnable on Pictoboxes with the Pictobox Front Panel code handling non-experimental rewards.  Note that this requires updated Orion libraries on the Pictoboxes as well, but strategy files are unaffected.");
+	releaseNoteList.append("Added System numbers.  All Picto apps now have settable system numbers.  Apps must have the same system number to talk to each other.  Automatic updating of apps occurs when the server with their system number gets updated code.");
 
 	//Format release notes:
 	QString releaseNotes;

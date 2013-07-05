@@ -260,6 +260,13 @@ void ProxyMainWindow::createLineEdits()
 	lineEditName_->setText("proxyName");
 	lineEditNameLabel_ = new QLabel(tr("&Proxy Name:"));
 	lineEditNameLabel_->setBuddy(lineEditName_);
+	connect(lineEditName_,SIGNAL(editingFinished()),this,SLOT(writeSettings()));
+
+	systemNumber_ = new QSpinBox();
+	systemNumber_->setValue(Picto::portNums->getSystemNumber());
+	systemNumLabel_ = new QLabel(tr("System Number:"));
+	systemNumLabel_->setBuddy(systemNumber_);
+	connect(systemNumber_,SIGNAL(valueChanged(int)),this,SLOT(systemNumberChanged(int)));
 }
 
 void ProxyMainWindow::createLayout()
@@ -270,6 +277,12 @@ void ProxyMainWindow::createLayout()
 	HLayout = new QHBoxLayout();
 	HLayout->addWidget(lineEditNameLabel_);
 	HLayout->addWidget(lineEditName_);
+	layout_->addLayout(HLayout);
+
+	HLayout = new QHBoxLayout();
+	HLayout->addWidget(systemNumLabel_);
+	HLayout->addWidget(systemNumber_);
+	HLayout->addStretch(1);
 	layout_->addLayout(HLayout);
 	
 	HLayout = new QHBoxLayout();
@@ -304,14 +317,6 @@ void ProxyMainWindow::createLayout()
  *	manner.  This uses the registry in Windows, XML preference files
  *	in OSX, and ini files in Unix.
  */
-void ProxyMainWindow::writeSettings()
-{
-	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
-
-	settings.setValue("proxyName",lineEditName_->text());
-	settings.setValue("plugin",pluginCombo_->itemText(pluginCombo_->currentIndex()));
-
-}
 
 void ProxyMainWindow::readSettings()
 {
@@ -501,6 +506,7 @@ void ProxyMainWindow::enterState()
 	{
 	case WaitForConnect:
 		lineEditName_->setEnabled(true);
+		systemNumber_->setEnabled(true);
 		runStatus_->turnRed();
 		sessionStatus_->turnRed();
 		pluginCombo_->setEnabled(true);
@@ -508,6 +514,7 @@ void ProxyMainWindow::enterState()
 		break;
 	case WaitForSession:
 		lineEditName_->setEnabled(true);
+		systemNumber_->setEnabled(true);
 		runStatus_->turnRed();
 		sessionStatus_->turnRed();
 		pluginCombo_->setEnabled(true);
@@ -515,6 +522,7 @@ void ProxyMainWindow::enterState()
 		break;
 	case WaitForDevice:
 		lineEditName_->setEnabled(false);
+		systemNumber_->setEnabled(false);
 		runStatus_->turnRed();
 		sessionStatus_->turnGreen();
 		pluginCombo_->setEnabled(true);
@@ -522,6 +530,7 @@ void ProxyMainWindow::enterState()
 		break;
 	case Running:
 		lineEditName_->setEnabled(false);
+		systemNumber_->setEnabled(false);
 		runStatus_->turnGreen();
 		sessionStatus_->turnGreen();
 		pluginCombo_->setEnabled(false);
@@ -533,4 +542,24 @@ void ProxyMainWindow::enterState()
 void ProxyMainWindow::pluginIndexChanged(int)
 {
 	writeSettings();
+}
+
+void ProxyMainWindow::systemNumberChanged(int index)
+{
+	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),index,true);
+}
+
+/*! \Brief stores settings
+ *
+ *	Settings for the workstation app are stored between sessions.
+ *	The QSettings object does this for us in a platform independent
+ *	manner.  This uses the registry in Windows, XML preference files
+ *	in OSX, and ini files in Unix.
+ */
+void ProxyMainWindow::writeSettings()
+{
+	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
+
+	settings.setValue("proxyName",lineEditName_->text());
+	settings.setValue("plugin",pluginCombo_->itemText(pluginCombo_->currentIndex()));
 }

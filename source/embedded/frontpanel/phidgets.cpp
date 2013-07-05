@@ -45,6 +45,7 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	}
 
 	//Custom character creator: http://www.phidgets.com/documentation/customchar.html
+	//CPhidgetTextLCD_setCustomCharacter(hTextLCD, 7, 23378, 276774); //picto not running character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 8, 214715, 395400); //milliseconds character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 9, 506248, 8590); //arrow character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 10, 31, 0); //horizontal line across top of matrix (used for underlining)
@@ -55,7 +56,8 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 12, 338926,490496); //idle
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 13, 1030276,135647); //stopped
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 14, 766150,149828); //running
-	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 15, 1020102,338244); //paused
+	//CPhidgetTextLCD_setCustomCharacter(hTextLCD, 15, 1020102,338244); //paused
+	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 15, 23378,276774); //picto not running character
 
 
 	CPhidgetTextLCD_setContrast(hTextLCD, 128);
@@ -153,6 +155,10 @@ void Phidgets::turnOnBacklight()
 	CPhidgetTextLCD_setBacklight(hTextLCD,1);
 }
 
+void Phidgets::turnOffBacklight()
+{
+	CPhidgetTextLCD_setBacklight(hTextLCD,0);
+}
 
 void Phidgets::buttonClicked()
 {

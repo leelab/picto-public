@@ -45,6 +45,7 @@ Menu::~Menu()
 void Menu::initMenu()
 {
 	loadMenus();
+	returnToStatus();
 	emit turnOnBacklight();
 }
 
@@ -73,6 +74,14 @@ void Menu::userInputSlot(int type)
 	currMode_ = newMode;
 	if(currMode_ != panelModes_[StatusModeType])
 		activityTimer->start(currMode_->activityTimeoutMs());
+}
+
+void Menu::aboutToQuit()
+{
+	directorIf_.clear();
+	emit turnOffBacklight();
+	emit updateLCD(1,"");
+	emit updateLCD(2,"");
 }
 
 
@@ -154,22 +163,22 @@ void Menu::loadMenus()
 
 void Menu::checkConnections()
 {
-	if(!directorIf_->isConnected())
-	{
-		QString line1 = "No engine connection\n";
-		QString line2 = "";
-
-		emit updateLCD(1, line1);
-		emit updateLCD(2, line2);
-
-		wasConnected_ = false;
-	}
-	//coming out of wait for engine, we return to the status menu
-	else if(!wasConnected_)
-	{
-		returnToStatus();
-		wasConnected_ = true;
-	}
+//	if(!directorIf_->isConnected())
+//	{
+//		QString line1 = "No engine connection\n";
+//		QString line2 = "";
+//
+//		emit updateLCD(1, line1);
+//		emit updateLCD(2, line2);
+//
+//		wasConnected_ = false;
+//	}
+//	//coming out of wait for engine, we return to the status menu
+//	else if(!wasConnected_)
+//	{
+//		returnToStatus();
+//		wasConnected_ = true;
+//	}
 }
 
 void Menu::returnToStatus()

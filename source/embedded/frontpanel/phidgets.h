@@ -39,6 +39,7 @@ public slots:
 	void updateLCD(int line, QString text);
 	void toggleBacklight();
 	void turnOnBacklight();
+	void turnOffBacklight();
 
 signals:
 	void userInputSignal(int type);
