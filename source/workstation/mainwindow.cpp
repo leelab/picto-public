@@ -505,10 +505,9 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed bug in System numbers infrastructure that prevented Picto servers from running as a service on system numbers above 1.");
+	releaseNoteList.append("Fixed bug in replay viewer that caused workstation to crash when analyzing very large sessions.");
 
-	releaseNoteList.append("Added support for Orion on Pictobox.  Orion will be runnable on Pictoboxes with the Pictobox Front Panel code handling non-experimental rewards.  Note that this requires updated Orion libraries on the Pictoboxes as well, but strategy files are unaffected.");
-	releaseNoteList.append("Added System numbers.  All Picto apps now have settable system numbers.  Apps must have the same system number to talk to each other.  Automatic updating of apps occurs when the server with their system number gets updated code.");
+	releaseNoteList.append("Fixed bug in System numbers infrastructure that prevented Picto servers from running as a service on system numbers above 1.");
 
 	//Format release notes:
 	QString releaseNotes;

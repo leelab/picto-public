@@ -113,6 +113,7 @@ public:
 	void addSignalChannel(QSharedPointer<SignalChannel> channel);
 	void startAllSignalChannels();
 	void stopAllSignalChannels();
+	void emptySignalChannels();
 	void markTaskRunStart(QString name);
 	void markTaskRunStop();
 

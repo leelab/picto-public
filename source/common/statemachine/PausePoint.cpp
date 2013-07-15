@@ -98,7 +98,9 @@ QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 	scene_->render(engine,getAssetId());
 	
 	//---------   Erase the latest cursor values (This happens in master when data is sent to server)
-	sigChannel_->getValues();
+	//sigChannel_->getValues();
+	engine->emptySignalChannels();	//Make sure all signal channels are emptied, not just the one that
+									//we used.
 	return result; 
 }
 

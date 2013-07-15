@@ -33,7 +33,14 @@ void SlaveExperimentDriver::renderFrame()
 		return;
 	
 	if(frameTimer_.elapsed() < FRAMEMS || !renderingEnabled_)
+	{
+		//Even if we don't render the frame, we need to make sure that the signal
+		//channels' data is getting cleared out each frame.  Otherwise they'll become
+		//huge and use up all our memory.  In general, slaveRenderFrame() takes care
+		//of this.
+		experiment_->getEngine()->emptySignalChannels();
 		return;
+	}
 
 	//Don't render the frame more than once per FRAMEMS
 	currElement_->slaveRenderFrame(experiment_->getEngine());

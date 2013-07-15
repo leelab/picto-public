@@ -125,6 +125,18 @@ void PictoEngine::stopAllSignalChannels()
 	}
 }
 
+void PictoEngine::emptySignalChannels()
+{
+	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
+	{
+		//By using getValues() instead of clearValues(), we make sure that the latest data 
+		//from the data input ports is moved into the signal channels before the signal channels
+		//data is erased.  Possibly this should happen in clearValues() as well... this should
+		//be looked into.
+		channel->getValues();
+	}
+}
+
 void PictoEngine::markTaskRunStart(QString name)
 {
 	taskRunName_ = name;
