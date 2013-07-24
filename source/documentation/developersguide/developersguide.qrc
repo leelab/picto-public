@@ -152,6 +152,8 @@
    <file alias="_box_graphic_8h-source.html">../../../output/documentation/main/html/_box_graphic_8h-source.html</file>
    <file alias="_buffer_file_generator_8cpp-source.html">../../../output/documentation/main/html/_buffer_file_generator_8cpp-source.html</file>
    <file alias="_buffer_file_generator_8h-source.html">../../../output/documentation/main/html/_buffer_file_generator_8h-source.html</file>
+   <file alias="_cached_session_data_8cpp-source.html">../../../output/documentation/main/html/_cached_session_data_8cpp-source.html</file>
+   <file alias="_cached_session_data_8h-source.html">../../../output/documentation/main/html/_cached_session_data_8h-source.html</file>
    <file alias="_calibration_8cpp-source.html">../../../output/documentation/main/html/_calibration_8cpp-source.html</file>
    <file alias="_calibration_8h-source.html">../../../output/documentation/main/html/_calibration_8h-source.html</file>
    <file alias="_camera_equipment_8cpp-source.html">../../../output/documentation/main/html/_camera_equipment_8cpp-source.html</file>
@@ -210,6 +212,8 @@
    <file alias="_control_target_result_8h-source.html">../../../output/documentation/main/html/_control_target_result_8h-source.html</file>
    <file alias="_copier_8cpp-source.html">../../../output/documentation/main/html/_copier_8cpp-source.html</file>
    <file alias="_copier_8h-source.html">../../../output/documentation/main/html/_copier_8h-source.html</file>
+   <file alias="_current_session_data_8cpp-source.html">../../../output/documentation/main/html/_current_session_data_8cpp-source.html</file>
+   <file alias="_current_session_data_8h-source.html">../../../output/documentation/main/html/_current_session_data_8h-source.html</file>
    <file alias="_cursor_graphic_8cpp-source.html">../../../output/documentation/main/html/_cursor_graphic_8cpp-source.html</file>
    <file alias="_cursor_graphic_8h-source.html">../../../output/documentation/main/html/_cursor_graphic_8h-source.html</file>
    <file alias="_custom_controller_8cpp-source.html">../../../output/documentation/main/html/_custom_controller_8cpp-source.html</file>
@@ -744,6 +748,8 @@
    <file alias="_search_request_8h-source.html">../../../output/documentation/main/html/_search_request_8h-source.html</file>
    <file alias="_searchable_text_edit_8cpp-source.html">../../../output/documentation/main/html/_searchable_text_edit_8cpp-source.html</file>
    <file alias="_searchable_text_edit_8h-source.html">../../../output/documentation/main/html/_searchable_text_edit_8h-source.html</file>
+   <file alias="_serial_session_data_8cpp-source.html">../../../output/documentation/main/html/_serial_session_data_8cpp-source.html</file>
+   <file alias="_serial_session_data_8h-source.html">../../../output/documentation/main/html/_serial_session_data_8h-source.html</file>
    <file alias="_serializable_8cpp-source.html">../../../output/documentation/main/html/_serializable_8cpp-source.html</file>
    <file alias="_serializable_8h-source.html">../../../output/documentation/main/html/_serializable_8h-source.html</file>
    <file alias="_server_app_update_protocol_8cpp-source.html">../../../output/documentation/main/html/_server_app_update_protocol_8cpp-source.html</file>
@@ -854,6 +860,8 @@
    <file alias="_stopwatch_8h-source.html">../../../output/documentation/main/html/_stopwatch_8h-source.html</file>
    <file alias="_stopwatch_controller_8cpp-source.html">../../../output/documentation/main/html/_stopwatch_controller_8cpp-source.html</file>
    <file alias="_stopwatch_controller_8h-source.html">../../../output/documentation/main/html/_stopwatch_controller_8h-source.html</file>
+   <file alias="_stored_session_data_8cpp-source.html">../../../output/documentation/main/html/_stored_session_data_8cpp-source.html</file>
+   <file alias="_stored_session_data_8h-source.html">../../../output/documentation/main/html/_stored_session_data_8h-source.html</file>
    <file alias="_string_parameter_8cpp-source.html">../../../output/documentation/main/html/_string_parameter_8cpp-source.html</file>
    <file alias="_string_parameter_8h-source.html">../../../output/documentation/main/html/_string_parameter_8h-source.html</file>
    <file alias="_string_variable_8cpp-source.html">../../../output/documentation/main/html/_string_variable_8cpp-source.html</file>
@@ -1030,6 +1038,9 @@
    <file alias="class_asset_item.png">../../../output/documentation/main/html/class_asset_item.png</file>
    <file alias="class_behav_viewer-members.html">../../../output/documentation/main/html/class_behav_viewer-members.html</file>
    <file alias="class_behav_viewer.html">../../../output/documentation/main/html/class_behav_viewer.html</file>
+   <file alias="class_cached_session_data-members.html">../../../output/documentation/main/html/class_cached_session_data-members.html</file>
+   <file alias="class_cached_session_data.html">../../../output/documentation/main/html/class_cached_session_data.html</file>
+   <file alias="class_cached_session_data.png">../../../output/documentation/main/html/class_cached_session_data.png</file>
    <file alias="class_change_name_mode-members.html">../../../output/documentation/main/html/class_change_name_mode-members.html</file>
    <file alias="class_change_name_mode.html">../../../output/documentation/main/html/class_change_name_mode.html</file>
    <file alias="class_change_name_mode.png">../../../output/documentation/main/html/class_change_name_mode.png</file>
@@ -1042,6 +1053,9 @@
    <file alias="class_control_element_item.png">../../../output/documentation/main/html/class_control_element_item.png</file>
    <file alias="class_copier-members.html">../../../output/documentation/main/html/class_copier-members.html</file>
    <file alias="class_copier.html">../../../output/documentation/main/html/class_copier.html</file>
+   <file alias="class_current_session_data-members.html">../../../output/documentation/main/html/class_current_session_data-members.html</file>
+   <file alias="class_current_session_data.html">../../../output/documentation/main/html/class_current_session_data.html</file>
+   <file alias="class_current_session_data.png">../../../output/documentation/main/html/class_current_session_data.png</file>
    <file alias="class_daq_board-members.html">../../../output/documentation/main/html/class_daq_board-members.html</file>
    <file alias="class_daq_board.html">../../../output/documentation/main/html/class_daq_board.html</file>
    <file alias="class_deletable_widget-members.html">../../../output/documentation/main/html/class_deletable_widget-members.html</file>
@@ -1860,6 +1874,9 @@
    <file alias="class_server_config.html">../../../output/documentation/main/html/class_server_config.html</file>
    <file alias="class_server_thread-members.html">../../../output/documentation/main/html/class_server_thread-members.html</file>
    <file alias="class_server_thread.html">../../../output/documentation/main/html/class_server_thread.html</file>
+   <file alias="class_session_data-members.html">../../../output/documentation/main/html/class_session_data-members.html</file>
+   <file alias="class_session_data.html">../../../output/documentation/main/html/class_session_data.html</file>
+   <file alias="class_session_data.png">../../../output/documentation/main/html/class_session_data.png</file>
    <file alias="class_session_info-members.html">../../../output/documentation/main/html/class_session_info-members.html</file>
    <file alias="class_session_info.html">../../../output/documentation/main/html/class_session_info.html</file>
    <file alias="class_signal_channel_test-members.html">../../../output/documentation/main/html/class_signal_channel_test-members.html</file>
@@ -1894,6 +1911,9 @@
    <file alias="class_status_mode-members.html">../../../output/documentation/main/html/class_status_mode-members.html</file>
    <file alias="class_status_mode.html">../../../output/documentation/main/html/class_status_mode.html</file>
    <file alias="class_status_mode.png">../../../output/documentation/main/html/class_status_mode.png</file>
+   <file alias="class_stored_session_data-members.html">../../../output/documentation/main/html/class_stored_session_data-members.html</file>
+   <file alias="class_stored_session_data.html">../../../output/documentation/main/html/class_stored_session_data.html</file>
+   <file alias="class_stored_session_data.png">../../../output/documentation/main/html/class_stored_session_data.png</file>
    <file alias="class_syntax_error_box-members.html">../../../output/documentation/main/html/class_syntax_error_box-members.html</file>
    <file alias="class_syntax_error_box.html">../../../output/documentation/main/html/class_syntax_error_box.html</file>
    <file alias="class_syntax_error_box.png">../../../output/documentation/main/html/class_syntax_error_box.png</file>
@@ -1942,6 +1962,8 @@
    <file alias="coding_conventions.html">../../../output/documentation/main/html/coding_conventions.html</file>
    <file alias="commands_8cpp-source.html">../../../output/documentation/main/html/commands_8cpp-source.html</file>
    <file alias="commands_8h-source.html">../../../output/documentation/main/html/commands_8h-source.html</file>
+   <file alias="common_2experiment_2_session_data_8cpp-source.html">../../../output/documentation/main/html/common_2experiment_2_session_data_8cpp-source.html</file>
+   <file alias="common_2experiment_2_session_data_8h-source.html">../../../output/documentation/main/html/common_2experiment_2_session_data_8h-source.html</file>
    <file alias="common_2protocol_2_test_command_handler_8cpp-source.html">../../../output/documentation/main/html/common_2protocol_2_test_command_handler_8cpp-source.html</file>
    <file alias="common_2protocol_2_test_command_handler_8h-source.html">../../../output/documentation/main/html/common_2protocol_2_test_command_handler_8h-source.html</file>
    <file alias="common_8h-source.html">../../../output/documentation/main/html/common_8h-source.html</file>
@@ -2201,6 +2223,8 @@
    <file alias="rewarddurmode_8h-source.html">../../../output/documentation/main/html/rewarddurmode_8h-source.html</file>
    <file alias="server_2_interactive_s_t_d_i_o_handler_8cpp-source.html">../../../output/documentation/main/html/server_2_interactive_s_t_d_i_o_handler_8cpp-source.html</file>
    <file alias="server_2_interactive_s_t_d_i_o_handler_8h-source.html">../../../output/documentation/main/html/server_2_interactive_s_t_d_i_o_handler_8h-source.html</file>
+   <file alias="server_2connections_2_session_data_8cpp-source.html">../../../output/documentation/main/html/server_2connections_2_session_data_8cpp-source.html</file>
+   <file alias="server_2connections_2_session_data_8h-source.html">../../../output/documentation/main/html/server_2connections_2_session_data_8h-source.html</file>
    <file alias="server_2dialog_8cpp-source.html">../../../output/documentation/main/html/server_2dialog_8cpp-source.html</file>
    <file alias="server_2dialog_8h-source.html">../../../output/documentation/main/html/server_2dialog_8h-source.html</file>
    <file alias="server_2main_8cpp-source.html">../../../output/documentation/main/html/server_2main_8cpp-source.html</file>
