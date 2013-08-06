@@ -1,5 +1,5 @@
 #include "SerialSessionData.h"
-#include <QMutexLocker>
+#include <QWriteLocker>
 
 SerialSessionData::SerialSessionData()
 {
@@ -12,7 +12,7 @@ SerialSessionData::~SerialSessionData()
 
 QString SerialSessionData::takeSerializedData()
 {
-	QMutexLocker locker(&accessMutex_);
+	QWriteLocker locker(&readWriteLock_);
 	QString returnVal = serialData_;
 	serialData_.clear();
 	return returnVal;
@@ -35,4 +35,9 @@ QList<QVariantList> SerialSessionData::readData(int,QVariant,bool)
 {
 	//SerialSessionData cant be moved to another SessionData object
 	return QList<QVariantList>();
+}
+
+void SerialSessionData::eraseEverything()
+{
+	serialData_.clear();
 }

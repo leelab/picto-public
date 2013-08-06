@@ -25,6 +25,8 @@ SOURCES += $$(PICTO_TREE)/source/server/dialog.cpp
 HEADERS += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.cpp
 
+HEADERS += $$(PICTO_TREE)/source/server/connections/AlignSessionData.h
+SOURCES += $$(PICTO_TREE)/source/server/connections/AlignSessionData.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/ConnectionManager.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/ConnectionManager.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/SessionData.h

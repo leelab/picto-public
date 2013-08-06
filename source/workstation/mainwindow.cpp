@@ -505,9 +505,10 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
+	releaseNoteList.append("Fixed bug in Server data storage system that caused intermittent crashes.");
+
 	releaseNoteList.append("Fixed bug in replay viewer that caused workstation to crash when analyzing very large sessions.");
-	
-	releaseNoteList.append("Fixed bug in System numbers infrastructure that prevented Picto servers from running as a service on system numbers above 1.");
+
 
 	//Format release notes:
 	QString releaseNotes;

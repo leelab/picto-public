@@ -24,7 +24,7 @@ void CachedSessionData::writeData(int dataType, QVariantList data)
 	QVariantList originalList = data.mid(1,data.size()-1);
 	if(dataMap_[dataType].contains(dataId))
 		return;
-	dataMap_[dataType][dataId] = data;
+	dataMap_[dataType][dataId] = originalList;
 }
 
 QList<int>CachedSessionData::readDataTypes()
@@ -32,8 +32,7 @@ QList<int>CachedSessionData::readDataTypes()
 	return dataMap_.keys();
 }
 
-//In this function, condition is a timestamp after which all data is read
-QList<QVariantList> CachedSessionData::readData(int dataType,QVariant condition,bool cut)
+QList<QVariantList> CachedSessionData::readData(int dataType,QVariant,bool cut)
 {
 	if(!dataMap_.contains(dataType))
 		return QList<QVariantList>();
@@ -45,4 +44,9 @@ QList<QVariantList> CachedSessionData::readData(int dataType,QVariant condition,
 	}
 	return returnVal;
 
+}
+
+void CachedSessionData::eraseEverything()
+{
+	dataMap_.clear();
 }

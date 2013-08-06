@@ -9,6 +9,8 @@
    <file alias="_align_data_iterator_8h-source.html">../../../output/documentation/main/html/_align_data_iterator_8h-source.html</file>
    <file alias="_align_data_source_8cpp-source.html">../../../output/documentation/main/html/_align_data_source_8cpp-source.html</file>
    <file alias="_align_data_source_8h-source.html">../../../output/documentation/main/html/_align_data_source_8h-source.html</file>
+   <file alias="_align_session_data_8cpp-source.html">../../../output/documentation/main/html/_align_session_data_8cpp-source.html</file>
+   <file alias="_align_session_data_8h-source.html">../../../output/documentation/main/html/_align_session_data_8h-source.html</file>
    <file alias="_align_trigger_8cpp-source.html">../../../output/documentation/main/html/_align_trigger_8cpp-source.html</file>
    <file alias="_align_trigger_8h-source.html">../../../output/documentation/main/html/_align_trigger_8h-source.html</file>
    <file alias="_alignment_data_unit_8cpp-source.html">../../../output/documentation/main/html/_alignment_data_unit_8cpp-source.html</file>
@@ -800,6 +802,8 @@
    <file alias="_signal_trigger_8h-source.html">../../../output/documentation/main/html/_signal_trigger_8h-source.html</file>
    <file alias="_signal_value_parameter_8cpp-source.html">../../../output/documentation/main/html/_signal_value_parameter_8cpp-source.html</file>
    <file alias="_signal_value_parameter_8h-source.html">../../../output/documentation/main/html/_signal_value_parameter_8h-source.html</file>
+   <file alias="_simple_thread_8cpp-source.html">../../../output/documentation/main/html/_simple_thread_8cpp-source.html</file>
+   <file alias="_simple_thread_8h-source.html">../../../output/documentation/main/html/_simple_thread_8h-source.html</file>
    <file alias="_single_unit_data_store_8cpp-source.html">../../../output/documentation/main/html/_single_unit_data_store_8cpp-source.html</file>
    <file alias="_single_unit_data_store_8h-source.html">../../../output/documentation/main/html/_single_unit_data_store_8h-source.html</file>
    <file alias="_size_property_8cpp-source.html">../../../output/documentation/main/html/_size_property_8cpp-source.html</file>
@@ -1003,6 +1007,9 @@
    <file alias="class_about_element_box-members.html">../../../output/documentation/main/html/class_about_element_box-members.html</file>
    <file alias="class_about_element_box.html">../../../output/documentation/main/html/class_about_element_box.html</file>
    <file alias="class_about_element_box.png">../../../output/documentation/main/html/class_about_element_box.png</file>
+   <file alias="class_align_session_data-members.html">../../../output/documentation/main/html/class_align_session_data-members.html</file>
+   <file alias="class_align_session_data.html">../../../output/documentation/main/html/class_align_session_data.html</file>
+   <file alias="class_align_session_data.png">../../../output/documentation/main/html/class_align_session_data.png</file>
    <file alias="class_alignment_tool-members.html">../../../output/documentation/main/html/class_alignment_tool-members.html</file>
    <file alias="class_alignment_tool.html">../../../output/documentation/main/html/class_alignment_tool.html</file>
    <file alias="class_analysis_item-members.html">../../../output/documentation/main/html/class_analysis_item-members.html</file>
@@ -1868,6 +1875,9 @@
    <file alias="class_searchable_text_edit-members.html">../../../output/documentation/main/html/class_searchable_text_edit-members.html</file>
    <file alias="class_searchable_text_edit.html">../../../output/documentation/main/html/class_searchable_text_edit.html</file>
    <file alias="class_searchable_text_edit.png">../../../output/documentation/main/html/class_searchable_text_edit.png</file>
+   <file alias="class_serial_session_data-members.html">../../../output/documentation/main/html/class_serial_session_data-members.html</file>
+   <file alias="class_serial_session_data.html">../../../output/documentation/main/html/class_serial_session_data.html</file>
+   <file alias="class_serial_session_data.png">../../../output/documentation/main/html/class_serial_session_data.png</file>
    <file alias="class_server-members.html">../../../output/documentation/main/html/class_server-members.html</file>
    <file alias="class_server.html">../../../output/documentation/main/html/class_server.html</file>
    <file alias="class_server_config-members.html">../../../output/documentation/main/html/class_server_config-members.html</file>
@@ -2234,6 +2244,8 @@
    <file alias="server_2service_2systemservice_8h-source.html">../../../output/documentation/main/html/server_2service_2systemservice_8h-source.html</file>
    <file alias="server_8cpp-source.html">../../../output/documentation/main/html/server_8cpp-source.html</file>
    <file alias="server_8h-source.html">../../../output/documentation/main/html/server_8h-source.html</file>
+   <file alias="servercommandhandler_8cpp-source.html">../../../output/documentation/main/html/servercommandhandler_8cpp-source.html</file>
+   <file alias="servercommandhandler_8h-source.html">../../../output/documentation/main/html/servercommandhandler_8h-source.html</file>
    <file alias="serverthread_8cpp-source.html">../../../output/documentation/main/html/serverthread_8cpp-source.html</file>
    <file alias="serverthread_8h-source.html">../../../output/documentation/main/html/serverthread_8h-source.html</file>
    <file alias="simpleeventsource_8cpp-source.html">../../../output/documentation/main/html/simpleeventsource_8cpp-source.html</file>

@@ -14,6 +14,7 @@
 #include <QVariant>
 #include <QUuid>
 #include <QTime>
+#include <QtConcurrentRun>
 #include "../../common/memleakdetect.h"
 
 PutDataCommandHandler::PutDataCommandHandler()
@@ -185,14 +186,55 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	//if(sourceType == "PROXY")
 	//	qDebug("Proxy Total  " + QString::number(messageIndex++).toLatin1() + " " + QString::number(commandProcessingTimer.elapsed()).toLatin1());
 	QString directive = sessionInfo->pendingDirective(sourceID);
+	bool lastDataPrecededFlush = sessionInfo->lastDataPrecededFlush(sourceType);
+	bool lastDataFollowedFlush = sessionInfo->lastDataFollowedFlush(sourceType);
+	sessionInfo->markLastDataTime(sourceType);
+	bool currDataPrecededFlush = sessionInfo->lastDataPrecededFlush(sourceType);
+	bool currDataFollowedFlush = sessionInfo->lastDataFollowedFlush(sourceType);
+	int regType = 0;
+	if(lastDataPrecededFlush && !currDataPrecededFlush)
+	{
+		regType |= Picto::RegisteredResponseType::FirstInCommandPackage;
+	}
+	if(!lastDataFollowedFlush && currDataFollowedFlush)
+	{
+		regType |= Picto::RegisteredResponseType::SendLastCommandPackage;
+	}
+	response->setRegisteredType(Picto::RegisteredResponseType::RegisteredResponseType(regType));
+
+
 	if(directive.isEmpty())
 	{
 		response->setContent("OK");
-		if(sessionInfo->needsFlush(sourceType))
-		{
-			sessionInfo->flushCache(sourceType);
-			response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
-		}
+		//if(sessionInfo->needsFlush(sourceType))
+		//{
+		//	//sessionInfo->flushCache(sourceType);
+		//	//response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+		//	readWriteLock_.lockForWrite();
+		//	flushCacheFutures_[sourceType] = QtConcurrent::run(sessionInfo.data(),&SessionInfo::flushCache,sourceType);
+		//	flushCacheWaiting_[sourceType] = true;
+		//	readWriteLock_.unlock();
+		//	response->setRegisteredType(Picto::RegisteredResponseType::LastInCommandPackage);
+		//}
+		//else
+		//{
+		//	//If we were flushing for this sourcetype and the flushing ended for this sourcetype,
+		//	//mark this response to include the commands that were included in that flush
+		//	readWriteLock_.lockForRead();
+		//	if(flushCacheWaiting_.contains(sourceType) 
+		//		&& flushCacheWaiting_.value(sourceType)
+		//		&& flushCacheFutures_.contains(sourceType)
+		//		&& flushCacheFutures_.value(sourceType).isFinished())
+		//	{
+		//		bool flushSuccess = flushCacheFutures_.value(sourceType).result();
+		//		readWriteLock_.unlock();
+		//		if(flushSuccess)
+		//			response->setRegisteredType(Picto::RegisteredResponseType::SendLastCommandPackage);
+		//		readWriteLock_.lockForWrite();
+		//		flushCacheWaiting_[sourceType] = false;
+		//	}
+		//	readWriteLock_.unlock();
+		//}
 	}
 	else
 	{

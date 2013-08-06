@@ -43,7 +43,13 @@ namespace RegisteredResponseType
 {
 	typedef enum
 	{
-		NotRegistered,Delayed,Immediate
+		NotRegistered = 0x0,			//This type of response doesn't include the command id of the command that it's responding to.  The command id from this type is appended to an unconfirmed command id list
+		Immediate = 0x1,				//This type of response includes the command id of all commands in any list that preceded it.  It is used when all activities that needed to occur on the any previous responses all occured within the same thread in which they arrived.
+		FirstInCommandPackage = 0x2,	//This type of response indicates that the current command is the first in a new unconfirmed command id list.  From this point on, new commands should go in this new list.
+										//If this type of response is detected while there is already a closed unconfirmed command id list, that list is erased and replaced by the latest list.
+		SendLastCommandPackage = 0x4,	//This type of response indicates that the current command should include a comma separated list of commands in the latest complete unconfirmed command list.
+										//It is used when the thread handling the activities of the commands in LastInCommandPackage is complete.
+		FirstInPackAndSendLast = 0x6
 	} RegisteredResponseType;
 }
 

@@ -1,5 +1,8 @@
+#include <QTime>
+#include <QReadLocker>
+#include <QWriteLocker>
+#include <QVector>
 #include "SessionData.h"
-#include <QMutexLocker>
 
 SessionData::SessionData()
 {
@@ -11,13 +14,19 @@ SessionData::~SessionData()
 
 QList<QVariantList> SessionData::peekData(int dataType)
 {
-	QMutexLocker locker(&accessMutex_);
+	QReadLocker locker(&readWriteLock_);
 	return readData(dataType,QVariant(),false);
 }
 
 void SessionData::moveDataTo(SessionData* receiver,QVariant condition)
 {
 	copyDataPrivate(receiver,condition,true);
+}
+
+void SessionData::clearData()
+{
+	QWriteLocker locker(&readWriteLock_);
+	eraseEverything();
 }
 
 void SessionData::copyDataTo(SessionData* receiver,QVariant condition)
@@ -27,18 +36,25 @@ void SessionData::copyDataTo(SessionData* receiver,QVariant condition)
 
 void SessionData::addData(int dataType, QVariantList data)
 {
-	QMutexLocker locker(&accessMutex_);
+	addData(dataType,QList<QVariantList>() << data);
+}
+
+void SessionData::addData(int dataType, QList<QVariantList> data)
+{
 	QString error;
 	bool success = false;
 	do{
-		success = startDataWrite(&error);
+		success = startDataWriteAndLock(&error);
 		if(!success)
 		{
 			qDebug("Failed to initiate data write. Error was: " + error.toLatin1() + "...Reattempting.");
 			continue;
 		}
-		writeData(dataType,data);
-		success = endDataWrite(&error);
+		foreach(QVariantList dataItem, data)
+		{
+			writeData(dataType,dataItem);
+		}
+		success = endDataWriteAndUnlock(&error);
 		if(!success)
 		{
 			qDebug("Failed to finalize data write. Error was: " + error.toLatin1() + "...Reattempting.");
@@ -57,17 +73,34 @@ bool SessionData::endDataWrite(QString*)
 	return true;
 }
 
+bool SessionData::startDataWriteAndLock(QString* error)
+{
+	readWriteLock_.lockForWrite();
+	return startDataWrite(error);
+}
+
+bool SessionData::endDataWriteAndUnlock(QString* error)
+{
+	bool returnVal = endDataWrite(error);
+	readWriteLock_.unlock();
+	return returnVal;
+}
+
 void SessionData::copyDataPrivate(SessionData* receiver,QVariant condition,bool cut)
 {
-	QMutexLocker locker(&accessMutex_);
-	QList<int>dataTypes = readDataTypes();
+	Q_ASSERT(receiver != this);
+	readWriteLock_.lockForRead();
+	QVector<int>dataTypes = readDataTypes().toVector();	//Turning the list into a vector forces a deep copy to occur.  Otherwise there are a lot of multithreading slow down issues when iterating through the list
+	readWriteLock_.unlock();
 	if(!dataTypes.size())
+	{
 		return;
+	}
 
 	QString error;
 	bool success = false;
 	do{
-		success = startDataWrite(&error);
+		success = receiver->startDataWriteAndLock(&error);
 		if(!success)
 		{
 			qDebug("Failed to initiate data write. Error was: " + error.toLatin1() + "...Reattempting.");
@@ -75,13 +108,18 @@ void SessionData::copyDataPrivate(SessionData* receiver,QVariant condition,bool 
 		}
 		foreach(int type,dataTypes)
 		{
-			QList<QVariantList> dataList = readData(type,condition,cut);
+			if(cut)
+				readWriteLock_.lockForWrite();
+			else
+				readWriteLock_.lockForRead();
+			QVector<QVariantList> dataList = readData(type,condition,cut).toVector();	//Turning the list into a vector forces a deep copy to occur.  Otherwise there are a lot of multithreading slow down issues when iterating through the list
+			readWriteLock_.unlock();
 			foreach(QVariantList data,dataList)
 			{
 				receiver->writeData(type,data);
 			}
 		}
-		success = endDataWrite(&error);
+		success = receiver->endDataWriteAndUnlock(&error);
 		if(!success)
 		{
 			qDebug("Failed to finalize data write. Error was: " + error.toLatin1() + "...Reattempting.");

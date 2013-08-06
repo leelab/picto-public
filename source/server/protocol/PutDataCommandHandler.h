@@ -6,6 +6,8 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 #include <QTime>
+#include <QFuture>
+#include <QReadWriteLock>
 
 /*! \brief Handles the PUTDATA commands, which are sent by Director
  *
@@ -51,6 +53,10 @@ public:
 
 	QString method() { return QString("PUTDATA"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
+//private:
+	//QReadWriteLock readWriteLock_;
+	//QHash<QString,QFuture<bool>> flushCacheFutures_;
+	//QHash<QString,bool> flushCacheWaiting_;
 };
 
 

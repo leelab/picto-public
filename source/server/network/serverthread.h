@@ -51,8 +51,8 @@ private:
 	QTcpSocket * tcpSocket_;
 	QSharedPointer<ServerProtocols> protocols_;
 	QString peerAddress_;
-	QList<QSharedPointer<Picto::ProtocolResponse> > delayedResponses_;
-	QStringList pendingCommandIDs_;
+	QStringList* closedUnconfirmedCommandIDs_;
+	QStringList* unconfirmedCommandIDs_;
 
 	static const int timeoutInterval_ = 10000;
 

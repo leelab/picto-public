@@ -69,8 +69,7 @@ void ConnectionManager::checkForTimeouts()
 	//If all components are no longer active, we should end the session.
 	//If there has been activity on the session, we should set activity for all of
 	//that sessions components, since we don't want any of them timing
-	//out if any of them haven't timed out. We also send each one a directive
-	//which has the affect of forcing their cached data to be flushed.
+	//out if any of them haven't timed out. We also flush their cached data to disk.
 	QMutexLocker locker(mutex_);
 	foreach(QSharedPointer<SessionInfo> sessionInfo, openSessions_)
 	{
@@ -103,14 +102,16 @@ void ConnectionManager::checkForTimeouts()
 			if(!component.isNull())
 			{
 				component->setActivity();
-				sessionInfo->enableFlush("DIRECTOR");
+				//sessionInfo->enableFlush("DIRECTOR");
 			}
 			component = sessionInfo->getComponentByType("PROXY");
 			if(!component.isNull())
 			{
 				component->setActivity();
-				sessionInfo->enableFlush("PROXY");
+				//sessionInfo->enableFlush("PROXY");
 			}
+			//sessionInfo->flushCache();
+			QFuture<bool> future = QtConcurrent::run(sessionInfo.data(),&SessionInfo::flushCache,QString(""));
 		}
 	}
 

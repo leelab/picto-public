@@ -1,5 +1,5 @@
-#ifndef _CACHED_SESSION_DATA_H_
-#define _CACHED_SESSION_DATA_H_
+#ifndef _ALIGN_SESSION_DATA_H_
+#define _ALIGN_SESSION_DATA_H_
 
 #include <QVariantList>
 #include <QMutex>
@@ -10,23 +10,25 @@
  *
  */
 
-class CachedSessionData : public SessionData
+class AlignSessionData : public SessionData
 {
 public:
-	CachedSessionData::CachedSessionData();
-	virtual ~CachedSessionData();
+	AlignSessionData::AlignSessionData(int dataType, int matchedColumn);
+	virtual ~AlignSessionData();
 
-	void insertData(int dataType, int dataId, QVariantList data);
+	void insertData(int dataId, QVariantList data);
+
 protected:
-
 	//Should write the input data to descendant defined data structure
 	void writeData(int dataType, QVariantList data);
-	QList<int> readDataTypes();
+	QList<int>readDataTypes();
 	//Should read all data of the input dataType into a QVector or VariantList
 	virtual QList<QVariantList> readData(int dataType,QVariant condition,bool cut=false);
 	virtual void eraseEverything();
-	QMap<int,QMap<int,QVariantList>> dataMap_;
-
+	QMap<int,QVariantList> dataMap_;
+	int dataType_;
+private:
+	int matchedCol_;
 };
 
 #endif

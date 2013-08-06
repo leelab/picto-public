@@ -27,6 +27,7 @@ protected:
 	QList<int>readDataTypes();
 	//Should read all data of the input dataType into a QVector or VariantList
 	QList<QVariantList> readData(int dataType,QVariant condition,bool cut=false);
+	virtual void eraseEverything();
 private:
 	QString serialData_;
 };

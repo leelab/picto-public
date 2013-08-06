@@ -43,6 +43,10 @@ void ServerThread::run()
 	//check for data as soon as the thread starts
 	connect(this, SIGNAL(started()), this, SLOT(readClient()));
 
+	QStringList list1,list2;
+	closedUnconfirmedCommandIDs_ = &list1;
+	unconfirmedCommandIDs_ = &list2;
+
 	QThread::exec();
 
 	delete timer_;
@@ -127,16 +131,47 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 
 	//If this command has a Command-ID field, we need to include the same field in the
 	//response (this allows the client to match up commands and responses).
+	//if(_command->hasField("Command-ID"))
+	//{
+	//	pendingCommandIDs_.append(_command->getFieldValue("Command-ID"));
+	//}
+	//if(response->getRegisteredType() == Picto::RegisteredResponseType::Immediate)
+	//{
+	//	response->setFieldValue("Command-ID",pendingCommandIDs_.join(","));
+	//	pendingCommandIDs_.clear();
+	//}
+	QStringList* buffer;
+	int registeredType = response->getRegisteredType();
+	if(registeredType & Picto::RegisteredResponseType::FirstInCommandPackage)
+	{
+		//If there's an old closed command ids package, clear it, it wasn't confirmed fast enough
+		closedUnconfirmedCommandIDs_->clear();
+		//Switch the closed and unclosed pointers.
+		buffer = closedUnconfirmedCommandIDs_;
+		closedUnconfirmedCommandIDs_ = unconfirmedCommandIDs_;
+		unconfirmedCommandIDs_ = buffer;
+	}
+	if(registeredType & Picto::RegisteredResponseType::SendLastCommandPackage)
+	{
+		//Send out the latest closed command ids package.
+		response->setFieldValue("Command-ID",closedUnconfirmedCommandIDs_->join(","));
+		//Clear the closedunconfirmed list since we are now confirming it.
+		closedUnconfirmedCommandIDs_->clear();
+	}
 	if(_command->hasField("Command-ID"))
 	{
-		pendingCommandIDs_.append(_command->getFieldValue("Command-ID"));
+		//Add the command id of this command to a list of command ids to be confirmed later.
+		unconfirmedCommandIDs_->append(_command->getFieldValue("Command-ID"));
 	}
 	if(response->getRegisteredType() == Picto::RegisteredResponseType::Immediate)
 	{
-		response->setFieldValue("Command-ID",pendingCommandIDs_.join(","));
-		pendingCommandIDs_.clear();
+		//Send responses to all commands that have arrived.
+		(*closedUnconfirmedCommandIDs_) << (*unconfirmedCommandIDs_);
+		response->setFieldValue("Command-ID",closedUnconfirmedCommandIDs_->join(","));
+		//Clear the lists because we just confirmed all of them.
+		closedUnconfirmedCommandIDs_->clear();
+		unconfirmedCommandIDs_->clear();
 	}
-	Q_ASSERT(response->getRegisteredType() != Picto::RegisteredResponseType::Delayed);
 	response->setFieldValue("PictoVersion",PICTOVERSION);
 
 	return response;
@@ -223,28 +258,14 @@ void ServerThread::readClient()
 						response->setContentEncoding(Picto::ContentEncodingType::deflate);
 					}
 				}
-				switch(response->getRegisteredType())
+				
+				deliverResponse(response);
+				if(response->shouldStream())
 				{
-				case Picto::RegisteredResponseType::Delayed:
-					delayedResponses_.push_back(response);
-					continue;
-				case Picto::RegisteredResponseType::Immediate:
-					Q_ASSERT_X(!response->shouldStream(),"ServerThread::readClient()","Streaming for registered messages is not currently supported.");
-					foreach(QSharedPointer<Picto::ProtocolResponse> msg,delayedResponses_)
-					{
-						//For now, registered responses can't stream
-						deliverResponse(msg);
-						tcpSocket_->flush();
-					}
-					delayedResponses_.clear();
-				case Picto::RegisteredResponseType::NotRegistered:
-					deliverResponse(response);
-					if(response->shouldStream())
-					{
-						command->setFieldValue("X-PictoStreamState",response->getFieldValue("X-PictoStreamState"));
-					}
-					tcpSocket_->flush();
+					command->setFieldValue("X-PictoStreamState",response->getFieldValue("X-PictoStreamState"));
 				}
+				tcpSocket_->flush();
+				
 			} while(tcpSocket_->state() == QTcpSocket::ConnectedState &&
 				    //tcpSocket_->waitForBytesWritten() &&
 					response->shouldStream());

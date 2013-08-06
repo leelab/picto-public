@@ -49,10 +49,7 @@ Director::Director(QString name,
 	yDiamChannel_(yDiamChannel),
 	posSampPer_(posSampPer),
 	diamSampPer_(diamSampPer),
-	useFrontPanel_(
-					(rewardController == HardwareSetup::PictoBoxXpReward)
-					||(rewardController == HardwareSetup::AudioReward)
-					),
+	useFrontPanel_(rewardController == HardwareSetup::PictoBoxXpReward),
 	directorData_(new DirectorData())
 {
 	//! \TODO Set up random number generator?

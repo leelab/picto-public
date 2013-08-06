@@ -81,15 +81,31 @@ QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCo
 			//Indicate that there was activity on this session.
 			sessionInfo->setActivity();
 
+			bool lastDataPrecededFlush = sessionInfo->lastDataPrecededFlush(sourceType);
+			bool lastDataFollowedFlush = sessionInfo->lastDataFollowedFlush(sourceType);
+			sessionInfo->markLastDataTime(sourceType);
+			bool currDataPrecededFlush = sessionInfo->lastDataPrecededFlush(sourceType);
+			bool currDataFollowedFlush = sessionInfo->lastDataFollowedFlush(sourceType);
+			int regType = 0;
+			if(lastDataPrecededFlush && !currDataPrecededFlush)
+			{
+				regType |= Picto::RegisteredResponseType::FirstInCommandPackage;
+			}
+			if(!lastDataFollowedFlush && currDataFollowedFlush)
+			{
+				regType |= Picto::RegisteredResponseType::SendLastCommandPackage;
+			}
+			response->setRegisteredType(Picto::RegisteredResponseType::RegisteredResponseType(regType));
+
 			QString directive = sessionInfo->pendingDirective(sourceID);
 			if(directive.isEmpty())
 			{
 				response->setContent("OK");
-				if(sessionInfo->needsFlush(sourceType))
-				{
-					sessionInfo->flushCache(sourceType);
-					response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
-				}
+				//if(sessionInfo->needsFlush(sourceType))
+				//{
+				//	sessionInfo->flushCache(sourceType);
+				//	response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
+				//}
 			}
 			else
 			{

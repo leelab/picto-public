@@ -15,6 +15,10 @@
 #include "../../common/storage/AlignmentInfo.h"
 #include "../../common/storage/TaskRunDataUnit.h"
 #include "../../common/storage/SessionDataPackage.h"
+#include "StoredSessionData.h"
+#include "CachedSessionData.h"
+#include "CurrentSessionData.h"
+#include "AlignSessionData.h"
 #include "ComponentInfo.h"
 
 #include <QSharedPointer>
@@ -72,7 +76,8 @@ public:
 	void alignTimestampsTo(QString componentType);
 	bool endSession();
 
-	void flushCache(QString sourceType = "");
+	//returns true on success or false if nothing happened.
+	bool flushCache(QString sourceType = "");
 	//void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID );
 	void insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data);\
 	void insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPackage> data);
@@ -99,8 +104,8 @@ public:
 	QString pendingDirective(QUuid componentID);
 	void addPendingDirective(QString directive, QString componentType);
 
-	void enableFlush(QString componentType){flushEnabled_[componentType] = true;};
-	bool needsFlush(QString componentType){bool r = flushEnabled_[componentType]; flushEnabled_[componentType]=false; return r;};
+	//void enableFlush(QString componentType){flushEnabled_[componentType] = true;};
+	//bool needsFlush(QString componentType){bool r = flushEnabled_[componentType]; flushEnabled_[componentType]=false; return r;};
 
 	//! clears the state of activity and returns it.
 	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
@@ -110,10 +115,37 @@ public:
 
 	bool addAuthorizedObserver(QUuid observerId, QString password);
 	QString getPassword();
+	//Marks the time that the last data was written by the input source
+	void markLastDataTime(QString source);
+	//Returns whether the last data marked for the input source preceded the
+	//beginning of the latest flush.
+	bool lastDataPrecededFlush(QString source);
+	//Returns whether the last data marked for the input source followed the 
+	//end of the latest flush
+	bool lastDataFollowedFlush(QString source);
 
 	friend class ConnectionManager;
 
 private:
+	enum SessionTableType{	SESSION_INFO_TYPE,
+							COMPONENT_INFO_TYPE,
+							RUNS_TYPE,
+							SPIKES_TYPE,
+							NEURAL_ALIGN_EVENTS_TYPE,
+							LFP_TYPE,
+							BEHAVIORAL_ALIGN_EVENTS_TYPE,
+							ALIGN_EVENTS_TYPE,
+							TRANSITIONS_TYPE,
+							TRANSITION_LOOKUP_TYPE,
+							PROPERTIES_TYPE,
+							INIT_PROPERTIES_TYPE,
+							PROPERTY_LOOKUP_TYPE,
+							ELEMENT_LOOKUP_TYPE,
+							FRAMES_TYPE,
+							REWARDS_TYPE,
+							CURRENT_STATE_TYPE,
+							FIRST_SIGNAL_CHANNEL_TYPE};
+	QMap<QString,int> sigChanTypes_;	//Store the SessionTableType of the signal channel indexed by its name
 	SessionInfo(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
 	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
@@ -121,8 +153,8 @@ private:
 	void SetupBaseSessionDatabase();
 	void CreateCacheDatabase(QString databaseName);
 	void AddTablesToDatabase(QSqlQuery* query);
-	bool executeReadQuery(QSqlQuery* query, QString optionalString = "",bool debug = false);
-	bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
+	//bool executeReadQuery(QSqlQuery* query, QString optionalString = "",bool debug = false);
+	//bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
 	void createSessionIndeces();
 	void setStateVariable(int dataid, int varid, QString serializedValue);
@@ -130,14 +162,21 @@ private:
 
 	void updateCurrentStateTable(QString updateTime);
 	void addAuthorizedObserver(QUuid observerId);
-	QSqlDatabase getSessionDb();
-	QSqlDatabase getCacheDb();
+	//QSqlDatabase getSessionDb();
+	//QSqlDatabase getCacheDb();
 
 	static QMap<QUuid,QWeakPointer<SessionInfo>> loadedSessions_;
 	QUuid uuid_;
 	QString password_;
 	QSqlDatabase baseSessionDbConnection_;
 	QSqlDatabase cacheDb_;
+
+	QSharedPointer<StoredSessionData> storedSessionData_;
+	QSharedPointer<CachedSessionData> cachedDirectorSessionData_;
+	QSharedPointer<CachedSessionData> cachedProxySessionData_;
+	QSharedPointer<AlignSessionData> neuralAlignSessionData_;
+	QSharedPointer<AlignSessionData> behavAlignSessionData_;
+	QSharedPointer<CurrentSessionData> currentSessionData_;
 
 	QSharedPointer<AlignmentTool> alignmentTool_;
 	QMutex latestNeuralDataMutex_;
@@ -149,6 +188,8 @@ private:
 	QString alignToType_;	//The component type who's timeframe should be used as a baseline in timing alignment.
 	bool activity_;
 	bool ignoreComponents_;
+	int sessionInfoDataId_;
+	int aligmentInfoDataId_;
 	QMap<QString,bool> flushEnabled_;
 	QByteArray designXml_;
 	QByteArray DesignConfig_;
@@ -180,6 +221,16 @@ private:
 	int nextSigChanVarId_;
 	QSharedPointer<Picto::SessionDataPackage> currSessionDataPack_;
 	QMutex sessionDataMutex_;
+	QMutex stateVarTimeMutex_;
+	QMutex flushingCache_;
+	QTime totalSessionTime_;
+	double timeInFlush_;
+	QHash<QString,double> dataTimeBySource_;
+	QMutex flushTimingMutex_;
+	double lastFlushStartTime_;
+	double lastFlushEndTime_;
+
+
 };
 
 #endif

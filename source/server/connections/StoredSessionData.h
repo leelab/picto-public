@@ -4,10 +4,9 @@
 #include <QVariantList>
 #include <QMutex>
 #include <QSharedPointer>
-#include <QSqlDatabase>
-#include <QSqlQuery>
 #include <QUuid>
 #include <QHash>
+#include <QSqlQuery>
 
 #include "SessionData.h"
 
@@ -21,7 +20,10 @@ public:
 	StoredSessionData::StoredSessionData(QString sessionPath,QString databaseFileName);
 	virtual ~StoredSessionData();
 	void setSessionId(QUuid sessionId);
-	void setTableInfo(int dataType,QString tableName,QString columnNames,QString columnTypes);
+	//Note that indeces are not built when you call this function.  You must use buildTableIndeces to do that later.
+	void setTableInfo(int dataType,QString tableName,QString columnNames,QString columnTypes,QString indexedColumns = "");
+	void buildTableIndeces();
+	void insertData(int dataType, QVariantList data);
 
 protected:
 	bool startDataWrite(QString* error = NULL);
@@ -32,22 +34,24 @@ protected:
 	QList<int>readDataTypes();
 	//Should read all data of the input dataType into a QVector or VariantList
 	QList<QVariantList> readData(int dataType,QVariant condition,bool cut=false);
+	virtual void eraseEverything();
 
 private:
 	QSqlDatabase StoredSessionData::getSessionDb();
 	struct TableInfo
 	{
 		TableInfo(){};
-		TableInfo(QString n,QString cn,QString ct,QString ps){name = n;colNames = cn;colTypes = ct;placeholderString = ps;};
+		TableInfo(QString n,QString cn,QString ct,QString ic,QString ps){name = n;colNames = cn;colTypes = ct;indexedColumns = ic;placeholderString = ps;};
 		QString name;
 		QString colNames;
 		QString colTypes;
+		QString indexedColumns;
 		QString placeholderString;
 	};
 	QHash<int,TableInfo> tableByType_;
 	QUuid sessionId_;
 	QStringList openDatabaseConnections_;
-	QSqlDatabase baseSessionDbConnection_;
+	QString baseSessionDbConnection_;
 	QSharedPointer<QSqlQuery> query_;
 };
 

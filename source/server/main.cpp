@@ -33,7 +33,7 @@
 #include "protocol/ServerAppUpdateProtocol.h"
 #include "service/systemservice.h"
 #include "dialog.h"
-#include "InteractiveSTDIOHandler.h"
+//#include "InteractiveSTDIOHandler.h"
 #include "../common/mainmemleakdetect.h"
 //#include "connections/ServerConfig.h"
 
@@ -284,8 +284,8 @@ int main(int argc, char *argv[])
 					outputStream << "Type \"quit\" on a single line to exit\n";
 					outputStream.flush();
 
-					InteractiveSTDIOHandler interactiveSTDIOHandler;
-					interactiveSTDIOHandler.start();
+					//InteractiveSTDIOHandler interactiveSTDIOHandler;
+					//interactiveSTDIOHandler.start();
 
 					result = systemService.runInteractive();
 

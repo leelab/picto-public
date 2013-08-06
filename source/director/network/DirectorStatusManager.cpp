@@ -120,7 +120,7 @@ void DirectorStatusManager::doServerUpdate()
 		return;
 	if((getStatus() > stopped) && (lastAlignTime_.secsTo(QDateTime::currentDateTime()) > SECS_PRE_ALIGN))
 	{
-		alignmentCode_ = (alignmentCode_ == 0x7F)? 0 : alignmentCode_+1;
+		alignmentCode_ = (alignmentCode_ == 0x7F)? 1 : alignmentCode_+1;
 		alignmentID_++;
 		Timestamper timestamper;
 

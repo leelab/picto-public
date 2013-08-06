@@ -15,10 +15,13 @@
 class CurrentSessionData : public SessionData
 {
 public:
-	CurrentSessionData::CurrentSessionData();
+	CurrentSessionData::CurrentSessionData(int dataType);
 	virtual ~CurrentSessionData();
 
-	void updateVariable(int variableId,int dataid,QString timestamp,QString data);
+	void updateVariable(int dataid,int variableId,QString timestamp,QString data);
+	//If this function is used, the individual variant lists must include: int dataid,int variableId,QString timestamp,QString data
+	//in that order
+	void updateVariables(QList<QVariantList> data);
 
 protected:
 
@@ -27,9 +30,11 @@ protected:
 	QList<int>readDataTypes();
 	//Should read all data of the input dataType into a QVector or VariantList
 	QList<QVariantList> readData(int dataType,QVariant condition,bool cut=false);
+	virtual void eraseEverything();
 private:
 	QMap<int,QVariantList> dataMap_;
-	QMap<double,int> dataByTime_;
+	QMap<double,QMap<int,int>> dataByTime_;
+	int dataType_;
 };
 
 #endif
