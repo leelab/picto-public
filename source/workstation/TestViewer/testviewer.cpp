@@ -284,6 +284,31 @@ void TestViewer::playTriggered()
 		//Find out which analyses should be enabled and enable them
 		QList<QUuid> analysisIds = analysisSelector_->getSelectedAnalysisIds();
 		QSharedPointer<DesignConfig> designConfig = experiment_->getDesignConfig();
+		//If there are active analysis ids, add the various data readers (frameReader, etc) to the 
+		//designConfig.  Then add them to the Picto Engine so that it can update them with data.
+		//Generally, the SlaveExperimentDriver is responsible for creating the readers and the StateUpdater
+		//is responsible for making sure they have data.  Eventually, the Test Viewer should contain a 
+		//running experiment and an interface to a SlaveExperimentViewer that handles the playback and analysis.
+		//Until that happens, we create the DataReaders here and update them in the PictoEngine.
+		if(analysisIds.size())
+		{
+			if(!liveFrameReader_)
+			{
+				//Setup Test Data Readers for Analysis
+				liveFrameReader_ = QSharedPointer<LiveFrameReader>(new LiveFrameReader());
+			}
+			designConfig->setFrameReader(liveFrameReader_.staticCast<FrameReader>());
+			engine_->setFrameReader(liveFrameReader_);
+		}
+		else
+		{
+			//If there's no analysis.  Set frame readers to null so that we don't waste memory on them.
+			//in case they were set last time.
+			designConfig->setFrameReader(QSharedPointer<FrameReader>());
+			engine_->setFrameReader(QSharedPointer<LiveFrameReader>());
+		}
+
+
 		designConfig->setActiveAnalysisIds(analysisIds);
 	}
 

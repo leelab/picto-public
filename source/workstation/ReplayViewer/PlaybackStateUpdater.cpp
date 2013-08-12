@@ -49,6 +49,12 @@ bool PlaybackStateUpdater::updateState()
 	return true;
 }
 
+QSharedPointer<FrameReader> PlaybackStateUpdater::getFrameReader()
+{
+	Q_ASSERT(sessionState_);
+	return sessionState_->getFrameReader();
+}
+
 bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	stop();

@@ -26,8 +26,10 @@ public:
 	PlaybackStateUpdater();
 	virtual ~PlaybackStateUpdater();
 
+	//StateUpdater Interface
 	//Updates the picto state to the latest values
 	virtual bool updateState();
+	virtual QSharedPointer<FrameReader> getFrameReader();
 
 	bool setFile(QString filePath);
 	QSharedPointer<DesignRoot> getDesignRoot();
@@ -42,6 +44,7 @@ public:
 	void setPlaybackSpeed(double speed);
 	double getPlaybackSpeed();
 	void jumpToTime(double time);
+
 signals:
 	void startingRun(QString taskName,QString runName);
 	void endingRun();

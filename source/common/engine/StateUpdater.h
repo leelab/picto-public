@@ -6,6 +6,7 @@
 #include <QStringList>
 
 #include "../common.h"
+#include "../playback/PlaybackInterfaces.h"
 
 namespace Picto {
 
@@ -27,6 +28,8 @@ public:
 	virtual ~StateUpdater(){};
 	//Updates the picto state to the latest values
 	virtual bool updateState() = 0;
+
+	virtual QSharedPointer<FrameReader> getFrameReader() = 0;
 signals:
 	void startingRun(QString taskName,QString runName);
 	void endingRun();

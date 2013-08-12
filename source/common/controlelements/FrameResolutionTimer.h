@@ -1,6 +1,7 @@
 #ifndef _FRAMERESOLUTIONTIMER_H_
 #define _FRAMERESOLUTIONTIMER_H_
 #include <QDateTime>
+#include <QHash>
 
 #include "../common.h"
 
@@ -47,6 +48,7 @@ class FrameResolutionTimer
 
 public:
 	FrameResolutionTimer();
+	~FrameResolutionTimer();
 
 	void start();
 	void restart() { start(); };
@@ -84,6 +86,12 @@ public:
 	//also occur if this function is called in an actual experiment, BUT DON'T LET ANYONE CALL IT IN AN
 	//ACTUAL EXPERIMENT.
 	static int effectiveAbsoluteTime(TimerUnits::TimerUnits units);
+	
+	//Sets stored data back to its initial conditions and restarts all timers
+	static void resetTimerSystem();
+
+protected:
+	static QHash<FrameResolutionTimer*,bool> timerLookup_;
 
 private:
 	double startTime_;

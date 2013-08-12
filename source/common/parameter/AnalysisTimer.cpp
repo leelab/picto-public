@@ -41,7 +41,8 @@ int AnalysisTimer::getValue()
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-	return time_ + timer_.elapsedTime(units);
+	int returnVal = time_ + timer_.elapsedTime(units);
+	return returnVal;
 	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toLatin1());
 }
 
@@ -52,7 +53,6 @@ void AnalysisTimer::postDeserialize()
 
 bool AnalysisTimer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-
 	if(!AnalysisDataSource::validateObject(xmlStreamReader))
 		return false;
 	return true;

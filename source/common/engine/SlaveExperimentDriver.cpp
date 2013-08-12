@@ -25,6 +25,9 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	connect(updater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
 	connect(updater_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(masterSignalChanged(QString,QStringList,QVector<float>)));
 	connect(updater_.data(),SIGNAL(disableRendering(bool)),this,SLOT(disableRendering(bool)));
+
+	//Put the various data sources into the design config for access from analysis parameters
+	experiment_->getDesignConfig()->setFrameReader(updater_->getFrameReader());
 }
 
 void SlaveExperimentDriver::renderFrame()
@@ -126,6 +129,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 
 void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 {
+	Controller::FrameResolutionTimer::resetTimerSystem();
 	eventQueue_.reset();
 	if(taskName != currTask_)
 	{

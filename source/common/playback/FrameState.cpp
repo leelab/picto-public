@@ -78,6 +78,63 @@ void FrameState::moveToIndex(PlaybackIndex index)
 	}
 }
 
+double FrameState::getPrevTime()
+{
+	if(curr_ < 1)
+		return 0;
+	PlaybackIndex prevIndex = globalToRunIndex(data_[curr_-1]);
+	if(prevIndex.time() < 0)
+		return 0;
+	return prevIndex.time();
+}
+double FrameState::getLatestTime()
+{
+	if(curr_ < 0)
+		return 0;
+	return getCurrentIndex().time();
+}
+double FrameState::getNextTime()
+{
+	if(curr_ >= (data_.size()-1))
+		return -1;
+	PlaybackIndex currIndex = globalToRunIndex(data_[curr_+1]);
+	return currIndex.time();
+}
+QVariantList FrameState::getTimesSince(double time)
+{
+	Q_ASSERT(runStart_ >= 0);
+	Q_ASSERT(curr_ >= 0);
+	double afterTime = time;
+	if(afterTime >= getLatestTime())
+		return QVariantList();
+	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
+	QVector<PlaybackIndex>::iterator iter = qUpperBound<QVector<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin(),data_.begin()+curr_,beyondIndex);
+	QVariantList returnVal;
+	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
+	{
+		returnVal.append(globalToRunIndex(*iter).time());
+	}
+	Q_ASSERT(iter != data_.end());
+	return returnVal;
+}
+
+QVariantList FrameState::getTimesUntil(double time)
+{
+	Q_ASSERT(runStart_ >= 0);
+	Q_ASSERT(curr_ >= 0);
+	double upToTime = time;
+	if(upToTime <= getLatestTime())
+		return QVariantList();
+	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
+	QVector<PlaybackIndex>::iterator upToIter = qUpperBound<QVector<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin()+curr_,data_.end(),beforeIndex);
+	QVariantList returnVal;
+	for(QVector<PlaybackIndex>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
+	{
+		returnVal.append(globalToRunIndex(*iter).time());
+	}
+	return returnVal;
+}
+
 PlaybackIndex FrameState::getNextIndex()
 {
 	Q_ASSERT(runStart_ >= 0);

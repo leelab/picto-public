@@ -34,6 +34,7 @@
 #include "StateUpdater.h"
 #include "propertytable.h"
 #include "ControlPanelInterface.h"
+#include "../playback/LiveFrameReader.h"
 
 namespace Picto {
 	namespace Engine {
@@ -186,7 +187,10 @@ public:
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
 	//void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
 	//QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
-		
+
+	//Setup Data Readers
+	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
+	void setFrameReader(QSharedPointer<LiveFrameReader> frameReader){frameReader_ = frameReader;};
 	
 	//The engine commands are only used when the engine is being run locally
 	//They should also only be used by the master of the engine (ie. The ComponentStatusManager,
@@ -248,6 +252,10 @@ private:
 
 	QUuid sessionId_;
 	QString name_;
+
+	//Data Readers
+	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
+	QSharedPointer<LiveFrameReader> frameReader_;
 
 	int engineCommand_;
 

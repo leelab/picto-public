@@ -724,6 +724,16 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("removeAt(key)","Removes the value at the input key from the map.  If the input key is invalid, nothing happens.");
 
 	//DataSources
+	curr = addDescription("AnalysisFrameData");
+	curr->setInherits(getAssetDescription("AnalysisDataSource"));
+	curr->setOverview("Provides frame timing data to be used in analysis.  The latest, previous, and next frame times can all be read out as single numerical values. Alternatively, frame times during a set time period can be read out as a javascript array of times.  All reported times are when the first phosphor appeared on the user display.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.  It should be noted that during tests in the workstation,  the system does not wait for first the phosphor before completing a frame.  For this reason it should not come as a surprise if frame times during testing are much higher than frame times during an experimental session.  High frame rates during testing; however, are a good indication that there will be no skipped frames during experimentation, assuming that the computer running the Picto director has a reasonable comparable processor.");
+	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
+	curr->addSFunc("getLatestTime()","Returns the time at which the first phosphor of the latest presented frame occured.");
+	curr->addSFunc("getPrevTime()","Returns the time at which the first phosphor of one frame before the latest was presented.");
+	curr->addSFunc("getNextTime()","Returns the time at which the first phosphor of the frame following this function call will occur.  Note that this only returns valid data when replaying an experiment.  Picto cannot predict the future.");
+	curr->addSFunc("getPrevTimes(secsPreceding)","Returns a javascript array of first phosphor times that occured after the input number of seconds preceding the latest frame time, up to and including the latest frame time.  Note that the input quantity need not be an integer.");
+	curr->addSFunc("getNextTimes(secsFollowing)","Returns a javascript array of first phosphor times that will occur starting from the next frame, up to and including the time at the input number of seconds following the latest frame time.  Note that the input quantity need not be an integer.  Also note that this function will only return data when replaying an experiment.  Picto cannot predict the future.");
+
 	curr = addDescription("AnalysisTimer");
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
 	curr->setOverview("Used to track time.  The Analysis Timer can be reset using restart() or set to restart from a given time by simply setting that time to the timer using the 'value' script property.");

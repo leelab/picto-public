@@ -15,6 +15,16 @@ public:
 	virtual PlaybackIndex getCurrentIndex();
 	virtual PlaybackIndex getNextIndex(double lookForwardTime);
 	virtual void moveToIndex(PlaybackIndex index);
+
+	//Frame Reader Interface
+	virtual double getPrevTime();
+	virtual double getLatestTime();
+	virtual double getNextTime();
+	//Returns a list of frame times that occured with times > the input time and <= the current time.  
+	virtual QVariantList getTimesSince(double time);
+	//Returns a list of values with times > the current time and <= the input time.  
+	virtual QVariantList getTimesUntil(double time);
+	
 signals:
 	void framePresented(double time);
 

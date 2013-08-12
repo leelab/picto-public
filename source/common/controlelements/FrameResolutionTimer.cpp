@@ -7,10 +7,17 @@ namespace Controller {
 double FrameResolutionTimer::lastFrameTime_ = -1;
 double FrameResolutionTimer::nextFrameTime_ = -1;
 double FrameResolutionTimer::firstFrameTime_ = -1;
+QHash<FrameResolutionTimer*,bool> FrameResolutionTimer::timerLookup_;
 
 FrameResolutionTimer::FrameResolutionTimer()
 {
+	timerLookup_[this] = true;
 	start();
+}
+
+FrameResolutionTimer::~FrameResolutionTimer()
+{
+	timerLookup_.remove(this);
 }
 
 void FrameResolutionTimer::start()
@@ -42,10 +49,22 @@ void FrameResolutionTimer::setLastFrameTime(double frameTime)
 {
 	if(firstFrameTime_ < 0)
 		firstFrameTime_ = frameTime;
+	if(frameTime < lastFrameTime_)
+	{
+		int i=0;
+		i++;
+	}
 	lastFrameTime_ = frameTime;
+	
 }
 void FrameResolutionTimer::setNextFrameTime(double frameTime)
 {
+	//If the next frame time is below the latest, re-estimate the latest
+	if(frameTime < lastFrameTime_)
+	{
+		int i=0;
+		i++;
+	}
 	nextFrameTime_ = frameTime;
 }
 
@@ -70,6 +89,18 @@ int FrameResolutionTimer::effectiveAbsoluteTime(TimerUnits::TimerUnits units)
 	}
 		
 }
+
+void FrameResolutionTimer::resetTimerSystem()
+{
+	lastFrameTime_ = -1;
+	nextFrameTime_ = -1;
+	firstFrameTime_ = -1;
+	foreach(FrameResolutionTimer* timer,timerLookup_.keys())
+	{	
+		timer->start();
+	}
+}
+
 
 }	//namespace Picto
 }	//namespace ControlElement

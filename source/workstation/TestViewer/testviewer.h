@@ -9,6 +9,7 @@
 #include "../../common/compositor/VisualTargetHost.h"
 #include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "../ReplayViewer/OutputWidgetHolder.h"
+#include "../../common/playback/LiveFrameReader.h"
 
 class QAction;
 class QToolBar;
@@ -79,6 +80,8 @@ private:
 	bool deiniting_;
 	enum Status {Ending, Stopped, Running, Paused};
 	Status status_;
+
+	QSharedPointer<LiveFrameReader> liveFrameReader_;
 private slots:
 	void playTriggered();
 	void running();

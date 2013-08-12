@@ -21,8 +21,11 @@ class RemoteStateUpdater : public StateUpdater
 public:
 	RemoteStateUpdater(CommandChannel *serverChan);
 	void initForNewSession();
+	//StateUpdater Interface
 	//Updates the picto state to the latest values
 	virtual bool updateState();
+	virtual QSharedPointer<FrameReader> getFrameReader(){return QSharedPointer<FrameReader>();};
+
 signals:
 	//NOTE: The startingRun and endingRun signals are not yet being called by the RemoteStateUpdater
 	//this is because its current design doesn't allow it to differentiate between a run that is starting

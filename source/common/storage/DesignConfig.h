@@ -1,13 +1,15 @@
 #ifndef _DesignConfig_H_
 #define _DesignConfig_H_
 
-#include "../common.h"
-#include "serializable.h"
 #include <QObject>
 #include <QMap>
 #include <QSet>
 #include <QWeakPointer>
 #include <QUuid>
+#include "../common.h"
+#include "serializable.h"
+
+#include "../playback/PlaybackInterfaces.h"
 namespace Picto {
 class Asset;
 struct AssetInfo{int id;QString path;};
@@ -46,6 +48,10 @@ public:
 	void markRunEnd();
 	QUuid getLatestRunId();
 	QString getLatestRunName();
+	
+	//Analysis Data Readers
+	void setFrameReader(QSharedPointer<FrameReader> frameReader){frameReader_ = frameReader;};
+	QSharedPointer<FrameReader> getFrameReader(){return frameReader_;};
 
 	QList<AssetInfo> getElementInfo();
 	QList<PropInfo> getPropertyInfo();
@@ -69,6 +75,8 @@ private:
 	QList<TransInfo> transInfo_;
 	QHash<Asset*,QWeakPointer<Asset>> assetHash_;
 	QList<QWeakPointer<Asset>> unsortedIdAssets_;
+
+	QSharedPointer<FrameReader> frameReader_;
 
 	QHash<QUuid,bool> analysisHash_;
 	int lastUsedId_;

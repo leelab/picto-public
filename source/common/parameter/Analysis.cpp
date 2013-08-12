@@ -8,6 +8,7 @@
 #include "AnalysisVariableList.h"
 #include "AnalysisFileOutput.h"
 #include "AnalysisTimer.h"
+#include "AnalysisFrameData.h"
 #include "../design/PictoData.h"
 #include "../memleakdetect.h"
 
@@ -34,6 +35,8 @@ Analysis::Analysis()
 	AddDefinableObjectFactory("AnalysisDataSource",outputFactory_);
 	scriptFactory_->addAssetType("Timer",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisTimer::Create))));
+	scriptFactory_->addAssetType("Frame",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFrameData::Create))));
 
 	AddDefinableObjectFactory("AnalysisOutput",dataSourceFactory_);
 	dataSourceFactory_->addAssetType("File",

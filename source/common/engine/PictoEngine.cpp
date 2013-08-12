@@ -9,7 +9,6 @@
 
 #include "PictoEngine.h"
 
-#include "../timing/Timestamper.h"
 #include "../controlelements/FrameResolutionTimer.h"
 #include "../storage/BehavioralDataUnitPackage.h"
 #include "../storage/RewardDataUnit.h"
@@ -139,14 +138,26 @@ void PictoEngine::emptySignalChannels()
 
 void PictoEngine::markTaskRunStart(QString name)
 {
+	//If there's not data channel, this is a test run.  Treat every run as if its in its own world
+	//by restarting the FrameResolutionTimers from scratch.
+	if(getDataCommandChannel().isNull())
+		Controller::FrameResolutionTimer::resetTimerSystem();
+
+	//Set up data for task run.
 	taskRunName_ = name;
 	taskRunUnit_ = QSharedPointer<TaskRunDataUnit>();
 	taskRunStarting_ = true;
+	
+	//If there's a frame reader, tell it that we're starting a new run
+	if(frameReader_)
+		frameReader_->setRunStart();
 }
 
 void PictoEngine::markTaskRunStop()
 {
 	taskRunEnding_ = true;
+	if(frameReader_)
+		frameReader_->setRunEnd();
 }
 
 
@@ -163,8 +174,6 @@ void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 {
 	if(rewardController_.isNull())
 		return;
-
-	Timestamper stamper;
 
 	//Rewards are added to the reward controller when this function is called.  They are actually performed just
 	//after the following firstPhosphor time.
@@ -353,10 +362,21 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	frameData.addFrame(frameTime,runningStateId);
 	setLastFrame(frameData.getLatestFrameId());
 
-	//Tell all timers that work on single frame resolution what the latest frame time is
-	Controller::FrameResolutionTimer::setLastFrameTime(frameTime);
-
 	QSharedPointer<CommandChannel> dataChannel = getDataCommandChannel();
+
+	//If this is an experimental run or this is a test run (not playback)
+	if(dataChannel || frameReader_)
+	{
+		//Tell all timers that work on single frame resolution what the latest frame time is
+		Controller::FrameResolutionTimer::setLastFrameTime(frameTime);
+	}
+	
+	//If there's an active frameReader_ (ie. We're using the TestViewer with Analysis)
+	if(frameReader_)
+	{
+		//Set the latest frame time to the frameReader_
+		frameReader_->setLatestFrameTime(frameTime);
+	}
 
 	if(dataChannel.isNull())
 		return;
@@ -437,7 +457,9 @@ void PictoEngine::setLastFrame(qulonglong frameId)
 {
 	lastFrameId_ = frameId;
 	if(!taskRunUnit_)
+	{
 		taskRunUnit_ = QSharedPointer<TaskRunDataUnit>(new TaskRunDataUnit(frameId,taskRunName_,""));
+	}
 }
 
 bool PictoEngine::updateCurrentStateFromServer()

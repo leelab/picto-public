@@ -103,7 +103,14 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	// JOEY 12/24/10 If there's no data channel, we're running in test mode.
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 	if(dataChannel.isNull())
+	{
+		//If there's no data channel, this is a Test run.  Restart the FrameResolutionTimer
+		//every time.
+		QDateTime dateTime = QDateTime::currentDateTime();
+		QString taskRunName = getName()+"_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");	
+		engine->markTaskRunStart(taskRunName);
 		return;
+	}
 
 	QSharedPointer<Transition> tran(new Transition(QSharedPointer<Asset>(),QSharedPointer<Asset>(),stateMachine_));
 	tran->setAssetId(-taskNumber_);
@@ -137,7 +144,10 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	// JOEY 12/24/10 If there's no data channel, we're running in test mode.
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 	if(dataChannel.isNull())
+	{
+		engine->markTaskRunStop();
 		return;
+	}
 
 	if(result == "EngineAbort")
 	{
