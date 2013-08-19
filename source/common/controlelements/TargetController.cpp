@@ -58,7 +58,7 @@ QString TargetController::ControllerType()
 
 void TargetController::start(QSharedPointer<Engine::PictoEngine> engine)
 {
-	cumulativeTimer_.start();
+	cumulativeTimer_->start();
 	isDone_ = false;
 	result_ = "";
 	targetAcquired_ = false;
@@ -215,9 +215,9 @@ bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 
 	//check to see if we've met or exceeded the total time
 	int totalTime = propertyContainer_->getPropertyValue("TotalTime").toInt();
-	int currTotalTime = cumulativeTimer_.elapsedTime(timeUnits);
-	int currAcqTime = acquisitionTimer_.elapsedTime(timeUnits);
-	int currReAcqTime = reacquisitionTimer_.elapsedTime(timeUnits);
+	int currTotalTime = cumulativeTimer_->elapsedTime(timeUnits);
+	int currAcqTime = acquisitionTimer_->elapsedTime(timeUnits);
+	int currReAcqTime = reacquisitionTimer_->elapsedTime(timeUnits);
 	int fixTime = propertyContainer_->getPropertyValue("FixationTime").toInt();
 	int remainingFixTime = targetAcquired_?fixTime-currAcqTime:fixTime;
 	if(currTotalTime+remainingFixTime > totalTime)
@@ -237,7 +237,7 @@ bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 		int minAcqTime = propertyContainer_->getPropertyValue("MinInitialAcquisitionTime").toInt();
 		if(currTotalTime >= minAcqTime)
 		{
-			acquisitionTimer_.start();
+			acquisitionTimer_->start();
 			targetAcquired_ = true;
 			initialAcquisitionOccurred_ = true;
 			if(!engine->slaveMode())
@@ -285,7 +285,7 @@ bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 				return true;
 			}
 			waitingForReacquisition_ = true;
-			reacquisitionTimer_.start();
+			reacquisitionTimer_->start();
 		}
 	}
 	//staying inside target
@@ -362,6 +362,11 @@ bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 void TargetController::postDeserialize()
 {
 	ControlElement::postDeserialize();
+
+	cumulativeTimer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+	acquisitionTimer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+	reacquisitionTimer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+
 	//Don't let user see OnTarget/OnTargetChanged, they are for internal use only
 	propertyContainer_->getProperty("OnTarget")->setVisible(false);
 	propertyContainer_->getProperty("OnTargetChanged")->setVisible(false);
@@ -375,6 +380,7 @@ void TargetController::postDeserialize()
 	setPropertyRuntimeEditable("MaxInitialAcquisitionTime");
 	setPropertyRuntimeEditable("MaxReacquisitionTime");
 	setPropertyRuntimeEditable("ReacquisitionAllowed");
+
 }
 
 

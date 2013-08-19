@@ -10,6 +10,7 @@
 #include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "../ReplayViewer/OutputWidgetHolder.h"
 #include "../../common/playback/LiveFrameReader.h"
+#include "../../common/playback/LiveRewardReader.h"
 
 class QAction;
 class QToolBar;
@@ -82,6 +83,7 @@ private:
 	Status status_;
 
 	QSharedPointer<LiveFrameReader> liveFrameReader_;
+	QSharedPointer<LiveRewardReader> liveRewardReader_;
 private slots:
 	void playTriggered();
 	void running();

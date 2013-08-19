@@ -50,7 +50,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	Controller::FrameResolutionTimer timer_;
+	QSharedPointer<Controller::FrameResolutionTimer>timer_;
 	QStringList unitList_;
 	int time_;
 

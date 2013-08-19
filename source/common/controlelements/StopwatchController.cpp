@@ -62,7 +62,7 @@ void StopwatchController::start(QSharedPointer<Engine::PictoEngine> engine)
 	Q_UNUSED(engine);
 
 	isDone_ = false;
-	timer_.start();
+	timer_->start();
 }
 
 bool StopwatchController::isDone(QSharedPointer<Engine::PictoEngine> engine)
@@ -78,7 +78,7 @@ bool StopwatchController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-	if(timer_.elapsedTime(units) >= propertyContainer_->getPropertyValue("Time").toInt())
+	if(timer_->elapsedTime(units) >= propertyContainer_->getPropertyValue("Time").toInt())
 	{
 		isDone_ = true;
 		return true;
@@ -100,6 +100,9 @@ QSharedPointer<Result> StopwatchController::getResult()
 void StopwatchController::postDeserialize()
 {
 	ControlElement::postDeserialize();
+
+	timer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+
 	setPropertyRuntimeEditable("Time");
 }
 

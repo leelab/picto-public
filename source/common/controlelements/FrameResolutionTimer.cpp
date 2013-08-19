@@ -4,34 +4,28 @@
 namespace Picto {
 namespace Controller {
 
-double FrameResolutionTimer::lastFrameTime_ = -1;
-double FrameResolutionTimer::nextFrameTime_ = -1;
-double FrameResolutionTimer::firstFrameTime_ = -1;
-QHash<FrameResolutionTimer*,bool> FrameResolutionTimer::timerLookup_;
-
-FrameResolutionTimer::FrameResolutionTimer()
+FrameResolutionTimer::FrameResolutionTimer(QSharedPointer<FrameTracker> frameTracker)
 {
-	timerLookup_[this] = true;
+	frameTracker_ = frameTracker;
 	start();
 }
 
 FrameResolutionTimer::~FrameResolutionTimer()
 {
-	timerLookup_.remove(this);
 }
 
 void FrameResolutionTimer::start()
 {
-	startTime_ = lastFrameTime_;
+	startTime_ = frameTracker_->lastFrameTime_;
 }
 
-int FrameResolutionTimer::elapsedTime(TimerUnits::TimerUnits units)
+int FrameResolutionTimer::elapsedTime(Controller::TimerUnits::TimerUnits units)
 {
 	//Start time can never be before the first frame.  At that point the user has had no
 	//experimental input, so that time is not part of the experiment.
 	if(startTime_ < 0)
-		startTime_ = firstFrameTime_;
-	double elapsedSec = lastFrameTime_ -  startTime_;
+		startTime_ = frameTracker_->firstFrameTime_;
+	double elapsedSec = frameTracker_->lastFrameTime_ -  startTime_;
 	if(units == TimerUnits::sec)
 		return elapsedSec;
 	else if(units == TimerUnits::ms)
@@ -42,62 +36,6 @@ int FrameResolutionTimer::elapsedTime(TimerUnits::TimerUnits units)
 	{
 		Q_ASSERT(false);
 		return 0;
-	}
-}
-
-void FrameResolutionTimer::setLastFrameTime(double frameTime)
-{
-	if(firstFrameTime_ < 0)
-		firstFrameTime_ = frameTime;
-	if(frameTime < lastFrameTime_)
-	{
-		int i=0;
-		i++;
-	}
-	lastFrameTime_ = frameTime;
-	
-}
-void FrameResolutionTimer::setNextFrameTime(double frameTime)
-{
-	//If the next frame time is below the latest, re-estimate the latest
-	if(frameTime < lastFrameTime_)
-	{
-		int i=0;
-		i++;
-	}
-	nextFrameTime_ = frameTime;
-}
-
-int FrameResolutionTimer::effectiveAbsoluteTime(TimerUnits::TimerUnits units)
-{
-	double returnTime = nextFrameTime_;
-	if(nextFrameTime_ <= lastFrameTime_)
-	{	//Looks like we need to estimate the return value.
-		returnTime = lastFrameTime_+16.666;
-	}
-
-	if(units == TimerUnits::sec)
-		return returnTime;
-	else if(units == TimerUnits::ms)
-		return returnTime * 1000.0;
-	else if(units == TimerUnits::us)
-		return returnTime * 1000000.0;
-	else
-	{
-		Q_ASSERT(false);
-		return 0;
-	}
-		
-}
-
-void FrameResolutionTimer::resetTimerSystem()
-{
-	lastFrameTime_ = -1;
-	nextFrameTime_ = -1;
-	firstFrameTime_ = -1;
-	foreach(FrameResolutionTimer* timer,timerLookup_.keys())
-	{	
-		timer->start();
 	}
 }
 

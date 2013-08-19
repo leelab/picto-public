@@ -25,6 +25,7 @@ public:
 	virtual bool isSaveable();
 	virtual bool saveOutputTo(QDir directory);
 private:
+	void patchQtTextStreamBug();
 	QSharedPointer<QFile> file_;
 	QSharedPointer<QTextStream> outputFileStream_;
 	QTextEdit* textEdit_;
@@ -32,14 +33,16 @@ private:
 	QPushButton* next_;
 	struct PageDef
 	{
-		PageDef(){startPos = endPos = 0;};
-		PageDef(int s,int e){startPos = s;endPos = e;};
+		PageDef(){startPos = endPos = completePage = 0;};
+		PageDef(int s,int e,bool c){startPos = s;endPos = e;completePage = c;};
 		bool isValid(){return startPos < endPos;};
 		int startPos;
 		int endPos;
+		bool completePage;
 	};
 	QVector<PageDef> pages_;
 	int currPage_;
+	int lastPage_;
 	int linesPerPage_;
 private slots:
 	void loadCurrPage();

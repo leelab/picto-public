@@ -25,6 +25,7 @@ public:
 	//Updates the picto state to the latest values
 	virtual bool updateState();
 	virtual QSharedPointer<FrameReader> getFrameReader(){return QSharedPointer<FrameReader>();};
+	virtual QSharedPointer<RewardReader> getRewardReader(){return QSharedPointer<RewardReader>();};
 
 signals:
 	//NOTE: The startingRun and endingRun signals are not yet being called by the RemoteStateUpdater

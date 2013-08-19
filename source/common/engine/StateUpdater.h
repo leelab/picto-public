@@ -30,6 +30,7 @@ public:
 	virtual bool updateState() = 0;
 
 	virtual QSharedPointer<FrameReader> getFrameReader() = 0;
+	virtual QSharedPointer<RewardReader> getRewardReader() = 0;
 signals:
 	void startingRun(QString taskName,QString runName);
 	void endingRun();

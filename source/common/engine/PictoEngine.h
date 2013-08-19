@@ -35,6 +35,8 @@
 #include "propertytable.h"
 #include "ControlPanelInterface.h"
 #include "../playback/LiveFrameReader.h"
+#include "../playback/LiveRewardReader.h"
+#include "../controlelements/FrameTimerFactory.h"
 
 namespace Picto {
 	namespace Engine {
@@ -187,10 +189,12 @@ public:
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
 	//void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
 	//QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
+	void setFrameTimerFactory(QSharedPointer<Controller::FrameTimerFactory> frameTimerFactory){frameTimerFactory_ = frameTimerFactory;};
 
 	//Setup Data Readers
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	void setFrameReader(QSharedPointer<LiveFrameReader> frameReader){frameReader_ = frameReader;};
+	void setRewardReader(QSharedPointer<LiveRewardReader> rewardReader){rewardReader_ = rewardReader;};
 	
 	//The engine commands are only used when the engine is being run locally
 	//They should also only be used by the master of the engine (ie. The ComponentStatusManager,
@@ -253,9 +257,12 @@ private:
 	QUuid sessionId_;
 	QString name_;
 
+	QSharedPointer<Controller::FrameTimerFactory> frameTimerFactory_;
+
 	//Data Readers
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	QSharedPointer<LiveFrameReader> frameReader_;
+	QSharedPointer<LiveRewardReader> rewardReader_;
 
 	int engineCommand_;
 

@@ -49,7 +49,7 @@ protected:
 
 private:
 	QStringList unitList_;
-	Controller::FrameResolutionTimer  timer_;
+	QSharedPointer<Controller::FrameResolutionTimer> timer_;
 };
 
 

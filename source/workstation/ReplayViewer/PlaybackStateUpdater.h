@@ -30,6 +30,7 @@ public:
 	//Updates the picto state to the latest values
 	virtual bool updateState();
 	virtual QSharedPointer<FrameReader> getFrameReader();
+	virtual QSharedPointer<RewardReader> getRewardReader();
 
 	bool setFile(QString filePath);
 	QSharedPointer<DesignRoot> getDesignRoot();

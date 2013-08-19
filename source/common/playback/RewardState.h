@@ -16,6 +16,21 @@ public:
 	virtual PlaybackIndex getCurrentIndex();
 	virtual PlaybackIndex getNextIndex(double lookForwardTime);
 	virtual void moveToIndex(PlaybackIndex index);
+
+	//Reward Reader Interface
+	virtual double getLatestTime();
+	virtual double getNextTime();
+	virtual int getLatestDuration();
+	virtual int getNextDuration();
+	//Returns a list of frame times that occured with times > the input time and <= the current time.  
+	virtual QVariantList getTimesSince(double time);
+	//Returns a list of values with times > the current time and <= the input time.  
+	virtual QVariantList getTimesUntil(double time);
+	//Returns a list of reward durations from rewards that occured with times > the input time and <= the current time.  
+	virtual QVariantList getDurationsSince(double time);
+	//Returns a list of reward durations from rewards with times > the current time and <= the input time.  
+	virtual QVariantList getDurationsUntil(double time);
+
 signals:
 	void rewardSupplied(double time,int duration,int channel);
 private:
@@ -46,6 +61,10 @@ struct PlaybackRewardData
 {
 	PlaybackRewardData(){};
 	PlaybackRewardData(PlaybackIndex index,int duration,int channel){index_ = index;duration_ = duration;channel_ = channel;};
+	// First inline function
+	inline bool operator<(const PlaybackRewardData& someData) const {
+		return index_ < someData.index_;
+	}
 	PlaybackIndex index_;
 	int duration_;
 	int channel_;

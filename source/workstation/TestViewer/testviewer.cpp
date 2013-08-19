@@ -81,6 +81,7 @@ void TestViewer::init()
 		connect(testController_.data(),SIGNAL(paused()),this,SLOT(paused()));
 		connect(testController_.data(),SIGNAL(stopped()),this,SLOT(stopped()));
 	}
+	engine_->setFrameTimerFactory(experiment_->getDesignConfig()->getFrameTimerFactory());
 	generateComboBox();
 	analysisSelector_->setDesignRoot(designRoot_);
 	connect(designRoot_->getExperiment()->getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
@@ -296,16 +297,21 @@ void TestViewer::playTriggered()
 			{
 				//Setup Test Data Readers for Analysis
 				liveFrameReader_ = QSharedPointer<LiveFrameReader>(new LiveFrameReader());
+				liveRewardReader_ = QSharedPointer<LiveRewardReader>(new LiveRewardReader());
 			}
 			designConfig->setFrameReader(liveFrameReader_.staticCast<FrameReader>());
+			designConfig->setRewardReader(liveRewardReader_.staticCast<RewardReader>());
 			engine_->setFrameReader(liveFrameReader_);
+			engine_->setRewardReader(liveRewardReader_);
 		}
 		else
 		{
 			//If there's no analysis.  Set frame readers to null so that we don't waste memory on them.
 			//in case they were set last time.
 			designConfig->setFrameReader(QSharedPointer<FrameReader>());
+			designConfig->setRewardReader(QSharedPointer<RewardReader>());
 			engine_->setFrameReader(QSharedPointer<LiveFrameReader>());
+			engine_->setRewardReader(QSharedPointer<LiveRewardReader>());
 		}
 
 

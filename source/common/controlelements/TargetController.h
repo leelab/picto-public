@@ -99,9 +99,9 @@ private:
 	QWeakPointer<ControlTarget> controlTarget_;
 	int frameCtr_;
 
-	Controller::FrameResolutionTimer cumulativeTimer_;
-	Controller::FrameResolutionTimer acquisitionTimer_;	
-	Controller::FrameResolutionTimer reacquisitionTimer_;
+	QSharedPointer<Controller::FrameResolutionTimer> cumulativeTimer_;
+	QSharedPointer<Controller::FrameResolutionTimer> acquisitionTimer_;	
+	QSharedPointer<Controller::FrameResolutionTimer> reacquisitionTimer_;
 
 	QStringList unitList_;
 	//QStringList shapeList_;

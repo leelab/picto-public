@@ -65,7 +65,7 @@ QString ChoiceController::ControllerType()
 
 void ChoiceController::start(QSharedPointer<Engine::PictoEngine> engine)
 {
-	cumulativeTimer_.start();
+	cumulativeTimer_->start();
 	isDone_ = false;
 	result_ = "";
 	targetAcquired_ = false;
@@ -168,9 +168,9 @@ bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 
 	//check to see if we've met or exceeded the total time
 	int totalTime = propertyContainer_->getPropertyValue("TotalTime").toInt();
-	int currTotalTime = cumulativeTimer_.elapsedTime(timeUnits);
+	int currTotalTime = cumulativeTimer_->elapsedTime(timeUnits);
 	int fixTime = propertyContainer_->getPropertyValue("FixationTime").toInt();
-	int currAcqTime = acquisitionTimer_.elapsedTime(timeUnits);
+	int currAcqTime = acquisitionTimer_->elapsedTime(timeUnits);
 	int remainingFixTime = targetAcquired_?fixTime-currAcqTime:fixTime;
 	if(currTotalTime+remainingFixTime > totalTime)
 	{
@@ -202,7 +202,7 @@ bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 			targetAcquired_ = false;
 		else
 		{
-			acquisitionTimer_.start();
+			acquisitionTimer_->start();
 			targetAcquired_ = true;
 		}
 		
@@ -225,7 +225,7 @@ bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 			//	runScript(getName().simplified().remove(' ').append("_TargetEntry"));
 		}
 		targetAcquired_ = true;
-		acquisitionTimer_.start();
+		acquisitionTimer_->start();
 		//If fixation time is zero, we're done
 		if(fixTime <= 0)
 		{
@@ -360,6 +360,10 @@ void ChoiceController::postDeserialize()
 {
 	ControlElement::postDeserialize();
 	
+	cumulativeTimer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+	acquisitionTimer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+	reacquisitionTimer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+
 	//Don't let user see OnTarget/OnTargetChanged, they are for internal use only
 	propertyContainer_->getProperty("OnTarget")->setVisible(false);
 	propertyContainer_->getProperty("OnTargetChanged")->setVisible(false);

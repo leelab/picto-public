@@ -1,5 +1,5 @@
-#ifndef _FRAMEPARAMETER_H_
-#define _FRAMEPARAMETER_H_
+#ifndef _ANALYSISFRAMEDATA_H_
+#define _ANALYSISFRAMEDATA_H_
 
 #include <QWeakPointer>
 #include "../common.h"
@@ -51,7 +51,7 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	//Returns the latest time where the zero time is the beginning of the run
+	//Returns the latest frame time with respect to the beginning of the run
 	double getLatestRunTime();
 	double zeroTime_;
 

@@ -4,20 +4,16 @@ using namespace Picto;
 void LiveFrameReader::setRunStart()
 {
 	frameTimes_.clear();
-	runStart_ = 0;
 }
 
 void LiveFrameReader::setLatestFrameTime(double time)
 {
-	if(frameTimes_.isEmpty())
-		runStart_ = time;
-	frameTimes_.append(time-runStart_);
+	frameTimes_.append(time);
 }
 
 void LiveFrameReader::setRunEnd()
 {
 	frameTimes_.clear();
-	runStart_ = 0;
 }
 
 double LiveFrameReader::getPrevTime()

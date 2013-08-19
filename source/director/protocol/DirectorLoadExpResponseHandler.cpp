@@ -45,5 +45,6 @@ bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 	QSharedPointer<Picto::Engine::PictoEngine> engine = statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->getEngine();
 	statusManager_.toStrongRef().staticCast<DirectorStatusManager>()->setUserInfo("Loaded experiment, Session ID: " + engine->getSessionId().toString());
 	experiment->setEngine(engine);
+	engine->setFrameTimerFactory(experiment->getDesignConfig()->getFrameTimerFactory());
 	return true;
 }

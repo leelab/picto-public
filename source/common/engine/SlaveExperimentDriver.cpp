@@ -28,6 +28,7 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 
 	//Put the various data sources into the design config for access from analysis parameters
 	experiment_->getDesignConfig()->setFrameReader(updater_->getFrameReader());
+	experiment_->getDesignConfig()->setRewardReader(updater_->getRewardReader());
 }
 
 void SlaveExperimentDriver::renderFrame()
@@ -129,7 +130,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 
 void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 {
-	Controller::FrameResolutionTimer::resetTimerSystem();
+	experiment_->getDesignConfig()->getFrameTimerFactory()->resetAllTimers();
 	eventQueue_.reset();
 	if(taskName != currTask_)
 	{
@@ -169,7 +170,7 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 {
 	//Report the time of the frame following all the property and transition updates that are
 	//about to occur.
-	Controller::FrameResolutionTimer::setNextFrameTime(time);
+	experiment_->getDesignConfig()->getFrameTimerFactory()->setNextFrameTime(time);
 	//Perform all queued events that occured up to this frame since the last one
 	//(We do this after setting next frame time so that when reading absolute time values during the course
 	//of state machine execution, we will read the absolute time value of the frame that follows
@@ -187,7 +188,7 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 	renderFrame();
 	
 	//Tell all timers that work on single frame resolution what the latest frame time is
-	Controller::FrameResolutionTimer::setLastFrameTime(time);
+	experiment_->getDesignConfig()->getFrameTimerFactory()->setLastFrameTime(time);
 
 	//----------  Run the analysis frame scripts ---------------------------------------
 	QSharedPointer<State> currState = currElement_.dynamicCast<State>();	

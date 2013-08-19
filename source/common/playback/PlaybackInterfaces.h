@@ -29,7 +29,11 @@ public:
 	virtual QVariantList getTimesUntil(double time){return QVariantList();};
 };
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API LfpReader : public QObject
+#else
 class LfpReader : public QObject
+#endif
 {
 	Q_OBJECT
 public:
@@ -69,31 +73,41 @@ class PropertyReader : public QObject
 //	virtual QVariantList getValuesUntil(double time){return QVariantList();};
 };
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API RewardReader : public QObject
+#else
 class RewardReader : public QObject
+#endif
 {
 	Q_OBJECT
 public:
 	virtual ~RewardReader(){};
-	virtual double getLatestTime(int channel){return 0;};
-	virtual int getLatestDuration(int channel){return 0;};
+	virtual double getLatestTime(){return 0;};
+	virtual double getNextTime(){return 0;};
+	virtual int getLatestDuration(){return 0;};
+	virtual int getNextDuration(){return 0;};
 	//Returns a list of reward times that occured with times > the input time and <= the current time.
 	//From the input reward channel
-	virtual QVariantList getTimesSince(int channel, double time){return QVariantList();};
+	virtual QVariantList getTimesSince(double time){return QVariantList();};
 	//Returns a list of reward times that occured with times > the current time and <= the input time.  
 	//From the input reward channel
-	virtual QVariantList getTimesUntil(int channel, double time){return QVariantList();};
+	virtual QVariantList getTimesUntil(double time){return QVariantList();};
 	//Returns a list of reward durations that occured with times > the input time and <= the current time.
 	//From the input reward channel.  There is a one to one matchup of values from this 
 	//function to times from the getTimesSince function.
-	virtual QVariantList getDurationsSince(int channel, double time){return QVariantList();};
+	virtual QVariantList getDurationsSince(double time){return QVariantList();};
 	//Returns a list of reward durations that occured with times > the current time and <= the input time.  
 	//From the input reward channel.  There is a one to one matchup of values from this 
 	//function to times from the getTimesSince function.
-	virtual QVariantList getDurationsUntil(int channel, double time){return QVariantList();};
+	virtual QVariantList getDurationsUntil(double time){return QVariantList();};
 
 };
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API SignalReader : public QObject
+#else
 class SignalReader : public QObject
+#endif
 {
 	Q_OBJECT
 public:
@@ -117,7 +131,11 @@ public:
 	virtual QVariantList getValuesUntil(double time){return QVariantList();};
 };
 
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API SpikeReader : public QObject
+#else
 class SpikeReader : public QObject
+#endif
 {
 	Q_OBJECT
 public:

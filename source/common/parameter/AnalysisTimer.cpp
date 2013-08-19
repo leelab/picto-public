@@ -9,7 +9,6 @@ AnalysisTimer::AnalysisTimer()
 {
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
-	restart();
 	//AddDefinableProperty(QVariant::Int,"Value",-1);
 }
 
@@ -21,7 +20,7 @@ QSharedPointer<Asset> AnalysisTimer::Create()
 void AnalysisTimer::restart()
 {
 	time_ = 0;
-	timer_.restart();
+	timer_->restart();
 }
 
 void AnalysisTimer::reset()
@@ -41,7 +40,7 @@ int AnalysisTimer::getValue()
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-	int returnVal = time_ + timer_.elapsedTime(units);
+	int returnVal = time_ + timer_->elapsedTime(units);
 	return returnVal;
 	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toLatin1());
 }
@@ -49,6 +48,8 @@ int AnalysisTimer::getValue()
 void AnalysisTimer::postDeserialize()
 {
 	AnalysisDataSource::postDeserialize();
+	timer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+	restart();
 }
 
 bool AnalysisTimer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

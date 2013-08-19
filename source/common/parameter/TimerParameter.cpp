@@ -10,7 +10,6 @@ TimerParameter::TimerParameter()
 {
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
-	restart();
 	//AddDefinableProperty(QVariant::Int,"Value",-1);
 }
 
@@ -27,7 +26,7 @@ QSharedPointer<Asset> TimerParameter::Create()
 void TimerParameter::restart()
 {
 	time_ = 0;
-	timer_.restart();
+	timer_->restart();
 }
 
 void TimerParameter::reset()
@@ -47,13 +46,15 @@ int TimerParameter::getValue()
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
-	return time_ + timer_.elapsedTime(units);
+	return time_ + timer_->elapsedTime(units);
 	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toLatin1());
 }
 
 void TimerParameter::postDeserialize()
 {
 	Parameter::postDeserialize();
+	timer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+	restart();
 }
 
 bool TimerParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

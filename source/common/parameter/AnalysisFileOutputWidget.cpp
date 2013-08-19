@@ -41,15 +41,13 @@ bool AnalysisFileOutputWidget::setFile(QString filename)
 	pages_.clear();
 	textEdit_->clear();
 	currPage_ = -1;
+	lastPage_ = -1;
 	QString objName = filename.mid(filename.lastIndexOf("/")+1);
 	if(objName.isEmpty())
 		objName = filename;
 	setObjectName(objName);
 	if(file_)
-	{
 		file_->close();
-		disconnect(file_.data(),SIGNAL(readyRead()),this,SLOT(loadCurrPage()));
-	}
 	file_ = QSharedPointer<QFile>(new QFile(filename));
 	if(!file_->open(QIODevice::ReadOnly | QIODevice::Text))
 		return false;
@@ -67,14 +65,18 @@ bool AnalysisFileOutputWidget::setFile(QString filename)
 
 void AnalysisFileOutputWidget::prevPage()
 {
+	if(currPage_ == 0)
+		return;
 	currPage_--;
 	loadCurrPage();
+	textEdit_->setCursor(QCursor());
 }
 
 void AnalysisFileOutputWidget::nextPage()
 {
 	currPage_++;
 	loadCurrPage();
+	textEdit_->setCursor(QCursor());
 }
 
 bool AnalysisFileOutputWidget::isSaveable()
@@ -104,31 +106,64 @@ bool AnalysisFileOutputWidget::saveOutputTo(QDir directory)
 	return result;
 }
 
+//There is some kind of Qt bug that makes the text stream stop functioning intermittently, possibly due to 
+//the text pointer reaching the end of the file stream.  In these cases, pos() returns -1.  To fix the issue
+//whenever this occurs, we recreate the QTextStream from scratch.
+void AnalysisFileOutputWidget::patchQtTextStreamBug()
+{
+	if(outputFileStream_->pos() < 0)
+		outputFileStream_ = QSharedPointer<QTextStream>(new QTextStream(file_.data()));
+}
+
 void AnalysisFileOutputWidget::loadCurrPage()
 {
+	//Disable previous and next buttons
+	prev_->setEnabled(false);
+	next_->setEnabled(false);
+
 	if(currPage_ < 0)
 		currPage_ = 0;
 
 	int lastPageEnd = 0;
 	int newPageEnd = -1;
+	
+	//If we don't yet have all the page limits defined up the current page selected by the user
 	while(currPage_ >= pages_.size() && !outputFileStream_->atEnd())
 	{	//Expand pages_ definitions until we reach the desired page
+		bool finishingOldPage = false;
 		if(pages_.size())
-			lastPageEnd = pages_.last().endPos;
+		{
+			if(pages_.last().completePage)
+			{
+				lastPageEnd = pages_.last().endPos;
+			}
+			else
+			{
+				finishingOldPage = true;
+				lastPageEnd = pages_.last().startPos;
+			}
+		}
+		patchQtTextStreamBug();
 		if(!outputFileStream_->seek(lastPageEnd)
 			|| outputFileStream_->atEnd())
 			break;
+		bool pageComplete = true;
 		for(int i=0;i<linesPerPage_;i++)
 		{
-			if(outputFileStream_->readLine().isNull())
+			outputFileStream_->readLine();
+			if(outputFileStream_->atEnd())
+			{
 				break;
+			}	
 		}
-		newPageEnd = outputFileStream_->pos();
-		if(newPageEnd < 0)
-			return;	//This happens if an error occurs.
-		if(newPageEnd < lastPageEnd)
-			break;	//No data was on this page.
-		pages_.append(PageDef(lastPageEnd,newPageEnd));
+		int currPos = outputFileStream_->pos();	//Note: putting pos() inside the above loop makes things really slow!!
+		if(currPos < 0 || outputFileStream_->atEnd())
+			pageComplete = false;
+		newPageEnd = currPos;
+		if(finishingOldPage)
+			pages_[pages_.size()-1] = PageDef(lastPageEnd,newPageEnd,pageComplete);
+		else
+			pages_.append(PageDef(lastPageEnd,newPageEnd,pageComplete));
 	}
 	//If pages_ still isn't big enough, we must have hit the end of the file.  Correct currPage_
 	if(currPage_ >= pages_.size())
@@ -136,29 +171,18 @@ void AnalysisFileOutputWidget::loadCurrPage()
 		currPage_ = pages_.size() - 1;
 	}
 
-	//Enable appropriate prev,next buttons
-	if(currPage_ <= 0)
-		prev_->setEnabled(false);
-	else
-		prev_->setEnabled(true);
-	if(	pages_.empty() 
-		|| !outputFileStream_->seek(pages_[currPage_].endPos) 
-		|| outputFileStream_->atEnd())
-		next_->setEnabled(false);
-	else
-		next_->setEnabled(true);
-
-	//If there is no data in the file, pages_ will be empty.  
-	//In this case clear output and we're done.
-	if(pages_.empty())
+	patchQtTextStreamBug();
+	//If there is no data in the file or we cant seek the beginning of the current page.  
+	//Clear output and go back to the beginning of the file.
+	if(pages_.empty() || !outputFileStream_->seek(pages_[currPage_].startPos))
 	{
+		//Something went wrong.  Start from the beginning.
+		lastPage_ = -1;
+		currPage_ = -1;
 		textEdit_->setText("");
 		return;
 	}
 
-	//Read page data into textEdit_.  Start by seeking the startPosition for this page.
-	if(!outputFileStream_->seek(pages_[currPage_].startPos))
-		return;
 	//I would have liked to use the QTextStream::read() function to read the text for this page in all in
 	//one shot.  The problem was that for some reason, when specifying the number of characters to read in
 	//with the read function, you have to skip "\n" characters.  This means that if we simply used the 
@@ -169,15 +193,46 @@ void AnalysisFileOutputWidget::loadCurrPage()
 	//are assured that we will come out with our expected result.
 	QString newLine;
 	QString outputText;
+	bool hasNextPage = true;
 	for(int i=0;i<linesPerPage_;i++)
 	{
 		newLine = outputFileStream_->readLine();
-		if(newLine.isEmpty())
-			break;
 		outputText.append(newLine).append("\n");
+		if(outputFileStream_->atEnd())
+		{
+			hasNextPage = false;
+			break;
+		}
 	}
 	if(!outputText.isEmpty())
 		outputText.resize(outputText.size()-1);	//Remove final "\n"
 
-	textEdit_->setText(outputText);
+	if(textEdit_->toPlainText() != outputText)
+	{
+		bool isNewPage = (currPage_  != lastPage_);
+		QTextCursor cursor(textEdit_->textCursor());
+		textEdit_->setPlainText(outputText);
+		if(!isNewPage)
+			textEdit_->setTextCursor(cursor);
+	}
+	lastPage_ = currPage_;
+
+	//Enable appropriate prev,next buttons
+	if(currPage_ <= 0)
+		prev_->setEnabled(false);
+	else
+		prev_->setEnabled(true);
+
+	if(currPage_ < pages_.size()-1 || hasNextPage)
+		next_->setEnabled(true);
+	else
+	{
+		//patchQtTextStreamBug();
+		////If there's more data, we just didn't create the pages for it, enable next, otherwise disable it
+		//int nextAvailablePosition = pages_.empty()?0:pages_.last().endPos;
+		//if(outputFileStream_->seek(nextAvailablePosition) && !outputFileStream_->atEnd())
+		//	next_->setEnabled(true);
+		//else
+		next_->setEnabled(false);
+	}
 }

@@ -24,6 +24,7 @@ void DesignConfig::reset()
 	lastUsedId_ = 0;
 	allowIdDuplication_ = true;
 	analysisHash_.clear();
+	frameTimerFactory_ = QSharedPointer<Controller::FrameTimerFactory>(new Controller::FrameTimerFactory());
 }
 
 bool DesignConfig::toXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)

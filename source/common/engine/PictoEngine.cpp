@@ -139,25 +139,37 @@ void PictoEngine::emptySignalChannels()
 void PictoEngine::markTaskRunStart(QString name)
 {
 	//If there's not data channel, this is a test run.  Treat every run as if its in its own world
-	//by restarting the FrameResolutionTimers from scratch.
+	//by restarting the FrameResolutionTimer and Timer stamper timers from scratch.
 	if(getDataCommandChannel().isNull())
-		Controller::FrameResolutionTimer::resetTimerSystem();
+	{
+		Timestamper::reset();
+		if(frameTimerFactory_)
+			frameTimerFactory_->resetAllTimers();
+	}
 
 	//Set up data for task run.
 	taskRunName_ = name;
 	taskRunUnit_ = QSharedPointer<TaskRunDataUnit>();
 	taskRunStarting_ = true;
 	
-	//If there's a frame reader, tell it that we're starting a new run
+	//If there's are data readers, tell them that we're starting a new run
 	if(frameReader_)
+	{
 		frameReader_->setRunStart();
+		rewardReader_->setRunStart();
+	}
 }
 
 void PictoEngine::markTaskRunStop()
 {
 	taskRunEnding_ = true;
+
+	//If there's are data readers, tell them that the run is over
 	if(frameReader_)
+	{
 		frameReader_->setRunEnd();
+		rewardReader_->setRunEnd();
+	}
 }
 
 
@@ -365,10 +377,10 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	QSharedPointer<CommandChannel> dataChannel = getDataCommandChannel();
 
 	//If this is an experimental run or this is a test run (not playback)
-	if(dataChannel || frameReader_)
+	if(frameTimerFactory_)
 	{
 		//Tell all timers that work on single frame resolution what the latest frame time is
-		Controller::FrameResolutionTimer::setLastFrameTime(frameTime);
+		frameTimerFactory_->setLastFrameTime(frameTime);
 	}
 	
 	//If there's an active frameReader_ (ie. We're using the TestViewer with Analysis)
@@ -376,6 +388,12 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	{
 		//Set the latest frame time to the frameReader_
 		frameReader_->setLatestFrameTime(frameTime);
+		//Set the latest reward data to the rewardReader_
+		QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
+		foreach(QSharedPointer<RewardDataUnit> reward,rewards)
+		{
+			rewardReader_->setLatestRewardData(reward->getTime().toDouble(),reward->getDuration());
+		}
 	}
 
 	if(dataChannel.isNull())
@@ -739,8 +757,11 @@ void PictoEngine::firstPhosphorOperations(double frameTime)
 		sigCont->updateValues();
 	}
 
+	//Below, we enable the reward controller's reward list if there is a reward reader, but if not, then we only enable it if
+	//this is the director.  This is so that in the case of the director rewards can get sent to the server and in the case
+	//of Testing analysis code (rewardReader).  Triggered rewards can get read by the analysis code.
 	if(!rewardController_.isNull())
-		rewardController_->triggerRewards(!(dataCommandChannel_.isNull() || sessionId_.isNull() || slave_));
+		rewardController_->triggerRewards(rewardReader_ || !(dataCommandChannel_.isNull() || sessionId_.isNull() || slave_));
 
 	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
 	{

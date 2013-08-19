@@ -10,6 +10,7 @@
 #include "serializable.h"
 
 #include "../playback/PlaybackInterfaces.h"
+#include "../controlelements/FrameTimerFactory.h"
 namespace Picto {
 class Asset;
 struct AssetInfo{int id;QString path;};
@@ -48,10 +49,13 @@ public:
 	void markRunEnd();
 	QUuid getLatestRunId();
 	QString getLatestRunName();
+	QSharedPointer<Controller::FrameTimerFactory> getFrameTimerFactory(){return frameTimerFactory_;};
 	
 	//Analysis Data Readers
 	void setFrameReader(QSharedPointer<FrameReader> frameReader){frameReader_ = frameReader;};
 	QSharedPointer<FrameReader> getFrameReader(){return frameReader_;};
+	void setRewardReader(QSharedPointer<RewardReader> rewardReader){rewardReader_ = rewardReader;};
+	QSharedPointer<RewardReader> getRewardReader(){return rewardReader_;};
 
 	QList<AssetInfo> getElementInfo();
 	QList<PropInfo> getPropertyInfo();
@@ -76,7 +80,10 @@ private:
 	QHash<Asset*,QWeakPointer<Asset>> assetHash_;
 	QList<QWeakPointer<Asset>> unsortedIdAssets_;
 
+	QSharedPointer<Controller::FrameTimerFactory> frameTimerFactory_;
+
 	QSharedPointer<FrameReader> frameReader_;
+	QSharedPointer<RewardReader> rewardReader_;
 
 	QHash<QUuid,bool> analysisHash_;
 	int lastUsedId_;

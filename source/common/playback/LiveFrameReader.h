@@ -29,7 +29,6 @@ public:
 	virtual QVariantList getTimesUntil(double time);
 
 private:
-	double runStart_;
 	QVector<double> frameTimes_;
 };
 

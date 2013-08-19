@@ -331,7 +331,8 @@ void ScriptableContainer::runScript(QString scriptName, QScriptValue& scriptRetu
 	Q_ASSERT(qsEngine_);
 	objectForResultCheck_ = this;
 	Q_ASSERT(scriptPrograms_.contains(scriptName));
-	scriptReturnVal = qsEngine_->evaluate(*scriptPrograms_.value(scriptName));
+	if(scriptPrograms_.contains(scriptName))
+		scriptReturnVal = qsEngine_->evaluate(*scriptPrograms_.value(scriptName));
 	objectForResultCheck_ = NULL;
 }
 

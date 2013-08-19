@@ -26,12 +26,12 @@ QSharedPointer<Asset> Reward::Create()
 QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
+
+	runEntryScript();
 	int numRewards = propertyContainer_->getPropertyValue("NumRewards").toInt();
 	int rewardQty = propertyContainer_->getPropertyValue("RewardQty").toInt();
 	int rewardChan = propertyContainer_->getPropertyValue("RewardChan").toInt();
 	int minRewardPeriod = propertyContainer_->getPropertyValue("MinRewardPeriod").toInt();
-
-	runEntryScript();
 	//Give the rewards
 	if(numRewards > 0)
 	{
