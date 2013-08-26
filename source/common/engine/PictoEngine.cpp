@@ -157,6 +157,10 @@ void PictoEngine::markTaskRunStart(QString name)
 	{
 		frameReader_->setRunStart();
 		rewardReader_->setRunStart();
+		foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
+		{
+			signalReader->setRunStart();
+		}
 	}
 }
 
@@ -169,6 +173,10 @@ void PictoEngine::markTaskRunStop()
 	{
 		frameReader_->setRunEnd();
 		rewardReader_->setRunEnd();
+		foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
+		{
+			signalReader->setRunEnd();
+		}
 	}
 }
 
@@ -393,6 +401,33 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 		foreach(QSharedPointer<RewardDataUnit> reward,rewards)
 		{
 			rewardReader_->setLatestRewardData(reward->getTime().toDouble(),reward->getDuration());
+		}
+
+		//Set the latest signal data to the signal readers
+		QStringList subChannels;
+		QVector<float> chanData;
+		//Loop through channels
+		foreach(QSharedPointer<Picto::SignalChannel> chan,signalChannels_)
+		{
+			//Loop through this channel's subchannels and build a list of float data
+			subChannels = chan->getSubchannels();
+			chanData.clear();
+			foreach(QString subChan,subChannels)
+			{
+				chanData.append(chan->peekValue(subChan));
+			}
+			//Add data to the appropriate signal reader
+			Q_ASSERT(signalReaders_.contains(chan->getName().toLower()));
+			QSharedPointer<LiveSignalReader> signalReader = signalReaders_.value(chan->getName().toLower());
+			//Right the input signal the correct number of times according to the signal reader's set
+			//sample period
+			double samplePeriod = signalReader->getSamplePeriod();
+			double nextSignalTime = signalReader->getLatestTime() + samplePeriod;
+			while(nextSignalTime <= frameTime)
+			{
+				signalReader->setLatestSignalData(nextSignalTime,chanData);
+				nextSignalTime += samplePeriod;
+			}
 		}
 	}
 

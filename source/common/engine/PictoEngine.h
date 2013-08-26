@@ -36,6 +36,7 @@
 #include "ControlPanelInterface.h"
 #include "../playback/LiveFrameReader.h"
 #include "../playback/LiveRewardReader.h"
+#include "../playback/LiveSignalReader.h"
 #include "../controlelements/FrameTimerFactory.h"
 
 namespace Picto {
@@ -195,6 +196,8 @@ public:
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	void setFrameReader(QSharedPointer<LiveFrameReader> frameReader){frameReader_ = frameReader;};
 	void setRewardReader(QSharedPointer<LiveRewardReader> rewardReader){rewardReader_ = rewardReader;};
+	void setSignalReader(QString name, QSharedPointer<LiveSignalReader> signalReader){signalReaders_[name.toLower()] = signalReader;};
+	void clearSignalReaders(){signalReaders_.clear();};
 	
 	//The engine commands are only used when the engine is being run locally
 	//They should also only be used by the master of the engine (ie. The ComponentStatusManager,
@@ -263,6 +266,7 @@ private:
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	QSharedPointer<LiveFrameReader> frameReader_;
 	QSharedPointer<LiveRewardReader> rewardReader_;
+	QHash<QString,QSharedPointer<LiveSignalReader>> signalReaders_;
 
 	int engineCommand_;
 

@@ -69,6 +69,7 @@ public:
 	QSharedPointer<TransitionReader> getTransitionReader();
 	QSharedPointer<FrameReader> getFrameReader();
 	QSharedPointer<RewardReader> getRewardReader();
+	QStringList getSignalReaderNames();
 	QSharedPointer<SignalReader> getSignalReader(QString name);
 	QSharedPointer<LfpReader> getLfpReader(int channel);
 	QSharedPointer<SpikeReader> getSpikeReader();

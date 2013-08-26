@@ -31,6 +31,8 @@ public:
 	virtual bool updateState();
 	virtual QSharedPointer<FrameReader> getFrameReader();
 	virtual QSharedPointer<RewardReader> getRewardReader();
+	virtual QStringList getSignalReaderNames();
+	virtual QSharedPointer<SignalReader> getSignalReader(QString name);
 
 	bool setFile(QString filePath);
 	QSharedPointer<DesignRoot> getDesignRoot();

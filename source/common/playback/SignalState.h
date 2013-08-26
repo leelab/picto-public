@@ -2,6 +2,7 @@
 #define _SIGNALSTATE_H_
 #include <QVector>
 #include <QStringList>
+#include <QHash>
 #include "DataState.h"
 #include "PlaybackInterfaces.h"
 
@@ -21,17 +22,28 @@ public:
 	virtual PlaybackIndex getNextIndex(double lookForwardTime);
 	virtual void moveToIndex(PlaybackIndex index);
 
+	//Signal Reader Interface
+	//Returns the name of the signal handled by this signal reader
+	virtual QString getName();
+	//Returns the sub channels of this signal
+	virtual QStringList getComponentNames();
+	virtual double getSamplePeriod();
+	virtual double getLatestTime();
+	virtual double getLatestValue(QString channel);
+	virtual double getNextTime();
+	virtual double getNextValue(QString channel);
+	//Returns signal values for the input sub channel with times > the input time.
+	virtual QVariantList getValuesSince(QString channel,double time);
+	virtual QVariantList getValuesUntil(QString channel,double time);
+
 signals:
 	void signalChanged(QString name, QStringList subChanNames,QVector<float> vals);
-protected:
-	//bool querySessionForData(QSharedPointer<QSqlQuery> query,double after,double upTo);
-	//QVector<QSharedPointer<IndexedData>> convertQueryToDataVector(QSharedPointer<QSqlQuery> query, double zeroTime);
-	//void triggerDataChange(QSharedPointer<IndexedData> data);
 
 private:
 	void goToNext();
 	PlaybackIndex getNextIndex();
 	PlaybackIndex globalToRunIndex(PlaybackIndex index);
+	bool moveIndecesToNextTime(int& outerIndex, int& innerIndex);
 	QSqlDatabase session_;
 	QSharedPointer<QSqlQuery> query_;
 	double runStart_;
@@ -43,25 +55,18 @@ private:
 	QString name_;
 	QString tableName_;
 	QStringList subChanNames_;
+	QHash<QString,int> subChanIndexLookup_;
 	int numSubChans_;
 	double sampPeriod_;
-//	bool setSignal(double time,qulonglong dataId,double sampPeriod,QByteArray dataArray);
-//
-//signals:
-//	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
-//	void needsData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsNextData(PlaybackIndex currLast,bool backward);
-//
-//protected:
-//	virtual void triggerValueChange(bool reverse,bool last);
-//	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
-//	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 };
 
 struct PlaybackSignalData
 {
 	PlaybackSignalData(){};
 	PlaybackSignalData(double time){time_= time;};
+	inline bool operator<(const PlaybackSignalData& someData) const {
+		return time_ < someData.time_;
+	}
 	double time_;
 	QVector<float> vals_;
 };

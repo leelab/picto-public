@@ -29,6 +29,10 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	//Put the various data sources into the design config for access from analysis parameters
 	experiment_->getDesignConfig()->setFrameReader(updater_->getFrameReader());
 	experiment_->getDesignConfig()->setRewardReader(updater_->getRewardReader());
+	foreach(QString signalName,updater_->getSignalReaderNames())
+	{
+		experiment_->getDesignConfig()->setSignalReader(signalName,updater_->getSignalReader(signalName));
+	}
 }
 
 void SlaveExperimentDriver::renderFrame()

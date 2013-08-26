@@ -26,6 +26,8 @@ public:
 	virtual bool updateState();
 	virtual QSharedPointer<FrameReader> getFrameReader(){return QSharedPointer<FrameReader>();};
 	virtual QSharedPointer<RewardReader> getRewardReader(){return QSharedPointer<RewardReader>();};
+	virtual QStringList getSignalReaderNames(){return QStringList();};
+	virtual QSharedPointer<SignalReader> getSignalReader(QString name){return QSharedPointer<SignalReader>();};
 
 signals:
 	//NOTE: The startingRun and endingRun signals are not yet being called by the RemoteStateUpdater

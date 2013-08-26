@@ -112,23 +112,18 @@ class SignalReader : public QObject
 	Q_OBJECT
 public:
 	virtual ~SignalReader(){};
+	//Returns the name of the signal handled by this signal reader
+	virtual QString getName(){return QString();};
 	//Returns the sub channels of this signal
-	virtual QStringList getChannels(){return QStringList();};	//Returns a list of times when transitions occured from the input source path regardless
-	//of result with times > the input time and <= the current time.
-	virtual QVariantList getTimesFromSourceSince(QString destPath, double time){return QVariantList();};
-	//Returns a list of times when transitions occured from the input source path 
-	//regardless of result with times > the current time and <= the input time.
-	virtual QVariantList getTimesFromSourceUntil(QString destPath, double time){return QVariantList();};
+	virtual QStringList getComponentNames(){return QStringList();};
 	virtual double getSamplePeriod(){return 0;};
-	virtual double getValue(QString channel){return 0;};
+	virtual double getLatestTime(){return 0;};
+	virtual double getLatestValue(QString channel){return 0;};
+	virtual double getNextTime(){return 0;};
+	virtual double getNextValue(QString channel){return 0;};
 	//Returns signal values for the input sub channel with times > the input time.
 	virtual QVariantList getValuesSince(QString channel,double time){return QVariantList();};
 	virtual QVariantList getValuesUntil(QString channel,double time){return QVariantList();};
-	//Returns signal values for all sub channels (ordered like the result of getChannels())
-	//with times > the current time and <= the input time.  Times should be incremented
-	//by one getSamplePeriod() every getChannels().length() entries.
-	virtual QVariantList getValuesSince(double time){return QVariantList();};
-	virtual QVariantList getValuesUntil(double time){return QVariantList();};
 };
 
 #if defined WIN32 || defined WINCE

@@ -11,6 +11,7 @@
 #include "../ReplayViewer/OutputWidgetHolder.h"
 #include "../../common/playback/LiveFrameReader.h"
 #include "../../common/playback/LiveRewardReader.h"
+#include "../../common/playback/LiveSignalReader.h"
 
 class QAction;
 class QToolBar;
@@ -84,6 +85,8 @@ private:
 
 	QSharedPointer<LiveFrameReader> liveFrameReader_;
 	QSharedPointer<LiveRewardReader> liveRewardReader_;
+	QVector<QSharedPointer<LiveSignalReader>> signalReaders_;
+
 private slots:
 	void playTriggered();
 	void running();

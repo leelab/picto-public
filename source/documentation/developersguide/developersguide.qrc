@@ -71,6 +71,8 @@
    <file alias="_analysis_script_container_8h-source.html">../../../output/documentation/main/html/_analysis_script_container_8h-source.html</file>
    <file alias="_analysis_selector_widget_8cpp-source.html">../../../output/documentation/main/html/_analysis_selector_widget_8cpp-source.html</file>
    <file alias="_analysis_selector_widget_8h-source.html">../../../output/documentation/main/html/_analysis_selector_widget_8h-source.html</file>
+   <file alias="_analysis_signal_data_8cpp-source.html">../../../output/documentation/main/html/_analysis_signal_data_8cpp-source.html</file>
+   <file alias="_analysis_signal_data_8h-source.html">../../../output/documentation/main/html/_analysis_signal_data_8h-source.html</file>
    <file alias="_analysis_string_variable_8cpp-source.html">../../../output/documentation/main/html/_analysis_string_variable_8cpp-source.html</file>
    <file alias="_analysis_string_variable_8h-source.html">../../../output/documentation/main/html/_analysis_string_variable_8h-source.html</file>
    <file alias="_analysis_timer_8cpp-source.html">../../../output/documentation/main/html/_analysis_timer_8cpp-source.html</file>
@@ -460,6 +462,8 @@
    <file alias="_live_frame_reader_8h-source.html">../../../output/documentation/main/html/_live_frame_reader_8h-source.html</file>
    <file alias="_live_reward_reader_8cpp-source.html">../../../output/documentation/main/html/_live_reward_reader_8cpp-source.html</file>
    <file alias="_live_reward_reader_8h-source.html">../../../output/documentation/main/html/_live_reward_reader_8h-source.html</file>
+   <file alias="_live_signal_reader_8cpp-source.html">../../../output/documentation/main/html/_live_signal_reader_8cpp-source.html</file>
+   <file alias="_live_signal_reader_8h-source.html">../../../output/documentation/main/html/_live_signal_reader_8h-source.html</file>
    <file alias="_load_exp_response_handler_8cpp-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8cpp-source.html</file>
    <file alias="_load_exp_response_handler_8h-source.html">../../../output/documentation/main/html/_load_exp_response_handler_8h-source.html</file>
    <file alias="_loading_widget_8cpp-source.html">../../../output/documentation/main/html/_loading_widget_8cpp-source.html</file>
@@ -1445,6 +1449,9 @@
    <file alias="class_picto_1_1_live_reward_reader-members.html">../../../output/documentation/main/html/class_picto_1_1_live_reward_reader-members.html</file>
    <file alias="class_picto_1_1_live_reward_reader.html">../../../output/documentation/main/html/class_picto_1_1_live_reward_reader.html</file>
    <file alias="class_picto_1_1_live_reward_reader.png">../../../output/documentation/main/html/class_picto_1_1_live_reward_reader.png</file>
+   <file alias="class_picto_1_1_live_signal_reader-members.html">../../../output/documentation/main/html/class_picto_1_1_live_signal_reader-members.html</file>
+   <file alias="class_picto_1_1_live_signal_reader.html">../../../output/documentation/main/html/class_picto_1_1_live_signal_reader.html</file>
+   <file alias="class_picto_1_1_live_signal_reader.png">../../../output/documentation/main/html/class_picto_1_1_live_signal_reader.png</file>
    <file alias="class_picto_1_1_logic_result-members.html">../../../output/documentation/main/html/class_picto_1_1_logic_result-members.html</file>
    <file alias="class_picto_1_1_logic_result.html">../../../output/documentation/main/html/class_picto_1_1_logic_result.html</file>
    <file alias="class_picto_1_1_logic_result.png">../../../output/documentation/main/html/class_picto_1_1_logic_result.png</file>

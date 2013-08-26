@@ -748,6 +748,23 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("getPrevDurations(secsPreceding)","Returns a javascript array of reward durations in ms that occured after the input number of seconds preceding the latest frame time, up to and including the latest frame time.  Note that the input quantity need not be an integer.");
 	curr->addSFunc("getNextDurations(secsFollowing)","Returns a javascript array of reward durations in ms that will occur starting from the next frame time, up to and including the time at the input number of seconds following the latest frame time.  Note that the input quantity need not be an integer.  Also note that this function will only return data when replaying an experiment.  Picto cannot predict the future.");
 
+	curr = addDescription("AnalysisSignalData");
+	curr->setInherits(getAssetDescription("AnalysisDataSource"));
+	curr->setOverview("Provides input signal data (eye position/diameter) to be used in analysis.  The latest, and next reward signal times can be read out as numerical values. Latest, Next, Previous and Future ranges of signal values can also be read out.  These can be selected according to the name of an individual component of the signal or returned in groups of n values in a javascript array where n is the number of components of the signal.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.");
+	curr->addProp("SignalName", "The name of the signal to be accessed using this element.  This value defaults to 'Position'");
+	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
+	curr->addSFunc("getComponentNames()","Returns an array with a list of all the components of the signal defined in the 'SignalName' property.");
+	curr->addSFunc("getSamplePeriod()","Returns the sample period for this signal in samples per second.");
+	curr->addSFunc("getLatestTime()","Returns the time at which the latest signal values were read.");
+	curr->addSFunc("getLatestValue(QString componentName)","Returns the latest value of the 'componentName' component of the signal.");
+	curr->addSFunc("getLatestValue()","Returns the latest values of all components of the signal as an array with size equal to the number of the signal's components.");
+	curr->addSFunc("getNextTime()","Returns the time at which the signal will next be read.  Note that this only returns valid data when replaying an experiment.  Picto cannot predict the future.");
+	curr->addSFunc("getNextValue(QString componentName)","Returns the next value of the 'componentName' component of the signal.");
+	curr->addSFunc("getNextValue()","Returns the next values of all components of the signal as an array with size equal to the number of the signal's components.");
+	curr->addSFunc("getPrevValues(QString componentName,double secsPreceding)","Returns a list of signal values for the input componentName that occured with times > the input # sec before the latest frame and &lt;= the latest frame time.");
+	curr->addSFunc("getNextValues(QString componentName,double secsFollowing)","Returns a list of signal values for the input sub channel that will occur with times > the latest frame time and &lt;= the input # sec after the latest frame.");
+	curr->addSFunc("getPrevValues(double secsPreceding)","Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames()) that will occur with times > the input # sec before the latest frame time and &lt;= the latest frame time. Times should be incremented by one getSamplePeriod() for every getComponentNames().length() entries.");
+	curr->addSFunc("getNextValues(double secsFollowing)","Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames()) that will occur with times > the latest frame time and &lt;= the input # sec after the latest frame. Times should be incremented by one getSamplePeriod() for every getComponentNames().length() entries.");
 
 	curr = addDescription("AnalysisTimer");
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));

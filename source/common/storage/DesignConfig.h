@@ -49,13 +49,16 @@ public:
 	void markRunEnd();
 	QUuid getLatestRunId();
 	QString getLatestRunName();
-	QSharedPointer<Controller::FrameTimerFactory> getFrameTimerFactory(){return frameTimerFactory_;};
+	QSharedPointer<Controller::FrameTimerFactory> getFrameTimerFactory();
 	
 	//Analysis Data Readers
-	void setFrameReader(QSharedPointer<FrameReader> frameReader){frameReader_ = frameReader;};
-	QSharedPointer<FrameReader> getFrameReader(){return frameReader_;};
-	void setRewardReader(QSharedPointer<RewardReader> rewardReader){rewardReader_ = rewardReader;};
-	QSharedPointer<RewardReader> getRewardReader(){return rewardReader_;};
+	void setFrameReader(QSharedPointer<FrameReader> frameReader);
+	QSharedPointer<FrameReader> getFrameReader();
+	void setRewardReader(QSharedPointer<RewardReader> rewardReader);
+	QSharedPointer<RewardReader> getRewardReader();
+	void setSignalReader(QString name, QSharedPointer<SignalReader> signalReader);
+	void clearSignalReaders();
+	QSharedPointer<SignalReader> getSignalReader(QString name);
 
 	QList<AssetInfo> getElementInfo();
 	QList<PropInfo> getPropertyInfo();
@@ -84,6 +87,7 @@ private:
 
 	QSharedPointer<FrameReader> frameReader_;
 	QSharedPointer<RewardReader> rewardReader_;
+	QHash<QString,QSharedPointer<SignalReader>> signalReaders_;
 
 	QHash<QUuid,bool> analysisHash_;
 	int lastUsedId_;

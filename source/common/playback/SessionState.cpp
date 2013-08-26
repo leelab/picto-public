@@ -238,6 +238,11 @@ QSharedPointer<RewardReader> SessionState::getRewardReader()
 	return rewardState_;
 }
 
+QStringList SessionState::getSignalReaderNames()
+{
+	return signalLookup_.keys();
+}
+
 QSharedPointer<SignalReader> SessionState::getSignalReader(QString name)
 {
 	if(signalLookup_.contains(name)) 

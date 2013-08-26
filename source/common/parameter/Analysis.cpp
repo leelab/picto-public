@@ -10,6 +10,7 @@
 #include "AnalysisTimer.h"
 #include "AnalysisFrameData.h"
 #include "AnalysisRewardData.h"
+#include "AnalysisSignalData.h"
 #include "../design/PictoData.h"
 #include "../memleakdetect.h"
 
@@ -40,6 +41,8 @@ Analysis::Analysis()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFrameData::Create))));
 	scriptFactory_->addAssetType("Reward",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisRewardData::Create))));
+	scriptFactory_->addAssetType("Signal",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisSignalData::Create))));
 
 	AddDefinableObjectFactory("AnalysisOutput",dataSourceFactory_);
 	dataSourceFactory_->addAssetType("File",

@@ -76,6 +76,9 @@ void FrameState::moveToIndex(PlaybackIndex index)
 		emit framePresented(globalToRunIndex(data_[curr_]).time());
 		nextIndex = getNextIndex();
 	}
+	double newTime = getLatestTime();
+	int i=0;
+	i++;
 }
 
 double FrameState::getPrevTime()

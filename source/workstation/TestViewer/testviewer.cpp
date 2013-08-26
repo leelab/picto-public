@@ -298,11 +298,21 @@ void TestViewer::playTriggered()
 				//Setup Test Data Readers for Analysis
 				liveFrameReader_ = QSharedPointer<LiveFrameReader>(new LiveFrameReader());
 				liveRewardReader_ = QSharedPointer<LiveRewardReader>(new LiveRewardReader());
+				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("Position",QStringList()<<"x"<<"y",0.016)));
+				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("Diameter",QStringList()<<"x"<<"y",0.016)));
 			}
 			designConfig->setFrameReader(liveFrameReader_.staticCast<FrameReader>());
 			designConfig->setRewardReader(liveRewardReader_.staticCast<RewardReader>());
+			foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
+			{
+				designConfig->setSignalReader(signalReader->getName(),signalReader.staticCast<SignalReader>());
+			}
 			engine_->setFrameReader(liveFrameReader_);
 			engine_->setRewardReader(liveRewardReader_);
+			foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
+			{
+				engine_->setSignalReader(signalReader->getName(),signalReader);
+			}
 		}
 		else
 		{
@@ -310,8 +320,10 @@ void TestViewer::playTriggered()
 			//in case they were set last time.
 			designConfig->setFrameReader(QSharedPointer<FrameReader>());
 			designConfig->setRewardReader(QSharedPointer<RewardReader>());
+			designConfig->clearSignalReaders();
 			engine_->setFrameReader(QSharedPointer<LiveFrameReader>());
 			engine_->setRewardReader(QSharedPointer<LiveRewardReader>());
+			engine_->clearSignalReaders();
 		}
 
 

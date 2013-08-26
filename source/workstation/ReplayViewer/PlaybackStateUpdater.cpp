@@ -61,6 +61,18 @@ QSharedPointer<RewardReader> PlaybackStateUpdater::getRewardReader()
 	return sessionState_->getRewardReader();
 }
 
+QStringList PlaybackStateUpdater::getSignalReaderNames()
+{
+	Q_ASSERT(sessionState_);
+	return sessionState_->getSignalReaderNames();
+}
+
+QSharedPointer<SignalReader>  PlaybackStateUpdater::getSignalReader(QString name)
+{
+	Q_ASSERT(sessionState_);
+	return sessionState_->getSignalReader(name);
+}
+
 bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	stop();

@@ -380,17 +380,63 @@ void DesignConfig::markRunStart(QString runName)
 	latestRunName_ = runName;
 	emit runStarted(latestRunId_);
 }
+
 void DesignConfig::markRunEnd()
 {
 	emit runEnded();
 }
+
 QUuid DesignConfig::getLatestRunId()
 {
 	return latestRunId_;
 }
+
 QString DesignConfig::getLatestRunName()
 {
 	return latestRunName_;
+}
+
+QSharedPointer<Controller::FrameTimerFactory> DesignConfig::getFrameTimerFactory()
+{
+	return frameTimerFactory_;
+}
+
+//Analysis Data Readers
+void DesignConfig::setFrameReader(QSharedPointer<FrameReader> frameReader)
+{
+	frameReader_ = frameReader;
+}
+
+QSharedPointer<FrameReader> DesignConfig::getFrameReader()
+{
+	return frameReader_;
+}
+
+void DesignConfig::setRewardReader(QSharedPointer<RewardReader> rewardReader)
+{
+	rewardReader_ = rewardReader;
+}
+
+QSharedPointer<RewardReader> DesignConfig::getRewardReader()
+{
+	return rewardReader_;
+}
+
+void DesignConfig::setSignalReader(QString name, QSharedPointer<SignalReader> signalReader)
+{
+	signalReaders_[name.toLower()] = signalReader;
+}
+
+void DesignConfig::clearSignalReaders()
+{
+	signalReaders_.clear();
+}
+
+QSharedPointer<SignalReader> DesignConfig::getSignalReader(QString name)
+{
+	if(!signalReaders_.contains(name.toLower()))
+		return QSharedPointer<SignalReader>();
+	return signalReaders_[name.toLower()];
 }
 
 QList<AssetInfo> DesignConfig::getElementInfo()

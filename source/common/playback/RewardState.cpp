@@ -151,7 +151,6 @@ QVariantList RewardState::getDurationsSince(double time)
 	{
 		returnVal.append(iter->duration_);
 	}
-	Q_ASSERT(iter != data_.end());
 	return returnVal;
 }
   
