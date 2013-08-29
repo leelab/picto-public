@@ -112,7 +112,7 @@ QVariantList AnalysisSignalData::getNextValue()
 	return result;
 }
 //Returns a list of signal values for the input sub channel that occured with times > the input # sec before the latest frame and <= the latest frame time
-QVariantList AnalysisSignalData::getPrevValues(QString channel,double secsPreceding)
+QVariantList AnalysisSignalData::getPrevValues(QString componentName,double secsPreceding)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
 	if(!getDesignConfig()->getFrameReader())
@@ -121,11 +121,11 @@ QVariantList AnalysisSignalData::getPrevValues(QString channel,double secsPreced
 	Q_ASSERT(signalReader_);
 	if(!signalReader_)
 		return QVariantList();
-	QVariantList returnVal = signalReader_->getValuesSince(channel,minRunTime);
+	QVariantList returnVal = signalReader_->getValuesSince(componentName,minRunTime);
 	return returnVal;
 }
 //Returns a list of signal values for the input sub channel that will occur with times > the latest frame time and <= the input # sec after the latest frame and <= the latest frame time
-QVariantList AnalysisSignalData::getNextValues(QString channel,double secsFollowing)
+QVariantList AnalysisSignalData::getNextValues(QString componentName,double secsFollowing)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
 	if(!getDesignConfig()->getFrameReader())
@@ -134,7 +134,7 @@ QVariantList AnalysisSignalData::getNextValues(QString channel,double secsFollow
 	Q_ASSERT(signalReader_);
 	if(!signalReader_)
 		return QVariantList();
-	QVariantList returnVal = signalReader_->getValuesUntil(channel,maxRunTime);
+	QVariantList returnVal = signalReader_->getValuesUntil(componentName,maxRunTime);
 	return returnVal;
 }
 //Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames())
@@ -160,15 +160,18 @@ QVariantList AnalysisSignalData::getPrevValues(double secsPreceding)
 	}
 	//Put together result list
 	QVariantList result;
+	QVariantList singleRow;
 	if(resultsByName.size())
 	{
-		result.reserve(resultsByName.size()*resultsByName[0].size());
+		result.reserve(resultsByName[0].size());
 		for(int i=0;i<resultsByName[0].size();i++)
 		{
+			singleRow.clear();
 			for(int j=0;j<resultsByName.size();j++)
 			{
-				result.append(resultsByName[j][i]);
+				singleRow.append(resultsByName[j][i]);
 			}
+			result.append(QVariant(singleRow));
 		}
 	}
 	return result;
@@ -196,15 +199,18 @@ QVariantList AnalysisSignalData::getNextValues(double secsFollowing)
 	}
 	//Put together result list
 	QVariantList result;
+	QVariantList singleRow;
 	if(resultsByName.size())
 	{
-		result.reserve(resultsByName.size()*resultsByName[0].size());
+		result.reserve(resultsByName[0].size());
 		for(int i=0;i<resultsByName[0].size();i++)
 		{
+			singleRow.clear();
 			for(int j=0;j<resultsByName.size();j++)
 			{
-				result.append(resultsByName[j][i]);
+				singleRow.append(resultsByName[j][i]);
 			}
+			result.append(QVariant(singleRow));
 		}
 	}
 	return result;

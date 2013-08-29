@@ -57,13 +57,13 @@ public slots:
 	virtual QVariantList getNextValues(QString componentName,double secsFollowing);
 	//Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames())
 	//that will occur with times > the input # sec before the latest frame time and <= the latest 
-	//frame time. Times should be incremented by one getSamplePeriod() for every 
-	//getComponentNames().length() entries.
+	//frame time. Returned value is a list of lists such that each index of the list contains a list signal subcomponents
+	//ordered like the result of getComponentNames(). Times should be incremented by one getSamplePeriod() for each index.
 	virtual QVariantList getPrevValues(double secsPreceding);
-	//Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames())
-	//that will occur with times > the latest frame time and <= the input # sec after the latest frame. 
-	//Times should be incremented by one getSamplePeriod() for every 
-	//getComponentNames().length() entries.
+	//Returns a list of signal values for all subcomponents that will occur with times > the latest frame 
+	//time and <= the input # sec after the latest frame. Returned value is a list of lists such that each 
+	//index of the list contains a list signal subcomponents ordered like the result of getComponentNames(). 
+	//Times should be incremented by one getSamplePeriod() for each index.
 	virtual QVariantList getNextValues(double secsFollowing);
 
 protected:
