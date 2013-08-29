@@ -111,6 +111,45 @@ QVariantList AnalysisSignalData::getNextValue()
 	}
 	return result;
 }
+
+//Returns a list of signal read times that occured with times > the input # sec before the latest frame and <= the latest frame time
+QVariantList AnalysisSignalData::getPrevTimes(double secsPreceding)
+{
+	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
+	if(!getDesignConfig()->getFrameReader())
+		return QVariantList();
+	double minRunTime = getLatestRunTime()-secsPreceding;
+	Q_ASSERT(signalReader_);
+	if(!signalReader_)
+		return QVariantList();
+	QVariantList returnVal = signalReader_->getTimesSince(minRunTime);
+	if(zeroTime_)
+	{
+		for(int i=0;i<returnVal.size();i++)
+			returnVal[i] = returnVal[i].toDouble() - zeroTime_;
+	}
+	return returnVal;
+}
+
+//Returns a list of signal valuesread times that will occur with times > the latest frame time and <= the input # sec after the latest frame
+QVariantList AnalysisSignalData::getNextTimes(double secsFollowing)
+{
+	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
+	if(!getDesignConfig()->getFrameReader())
+		return QVariantList();
+	double maxRunTime = getLatestRunTime()+secsFollowing;
+	Q_ASSERT(signalReader_);
+	if(!signalReader_)
+		return QVariantList();
+	QVariantList returnVal = signalReader_->getTimesUntil(maxRunTime);
+	if(zeroTime_)
+	{
+		for(int i=0;i<returnVal.size();i++)
+			returnVal[i] = returnVal[i].toDouble() - zeroTime_;
+	}
+	return returnVal;
+}
+
 //Returns a list of signal values for the input sub channel that occured with times > the input # sec before the latest frame and <= the latest frame time
 QVariantList AnalysisSignalData::getPrevValues(QString componentName,double secsPreceding)
 {

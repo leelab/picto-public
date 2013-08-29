@@ -223,6 +223,65 @@ QVariantList SignalState::getValuesUntil(QString channel,double time)
 	return returnVal;
 }
 
+QVariantList SignalState::getTimesSince(double time)
+{
+	Q_ASSERT(runStart_ >= 0);
+	Q_ASSERT(curr_ >= 0);
+	double afterTime = time;
+	double latestTime = getLatestTime();
+	if(afterTime >= latestTime)
+		return QVariantList();
+	double upToGlobalTime = data_[curr_].time_+double(currSub_)*sampPeriod_;
+	PlaybackSignalData beyondVal = PlaybackSignalData(afterTime+runStart_);
+	QVector<PlaybackSignalData>::iterator iter = qLowerBound<QVector<PlaybackSignalData>::iterator,PlaybackSignalData>(data_.begin(),data_.begin()+curr_,beyondVal);
+	while(iter != data_.end() && iter->time_+(sampPeriod_ * iter->vals_.size()/numSubChans_) <= beyondVal.time_)
+		iter++;
+	QVariantList returnVal;
+	double sampleTime;
+	for(;(iter->time_ <= upToGlobalTime) && (iter != data_.end());iter++)
+	{
+		for(int i=0;i<iter->vals_.size();i+=numSubChans_)
+		{
+			sampleTime = iter->time_ + (i/numSubChans_)*sampPeriod_;
+			if(sampleTime <= beyondVal.time_)
+				continue;
+			if(sampleTime > upToGlobalTime)
+				break;
+			returnVal.append(sampleTime-runStart_);
+		}
+	}
+	Q_ASSERT(iter != data_.end());
+	return returnVal;
+}
+
+QVariantList SignalState::getTimesUntil(double time)
+{
+	Q_ASSERT(runStart_ >= 0);
+	Q_ASSERT(curr_ >= 0);;
+	double beforeTime = time;
+	if(beforeTime <= getLatestTime())
+		return QVariantList();
+	double upToGlobalTime = beforeTime+runStart_;
+	double currGlobalTime = data_[curr_].time_+double(currSub_)*sampPeriod_;
+	QVector<PlaybackSignalData>::iterator iter = data_.begin() + curr_;
+	QVariantList returnVal;
+	double sampleTime;
+	for(;(iter->time_ <= upToGlobalTime) && (iter != data_.end());iter++)
+	{
+		for(int i=0;i<iter->vals_.size();i+=numSubChans_)
+		{
+			sampleTime = iter->time_ + (i/numSubChans_)*sampPeriod_;
+			if(sampleTime <= currGlobalTime)
+				continue;
+			if(sampleTime > upToGlobalTime)
+				break;
+			returnVal.append(sampleTime-runStart_);
+		}
+	}
+	Q_ASSERT(iter != data_.end());
+	return returnVal;
+}
+
 void SignalState::goToNext()
 {
 	moveIndecesToNextTime(curr_,currSub_);

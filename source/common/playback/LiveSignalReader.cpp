@@ -91,3 +91,26 @@ QVariantList LiveSignalReader::getValuesUntil(QString channel,double time)
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
 }
+
+QVariantList LiveSignalReader::getTimesSince(double time)
+{
+	if(!signalData_.size())
+		return QVariantList();
+	double afterTime = time;
+	double latestTime = getLatestTime();
+	if(afterTime >= latestTime)
+		return QVariantList();
+	QVector<PlaybackSignalData>::iterator iter = qUpperBound<QVector<PlaybackSignalData>::iterator,PlaybackSignalData>(signalData_.begin(),signalData_.end(),time);
+	QVariantList returnVal;
+	for(;iter < signalData_.end();iter++)
+	{
+		returnVal.append(iter->time_);
+	}
+	return returnVal;
+}
+
+QVariantList LiveSignalReader::getTimesUntil(double time)
+{
+	//Since we can't see the future, we just always return an empty list.
+	return QVariantList();
+}

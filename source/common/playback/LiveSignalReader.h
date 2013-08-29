@@ -33,6 +33,8 @@ public:
 	//Returns signal values for the input sub channel with times > the input time.
 	virtual QVariantList getValuesSince(QString channel,double time);
 	virtual QVariantList getValuesUntil(QString channel,double time);
+	virtual QVariantList getTimesSince(double time);
+	virtual QVariantList getTimesUntil(double time);
 
 private:
 	struct PlaybackSignalData

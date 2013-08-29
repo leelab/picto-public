@@ -121,8 +121,21 @@ public:
 	virtual double getLatestValue(QString channel){return 0;};
 	virtual double getNextTime(){return 0;};
 	virtual double getNextValue(QString channel){return 0;};
-	//Returns signal values for the input sub channel with times > the input time.
+	//Returns a list of signal read times that occured > the input time and 
+	//<= the current time.  There is a one to one matchup of times
+	//from this function and values from getValuesSince(channel,time).
+	virtual QVariantList getTimesSince(double time){return QVariantList();};
+	//Returns a list of signal read times that occured > the current time and 
+	// <= the input time.  There is a one to one matchup of times
+	//from this function and values from getValuesUntil(channel,time).
+	virtual QVariantList getTimesUntil(double time){return QVariantList();};
+	//Returns signal values for the input sub channel with times > the input time and
+	//<= the current time.  There is a one to one matchup of times
+	//from this function and values from getTimesSince(channel,time).
 	virtual QVariantList getValuesSince(QString channel,double time){return QVariantList();};
+	//Returns signal values for the input sub channel with times > the current time and
+	//<= the input time time.  There is a one to one matchup of times
+	//from this function and values from getTimesUntil(channel,time).
 	virtual QVariantList getValuesUntil(QString channel,double time){return QVariantList();};
 };
 
