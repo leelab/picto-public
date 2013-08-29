@@ -1,24 +1,25 @@
-#ifndef _SPIKESTATE_H_
-#define _SPIKESTATE_H_
+#ifndef _LiveSpikeReader_H_
+#define _LiveSpikeReader_H_
 #include <QVector>
-#include <QHash>
-#include "DataState.h"
-#include "PlaybackInterfaces.h"
+#include "../../common/playback/PlaybackInterfaces.h"
 
 namespace Picto {
-struct PlaybackSpikeData;
-/*! \brief Stores Transition PlaybackData values for use in Playback system.
+/*! \brief Stores Frame PlaybackData values for use in Playback system.
  */
-class SpikeState :public SpikeReader, public DataState
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API LiveSpikeReader : public SpikeReader
+#else
+class LiveSpikeReader : public SpikeReader
+#endif
 {
 	Q_OBJECT
 public:
-	virtual void setDatabase(QSqlDatabase session);
-	virtual void startRun(double runStartTime,double runEndTime = -1);
-	virtual PlaybackIndex getCurrentIndex();
-	virtual PlaybackIndex getNextIndex(double lookForwardTime);
-	virtual void moveToIndex(PlaybackIndex index);
+	LiveSpikeReader(int maxChan,int maxUnit,int waveformSize);
+	void setRunStart();
+	void createVirtualSpike(double time);
+	void setRunEnd();
 
+	//Frame Reader Interface
 	//Spike Reader Interface
 	virtual QVariantList getChannels();
 	virtual QVariantList getUnits(int channel);
@@ -48,33 +49,28 @@ public:
 	virtual QVariantList getWaveformsSince(double time);
 	virtual QVariantList getWaveformsUntil(double time);
 
-signals:
-	void spikeEvent(double time, int channel, int unit, QVector<float> waveform);
 private:
-	PlaybackIndex getNextIndex();
-	PlaybackIndex globalTimeToRunIndex(double time);
-	QSqlDatabase session_;
-	QSharedPointer<QSqlQuery> query_;
-	double runStart_;
-	double runEnd_;
-	int curr_;
-	QVariantList channels_;
-	QHash<int,QVariantList> unitsLookup_;
-	QVector<PlaybackSpikeData> data_;
+
+	struct SpikeData
+	{
+		SpikeData(){time_ = 0;channel_ = 0;unit_=0;waveform_.clear();};
+		SpikeData(double time,int channel,int unit,QVariantList waveform){time_=time;channel_=channel;unit_=unit;waveform_=waveform;};
+		inline bool operator<(const SpikeData& someData) const {
+			return time_ < someData.time_;
+		}
+		double time_;
+		int channel_;
+		int unit_;
+		QVariantList waveform_;
+	};
+	QVector<SpikeData> spikeData_;
+	int maxChans_;
+	int maxUnits_;
+	int waveformSize_;
+	QVariantList chans_;
+	QVariantList units_;
 };
 
-struct PlaybackSpikeData
-{
-	PlaybackSpikeData(){};
-	PlaybackSpikeData(double time,int channel, int unit, QVector<float> waveform){time_=time;channel_=channel;unit_=unit;waveform_ = waveform;};
-	inline bool operator<(const PlaybackSpikeData& someData) const {
-		return time_ < someData.time_;
-	}
-	double time_;
-	int channel_;
-	int unit_;
-	QVector<float> waveform_;
-};
 
 }; //namespace Picto
 #endif

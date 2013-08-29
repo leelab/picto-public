@@ -19,7 +19,7 @@ spikeState_(new SpikeState())
 	connect(transState_.data(),SIGNAL(transitionActivated(int)),this,SIGNAL(transitionActivated(int)));
 	connect(frameState_.data(),SIGNAL(framePresented(double)),this,SIGNAL(framePresented(double)));
 	connect(rewardState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
-	connect(spikeState_.data(),SIGNAL(spikeEvent(int,int,QVector<float>)),this,SIGNAL(spikeEvent(int,int,QVector<float>)));
+	connect(spikeState_.data(),SIGNAL(spikeEvent(double,int,int,QVector<float>)),this,SIGNAL(spikeEvent(double,int,int,QVector<float>)));
 
 	currRunStart_ = currRunEnd_ = -1;
 	//connect(propState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsPropertyData(PlaybackIndex,PlaybackIndex)));

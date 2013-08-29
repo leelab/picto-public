@@ -137,21 +137,14 @@ public:
 	virtual ~SpikeReader(){};
 	virtual QVariantList getChannels(){return QVariantList();};
 	virtual QVariantList getUnits(int channel){return QVariantList();};
-	virtual double getLatestTime(int channel, int unit){return 0;};
-	//Returns a list of spikes times when that occured with times > the input time and 
-	//<= the current time on the input channel and unit.
-	virtual QVariantList getTimesSince(int channel, int unit, double time){return QVariantList();};
-	//Returns a list of spikes times when that occured with times > the current time and 
-	// <= the input time on the input channel and unit.
-	virtual QVariantList getTimesUntil(int channel, int unit, double time){return QVariantList();};
-	//Returns a list of waveforms when that occured with times > the input time and 
-	//<= the current time on the input channel and unit.  There is a one to one matchup of
-	//values from this function and times from getTimesSince(channel,unit,time)
-	virtual QVariantList getWaveformsSince(int channel, int unit, double time){return QVariantList();};
-	//Returns a list of waveforms when that occured with times > the current time and 
-	// <= the input time on the input channel and unit.  There is a one to one matchup of
-	//values from this function and times from getTimesSince(channel,unit,time)
-	virtual QVariantList getWaveformsUntil(int channel, int unit, double time){return QVariantList();};
+	virtual double getLatestTime(){return 0;};
+	virtual int getLatestChannel(){return 0;};
+	virtual int getLatestUnit(){return 0;};
+	virtual QVariantList getLatestWaveform(){return QVariantList();};
+	virtual double getNextTime(){return 0;};
+	virtual int getNextChannel(){return 0;};
+	virtual int getNextUnit(){return 0;};
+	virtual QVariantList getNextWaveform(){return QVariantList();};
 	
 	//Returns a list of spikes times when that occured with times > the input time and 
 	//<= the current time on all channels and units.  There is a one to one matchup of times

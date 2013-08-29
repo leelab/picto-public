@@ -61,7 +61,6 @@ struct PlaybackRewardData
 {
 	PlaybackRewardData(){};
 	PlaybackRewardData(PlaybackIndex index,int duration,int channel){index_ = index;duration_ = duration;channel_ = channel;};
-	// First inline function
 	inline bool operator<(const PlaybackRewardData& someData) const {
 		return index_ < someData.index_;
 	}

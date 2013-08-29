@@ -417,9 +417,19 @@ void DesignConfig::setRewardReader(QSharedPointer<RewardReader> rewardReader)
 	rewardReader_ = rewardReader;
 }
 
+void DesignConfig::setSpikeReader(QSharedPointer<SpikeReader> spikeReader)
+{
+	spikeReader_ = spikeReader;
+}
+
 QSharedPointer<RewardReader> DesignConfig::getRewardReader()
 {
 	return rewardReader_;
+}
+
+QSharedPointer<SpikeReader> DesignConfig::getSpikeReader()
+{
+	return spikeReader_;
 }
 
 void DesignConfig::setSignalReader(QString name, QSharedPointer<SignalReader> signalReader)

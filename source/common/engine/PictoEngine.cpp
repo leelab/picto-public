@@ -402,6 +402,8 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 		{
 			rewardReader_->setLatestRewardData(reward->getTime().toDouble(),reward->getDuration());
 		}
+		//Add a spike to the spikeReader
+		spikeReader_->createVirtualSpike(frameTime);
 
 		//Set the latest signal data to the signal readers
 		QStringList subChannels;

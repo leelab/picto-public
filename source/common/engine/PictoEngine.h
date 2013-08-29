@@ -36,6 +36,7 @@
 #include "ControlPanelInterface.h"
 #include "../playback/LiveFrameReader.h"
 #include "../playback/LiveRewardReader.h"
+#include "../playback/LiveSpikeReader.h"
 #include "../playback/LiveSignalReader.h"
 #include "../controlelements/FrameTimerFactory.h"
 
@@ -196,6 +197,7 @@ public:
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	void setFrameReader(QSharedPointer<LiveFrameReader> frameReader){frameReader_ = frameReader;};
 	void setRewardReader(QSharedPointer<LiveRewardReader> rewardReader){rewardReader_ = rewardReader;};
+	void setSpikeReader(QSharedPointer<LiveSpikeReader> spikeReader){spikeReader_ = spikeReader;};
 	void setSignalReader(QString name, QSharedPointer<LiveSignalReader> signalReader){signalReaders_[name.toLower()] = signalReader;};
 	void clearSignalReaders(){signalReaders_.clear();};
 	
@@ -266,6 +268,7 @@ private:
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	QSharedPointer<LiveFrameReader> frameReader_;
 	QSharedPointer<LiveRewardReader> rewardReader_;
+	QSharedPointer<LiveSpikeReader> spikeReader_;
 	QHash<QString,QSharedPointer<LiveSignalReader>> signalReaders_;
 
 	int engineCommand_;

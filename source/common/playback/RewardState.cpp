@@ -15,7 +15,6 @@ void RewardState::setDatabase(QSqlDatabase session)
 	}
 	data_.resize(query_->value(0).toInt());
 
-	//Currently, we don't select properties with no parent (ie. Runtime parameters).
 	query_->exec("SELECT r.time,r.dataid,r.duration,r.channel FROM rewards r "
 		"ORDER BY r.dataid");
 	if(!query_->exec())
@@ -53,7 +52,7 @@ void RewardState::startRun(double runStartTime,double runEndTime)
 PlaybackIndex RewardState::getCurrentIndex()
 {
 	Q_ASSERT(runStart_ >= 0);
-	if(curr_ < 0)
+	if(curr_ < 0 || curr_ >= data_.size())
 		return PlaybackIndex();
 	return globalToRunIndex(data_[curr_].index_);
 }

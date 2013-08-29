@@ -94,7 +94,7 @@ signals:
 	void rewardSupplied(double time,int duration,int channel);
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void lfpChanged(int channel,double value);
-	void spikeEvent(int channel, int unit, QVector<float> waveform);
+	void spikeEvent(double time, int channel, int unit, QVector<float> waveform);
 	void percentLoaded(double percent);
 
 	//Indicates that data is needed by the session state to fulfil playback requests

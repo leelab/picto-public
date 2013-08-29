@@ -58,7 +58,7 @@ void PropertyState::startRun(double runStartTime,double runEndTime)
 PlaybackIndex PropertyState::getCurrentIndex()
 {
 	Q_ASSERT(runStart_ >= 0);
-	if(curr_ < 0)
+	if(curr_ < 0 || curr_ >= data_.size())
 		return PlaybackIndex();
 	return globalToRunIndex(data_[curr_].index_);
 }

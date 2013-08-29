@@ -31,6 +31,7 @@ public:
 	virtual bool updateState();
 	virtual QSharedPointer<FrameReader> getFrameReader();
 	virtual QSharedPointer<RewardReader> getRewardReader();
+	virtual QSharedPointer<SpikeReader> getSpikeReader();
 	virtual QStringList getSignalReaderNames();
 	virtual QSharedPointer<SignalReader> getSignalReader(QString name);
 
