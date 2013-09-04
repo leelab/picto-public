@@ -54,8 +54,10 @@ public:
 	//Analysis Data Readers
 	void setFrameReader(QSharedPointer<FrameReader> frameReader);
 	QSharedPointer<FrameReader> getFrameReader();
+	void setLfpReader(QSharedPointer<LfpReader> lfpReader);
 	void setRewardReader(QSharedPointer<RewardReader> rewardReader);
 	void setSpikeReader(QSharedPointer<SpikeReader> spikeReader);
+	QSharedPointer<LfpReader> getLfpReader();
 	QSharedPointer<RewardReader> getRewardReader();
 	QSharedPointer<SpikeReader> getSpikeReader();
 	void setSignalReader(QString name, QSharedPointer<SignalReader> signalReader);
@@ -88,6 +90,7 @@ private:
 	QSharedPointer<Controller::FrameTimerFactory> frameTimerFactory_;
 
 	QSharedPointer<FrameReader> frameReader_;
+	QSharedPointer<LfpReader> lfpReader_;
 	QSharedPointer<RewardReader> rewardReader_;
 	QSharedPointer<SpikeReader> spikeReader_;
 	QHash<QString,QSharedPointer<SignalReader>> signalReaders_;

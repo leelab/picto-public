@@ -412,6 +412,11 @@ QSharedPointer<FrameReader> DesignConfig::getFrameReader()
 	return frameReader_;
 }
 
+void DesignConfig::setLfpReader(QSharedPointer<LfpReader> lfpReader)
+{
+	lfpReader_ = lfpReader;
+}
+
 void DesignConfig::setRewardReader(QSharedPointer<RewardReader> rewardReader)
 {
 	rewardReader_ = rewardReader;
@@ -420,6 +425,11 @@ void DesignConfig::setRewardReader(QSharedPointer<RewardReader> rewardReader)
 void DesignConfig::setSpikeReader(QSharedPointer<SpikeReader> spikeReader)
 {
 	spikeReader_ = spikeReader;
+}
+
+QSharedPointer<LfpReader> DesignConfig::getLfpReader()
+{
+	return lfpReader_;
 }
 
 QSharedPointer<RewardReader> DesignConfig::getRewardReader()

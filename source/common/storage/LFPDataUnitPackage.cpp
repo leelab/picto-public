@@ -194,7 +194,7 @@ QLinkedList<QPointF> LFPDataUnitPackage::getAlignedDataAsLinkedList()
 void LFPDataUnitPackage::setPotentialsFromByteArray(QByteArray potentials)
 {
 	const float* pots = reinterpret_cast<const float*>(potentials.constData());
-	potentials.clear();
+	potentials_.clear();
 	appendData(pots,potentials.size()/sizeof(float));
 }
 

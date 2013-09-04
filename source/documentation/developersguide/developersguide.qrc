@@ -45,6 +45,8 @@
    <file alias="_analysis_function_8h-source.html">../../../output/documentation/main/html/_analysis_function_8h-source.html</file>
    <file alias="_analysis_item_8cpp-source.html">../../../output/documentation/main/html/_analysis_item_8cpp-source.html</file>
    <file alias="_analysis_item_8h-source.html">../../../output/documentation/main/html/_analysis_item_8h-source.html</file>
+   <file alias="_analysis_lfp_data_8cpp-source.html">../../../output/documentation/main/html/_analysis_lfp_data_8cpp-source.html</file>
+   <file alias="_analysis_lfp_data_8h-source.html">../../../output/documentation/main/html/_analysis_lfp_data_8h-source.html</file>
    <file alias="_analysis_number_variable_8cpp-source.html">../../../output/documentation/main/html/_analysis_number_variable_8cpp-source.html</file>
    <file alias="_analysis_number_variable_8h-source.html">../../../output/documentation/main/html/_analysis_number_variable_8h-source.html</file>
    <file alias="_analysis_option_widget_8cpp-source.html">../../../output/documentation/main/html/_analysis_option_widget_8cpp-source.html</file>
@@ -462,6 +464,8 @@
    <file alias="_list_property_8h-source.html">../../../output/documentation/main/html/_list_property_8h-source.html</file>
    <file alias="_live_frame_reader_8cpp-source.html">../../../output/documentation/main/html/_live_frame_reader_8cpp-source.html</file>
    <file alias="_live_frame_reader_8h-source.html">../../../output/documentation/main/html/_live_frame_reader_8h-source.html</file>
+   <file alias="_live_lfp_reader_8cpp-source.html">../../../output/documentation/main/html/_live_lfp_reader_8cpp-source.html</file>
+   <file alias="_live_lfp_reader_8h-source.html">../../../output/documentation/main/html/_live_lfp_reader_8h-source.html</file>
    <file alias="_live_reward_reader_8cpp-source.html">../../../output/documentation/main/html/_live_reward_reader_8cpp-source.html</file>
    <file alias="_live_reward_reader_8h-source.html">../../../output/documentation/main/html/_live_reward_reader_8h-source.html</file>
    <file alias="_live_signal_reader_8cpp-source.html">../../../output/documentation/main/html/_live_signal_reader_8cpp-source.html</file>
@@ -1197,6 +1201,9 @@
    <file alias="class_picto_1_1_analysis_signal_data-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_signal_data-members.html</file>
    <file alias="class_picto_1_1_analysis_signal_data.html">../../../output/documentation/main/html/class_picto_1_1_analysis_signal_data.html</file>
    <file alias="class_picto_1_1_analysis_signal_data.png">../../../output/documentation/main/html/class_picto_1_1_analysis_signal_data.png</file>
+   <file alias="class_picto_1_1_analysis_spike_data-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_spike_data-members.html</file>
+   <file alias="class_picto_1_1_analysis_spike_data.html">../../../output/documentation/main/html/class_picto_1_1_analysis_spike_data.html</file>
+   <file alias="class_picto_1_1_analysis_spike_data.png">../../../output/documentation/main/html/class_picto_1_1_analysis_spike_data.png</file>
    <file alias="class_picto_1_1_analysis_string_variable-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_string_variable-members.html</file>
    <file alias="class_picto_1_1_analysis_string_variable.html">../../../output/documentation/main/html/class_picto_1_1_analysis_string_variable.html</file>
    <file alias="class_picto_1_1_analysis_string_variable.png">../../../output/documentation/main/html/class_picto_1_1_analysis_string_variable.png</file>

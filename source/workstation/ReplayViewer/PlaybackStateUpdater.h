@@ -30,6 +30,7 @@ public:
 	//Updates the picto state to the latest values
 	virtual bool updateState();
 	virtual QSharedPointer<FrameReader> getFrameReader();
+	virtual QSharedPointer<LfpReader> getLfpReader();
 	virtual QSharedPointer<RewardReader> getRewardReader();
 	virtual QSharedPointer<SpikeReader> getSpikeReader();
 	virtual QStringList getSignalReaderNames();

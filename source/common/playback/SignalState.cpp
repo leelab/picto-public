@@ -27,6 +27,7 @@ void SignalState::setDatabase(QSqlDatabase session)
 		Q_ASSERT(false);
 		return;
 	}
+	data_.clear();
 	data_.resize(query_->value(0).toInt());
 
 	query_->exec(QString("SELECT f.time,s.offsettime,s.data "

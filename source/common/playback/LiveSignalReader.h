@@ -10,7 +10,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveSignalReader : public SignalReader
 #else
-class LiveSignalReader : public FrameReader
+class LiveSignalReader : public SignalReader
 #endif
 {
 	Q_OBJECT

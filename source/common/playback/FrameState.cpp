@@ -13,6 +13,7 @@ void FrameState::setDatabase(QSqlDatabase session)
 		Q_ASSERT(false);
 		return;
 	}
+	data_.clear();
 	data_.resize(query_->value(0).toInt());
 
 	//Currently, we don't select properties with no parent (ie. Runtime parameters).

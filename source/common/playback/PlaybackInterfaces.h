@@ -40,15 +40,15 @@ public:
 	virtual ~LfpReader(){};
 	virtual QVariantList getChannels(){return QVariantList();};
 	virtual double getSamplePeriod(){return 0;};
-	virtual double getValue(int channel){return 0;};
+	virtual double getLatestTime(){return 0;};
+	virtual double getLatestValue(int channel){return 0;};
+	virtual double getNextTime(){return 0;};
+	virtual double getNextValue(int channel){return 0;};
 	//Returns lfp values for the input channel with times > the input time.
 	virtual QVariantList getValuesSince(int channel,double time){return QVariantList();};
 	virtual QVariantList getValuesUntil(int channel,double time){return QVariantList();};
-	//Returns lfp values for all channels (ordered like the result of getChannels())
-	//with times > the current time and <= the input time.  Times should be incremented
-	//by one getSamplePeriod() every getChannels().length() entries.
-	virtual QVariantList getValuesSince(double time){return QVariantList();};
-	virtual QVariantList getValuesUntil(double time){return QVariantList();};
+	virtual QVariantList getTimesSince(double time){return QVariantList();};
+	virtual QVariantList getTimesUntil(double time){return QVariantList();};
 };
 
 class PropertyReader : public QObject

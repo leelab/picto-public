@@ -6,7 +6,8 @@ propState_(new PropertyState()),
 transState_(new TransitionState()),
 frameState_(new FrameState()),
 rewardState_(new RewardState()),
-spikeState_(new SpikeState())
+spikeState_(new SpikeState()),
+lfpState_(new LfpState())
 {
 	statesWithIds_.push_back(propState_);
 	statesWithIds_.push_back(transState_);
@@ -14,26 +15,16 @@ spikeState_(new SpikeState())
 
 	statesWithTimes_.push_back(rewardState_);
 	statesWithTimes_.push_back(spikeState_);
+	statesWithTimes_.push_back(lfpState_);
 
 	connect(propState_.data(),SIGNAL(propertyChanged(int,QString)),this,SIGNAL(propertyChanged(int,QString)));
 	connect(transState_.data(),SIGNAL(transitionActivated(int)),this,SIGNAL(transitionActivated(int)));
 	connect(frameState_.data(),SIGNAL(framePresented(double)),this,SIGNAL(framePresented(double)));
 	connect(rewardState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
 	connect(spikeState_.data(),SIGNAL(spikeEvent(double,int,int,QVector<float>)),this,SIGNAL(spikeEvent(double,int,int,QVector<float>)));
+	connect(lfpState_.data(),SIGNAL(lfpChanged(int,double)),this,SIGNAL(lfpChanged(int,double)));
 
 	currRunStart_ = currRunEnd_ = -1;
-	//connect(propState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsPropertyData(PlaybackIndex,PlaybackIndex)));
-	//connect(transState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsTransitionData(PlaybackIndex,PlaybackIndex)));
-	//connect(frameState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsFrameData(PlaybackIndex,PlaybackIndex)));
-	//connect(rewardState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsRewardData(PlaybackIndex,PlaybackIndex)));
-	//connect(spikeState_.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsSpikeData(PlaybackIndex,PlaybackIndex)));
-
-	//connect(propState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextPropertyData(PlaybackIndex,bool)));
-	//connect(transState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextTransitionData(PlaybackIndex,bool)));
-	//connect(frameState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextFrameData(PlaybackIndex,bool)));
-	//connect(rewardState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextRewardData(PlaybackIndex,bool)));
-	//connect(spikeState_.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextSpikeData(PlaybackIndex,bool)));
-
 }
 
 
@@ -107,19 +98,6 @@ void SessionState::addSignal(QString name,QString tableName,QStringList subChanN
 		connect(newSigState.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SIGNAL(signalChanged(QString,QStringList,QVector<float>)));
 		//connect(newSigState.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsSignalData(PlaybackIndex,PlaybackIndex)));
 		//connect(newSigState.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextSignalData(PlaybackIndex,bool)));
-	}
-}
-
-void SessionState::addLfpChannel(int channel,double sampPeriod)
-{
-	if(!lfpLookup_.contains(channel))
-	{
-		QSharedPointer<LfpState> newLfpState = QSharedPointer<LfpState>(new LfpState(channel,sampPeriod));
-		lfpLookup_[channel] = newLfpState;
-		statesWithTimes_.push_back(newLfpState);
-		connect(newLfpState.data(),SIGNAL(lfpChanged(int,double)),this,SIGNAL(lfpChanged(int,double)));
-		connect(newLfpState.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsLfpData(PlaybackIndex,PlaybackIndex)));
-		connect(newLfpState.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextLfpData(PlaybackIndex,bool)));
 	}
 }
 
@@ -250,11 +228,9 @@ QSharedPointer<SignalReader> SessionState::getSignalReader(QString name)
 	return QSharedPointer<SignalState>();
 }
 
-QSharedPointer<LfpReader> SessionState::getLfpReader(int channel)
+QSharedPointer<LfpReader> SessionState::getLfpReader()
 {
-	if(lfpLookup_.contains(channel))
-		return lfpLookup_[channel];
-	return QSharedPointer<LfpReader>();
+	return lfpState_;
 }
 
 QSharedPointer<SpikeReader> SessionState::getSpikeReader()
@@ -289,11 +265,9 @@ QSharedPointer<SignalState> SessionState::getSignalState(QString name)
 	return QSharedPointer<SignalState>();
 }
 
-QSharedPointer<LfpState> SessionState::getLfpState(int channel)
+QSharedPointer<LfpState> SessionState::getLfpState()
 {
-	if(lfpLookup_.contains(channel))
-		return lfpLookup_[channel];
-	return QSharedPointer<LfpState>();
+	return lfpState_;
 }
 
 QSharedPointer<SpikeState> SessionState::getSpikeState()

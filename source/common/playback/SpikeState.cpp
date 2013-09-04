@@ -15,6 +15,7 @@ void SpikeState::setDatabase(QSqlDatabase session)
 		Q_ASSERT(false);
 		return;
 	}
+	data_.clear();
 	data_.resize(query_->value(0).toInt());
 
 	query_->exec("SELECT s.timestamp,s.channel,s.unit,s.waveform FROM spikes s "

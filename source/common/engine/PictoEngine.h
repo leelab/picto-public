@@ -35,6 +35,7 @@
 #include "propertytable.h"
 #include "ControlPanelInterface.h"
 #include "../playback/LiveFrameReader.h"
+#include "../playback/LiveLfpReader.h"
 #include "../playback/LiveRewardReader.h"
 #include "../playback/LiveSpikeReader.h"
 #include "../playback/LiveSignalReader.h"
@@ -196,6 +197,7 @@ public:
 	//Setup Data Readers
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	void setFrameReader(QSharedPointer<LiveFrameReader> frameReader){frameReader_ = frameReader;};
+	void setLfpReader(QSharedPointer<LiveLfpReader> lfpReader){lfpReader_ = lfpReader;};
 	void setRewardReader(QSharedPointer<LiveRewardReader> rewardReader){rewardReader_ = rewardReader;};
 	void setSpikeReader(QSharedPointer<LiveSpikeReader> spikeReader){spikeReader_ = spikeReader;};
 	void setSignalReader(QString name, QSharedPointer<LiveSignalReader> signalReader){signalReaders_[name.toLower()] = signalReader;};
@@ -267,6 +269,7 @@ private:
 	//Data Readers
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
 	QSharedPointer<LiveFrameReader> frameReader_;
+	QSharedPointer<LiveLfpReader> lfpReader_;
 	QSharedPointer<LiveRewardReader> rewardReader_;
 	QSharedPointer<LiveSpikeReader> spikeReader_;
 	QHash<QString,QSharedPointer<LiveSignalReader>> signalReaders_;

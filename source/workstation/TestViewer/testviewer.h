@@ -10,6 +10,7 @@
 #include "../../common/iodevices/VirtualOutputSignalController.h"
 #include "../ReplayViewer/OutputWidgetHolder.h"
 #include "../../common/playback/LiveFrameReader.h"
+#include "../../common/playback/LiveLfpReader.h"
 #include "../../common/playback/LiveRewardReader.h"
 #include "../../common/playback/LiveSpikeReader.h"
 #include "../../common/playback/LiveSignalReader.h"
@@ -85,6 +86,7 @@ private:
 	Status status_;
 
 	QSharedPointer<LiveFrameReader> liveFrameReader_;
+	QSharedPointer<LiveLfpReader> liveLfpReader_;
 	QSharedPointer<LiveRewardReader> liveRewardReader_;
 	QSharedPointer<LiveSpikeReader> liveSpikeReader_;
 	QVector<QSharedPointer<LiveSignalReader>> signalReaders_;

@@ -13,6 +13,7 @@ void RewardState::setDatabase(QSqlDatabase session)
 		Q_ASSERT(false);
 		return;
 	}
+	data_.clear();
 	data_.resize(query_->value(0).toInt());
 
 	query_->exec("SELECT r.time,r.dataid,r.duration,r.channel FROM rewards r "
@@ -102,7 +103,7 @@ int RewardState::getNextDuration()
 {
 	if(curr_ >= (data_.size()-1))
 		return -1;
-	data_[curr_+1].duration_;
+	return data_[curr_+1].duration_;
 }
 QVariantList RewardState::getTimesSince(double time)
 {

@@ -55,6 +55,12 @@ QSharedPointer<FrameReader> PlaybackStateUpdater::getFrameReader()
 	return sessionState_->getFrameReader();
 }
 
+QSharedPointer<LfpReader> PlaybackStateUpdater::getLfpReader()
+{
+	Q_ASSERT(sessionState_);
+	return sessionState_->getLfpReader();
+}
+
 QSharedPointer<RewardReader> PlaybackStateUpdater::getRewardReader()
 {
 	Q_ASSERT(sessionState_);

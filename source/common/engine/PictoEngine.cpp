@@ -156,7 +156,9 @@ void PictoEngine::markTaskRunStart(QString name)
 	if(frameReader_)
 	{
 		frameReader_->setRunStart();
+		lfpReader_->setRunStart();
 		rewardReader_->setRunStart();
+		spikeReader_->setRunStart();
 		foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
 		{
 			signalReader->setRunStart();
@@ -172,7 +174,9 @@ void PictoEngine::markTaskRunStop()
 	if(frameReader_)
 	{
 		frameReader_->setRunEnd();
+		lfpReader_->setRunEnd();
 		rewardReader_->setRunEnd();
+		spikeReader_->setRunEnd();
 		foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
 		{
 			signalReader->setRunEnd();
@@ -396,6 +400,8 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	{
 		//Set the latest frame time to the frameReader_
 		frameReader_->setLatestFrameTime(frameTime);
+		//Set the latest frame time to the lfpReader_
+		lfpReader_->createVirtualLfpData(frameTime);
 		//Set the latest reward data to the rewardReader_
 		QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
 		foreach(QSharedPointer<RewardDataUnit> reward,rewards)

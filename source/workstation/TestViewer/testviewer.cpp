@@ -297,12 +297,14 @@ void TestViewer::playTriggered()
 			{
 				//Setup Test Data Readers for Analysis
 				liveFrameReader_ = QSharedPointer<LiveFrameReader>(new LiveFrameReader());
+				liveLfpReader_ = QSharedPointer<LiveLfpReader>(new LiveLfpReader(QList<int>() << 1 << 3 << 4 << 5 << 8,0.001));
 				liveRewardReader_ = QSharedPointer<LiveRewardReader>(new LiveRewardReader());
 				liveSpikeReader_ = QSharedPointer<LiveSpikeReader>(new LiveSpikeReader(5,2,32));
 				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("Position",QStringList()<<"x"<<"y",0.002)));
 				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("Diameter",QStringList()<<"x"<<"y",0.004)));
 			}
 			designConfig->setFrameReader(liveFrameReader_.staticCast<FrameReader>());
+			designConfig->setLfpReader(liveLfpReader_.staticCast<LfpReader>());
 			designConfig->setRewardReader(liveRewardReader_.staticCast<RewardReader>());
 			designConfig->setSpikeReader(liveSpikeReader_.staticCast<SpikeReader>());
 			foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
@@ -310,6 +312,7 @@ void TestViewer::playTriggered()
 				designConfig->setSignalReader(signalReader->getName(),signalReader.staticCast<SignalReader>());
 			}
 			engine_->setFrameReader(liveFrameReader_);
+			engine_->setLfpReader(liveLfpReader_);
 			engine_->setRewardReader(liveRewardReader_);
 			engine_->setSpikeReader(liveSpikeReader_);
 			foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
@@ -322,10 +325,12 @@ void TestViewer::playTriggered()
 			//If there's no analysis.  Set frame readers to null so that we don't waste memory on them.
 			//in case they were set last time.
 			designConfig->setFrameReader(QSharedPointer<FrameReader>());
+			designConfig->setLfpReader(QSharedPointer<LfpReader>());
 			designConfig->setRewardReader(QSharedPointer<RewardReader>());
 			designConfig->setSpikeReader(QSharedPointer<SpikeReader>());
 			designConfig->clearSignalReaders();
 			engine_->setFrameReader(QSharedPointer<LiveFrameReader>());
+			engine_->setLfpReader(QSharedPointer<LiveLfpReader>());
 			engine_->setRewardReader(QSharedPointer<LiveRewardReader>());
 			engine_->setSpikeReader(QSharedPointer<LiveSpikeReader>());
 			engine_->clearSignalReaders();

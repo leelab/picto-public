@@ -41,9 +41,6 @@ public:
 	//Used to add a new signal to the SessionState since different sessions
 	//can contain different numbers of signals.
 	void addSignal(QString name,QString tableName,QStringList subChanNames,double sampPeriod);
-	//Used to add a new lfp channel to the SessionState since different sessions
-	//can contain different numbers of lfp channels and each is tracked seperately.
-	void addLfpChannel(int channel,double sampPeriod);
 	//The before boolean should be set true if data will be inserted in decreasing index order
 	//before the current data set.
 	//bool setPropertyValue(double time,qulonglong dataId,int propId,QString value);
@@ -71,7 +68,7 @@ public:
 	QSharedPointer<RewardReader> getRewardReader();
 	QStringList getSignalReaderNames();
 	QSharedPointer<SignalReader> getSignalReader(QString name);
-	QSharedPointer<LfpReader> getLfpReader(int channel);
+	QSharedPointer<LfpReader> getLfpReader();
 	QSharedPointer<SpikeReader> getSpikeReader();
 
 	//The separate types of DataStates are used to step through the session.
@@ -80,7 +77,7 @@ public:
 	QSharedPointer<FrameState> getFrameState();
 	QSharedPointer<RewardState> getRewardState();
 	QSharedPointer<SignalState> getSignalState(QString name);
-	QSharedPointer<LfpState> getLfpState(int channel);
+	QSharedPointer<LfpState> getLfpState();
 	QSharedPointer<SpikeState> getSpikeState();
 
 	QList<QSharedPointer<DataState>> getStatesIndexedById();
@@ -125,8 +122,8 @@ private:
 	QSharedPointer<FrameState> frameState_;
 	QSharedPointer<RewardState> rewardState_;
 	QHash<QString,QSharedPointer<SignalState>> signalLookup_;
-	QHash<int,QSharedPointer<LfpState>> lfpLookup_;
 	QSharedPointer<SpikeState> spikeState_;
+	QSharedPointer<LfpState> lfpState_;
 
 	QList<QSharedPointer<DataState>> statesWithIds_;
 	QList<QSharedPointer<DataState>> statesWithTimes_;

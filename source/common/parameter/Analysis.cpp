@@ -9,6 +9,7 @@
 #include "AnalysisFileOutput.h"
 #include "AnalysisTimer.h"
 #include "AnalysisFrameData.h"
+#include "AnalysisLfpData.h"
 #include "AnalysisRewardData.h"
 #include "AnalysisSignalData.h"
 #include "AnalysisSpikeData.h"
@@ -40,6 +41,8 @@ Analysis::Analysis()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisTimer::Create))));
 	scriptFactory_->addAssetType("Frame",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFrameData::Create))));
+	scriptFactory_->addAssetType("Lfp",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisLfpData::Create))));
 	scriptFactory_->addAssetType("Reward",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisRewardData::Create))));
 	scriptFactory_->addAssetType("Signal",
