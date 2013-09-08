@@ -1,25 +1,56 @@
-<svg width="793.7007874015749" height="1122.5196850393702" xmlns="http://www.w3.org/2000/svg">
- <title>hand</title>
- <defs>
-  <linearGradient id="svg_2">
-   <stop offset="0" stop-color="#cccccc"/>
-   <stop offset="1" stop-color="#333333"/>
-  </linearGradient>
-  <linearGradient y2="0" x2="1" y1="0" x1="0" id="svg_3">
-   <stop offset="0" stop-color="#cccccc"/>
-   <stop offset="1" stop-opacity="0.996094" stop-color="#0a0a0a"/>
-  </linearGradient>
-  <linearGradient y2="0" x2="1" y1="0" x1="0" id="svg_4">
-   <stop offset="0" stop-color="#cccccc"/>
-   <stop offset="1" stop-opacity="0.992188" stop-color="#969696"/>
-  </linearGradient>
- </defs>
- <metadata id="metadata7">image/svg+xmlSergio Luiz Araujo Silvahandcomputermousecursor</metadata>
- <g>
-  <title>Layer 1</title>
-  <g id="g3922">
-   <path stroke="#000000" d="m322.039276,211.797989c-19.213898,0 -34.702637,11.313385 -34.702637,25.381638l2.067108,331.393738c-0.541626,12.004639 -21.82782,14.132568 -25.840179,5.350525l-48.860977,-107.3638c-18.205521,-20.29129 -33.748306,-17.749786 -57.954971,-12.697418c-16.44838,3.434479 -23.259354,25.003143 -14.903671,42.375824l62.489822,183.783539l106.343994,158.572876l26.150177,73.726135l240.894897,-1.64563l65.610596,-264.554016c4.320618,-23.068237 -1.339172,-126.481506 -0.611206,-135.425873l0,-88.626038c-4.797791,-18.139984 -13.796082,-29.231171 -30.559692,-27.28891c-19.248657,0 -29.135071,13.220642 -29.135071,27.28891l0,87.718445c3.359253,11.890717 -25.659119,14.988983 -24.419189,-0.059937l0,-132.494019c0,-14.068268 -15.507935,-25.40213 -34.756592,-25.40213l-0.163696,0c-19.248688,0 -34.72876,11.333862 -34.72876,25.40213l0,106.405029c3.507324,12.862579 -34.373535,16.62439 -33.535858,-0.059937l0,-161.69458c0,-14.068268 -15.507996,-25.383087 -34.756683,-25.383087c-19.250397,0 -34.758331,11.314819 -34.758331,25.383087l0,169.966644c1.522003,11.79126 -28.424591,14.762451 -29.194336,-0.03949l0,-254.632019c0,-14.068253 -15.460938,-25.381638 -34.674744,-25.381638l0,0l0,0l0,0l0,0l0,0z" id="rect3906" stroke-dashoffset="0" stroke-miterlimit="4" fill-rule="nonzero" fill="#ffffff"/>
+<svg width="450" height="490" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient y2="1" x2="1" id="svg_7">
+      <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
+      <stop offset="1" stop-opacity="0.996094" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_8">
+      <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
+      <stop offset="1" stop-opacity="0.996094" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_9">
+      <stop offset="0" stop-opacity="0.992188" stop-color="#000000"/>
+      <stop offset="1" stop-opacity="0.996094" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="0" x2="1" id="svg_10">
+      <stop offset="0" stop-opacity="0.992188" stop-color="#000000"/>
+      <stop offset="1" stop-opacity="0.996094" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_11">
+      <stop offset="0" stop-opacity="0.992188" stop-color="#000000"/>
+      <stop offset="1" stop-opacity="0.996094" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_12">
+      <stop offset="0" stop-opacity="0.992188" stop-color="#000000"/>
+      <stop offset="1" stop-opacity="0.988281" stop-color="#640000"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_13">
+      <stop offset="0" stop-opacity="0.992188" stop-color="#000000"/>
+      <stop offset="1" stop-opacity="0.984375" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_14">
+      <stop offset="0" stop-opacity="0.992188" stop-color="#000000"/>
+      <stop offset="1" stop-opacity="0.980469" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_15">
+      <stop offset="0" stop-opacity="0.992188" stop-color="#000000"/>
+      <stop offset="1" stop-opacity="0.984375" stop-color="#000064"/>
+    </linearGradient>
+  </defs>
+  <metadata id="metadata7">image/svg+xml</metadata>
+  <g>
+    <title>Layer 1</title>
+    <g id="layer1">
+      <path fill="#000096" fill-opacity="0.461187" fill-rule="nonzero" stroke="#0000fa" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" d="m382.142822,219.857178a159.285706,159.285706 0 1 1 -318.571396,0a159.285706,159.285706 0 1 1 318.571396,0z" id="path3159"/>
+      <path fill="#000096" fill-opacity="0.461187" fill-rule="nonzero" stroke="#0000fa" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" d="m329.285706,219.857178a106.428574,106.428574 0 1 1 -212.857162,0a106.428574,106.428574 0 1 1 212.857162,0z" id="path3161"/>
+      <path fill="#000096" fill-rule="nonzero" stroke="#0000fa" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" d="m232.142838,219.857178a9.285712,9.285712 0 1 1 -18.571411,0a9.285712,9.285712 0 1 1 18.571411,0z" id="path3165"/>
+      <path fill="#000096" fill-rule="evenodd" stroke="#0000fa" stroke-width="1px" id="path3189" d="m155.714279,219.857178l-130.714279,0"/>
+      <path fill="#000096" fill-rule="evenodd" stroke="#0000fa" stroke-width="1px" id="path3191" d="m222.857132,152.714294l0,-130.714294"/>
+      <path fill="#000096" fill-rule="evenodd" stroke="#0000fa" stroke-width="1px" id="path3193" d="m289.285706,219.857178l130.714325,0"/>
+      <path fill="#000096" fill-rule="evenodd" stroke="#0000fa" stroke-width="1px" id="path3195" d="m222.857132,287.000031l0,130.714294"/>
+    </g>
+    <g id="svg_6">
+      <polygon fill="url(#svg_15)" id="svg_5" points="223.463 218.002 222.837 216.924 222.924 217.594 222.385 217.185 223.01 218.266 247.032 408.101 290.864 357.205 356.031 470.079 365.304 464.726 365.757 464.465 375.028 459.112 309.863 346.237 375.853 333.724"/>
+    </g>
   </g>
-  <g id="layer1"/>
- </g>
 </svg>
