@@ -28,7 +28,7 @@ public:
 	virtual void reset();
 
 	virtual QString friendlyTypeName(){return "Lfp Data";};
-	virtual QString getUITemplate(){return "Sensor";};
+	virtual QString getUITemplate(){return "LFPDataSource";};
 	virtual QString getUIGroup(){return "Sensors";};
 
 public slots:

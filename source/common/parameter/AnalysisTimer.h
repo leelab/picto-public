@@ -32,8 +32,9 @@ public:
 	void setValue(int val){restart();time_ = val;};
 
 	virtual QString friendlyTypeName(){return "Timer";};
-	virtual QString getUITemplate(){return "Sensor";};
+	virtual QString getUITemplate(){return "TimeDataSource";};
 	virtual QString getUIGroup(){return "Sensors";};
+
 
 protected:
 	virtual void postDeserialize();

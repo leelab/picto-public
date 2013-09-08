@@ -25,6 +25,7 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	//Resets the VariableList Object to its initial state.
+	virtual QString getUITemplate(){return "ListVariable";};
 	virtual QString friendlyTypeName(){return "Variable List";};
 	
 public slots:

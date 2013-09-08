@@ -42,6 +42,7 @@ public:
 	QPoint getPositionOffset();
 
 	virtual QString friendlyTypeName(){return "Diamond";};
+	virtual QString getUITemplate(){return "DiamondElement";};
 	static const QString type;
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};

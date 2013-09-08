@@ -50,6 +50,7 @@ public:
 
 	static const QString type;
 
+	virtual QString getUITemplate(){return "TokenFactoryElement";};
 	virtual QString friendlyTypeName(){return "Token Factory";};
 public slots:
 	void setTokenDimensions(int w, int h){setTokenWidth(w);setTokenHeight(h);};

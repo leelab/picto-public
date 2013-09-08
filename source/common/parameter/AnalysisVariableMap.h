@@ -26,6 +26,7 @@ public:
 
 	virtual void reset();
 
+	virtual QString getUITemplate(){return "MapVariable";};
 	virtual QString friendlyTypeName(){return "Variable Map";};
 	
 public slots:

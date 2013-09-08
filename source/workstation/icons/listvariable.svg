@@ -1,0 +1,23 @@
+<svg width="180" height="105" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Raven (http://www.aviary.com)</desc>
+  <g>
+    <title>Layer 1</title>
+    <g id="Layer_DCCB221B-BFEA-FFC1-DF2E-67EBEB888B80"/>
+    <text fill="#0000ff" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="29.500031" y="27.590908" id="svg_2" font-size="40" font-family="Sans-serif" text-anchor="middle" xml:space="preserve"/>
+    <path d="m82,41m0,0c0,-1.900002 0.699997,-2 11,-2c10.300003,0 11,0.099998 11,2c0,1.900002 -0.699997,2 -11,2c-10.300003,0 -11,-0.099998 -11,-2" id="ShapeObject_9A946872-09C3-5825-79C1-67EC7D854516" fill="#0000ff"/>
+    <path d="m82,32m0,0c0,-1.900002 0.699997,-2 11,-2c10.300003,0 11,0.099998 11,2c0,1.900002 -0.699997,2 -11,2c-10.300003,0 -11,-0.099998 -11,-2" id="ShapeObject_E622E861-3176-F5EE-6624-67EC7D86F28A" fill="#0000ff"/>
+    <text fill="#000009" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="30.500031" y="45.590908" id="svg_6" font-size="40" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">x</text>
+    <text fill="#000009" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="56.500031" y="44.590908" id="svg_8" font-size="30" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">[0]</text>
+    <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="30" id="svg_1" y="45.590908" x="122.500031" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" fill="#000009">#</text>
+    <text id="svg_3" fill="#0000ff" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="30.497193" y="64.049007" font-size="40" font-family="Sans-serif" text-anchor="middle" xml:space="preserve"/>
+    <g id="svg_12">
+      <text id="svg_7" fill="#000009" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="30.497193" y="82.049007" font-size="40" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">x</text>
+      <text style="cursor: move;" id="svg_9" fill="#000009" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="56.497193" y="81.049007" font-size="30" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">[1]</text>
+      <text id="svg_10" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="30" y="81.049007" x="135.497192" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" fill="#000009">"..."</text>
+      <g id="svg_11">
+        <path id="svg_4" d="m81.997162,77.458099m0,0c0,-1.899994 0.700012,-2 11.000031,-2c10.299988,0 11,0.100006 11,2c0,1.899994 -0.700012,2 -11,2c-10.300018,0 -11.000031,-0.100006 -11.000031,-2" fill="#0000ff"/>
+        <path id="svg_5" d="m81.997162,68.458099m0,0c0,-1.899994 0.700012,-2 11.000031,-2c10.299988,0 11,0.100006 11,2c0,1.899994 -0.700012,2 -11,2c-10.300018,0 -11.000031,-0.100006 -11.000031,-2" fill="#0000ff"/>
+      </g>
+    </g>
+  </g>
+</svg>

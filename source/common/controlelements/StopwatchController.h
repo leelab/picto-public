@@ -39,6 +39,7 @@ public:
 	void setTime(int time){propertyContainer_->setPropertyValue("Time",time);};
 	int getTime(){return propertyContainer_->getPropertyValue("Time").toInt();};
 
+	virtual QString getUITemplate(){return "StopwatchController";};
 	virtual QString friendlyTypeName(){return "Stopwatch Controller";};
 	////DataStore Functions
 	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

@@ -47,6 +47,7 @@ public:
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
+	virtual QString getUITemplate(){return "IntegerParameter";};
 	virtual QString friendlyTypeName(){return "Integer Range";};
 
 	virtual bool valuesAreValid(QString& warning = QString());

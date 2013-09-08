@@ -59,6 +59,7 @@ public:
 	int getTotalTime(){return propertyContainer_->getPropertyValue("TotalTime").toInt();};
 	void setTotalTime(int time){propertyContainer_->setPropertyValue("TotalTime",time);};
 
+	virtual QString getUITemplate(){return "ChoiceController";};
 	virtual QString friendlyTypeName(){return "Choice Controller";};
 public slots:
 	bool userOnTarget();

@@ -1,0 +1,52 @@
+<svg width="1000" height="750" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <metadata id="metadata2494">image/svg+xml</metadata>
+  <defs>
+    <circle r="1" id="gpDot"/>
+    <path stroke-width="0.133" d="m-1,0l2,0m-1,-1l0,2" id="gpPt0"/>
+    <path stroke-width="0.133" d="m-1,-1l2,2m0,-2l-2,2" id="gpPt1"/>
+    <path stroke-width="0.133" d="m-1,0l2,0m-1,-1l0,2m-1,-2l2,2m-2,0l2,-2" id="gpPt2"/>
+    <rect stroke-width="0.133" height="2" width="2" y="-1" x="-1" id="gpPt3"/>
+    <use fill="currentColor" id="gpPt4" xlink:href="#gpPt3"/>
+    <circle stroke-width="0.133" r="1" cy="0" cx="0" id="gpPt5"/>
+    <use fill="currentColor" id="gpPt6" xlink:href="#gpPt5"/>
+    <path stroke-width="0.133" d="m0,-1.33l-1.33,2l2.66,0l-1.33,-2z" id="gpPt7"/>
+    <use fill="currentColor" id="gpPt8" xlink:href="#gpPt7"/>
+    <use transform="rotate(180)" id="gpPt9" xlink:href="#gpPt7"/>
+    <use fill="currentColor" id="gpPt10" xlink:href="#gpPt9"/>
+    <use transform="rotate(45)" id="gpPt11" xlink:href="#gpPt3"/>
+    <use fill="currentColor" id="gpPt12" xlink:href="#gpPt11"/>
+  </defs>
+  <g>
+    <title>Layer 1</title>
+    <g id="grid">
+      <g font-size="12" fill="none" stroke="#7f7f7f" stroke-width="5" stroke-dasharray="5 10 " stroke-dashoffset="0" id="g2357">
+        <path stroke="#7f7f7f" stroke-width="5" stroke-miterlimit="4" stroke-dasharray="5,9.999999" stroke-dashoffset="0" d="m41,604l918,0" id="path2359"/>
+      </g>
+      <g font-size="12" fill="none" stroke="#7f7f7f" stroke-width="5" stroke-dasharray="5 10 " stroke-dashoffset="0" id="g2381">
+        <path stroke="#7f7f7f" stroke-width="5" stroke-miterlimit="4" stroke-dasharray="5,10" stroke-dashoffset="0" d="m41,142l918,0" id="path2383"/>
+      </g>
+      <g font-size="12" fill="none" stroke="#7f7f7f" stroke-width="5" stroke-dasharray="5 10 " stroke-dashoffset="0" id="g2417">
+        <path stroke="#7f7f7f" stroke-width="5" stroke-miterlimit="4" stroke-dasharray="5,10" stroke-dashoffset="0" d="m347,720l0,-694" id="path2419"/>
+      </g>
+      <g font-size="12" fill="none" stroke="#7f7f7f" stroke-width="5" stroke-dasharray="5 10 " stroke-dashoffset="0" id="g2441">
+        <path stroke="#7f7f7f" stroke-width="5" stroke-miterlimit="4" stroke-dasharray="5,10" stroke-dashoffset="0" d="m653,720l0,-694" id="path2443"/>
+      </g>
+      <g font-size="12" fill="none" stroke="#7f7f7f" stroke-width="5" stroke-dashoffset="0" id="g2477">
+        <path fill="none" stroke="#7f7f7f" stroke-width="5" stroke-miterlimit="4" stroke-dashoffset="0" id="path2479" d="m41,373l918,0"/>
+      </g>
+      <path fill="none" stroke="#7f7f7f" stroke-width="5" stroke-dasharray="5 10 " stroke-dashoffset="0" d="m41,720l0,-694" id="path730"/>
+    </g>
+    <path stroke="#000000" fill="none" fill-rule="evenodd" stroke-width="4.999998" stroke-linejoin="round" id="path695" d="m303.459198,514.799011l34.437805,10.094971l-34.437805,10.093994m-227.685028,-20.188965l-34.43877,10.094971l34.43877,10.093994m-34.43877,-10.093994l296.561604,0"/>
+    <text fill="black" font-family="Arial" font-style="normal" font-weight="normal" font-size="100" text-anchor="start" stroke-width="1pt" xml:space="default" id="text697" y="493.082256" x="138.966273">
+      <tspan id="tspan704" y="497.082245" x="86.96627">t</tspan>
+    </text>
+    <text fill="black" font-family="Arial" font-style="normal" font-weight="normal" font-size="56" text-anchor="start" stroke-width="1pt" xml:space="default" id="text706" y="510.064921" x="177">
+      <tspan id="tspan714" y="514.064941" x="125">1</tspan>
+    </text>
+    <path stroke="#000000" fill="none" fill-rule="evenodd" stroke-width="4.999999" stroke-linejoin="round" id="path696" d="m41.37001,636.326782l537.461044,0m-521.932545,-10.950806l-15.528481,10.950806l15.528481,10.949646m506.403248,-21.900452l15.529297,10.950806l-15.529297,10.950684"/>
+    <path fill="none" fill-opacity="0.75" fill-rule="evenodd" stroke="blue" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" id="graph" d="m41,373l0,-231l306,0l0,233l253,-1c0,-77 0,-155 0,-232l309,0l-2,231l48,0"/>
+    <text xml:space="preserve" text-anchor="middle" font-family="serif" font-size="120" id="svg_1" y="299.545441" x="196.454544" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" stroke="blue" fill="#0000ff">0x7E</text>
+    <text id="svg_2" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="120" y="299.906944" x="757.183243" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" fill="#0000ff" stroke="blue">0x7F</text>
+    <text xml:space="preserve" text-anchor="middle" font-family="Arial" font-size="100" id="svg_7" y="624.545441" x="321.454544" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="1pt" fill="black">T</text>
+  </g>
+</svg>

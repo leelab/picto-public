@@ -45,6 +45,7 @@ public:
 	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Box";};
+	virtual QString getUITemplate(){return "BoxElement";};
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 

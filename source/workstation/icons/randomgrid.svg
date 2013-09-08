@@ -1,0 +1,80 @@
+<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient xlink:href="#linearGradient10073" id="linearGradient10214" x1="-0.280518" y1="-0.552782" x2="1.280445" y2="1.503816"/>
+    <linearGradient id="linearGradient10073">
+      <stop offset="0" id="stop10075" stop-color="#0044aa"/>
+      <stop offset="1" id="stop10077" stop-opacity="0" stop-color="#0044aa"/>
+    </linearGradient>
+    <linearGradient xlink:href="#linearGradient10073" id="linearGradient10216" x1="-0.280486" y1="-0.552782" x2="1.280477" y2="1.503816"/>
+    <linearGradient id="svg_2">
+      <stop stop-color="#ff0000" stop-opacity="0.996094" offset="0"/>
+      <stop stop-color="#640000" stop-opacity="0.996094" offset="1"/>
+    </linearGradient>
+    <pattern height="100" width="100" y="0" x="0" patternUnits="userSpaceOnUse" id="gridpattern">
+      <image height="100" width="100" y="0" x="0"/>
+    </pattern>
+    <linearGradient y2="1" x2="1" id="svg_3">
+      <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
+      <stop offset="1" stop-opacity="0.996094" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y2="1" x2="1" id="svg_4">
+      <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#NaNNaNNaN"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_5">
+      <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#NaNNaNNaN"/>
+    </linearGradient>
+    <linearGradient id="svg_6">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient y2="1" x2="1" y1="0" x1="0" id="svg_7">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient y2="0.523438" x2="0.4245" y1="0" x1="0" id="svg_8">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient id="svg_9">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_12">
+      <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#NaNNaNNaN"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_13">
+      <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
+      <stop stop-opacity="0.996094" offset="1" stop-color="#000064"/>
+    </linearGradient>
+  </defs>
+  <metadata>image/svg+xmlOpen Clip Art Libraryvector x2011-07-26T19:16:26http://openclipart.org/detail/152029/vector-x-by-gblas.ivangblas.ivanalgebraaxiscalculusclip artclipartformulamathematicsplotplottingvectorxy</metadata>
+  <g>
+    <title>Layer 1</title>
+    <g id="g10017" stroke="#0055d4">
+      <g id="svg_10">
+        <g id="g10019" stroke="#0055d4">
+          <path d="m288.996002,265.997986l-276.996002,0" id="path10021" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+          <path id="path10023" d="m288.996002,209.740005l-276.996002,0" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+          <path d="m288.996002,153.483002l-276.996002,0" id="path10025" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+          <path id="path10027" d="m288.996002,97.225197l-276.996002,0" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+          <path d="m288.996002,40.967201l-276.996002,0" id="path10029" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+        </g>
+        <path id="path10033" d="m263.022888,14.999651l0,276.972273" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+        <path d="m206.765152,14.999651l0,276.972273" id="path10035" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+        <path id="path10037" d="m150.507416,14.999651l0,276.972273" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+        <path d="m94.249352,14.999651l0,276.972273" id="path10039" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+        <path id="path10041" d="m37.991623,14.999651l0,276.972273" stroke-miterlimit="4" stroke-width="10" fill="url(#svg_5)" stroke="#0000ff"/>
+      </g>
+    </g>
+    <rect id="svg_11" height="54" width="54" y="41" x="38" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000c8" fill="url(#svg_13)"/>
+    <rect id="svg_14" height="54" width="54" y="158" x="152" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000c8" fill="url(#svg_13)"/>
+    <rect id="svg_15" height="54" width="54" y="43" x="210" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000c8" fill="url(#svg_13)"/>
+    <rect id="svg_16" height="54" width="54" y="212" x="94" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000c8" fill="url(#svg_13)"/>
+    <rect id="svg_17" height="54" width="54" y="101" x="39" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000c8" fill="url(#svg_13)"/>
+    <rect id="svg_18" height="54" width="54" y="39.666664" x="150.666687" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000c8" fill="url(#svg_13)"/>
+    <rect id="svg_19" height="54" width="54" y="210.666664" x="207.666687" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000c8" fill="url(#svg_13)"/>
+  </g>
+</svg>

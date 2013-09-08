@@ -50,6 +50,7 @@ public:
 	QPoint getPositionOffset();
 
 	virtual QString friendlyTypeName(){return "Random Fill Grid";};
+	virtual QString getUITemplate(){return "RandomGridElement";};
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

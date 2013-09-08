@@ -1,0 +1,85 @@
+<svg width="822.0177" height="567.00085" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="linearGradient3943">
+      <stop offset="0" id="stop3945" stop-color="#19007d"/>
+      <stop offset="1" id="stop3947" stop-opacity="0.632959" stop-color="#19007d"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3935">
+      <stop id="stop3937" offset="0" stop-color="#daefec"/>
+      <stop offset="0.213749" id="stop3939" stop-color="#719ca7"/>
+      <stop id="stop3941" offset="1" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3927">
+      <stop id="stop3929" offset="0" stop-color="#daefec"/>
+      <stop offset="0.480484" id="stop3931" stop-color="#719ca7"/>
+      <stop id="stop3933" offset="1" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3919">
+      <stop id="stop3921" offset="0" stop-color="#daefec"/>
+      <stop offset="0.310737" id="stop3923" stop-color="#719ca7"/>
+      <stop id="stop3925" offset="1" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3911">
+      <stop id="stop3913" offset="0" stop-color="#daefec"/>
+      <stop offset="0.189705" id="stop3915" stop-color="#719ca7"/>
+      <stop id="stop3917" offset="1" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3903">
+      <stop id="stop3905" offset="0" stop-color="#daefec"/>
+      <stop offset="0.504147" id="stop3907" stop-color="#719ca7"/>
+      <stop id="stop3909" offset="1" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3895">
+      <stop id="stop3897" offset="0" stop-color="#daefec"/>
+      <stop offset="0.482258" id="stop3899" stop-color="#719ca7"/>
+      <stop id="stop3901" offset="1" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3887">
+      <stop id="stop3889" offset="0" stop-color="#daefec"/>
+      <stop offset="0.275127" id="stop3891" stop-color="#719ca7"/>
+      <stop id="stop3893" offset="1" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3167">
+      <stop offset="0" id="stop3169" stop-color="#daefec"/>
+      <stop id="stop3885" offset="0.5" stop-color="#719ca7"/>
+      <stop offset="1" id="stop3171" stop-color="#094a62"/>
+    </linearGradient>
+    <linearGradient xlink:href="#linearGradient3167" id="linearGradient3177" x1="122.125" y1="495.875" x2="214" y2="604" gradientUnits="userSpaceOnUse"/>
+    <linearGradient xlink:href="#linearGradient3895" id="linearGradient3871" gradientUnits="userSpaceOnUse" x1="696.87329" y1="278.10086" x2="800.74829" y2="759.06165" gradientTransform="matrix(1.0198331,0,0,0.9998761,-13.851265,0.06423514)"/>
+    <linearGradient xlink:href="#linearGradient3911" id="linearGradient3873" gradientUnits="userSpaceOnUse" x1="796.99829" y1="581.10083" x2="900.87329" y2="759.06018"/>
+    <linearGradient xlink:href="#linearGradient3919" id="linearGradient3875" gradientUnits="userSpaceOnUse" x1="915.81647" y1="645.12006" x2="999.69147" y2="759.06024"/>
+    <linearGradient xlink:href="#linearGradient3887" id="linearGradient3877" gradientUnits="userSpaceOnUse" x1="597.93579" y1="451.10086" x2="701.81079" y2="759.06165"/>
+    <linearGradient xlink:href="#linearGradient3903" id="linearGradient3879" gradientUnits="userSpaceOnUse" x1="498.93579" y1="278.10086" x2="602.81079" y2="759.06165"/>
+    <linearGradient xlink:href="#linearGradient3927" id="linearGradient3881" gradientUnits="userSpaceOnUse" x1="399.94086" y1="321.24619" x2="503.81586" y2="759.06165"/>
+    <linearGradient xlink:href="#linearGradient3935" id="linearGradient3883" gradientUnits="userSpaceOnUse" x1="300.94086" y1="537.93665" x2="404.81586" y2="759.06165"/>
+    <linearGradient xlink:href="#linearGradient3943" id="linearGradient3957" x1="485" y1="602" x2="490" y2="37.000004" gradientUnits="userSpaceOnUse"/>
+    <linearGradient xlink:href="#linearGradient3167" id="linearGradient3056" x1="0.091954" y1="-1.495549" x2="1.030651" y2="1.071217"/>
+    <linearGradient xlink:href="#linearGradient3935" id="linearGradient3058" x1="-0.030651" y1="-0.013945" x2="1.030651" y2="1.013945"/>
+    <linearGradient xlink:href="#linearGradient3927" id="linearGradient3060" x1="-0.030651" y1="-0.006947" x2="1.030651" y2="1.006947"/>
+    <linearGradient xlink:href="#linearGradient3903" id="linearGradient3062" x1="-0.030651" y1="-0.006316" x2="1.030651" y2="1.006316"/>
+    <linearGradient xlink:href="#linearGradient3887" id="linearGradient3064" x1="-0.030651" y1="-0.009935" x2="1.030651" y2="1.009935"/>
+    <linearGradient xlink:href="#linearGradient3895" id="linearGradient3066" x1="-0.030652" y1="-0.006316" x2="1.030651" y2="1.006316"/>
+    <linearGradient xlink:href="#linearGradient3911" id="linearGradient3068" x1="-0.030651" y1="-0.017446" x2="1.030651" y2="1.017446"/>
+    <linearGradient xlink:href="#linearGradient3919" id="linearGradient3070" x1="0.173691" y1="-1.6452" x2="1.030651" y2="1.07153"/>
+    <linearGradient xlink:href="#linearGradient3943" id="linearGradient3072" x1="0.978892" y1="1.049618" x2="0.992084" y2="-0.028626"/>
+  </defs>
+  <metadata id="metadata7">image/svg+xml</metadata>
+  <g>
+    <title>Layer 1</title>
+    <g id="layer1">
+      <rect id="rect3074" width="822" height="567" x="0.008848" y="0.000429" fill="#ffffff"/>
+      <g id="g3045">
+        <rect y="521.875" x="14.13385" height="42.125" width="97.875" id="rect4342" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3056)"/>
+        <rect id="rect4346" width="97.875" height="215.125" x="113.008868" y="348.874989" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3058)"/>
+        <rect y="132.184529" x="212.008868" height="431.81546" width="97.875" id="rect4348" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3060)"/>
+        <rect id="rect4350" width="97.875" height="474.96078" x="311.003798" y="89.039199" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3062)"/>
+        <rect y="262.039199" x="410.003798" height="301.96078" width="97.875" id="rect4352" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3064)"/>
+        <rect y="89.068619" x="508.970718" height="474.90195" width="99.81617" id="rect4354" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6.058832" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3066)"/>
+        <rect id="rect4358" width="97.875008" height="171.95938" x="609.066298" y="392.039169" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3068)"/>
+        <rect y="522.058399" x="707.884478" height="41.940189" width="97.875008" id="rect4360" stroke-dashoffset="0" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="square" stroke-width="6" stroke="#0c2145" fill-rule="evenodd" fill="url(#linearGradient3070)"/>
+        <path id="path4362" d="m15.00885,539c175.088959,-46.914948 264.995605,-524 379,-524c129,0 185.409729,474.017395 413,535" stroke-miterlimit="4" stroke-linecap="round" stroke-width="30" stroke="url(#linearGradient3072)" fill="none"/>
+      </g>
+    </g>
+    <text fill="#ffffff" stroke="#ffffff" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="388.00885" y="474.817322" id="svg_1" font-size="100" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">3,2,1,5,4</text>
+  </g>
+</svg>

@@ -115,5 +115,35 @@
         <file>icons/export_analysis.png</file>
         <file>icons/copy.png</file>
         <file>icons/playall.png</file>
+        <file>icons/rewarddatasource.svg</file>
+        <file>icons/ellipse.svg</file>
+        <file>icons/diamond.svg</file>
+        <file>icons/circle.svg</file>
+        <file>icons/box.svg</file>
+        <file>icons/SignalDataSource.svg</file>
+        <file>icons/grid.svg</file>
+        <file>icons/text.svg</file>
+        <file>icons/randomgrid.svg</file>
+        <file>icons/operatorinfo.svg</file>
+        <file>icons/shapeshifter.svg</file>
+        <file>icons/binarysignal.svg</file>
+        <file>icons/tokenfactory.svg</file>
+        <file>icons/tokentray.svg</file>
+        <file>icons/rectangletarget.svg</file>
+        <file>icons/listvariable.svg</file>
+        <file>icons/mapvariable.svg</file>
+        <file>icons/numbervariable.svg</file>
+        <file>icons/stringvariable.svg</file>
+        <file>icons/booleanparameter.svg</file>
+        <file>icons/colorparameter.svg</file>
+        <file>icons/floatparameter.svg</file>
+        <file>icons/integerparameter.svg</file>
+        <file>icons/pseudorandomfloat.svg</file>
+        <file>icons/randomint.svg</file>
+        <file>icons/pseudorandomint.svg</file>
+        <file>icons/choicecontroller.svg</file>
+        <file>icons/scriptcontroller.svg</file>
+        <file>icons/stopwatchcontroller.svg</file>
+        <file>icons/targetcontroller.svg</file>
     </qresource>
 </RCC>

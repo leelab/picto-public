@@ -44,6 +44,7 @@ public:
 	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Ellipse";};
+	virtual QString getUITemplate(){return "EllipseElement";};
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 

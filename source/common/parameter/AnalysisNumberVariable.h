@@ -28,6 +28,7 @@ public:
 	double getValue(){return propertyContainer_->getPropertyValue("Value").toDouble();};
 	void setValue(double val){propertyContainer_->setPropertyValue("Value",val);};
 
+	virtual QString getUITemplate(){return "NumberVariable";};
 	virtual QString friendlyTypeName(){return "Number Variable";};
 
 protected:

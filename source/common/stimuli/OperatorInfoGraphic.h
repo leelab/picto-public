@@ -35,7 +35,7 @@ public:
 	virtual void reset();
 	static const QString type;
 	virtual QString friendlyTypeName(){return "Operator Info";};
-
+	virtual QString getUITemplate(){return "OperatorInfoElement";};
 public slots:
 	void setData(QString field, QVariant value);
 	int getDataAsInt(QString field){return getData(field).toInt();};

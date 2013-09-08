@@ -28,6 +28,7 @@ public:
 	QString getValue(){return propertyContainer_->getPropertyValue("Value").toString();};
 	void setValue(QString val){propertyContainer_->setPropertyValue("Value",val);};
 
+	virtual QString getUITemplate(){return "StringVariable";};
 	virtual QString friendlyTypeName(){return "String Variable";};
 
 protected:

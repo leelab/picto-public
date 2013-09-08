@@ -1,0 +1,85 @@
+<svg width="822.0177" height="567.00085" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="linearGradient3943">
+      <stop stop-color="#19007d" id="stop3945" offset="0"/>
+      <stop stop-color="#19007d" stop-opacity="0.632959" id="stop3947" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3935">
+      <stop stop-color="#daefec" offset="0" id="stop3937"/>
+      <stop stop-color="#719ca7" id="stop3939" offset="0.213749"/>
+      <stop stop-color="#094a62" offset="1" id="stop3941"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3927">
+      <stop stop-color="#daefec" offset="0" id="stop3929"/>
+      <stop stop-color="#719ca7" id="stop3931" offset="0.480484"/>
+      <stop stop-color="#094a62" offset="1" id="stop3933"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3919">
+      <stop stop-color="#daefec" offset="0" id="stop3921"/>
+      <stop stop-color="#719ca7" id="stop3923" offset="0.310737"/>
+      <stop stop-color="#094a62" offset="1" id="stop3925"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3911">
+      <stop stop-color="#daefec" offset="0" id="stop3913"/>
+      <stop stop-color="#719ca7" id="stop3915" offset="0.189705"/>
+      <stop stop-color="#094a62" offset="1" id="stop3917"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3903">
+      <stop stop-color="#daefec" offset="0" id="stop3905"/>
+      <stop stop-color="#719ca7" id="stop3907" offset="0.504147"/>
+      <stop stop-color="#094a62" offset="1" id="stop3909"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3895">
+      <stop stop-color="#daefec" offset="0" id="stop3897"/>
+      <stop stop-color="#719ca7" id="stop3899" offset="0.482258"/>
+      <stop stop-color="#094a62" offset="1" id="stop3901"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3887">
+      <stop stop-color="#daefec" offset="0" id="stop3889"/>
+      <stop stop-color="#719ca7" id="stop3891" offset="0.275127"/>
+      <stop stop-color="#094a62" offset="1" id="stop3893"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3167">
+      <stop stop-color="#daefec" id="stop3169" offset="0"/>
+      <stop stop-color="#719ca7" offset="0.5" id="stop3885"/>
+      <stop stop-color="#094a62" id="stop3171" offset="1"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" y2="604" x2="214" y1="495.875" x1="122.125" id="linearGradient3177" xlink:href="#linearGradient3167"/>
+    <linearGradient gradientTransform="matrix(1.0198331,0,0,0.9998761,-13.851265,0.06423514)" y2="759.06165" x2="800.74829" y1="278.10086" x1="696.87329" gradientUnits="userSpaceOnUse" id="linearGradient3871" xlink:href="#linearGradient3895"/>
+    <linearGradient y2="759.06018" x2="900.87329" y1="581.10083" x1="796.99829" gradientUnits="userSpaceOnUse" id="linearGradient3873" xlink:href="#linearGradient3911"/>
+    <linearGradient y2="759.06024" x2="999.69147" y1="645.12006" x1="915.81647" gradientUnits="userSpaceOnUse" id="linearGradient3875" xlink:href="#linearGradient3919"/>
+    <linearGradient y2="759.06165" x2="701.81079" y1="451.10086" x1="597.93579" gradientUnits="userSpaceOnUse" id="linearGradient3877" xlink:href="#linearGradient3887"/>
+    <linearGradient y2="759.06165" x2="602.81079" y1="278.10086" x1="498.93579" gradientUnits="userSpaceOnUse" id="linearGradient3879" xlink:href="#linearGradient3903"/>
+    <linearGradient y2="759.06165" x2="503.81586" y1="321.24619" x1="399.94086" gradientUnits="userSpaceOnUse" id="linearGradient3881" xlink:href="#linearGradient3927"/>
+    <linearGradient y2="759.06165" x2="404.81586" y1="537.93665" x1="300.94086" gradientUnits="userSpaceOnUse" id="linearGradient3883" xlink:href="#linearGradient3935"/>
+    <linearGradient gradientUnits="userSpaceOnUse" y2="37.000004" x2="490" y1="602" x1="485" id="linearGradient3957" xlink:href="#linearGradient3943"/>
+    <linearGradient y2="1.071217" x2="1.030651" y1="-1.495549" x1="0.091954" id="linearGradient3056" xlink:href="#linearGradient3167"/>
+    <linearGradient y2="1.013945" x2="1.030651" y1="-0.013945" x1="-0.030651" id="linearGradient3058" xlink:href="#linearGradient3935"/>
+    <linearGradient y2="1.006947" x2="1.030651" y1="-0.006947" x1="-0.030651" id="linearGradient3060" xlink:href="#linearGradient3927"/>
+    <linearGradient y2="1.006316" x2="1.030651" y1="-0.006316" x1="-0.030651" id="linearGradient3062" xlink:href="#linearGradient3903"/>
+    <linearGradient y2="1.009935" x2="1.030651" y1="-0.009935" x1="-0.030651" id="linearGradient3064" xlink:href="#linearGradient3887"/>
+    <linearGradient y2="1.006316" x2="1.030651" y1="-0.006316" x1="-0.030652" id="linearGradient3066" xlink:href="#linearGradient3895"/>
+    <linearGradient y2="1.017446" x2="1.030651" y1="-0.017446" x1="-0.030651" id="linearGradient3068" xlink:href="#linearGradient3911"/>
+    <linearGradient y2="1.07153" x2="1.030651" y1="-1.6452" x1="0.173691" id="linearGradient3070" xlink:href="#linearGradient3919"/>
+    <linearGradient y2="-0.028626" x2="0.992084" y1="1.049618" x1="0.978892" id="linearGradient3072" xlink:href="#linearGradient3943"/>
+  </defs>
+  <metadata id="metadata7">image/svg+xml</metadata>
+  <g>
+    <title>Layer 1</title>
+    <g id="layer1">
+      <rect fill="#ffffff" y="0.000429" x="0.008848" height="567" width="822" id="rect3074"/>
+      <g id="g3045">
+        <rect fill="url(#linearGradient3056)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" id="rect4342" width="97.875" height="42.125" x="14.13385" y="521.875"/>
+        <rect fill="url(#linearGradient3058)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" y="348.874989" x="113.008868" height="215.125" width="97.875" id="rect4346"/>
+        <rect fill="url(#linearGradient3060)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" id="rect4348" width="97.875" height="431.81546" x="212.008868" y="132.184529"/>
+        <rect fill="url(#linearGradient3062)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" y="89.039199" x="311.003798" height="474.96078" width="97.875" id="rect4350"/>
+        <rect fill="url(#linearGradient3064)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" id="rect4352" width="97.875" height="301.96078" x="410.003798" y="262.039199"/>
+        <rect fill="url(#linearGradient3066)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6.058832" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" id="rect4354" width="99.81617" height="474.90195" x="508.970718" y="89.068619"/>
+        <rect fill="url(#linearGradient3068)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" y="392.039169" x="609.066298" height="171.95938" width="97.875008" id="rect4358"/>
+        <rect fill="url(#linearGradient3070)" fill-rule="evenodd" stroke="#0c2145" stroke-width="6" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="4" stroke-dashoffset="0" id="rect4360" width="97.875008" height="41.940189" x="707.884478" y="522.058399"/>
+        <path fill="none" stroke="url(#linearGradient3072)" stroke-width="30" stroke-linecap="round" stroke-miterlimit="4" d="m15.00885,539c175.088959,-46.914948 264.995605,-524 379,-524c129,0 185.409729,474.017395 413,535" id="path4362"/>
+      </g>
+    </g>
+    <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="90" id="svg_1" y="474.817322" x="400.00885" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#ffffff" fill="#ffffff">3,1,1,2</text>
+  </g>
+</svg>

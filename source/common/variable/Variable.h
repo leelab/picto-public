@@ -27,7 +27,7 @@ public:
 	Variable();
 	virtual ~Variable(){};
 
-	virtual QString getUITemplate(){return "Variable";};
+	virtual QString getUITemplate(){return "NumberVariable";};
 	virtual QString friendlyTypeName(){return "Variable";};
 	virtual QString getUIGroup(){return "Variables";};
 

@@ -27,6 +27,7 @@ public:
 	virtual void reset();
 
 	//Resets the AnalysisVariableList Object to its initial state.
+	virtual QString getUITemplate(){return "ListVariable";};
 	virtual QString friendlyTypeName(){return "Variable List";};
 	
 public slots:

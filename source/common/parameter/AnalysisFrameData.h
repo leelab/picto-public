@@ -28,7 +28,7 @@ public:
 	virtual void reset();
 
 	virtual QString friendlyTypeName(){return "Frame Data";};
-	virtual QString getUITemplate(){return "Sensor";};
+	virtual QString getUITemplate(){return "FrameDataSource";};
 	virtual QString getUIGroup(){return "Sensors";};
 
 public slots:

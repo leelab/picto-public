@@ -53,6 +53,7 @@ public:
 	void setBlue(int b){QColor val = getColor(); val.setBlue(b);setColor(val);};
 	void setAlpha(int a){QColor val = getColor(); val.setAlpha(a);setColor(val);};
 
+	virtual QString getUITemplate(){return "ColorParameter";};
 	virtual QString friendlyTypeName(){return "Color";};
 
 public slots:

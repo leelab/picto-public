@@ -1179,6 +1179,9 @@
    <file alias="class_picto_1_1_analysis_function-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_function-members.html</file>
    <file alias="class_picto_1_1_analysis_function.html">../../../output/documentation/main/html/class_picto_1_1_analysis_function.html</file>
    <file alias="class_picto_1_1_analysis_function.png">../../../output/documentation/main/html/class_picto_1_1_analysis_function.png</file>
+   <file alias="class_picto_1_1_analysis_lfp_data-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_lfp_data-members.html</file>
+   <file alias="class_picto_1_1_analysis_lfp_data.html">../../../output/documentation/main/html/class_picto_1_1_analysis_lfp_data.html</file>
+   <file alias="class_picto_1_1_analysis_lfp_data.png">../../../output/documentation/main/html/class_picto_1_1_analysis_lfp_data.png</file>
    <file alias="class_picto_1_1_analysis_number_variable-members.html">../../../output/documentation/main/html/class_picto_1_1_analysis_number_variable-members.html</file>
    <file alias="class_picto_1_1_analysis_number_variable.html">../../../output/documentation/main/html/class_picto_1_1_analysis_number_variable.html</file>
    <file alias="class_picto_1_1_analysis_number_variable.png">../../../output/documentation/main/html/class_picto_1_1_analysis_number_variable.png</file>
@@ -1460,6 +1463,9 @@
    <file alias="class_picto_1_1_live_frame_reader-members.html">../../../output/documentation/main/html/class_picto_1_1_live_frame_reader-members.html</file>
    <file alias="class_picto_1_1_live_frame_reader.html">../../../output/documentation/main/html/class_picto_1_1_live_frame_reader.html</file>
    <file alias="class_picto_1_1_live_frame_reader.png">../../../output/documentation/main/html/class_picto_1_1_live_frame_reader.png</file>
+   <file alias="class_picto_1_1_live_lfp_reader-members.html">../../../output/documentation/main/html/class_picto_1_1_live_lfp_reader-members.html</file>
+   <file alias="class_picto_1_1_live_lfp_reader.html">../../../output/documentation/main/html/class_picto_1_1_live_lfp_reader.html</file>
+   <file alias="class_picto_1_1_live_lfp_reader.png">../../../output/documentation/main/html/class_picto_1_1_live_lfp_reader.png</file>
    <file alias="class_picto_1_1_live_reward_reader-members.html">../../../output/documentation/main/html/class_picto_1_1_live_reward_reader-members.html</file>
    <file alias="class_picto_1_1_live_reward_reader.html">../../../output/documentation/main/html/class_picto_1_1_live_reward_reader.html</file>
    <file alias="class_picto_1_1_live_reward_reader.png">../../../output/documentation/main/html/class_picto_1_1_live_reward_reader.png</file>

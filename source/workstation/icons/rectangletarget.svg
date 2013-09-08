@@ -1,0 +1,23 @@
+<svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <metadata id="metadata19">image/svg+xml</metadata>
+  <desc>Created with Raven (http://www.aviary.com)</desc>
+  <defs>
+    <linearGradient id="linearGradient3792">
+      <stop stop-color="#dc0000" offset="0" id="stop3794"/>
+      <stop stop-color="#320000" offset="1" id="stop3796"/>
+    </linearGradient>
+    <linearGradient y2="0.5" x2="1.014286" y1="0.5" x1="-0.014286" id="linearGradient3790" xlink:href="#linearGradient3792"/>
+  </defs>
+  <g>
+    <title>Layer 1</title>
+    <g id="Layer_EC920C22-602B-DB2F-B09A-BFA17C842900"/>
+    <path fill="url(#linearGradient3790)" fill-rule="nonzero" stroke-miterlimit="4" stroke-width="2" stroke="#ffffff" id="EGGNode_1313180030508" d="m94,42l70,0l0,70l-70,0l0,-70z"/>
+    <path fill="#ffffff" fill-opacity="0" stroke-miterlimit="4" stroke-width="2" stroke="#ff0000" id="EGGNode_1313180030516" d="m8,75.25m0,0l18,0"/>
+    <path fill="#ffffff" fill-opacity="0" stroke-miterlimit="4" stroke-width="2" stroke="#ff0000" id="EGGNode_1313180030520" d="m17.207277,66.402641m0,0l0.074055,17.999847"/>
+    <path fill="#ffffff" fill-opacity="0" stroke-miterlimit="4" stroke-width="2" stroke-opacity="0.498039" stroke="#ff0000" id="EGGNode_1313180030524" d="m24.5,57.5m0,0l18,0"/>
+    <path fill="#ffffff" fill-opacity="0" stroke-miterlimit="4" stroke-width="2" stroke-opacity="0.498039" stroke="#ff0000" id="EGGNode_1313180030528" d="m33.457279,48.652637m0,0l0.074051,17.999851"/>
+    <path fill="#ffffff" fill-opacity="0" stroke-miterlimit="4" stroke-width="2" stroke-opacity="0.247059" stroke="#ff0000" id="EGGNode_1313180030532" d="m46,53.75m0,0l18,0"/>
+    <path fill="#ffffff" fill-opacity="0" stroke-miterlimit="4" stroke-width="2" stroke-opacity="0.247059" stroke="#ff0000" id="EGGNode_1313180030536" d="m54.957279,44.902637m0,0l0.074051,17.999847"/>
+    <rect stroke="#00ff00" id="svg_2" height="104.999996" width="104.999996" y="24.590912" x="75.500034" fill-opacity="0" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="null" stroke-width="5" fill="#ffffff"/>
+  </g>
+</svg>

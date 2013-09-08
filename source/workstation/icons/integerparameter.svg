@@ -1,0 +1,47 @@
+<svg width="200" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient3812">
+   <stop stop-color="#1a1a1a" offset="0" id="stop3814"/>
+   <stop stop-color="#ffffff" stop-opacity="0" offset="1" id="stop3816"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3800">
+   <stop stop-color="#ffffff" id="stop3802" offset="0"/>
+   <stop stop-color="#ffffff" stop-opacity="0" id="stop3804" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3003">
+   <stop stop-color="#e6e6e6" id="stop3005" offset="0"/>
+   <stop stop-color="#b3b3b3" id="stop3007" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient2995">
+   <stop stop-color="#e6e6e6" id="stop2997" offset="0"/>
+   <stop stop-color="#f9f9f9" id="stop2999" offset="1"/>
+  </linearGradient>
+  <linearGradient y2="0" x2="0.083333" y1="1" x1="0.083333" id="linearGradient3001" xlink:href="#linearGradient2995"/>
+  <linearGradient y2="1" x2="0.5" y1="0" x1="0.5" id="linearGradient3009" xlink:href="#linearGradient3003"/>
+  <linearGradient y2="1" x2="0.5" y1="0" x1="0.5" id="linearGradient3011" xlink:href="#linearGradient3003"/>
+  <radialGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.7333333,0,0,2.0222223,-118.06667,-57.633332)" r="15" fy="54.090656" fx="161.32452" cy="55.6978" cx="163.88461" id="radialGradient3806" xlink:href="#linearGradient3800"/>
+  <radialGradient r="15" fy="54.090656" fx="161.32452" cy="55.6978" cx="163.88461" gradientTransform="matrix(-1.7333333,0,0,-2.0222223,468.06667,1144.9956)" gradientUnits="userSpaceOnUse" id="radialGradient3810" xlink:href="#linearGradient3812"/>
+  <radialGradient r="15" fy="54.090656" fx="161.32452" cy="55.6978" cx="163.88461" gradientTransform="matrix(1.7333333,0,0,2.0222223,-118.06667,859.72885)" gradientUnits="userSpaceOnUse" id="radialGradient3822" xlink:href="#linearGradient3800"/>
+  <radialGradient r="15" fy="54.090656" fx="161.32452" cy="55.6978" cx="163.88461" gradientTransform="matrix(-1.7333333,0,0,-2.0222223,468.06667,1109.9956)" gradientUnits="userSpaceOnUse" id="radialGradient3824" xlink:href="#linearGradient3812"/>
+  <linearGradient id="svg_2" x1="0" y1="0" x2="1" y2="1">
+   <stop stop-color="#0000ff" stop-opacity="0.99609" offset="0"/>
+   <stop stop-color="#000064" stop-opacity="0.99609" offset="1"/>
+  </linearGradient>
+ </defs>
+ <metadata>image/svg+xmlOpen Clip Art LibrarySpin box2010-10-06T21:33:22Spin box controlhttp://openclipart.org/detail/88993/spin-box-by-jhnri4jhnri4arrowboxclip artclipartelementsinterfacenumberspinuser</metadata>
+ <g>
+  <title>Layer 1</title>
+  <g id="layer1">
+   <rect fill="url(#linearGradient3001)" fill-rule="evenodd" stroke="#999999" stroke-width="1px" y="14.999997" x="10" height="70" width="180" id="rect2987"/>
+   <rect fill="url(#linearGradient3011)" fill-rule="evenodd" stroke="#666666" stroke-width="1px" y="50.000017" x="160" height="35.000008" width="30" id="rect2991"/>
+   <rect fill="url(#linearGradient3009)" fill-rule="evenodd" stroke="#666666" stroke-width="1px" id="rect2993" width="30" height="35.000008" x="160" y="14.999997"/>
+   <path fill="#000000" stroke-width="1px" id="path3019" d="m165,60l10,15l10,-15l-20,0z"/>
+   <path fill="#000000" stroke-width="1px" d="m165,40l10,-15l10,15l-20,0z" id="path3021"/>
+   <path fill="url(#radialGradient3806)" fill-rule="evenodd" stroke-width="1px" id="rect3023" d="m160,50l0,35l2,0l0,-33l28,0l0,-2l-30,0z"/>
+   <path fill="url(#radialGradient3810)" fill-rule="evenodd" opacity="0.73991" d="m190,85l0,-35l-2,0l0,33l-28,0l0,2l30,0z" id="path3808"/>
+   <path fill="url(#radialGradient3822)" fill-rule="evenodd" d="m160,15l0,35l2,0l0,-33l28,0l0,-2l-30,0z" id="path3818"/>
+   <path fill="url(#radialGradient3824)" fill-rule="evenodd" opacity="0.73991" id="path3820" d="m190,50l0,-35l-2,0l0,33l-28,0l0,2l30,0z"/>
+  </g>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="70" id="svg_1" y="72.590908" x="84.500031" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#0000ff" fill="url(#svg_2)">1</text>
+ </g>
+</svg>

@@ -38,7 +38,7 @@ public:
 	void setValue(double val){propertyContainer_->setPropertyValue("Value",val);};
 
 	virtual QString friendlyTypeName(){return "Random Float";};
-	virtual QString getUITemplate(){return "RandomGenerator";};
+	virtual QString getUITemplate(){return "PseudorandomFloat";};
 	
 	virtual bool valuesAreValid(QString& warning = QString());
 	virtual void fixValues();

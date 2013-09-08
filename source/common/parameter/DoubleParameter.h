@@ -30,6 +30,7 @@ public:
 	double getValue();
 	void setValue(double val);
 
+	virtual QString getUITemplate(){return "FloatParameter";};
 	virtual QString friendlyTypeName(){return "Float Range";};
 
 	virtual bool valuesAreValid(QString& warning = QString());

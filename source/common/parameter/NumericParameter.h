@@ -45,6 +45,7 @@ public:
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
+	virtual QString getUITemplate(){return "IntegerParameter";};
 	virtual QString friendlyTypeName(){return "Integer";};
 
 	//This is just the Integer range parameter but less so but old experiments use it so we can't get rid of it.  This way no one will be able to create it.

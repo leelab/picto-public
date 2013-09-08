@@ -69,6 +69,7 @@ public:
 	static const QString type;
 	virtual void upgradeVersion(QString deserializedVersion);
 
+	virtual QString getUITemplate(){return "TokenTrayElement";};
 	virtual QString friendlyTypeName(){return "Token Tray";};
 public slots:
 	void setDimensions(int w, int h){setTrayWidth(w);setTrayHeight(h);};

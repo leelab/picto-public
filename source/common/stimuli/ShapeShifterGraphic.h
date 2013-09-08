@@ -44,6 +44,7 @@ public:
 	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Shape Shift";};
+	virtual QString getUITemplate(){return "ShapeShifterElement";};
 public slots:
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 
