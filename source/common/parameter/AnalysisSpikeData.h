@@ -55,7 +55,22 @@ public slots:
 	QVariantList getNextChannels(double secsFollowing);
 	QVariantList getNextUnits(double secsFollowing);
 	QVariantList getNextWaveforms(double secsFollowing);
-
+	//Functions like getTimesUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesSince(double beyondTime);
+	//Functions like getTimesUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesUntil(double upToTime);
+	//Functions like getChannelsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getChannelsSince(double beyondTime);
+	//Functions like getChannelsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getChannelsUntil(double upToTime);
+	//Functions like getUnitsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getUnitsSince(double beyondTime);
+	//Functions like getUnitsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getUnitsUntil(double upToTime);
+	//Functions like getWaveformsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getWaveformsSince(double beyondTime);
+	//Functions like getWaveformsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getWaveformsUntil(double upToTime);
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

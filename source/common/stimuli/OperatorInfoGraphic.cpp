@@ -8,7 +8,8 @@ namespace Picto {
 const QString OperatorInfoGraphic::type = "Operator Info Graphic";
 
 OperatorInfoGraphic::OperatorInfoGraphic()
-: VisualElement(QPoint(),QColor(Qt::green))
+: VisualElement(QPoint(),QColor(Qt::green)),
+settingPropsFromMap_(false)
 {
 	AddDefinableProperty(QVariant::Size,"Size",QSize());
 	AddDefinableProperty(QVariant::String,"Fields","");
@@ -85,8 +86,10 @@ void OperatorInfoGraphic::updateValue()
 	{
 		values.append(infoMap_.value(field).toString());
 	}
+	settingPropsFromMap_ = true;
 	propertyContainer_->setPropertyValue("Fields",orderedFields_.join(","));
 	propertyContainer_->setPropertyValue("Values",values.join(","));
+	settingPropsFromMap_ = false;
 }
 
 QVariant OperatorInfoGraphic::getData(QString field)
@@ -102,6 +105,8 @@ void OperatorInfoGraphic::postDeserialize()
 	//Fields and Values properties are for information transfer only, don't show them in the UI
 	propertyContainer_->getProperty("Fields")->setVisible(false);
 	propertyContainer_->getProperty("Values")->setVisible(false);
+	connect(propertyContainer_->getProperty("Fields").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propValueChanged(Property*,QVariant)));
+	connect(propertyContainer_->getProperty("Values").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propValueChanged(Property*,QVariant)));
 }
 
 bool OperatorInfoGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -111,4 +116,26 @@ bool OperatorInfoGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	return true;
 }
 
+void OperatorInfoGraphic::propValueChanged(Property*,QVariant)
+{
+	//If the change happened because of one of this object's functions, return.
+	if(settingPropsFromMap_)
+		return;
+	//The change must have happened from an outside source (ie. The value was reset to the initValue
+	//or this is a slave and something changed on the master)
+	//Set our Map from the properties
+	QStringList fields = propertyContainer_->getPropertyValue("Fields").toString().split(",");
+	QStringList values = propertyContainer_->getPropertyValue("Values").toString().split(",");
+	orderedFields_.clear();
+	infoMap_.clear();
+	QVariant value;
+	for(int i=0;i<fields.length();i++)
+	{
+		if(i >= values.length())
+			value.clear();
+		else
+			value = values[i];
+		setData(fields[i],value);
+	}
+}
 }; //namespace Picto

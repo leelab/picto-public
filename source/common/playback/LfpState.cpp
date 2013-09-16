@@ -1,6 +1,7 @@
 #include "LfpState.h"
 #include "../storage/DataSourceInfo.h"
 #include "PlaybackData.h"
+#include "../storage/alignmentinfo.h"
 using namespace Picto;
 
 LfpState::LfpState()
@@ -14,6 +15,19 @@ void LfpState::setDatabase(QSqlDatabase session)
 	data_.clear();
 	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
 
+	//Get timestamp alignment constants
+	query_->prepare("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
+	if(!query_->exec() || !query_->next())
+	{
+		Q_ASSERT(false);
+		return;
+	}
+	AlignmentInfo inf;
+	inf.fromXml(query_->value(0).toString());
+	double offsetTime = inf.getOffsetTime();
+	double temporalFactor = inf.getTemporalFactor();
+
+
 	//Set up lfp hash
 	query_->prepare("SELECT DISTINCT channel FROM lfp ORDER BY channel");
 	if(!query_->exec() || !query_->next())
@@ -26,6 +40,7 @@ void LfpState::setDatabase(QSqlDatabase session)
 		chanIndexMap_[query_->value(0).toInt()] = index++;
 		channels_.append(query_->value(0).toInt());
 	} while(query_->next());
+	numChannels_ = channels_.size();
 
 	//Get lfp resolution
 	sampPeriod_ = 0;
@@ -40,7 +55,7 @@ void LfpState::setDatabase(QSqlDatabase session)
 		info.fromXml(query_->value(0).toString());
 		if(info.getName() == "lfp")
 		{
-			sampPeriod_ = info.getResolution();
+			sampPeriod_ = temporalFactor*info.getResolution();
 			break;
 		}
 	}
@@ -53,35 +68,37 @@ void LfpState::setDatabase(QSqlDatabase session)
 	{
 		return;
 	}
-	double minTime = query_->value(0).toDouble();
+	minLfpTime_ = offsetTime + temporalFactor*query_->value(0).toDouble();
 
 	//Get maximum lfp time
-	//Start by getting highest timestamp entries for all channels
-	query_->prepare("SELECT DISTINCT channel,timestamp,data FROM lfp ORDER BY timestamp DESC LIMIT (SELECT COUNT(channel) FROM lfp)");
+	//Start by getting highest timestamp entries for all channels.  We could use distinct to make sure that we're
+	//actually getting the highest value from each channel.  In practice; however, the DISTINCT keyword makes
+	//things take a lot longer in this call and unless the neural proxy is doing something really weird if we
+	//just select the last numberOfChannels timestamp entries whether or not the channels are distinct, we will get 
+	//the highest time value in the experiment or certainly it will be close enough to the end of the experiment as
+	//to be past the end of the last run.  The worst case here is that we miss one lfp data packet time length at 
+	//the end of the session.  Currently these packets are 500ms long and as mentioned before, this worst case will
+	//really never come up unless something really wierd happens with the proxy.
+	query_->prepare("SELECT timestamp,data FROM lfp ORDER BY timestamp DESC LIMIT :channels");
+	query_->bindValue(":channels",numChannels_);
 	if(!query_->exec())
 	{
 		return;
 	}
-	double maxTime = minTime-1;
+	double maxTime = minLfpTime_-1;
 	while(query_->next())
 	{
-		double currHighest = query_->value(1).toDouble() + (sampPeriod_ * query_->value(2).toByteArray().size()/sizeof(float));
+		double currHighest = offsetTime+(temporalFactor*query_->value(0).toDouble()) + (sampPeriod_ * query_->value(1).toByteArray().size()/sizeof(float));
 		if(currHighest > maxTime)
 			maxTime = currHighest;
 	}
-	Q_ASSERT(maxTime >= minTime);
+	Q_ASSERT(maxTime >= minLfpTime_);
 
 	//Create data list with an entry for every sample time from minTime to maxTime
-	data_.reserve(int(maxTime-minTime)/sampPeriod_);
-	for(double time = minTime;time <= maxTime;time+=sampPeriod_)
-	{
-		data_.append(PlaybackLFPData(time));
-	}
-	int numChannels = chanIndexMap_.size();
-	for(QList<PlaybackLFPData>::Iterator iter = data_.begin();iter != data_.end();iter++)
-	{
-		iter->initializeValArray(numChannels);
-	}
+	numValues_ = arrayIndexFromGlobalTime(maxTime)+1;
+	data_.resize(numChannels_ * numValues_);
+	for(int i=0;i<data_.size();i++)
+		data_[i]=0;
 
 	//Go through each channel in database and fill data list
 	foreach(int channel,chanIndexMap_.keys())
@@ -96,32 +113,33 @@ void LfpState::setDatabase(QSqlDatabase session)
 			Q_ASSERT(false);
 			return;
 		}
-		QList<PlaybackLFPData>::Iterator dataIt = data_.begin();
+		int catchUpIndex = 0;
 		double startTime;
 		double currTime;
-		PlaybackLFPData* currObject;
-		QList<PlaybackLFPData>::Iterator curr;
 		float latestValue = 0;
-
+		int indexForCurrTime = -1;
 		while(query_->next())
 		{
-			startTime = query_->value(0).toDouble();
+			startTime = offsetTime + temporalFactor*query_->value(0).toDouble();
 			QByteArray dataArray = query_->value(1).toByteArray();
 			const float* dataArrayStart = reinterpret_cast<const float*>(dataArray.constData());
 			int dataArraySize = dataArray.size()/sizeof(float);
 			for(int i=0;i<dataArraySize;i++)
 			{
 				currTime = startTime + i*sampPeriod_;
-				while( (dataIt != data_.end()) && (dataIt->time_ <= currTime) )
+				indexForCurrTime = arrayIndexFromGlobalTime(currTime);
+				if(indexForCurrTime >= numValues_)
+					break;	//Since we sped things up above by not necessarily checking all channels before making a highest time decision
+							//there is a very unlikely possiblity that there is more data available than will fit in the vector we made
+							//if this is the case we just throw the data out because in any case we will be very close to the end of the
+							//session and the data will almost certainly come from after the significant runs were finished.
+				while(catchUpIndex <= arrayIndexFromGlobalTime(currTime))
 				{
-					dataIt->setValue(valueIndex,latestValue);
-					dataIt++;
+					setDataValue(catchUpIndex,valueIndex,latestValue);
+					catchUpIndex++;
 				}
-				Q_ASSERT(dataIt != data_.begin());
-				curr = (dataIt-1);
 				latestValue = *(dataArrayStart + i);
-				Q_ASSERT(currTime - curr->time_ <= sampPeriod_);
-				curr->setValue(valueIndex,latestValue);
+				setDataValue(arrayIndexFromGlobalTime(currTime),valueIndex,latestValue);
 			}
 		}
 	}
@@ -146,7 +164,7 @@ PlaybackIndex LfpState::getCurrentIndex()
 	Q_ASSERT(runStart_ >= 0);
 	if(curr_ < 0)
 		return PlaybackIndex();
-	return globalToRunIndex(PlaybackIndex::minForTime(data_[curr_].time_));
+	return globalToRunIndex(PlaybackIndex::minForTime(globalTimeFromArrayIndex(curr_)));
 }
 
 PlaybackIndex LfpState::getNextIndex(double lookForwardTime)
@@ -167,7 +185,7 @@ void LfpState::moveToIndex(PlaybackIndex index)
 		curr_++;
 		for(QHash<int,int>::Iterator iter = chanIndexMap_.begin();iter!=chanIndexMap_.end();iter++)
 		{
-			emit lfpChanged(iter.key(),data_[curr_].getValue(iter.value()));
+			emit lfpChanged(iter.key(),getDataValue(curr_,iter.value()));
 		}
 		nextIndex = getNextIndex();
 	}
@@ -193,7 +211,7 @@ double LfpState::getLatestValue(int channel)
 	if(!chanIndexMap_.contains(channel))
 		return 0;
 	int index = chanIndexMap_[channel];
-	return data_[curr_].getValue(index);
+	return getDataValue(curr_,index);
 }
 
 double LfpState::getNextTime()
@@ -206,10 +224,9 @@ double LfpState::getNextValue(int channel)
 	if(!chanIndexMap_.contains(channel))
 		return 0;
 	int index = chanIndexMap_[channel];
-	int nextCurr = curr_;
-	if(curr_+1 >= data_.size())
+	if(curr_+1 >= numValues_)
 		return 0;
-	return data_[curr_+1].getValue(index);
+	return getDataValue(curr_+1,index);
 }
 
 //Returns signal values for the input sub channel with times > the input time.
@@ -224,11 +241,13 @@ QVariantList LfpState::getValuesSince(int channel,double time)
 	double latestTime = getLatestTime();
 	if(afterTime >= latestTime)
 		return QVariantList();
-	QList<PlaybackLFPData>::iterator iter = qUpperBound<QList<PlaybackLFPData>::iterator,PlaybackLFPData>(data_.begin(),data_.begin()+curr_,PlaybackLFPData(afterTime+runStart_));
+	int startPos = arrayIndexFromGlobalTime(afterTime+runStart_);
+	if(globalTimeFromArrayIndex(startPos) <= afterTime+runStart_)
+		startPos++;
 	QVariantList returnVal;
-	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
+	for(int pos = startPos;pos <= curr_;pos++)
 	{
-		returnVal.append(iter->getValue(chanIndex));
+		returnVal.append(getDataValue(pos,chanIndex));
 	}
 	return returnVal;
 }
@@ -244,11 +263,13 @@ QVariantList LfpState::getValuesUntil(int channel,double time)
 	double latestTime = getLatestTime();
 	if(upToTime <= latestTime)
 		return QVariantList();
-	QList<PlaybackLFPData>::iterator upToIter = qUpperBound<QList<PlaybackLFPData>::iterator,PlaybackLFPData>(data_.begin()+curr_,data_.end(),PlaybackLFPData(upToTime+runStart_));
+	int endPos = arrayIndexFromGlobalTime(upToTime+runStart_);
+	if(globalTimeFromArrayIndex(endPos) > upToTime+runStart_)
+		endPos--;
 	QVariantList returnVal;
-	for(QList<PlaybackLFPData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
+	for(int pos = curr_+1;(pos <= endPos) && (pos < numValues_);pos++)
 	{
-		returnVal.append(iter->getValue(chanIndex));
+		returnVal.append(getDataValue(pos,chanIndex));
 	}
 	return returnVal;
 }
@@ -261,11 +282,13 @@ QVariantList LfpState::getTimesSince(double time)
 	double latestTime = getLatestTime();
 	if(afterTime >= latestTime)
 		return QVariantList();
-	QList<PlaybackLFPData>::iterator iter = qUpperBound<QList<PlaybackLFPData>::iterator,PlaybackLFPData>(data_.begin(),data_.begin()+curr_,PlaybackLFPData(afterTime+runStart_));
+	int startPos = arrayIndexFromGlobalTime(afterTime+runStart_);
+	if(globalTimeFromArrayIndex(startPos) <= afterTime+runStart_)
+		startPos++;
 	QVariantList returnVal;
-	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
+	for(int pos = startPos;pos <= curr_;pos++)
 	{
-		returnVal.append(iter->time_ - runStart_);
+		returnVal.append(globalTimeFromArrayIndex(pos) - runStart_);
 	}
 	return returnVal;
 }
@@ -278,20 +301,22 @@ QVariantList LfpState::getTimesUntil(double time)
 	double latestTime = getLatestTime();
 	if(upToTime <= latestTime)
 		return QVariantList();
-	QList<PlaybackLFPData>::iterator upToIter = qUpperBound<QList<PlaybackLFPData>::iterator,PlaybackLFPData>(data_.begin()+curr_,data_.end(),PlaybackLFPData(upToTime+runStart_));
+	int endPos = arrayIndexFromGlobalTime(upToTime+runStart_);
+	if(globalTimeFromArrayIndex(endPos) > upToTime+runStart_)
+		endPos--;
 	QVariantList returnVal;
-	for(QList<PlaybackLFPData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
+	for(int pos = curr_+1;(pos <= endPos) && (pos < numValues_);pos++)
 	{
-		returnVal.append(iter->time_ - runStart_);
+		returnVal.append(globalTimeFromArrayIndex(pos) - runStart_);
 	}
 	return returnVal;
 }
 
 PlaybackIndex LfpState::getNextIndex()
 {
-	if(curr_ + 1 >= data_.size())
+	if(curr_ + 1 >= numValues_)
 		return PlaybackIndex();
-	return globalToRunIndex(PlaybackIndex::minForTime(data_[curr_+1].time_));
+	return globalToRunIndex(PlaybackIndex::minForTime(globalTimeFromArrayIndex(curr_+1)));
 }
 
 PlaybackIndex LfpState::globalToRunIndex(PlaybackIndex index)
@@ -301,36 +326,27 @@ PlaybackIndex LfpState::globalToRunIndex(PlaybackIndex index)
 	return returnVal;
 }
 
-LfpState::PlaybackLFPData::PlaybackLFPData()
+double LfpState::globalTimeFromArrayIndex(const int& index)
 {
-	time_ = -1;
-	channelVals_ = NULL;
+	return minLfpTime_ + (sampPeriod_ * double(index));
 }
 
-LfpState::PlaybackLFPData::~PlaybackLFPData()
+int LfpState::arrayIndexFromGlobalTime(const double& time)
 {
-	if(channelVals_) 
-		delete channelVals_;
+	int returnVal = int(0.5+((time-minLfpTime_)/sampPeriod_)); //We add the 0.5 so that we're rounding to the nearest value and not rounding down
+	if(returnVal < 0)
+		returnVal = 0;
+	return returnVal;
 }
 
-LfpState::PlaybackLFPData::PlaybackLFPData(double time)
+float LfpState::getDataValue(const int& arrayIndex,const int& channelIndex)
 {
-	time_ = time;
-	channelVals_ = NULL;
+	Q_ASSERT((arrayIndex*numChannels_)+channelIndex < data_.size());
+	return data_[(arrayIndex*numChannels_)+channelIndex];
 }
-void LfpState::PlaybackLFPData::initializeValArray(int size)
+
+void LfpState::setDataValue(const int& arrayIndex,const int& channelIndex,const float& value)
 {
-	channelVals_ = new float[size];
-	for(int i=0;i<size;i++)
-		channelVals_[i] = 0;
-}
-//In the interest of speed/memory we're not checking that index is the right size.  Caller should check this.
-void LfpState::PlaybackLFPData::setValue(int index,float value)
-{	
-	channelVals_[index] = value;
-}
-;//In the interest of speed/memory we're not checking that index is the right size.  Caller should check this.
-float LfpState::PlaybackLFPData::getValue(const int& index)
-{
-	return channelVals_[index];
+	Q_ASSERT((arrayIndex*numChannels_)+channelIndex < data_.size());
+	data_[(arrayIndex*numChannels_)+channelIndex] = value;
 }

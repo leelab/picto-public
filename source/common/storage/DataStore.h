@@ -150,6 +150,10 @@ protected:
 	void AddChild(QString tagName, QSharedPointer<Asset> child);
 
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
+	bool needsUniqueChildNames(){return needsUniqueChildNames_;};
+	//Call this function to set whether children that want unique names must have unique names.
+	//Default if you don't call this function is true.
+	void requireUniqueChildNames(bool require = true){needsUniqueChildNames_ = require;};
 
 	QSharedPointer<PropertyContainer> propertyContainer_;
 	//--------------------------------------------------------
@@ -166,6 +170,7 @@ private:
 	//--------------------------------------------------------
 
 	QString myTagName_;
+	bool needsUniqueChildNames_;
 	int assetId_;
 
 };

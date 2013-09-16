@@ -86,6 +86,20 @@ QVariantList AnalysisFrameData::getNextTimes(double secsFollowing)
 	return returnVal;
 }
 
+QVariantList AnalysisFrameData::getTimesSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevTimes(offsetTime);
+}
+
+QVariantList AnalysisFrameData::getTimesUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextTimes(offsetTime);
+}
+
 void AnalysisFrameData::postDeserialize()
 {
 	AnalysisDataSource::postDeserialize();

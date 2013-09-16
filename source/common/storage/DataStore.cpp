@@ -9,7 +9,8 @@
 namespace Picto {
 
 DataStore::DataStore():
-Asset()
+Asset(),
+needsUniqueChildNames_(true)
 {
 	assetId_ = 0;
 	propertyContainer_ = PropertyContainer::create("DataStore");
@@ -367,30 +368,11 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	QHash<QString,bool> nameMap;
 	QString name;
-	//First make sure that the experimental children all have different names
-	foreach(QList<QSharedPointer<Asset>> assetList,children_.values())
+	//If necessary check to see if children have unique names
+	if(needsUniqueChildNames())
 	{
-		foreach(QSharedPointer<Asset> child,assetList)
-		{
-			if(child->needsUniqueName())
-			{
-				name = child->getName();
-				if(nameMap.contains(name))
-				{
-					QString errMsg = QString("%1 contains more than one child with the name: %2").arg(getName()).arg(name);
-					addError(errMsg);
-					return false;
-				}
-				nameMap[name] = true;
-			}
-		}
-	}
-	//Now check that each individual Associate child has a different name
-	foreach(QUuid key,associateChildrenByGuid_.keys())
-	{
-		QMap<QString,QList<QSharedPointer<Asset>>> associateChildren = associateChildrenByGuid_.value(key);
-		QMap<QString,bool> associateNameMap;
-		foreach(QList<QSharedPointer<Asset>> assetList,associateChildren.values())
+		//First make sure that the experimental children all have different names
+		foreach(QList<QSharedPointer<Asset>> assetList,children_.values())
 		{
 			foreach(QSharedPointer<Asset> child,assetList)
 			{
@@ -399,17 +381,40 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 					name = child->getName();
 					if(nameMap.contains(name))
 					{
-						QString errMsg = QString("%1 contains experimental and analysis elements with the same name: %2").arg(getName()).arg(name);
+						QString errMsg = QString("%1 contains more than one child with the name: %2").arg(getName()).arg(name);
 						addError(errMsg);
 						return false;
 					}
-					if(associateNameMap.contains(name))
+					nameMap[name] = true;
+				}
+			}
+		}
+		//Now check that each individual Associate child has a different name
+		foreach(QUuid key,associateChildrenByGuid_.keys())
+		{
+			QMap<QString,QList<QSharedPointer<Asset>>> associateChildren = associateChildrenByGuid_.value(key);
+			QMap<QString,bool> associateNameMap;
+			foreach(QList<QSharedPointer<Asset>> assetList,associateChildren.values())
+			{
+				foreach(QSharedPointer<Asset> child,assetList)
+				{
+					if(child->needsUniqueName())
 					{
-						QString errMsg = QString("%1 more than one analysis element child with the same name: %2").arg(getName()).arg(name);
-						addError( errMsg);
-						return false;
+						name = child->getName();
+						if(nameMap.contains(name))
+						{
+							QString errMsg = QString("%1 contains experimental and analysis elements with the same name: %2").arg(getName()).arg(name);
+							addError(errMsg);
+							return false;
+						}
+						if(associateNameMap.contains(name))
+						{
+							QString errMsg = QString("%1 contains more than one analysis element child with the same name: %2").arg(getName()).arg(name);
+							addError( errMsg);
+							return false;
+						}
+						associateNameMap[name] = true;
 					}
-					associateNameMap[name] = true;
 				}
 			}
 		}

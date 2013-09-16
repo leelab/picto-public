@@ -62,6 +62,7 @@ Analysis::Analysis()
 	AddDefinableObjectFactory("AnalysisScriptContainer",scriptFactory_);
 	scriptFactory_->addAssetType("",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisScriptContainer::Create))));
+	requireUniqueChildNames(false);
 
 	ASSOCIATE_ROOT_HOST_INITIALIZATION
 }

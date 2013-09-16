@@ -55,6 +55,10 @@ public slots:
 	QVariantList getPrevTimes(double secsPreceding);
 	//Returns a list of signal valuesread times that will occur with times > the latest frame time and <= the input # sec after the latest frame
 	QVariantList getNextTimes(double secsFollowing);
+	//Functions like getPrevTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesSince(double beyondTime);
+	//Functions like getNextTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesUntil(double upToTime);
 	//Returns a list of signal values for the input sub channel that occured with times > the input # sec before the latest frame and <= the latest frame time
 	QVariantList getPrevValues(QString componentName,double secsPreceding);
 	//Returns a list of signal values for the input sub channel that will occur with times > the latest frame time and <= the input # sec after the latest frame
@@ -69,7 +73,14 @@ public slots:
 	//index of the list contains a list signal subcomponents ordered like the result of getComponentNames(). 
 	//Times should be incremented by one getSamplePeriod() for each index.
 	QVariantList getNextValues(double secsFollowing);
-
+	//Functions like getPrevValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesSince(QString componentName,double beyondTime);
+	//Functions like getNextValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesUntil(QString componentName,double upToTime);
+	//Functions like getPrevValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesSince(double beyondTime);
+	//Functions like getNextValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesUntil(double upToTime);
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

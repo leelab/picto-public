@@ -106,6 +106,20 @@ QVariantList AnalysisRewardData::getNextTimes(double secsFollowing)
 	return returnVal;
 }
 
+QVariantList AnalysisRewardData::getTimesSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevTimes(offsetTime);
+}
+
+QVariantList AnalysisRewardData::getTimesUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextTimes(offsetTime);
+}
+
 //Returns a list of reward durations that occured with times > the input # sec before the latest frame and <= the latest frame time.
 QVariantList AnalysisRewardData::getPrevDurations(double secsPreceding)
 {
@@ -132,6 +146,19 @@ QVariantList AnalysisRewardData::getNextDurations(double secsFollowing)
 		return QVariantList();
 	QVariantList returnVal = getDesignConfig()->getRewardReader()->getDurationsUntil(maxRunTime);
 	return returnVal;
+}
+
+QVariantList AnalysisRewardData::getDurationsSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevDurations(offsetTime);
+}
+QVariantList AnalysisRewardData::getDurationsUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextDurations(offsetTime);
 }
 
 void AnalysisRewardData::postDeserialize()

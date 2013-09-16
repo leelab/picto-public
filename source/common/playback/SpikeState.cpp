@@ -1,6 +1,7 @@
 #include <QMap>
 #include "SpikeState.h"
 #include "PlaybackData.h"
+#include "../storage/alignmentinfo.h"
 using namespace Picto;
 
 
@@ -9,6 +10,20 @@ void SpikeState::setDatabase(QSqlDatabase session)
 	runStart_ = runEnd_ = curr_ = -1;
 	session_ = session;
 	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
+
+	//Get timestamp alignment constants
+	query_->prepare("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
+	if(!query_->exec() || !query_->next())
+	{
+		Q_ASSERT(false);
+		return;
+	}
+	AlignmentInfo inf;
+	inf.fromXml(query_->value(0).toString());
+	double offsetTime = inf.getOffsetTime();
+	double temporalFactor = inf.getTemporalFactor();
+
+	//Preallocate Spike data array
 	query_->exec("SELECT COUNT(*) FROM spikes");
 	if(!query_->exec() || !query_->next())
 	{
@@ -43,7 +58,7 @@ void SpikeState::setDatabase(QSqlDatabase session)
 		}
 		channel = query_->value(1).toInt();
 		unit = query_->value(2).toInt();
-		data_[arrayIndex++] = PlaybackSpikeData(query_->value(0).toDouble(),channel,unit,waveform);
+		data_[arrayIndex++] = PlaybackSpikeData(offsetTime + (temporalFactor*query_->value(0).toDouble()),channel,unit,waveform);
 		channelUnitsLookup[channel][unit] = true;
 	}
 	foreach(int chan,channelUnitsLookup.keys())

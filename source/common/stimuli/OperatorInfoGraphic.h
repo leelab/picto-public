@@ -56,8 +56,9 @@ private:
 	QVariant getData(QString field);
 	QStringList orderedFields_;
 	QHash<QString,QVariant> infoMap_;
+	bool settingPropsFromMap_;
 private slots:
-	
+	void propValueChanged(Property*,QVariant);
 };
 
 

@@ -150,6 +150,20 @@ QVariantList AnalysisSignalData::getNextTimes(double secsFollowing)
 	return returnVal;
 }
 
+QVariantList AnalysisSignalData::getTimesSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevTimes(offsetTime);
+}
+
+QVariantList AnalysisSignalData::getTimesUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextTimes(offsetTime);
+}
+
 //Returns a list of signal values for the input sub channel that occured with times > the input # sec before the latest frame and <= the latest frame time
 QVariantList AnalysisSignalData::getPrevValues(QString componentName,double secsPreceding)
 {
@@ -253,6 +267,31 @@ QVariantList AnalysisSignalData::getNextValues(double secsFollowing)
 		}
 	}
 	return result;
+}
+
+QVariantList AnalysisSignalData::getValuesSince(QString componentName,double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevValues(componentName,offsetTime);
+}
+QVariantList AnalysisSignalData::getValuesUntil(QString componentName,double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextValues(componentName,offsetTime);
+}
+QVariantList AnalysisSignalData::getValuesSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevValues(offsetTime);
+}
+QVariantList AnalysisSignalData::getValuesUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextValues(offsetTime);
 }
 
 void AnalysisSignalData::postDeserialize()

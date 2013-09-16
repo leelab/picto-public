@@ -55,6 +55,10 @@ public slots:
 	QVariantList getPrevTimes(double secsPreceding);
 	//Returns a list of lfp read times that will occur with times > the latest frame time and <= the input # sec after the latest frame
 	QVariantList getNextTimes(double secsFollowing);
+	//Functions like getPrevTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesSince(double beyondTime);
+	//Functions like getNextTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesUntil(double upToTime);
 	//Returns a list of lfp values for the input lfp channel that occured with times > the input # sec before the latest frame and <= the latest frame time
 	QVariantList getPrevValues(int channel,double secsPreceding);
 	//Returns a list of lfp values for the input lfp channel that will occur with times > the latest frame time and <= the input # sec after the latest frame
@@ -70,6 +74,14 @@ public slots:
 	//index of the list contains a list of lfp channel values ordered like the result of getChannels(). 
 	//Times for these values can be read in using getNextTimes() with the same input.
 	QVariantList getNextValues(double secsFollowing);
+	//Functions like getPrevValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesSince(int channel,double beyondTime);
+	//Functions like getNextValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesUntil(int channel,double upToTime);
+	//Functions like getPrevValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesSince(double beyondTime);
+	//Functions like getNextValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getValuesUntil(double upToTime);
 
 protected:
 	virtual void postDeserialize();

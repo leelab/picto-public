@@ -45,6 +45,10 @@ public slots:
 	QVariantList getPrevTimes(double secsPreceding);
 	//Returns a list of frame times that occured with times <= the input # sec after the latest frame and > the latest frame time.
 	QVariantList getNextTimes(double secsFollowing);
+	//Functions like getPrevTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesSince(double beyondTime);
+	//Functions like getNextTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
+	QVariantList getTimesUntil(double upToTime);
 
 protected:
 	virtual void postDeserialize();

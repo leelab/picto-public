@@ -149,6 +149,20 @@ QVariantList AnalysisLfpData::getNextTimes(double secsFollowing)
 	return returnVal;
 }
 
+QVariantList AnalysisLfpData::getTimesSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevTimes(offsetTime);
+}
+
+QVariantList AnalysisLfpData::getTimesUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextTimes(offsetTime);
+}
+
 //Returns a list of signal values for the input sub channel that occured with times > the input # sec before the latest frame and <= the latest frame time
 QVariantList AnalysisLfpData::getPrevValues(int channel,double secsPreceding)
 {
@@ -175,6 +189,32 @@ QVariantList AnalysisLfpData::getNextValues(int channel,double secsFollowing)
 	QVariantList returnVal = lfpReader_->getValuesUntil(channel,maxRunTime);
 	return returnVal;
 }
+
+QVariantList AnalysisLfpData::getValuesSince(int channel,double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevValues(channel,offsetTime);
+}
+QVariantList AnalysisLfpData::getValuesUntil(int channel,double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextValues(channel,offsetTime);
+}
+QVariantList AnalysisLfpData::getValuesSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevValues(offsetTime);
+}
+QVariantList AnalysisLfpData::getValuesUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextValues(offsetTime);
+}
+
 //Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames())
 //that will occur with times > the input # sec before the latest frame time and <= the latest 
 //frame time. Times should be incremented by one getSamplePeriod() for every 

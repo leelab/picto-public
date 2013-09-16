@@ -217,6 +217,58 @@ QVariantList AnalysisSpikeData::getNextWaveforms(double secsFollowing)
 	return returnVal;
 }
 
+QVariantList AnalysisSpikeData::getTimesSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevTimes(offsetTime);
+}
+
+QVariantList AnalysisSpikeData::getTimesUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextTimes(offsetTime);
+}
+QVariantList AnalysisSpikeData::getChannelsSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevChannels(offsetTime);
+}
+
+QVariantList AnalysisSpikeData::getChannelsUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextChannels(offsetTime);
+}
+QVariantList AnalysisSpikeData::getUnitsSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevUnits(offsetTime);
+}
+
+QVariantList AnalysisSpikeData::getUnitsUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextUnits(offsetTime);
+}
+QVariantList AnalysisSpikeData::getWaveformsSince(double beyondTime)
+{
+	double globalTime = beyondTime+zeroTime_;
+	double offsetTime = getLatestRunTime()-globalTime;
+	return getPrevWaveforms(offsetTime);
+}
+
+QVariantList AnalysisSpikeData::getWaveformsUntil(double upToTime)
+{
+	double globalTime = upToTime+zeroTime_;
+	double offsetTime = globalTime - getLatestRunTime();
+	return getNextWaveforms(offsetTime);
+}
 void AnalysisSpikeData::postDeserialize()
 {
 	AnalysisDataSource::postDeserialize();

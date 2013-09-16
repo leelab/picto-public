@@ -41,30 +41,22 @@ signals:
 private:
 	PlaybackIndex getNextIndex();
 	PlaybackIndex globalToRunIndex(PlaybackIndex index);
+	double globalTimeFromArrayIndex(const int& index);
+	int arrayIndexFromGlobalTime(const double& time);
+	float getDataValue(const int& arrayIndex,const int& channelIndex);
+	void setDataValue(const int& arrayIndex,const int& channelIndex,const float& value);
 	QSqlDatabase session_;
 	QSharedPointer<QSqlQuery> query_;
 	double runStart_;
 	double runEnd_;
 	int curr_;
-	struct PlaybackLFPData
-	{
-		//data_ = data;dataStart_ = reinterpret_cast<const float*>(data_.constData());dataSize_ = data_.size()/sizeof(float);
-		PlaybackLFPData();
-		~PlaybackLFPData();
-		PlaybackLFPData(double time);
-		void initializeValArray(int size);
-		void setValue(int index,float value);
-		inline bool operator<(const PlaybackLFPData& someData) const {
-			return time_ < someData.time_;
-		}
-		float getValue(const int& index);
-		double time_;
-		float* channelVals_;
-	};
-	QList<PlaybackLFPData> data_;
+	QVector<float> data_;
 	QHash<int,int> chanIndexMap_;
 	QVariantList channels_;
+	int numChannels_;
+	int numValues_;
 	double sampPeriod_;
+	double minLfpTime_;
 };
 
 }; //namespace Picto

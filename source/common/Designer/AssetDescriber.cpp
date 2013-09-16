@@ -248,9 +248,9 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("AllowReentries","If true, the user's eye position may enter and exit the contained targets without triggering a 'Broke Fixation' result until they either fixate for 'FixationTime' or 'TotalTime' passes.");
 	curr->addSProp("fixationTime","Sets/Gets the current value of the necessary 'FixationTime' considered succesful fixation.");
 	curr->addSProp("totalTime","Sets/Gets the current value of the 'TotalTime' that the user has in order to correctly fixate before 'Total Time Exceeded' is triggered.");
-	curr->addSFunc("bool userOnTarget()","Returns true if the user's eye position is on a target.");
-	curr->addSFunc("bool userEnteredTarget()","Returns true if the user's eye position entered a target between the last frame presented and the one before it.");
-	curr->addSFunc("bool userExitedTarget()","Returns true if the user's eye position exited a target between the last frame presented and the one before it.");
+	curr->addSFunc("bool userOnTarget()","Returns true if the user's eye position is on a target.  Warning: returns invalid data for sessions saved while Picto was in alpha stage (ie. original Ambiguity,Matching Pennies sessions)");
+	curr->addSFunc("bool userEnteredTarget()","Returns true if the user's eye position entered a target between the last frame presented and the one before it.  Warning: returns invalid data for sessions saved while Picto was in alpha stage (ie. original Ambiguity,Matching Pennies sessions)");
+	curr->addSFunc("bool userExitedTarget()","Returns true if the user's eye position exited a target between the last frame presented and the one before it.  Warning: returns invalid data for sessions saved while Picto was in alpha stage (ie. original Ambiguity,Matching Pennies sessions)");
 
 	curr = addDescription("ScriptController");
 	curr->setInherits(getAssetDescription("ControlElement"));
