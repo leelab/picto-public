@@ -505,9 +505,10 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed bug in Server data storage system that caused intermittent crashes.");
+	releaseNoteList.append("Added additional elements to analysis system including: Spike, LFP, Signal (eye position, diameter), Reward, and Frame time elements.");
+	releaseNoteList.append("Added multiple new element icons to the State Machine Editor.");
 
-	releaseNoteList.append("Fixed bug in replay viewer that caused workstation to crash when analyzing very large sessions.");
+	releaseNoteList.append("Fixed bug in Server data storage system that caused intermittent crashes.");
 
 
 	//Format release notes:

@@ -30,6 +30,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("SwitchElement",":/icons/scriptelement.svg",50,75);
 		addIconDefinition("Parameter",":/icons/parameter.svg",50,75);
 		addIconDefinition("BooleanParameter",":/icons/booleanparameter.svg",50,75);
+		addIconDefinition("ImageFileParameter",":/icons/booleanparameter.svg",50,75);
 		addIconDefinition("IntegerParameter",":/icons/integerparameter.svg",50,75);
 		addIconDefinition("FloatParameter",":/icons/floatparameter.svg",50,75);
 		addIconDefinition("ColorParameter",":/icons/colorparameter.svg",50,75);

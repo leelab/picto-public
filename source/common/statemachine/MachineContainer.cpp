@@ -7,6 +7,7 @@
 #include "../parameter/BooleanParameter.h"
 #include "../parameter/ColorParameter.h"
 #include "../parameter/ChoiceParameter.h"
+#include "../parameter/ImageFileParameter.h"
 #include "../parameter/NumericParameter.h"
 #include "../parameter/RangeParameter.h"
 #include "../parameter/RandomIntParameter.h"
@@ -51,6 +52,8 @@ addingTransition_(false)
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
 	parameterFactory_->addAssetType("Color",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ColorParameter::Create))));
+	parameterFactory_->addAssetType("ImageFile",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ImageFileParameter::Create))));
 	//parameterFactory_->addAssetType("Choice",
 	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
 	parameterFactory_->addAssetType("Numeric",
