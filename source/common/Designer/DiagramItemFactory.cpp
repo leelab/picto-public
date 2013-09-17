@@ -30,7 +30,8 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("SwitchElement",":/icons/scriptelement.svg",50,75);
 		addIconDefinition("Parameter",":/icons/parameter.svg",50,75);
 		addIconDefinition("BooleanParameter",":/icons/booleanparameter.svg",50,75);
-		addIconDefinition("ImageFileParameter",":/icons/booleanparameter.svg",50,75);
+		addIconDefinition("ImageFileParameter",":/icons/imagefile.svg",50,75);
+		addIconDefinition("SoundFileParameter",":/icons/soundfile.svg",50,75);
 		addIconDefinition("IntegerParameter",":/icons/integerparameter.svg",50,75);
 		addIconDefinition("FloatParameter",":/icons/floatparameter.svg",50,75);
 		addIconDefinition("ColorParameter",":/icons/colorparameter.svg",50,75);
@@ -51,6 +52,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("BoxElement",":/icons/box.svg",50,75);
 		addIconDefinition("CircleElement",":/icons/circle.svg",50,75);
 		addIconDefinition("EllipseElement",":/icons/ellipse.svg",50,75);
+		addIconDefinition("ImageElement",":/icons/image.svg",50,75);
 		addIconDefinition("DiamondElement",":/icons/diamond.svg",50,75);
 		addIconDefinition("TokenTrayElement",":/icons/tokentray.svg",50,75);
 		addIconDefinition("TokenFactoryElement",":/icons/tokenfactory.svg",50,75);
@@ -59,6 +61,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("OperatorInfoElement",":/icons/operatorinfo.svg",50,75);
 		addIconDefinition("RandomGridElement",":/icons/randomgrid.svg",50,75);
 		addIconDefinition("TextElement",":/icons/text.svg",50,75);
+		addIconDefinition("SoundElement",":/icons/sound.svg",50,75);
 		addIconDefinition("Scriptable",":/icons/scriptable.svg",50,75);
 		addIconDefinition("Result",":/icons/result.svg",50,75);
 		addIconDefinition("Reward",":/icons/reward.svg",50,100);

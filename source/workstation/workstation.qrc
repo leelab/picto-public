@@ -145,5 +145,9 @@
         <file>icons/scriptcontroller.svg</file>
         <file>icons/stopwatchcontroller.svg</file>
         <file>icons/targetcontroller.svg</file>
+        <file>icons/sound.svg</file>
+        <file>icons/image.svg</file>
+        <file>icons/soundfile.svg</file>
+        <file>icons/imagefile.svg</file>
     </qresource>
 </RCC>
