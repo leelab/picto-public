@@ -30,7 +30,7 @@ void SignalState::setDatabase(QSqlDatabase session)
 	data_.clear();
 	data_.resize(query_->value(0).toInt());
 
-	query_->exec(QString("SELECT f.time,s.offsettime,s.data "
+	query_->exec(QString("SELECT f.time,s.offsettime,s.data,f.dataid "
 			"FROM %1 s,frames f WHERE f.dataid=s.frameid ORDER BY f.dataid").arg(tableName_));
 
 	if(!query_->exec())
@@ -45,8 +45,19 @@ void SignalState::setDatabase(QSqlDatabase session)
 	QByteArray byteArray;
 	int numEntries;
 	float* floatArray;
+	qulonglong lastFrameId = 0;	//Before 6/2013 data ids of signals in session file were not being transferred
+								//to the session file correctly.  This means that if there signal data got 
+								//sent more than once from the diretor due to a server slowdown, it could
+								//appear in the session file more than once.  For this reason, we store the 
+								//last frameId and throw out any data that arrives with a frame id that duplicates
+								//duplicates the last one.
+	qulonglong currFrameId;
 	while(query_->next())
 	{
+		currFrameId = query_->value(3).toLongLong();
+		if(lastFrameId == currFrameId)
+			continue;	//See big comment a few lines up
+		lastFrameId = currFrameId;
 		//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
 		data_[arrayIndex] = PlaybackSignalData(query_->value(0).toDouble()+query_->value(1).toDouble());
 		byteArray = query_->value(2).toByteArray();

@@ -24,7 +24,7 @@ AssociateRoot::AssociateRoot()
 //Links this AssociateRoot to the input Asset.
 //Returns true on success, false if the linkage wasn't perfect.  On false, the feedback
 //message has more information.
-//THIS IS GOING TO NEED SOME DEBUGGING.  MAKE SURE, FOR EXAMPLE, THAT ADDING AN ANALYSISSCRIPTCONTAINER TO A
+//THIS IS GOING TO NEED SOME DEBUGGING.  MAKE SURE, FOR EXAMPLE, THAT ADDING AN ANALYSISSCRIPTHOLDER TO A
 //NUMERIC PARAMETER WON'T BREAK ANYTHING!!!  Possibly fix these types of issues by overloading the AssociateElement's
 //attachToLinkedAsset function for different types of classes depending on whether they can be loaded onto the wrong
 //element or not.

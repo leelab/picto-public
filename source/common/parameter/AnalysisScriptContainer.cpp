@@ -1,9 +1,9 @@
-#include "AnalysisScriptContainer.h"
+#include "AnalysisScriptHolder.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
 
-AnalysisScriptContainer::AnalysisScriptContainer()
+AnalysisScriptHolder::AnalysisScriptHolder()
 : ScriptableContainer()
 {
 	EXP_LINK_FACTORY_CREATION
@@ -15,12 +15,12 @@ AnalysisScriptContainer::AnalysisScriptContainer()
 	requireUniqueName(false);
 }
 
-QSharedPointer<Asset> AnalysisScriptContainer::Create()
+QSharedPointer<Asset> AnalysisScriptHolder::Create()
 {
-	return QSharedPointer<Asset>(new AnalysisScriptContainer());
+	return QSharedPointer<Asset>(new AnalysisScriptHolder());
 }
 
-void AnalysisScriptContainer::runScript(ScriptType type)
+void AnalysisScriptHolder::runScript(ScriptType type)
 {
 	//Monitor for changes in any Experimental properties during the running of the scripts below.
 	//If any experimental properties change, Analysis changed them and a runtime error should be issued.
@@ -54,7 +54,7 @@ void AnalysisScriptContainer::runScript(ScriptType type)
 }
 
 //Returns true if this object contains a property of the input type, whether or not it is empty.
-bool AnalysisScriptContainer::hasScriptPropertyType(ScriptType type)
+bool AnalysisScriptHolder::hasScriptPropertyType(ScriptType type)
 {
 	switch(type)
 	{
@@ -72,7 +72,7 @@ bool AnalysisScriptContainer::hasScriptPropertyType(ScriptType type)
 	return false;
 }
 
-bool AnalysisScriptContainer::isPartOfSearch(SearchRequest searchRequest)
+bool AnalysisScriptHolder::isPartOfSearch(SearchRequest searchRequest)
 {
 	//If the search is for all analyses
 	//OR If the search is for active analyses and this is an active analysis,
@@ -85,7 +85,7 @@ bool AnalysisScriptContainer::isPartOfSearch(SearchRequest searchRequest)
 	return false;
 }
 
-QString AnalysisScriptContainer::getReturnValueError(QString scriptName,const QScriptValue& returnValue)
+QString AnalysisScriptHolder::getReturnValueError(QString scriptName,const QScriptValue& returnValue)
 {
 	QString resultError = "";
 	if(Property::experimentalValueWasChanged())
@@ -104,21 +104,21 @@ QString AnalysisScriptContainer::getReturnValueError(QString scriptName,const QS
 	return resultError;
 }
 
-void AnalysisScriptContainer::postDeserialize()
+void AnalysisScriptHolder::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();
 	QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();
 	connect(lnk.data(),SIGNAL(linkedToAsset(QSharedPointer<Asset>)),this,SLOT(linkedToAsset(QSharedPointer<Asset>)));
 }
 
-bool AnalysisScriptContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
+bool AnalysisScriptHolder::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!ScriptableContainer::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }
 
-bool AnalysisScriptContainer::hasScripts()
+bool AnalysisScriptHolder::hasScripts()
 {
 	return	!propertyContainer_->getPropertyValue("AnalysisEntryScript").toString().isEmpty() 
 			||	(hasScriptPropertyType(FRAME)
@@ -128,7 +128,7 @@ bool AnalysisScriptContainer::hasScripts()
 				&& !propertyContainer_->getPropertyValue("AnalysisExitScript").toString().isEmpty());
 }
 
-QMap<QString,QString> AnalysisScriptContainer::getScripts()
+QMap<QString,QString> AnalysisScriptHolder::getScripts()
 {
 	QMap<QString,QString>  scripts = ScriptableContainer::getScripts();
 	QString script = propertyContainer_->getPropertyValue("AnalysisEntryScript").toString();
@@ -161,21 +161,21 @@ QMap<QString,QString> AnalysisScriptContainer::getScripts()
 //In the case where its scripts are all empty and a search for its simple existance comes through, 
 //it overloads the default behavior and returns false, since it might as well not exist and will
 //not be visible in the UI.
-bool AnalysisScriptContainer::executeSearchAlgorithm(SearchRequest searchRequest)
+bool AnalysisScriptHolder::executeSearchAlgorithm(SearchRequest searchRequest)
 {
 	if(!hasScripts())
 		return false;
 	return ScriptableContainer::executeSearchAlgorithm(searchRequest);
 }
 
-QString AnalysisScriptContainer::getScriptNamePrefix()
+QString AnalysisScriptHolder::getScriptNamePrefix()
 {
 	QSharedPointer<Asset> linkedAsset = getLinkedAsset();
 	Q_ASSERT(linkedAsset);
 	return linkedAsset->getName().simplified().remove(' ')+"Analysis";
 }
 
-void AnalysisScriptContainer::linkedToAsset(QSharedPointer<Asset> asset)
+void AnalysisScriptHolder::linkedToAsset(QSharedPointer<Asset> asset)
 {
 	//If this script container contains a frame script and is not linked to a state, erase
 	//the frame script

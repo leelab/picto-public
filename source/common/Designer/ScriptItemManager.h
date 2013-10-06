@@ -30,7 +30,7 @@ private:
 
 private slots:
 	void updateScriptItems();
-	void performAnalysisScriptContainerOps(QSharedPointer<Asset> assetChild);
+	void performAnalysisScriptHolderOps(QSharedPointer<Asset> assetChild);
 };
 //! [0]
 

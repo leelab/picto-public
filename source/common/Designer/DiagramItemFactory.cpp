@@ -31,7 +31,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("Parameter",":/icons/parameter.svg",50,75);
 		addIconDefinition("BooleanParameter",":/icons/booleanparameter.svg",50,75);
 		addIconDefinition("ImageFileParameter",":/icons/imagefile.svg",50,75);
-		addIconDefinition("SoundFileParameter",":/icons/soundfile.svg",50,75);
+		addIconDefinition("AudioFileParameter",":/icons/soundfile.svg",50,75);
 		addIconDefinition("IntegerParameter",":/icons/integerparameter.svg",50,75);
 		addIconDefinition("FloatParameter",":/icons/floatparameter.svg",50,75);
 		addIconDefinition("ColorParameter",":/icons/colorparameter.svg",50,75);
@@ -80,6 +80,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("LFPDataSource",":/icons/lfpdatasource.svg",100,100);
 		addIconDefinition("PropertyDataSource",":/icons/propertydatasource.svg",100,100);
 		addIconDefinition("RewardDataSource",":/icons/rewarddatasource.svg",100,100);
+		addIconDefinition("RunNotesDataSource",":/icons/runnotes.svg",100,100);
 		addIconDefinition("SignalDataSource",":/icons/SignalDataSource.svg",100,100);
 		addIconDefinition("SpikeDataSource",":/icons/spikedatasource.svg",100,100);
 		addIconDefinition("TimeDataSource",":/icons/timedatasource.svg",100,100);
@@ -123,7 +124,7 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		returnVal = NULL;
 	else if(asset->inherits("Picto::UIInfo"))
 		returnVal = NULL;
-	else if(asset->inherits("Picto::AnalysisScriptContainer"))
+	else if(asset->inherits("Picto::AnalysisScriptHolder"))
 		returnVal = NULL;
 	else if(asset->inherits("Picto::LogicResult"))
 		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);

@@ -422,6 +422,11 @@ void DesignConfig::setRewardReader(QSharedPointer<RewardReader> rewardReader)
 	rewardReader_ = rewardReader;
 }
 
+void DesignConfig::setRunNotesReader(QSharedPointer<RunNotesReader> runNotesReader)
+{
+	runNotesReader_ = runNotesReader;
+}
+
 void DesignConfig::setSpikeReader(QSharedPointer<SpikeReader> spikeReader)
 {
 	spikeReader_ = spikeReader;
@@ -435,6 +440,11 @@ QSharedPointer<LfpReader> DesignConfig::getLfpReader()
 QSharedPointer<RewardReader> DesignConfig::getRewardReader()
 {
 	return rewardReader_;
+}
+
+QSharedPointer<RunNotesReader> DesignConfig::getRunNotesReader()
+{
+	return runNotesReader_;
 }
 
 QSharedPointer<SpikeReader> DesignConfig::getSpikeReader()

@@ -1,6 +1,7 @@
 #include "LiveSpikeReader.h"
 using namespace Picto;
 
+#define SAMP_PERIOD 0.000025
 LiveSpikeReader::LiveSpikeReader(int maxChan,int maxUnit,int waveformSize)
 {
 	maxChans_=maxChan;
@@ -46,6 +47,11 @@ QVariantList LiveSpikeReader::getChannels()
 QVariantList LiveSpikeReader::getUnits(int channel)
 {
 	return units_;
+}
+
+double LiveSpikeReader::getSamplePeriod()
+{
+	return SAMP_PERIOD;
 }
 
 double LiveSpikeReader::getLatestTime()

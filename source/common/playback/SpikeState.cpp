@@ -1,5 +1,6 @@
 #include <QMap>
 #include "SpikeState.h"
+#include "../storage/DataSourceInfo.h"
 #include "PlaybackData.h"
 #include "../storage/alignmentinfo.h"
 using namespace Picto;
@@ -22,6 +23,27 @@ void SpikeState::setDatabase(QSqlDatabase session)
 	inf.fromXml(query_->value(0).toString());
 	double offsetTime = inf.getOffsetTime();
 	double temporalFactor = inf.getTemporalFactor();
+
+	//Get spike resolution
+	sampPeriod_ = 0;
+	query_->prepare("SELECT value FROM sessioninfo WHERE key='DataSource'");
+	if(!query_->exec())
+	{
+		return;
+	}
+	while(query_->next())
+	{
+		DataSourceInfo info;
+		info.fromXml(query_->value(0).toString());
+		if(info.getName() == "spikes")
+		{
+			sampPeriod_ = temporalFactor*info.getResolution();
+			break;
+		}
+	}
+	if(sampPeriod_ <= 0)
+		return;
+
 
 	//Preallocate Spike data array
 	query_->exec("SELECT COUNT(*) FROM spikes");
@@ -124,6 +146,10 @@ QVariantList SpikeState::getUnits(int channel)
 	if(!unitsLookup_.contains(channel))
 		return QVariantList();
 	return unitsLookup_.value(channel);
+}
+double SpikeState::getSamplePeriod()
+{
+	return sampPeriod_;
 }
 double SpikeState::getLatestTime()
 {

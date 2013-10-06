@@ -4,7 +4,7 @@
 #include "../statemachine/UIData.h"
 #include "../parameter/AssociateRootHost.h"
 #include "../parameter/AssociateRoot.h"
-#include "../storage/ObsoleteAsset.h"
+#include "../storage/OldVersionAsset.h"
 #include "../memleakdetect.h"
 using namespace Picto;
 
@@ -43,13 +43,13 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 	}
 	connect(pictoData_.data(),SIGNAL(edited()),this,SLOT(designEdited()));
 	setDesignName(pictoData_->getName());
-	if(ObsoleteAsset::encounteredObsoleteAsset() || Property::encounteredObsoleteSerialSyntax())
+	if(OldVersionAsset::encounteredOldVersionAsset() || Property::encounteredObsoleteSerialSyntax())
 	{
 		lastWarning_.name="Obsolete Syntax Encountered                                  ";
 		lastWarning_.details="File contents have been automatically upgraded to "
 			"function with the latest version of Picto.  If you save this design, "
 			"it will be incompatible with older versions of Picto.";
-		ObsoleteAsset::clearObsoleteAssetFlag();
+		OldVersionAsset::clearOldVersionAssetFlag();
 		Property::clearObsoleteSerialSyntax();
 		//Move to the upgraded version
 		return resetDesignRoot(pictoData_->toXml());

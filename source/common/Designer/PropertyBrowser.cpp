@@ -1,7 +1,7 @@
 #include <QtWidgets>
 #include "PropertyBrowser.h"
 #include "../../common/storage/datastore.h"
-#include "../parameter/AnalysisScriptContainer.h"
+#include "../parameter/AnalysisScriptHolder.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -75,13 +75,13 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 	if(dataStore.isNull())
 		return;
 
-	//If this object doesn't have an AnalysisScriptContainer and their is an active analysis, add one now
+	//If this object doesn't have an AnalysisScriptHolder and their is an active analysis, add one now
 	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-	if(activeAnalysis && asset->inherits("Picto::StateMachineElement") && asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
+	if(activeAnalysis && asset->inherits("Picto::StateMachineElement") && asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptHolder").isEmpty())
 	{
-		//create the AnalysisScriptContainer, put it in the analysis 
+		//create the AnalysisScriptHolder, put it in the analysis 
 		//and link it to the object
-		QSharedPointer<AnalysisScriptContainer> newScriptContainer = editorState_->getCurrentAnalysis()->createChildAsset("AnalysisScriptContainer",QString(),QString()).staticCast<AnalysisScriptContainer>();
+		QSharedPointer<AnalysisScriptHolder> newScriptContainer = editorState_->getCurrentAnalysis()->createChildAsset("AnalysisScriptHolder",QString(),QString()).staticCast<AnalysisScriptHolder>();
 		//Add entry and exit scripts
 		newScriptContainer->createChildAsset("AnalysisEntryScript",QString(),QString());
 		newScriptContainer->createChildAsset("AnalysisExitScript",QString(),QString());
@@ -90,12 +90,12 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 			newScriptContainer->createChildAsset("AnalysisFrameScript",QString(),QString());
 		}
 		//Add this newScriptContainer to the asset
-		asset.staticCast<DataStore>()->AddAssociateChild(newScriptContainer->getAssociateId(),"AnalysisScriptContainer",newScriptContainer);
+		asset.staticCast<DataStore>()->AddAssociateChild(newScriptContainer->getAssociateId(),"AnalysisScriptHolder",newScriptContainer);
 	}
-	QSharedPointer<AnalysisScriptContainer> scriptContainer;
+	QSharedPointer<AnalysisScriptHolder> scriptContainer;
 	if(activeAnalysis && asset->inherits("Picto::StateMachineElement"))
 	{
-		scriptContainer = asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
+		scriptContainer = asset.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptHolder").first().staticCast<AnalysisScriptHolder>();
 	}
 	QSharedPointer<PropertyContainer> propContainer;
 	QVector<QSharedPointer<Property>> propVec;
@@ -110,10 +110,10 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 		}
 		else
 		{
-			//If there's an active analysis, get the propContainer from the AnalysisScriptContainer, otherwise leave it empty
+			//If there's an active analysis, get the propContainer from the AnalysisScriptHolder, otherwise leave it empty
 			if(activeAnalysis && scriptContainer)
 			{
-				//The propTag is for an analysis script, set the property container from the AnalysisScriptContainer
+				//The propTag is for an analysis script, set the property container from the AnalysisScriptHolder
 				propContainer = scriptContainer.staticCast<DataStore>()->getPropertyContainer();
 			}
 		}

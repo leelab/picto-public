@@ -93,8 +93,8 @@
 //#define LCDEVENTPORT PORTPREFIX+2421
 
 //Version MAJOR.MINOR.BUILD
-#define PICTOVERSION "1.0.29"
-#define DESIGNSYNTAXVERSION "0.0.1"
+#define PICTOVERSION "1.0.30"
+#define DESIGNSYNTAXVERSION "0.0.2"
 //Directory name of automatic updater application and dependencies
 //It is a subdirectory of the main binary directory
 #define UPDATERDIR "updater"

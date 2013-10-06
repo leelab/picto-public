@@ -30,6 +30,7 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	experiment_->getDesignConfig()->setFrameReader(updater_->getFrameReader());
 	experiment_->getDesignConfig()->setLfpReader(updater_->getLfpReader());
 	experiment_->getDesignConfig()->setRewardReader(updater_->getRewardReader());
+	experiment_->getDesignConfig()->setRunNotesReader(updater_->getRunNotesReader());
 	experiment_->getDesignConfig()->setSpikeReader(updater_->getSpikeReader());
 	foreach(QString signalName,updater_->getSignalReaderNames())
 	{

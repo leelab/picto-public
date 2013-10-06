@@ -32,6 +32,7 @@ public:
 	virtual QSharedPointer<FrameReader> getFrameReader();
 	virtual QSharedPointer<LfpReader> getLfpReader();
 	virtual QSharedPointer<RewardReader> getRewardReader();
+	virtual QSharedPointer<RunNotesReader> getRunNotesReader();
 	virtual QSharedPointer<SpikeReader> getSpikeReader();
 	virtual QStringList getSignalReaderNames();
 	virtual QSharedPointer<SignalReader> getSignalReader(QString name);

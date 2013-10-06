@@ -1,5 +1,5 @@
-#ifndef _AnalysisScriptContainer_H_
-#define _AnalysisScriptContainer_H_
+#ifndef _AnalysisScriptHolder_H_
+#define _AnalysisScriptHolder_H_
 
 #include "../common.h"
 
@@ -13,16 +13,16 @@ namespace Picto {
  *
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AnalysisScriptContainer : public ScriptableContainer, public AssociateElement
+	class PICTOLIB_API AnalysisScriptHolder : public ScriptableContainer, public AssociateElement
 #else
-class AnalysisScriptContainer : public ScriptableContainer, public AssociateElement
+class AnalysisScriptHolder : public ScriptableContainer, public AssociateElement
 #endif
 {
 	Q_OBJECT
 
 public:
-	AnalysisScriptContainer();
-	virtual ~AnalysisScriptContainer(){};
+	AnalysisScriptHolder();
+	virtual ~AnalysisScriptHolder(){};
 
 	static QSharedPointer<Asset> Create();
 	enum ScriptType {ENTRY,FRAME,EXIT};
@@ -34,7 +34,7 @@ public:
 	ASSOCIATE_ELEMENT_IMPLEMENTATION
 
 protected:
-	virtual QString defaultTagName(){return "AnalysisScriptContainer";};
+	virtual QString defaultTagName(){return "AnalysisScriptHolder";};
 	virtual QString getReturnValueError(QString scriptName,const QScriptValue& returnValue);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

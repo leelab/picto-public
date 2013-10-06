@@ -35,6 +35,8 @@ public slots:
 	//Sets the time of the latest frame to zero.  Spike times will be returned with respect to
 	//this latest frame.
 	void zeroLatestFrame();
+	//Returns the sample period used by the spike data acquisition system
+	double getSamplePeriod();
 	//Returns the time of the latest spike to have been read
 	double getLatestTime();
 	int getLatestChannel();

@@ -11,6 +11,7 @@
 #include "RewardState.h"
 #include "SignalState.h"
 #include "SpikeState.h"
+#include "RunNotesState.h"
 #include "TransitionState.h"
 #include "PlaybackInterfaces.h"
 #include "../common.h"
@@ -66,6 +67,7 @@ public:
 	QSharedPointer<TransitionReader> getTransitionReader();
 	QSharedPointer<FrameReader> getFrameReader();
 	QSharedPointer<RewardReader> getRewardReader();
+	QSharedPointer<RunNotesReader> getRunNotesReader();
 	QStringList getSignalReaderNames();
 	QSharedPointer<SignalReader> getSignalReader(QString name);
 	QSharedPointer<LfpReader> getLfpReader();
@@ -121,6 +123,7 @@ private:
 	QSharedPointer<TransitionState> transState_;
 	QSharedPointer<FrameState> frameState_;
 	QSharedPointer<RewardState> rewardState_;
+	QSharedPointer<RunNotesState> runNotesState_;
 	QHash<QString,QSharedPointer<SignalState>> signalLookup_;
 	QSharedPointer<SpikeState> spikeState_;
 	QSharedPointer<LfpState> lfpState_;

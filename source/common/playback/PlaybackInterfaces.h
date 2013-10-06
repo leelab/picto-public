@@ -104,6 +104,22 @@ public:
 };
 
 #if defined WIN32 || defined WINCE
+class PICTOLIB_API RunNotesReader : public QObject
+#else
+class RunNotesReader : public QObject
+#endif
+{
+	Q_OBJECT
+public:
+	virtual ~RunNotesReader(){};
+	virtual QString getName(){return "";};
+	virtual double getStartTime(){return 0;};
+	virtual double getEndTime(){return 0;};
+	virtual QString getNotes(){return "";};
+	virtual int getRunIndex(){return 0;};
+};
+
+#if defined WIN32 || defined WINCE
 class PICTOLIB_API SignalReader : public QObject
 #else
 class SignalReader : public QObject
@@ -150,6 +166,7 @@ public:
 	virtual ~SpikeReader(){};
 	virtual QVariantList getChannels(){return QVariantList();};
 	virtual QVariantList getUnits(int channel){return QVariantList();};
+	virtual double getSamplePeriod(){return 0;};
 	virtual double getLatestTime(){return 0;};
 	virtual int getLatestChannel(){return 0;};
 	virtual int getLatestUnit(){return 0;};

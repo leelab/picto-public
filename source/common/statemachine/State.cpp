@@ -10,7 +10,7 @@
 #include "../engine/SignalChannel.h"
 #include "../stimuli/OutputElement.h"
 #include "../timing/Timestamper.h"
-#include "../parameter/AnalysisScriptContainer.h"
+#include "../parameter/AnalysisScriptHolder.h"
 #include "../stimuli/CursorGraphic.h"
 #include "../controlelements/TestController.h"
 #include "../controlelements/StopwatchController.h"

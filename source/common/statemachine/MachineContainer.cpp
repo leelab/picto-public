@@ -4,6 +4,7 @@
 #include "../variable/NumberVariable.h"
 #include "../variable/VariableList.h"
 #include "../variable/VariableMap.h"
+#include "../parameter/AudioFileParameter.h"
 #include "../parameter/BooleanParameter.h"
 #include "../parameter/ColorParameter.h"
 #include "../parameter/ChoiceParameter.h"
@@ -52,8 +53,6 @@ addingTransition_(false)
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
 	parameterFactory_->addAssetType("Color",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ColorParameter::Create))));
-	parameterFactory_->addAssetType("ImageFile",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ImageFileParameter::Create))));
 	//parameterFactory_->addAssetType("Choice",
 	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
 	parameterFactory_->addAssetType("Numeric",
@@ -74,6 +73,11 @@ addingTransition_(false)
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorClickParameter::Create))));
 	parameterFactory_->addAssetType("SignalValue",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(SignalValueParameter::Create))));
+	parameterFactory_->addAssetType("ImageFile",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ImageFileParameter::Create))));
+	parameterFactory_->addAssetType("AudioFile",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AudioFileParameter::Create))));
+
 
 
 	AddDefinableObjectFactory("ControlTarget",controlTargetFactory_);

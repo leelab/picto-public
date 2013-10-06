@@ -537,6 +537,8 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("getDataAsNum(field)","Returns the data from the input field as a floating point number.  This is equivalent to parseFloat(getDataAsString(field)).");
 	curr->addSFunc("getNumEntries()","Returns the number of fields in this element.");
 	curr->addSFunc("updateValue()","Causes the changes from calling 'setData(field,value)' to be implemented.  Only after this is called will the display on the screen change according to the contents of that function call.");
+	curr->addSFunc("getFields()","Returns a javascript array of the field names currently used by this operator info graphic");
+	curr->addSFunc("getValues()","Returns a javascript array of the values currently stored in this operator info graphic.  Values are in the order of the fields returned by getFields() and are in the string format in which they appear on screen.  To turn them into numbers, use parseFloat on the individual values.");
 
 	curr = addDescription("RandomlyFilledGridGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
@@ -780,6 +782,14 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("getDurationsSince(number beyondTime)","Functions like getPrevDurations except that the input time is an absolute time with respect to this element's zero time instead of an offset.");
 	curr->addSFunc("getDurationsUntil(number upToTime)","Functions like getNextDurations except that the input time is an absolute time with respect to this element's zero time instead of an offset.");
 
+	curr = addDescription("AnalysisRunNotesData");
+	curr->setInherits(getAssetDescription("AnalysisDataSource"));
+	curr->setOverview("Provides access to run notes and other run information.");
+	curr->addSFunc("getRunName()","Returns the name of the current run.  This is the name entered by the operator during the session or the automatically generated name if no name was entered.");
+	curr->addSFunc("getGlobalStartTime()","Returns the time in the session at which the run started.  This time is reported in seconds where time zero is the time at which the session began.");
+	curr->addSFunc("getGlobalEndTime()","Returns the time in the session at which the run ended.  This time is reported in seconds where time zero is the time at which the session began.");
+	curr->addSFunc("getRunNotes()","Returns the notes saved in the run info tab during the course of a session for the current run.");
+	curr->addSFunc("getRunIndex()","Returns the index of this run in this sessions list of task runs, starting with zero.");
 
 	curr = addDescription("AnalysisSignalData");
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
@@ -811,6 +821,7 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
 	curr->setOverview("Provides spike data to be used in analysis.  The latest, and next spike times/channels/units/waveforms can be read out individually. Alternatively, spike times/channels/units/waveforms during a set time period can be read out as javascript arrays.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.");
 	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
+	curr->addSFunc("getSamplePeriod()","Returns the sample period in seconds used by the running sessions neural data acquisition system.");
 	curr->addSFunc("getLatestTime()","Returns the time at which the latest spike occured.");
 	curr->addSFunc("getLatestChannel()","Returns the channel of the latest spike.");
 	curr->addSFunc("getLatestUnit()","Returns the unit of the latest spike.");

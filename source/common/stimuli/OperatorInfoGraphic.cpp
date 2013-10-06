@@ -79,6 +79,30 @@ void OperatorInfoGraphic::setData(QString field, QVariant value)
 	infoMap_[field] = value;
 }
 
+QVariantList OperatorInfoGraphic::getFields()
+{
+	QStringList fields = propertyContainer_->getPropertyValue("Fields").toString().split(",");
+	QVariantList returnVal;
+	returnVal.reserve(fields.size());
+	foreach(QString field,fields)
+	{
+		returnVal.append(field);
+	}
+	return returnVal;
+}
+
+QVariantList OperatorInfoGraphic::getValues()
+{
+	QStringList values = propertyContainer_->getPropertyValue("Values").toString().split(",");
+	QVariantList returnVal;
+	returnVal.reserve(values.size());
+	foreach(QString value,values)
+	{
+		returnVal.append(value);
+	}
+	return returnVal;
+}
+
 void OperatorInfoGraphic::updateValue()
 {
 	QStringList values;

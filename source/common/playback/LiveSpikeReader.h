@@ -23,6 +23,7 @@ public:
 	//Spike Reader Interface
 	virtual QVariantList getChannels();
 	virtual QVariantList getUnits(int channel);
+	virtual double getSamplePeriod();
 	virtual double getLatestTime();
 	virtual int getLatestChannel();
 	virtual int getLatestUnit();

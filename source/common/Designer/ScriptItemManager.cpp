@@ -1,7 +1,7 @@
 #include <QUuid>
 #include "ScriptItemManager.h"
 #include "../storage/DataStore.h"
-#include "../parameter/AnalysisScriptContainer.h"
+#include "../parameter/AnalysisScriptHolder.h"
 #include "../../common/memleakdetect.h"
 ScriptItemManager::ScriptItemManager(QSharedPointer<EditorState> editorState, QGraphicsItem *scriptsParent, QSharedPointer<Asset> asset, bool horizontal)
 : 
@@ -34,21 +34,21 @@ ScriptItemManager::ScriptItemManager(QSharedPointer<EditorState> editorState, QG
 	//If the asset is edited, it may be a change in the script values so we call updateScriptItems whenever this happens
 	connect(asset_.data(),SIGNAL(edited()),this,SLOT(updateScriptItems()));
 
-	//If the asset has an analysisScriptContainer, we need to connect its edited signal too since it doesn't propegate
-	//to its connected experimental asset.  This happens in performAnalysisScriptContainerOps();
+	//If the asset has an AnalysisScriptHolder, we need to connect its edited signal too since it doesn't propegate
+	//to its connected experimental asset.  This happens in performAnalysisScriptHolderOps();
 	QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
 	if(activeAnalysis)
 	{
-		if(!asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
+		if(!asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptHolder").isEmpty())
 		{
-			QSharedPointer<Asset> anaScriptContainer = asset_.staticCast<DataStore>()->getAssociateChildren(editorState_->getCurrentAnalysis()->getAssociateId(),"AnalysisScriptContainer").first();
-			performAnalysisScriptContainerOps(anaScriptContainer);
+			QSharedPointer<Asset> anaScriptContainer = asset_.staticCast<DataStore>()->getAssociateChildren(editorState_->getCurrentAnalysis()->getAssociateId(),"AnalysisScriptHolder").first();
+			performAnalysisScriptHolderOps(anaScriptContainer);
 		}
 		else
 		{
-			//If the asset does not have an AnalysisScriptContainer, we need will connect to its childAddedAfterDeserialize() signal
-			//so that performAnalysisScriptContainerOps() can operate if one is added.
-			connect(asset_.data(),SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(performAnalysisScriptContainerOps(QSharedPointer<Asset>)));
+			//If the asset does not have an AnalysisScriptHolder, we need will connect to its childAddedAfterDeserialize() signal
+			//so that performAnalysisScriptHolderOps() can operate if one is added.
+			connect(asset_.data(),SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(performAnalysisScriptHolderOps(QSharedPointer<Asset>)));
 		}
 	}
 }
@@ -114,13 +114,13 @@ void ScriptItemManager::updateScriptItems()
 		}
 		else
 		{	//if its an analysis script
-			//If the object does not have an AnalysisScriptContainer, skip this script
+			//If the object does not have an AnalysisScriptHolder, skip this script
 			QSharedPointer<Analysis> activeAnalysis = editorState_->getCurrentAnalysis();
-			if(!activeAnalysis || asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").isEmpty())
+			if(!activeAnalysis || asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptHolder").isEmpty())
 				continue;
 
 			//Set the property container from the scriptContainer
-			QSharedPointer<AnalysisScriptContainer> scriptContainer = asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptContainer").first().staticCast<AnalysisScriptContainer>();
+			QSharedPointer<AnalysisScriptHolder> scriptContainer = asset_.staticCast<DataStore>()->getAssociateChildren(activeAnalysis->getAssociateId(),"AnalysisScriptHolder").first().staticCast<AnalysisScriptHolder>();
 			propContainer = scriptContainer.staticCast<DataStore>()->getPropertyContainer();
 		}
 		//Check the property container for the prop
@@ -147,13 +147,13 @@ void ScriptItemManager::updateScriptItems()
 	updateScriptItemDimensions();
 }
 
-void ScriptItemManager::performAnalysisScriptContainerOps(QSharedPointer<Asset> assetChild)
+void ScriptItemManager::performAnalysisScriptHolderOps(QSharedPointer<Asset> assetChild)
 {
-	//If the input assetChild is not an AnalysisScriptContainer, we have nothing to do stop here.
-	if(!assetChild->inherits("Picto::AnalysisScriptContainer"))
+	//If the input assetChild is not an AnalysisScriptHolder, we have nothing to do stop here.
+	if(!assetChild->inherits("Picto::AnalysisScriptHolder"))
 		return;
 
-	//We need to connect the AnalysisScriptContainer's edited signal to updateScriptItems() because it won't 
+	//We need to connect the AnalysisScriptHolder's edited signal to updateScriptItems() because it won't 
 	//propegate to the experimental assets edited signal.
 	connect(assetChild.data(),SIGNAL(edited()),this,SLOT(updateScriptItems()));
 	updateScriptItems();

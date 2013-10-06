@@ -26,6 +26,8 @@ public:
 	virtual ~AnalysisTimer(){};
 
 	static QSharedPointer<Asset> Create();
+
+	virtual void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
 		
 	virtual void reset();
 	int getValue();

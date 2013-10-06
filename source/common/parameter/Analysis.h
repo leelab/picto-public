@@ -21,6 +21,7 @@ public:
 	virtual ~Analysis(){};
 	static QSharedPointer<Asset> Create();
 	virtual QString friendlyTypeName(){return "Analysis";};
+	virtual void upgradeVersion(QString deserializedVersion);
 
 	ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION
 

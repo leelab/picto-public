@@ -1,7 +1,7 @@
 #include "Analysis.h"
 #include "AnalysisDataSource.h"
 #include "AnalysisFunction.h"
-#include "AnalysisScriptContainer.h"
+#include "AnalysisScriptHolder.h"
 #include "AnalysisNumberVariable.h"
 #include "AnalysisStringVariable.h"
 #include "AnalysisVariableMap.h"
@@ -11,8 +11,10 @@
 #include "AnalysisFrameData.h"
 #include "AnalysisLfpData.h"
 #include "AnalysisRewardData.h"
+#include "AnalysisRunNotesData.h"
 #include "AnalysisSignalData.h"
 #include "AnalysisSpikeData.h"
+#include "../storage/ObsoleteNameAsset.h"
 #include "../design/PictoData.h"
 #include "../memleakdetect.h"
 
@@ -36,33 +38,40 @@ Analysis::Analysis()
 	variableFactory_->addAssetType("VariableMap",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisVariableMap::Create))));
 	
-	AddDefinableObjectFactory("AnalysisDataSource",outputFactory_);
-	scriptFactory_->addAssetType("Timer",
+	AddDefinableObjectFactory("AnalysisDataSource",dataSourceFactory_);
+	dataSourceFactory_->addAssetType("Timer",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisTimer::Create))));
-	scriptFactory_->addAssetType("Frame",
+	dataSourceFactory_->addAssetType("Frame",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFrameData::Create))));
-	scriptFactory_->addAssetType("Lfp",
+	dataSourceFactory_->addAssetType("Lfp",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisLfpData::Create))));
-	scriptFactory_->addAssetType("Reward",
+	dataSourceFactory_->addAssetType("Reward",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisRewardData::Create))));
-	scriptFactory_->addAssetType("Signal",
+	dataSourceFactory_->addAssetType("RunNotes",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisRunNotesData::Create))));
+	dataSourceFactory_->addAssetType("Signal",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisSignalData::Create))));
-	scriptFactory_->addAssetType("Spike",
+	dataSourceFactory_->addAssetType("Spike",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisSpikeData::Create))));
 
 
-	AddDefinableObjectFactory("AnalysisOutput",dataSourceFactory_);
-	dataSourceFactory_->addAssetType("File",
+	AddDefinableObjectFactory("AnalysisOutput",outputFactory_);
+	outputFactory_->addAssetType("File",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFileOutput::Create))));
 
 	AddDefinableObjectFactory("AnalysisFunction",functionFactory_);
 	functionFactory_->addAssetType("",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFunction::Create))));
 
-	AddDefinableObjectFactory("AnalysisScriptContainer",scriptFactory_);
+	AddDefinableObjectFactory("AnalysisScriptHolder",scriptFactory_);
 	scriptFactory_->addAssetType("",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisScriptContainer::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisScriptHolder::Create))));
 	requireUniqueChildNames(false);
+
+	//A copy paste error led to all data sources being saved with the AnalysisScriptContainer tag before Picto version 1.0.30 and syntax version 0.0.2
+	//For this reason we changed the AnalysisScriptContainer name to AnalysisScriptHolder and in the upgradeVersion function we are recreating all 
+	//AnalysisDataSource and AnalysisScriptHolder objects with the correct tag names.
+	AddDefinableObjectFactory("AnalysisScriptContainer",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteNameAsset::Create))));
 
 	ASSOCIATE_ROOT_HOST_INITIALIZATION
 }
@@ -72,6 +81,31 @@ QSharedPointer<Asset> Analysis::Create()
 	QSharedPointer<Analysis> newAnalysis(new Analysis());
 	newAnalysis->setSelfPtr(newAnalysis);
 	return newAnalysis;
+}
+
+void Analysis::upgradeVersion(QString deserializedVersion)
+{
+	AssociateRoot::upgradeVersion(deserializedVersion);
+	if(deserializedVersion < "0.0.2")
+	{	
+		//Before 0.0.2, a copy paste error led to all data sources being saved with the AnalysisScriptContainer tag 
+		//For this reason we changed the AnalysisScriptContainer name to AnalysisScriptHolder and in the upgradeVersion function we are recreating all 
+		//AnalysisDataSource and AnalysisScriptHolder objects with the correct tag names.
+		QList<QSharedPointer<Asset>> childList = getGeneratedChildren("AnalysisScriptContainer");
+		
+		//Go through everything that was saved with an AnalysisScriptContainer tag.
+		QSharedPointer<ObsoleteNameAsset> obsNameChild;
+		foreach(QSharedPointer<Asset> child,childList)
+		{
+			obsNameChild = child.staticCast<ObsoleteNameAsset>();
+			
+			//If the type was empty, change the name to AnalysisScriptHolder
+			if(obsNameChild->getOriginalType().isEmpty())
+				obsNameChild->setNewTagName("AnalysisScriptHolder");
+			else	//If there is a type, change the name to AnalysisDataSource
+				obsNameChild->setNewTagName("AnalysisDataSource");
+		}
+	}
 }
 
 void Analysis::postDeserialize()

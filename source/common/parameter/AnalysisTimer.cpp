@@ -17,15 +17,26 @@ QSharedPointer<Asset> AnalysisTimer::Create()
 	return QSharedPointer<Asset>(new AnalysisTimer());
 }
 
+void AnalysisTimer::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
+{
+	AnalysisDataSource::setDesignConfig(designConfig);
+	//Whenever the design config changes we need to change our change our frame timer so that 
+	//we can be sure that it will be updated according to presented frames in the  
+	//experiment to which this analysis is attached
+	timer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
+	restart();
+}
+
 void AnalysisTimer::restart()
 {
 	time_ = 0;
+	Q_ASSERT(timer_);
 	timer_->restart();
 }
 
 void AnalysisTimer::reset()
 {
-	Parameter::reset();
+	AnalysisDataSource::reset();
 	restart();
 }
 
@@ -40,6 +51,7 @@ int AnalysisTimer::getValue()
 		units = Controller::TimerUnits::us;
 	else
 		Q_ASSERT(false);
+	Q_ASSERT(timer_);
 	int returnVal = time_ + timer_->elapsedTime(units);
 	return returnVal;
 	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toLatin1());
@@ -48,7 +60,6 @@ int AnalysisTimer::getValue()
 void AnalysisTimer::postDeserialize()
 {
 	AnalysisDataSource::postDeserialize();
-	timer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
 	restart();
 }
 

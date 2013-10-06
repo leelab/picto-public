@@ -6,7 +6,7 @@
 #include "../protocol/ProtocolResponse.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/AssetFactory.h"
-#include "../parameter/AnalysisScriptContainer.h"
+#include "../parameter/AnalysisScriptHolder.h"
 #include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
 
@@ -95,14 +95,14 @@ void StateMachineElement::runAnalysisScripts(ScriptType type)
 	if(activeAnalysisIds.isEmpty())
 		return;
 	QList<QSharedPointer<Asset>> analysisScriptChildren;
-	QSharedPointer<AnalysisScriptContainer> scriptContainer;
+	QSharedPointer<AnalysisScriptHolder> scriptContainer;
 	foreach(QUuid analysisId,activeAnalysisIds)
 	{
-		analysisScriptChildren = getAssociateChildren(analysisId,"AnalysisScriptContainer");
+		analysisScriptChildren = getAssociateChildren(analysisId,"AnalysisScriptHolder");
 		if(analysisScriptChildren.isEmpty())
 			continue;
-		scriptContainer = analysisScriptChildren.first().staticCast<AnalysisScriptContainer>();
-		scriptContainer->runScript(AnalysisScriptContainer::ScriptType(type));
+		scriptContainer = analysisScriptChildren.first().staticCast<AnalysisScriptHolder>();
+		scriptContainer->runScript(AnalysisScriptHolder::ScriptType(type));
 	}
 }
 

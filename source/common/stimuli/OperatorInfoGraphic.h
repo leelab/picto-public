@@ -42,6 +42,8 @@ public slots:
 	QString getDataAsString(QString field){return getData(field).toString();};
 	double getDataAsDouble(QString field){return getData(field).toDouble();};
 	double getDataAsNum(QString field){return getData(field).toDouble();};
+	QVariantList getFields();
+	QVariantList getValues();
 	int getNumEntries(){return orderedFields_.size();};
 	void updateValue();
 

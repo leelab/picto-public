@@ -22,6 +22,7 @@ public:
 	//Spike Reader Interface
 	virtual QVariantList getChannels();
 	virtual QVariantList getUnits(int channel);
+	virtual double getSamplePeriod();
 	virtual double getLatestTime();
 	virtual int getLatestChannel();
 	virtual int getLatestUnit();
@@ -58,6 +59,7 @@ private:
 	double runStart_;
 	double runEnd_;
 	int curr_;
+	double sampPeriod_;
 	QVariantList channels_;
 	QHash<int,QVariantList> unitsLookup_;
 	QVector<PlaybackSpikeData> data_;

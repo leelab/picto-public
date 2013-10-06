@@ -3,8 +3,6 @@
 
 namespace Picto {
 
-bool ObsoleteAsset::hadObsoleteAsset_ = false;
-
 ObsoleteAsset::ObsoleteAsset() :
 tagName_(""),
 value_(""),
@@ -28,7 +26,7 @@ bool ObsoleteAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 }
 bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	hadObsoleteAsset_ = true;
+	reportOldVersionAsset();
 
 	//Get Start tag name (depending on who the parent is, they may have given us different names.
 	tagName_ = xmlStreamReader->name().toString();
@@ -55,6 +53,7 @@ bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 }
 void ObsoleteAsset::postDeserialize()
 {
+	Asset::postDeserialize();
 	setDeleted();
 	emit edited();
 }

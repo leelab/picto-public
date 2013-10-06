@@ -2,6 +2,7 @@
 #include <QMessageBox>
 #include "AnalysisFileOutput.h"
 #include "AnalysisFileOutputWidget.h"
+#include "AnalysisBinaryOutputWidget.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -125,7 +126,16 @@ AnalysisOutputWidget* AnalysisFileOutput::createWidget()
 		openFile();
 	}
 	//Now that the file is opened, add a widget showing it to this run's container widget
-	AnalysisFileOutputWidget* outputWidget(new AnalysisFileOutputWidget(1000));
+	//Choose a regular or binary widget according to the file type
+	QString fileType = typeList_.value(propertyContainer_->getPropertyValue("FileType").toInt(),"");
+	bool textMode = (fileType == "Text");
+	if(textMode)
+	{
+		AnalysisFileOutputWidget* outputWidget(new AnalysisFileOutputWidget(1000));
+		outputWidget->setFile(file_->fileName());
+		return outputWidget;
+	}
+	AnalysisBinaryOutputWidget* outputWidget(new AnalysisBinaryOutputWidget());
 	outputWidget->setFile(file_->fileName());
 	return outputWidget;
 }

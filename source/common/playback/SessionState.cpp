@@ -6,6 +6,7 @@ propState_(new PropertyState()),
 transState_(new TransitionState()),
 frameState_(new FrameState()),
 rewardState_(new RewardState()),
+runNotesState_(new RunNotesState()),
 spikeState_(new SpikeState()),
 lfpState_(new LfpState())
 {
@@ -34,7 +35,7 @@ SessionState::~SessionState()
 
 void SessionState::setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteAssetIds)
 {
-	double totalSubStates = statesWithIds_.size()+statesWithTimes_.size();
+	double totalSubStates = statesWithIds_.size()+statesWithTimes_.size()+1;
 	double loadedStates = 0;
 	currRunStart_ = currRunEnd_ = -1;
 	propState_->setObsoleteAssets(obsoleteAssetIds);
@@ -51,6 +52,9 @@ void SessionState::setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteA
 		loadedStates++;
 		emit percentLoaded(100*loadedStates/totalSubStates);
 	}
+	runNotesState_->setDatabase(session);
+	loadedStates++;
+	emit percentLoaded(100*loadedStates/totalSubStates);
 }
 
 void SessionState::startNewRun(double startTime,double endTime)
@@ -65,6 +69,7 @@ void SessionState::startNewRun(double startTime,double endTime)
 	{
 		state->startRun(startTime,endTime);
 	}
+	runNotesState_->startRun(startTime,endTime);
 	currRunStart_ = startTime;
 	currRunEnd_ = endTime;
 }
@@ -214,6 +219,11 @@ QSharedPointer<FrameReader> SessionState::getFrameReader()
 QSharedPointer<RewardReader> SessionState::getRewardReader()
 {
 	return rewardState_;
+}
+
+QSharedPointer<RunNotesReader> SessionState::getRunNotesReader()
+{
+	return runNotesState_;
 }
 
 QStringList SessionState::getSignalReaderNames()

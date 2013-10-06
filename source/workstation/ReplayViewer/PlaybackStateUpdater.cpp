@@ -67,6 +67,12 @@ QSharedPointer<RewardReader> PlaybackStateUpdater::getRewardReader()
 	return sessionState_->getRewardReader();
 }
 
+QSharedPointer<RunNotesReader> PlaybackStateUpdater::getRunNotesReader()
+{
+	Q_ASSERT(sessionState_);
+	return sessionState_->getRunNotesReader();
+}
+
 QSharedPointer<SpikeReader> PlaybackStateUpdater::getSpikeReader()
 {
 	Q_ASSERT(sessionState_);

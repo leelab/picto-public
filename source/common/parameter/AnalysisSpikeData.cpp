@@ -30,6 +30,14 @@ void AnalysisSpikeData::zeroLatestFrame()
 	zeroTime_ = latestTime;
 }
 
+double AnalysisSpikeData::getSamplePeriod()
+{
+	Q_ASSERT(!getDesignConfig()->getSpikeReader().isNull());
+	if(!getDesignConfig()->getSpikeReader())
+		return -1;
+	return getDesignConfig()->getSpikeReader()->getSamplePeriod();
+}
+
 double AnalysisSpikeData::getLatestTime()
 {
 	Q_ASSERT(!getDesignConfig()->getSpikeReader().isNull());

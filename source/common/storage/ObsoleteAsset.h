@@ -4,16 +4,17 @@
 #include <QSharedPointer>
 
 #include "../common.h"
-#include "../storage/Asset.h"
+#include "OldVersionAsset.h"
+#include "Asset.h"
 
 namespace Picto {
 /*!	\brief Used to hold data from obsolete asset tags in an experiment file for autoupgrade purposes
  * 
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API ObsoleteAsset : public Asset
+	class PICTOLIB_API ObsoleteAsset : public Asset, OldVersionAsset
 #else
-class ObsoleteAsset : public Asset
+class ObsoleteAsset : public Asset, OldVersionAsset
 #endif
 {
 	Q_OBJECT
@@ -21,8 +22,6 @@ public:
 	ObsoleteAsset();
 	virtual ~ObsoleteAsset();
 	static QSharedPointer<Asset> Create();
-	static bool encounteredObsoleteAsset(){return hadObsoleteAsset_;};
-	static void clearObsoleteAssetFlag(){hadObsoleteAsset_ = false;};
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual void postDeserialize();
@@ -48,7 +47,6 @@ private:
 	QMultiMap<QString,QSharedPointer<ObsoleteAsset>> children_;	//Maps children by tag name
 	QString value_;
 	int assetId_;
-	static bool hadObsoleteAsset_;
 };
 
 

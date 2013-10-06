@@ -427,7 +427,7 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 			//Add data to the appropriate signal reader
 			Q_ASSERT(signalReaders_.contains(chan->getName().toLower()));
 			QSharedPointer<LiveSignalReader> signalReader = signalReaders_.value(chan->getName().toLower());
-			//Right the input signal the correct number of times according to the signal reader's set
+			//Write the input signal the correct number of times according to the signal reader's set
 			//sample period
 			double samplePeriod = signalReader->getSamplePeriod();
 			double nextSignalTime = signalReader->getLatestTime() + samplePeriod;

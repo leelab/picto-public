@@ -12,6 +12,7 @@
 #include "../../common/playback/LiveFrameReader.h"
 #include "../../common/playback/LiveLfpReader.h"
 #include "../../common/playback/LiveRewardReader.h"
+#include "../../common/playback/LiveRunNotesReader.h"
 #include "../../common/playback/LiveSpikeReader.h"
 #include "../../common/playback/LiveSignalReader.h"
 
@@ -89,6 +90,7 @@ private:
 	QSharedPointer<LiveLfpReader> liveLfpReader_;
 	QSharedPointer<LiveRewardReader> liveRewardReader_;
 	QSharedPointer<LiveSpikeReader> liveSpikeReader_;
+	QSharedPointer<LiveRunNotesReader> liveRunNotesReader_;
 	QVector<QSharedPointer<LiveSignalReader>> signalReaders_;
 
 private slots:

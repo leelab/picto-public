@@ -56,9 +56,11 @@ public:
 	QSharedPointer<FrameReader> getFrameReader();
 	void setLfpReader(QSharedPointer<LfpReader> lfpReader);
 	void setRewardReader(QSharedPointer<RewardReader> rewardReader);
+	void setRunNotesReader(QSharedPointer<RunNotesReader> runNotesReader);
 	void setSpikeReader(QSharedPointer<SpikeReader> spikeReader);
 	QSharedPointer<LfpReader> getLfpReader();
 	QSharedPointer<RewardReader> getRewardReader();
+	QSharedPointer<RunNotesReader> getRunNotesReader();
 	QSharedPointer<SpikeReader> getSpikeReader();
 	void setSignalReader(QString name, QSharedPointer<SignalReader> signalReader);
 	void clearSignalReaders();
@@ -92,6 +94,7 @@ private:
 	QSharedPointer<FrameReader> frameReader_;
 	QSharedPointer<LfpReader> lfpReader_;
 	QSharedPointer<RewardReader> rewardReader_;
+	QSharedPointer<RunNotesReader> runNotesReader_;
 	QSharedPointer<SpikeReader> spikeReader_;
 	QHash<QString,QSharedPointer<SignalReader>> signalReaders_;
 

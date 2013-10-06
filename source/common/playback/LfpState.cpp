@@ -233,6 +233,8 @@ double LfpState::getNextValue(int channel)
 QVariantList LfpState::getValuesSince(int channel,double time)
 {
 	Q_ASSERT(runStart_ >= 0);
+	if(!data_.size())
+		return QVariantList();
 	Q_ASSERT(curr_ >= 0);
 	if(!chanIndexMap_.contains(channel))
 		return QVariantList();
@@ -255,6 +257,8 @@ QVariantList LfpState::getValuesSince(int channel,double time)
 QVariantList LfpState::getValuesUntil(int channel,double time)
 {
 	Q_ASSERT(runStart_ >= 0);
+	if(!data_.size())
+		return QVariantList();
 	Q_ASSERT(curr_ >= 0);
 	if(!chanIndexMap_.contains(channel))
 		return QVariantList();
@@ -277,6 +281,8 @@ QVariantList LfpState::getValuesUntil(int channel,double time)
 QVariantList LfpState::getTimesSince(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
+	if(!data_.size())
+		return QVariantList();
 	Q_ASSERT(curr_ >= 0);
 	double afterTime = time;
 	double latestTime = getLatestTime();
@@ -296,6 +302,8 @@ QVariantList LfpState::getTimesSince(double time)
 QVariantList LfpState::getTimesUntil(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
+	if(!data_.size())
+		return QVariantList();
 	Q_ASSERT(curr_ >= 0);
 	double upToTime = time;
 	double latestTime = getLatestTime();
