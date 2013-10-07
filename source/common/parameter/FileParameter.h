@@ -29,12 +29,12 @@ public:
 
 	virtual QString getUITemplate(){return "FileParameter";};
 	virtual QString friendlyTypeName(){return "File";};
-
+	
+	QByteArray getFileData();
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual void fileDataUpdated(const QByteArray& data) = 0;
-	QByteArray getFileData();
 private:
 	void loadDataFromPropery();
 	bool updatingFile_;

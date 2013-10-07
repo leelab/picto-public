@@ -18,6 +18,7 @@
 #include "../stimuli/TokenFactoryGraphic.h"
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
+#include "../stimuli/ImageGraphic.h"
 //#include "../stimuli/LineGraphic.h"
 #include "../stimuli/GridGraphic.h"
 //#include "../stimuli/PictureGraphic.h"
@@ -73,6 +74,8 @@ OutputElementContainer::OutputElementContainer() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TextGraphic::Create))));
 	visualElementFactory_->addAssetType(OperatorInfoGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(OperatorInfoGraphic::Create))));
+	visualElementFactory_->addAssetType(ImageGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ImageGraphic::Create))));
 
 	AddDefinableObjectFactory("AudioElement",audioElementFactory_);
 	audioElementFactory_->addAssetType("AudioElement",

@@ -398,6 +398,8 @@
    <file alias="_file_output_widget_8h-source.html">../../../output/documentation/main/html/_file_output_widget_8h-source.html</file>
    <file alias="_file_parameter_8cpp-source.html">../../../output/documentation/main/html/_file_parameter_8cpp-source.html</file>
    <file alias="_file_parameter_8h-source.html">../../../output/documentation/main/html/_file_parameter_8h-source.html</file>
+   <file alias="_file_select_widget_8cpp-source.html">../../../output/documentation/main/html/_file_select_widget_8cpp-source.html</file>
+   <file alias="_file_select_widget_8h-source.html">../../../output/documentation/main/html/_file_select_widget_8h-source.html</file>
    <file alias="_file_session_loader_8cpp-source.html">../../../output/documentation/main/html/_file_session_loader_8cpp-source.html</file>
    <file alias="_file_session_loader_8h-source.html">../../../output/documentation/main/html/_file_session_loader_8h-source.html</file>
    <file alias="_flow_element_8cpp-source.html">../../../output/documentation/main/html/_flow_element_8cpp-source.html</file>
@@ -443,6 +445,8 @@
    <file alias="_hello_q_t_8cpp-source.html">../../../output/documentation/main/html/_hello_q_t_8cpp-source.html</file>
    <file alias="_image_file_parameter_8cpp-source.html">../../../output/documentation/main/html/_image_file_parameter_8cpp-source.html</file>
    <file alias="_image_file_parameter_8h-source.html">../../../output/documentation/main/html/_image_file_parameter_8h-source.html</file>
+   <file alias="_image_graphic_8cpp-source.html">../../../output/documentation/main/html/_image_graphic_8cpp-source.html</file>
+   <file alias="_image_graphic_8h-source.html">../../../output/documentation/main/html/_image_graphic_8h-source.html</file>
    <file alias="_indexed_data_8cpp-source.html">../../../output/documentation/main/html/_indexed_data_8cpp-source.html</file>
    <file alias="_indexed_data_8h-source.html">../../../output/documentation/main/html/_indexed_data_8h-source.html</file>
    <file alias="_input_port_8cpp-source.html">../../../output/documentation/main/html/_input_port_8cpp-source.html</file>
@@ -1466,6 +1470,9 @@
    <file alias="class_picto_1_1_image_file_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_image_file_parameter-members.html</file>
    <file alias="class_picto_1_1_image_file_parameter.html">../../../output/documentation/main/html/class_picto_1_1_image_file_parameter.html</file>
    <file alias="class_picto_1_1_image_file_parameter.png">../../../output/documentation/main/html/class_picto_1_1_image_file_parameter.png</file>
+   <file alias="class_picto_1_1_image_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_image_graphic-members.html</file>
+   <file alias="class_picto_1_1_image_graphic.html">../../../output/documentation/main/html/class_picto_1_1_image_graphic.html</file>
+   <file alias="class_picto_1_1_image_graphic.png">../../../output/documentation/main/html/class_picto_1_1_image_graphic.png</file>
    <file alias="class_picto_1_1_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_input_port-members.html</file>
    <file alias="class_picto_1_1_input_port.html">../../../output/documentation/main/html/class_picto_1_1_input_port.html</file>
    <file alias="class_picto_1_1_input_port.png">../../../output/documentation/main/html/class_picto_1_1_input_port.png</file>

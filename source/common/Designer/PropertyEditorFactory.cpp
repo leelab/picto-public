@@ -4,6 +4,7 @@
 #include "../../common/property/PropertyContainer.h"
 #include "../parameter/AssociateElement.h"
 #include "ScriptWidget.h"
+#include "FileSelectWidget.h"
 //#include "DeletableWidget.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -88,6 +89,16 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	{
 		Q_ASSERT(editorState_);
 		resultWidget = new ScriptWidget(manager,property,editorState_,true,parent);
+	}
+	else if(propName == "ImageFile")
+	{
+		Q_ASSERT(editorState_);
+		resultWidget = new ScriptWidget(manager,property,editorState_,true,parent);
+	}
+	else if(propName == "FileName")
+	{
+		Q_ASSERT(editorState_);
+		resultWidget = new FileSelectWidget(manager,property,editorState_,parent);
 	}
 	else
 	{

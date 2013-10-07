@@ -9,7 +9,7 @@
 #include "../common.h"
 
 #include "StimulusElement.h"
-#include "../statemachine/scriptable.h"
+#include "../statemachine/scriptablecontainer.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
 #include "../property/PropertyContainer.h"
@@ -21,9 +21,9 @@ namespace Picto {
  *	Currently these include Visual Elements and Output Signals
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_CLASS OutputElement : public Scriptable
+class PICTOLIB_CLASS OutputElement : public ScriptableContainer
 #else
-class ScriptableContainer : public Scriptable, protected QScriptable
+class ScriptableContainer : public ScriptableContainer
 #endif
 {
 	Q_OBJECT

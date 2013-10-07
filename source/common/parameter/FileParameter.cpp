@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QRegularExpression>
 #include "FileParameter.h"
 #include "../memleakdetect.h"
 
@@ -8,15 +9,22 @@ FileParameter::FileParameter()
 : Parameter(),
 updatingFile_(false)
 {
-	AddDefinableProperty(QVariant::String,"FilePath",QVariant());
+	AddDefinableProperty(QVariant::String,"FileName",QVariant());
 	AddDefinableProperty(QVariant::String,"Data",QVariant());
+}
+
+
+QByteArray FileParameter::getFileData()
+{
+	return fileData_;
 }
 
 void FileParameter::postDeserialize()
 {
 	Parameter::postDeserialize();
-	connect(propertyContainer_->getProperty("FilePath").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(filePathChanged(Property*,QVariant)));
+	connect(propertyContainer_->getProperty("FileName").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(filePathChanged(Property*,QVariant)));
 	connect(propertyContainer_->getProperty("Data").data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(fileDataChanged(Property*,QVariant)));
+	propertyContainer_->getProperty("Data")->setVisible(false);
 	loadDataFromPropery();
 }
 
@@ -30,11 +38,6 @@ bool FileParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 		return false;
 	}
 	return true;
-}
-
-QByteArray FileParameter::getFileData()
-{
-	return fileData_;
 }
 
 void FileParameter::loadDataFromPropery()
