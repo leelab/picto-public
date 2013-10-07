@@ -23,9 +23,15 @@ bool ImageFileParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 {
 	if(!FileParameter::validateObject(xmlStreamReader))
 		return false;
+	QByteArray fileData = getFileData();
+	if(fileData.isEmpty())
+	{
+		addError("Image file was empty or could not be loaded.");
+		return false;
+	}
 	if(!image_.loadFromData(getFileData()))
 	{
-		addError("ImageFileParameter could not load the image file.");
+		addError("The image file appears to have an unsupported file type.");
 		return false;
 	}
 	return true;

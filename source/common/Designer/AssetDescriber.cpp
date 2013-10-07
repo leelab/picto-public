@@ -147,6 +147,17 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("setColor(r,g,b) or setColor(r,g,b,a)","A convenience function to set the rgb or rgba color components at once.  Inputs are (r,g,b) or (r,g,b,a) with each input ranging from 0-255.");
 	curr->addSFunc("setPos(x,y)","A convenience function to set both the x and y components of position at once.  Inputs are (x,y) and range from 0-800 and 0-600 respectively.");
 
+	curr = addDescription("AudioElement");
+	curr->setInherits(getAssetDescription("OutputElement"));
+	curr->setOverview("This element is used to play audio from an audio file during the course of an experiment.  Each audio element represents a single sound channel such that multiple audio elements can be played simultaneoulsy. At any point in the experiment, the play()/stop() functions of any audio elements that are in scope can be called to control the audio channel of those elements.  Audio elements only play sound if their play() function is called and continue until the audio file ends, stop() is called or the Audio Element goes out of scope.  Calling play() on an already playing audio file causes playback to restart from the beginning.  The file to be played back is set by entering the name of an 'in scope' Audio File parameter to the AudioFile property.  It can also be set programatically using the 'file' script property, in which case a string with the AudioFile parameter's name should be set to the script property.  If the Audio Element's AudioFile changes during playback of a previous file, the previous file's sound will stop.  The isPlaying() funciton can be used to find out if an audio file was playing at the time that the last frame was presented.  To avoid lags when switching the Audio File of an Audio element, make sure to precache any Audio Files that will be used by this Audio Element at the beginning of the experiment by using the cacheFile(fileElementName) function.  Setting the volume for an individual audio element is not yet supported.");
+	curr->addProp("AudioFile","The name of an Audio File Parameter whose audio file contents will be played when this element's play() function is called.  The Audio File Parameter must be in scope.");
+	curr->addProp("UIEnabled","");
+	curr->addSProp("file","Sets/Gets the name of an Audio File Parameter whose audio file contents will be played when this element's play() function is called.  The name of the Audio File Parameter should be in string form (ie. surrounded by quotes).  When the audio file is changed, if the previously set file was playing it will be stopped upon presenting the next frame.");
+	curr->addSFunc("play()","Starts playback of the audio File.  If play() is called while the audio file is already playing back, it will restart from the beginning.");
+	curr->addSFunc("stop()","Stops playback of the audio file.");
+	curr->addSFunc("isPlaying()","Returns true if the audio file was playing at the time the last frame was presented, false otherwise.  This is useful to check whether audio is playing in cases where an audio file is not stopped manually but allowed to play to the end.");
+	curr->addSFunc("cacheFile(fileElementName)","If an audio file is set to an Audio Element for the first time during the course of an experiment, the element must perform the overhead necessary to create a new underlying 'sound' and this could cause some lag in experimental execution.  The system cache's the sound from the Audio Element stored in the AudioFile field automatically, but it can't predict what other Audio Element's sound it might need to cache.  To avoid this, call cacheFile(fileElementName) with each additional file that can be played back in this audio element at the beginning of the experiment so that the element can preload all sounds that it will need to play.");
+
 	curr = addDescription("ResultContainer");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
 	curr->addSFunc("getLatestResult())","Returns the name of the latest result that was triggered by this element.  If no result has been triggered since this element's parent's execution started, an empty string is returned.");
@@ -364,6 +375,12 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("Max","The maximum allowable double value. Operator will not be able to select a 'Value' above this.");
 	curr->addSProp("value","Sets/Gets the current double value.");
 
+	curr = addDescription("FileParameter");
+	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to embed data from a file into an experimental design.");
+	curr->addProp("FileName","The file whose contents are accessible to elements that connect to this parameter.  Note that this object embeds the contents of the file into the experiment at the time that the file is selected from the property area.  This means that changing the file on disk will not affect the experiment unless the file is reselected.");
+	curr->addProp("UIEnabled","");
+
 	curr = addDescription("NumericParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
 	curr->setOverview("Used to retreive an integer parameter value from the operator during run time.  The parameter value is confined to lie in a preset range.");
@@ -436,6 +453,14 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the time values returned from this element.");
 	curr->addSProp("value","Gets the time of the first phosphor of the last frame that was displayed in units defined by 'TimeUnits'.  When used to set the value, this restarts the timer starting at the set time (Calls to value before the next frame will return the value that was set.  Calls after the next frame will return the value set plus a single frame period.)");
 	curr->addSFunc("restart()","Restarts the timer from 0.  Equivalent to '(TimerParameter).value = 0;'");
+
+	curr = addDescription("ImageFileParameter");
+	curr->setInherits(getAssetDescription("FileParameter"));
+	curr->setOverview("Used to embed image data from a file into an experimental design.  The image can be displayed by connecting an image graphic to this parameter.  Keep in mind that the selected file is embedded in the experiment such that modifications to a file after selecting it in the property window will not affect the experimental design unless the file is reselected.  Supported image types are: BMP, GIF, JPG, JPEG, PNG, PBM, PGM, PPM, SVG, XBM, XPM.");
+
+	curr = addDescription("AudioFileParameter");
+	curr->setInherits(getAssetDescription("FileParameter"));
+	curr->setOverview("Used to embed audio data from a file into an experimental design.  The audio can be played by connecting an audio element to this parameter and calling its play() function.  Keep in mind that the selected file is embedded in the experiment such that modifications to a file after selecting it in the property window will not affect the experimental design unless the file is reselected.  Currently, only audio files in WAV format are supported.");
 
 	//Logic Elements
 	curr = addDescription("CircleTarget");
@@ -525,6 +550,23 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSProp("height","Sets/Gets the height of this grid.");
 	curr->addSProp("rows","Sets/Gets the number of rows in this grid.");
 	curr->addSProp("columns","Sets/Gets the number of columns in this grid.");
+
+	curr = addDescription("ImageGraphic");
+	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to show an image from a file on screen.  The file is set by entering the name of an 'in scope' Image File parameter to the ImageFile property.  It can also be set programatically using the 'file' script property, in which case a string with the ImageFile parameter's name should be set to the script property. The image is scaled automatically by using the width and height properties.  The center of the image will lie at the set 'Position'.");
+	curr->addProp("Color","");
+	curr->addProp("ImageFile","The name of an Image File Parameter whose image file contents will be displayed when this graphic is visible.  The Image File Parameter must be in scope.");
+	curr->addProp("Size","The size in pixels at which the image file should be displayed.  If the original image file is larger or smaller than this size it will be resized automatically.");
+	curr->addSProp("alpha","");
+	curr->addSProp("blue","");
+	curr->addSProp("color","");
+	curr->addSProp("file","Sets/Gets the name of an Image File Parameter whose image file contents will be displayed when this graphic is visible.  The name of the Image File Parameter should be in string form (ie. surrounded by quotes).  This allows an image graphic to have its displayed contents changed depending on the experimental state.");
+	curr->addSProp("green","");
+	curr->addSProp("height","Sets/Gets the height of this graphic.");
+	curr->addSProp("red","");
+	curr->addSProp("width","Sets/Gets the width of this graphic.");
+	curr->addSFunc("setColor(r,g,b) or setColor(r,g,b,a)","");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
 
 	curr = addDescription("OperatorInfoGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));

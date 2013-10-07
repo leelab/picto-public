@@ -1,5 +1,5 @@
-#ifndef _WAVESOUND_H_
-#define _WAVESOUND_H_
+#ifndef _PreloadedSound_H_
+#define _PreloadedSound_H_
 
 #include "../common.h"
 
@@ -7,10 +7,10 @@ namespace Picto {
 
 /*!	\brief Unimplemented. A Wave Sound class.
  */
-class WaveSound
+class PreloadedSound
 {
 public:
-	WaveSound();
+	PreloadedSound();
 };
 
 

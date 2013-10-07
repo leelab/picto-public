@@ -398,6 +398,8 @@
    <file alias="_file_output_widget_8h-source.html">../../../output/documentation/main/html/_file_output_widget_8h-source.html</file>
    <file alias="_file_parameter_8cpp-source.html">../../../output/documentation/main/html/_file_parameter_8cpp-source.html</file>
    <file alias="_file_parameter_8h-source.html">../../../output/documentation/main/html/_file_parameter_8h-source.html</file>
+   <file alias="_file_select_widget_8cpp-source.html">../../../output/documentation/main/html/_file_select_widget_8cpp-source.html</file>
+   <file alias="_file_select_widget_8h-source.html">../../../output/documentation/main/html/_file_select_widget_8h-source.html</file>
    <file alias="_file_session_loader_8cpp-source.html">../../../output/documentation/main/html/_file_session_loader_8cpp-source.html</file>
    <file alias="_file_session_loader_8h-source.html">../../../output/documentation/main/html/_file_session_loader_8h-source.html</file>
    <file alias="_flow_element_8cpp-source.html">../../../output/documentation/main/html/_flow_element_8cpp-source.html</file>
@@ -443,6 +445,8 @@
    <file alias="_hello_q_t_8cpp-source.html">../../../output/documentation/main/html/_hello_q_t_8cpp-source.html</file>
    <file alias="_image_file_parameter_8cpp-source.html">../../../output/documentation/main/html/_image_file_parameter_8cpp-source.html</file>
    <file alias="_image_file_parameter_8h-source.html">../../../output/documentation/main/html/_image_file_parameter_8h-source.html</file>
+   <file alias="_image_graphic_8cpp-source.html">../../../output/documentation/main/html/_image_graphic_8cpp-source.html</file>
+   <file alias="_image_graphic_8h-source.html">../../../output/documentation/main/html/_image_graphic_8h-source.html</file>
    <file alias="_indexed_data_8cpp-source.html">../../../output/documentation/main/html/_indexed_data_8cpp-source.html</file>
    <file alias="_indexed_data_8h-source.html">../../../output/documentation/main/html/_indexed_data_8h-source.html</file>
    <file alias="_input_port_8cpp-source.html">../../../output/documentation/main/html/_input_port_8cpp-source.html</file>
@@ -509,6 +513,8 @@
    <file alias="_mixing_sample_8h-source.html">../../../output/documentation/main/html/_mixing_sample_8h-source.html</file>
    <file alias="_mouse_input_port_8cpp-source.html">../../../output/documentation/main/html/_mouse_input_port_8cpp-source.html</file>
    <file alias="_mouse_input_port_8h-source.html">../../../output/documentation/main/html/_mouse_input_port_8h-source.html</file>
+   <file alias="_multi_platform_sound_8cpp-source.html">../../../output/documentation/main/html/_multi_platform_sound_8cpp-source.html</file>
+   <file alias="_multi_platform_sound_8h-source.html">../../../output/documentation/main/html/_multi_platform_sound_8h-source.html</file>
    <file alias="_neural_data_acq_interface_8h-source.html">../../../output/documentation/main/html/_neural_data_acq_interface_8h-source.html</file>
    <file alias="_neural_data_unit_8cpp-source.html">../../../output/documentation/main/html/_neural_data_unit_8cpp-source.html</file>
    <file alias="_neural_data_unit_8h-source.html">../../../output/documentation/main/html/_neural_data_unit_8h-source.html</file>
@@ -638,6 +644,8 @@
    <file alias="_predicate_less_than_eq_8h-source.html">../../../output/documentation/main/html/_predicate_less_than_eq_8h-source.html</file>
    <file alias="_predicate_not_equal_8cpp-source.html">../../../output/documentation/main/html/_predicate_not_equal_8cpp-source.html</file>
    <file alias="_predicate_not_equal_8h-source.html">../../../output/documentation/main/html/_predicate_not_equal_8h-source.html</file>
+   <file alias="_preloaded_sound_8cpp-source.html">../../../output/documentation/main/html/_preloaded_sound_8cpp-source.html</file>
+   <file alias="_preloaded_sound_8h-source.html">../../../output/documentation/main/html/_preloaded_sound_8h-source.html</file>
    <file alias="_progress_widget_8cpp-source.html">../../../output/documentation/main/html/_progress_widget_8cpp-source.html</file>
    <file alias="_progress_widget_8h-source.html">../../../output/documentation/main/html/_progress_widget_8h-source.html</file>
    <file alias="_property_8cpp-source.html">../../../output/documentation/main/html/_property_8cpp-source.html</file>
@@ -866,6 +874,8 @@
    <file alias="_slave_experiment_driver_8h-source.html">../../../output/documentation/main/html/_slave_experiment_driver_8h-source.html</file>
    <file alias="_software_compositing_surface_8cpp-source.html">../../../output/documentation/main/html/_software_compositing_surface_8cpp-source.html</file>
    <file alias="_software_compositing_surface_8h-source.html">../../../output/documentation/main/html/_software_compositing_surface_8h-source.html</file>
+   <file alias="_sound_8cpp-source.html">../../../output/documentation/main/html/_sound_8cpp-source.html</file>
+   <file alias="_sound_8h-source.html">../../../output/documentation/main/html/_sound_8h-source.html</file>
    <file alias="_speed_widget_8cpp-source.html">../../../output/documentation/main/html/_speed_widget_8cpp-source.html</file>
    <file alias="_speed_widget_8h-source.html">../../../output/documentation/main/html/_speed_widget_8h-source.html</file>
    <file alias="_spike_data_iterator_8cpp-source.html">../../../output/documentation/main/html/_spike_data_iterator_8cpp-source.html</file>
@@ -1033,6 +1043,8 @@
    <file alias="_win_get_p_i_d_8cpp-source.html">../../../output/documentation/main/html/_win_get_p_i_d_8cpp-source.html</file>
    <file alias="_win_get_p_i_d_8h-source.html">../../../output/documentation/main/html/_win_get_p_i_d_8h-source.html</file>
    <file alias="_win_get_p_i_d_8h.html">../../../output/documentation/main/html/_win_get_p_i_d_8h.html</file>
+   <file alias="_win_sound_8cpp-source.html">../../../output/documentation/main/html/_win_sound_8cpp-source.html</file>
+   <file alias="_win_sound_8h-source.html">../../../output/documentation/main/html/_win_sound_8h-source.html</file>
    <file alias="_wireable_item_8cpp-source.html">../../../output/documentation/main/html/_wireable_item_8cpp-source.html</file>
    <file alias="_wireable_item_8h-source.html">../../../output/documentation/main/html/_wireable_item_8h-source.html</file>
    <file alias="_wireable_result_item_8cpp-source.html">../../../output/documentation/main/html/_wireable_result_item_8cpp-source.html</file>
@@ -1146,6 +1158,8 @@
    <file alias="class_experiment_item-members.html">../../../output/documentation/main/html/class_experiment_item-members.html</file>
    <file alias="class_experiment_item.html">../../../output/documentation/main/html/class_experiment_item.html</file>
    <file alias="class_experiment_item.png">../../../output/documentation/main/html/class_experiment_item.png</file>
+   <file alias="class_file_select_widget-members.html">../../../output/documentation/main/html/class_file_select_widget-members.html</file>
+   <file alias="class_file_select_widget.html">../../../output/documentation/main/html/class_file_select_widget.html</file>
    <file alias="class_flush_dur_mode-members.html">../../../output/documentation/main/html/class_flush_dur_mode-members.html</file>
    <file alias="class_flush_dur_mode.html">../../../output/documentation/main/html/class_flush_dur_mode.html</file>
    <file alias="class_flush_dur_mode.png">../../../output/documentation/main/html/class_flush_dur_mode.png</file>
@@ -1279,6 +1293,9 @@
    <file alias="class_picto_1_1_associate_root_host-members.html">../../../output/documentation/main/html/class_picto_1_1_associate_root_host-members.html</file>
    <file alias="class_picto_1_1_associate_root_host.html">../../../output/documentation/main/html/class_picto_1_1_associate_root_host.html</file>
    <file alias="class_picto_1_1_associate_root_host.png">../../../output/documentation/main/html/class_picto_1_1_associate_root_host.png</file>
+   <file alias="class_picto_1_1_audio_element-members.html">../../../output/documentation/main/html/class_picto_1_1_audio_element-members.html</file>
+   <file alias="class_picto_1_1_audio_element.html">../../../output/documentation/main/html/class_picto_1_1_audio_element.html</file>
+   <file alias="class_picto_1_1_audio_element.png">../../../output/documentation/main/html/class_picto_1_1_audio_element.png</file>
    <file alias="class_picto_1_1_audio_equipment-members.html">../../../output/documentation/main/html/class_picto_1_1_audio_equipment-members.html</file>
    <file alias="class_picto_1_1_audio_equipment.html">../../../output/documentation/main/html/class_picto_1_1_audio_equipment.html</file>
    <file alias="class_picto_1_1_audio_file_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_audio_file_parameter-members.html</file>
@@ -1466,6 +1483,9 @@
    <file alias="class_picto_1_1_image_file_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_image_file_parameter-members.html</file>
    <file alias="class_picto_1_1_image_file_parameter.html">../../../output/documentation/main/html/class_picto_1_1_image_file_parameter.html</file>
    <file alias="class_picto_1_1_image_file_parameter.png">../../../output/documentation/main/html/class_picto_1_1_image_file_parameter.png</file>
+   <file alias="class_picto_1_1_image_graphic-members.html">../../../output/documentation/main/html/class_picto_1_1_image_graphic-members.html</file>
+   <file alias="class_picto_1_1_image_graphic.html">../../../output/documentation/main/html/class_picto_1_1_image_graphic.html</file>
+   <file alias="class_picto_1_1_image_graphic.png">../../../output/documentation/main/html/class_picto_1_1_image_graphic.png</file>
    <file alias="class_picto_1_1_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_input_port-members.html</file>
    <file alias="class_picto_1_1_input_port.html">../../../output/documentation/main/html/class_picto_1_1_input_port.html</file>
    <file alias="class_picto_1_1_input_port.png">../../../output/documentation/main/html/class_picto_1_1_input_port.png</file>
@@ -1532,9 +1552,15 @@
    <file alias="class_picto_1_1_map_property.png">../../../output/documentation/main/html/class_picto_1_1_map_property.png</file>
    <file alias="class_picto_1_1_media_item-members.html">../../../output/documentation/main/html/class_picto_1_1_media_item-members.html</file>
    <file alias="class_picto_1_1_media_item.html">../../../output/documentation/main/html/class_picto_1_1_media_item.html</file>
+   <file alias="class_picto_1_1_mixing_sample-members.html">../../../output/documentation/main/html/class_picto_1_1_mixing_sample-members.html</file>
+   <file alias="class_picto_1_1_mixing_sample.html">../../../output/documentation/main/html/class_picto_1_1_mixing_sample.html</file>
+   <file alias="class_picto_1_1_mixing_sample.png">../../../output/documentation/main/html/class_picto_1_1_mixing_sample.png</file>
    <file alias="class_picto_1_1_mouse_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_mouse_input_port-members.html</file>
    <file alias="class_picto_1_1_mouse_input_port.html">../../../output/documentation/main/html/class_picto_1_1_mouse_input_port.html</file>
    <file alias="class_picto_1_1_mouse_input_port.png">../../../output/documentation/main/html/class_picto_1_1_mouse_input_port.png</file>
+   <file alias="class_picto_1_1_multiplatform_sound-members.html">../../../output/documentation/main/html/class_picto_1_1_multiplatform_sound-members.html</file>
+   <file alias="class_picto_1_1_multiplatform_sound.html">../../../output/documentation/main/html/class_picto_1_1_multiplatform_sound.html</file>
+   <file alias="class_picto_1_1_multiplatform_sound.png">../../../output/documentation/main/html/class_picto_1_1_multiplatform_sound.png</file>
    <file alias="class_picto_1_1_neural_data_unit-members.html">../../../output/documentation/main/html/class_picto_1_1_neural_data_unit-members.html</file>
    <file alias="class_picto_1_1_neural_data_unit.html">../../../output/documentation/main/html/class_picto_1_1_neural_data_unit.html</file>
    <file alias="class_picto_1_1_neural_data_unit.png">../../../output/documentation/main/html/class_picto_1_1_neural_data_unit.png</file>
@@ -1575,6 +1601,12 @@
    <file alias="class_picto_1_1_output_signal_controller.png">../../../output/documentation/main/html/class_picto_1_1_output_signal_controller.png</file>
    <file alias="class_picto_1_1_output_signal_widget-members.html">../../../output/documentation/main/html/class_picto_1_1_output_signal_widget-members.html</file>
    <file alias="class_picto_1_1_output_signal_widget.html">../../../output/documentation/main/html/class_picto_1_1_output_signal_widget.html</file>
+   <file alias="class_picto_1_1_p_c_m_aural_target-members.html">../../../output/documentation/main/html/class_picto_1_1_p_c_m_aural_target-members.html</file>
+   <file alias="class_picto_1_1_p_c_m_aural_target.html">../../../output/documentation/main/html/class_picto_1_1_p_c_m_aural_target.html</file>
+   <file alias="class_picto_1_1_p_c_m_aural_target.png">../../../output/documentation/main/html/class_picto_1_1_p_c_m_aural_target.png</file>
+   <file alias="class_picto_1_1_p_c_m_mixing_sample-members.html">../../../output/documentation/main/html/class_picto_1_1_p_c_m_mixing_sample-members.html</file>
+   <file alias="class_picto_1_1_p_c_m_mixing_sample.html">../../../output/documentation/main/html/class_picto_1_1_p_c_m_mixing_sample.html</file>
+   <file alias="class_picto_1_1_p_c_m_mixing_sample.png">../../../output/documentation/main/html/class_picto_1_1_p_c_m_mixing_sample.png</file>
    <file alias="class_picto_1_1_parameter-members.html">../../../output/documentation/main/html/class_picto_1_1_parameter-members.html</file>
    <file alias="class_picto_1_1_parameter.html">../../../output/documentation/main/html/class_picto_1_1_parameter.html</file>
    <file alias="class_picto_1_1_parameter.png">../../../output/documentation/main/html/class_picto_1_1_parameter.png</file>
@@ -1651,6 +1683,9 @@
    <file alias="class_picto_1_1_predicate_not_equal-members.html">../../../output/documentation/main/html/class_picto_1_1_predicate_not_equal-members.html</file>
    <file alias="class_picto_1_1_predicate_not_equal.html">../../../output/documentation/main/html/class_picto_1_1_predicate_not_equal.html</file>
    <file alias="class_picto_1_1_predicate_not_equal.png">../../../output/documentation/main/html/class_picto_1_1_predicate_not_equal.png</file>
+   <file alias="class_picto_1_1_preloaded_sound-members.html">../../../output/documentation/main/html/class_picto_1_1_preloaded_sound-members.html</file>
+   <file alias="class_picto_1_1_preloaded_sound.html">../../../output/documentation/main/html/class_picto_1_1_preloaded_sound.html</file>
+   <file alias="class_picto_1_1_preloaded_sound.png">../../../output/documentation/main/html/class_picto_1_1_preloaded_sound.png</file>
    <file alias="class_picto_1_1_property-members.html">../../../output/documentation/main/html/class_picto_1_1_property-members.html</file>
    <file alias="class_picto_1_1_property.html">../../../output/documentation/main/html/class_picto_1_1_property.html</file>
    <file alias="class_picto_1_1_property.png">../../../output/documentation/main/html/class_picto_1_1_property.png</file>
@@ -1787,6 +1822,8 @@
    <file alias="class_picto_1_1_slave_experiment_driver.html">../../../output/documentation/main/html/class_picto_1_1_slave_experiment_driver.html</file>
    <file alias="class_picto_1_1_software_compositing_surface-members.html">../../../output/documentation/main/html/class_picto_1_1_software_compositing_surface-members.html</file>
    <file alias="class_picto_1_1_software_compositing_surface.html">../../../output/documentation/main/html/class_picto_1_1_software_compositing_surface.html</file>
+   <file alias="class_picto_1_1_sound-members.html">../../../output/documentation/main/html/class_picto_1_1_sound-members.html</file>
+   <file alias="class_picto_1_1_sound.html">../../../output/documentation/main/html/class_picto_1_1_sound.html</file>
    <file alias="class_picto_1_1_spike_state-members.html">../../../output/documentation/main/html/class_picto_1_1_spike_state-members.html</file>
    <file alias="class_picto_1_1_spike_state.html">../../../output/documentation/main/html/class_picto_1_1_spike_state.html</file>
    <file alias="class_picto_1_1_spike_state.png">../../../output/documentation/main/html/class_picto_1_1_spike_state.png</file>
@@ -1925,6 +1962,9 @@
    <file alias="class_picto_1_1_visual_target_host.html">../../../output/documentation/main/html/class_picto_1_1_visual_target_host.html</file>
    <file alias="class_picto_1_1_wave_sound-members.html">../../../output/documentation/main/html/class_picto_1_1_wave_sound-members.html</file>
    <file alias="class_picto_1_1_wave_sound.html">../../../output/documentation/main/html/class_picto_1_1_wave_sound.html</file>
+   <file alias="class_picto_1_1_win_sound-members.html">../../../output/documentation/main/html/class_picto_1_1_win_sound-members.html</file>
+   <file alias="class_picto_1_1_win_sound.html">../../../output/documentation/main/html/class_picto_1_1_win_sound.html</file>
+   <file alias="class_picto_1_1_win_sound.png">../../../output/documentation/main/html/class_picto_1_1_win_sound.png</file>
    <file alias="class_picto_1_1_x_y_signal_channel-members.html">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel-members.html</file>
    <file alias="class_picto_1_1_x_y_signal_channel.html">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel.html</file>
    <file alias="class_picto_1_1_x_y_signal_channel.png">../../../output/documentation/main/html/class_picto_1_1_x_y_signal_channel.png</file>

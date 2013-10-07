@@ -3,12 +3,11 @@
 
 
 #include <QSharedPointer>
+#include <QHash>
 
 #include "../common.h"
-
 #include "AuralTarget.h"
 #include "MixingSample.h"
-#include "PCMMixingSample.h"
 
 namespace Picto {
 
@@ -17,12 +16,22 @@ namespace Picto {
  *	This hasn't been implemented yet, and I'm not sure how it was going
  *	to be implemented...  - Matt Gay 8/31/2010
  */
-struct PICTOLIB_CLASS PCMAuralTarget : public AuralTarget
+#if defined WIN32 || defined WINCE
+class PICTOLIB_CLASS PCMAuralTarget : public AuralTarget
+#else
+class PCMAuralTarget : public AuralTarget
+#endif
 {
 public:
 	PCMAuralTarget();
 
-	QSharedPointer<MixingSample> generateMixingSample();
+	virtual QSharedPointer<MixingSample> generateMixingSample();
+	virtual QString getTypeName();
+	virtual void mix(QSharedPointer<MixingSample>);
+	virtual void present();
+private:
+	QList<QSharedPointer<MixingSample>> soundsToMix_;
+	QSharedPointer<QHash<MixingSample*,QSharedPointer<MixingSample>>> activeSoundLookup_;
 };
 
 

@@ -13,12 +13,19 @@ namespace Picto {
  *
  *	None of these have been implemented yet.
  */
+#if defined WIN32 || defined WINCE
+class PICTOLIB_CLASS AuralTarget
+#else
 class AuralTarget
+#endif
 {
 public:
 	AuralTarget();
 
 	virtual QSharedPointer<MixingSample> generateMixingSample() = 0;
+	virtual QString getTypeName() = 0;
+	virtual void mix(QSharedPointer<MixingSample>) = 0;
+	virtual void present() = 0;
 };
 
 

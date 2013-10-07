@@ -1,9 +1,9 @@
-#include "WaveSound.h"
+#include "PreloadedSound.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
 
-WaveSound::WaveSound()
+PreloadedSound::PreloadedSound()
 {
 }
 

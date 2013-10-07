@@ -46,12 +46,14 @@
 #include "../common/iodevices/NullRewardController.h"
 #include "../common/iodevices/AudioRewardController.h"
 #include "../common/iodevices/NullEventCodeGenerator.h"
+#include "../common/stimuli/PreloadedSound.h"
 #if defined WIN32 && defined NI_STUFF
 #include "iodevices/PictoBoxXPRewardController.h"
 #include "iodevices/PictoBoxXPOutputSignalController.h"
 #include "iodevices/LegacySystemXPRewardController.h"
 #include "iodevices/LegacySystemXPEventCodeGenerator.h"
 #include "iodevices/PictoBoxXPEventCodeGenerator.h"
+#include "iodevices/WinSound.h"
 #endif
 #include "../common/memleakdetect.h"
 
@@ -94,6 +96,8 @@ bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, boo
 {
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
 	QSharedPointer<Picto::VisualTarget> visualTarget;
+	//Tell objects to use WinSound objects for sounds.
+	Picto::PreloadedSound::setSoundConstructor(Picto::WinSound::createWinSound);
 
 	if(visualTargetType == Pixmap)
 	{

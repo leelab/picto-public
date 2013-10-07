@@ -52,6 +52,7 @@ INCLUDEPATH += "$$(DXSDK_DIR)/include"
 
 LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
 LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
+LIBS += "Strmiids.lib"
 
 HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.h
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.cpp
@@ -63,6 +64,8 @@ HEADERS += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPEventCodeGener
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPEventCodeGenerator.cpp
 HEADERS += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPRewardController.h
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPRewardController.cpp
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/WinSound.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/WinSound.cpp
 INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
 LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
 

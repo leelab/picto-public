@@ -12,6 +12,7 @@
 
 #include "../common.h"
 
+#include "MixingSample.h"
 #include "VisualTarget.h"
 #include "AuralTarget.h"
 

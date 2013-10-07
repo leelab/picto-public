@@ -6,13 +6,13 @@
   pushd %PICTO_TREE%
 
   echo Getting Qt libraries
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release Qt5Core.dll Qt5Gui.dll Qt5Script.dll Qt5Xml.dll Qt5Network.dll Qt5Sql.dll Qt5Svg.dll Qt5ScriptTools.dll Qt5Widgets.dll Qt5Multimedia.dll Qt5OpenGl.dll Qt5PrintSupport.dll Qt5Test.dll libGLESv2.dll libEGL.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release Qt*Core.dll Qt*Gui.dll Qt*Script.dll Qt*Xml.dll Qt*Network.dll Qt*Sql.dll Qt*Svg.dll Qt*ScriptTools.dll Qt*Widgets.dll Qt*Multimedia.dll Qt*OpenGl.dll Qt*PrintSupport.dll Qt*Test.dll libGLESv2.dll libEGL.dll /NFL /NDL /NJH /NJS
 
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug Qt5Cored.dll Qt5Guid.dll Qt5Scriptd.dll Qt5Xmld.dll Qt5Networkd.dll Qt5Sqld.dll Qt5Svgd.dll Qt5ScriptToolsd.dll Qt5Widgetsd.dll Qt5Multimediad.dll Qt5OpenGld.dll Qt5PrintSupportd.dll Qt5Testd.dll libGLESv2d.dll libEGLd.dll Qt5Cored.pdb Qt5Guid.pdb Qt5Scriptd.pdb Qt5Xmld.pdb Qt5Networkd.pdb Qt5Sqld.pdb Qt5Svgd.pdb Qt5ScriptToolsd.pdb Qt5Widgetsd.pdb Qt5Multimediad.pdb Qt5OpenGld.pdb Qt5PrintSupportd.pdb Qt5Testd.pdb libGLESv2d.pdb libEGLd.pdb /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug Qt*Cored.dll Qt*Guid.dll Qt*Scriptd.dll Qt*Xmld.dll Qt*Networkd.dll Qt*Sqld.dll Qt*Svgd.dll Qt*ScriptToolsd.dll Qt*Widgetsd.dll Qt*Multimediad.dll Qt*OpenGld.dll Qt*PrintSupportd.dll Qt*Testd.dll libGLESv2d.dll libEGLd.dll Qt*Cored.pdb Qt*Guid.pdb Qt*Scriptd.pdb Qt*Xmld.pdb Qt*Networkd.pdb Qt*Sqld.pdb Qt*Svgd.pdb Qt*ScriptToolsd.pdb Qt*Widgetsd.pdb Qt*Multimediad.pdb Qt*OpenGld.pdb Qt*PrintSupportd.pdb Qt*Testd.pdb libGLESv2d.pdb libEGLd.pdb /NFL /NDL /NJH /NJS
 
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release icuin49.dll icuuc49.dll icudt49.dll D3DCompiler_43.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release icuin*.dll icuuc*.dll icudt*.dll D3DCompiler_43.dll /NFL /NDL /NJH /NJS
 
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug icuin49.dll icuuc49.dll icudt49.dll D3DCompiler_43.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug icuin*.dll icuuc*.dll icudt*.dll D3DCompiler_43.dll /NFL /NDL /NJH /NJS
 
   ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\release\platforms qwindows.dll /NFL /NDL /NJH /NJS
 
@@ -30,9 +30,9 @@
 
   ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\debug\plugins PlexClient.dll /NFL /NDL /NJH /NJS
 
-  ROBOCOPY %QTDIR%\lib %PICTO_TREE%\output\tests\bin\release Qt5Core.dll Qt5Gui.dll Qt5Script.dll Qt5Xml.dll Qt5Network.dll Qt5Sql.dll Qt5Svg.dll Qt5ScriptTools.dll Qt5Widgets.dll Qt5Multimedia.dll Qt5OpenGl.dll Qt5PrintSupport.dll Qt5Test.dll libGLESv2.dll libEGL.dll icuin49.dll icuuc49.dll icudt49.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\tests\bin\release Qt*Core.dll Qt*Gui.dll Qt*Script.dll Qt*Xml.dll Qt*Network.dll Qt*Sql.dll Qt*Svg.dll Qt*ScriptTools.dll Qt*Widgets.dll Qt*Multimedia.dll Qt*OpenGl.dll Qt*PrintSupport.dll Qt*Test.dll libGLESv2.dll libEGL.dll icuin*.dll icuuc*.dll icudt*.dll /NFL /NDL /NJH /NJS
 
-  ROBOCOPY %QTDIR%\lib %PICTO_TREE%\output\tests\bin\debug Qt5Cored.dll Qt5Guid.dll Qt5Scriptd.dll Qt5Xmld.dll Qt5Networkd.dll Qt5Sqld.dll Qt5Svgd.dll Qt5ScriptToolsd.dll Qt5Widgetsd.dll Qt5Multimediad.dll Qt5OpenGld.dll Qt5PrintSupportd.dll Qt5Testd.dll libGLESv2d.dll libEGLd.dll icuin49.dll icuuc49.dll icudt49.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\tests\bin\debug Qt*Cored.dll Qt*Guid.dll Qt*Scriptd.dll Qt*Xmld.dll Qt*Networkd.dll Qt*Sqld.dll Qt*Svgd.dll Qt*ScriptToolsd.dll Qt*Widgetsd.dll Qt*Multimediad.dll Qt*OpenGld.dll Qt*PrintSupportd.dll Qt*Testd.dll libGLESv2d.dll libEGLd.dll icuin*.dll icuuc*.dll icudt*.dll /NFL /NDL /NJH /NJS
 
  REM echo Getting Qt Property Browser Libraries
  REM ROBOCOPY %PROPBROWSDIR%\bin\release %PICTO_TREE%\output\bin\release *.dll /NFL /NDL /NJH /NJS

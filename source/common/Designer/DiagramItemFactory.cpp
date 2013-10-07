@@ -61,7 +61,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("OperatorInfoElement",":/icons/operatorinfo.svg",50,75);
 		addIconDefinition("RandomGridElement",":/icons/randomgrid.svg",50,75);
 		addIconDefinition("TextElement",":/icons/text.svg",50,75);
-		addIconDefinition("SoundElement",":/icons/sound.svg",50,75);
+		addIconDefinition("AudioElement",":/icons/sound.svg",50,75);
 		addIconDefinition("Scriptable",":/icons/scriptable.svg",50,75);
 		addIconDefinition("Result",":/icons/result.svg",50,75);
 		addIconDefinition("Reward",":/icons/reward.svg",50,100);

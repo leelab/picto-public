@@ -91,6 +91,16 @@ void Scene::reset()
 		outputSignal->reset();
 	}
 
+	foreach(QSharedPointer<AudioElement> audioElement, audioElements_)
+	{
+		audioElement->reset();
+	}
+
+	foreach(QSharedPointer<AudioElement> audioElement, unaddedAudioElements_)
+	{
+		audioElement->reset();
+	}
+
 }
 void Scene::setBackgroundColor(QColor color)
 {
@@ -206,6 +216,29 @@ void Scene::doRender(int callerId)
 			engine_->setOutputSignalValue(port,pinId,value);
 		}
 
+
+
+
+
+
+		//Add any unadded audio elements to the audio elements list
+		if(!unaddedAudioElements_.isEmpty())
+		{
+			QSharedPointer<Picto::MixingSample> mixingSample;
+
+			//add the appropriate compositing surfaces to the element
+			for(int i=0; i<unaddedAudioElements_.length(); i++)
+			{
+				foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+				{
+					mixingSample = renderTarget->generateMixingSample();
+					unaddedAudioElements_[i]->addMixingSample(mixingSample);
+				}
+				audioElements_.append(unaddedAudioElements_[i]);
+			}
+			unaddedAudioElements_.clear();
+		}
+
 		//Render visual elements to each rendering target
 		foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
 		{
@@ -224,6 +257,22 @@ void Scene::doRender(int callerId)
 			//Present it
 			visualTarget->present();
 		}
+
+		//Render audio elements to each rendering target
+		foreach(QSharedPointer<RenderingTarget> renderTarget, renderingTargets)
+		{
+			QSharedPointer<AuralTarget> auralTarget = renderTarget->getAuralTarget();
+
+			//run through all our audioElements and mix them into the auralTarget
+			foreach(QSharedPointer<AudioElement> audioElement, audioElements_)
+			{
+				auralTarget->mix(audioElement->getMixingSample(auralTarget->getTypeName()));
+			}
+			
+			//Present it
+			auralTarget->present();
+		}
+
 		if(renderingTargets.size() && renderingTargets.first()->getVisualTarget())
 		{
 			firstPhosphorTime_ = renderingTargets.first()->getVisualTarget()->getLatestFirstPhosphor();

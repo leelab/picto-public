@@ -357,6 +357,10 @@ void State::rebuildScene()
 		{
 			scene_->addOutputSignal(output.staticCast<OutputSignal>());
 		}
+		else if(output.dynamicCast<AudioElement>())
+		{
+			scene_->addAudioElement(output.staticCast<AudioElement>());
+		}
 	}
 	QColor backgroundColor;
 	backgroundColor.setNamedColor(propertyContainer_->getPropertyValue("BackgroundColor").toString());
