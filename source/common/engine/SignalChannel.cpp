@@ -258,6 +258,12 @@ QSharedPointer<BehavioralDataUnitPackage> SignalChannel::getDataPackage()
 void SignalChannel::insertValue(QString subchannel, double val)
 {
 	Q_ASSERT(rawDataBuffer_.contains(subchannel));
+
+	//DELETE ME
+	int sizeOfBuff = rawDataBuffer_[subchannel].size();
+	//!!!!!!!!!!!!!!!
+
+
 	rawDataBuffer_[subchannel].append(val);
 	rawDataLastValue_[subchannel] = val;
 	

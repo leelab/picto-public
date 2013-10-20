@@ -186,7 +186,7 @@ public:
 
 	void setOperatorAsUser(bool operatorMode = true){userIsOperator_ = operatorMode;};
 	bool operatorIsUser(){return userIsOperator_;};
-	void setSlaveMode(bool mode, CommandChannel *serverChan) { slave_ = mode; slaveCommandChannel_ = serverChan; };
+	void setSlaveMode(bool mode) { slave_ = mode; };
 	bool slaveMode() { return slave_; }
 	//If disabled, Init properties of the slave experiment will not be synchronized with those of the master.
 	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
@@ -248,7 +248,6 @@ private:
 	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
 	QSharedPointer<CommandChannel> fpCommandChannel_;		//Used for receiving commands from the front panel
 	QSharedPointer<CommandChannel> fpEventChannel_;			//Used for sending event data to the front panel
-	CommandChannel *slaveCommandChannel_;	//Used for communicating with the server in slave mode
 	QSharedPointer<PropertyTable> propTable_;
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
 	QVector<int> rewardDurations_;

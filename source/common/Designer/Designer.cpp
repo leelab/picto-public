@@ -124,6 +124,18 @@ void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 	resetEditor();
 }
 
+void Designer::activate(bool enable)
+{
+	if(!enable)
+	{
+		//If we keep an asset selected, this viewer can have unexpected effects even though it is not active.
+		//For example, an unexpected path leading from property value changes through the property browser back to
+		//a different part of the propery could be active if we didn't do this
+		editorState_->setSelectedAsset(QSharedPointer<Asset>());
+	}
+	setEnabled(enable);
+}
+
 //void Designer::deinit()
 //{
 //	if(pictoData_.isNull())
@@ -421,7 +433,15 @@ void Designer::updateEnabledActions()
 	{	//An Analysis is active
 		analysisExportAction->setVisible(true);
 		analysisImportAction->setVisible(true);
-		if(dynamic_cast<AssociateElement*>(asset.data()))
+		if(!asset)
+		{
+			deleteAction->setEnabled(false);
+			copyAction->setEnabled(false);
+			analysisExportAction->setEnabled(false);
+			analysisImportAction->setEnabled(false);
+			pasteAction->setEnabled(false);
+		}
+		else if(dynamic_cast<AssociateElement*>(asset.data()))
 		{	//The asset is an analysis element
 			deleteAction->setEnabled(true);
 			copyAction->setEnabled(true);
@@ -443,15 +463,26 @@ void Designer::updateEnabledActions()
 		analysisExportAction->setVisible(false);
 		analysisImportAction->setVisible(false);
 
-		deleteAction->setEnabled(true);
-		copyAction->setEnabled(true);
-		analysisExportAction->setEnabled(false);
-		analysisImportAction->setEnabled(false);
-		pasteAction->setEnabled((Copier::availablePasteType() == Copier::EXPERIMENT_PASTE));		
+		if(!asset)
+		{
+			deleteAction->setEnabled(false);
+			copyAction->setEnabled(false);
+			analysisExportAction->setEnabled(false);
+			analysisImportAction->setEnabled(false);
+			pasteAction->setEnabled(false);
+		}
+		else
+		{
+			deleteAction->setEnabled(true);
+			copyAction->setEnabled(true);
+			analysisExportAction->setEnabled(false);
+			analysisImportAction->setEnabled(false);
+			pasteAction->setEnabled((Copier::availablePasteType() == Copier::EXPERIMENT_PASTE));		
+		}
 	}
 	//If the window is the selected asset, copy should be disabled, 
 	//paste depends on whether we're in analysis mode
-	if(editorState_->getSelectedAsset() == editorState_->getWindowAsset())
+	if(asset && (asset == editorState_->getWindowAsset()))
 	{
 		copyAction->setEnabled(false);
 		analysisExportAction->setEnabled(false);
@@ -461,7 +492,7 @@ void Designer::updateEnabledActions()
 		pasteAction->setEnabled(pasteEnabled);
 	}
 	//If the window is the selected asset, and the selected item isn't a transition delete should be disabled
-	if	(	editorState_->getSelectedAsset() == editorState_->getWindowAsset() 
+	if	(	asset && (editorState_->getSelectedAsset() == editorState_->getWindowAsset()) 
 		&& (dynamic_cast<Arrow*>(editorState_->getSelectedItem()) == NULL)
 		)
 	{

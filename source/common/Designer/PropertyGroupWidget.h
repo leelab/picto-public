@@ -30,17 +30,10 @@ signals:
 	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 
 private:
-	void addProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtAbstractPropertyBrowser* browser);
-	void addScriptProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtAbstractPropertyBrowser* browser);
-	QSharedPointer<PropertyEditorFactory> propertyFactory_;
+	QSharedPointer<EditorState> editorState_;
 	QVBoxLayout* layout_;
 	QWidget* mainWidget_;
 	bool trackInitVals_;
-	QHash<Property*,QPair<QtVariantProperty*,QSharedPointer<Property>>> propToQtPropHash_;
-	QtAbstractPropertyBrowser* browser_;
-private slots:
-	void propertyWasEdited(QSharedPointer<Property> prop,QVariant val);
-	void propertyWasEditedExternally(Property* prop,QVariant val);
 };
 //! [0]
 #endif

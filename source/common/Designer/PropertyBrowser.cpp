@@ -37,6 +37,7 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
 
 void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 {
+	propGroupWidget_->clear();
 	if(asset.isNull())
 		return;
 					
@@ -55,7 +56,7 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 				propVec << prop;
 		}
 	}
-	propGroupWidget_->clear();
+	//propGroupWidget_->clear();
 	propGroupWidget_->addProperties(dataStore->getName(),propVec);
 	setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }

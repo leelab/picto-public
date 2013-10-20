@@ -146,6 +146,7 @@ void PlaybackController::setup()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(operatorWasUser);
+	engine_->setSlaveMode(true);
 	engine_->syncInitPropertiesForSlave(false);
 
 	//Setup playback update system
@@ -207,6 +208,14 @@ void PlaybackController::update()
 		case PlaybackCommand::Load:
 			{
 				setup();
+				slaveExpDriver_.clear();	//Both SlaveExperimentDriver and Playback Updater contain pointers to the SessionState which is where
+											//all the session data is stored in RAM.  By clearing the slaveExpDriver_ here, we can be sure that
+											//RAM that was allocated for a previous playback will be freed up for loading the new file.  If	
+											//we didn't do this, we would effectively be cutting our maximum RAM capacity in half because when 
+											//switching from one session to the next, only half of the maximum RAM available to the application
+											//is available for the new session.
+				experiment_.clear();		//Experiment also uses up a lot of RAM.
+				designRoot_.clear();		//Design root point to the experiment too.
 				if(!playbackUpdater_->setFile(cmd.commandData.toString()))
 				{
 					emit loadError("Failed to load session design.  This often means that the session contains no experimental data.");

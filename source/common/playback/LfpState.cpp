@@ -96,7 +96,13 @@ void LfpState::setDatabase(QSqlDatabase session)
 
 	//Create data list with an entry for every sample time from minTime to maxTime
 	numValues_ = arrayIndexFromGlobalTime(maxTime)+1;
-	data_.resize(numChannels_ * numValues_);
+	try{
+		data_.reserve(numChannels_ * numValues_);	//We use reserve and not resize so that we can be sure that we're allocated exactly the right amount of memory
+													//tests indicate that resize actually may reserve more than the requested amount
+	} catch(...)
+	{
+		Q_ASSERT(false);
+	}
 	for(int i=0;i<data_.size();i++)
 		data_[i]=0;
 

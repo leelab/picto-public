@@ -105,7 +105,12 @@ void TestViewer::deinit()
 		testController_->stop();
 	}
 	else
-		stopped(); 
+		stopped();
+	Q_ASSERT(propertyFrame_);
+	//Clear the property frame by setting its data store to null.  If we don't do this then an unexpected
+	//path leading from property value changes through the property frame back to
+	//a different part of the propery value would be active... this gets rid of that path
+	static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(QSharedPointer<DataStore>());
 }
 
 //! \brief Called when the application is about to quit.  Takes care of closing this windows resources
@@ -122,6 +127,7 @@ void TestViewer::setupEngine()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(true);
+	engine_->setSlaveMode(true);
 
 	//Set up the rendering target
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
@@ -197,6 +203,7 @@ void TestViewer::setupUi()
 	connect(userType_,SIGNAL(currentIndexChanged(int)),this,SLOT(setUserType(int)));
 	Q_ASSERT(!engine_.isNull());
 	engine_->setOperatorAsUser(true);
+	engine_->setSlaveMode(true);
 
 	////Zoom slider
 	//zoomSlider_ = new QSlider;

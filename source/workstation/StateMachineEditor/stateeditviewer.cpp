@@ -63,7 +63,7 @@ StateEditViewer::~StateEditViewer()
 void StateEditViewer::init()
 {
 	designRoot_->enableRunMode(false);
-	expDesigner_->setEnabled(true);
+	expDesigner_->activate(true);
 	expDesigner_->loadDesign(designRoot_);
 }
 
@@ -73,7 +73,7 @@ void StateEditViewer::deinit()
 	//be sure that the text stored in the design root matches the current state of the
 	//software design
 	designRoot_->setUndoPoint();
-	expDesigner_->setEnabled(false);
+	expDesigner_->activate(false);
 	emit deinitComplete();
 }
 

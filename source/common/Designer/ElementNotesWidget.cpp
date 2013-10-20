@@ -34,7 +34,7 @@ ElementNotesWidget::~ElementNotesWidget()
 
 void ElementNotesWidget::selectedAssetChanged(QSharedPointer<Asset> asset)
 {
-	if(!asset->inherits("Picto::UIEnabled"))
+	if(asset && !asset->inherits("Picto::UIEnabled"))
 		return;
 	changingAsset_ = true;
 	selectedAsset_ = asset;

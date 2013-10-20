@@ -804,6 +804,7 @@ void RemoteViewer::setupEngine()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(true);
+	engine_->setSlaveMode(true);
 
 	//Set up remote state updater
 	updater_ = QSharedPointer<RemoteStateUpdater>(new RemoteStateUpdater(engineSlaveChannel_));

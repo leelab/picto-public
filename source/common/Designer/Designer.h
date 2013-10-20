@@ -101,6 +101,7 @@ public:
 	virtual ~Designer();
 
 	void loadDesign(QSharedPointer<DesignRoot> designRoot);  //Called just before displaying the viewer
+	void activate(bool enable); //Activates this designer for user input
 
 private slots:
     //void updateEditModeButtons(int id);
