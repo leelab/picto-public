@@ -41,7 +41,7 @@ private:
 	double runStart_;
 	double runEnd_;
 	int curr_;
-	QVector<PlaybackRewardData> data_;
+	QList<PlaybackRewardData> data_;
 
 //public:
 //	bool setReward(double time,qulonglong dataId,int duration,int channel);

@@ -52,7 +52,7 @@ private:
 	double runEnd_;
 	int curr_;
 	int currSub_;
-	QVector<PlaybackSignalData> data_;
+	QList<PlaybackSignalData> data_;
 
 	QString name_;
 	QString tableName_;

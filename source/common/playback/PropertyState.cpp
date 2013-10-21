@@ -14,7 +14,11 @@ void PropertyState::setDatabase(QSqlDatabase session)
 		return;
 	}
 	data_.clear();
-	data_.resize(query_->value(0).toInt());
+	data_.reserve(query_->value(0).toInt());
+	for(int i=0;i<query_->value(0).toInt();i++)
+	{
+		data_.append(PropertyData());
+	}
 
 	//Currently, we don't select properties with no parent (ie. Runtime parameters).
 	query_->exec("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, propertylookup pl,frames f "
@@ -38,7 +42,9 @@ void PropertyState::setDatabase(QSqlDatabase session)
 			assetId,query_->value(3).toString());
 	}
 	if(arrayIndex < data_.size())
-		data_.resize(arrayIndex);
+	{
+		data_.erase(data_.begin()+arrayIndex,data_.end());
+	}
 }
 
 void PropertyState::startRun(double runStartTime,double runEndTime)

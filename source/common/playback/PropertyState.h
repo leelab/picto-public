@@ -29,7 +29,7 @@ private:
 	double runStart_;
 	double runEnd_;
 	int curr_;
-	QVector<PropertyData> data_;
+	QList<PropertyData> data_;
 	QHash<int,bool> obsoleteAssetIds_;
 //
 //protected:

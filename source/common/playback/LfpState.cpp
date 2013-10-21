@@ -103,8 +103,8 @@ void LfpState::setDatabase(QSqlDatabase session)
 	{
 		Q_ASSERT(false);
 	}
-	for(int i=0;i<data_.size();i++)
-		data_[i]=0;
+	for(int i=0;i<numChannels_ * numValues_;i++)
+		data_.append(0);
 
 	//Go through each channel in database and fill data list
 	foreach(int channel,chanIndexMap_.keys())

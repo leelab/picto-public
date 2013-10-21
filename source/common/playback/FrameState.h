@@ -36,7 +36,7 @@ private:
 	double runStart_;
 	double runEnd_;
 	int curr_;
-	QVector<PlaybackIndex> data_;
+	QList<PlaybackIndex> data_;
 };
 
 }; //namespace Picto

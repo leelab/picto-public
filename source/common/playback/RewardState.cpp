@@ -14,7 +14,11 @@ void RewardState::setDatabase(QSqlDatabase session)
 		return;
 	}
 	data_.clear();
-	data_.resize(query_->value(0).toInt());
+	data_.reserve(query_->value(0).toInt());
+	for(int i=0;i<query_->value(0).toInt();i++)
+	{
+		data_.append(PlaybackRewardData());
+	}
 
 	query_->exec("SELECT r.time,r.dataid,r.duration,r.channel FROM rewards r "
 		"ORDER BY r.dataid");
@@ -112,7 +116,7 @@ QVariantList RewardState::getTimesSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QVector<PlaybackRewardData>::iterator iter = qUpperBound<QVector<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin(),data_.begin()+curr_,PlaybackRewardData(beyondIndex,0,0));
+	QList<PlaybackRewardData>::iterator iter = qUpperBound<QList<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin(),data_.begin()+curr_,PlaybackRewardData(beyondIndex,0,0));
 	QVariantList returnVal;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
 	{
@@ -125,12 +129,12 @@ QVariantList RewardState::getTimesUntil(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
 	double upToTime = time;
-	if(upToTime <= getLatestTime())
+	if(!data_.size() || upToTime <= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QVector<PlaybackRewardData>::iterator upToIter = qUpperBound<QVector<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin()+curr_,data_.end(),PlaybackRewardData(beforeIndex,0,0));
+	QList<PlaybackRewardData>::iterator upToIter = qUpperBound<QList<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin()+curr_,data_.end(),PlaybackRewardData(beforeIndex,0,0));
 	QVariantList returnVal;
-	for(QVector<PlaybackRewardData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
+	for(QList<PlaybackRewardData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
 	{
 		returnVal.append(globalToRunIndex(iter->index_).time());
 	}
@@ -145,7 +149,7 @@ QVariantList RewardState::getDurationsSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QVector<PlaybackRewardData>::iterator iter = qUpperBound<QVector<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin(),data_.begin()+curr_,PlaybackRewardData(beyondIndex,0,0));
+	QList<PlaybackRewardData>::iterator iter = qUpperBound<QList<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin(),data_.begin()+curr_,PlaybackRewardData(beyondIndex,0,0));
 	QVariantList returnVal;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
 	{
@@ -157,14 +161,13 @@ QVariantList RewardState::getDurationsSince(double time)
 QVariantList RewardState::getDurationsUntil(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
-	Q_ASSERT(curr_ >= 0);
 	double upToTime = time;
-	if(upToTime <= getLatestTime())
+	if(!data_.size() || upToTime <= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QVector<PlaybackRewardData>::iterator upToIter = qUpperBound<QVector<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin()+curr_,data_.end(),PlaybackRewardData(beforeIndex,0,0));
+	QList<PlaybackRewardData>::iterator upToIter = qUpperBound<QList<PlaybackRewardData>::iterator,PlaybackRewardData>(data_.begin()+curr_,data_.end(),PlaybackRewardData(beforeIndex,0,0));
 	QVariantList returnVal;
-	for(QVector<PlaybackRewardData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
+	for(QList<PlaybackRewardData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
 	{
 		returnVal.append(iter->duration_);
 	}

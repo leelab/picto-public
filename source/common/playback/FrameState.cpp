@@ -14,7 +14,9 @@ void FrameState::setDatabase(QSqlDatabase session)
 		return;
 	}
 	data_.clear();
-	data_.resize(query_->value(0).toInt());
+	data_.reserve(query_->value(0).toInt());
+	for(int i=0;i<query_->value(0).toInt();i++)
+		data_.push_back(PlaybackIndex());
 
 	//Currently, we don't select properties with no parent (ie. Runtime parameters).
 	query_->exec("SELECT f.time,f.dataid FROM frames f "
@@ -112,7 +114,7 @@ QVariantList FrameState::getTimesSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QVector<PlaybackIndex>::iterator iter = qUpperBound<QVector<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin(),data_.begin()+curr_,beyondIndex);
+	QList<PlaybackIndex>::iterator iter = qUpperBound<QList<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin(),data_.begin()+curr_,beyondIndex);
 	QVariantList returnVal;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
 	{
@@ -127,12 +129,12 @@ QVariantList FrameState::getTimesUntil(double time)
 	Q_ASSERT(runStart_ >= 0);
 	Q_ASSERT(curr_ >= 0);
 	double upToTime = time;
-	if(upToTime <= getLatestTime())
+	if(!data_.size() || upToTime <= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QVector<PlaybackIndex>::iterator upToIter = qUpperBound<QVector<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin()+curr_,data_.end(),beforeIndex);
+	QList<PlaybackIndex>::iterator upToIter = qUpperBound<QList<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin()+curr_,data_.end(),beforeIndex);
 	QVariantList returnVal;
-	for(QVector<PlaybackIndex>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
+	for(QList<PlaybackIndex>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
 	{
 		returnVal.append(globalToRunIndex(*iter).time());
 	}

@@ -62,7 +62,7 @@ private:
 	double sampPeriod_;
 	QVariantList channels_;
 	QHash<int,QVariantList> unitsLookup_;
-	QVector<PlaybackSpikeData> data_;
+	QList<PlaybackSpikeData> data_;
 };
 
 struct PlaybackSpikeData
