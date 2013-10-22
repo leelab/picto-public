@@ -12,7 +12,8 @@ QHash<QString,int> FileSessionLoader::connectionUsers_;
 
 FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState)
 : sessionState_(sessState),
-runIndex_(-1)
+runIndex_(-1),
+sessionDataLoaded_(false)
 {
 	connect(sessionState_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 }
@@ -34,6 +35,7 @@ FileSessionLoader::~FileSessionLoader()
 
 bool FileSessionLoader::setFile(QString path)
 {
+	sessionDataLoaded_ = false;
 	Q_ASSERT(connectionName_.isEmpty());	//Currently, we just create a new file session loader whenever we need to load a new file
 											//
 	//Load Sqlite Database
@@ -67,7 +69,7 @@ bool FileSessionLoader::setFile(QString path)
 		return false;
 	if(!loadDesignDefinition())
 		return false;
-	sessionState_->setSessionData(getDatabase(),obsoleteAssetIds_);
+	//sessionState_->setSessionData(getDatabase(),obsoleteAssetIds_);
 	runIndex_ = -1;
 	return true;
 }
@@ -105,6 +107,11 @@ bool FileSessionLoader::loadRun(int index)
 	if(index < 0 || index >= runs_.size())
 		return false;
 	runIndex_ = index;
+	if(!sessionDataLoaded_)
+	{
+		sessionState_->setSessionData(getDatabase(),obsoleteAssetIds_);
+		sessionDataLoaded_ = true;
+	}
 	sessionState_->startNewRun(runs_[index].startTime_,runs_[index].endTime_);
 	return true;
 }

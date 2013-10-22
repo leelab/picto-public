@@ -18,6 +18,8 @@ public:
 	OutputWidgetHolder(QWidget *parent=0);
 	virtual ~OutputWidgetHolder();
 	void newRunStarted(QUuid runId);
+	void setSaveParameters(QString saveToPath,bool separateSubDirs);
+	void saveOutput();
 public slots:
 	void update();
 private:
@@ -26,8 +28,10 @@ private:
 	QPushButton* saveButton_;
 	QUuid latestRunId_;
 	QTimer* updateTimer_;
+	QString saveToPath_;
+	bool separateSubDirs_;
 private slots:
-	void saveOutput();
+	void saveOutputFromDialog();
 	void enableSaveButton();
 };
 

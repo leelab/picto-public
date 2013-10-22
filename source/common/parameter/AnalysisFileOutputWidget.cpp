@@ -93,7 +93,8 @@ bool AnalysisFileOutputWidget::saveOutputTo(QDir directory)
 	QString directoryPath = directory.absolutePath();
 	QString newFileName = directoryPath + "/" + objectName();
 	QFile::remove(newFileName);
-	bool result = file_->copy(newFileName);
+	//Using file_->copy() causes the file to be closed, so we use the static function
+	bool result = QFile::copy(file_->fileName(),newFileName);
 	if(!result)
 	{
 		QMessageBox error;

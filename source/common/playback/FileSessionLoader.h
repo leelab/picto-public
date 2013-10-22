@@ -69,6 +69,7 @@ private:
 	QSharedPointer<DesignRoot> designRoot_;
 	QHash<int,bool> obsoleteAssetIds_;
 	int runIndex_;
+	bool sessionDataLoaded_;
 	static QHash<QString,int> connectionUsers_;
 };
 

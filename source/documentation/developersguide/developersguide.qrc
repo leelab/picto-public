@@ -952,6 +952,8 @@
    <file alias="_task_run_selector_8h-source.html">../../../output/documentation/main/html/_task_run_selector_8h-source.html</file>
    <file alias="_task_run_viewer_8cpp-source.html">../../../output/documentation/main/html/_task_run_viewer_8cpp-source.html</file>
    <file alias="_task_run_viewer_8h-source.html">../../../output/documentation/main/html/_task_run_viewer_8h-source.html</file>
+   <file alias="_task_selector_widget_8cpp-source.html">../../../output/documentation/main/html/_task_selector_widget_8cpp-source.html</file>
+   <file alias="_task_selector_widget_8h-source.html">../../../output/documentation/main/html/_task_selector_widget_8h-source.html</file>
    <file alias="_terminate_command_handler_8cpp-source.html">../../../output/documentation/main/html/_terminate_command_handler_8cpp-source.html</file>
    <file alias="_terminate_command_handler_8h-source.html">../../../output/documentation/main/html/_terminate_command_handler_8h-source.html</file>
    <file alias="_test_controller_8cpp-source.html">../../../output/documentation/main/html/_test_controller_8cpp-source.html</file>
@@ -1989,6 +1991,8 @@
    <file alias="class_property_frame.html">../../../output/documentation/main/html/class_property_frame.html</file>
    <file alias="class_property_group_widget-members.html">../../../output/documentation/main/html/class_property_group_widget-members.html</file>
    <file alias="class_property_group_widget.html">../../../output/documentation/main/html/class_property_group_widget.html</file>
+   <file alias="class_property_list_widget-members.html">../../../output/documentation/main/html/class_property_list_widget-members.html</file>
+   <file alias="class_property_list_widget.html">../../../output/documentation/main/html/class_property_list_widget.html</file>
    <file alias="class_proxy_main_window-members.html">../../../output/documentation/main/html/class_proxy_main_window-members.html</file>
    <file alias="class_proxy_main_window.html">../../../output/documentation/main/html/class_proxy_main_window.html</file>
    <file alias="class_proxy_main_window.png">../../../output/documentation/main/html/class_proxy_main_window.png</file>

@@ -59,7 +59,7 @@ void MainWindow::createActions()
 	newExperimentAction_->setStatusTip(tr("Create a new experiment"));
 	connect(newExperimentAction_,SIGNAL(triggered()),this, SLOT(newExperiment()));
 
-	openExperimentAction_ = new QAction(tr("&Open"), this);
+	openExperimentAction_ = new QAction(tr("&Open Design"), this);
 	openExperimentAction_->setIcon(QIcon(":/icons/fileopen.png"));
 	openExperimentAction_->setShortcut(QKeySequence::Open);
 	openExperimentAction_->setStatusTip(tr("Open an experiment"));

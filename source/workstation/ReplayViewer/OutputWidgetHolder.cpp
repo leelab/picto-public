@@ -37,6 +37,19 @@ void OutputWidgetHolder::newRunStarted(QUuid runId)
 	}
 }
 
+void OutputWidgetHolder::setSaveParameters(QString saveToPath,bool separateSubDirs)
+{
+	saveToPath_ = saveToPath;
+	separateSubDirs_ = separateSubDirs;
+}
+
+void OutputWidgetHolder::saveOutput()
+{
+	if(!containerWidget_ || saveToPath_.isEmpty())
+		return;
+	containerWidget_->saveOutputTo(saveToPath_,separateSubDirs_);
+}
+
 void OutputWidgetHolder::update()
 {
 	containerWidget_ = Picto::AnalysisOutput::getContainerWidget(latestRunId_);
@@ -62,7 +75,7 @@ void OutputWidgetHolder::resetLayout()
 	saveButton_ = new QPushButton(QIcon("://icons/filesave.png"),"");
 	saveButton_->setToolTip("Save Analysis Output");
 	saveButton_->setEnabled(false);
-	connect(saveButton_,SIGNAL(released()),this,SLOT(saveOutput()));
+	connect(saveButton_,SIGNAL(released()),this,SLOT(saveOutputFromDialog()));
 	topLayout->addWidget(new QLabel("Analysis Outputs"),0,Qt::AlignLeft | Qt::AlignTop);
 	topLayout->addWidget(saveButton_,0,Qt::AlignRight | Qt::AlignTop);
 	QVBoxLayout* layout(new QVBoxLayout());
@@ -70,7 +83,7 @@ void OutputWidgetHolder::resetLayout()
 	setLayout(layout);
 }
 
-void OutputWidgetHolder::saveOutput()
+void OutputWidgetHolder::saveOutputFromDialog()
 {
 	//Restore dialog values
 	QString dirName = ".";
@@ -94,31 +107,8 @@ void OutputWidgetHolder::saveOutput()
 	if(dirName.isEmpty())
 		return;
 	useSeperateSubDirs = saveDialog.useSeperateSubDirs();
-
-	////Save dialog values
-	//if(configDb_.isOpen())
-	//{
-	//	QSqlQuery query(configDb_);
-	//	query.prepare(QString("INSERT OR REPLACE INTO workstationinfo (key,value) VALUES ('OutputPath',:outputPath)"));
-	//	query.bindValue(":outputPath",dirName);
-	//	query.exec();
-	//	query.prepare(QString("INSERT OR REPLACE INTO workstationinfo (key,value) VALUES ('SeperateDirs',:seperateDirs)"));
-	//	query.bindValue(":seperateDirs",useSeperateSubDirs);
-	//	query.exec();
-	//}
-	//status_ = SAVING;
-	//progressBar_->setRange(0,0);	//Starts progress bar busy indicator.
-	//progressBarTimer_->start();
-	//executeAction_->setEnabled(false);
-	//loadSessionAction_->setEnabled(false);
-	//saveOutputAction_->setEnabled(false);
-	containerWidget_->saveOutputTo(dirName,useSeperateSubDirs);
-	//progressBarTimer_->stop();
-	//progressBar_->setRange(0,100);	//Returns progress bar to normal range if it wasn't done in updateProgressBar.
-	//progressBar_->setValue(100);
-	//executeAction_->setEnabled(true);
-	//loadSessionAction_->setEnabled(true);
-	//saveOutputAction_->setEnabled(true);
+	setSaveParameters(dirName,useSeperateSubDirs);
+	saveOutput();
 }
 
 void OutputWidgetHolder::enableSaveButton()

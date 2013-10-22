@@ -89,6 +89,7 @@ private:
 	bool renderingEnabled_;
 	bool runLoaded_;
 	double currRunLength_;
+	int currRunIndex_;
 	double lastMaxBehav_;
 	double lastMaxNeural_;
 private slots:

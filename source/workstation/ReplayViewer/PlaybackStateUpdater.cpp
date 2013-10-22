@@ -94,6 +94,7 @@ QSharedPointer<SignalReader>  PlaybackStateUpdater::getSignalReader(QString name
 bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	stop();
+	currRunIndex_ = -1;
 	sessionState_ = QSharedPointer<SessionState>(new SessionState());
 	//if(fileSessionLoader_)
 	//	fileSessionLoader_->unload();
@@ -122,7 +123,7 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 		Q_ASSERT(false);	//This would mean that somehow the session had a bad design in it.
 		return false;
 	}
-	loadRun(0);
+	//loadRun(0);
 	return true;
 }
 
@@ -156,13 +157,19 @@ bool PlaybackStateUpdater::loadRun(int index)
 {
 	if(!fileSessionLoader_)
 		return false;
+	if(index < 0)
+		return false;
+	if(index >= fileSessionLoader_->getRunNames().length())
+		return false;
 	paused_ = false;
 	timerOffset_ = 0.0;
 	suspendPlayback();
 	runLoaded_ = false;
-	currRunLength_ = fileSessionLoader_->runDuration(index);
-	//Load the run
-	return fileSessionLoader_->loadRun(index);
+	currRunIndex_ = index;
+	currRunLength_ = fileSessionLoader_->runDuration(currRunIndex_);
+	////Load the run
+	//return fileSessionLoader_->loadRun(index);
+	return true;
 }
 
 bool PlaybackStateUpdater::pause()
@@ -175,6 +182,7 @@ bool PlaybackStateUpdater::pause()
 
 bool PlaybackStateUpdater::play()
 {
+	fileSessionLoader_->loadRun(currRunIndex_);
 	paused_ = false;
 	return true;
 }

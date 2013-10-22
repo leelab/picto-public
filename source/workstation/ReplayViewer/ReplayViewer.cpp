@@ -16,6 +16,7 @@
 
 #include "ReplayViewer.h"
 
+#include "SaveOutputDialog.h"
 #include "../../common/storage/AssetExportImport.h"
 #include "../../common/compositor/RenderingTarget.h"
 #include "../../common/compositor/PCMAuralTarget.h"
@@ -69,14 +70,14 @@ bool ReplayViewer::aboutToQuit()
 void ReplayViewer::setupUi()
 {
 	//Load Session Actions
-	loadSessionAction_ = new QAction(tr("&Load Session"),this);
+	loadSessionAction_ = new QAction(tr("Open Session"),this);
+	loadSessionAction_->setIcon(QIcon(":/icons/sessionopen.png"));
 	connect(loadSessionAction_, SIGNAL(triggered()),this, SLOT(loadSession()));
 	loadSessionAction_->setEnabled(true);
 
-	runs_ = new QComboBox();
-	runs_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	runs_ = new TaskSelectorWidget();
 	runs_->setToolTip("Select a Run from the Session");
-	connect(runs_,SIGNAL(currentIndexChanged(int)),this,SLOT(setCurrentRun(int)));
+	connect(runs_,SIGNAL(runSelected(int)),this,SLOT(setCurrentRun(int)));
 	connect(playbackController_.data(),SIGNAL(runsUpdated(QStringList,QStringList)),this,SLOT(updateRunsList(QStringList,QStringList)));
 
 	///play/pause/stop actions and toolbar
@@ -158,7 +159,6 @@ void ReplayViewer::setupUi()
 
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(loadSessionAction_);
-	testToolbar_->addWidget(runs_);
 	testToolbar_->addSeparator();
 	testToolbar_->addAction(playAction_);
 	testToolbar_->addAction(playAllAction_);
@@ -167,24 +167,15 @@ void ReplayViewer::setupUi()
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(userType_);
 	testToolbar_->addSeparator();
-	testToolbar_->addWidget(loadProgress_);
+	testToolbar_->addAction(toggleRecord_);
+	testToolbar_->addWidget(recordTime_);
+	testToolbar_->addAction(restartRecord_);
+	testToolbar_->addAction(saveRecording_);
 	testToolbar_->addSeparator();
-
-	recordToolbar_ = new QToolBar(this);
-	recordToolbar_->addAction(toggleRecord_);
-	recordToolbar_->addWidget(recordTime_);
-	recordToolbar_->addAction(restartRecord_);
-	recordToolbar_->addAction(saveRecording_);
-	//testToolbar_->addWidget(zoomSlider_);
-
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(testToolbar_);
 	toolbarLayout->addStretch();
-
-	QHBoxLayout *recordToolbarLayout = new QHBoxLayout;
-	recordToolbarLayout->addWidget(recordToolbar_);
-	recordToolbarLayout->addStretch();
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	//Set up the visual target host
@@ -212,18 +203,25 @@ void ReplayViewer::setupUi()
 	analysisSelector_->setEnabled(false);
 	connect(playbackController_.data(),SIGNAL(designRootChanged()),this,SLOT(designRootChanged()));
 	outputWidgetHolder_ = new OutputWidgetHolder();
+	analysisTabs->addTab(runs_,"Select Runs");
 	analysisTabs->addTab(analysisSelector_,"Select Analyses");
 	analysisTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
+	QVBoxLayout *infoLayout = new QVBoxLayout();
+	infoLayout->addWidget(analysisTabs);
+	QHBoxLayout *progressLayout = new QHBoxLayout();
+	progressLayout->addWidget(new QLabel("Load Progress:"));
+	progressLayout->addWidget(loadProgress_);
+	infoLayout->addLayout(progressLayout);
+
 	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addWidget(analysisTabs);
+	operationLayout->addLayout(infoLayout);
 	operationLayout->addLayout(stimulusLayout);
 	operationLayout->addWidget(speed_);
 	operationLayout->addStretch();
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addLayout(recordToolbarLayout);
 	mainLayout->addLayout(operationLayout);
 	mainLayout->addStretch(1);
 	setLayout(mainLayout);
@@ -309,21 +307,70 @@ bool ReplayViewer::activateSelectedAnalyses()
 	return true;
 }
 
-void ReplayViewer::play()
+void ReplayViewer::prepareForSessionLoad()
+{
+	runs_->setEnabled(false);
+	loadProgress_->setMaximum(0);
+	pauseAction_->setEnabled(false);
+	stopAction_->setEnabled(false);
+	playAction_->setEnabled(false);
+	playAllAction_->setEnabled(false);
+	toggleRecord_->setEnabled(false);
+	loadSessionAction_->setEnabled(false);
+	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+	{
+		static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+	}
+}
+
+bool ReplayViewer::play()
 {
 	qDebug()<<"Play slot";
 	if(!paused_)
 	{
 		if(!activateSelectedAnalyses())
-			return;
+			return false;
 		analysisSelector_->setEnabled(false);
 	}
+	if(loadProgress_->value() == 0)	//If we haven't loaded the session data yet, put loadProgress into initial state
+	{
+		prepareForSessionLoad();
+	}
 	playbackController_->play();
+	return true;
 }
 
 void ReplayViewer::playAll()
 {
-	play();
+	bool shouldAutoSave = false;
+	if(!paused_)
+	{
+		QList<QUuid> importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
+		QList<QUuid> finalAnalysisIdList = analysisSelector_->getSelectedAnalysisIds();	//The import analysis ids will change when we import them to new analyses in the session file.
+		if(importAnalysisIds.size() || finalAnalysisIdList.size())
+		{
+			QMessageBox::StandardButton result = QMessageBox::question(this,"Save analysis results","Would you like to Picto to automatically save analysis results when this run is complete?",QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No,QMessageBox::StandardButton::Yes);
+			if(result == QMessageBox::StandardButton::Yes)
+			{
+				QString dirName = ".";
+				bool useSeperateSubDirs = true;
+				SaveOutputDialog saveDialog(this,dirName,useSeperateSubDirs);
+				saveDialog.showDialog();
+				dirName = saveDialog.getSelectedDir();
+				if(dirName.isEmpty())
+					return;
+				useSeperateSubDirs = saveDialog.useSeperateSubDirs();
+				outputWidgetHolder_->setSaveParameters(dirName,useSeperateSubDirs);
+				needsAutoSave_ = true;
+			}
+		}
+	}
+
+	if(!play())
+	{
+		needsAutoSave_ = false;
+		return;
+	}
 	progress_->jumpToEnd();
 }
 
@@ -335,6 +382,11 @@ void ReplayViewer::pause()
 		if(!activateSelectedAnalyses())
 			return;
 		analysisSelector_->setEnabled(false);
+		
+		if(loadProgress_->value() == 0)	//If we haven't loaded the session data yet, put loadProgress into initial state
+		{
+			prepareForSessionLoad();
+		}
 	}
 	playbackController_->pause();
 }
@@ -348,12 +400,14 @@ void ReplayViewer::stop()
 
 void ReplayViewer::playbackStatusChanged(int status)
 {
+	bool runIsSelected = runs_->getSelectedRun() >= 0;
 	switch(status)
 	{
 	case PlaybackControllerData::Idle:
 			progress_->setHighlightRange(0,0,0);
 			progress_->setHighlightRange(1,0,0,true);
 			progress_->setSliderProgress(0);
+			runs_->setEnabled(false);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(false);
@@ -364,14 +418,17 @@ void ReplayViewer::playbackStatusChanged(int status)
 			paused_ = false;
 		break;
 		case PlaybackControllerData::Stopped:
+			runs_->setEnabled(true);
+			loadProgress_->setMaximum(100);
 			progress_->setHighlightRange(0,0,0);
 			progress_->setHighlightRange(1,0,0,true);
 			progress_->setSliderProgress(0);
-			pauseAction_->setEnabled(true);
+			pauseAction_->setEnabled(runIsSelected);
 			stopAction_->setEnabled(false);
-			playAction_->setEnabled(true);
-			playAllAction_->setEnabled(true);
-			toggleRecord_->setEnabled(true);
+			playAction_->setEnabled(runIsSelected);
+			playAllAction_->setEnabled(runIsSelected);
+			toggleRecord_->setEnabled(runIsSelected);
+			loadSessionAction_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -380,13 +437,21 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playbackController_->getRenderingTarget()->showSplash();
 			playing_ = false;
 			paused_ = false;
+			if(needsAutoSave_)
+			{
+				outputWidgetHolder_->saveOutput();
+				needsAutoSave_ = false;
+			}
 		break;
 		case PlaybackControllerData::Running:
+			runs_->setEnabled(true);
+			loadProgress_->setMaximum(100);
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(false);
 			playAllAction_->setEnabled(false);
 			toggleRecord_->setEnabled(true);
+			loadSessionAction_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
@@ -395,10 +460,13 @@ void ReplayViewer::playbackStatusChanged(int status)
 			paused_ = false;
 		break;
 		case PlaybackControllerData::Paused:
+			runs_->setEnabled(true);
+			loadProgress_->setMaximum(100);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(true);
 			playAllAction_->setEnabled(true);
+			loadSessionAction_->setEnabled(true);
 			playing_ = false;
 			paused_ = true;
 		break;
@@ -415,6 +483,8 @@ void ReplayViewer::loadSession()
 															"Picto Sessions(*.sqlite)");
 	if(!filenames.size())
 		return;
+	loadSessionAction_->setEnabled(false);
+	needsAutoSave_ = false;
 	filenames.sort();
 	QString filename = filenames[0];
 	//Load Sqlite Database
@@ -422,6 +492,7 @@ void ReplayViewer::loadSession()
 	Q_ASSERT(filename.lastIndexOf("/") >=0);
 	Q_ASSERT(filename.lastIndexOf(".") >=0);
 	loadProgress_->setMaximum(0);
+	loadProgress_->setValue(0);
 	QString result = playbackController_->loadSession(filename);
 	if(!result.isEmpty())
 	{
@@ -461,9 +532,9 @@ void ReplayViewer::updateRunsList(QStringList runs,QStringList savedRuns)
 	for(int i=0;i<runs.size();i++)
 	{
 		if(savedRuns.contains(runs[i]))
-			runs_->addItem(QIcon(":/icons/filesave.png"),runs[i],i);
+			runs_->addRun(QIcon(":/icons/filesave.png"),runs[i],i);
 		else
-			runs_->addItem(QIcon(QIcon("://icons/delete.png")),runs[i],i);
+			runs_->addRun(QIcon(QIcon("://icons/delete.png")),runs[i],i);
 	}
 	runs_->setEnabled(true);
 }
@@ -474,6 +545,14 @@ void ReplayViewer::setCurrentRun(int index)
 	progress_->setSliderProgress(0);
 	progress_->setHighlightRange(0,0,0);
 	progress_->setHighlightRange(1,0,0);
+
+	if(!playing_ && !paused_)
+	{
+		pauseAction_->setEnabled(true);
+		playAction_->setEnabled(true);
+		playAllAction_->setEnabled(true);
+		toggleRecord_->setEnabled(true);
+	}
 	jumpDownRequested_ = false;
 }
 
@@ -592,6 +671,7 @@ void ReplayViewer::loadError(QString errorStr)
 	loadProgress_->setMaximum(100);
 	loadProgress_->setMinimum(0);
 	loadProgress_->setValue(0);
+	loadSessionAction_->setEnabled(true);
 }
 
 void ReplayViewer::runStarted(QUuid runId)

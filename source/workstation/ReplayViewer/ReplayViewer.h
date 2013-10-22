@@ -11,6 +11,7 @@
 #include "SpeedWidget.h"
 #include "ProgressWidget.h"
 #include "OutputWidgetHolder.h"
+#include "../../common/Designer/TaskSelectorWidget.h"
 #include "../../common/Designer/AnalysisSelectorWidget.h"
 
 class QLabel;
@@ -38,7 +39,7 @@ public slots:
 	void deinit();	//Called just after the user switches out of the viewer
 	bool aboutToQuit();
 
-	void play();
+	bool play();
 	void playAll();
 	void pause();
 	void stop();
@@ -48,6 +49,7 @@ private:
 	void setupUi();
 	void updateRecordingTarget();
 	bool activateSelectedAnalyses();
+	void prepareForSessionLoad();
 
 	QSharedPointer<PlaybackController> playbackController_;
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
@@ -68,7 +70,7 @@ private:
 	SpeedWidget *speed_;
 	ProgressWidget *progress_;
 	QProgressBar *loadProgress_;
-	QComboBox *runs_;
+	TaskSelectorWidget* runs_;
 	QComboBox *userType_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 	
@@ -88,6 +90,7 @@ private:
 	bool recordModeOn_;
 	bool playing_;
 	bool paused_;
+	bool needsAutoSave_;
 	QString lastStatus_;
 
 	enum Status {Ending, Stopped, Running, Paused};

@@ -150,5 +150,6 @@
         <file>icons/soundfile.svg</file>
         <file>icons/imagefile.svg</file>
         <file>icons/runnotes.svg</file>
+        <file>icons/sessionopen.png</file>
     </qresource>
 </RCC>

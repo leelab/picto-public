@@ -155,6 +155,8 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 }
 void SlaveExperimentDriver::masterRunEnding()
 {
+	if(currTask_.isEmpty())
+		return;	//This could happen if the task never actually started before it was stopped.
 	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
 	//Run AnalysisExitScripts on Top
 	top->runAnalysisExitScripts();
