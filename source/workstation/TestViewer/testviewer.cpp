@@ -83,7 +83,8 @@ void TestViewer::init()
 	}
 	engine_->setFrameTimerFactory(experiment_->getDesignConfig()->getFrameTimerFactory());
 	generateComboBox();
-	analysisSelector_->setDesignRoot(designRoot_);
+	analysisSelector_->setLocalDesignRoot(designRoot_->getExperiment()->getName(),designRoot_);
+	analysisSelector_->setCurrentFile(designRoot_->getExperiment()->getName());
 	connect(designRoot_->getExperiment()->getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 }
 

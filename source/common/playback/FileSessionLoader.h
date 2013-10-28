@@ -19,12 +19,13 @@ class FileSessionLoader : public  QObject
 {
 	Q_OBJECT
 public:
-	FileSessionLoader(QSharedPointer<SessionState> sessState);
+	FileSessionLoader(QSharedPointer<SessionState> sessState = QSharedPointer<SessionState>());
 	~FileSessionLoader();
 
 	bool setFile(QString path);
 	QSharedPointer<DesignRoot> getDesignRoot();
 	QStringList getRunNames();
+	QStringList getRunNotes();
 	QStringList getSavedRunNames();
 	bool loadRun(int index);
 	double runDuration(int index);
@@ -47,8 +48,6 @@ protected:
 	};
 
 	virtual bool loadRunData();
-	virtual bool loadInitData(double upTo);
-	virtual double loadBehavData(double after,double to,double subtractTime);
 	virtual double loadNeuralData(double after,double to,double subtractTime);
 private:
 	bool getSignalInfo();

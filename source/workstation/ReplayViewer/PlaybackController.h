@@ -38,7 +38,10 @@ public:
 	double getRunSpeed();
 	void setRunLength(double val);
 	double getRunLength();
-	void setEnabledAnalyses(QList<QUuid> analysisList);
+	void setEnabledBuiltInAnalyses(QList<QUuid> analysisList);
+	void setEnabledImportedAnalyses(QList<QUuid> analysisList);
+	void clearEnabledBuiltInAnalyses();
+	void clearEnabledImportedAnalyses();
 	QList<QUuid> getEnabledAnalyses();
 	void setStatus(Status val);
 	PlaybackControllerData::Status getStatus();
@@ -54,6 +57,7 @@ private:
 	double runSpeed_;
 	double runLength_;
 	QList<QUuid> enabledAnalyses_;
+	QList<QUuid> enabledImportedAnalyses_;
 	Status status_;
 	Status nextStatus_;
 	QVector<PlaybackCommand> cmds_;
@@ -71,7 +75,6 @@ public:
 	virtual ~PlaybackController();
 
 	QString loadSession(QString filename);
-	void setEnabledAnalyses(QList<QUuid> analysisList);
 
 	QSharedPointer<Picto::VisualTarget> getVisualTarget();
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> getOutputSignalControllers();
@@ -79,15 +82,16 @@ public:
 	QSharedPointer<DesignRoot> getDesignRoot();
 	double getRunLength();
 	void aboutToQuit();
-	
+	void play(QList<QUuid> activeAnalyses,QStringList importAnalyses);
+	void pause(QList<QUuid> activeAnalyses = QList<QUuid>(),QStringList importAnalyses = QStringList());
+
 public slots:
-	void play();
-	void pause();
 	void stop();
 	void jumpToTime(double time);
 
 
 signals:
+	void analysesImportFailed(QString errorMsg);
 	void timeChanged(double time);
 	void loadedTo(double maxBehavioral,double maxNeural);
 	void loading(bool isLoading);
@@ -106,6 +110,7 @@ public slots:
 
 
 private:
+	QString activateAnalyses(QStringList analysisData);
 	QTimer stateUpdateTimer_;
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
@@ -117,9 +122,12 @@ private:
 	QSharedPointer<SlaveExperimentDriver> slaveExpDriver_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 	PlaybackControllerData data_;
+	QString filePath_;
+	int numImportedAnalyses_;
 private slots:
 	void newRunLength(double length);
 	void setCurrTime(double time);
+	void playbackEnded();
 	void setup();
 	void update();
 	//void runExperiment();

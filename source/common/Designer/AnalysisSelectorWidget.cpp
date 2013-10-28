@@ -18,55 +18,74 @@ AnalysisSelectorWidget::AnalysisSelectorWidget(QWidget *parent) :
 	tabWidget_->addTab(analysesForImportBox_,"Import");
 
 	QVBoxLayout* layout(new QVBoxLayout());
-	layout->addWidget(new QLabel("Select Analyses"));
 	layout->addWidget(tabWidget_);
 	setLayout(layout);
 }
 
-void AnalysisSelectorWidget::setDesignRoot(QSharedPointer<DesignRoot> designRoot)
+void AnalysisSelectorWidget::clearLocalAnalyses()
 {
-	analysisIds_.clear();
-	analysisNames_.clear();
-	if(designRoot.isNull())
+	localAnalysisLookup_.clear();
+	currFilePath_ = "";
+	updateLocalAnalysisList();
+}
+
+void AnalysisSelectorWidget::setLocalDesignRoot(QString filePath,QSharedPointer<DesignRoot> designRoot)
+{
+	if(designRoot.isNull() || filePath.isEmpty())
 	{	
-		updateAnalysisList();
 		return;
 	}
+	QList<AnalysisInfo> localAnalysisList;
 	for(int i=0;i<designRoot->getNumAnalyses();i++)
 	{
-		analysisNames_.append(designRoot->getAnalysis(i)->getName());
-		analysisIds_.append(designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId());
+		localAnalysisList.append(
+			AnalysisInfo(	designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId(),
+				designRoot->getAnalysis(i)->getName()
+			)
+		);
+		//analysisNames_.append(designRoot->getAnalysis(i)->getName());
+		//analysisIds_.append(designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId());
 	}
-	updateAnalysisList();
+	localAnalysisLookup_[filePath] = localAnalysisList;
 }
 
 void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> designRoot)
 {
-	analysisNamesForImport_.clear();
-	analysisIdsForImport_.clear();
+	analysesForImport_.clear();
 	if(designRoot.isNull())
 	{	
-		updateAnalysisList();
+		updateAnalysesForImportList();
 		return;
 	}
 	for(int i=0;i<designRoot->getNumAnalyses();i++)
 	{
-		analysisNamesForImport_.append(designRoot->getAnalysis(i)->getName());
-		analysisIdsForImport_.append(designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId());
+		analysesForImport_.append(
+			AnalysisInfo(	designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId(),
+				designRoot->getAnalysis(i)->getName()
+			)
+		);
 	}
-	updateAnalysisList();
+	updateAnalysesForImportList();
+}
+
+void AnalysisSelectorWidget::setCurrentFile(QString filePath)
+{
+	currFilePath_ = filePath;
+	updateLocalAnalysisList();
 }
 
 QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIds()
 {
 	QList<QUuid> returnVal;
-	for(int i=0;i<analysisIds_.size();i++)
+	if(currFilePath_.isEmpty() || !localAnalysisLookup_.contains(currFilePath_))
+		return returnVal;
+	for(int i=0;i<localAnalysisLookup_[currFilePath_].size();i++)
 	{
 		QAbstractButton* button = qobject_cast<QAbstractButton*>(analysesBox_->layout()->itemAt(i)->widget());
 		Q_ASSERT(button);
 		if(button->isChecked())
 		{
-			returnVal.append(analysisIds_[i]);
+			returnVal.append(localAnalysisLookup_[currFilePath_][i].id_);
 		}
 	}
 	return returnVal;
@@ -75,19 +94,20 @@ QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIds()
 QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIdsForImport()
 {
 	QList<QUuid> returnVal;
-	for(int i=0;i<analysisIdsForImport_.size();i++)
+	for(int i=0;i<analysesForImport_.size();i++)
 	{
 		QAbstractButton* button = qobject_cast<QAbstractButton*>(analysesForImportBox_->layout()->itemAt(i)->widget());
 		Q_ASSERT(button);
 		if(button->isChecked())
 		{
-			returnVal.append(analysisIdsForImport_[i]);
+			returnVal.append(analysesForImport_[i].id_);
 		}
 	}
 	return returnVal;
 }
 
-void AnalysisSelectorWidget::updateAnalysisList()
+
+void AnalysisSelectorWidget::updateLocalAnalysisList()
 {
 	//Remove all old buttons from layout.  We do this in a roundabout but simple way.  Moving a widget's
 	//layout to another widget and then destroying that widget destroys the layout and all the children that
@@ -97,29 +117,35 @@ void AnalysisSelectorWidget::updateAnalysisList()
 	analysesBox_->setLayout(new QVBoxLayout());
 
 	//Add new buttons to layout
-	for(int i=0;i<analysisNames_.size();i++)
+	if(localAnalysisLookup_.contains(currFilePath_))
 	{
-		QCheckBox* analysisCheckbox(new QCheckBox(analysisNames_[i]));
-		qobject_cast<QVBoxLayout*>(analysesBox_->layout())->addWidget(analysisCheckbox,0,Qt::AlignTop);
-		qobject_cast<QVBoxLayout*>(analysesBox_->layout())->setStretch(i,0);
+		for(int i=0;i<localAnalysisLookup_[currFilePath_].size();i++)
+		{
+			QCheckBox* analysisCheckbox(new QCheckBox(localAnalysisLookup_[currFilePath_][i].name_));
+			qobject_cast<QVBoxLayout*>(analysesBox_->layout())->addWidget(analysisCheckbox,0,Qt::AlignTop);
+			qobject_cast<QVBoxLayout*>(analysesBox_->layout())->setStretch(i,0);
+		}
 	}
 	qobject_cast<QVBoxLayout*>(analysesBox_->layout())->addStretch(1);
 	//Enable this tab if it contains any analyses
-	tabWidget_->setTabEnabled(0,analysisNames_.size());
+	tabWidget_->setTabEnabled(0,localAnalysisLookup_.contains(currFilePath_) && localAnalysisLookup_[currFilePath_].size());
+}
 
+void AnalysisSelectorWidget::updateAnalysesForImportList()
+{
 	//Remove old buttons from layout
 	if(analysesForImportBox_->layout())
 		QWidget().setLayout(analysesForImportBox_->layout());
 	analysesForImportBox_->setLayout(new QVBoxLayout());
 
 	//Add new buttons to layout
-	for(int i=0;i<analysisNamesForImport_.size();i++)
+	for(int i=0;i<analysesForImport_.size();i++)
 	{
-		QCheckBox* analysisCheckbox(new QCheckBox(analysisNamesForImport_[i]));
+		QCheckBox* analysisCheckbox(new QCheckBox(analysesForImport_[i].name_));
 		qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->addWidget(analysisCheckbox,0,Qt::AlignTop);
 		qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->setStretch(i,0);
 	}
 	qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->addStretch(1);
 	//Enable this tab if it contains any analyses
-	tabWidget_->setTabEnabled(1,analysisNamesForImport_.size());
+	tabWidget_->setTabEnabled(1,analysesForImport_.size());
 }

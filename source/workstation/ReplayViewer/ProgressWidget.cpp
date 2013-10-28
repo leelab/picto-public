@@ -90,6 +90,11 @@ void ProgressWidget::setMaximum(double max)
 		updateHighlights(true);
 }
 
+double ProgressWidget::getMaximum()
+{
+	return max_;
+}
+
 double ProgressWidget::getHighlightMin(int index)
 {
 	verifyHighlightIndex(index);
@@ -166,7 +171,7 @@ void ProgressWidget::setSliderProgress(double progress)
 void ProgressWidget::jumpToEnd()
 {
 	sliderPressed();
-	setSliderProgress(max_);
+	setSliderProgress(max_+1);
 	sliderReleased();
 }
 

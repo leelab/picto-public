@@ -12,6 +12,7 @@
 #include "../../common/parameter/OperatorClickParameter.h"
 #include "../../common/compositor/OutputSignalWidget.h"
 #include "../../common/statemachine/Scene.h"
+#include "../../common/storage/AssetExportImport.h"
 
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -23,6 +24,7 @@ PlaybackController::PlaybackController()
 	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("PAR0")));
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
 	renderingTarget_ = QSharedPointer<Picto::RenderingTarget>(new Picto::RenderingTarget(pixmapVisualTarget_, pcmAuralTarget));
+	filePath_.clear();
 
 	playbackThread_ = QSharedPointer<PlaybackThread>(new PlaybackThread());
 	connect(playbackThread_.data(),SIGNAL(init()),this,SLOT(setup()));
@@ -41,9 +43,83 @@ QString PlaybackController::loadSession(QString filename)
 	return "";
 }
 
-void PlaybackController::setEnabledAnalyses(QList<QUuid> analysisList)
+//void PlaybackController::setEnabledAnalyses(QList<QUuid> analysisList)
+//{
+//	data_.setEnabledAnalyses(analysisList);
+//}
+
+QString PlaybackController::activateAnalyses(QStringList analysisData)
 {
-	data_.setEnabledAnalyses(analysisList);
+	QList<QUuid> localAnalyses;
+	QStringList importAnalyses;
+	foreach(QString analysisDataUnit,analysisData)
+	{
+		if(analysisDataUnit.contains("<"))
+			importAnalyses.append(analysisDataUnit);
+		else
+			localAnalyses.append(QUuid(analysisDataUnit));
+	}
+
+	data_.clearEnabledBuiltInAnalyses();
+	data_.clearEnabledImportedAnalyses();
+	//Delete any analyses that were previously in the import list
+	while(numImportedAnalyses_ > 0)
+	{
+		int lastAnalysisIndex = getDesignRoot()->getNumAnalyses()-1;
+		QUuid lastAnalysisId = getDesignRoot()->getAnalysis(lastAnalysisIndex).staticCast<Analysis>()->getAssociateId();
+		getDesignRoot()->getExperiment().staticCast<DataStore>()->ClearAssociateDescendants(lastAnalysisId);
+		if(!getDesignRoot()->removeAnalysis(lastAnalysisIndex))
+				Q_ASSERT(false);
+		numImportedAnalyses_--;
+	}
+
+	//import analyses that are in the input string list and put them in the activated analysis list.
+	QList<QUuid> importedAnalysisIds;
+	foreach(QString analysis,importAnalyses)
+	{
+		//Create a new analysis to put the exported analysis in.
+		QSharedPointer<Analysis> newAnalysis = getDesignRoot()->importAnalysis("<Analysis/>").staticCast<Analysis>();
+		newAnalysis->setName(QUuid::createUuid().toString());	//Name doesn't matter.  Just make it unique
+		QUuid newAnalysisId = newAnalysis->getAssociateId();
+		bool linkResult = newAnalysis->LinkToAsset(getDesignRoot()->getExperiment(),QString());
+		Q_ASSERT(linkResult);
+		//Create UI Data for the new Analysis and attach it
+		AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
+		Q_ASSERT(assocRootHost);
+		QUuid hostId = assocRootHost->getHostId();
+		QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
+		QString feedback;
+		newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
+		Q_ASSERT(newAnalysis);
+
+		//Lets try to import the analysis contents into our new analysis from the exportText.
+		QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
+		int result = exportImport->importFromText(getDesignRoot()->getExperiment()
+												,analysis
+												,dynamic_cast<AssociateRootHost*>(getDesignRoot()->getExperiment().data())
+												,QPoint(0,0)
+												,dynamic_cast<AssociateRootHost*>(newAnalysis.data()));
+		switch(result)
+		{
+		case AssetExportImport::IMPORT_SUCCEEDED:
+			break;
+		//case AssetExportImport::IMPORT_SUCCEEDED_WITH_WARNINGS:
+		default:
+			//Import failed, remove analysis from design
+			getDesignRoot()->getExperiment().staticCast<DataStore>()->ClearAssociateDescendants(newAnalysisId);
+	
+			int analysisIndexToRemove = getDesignRoot()->getNumAnalyses()-1;
+			if(!getDesignRoot()->removeAnalysis(analysisIndexToRemove))
+				Q_ASSERT(false);
+			return exportImport->getLatestMessage();
+		}
+		importedAnalysisIds.append(newAnalysisId);
+		numImportedAnalyses_++;
+	}
+	
+	data_.setEnabledBuiltInAnalyses(localAnalyses);
+	data_.setEnabledImportedAnalyses(importedAnalysisIds);
+	return "";
 }
 
 void PlaybackController::setRunSpeed(double value)
@@ -98,14 +174,20 @@ void PlaybackController::aboutToQuit()
 	playbackThread_->wait();
 }
 
-void PlaybackController::play()
+void PlaybackController::play(QList<QUuid> activeAnalyses,QStringList importAnalyses)
 {
-	data_.pushCommand(PlaybackCommand(PlaybackCommand::Play));
+	QStringList analysisList;
+	foreach(QUuid analysisId,activeAnalyses)
+		analysisList.append(analysisId.toString());
+	data_.pushCommand(PlaybackCommand(PlaybackCommand::Play,analysisList+importAnalyses));
 }
 
-void PlaybackController::pause()
+void PlaybackController::pause(QList<QUuid> activeAnalyses,QStringList importAnalyses)
 {
-	data_.pushCommand(PlaybackCommand(PlaybackCommand::Pause));
+	QStringList analysisList;
+	foreach(QUuid analysisId,activeAnalyses)
+	analysisList.append(analysisId.toString());
+	data_.pushCommand(PlaybackCommand(PlaybackCommand::Pause,analysisList+importAnalyses));
 }
 
 void PlaybackController::stop()
@@ -123,7 +205,6 @@ void PlaybackController::jumpToTime(double time)
 void PlaybackController::selectRun(int index)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeRun,index));
-	//playbackUpdater_->loadRun(index);
 }
 
 void PlaybackController::newRunLength(double length)
@@ -135,6 +216,12 @@ void PlaybackController::setCurrTime(double time)
 {
 	data_.setCurrTime(time);
 	emit timeChanged(time);
+}
+
+void PlaybackController::playbackEnded()
+{
+	emit finishedPlayback();
+	stop();
 }
 
 void PlaybackController::setup()
@@ -159,8 +246,7 @@ void PlaybackController::setup()
 	connect(playbackUpdater_.data(),SIGNAL(loadedTo(double,double)),this,SIGNAL(loadedTo(double,double)));
 	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
 	connect(playbackUpdater_.data(),SIGNAL(newRun(double)),this,SLOT(newRunLength(double)));
-	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SLOT(stop()));
-	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SIGNAL(finishedPlayback()));
+	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SLOT(playbackEnded()));
 	connect(playbackUpdater_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 
 
@@ -190,6 +276,9 @@ void PlaybackController::setup()
 	rewardController->discardOverlapingRewards(true);
 	engine_->setRewardController(rewardController);
 
+	numImportedAnalyses_ = 0;
+	data_.clearEnabledBuiltInAnalyses();
+	data_.clearEnabledImportedAnalyses();
 	data_.setAsSetup();
 }
 
@@ -197,6 +286,7 @@ void PlaybackController::update()
 {
 	PlaybackControllerData::Status status = data_.getStatus();
 	PlaybackCommand cmd = data_.getNextCommand();
+	QString errorMsg;
 	switch(status)
 	{
 	case PlaybackControllerData::None:
@@ -207,6 +297,13 @@ void PlaybackController::update()
 		{
 		case PlaybackCommand::Load:
 			{
+				QString newFilePath = cmd.commandData.toString();
+				if(newFilePath == filePath_)
+				{
+					data_.setNextStatus(PlaybackControllerData::Stopped);
+					break;
+				}
+				filePath_ = newFilePath;
 				setup();
 				slaveExpDriver_.clear();	//Both SlaveExperimentDriver and Playback Updater contain pointers to the SessionState which is where
 											//all the session data is stored in RAM.  By clearing the slaveExpDriver_ here, we can be sure that
@@ -216,7 +313,7 @@ void PlaybackController::update()
 											//is available for the new session.
 				experiment_.clear();		//Experiment also uses up a lot of RAM.
 				designRoot_.clear();		//Design root point to the experiment too.
-				if(!playbackUpdater_->setFile(cmd.commandData.toString()))
+				if(!playbackUpdater_->setFile(filePath_))
 				{
 					emit loadError("Failed to load session design.  This often means that the session contains no experimental data.");
 					break;
@@ -233,6 +330,10 @@ void PlaybackController::update()
 					break;
 				}
 				designRoot_ = newDesignRoot;
+				numImportedAnalyses_ = 0;
+				data_.clearEnabledBuiltInAnalyses();
+				data_.clearEnabledImportedAnalyses();
+
 				data_.setRunLength(playbackUpdater_->getRunLength());
 				emit runsUpdated(playbackUpdater_->getRuns(),playbackUpdater_->getSavedRuns());
 
@@ -256,18 +357,36 @@ void PlaybackController::update()
 		case PlaybackCommand::ChangeUserType:
 			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
 			break;
+		case PlaybackCommand::Stop:
+			data_.setNextStatus(PlaybackControllerData::Stopped);
+			break;
+		case PlaybackCommand::Jump:
+			data_.setNextStatus(status);
+			break;
 		}
 		break;
 	case PlaybackControllerData::Stopped:
 		switch(cmd.commandType)
 		{
 		case PlaybackCommand::Play:
+			errorMsg = activateAnalyses(cmd.commandData.toStringList());
+			if(!errorMsg.isEmpty())
+			{
+				emit analysesImportFailed(errorMsg);
+				break;
+			}
 			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
 			designRoot_->enableRunMode(true);	//We do this here so that we're sure all the analyses are attached first.  Otherwise, they might not be operating in run mode.
 			playbackUpdater_->play();
 			data_.setNextStatus(PlaybackControllerData::Running);
 			break;
 		case PlaybackCommand::Pause:
+			errorMsg = activateAnalyses(cmd.commandData.toStringList());
+			if(!errorMsg.isEmpty())
+			{
+				emit analysesImportFailed(errorMsg);
+				break;
+			}
 			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
 			designRoot_->enableRunMode(true);//We do this here so that we're sure all the analyses are attached first
 			playbackUpdater_->play();
@@ -288,6 +407,9 @@ void PlaybackController::update()
 			break;
 		case PlaybackCommand::ChangeUserType:
 			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
+			break;
+		case PlaybackCommand::Jump:
+			data_.setNextStatus(status);
 			break;
 		}
 		break;
@@ -363,8 +485,11 @@ void PlaybackControllerData::setRunSpeed(double val){QMutexLocker locker(&mutex_
 double PlaybackControllerData::getRunSpeed(){QMutexLocker locker(&mutex_);return runSpeed_;}
 void PlaybackControllerData::setRunLength(double val){QMutexLocker locker(&mutex_);runLength_ = val;}
 double PlaybackControllerData::getRunLength(){QMutexLocker locker(&mutex_);return runLength_;}
-void PlaybackControllerData::setEnabledAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledAnalyses_=analysisList;}
-QList<QUuid> PlaybackControllerData::getEnabledAnalyses(){QMutexLocker locker(&mutex_);return enabledAnalyses_;}
+void PlaybackControllerData::setEnabledBuiltInAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledAnalyses_=analysisList;}
+void PlaybackControllerData::setEnabledImportedAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledImportedAnalyses_=analysisList;}
+void PlaybackControllerData::clearEnabledBuiltInAnalyses(){QMutexLocker locker(&mutex_);enabledAnalyses_.clear();}
+void PlaybackControllerData::clearEnabledImportedAnalyses(){QMutexLocker locker(&mutex_);enabledImportedAnalyses_.clear();}
+QList<QUuid> PlaybackControllerData::getEnabledAnalyses(){QMutexLocker locker(&mutex_);return enabledAnalyses_ + enabledImportedAnalyses_ ;}
 void PlaybackControllerData::setStatus(Status val){QMutexLocker locker(&mutex_);status_ = val;}
 PlaybackControllerData::Status PlaybackControllerData::getStatus(){QMutexLocker locker(&mutex_);return status_;}
 void PlaybackControllerData::setNextStatus(Status val){QMutexLocker locker(&mutex_);nextStatus_ = val;}

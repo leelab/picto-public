@@ -20,6 +20,7 @@ public:
 	ProgressWidget(QWidget *parent=0);
 	virtual ~ProgressWidget();
 	void setMaximum(double max);
+	double getMaximum();
 	double getHighlightMin(int index);
 	//By default, to conserve processing resources, highlight is not always updated
 	//when this function is called (it is updated at most once per frame).

@@ -76,7 +76,6 @@ void OutputWidgetHolder::resetLayout()
 	saveButton_->setToolTip("Save Analysis Output");
 	saveButton_->setEnabled(false);
 	connect(saveButton_,SIGNAL(released()),this,SLOT(saveOutputFromDialog()));
-	topLayout->addWidget(new QLabel("Analysis Outputs"),0,Qt::AlignLeft | Qt::AlignTop);
 	topLayout->addWidget(saveButton_,0,Qt::AlignRight | Qt::AlignTop);
 	QVBoxLayout* layout(new QVBoxLayout());
 	layout->addLayout(topLayout);

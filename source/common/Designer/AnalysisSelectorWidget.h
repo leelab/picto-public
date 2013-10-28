@@ -6,7 +6,7 @@
 #include <QTabWidget>
 #include <QGroupBox>
 #include <QAbstractButton>
-#include <QMap>
+#include <QHash>
 #include "../design/DesignRoot.h"
 #include "../parameter/Analysis.h"
 
@@ -24,20 +24,32 @@ class AnalysisSelectorWidget : public QWidget
 public:
 	AnalysisSelectorWidget(QWidget *parent = NULL);
 	virtual ~AnalysisSelectorWidget(){};
-	void setDesignRoot(QSharedPointer<DesignRoot> designRoot);
+	void clearLocalAnalyses();
+	void setLocalDesignRoot(QString filePath,QSharedPointer<DesignRoot> designRoot);
 	void setDesignRootForImport(QSharedPointer<DesignRoot> designRoot);
+	void setCurrentFile(QString filePath);
 	QList<QUuid> getSelectedAnalysisIds();
 	QList<QUuid> getSelectedAnalysisIdsForImport();
 private:
 	QTabWidget* tabWidget_;
 	QWidget* analysesBox_;
 	QWidget* analysesForImportBox_;
-	QStringList	analysisNames_;	
-	QStringList	analysisNamesForImport_;	
-	QList<QUuid> analysisIds_;
-	QList<QUuid> analysisIdsForImport_;
-private slots:
-	void updateAnalysisList();
+	struct AnalysisInfo
+	{
+		AnalysisInfo(){id_ = QUuid();name_ = "";};
+		AnalysisInfo(QUuid id,QString name){id_ = id;name_ = name;};
+		QUuid id_;
+		QString name_;
+	};
+	QHash<QString,QList<AnalysisInfo>> localAnalysisLookup_;
+	QList<AnalysisInfo> analysesForImport_;
+	QString currFilePath_;
+	//QStringList	analysisNames_;	
+	//QStringList	analysisNamesForImport_;	
+	//QList<QUuid> analysisIds_;
+	//QList<QUuid> analysisIdsForImport_;
+	void updateLocalAnalysisList();
+	void updateAnalysesForImportList();
 };
 };
 //! [0]

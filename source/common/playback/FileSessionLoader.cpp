@@ -15,7 +15,8 @@ FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState)
 runIndex_(-1),
 sessionDataLoaded_(false)
 {
-	connect(sessionState_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
+	if(sessionState_)
+		connect(sessionState_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 }
 
 FileSessionLoader::~FileSessionLoader()
@@ -69,7 +70,6 @@ bool FileSessionLoader::setFile(QString path)
 		return false;
 	if(!loadDesignDefinition())
 		return false;
-	//sessionState_->setSessionData(getDatabase(),obsoleteAssetIds_);
 	runIndex_ = -1;
 	return true;
 }
@@ -85,6 +85,16 @@ QStringList FileSessionLoader::getRunNames()
 	foreach(RunData runData,runs_)
 	{
 		returnVal.append(runData.name_);
+	}
+	return returnVal;
+}
+
+QStringList FileSessionLoader::getRunNotes()
+{
+	QStringList returnVal;
+	foreach(RunData runData,runs_)
+	{
+		returnVal.append(runData.notes_);
 	}
 	return returnVal;
 }
@@ -105,6 +115,8 @@ bool FileSessionLoader::loadRun(int index)
 	if(runIndex_ == index)
 		return true;
 	if(index < 0 || index >= runs_.size())
+		return false;
+	if(!sessionState_)
 		return false;
 	runIndex_ = index;
 	if(!sessionDataLoaded_)
@@ -174,175 +186,6 @@ bool FileSessionLoader::loadRunData()
 	return true;
 }
 
-bool FileSessionLoader::loadInitData(double upTo)
-{
-	//if(!getDatabase().isOpen())
-	//	return false;
-	//if(upTo <= 0)
-	//	return true;
-	//
-	//double from = loadRunData().first().startTime_;
-	//QSqlQuery query(getDatabase());
-	//query.setForwardOnly(true);
-	//bool success;
-	//int assetId;
-	////Property:
-	//query.prepare("SELECT p.dataid,p.assetid,p.value FROM properties p, propertylookup pl, frames f "
-	//	"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid "
-	//	"AND f.time < :upto ORDER BY p.dataid");
-	//query.bindValue(":upto",upTo);
-	//success = query.exec();
-	//if(!success)
-	//{
-	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
-	//	return false;
-	//}
-	//while(query.next()){
-	//	assetId = query.value(1).toInt();
-	//	if(obsoleteAssetIds_.contains(assetId))
-	//		continue;
-	//	sessionState_->setPropertyValue(0,query.value(0).toLongLong(),assetId,query.value(2).toString());
-	//}
-	//query.finish();
-	return true;
-}
-
-double FileSessionLoader::loadBehavData(double after,double to,double subtractTime)
-{
-	//double returnVal = after;
-	//if(!getDatabase().isOpen())
-	//	return returnVal;
-	//if(after == to)
-	//	return returnVal;
-	//
-	//double time = -1;
-	//QSqlQuery query(getDatabase());
-	//query.setForwardOnly(true);
-	//bool success;
-	//int assetId;
-	////Property:
-	////Currently, we don't select properties with no parent (ie. Runtime parameters).
-	//query.prepare("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, propertylookup pl,frames f "
-	//	"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid AND f.time > :after "
-	//	"AND f.time <= :to ORDER BY p.dataid");
-	//query.bindValue(":after",after);
-	//query.bindValue(":to",to);
-	//success = query.exec();
-	//if(!success)
-	//{
-	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
-	//	return after;
-	//}
-	//while(query.next()){
-	//	assetId = query.value(2).toInt();
-	//	if(obsoleteAssetIds_.contains(assetId))
-	//		continue;
-	//	time = query.value(0).toDouble();
-	//	sessionState_->setPropertyValue(time-subtractTime,query.value(1).toLongLong(),assetId,query.value(3).toString());
-	//	if(time > returnVal)
-	//		returnVal = time;
-	//}
-	//query.finish();
-	////eTransition:
-	//query.prepare("SELECT f.time,t.dataid,t.transid FROM transitions t, frames f "
-	//	"WHERE f.dataid=t.frameid AND f.time > :after "
-	//	"AND f.time <= :to ORDER BY t.dataid");
-	//query.bindValue(":after",after);
-	//query.bindValue(":to",to);
-	//success = query.exec();
-	//if(!success)
-	//{
-	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
-	//	return after;
-	//}
-	//while(query.next()){
-	//	assetId = query.value(2).toInt();
-	//	if(obsoleteAssetIds_.contains(assetId))
-	//		continue;
-	//	time = query.value(0).toDouble();
-	//	sessionState_->setTransition(time-subtractTime,query.value(1).toLongLong(),assetId);
-	//	if(time > returnVal)
-	//		returnVal = time;
-	//}
-	//query.finish();
-	////eFrame:
-	//query.prepare("SELECT f.dataid,f.time FROM frames f "
-	//	"WHERE f.time > :after "
-	//	"AND f.time <= :to ORDER BY f.dataid");
-	//query.bindValue(":after",after);
-	//query.bindValue(":to",to);
-	//success = query.exec();
-	//if(!success)
-	//{
-	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
-	//	return after;
-	//}
-	//while(query.next()){
-	//	time = query.value(1).toDouble();
-	//	sessionState_->setFrame(query.value(0).toLongLong(),time-subtractTime);
-	//	if(time > returnVal)
-	//		returnVal = time;
-	//}
-	//query.finish();
-	////eReward:
-	//query.prepare("SELECT r.dataid,r.duration,r.channel,r.time FROM rewards r "
-	//	"WHERE r.time > :after "
-	//	"AND r.time <= :to ORDER BY r.dataid");
-	//query.bindValue(":after",after);
-	//query.bindValue(":to",to);
-	//success = query.exec();
-	//if(!success)
-	//{
-	//	Q_ASSERT(false);
-	//	qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
-	//	return after;
-	//}
-	//while(query.next()){
-	//	time = query.value(3).toDouble();
-	//	sessionState_->setReward(time-subtractTime,query.value(0).toLongLong(),query.value(1).toInt(),query.value(2).toInt());
-	//	if(time > returnVal)
-	//		returnVal = time;
-	//}
-	//query.finish();
-	////eSignal:
-	//foreach(SigData sigData,sigs_)
-	//{
-	//	query.prepare(QString("SELECT s.dataid,f.time,s.offsettime,s.data "
-	//					"FROM %1 s,frames f WHERE f.dataid=s.frameid AND "
-	//					"f.time > :after AND f.time <= :to ORDER BY s.dataid").arg(sigData.tableName_));
-	//	query.bindValue(":after",after);
-	//	query.bindValue(":to",to);
-	//	success = query.exec();
-	//	if(!success)
-	//	{
-	//		Q_ASSERT(false);
-	//		qDebug("Failed to select data from table with error: " + query.lastError().text().toLatin1());
-	//		
-	//		return after;
-	//	}
-	//	while(query.next()){
-	//		time = query.value(1).toDouble();
-	//		//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
-	//		sessionState_->setSignal(	sigData.name_,
-	//									sigData.subChanNames_,
-	//									time+query.value(2).toDouble()-subtractTime,
-	//									query.value(0).toLongLong(),
-	//									sigData.samplePeriod_,
-	//									query.value(3).toByteArray()
-	//									);
-	//		if(time > returnVal)
-	//			returnVal = time;
-	//	}
-	//	query.finish();
-	//}
-	//return returnVal;
-	return 0;
-}
-
 double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
 {
 	if(!getDatabase().isOpen())
@@ -386,7 +229,8 @@ bool FileSessionLoader::getSignalInfo()
 		data.samplePeriod_ = double(sigInf.getResolution())/1000.0;
 		sigs_.append(data);
 		//Add the signal to the session state so that it knows it should track its data
-		sessionState_->addSignal(data.name_,data.tableName_,data.subChanNames_,data.samplePeriod_);
+		if(sessionState_)
+			sessionState_->addSignal(data.name_,data.tableName_,data.subChanNames_,data.samplePeriod_);
 	}while(query.next());
 	return true;
 }

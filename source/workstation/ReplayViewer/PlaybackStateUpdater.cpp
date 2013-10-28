@@ -222,8 +222,10 @@ void PlaybackStateUpdater::jumpToTime(double time)
 {
 	if(!sessionPlayer_)
 		return;
-	if(time > getRunLength() || time < 0)
-		return;
+	if(time > getRunLength())
+		time = getRunLength();
+	if(time < 0)
+		time = 0;
 	timerOffset_ = time;
 	suspendPlayback();
 }

@@ -1,6 +1,7 @@
 #ifndef REPLAYVIEWER_H_
 #define REPLAYVIEWER_H_
 
+#include <QList>
 #include "../viewer.h"
 #include "../../common/engine/pictoengine.h"
 #include "../../common/compositor/PixmapVisualTarget.h"
@@ -39,8 +40,9 @@ public slots:
 	void deinit();	//Called just after the user switches out of the viewer
 	bool aboutToQuit();
 
+	void runNormal();
+	void runToEnd();
 	bool play();
-	void playAll();
 	void pause();
 	void stop();
 
@@ -48,8 +50,20 @@ public slots:
 private:
 	void setupUi();
 	void updateRecordingTarget();
+	QList<QUuid> getSelectedLocalAnalyses();
+	QStringList getAnalysesToImport();
 	bool activateSelectedAnalyses();
 	void prepareForSessionLoad();
+	struct PlayRunInfo
+	{
+		PlayRunInfo(){filePath_="";runIndex_=-1;};
+		PlayRunInfo(QString filePath,int runIndex){filePath_=filePath;runIndex_=runIndex;};
+		QString filePath_;
+		int runIndex_;
+		bool operator==(const PlayRunInfo& rhs){return (filePath_ == rhs.filePath_) && (runIndex_ == rhs.runIndex_);};
+		bool operator!=(const PlayRunInfo& rhs){return !((filePath_ == rhs.filePath_) && (runIndex_ == rhs.runIndex_));};
+	};
+	QList<PlayRunInfo> getSelectedPlayRunInfo();
 
 	QSharedPointer<PlaybackController> playbackController_;
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
@@ -62,9 +76,12 @@ private:
 	RecordingVisualTargetHost *visualTargetHost_;
 	QVector<QWidget *> outputSignalsWidgets_;
 
+	QList<PlayRunInfo> runQueue_;
+	PlayRunInfo latestRun_;
+
 	QAction *loadSessionAction_;
 	QAction *playAction_;
-	QAction *playAllAction_;
+	QAction *runToEndAction_;
 	QAction *pauseAction_;
 	QAction *stopAction_;
 	SpeedWidget *speed_;
@@ -90,7 +107,11 @@ private:
 	bool recordModeOn_;
 	bool playing_;
 	bool paused_;
+	bool calledPlayNotPause_;
 	bool needsAutoSave_;
+	bool useRunToEnd_;
+	bool startingRun_;
+	int latestStatus_;
 	QString lastStatus_;
 
 	enum Status {Ending, Stopped, Running, Paused};
@@ -100,8 +121,7 @@ private slots:
 	void loadSession();
 	void updateTime(double time);
 	void updateLoadTimes(double maxBehavioral,double maxNeural);
-	void updateRunsList(QStringList runs,QStringList savedRuns);
-	void setCurrentRun(int index);
+	void runSelectionChanged();
 	void setUserType(int index);
 	void percentLoaded(double percent);
 	void jumpRequested(double time);
@@ -113,6 +133,8 @@ private slots:
 	void designRootChanged();
 	void loadError(QString errorStr);
 	void runStarted(QUuid runId);
+	void finishedPlayback();
+	void analysesImportedFailed(QString errorMsg);
 	//void zoomChanged(int zoom);
 
 };
