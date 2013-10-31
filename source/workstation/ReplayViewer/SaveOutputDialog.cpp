@@ -18,15 +18,18 @@ defaultSubDirSetting_(defaultSubDirSetting)
 
 void SaveOutputDialog::showDialog()
 {
-	exec();
+	selectedDir_.clear();
+	if(exec())
+	{
+		QStringList selectedDirs = selectedFiles();
+		if(selectedDirs.length())
+			selectedDir_ = selectedDirs.first();
+	}
 }
 
 QString SaveOutputDialog::getSelectedDir()
 {
-	QStringList selectedDirs = selectedFiles();
-	if(selectedDirs.length())
-		return selectedDirs.first();
-	return "";
+	return selectedDir_;
 }
 
 bool SaveOutputDialog::useSeperateSubDirs()
@@ -45,6 +48,7 @@ void SaveOutputDialog::setup()
 		setDirectory(defaultPath_);
 	setOption(QFileDialog::ShowDirsOnly,true);
 	setFileMode(QFileDialog::Directory);
+	selectedDir_ = "";
 }
 
 //! Adds "use seperate subdirs" checkbox to the dialog

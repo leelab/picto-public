@@ -17,7 +17,7 @@ using namespace Picto;
 
 struct PlaybackCommand 
 {
-	enum Type {NoCommand, Load, ChangeRun, ChangeSpeed, ChangeUserType, Play, Pause, Stop, Jump};
+	enum Type {NoCommand, PreLoad, ChangeFile, ChangeRun, ChangeSpeed, ChangeUserType, EnableLFP, Play, Pause, Stop, Jump};
 	enum UserType {Operator,TestSubject};
 	PlaybackCommand(){commandType = NoCommand;};
 	PlaybackCommand(Type cmd,QVariant val=0){commandType = cmd;commandData=val;};
@@ -29,7 +29,7 @@ class PlaybackControllerData
 {
 public:
 	PlaybackControllerData();
-	enum Status {None,Idle,Stopped, Running, Paused};
+	enum Status {None,Idle,PreLoading,Stopped,Loading,Running, Paused};
 	void setAsSetup();
 	bool isSetup();
 	void setCurrTime(double val);
@@ -38,6 +38,12 @@ public:
 	double getRunSpeed();
 	void setRunLength(double val);
 	double getRunLength();
+	void setLoadedFilePath(QString filePath);
+	QString getLoadedFilePath();
+	void setNextFilePath(QString filePath);
+	QString getNextFilePath();
+	void enableLfp(bool enabled);
+	bool getLfpEnabled();
 	void setEnabledBuiltInAnalyses(QList<QUuid> analysisList);
 	void setEnabledImportedAnalyses(QList<QUuid> analysisList);
 	void clearEnabledBuiltInAnalyses();
@@ -56,6 +62,9 @@ private:
 	double currTime_;
 	double runSpeed_;
 	double runLength_;
+	QString filePath_;
+	QString nextFilePath_;
+	bool lfpEnabled_;
 	QList<QUuid> enabledAnalyses_;
 	QList<QUuid> enabledImportedAnalyses_;
 	Status status_;
@@ -63,6 +72,27 @@ private:
 	QVector<PlaybackCommand> cmds_;
 
 };
+
+struct PreloadedSessionData
+{
+	PreloadedSessionData(){fileName_="";};
+	PreloadedSessionData(const PreloadedSessionData& other){
+		fileName_ = other.fileName_;
+		runs_ = other.runs_;
+		notes_ = other.notes_;
+		savedRuns_ = other.savedRuns_;
+		analysisIds_ = other.analysisIds_;
+		analysisNames_ = other.analysisNames_;
+	};
+	~PreloadedSessionData(){};
+	QString fileName_;
+	QStringList runs_;
+	QStringList notes_;
+	QStringList savedRuns_;
+	QList<QUuid> analysisIds_;
+	QStringList analysisNames_;
+};
+Q_DECLARE_METATYPE(PreloadedSessionData)
 
 /*!	\brief	This controlls experimental playback
  *
@@ -74,13 +104,14 @@ public:
 	PlaybackController();
 	virtual ~PlaybackController();
 
-	QString loadSession(QString filename);
+	QString preLoadSessions(QStringList filenames);
 
 	QSharedPointer<Picto::VisualTarget> getVisualTarget();
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> getOutputSignalControllers();
 	QSharedPointer<Picto::RenderingTarget> getRenderingTarget();
 	QSharedPointer<DesignRoot> getDesignRoot();
 	double getRunLength();
+	QString getLoadedFilePath();
 	void aboutToQuit();
 	void play(QList<QUuid> activeAnalyses,QStringList importAnalyses);
 	void pause(QList<QUuid> activeAnalyses = QList<QUuid>(),QStringList importAnalyses = QStringList());
@@ -88,25 +119,24 @@ public:
 public slots:
 	void stop();
 	void jumpToTime(double time);
-
+	void setRunSpeed(double value);
+	void setUserToOperator();
+	void setUserToSubject();
+	void enableLFPLoad(bool enable);
+	void selectFile(QString filePath);
+	void selectRun(int index);
 
 signals:
-	void analysesImportFailed(QString errorMsg);
+	void sessionPreloaded(PreloadedSessionData sessionData);
+	void sessionPreloadFailed(QString error);
 	void timeChanged(double time);
-	void loadedTo(double maxBehavioral,double maxNeural);
 	void loading(bool isLoading);
 	void percentLoaded(double percent);
-	void runsUpdated(QStringList runs,QStringList savedRuns);
 	void designRootChanged();
 	void statusChanged(int status);
 	void finishedPlayback();
 	void loadError(QString msg);
 
-public slots:
-	void setRunSpeed(double value);
-	void setUserToOperator();
-	void setUserToSubject();
-	void selectRun(int index);
 
 
 private:
@@ -123,6 +153,8 @@ private:
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 	PlaybackControllerData data_;
 	QString filePath_;
+	QString nextFilePath_;
+	int currRun_;
 	int numImportedAnalyses_;
 private slots:
 	void newRunLength(double length);

@@ -151,13 +151,13 @@ void TaskSelectorWidget::setRunStatus(QString fileName,int runIndex,RunStatus st
 	switch(status)
 	{
 	case IDLE:
-		setRunColor(fileName,runIndex,QColor());
+		setRunColor(fileName,runIndex,QColor(255,100,100));
 		break;
 	case INPROGRESS:
-		setRunColor(fileName,runIndex,Qt::green);
+		setRunColor(fileName,runIndex,QColor(100,100,255));
 		break;
 	case COMPLETE:
-		setRunColor(fileName,runIndex,Qt::cyan);
+		setRunColor(fileName,runIndex,QColor(100,255,100));
 		break;
 	case ERROROCCURED:
 		setRunColor(fileName,runIndex,Qt::red);
@@ -218,26 +218,60 @@ void TaskSelectorWidget::buttonClicked(int buttonIndex)
 
 void TaskSelectorWidget::selectAll()
 {
+	bool changed = false;
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
 	{
-		runInfo->button_->setChecked(true);
+		if(!runInfo->button_->isChecked())
+		{
+			changed = true;
+			runInfo->button_->setChecked(true);
+		}
 	}
+	//buttonClicked is only triggered when a user physically presses a button, so we
+	//need to emit runSelectionChanged here a well.
+	if(changed)
+		emit runSelectionChanged();
 }
 
 void TaskSelectorWidget::selectSaved()
 {
+	bool needsChange = false;
+	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
+	{
+		if(	(!runInfo->saved_ && runInfo->button_->isChecked())
+			|| (runInfo->saved_ && !runInfo->button_->isChecked())
+			)
+		{
+			needsChange = true;
+			break;
+		}
+	}
+	if(!needsChange)
+		return;
 	clearSelection();
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
 	{
 		if(runInfo->saved_)
 			runInfo->button_->setChecked(true);
 	}
+	//buttonClicked is only triggered when a user physically presses a button, so we
+	//need to emit runSelectionChanged here a well.
+	emit runSelectionChanged();
 }
 
 void TaskSelectorWidget::clearSelection()
 {
+	bool changed = false;
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
 	{
-		runInfo->button_->setChecked(false);
+		if(runInfo->button_->isChecked())
+		{
+			runInfo->button_->setChecked(false);
+			changed = true;
+		}
 	}
+	//buttonClicked is only triggered when a user physically presses a button, so we
+	//need to emit runSelectionChanged here a well.
+	if(changed)
+		emit runSelectionChanged();
 }

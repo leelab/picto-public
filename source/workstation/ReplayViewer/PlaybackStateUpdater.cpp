@@ -16,6 +16,7 @@ PlaybackStateUpdater::PlaybackStateUpdater()
 	lastMaxBehav_ = 0;
 	lastMaxNeural_ = 0;
 	playbackSpeed_ = 1.0;
+	enableLfp_ = true;
 }
 
 PlaybackStateUpdater::~PlaybackStateUpdater()
@@ -35,7 +36,6 @@ bool PlaybackStateUpdater::updateState()
 		//Rendering should be disabled.
 		enableRendering(false);
 	}
-	emitLoadTimeSignals();
 	if(sessionPlayer_->stepToTime(runToTime))
 	{
 		//Once we have caught up to runToTime rendering should always be enabled.
@@ -95,7 +95,7 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	stop();
 	currRunIndex_ = -1;
-	sessionState_ = QSharedPointer<SessionState>(new SessionState());
+	sessionState_ = QSharedPointer<SessionState>(new SessionState(enableLfp_));
 	//if(fileSessionLoader_)
 	//	fileSessionLoader_->unload();
 	fileSessionLoader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(sessionState_));
@@ -167,9 +167,11 @@ bool PlaybackStateUpdater::loadRun(int index)
 	runLoaded_ = false;
 	currRunIndex_ = index;
 	currRunLength_ = fileSessionLoader_->runDuration(currRunIndex_);
-	////Load the run
-	//return fileSessionLoader_->loadRun(index);
-	return true;
+	//Make sure the lfp enabling is set up before loading the run
+	if(sessionState_->lfpEnabled() != enableLfp_)
+		sessionState_->enableLfp(enableLfp_);
+	//Load the run
+	return fileSessionLoader_->loadRun(index);
 }
 
 bool PlaybackStateUpdater::pause()
@@ -182,7 +184,6 @@ bool PlaybackStateUpdater::pause()
 
 bool PlaybackStateUpdater::play()
 {
-	fileSessionLoader_->loadRun(currRunIndex_);
 	paused_ = false;
 	return true;
 }
@@ -230,23 +231,9 @@ void PlaybackStateUpdater::jumpToTime(double time)
 	suspendPlayback();
 }
 
-void PlaybackStateUpdater::emitLoadTimeSignals()
+void PlaybackStateUpdater::enableLfp(bool enable)
 {
-	//double newMaxB = fileSessionLoader_->getMaxBehavTime();
-	//double newMaxN = fileSessionLoader_->getMaxNeuralTime();
-	//bool emitUpdate = false;
-	//if(lastMaxBehav_ != newMaxB)
-	//{
-	//	lastMaxBehav_ = newMaxB;
-	//	emitUpdate = true;
-	//}
-	//if(lastMaxNeural_ != newMaxN)
-	//{
-	//	lastMaxNeural_ = newMaxN;
-	//	emitUpdate = true;
-	//}
-	//if(emitUpdate)
-	//	emit loadedTo(lastMaxBehav_, lastMaxNeural_);
+	enableLfp_ = enable;
 }
 
 void PlaybackStateUpdater::enableRendering(bool en)

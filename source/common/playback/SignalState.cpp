@@ -189,7 +189,7 @@ QVariantList SignalState::getValuesSince(QString channel,double time)
 		return QVariantList();
 	double upToGlobalTime = data_[curr_].time_+double(currSub_)*sampPeriod_;
 	PlaybackSignalData beyondVal = PlaybackSignalData(afterTime+runStart_);
-	QList<PlaybackSignalData>::iterator iter = qLowerBound<QList<PlaybackSignalData>::iterator,PlaybackSignalData>(data_.begin(),data_.begin()+curr_,beyondVal);
+	QList<PlaybackSignalData>::iterator iter = qLowerBound<QList<PlaybackSignalData>::iterator,PlaybackSignalData>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),beyondVal);
 	//The above line puts the iterator at the data_ entry at or one after the one containing the beyondVal, 
 	//so we move it backward by one to assure that its low enough for us to capture all relevant data
 	if(iter != data_.begin())
@@ -253,7 +253,7 @@ QVariantList SignalState::getTimesSince(double time)
 		return QVariantList();
 	double upToGlobalTime = data_[curr_].time_+double(currSub_)*sampPeriod_;
 	PlaybackSignalData beyondVal = PlaybackSignalData(afterTime+runStart_);
-	QList<PlaybackSignalData>::iterator iter = qLowerBound<QList<PlaybackSignalData>::iterator,PlaybackSignalData>(data_.begin(),data_.begin()+curr_,beyondVal);
+	QList<PlaybackSignalData>::iterator iter = qLowerBound<QList<PlaybackSignalData>::iterator,PlaybackSignalData>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),beyondVal);
 	//The above line puts the iterator at the data_ entry at or one after the one containing the beyondVal, 
 	//so we move it backward by one to assure that its low enough for us to capture all relevant data
 	if(iter != data_.begin())

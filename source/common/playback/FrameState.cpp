@@ -114,7 +114,7 @@ QVariantList FrameState::getTimesSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QList<PlaybackIndex>::iterator iter = qUpperBound<QList<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin(),data_.begin()+curr_,beyondIndex);
+	QList<PlaybackIndex>::iterator iter = qUpperBound<QList<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),beyondIndex);
 	QVariantList returnVal;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
 	{
@@ -132,7 +132,7 @@ QVariantList FrameState::getTimesUntil(double time)
 	if(!data_.size() || upToTime <= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QList<PlaybackIndex>::iterator upToIter = qUpperBound<QList<PlaybackIndex>::iterator,PlaybackIndex>(data_.begin()+curr_,data_.end(),beforeIndex);
+	QList<PlaybackIndex>::iterator upToIter = qUpperBound<QList<PlaybackIndex>::iterator,PlaybackIndex>(curr_>=0?data_.begin()+curr_:data_.begin(),data_.end(),beforeIndex);
 	QVariantList returnVal;
 	for(QList<PlaybackIndex>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
 	{

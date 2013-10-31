@@ -77,7 +77,8 @@ void ReplayViewer::setupUi()
 
 	runs_ = new TaskSelectorWidget();
 	connect(runs_,SIGNAL(runSelectionChanged()),this,SLOT(runSelectionChanged()));
-	//connect(playbackController_.data(),SIGNAL(runsUpdated(QStringList,QStringList)),this,SLOT(updateRunsList(QStringList,QStringList)));
+	connect(playbackController_.data(),SIGNAL(sessionPreloaded(PreloadedSessionData)),this,SLOT(sessionPreloaded(PreloadedSessionData)));
+	connect(playbackController_.data(),SIGNAL(sessionPreloadFailed(QString)),this,SLOT(preloadError(QString)));
 
 	///play/pause/stop actions and toolbar
 	playAction_ = new QAction(tr("&Start task"),this);
@@ -85,12 +86,10 @@ void ReplayViewer::setupUi()
 	playAction_->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_R));
 	playAction_->setToolTip("Run (Ctrl+R)");
 	connect(playAction_,SIGNAL(triggered()),this, SLOT(runNormal()));
-	playing_ = false;	//True when an experiment is playing
-	paused_ = false;	//True when experiment is paused
+	latestStatus_ = PlaybackControllerData::Idle;
 	useRunToEnd_ = false;
 	startingRun_ = false;
 	calledPlayNotPause_ = false;
-	latestRun_ = PlayRunInfo();
 
 	///playall
 	runToEndAction_ = new QAction(tr("&Run to end"),this);
@@ -124,12 +123,18 @@ void ReplayViewer::setupUi()
 	userType_->addItem("Test Subject",1);
 	connect(userType_,SIGNAL(currentIndexChanged(int)),this,SLOT(setUserType(int)));
 
+	lfpRequirements_ = new QComboBox();
+	lfpRequirements_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	lfpRequirements_->setToolTip("Set LFP requirements");
+	lfpRequirements_->addItem("Load LFP",0);
+	lfpRequirements_->addItem("Ignore LFP",1);
+	connect(lfpRequirements_,SIGNAL(currentIndexChanged(int)),this,SLOT(setLFPRequirements(int)));
+
 	progress_ = new ProgressWidget();
 	progress_->setMaximum(1);
 	progress_->setHighlightColor(0,QColor("#88f"));
 	progress_->setHighlightColor(1,QColor("#f88"));
 	connect(playbackController_.data(),SIGNAL(timeChanged(double)),this,SLOT(updateTime(double)));
-	connect(playbackController_.data(),SIGNAL(loadedTo(double,double)),this,SLOT(updateLoadTimes(double,double)));
 	connect(progress_,SIGNAL(valueRequested(double)),this,SLOT(jumpRequested(double)));
 	connect(progress_,SIGNAL(userAction(bool)),this,SLOT(userChoosingJump(bool)));
 	
@@ -169,6 +174,7 @@ void ReplayViewer::setupUi()
 	testToolbar_->addAction(stopAction_);
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(userType_);
+	testToolbar_->addWidget(lfpRequirements_);
 	testToolbar_->addSeparator();
 	testToolbar_->addAction(toggleRecord_);
 	testToolbar_->addWidget(recordTime_);
@@ -209,7 +215,6 @@ void ReplayViewer::setupUi()
 	analysisTabs->addTab(runs_,"Select Runs");
 	analysisTabs->addTab(analysisSelector_,"Select Analyses");
 	analysisTabs->addTab(outputWidgetHolder_,"Analysis Output");
-	connect(playbackController_.data(),SIGNAL(analysesImportFailed(QString)),this,SLOT(analysesImportedFailed(QString)));
 
 	QVBoxLayout *infoLayout = new QVBoxLayout();
 	infoLayout->addWidget(analysisTabs);
@@ -235,7 +240,7 @@ void ReplayViewer::setupUi()
 //on the current run and record mode states.
 void ReplayViewer::updateRecordingTarget()
 {
-	if(recordModeOn_ && playing_)
+	if(recordModeOn_ && (latestStatus_ == PlaybackControllerData::Running))
 	{
 		if(!visualTargetHost_->isRecording())
 			visualTargetHost_->toggleRecording();
@@ -270,85 +275,27 @@ QStringList ReplayViewer::getAnalysesToImport()
 	}
 	return resultList;
 }
-
-//bool ReplayViewer::activateSelectedAnalyses()
-//{
-//	QList<QUuid> importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
-//	QList<QUuid> finalAnalysisIdList = analysisSelector_->getSelectedAnalysisIds();	//The import analysis ids will change when we import them to new analyses in the session file.
-//	for(int i=0;i<designRoot_->getNumAnalyses();i++)
-//	{
-//		//If this analysis is in our import list
-//		if(importAnalysisIds.contains(designRoot_->getAnalysis(i).staticCast<Analysis>()->getAssociateId()))
-//		{
-//			//Try to import it.
-//			QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
-//			QString exportText = exportImport->exportToText((QList<QSharedPointer<Asset>>() << designRoot_->getExperiment())
-//				,dynamic_cast<AssociateRootHost*>(designRoot_->getAnalysis(i).data()));
-//			if(exportText.isEmpty())
-//			{
-//				QMessageBox::warning(0,"Could not import Analysis",exportImport->getLatestMessage());
-//				return false;
-//			}
-//
-//			//Create a new analysis to put the exported analysis in.
-//			QSharedPointer<Analysis> newAnalysis = playbackController_->getDesignRoot()->importAnalysis("<Analysis/>").staticCast<Analysis>();
-//			newAnalysis->setName(designRoot_->getAnalysis(i)->getName());
-//			QUuid newAnalysisId = newAnalysis->getAssociateId();
-//			bool linkResult = newAnalysis->LinkToAsset(playbackController_->getDesignRoot()->getExperiment(),QString());
-//			Q_ASSERT(linkResult);
-//			//Create UI Data for the new Analysis and attach it
-//			AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
-//			Q_ASSERT(assocRootHost);
-//			QUuid hostId = assocRootHost->getHostId();
-//			QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
-//			QString feedback;
-//			newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
-//			Q_ASSERT(newAnalysis);
-//
-//			//Lets try to import the analysis contents into our new analysis from the exportText.
-//			int result = exportImport->importFromText(playbackController_->getDesignRoot()->getExperiment()
-//													,exportText
-//													,dynamic_cast<AssociateRootHost*>(playbackController_->getDesignRoot()->getExperiment().data())
-//													,QPoint(0,0)
-//													,dynamic_cast<AssociateRootHost*>(newAnalysis.data()));
-//			switch(result)
-//			{
-//			case AssetExportImport::IMPORT_SUCCEEDED:
-//				break;
-//			//case AssetExportImport::IMPORT_SUCCEEDED_WITH_WARNINGS:
-//			default:
-//				//Import failed, remove analysis from design
-//				playbackController_->getDesignRoot()->getExperiment().staticCast<DataStore>()->ClearAssociateDescendants(newAnalysisId);
-//	
-//				int analysisIndexToRemove = playbackController_->getDesignRoot()->getNumAnalyses()-1;
-//				if(!playbackController_->getDesignRoot()->removeAnalysis(analysisIndexToRemove))
-//					Q_ASSERT(false);
-//				QMessageBox::warning(0,"Could not import Analysis",exportImport->getLatestMessage());
-//				return false;
-//			}
-//			finalAnalysisIdList.append(newAnalysisId);
-//		}
-//	}
-//
-//	//If we got here, all import analyses were imported.  Enabled them.
-//	playbackController_->setEnabledAnalyses(finalAnalysisIdList);
-//	return true;
-//}
-
-void ReplayViewer::prepareForSessionLoad()
+//Returns false if the runQueue was decremented to empty and then reinitialized
+//ie.  It didn't pop the front because the front's now back in the queue somewhere
+bool ReplayViewer::popRunQueueFront()
 {
-	runs_->setEnabled(false);
-	loadProgress_->setMaximum(0);
-	pauseAction_->setEnabled(false);
-	stopAction_->setEnabled(false);
-	playAction_->setEnabled(false);
-	runToEndAction_->setEnabled(false);
-	toggleRecord_->setEnabled(false);
-	loadSessionAction_->setEnabled(false);
-	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+	runQueue_.pop_front();
+	if(runQueue_.isEmpty())
 	{
-		static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+		QList<PlayRunInfo> selectedRuns = getSelectedPlayRunInfo();
+		//Playback is complete.  Tell the user in a dialog.
+		QMessageBox::information(this,"Playback Complete","Playback of the selected runs is complete");
+		runs_->resetAllRunStatus();
+		runQueue_ = selectedRuns;
+		if	(	runQueue_.size() 
+				&& (runQueue_.first().filePath_ != playbackController_->getLoadedFilePath())
+			)
+		{
+			loadProgress_->setValue(0);
+		}
+		return false;
 	}
+	return true;
 }
 
 void ReplayViewer::runNormal()
@@ -362,13 +309,13 @@ void ReplayViewer::runNormal()
 void ReplayViewer::runToEnd()
 {
 	needsAutoSave_ = false;
-	if(!paused_)
+	if(latestStatus_ != PlaybackControllerData::Paused)
 	{
 		QList<QUuid> importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
 		QList<QUuid> finalAnalysisIdList = analysisSelector_->getSelectedAnalysisIds();	//The import analysis ids will change when we import them to new analyses in the session file.
 		if(importAnalysisIds.size() || finalAnalysisIdList.size())
 		{
-			QMessageBox::StandardButton result = QMessageBox::question(this,"Save analysis results","Would you like to Picto to automatically save analysis results when this run is complete?",QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No,QMessageBox::StandardButton::Yes);
+			QMessageBox::StandardButton result = QMessageBox::question(this,"Save analysis results","Would you like to Picto to automatically save analysis results when this run is complete?",QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No | QMessageBox::StandardButton::Cancel,QMessageBox::StandardButton::Yes);
 			if(result == QMessageBox::StandardButton::Yes)
 			{
 				QString dirName = ".";
@@ -382,6 +329,10 @@ void ReplayViewer::runToEnd()
 				outputWidgetHolder_->setSaveParameters(dirName,useSeperateSubDirs);
 				needsAutoSave_ = true;
 			}
+			else if(result != QMessageBox::StandardButton::No)
+			{
+				return;
+			}
 		}
 	}
 	useRunToEnd_ = true;
@@ -394,32 +345,12 @@ void ReplayViewer::runToEnd()
 bool ReplayViewer::play()
 {
 	qDebug()<<"Play slot";
-	if(!paused_)
+	if((latestStatus_ != PlaybackControllerData::Paused))
 	{
-		if(runQueue_.isEmpty())
-		{
-			QMessageBox::information(this,"Playback Complete","Playback of the selected runs is complete");
-			runs_->resetAllRunStatus();
-			runQueue_ = getSelectedPlayRunInfo();
-			if	(	runQueue_.size() 
-					&& (runQueue_.first().filePath_ != latestRun_.filePath_)
-				)
-			{
-				loadProgress_->setValue(0);
-			}
-			return false;
-		}
+		Q_ASSERT(!runQueue_.isEmpty());
 		PlayRunInfo latestPlayRunInfo = runQueue_.first();
-		stop();
-		playbackController_->loadSession(latestPlayRunInfo.filePath_);
+		playbackController_->selectFile(latestPlayRunInfo.filePath_);
 		playbackController_->selectRun(latestPlayRunInfo.runIndex_);
-
-		analysisSelector_->setEnabled(false);
-		latestRun_ = runQueue_.first();
-	}
-	if(loadProgress_->value() == 0)	//If we haven't loaded the session data yet, put loadProgress into initial state
-	{
-		prepareForSessionLoad();
 	}
 	startingRun_ = true;
 	calledPlayNotPause_ = true;
@@ -430,17 +361,12 @@ bool ReplayViewer::play()
 void ReplayViewer::pause()
 {
 	qDebug()<<"Pause slot";
-	if(!playing_)
+	if(latestStatus_ != PlaybackControllerData::Running)
 	{
 		PlayRunInfo latestPlayRunInfo = runQueue_.first();
 		stop();
-		playbackController_->loadSession(latestPlayRunInfo.filePath_);
+		playbackController_->selectFile(latestPlayRunInfo.filePath_);
 		playbackController_->selectRun(latestPlayRunInfo.runIndex_);
-		analysisSelector_->setEnabled(false);
-	}
-	if(loadProgress_->value() == 0)	//If we haven't loaded the session data yet, put loadProgress into initial state
-	{
-		prepareForSessionLoad();
 	}
 	calledPlayNotPause_ = false;
 	playbackController_->pause(getSelectedLocalAnalyses(),getAnalysesToImport());
@@ -467,23 +393,46 @@ QList<ReplayViewer::PlayRunInfo> ReplayViewer::getSelectedPlayRunInfo()
 
 void ReplayViewer::playbackStatusChanged(int status)
 {
-	int numSelectedRuns = runs_->getNumSelectedRuns();
-	bool runIsSelected = numSelectedRuns > 0;
+	bool runIsSelected = runs_->getNumSelectedRuns();
 	switch(status)
 	{
 	case PlaybackControllerData::Idle:
 			progress_->setHighlightRange(0,0,0);
 			progress_->setHighlightRange(1,0,0,true);
 			progress_->setSliderProgress(0);
+			progress_->setEnabled(false);
 			runs_->setEnabled(false);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(false);
 			runToEndAction_->setEnabled(false);
 			toggleRecord_->setEnabled(false);
+			lfpRequirements_->setEnabled(false);
+			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+			{
+				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+			}
 			playbackController_->getRenderingTarget()->showSplash();
-			playing_ = false;
-			paused_ = false;
+		break;
+		case PlaybackControllerData::PreLoading:
+			progress_->setHighlightRange(0,0,0);
+			progress_->setHighlightRange(1,0,0,true);
+			progress_->setSliderProgress(0);
+			progress_->setEnabled(false);
+			runs_->setEnabled(false);
+			pauseAction_->setEnabled(false);
+			stopAction_->setEnabled(false);
+			playAction_->setEnabled(false);
+			runToEndAction_->setEnabled(false);
+			toggleRecord_->setEnabled(false);
+			loadProgress_->setMaximum(0);
+			loadSessionAction_->setEnabled(false);
+			lfpRequirements_->setEnabled(false);
+			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+			{
+				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+			}
+			playbackController_->getRenderingTarget()->showSplash();
 		break;
 		case PlaybackControllerData::Stopped:
 			runs_->setEnabled(true);
@@ -491,12 +440,14 @@ void ReplayViewer::playbackStatusChanged(int status)
 			progress_->setHighlightRange(0,0,0);
 			progress_->setHighlightRange(1,0,0,true);
 			progress_->setSliderProgress(0);
+			progress_->setEnabled(false);
 			pauseAction_->setEnabled(runIsSelected);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(runIsSelected);
 			runToEndAction_->setEnabled(runIsSelected);
 			toggleRecord_->setEnabled(runIsSelected);
 			loadSessionAction_->setEnabled(true);
+			lfpRequirements_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -504,37 +455,62 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playbackController_->getVisualTarget()->clear();
 			playbackController_->getRenderingTarget()->showSplash();
 			analysisSelector_->setEnabled(true);
-			playing_ = false;
-			paused_ = false;
+		break;
+		case PlaybackControllerData::Loading:
+			progress_->setHighlightRange(0,0,0);
+			progress_->setHighlightRange(1,0,0,true);
+			progress_->setSliderProgress(0);
+			progress_->setEnabled(false);
+			runs_->setEnabled(false);
+			pauseAction_->setEnabled(false);
+			stopAction_->setEnabled(false);
+			playAction_->setEnabled(false);
+			runToEndAction_->setEnabled(false);
+			toggleRecord_->setEnabled(false);
+			lfpRequirements_->setEnabled(false);
+			loadProgress_->setMaximum(0);
+			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+			{
+				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
+			}
+			playbackController_->getRenderingTarget()->showSplash();
 		break;
 		case PlaybackControllerData::Running:
 			runs_->setEnabled(true);
 			loadProgress_->setMaximum(100);
+			loadProgress_->setValue(100);
 			pauseAction_->setEnabled(true);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(false);
+			progress_->setEnabled(true);
 			runToEndAction_->setEnabled(false);
 			toggleRecord_->setEnabled(true);
 			loadSessionAction_->setEnabled(true);
+			lfpRequirements_->setEnabled(false);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
 			}
-			playing_ = true;
-			paused_ = false;
 			Q_ASSERT(runQueue_.size());
 			runs_->setRunStatus(runQueue_.first().filePath_,runQueue_.first().runIndex_,TaskSelectorWidget::INPROGRESS);	//Set currently playing run to green
 		break;
 		case PlaybackControllerData::Paused:
 			runs_->setEnabled(true);
 			loadProgress_->setMaximum(100);
+			loadProgress_->setValue(100);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(true);
+			progress_->setEnabled(true);
 			runToEndAction_->setEnabled(true);
+			toggleRecord_->setEnabled(true);
 			loadSessionAction_->setEnabled(true);
-			playing_ = false;
-			paused_ = true;
+			lfpRequirements_->setEnabled(false);
+			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
+			{
+				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
+			}
+			runs_->setRunStatus(runQueue_.first().filePath_,runQueue_.first().runIndex_,TaskSelectorWidget::INPROGRESS);	//Set currently playing run to green
 		break;
 	}
 	//Each time the playback status changes, update the Visual Target Host's record mode
@@ -550,46 +526,29 @@ void ReplayViewer::loadSession()
 															"Picto Sessions(*.sqlite)");
 	if(!filenames.size())
 		return;
+	stop();
 	loadSessionAction_->setEnabled(false);
 	needsAutoSave_ = false;
 	useRunToEnd_ = false;
 	startingRun_ = false;
 	calledPlayNotPause_ = false;
-	latestRun_ = PlayRunInfo();
 	latestStatus_ = PlaybackControllerData::Idle;
 	loadProgress_->setMaximum(0);
 	loadProgress_->setValue(0);
-
 	runQueue_.clear();
-
 	runs_->clear();
 	filenames.sort();
+	QStringList sessionFiles;
 	foreach(QString filename,filenames)
 	{
 		//Load Sqlite Database
 		filename = filename.replace("\\","/");
 		Q_ASSERT(filename.lastIndexOf("/") >=0);
 		Q_ASSERT(filename.lastIndexOf(".") >=0);
-		FileSessionLoader loader;
-		if(!loader.setFile(filename))
-		{
-			QMessageBox::warning(0,"Session could not be loaded","The session in file: " + filename.toLatin1() + " could not be loaded.");
-		}
-		//Set up task selector widget
-		QStringList runs = loader.getRunNames();
-		QStringList notes = loader.getRunNotes();
-		QStringList savedRuns = loader.getSavedRunNames();
-		for(int i=0;i<runs.size();i++)
-		{
-			runs_->addRun(savedRuns.contains(runs[i]),filename,runs[i],i,notes[i]);
-		}
-		//Set up analysis selector widget
-		analysisSelector_->setLocalDesignRoot(filename,loader.getDesignRoot());
-		//analysisSelector_->setDesignRootForImport(designRoot_);
+		sessionFiles.append(filename);
 	}
 	analysisSelector_->setCurrentFile("");
-	stop();
-	paused_ = false;
+	playbackController_->preLoadSessions(sessionFiles);
 }
 
 void ReplayViewer::updateTime(double time)
@@ -598,7 +557,7 @@ void ReplayViewer::updateTime(double time)
 	if(runLength < 0)
 		runLength = 1;
 	progress_->setMaximum(runLength);
-	if(startingRun_ && playing_)
+	if(startingRun_ && (latestStatus_ == PlaybackControllerData::Running))
 	{
 		if(useRunToEnd_)
 			progress_->jumpToEnd();	//we do this here because the progress widget needs to know how long the run is before it can say how to jump to the end
@@ -616,15 +575,11 @@ void ReplayViewer::updateTime(double time)
 		progress_->setSliderProgress(time);
 }
 
-void ReplayViewer::updateLoadTimes(double maxBehavioral,double)
-{
-	progress_->setHighlightMax(1,maxBehavioral);	//For now just deal with behavioral time
-}
-
 void ReplayViewer::runSelectionChanged()
 {
 	QList<PlayRunInfo> newRunQueue = getSelectedPlayRunInfo();
-
+	//If the first run in the new run queue isn't part of the
+	//same file that we last loaded, set the load progress to zero
 	if	(	runQueue_.size() 
 			&& newRunQueue.size() 
 			&& (newRunQueue.first().filePath_ != runQueue_.first().filePath_)
@@ -633,12 +588,25 @@ void ReplayViewer::runSelectionChanged()
 		loadProgress_->setValue(0);
 	}
 
-	if(!playing_ && !paused_)
+	//If we're not currently running
+	if(latestStatus_ == PlaybackControllerData::Stopped)
 	{
-		pauseAction_->setEnabled(true);
-		playAction_->setEnabled(true);
-		runToEndAction_->setEnabled(true);
-		toggleRecord_->setEnabled(true);
+		//If nothing is selected, disable the commands that let you
+		//start playback
+		if(newRunQueue.isEmpty())
+		{
+			pauseAction_->setEnabled(false);
+			playAction_->setEnabled(false);
+			runToEndAction_->setEnabled(false);
+			toggleRecord_->setEnabled(false);
+		}
+		else
+		{	//Otherwise enable them
+			pauseAction_->setEnabled(true);
+			playAction_->setEnabled(true);
+			runToEndAction_->setEnabled(true);
+			toggleRecord_->setEnabled(true);
+		}
 	}
 	runQueue_ = newRunQueue;
 	//Set up local analysis selector based on currently selected runs
@@ -680,6 +648,20 @@ void ReplayViewer::setUserType(int index)
 		break;
 	case 1:
 		playbackController_->setUserToSubject();
+		break;
+	};
+}
+
+
+void ReplayViewer::setLFPRequirements(int index)
+{
+	switch(index)
+	{
+	case 0:
+		playbackController_->enableLFPLoad(true);
+		break;
+	case 1:
+		playbackController_->enableLFPLoad(false);
 		break;
 	};
 }
@@ -772,6 +754,8 @@ void ReplayViewer::setRecordTime(double time)
 	recordTime_->display(QString::number(time,'f',3));
 }
 
+//When the playback controller's design root changes, we need to hook back
+//up to it's run started signal for the purposes of our output widget holder
 void ReplayViewer::designRootChanged()
 {
 	//In theory, we don't have to disconnect the old design config when a new one is set because it is done
@@ -779,13 +763,10 @@ void ReplayViewer::designRootChanged()
 	connect(playbackController_->getDesignRoot()->getExperiment()->getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 }
 
-void ReplayViewer::loadError(QString errorStr)
+void ReplayViewer::preloadError(QString errorStr)
 {
 	QMessageBox::critical(0,"Load Error",errorStr);
-	loadProgress_->setMaximum(100);
-	loadProgress_->setMinimum(0);
 	loadProgress_->setValue(0);
-	loadSessionAction_->setEnabled(true);
 }
 
 void ReplayViewer::runStarted(QUuid runId)
@@ -795,33 +776,51 @@ void ReplayViewer::runStarted(QUuid runId)
 
 void ReplayViewer::finishedPlayback()
 {
-	PlayRunInfo latestPlayRunInfo = runQueue_.first();
-	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::COMPLETE);
+	//Perform autosave if this was requested
 	if(needsAutoSave_)
 	{
 		outputWidgetHolder_->saveOutput();
 	}
-	runQueue_.pop_front();
-	play();
+	//Update the latest run's color in its widget
+	PlayRunInfo latestPlayRunInfo = runQueue_.first();
+	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::COMPLETE);
+	//Update the run queue, and play the next run if there's one left
+	if(popRunQueueFront())
+		play();
 }
 
-void ReplayViewer::analysesImportedFailed(QString errorMsg)
+void ReplayViewer::loadError(QString errorMsg)
 {
-	bool callPlayAgain = calledPlayNotPause_;
+	//Mark the run as an error
 	PlayRunInfo latestPlayRunInfo = runQueue_.first();
-	runQueue_.pop_front();
-	QList<PlayRunInfo> selectedRuns = getSelectedPlayRunInfo();
-	if(selectedRuns.size() == 1)	//This was the only selected run
+	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::ERROROCCURED);
+
+	//If only a single run was begin played, inform the user of the analysis import error
+	if(getSelectedPlayRunInfo().size() == 1)
 	{
-		QMessageBox::warning(0,"Could not import Analysis",errorMsg);
-		runQueue_ = selectedRuns;
-		callPlayAgain = false;
+		QMessageBox::warning(0,"Load Error",errorMsg);
 	}
-	else
-		runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::ERROROCCURED);
-	analysisSelector_->setEnabled(true);
-	if(callPlayAgain)
-	{
+
+	//If there are more runs in the queue, and this run
+	//was started with a play (not a pause), play the next 
+	//run
+	if(popRunQueueFront() && calledPlayNotPause_)
+	{	
 		play();
 	}
+}
+
+void ReplayViewer::sessionPreloaded(PreloadedSessionData sessionData)
+{
+	//A session was preloaded, add its runs to the runs_ widget
+	for(int i=0;i<sessionData.runs_.size();i++)
+	{
+		runs_->addRun(sessionData.savedRuns_.contains(sessionData.runs_[i]),
+			sessionData.fileName_,
+			sessionData.runs_[i],
+			i,
+			sessionData.notes_[i]);
+	}
+	//Add the session's local analyses to the analysisSelector_ widget
+	analysisSelector_->setLocalDesignAnalyses(sessionData.fileName_,sessionData.analysisIds_,sessionData.analysisNames_);
 }

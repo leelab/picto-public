@@ -121,7 +121,17 @@ bool FileSessionLoader::loadRun(int index)
 	runIndex_ = index;
 	if(!sessionDataLoaded_)
 	{
-		sessionState_->setSessionData(getDatabase(),obsoleteAssetIds_);
+		try
+		{	//Adding the data base to the session state involves creating
+			//lots of giant data structures in RAM to hold everything.  If
+			//there is any RAM limitation, or even too much RAM fragmentation
+			//this might fail, so check for that here.
+			sessionState_->setSessionData(getDatabase(),obsoleteAssetIds_);
+		}
+		catch(...)
+		{	//Looks like loading failed... return false;
+			return false;
+		}
 		sessionDataLoaded_ = true;
 	}
 	sessionState_->startNewRun(runs_[index].startTime_,runs_[index].endTime_);

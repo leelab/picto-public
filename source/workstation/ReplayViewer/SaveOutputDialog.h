@@ -29,6 +29,7 @@ private:
 	QCheckBox *subDirOpCheck_;
 
 	QString defaultPath_;
+	QString selectedDir_;
 	bool defaultSubDirSetting_;
 };
 

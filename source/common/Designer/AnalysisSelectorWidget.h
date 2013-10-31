@@ -26,6 +26,7 @@ public:
 	virtual ~AnalysisSelectorWidget(){};
 	void clearLocalAnalyses();
 	void setLocalDesignRoot(QString filePath,QSharedPointer<DesignRoot> designRoot);
+	void setLocalDesignAnalyses(QString filePath,QList<QUuid> analysisIds,QStringList analysisNames);
 	void setDesignRootForImport(QSharedPointer<DesignRoot> designRoot);
 	void setCurrentFile(QString filePath);
 	QList<QUuid> getSelectedAnalysisIds();

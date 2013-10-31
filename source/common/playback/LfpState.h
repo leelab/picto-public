@@ -13,8 +13,10 @@ class LfpState : public LfpReader, public DataState
 {
 	Q_OBJECT
 public:
-	LfpState();
+	LfpState(bool enabled = true);
 
+	void setEnabled(bool enable);
+	bool getEnabled();
 	virtual void setDatabase(QSqlDatabase session);
 	virtual void startRun(double runStartTime,double runEndTime = -1);
 	virtual PlaybackIndex getCurrentIndex();
@@ -37,8 +39,11 @@ public:
 
 signals:
 	void lfpChanged(int channel, double value);
+	void lfpLoadProgress(int percent);
 
 private:
+	bool loadData();
+	void resetDataVariables();
 	PlaybackIndex getNextIndex();
 	PlaybackIndex globalToRunIndex(PlaybackIndex index);
 	double globalTimeFromArrayIndex(const int& index);
@@ -46,6 +51,7 @@ private:
 	float getDataValue(const int& arrayIndex,const int& channelIndex);
 	void setDataValue(const int& arrayIndex,const int& channelIndex,const float& value);
 	QSqlDatabase session_;
+	bool enabled_;
 	QSharedPointer<QSqlQuery> query_;
 	double runStart_;
 	double runEnd_;

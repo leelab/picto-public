@@ -50,6 +50,7 @@ public:
 	void setPlaybackSpeed(double speed);
 	double getPlaybackSpeed();
 	void jumpToTime(double time);
+	void enableLfp(bool enable);
 
 signals:
 	void startingRun(QString taskName,QString runName);
@@ -62,7 +63,6 @@ signals:
 	void framePresented(double time);
 	void rewardSupplied(double time,int duration,int channel);
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
-	void loadedTo(double maxBehavioral,double maxNeural);
 	void loading(bool isLoading);
 	void percentLoaded(double percent);
 	void newRun(double length);
@@ -70,7 +70,6 @@ signals:
 	void disableRendering(bool disable);
 
 private:
-	void emitLoadTimeSignals();
 	void enableRendering(bool en);
 	void suspendPlayback();
 	void resumePlayback();
@@ -88,6 +87,7 @@ private:
 	bool firstResumeFrame_;
 	bool renderingEnabled_;
 	bool runLoaded_;
+	bool enableLfp_;
 	double currRunLength_;
 	int currRunIndex_;
 	double lastMaxBehav_;

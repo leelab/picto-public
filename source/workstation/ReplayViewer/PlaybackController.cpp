@@ -24,7 +24,10 @@ PlaybackController::PlaybackController()
 	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("PAR0")));
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
 	renderingTarget_ = QSharedPointer<Picto::RenderingTarget>(new Picto::RenderingTarget(pixmapVisualTarget_, pcmAuralTarget));
-	filePath_.clear();
+	currRun_ = 0;
+
+	//This allows preloaded session data to be used in signal and slots
+	qRegisterMetaType<PreloadedSessionData>();
 
 	playbackThread_ = QSharedPointer<PlaybackThread>(new PlaybackThread());
 	connect(playbackThread_.data(),SIGNAL(init()),this,SLOT(setup()));
@@ -37,9 +40,9 @@ PlaybackController::~PlaybackController()
 {
 }
 
-QString PlaybackController::loadSession(QString filename)
+QString PlaybackController::preLoadSessions(QStringList filenames)
 {
-	data_.pushCommand(PlaybackCommand(PlaybackCommand::Load,filename));
+	data_.pushCommand(PlaybackCommand(PlaybackCommand::PreLoad,filenames));
 	return "";
 }
 
@@ -137,6 +140,11 @@ void PlaybackController::setUserToSubject()
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeUserType,PlaybackCommand::TestSubject));
 }
 
+void PlaybackController::enableLFPLoad(bool enable)
+{
+	data_.pushCommand(PlaybackCommand(PlaybackCommand::EnableLFP,enable));
+}
+
 QSharedPointer<Picto::VisualTarget> PlaybackController::getVisualTarget()
 {
 	return pixmapVisualTarget_;
@@ -160,6 +168,11 @@ QSharedPointer<Picto::DesignRoot> PlaybackController::getDesignRoot()
 double PlaybackController::getRunLength()
 {
 	return data_.getRunLength();
+}
+
+QString PlaybackController::getLoadedFilePath()
+{
+	return data_.getLoadedFilePath();
 }
 
 void PlaybackController::aboutToQuit()
@@ -202,6 +215,11 @@ void PlaybackController::jumpToTime(double time)
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Jump,time));
 }
 
+void PlaybackController::selectFile(QString filePath)
+{
+	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeFile,filePath));
+}
+
 void PlaybackController::selectRun(int index)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeRun,index));
@@ -241,9 +259,9 @@ void PlaybackController::setup()
 	if(playbackUpdater_)
 		playbackSpeed = playbackUpdater_->getPlaybackSpeed();
 	playbackUpdater_ = QSharedPointer<PlaybackStateUpdater>(new PlaybackStateUpdater());
+	playbackUpdater_->enableLfp(data_.getLfpEnabled());
 	playbackUpdater_->setPlaybackSpeed(playbackSpeed);
 	connect(playbackUpdater_.data(),SIGNAL(framePresented(double)),this,SLOT(setCurrTime(double)));
-	connect(playbackUpdater_.data(),SIGNAL(loadedTo(double,double)),this,SIGNAL(loadedTo(double,double)));
 	connect(playbackUpdater_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
 	connect(playbackUpdater_.data(),SIGNAL(newRun(double)),this,SLOT(newRunLength(double)));
 	connect(playbackUpdater_.data(),SIGNAL(finishedPlayback()),this,SLOT(playbackEnded()));
@@ -295,67 +313,18 @@ void PlaybackController::update()
 	case PlaybackControllerData::Idle:
 		switch(cmd.commandType)
 		{
-		case PlaybackCommand::Load:
-			{
-				QString newFilePath = cmd.commandData.toString();
-				if(newFilePath == filePath_)
-				{
-					data_.setNextStatus(PlaybackControllerData::Stopped);
-					break;
-				}
-				filePath_ = newFilePath;
-				setup();
-				slaveExpDriver_.clear();	//Both SlaveExperimentDriver and Playback Updater contain pointers to the SessionState which is where
-											//all the session data is stored in RAM.  By clearing the slaveExpDriver_ here, we can be sure that
-											//RAM that was allocated for a previous playback will be freed up for loading the new file.  If	
-											//we didn't do this, we would effectively be cutting our maximum RAM capacity in half because when 
-											//switching from one session to the next, only half of the maximum RAM available to the application
-											//is available for the new session.
-				experiment_.clear();		//Experiment also uses up a lot of RAM.
-				designRoot_.clear();		//Design root point to the experiment too.
-				if(!playbackUpdater_->setFile(filePath_))
-				{
-					emit loadError("Failed to load session design.  This often means that the session contains no experimental data.");
-					break;
-				}
-				QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(playbackUpdater_->getDesignRoot());
-				if(!newDesignRoot)
-				{
-					emit loadError("Failed to load session design.");
-					break;
-				}
-				if(!newDesignRoot->compiles())
-				{
-					emit loadError("Session's experiment does not compile.");
-					break;
-				}
-				designRoot_ = newDesignRoot;
-				numImportedAnalyses_ = 0;
-				data_.clearEnabledBuiltInAnalyses();
-				data_.clearEnabledImportedAnalyses();
-
-				data_.setRunLength(playbackUpdater_->getRunLength());
-				emit runsUpdated(playbackUpdater_->getRuns(),playbackUpdater_->getSavedRuns());
-
-				//Set up SlaveExperimentDriver to connect StateUpdater and Experiment
-				QSharedPointer<Picto::Experiment> currExp = designRoot_->getExperiment().staticCast<Experiment>();
-				if(!currExp || !currExp->getTaskNames().size())
-				{
-					emit loadError("Failed to load experiment from session.");
-					break;
-				}
-				experiment_ = currExp;
-				experiment_->setEngine(engine_);
-				slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(experiment_,playbackUpdater_));
-				emit designRootChanged();
-				data_.setNextStatus(PlaybackControllerData::Stopped);
-			}
+		case PlaybackCommand::PreLoad:
+			data_.setNextStatus(PlaybackControllerData::PreLoading);
+			data_.pushCommand(cmd,false);
 			break;
 		case PlaybackCommand::ChangeSpeed:
 			playbackUpdater_->setPlaybackSpeed(cmd.commandData.toDouble());
 			break;
 		case PlaybackCommand::ChangeUserType:
 			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
+			break;
+		case PlaybackCommand::EnableLFP:
+			Q_ASSERT(false);
 			break;
 		case PlaybackCommand::Stop:
 			data_.setNextStatus(PlaybackControllerData::Stopped);
@@ -365,41 +334,87 @@ void PlaybackController::update()
 			break;
 		}
 		break;
+	case PlaybackControllerData::PreLoading:
+		switch(cmd.commandType)
+		{
+		case PlaybackCommand::PreLoad:
+			{
+				//Preload the first file in the list and send the designRoot to signal
+				//listeners.  Then remove the file from the list and re-enter the command
+				//until the list is empty.  At that point we can move on to stop.
+
+				//Take first file path from cmd list
+				QStringList filePaths = cmd.commandData.toStringList();
+				QString filePath = filePaths.takeFirst();
+
+				FileSessionLoader loader;
+				if(!loader.setFile(filePath) || !loader.getDesignRoot())
+				{
+					emit sessionPreloadFailed("The session in file: " + filePath.toLatin1() + " could not be loaded.");
+				}
+				else
+				{
+					PreloadedSessionData preloadData;
+					preloadData.fileName_ = filePath;
+					preloadData.runs_ = loader.getRunNames();
+					preloadData.notes_ = loader.getRunNotes();
+					preloadData.savedRuns_ = loader.getSavedRunNames();
+					QSharedPointer<DesignRoot> designRoot = loader.getDesignRoot();
+					for(int i=0;i<designRoot->getNumAnalyses();i++)
+					{
+						preloadData.analysisIds_.append(designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId());
+						preloadData.analysisNames_.append(designRoot->getAnalysis(i)->getName());
+					}
+					emit sessionPreloaded(preloadData);
+				}
+
+				//If we're done with all the preloading, move to the stopped state.
+				if(filePaths.isEmpty())
+				{
+					data_.setNextStatus(PlaybackControllerData::Stopped);
+					break;
+				}
+				//If there are more files to preload, attach the updated list
+				//to the command and put it back on the command queue.
+				cmd.commandData = filePaths;
+				data_.pushCommand(cmd);
+				break;
+			}
+		case PlaybackCommand::ChangeSpeed:
+			playbackUpdater_->setPlaybackSpeed(cmd.commandData.toDouble());
+			break;
+		case PlaybackCommand::ChangeUserType:
+			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
+			break;
+		case PlaybackCommand::EnableLFP:
+			Q_ASSERT(false);
+			break;
+		case PlaybackCommand::Stop:
+				data_.setNextStatus(PlaybackControllerData::Idle);
+			break;
+		case PlaybackCommand::Jump:
+			data_.setNextStatus(status);
+			break;
+		}
+	break;
 	case PlaybackControllerData::Stopped:
 		switch(cmd.commandType)
 		{
 		case PlaybackCommand::Play:
-			errorMsg = activateAnalyses(cmd.commandData.toStringList());
-			if(!errorMsg.isEmpty())
-			{
-				emit analysesImportFailed(errorMsg);
-				break;
-			}
-			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
-			designRoot_->enableRunMode(true);	//We do this here so that we're sure all the analyses are attached first.  Otherwise, they might not be operating in run mode.
-			playbackUpdater_->play();
-			data_.setNextStatus(PlaybackControllerData::Running);
-			break;
 		case PlaybackCommand::Pause:
-			errorMsg = activateAnalyses(cmd.commandData.toStringList());
-			if(!errorMsg.isEmpty())
-			{
-				emit analysesImportFailed(errorMsg);
-				break;
-			}
-			designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
-			designRoot_->enableRunMode(true);//We do this here so that we're sure all the analyses are attached first
-			playbackUpdater_->play();
-			data_.setNextStatus(PlaybackControllerData::Running);
+			data_.setNextStatus(PlaybackControllerData::Loading);
 			data_.pushCommand(cmd,false);
 			break;
-		case PlaybackCommand::Load:
+		case PlaybackCommand::PreLoad:
 			data_.setNextStatus(PlaybackControllerData::Idle);
 			data_.pushCommand(cmd,false);
 			break;
+		case PlaybackCommand::ChangeFile:
+			data_.setNextFilePath(cmd.commandData.toString());
+			setCurrTime(0.0);
+			break;
 		case PlaybackCommand::ChangeRun:
-			playbackUpdater_->loadRun(cmd.commandData.toInt());
-			data_.setRunLength(playbackUpdater_->getRunLength());
+			currRun_ = cmd.commandData.toInt();
 			setCurrTime(0.0);
 			break;
 		case PlaybackCommand::ChangeSpeed:
@@ -408,11 +423,114 @@ void PlaybackController::update()
 		case PlaybackCommand::ChangeUserType:
 			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
 			break;
+		case PlaybackCommand::EnableLFP:
+			//If the session for the upcoming run is already loaded, set it to the playabck state updater.
+			//otherwise this happens automatically during the setup() call used when the session is loaded
+			if(data_.getLoadedFilePath() == data_.getNextFilePath())
+			{
+				if(playbackUpdater_)
+					playbackUpdater_->enableLfp(cmd.commandData.toBool());
+			}
+			data_.enableLfp(cmd.commandData.toBool());
+			break;
 		case PlaybackCommand::Jump:
 			data_.setNextStatus(status);
 			break;
 		}
 		break;
+	case PlaybackControllerData::Loading:
+		switch(cmd.commandType)
+		{
+		case PlaybackCommand::Play:	
+		case PlaybackCommand::Pause:
+			{
+				QString nextFilePath = data_.getNextFilePath();
+				if(nextFilePath != data_.getLoadedFilePath())
+				{
+					setup();
+					slaveExpDriver_.clear();	//Both SlaveExperimentDriver and Playback Updater contain pointers to the SessionState which is where
+												//all the session data is stored in RAM.  By clearing the slaveExpDriver_ here, we can be sure that
+												//RAM that was allocated for a previous playback will be freed up for loading the new file.  If	
+												//we didn't do this, we would effectively be cutting our maximum RAM capacity in half because when 
+												//switching from one session to the next, only half of the maximum RAM available to the application
+												//is available for the new session.
+					experiment_.clear();		//Experiment also uses up a lot of RAM.
+					designRoot_.clear();		//Design root point to the experiment too.
+					if(!playbackUpdater_->setFile(nextFilePath))
+					{
+						emit loadError("Failed to load session design.  This often means that the session contains no experimental data.");
+						data_.setNextStatus(PlaybackControllerData::Stopped);
+						break;
+					}
+					QSharedPointer<DesignRoot> newDesignRoot = QSharedPointer<DesignRoot>(playbackUpdater_->getDesignRoot());
+					if(!newDesignRoot)
+					{
+						emit loadError("Failed to load session design.");
+						data_.setNextStatus(PlaybackControllerData::Stopped);
+						break;
+					}
+					if(!newDesignRoot->compiles())
+					{
+						emit loadError("Session's experiment does not compile.");
+						data_.setNextStatus(PlaybackControllerData::Stopped);
+						break;
+					}
+					QSharedPointer<Picto::Experiment> currExp = newDesignRoot->getExperiment().staticCast<Experiment>();
+					if(!currExp || !currExp->getTaskNames().size())
+					{
+						emit loadError("Failed to load experiment from session.");
+						data_.setNextStatus(PlaybackControllerData::Stopped);
+						break;
+					}
+
+					if(!playbackUpdater_->loadRun(currRun_))
+					{
+						emit loadError("Failed to load data from this session run.  This is usually due to RAM issues when running a batch analysis.  Try analyzing this run by itself.");
+						data_.setNextStatus(PlaybackControllerData::Stopped);
+						break;
+					}
+
+					designRoot_ = newDesignRoot;
+					experiment_ = currExp;
+					experiment_->setEngine(engine_);
+
+					numImportedAnalyses_ = 0;
+					data_.clearEnabledBuiltInAnalyses();
+					data_.clearEnabledImportedAnalyses();
+
+					data_.setRunLength(playbackUpdater_->getRunLength());
+
+					data_.setLoadedFilePath(nextFilePath);
+
+					//Set up SlaveExperimentDriver to connect StateUpdater and Experiment
+					slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(experiment_,playbackUpdater_));
+					emit designRootChanged();
+				}
+
+				//If we got here, the session is loaded
+				//Update to use the current set run
+				playbackUpdater_->loadRun(currRun_);
+				data_.setRunLength(playbackUpdater_->getRunLength());
+
+				//Activate the necessary analyses
+				errorMsg = activateAnalyses(cmd.commandData.toStringList());
+				if(!errorMsg.isEmpty())
+				{
+					emit loadError(errorMsg);
+					data_.setNextStatus(PlaybackControllerData::Stopped);
+					break;
+				}
+				designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
+
+				designRoot_->enableRunMode(true);//We do this here so that we're sure all the analyses are attached first
+				playbackUpdater_->play();
+				data_.setNextStatus(PlaybackControllerData::Running);
+				if(cmd.commandType == PlaybackCommand::Pause)
+					data_.pushCommand(cmd,false);
+			}
+			break;
+		}
+	break;
 	case PlaybackControllerData::Running:
 	case PlaybackControllerData::Paused:
 		switch(cmd.commandType)
@@ -440,12 +558,13 @@ void PlaybackController::update()
 			playbackUpdater_->jumpToTime(cmd.commandData.toDouble());
 			data_.setNextStatus(status);
 			break;
-		case PlaybackCommand::Load:
+		case PlaybackCommand::PreLoad:
 			playbackUpdater_->stop();
 			data_.setCurrTime(0.0);
 			data_.setNextStatus(PlaybackControllerData::Idle);
 			data_.pushCommand(cmd,false);
 			break;
+		case PlaybackCommand::ChangeFile:
 		case PlaybackCommand::ChangeRun:
 			playbackUpdater_->stop();
 			data_.setCurrTime(0.0);
@@ -457,6 +576,9 @@ void PlaybackController::update()
 			break;
 		case PlaybackCommand::ChangeUserType:
 			engine_->setOperatorAsUser(cmd.commandData.toInt() == PlaybackCommand::Operator);
+			break;
+		case PlaybackCommand::EnableLFP:
+			Q_ASSERT(false);
 			break;
 		}
 		playbackUpdater_->updateState();
@@ -476,7 +598,7 @@ void PlaybackController::update()
 
 
 
-PlaybackControllerData::PlaybackControllerData(){isSetup_ = false;currTime_ = 0;runSpeed_ = 0;runLength_ = 0;status_ = None;nextStatus_ = None;}
+PlaybackControllerData::PlaybackControllerData(){isSetup_ = false;currTime_ = 0;runSpeed_ = 0;runLength_ = 0;status_ = None;nextStatus_ = None;filePath_ = "";nextFilePath_ = "";lfpEnabled_ = true;}
 void PlaybackControllerData::setAsSetup(){QMutexLocker locker(&mutex_);isSetup_=true;}
 bool PlaybackControllerData::isSetup(){QMutexLocker locker(&mutex_);return isSetup_;}
 void PlaybackControllerData::setCurrTime(double val){QMutexLocker locker(&mutex_);currTime_=val;}
@@ -485,6 +607,12 @@ void PlaybackControllerData::setRunSpeed(double val){QMutexLocker locker(&mutex_
 double PlaybackControllerData::getRunSpeed(){QMutexLocker locker(&mutex_);return runSpeed_;}
 void PlaybackControllerData::setRunLength(double val){QMutexLocker locker(&mutex_);runLength_ = val;}
 double PlaybackControllerData::getRunLength(){QMutexLocker locker(&mutex_);return runLength_;}
+void PlaybackControllerData::setLoadedFilePath(QString filePath){QMutexLocker locker(&mutex_);filePath_ = filePath;}
+QString PlaybackControllerData::getLoadedFilePath(){QMutexLocker locker(&mutex_);return filePath_;}
+void PlaybackControllerData::setNextFilePath(QString filePath){QMutexLocker locker(&mutex_);nextFilePath_ = filePath;}
+QString PlaybackControllerData::getNextFilePath(){QMutexLocker locker(&mutex_);return nextFilePath_;}
+void PlaybackControllerData::enableLfp(bool enabled){QMutexLocker locker(&mutex_);lfpEnabled_ = enabled;}
+bool PlaybackControllerData::getLfpEnabled(){QMutexLocker locker(&mutex_);return lfpEnabled_;}
 void PlaybackControllerData::setEnabledBuiltInAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledAnalyses_=analysisList;}
 void PlaybackControllerData::setEnabledImportedAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledImportedAnalyses_=analysisList;}
 void PlaybackControllerData::clearEnabledBuiltInAnalyses(){QMutexLocker locker(&mutex_);enabledAnalyses_.clear();}

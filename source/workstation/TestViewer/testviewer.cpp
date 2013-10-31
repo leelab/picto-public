@@ -128,7 +128,7 @@ void TestViewer::setupEngine()
 	engine_ = QSharedPointer<Picto::Engine::PictoEngine>(new Picto::Engine::PictoEngine);
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(true);
-	engine_->setSlaveMode(true);
+	engine_->setSlaveMode(false);
 
 	//Set up the rendering target
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
@@ -204,7 +204,7 @@ void TestViewer::setupUi()
 	connect(userType_,SIGNAL(currentIndexChanged(int)),this,SLOT(setUserType(int)));
 	Q_ASSERT(!engine_.isNull());
 	engine_->setOperatorAsUser(true);
-	engine_->setSlaveMode(true);
+	engine_->setSlaveMode(false);
 
 	////Zoom slider
 	//zoomSlider_ = new QSlider;

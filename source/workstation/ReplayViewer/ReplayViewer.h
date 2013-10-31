@@ -52,8 +52,8 @@ private:
 	void updateRecordingTarget();
 	QList<QUuid> getSelectedLocalAnalyses();
 	QStringList getAnalysesToImport();
+	bool popRunQueueFront();
 	bool activateSelectedAnalyses();
-	void prepareForSessionLoad();
 	struct PlayRunInfo
 	{
 		PlayRunInfo(){filePath_="";runIndex_=-1;};
@@ -89,6 +89,7 @@ private:
 	QProgressBar *loadProgress_;
 	TaskSelectorWidget* runs_;
 	QComboBox *userType_;
+	QComboBox *lfpRequirements_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 	
 	QAction *toggleRecord_;
@@ -105,8 +106,6 @@ private:
 	bool pausedFromJump_;	//If playback is not yet paused, system should pause playback while a jump location is being selected.
 	bool jumpDownRequested_;
 	bool recordModeOn_;
-	bool playing_;
-	bool paused_;
 	bool calledPlayNotPause_;
 	bool needsAutoSave_;
 	bool useRunToEnd_;
@@ -120,9 +119,9 @@ private slots:
 	void playbackStatusChanged(int status);
 	void loadSession();
 	void updateTime(double time);
-	void updateLoadTimes(double maxBehavioral,double maxNeural);
 	void runSelectionChanged();
 	void setUserType(int index);
+	void setLFPRequirements(int index);
 	void percentLoaded(double percent);
 	void jumpRequested(double time);
 	void userChoosingJump(bool starting);
@@ -131,10 +130,11 @@ private slots:
 	void saveRecording();
 	void setRecordTime(double time);
 	void designRootChanged();
-	void loadError(QString errorStr);
+	void preloadError(QString errorStr);
 	void runStarted(QUuid runId);
 	void finishedPlayback();
-	void analysesImportedFailed(QString errorMsg);
+	void loadError(QString errorMsg);
+	void sessionPreloaded(PreloadedSessionData sessionData);
 	//void zoomChanged(int zoom);
 
 };

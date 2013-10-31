@@ -31,7 +31,7 @@ class SessionState : public  QObject
 {
 	Q_OBJECT
 public:
-	SessionState();
+	SessionState(bool enableLfp = true);
 	virtual ~SessionState();
 	//SET FUNCTIONS-----------------------------------------------------------------
 	void setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteAssetIds = QHash<int,bool>());
@@ -42,6 +42,8 @@ public:
 	//Used to add a new signal to the SessionState since different sessions
 	//can contain different numbers of signals.
 	void addSignal(QString name,QString tableName,QStringList subChanNames,double sampPeriod);
+	void enableLfp(bool enable);
+	bool lfpEnabled();
 	//The before boolean should be set true if data will be inserted in decreasing index order
 	//before the current data set.
 	//bool setPropertyValue(double time,qulonglong dataId,int propId,QString value);
@@ -117,7 +119,7 @@ signals:
 	void wasReset();
 
 private:
-
+	void updatePercentLoaded();
 	//Lookup table of Property States indexed by PropId used for reversing and 
 	QSharedPointer<PropertyState> propState_;
 	QSharedPointer<TransitionState> transState_;
@@ -132,24 +134,12 @@ private:
 	QList<QSharedPointer<DataState>> statesWithTimes_;
 	double currRunStart_;
 	double currRunEnd_;
+	int loadedStates_;
+	int totalSubStates_;
+	double lfpPercent_;
 
-//private slots:
-//	void needsPropertyData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsTransitionData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsFrameData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsRewardData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsSignalData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsLFPData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsSpikeData(PlaybackIndex currLast,PlaybackIndex to);
-//
-//	void needsNextPropertyData(PlaybackIndex currLast,bool backward);
-//	void needsNextTransitionData(PlaybackIndex currLast,bool backward);
-//	void needsNextFrameData(PlaybackIndex currLast,bool backward);
-//	void needsNextRewardData(PlaybackIndex currLast,bool backward);
-//	void needsNextSignalData(PlaybackIndex currLast,bool backward);
-//	void needsNextLFPData(PlaybackIndex currLast,bool backward);
-//	void needsNextSpikeData(PlaybackIndex currLast,bool backward);
-
+private slots:
+	void lfpLoadingUpdated(int percent);
 };
 
 }; //namespace Picto

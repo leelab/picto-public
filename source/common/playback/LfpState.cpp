@@ -4,151 +4,54 @@
 #include "../storage/alignmentinfo.h"
 using namespace Picto;
 
-LfpState::LfpState()
+LfpState::LfpState(bool enabled) :
+enabled_(enabled)
 {
+
+}
+
+void LfpState::setEnabled(bool enable)
+{
+	if(enable)
+	{
+		if(!enabled_ && session_.isValid())
+		{
+			if(!loadData())
+			{
+				emit lfpLoadProgress(100);
+				resetDataVariables();
+				return;
+			}
+		}
+	}
+	else
+	{
+		if(enabled_)
+		{
+			resetDataVariables();
+		}
+	}
+	enabled_ = enable;
+	emit lfpLoadProgress(100);
+}
+
+bool LfpState::getEnabled()
+{
+	return enabled_;
 }
 
 void LfpState::setDatabase(QSqlDatabase session)
 {
-	runStart_ = runEnd_ = curr_ = -1;
+	runStart_ = runEnd_ = -1;
 	session_ = session;
-	data_.clear();
-	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
+	resetDataVariables();
 
-	//Get timestamp alignment constants
-	query_->prepare("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
-	if(!query_->exec() || !query_->next())
-	{
-		Q_ASSERT(false);
-		return;
-	}
-	AlignmentInfo inf;
-	inf.fromXml(query_->value(0).toString());
-	double offsetTime = inf.getOffsetTime();
-	double temporalFactor = inf.getTemporalFactor();
-
-
-	//Set up lfp hash
-	query_->prepare("SELECT DISTINCT channel FROM lfp ORDER BY channel");
-	if(!query_->exec() || !query_->next())
-	{
-		return;
-	}
-	int index = 0;
-	do
-	{
-		chanIndexMap_[query_->value(0).toInt()] = index++;
-		channels_.append(query_->value(0).toInt());
-	} while(query_->next());
-	numChannels_ = channels_.size();
-
-	//Get lfp resolution
-	sampPeriod_ = 0;
-	query_->prepare("SELECT value FROM sessioninfo WHERE key='DataSource'");
-	if(!query_->exec())
-	{
-		return;
-	}
-	while(query_->next())
-	{
-		DataSourceInfo info;
-		info.fromXml(query_->value(0).toString());
-		if(info.getName() == "lfp")
-		{
-			sampPeriod_ = temporalFactor*info.getResolution();
-			break;
-		}
-	}
-	if(sampPeriod_ <= 0)
+	if(!enabled_)
 		return;
 
-	//Get minimum lfp time
-	query_->prepare("SELECT timestamp from lfp ORDER BY timestamp LIMIT 1");
-	if(!query_->exec() || !query_->next())
-	{
-		return;
-	}
-	minLfpTime_ = offsetTime + temporalFactor*query_->value(0).toDouble();
-
-	//Get maximum lfp time
-	//Start by getting highest timestamp entries for all channels.  We could use distinct to make sure that we're
-	//actually getting the highest value from each channel.  In practice; however, the DISTINCT keyword makes
-	//things take a lot longer in this call and unless the neural proxy is doing something really weird if we
-	//just select the last numberOfChannels timestamp entries whether or not the channels are distinct, we will get 
-	//the highest time value in the experiment or certainly it will be close enough to the end of the experiment as
-	//to be past the end of the last run.  The worst case here is that we miss one lfp data packet time length at 
-	//the end of the session.  Currently these packets are 500ms long and as mentioned before, this worst case will
-	//really never come up unless something really wierd happens with the proxy.
-	query_->prepare("SELECT timestamp,data FROM lfp ORDER BY timestamp DESC LIMIT :channels");
-	query_->bindValue(":channels",numChannels_);
-	if(!query_->exec())
-	{
-		return;
-	}
-	double maxTime = minLfpTime_-1;
-	while(query_->next())
-	{
-		double currHighest = offsetTime+(temporalFactor*query_->value(0).toDouble()) + (sampPeriod_ * query_->value(1).toByteArray().size()/sizeof(float));
-		if(currHighest > maxTime)
-			maxTime = currHighest;
-	}
-	Q_ASSERT(maxTime >= minLfpTime_);
-
-	//Create data list with an entry for every sample time from minTime to maxTime
-	numValues_ = arrayIndexFromGlobalTime(maxTime)+1;
-	try{
-		data_.reserve(numChannels_ * numValues_);	//We use reserve and not resize so that we can be sure that we're allocated exactly the right amount of memory
-													//tests indicate that resize actually may reserve more than the requested amount
-	} catch(...)
-	{
-		Q_ASSERT(false);
-	}
-	for(int i=0;i<numChannels_ * numValues_;i++)
-		data_.append(0);
-
-	//Go through each channel in database and fill data list
-	foreach(int channel,chanIndexMap_.keys())
-	{
-		int valueIndex = chanIndexMap_[channel];
-		//Get data and load it into this channel's list from the lfp hash
-		query_->prepare("SELECT timestamp,data FROM lfp WHERE channel=:channel "
-		"ORDER BY timestamp");
-		query_->bindValue(":channel",channel);
-		if(!query_->exec())
-		{
-			Q_ASSERT(false);
-			return;
-		}
-		int catchUpIndex = 0;
-		double startTime;
-		double currTime;
-		float latestValue = 0;
-		int indexForCurrTime = -1;
-		while(query_->next())
-		{
-			startTime = offsetTime + temporalFactor*query_->value(0).toDouble();
-			QByteArray dataArray = query_->value(1).toByteArray();
-			const float* dataArrayStart = reinterpret_cast<const float*>(dataArray.constData());
-			int dataArraySize = dataArray.size()/sizeof(float);
-			for(int i=0;i<dataArraySize;i++)
-			{
-				currTime = startTime + i*sampPeriod_;
-				indexForCurrTime = arrayIndexFromGlobalTime(currTime);
-				if(indexForCurrTime >= numValues_)
-					break;	//Since we sped things up above by not necessarily checking all channels before making a highest time decision
-							//there is a very unlikely possiblity that there is more data available than will fit in the vector we made
-							//if this is the case we just throw the data out because in any case we will be very close to the end of the
-							//session and the data will almost certainly come from after the significant runs were finished.
-				while(catchUpIndex <= arrayIndexFromGlobalTime(currTime))
-				{
-					setDataValue(catchUpIndex,valueIndex,latestValue);
-					catchUpIndex++;
-				}
-				latestValue = *(dataArrayStart + i);
-				setDataValue(arrayIndexFromGlobalTime(currTime),valueIndex,latestValue);
-			}
-		}
-	}
+	if(!loadData())
+		resetDataVariables();
+	emit lfpLoadProgress(100);
 }
 void LfpState::startRun(double runStartTime,double runEndTime)
 {
@@ -241,7 +144,6 @@ QVariantList LfpState::getValuesSince(int channel,double time)
 	Q_ASSERT(runStart_ >= 0);
 	if(!data_.size())
 		return QVariantList();
-	Q_ASSERT(curr_ >= 0);
 	if(!chanIndexMap_.contains(channel))
 		return QVariantList();
 	int chanIndex = chanIndexMap_[channel];
@@ -265,7 +167,6 @@ QVariantList LfpState::getValuesUntil(int channel,double time)
 	Q_ASSERT(runStart_ >= 0);
 	if(!data_.size())
 		return QVariantList();
-	Q_ASSERT(curr_ >= 0);
 	if(!chanIndexMap_.contains(channel))
 		return QVariantList();
 	int chanIndex = chanIndexMap_[channel];
@@ -289,7 +190,6 @@ QVariantList LfpState::getTimesSince(double time)
 	Q_ASSERT(runStart_ >= 0);
 	if(!data_.size())
 		return QVariantList();
-	Q_ASSERT(curr_ >= 0);
 	double afterTime = time;
 	double latestTime = getLatestTime();
 	if(afterTime >= latestTime)
@@ -310,7 +210,6 @@ QVariantList LfpState::getTimesUntil(double time)
 	Q_ASSERT(runStart_ >= 0);
 	if(!data_.size())
 		return QVariantList();
-	Q_ASSERT(curr_ >= 0);
 	double upToTime = time;
 	double latestTime = getLatestTime();
 	if(upToTime <= latestTime)
@@ -324,6 +223,168 @@ QVariantList LfpState::getTimesUntil(double time)
 		returnVal.append(globalTimeFromArrayIndex(pos) - runStart_);
 	}
 	return returnVal;
+}
+
+bool LfpState::loadData()
+{
+	resetDataVariables();
+	emit lfpLoadProgress(0);
+	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
+
+	//Get timestamp alignment constants
+	query_->prepare("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
+	if(!query_->exec() || !query_->next())
+	{
+		return true;
+	}
+	AlignmentInfo inf;
+	inf.fromXml(query_->value(0).toString());
+	double offsetTime = inf.getOffsetTime();
+	double temporalFactor = inf.getTemporalFactor();
+
+
+	//Set up lfp hash
+	query_->prepare("SELECT DISTINCT channel FROM lfp ORDER BY channel");
+	if(!query_->exec() || !query_->next())
+	{
+		return true;
+	}
+	int index = 0;
+	do
+	{
+		chanIndexMap_[query_->value(0).toInt()] = index++;
+		channels_.append(query_->value(0).toInt());
+	} while(query_->next());
+	numChannels_ = channels_.size();
+
+	//Get lfp resolution
+	sampPeriod_ = 0;
+	query_->prepare("SELECT value FROM sessioninfo WHERE key='DataSource'");
+	if(!query_->exec())
+	{
+		return false;
+	}
+	while(query_->next())
+	{
+		DataSourceInfo info;
+		info.fromXml(query_->value(0).toString());
+		if(info.getName() == "lfp")
+		{
+			sampPeriod_ = temporalFactor*info.getResolution();
+			break;
+		}
+	}
+	if(sampPeriod_ <= 0)
+	{
+		return false;
+	}
+
+	//Get minimum lfp time
+	query_->prepare("SELECT timestamp from lfp ORDER BY timestamp LIMIT 1");
+	if(!query_->exec() || !query_->next())
+	{
+		return true;
+	}
+	minLfpTime_ = offsetTime + temporalFactor*query_->value(0).toDouble();
+
+	//Get maximum lfp time
+	//Start by getting highest timestamp entries for all channels.  We could use distinct to make sure that we're
+	//actually getting the highest value from each channel.  In practice; however, the DISTINCT keyword makes
+	//things take a lot longer in this call and unless the neural proxy is doing something really weird if we
+	//just select the last numberOfChannels timestamp entries whether or not the channels are distinct, we will get 
+	//the highest time value in the experiment or certainly it will be close enough to the end of the experiment as
+	//to be past the end of the last run.  The worst case here is that we miss one lfp data packet time length at 
+	//the end of the session.  Currently these packets are 500ms long and as mentioned before, this worst case will
+	//really never come up unless something really wierd happens with the proxy.
+	query_->prepare("SELECT timestamp,data FROM lfp ORDER BY timestamp DESC LIMIT :channels");
+	query_->bindValue(":channels",numChannels_);
+	if(!query_->exec())
+	{
+		return false;
+	}
+	double maxTime = minLfpTime_-1;
+	while(query_->next())
+	{
+		double currHighest = offsetTime+(temporalFactor*query_->value(0).toDouble()) + (sampPeriod_ * query_->value(1).toByteArray().size()/sizeof(float));
+		if(currHighest > maxTime)
+			maxTime = currHighest;
+	}
+	Q_ASSERT(maxTime >= minLfpTime_);
+
+	emit lfpLoadProgress(10);
+
+	//Create data list with an entry for every sample time from minTime to maxTime
+	numValues_ = arrayIndexFromGlobalTime(maxTime)+1;
+	try{
+		data_.reserve(numChannels_ * numValues_);	//We use reserve and not resize so that we can be sure that we're allocated exactly the right amount of memory
+													//tests indicate that resize actually may reserve more than the requested amount
+	} catch(...)
+	{
+		resetDataVariables();
+		throw;
+	}
+	for(int i=0;i<numChannels_ * numValues_;i++)
+		data_.append(0);
+
+	emit lfpLoadProgress(20);
+	//Go through each channel in database and fill data list
+	int channelNum = 0;
+	foreach(int channel,chanIndexMap_.keys())
+	{
+		channelNum++;
+		int valueIndex = chanIndexMap_[channel];
+		//Get data and load it into this channel's list from the lfp hash
+		query_->prepare("SELECT timestamp,data FROM lfp WHERE channel=:channel "
+		"ORDER BY timestamp");
+		query_->bindValue(":channel",channel);
+		if(!query_->exec())
+		{
+			Q_ASSERT(false);
+			return false;
+		}
+		int catchUpIndex = 0;
+		double startTime;
+		double currTime;
+		float latestValue = 0;
+		int indexForCurrTime = -1;
+		while(query_->next())
+		{
+			startTime = offsetTime + temporalFactor*query_->value(0).toDouble();
+			QByteArray dataArray = query_->value(1).toByteArray();
+			const float* dataArrayStart = reinterpret_cast<const float*>(dataArray.constData());
+			int dataArraySize = dataArray.size()/sizeof(float);
+			for(int i=0;i<dataArraySize;i++)
+			{
+				currTime = startTime + i*sampPeriod_;
+				indexForCurrTime = arrayIndexFromGlobalTime(currTime);
+				if(indexForCurrTime >= numValues_)
+					break;	//Since we sped things up above by not necessarily checking all channels before making a highest time decision
+							//there is a very unlikely possiblity that there is more data available than will fit in the vector we made
+							//if this is the case we just throw the data out because in any case we will be very close to the end of the
+							//session and the data will almost certainly come from after the significant runs were finished.
+				while(catchUpIndex <= arrayIndexFromGlobalTime(currTime))
+				{
+					setDataValue(catchUpIndex,valueIndex,latestValue);
+					catchUpIndex++;
+				}
+				latestValue = *(dataArrayStart + i);
+				setDataValue(arrayIndexFromGlobalTime(currTime),valueIndex,latestValue);
+			}
+		}
+		emit lfpLoadProgress(20+(80.0*double(channelNum)/double(chanIndexMap_.keys().size())));
+	}
+	return true;
+}
+
+void LfpState::resetDataVariables()
+{
+	chanIndexMap_.clear();
+	channels_.clear();
+	numChannels_ = 0;
+	sampPeriod_ = 0;
+	minLfpTime_ = 0;
+	data_.clear();
+	curr_ = -1;
 }
 
 PlaybackIndex LfpState::getNextIndex()
@@ -349,7 +410,7 @@ int LfpState::arrayIndexFromGlobalTime(const double& time)
 {
 	int returnVal = int(0.5+((time-minLfpTime_)/sampPeriod_)); //We add the 0.5 so that we're rounding to the nearest value and not rounding down
 	if(returnVal < 0)
-		returnVal = 0;
+		return 0;
 	return returnVal;
 }
 

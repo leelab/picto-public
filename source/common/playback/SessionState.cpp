@@ -1,14 +1,14 @@
 #include "SessionState.h"
 using namespace Picto;
 
-SessionState::SessionState() :
+SessionState::SessionState(bool enableLfp) :
 propState_(new PropertyState()),
 transState_(new TransitionState()),
 frameState_(new FrameState()),
 rewardState_(new RewardState()),
 runNotesState_(new RunNotesState()),
 spikeState_(new SpikeState()),
-lfpState_(new LfpState())
+lfpState_(new LfpState(enableLfp))
 {
 	statesWithIds_.push_back(propState_);
 	statesWithIds_.push_back(transState_);
@@ -24,8 +24,12 @@ lfpState_(new LfpState())
 	connect(rewardState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
 	connect(spikeState_.data(),SIGNAL(spikeEvent(double,int,int,QVector<float>)),this,SIGNAL(spikeEvent(double,int,int,QVector<float>)));
 	connect(lfpState_.data(),SIGNAL(lfpChanged(int,double)),this,SIGNAL(lfpChanged(int,double)));
+	connect(lfpState_.data(),SIGNAL(lfpLoadProgress(int)),this,SLOT(lfpLoadingUpdated(int)));
 
 	currRunStart_ = currRunEnd_ = -1;
+	loadedStates_ = 0;
+	totalSubStates_ = 0;
+	lfpPercent_ = 100;
 }
 
 
@@ -35,26 +39,27 @@ SessionState::~SessionState()
 
 void SessionState::setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteAssetIds)
 {
-	double totalSubStates = statesWithIds_.size()+statesWithTimes_.size()+1;
-	double loadedStates = 0;
+	totalSubStates_ = statesWithIds_.size()+statesWithTimes_.size()+1;
+	loadedStates_ = 0;
+	lfpPercent_ = 100;
 	currRunStart_ = currRunEnd_ = -1;
 	propState_->setObsoleteAssets(obsoleteAssetIds);
 	transState_->setObsoleteAssets(obsoleteAssetIds);
 	foreach(QSharedPointer<DataState> state,statesWithIds_)
 	{
 		state->setDatabase(session);
-		loadedStates++;
-		emit percentLoaded(100*loadedStates/totalSubStates);
+		loadedStates_++;
+		updatePercentLoaded();
 	}
 	foreach(QSharedPointer<DataState> state,statesWithTimes_)
 	{
 		state->setDatabase(session);
-		loadedStates++;
-		emit percentLoaded(100*loadedStates/totalSubStates);
+		loadedStates_++;
+		updatePercentLoaded();
 	}
 	runNotesState_->setDatabase(session);
-	loadedStates++;
-	emit percentLoaded(100*loadedStates/totalSubStates);
+	loadedStates_++;
+	updatePercentLoaded();
 }
 
 void SessionState::startNewRun(double startTime,double endTime)
@@ -104,6 +109,18 @@ void SessionState::addSignal(QString name,QString tableName,QStringList subChanN
 		//connect(newSigState.data(),SIGNAL(needsData(PlaybackIndex,PlaybackIndex)),this,SLOT(needsSignalData(PlaybackIndex,PlaybackIndex)));
 		//connect(newSigState.data(),SIGNAL(needsNextData(PlaybackIndex,bool)),this,SLOT(needsNextSignalData(PlaybackIndex,bool)));
 	}
+}
+
+void SessionState::enableLfp(bool enable)
+{
+	lfpState_->setEnabled(enable);
+}
+
+bool SessionState::lfpEnabled()
+{
+	if(!lfpState_)
+		return false;
+	return lfpState_->getEnabled();
 }
 
 //bool SessionState::setPropertyValue(double time,qulonglong dataId,int propId,QString value)
@@ -295,18 +312,25 @@ QList<QSharedPointer<DataState>> SessionState::getStatesIndexedByTime()
 	return statesWithTimes_;
 }
 
-//void SessionState::needsPropertyData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eProperty,currLast,to);}
-//void SessionState::needsTransitionData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eTransition,currLast,to);}
-//void SessionState::needsFrameData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eFrame,currLast,to);}
-//void SessionState::needsRewardData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eReward,currLast,to);}
-//void SessionState::needsSignalData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eSignal,currLast,to);}
-//void SessionState::needsLFPData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eLfp,currLast,to);}
-//void SessionState::needsSpikeData(PlaybackIndex currLast,PlaybackIndex to){emit needsData(eSpike,currLast,to);}
-//
-//void SessionState::needsNextPropertyData(PlaybackIndex currLast,bool backward){emit needsNextData(eProperty,currLast,backward);}
-//void SessionState::needsNextTransitionData(PlaybackIndex currLast,bool backward){emit needsNextData(eTransition,currLast,backward);}
-//void SessionState::needsNextFrameData(PlaybackIndex currLast,bool backward){emit needsNextData(eFrame,currLast,backward);}
-//void SessionState::needsNextRewardData(PlaybackIndex currLast,bool backward){emit needsNextData(eReward,currLast,backward);}
-//void SessionState::needsNextSignalData(PlaybackIndex currLast,bool backward){emit needsNextData(eSignal,currLast,backward);}
-//void SessionState::needsNextLFPData(PlaybackIndex currLast,bool backward){emit needsNextData(eLfp,currLast,backward);}
-//void SessionState::needsNextSpikeData(PlaybackIndex currLast,bool backward){emit needsNextData(eSpike,currLast,backward);}
+void SessionState::updatePercentLoaded()
+{
+	//Handle lfp separately because its so big and so that
+	//a meaningful value can appear here when it is being loaded
+	//on its own
+	double currLoadedStates = loadedStates_;
+	if(lfpPercent_ < 100)
+	{
+		if(loadedStates_ == totalSubStates_)
+			currLoadedStates = loadedStates_-1;
+		currLoadedStates += double(lfpPercent_)/100.0;
+	}
+	if(totalSubStates_ > 0)
+		emit percentLoaded(100.0*currLoadedStates/double(totalSubStates_));
+}
+
+void SessionState::lfpLoadingUpdated(int percent)
+{
+	//We handle lfp loading differently because its so big
+	lfpPercent_ = percent;
+	updatePercentLoaded();
+}

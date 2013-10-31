@@ -46,7 +46,6 @@ signals:
 	void framePresented(double time);
 	void rewardSupplied(double time,int duration,int channel);
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
-	void loadedTo(double maxBehavioral,double maxNeural);
 	void disableRendering(bool disable);
 };
 

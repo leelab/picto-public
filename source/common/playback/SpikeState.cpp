@@ -16,7 +16,6 @@ void SpikeState::setDatabase(QSqlDatabase session)
 	query_->prepare("SELECT value FROM sessioninfo WHERE key=\"AlignmentInfo\"");
 	if(!query_->exec() || !query_->next())
 	{
-		Q_ASSERT(false);
 		return;
 	}
 	AlignmentInfo inf;
@@ -222,7 +221,7 @@ QVariantList SpikeState::getTimesSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),data_.begin()+curr_,PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
 	{
@@ -237,7 +236,7 @@ QVariantList SpikeState::getTimesUntil(double time)
 	if(!data_.size() || upToTime <= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin()+curr_,data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(curr_>=0?data_.begin()+curr_:data_.begin(),data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	for(QList<PlaybackSpikeData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
 	{
@@ -252,7 +251,7 @@ QVariantList SpikeState::getChannelsSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),data_.begin()+curr_,PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
 	{
@@ -267,7 +266,7 @@ QVariantList SpikeState::getChannelsUntil(double time)
 	if(!data_.size() || upToTime <= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin()+curr_,data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(curr_>=0?data_.begin()+curr_:data_.begin(),data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	for(QList<PlaybackSpikeData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
 	{
@@ -282,7 +281,7 @@ QVariantList SpikeState::getUnitsSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),data_.begin()+curr_,PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
 	{
@@ -297,7 +296,7 @@ QVariantList SpikeState::getUnitsUntil(double time)
 	if(!data_.size() || upToTime <= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin()+curr_,data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(curr_>=0?data_.begin()+curr_:data_.begin(),data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	for(QList<PlaybackSpikeData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)
 	{
@@ -312,7 +311,7 @@ QVariantList SpikeState::getWaveformsSince(double time)
 	if(afterTime >= getLatestTime())
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
-	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),data_.begin()+curr_,PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	QVariantList waveformList;
 	for(;(iter <= data_.begin()+curr_) && (iter < data_.end());iter++)
@@ -333,7 +332,7 @@ QVariantList SpikeState::getWaveformsUntil(double time)
 	if(!data_.size() || (upToTime <= getLatestTime()))
 		return QVariantList();
 	PlaybackIndex beforeIndex = PlaybackIndex::maxForTime(upToTime+runStart_);
-	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin()+curr_,data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
+	QList<PlaybackSpikeData>::iterator upToIter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(curr_>=0?data_.begin()+curr_:data_.begin(),data_.end(),PlaybackSpikeData(beforeIndex.time(),0,0,QVector<float>()));
 	QVariantList returnVal;
 	QVariantList waveformList;
 	for(QList<PlaybackSpikeData>::iterator iter = data_.begin()+curr_+1;(iter < upToIter) && (iter < data_.end());iter++)

@@ -49,6 +49,25 @@ void AnalysisSelectorWidget::setLocalDesignRoot(QString filePath,QSharedPointer<
 	localAnalysisLookup_[filePath] = localAnalysisList;
 }
 
+void AnalysisSelectorWidget::setLocalDesignAnalyses(QString filePath,QList<QUuid> analysisIds,QStringList analysisNames)
+{
+	if(filePath.isEmpty())
+	{	
+		return;
+	}
+	QList<AnalysisInfo> localAnalysisList;
+	for(int i=0;i<analysisIds.size();i++)
+	{
+		localAnalysisList.append(
+			AnalysisInfo(analysisIds[i],analysisNames[i]
+			)
+		);
+		//analysisNames_.append(designRoot->getAnalysis(i)->getName());
+		//analysisIds_.append(designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId());
+	}
+	localAnalysisLookup_[filePath] = localAnalysisList;
+}
+
 void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> designRoot)
 {
 	analysesForImport_.clear();
