@@ -285,7 +285,6 @@ bool ReplayViewer::popRunQueueFront()
 		QList<PlayRunInfo> selectedRuns = getSelectedPlayRunInfo();
 		//Playback is complete.  Tell the user in a dialog.
 		QMessageBox::information(this,"Playback Complete","Playback of the selected runs is complete");
-		runs_->resetAllRunStatus();
 		runQueue_ = selectedRuns;
 		if	(	runQueue_.size() 
 				&& (runQueue_.first().filePath_ != playbackController_->getLoadedFilePath())
@@ -302,6 +301,7 @@ void ReplayViewer::runNormal()
 {
 	useRunToEnd_ = false;
 	needsAutoSave_ = false;
+	runs_->resetAllRunStatus();
 	play();
 }
 
@@ -336,6 +336,7 @@ void ReplayViewer::runToEnd()
 		}
 	}
 	useRunToEnd_ = true;
+	runs_->resetAllRunStatus();
 	if(!play())
 	{
 		return;
@@ -633,7 +634,6 @@ void ReplayViewer::runSelectionChanged()
 	}
 	jumpDownRequested_ = false;
 	playbackController_->stop();
-	runs_->resetAllRunStatus();
 	progress_->setSliderProgress(0);
 	progress_->setHighlightRange(0,0,0);
 	progress_->setHighlightRange(1,0,0);
@@ -793,7 +793,7 @@ void ReplayViewer::loadError(QString errorMsg)
 {
 	//Mark the run as an error
 	PlayRunInfo latestPlayRunInfo = runQueue_.first();
-	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::ERROROCCURED);
+	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::ERROROCCURED,errorMsg);
 
 	//If only a single run was begin played, inform the user of the analysis import error
 	if(getSelectedPlayRunInfo().size() == 1)

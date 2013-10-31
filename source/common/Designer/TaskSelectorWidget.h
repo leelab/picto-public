@@ -39,7 +39,7 @@ public:
 		COMPLETE,
 		ERROROCCURED
 		};
-	void setRunStatus(QString fileName,int runIndex,RunStatus status);
+	void setRunStatus(QString fileName,int runIndex,RunStatus status,QString message="");
 	int getRunStatus(QString fileName,int runIndex);
 	void setRunInProgress(QString fileName,int runIndex);
 	void setRunComplete(QString fileName,int runIndex);
@@ -60,12 +60,13 @@ private:
 	int numSessions_;
 	struct RunInfo
 	{
-		RunInfo(){fileName_ = "";index_ = -1;runStatus_ = IDLE;saved_ = false;button_=NULL;};
-		RunInfo(QString fileName,int index,bool saved,QAbstractButton* button,RunStatus runStatus = IDLE){fileName_ = fileName;index_ = index;saved_ = saved;runStatus_ = runStatus;button_ = button;};
+		RunInfo(){fileName_ = "";index_ = -1;runStatus_ = IDLE;saved_ = false;button_=NULL;notes_="";};
+		RunInfo(QString fileName,int index,bool saved,QAbstractButton* button,QString notes = "",RunStatus runStatus = IDLE){fileName_ = fileName;index_ = index;saved_ = saved;runStatus_ = runStatus;button_ = button;notes_=notes;};
 		QString fileName_;
 		int index_;
 		RunStatus runStatus_;
 		bool saved_;
+		QString notes_;
 		QAbstractButton* button_;
 	};
 	QMap<int,QSharedPointer<RunInfo>> buttonIdRunLookup_;

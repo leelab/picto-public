@@ -62,7 +62,7 @@ void TaskSelectorWidget::addRun(bool saved,QString filePath,QString runName,int 
 	QCheckBox* taskCheckbox(new QCheckBox(runName));
 	taskCheckbox->setToolTip(notes);
 	taskCheckbox->setIcon(saved?QIcon(":/icons/filesave.png"):QIcon("://icons/delete.png"));
-	buttonIdRunLookup_[numRuns_] = QSharedPointer<RunInfo>(new RunInfo(filePath,index,saved,taskCheckbox));
+	buttonIdRunLookup_[numRuns_] = QSharedPointer<RunInfo>(new RunInfo(filePath,index,saved,taskCheckbox,notes));
 	fileRunLookup_[filePath][index] = buttonIdRunLookup_[numRuns_];
 	buttonGroup_->addButton(taskCheckbox,numRuns_);
 	qobject_cast<QVBoxLayout*>(currGroupBox_->layout())->addWidget(taskCheckbox,0,Qt::AlignTop);
@@ -143,11 +143,13 @@ int TaskSelectorWidget::getNumSelectedRuns()
 
 }
 
-void TaskSelectorWidget::setRunStatus(QString fileName,int runIndex,RunStatus status)
+void TaskSelectorWidget::setRunStatus(QString fileName,int runIndex,RunStatus status,QString message)
 {
 	if(!fileRunLookup_.contains(fileName) || !fileRunLookup_[fileName].contains(runIndex))
 		return;
 	fileRunLookup_[fileName][runIndex]->runStatus_ = status;
+	if(!message.isEmpty())
+		fileRunLookup_[fileName][runIndex]->button_->setToolTip(message);
 	switch(status)
 	{
 	case IDLE:
@@ -189,9 +191,11 @@ void TaskSelectorWidget::setRunError(QString fileName,int runIndex)
 
 void TaskSelectorWidget::resetAllRunStatus()
 {
-	foreach(QAbstractButton* button,buttonGroup_->buttons())
+	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
 	{
-		button->setStyleSheet("");
+		runInfo->button_->setStyleSheet("");
+		runInfo->runStatus_ = RunStatus::IDLE;
+		runInfo->button_->setToolTip(runInfo->notes_);
 	}
 }
 
@@ -213,6 +217,7 @@ void TaskSelectorWidget::setRunColor(QString fileName,int runIndex,QColor color)
 void TaskSelectorWidget::buttonClicked(int buttonIndex)
 {
 	Q_ASSERT(buttonIdRunLookup_.contains(buttonIndex));
+	resetAllRunStatus();
 	emit runSelectionChanged();
 }
 
@@ -230,7 +235,10 @@ void TaskSelectorWidget::selectAll()
 	//buttonClicked is only triggered when a user physically presses a button, so we
 	//need to emit runSelectionChanged here a well.
 	if(changed)
+	{
+		resetAllRunStatus();
 		emit runSelectionChanged();
+	}
 }
 
 void TaskSelectorWidget::selectSaved()
@@ -254,6 +262,7 @@ void TaskSelectorWidget::selectSaved()
 		if(runInfo->saved_)
 			runInfo->button_->setChecked(true);
 	}
+	resetAllRunStatus();
 	//buttonClicked is only triggered when a user physically presses a button, so we
 	//need to emit runSelectionChanged here a well.
 	emit runSelectionChanged();
@@ -273,5 +282,8 @@ void TaskSelectorWidget::clearSelection()
 	//buttonClicked is only triggered when a user physically presses a button, so we
 	//need to emit runSelectionChanged here a well.
 	if(changed)
+	{
+		resetAllRunStatus();
 		emit runSelectionChanged();
+	}
 }
