@@ -1,5 +1,5 @@
-#ifndef TaskSelectorWidget_H
-#define TaskSelectorWidget_H
+#ifndef RunSelectorWidget_H
+#define RunSelectorWidget_H
 
 #include <QWidget>
 #include <QSharedPointer>
@@ -18,16 +18,16 @@ namespace Picto {
 //! [0]
 //Widget for selecting from a list of available tasks
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API TaskSelectorWidget : public QWidget
+class PICTOLIB_API RunSelectorWidget : public QWidget
 #else
-class TaskSelectorWidget : public QWidget
+class RunSelectorWidget : public QWidget
 #endif
 {
     Q_OBJECT
 
 public:
-	TaskSelectorWidget(QWidget *parent = NULL);
-	virtual ~TaskSelectorWidget(){};
+	RunSelectorWidget(QWidget *parent = NULL);
+	virtual ~RunSelectorWidget(){};
 	void addRun(bool saved,QString filePath,QString runName,int index,QString notes = "");
 	void clear();
 	QList<int> getSelectedRuns(QString filePath);

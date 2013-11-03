@@ -12,7 +12,7 @@
 #include "SpeedWidget.h"
 #include "ProgressWidget.h"
 #include "OutputWidgetHolder.h"
-#include "../../common/Designer/TaskSelectorWidget.h"
+#include "../../common/Designer/RunSelectorWidget.h"
 #include "../../common/Designer/AnalysisSelectorWidget.h"
 
 class QLabel;
@@ -87,7 +87,7 @@ private:
 	SpeedWidget *speed_;
 	ProgressWidget *progress_;
 	QProgressBar *loadProgress_;
-	TaskSelectorWidget* runs_;
+	RunSelectorWidget* runs_;
 	QComboBox *userType_;
 	QComboBox *lfpRequirements_;
 	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.

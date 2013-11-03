@@ -168,7 +168,14 @@ void AnalysisFileOutput::openFile()
 	//Open file
 	QString fileType = typeList_.value(propertyContainer_->getPropertyValue("FileType").toInt(),"");
 	bool textMode = (fileType == "Text");
-	if(!file_->open(textMode?(QIODevice::WriteOnly | QIODevice::Text):QIODevice::WriteOnly))
+	bool fileOpened = false;
+	try{
+		fileOpened = file_->open(textMode?(QIODevice::WriteOnly | QIODevice::Text):QIODevice::WriteOnly);
+	} catch(...)
+	{
+		//Do nothing here.  Just catch the exception...
+	}
+	if(!fileOpened)
 	{
 		QMessageBox error;
 		error.setText("Could not open file");

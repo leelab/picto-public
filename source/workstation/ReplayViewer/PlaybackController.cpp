@@ -520,6 +520,24 @@ void PlaybackController::update()
 					data_.setNextStatus(PlaybackControllerData::Stopped);
 					break;
 				}
+
+				//Now that the analyses have been added, we need to reinitialize scripting for the experiment
+				//Since a whole lot of memory is allocated at this point, the script engine allocation occuring
+				//during the initScripting may fail, so we put this in a try catch block.
+				try{
+					if(!designRoot_->getExperiment().staticCast<Experiment>()->initScripting(false))
+					{
+						emit loadError("Failed to initialize the loaded session.  This may result from RAM issues when running batch analysis.  Try analyzing this run by itself.");
+						data_.setNextStatus(PlaybackControllerData::Stopped);
+						break;
+					}
+				}
+				catch(...)
+				{
+					emit loadError("Failed to initialize the loaded session.  This may have resulted from RAM issues when running batch analysis.  Try analyzing this run by itself.");
+					data_.setNextStatus(PlaybackControllerData::Stopped);
+					break;
+				}
 				designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
 
 				designRoot_->enableRunMode(true);//We do this here so that we're sure all the analyses are attached first

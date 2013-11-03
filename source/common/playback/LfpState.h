@@ -56,7 +56,7 @@ private:
 	double runStart_;
 	double runEnd_;
 	int curr_;
-	QList<float> data_;
+	QList<QList<float>> data_;
 	QHash<int,int> chanIndexMap_;
 	QVariantList channels_;
 	int numChannels_;

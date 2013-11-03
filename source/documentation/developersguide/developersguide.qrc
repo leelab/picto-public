@@ -776,6 +776,8 @@
    <file alias="_reward_unit_8h-source.html">../../../output/documentation/main/html/_reward_unit_8h-source.html</file>
    <file alias="_run_notes_state_8cpp-source.html">../../../output/documentation/main/html/_run_notes_state_8cpp-source.html</file>
    <file alias="_run_notes_state_8h-source.html">../../../output/documentation/main/html/_run_notes_state_8h-source.html</file>
+   <file alias="_run_selector_widget_8cpp-source.html">../../../output/documentation/main/html/_run_selector_widget_8cpp-source.html</file>
+   <file alias="_run_selector_widget_8h-source.html">../../../output/documentation/main/html/_run_selector_widget_8h-source.html</file>
    <file alias="_run_task_dialog_8cpp-source.html">../../../output/documentation/main/html/_run_task_dialog_8cpp-source.html</file>
    <file alias="_run_task_dialog_8h-source.html">../../../output/documentation/main/html/_run_task_dialog_8h-source.html</file>
    <file alias="_save_output_dialog_8cpp-source.html">../../../output/documentation/main/html/_save_output_dialog_8cpp-source.html</file>
@@ -1763,6 +1765,8 @@
    <file alias="class_picto_1_1_run_notes_state-members.html">../../../output/documentation/main/html/class_picto_1_1_run_notes_state-members.html</file>
    <file alias="class_picto_1_1_run_notes_state.html">../../../output/documentation/main/html/class_picto_1_1_run_notes_state.html</file>
    <file alias="class_picto_1_1_run_notes_state.png">../../../output/documentation/main/html/class_picto_1_1_run_notes_state.png</file>
+   <file alias="class_picto_1_1_run_selector_widget-members.html">../../../output/documentation/main/html/class_picto_1_1_run_selector_widget-members.html</file>
+   <file alias="class_picto_1_1_run_selector_widget.html">../../../output/documentation/main/html/class_picto_1_1_run_selector_widget.html</file>
    <file alias="class_picto_1_1_scene-members.html">../../../output/documentation/main/html/class_picto_1_1_scene-members.html</file>
    <file alias="class_picto_1_1_scene.html">../../../output/documentation/main/html/class_picto_1_1_scene.html</file>
    <file alias="class_picto_1_1_script_controller-members.html">../../../output/documentation/main/html/class_picto_1_1_script_controller-members.html</file>

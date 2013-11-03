@@ -1,12 +1,12 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QAbstractButton>
-#include "TaskSelectorWidget.h"
+#include "RunSelectorWidget.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
 //! [0]
-TaskSelectorWidget::TaskSelectorWidget(QWidget *parent) :
+RunSelectorWidget::RunSelectorWidget(QWidget *parent) :
 	QWidget(parent)
 {
 	scrollArea_ = new QScrollArea();
@@ -37,7 +37,7 @@ TaskSelectorWidget::TaskSelectorWidget(QWidget *parent) :
 	clear();
 }
 
-void TaskSelectorWidget::addRun(bool saved,QString filePath,QString runName,int index,QString notes)
+void RunSelectorWidget::addRun(bool saved,QString filePath,QString runName,int index,QString notes)
 {
 	//Add new buttons to layout
 	if(filePath.isEmpty())
@@ -73,7 +73,7 @@ void TaskSelectorWidget::addRun(bool saved,QString filePath,QString runName,int 
 	scrollArea_->setWidget(mainWidget_);
 }
 
-void TaskSelectorWidget::clear()
+void RunSelectorWidget::clear()
 {
 	//Remove all old buttons from layout.  We do this in a roundabout but simple way.  Moving a widget's
 	//layout to another widget and then destroying that widget destroys the layout and all the children that
@@ -98,7 +98,7 @@ void TaskSelectorWidget::clear()
 	scrollArea_->setWidget(mainWidget_);
 }
 
-QList<int> TaskSelectorWidget::getSelectedRuns(QString filePath)
+QList<int> RunSelectorWidget::getSelectedRuns(QString filePath)
 {
 	if(!fileRunLookup_.contains(filePath))
 		return QList<int>();
@@ -114,7 +114,7 @@ QList<int> TaskSelectorWidget::getSelectedRuns(QString filePath)
 	return returnList;
 }
 
-QStringList TaskSelectorWidget::getSelectedFilePaths()
+QStringList RunSelectorWidget::getSelectedFilePaths()
 {
 	QStringList returnList;
 	QString nextPath;
@@ -131,7 +131,7 @@ QStringList TaskSelectorWidget::getSelectedFilePaths()
 	return returnList;
 }
 
-int TaskSelectorWidget::getNumSelectedRuns()
+int RunSelectorWidget::getNumSelectedRuns()
 {
 	int numRuns = 0;
 	foreach(QAbstractButton* button,buttonGroup_->buttons())
@@ -143,7 +143,7 @@ int TaskSelectorWidget::getNumSelectedRuns()
 
 }
 
-void TaskSelectorWidget::setRunStatus(QString fileName,int runIndex,RunStatus status,QString message)
+void RunSelectorWidget::setRunStatus(QString fileName,int runIndex,RunStatus status,QString message)
 {
 	if(!fileRunLookup_.contains(fileName) || !fileRunLookup_[fileName].contains(runIndex))
 		return;
@@ -167,29 +167,29 @@ void TaskSelectorWidget::setRunStatus(QString fileName,int runIndex,RunStatus st
 	}
 }
 
-int TaskSelectorWidget::getRunStatus(QString fileName,int runIndex)
+int RunSelectorWidget::getRunStatus(QString fileName,int runIndex)
 {
 	if(!fileRunLookup_.contains(fileName) || !fileRunLookup_[fileName].contains(runIndex))
 		return IDLE;
 	return fileRunLookup_[fileName][runIndex]->runStatus_;
 }
 
-void TaskSelectorWidget::setRunInProgress(QString fileName,int runIndex)
+void RunSelectorWidget::setRunInProgress(QString fileName,int runIndex)
 {
 	setRunColor(fileName,runIndex,Qt::green);
 }
 
-void TaskSelectorWidget::setRunComplete(QString fileName,int runIndex)
+void RunSelectorWidget::setRunComplete(QString fileName,int runIndex)
 {
 	setRunColor(fileName,runIndex,Qt::blue);
 }
 
-void TaskSelectorWidget::setRunError(QString fileName,int runIndex)
+void RunSelectorWidget::setRunError(QString fileName,int runIndex)
 {
 	setRunColor(fileName,runIndex,Qt::red);
 }
 
-void TaskSelectorWidget::resetAllRunStatus()
+void RunSelectorWidget::resetAllRunStatus()
 {
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
 	{
@@ -199,7 +199,7 @@ void TaskSelectorWidget::resetAllRunStatus()
 	}
 }
 
-void TaskSelectorWidget::setRunColor(QString fileName,int runIndex,QColor color)
+void RunSelectorWidget::setRunColor(QString fileName,int runIndex,QColor color)
 {
 	if(!fileRunLookup_.contains(fileName))
 		return;
@@ -214,14 +214,14 @@ void TaskSelectorWidget::setRunColor(QString fileName,int runIndex,QColor color)
 	button->show();
 }
 
-void TaskSelectorWidget::buttonClicked(int buttonIndex)
+void RunSelectorWidget::buttonClicked(int buttonIndex)
 {
 	Q_ASSERT(buttonIdRunLookup_.contains(buttonIndex));
 	resetAllRunStatus();
 	emit runSelectionChanged();
 }
 
-void TaskSelectorWidget::selectAll()
+void RunSelectorWidget::selectAll()
 {
 	bool changed = false;
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
@@ -241,7 +241,7 @@ void TaskSelectorWidget::selectAll()
 	}
 }
 
-void TaskSelectorWidget::selectSaved()
+void RunSelectorWidget::selectSaved()
 {
 	bool needsChange = false;
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
@@ -268,7 +268,7 @@ void TaskSelectorWidget::selectSaved()
 	emit runSelectionChanged();
 }
 
-void TaskSelectorWidget::clearSelection()
+void RunSelectorWidget::clearSelection()
 {
 	bool changed = false;
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())

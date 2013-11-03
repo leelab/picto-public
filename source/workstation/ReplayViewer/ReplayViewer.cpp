@@ -75,7 +75,7 @@ void ReplayViewer::setupUi()
 	connect(loadSessionAction_, SIGNAL(triggered()),this, SLOT(loadSession()));
 	loadSessionAction_->setEnabled(true);
 
-	runs_ = new TaskSelectorWidget();
+	runs_ = new RunSelectorWidget();
 	connect(runs_,SIGNAL(runSelectionChanged()),this,SLOT(runSelectionChanged()));
 	connect(playbackController_.data(),SIGNAL(sessionPreloaded(PreloadedSessionData)),this,SLOT(sessionPreloaded(PreloadedSessionData)));
 	connect(playbackController_.data(),SIGNAL(sessionPreloadFailed(QString)),this,SLOT(preloadError(QString)));
@@ -493,7 +493,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
 			}
 			Q_ASSERT(runQueue_.size());
-			runs_->setRunStatus(runQueue_.first().filePath_,runQueue_.first().runIndex_,TaskSelectorWidget::INPROGRESS);	//Set currently playing run to green
+			runs_->setRunStatus(runQueue_.first().filePath_,runQueue_.first().runIndex_,RunSelectorWidget::INPROGRESS);	//Set currently playing run to green
 		break;
 		case PlaybackControllerData::Paused:
 			runs_->setEnabled(true);
@@ -511,7 +511,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
 			}
-			runs_->setRunStatus(runQueue_.first().filePath_,runQueue_.first().runIndex_,TaskSelectorWidget::INPROGRESS);	//Set currently playing run to green
+			runs_->setRunStatus(runQueue_.first().filePath_,runQueue_.first().runIndex_,RunSelectorWidget::INPROGRESS);	//Set currently playing run to green
 		break;
 	}
 	//Each time the playback status changes, update the Visual Target Host's record mode
@@ -783,7 +783,7 @@ void ReplayViewer::finishedPlayback()
 	}
 	//Update the latest run's color in its widget
 	PlayRunInfo latestPlayRunInfo = runQueue_.first();
-	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::COMPLETE);
+	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,RunSelectorWidget::COMPLETE);
 	//Update the run queue, and play the next run if there's one left
 	if(popRunQueueFront())
 		play();
@@ -793,7 +793,7 @@ void ReplayViewer::loadError(QString errorMsg)
 {
 	//Mark the run as an error
 	PlayRunInfo latestPlayRunInfo = runQueue_.first();
-	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,TaskSelectorWidget::ERROROCCURED,errorMsg);
+	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,RunSelectorWidget::ERROROCCURED,errorMsg);
 
 	//If only a single run was begin played, inform the user of the analysis import error
 	if(getSelectedPlayRunInfo().size() == 1)

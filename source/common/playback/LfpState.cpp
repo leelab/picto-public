@@ -142,11 +142,11 @@ double LfpState::getNextValue(int channel)
 QVariantList LfpState::getValuesSince(int channel,double time)
 {
 	Q_ASSERT(runStart_ >= 0);
-	if(!data_.size())
-		return QVariantList();
 	if(!chanIndexMap_.contains(channel))
 		return QVariantList();
 	int chanIndex = chanIndexMap_[channel];
+	if(!data_.size() || !data_[chanIndex].size())
+		return QVariantList();
 	double afterTime = time;
 	double latestTime = getLatestTime();
 	if(afterTime >= latestTime)
@@ -165,11 +165,11 @@ QVariantList LfpState::getValuesSince(int channel,double time)
 QVariantList LfpState::getValuesUntil(int channel,double time)
 {
 	Q_ASSERT(runStart_ >= 0);
-	if(!data_.size())
-		return QVariantList();
 	if(!chanIndexMap_.contains(channel))
 		return QVariantList();
 	int chanIndex = chanIndexMap_[channel];
+	if(!data_.size() || !data_[chanIndex].size())
+		return QVariantList();
 	double upToTime = time;
 	double latestTime = getLatestTime();
 	if(upToTime <= latestTime)
@@ -316,15 +316,25 @@ bool LfpState::loadData()
 	//Create data list with an entry for every sample time from minTime to maxTime
 	numValues_ = arrayIndexFromGlobalTime(maxTime)+1;
 	try{
-		data_.reserve(numChannels_ * numValues_);	//We use reserve and not resize so that we can be sure that we're allocated exactly the right amount of memory
+		data_.reserve(numChannels_);
+		for(int i=0;i<numChannels_;i++)
+		{
+			data_.append(QList<float>());
+			data_[i].reserve(numValues_);				//We use reserve and not resize so that we can be sure that we're allocating exactly the right amount of memory
 													//tests indicate that resize actually may reserve more than the requested amount
+		}
 	} catch(...)
 	{
 		resetDataVariables();
 		throw;
 	}
-	for(int i=0;i<numChannels_ * numValues_;i++)
-		data_.append(0);
+	for(int i=0;i<numChannels_;i++)
+	{
+		QList<float> chanList;
+		for(int j=0;j<numValues_;j++)
+			chanList.append(0);
+		data_[i]= chanList;
+	}
 
 	emit lfpLoadProgress(20);
 	//Go through each channel in database and fill data list
@@ -416,12 +426,14 @@ int LfpState::arrayIndexFromGlobalTime(const double& time)
 
 float LfpState::getDataValue(const int& arrayIndex,const int& channelIndex)
 {
-	Q_ASSERT((arrayIndex*numChannels_)+channelIndex < data_.size());
-	return data_[(arrayIndex*numChannels_)+channelIndex];
+	Q_ASSERT(channelIndex < data_.size());
+	Q_ASSERT(arrayIndex < data_[channelIndex].size());
+	return data_[channelIndex][arrayIndex];
 }
 
 void LfpState::setDataValue(const int& arrayIndex,const int& channelIndex,const float& value)
 {
-	Q_ASSERT((arrayIndex*numChannels_)+channelIndex < data_.size());
-	data_[(arrayIndex*numChannels_)+channelIndex] = value;
+	Q_ASSERT(channelIndex < data_.size());
+	Q_ASSERT(arrayIndex < data_[channelIndex].size());
+	data_[channelIndex][arrayIndex] = value;
 }
