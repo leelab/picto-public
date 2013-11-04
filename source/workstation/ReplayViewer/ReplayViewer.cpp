@@ -50,6 +50,10 @@ void ReplayViewer::init()
 {
 	jumpDownRequested_ = false;
 	analysisSelector_->setDesignRootForImport(designRoot_);
+	if(latestStatus_ == PlaybackControllerData::PreLoading || latestStatus_ == PlaybackControllerData::Stopped)
+		analysisSelector_->enableCheckboxes(true);
+	else
+		analysisSelector_->enableCheckboxes(false);
 }
 
 //!Called just before hiding the viewer
@@ -450,6 +454,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			progress_->setHighlightRange(1,0,0,true);
 			progress_->setSliderProgress(0);
 			progress_->setEnabled(false);
+			runs_->enableCheckBoxes(false);
 			runs_->setEnabled(false);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
@@ -457,6 +462,8 @@ void ReplayViewer::playbackStatusChanged(int status)
 			runToEndAction_->setEnabled(false);
 			toggleRecord_->setEnabled(false);
 			lfpRequirements_->setEnabled(false);
+			analysisSelector_->setEnabled(false);
+			analysisSelector_->enableCheckboxes(false);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -468,6 +475,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			progress_->setHighlightRange(1,0,0,true);
 			progress_->setSliderProgress(0);
 			progress_->setEnabled(false);
+			runs_->enableCheckBoxes(false);
 			runs_->setEnabled(false);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
@@ -477,6 +485,8 @@ void ReplayViewer::playbackStatusChanged(int status)
 			loadProgress_->setMaximum(0);
 			loadSessionAction_->setEnabled(false);
 			lfpRequirements_->setEnabled(false);
+			analysisSelector_->setEnabled(true);
+			analysisSelector_->enableCheckboxes(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -484,6 +494,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playbackController_->getRenderingTarget()->showSplash();
 		break;
 		case PlaybackControllerData::Stopped:
+			runs_->enableCheckBoxes(true);
 			runs_->setEnabled(true);
 			loadProgress_->setMaximum(100);
 			progress_->setHighlightRange(0,0,0);
@@ -504,19 +515,23 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playbackController_->getVisualTarget()->clear();
 			playbackController_->getRenderingTarget()->showSplash();
 			analysisSelector_->setEnabled(true);
+			analysisSelector_->enableCheckboxes(true);
 		break;
 		case PlaybackControllerData::Loading:
 			progress_->setHighlightRange(0,0,0);
 			progress_->setHighlightRange(1,0,0,true);
 			progress_->setSliderProgress(0);
 			progress_->setEnabled(false);
-			runs_->setEnabled(false);
+			runs_->enableCheckBoxes(false);
+			runs_->setEnabled(true);
 			pauseAction_->setEnabled(false);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(false);
 			runToEndAction_->setEnabled(false);
 			toggleRecord_->setEnabled(false);
 			lfpRequirements_->setEnabled(false);
+			analysisSelector_->setEnabled(true);
+			analysisSelector_->enableCheckboxes(false);
 			loadProgress_->setMaximum(0);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
@@ -525,6 +540,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playbackController_->getRenderingTarget()->showSplash();
 		break;
 		case PlaybackControllerData::Running:
+			runs_->enableCheckBoxes(true);
 			runs_->setEnabled(true);
 			loadProgress_->setMaximum(100);
 			loadProgress_->setValue(100);
@@ -536,6 +552,8 @@ void ReplayViewer::playbackStatusChanged(int status)
 			toggleRecord_->setEnabled(true);
 			loadSessionAction_->setEnabled(true);
 			lfpRequirements_->setEnabled(false);
+			analysisSelector_->setEnabled(true);
+			analysisSelector_->enableCheckboxes(false);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
@@ -544,6 +562,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			runs_->setRunStatus(runQueue_.first().filePath_,runQueue_.first().runIndex_,RunSelectorWidget::INPROGRESS);	//Set currently playing run to green
 		break;
 		case PlaybackControllerData::Paused:
+			runs_->enableCheckBoxes(true);
 			runs_->setEnabled(true);
 			loadProgress_->setMaximum(100);
 			loadProgress_->setValue(100);
@@ -555,6 +574,8 @@ void ReplayViewer::playbackStatusChanged(int status)
 			toggleRecord_->setEnabled(true);
 			loadSessionAction_->setEnabled(true);
 			lfpRequirements_->setEnabled(false);
+			analysisSelector_->setEnabled(true);
+			analysisSelector_->enableCheckboxes(false);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);

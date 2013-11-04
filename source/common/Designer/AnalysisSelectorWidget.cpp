@@ -125,6 +125,12 @@ QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIdsForImport()
 	return returnVal;
 }
 
+void AnalysisSelectorWidget::enableCheckboxes(bool enable)
+{
+	analysesBox_->setEnabled(enable);
+	analysesForImportBox_->setEnabled(enable);
+}
+
 bool AnalysisSelectorWidget::hasSelectedIds()
 {
 	return bool(getSelectedAnalysisIdsForImport().size()) || bool(getSelectedAnalysisIds().size());

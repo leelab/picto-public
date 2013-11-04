@@ -48,6 +48,7 @@ public:
 	void selectRun(QString fileName,int runIndex);
 	void deselectRun(QString fileName,int runIndex);
 	void deselectAll();
+	void enableCheckBoxes(bool enabled);
 signals:
 	void runSelectionChanged();
 private:

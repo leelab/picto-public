@@ -226,6 +226,14 @@ void RunSelectorWidget::deselectRun(QString fileName,int runIndex)
 	emit runSelectionChanged();
 }
 
+void RunSelectorWidget::enableCheckBoxes(bool enabled)
+{
+	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
+	{
+		runInfo->button_->setEnabled(enabled);
+	}
+}
+
 void RunSelectorWidget::deselectAll()
 {
 	clearSelection();

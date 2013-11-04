@@ -31,6 +31,7 @@ public:
 	void setCurrentFile(QString filePath);
 	QList<QUuid> getSelectedAnalysisIds();
 	QList<QUuid> getSelectedAnalysisIdsForImport();
+	void enableCheckboxes(bool enable);
 	bool hasSelectedIds();
 signals:
 	void analysisWidgetChanged();	//Triggered whenever the widget changes (ie.  Something clicked, buttons removed, added, etc)
