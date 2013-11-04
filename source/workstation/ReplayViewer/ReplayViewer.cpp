@@ -210,6 +210,7 @@ void ReplayViewer::setupUi()
 
 	analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	analysisSelector_->setEnabled(false);
+	connect(analysisSelector_,SIGNAL(analysisWidgetChanged()),this,SLOT(analysisWidgetChanged()));
 	connect(playbackController_.data(),SIGNAL(designRootChanged()),this,SLOT(designRootChanged()));
 	outputWidgetHolder_ = new OutputWidgetHolder();
 	analysisTabs->addTab(runs_,"Select Runs");
@@ -279,22 +280,65 @@ QStringList ReplayViewer::getAnalysesToImport()
 //ie.  It didn't pop the front because the front's now back in the queue somewhere
 bool ReplayViewer::popRunQueueFront()
 {
+	bool returnValue = true;
 	runQueue_.pop_front();
 	if(runQueue_.isEmpty())
 	{
+		//Playback is complete.
 		QList<PlayRunInfo> selectedRuns = getSelectedPlayRunInfo();
-		//Playback is complete.  Tell the user in a dialog.
-		QMessageBox::information(this,"Playback Complete","Playback of the selected runs is complete");
-		runQueue_ = selectedRuns;
-		if	(	runQueue_.size() 
-				&& (runQueue_.first().filePath_ != playbackController_->getLoadedFilePath())
-			)
+		//Check if any of the run playbacks failed for the currently selected runs
+		QList<PlayRunInfo> failedRuns;
+		foreach(PlayRunInfo runInfo,selectedRuns)
 		{
-			loadProgress_->setValue(0);
+			if(runs_->getRunStatus(runInfo.filePath_,runInfo.runIndex_) == RunSelectorWidget::ERROROCCURED)
+			{
+				failedRuns.append(runInfo);
+			}
 		}
-		return false;
+		//If a playback failed
+		if(failedRuns.size())
+		{
+			//Tell the user we're done and offer to re-run failed playbacks.
+			QMessageBox::StandardButton result = QMessageBox::question(this,"Playback Complete with Errors","Playback is complete; however, some runs could not successfully be played.  This is most likely due to limited system memory.  Try closing other applications and then select \"Retry\" to replay the failed runs.",QMessageBox::StandardButton::Retry | QMessageBox::StandardButton::Cancel,QMessageBox::StandardButton::Cancel);
+			//If the user wants to run failed playbacks again
+			if(result == QMessageBox::Retry)
+			{
+				//Update the runs_ dialog and selectedRuns list, then set return value to true (for continue).
+				runs_->deselectAll();
+				foreach(PlayRunInfo runInfo,failedRuns)
+				{
+					runs_->selectRun(runInfo.filePath_,runInfo.runIndex_);
+				}
+				selectedRuns = getSelectedPlayRunInfo();
+				returnValue = true;
+			}
+			else
+			{
+				returnValue = false;	//Don't continue
+			}
+		}
+		else
+		{	//All playbacks were succesfull.  Tell the user
+			QMessageBox::information(this,"Playback Complete","All selected runs completed successfully");
+			returnValue = false;
+		}
+		//Update the runQueue_ to contain all the selected runs.
+		setRunQueue(selectedRuns);
 	}
-	return true;
+	return returnValue;
+}
+
+void ReplayViewer::setRunQueue(QList<PlayRunInfo> newRunQueue)
+{
+	//Update the runQueue_ to contain all the input runs.
+	runQueue_ = newRunQueue;
+	//If we haven't already loaded the session for the first run in the list, set load progress back to zero.
+	if	(	runQueue_.size() 
+			&& (runQueue_.first().filePath_ != playbackController_->getLoadedFilePath())
+		)
+	{
+		loadProgress_->setValue(0);
+	}
 }
 
 void ReplayViewer::runNormal()
@@ -376,6 +420,9 @@ void ReplayViewer::pause()
 void ReplayViewer::stop()
 {
 	qDebug()<<"Stop slot";
+	//Whenever stop is pressed, the runQueue_ should be reinitialized to everything that's in the run selector
+	QList<PlayRunInfo> selectedRuns = getSelectedPlayRunInfo();
+	setRunQueue(selectedRuns);
 	playbackController_->stop();
 }
 
@@ -395,6 +442,7 @@ QList<ReplayViewer::PlayRunInfo> ReplayViewer::getSelectedPlayRunInfo()
 void ReplayViewer::playbackStatusChanged(int status)
 {
 	bool runIsSelected = runs_->getNumSelectedRuns();
+	bool analysisIsSelected = analysisSelector_->hasSelectedIds();
 	switch(status)
 	{
 	case PlaybackControllerData::Idle:
@@ -445,7 +493,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			pauseAction_->setEnabled(runIsSelected);
 			stopAction_->setEnabled(false);
 			playAction_->setEnabled(runIsSelected);
-			runToEndAction_->setEnabled(runIsSelected);
+			runToEndAction_->setEnabled(runIsSelected && analysisIsSelected);
 			toggleRecord_->setEnabled(runIsSelected);
 			loadSessionAction_->setEnabled(true);
 			lfpRequirements_->setEnabled(true);
@@ -503,7 +551,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			stopAction_->setEnabled(true);
 			playAction_->setEnabled(true);
 			progress_->setEnabled(true);
-			runToEndAction_->setEnabled(true);
+			runToEndAction_->setEnabled(analysisIsSelected);
 			toggleRecord_->setEnabled(true);
 			loadSessionAction_->setEnabled(true);
 			lfpRequirements_->setEnabled(false);
@@ -579,6 +627,7 @@ void ReplayViewer::updateTime(double time)
 void ReplayViewer::runSelectionChanged()
 {
 	QList<PlayRunInfo> newRunQueue = getSelectedPlayRunInfo();
+
 	//If the first run in the new run queue isn't part of the
 	//same file that we last loaded, set the load progress to zero
 	if	(	runQueue_.size() 
@@ -605,7 +654,7 @@ void ReplayViewer::runSelectionChanged()
 		{	//Otherwise enable them
 			pauseAction_->setEnabled(true);
 			playAction_->setEnabled(true);
-			runToEndAction_->setEnabled(true);
+			runToEndAction_->setEnabled(analysisSelector_->hasSelectedIds());
 			toggleRecord_->setEnabled(true);
 		}
 	}
@@ -633,10 +682,18 @@ void ReplayViewer::runSelectionChanged()
 			analysisSelector_->setCurrentFile("");
 	}
 	jumpDownRequested_ = false;
-	playbackController_->stop();
+	stopAction_->trigger();
 	progress_->setSliderProgress(0);
 	progress_->setHighlightRange(0,0,0);
 	progress_->setHighlightRange(1,0,0);
+}
+
+void ReplayViewer::analysisWidgetChanged()
+{
+	if(latestStatus_ != PlaybackControllerData::Stopped)
+		return;
+	QList<PlayRunInfo> selectedRuns = getSelectedPlayRunInfo();
+	runToEndAction_->setEnabled(analysisSelector_->hasSelectedIds() && selectedRuns.size());
 }
 
 void ReplayViewer::setUserType(int index)
@@ -784,6 +841,7 @@ void ReplayViewer::finishedPlayback()
 	//Update the latest run's color in its widget
 	PlayRunInfo latestPlayRunInfo = runQueue_.first();
 	runs_->setRunStatus(latestPlayRunInfo.filePath_,latestPlayRunInfo.runIndex_,RunSelectorWidget::COMPLETE);
+
 	//Update the run queue, and play the next run if there's one left
 	if(popRunQueueFront())
 		play();

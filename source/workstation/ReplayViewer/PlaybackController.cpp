@@ -14,6 +14,10 @@
 #include "../../common/statemachine/Scene.h"
 #include "../../common/storage/AssetExportImport.h"
 
+#if defined WIN32 || defined WINCE
+#include <Windows.h>
+#endif
+
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -456,6 +460,25 @@ void PlaybackController::update()
 												//is available for the new session.
 					experiment_.clear();		//Experiment also uses up a lot of RAM.
 					designRoot_.clear();		//Design root point to the experiment too.
+
+
+#if defined WIN32 || defined WINCE
+					//Since we're creating lots of giant data structures on the heap, we found that there were some heap fragmentation issues.  ie.  'new' commands
+					//would start to fail wbile creating analysis data structures after we analyzed multiple other sessions, presumably since there weren't 
+					//large enough holes in memory for the new data structures.  For this reason, we are defragmenting the heap each time we start loading a new
+					//session.  This code for heap deframentation is from: http://www.cplusplus.com/forum/windows/8010/
+					{	
+					  const int MaxNumHeaps= 5000;
+					  HANDLE HeapHandles[MaxNumHeaps];
+					  int NumUsedHeaps= GetProcessHeaps(MaxNumHeaps,HeapHandles);
+					  for (int i=0;i<NumUsedHeaps;i++)
+					  {
+						HeapCompact(HeapHandles[i],0);
+					  }
+					}
+					///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#endif
+
 					if(!playbackUpdater_->setFile(nextFilePath))
 					{
 						emit loadError("Failed to load session design.  This often means that the session contains no experimental data.");

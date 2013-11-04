@@ -31,6 +31,9 @@ public:
 	void setCurrentFile(QString filePath);
 	QList<QUuid> getSelectedAnalysisIds();
 	QList<QUuid> getSelectedAnalysisIdsForImport();
+	bool hasSelectedIds();
+signals:
+	void analysisWidgetChanged();	//Triggered whenever the widget changes (ie.  Something clicked, buttons removed, added, etc)
 private:
 	QTabWidget* tabWidget_;
 	QWidget* analysesBox_;
@@ -51,6 +54,8 @@ private:
 	//QList<QUuid> analysisIdsForImport_;
 	void updateLocalAnalysisList();
 	void updateAnalysesForImportList();
+private slots:
+	void checkboxChanged(bool checked);
 };
 };
 //! [0]

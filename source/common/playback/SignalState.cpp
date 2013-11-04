@@ -20,24 +20,24 @@ void SignalState::setDatabase(QSqlDatabase session)
 {
 	runStart_ = runEnd_ = curr_ = -1;
 	session_ = session;
-	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
-	query_->exec(QString("SELECT COUNT(*) FROM %1").arg(tableName_));
-	if(!query_->exec() || !query_->next())
+	QSqlQuery query(session_);
+	query.exec(QString("SELECT COUNT(*) FROM %1").arg(tableName_));
+	if(!query.exec() || !query.next())
 	{
 		Q_ASSERT(false);
 		return;
 	}
 	data_.clear();
-	data_.reserve(query_->value(0).toInt());
-	for(int i=0;i<query_->value(0).toInt();i++)
+	data_.reserve(query.value(0).toInt());
+	for(int i=0;i<query.value(0).toInt();i++)
 	{
 		data_.append(PlaybackSignalData());
 	}
 
-	query_->exec(QString("SELECT f.time,s.offsettime,s.data,f.dataid "
+	query.exec(QString("SELECT f.time,s.offsettime,s.data,f.dataid "
 			"FROM %1 s,frames f WHERE f.dataid=s.frameid ORDER BY f.dataid").arg(tableName_));
 
-	if(!query_->exec())
+	if(!query.exec())
 	{
 		Q_ASSERT(false);
 		return;
@@ -48,25 +48,25 @@ void SignalState::setDatabase(QSqlDatabase session)
 	int arrayIndex = 0;
 	QByteArray byteArray;
 	int numEntries;
-	float* floatArray;
 	qulonglong lastFrameId = 0;	//Before 6/2013 data ids of signals in session file were not being transferred
-								//to the session file correctly.  This means that if there signal data got 
+								//to the session file correctly.  This means that if their signal data got 
 								//sent more than once from the diretor due to a server slowdown, it could
 								//appear in the session file more than once.  For this reason, we store the 
-								//last frameId and throw out any data that arrives with a frame id that duplicates
+								//last frameId and throw out any data that arrives with a frame id that 
 								//duplicates the last one.
 	qulonglong currFrameId;
-	while(query_->next())
+	while(query.next())
 	{
-		currFrameId = query_->value(3).toLongLong();
+		Q_ASSERT(arrayIndex < data_.size());
+		currFrameId = query.value(3).toLongLong();
 		if(lastFrameId == currFrameId)
 			continue;	//See big comment a few lines up
 		lastFrameId = currFrameId;
 		//Note: With signals, the definition is such that offsetTime after the frameTime of frameId is when the first signal data was read.
-		data_[arrayIndex] = PlaybackSignalData(query_->value(0).toDouble()+query_->value(1).toDouble());
-		byteArray = query_->value(2).toByteArray();
+		data_[arrayIndex] = PlaybackSignalData(query.value(0).toDouble()+query.value(1).toDouble());
+		byteArray = query.value(2).toByteArray();
 		numEntries = byteArray.size()/sizeof(float);
-		floatArray = reinterpret_cast<float*>(byteArray.data());
+		const float* floatArray = reinterpret_cast<const float*>(byteArray.constData());
 		data_[arrayIndex].vals_.resize(numEntries);
 		for(int i=0;i<numEntries;i++)
 		{

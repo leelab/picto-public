@@ -199,6 +199,38 @@ void RunSelectorWidget::resetAllRunStatus()
 	}
 }
 
+void RunSelectorWidget::selectRun(QString fileName,int runIndex)
+{
+	if(!fileRunLookup_.contains(fileName) || !fileRunLookup_[fileName].contains(runIndex))
+		return;
+	bool selectedNow = fileRunLookup_[fileName][runIndex]->button_->isChecked();
+	if(selectedNow)
+		return;
+	fileRunLookup_[fileName][runIndex]->button_->setChecked(true);
+	resetAllRunStatus();
+	//buttonClicked is only triggered when a user physically presses a button, so we
+	//need to emit runSelectionChanged here a well.
+	emit runSelectionChanged();
+}
+void RunSelectorWidget::deselectRun(QString fileName,int runIndex)
+{
+	if(!fileRunLookup_.contains(fileName) || !fileRunLookup_[fileName].contains(runIndex))
+		return;
+	bool selectedNow = fileRunLookup_[fileName][runIndex]->button_->isChecked();
+	if(!selectedNow)
+		return;
+	fileRunLookup_[fileName][runIndex]->button_->setChecked(false);
+	resetAllRunStatus();
+	//buttonClicked is only triggered when a user physically presses a button, so we
+	//need to emit runSelectionChanged here a well.
+	emit runSelectionChanged();
+}
+
+void RunSelectorWidget::deselectAll()
+{
+	clearSelection();
+}
+
 void RunSelectorWidget::setRunColor(QString fileName,int runIndex,QColor color)
 {
 	if(!fileRunLookup_.contains(fileName))

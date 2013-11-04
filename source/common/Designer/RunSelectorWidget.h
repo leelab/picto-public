@@ -45,6 +45,9 @@ public:
 	void setRunComplete(QString fileName,int runIndex);
 	void setRunError(QString fileName,int runIndex);
 	void resetAllRunStatus();
+	void selectRun(QString fileName,int runIndex);
+	void deselectRun(QString fileName,int runIndex);
+	void deselectAll();
 signals:
 	void runSelectionChanged();
 private:

@@ -125,6 +125,11 @@ QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIdsForImport()
 	return returnVal;
 }
 
+bool AnalysisSelectorWidget::hasSelectedIds()
+{
+	return bool(getSelectedAnalysisIdsForImport().size()) || bool(getSelectedAnalysisIds().size());
+}
+
 
 void AnalysisSelectorWidget::updateLocalAnalysisList()
 {
@@ -141,6 +146,7 @@ void AnalysisSelectorWidget::updateLocalAnalysisList()
 		for(int i=0;i<localAnalysisLookup_[currFilePath_].size();i++)
 		{
 			QCheckBox* analysisCheckbox(new QCheckBox(localAnalysisLookup_[currFilePath_][i].name_));
+			connect(analysisCheckbox,SIGNAL(clicked(bool)),this,SLOT(checkboxChanged(bool)));
 			qobject_cast<QVBoxLayout*>(analysesBox_->layout())->addWidget(analysisCheckbox,0,Qt::AlignTop);
 			qobject_cast<QVBoxLayout*>(analysesBox_->layout())->setStretch(i,0);
 		}
@@ -148,6 +154,7 @@ void AnalysisSelectorWidget::updateLocalAnalysisList()
 	qobject_cast<QVBoxLayout*>(analysesBox_->layout())->addStretch(1);
 	//Enable this tab if it contains any analyses
 	tabWidget_->setTabEnabled(0,localAnalysisLookup_.contains(currFilePath_) && localAnalysisLookup_[currFilePath_].size());
+	emit analysisWidgetChanged();
 }
 
 void AnalysisSelectorWidget::updateAnalysesForImportList()
@@ -161,10 +168,17 @@ void AnalysisSelectorWidget::updateAnalysesForImportList()
 	for(int i=0;i<analysesForImport_.size();i++)
 	{
 		QCheckBox* analysisCheckbox(new QCheckBox(analysesForImport_[i].name_));
+		connect(analysisCheckbox,SIGNAL(clicked(bool)),this,SLOT(checkboxChanged(bool)));
 		qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->addWidget(analysisCheckbox,0,Qt::AlignTop);
 		qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->setStretch(i,0);
 	}
 	qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->addStretch(1);
 	//Enable this tab if it contains any analyses
 	tabWidget_->setTabEnabled(1,analysesForImport_.size());
+	emit analysisWidgetChanged();
+}
+
+void AnalysisSelectorWidget::checkboxChanged(bool)
+{
+	emit analysisWidgetChanged();
 }

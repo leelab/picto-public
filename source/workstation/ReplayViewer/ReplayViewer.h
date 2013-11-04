@@ -53,7 +53,6 @@ private:
 	QList<QUuid> getSelectedLocalAnalyses();
 	QStringList getAnalysesToImport();
 	bool popRunQueueFront();
-	bool activateSelectedAnalyses();
 	struct PlayRunInfo
 	{
 		PlayRunInfo(){filePath_="";runIndex_=-1;};
@@ -63,6 +62,8 @@ private:
 		bool operator==(const PlayRunInfo& rhs){return (filePath_ == rhs.filePath_) && (runIndex_ == rhs.runIndex_);};
 		bool operator!=(const PlayRunInfo& rhs){return !((filePath_ == rhs.filePath_) && (runIndex_ == rhs.runIndex_));};
 	};
+	void setRunQueue(QList<PlayRunInfo> newRunQueue);
+	bool activateSelectedAnalyses();
 	QList<PlayRunInfo> getSelectedPlayRunInfo();
 
 	QSharedPointer<PlaybackController> playbackController_;
@@ -120,6 +121,7 @@ private slots:
 	void loadSession();
 	void updateTime(double time);
 	void runSelectionChanged();
+	void analysisWidgetChanged();
 	void setUserType(int index);
 	void setLFPRequirements(int index);
 	void percentLoaded(double percent);

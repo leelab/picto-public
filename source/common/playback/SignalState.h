@@ -47,7 +47,6 @@ private:
 	PlaybackIndex globalToRunIndex(PlaybackIndex index);
 	bool moveIndecesToNextTime(int& outerIndex, int& innerIndex);
 	QSqlDatabase session_;
-	QSharedPointer<QSqlQuery> query_;
 	double runStart_;
 	double runEnd_;
 	int curr_;
