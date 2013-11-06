@@ -46,8 +46,8 @@ signals:
 private slots:
 	void newExperiment();
 	void openExperiment();
-	void openSession();
 	void openRecentExperiment();
+	void openDesign(QSharedPointer<DesignRoot> designRoot);
 	bool saveExperiment();
 	bool saveAsExperiment();
 	void changeMode();

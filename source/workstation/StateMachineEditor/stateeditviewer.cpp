@@ -45,15 +45,20 @@
 
 #include "stateeditviewer.h"
 #include "../../common/memleakdetect.h"
-
+#define AUTOSAVEINTERVALMS 1000	//auto save every 30 seconds
 //! [0]
 StateEditViewer::StateEditViewer(QWidget *parent) :
 	Viewer(parent),
-	expDesigner_(new Designer())
+	expDesigner_(new Designer()),
+	autoSaver_(AutoSaver::create()),
+	checkedAutoSave_(false)
 {
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(expDesigner_);
 	setLayout(mainLayout);
+	autoSaveTimer_.setInterval(AUTOSAVEINTERVALMS);
+	autoSaveTimer_.stop();
+	connect(&autoSaveTimer_,SIGNAL(timeout()),autoSaver_.data(),SLOT(saveDesignToFile()));
 }
 
 StateEditViewer::~StateEditViewer()
@@ -65,6 +70,24 @@ void StateEditViewer::init()
 	designRoot_->enableRunMode(false);
 	expDesigner_->activate(true);
 	expDesigner_->loadDesign(designRoot_);
+
+	if(!checkedAutoSave_)
+	{
+		QSharedPointer<DesignRoot> autoSavedDesign = autoSaver_->takePreviouslyAutoSavedDesign();
+		checkedAutoSave_ = true;
+		if(autoSavedDesign)
+		{
+			QMessageBox::StandardButton userResponse = QMessageBox::question(this,"Design Restore","A design was automatically saved before Picto ended unexpectedly.  Would you like to load the restored design?",QMessageBox::Yes | QMessageBox::No,QMessageBox::No);
+			if(userResponse == QMessageBox::Yes)
+			{
+				//Do load of new design here!!!!!!!!!!!!!!!!
+				emit loadDesignRoot(autoSavedDesign);
+				return;
+			}
+		}
+	}
+	autoSaver_->setDesignRoot(designRoot_);
+	autoSaveTimer_.start();
 }
 
 void StateEditViewer::deinit()
@@ -74,6 +97,8 @@ void StateEditViewer::deinit()
 	//software design
 	designRoot_->setUndoPoint();
 	expDesigner_->activate(false);
+	autoSaveTimer_.stop();
+	autoSaver_->saveDesignToFile();
 	emit deinitComplete();
 }
 

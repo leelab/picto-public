@@ -42,6 +42,7 @@
 #ifndef STATEEDITVIEWER_H
 #define STATEEDITVIEWER_H
 
+#include "../../common/Designer/AutoSaver.h"
 #include "../viewer.h"
 #include "../../common/Designer/Designer.h"
 using namespace Picto;
@@ -54,6 +55,8 @@ public:
    StateEditViewer(QWidget *parent=0);
    virtual ~StateEditViewer();
    virtual QString type(){return "State Edit Viewer";};
+signals:
+   void loadDesignRoot(QSharedPointer<DesignRoot> designRoot);
 public slots:
 	virtual void init();  //Called just before displaying the viewer
 	virtual void deinit();	//Called just after the user switches out of the viewer
@@ -62,6 +65,9 @@ public slots:
 private:
 
 	Designer* expDesigner_;
+	QSharedPointer<AutoSaver> autoSaver_;
+	QTimer autoSaveTimer_;
+	bool checkedAutoSave_;
 };
 //! [0]
 

@@ -221,6 +221,7 @@ void MainWindow::createViewers()
 	modeMenu_->addAction(viewerAction);
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
+	connect(static_cast<StateEditViewer*>(viewer),SIGNAL(loadDesignRoot(QSharedPointer<DesignRoot>)),this,SLOT(openDesign(QSharedPointer<DesignRoot>)));
 	initViewerAction_ = viewerAction;
 
 	//Test Viewer
@@ -360,17 +361,6 @@ void MainWindow::openExperiment()
 	}
 }
 
-void MainWindow::openSession()
-{
-	if(okToContinue())
-	{
-		QString filename = QFileDialog::getOpenFileName(this,
-				tr("Open Experiment"),".","XML files (*.xml)");
-		if(!filename.isEmpty())
-			loadFile(filename);
-	}
-}
-
 void MainWindow::openRecentExperiment()
 {
 	if(okToContinue())
@@ -381,6 +371,21 @@ void MainWindow::openRecentExperiment()
 				newExperiment();
 	}
 }
+
+void MainWindow::openDesign(QSharedPointer<DesignRoot> designRoot)
+{
+	if(designRoot.isNull())
+		return;
+	if(!okToContinue())
+		return;
+	designRoot_ = designRoot;
+	//When we save this file, we need to force a saveas, so we set the current
+	//file to be empty
+	setCurrentFile("");
+	setWindowTitle(QString("%1[*] - %2").arg(designRoot_->getDesignName())
+								   .arg(Picto::Names->workstationAppName));
+}
+
 
 //! Called to save a file
 bool MainWindow::saveExperiment()
