@@ -379,6 +379,10 @@ void MainWindow::openDesign(QSharedPointer<DesignRoot> designRoot)
 	if(!okToContinue())
 		return;
 	designRoot_ = designRoot;
+	//Load the design root into the autosaver.  Auto save the initial version
+	//since we are opening it from a RAM object that isn't saved anywhere
+	AutoSaver::getSingleton()->setDesignRoot(designRoot_,true);
+
 	//When we save this file, we need to force a saveas, so we set the current
 	//file to be empty
 	setCurrentFile("");
@@ -582,6 +586,12 @@ bool MainWindow::saveFile(const QString filename)
 	}
 	else
 	{
+		//The file saved succesfully
+
+		//Tell the autosaver that it can get rid of the autosaved file cause there is now
+		//a saved version.
+		AutoSaver::getSingleton()->removeFileUntilNextChange();
+		
 		setCurrentFile(filename);
 		changeMode(currViewer_);
 		designRoot_->setUnmodified();
@@ -664,6 +674,9 @@ bool MainWindow::loadFile(const QString filename)
 		QMessageBox::warning(0,warnMsg.name,warnMsg.details);
 	}
 	designRoot_ = newDesignRoot;
+	//Load the design root into the autosaver.  Don't auto save the current version
+	//because we just opened it from file, we already have a saved version.
+	AutoSaver::getSingleton()->setDesignRoot(designRoot_,false);
 
 	if(filename == DEFAULT_FILE)
 		setCurrentFile("");

@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include "AutoSaver.h"
+#include "AutoSaveDialog.h"
 #include "../memleakdetect.h"
 #define LOCKFILENAME "LockFile"
 #define AUTOSAVEROOT "AutoSave"
@@ -13,9 +14,11 @@ AutoSaver::AutoSaver()
 : QObject()
 {
 	initAutoSaveDir();
+	saveTimer_.stop();
+	connect(&saveTimer_,SIGNAL(timeout()),this,SLOT(saveDesignToFile()));
 }
 
-QSharedPointer<AutoSaver> AutoSaver::create()
+QSharedPointer<AutoSaver> AutoSaver::getSingleton()
 {
 	QSharedPointer<AutoSaver> returnVal = singleton_.toStrongRef();
 	if(returnVal.isNull())
@@ -49,110 +52,92 @@ AutoSaver::~AutoSaver()
 	}
 }
 
-void AutoSaver::setDesignRoot(QSharedPointer<DesignRoot> designRoot)
+void AutoSaver::start(int savePeriodMs)
 {
-	//Store the design root
-	designRoot_ = designRoot;
-	//Get the new file name for this design
-	QString designName;
-	if(designRoot_)
-		designName = designRoot_->getDesignName();
-	QString newFileName = buildDesignFileName(designName);
-	//If there's no design file, create it now
-	if(autoSaveDir_.isEmpty())
-		return;
-	if(!designFile_ && designRoot_)
-	{
-		QString designFilePath = QDir(autoSaveDir_).filePath(newFileName);
-		designFile_ = QSharedPointer<QFile>(new QFile(designFilePath));
-		bool rc = designFile_->open(QIODevice::ReadWrite | QIODevice::Text);
-		Q_ASSERT(rc);
-	}
-	saveDesignToFile();
+	saveTimer_.stop();
+	saveTimer_.setInterval(savePeriodMs);
+	saveTimer_.start();
 }
 
-void AutoSaver::saveDesignToFile()
+void AutoSaver::stop()
 {
-	//If we are here and there's no designFile, there must have been a problem
-	//creating it (read only directory or something)
-	if(!designFile_)
+	saveTimer_.stop();
+	saveDesignToFile();	//This will pick up any last changes before stop was called.
+}
+
+//saveFirstVersion tells the AutoSaver to save the input designRoot right away and not
+//wait for changes to be made.  Otherwise, the design will only be saved after something
+//has changed.
+void AutoSaver::setDesignRoot(QSharedPointer<DesignRoot> designRoot,bool saveFirstVersion)
+{
+	//If the designRoot_ hasn't changed, we're done
+	if(designRoot_ == designRoot)
 		return;
-	//Get the latest design code;
-	QString newDesignCode;
-	if(designRoot_)
-		newDesignCode = designRoot_->getDesignRootText();
-	//If the design code hasn't changed, we're done
-	if(newDesignCode == latestDesignCode_)
-		return;
-	//Update latestDesignCode_
-	latestDesignCode_ = newDesignCode;
-	//If the latestDesignCode_ is empty, remove the designFile and we're done
-	if(latestDesignCode_.isEmpty())
+	//Store the design root
+	designRoot_ = designRoot;
+	//Remove previously auto saved file
+	if(designFile_)
 	{
 		designFile_->close();
 		designFile_->remove();
-		return;
 	}
-	//Update contents of the design file with the latest design code
-	designFile_->resize(0);
-	designFile_->write(latestDesignCode_.toLatin1());
-	designFile_->flush();
-	//If the name of the design root has changed, update the name of 
-	//the design file
-	QString newDesignName;
-	if(designRoot_)
-		newDesignName = designRoot_->getDesignName();
-	QString newFileName = buildDesignFileName(newDesignName);
-	QString newDesignFilePath = QDir(autoSaveDir_).filePath(newFileName);
-	if(designFile_->fileName() != newDesignFilePath)
+
+	if(!designRoot_)
+		return;
+
+	if(saveFirstVersion)
 	{
-		designFile_->rename(newDesignFilePath);	//This closes the file
-		bool rc = designFile_->open(QIODevice::ReadWrite | QIODevice::Text);
-		Q_ASSERT(rc);
+		//Go ahead and do the first autosave of the new design
+		saveDesignToFile();
+	}
+	else
+	{
+		//Set the latestDesignCode_ to the current code so that
+		//saving won't start until something changes.
+		latestDesignCode_ = designRoot_->getDesignRootText();
 	}
 }
 
-QSharedPointer<DesignRoot> AutoSaver::takePreviouslyAutoSavedDesign()
+void AutoSaver::removeFileUntilNextChange()
 {
-	QSharedPointer<DesignRoot> design;
-	//Go through the saved design directories list looking for a design.
-	//Keep going until the list is empty or we have a valid design.
-	while(design.isNull() && savedDesignDirs_.size())
+	//Set the latestDesignCode_ to the current code so that
+	//saving won't restart until something changes.
+	latestDesignCode_ = designRoot_->getDesignRootText();
+	if(designFile_)
 	{
-		//Get the directory of the first saved design and remove it
-		//from the list
-		QDir designDir(savedDesignDirs_.takeFirst());
+		designFile_->close();
+		designFile_->remove();
+	}
+}
+
+ bool putPathsWithLatestFileNamesFirst(const QString &s1, const QString &s2)
+ {
+     return QFileInfo(s1).fileName().toLower() > QFileInfo(s2).fileName().toLower();
+ }
+
+QDialog* AutoSaver::getDesignRestoreDialog(QWidget* parent)
+{
+	if(!savedDesignDirs_.size())
+		return NULL;
+	//Make a list of filePaths of saved designs using our list of autosave directories
+	QStringList filePaths;
+	foreach(QDir designDir,savedDesignDirs_)
+	{
 		//Get the file with the saved design
 		QStringList files = designDir.entryList(QDir::Files);
 		QString savedFilePath = files.length()?designDir.filePath(files.first()):"";
-		//Load what's in the savedFilePath into a fileContents string
-		QString fileContents;
-		QString fileName;
 		if(savedFilePath.length())
-		{
-			QFile savedFile(savedFilePath);
-			bool rc = savedFile.open(QIODevice::ReadOnly | QIODevice::Text);
-			if(rc)
-			{
-				fileContents = QString(savedFile.readAll());
-				fileName = QFileInfo(savedFile).fileName();
-				savedFile.close();
-			}
-		}
-		//Create a DesignRoot from the FileContents string
-		if(fileContents.length())
-		{
-			design = QSharedPointer<DesignRoot>(new DesignRoot());
-			if(!design->resetDesignRoot(fileContents))
-				design.clear();
-			else
-				design->setDesignName(fileName);
-		}
-		//Remove the directory that contained the autosaved file.
-		removeFilesThenDirectories(designDir);
-		designDir.rmdir(".");
+			filePaths.append(savedFilePath);
 	}
-	return design;
+	if(!filePaths.size())
+		return NULL;
+	//Sort filePaths by reverse file name so that the newest files will be first
+	qSort(filePaths.begin(),filePaths.end(),putPathsWithLatestFileNamesFirst);
+
+	AutoSaveDialog* autoSaveDialog(new AutoSaveDialog(filePaths,parent));
+	connect(autoSaveDialog,SIGNAL(deleteFileRequest(QString)),this,SLOT(deleteRestorableDesignFile(QString)));
+	connect(autoSaveDialog,SIGNAL(restoreFileRequest(QString)),this,SLOT(restoreDesignFile(QString)));
+	return static_cast<QDialog*>(autoSaveDialog);
 }
 
 QString AutoSaver::getAutoSaveDir()
@@ -190,7 +175,7 @@ void AutoSaver::initAutoSaveDir()
 		//an autosave directory that we should add to our list
 		if(!subDir.exists(LOCKFILENAME))
 		{
-			savedDesignDirs_.push_front(autoSaveRoot.filePath(subDirName));
+			savedDesignDirs_.push_front(QDir(autoSaveRoot.filePath(subDirName)));
 		}
 	}
 	//We now have a list of all directores that contain auto saved files.
@@ -237,5 +222,108 @@ QString AutoSaver::buildDesignFileName(const QString designName)
 	QDateTime dateTime = QDateTime::currentDateTime();
 	return dateTime.toString("yyyy_MM_dd__hh_mm_ss_") + designName + ".xml";
 }
+
+void AutoSaver::saveDesignToFile()
+{
+	//Make sure that there is a designRoot_ to save to file
+	if(!designRoot_)
+		return;
+	//Get the latest design code;
+	QString newDesignCode;
+	if(designRoot_)
+		newDesignCode = designRoot_->getDesignRootText();
+	//If the design code hasn't changed, we're done
+	if(newDesignCode == latestDesignCode_)
+		return;
+	//Update latestDesignCode_
+	latestDesignCode_ = newDesignCode;
+	//If the latestDesignCode_ is empty, remove the designFile if it exists 
+	//and we're done
+	if(latestDesignCode_.isEmpty())
+	{
+		if(designFile_)
+		{
+			designFile_->close();
+			designFile_->remove();
+		}
+		return;
+	}
+
+	//Get the latest design name and build an updated file name from it
+	QString newDesignName;
+	if(designRoot_)
+		newDesignName = designRoot_->getDesignName();
+	QString newFileName = buildDesignFileName(newDesignName);
+	QString newDesignFilePath = QDir(autoSaveDir_).filePath(newFileName);
+
+	//If there's no design file yet, make one
+	if(!designFile_)
+	{
+		designFile_ = QSharedPointer<QFile>(new QFile(newDesignFilePath));
+		bool rc = designFile_->open(QIODevice::ReadWrite | QIODevice::Text);
+		//If we didn't succesfully open the file, we can't autosave... we're done here.
+		if(!rc)
+			return;
+	}
+
+	//Update contents of the design file with the latest design code
+	designFile_->resize(0);
+	designFile_->write(latestDesignCode_.toLatin1());
+	designFile_->flush();
+	//If the name of the design root has changed, update the name of 
+	//the design file
+	if(designFile_->fileName() != newDesignFilePath)
+	{
+		designFile_->rename(newDesignFilePath);	//This closes the file
+		bool rc = designFile_->open(QIODevice::ReadWrite | QIODevice::Text);
+		Q_ASSERT(rc);
+	}
+}
+
+void AutoSaver::deleteRestorableDesignFile(QString filePath)
+{
+	QFileInfo deleteFileInfo(filePath);
+	QDir deleteFileDir = deleteFileInfo.dir();
+	if(!savedDesignDirs_.contains(deleteFileDir))
+		return;
+
+	//Remove the directory that contained the autosaved file from the 
+	//savedDesignDirs list and then from the file system
+	savedDesignDirs_.removeAll(deleteFileDir);
+	removeFilesThenDirectories(deleteFileDir);
+	deleteFileDir.rmdir(".");
+}
+
+void AutoSaver::restoreDesignFile(QString filePath)
+{
+	//Open the file, get it's contents and name, then close it
+	QFile savedFile(filePath);
+	QString fileContents;
+	QString fileName;
+	bool rc = savedFile.open(QIODevice::ReadOnly | QIODevice::Text);
+	if(rc)
+	{
+		fileContents = QString(savedFile.readAll());
+		fileName = QFileInfo(savedFile).fileName();
+		savedFile.close();
+	}
+	//Create a DesignRoot from the FileContents string and set its
+	//name to the name of the file
+	QSharedPointer<DesignRoot> design;
+	if(fileContents.length())
+	{
+		design = QSharedPointer<DesignRoot>(new DesignRoot());
+		if(!design->resetDesignRoot(fileContents))
+			design.clear();
+		else
+			design->setDesignName(fileName);
+	}
+
+	//Remove the file and its autosave directory from the file system.
+	deleteRestorableDesignFile(filePath);
+	//Tell our owner to open the design
+	emit openDesign(design);
+}
+
 
 }; //namespace Picto
