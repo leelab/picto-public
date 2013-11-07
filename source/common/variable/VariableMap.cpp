@@ -51,6 +51,12 @@ void VariableMap::removeAt(QVariant key)
 	copyMapToValueProp();
 }
 
+void VariableMap::clear()
+{
+	map_.clear();
+	copyMapToValueProp();
+}
+
 void VariableMap::postDeserialize()
 {
 	Variable::postDeserialize();

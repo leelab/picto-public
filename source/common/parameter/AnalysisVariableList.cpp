@@ -66,6 +66,11 @@ void AnalysisVariableList::removeAt(int index)
 	list_.removeAt(index);
 }
 
+void AnalysisVariableList::clear()
+{
+	list_.clear();
+}
+
 void AnalysisVariableList::postDeserialize()
 {
 	AnalysisVariable::postDeserialize();

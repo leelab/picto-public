@@ -66,6 +66,12 @@ void VariableList::removeAt(int index)
 	copyListToValueProp();
 }
 
+void VariableList::clear()
+{
+	list_.clear();
+	copyListToValueProp();
+}
+
 void VariableList::postDeserialize()
 {
 	Variable::postDeserialize();

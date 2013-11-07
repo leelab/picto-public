@@ -54,6 +54,12 @@ void AnalysisVariableMap::removeAt(QVariant key)
 	map_.take(key.toString());
 }
 
+void AnalysisVariableMap::clear()
+{
+	map_.clear();
+}
+
+
 void AnalysisVariableMap::postDeserialize()
 {
 	AnalysisVariable::postDeserialize();

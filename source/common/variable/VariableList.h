@@ -54,6 +54,7 @@ public slots:
 	void removeFirst();
 	void removeLast();
 	void removeAt(int index);
+	void clear();
 
 protected:
 	virtual void postDeserialize();

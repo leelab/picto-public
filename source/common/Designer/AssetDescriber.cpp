@@ -334,7 +334,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("removeFirst()","Removes the first value from the array.  If the array is empty, nothing happens.");
 	curr->addSFunc("removeLast()","Removes the last value from the array.  If the array is empty nothing happens.");
 	curr->addSFunc("removeAt(index)","Removes the value at the input index from the array.  If the input index is invalid, nothing happens.");
-
+	curr->addSFunc("clear()","Removes all values from the array.");
 
 	curr = addDescription("VariableMap");
 	curr->setInherits(getAssetDescription("Variable"));
@@ -348,6 +348,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("number takeAtAsNum(key)","Returns the value in the map at the input key as a number and deletes that value from the map.  If the key is invalid an undefined value is returned.");
 	curr->addSFunc("string takeAtAsString(key)","Returns the value in the map at the input key as a string and deletes that value from the map.  If the key is invalid an undefined value is returned.");
 	curr->addSFunc("removeAt(key)","Removes the value at the input key from the map.  If the input key is invalid, nothing happens.");
+	curr->addSFunc("clear()","Removes all values from the map.");
 
 	//Parameters
 	curr = addDescription("BooleanParameter");
@@ -677,10 +678,10 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("setTokenDimensions(w,h)","Sets the default width and height of this tray's tokens in a single function call.");
 	curr->addSProp("setTokenPos(index,x,y)","Sets the position of the token at the input index in global coordinates (ie. top left corner of screen is 0,0).");
 	curr->addSProp("setTokenLocalPos(index,x,y)","Sets the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
-	curr->addSProp("setTokenX(index,x,y)","Sets the x component of the position of the token at the input index in global coordinates (ie. top left corner of screen is 0,0).");
-	curr->addSProp("setTokenY(index,x,y)","Sets the y component of the position of the token at the input index in global coordinates (ie. top left corner of screen is 0,0).");
-	curr->addSProp("setTokenLocalX(index,x,y)","Sets the x component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
-	curr->addSProp("setTokenLocalY(index,x,y)","Sets the y component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
+	curr->addSProp("setTokenX(index,x)","Sets the x component of the position of the token at the input index in global coordinates (ie. top left corner of screen is 0,0).");
+	curr->addSProp("setTokenY(index,y)","Sets the y component of the position of the token at the input index in global coordinates (ie. top left corner of screen is 0,0).");
+	curr->addSProp("setTokenLocalX(index,x)","Sets the x component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
+	curr->addSProp("setTokenLocalY(index,y)","Sets the y component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
 	curr->addSFunc("setTokenSize(index,size)","Scales the size of the token at the input index by a factor of the input size, where size is a number between 0 and 1.");
 	curr->addSFunc("setTokenColor(index,r,g,b,a) or setTokenColor(index,r,g,b)","Sets the color of the token at the input index according to the red, green, blue and optional alpha inputs.");
 	curr->addSFunc("setTokenColor(index,color)","Sets the color of the token at the input index by using a string containing hexadecimal r,g,b values (#rrggbb).");
@@ -754,6 +755,7 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("removeFirst()","Removes the first value from the array.  If the array is empty, nothing happens.");
 	curr->addSFunc("removeLast()","Removes the last value from the array.  If the array is empty nothing happens.");
 	curr->addSFunc("removeAt(index)","Removes the value at the input index from the array.  If the input index is invalid, nothing happens.");
+	curr->addSFunc("clear()","Removes all values from the array.");
 
 	curr = addDescription("AnalysisVariableMap");
 	curr->setInherits(getAssetDescription("Variable"));
@@ -767,6 +769,7 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("number takeAtAsNum(key)","Returns the value in the map at the input key as a number and deletes that value from the map.  If the key is invalid an undefined value is returned.");
 	curr->addSFunc("string takeAtAsString(key)","Returns the value in the map at the input key as a string and deletes that value from the map.  If the key is invalid an undefined value is returned.");
 	curr->addSFunc("removeAt(key)","Removes the value at the input key from the map.  If the input key is invalid, nothing happens.");
+	curr->addSFunc("clear()","Removes all values from the map.");
 
 	//DataSources
 	curr = addDescription("AnalysisFrameData");

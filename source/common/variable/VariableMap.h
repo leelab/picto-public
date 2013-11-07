@@ -39,6 +39,7 @@ public slots:
 	double takeAtAsNum(QVariant key){return takeAt(key.toString()).toDouble();};
 	QString takeAtAsString(QVariant key){return takeAt(key.toString()).toString();};
 	void removeAt(QVariant key);
+	void clear();
 
 protected:
 	virtual void postDeserialize();

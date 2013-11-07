@@ -34,7 +34,7 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 	}
 
 	PropertyListWidget* propList = new PropertyListWidget(trackInitVals_,editorState_);
-	connect(propList,SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),this,SLOT(propertyEdited(QSharedPointer<Property>,QVariant)));
+	connect(propList,SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),this,SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)));
 
 	//Add the newly created browser to a layout
 	QVBoxLayout* browserLayout = new QVBoxLayout();
