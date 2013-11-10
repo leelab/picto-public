@@ -303,7 +303,7 @@ bool ReplayViewer::popRunQueueFront()
 		if(failedRuns.size())
 		{
 			//Tell the user we're done and offer to re-run failed playbacks.
-			QMessageBox::StandardButton result = QMessageBox::question(this,"Playback Complete with Errors","Playback is complete; however, some runs could not successfully be played.  This is most likely due to limited system memory.  Try closing other applications and then select \"Retry\" to replay the failed runs.",QMessageBox::StandardButton::Retry | QMessageBox::StandardButton::Cancel,QMessageBox::StandardButton::Cancel);
+			QMessageBox::StandardButton result = QMessageBox::question(this,"Playback Complete with Errors","Playback is complete; however, some runs could not successfully be played.  This is most likely due to limited system memory.  Try closing other applications and then select \"Retry\" to retry playback on the failed runs only.",QMessageBox::StandardButton::Retry | QMessageBox::StandardButton::Cancel,QMessageBox::StandardButton::Cancel);
 			//If the user wants to run failed playbacks again
 			if(result == QMessageBox::Retry)
 			{

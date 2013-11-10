@@ -139,6 +139,7 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 {
 	experiment_->getDesignConfig()->getFrameTimerFactory()->resetAllTimers();
 	eventQueue_.reset();
+	currElement_.clear();
 	if(taskName != currTask_)
 	{
 		currTask_ = taskName;
@@ -202,7 +203,9 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 	//----------  Run the analysis frame scripts ---------------------------------------
 	QSharedPointer<State> currState = currElement_.dynamicCast<State>();	
 	if(currState)
+	{
 		currState->runAnalysisFrameScripts();
+	}
 }
 void SlaveExperimentDriver::masterRewardSupplied(double time,int duration,int channel)
 {
