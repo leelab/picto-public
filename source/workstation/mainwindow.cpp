@@ -514,13 +514,15 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
+	releaseNoteList.append("Fixed bug that caused property fields to be intermittently greyed out and read-only.");
+	releaseNoteList.append("Overhaul of playback/analysis system to support batch analysis.");
+	releaseNoteList.append("Added 'disable lfp' capability to speed up session playback/analysis when lfp data is not necessary.");
+	releaseNoteList.append("Added auto-save system for restoring a recent unsaved version of a design file in the event of a crash.");
+
 	releaseNoteList.append("Added Image Graphic and Image File Parameter, which are used together to show images from a file on screen.");
 	releaseNoteList.append("Added Audio Element and Audio File Parameter, which are used together to play audio from a file during an experiment.");
 	releaseNoteList.append("Added Run Info element to analysis system for extraction of notes and other information saved with individual runs.");
 	releaseNoteList.append("Fixed bug in State Machine Editor that caused Analysis Scripts to sometimes not show up in the property window.");
-
-	releaseNoteList.append("Added additional elements to analysis system including: Spike, LFP, Signal (eye position, diameter), Reward, and Frame time elements.");
-	releaseNoteList.append("Added multiple new element icons to the State Machine Editor.");
 
 	//Format release notes:
 	QString releaseNotes;

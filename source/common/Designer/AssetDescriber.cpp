@@ -160,7 +160,7 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("ResultContainer");
 	curr->setInherits(getAssetDescription("ScriptableContainer"));
-	curr->addSFunc("getLatestResult())","Returns the name of the latest result that was triggered by this element.  If no result has been triggered since this element's parent's execution started, an empty string is returned.");
+	curr->addSFunc("getLatestResult()","Returns the name of the latest result that was triggered by this element.  If no result has been triggered since this element's parent's execution started, an empty string is returned.");
 
 	curr = addDescription("StateMachineElement");
 	curr->setInherits(getAssetDescription("ResultContainer"));

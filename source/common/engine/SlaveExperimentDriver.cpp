@@ -127,6 +127,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			//run its AnalysisEntryScripts
 			//start it up
 			currElement_ = destAsset.staticCast<StateMachineElement>();
+			currElement_->resetScriptableValues();
 			currElement_->resetScriptableAnalysisValues();
 			currElement_->runAnalysisEntryScripts();
 			currElement_->slaveRun(experiment_->getEngine());

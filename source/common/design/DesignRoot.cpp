@@ -141,12 +141,18 @@ void DesignRoot::setUndoPoint()
 	QString newDesignRootText = pictoData_->toXml();
 	if(newDesignRootText != designRootText_.toPlainText())
 	{
-		QTextCursor cursor = QTextCursor(&designRootText_);
-		cursor.beginEditBlock();
-		cursor.select(QTextCursor::Document);
-		cursor.removeSelectedText();
-		cursor.insertText(newDesignRootText);
-		cursor.endEditBlock();
+		try	//Sometimes with giant experiment designs this fails to allocate memory
+		{
+			QTextCursor cursor = QTextCursor(&designRootText_);
+			cursor.beginEditBlock();
+			cursor.select(QTextCursor::Document);
+			cursor.insertText(newDesignRootText);
+			cursor.endEditBlock();
+		}
+		catch(...)
+		{
+			designRootText_.setPlainText(newDesignRootText);
+		}
 	}
 }
 

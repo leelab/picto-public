@@ -529,6 +529,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playAction_->setEnabled(false);
 			runToEndAction_->setEnabled(false);
 			toggleRecord_->setEnabled(false);
+			loadSessionAction_->setEnabled(false);
 			lfpRequirements_->setEnabled(false);
 			analysisSelector_->setEnabled(true);
 			analysisSelector_->enableCheckboxes(false);
